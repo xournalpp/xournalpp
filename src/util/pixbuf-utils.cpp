@@ -67,6 +67,13 @@ f_image_surface_create(cairo_format_t format, int width, int height)
 	case CAIRO_FORMAT_A1:
 		size = 1;
 		break;
+	case CAIRO_FORMAT_INVALID:
+	case CAIRO_FORMAT_RGB16_565:
+	case CAIRO_FORMAT_RGB30:
+	default:
+		g_warning("Unsupported image format: %i\n", format);
+		size = 1;
+		break;
 	}
 
 	unsigned char* pixels = (unsigned char*) g_malloc(width * height * size);

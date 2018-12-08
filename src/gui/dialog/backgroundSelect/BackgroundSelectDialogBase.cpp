@@ -7,7 +7,13 @@
 
 BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings, string glade, string mainWnd)
  : GladeGui(gladeSearchPath, glade, mainWnd),
-   settings(settings), lastWidth(0), selected(-1), doc(doc), confirmed(false)
+   settings(settings),
+   scrollPreview(NULL),
+   layoutContainer(NULL),
+   doc(doc),
+   confirmed(false),
+   selected(-1),
+   lastWidth(0)
 {
 	XOJ_INIT_TYPE(BackgroundSelectDialogBase);
 
@@ -125,12 +131,12 @@ void BackgroundSelectDialogBase::setSelected(int selected)
 	}
 
 	int lastSelected = this->selected;
-	if (lastSelected >= 0 && lastSelected < elements.size())
+	if (lastSelected >= 0 && lastSelected < (int)elements.size())
 	{
 		elements[lastSelected]->setSelected(false);
 	}
 
-	if (selected >= 0 && selected < elements.size())
+	if (selected >= 0 && selected < (int)elements.size())
 	{
 		elements[selected]->setSelected(true);
 		this->selected = selected;

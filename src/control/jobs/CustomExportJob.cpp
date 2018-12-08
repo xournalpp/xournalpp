@@ -15,10 +15,10 @@
 CustomExportJob::CustomExportJob(Control* control)
  : BaseExportJob(control, _("Custom Export")),
    pngDpi(300),
-   exportTypePdf(false),
-   exportTypeXoj(false),
    surface(NULL),
-   cr(NULL)
+   cr(NULL),
+   exportTypePdf(false),
+   exportTypeXoj(false)
 {
 	XOJ_INIT_TYPE(CustomExportJob);
 }

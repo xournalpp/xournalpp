@@ -654,7 +654,7 @@ void EditSelection::snapRotation()
 	const double ROTATION_LOCK[8] = {0, M_PI / 2.0, M_PI, M_PI / 4.0, 3.0 * M_PI / 4.0,
 									- M_PI / 4.0, - 3.0 * M_PI / 4.0, - M_PI / 2.0};
 
-	for ( int i = 0; i < sizeof(ROTATION_LOCK) / sizeof(ROTATION_LOCK[0]); i++ )
+	for (unsigned int i = 0; i < sizeof(ROTATION_LOCK) / sizeof(ROTATION_LOCK[0]); i++ )
 	{
 		if (std::abs(this->rotation - ROTATION_LOCK[i]) < epsilon)
 		{

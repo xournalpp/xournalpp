@@ -6,9 +6,9 @@
 
 ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath)
  : GladeGui(gladeSearchPath, "exportSettings.glade", "exportDialog"),
-   confirmed(false),
    currentPage(0),
-   pageCount(0)
+   pageCount(0),
+   confirmed(false)
 {
 	XOJ_INIT_TYPE(ExportDialog);
 
