@@ -50,7 +50,7 @@ endif ()
 
 ## Libraries ##
 
-option (ADVANCED_PDF_EXPORT_POPPLER "Export PDF with private Poppler API" ON)
+option (ADVANCED_PDF_EXPORT_POPPLER "Export PDF with private Poppler API" OFF)
 
 macro (add_includes_ldflags LDFLAGS INCLUDES)
     set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} ${LDFLAGS})
