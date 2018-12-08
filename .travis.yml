@@ -34,7 +34,6 @@ addons:
     - fontconfig
     - libgtk-3-dev
     - librsvg2-dev
-    - libpoppler-glib8
     - libpoppler-glib-dev
     sources:
     - boost-latest
