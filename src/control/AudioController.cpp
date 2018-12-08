@@ -1,6 +1,8 @@
 #include "AudioController.h"
 #include "Util.h"
+
 #include <iostream>
+#include <i18n.h>
 
 AudioController::AudioController(Settings* settings, Control* control)
 {
@@ -94,14 +96,14 @@ string AudioController::getAudioFolder()
 
 	if (af.length() < 8)
 	{
-		string msg ="Audio folder not set! Recording won't work!\nPlase set the "\
-					"recording folder under \"Preferences > Audio recording\"";
-		g_warning(msg.c_str());
+		string msg = _("Audio folder not set! Recording won't work!\nPlase set the "
+					   "recording folder under \"Preferences > Audio recording\"");
+		g_warning("%s", msg.c_str());
 		Util::showErrorToUser(this->control->getGtkWindow(), msg);
 		return "";
 	}
 
-	af.erase(af.begin(),af.begin()+7);
+	af.erase(af.begin(), af.begin() + 7);
 	return af;
 }
 
