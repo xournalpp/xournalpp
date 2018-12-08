@@ -61,12 +61,10 @@ Current releases are out of Date, we are searching for Maintainer for PPA etc.
 
 ### Install dependencies
 For Fedora/CentOS/RHEL:
-```diff
-- Probably not correct for new GTK3 build, create a pull or a Ticket if you have the correct list
-```
 ````bash
 dnf groups install "C Development Tools and Libraries"
-dnf install cmake libglade2-devel texlive-scheme-basic texlive-dvipng glibmm24-devel gtk2-devel gtk+-devel boost boost-devel poppler-glib-devel
+dnf install cmake texlive-scheme-basic texlive-dvipng poppler-glib-devel
+# AND SOME MORE please create Pull / write ticket if you have the exact dependencies
 ````
 
 For Ubuntu/Debian:
