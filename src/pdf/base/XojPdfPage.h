@@ -26,6 +26,7 @@ class XojPdfRectangle
 {
 public:
 	XojPdfRectangle();
+	XojPdfRectangle(double x1, double y1, double x2, double y2);
 
 public:
 	double x1;
