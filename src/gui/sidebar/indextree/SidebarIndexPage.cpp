@@ -163,7 +163,7 @@ bool SidebarIndexPage::treeBookmarkSelected(GtkWidget* treeview, SidebarIndexPag
 					{
 						if (dest->shouldChangeTop())
 						{
-							sidebar->control->getScrollHandler()->scrollToPage(page, dest->getTop());
+							sidebar->control->getScrollHandler()->scrollToPage(page, dest->getTop() * sidebar->control->getZoomControl()->getZoom());
 						}
 						else
 						{
