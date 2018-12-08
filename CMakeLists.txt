@@ -126,8 +126,8 @@ pkg_check_modules (Libxml REQUIRED "libxml-2.0 >= 2.0.0")
 add_includes_ldflags ("${Libxml_LDFLAGS}" "${Libxml_INCLUDE_DIRS}")
 
 if (NOT ADVANCED_PDF_EXPORT_POPPLER)
-	pkg_check_modules (Poppler REQUIRED "poppler-glib >= 0.41.0")
-	add_includes_ldflags ("${Poppler_LDFLAGS}" "${Poppler_INCLUDE_DIRS}")
+	pkg_check_modules (PopplerGlib REQUIRED "poppler-glib >= 0.41.0")
+	add_includes_ldflags ("${PopplerGlib_LDFLAGS}" "${PopplerGlib_INCLUDE_DIRS}")
 endif ()
 
 find_program(LSB_RELEASE_EXEC lsb_release)
