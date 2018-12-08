@@ -125,12 +125,6 @@ add_includes_ldflags ("${GThread_LDFLAGS}" "${GThread_INCLUDE_DIRS}")
 pkg_check_modules (Libxml REQUIRED "libxml-2.0 >= 2.0.0")
 add_includes_ldflags ("${Libxml_LDFLAGS}" "${Libxml_INCLUDE_DIRS}")
 
-if (NOT ADVANCED_PDF_EXPORT_POPPLER)
-	pkg_check_modules (PopplerGlib REQUIRED "poppler-glib >= 0.41.0")
-	add_includes_ldflags ("${PopplerGlib_LDFLAGS}" "${PopplerGlib_INCLUDE_DIRS}")
-	set(POPPLER_INCLUDE_DIR, "${PopplerGlib_INCLUDE_DIRS}")
-endif ()
-
 find_program(LSB_RELEASE_EXEC lsb_release)
 execute_process(COMMAND ${LSB_RELEASE_EXEC} -is
   OUTPUT_VARIABLE LSB_RELEASE_ID_SHORT
@@ -257,20 +251,25 @@ if (BUILD_POPPLER)
     ${lcms_INCLUDE_DIRS}
   )
 
-else ()
+elseif (NOT ADVANCED_PDF_EXPORT_POPPLER)
 
   find_package (Poppler)
   if (NOT POPPLER_FOUND)
     message (FATAL_ERROR "Poppler not found – you should enable BUILD_POPPLER CMake flag")
-  elseif (ADVANCED_PDF_EXPORT_POPPLER)
-    if (POPPLER_VERSION VERSION_LESS ${POPPLER_MIN_VER})
-	  message (FATAL_ERROR "Poppler too old - you should enable BUILD_POPPLER CMake flag")
-    elseif (POPPLER_VERSION VERSION_GREATER ${POPPLER_MAX_VER})
-      message (FATAL_ERROR "Poppler too new, Xournalpp has not been adapted jet - you should enable BUILD_POPPLER CMake flag")
-    endif ()
-  endif (NOT POPPLER_FOUND)
+  elseif (POPPLER_VERSION VERSION_LESS ${POPPLER_MIN_VER})
+	message (FATAL_ERROR "Poppler too old - you should enable BUILD_POPPLER CMake flag")
+  elseif (POPPLER_VERSION VERSION_GREATER ${POPPLER_MAX_VER})
+    message (FATAL_ERROR "Poppler too new, Xournalpp has not been adapted jet - you should enable BUILD_POPPLER CMake flag")
+  endif ()
 endif ()
-add_includes_ldflags ("${POPPLER_LIBRARIES}" "${POPPLER_INCLUDE_DIRS}")
+
+if (NOT ADVANCED_PDF_EXPORT_POPPLER)
+	add_includes_ldflags ("${POPPLER_LIBRARIES}" "${POPPLER_INCLUDE_DIRS}")
+else ()
+	pkg_check_modules (PopplerGlib REQUIRED "poppler-glib >= 0.41.0")
+	add_includes_ldflags ("${PopplerGlib_LDFLAGS}" "${PopplerGlib_INCLUDE_DIRS}")
+	set(POPPLER_INCLUDE_DIR, "${PopplerGlib_INCLUDE_DIRS}")
+endif ()
 
 # zlib
 find_package (ZLIB REQUIRED)
