@@ -1,3 +1,9 @@
+xournalpp (1.0.3-0) unstable; urgency=low
+
+  * Fixed debian dependencies
+
+ -- Andreas Butti <andreasbutti@gmail.com>  Sun, 09 Dec 2018 13:32:00 +0100
+
 xournalpp (1.0.2-0) unstable; urgency=low
 
   * Initial release Debian Packaging
