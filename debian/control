@@ -3,12 +3,12 @@ Maintainer: Andreas Butti <andreasbutti@gmail.com>
 Section: misc
 Priority: optional
 Standards-Version: 3.9.2
-Build-Depends: debhelper (>= 9), cmake, git, libboost-filesystem-dev, libboost-locale-dev, libboost-iostreams-dev, dvipng, texlive, libgtk-3-dev, libpoppler-glib-dev
+Build-Depends: debhelper (>= 9), cmake, git, libboost-filesystem-dev, libboost-locale-dev, libboost-iostreams-dev, dvipng, texlive, libgtk-3-dev, libpoppler-glib-dev, libxml2-dev
 Homepage: https://github.com/xournalpp/xournalpp/
 
 Package: xournalpp
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libboost-filesystem, libboost-locale, libboost-iostreams, dvipng, texlive, libgtk-3, libpoppler-glib
+Depends: ${shlibs:Depends}, ${misc:Depends}, libboost-filesystem, libboost-locale, libboost-iostreams, dvipng, texlive, libgtk-3, libpoppler-glib, libxml2
 Description: Xournal++ is a handwriting Notetaking software, working on Linux
 
 
