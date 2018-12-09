@@ -452,7 +452,7 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath)
 		return;
 	}
 
-	string msg = _("Missing the needed UI file, could not find them at any location.\nNot relative\nNot in the Working Path\nNot in " PACKAGE_DATA_DIR);
+	string msg = FS(_F("Missing the needed UI file, could not find them at any location.\nNot relative\nNot in the Working Path\nNot in {1}") % PACKAGE_DATA_DIR);
 	Util::showErrorToUser(NULL, msg.c_str());
 
 	exit(12);
