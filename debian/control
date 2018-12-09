@@ -8,7 +8,7 @@ Homepage: https://github.com/xournalpp/xournalpp/
 
 Package: xournalpp
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libboost-filesystem, libboost-locale, libboost-iostreams, dvipng, texlive, libgtk-3, libpoppler-glib, libxml2
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Xournal++ is a handwriting Notetaking software, working on Linux
 
 
