@@ -31,23 +31,38 @@ void RulerHandler::snapToGrid(double& x, double& y)
 		double xRem = fmod(x,gridSize);
 		double yRem = fmod(y,gridSize);
 
+		bool snapX = false;
+		bool snapY = false;
+
+		double tmpX = 0;
+		double tmpY = 0;
+
 		if (xRem < tolerance) 
 		{
-			x = x - xRem;
+			tmpX = x - xRem;
+			snapX = true;
 		}
 		if (xRem > gridSize - tolerance )
 		{
-			x += gridSize - xRem;
+			tmpX = x + (gridSize - xRem);
+			snapX = true;
 		}
 		if (yRem < tolerance) 
 		{
-			y = y - yRem;
+			tmpY = y - yRem;
+			snapY = true;
 		}
 		if (yRem > gridSize - tolerance )
 		{
-			y += gridSize - yRem;
+			tmpY = y + (gridSize - yRem);
+			snapY = true;
 		}
 
+		if (snapX && snapY)
+		{
+			x = tmpX;
+			y = tmpY;
+		}
 }
 
 void RulerHandler::drawShape(Point& currentPoint, bool shiftDown)
@@ -114,7 +129,7 @@ void RulerHandler::drawShape(Point& currentPoint, bool shiftDown)
 		{
 			stroke->setLastPoint(x, y);
 		}
-		
+
 		snapToGrid(x,y);
 		stroke->setLastPoint(x,y);
 	}
