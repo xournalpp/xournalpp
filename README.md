@@ -55,6 +55,10 @@ sudo apt update
 sudo apt install xournalpp
 ````
 
+# OpenSuse
+https://build.opensuse.org/package/show/home:badshah400:Staging/xournalpp-gtk3
+Build by https://github.com/badshah400
+
 ## Building
 
 Aside from legacy releases, this is currently the way to install Xournal++. For complete building documentation refer to wiki page:
