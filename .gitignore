@@ -19,6 +19,9 @@ configure
 po/POTFILES
 stamp-h1
 
+# PPA Build (ubuntu)
+ppa-build
+
 # CMake
 build/
 desktop/desktop_install.sh
@@ -33,10 +36,10 @@ src/pdf/popplerdirect/workaround/workaround.sh
 # NetBeans
 nbproject/
 
-#Visual Studio Code
+# Visual Studio Code
 .vscode/
 
-#CLion
+# CLion
 .idea
 cmake-build-debug
 cmake-build-release
@@ -44,3 +47,4 @@ cmake-build-release
 # API Documentation
 doc/html
 doc/latex
+
