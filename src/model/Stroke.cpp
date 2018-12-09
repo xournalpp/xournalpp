@@ -172,6 +172,19 @@ bool Stroke::isInSelection(ShapeContainer* container)
 	return true;
 }
 
+void Stroke::setFirstPoint(double x, double y)
+{
+	XOJ_CHECK_TYPE(Stroke);
+
+	if (this->pointCount > 0)
+	{
+		Point& p = this->points[0];
+		p.x = x;
+		p.y = y;
+		this->sizeCalculated = false;
+	}
+}
+
 void Stroke::setLastPoint(double x, double y)
 {
 	XOJ_CHECK_TYPE(Stroke);

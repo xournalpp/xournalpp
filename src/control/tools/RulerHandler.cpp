@@ -18,6 +18,38 @@ RulerHandler::~RulerHandler()
 	XOJ_RELEASE_TYPE(RulerHandler);
 }
 
+void RulerHandler::snapToGrid(double& x, double& y)
+{
+		/**
+		 * Snap points to a grid:
+		 * If x/y coordinates are under a certain tolerance,
+		 * fix the point to the grid intersection value
+		 */
+		double gridSize = 14.17;
+		double tolerance = 2.5;
+
+		double xRem = fmod(x,gridSize);
+		double yRem = fmod(y,gridSize);
+
+		if (xRem < tolerance) 
+		{
+			x = x - xRem;
+		}
+		if (xRem > gridSize - tolerance )
+		{
+			x += gridSize - xRem;
+		}
+		if (yRem < tolerance) 
+		{
+			y = y - yRem;
+		}
+		if (yRem > gridSize - tolerance )
+		{
+			y += gridSize - yRem;
+		}
+
+}
+
 void RulerHandler::drawShape(Point& currentPoint, bool shiftDown)
 {
 	int count = stroke->getPointCount();
@@ -34,12 +66,15 @@ void RulerHandler::drawShape(Point& currentPoint, bool shiftDown)
 	{
 		double x = currentPoint.x;
 		double y = currentPoint.y;
+		Point firstPoint = stroke->getPoint(0);
+
+		snapToGrid(firstPoint.x,firstPoint.y);
+		stroke->setFirstPoint(firstPoint.x,firstPoint.y);
 
 		//snap to a grid - get the angle of the points
 		//if it's near 0, pi/4, 3pi/4, pi, or the negatives
 		//within epsilon, fix it to that value.
-		Point firstPoint = stroke->getPoint(0);
-
+		
 		double dist = sqrt(pow(x - firstPoint.x, 2.0) + pow(y - firstPoint.y, 2.0));
 		double angle = atan2((y - firstPoint.y), (x - firstPoint.x));
 		double epsilon = 0.1;
@@ -79,6 +114,9 @@ void RulerHandler::drawShape(Point& currentPoint, bool shiftDown)
 		{
 			stroke->setLastPoint(x, y);
 		}
+		
+		snapToGrid(x,y);
+		stroke->setLastPoint(x,y);
 	}
 }
 
