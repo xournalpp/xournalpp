@@ -57,6 +57,7 @@ sudo apt install xournalpp
 
 ### OpenSuse
 https://build.opensuse.org/package/show/home:badshah400:Staging/xournalpp-gtk3
+
 Build by https://github.com/badshah400
 
 ## Building
