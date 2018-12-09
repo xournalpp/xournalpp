@@ -7,6 +7,7 @@ LatexDialog::LatexDialog(GladeSearchpath *gladeSearchPath)
 
 	this->texBox = get("texEntry");
 	this->texTempRender = get("texImage");
+	this->scaledRender = NULL;
 
 	// increase the maximum length to something reasonable.
 	gtk_entry_set_max_length(GTK_ENTRY(this->texBox), 500);
@@ -38,9 +39,26 @@ string LatexDialog::getTex()
 void LatexDialog::setTempRender(cairo_surface_t* cairoTexTempRender)
 {
 	XOJ_CHECK_TYPE(LatexDialog);
+
+	//If a previous render exists, destroy it
+	if(this->scaledRender != NULL)
+	{
+		cairo_surface_destroy(this->scaledRender);
+	}
+	size_t length = string(gtk_entry_get_text(GTK_ENTRY(this->texBox))).size();
+	//Max size = 100%, Min size = 45%
+	double factor = MAX(0.45, 1 -  length / 100.0 );
 	// Every time the controller updates the temporary render, we update
-	// our corresponding GtkWidget
-	gtk_image_set_from_surface(GTK_IMAGE(this->texTempRender), cairoTexTempRender);
+	// our corresponding GtkWidget	
+	this->scaledRender = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, cairo_image_surface_get_width(cairoTexTempRender)*factor, cairo_image_surface_get_height(cairoTexTempRender)*factor);
+	cairo_t* cr = cairo_create(this->scaledRender);
+	cairo_scale(cr, factor, factor);
+		
+	cairo_set_source_surface(cr, cairoTexTempRender, 0, 0);
+	cairo_paint(cr);
+	cairo_destroy(cr);	
+
+	gtk_image_set_from_surface(GTK_IMAGE(this->texTempRender), this->scaledRender);
 }
 
 GtkWidget* LatexDialog::getTexBox()
