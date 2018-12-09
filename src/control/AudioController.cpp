@@ -96,7 +96,7 @@ string AudioController::getAudioFolder()
 
 	if (af.length() < 8)
 	{
-		string msg = _("Audio folder not set! Recording won't work!\nPlase set the "
+		string msg = _("Audio folder not set! Recording won't work!\nPlease set the "
 					   "recording folder under \"Preferences > Audio recording\"");
 		g_warning("%s", msg.c_str());
 		Util::showErrorToUser(this->control->getGtkWindow(), msg);
