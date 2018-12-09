@@ -48,14 +48,14 @@ Just press the red button to start/stop recording and use the `Play Object` tool
 If you need to, you can edit the recording audio gain in the script under `/usr/local/bin/xopp-recording.sh` (an option for this will be availabe through xournalpp's settings in the future)
 
 ## Installing
-# Ubuntu and derivates
+### Ubuntu and derivates
 ````bash
 sudo add-apt-repository ppa:andreasbutti/xournalpp-master
 sudo apt update
 sudo apt install xournalpp
 ````
 
-# OpenSuse
+### OpenSuse
 https://build.opensuse.org/package/show/home:badshah400:Staging/xournalpp-gtk3
 Build by https://github.com/badshah400
 
