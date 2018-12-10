@@ -14,4 +14,4 @@
 class Document;
 void setEmergencyDocument(Document* doc);
 void installCrashHandlers();
-void void emergencySave();
+void emergencySave();
