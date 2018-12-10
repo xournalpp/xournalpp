@@ -50,8 +50,6 @@ bool BaseExportJob::showFilechooser()
 	initDialog();
 	addFilterToDialog();
 
-	path savePath;
-
 	Settings* settings = control->getSettings();
 	Document* doc = control->getDocument();
 	doc->lock();
@@ -61,8 +59,8 @@ bool BaseExportJob::showFilechooser()
 
 	prepareSavePath(name);
 
-	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), folder.c_str());
-	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), name.c_str());
+	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(folder));
+	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(name));
 	
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 

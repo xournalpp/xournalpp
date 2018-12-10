@@ -5,6 +5,7 @@
 
 #include <config.h>
 #include <i18n.h>
+#include <Util.h>
 
 #include <boost/filesystem.hpp>
 
@@ -500,7 +501,7 @@ bool Settings::load()
 		return false;
 	}
 
-	xmlDocPtr doc = xmlParseFile(filename.c_str());
+	xmlDocPtr doc = xmlParseFile(PATH_TO_CSTR(filename));
 
 	if (doc == NULL)
 	{
@@ -761,7 +762,7 @@ void Settings::save()
 		saveData(root, p.first, p.second);
 	}
 
-	xmlSaveFormatFileEnc(filename.c_str(), doc, "UTF-8", 1);
+	xmlSaveFormatFileEnc(PATH_TO_CSTR(filename), doc, "UTF-8", 1);
 	xmlFreeDoc(doc);
 }
 

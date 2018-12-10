@@ -14,6 +14,7 @@
 #include <config-dev.h>
 #include <config-paths.h>
 #include <i18n.h>
+#include <Stacktrace.h>
 
 #include <gtk/gtk.h>
 
@@ -27,6 +28,9 @@ namespace bf = boost::filesystem;
 #endif
 
 #ifdef __APPLE__
+#undef ENABLE_NLS
+#endif
+#ifdef WIN32
 #undef ENABLE_NLS
 #endif
 
@@ -383,20 +387,8 @@ string XournalMain::findResourcePath(string searchFile)
 
 	// -----------------------------------------------------------------------
 
-#if __linux__
-
-	char result[PATH_MAX];
-	ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
-	const char* executableDir = NULL;
-	if (count != -1)
-	{
-		executableDir = dirname(result);
-	}
-	else
-	{
-		// Not found
-		return "";
-	}
+	path executableDir = Stacktrace::getExePath();
+	executableDir = executableDir.parent_path();
 
 	// First check if the files are available relative to the executable
 	// So a "portable" installation will be possible
@@ -420,8 +412,6 @@ string XournalMain::findResourcePath(string searchFile)
 	{
 		return relative4.parent_path().normalize().string();
 	}
-
-#endif
 
 	// Not found
 	return "";

@@ -2,6 +2,7 @@
 
 #include <config.h>
 #include <i18n.h>
+#include <Util.h>
 
 #include <gtk/gtk.h>
 
@@ -91,7 +92,7 @@ void RecentManager::addRecentFileFilename(path filename)
 	recentData->groups = groups;
 	recentData->is_private = FALSE;
 
-	GFile* file = g_file_new_for_path(filename.c_str());
+	GFile* file = g_file_new_for_path(PATH_TO_CSTR(filename));
 	gchar* uri = g_file_get_uri(file);
 	gtk_recent_manager_add_full(recentManager, uri, recentData);
 
@@ -106,7 +107,7 @@ void RecentManager::removeRecentFileFilename(path filename)
 {
 	XOJ_CHECK_TYPE(RecentManager);
 
-	GFile* file = g_file_new_for_path(filename.c_str());
+	GFile* file = g_file_new_for_path(PATH_TO_CSTR(filename));
 
 	GtkRecentManager* recentManager = gtk_recent_manager_get_default();
 	gtk_recent_manager_remove_item(recentManager, g_file_get_uri(file), NULL);
@@ -136,7 +137,7 @@ void RecentManager::openRecent(path p)
 
 	for (RecentManagerListener* l : this->listener)
 	{
-		l->fileOpened(p.c_str());
+		l->fileOpened(PATH_TO_CSTR(p));
 	}
 }
 
