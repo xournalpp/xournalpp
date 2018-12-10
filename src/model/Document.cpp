@@ -141,13 +141,13 @@ path Document::getPdfFilename()
 	return pdfFilename;
 }
 
-path Document::getSaveFolder(path lastSavePath)
+path Document::createSaveFolder(path lastSavePath)
 {
 	if (!filename.empty())
 	{
-		return filename().parent_path();
+		return filename.parent_path();
 	}
-	else if (!pdfFilename().empty())
+	else if (!pdfFilename.empty())
 	{
 		return pdfFilename.parent_path();
 	}
@@ -164,7 +164,7 @@ path Document::createSaveFilename(DocumentType type, string defaultSaveName)
 		//This can be any extension
 		return filename.filename();
 	}
-	else if (!pdfFilename().empty())
+	else if (!pdfFilename.empty())
 	{
 		path extension;
 		if (type == Document::XOPP)
@@ -179,7 +179,7 @@ path Document::createSaveFilename(DocumentType type, string defaultSaveName)
 		{
 			extension = path("");
 		}
-		return pdfFilename().filename().replace_extension(extension);
+		return pdfFilename.filename().replace_extension(extension);
 	}
 	else
 	{
