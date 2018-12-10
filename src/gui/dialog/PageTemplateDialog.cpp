@@ -195,7 +195,7 @@ void PageTemplateDialog::saveToFile()
 
 	if (!settings->getLastSavePath().empty())
 	{
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
+		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(settings->getLastSavePath()));
 	}
 
 
