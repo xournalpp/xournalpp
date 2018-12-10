@@ -50,6 +50,7 @@ extern int currentToolType;
 #include <i18n.h>
 #include <serializing/ObjectInputStream.h>
 #include <Stacktrace.h>
+#include <Util.h>
 #include <XInputUtils.h>
 
 #include <boost/locale.hpp>
@@ -377,7 +378,7 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage)
 	this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
 	this->sidebar->selectPageNr(page, pdfPage);
 
-	this->metadata->storeMetadata(this->doc->getEvMetadataFilename().c_str(), page, getZoomControl()->getZoom());
+	this->metadata->storeMetadata(this->doc->getEvMetadataFilename().string(), page, getZoomControl()->getZoom());
 
 	int current = this->win->getXournal()->getCurrentPage();
 	int count = this->doc->getPageCount();
@@ -950,7 +951,7 @@ void Control::manageToolbars()
 	this->win->updateToolbarMenu();
 
 	path file = Util::getConfigFile(TOOLBAR_CONFIG);
-	this->win->getToolbarModel()->save(file.c_str());
+	this->win->getToolbarModel()->save(file.string());
 }
 
 void Control::customizeToolbars()
@@ -2120,7 +2121,7 @@ void Control::fileLoaded(int scrollToPage)
 
 	if (!file.empty())
 	{
-		MetadataEntry md = metadata->getForFile(file.c_str());
+		MetadataEntry md = metadata->getForFile(file.string());
 		if (!md.valid)
 		{
 			md.zoom = -1;
@@ -2212,7 +2213,7 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 		this->doc->lock();
 		path file = this->doc->getEvMetadataFilename();
 		this->doc->unlock();
-		MetadataEntry md = metadata->getForFile(file.c_str());
+		MetadataEntry md = metadata->getForFile(file.string());
 		loadMetadata(md);
 	}
 	else
@@ -2357,10 +2358,8 @@ bool Control::showSaveDialog()
 	path suggested_name = this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
 	this->doc->unlock();
 
-	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog),
-										suggested_folder.c_str());
-	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog),
-										suggested_name.c_str());
+	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(suggested_folder));
+	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(suggested_name));
 
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 

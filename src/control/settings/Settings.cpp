@@ -672,8 +672,8 @@ void Settings::save()
 	WRITE_BOOL_PROP(presureSensitivity);
 
 	WRITE_STRING_PROP(selectedToolbar);
-	WRITE_STRING_PROP(lastSavePath);
-	WRITE_STRING_PROP(lastImagePath);
+	WRITE_STRING_PROP(lastSavePath.string());
+	WRITE_STRING_PROP(lastImagePath.string());
 
 	WRITE_INT_PROP(displayDpi);
 	WRITE_INT_PROP(mainWndWidth);
