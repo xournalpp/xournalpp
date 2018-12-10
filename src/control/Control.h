@@ -134,6 +134,7 @@ public:
 
 	bool isFullscreen();
 	bool isRotationSnapping();
+	bool isGridSnapping();
 
 	bool searchTextOnPage(string text, int p, int* occures, double* top);
 
@@ -241,6 +242,7 @@ protected:
 	void zoomFit();
 
 	void rotationSnappingToggle();
+	void gridSnappingToggle();
 
 	bool showSaveDialog();
 
@@ -278,6 +280,7 @@ private:
 	ZoomControl* zoom;
 	bool fullscreen = false;
 	bool snapRotation = true;	//rotation snapping enabled by default
+	bool snapGrid = true; 		//grid snapping enabled by default
 
 	Settings* settings;
 	MainWindow* win;

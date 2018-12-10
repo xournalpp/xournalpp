@@ -323,6 +323,8 @@ void Control::initWindow(MainWindow* win)
 
 	//rotation snapping enabled by default
 	fireActionSelected(GROUP_SNAPPING,ACTION_ROTATION_SNAPPING);
+	//grid snapping enabled by default
+	fireActionSelected(GROUP_GRID_SNAPPING,ACTION_GRID_SNAPPING);
 }
 
 bool Control::autosaveCallback(Control* control)
@@ -820,6 +822,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	
 	case ACTION_ROTATION_SNAPPING:
 		rotationSnappingToggle();
+		break;
+
+	case ACTION_GRID_SNAPPING:
+		gridSnappingToggle();
 		break;
 
 		// Footer, not really an action, but need an identifier to
@@ -3040,6 +3046,12 @@ bool Control::isRotationSnapping()
 	return this->snapRotation;
 }
 
+bool Control::isGridSnapping()
+{
+	XOJ_CHECK_TYPE(Control);
+	return this->snapGrid;
+}
+
 void Control::rotationSnappingToggle()
 {
 	XOJ_CHECK_TYPE(Control);
@@ -3052,7 +3064,20 @@ void Control::rotationSnappingToggle()
 	{
 		this->snapRotation = false;
 	}
+}
 
+void Control::gridSnappingToggle()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	if (!this->snapGrid)
+	{
+		this->snapGrid = true;
+	}
+	else
+	{
+		this->snapGrid = false;
+	}
 }
 
 TextEditor* Control::getTextEditor()

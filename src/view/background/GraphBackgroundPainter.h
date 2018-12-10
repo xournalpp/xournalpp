@@ -30,6 +30,8 @@ public:
 	 */
 	virtual void resetConfig();
 
+	double getUnitSize();
+
 private:
 	XOJ_TYPE_ATTRIB;
 };
