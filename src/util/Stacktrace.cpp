@@ -41,8 +41,6 @@ std::string Stacktrace::getExePath()
 	return std::string(result, (count > 0) ? count : 0);
 }
 
-#endif
-
 void Stacktrace::printStracktrace(std::ostream& stream)
 {
 	void* trace[32];
@@ -70,6 +68,7 @@ void Stacktrace::printStracktrace(std::ostream& stream)
 		pclose(fProc);
 	}
 }
+#endif
 
 void Stacktrace::printStracktrace()
 {
