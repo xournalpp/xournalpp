@@ -121,7 +121,7 @@ void Scheduler::addJob(Job* job, JobPriority priority)
 	g_queue_push_tail(this->jobQueue[priority], job);
 	g_cond_broadcast(&this->jobQueueCond);
 
-	SDEBUG("add job: {1}") % (long) job;
+	SDEBUG("add job: {1}") % (uint64_t) job;
 
 	g_mutex_unlock(&this->jobQueueMutex);
 }
@@ -298,7 +298,7 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 			hasOnlyRenderJobs = false;
 		}
 
-		SDEBUG("get job: {1}") % (long) job;
+		SDEBUG("get job: {1}") % (uint64_t) job;
 
 		if (job == NULL)
 		{
@@ -320,7 +320,7 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 			continue;
 		}
 
-		SDEBUG("do job: {1}") % (long) job;
+		SDEBUG("do job: {1}") % (uint64_t) job;
 
 		g_mutex_unlock(&scheduler->jobQueueMutex);
 
