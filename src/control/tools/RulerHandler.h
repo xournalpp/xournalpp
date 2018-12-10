@@ -22,7 +22,7 @@ public:
 private:
 	virtual void drawShape(Point& currentPoint, bool shiftDown);
 	void snapToGrid(double& x, double& y);
-
+	void snapRotation(double& x, double& y);
 
 private:
 	XOJ_TYPE_ATTRIB;

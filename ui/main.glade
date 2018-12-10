@@ -307,6 +307,14 @@
                         <property name="label" translatable="yes">Rotation Snapping</property>
                       </object>
                     </child>
+					<child>
+                      <object class="GtkCheckMenuItem" id="menuSnapGrid">
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Grid Snapping</property>
+                      </object>
+                    </child>
                     <child>
                       <object class="GtkCheckMenuItem" id="menuViewSidebarVisible">
                         <property name="visible">True</property>
