@@ -583,7 +583,7 @@ void Stroke::debugPrint()
 {
 	XOJ_CHECK_TYPE(Stroke);
 
-	cout << bl::format("Stroke {1} / hasPressure() = {2}") % (long) this % this->hasPressure() << endl;
+	cout << bl::format("Stroke {1} / hasPressure() = {2}") % (uint64_t) this % this->hasPressure() << endl;
 
 	for (int i = 0; i < this->pointCount; i++)
 	{
