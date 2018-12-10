@@ -600,7 +600,7 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 		return CURSOR_SELECTION_BOTTOM_RIGHT;
 	}
 
-	if (x2 + BORDER_PADDING + 8 <= x && x <= x2 + BORDER_PADDING + 16 && (y2 + y1)/2 - 4 <= y && (y2 + y1)/2 + 4 >= y )
+	if (x2 + BORDER_PADDING + 4 <= x && x <= x2 + BORDER_PADDING + 16 && (y2 + y1)/2 - 4 <= y && (y2 + y1)/2 + 4 >= y )
 	{
 		return CURSOR_SELECTION_ROTATE;
 	}
@@ -679,17 +679,16 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 	{
 		snapRotation();
 
-		double rx = (x + width / 2) * zoom;
-		double ry = (y + height / 2) * zoom;
+		double rx = ((x + width / 2) - 0.7) * zoom;
+		double ry = ((y + height / 2) - 0.7) * zoom;
 
 		cairo_translate(cr, rx, ry);
 		cairo_rotate(cr, this->rotation);
 
 		// Draw the rotation point for debugging
-		cairo_set_source_rgb(cr, 0, 1, 0);
-		cairo_rectangle(cr, 0, 0, 10, 10);
-		cairo_stroke(cr);
-
+		//cairo_set_source_rgb(cr, 0, 1, 0);
+		//cairo_rectangle(cr, 0, 0, 10, 10);
+		//cairo_stroke(cr);
 
 		cairo_translate(cr, -rx, -ry);
 	}
@@ -725,7 +724,7 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 		// right
 		drawAnchorRect(cr, x + width, y + height / 2, zoom);
 		// rotation handle
-		drawAnchorRotation(cr, x + width +12/zoom, y + height / 2, zoom);
+		drawAnchorRotation(cr, x + width + 12/zoom, y + height / 2, zoom);
 	}
 
 	// top left

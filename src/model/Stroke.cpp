@@ -335,7 +335,7 @@ void Stroke::rotate(double x0, double y0, double xo, double yo, double th)
 
 		p.x -= x0;	//move to origin
 		p.y -= y0;
-		double offset = 0; // __DBL_EPSILON__;
+		double offset = 0.7; // __DBL_EPSILON__;
 		p.x -= xo-offset;	//center to origin
 		p.y -= yo-offset;
 
