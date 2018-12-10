@@ -64,7 +64,7 @@ void RulerHandler::snapToGrid(double& x, double& y)
 		tmpY = y + (gridSize - yRem);
 		snapY = true;
 	}
-	
+
 	if (snapX && snapY)
 	{
 		x = tmpX;
