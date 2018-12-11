@@ -4,8 +4,6 @@
 
 #include <i18n.h>
 
-#include <boost/algorithm/string/predicate.hpp>
-
 BaseExportJob::BaseExportJob(Control* control, string name)
  : BlockingJob(control, name),
    dialog(NULL)

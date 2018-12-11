@@ -82,16 +82,6 @@ public:
 		return sformat(&f, objects...)->str();
 	}
 	
-private:
-	static void addToString(string& str) { };
-
-	template<typename T, typename... Args>
-	static void addToString(string& str, const T& a_value, Args... a_args)
-	{
-		str += a_value;
-		addToString(str, a_args...);
-	}
-	
 public:
 	static void replace_all_chars(string& input, const std::vector<replace_pair> replaces);
 };

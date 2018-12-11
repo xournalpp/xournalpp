@@ -53,9 +53,7 @@ extern int currentToolType;
 #include <Util.h>
 #include <XInputUtils.h>
 
-#include <boost/locale.hpp>
 #include <boost/filesystem.hpp>
-#include <boost/algorithm/string.hpp>
 namespace bf = boost::filesystem;
 
 #include <gtk/gtk.h>
