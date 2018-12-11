@@ -60,77 +60,19 @@ https://build.opensuse.org/package/show/home:badshah400:Staging/xournalpp-gtk3
 
 Build by https://github.com/badshah400
 
+### Windows
+No builds yet, comming soon. Probably not yet fully working.
+Build manual below.
+
+### Mac OS X
+Work in Progress, it's possible to build, but no release yet.
+
+
 ## Building
 
-Aside from legacy releases, this is currently the way to install Xournal++. For complete building documentation refer to wiki page:
-[Installation](https://github.com/xournalpp/xournalpp/wiki/Installing).
-
-There will be some binaries appearing in the future, so ideally you can make use of those as well.
-They'll be at [Xournal++ releases](https://github.com/xournalpp/xournalpp/releases).
-
-Current releases are out of Date, we are searching for Maintainer for PPA etc.
-[Issue for Contact](https://github.com/xournalpp/xournalpp/issues/176)
-
-
-### Install dependencies
-For Fedora/CentOS/RHEL:
-````bash
-dnf groups install "C Development Tools and Libraries"
-dnf install cmake texlive-scheme-basic texlive-dvipng poppler-glib-devel
-# AND SOME MORE please create Pull / write ticket if you have the exact dependencies
-````
-
-For Ubuntu/Debian:
-````bash
-sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev \
-libboost-filesystem-dev libboost-locale-dev libboost-iostreams-dev \
-libcppunit-dev dvipng texlive 
-````
-
-Basic steps are:
-````bash
-git clone http://github.com/xournalpp/xournalpp.git
-cd xournalpp
-mkdir build
-cd build
-cmake ..
-make
-````
-
-Use `cmake-gui ..` to see graphically all available options.
-
-With `-DADVANCED_PDF_EXPORT_POPPLER=ON` the internal Poppler API is used, and
-PDFs are exported with Bookmarks, but this is only working with some Poppler
-Versions.
-If not working, add `-DBUILD_POPPLER=ON` to build Poppler manually.
-
-With Cairo 1.16 PDF Bookmarks will be possible, but this Version is not yet
-common available, therefore the Cairo PDF Export is without PDF Bookmarks.
-
-The binary executable will be in `build/src/` subdirectory.
-
-To install all needed files execute:
-```bash
-make install
-```
+[Linux Build](readme/LinuxBuild.md)
 
 [Windows Build](readme/WindowsBuild.md)
-
-## Code documentation
-
-The code documentation is generated using Doxygen.
-
-In order to generate the documentation yourself, first install Doxygen and graphviz, i.e.
-
-```bash
-sudo apt install doxygen
-sudo apt install graphviz
-```
-
-on Debian or Ubuntu. Finally, type in `doxygen` in the root directory of the repository.
-The documentation can be found in `doc/html` and `doc/latex`. Conveniently display the
-documentation with `python3 -m http.server 8000` and visit the shown URL to view the
-documentation.
 
 ## Fileformat
 The fileformat *.xopp is an XML which is .gz compressed. PDFs are not embedded
@@ -156,3 +98,20 @@ merged, even if they are not 100% finished.
 
 See [GitHub:xournalpp](http://github.com/xournalpp/xournalpp) for current development. You can also join
 our Gitter channel via badge on top.
+
+## Code documentation
+
+The code documentation is generated using Doxygen.
+
+In order to generate the documentation yourself, first install Doxygen and graphviz, i.e.
+
+```bash
+sudo apt install doxygen
+sudo apt install graphviz
+```
+
+on Debian or Ubuntu. Finally, type in `doxygen` in the root directory of the repository.
+The documentation can be found in `doc/html` and `doc/latex`. Conveniently display the
+documentation with `python3 -m http.server 8000` and visit the shown URL to view the
+documentation.
+
