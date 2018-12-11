@@ -48,6 +48,10 @@ else ()
     set(LIB_ENDING "so")
 endif ()
 
+if (WIN32)
+    set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-mwindows")
+endif ()
+
 ## Libraries ##
 
 option (ADVANCED_PDF_EXPORT_POPPLER "Export PDF with private Poppler API" OFF)
