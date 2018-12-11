@@ -33,7 +33,8 @@ LatexController::LatexController(Control* control)
 	  selectedTexImage(NULL),
 	  selectedText(NULL),
 	  dlg(NULL),
-	  temporaryRender(NULL)
+	  temporaryRender(NULL),
+	  rescaleId(0)
 {
 	XOJ_INIT_TYPE(LatexController);
 }
@@ -212,13 +213,22 @@ void LatexController::showTexEditDialog()
 /**
  * Text-changed handler: when the Buffer in the dialog changes,
  * this handler updates currentTex, removes the previous existing render and creates
- * a new one. We need to do it through 'thisContr' because signal handlers
+ * a new one. We need to do it through 'self' because signal handlers
  * cannot directly access non-static methods and non-static fields such as
- * 'dlg' so we need to wrap all the dlg method inside small methods in 'thisContr'
+ * 'dlg' so we need to wrap all the dlg method inside small methods in 'self'
  */
 void LatexController::handleTexChanged(GtkTextBuffer* buffer, LatexController* self)
 {
 	XOJ_CHECK_TYPE_OBJ(self, LatexController);
+
+	// if(self->getRescaleId() != 0)
+	// {
+	// 	g_source_remove(self->getRescaleId());
+	// }
+	// //=================================================================================
+	// //NOT WORKING
+	// self->setRescaleId(g_timeout_add_seconds(1, (GSourceFunc) handleTexChanged, self));
+	// //=================================================================================
 	
 	//Right now, this is the only way I know to extract text from TextBuffer
 	self->setCurrentTex(gtk_text_buffer_get_text(buffer, self->getStartIterator(buffer), self->getEndIterator(buffer), TRUE));
@@ -269,6 +279,19 @@ GtkTextIter* LatexController::getEndIterator(GtkTextBuffer* buffer)
 	XOJ_CHECK_TYPE(LatexController);
 	gtk_text_buffer_get_end_iter(buffer, &this->end);
 	return &this->end;
+}
+
+void LatexController::setRescaleId(int rescaleId)
+{
+	XOJ_CHECK_TYPE(LatexController);
+	this->rescaleId = rescaleId;
+
+}
+
+int LatexController::getRescaleId()
+{
+	XOJ_CHECK_TYPE(LatexController);
+	return this->rescaleId;
 }
 
 void LatexController::deleteOldImage()
