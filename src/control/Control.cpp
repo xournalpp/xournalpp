@@ -50,6 +50,7 @@ extern int currentToolType;
 #include <i18n.h>
 #include <serializing/ObjectInputStream.h>
 #include <Stacktrace.h>
+#include <Util.h>
 #include <XInputUtils.h>
 
 #include <boost/locale.hpp>
@@ -323,6 +324,8 @@ void Control::initWindow(MainWindow* win)
 
 	//rotation snapping enabled by default
 	fireActionSelected(GROUP_SNAPPING,ACTION_ROTATION_SNAPPING);
+	//grid snapping enabled by default
+	fireActionSelected(GROUP_GRID_SNAPPING,ACTION_GRID_SNAPPING);
 }
 
 bool Control::autosaveCallback(Control* control)
@@ -375,7 +378,7 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage)
 	this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
 	this->sidebar->selectPageNr(page, pdfPage);
 
-	this->metadata->storeMetadata(this->doc->getEvMetadataFilename().c_str(), page, getZoomControl()->getZoom());
+	this->metadata->storeMetadata(this->doc->getEvMetadataFilename().string(), page, getZoomControl()->getZoom());
 
 	int current = this->win->getXournal()->getCurrentPage();
 	int count = this->doc->getPageCount();
@@ -822,6 +825,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		rotationSnappingToggle();
 		break;
 
+	case ACTION_GRID_SNAPPING:
+		gridSnappingToggle();
+		break;
+
 		// Footer, not really an action, but need an identifier to
 	case ACTION_FOOTER_PAGESPIN:
 	case ACTION_FOOTER_ZOOM_SLIDER:
@@ -944,7 +951,7 @@ void Control::manageToolbars()
 	this->win->updateToolbarMenu();
 
 	path file = Util::getConfigFile(TOOLBAR_CONFIG);
-	this->win->getToolbarModel()->save(file.c_str());
+	this->win->getToolbarModel()->save(file.string());
 }
 
 void Control::customizeToolbars()
@@ -2114,7 +2121,7 @@ void Control::fileLoaded(int scrollToPage)
 
 	if (!file.empty())
 	{
-		MetadataEntry md = metadata->getForFile(file.c_str());
+		MetadataEntry md = metadata->getForFile(file.string());
 		if (!md.valid)
 		{
 			md.zoom = -1;
@@ -2206,7 +2213,7 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 		this->doc->lock();
 		path file = this->doc->getEvMetadataFilename();
 		this->doc->unlock();
-		MetadataEntry md = metadata->getForFile(file.c_str());
+		MetadataEntry md = metadata->getForFile(file.string());
 		loadMetadata(md);
 	}
 	else
@@ -2346,41 +2353,13 @@ bool Control::showSaveDialog()
 	gtk_file_filter_add_pattern(filterXoj, "*.xopp");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
-	path lastSavePath = settings->getLastSavePath();
-
 	this->doc->lock();
-
-	if (!doc->getFilename().empty())
-	{
-		string saveFilename = doc->getFilename().filename().string();
-		string folder = doc->getFilename().parent_path().string();
-
-		gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), folder.c_str());
-		gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
-	}
-	else if (!doc->getPdfFilename().empty())
-	{
-		string folder = doc->getPdfFilename().parent_path().string();
-		string saveFilename = doc->getPdfFilename().filename().replace_extension(".pdf.xopp").string();
-
-		gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), folder.c_str());
-		gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
-	}
-	else
-	{
-		time_t curtime = time(NULL);
-		char stime[128];
-		strftime(stime, sizeof(stime), settings->getDefaultSaveName().c_str(), localtime(&curtime));
-
-		// Try to set the folder, the GTK Filechooser is not working that good...
-		gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
-
-		// According to the GTK3 Documentation this is the right way for saving a new file
-		// on GTK2 Xournal++ Controls everything, but don't seem to work with GTK3
-		// so hopefully this will work
-		gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), stime);
-	}
+	path suggested_folder = this->doc->createSaveFolder(this->settings->getLastSavePath());
+	path suggested_name = this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
 	this->doc->unlock();
+
+	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(suggested_folder));
+	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(suggested_name));
 
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
@@ -3040,6 +3019,12 @@ bool Control::isRotationSnapping()
 	return this->snapRotation;
 }
 
+bool Control::isGridSnapping()
+{
+	XOJ_CHECK_TYPE(Control);
+	return this->snapGrid;
+}
+
 void Control::rotationSnappingToggle()
 {
 	XOJ_CHECK_TYPE(Control);
@@ -3052,7 +3037,20 @@ void Control::rotationSnappingToggle()
 	{
 		this->snapRotation = false;
 	}
+}
 
+void Control::gridSnappingToggle()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	if (!this->snapGrid)
+	{
+		this->snapGrid = true;
+	}
+	else
+	{
+		this->snapGrid = false;
+	}
 }
 
 TextEditor* Control::getTextEditor()

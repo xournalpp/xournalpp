@@ -3,6 +3,8 @@
 #include "view/DocumentView.h"
 
 #include <i18n.h>
+#include <Util.h>
+
 #include <cairo/cairo-pdf.h>
 
 XojCairoPdfExport::XojCairoPdfExport(Document* doc, ProgressListener* progressListener)
@@ -30,7 +32,7 @@ bool XojCairoPdfExport::startPdf(path file)
 {
 	XOJ_CHECK_TYPE(XojCairoPdfExport);
 
-	this->surface = cairo_pdf_surface_create(file.c_str(), 0, 0);
+	this->surface = cairo_pdf_surface_create(PATH_TO_CSTR(file), 0, 0);
 	this->cr = cairo_create(surface);
 
 	// Require Cairo 1.16

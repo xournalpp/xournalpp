@@ -113,12 +113,18 @@ bool LatexController::runCommand()
 	}
 	string command = FS(bl::format("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}") % binTex % fontcolour % texres % g_strescape(currentTex.c_str(), NULL) % texImage);
 
+#ifdef WIN32
+	g_error("LaTex is currently not Supported for Windows!");
+	return false;
+#else
+
 	gint rt = 0;
 	void (*texhandler)(int) = signal(SIGCHLD, SIG_DFL);
 	gboolean success = g_spawn_command_line_sync(command.c_str(), NULL, NULL, &rt, NULL);
 	signal(SIGCHLD, texhandler);
 
 	return success;
+#endif
 }
 
 /**

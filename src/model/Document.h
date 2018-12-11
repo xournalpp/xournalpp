@@ -36,6 +36,13 @@ public:
 	virtual ~Document();
 
 public:
+	enum DocumentType
+	{
+		XOPP,
+		XOJ,
+		PDF
+	};
+
 	bool readPdf(path filename, bool initPages, bool attachToDocument);
 
 	size_t getPageCount();
@@ -62,6 +69,8 @@ public:
 	void setFilename(path filename);
 	path getFilename();
 	path getPdfFilename();
+	path createSaveFolder(path);
+	path createSaveFilename(DocumentType, string);
 
 	path getEvMetadataFilename();
 

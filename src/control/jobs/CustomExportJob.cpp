@@ -145,10 +145,10 @@ string CustomExportJob::getFilenameWithNumber(int no)
 	if (no == -1)
 	{
 		// No number to add
-		return filename.c_str();
+		return filename.string();
 	}
 
-	string filepath = filename.c_str();
+	string filepath = filename.string();
 	size_t dotPos = filepath.find_last_of(".");
 	if (dotPos == string::npos)
 	{

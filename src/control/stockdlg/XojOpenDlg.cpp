@@ -3,6 +3,7 @@
 #include <config.h>
 #include <i18n.h>
 #include <XojPreviewExtractor.h>
+#include <Util.h>
 
 #include <gio/gio.h>
 #include <boost/algorithm/string.hpp>
@@ -22,7 +23,7 @@ XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings)
 
 	if (!settings->getLastSavePath().empty())
 	{
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
+		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(settings->getLastSavePath()));
 	}
 	else
 	{

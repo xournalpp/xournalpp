@@ -50,35 +50,18 @@ bool BaseExportJob::showFilechooser()
 	initDialog();
 	addFilterToDialog();
 
-	path savePath;
-
 	Settings* settings = control->getSettings();
 	Document* doc = control->getDocument();
 	doc->lock();
-	if (!doc->getFilename().empty())
-	{
-		savePath = doc->getFilename();
-	}
-	else if (!doc->getPdfFilename().empty())
-	{
-		savePath = doc->getPdfFilename().filename().replace_extension("");
-	}
-	else
-	{
-		time_t curtime = time(NULL);
-		char stime[128];
-		strftime(stime, sizeof(stime), settings->getDefaultSaveName().c_str(), localtime(&curtime));
-		savePath /= stime;
-	}
+	path folder = doc->createSaveFolder(settings->getLastSavePath());
+	path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName());
 	doc->unlock();
 
-	prepareSavePath(savePath);
+	prepareSavePath(name);
 
-	GFile* folder = g_file_new_for_path(savePath.parent_path().c_str());
-	gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), g_file_get_uri(folder));
-	g_object_unref(folder);
-
-	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), savePath.filename().c_str());
+	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(folder));
+	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(name));
+	
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
 	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));

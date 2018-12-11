@@ -1,6 +1,11 @@
 #include "Stacktrace.h"
 
+#ifdef WIN32
+#include <Windows.h>
+#else
 #include <execinfo.h>
+#endif
+
 #include <iostream>
 using std::endl;
 
@@ -13,6 +18,21 @@ using std::endl;
 Stacktrace::Stacktrace() { }
 
 Stacktrace::~Stacktrace() { }
+
+#ifdef WIN32
+std::string Stacktrace::getExePath()
+{
+	char szFileName[MAX_PATH + 1];
+	GetModuleFileNameA(NULL, szFileName, MAX_PATH + 1);
+
+	return szFileName;
+}
+void Stacktrace::printStracktrace(std::ostream& stream)
+{
+	// Stracktrace is currently not implemented for Windows
+	// Currently this is only needed for developing, so this is no issue
+}
+#else
 
 std::string Stacktrace::getExePath()
 {
@@ -48,6 +68,7 @@ void Stacktrace::printStracktrace(std::ostream& stream)
 		pclose(fProc);
 	}
 }
+#endif
 
 void Stacktrace::printStracktrace()
 {

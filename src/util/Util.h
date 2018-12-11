@@ -23,6 +23,15 @@ using std::string;
 
 #include <functional>
 
+
+// Path on Windows is UTF-16, but GTK is UTF-8
+#ifdef WIN32
+#define PATH_TO_CSTR(p) p.string().c_str()
+#else
+#define PATH_TO_CSTR(p) p.c_str()
+#endif
+
+
 class Util
 {
 private:
