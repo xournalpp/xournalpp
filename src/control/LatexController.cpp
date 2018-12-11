@@ -33,8 +33,7 @@ LatexController::LatexController(Control* control)
 	  selectedTexImage(NULL),
 	  selectedText(NULL),
 	  dlg(NULL),
-	  temporaryRender(NULL),
-	  rescaleId(0)
+	  temporaryRender(NULL)
 {
 	XOJ_INIT_TYPE(LatexController);
 }
@@ -83,6 +82,11 @@ bool LatexController::runCommand()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
+#ifdef WIN32
+	g_error("LaTex is currently not Supported for Windows!");
+	return false;
+#else
+
 	// can change font colour later with more features
 	string fontcolour = "black";
 	// dpi 300 is a good balance
@@ -112,11 +116,6 @@ bool LatexController::runCommand()
 		texres = "1000";
 	}
 	string command = FS(bl::format("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}") % binTex % fontcolour % texres % g_strescape(currentTex.c_str(), NULL) % texImage);
-
-#ifdef WIN32
-	g_error("LaTex is currently not Supported for Windows!");
-	return false;
-#else
 
 	gint rt = 0;
 	void (*texhandler)(int) = signal(SIGCHLD, SIG_DFL);
@@ -226,15 +225,6 @@ void LatexController::showTexEditDialog()
 void LatexController::handleTexChanged(GtkTextBuffer* buffer, LatexController* self)
 {
 	XOJ_CHECK_TYPE_OBJ(self, LatexController);
-
-	// if(self->getRescaleId() != 0)
-	// {
-	// 	g_source_remove(self->getRescaleId());
-	// }
-	// //=================================================================================
-	// //NOT WORKING
-	// self->setRescaleId(g_timeout_add_seconds(1, (GSourceFunc) handleTexChanged, self));
-	// //=================================================================================
 	
 	//Right now, this is the only way I know to extract text from TextBuffer
 	self->setCurrentTex(gtk_text_buffer_get_text(buffer, self->getStartIterator(buffer), self->getEndIterator(buffer), TRUE));
@@ -285,19 +275,6 @@ GtkTextIter* LatexController::getEndIterator(GtkTextBuffer* buffer)
 	XOJ_CHECK_TYPE(LatexController);
 	gtk_text_buffer_get_end_iter(buffer, &this->end);
 	return &this->end;
-}
-
-void LatexController::setRescaleId(int rescaleId)
-{
-	XOJ_CHECK_TYPE(LatexController);
-	this->rescaleId = rescaleId;
-
-}
-
-int LatexController::getRescaleId()
-{
-	XOJ_CHECK_TYPE(LatexController);
-	return this->rescaleId;
 }
 
 void LatexController::deleteOldImage()

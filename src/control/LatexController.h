@@ -78,8 +78,6 @@ private:
 	void setCurrentTex(string currentTex);
 	GtkTextIter* getStartIterator(GtkTextBuffer* buffer);
 	GtkTextIter* getEndIterator(GtkTextBuffer* buffer);
-	void setRescaleId(int rescaleId);
-	int getRescaleId();
 	/*******/
 
 	/**
@@ -181,7 +179,6 @@ private:
 	 */
 	TexImage* temporaryRender;
 
-	int rescaleId;
 
 	/**
 	 * TextBuffer iterators
