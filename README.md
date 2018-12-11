@@ -113,6 +113,9 @@ To install all needed files execute:
 ```bash
 make install
 ```
+
+[Windows Build](readme/WindowsBuild.md)
+
 ## Code documentation
 
 The code documentation is generated using Doxygen.
