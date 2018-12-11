@@ -67,7 +67,7 @@ private:
 	/**
 	 * Signal handler, updates the rendered image when the text in the editor changes
 	 */
-	static void handleTexChanged(GtkWidget* widget, LatexController* self);
+	static void handleTexChanged(GtkTextBuffer* buffer, LatexController* self);
 
 	/*******/
 	//Wrappers for signal handler who can't access non-static fields 
@@ -76,6 +76,8 @@ private:
 	void setImageInDialog(cairo_surface_t* image);
 	void deletePreviousRender();
 	void setCurrentTex(string currentTex);
+	GtkTextIter* getStartIterator(GtkTextBuffer* buffer);
+	GtkTextIter* getEndIterator(GtkTextBuffer* buffer);
 	/*******/
 
 	/**
@@ -176,4 +178,13 @@ private:
 	 * to be able to delete it when a new render is created
 	 */
 	TexImage* temporaryRender;
+
+
+	/**
+	 * TextBuffer iterators
+	 * I don't understand why, but declaring these as pointers
+	 * makes the TextView widget crash
+	 */
+	GtkTextIter start;
+	GtkTextIter end;
 };
