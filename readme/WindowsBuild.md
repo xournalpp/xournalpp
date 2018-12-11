@@ -3,8 +3,13 @@
 **Windows Build is working now, but Xournal++ is not yet fully supported
 on Windows.**
 
+See also [Linux Build](LinuxBuild.md)
+
 Pull requests with fixes to the Code **and to this manual** are welcome!
 This manual is not yet completed.
+
+
+![Screenshot](main-win.png?raw=true "Xournal++ Screenshot on Win10")
 
 ## Preparation
 Install MSYS2
@@ -18,32 +23,41 @@ close Terminal after each update)
  $ pacman -S git
 
 ## Install Build tools
- $ pacman -S mingw-w64-x86_64-cmake
- $ pacman -S make
- $ pacman -S mingw-w64-x86_64-toolchain
- $ pacman -S --needed base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
+```bash
+pacman -S mingw-w64-x86_64-cmake \
+pacman -S make \
+pacman -S mingw-w64-x86_64-toolchain \
+pacman -S --needed base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
+```
 (this is a duplicate of the lines above, probably only this line is needed.
 Can anybody confirm this?)
 -> press enter multiple times / confirm all default values
 
- $ pacman -S mingw-w64-x86_64-gcc
+```bash
+pacman -S mingw-w64-x86_64-gcc
+```
 
 ## Install dependencies
 
- $ pacman -S mingw-w64-x86_64-boost
- $ pacman -S mingw-w64-x86_64-poppler
- $ pacman -S mingw-w64-x86_64-gtk3
-
+```bash
+pacman -S mingw-w64-x86_64-boost \
+pacman -S mingw-w64-x86_64-poppler \
+pacman -S mingw-w64-x86_64-gtk3
+```
 
 ## Get sources and build
 
-$ git clone https://github.com/xournalpp/xournalpp.git
-$ cd xournalpp/
-$ mkdir build
-$ cd build/
+```bash
+git clone https://github.com/xournalpp/xournalpp.git
+cd xournalpp/
+mkdir build
+cd build/
+```
 
- cmake .. -G 'MSYS Makefiles' -DENABLE_MATHTEX=OFF -DCMAKE_BUILD_TYPE=Release
- make
+```bash
+cmake .. -G 'MSYS Makefiles' -DENABLE_MATHTEX=OFF
+make
+```
 
 ## Packaging and Setup
 There is no Script yet. This two StackOverflow entries describe how it works.
