@@ -8,7 +8,6 @@
 
 #include <config-debug.h>
 
-#include <boost/format.hpp>
 #include <math.h>
 #include <string.h>
 
