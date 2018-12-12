@@ -1,5 +1,7 @@
 #include "ZoomControl.h"
 
+#include <cmath>
+
 ZoomListener::~ZoomListener() { }
 
 ZoomControl::ZoomControl()
