@@ -147,7 +147,7 @@ if (ADVANCED_PDF_EXPORT_POPPLER AND LSB_RELEASE_ID_SHORT STREQUAL "Ubuntu" AND L
   message ("Automatically set BUILD_POPPLER ON on Ubuntu 16.04")
 endif()
 ## Mac OS X too
-if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+if (ADVANCED_PDF_EXPORT_POPPLER AND CMAKE_SYSTEM_NAME STREQUAL "Darwin")
   set(BUILD_POPPLER ON)
   message ("Automatically set BUILD_POPPLER ON on Mac OS")
 endif ()
