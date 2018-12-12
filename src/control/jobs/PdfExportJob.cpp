@@ -4,6 +4,7 @@
 #include "pdf/base/XojPdfExportFactory.h"
 
 #include <i18n.h>
+#include <iostream>
 
 
 PdfExportJob::PdfExportJob(Control* control)
@@ -22,6 +23,7 @@ void PdfExportJob::addFilterToDialog()
 	XOJ_CHECK_TYPE(PdfExportJob);
 
 	addFileFilterToDialog(_C("PDF files"), "*.pdf");
+	addFileFilterToDialog(_C("PDF Without paper style"), "*.pdf");
 }
 
 void PdfExportJob::prepareSavePath(path& path)
@@ -58,7 +60,39 @@ bool PdfExportJob::isUriValid(string& uri)
 		return false;
 	}
 
+
+	std::cout<<"PdfExportJob::isUriValid\n";
+	string filterName = BaseExportJob::getFilterName();
+	std::cout<<"FilterName: "<<filterName<<"\n";
+
 	return true;
+}
+
+void PdfExportJob::resetBackgroundType(Document* doc, PageType* pt, ResetActionType action)
+{
+	XOJ_CHECK_TYPE(PdfExportJob);
+
+	size_t count = doc->getPageCount();
+
+	if (action == ACTION_RESET)
+	{
+		/** apply "plain" paper style to all pages before export */
+		for (int i=0; i<count ; i++)
+		{
+			pt[i] = doc->getPage(i)->getBackgroundType();
+			doc->getPage(i)->setBackgroundType(PageType("plain"));	
+		}
+	}
+
+	if (action == ACTION_RESTORE)
+	{
+		/** restore each page to its original style */
+		for (int i=0; i<count ; i++)
+		{
+			doc->getPage(i)->setBackgroundType(pt[i]);	
+		}
+	}
+	
 }
 
 void PdfExportJob::run()
@@ -66,6 +100,12 @@ void PdfExportJob::run()
 	XOJ_CHECK_TYPE(PdfExportJob);
 
 	Document* doc = control->getDocument();
+
+	size_t count = doc->getPageCount();
+	PageType pt[count];
+
+	resetBackgroundType(doc, pt, ACTION_RESET);
+
 	doc->lock();
 	XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
 	doc->unlock();
@@ -83,5 +123,7 @@ void PdfExportJob::run()
 	}
 
 	delete pdfe;
+
+	resetBackgroundType(doc, pt, ACTION_RESTORE);
 }
 
