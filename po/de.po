@@ -76,9 +76,9 @@ msgid ""
 "%Z\tTimezone name or abbreviation (e.g. CDT\n"
 "%%\tA % sign"
 msgstr ""
-"%a\tAbgekürtzer Wochentag \t(z.B. Mit)\n"
+"%a\tAbgekürzter Wochentag \t(z.B. Mit)\n"
 "%A\tWochentag (z.B. Mittwoch)\n"
-"%b\tAbgekürtzer Monat (z.B. Aug)\n"
+"%b\tAbgekürzter Monat (z.B. Aug)\n"
 "%B\tMonatsname (z.B. August)\n"
 "%c\tDatum und Zeit (z.B. Mit 16 Feb 2011 21:05:24 CET)\n"
 "%d\tTag des Monats (01-31)\n"
@@ -91,10 +91,10 @@ msgstr ""
 "%S\tSekunde (00-61)\n"
 "%U\tWochennummer mit Sonntag als den ersten Tag der Woche (00-53)\n"
 "%w\tWochentag als Nummer mit Sonntag als 0 (0-6)\n"
-"%W\ttWochennummer mit Montag als den ersten Tag der Woche (00-53)\n"
+"%W\tWochennummer mit Montag als den ersten Tag der Woche (00-53)\n"
 "%x\tDatum (z.B. 16.02.2011)\n"
 "%X\tZeit (e.g. 14:55:02\n"
-"%y\tJahr, Zweistellig (00-99)\n"
+"%y\tJahr, zweistellig (00-99)\n"
 "%Y\tJahr\t(z.B. 2011)\n"
 "%Z\tZeitzone (z.B. CET)\n"
 "%%\tein % Zeichen"
@@ -201,7 +201,7 @@ msgstr "<b>Radierer</b>"
 
 #: ../ui/settings.glade:169
 msgid "<b>Event compression</b>"
-msgstr "<b>Ereigniss Kompression</b>"
+msgstr "<b>Ereignis Kompression</b>"
 
 #: ../ui/settings.glade:87
 msgid "<b>Extended Input</b>"
@@ -273,7 +273,7 @@ msgid ""
 "<i>Disable the event compression if strokes appear segmented\n"
 "when drawn too fast</i>"
 msgstr ""
-"<i>Deaktivere Ereignis Kompression wenn linien zerstückelt\n"
+"<i>Deaktivere Ereignis Kompression wenn Linien zerstückelt\n"
 "werden beim schnell zeichnen</i>"
 
 #: ../ui/exportSettings.glade:200
@@ -528,11 +528,11 @@ msgstr "Aktuellen Hintergrund kopieren"
 
 #: ../ui/pageTemplate.glade:175
 msgid "Copy last page settings"
-msgstr "Einstellen der letzten Seite kopieren"
+msgstr "Einstellungen der letzten Seite kopieren"
 
 #: ../ui/pageTemplate.glade:283
 msgid "Copy last page size"
-msgstr "Grösser der letzten Seite kopieren"
+msgstr "Größe der letzten Seite kopieren"
 
 #: ../src/undo/CopyUndoAction.cpp:80
 msgid "Copy page"
@@ -550,7 +550,7 @@ msgid ""
 "Could not find Xournal++ LaTeX executable relative or in Path.\n"
 "Searched for: mathtex-xournalpp.cgi"
 msgstr ""
-"Konnte Xournal++ LaTeX programm nicht finden, relativ oder im Pfad.\n"
+"Konnte Xournal++ LaTeX Programm nicht finden, relativ oder im Pfad.\n"
 "Suche nach: mathtex-xournalpp.cgi"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:18
@@ -586,7 +586,7 @@ msgid ""
 "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr ""
-"Rückgängig ist fehlgeschlagen '{1}'\n"
+"Konnte '{1}' nicht wiederherstellen\n"
 "Etwas ist schief gelaufen... Bitte erstellen Sie einen Fehlerbericht."
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:214
@@ -597,7 +597,7 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:209
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr ""
-"Konnte Werkzeug von {1} von der Werkzeugleiste {2} Position {3} nicht "
+"Konnte Werkzeug {1} von der Werkzeugleiste {2} Position {3} nicht "
 "entfernen"
 
 #: ../src/control/LatexController.cpp:290
@@ -609,8 +609,8 @@ msgid ""
 "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr ""
-"Wiederherstellen ist fehlgeschlagen '{1}'\n"
-"Etwas ist schief gelaufen... Bitte Erstellen Sie einen Fehlerbericht."
+"Konnte '{1}' nicht rückgängig machen\n"
+"Etwas ist schief gelaufen... Bitte erstellen Sie einen Fehlerbericht."
 
 #: ../src/control/xojfile/SaveHandler.cpp:271
 msgid "Could not write background \"{1}\", {2}"
@@ -796,7 +796,7 @@ msgstr "Radierer Optionen"
 
 #: ../ui/settingsButtonConfig.glade:168
 msgid "Eraser type"
-msgstr "Radierer type"
+msgstr "Radierer Typ"
 
 #: ../src/control/Control.cpp:2218
 msgid ""
@@ -917,7 +917,7 @@ msgstr "Gehe zur letzten Seite"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:348
 msgid "Go to next layer"
-msgstr "Zur nächsten ebene Springen"
+msgstr "Zur nächsten Ebene springen"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:338
 msgid "Go to page"
@@ -925,7 +925,7 @@ msgstr "Gehe zur Seite"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:346
 msgid "Go to previous layer"
-msgstr "Zur vorherigen Ebene springe"
+msgstr "Zur vorherigen Ebene springen"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:350
 msgid "Go to top layer"
@@ -1010,7 +1010,7 @@ msgstr "LaTeX einfügen"
 
 #: ../ui/main.glade:1201
 msgid "Insert a copy of the current page below"
-msgstr "Eine kopie der aktuellen Seite unten einfügen"
+msgstr "Eine Kopie der aktuellen Seite unten einfügen"
 
 #: ../src/undo/InsertUndoAction.cpp:115
 msgid "Insert elements"
@@ -1345,11 +1345,11 @@ msgstr "Bereich"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Rec / Stop"
-msgstr "Aufname / Stop"
+msgstr "Aufnahme / Stopp"
 
 #: ../ui/main.glade:299
 msgid "Rec-Stop"
-msgstr "Aufnameh stoppen"
+msgstr "Aufnahme stoppen"
 
 #: ../ui/main.glade:61
 msgid "Recent _Documents"
@@ -1433,7 +1433,7 @@ msgstr "Hintergrundfarbe wählen"
 
 #: ../ui/settings.glade:1685
 msgid "Select Folder"
-msgstr "Gewähler Ordner"
+msgstr "Ordner auswählen"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Select Font"
@@ -1720,7 +1720,7 @@ msgid ""
 "Touch Screens which are detected by GTK are handled specially, and don't "
 "need to be configured here."
 msgstr ""
-"Touch eingaben welche von GTK erkannt werden, werden speziell verarbeitet, "
+"Touchscreens, welche von GTK erkannt werden, werden speziell verarbeitet "
 "und nicht hier konfiguriert."
 
 #: ../src/util/CrashHandler.cpp:138
@@ -1866,7 +1866,7 @@ msgid ""
 "You're using {1}/{2} branch. Send Bugreport will direct you to this repo's "
 "issue tracker."
 msgstr ""
-"Sie benutzen den {1}/{2} Zweig. Das Senden eines Fehlerberichts wird Siezum "
+"Sie benutzen den {1}/{2} Zweig. Das Senden eines Fehlerberichts wird Sie zum "
 "Issue-Tracker dieses Repositoriums führen."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:80

@@ -31,6 +31,11 @@ public:
 	virtual bool createPdf(path file, PageRangeVector& range) = 0;
 	virtual string getLastError() = 0;
 
+	/**
+	 * Export without background
+	 */
+	virtual void setNoBackgroundExport(bool noBackgroundExport);
+
 private:
 	XOJ_TYPE_ATTRIB;
 };
