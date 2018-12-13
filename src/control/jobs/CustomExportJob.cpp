@@ -274,9 +274,13 @@ void CustomExportJob::run()
 		// the ui is blocked, so there should be no changes...
 		Document* doc = control->getDocument();
 
-		size_t count = doc->getPageCount();
-		PageType pt[count];
-		resetBackgroundType(doc, pt, ACTION_RESET);
+		PageType pt[doc->getPageCount()];
+
+		if (this->choosenFilterName == EXPORT_PDF_NOBG)
+		{
+			pt[0] = PageType("plain");
+			resetBackgroundType(doc, pt, ACTION_RESET);
+		}
 		
 		XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
 
@@ -292,7 +296,11 @@ void CustomExportJob::run()
 
 		delete pdfe;
 
-		resetBackgroundType(doc, pt, ACTION_RESTORE);
+		if (this->choosenFilterName == EXPORT_PDF_NOBG)
+		{
+			resetBackgroundType(doc, pt, ACTION_RESTORE);
+		}
+
 	}
 	else
 	{
@@ -304,20 +312,19 @@ void CustomExportJob::resetBackgroundType(Document* doc, PageType* pt, ResetActi
 {
 	XOJ_CHECK_TYPE(CustomExportJob);
 
-	if (this->choosenFilterName != EXPORT_PDF_NOBG)
-	{
-		return;
-	}
-
 	size_t count = doc->getPageCount();
 
 	if (action == ACTION_RESET)
 	{
-		/** apply "plain" paper style to all pages before export */
+		/**
+		 * backup the current and apply the passed 
+		 * paper style to all pages before export 
+		 */
+		PageType tmp = pt[0];
 		for (int i=0; i<count ; i++)
 		{
 			pt[i] = doc->getPage(i)->getBackgroundType();
-			doc->getPage(i)->setBackgroundType(PageType("plain"));	
+			doc->getPage(i)->setBackgroundType(tmp);	
 		}
 	}
 
