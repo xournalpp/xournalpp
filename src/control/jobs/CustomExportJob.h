@@ -28,7 +28,7 @@ const string EXPORT_XOJ = "Xournal (Compatibility)";
 
 enum ResetActionType
 {
-	ACTION_RESET = 0,
+	ACTION_SET = 0,
 	ACTION_RESTORE = 1	
 };
 

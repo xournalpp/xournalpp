@@ -206,6 +206,13 @@ void CustomExportJob::exportPng()
 	Document* doc = control->getDocument();
 
 	int count = doc->getPageCount();
+	PageType pt[count];
+
+	if (this->choosenFilterName == EXPORT_PNG_NOBG)
+	{
+		pt[0] = PageType("transparent");
+		resetBackgroundType(doc, pt, ACTION_SET);
+	}
 
 	bool onePage = ((this->exportRange.size() == 1) && (this->exportRange[0]->getFirst() == this->exportRange[0]->getLast()));
 
@@ -244,6 +251,11 @@ void CustomExportJob::exportPng()
 			exportPngPage(i, id, zoom, view);
 		}
 	}
+
+	if (this->choosenFilterName == EXPORT_PNG_NOBG)
+	{
+		resetBackgroundType(doc, pt, ACTION_RESTORE);
+	}
 }
 
 void CustomExportJob::run()
@@ -279,7 +291,7 @@ void CustomExportJob::run()
 		if (this->choosenFilterName == EXPORT_PDF_NOBG)
 		{
 			pt[0] = PageType("plain");
-			resetBackgroundType(doc, pt, ACTION_RESET);
+			resetBackgroundType(doc, pt, ACTION_SET);
 		}
 		
 		XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
@@ -314,7 +326,7 @@ void CustomExportJob::resetBackgroundType(Document* doc, PageType* pt, ResetActi
 
 	size_t count = doc->getPageCount();
 
-	if (action == ACTION_RESET)
+	if (action == ACTION_SET)
 	{
 		/**
 		 * backup the current and apply the passed 
