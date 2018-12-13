@@ -180,11 +180,18 @@ void CustomExportJob::exportPngPage(int pageId, int id, double zoom, DocumentVie
 	{
 		int pgNo = page->getPdfPageNr();
 		XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
-
+	
 		PdfView::drawPage(NULL, popplerPage, cr, zoom, page->getWidth(), page->getHeight());
 	}
 
-	view.drawPage(page, this->cr, true);
+	if (this->choosenFilterName == EXPORT_PNG_NOBG)
+	{
+		view.drawPage(page, this->cr, true, true);
+	}
+	else
+	{
+		view.drawPage(page, this->cr, true);
+	}
 
 	if (!freeSurface(id))
 	{
@@ -206,11 +213,6 @@ void CustomExportJob::exportPng()
 	Document* doc = control->getDocument();
 
 	int count = doc->getPageCount();
-
-	if (this->choosenFilterName == EXPORT_PNG_NOBG)
-	{
-		//Set no background here
-	}
 
 	bool onePage = ((this->exportRange.size() == 1) && (this->exportRange[0]->getFirst() == this->exportRange[0]->getLast()));
 
