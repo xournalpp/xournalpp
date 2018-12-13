@@ -60,11 +60,6 @@ bool CustomExportJob::isUriValid(string& uri)
 
 	this->choosenFilterName = BaseExportJob::getFilterName();
 
-	if (this->choosenFilterName == EXPORT_PDF_NOBG)
-	{
-		std::cout<<"Exporting with plain bg \n";
-	}
-
 	string ext = filename.extension().string();
 	if (ext != ".pdf" && ext != ".png" && ext != ".xoj")
 	{
@@ -279,25 +274,62 @@ void CustomExportJob::run()
 		// the ui is blocked, so there should be no changes...
 		Document* doc = control->getDocument();
 
+		size_t count = doc->getPageCount();
+		PageType pt[count];
+		resetBackgroundType(doc, pt, ACTION_RESET);
+		
 		XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
-
 
 #ifdef ADVANCED_PDF_EXPORT_POPPLER
 		// Not working with ADVANCED_PDF_EXPORT_POPPLER
 		if (!pdfe->createPdf(this->filename))
 #else
-		if (!pdfe->createPdf(this->filename, exportRange))
+		if (!pdfe->createPdf(this->filename/*, exportRange*/))	//export range is called anyways
 #endif
 		{
 			this->errorMsg = pdfe->getLastError();
 		}
 
 		delete pdfe;
+
+		resetBackgroundType(doc, pt, ACTION_RESTORE);
 	}
 	else
 	{
 		exportPng();
 	}
+}
+
+void CustomExportJob::resetBackgroundType(Document* doc, PageType* pt, ResetActionType action)
+{
+	XOJ_CHECK_TYPE(CustomExportJob);
+
+	if (this->choosenFilterName != EXPORT_PDF_NOBG)
+	{
+		return;
+	}
+
+	size_t count = doc->getPageCount();
+
+	if (action == ACTION_RESET)
+	{
+		/** apply "plain" paper style to all pages before export */
+		for (int i=0; i<count ; i++)
+		{
+			pt[i] = doc->getPage(i)->getBackgroundType();
+			doc->getPage(i)->setBackgroundType(PageType("plain"));	
+		}
+	}
+
+	if (action == ACTION_RESTORE)
+	{
+		/** restore each page to its original style */
+		for (int i=0; i<count ; i++)
+		{
+			doc->getPage(i)->setBackgroundType(pt[i]);	
+		}
+	}
+	
 }
 
 void CustomExportJob::afterRun()

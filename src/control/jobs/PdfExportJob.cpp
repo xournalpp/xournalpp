@@ -61,43 +61,13 @@ bool PdfExportJob::isUriValid(string& uri)
 	return true;
 }
 
-void PdfExportJob::resetBackgroundType(Document* doc, PageType* pt, ResetActionType action)
-{
-	XOJ_CHECK_TYPE(PdfExportJob);
 
-	size_t count = doc->getPageCount();
-
-	if (action == ACTION_RESET)
-	{
-		/** apply "plain" paper style to all pages before export */
-		for (int i=0; i<count ; i++)
-		{
-			pt[i] = doc->getPage(i)->getBackgroundType();
-			doc->getPage(i)->setBackgroundType(PageType("plain"));	
-		}
-	}
-
-	if (action == ACTION_RESTORE)
-	{
-		/** restore each page to its original style */
-		for (int i=0; i<count ; i++)
-		{
-			doc->getPage(i)->setBackgroundType(pt[i]);	
-		}
-	}
-	
-}
 
 void PdfExportJob::run()
 {
 	XOJ_CHECK_TYPE(PdfExportJob);
 
 	Document* doc = control->getDocument();
-
-	size_t count = doc->getPageCount();
-	PageType pt[count];
-
-	resetBackgroundType(doc, pt, ACTION_RESET);
 
 	doc->lock();
 	XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
@@ -116,7 +86,5 @@ void PdfExportJob::run()
 	}
 
 	delete pdfe;
-
-	resetBackgroundType(doc, pt, ACTION_RESTORE);
 }
 
