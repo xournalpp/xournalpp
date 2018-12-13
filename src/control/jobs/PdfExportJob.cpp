@@ -4,7 +4,6 @@
 #include "pdf/base/XojPdfExportFactory.h"
 
 #include <i18n.h>
-#include <iostream>
 
 
 PdfExportJob::PdfExportJob(Control* control)
@@ -23,7 +22,6 @@ void PdfExportJob::addFilterToDialog()
 	XOJ_CHECK_TYPE(PdfExportJob);
 
 	addFileFilterToDialog(_C("PDF files"), "*.pdf");
-	addFileFilterToDialog(_C("PDF Without paper style"), "*.pdf");
 }
 
 void PdfExportJob::prepareSavePath(path& path)
@@ -59,11 +57,6 @@ bool PdfExportJob::isUriValid(string& uri)
 		Util::showErrorToUser(control->getGtkWindow(), msg);
 		return false;
 	}
-
-
-	std::cout<<"PdfExportJob::isUriValid\n";
-	string filterName = BaseExportJob::getFilterName();
-	std::cout<<"FilterName: "<<filterName<<"\n";
 
 	return true;
 }

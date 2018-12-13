@@ -10,6 +10,7 @@
 
 #include <i18n.h>
 #include <config-features.h>
+#include <iostream>
 
 
 CustomExportJob::CustomExportJob(Control* control)
@@ -41,9 +42,11 @@ void CustomExportJob::addFilterToDialog()
 {
 	XOJ_CHECK_TYPE(CustomExportJob);
 
-	addFileFilterToDialog(_C("PDF files"), "*.pdf");
-	addFileFilterToDialog(_C("PNG graphics"), "*.png");
-	addFileFilterToDialog(_C("Xournal (Compatibility)"), "*.xoj");
+	addFileFilterToDialog(_C(EXPORT_PDF), "*.pdf");
+	addFileFilterToDialog(_C(EXPORT_PDF_NOBG), "*.pdf");
+	addFileFilterToDialog(_C(EXPORT_PNG), "*.png");
+	addFileFilterToDialog(_C(EXPORT_PNG_NOBG), "*.png");
+	addFileFilterToDialog(_C(EXPORT_XOJ), "*.xoj");
 }
 
 bool CustomExportJob::isUriValid(string& uri)
@@ -53,6 +56,13 @@ bool CustomExportJob::isUriValid(string& uri)
 	if (!BaseExportJob::isUriValid(uri))
 	{
 		return false;
+	}
+
+	this->choosenFilterName = BaseExportJob::getFilterName();
+
+	if (this->choosenFilterName == EXPORT_PDF_NOBG)
+	{
+		std::cout<<"Exporting with plain bg \n";
 	}
 
 	string ext = filename.extension().string();

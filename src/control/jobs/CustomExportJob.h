@@ -17,6 +17,12 @@
 
 #include <PageRange.h>
 
+const string EXPORT_PDF = "PDF files";
+const string EXPORT_PDF_NOBG = "PDF with plain background";
+const string EXPORT_PNG = "PNG graphics";
+const string EXPORT_PNG_NOBG = "PNG with transparent background";
+const string EXPORT_XOJ = "Xournal (Compatibility)";
+
 class CustomExportJob : public BaseExportJob
 {
 public:
@@ -71,4 +77,6 @@ private:
 	bool exportTypeXoj;
 
 	string lastError;
+
+	string choosenFilterName;
 };
