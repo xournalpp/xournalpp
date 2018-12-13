@@ -206,12 +206,10 @@ void CustomExportJob::exportPng()
 	Document* doc = control->getDocument();
 
 	int count = doc->getPageCount();
-	PageType pt[count];
 
 	if (this->choosenFilterName == EXPORT_PNG_NOBG)
 	{
-		pt[0] = PageType("transparent");
-		resetBackgroundType(doc, pt, ACTION_SET);
+		//Set no background here
 	}
 
 	bool onePage = ((this->exportRange.size() == 1) && (this->exportRange[0]->getFirst() == this->exportRange[0]->getLast()));
@@ -251,11 +249,6 @@ void CustomExportJob::exportPng()
 			exportPngPage(i, id, zoom, view);
 		}
 	}
-
-	if (this->choosenFilterName == EXPORT_PNG_NOBG)
-	{
-		resetBackgroundType(doc, pt, ACTION_RESTORE);
-	}
 }
 
 void CustomExportJob::run()
@@ -285,16 +278,13 @@ void CustomExportJob::run()
 		// don't lock the page here for the whole flow, else we get a dead lock...
 		// the ui is blocked, so there should be no changes...
 		Document* doc = control->getDocument();
-
-		PageType pt[doc->getPageCount()];
-
-		if (this->choosenFilterName == EXPORT_PDF_NOBG)
-		{
-			pt[0] = PageType("plain");
-			resetBackgroundType(doc, pt, ACTION_SET);
-		}
 		
 		XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
+		
+		if (this->choosenFilterName == EXPORT_PDF_NOBG)
+		{
+			pdfe->setNoBackgroundExport(true);
+		}
 
 #ifdef ADVANCED_PDF_EXPORT_POPPLER
 		// Not working with ADVANCED_PDF_EXPORT_POPPLER
@@ -307,48 +297,11 @@ void CustomExportJob::run()
 		}
 
 		delete pdfe;
-
-		if (this->choosenFilterName == EXPORT_PDF_NOBG)
-		{
-			resetBackgroundType(doc, pt, ACTION_RESTORE);
-		}
-
 	}
 	else
 	{
 		exportPng();
 	}
-}
-
-void CustomExportJob::resetBackgroundType(Document* doc, PageType* pt, ResetActionType action)
-{
-	XOJ_CHECK_TYPE(CustomExportJob);
-
-	size_t count = doc->getPageCount();
-
-	if (action == ACTION_SET)
-	{
-		/**
-		 * backup the current and apply the passed 
-		 * paper style to all pages before export 
-		 */
-		PageType tmp = pt[0];
-		for (int i=0; i<count ; i++)
-		{
-			pt[i] = doc->getPage(i)->getBackgroundType();
-			doc->getPage(i)->setBackgroundType(tmp);	
-		}
-	}
-
-	if (action == ACTION_RESTORE)
-	{
-		/** restore each page to its original style */
-		for (int i=0; i<count ; i++)
-		{
-			doc->getPage(i)->setBackgroundType(pt[i]);	
-		}
-	}
-	
 }
 
 void CustomExportJob::afterRun()

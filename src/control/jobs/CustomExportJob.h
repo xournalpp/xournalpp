@@ -26,12 +26,6 @@ const string EXPORT_PNG = "PNG graphics";
 const string EXPORT_PNG_NOBG = "PNG with transparent background";
 const string EXPORT_XOJ = "Xournal (Compatibility)";
 
-enum ResetActionType
-{
-	ACTION_SET = 0,
-	ACTION_RESTORE = 1	
-};
-
 class CustomExportJob : public BaseExportJob
 {
 public:
@@ -65,7 +59,6 @@ protected:
 	bool freeSurface(int id);
 	string getFilenameWithNumber(int no);
 	virtual bool isUriValid(string& uri);
-	void resetBackgroundType(Document* doc, PageType* pt, ResetActionType action);
 
 private:
 	XOJ_TYPE_ATTRIB;

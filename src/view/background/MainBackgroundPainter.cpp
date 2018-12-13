@@ -5,7 +5,6 @@
 #include "DottedBackgroundPainter.h"
 #include "GraphBackgroundPainter.h"
 #include "LineBackgroundPainter.h"
-#include "TransparentBackgroundPainter.h"
 
 #include <vector>
 using std::vector;
@@ -21,7 +20,6 @@ MainBackgroundPainter::MainBackgroundPainter()
 	painter["ruled"] = new LineBackgroundPainter(true);
 	painter["graph"] = new GraphBackgroundPainter();
 	painter["dotted"] = new DottedBackgroundPainter();
-	painter["transparent"] = new TransparentBackgroundPainter();
 }
 
 MainBackgroundPainter::~MainBackgroundPainter()
