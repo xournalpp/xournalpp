@@ -42,11 +42,11 @@ void CustomExportJob::addFilterToDialog()
 {
 	XOJ_CHECK_TYPE(CustomExportJob);
 
-	addFileFilterToDialog(_C(EXPORT_PDF), "*.pdf");
-	addFileFilterToDialog(_C(EXPORT_PDF_NOBG), "*.pdf");
-	addFileFilterToDialog(_C(EXPORT_PNG), "*.png");
-	addFileFilterToDialog(_C(EXPORT_PNG_NOBG), "*.png");
-	addFileFilterToDialog(_C(EXPORT_XOJ), "*.xoj");
+	addFileFilterToDialog(EXPORT_PDF, "*.pdf");
+	addFileFilterToDialog(EXPORT_PDF_NOBG, "*.pdf");
+	addFileFilterToDialog(EXPORT_PNG, "*.png");
+	addFileFilterToDialog(EXPORT_PNG_NOBG, "*.png");
+	addFileFilterToDialog(EXPORT_XOJ, "*.xoj");
 }
 
 bool CustomExportJob::isUriValid(string& uri)
@@ -292,7 +292,7 @@ void CustomExportJob::run()
 		// Not working with ADVANCED_PDF_EXPORT_POPPLER
 		if (!pdfe->createPdf(this->filename))
 #else
-		if (!pdfe->createPdf(this->filename/*, exportRange*/))	//export range is called anyways
+		if (!pdfe->createPdf(this->filename, exportRange))
 #endif
 		{
 			this->errorMsg = pdfe->getLastError();
