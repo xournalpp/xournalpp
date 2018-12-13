@@ -1,6 +1,7 @@
 #include "PdfExportJob.h"
 #include "control/Control.h"
-#include "pdf/popplerdirect/PdfExport.h"
+#include "pdf/base/XojPdfExport.h"
+#include "pdf/base/XojPdfExportFactory.h"
 
 #include <i18n.h>
 
@@ -56,20 +57,22 @@ bool PdfExportJob::isUriValid(string& uri)
 		Util::showErrorToUser(control->getGtkWindow(), msg);
 		return false;
 	}
-
+	
 	return true;
 }
+
 
 void PdfExportJob::run()
 {
 	XOJ_CHECK_TYPE(PdfExportJob);
 
 	Document* doc = control->getDocument();
+
 	doc->lock();
-	PdfExport pdf(doc, control);
+	XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
 	doc->unlock();
 
-	if (!pdf.createPdf(this->filename))
+	if (!pdfe->createPdf(this->filename))
 	{
 		if (control->getWindow())
 		{
@@ -77,8 +80,10 @@ void PdfExportJob::run()
 		}
 		else
 		{
-			this->errorMsg = pdf.getLastError();
+			this->errorMsg = pdfe->getLastError();
 		}
 	}
+
+	delete pdfe;
 }
 

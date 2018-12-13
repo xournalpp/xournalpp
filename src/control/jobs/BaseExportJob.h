@@ -34,6 +34,7 @@ public:
 
 public:
 	virtual bool showFilechooser();
+	string getFilterName();
 
 protected:
 	void initDialog();

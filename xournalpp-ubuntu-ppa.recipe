@@ -1,0 +1,3 @@
+# git-build-recipe format 0.4 deb-version {debupstream}-0~{revtime}
+lp:xournalpp master
+

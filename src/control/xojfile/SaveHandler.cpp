@@ -257,7 +257,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 				cout << "doc->isAttachPdf()" << endl;
 				background->setAttrib("domain", "attach");
 				path filename = path(doc->getFilename().string() + ".bg.pdf");
-				background->setAttrib("filename", filename.c_str());
+				background->setAttrib("filename", filename.string());
 
 				GError* error = NULL;
 				doc->getPdfDocument().save(filename, &error);
@@ -276,7 +276,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 			else
 			{
 				background->setAttrib("domain", "absolute");
-				background->setAttrib("filename", doc->getPdfFilename().c_str());
+				background->setAttrib("filename", doc->getPdfFilename().string());
 			}
 		}
 		background->setAttrib("pageno", p->getPdfPageNr() + 1);

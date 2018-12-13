@@ -14,9 +14,9 @@
 /* --- Stable features --- */
 
 /**
- * Enable Overlay scrollbar
+ * Export PDF with private Poppler API
  */
-#cmakedefine ENABLE_OS
+#cmakedefine ADVANCED_PDF_EXPORT_POPPLER
 
 /**
  * Enable Mathtex support

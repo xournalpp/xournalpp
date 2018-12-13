@@ -47,81 +47,32 @@ Just press the red button to start/stop recording and use the `Play Object` tool
 
 If you need to, you can edit the recording audio gain in the script under `/usr/local/bin/xopp-recording.sh` (an option for this will be availabe through xournalpp's settings in the future)
 
+## Installing
+### Ubuntu and derivates
+````bash
+sudo add-apt-repository ppa:andreasbutti/xournalpp-master
+sudo apt update
+sudo apt install xournalpp
+````
+
+### OpenSuse
+https://build.opensuse.org/package/show/home:badshah400:Staging/xournalpp-gtk3
+
+Build by https://github.com/badshah400
+
+### Windows
+No builds yet, comming soon. Probably not yet fully working.
+Build manual below.
+
+### Mac OS X
+Work in Progress, it's possible to build, but no release yet.
+
+
 ## Building
 
-Aside from legacy releases, this is currently the way to install Xournal++. For complete building documentation refer to wiki page:
-[Installation](https://github.com/xournalpp/xournalpp/wiki/Installing).
+[Linux Build](readme/LinuxBuild.md)
 
-There will be some binaries appearing in the future, so ideally you can make use of those as well.
-They'll be at [Xournal++ releases](https://github.com/xournalpp/xournalpp/releases).
-
-Current releases are out of Date, we are searching for Maintainer for PPA etc.
-[Issue for Contact](https://github.com/xournalpp/xournalpp/issues/176)
-
-
-### Install dependencies
-For Fedora/CentOS/RHEL:
-```diff
-- Probably not correct for new GTK3 build, create a pull or a Ticket if you have the correct list
-```
-````bash
-dnf groups install "C Development Tools and Libraries"
-dnf install cmake libglade2-devel texlive-scheme-basic texlive-dvipng glibmm24-devel gtk2-devel gtk+-devel boost boost-devel poppler-glib-devel
-````
-
-For Ubuntu/Debian:
-````bash
-sudo apt-get install cmake libboost-all-dev libcppunit-dev dvipng texlive \
-liblcms2-dev libjpeg-dev fontconfig librsvg2-dev libgtk-3-dev \
-libpoppler-dev libpoppler-cpp-dev libpoppler-glib-dev libpoppler-private-dev \
-libxml2-dev libopenjpeg-dev
-````
-(On Ubuntu 18.04, remove the last `libopenjpeg-dev`, it's not in the repository any more).
-
-Basic steps are:
-````bash
-git clone http://github.com/xournalpp/xournalpp.git
-cd xournalpp
-mkdir build
-cd build
-cmake ..
-make
-````
-
-On Ubuntu 16.04, `-DBUILD_POPPLER=ON` is automatically added due to #234.
-
-Use `cmake-gui ..` to see graphically all available options.
-
-The binary executable will be in `build/src/` subdirectory.
-
-To install all needed files execute:
-```bash
-make install
-```
-
-If you want to install desktop file and thumbnailer execute:
-```bash
-make desktop-install
-```
-
-## Code documentation
-
-The code documentation is generated using Doxygen.
-
-In order to generate the documentation yourself, first install Doxygen and graphviz, i.e.
-
-```bash
-sudo apt install doxygen
-sudo apt install graphviz
-```
-
-on Debian or Ubuntu. Finally, type in `doxygen` in the root directory of the repository.
-The documentation can be found in `doc/html` and `doc/latex`. Conveniently display the
-documentation with `python3 -m http.server 8000` and visit the shown URL to view the
-documentation.
-
-The website https://cypax.net/tutorials/doxygen/ provides a good introduction to Doxygen
-and how to document code with it.
+[Windows Build](readme/WindowsBuild.md)
 
 ## Fileformat
 The fileformat *.xopp is an XML which is .gz compressed. PDFs are not embedded
@@ -147,3 +98,20 @@ merged, even if they are not 100% finished.
 
 See [GitHub:xournalpp](http://github.com/xournalpp/xournalpp) for current development. You can also join
 our Gitter channel via badge on top.
+
+## Code documentation
+
+The code documentation is generated using Doxygen.
+
+In order to generate the documentation yourself, first install Doxygen and graphviz, i.e.
+
+```bash
+sudo apt install doxygen
+sudo apt install graphviz
+```
+
+on Debian or Ubuntu. Finally, type in `doxygen` in the root directory of the repository.
+The documentation can be found in `doc/html` and `doc/latex`. Conveniently display the
+documentation with `python3 -m http.server 8000` and visit the shown URL to view the
+documentation.
+

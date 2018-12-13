@@ -17,17 +17,17 @@
 #include "PdfWriter.h"
 #include "PdfXRef.h"
 
+#include "pdf/base/XojPdfExport.h"
+
 #include "control/jobs/ProgressListener.h"
 #include "model/Document.h"
-#include "pdf/cairo/CairoPdf.h"
+#include "cairo/CairoPdf.h"
 
-#include <PageRange.h>
 #include <StringUtils.h>
 
 #include <glib.h>
-#include <vector>
 
-class PdfExport
+class PdfExport : public XojPdfExport
 {
 public:
 	PdfExport(Document* doc, ProgressListener* progressListener);
@@ -41,7 +41,7 @@ public:
 private:
 	void addPopplerDocument(XojPopplerDocument doc);
 
-	bool addPopplerPage(XojPopplerPage* pdf, XojPopplerDocument doc);
+	bool addPopplerPage(XojPdfPageSPtr pdf, XojPopplerDocument doc);
 	bool writePage(int page);
 
 	void writeGzStream(Stream* str, GList* replacementList);

@@ -320,6 +320,8 @@ void EditSelection::mouseUp()
 	PageRef page = this->view->getPage();
 	Layer* layer = page->getSelectedLayer();
 
+	snapRotation();
+
 	this->contents->updateContent(this->x, this->y, this->rotation, this->width, this->height, this->aspectRatio,
 								  layer, page, this->view, this->undo, this->mouseDownType);
 
@@ -598,7 +600,7 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 		return CURSOR_SELECTION_BOTTOM_RIGHT;
 	}
 
-	if (x2 + BORDER_PADDING + 8 <= x && x <= x2 + BORDER_PADDING + 16 && (y2 + y1)/2 - 4 <= y && (y2 + y1)/2 + 4 >= y )
+	if (x2 + BORDER_PADDING + 4 <= x && x <= x2 + BORDER_PADDING + 16 && (y2 + y1)/2 - 4 <= y && (y2 + y1)/2 + 4 >= y )
 	{
 		return CURSOR_SELECTION_ROTATE;
 	}
@@ -640,6 +642,27 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 	return CURSOR_SELECTION_NONE;
 }
 
+void EditSelection::snapRotation()
+{
+	bool snapping = this->view->getXournal()->getControl()->isRotationSnapping();
+	if (!snapping)
+	{
+		return;
+	}
+	
+	double epsilon = 0.1;
+	const double ROTATION_LOCK[8] = {0, M_PI / 2.0, M_PI, M_PI / 4.0, 3.0 * M_PI / 4.0,
+									- M_PI / 4.0, - 3.0 * M_PI / 4.0, - M_PI / 2.0};
+
+	for (unsigned int i = 0; i < sizeof(ROTATION_LOCK) / sizeof(ROTATION_LOCK[0]); i++ )
+	{
+		if (std::abs(this->rotation - ROTATION_LOCK[i]) < epsilon)
+		{
+			this->rotation = ROTATION_LOCK[i];
+		}
+	}
+}
+
 /**
  * Paints the selection to cr, with the given zoom factor. The coordinates of cr
  * should be relative to the provideded view by getView() (use translateEvent())
@@ -654,18 +677,18 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 
 	if (abs(this->rotation) > __DBL_EPSILON__)
 	{
-		
-		double rx = (x + width / 2) * zoom;
-		double ry = (y + height / 2) * zoom;
+		snapRotation();
+
+		double rx = ((x + width / 2) - 0.7) * zoom;
+		double ry = ((y + height / 2) - 0.7) * zoom;
 
 		cairo_translate(cr, rx, ry);
 		cairo_rotate(cr, this->rotation);
 
 		// Draw the rotation point for debugging
-		cairo_set_source_rgb(cr, 0, 1, 0);
-		cairo_rectangle(cr, 0, 0, 10, 10);
-		cairo_stroke(cr);
-
+		//cairo_set_source_rgb(cr, 0, 1, 0);
+		//cairo_rectangle(cr, 0, 0, 10, 10);
+		//cairo_stroke(cr);
 
 		cairo_translate(cr, -rx, -ry);
 	}
@@ -701,7 +724,7 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 		// right
 		drawAnchorRect(cr, x + width, y + height / 2, zoom);
 		// rotation handle
-		drawAnchorRotation(cr, x + width +8, y + height / 2, zoom);
+		drawAnchorRotation(cr, x + width + 12/zoom, y + height / 2, zoom);
 	}
 
 	// top left

@@ -63,7 +63,7 @@ void RenderJob::rerenderRectangle(Rectangle* rect)
 	if (view->page->getBackgroundType().isPdfPage())
 	{
 		int pgNo = view->page->getPdfPageNr();
-		XojPopplerPage* popplerPage = doc->getPdfPage(pgNo);
+		XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 		PdfCache* cache = view->xournal->getCache();
 		PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight);
 	}
@@ -117,7 +117,7 @@ void RenderJob::run()
 		cairo_t* cr2 = cairo_create(crBuffer);
 		cairo_scale(cr2, zoom, zoom);
 
-		XojPopplerPage* popplerPage = NULL;
+		XojPdfPageSPtr popplerPage;
 
 		doc->lock();
 

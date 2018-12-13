@@ -6,9 +6,9 @@
 
 ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath)
  : GladeGui(gladeSearchPath, "exportSettings.glade", "exportDialog"),
-   confirmed(false),
    currentPage(0),
-   pageCount(0)
+   pageCount(0),
+   confirmed(false)
 {
 	XOJ_INIT_TYPE(ExportDialog);
 
@@ -50,11 +50,6 @@ void ExportDialog::removeDpiSelection()
 	gtk_widget_hide(get("lbResolution"));
 	gtk_widget_hide(get("spDpi"));
 	gtk_widget_hide(get("lbDpi"));
-
-	// TODO Enable PDF Part export
-	gtk_widget_set_sensitive(get("rdRangeCurrent"), false);
-	gtk_widget_set_sensitive(get("rdRangePages"), false);
-	gtk_widget_set_sensitive(get("txtPages"), false);
 }
 
 int ExportDialog::getPngDpi()
@@ -108,10 +103,6 @@ void ExportDialog::show(GtkWindow* parent)
 	if (res == 1)
 	{
 		confirmed = true;
-	}
-	else
-	{
-		return;
 	}
 
 	gtk_widget_hide(this->window);

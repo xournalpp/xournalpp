@@ -44,6 +44,8 @@ private:
 	 */
 	void contstruct(UndoRedoHandler* undo, XojPageView* view, PageRef sourcePage);
 
+	void snapRotation();
+
 public:
 	/**
 	 * get the X coordinate relative to the provided view (getView())

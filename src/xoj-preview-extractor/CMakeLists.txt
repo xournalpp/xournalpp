@@ -1,5 +1,9 @@
 ## xournal-thumbnailer executable ##
 
+if (WIN32)
+  return ()
+endif ()
+
 add_executable (xournal-thumbnailer
   xournal-thumbnailer.cpp
   "${PROJECT_SOURCE_DIR}/src/util/XojPreviewExtractor.cpp"

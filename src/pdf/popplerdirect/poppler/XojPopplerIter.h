@@ -14,9 +14,11 @@
 #include "XojPopplerAction.h"
 #include "XojPopplerDocument.h"
 
+#include "pdf/base/XojPdfBookmarkIterator.h"
+
 class GooList;
 
-class XojPopplerIter
+class XojPopplerIter : public XojPdfBookmarkIterator
 {
 public:
 	XojPopplerIter(XojPopplerDocument doc, GooList* items);

@@ -369,6 +369,13 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolButton(listener, gui, "RECSTOP", ACTION_RECSTOP, GROUP_REC, false,
 								"rec.svg", _C("Rec / Stop"), gui->get("menuRecStop")));
 
+	//Icon snapping.svg made by www.freepik.com from www.flaticon.com
+	addToolItem(new ToolButton(listener, gui, "ROTATION_SNAPPING", ACTION_ROTATION_SNAPPING, GROUP_SNAPPING, false,
+								"snapping.svg", _C("Rotation Snapping"), gui->get("menuSnapRotation")));
+
+	addToolItem(new ToolButton(listener, gui, "GRID_SNAPPING", ACTION_GRID_SNAPPING, GROUP_GRID_SNAPPING, false,
+								"grid_snapping.svg", _C("Grid Snapping"), gui->get("menuSnapGrid")));
+
 	addToolItem(new ColorToolItem(listener, toolHandler, this->parent, 0xff0000, true));
 
 	addToolItem(new ToolButton(listener, gui, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, "tool_pencil.svg", _C("Pen"),

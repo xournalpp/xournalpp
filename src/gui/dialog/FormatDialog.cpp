@@ -5,7 +5,6 @@
 #include <config.h>
 #include <i18n.h>
 
-#include <boost/algorithm/string/predicate.hpp>
 
 FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height)
  : GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog"),

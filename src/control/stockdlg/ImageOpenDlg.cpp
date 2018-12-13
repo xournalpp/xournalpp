@@ -4,6 +4,7 @@
 
 #include <config.h>
 #include <i18n.h>
+#include <Util.h>
 
 GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bool* attach)
 {
@@ -20,7 +21,7 @@ GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bo
 
 	if (!settings->getLastImagePath().empty())
 	{
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastImagePath().c_str());
+		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(settings->getLastImagePath()));
 	}
 
 	GtkWidget* cbAttach = NULL;

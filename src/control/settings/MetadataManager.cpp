@@ -15,7 +15,10 @@
 using namespace std;
 
 MetadataEntry::MetadataEntry()
- : valid(false), zoom(1), page(0), time(0)
+ : valid(false),
+   zoom(1),
+   page(0),
+   time(0)
 {
 }
 
@@ -94,11 +97,11 @@ vector<MetadataEntry> MetadataManager::loadList()
 	vector<MetadataEntry> data;
 
 	GError* error = NULL;
-	GDir* home = g_dir_open(folder.c_str(), 0, &error);
+	GDir* home = g_dir_open(PATH_TO_CSTR(folder), 0, &error);
 	const gchar* file;
 	while ((file = g_dir_read_name(home)) != NULL)
 	{
-		string path = folder.c_str();
+		string path = PATH_TO_CSTR(folder);
 		path += "/";
 		path += file;
 
@@ -210,7 +213,7 @@ MetadataEntry MetadataManager::getForFile(string file)
 		}
 	}
 
-	for (int i = 20; i < files.size(); i++)
+	for (int i = 20; i < (int)files.size(); i++)
 	{
 		string path = files[i].metadataFile;
 		deleteMetadataFile(path);
@@ -235,7 +238,7 @@ void MetadataManager::storeMetadata(MetadataEntry* m)
 	}
 
 	path folder = Util::getConfigSubfolder("metadata");
-	string path = folder.c_str();
+	string path = folder.string();
 	path += "/";
 	gint64 time = g_get_real_time();
 	path += std::to_string(time);

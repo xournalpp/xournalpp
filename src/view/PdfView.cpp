@@ -7,7 +7,7 @@ PdfView::PdfView() { }
 
 PdfView::~PdfView() { }
 
-void PdfView::drawPage(PdfCache* cache, XojPopplerPage* popplerPage, cairo_t* cr,
+void PdfView::drawPage(PdfCache* cache, XojPdfPageSPtr popplerPage, cairo_t* cr,
 					   double zoom, double width, double height, bool forPrinting)
 {
 	if (popplerPage)

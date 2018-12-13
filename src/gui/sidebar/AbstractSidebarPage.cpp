@@ -69,7 +69,7 @@ void AbstractSidebarPage::setTmpDisabled(bool disabled)
 	GdkCursor* cursor = NULL;
 	if (disabled)
 	{
-		cursor = gdk_cursor_new(GDK_WATCH);
+		cursor = gdk_cursor_new_for_display(gdk_display_get_default(), GDK_WATCH);
 	}
 
 	if (gtk_widget_get_window(this->getWidget()))

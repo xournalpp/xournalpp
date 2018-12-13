@@ -180,7 +180,7 @@ bool XojPageView::searchTextOnPage(string& text, int* occures, double* top)
 		if (text.empty()) return true;
 
 		int pNr = this->page->getPdfPageNr();
-		XojPopplerPage* pdf = NULL;
+		XojPdfPageSPtr pdf = NULL;
 		if (pNr != -1)
 		{
 			Document* doc = xournal->getControl()->getDocument();
@@ -337,10 +337,7 @@ void XojPageView::playObjectAt(double x, double y)
 	GdkRectangle matchRect =
 	{ gint(x - 10), gint(y - 10), 20, 20 };
 
-	Stroke* strokeMatch = NULL;
 	double gap = 1000000000;
-
-	Element* elementMatch = NULL;
 
 	// clear old selection anyway
 	this->xournal->getControl()->clearSelection();
@@ -358,7 +355,6 @@ void XojPageView::playObjectAt(double x, double y)
 					if ((s->intersects(x, y, 15, &tmpGap)) && (gap > tmpGap))
 					{
 						gap = tmpGap;
-						strokeMatch = s;
 
 						int ts = s->getTimestamp();
 						int buffer = 5;
@@ -396,10 +392,6 @@ void XojPageView::playObjectAt(double x, double y)
 							system(command.c_str());
 						}
 					}
-				}
-				else
-				{
-					elementMatch = e;
 				}
 			}
 		}

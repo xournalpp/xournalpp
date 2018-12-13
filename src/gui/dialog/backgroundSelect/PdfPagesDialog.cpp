@@ -16,7 +16,7 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
 
 	for (size_t i = 0; i < doc->getPdfPageCount(); i++)
 	{
-		XojPopplerPage* p = doc->getPdfPage(i);
+		XojPdfPageSPtr p = doc->getPdfPage(i);
 		PdfElementView* pv = new PdfElementView(elements.size(), p, this);
 		elements.push_back(pv);
 	}
@@ -32,7 +32,7 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
 		if (p->getBackgroundType().isPdfPage())
 		{
 			int pdfPage = p->getPdfPageNr();
-			if (pdfPage >= 0 && pdfPage < elements.size())
+			if (pdfPage >= 0 && pdfPage < (int)elements.size())
 			{
 				((PdfElementView*)elements[p->getPdfPageNr()])->setUsed(true);
 			}
@@ -57,7 +57,7 @@ void PdfPagesDialog::updateOkButton()
 	XOJ_CHECK_TYPE(PdfPagesDialog);
 
 	bool valid = false;
-	if (selected >= 0 && selected < elements.size())
+	if (selected >= 0 && selected < (int)elements.size())
 	{
 		BaseElementView* p = this->elements[this->selected];
 		valid = gtk_widget_get_visible(p->getWidget());

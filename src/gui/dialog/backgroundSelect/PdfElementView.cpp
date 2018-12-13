@@ -2,11 +2,13 @@
 
 #include "PdfPagesDialog.h"
 
-#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "pdf/base/XojPdfPage.h"
 
 
-PdfElementView::PdfElementView(int id, XojPopplerPage* page, PdfPagesDialog* dlg)
-: BaseElementView(id, dlg), page(page), used(false)
+PdfElementView::PdfElementView(int id, XojPdfPageSPtr page, PdfPagesDialog* dlg)
+ : BaseElementView(id, dlg),
+   page(page),
+   used(false)
 {
 	XOJ_INIT_TYPE(PdfElementView);
 }

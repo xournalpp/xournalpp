@@ -34,6 +34,7 @@
 #include <vector>
 #include "../gui/dialog/LatexDialog.h"
 
+class AudioController;
 class Sidebar;
 class XojPageView;
 class SaveHandler;
@@ -132,6 +133,8 @@ public:
 	bool isInDragAndDropToolbar();
 
 	bool isFullscreen();
+	bool isRotationSnapping();
+	bool isGridSnapping();
 
 	bool searchTextOnPage(string text, int p, int* occures, double* top);
 
@@ -238,6 +241,9 @@ protected:
 	void zoomCallback(ActionType type);
 	void zoomFit();
 
+	void rotationSnappingToggle();
+	void gridSnappingToggle();
+
 	bool showSaveDialog();
 
 	void fileLoaded(int scrollToPage = -1);
@@ -272,7 +278,9 @@ private:
 	RecentManager* recent;
 	UndoRedoHandler* undoRedo;
 	ZoomControl* zoom;
-	bool fullscreen;
+	bool fullscreen = false;
+	bool snapRotation = true;	//rotation snapping enabled by default
+	bool snapGrid = true; 		//grid snapping enabled by default
 
 	Settings* settings;
 	MainWindow* win;

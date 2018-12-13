@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "pdf/base/XojPdfPage.h"
 #include <StringUtils.h>
 
 #include <gtk/gtk.h>
@@ -37,7 +38,7 @@ public:
 	/**
 	 * Searches text within a Text model, returns XojPopplerRectangle, have to been freed
 	 */
-	static GList* findText(Text* t, string& text);
+	static vector<XojPdfRectangle> findText(Text* t, string& text);
 
 	/**
 	 * Initialize a Pango layout

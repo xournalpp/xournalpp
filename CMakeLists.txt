@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.8.8)
 
 project ("Xournal++" CXX C)
-set (PROJECT_VERSION "1.0.2")
+set (PROJECT_VERSION "1.0.3")
 set (PROJECT_PACKAGE "xournalpp")
 set (PROJECT_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
 set (PROJECT_URL "https://github.com/xournalpp/xournalpp")
@@ -48,7 +48,13 @@ else ()
     set(LIB_ENDING "so")
 endif ()
 
+if (WIN32)
+    set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-mwindows")
+endif ()
+
 ## Libraries ##
+
+option (ADVANCED_PDF_EXPORT_POPPLER "Export PDF with private Poppler API" OFF)
 
 macro (add_includes_ldflags LDFLAGS INCLUDES)
     set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} ${LDFLAGS})
@@ -73,7 +79,7 @@ if (BUILD_BOOST)
 
     BUILD_COMMAND cd "${BOOST_PREFIX}/src/boost" && ./b2
       ${BOOST_CXXFLAGS}
-      --with-filesystem --with-iostreams --with-locale --with-thread --with-system
+      --with-filesystem --with-iostreams --with-locale
       "--prefix=${BOOST_PREFIX}"
       "--build-dir=${BOOST_PREFIX}/src/boost-build"
       "--stagedir=${BOOST_PREFIX}"
@@ -90,8 +96,6 @@ if (BUILD_BOOST)
     boost_filesystem
     boost_locale
     boost_iostreams
-    boost_thread
-    boost_system
     ${ICU_LIBRARIES}
   )
   set (Boost_INCLUDE_DIRS "${BOOST_PREFIX}/src/boost")
@@ -99,7 +103,7 @@ if (BUILD_BOOST)
 else (BUILD_BOOST)
 
   set (Boost_USE_MULTITHREADED ON)
-  find_package (Boost 1.54 COMPONENTS system filesystem locale iostreams thread)
+  find_package (Boost 1.54 COMPONENTS filesystem locale iostreams)
   if (Boost_VERSION VERSION_LESS 1.54)
     message (FATAL_ERROR "Boost 1.54 or newer not found – you should enable BUILD_BOOST CMake flag")
   endif (Boost_VERSION VERSION_LESS 1.54)
@@ -138,12 +142,12 @@ execute_process(COMMAND ${LSB_RELEASE_EXEC} -rs
 option (BUILD_POPPLER "Build Poppler from git or other source" DEFAULT_BUILD_POPPLER)
 
 ## Ubuntu 16.04 need a poppler build
-if (LSB_RELEASE_ID_SHORT STREQUAL "Ubuntu" AND LSB_RELEASE_NUMBER_SHORT STREQUAL "16.04")
+if (ADVANCED_PDF_EXPORT_POPPLER AND LSB_RELEASE_ID_SHORT STREQUAL "Ubuntu" AND LSB_RELEASE_NUMBER_SHORT STREQUAL "16.04")
   set(BUILD_POPPLER ON)
   message ("Automatically set BUILD_POPPLER ON on Ubuntu 16.04")
 endif()
 ## Mac OS X too
-if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+if (ADVANCED_PDF_EXPORT_POPPLER AND CMAKE_SYSTEM_NAME STREQUAL "Darwin")
   set(BUILD_POPPLER ON)
   message ("Automatically set BUILD_POPPLER ON on Mac OS")
 endif ()
@@ -155,120 +159,125 @@ set (POPPLER_GIT_VER "0.61.1" CACHE STRING "Version of Poppler to build")
 set (POPPLER_SRC_DIR "/path/to/poppler/source" CACHE STRING "Directory with poppler source")
 set (POPPLER_SRC_TARXZ "/path/to/poppler.tar.xz" CACHE STRING "Tarball file location")
 
-if (BUILD_POPPLER)
-  # For documentation see https://gitlab.kitware.com/cmake/community/wikis/doc/cmake/RPATH-handling
-  set(POPPLER_LIB_DIR ${CMAKE_INSTALL_PREFIX}/bin/xournalpplib)
-  # RPATH needs to be set *here*, it's set later in the script, it is not used!
-  SET(CMAKE_INSTALL_RPATH "${POPPLER_LIB_DIR}")
+if (ADVANCED_PDF_EXPORT_POPPLER)
+	if (BUILD_POPPLER)
+	  # For documentation see https://gitlab.kitware.com/cmake/community/wikis/doc/cmake/RPATH-handling
+	  set(POPPLER_LIB_DIR ${CMAKE_INSTALL_PREFIX}/bin/xournalpplib)
+	  # RPATH needs to be set *here*, it's set later in the script, it is not used!
+	  SET(CMAKE_INSTALL_RPATH "${POPPLER_LIB_DIR}")
+	
+	  include (ExternalProject)
+	  set (POPPLER_PREFIX "${CMAKE_BINARY_DIR}/poppler-prefix")
+	  set (POPPLER_CMAKE_ARGS "-DBUILD_QT5_TESTS=OFF -DENABLE_UTILS=OFF -DENABLE_QT5=OFF -DENABLE_QT4=OFF -DBUILD_QT4_TESTS=OFF")
+	  if (POPPLER_BUILD_FROM STREQUAL "git")
+	    ExternalProject_Add (poppler
+	        GIT_REPOSITORY "git://git.freedesktop.org/git/poppler/poppler"
+	        GIT_TAG "poppler-${POPPLER_GIT_VER}"
+	        PREFIX "${POPPLER_PREFIX}"
+	
+	        CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
+	        INSTALL_COMMAND ""
+	    )
+	  elseif (POPPLER_BUILD_FROM STREQUAL "sourcefolder")
+	    ExternalProject_Add (poppler
+	        SOURCE_DIR "${POPPLER_SRC_DIR}"
+	        PREFIX "${POPPLER_PREFIX}"
+	
+	        CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
+	        INSTALL_COMMAND ""
+	    )
+	  elseif (POPPLER_BUILD_FROM STREQUAL "tarball")
+		ExternalProject_Add (poppler
+	        URL "${POPPLER_SRC_TARXZ}"
+	        PREFIX "${POPPLER_PREFIX}"
+	
+	        CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
+			INSTALL_COMMAND ""
+	    )
+	  else ()
+	    message (FATAL_ERROR "Source to build poppler from must be: git (default), sourcefolder or tarball")
+	  endif()
+	  
+	  # Additional packages required by Poppler
+	  find_package (OpenJPEG REQUIRED)
+	  find_package (JPEG REQUIRED)
+	  pkg_check_modules (PopplerLibs REQUIRED "librsvg-2.0 >= 2.14.0" fontconfig)
+	
+	  pkg_check_modules (lcms2 lcms2)
+	  if (lcms2_FOUND)
+	    set (lcms_VERSION 2)
+	  else ()
+	    pkg_check_modules (lcms1 lcms)
+	    if (lcms1_FOUND)
+	      set (lcms_VERSION 1)
+	    else ()
+	      message (FATAL_ERROR "Neither first nor second version of lcms (needed to link with poppler) was found!")
+	    endif ()
+	  endif ()
+	  
+	  set (lcms_FOUND ON)
+	  set (lcms_LDFLAGS "${lcms${lcms_VERSION}_LDFLAGS}")
+	  set (lcms_INCLUDE_DIRS "${lcms${lcms_VERSION}_INCLUDE_DIRS}")
+	  
+	  link_directories (
+	    "${POPPLER_PREFIX}/src/poppler-build"
+	    "${POPPLER_PREFIX}/src/poppler-build/glib"
+	    "${POPPLER_PREFIX}/src/poppler-build/cpp"
+	    "${POPPLER_PREFIX}/src/poppler-build/utils"
+	  )
+	  set (POPPLER_LIBRARIES
+	    "libpoppler.${LIB_ENDING}"
+	    "libpoppler-cpp.${LIB_ENDING}"
+	    "libpoppler-glib.${LIB_ENDING}"
+	
+	    ${OPENJPEG_LIBRARIES}
+	# Comment out, seems to be a problem on Debian...
+	# Do we need to detect something to enable / disable?
+	#    -lopenjpeg
+	    ${JPEG_LIBRARIES}
+	    ${PopplerLibs_LDFLAGS}
+	    ${lcms_LDFLAGS}
+	  )
+	  # -lopenjpeg added as fallback
+	  
+	  set (POPPLER_INCLUDE_DIRS
+	    "${POPPLER_PREFIX}/src/poppler-build"
+	    "${POPPLER_PREFIX}/src/poppler-build/poppler"
+	    "${POPPLER_PREFIX}/src/poppler-build/glib"
+	    "${POPPLER_PREFIX}/src/poppler-build/cpp"
+	
+	    "${POPPLER_PREFIX}/src/poppler"
+	    
+	    ${OPENJPEG_INCLUDE_DIRS}
+	    ${JPEG_INCLUDE_DIRS}
+	    ${PopplerLibs_INCLUDE_DIRS}
+	    ${lcms_INCLUDE_DIRS}
+	  )
+	
+	else ()
+	  find_package (Poppler)
+	  if (NOT POPPLER_FOUND)
+	    message (FATAL_ERROR "Poppler not found – you should enable BUILD_POPPLER CMake flag")
+	  elseif (POPPLER_VERSION VERSION_LESS ${POPPLER_MIN_VER})
+		message (FATAL_ERROR "Poppler too old - you should enable BUILD_POPPLER CMake flag")
+	  elseif (POPPLER_VERSION VERSION_GREATER ${POPPLER_MAX_VER})
+	    message (FATAL_ERROR "Poppler too new, Xournalpp has not been adapted jet - you should enable BUILD_POPPLER CMake flag")
+	  endif ()
+	endif ()
 
-  include (ExternalProject)
-  set (POPPLER_PREFIX "${CMAKE_BINARY_DIR}/poppler-prefix")
-  set (POPPLER_CMAKE_ARGS "-DBUILD_QT5_TESTS=OFF -DENABLE_UTILS=OFF -DENABLE_QT5=OFF -DENABLE_QT4=OFF -DBUILD_QT4_TESTS=OFF")
-  if (POPPLER_BUILD_FROM STREQUAL "git")
-    ExternalProject_Add (poppler
-        GIT_REPOSITORY "git://git.freedesktop.org/git/poppler/poppler"
-        GIT_TAG "poppler-${POPPLER_GIT_VER}"
-        PREFIX "${POPPLER_PREFIX}"
-
-        CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
-        INSTALL_COMMAND ""
-    )
-  elseif (POPPLER_BUILD_FROM STREQUAL "sourcefolder")
-    ExternalProject_Add (poppler
-        SOURCE_DIR "${POPPLER_SRC_DIR}"
-        PREFIX "${POPPLER_PREFIX}"
-
-        CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
-        INSTALL_COMMAND ""
-    )
-  elseif (POPPLER_BUILD_FROM STREQUAL "tarball")
-	ExternalProject_Add (poppler
-        URL "${POPPLER_SRC_TARXZ}"
-        PREFIX "${POPPLER_PREFIX}"
-
-        CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
-		INSTALL_COMMAND ""
-    )
-  else ()
-    message (FATAL_ERROR "Source to build poppler from must be: git (default), sourcefolder or tarball")
-  endif()
-  
-  # Additional packages required by Poppler
-  find_package (OpenJPEG REQUIRED)
-  find_package (JPEG REQUIRED)
-  pkg_check_modules (PopplerLibs REQUIRED "librsvg-2.0 >= 2.14.0" fontconfig)
-
-  pkg_check_modules (lcms2 lcms2)
-  if (lcms2_FOUND)
-    set (lcms_VERSION 2)
-  else ()
-    pkg_check_modules (lcms1 lcms)
-    if (lcms1_FOUND)
-      set (lcms_VERSION 1)
-    else ()
-      message (FATAL_ERROR "Neither first nor second version of lcms (needed to link with poppler) was found!")
-    endif ()
-  endif ()
-  
-  set (lcms_FOUND ON)
-  set (lcms_LDFLAGS "${lcms${lcms_VERSION}_LDFLAGS}")
-  set (lcms_INCLUDE_DIRS "${lcms${lcms_VERSION}_INCLUDE_DIRS}")
-  
-  link_directories (
-    "${POPPLER_PREFIX}/src/poppler-build"
-    "${POPPLER_PREFIX}/src/poppler-build/glib"
-    "${POPPLER_PREFIX}/src/poppler-build/cpp"
-    "${POPPLER_PREFIX}/src/poppler-build/utils"
-  )
-  set (POPPLER_LIBRARIES
-    "libpoppler.${LIB_ENDING}"
-    "libpoppler-cpp.${LIB_ENDING}"
-    "libpoppler-glib.${LIB_ENDING}"
-
-    ${OPENJPEG_LIBRARIES}
-# Comment out, seems to be a problem on Debian...
-# Do we need to detect something to enable / disable?
-#    -lopenjpeg
-    ${JPEG_LIBRARIES}
-    ${PopplerLibs_LDFLAGS}
-    ${lcms_LDFLAGS}
-  )
-  # -lopenjpeg added as fallback
-  
-  set (POPPLER_INCLUDE_DIRS
-    "${POPPLER_PREFIX}/src/poppler-build"
-    "${POPPLER_PREFIX}/src/poppler-build/poppler"
-    "${POPPLER_PREFIX}/src/poppler-build/glib"
-    "${POPPLER_PREFIX}/src/poppler-build/cpp"
-
-    "${POPPLER_PREFIX}/src/poppler"
-    
-    ${OPENJPEG_INCLUDE_DIRS}
-    ${JPEG_INCLUDE_DIRS}
-    ${PopplerLibs_INCLUDE_DIRS}
-    ${lcms_INCLUDE_DIRS}
-  )
-
+	add_includes_ldflags ("${POPPLER_LIBRARIES}" "${POPPLER_INCLUDE_DIRS}")
 else ()
-
-  find_package (Poppler)
-  if (NOT POPPLER_FOUND)
-    message (FATAL_ERROR "Poppler not found – you should enable BUILD_POPPLER CMake flag")
-  elseif (POPPLER_VERSION VERSION_LESS ${POPPLER_MIN_VER})
-    message (FATAL_ERROR "Poppler too old - you should enable BUILD_POPPLER CMake flag")
-  elseif (POPPLER_VERSION VERSION_GREATER ${POPPLER_MAX_VER})
-    message (FATAL_ERROR "Poppler too new, Xournalpp has not been adapted jet - you should enable BUILD_POPPLER CMake flag")
-  endif (NOT POPPLER_FOUND)
-
+	pkg_check_modules (PopplerGlib REQUIRED "poppler-glib >= 0.41.0")
+	add_includes_ldflags ("${PopplerGlib_LDFLAGS}" "${PopplerGlib_INCLUDE_DIRS}")
+	set(POPPLER_INCLUDE_DIR, "${PopplerGlib_INCLUDE_DIRS}")
 endif ()
-add_includes_ldflags ("${POPPLER_LIBRARIES}" "${POPPLER_INCLUDE_DIRS}")
 
 # zlib
-find_package (ZLIB REQUIRED)    # zlib
+find_package (ZLIB REQUIRED)
 add_includes_ldflags ("${ZLIB_LIBRARIES}" "${ZLIB_INCLUDE_DIRS}")
 
 # pthreads
-find_package (Threads REQUIRED) # pthreads
+find_package (Threads REQUIRED)
 set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} ${CMAKE_THREAD_LIBS_INIT})
 
 ## Additional features ##
@@ -452,6 +461,8 @@ Configuration:
 	Compiler:                   ${CMAKE_CXX_COMPILER}
 	Mathtex enabled:            ${ENABLE_MATHTEX}
 	CppUnit enabled:            ${ENABLE_CPPUNIT}
+	Advanced PDF Export         ${ADVANCED_PDF_EXPORT_POPPLER}
+	(private Poppler API)
 
 Unstable features:
 	Layers sidebar:             ${UNSTABLE_LAYERS_SIDEBAR}

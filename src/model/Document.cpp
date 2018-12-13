@@ -1,5 +1,7 @@
 #include "Document.h"
 
+#include "pdf/base/XojPdfAction.h"
+
 #include "LinkDestination.h"
 #include "XojPage.h"
 
@@ -33,14 +35,39 @@ Document::~Document()
 	XOJ_CHECK_TYPE(Document);
 
 	clearDocument(true);
+	freeTreeContentModel();
+
+	XOJ_RELEASE_TYPE(Document);
+}
+
+void Document::freeTreeContentModel()
+{
+	XOJ_CHECK_TYPE(Document);
 
 	if (this->contentsModel)
 	{
+		gtk_tree_model_foreach(this->contentsModel, (GtkTreeModelForeachFunc) freeTreeContentEntry, this);
+
 		g_object_unref(this->contentsModel);
 		this->contentsModel = NULL;
 	}
+}
 
-	XOJ_RELEASE_TYPE(Document);
+bool Document::freeTreeContentEntry(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc)
+{
+	XojLinkDest* link = NULL;
+	gtk_tree_model_get(treeModel, iter, DOCUMENT_LINKS_COLUMN_LINK, &link, -1);
+
+	if (link == NULL)
+	{
+		return false;
+	}
+
+	// The dispose function of XojLinkDest is not called, this workaround fixes the Memory Leak
+	delete link->dest;
+	link->dest = NULL;
+
+	return false;
 }
 
 void Document::lock()
@@ -98,6 +125,7 @@ void Document::clearDocument(bool destroy)
 	}
 
 	this->pages.clear();
+	freeTreeContentModel();
 
 	this->filename = "";
 	this->pdfFilename = "";
@@ -141,6 +169,69 @@ path Document::getPdfFilename()
 	return pdfFilename;
 }
 
+path Document::createSaveFolder(path lastSavePath)
+{
+	if (!filename.empty())
+	{
+		return filename.parent_path();
+	}
+	else if (!pdfFilename.empty())
+	{
+		return pdfFilename.parent_path();
+	}
+	else
+	{
+		return lastSavePath;
+	}
+}
+
+path Document::createSaveFilename(DocumentType type, string defaultSaveName)
+{
+	if (!filename.empty())
+	{
+		//This can be any extension
+		return filename.filename();
+	}
+	else if (!pdfFilename.empty())
+	{
+		path extension;
+		if (type == Document::XOPP)
+		{
+			extension = path(".pdf.xopp");
+		}
+		else if (type == Document::PDF)
+		{
+			extension = path(".xopp.pdf");
+		}
+		else
+		{
+			extension = path("");
+		}
+		return pdfFilename.filename().replace_extension(extension);
+	}
+	else
+	{
+		time_t curtime = time(NULL);
+		char stime[128];
+		strftime(stime, sizeof(stime), defaultSaveName.c_str(), localtime(&curtime));
+		path automaticName = path(stime);
+		if (type == Document::XOPP)
+		{
+			automaticName.replace_extension(".xopp");
+		}
+		else if (type == Document::XOJ)
+		{
+			automaticName.replace_extension(".xoj");
+		}
+		else if (type == Document::PDF)
+		{
+			automaticName.replace_extension(".pdf");
+		}
+		return automaticName.c_str();
+	}
+}
+
+
 cairo_surface_t* Document::getPreview()
 {
 	XOJ_CHECK_TYPE(Document);
@@ -164,7 +255,6 @@ void Document::setPreview(cairo_surface_t* preview)
 	{
 		this->preview = NULL;
 	}
-
 }
 
 path Document::getEvMetadataFilename()
@@ -214,7 +304,7 @@ size_t Document::findPdfPage(size_t pdfPage)
 	return -1;
 }
 
-void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter)
+void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterator* iter)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -222,7 +312,7 @@ void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter)
 	{
 		GtkTreeIter treeIter = { 0 };
 
-		XojPopplerAction* action = iter->getAction();
+		XojPdfAction* action = iter->getAction();
 		XojLinkDest* link = action->getDestination();
 
 		if (action->getTitle().empty())
@@ -243,7 +333,7 @@ void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter)
 		g_free(titleMarkup);
 		g_object_unref(link);
 
-		XojPopplerIter* child = iter->getChildIter();
+		XojPdfBookmarkIterator* child = iter->getChildIter();
 		if (child)
 		{
 			buildTreeContentsModel(&treeIter, child);
@@ -260,13 +350,9 @@ void Document::buildContentsModel()
 {
 	XOJ_CHECK_TYPE(Document);
 
-	if (this->contentsModel)
-	{
-		g_object_unref(this->contentsModel);
-		this->contentsModel = NULL;
-	}
+	freeTreeContentModel();
 
-	XojPopplerIter* iter = pdfDocument.getContentsIter();
+	XojPdfBookmarkIterator* iter = pdfDocument.getContentsIter();
 	if (iter == NULL)
 	{
 		// No Bookmarks
@@ -288,7 +374,6 @@ GtkTreeModel* Document::getContentsModel()
 bool Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc)
 {
 	XojLinkDest* link = NULL;
-
 	gtk_tree_model_get(treeModel, iter, DOCUMENT_LINKS_COLUMN_LINK, &link, -1);
 
 	if (link == NULL)
@@ -332,6 +417,8 @@ bool Document::readPdf(path filename, bool initPages, bool attachToDocument)
 	{
 		lastError = FS(_F("Document not loaded! ({1}), {2}") % filename % popplerError->message);
 		g_error_free(popplerError);
+		unlock();
+
 		return false;
 	}
 
@@ -351,7 +438,7 @@ bool Document::readPdf(path filename, bool initPages, bool attachToDocument)
 	{
 		for (size_t i = 0; i < pdfDocument.getPageCount(); i++)
 		{
-			XojPopplerPage* page = pdfDocument.getPage(i);
+			XojPdfPageSPtr page = pdfDocument.getPage(i);
 			PageRef p = new XojPage(page->getWidth(), page->getHeight());
 			p->setBackgroundPdfPageNr(i);
 			addPage(p);
@@ -450,14 +537,14 @@ PageRef Document::getPage(size_t page)
 	return this->pages[page];
 }
 
-XojPopplerPage* Document::getPdfPage(size_t page)
+XojPdfPageSPtr Document::getPdfPage(size_t page)
 {
 	XOJ_CHECK_TYPE(Document);
 
 	return this->pdfDocument.getPage(page);
 }
 
-XojPopplerDocument& Document::getPdfDocument()
+XojPdfDocument& Document::getPdfDocument()
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -470,6 +557,7 @@ void Document::operator=(Document& doc)
 
 	clearDocument();
 
+	// Copy PDF Document
 	this->pdfDocument = doc.pdfDocument;
 
 	this->password = doc.password;

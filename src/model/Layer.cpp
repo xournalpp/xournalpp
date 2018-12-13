@@ -90,7 +90,7 @@ void Layer::insertElement(Element* e, int pos)
 	}
 
 	// If the element should be inserted at the top
-	if (pos >= this->elements.size())
+	if (pos >= (int)this->elements.size())
 	{
 		this->elements.push_back(e);
 	}

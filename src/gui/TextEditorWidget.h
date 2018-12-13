@@ -361,7 +361,7 @@ static void gtk_invisible_realize(GtkWidget* widget)
 	GdkWindow* parent = gtk_widget_get_parent_window(widget);
 	if (parent == NULL)
 	{
-		parent = gtk_widget_get_root_window(widget);
+		parent = gdk_screen_get_root_window(gdk_screen_get_default());
 	}
 
 	GdkWindowAttr attributes;
@@ -379,8 +379,6 @@ static void gtk_invisible_realize(GtkWidget* widget)
 	gtk_widget_set_window(widget, gdk_window_new(parent, &attributes, attributes_mask));
 
 	gdk_window_set_user_data(gtk_widget_get_window(widget), widget);
-
-	gtk_widget_style_attach(widget);
 }
 
 static void gtk_invisible_style_set(GtkWidget* widget, GtkStyle* previous_style)

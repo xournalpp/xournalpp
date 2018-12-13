@@ -6,13 +6,15 @@
 #include "gui/MainWindow.h"
 #include "gui/toolbarMenubar/model/ToolbarColorNames.h"
 #include "gui/XournalView.h"
-#include "pdf/popplerdirect/PdfExport.h"
+#include "pdf/base/XojPdfExport.h"
+#include "pdf/base/XojPdfExportFactory.h"
 #include "xojfile/LoadHandler.h"
 
 #include <config.h>
 #include <config-dev.h>
 #include <config-paths.h>
 #include <i18n.h>
+#include <Stacktrace.h>
 
 #include <gtk/gtk.h>
 
@@ -26,6 +28,9 @@ namespace bf = boost::filesystem;
 #endif
 
 #ifdef __APPLE__
+#undef ENABLE_NLS
+#endif
+#ifdef WIN32
 #undef ENABLE_NLS
 #endif
 
@@ -190,14 +195,16 @@ int XournalMain::exportPdf(const char* input, const char* output)
 
 	GFile* file = g_file_new_for_commandline_arg(output);
 
-	PdfExport pdf(doc, NULL);
-	if (!pdf.createPdf(g_file_get_path(file)))
+	XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, NULL);
+	if (!pdfe->createPdf(g_file_get_path(file)))
 	{
-		cerr << pdf.getLastError() << endl;
+		cerr << pdfe->getLastError() << endl;
 
 		g_object_unref(file);
+		delete pdfe;
 		return -3;
 	}
+	delete pdfe;
 
 	g_object_unref(file);
 
@@ -248,7 +255,7 @@ int XournalMain::run(int argc, char* argv[])
 
 	if (optNoPdfCompress)
 	{
-		PdfWriter::setCompressPdfOutput(false);
+		XojPdfExportFactory::setCompressPdfOutput(false);
 	}
 
 	if (pdfFilename && optFilename && *optFilename)
@@ -257,7 +264,7 @@ int XournalMain::run(int argc, char* argv[])
 	}
 
 	// Init GTK Display
-	gdk_display_open_default_libgtk_only();
+	gtk_init(&argc, &argv);
 
 	initSettingsPath();
 
@@ -380,20 +387,8 @@ string XournalMain::findResourcePath(string searchFile)
 
 	// -----------------------------------------------------------------------
 
-#if __linux__
-
-	char result[PATH_MAX];
-	ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
-	const char* executableDir = NULL;
-	if (count != -1)
-	{
-		executableDir = dirname(result);
-	}
-	else
-	{
-		// Not found
-		return "";
-	}
+	path executableDir = Stacktrace::getExePath();
+	executableDir = executableDir.parent_path();
 
 	// First check if the files are available relative to the executable
 	// So a "portable" installation will be possible
@@ -417,8 +412,6 @@ string XournalMain::findResourcePath(string searchFile)
 	{
 		return relative4.parent_path().normalize().string();
 	}
-
-#endif
 
 	// Not found
 	return "";
@@ -449,7 +442,7 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath)
 		return;
 	}
 
-	string msg = _("Missing the needed UI file, could not find them at any location.\nNot relative\nNot in the Working Path\nNot in " PACKAGE_DATA_DIR);
+	string msg = FS(_F("Missing the needed UI file, could not find them at any location.\nNot relative\nNot in the Working Path\nNot in {1}") % PACKAGE_DATA_DIR);
 	Util::showErrorToUser(NULL, msg.c_str());
 
 	exit(12);

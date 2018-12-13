@@ -199,6 +199,8 @@ void Cursor::updateCursor()
 			case CURSOR_SELECTION_BOTTOM:
 				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_SB_V_DOUBLE_ARROW);
 				break;
+			default:
+				break;
 			}
 		}
 		else if (type == TOOL_PEN)
@@ -252,7 +254,10 @@ void Cursor::updateCursor()
 
 	if (gtk_widget_get_window(xournal->getWidget()))
 	{
-		gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
+		if (cursor != NULL)
+		{
+			gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
+		}
 
 		gtk_widget_set_sensitive(xournal->getWidget(), !this->busy);
 	}
@@ -328,7 +333,7 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 	if (big)
 	{
 		height = 22;
-		width = 12;
+		width = 22;
 	}
 
 	cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
@@ -336,15 +341,34 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 
 	if (big)
 	{
-		cairo_set_source_rgb(cr, 1, 1, 1);
+		if(size == 5)
+		{
+			cairo_set_source_rgb(cr, r, g, b);
+		}
+		else
+		{
+			cairo_set_source_rgb(cr, 1, 1, 1);
+		}
 		cairo_set_line_width(cr, 1.2);
-		cairo_move_to(cr, 1.5, 1.5);
-		cairo_line_to(cr, 2, 19);
-		cairo_line_to(cr, 5.5, 15.5);
-		cairo_line_to(cr, 8.5, 20.5);
-		cairo_line_to(cr, 10.5, 19);
-		cairo_line_to(cr, 8.5, 14);
-		cairo_line_to(cr, 13, 14);
+		
+		// Plain cursor drawing + color dot
+		// cairo_move_to(cr, 1.5, 1.5);
+		// cairo_line_to(cr, 2, 19);
+		// cairo_line_to(cr, 5.5, 15.5);
+		// cairo_line_to(cr, 8.5, 20.5);
+		// cairo_line_to(cr, 10.5, 19);
+		// cairo_line_to(cr, 8.5, 14);
+		// cairo_line_to(cr, 13, 14);
+
+
+		// Color dot
+		cairo_move_to(cr, 2, 19);
+		// Pencil cursor
+		cairo_line_to(cr, 2, 15);
+		cairo_line_to(cr, 15, 0.5);
+		cairo_line_to(cr, 19, 4);
+		cairo_line_to(cr, 6, 19);
+
 		cairo_close_path(cr);
 		cairo_fill_preserve(cr);
 
@@ -353,7 +377,8 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 	}
 
 	cairo_set_source_rgba(cr, r, g, b, alpha);
-	cairo_rectangle(cr, 0, 0, size, size);
+	// Correct the offset of the coloured dot for big-cursor mode
+	cairo_rectangle(cr, 0, big ? height-size : 0, size, size);
 	cairo_fill(cr);
 
 	cairo_destroy(cr);
@@ -364,9 +389,9 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 	//	gdk_pixbuf_save(pixbuf, "/home/andreas/xoj-cursor.png", "png", NULL, NULL);
 
 	cairo_surface_destroy(crCursor);
-
+	
 	GdkCursor* cursor = gdk_cursor_new_from_pixbuf(
-			gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, 1, 1);
+			gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, 1, height-size);
 
 	g_object_unref(pixbuf);
 

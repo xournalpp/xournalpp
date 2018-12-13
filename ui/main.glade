@@ -299,6 +299,22 @@
                         <property name="label" translatable="yes">Rec-Stop</property>
                       </object>
                     </child>
+					<child>
+                      <object class="GtkCheckMenuItem" id="menuSnapRotation">
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Rotation Snapping</property>
+                      </object>
+                    </child>
+					<child>
+                      <object class="GtkCheckMenuItem" id="menuSnapGrid">
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Grid Snapping</property>
+                      </object>
+                    </child>
                     <child>
                       <object class="GtkCheckMenuItem" id="menuViewSidebarVisible">
                         <property name="visible">True</property>
@@ -774,6 +790,7 @@
                         <property name="label" translatable="yes">Select Object</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
+                        <accelerator key="o" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>

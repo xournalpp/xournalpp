@@ -4,19 +4,20 @@
 #include "control/Control.h"
 #include "control/xojfile/XojExportHandler.h"
 #include "gui/dialog/ExportDialog.h"
-#include "pdf/popplerdirect/PdfExport.h"
+#include "pdf/base/XojPdfExport.h"
+#include "pdf/base/XojPdfExportFactory.h"
 #include "view/PdfView.h"
 
 #include <i18n.h>
-
+#include <config-features.h>
 
 CustomExportJob::CustomExportJob(Control* control)
  : BaseExportJob(control, _("Custom Export")),
    pngDpi(300),
-   exportTypePdf(false),
-   exportTypeXoj(false),
    surface(NULL),
-   cr(NULL)
+   cr(NULL),
+   exportTypePdf(false),
+   exportTypeXoj(false)
 {
 	XOJ_INIT_TYPE(CustomExportJob);
 }
@@ -39,9 +40,11 @@ void CustomExportJob::addFilterToDialog()
 {
 	XOJ_CHECK_TYPE(CustomExportJob);
 
-	addFileFilterToDialog(_C("PDF files"), "*.pdf");
-	addFileFilterToDialog(_C("PNG graphics"), "*.png");
-	addFileFilterToDialog(_C("Xournal (Compatibility)"), "*.xoj");
+	addFileFilterToDialog(EXPORT_PDF, "*.pdf");
+	addFileFilterToDialog(EXPORT_PDF_NOBG, "*.pdf");
+	addFileFilterToDialog(EXPORT_PNG, "*.png");
+	addFileFilterToDialog(EXPORT_PNG_NOBG, "*.png");
+	addFileFilterToDialog(EXPORT_XOJ, "*.xoj");
 }
 
 bool CustomExportJob::isUriValid(string& uri)
@@ -52,6 +55,8 @@ bool CustomExportJob::isUriValid(string& uri)
 	{
 		return false;
 	}
+
+	this->chosenFilterName = BaseExportJob::getFilterName();
 
 	string ext = filename.extension().string();
 	if (ext != ".pdf" && ext != ".png" && ext != ".xoj")
@@ -143,10 +148,10 @@ string CustomExportJob::getFilenameWithNumber(int no)
 	if (no == -1)
 	{
 		// No number to add
-		return filename.c_str();
+		return filename.string();
 	}
 
-	string filepath = filename.c_str();
+	string filepath = filename.string();
 	size_t dotPos = filepath.find_last_of(".");
 	if (dotPos == string::npos)
 	{
@@ -172,12 +177,19 @@ void CustomExportJob::exportPngPage(int pageId, int id, double zoom, DocumentVie
 	if (page->getBackgroundType().isPdfPage())
 	{
 		int pgNo = page->getPdfPageNr();
-		XojPopplerPage* popplerPage = doc->getPdfPage(pgNo);
+		XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
 		PdfView::drawPage(NULL, popplerPage, cr, zoom, page->getWidth(), page->getHeight());
 	}
 
-	view.drawPage(page, this->cr, true);
+	if (this->chosenFilterName == EXPORT_PNG_NOBG)
+	{
+		view.drawPage(page, this->cr, true, true);
+	}
+	else
+	{
+		view.drawPage(page, this->cr, true);
+	}
 
 	if (!freeSurface(id))
 	{
@@ -267,16 +279,24 @@ void CustomExportJob::run()
 		// the ui is blocked, so there should be no changes...
 		Document* doc = control->getDocument();
 
-		PdfExport pdfe(doc, control);
-
-		// if (!pdfe.createPdf(this->filename, exportRange))
-
-		// TODO Currently export always the full PDF, the page by page routine
-		// is currently not working correct!
-		if (!pdfe.createPdf(this->filename))
+		XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
+		
+		if (this->chosenFilterName == EXPORT_PDF_NOBG)
 		{
-			this->errorMsg = pdfe.getLastError();
+			pdfe->setNoBackgroundExport(true);
 		}
+
+#ifdef ADVANCED_PDF_EXPORT_POPPLER
+		// Not working with ADVANCED_PDF_EXPORT_POPPLER
+		if (!pdfe->createPdf(this->filename))
+#else
+		if (!pdfe->createPdf(this->filename, exportRange))
+#endif
+		{
+			this->errorMsg = pdfe->getLastError();
+		}
+
+		delete pdfe;
 	}
 	else
 	{

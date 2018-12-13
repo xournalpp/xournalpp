@@ -1,4 +1,5 @@
 #include "BackgroundImageContents.h"
+#include <Util.h>
 
 BackgroundImageContents::BackgroundImageContents(path filename, GError** error)
 {
@@ -8,7 +9,7 @@ BackgroundImageContents::BackgroundImageContents(path filename, GError** error)
 	this->ref = 1;
 	this->pageId = -1;
 	this->attach = false;
-	this->pixbuf = gdk_pixbuf_new_from_file(filename.c_str(), error);
+	this->pixbuf = gdk_pixbuf_new_from_file(PATH_TO_CSTR(filename), error);
 }
 
 BackgroundImageContents::~BackgroundImageContents()

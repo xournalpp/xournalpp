@@ -421,11 +421,17 @@ void PdfExport::addPopplerDocument(XojPopplerDocument doc)
 	this->documents.push_back(d);
 }
 
-bool PdfExport::addPopplerPage(XojPopplerPage* pdf, XojPopplerDocument doc)
+bool PdfExport::addPopplerPage(XojPdfPageSPtr pdf, XojPopplerDocument doc)
 {
 	XOJ_CHECK_TYPE(PdfExport);
 
-	Page* page = pdf->getPage();
+	XojPopplerPage* pdfPage = dynamic_cast<XojPopplerPage*>(pdf.get());
+	if (pdfPage == NULL)
+	{
+		return false;
+	}
+
+	Page* page = pdfPage->getPage();
 	static int otherObjectId = 1;
 
 	this->resources = page->getResourceDict();
@@ -595,13 +601,13 @@ bool PdfExport::writePage(int pageNr)
 
 	this->writer->startStream();
 
-	addPopplerDocument(doc->getPdfDocument());
-	currentPdfDoc = doc->getPdfDocument();
+	addPopplerDocument(*((XojPopplerDocument*)doc->getPdfDocument().getDocumentInterface()));
+	currentPdfDoc = *((XojPopplerDocument*)doc->getPdfDocument().getDocumentInterface());
 
 	if (page->getBackgroundType().isPdfPage())
 	{
-		XojPopplerPage* pdf = doc->getPdfPage(page->getPdfPageNr());
-		if (!addPopplerPage(pdf, currentPdfDoc))
+		XojPdfPageSPtr pdfPage = doc->getPdfPage(page->getPdfPageNr());
+		if (!addPopplerPage(pdfPage, currentPdfDoc))
 		{
 			return false;
 		}
@@ -663,8 +669,7 @@ bool PdfExport::createPdf(path file, PageRangeVector& range)
 	{
 		for (int i = e->getFirst(); i <= e->getLast(); i++)
 		{
-			int p = i - 1;
-			if (p < 0 || p >= doc->getPageCount())
+			if (i < 0 || i > doc->getPageCount())
 			{
 				continue;
 			}

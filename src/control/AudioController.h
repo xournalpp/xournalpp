@@ -2,15 +2,17 @@
 
 #include <XournalType.h>
 #include "settings/Settings.h"
+#include "Control.h"
 #include <string>
 using std::string;
 
 class AudioController
 {
 public:
-	AudioController(Settings* settings);
+	AudioController(Settings* settings, Control* control);
 	virtual ~AudioController();
 
+public:
 	bool isRecording();
 	void recToggle();
 	void recStartStop(bool record);
@@ -22,7 +24,8 @@ protected:
 	bool recording = false;
 	string audioFilename;
 	gint sttime = 0;	
-	Settings * settings;
+	Settings* settings;
+	Control* control;
 
 private:
 	XOJ_TYPE_ATTRIB;

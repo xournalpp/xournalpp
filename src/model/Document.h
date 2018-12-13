@@ -17,10 +17,9 @@
 #include "LinkDestination.h"
 #include "PageRef.h"
 
-#include "pdf/popplerdirect/poppler/XojPopplerDocument.h"
-#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
-#include "pdf/popplerdirect/poppler/XojPopplerIter.h"
-#include "pdf/popplerdirect/poppler/XojPopplerAction.h"
+#include "pdf/base/XojPdfDocument.h"
+#include "pdf/base/XojPdfPage.h"
+#include "pdf/base/XojPdfBookmarkIterator.h"
 
 #include <StringUtils.h>
 #include <XournalType.h>
@@ -37,12 +36,19 @@ public:
 	virtual ~Document();
 
 public:
+	enum DocumentType
+	{
+		XOPP,
+		XOJ,
+		PDF
+	};
+
 	bool readPdf(path filename, bool initPages, bool attachToDocument);
 
 	size_t getPageCount();
 	size_t getPdfPageCount();
-	XojPopplerPage* getPdfPage(size_t page);
-	XojPopplerDocument& getPdfDocument();
+	XojPdfPageSPtr getPdfPage(size_t page);
+	XojPdfDocument& getPdfDocument();
 
 	void insertPage(PageRef p, size_t position);
 	void addPage(PageRef p);
@@ -63,6 +69,8 @@ public:
 	void setFilename(path filename);
 	path getFilename();
 	path getPdfFilename();
+	path createSaveFolder(path);
+	path createSaveFilename(DocumentType, string);
 
 	path getEvMetadataFilename();
 
@@ -84,7 +92,10 @@ public:
 
 private:
 	void buildContentsModel();
-	void buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter);
+	void freeTreeContentModel();
+	static bool freeTreeContentEntry(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc);
+
+	void buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterator* iter);
 	void updateIndexPageNumbers();
 	static bool fillPageLabels(GtkTreeModel* tree_model, GtkTreePath* path, GtkTreeIter* iter, Document* doc);
 
@@ -94,7 +105,7 @@ private:
 
 	DocumentHandler* handler;
 
-	XojPopplerDocument pdfDocument;
+	XojPdfDocument pdfDocument;
 
 	path filename;
 	path pdfFilename;

@@ -172,6 +172,19 @@ bool Stroke::isInSelection(ShapeContainer* container)
 	return true;
 }
 
+void Stroke::setFirstPoint(double x, double y)
+{
+	XOJ_CHECK_TYPE(Stroke);
+
+	if (this->pointCount > 0)
+	{
+		Point& p = this->points[0];
+		p.x = x;
+		p.y = y;
+		this->sizeCalculated = false;
+	}
+}
+
 void Stroke::setLastPoint(double x, double y)
 {
 	XOJ_CHECK_TYPE(Stroke);
@@ -322,7 +335,7 @@ void Stroke::rotate(double x0, double y0, double xo, double yo, double th)
 
 		p.x -= x0;	//move to origin
 		p.y -= y0;
-		double offset = 0; // __DBL_EPSILON__;
+		double offset = 0.7; // __DBL_EPSILON__;
 		p.x -= xo-offset;	//center to origin
 		p.y -= yo-offset;
 
@@ -570,7 +583,7 @@ void Stroke::debugPrint()
 {
 	XOJ_CHECK_TYPE(Stroke);
 
-	cout << bl::format("Stroke {1} / hasPressure() = {2}") % (long) this % this->hasPressure() << endl;
+	cout << bl::format("Stroke {1} / hasPressure() = {2}") % (uint64_t) this % this->hasPressure() << endl;
 
 	for (int i = 0; i < this->pointCount; i++)
 	{

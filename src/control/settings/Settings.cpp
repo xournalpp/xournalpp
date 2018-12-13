@@ -5,6 +5,7 @@
 
 #include <config.h>
 #include <i18n.h>
+#include <Util.h>
 
 #include <boost/filesystem.hpp>
 
@@ -83,7 +84,7 @@ void Settings::loadDefault()
 
 	this->enableLeafEnterWorkaround = true;
 
-	this->defaultSaveName = _("%F-Note-%H-%M.xopp");
+	this->defaultSaveName = _("%F-Note-%H-%M");
 
 	// Eraser
 	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
@@ -500,7 +501,7 @@ bool Settings::load()
 		return false;
 	}
 
-	xmlDocPtr doc = xmlParseFile(filename.c_str());
+	xmlDocPtr doc = xmlParseFile(PATH_TO_CSTR(filename));
 
 	if (doc == NULL)
 	{
@@ -671,8 +672,8 @@ void Settings::save()
 	WRITE_BOOL_PROP(presureSensitivity);
 
 	WRITE_STRING_PROP(selectedToolbar);
-	WRITE_STRING_PROP(lastSavePath);
-	WRITE_STRING_PROP(lastImagePath);
+	WRITE_STRING_PROP(lastSavePath.string());
+	WRITE_STRING_PROP(lastImagePath.string());
 
 	WRITE_INT_PROP(displayDpi);
 	WRITE_INT_PROP(mainWndWidth);
@@ -761,7 +762,7 @@ void Settings::save()
 		saveData(root, p.first, p.second);
 	}
 
-	xmlSaveFormatFileEnc(filename.c_str(), doc, "UTF-8", 1);
+	xmlSaveFormatFileEnc(PATH_TO_CSTR(filename), doc, "UTF-8", 1);
 	xmlFreeDoc(doc);
 }
 

@@ -73,12 +73,13 @@ private:
 	static gboolean drawCallback(GtkWidget* widget, cairo_t* cr, BaseElementView* element);
 	static gboolean mouseButtonPressCallback(GtkWidget* widget, GdkEventButton* event, BaseElementView* element);
 
+private:
+	XOJ_TYPE_ATTRIB;
+
 protected:
 	BackgroundSelectDialogBase* dlg;
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Element ID, starting with 0
 	 */

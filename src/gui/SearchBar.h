@@ -42,5 +42,5 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	Control* control;
-	GdkColor defaultColor;
+	GtkCssProvider* cssTextFild;
 };

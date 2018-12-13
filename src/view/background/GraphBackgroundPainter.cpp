@@ -27,6 +27,13 @@ void GraphBackgroundPainter::resetConfig()
 	this->roundMargin = 0;
 }
 
+double GraphBackgroundPainter::getUnitSize()
+{
+	XOJ_CHECK_TYPE(GraphBackgroundPainter);
+
+	return this->drawRaster1;
+}
+
 void GraphBackgroundPainter::paint()
 {
 	XOJ_CHECK_TYPE(GraphBackgroundPainter);

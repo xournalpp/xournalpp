@@ -29,12 +29,11 @@ public:
 
 		Catalog* catalog = this->doc->getCatalog();
 
-		pages = new XojPopplerPage*[doc->getNumPages()];
 		for (int i = 0; i < doc->getNumPages(); i++)
 		{
 			Page* page = catalog->getPage(i + 1);
 
-			pages[i] = new XojPopplerPage(doc, &this->docMutex, output_dev, page, i);
+			pages.push_back(std::make_shared<XojPopplerPage>(doc, &this->docMutex, output_dev, page, i));
 		}
 		
 		this->layers_rbgroups = NULL;
@@ -48,13 +47,7 @@ private:
 
 		layersFree();
 
-		for (int i = 0; i < doc->getNumPages(); i++)
-		{
-			delete pages[i];
-		}
-
-		delete[] pages;
-		this->pages = NULL;
+		this->pages.clear();
 		delete output_dev;
 		this->output_dev = NULL;
 		delete doc;
@@ -130,7 +123,7 @@ public:
 	GList* layers_rbgroups;
 	CairoOutputDev* output_dev;
 
-	XojPopplerPage** pages;
+	vector<XojPdfPageSPtr> pages;
 
 private:
 	int ref;
@@ -182,12 +175,19 @@ void XojPopplerDocument::operator=(XojPopplerDocument& doc)
 {
 	XOJ_CHECK_TYPE(XojPopplerDocument);
 
+	this->assign(&doc);
+}
+
+void XojPopplerDocument::assign(XojPdfDocumentInterface* doc)
+{
+	XOJ_CHECK_TYPE(XojPopplerDocument);
+
 	if (this->data)
 	{
 		this->data->unreference();
 	}
 
-	this->data = doc.data;
+	this->data = ((XojPopplerDocument*)doc)->data;
 
 	if (this->data)
 	{
@@ -195,7 +195,14 @@ void XojPopplerDocument::operator=(XojPopplerDocument& doc)
 	}
 }
 
-XojPopplerIter* XojPopplerDocument::getContentsIter()
+bool XojPopplerDocument::equals(XojPdfDocumentInterface* doc)
+{
+	XOJ_CHECK_TYPE(XojPopplerDocument);
+
+	return this->data == ((XojPopplerDocument*)doc)->data;
+}
+
+XojPdfBookmarkIterator* XojPopplerDocument::getContentsIter()
 {
 	XOJ_CHECK_TYPE(XojPopplerDocument);
 
@@ -219,7 +226,7 @@ XojPopplerIter* XojPopplerDocument::getContentsIter()
 	return new XojPopplerIter(*this, items);
 }
 
-XojPopplerPage* XojPopplerDocument::getPage(size_t page)
+XojPdfPageSPtr XojPopplerDocument::getPage(size_t page)
 {
 	XOJ_CHECK_TYPE(XojPopplerDocument);
 

@@ -245,3 +245,17 @@ XOJ_DECLARE_TYPE(DottedBackgroundPainter, 233);
 XOJ_DECLARE_TYPE(BaseBackgroundPainter, 234);
 XOJ_DECLARE_TYPE(BackgroundConfig, 235);
 XOJ_DECLARE_TYPE(RotateUndoAction, 236);
+XOJ_DECLARE_TYPE(XojPdfPage, 237);
+XOJ_DECLARE_TYPE(XojPdfBookmarkIterator, 238);
+XOJ_DECLARE_TYPE(XojPdfDocument, 239);
+XOJ_DECLARE_TYPE(XojPdfAction, 240);
+XOJ_DECLARE_TYPE(XojPdfExport, 241);
+XOJ_DECLARE_TYPE(XojPdfExportFactory, 242);
+XOJ_DECLARE_TYPE(XojPdfDocumentInterface, 243);
+XOJ_DECLARE_TYPE(PopplerGlibDocument, 244);
+XOJ_DECLARE_TYPE(PopplerGlibPage, 245);
+XOJ_DECLARE_TYPE(PopplerGlibPageBookmarkIterator, 246);
+XOJ_DECLARE_TYPE(PopplerGlibAction, 247);
+XOJ_DECLARE_TYPE(XojCairoPdfExport, 248);
+
+

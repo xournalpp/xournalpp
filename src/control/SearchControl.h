@@ -13,12 +13,12 @@
 
 #include "model/PageRef.h"
 #include "util/GtkColorWrapper.h"
-#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "pdf/base/XojPdfPage.h"
 
 class SearchControl
 {
 public:
-	SearchControl(PageRef page, XojPopplerPage* pdf);
+	SearchControl(PageRef page, XojPdfPageSPtr pdf);
 	virtual ~SearchControl();
 
 	bool search(string text, int* occures, double* top);
@@ -30,7 +30,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	PageRef page;
-	XojPopplerPage* pdf;
+	XojPdfPageSPtr pdf;
 
-	GList* results;
+	vector<XojPdfRectangle> results;
 };

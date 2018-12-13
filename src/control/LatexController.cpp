@@ -82,6 +82,11 @@ bool LatexController::runCommand()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
+#ifdef WIN32
+	g_error("LaTex is currently not Supported for Windows!");
+	return false;
+#else
+
 	// can change font colour later with more features
 	string fontcolour = "black";
 	// dpi 300 is a good balance
@@ -118,6 +123,7 @@ bool LatexController::runCommand()
 	signal(SIGCHLD, texhandler);
 
 	return success;
+#endif
 }
 
 /**
@@ -190,13 +196,14 @@ void LatexController::showTexEditDialog()
 	dlg = new LatexDialog(control->getGladeSearchPath());
 
 	// For 'real time' LaTex rendering in the dialog
-	g_signal_connect(dlg->getTexBox(), "changed", G_CALLBACK(handleTexChanged), this);
 	dlg->setTex(initalTex);
-
+	g_signal_connect(dlg->getTextBuffer(), "changed", G_CALLBACK(handleTexChanged), this);
+	
+	
 	// The controller owns the tempRender because, on signal changed, he has to handle the old/new renders
 	if (temporaryRender != NULL)
 	{
-		dlg->setTempRender(temporaryRender->getImage());
+		dlg->setTempRender(temporaryRender->getImage(), initalTex.size());
 	}
 
 	dlg->show(GTK_WINDOW(control->getWindow()->getWindow()));
@@ -209,17 +216,18 @@ void LatexController::showTexEditDialog()
 }
 
 /**
- * Text-changed handler: when the Entry in the dialog changes,
+ * Text-changed handler: when the Buffer in the dialog changes,
  * this handler updates currentTex, removes the previous existing render and creates
- * a new one. We need to do it through 'thisContr' because signal handlers
+ * a new one. We need to do it through 'self' because signal handlers
  * cannot directly access non-static methods and non-static fields such as
- * 'dlg' so we need to wrap all the dlg method inside small methods in 'thisContr'
+ * 'dlg' so we need to wrap all the dlg method inside small methods in 'self'
  */
-void LatexController::handleTexChanged(GtkWidget* widget, LatexController* self)
+void LatexController::handleTexChanged(GtkTextBuffer* buffer, LatexController* self)
 {
 	XOJ_CHECK_TYPE_OBJ(self, LatexController);
-
-	self->setCurrentTex(gtk_entry_get_text(GTK_ENTRY(widget)));
+	
+	//Right now, this is the only way I know to extract text from TextBuffer
+	self->setCurrentTex(gtk_text_buffer_get_text(buffer, self->getStartIterator(buffer), self->getEndIterator(buffer), TRUE));
 	self->deletePreviousRender();
 	self->runCommand();
 	self->insertTexImage(true);
@@ -239,7 +247,7 @@ TexImage* LatexController::getTemporaryRender()
 void LatexController::setImageInDialog(cairo_surface_t* image)
 {
 	XOJ_CHECK_TYPE(LatexController);
-	dlg->setTempRender(image);
+	dlg->setTempRender(image, currentTex.size());
 }
 
 void LatexController::deletePreviousRender()
@@ -253,6 +261,20 @@ void LatexController::setCurrentTex(string currentTex)
 {
 	XOJ_CHECK_TYPE(LatexController);
 	this->currentTex = currentTex;
+}
+
+GtkTextIter* LatexController::getStartIterator(GtkTextBuffer* buffer)
+{
+	XOJ_CHECK_TYPE(LatexController);
+	gtk_text_buffer_get_start_iter(buffer, &this->start);
+	return &this->start;
+}
+
+GtkTextIter* LatexController::getEndIterator(GtkTextBuffer* buffer)
+{
+	XOJ_CHECK_TYPE(LatexController);
+	gtk_text_buffer_get_end_iter(buffer, &this->end);
+	return &this->end;
 }
 
 void LatexController::deleteOldImage()

@@ -94,7 +94,7 @@ void SaveJob::updatePreview(Control* control)
 		if (page->getBackgroundType().isPdfPage())
 		{
 			int pgNo = page->getPdfPageNr();
-			XojPopplerPage* popplerPage = doc->getPdfPage(pgNo);
+			XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 			if (popplerPage)
 			{
 				popplerPage->render(cr, false);

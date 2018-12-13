@@ -75,7 +75,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkEntry" id="texEntry">
+          <object class="GtkTextView" id="texView">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
           </object>
