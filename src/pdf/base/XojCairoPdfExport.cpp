@@ -11,7 +11,8 @@ XojCairoPdfExport::XojCairoPdfExport(Document* doc, ProgressListener* progressLi
  : doc(doc),
    progressListener(progressListener),
    surface(NULL),
-   cr(NULL)
+   cr(NULL),
+   noBackgroundExport(false)
 {
     XOJ_INIT_TYPE(XojCairoPdfExport);
 }
@@ -26,6 +27,15 @@ XojCairoPdfExport::~XojCairoPdfExport()
 	}
 
     XOJ_RELEASE_TYPE(XojCairoPdfExport);
+}
+
+/**
+ * Export without background
+ */
+void XojCairoPdfExport::setNoBackgroundExport(bool noBackgroundExport)
+{
+	XOJ_CHECK_TYPE(XojCairoPdfExport);
+	this->noBackgroundExport = noBackgroundExport;
 }
 
 bool XojCairoPdfExport::startPdf(path file)
@@ -63,7 +73,7 @@ void XojCairoPdfExport::exportPage(size_t page)
 
 	DocumentView view;
 
-	if (p->getBackgroundType().isPdfPage())
+	if (p->getBackgroundType().isPdfPage() && !noBackgroundExport)
 	{
 		int pgNo = p->getPdfPageNr();
 		XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
@@ -71,7 +81,7 @@ void XojCairoPdfExport::exportPage(size_t page)
 		popplerPage->render(cr, true);
 	}
 
-	view.drawPage(p, this->cr, true /* dont render eraseable */);
+	view.drawPage(p, this->cr, true /* dont render eraseable */, noBackgroundExport);
 
 	// next page
 	cairo_show_page(this->cr);

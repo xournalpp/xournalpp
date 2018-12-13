@@ -27,6 +27,11 @@ public:
 	virtual bool createPdf(path file, PageRangeVector& range);
 	virtual string getLastError();
 
+	/**
+	 * Export without background
+	 */
+	virtual void setNoBackgroundExport(bool noBackgroundExport);
+
 private:
 	bool startPdf(path file);
 	void endPdf();
@@ -40,6 +45,8 @@ private:
 
 	cairo_surface_t* surface;
 	cairo_t* cr;
+
+	bool noBackgroundExport;
 
 	string lastError;
 };

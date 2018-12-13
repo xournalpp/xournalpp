@@ -457,13 +457,18 @@ void DocumentView::drawBackground()
  * @param page The page to draw
  * @param cr Draw to thgis context
  * @param dontRenderEditingStroke false to draw currently drawing stroke
+ * @param hideBackground true to hide the background
  */
-void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke)
+void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hideBackground)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
 	initDrawing(page, cr, dontRenderEditingStroke);
-	drawBackground();
+
+	if (!hideBackground)
+	{
+		drawBackground();
+	}
 
 	int layer = 0;
 	for (Layer* l : *page->getLayers())
