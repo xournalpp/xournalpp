@@ -57,10 +57,9 @@ bool PdfExportJob::isUriValid(string& uri)
 		Util::showErrorToUser(control->getGtkWindow(), msg);
 		return false;
 	}
-
+	
 	return true;
 }
-
 
 
 void PdfExportJob::run()

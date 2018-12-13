@@ -79,5 +79,5 @@ private:
 
 	string lastError;
 
-	string choosenFilterName;
+	string chosenFilterName;
 };

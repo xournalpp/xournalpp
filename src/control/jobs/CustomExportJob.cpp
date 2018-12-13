@@ -10,8 +10,6 @@
 
 #include <i18n.h>
 #include <config-features.h>
-#include <iostream>
-
 
 CustomExportJob::CustomExportJob(Control* control)
  : BaseExportJob(control, _("Custom Export")),
@@ -58,7 +56,7 @@ bool CustomExportJob::isUriValid(string& uri)
 		return false;
 	}
 
-	this->choosenFilterName = BaseExportJob::getFilterName();
+	this->chosenFilterName = BaseExportJob::getFilterName();
 
 	string ext = filename.extension().string();
 	if (ext != ".pdf" && ext != ".png" && ext != ".xoj")
@@ -180,11 +178,11 @@ void CustomExportJob::exportPngPage(int pageId, int id, double zoom, DocumentVie
 	{
 		int pgNo = page->getPdfPageNr();
 		XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
-	
+
 		PdfView::drawPage(NULL, popplerPage, cr, zoom, page->getWidth(), page->getHeight());
 	}
 
-	if (this->choosenFilterName == EXPORT_PNG_NOBG)
+	if (this->chosenFilterName == EXPORT_PNG_NOBG)
 	{
 		view.drawPage(page, this->cr, true, true);
 	}
@@ -280,10 +278,10 @@ void CustomExportJob::run()
 		// don't lock the page here for the whole flow, else we get a dead lock...
 		// the ui is blocked, so there should be no changes...
 		Document* doc = control->getDocument();
-		
+
 		XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
 		
-		if (this->choosenFilterName == EXPORT_PDF_NOBG)
+		if (this->chosenFilterName == EXPORT_PDF_NOBG)
 		{
 			pdfe->setNoBackgroundExport(true);
 		}
