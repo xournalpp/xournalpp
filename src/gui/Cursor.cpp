@@ -339,9 +339,16 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 	cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
 	cairo_t* cr = cairo_create(crCursor);
 
-	if (big && size != 5) //size == 5 for highlighter
+	if (big)
 	{
-		cairo_set_source_rgb(cr, 1, 1, 1);
+		if(size == 5)
+		{
+			cairo_set_source_rgb(cr, r, g, b);
+		}
+		else
+		{
+			cairo_set_source_rgb(cr, 1, 1, 1);
+		}
 		cairo_set_line_width(cr, 1.2);
 		
 		// Plain cursor drawing + color dot

@@ -104,10 +104,6 @@ void ExportDialog::show(GtkWindow* parent)
 	{
 		confirmed = true;
 	}
-	else
-	{
-		return;
-	}
 
 	gtk_widget_hide(this->window);
 }
