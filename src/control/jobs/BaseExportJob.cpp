@@ -35,6 +35,14 @@ void BaseExportJob::addFileFilterToDialog(string name, string pattern)
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 }
 
+string BaseExportJob::getFilterName()
+{
+	XOJ_CHECK_TYPE(BaseExportJob);
+	
+	GtkFileFilter* filter = gtk_file_chooser_get_filter(GTK_FILE_CHOOSER(dialog));
+	return gtk_file_filter_get_name(filter);
+}
+
 void BaseExportJob::prepareSavePath(path& path)
 {
 	XOJ_CHECK_TYPE(BaseExportJob);

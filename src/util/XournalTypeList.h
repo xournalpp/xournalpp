@@ -259,4 +259,3 @@ XOJ_DECLARE_TYPE(PopplerGlibAction, 247);
 XOJ_DECLARE_TYPE(XojCairoPdfExport, 248);
 
 
-

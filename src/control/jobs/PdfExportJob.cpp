@@ -57,15 +57,17 @@ bool PdfExportJob::isUriValid(string& uri)
 		Util::showErrorToUser(control->getGtkWindow(), msg);
 		return false;
 	}
-
+	
 	return true;
 }
+
 
 void PdfExportJob::run()
 {
 	XOJ_CHECK_TYPE(PdfExportJob);
 
 	Document* doc = control->getDocument();
+
 	doc->lock();
 	XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
 	doc->unlock();

@@ -118,8 +118,7 @@ bool XojCairoPdfExport::createPdf(path file, PageRangeVector& range)
 	{
 		for (int i = e->getFirst(); i <= e->getLast(); i++)
 		{
-			int p = i - 1;
-			if (p < 0 || p >= (int)doc->getPageCount())
+			if (i < 0 || i > (int)doc->getPageCount())
 			{
 				continue;
 			}

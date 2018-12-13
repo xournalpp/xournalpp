@@ -11,7 +11,6 @@
 #include <i18n.h>
 #include <config-features.h>
 
-
 CustomExportJob::CustomExportJob(Control* control)
  : BaseExportJob(control, _("Custom Export")),
    pngDpi(300),
@@ -41,9 +40,11 @@ void CustomExportJob::addFilterToDialog()
 {
 	XOJ_CHECK_TYPE(CustomExportJob);
 
-	addFileFilterToDialog(_C("PDF files"), "*.pdf");
-	addFileFilterToDialog(_C("PNG graphics"), "*.png");
-	addFileFilterToDialog(_C("Xournal (Compatibility)"), "*.xoj");
+	addFileFilterToDialog(EXPORT_PDF, "*.pdf");
+	addFileFilterToDialog(EXPORT_PDF_NOBG, "*.pdf");
+	addFileFilterToDialog(EXPORT_PNG, "*.png");
+	addFileFilterToDialog(EXPORT_PNG_NOBG, "*.png");
+	addFileFilterToDialog(EXPORT_XOJ, "*.xoj");
 }
 
 bool CustomExportJob::isUriValid(string& uri)
@@ -54,6 +55,8 @@ bool CustomExportJob::isUriValid(string& uri)
 	{
 		return false;
 	}
+
+	this->chosenFilterName = BaseExportJob::getFilterName();
 
 	string ext = filename.extension().string();
 	if (ext != ".pdf" && ext != ".png" && ext != ".xoj")
@@ -179,7 +182,14 @@ void CustomExportJob::exportPngPage(int pageId, int id, double zoom, DocumentVie
 		PdfView::drawPage(NULL, popplerPage, cr, zoom, page->getWidth(), page->getHeight());
 	}
 
-	view.drawPage(page, this->cr, true);
+	if (this->chosenFilterName == EXPORT_PNG_NOBG)
+	{
+		view.drawPage(page, this->cr, true, true);
+	}
+	else
+	{
+		view.drawPage(page, this->cr, true);
+	}
 
 	if (!freeSurface(id))
 	{
@@ -270,7 +280,11 @@ void CustomExportJob::run()
 		Document* doc = control->getDocument();
 
 		XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
-
+		
+		if (this->chosenFilterName == EXPORT_PDF_NOBG)
+		{
+			pdfe->setNoBackgroundExport(true);
+		}
 
 #ifdef ADVANCED_PDF_EXPORT_POPPLER
 		// Not working with ADVANCED_PDF_EXPORT_POPPLER
