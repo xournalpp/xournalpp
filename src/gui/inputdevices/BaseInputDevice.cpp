@@ -113,8 +113,9 @@ void BaseInputDevice::readPositionAndPressure(GdkEventMotion* event, double& x, 
 
 	bool presureSensitivity = view->getControl()->getSettings()->isPresureSensitivity();
 
-	if (presureSensitivity)
+	if (!presureSensitivity)
 	{
+		// No pressure sensitivity
 		return;
 	}
 
