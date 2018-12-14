@@ -262,6 +262,13 @@ int XournalMain::run(int argc, char* argv[])
 	{
 		return exportPdf(*optFilename, pdfFilename);
 	}
+	
+	// Checks for input method compatibility
+	if(strcmp(g_getenv("GTK_IM_MODULE"), "xim") == 0)
+	{
+		g_setenv("GTK_IM_MODULE", "ibus", true);
+		g_warning("Unsupported input method: xim, changed to: ibus");
+	}
 
 	// Init GTK Display
 	gtk_init(&argc, &argv);

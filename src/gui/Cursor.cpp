@@ -342,6 +342,7 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 
 	if (big)
 	{
+		// When using highlighter, paint the icon with the current color
 		if(size == 5)
 		{
 			cairo_set_source_rgb(cr, r, g, b);
