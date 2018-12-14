@@ -238,16 +238,17 @@ void Cursor::updateCursor()
 				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_SB_V_DOUBLE_ARROW);
 			}
 		}
-		else if (type != TOOL_SELECT_OBJECT) // other selections are handled before anyway, because you can move a selection with every tool
+		else if (type == TOOL_SELECT_OBJECT)
 		{
-			if (type == TOOL_PLAY_OBJECT)
-			{
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_HAND2);
-			}
-			else
-			{
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_TCROSS);
-			}
+			cursor = gdk_cursor_new_from_name(gdk_window_get_display(window),"default");
+		}
+		else if (type == TOOL_PLAY_OBJECT) 
+		{
+			cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_HAND2);
+		}
+		else // other selections are handled before anyway, because you can move a selection with every tool
+		{
+			cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_TCROSS);
 		}
 
 	}
