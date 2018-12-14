@@ -119,10 +119,11 @@ GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 	{
 		xoj->input = new DirectAxisInputDevice(GTK_WIDGET(xoj), view);
 	}
-	else if (selectedInputType == "03-gtk")
-	{
-		xoj->input = new NewGtkInputDevice(GTK_WIDGET(xoj), view);
-	}
+	// Not working yet, work in progress
+//	else if (selectedInputType == "03-gtk")
+//	{
+//		xoj->input = new NewGtkInputDevice(GTK_WIDGET(xoj), view);
+//	}
 	else // selectedInputType == "auto"
 	{
 		// No autodection performed yet, need some infos from users
