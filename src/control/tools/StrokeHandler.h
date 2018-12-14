@@ -34,7 +34,7 @@ public:
 
 	void draw(cairo_t* cr);
 
-	bool onMotionNotifyEvent(GdkEventMotion* event, bool shiftDown);
+	bool onMotionNotifyEvent(double pageX, double pageY, double pressure, bool shiftDown);
 	void onButtonReleaseEvent(GdkEventButton* event);
 	void onButtonPressEvent(GdkEventButton* event);
 
@@ -47,7 +47,6 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	bool getPressureMultiplier(GdkEvent* event, double& presure);
 	void destroySurface();
 
 	/**

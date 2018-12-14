@@ -6,6 +6,7 @@
 #include "control/settings/Settings.h"
 #include "gui/Cursor.h"
 #include "gui/Layout.h"
+#include "gui/inputdevices/BaseInputDevice.h"
 #include "gui/pageposition/PagePositionCache.h"
 #include "gui/pageposition/PagePositionHandler.h"
 #include "gui/Shadow.h"
@@ -90,29 +91,6 @@ GType gtk_xournal_get_type(void)
 	return gtk_xournal_type;
 }
 
-static void gtk_xournal_init_touch_handling(GtkXournal* xournal)
-{
-	// Currently does not work, needs further testing
-	Settings* settings = xournal->view->getControl()->getSettings();
-	ButtonConfig* cfg = settings->getTouchButtonConfig();
-
-	if (cfg->getDisableDrawing())
-	{
-		DeviceListHelper devList;
-		for (InputDevice& dev : devList.getDeviceList())
-		{
-			if (cfg->device == dev.getName())
-			{
-				printf("Disable device for drawing: %s\n", dev.getName().c_str());
-				gtk_widget_set_device_enabled(GTK_WIDGET(xournal), dev.getDevice(), false);
-				return;
-			}
-		}
-
-		printf("Could NOT disable device for drawing!\n");
-	}
-}
-
 GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 {
 	GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), NULL));
@@ -136,7 +114,8 @@ GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 	xoj->selection = NULL;
 	xoj->shiftDown = false;
 
-	gtk_xournal_init_touch_handling(xoj);
+	// TODO Here the correct instance needs to be created
+	xoj->input = new BaseInputDevice(GTK_WIDGET(xoj), view);
 
 	return GTK_WIDGET(xoj);
 }
@@ -538,15 +517,8 @@ gboolean gtk_xournal_button_release_event(GtkWidget* widget, GdkEventButton* eve
 gboolean gtk_xournal_motion_notify_event(GtkWidget* widget, GdkEventMotion* event)
 {
 	GtkXournal* xournal = GTK_XOURNAL(widget);
-	ToolHandler* h = xournal->view->getControl()->getToolHandler();
 
-	// Workaround to detect if the pen is there
-	GdkDevice* device = gdk_event_get_device((GdkEvent*)event);
-	int axesCount = gdk_device_get_n_axes(device);
-	if (axesCount >= 6)
-	{
-		xournal->view->penActionDetected();
-	}
+	ToolHandler* h = xournal->view->getControl()->getToolHandler();
 
 	if (xournal->view->zoom_gesture_active)
 	{
@@ -600,26 +572,18 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget* widget, GdkEventMotion* even
 		// allow events only to a single page!
 		if (xournal->currentInputPage == NULL || pv == xournal->currentInputPage)
 		{
-			pv->translateEvent((GdkEvent*) event, xournal->x, xournal->y);
-			return pv->onMotionNotifyEvent(widget, event, xournal->shiftDown);
+			return xournal->input->motionEvent(pv, event);
 		}
 	}
-
+	
 	return false;
 }
 
 gboolean gtk_xournal_touch_event(GtkWidget* widget, GdkEventTouch* event)
 {
-	g_return_val_if_fail(widget != NULL, FALSE);
-	g_return_val_if_fail(GTK_IS_XOURNAL(widget), FALSE);
-	g_return_val_if_fail(event != NULL, FALSE);
+	GtkXournal* xournal = GTK_XOURNAL(widget);
 
-	// This handler consume some touch events
-	// Not fully working, but fixes some touch
-	// issues
-
-	// Consume event
-	return true;
+	return xournal->input->touchEvent(event);
 }
 
 static void gtk_xournal_init(GtkXournal* xournal)
@@ -628,27 +592,7 @@ static void gtk_xournal_init(GtkXournal* xournal)
 
 	gtk_widget_set_can_focus(widget, TRUE);
 
-	int events = GDK_EXPOSURE_MASK;
-	events |= GDK_POINTER_MOTION_MASK;
-	events |= GDK_EXPOSURE_MASK;
-	events |= GDK_BUTTON_MOTION_MASK;
-
-	// See documentation: https://developer.gnome.org/gtk3/stable/chap-input-handling.html
-	events |= GDK_TOUCH_MASK;
-	events |= GDK_BUTTON_PRESS_MASK;
-	events |= GDK_BUTTON_RELEASE_MASK;
-	events |= GDK_ENTER_NOTIFY_MASK;
-	events |= GDK_LEAVE_NOTIFY_MASK;
-	events |= GDK_KEY_PRESS_MASK;
-	events |= GDK_SCROLL_MASK;
-
-	// NOT Working with GTK3, only with GTK2
-	// Therefore listening for mouse move events
-	// of the pen, and add a timeout
-	//	events |= GDK_PROXIMITY_IN_MASK;
-	//	events |= GDK_PROXIMITY_OUT_MASK;
-
-	gtk_widget_set_events(widget, events);
+	xournal->input->initWidget();
 }
 
 static void
@@ -848,5 +792,8 @@ static void gtk_xournal_destroy(GtkWidget* object)
 
 	delete xournal->layout;
 	xournal->layout = NULL;
+
+	delete xournal->input;
+	xournal->input = NULL;
 }
 

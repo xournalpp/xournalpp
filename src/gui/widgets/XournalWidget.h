@@ -19,6 +19,7 @@ G_BEGIN_DECLS
 #define GTK_XOURNAL_CLASS(klass) GTK_CHECK_CLASS_CAST(klass, gtk_xournal_get_type(), GtkXournalClass)
 #define GTK_IS_XOURNAL(obj) G_TYPE_CHECK_INSTANCE_TYPE(obj, gtk_xournal_get_type())
 
+class BaseInputDevice;
 class EditSelection;
 class Layout;
 class XojPageView;
@@ -70,6 +71,11 @@ struct _GtkXournal
 	 * Shift is currently pressed
 	 */
 	bool shiftDown = false;
+
+	/**
+	 * Input handling
+	 */
+	BaseInputDevice* input;
 };
 
 struct _GtkXournalClass

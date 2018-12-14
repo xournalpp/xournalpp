@@ -25,7 +25,7 @@ public:
 
 	void draw(cairo_t* cr);
 
-	bool onMotionNotifyEvent(GdkEventMotion* event, bool shiftDown);
+	bool onMotionNotifyEvent(double pageX, double pageY, double pressure, bool shiftDown);
 	void onButtonReleaseEvent(GdkEventButton* event);
 	void onButtonPressEvent(GdkEventButton* event);
 
