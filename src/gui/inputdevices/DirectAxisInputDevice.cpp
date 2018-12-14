@@ -3,6 +3,7 @@
 #include "control/Control.h"
 #include "gui/XournalView.h"
 
+#include <cmath>
 
 DirectAxisInputDevice::DirectAxisInputDevice(GtkWidget* widget, XournalView* view)
  : BaseInputDevice(widget, view)
