@@ -2,7 +2,7 @@
  * Xournal++
  *
  * Base class for device input handling
- * This class uses Standard GTK Functionality without any hacks
+ * This class uses the Example from GTK 3.24.x
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -14,11 +14,11 @@
 
 #include "AbstractInputDevice.h"
 
-class BaseInputDevice : public AbstractInputDevice
+class NewGtkInputDevice : public AbstractInputDevice
 {
 public:
-	BaseInputDevice(GtkWidget* widget, XournalView* view);
-	virtual ~BaseInputDevice();
+	NewGtkInputDevice(GtkWidget* widget, XournalView* view);
+	virtual ~NewGtkInputDevice();
 
 public:
 	/**

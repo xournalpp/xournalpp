@@ -7,6 +7,8 @@
 #include "gui/Cursor.h"
 #include "gui/Layout.h"
 #include "gui/inputdevices/BaseInputDevice.h"
+#include "gui/inputdevices/DirectAxisInputDevice.h"
+#include "gui/inputdevices/NewGtkInputDevice.h"
 #include "gui/pageposition/PagePositionCache.h"
 #include "gui/pageposition/PagePositionHandler.h"
 #include "gui/Shadow.h"
@@ -121,15 +123,24 @@ GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 	string selectedInputType;
 	inputSettings.getString("type", selectedInputType);
 
-	if (selectedInputType == "auto")
+	if (selectedInputType == "01-gtk")
 	{
-		// TODO Options not yet finished
 		xoj->input = new BaseInputDevice(GTK_WIDGET(xoj), view);
+	}
+	else if (selectedInputType == "02-direct")
+	{
+		xoj->input = new DirectAxisInputDevice(GTK_WIDGET(xoj), view);
+	}
+	else if (selectedInputType == "03-gtk")
+	{
+		xoj->input = new NewGtkInputDevice(GTK_WIDGET(xoj), view);
 	}
 	else // selectedInputType == "auto"
 	{
-		xoj->input = new BaseInputDevice(GTK_WIDGET(xoj), view);
+		// TODO No autodection performed yet
+		xoj->input = new DirectAxisInputDevice(GTK_WIDGET(xoj), view);
 	}
+
 	xoj->input->initWidget();
 
 	return GTK_WIDGET(xoj);
