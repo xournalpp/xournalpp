@@ -46,10 +46,43 @@ void BaseInputDevice::initWidget()
 	//	events |= GDK_PROXIMITY_OUT_MASK;
 
 	gtk_widget_set_events(widget, events);
+
+	g_signal_connect(widget, "button-press-event", G_CALLBACK(button_press_event_cb), this);
+	g_signal_connect(widget, "button-release-event", G_CALLBACK(button_release_event_cb), this);
+	g_signal_connect(widget, "motion-notify-event", G_CALLBACK(motion_notify_event_cb), this);
+	g_signal_connect(widget, "touch-event", G_CALLBACK(touch_event_cb), this);
+}
+
+bool BaseInputDevice::button_press_event_cb(GtkWidget* widget, GdkEventButton* event, BaseInputDevice* self)
+{
+	XOJ_CHECK_TYPE_OBJ(self, BaseInputDevice);
+
+	return self->buttonPressEvent(event);
+}
+
+bool BaseInputDevice::button_release_event_cb(GtkWidget* widget, GdkEventButton* event, BaseInputDevice* self)
+{
+	XOJ_CHECK_TYPE_OBJ(self, BaseInputDevice);
+
+	return self->buttonReleaseEvent(event);
+}
+
+bool BaseInputDevice::motion_notify_event_cb(GtkWidget* widget, GdkEventMotion* event, BaseInputDevice* self)
+{
+	XOJ_CHECK_TYPE_OBJ(self, BaseInputDevice);
+
+	return self->motionNotifyEvent(event);
+}
+
+bool BaseInputDevice::touch_event_cb(GtkWidget* widget, GdkEventTouch* event, BaseInputDevice* self)
+{
+	XOJ_CHECK_TYPE_OBJ(self, BaseInputDevice);
+
+	return self->touchEvent(event);
 }
 
 /**
- * Mouse / pen moved event
+ * Mouse / pen moved event, handle pressure
  */
 bool BaseInputDevice::motionEvent(XojPageView* pageView, GdkEventMotion* event)
 {
@@ -132,12 +165,57 @@ bool BaseInputDevice::getPressureMultiplier(GdkEvent* event, double& pressure)
 }
 
 /**
+ * Button pressed event
+ */
+bool BaseInputDevice::buttonPressEvent(GdkEventButton* event)
+{
+	XOJ_CHECK_TYPE(BaseInputDevice);
+
+	if (event->type != GDK_BUTTON_PRESS)
+	{
+		return FALSE; // this event is not handled here
+	}
+
+	if (event->button > 3)   // scroll wheel events
+	{
+		return FALSE;
+	}
+
+	return handleButtonPress(event);
+}
+
+/**
+ * Button release event
+ */
+bool BaseInputDevice::buttonReleaseEvent(GdkEventButton* event)
+{
+	XOJ_CHECK_TYPE(BaseInputDevice);
+
+	// scroll wheel events
+	if (event->button > 3)
+	{
+		return TRUE;
+	}
+
+	return handleButtonRelease(event);
+}
+
+/**
+ * Moved event
+ */
+bool BaseInputDevice::motionNotifyEvent(GdkEventMotion* event)
+{
+	XOJ_CHECK_TYPE(BaseInputDevice);
+
+	return handleMotion(event);
+}
+
+/**
  * Touch event
  */
 bool BaseInputDevice::touchEvent(GdkEventTouch* event)
 {
 	XOJ_CHECK_TYPE(BaseInputDevice);
-
 
 	// This handler consume some touch events
 	// Not fully working, but fixes some touch

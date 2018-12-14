@@ -26,18 +26,18 @@ public:
 	 */
 	virtual void initWidget();
 
+protected:
 	/**
 	 * Mouse / pen moved event
 	 */
 	virtual bool motionEvent(XojPageView* pageView, GdkEventMotion* event);
 
 	/**
-	 * Touch event
+	 * Handle all GTK Events
 	 */
-	virtual bool touchEvent(GdkEventTouch* event);
+	virtual bool eventHandler(GdkEvent* event);
 
 protected:
-
 	/**
 	 * Read Pressure over GTK
 	 */
@@ -47,6 +47,10 @@ protected:
 	 * Read pressure and position of the pen, if a pen is active
 	 */
 	virtual void readPositionAndPressure(GdkEventMotion* event, double& x, double& y, double& pressure);
+
+private:
+	static bool event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self);
+
 
 private:
 	XOJ_TYPE_ATTRIB;

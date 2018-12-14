@@ -25,27 +25,37 @@ void NewGtkInputDevice::initWidget()
 {
 	XOJ_CHECK_TYPE(NewGtkInputDevice);
 
-	int events = GDK_EXPOSURE_MASK;
-	events |= GDK_POINTER_MOTION_MASK;
-	events |= GDK_EXPOSURE_MASK;
-	events |= GDK_BUTTON_MOTION_MASK;
+	gtk_widget_set_support_multidevice(widget, true);
+	gtk_widget_add_events(widget,
+			// Key handling
+			GDK_KEY_PRESS_MASK |
 
-	// See documentation: https://developer.gnome.org/gtk3/stable/chap-input-handling.html
-	events |= GDK_TOUCH_MASK;
-	events |= GDK_BUTTON_PRESS_MASK;
-	events |= GDK_BUTTON_RELEASE_MASK;
-	events |= GDK_ENTER_NOTIFY_MASK;
-	events |= GDK_LEAVE_NOTIFY_MASK;
-	events |= GDK_KEY_PRESS_MASK;
-	events |= GDK_SCROLL_MASK;
+			// Touch / Pen / Mouse
+			GDK_POINTER_MOTION_MASK |
+			GDK_BUTTON_PRESS_MASK |
+			GDK_BUTTON_RELEASE_MASK |
+			GDK_SMOOTH_SCROLL_MASK |
+			GDK_ENTER_NOTIFY_MASK |
+			GDK_LEAVE_NOTIFY_MASK |
+			GDK_TOUCH_MASK);
 
-	// NOT Working with GTK3, only with GTK2
-	// Therefore listening for mouse move events
-	// of the pen, and add a timeout
-	//	events |= GDK_PROXIMITY_IN_MASK;
-	//	events |= GDK_PROXIMITY_OUT_MASK;
+    g_signal_connect(widget, "event", G_CALLBACK(event_cb), this);
+}
 
-	gtk_widget_set_events(widget, events);
+bool NewGtkInputDevice::event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self)
+{
+	XOJ_CHECK_TYPE_OBJ(self, NewGtkInputDevice);
+
+	return self->eventHandler(event);
+}
+
+/**
+ * Handle all GTK Events
+ */
+bool NewGtkInputDevice::eventHandler(GdkEvent* event)
+{
+
+	return false;
 }
 
 /**
@@ -55,17 +65,76 @@ bool NewGtkInputDevice::motionEvent(XojPageView* pageView, GdkEventMotion* event
 {
 	XOJ_CHECK_TYPE(NewGtkInputDevice);
 
-	double x = 0;
-	double y = 0;
-	double pressure = Point::NO_PRESURE;
-	readPositionAndPressure(event, x, y, pressure);
+/*
+	gdouble x, y;
+	AxesInfo *info;
 
-	GtkXournal* xournal = GTK_XOURNAL(widget);
+	GdkDevice* device = gdk_event_get_device(event);
+	GdkDevice* source_device = gdk_event_get_source_device(event);
+	GdkEventSequence* sequence = gdk_event_get_event_sequence(event);
+	GdkDeviceTool* tool = gdk_event_get_device_tool(event);
 
-	double pageX = x - pageView->getX() - xournal->x;
-	double pageY = y - pageView->getY() - xournal->y;
+	if (event->type == GDK_TOUCH_END || event->type == GDK_TOUCH_CANCEL)
+	{
+		g_hash_table_remove(data->touch_info, sequence);
+		return true;
+	}
+	else if (event->type == GDK_LEAVE_NOTIFY)
+	{
+		g_hash_table_remove(data->pointer_info, device);
+		return;
+	}
 
-	return pageView->onMotionNotifyEvent(widget, pageX, pageY, pressure, xournal->shiftDown);
+	if (!sequence)
+	{
+		info = g_hash_table_lookup(data->pointer_info, device);
+
+		if (!info)
+		{
+			info = axes_info_new();
+			g_hash_table_insert(data->pointer_info, device, info);
+		}
+	}
+	else
+	{
+		info = g_hash_table_lookup(data->touch_info, sequence);
+
+		if (!info)
+		{
+			info = axes_info_new();
+			g_hash_table_insert(data->touch_info, sequence, info);
+		}
+	}
+
+	if (info->last_source != source_device)
+		info->last_source = source_device;
+
+	if (info->last_tool != tool)
+		info->last_tool = tool;
+
+	g_clear_pointer(&info->axes, g_free);
+
+	if (event->type == GDK_TOUCH_BEGIN || event->type == GDK_TOUCH_UPDATE)
+	{
+		if (sequence && event->touch.emulating_pointer)
+			g_hash_table_remove(data->pointer_info, device);
+	}
+	if (event->type == GDK_MOTION_NOTIFY)
+	{
+		info->axes = g_memdup(event->motion.axes, sizeof(gdouble) * gdk_device_get_n_axes(source_device));
+	}
+	else if (event->type == GDK_BUTTON_PRESS || event->type == GDK_BUTTON_RELEASE)
+	{
+		info->axes = g_memdup(event->button.axes, sizeof(gdouble) * gdk_device_get_n_axes(source_device));
+	}
+
+	if (gdk_event_get_coords(event, &x, &y))
+	{
+		info->x = x;
+		info->y = y;
+	}
+*/
+	return false;
 }
 
 /**
@@ -108,19 +177,4 @@ bool NewGtkInputDevice::getPressureMultiplier(GdkEvent* event, double& pressure)
 	return true;
 }
 
-/**
- * Touch event
- */
-bool NewGtkInputDevice::touchEvent(GdkEventTouch* event)
-{
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
-
-	// This handler consume some touch events
-	// Not fully working, but fixes some touch
-	// issues
-
-	// Consume event
-	return true;
-}
 

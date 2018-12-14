@@ -65,7 +65,7 @@ void SettingsDialog::initAdvanceInputConfig()
 	gtk_combo_box_text_append_text(cbSelectInputType, _C("Auto"));
 	gtk_combo_box_text_append_text(cbSelectInputType, _C("01: GTK / may crash on X11"));
 	gtk_combo_box_text_append_text(cbSelectInputType, _C("02: Direct read axes"));
-	gtk_combo_box_text_append_text(cbSelectInputType, _C("03: GTK 3.24 Sample way"));
+	gtk_combo_box_text_append_text(cbSelectInputType, _C("03: GTK multi device support"));
 
 	string selectedInputType;
 	SElement& inputSettings = settings->getCustomElement("inputHandling");

@@ -31,15 +31,18 @@ public:
 	 */
 	virtual void initWidget() = 0;
 
+protected:
 	/**
-	 * Mouse / pen moved event
+	 * Mouse / pen moved event, handle pressure
 	 */
 	virtual bool motionEvent(XojPageView* pageView, GdkEventMotion* event) = 0;
 
-	/**
-	 * Touch event
-	 */
-	virtual bool touchEvent(GdkEventTouch* event) = 0;
+	// Handling from Xournal Widget
+protected:
+	bool handleButtonPress(GdkEventButton* event);
+	bool handleButtonRelease(GdkEventButton* event);
+	bool handleMotion(GdkEventMotion* event);
+	bool changeTool(GdkEventButton* event);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -55,4 +58,6 @@ protected:
 	 * Xournal View
 	 */
 	XournalView* view;
+
+	XojPageView* current_view;
 };
