@@ -81,6 +81,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
+                <property name="spacing">10</property>
                 <child>
                   <object class="GtkLabel" id="label27">
                     <property name="visible">True</property>
@@ -104,6 +105,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
+                        <property name="spacing">5</property>
                         <child>
                           <object class="GtkLabel" id="labeXInput">
                             <property name="visible">True</property>
@@ -193,6 +195,47 @@ when drawn too fast&lt;/i&gt;</property>
                             <property name="position">4</property>
                           </packing>
                         </child>
+                        <child>
+                          <object class="GtkLabel" id="label50">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">&lt;b&gt;Input handling&lt;/b&gt;</property>
+                            <property name="use_markup">True</property>
+                            <property name="xalign">0</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">5</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="cbSelectInputType">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">6</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label49">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">&lt;i&gt;To best support all system Xournal++ allows to do some export configurations.
+Usually you should set the Input Handling to &lt;b&gt;Auto&lt;/b&gt;.
+If there are problems / crashes on drawing, try the other methods.&lt;/i&gt;</property>
+                            <property name="use_markup">True</property>
+                            <property name="xalign">0</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">7</property>
+                          </packing>
+                        </child>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -221,7 +264,7 @@ when drawn too fast&lt;/i&gt;</property>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="padding">10</property>
-                    <property name="position">2</property>
+                    <property name="position">5</property>
                   </packing>
                 </child>
                 <child>
@@ -308,7 +351,7 @@ like to work on&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">3</property>
+                    <property name="position">6</property>
                   </packing>
                 </child>
               </object>
@@ -1055,70 +1098,6 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="box5">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
-                <property name="spacing">10</property>
-                <child>
-                  <object class="GtkLabel" id="label49">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">&lt;i&gt;To best support all system Xournal++ allows to do some export configurations.
-Usually you should set the Input Handling to &lt;b&gt;Auto&lt;/b&gt;.
-If there are problems / crashes on drawing, try the other methods.&lt;/i&gt;</property>
-                    <property name="use_markup">True</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkComboBoxText" id="cbSelectInputType">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkAspectFrame" id="aspectframe1">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label_xalign">0</property>
-                    <property name="shadow_type">none</property>
-                    <child>
-                      <placeholder/>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">2</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="position">5</property>
-              </packing>
-            </child>
-            <child type="tab">
-              <object class="GtkLabel" id="label48">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Advanced Input Handling</property>
-              </object>
-              <packing>
-                <property name="position">5</property>
-                <property name="tab_fill">False</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkBox" id="vbox5">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -1602,7 +1581,7 @@ If there are problems / crashes on drawing, try the other methods.&lt;/i&gt;</pr
                 </child>
               </object>
               <packing>
-                <property name="position">6</property>
+                <property name="position">5</property>
               </packing>
             </child>
             <child type="tab">
@@ -1612,7 +1591,7 @@ If there are problems / crashes on drawing, try the other methods.&lt;/i&gt;</pr
                 <property name="label" translatable="yes">View</property>
               </object>
               <packing>
-                <property name="position">6</property>
+                <property name="position">5</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
@@ -1688,7 +1667,7 @@ If there are problems / crashes on drawing, try the other methods.&lt;/i&gt;</pr
                 </child>
               </object>
               <packing>
-                <property name="position">7</property>
+                <property name="position">6</property>
               </packing>
             </child>
             <child type="tab">
@@ -1698,7 +1677,7 @@ If there are problems / crashes on drawing, try the other methods.&lt;/i&gt;</pr
                 <property name="label" translatable="yes">Defaults</property>
               </object>
               <packing>
-                <property name="position">7</property>
+                <property name="position">6</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
@@ -1763,7 +1742,7 @@ The Audio track is recorded to a separate folder, and liked to there.&lt;/i&gt;<
                 </child>
               </object>
               <packing>
-                <property name="position">8</property>
+                <property name="position">7</property>
               </packing>
             </child>
             <child type="tab">
@@ -1773,7 +1752,7 @@ The Audio track is recorded to a separate folder, and liked to there.&lt;/i&gt;<
                 <property name="label" translatable="yes">Audio Recording</property>
               </object>
               <packing>
-                <property name="position">8</property>
+                <property name="position">7</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
