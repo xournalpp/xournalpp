@@ -75,7 +75,6 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="show_border">False</property>
-            <property name="scrollable">True</property>
             <child>
               <object class="GtkBox" id="box17">
                 <property name="visible">True</property>
