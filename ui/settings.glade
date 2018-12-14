@@ -75,6 +75,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="show_border">False</property>
+            <property name="scrollable">True</property>
             <child>
               <object class="GtkBox" id="box17">
                 <property name="visible">True</property>
@@ -1054,6 +1055,70 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
               </packing>
             </child>
             <child>
+              <object class="GtkBox" id="box5">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">10</property>
+                <child>
+                  <object class="GtkLabel" id="label49">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">&lt;i&gt;To best support all system Xournal++ allows to do some export configurations.
+Usually you should set the Input Handling to &lt;b&gt;Auto&lt;/b&gt;.
+If there are problems / crashes on drawing, try the other methods.&lt;/i&gt;</property>
+                    <property name="use_markup">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkComboBoxText" id="cbSelectInputType">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkAspectFrame" id="aspectframe1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label_xalign">0</property>
+                    <property name="shadow_type">none</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">5</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="label48">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Advanced Input Handling</property>
+              </object>
+              <packing>
+                <property name="position">5</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkBox" id="vbox5">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -1537,7 +1602,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                 </child>
               </object>
               <packing>
-                <property name="position">5</property>
+                <property name="position">6</property>
               </packing>
             </child>
             <child type="tab">
@@ -1547,7 +1612,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                 <property name="label" translatable="yes">View</property>
               </object>
               <packing>
-                <property name="position">5</property>
+                <property name="position">6</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
@@ -1623,7 +1688,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                 </child>
               </object>
               <packing>
-                <property name="position">6</property>
+                <property name="position">7</property>
               </packing>
             </child>
             <child type="tab">
@@ -1633,7 +1698,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                 <property name="label" translatable="yes">Defaults</property>
               </object>
               <packing>
-                <property name="position">6</property>
+                <property name="position">7</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
@@ -1698,7 +1763,7 @@ The Audio track is recorded to a separate folder, and liked to there.&lt;/i&gt;<
                 </child>
               </object>
               <packing>
-                <property name="position">7</property>
+                <property name="position">8</property>
               </packing>
             </child>
             <child type="tab">
@@ -1708,7 +1773,7 @@ The Audio track is recorded to a separate folder, and liked to there.&lt;/i&gt;<
                 <property name="label" translatable="yes">Audio Recording</property>
               </object>
               <packing>
-                <property name="position">7</property>
+                <property name="position">8</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>

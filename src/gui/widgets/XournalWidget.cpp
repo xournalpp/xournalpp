@@ -114,8 +114,23 @@ GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 	xoj->selection = NULL;
 	xoj->shiftDown = false;
 
-	// TODO Here the correct instance needs to be created
-	xoj->input = new BaseInputDevice(GTK_WIDGET(xoj), view);
+	Settings* settings = view->getControl()->getSettings();
+
+	SElement& inputSettings = settings->getCustomElement("inputHandling");
+
+	string selectedInputType;
+	inputSettings.getString("type", selectedInputType);
+
+	if (selectedInputType == "auto")
+	{
+		// TODO Options not yet finished
+		xoj->input = new BaseInputDevice(GTK_WIDGET(xoj), view);
+	}
+	else // selectedInputType == "auto"
+	{
+		xoj->input = new BaseInputDevice(GTK_WIDGET(xoj), view);
+	}
+	xoj->input->initWidget();
 
 	return GTK_WIDGET(xoj);
 }
@@ -591,8 +606,6 @@ static void gtk_xournal_init(GtkXournal* xournal)
 	GtkWidget* widget = GTK_WIDGET(xournal);
 
 	gtk_widget_set_can_focus(widget, TRUE);
-
-	xournal->input->initWidget();
 }
 
 static void

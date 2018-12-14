@@ -40,6 +40,7 @@ public:
 
 private:
 	void load();
+	void initAdvanceInputConfig();
 	void loadCheckbox(const char* name, gboolean value);
 	bool getCheckbox(const char* name);
 
