@@ -154,6 +154,8 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	{
 		input = (InputSequence*) g_hash_table_lookup(pointerInputList, device);
 
+		printf("dev->input : %ld->%ld", device, input);
+
 		if (input == NULL)
 		{
 			input = new InputSequence(this);
