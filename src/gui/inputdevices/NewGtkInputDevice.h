@@ -41,25 +41,9 @@ public:
 
 protected:
 	/**
-	 * Mouse / pen moved event
-	 */
-	bool motionEvent(XojPageView* pageView, GdkEventMotion* event);
-
-	/**
 	 * Handle all GTK Events
 	 */
 	bool eventHandler(GdkEvent* event);
-
-protected:
-	/**
-	 * Read Pressure over GTK
-	 */
-	bool getPressureMultiplier(GdkEvent* event, double& presure);
-
-	/**
-	 * Read pressure and position of the pen, if a pen is active
-	 */
-	void readPositionAndPressure(GdkEventMotion* event, double& x, double& y, double& pressure);
 
 private:
 	static bool event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self);

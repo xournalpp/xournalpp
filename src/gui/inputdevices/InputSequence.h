@@ -36,7 +36,7 @@ public:
 	/**
 	 * Mouse / Pen down / touch start
 	 */
-	void actionStart();
+	bool actionStart();
 
 	/**
 	 * Mouse / Pen up / touch end
@@ -71,6 +71,13 @@ public:
 	 */
 	void setCurrentPosition(double x, double y);
 
+	/**
+	 * Get Page at current position
+	 *
+	 * @return page or NULL if none
+	 */
+	XojPageView* getPageAtCurrentPosition();
+
 public:
 	/**
 	 * Free an input sequence, used as callback for GTK
@@ -88,7 +95,7 @@ private:
 	/**
 	 * Get input data relative to current input page
 	 */
-	PositionInputData getInputDataRelativeToCurrentPage();
+	PositionInputData getInputDataRelativeToCurrentPage(XojPageView* page);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -117,6 +124,11 @@ private:
 	 * Axes of the input
 	 */
 	gdouble* axes;
+
+	/**
+	 * Pressure sensitivity enabled
+	 */
+	bool presureSensitivity;
 
 	/**
 	 * Position X

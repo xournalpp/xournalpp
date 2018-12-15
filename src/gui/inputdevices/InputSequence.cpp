@@ -6,8 +6,49 @@
 #include "control/tools/EditSelection.h"
 #include "control/ToolHandler.h"
 #include "gui/Cursor.h"
+#include "gui/pageposition/PagePositionHandler.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
+
+
+
+/*
+bool gtk_xournal_scroll_callback(GtkXournal* xournal)
+{
+	xournal->layout->scrollRelativ(xournal->scrollOffsetX, xournal->scrollOffsetY);
+
+	// Scrolling done, so reset our counters
+	xournal->scrollOffsetX = 0;
+	xournal->scrollOffsetY = 0;
+
+	return false;
+}
+
+static void gtk_xournal_scroll_mouse_event(GtkXournal* xournal, GdkEventMotion* event)
+{
+	// use root coordinates as reference point because
+	// scrolling changes window relative coordinates
+	// see github Gnome/evince@1adce5486b10e763bed869
+	int x_root = event->x_root;
+	int y_root = event->y_root;
+
+	if (xournal->lastMousePositionX - x_root == 0 && xournal->lastMousePositionY - y_root == 0)
+	{
+		return;
+	}
+
+	if (xournal->scrollOffsetX == 0 && xournal->scrollOffsetY == 0)
+	{
+		xournal->scrollOffsetX = xournal->lastMousePositionX - x_root;
+		xournal->scrollOffsetY = xournal->lastMousePositionY - y_root;
+
+		g_idle_add((GSourceFunc) gtk_xournal_scroll_callback, xournal);
+		//gtk_xournal_scroll_callback(xournal);
+		xournal->lastMousePositionX = x_root;
+		xournal->lastMousePositionY = y_root;
+	}
+}*/
+
 
 
 InputSequence::InputSequence(NewGtkInputDevice* inputHandler)
@@ -20,6 +61,8 @@ InputSequence::InputSequence(NewGtkInputDevice* inputHandler)
    y(-1)
 {
 	XOJ_INIT_TYPE(InputSequence);
+
+	this->presureSensitivity = inputHandler->getSettings()->isPresureSensitivity();
 }
 
 InputSequence::~InputSequence()
@@ -87,6 +130,25 @@ void InputSequence::setCurrentPosition(double x, double y)
 }
 
 /**
+ * Get Page at current position
+ *
+ * @return page or NULL if none
+ */
+XojPageView* InputSequence::getPageAtCurrentPosition()
+{
+	XOJ_CHECK_TYPE(InputSequence);
+
+	GtkXournal* xournal = inputHandler->getXournal();
+
+	double x = this->x + xournal->x;
+	double y = this->y + xournal->y;
+
+	PagePositionHandler* pph = xournal->view->getPagePositionHandler();
+
+	return pph->getViewAt(x, y, xournal->pagePositionCache);
+}
+
+/**
  * Mouse / Pen / Touch move
  */
 bool InputSequence::actionMoved()
@@ -108,7 +170,7 @@ bool InputSequence::actionMoved()
 	{
 		if (xournal->inScrolling)
 		{
-//TODO			gtk_xournal_scroll_mouse_event(xournal, event);
+			// TODO gtk_xournal_scroll_mouse_event(xournal, event);
 			return true;
 		}
 		return false;
@@ -141,7 +203,7 @@ bool InputSequence::actionMoved()
 	}
 	else
 	{
-		pv = gtk_xournal_get_page_view_for_pos_cached(xournal, x, y);
+		pv = getPageAtCurrentPosition();
 	}
 
 	xournal->view->getCursor()->setInsidePage(pv != NULL);
@@ -151,7 +213,8 @@ bool InputSequence::actionMoved()
 		// allow events only to a single page!
 		if (currentInputPage == NULL || pv == currentInputPage)
 		{
-			return motionEvent(pv, event);
+			PositionInputData pos = getInputDataRelativeToCurrentPage(pv);
+			return pv->onMotionNotifyEvent(pos, xournal->shiftDown);
 		}
 	}
 
@@ -161,95 +224,90 @@ bool InputSequence::actionMoved()
 /**
  * Mouse / Pen down / touch start
  */
-void InputSequence::actionStart()
+bool InputSequence::actionStart()
 {
 	XOJ_CHECK_TYPE(InputSequence);
 
 	inputHandler->focusWidget();
 
-	printf("actionStart %s\n", gdk_device_get_name(device));
-}
-
-/*
-
-	GtkXournal* xournal = GTK_XOURNAL(widget);
-
 	// none button release event was sent, send one now
-	if (xournal->currentInputPage)
+	// only for this device, other devices may still have unfinished input
+	if (currentInputPage)
 	{
-		GdkEventButton ev = *event;
-		xournal->currentInputPage->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
-		xournal->currentInputPage->onButtonReleaseEvent(widget, &ev);
+		PositionInputData pos = getInputDataRelativeToCurrentPage(currentInputPage);
+		currentInputPage->onButtonReleaseEvent(pos);
+		currentInputPage->onButtonReleaseEvent(pos);
 	}
 
-	ToolHandler* h = xournal->view->getControl()->getToolHandler();
+	ToolHandler* h = inputHandler->getToolHandler();
 
 	// Change the tool depending on the key or device
-	if (changeTool(event))
+	// TODO Button
+	if (changeTool(0))
 	{
 		return true;
 	}
+
+	GtkXournal* xournal = inputHandler->getXournal();
 
 	// hand tool don't change the selection, so you can scroll e.g.
 	// with your touchscreen without remove the selection
 	if (h->getToolType() == TOOL_HAND)
 	{
-		Cursor* cursor = xournal->view->getCursor();
-		cursor->setMouseDown(true);
-		xournal->inScrolling = true;
-		//set reference
-		xournal->lastMousePositionX = event->x_root;
-		xournal->lastMousePositionY = event->y_root;
-
-		return TRUE;
+//		Cursor* cursor = xournal->view->getCursor();
+//		cursor->setMouseDown(true);
+//		xournal->inScrolling = true;
+//		//set reference
+//		xournal->lastMousePositionX = event->x_root;
+//		xournal->lastMousePositionY = event->y_root;
+//
+//		return TRUE;
 	}
 	else if (xournal->selection)
 	{
-		EditSelection* selection = xournal->selection;
-
-		XojPageView* view = selection->getView();
-		GdkEventButton ev = *event;
-		view->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
-		CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y, xournal->view->getZoom());
-		if (selType)
-		{
-
-			if (selType == CURSOR_SELECTION_MOVE && event->button == 3)
-			{
-				selection->copySelection();
-			}
-
-			xournal->view->getCursor()->setMouseDown(true);
-			xournal->selection->mouseDown(selType, ev.x, ev.y);
-			return true;
-		}
-		else
-		{
-			xournal->view->clearSelection();
-			if (changeTool(event))
-			{
-				return true;
-			}
-		}
+//		EditSelection* selection = xournal->selection;
+//
+//		XojPageView* view = selection->getView();
+//		GdkEventButton ev = *event;
+//		view->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
+//		CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y, xournal->view->getZoom());
+//		if (selType)
+//		{
+//
+//			if (selType == CURSOR_SELECTION_MOVE && event->button == 3)
+//			{
+//				selection->copySelection();
+//			}
+//
+//			xournal->view->getCursor()->setMouseDown(true);
+//			xournal->selection->mouseDown(selType, ev.x, ev.y);
+//			return true;
+//		}
+//		else
+//		{
+//			xournal->view->clearSelection();
+//			if (changeTool(event))
+//			{
+//				return true;
+//			}
+//		}
 	}
 
-	XojPageView* pv = gtk_xournal_get_page_view_for_pos_cached(xournal, event->x, event->y);
+	XojPageView* pv = getPageAtCurrentPosition();
 
 	current_view = pv;
 
 	if (pv)
 	{
-		xournal->currentInputPage = pv;
-		pv->translateEvent((GdkEvent*) event, xournal->x, xournal->y);
+		currentInputPage = pv;
 
-		xournal->view->getDocument()->indexOf(pv->getPage());
-		return pv->onButtonPressEvent(widget, event);
+		PositionInputData pos = getInputDataRelativeToCurrentPage(pv);
+		return pv->onButtonPressEvent(pos);
 	}
 
-	return FALSE; // not handled
-
-
- */
+	// not handled
+	return false;
+}
 
 /**
  * Mouse / Pen up / touch end
@@ -280,8 +338,8 @@ void InputSequence::actionEnd()
 
 	if (currentInputPage)
 	{
-		PositionInputData in = getInputDataRelativeToCurrentPage();
-		currentInputPage->onButtonReleaseEvent(in);
+		PositionInputData pos = getInputDataRelativeToCurrentPage(currentInputPage);
+		currentInputPage->onButtonReleaseEvent(pos);
 		currentInputPage = NULL;
 	}
 
@@ -300,21 +358,26 @@ void InputSequence::actionEnd()
 /**
  * Get input data relative to current input page
  */
-PositionInputData InputSequence::getInputDataRelativeToCurrentPage()
+PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* page)
 {
 	XOJ_CHECK_TYPE(InputSequence);
 
 	GtkXournal* xournal = inputHandler->getXournal();
 
-	PositionInputData in;
-	in.x -= currentInputPage->getX() - xournal->x;
-	in.y -= currentInputPage->getY() - xournal->y;
-	in.pressure = 1.0;
+	PositionInputData pos;
+	pos.x -= page->getX() - xournal->x;
+	pos.y -= page->getY() - xournal->y;
+	pos.pressure = 1.0;
+
+	if (presureSensitivity)
+	{
+		gdk_device_get_axis(device, axes, GDK_AXIS_PRESSURE, &pos.pressure);
+	}
 
 	// TODO Key event
-	in.state = 0;
+	pos.state = 0;
 
-	return in;
+	return pos;
 }
 
 /**
