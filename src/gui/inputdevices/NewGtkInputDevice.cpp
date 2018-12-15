@@ -183,9 +183,16 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	{
 		return eventKeyPressHandler(&event->key);
 	}
+
 	if (event->type == GDK_KEY_RELEASE)
 	{
 		return view->onKeyReleaseEvent(&event->key);
+	}
+
+	if (event->type == GDK_SCROLL)
+	{
+		// Hand over to standard GTK Scroll / Zoom handling
+		return false;
 	}
 
 	GdkDevice* device = gdk_event_get_device(event);
@@ -287,13 +294,6 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	}
 	else if (event->type == GDK_BUTTON_PRESS)
 	{
-		guint button = 0;
-		// scroll wheel events
-		if (gdk_event_get_button(event, &button) && button > 3)
-		{
-			return FALSE;
-		}
-
 		input->copyAxes(event);
 		input->actionStart();
 	}
