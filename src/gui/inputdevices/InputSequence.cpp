@@ -8,47 +8,10 @@
 #include "gui/Cursor.h"
 #include "gui/pageposition/PagePositionHandler.h"
 #include "gui/PageView.h"
+#include "gui/Layout.h"
 #include "gui/XournalView.h"
 
-
-
-/*
-bool gtk_xournal_scroll_callback(GtkXournal* xournal)
-{
-	xournal->layout->scrollRelativ(xournal->scrollOffsetX, xournal->scrollOffsetY);
-
-	// Scrolling done, so reset our counters
-	xournal->scrollOffsetX = 0;
-	xournal->scrollOffsetY = 0;
-
-	return false;
-}
-
-static void gtk_xournal_scroll_mouse_event(GtkXournal* xournal, GdkEventMotion* event)
-{
-	// use root coordinates as reference point because
-	// scrolling changes window relative coordinates
-	// see github Gnome/evince@1adce5486b10e763bed869
-	int x_root = event->x_root;
-	int y_root = event->y_root;
-
-	if (xournal->lastMousePositionX - x_root == 0 && xournal->lastMousePositionY - y_root == 0)
-	{
-		return;
-	}
-
-	if (xournal->scrollOffsetX == 0 && xournal->scrollOffsetY == 0)
-	{
-		xournal->scrollOffsetX = xournal->lastMousePositionX - x_root;
-		xournal->scrollOffsetY = xournal->lastMousePositionY - y_root;
-
-		g_idle_add((GSourceFunc) gtk_xournal_scroll_callback, xournal);
-		//gtk_xournal_scroll_callback(xournal);
-		xournal->lastMousePositionX = x_root;
-		xournal->lastMousePositionY = y_root;
-	}
-}*/
-
+#include <Util.h>
 
 
 InputSequence::InputSequence(NewGtkInputDevice* inputHandler)
@@ -60,7 +23,14 @@ InputSequence::InputSequence(NewGtkInputDevice* inputHandler)
    axes(NULL),
    button(0),
    x(-1),
-   y(-1)
+   y(-1),
+   rootX(0),
+   rootY(0),
+   lastMousePositionX(0),
+   lastMousePositionY(0),
+   inScrolling(false),
+   scrollOffsetX(0),
+   scrollOffsetY(0)
 {
 	XOJ_INIT_TYPE(InputSequence);
 
@@ -136,6 +106,17 @@ void InputSequence::setCurrentPosition(double x, double y)
 }
 
 /**
+ * Set Root Position
+ */
+void InputSequence::setCurrentRootPosition(double x, double y)
+{
+	XOJ_CHECK_TYPE(InputSequence);
+
+	this->rootX = x;
+	this->rootY = y;
+}
+
+/**
  * Set (mouse)button
  */
 void InputSequence::setButton(guint button)
@@ -165,6 +146,39 @@ XojPageView* InputSequence::getPageAtCurrentPosition()
 }
 
 /**
+ * Do the scrolling with the hand tool
+ */
+void InputSequence::handleScrollEvent()
+{
+	XOJ_CHECK_TYPE(InputSequence);
+
+	// use root coordinates as reference point because
+	// scrolling changes window relative coordinates
+	// see github Gnome/evince@1adce5486b10e763bed869
+	if (lastMousePositionX  == (int)rootX && lastMousePositionY == (int)rootY)
+	{
+		return;
+	}
+
+	if (scrollOffsetX == 0 && scrollOffsetY == 0)
+	{
+		scrollOffsetX = lastMousePositionX - rootX;
+		scrollOffsetY = lastMousePositionY - rootY;
+
+		Util::execInUiThread([=]() {
+			inputHandler->getXournal()->layout->scrollRelativ(scrollOffsetX, scrollOffsetY);
+
+			// Scrolling done, so reset our counters
+			scrollOffsetX = 0;
+			scrollOffsetY = 0;
+		});
+
+		lastMousePositionX = rootX;
+		lastMousePositionY = rootY;
+	}
+}
+
+/**
  * Mouse / Pen / Touch move
  */
 bool InputSequence::actionMoved()
@@ -183,31 +197,30 @@ bool InputSequence::actionMoved()
 
 	if (h->getToolType() == TOOL_HAND)
 	{
-		if (xournal->inScrolling)
+		if (inScrolling)
 		{
-			// TODO gtk_xournal_scroll_mouse_event(xournal, event);
+			handleScrollEvent();
 			return true;
 		}
 		return false;
 	}
 	else if (xournal->selection)
 	{
-//		EditSelection* selection = xournal->selection;
-//
-//		XojPageView* view = selection->getView();
-//		GdkEventMotion ev = *event;
-//		view->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
-//
-//		if (xournal->selection->isMoving())
-//		{
-//			selection->mouseMove(ev.x, ev.y);
-//		}
-//		else
-//		{
-//			CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y, xournal->view->getZoom());
-//			xournal->view->getCursor()->setMouseSelectionType(selType);
-//		}
-//		return true;
+		EditSelection* selection = xournal->selection;
+		XojPageView* view = selection->getView();
+
+		PositionInputData pos = getInputDataRelativeToCurrentPage(view);
+
+		if (xournal->selection->isMoving())
+		{
+			selection->mouseMove(pos.x, pos.y);
+		}
+		else
+		{
+			CursorSelectionType selType = selection->getSelectionTypeForPos(pos.x, pos.y, xournal->view->getZoom());
+			xournal->view->getCursor()->setMouseSelectionType(selType);
+		}
+		return true;
 	}
 
 	XojPageView* pv = NULL;
@@ -274,14 +287,14 @@ bool InputSequence::actionStart()
 	// with your touchscreen without remove the selection
 	if (h->getToolType() == TOOL_HAND)
 	{
-//		Cursor* cursor = xournal->view->getCursor();
-//		cursor->setMouseDown(true);
-//		xournal->inScrolling = true;
-//		//set reference
-//		xournal->lastMousePositionX = event->x_root;
-//		xournal->lastMousePositionY = event->y_root;
-//
-//		return TRUE;
+		Cursor* cursor = xournal->view->getCursor();
+		cursor->setMouseDown(true);
+		inScrolling = true;
+		// set reference
+		lastMousePositionX = rootX;
+		lastMousePositionY = rootY;
+
+		return true;
 	}
 	else if (xournal->selection)
 	{
@@ -355,7 +368,7 @@ void InputSequence::actionEnd()
 
 	cursor->setMouseDown(false);
 
-	xournal->inScrolling = false;
+	inScrolling = false;
 
 	EditSelection* sel = xournal->view->getSelection();
 	if (sel)

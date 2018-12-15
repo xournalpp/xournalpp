@@ -72,6 +72,11 @@ public:
 	void setCurrentPosition(double x, double y);
 
 	/**
+	 * Set Root Position
+	 */
+	void setCurrentRootPosition(double x, double y);
+
+	/**
 	 * Set (mouse)button
 	 */
 	void setButton(guint button);
@@ -105,6 +110,11 @@ private:
 	 * Stop the running input, if running
 	 */
 	void stopInput();
+
+	/**
+	 * Do the scrolling with the hand tool
+	 */
+	void handleScrollEvent();
 
 	/**
 	 * Get input data relative to current input page
@@ -163,4 +173,39 @@ private:
 	 * Position Y
 	 */
 	double y;
+
+	/**
+	 * Root Position X
+	 */
+	double rootX;
+
+	/**
+	 * Root Position Y
+	 */
+	double rootY;
+
+	/**
+	 * Last mouse position for Scrolling
+	 */
+	int lastMousePositionX;
+
+	/**
+	 * Last mouse position for Scrolling
+	 */
+	int lastMousePositionY;
+
+	/**
+	 * Currently scrolling active
+	 */
+	bool inScrolling;
+
+	/**
+	 * The last Mouse Position, for scrolling
+	 */
+	int scrollOffsetX;
+
+	/**
+	 * The last Mouse Position, for scrolling
+	 */
+	int scrollOffsetY;
 };

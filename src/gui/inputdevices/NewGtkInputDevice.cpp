@@ -202,6 +202,11 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		input->setCurrentPosition(x, y);
 	}
 
+	if (gdk_event_get_root_coords(event, &x, &y))
+	{
+		input->setCurrentRootPosition(x, y);
+	}
+
 	guint button = 0;
 	if (gdk_event_get_button(event, &button))
 	{

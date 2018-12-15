@@ -92,12 +92,6 @@ GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 	                         gtk_scrollable_get_vadjustment(parent));
 	xoj->pagePositionCache = new PagePositionCache();
 
-	xoj->lastMousePositionX = 0;
-	xoj->lastMousePositionY = 0;
-	xoj->scrollOffsetX = 0;
-	xoj->scrollOffsetY = 0;
-	xoj->inScrolling = false;
-
 	xoj->selection = NULL;
 	xoj->shiftDown = false;
 

@@ -53,15 +53,6 @@ struct _GtkXournal
 	PagePositionCache* pagePositionCache;
 
 	/**
-	 * The last Mouse Position, for scrolling
-	 */
-	int lastMousePositionX;
-	int lastMousePositionY;
-	int scrollOffsetX;
-	int scrollOffsetY;
-	bool inScrolling;
-
-	/**
 	 * Selected content, if any
 	 */
 	EditSelection* selection;
