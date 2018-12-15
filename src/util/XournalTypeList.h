@@ -261,4 +261,5 @@ XOJ_DECLARE_TYPE(BaseInputDevice, 249);
 XOJ_DECLARE_TYPE(AbstractInputDevice, 250);
 XOJ_DECLARE_TYPE(DirectAxisInputDevice, 251);
 XOJ_DECLARE_TYPE(NewGtkInputDevice, 252);
+XOJ_DECLARE_TYPE(InputSequence, 253);
 

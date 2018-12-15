@@ -1,4 +1,5 @@
 #include "NewGtkInputDevice.h"
+#include "InputSequence.h"
 
 #include "control/Control.h"
 #include "gui/PageView.h"
@@ -6,38 +7,13 @@
 #include "gui/XournalView.h"
 #include "model/Point.h"
 
-
-
-
-typedef struct {
-  GdkDevice* last_source;
-  gdouble* axes;
-  gdouble x;
-  gdouble y;
-} AxesInfo;
-
-
-
-static AxesInfo *
-axes_info_new (void)
-{
-  AxesInfo *info;
-
-  info = g_new0 (AxesInfo, 1);
-
-  return info;
-}
-
-
-
-
 NewGtkInputDevice::NewGtkInputDevice(GtkWidget* widget, XournalView* view)
  : AbstractInputDevice(widget, view)
 {
 	XOJ_INIT_TYPE(NewGtkInputDevice);
 
-	pointer_info = g_hash_table_new_full(NULL, NULL, NULL, (GDestroyNotify) g_free);
-	touch_info = g_hash_table_new_full(NULL, NULL, NULL, (GDestroyNotify) g_free);
+	pointer_info = g_hash_table_new_full(NULL, NULL, NULL, (GDestroyNotify) InputSequence::free);
+	touch_info = g_hash_table_new_full(NULL, NULL, NULL, (GDestroyNotify) InputSequence::free);
 }
 
 NewGtkInputDevice::~NewGtkInputDevice()
@@ -94,66 +70,74 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 
 	if (event->type == GDK_TOUCH_END || event->type == GDK_TOUCH_CANCEL)
 	{
+		InputSequence* input = (InputSequence*) g_hash_table_lookup(touch_info, sequence);
+		input->endInput();
 		g_hash_table_remove(touch_info, sequence);
-		// TODO End input
 		return true;
 	}
 	else if (event->type == GDK_LEAVE_NOTIFY)
 	{
+		InputSequence* input = (InputSequence*) g_hash_table_lookup(pointer_info, device);
+		input->endInput();
 		g_hash_table_remove(pointer_info, device);
-		// TODO End input
 		return true;
 	}
 
-	AxesInfo* info = NULL;
+	InputSequence* input = NULL;
 	if (sequence == NULL)
 	{
-		info = (AxesInfo*) g_hash_table_lookup(pointer_info, device);
+		input = (InputSequence*) g_hash_table_lookup(pointer_info, device);
 
-		if (!info)
+		if (input == NULL)
 		{
-			info = axes_info_new();
-			g_hash_table_insert(pointer_info, device, info);
+			input = new InputSequence();
+			g_hash_table_insert(pointer_info, device, input);
 		}
 	}
 	else
 	{
-		info = (AxesInfo*) g_hash_table_lookup(touch_info, sequence);
+		input = (InputSequence*) g_hash_table_lookup(touch_info, sequence);
 
-		if (!info)
+		if (input == NULL)
 		{
-			info = axes_info_new();
-			g_hash_table_insert(touch_info, sequence, info);
+			input = new InputSequence();
+			g_hash_table_insert(touch_info, sequence, input);
 		}
 	}
-	if (info->last_source != source_device)
-		info->last_source = source_device;
 
-	g_clear_pointer(&info->axes, g_free);
+	// Apply the correct device if not yet set, should not change
+	// But GTK decides which inputs are get together
+	input->setDevice(source_device);
+
+	input->clearAxes();
+
 
 	if (event->type == GDK_TOUCH_BEGIN || event->type == GDK_TOUCH_UPDATE)
 	{
 		if (sequence && event->touch.emulating_pointer)
 		{
+			InputSequence* input = (InputSequence*) g_hash_table_lookup(pointer_info, device);
+			input->endInput();
 			g_hash_table_remove(pointer_info, device);
 		}
 	}
 
 	if (event->type == GDK_MOTION_NOTIFY)
 	{
-		info->axes = (gdouble*)g_memdup(event->motion.axes, sizeof(gdouble) * gdk_device_get_n_axes(source_device));
+		input->setAxes((gdouble*)g_memdup(event->motion.axes, sizeof(gdouble) * gdk_device_get_n_axes(source_device)));
 	}
 	else if (event->type == GDK_BUTTON_PRESS || event->type == GDK_BUTTON_RELEASE)
 	{
-		info->axes = (gdouble*)g_memdup(event->button.axes, sizeof(gdouble) * gdk_device_get_n_axes(source_device));
+		input->setAxes((gdouble*)g_memdup(event->button.axes, sizeof(gdouble) * gdk_device_get_n_axes(source_device)));
 	}
 
 	gdouble x, y;
 	if (gdk_event_get_coords(event, &x, &y))
 	{
-		info->x = x;
-		info->y = y;
+		input->setCurrentPosition(x, y);
 	}
+
+	input->handleInput();
 
 	return true;
 }

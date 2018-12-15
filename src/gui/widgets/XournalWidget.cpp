@@ -108,27 +108,28 @@ GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 
 	SElement& inputSettings = settings->getCustomElement("inputHandling");
 
-	string selectedInputType;
-	inputSettings.getString("type", selectedInputType);
-
-	if (selectedInputType == "01-gtk")
-	{
-		xoj->input = new BaseInputDevice(GTK_WIDGET(xoj), view);
-	}
-	else if (selectedInputType == "02-direct")
-	{
-		xoj->input = new DirectAxisInputDevice(GTK_WIDGET(xoj), view);
-	}
-	// Not working yet, work in progress
+//	string selectedInputType;
+//	inputSettings.getString("type", selectedInputType);
+//
+//	if (selectedInputType == "01-gtk")
+//	{
+//		xoj->input = new BaseInputDevice(GTK_WIDGET(xoj), view);
+//	}
+//	else if (selectedInputType == "02-direct")
+//	{
+//		xoj->input = new DirectAxisInputDevice(GTK_WIDGET(xoj), view);
+//	}
 //	else if (selectedInputType == "03-gtk")
 //	{
 //		xoj->input = new NewGtkInputDevice(GTK_WIDGET(xoj), view);
 //	}
-	else // selectedInputType == "auto"
-	{
-		// No autodection performed yet, need some infos from users
-		xoj->input = new DirectAxisInputDevice(GTK_WIDGET(xoj), view);
-	}
+//	else // selectedInputType == "auto"
+//	{
+//		// No autodection performed yet, need some infos from users
+//		xoj->input = new DirectAxisInputDevice(GTK_WIDGET(xoj), view);
+//	}
+
+	xoj->input = new NewGtkInputDevice(GTK_WIDGET(xoj), view);
 
 	xoj->input->initWidget();
 

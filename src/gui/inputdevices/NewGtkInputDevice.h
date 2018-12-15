@@ -59,7 +59,7 @@ protected:
 	/**
 	 * Current ongoing pointer events
 	 *
-	 * GdkDevice -> AxesInfo
+	 * GdkDevice -> InputSequence
 	 */
 	// TODO Rename
 	GHashTable* pointer_info;
@@ -67,7 +67,7 @@ protected:
 	/**
 	 * Current ongoing touch events
 	 *
-	 * GdkEventSequence -> AxesInfo
+	 * GdkEventSequence -> InputSequence
 	 */
 	// TODO Rename
 	GHashTable* touch_info;
