@@ -13,14 +13,20 @@ This manual is not yet completed.
 
 ## Preparation
 Install MSYS2
+
 Start Mingw-w64 64bit. (Always Check **64bit** not 32bit and not MSYS2)
 
 Update MSYS (do this multiple times,
 close Terminal after each update)
- $ pacman -Syuu
+
+```bash
+pacman -Syuu
+```
 
 ## Install GIT
- $ pacman -S git
+```bash
+pacman -S git
+```
 
 ## Install Build tools
 ```bash
@@ -55,7 +61,7 @@ cd build/
 ```
 
 ```bash
-cmake .. -G 'MSYS Makefiles' -DENABLE_MATHTEX=OFF
+cmake ..
 make
 ```
 

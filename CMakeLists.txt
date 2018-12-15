@@ -291,9 +291,10 @@ endif (ENABLE_CPPUNIT)
 
 # Mathtex
 option (ENABLE_MATHTEX "Mathtex support" ON)
-if (ENABLE_MATHTEX AND WIN32)
-    message (FATAL_ERROR "Mathtex is not supported on Windows for now")
-endif (ENABLE_MATHTEX AND WIN32)
+if (WIN32)
+  set(ENABLE_MATHTEX OFF)
+  message ("Automatically set ENABLE_MATHTEX OFF on Windows")
+endif ()
 
 # Unstable features
 
