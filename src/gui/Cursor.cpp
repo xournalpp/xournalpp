@@ -112,8 +112,6 @@ void Cursor::setInvisible(bool invisible)
 {
 	XOJ_CHECK_TYPE(Cursor);
 
-	g_return_if_fail(this != NULL);
-
 	if (this->invisible == invisible)
 	{
 		return;

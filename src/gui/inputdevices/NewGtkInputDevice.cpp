@@ -2,6 +2,7 @@
 #include "InputSequence.h"
 
 #include "control/Control.h"
+#include "gui/Cursor.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
 #include "util/DeviceListHelper.h"
@@ -314,6 +315,10 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	{
 		input->copyAxes(event);
 		input->actionMoved();
+
+		Cursor* cursor = view->getControl()->getWindow()->getXournal()->getCursor();
+		cursor->setInvisible(false);
+
 	}
 	else if (event->type == GDK_BUTTON_PRESS)
 	{
