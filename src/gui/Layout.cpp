@@ -52,7 +52,15 @@ void Layout::checkScroll(GtkAdjustment* adjustment, double& lastScroll)
 
 	lastScroll = gtk_adjustment_get_value(adjustment);
 
-//
+/**
+ * This causes issues.
+ *
+ * Disabling devices does not work
+ * Removing Touch mask does not work
+ *
+ * So an X11 / Wayland etc. implementation should be created
+ */
+
 //	ToolHandler* h = view->getControl()->getToolHandler();
 //
 //	if (!view->shouldIgnoreTouchEvents() || h->getToolType() == TOOL_HAND)

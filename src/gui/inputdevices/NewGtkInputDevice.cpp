@@ -282,7 +282,6 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		if (sequence && event->touch.emulating_pointer)
 		{
 			g_hash_table_remove(pointerInputList, sourceDevice);
-			g_warning("Touch emulating pointer\n");
 			return true;
 		}
 	}
