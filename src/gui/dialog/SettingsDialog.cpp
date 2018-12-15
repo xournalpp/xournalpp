@@ -5,7 +5,6 @@
 
 #include <config.h>
 #include <Util.h>
-#include <i18n.h>
 
 #include <string.h>
 
@@ -41,7 +40,6 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 	gtk_widget_show(callib);
 
 	initMouseButtonEvents();
-	initAdvanceInputConfig();
 }
 
 SettingsDialog::~SettingsDialog()
@@ -57,38 +55,6 @@ SettingsDialog::~SettingsDialog()
 	this->settings = NULL;
 
 	XOJ_RELEASE_TYPE(SettingsDialog);
-}
-
-void SettingsDialog::initAdvanceInputConfig()
-{
-	GtkComboBoxText* cbSelectInputType = GTK_COMBO_BOX_TEXT(get("cbSelectInputType"));
-	gtk_combo_box_text_append_text(cbSelectInputType, _C("Auto"));
-	gtk_combo_box_text_append_text(cbSelectInputType, _C("01: GTK / may crash on X11"));
-	gtk_combo_box_text_append_text(cbSelectInputType, _C("02: Direct read axes"));
-
-	// Not fully working yet
-	// gtk_combo_box_text_append_text(cbSelectInputType, _C("03: GTK multi device support"));
-
-	string selectedInputType;
-	SElement& inputSettings = settings->getCustomElement("inputHandling");
-	inputSettings.getString("type", selectedInputType);
-
-	if (selectedInputType == "01-gtk")
-	{
-		gtk_combo_box_set_active(GTK_COMBO_BOX(cbSelectInputType), 1);
-	}
-	else if (selectedInputType == "02-direct")
-	{
-		gtk_combo_box_set_active(GTK_COMBO_BOX(cbSelectInputType), 2);
-	}
-	else if (selectedInputType == "03-gtk")
-	{
-		gtk_combo_box_set_active(GTK_COMBO_BOX(cbSelectInputType), 3);
-	}
-	else // selectedInputType == "auto"
-	{
-		gtk_combo_box_set_active(GTK_COMBO_BOX(cbSelectInputType), 0);
-	}
 }
 
 void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool withDevice)
@@ -381,28 +347,6 @@ void SettingsDialog::save()
 	{
 		bcg->saveSettings();
 	}
-
-	SElement& inputSettings = settings->getCustomElement("inputHandling");
-	GtkComboBox* cbSelectInputType = GTK_COMBO_BOX(get("cbSelectInputType"));
-	int activeInput = gtk_combo_box_get_active(cbSelectInputType);
-
-	if (activeInput == 1)
-	{
-		inputSettings.setString("type", "01-gtk");
-	}
-	else if (activeInput == 2)
-	{
-		inputSettings.setString("type", "02-direct");
-	}
-	else if (activeInput == 3)
-	{
-		inputSettings.setString("type", "03-gtk");
-	}
-	else
-	{
-		inputSettings.setString("type", "auto");
-	}
-
 
 	settings->transactionEnd();
 }
