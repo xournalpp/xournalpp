@@ -170,9 +170,6 @@ bool InputSequence::actionMoved()
 	GtkXournal* xournal = inputHandler->getXournal();
 	ToolHandler* h = inputHandler->getToolHandler();
 
-	printf("moved %s %i (%ld)\n", gdk_device_get_name(device), inputRunning, this);
-
-
 	changeTool();
 
 	if (xournal->view->zoom_gesture_active)
@@ -340,8 +337,6 @@ void InputSequence::actionEnd()
 		return;
 	}
 
-	printf("InputSequence::actionEnd\n");
-
 	current_view = NULL;
 
 	GtkXournal* xournal = inputHandler->getXournal();
@@ -420,12 +415,10 @@ void InputSequence::checkCanStartInput()
 
 	if (inputHandler->startInput(this))
 	{
-		printf("start input %s\n", gdk_device_get_name(device));
 		inputRunning = true;
 	}
 	else
 	{
-		printf("NOT start input %s\n", gdk_device_get_name(device));
 		inputRunning = false;
 	}
 }
@@ -436,11 +429,6 @@ void InputSequence::checkCanStartInput()
 void InputSequence::stopInput()
 {
 	XOJ_CHECK_TYPE(InputSequence);
-
-	if (inputRunning)
-	{
-		printf("stop input %s\n", gdk_device_get_name(device));
-	}
 
 	inputRunning = false;
 	inputHandler->stopInput(this);

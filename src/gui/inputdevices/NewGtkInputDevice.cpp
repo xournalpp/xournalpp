@@ -105,11 +105,11 @@ void NewGtkInputDevice::initWidget()
 
 			// Touch / Pen / Mouse
 			GDK_POINTER_MOTION_MASK |
-			GDK_BUTTON_PRESS_MASK |
+			GDK_BUTTON_PRESS_MASK   |
 			GDK_BUTTON_RELEASE_MASK |
-			GDK_SMOOTH_SCROLL_MASK |
-			GDK_ENTER_NOTIFY_MASK |
-			GDK_LEAVE_NOTIFY_MASK |
+			GDK_SMOOTH_SCROLL_MASK  |
+			GDK_ENTER_NOTIFY_MASK   |
+			GDK_LEAVE_NOTIFY_MASK   |
 			GDK_TOUCH_MASK);
 
     g_signal_connect(widget, "event", G_CALLBACK(event_cb), this);
@@ -159,8 +159,6 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	{
 		input = (InputSequence*) g_hash_table_lookup(pointerInputList, sourceDevice);
 
-		printf("dev->input : %ld->%ld (%s)\n", sourceDevice, input, gdk_device_get_name(sourceDevice));
-
 		if (input == NULL)
 		{
 			input = new InputSequence(this);
@@ -193,7 +191,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		if (sequence && event->touch.emulating_pointer)
 		{
 			g_hash_table_remove(pointerInputList, sourceDevice);
-			printf("Touch emulating pointer\n");
+			g_warning("Touch emulating pointer\n");
 			return true;
 		}
 	}
