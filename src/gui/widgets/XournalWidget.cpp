@@ -104,8 +104,8 @@ GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 	xoj->selection = NULL;
 	xoj->shiftDown = false;
 
-	Settings* settings = view->getControl()->getSettings();
-
+//	Settings* settings = view->getControl()->getSettings();
+//
 //	SElement& inputSettings = settings->getCustomElement("inputHandling");
 //
 //	string selectedInputType;

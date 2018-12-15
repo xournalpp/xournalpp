@@ -79,14 +79,20 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	if (event->type == GDK_TOUCH_END || event->type == GDK_TOUCH_CANCEL)
 	{
 		InputSequence* input = (InputSequence*) g_hash_table_lookup(touchInputList, sequence);
-		input->endInput();
+		if (input != NULL)
+		{
+			input->endInput();
+		}
 		g_hash_table_remove(touchInputList, sequence);
 		return true;
 	}
 	else if (event->type == GDK_LEAVE_NOTIFY)
 	{
 		InputSequence* input = (InputSequence*) g_hash_table_lookup(pointerInputList, device);
-		input->endInput();
+		if (input != NULL)
+		{
+			input->endInput();
+		}
 		g_hash_table_remove(pointerInputList, device);
 		return true;
 	}
@@ -134,7 +140,10 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		if (sequence && event->touch.emulating_pointer)
 		{
 			InputSequence* input = (InputSequence*) g_hash_table_lookup(pointerInputList, device);
-			input->endInput();
+			if (input != NULL)
+			{
+				input->endInput();
+			}
 			g_hash_table_remove(pointerInputList, device);
 		}
 	}
