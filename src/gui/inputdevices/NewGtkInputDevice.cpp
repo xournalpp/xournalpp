@@ -227,7 +227,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 			|| gdk_device_get_source(sourceDevice) == GDK_SOURCE_TOUCHSCREEN)
 	{
 		// Ignore Touch events
-		return false;
+		return true;
 	}
 
 
