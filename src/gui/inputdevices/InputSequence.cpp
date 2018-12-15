@@ -170,7 +170,7 @@ bool InputSequence::actionMoved()
 	GtkXournal* xournal = inputHandler->getXournal();
 	ToolHandler* h = inputHandler->getToolHandler();
 
-	printf("moved %s %i\n", gdk_device_get_name(device), inputRunning);
+	printf("moved %s %i (%ld)\n", gdk_device_get_name(device), inputRunning, this);
 
 
 	changeTool();
