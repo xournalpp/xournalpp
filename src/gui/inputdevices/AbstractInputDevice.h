@@ -42,7 +42,9 @@ protected:
 	bool handleButtonPress(GdkEventButton* event);
 	bool handleButtonRelease(GdkEventButton* event);
 	bool handleMotion(GdkEventMotion* event);
-	bool changeTool(GdkEventButton* event);
+
+public:
+	bool changeTool(GdkDevice* device, int button);
 
 private:
 	XOJ_TYPE_ATTRIB;

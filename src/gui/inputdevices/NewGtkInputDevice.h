@@ -24,18 +24,23 @@ public:
 	/**
 	 * Initialize the input handling, set input events
 	 */
-	virtual void initWidget();
+	void initWidget();
+
+	/**
+	 * Focus the widget
+	 */
+	void focusWidget();
 
 protected:
 	/**
 	 * Mouse / pen moved event
 	 */
-	virtual bool motionEvent(XojPageView* pageView, GdkEventMotion* event);
+	bool motionEvent(XojPageView* pageView, GdkEventMotion* event);
 
 	/**
 	 * Handle all GTK Events
 	 */
-	virtual bool eventHandler(GdkEvent* event);
+	bool eventHandler(GdkEvent* event);
 
 protected:
 	/**
@@ -46,7 +51,7 @@ protected:
 	/**
 	 * Read pressure and position of the pen, if a pen is active
 	 */
-	virtual void readPositionAndPressure(GdkEventMotion* event, double& x, double& y, double& pressure);
+	void readPositionAndPressure(GdkEventMotion* event, double& x, double& y, double& pressure);
 
 private:
 	static bool event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self);

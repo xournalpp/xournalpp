@@ -93,7 +93,7 @@ bool AbstractInputDevice::handleButtonPress(GdkEventButton* event)
 	ToolHandler* h = xournal->view->getControl()->getToolHandler();
 
 	// Change the tool depending on the key or device
-	if (changeTool(event))
+	if (changeTool(event->device, event->button))
 	{
 		return true;
 	}
@@ -134,7 +134,8 @@ bool AbstractInputDevice::handleButtonPress(GdkEventButton* event)
 		else
 		{
 			xournal->view->clearSelection();
-			if (changeTool(event))
+
+			if (changeTool(event->device, event->button))
 			{
 				return true;
 			}
@@ -269,33 +270,30 @@ bool AbstractInputDevice::handleMotion(GdkEventMotion* event)
 	return false;
 }
 
-bool AbstractInputDevice::changeTool(GdkEventButton* event)
+bool AbstractInputDevice::changeTool(GdkDevice* device, int button)
 {
 	Settings* settings = view->getControl()->getSettings();
 	ButtonConfig* cfgTouch = settings->getTouchButtonConfig();
 	ToolHandler* h = view->getControl()->getToolHandler();
 
-	GdkEvent* rawEvent = (GdkEvent*) event;
-	GdkDevice* device = gdk_event_get_source_device(rawEvent);
-
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 	ButtonConfig* cfg = NULL;
 	if (gdk_device_get_source(device) == GDK_SOURCE_PEN)
 	{
-		if (event->button == 2)
+		if (button == 2)
 		{
 			cfg = settings->getStylusButton1Config();
 		}
-		else if (event->button == 3)
+		else if (button == 3)
 		{
 			cfg = settings->getStylusButton2Config();
 		}
 	}
-	 else if (event->button == 2)   // Middle Button
+	 else if (button == 2)   // Middle Button
 	{
 		cfg = settings->getMiddleButtonConfig();
 	}
-	else if (event->button == 3 && !xournal->selection)     // Right Button
+	else if (button == 3 && !xournal->selection)     // Right Button
 	{
 		cfg = settings->getRightButtonConfig();
 	}

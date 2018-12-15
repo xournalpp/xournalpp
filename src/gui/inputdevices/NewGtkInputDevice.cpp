@@ -29,6 +29,16 @@ NewGtkInputDevice::~NewGtkInputDevice()
 }
 
 /**
+ * Focus the widget
+ */
+void NewGtkInputDevice::focusWidget()
+{
+	XOJ_CHECK_TYPE(NewGtkInputDevice);
+
+	gtk_widget_grab_focus(widget);
+}
+
+/**
  * Initialize the input handling, set input events
  */
 void NewGtkInputDevice::initWidget()
@@ -50,7 +60,6 @@ void NewGtkInputDevice::initWidget()
 			GDK_TOUCH_MASK);
 
     g_signal_connect(widget, "event", G_CALLBACK(event_cb), this);
-	g_signal_connect(widget, "touch-event", G_CALLBACK(touch_event_cb), this);
 }
 
 bool NewGtkInputDevice::event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self)
@@ -94,7 +103,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 
 		if (input == NULL)
 		{
-			input = new InputSequence();
+			input = new InputSequence(this);
 			g_hash_table_insert(pointerInputList, device, input);
 		}
 	}
@@ -104,7 +113,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 
 		if (input == NULL)
 		{
-			input = new InputSequence();
+			input = new InputSequence(this);
 			g_hash_table_insert(touchInputList, sequence, input);
 		}
 	}
@@ -142,6 +151,13 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	}
 	else if (event->type == GDK_BUTTON_PRESS)
 	{
+		guint button = 0;
+		// scroll wheel events
+		if (gdk_event_get_button(event, &button) && button > 3)
+		{
+			return FALSE;
+		}
+
 		input->copyAxes(event);
 		input->actionStart();
 	}

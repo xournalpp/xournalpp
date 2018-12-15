@@ -16,10 +16,12 @@
 
 #include <gtk/gtk.h>
 
+class NewGtkInputDevice;
+
 class InputSequence
 {
 public:
-	InputSequence();
+	InputSequence(NewGtkInputDevice* inputHandler);
 	virtual ~InputSequence();
 
 public:
@@ -75,6 +77,11 @@ public:
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	/**
+	 * Input Handler
+	 */
+	NewGtkInputDevice* inputHandler;
 
 	/**
 	 * Current input device
