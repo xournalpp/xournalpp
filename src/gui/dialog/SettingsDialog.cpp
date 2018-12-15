@@ -151,7 +151,6 @@ void SettingsDialog::load()
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
 	loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
 	loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
-	loadCheckbox("cbMultiInput", settings->isMultiInput());
 
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
 	string txt = settings->getDefaultSaveName();
@@ -310,7 +309,6 @@ void SettingsDialog::save()
 		scrollbarHideType |= SCROLLBAR_HIDE_VERTICAL;
 	}
 	settings->setScrollbarHideType((ScrollbarHideType)scrollbarHideType);
-	settings->setMultiInput(getCheckbox("cbMultiInput"));
 
 	GdkRGBA color;
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorBorder")), &color);

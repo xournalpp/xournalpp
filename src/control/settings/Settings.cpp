@@ -73,7 +73,6 @@ void Settings::loadDefault()
 
 	this->autoloadPdfXoj = true;
 	this->showBigCursor = false;
-	this->multiInput = false;
 	this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
 
 	//Set this for autosave frequency in minutes.
@@ -335,10 +334,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "showBigCursor") == 0)
 	{
 		this->showBigCursor = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "multiInput") == 0)
-	{
-		this->multiInput = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "defaultSaveName") == 0)
 	{
@@ -701,9 +696,6 @@ void Settings::save()
 
 	WRITE_BOOL_PROP(showBigCursor);
 
-	WRITE_COMMENT("Allow multiple inputs, which e.g. on Wayland produces one cursor per device");
-	WRITE_BOOL_PROP(multiInput);
-
 	if (this->scrollbarHideType == SCROLLBAR_HIDE_BOTH)
 	{
 		saveProperty((const char*) "scrollbarHideType", "both", root);
@@ -1011,26 +1003,6 @@ void Settings::setShowBigCursor(bool b)
 	}
 
 	this->showBigCursor = b;
-	save();
-}
-
-bool Settings::isMultiInput()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->multiInput;
-}
-
-void Settings::setMultiInput(bool b)
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	if (this->multiInput == b)
-	{
-		return;
-	}
-
-	this->multiInput = b;
 	save();
 }
 
