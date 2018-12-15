@@ -202,21 +202,30 @@ void Control::renameLastAutosaveFile()
 
 	if (!this->lastAutosaveFilename.empty())
 	{
-		path filename = this->lastAutosaveFilename;
-		path renamed = Util::getAutosaveFilename();
-		renamed.replace_extension(filename.filename());
-		
-		if (bf::exists(filename))
+		try
 		{
-			bf::remove(renamed);
-			bf::rename(filename, renamed);
+			path filename = this->lastAutosaveFilename;
+			path renamed = Util::getAutosaveFilename();
+			renamed.replace_extension(filename.filename());
+
+			if (bf::exists(filename))
+			{
+				bf::remove(renamed);
+				bf::rename(filename, renamed);
+			}
+			else
+			{
+				bf::remove(renamed);
+				this->save(false);
+				bf::rename(filename, renamed);
+				bf::remove(filename);
+			}
 		}
-		else
+		catch (const boost::filesystem::filesystem_error& e)
 		{
-			bf::remove(renamed);
-			this->save(false);
-			bf::rename(filename, renamed);
-			bf::remove(filename);
+			string msg = FS(_F("Autosave failed with an error: {1}") % e.what());
+			g_warning("%s", msg.c_str());
+			Util::showErrorToUser(getGtkWindow(), msg);
 		}
 	}
 }
