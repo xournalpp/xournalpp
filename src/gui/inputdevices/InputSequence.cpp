@@ -7,8 +7,6 @@ InputSequence::InputSequence()
    y(-1)
 {
 	XOJ_INIT_TYPE(InputSequence);
-
-	printf("start input\n");
 }
 
 InputSequence::~InputSequence()
@@ -16,8 +14,6 @@ InputSequence::~InputSequence()
 	XOJ_CHECK_TYPE(InputSequence);
 
 	clearAxes();
-
-	printf("end input\n");
 
 	XOJ_RELEASE_TYPE(InputSequence);
 }

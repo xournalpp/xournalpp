@@ -37,11 +37,6 @@ protected:
 	 */
 	virtual bool eventHandler(GdkEvent* event);
 
-	/**
-	 * Touch event
-	 */
-	virtual bool touchEvent(GdkEventTouch* event);
-
 protected:
 	/**
 	 * Read Pressure over GTK
@@ -55,7 +50,6 @@ protected:
 
 private:
 	static bool event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self);
-	static bool touch_event_cb(GtkWidget* widget, GdkEventTouch* event, NewGtkInputDevice* self);
 
 private:
 	XOJ_TYPE_ATTRIB;

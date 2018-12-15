@@ -21,7 +21,9 @@ NewGtkInputDevice::~NewGtkInputDevice()
 	XOJ_CHECK_TYPE(NewGtkInputDevice);
 
 	g_hash_table_destroy(pointerInputList);
+	pointerInputList = NULL;
 	g_hash_table_destroy(touchInputList);
+	touchInputList = NULL;
 
 	XOJ_RELEASE_TYPE(NewGtkInputDevice);
 }
@@ -58,44 +60,11 @@ bool NewGtkInputDevice::event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInput
 	return self->eventHandler(event);
 }
 
-bool NewGtkInputDevice::touch_event_cb(GtkWidget* widget, GdkEventTouch* event, NewGtkInputDevice* self)
-{
-	XOJ_CHECK_TYPE_OBJ(self, NewGtkInputDevice);
-
-	return self->touchEvent(event);
-}
-
-/**
- * Touch event
- */
-bool NewGtkInputDevice::touchEvent(GdkEventTouch* event)
-{
-	GdkEventSequence* sequence = gdk_event_get_event_sequence((GdkEvent*) event);
-	InputSequence* input = (InputSequence*) g_hash_table_lookup(touchInputList, sequence);
-
-	printf("Touch event\n");
-
-	if (input != NULL)
-	{
-		gdouble x, y;
-		if (gdk_event_get_coords((GdkEvent*) event, &x, &y))
-		{
-			input->setCurrentPosition(x, y);
-		}
-
-		input->actionMoved();
-	}
-
-	return true;
-}
-
 /**
  * Handle all GTK Events
  */
 bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 {
-	printf("->event->type=%i\n", event->type);
-
 	GdkDevice* device = gdk_event_get_device(event);
 	GdkDevice* sourceDevice = gdk_event_get_source_device(event);
 	GdkEventSequence* sequence = gdk_event_get_event_sequence(event);
@@ -159,7 +128,6 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 			return true;
 		}
 	}
-
 
 	gdouble x, y;
 	if (gdk_event_get_coords(event, &x, &y))
