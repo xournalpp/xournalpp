@@ -44,10 +44,16 @@ public:
 	void actionEnd();
 
 	/**
+	 * Check if input is still running, or if there an event was missed
+	 *
+	 * @return true if input is stopped now
+	 */
+	bool checkStillRunning();
+
+	/**
 	 * Set current input device
 	 */
 	void setDevice(GdkDevice* device);
-
 
 	/**
 	 * Clear the last stored axes
