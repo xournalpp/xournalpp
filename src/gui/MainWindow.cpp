@@ -29,6 +29,19 @@ using std::cout;
 using std::endl;
 namespace bf = boost::filesystem;
 
+
+
+
+
+gboolean scroll_touch_callback(GtkWidget* widget, GdkEvent* event, gpointer pointer)
+{
+	printf("touch callback\n");
+	return false;
+}
+
+
+
+
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
  : GladeGui(gladeSearchPath, "main.glade", "mainWindow")
 {
@@ -55,6 +68,12 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 #endif
 
 	GtkWidget* vpXournal = get("vpXournal");
+
+	GtkWidget* winXournal = get("winXournal");
+
+	//gtk_widget_add_events(GTK_WIDGET(parent), GDK_TOUCH_MASK);
+    g_signal_connect(winXournal, "touch-event", G_CALLBACK(scroll_touch_callback), NULL);
+
 
 	this->xournal = new XournalView(vpXournal, control);
 

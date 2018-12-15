@@ -275,7 +275,10 @@ bool InputSequence::actionStart()
 
 	inputHandler->focusWidget();
 
-	checkCanStartInput();
+	if (penDevice)
+	{
+		checkCanStartInput();
+	}
 
 	if (!inputRunning)
 	{
