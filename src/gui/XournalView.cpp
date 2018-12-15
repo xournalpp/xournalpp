@@ -380,7 +380,13 @@ void XournalView::zoom_gesture_begin_cb(GtkGesture* gesture, GdkEventSequence* s
 
 	// get center of bounding box
 	ZoomControl* zoom = view->control->getZoomControl();
-	gtk_gesture_get_bounding_box_center(GTK_GESTURE(gesture), &zoom->zoom_center_x, &zoom->zoom_center_y);
+	gdouble center_x;
+	gdouble center_y;
+	if(gtk_gesture_get_bounding_box_center(GTK_GESTURE(gesture), &center_x, &center_y))
+	{
+		zoom->setZoomCenterX(center_x);
+		zoom->setZoomCenterY(center_y);
+	}
 }
 
 void XournalView::zoom_gesture_end_cb(GtkGesture* gesture, GdkEventSequence* sequence, XournalView* view)
@@ -388,8 +394,8 @@ void XournalView::zoom_gesture_end_cb(GtkGesture* gesture, GdkEventSequence* seq
 	XOJ_CHECK_TYPE_OBJ(view, XournalView);
 
 	ZoomControl* zoom = view->control->getZoomControl();
-	zoom->zoom_center_x = -1;
-	zoom->zoom_center_y = -1;
+	zoom->setZoomCenterX(-1);
+	zoom->setZoomCenterY(-1);
 	view->zoom_gesture_active = false;
 }
 
@@ -658,41 +664,62 @@ void XournalView::zoomChanged(double lastZoom)
 		return;
 	}
 
-	// move this somewhere else maybe
-	layout->layoutPages();
 
 	// Keep zoom center at static position in current view
 	// by scrolling relative to counter motion induced by zoom
 	// in orignal version top left corner of first page static
 	// Pack into extra function later
 	double zoom_now = getZoom();
-	// relative scrolling
 	double zoom_eff = zoom_now / lastZoom;
-	int scroll_x;
-	int scroll_y;
+	// center of zooming for the scroll adjustment
+	double zoom_center_x;
+	double zoom_center_y;
+	// relative scrolling
+	double scroll_x;
+	double scroll_y;
 	// x,y position of visible rectangle for gesture scrolling
-	int vis_x;
-	int vis_y;
+	double vis_x;
+	double vis_y;
 	// get margins for relative scroll calculation
 	double marginLeft = (double) view->layout.getMarginLeft();
 	double marginTop = (double) view->layout.getMarginTop();
 
+	if (std::abs(zoom_now - lastZoom) < ZOOM_EPSILON)
+	{
+		return;
+	}
+
+	// move this somewhere else maybe
+	layout->layoutPages();
+
+	//TODO: what if gesture_active we should fire error
+	// Scroll by ZoomIn, ZoomOut or Slider towards the middle
+	if (zoom->getZoomCenterX() == -1 || zoom->getZoomCenterY() == -1)
+	{
+		Rectangle *vis_rect = getVisibleRect(view);
+		zoom_center_x = vis_rect->x + (vis_rect->width * 0.5);
+		zoom_center_y = vis_rect->y + (vis_rect->height * 0.5);
+	}
+	else
+	{
+		zoom_center_x = zoom->getZoomCenterX();
+		zoom_center_y = zoom->getZoomCenterY();
+	}
 	// Absolute centred scrolling used for gesture
 	if (this->zoom_gesture_active)
 	{
-		vis_x = (int) ((zoom->zoom_center_x - marginLeft) * (zoom_now / this->zoom_gesture_begin - 1));
-		vis_y = (int) ((zoom->zoom_center_y - marginTop) * (zoom_now / this->zoom_gesture_begin - 1));
-		layout->scrollAbs(this->visRect_gesture_begin.x + vis_x, this->visRect_gesture_begin.y + vis_y);
+		vis_x = (zoom_center_x - marginLeft) * (zoom_now / this->zoom_gesture_begin - 1);
+		vis_y = (zoom_center_y - marginTop) * (zoom_now / this->zoom_gesture_begin - 1);
+		layout->scrollAbs(this->visRect_gesture_begin.x + std::round(vis_x), this->visRect_gesture_begin.y + std::round(vis_y));
 	}
-
+	else
 	// Relative centered scrolling used for SHIFT-mousewheel
-	if (zoom_eff != 1 && zoom->zoom_center_x != -1 && this->zoom_gesture_active == false)
 	{
-		scroll_x = (int) ((zoom->zoom_center_x - marginLeft) * (zoom_eff - 1));
-		scroll_y = (int) ((zoom->zoom_center_y - marginTop) * (zoom_eff - 1));
+		scroll_x = (zoom_center_x - marginLeft) * (zoom_eff - 1);
+		scroll_y = (zoom_center_y - marginTop) * (zoom_eff - 1);
 
 		// adjust view by scrolling
-		layout->scrollRelativ(scroll_x, scroll_y);
+		layout->scrollRelativ(std::round(scroll_x), std::round(scroll_y));
 	}
 
 	Document* doc = control->getDocument();
