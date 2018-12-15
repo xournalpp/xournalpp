@@ -161,6 +161,11 @@ private:
 	GdkDevice* device;
 
 	/**
+	 * This is a pen / eraser device
+	 */
+	bool penDevice;
+
+	/**
 	 * Axes of the input
 	 */
 	gdouble* axes;

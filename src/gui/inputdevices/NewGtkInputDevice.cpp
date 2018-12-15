@@ -4,6 +4,7 @@
 #include "control/Control.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
+#include "util/DeviceListHelper.h"
 #include "model/Point.h"
 
 
@@ -58,6 +59,13 @@ GtkXournal* NewGtkInputDevice::getXournal()
 	XOJ_CHECK_TYPE(NewGtkInputDevice);
 
 	return GTK_XOURNAL(widget);
+}
+
+XournalView* NewGtkInputDevice::getView()
+{
+	XOJ_CHECK_TYPE(NewGtkInputDevice);
+
+	return view;
 }
 
 /**
@@ -275,7 +283,6 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		if (sequence && event->touch.emulating_pointer)
 		{
 			g_hash_table_remove(pointerInputList, sourceDevice);
-			g_warning("Touch emulating pointer\n");
 			return true;
 		}
 	}

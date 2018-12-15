@@ -50,6 +50,8 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	this->currentPage = 0;
 	this->lastSelectedPage = -1;
 
+	this->lastPenAction = 0;
+
 	control->getZoomControl()->addZoomListener(this);
 
 	gtk_widget_set_can_default(this->widget, true);
@@ -394,6 +396,13 @@ void XournalView::zoom_gesture_end_cb(GtkGesture* gesture, GdkEventSequence* seq
 void XournalView::zoom_gesture_scale_changed_cb(GtkGestureZoom* gesture, gdouble scale, XournalView* view)
 {
 	XOJ_CHECK_TYPE_OBJ(view, XournalView);
+
+	// Touch handling, cannot be solved this way
+//	if (view->shouldIgnoreTouchEvents())
+//	{
+//		return;
+//	}
+
 	view->setZoom(scale * view->zoom_gesture_begin);
 }
 
@@ -574,6 +583,30 @@ GtkContainer* XournalView::getParent()
 	XOJ_CHECK_TYPE(XournalView);
 
 	return this->parent;
+}
+
+/**
+ * A pen action was detected now, therefore ignore touch events
+ * for a short time
+ */
+void XournalView::penActionDetected()
+{
+	XOJ_CHECK_TYPE(XournalView);
+	this->lastPenAction = g_get_monotonic_time() / 1000;
+}
+
+/**
+ * If the pen was active a short time before, ignore touch events
+ */
+bool XournalView::shouldIgnoreTouchEvents()
+{
+	XOJ_CHECK_TYPE(XournalView);
+	if ((g_get_monotonic_time() / 1000 - this->lastPenAction) < 500)
+	{
+		// printf("Ignore touch, pen was active\n");
+		return true;
+	}
+	return false;
 }
 
 GtkWidget* XournalView::getWidget()
