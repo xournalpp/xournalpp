@@ -254,6 +254,7 @@ void XojPageView::startText(double x, double y)
 	XOJ_CHECK_TYPE(XojPageView);
 
 	this->xournal->endTextAllPages(this);
+	this->xournal->getControl()->getSearchBar()->showSearchBar(false);
 
 	if (this->textEditor == NULL)
 	{
