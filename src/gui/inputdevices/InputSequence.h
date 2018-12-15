@@ -23,15 +23,21 @@ public:
 	virtual ~InputSequence();
 
 public:
-	/**
-	 * End / finalize input
-	 */
-	void endInput();
 
 	/**
-	 * All data applied, do the input now
+	 * Mouse / Pen / Touch move
 	 */
-	void handleInput();
+	void actionMoved();
+
+	/**
+	 * Mouse / Pen down / touch start
+	 */
+	void actionStart();
+
+	/**
+	 * Mouse / Pen up / touch end
+	 */
+	void actionEnd();
 
 	/**
 	 * Set current input device
@@ -50,6 +56,11 @@ public:
 	 * @param axes Will be handed over, and freed by InputSequence
 	 */
 	void setAxes(gdouble* axes);
+
+	/**
+	 * Copy axes from event
+	 */
+	void copyAxes(GdkEvent* event);
 
 	/**
 	 * Set Position

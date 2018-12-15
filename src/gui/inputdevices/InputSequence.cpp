@@ -17,6 +17,8 @@ InputSequence::~InputSequence()
 
 	clearAxes();
 
+	printf("end input\n");
+
 	XOJ_RELEASE_TYPE(InputSequence);
 }
 
@@ -54,6 +56,17 @@ void InputSequence::setAxes(gdouble* axes)
 }
 
 /**
+ * Copy axes from event
+ */
+void InputSequence::copyAxes(GdkEvent* event)
+{
+	XOJ_CHECK_TYPE(InputSequence);
+
+	clearAxes();
+	setAxes((gdouble*)g_memdup(event->motion.axes, sizeof(gdouble) * gdk_device_get_n_axes(device)));
+}
+
+/**
  * Set Position
  */
 void InputSequence::setCurrentPosition(double x, double y)
@@ -65,23 +78,33 @@ void InputSequence::setCurrentPosition(double x, double y)
 }
 
 /**
- * End / finalize input
+ * Mouse / Pen / Touch move
  */
-void InputSequence::endInput()
+void InputSequence::actionMoved()
 {
 	XOJ_CHECK_TYPE(InputSequence);
 
-	printf("end input\n");
+	printf("actionMoved %s\n", gdk_device_get_name(device));
 }
 
 /**
- * All data applied, do the input now
+ * Mouse / Pen down / touch start
  */
-void InputSequence::handleInput()
+void InputSequence::actionStart()
 {
 	XOJ_CHECK_TYPE(InputSequence);
 
-	printf("input %s\n", gdk_device_get_name(device));
+	printf("actionStart %s\n", gdk_device_get_name(device));
+}
+
+/**
+ * Mouse / Pen up / touch end
+ */
+void InputSequence::actionEnd()
+{
+	XOJ_CHECK_TYPE(InputSequence);
+
+	printf("actionEnd %s\n", gdk_device_get_name(device));
 }
 
 /**

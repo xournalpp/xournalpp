@@ -45,15 +45,7 @@ void NewGtkInputDevice::initWidget()
 			GDK_SMOOTH_SCROLL_MASK |
 			GDK_ENTER_NOTIFY_MASK |
 			GDK_LEAVE_NOTIFY_MASK |
-			GDK_TOUCH_MASK |
-
-			// TODO Testing
-			GDK_PROXIMITY_IN_MASK |
-			GDK_PROXIMITY_OUT_MASK
-
-
-
-	);
+			GDK_TOUCH_MASK);
 
     g_signal_connect(widget, "event", G_CALLBACK(event_cb), this);
 }
@@ -74,25 +66,21 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	GdkDevice* device = gdk_event_get_device(event);
 	GdkDevice* sourceDevice = gdk_event_get_source_device(event);
 	GdkEventSequence* sequence = gdk_event_get_event_sequence(event);
-//	GdkDeviceTool* tool = gdk_event_get_device_tool(event);
 
 	if (event->type == GDK_TOUCH_END || event->type == GDK_TOUCH_CANCEL)
 	{
 		InputSequence* input = (InputSequence*) g_hash_table_lookup(touchInputList, sequence);
+
 		if (input != NULL)
 		{
-			input->endInput();
+			input->actionEnd();
 		}
+
 		g_hash_table_remove(touchInputList, sequence);
 		return true;
 	}
 	else if (event->type == GDK_LEAVE_NOTIFY)
 	{
-		InputSequence* input = (InputSequence*) g_hash_table_lookup(pointerInputList, device);
-		if (input != NULL)
-		{
-			input->endInput();
-		}
 		g_hash_table_remove(pointerInputList, device);
 		return true;
 	}
@@ -122,40 +110,23 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	// Apply the correct device if not yet set, should not change
 	// But GTK decides which inputs are get together
 	input->setDevice(sourceDevice);
-
 	input->clearAxes();
 
-	if (event->type == GDK_PROXIMITY_IN)
+	if (event->type == GDK_TOUCH_BEGIN)
 	{
-		printf("GDK_PROXIMITY_IN\n");
+		input->actionStart();
 	}
-	if (event->type == GDK_PROXIMITY_OUT)
-	{
-		printf("GDK_PROXIMITY_OUT\n");
-	}
-
 
 	if (event->type == GDK_TOUCH_BEGIN || event->type == GDK_TOUCH_UPDATE)
 	{
 		if (sequence && event->touch.emulating_pointer)
 		{
-			InputSequence* input = (InputSequence*) g_hash_table_lookup(pointerInputList, device);
-			if (input != NULL)
-			{
-				input->endInput();
-			}
 			g_hash_table_remove(pointerInputList, device);
+			printf("Touch emulating pointer\n");
+			return true;
 		}
 	}
 
-	if (event->type == GDK_MOTION_NOTIFY)
-	{
-		input->setAxes((gdouble*)g_memdup(event->motion.axes, sizeof(gdouble) * gdk_device_get_n_axes(sourceDevice)));
-	}
-	else if (event->type == GDK_BUTTON_PRESS || event->type == GDK_BUTTON_RELEASE)
-	{
-		input->setAxes((gdouble*)g_memdup(event->button.axes, sizeof(gdouble) * gdk_device_get_n_axes(sourceDevice)));
-	}
 
 	gdouble x, y;
 	if (gdk_event_get_coords(event, &x, &y))
@@ -163,7 +134,21 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		input->setCurrentPosition(x, y);
 	}
 
-	input->handleInput();
+	if (event->type == GDK_MOTION_NOTIFY || event->type == GDK_TOUCH_UPDATE)
+	{
+		input->copyAxes(event);
+		input->actionMoved();
+	}
+	else if (event->type == GDK_BUTTON_PRESS)
+	{
+		input->copyAxes(event);
+		input->actionStart();
+	}
+	else if (event->type == GDK_BUTTON_RELEASE)
+	{
+		input->copyAxes(event);
+		input->actionEnd();
+	}
 
 	return true;
 }
