@@ -71,6 +71,10 @@ InputSequence::~InputSequence()
 {
 	XOJ_CHECK_TYPE(InputSequence);
 
+	if (inputRunning)
+	{
+		actionEnd();
+	}
 	clearAxes();
 
 	XOJ_RELEASE_TYPE(InputSequence);
