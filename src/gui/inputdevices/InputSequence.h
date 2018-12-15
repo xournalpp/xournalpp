@@ -72,6 +72,11 @@ public:
 	void setCurrentPosition(double x, double y);
 
 	/**
+	 * Set (mouse)button
+	 */
+	void setButton(guint button);
+
+	/**
 	 * Get Page at current position
 	 *
 	 * @return page or NULL if none
@@ -87,10 +92,9 @@ public:
 private:
 	/**
 	 * Change the tool according to the device and button
-	 * @param button Button ID
 	 * @return true to ignore event
 	 */
-	bool changeTool(int button);
+	bool changeTool();
 
 	/**
 	 * Get input data relative to current input page
@@ -129,6 +133,11 @@ private:
 	 * Pressure sensitivity enabled
 	 */
 	bool presureSensitivity;
+
+	/**
+	 * Current mouse button
+	 */
+	guint button;
 
 	/**
 	 * Position X

@@ -165,6 +165,12 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		input->setCurrentPosition(x, y);
 	}
 
+	guint button = 0;
+	if (gdk_event_get_button(event, &button))
+	{
+		input->setButton(button);
+	}
+
 	if (event->type == GDK_MOTION_NOTIFY)
 	{
 		input->copyAxes(event);

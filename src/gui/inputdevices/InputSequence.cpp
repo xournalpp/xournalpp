@@ -57,6 +57,7 @@ InputSequence::InputSequence(NewGtkInputDevice* inputHandler)
    currentInputPage(NULL),
    device(NULL),
    axes(NULL),
+   button(0),
    x(-1),
    y(-1)
 {
@@ -130,6 +131,16 @@ void InputSequence::setCurrentPosition(double x, double y)
 }
 
 /**
+ * Set (mouse)button
+ */
+void InputSequence::setButton(guint button)
+{
+	XOJ_CHECK_TYPE(InputSequence);
+
+	this->button = button;
+}
+
+/**
  * Get Page at current position
  *
  * @return page or NULL if none
@@ -158,8 +169,7 @@ bool InputSequence::actionMoved()
 	GtkXournal* xournal = inputHandler->getXournal();
 	ToolHandler* h = inputHandler->getToolHandler();
 
-	// TODO !!!!!!! button key
-	changeTool(0);
+	changeTool();
 
 	if (xournal->view->zoom_gesture_active)
 	{
@@ -242,8 +252,7 @@ bool InputSequence::actionStart()
 	ToolHandler* h = inputHandler->getToolHandler();
 
 	// Change the tool depending on the key or device
-	// TODO Button
-	if (changeTool(0))
+	if (changeTool())
 	{
 		return true;
 	}
@@ -385,7 +394,7 @@ PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* 
  * @param button Button ID
  * @return true to ignore event
  */
-bool InputSequence::changeTool(int button)
+bool InputSequence::changeTool()
 {
 	Settings* settings = inputHandler->getSettings();
 	ButtonConfig* cfgTouch = settings->getTouchButtonConfig();
@@ -436,6 +445,10 @@ bool InputSequence::changeTool(int button)
 	{
 		h->copyCurrentConfig();
 		cfg->acceptActions(h);
+	}
+	else
+	{
+		h->restoreLastConfig();
 	}
 
 	return false;
