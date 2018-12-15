@@ -89,13 +89,73 @@ void InputSequence::setCurrentPosition(double x, double y)
 /**
  * Mouse / Pen / Touch move
  */
-void InputSequence::actionMoved()
+bool InputSequence::actionMoved()
 {
 	XOJ_CHECK_TYPE(InputSequence);
 
-//	inputHandler->changeTool(device, 0);
+	GtkXournal* xournal = inputHandler->getXournal();
+	ToolHandler* h = inputHandler->getToolHandler();
 
-	printf("actionMoved %s\n", gdk_device_get_name(device));
+	// TODO !!!!!!! button key
+	changeTool(0);
+
+	if (xournal->view->zoom_gesture_active)
+	{
+		return false;
+	}
+
+	if (h->getToolType() == TOOL_HAND)
+	{
+		if (xournal->inScrolling)
+		{
+//TODO			gtk_xournal_scroll_mouse_event(xournal, event);
+			return true;
+		}
+		return false;
+	}
+	else if (xournal->selection)
+	{
+//		EditSelection* selection = xournal->selection;
+//
+//		XojPageView* view = selection->getView();
+//		GdkEventMotion ev = *event;
+//		view->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
+//
+//		if (xournal->selection->isMoving())
+//		{
+//			selection->mouseMove(ev.x, ev.y);
+//		}
+//		else
+//		{
+//			CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y, xournal->view->getZoom());
+//			xournal->view->getCursor()->setMouseSelectionType(selType);
+//		}
+//		return true;
+	}
+
+	XojPageView* pv = NULL;
+
+	if (current_view)
+	{
+		pv = current_view;
+	}
+	else
+	{
+		pv = gtk_xournal_get_page_view_for_pos_cached(xournal, x, y);
+	}
+
+	xournal->view->getCursor()->setInsidePage(pv != NULL);
+
+	if (pv)
+	{
+		// allow events only to a single page!
+		if (currentInputPage == NULL || pv == currentInputPage)
+		{
+			return motionEvent(pv, event);
+		}
+	}
+
+	return false;
 }
 
 /**
@@ -200,9 +260,9 @@ void InputSequence::actionEnd()
 	current_view = NULL;
 
 	GtkXournal* xournal = inputHandler->getXournal();
-
 	Cursor* cursor = xournal->view->getCursor();
 	ToolHandler* h = inputHandler->getToolHandler();
+
 	if (xournal->view->zoom_gesture_active)
 	{
 		return;
@@ -256,87 +316,6 @@ PositionInputData InputSequence::getInputDataRelativeToCurrentPage()
 
 	return in;
 }
-
-
-/*
-
-bool AbstractInputDevice::handleMotion(GdkEventMotion* event)
-{
-	GtkXournal* xournal = GTK_XOURNAL(widget);
-
-	ToolHandler* h = xournal->view->getControl()->getToolHandler();
-
-	if (xournal->view->zoom_gesture_active)
-	{
-		return true;
-	}
-
-	if (h->getToolType() == TOOL_HAND)
-	{
-		if (xournal->inScrolling)
-		{
-			gtk_xournal_scroll_mouse_event(xournal, event);
-			return TRUE;
-		}
-		return FALSE;
-	}
-	else if (xournal->selection)
-	{
-		EditSelection* selection = xournal->selection;
-
-		XojPageView* view = selection->getView();
-		GdkEventMotion ev = *event;
-		view->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
-
-		if (xournal->selection->isMoving())
-		{
-			selection->mouseMove(ev.x, ev.y);
-		}
-		else
-		{
-			CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y, xournal->view->getZoom());
-			xournal->view->getCursor()->setMouseSelectionType(selType);
-		}
-		return true;
-	}
-
-	XojPageView* pv = NULL;
-
-	if (current_view)
-	{
-		pv = current_view;
-	}
-	else
-	{
-		pv = gtk_xournal_get_page_view_for_pos_cached(xournal, event->x, event->y);
-	}
-
-	xournal->view->getCursor()->setInsidePage(pv != NULL);
-
-	if (pv)
-	{
-		// allow events only to a single page!
-		if (xournal->currentInputPage == NULL || pv == xournal->currentInputPage)
-		{
-			return motionEvent(pv, event);
-		}
-	}
-
-	return false;
-}
-
-
-*/
-
-
-
-
-
-
-
-
-
-
 
 /**
  * Change the tool according to the device and button

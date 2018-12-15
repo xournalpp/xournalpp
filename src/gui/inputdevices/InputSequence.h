@@ -31,7 +31,7 @@ public:
 	/**
 	 * Mouse / Pen / Touch move
 	 */
-	void actionMoved();
+	bool actionMoved();
 
 	/**
 	 * Mouse / Pen down / touch start
