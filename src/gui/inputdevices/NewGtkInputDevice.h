@@ -58,6 +58,11 @@ protected:
 	 */
 	bool eventHandler(GdkEvent* event);
 
+	/**
+	 * Handle Key Press event
+	 */
+	bool eventKeyPressHandler(GdkEventKey* event);
+
 private:
 	static bool event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self);
 

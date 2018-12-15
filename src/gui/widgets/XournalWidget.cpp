@@ -38,9 +38,6 @@ static void gtk_xournal_realize(GtkWidget* widget);
 static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr);
 static void gtk_xournal_destroy(GtkWidget* object);
 
-static gboolean gtk_xournal_key_press_event(GtkWidget* widget, GdkEventKey* event);
-static gboolean gtk_xournal_key_release_event(GtkWidget* widget, GdkEventKey* event);
-
 GType gtk_xournal_get_type(void)
 {
 	static GType gtk_xournal_type = 0;
@@ -112,72 +109,9 @@ static void gtk_xournal_class_init(GtkXournalClass* klass)
 	widget_class->get_preferred_height = gtk_xournal_get_preferred_height;
 	widget_class->size_allocate = gtk_xournal_size_allocate;
 
-	widget_class->key_press_event = gtk_xournal_key_press_event;
-	widget_class->key_release_event = gtk_xournal_key_release_event;
-
 	widget_class->draw = gtk_xournal_draw;
 
 	widget_class->destroy = gtk_xournal_destroy;
-}
-
-static gboolean gtk_xournal_key_press_event(GtkWidget* widget, GdkEventKey* event)
-{
-	g_return_val_if_fail(widget != NULL, FALSE);
-	g_return_val_if_fail(GTK_IS_XOURNAL(widget), FALSE);
-	g_return_val_if_fail(event != NULL, FALSE);
-
-	GtkXournal* xournal = GTK_XOURNAL(widget);
-
-	EditSelection* selection = xournal->selection;
-	if (selection)
-	{
-		int d = 3;
-
-		if ((event->state & GDK_MOD1_MASK) || (event->state & GDK_SHIFT_MASK))
-		{
-			if (event->state & GDK_MOD1_MASK)
-			{
-				d = 1;
-			}
-			else
-			{
-				d = 20;
-			}
-		}
-
-		if (event->keyval == GDK_KEY_Left)
-		{
-			selection->moveSelection(d, 0);
-			return true;
-		}
-		else if (event->keyval == GDK_KEY_Up)
-		{
-			selection->moveSelection(0, d);
-			return true;
-		}
-		else if (event->keyval == GDK_KEY_Right)
-		{
-			selection->moveSelection(-d, 0);
-			return true;
-		}
-		else if (event->keyval == GDK_KEY_Down)
-		{
-			selection->moveSelection(0, -d);
-			return true;
-		}
-	}
-
-	return xournal->view->onKeyPressEvent(event);
-}
-
-static gboolean gtk_xournal_key_release_event(GtkWidget* widget, GdkEventKey* event)
-{
-	g_return_val_if_fail(widget != NULL, false);
-	g_return_val_if_fail(GTK_IS_XOURNAL(widget), false);
-	g_return_val_if_fail(event != NULL, false);
-
-	GtkXournal* xournal = GTK_XOURNAL(widget);
-	return xournal->view->onKeyReleaseEvent(event);
 }
 
 Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p)
@@ -331,8 +265,7 @@ static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left,
 	}
 }
 
-void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2,
-                              int y2)
+void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2, int y2)
 {
 	g_return_if_fail(widget != NULL);
 	g_return_if_fail(GTK_IS_XOURNAL(widget));

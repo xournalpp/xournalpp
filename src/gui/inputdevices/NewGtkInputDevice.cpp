@@ -103,6 +103,9 @@ void NewGtkInputDevice::initWidget()
 			// Key handling
 			GDK_KEY_PRESS_MASK |
 
+			// Allow scrolling
+			GDK_SCROLL_MASK |
+
 			// Touch / Pen / Mouse
 			GDK_POINTER_MOTION_MASK |
 			GDK_BUTTON_PRESS_MASK   |
@@ -123,10 +126,68 @@ bool NewGtkInputDevice::event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInput
 }
 
 /**
+ * Handle Key Press event
+ */
+bool NewGtkInputDevice::eventKeyPressHandler(GdkEventKey* event)
+{
+	GtkXournal* xournal = GTK_XOURNAL(widget);
+
+	EditSelection* selection = xournal->selection;
+	if (selection)
+	{
+		int d = 3;
+
+		if ((event->state & GDK_MOD1_MASK) || (event->state & GDK_SHIFT_MASK))
+		{
+			if (event->state & GDK_MOD1_MASK)
+			{
+				d = 1;
+			}
+			else
+			{
+				d = 20;
+			}
+		}
+
+		if (event->keyval == GDK_KEY_Left)
+		{
+			selection->moveSelection(d, 0);
+			return true;
+		}
+		else if (event->keyval == GDK_KEY_Up)
+		{
+			selection->moveSelection(0, d);
+			return true;
+		}
+		else if (event->keyval == GDK_KEY_Right)
+		{
+			selection->moveSelection(-d, 0);
+			return true;
+		}
+		else if (event->keyval == GDK_KEY_Down)
+		{
+			selection->moveSelection(0, -d);
+			return true;
+		}
+	}
+
+	return xournal->view->onKeyPressEvent(event);
+}
+
+/**
  * Handle all GTK Events
  */
 bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 {
+	if (event->type == GDK_KEY_PRESS)
+	{
+		return eventKeyPressHandler(&event->key);
+	}
+	if (event->type == GDK_KEY_RELEASE)
+	{
+		return view->onKeyReleaseEvent(&event->key);
+	}
+
 	GdkDevice* device = gdk_event_get_device(event);
 	GdkDevice* sourceDevice = gdk_event_get_source_device(event);
 	GdkEventSequence* sequence = gdk_event_get_event_sequence(event);
