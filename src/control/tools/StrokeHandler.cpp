@@ -44,7 +44,7 @@ void StrokeHandler::draw(cairo_t* cr)
 	cairo_mask_surface(cr, surfMask, visRect.x, visRect.y);
 }
 
-bool StrokeHandler::onMotionNotifyEvent(GdkEventMotion* event, bool shiftDown)
+bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(StrokeHandler);
 
@@ -54,9 +54,8 @@ bool StrokeHandler::onMotionNotifyEvent(GdkEventMotion* event, bool shiftDown)
 	}
 
 	double zoom = xournal->getZoom();
-	double x = event->x / zoom;
-	double y = event->y / zoom;
-	bool presureSensitivity = xournal->getControl()->getSettings()->isPresureSensitivity();
+	double x = pos.x / zoom;
+	double y = pos.y / zoom;
 	int pointCount = stroke->getPointCount();
 
 	Point currentPoint(x, y);
@@ -69,24 +68,9 @@ bool StrokeHandler::onMotionNotifyEvent(GdkEventMotion* event, bool shiftDown)
 		}
 	}
 
-	ToolHandler* h = xournal->getControl()->getToolHandler();
-
-	if (presureSensitivity)
+	if (Point::NO_PRESURE != pos.pressure)
 	{
-		double pressure = Point::NO_PRESURE;
-		if (h->getToolType() == TOOL_PEN)
-		{
-			if (getPressureMultiplier((GdkEvent*) event, pressure))
-			{
-				pressure = pressure * stroke->getWidth();
-			}
-			else
-			{
-				pressure = Point::NO_PRESURE;
-			}
-		}
-
-		stroke->setLastPressure(pressure);
+		stroke->setLastPressure(pos.pressure * stroke->getWidth());
 	}
 
 	if (pointCount > 0)
@@ -117,7 +101,7 @@ bool StrokeHandler::onMotionNotifyEvent(GdkEventMotion* event, bool shiftDown)
 	return true;
 }
 
-void StrokeHandler::onButtonReleaseEvent(GdkEventButton* event)
+void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(StrokeHandler);
 
@@ -221,7 +205,7 @@ void StrokeHandler::onButtonReleaseEvent(GdkEventButton* event)
 	return;
 }
 
-void StrokeHandler::onButtonPressEvent(GdkEventButton* event)
+void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(StrokeHandler);
 
@@ -268,63 +252,11 @@ void StrokeHandler::onButtonPressEvent(GdkEventButton* event)
 
 	if (!stroke)
 	{
-		double x = event->x / zoom;
-		double y = event->y / zoom;
+		double x = pos.x / zoom;
+		double y = pos.y / zoom;
 
 		createStroke(Point(x, y));
 	}
-}
-
-bool StrokeHandler::getPressureMultiplier(GdkEvent* event, double& pressure)
-{
-	XOJ_CHECK_TYPE(StrokeHandler);
-
-	GdkDevice* device = gdk_event_get_device(event);
-	int axesCount = gdk_device_get_n_axes(device);
-	if (axesCount <= 4)
-	{
-		pressure = 1.0;
-		return false;
-	}
-
-	// This causes some memory corruption
-	// If touch and pen is active at the same time
-	// Here are random crashes. It cannot be reproduced
-	// without touch and pen at the same time
-//	gdouble* axes = event->button.axes;
-//	gdk_device_get_state(device,
-//						 gtk_widget_get_parent_window(xournal->getWidget()),
-//						 axes, NULL);
-//
-//	if (!gdk_device_get_axis(device, axes, GDK_AXIS_PRESSURE, &pressure))
-//	{
-//		pressure = 1.0;
-//		return false;
-//	}
-
-	double* axes;
-	if (event->type == GDK_MOTION_NOTIFY)
-	{
-		axes = event->motion.axes;
-	}
-	else
-	{
-		axes = event->button.axes;
-	}
-
-	pressure = axes[2];
-	Settings* settings = xournal->getControl()->getSettings();
-
-	if (!finite(pressure))
-	{
-		pressure = 1.0;
-		return false;
-	}
-
-	pressure = ((1 - pressure) * settings->getWidthMinimumMultiplier()
-			+ pressure * settings->getWidthMaximumMultiplier());
-
-	return true;
 }
 
 void StrokeHandler::destroySurface()

@@ -27,7 +27,7 @@ void BaseStrokeHandler::draw(cairo_t* cr)
 	view.drawStroke(cr, stroke, 0);
 }
 
-bool BaseStrokeHandler::onMotionNotifyEvent(GdkEventMotion* event, bool shiftDown)
+bool BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 
@@ -37,8 +37,8 @@ bool BaseStrokeHandler::onMotionNotifyEvent(GdkEventMotion* event, bool shiftDow
 	}
 
 	double zoom = xournal->getZoom();
-	double x = event->x / zoom;
-	double y = event->y / zoom;
+	double x = pos.x / zoom;
+	double y = pos.y / zoom;
 	int pointCount = stroke->getPointCount();
 
 	Point currentPoint(x, y);
@@ -55,7 +55,7 @@ bool BaseStrokeHandler::onMotionNotifyEvent(GdkEventMotion* event, bool shiftDow
 	this->redrawable->repaintRect(stroke->getX(), stroke->getY(),
 			stroke->getElementWidth(), stroke->getElementHeight());
 
-	drawShape(currentPoint, shiftDown);
+	drawShape(currentPoint, pos.isShiftDown());
 	
 	rect.add(stroke->boundingRect());
 	double w = stroke->getWidth();
@@ -67,7 +67,7 @@ bool BaseStrokeHandler::onMotionNotifyEvent(GdkEventMotion* event, bool shiftDow
 	return true;
 }
 
-void BaseStrokeHandler::onButtonReleaseEvent(GdkEventButton* event)
+void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 
@@ -116,13 +116,13 @@ void BaseStrokeHandler::onButtonReleaseEvent(GdkEventButton* event)
 	return;
 }
 
-void BaseStrokeHandler::onButtonPressEvent(GdkEventButton* event)
+void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 
 	double zoom = xournal->getZoom();
-	double x = event->x / zoom;
-	double y = event->y / zoom;
+	double x = pos.x / zoom;
+	double y = pos.y / zoom;
 
 	if (!stroke)
 	{
