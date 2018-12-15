@@ -231,6 +231,9 @@ public:
 	bool isShowBigCursor();
 	void setShowBigCursor(bool b);
 
+	bool isMultiInput();
+	void setMultiInput(bool b);
+
 	ScrollbarHideType getScrollbarHideType();
 	void setScrollbarHideType(ScrollbarHideType type);
 
@@ -362,6 +365,11 @@ private:
 	 *  Show a better visible cursor for pen
 	 */
 	bool showBigCursor;
+
+	/**
+	 * Allow multiple inputs, which e.g. on Wayland produces one cursor per device
+	 */
+	bool multiInput;
 
 	/**
 	 *  Hide the scrollbar

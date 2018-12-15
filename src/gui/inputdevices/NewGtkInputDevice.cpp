@@ -98,7 +98,7 @@ void NewGtkInputDevice::initWidget()
 {
 	XOJ_CHECK_TYPE(NewGtkInputDevice);
 
-	gtk_widget_set_support_multidevice(widget, true);
+	gtk_widget_set_support_multidevice(widget, getSettings()->isMultiInput());
 	gtk_widget_add_events(widget,
 			// Key handling
 			GDK_KEY_PRESS_MASK |
