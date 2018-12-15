@@ -48,6 +48,7 @@ void NewGtkInputDevice::initWidget()
 			GDK_TOUCH_MASK);
 
     g_signal_connect(widget, "event", G_CALLBACK(event_cb), this);
+	g_signal_connect(widget, "touch-event", G_CALLBACK(touch_event_cb), this);
 }
 
 bool NewGtkInputDevice::event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self)
@@ -55,6 +56,35 @@ bool NewGtkInputDevice::event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInput
 	XOJ_CHECK_TYPE_OBJ(self, NewGtkInputDevice);
 
 	return self->eventHandler(event);
+}
+
+bool NewGtkInputDevice::touch_event_cb(GtkWidget* widget, GdkEventTouch* event, NewGtkInputDevice* self)
+{
+	XOJ_CHECK_TYPE_OBJ(self, NewGtkInputDevice);
+
+	return self->touchEvent(event);
+}
+
+/**
+ * Touch event
+ */
+bool NewGtkInputDevice::touchEvent(GdkEventTouch* event)
+{
+	GdkEventSequence* sequence = gdk_event_get_event_sequence((GdkEvent*) event);
+	InputSequence* input = (InputSequence*) g_hash_table_lookup(touchInputList, sequence);
+
+	if (input != NULL)
+	{
+		gdouble x, y;
+		if (gdk_event_get_coords((GdkEvent*) event, &x, &y))
+		{
+			input->setCurrentPosition(x, y);
+		}
+
+		input->actionMoved();
+	}
+
+	return true;
 }
 
 /**
@@ -135,7 +165,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		input->setCurrentPosition(x, y);
 	}
 
-	if (event->type == GDK_MOTION_NOTIFY || event->type == GDK_TOUCH_UPDATE)
+	if (event->type == GDK_MOTION_NOTIFY)
 	{
 		input->copyAxes(event);
 		input->actionMoved();
