@@ -223,16 +223,6 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	GdkDevice* sourceDevice = gdk_event_get_source_device(event);
 	GdkEventSequence* sequence = gdk_event_get_event_sequence(event);
 
-	// Currently not configurable, ignore all touch events
-	if (gdk_device_get_source(device) == GDK_SOURCE_TOUCHSCREEN
-			|| gdk_device_get_source(sourceDevice) == GDK_SOURCE_TOUCHSCREEN || event->type == GDK_TOUCH_BEGIN
-			|| event->type == GDK_TOUCH_BEGIN || event->type == GDK_TOUCH_UPDATE || event->touch.emulating_pointer)
-	{
-		// Ignore Touch events
-		return true;
-	}
-
-
 	if (sourceDevice == NULL)
 	{
 		sourceDevice = device;
