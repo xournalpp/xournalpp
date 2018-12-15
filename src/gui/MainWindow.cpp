@@ -69,8 +69,10 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 
 	GtkWidget* vpXournal = get("vpXournal");
 
+	GtkWidget* panelMainContents = get("panelMainContents");
+
 	//gtk_widget_add_events(GTK_WIDGET(parent), GDK_TOUCH_MASK);
-    g_signal_connect(vpXournal, "touch-event", G_CALLBACK(scroll_touch_callback), NULL);
+    g_signal_connect(panelMainContents, "touch-event", G_CALLBACK(scroll_touch_callback), NULL);
 
 
 	this->xournal = new XournalView(vpXournal, control);
