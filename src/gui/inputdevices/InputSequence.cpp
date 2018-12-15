@@ -48,6 +48,9 @@ InputSequence::~InputSequence()
 	}
 	clearAxes();
 
+	// Make 100% sure there is no input running
+	stopInput();
+
 	XOJ_RELEASE_TYPE(InputSequence);
 }
 
@@ -352,6 +355,42 @@ bool InputSequence::actionStart()
 
 	// not handled
 	return false;
+}
+
+
+/**
+ * Check if input is still running, or if there an event was missed
+ *
+ * @return true if input is stopped now
+ */
+bool InputSequence::checkStillRunning()
+{
+	if (!inputRunning)
+	{
+		// Already stopped
+		return true;
+	}
+
+	GdkModifierType mask = (GdkModifierType) 0;
+	GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(inputHandler->getXournal()));
+	gdk_device_get_state(device, window, NULL, &mask);
+
+	if ((GDK_BUTTON1_MASK & mask) ||
+		(GDK_BUTTON2_MASK & mask) ||
+		(GDK_BUTTON3_MASK & mask) ||
+		(GDK_BUTTON4_MASK & mask) ||
+		(GDK_BUTTON5_MASK & mask))
+	{
+		// Button still down
+		// Input is still running, probably everything OK
+		return false;
+	}
+
+	// Button is not down, stop input now!
+	// So the new input can start
+	actionEnd();
+
+	return true;
 }
 
 /**

@@ -69,10 +69,26 @@ bool NewGtkInputDevice::startInput(InputSequence* input)
 {
 	XOJ_CHECK_TYPE(NewGtkInputDevice);
 
+	if (inputRunning == input)
+	{
+		g_warning("Input for the same device started twice!");
+		return true;
+	}
+
+
 	if (inputRunning == NULL)
 	{
 		inputRunning = input;
 		return true;
+	}
+	else
+	{
+		if (inputRunning->checkStillRunning())
+		{
+			g_warning("Input was not stopped correctly!");
+			inputRunning = input;
+			return true;
+		}
 	}
 
 	return false;
