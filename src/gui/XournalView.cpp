@@ -22,6 +22,13 @@
 
 #include <math.h>
 
+
+bool touch_event_cb(GtkWidget* widget, GdkEventTouch* event, void* self)
+{
+	printf("touch1\n");
+	return true;
+}
+
 XournalView::XournalView(GtkWidget* parent, Control* control)
 {
 	XOJ_INIT_TYPE(XournalView);
@@ -31,6 +38,10 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	this->control = control;
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
+
+
+	g_signal_connect(widget, "touch-event", G_CALLBACK(touch_event_cb), NULL);
+
 
 	this->widget = gtk_xournal_new(this, GTK_SCROLLABLE(parent));
 	// we need to refer widget here, because we unref it somewhere twice!?
