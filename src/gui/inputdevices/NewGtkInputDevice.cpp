@@ -131,6 +131,11 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	GdkDevice* sourceDevice = gdk_event_get_source_device(event);
 	GdkEventSequence* sequence = gdk_event_get_event_sequence(event);
 
+	if (sourceDevice == NULL)
+	{
+		sourceDevice = device;
+	}
+
 	if (event->type == GDK_TOUCH_END || event->type == GDK_TOUCH_CANCEL)
 	{
 		InputSequence* input = (InputSequence*) g_hash_table_lookup(touchInputList, sequence);
@@ -145,21 +150,21 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	}
 	else if (event->type == GDK_LEAVE_NOTIFY)
 	{
-		g_hash_table_remove(pointerInputList, device);
+		g_hash_table_remove(pointerInputList, sourceDevice);
 		return true;
 	}
 
 	InputSequence* input = NULL;
 	if (sequence == NULL)
 	{
-		input = (InputSequence*) g_hash_table_lookup(pointerInputList, device);
+		input = (InputSequence*) g_hash_table_lookup(pointerInputList, sourceDevice);
 
-		printf("dev->input : %ld->%ld (%s)\n", device, input, gdk_device_get_name(device));
+		printf("dev->input : %ld->%ld (%s)\n", sourceDevice, input, gdk_device_get_name(sourceDevice));
 
 		if (input == NULL)
 		{
 			input = new InputSequence(this);
-			g_hash_table_insert(pointerInputList, device, input);
+			g_hash_table_insert(pointerInputList, sourceDevice, input);
 		}
 	}
 	else
@@ -187,7 +192,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	{
 		if (sequence && event->touch.emulating_pointer)
 		{
-			g_hash_table_remove(pointerInputList, device);
+			g_hash_table_remove(pointerInputList, sourceDevice);
 			printf("Touch emulating pointer\n");
 			return true;
 		}
