@@ -1482,7 +1482,7 @@ msgid ""
 msgstr ""
 
 #: ../ui/about.glade:8
-msgid "About Xournal"
+msgid "About Xournal++"
 msgstr ""
 
 #: ../ui/main.glade:1019

@@ -5,7 +5,7 @@
   <object class="GtkDialog" id="aboutDialog">
     <property name="width_request">320</property>
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">About Xournal</property>
+    <property name="title" translatable="yes">About Xournal++</property>
     <property name="resizable">False</property>
     <property name="window_position">center</property>
     <property name="destroy_with_parent">True</property>
