@@ -50,14 +50,17 @@ void Layout::checkScroll(GtkAdjustment* adjustment, double& lastScroll)
 {
 	XOJ_CHECK_TYPE(Layout);
 
-	ToolHandler* h = view->getControl()->getToolHandler();
+	lastScroll = gtk_adjustment_get_value(adjustment);
 
-	if (!view->shouldIgnoreTouchEvents() || h->getToolType() == TOOL_HAND)
-	{
-		lastScroll = gtk_adjustment_get_value(adjustment);
-		return;
-	}
-	gtk_adjustment_set_value(adjustment, lastScroll);
+//
+//	ToolHandler* h = view->getControl()->getToolHandler();
+//
+//	if (!view->shouldIgnoreTouchEvents() || h->getToolType() == TOOL_HAND)
+//	{
+//		lastScroll = gtk_adjustment_get_value(adjustment);
+//		return;
+//	}
+//	gtk_adjustment_set_value(adjustment, lastScroll);
 }
 
 /**

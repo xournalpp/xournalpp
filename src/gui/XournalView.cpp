@@ -592,6 +592,8 @@ void XournalView::penActionDetected()
 {
 	XOJ_CHECK_TYPE(XournalView);
 	this->lastPenAction = g_get_monotonic_time() / 1000;
+
+	printf("pen action\n");
 }
 
 /**

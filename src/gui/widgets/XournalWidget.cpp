@@ -102,7 +102,7 @@ GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 
 	xoj->input->initWidget();
 
-
+	gtk_widget_add_events(GTK_WIDGET(parent), GDK_TOUCH_MASK);
     g_signal_connect(parent, "touch-event", G_CALLBACK(scroll_touch_callback), xoj);
 
 	return GTK_WIDGET(xoj);
