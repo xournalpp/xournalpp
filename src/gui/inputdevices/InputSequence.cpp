@@ -205,7 +205,10 @@ bool InputSequence::actionMoved()
 
 	changeTool();
 
-	inputHandler->getView()->penActionDetected();
+	if (penDevice)
+	{
+		inputHandler->getView()->penActionDetected();
+	}
 
 	if (xournal->view->zoom_gesture_active)
 	{
@@ -275,10 +278,7 @@ bool InputSequence::actionStart()
 
 	inputHandler->focusWidget();
 
-	if (penDevice)
-	{
-		checkCanStartInput();
-	}
+	checkCanStartInput();
 
 	if (!inputRunning)
 	{
