@@ -4,6 +4,7 @@
 #include "control/Control.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
+#include "util/DeviceListHelper.h"
 #include "model/Point.h"
 
 
@@ -139,6 +140,16 @@ void NewGtkInputDevice::initWidget()
 			GDK_TOUCH_MASK);
 
     g_signal_connect(widget, "event", G_CALLBACK(event_cb), this);
+
+	DeviceListHelper devList;
+	for (InputDevice& dev : devList.getDeviceList())
+	{
+		if (gdk_device_get_source(dev.getDevice()) == GDK_SOURCE_TOUCHSCREEN)
+		{
+			printf("Disabling touch device \"%s\" for drawing", gdk_device_get_name(dev.getDevice()));
+			gtk_widget_set_device_enabled(widget, dev.getDevice(), false);
+		}
+	}
 }
 
 bool NewGtkInputDevice::event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self)

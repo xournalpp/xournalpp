@@ -9,7 +9,6 @@
 #include "gui/pageposition/PagePositionHandler.h"
 #include "gui/Shadow.h"
 #include "gui/XournalView.h"
-#include "util/DeviceListHelper.h"
 
 #include <config-debug.h>
 #include <Rectangle.h>
