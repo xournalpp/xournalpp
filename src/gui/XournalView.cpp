@@ -397,10 +397,11 @@ void XournalView::zoom_gesture_scale_changed_cb(GtkGestureZoom* gesture, gdouble
 {
 	XOJ_CHECK_TYPE_OBJ(view, XournalView);
 
-	if (view->shouldIgnoreTouchEvents())
-	{
-		return;
-	}
+	// Touch handling, cannot be solved this way
+//	if (view->shouldIgnoreTouchEvents())
+//	{
+//		return;
+//	}
 
 	view->setZoom(scale * view->zoom_gesture_begin);
 }
