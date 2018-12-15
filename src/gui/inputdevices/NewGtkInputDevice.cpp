@@ -140,16 +140,6 @@ void NewGtkInputDevice::initWidget()
 			GDK_TOUCH_MASK);
 
     g_signal_connect(widget, "event", G_CALLBACK(event_cb), this);
-
-	DeviceListHelper devList;
-	for (InputDevice& dev : devList.getDeviceList())
-	{
-		if (gdk_device_get_source(dev.getDevice()) == GDK_SOURCE_TOUCHSCREEN)
-		{
-			printf("Disabling touch device \"%s\" for drawing", gdk_device_get_name(dev.getDevice()));
-			gtk_widget_set_device_enabled(widget, dev.getDevice(), false);
-		}
-	}
 }
 
 bool NewGtkInputDevice::event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self)
@@ -232,6 +222,14 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	GdkDevice* device = gdk_event_get_device(event);
 	GdkDevice* sourceDevice = gdk_event_get_source_device(event);
 	GdkEventSequence* sequence = gdk_event_get_event_sequence(event);
+
+	if (gdk_device_get_source(device) == GDK_SOURCE_TOUCHSCREEN
+			|| gdk_device_get_source(sourceDevice) == GDK_SOURCE_TOUCHSCREEN)
+	{
+		// Ignore Touch events
+		return false;
+	}
+
 
 	if (sourceDevice == NULL)
 	{
