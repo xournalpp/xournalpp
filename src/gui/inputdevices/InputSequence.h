@@ -17,6 +17,7 @@
 #include <gtk/gtk.h>
 
 class NewGtkInputDevice;
+class XojPageView;
 
 class InputSequence
 {
@@ -76,12 +77,25 @@ public:
 	static void free(InputSequence* sequence);
 
 private:
+	/**
+	 * Change the tool according to the device and button
+	 * @param button Button ID
+	 * @return true to ignore event
+	 */
+	bool changeTool(int button);
+
+private:
 	XOJ_TYPE_ATTRIB;
 
 	/**
 	 * Input Handler
 	 */
 	NewGtkInputDevice* inputHandler;
+
+	/**
+	 * Current editing page
+	 */
+	XojPageView* current_view;
 
 	/**
 	 * Current input device

@@ -7,7 +7,8 @@ InputSequence::InputSequence(NewGtkInputDevice* inputHandler)
    device(NULL),
    axes(NULL),
    x(-1),
-   y(-1)
+   y(-1),
+   current_view(NULL)
 {
 	XOJ_INIT_TYPE(InputSequence);
 }
@@ -83,7 +84,7 @@ void InputSequence::actionMoved()
 {
 	XOJ_CHECK_TYPE(InputSequence);
 
-	inputHandler->changeTool(device, 0);
+//	inputHandler->changeTool(device, 0);
 
 	printf("actionMoved %s\n", gdk_device_get_name(device));
 }
@@ -102,6 +103,7 @@ void InputSequence::actionStart()
 
 /*
 
+	GtkXournal* xournal = GTK_XOURNAL(widget);
 
 	// none button release event was sent, send one now
 	if (xournal->currentInputPage)
@@ -188,6 +190,197 @@ void InputSequence::actionEnd()
 	XOJ_CHECK_TYPE(InputSequence);
 
 	printf("actionEnd %s\n", gdk_device_get_name(device));
+}
+
+/*
+
+
+
+bool AbstractInputDevice::handleButtonRelease(GdkEventButton* event)
+{
+	XOJ_CHECK_TYPE(AbstractInputDevice);
+
+	current_view = NULL;
+
+	GtkXournal* xournal = GTK_XOURNAL(widget);
+
+	Cursor* cursor = xournal->view->getCursor();
+	ToolHandler* h = xournal->view->getControl()->getToolHandler();
+	if (xournal->view->zoom_gesture_active)
+	{
+		return true;
+	}
+
+	cursor->setMouseDown(false);
+
+	xournal->inScrolling = false;
+
+	EditSelection* sel = xournal->view->getSelection();
+	if (sel)
+	{
+		sel->mouseUp();
+	}
+
+	bool res = false;
+	if (xournal->currentInputPage)
+	{
+		xournal->currentInputPage->translateEvent((GdkEvent*) event, xournal->x, xournal->y);
+		res = xournal->currentInputPage->onButtonReleaseEvent(widget, event);
+		xournal->currentInputPage = NULL;
+	}
+
+	EditSelection* tmpSelection = xournal->selection;
+	xournal->selection = NULL;
+
+	h->restoreLastConfig();
+
+	// we need this workaround so it's possible to select something with the middle button
+	if (tmpSelection)
+	{
+		xournal->view->setSelection(tmpSelection);
+	}
+
+	return res;
+}
+
+bool AbstractInputDevice::handleMotion(GdkEventMotion* event)
+{
+	GtkXournal* xournal = GTK_XOURNAL(widget);
+
+	ToolHandler* h = xournal->view->getControl()->getToolHandler();
+
+	if (xournal->view->zoom_gesture_active)
+	{
+		return true;
+	}
+
+	if (h->getToolType() == TOOL_HAND)
+	{
+		if (xournal->inScrolling)
+		{
+			gtk_xournal_scroll_mouse_event(xournal, event);
+			return TRUE;
+		}
+		return FALSE;
+	}
+	else if (xournal->selection)
+	{
+		EditSelection* selection = xournal->selection;
+
+		XojPageView* view = selection->getView();
+		GdkEventMotion ev = *event;
+		view->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
+
+		if (xournal->selection->isMoving())
+		{
+			selection->mouseMove(ev.x, ev.y);
+		}
+		else
+		{
+			CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y, xournal->view->getZoom());
+			xournal->view->getCursor()->setMouseSelectionType(selType);
+		}
+		return true;
+	}
+
+	XojPageView* pv = NULL;
+
+	if (current_view)
+	{
+		pv = current_view;
+	}
+	else
+	{
+		pv = gtk_xournal_get_page_view_for_pos_cached(xournal, event->x, event->y);
+	}
+
+	xournal->view->getCursor()->setInsidePage(pv != NULL);
+
+	if (pv)
+	{
+		// allow events only to a single page!
+		if (xournal->currentInputPage == NULL || pv == xournal->currentInputPage)
+		{
+			return motionEvent(pv, event);
+		}
+	}
+
+	return false;
+}
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Change the tool according to the device and button
+ * @param button Button ID
+ * @return true to ignore event
+ */
+bool InputSequence::changeTool(int button)
+{
+	/*
+	Settings* settings = view->getControl()->getSettings();
+	ButtonConfig* cfgTouch = settings->getTouchButtonConfig();
+	ToolHandler* h = view->getControl()->getToolHandler();
+
+	GtkXournal* xournal = GTK_XOURNAL(widget);
+	ButtonConfig* cfg = NULL;
+	if (gdk_device_get_source(device) == GDK_SOURCE_PEN)
+	{
+		if (button == 2)
+		{
+			cfg = settings->getStylusButton1Config();
+		}
+		else if (button == 3)
+		{
+			cfg = settings->getStylusButton2Config();
+		}
+	}
+	 else if (button == 2)   // Middle Button
+	{
+		cfg = settings->getMiddleButtonConfig();
+	}
+	else if (button == 3 && !xournal->selection)     // Right Button
+	{
+		cfg = settings->getRightButtonConfig();
+	}
+	else if (gdk_device_get_source(device) == GDK_SOURCE_ERASER)
+	{
+		cfg = settings->getEraserButtonConfig();
+	}
+	else if (cfgTouch->device == gdk_device_get_name(device))
+	{
+		cfg = cfgTouch;
+
+		// If an action is defined we do it, even if it's a drawing action...
+		if (cfg->getDisableDrawing() && cfg->getAction() == TOOL_NONE)
+		{
+			ToolType tool = h->getToolType();
+			if (tool == TOOL_PEN || tool == TOOL_ERASER || tool == TOOL_HILIGHTER)
+			{
+				printf("ignore touchscreen for drawing!\n");
+				return true;
+			}
+		}
+	}
+
+	if (cfg && cfg->getAction() != TOOL_NONE)
+	{
+		h->copyCurrentConfig();
+		cfg->acceptActions(h);
+	}
+*/
+	return false;
 }
 
 /**

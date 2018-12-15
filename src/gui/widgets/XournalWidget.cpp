@@ -4,8 +4,6 @@
 #include "control/tools/EditSelection.h"
 #include "control/settings/Settings.h"
 #include "gui/Layout.h"
-#include "gui/inputdevices/BaseInputDevice.h"
-#include "gui/inputdevices/DirectAxisInputDevice.h"
 #include "gui/inputdevices/NewGtkInputDevice.h"
 #include "gui/pageposition/PagePositionCache.h"
 #include "gui/pageposition/PagePositionHandler.h"
@@ -103,31 +101,6 @@ GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 
 	xoj->selection = NULL;
 	xoj->shiftDown = false;
-
-//	Settings* settings = view->getControl()->getSettings();
-//
-//	SElement& inputSettings = settings->getCustomElement("inputHandling");
-//
-//	string selectedInputType;
-//	inputSettings.getString("type", selectedInputType);
-//
-//	if (selectedInputType == "01-gtk")
-//	{
-//		xoj->input = new BaseInputDevice(GTK_WIDGET(xoj), view);
-//	}
-//	else if (selectedInputType == "02-direct")
-//	{
-//		xoj->input = new DirectAxisInputDevice(GTK_WIDGET(xoj), view);
-//	}
-//	else if (selectedInputType == "03-gtk")
-//	{
-//		xoj->input = new NewGtkInputDevice(GTK_WIDGET(xoj), view);
-//	}
-//	else // selectedInputType == "auto"
-//	{
-//		// No autodection performed yet, need some infos from users
-//		xoj->input = new DirectAxisInputDevice(GTK_WIDGET(xoj), view);
-//	}
 
 	xoj->input = new NewGtkInputDevice(GTK_WIDGET(xoj), view);
 
