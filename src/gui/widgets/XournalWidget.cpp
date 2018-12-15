@@ -76,6 +76,13 @@ GType gtk_xournal_get_type(void)
 	return gtk_xournal_type;
 }
 
+
+gboolean scroll_touch_callback(GtkWidget* widget, GdkEvent* event, GtkXournal* xoj)
+{
+	printf("touch callback\n");
+	return false;
+}
+
 GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 {
 	GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), NULL));
@@ -94,6 +101,9 @@ GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 	xoj->input = new NewGtkInputDevice(GTK_WIDGET(xoj), view);
 
 	xoj->input->initWidget();
+
+
+    g_signal_connect(parent, "touch-event", G_CALLBACK(scroll_touch_callback), xoj);
 
 	return GTK_WIDGET(xoj);
 }
