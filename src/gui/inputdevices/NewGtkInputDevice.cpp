@@ -60,6 +60,13 @@ GtkXournal* NewGtkInputDevice::getXournal()
 	return GTK_XOURNAL(widget);
 }
 
+XournalView* NewGtkInputDevice::getView()
+{
+	XOJ_CHECK_TYPE(NewGtkInputDevice);
+
+	return view;
+}
+
 /**
  * Try to start input
  *

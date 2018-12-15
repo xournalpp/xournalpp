@@ -39,6 +39,7 @@ public:
 	Settings* getSettings();
 	ToolHandler* getToolHandler();
 	GtkXournal* getXournal();
+	XournalView* getView();
 
 	/**
 	 * Try to start input

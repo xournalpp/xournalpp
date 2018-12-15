@@ -20,6 +20,7 @@ InputSequence::InputSequence(NewGtkInputDevice* inputHandler)
    current_view(NULL),
    currentInputPage(NULL),
    device(NULL),
+   penDevice(false),
    axes(NULL),
    button(0),
    state((GdkModifierType)0),
@@ -203,6 +204,8 @@ bool InputSequence::actionMoved()
 	ToolHandler* h = inputHandler->getToolHandler();
 
 	changeTool();
+
+	inputHandler->getView()->penActionDetected();
 
 	if (xournal->view->zoom_gesture_active)
 	{
@@ -517,6 +520,7 @@ bool InputSequence::changeTool()
 	ButtonConfig* cfg = NULL;
 	if (gdk_device_get_source(device) == GDK_SOURCE_PEN)
 	{
+		penDevice = true;
 		if (button == 2)
 		{
 			cfg = settings->getStylusButton1Config();
@@ -536,6 +540,7 @@ bool InputSequence::changeTool()
 	}
 	else if (gdk_device_get_source(device) == GDK_SOURCE_ERASER)
 	{
+		penDevice = true;
 		cfg = settings->getEraserButtonConfig();
 	}
 	else if (cfgTouch->device == gdk_device_get_name(device))
