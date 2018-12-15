@@ -374,8 +374,8 @@ PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* 
 	GtkXournal* xournal = inputHandler->getXournal();
 
 	PositionInputData pos;
-	pos.x -= page->getX() - xournal->x;
-	pos.y -= page->getY() - xournal->y;
+	pos.x = x - page->getX() - xournal->x;
+	pos.y = y - page->getY() - xournal->y;
 	pos.pressure = 1.0;
 
 	if (presureSensitivity)
@@ -391,7 +391,6 @@ PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* 
 
 /**
  * Change the tool according to the device and button
- * @param button Button ID
  * @return true to ignore event
  */
 bool InputSequence::changeTool()

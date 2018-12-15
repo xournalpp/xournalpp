@@ -474,7 +474,7 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 
 	if (x < 0 || y < 0)
 	{
-		return FALSE;
+		return false;
 	}
 
 	double zoom = xournal->getZoom();
