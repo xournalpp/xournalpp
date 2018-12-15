@@ -62,6 +62,7 @@ bool NewGtkInputDevice::event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInput
  */
 bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 {
+	printf("->event->type=%i\n", event->type);
 
 	GdkDevice* device = gdk_event_get_device(event);
 	GdkDevice* sourceDevice = gdk_event_get_source_device(event);
