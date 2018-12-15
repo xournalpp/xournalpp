@@ -73,6 +73,8 @@ bool NewGtkInputDevice::touchEvent(GdkEventTouch* event)
 	GdkEventSequence* sequence = gdk_event_get_event_sequence((GdkEvent*) event);
 	InputSequence* input = (InputSequence*) g_hash_table_lookup(touchInputList, sequence);
 
+	printf("Touch event\n");
+
 	if (input != NULL)
 	{
 		gdouble x, y;
