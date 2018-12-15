@@ -140,7 +140,7 @@ public:
 public: // event handler
 	bool onButtonPressEvent(const PositionInputData& pos);
 	bool onButtonReleaseEvent(const PositionInputData& pos);
-	bool onMotionNotifyEvent(const PositionInputData& pos, bool shiftDown);
+	bool onMotionNotifyEvent(const PositionInputData& pos);
 
 	/**
 	 * This method actually repaints the XojPageView, triggering

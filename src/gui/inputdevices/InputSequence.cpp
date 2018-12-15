@@ -22,6 +22,7 @@ InputSequence::InputSequence(NewGtkInputDevice* inputHandler)
    device(NULL),
    axes(NULL),
    button(0),
+   state((GdkModifierType)0),
    x(-1),
    y(-1),
    rootX(0),
@@ -124,6 +125,16 @@ void InputSequence::setButton(guint button)
 	XOJ_CHECK_TYPE(InputSequence);
 
 	this->button = button;
+}
+
+/**
+ * Set state flags from GDKevent (Shift down etc.)
+ */
+void InputSequence::setState(GdkModifierType state)
+{
+	XOJ_CHECK_TYPE(InputSequence);
+
+	this->state = state;
 }
 
 /**
@@ -242,7 +253,7 @@ bool InputSequence::actionMoved()
 		if (currentInputPage == NULL || pv == currentInputPage)
 		{
 			PositionInputData pos = getInputDataRelativeToCurrentPage(pv);
-			return pv->onMotionNotifyEvent(pos, xournal->shiftDown);
+			return pv->onMotionNotifyEvent(pos);
 		}
 	}
 
@@ -298,32 +309,33 @@ bool InputSequence::actionStart()
 	}
 	else if (xournal->selection)
 	{
-//		EditSelection* selection = xournal->selection;
-//
-//		XojPageView* view = selection->getView();
-//		GdkEventButton ev = *event;
-//		view->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
-//		CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y, xournal->view->getZoom());
-//		if (selType)
-//		{
-//
-//			if (selType == CURSOR_SELECTION_MOVE && event->button == 3)
-//			{
-//				selection->copySelection();
-//			}
-//
-//			xournal->view->getCursor()->setMouseDown(true);
-//			xournal->selection->mouseDown(selType, ev.x, ev.y);
-//			return true;
-//		}
-//		else
-//		{
-//			xournal->view->clearSelection();
-//			if (changeTool(event))
-//			{
-//				return true;
-//			}
-//		}
+		EditSelection* selection = xournal->selection;
+
+		XojPageView* view = selection->getView();
+
+		PositionInputData pos = getInputDataRelativeToCurrentPage(view);
+
+		CursorSelectionType selType = selection->getSelectionTypeForPos(pos.x, pos.y, xournal->view->getZoom());
+		if (selType)
+		{
+
+			if (selType == CURSOR_SELECTION_MOVE && button == 3)
+			{
+				selection->copySelection();
+			}
+
+			xournal->view->getCursor()->setMouseDown(true);
+			xournal->selection->mouseDown(selType, pos.x, pos.y);
+			return true;
+		}
+		else
+		{
+			xournal->view->clearSelection();
+			if (changeTool())
+			{
+				return true;
+			}
+		}
 	}
 
 	XojPageView* pv = getPageAtCurrentPosition();
@@ -416,8 +428,7 @@ PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* 
 		gdk_device_get_axis(device, axes, GDK_AXIS_PRESSURE, &pos.pressure);
 	}
 
-	// TODO Key event
-	pos.state = 0;
+	pos.state = this->state;
 
 	return pos;
 }

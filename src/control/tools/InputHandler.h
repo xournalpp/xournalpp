@@ -55,7 +55,7 @@ public:
 	 * structures and queue repaints of the XojPageView
 	 * if necessary
 	 */
-	virtual bool onMotionNotifyEvent(const PositionInputData& pos, bool shiftDown) = 0;
+	virtual bool onMotionNotifyEvent(const PositionInputData& pos) = 0;
 
  	/**
 	 * The current input device for stroken, do not react on other devices (linke mices)

@@ -213,6 +213,12 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		input->setButton(button);
 	}
 
+	GdkModifierType state = (GdkModifierType)0;
+	if (gdk_event_get_state(event, &state))
+	{
+		input->setState(state);
+	}
+
 	if (event->type == GDK_MOTION_NOTIFY)
 	{
 		input->copyAxes(event);

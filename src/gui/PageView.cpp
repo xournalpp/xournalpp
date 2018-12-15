@@ -579,7 +579,7 @@ void XojPageView::resetShapeRecognizer()
 	}
 }
 
-bool XojPageView::onMotionNotifyEvent(const PositionInputData& pos, bool shiftDown)
+bool XojPageView::onMotionNotifyEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
@@ -591,7 +591,7 @@ bool XojPageView::onMotionNotifyEvent(const PositionInputData& pos, bool shiftDo
 
 	if (containsPoint(x, y, true) &&
 		this->inputHandler &&
-		this->inputHandler->onMotionNotifyEvent(pos, shiftDown))
+		this->inputHandler->onMotionNotifyEvent(pos))
 	{
 		//input	handler used this event
 	}

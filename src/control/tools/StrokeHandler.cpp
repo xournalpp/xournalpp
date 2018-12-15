@@ -44,7 +44,7 @@ void StrokeHandler::draw(cairo_t* cr)
 	cairo_mask_surface(cr, surfMask, visRect.x, visRect.y);
 }
 
-bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos, bool shiftDown)
+bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(StrokeHandler);
 

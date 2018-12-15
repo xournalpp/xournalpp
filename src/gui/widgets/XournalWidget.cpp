@@ -93,7 +93,6 @@ GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 	xoj->pagePositionCache = new PagePositionCache();
 
 	xoj->selection = NULL;
-	xoj->shiftDown = false;
 
 	xoj->input = new NewGtkInputDevice(GTK_WIDGET(xoj), view);
 
@@ -128,12 +127,6 @@ static gboolean gtk_xournal_key_press_event(GtkWidget* widget, GdkEventKey* even
 	g_return_val_if_fail(event != NULL, FALSE);
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
-
-	// Shift alone pressed. Is there a constant?
-	if (event->is_modifier && (event->keyval == 0xFFE1))
-	{
-		xournal->shiftDown = true;
-	}
 
 	EditSelection* selection = xournal->selection;
 	if (selection)
@@ -184,12 +177,6 @@ static gboolean gtk_xournal_key_release_event(GtkWidget* widget, GdkEventKey* ev
 	g_return_val_if_fail(event != NULL, false);
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
-
-	if (event->is_modifier && (event->state & GDK_SHIFT_MASK))
-	{
-		xournal->shiftDown = false;
-	}
-
 	return xournal->view->onKeyReleaseEvent(event);
 }
 

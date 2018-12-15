@@ -58,11 +58,6 @@ struct _GtkXournal
 	EditSelection* selection;
 
 	/**
-	 * Shift is currently pressed
-	 */
-	bool shiftDown = false;
-
-	/**
 	 * Input handling
 	 */
 	AbstractInputDevice* input;

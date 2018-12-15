@@ -82,6 +82,11 @@ public:
 	void setButton(guint button);
 
 	/**
+	 * Set state flags from GDKevent (Shift down etc.)
+	 */
+	void setState(GdkModifierType state);
+
+	/**
 	 * Get Page at current position
 	 *
 	 * @return page or NULL if none
@@ -140,7 +145,7 @@ private:
 	XojPageView* current_view;
 
 	/**
-	 * TODO mege together with current_view??
+	 * Current input page. Mege together with current_view??
 	 */
 	XojPageView* currentInputPage;
 
@@ -163,6 +168,11 @@ private:
 	 * Current mouse button
 	 */
 	guint button;
+
+	/**
+	 * State flags from GDKevent (Shift down etc.)
+	 */
+	GdkModifierType state;
 
 	/**
 	 * Position X

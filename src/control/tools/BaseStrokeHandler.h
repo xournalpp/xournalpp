@@ -25,7 +25,7 @@ public:
 
 	void draw(cairo_t* cr);
 
-	bool onMotionNotifyEvent(const PositionInputData& pos, bool shiftDown);
+	bool onMotionNotifyEvent(const PositionInputData& pos);
 	void onButtonReleaseEvent(const PositionInputData& pos);
 	void onButtonPressEvent(const PositionInputData& pos);
 

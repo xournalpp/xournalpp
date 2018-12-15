@@ -12,7 +12,13 @@
 
 #pragma once
 
-typedef struct {
+#include <gtk/gtk.h>
+
+class PositionInputData {
+public:
+	bool isShiftDown() const;
+
+public:
 	double x;
 	double y;
 	double pressure;
@@ -20,6 +26,6 @@ typedef struct {
 	/**
 	 * State flags from GDKevent (Shift down etc.)
 	 */
-	int state;
-} PositionInputData;
+	GdkModifierType state;
+};
  
