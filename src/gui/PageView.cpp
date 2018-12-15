@@ -453,11 +453,11 @@ void XojPageView::selectObjectAt(double x, double y)
 	}
 }
 
-bool XojPageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
+bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
-	if ((event->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)) != 0)
+	if ((pos.state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)) != 0)
 	{
 		return false; // not handled here
 	}
@@ -469,8 +469,8 @@ bool XojPageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 
 	ToolHandler* h = xournal->getControl()->getToolHandler();
 
-	double x = event->x;
-	double y = event->y;
+	double x = pos.x;
+	double y = pos.y;
 
 	if (x < 0 || y < 0)
 	{
@@ -511,7 +511,7 @@ bool XojPageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 			this->inputHandler = new StrokeHandler(this->xournal, this, getPage());
 		}
 
-		this->inputHandler->onButtonPressEvent(event);
+		this->inputHandler->onButtonPressEvent(pos);
 	}
 	else if(h->getToolType() == TOOL_ERASER)
 	{
@@ -579,19 +579,19 @@ void XojPageView::resetShapeRecognizer()
 	}
 }
 
-bool XojPageView::onMotionNotifyEvent(GtkWidget* widget, double pageX, double pageY, double pressure, bool shiftDown)
+bool XojPageView::onMotionNotifyEvent(const PositionInputData& pos, bool shiftDown)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
 	double zoom = xournal->getZoom();
-	double x = pageX / zoom;
-	double y = pageY / zoom;
+	double x = pos.x / zoom;
+	double y = pos.y / zoom;
 
 	ToolHandler* h = xournal->getControl()->getToolHandler();
 
 	if (containsPoint(x, y, true) &&
 		this->inputHandler &&
-		this->inputHandler->onMotionNotifyEvent(pageX, pageY, pressure, shiftDown))
+		this->inputHandler->onMotionNotifyEvent(pos, shiftDown))
 	{
 		//input	handler used this event
 	}
@@ -619,36 +619,7 @@ bool XojPageView::onMotionNotifyEvent(GtkWidget* widget, double pageX, double pa
 	return false;
 }
 
-void XojPageView::translateEvent(GdkEvent* event, int xOffset, int yOffset)
-{
-	XOJ_CHECK_TYPE(XojPageView);
-
-	double* x = NULL;
-	double* y = NULL;
-
-	if (event->type == GDK_MOTION_NOTIFY)
-	{
-		GdkEventMotion* ev = &event->motion;
-		x = &ev->x;
-		y = &ev->y;
-	}
-	else if (event->type == GDK_BUTTON_PRESS || event->type == GDK_BUTTON_RELEASE)
-	{
-		GdkEventButton* ev = &event->button;
-		x = &ev->x;
-		y = &ev->y;
-	}
-	else
-	{
-		g_warning("XojPageView::translateEvent unknown event type: %i", event->type);
-		return;
-	}
-
-	*x -= this->getX() - xOffset;
-	*y -= this->getY() - yOffset;
-}
-
-bool XojPageView::onButtonReleaseEvent(GtkWidget* widget, GdkEventButton* event)
+bool XojPageView::onButtonReleaseEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
@@ -656,7 +627,7 @@ bool XojPageView::onButtonReleaseEvent(GtkWidget* widget, GdkEventButton* event)
 
 	if (this->inputHandler)
 	{
-		this->inputHandler->onButtonReleaseEvent(event);
+		this->inputHandler->onButtonReleaseEvent(pos);
 		delete this->inputHandler;
 		this->inputHandler = NULL;
 	}

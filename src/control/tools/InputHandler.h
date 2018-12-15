@@ -14,8 +14,10 @@
 #include <gtk/gtk.h>
 #include "model/Stroke.h"
 #include "model/PageRef.h"
-#include <XournalType.h>
 #include "control/shaperecognizer/ShapeRecognizer.h"
+#include "gui/inputdevices/PositionInputData.h"
+
+#include <XournalType.h>
 
 class DocumentView;
 class XournalView;
@@ -53,20 +55,20 @@ public:
 	 * structures and queue repaints of the XojPageView
 	 * if necessary
 	 */
-	virtual bool onMotionNotifyEvent(double pageX, double pageY, double pressure, bool shiftDown) = 0;
+	virtual bool onMotionNotifyEvent(const PositionInputData& pos, bool shiftDown) = 0;
 
  	/**
 	 * The current input device for stroken, do not react on other devices (linke mices)
 	 * This method is called from the XojPageView as soon
 	 * as the pointer is released.
 	 */
-	virtual void onButtonReleaseEvent(GdkEventButton* event) = 0;
+	virtual void onButtonReleaseEvent(const PositionInputData& pos) = 0;
 
  	/**
 	 * This method is called from the XojPageView as soon
 	 * as the pointer is pressed.
 	 */
-	virtual void onButtonPressEvent(GdkEventButton* event) = 0;
+	virtual void onButtonPressEvent(const PositionInputData& pos) = 0;
 
 	Stroke* getStroke();
 

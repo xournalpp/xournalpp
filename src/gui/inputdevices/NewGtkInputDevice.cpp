@@ -3,9 +3,9 @@
 
 #include "control/Control.h"
 #include "gui/PageView.h"
-#include "gui/widgets/XournalWidget.h"
 #include "gui/XournalView.h"
 #include "model/Point.h"
+
 
 NewGtkInputDevice::NewGtkInputDevice(GtkWidget* widget, XournalView* view)
  : AbstractInputDevice(widget, view)
@@ -36,6 +36,27 @@ void NewGtkInputDevice::focusWidget()
 	XOJ_CHECK_TYPE(NewGtkInputDevice);
 
 	gtk_widget_grab_focus(widget);
+}
+
+Settings* NewGtkInputDevice::getSettings()
+{
+	XOJ_CHECK_TYPE(NewGtkInputDevice);
+
+	return view->getControl()->getSettings();
+}
+
+ToolHandler* NewGtkInputDevice::getToolHandler()
+{
+	XOJ_CHECK_TYPE(NewGtkInputDevice);
+
+	return view->getControl()->getToolHandler();
+}
+
+GtkXournal* NewGtkInputDevice::getXournal()
+{
+	XOJ_CHECK_TYPE(NewGtkInputDevice);
+
+	return GTK_XOURNAL(widget);
 }
 
 /**

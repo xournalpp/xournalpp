@@ -21,6 +21,7 @@
 #include <Range.h>
 
 #include <vector>
+#include "inputdevices/PositionInputData.h"
 
 class EditSelection;
 class EraseHandler;
@@ -137,10 +138,9 @@ public:
 	Rectangle getRect();
 
 public: // event handler
-	bool onButtonPressEvent(GtkWidget* widget, GdkEventButton* event);
-	bool onButtonReleaseEvent(GtkWidget* widget, GdkEventButton* event);
-	bool onMotionNotifyEvent(GtkWidget* widget, double pageX, double pageY, double pressure, bool shiftDown);
-	void translateEvent(GdkEvent* event, int xOffset, int yOffset);
+	bool onButtonPressEvent(const PositionInputData& pos);
+	bool onButtonReleaseEvent(const PositionInputData& pos);
+	bool onMotionNotifyEvent(const PositionInputData& pos, bool shiftDown);
 
 	/**
 	 * This method actually repaints the XojPageView, triggering

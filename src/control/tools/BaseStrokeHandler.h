@@ -25,9 +25,9 @@ public:
 
 	void draw(cairo_t* cr);
 
-	bool onMotionNotifyEvent(double pageX, double pageY, double pressure, bool shiftDown);
-	void onButtonReleaseEvent(GdkEventButton* event);
-	void onButtonPressEvent(GdkEventButton* event);
+	bool onMotionNotifyEvent(const PositionInputData& pos, bool shiftDown);
+	void onButtonReleaseEvent(const PositionInputData& pos);
+	void onButtonPressEvent(const PositionInputData& pos);
 
 private:
 	virtual void drawShape(Point& currentPoint, bool shiftDown) = 0;

@@ -44,7 +44,7 @@ void StrokeHandler::draw(cairo_t* cr)
 	cairo_mask_surface(cr, surfMask, visRect.x, visRect.y);
 }
 
-bool StrokeHandler::onMotionNotifyEvent(double pageX, double pageY, double pressure, bool shiftDown)
+bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos, bool shiftDown)
 {
 	XOJ_CHECK_TYPE(StrokeHandler);
 
@@ -54,8 +54,8 @@ bool StrokeHandler::onMotionNotifyEvent(double pageX, double pageY, double press
 	}
 
 	double zoom = xournal->getZoom();
-	double x = pageX / zoom;
-	double y = pageY / zoom;
+	double x = pos.x / zoom;
+	double y = pos.y / zoom;
 	int pointCount = stroke->getPointCount();
 
 	Point currentPoint(x, y);
@@ -68,9 +68,9 @@ bool StrokeHandler::onMotionNotifyEvent(double pageX, double pageY, double press
 		}
 	}
 
-	if (Point::NO_PRESURE != pressure)
+	if (Point::NO_PRESURE != pos.pressure)
 	{
-		stroke->setLastPressure(pressure * stroke->getWidth());
+		stroke->setLastPressure(pos.pressure * stroke->getWidth());
 	}
 
 	if (pointCount > 0)
@@ -101,7 +101,7 @@ bool StrokeHandler::onMotionNotifyEvent(double pageX, double pageY, double press
 	return true;
 }
 
-void StrokeHandler::onButtonReleaseEvent(GdkEventButton* event)
+void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(StrokeHandler);
 
@@ -205,7 +205,7 @@ void StrokeHandler::onButtonReleaseEvent(GdkEventButton* event)
 	return;
 }
 
-void StrokeHandler::onButtonPressEvent(GdkEventButton* event)
+void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(StrokeHandler);
 
@@ -252,8 +252,8 @@ void StrokeHandler::onButtonPressEvent(GdkEventButton* event)
 
 	if (!stroke)
 	{
-		double x = event->x / zoom;
-		double y = event->y / zoom;
+		double x = pos.x / zoom;
+		double y = pos.y / zoom;
 
 		createStroke(Point(x, y));
 	}

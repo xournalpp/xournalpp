@@ -50,7 +50,6 @@ struct _GtkXournal
 
 	Layout* layout;
 
-	XojPageView* currentInputPage;
 	PagePositionCache* pagePositionCache;
 
 	/**

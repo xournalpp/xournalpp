@@ -13,6 +13,10 @@
 #pragma once
 
 #include "AbstractInputDevice.h"
+#include "gui/widgets/XournalWidget.h"
+
+class Settings;
+class ToolHandler;
 
 class NewGtkInputDevice : public AbstractInputDevice
 {
@@ -30,6 +34,10 @@ public:
 	 * Focus the widget
 	 */
 	void focusWidget();
+
+	Settings* getSettings();
+	ToolHandler* getToolHandler();
+	GtkXournal* getXournal();
 
 protected:
 	/**

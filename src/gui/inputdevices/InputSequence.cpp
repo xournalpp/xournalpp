@@ -1,14 +1,23 @@
 #include "InputSequence.h"
 #include "NewGtkInputDevice.h"
 
+#include "control/settings/ButtonConfig.h"
+#include "control/settings/Settings.h"
+#include "control/tools/EditSelection.h"
+#include "control/ToolHandler.h"
+#include "gui/Cursor.h"
+#include "gui/PageView.h"
+#include "gui/XournalView.h"
+
 
 InputSequence::InputSequence(NewGtkInputDevice* inputHandler)
  : inputHandler(inputHandler),
+   current_view(NULL),
+   currentInputPage(NULL),
    device(NULL),
    axes(NULL),
    x(-1),
-   y(-1),
-   current_view(NULL)
+   y(-1)
 {
 	XOJ_INIT_TYPE(InputSequence);
 }
@@ -188,27 +197,15 @@ void InputSequence::actionStart()
 void InputSequence::actionEnd()
 {
 	XOJ_CHECK_TYPE(InputSequence);
-
-	printf("actionEnd %s\n", gdk_device_get_name(device));
-}
-
-/*
-
-
-
-bool AbstractInputDevice::handleButtonRelease(GdkEventButton* event)
-{
-	XOJ_CHECK_TYPE(AbstractInputDevice);
-
 	current_view = NULL;
 
-	GtkXournal* xournal = GTK_XOURNAL(widget);
+	GtkXournal* xournal = inputHandler->getXournal();
 
 	Cursor* cursor = xournal->view->getCursor();
-	ToolHandler* h = xournal->view->getControl()->getToolHandler();
+	ToolHandler* h = inputHandler->getToolHandler();
 	if (xournal->view->zoom_gesture_active)
 	{
-		return true;
+		return;
 	}
 
 	cursor->setMouseDown(false);
@@ -221,12 +218,11 @@ bool AbstractInputDevice::handleButtonRelease(GdkEventButton* event)
 		sel->mouseUp();
 	}
 
-	bool res = false;
-	if (xournal->currentInputPage)
+	if (currentInputPage)
 	{
-		xournal->currentInputPage->translateEvent((GdkEvent*) event, xournal->x, xournal->y);
-		res = xournal->currentInputPage->onButtonReleaseEvent(widget, event);
-		xournal->currentInputPage = NULL;
+		PositionInputData in = getInputDataRelativeToCurrentPage();
+		currentInputPage->onButtonReleaseEvent(in);
+		currentInputPage = NULL;
 	}
 
 	EditSelection* tmpSelection = xournal->selection;
@@ -239,9 +235,30 @@ bool AbstractInputDevice::handleButtonRelease(GdkEventButton* event)
 	{
 		xournal->view->setSelection(tmpSelection);
 	}
-
-	return res;
 }
+
+/**
+ * Get input data relative to current input page
+ */
+PositionInputData InputSequence::getInputDataRelativeToCurrentPage()
+{
+	XOJ_CHECK_TYPE(InputSequence);
+
+	GtkXournal* xournal = inputHandler->getXournal();
+
+	PositionInputData in;
+	in.x -= currentInputPage->getX() - xournal->x;
+	in.y -= currentInputPage->getY() - xournal->y;
+	in.pressure = 1.0;
+
+	// TODO Key event
+	in.state = 0;
+
+	return in;
+}
+
+
+/*
 
 bool AbstractInputDevice::handleMotion(GdkEventMotion* event)
 {
@@ -328,12 +345,11 @@ bool AbstractInputDevice::handleMotion(GdkEventMotion* event)
  */
 bool InputSequence::changeTool(int button)
 {
-	/*
-	Settings* settings = view->getControl()->getSettings();
+	Settings* settings = inputHandler->getSettings();
 	ButtonConfig* cfgTouch = settings->getTouchButtonConfig();
-	ToolHandler* h = view->getControl()->getToolHandler();
+	ToolHandler* h = inputHandler->getToolHandler();
+	GtkXournal* xournal = inputHandler->getXournal();
 
-	GtkXournal* xournal = GTK_XOURNAL(widget);
 	ButtonConfig* cfg = NULL;
 	if (gdk_device_get_source(device) == GDK_SOURCE_PEN)
 	{
@@ -346,11 +362,11 @@ bool InputSequence::changeTool(int button)
 			cfg = settings->getStylusButton2Config();
 		}
 	}
-	 else if (button == 2)   // Middle Button
+	else if (button == 2 /* Middle Button */)
 	{
 		cfg = settings->getMiddleButtonConfig();
 	}
-	else if (button == 3 && !xournal->selection)     // Right Button
+	else if (button == 3 /* Right Button */ && !xournal->selection)
 	{
 		cfg = settings->getRightButtonConfig();
 	}
@@ -379,7 +395,7 @@ bool InputSequence::changeTool(int button)
 		h->copyCurrentConfig();
 		cfg->acceptActions(h);
 	}
-*/
+
 	return false;
 }
 

@@ -15,6 +15,7 @@
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
+#include "PositionInputData.h"
 
 class NewGtkInputDevice;
 class XojPageView;
@@ -84,6 +85,11 @@ private:
 	 */
 	bool changeTool(int button);
 
+	/**
+	 * Get input data relative to current input page
+	 */
+	PositionInputData getInputDataRelativeToCurrentPage();
+
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -96,6 +102,11 @@ private:
 	 * Current editing page
 	 */
 	XojPageView* current_view;
+
+	/**
+	 * TODO mege together with current_view??
+	 */
+	XojPageView* currentInputPage;
 
 	/**
 	 * Current input device

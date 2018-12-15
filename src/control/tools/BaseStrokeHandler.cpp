@@ -27,7 +27,7 @@ void BaseStrokeHandler::draw(cairo_t* cr)
 	view.drawStroke(cr, stroke, 0);
 }
 
-bool BaseStrokeHandler::onMotionNotifyEvent(double pageX, double pageY, double pressure, bool shiftDown)
+bool BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos, bool shiftDown)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 
@@ -37,8 +37,8 @@ bool BaseStrokeHandler::onMotionNotifyEvent(double pageX, double pageY, double p
 	}
 
 	double zoom = xournal->getZoom();
-	double x = pageX / zoom;
-	double y = pageY / zoom;
+	double x = pos.x / zoom;
+	double y = pos.y / zoom;
 	int pointCount = stroke->getPointCount();
 
 	Point currentPoint(x, y);
@@ -67,7 +67,7 @@ bool BaseStrokeHandler::onMotionNotifyEvent(double pageX, double pageY, double p
 	return true;
 }
 
-void BaseStrokeHandler::onButtonReleaseEvent(GdkEventButton* event)
+void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 
@@ -116,13 +116,13 @@ void BaseStrokeHandler::onButtonReleaseEvent(GdkEventButton* event)
 	return;
 }
 
-void BaseStrokeHandler::onButtonPressEvent(GdkEventButton* event)
+void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 
 	double zoom = xournal->getZoom();
-	double x = event->x / zoom;
-	double y = event->y / zoom;
+	double x = pos.x / zoom;
+	double y = pos.y / zoom;
 
 	if (!stroke)
 	{
