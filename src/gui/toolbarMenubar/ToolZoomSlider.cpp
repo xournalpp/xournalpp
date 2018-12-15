@@ -141,12 +141,16 @@ GtkToolItem* ToolZoomSlider::newItem()
 	if (this->horizontal)
 	{
 		this->slider = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL,
-		                                        MIN_ZOOM, MAX_ZOOM, 0.1);
+												zoom->getZoomMin(),
+												zoom->getZoomMax(),
+												zoom->getZoomStep());
 	}
 	else
 	{
 		this->slider = gtk_scale_new_with_range(GTK_ORIENTATION_VERTICAL,
-		                                        MIN_ZOOM, MAX_ZOOM, 0.1);
+												zoom->getZoomMin(),
+												zoom->getZoomMax(),
+												zoom->getZoomStep());
 		gtk_range_set_inverted(GTK_RANGE(this->slider), true);
 	}
 	g_signal_connect(this->slider, "value-changed", G_CALLBACK(sliderChanged),
