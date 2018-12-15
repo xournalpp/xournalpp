@@ -17,6 +17,7 @@
 
 class Settings;
 class ToolHandler;
+class InputSequence;
 
 class NewGtkInputDevice : public AbstractInputDevice
 {
@@ -39,6 +40,18 @@ public:
 	ToolHandler* getToolHandler();
 	GtkXournal* getXournal();
 
+	/**
+	 * Try to start input
+	 *
+	 * @return true if it should start
+	 */
+	bool startInput(InputSequence* input);
+
+	/**
+	 * Stop input of this sequence
+	 */
+	void stopInput(InputSequence* input);
+
 protected:
 	/**
 	 * Handle all GTK Events
@@ -53,11 +66,15 @@ private:
 
 protected:
 	/**
+	 * Running input
+	 */
+	InputSequence* inputRunning;
+
+	/**
 	 * Current ongoing pointer events
 	 *
 	 * GdkDevice -> InputSequence
 	 */
-	// TODO Rename
 	GHashTable* pointerInputList;
 
 	/**
@@ -65,6 +82,5 @@ protected:
 	 *
 	 * GdkEventSequence -> InputSequence
 	 */
-	// TODO Rename
 	GHashTable* touchInputList;
 };

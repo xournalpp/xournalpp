@@ -52,7 +52,8 @@ static void gtk_xournal_scroll_mouse_event(GtkXournal* xournal, GdkEventMotion* 
 
 
 InputSequence::InputSequence(NewGtkInputDevice* inputHandler)
- : inputHandler(inputHandler),
+ : inputRunning(false),
+   inputHandler(inputHandler),
    current_view(NULL),
    currentInputPage(NULL),
    device(NULL),
@@ -218,7 +219,7 @@ bool InputSequence::actionMoved()
 
 	xournal->view->getCursor()->setInsidePage(pv != NULL);
 
-	if (pv)
+	if (pv && inputRunning)
 	{
 		// allow events only to a single page!
 		if (currentInputPage == NULL || pv == currentInputPage)
@@ -239,6 +240,13 @@ bool InputSequence::actionStart()
 	XOJ_CHECK_TYPE(InputSequence);
 
 	inputHandler->focusWidget();
+
+	checkCanStartInput();
+
+	if (!inputRunning)
+	{
+		return false;
+	}
 
 	// none button release event was sent, send one now
 	// only for this device, other devices may still have unfinished input
@@ -324,6 +332,12 @@ bool InputSequence::actionStart()
 void InputSequence::actionEnd()
 {
 	XOJ_CHECK_TYPE(InputSequence);
+
+	if (!inputRunning)
+	{
+		return;
+	}
+
 	current_view = NULL;
 
 	GtkXournal* xournal = inputHandler->getXournal();
@@ -332,6 +346,7 @@ void InputSequence::actionEnd()
 
 	if (xournal->view->zoom_gesture_active)
 	{
+		stopInput();
 		return;
 	}
 
@@ -362,6 +377,8 @@ void InputSequence::actionEnd()
 	{
 		xournal->view->setSelection(tmpSelection);
 	}
+
+	stopInput();
 }
 
 /**
@@ -389,12 +406,43 @@ PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* 
 	return pos;
 }
 
+
+/**
+ * Check if this input can be started (don't do two inputs at the same time)
+ */
+void InputSequence::checkCanStartInput()
+{
+	XOJ_CHECK_TYPE(InputSequence);
+
+	if (inputHandler->startInput(this))
+	{
+		inputRunning = true;
+	}
+	else
+	{
+		inputRunning = false;
+	}
+}
+
+/**
+ * Stop the running input, if running
+ */
+void InputSequence::stopInput()
+{
+	XOJ_CHECK_TYPE(InputSequence);
+
+	inputRunning = false;
+	inputHandler->stopInput(this);
+}
+
 /**
  * Change the tool according to the device and button
  * @return true to ignore event
  */
 bool InputSequence::changeTool()
 {
+	XOJ_CHECK_TYPE(InputSequence);
+
 	Settings* settings = inputHandler->getSettings();
 	ButtonConfig* cfgTouch = settings->getTouchButtonConfig();
 	ToolHandler* h = inputHandler->getToolHandler();

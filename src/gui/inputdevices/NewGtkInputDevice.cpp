@@ -8,7 +8,8 @@
 
 
 NewGtkInputDevice::NewGtkInputDevice(GtkWidget* widget, XournalView* view)
- : AbstractInputDevice(widget, view)
+ : AbstractInputDevice(widget, view),
+   inputRunning(NULL)
 {
 	XOJ_INIT_TYPE(NewGtkInputDevice);
 
@@ -57,6 +58,37 @@ GtkXournal* NewGtkInputDevice::getXournal()
 	XOJ_CHECK_TYPE(NewGtkInputDevice);
 
 	return GTK_XOURNAL(widget);
+}
+
+/**
+ * Try to start input
+ *
+ * @return true if it should start
+ */
+bool NewGtkInputDevice::startInput(InputSequence* input)
+{
+	XOJ_CHECK_TYPE(NewGtkInputDevice);
+
+	if (inputRunning == NULL)
+	{
+		inputRunning = input;
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Stop input of this sequence
+ */
+void NewGtkInputDevice::stopInput(InputSequence* input)
+{
+	XOJ_CHECK_TYPE(NewGtkInputDevice);
+
+	if (inputRunning == input)
+	{
+		inputRunning = NULL;
+	}
 }
 
 /**

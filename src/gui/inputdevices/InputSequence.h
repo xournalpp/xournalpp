@@ -97,12 +97,27 @@ private:
 	bool changeTool();
 
 	/**
+	 * Check if this input can be started (don't do two inputs at the same time)
+	 */
+	void checkCanStartInput();
+
+	/**
+	 * Stop the running input, if running
+	 */
+	void stopInput();
+
+	/**
 	 * Get input data relative to current input page
 	 */
 	PositionInputData getInputDataRelativeToCurrentPage(XojPageView* page);
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	/**
+	 * true if this input is running, false to ignore
+	 */
+	bool inputRunning;
 
 	/**
 	 * Input Handler
