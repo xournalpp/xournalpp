@@ -54,4 +54,21 @@ private:
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+protected:
+	/**
+	 * Current ongoing pointer events
+	 *
+	 * GdkDevice -> AxesInfo
+	 */
+	// TODO Rename
+	GHashTable* pointer_info;
+
+	/**
+	 * Current ongoing touch events
+	 *
+	 * GdkEventSequence -> AxesInfo
+	 */
+	// TODO Rename
+	GHashTable* touch_info;
 };

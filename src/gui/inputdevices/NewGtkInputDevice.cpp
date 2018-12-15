@@ -7,14 +7,46 @@
 #include "model/Point.h"
 
 
+
+
+typedef struct {
+  GdkDevice* last_source;
+  gdouble* axes;
+  gdouble x;
+  gdouble y;
+} AxesInfo;
+
+
+
+static AxesInfo *
+axes_info_new (void)
+{
+  AxesInfo *info;
+
+  info = g_new0 (AxesInfo, 1);
+
+  return info;
+}
+
+
+
+
 NewGtkInputDevice::NewGtkInputDevice(GtkWidget* widget, XournalView* view)
  : AbstractInputDevice(widget, view)
 {
 	XOJ_INIT_TYPE(NewGtkInputDevice);
+
+	pointer_info = g_hash_table_new_full(NULL, NULL, NULL, (GDestroyNotify) g_free);
+	touch_info = g_hash_table_new_full(NULL, NULL, NULL, (GDestroyNotify) g_free);
 }
 
 NewGtkInputDevice::~NewGtkInputDevice()
 {
+	XOJ_CHECK_TYPE(NewGtkInputDevice);
+
+	g_hash_table_destroy(pointer_info);
+	g_hash_table_destroy(touch_info);
+
 	XOJ_RELEASE_TYPE(NewGtkInputDevice);
 }
 
@@ -55,7 +87,75 @@ bool NewGtkInputDevice::event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInput
 bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 {
 
-	return false;
+	GdkDevice* device = gdk_event_get_device(event);
+	GdkDevice* source_device = gdk_event_get_source_device(event);
+	GdkEventSequence* sequence = gdk_event_get_event_sequence(event);
+//	GdkDeviceTool* tool = gdk_event_get_device_tool(event);
+
+	if (event->type == GDK_TOUCH_END || event->type == GDK_TOUCH_CANCEL)
+	{
+		g_hash_table_remove(touch_info, sequence);
+		// TODO End input
+		return true;
+	}
+	else if (event->type == GDK_LEAVE_NOTIFY)
+	{
+		g_hash_table_remove(pointer_info, device);
+		// TODO End input
+		return true;
+	}
+
+	AxesInfo* info = NULL;
+	if (sequence == NULL)
+	{
+		info = (AxesInfo*) g_hash_table_lookup(pointer_info, device);
+
+		if (!info)
+		{
+			info = axes_info_new();
+			g_hash_table_insert(pointer_info, device, info);
+		}
+	}
+	else
+	{
+		info = (AxesInfo*) g_hash_table_lookup(touch_info, sequence);
+
+		if (!info)
+		{
+			info = axes_info_new();
+			g_hash_table_insert(touch_info, sequence, info);
+		}
+	}
+	if (info->last_source != source_device)
+		info->last_source = source_device;
+
+	g_clear_pointer(&info->axes, g_free);
+
+	if (event->type == GDK_TOUCH_BEGIN || event->type == GDK_TOUCH_UPDATE)
+	{
+		if (sequence && event->touch.emulating_pointer)
+		{
+			g_hash_table_remove(pointer_info, device);
+		}
+	}
+
+	if (event->type == GDK_MOTION_NOTIFY)
+	{
+		info->axes = (gdouble*)g_memdup(event->motion.axes, sizeof(gdouble) * gdk_device_get_n_axes(source_device));
+	}
+	else if (event->type == GDK_BUTTON_PRESS || event->type == GDK_BUTTON_RELEASE)
+	{
+		info->axes = (gdouble*)g_memdup(event->button.axes, sizeof(gdouble) * gdk_device_get_n_axes(source_device));
+	}
+
+	gdouble x, y;
+	if (gdk_event_get_coords(event, &x, &y))
+	{
+		info->x = x;
+		info->y = y;
+	}
+
+	return true;
 }
 
 /**
@@ -65,76 +165,7 @@ bool NewGtkInputDevice::motionEvent(XojPageView* pageView, GdkEventMotion* event
 {
 	XOJ_CHECK_TYPE(NewGtkInputDevice);
 
-/*
-	gdouble x, y;
-	AxesInfo *info;
-
-	GdkDevice* device = gdk_event_get_device(event);
-	GdkDevice* source_device = gdk_event_get_source_device(event);
-	GdkEventSequence* sequence = gdk_event_get_event_sequence(event);
-	GdkDeviceTool* tool = gdk_event_get_device_tool(event);
-
-	if (event->type == GDK_TOUCH_END || event->type == GDK_TOUCH_CANCEL)
-	{
-		g_hash_table_remove(data->touch_info, sequence);
-		return true;
-	}
-	else if (event->type == GDK_LEAVE_NOTIFY)
-	{
-		g_hash_table_remove(data->pointer_info, device);
-		return;
-	}
-
-	if (!sequence)
-	{
-		info = g_hash_table_lookup(data->pointer_info, device);
-
-		if (!info)
-		{
-			info = axes_info_new();
-			g_hash_table_insert(data->pointer_info, device, info);
-		}
-	}
-	else
-	{
-		info = g_hash_table_lookup(data->touch_info, sequence);
-
-		if (!info)
-		{
-			info = axes_info_new();
-			g_hash_table_insert(data->touch_info, sequence, info);
-		}
-	}
-
-	if (info->last_source != source_device)
-		info->last_source = source_device;
-
-	if (info->last_tool != tool)
-		info->last_tool = tool;
-
-	g_clear_pointer(&info->axes, g_free);
-
-	if (event->type == GDK_TOUCH_BEGIN || event->type == GDK_TOUCH_UPDATE)
-	{
-		if (sequence && event->touch.emulating_pointer)
-			g_hash_table_remove(data->pointer_info, device);
-	}
-	if (event->type == GDK_MOTION_NOTIFY)
-	{
-		info->axes = g_memdup(event->motion.axes, sizeof(gdouble) * gdk_device_get_n_axes(source_device));
-	}
-	else if (event->type == GDK_BUTTON_PRESS || event->type == GDK_BUTTON_RELEASE)
-	{
-		info->axes = g_memdup(event->button.axes, sizeof(gdouble) * gdk_device_get_n_axes(source_device));
-	}
-
-	if (gdk_event_get_coords(event, &x, &y))
-	{
-		info->x = x;
-		info->y = y;
-	}
-*/
-	return false;
+	return true;
 }
 
 /**
