@@ -62,7 +62,7 @@ protected:
 	 * GdkDevice -> InputSequence
 	 */
 	// TODO Rename
-	GHashTable* pointer_info;
+	GHashTable* pointerInputList;
 
 	/**
 	 * Current ongoing touch events
@@ -70,5 +70,5 @@ protected:
 	 * GdkEventSequence -> InputSequence
 	 */
 	// TODO Rename
-	GHashTable* touch_info;
+	GHashTable* touchInputList;
 };

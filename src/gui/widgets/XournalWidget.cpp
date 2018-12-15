@@ -106,8 +106,8 @@ GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 
 	Settings* settings = view->getControl()->getSettings();
 
-	SElement& inputSettings = settings->getCustomElement("inputHandling");
-
+//	SElement& inputSettings = settings->getCustomElement("inputHandling");
+//
 //	string selectedInputType;
 //	inputSettings.getString("type", selectedInputType);
 //

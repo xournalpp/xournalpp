@@ -12,16 +12,16 @@ NewGtkInputDevice::NewGtkInputDevice(GtkWidget* widget, XournalView* view)
 {
 	XOJ_INIT_TYPE(NewGtkInputDevice);
 
-	pointer_info = g_hash_table_new_full(NULL, NULL, NULL, (GDestroyNotify) InputSequence::free);
-	touch_info = g_hash_table_new_full(NULL, NULL, NULL, (GDestroyNotify) InputSequence::free);
+	pointerInputList = g_hash_table_new_full(NULL, NULL, NULL, (GDestroyNotify) InputSequence::free);
+	touchInputList = g_hash_table_new_full(NULL, NULL, NULL, (GDestroyNotify) InputSequence::free);
 }
 
 NewGtkInputDevice::~NewGtkInputDevice()
 {
 	XOJ_CHECK_TYPE(NewGtkInputDevice);
 
-	g_hash_table_destroy(pointer_info);
-	g_hash_table_destroy(touch_info);
+	g_hash_table_destroy(pointerInputList);
+	g_hash_table_destroy(touchInputList);
 
 	XOJ_RELEASE_TYPE(NewGtkInputDevice);
 }
@@ -45,7 +45,15 @@ void NewGtkInputDevice::initWidget()
 			GDK_SMOOTH_SCROLL_MASK |
 			GDK_ENTER_NOTIFY_MASK |
 			GDK_LEAVE_NOTIFY_MASK |
-			GDK_TOUCH_MASK);
+			GDK_TOUCH_MASK |
+
+			// TODO Testing
+			GDK_PROXIMITY_IN_MASK |
+			GDK_PROXIMITY_OUT_MASK
+
+
+
+	);
 
     g_signal_connect(widget, "event", G_CALLBACK(event_cb), this);
 }
@@ -64,71 +72,80 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 {
 
 	GdkDevice* device = gdk_event_get_device(event);
-	GdkDevice* source_device = gdk_event_get_source_device(event);
+	GdkDevice* sourceDevice = gdk_event_get_source_device(event);
 	GdkEventSequence* sequence = gdk_event_get_event_sequence(event);
 //	GdkDeviceTool* tool = gdk_event_get_device_tool(event);
 
 	if (event->type == GDK_TOUCH_END || event->type == GDK_TOUCH_CANCEL)
 	{
-		InputSequence* input = (InputSequence*) g_hash_table_lookup(touch_info, sequence);
+		InputSequence* input = (InputSequence*) g_hash_table_lookup(touchInputList, sequence);
 		input->endInput();
-		g_hash_table_remove(touch_info, sequence);
+		g_hash_table_remove(touchInputList, sequence);
 		return true;
 	}
 	else if (event->type == GDK_LEAVE_NOTIFY)
 	{
-		InputSequence* input = (InputSequence*) g_hash_table_lookup(pointer_info, device);
+		InputSequence* input = (InputSequence*) g_hash_table_lookup(pointerInputList, device);
 		input->endInput();
-		g_hash_table_remove(pointer_info, device);
+		g_hash_table_remove(pointerInputList, device);
 		return true;
 	}
 
 	InputSequence* input = NULL;
 	if (sequence == NULL)
 	{
-		input = (InputSequence*) g_hash_table_lookup(pointer_info, device);
+		input = (InputSequence*) g_hash_table_lookup(pointerInputList, device);
 
 		if (input == NULL)
 		{
 			input = new InputSequence();
-			g_hash_table_insert(pointer_info, device, input);
+			g_hash_table_insert(pointerInputList, device, input);
 		}
 	}
 	else
 	{
-		input = (InputSequence*) g_hash_table_lookup(touch_info, sequence);
+		input = (InputSequence*) g_hash_table_lookup(touchInputList, sequence);
 
 		if (input == NULL)
 		{
 			input = new InputSequence();
-			g_hash_table_insert(touch_info, sequence, input);
+			g_hash_table_insert(touchInputList, sequence, input);
 		}
 	}
 
 	// Apply the correct device if not yet set, should not change
 	// But GTK decides which inputs are get together
-	input->setDevice(source_device);
+	input->setDevice(sourceDevice);
 
 	input->clearAxes();
+
+	if (event->type == GDK_PROXIMITY_IN)
+	{
+		printf("GDK_PROXIMITY_IN\n");
+	}
+	if (event->type == GDK_PROXIMITY_OUT)
+	{
+		printf("GDK_PROXIMITY_OUT\n");
+	}
 
 
 	if (event->type == GDK_TOUCH_BEGIN || event->type == GDK_TOUCH_UPDATE)
 	{
 		if (sequence && event->touch.emulating_pointer)
 		{
-			InputSequence* input = (InputSequence*) g_hash_table_lookup(pointer_info, device);
+			InputSequence* input = (InputSequence*) g_hash_table_lookup(pointerInputList, device);
 			input->endInput();
-			g_hash_table_remove(pointer_info, device);
+			g_hash_table_remove(pointerInputList, device);
 		}
 	}
 
 	if (event->type == GDK_MOTION_NOTIFY)
 	{
-		input->setAxes((gdouble*)g_memdup(event->motion.axes, sizeof(gdouble) * gdk_device_get_n_axes(source_device)));
+		input->setAxes((gdouble*)g_memdup(event->motion.axes, sizeof(gdouble) * gdk_device_get_n_axes(sourceDevice)));
 	}
 	else if (event->type == GDK_BUTTON_PRESS || event->type == GDK_BUTTON_RELEASE)
 	{
-		input->setAxes((gdouble*)g_memdup(event->button.axes, sizeof(gdouble) * gdk_device_get_n_axes(source_device)));
+		input->setAxes((gdouble*)g_memdup(event->button.axes, sizeof(gdouble) * gdk_device_get_n_axes(sourceDevice)));
 	}
 
 	gdouble x, y;
