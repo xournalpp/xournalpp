@@ -254,7 +254,6 @@ bool InputSequence::actionStart()
 	{
 		PositionInputData pos = getInputDataRelativeToCurrentPage(currentInputPage);
 		currentInputPage->onButtonReleaseEvent(pos);
-		currentInputPage->onButtonReleaseEvent(pos);
 	}
 
 	ToolHandler* h = inputHandler->getToolHandler();
@@ -337,6 +336,8 @@ void InputSequence::actionEnd()
 	{
 		return;
 	}
+
+	printf("InputSequence::actionEnd\n");
 
 	current_view = NULL;
 
