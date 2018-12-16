@@ -9,12 +9,12 @@ InputStreamException::InputStreamException(string message, string filename, int 
 	this->message = message + ", " + filename + ": " + std::to_string(line);
 }
 
-InputStreamException::~InputStreamException() throw ()
+InputStreamException::~InputStreamException()
 {
 	XOJ_RELEASE_TYPE(InputStreamException);
 }
 
-const char* InputStreamException::what() const throw ()
+const char* InputStreamException::what()
 {
 	return this->message.c_str();
 }

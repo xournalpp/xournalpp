@@ -787,7 +787,7 @@ void EditSelection::serialize(ObjectOutputStream& out)
 	for (Element* e : *this->getElements()) out << e;
 }
 
-void EditSelection::readSerialized(ObjectInputStream& in) throw (InputStreamException)
+void EditSelection::readSerialized(ObjectInputStream& in)
 {
 	in.readObject("EditSelection");
 	this->x = in.readDouble();

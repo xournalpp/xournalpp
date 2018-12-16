@@ -150,7 +150,7 @@ void Text::serialize(ObjectOutputStream& out)
     out.endObject();
 }
 
-void Text::readSerialized(ObjectInputStream& in) throw (InputStreamException)
+void Text::readSerialized(ObjectInputStream& in)
 {
     XOJ_CHECK_TYPE(Text);
 

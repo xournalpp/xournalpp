@@ -83,7 +83,7 @@ public:
 public:
 	// Serialize interface
 	void serialize(ObjectOutputStream& out);
-	void readSerialized(ObjectInputStream& in) throw (InputStreamException);
+	void readSerialized(ObjectInputStream& in);
 
 protected:
 	virtual void calcSize();

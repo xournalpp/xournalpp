@@ -191,7 +191,7 @@ void Element::serializeElement(ObjectOutputStream& out)
 	out.endObject();
 }
 
-void Element::readSerializedElement(ObjectInputStream& in) throw (InputStreamException)
+void Element::readSerializedElement(ObjectInputStream& in)
 {
 	XOJ_CHECK_TYPE(Element);
 

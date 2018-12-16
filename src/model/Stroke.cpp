@@ -88,7 +88,7 @@ void Stroke::serialize(ObjectOutputStream& out)
 	out.endObject();
 }
 
-void Stroke::readSerialized(ObjectInputStream& in) throw (InputStreamException)
+void Stroke::readSerialized(ObjectInputStream& in)
 {
 	XOJ_CHECK_TYPE(Stroke);
 
