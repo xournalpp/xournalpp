@@ -60,7 +60,7 @@ Var StartMenuFolder
 ;--------------------------------
 ;Installer Sections
 
-Section "Xournal++" SecDummy
+Section "Xournal++" SecFeatures
 
   SetOutPath "$INSTDIR"
   
@@ -88,11 +88,11 @@ SectionEnd
 ;Descriptions
 
   ;Language strings
-  LangString DESC_SecDummy ${LANG_ENGLISH} "A test section."
+  LangString DESC_SecFeatures ${LANG_ENGLISH} "Feature selection"
 
   ;Assign language strings to sections
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecDummy} $(DESC_SecDummy)
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecFeatures} $(DESC_SecFeatures)
   !insertmacro MUI_FUNCTION_DESCRIPTION_END
  
 ;--------------------------------

@@ -23,13 +23,13 @@ mkdir setup/share
 
 echo "copy binaries"
 
-cp ../build/src/xournalpp.exe ./setup/bin
+cp ../build/src/xournalpp.exe ./setup/bin/xournalpp_bin.exe
 ldd ../build/src/xournalpp.exe | grep '\/mingw.*\.dll' -o | xargs -I{} cp "{}" setup/bin/
 
 echo "copy ui"
 
 cp -r ../ui setup/
-cp -r ../ui/pixmaps/xournalpp.ico setup/
+cp xournalpp.ico setup/
 cp -r ../po setup/ui/
 
 echo "copy pixbuf libs"
