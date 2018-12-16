@@ -167,7 +167,7 @@ void TexImage::serialize(ObjectOutputStream& out)
     out.endObject();
 }
 
-void TexImage::readSerialized(ObjectInputStream& in) throw (InputStreamException)
+void TexImage::readSerialized(ObjectInputStream& in)
 {
     XOJ_CHECK_TYPE(TexImage);
 

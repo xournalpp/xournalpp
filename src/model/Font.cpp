@@ -63,7 +63,7 @@ void XojFont::serialize(ObjectOutputStream& out)
 	out.endObject();
 }
 
-void XojFont::readSerialized(ObjectInputStream& in) throw (InputStreamException)
+void XojFont::readSerialized(ObjectInputStream& in)
 {
 	XOJ_CHECK_TYPE(XojFont);
 

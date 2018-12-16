@@ -24,7 +24,7 @@ ObjectInputStream::~ObjectInputStream()
 	XOJ_RELEASE_TYPE(ObjectInputStream);
 }
 
-bool ObjectInputStream::read(const char* data, int len) throw (InputStreamException)
+bool ObjectInputStream::read(const char* data, int len)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -59,7 +59,7 @@ bool ObjectInputStream::read(const char* data, int len) throw (InputStreamExcept
 	return true;
 }
 
-void ObjectInputStream::readObject(const char* name) throw (InputStreamException)
+void ObjectInputStream::readObject(const char* name)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -70,7 +70,7 @@ void ObjectInputStream::readObject(const char* name) throw (InputStreamException
 	}
 }
 
-string ObjectInputStream::readObject() throw (InputStreamException)
+string ObjectInputStream::readObject()
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -78,7 +78,7 @@ string ObjectInputStream::readObject() throw (InputStreamException)
 	return readString();
 }
 
-string ObjectInputStream::getNextObjectName() throw (InputStreamException)
+string ObjectInputStream::getNextObjectName()
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -91,14 +91,14 @@ string ObjectInputStream::getNextObjectName() throw (InputStreamException)
 	return name;
 }
 
-void ObjectInputStream::endObject() throw (InputStreamException)
+void ObjectInputStream::endObject()
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
 	checkType('}');
 }
 
-int ObjectInputStream::readInt() throw (InputStreamException)
+int ObjectInputStream::readInt()
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -114,7 +114,7 @@ int ObjectInputStream::readInt() throw (InputStreamException)
 	return i;
 }
 
-double ObjectInputStream::readDouble() throw (InputStreamException)
+double ObjectInputStream::readDouble()
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -130,7 +130,7 @@ double ObjectInputStream::readDouble() throw (InputStreamException)
 	return d;
 }
 
-string ObjectInputStream::readString() throw (InputStreamException)
+string ObjectInputStream::readString()
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -154,7 +154,7 @@ string ObjectInputStream::readString() throw (InputStreamException)
 	return s;
 }
 
-void ObjectInputStream::readData(void** data, int* length) throw (InputStreamException)
+void ObjectInputStream::readData(void** data, int* length)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -223,7 +223,7 @@ cairo_status_t cairoReadFunction(PngDatasource* obj, unsigned char* data, unsign
 	return CAIRO_STATUS_SUCCESS;
 }
 
-cairo_surface_t* ObjectInputStream::readImage() throw (InputStreamException)
+cairo_surface_t* ObjectInputStream::readImage()
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -254,7 +254,6 @@ cairo_surface_t* ObjectInputStream::readImage() throw (InputStreamException)
 }
 
 ObjectInputStream& ObjectInputStream::operator>>(Serializeable* s)
-	throw (InputStreamException)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -262,7 +261,7 @@ ObjectInputStream& ObjectInputStream::operator>>(Serializeable* s)
 	return *this;
 }
 
-void ObjectInputStream::checkType(char type) throw (InputStreamException)
+void ObjectInputStream::checkType(char type)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 

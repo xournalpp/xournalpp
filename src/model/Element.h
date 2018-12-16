@@ -86,7 +86,7 @@ protected:
 	double height;
 
 	void serializeElement(ObjectOutputStream& out);
-	void readSerializedElement(ObjectInputStream& in) throw (InputStreamException);
+	void readSerializedElement(ObjectInputStream& in);
 
 protected:
 	// If the size has been calculated

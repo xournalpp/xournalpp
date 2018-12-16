@@ -154,7 +154,7 @@ void Image::serialize(ObjectOutputStream& out)
 	out.endObject();
 }
 
-void Image::readSerialized(ObjectInputStream& in) throw (InputStreamException)
+void Image::readSerialized(ObjectInputStream& in)
 {
 	XOJ_CHECK_TYPE(Image);
 
