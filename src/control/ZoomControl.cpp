@@ -1,6 +1,6 @@
 #include "ZoomControl.h"
 
-#include <cmath>
+const double zoomStep = 0.04;
 
 ZoomListener::~ZoomListener() { }
 
@@ -13,11 +13,8 @@ ZoomControl::ZoomControl()
 	this->zoom100Value = 1.0;
 	this->zoomFitValue = 1.0;
 	this->zoomFitMode = true;
-	this->zoomCenterX = -1;
-	this->zoomCenterY = -1;
-	this->zoomStep = DEFAULT_ZOOM_STEP;
-	this->zoomMax = DEFAULT_ZOOM_MAX;
-	this->zoomMin = DEFAULT_ZOOM_MIN;
+	this->zoom_center_x = -1;
+	this->zoom_center_y = -1;
 }
 
 ZoomControl::~ZoomControl()
@@ -41,68 +38,18 @@ void ZoomControl::initZoomHandler(GtkWidget* widget)
 	g_signal_connect(widget, "scroll_event", G_CALLBACK(onScrolledwindowMainScrollEvent), this);
 }
 
-double ZoomControl::getZoomCenterX()
-{
-	return this->zoomCenterX;
-}
-
-void ZoomControl::setZoomCenterX(double zoomCenterX)
-{
-	this->zoomCenterX = zoomCenterX;
-}
-
-double ZoomControl::getZoomCenterY()
-{
-	return this->zoomCenterY;
-}
-
-void ZoomControl::setZoomCenterY(double zoomCenterY)
-{
-	this->zoomCenterY = zoomCenterY;
-}
-
-double ZoomControl::getZoomStep()
-{
-	return this->zoomStep;
-}
-
-void ZoomControl::setZoomStep(double zoomStep)
-{
-	this->zoomStep = zoomStep;
-}
-
-double ZoomControl::getZoomMax()
-{
-	return this->zoomMax;
-}
-
-void ZoomControl::setZoomMax(double zoomMax)
-{
-	this->zoomMax = zoomMax;
-}
-
-double ZoomControl::getZoomMin()
-{
-	return this->zoomMin;
-}
-
-void ZoomControl::setZoomMin(double zoomMin)
-{
-	this->zoomMin = zoomMin;
-}
-
 void ZoomControl::fireZoomChanged(double lastZoom)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	if (this->zoom < this->zoomMin)
+	if (this->zoom < MIN_ZOOM)
 	{
-		this->zoom = this->zoomMin;
+		this->zoom = MIN_ZOOM;
 	}
 
-	if (this->zoom > this->zoomMax)
+	if (this->zoom > MAX_ZOOM)
 	{
-		this->zoom = zoomMax;
+		this->zoom = MAX_ZOOM;
 	}
 
 	for (ZoomListener* z : this->listener)
@@ -132,14 +79,10 @@ void ZoomControl::setZoom(double zoom)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	//TODO:check wether zoom is muliplier of zoomStep
-	if (std::abs(zoom - this->zoom) > ZOOM_EPSILON)
-	{
-		double lastZoom = this->zoom;
-		this->zoom = zoom;
-		this->zoomFitMode = false;
-		fireZoomChanged(lastZoom);
-	}
+	double lastZoom = this->zoom;
+	this->zoom = zoom;
+	this->zoomFitMode = false;
+	fireZoomChanged(lastZoom);
 }
 
 void ZoomControl::setZoom100(double zoom)
@@ -204,7 +147,7 @@ void ZoomControl::zoomIn()
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	double lastZoom = this->zoom;
-	this->zoom += this->zoomStep;
+	this->zoom += zoomStep;
 	this->zoomFitMode = false;
 	fireZoomChanged(lastZoom);
 }
@@ -214,7 +157,7 @@ void ZoomControl::zoomOut()
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	double lastZoom = this->zoom;
-	this->zoom -= this->zoomStep;
+	this->zoom -= zoomStep;
 	this->zoomFitMode = false;
 	fireZoomChanged(lastZoom);
 }
@@ -234,8 +177,8 @@ bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScr
 	if (state & GDK_CONTROL_MASK)
 	{
 		//set zoom center (for shift centered scroll)
-		zoom->setZoomCenterX(event->x);
-		zoom->setZoomCenterY(event->y);
+		zoom->zoom_center_x = event->x;
+		zoom->zoom_center_y = event->y;
 
 		if (event->direction == GDK_SCROLL_UP || event->direction == GDK_SCROLL_LEFT)
 		{
