@@ -408,15 +408,27 @@ string XournalMain::findResourcePath(string searchFile)
 
 	// -----------------------------------------------------------------------
 
-	// Check if we are in the "build" directory, and therefore the resources
-	// are installed two folders back
+	// Check one folder back, for windows portable
 	path relative4 = executableDir;
-	relative4 /= "../..";
+	relative4 /= "..";
 	relative4 /= searchFile;
 
 	if (bf::exists(relative4))
 	{
 		return relative4.parent_path().normalize().string();
+	}
+
+	// -----------------------------------------------------------------------
+
+	// Check if we are in the "build" directory, and therefore the resources
+	// are installed two folders back
+	path relative5 = executableDir;
+	relative5 /= "../..";
+	relative5 /= searchFile;
+
+	if (bf::exists(relative5))
+	{
+		return relative5.parent_path().normalize().string();
 	}
 
 	// Not found
