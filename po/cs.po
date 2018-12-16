@@ -357,8 +357,8 @@ msgstr ""
 "<i>Další generace</i>"
 
 #: ../ui/about.glade:8
-msgid "About Xournal"
-msgstr "O aplikaci Xournal"
+msgid "About Xournal++"
+msgstr "O aplikaci Xournal++"
 
 #: ../src/control/XournalMain.cpp:233
 msgid "Absolute path for the audio files playback"

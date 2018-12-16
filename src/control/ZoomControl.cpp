@@ -1,10 +1,14 @@
 #include "ZoomControl.h"
 
+#include "gui/XournalView.h"
+
+
 const double zoomStep = 0.04;
 
 ZoomListener::~ZoomListener() { }
 
 ZoomControl::ZoomControl()
+ : view(NULL)
 {
 	XOJ_INIT_TYPE(ZoomControl);
 
@@ -15,6 +19,8 @@ ZoomControl::ZoomControl()
 	this->zoomFitMode = true;
 	this->zoom_center_x = -1;
 	this->zoom_center_y = -1;
+
+	this->currentPage = 0;
 }
 
 ZoomControl::~ZoomControl()
@@ -31,11 +37,19 @@ void ZoomControl::addZoomListener(ZoomListener* listener)
 	this->listener.push_back(listener);
 }
 
-void ZoomControl::initZoomHandler(GtkWidget* widget)
+void ZoomControl::initZoomHandler(GtkWidget* widget, XournalView* view)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	g_signal_connect(widget, "scroll_event", G_CALLBACK(onScrolledwindowMainScrollEvent), this);
+	this->view = view;
+}
+
+void ZoomControl::setCurrentPage(size_t currentPage)
+{
+	XOJ_CHECK_TYPE(ZoomControl);
+
+	this->currentPage = currentPage;
 }
 
 void ZoomControl::fireZoomChanged(double lastZoom)
@@ -52,9 +66,18 @@ void ZoomControl::fireZoomChanged(double lastZoom)
 		this->zoom = MAX_ZOOM;
 	}
 
+	// Store current page
+	size_t page = this->currentPage;
+
 	for (ZoomListener* z : this->listener)
 	{
 		z->zoomChanged(lastZoom);
+	}
+
+	if (view != NULL)
+	{
+		// Restore page
+		view->scrollTo(page, 0);
 	}
 }
 

@@ -324,8 +324,8 @@ msgstr ""
 "<i>浴火重生</i>"
 
 #: ../ui/about.glade:8
-msgid "About Xournal"
-msgstr "關於Xournal"
+msgid "About Xournal++"
+msgstr "關於Xournal++"
 
 #: ../src/control/XournalMain.cpp:233
 msgid "Absolute path for the audio files playback"

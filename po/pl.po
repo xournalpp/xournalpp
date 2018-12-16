@@ -354,7 +354,8 @@ msgstr ""
 "<i>Następna generacja</i>"
 
 #: ../ui/about.glade:8
-msgid "About Xournal"
+#, fuzzy
+msgid "About Xournal++"
 msgstr "O programie Xournal++"
 
 #: ../src/control/XournalMain.cpp:233
