@@ -16,13 +16,14 @@ echo "clean setup folder"
 rm -rf ./setup
 rm -rf xournalpp-setup.exe
 
-echo "build windows launcher"
-./build-launcher.sh
-
 mkdir setup
 mkdir setup/bin
 mkdir setup/lib
 mkdir setup/share
+
+echo "build windows launcher"
+./build-launcher.sh
+cp xournalpp.exe setup/bin/
 
 echo "copy binaries"
 
@@ -32,7 +33,6 @@ ldd ../build/src/xournalpp.exe | grep '\/mingw.*\.dll' -o | xargs -I{} cp "{}" s
 echo "copy ui"
 
 cp -r ../ui setup/
-cp xournalpp.ico setup/
 cp -r ../po setup/ui/
 
 echo "copy pixbuf libs"

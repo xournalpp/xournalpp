@@ -18,6 +18,7 @@ using std::string;
 
 #ifdef WIN32
 #include <Windows.h>
+#include <direct.h>
 #else
 #include <unistd.h>
 #endif
@@ -83,6 +84,7 @@ int main(int argc, char* argv[])
 		command += "\"";
 	}
 
+	system(command.c_str());
 
 	return 0;
 }
