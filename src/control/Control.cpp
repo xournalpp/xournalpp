@@ -300,7 +300,7 @@ void Control::initWindow(MainWindow* win)
 	win->setRecentMenu(recent->getMenu());
 	selectTool(toolHandler->getToolType());
 	this->win = win;
-	this->zoom->initZoomHandler(win->getXournal()->getWidget());
+	this->zoom->initZoomHandler(win->getXournal()->getWidget(), win->getXournal());
 	this->sidebar = new Sidebar(win, this);
 
 	updatePageNumbers(0, size_t_npos);

@@ -21,6 +21,8 @@
 #define MAX_ZOOM 5
 #define MIN_ZOOM 0.3
 
+class XournalView;
+
 class ZoomListener
 {
 public:
@@ -53,7 +55,9 @@ public:
 
 	void addZoomListener(ZoomListener* listener);
 
-	void initZoomHandler(GtkWidget* widget);
+	void initZoomHandler(GtkWidget* widget, XournalView* view);
+
+	void setCurrentPage(size_t currentPage);
 
 	// TODO: Naming and getter / setter!
 	// Current zoom center
@@ -69,6 +73,8 @@ protected:
 private:
 	XOJ_TYPE_ATTRIB;
 
+	XournalView* view;
+
 	std::vector<ZoomListener*> listener;
 
 	double zoom;
@@ -79,4 +85,6 @@ private:
 
 	double zoom100Value;
 	double zoomFitValue;
+
+	size_t currentPage;
 };

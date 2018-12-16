@@ -484,6 +484,8 @@ void XournalView::pageSelected(size_t page)
 	control->updatePageNumbers(currentPage, pdfPage);
 
 	control->updateBackgroundSizeButton();
+
+	control->getZoomControl()->setCurrentPage(page);
 }
 
 Control* XournalView::getControl()
