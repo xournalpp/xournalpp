@@ -67,8 +67,12 @@ https://build.opensuse.org/package/show/home:badshah400:Staging/xournalpp-gtk3
 Build by https://github.com/badshah400
 
 ### Windows
-No builds yet, comming soon. Probably not yet fully working.
-Build manual below.
+**Windows is not fully tested.** If you find errors, please let us know over the
+Issues page here on Github.
+If you are a developer, working with Windows and would like to help us, please
+contact also contact us over an Issue. 
+
+https://github.com/xournalpp/xournalpp/releases/tag/1.0.3-win-alpha-01
 
 ### Mac OS X
 Work in Progress, it's possible to build, but no release yet.
