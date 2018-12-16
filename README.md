@@ -17,16 +17,22 @@ Stroke recognizer and other parts are based on Xournal Code, which you can find 
 Xournal++ features:
 * Support for Pen preassure, e.g. Wacom Tablet
 * Support for annotating PDFs
+* PDF Export (with and without paper style)
+* PNG Export (with and without transparent background)
 * Allow to map different tools / colors etc. to stylus buttons / mouse buttons
 * Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (Layers currently not enabled by default)
 * enhanced support for image insertion
-* Eraser with multipe configurations
+* Eraser with multiple configurations
 * Significantly reduced memory usage and code to detect memory leaks compared to Xournal
 * LaTeX support (requires a working LaTeX install)
 * bug reporting, autosave, and auto backup tools
 * Customizeable toolbar, with multiple configurations, e.g. to optimize toolbar for portrait / landscape
 * Page Template definitions
 * Shape drawing (line, arrow, circle, rect)
+* Shape resizing and rotation
+* Rotation snapping every 45 degrees
+* Rect snapping to grid 
+* Audio recording and playback alongside with handwritten notes
 
 ![Screenshot](readme/main.png?raw=true "Xournal++ Screenshot")
 
