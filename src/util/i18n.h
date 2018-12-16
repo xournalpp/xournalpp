@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <libintl.h>
+
 #include <boost/locale.hpp>
 
 #define _(msg) boost::locale::translate(msg)
