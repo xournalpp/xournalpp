@@ -27,13 +27,27 @@
 	}
 
 LoadHandler::LoadHandler()
- : doc(&dHanlder),
-   loadedTimeStamp(0),
-   pos(PARSER_POS_NOT_STARTED),
+ : attachedPdfMissing(false),
    removePdfBackgroundFlag(false),
-   pdfReplacementAttach(false)
+   pdfReplacementAttach(false),
+   pdfFilenameParsed(false),
+   pos(PARSER_POS_NOT_STARTED),
+   fileversion(0),
+   fp(NULL),
+   layer(NULL),
+   stroke(NULL),
+   text(NULL),
+   image(NULL),
+   teximage(NULL),
+   attributeNames(NULL),
+   attributeValues(NULL),
+   elementName(NULL),
+   loadedTimeStamp(0),
+   doc(&dHanlder)
 {
 	XOJ_INIT_TYPE(LoadHandler);
+
+	this->error = NULL;
 
 	initAttributes();
 }
