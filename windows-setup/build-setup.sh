@@ -23,7 +23,7 @@ mkdir setup/share
 
 echo "build windows launcher"
 ./build-launcher.sh
-cp xournalpp.exe setup/bin/
+# done in launcher build script: cp xournalpp.exe setup/bin/
 
 echo "copy binaries"
 
@@ -33,7 +33,8 @@ ldd ../build/src/xournalpp.exe | grep '\/mingw.*\.dll' -o | xargs -I{} cp "{}" s
 echo "copy ui"
 
 cp -r ../ui setup/
-cp -r ../po setup/ui/
+mkdir setup/share/po/
+cp -r ../po/*.mo setup/share/po/
 
 echo "copy pixbuf libs"
 cp -r /mingw64/lib/gdk-pixbuf-2.0 setup/lib

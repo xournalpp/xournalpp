@@ -59,6 +59,12 @@ void XournalMain::initLocalisation()
 	//locale generator
 	boost::locale::generator gen;
 #ifdef ENABLE_NLS
+
+#ifdef WIN32
+#undef PACKAGE_LOCALE_DIR
+#define PACKAGE_LOCALE_DIR "../share/po/"
+#endif
+
 	gen.add_messages_path(PACKAGE_LOCALE_DIR);
 	gen.add_messages_domain(GETTEXT_PACKAGE);
 	

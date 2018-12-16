@@ -79,12 +79,32 @@ int main(int argc, char* argv[])
 
 	for (int i = 1; i < argc; i++)
 	{
+	MessageBoxA(NULL, argv[i], "Debug IN", 0);
+	
 		command += " \"";
 		command += escapeString(argv[i]);
 		command += "\"";
 	}
 
+
+#ifdef WIN32
+	STARTUPINFO info = {};
+	PROCESS_INFORMATION processInfo;
+	char* cmd = new char[command.size() + 1];
+	strncpy(cmd, command.c_str(), command.size());
+	cmd[command.size()] = 0;
+//	MessageBoxA(NULL, cmd, "Debug", 0);
+	if (CreateProcessA(NULL, cmd, NULL, NULL, TRUE, 0, NULL, folder.c_str(), &info, &processInfo))
+	{
+		WaitForSingleObject(processInfo.hProcess, INFINITE);
+		CloseHandle(processInfo.hProcess);
+		CloseHandle(processInfo.hThread);
+	}
+	
+	delete cmd;
+#else
 	system(command.c_str());
+#endif
 
 	return 0;
 }
