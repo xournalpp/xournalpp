@@ -1,10 +1,6 @@
 #include "ZoomControl.h"
 
-#include "gui/pageposition/PagePositionHandler.h"
-#include "gui/PageView.h"
-#include "gui/widgets/XournalWidget.h"
 #include "gui/XournalView.h"
-#include "model/Document.h"
 
 
 const double zoomStep = 0.04;
