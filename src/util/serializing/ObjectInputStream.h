@@ -24,24 +24,24 @@ public:
 	virtual ~ObjectInputStream();
 
 public:
-	bool read(const char* data, int len) throw (InputStreamException);
+	bool read(const char* data, int len);
 
-	void readObject(const char* name) throw (InputStreamException);
-	string readObject() throw (InputStreamException);
-	string getNextObjectName() throw (InputStreamException);
-	void endObject() throw (InputStreamException);
+	void readObject(const char* name);
+	string readObject();
+	string getNextObjectName();
+	void endObject();
 
-	int readInt() throw (InputStreamException);
-	double readDouble() throw (InputStreamException);
-	string readString() throw (InputStreamException);
+	int readInt();
+	double readDouble();
+	string readString();
 
-	void readData(void** data, int* len) throw (InputStreamException);
-	cairo_surface_t* readImage() throw (InputStreamException);
+	void readData(void** data, int* len);
+	cairo_surface_t* readImage();
 
-	ObjectInputStream& operator>>(Serializeable* s) throw (InputStreamException);
+	ObjectInputStream& operator>>(Serializeable* s);
 
 private:
-	void checkType(char type) throw (InputStreamException);
+	void checkType(char type);
 
 	string getType(char type);
 
