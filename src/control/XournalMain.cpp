@@ -16,6 +16,7 @@
 #include <i18n.h>
 #include <Stacktrace.h>
 
+#include <libintl.h>
 #include <gtk/gtk.h>
 
 #include <boost/algorithm/string/predicate.hpp>
@@ -28,9 +29,6 @@ namespace bf = boost::filesystem;
 #endif
 
 #ifdef __APPLE__
-#undef ENABLE_NLS
-#endif
-#ifdef WIN32
 #undef ENABLE_NLS
 #endif
 
