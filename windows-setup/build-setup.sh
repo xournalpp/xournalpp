@@ -14,6 +14,8 @@ cd "${0%/*}"
 echo "clean setup folder"
 
 rm -rf ./setup
+rm -rf xournalpp-setup.exe
+
 mkdir setup
 mkdir setup/bin
 mkdir setup/lib
@@ -27,6 +29,7 @@ ldd ../build/src/xournalpp.exe | grep '\/mingw.*\.dll' -o | xargs -I{} cp "{}" s
 echo "copy ui"
 
 cp -r ../ui setup/
+cp -r ../ui/pixmaps/xournalpp.ico setup/
 cp -r ../po setup/ui/
 
 echo "copy pixbuf libs"
@@ -37,5 +40,8 @@ ldd /mingw64/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll | grep '\/mingw.*\.dll' -o 
 
 echo "copy icons"
 cp -r /mingw64/share/icons setup/share/
+
+echo "pack setup"
+"/c/Program Files (x86)/NSIS/Bin/makensis.exe" xournalpp.nsi
 
 echo "finished"
