@@ -112,8 +112,6 @@ void Cursor::setInvisible(bool invisible)
 {
 	XOJ_CHECK_TYPE(Cursor);
 
-	g_return_if_fail(this != NULL);
-
 	if (this->invisible == invisible)
 	{
 		return;
@@ -238,16 +236,17 @@ void Cursor::updateCursor()
 				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_SB_V_DOUBLE_ARROW);
 			}
 		}
-		else if (type != TOOL_SELECT_OBJECT) // other selections are handled before anyway, because you can move a selection with every tool
+		else if (type == TOOL_SELECT_OBJECT)
 		{
-			if (type == TOOL_PLAY_OBJECT)
-			{
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_HAND2);
-			}
-			else
-			{
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_TCROSS);
-			}
+			cursor = gdk_cursor_new_from_name(gdk_window_get_display(window),"default");
+		}
+		else if (type == TOOL_PLAY_OBJECT) 
+		{
+			cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_HAND2);
+		}
+		else // other selections are handled before anyway, because you can move a selection with every tool
+		{
+			cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_TCROSS);
 		}
 
 	}
@@ -341,6 +340,7 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 
 	if (big)
 	{
+		// When using highlighter, paint the icon with the current color
 		if(size == 5)
 		{
 			cairo_set_source_rgb(cr, r, g, b);

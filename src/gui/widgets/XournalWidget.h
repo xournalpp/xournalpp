@@ -19,6 +19,7 @@ G_BEGIN_DECLS
 #define GTK_XOURNAL_CLASS(klass) GTK_CHECK_CLASS_CAST(klass, gtk_xournal_get_type(), GtkXournalClass)
 #define GTK_IS_XOURNAL(obj) G_TYPE_CHECK_INSTANCE_TYPE(obj, gtk_xournal_get_type())
 
+class AbstractInputDevice;
 class EditSelection;
 class Layout;
 class XojPageView;
@@ -49,17 +50,7 @@ struct _GtkXournal
 
 	Layout* layout;
 
-	XojPageView* currentInputPage;
 	PagePositionCache* pagePositionCache;
-
-	/**
-	 * The last Mouse Position, for scrolling
-	 */
-	int lastMousePositionX;
-	int lastMousePositionY;
-	int scrollOffsetX;
-	int scrollOffsetY;
-	bool inScrolling;
 
 	/**
 	 * Selected content, if any
@@ -67,9 +58,9 @@ struct _GtkXournal
 	EditSelection* selection;
 
 	/**
-	 * Shift is currently pressed
+	 * Input handling
 	 */
-	bool shiftDown = false;
+	AbstractInputDevice* input;
 };
 
 struct _GtkXournalClass

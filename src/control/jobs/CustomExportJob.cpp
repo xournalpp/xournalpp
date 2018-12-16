@@ -20,6 +20,13 @@ CustomExportJob::CustomExportJob(Control* control)
    exportTypeXoj(false)
 {
 	XOJ_INIT_TYPE(CustomExportJob);
+
+	// Static vars are not translated, they are loaded before the translation is ready
+	EXPORT_PDF = _("PDF files");
+	EXPORT_PDF_NOBG = _("PDF with plain background");
+	EXPORT_PNG = _("PNG graphics");
+	EXPORT_PNG_NOBG = _("PNG with transparent background");
+	EXPORT_XOJ = _("Xournal (Compatibility)");
 }
 
 CustomExportJob::~CustomExportJob()

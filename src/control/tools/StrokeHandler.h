@@ -34,9 +34,9 @@ public:
 
 	void draw(cairo_t* cr);
 
-	bool onMotionNotifyEvent(GdkEventMotion* event, bool shiftDown);
-	void onButtonReleaseEvent(GdkEventButton* event);
-	void onButtonPressEvent(GdkEventButton* event);
+	bool onMotionNotifyEvent(const PositionInputData& pos);
+	void onButtonReleaseEvent(const PositionInputData& pos);
+	void onButtonPressEvent(const PositionInputData& pos);
 
 	/**
 	 * Reset the shape recognizer, only implemented by drawing instances,
@@ -47,7 +47,6 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	bool getPressureMultiplier(GdkEvent* event, double& presure);
 	void destroySurface();
 
 	/**

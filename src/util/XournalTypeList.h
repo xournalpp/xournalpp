@@ -257,5 +257,7 @@ XOJ_DECLARE_TYPE(PopplerGlibPage, 245);
 XOJ_DECLARE_TYPE(PopplerGlibPageBookmarkIterator, 246);
 XOJ_DECLARE_TYPE(PopplerGlibAction, 247);
 XOJ_DECLARE_TYPE(XojCairoPdfExport, 248);
-
+XOJ_DECLARE_TYPE(AbstractInputDevice, 250);
+XOJ_DECLARE_TYPE(NewGtkInputDevice, 252);
+XOJ_DECLARE_TYPE(InputSequence, 253);
 

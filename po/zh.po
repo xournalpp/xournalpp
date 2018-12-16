@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-09 10:20+0100\n"
+"POT-Creation-Date: 2018-12-15 22:00+0100\n"
 "PO-Revision-Date: 2018-11-14 19:55+0100\n"
 "Last-Translator: Andreas Butti <andreasbutti at gmail dot com>\n"
 "Language-Team: Xournal++ team\n"
@@ -41,13 +41,13 @@ msgstr "笔划"
 msgid " text"
 msgstr "文本"
 
-#: ../ui/settings.glade:503
-msgid "%F-Note-%H-%M.xoj"
+#: ../src/control/settings/Settings.cpp:87
+#, fuzzy
+msgid "%F-Note-%H-%M"
 msgstr "%F-Note-%H-%M.xoj"
 
-#: ../src/control/settings/Settings.cpp:86
-#, fuzzy
-msgid "%F-Note-%H-%M.xopp"
+#: ../ui/settings.glade:503
+msgid "%F-Note-%H-%M.xoj"
 msgstr "%F-Note-%H-%M.xoj"
 
 #: ../ui/settings.glade:526
@@ -327,15 +327,15 @@ msgstr ""
 msgid "About Xournal"
 msgstr "关于Xournal"
 
-#: ../src/control/XournalMain.cpp:229
+#: ../src/control/XournalMain.cpp:233
 msgid "Absolute path for the audio files playback"
 msgstr ""
 
-#: ../ui/main.glade:1010
+#: ../ui/main.glade:1019
 msgid "Add/Edit Tex"
 msgstr "插入/编辑TeX"
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:49
+#: ../src/control/stockdlg/XojOpenDlg.cpp:50
 msgid "All files"
 msgstr "所有文件"
 
@@ -343,8 +343,8 @@ msgstr "所有文件"
 msgid "All pages"
 msgstr "所有页面"
 
-#: ../src/control/stockdlg/ImageOpenDlg.cpp:29
-#: ../src/control/stockdlg/XojOpenDlg.cpp:148
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:30
+#: ../src/control/stockdlg/XojOpenDlg.cpp:149
 msgid "Attach file to the journal"
 msgstr "将文件附加到日记"
 
@@ -393,6 +393,11 @@ msgstr "<b>作者：</b>"
 msgid "Autosave every ... minutes:"
 msgstr "自动保存间隔分钟数："
 
+#: ../src/control/Control.cpp:226
+#, fuzzy
+msgid "Autosave failed with an error: {1}"
+msgstr "打开文件出错：{1}"
+
 #: ../src/control/jobs/AutosaveJob.cpp:24
 msgid "Autosave: {1}"
 msgstr "自动保存：{1}"
@@ -437,8 +442,8 @@ msgstr "當前頁和選中項目的邊界顏色"
 msgid "Built on:"
 msgstr ""
 
-#: ../src/control/Control.cpp:2009 ../src/control/Control.cpp:2533
-#: ../src/control/Control.cpp:2570 ../src/control/XournalMain.cpp:111
+#: ../src/control/Control.cpp:2023 ../src/control/Control.cpp:2519
+#: ../src/control/Control.cpp:2556 ../src/control/XournalMain.cpp:115
 msgid "Cancel"
 msgstr "取消"
 
@@ -462,7 +467,7 @@ msgstr "颜色"
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
 msgstr "色彩\"{1}\"未定义！"
 
-#: ../ui/main.glade:565
+#: ../ui/main.glade:573
 msgid "Configure Page Template"
 msgstr ""
 
@@ -470,7 +475,7 @@ msgstr ""
 msgid "Contents"
 msgstr "内容"
 
-#: ../src/control/Control.cpp:990 ../src/control/Control.cpp:998
+#: ../src/control/Control.cpp:1004 ../src/control/Control.cpp:1012
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:320
 msgid "Copy"
 msgstr "拷贝"
@@ -497,7 +502,7 @@ msgid ""
 "Could not create backup! (The file was created from an older Xournal version)"
 msgstr "未能产生备份文件！(此文件应为老版本Xournal所建)"
 
-#: ../src/control/LatexController.cpp:361
+#: ../src/control/LatexController.cpp:383
 msgid ""
 "Could not find Xournal++ LaTeX executable relative or in Path.\n"
 "Searched for: mathtex-xournalpp.cgi"
@@ -548,7 +553,7 @@ msgstr ""
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:290
+#: ../src/control/LatexController.cpp:312
 msgid "Could not retrieve LaTeX image file: {1}"
 msgstr "未能提取LaTeX图像文件{1}"
 
@@ -572,11 +577,11 @@ msgstr "未能写上背景\"{1}\"，不管啦继续哦..."
 msgid "Current page"
 msgstr "当前页"
 
-#: ../src/gui/dialog/FormatDialog.cpp:79
+#: ../src/gui/dialog/FormatDialog.cpp:78
 msgid "Custom"
 msgstr "设置"
 
-#: ../src/control/jobs/CustomExportJob.cpp:16
+#: ../src/control/jobs/CustomExportJob.cpp:15
 #, fuzzy
 msgid "Custom Export"
 msgstr "设置"
@@ -589,7 +594,7 @@ msgstr "设置过"
 msgid "Cut"
 msgstr "剪切"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 msgid "Default Tool"
 msgstr "缺省工具"
 
@@ -601,15 +606,15 @@ msgstr "缺省"
 msgid "Delete"
 msgstr "删除"
 
-#: ../ui/main.glade:597
+#: ../ui/main.glade:605
 msgid "Delete Layer"
 msgstr "删除层"
 
-#: ../src/control/XournalMain.cpp:110
+#: ../src/control/XournalMain.cpp:114
 msgid "Delete Logfile"
 msgstr "删除日志文件"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 msgid "Delete current page"
 msgstr "删除当前页"
 
@@ -621,7 +626,7 @@ msgstr "删除层"
 msgid "Delete stroke"
 msgstr "删除笔划"
 
-#: ../ui/main.glade:1221
+#: ../ui/main.glade:1230
 #, fuzzy
 msgid "Delete this page"
 msgstr "刪除當前頁"
@@ -634,11 +639,11 @@ msgstr "设备"
 msgid "Disable drawing for this device"
 msgstr "取消此设备绘制"
 
-#: ../src/control/Control.cpp:2532 ../src/control/Control.cpp:2569
+#: ../src/control/Control.cpp:2518 ../src/control/Control.cpp:2555
 msgid "Discard"
 msgstr "丢弃"
 
-#: ../src/control/Control.cpp:1939
+#: ../src/control/Control.cpp:1953
 msgid ""
 "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
@@ -649,7 +654,7 @@ msgstr ""
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/control/Control.cpp:2566
+#: ../src/control/Control.cpp:2552
 msgid "Document file was removed."
 msgstr "文档已删除。"
 
@@ -657,7 +662,7 @@ msgstr "文档已删除。"
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "文档文件不完整"
 
-#: ../src/model/Document.cpp:355
+#: ../src/model/Document.cpp:418
 msgid "Document not loaded! ({1}), {2}"
 msgstr "文档未加载！({1}), {2}"
 
@@ -667,7 +672,7 @@ msgstr "文档未加载！({1}), {2}"
 msgid "Don't change"
 msgstr "勿作修改"
 
-#: ../src/control/XournalMain.cpp:226
+#: ../src/control/XournalMain.cpp:230
 msgid "Don't compress PDF files (for debugging)"
 msgstr "勿压缩PDF文件(调试用)"
 
@@ -681,13 +686,13 @@ msgstr "在这里和工具条之间可以来回拖动条目。"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:101
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:40
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:416
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Draw Arrow"
 msgstr "绘制箭头"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:99
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Draw Circle"
 msgstr "绘制圆形"
 
@@ -701,11 +706,11 @@ msgstr "绘制直线"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:38
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:119
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:122
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Draw Rectangle"
 msgstr "绘制矩形"
 
-#: ../ui/main.glade:747
+#: ../ui/main.glade:755
 #, fuzzy
 msgid "Draw _Line"
 msgstr "绘制直线"
@@ -737,7 +742,7 @@ msgstr "擦除笔划"
 msgid "Eraser"
 msgstr "橡皮"
 
-#: ../ui/main.glade:886
+#: ../ui/main.glade:895
 msgid "Eraser Optio_ns"
 msgstr "橡皮选项(_n)"
 
@@ -745,7 +750,7 @@ msgstr "橡皮选项(_n)"
 msgid "Eraser type"
 msgstr "橡皮类型"
 
-#: ../src/control/Control.cpp:2218
+#: ../src/control/Control.cpp:2232
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
@@ -753,7 +758,7 @@ msgstr ""
 "PDF文件\"{1}\"标注出错\n"
 "{2}"
 
-#: ../src/control/jobs/CustomExportJob.cpp:187
+#: ../src/control/jobs/CustomExportJob.cpp:204
 #, fuzzy
 msgid "Error export PDF Page"
 msgstr "输出为PDF"
@@ -762,7 +767,7 @@ msgstr "输出为PDF"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "加载glade文件\"{1}\"出错(尝试加载\"{2}\")"
 
-#: ../src/control/Control.cpp:2034
+#: ../src/control/Control.cpp:2048
 msgid "Error opening file \"{1}\""
 msgstr "打开文件\"{1}\"出错"
 
@@ -786,11 +791,11 @@ msgstr "读入笔划粗细出错：{1}"
 msgid "Error writing stream: {1}"
 msgstr "流写错误：{1}"
 
-#: ../src/util/CrashHandler.cpp:148
+#: ../src/util/CrashHandler.cpp:56
 msgid "Error: {1}"
 msgstr "错误：{1}"
 
-#: ../src/control/XournalMain.cpp:134
+#: ../src/control/XournalMain.cpp:138
 msgid ""
 "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
@@ -802,7 +807,7 @@ msgstr ""
 msgid "Export"
 msgstr "输出"
 
-#: ../src/control/jobs/BaseExportJob.cpp:25
+#: ../src/control/jobs/BaseExportJob.cpp:23
 msgid "Export PDF"
 msgstr "输出为PDF"
 
@@ -810,7 +815,7 @@ msgstr "输出为PDF"
 msgid "Export as..."
 msgstr "输出为..."
 
-#: ../src/control/LatexController.cpp:378
+#: ../src/control/LatexController.cpp:400
 msgid "Failed to generate LaTeX image!"
 msgstr ""
 
@@ -826,19 +831,19 @@ msgstr ""
 msgid "File name needs to end with .pdf"
 msgstr ""
 
-#: ../src/control/jobs/CustomExportJob.cpp:61
+#: ../src/control/jobs/CustomExportJob.cpp:71
 msgid "File name needs to end with .pdf, .png or .xoj"
 msgstr ""
 
-#: ../src/control/Control.cpp:1969
+#: ../src/control/Control.cpp:1983
 msgid "Filename: {1}"
 msgstr "文件名：{1}"
 
-#: ../ui/main.glade:1416
+#: ../ui/main.glade:1425
 msgid "Find next occurrence of the search string"
 msgstr ""
 
-#: ../ui/main.glade:1395
+#: ../ui/main.glade:1404
 msgid "Find previous occurrence of the search string"
 msgstr ""
 
@@ -900,12 +905,16 @@ msgstr "灰色"
 msgid "Green"
 msgstr "绿色"
 
-#: ../ui/main.glade:811
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:377
+msgid "Grid Snapping"
+msgstr ""
+
+#: ../ui/main.glade:820
 msgid "H_and Tool"
 msgstr "手形工具(_a)"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:65
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Hand"
 msgstr "手形工具"
 
@@ -930,21 +939,21 @@ msgid "Hide the vertical scrollbar"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:57
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:395
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:398
 msgid "Highlighter"
 msgstr "高亮"
 
-#: ../ui/main.glade:960
+#: ../ui/main.glade:969
 #, fuzzy
 msgid "Highlighter Opti_ons"
 msgstr "高亮选项(_i)"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:399
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:402
 msgid "Image"
 msgstr "图片"
 
-#: ../src/control/stockdlg/ImageOpenDlg.cpp:17
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:18
 msgid "Images"
 msgstr "图片"
 
@@ -960,7 +969,7 @@ msgstr "输入设备"
 msgid "Insert Latex"
 msgstr "插入LaTeX"
 
-#: ../ui/main.glade:1201
+#: ../ui/main.glade:1210
 msgid "Insert a copy of the current page below"
 msgstr ""
 
@@ -980,11 +989,11 @@ msgstr "插入LaTeX"
 msgid "Insert layer"
 msgstr "插入层"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:390
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Insert page"
 msgstr "插入页面"
 
-#: ../src/control/XournalMain.cpp:228
+#: ../src/control/XournalMain.cpp:232
 msgid "Jump to Page (first Page: 1)"
 msgstr "跳到页面(第一页:1)"
 
@@ -1030,7 +1039,7 @@ msgstr "加载/保存"
 msgid "Load file"
 msgstr "加载文件"
 
-#: ../src/gui/PageView.cpp:884
+#: ../src/gui/PageView.cpp:856
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:115
 msgid "Loading..."
 msgstr "加载中..."
@@ -1045,11 +1054,11 @@ msgid "Mangenta"
 msgstr "品红"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:431
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Medium"
 msgstr "中"
 
-#: ../src/control/XournalMain.cpp:455
+#: ../src/control/XournalMain.cpp:453
 msgid ""
 "Missing the needed UI file, could not find them at any location.\n"
 "Not relative\n"
@@ -1073,7 +1082,7 @@ msgstr "向后移动页面"
 msgid "Move page upwards"
 msgstr "向前移动页面"
 
-#: ../ui/main.glade:508
+#: ../ui/main.glade:516
 msgid "N_ext annotated page"
 msgstr "下一个标注页(_e)"
 
@@ -1081,15 +1090,15 @@ msgstr "下一个标注页(_e)"
 msgid "New"
 msgstr "新建"
 
-#: ../ui/main.glade:548
+#: ../ui/main.glade:556
 msgid "New Page _After"
 msgstr "新建后页(_A)"
 
-#: ../ui/main.glade:540
+#: ../ui/main.glade:548
 msgid "New Page _Before"
 msgstr "新建前页(_B)"
 
-#: ../ui/main.glade:557
+#: ../ui/main.glade:565
 msgid "New Page at _End"
 msgstr "新建尾页(_E)"
 
@@ -1097,7 +1106,7 @@ msgstr "新建尾页(_E)"
 msgid "New Xournal"
 msgstr "新建日记"
 
-#: ../ui/main.glade:588
+#: ../ui/main.glade:596
 msgid "New _Layer"
 msgstr "新建图层(_L)"
 
@@ -1113,8 +1122,8 @@ msgstr "下一个标注页面"
 msgid "No device"
 msgstr "没有设备"
 
-#: ../src/pdf/base/XojCairoPdfExport.cpp:84
-#: ../src/pdf/base/XojCairoPdfExport.cpp:134
+#: ../src/pdf/base/XojCairoPdfExport.cpp:96
+#: ../src/pdf/base/XojCairoPdfExport.cpp:145
 msgid "No pages to export!"
 msgstr ""
 
@@ -1122,21 +1131,21 @@ msgstr ""
 msgid "Normal drawing"
 msgstr ""
 
-#: ../src/control/jobs/BaseExportJob.cpp:116
+#: ../src/control/jobs/BaseExportJob.cpp:105
 msgid ""
 "Only local files are supported\n"
 "Path: {1}"
 msgstr ""
 
-#: ../src/control/stockdlg/ImageOpenDlg.cpp:10
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:11
 msgid "Open Image"
 msgstr "打开图片"
 
-#: ../src/control/XournalMain.cpp:108
+#: ../src/control/XournalMain.cpp:112
 msgid "Open Logfile"
 msgstr "打开日志文件"
 
-#: ../src/control/XournalMain.cpp:109
+#: ../src/control/XournalMain.cpp:113
 msgid "Open Logfile directory"
 msgstr "打开日志文件目录"
 
@@ -1144,12 +1153,12 @@ msgstr "打开日志文件目录"
 msgid "Open URI: {1}"
 msgstr "打开URI: {1}"
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:17
+#: ../src/control/stockdlg/XojOpenDlg.cpp:18
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:317
 msgid "Open file"
 msgstr "打开文件"
 
-#: ../src/control/RecentManager.cpp:241
+#: ../src/control/RecentManager.cpp:242
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "打开{1}"
@@ -1171,25 +1180,35 @@ msgstr "PDF页码{1}"
 msgid "PDF background missing"
 msgstr "PDF背景丢失"
 
-#: ../src/control/XournalMain.cpp:207
+#: ../src/control/XournalMain.cpp:211
 msgid "PDF file successfully created"
 msgstr "PDF文件成功建立"
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:59
+#: ../src/control/stockdlg/XojOpenDlg.cpp:60
 #: ../src/control/jobs/PdfExportJob.cpp:24
-#: ../src/control/jobs/CustomExportJob.cpp:44
+#: ../src/control/jobs/CustomExportJob.cpp:25
 msgid "PDF files"
 msgstr "PDF文件"
 
-#: ../src/control/XournalMain.cpp:227
+#: ../src/control/XournalMain.cpp:231
 msgid "PDF output filename"
 msgstr "PDF输出文件名"
 
-#: ../src/control/jobs/CustomExportJob.cpp:45
+#: ../src/control/jobs/CustomExportJob.cpp:26
+#, fuzzy
+msgid "PDF with plain background"
+msgstr "使用PDF背景"
+
+#: ../src/control/jobs/CustomExportJob.cpp:27
 msgid "PNG graphics"
 msgstr ""
 
-#: ../ui/main.glade:517
+#: ../src/control/jobs/CustomExportJob.cpp:28
+#, fuzzy
+msgid "PNG with transparent background"
+msgstr "纸张背景(_a)"
+
+#: ../ui/main.glade:525
 #, fuzzy
 msgid "P_revious annotated Page"
 msgstr "前一個標註頁(_r)"
@@ -1231,15 +1250,15 @@ msgstr "页码："
 msgid "Paper Format"
 msgstr "纸张样式"
 
-#: ../ui/main.glade:620
+#: ../ui/main.glade:628
 msgid "Paper _Color"
 msgstr "纸张颜色(_C)"
 
-#: ../ui/main.glade:612
+#: ../ui/main.glade:620
 msgid "Paper _Format"
 msgstr "纸张样式(_F)"
 
-#: ../ui/main.glade:628
+#: ../ui/main.glade:636
 msgid "Paper b_ackground"
 msgstr "纸张背景(_a)"
 
@@ -1255,11 +1274,11 @@ msgid "Paste"
 msgstr "粘贴"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:55
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:378
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "Pen"
 msgstr "画笔"
 
-#: ../ui/main.glade:827
+#: ../ui/main.glade:836
 msgid "Pen _Options"
 msgstr "画笔选项(_O)"
 
@@ -1269,7 +1288,7 @@ msgstr "空白"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:32
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:106
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:409
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 #, fuzzy
 msgid "Play Object"
 msgstr "选择对象"
@@ -1282,7 +1301,7 @@ msgstr "预定"
 msgid "Preferences"
 msgstr "偏好设置"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:452
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:455
 msgid "Presentation mode"
 msgstr "演讲模式"
 
@@ -1316,7 +1335,7 @@ msgstr "重复"
 msgid "Redo: "
 msgstr "重复："
 
-#: ../src/control/Control.cpp:2008
+#: ../src/control/Control.cpp:2022
 msgid "Remove PDF Background"
 msgstr "去掉PDF背景"
 
@@ -1346,25 +1365,25 @@ msgstr ""
 msgid "Ruled"
 msgstr "定标"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Ruler"
 msgstr "标尺"
 
-#: ../src/control/jobs/SaveJob.cpp:17 ../src/control/Control.cpp:2531
+#: ../src/control/jobs/SaveJob.cpp:17 ../src/control/Control.cpp:2517
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:314
 msgid "Save"
 msgstr "保存"
 
-#: ../src/control/Control.cpp:2568
+#: ../src/control/Control.cpp:2554
 msgid "Save As"
 msgstr "保存为"
 
-#: ../src/control/Control.cpp:2338 ../src/gui/dialog/PageTemplateDialog.cpp:185
+#: ../src/control/Control.cpp:2352 ../src/gui/dialog/PageTemplateDialog.cpp:185
 msgid "Save File"
 msgstr "保存文件"
 
 #: ../src/control/jobs/SaveJob.cpp:157
-#: ../src/control/jobs/CustomExportJob.cpp:261
+#: ../src/control/jobs/CustomExportJob.cpp:278
 #, fuzzy
 msgid "Save file error: {1}"
 msgstr "打开文件出错：{1}"
@@ -1387,7 +1406,7 @@ msgstr "选色"
 msgid "Select Folder"
 msgstr "选色"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Select Font"
 msgstr "选择字体"
 
@@ -1397,7 +1416,7 @@ msgstr "选择图片"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:31
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:99
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:406
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Select Object"
 msgstr "选择对象"
 
@@ -1409,17 +1428,17 @@ msgstr "选择PDF页面"
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:29
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:85
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:125
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:404
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Select Rectangle"
 msgstr "选择矩形"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:30
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:92
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:402
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Select Region"
 msgstr "选择区域"
 
-#: ../src/control/Control.cpp:2007
+#: ../src/control/Control.cpp:2021
 msgid "Select another PDF"
 msgstr "选择其他PDF"
 
@@ -1449,7 +1468,7 @@ msgstr "按下缺省按钮，此工具及其设置将会生效"
 msgid "Select toolbar:"
 msgstr "选择工具条："
 
-#: ../src/control/XournalMain.cpp:107
+#: ../src/control/XournalMain.cpp:111
 msgid "Send Bugreport"
 msgstr "选择错误报告"
 
@@ -1457,7 +1476,7 @@ msgstr "选择错误报告"
 msgid "Separator"
 msgstr "分割线"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Shape Recognizer"
 msgstr "识别形状"
 
@@ -1475,7 +1494,7 @@ msgstr "只显示未使用页面(一个未使用页面)"
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "只显示未使用页面({1}个未使用页面)"
 
-#: ../ui/main.glade:314
+#: ../ui/main.glade:322
 msgid "Show sidebar"
 msgstr "显示侧边栏"
 
@@ -1487,7 +1506,7 @@ msgstr "侧边栏右置"
 msgid "Show vertical scrollbar on the left side"
 msgstr "垂直滚动条左置"
 
-#: ../src/control/XournalMain.cpp:286
+#: ../src/control/XournalMain.cpp:298
 #, fuzzy
 msgid ""
 "Sorry, Xournal++ can only open one file from the command line.\n"
@@ -1496,7 +1515,7 @@ msgstr ""
 "Xournal只能打開一個命令行檔案。\n"
 "其他的會被忽略。"
 
-#: ../src/control/XournalMain.cpp:305
+#: ../src/control/XournalMain.cpp:317
 #, fuzzy
 msgid ""
 "Sorry, Xournal++ cannot open remote files at the moment.\n"
@@ -1509,7 +1528,7 @@ msgstr ""
 msgid "Standard"
 msgstr "标准"
 
-#: ../ui/main.glade:1534
+#: ../ui/main.glade:1543
 msgid "State PLACEHOLDER"
 msgstr ""
 
@@ -1519,23 +1538,23 @@ msgstr ""
 msgid "Stroke recognizer"
 msgstr "笔划识别"
 
-#: ../src/util/CrashHandler.cpp:152
+#: ../src/util/CrashHandler.cpp:60
 msgid "Successfully saved document to \"{1}\""
 msgstr "文档已经保存为\"{1}\""
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:129
+#: ../src/control/stockdlg/XojOpenDlg.cpp:130
 msgid "Supported files"
 msgstr "支撑文件"
 
-#: ../ui/main.glade:1160
+#: ../ui/main.glade:1169
 msgid "Swap the current page with the one above"
 msgstr ""
 
-#: ../ui/main.glade:1181
+#: ../ui/main.glade:1190
 msgid "Swap the current page with the one below"
 msgstr ""
 
-#: ../ui/main.glade:329
+#: ../ui/main.glade:337
 msgid "T_oolbars"
 msgstr "工具条(_o)"
 
@@ -1544,7 +1563,7 @@ msgid "Template:"
 msgstr "模板："
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:58
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:397
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 msgid "Text"
 msgstr "文本"
 
@@ -1553,7 +1572,7 @@ msgstr "文本"
 msgid "Text %i times found on this page"
 msgstr "文本在本页面出现%i次"
 
-#: ../ui/main.glade:1001
+#: ../ui/main.glade:1010
 msgid "Text Font..."
 msgstr "文本字体..."
 
@@ -1581,21 +1600,21 @@ msgstr "文本未找到"
 msgid "Text not found, searched on all pages"
 msgstr "找遍所有页面未找到文本"
 
-#: ../src/control/Control.cpp:960
+#: ../src/control/Control.cpp:974
 msgid ""
 "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to "
 "edit?"
 msgstr "工具条配置\"{1}\"是预置的，要产生一个拷贝到编辑?"
 
-#: ../src/control/Control.cpp:2004
+#: ../src/control/Control.cpp:2018
 msgid "The attached background PDF could not be found."
 msgstr "附加的背景PDF未找到。"
 
-#: ../src/control/Control.cpp:2005
+#: ../src/control/Control.cpp:2019
 msgid "The background PDF could not be found."
 msgstr "背景PDF未找到。"
 
-#: ../src/control/XournalMain.cpp:102
+#: ../src/control/XournalMain.cpp:106
 msgid "The most recent log file name: {1}"
 msgstr "最近的日志文件名：{1}"
 
@@ -1603,24 +1622,24 @@ msgstr "最近的日志文件名：{1}"
 msgid "The unit of the ruler is cm"
 msgstr "标尺的单位是厘米"
 
-#: ../src/control/XournalMain.cpp:95
+#: ../src/control/XournalMain.cpp:99
 msgid ""
 "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug "
 "may be fixed."
 msgstr "发现Xournal++的错误日志文件，请发送一个错误报告，将会被修正。"
 
-#: ../src/control/XournalMain.cpp:94
+#: ../src/control/XournalMain.cpp:98
 msgid ""
 "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug "
 "may be fixed."
 msgstr "发现Xournal++的错误日志文件，请发送一个错误报告，将会被修正。"
 
-#: ../src/control/Control.cpp:864
+#: ../src/control/Control.cpp:878
 msgid "There was an error displaying help: {1}"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:84
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Thick"
 msgstr "粗"
 
@@ -1629,11 +1648,11 @@ msgid "Thickness"
 msgstr "粗细"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:82
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 msgid "Thin"
 msgstr "细"
 
-#: ../src/control/Control.cpp:2529
+#: ../src/control/Control.cpp:2515
 msgid "This document is not saved yet."
 msgstr ""
 
@@ -1664,11 +1683,11 @@ msgid ""
 "need to be configured here."
 msgstr ""
 
-#: ../src/util/CrashHandler.cpp:138
+#: ../src/util/CrashHandler.cpp:46
 msgid "Trying to emergency save the current open document…"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:452
 msgid "Two pages"
 msgstr "双页"
 
@@ -1713,7 +1732,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2423
+#: ../src/control/Control.cpp:2409
 msgid "Unsaved Document"
 msgstr "未保存文档"
 
@@ -1722,7 +1741,7 @@ msgstr "未保存文档"
 msgid "Version"
 msgstr "扩展"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Vertical Space"
 msgstr "垂直间距"
 
@@ -1767,11 +1786,11 @@ msgstr ""
 msgid "XML Parser error: {1}"
 msgstr ""
 
-#: ../src/control/jobs/CustomExportJob.cpp:46
+#: ../src/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
 msgstr ""
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:70
+#: ../src/control/stockdlg/XojOpenDlg.cpp:71
 msgid "Xournal files"
 msgstr "Xournal文件"
 
@@ -1779,12 +1798,12 @@ msgstr "Xournal文件"
 msgid "Xournal++ Preferences"
 msgstr "Xournal++偏好设置"
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:80 ../src/control/Control.cpp:2345
+#: ../src/control/stockdlg/XojOpenDlg.cpp:81 ../src/control/Control.cpp:2359
 #, fuzzy
 msgid "Xournal++ files"
 msgstr "Xournal文件"
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:90
+#: ../src/control/stockdlg/XojOpenDlg.cpp:91
 #: ../src/gui/dialog/PageTemplateDialog.cpp:192
 #, fuzzy
 msgid "Xournal++ template"
@@ -1802,7 +1821,7 @@ msgid ""
 "Template\"."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:98
+#: ../src/control/XournalMain.cpp:102
 msgid ""
 "You're using {1}/{2} branch. Send Bugreport will direct you to this repo's "
 "issue tracker."
@@ -1845,24 +1864,24 @@ msgstr "原始尺寸"
 msgid "_Annotate PDF"
 msgstr "标注PDF(_A)"
 
-#: ../src/control/stockdlg/ImageOpenDlg.cpp:11
-#: ../src/control/stockdlg/XojOpenDlg.cpp:18
-#: ../src/control/jobs/BaseExportJob.cpp:26 ../src/control/Control.cpp:2339
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:12
+#: ../src/control/stockdlg/XojOpenDlg.cpp:19
+#: ../src/control/jobs/BaseExportJob.cpp:24 ../src/control/Control.cpp:2353
 #: ../src/gui/dialog/PageTemplateDialog.cpp:186
 #, fuzzy
 msgid "_Cancel"
 msgstr "取消"
 
-#: ../ui/main.glade:353
+#: ../ui/main.glade:361
 msgid "_Customize"
 msgstr "设置(_C)"
 
-#: ../ui/main.glade:700
+#: ../ui/main.glade:708
 #, fuzzy
 msgid "_Default Tools"
 msgstr "<b>預設工具</b>"
 
-#: ../ui/main.glade:573
+#: ../ui/main.glade:581
 msgid "_Delete Page"
 msgstr "删除页面(_D)"
 
@@ -1870,7 +1889,7 @@ msgstr "删除页面(_D)"
 msgid "_Edit"
 msgstr "编辑(_E)"
 
-#: ../ui/main.glade:660
+#: ../ui/main.glade:668
 msgid "_Eraser"
 msgstr "橡皮(_E)"
 
@@ -1882,59 +1901,59 @@ msgstr "输出为PDF(_E)"
 msgid "_File"
 msgstr "文件(_F)"
 
-#: ../ui/main.glade:425
+#: ../ui/main.glade:433
 msgid "_First Page"
 msgstr "首页(_F)"
 
-#: ../ui/main.glade:443
+#: ../ui/main.glade:451
 #, fuzzy
 msgid "_Goto Page"
 msgstr "頁面跳轉(_G)"
 
-#: ../ui/main.glade:1023
+#: ../ui/main.glade:1032
 msgid "_Help"
 msgstr "帮助(_H)"
 
-#: ../ui/main.glade:670
+#: ../ui/main.glade:678
 msgid "_Highlighter"
 msgstr "高亮(_H)"
 
-#: ../ui/main.glade:690
+#: ../ui/main.glade:698
 msgid "_Image"
 msgstr "图片(_I)"
 
-#: ../ui/main.glade:530
+#: ../ui/main.glade:538
 msgid "_Journal"
 msgstr "日志(_J)"
 
-#: ../ui/main.glade:461
+#: ../ui/main.glade:469
 msgid "_Last Page"
 msgstr "末页(_L)"
 
-#: ../ui/main.glade:345
+#: ../ui/main.glade:353
 msgid "_Manage"
 msgstr "管理(_M)"
 
-#: ../ui/main.glade:415
+#: ../ui/main.glade:423
 msgid "_Navigation"
 msgstr "导航(_N)"
 
-#: ../ui/main.glade:485
+#: ../ui/main.glade:493
 #, fuzzy
 msgid "_Next Layer"
 msgstr "下一页(_N)"
 
-#: ../ui/main.glade:452
+#: ../ui/main.glade:460
 msgid "_Next Page"
 msgstr "下一页(_N)"
 
-#: ../src/control/stockdlg/ImageOpenDlg.cpp:12
-#: ../src/control/stockdlg/XojOpenDlg.cpp:19
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:13
+#: ../src/control/stockdlg/XojOpenDlg.cpp:20
 #, fuzzy
 msgid "_Open"
 msgstr "打开{1}"
 
-#: ../ui/main.glade:650
+#: ../ui/main.glade:658
 msgid "_Pen"
 msgstr "画笔(_P)"
 
@@ -1942,34 +1961,34 @@ msgstr "画笔(_P)"
 msgid "_Presentation Mode"
 msgstr "演讲模式(_P)"
 
-#: ../ui/main.glade:476
+#: ../ui/main.glade:484
 #, fuzzy
 msgid "_Previous Layer"
 msgstr "前一页(_P)"
 
-#: ../ui/main.glade:434
+#: ../ui/main.glade:442
 msgid "_Previous Page"
 msgstr "前一页(_P)"
 
-#: ../src/control/jobs/BaseExportJob.cpp:27 ../src/control/Control.cpp:2340
+#: ../src/control/jobs/BaseExportJob.cpp:25 ../src/control/Control.cpp:2354
 #: ../src/gui/dialog/PageTemplateDialog.cpp:187
 #, fuzzy
 msgid "_Save"
 msgstr "保存"
 
-#: ../ui/main.glade:714
+#: ../ui/main.glade:722
 msgid "_Shape Recognizer"
 msgstr "形状识别(_S)"
 
-#: ../ui/main.glade:680
+#: ../ui/main.glade:688
 msgid "_Text"
 msgstr "文本(_T)"
 
-#: ../ui/main.glade:640
+#: ../ui/main.glade:648
 msgid "_Tools"
 msgstr "工具(_T)"
 
-#: ../ui/main.glade:494
+#: ../ui/main.glade:502
 #, fuzzy
 msgid "_Top Layer"
 msgstr "图层"
@@ -1978,7 +1997,7 @@ msgstr "图层"
 msgid "_Two Pages"
 msgstr "双页(_T)"
 
-#: ../ui/main.glade:791
+#: ../ui/main.glade:800
 msgid "_Vertical Space"
 msgstr "垂直间距(_V)"
 
@@ -1986,31 +2005,31 @@ msgstr "垂直间距(_V)"
 msgid "_View"
 msgstr "视图(_V)"
 
-#: ../ui/main.glade:947
+#: ../ui/main.glade:956
 msgid "_delete strokes"
 msgstr "删除笔划(_d)"
 
-#: ../ui/main.glade:846 ../ui/main.glade:896 ../ui/main.glade:970
+#: ../ui/main.glade:855 ../ui/main.glade:905 ../ui/main.glade:979
 msgid "_fine"
 msgstr "细(_f)"
 
-#: ../ui/main.glade:855 ../ui/main.glade:905 ../ui/main.glade:979
+#: ../ui/main.glade:864 ../ui/main.glade:914 ../ui/main.glade:988
 msgid "_medium"
 msgstr "中(_m)"
 
-#: ../ui/main.glade:929
+#: ../ui/main.glade:938
 msgid "_standard"
 msgstr "标准(_s)"
 
-#: ../ui/main.glade:864 ../ui/main.glade:914 ../ui/main.glade:988
+#: ../ui/main.glade:873 ../ui/main.glade:923 ../ui/main.glade:997
 msgid "_thick"
 msgstr "粗(_t)"
 
-#: ../ui/main.glade:837
+#: ../ui/main.glade:846
 msgid "_very fine"
 msgstr "极细(_v)"
 
-#: ../ui/main.glade:938
+#: ../ui/main.glade:947
 msgid "_whiteout"
 msgstr "涂白(_w)"
 
@@ -2070,7 +2089,7 @@ msgstr ""
 msgid "touchscreen"
 msgstr "全屏"
 
-#: ../ui/main.glade:873
+#: ../ui/main.glade:882
 msgid "ver_y thick"
 msgstr "极粗(_y)"
 
@@ -2110,6 +2129,10 @@ msgstr ""
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:131
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%F-Note-%H-%M.xopp"
+#~ msgstr "%F-Note-%H-%M.xoj"
 
 #~ msgid "<b>Custom color</b>"
 #~ msgstr "<b>调色</b>"

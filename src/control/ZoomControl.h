@@ -17,9 +17,12 @@
 #include <vector>
 
 //Hardcode max and min zoom
-//this should probably be user-adjustable in future
-#define MAX_ZOOM 5
-#define MIN_ZOOM 0.3
+//TODO:this should probably be user-adjustable in future
+#define DEFAULT_ZOOM_MAX 5
+#define DEFAULT_ZOOM_MIN 0.3
+#define DEFAULT_ZOOM_STEP 0.1
+#define MIN_ZOOM_STEP 0.05
+#define ZOOM_EPSILON 0.0001
 
 class ZoomListener
 {
@@ -57,8 +60,20 @@ public:
 
 	// TODO: Naming and getter / setter!
 	// Current zoom center
-	gdouble zoom_center_x;
-	gdouble zoom_center_y;
+	double getZoomCenterX();
+	void setZoomCenterX(double zoomCenterX);
+
+	double getZoomCenterY();
+	void setZoomCenterY(double zoomCenterY);
+
+	double getZoomStep();
+	void setZoomStep(double zoomStep);
+
+	double getZoomMax();
+	void setZoomMax(double zoomMax);
+
+	double getZoomMin();
+	void setZoomMin(double zoomMin);
 
 protected:
 	void fireZoomChanged(double lastZoom);
@@ -79,4 +94,11 @@ private:
 
 	double zoom100Value;
 	double zoomFitValue;
+
+	double zoomCenterX;
+	double zoomCenterY;
+
+	double zoomStep;
+	double zoomMax;
+	double zoomMin;
 };
