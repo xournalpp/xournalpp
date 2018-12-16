@@ -16,6 +16,9 @@ echo "clean setup folder"
 rm -rf ./setup
 rm -rf xournalpp-setup.exe
 
+echo "build windows launcher"
+./build-launcher.sh
+
 mkdir setup
 mkdir setup/bin
 mkdir setup/lib
