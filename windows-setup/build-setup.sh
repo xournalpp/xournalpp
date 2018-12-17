@@ -60,9 +60,6 @@ cp -r /mingw64/share/icons setup/share/
 echo "copy glib shared"
 cp -r /mingw64/share/glib-2.0 setup/share/
 
-C:\msys64\mingw64\share\glib-2.0
-
-
 echo "pack setup"
 "/c/Program Files (x86)/NSIS/Bin/makensis.exe" xournalpp.nsi
 
