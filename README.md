@@ -72,7 +72,7 @@ Issues page here on Github.
 If you are a developer, working with Windows and would like to help us, please
 contact also contact us over an Issue. 
 
-https://github.com/xournalpp/xournalpp/releases/tag/1.0.3-win-alpha-01
+https://github.com/xournalpp/xournalpp/releases
 
 ### Mac OS X
 Work in Progress, it's possible to build, but no release yet.
