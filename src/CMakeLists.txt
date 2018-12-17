@@ -20,7 +20,10 @@ add_subdirectory (xoj-preview-extractor)
 # Used for both util and xournalpp targets
 add_definitions (-g -Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable)
 
-if (NOT WIN32)
+if (WIN32)
+  # optimize for size (the Windows .exe is really big)
+  set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-Os -s")
+else ()
   add_definitions (-rdynamic)
 endif ()
 
