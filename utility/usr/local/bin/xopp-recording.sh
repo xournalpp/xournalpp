@@ -18,13 +18,13 @@ then
         amixer sset 'Capture' ${vol}%
         amixer sset 'Master' 0%
 	dst="${directory}${filename}"
-        #arecord -f cd -t wav |lame --preset 56 -mm - "$dst" &
-	cvlc alsa://default --sout "#transcode{acodec=mp3,ab=128,channels=2, samplerate=44100}:duplicate{dst=std{access=file,mux=mp3,dst=\"$dst\"}}}" &
+        arecord -f cd -t wav |lame --preset 56 -mm - "$dst" &
+	#cvlc alsa://default --sout "#transcode{acodec=mp3,ab=128,channels=2, samplerate=44100}:duplicate{dst=std{access=file,mux=mp3,dst=\"$dst\"}}}" &
 
 elif [[ $1 == "stop" ]]
 then
-        #pkill -f "arecord" && notify-send "Recording stopped"
-	killall vlc && notify-send "Recording stopped"
+        pkill -f "arecord" && notify-send "Recording stopped"
+	#killall vlc && notify-send "Recording stopped"
 fi
 
 
