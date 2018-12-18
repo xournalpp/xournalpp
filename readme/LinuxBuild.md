@@ -25,6 +25,13 @@ libboost-filesystem-dev libboost-locale-dev libboost-iostreams-dev \
 libcppunit-dev dvipng texlive 
 ````
 
+### For OpenSuse:
+```bash
+sudo zypper install cmake gtk3-devel cppunit-devel \
+libboost_filesystem-devel libboost_locale-devel libboost_iostreams-devel \
+texlive-dvipng texlive libxml2-devel libpoppler-glib-devel
+```
+
 ## Basic steps are:
 ````bash
 git clone http://github.com/xournalpp/xournalpp.git
