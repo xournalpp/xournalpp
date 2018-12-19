@@ -57,7 +57,7 @@ static void crashHandler(int sig)
 	}
 	alreadyCrashed = true;
 
-	cerr << bl::format("[Crash Handler] Crashed with signal {1}") % sig << endl;
+	cerr << FORMAT_STR("[Crash Handler] Crashed with signal {1}") % sig << endl;
 
 	time_t lt;
 	void* array[100];
@@ -75,20 +75,20 @@ static void crashHandler(int sig)
 	ofstream fp(filename);
 	if (fp)
 	{
-		cerr << bl::format("[Crash Handler] Wrote crash log to: {1}") % filename << endl;
+		cerr << FORMAT_STR("[Crash Handler] Wrote crash log to: {1}") % filename << endl;
 	}
 
 	lt = time(NULL);
 
-	fp << bl::format("Date: {1}") % ctime(&lt);
-	fp << bl::format("Error: signal {1}") % sig;
+	fp << FORMAT_STR("Date: {1}") % ctime(&lt);
+	fp << FORMAT_STR("Error: signal {1}") % sig;
 	fp << "\n";
 
 	messages = backtrace_symbols(array, size);
 
 	for (size_t i = 0; i < size; i++)
 	{
-		fp << bl::format("[bt]: ({1}) {2}") % i % messages[i];
+		fp << FORMAT_STR("[bt]: ({1}) {2}") % i % messages[i];
 		fp << "\n";
 	}
 

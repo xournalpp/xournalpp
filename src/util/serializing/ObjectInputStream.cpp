@@ -2,6 +2,8 @@
 
 #include "Serializeable.h"
 
+#include <i18n.h>
+
 #include <string.h>
 
 ObjectInputStream::ObjectInputStream()
@@ -66,7 +68,8 @@ void ObjectInputStream::readObject(const char* name)
 	string type = readObject();
 	if (type != name)
 	{
-		throw INPUT_STREAM_EXCEPTION("Try to read object type {1} but read object type {2}", name, type);
+		throw InputStreamException(FS(FORMAT_STR("Try to read object type {1} but read object type {2}")
+								   % name % type), __FILE__, __LINE__);
 	}
 }
 
@@ -267,19 +270,20 @@ void ObjectInputStream::checkType(char type)
 
 	if (this->pos + 2 > this->str->len)
 	{
-		throw INPUT_STREAM_EXCEPTION("End reached, but try to read {1}, index {2} of {3}",
-									 getType(type), this->pos, this->str->len);
+		throw InputStreamException(FS(FORMAT_STR("End reached, but try to read {1}, index {2} of {3}")
+								   % getType(type) % this->pos % this->str->len), __FILE__, __LINE__);
 	}
 	if (this->str->str[this->pos] != '_')
 	{
-		throw INPUT_STREAM_EXCEPTION("Expected type signature of {1}, index {2} of {3}, but read '{4}'",
-									 getType(type), this->pos, this->str->len, this->str->str[this->pos]);
+		throw InputStreamException(FS(FORMAT_STR("Expected type signature of {1}, index {2} of {3}, but read '{4}'")
+								   % getType(type) % this->pos % this->str->len % this->str->str[this->pos]), __FILE__, __LINE__);
 	}
 	this->pos++;
 
 	if (this->str->str[this->pos] != type)
 	{
-		throw INPUT_STREAM_EXCEPTION("Expected {1} but read {2}", getType(type), getType(this->str->str[this->pos]));
+		throw InputStreamException(FS(FORMAT_STR("Expected {1} but read {2}")
+								   % getType(type) % getType(this->str->str[this->pos])), __FILE__, __LINE__);
 	}
 
 	this->pos++;

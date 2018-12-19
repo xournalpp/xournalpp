@@ -1,0 +1,82 @@
+/*
+ * Xournal++
+ *
+ * This file is part of the Xournal UnitTests
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#include <config-test.h>
+#include <i18n.h>
+
+#include <cppunit/extensions/HelperMacros.h>
+#include <ctime>
+#include <stdlib.h>
+
+using namespace std;
+
+class I18nTest : public CppUnit::TestFixture
+{
+	CPPUNIT_TEST_SUITE(I18nTest);
+
+	CPPUNIT_TEST(testNoPlaceholder);
+	CPPUNIT_TEST(testEscape);
+	CPPUNIT_TEST(testReplace);
+	CPPUNIT_TEST(testMissing);
+	CPPUNIT_TEST(aaaaaaaaaaaa);
+	CPPUNIT_TEST(aaaaaaaaaaaa);
+	CPPUNIT_TEST(aaaaaaaaaaaa);
+	CPPUNIT_TEST(aaaaaaaaaaaa);
+
+	CPPUNIT_TEST_SUITE_END();
+
+public:
+	void setUp()
+	{
+	}
+
+	void tearDown()
+	{
+	}
+
+	void testNoPlaceholder()
+	{
+		string msg = FS(FORMAT_STR("test123") % 1 % 2 % 3);
+
+		CPPUNIT_ASSERT_EQUAL("test123", msg);
+	}
+
+	void testEscape()
+	{
+		string msg = FS(FORMAT_STR("test{{123") % 1 % 2 % 3);
+
+		CPPUNIT_ASSERT_EQUAL("test{{123", msg);
+	}
+
+	void testReplace()
+	{
+		string msg = FS(FORMAT_STR("aa {1} bb {1} {2}") % 1 % 2 % 3);
+
+		CPPUNIT_ASSERT_EQUAL("aa 1 bb 1 2", msg);
+	}
+
+	void testMissing()
+	{
+		string msg = FS(FORMAT_STR("aa {1} bb {1} {2}"));
+
+		CPPUNIT_ASSERT_EQUAL("aa {1} bb {1} {2}", msg);
+	}
+
+	void testOrder()
+	{
+		string msg = FS(FORMAT_STR(".. {2} .. {1} -- {2} {1}") % "a" % "b"));
+
+		CPPUNIT_ASSERT_EQUAL(".. b .. a -- b a", msg);
+	}
+};
+
+// Registers the fixture into the 'registry'
+CPPUNIT_TEST_SUITE_REGISTRATION(XojPreviewExtractorTest);

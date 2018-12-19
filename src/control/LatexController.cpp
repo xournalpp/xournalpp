@@ -115,7 +115,9 @@ bool LatexController::runCommand()
 	{
 		texres = "1000";
 	}
-	string command = FS(bl::format("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}") % binTex % fontcolour % texres % g_strescape(currentTex.c_str(), NULL) % texImage);
+	char* escapedCommand = g_strescape(currentTex.c_str(), NULL);
+	string command = FS(FORMAT_STR("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}") % binTex % fontcolour % texres % escapedCommand % texImage);
+	g_free(escapedCommand);
 
 	gint rt = 0;
 	void (*texhandler)(int) = signal(SIGCHLD, SIG_DFL);

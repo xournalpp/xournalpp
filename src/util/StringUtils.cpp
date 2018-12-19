@@ -1,5 +1,11 @@
 #include "StringUtils.h"
 
+string StringUtils::toLowerCase(string input)
+{
+
+}
+
+
 void StringUtils::replace_all_chars(string& input, const std::vector<replace_pair> replaces)
 {
 	string out;

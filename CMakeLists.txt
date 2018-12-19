@@ -79,7 +79,7 @@ if (BUILD_BOOST)
 
     BUILD_COMMAND cd "${BOOST_PREFIX}/src/boost" && ./b2
       ${BOOST_CXXFLAGS}
-      --with-filesystem --with-iostreams --with-locale
+      --with-filesystem --with-iostreams
       "--prefix=${BOOST_PREFIX}"
       "--build-dir=${BOOST_PREFIX}/src/boost-build"
       "--stagedir=${BOOST_PREFIX}"
@@ -88,13 +88,9 @@ if (BUILD_BOOST)
     INSTALL_COMMAND ""
   )
 
-  # ICU – needed for boost::locale
-  find_package (ICU COMPONENTS uc i18n)
-
   link_directories ("${BOOST_PREFIX}/lib/")
   set (Boost_LIBRARIES
     boost_filesystem
-    boost_locale
     boost_iostreams
     ${ICU_LIBRARIES}
   )
@@ -103,7 +99,7 @@ if (BUILD_BOOST)
 else (BUILD_BOOST)
 
   set (Boost_USE_MULTITHREADED ON)
-  find_package (Boost 1.54 COMPONENTS filesystem locale iostreams)
+  find_package (Boost 1.54 COMPONENTS filesystem iostreams)
   if (Boost_VERSION VERSION_LESS 1.54)
     message (FATAL_ERROR "Boost 1.54 or newer not found – you should enable BUILD_BOOST CMake flag")
   endif (Boost_VERSION VERSION_LESS 1.54)

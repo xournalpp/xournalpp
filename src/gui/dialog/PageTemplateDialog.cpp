@@ -10,6 +10,7 @@
 #include <config.h>
 #include <i18n.h>
 
+#include <sstream>
 #include <fstream>
 using std::ofstream;
 

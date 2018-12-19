@@ -6,8 +6,6 @@
 
 #include <Util.h>
 
-#include <boost/locale.hpp>
-
 TextView::TextView() { }
 
 TextView::~TextView() { }
@@ -76,16 +74,17 @@ vector<XojPdfRectangle> TextView::findText(Text* t, string& search)
 	string str = t->getText();
 	pango_layout_set_text(layout, str.c_str(), str.length());
 
-	int pos = -1;
 
 	string text = t->getText();
 
-	string srch = bl::to_lower(search);
+	string srch = StringUtils::toLowerCase(search);
 
 	vector<XojPdfRectangle> list;
+
+	int pos = -1;
 	do
 	{
-		pos = bl::to_lower(text).find(srch, pos + 1);
+		pos = StringUtils::toLowerCase(text).find(srch, pos + 1);
 		if (pos != -1)
 		{
 			XojPdfRectangle mark;

@@ -18,12 +18,6 @@
 #include <i18n.h>
 #include <XojPreviewExtractor.h>
 
-namespace bl = boost::locale;
-
-#ifdef __APPLE__
-#undef ENABLE_NLS
-#endif
-
 #include <iostream>
 #include <fstream>
 using std::cerr;
@@ -34,17 +28,12 @@ using std::string;
 
 void initLocalisation()
 {
-	//locale generator
-	bl::generator gen;
 #ifdef ENABLE_NLS
-	gen.add_messages_path(PACKAGE_LOCALE_DIR);
-	gen.add_messages_domain(GETTEXT_PACKAGE);
-	
 	bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 	textdomain(GETTEXT_PACKAGE);
 #endif //ENABLE_NLS
 
-	std::locale::global(gen("")); //"" - system default locale
+	// Should not be needed: std::locale::global(gen("")); //"" - system default locale
 	std::cout.imbue(std::locale());
 }
 

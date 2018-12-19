@@ -120,7 +120,9 @@ string ColorToolItem::getId()
 		return "COLOR_SELECT";
 	}
 
-	string id = StringUtils::format("COLOR(0x%06x)", this->color);
+	char buffer[64];
+	sprintf(buffer, "COLOR(0x%06x)", this->color);
+	string id = buffer;
 
 	return id;
 }

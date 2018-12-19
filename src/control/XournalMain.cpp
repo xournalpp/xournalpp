@@ -21,15 +21,10 @@
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
-#include <boost/locale.hpp>
 namespace bf = boost::filesystem;
 
 #if __linux__
 #include <libgen.h>
-#endif
-
-#ifdef __APPLE__
-#undef ENABLE_NLS
 #endif
 
 namespace bf = boost::filesystem;
@@ -56,8 +51,6 @@ void XournalMain::initLocalisation()
 {
 	XOJ_CHECK_TYPE(XournalMain);
 
-	//locale generator
-	boost::locale::generator gen;
 #ifdef ENABLE_NLS
 
 #ifdef WIN32
@@ -65,14 +58,11 @@ void XournalMain::initLocalisation()
 #define PACKAGE_LOCALE_DIR "../share/po/"
 #endif
 
-	gen.add_messages_path(PACKAGE_LOCALE_DIR);
-	gen.add_messages_domain(GETTEXT_PACKAGE);
-	
 	bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 	textdomain(GETTEXT_PACKAGE);
 #endif //ENABLE_NLS
 
-	std::locale::global(gen("")); // "" - system default locale
+	// std::locale::global(gen("")); // "" - system default locale
 	std::cout.imbue(std::locale());
 }
 

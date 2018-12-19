@@ -64,7 +64,7 @@ void RecentManager::addRecentFileFilename(path filename)
 {
 	XOJ_CHECK_TYPE(RecentManager);
 
-	cout << bl::format("addRecentFileFilename: {1}") % filename << endl;
+	cout << "addRecentFileFilename: " << filename << endl;
 
 	GtkRecentManager* recentManager;
 	GtkRecentData* recentData;
@@ -226,11 +226,11 @@ void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
 	XOJ_CHECK_TYPE(RecentManager);
 
 	string display_name(gtk_recent_info_get_display_name(info));
-	ba::replace_all(display_name, "_", "__");	//escape underscore
+	ba::replace_all(display_name, "_", "__"); // escape underscore
 	
 	string label = (i >= 10
-			? FS(bl::format("{1}. {2}") % i % display_name)
-			: FS(bl::format("_{1}. {2}") % i % display_name));
+			? FS(FORMAT_STR("{1}. {2}") % i % display_name)
+			: FS(FORMAT_STR("_{1}. {2}") % i % display_name));
 
 	/* gtk_recent_info_get_uri_display (info) is buggy and
 	 * works only for local files */

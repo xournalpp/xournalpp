@@ -58,6 +58,7 @@ namespace bf = boost::filesystem;
 
 #include <gtk/gtk.h>
 
+#include <sstream>
 #include <iostream>
 #include <fstream>
 using std::cout;
@@ -2053,7 +2054,7 @@ bool Control::openFile(path filename, int scrollToPage)
 
 	if (!loadedDocument)
 	{
-		string msg = FS(_F("Error opening file \"{1}\"") % filename) + "\n" + loadHandler.getLastError();
+		string msg = FS(_F("Error opening file \"{1}\"") % filename.string()) + "\n" + loadHandler.getLastError();
 		Util::showErrorToUser(getGtkWindow(), msg);
 
 		fileLoaded(scrollToPage);
@@ -2237,7 +2238,7 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 		string errMsg = doc->getLastErrorMsg();
 		this->doc->unlock();
 
-		string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filename % errMsg);
+		string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filename.string() % errMsg);
 		Util::showErrorToUser(getGtkWindow(), msg);
 	}
 	getCursor()->setCursorBusy(false);
@@ -2814,7 +2815,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 			}
 			else
 			{
-				throw INPUT_STREAM_EXCEPTION("Get unknown object {1}", name);
+				throw InputStreamException(FS(FORMAT_STR("Get unknown object {1}") % name), __FILE__, __LINE__);
 			}
 
 			in >> element;
