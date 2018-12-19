@@ -32,6 +32,12 @@ libboost_filesystem-devel libboost_locale-devel libboost_iostreams-devel \
 texlive-dvipng texlive libxml2-devel libpoppler-glib-devel
 ```
 
+### For Fedora:
+```bash
+sudo dnf install libxml2-devel cppunit-devel gtk3-devel boost-devel cmake-gui \
+texlive-scheme-basic texlive-dvipng poppler-glib-devel
+```
+
 ## Basic steps are:
 ````bash
 git clone http://github.com/xournalpp/xournalpp.git
@@ -56,6 +62,6 @@ The binary executable will be in `build/src/` subdirectory.
 
 To install all needed files execute:
 ```bash
-make install
+sudo make install
 ```
 
