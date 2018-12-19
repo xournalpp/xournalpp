@@ -26,10 +26,7 @@ class I18nTest : public CppUnit::TestFixture
 	CPPUNIT_TEST(testEscape);
 	CPPUNIT_TEST(testReplace);
 	CPPUNIT_TEST(testMissing);
-	CPPUNIT_TEST(aaaaaaaaaaaa);
-	CPPUNIT_TEST(aaaaaaaaaaaa);
-	CPPUNIT_TEST(aaaaaaaaaaaa);
-	CPPUNIT_TEST(aaaaaaaaaaaa);
+	CPPUNIT_TEST(testOrder);
 
 	CPPUNIT_TEST_SUITE_END();
 
@@ -46,37 +43,37 @@ public:
 	{
 		string msg = FS(FORMAT_STR("test123") % 1 % 2 % 3);
 
-		CPPUNIT_ASSERT_EQUAL("test123", msg);
+		CPPUNIT_ASSERT_EQUAL(std::string("test123"), msg);
 	}
 
 	void testEscape()
 	{
 		string msg = FS(FORMAT_STR("test{{123") % 1 % 2 % 3);
 
-		CPPUNIT_ASSERT_EQUAL("test{{123", msg);
+		CPPUNIT_ASSERT_EQUAL(std::string("test{{123"), msg);
 	}
 
 	void testReplace()
 	{
 		string msg = FS(FORMAT_STR("aa {1} bb {1} {2}") % 1 % 2 % 3);
 
-		CPPUNIT_ASSERT_EQUAL("aa 1 bb 1 2", msg);
+		CPPUNIT_ASSERT_EQUAL(std::string("aa 1 bb 1 2"), msg);
 	}
 
 	void testMissing()
 	{
 		string msg = FS(FORMAT_STR("aa {1} bb {1} {2}"));
 
-		CPPUNIT_ASSERT_EQUAL("aa {1} bb {1} {2}", msg);
+		CPPUNIT_ASSERT_EQUAL(std::string("aa {1} bb {1} {2}"), msg);
 	}
 
 	void testOrder()
 	{
-		string msg = FS(FORMAT_STR(".. {2} .. {1} -- {2} {1}") % "a" % "b"));
+		string msg = FS(FORMAT_STR(".. {2} .. {1} -- {2} {1}") % "a" % "b");
 
-		CPPUNIT_ASSERT_EQUAL(".. b .. a -- b a", msg);
+		CPPUNIT_ASSERT_EQUAL(std::string(".. b .. a -- b a"), msg);
 	}
 };
 
 // Registers the fixture into the 'registry'
-CPPUNIT_TEST_SUITE_REGISTRATION(XojPreviewExtractorTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(I18nTest);
