@@ -20,9 +20,9 @@ BaseExportJob::~BaseExportJob()
 
 void BaseExportJob::initDialog()
 {
-	dialog = gtk_file_chooser_dialog_new(_C("Export PDF"), control->getGtkWindow(), GTK_FILE_CHOOSER_ACTION_SAVE,
-													_C("_Cancel"), GTK_RESPONSE_CANCEL,
-													_C("_Save"), GTK_RESPONSE_OK, NULL);
+	dialog = gtk_file_chooser_dialog_new(_("Export PDF"), control->getGtkWindow(), GTK_FILE_CHOOSER_ACTION_SAVE,
+													_("_Cancel"), GTK_RESPONSE_CANCEL,
+													_("_Save"), GTK_RESPONSE_OK, NULL);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 }

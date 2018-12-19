@@ -66,7 +66,7 @@ GtkToolItem* ToolPageSpinner::newItem()
 
 	GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
 
-	GtkWidget* pageLabel = gtk_label_new(_C("Page"));
+	GtkWidget* pageLabel = gtk_label_new(_("Page"));
 	GtkWidget* spinner = this->pageSpinner->getWidget();
 
 	gtk_widget_set_valign(pageLabel, GTK_ALIGN_BASELINE);

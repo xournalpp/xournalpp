@@ -154,7 +154,7 @@ bool ColorToolItem::colorEqualsMoreOreLess(int color)
  */
 void ColorToolItem::showColorchooser()
 {
-	GtkWidget* dialog = gtk_color_chooser_dialog_new(_C("Select color"), parent);
+	GtkWidget* dialog = gtk_color_chooser_dialog_new(_("Select color"), parent);
 	gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(dialog), false);
 
 	int response = gtk_dialog_run(GTK_DIALOG(dialog));

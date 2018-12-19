@@ -68,7 +68,7 @@ void ToolPageLayer::setLayerCount(int layer, int selected)
 		gtk_combo_box_text_remove(GTK_COMBO_BOX_TEXT(this->layerComboBox), i);
 	}
 
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->layerComboBox), _C("Background"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->layerComboBox), _("Background"));
 	for (int i = 1; i <= layer; i++)
 	{
 		string text = FS(_F("Layer {1}") % i);
@@ -102,7 +102,7 @@ GtkToolItem* ToolPageLayer::newItem()
 	GtkToolItem* it = gtk_tool_item_new();
 
 	GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
-	gtk_box_pack_start(GTK_BOX(hbox), gtk_label_new(_C("Layer")), false, false, 7);
+	gtk_box_pack_start(GTK_BOX(hbox), gtk_label_new(_("Layer")), false, false, 7);
 
 	gtk_box_pack_start(GTK_BOX(hbox), this->layerComboBox, false, false, 0);
 

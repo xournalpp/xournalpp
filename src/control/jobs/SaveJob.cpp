@@ -141,7 +141,7 @@ bool SaveJob::save()
 		}
 		catch (const filesystem_error& e)
 		{
-			g_warning("%s\n%s", _C("Could not create backup! (The file was created from an older Xournal version)"), e.what());
+			g_warning("%s\n%s", _("Could not create backup! (The file was created from an older Xournal version)"), e.what());
 		}
 
 		doc->setCreateBackupOnSave(false);

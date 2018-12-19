@@ -330,7 +330,7 @@ void PdfExport::writePlainStream(Stream* str, GList* replacementList)
 	for (int i = 0; i < length; i++)
 	{
 		int c = str->getUnfilteredChar();
-		buffer = g_string_append_c(buffer, c);
+		buffer = g_string_append_(buffer, c);
 	}
 
 	writeStream(buffer->str, buffer->len, replacementList);

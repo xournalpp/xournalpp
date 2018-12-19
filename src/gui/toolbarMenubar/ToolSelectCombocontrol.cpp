@@ -122,7 +122,7 @@ GtkToolItem* ToolSelectCombocontrol::newItem()
 
 	GtkToolItem* it;
 
-	labelWidget = gtk_label_new(_C("Select Rectangle"));
+	labelWidget = gtk_label_new(_("Select Rectangle"));
 	iconWidget = gtk_image_new_from_pixbuf(this->iconSelectRect);
 
 	it = gtk_menu_tool_toggle_button_new(iconWidget, "test0");

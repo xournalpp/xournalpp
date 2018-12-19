@@ -16,12 +16,9 @@
 #include <boost/locale.hpp>
 
 #define _(msg) gettext(msg)
-// Use standard gettext, where the string is const and no issue with freed strings
-#define _C(msg) gettext(msg)
+#define C_(context, msg) g_dpgettext (NULL, context "\004" msg, strlen(msg) + 1)
+
 #define _F(msg) boost::locale::format(_(msg))
-#define C_(context, msg) boost::locale::translate(context, msg)
-// Use standard gettext, where the string is const and no issue with freed strings
-#define C_C(context, msg) g_dpgettext (NULL, context "\004" msg, strlen(context) + 1)
 #define C_F(context, msg) boost::locale::format(C_(context, msg))
 
 
