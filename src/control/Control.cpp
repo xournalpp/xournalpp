@@ -1001,7 +1001,7 @@ void Control::customizeToolbars()
 					{
 						string filename = data->getName();
 						filename += " ";
-						filename += FS(_("Copy"));
+						filename += _("Copy");
 						filename += " ";
 						filename += std::to_string(i);
 
@@ -1009,7 +1009,7 @@ void Control::customizeToolbars()
 					}
 					else
 					{
-						data->setName(data->getName() + " " + FS(_("Copy")));
+						data->setName(data->getName() + " " + _("Copy"));
 					}
 					data->setId(id);
 					break;

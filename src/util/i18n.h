@@ -15,7 +15,7 @@
 
 #include <boost/locale.hpp>
 
-#define _(msg) boost::locale::translate(msg)
+#define _(msg) gettext(msg)
 // Use standard gettext, where the string is const and no issue with freed strings
 #define _C(msg) gettext(msg)
 #define _F(msg) boost::locale::format(_(msg))

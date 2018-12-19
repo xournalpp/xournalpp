@@ -299,8 +299,8 @@ int XournalMain::run(int argc, char* argv[])
 	{
 		if (g_strv_length(optFilename) != 1)
 		{
-			string msg = FC(_("Sorry, Xournal++ can only open one file from the command line.\n"
-					 "Others are ignored."));
+			string msg = _("Sorry, Xournal++ can only open one file at once.\n"
+						   "Others are ignored.");
 			Util::showErrorToUser((GtkWindow*) *win, msg);
 		}
 
@@ -318,8 +318,8 @@ int XournalMain::run(int argc, char* argv[])
 		}
 		else
 		{
-			string msg = FC(_("Sorry, Xournal++ cannot open remote files at the moment.\n"
-					"You have to copy the file to a local directory."));
+			string msg = _("Sorry, Xournal++ cannot open remote files at the moment.\n"
+						   "You have to copy the file to a local directory.");
 			Util::showErrorToUser((GtkWindow*) *win, msg);
 		}
 	}

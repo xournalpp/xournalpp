@@ -380,7 +380,7 @@ void LatexController::run()
 	if (!findTexExecutable())
 	{
 
-		string msg = FS(_("Could not find Xournal++ LaTeX executable relative or in Path.\nSearched for: mathtex-xournalpp.cgi"));
+		string msg = _("Could not find Xournal++ LaTeX executable relative or in Path.\nSearched for: mathtex-xournalpp.cgi");
 		Util::showErrorToUser(control->getGtkWindow(), msg);
 		return;
 	}
@@ -397,7 +397,7 @@ void LatexController::run()
 	// now do all the LatexAction stuff
 	if (!runCommand())
 	{
-		string msg = FS(_("Failed to generate LaTeX image!"));
+		string msg = _("Failed to generate LaTeX image!");
 		Util::showErrorToUser(control->getGtkWindow(), msg);
 		return;
 	}
