@@ -199,19 +199,26 @@ bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScr
 
 	if (state & GDK_CONTROL_MASK)
 	{
-		//set zoom center (for shift centered scroll)
+		//set zoom center (for ctrl centered scroll)
 		zoom->zoom_center_x = event->x;
 		zoom->zoom_center_y = event->y;
 
-		if (event->direction == GDK_SCROLL_UP || event->direction == GDK_SCROLL_LEFT)
+		if (event->direction == GDK_SCROLL_UP ||
+			(event->direction == GDK_SCROLL_SMOOTH && event->delta_y > 0))
 		{
 			zoom->zoomIn();
 		}
-		else
+		else if (event->direction == GDK_SCROLL_DOWN ||
+			(event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0))
 		{
 			zoom->zoomOut();
 		}
-
+		else
+		{
+			// don't zoom if scroll left or right
+			zoom->zoom_center_x = -1;
+			zoom->zoom_center_y = -1;
+		}
 		return true;
 	}
 
