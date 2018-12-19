@@ -49,7 +49,8 @@ class PageTypeHandler;
 class PageTypeMenu;
 class BaseExportJob;
 
-class Control : public ActionHandler,
+class Control :
+	public ActionHandler,
 	public ToolListener,
 	public DocumentHandler,
 	public RecentManagerListener,
@@ -90,7 +91,15 @@ public:
 	virtual void actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
 								 GtkToolButton* toolbutton, bool enabled);
 
-	virtual void toolColorChanged();
+	/**
+	 * Select the color for the tool
+	 *
+	 * @param userSelection
+	 * 			true if the user selected the color
+	 * 			false if the color is selected by a tool change
+	 * 			and therefore should not be applied to a selection
+	 */
+	virtual void toolColorChanged(bool userSelection);
 	virtual void setCustomColorSelected();
 	virtual void toolChanged();
 	virtual void toolSizeChanged();

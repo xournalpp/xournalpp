@@ -22,7 +22,7 @@ class LastSelectedTool;
 class ToolListener
 {
 public:
-	virtual void toolColorChanged() = 0;
+	virtual void toolColorChanged(bool userSelection) = 0;
 	virtual void setCustomColorSelected() = 0;
 	virtual void toolSizeChanged() = 0;
 	virtual void toolChanged() = 0;
@@ -38,7 +38,16 @@ public:
 	ToolHandler(ToolListener* listener, ActionHandler* actionHandler, Settings* settings);
 	virtual ~ToolHandler();
 
-	void setColor(int color);
+	/**
+	 * Select the color for the tool
+	 *
+	 * @param color Color
+	 * @param userSelection
+	 * 			true if the user selected the color
+	 * 			false if the color is selected by a tool change
+	 * 			and therefore should not be applied to a selection
+	 */
+	void setColor(int color, bool userSelection);
 	int getColor();
 
 	DrawingType getDrawingType();

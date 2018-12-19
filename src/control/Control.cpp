@@ -1687,7 +1687,7 @@ void Control::toolChanged()
 	// Update color
 	if (toolHandler->isEnableColor())
 	{
-		toolColorChanged();
+		toolColorChanged(false);
 	}
 
 	ActionType rulerAction = ACTION_NOT_SELECTED;
@@ -1833,14 +1833,22 @@ void Control::toolSizeChanged()
 	}
 }
 
-void Control::toolColorChanged()
+/**
+ * Select the color for the tool
+ *
+ * @param userSelection
+ * 			true if the user selected the color
+ * 			false if the color is selected by a tool change
+ * 			and therefore should not be applied to a selection
+ */
+void Control::toolColorChanged(bool userSelection)
 {
 	XOJ_CHECK_TYPE(Control);
 
 	fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR);
 	getCursor()->updateCursor();
 
-	if (this->win && toolHandler->getColor() != -1)
+	if (userSelection && this->win && toolHandler->getColor() != -1)
 	{
 		EditSelection* sel = this->win->getXournal()->getSelection();
 		if (sel)

@@ -339,14 +339,23 @@ void ToolHandler::setSize(ToolSize size)
 	this->listener->toolSizeChanged();
 }
 
-void ToolHandler::setColor(int color)
+/**
+ * Select the color for the tool
+ *
+ * @param color Color
+ * @param userSelection
+ * 			true if the user selected the color
+ * 			false if the color is selected by a tool change
+ * 			and therefore should not be applied to a selection
+ */
+void ToolHandler::setColor(int color, bool userSelection)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	this->colorFound = false;
 
 	this->current->color = color;
-	this->listener->toolColorChanged();
+	this->listener->toolColorChanged(userSelection);
 
 	if (!colorFound)
 	{
@@ -544,7 +553,7 @@ void ToolHandler::restoreLastConfig()
 	delete this->lastSelectedTool;
 	this->lastSelectedTool = NULL;
 
-	this->listener->toolColorChanged();
+	this->listener->toolColorChanged(false);
 	this->listener->toolSizeChanged();
 	this->fireToolChanged();
 }
@@ -574,7 +583,7 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize)
 		this->current->type == TOOL_SELECT_OBJECT ||
 		this->current->type == TOOL_PLAY_OBJECT)
 	{
-		this->listener->toolColorChanged();
+		this->listener->toolColorChanged(false);
 		this->listener->toolSizeChanged();
 		this->fireToolChanged();
 	}

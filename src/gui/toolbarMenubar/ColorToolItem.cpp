@@ -10,8 +10,8 @@
 
 bool ColorToolItem::inUpdate = false;
 
-ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, int color, bool selektor) :
-		AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR)
+ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, int color, bool selektor)
+ : AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR)
 {
 	XOJ_INIT_TYPE(ColorToolItem);
 
@@ -97,7 +97,7 @@ void ColorToolItem::enableColor(int color)
 			// Only equals more ore less, so we will set it exact to the default color
 			if (this->color != color)
 			{
-				this->toolHandler->setColor(this->color);
+				this->toolHandler->setColor(this->color, true);
 			}
 
 		}
@@ -185,7 +185,7 @@ void ColorToolItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolBut
 		showColorchooser();
 	}
 
-	toolHandler->setColor(this->color);
+	toolHandler->setColor(this->color, true);
 
 	inUpdate = false;
 }
