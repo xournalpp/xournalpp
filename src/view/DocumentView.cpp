@@ -131,16 +131,8 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 	// No pressure sensitivity, easy draw a line...
 	if (!s->hasPressure())
 	{
-		if (scaleFactor == 1)
-		{
-			// Set width
-			cairo_set_line_width(cr, width);
-		}
-		else
-		{
-			// Set width
-			cairo_set_line_width(cr, width * scaleFactor);
-		}
+		// Set width
+		cairo_set_line_width(cr, width * scaleFactor);
 
 		while (points.hasNext())
 		{
@@ -178,16 +170,8 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 				width = lastPoint1.z;
 			}
 
-			if (scaleFactor == 1)
-			{
-				// Set width
-				cairo_set_line_width(cr, width);
-			}
-			else
-			{
-				// Set width
-				cairo_set_line_width(cr, width * scaleFactor);
-			}
+			// Set width
+			cairo_set_line_width(cr, width * scaleFactor);
 
 			cairo_move_to(cr, lastPoint1.x, lastPoint1.y);
 			cairo_line_to(cr, p.x, p.y);
