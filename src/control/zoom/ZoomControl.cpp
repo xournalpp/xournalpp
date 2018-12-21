@@ -17,8 +17,8 @@ ZoomControl::ZoomControl()
 	this->zoom100Value = 1.0;
 	this->zoomFitValue = 1.0;
 	this->zoomFitMode = true;
-	this->zoom_center_x = -1;
-	this->zoom_center_y = -1;
+	this->zoomCenterX = -1;
+	this->zoomCenterY = -1;
 
 	this->zoomSequenceStart = 1;
 }
@@ -44,35 +44,40 @@ void ZoomControl::startZoomSequence(double centerX, double centerY)
 	Layout* layout = gtk_xournal_get_layout(widget);
 	// Save visible rectangle at beginning of zoom
 	zoomSequenceRectangle = layout->getVisibleRect();
-	zoomSequenceStart = view->getZoom();
+
+	// Scale to 100% zoom
+	zoomSequenceRectangle.x /= this->zoom;
+	zoomSequenceRectangle.y /= this->zoom;
+
+	zoomSequenceStart = this->zoom;
 
 	if (centerX == -1 || centerY == -1)
 	{
-		this->zoom_center_x = gtk_widget_get_allocated_width(widget) / 2;
-		this->zoom_center_y = gtk_widget_get_allocated_height(widget) / 2;
+		this->zoomCenterX = gtk_widget_get_allocated_width(widget) / 2;
+		this->zoomCenterY = gtk_widget_get_allocated_height(widget) / 2;
 	}
 	else
 	{
-		this->zoom_center_x = centerX;
-		this->zoom_center_y = centerY;
+		this->zoomCenterX = centerX;
+		this->zoomCenterY = centerY;
 	}
 }
 
 /**
- * Change the zoom within a Zoom sequnce (startZoomSequence() / endZoomSequence())
+ * Change the zoom within a Zoom sequence (startZoomSequence() / endZoomSequence())
  *
  * @param zoom Current zoom value
- * @param realative If the zoom is realative to the start value (for Gesture)
+ * @param relative If the zoom is relative to the start value (for Gesture)
  */
-void ZoomControl::zoomSequnceChange(double zoom, bool realative)
+void ZoomControl::zoomSequnceChange(double zoom, bool relative)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	if (realative) {
+	if (relative) {
 		zoom *= zoomSequenceStart;
 	}
 
-
+	setZoom(zoom);
 }
 
 /**
@@ -81,51 +86,25 @@ void ZoomControl::zoomSequnceChange(double zoom, bool realative)
 void ZoomControl::endZoomSequence()
 {
 	XOJ_CHECK_TYPE(ZoomControl);
-	zoom_center_x = -1;
-	zoom_center_y = -1;
+	zoomCenterX = -1;
+	zoomCenterY = -1;
 }
 
 /**
  * Zoom to correct position on zooming
  */
-void ZoomControl::scrollToZoomPosition(XojPageView* view, double lastZoom)
+void ZoomControl::scrollToZoomPosition(XojPageView* view)
 {
-	// Keep zoom center at static position in current view
-	// by scrolling relative to counter motion induced by zoom
-	// in orignal version top left corner of first page static
-	// Pack into extra function later
-	double zoom_now = getZoom();
-	// relative scrolling
-	double zoom_eff = zoom_now / lastZoom;
-	int scroll_x;
-	int scroll_y;
-	// x,y position of visible rectangle for gesture scrolling
-	int vis_x;
-	int vis_y;
-
 	Layout* layout = gtk_xournal_get_layout(this->view->getWidget());
 
 	// get margins for relative scroll calculation
 	double marginLeft = (double) view->layout.getMarginLeft();
 	double marginTop = (double) view->layout.getMarginTop();
 
-		// Absolute centred scrolling used for gesture
-		if (true)//(this->zoom_gesture_active)
-		{
-			vis_x = (int) ((zoom_center_x - marginLeft) * (zoom_now / zoomSequenceStart - 1));
-			vis_y = (int) ((zoom_center_y - marginTop) * (zoom_now / zoomSequenceStart - 1));
-			layout->scrollAbs(zoomSequenceRectangle.x + vis_x, zoomSequenceRectangle.y + vis_y);
-		}
-
-//		// Relative centered scrolling used for SHIFT-mousewheel
-//		if (zoom_eff != 1 && zoom->zoom_center_x != -1 && this->zoom_gesture_active == false)
-//		{
-//			scroll_x = (int) ((zoom->zoom_center_x - marginLeft) * (zoom_eff - 1));
-//			scroll_y = (int) ((zoom->zoom_center_y - marginTop) * (zoom_eff - 1));
-//
-//			// adjust view by scrolling
-//			layout->scrollRelativ(scroll_x, scroll_y);
-//		}
+	int vis_x = (int) ((zoomCenterX - marginLeft) * (this->zoom / zoomSequenceStart - 1));
+	int vis_y = (int) ((zoomCenterY - marginTop) * (this->zoom / zoomSequenceStart - 1));
+	layout->scrollAbs(zoomSequenceRectangle.x * this->zoom, zoomSequenceRectangle.y * this->zoom);
+//	layout->scrollAbs(zoomSequenceRectangle.x + vis_x, zoomSequenceRectangle.y + vis_y);
 }
 
 
@@ -150,7 +129,7 @@ void ZoomControl::initZoomHandler(GtkWidget* widget, XournalView* view)
 	this->view = view;
 }
 
-void ZoomControl::fireZoomChanged(double lastZoom)
+void ZoomControl::fireZoomChanged()
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
@@ -166,7 +145,7 @@ void ZoomControl::fireZoomChanged(double lastZoom)
 
 	for (ZoomListener* z : this->listener)
 	{
-		z->zoomChanged(lastZoom);
+		z->zoomChanged();
 	}
 }
 
@@ -191,10 +170,9 @@ void ZoomControl::setZoom(double zoom)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	double lastZoom = this->zoom;
 	this->zoom = zoom;
 	this->zoomFitMode = false;
-	fireZoomChanged(lastZoom);
+	fireZoomChanged();
 }
 
 void ZoomControl::setZoom100(double zoom)
@@ -214,9 +192,8 @@ void ZoomControl::setZoomFit(double zoom)
 
 	if (this->zoomFitMode)
 	{
-		double lastZoom = this->zoom;
 		this->zoom = this->zoomFitValue;
-		fireZoomChanged(lastZoom);
+		fireZoomChanged();
 	}
 }
 
@@ -238,40 +215,52 @@ void ZoomControl::zoom100()
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	double lastZoom = this->zoom;
+	startZoomSequence(-1, -1);
+
 	this->zoom = this->zoom100Value;
 	this->zoomFitMode = false;
-	fireZoomChanged(lastZoom);
+	fireZoomChanged();
+
+	endZoomSequence();
 }
 
 void ZoomControl::zoomFit()
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	double lastZoom = this->zoom;
+	startZoomSequence(-1, -1);
+
 	this->zoom = this->zoomFitValue;
 	this->zoomFitMode = true;
-	fireZoomChanged(lastZoom);
+	fireZoomChanged();
+
+	endZoomSequence();
 }
 
-void ZoomControl::zoomIn()
+void ZoomControl::zoomIn(double x, double y)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	double lastZoom = this->zoom;
+	startZoomSequence(x, y);
+
 	this->zoom += zoomStep;
 	this->zoomFitMode = false;
-	fireZoomChanged(lastZoom);
+	fireZoomChanged();
+
+	endZoomSequence();
 }
 
-void ZoomControl::zoomOut()
+void ZoomControl::zoomOut(double x, double y)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	double lastZoom = this->zoom;
+	startZoomSequence(x, y);
+
 	this->zoom -= zoomStep;
 	this->zoomFitMode = false;
-	fireZoomChanged(lastZoom);
+	fireZoomChanged();
+
+	endZoomSequence();
 }
 
 bool ZoomControl::onScrolledwindowMainScrollEvent(GdkEventScroll* event)
@@ -288,25 +277,15 @@ bool ZoomControl::onScrolledwindowMainScrollEvent(GdkEventScroll* event)
 
 	if (state & GDK_CONTROL_MASK)
 	{
-		//set zoom center (for ctrl centered scroll)
-		zoom_center_x = event->x;
-		zoom_center_y = event->y;
-
 		if (event->direction == GDK_SCROLL_UP ||
 			(event->direction == GDK_SCROLL_SMOOTH && event->delta_y > 0))
 		{
-			zoomIn();
+			zoomIn(event->x, event->y);
 		}
 		else if (event->direction == GDK_SCROLL_DOWN ||
 			(event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0))
 		{
-			zoomOut();
-		}
-		else
-		{
-			// don't zoom if scroll left or right
-			zoom_center_x = -1;
-			zoom_center_y = -1;
+			zoomOut(event->x, event->y);
 		}
 		return true;
 	}

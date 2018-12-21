@@ -39,7 +39,7 @@ void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self)
 	self->zoom->endZoomSequence();
 }
 
-void ToolZoomSlider::zoomChanged(double lastZoom)
+void ToolZoomSlider::zoomChanged()
 {
 	XOJ_CHECK_TYPE(ToolZoomSlider);
 

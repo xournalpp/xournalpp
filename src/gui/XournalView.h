@@ -119,7 +119,7 @@ public:
 
 public:
 	// ZoomListener interface
-	void zoomChanged(double lastZoom);
+	void zoomChanged();
 
 public:
 	// DocumentListener interface

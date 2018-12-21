@@ -33,8 +33,8 @@ public:
 	ZoomControl();
 	virtual ~ZoomControl();
 
-	void zoomIn();
-	void zoomOut();
+	void zoomIn(double x = -1, double y = -1);
+	void zoomOut(double x = -1, double y = -1);
 
 	void zoomFit();
 	void zoom100();
@@ -66,12 +66,12 @@ public:
 	void startZoomSequence(double centerX, double centerY);
 
 	/**
-	 * Change the zoom within a Zoom sequnce (startZoomSequence() / endZoomSequence())
+	 * Change the zoom within a Zoom sequence (startZoomSequence() / endZoomSequence())
 	 *
 	 * @param zoom Current zoom value
-	 * @param realative If the zoom is realative to the start value (for Gesture)
+	 * @param relative If the zoom is relative to the start value (for Gesture)
 	 */
-	void zoomSequnceChange(double zoom, bool realative);
+	void zoomSequnceChange(double zoom, bool relative);
 
 	/**
 	 * Clear all stored data from startZoomSequence()
@@ -81,10 +81,10 @@ public:
 	/**
 	 * Zoom to correct position on zooming
 	 */
-	void scrollToZoomPosition(XojPageView* view, double lastZoom);
+	void scrollToZoomPosition(XojPageView* view);
 
 protected:
-	void fireZoomChanged(double lastZoom);
+	void fireZoomChanged();
 	void fireZoomRangeValueChanged();
 
 	bool onScrolledwindowMainScrollEvent(GdkEventScroll* event);
@@ -105,12 +105,9 @@ private:
 	double zoom100Value;
 	double zoomFitValue;
 
-
-
-	// TODO: Naming and getter / setter!
 	// Current zoom center
-	gdouble zoom_center_x;
-	gdouble zoom_center_y;
+	gdouble zoomCenterX;
+	gdouble zoomCenterY;
 
 	/**
 	 * Zoom at zoom sequence start

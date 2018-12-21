@@ -578,7 +578,7 @@ void XournalView::ensureRectIsVisible(int x, int y, int width, int height)
 	layout->ensureRectIsVisible(x, y, width, height);
 }
 
-void XournalView::zoomChanged(double lastZoom)
+void XournalView::zoomChanged()
 {
 	XOJ_CHECK_TYPE(XournalView);
 
@@ -595,7 +595,7 @@ void XournalView::zoomChanged(double lastZoom)
 	// move this somewhere else maybe
 	layout->layoutPages();
 
-	zoom->scrollToZoomPosition(view, lastZoom);
+	zoom->scrollToZoomPosition(view);
 
 	Document* doc = control->getDocument();
 	doc->lock();

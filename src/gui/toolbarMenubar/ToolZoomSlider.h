@@ -26,7 +26,7 @@ public:
 
 public:
 	static void sliderChanged(GtkRange* range, ToolZoomSlider* self);
-	virtual void zoomChanged(double lastZoom);
+	virtual void zoomChanged();
 	virtual void zoomRangeValuesChanged();
 	virtual string getToolDisplayName();
 
