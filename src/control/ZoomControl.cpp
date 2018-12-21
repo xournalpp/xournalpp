@@ -74,7 +74,7 @@ void ZoomControl::fireZoomChanged(double lastZoom)
 		z->zoomChanged(lastZoom);
 	}
 
-	if (view != NULL)
+	if (view != NULL && page != this->currentPage)
 	{
 		// Restore page
 		view->scrollTo(page, 0);
