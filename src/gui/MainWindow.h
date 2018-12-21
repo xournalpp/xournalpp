@@ -87,6 +87,8 @@ public:
 
 	Layout* getLayout();
 
+	bool isGestureActive();
+
 private:
 	void createToolbarAndMenu();
 

@@ -158,8 +158,14 @@ Layout* MainWindow::getLayout()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	Layout* layout = gtk_xournal_get_layout(GTK_WIDGET(this->xournal->getWidget()));
-	return layout;
+	return gtk_xournal_get_layout(GTK_WIDGET(this->xournal->getWidget()));
+}
+
+bool MainWindow::isGestureActive()
+{
+	XOJ_CHECK_TYPE(MainWindow);
+
+	return zoomGesture->isGestureActive();
 }
 
 bool cancellable_cancel(GCancellable* cancel)

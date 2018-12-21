@@ -1,6 +1,7 @@
 #include "InputSequence.h"
 #include "NewGtkInputDevice.h"
 
+#include "control/Control.h"
 #include "control/settings/ButtonConfig.h"
 #include "control/settings/Settings.h"
 #include "control/tools/EditSelection.h"
@@ -210,11 +211,10 @@ bool InputSequence::actionMoved()
 		inputHandler->getView()->penActionDetected();
 	}
 
-	printf("actionMoved()*************\n");
-//	if (xournal->view->zoom_gesture_active)
-//	{
-//		return false;
-//	}
+	if (xournal->view->getControl()->getWindow()->isGestureActive())
+	{
+		return false;
+	}
 
 	if (h->getToolType() == TOOL_HAND)
 	{
@@ -418,12 +418,11 @@ void InputSequence::actionEnd()
 	Cursor* cursor = xournal->view->getCursor();
 	ToolHandler* h = inputHandler->getToolHandler();
 
-	printf("actionEnd()*************\n");
-//	if (xournal->view->zoom_gesture_active)
-//	{
-//		stopInput();
-//		return;
-//	}
+	if (xournal->view->getControl()->getWindow()->isGestureActive())
+	{
+		stopInput();
+		return;
+	}
 
 	cursor->setMouseDown(false);
 

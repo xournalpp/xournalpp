@@ -23,6 +23,9 @@ public:
 	ZoomGesture(GtkWidget* parent, ZoomControl* zoomControl);
 	virtual ~ZoomGesture();
 
+public:
+	bool isGestureActive();
+
 private:
 	void zoomBegin();
 	void zoomChanged(double zoom);
@@ -33,4 +36,6 @@ private:
 
 	ZoomControl* zoomControl;
 	GtkGesture* gesture;
+
+	bool gestureActive;
 };

@@ -51,16 +51,8 @@ void ZoomControl::startZoomSequence(double centerX, double centerY)
 
 	zoomSequenceStart = this->zoom;
 
-//	if (centerX == -1 || centerY == -1)
-//	{
-//		this->zoomCenterX = gtk_widget_get_allocated_width(widget) / 2;
-//		this->zoomCenterY = gtk_widget_get_allocated_height(widget) / 2;
-//	}
-//	else
-//	{
-		this->zoomCenterX = centerX;
-		this->zoomCenterY = centerY;
-//	}
+	this->zoomCenterX = centerX;
+	this->zoomCenterY = centerY;
 }
 
 /**
@@ -97,20 +89,22 @@ void ZoomControl::scrollToZoomPosition(XojPageView* view)
 {
 	Layout* layout = gtk_xournal_get_layout(this->view->getWidget());
 
-	if (this->zoomCenterX == -1 || this->zoomCenterY == -1)
-	{
-		// get margins for relative scroll calculation
-		double marginLeft = (double) view->layout.getMarginLeft();
-		double marginTop = (double) view->layout.getMarginTop();
 
-		int visX = (int) ((zoomCenterX - marginLeft) * (this->zoom / zoomSequenceStart - 1));
-		int visY = (int) ((zoomCenterY - marginTop) * (this->zoom / zoomSequenceStart - 1));
-		layout->scrollAbs(zoomSequenceRectangle.x + visX, zoomSequenceRectangle.y + visY);
-	}
-	else
-	{
+	printf("ZoomPos: %lf / %lf\n", this->zoomCenterX, this->zoomCenterY);
+//	if (this->zoomCenterX == -1 || this->zoomCenterY == -1)
+//	{
+//		// get margins for relative scroll calculation
+//		double marginLeft = (double) view->layout.getMarginLeft();
+//		double marginTop = (double) view->layout.getMarginTop();
+//
+//		int visX = (int) ((zoomCenterX - marginLeft) * (this->zoom / zoomSequenceStart - 1));
+//		int visY = (int) ((zoomCenterY - marginTop) * (this->zoom / zoomSequenceStart - 1));
+//		layout->scrollAbs(zoomSequenceRectangle.x + visX, zoomSequenceRectangle.y + visY);
+//	}
+//	else
+//	{
 		layout->scrollAbs(zoomSequenceRectangle.x * this->zoom, zoomSequenceRectangle.y * this->zoom);
-	}
+//	}
 }
 
 
@@ -283,41 +277,27 @@ bool ZoomControl::onScrolledwindowMainScrollEvent(GdkEventScroll* event)
 
 	if (state & GDK_CONTROL_MASK)
 	{
+		GtkWidget* topLevel = gtk_widget_get_toplevel(view->getWidget());
+		int wx = 0;
+		int wy = 0;
+		gtk_widget_translate_coordinates(view->getWidget(), topLevel, 0, 0, &wx, &wy);
+
+		printf("event: %lf / %lf (%lf / %lf)\n", event->x, event->y,
+				event->x_root, event->y_root
+
+		);
+
 		if (event->direction == GDK_SCROLL_UP ||
 			(event->direction == GDK_SCROLL_SMOOTH && event->delta_y > 0))
 		{
-			zoomIn(event->x, event->y);
+			zoomOut(event->x - wx, event->y - wy);
 		}
 		else if (event->direction == GDK_SCROLL_DOWN ||
 			(event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0))
 		{
-			zoomOut(event->x, event->y);
+			zoomIn(event->x - wx, event->y - wy);
 		}
 		return true;
-	}
-
-	// Shift + Wheel scrolls the in the perpendicular direction
-	if (state & GDK_SHIFT_MASK)
-	{
-		if (event->direction == GDK_SCROLL_UP)
-		{
-			event->direction = GDK_SCROLL_LEFT;
-		}
-		else if (event->direction == GDK_SCROLL_LEFT)
-		{
-			event->direction = GDK_SCROLL_UP;
-		}
-		else if (event->direction == GDK_SCROLL_DOWN)
-		{
-			event->direction = GDK_SCROLL_RIGHT;
-		}
-		else if (event->direction == GDK_SCROLL_RIGHT)
-		{
-			event->direction = GDK_SCROLL_DOWN;
-		}
-
-		event->state &= ~GDK_SHIFT_MASK;
-		state &= ~GDK_SHIFT_MASK;
 	}
 
 	return false;

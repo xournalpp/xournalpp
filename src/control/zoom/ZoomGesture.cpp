@@ -2,7 +2,8 @@
 #include "ZoomControl.h"
 
 ZoomGesture::ZoomGesture(GtkWidget* parent, ZoomControl* zoomControl)
- : zoomControl(zoomControl)
+ : zoomControl(zoomControl),
+   gestureActive(false)
 {
 	XOJ_INIT_TYPE(ZoomGesture);
 
@@ -42,9 +43,18 @@ ZoomGesture::~ZoomGesture()
 	XOJ_RELEASE_TYPE(ZoomGesture);
 }
 
+bool ZoomGesture::isGestureActive()
+{
+	XOJ_CHECK_TYPE(ZoomGesture);
+
+	return gestureActive;
+}
+
 void ZoomGesture::zoomBegin()
 {
 	XOJ_CHECK_TYPE(ZoomGesture);
+
+	gestureActive = true;
 
 	double x = 0;
 	double y = 0;
@@ -64,6 +74,8 @@ void ZoomGesture::zoomChanged(double zoom)
 void ZoomGesture::zoomEnd()
 {
 	XOJ_CHECK_TYPE(ZoomGesture);
+
+	gestureActive = false;
 
 	zoomControl->endZoomSequence();
 }

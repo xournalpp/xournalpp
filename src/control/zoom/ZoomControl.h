@@ -106,8 +106,8 @@ private:
 	double zoomFitValue;
 
 	// Current zoom center
-	gdouble zoomCenterX;
-	gdouble zoomCenterY;
+	double zoomCenterX;
+	double zoomCenterY;
 
 	/**
 	 * Zoom at zoom sequence start
