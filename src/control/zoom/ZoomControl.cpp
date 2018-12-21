@@ -51,16 +51,16 @@ void ZoomControl::startZoomSequence(double centerX, double centerY)
 
 	zoomSequenceStart = this->zoom;
 
-	if (centerX == -1 || centerY == -1)
-	{
-		this->zoomCenterX = gtk_widget_get_allocated_width(widget) / 2;
-		this->zoomCenterY = gtk_widget_get_allocated_height(widget) / 2;
-	}
-	else
-	{
+//	if (centerX == -1 || centerY == -1)
+//	{
+//		this->zoomCenterX = gtk_widget_get_allocated_width(widget) / 2;
+//		this->zoomCenterY = gtk_widget_get_allocated_height(widget) / 2;
+//	}
+//	else
+//	{
 		this->zoomCenterX = centerX;
 		this->zoomCenterY = centerY;
-	}
+//	}
 }
 
 /**
@@ -97,14 +97,20 @@ void ZoomControl::scrollToZoomPosition(XojPageView* view)
 {
 	Layout* layout = gtk_xournal_get_layout(this->view->getWidget());
 
-	// get margins for relative scroll calculation
-	double marginLeft = (double) view->layout.getMarginLeft();
-	double marginTop = (double) view->layout.getMarginTop();
+	if (this->zoomCenterX == -1 || this->zoomCenterY == -1)
+	{
+		// get margins for relative scroll calculation
+		double marginLeft = (double) view->layout.getMarginLeft();
+		double marginTop = (double) view->layout.getMarginTop();
 
-	int vis_x = (int) ((zoomCenterX - marginLeft) * (this->zoom / zoomSequenceStart - 1));
-	int vis_y = (int) ((zoomCenterY - marginTop) * (this->zoom / zoomSequenceStart - 1));
-	layout->scrollAbs(zoomSequenceRectangle.x * this->zoom, zoomSequenceRectangle.y * this->zoom);
-//	layout->scrollAbs(zoomSequenceRectangle.x + vis_x, zoomSequenceRectangle.y + vis_y);
+		int visX = (int) ((zoomCenterX - marginLeft) * (this->zoom / zoomSequenceStart - 1));
+		int visY = (int) ((zoomCenterY - marginTop) * (this->zoom / zoomSequenceStart - 1));
+		layout->scrollAbs(zoomSequenceRectangle.x + visX, zoomSequenceRectangle.y + visY);
+	}
+	else
+	{
+		layout->scrollAbs(zoomSequenceRectangle.x * this->zoom, zoomSequenceRectangle.y * this->zoom);
+	}
 }
 
 
