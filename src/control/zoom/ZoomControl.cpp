@@ -17,10 +17,8 @@ ZoomControl::ZoomControl()
 	this->zoom100Value = 1.0;
 	this->zoomFitValue = 1.0;
 	this->zoomFitMode = true;
-//	this->zoomCenterX = -1;
-//	this->zoomCenterY = -1;
-//
-//	this->zoomSequenceStart = 1;
+
+	this->zoomSequenceStart = 1;
 
 	this->zoomWidgetPosX = 0;
 	this->zoomWidgetPosY = 0;
@@ -64,21 +62,7 @@ void ZoomControl::startZoomSequence(double centerX, double centerY)
 	this->scrollPositionX = (rect.x + this->zoomWidgetPosX) / this->zoom;
 	this->scrollPositionY = (rect.y + this->zoomWidgetPosY) / this->zoom;
 
-
-
-//
-//
-//
-//	this->zoomCenterX = centerX / this->zoom;
-//	this->zoomCenterY = centerY / this->zoom;
-//
-//	zoomSequenceRectangle = getVisibleRect();
-//
-//	// Scale to 100% zoom
-//	zoomSequenceRectangle.x /= this->zoom;
-//	zoomSequenceRectangle.y /= this->zoom;
-//
-//	zoomSequenceStart = this->zoom;
+	this->zoomSequenceStart = this->zoom;
 }
 
 /**
@@ -91,9 +75,9 @@ void ZoomControl::zoomSequnceChange(double zoom, bool relative)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-//	if (relative) {
-//		zoom *= zoomSequenceStart;
-//	}
+	if (relative) {
+		zoom *= zoomSequenceStart;
+	}
 
 	setZoom(zoom);
 }

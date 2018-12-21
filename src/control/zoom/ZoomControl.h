@@ -129,4 +129,9 @@ private:
 	 * Scroll position to scale
 	 */
 	double scrollPositionY;
+
+	/**
+	 * Base zoom on start, for relative zoom (Gesture)
+	 */
+	double zoomSequenceStart;
 };
