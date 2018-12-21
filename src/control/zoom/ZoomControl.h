@@ -110,17 +110,23 @@ private:
 	double zoom100Value;
 	double zoomFitValue;
 
-	// Current zoom center
-	double zoomCenterX;
-	double zoomCenterY;
+	/**
+	 * Zoom point on widget, will not be zoomed!
+	 */
+	double zoomWidgetPosX;
 
 	/**
-	 * Zoom at zoom sequence start
+	 * Zoom point on widget, will not be zoomed!
 	 */
-	double zoomSequenceStart;
+	double zoomWidgetPosY;
 
 	/**
-	 * Zoom sequence rectangle
+	 * Scroll position to scale
 	 */
-	Rectangle zoomSequenceRectangle;
+	double scrollPositionX;
+
+	/**
+	 * Scroll position to scale
+	 */
+	double scrollPositionY;
 };
