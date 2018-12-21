@@ -6,6 +6,7 @@
 #include "XournalView.h"
 
 #include "control/Control.h"
+#include "control/zoom/ZoomGesture.h"
 #include "gui/GladeSearchpath.h"
 #include "ToolbarDefinitions.h"
 #include "toolbarMenubar/model/ToolbarData.h"
@@ -57,6 +58,8 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	GtkWidget* vpXournal = get("vpXournal");
 
 	this->xournal = new XournalView(vpXournal, control);
+
+	this->zoomGesture = new ZoomGesture(get("winXournal"), control->getZoomControl());
 
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
 
@@ -144,6 +147,9 @@ MainWindow::~MainWindow()
 
 	delete this->toolbar;
 	this->toolbar = NULL;
+
+	delete this->zoomGesture;
+	this->zoomGesture = NULL;
 
 	XOJ_RELEASE_TYPE(MainWindow);
 }

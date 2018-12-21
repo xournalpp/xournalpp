@@ -210,10 +210,11 @@ bool InputSequence::actionMoved()
 		inputHandler->getView()->penActionDetected();
 	}
 
-	if (xournal->view->zoom_gesture_active)
-	{
-		return false;
-	}
+	printf("actionMoved()*************\n");
+//	if (xournal->view->zoom_gesture_active)
+//	{
+//		return false;
+//	}
 
 	if (h->getToolType() == TOOL_HAND)
 	{
@@ -417,11 +418,12 @@ void InputSequence::actionEnd()
 	Cursor* cursor = xournal->view->getCursor();
 	ToolHandler* h = inputHandler->getToolHandler();
 
-	if (xournal->view->zoom_gesture_active)
-	{
-		stopInput();
-		return;
-	}
+	printf("actionEnd()*************\n");
+//	if (xournal->view->zoom_gesture_active)
+//	{
+//		stopInput();
+//		return;
+//	}
 
 	cursor->setMouseDown(false);
 

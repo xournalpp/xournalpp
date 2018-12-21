@@ -260,4 +260,5 @@ XOJ_DECLARE_TYPE(XojCairoPdfExport, 248);
 XOJ_DECLARE_TYPE(AbstractInputDevice, 250);
 XOJ_DECLARE_TYPE(NewGtkInputDevice, 252);
 XOJ_DECLARE_TYPE(InputSequence, 253);
+XOJ_DECLARE_TYPE(ZoomGesture, 254);
 

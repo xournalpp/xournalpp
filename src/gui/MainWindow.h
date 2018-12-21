@@ -27,6 +27,7 @@ class ToolbarData;
 class ToolbarModel;
 class XournalView;
 class MainWindowToolbarMenu;
+class ZoomGesture;
 
 class MainWindow : public GladeGui
 {
@@ -123,6 +124,8 @@ private:
 	Control* control;
 
 	XournalView* xournal;
+
+	ZoomGesture* zoomGesture;
 
 	// Toolbars
 	ToolMenuHandler* toolbar;
