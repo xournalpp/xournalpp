@@ -45,14 +45,15 @@ void ZoomControl::startZoomSequence(double centerX, double centerY)
 	// Save visible rectangle at beginning of zoom
 	zoomSequenceRectangle = layout->getVisibleRect();
 
+	this->zoomCenterX = centerX - zoomSequenceRectangle.x;
+	this->zoomCenterY = centerY - zoomSequenceRectangle.y;
+
+
 	// Scale to 100% zoom
 	zoomSequenceRectangle.x /= this->zoom;
 	zoomSequenceRectangle.y /= this->zoom;
 
 	zoomSequenceStart = this->zoom;
-
-	this->zoomCenterX = centerX;
-	this->zoomCenterY = centerY;
 }
 
 /**
