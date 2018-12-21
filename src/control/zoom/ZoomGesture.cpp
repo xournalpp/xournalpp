@@ -61,7 +61,9 @@ void ZoomGesture::zoomBegin()
 	// get center of bounding box
 	gtk_gesture_get_bounding_box_center(GTK_GESTURE(gesture), &x, &y);
 
-	zoomControl->startZoomSequence(x, y);
+	Rectangle zoomSequenceRectangle = zoomControl->getVisibleRect();
+
+	zoomControl->startZoomSequence(x - zoomSequenceRectangle.x, y - zoomSequenceRectangle.y);
 }
 
 void ZoomGesture::zoomChanged(double zoom)

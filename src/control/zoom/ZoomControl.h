@@ -83,6 +83,11 @@ public:
 	 */
 	void scrollToZoomPosition(XojPageView* view);
 
+	/**
+	 * Get visible rect on xournal view, for Zoom Gesture
+	 */
+	Rectangle getVisibleRect();
+
 protected:
 	void fireZoomChanged();
 	void fireZoomRangeValueChanged();

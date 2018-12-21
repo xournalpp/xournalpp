@@ -40,20 +40,16 @@ void ZoomControl::startZoomSequence(double centerX, double centerY)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	GtkWidget* widget = view->getWidget();
-	Layout* layout = gtk_xournal_get_layout(widget);
-	// Save visible rectangle at beginning of zoom
-	zoomSequenceRectangle = layout->getVisibleRect();
-
-	this->zoomCenterX = centerX - zoomSequenceRectangle.x;
-	this->zoomCenterY = centerY - zoomSequenceRectangle.y;
-
+	zoomSequenceRectangle = getVisibleRect();
 
 	// Scale to 100% zoom
 	zoomSequenceRectangle.x /= this->zoom;
 	zoomSequenceRectangle.y /= this->zoom;
 
 	zoomSequenceStart = this->zoom;
+
+	this->zoomCenterX = centerX;
+	this->zoomCenterY = centerY;
 }
 
 /**
@@ -81,6 +77,16 @@ void ZoomControl::endZoomSequence()
 	XOJ_CHECK_TYPE(ZoomControl);
 	zoomCenterX = -1;
 	zoomCenterY = -1;
+}
+
+/**
+ * Get visible rect on xournal view, for Zoom Gesture
+ */
+Rectangle ZoomControl::getVisibleRect()
+{
+	GtkWidget* widget = view->getWidget();
+	Layout* layout = gtk_xournal_get_layout(widget);
+	return layout->getVisibleRect();
 }
 
 /**
