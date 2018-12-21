@@ -59,7 +59,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 
 	this->xournal = new XournalView(vpXournal, control);
 
-	this->zoomGesture = new ZoomGesture(get("winXournal"), control->getZoomControl());
+	this->zoomGesture = new ZoomGesture(get("mainWindow"), control->getZoomControl());
 
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
 
