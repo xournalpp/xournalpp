@@ -112,8 +112,8 @@ void ZoomControl::scrollToZoomPosition(XojPageView* view, double lastZoom)
 		// Absolute centred scrolling used for gesture
 		if (true)//(this->zoom_gesture_active)
 		{
-			vis_x = (int) ((zoom_center_x - marginLeft) * (zoom_now / zoom_gesture_begin - 1));
-			vis_y = (int) ((zoom_center_y - marginTop) * (zoom_now / zoom_gesture_begin - 1));
+			vis_x = (int) ((zoom_center_x - marginLeft) * (zoom_now / zoomSequenceStart - 1));
+			vis_y = (int) ((zoom_center_y - marginTop) * (zoom_now / zoomSequenceStart - 1));
 			layout->scrollAbs(zoomSequenceRectangle.x + vis_x, zoomSequenceRectangle.y + vis_y);
 		}
 

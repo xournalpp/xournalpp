@@ -25,7 +25,7 @@ public:
 	virtual ~ToolZoomSlider();
 
 public:
-	static void sliderChanged(GtkRange* range, ZoomControl* zoom);
+	static void sliderChanged(GtkRange* range, ToolZoomSlider* self);
 	virtual void zoomChanged(double lastZoom);
 	virtual void zoomRangeValuesChanged();
 	virtual string getToolDisplayName();
@@ -43,6 +43,7 @@ protected:
 private:
 	XOJ_TYPE_ATTRIB;
 
+	bool ignoreChange;
 	GtkWidget* slider;
 	ZoomControl* zoom;
 	bool horizontal;
