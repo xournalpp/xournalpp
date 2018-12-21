@@ -43,8 +43,6 @@ void ZoomControl::startZoomSequence(double centerX, double centerY)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	printf("zoom position: %lf / %lf\n", centerX, centerY);
-
 	if (centerX == -1 || centerY == -1)
 	{
 		GtkWidget* widget = view->getWidget();
@@ -115,36 +113,7 @@ void ZoomControl::scrollToZoomPosition(XojPageView* view)
 	x -= this->zoomWidgetPosX;
 	y -= this->zoomWidgetPosY;
 
-
-	// get margins for relative scroll calculation
-	double marginLeft = view->layout.getMarginLeft();
-	double marginTop = view->layout.getMarginTop();
-
-//		int visX = (int) ((zoomCenterX - marginLeft) * (this->zoom / zoomSequenceStart - 1));
-//		int visY = (int) ((zoomCenterY - marginTop) * (this->zoom / zoomSequenceStart - 1));
-//		layout->scrollAbs(zoomSequenceRectangle.x + visX, zoomSequenceRectangle.y + visY);
-
-
 	layout->scrollAbs(x, y);
-
-
-
-//	if (this->zoomCenterX == -1 || this->zoomCenterY == -1)
-//	{
-//		layout->scrollAbs(zoomSequenceRectangle.x * this->zoom, zoomSequenceRectangle.y * this->zoom);
-//	}
-//	else
-//	{
-////		// get margins for relative scroll calculation
-////		double marginLeft = (double) view->layout.getMarginLeft();
-////		double marginTop = (double) view->layout.getMarginTop();
-////
-////		int visX = (int) ((zoomCenterX - marginLeft) * (this->zoom / zoomSequenceStart - 1));
-////		int visY = (int) ((zoomCenterY - marginTop) * (this->zoom / zoomSequenceStart - 1));
-////		layout->scrollAbs(zoomSequenceRectangle.x + visX, zoomSequenceRectangle.y + visY);
-//
-//		layout->scrollAbs((zoomSequenceRectangle.x + zoomCenterX) * this->zoom, (zoomSequenceRectangle.y + zoomCenterY) * this->zoom);
-//	}
 }
 
 
