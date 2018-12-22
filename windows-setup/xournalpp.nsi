@@ -4,18 +4,31 @@
 
 ;--------------------------------
 ;Include Modern UI
-
-  !include "MUI2.nsh"
+!include "MUI2.nsh"
+; 64 Bit check
+!include x64.nsh
+; File association
+!include "FileAssociation.nsh"
 
 ;--------------------------------
 ;General
+
+Function .onInit
+	${If} ${RunningX64}
+		# 64 bit code
+	${Else}
+		# 32 bit code
+		MessageBox MB_OK "Xournal++ needs 64bit Operating System - quit installer"
+		Abort
+	${EndIf}
+FunctionEnd
 
 ;Name and file
 Name "Xournal++"
 OutFile "xournalpp-setup.exe"
 
 ;Default installation folder
-InstallDir $PROGRAMFILES\Xournal++
+InstallDir $PROGRAMFILES64\Xournal++
 
 ;Get installation folder from registry if available
 InstallDirRegKey HKCU "Software\Xournalpp" ""
@@ -60,7 +73,7 @@ Var StartMenuFolder
 ;--------------------------------
 ;Installer Sections
 
-Section "Xournal++" SecFeatures
+Section "Xournal++" SecXournalpp
 	; Required
 	SectionIn RO
 
@@ -84,16 +97,30 @@ Section "Xournal++" SecFeatures
 
 SectionEnd
 
+
+Section "Assign .xopp files" SecFileXopp
+	${registerExtension} "$INSTDIR\bin\xournalpp.exe" ".xopp" "Xournal++ file"
+SectionEnd
+
+Section "Assign .xoj files" SecFileXoj
+	${registerExtension} "$INSTDIR\bin\xournalpp.exe" ".xoj" "Xournal file"
+SectionEnd
+
+
 ;--------------------------------
 ;Descriptions
 
-  ;Language strings
-  LangString DESC_SecFeatures ${LANG_ENGLISH} "Feature selection"
+	;Language strings
+	LangString DESC_SecXournalpp ${LANG_ENGLISH} "Xournal++ executable"
+	LangString DESC_SecFileXopp ${LANG_ENGLISH} "Open .xopp files with Xournal++"
+	LangString DESC_SecFileXoj ${LANG_ENGLISH} "Open .xoj files with Xournal++"
 
-  ;Assign language strings to sections
-  !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecFeatures} $(DESC_SecFeatures)
-  !insertmacro MUI_FUNCTION_DESCRIPTION_END
+	;Assign language strings to sections
+	!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+		!insertmacro MUI_DESCRIPTION_TEXT ${SecXournalpp} $(DESC_SecXournalpp)
+		!insertmacro MUI_DESCRIPTION_TEXT ${SecFileXopp} $(DESC_SecFileXopp)
+		!insertmacro MUI_DESCRIPTION_TEXT ${SecFileXoj} $(DESC_SecFileXoj)
+	!insertmacro MUI_FUNCTION_DESCRIPTION_END
  
 ;--------------------------------
 ;Uninstaller Section
