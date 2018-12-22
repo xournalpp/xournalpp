@@ -871,7 +871,7 @@ void Control::help()
 {
 	GError* error = NULL;
 
-	gtk_show_uri(gtk_window_get_screen(getGtkWindow()), XOJ_HELP, gtk_get_current_event_time(), &error);
+	gtk_show_uri_on_window(getGtkWindow(), XOJ_HELP, gtk_get_current_event_time(), &error);
 	if (error)
 	{
 
