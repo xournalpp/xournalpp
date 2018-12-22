@@ -1,11 +1,15 @@
 #include "ToolZoomSlider.h"
 
+#include "control/zoom/ZoomControl.h"
+
 #include <config.h>
 #include <i18n.h>
 #include <StringUtils.h>
 
 ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom)
- : AbstractToolItem(id, handler, type, NULL)
+ : AbstractToolItem(id, handler, type, NULL),
+   ignoreChange(false),
+   sliderChangingByUser(false)
 {
 	XOJ_INIT_TYPE(ToolZoomSlider);
 
@@ -22,21 +26,36 @@ ToolZoomSlider::~ToolZoomSlider()
 	XOJ_RELEASE_TYPE(ToolZoomSlider);
 }
 
-void ToolZoomSlider::sliderChanged(GtkRange* range, ZoomControl* zoom)
+void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self)
 {
-	zoom->setZoom(gtk_range_get_value(range));
-}
+	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
 
-void ToolZoomSlider::zoomChanged(double lastZoom)
-{
-	XOJ_CHECK_TYPE(ToolZoomSlider);
-
-	if (this->slider == NULL)
+	if (self->ignoreChange)
 	{
 		return;
 	}
 
+	self->sliderChangingByUser = true;
+
+	self->zoom->startZoomSequence(-1, -1);
+	self->zoom->zoomSequnceChange(gtk_range_get_value(range), false);
+	self->zoom->endZoomSequence();
+
+	self->sliderChangingByUser = false;
+}
+
+void ToolZoomSlider::zoomChanged()
+{
+	XOJ_CHECK_TYPE(ToolZoomSlider);
+
+	if (this->slider == NULL || this->sliderChangingByUser)
+	{
+		return;
+	}
+
+	ignoreChange = true;
 	gtk_range_set_value(GTK_RANGE(this->slider), this->zoom->getZoom());
+	ignoreChange = false;
 }
 
 void ToolZoomSlider::zoomRangeValuesChanged()
@@ -134,26 +153,23 @@ GtkToolItem* ToolZoomSlider::newItem()
 
 	if (this->slider)
 	{
-		g_signal_handlers_disconnect_by_func(this->slider, (void*)(sliderChanged),
-		                                     this->zoom);
+		g_signal_handlers_disconnect_by_func(this->slider, (void* )(sliderChanged), this);
 	}
 
 	if (this->horizontal)
 	{
-		this->slider = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL,
-		                                        MIN_ZOOM, MAX_ZOOM, 0.1);
+		this->slider = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL, MIN_ZOOM, MAX_ZOOM, 0.1);
 	}
 	else
 	{
-		this->slider = gtk_scale_new_with_range(GTK_ORIENTATION_VERTICAL,
-		                                        MIN_ZOOM, MAX_ZOOM, 0.1);
+		this->slider = gtk_scale_new_with_range(GTK_ORIENTATION_VERTICAL, MIN_ZOOM, MAX_ZOOM, 0.1);
 		gtk_range_set_inverted(GTK_RANGE(this->slider), true);
 	}
-	g_signal_connect(this->slider, "value-changed", G_CALLBACK(sliderChanged),
-	                 this->zoom);
+
+	g_signal_connect(this->slider, "value-changed", G_CALLBACK(sliderChanged), this);
 	gtk_scale_set_draw_value(GTK_SCALE(this->slider), false);
 
-	if(this->horizontal)
+	if (this->horizontal)
 	{
 		gtk_widget_set_size_request(GTK_WIDGET(this->slider), 120, 0);
 	}
@@ -163,7 +179,11 @@ GtkToolItem* ToolZoomSlider::newItem()
 	}
 
 	gtk_container_add(GTK_CONTAINER(it), this->slider);
+
+	ignoreChange = true;
 	gtk_range_set_value(GTK_RANGE(this->slider), this->zoom->getZoom());
+	ignoreChange = false;
+
 	updateScaleMarks();
 
 	return it;

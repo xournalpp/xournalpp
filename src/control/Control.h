@@ -16,7 +16,6 @@
 #include "RecentManager.h"
 #include "ScrollHandler.h"
 #include "ToolHandler.h"
-#include "ZoomControl.h"
 #include "AudioController.h"
 
 #include "gui/MainWindow.h"
@@ -28,6 +27,7 @@
 #include "settings/MetadataManager.h"
 #include "settings/Settings.h"
 #include "undo/UndoRedoHandler.h"
+#include "zoom/ZoomControl.h"
 
 #include <XournalType.h>
 

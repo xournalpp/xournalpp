@@ -12,9 +12,11 @@
 #pragma once
 
 #include "AbstractToolItem.h"
-#include "control/ZoomControl.h"
+#include "control/zoom/ZoomListener.h"
 
 #include <XournalType.h>
+
+class ZoomControl;
 
 class ToolZoomSlider : public AbstractToolItem, public ZoomListener
 {
@@ -23,8 +25,8 @@ public:
 	virtual ~ToolZoomSlider();
 
 public:
-	static void sliderChanged(GtkRange* range, ZoomControl* zoom);
-	virtual void zoomChanged(double lastZoom);
+	static void sliderChanged(GtkRange* range, ToolZoomSlider* self);
+	virtual void zoomChanged();
 	virtual void zoomRangeValuesChanged();
 	virtual string getToolDisplayName();
 
@@ -41,6 +43,12 @@ protected:
 private:
 	XOJ_TYPE_ATTRIB;
 
+	bool ignoreChange;
+
+	/**
+	 * The slider is currently changing by user, do not update value
+	 */
+	bool sliderChangingByUser;
 	GtkWidget* slider;
 	ZoomControl* zoom;
 	bool horizontal;
