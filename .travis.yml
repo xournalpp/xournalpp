@@ -9,7 +9,6 @@ cache:
 - ccache
 
 os: linux
-env: GTK=3.22.30
 dist: xenial
 
 sudo: false
