@@ -85,10 +85,6 @@ if (BUILD_BOOST)
   add_dependencies (xournalpp-core boost)
 endif ()
 
-if (BUILD_POPPLER)
-  add_dependencies (xournalpp-core poppler)
-endif ()
-
 ## xournalpp main program ##
 add_executable (xournalpp
   $<TARGET_OBJECTS:xournalpp-core>

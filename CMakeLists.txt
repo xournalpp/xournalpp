@@ -133,7 +133,6 @@ execute_process(COMMAND ${LSB_RELEASE_EXEC} -rs
 )
 
 # Poppler
-option (BUILD_POPPLER "Build Poppler from git or other source" DEFAULT_BUILD_POPPLER)
 
 pkg_check_modules (PopplerGlib REQUIRED "poppler-glib >= 0.41.0")
 add_includes_ldflags ("${PopplerGlib_LDFLAGS}" "${PopplerGlib_INCLUDE_DIRS}")
@@ -293,24 +292,6 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 endif ()
 
-if (BUILD_POPPLER)
-	# Manual install Poppler libs
-	# RPATH is set before, so they will be loaded
-	install(CODE "MESSAGE(\"Install Poppler workaround to ${CMAKE_INSTALL_PREFIX}\")")
-
-	install(DIRECTORY DESTINATION ${CMAKE_INSTALL_PREFIX})
-
-	install(
-	  CODE "file(GLOB POPPLER_LIBS LIST_DIRECTORIES false \"\${CMAKE_CURRENT_BINARY_DIR}/poppler-prefix/src/poppler-build/libpoppler.so.*\")"
-	  CODE "file(INSTALL \${POPPLER_LIBS} DESTINATION ${POPPLER_LIB_DIR})"
-	)
-
-	install(
-	  CODE "file(GLOB POPPLER_GLIB_LIBS LIST_DIRECTORIES false \"\${CMAKE_CURRENT_BINARY_DIR}/poppler-prefix/src/poppler-build/glib/libpoppler-glib.so.*\")"
-	  CODE "file(INSTALL \${POPPLER_GLIB_LIBS} DESTINATION ${POPPLER_LIB_DIR})"
-	)
-endif()
-
 # Uninstall target
 configure_file (
   cmake/cmake_uninstall.cmake.in
@@ -335,7 +316,6 @@ Unstable features:
 	HighDPI Fixes:              ${UNSTABLE_HIGHDPI_FIXES}
 
 Static libraries:
-	Poppler:                    ${BUILD_POPPLER}
 	Boost:                      ${BUILD_BOOST}
 ")
 
