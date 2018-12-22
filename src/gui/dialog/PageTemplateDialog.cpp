@@ -27,16 +27,12 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
 
 	GtkTextDirection direction = gtk_widget_get_direction(widget);
 
-	GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET (menu));
+	GdkDisplay* display = gtk_widget_get_display(GTK_WIDGET(menu));
 
-	gint monitor_num = gdk_screen_get_monitor_at_window(screen, gtk_widget_get_window(widget));
+	GdkMonitor* monitor = gdk_display_get_monitor_at_window(display, gtk_widget_get_window(widget));
 
-	if (monitor_num < 0)
-	{
-		monitor_num = 0;
-	}
-	GdkRectangle monitor;
-	gdk_screen_get_monitor_geometry(screen, monitor_num, &monitor);
+	GdkRectangle geometry;
+	gdk_monitor_get_geometry(monitor, &geometry);
 
 	GtkAllocation arrow_allocation;
 	gtk_widget_get_allocation(widget, &arrow_allocation);
@@ -57,15 +53,15 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
 		*x -= menu_req.width - allocation.width;
 	}
 
-	if ((*y + arrow_allocation.height + menu_req.height) <= monitor.y + monitor.height)
+	if ((*y + arrow_allocation.height + menu_req.height) <= geometry.y + geometry.height)
 	{
 		*y += arrow_allocation.height;
 	}
-	else if ((*y - menu_req.height) >= monitor.y)
+	else if ((*y - menu_req.height) >= geometry.y)
 	{
 		*y -= menu_req.height;
 	}
-	else if (monitor.y + monitor.height - (*y + arrow_allocation.height) > *y)
+	else if (geometry.y + geometry.height - (*y + arrow_allocation.height) > *y)
 	{
 		*y += arrow_allocation.height;
 	}
