@@ -33,7 +33,7 @@ void initLocalisation()
 	textdomain(GETTEXT_PACKAGE);
 #endif //ENABLE_NLS
 
-	// Should not be needed: std::locale::global(gen("")); //"" - system default locale
+	std::locale::global(std::locale("")); //"" - system default locale
 	std::cout.imbue(std::locale());
 }
 
