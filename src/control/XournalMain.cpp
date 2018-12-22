@@ -23,6 +23,8 @@
 #include <boost/filesystem.hpp>
 namespace bf = boost::filesystem;
 
+#include <langinfo.h>
+
 #if __linux__
 #include <libgen.h>
 #endif
@@ -61,10 +63,10 @@ void XournalMain::initLocalisation()
 	textdomain(GETTEXT_PACKAGE);
 #endif //ENABLE_NLS
 
-    std::cout << "User-preferred locale setting is ";
-    std::cout << std::locale("").name().c_str() << '\n';
-
-//	std::locale::global(std::locale("")); // "" - system default locale
+	// Not working on Windows! Working on Linux, but not sure if it's needed
+#ifndef WIN32
+	std::locale::global(std::locale("")); // "" - system default locale
+#endif
 	std::cout.imbue(std::locale());
 }
 
