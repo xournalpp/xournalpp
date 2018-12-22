@@ -60,7 +60,7 @@ bool PopplerGlibDocument::equals(XojPdfDocumentInterface* doc)
 
 string pathToUri(path filename, GError** error)
 {
-	char * uri = g_filename_to_uri(filename.c_str(), NULL, error);
+	char * uri = g_filename_to_uri(PATH_TO_CSTR(filename), NULL, error);
 
 	if (uri == NULL)
 	{
