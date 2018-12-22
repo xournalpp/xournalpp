@@ -24,13 +24,13 @@ public:
 
 public:
 	/**
-	 * @return What should be renderered
+	 * @return What should be rendered
 	 * @override
 	 */
 	virtual PreviewRenderType getRenderType();
 
 	/**
-	 * @return The layer to be rendererd
+	 * @return The layer to be rendered
 	 */
 	int getLayer();
 
