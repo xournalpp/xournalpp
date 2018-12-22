@@ -59,6 +59,11 @@ void XournalMain::initLocalisation()
 
 	bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 	textdomain(GETTEXT_PACKAGE);
+	
+#ifdef WIN32
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif
+	
 #endif //ENABLE_NLS
 
 	// Not working on Windows! Working on Linux, but not sure if it's needed
