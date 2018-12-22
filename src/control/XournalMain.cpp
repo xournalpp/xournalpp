@@ -275,22 +275,6 @@ int XournalMain::run(int argc, char* argv[])
 	// Init GTK Display
 	gtk_init(&argc, &argv);
 
-
-// TODO !!!!!!!!!!!!!!!!!
-		string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % "" % "");
-
-			g_warning("%s", msg.c_str());
-		
-		for (int i = 0; i < msg.length(); i++)
-		{
-			char c = msg.at(i);
-			g_warning("%02x ", (int)c & 0xff);
-		}
-		
-		Util::showErrorToUser(NULL, msg);
-
-
-
 	initSettingsPath();
 
 	GladeSearchpath* gladePath = new GladeSearchpath();
