@@ -14,6 +14,7 @@
 #include "PlaceholderString.h"
 
 #include <libintl.h>
+#undef snprintf
 
 #define _(msg) gettext(msg)
 #define C_(context, msg) g_dpgettext (NULL, context "\004" msg, strlen(msg) + 1)
