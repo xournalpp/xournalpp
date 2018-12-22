@@ -7,7 +7,3 @@ add_library (util STATIC ${util_SOURCES})
 if (BUILD_BOOST)
   add_dependencies (util boost)
 endif ()
-
-if (BUILD_POPPLER)
-  add_dependencies (util poppler)
-endif ()

@@ -27,13 +27,6 @@ ppa-build
 build/
 desktop/desktop_install.sh
 
-# Poppler binaries
-src/pdf/popplerdirect/libpoppler-glib.a
-src/pdf/popplerdirect/libpoppler.a
-src/pdf/popplerdirect/poppler-0.24.1_build/
-src/pdf/popplerdirect/poppler-config.h
-src/pdf/popplerdirect/workaround/workaround.sh
-
 # NetBeans
 nbproject/
 
