@@ -23,8 +23,6 @@
 #include <boost/filesystem.hpp>
 namespace bf = boost::filesystem;
 
-#include <langinfo.h>
-
 #if __linux__
 #include <libgen.h>
 #endif
