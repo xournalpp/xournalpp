@@ -207,12 +207,12 @@ void ToolbarAdapter::removeFromToolbar(AbstractToolItem* item, string toolbarNam
 		if (item != NULL)
 		{
 			cout << _F("Could not remove tool item {1} from Toolbar {2} on position {3}")
-						% item->getId() % toolbarName % id << endl;
+					   % item->getId() % toolbarName % id << endl;
 		}
 		else
 		{
 			cout << _F("Could not remove tool item from Toolbar {1} on position {2}")
-						% toolbarName % id << endl;
+					   % toolbarName % id << endl;
 		}
 	}
 }

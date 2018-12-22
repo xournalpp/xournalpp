@@ -131,7 +131,7 @@ void PdfPagesDialog::show(GtkWindow* parent)
 
 	gtk_button_set_label(GTK_BUTTON(w),
 		(unused == 1
-			? _C("Show only not used pages (one unused page)")
+			? _("Show only not used pages (one unused page)")
 			: FC(_F("Show only not used pages ({1} unused pages)") % unused)));
 
 	BackgroundSelectDialogBase::show(parent);

@@ -32,7 +32,7 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GladeSearchpath* gladeSear
 
 	if (withDevice)
 	{
-		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), _C("No device"));
+		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), _("No device"));
 
 		DeviceListHelper devList;
 		for (InputDevice& dev : devList.getDeviceList())
@@ -51,18 +51,18 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GladeSearchpath* gladeSear
 	GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
 	GtkTreeIter iter;
 
-	ADD_TYPE_CB("empty.svg",            _C("Don't change"),     TOOL_NONE);
-	ADD_TYPE_CB("tool_pencil.svg",      _C("Pen"),              TOOL_PEN);
-	ADD_TYPE_CB("tool_eraser.svg",      _C("Eraser"),           TOOL_ERASER);
-	ADD_TYPE_CB("tool_highlighter.svg", _C("Highlighter"),      TOOL_HILIGHTER);
-	ADD_TYPE_CB("tool_text.svg",        _C("Text"),             TOOL_TEXT);
-	ADD_TYPE_CB("tool_image.svg",       _C("Insert image"),     TOOL_IMAGE);
-	ADD_TYPE_CB("stretch.svg",          _C("Vertical space"),   TOOL_VERTICAL_SPACE);
-	ADD_TYPE_CB("lasso.svg",            _C("Select region"),    TOOL_SELECT_REGION);
-	ADD_TYPE_CB("rect-select.svg",      _C("Select rectangle"), TOOL_SELECT_RECT);
-	//ADD_TYPE_CB("rect-draw.svg",      _C("Draw rectangle"),   TOOL_DRAW_RECT);
-	//ADD_TYPE_CB("circle-draw.svg",    _C("Draw circle"),      TOOL_DRAW_CIRCLE);
-	ADD_TYPE_CB("hand.svg",             _C("Hand"),             TOOL_HAND);
+	ADD_TYPE_CB("empty.svg",            _("Don't change"),     TOOL_NONE);
+	ADD_TYPE_CB("tool_pencil.svg",      _("Pen"),              TOOL_PEN);
+	ADD_TYPE_CB("tool_eraser.svg",      _("Eraser"),           TOOL_ERASER);
+	ADD_TYPE_CB("tool_highlighter.svg", _("Highlighter"),      TOOL_HILIGHTER);
+	ADD_TYPE_CB("tool_text.svg",        _("Text"),             TOOL_TEXT);
+	ADD_TYPE_CB("tool_image.svg",       _("Insert image"),     TOOL_IMAGE);
+	ADD_TYPE_CB("stretch.svg",          _("Vertical space"),   TOOL_VERTICAL_SPACE);
+	ADD_TYPE_CB("lasso.svg",            _("Select region"),    TOOL_SELECT_REGION);
+	ADD_TYPE_CB("rect-select.svg",      _("Select rectangle"), TOOL_SELECT_RECT);
+	//ADD_TYPE_CB("rect-draw.svg",      _("Draw rectangle"),   TOOL_DRAW_RECT);
+	//ADD_TYPE_CB("circle-draw.svg",    _("Draw circle"),      TOOL_DRAW_CIRCLE);
+	ADD_TYPE_CB("hand.svg",             _("Hand"),             TOOL_HAND);
 
 
 	this->cbTool = get("cbTool");
@@ -78,29 +78,29 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GladeSearchpath* gladeSear
 	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "text", 1, NULL);
 
 	this->cbThickness = get("cbThickness");
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _C("Don't change"));
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _C("Thin"));
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _C("Medium"));
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _C("Thick"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Don't change"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Thin"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Medium"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Thick"));
 	gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 0);
 
 	this->colorButton = get("colorButton");
 
 	this->cbDrawingType = get("cbDrawingType");
 	// DRAWING_TYPE_DONT_CHANGE
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Don't change"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Don't change"));
 	// DRAWING_TYPE_DEFAULT
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Normal drawing"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Normal drawing"));
 	// DRAWING_TYPE_RULER
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Draw Line"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Line"));
 	// DRAWING_TYPE_RECTANGLE
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Draw Rectangle"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Rectangle"));
 	// DRAWING_TYPE_CIRCLE
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Draw Circle"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Circle"));
 	// DRAWING_TYPE_ARROW
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Draw Arrow"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Arrow"));
 	// DRAWING_TYPE_STROKE_RECOGNIZER
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Stroke recognizer"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Stroke recognizer"));
 
 
 	// Values in glade GUI!

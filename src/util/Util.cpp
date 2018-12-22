@@ -134,11 +134,11 @@ void Util::openFileWithDefaultApplicaion(path filename)
 		replace_pair('\"', "\\\"")
 	});
 
-	string command = FS(bl::format(OPEN_PATTERN) % escaped);
-	cout << bl::format("XPP Execute command: «{1}»") % command << endl;
+	string command = FS(FORMAT_STR(OPEN_PATTERN) % escaped);
+	cout << FORMAT_STR("XPP Execute command: «{1}»") % command << endl;
 	if (system(command.c_str()) != 0)
 	{
-		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename);
+		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename.string());
 		showErrorToUser(NULL, msg);
 	}
 }
@@ -161,11 +161,11 @@ void Util::openFileWithFilebrowser(path filename)
 		replace_pair('\"', "\\\"")
 	});
 
-	string command = FS(bl::format(OPEN_PATTERN) % escaped);
-	cout << bl::format("XPP show file in filebrowser command: «{1}»") % command << endl;
+	string command = FS(FORMAT_STR(OPEN_PATTERN) % escaped);
+	cout << FORMAT_STR("XPP show file in filebrowser command: «{1}»") % command << endl;
 	if (system(command.c_str()) != 0)
 	{
-		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename);
+		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename.string());
 		showErrorToUser(NULL, msg);
 	}
 }

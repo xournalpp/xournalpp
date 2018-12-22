@@ -21,7 +21,7 @@ void PdfExportJob::addFilterToDialog()
 {
 	XOJ_CHECK_TYPE(PdfExportJob);
 
-	addFileFilterToDialog(_C("PDF files"), "*.pdf");
+	addFileFilterToDialog(_("PDF files"), "*.pdf");
 }
 
 void PdfExportJob::prepareSavePath(path& path)
@@ -46,14 +46,14 @@ bool PdfExportJob::isUriValid(string& uri)
 	string ext = filename.extension().string();
 	if (ext != ".pdf")
 	{
-		string msg = _C("File name needs to end with .pdf");
+		string msg = _("File name needs to end with .pdf");
 		Util::showErrorToUser(control->getGtkWindow(), msg);
 		return false;
 	}
 
 	if (boost::iequals(filename.string(), control->getDocument()->getPdfFilename().string()))
 	{
-		string msg = _C("Do not overwrite the background PDF! This will cause errors!");
+		string msg = _("Do not overwrite the background PDF! This will cause errors!");
 		Util::showErrorToUser(control->getGtkWindow(), msg);
 		return false;
 	}

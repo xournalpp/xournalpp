@@ -58,6 +58,7 @@ namespace bf = boost::filesystem;
 
 #include <gtk/gtk.h>
 
+#include <sstream>
 #include <iostream>
 #include <fstream>
 using std::cout;
@@ -1001,7 +1002,7 @@ void Control::customizeToolbars()
 					{
 						string filename = data->getName();
 						filename += " ";
-						filename += FS(_("Copy"));
+						filename += _("Copy");
 						filename += " ";
 						filename += std::to_string(i);
 
@@ -1009,7 +1010,7 @@ void Control::customizeToolbars()
 					}
 					else
 					{
-						data->setName(data->getName() + " " + FS(_("Copy")));
+						data->setName(data->getName() + " " + _("Copy"));
 					}
 					data->setId(id);
 					break;
@@ -2025,12 +2026,12 @@ bool Control::openFile(path filename, int scrollToPage)
 												   GTK_DIALOG_MODAL,
 													   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
 													   loadHandler.isAttachedPdfMissing()
-															? _C("The attached background PDF could not be found.")
-															: _C("The background PDF could not be found."));
+															? _("The attached background PDF could not be found.")
+															: _("The background PDF could not be found."));
 
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Select another PDF"), 1);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Remove PDF Background"), 2);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Cancel"), 3);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), 1);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 2);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
 		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
@@ -2055,7 +2056,7 @@ bool Control::openFile(path filename, int scrollToPage)
 
 	if (!loadedDocument)
 	{
-		string msg = FS(_F("Error opening file \"{1}\"") % filename) + "\n" + loadHandler.getLastError();
+		string msg = FS(_F("Error opening file \"{1}\"") % filename.string()) + "\n" + loadHandler.getLastError();
 		Util::showErrorToUser(getGtkWindow(), msg);
 
 		fileLoaded(scrollToPage);
@@ -2239,7 +2240,7 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 		string errMsg = doc->getLastErrorMsg();
 		this->doc->unlock();
 
-		string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filename % errMsg);
+		string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filename.string() % errMsg);
 		Util::showErrorToUser(getGtkWindow(), msg);
 	}
 	getCursor()->setCursorBusy(false);
@@ -2359,14 +2360,14 @@ bool Control::showSaveDialog()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Save File"), getGtkWindow(),
-													GTK_FILE_CHOOSER_ACTION_SAVE, _C("_Cancel"), GTK_RESPONSE_CANCEL,
-													_C("_Save"), GTK_RESPONSE_OK, NULL);
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Save File"), getGtkWindow(),
+													GTK_FILE_CHOOSER_ACTION_SAVE, _("_Cancel"), GTK_RESPONSE_CANCEL,
+													_("_Save"), GTK_RESPONSE_OK, NULL);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
 	GtkFileFilter* filterXoj = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterXoj, _C("Xournal++ files"));
+	gtk_file_filter_set_name(filterXoj, _("Xournal++ files"));
 	gtk_file_filter_add_pattern(filterXoj, "*.xopp");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
@@ -2522,11 +2523,11 @@ bool Control::close(bool destroy)
 	{
 		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL,
 												   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, "%s",
-												   _C("This document is not saved yet."));
+												   _("This document is not saved yet."));
 
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Save"), 1);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Discard"), 2);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Cancel"), 3);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save"), 1);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
 		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		int resNotSaved = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
@@ -2559,11 +2560,11 @@ bool Control::close(bool destroy)
 		{
 			GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL,
 													   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, "%s",
-													   _C("Document file was removed."));
+													   _("Document file was removed."));
 
-			gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Save As"), 1);
-			gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Discard"), 2);
-			gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Cancel"), 3);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save As"), 1);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
 			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 			int resDocRemoved = gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
@@ -2816,7 +2817,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 			}
 			else
 			{
-				throw INPUT_STREAM_EXCEPTION("Get unknown object {1}", name);
+				throw InputStreamException(FS(FORMAT_STR("Get unknown object {1}") % name), __FILE__, __LINE__);
 			}
 
 			in >> element;

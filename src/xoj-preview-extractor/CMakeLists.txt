@@ -6,6 +6,7 @@ endif ()
 
 add_executable (xournal-thumbnailer
   xournal-thumbnailer.cpp
+  "${PROJECT_SOURCE_DIR}/src/util/PlaceholderString.cpp"
   "${PROJECT_SOURCE_DIR}/src/util/XojPreviewExtractor.cpp"
 )
 

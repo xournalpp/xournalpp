@@ -141,7 +141,7 @@ void SelectBackgroundColorDialog::show(GtkWindow* parent)
 {
 	XOJ_CHECK_TYPE(SelectBackgroundColorDialog);
 
-	GtkWidget* dialog = gtk_color_chooser_dialog_new(_C("Select background color"), parent);
+	GtkWidget* dialog = gtk_color_chooser_dialog_new(_("Select background color"), parent);
 	gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(dialog), false);
 
 	gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9,

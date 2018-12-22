@@ -21,15 +21,10 @@
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
-#include <boost/locale.hpp>
 namespace bf = boost::filesystem;
 
 #if __linux__
 #include <libgen.h>
-#endif
-
-#ifdef __APPLE__
-#undef ENABLE_NLS
 #endif
 
 namespace bf = boost::filesystem;
@@ -56,8 +51,6 @@ void XournalMain::initLocalisation()
 {
 	XOJ_CHECK_TYPE(XournalMain);
 
-	//locale generator
-	boost::locale::generator gen;
 #ifdef ENABLE_NLS
 
 #ifdef WIN32
@@ -65,14 +58,11 @@ void XournalMain::initLocalisation()
 #define PACKAGE_LOCALE_DIR "../share/po/"
 #endif
 
-	gen.add_messages_path(PACKAGE_LOCALE_DIR);
-	gen.add_messages_domain(GETTEXT_PACKAGE);
-	
 	bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 	textdomain(GETTEXT_PACKAGE);
 #endif //ENABLE_NLS
 
-	std::locale::global(gen("")); // "" - system default locale
+	std::locale::global(std::locale("")); // "" - system default locale
 	std::cout.imbue(std::locale());
 }
 
@@ -112,11 +102,11 @@ void XournalMain::checkForErrorlog()
 		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
 			GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
 		
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Send Bugreport"), 1);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Open Logfile"), 2);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Open Logfile directory"), 3);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Delete Logfile"), 4);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Cancel"), 5);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), 2);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile directory"), 3);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), 4);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 5);
 
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 
@@ -157,12 +147,12 @@ void XournalMain::checkForEmergencySave() {
 	// TODO Check for emergency save document!
 	//	gchar * filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, "errorlog.log", NULL);
 	//	if (g_file_test(filename, G_FILE_TEST_EXISTS)) {
-	//		GtkWidget * dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, _C(
+	//		GtkWidget * dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, _(
 	//				"There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may been fixed.\nLogfile: %s"), filename);
-	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Send Bugreport"), 1);
-	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Open Logfile"), 2);
-	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Delete Logfile"), 3);
-	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Cancel"), 4);
+	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
+	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), 2);
+	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), 3);
+	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 4);
 	//
 	//		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 	//
@@ -172,7 +162,7 @@ void XournalMain::checkForEmergencySave() {
 	//			Util::openFileWithFilebrowser(filename);
 	//		} else if (res == 3) { // Delete Logfile
 	//			if (g_unlink(filename) != 0) {
-	//				GtkWidget * dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", _C(
+	//				GtkWidget * dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", _(
 	//						"Errorlog could not be deleted. You have to delete it manually.\nLogfile: %s"), filename);
 	//				gtk_dialog_run(GTK_DIALOG(dlgError));
 	//			}
@@ -299,8 +289,8 @@ int XournalMain::run(int argc, char* argv[])
 	{
 		if (g_strv_length(optFilename) != 1)
 		{
-			string msg = FC(_("Sorry, Xournal++ can only open one file from the command line.\n"
-					 "Others are ignored."));
+			string msg = _("Sorry, Xournal++ can only open one file at once.\n"
+						   "Others are ignored.");
 			Util::showErrorToUser((GtkWindow*) *win, msg);
 		}
 
@@ -318,8 +308,8 @@ int XournalMain::run(int argc, char* argv[])
 		}
 		else
 		{
-			string msg = FC(_("Sorry, Xournal++ cannot open remote files at the moment.\n"
-					"You have to copy the file to a local directory."));
+			string msg = _("Sorry, Xournal++ cannot open remote files at the moment.\n"
+						   "You have to copy the file to a local directory.");
 			Util::showErrorToUser((GtkWindow*) *win, msg);
 		}
 	}

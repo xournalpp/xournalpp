@@ -2,6 +2,7 @@
 
 #include "StringUtils.h"
 #include <config-dev.h>
+#include <i18n.h>
 
 #include <glib.h>
 
@@ -89,11 +90,11 @@ void xoj_momoryleak_printRemainingObjects()
 		if (x != 0)
 		{
 			sum += x;
-			cout << bl::format("MemoryLeak: {1} objects of type: {2}") % x % xoj_type_getName(i) << endl;
+			cout << FORMAT_STR("MemoryLeak: {1} objects of type: {2}") % x % xoj_type_getName(i) << endl;
 		}
 	}
 
-	cout << bl::format("MemoryLeak: sum {1} objects.") % sum << endl;
+	cout << FORMAT_STR("MemoryLeak: sum {1} objects.") % sum << endl;
 }
 
 #endif // DEV_MEMORY_LEAK_CHECKING

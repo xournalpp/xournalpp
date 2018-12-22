@@ -415,14 +415,14 @@ bool Document::readPdf(path filename, bool initPages, bool attachToDocument)
 
 	if (!pdfDocument.load(filename.c_str(), password.c_str(), &popplerError))
 	{
-		lastError = FS(_F("Document not loaded! ({1}), {2}") % filename % popplerError->message);
+		lastError = FS(_F("Document not loaded! ({1}), {2}") % filename.string() % popplerError->message);
 		g_error_free(popplerError);
 		unlock();
 
 		return false;
 	}
 
-	cout << bl::format("attachToDocument: {1}") % attachToDocument << endl;
+	cout << "attachToDocument: " << attachToDocument << endl;
 
 	this->pdfFilename = filename;
 	this->attachPdf = attachToDocument;

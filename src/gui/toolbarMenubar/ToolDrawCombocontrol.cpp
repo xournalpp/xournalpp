@@ -39,7 +39,7 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, Act
 	drawTypes.push_back(new ToolDrawType(_("Draw Circle"),			"circle-draw.svg",		ACTION_TOOL_DRAW_CIRCLE ));
 	drawTypes.push_back(new ToolDrawType(_("Draw Arrow"),			"arrow-draw.svg",		ACTION_TOOL_DRAW_ARROW  ));
 	drawTypes.push_back(new ToolDrawType(_("Draw Line"),			"ruler.svg",			ACTION_RULER            ));
-	drawTypes.push_back(new ToolDrawType(_C("Stroke recognizer"),	"shape_recognizer.svg",	ACTION_SHAPE_RECOGNIZER ));
+	drawTypes.push_back(new ToolDrawType(_("Stroke recognizer"),	"shape_recognizer.svg",	ACTION_SHAPE_RECOGNIZER ));
 
 	for (ToolDrawType* t : drawTypes)
 	{
@@ -116,10 +116,10 @@ GtkToolItem* ToolDrawCombocontrol::newItem()
 {
 	XOJ_CHECK_TYPE(ToolDrawCombocontrol);
 
-	labelWidget = gtk_label_new(_C("Draw Rectangle"));
+	labelWidget = gtk_label_new(_("Draw Rectangle"));
 	iconWidget = gtk_image_new_from_pixbuf(drawTypes[0]->pixbuf);
 
-	GtkToolItem* it = gtk_menu_tool_toggle_button_new(iconWidget, _C("Draw Rectangle"));
+	GtkToolItem* it = gtk_menu_tool_toggle_button_new(iconWidget, _("Draw Rectangle"));
 	gtk_tool_button_set_label_widget(GTK_TOOL_BUTTON(it), labelWidget);
 	gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popupMenu);
 	return it;

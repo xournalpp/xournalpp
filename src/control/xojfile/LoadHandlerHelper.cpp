@@ -67,7 +67,7 @@ bool LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* lo
 {
 	if (text == NULL)
 	{
-		error("%s", _C("Attribute color not set!"));
+		error("%s", _("Attribute color not set!"));
 		return false;
 	}
 

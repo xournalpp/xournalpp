@@ -10,6 +10,7 @@
 #include <config.h>
 #include <i18n.h>
 
+#include <sstream>
 #include <fstream>
 using std::ofstream;
 
@@ -182,14 +183,14 @@ void PageTemplateDialog::saveToFile()
 
 	saveToModel();
 
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Save File"), GTK_WINDOW(this->getWindow()),
-													GTK_FILE_CHOOSER_ACTION_SAVE, _C("_Cancel"), GTK_RESPONSE_CANCEL,
-													_C("_Save"), GTK_RESPONSE_OK, NULL);
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Save File"), GTK_WINDOW(this->getWindow()),
+													GTK_FILE_CHOOSER_ACTION_SAVE, _("_Cancel"), GTK_RESPONSE_CANCEL,
+													_("_Save"), GTK_RESPONSE_OK, NULL);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
 	GtkFileFilter* filterXoj = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterXoj, _C("Xournal++ template"));
+	gtk_file_filter_set_name(filterXoj, _("Xournal++ template"));
 	gtk_file_filter_add_pattern(filterXoj, "*.xopt");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
