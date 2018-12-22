@@ -11,6 +11,7 @@
 #include "gui/PageView.h"
 #include "gui/Layout.h"
 #include "gui/XournalView.h"
+#include "model/Point.h"
 
 #include <Util.h>
 
@@ -467,7 +468,7 @@ PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* 
 	PositionInputData pos;
 	pos.x = x - page->getX() - xournal->x;
 	pos.y = y - page->getY() - xournal->y;
-	pos.pressure = 1.0;
+	pos.pressure = Point::NO_PRESURE;
 
 	if (presureSensitivity)
 	{
