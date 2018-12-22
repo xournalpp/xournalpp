@@ -2,6 +2,7 @@
 #include "PopplerGlibPage.h"
 #include "PopplerGlibPageBookmarkIterator.h"
 
+#include <Util.h>
 #include <memory>
 
 
