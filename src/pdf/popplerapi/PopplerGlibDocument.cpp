@@ -69,6 +69,13 @@ bool PopplerGlibDocument::save(path filename, GError** error)
 
 	string uri = "file://";
 	uri += filename.string();
+
+#if WIN32
+	StringUtils::replace_all_chars(uri, {
+		replace_pair('\\', "/"),
+	});
+#endif
+
 	return poppler_document_save(document, uri.c_str(), error);
 }
 
@@ -78,6 +85,13 @@ bool PopplerGlibDocument::load(path filename, string password, GError** error)
 
 	string uri = "file://";
 	uri += filename.string();
+
+#if WIN32
+	StringUtils::replace_all_chars(uri, {
+		replace_pair('\\', "/"),
+	});
+#endif
+
 	this->document = poppler_document_new_from_file(uri.c_str(), password.c_str(), error);
 
 	return this->document != NULL;

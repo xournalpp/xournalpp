@@ -149,7 +149,7 @@ void Util::openFileWithFilebrowser(path filename)
 
 #ifdef __APPLE__
 #define OPEN_PATTERN "open \"{1}\""
-#elif _WIN32 // note the underscore: without it, it's not msdn official!
+#elif WIN32
 #define OPEN_PATTERN "explorer.exe /n,/e,\"{1}\""
 #else // linux, unix, ...
 #define OPEN_PATTERN "nautilus \"file://{1}\" || dolphin \"file://{1}\" || konqueror \"file://{1}\" &"
