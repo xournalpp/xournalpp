@@ -1,5 +1,7 @@
 #include "PlaceholderString.h"
 
+#include <glib.h>
+
 /**
  * Base class for Formatting
  */
@@ -96,7 +98,16 @@ string PlaceholderString::formatPart(string format)
 		format = format.substr(0, comma);
 	}
 
-	int index = std::stoi(format);
+	int index;
+	try
+	{
+		index = std::stoi(format);
+	}
+	catch (const std::exception& e)
+	{
+		g_error("Could not parse «%s» as int, error: %s", format.c_str(), e.what());
+		return "{?}";
+	}
 
 	// Placeholder index starting at 1, vector at 0
 	index--;
