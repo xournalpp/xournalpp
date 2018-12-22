@@ -3,7 +3,7 @@
  *
  * Internationalization module
  *
- * @author MarPiRK
+ * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
  *
  * @license GNU GPLv2 or later
@@ -11,42 +11,9 @@
 
 #pragma once
 
+#include "PlaceholderString.h"
+
 #include <libintl.h>
-
-#include <string>
-using std::string;
-
-/**
- * Placeholder String, used for formatting. Support Placeholder like
- * {1}, {2} etc. Use {{ for {
- */
-class PlaceholderString {
-public:
-	PlaceholderString(const char* text);
-	~PlaceholderString();
-
-	// Placeholder methods
-public:
-	PlaceholderString& operator%(uint64_t value);
-	PlaceholderString& operator%(int value);
-	PlaceholderString& operator%(string value);
-
-private:
-	void process();
-
-	// Process Method
-public:
-	string str();
-	const char* c_str();
-
-private:
-	/**
-	 * Input text
-	 */
-	const char* text;
-};
-
-std::ostream &operator<<(std::ostream &os, PlaceholderString &ps);
 
 #define _(msg) gettext(msg)
 #define C_(context, msg) g_dpgettext (NULL, context "\004" msg, strlen(msg) + 1)

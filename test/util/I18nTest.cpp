@@ -50,7 +50,7 @@ public:
 	{
 		string msg = FS(FORMAT_STR("test{{123") % 1 % 2 % 3);
 
-		CPPUNIT_ASSERT_EQUAL(std::string("test{{123"), msg);
+		CPPUNIT_ASSERT_EQUAL(std::string("test{123"), msg);
 	}
 
 	void testReplace()
