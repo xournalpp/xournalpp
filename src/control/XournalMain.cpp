@@ -61,7 +61,8 @@ void XournalMain::initLocalisation()
 	textdomain(GETTEXT_PACKAGE);
 #endif //ENABLE_NLS
 
-    std::cout << "User-preferred locale setting is " << std::locale("").name().c_str() << '\n';
+    std::cout << "User-preferred locale setting is ";
+    std::cout << std::locale("").name().c_str() << '\n';
 
 //	std::locale::global(std::locale("")); // "" - system default locale
 	std::cout.imbue(std::locale());
