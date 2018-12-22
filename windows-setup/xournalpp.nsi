@@ -61,26 +61,26 @@ Var StartMenuFolder
 ;Installer Sections
 
 Section "Xournal++" SecFeatures
+	; Required
+	SectionIn RO
 
-  SetOutPath "$INSTDIR"
-  
-  ; Files to put into the setup
-  File /r "setup\*"
-  
-  ;Store installation folder
-  WriteRegStr HKCU "Software\Xournalpp" "" $INSTDIR
-  
-  ;Create uninstaller
-  WriteUninstaller "$INSTDIR\Uninstall.exe"
-  
-  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-    
-    ;Create shortcuts
-    CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
-    CreateShortcut "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk" "$INSTDIR\Bin\xournalpp.exe"
-    CreateShortcut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
-  
-  !insertmacro MUI_STARTMENU_WRITE_END
+	SetOutPath "$INSTDIR"
+
+	; Files to put into the setup
+	File /r "setup\*"
+
+	;Store installation folder
+	WriteRegStr HKCU "Software\Xournalpp" "" $INSTDIR
+
+	;Create uninstaller
+	WriteUninstaller "$INSTDIR\Uninstall.exe"
+
+	!insertmacro MUI_STARTMENU_WRITE_BEGIN Application
+		;Create shortcuts
+		CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
+		CreateShortcut "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk" "$INSTDIR\Bin\xournalpp.exe"
+		CreateShortcut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
+	!insertmacro MUI_STARTMENU_WRITE_END
 
 SectionEnd
 

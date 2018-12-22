@@ -44,7 +44,7 @@ mkdir -p setup/share/po/zh/LC_MESSAGES
 cp -r ../po/cs.mo setup/share/po/cs/LC_MESSAGES/xournalpp.mo
 cp -r ../po/zh_HK.mo setup/share/po/zh_HK/LC_MESSAGES/xournalpp.mo
 cp -r ../po/de.mo setup/share/po/de/LC_MESSAGES/xournalpp.mo
-cp -r ../po/ps.mo setup/share/po/pl/LC_MESSAGES/xournalpp.mo
+cp -r ../po/pl.mo setup/share/po/pl/LC_MESSAGES/xournalpp.mo
 cp -r ../po/zh_TW.mo setup/share/po/zh_TW/LC_MESSAGES/xournalpp.mo
 cp -r ../po/zh.mo setup/share/po/zh/LC_MESSAGES/xournalpp.mo
 

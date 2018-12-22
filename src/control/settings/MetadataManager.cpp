@@ -172,7 +172,16 @@ MetadataEntry MetadataManager::loadMetadataFile(string path, string file)
 		// Not valid
 		return entry;
 	}
-	entry.page = std::stoi(line.substr(5));
+
+	try
+	{
+		entry.page = std::stoi(line.substr(5));
+	}
+	catch (const std::exception& e)
+	{
+		// Return invalid entry
+		return entry;
+	}
 
 	if (!getline(infile, line))
 	{

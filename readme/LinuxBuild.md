@@ -50,11 +50,6 @@ make
 
 Use `cmake-gui ..` to see graphically all available options.
 
-With `-DADVANCED_PDF_EXPORT_POPPLER=ON` the internal Poppler API is used, and
-PDFs are exported with Bookmarks, but this is only working with some Poppler
-Versions.
-If not working, add `-DBUILD_POPPLER=ON` to build Poppler manually.
-
 With Cairo 1.16 PDF Bookmarks will be possible, but this Version is not yet
 common available, therefore the Cairo PDF Export is without PDF Bookmarks.
 

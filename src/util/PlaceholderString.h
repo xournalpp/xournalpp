@@ -30,8 +30,7 @@ public:
 
 	// Placeholder methods
 public:
-	PlaceholderString& operator%(uint64_t value);
-	PlaceholderString& operator%(int value);
+	PlaceholderString& operator%(int64_t value);
 	PlaceholderString& operator%(string value);
 
 private:

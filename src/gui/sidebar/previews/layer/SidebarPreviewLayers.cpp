@@ -8,10 +8,10 @@
 #include <i18n.h>
 
 SidebarPreviewLayers::SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
- : SidebarPreviewBase(control, gui, toolbar)
+ : SidebarPreviewBase(control, gui, toolbar),
+   displayedPage(0)
 {
 	XOJ_INIT_TYPE(SidebarPreviewLayers);
-	displayedPage = 0;
 }
 
 SidebarPreviewLayers::~SidebarPreviewLayers()
@@ -46,12 +46,10 @@ void SidebarPreviewLayers::updatePreviews()
 	this->previews.clear();
 
 	Document* doc = this->getControl()->getDocument();
-	// doc->lock();
 
 	int len = doc->getPageCount();
 	if (displayedPage < 0 || displayedPage >= len)
 	{
-		// doc->unlock();
 		return;
 	}
 
@@ -72,7 +70,6 @@ void SidebarPreviewLayers::updatePreviews()
 	gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
 
 	layout();
-	// doc->unlock();
 }
 
 void SidebarPreviewLayers::pageSelected(int page)
