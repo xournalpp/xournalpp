@@ -94,7 +94,7 @@ void xoj_momoryleak_printRemainingObjects()
 		}
 	}
 
-	cout << FORMAT_STR("MemoryLeak: sum {1} objects.") % sum << endl;
+	g_message("MemoryLeak: sum %i objects.", sum);
 }
 
 #endif // DEV_MEMORY_LEAK_CHECKING
