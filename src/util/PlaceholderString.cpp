@@ -1,5 +1,7 @@
 #include "PlaceholderString.h"
 
+#include <glib.h>
+
 /**
  * Base class for Formatting
  */
@@ -39,7 +41,7 @@ private:
  */
 class PlaceholderElementInt : public PlaceholderElement{
 public:
-	PlaceholderElementInt(int value)
+	PlaceholderElementInt(int64_t value)
 	 : value(value)
 	{
 	}
@@ -51,31 +53,8 @@ public:
 	}
 
 private:
-	int value;
+	int64_t value;
 };
-
-
-/**
- * Format uint64_t
- */
-class PlaceholderElementUint64_t : public PlaceholderElement{
-public:
-	PlaceholderElementUint64_t(uint64_t value)
-	 : value(value)
-	{
-	}
-
-public:
-	string format(string format)
-	{
-		return std::to_string(value);
-	}
-
-private:
-	uint64_t value;
-};
-
-
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -96,13 +75,7 @@ PlaceholderString::~PlaceholderString()
 	data.clear();
 }
 
-PlaceholderString& PlaceholderString::operator%(uint64_t value)
-{
-	data.push_back(new PlaceholderElementUint64_t(value));
-	return *this;
-}
-
-PlaceholderString& PlaceholderString::operator%(int value)
+PlaceholderString& PlaceholderString::operator%(int64_t value)
 {
 	data.push_back(new PlaceholderElementInt(value));
 	return *this;
@@ -125,7 +98,16 @@ string PlaceholderString::formatPart(string format)
 		format = format.substr(0, comma);
 	}
 
-	int index = std::stoi(format);
+	int index;
+	try
+	{
+		index = std::stoi(format);
+	}
+	catch (const std::exception& e)
+	{
+		g_error("Could not parse «%s» as int, error: %s", format.c_str(), e.what());
+		return "{?}";
+	}
 
 	// Placeholder index starting at 1, vector at 0
 	index--;
