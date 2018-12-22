@@ -46,7 +46,6 @@ XournalMain::~XournalMain()
 	XOJ_RELEASE_TYPE(XournalMain);
 }
 
-// it HAS to be done – otherwise such things like boost::algorithm::to_lower wont work, throwing casting exceptions
 void XournalMain::initLocalisation()
 {
 	XOJ_CHECK_TYPE(XournalMain);
@@ -62,7 +61,9 @@ void XournalMain::initLocalisation()
 	textdomain(GETTEXT_PACKAGE);
 #endif //ENABLE_NLS
 
-	std::locale::global(std::locale("")); // "" - system default locale
+    std::cout << "User-preferred locale setting is " << std::locale("").name().c_str() << '\n';
+
+//	std::locale::global(std::locale("")); // "" - system default locale
 	std::cout.imbue(std::locale());
 }
 

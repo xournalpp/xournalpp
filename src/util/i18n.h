@@ -34,7 +34,7 @@
 
 /* Some helper macros */
 
-// boost::locale::format → std::string
+// PlaceholderString → std::string
 #define FS(format) (format).str()
-// boost::locale::format → char*
+// PlaceholderString → const char*
 #define FC(format) FS(format).c_str()
