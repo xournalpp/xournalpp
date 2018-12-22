@@ -56,7 +56,7 @@ before_script:
 
 script:
   - "cmake .. -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_MATHTEX=ON -DENABLE_CPPUNIT=ON -DUNSTABLE_LAYERS_SIDEBAR=ON -DDEBUG_COMPILE=ON"
-  - "make"
+  - "make -j5"
   - "ctest"
 
 notifications:
