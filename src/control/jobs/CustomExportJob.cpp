@@ -293,12 +293,7 @@ void CustomExportJob::run()
 			pdfe->setNoBackgroundExport(true);
 		}
 
-#ifdef ADVANCED_PDF_EXPORT_POPPLER
-		// Not working with ADVANCED_PDF_EXPORT_POPPLER
-		if (!pdfe->createPdf(this->filename))
-#else
 		if (!pdfe->createPdf(this->filename, exportRange))
-#endif
 		{
 			this->errorMsg = pdfe->getLastError();
 		}

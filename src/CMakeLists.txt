@@ -1,9 +1,5 @@
 ## Build poppler ##
 
-if (ADVANCED_PDF_EXPORT_POPPLER)
-  add_subdirectory ("pdf/popplerdirect/workaround")
-endif ()
-
 ## Basic variables ##
 
 include_directories (
@@ -69,25 +65,13 @@ file (GLOB xournalpp_SOURCES
 set (xournalpp_SOURCES ${xournalpp_SOURCES_RECURSE} ${xournalpp_SOURCES})
 unset (xournalpp_SOURCES_RECURSE)
 
-if (ADVANCED_PDF_EXPORT_POPPLER)
-  file (GLOB xournalpp_SOURCES_RECURSE
-    pdf/popplerdirect/*.cpp
-    pdf/popplerdirect/cairo/*.cpp
-    pdf/popplerdirect/poppler/*.cpp
-  )
+file (GLOB xournalpp_SOURCES_RECURSE
+  pdf/popplerapi/*.cpp
+)
 
-  # Concatenate SOURCES lists
-  set (xournalpp_SOURCES ${xournalpp_SOURCES_RECURSE} ${xournalpp_SOURCES})
-  unset (xournalpp_SOURCES_RECURSE)
-else ()
-  file (GLOB xournalpp_SOURCES_RECURSE
-    pdf/popplerapi/*.cpp
-  )
-
-  # Concatenate SOURCES lists
-  set (xournalpp_SOURCES ${xournalpp_SOURCES_RECURSE} ${xournalpp_SOURCES})
-  unset (xournalpp_SOURCES_RECURSE)
-endif ()
+# Concatenate SOURCES lists
+set (xournalpp_SOURCES ${xournalpp_SOURCES_RECURSE} ${xournalpp_SOURCES})
+unset (xournalpp_SOURCES_RECURSE)
 
 list (REMOVE_ITEM xournalpp_SOURCES ${PROJECT_SOURCE_DIR}/src/model/LayerListener.cpp) # TOCHECK
 
