@@ -18,7 +18,7 @@ ZoomControl::ZoomControl()
 	this->zoomFitValue = 1.0;
 	this->zoomFitMode = true;
 
-	this->zoomSequenceStart = 1;
+	this->zoomSequenceStart = -1;
 
 	this->zoomWidgetPosX = 0;
 	this->zoomWidgetPosY = 0;
@@ -73,7 +73,8 @@ void ZoomControl::zoomSequnceChange(double zoom, bool relative)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	if (relative) {
+	if (relative && this->zoomSequenceStart != -1)
+	{
 		zoom *= zoomSequenceStart;
 	}
 
@@ -88,6 +89,8 @@ void ZoomControl::endZoomSequence()
 	XOJ_CHECK_TYPE(ZoomControl);
 	scrollPositionX = -1;
 	scrollPositionY = -1;
+
+	zoomSequenceStart = -1;
 }
 
 /**
@@ -105,6 +108,11 @@ Rectangle ZoomControl::getVisibleRect()
  */
 void ZoomControl::scrollToZoomPosition(XojPageView* view)
 {
+	if (this->zoomSequenceStart == -1)
+	{
+		return;
+	}
+
 	Layout* layout = gtk_xournal_get_layout(this->view->getWidget());
 
 	double x = this->scrollPositionX * this->zoom;

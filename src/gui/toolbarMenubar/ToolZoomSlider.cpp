@@ -8,7 +8,8 @@
 
 ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom)
  : AbstractToolItem(id, handler, type, NULL),
-   ignoreChange(false)
+   ignoreChange(false),
+   sliderChangingByUser(false)
 {
 	XOJ_INIT_TYPE(ToolZoomSlider);
 
@@ -34,16 +35,20 @@ void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self)
 		return;
 	}
 
+	self->sliderChangingByUser = true;
+
 	self->zoom->startZoomSequence(-1, -1);
 	self->zoom->zoomSequnceChange(gtk_range_get_value(range), false);
 	self->zoom->endZoomSequence();
+
+	self->sliderChangingByUser = false;
 }
 
 void ToolZoomSlider::zoomChanged()
 {
 	XOJ_CHECK_TYPE(ToolZoomSlider);
 
-	if (this->slider == NULL)
+	if (this->slider == NULL || this->sliderChangingByUser)
 	{
 		return;
 	}

@@ -20,7 +20,7 @@
 
 // Hardcode max and min zoom
 // this should probably be user-adjustable in future
-#define MAX_ZOOM 5
+#define MAX_ZOOM 7
 #define MIN_ZOOM 0.3
 
 class XournalView;
