@@ -22,8 +22,8 @@ ZoomControl::ZoomControl()
 
 	this->zoomWidgetPosX = 0;
 	this->zoomWidgetPosY = 0;
-	this->scrollPositionX = -1;
-	this->scrollPositionY = -1;
+	this->scrollPositionX = 0;
+	this->scrollPositionY = 0;
 }
 
 ZoomControl::~ZoomControl()
@@ -57,8 +57,8 @@ void ZoomControl::startZoomSequence(double centerX, double centerY)
 
 	Rectangle rect = getVisibleRect();
 
-	this->scrollPositionX = (rect.x + this->zoomWidgetPosX);
-	this->scrollPositionY = (rect.y + this->zoomWidgetPosY);
+	this->scrollPositionX = (rect.x + this->zoomWidgetPosX) / this->zoom;
+	this->scrollPositionY = (rect.y + this->zoomWidgetPosY) / this->zoom;
 
 	this->zoomSequenceStart = this->zoom;
 }
@@ -115,12 +115,11 @@ void ZoomControl::scrollToZoomPosition(XojPageView* view)
 
 	Layout* layout = gtk_xournal_get_layout(this->view->getWidget());
 
-	double zoom_eff = (this->zoom/ this->zoomSequenceStart);
-	double x = this->scrollPositionX * zoom_eff;
-	double y = this->scrollPositionY * zoom_eff;
+	double x = this->scrollPositionX * this->zoom;
+	double y = this->scrollPositionY * this->zoom;
 
-	x -= this->zoomWidgetPosX * zoom_eff;
-	y -= this->zoomWidgetPosY * zoom_eff;
+	x -= this->zoomWidgetPosX;
+	y -= this->zoomWidgetPosY;
 
 	layout->scrollAbs(x, y);
 }
