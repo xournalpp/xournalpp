@@ -89,7 +89,7 @@ int ToolbarEntry::insertItem(string item, int position)
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
 	ToolbarItem* it = new ToolbarItem(item);
-	if (position >= entries.size())
+	if (position >= (int)entries.size())
 	{
 		entries.push_back(it);
 		return it->getId();

@@ -397,19 +397,16 @@ void Layout::scrollRelativ(int x, int y)
 {
 	XOJ_CHECK_TYPE(Layout);
 
-	gtk_adjustment_set_value(adjHorizontal,
-	                         gtk_adjustment_get_value(adjHorizontal) + x);
-
-	gtk_adjustment_set_value(adjVertical,
-	                         gtk_adjustment_get_value(adjVertical) + y);
+	gtk_adjustment_set_value(adjHorizontal, gtk_adjustment_get_value(adjHorizontal) + x);
+	gtk_adjustment_set_value(adjVertical, gtk_adjustment_get_value(adjVertical) + y);
 }
 
 void Layout::scrollAbs(int x, int y)
 {
 	XOJ_CHECK_TYPE(Layout);
 
-	gtk_adjustment_set_value(adjHorizontal,x);
-	gtk_adjustment_set_value(adjVertical,y);
+	gtk_adjustment_set_value(adjHorizontal, x);
+	gtk_adjustment_set_value(adjVertical, y);
 }
 
 

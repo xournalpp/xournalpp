@@ -1293,7 +1293,9 @@ void Control::insertPage(PageRef page, size_t position)
 
 	if (visibleHeight < 10)
 	{
-		scrollHandler->scrollToPage(position);
+		Util::execInUiThread([=]() {
+			scrollHandler->scrollToPage(position);
+		});
 	}
 	firePageSelected(position);
 
