@@ -129,7 +129,7 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 	double width = s->getWidth();
 
 	// No pressure sensitivity, easy draw a line...
-	if (!s->hasPressure())
+	if (!s->hasPressure() || s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
 	{
 		// Set width
 		cairo_set_line_width(cr, width * scaleFactor);
@@ -138,7 +138,7 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 		{
 			Point p = points.next();
 
-			if (startPoint <= count++)
+			if (startPoint <= count)
 			{
 				cairo_line_to(cr, p.x, p.y);
 			}
@@ -146,6 +146,8 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 			{
 				cairo_move_to(cr, p.x, p.y);
 			}
+
+			count++;
 		}
 
 		cairo_stroke(cr);
