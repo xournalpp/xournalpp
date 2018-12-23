@@ -6,9 +6,6 @@
 
 #include "gui/Cursor.h"
 
-// TODO Remove
-extern int currentToolType;
-
 #include "gui/dialog/AboutDialog.h"
 #include "gui/dialog/GotoDialog.h"
 #include "gui/dialog/FormatDialog.h"
@@ -1635,7 +1632,6 @@ void Control::selectTool(ToolType type)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	currentToolType = type;
 	toolHandler->selectTool(type);
 
 	if (win)

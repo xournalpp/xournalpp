@@ -1,6 +1,7 @@
 #include "RenderJob.h"
-#include "RenderJob.h"
 
+#include "control/Control.h"
+#include "control/ToolHandler.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
 #include "model/Document.h"
@@ -58,6 +59,8 @@ void RenderJob::rerenderRectangle(Rectangle* rect)
 	cairo_scale(crRect, zoom, zoom);
 
 	DocumentView v;
+	Control* control = view->getXournal()->getControl();
+	v.setMarkAudioStroke(control->getToolHandler()->getToolType() == TOOL_PLAY_OBJECT);
 	v.limitArea(rect->x, rect->y, rect->width, rect->height);
 
 	if (view->page->getBackgroundType().isPdfPage())

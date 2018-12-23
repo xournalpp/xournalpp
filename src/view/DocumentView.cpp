@@ -3,8 +3,6 @@
 #include "TextView.h"
 
 #include "gui/Cursor.h"
-extern int currentToolType;
-
 #include "background/MainBackgroundPainter.h"
 #include "control/tools/EditSelection.h"
 #include "control/tools/Selection.h"
@@ -40,6 +38,8 @@ DocumentView::DocumentView()
 
 	this->dontRenderEditingStroke = 0;
 	this->backgroundPainter = new MainBackgroundPainter();
+
+	this->markAudioStroke = false;
 }
 
 DocumentView::~DocumentView()
@@ -48,6 +48,16 @@ DocumentView::~DocumentView()
 	this->backgroundPainter = NULL;
 
 	XOJ_RELEASE_TYPE(DocumentView);
+}
+
+/**
+ * Mark stroke with Audio
+ */
+void DocumentView::setMarkAudioStroke(bool markAudioStroke)
+{
+	XOJ_CHECK_TYPE(DocumentView);
+
+	this->markAudioStroke = markAudioStroke;
 }
 
 void DocumentView::applyColor(cairo_t* cr, Stroke* s)
@@ -101,7 +111,7 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 	if (changeSource)
 	{
 		if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER ||
-			(s->getAudioFilename().length() == 0 && currentToolType == TOOL_PLAY_OBJECT))
+			(s->getAudioFilename().length() == 0 && this->markAudioStroke))
 		{
 			cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 			// Set the color
