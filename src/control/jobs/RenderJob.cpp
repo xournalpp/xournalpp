@@ -130,7 +130,9 @@ void RenderJob::run()
 			popplerPage = doc->getPdfPage(pgNo);
 		}
 
+		Control* control = view->getXournal()->getControl();
 		DocumentView view;
+		view.setMarkAudioStroke(control->getToolHandler()->getToolType() == TOOL_PLAY_OBJECT);
 		int width = this->view->page->getWidth();
 		int height = this->view->page->getHeight();
 
