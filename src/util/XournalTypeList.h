@@ -171,7 +171,7 @@ XOJ_DECLARE_TYPE(ToolbarDragDropHelper, 159);
 XOJ_DECLARE_TYPE(SidebarIndexPage, 160);
 XOJ_DECLARE_TYPE(ScrollbarXournalWidgetListener, 161);
 XOJ_DECLARE_TYPE(Scrollbar, 162);
-XOJ_DECLARE_TYPE(Layout, 162);
+XOJ_DECLARE_TYPE(Layout, 163);
 XOJ_DECLARE_TYPE(LayoutData, 164);
 XOJ_DECLARE_TYPE(ToolbarAdapter, 165);
 XOJ_DECLARE_TYPE(SpinPageAdapter, 166);
