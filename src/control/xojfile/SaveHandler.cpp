@@ -130,7 +130,7 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s)
 	if (t == STROKE_TOOL_PEN)
 	{
 		stroke->setAttrib("tool", "pen");
-		writeTimestamp(s,stroke);
+		writeTimestamp(s, stroke);
 	}
 	else if (t == STROKE_TOOL_ERASER)
 	{
