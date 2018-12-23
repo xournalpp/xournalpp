@@ -325,11 +325,30 @@ void PageBackgroundChangeController::pageDeleted(size_t page)
 void PageBackgroundChangeController::pageSelected(size_t page)
 {
 	PageRef current = control->getCurrentPage();
-	if (current.isValid())
+	if (!current.isValid())
 	{
-		ignoreEvent = true;
-		currentPageType->setSelected(current->getBackgroundType());
-		ignoreEvent = false;
+		return;
+	}
+
+	ignoreEvent = true;
+	currentPageType->setSelected(current->getBackgroundType());
+	ignoreEvent = false;
+}
+
+void PageBackgroundChangeController::applyCurrentPageBackground(bool allPages)
+{
+	PageType pt = control->getNewPageType()->getSelected();
+
+	if (allPages)
+	{
+		// TODO !!!!!!!!!!!!!!!!
+	}
+	else
+	{
+		PageTypeInfo info;
+		info.page = pt;
+		pageSelected(&info);
 	}
 }
+
 

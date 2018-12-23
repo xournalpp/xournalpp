@@ -9,7 +9,7 @@
 #include <i18n.h>
 
 PageTypeMenuChangeListener::~PageTypeMenuChangeListener() {}
-
+PageTypeApplyListener::~PageTypeApplyListener() {}
 
 #define PREVIEW_COLUMNS 3
 
@@ -24,7 +24,8 @@ PageTypeMenu::PageTypeMenu(PageTypeHandler* types, Settings* settings, bool show
    menuX(0),
    menuY(0),
    backgroundPainter(NULL),
-   showPreview(showPreview)
+   showPreview(showPreview),
+   pageTypeApplyListener(NULL)
 {
 	XOJ_INIT_TYPE(PageTypeMenu);
 
@@ -223,6 +224,62 @@ void PageTypeMenu::hideCopyPage()
 			break;
 		}
 	}
+}
+
+/**
+ * Apply background to current or to all pages button
+ */
+void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener)
+{
+	XOJ_CHECK_TYPE(PageTypeMenu);
+
+	this->pageTypeApplyListener = pageTypeApplyListener;
+
+	GtkWidget* separator = gtk_separator_menu_item_new();
+	gtk_widget_show(separator);
+
+	gtk_menu_attach(GTK_MENU(menu), separator, 0, PREVIEW_COLUMNS, menuY, menuY + 1);
+	menuY++;
+
+	GtkWidget* menuEntryApply = createApplyMenuItem(_("Apply to current page"));
+	GtkWidget* menuEntryApplyAll = createApplyMenuItem(_("Apply to all pages"));
+
+	gtk_menu_attach(GTK_MENU(menu), menuEntryApply, 0, PREVIEW_COLUMNS, menuY, menuY + 1);
+	menuY++;
+
+	gtk_menu_attach(GTK_MENU(menu), menuEntryApplyAll, 0, PREVIEW_COLUMNS, menuY, menuY + 1);
+	menuY++;
+
+	g_signal_connect(menuEntryApply, "activate", G_CALLBACK(
+		+[](GtkWidget* menu, PageTypeMenu* self)
+		{
+			XOJ_CHECK_TYPE_OBJ(self, PageTypeMenu);
+			self->pageTypeApplyListener->applyCurrentPageBackground(false);
+		}), this);
+
+	g_signal_connect(menuEntryApplyAll, "activate", G_CALLBACK(
+		+[](GtkWidget* menu, PageTypeMenu* self)
+		{
+			XOJ_CHECK_TYPE_OBJ(self, PageTypeMenu);
+			self->pageTypeApplyListener->applyCurrentPageBackground(true);
+		}), this);
+}
+
+GtkWidget* PageTypeMenu::createApplyMenuItem(const char* text)
+{
+	GtkWidget* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+	GtkWidget* icon = gtk_image_new_from_icon_name("gtk-apply", GTK_ICON_SIZE_MENU);
+	GtkWidget* label = gtk_label_new(text);
+	GtkWidget* menuItem = gtk_menu_item_new();
+
+	gtk_container_add(GTK_CONTAINER(box), icon);
+	gtk_container_add(GTK_CONTAINER(box), label);
+
+	gtk_container_add(GTK_CONTAINER(menuItem), box);
+
+	gtk_widget_show_all(menuItem);
+
+	return menuItem;
 }
 
 void PageTypeMenu::initDefaultMenu()

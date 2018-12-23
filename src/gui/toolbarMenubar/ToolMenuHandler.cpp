@@ -11,7 +11,6 @@
 
 #include "control/Actions.h"
 #include "control/Control.h"
-#include "control/pagetype/PageTypeMenu.h"
 #include "control/PageBackgroundChangeController.h"
 #include "gui/ToolitemDragDrop.h"
 #include "model/ToolbarData.h"
@@ -40,6 +39,7 @@ ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* par
 
 	// still owned by Control
 	this->newPageType = control->getNewPageType();
+	this->newPageType->addApplyBackgroundButton(control->getPageBackgroundChangeController());
 
 	// still owned by Control
 	this->pageBackgroundChangeController = control->getPageBackgroundChangeController();

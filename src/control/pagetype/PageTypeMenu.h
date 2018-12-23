@@ -38,6 +38,13 @@ public:
 	virtual ~PageTypeMenuChangeListener();
 };
 
+class PageTypeApplyListener
+{
+public:
+	virtual void applyCurrentPageBackground(bool allPages) = 0;
+	virtual ~PageTypeApplyListener();
+};
+
 class PageTypeMenu
 {
 public:
@@ -52,7 +59,13 @@ public:
 	void setListener(PageTypeMenuChangeListener* listener);
 	void hideCopyPage();
 
+	/**
+	 * Apply background to current or to all pages button
+	 */
+	void addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener);
+
 private:
+	GtkWidget* createApplyMenuItem(const char* text);
 	void initDefaultMenu();
 	void addMenuEntry(PageTypeInfo* t);
 	void entrySelected(PageTypeInfo* t);
@@ -81,4 +94,6 @@ private:
 	MainBackgroundPainter* backgroundPainter;
 
 	bool showPreview;
+
+	PageTypeApplyListener* pageTypeApplyListener;
 };

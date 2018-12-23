@@ -22,7 +22,7 @@ class PageTypeMenu;
 class Control;
 class XojPage;
 
-class PageBackgroundChangeController : public PageTypeMenuChangeListener, public DocumentListener
+class PageBackgroundChangeController : public PageTypeMenuChangeListener, public DocumentListener, public PageTypeApplyListener
 {
 public:
 	PageBackgroundChangeController(Control* control);
@@ -41,6 +41,10 @@ public:
 	virtual void pageInserted(size_t page);
 	virtual void pageDeleted(size_t page);
 	virtual void pageSelected(size_t page);
+
+	// PageTypeApplyListener
+public:
+	virtual void applyCurrentPageBackground(bool allPages);
 
 private:
 

@@ -6,8 +6,8 @@
 #include <config.h>
 #include <i18n.h>
 
-ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type) :
-		AbstractToolItem(id, handler, type, NULL)
+ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type)
+ : AbstractToolItem(id, handler, type, NULL)
 {
 	XOJ_INIT_TYPE(ToolPageSpinner);
 
