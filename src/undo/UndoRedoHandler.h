@@ -46,7 +46,7 @@ public:
 
 	void clearContents();
 
-	void fireUpdateUndoRedoButtons(vector<XojPage*> pages);
+	void fireUpdateUndoRedoButtons(vector<PageRef> pages);
 	void addUndoRedoListener(UndoRedoListener* listener);
 
 	bool isChanged();

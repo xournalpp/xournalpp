@@ -26,18 +26,23 @@ void GroupUndoAction::addAction(UndoAction* action)
 	actions.push_back(action);
 }
 
-vector<XojPage*> GroupUndoAction::getPages()
+vector<PageRef> GroupUndoAction::getPages()
 {
 	XOJ_CHECK_TYPE(GroupUndoAction);
 
-	vector<XojPage*> pages;
+	vector<PageRef> pages;
 
 	for (UndoAction* a : actions)
 	{
-		for (XojPage* addPage : a->getPages())
+		for (PageRef addPage : a->getPages())
 		{
+			if (!addPage.isValid())
+			{
+				continue;
+			}
+
 			bool pageAlreadyInTheList = false;
-			for (XojPage* p : pages)
+			for (PageRef p : pages)
 			{
 				if (addPage == p)
 				{

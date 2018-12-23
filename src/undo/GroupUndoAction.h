@@ -14,9 +14,6 @@
 #include "UndoAction.h"
 #include <XournalType.h>
 
-#include <vector>
-using std::vector;
-
 class GroupUndoAction : public UndoAction
 {
 public:
@@ -29,7 +26,7 @@ public:
 	/**
 	 * Get the affected pages
 	 */
-	virtual vector<XojPage*> getPages();
+	virtual vector<PageRef> getPages();
 
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);

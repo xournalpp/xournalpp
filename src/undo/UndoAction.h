@@ -36,7 +36,7 @@ public:
 	/**
 	 * Get the affected pages
 	 */
-	virtual vector<XojPage*> getPages();
+	virtual vector<PageRef> getPages();
 
 	const char* getClassName() const;
 
