@@ -4,6 +4,7 @@
 #include "Serializeable.h"
 
 ObjectOutputStream::ObjectOutputStream(ObjectEncoding* encoder)
+ : encoder(NULL)
 {
 	XOJ_INIT_TYPE(ObjectOutputStream);
 

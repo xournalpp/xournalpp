@@ -23,6 +23,11 @@ public:
 	virtual ~XojExportHandler();
 
 protected:
+	/**
+	 * Export the fill attributes
+	 */
+	virtual void visitStrokeExtended(XmlPointNode* stroke, Stroke* s);
+
 	virtual void writeHeader();
 	virtual void writeSolidBackground(XmlNode* background, PageRef p);
 	virtual void writeTimestamp(Stroke* s, XmlPointNode* stroke);
