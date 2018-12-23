@@ -119,6 +119,79 @@ void SaveHandler::writeTimestamp(Stroke* s, XmlPointNode* stroke)
 	stroke->setAttrib("fn",s->getAudioFilename());
 }
 
+void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s)
+{
+	XOJ_CHECK_TYPE(SaveHandler);
+
+	StrokeTool t = s->getToolType();
+
+	unsigned char alpha = 0xff;
+
+	if (t == STROKE_TOOL_PEN)
+	{
+		stroke->setAttrib("tool", "pen");
+		writeTimestamp(s,stroke);
+	}
+	else if (t == STROKE_TOOL_ERASER)
+	{
+		stroke->setAttrib("tool", "eraser");
+	}
+	else if (t == STROKE_TOOL_HIGHLIGHTER)
+	{
+		stroke->setAttrib("tool", "highlighter");
+		alpha = 0x7f;
+	}
+	else
+	{
+		g_warning("Unknown stroke tool type: %i", t);
+		stroke->setAttrib("tool", "pen");
+	}
+
+	stroke->setAttrib("color", getColorStr(s->getColor(), alpha).c_str());
+
+	int pointCount = s->getPointCount();
+
+	for (int i = 0; i < pointCount; i++)
+	{
+		Point p = s->getPoint(i);
+		stroke->addPoint(&p);
+	}
+
+	if (s->hasPressure())
+	{
+		double* values = new double[pointCount + 1];
+		values[0] = s->getWidth();
+		for (int i = 0; i < pointCount; i++)
+		{
+			values[i + 1] = s->getPoint(i).z;
+		}
+
+		stroke->setAttrib("width", values, pointCount);
+	}
+	else
+	{
+		stroke->setAttrib("width", s->getWidth());
+	}
+
+	visitStrokeExtended(stroke, s);
+}
+
+/**
+ * Export the fill attributes
+ */
+void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s)
+{
+	XOJ_CHECK_TYPE(SaveHandler);
+
+	if (s->getFill() == -1)
+	{
+		// no fill to save
+		return;
+	}
+
+	stroke->setAttrib("fill", s->getFill());
+}
+
 void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 {
 	XOJ_CHECK_TYPE(SaveHandler);
@@ -132,57 +205,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 			Stroke* s = (Stroke*) e;
 			XmlPointNode* stroke = new XmlPointNode("stroke");
 			layer->addChild(stroke);
-
-			StrokeTool t = s->getToolType();
-
-			unsigned char alpha = 0xff;
-
-			if (t == STROKE_TOOL_PEN)
-			{
-				stroke->setAttrib("tool", "pen");
-				writeTimestamp(s,stroke);
-			}
-			else if (t == STROKE_TOOL_ERASER)
-			{
-				stroke->setAttrib("tool", "eraser");
-			}
-			else if (t == STROKE_TOOL_HIGHLIGHTER)
-			{
-				stroke->setAttrib("tool", "highlighter");
-				alpha = 0x7f;
-			}
-			else
-			{
-				g_warning("Unknown stroke tool type: %i", t);
-				stroke->setAttrib("tool", "pen");
-			}
-
-			stroke->setAttrib("color", getColorStr(s->getColor(), alpha).c_str());
-
-			int pointCount = s->getPointCount();
-
-			for (int i = 0; i < pointCount; i++)
-			{
-				Point p = s->getPoint(i);
-				stroke->addPoint(&p);
-			}
-
-			if (s->hasPressure())
-			{
-				double* values = new double[pointCount + 1];
-				values[0] = s->getWidth();
-				for (int i = 0; i < pointCount; i++)
-				{
-					values[i + 1] = s->getPoint(i).z;
-				}
-
-				stroke->setAttrib("width", values, pointCount);
-			}
-			else
-			{
-				stroke->setAttrib("width", s->getWidth());
-			}
-
+			visitStroke(stroke, s);
 		}
 		else if (e->getType() == ELEMENT_TEXT)
 		{

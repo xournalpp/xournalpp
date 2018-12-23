@@ -491,10 +491,8 @@ void LoadHandler::parseStroke()
 	this->layer->addElement(this->stroke);
 
 	const char* width = LoadHandlerHelper::getAttrib("width", false, this);
-	char* ptr = NULL;
-	char* tmpptr = NULL;
-	double val = 0;
 
+	char* ptr = NULL;
 	stroke->setWidth(g_ascii_strtod(width, &ptr));
 	if (ptr == width)
 	{
@@ -504,7 +502,8 @@ void LoadHandler::parseStroke()
 
 	while (*ptr != 0)
 	{
-		val = g_ascii_strtod(ptr, &tmpptr);
+		char* tmpptr = NULL;
+		double val = g_ascii_strtod(ptr, &tmpptr);
 		if (tmpptr == ptr)
 		{
 			break;
@@ -522,15 +521,22 @@ void LoadHandler::parseStroke()
 	stroke->setColor(color);
 
 	/** read stroke timestamps (xopp fileformat) */
-	const char* fn = LoadHandlerHelper::getAttrib("fn",true,this);
-	int ts;
+	const char* fn = LoadHandlerHelper::getAttrib("fn", true, this);
 	if (fn != NULL)
 	{
 		stroke->setAudioFilename(fn);
 	}
-	if (LoadHandlerHelper::getAttribInt("ts",true,this,ts))
+
+	int ts = 0;
+	if (LoadHandlerHelper::getAttribInt("ts", true, this, ts))
 	{
 		stroke->setTimestamp(ts);
+	}
+
+	int fill = -1;
+	if (LoadHandlerHelper::getAttribInt("fill", true, this, fill))
+	{
+		stroke->setFill(fill);
 	}
 
 	const char* tool = LoadHandlerHelper::getAttrib("tool", false, this);
@@ -557,7 +563,7 @@ void LoadHandler::parseStroke()
 	 * we've read just before. 
 	 * Afterwards, clean the read timestamp data.
 	 */
-	if(loadedFilename.length() != 0)
+	if (loadedFilename.length() != 0)
 	{
 		this->stroke->setTimestamp(loadedTimeStamp);
 		this->stroke->setAudioFilename(loadedFilename);

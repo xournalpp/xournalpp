@@ -26,6 +26,7 @@ Stroke::Stroke()
 	this->timestamp = 0;
 
 	this->eraseable = NULL;
+	this->fill = -1;
 }
 
 Stroke::~Stroke()
@@ -37,7 +38,7 @@ Stroke::~Stroke()
 	this->pointCount = 0;
 	this->pointAllocCount = 0;
 
-	this->timestamp=0;
+	this->timestamp = 0;
 
 	XOJ_RELEASE_TYPE(Stroke);
 }
@@ -52,6 +53,7 @@ Stroke* Stroke::cloneStroke() const
 	s->setWidth(this->getWidth());
 	s->setAudioFilename(this->getAudioFilename());
 	s->setTimestamp(this->getTimestamp());
+	s->setFill(this->getFill());
 
 	s->allocPointSize(this->pointCount);
 	memcpy(s->points, this->points, this->pointCount * sizeof(Point));
@@ -83,6 +85,8 @@ void Stroke::serialize(ObjectOutputStream& out)
 
 	out.writeInt(this->timestamp);
 
+	out.writeInt(fill);
+
 	out.writeData(this->points, this->pointCount, sizeof(Point));
 
 	out.endObject();
@@ -103,6 +107,8 @@ void Stroke::readSerialized(ObjectInputStream& in)
 	this->audioFilename = in.readString();
 
 	this->timestamp = in.readInt();
+
+	this->fill = in.readInt();
 
 	if (this->points)
 	{
@@ -138,6 +144,34 @@ int Stroke::getTimestamp() const
 	XOJ_CHECK_TYPE(Stroke);
 
 	return this->timestamp;
+}
+
+/**
+ * Option to fill the shape:
+ *  -1: The shape is not filled
+ * 255: The shape is fully opaque filled
+ * ...
+ *   1: The shape is nearly fully transparent filled
+ */
+int Stroke::getFill() const
+{
+	XOJ_CHECK_TYPE(Stroke);
+
+	return fill;
+}
+
+/**
+ * Option to fill the shape:
+ *  -1: The shape is not filled
+ * 255: The shape is fully opaque filled
+ * ...
+ *   1: The shape is nearly fully transparent filled
+ */
+void Stroke::setFill(int fill)
+{
+	XOJ_CHECK_TYPE(Stroke);
+
+	this->fill = fill;
 }
 
 void Stroke::setWidth(double width)
