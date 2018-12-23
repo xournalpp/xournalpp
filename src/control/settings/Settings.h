@@ -225,9 +225,6 @@ public:
 	bool getAddHorizontalSpace();
 	void setAddHorizontalSpace(bool space);
 
-	bool isEnableLeafEnterWorkaround();
-	void setEnableLeafEnterWorkaround(bool enable);
-
 	bool isShowBigCursor();
 	void setShowBigCursor(bool b);
 
@@ -457,11 +454,6 @@ private:
 	 * Allow scroll outside the page (vertical)
 	 */
 	bool addVerticalSpace;
-
-	/**
-	 * Enable Bugfix to prevent crash on GTK 2.18 etc
-	 */
-	bool enableLeafEnterWorkaround;
 
 	/**
 	 * Default name if you save a new document
