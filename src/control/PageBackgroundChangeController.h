@@ -30,6 +30,7 @@ public:
 
 public:
 	virtual void changeCurrentPageBackground(PageTypeInfo* info);
+	void changeAllPagesBackground(PageType pt);
 	void insertNewPage(size_t position);
 	GtkWidget* getMenu();
 

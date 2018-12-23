@@ -44,6 +44,41 @@ GtkWidget* PageBackgroundChangeController::getMenu()
 	return currentPageType->getMenu();
 }
 
+void PageBackgroundChangeController::changeAllPagesBackground(PageType pt)
+{
+	XOJ_CHECK_TYPE(PageBackgroundChangeController);
+
+	control->clearSelectionEndText();
+
+	Document* doc = control->getDocument();
+
+	for (size_t p = 0; p < doc->getPageCount(); p++)
+	{
+		PageRef page = doc->getPage(p);
+		if (!page.isValid())
+		{
+			// Should not happen
+			continue;
+		}
+
+		// Get values for Undo / Redo
+		double origW = page->getWidth();
+		double origH = page->getHeight();
+		BackgroundImage origBackgroundImage = page->getBackgroundImage();
+		int origPdfPage = page->getPdfPageNr();
+		PageType origType = page->getBackgroundType();
+
+		// Apply the new background
+		applyPageBackground(page, pt);
+
+		control->firePageChanged(p);
+		control->updateBackgroundSizeButton();
+
+		UndoAction* undo = new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage, origW, origH);
+		control->getUndoRedoHandler()->addUndoAction(undo);
+	}
+}
+
 void PageBackgroundChangeController::changeCurrentPageBackground(PageTypeInfo* info)
 {
 	XOJ_CHECK_TYPE(PageBackgroundChangeController);
@@ -343,7 +378,7 @@ void PageBackgroundChangeController::applyCurrentPageBackground(bool allPages)
 
 	if (allPages)
 	{
-		// TODO !!!!!!!!!!!!!!!!
+		changeAllPagesBackground(pt);
 	}
 	else
 	{
