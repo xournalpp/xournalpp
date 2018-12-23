@@ -5,8 +5,6 @@
 #include <config.h>
 #include <i18n.h>
 
-#include <boost/format.hpp>
-
 #include <stdio.h>
 
 #ifdef UNDO_TRACE
