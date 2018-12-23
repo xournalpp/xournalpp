@@ -117,14 +117,13 @@ void MoveUndoAction::repaint()
 	}
 }
 
-XojPage** MoveUndoAction::getPages()
+vector<XojPage*> MoveUndoAction::getPages()
 {
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
-	XojPage** pages = new XojPage *[3];
-	pages[0] = this->page;
-	pages[1] = this->targetPage;
-	pages[2] = NULL;
+	vector<XojPage*> pages;
+	pages.push_back(this->page);
+	pages.push_back(this->targetPage);
 	return pages;
 }
 

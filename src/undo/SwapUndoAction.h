@@ -19,14 +19,14 @@ class Control;
 class SwapUndoAction : public UndoAction
 {
 public:
-	SwapUndoAction(size_t pageNr, bool moveUp, PageRef swapped_page, PageRef other_page);
+	SwapUndoAction(size_t pageNr, bool moveUp, PageRef swappedPage, PageRef otherPage);
 
 	virtual ~SwapUndoAction();
 
 public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
-	XojPage** getPages();
+	vector<XojPage*> getPages();
 	virtual string getText();
 
 private:
@@ -36,6 +36,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	size_t pageNr;
-	PageRef swapped_page, other_page;
+	PageRef swappedPage;
+	PageRef otherPage;
 	bool moveUp;
 };

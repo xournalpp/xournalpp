@@ -213,7 +213,10 @@ void UndoRedoHandler::addUndoAction(UndoAction* action)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (action == NULL) return;
+	if (action == NULL)
+	{
+		return;
+	}
 
 	this->undoList = g_list_append(this->undoList, action);
 	clearRedo();
@@ -292,7 +295,7 @@ string UndoRedoHandler::redoDescription()
 	return _("Redo");
 }
 
-void UndoRedoHandler::fireUpdateUndoRedoButtons(XojPage** pages)
+void UndoRedoHandler::fireUpdateUndoRedoButtons(vector<XojPage*> pages)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
@@ -301,14 +304,13 @@ void UndoRedoHandler::fireUpdateUndoRedoButtons(XojPage** pages)
 		((UndoRedoListener*) l->data)->undoRedoChanged();
 	}
 
-	for (int i = 0; pages[i]; i++)
+	for (XojPage* page : pages)
 	{
 		for (GList* l = this->listener; l != NULL; l = l->next)
 		{
-			((UndoRedoListener*) l->data)->undoRedoPageChanged(pages[i]);
+			((UndoRedoListener*) l->data)->undoRedoPageChanged(page);
 		}
 	}
-	delete[] pages;
 }
 
 void UndoRedoHandler::addUndoRedoListener(UndoRedoListener* listener)
