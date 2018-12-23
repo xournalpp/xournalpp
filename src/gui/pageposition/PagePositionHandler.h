@@ -13,8 +13,6 @@
 
 #include <XournalType.h>
 
-#include <glib.h>
-
 class PagePosition;
 class PagePositionCache;
 class XojPageView;

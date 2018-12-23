@@ -90,8 +90,9 @@ void ToolbarColorNames::addColor(int color, string name, bool predefined)
 	}
 	else
 	{
-		string colorHex = (boost::format("%06x") % color).str();
-		g_key_file_set_string(this->config, "custom", colorHex.c_str(), name.c_str());
+		char colorHex[16];
+		sprintf(colorHex, "%06x", color);
+		g_key_file_set_string(this->config, "custom", colorHex, name.c_str());
 	}
 }
 
@@ -101,8 +102,9 @@ string ToolbarColorNames::getColorName(int color)
 
 	string colorName;
 
-	string colorHex = (boost::format("%06x") % color).str();
-	char* name = g_key_file_get_string(this->config, "custom", colorHex.c_str(), NULL);
+	char colorHex[16];
+	sprintf(colorHex, "%06x", color);
+	char* name = g_key_file_get_string(this->config, "custom", colorHex, NULL);
 	if (name != NULL)
 	{
 		colorName = name;

@@ -14,9 +14,6 @@
 #include <OutputStream.h>
 #include <XournalType.h>
 
-#include <string>
-using std::string;
-
 class XMLAttribute
 {
 public:

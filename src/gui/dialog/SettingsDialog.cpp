@@ -5,8 +5,7 @@
 
 #include <config.h>
 #include <Util.h>
-
-#include <string.h>
+#include <StringUtils.h>
 
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings)
  : GladeGui(gladeSearchPath, "settings.glade", "settingsDialog"),
@@ -179,35 +178,30 @@ void SettingsDialog::load()
 	bool hidePresentationSidebar = false;
 
 	string hidden = settings->getFullscreenHideElements();
-	StringTokenizer tokenF(hidden, ',');
-	const char* element = tokenF.next();
-	while (element)
+
+	for (string element : StringUtils::split(hidden, ','))
 	{
-		if (!strcmp("mainMenubar", element))
+		if (element == "mainMenubar")
 		{
 			hideFullscreenMenubar = true;
 		}
-		else if (!strcmp("sidebarContents", element))
+		else if (element == "sidebarContents")
 		{
 			hideFullscreenSidebar = true;
 		}
-		element = tokenF.next();
 	}
 
 	hidden = settings->getPresentationHideElements();
-	StringTokenizer token(hidden, ',');
-	element = token.next();
-	while (element)
+	for (string element : StringUtils::split(hidden, ','))
 	{
-		if (!strcmp("mainMenubar", element))
+		if (element == "mainMenubar")
 		{
 			hidePresentationMenubar = true;
 		}
-		else if (!strcmp("sidebarContents", element))
+		else if (element == "sidebarContents")
 		{
 			hidePresentationSidebar = true;
 		}
-		element = token.next();
 	}
 
 	loadCheckbox("cbHideFullscreenMenubar", hideFullscreenMenubar);
@@ -224,12 +218,9 @@ string SettingsDialog::updateHideString(string hidden, bool hideMenubar, bool hi
 
 	string newHidden = "";
 
-	const char* element;
-	StringTokenizer token(hidden, ',');
-	element = token.next();
-	while (element)
+	for (string element : StringUtils::split(hidden, ','))
 	{
-		if (!strcmp("mainMenubar", element))
+		if (element == "mainMenubar")
 		{
 			if (hideMenubar)
 			{
@@ -237,11 +228,10 @@ string SettingsDialog::updateHideString(string hidden, bool hideMenubar, bool hi
 			}
 			else
 			{
-				element = token.next();
 				continue;
 			}
 		}
-		else if (!strcmp("sidebarContents", element))
+		else if (element == "sidebarContents")
 		{
 			if (hideSidebar)
 			{
@@ -249,7 +239,6 @@ string SettingsDialog::updateHideString(string hidden, bool hideMenubar, bool hi
 			}
 			else
 			{
-				element = token.next();
 				continue;
 			}
 		}
@@ -259,8 +248,6 @@ string SettingsDialog::updateHideString(string hidden, bool hideMenubar, bool hi
 			newHidden += ",";
 		}
 		newHidden += element;
-
-		element = token.next();
 	}
 
 	if (hideMenubar)

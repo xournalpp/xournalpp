@@ -15,11 +15,7 @@
 
 #include <XournalType.h>
 
-#include <string>
-
 class GladeSearchpath;
-
-using std::string;
 
 class GladeGui
 {

@@ -16,11 +16,6 @@
 #include <OutputStream.h>
 #include <Util.h>
 
-#include <glib.h>
-
-#include <string>
-using std::string;
-
 class ProgressListener;
 
 class XmlNode

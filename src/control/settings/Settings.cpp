@@ -8,6 +8,8 @@
 #include <Util.h>
 
 #include <boost/filesystem.hpp>
+#include <boost/algorithm/string.hpp>
+namespace ba = boost::algorithm;
 
 #include <string.h>
 
@@ -1050,7 +1052,7 @@ string Settings::getDefaultSaveName()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	if (boost::algorithm::ends_with(defaultSaveName, ".xoj"))
+	if (ba::ends_with(defaultSaveName, ".xoj"))
 	{
 		defaultSaveName = defaultSaveName.substr(0, defaultSaveName.size() - 4);
 		defaultSaveName += ".xopp";

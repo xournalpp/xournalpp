@@ -12,7 +12,6 @@
 #pragma once
 
 #include <XournalType.h>
-#include <StringUtils.h>
 
 class ToolbarData;
 typedef std::vector<ToolbarData*> ToolbarDataVector;

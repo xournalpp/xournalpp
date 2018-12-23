@@ -11,10 +11,8 @@
 
 #pragma once
 
-#include <StringUtils.h>
 #include <XournalType.h>
 
-#include <glib.h>
 #include <gtk/gtk.h>
 
 #include <boost/filesystem/path.hpp>

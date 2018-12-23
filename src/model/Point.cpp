@@ -1,7 +1,5 @@
 #include "Point.h"
 
-#include <glib.h>
-
 #include <cmath>
 
 Point::Point()

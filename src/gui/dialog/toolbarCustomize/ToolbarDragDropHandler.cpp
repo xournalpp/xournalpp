@@ -9,8 +9,6 @@
 #include "gui/toolbarMenubar/AbstractToolItem.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
 
-#include <glib.h>
-
 ToolbarDragDropHandler::ToolbarDragDropHandler(Control* control)
 {
 	XOJ_INIT_TYPE(ToolbarDragDropHandler);

@@ -14,7 +14,6 @@
 #include "model/PageRef.h"
 
 #include <config.h>
-#include <StringUtils.h>
 
 #include <vector>
 using std::vector;

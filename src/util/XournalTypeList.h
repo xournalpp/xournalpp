@@ -137,7 +137,6 @@ XOJ_DECLARE_TYPE(UndoAction, 125);
 XOJ_DECLARE_TYPE(Range, 126);
 XOJ_DECLARE_TYPE(Text, 127);
 XOJ_DECLARE_TYPE(_IntPopplerDocument, 128);
-XOJ_DECLARE_TYPE(StringTokenizer, 129);
 XOJ_DECLARE_TYPE(InputStreamException, 130);
 XOJ_DECLARE_TYPE(_RefStrInternal, 131);
 XOJ_DECLARE_TYPE(RemoveLayerUndoAction, 132);

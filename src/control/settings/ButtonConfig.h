@@ -13,7 +13,6 @@
 
 #include "control/Tool.h"
 
-#include <StringUtils.h>
 #include <XournalType.h>
 
 class ToolHandler;
