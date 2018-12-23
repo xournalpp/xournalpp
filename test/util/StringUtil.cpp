@@ -24,6 +24,8 @@ class StringUtilTest : public CppUnit::TestFixture
 
 	CPPUNIT_TEST(testStartWith);
 	CPPUNIT_TEST(testSplit);
+	CPPUNIT_TEST(testSplitEmpty);
+	CPPUNIT_TEST(testSplitOne);
 
 	CPPUNIT_TEST_SUITE_END();
 
@@ -49,10 +51,26 @@ public:
 	{
 		vector<string> splitted = StringUtils::split("a,,b,c,d,e,f", ',');
 
-		CPPUNIT_ASSERT_EQUAL(8, (int)splitted.size());
+		CPPUNIT_ASSERT_EQUAL(7, (int)splitted.size());
 		CPPUNIT_ASSERT_EQUAL(std::string("a"), splitted[0]);
 		CPPUNIT_ASSERT_EQUAL(std::string(""), splitted[1]);
 	}
+
+	void testSplitEmpty()
+	{
+		vector<string> splitted = StringUtils::split("", ',');
+
+		CPPUNIT_ASSERT_EQUAL(0, (int)splitted.size());
+	}
+
+	void testSplitOne()
+	{
+		vector<string> splitted = StringUtils::split("aa", ',');
+
+		CPPUNIT_ASSERT_EQUAL(1, (int)splitted.size());
+		CPPUNIT_ASSERT_EQUAL(std::string("aa"), splitted[0]);
+	}
+
 };
 
 // Registers the fixture into the 'registry'
