@@ -5,6 +5,7 @@
 #include "gui/dialog/backgroundSelect/ImagesDialog.h"
 #include "gui/dialog/backgroundSelect/PdfPagesDialog.h"
 #include "stockdlg/ImageOpenDlg.h"
+#include "undo/GroupUndoAction.h"
 #include "undo/PageBackgroundChangedUndoAction.h"
 
 #include <Util.h>
@@ -52,6 +53,8 @@ void PageBackgroundChangeController::changeAllPagesBackground(PageType pt)
 
 	Document* doc = control->getDocument();
 
+	GroupUndoAction* groupUndoAction = new GroupUndoAction();
+
 	for (size_t p = 0; p < doc->getPageCount(); p++)
 	{
 		PageRef page = doc->getPage(p);
@@ -75,8 +78,10 @@ void PageBackgroundChangeController::changeAllPagesBackground(PageType pt)
 		control->updateBackgroundSizeButton();
 
 		UndoAction* undo = new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage, origW, origH);
-		control->getUndoRedoHandler()->addUndoAction(undo);
+		groupUndoAction->addAction(undo);
 	}
+
+	control->getUndoRedoHandler()->addUndoAction(groupUndoAction);
 }
 
 void PageBackgroundChangeController::changeCurrentPageBackground(PageTypeInfo* info)
