@@ -17,8 +17,6 @@
 
 #include <gtk/gtk.h>
 
-#include <vector>
-
 class PdfCache;
 class SidebarLayout;
 class SidebarPreviewBaseEntry;

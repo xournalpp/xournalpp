@@ -2,10 +2,6 @@
 
 #include <boost/algorithm/string.hpp>
 
-#include <vector>
-using std::vector;
-using std::pair;
-
 BackgroundConfig::BackgroundConfig(string config)
 {
 	XOJ_INIT_TYPE(BackgroundConfig);

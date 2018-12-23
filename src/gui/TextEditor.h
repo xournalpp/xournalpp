@@ -17,7 +17,6 @@
 #include "undo/UndoAction.h"
 
 #include <gtk/gtk.h>
-#include <vector>
 
 class XojPageView;
 

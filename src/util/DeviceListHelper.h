@@ -19,6 +19,7 @@
 #include <string>
 
 using std::string;
+using std::vector;
 
 class InputDevice
 {
@@ -43,11 +44,11 @@ public:
 	virtual ~DeviceListHelper();
 
 public:
-	std::vector<InputDevice>& getDeviceList();
+	vector<InputDevice>& getDeviceList();
 
 private:
 	void addDevicesToList(GList* devList);
 
 private:
-	std::vector<InputDevice> deviceList;
+	vector<InputDevice> deviceList;
 };

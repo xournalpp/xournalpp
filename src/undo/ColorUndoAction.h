@@ -14,8 +14,6 @@
 #include "UndoAction.h"
 #include <XournalType.h>
 
-#include <vector>
-
 class ColorUndoActionEntry;
 class Element;
 class Layer;

@@ -14,8 +14,6 @@
 #include "UndoAction.h"
 #include <XournalType.h>
 
-#include <vector>
-
 class FontUndoActionEntry;
 class Layer;
 class Redrawable;

@@ -17,9 +17,6 @@
 
 #include <gtk/gtk.h>
 
-#include <vector>
-using std::vector;
-
 class PageTypeHandler;
 class PageTypeHandler;
 class PageTypeInfo;

@@ -14,13 +14,9 @@
 #include "gui/GladeGui.h"
 #include <XournalType.h>
 
-#include <vector>
-
 class Document;
 class Settings;
 class BaseElementView;
-
-using std::vector;
 
 class BackgroundSelectDialogBase : public GladeGui
 {

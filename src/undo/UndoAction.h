@@ -15,9 +15,6 @@
 
 #include <config.h>
 
-#include <vector>
-using std::vector;
-
 class Control;
 class XojPage;
 

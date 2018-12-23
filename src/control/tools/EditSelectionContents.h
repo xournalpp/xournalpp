@@ -21,8 +21,6 @@
 
 #include <XournalType.h>
 
-#include <vector>
-
 class UndoRedoHandler;
 class Layer;
 class XojPageView;

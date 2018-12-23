@@ -17,8 +17,6 @@
 
 #include <gtk/gtk.h>
 
-#include <vector>
-
 enum ElementType
 {
 	ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT

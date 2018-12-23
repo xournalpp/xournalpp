@@ -15,9 +15,6 @@
 
 #include <gtk/gtk.h>
 
-#include <string>
-using std::string;
-
 class ObjectEncoding;
 class Serializeable;
 

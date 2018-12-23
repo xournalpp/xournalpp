@@ -16,9 +16,6 @@
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 
-#include <string>
-using std::string;
-
 #include <zlib.h>
 
 class OutputStream

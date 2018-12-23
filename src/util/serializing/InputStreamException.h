@@ -14,8 +14,6 @@
 #include <XournalType.h>
 
 #include <exception>
-#include <string>
-using std::string;
 
 class InputStreamException : public std::exception
 {
