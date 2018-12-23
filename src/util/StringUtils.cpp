@@ -1,4 +1,7 @@
 #include "StringUtils.h"
+#include <sstream> // std::istringstream
+
+#include <glib.h>
 
 string StringUtils::toLowerCase(string input)
 {
@@ -9,7 +12,7 @@ string StringUtils::toLowerCase(string input)
 	return strLower;
 }
 
-void StringUtils::replace_all_chars(string& input, const std::vector<replace_pair> replaces)
+void StringUtils::replaceAllChars(string& input, const std::vector<replace_pair> replaces)
 {
 	string out;
 	bool found = false;
@@ -33,65 +36,21 @@ void StringUtils::replace_all_chars(string& input, const std::vector<replace_pai
 	input = out;
 }
 
-/**
- * String tokenizer
- */
-StringTokenizer::StringTokenizer(const string s, char token, bool returnToken)
+vector<string> StringUtils::split(string input, char delimiter)
 {
-	XOJ_INIT_TYPE(StringTokenizer);
-
-	this->str = (char*) g_malloc(s.length() +1);
-	memcpy(this->str, s.c_str(), s.length() +1);
-	this->token = token;
-	this->tokenStr[0] = token;
-	this->tokenStr[1] = 0;
-	this->returnToken = returnToken;
-	this->lastWasToken = false;
-	this->x = 0;
-	this->len = s.length();
+	vector<string> tokens;
+	string token;
+	std::istringstream tokenStream(input);
+	while (std::getline(tokenStream, token, delimiter))
+	{
+		tokens.push_back(token);
+	}
+	return tokens;
 }
 
-StringTokenizer::~StringTokenizer()
+bool StringUtils::startsWith(string str, string start)
 {
-	XOJ_CHECK_TYPE(StringTokenizer);
-
-	g_free(this->str);
-	this->str = NULL;
-
-	XOJ_RELEASE_TYPE(StringTokenizer);
+	return str.compare(0, start.length(), start) == 0;
 }
 
-const char* StringTokenizer::next()
-{
-	XOJ_CHECK_TYPE(StringTokenizer);
 
-	if (this->x == -1)
-	{
-		return NULL;
-	}
-
-	if (this->lastWasToken)
-	{
-		this->lastWasToken = false;
-		return this->tokenStr;
-	}
-
-	const char* tmp = this->str + x;
-
-	for (; x < this->len; x++)
-	{
-		if (this->str[x] == this->token)
-		{
-			this->str[x] = 0;
-			if (this->returnToken)
-			{
-				this->lastWasToken = true;
-			}
-			x++;
-			return tmp;
-		}
-	}
-	this->x = -1;
-
-	return tmp;
-}

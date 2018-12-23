@@ -19,8 +19,6 @@
 
 #include <XournalType.h>
 #include "gui/dialog/LatexDialog.h"
-#include <string>
-using std::string;
 
 class Control;
 class TexImage;

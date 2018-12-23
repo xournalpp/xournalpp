@@ -3,8 +3,6 @@
 #include "StringUtils.h"
 #include <config-dev.h>
 
-#include <glib.h>
-
 #include <stdlib.h>
 #include <iostream>
 using std::cout;

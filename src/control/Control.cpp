@@ -55,6 +55,8 @@ extern int currentToolType;
 
 #include <boost/filesystem.hpp>
 namespace bf = boost::filesystem;
+#include <boost/algorithm/string.hpp>
+namespace ba = boost::algorithm;
 
 #include <gtk/gtk.h>
 

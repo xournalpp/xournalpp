@@ -7,7 +7,6 @@
 #include <config.h>
 #include <i18n.h>
 
-#include <glib.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
 

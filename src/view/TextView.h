@@ -12,7 +12,6 @@
 #pragma once
 
 #include "pdf/base/XojPdfPage.h"
-#include <StringUtils.h>
 
 #include <gtk/gtk.h>
 

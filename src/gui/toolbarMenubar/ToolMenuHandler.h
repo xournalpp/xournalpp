@@ -15,8 +15,6 @@
 #include "MenuItem.h"
 #include "control/Actions.h"
 
-#include <StringUtils.h>
-
 #include <gtk/gtk.h>
 #include <vector>
 

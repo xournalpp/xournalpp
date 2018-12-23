@@ -21,7 +21,6 @@
 #include "pdf/base/XojPdfPage.h"
 #include "pdf/base/XojPdfBookmarkIterator.h"
 
-#include <StringUtils.h>
 #include <XournalType.h>
 
 #include <boost/filesystem/path.hpp>

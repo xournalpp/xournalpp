@@ -11,11 +11,13 @@
 
 #pragma once
 
-#include "StringUtils.h"
 #include "XournalType.h"
 
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
+
+#include <string>
+using std::string;
 
 #include <zlib.h>
 

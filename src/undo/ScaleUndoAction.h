@@ -13,8 +13,6 @@
 
 #include "UndoAction.h"
 
-#include <glib.h>
-
 class ScaleUndoAction : public UndoAction
 {
 public:

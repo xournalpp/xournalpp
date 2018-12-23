@@ -18,7 +18,7 @@ void TextAttribute::writeOut(OutputStream* out)
 	XOJ_CHECK_TYPE(TextAttribute);
 
 	string v = this->value;
-	StringUtils::replace_all_chars(v, {
+	StringUtils::replaceAllChars(v, {
 		replace_pair('&', "&amp;"),
 		replace_pair('\"', "&quot;"),
 		replace_pair('<', "&lt;"),

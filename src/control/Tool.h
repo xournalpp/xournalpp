@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include <StringUtils.h>
 #include <XournalType.h>
 
 // Has to be in the same order as in Action.h: ActionType!

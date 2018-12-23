@@ -5,8 +5,6 @@
 
 #include <i18n.h>
 
-#include <glib.h>
-
 #include <math.h>
 #include <string.h>
 #include <iostream>

@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include <StringUtils.h>
 #include <XournalType.h>
 
 class ToolbarItem

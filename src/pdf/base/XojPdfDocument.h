@@ -19,8 +19,6 @@
 
 #include <XournalType.h>
 
-#include <glib.h>
-
 class XojPdfDocument : XojPdfDocumentInterface
 {
 public:

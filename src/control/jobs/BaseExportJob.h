@@ -13,7 +13,6 @@
 
 #include "BlockingJob.h"
 
-#include <StringUtils.h>
 #include <XournalType.h>
 
 #include <boost/filesystem/path.hpp>

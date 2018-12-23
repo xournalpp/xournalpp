@@ -5,6 +5,8 @@
 
 #include <i18n.h>
 
+#include <boost/algorithm/string/predicate.hpp>
+
 
 PdfExportJob::PdfExportJob(Control* control)
  : BaseExportJob(control, _("PDF Export"))

@@ -16,7 +16,6 @@
 #include "PageHandler.h"
 #include "PageType.h"
 
-#include <StringUtils.h>
 #include <XournalType.h>
 
 class XojPage : public PageHandler

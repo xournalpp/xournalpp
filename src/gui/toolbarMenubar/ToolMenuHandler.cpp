@@ -20,7 +20,8 @@
 #include <config-features.h>
 #include <i18n.h>
 
-#include <glib.h>
+#include <boost/algorithm/string.hpp>
+namespace ba = boost::algorithm;
 
 ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* parent)
 {

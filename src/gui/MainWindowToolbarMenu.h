@@ -15,12 +15,6 @@
 
 #include <gtk/gtk.h>
 
-#include <vector>
-#include <string>
-
-using std::vector;
-using std::string;
-
 class Settings;
 class ToolbarData;
 class ToolMenuHandler;

@@ -3,6 +3,7 @@
 #include <config.h>
 #include <config-dev.h>
 #include <i18n.h>
+#include <StringUtils.h>
 
 #include <boost/filesystem.hpp>
 
@@ -129,7 +130,7 @@ void Util::openFileWithDefaultApplicaion(path filename)
 #endif
 
 	string escaped = filename.string();
-	StringUtils::replace_all_chars(escaped, {
+	StringUtils::replaceAllChars(escaped, {
 		replace_pair('\\', "\\\\"),
 		replace_pair('\"', "\\\"")
 	});
@@ -156,7 +157,7 @@ void Util::openFileWithFilebrowser(path filename)
 #endif
 
 	string escaped = filename.string();
-	StringUtils::replace_all_chars(escaped, {
+	StringUtils::replaceAllChars(escaped, {
 		replace_pair('\\', "\\\\"),
 		replace_pair('\"', "\\\"")
 	});

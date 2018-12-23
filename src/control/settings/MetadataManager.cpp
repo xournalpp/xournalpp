@@ -2,7 +2,6 @@
 
 #include <Util.h>
 
-#include <glib.h>
 #include <glib/gstdio.h>
 #include <fcntl.h>
 #include <sys/types.h>

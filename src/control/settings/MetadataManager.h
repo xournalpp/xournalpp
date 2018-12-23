@@ -13,12 +13,6 @@
 
 #include <XournalType.h>
 
-#include <string>
-#include <vector>
-
-using std::string;
-using std::vector;
-
 class MetadataEntry
 {
 public:

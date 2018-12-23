@@ -18,9 +18,6 @@
 
 #include <gtk/gtk.h>
 
-#include <string>
-using std::string;
-
 class Control;
 
 class AbstractSidebarPage : public DocumentListener

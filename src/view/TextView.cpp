@@ -5,6 +5,7 @@
 #include "pdf/base/XojPdfPage.h"
 
 #include <Util.h>
+#include <StringUtils.h>
 
 TextView::TextView() { }
 

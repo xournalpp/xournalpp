@@ -2,12 +2,14 @@
 
 #include <i18n.h>
 
-#include <glib.h>
 #include <gtk/gtk.h>
 
 #include <iostream>
 using std::cout;
 using std::endl;
+
+#include <boost/algorithm/string.hpp>
+namespace ba = boost::algorithm;
 
 ToolbarData::ToolbarData(bool predefined)
 {

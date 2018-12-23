@@ -13,9 +13,6 @@
 
 #include "Attribute.h"
 
-#include <string>
-using std::string;
-
 class TextAttribute : public XMLAttribute
 {
 public:

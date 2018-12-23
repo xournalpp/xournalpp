@@ -35,7 +35,6 @@
 
 #ifdef DEBUG_RECOGNIZER
 
-#include <StringUtils.h>
 #include <iostream>
 using std::cout;
 using std::endl;

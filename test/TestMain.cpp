@@ -13,6 +13,7 @@
 #include <config-test.h>
 #include <CrashHandler.h>
 #include <Stacktrace.h>
+#include <XournalType.h>
 
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>

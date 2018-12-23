@@ -13,7 +13,6 @@
 
 #include "Job.h"
 
-#include <StringUtils.h>
 #include <XournalType.h>
 
 class Control;
