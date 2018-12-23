@@ -57,6 +57,11 @@ public:
 
 	void drawSelection(cairo_t* cr, ElementContainer* container);
 
+	/**
+	 * Mark stroke with Audio
+	 */
+	void setMarkAudioStroke(bool markAudioStroke);
+
 	// API for special drawing, usually you won't call this methods
 public:
 	/**
@@ -101,6 +106,7 @@ private:
 	double width;
 	double height;
 	bool dontRenderEditingStroke;
+	bool markAudioStroke;
 
 	double lX;
 	double lY;

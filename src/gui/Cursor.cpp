@@ -5,8 +5,6 @@
 
 #include <Util.h>
 #include <pixbuf-utils.h>
-int currentToolType;
-
 #include <cmath>
 
 Cursor::Cursor(Control* control)
@@ -150,7 +148,6 @@ void Cursor::updateCursor()
 	{
 		ToolHandler* handler = control->getToolHandler();
 		ToolType type = handler->getToolType();
-		currentToolType = type;
 
 		if (type == TOOL_HAND)
 		{
