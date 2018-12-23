@@ -295,7 +295,7 @@ string UndoRedoHandler::redoDescription()
 	return _("Redo");
 }
 
-void UndoRedoHandler::fireUpdateUndoRedoButtons(vector<XojPage*> pages)
+void UndoRedoHandler::fireUpdateUndoRedoButtons(vector<PageRef> pages)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
@@ -304,8 +304,13 @@ void UndoRedoHandler::fireUpdateUndoRedoButtons(vector<XojPage*> pages)
 		((UndoRedoListener*) l->data)->undoRedoChanged();
 	}
 
-	for (XojPage* page : pages)
+	for (PageRef page : pages)
 	{
+		if (!page.isValid())
+		{
+			continue;
+		}
+
 		for (GList* l = this->listener; l != NULL; l = l->next)
 		{
 			((UndoRedoListener*) l->data)->undoRedoPageChanged(page);

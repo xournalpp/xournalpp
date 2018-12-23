@@ -71,11 +71,11 @@ void SwapUndoAction::swap(Control* control)
 	doc->lock();
 }
 
-vector<XojPage*> SwapUndoAction::getPages()
+vector<PageRef> SwapUndoAction::getPages()
 {
 	XOJ_CHECK_TYPE(SwapUndoAction);
 
-	vector<XojPage*> pages;
+	vector<PageRef> pages;
 	pages.push_back(this->swappedPage);
 	pages.push_back(this->otherPage);
 	return pages;

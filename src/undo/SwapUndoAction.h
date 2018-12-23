@@ -26,7 +26,7 @@ public:
 public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
-	vector<XojPage*> getPages();
+	vector<PageRef> getPages();
 	virtual string getText();
 
 private:
