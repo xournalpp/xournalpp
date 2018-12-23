@@ -51,7 +51,6 @@ extern int currentToolType;
 #include <serializing/ObjectInputStream.h>
 #include <Stacktrace.h>
 #include <Util.h>
-#include <XInputUtils.h>
 
 #include <boost/filesystem.hpp>
 namespace bf = boost::filesystem;
@@ -329,12 +328,9 @@ void Control::initWindow(MainWindow* win)
 
 	win->setFontButtonFont(settings->getFont());
 
-	XInputUtils::initUtils(win->getWindow());
-	XInputUtils::setLeafEnterWorkaroundEnabled(settings->isEnableLeafEnterWorkaround());
-
-	//rotation snapping enabled by default
+	// rotation snapping enabled by default
 	fireActionSelected(GROUP_SNAPPING,ACTION_ROTATION_SNAPPING);
-	//grid snapping enabled by default
+	// grid snapping enabled by default
 	fireActionSelected(GROUP_GRID_SNAPPING,ACTION_GRID_SNAPPING);
 }
 
