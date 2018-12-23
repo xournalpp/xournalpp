@@ -34,7 +34,7 @@ typedef struct {
 class PageTypeMenuChangeListener
 {
 public:
-	virtual void pageSelected(PageTypeInfo* info) = 0;
+	virtual void changeCurrentPageBackground(PageTypeInfo* info) = 0;
 	virtual ~PageTypeMenuChangeListener();
 };
 
@@ -62,7 +62,7 @@ public:
 	/**
 	 * Apply background to current or to all pages button
 	 */
-	void addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener);
+	void addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener, bool onlyAllMenu);
 
 private:
 	GtkWidget* createApplyMenuItem(const char* text);

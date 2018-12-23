@@ -29,7 +29,7 @@ public:
 	virtual ~PageBackgroundChangeController();
 
 public:
-	virtual void pageSelected(PageTypeInfo* info);
+	virtual void changeCurrentPageBackground(PageTypeInfo* info);
 	void insertNewPage(size_t position);
 	GtkWidget* getMenu();
 

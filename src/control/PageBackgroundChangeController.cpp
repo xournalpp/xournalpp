@@ -22,6 +22,8 @@ PageBackgroundChangeController::PageBackgroundChangeController(Control* control)
 
 	currentPageType->hideCopyPage();
 
+	currentPageType->addApplyBackgroundButton(control->getPageBackgroundChangeController(), true);
+
 	registerListener(control);
 }
 
@@ -42,7 +44,7 @@ GtkWidget* PageBackgroundChangeController::getMenu()
 	return currentPageType->getMenu();
 }
 
-void PageBackgroundChangeController::pageSelected(PageTypeInfo* info)
+void PageBackgroundChangeController::changeCurrentPageBackground(PageTypeInfo* info)
 {
 	XOJ_CHECK_TYPE(PageBackgroundChangeController);
 
@@ -347,7 +349,7 @@ void PageBackgroundChangeController::applyCurrentPageBackground(bool allPages)
 	{
 		PageTypeInfo info;
 		info.page = pt;
-		pageSelected(&info);
+		changeCurrentPageBackground(&info);
 	}
 }
 

@@ -39,7 +39,7 @@ ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* par
 
 	// still owned by Control
 	this->newPageType = control->getNewPageType();
-	this->newPageType->addApplyBackgroundButton(control->getPageBackgroundChangeController());
+	this->newPageType->addApplyBackgroundButton(control->getPageBackgroundChangeController(), false);
 
 	// still owned by Control
 	this->pageBackgroundChangeController = control->getPageBackgroundChangeController();

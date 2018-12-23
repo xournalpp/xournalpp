@@ -187,7 +187,7 @@ void PageTypeMenu::entrySelected(PageTypeInfo* t)
 
 	if (listener != NULL)
 	{
-		listener->pageSelected(t);
+		listener->changeCurrentPageBackground(t);
 	}
 }
 
@@ -229,7 +229,7 @@ void PageTypeMenu::hideCopyPage()
 /**
  * Apply background to current or to all pages button
  */
-void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener)
+void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener, bool onlyAllMenu)
 {
 	XOJ_CHECK_TYPE(PageTypeMenu);
 
@@ -241,22 +241,22 @@ void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApply
 	gtk_menu_attach(GTK_MENU(menu), separator, 0, PREVIEW_COLUMNS, menuY, menuY + 1);
 	menuY++;
 
-	GtkWidget* menuEntryApply = createApplyMenuItem(_("Apply to current page"));
+	if (!onlyAllMenu)
+	{
+		GtkWidget* menuEntryApply = createApplyMenuItem(_("Apply to current page"));
+		gtk_menu_attach(GTK_MENU(menu), menuEntryApply, 0, PREVIEW_COLUMNS, menuY, menuY + 1);
+		menuY++;
+		g_signal_connect(menuEntryApply, "activate", G_CALLBACK(
+			+[](GtkWidget* menu, PageTypeMenu* self)
+			{
+				XOJ_CHECK_TYPE_OBJ(self, PageTypeMenu);
+				self->pageTypeApplyListener->applyCurrentPageBackground(false);
+			}), this);
+	}
+
 	GtkWidget* menuEntryApplyAll = createApplyMenuItem(_("Apply to all pages"));
-
-	gtk_menu_attach(GTK_MENU(menu), menuEntryApply, 0, PREVIEW_COLUMNS, menuY, menuY + 1);
-	menuY++;
-
 	gtk_menu_attach(GTK_MENU(menu), menuEntryApplyAll, 0, PREVIEW_COLUMNS, menuY, menuY + 1);
 	menuY++;
-
-	g_signal_connect(menuEntryApply, "activate", G_CALLBACK(
-		+[](GtkWidget* menu, PageTypeMenu* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, PageTypeMenu);
-			self->pageTypeApplyListener->applyCurrentPageBackground(false);
-		}), this);
-
 	g_signal_connect(menuEntryApplyAll, "activate", G_CALLBACK(
 		+[](GtkWidget* menu, PageTypeMenu* self)
 		{
