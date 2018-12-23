@@ -40,7 +40,9 @@ protected:
 	void initDialog();
 	virtual void addFilterToDialog() = 0;
 	void addFileFilterToDialog(string name, string pattern);
-	virtual void prepareSavePath(path& path);
+	void clearExtensions(path& filename);
+	bool checkOverwriteBackgroundPDF(path& filename);
+	bool checkExistingFile(path folder, path& filename);
 	virtual bool isUriValid(string& uri);
 
 private:

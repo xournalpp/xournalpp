@@ -17,6 +17,7 @@
 
 #include <PageRange.h>
 #include <i18n.h>
+#include <map>
 
 class CustomExportJob : public BaseExportJob
 {
@@ -75,10 +76,5 @@ private:
 
 	string chosenFilterName;
 
-	// Cannot be full static, because of translation
-	string EXPORT_PDF;
-	string EXPORT_PDF_NOBG;
-	string EXPORT_PNG;
-	string EXPORT_PNG_NOBG;
-	string EXPORT_XOJ;
+	std::map<string, string> filters;
 };

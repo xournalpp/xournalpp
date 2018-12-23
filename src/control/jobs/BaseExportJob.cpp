@@ -3,6 +3,8 @@
 #include "control/Control.h"
 
 #include <i18n.h>
+#include <boost/filesystem.hpp>
+using namespace boost::filesystem;
 
 BaseExportJob::BaseExportJob(Control* control, string name)
  : BlockingJob(control, name),
@@ -35,18 +37,54 @@ void BaseExportJob::addFileFilterToDialog(string name, string pattern)
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 }
 
+void BaseExportJob::clearExtensions(path& filename)
+{
+	XOJ_CHECK_TYPE(BaseExportJob);
+	while (filename.has_extension())
+	{
+		filename.replace_extension();
+	}
+}
+
+bool BaseExportJob::checkOverwriteBackgroundPDF(path& filename)
+{
+	XOJ_CHECK_TYPE(BaseExportJob);
+	
+	// If the new file name (with the selected extension) is the prevoiusly selected pdf, warn the user
+	if (boost::iequals(filename.string(), control->getDocument()->getPdfFilename().string()))
+	{
+		string msg = _("Do not overwrite the background PDF! This will cause errors!");
+		Util::showErrorToUser(control->getGtkWindow(), msg);
+		return false;
+	}
+	return true;
+}
+
+bool BaseExportJob::checkExistingFile(path folder, path& filename)
+{
+	XOJ_CHECK_TYPE(BaseExportJob);
+	
+	directory_iterator end_itr;
+
+    // Cycle through the directory
+    for (directory_iterator itr(folder); itr != end_itr; ++itr)
+    {
+		if(itr->path() == filename)
+		{
+			string msg = _("The selected name already exists! Please change it");
+			Util::showErrorToUser(control->getGtkWindow(), msg);
+			return false;
+		}
+	}
+	return true;
+}
+
 string BaseExportJob::getFilterName()
 {
 	XOJ_CHECK_TYPE(BaseExportJob);
 	
 	GtkFileFilter* filter = gtk_file_chooser_get_filter(GTK_FILE_CHOOSER(dialog));
 	return gtk_file_filter_get_name(filter);
-}
-
-void BaseExportJob::prepareSavePath(path& path)
-{
-	XOJ_CHECK_TYPE(BaseExportJob);
-	// Nothing to do here, but will be overwritten
 }
 
 bool BaseExportJob::showFilechooser()
@@ -63,13 +101,9 @@ bool BaseExportJob::showFilechooser()
 	path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName());
 	doc->unlock();
 
-	prepareSavePath(name);
-
 	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(folder));
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(name));
 	
-	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
-
 	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
 
 	while (true)
@@ -81,9 +115,11 @@ bool BaseExportJob::showFilechooser()
 		}
 
 		string uri(gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog)));
-		this->filename = path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+		this->filename = path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog))).replace_extension();
+		path currentFolder = path(gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog));
 
-		if (isUriValid(uri))
+		// Since we add the extension after the OK button, we have to check manually on existing files
+		if (isUriValid(uri) && checkExistingFile(folder, filename))
 		{
 			break;
 		}

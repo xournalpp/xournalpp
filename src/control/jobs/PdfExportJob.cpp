@@ -24,16 +24,6 @@ void PdfExportJob::addFilterToDialog()
 	addFileFilterToDialog(_("PDF files"), "*.pdf");
 }
 
-void PdfExportJob::prepareSavePath(path& path)
-{
-	XOJ_CHECK_TYPE(PdfExportJob);
-
-	if (path.extension() != ".pdf")
-    {
-		path += ".pdf";
-    }
-}
-
 bool PdfExportJob::isUriValid(string& uri)
 {
 	XOJ_CHECK_TYPE(PdfExportJob);
@@ -43,22 +33,11 @@ bool PdfExportJob::isUriValid(string& uri)
 		return false;
 	}
 
-	string ext = filename.extension().string();
-	if (ext != ".pdf")
-	{
-		string msg = _("File name needs to end with .pdf");
-		Util::showErrorToUser(control->getGtkWindow(), msg);
-		return false;
-	}
-
-	if (boost::iequals(filename.string(), control->getDocument()->getPdfFilename().string()))
-	{
-		string msg = _("Do not overwrite the background PDF! This will cause errors!");
-		Util::showErrorToUser(control->getGtkWindow(), msg);
-		return false;
-	}
+	// Remove any pre-existing extension and adds .pdf
+	clearExtensions(filename);
+	filename += ".pdf";
 	
-	return true;
+	return checkOverwriteBackgroundPDF(filename);
 }
 
 
