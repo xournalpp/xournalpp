@@ -16,7 +16,6 @@
 #include <Rectangle.h>
 
 #include <gtk/gtk.h>
-#include <vector>
 
 // Hardcode max and min zoom
 // this should probably be user-adjustable in future

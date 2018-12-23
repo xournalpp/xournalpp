@@ -92,7 +92,7 @@ string PlaceholderString::formatPart(string format)
 	string formatDef;
 
 	std::size_t comma = format.find(',');
-	if (comma != std::string::npos)
+	if (comma != string::npos)
 	{
 		formatDef = format.substr(comma + 1);
 		format = format.substr(0, comma);

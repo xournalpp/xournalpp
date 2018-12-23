@@ -13,8 +13,6 @@
 
 #include <XournalType.h>
 
-#include <vector>
-
 class XojPageView;
 
 /**

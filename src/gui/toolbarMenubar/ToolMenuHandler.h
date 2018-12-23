@@ -16,7 +16,6 @@
 #include "control/Actions.h"
 
 #include <gtk/gtk.h>
-#include <vector>
 
 class AbstractToolItem;
 typedef std::vector<AbstractToolItem*> AbstractToolItemVector;

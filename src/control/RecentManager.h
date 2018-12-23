@@ -17,8 +17,6 @@
 using boost::filesystem::path;
 #include <gtk/gtk.h>
 
-#include <vector>
-
 class RecentManagerListener
 {
 public:

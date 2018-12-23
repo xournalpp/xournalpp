@@ -35,8 +35,6 @@ namespace ba = boost::algorithm;
 using std::cout;
 using std::cerr;
 using std::endl;
-#include <vector>
-using std::vector;
 
 XournalMain::XournalMain()
 {

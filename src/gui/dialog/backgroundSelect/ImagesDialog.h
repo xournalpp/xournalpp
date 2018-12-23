@@ -15,8 +15,6 @@
 #include "BackgroundSelectDialogBase.h"
 #include <XournalType.h>
 
-#include <vector>
-
 class BackgroundImage;
 
 class ImagesDialog : public BackgroundSelectDialogBase

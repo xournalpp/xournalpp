@@ -6,10 +6,6 @@
 #include "GraphBackgroundPainter.h"
 #include "LineBackgroundPainter.h"
 
-#include <vector>
-using std::vector;
-using std::pair;
-
 MainBackgroundPainter::MainBackgroundPainter()
 {
 	XOJ_INIT_TYPE(MainBackgroundPainter);

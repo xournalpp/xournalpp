@@ -26,8 +26,6 @@
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 
-#include <vector>
-
 class Document
 {
 public:

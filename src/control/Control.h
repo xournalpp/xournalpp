@@ -31,7 +31,6 @@
 
 #include <XournalType.h>
 
-#include <vector>
 #include "../gui/dialog/LatexDialog.h"
 
 class AudioController;
