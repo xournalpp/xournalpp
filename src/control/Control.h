@@ -76,6 +76,10 @@ public:
 	void quit();
 	bool close(bool destroy = false);
 
+	// Asks user to replace an existing file when saving / exporting, since we add the extension
+	// after the OK, we need to check manually
+	bool checkExistingFile(path& folder, path& filename);
+
 	void resetShapeRecognizer();
 
 	// Menu edit

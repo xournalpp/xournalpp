@@ -187,45 +187,21 @@ path Document::createSaveFilename(DocumentType type, string defaultSaveName)
 {
 	if (!filename.empty())
 	{
-		//This can be any extension
-		return filename.filename();
+		//This can be any extension		
+		return filename.stem();
 	}
 	else if (!pdfFilename.empty())
 	{
-		path extension;
-		if (type == Document::XOPP)
-		{
-			extension = path(".pdf.xopp");
-		}
-		else if (type == Document::PDF)
-		{
-			extension = path(".xopp.pdf");
-		}
-		else
-		{
-			extension = path("");
-		}
-		return pdfFilename.filename().replace_extension(extension);
+		return pdfFilename.stem();
 	}
 	else
 	{
 		time_t curtime = time(NULL);
 		char stime[128];
 		strftime(stime, sizeof(stime), defaultSaveName.c_str(), localtime(&curtime));
-		path automaticName = path(stime);
-		if (type == Document::XOPP)
-		{
-			automaticName.replace_extension(".xopp");
-		}
-		else if (type == Document::XOJ)
-		{
-			automaticName.replace_extension(".xoj");
-		}
-		else if (type == Document::PDF)
-		{
-			automaticName.replace_extension(".pdf");
-		}
-		return automaticName.c_str();
+
+		// Remove the extension, file format is handled by the filter combo box
+		return path(stime).replace_extension();
 	}
 }
 

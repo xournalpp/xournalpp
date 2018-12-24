@@ -5,7 +5,7 @@
 #else
 #include <execinfo.h>
 #include <unistd.h>
-#include <linux/limits.h>
+#include <limits.h>
 #endif
 
 #include <iostream>
