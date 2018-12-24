@@ -76,5 +76,5 @@ private:
 
 	string chosenFilterName;
 
-	std::map<string, string> filters;
+	std::map<string, ExportType*> filters;
 };

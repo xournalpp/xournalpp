@@ -22,11 +22,11 @@ CustomExportJob::CustomExportJob(Control* control)
 	XOJ_INIT_TYPE(CustomExportJob);
 
 	// Supported filters
-	filters[_("PDF files")] = ".pdf"; 
-	filters[_("PDF with plain background")] = ".pdf";
-	filters[_("PNG graphics")] = ".png";
-	filters[_("PNG with transparent background")] = ".png";
-	filters[_("Xournal (Compatibility)")] =  ".xoj";
+	filters[_("PDF files")] = new ExportType(".pdf", false); 
+	filters[_("PDF with plain background")] = new ExportType(".pdf", true);
+	filters[_("PNG graphics")] = new ExportType(".png", false);
+	filters[_("PNG with transparent background")] = new ExportType(".png", true);
+	filters[_("Xournal (Compatibility)")] =  new ExportType(".xoj", false);
 }
 
 CustomExportJob::~CustomExportJob()
@@ -39,6 +39,11 @@ CustomExportJob::~CustomExportJob()
 	}
 	exportRange.clear();
 
+	for(auto& filter : filters)
+	{
+		delete filter.second;
+	}
+
 
 	XOJ_RELEASE_TYPE(CustomExportJob);
 }
@@ -48,9 +53,9 @@ void CustomExportJob::addFilterToDialog()
 	XOJ_CHECK_TYPE(CustomExportJob);
 
 	// Runs on every filter inside the filters map
-	for (std::map<string, string>::iterator it = filters.begin(); it != filters.end(); ++it)
+	for (auto& filter : filters)
 	{
-  		addFileFilterToDialog(it->first, "*" + it->second); // Adds * for the pattern
+  		addFileFilterToDialog(filter.first, "*" + filter.second->extension); // Adds * for the pattern
 	}
 }
 
@@ -68,7 +73,7 @@ bool CustomExportJob::isUriValid(string& uri)
 	
 	// Remove any pre-existing extension and adds the chosen one
 	clearExtensions(filename);
-	filename.replace_extension(filters[this->chosenFilterName]);
+	filename.replace_extension(filters[this->chosenFilterName]->extension);
 
 	return checkOverwriteBackgroundPDF(filename);
 }
@@ -186,14 +191,9 @@ void CustomExportJob::exportPngPage(int pageId, int id, double zoom, DocumentVie
 		PdfView::drawPage(NULL, popplerPage, cr, zoom, page->getWidth(), page->getHeight());
 	}
 
-	if (this->chosenFilterName == _("PNG with transparent background"))
-	{
-		view.drawPage(page, this->cr, true, true);
-	}
-	else
-	{
-		view.drawPage(page, this->cr, true);
-	}
+	bool hideBackground = filters[this->chosenFilterName]->withoutBackground;
+	
+	view.drawPage(page, this->cr, true, hideBackground);
 
 	if (!freeSurface(id))
 	{
@@ -284,14 +284,9 @@ void CustomExportJob::run()
 		Document* doc = control->getDocument();
 
 		XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
-		
-		
 
-		if (this->chosenFilterName == _("PDF with plain background"))
-		{
-			pdfe->setNoBackgroundExport(true);
-		}
-
+		pdfe->setNoBackgroundExport(filters[this->chosenFilterName]->withoutBackground);
+		
 		if (!pdfe->createPdf(this->filename, exportRange))
 		{
 			this->errorMsg = pdfe->getLastError();

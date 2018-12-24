@@ -38,6 +38,7 @@ private:
 
 public:
 	static void showErrorToUser(GtkWindow* win, string msg);
+	static int replaceFileQuestion(GtkWindow* win, string msg);
 
 	static void cairo_set_source_rgbi(cairo_t* cr, int color);
 

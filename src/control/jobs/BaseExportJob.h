@@ -41,7 +41,6 @@ protected:
 	void addFileFilterToDialog(string name, string pattern);
 	void clearExtensions(path& filename);
 	bool checkOverwriteBackgroundPDF(path& filename);
-	bool checkExistingFile(path folder, path& filename);
 	virtual bool isUriValid(string& uri);
 
 private:
@@ -53,4 +52,12 @@ protected:
 	path filename;
 
 	string errorMsg;
+
+	class ExportType
+	{
+		public:
+			string extension;
+			bool withoutBackground;
+			ExportType(string ext, bool hideBg) : extension(ext), withoutBackground(hideBg){}
+	};
 };

@@ -63,25 +63,6 @@ bool BaseExportJob::checkOverwriteBackgroundPDF(path& filename)
 	return true;
 }
 
-bool BaseExportJob::checkExistingFile(path folder, path& filename)
-{
-	XOJ_CHECK_TYPE(BaseExportJob);
-	
-	directory_iterator end_itr;
-
-    // Cycle through the directory
-    for (directory_iterator itr(folder); itr != end_itr; ++itr)
-    {
-		if(itr->path() == filename)
-		{
-			string msg = _("The selected name already exists! Please change it");
-			Util::showErrorToUser(control->getGtkWindow(), msg);
-			return false;
-		}
-	}
-	return true;
-}
-
 string BaseExportJob::getFilterName()
 {
 	XOJ_CHECK_TYPE(BaseExportJob);
@@ -122,7 +103,7 @@ bool BaseExportJob::showFilechooser()
 		path currentFolder(gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog)));
 
 		// Since we add the extension after the OK button, we have to check manually on existing files
-		if (isUriValid(uri) && checkExistingFile(folder, filename))
+		if (isUriValid(uri) && control->checkExistingFile(currentFolder, filename))
 		{
 			break;
 		}
