@@ -50,6 +50,11 @@ public:
 	void setColor(int color, bool userSelection);
 	int getColor();
 
+	/**
+	 * @return -1 if fill is disabled, else the fill alpha value
+	 */
+	int getFill();
+
 	DrawingType getDrawingType();
 	void setDrawingType(DrawingType drawingType);
 
@@ -66,12 +71,21 @@ public:
 	void setEraserSize(ToolSize size);
 	void setHilighterSize(ToolSize size);
 
+	void setPenFillEnabled(bool fill);
+	bool getPenFillEnabled();
+	void setPenFill(int alpha);
+	int getPenFill();
+
+	void setHilighterFillEnabled(bool fill);
+	bool getHilighterFillEnabled();
+	void setHilighterFill(int alpha);
+	int getHilighterFill();
 
 	void selectTool(ToolType type, bool fireToolChanged = true);
 	ToolType getToolType();
 	void fireToolChanged();
 
-	Tool &getTool(ToolType type);
+	Tool& getTool(ToolType type);
 
 	void setEraserType(EraserType eraserType);
 	EraserType getEraserType();
@@ -93,6 +107,9 @@ public:
 
 	ArrayIterator<Tool*> iterator();
 
+	/**
+	 * Change the selection tools capabilities, depending on the selected elements
+	 */
 	void setSelectionEditTools(bool setColor, bool setSize);
 
 	const double* getToolThickness(ToolType type);

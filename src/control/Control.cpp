@@ -8,6 +8,7 @@
 
 #include "gui/dialog/AboutDialog.h"
 #include "gui/dialog/GotoDialog.h"
+#include "gui/dialog/FillTransparencyDialog.h"
 #include "gui/dialog/FormatDialog.h"
 #include "gui/dialog/PageTemplateDialog.h"
 #include "gui/dialog/SettingsDialog.h"
@@ -745,6 +746,14 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 			penSizeChanged();
 		}
 		break;
+	case ACTION_TOOL_PEN_FILL:
+		this->toolHandler->setPenFillEnabled(enabled);
+		break;
+	case ACTION_TOOL_PEN_FILL_TRANSPARENCY:
+		selectFillAlpha(true);
+		break;
+
+
 	case ACTION_TOOL_HILIGHTER_SIZE_FINE:
 		if (enabled)
 		{
@@ -765,6 +774,12 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 			this->toolHandler->setHilighterSize(TOOL_SIZE_THICK);
 			hilighterSizeChanged();
 		}
+		break;
+	case ACTION_TOOL_HILIGHTER_FILL:
+		this->toolHandler->setHilighterFillEnabled(enabled);
+		break;
+	case ACTION_TOOL_HILIGHTER_FILL_TRANSPARENCY:
+		selectFillAlpha(false);
 		break;
 
 	case ACTION_FONT_BUTTON_CHANGED:
@@ -903,6 +918,40 @@ bool Control::paste()
 		return true;
 	}
 	return this->clipboardHandler->paste();
+}
+
+void Control::selectFillAlpha(bool pen)
+{
+	XOJ_CHECK_TYPE(Control);
+
+	int alpha = 0;
+
+	if (pen)
+	{
+		alpha = toolHandler->getPenFill();
+	}
+	else
+	{
+		alpha = toolHandler->getHilighterFill();
+	}
+
+	FillTransparencyDialog dlg(gladeSearchPath, alpha);
+	dlg.show(getGtkWindow());
+
+	if (dlg.getResultAlpha() == -1)
+	{
+		return;
+	}
+
+
+	if (pen)
+	{
+		toolHandler->setPenFill(dlg.getResultAlpha());
+	}
+	else
+	{
+		toolHandler->setHilighterFill(dlg.getResultAlpha());
+	}
 }
 
 void Control::clearSelectionEndText()

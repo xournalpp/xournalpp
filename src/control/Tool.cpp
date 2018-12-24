@@ -1,8 +1,6 @@
 #include "Tool.h"
 
-Tool::Tool(string name, ToolType type, int color, bool enableColor, bool enableSize, bool enableRuler,
-		   bool enableRectangle, bool enableCircle, bool enableArrow, bool enableShapreRecognizer,
-		   double* thickness)
+Tool::Tool(string name, ToolType type, int color, int capabilities, double* thickness)
 {
 	XOJ_INIT_TYPE(Tool);
 
@@ -10,18 +8,15 @@ Tool::Tool(string name, ToolType type, int color, bool enableColor, bool enableS
 	this->type = type;
 	this->thickness = thickness;
 
-	this->enableColor = enableColor;
-	this->enableSize = enableSize;
-	this->enableShapeRecognizer = enableShapreRecognizer;
-	this->enableRuler = enableRuler;
-	this->enableRectangle = enableRectangle;
-	this->enableCircle = enableCircle;
-	this->enableArrow = enableArrow;
+	this->capabilities = capabilities;
 
 	this->drawingType = DRAWING_TYPE_DEFAULT;
 
 	this->color = color;
 	this->size = TOOL_SIZE_MEDIUM;
+
+	this->fill = false;
+	this->fillAlpha = 128;
 }
 
 Tool::~Tool()
@@ -69,53 +64,74 @@ void Tool::setSize(ToolSize size)
 	this->size = size;
 }
 
+void Tool::setCapability(int capability, bool enabled)
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	if (enabled)
+	{
+		this->capabilities |= capability;
+	}
+	else
+	{
+		this->capabilities &= ~capability;
+	}
+}
+
 bool Tool::isEnableColor()
 {
 	XOJ_CHECK_TYPE(Tool);
 
-	return this->enableColor;
+	return this->capabilities & TOOL_CAP_COLOR != 0;
 }
 
 bool Tool::isEnableSize()
 {
 	XOJ_CHECK_TYPE(Tool);
 
-	return this->enableSize;
+	return this->capabilities & TOOL_CAP_SIZE != 0;
 }
 
 bool Tool::isEnableRuler()
 {
 	XOJ_CHECK_TYPE(Tool);
 
-	return this->enableRuler;
+	return this->capabilities & TOOL_CAP_RULER != 0;
 }
 
 bool Tool::isEnableRectangle()
 {
 	XOJ_CHECK_TYPE(Tool);
 
-	return this->enableRectangle;
+	return this->capabilities & TOOL_CAP_RECTANGLE != 0;
 }
 
 bool Tool::isEnableCircle()
 {
 	XOJ_CHECK_TYPE(Tool);
 
-	return this->enableCircle;
+	return this->capabilities & TOOL_CAP_CIRCLE != 0;
 }
 
 bool Tool::isEnableArrow()
 {
 	XOJ_CHECK_TYPE(Tool);
 
-	return this->enableArrow;
+	return this->capabilities & TOOL_CAP_ARROW != 0;
 }
 
 bool Tool::isEnableShapeRecognizer()
 {
 	XOJ_CHECK_TYPE(Tool);
 
-	return this->enableShapeRecognizer;
+	return this->capabilities & TOOL_CAP_RECOGNIZER != 0;
+}
+
+bool Tool::isEnableFill()
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->capabilities & TOOL_CAP_FILL != 0;
 }
 
 DrawingType Tool::getDrawingType()

@@ -299,7 +299,7 @@
                         <property name="label" translatable="yes">Rec-Stop</property>
                       </object>
                     </child>
-					<child>
+                    <child>
                       <object class="GtkCheckMenuItem" id="menuSnapRotation">
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
@@ -307,7 +307,7 @@
                         <property name="label" translatable="yes">Rotation Snapping</property>
                       </object>
                     </child>
-					<child>
+                    <child>
                       <object class="GtkCheckMenuItem" id="menuSnapGrid">
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
@@ -884,6 +884,28 @@
                                 <property name="draw_as_radio">True</property>
                               </object>
                             </child>
+                            <child>
+                              <object class="GtkSeparatorMenuItem" id="menuitem1">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckMenuItem" id="penFill">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Fi_ll</property>
+                                <property name="use_underline">True</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkMenuItem" id="penFillTransparency">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Fill transparency</property>
+                                <property name="use_underline">True</property>
+                              </object>
+                            </child>
                           </object>
                         </child>
                       </object>
@@ -997,6 +1019,28 @@
                                 <property name="label" translatable="yes">_thick</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkSeparatorMenuItem" id="menuitem2">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckMenuItem" id="highlighterFill">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Fi_ll</property>
+                                <property name="use_underline">True</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkMenuItem" id="highlighterFillTransparency">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Fill transparency</property>
+                                <property name="use_underline">True</property>
                               </object>
                             </child>
                           </object>
