@@ -44,10 +44,12 @@ public:
 	 */
 	virtual void resetShapeRecognizer();
 
+protected:
+	void strokeRecognizerDetected(ShapeRecognizerResult* result, Layer* layer);
+	void destroySurface();
+
 private:
 	XOJ_TYPE_ATTRIB;
-
-	void destroySurface();
 
 	/**
 	 * The masking surface
