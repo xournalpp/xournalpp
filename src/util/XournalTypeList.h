@@ -249,4 +249,5 @@ XOJ_DECLARE_TYPE(NewGtkInputDevice, 238);
 XOJ_DECLARE_TYPE(InputSequence, 239);
 XOJ_DECLARE_TYPE(ZoomGesture, 240);
 XOJ_DECLARE_TYPE(GroupUndoAction, 241);
+XOJ_DECLARE_TYPE(FillTransparencyDialog, 242);
 

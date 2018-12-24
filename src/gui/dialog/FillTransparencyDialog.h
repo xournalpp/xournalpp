@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Goto-Page dialog
+ * The about dialog
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -13,20 +13,22 @@
 
 #include "gui/GladeGui.h"
 
-class GotoDialog : public GladeGui
+class FillTransparencyDialog : public GladeGui
 {
 public:
-	GotoDialog(GladeSearchpath* gladeSearchPath, int maxPage);
-	virtual ~GotoDialog();
+	FillTransparencyDialog(GladeSearchpath* gladeSearchPath, int alpha);
+	virtual ~FillTransparencyDialog();
 
 public:
 	virtual void show(GtkWindow* parent);
 
-	// returns the selected page or -1 if closed
-	int getSelectedPage();
+	int getResultAlpha();
+
+private:
+	void setPreviewImage(int alpha);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int selectedPage;
+	int resultAlpha;
 };

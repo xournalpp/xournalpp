@@ -110,9 +110,7 @@ Stroke* ShapeRecognizer::tryRectangle()
 	}
 
 	Stroke* s = new Stroke();
-	s->setWidth(this->stroke->getWidth());
-	s->setToolType(this->stroke->getToolType());
-	s->setColor(this->stroke->getColor());
+	s->applyStyleFrom(this->stroke);
 
 	for (int i = 0; i <= 3; i++)
 	{
@@ -283,9 +281,7 @@ Stroke* ShapeRecognizer::tryArrow()
 	dist = (hypot(rs[1].x1 - rs[1].x2, rs[1].y1 - rs[1].y2) + hypot(rs[2].x1 - rs[2].x2, rs[2].y1 - rs[2].y2)) / 2;
 
 	Stroke* s = new Stroke();
-	s->setWidth(this->stroke->getWidth());
-	s->setToolType(this->stroke->getToolType());
-	s->setColor(this->stroke->getColor());
+	s->applyStyleFrom(this->stroke);
 
 	s->addPoint(Point(x1, y1));
 	s->addPoint(Point(x2, y2));
@@ -528,9 +524,7 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 	}
 
 	Stroke* s = new Stroke();
-	s->setWidth(this->stroke->getWidth());
-	s->setToolType(this->stroke->getToolType());
-	s->setColor(this->stroke->getColor());
+	s->applyStyleFrom(this->stroke);
 
 	for (int i = 0; i < nsides; i++)
 	{
@@ -610,31 +604,31 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			RDEBUG("return tryRectangle()");
 			return result;
 		}
-/*
-		if ((tmp = tryArrow()) != NULL)
-		{
-			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-			resetRecognizer();
-			RDEBUG("return tryArrow()");
-			return result;
-		}
 
-		if ((tmp = tryClosedPolygon(3)) != NULL)
-		{
-			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-			RDEBUG("return tryClosedPolygon(3)");
-			resetRecognizer();
-			return result;
-		}
+//		if ((tmp = tryArrow()) != NULL)
+//		{
+//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
+//			resetRecognizer();
+//			RDEBUG("return tryArrow()");
+//			return result;
+//		}
+//
+//		if ((tmp = tryClosedPolygon(3)) != NULL)
+//		{
+//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
+//			RDEBUG("return tryClosedPolygon(3)");
+//			resetRecognizer();
+//			return result;
+//		}
+//
+//		if ((tmp = tryClosedPolygon(4)) != NULL)
+//		{
+//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
+//			RDEBUG("return tryClosedPolygon(4)");
+//			resetRecognizer();
+//			return result;
+//		}
 
-		if ((tmp = tryClosedPolygon(4)) != NULL)
-		{
-			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-			RDEBUG("return tryClosedPolygon(4)");
-			resetRecognizer();
-			return result;
-		}
-		 */
 
 		// Removed complicated recognition
 
@@ -652,9 +646,7 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			}
 
 			Stroke* s = new Stroke();
-			s->setWidth(this->stroke->getWidth());
-			s->setToolType(this->stroke->getToolType());
-			s->setColor(this->stroke->getColor());
+			s->applyStyleFrom(this->stroke);
 
 			s->addPoint(Point(rs->x1, rs->y1));
 			s->addPoint(Point(rs->x2, rs->y2));

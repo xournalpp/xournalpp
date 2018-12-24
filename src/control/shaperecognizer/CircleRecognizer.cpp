@@ -18,9 +18,7 @@ Stroke* CircleRecognizer::makeCircleShape(Stroke* originalStroke, Inertia& inert
 	}
 
 	Stroke* s = new Stroke();
-	s->setWidth(originalStroke->getWidth());
-	s->setToolType(originalStroke->getToolType());
-	s->setColor(originalStroke->getColor());
+	s->applyStyleFrom(originalStroke);
 
 	for (int i = 0; i <= npts; i++)
 	{

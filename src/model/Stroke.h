@@ -33,6 +33,11 @@ public:
 	Stroke* cloneStroke() const;
 	virtual Element* clone();
 
+	/**
+	 * Clone style attributes, but not the data (position, width etc.)
+	 */
+	void applyStyleFrom(const Stroke* other);
+
 	void setWidth(double width);
 	double getWidth() const;
 

@@ -43,17 +43,25 @@ Stroke::~Stroke()
 	XOJ_RELEASE_TYPE(Stroke);
 }
 
+/**
+ * Clone style attributes, but not the data (position, width etc.)
+ */
+void Stroke::applyStyleFrom(const Stroke* other)
+{
+	setColor(other->getColor());
+	setToolType(other->getToolType());
+	setWidth(other->getWidth());
+	setAudioFilename(other->getAudioFilename());
+	setTimestamp(other->getTimestamp());
+	setFill(other->getFill());
+}
+
 Stroke* Stroke::cloneStroke() const
 {
 	XOJ_CHECK_TYPE(Stroke);
 
 	Stroke* s = new Stroke();
-	s->setColor(this->getColor());
-	s->setToolType(this->getToolType());
-	s->setWidth(this->getWidth());
-	s->setAudioFilename(this->getAudioFilename());
-	s->setTimestamp(this->getTimestamp());
-	s->setFill(this->getFill());
+	s->applyStyleFrom(this);
 
 	s->allocPointSize(this->pointCount);
 	memcpy(s->points, this->points, this->pointCount * sizeof(Point));
