@@ -13,7 +13,6 @@
 
 #include "BlockingJob.h"
 
-#include <StringUtils.h>
 #include <XournalType.h>
 
 class SaveJob : public BlockingJob

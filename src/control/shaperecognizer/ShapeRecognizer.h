@@ -17,8 +17,6 @@
 
 #include <XournalType.h>
 
-#include <glib.h>
-
 class Stroke;
 class Point;
 class ShapeRecognizerResult;

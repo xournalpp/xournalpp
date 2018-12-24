@@ -28,13 +28,13 @@ namespace bf = boost::filesystem;
 #endif
 
 namespace bf = boost::filesystem;
+#include <boost/algorithm/string.hpp>
+namespace ba = boost::algorithm;
 
 #include <iostream>
 using std::cout;
 using std::cerr;
 using std::endl;
-#include <vector>
-using std::vector;
 
 XournalMain::XournalMain()
 {

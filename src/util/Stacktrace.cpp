@@ -4,6 +4,8 @@
 #include <Windows.h>
 #else
 #include <execinfo.h>
+#include <unistd.h>
+#include <linux/limits.h>
 #endif
 
 #include <iostream>

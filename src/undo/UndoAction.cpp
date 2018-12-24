@@ -14,13 +14,12 @@ UndoAction::~UndoAction()
 	XOJ_RELEASE_TYPE(UndoAction);
 }
 
-XojPage** UndoAction::getPages()
+vector<PageRef> UndoAction::getPages()
 {
 	XOJ_CHECK_TYPE(UndoAction);
 
-	XojPage** pages = new XojPage *[2];
-	pages[0] = this->page;
-	pages[1] = NULL;
+	vector<PageRef> pages;
+	pages.push_back(this->page);
 	return pages;
 }
 

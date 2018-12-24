@@ -17,9 +17,6 @@
 
 #include <gtk/gtk.h>
 
-#include <vector>
-using std::vector;
-
 class PageTypeHandler;
 class PageTypeHandler;
 class PageTypeInfo;
@@ -34,8 +31,15 @@ typedef struct {
 class PageTypeMenuChangeListener
 {
 public:
-	virtual void pageSelected(PageTypeInfo* info) = 0;
+	virtual void changeCurrentPageBackground(PageTypeInfo* info) = 0;
 	virtual ~PageTypeMenuChangeListener();
+};
+
+class PageTypeApplyListener
+{
+public:
+	virtual void applyCurrentPageBackground(bool allPages) = 0;
+	virtual ~PageTypeApplyListener();
 };
 
 class PageTypeMenu
@@ -52,7 +56,13 @@ public:
 	void setListener(PageTypeMenuChangeListener* listener);
 	void hideCopyPage();
 
+	/**
+	 * Apply background to current or to all pages button
+	 */
+	void addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener, bool onlyAllMenu);
+
 private:
+	GtkWidget* createApplyMenuItem(const char* text);
 	void initDefaultMenu();
 	void addMenuEntry(PageTypeInfo* t);
 	void entrySelected(PageTypeInfo* t);
@@ -81,4 +91,6 @@ private:
 	MainBackgroundPainter* backgroundPainter;
 
 	bool showPreview;
+
+	PageTypeApplyListener* pageTypeApplyListener;
 };

@@ -15,10 +15,8 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
-#include <vector>
 
 class Control;
-
 
 /**
  * Count of last background colors

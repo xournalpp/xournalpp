@@ -15,8 +15,6 @@
 
 #include <XournalType.h>
 
-#include <vector>
-
 class Layer;
 class BackgroundImage;
 

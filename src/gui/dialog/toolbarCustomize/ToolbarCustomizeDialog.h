@@ -14,7 +14,6 @@
 #include "CustomizeableColorList.h"
 #include "gui/GladeGui.h"
 
-#include <StringUtils.h>
 #include <XournalType.h>
 
 #include <list>

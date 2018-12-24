@@ -6,6 +6,9 @@
 #include <boost/filesystem.hpp>
 using namespace boost::filesystem;
 
+#include <boost/algorithm/string.hpp>
+namespace ba = boost::algorithm;
+
 BaseExportJob::BaseExportJob(Control* control, string name)
  : BlockingJob(control, name),
    dialog(NULL)

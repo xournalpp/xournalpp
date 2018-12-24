@@ -35,9 +35,16 @@ public:
 	string getErrorMessage();
 
 protected:
-	void visitPage(XmlNode* root, PageRef p, Document* doc, int id);
 	static string getColorStr(int c, unsigned char alpha = 0xff);
-	void visitLayer(XmlNode* page, Layer* l);
+
+	virtual void visitPage(XmlNode* root, PageRef p, Document* doc, int id);
+	virtual void visitLayer(XmlNode* page, Layer* l);
+	virtual void visitStroke(XmlPointNode* stroke, Stroke* s);
+
+	/**
+	 * Export the fill attributes
+	 */
+	virtual void visitStrokeExtended(XmlPointNode* stroke, Stroke* s);
 
 	virtual void writeHeader();
 	virtual void writeSolidBackground(XmlNode* background, PageRef p);

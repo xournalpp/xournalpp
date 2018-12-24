@@ -16,8 +16,6 @@
 
 #include <XournalType.h>
 
-#include <vector>
-
 class ButtonConfigGui;
 
 class SettingsDialog : public GladeGui

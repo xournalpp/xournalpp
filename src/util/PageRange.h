@@ -13,9 +13,6 @@
 
 #include "XournalType.h"
 
-#include <vector>
-using std::vector;
-
 class PageRangeEntry
 {
 public:

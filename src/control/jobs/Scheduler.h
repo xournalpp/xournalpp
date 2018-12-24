@@ -16,12 +16,6 @@
 #include "Job.h"
 #include <XournalType.h>
 
-#include <glib.h>
-
-#include <string>
-using std::string;
-
-
 /** @file Scheduler.h
     @brief A file containing the defintion of the Scheduler
 */

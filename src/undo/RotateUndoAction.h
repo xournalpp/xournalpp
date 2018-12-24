@@ -13,8 +13,6 @@
 
 #include "UndoAction.h"
 
-#include <glib.h>
-
 class RotateUndoAction : public UndoAction
 {
 public:

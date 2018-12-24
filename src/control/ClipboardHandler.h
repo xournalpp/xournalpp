@@ -13,7 +13,6 @@
 
 #include "tools/EditSelection.h"
 
-#include <StringUtils.h>
 #include <XournalType.h>
 
 #include <gtk/gtk.h>

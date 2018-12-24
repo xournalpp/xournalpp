@@ -38,7 +38,6 @@
 #include <Range.h>
 #include <Rectangle.h>
 
-#include <glib.h>
 #include <gdk/gdk.h>
 
 #include <stdlib.h>

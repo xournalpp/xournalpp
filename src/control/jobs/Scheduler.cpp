@@ -4,7 +4,6 @@
 
 #ifdef DEBUG_SHEDULER
 
-#include <StringUtils.h>
 #include <iostream>
 #define SDEBUG(msg) std::cout << bl::format(CONCAT("Scheduler::", msg, "\n"))
 

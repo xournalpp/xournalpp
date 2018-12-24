@@ -14,9 +14,6 @@
 #include "Element.h"
 #include <XournalType.h>
 
-#include <string>
-using std::string;
-
 class Image : public Element
 {
 public:

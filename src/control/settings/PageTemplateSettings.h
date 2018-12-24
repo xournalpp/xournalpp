@@ -16,9 +16,6 @@
 
 #include <XournalType.h>
 
-#include <string>
-using std::string;
-
 class PageTemplateSettings
 {
 public:

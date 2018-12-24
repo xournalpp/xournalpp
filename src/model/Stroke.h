@@ -42,6 +42,24 @@ public:
 	void setAudioFilename(string fn);
 	string getAudioFilename() const;
 
+	/**
+	 * Option to fill the shape:
+	 *  -1: The shape is not filled
+	 * 255: The shape is fully opaque filled
+	 * ...
+	 *   1: The shape is nearly fully transparent filled
+	 */
+	int getFill() const;
+
+	/**
+	 * Option to fill the shape:
+	 *  -1: The shape is not filled
+	 * 255: The shape is fully opaque filled
+	 * ...
+	 *   1: The shape is nearly fully transparent filled
+	 */
+	void setFill(int fill);
+
 	void addPoint(Point p);
 	void setLastPoint(double x, double y);
 	void setFirstPoint(double x, double y);
@@ -107,4 +125,13 @@ private:
 	string audioFilename;
 
 	EraseableStroke* eraseable;
+
+	/**
+	 * Option to fill the shape:
+	 *  -1: The shape is not filled
+	 * 255: The shape is fully opaque filled
+	 * ...
+	 *   1: The shape is nearly fully transparent filled
+	 */
+	int fill;
 };

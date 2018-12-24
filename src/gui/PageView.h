@@ -20,7 +20,6 @@
 
 #include <Range.h>
 
-#include <vector>
 #include "inputdevices/PositionInputData.h"
 
 class EditSelection;

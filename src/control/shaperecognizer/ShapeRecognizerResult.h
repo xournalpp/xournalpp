@@ -12,7 +12,6 @@
 #pragma once
 
 #include <XournalType.h>
-#include <vector>
 
 class Stroke;
 typedef std::vector<Stroke*> StrokeVector;

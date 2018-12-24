@@ -13,9 +13,7 @@
 
 #include "ToolbarItem.h"
 
-#include <vector>
-
-typedef std::vector<ToolbarItem*> ToolbarItemVector;
+typedef vector<ToolbarItem*> ToolbarItemVector;
 
 class ToolbarEntry
 {

@@ -8,6 +8,8 @@
 
 #include <boost/filesystem.hpp>
 using boost::filesystem::path;
+#include <boost/algorithm/string.hpp>
+namespace ba = boost::algorithm;
 
 #include <iostream>
 using std::cout;

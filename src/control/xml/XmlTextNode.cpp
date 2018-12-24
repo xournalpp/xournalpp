@@ -1,5 +1,7 @@
 #include "XmlTextNode.h"
 
+#include <StringUtils.h>
+
 XmlTextNode::XmlTextNode(const char* tag, const char* text) : XmlNode(tag)
 {
 	XOJ_INIT_TYPE(XmlTextNode);
@@ -45,7 +47,7 @@ void XmlTextNode::writeOut(OutputStream* out)
 	out->write(">");
 
 	string tmp(this->text);
-	StringUtils::replace_all_chars(tmp,{
+	StringUtils::replaceAllChars(tmp,{
 		replace_pair('&', "&amp;"),
 		replace_pair('<', "&lt;"),
 		replace_pair('>', "&gt;")

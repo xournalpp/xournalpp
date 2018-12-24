@@ -13,8 +13,6 @@
 
 #include "UndoAction.h"
 
-#include <vector>
-
 class Layer;
 class Redrawable;
 class SizeUndoActionEntry;

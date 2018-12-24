@@ -36,7 +36,7 @@ public:
 	 */
 	bool isSaved();
 
-	void pageSelected(PageTypeInfo* info);
+	void changeCurrentPageBackground(PageTypeInfo* info);
 
 private:
 	void showPageSizeDialog();

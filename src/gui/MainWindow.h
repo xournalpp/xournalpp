@@ -16,8 +16,6 @@
 
 #include <XournalType.h>
 
-#include <vector>
-
 class Control;
 class Layout;
 class MainWindow;

@@ -9,10 +9,7 @@
 #include <config-dev.h>
 #include <i18n.h>
 
-#include <glib.h>
 #include <gtk/gtk.h>
-
-#include <boost/locale/format.hpp>
 
 using std::to_string;
 #include <ctime>

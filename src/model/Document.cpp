@@ -10,8 +10,6 @@
 #include <Stacktrace.h>
 #include <Util.h>
 
-#include <boost/locale/format.hpp>
-
 #include <string.h>
 #include <iostream>
 using std::cout;

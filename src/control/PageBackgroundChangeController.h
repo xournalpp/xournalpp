@@ -22,14 +22,15 @@ class PageTypeMenu;
 class Control;
 class XojPage;
 
-class PageBackgroundChangeController : public PageTypeMenuChangeListener, public DocumentListener
+class PageBackgroundChangeController : public PageTypeMenuChangeListener, public DocumentListener, public PageTypeApplyListener
 {
 public:
 	PageBackgroundChangeController(Control* control);
 	virtual ~PageBackgroundChangeController();
 
 public:
-	virtual void pageSelected(PageTypeInfo* info);
+	virtual void changeCurrentPageBackground(PageTypeInfo* info);
+	void changeAllPagesBackground(PageType pt);
 	void insertNewPage(size_t position);
 	GtkWidget* getMenu();
 
@@ -41,6 +42,10 @@ public:
 	virtual void pageInserted(size_t page);
 	virtual void pageDeleted(size_t page);
 	virtual void pageSelected(size_t page);
+
+	// PageTypeApplyListener
+public:
+	virtual void applyCurrentPageBackground(bool allPages);
 
 private:
 

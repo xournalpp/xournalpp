@@ -11,7 +11,6 @@
 
 #include "control/Actions.h"
 #include "control/Control.h"
-#include "control/pagetype/PageTypeMenu.h"
 #include "control/PageBackgroundChangeController.h"
 #include "gui/ToolitemDragDrop.h"
 #include "model/ToolbarData.h"
@@ -21,7 +20,8 @@
 #include <config-features.h>
 #include <i18n.h>
 
-#include <glib.h>
+#include <boost/algorithm/string.hpp>
+namespace ba = boost::algorithm;
 
 ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* parent)
 {
@@ -40,6 +40,7 @@ ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* par
 
 	// still owned by Control
 	this->newPageType = control->getNewPageType();
+	this->newPageType->addApplyBackgroundButton(control->getPageBackgroundChangeController(), false);
 
 	// still owned by Control
 	this->pageBackgroundChangeController = control->getPageBackgroundChangeController();

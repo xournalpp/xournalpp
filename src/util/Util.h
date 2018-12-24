@@ -11,8 +11,6 @@
 
 #pragma once
 
-#include "StringUtils.h"
-
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 

@@ -18,8 +18,6 @@
 #include <Util.h>
 #include <XournalType.h>
 
-#include <vector>
-
 class Selection : public ShapeContainer
 {
 public:

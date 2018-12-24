@@ -12,7 +12,6 @@
 #pragma once
 
 #include "control/settings/Settings.h"
-#include <StringUtils.h>
 
 #include <gtk/gtk.h>
 

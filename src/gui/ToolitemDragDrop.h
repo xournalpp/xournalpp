@@ -11,8 +11,6 @@
 
 #pragma once
 
-#include <StringUtils.h>
-
 #include <gtk/gtk.h>
 
 class AbstractToolItem;

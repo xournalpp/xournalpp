@@ -156,7 +156,7 @@ void PageTemplateDialog::updateDataFromModel()
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPageSize")), model.isCopyLastPageSize());
 }
 
-void PageTemplateDialog::pageSelected(PageTypeInfo* info)
+void PageTemplateDialog::changeCurrentPageBackground(PageTypeInfo* info)
 {
 	XOJ_CHECK_TYPE(PageTemplateDialog);
 

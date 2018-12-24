@@ -15,12 +15,8 @@
 
 #include <cairo/cairo.h>
 
-#include <vector>
-using std::vector;
-#include <string>
-using std::string;
+#include <memory> // std::shared_ptr
 
-#include <memory>
 
 class XojPdfRectangle
 {
