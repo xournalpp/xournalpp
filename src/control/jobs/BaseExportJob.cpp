@@ -116,7 +116,7 @@ bool BaseExportJob::showFilechooser()
 
 		string uri(gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog)));
 		this->filename = path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog))).replace_extension();
-		path currentFolder = path(gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog));
+		path currentFolder(gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog)));
 
 		// Since we add the extension after the OK button, we have to check manually on existing files
 		if (isUriValid(uri) && checkExistingFile(folder, filename))
