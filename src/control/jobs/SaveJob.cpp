@@ -127,6 +127,7 @@ bool SaveJob::save()
 	doc->lock();
 	h.prepareSave(doc);
 	path filename = doc->getFilename();
+	filename.replace_extension(".xopp");
 	doc->unlock();
 
 	if (doc->shouldCreateBackupOnSave())

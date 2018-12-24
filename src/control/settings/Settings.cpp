@@ -1026,12 +1026,6 @@ string Settings::getDefaultSaveName()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	if (ba::ends_with(defaultSaveName, ".xoj"))
-	{
-		defaultSaveName = defaultSaveName.substr(0, defaultSaveName.size() - 4);
-		defaultSaveName += ".xopp";
-	}
-
 	return this->defaultSaveName;
 }
 

@@ -2376,10 +2376,23 @@ bool Control::showSaveDialog()
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
 	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
-	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
+
+	while (true)
 	{
-		gtk_widget_destroy(dialog);
-		return false;
+		if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
+		{
+			gtk_widget_destroy(dialog);
+			return false;
+		}
+
+		path filenameTmp = path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog))).replace_extension(".xopp");
+		path currentFolder(gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog)));
+
+		// Since we add the extension after the OK button, we have to check manually on existing files
+		if (checkExistingFile(currentFolder, filenameTmp))
+		{
+			break;
+		}
 	}
 
 	char* name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
@@ -2594,6 +2607,19 @@ bool Control::close(bool destroy)
 
 		//updateWindowTitle();
 		undoRedoChanged();
+	}
+	return true;
+}
+
+bool Control::checkExistingFile(path& folder, path& filename)
+{
+	XOJ_CHECK_TYPE(Control);
+	
+	if (boost::filesystem::exists(filename))
+	{
+		string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % filename.filename().string() );
+		int res = Util::replaceFileQuestion(getGtkWindow(), msg);
+		return res != 1; // res != 1 when user clicks on Replace
 	}
 	return true;
 }

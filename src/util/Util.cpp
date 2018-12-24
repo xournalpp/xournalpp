@@ -58,6 +58,21 @@ void Util::showErrorToUser(GtkWindow* win, string msg)
 	gtk_widget_destroy(dialog);
 }
 
+int Util::replaceFileQuestion(GtkWindow* win, string msg)
+{
+	GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
+											   "%s", msg.c_str());
+	if (win != NULL)
+	{
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
+	}
+	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another name"), 1);
+	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Replace"), 2);
+	int res = gtk_dialog_run(GTK_DIALOG(dialog));
+	gtk_widget_destroy(dialog);
+	return res;
+}
+
 void Util::cairo_set_source_rgbi(cairo_t* cr, int c)
 {
 	double r = ((c >> 16) & 0xff) / 255.0;

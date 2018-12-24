@@ -26,7 +26,6 @@ public:
 
 protected:
 	virtual void addFilterToDialog();
-	virtual void prepareSavePath(path& path);
 	virtual bool isUriValid(string& uri);
 
 private:
