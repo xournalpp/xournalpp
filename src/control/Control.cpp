@@ -943,14 +943,15 @@ void Control::selectFillAlpha(bool pen)
 		return;
 	}
 
+	alpha = dlg.getResultAlpha();
 
 	if (pen)
 	{
-		toolHandler->setPenFill(dlg.getResultAlpha());
+		toolHandler->setPenFill(alpha);
 	}
 	else
 	{
-		toolHandler->setHilighterFill(dlg.getResultAlpha());
+		toolHandler->setHilighterFill(alpha);
 	}
 }
 
