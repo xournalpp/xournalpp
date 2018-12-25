@@ -16,8 +16,6 @@
 #include "control/pagetype/PageTypeMenu.h"
 #include "control/settings/PageTemplateSettings.h"
 
-#include <XournalType.h>
-
 class PageTypeHandler;
 class PageTypeMenu;
 class PageTypeInfo;

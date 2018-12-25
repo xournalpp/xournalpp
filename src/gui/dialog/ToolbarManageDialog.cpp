@@ -11,8 +11,8 @@ enum
 	COLUMN_STRING, COLUMN_BOLD, COLUMN_POINTER, COLUMN_EDITABLE, N_COLUMNS
 };
 
-ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, ToolbarModel* model) :
-		GladeGui(gladeSearchPath, "toolbarManageDialog.glade", "DialogManageToolbar")
+ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, ToolbarModel* model)
+ : GladeGui(gladeSearchPath, "toolbarManageDialog.glade", "DialogManageToolbar")
 {
 	XOJ_INIT_TYPE(ToolbarManageDialog);
 

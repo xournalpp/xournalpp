@@ -19,6 +19,7 @@
 #include <config-dev.h>
 #include <config-features.h>
 #include <i18n.h>
+#include <XojMsgBox.h>
 
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/path.hpp>
@@ -83,7 +84,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 
 		string msg = FS(_F("Could not parse general toolbar.ini file: {1}\n"
 						   "No Toolbars will be available") % file);
-		Util::showErrorToUser(control->getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 	}
 
 	file = string(g_get_home_dir()) + G_DIR_SEPARATOR_S + CONFIG_DIR + G_DIR_SEPARATOR_S + TOOLBAR_CONFIG;
@@ -93,7 +94,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 		{
 			string msg = FS(_F("Could not parse custom toolbar.ini file: {1}\n"
 							   "Toolbars will not be available") % file);
-			Util::showErrorToUser(control->getGtkWindow(), msg);
+			XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 		}
 	}
 

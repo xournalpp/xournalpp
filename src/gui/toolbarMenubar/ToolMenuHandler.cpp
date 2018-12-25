@@ -495,9 +495,15 @@ void ToolMenuHandler::initToolItems()
 	registerMenupoint(gui->get("penthicknessThick"), ACTION_TOOL_PEN_SIZE_THICK, GROUP_PEN_SIZE);
 	registerMenupoint(gui->get("penthicknessVeryThick"), ACTION_TOOL_PEN_SIZE_VERY_THICK, GROUP_PEN_SIZE);
 
+	registerMenupoint(gui->get("penFill"), ACTION_TOOL_PEN_FILL, GROUP_PEN_FILL);
+	registerMenupoint(gui->get("penFillTransparency"), ACTION_TOOL_PEN_FILL_TRANSPARENCY);
+
 	registerMenupoint(gui->get("highlighterFine"), ACTION_TOOL_HILIGHTER_SIZE_FINE, GROUP_HILIGHTER_SIZE);
 	registerMenupoint(gui->get("highlighterMedium"), ACTION_TOOL_HILIGHTER_SIZE_MEDIUM, GROUP_HILIGHTER_SIZE);
 	registerMenupoint(gui->get("highlighterThick"), ACTION_TOOL_HILIGHTER_SIZE_THICK, GROUP_HILIGHTER_SIZE);
+
+	registerMenupoint(gui->get("highlighterFill"), ACTION_TOOL_HILIGHTER_FILL, GROUP_HILIGHTER_FILL);
+	registerMenupoint(gui->get("highlighterFillTransparency"), ACTION_TOOL_HILIGHTER_FILL_TRANSPARENCY);
 
 	registerMenupoint(gui->get("menuToolsTextFont"), ACTION_SELECT_FONT);
 

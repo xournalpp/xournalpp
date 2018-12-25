@@ -3,7 +3,8 @@
 #include <config.h>
 #include <StringUtils.h>
 
-AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath) : GladeGui(gladeSearchPath, "about.glade", "aboutDialog")
+AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath)
+ : GladeGui(gladeSearchPath, "about.glade", "aboutDialog")
 {
 	XOJ_INIT_TYPE(AboutDialog);
 

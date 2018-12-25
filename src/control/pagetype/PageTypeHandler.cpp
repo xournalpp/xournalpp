@@ -3,7 +3,7 @@
 #include "gui/GladeSearchpath.h"
 
 #include <i18n.h>
-#include <Util.h>
+#include <XojMsgBox.h>
 
 
 PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath)
@@ -16,7 +16,7 @@ PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath)
 	{
 
 		string msg = FS(_F("Could not load pagetemplates.ini file"));
-		Util::showErrorToUser(NULL, msg);
+		XojMsgBox::showErrorToUser(NULL, msg);
 
 		// On failure load the hardcoded and predefined values
 		addPageTypeInfo(_("Plain"), "plain", "");

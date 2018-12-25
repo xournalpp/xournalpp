@@ -4,7 +4,7 @@
  * Extracts a preview of an .xoj file, used by xournal-thumbnailer and xournalpp
  * Because of this xournal type checks cannot be used
  *
- * @author Andreas Butti <andreasbutti@gmail.com>
+ * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
  *
  * @license GNU GPLv2 or later
@@ -59,6 +59,14 @@ public:
 	 * @return If an image was read, or the error
 	 */
 	PreviewExtractResult readFile(string file);
+
+	/**
+	 * Try to read the preview from byte buffer
+	 * @param buffer Buffer
+	 * @param len Buffer len
+	 * @return If an image was read, or the error
+	 */
+	PreviewExtractResult readPreview(char* buffer, int len);
 
 	/**
 	 * @return The preview data, should be a binary PNG

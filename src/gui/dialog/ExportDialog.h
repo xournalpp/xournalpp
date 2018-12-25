@@ -15,7 +15,6 @@
 #include "gui/GladeGui.h"
 
 #include <PageRange.h>
-#include <XournalType.h>
 
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;

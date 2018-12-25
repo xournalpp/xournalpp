@@ -11,9 +11,6 @@
 #include <Util.h>
 
 #include <string.h>
-#include <iostream>
-using std::cout;
-using std::endl;
 
 Document::Document(DocumentHandler* handler)
 {
@@ -187,7 +184,7 @@ path Document::createSaveFilename(DocumentType type, string defaultSaveName)
 {
 	if (!filename.empty())
 	{
-		//This can be any extension		
+		// This can be any extension
 		return filename.stem();
 	}
 	else if (!pdfFilename.empty())
@@ -395,8 +392,6 @@ bool Document::readPdf(path filename, bool initPages, bool attachToDocument)
 
 		return false;
 	}
-
-	cout << "attachToDocument: " << attachToDocument << endl;
 
 	this->pdfFilename = filename;
 	this->attachPdf = attachToDocument;

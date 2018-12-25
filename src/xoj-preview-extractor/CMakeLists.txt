@@ -1,6 +1,7 @@
 ## xournal-thumbnailer executable ##
 
 if (WIN32)
+  # Windows does not support the thumbniler like this
   return ()
 endif ()
 
@@ -11,22 +12,11 @@ add_executable (xournal-thumbnailer
 )
 
 target_link_libraries (xournal-thumbnailer
-  ${Boost_LIBRARIES}
-  ${Glibmm_LDFLAGS}
   ${ZLIB_LIBRARIES}
   ${Glib_LDFLAGS}
-  ${GThread_LDFLAGS}
-  ${Libxml_LDFLAGS}
 )
 
-if (BUILD_BOOST)
-  add_dependencies (xournal-thumbnailer boost)
-endif (BUILD_BOOST)
-
 set (THUMBNAILER_BIN "xournal-thumbnailer")
-if (WIN32)
-  set (THUMBNAILER_BIN "${THUMBNAILER_BIN}.exe")
-endif (WIN32)
 
 add_custom_command (TARGET xournal-thumbnailer POST_BUILD
   COMMAND ${CMAKE_STRIP} ${THUMBNAILER_BIN}

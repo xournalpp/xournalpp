@@ -17,18 +17,11 @@ core_find_git_rev(RELEASE_IDENTIFIER)
 string(TIMESTAMP PACKAGE_TIMESTAMP "%Y%m%d.%H%M" UTC)
 set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION}~git${PACKAGE_TIMESTAMP}-${RELEASE_IDENTIFIER}-${DISTRO_CODENAME})
 
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Xournal++: Notetaking software designed around a tablet")
-set(CPACK_GENERATOR "DEB"  CACHE STRING "Alternativelly generate RPM. Needs rpmbuild.")
-set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Xournal++ Team")
-set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_BINARY_DIR}/cmake/postinst")
-
 configure_file (
     cmake/postinst.in
     cmake/postinst
     @ONLY
 )
-
-include(CPack)
 
 include (FindPkgConfig)
 
@@ -77,7 +70,7 @@ if (BUILD_BOOST)
 
     BUILD_COMMAND cd "${BOOST_PREFIX}/src/boost" && ./b2
       ${BOOST_CXXFLAGS}
-      --with-filesystem --with-iostreams
+      --with-filesystem
       "--prefix=${BOOST_PREFIX}"
       "--build-dir=${BOOST_PREFIX}/src/boost-build"
       "--stagedir=${BOOST_PREFIX}"
@@ -89,7 +82,6 @@ if (BUILD_BOOST)
   link_directories ("${BOOST_PREFIX}/lib/")
   set (Boost_LIBRARIES
     boost_filesystem
-    boost_iostreams
     ${ICU_LIBRARIES}
   )
   set (Boost_INCLUDE_DIRS "${BOOST_PREFIX}/src/boost")
@@ -97,7 +89,7 @@ if (BUILD_BOOST)
 else (BUILD_BOOST)
 
   set (Boost_USE_MULTITHREADED ON)
-  find_package (Boost 1.54 COMPONENTS filesystem iostreams)
+  find_package (Boost 1.54 COMPONENTS filesystem)
   if (Boost_VERSION VERSION_LESS 1.54)
     message (FATAL_ERROR "Boost 1.54 or newer not found – you should enable BUILD_BOOST CMake flag")
   endif (Boost_VERSION VERSION_LESS 1.54)
@@ -121,19 +113,7 @@ add_includes_ldflags ("${GThread_LDFLAGS}" "${GThread_INCLUDE_DIRS}")
 pkg_check_modules (Libxml REQUIRED "libxml-2.0 >= 2.0.0")
 add_includes_ldflags ("${Libxml_LDFLAGS}" "${Libxml_INCLUDE_DIRS}")
 
-find_program(LSB_RELEASE_EXEC lsb_release)
-execute_process(COMMAND ${LSB_RELEASE_EXEC} -is
-  OUTPUT_VARIABLE LSB_RELEASE_ID_SHORT
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-find_program(LSB_RELEASE_EXEC lsb_release)
-execute_process(COMMAND ${LSB_RELEASE_EXEC} -rs
-  OUTPUT_VARIABLE LSB_RELEASE_NUMBER_SHORT
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-
 # Poppler
-
 pkg_check_modules (PopplerGlib REQUIRED "poppler-glib >= 0.41.0")
 add_includes_ldflags ("${PopplerGlib_LDFLAGS}" "${PopplerGlib_INCLUDE_DIRS}")
 set(POPPLER_INCLUDE_DIR, "${PopplerGlib_INCLUDE_DIRS}")

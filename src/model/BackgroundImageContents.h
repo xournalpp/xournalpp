@@ -15,13 +15,10 @@
 
 #include <gtk/gtk.h>
 
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
-
 class BackgroundImageContents
 {
 public:
-    BackgroundImageContents(path filename, GError** error);
+    BackgroundImageContents(string filename, GError** error);
 
 private:
     BackgroundImageContents();
@@ -36,8 +33,8 @@ public:
     void reference();
 
 public:
-    path getFilename();
-    void setFilename(path filename);
+    string getFilename();
+    void setFilename(string filename);
 
     bool isAttach();
     void setAttach(bool attach);
@@ -51,7 +48,7 @@ private:
     XOJ_TYPE_ATTRIB;
 
     int ref;
-    path filename;
+    string filename;
     bool attach;
     int pageId;
     GdkPixbuf* pixbuf;

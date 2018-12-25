@@ -1,8 +1,6 @@
 #include "Tool.h"
 
-Tool::Tool(string name, ToolType type, int color, bool enableColor, bool enableSize, bool enableRuler,
-		   bool enableRectangle, bool enableCircle, bool enableArrow, bool enableShapreRecognizer,
-		   double* thickness)
+Tool::Tool(string name, ToolType type, int color, int capabilities, double* thickness)
 {
 	XOJ_INIT_TYPE(Tool);
 
@@ -10,18 +8,15 @@ Tool::Tool(string name, ToolType type, int color, bool enableColor, bool enableS
 	this->type = type;
 	this->thickness = thickness;
 
-	this->enableColor = enableColor;
-	this->enableSize = enableSize;
-	this->enableShapeRecognizer = enableShapreRecognizer;
-	this->enableRuler = enableRuler;
-	this->enableRectangle = enableRectangle;
-	this->enableCircle = enableCircle;
-	this->enableArrow = enableArrow;
+	this->capabilities = capabilities;
 
 	this->drawingType = DRAWING_TYPE_DEFAULT;
 
 	this->color = color;
 	this->size = TOOL_SIZE_MEDIUM;
+
+	this->fill = false;
+	this->fillAlpha = 128;
 }
 
 Tool::~Tool()
@@ -69,53 +64,25 @@ void Tool::setSize(ToolSize size)
 	this->size = size;
 }
 
-bool Tool::isEnableColor()
+void Tool::setCapability(int capability, bool enabled)
 {
 	XOJ_CHECK_TYPE(Tool);
 
-	return this->enableColor;
+	if (enabled)
+	{
+		this->capabilities |= capability;
+	}
+	else
+	{
+		this->capabilities &= ~capability;
+	}
 }
 
-bool Tool::isEnableSize()
+bool Tool::hasCapability(ToolCapabilities cap)
 {
 	XOJ_CHECK_TYPE(Tool);
 
-	return this->enableSize;
-}
-
-bool Tool::isEnableRuler()
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	return this->enableRuler;
-}
-
-bool Tool::isEnableRectangle()
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	return this->enableRectangle;
-}
-
-bool Tool::isEnableCircle()
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	return this->enableCircle;
-}
-
-bool Tool::isEnableArrow()
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	return this->enableArrow;
-}
-
-bool Tool::isEnableShapeRecognizer()
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	return this->enableShapeRecognizer;
+	return (this->capabilities & cap) != 0;
 }
 
 DrawingType Tool::getDrawingType()

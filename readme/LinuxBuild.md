@@ -21,15 +21,14 @@ dnf install cmake texlive-scheme-basic texlive-dvipng poppler-glib-devel
 ### For Ubuntu/Debian:
 ````bash
 sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev \
-libboost-filesystem-dev libboost-locale-dev libboost-iostreams-dev \
-libcppunit-dev dvipng texlive 
+libboost-filesystem-dev libcppunit-dev dvipng texlive 
 ````
 
 ### For OpenSuse:
 ```bash
 sudo zypper install cmake gtk3-devel cppunit-devel \
-libboost_filesystem-devel libboost_locale-devel libboost_iostreams-devel \
-texlive-dvipng texlive libxml2-devel libpoppler-glib-devel
+libboost_filesystem-devel texlive-dvipng texlive libxml2-devel \
+libpoppler-glib-devel
 ```
 
 ### For Fedora:

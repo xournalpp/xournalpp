@@ -89,12 +89,23 @@ enum DrawingType
 string drawingTypeToString(DrawingType type);
 DrawingType drawingTypeFromString(string type);
 
+enum ToolCapabilities
+{
+	TOOL_CAP_NONE       = 0,
+	TOOL_CAP_COLOR      = 1 << 0,
+	TOOL_CAP_SIZE       = 1 << 1,
+	TOOL_CAP_RULER      = 1 << 2,
+	TOOL_CAP_RECTANGLE  = 1 << 3,
+	TOOL_CAP_CIRCLE     = 1 << 4,
+	TOOL_CAP_ARROW      = 1 << 5,
+	TOOL_CAP_RECOGNIZER = 1 << 6,
+	TOOL_CAP_FILL       = 1 << 7
+};
+
 class Tool
 {
 public:
-	Tool(string name, ToolType tool, int color, bool enableColor, bool enableSize,
-		 bool enableRuler, bool enableRectangle, bool enableCircle, bool enableArrow,
-		 bool enableShapreRecognizer, double* thickness);
+	Tool(string name, ToolType tool, int color, int capabilities, double* thickness);
 	virtual ~Tool();
 
 	string getName();
@@ -108,15 +119,12 @@ public:
 	DrawingType getDrawingType();
 	void setDrawingType(DrawingType drawingType);
 
-	bool isEnableColor();
-	bool isEnableSize();
-	bool isEnableRuler();
-	bool isEnableRectangle();
-	bool isEnableCircle();
-	bool isEnableArrow();
-	bool isEnableShapeRecognizer();
+	bool hasCapability(ToolCapabilities cap);
 
 	double getThickness(ToolSize size);
+
+protected:
+	void setCapability(int capability, bool enabled);
 
 private:
 	Tool(const Tool& t);
@@ -132,15 +140,12 @@ private:
 	ToolSize size;
 	double* thickness;
 
+	bool fill;
+	int fillAlpha;
+
 	DrawingType drawingType;
 
-	bool enableColor;
-	bool enableSize;
-	bool enableRuler;
-	bool enableRectangle;
-	bool enableCircle;
-	bool enableArrow;
-	bool enableShapeRecognizer;
+	int capabilities;
 
 	friend class ToolHandler;
 };

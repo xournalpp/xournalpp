@@ -138,10 +138,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 
 	UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
 
-	undo->addUndoAction(new InsertUndoAction(page,
-	                                         layer,
-	                                         stroke));
-
+	undo->addUndoAction(new InsertUndoAction(page, layer, stroke));
 
 	ToolHandler* h = xournal->getControl()->getToolHandler();
 
@@ -153,56 +150,68 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 		}
 
 		ShapeRecognizerResult* result = reco->recognizePatterns(stroke);
-		
-		if(result)
+
+		if (result)
 		{
-			Stroke* recognized = result->getRecognized();
+			strokeRecognizerDetected(result, layer);
 
-			RecognizerUndoAction* recognizerUndo = new RecognizerUndoAction(page, layer, stroke, recognized);
+			// Full repaint is done anyway
+			// So repaint don't need to be done here
 
-			undo->addUndoAction(recognizerUndo);
-			layer->addElement(result->getRecognized());
-
-			Range range(recognized->getX(), recognized->getY());
-			range.addPoint(recognized->getX() + recognized->getElementWidth(),
-			recognized->getY() + recognized->getElementHeight());
-
-			range.addPoint(stroke->getX(), stroke->getY());
-			range.addPoint(stroke->getX() + stroke->getElementWidth(),
-			               stroke->getY() + stroke->getElementHeight());
-
-			for (Stroke* s : *result->getSources())
-			{
-				layer->removeElement(s, false);
-
-				recognizerUndo->addSourceElement(s);
-
-				range.addPoint(s->getX(), s->getY());
-				range.addPoint(s->getX() + s->getElementWidth(),
-						           s->getY() + s->getElementHeight());
-			}
-
-			page->fireRangeChanged(range);
-
-			// delete the result object, this is not needed anymore, the stroke are not deleted with this
-			delete result;
-
-		}
-		else
-		{
-			layer->addElement(stroke);
-			page->fireElementChanged(stroke);
+			stroke = NULL;
+			return;
 		}
 	}
-	else
+
+	if (stroke->getFill() != -1)
 	{
-		layer->addElement(stroke);
-		page->fireElementChanged(stroke);
+		// The stroke is not filled on drawing time
+		// If the stroke has fill values, it needs to be re-rendered
+		// else the fill will not be visible.
+
+		view.drawStroke(crMask, stroke, 0, 1, true, true);
 	}
+
+	layer->addElement(stroke);
+	page->fireElementChanged(stroke);
 
 	stroke = NULL;
 
 	return;
+}
+
+void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Layer* layer)
+{
+	XOJ_CHECK_TYPE(StrokeHandler);
+
+	Stroke* recognized = result->getRecognized();
+
+	RecognizerUndoAction* recognizerUndo = new RecognizerUndoAction(page, layer, stroke, recognized);
+
+	UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
+	undo->addUndoAction(recognizerUndo);
+	layer->addElement(result->getRecognized());
+
+	Range range(recognized->getX(), recognized->getY());
+	range.addPoint(recognized->getX() + recognized->getElementWidth(), recognized->getY() + recognized->getElementHeight());
+
+	range.addPoint(stroke->getX(), stroke->getY());
+	range.addPoint(stroke->getX() + stroke->getElementWidth(), stroke->getY() + stroke->getElementHeight());
+
+	for (Stroke* s : *result->getSources())
+	{
+		layer->removeElement(s, false);
+
+		recognizerUndo->addSourceElement(s);
+
+		range.addPoint(s->getX(), s->getY());
+		range.addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
+	}
+
+	page->fireRangeChanged(range);
+
+	// delete the result object, this is not needed anymore, the stroke are not deleted with this
+	delete result;
 }
 
 void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)

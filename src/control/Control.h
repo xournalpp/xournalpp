@@ -222,6 +222,8 @@ public:
 
 	void help();
 
+	void selectFillAlpha(bool pen);
+
 public:
 	// UndoRedoListener interface
 	void undoRedoChanged();

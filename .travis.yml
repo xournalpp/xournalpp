@@ -25,7 +25,6 @@ addons:
     - cmake
 
     - libboost-filesystem-dev
-    - libboost-iostreams-dev
 
     - libcppunit-dev
 
@@ -35,11 +34,6 @@ addons:
 
     - libgtk-3-dev
     - libpoppler-glib-dev
-
-# Do not use PPAs, use standard Ubuntu Sources
-#    sources:
-#    - boost-latest
-#    - kalakris-cmake
 
   coverity_scan:
     project:
@@ -56,7 +50,7 @@ before_script:
 
 script:
   - "cmake .. -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_MATHTEX=ON -DENABLE_CPPUNIT=ON -DUNSTABLE_LAYERS_SIDEBAR=ON -DDEBUG_COMPILE=ON"
-  - "make -j`grep processor /proc/cpuinfo | tail -c 2`"
+  - "make -j `grep processor /proc/cpuinfo | tail -c 2`"
   - "ctest"
 
 notifications:

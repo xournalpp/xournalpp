@@ -110,9 +110,7 @@ Stroke* ShapeRecognizer::tryRectangle()
 	}
 
 	Stroke* s = new Stroke();
-	s->setWidth(this->stroke->getWidth());
-	s->setToolType(this->stroke->getToolType());
-	s->setColor(this->stroke->getColor());
+	s->applyStyleFrom(this->stroke);
 
 	for (int i = 0; i <= 3; i++)
 	{
@@ -203,7 +201,7 @@ Stroke* ShapeRecognizer::tryArrow()
 			alpha[i] -= M_PI;
 			rs[i].reversed = !rs[i].reversed;
 		}
-		RDEBUG("arrow: alpha[{1}] = {2,p=1} degrees") % i % (alpha[i] * 180 / M_PI);
+		RDEBUG("arrow: alpha[%d] = %.1f degrees", i, (alpha[i] * 180 / M_PI));
 		if (fabs(alpha[i]) < ARROW_ANGLE_MIN || fabs(alpha[i]) > ARROW_ANGLE_MAX)
 		{
 			return NULL;
@@ -211,8 +209,7 @@ Stroke* ShapeRecognizer::tryArrow()
 	}
 
 	// check arrow head segments are roughly symmetric
-	if (alpha[1] * alpha[2] > 0 ||
-		fabs(alpha[1] + alpha[2]) > ARROW_ASYMMETRY_MAX_ANGLE)
+	if (alpha[1] * alpha[2] > 0 || fabs(alpha[1] + alpha[2]) > ARROW_ASYMMETRY_MAX_ANGLE)
 	{
 		return NULL;
 	}
@@ -233,7 +230,7 @@ Stroke* ShapeRecognizer::tryArrow()
 	{
 		double dist = hypot(pt.x - (rs[j].reversed ? rs[j].x1 : rs[j].x2),
 							pt.y - (rs[j].reversed ? rs[j].y1 : rs[j].y2));
-		RDEBUG("linear tolerance: tip[{1}] = {2,p=2}") % j % (dist / rs[j].radius);
+		RDEBUG("linear tolerance: tip[%d] = %.2f", j, (dist / rs[j].radius));
 		if (dist > ARROW_TIP_LINEAR_TOLERANCE * rs[j].radius)
 		{
 			return NULL;
@@ -243,7 +240,7 @@ Stroke* ShapeRecognizer::tryArrow()
 	double dist = (pt.x - x2) * sin(angle) - (pt.y - y2) * cos(angle);
 	dist /= rs[1].radius + rs[2].radius;
 
-	RDEBUG("sideways gap tolerance = {1,p=2}") % dist;
+	RDEBUG("sideways gap tolerance = %.2f", dist);
 
 	if (fabs(dist) > ARROW_SIDEWAYS_GAP_TOLERANCE)
 	{
@@ -253,7 +250,7 @@ Stroke* ShapeRecognizer::tryArrow()
 	dist = (pt.x - x2) * cos(angle) + (pt.y - y2) * sin(angle);
 	dist /= rs[1].radius + rs[2].radius;
 
-	RDEBUG("main linear gap = {1,p=2}") % dist;
+	RDEBUG("main linear gap = %.2f", dist);
 
 	if (dist < ARROW_MAIN_LINEAR_GAP_MIN || dist > ARROW_MAIN_LINEAR_GAP_MAX)
 	{
@@ -283,9 +280,7 @@ Stroke* ShapeRecognizer::tryArrow()
 	dist = (hypot(rs[1].x1 - rs[1].x2, rs[1].y1 - rs[1].y2) + hypot(rs[2].x1 - rs[2].x2, rs[2].y1 - rs[2].y2)) / 2;
 
 	Stroke* s = new Stroke();
-	s->setWidth(this->stroke->getWidth());
-	s->setToolType(this->stroke->getToolType());
-	s->setColor(this->stroke->getColor());
+	s->applyStyleFrom(this->stroke);
 
 	s->addPoint(Point(x1, y1));
 	s->addPoint(Point(x2, y2));
@@ -528,9 +523,7 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 	}
 
 	Stroke* s = new Stroke();
-	s->setWidth(this->stroke->getWidth());
-	s->setToolType(this->stroke->getToolType());
-	s->setColor(this->stroke->getColor());
+	s->applyStyleFrom(this->stroke);
 
 	for (int i = 0; i < nsides; i++)
 	{
@@ -567,14 +560,13 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 	{
 		optimizePolygonal(stroke->getPoints(), n, brk, ss);
 #ifdef DEBUG_RECOGNIZER
-		cout << endl << boost::format("ShapeReco:: Polygon, %d edges:") % n << endl;
+		g_message("--");
+		g_message("ShapeReco:: Polygon, %d edges:", n);
 		for (int i = 0; i < n; i++)
 		{
-			cout << boost::format("ShapeReco::      %d-%d (M=%.0f, det=%.4f)")
-					% brk[i] % brk[i + 1] % ss[i].getMass() % ss[i].det()
-				 << endl;
+			g_message("ShapeReco::      %d-%d (M=%.0f, det=%.4f)", brk[i], brk[i + 1], ss[i].getMass(), ss[i].det());
 		}
-		cout << endl;
+		g_message("--");
 #endif
 		// update recognizer segment queue (most recent at end)
 		while (n + queueLength > MAX_POLYGON_SIDES)
@@ -589,7 +581,7 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			g_memmove(queue, queue + i, queueLength * sizeof(RecoSegment));
 		}
 
-		RDEBUG("Queue now has {1} + {2} edges") % this->queueLength % n;
+		RDEBUG("Queue now has %i + %i edges", this->queueLength, n);
 
 		RecoSegment* rs = &this->queue[this->queueLength];
 		this->queueLength += n;
@@ -610,31 +602,31 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			RDEBUG("return tryRectangle()");
 			return result;
 		}
-/*
-		if ((tmp = tryArrow()) != NULL)
-		{
-			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-			resetRecognizer();
-			RDEBUG("return tryArrow()");
-			return result;
-		}
 
-		if ((tmp = tryClosedPolygon(3)) != NULL)
-		{
-			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-			RDEBUG("return tryClosedPolygon(3)");
-			resetRecognizer();
-			return result;
-		}
+//		if ((tmp = tryArrow()) != NULL)
+//		{
+//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
+//			resetRecognizer();
+//			RDEBUG("return tryArrow()");
+//			return result;
+//		}
+//
+//		if ((tmp = tryClosedPolygon(3)) != NULL)
+//		{
+//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
+//			RDEBUG("return tryClosedPolygon(3)");
+//			resetRecognizer();
+//			return result;
+//		}
+//
+//		if ((tmp = tryClosedPolygon(4)) != NULL)
+//		{
+//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
+//			RDEBUG("return tryClosedPolygon(4)");
+//			resetRecognizer();
+//			return result;
+//		}
 
-		if ((tmp = tryClosedPolygon(4)) != NULL)
-		{
-			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-			RDEBUG("return tryClosedPolygon(4)");
-			resetRecognizer();
-			return result;
-		}
-		 */
 
 		// Removed complicated recognition
 
@@ -652,9 +644,7 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			}
 
 			Stroke* s = new Stroke();
-			s->setWidth(this->stroke->getWidth());
-			s->setToolType(this->stroke->getToolType());
-			s->setColor(this->stroke->getColor());
+			s->applyStyleFrom(this->stroke);
 
 			s->addPoint(Point(rs->x1, rs->y1));
 			s->addPoint(Point(rs->x2, rs->y2));

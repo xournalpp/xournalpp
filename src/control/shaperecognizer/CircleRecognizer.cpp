@@ -18,9 +18,7 @@ Stroke* CircleRecognizer::makeCircleShape(Stroke* originalStroke, Inertia& inert
 	}
 
 	Stroke* s = new Stroke();
-	s->setWidth(originalStroke->getWidth());
-	s->setToolType(originalStroke->getToolType());
-	s->setColor(originalStroke->getColor());
+	s->applyStyleFrom(originalStroke);
 
 	for (int i = 0; i <= npts; i++)
 	{
@@ -74,13 +72,13 @@ Stroke* CircleRecognizer::recognize(Stroke* stroke)
 {
 	Inertia s;
 	s.calc(stroke->getPoints(), 0, stroke->getPointCount());
-	RDEBUG("Mass={1,p=0}, Center=({2,p=1},{3,p=1}, I=({4,p=0},{5,p=0}, {6,p=0}), Rad={7,p=2}, Det={8,p=4}")
-		   % s.getMass() % s.centerX() % s.centerY() % s.xx() % s.yy() % s.xy() % s.rad() % s.det();
+	RDEBUG("Mass=%.0f, Center=(%.1f,%.1f), I=(%.0f,%.0f, %.0f), Rad=%.2f, Det=%.4f",
+			s.getMass(), s.centerX(), s.centerY(), s.xx(), s.yy(), s.xy(), s.rad(), s.det());
 
 	if (s.det() > CIRCLE_MIN_DET)
 	{
 		double score = CircleRecognizer::scoreCircle(stroke, s);
-		RDEBUG("Circle score: {1,p=2}") % score;
+		RDEBUG("Circle score: %.2f", score);
 		if (score < CIRCLE_MAX_SCORE)
 		{
 			return CircleRecognizer::makeCircleShape(stroke, s);
