@@ -53,7 +53,7 @@ bool BaseExportJob::checkOverwriteBackgroundPDF(path& filename)
 {
 	XOJ_CHECK_TYPE(BaseExportJob);
 	
-	// If the new file name (with the selected extension) is the prevoiusly selected pdf, warn the user
+	// If the new file name (with the selected extension) is the previously selected pdf, warn the user
 	if (boost::iequals(filename.string(), control->getDocument()->getPdfFilename().string()))
 	{
 		string msg = _("Do not overwrite the background PDF! This will cause errors!");

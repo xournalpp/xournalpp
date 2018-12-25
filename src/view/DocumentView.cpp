@@ -2,7 +2,6 @@
 
 #include "TextView.h"
 
-#include "gui/Cursor.h"
 #include "background/MainBackgroundPainter.h"
 #include "control/tools/EditSelection.h"
 #include "control/tools/Selection.h"
@@ -13,15 +12,6 @@
 #include <config.h>
 #include <config-debug.h>
 
-#include <gdk/gdk.h>
-
-#include <typeinfo>
-
-#ifdef DEBUG_SHOW_REPAINT_BOUNDS
-#include <iostream>
-using std::cout;
-using std::endl;
-#endif
 
 DocumentView::DocumentView()
 {
@@ -44,6 +34,8 @@ DocumentView::DocumentView()
 
 DocumentView::~DocumentView()
 {
+	XOJ_CHECK_TYPE(DocumentView);
+
 	delete this->backgroundPainter;
 	this->backgroundPainter = NULL;
 
@@ -446,7 +438,7 @@ void DocumentView::finializeDrawing()
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
 	if (this->lX != -1)
 	{
-		cout << "DBG:repaint area" << endl;
+		g_message("DBG:repaint area");
 		cairo_set_source_rgb(cr, 1, 0, 0);
 		cairo_set_line_width(cr, 1);
 		cairo_rectangle(cr, this->lX + 3, this->lY + 3, this->lWidth - 6, this->lHeight - 6);
@@ -454,7 +446,7 @@ void DocumentView::finializeDrawing()
 	}
 	else
 	{
-		cout << "DBG:repaint complete" << endl;
+		g_message("DBG:repaint complete");
 	}
 #endif // DEBUG_SHOW_REPAINT_BOUNDS
 
