@@ -1,7 +1,5 @@
 #include "PagePositionCache.h"
 
-#include <glib.h>
-
 PagePositionCache::PagePositionCache()
 {
 	XOJ_INIT_TYPE(PagePositionCache);

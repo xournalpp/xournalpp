@@ -8,6 +8,8 @@
 #include <Util.h>
 
 #include <boost/filesystem.hpp>
+#include <boost/algorithm/string.hpp>
+namespace ba = boost::algorithm;
 
 #include <string.h>
 
@@ -81,8 +83,6 @@ void Settings::loadDefault()
 
 	this->addHorizontalSpace = false;
 	this->addVerticalSpace = false;
-
-	this->enableLeafEnterWorkaround = true;
 
 	this->defaultSaveName = _("%F-Note-%H-%M");
 
@@ -386,10 +386,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "addHorizontalSpace") == 0)
 	{
 		this->addHorizontalSpace = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "enableLeafEnterWorkaround") == 0)
-	{
-		this->enableLeafEnterWorkaround = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "scrollbarHideType") == 0)
 	{
@@ -725,10 +721,6 @@ void Settings::save()
 	WRITE_BOOL_PROP(addHorizontalSpace);
 	WRITE_BOOL_PROP(addVerticalSpace);
 
-	WRITE_BOOL_PROP(enableLeafEnterWorkaround);
-	WRITE_COMMENT("If Xournal++ crashes if you e.g. unplug your mouse set this to true. "
-				  "If you have input problems, you can turn it of with false.");
-
 	WRITE_INT_PROP(selectionColor);
 	WRITE_INT_PROP(backgroundColor);
 
@@ -970,22 +962,6 @@ void Settings::setAddHorizontalSpace(bool space)
 	this->addHorizontalSpace = space;
 }
 
-bool Settings::isEnableLeafEnterWorkaround()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->enableLeafEnterWorkaround;
-}
-
-void Settings::setEnableLeafEnterWorkaround(bool enable)
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	this->enableLeafEnterWorkaround = enable;
-
-	save();
-}
-
 bool Settings::isShowBigCursor()
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1049,12 +1025,6 @@ void Settings::setAutoloadPdfXoj(bool load)
 string Settings::getDefaultSaveName()
 {
 	XOJ_CHECK_TYPE(Settings);
-
-	if (boost::algorithm::ends_with(defaultSaveName, ".xoj"))
-	{
-		defaultSaveName = defaultSaveName.substr(0, defaultSaveName.size() - 4);
-		defaultSaveName += ".xopp";
-	}
 
 	return this->defaultSaveName;
 }

@@ -19,6 +19,12 @@
 
 #include <glib.h>
 
+// Include string and vector everywhere
+#include <string>
+using std::string;
+#include <vector>
+using std::vector;
+
 #ifdef DEV_MEMORY_CHECKING
 
 #ifdef DEV_MEMORY_LEAK_CHECKING

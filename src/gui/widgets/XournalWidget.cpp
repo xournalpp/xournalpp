@@ -13,7 +13,6 @@
 #include <config-debug.h>
 #include <Rectangle.h>
 #include <Util.h>
-#include <XInputUtils.h>
 
 #include <gdk/gdk.h>
 

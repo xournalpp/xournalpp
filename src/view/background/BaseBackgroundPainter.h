@@ -19,9 +19,6 @@
 
 #include <gtk/gtk.h>
 
-#include <string>
-using std::string;
-
 class BaseBackgroundPainter
 {
 public:

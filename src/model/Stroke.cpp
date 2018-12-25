@@ -3,7 +3,7 @@
 #include <serializing/ObjectInputStream.h>
 #include <serializing/ObjectOutputStream.h>
 
-#include <glib.h>
+#include <i18n.h>
 
 #include <math.h>
 #include <string.h>
@@ -26,6 +26,7 @@ Stroke::Stroke()
 	this->timestamp = 0;
 
 	this->eraseable = NULL;
+	this->fill = -1;
 }
 
 Stroke::~Stroke()
@@ -37,9 +38,22 @@ Stroke::~Stroke()
 	this->pointCount = 0;
 	this->pointAllocCount = 0;
 
-	this->timestamp=0;
+	this->timestamp = 0;
 
 	XOJ_RELEASE_TYPE(Stroke);
+}
+
+/**
+ * Clone style attributes, but not the data (position, width etc.)
+ */
+void Stroke::applyStyleFrom(const Stroke* other)
+{
+	setColor(other->getColor());
+	setToolType(other->getToolType());
+	setWidth(other->getWidth());
+	setAudioFilename(other->getAudioFilename());
+	setTimestamp(other->getTimestamp());
+	setFill(other->getFill());
 }
 
 Stroke* Stroke::cloneStroke() const
@@ -47,11 +61,7 @@ Stroke* Stroke::cloneStroke() const
 	XOJ_CHECK_TYPE(Stroke);
 
 	Stroke* s = new Stroke();
-	s->setColor(this->getColor());
-	s->setToolType(this->getToolType());
-	s->setWidth(this->getWidth());
-	s->setAudioFilename(this->getAudioFilename());
-	s->setTimestamp(this->getTimestamp());
+	s->applyStyleFrom(this);
 
 	s->allocPointSize(this->pointCount);
 	memcpy(s->points, this->points, this->pointCount * sizeof(Point));
@@ -83,12 +93,14 @@ void Stroke::serialize(ObjectOutputStream& out)
 
 	out.writeInt(this->timestamp);
 
+	out.writeInt(fill);
+
 	out.writeData(this->points, this->pointCount, sizeof(Point));
 
 	out.endObject();
 }
 
-void Stroke::readSerialized(ObjectInputStream& in) throw (InputStreamException)
+void Stroke::readSerialized(ObjectInputStream& in)
 {
 	XOJ_CHECK_TYPE(Stroke);
 
@@ -103,6 +115,8 @@ void Stroke::readSerialized(ObjectInputStream& in) throw (InputStreamException)
 	this->audioFilename = in.readString();
 
 	this->timestamp = in.readInt();
+
+	this->fill = in.readInt();
 
 	if (this->points)
 	{
@@ -138,6 +152,34 @@ int Stroke::getTimestamp() const
 	XOJ_CHECK_TYPE(Stroke);
 
 	return this->timestamp;
+}
+
+/**
+ * Option to fill the shape:
+ *  -1: The shape is not filled
+ * 255: The shape is fully opaque filled
+ * ...
+ *   1: The shape is nearly fully transparent filled
+ */
+int Stroke::getFill() const
+{
+	XOJ_CHECK_TYPE(Stroke);
+
+	return fill;
+}
+
+/**
+ * Option to fill the shape:
+ *  -1: The shape is not filled
+ * 255: The shape is fully opaque filled
+ * ...
+ *   1: The shape is nearly fully transparent filled
+ */
+void Stroke::setFill(int fill)
+{
+	XOJ_CHECK_TYPE(Stroke);
+
+	this->fill = fill;
 }
 
 void Stroke::setWidth(double width)
@@ -583,7 +625,7 @@ void Stroke::debugPrint()
 {
 	XOJ_CHECK_TYPE(Stroke);
 
-	cout << bl::format("Stroke {1} / hasPressure() = {2}") % (uint64_t) this % this->hasPressure() << endl;
+	cout << FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (uint64_t) this % this->hasPressure() << endl;
 
 	for (int i = 0; i < this->pointCount; i++)
 	{

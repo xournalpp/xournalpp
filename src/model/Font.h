@@ -12,7 +12,6 @@
 #pragma once
 
 #include <serializing/Serializeable.h>
-#include <StringUtils.h>
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
@@ -34,7 +33,7 @@ public:
 public:
 	// Serialize interface
 	void serialize(ObjectOutputStream& out);
-	void readSerialized(ObjectInputStream& in) throw (InputStreamException);
+	void readSerialized(ObjectInputStream& in);
 
 private:
 	void updateFontDesc();

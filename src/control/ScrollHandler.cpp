@@ -111,10 +111,14 @@ void ScrollHandler::scrollToPage(size_t page, double top)
 {
 	XOJ_CHECK_TYPE(ScrollHandler);
 
-	if (this->control->getWindow())
+	MainWindow* win = this->control->getWindow();
+	if (win == NULL)
 	{
-		this->control->getWindow()->getXournal()->scrollTo(page, top);
+		g_error("Windows is NULL!");
+		return;
 	}
+
+	win->getXournal()->scrollTo(page, top);
 }
 
 void ScrollHandler::scrollToSpinPange()

@@ -1,6 +1,7 @@
 #include "InputSequence.h"
 #include "NewGtkInputDevice.h"
 
+#include "control/Control.h"
 #include "control/settings/ButtonConfig.h"
 #include "control/settings/Settings.h"
 #include "control/tools/EditSelection.h"
@@ -10,6 +11,7 @@
 #include "gui/PageView.h"
 #include "gui/Layout.h"
 #include "gui/XournalView.h"
+#include "model/Point.h"
 
 #include <Util.h>
 
@@ -210,7 +212,7 @@ bool InputSequence::actionMoved()
 		inputHandler->getView()->penActionDetected();
 	}
 
-	if (xournal->view->zoom_gesture_active)
+	if (xournal->view->getControl()->getWindow()->isGestureActive())
 	{
 		return false;
 	}
@@ -417,7 +419,7 @@ void InputSequence::actionEnd()
 	Cursor* cursor = xournal->view->getCursor();
 	ToolHandler* h = inputHandler->getToolHandler();
 
-	if (xournal->view->zoom_gesture_active)
+	if (xournal->view->getControl()->getWindow()->isGestureActive())
 	{
 		stopInput();
 		return;
@@ -466,7 +468,7 @@ PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* 
 	PositionInputData pos;
 	pos.x = x - page->getX() - xournal->x;
 	pos.y = y - page->getY() - xournal->y;
-	pos.pressure = 1.0;
+	pos.pressure = Point::NO_PRESURE;
 
 	if (presureSensitivity)
 	{

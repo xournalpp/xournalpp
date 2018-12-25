@@ -2,7 +2,6 @@
 
 #include <Util.h>
 
-#include <glib.h>
 #include <glib/gstdio.h>
 #include <fcntl.h>
 #include <sys/types.h>
@@ -172,7 +171,16 @@ MetadataEntry MetadataManager::loadMetadataFile(string path, string file)
 		// Not valid
 		return entry;
 	}
-	entry.page = std::stoi(line.substr(5));
+
+	try
+	{
+		entry.page = std::stoi(line.substr(5));
+	}
+	catch (const std::exception& e)
+	{
+		// Return invalid entry
+		return entry;
+	}
 
 	if (!getline(infile, line))
 	{

@@ -52,13 +52,9 @@ public:
 	void testExtensionCheck()
 	{
 		XojPreviewExtractor extractor;
-		PreviewExtractResult result = extractor.readFile(GET_TESTFILE("THIS FILE DOES NOT EXIST.xoi"));
+		PreviewExtractResult result = extractor.readFile(GET_TESTFILE("test.xoi"));
 
 		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_BAD_FILE_EXTENSION, result);
-		
-		result = extractor.readFile(GET_TESTFILE("THIS FILE DOES NOT EXIST.xOj"));
-
-		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_COULD_NOT_OPEN_FILE, result);
 	}
 
 	void testLoadGzipped()

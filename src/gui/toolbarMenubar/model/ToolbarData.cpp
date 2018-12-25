@@ -2,12 +2,14 @@
 
 #include <i18n.h>
 
-#include <glib.h>
 #include <gtk/gtk.h>
 
 #include <iostream>
 using std::cout;
 using std::endl;
+
+#include <boost/algorithm/string.hpp>
+namespace ba = boost::algorithm;
 
 ToolbarData::ToolbarData(bool predefined)
 {
@@ -144,7 +146,7 @@ int ToolbarData::insertItem(string toolbar, string item, int position)
 {
 	XOJ_CHECK_TYPE(ToolbarData);
 
-	cout << bl::format("ToolbarData::insertItem({1}, {2}, {3});") % toolbar % item % position << endl;
+	cout << FORMAT_STR("ToolbarData::insertItem({1}, {2}, {3});") % toolbar % item % position << endl;
 
 	g_return_val_if_fail(isPredefined() == false, -1);
 
@@ -156,7 +158,7 @@ int ToolbarData::insertItem(string toolbar, string item, int position)
 
 			int id = e->insertItem(item, position);
 
-			cout << bl::format("return {1}") % id << endl;
+			cout << FORMAT_STR("return {1}") % id << endl;
 			return id;
 		}
 	}

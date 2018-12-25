@@ -12,7 +12,6 @@
 #pragma once
 
 #include "gui/GladeGui.h"
-#include <XournalType.h>
 
 class GotoDialog : public GladeGui
 {

@@ -18,9 +18,7 @@
 #include <gtk/gtk.h>
 
 #include <map>
-#include <string>
 using std::map;
-using std::string;
 
 class BaseBackgroundPainter;
 

@@ -10,8 +10,8 @@ if (XGETTEXT_FOUND)
     PACKAGE ${PROJECT_PACKAGE}
     VERSION ${PROJECT_VERSION}
     OPTIONS --language=C++ -s --from-code=UTF-8
-            --keyword=_ --keyword=_C --keyword=_F --keyword=N_
-            --keyword=C_:1c,2 --keyword=C_C:1c,2 --keyword=C_F:1c,2 --keyword=NC_:1c,2
+            --keyword=_ --keyword=_F --keyword=N_
+            --keyword=C_:1c,2 --keyword=C_F:1c,2 --keyword=NC_:1c,2
 
     SRCFILES
       "${PROJECT_SOURCE_DIR}/src/*.cpp"
@@ -28,3 +28,4 @@ endif (XGETTEXT_FOUND)
 
 set (GETTEXT_PACKAGE ${PROJECT_PACKAGE} PARENT_SCOPE)
 set (PACKAGE_LOCALE_DIR ${PACKAGE_DATA_DIR}/locale PARENT_SCOPE)
+

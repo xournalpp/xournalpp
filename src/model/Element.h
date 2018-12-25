@@ -17,8 +17,6 @@
 
 #include <gtk/gtk.h>
 
-#include <vector>
-
 enum ElementType
 {
 	ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT
@@ -86,7 +84,7 @@ protected:
 	double height;
 
 	void serializeElement(ObjectOutputStream& out);
-	void readSerializedElement(ObjectInputStream& in) throw (InputStreamException);
+	void readSerializedElement(ObjectInputStream& in);
 
 protected:
 	// If the size has been calculated

@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "control/ZoomControl.h"
+#include "control/zoom/ZoomListener.h"
 #include "model/DocumentListener.h"
 #include "model/PageRef.h"
 
@@ -40,7 +40,6 @@ public:
 public:
 	void zoomIn();
 	void zoomOut();
-	void setZoom(gdouble scale);
 
 	bool paint(GtkWidget* widget, GdkEventExpose* event);
 
@@ -120,7 +119,7 @@ public:
 
 public:
 	// ZoomListener interface
-	void zoomChanged(double lastZoom);
+	void zoomChanged();
 
 public:
 	// DocumentListener interface
@@ -135,14 +134,7 @@ public:
 	bool onKeyPressEvent(GdkEventKey* event);
 	bool onKeyReleaseEvent(GdkEventKey* event);
 
-	// TODO Private!, Naming conventions!
-	bool zoom_gesture_active;
 	static void onRealized(GtkWidget* widget, XournalView* view);
-
-	static void zoom_gesture_begin_cb(GtkGesture* gesture,GdkEventSequence* sequence,XournalView* view);
-	static void zoom_gesture_end_cb(GtkGesture* gesture,GdkEventSequence* sequence,XournalView* view);
-	static void zoom_gesture_scale_changed_cb(GtkGestureZoom* gesture,gdouble scale,XournalView* view);
-
 private:
 
 	void fireZoomChanged();
@@ -157,14 +149,6 @@ private:
 
 private:
 	XOJ_TYPE_ATTRIB;
-
-	// Gestures
-	GtkGesture* zoom_gesture;
-	gdouble zoom_gesture_begin;
-	Rectangle visRect_gesture_begin;
-	//Problems with pinch to zoom:
-	//-keep view centered between pinching fingers
-	//-gtk_gesture_is_recognized not working (always false in XournalWidget.cpp code)
 
 	GtkWidget* widget;
 	double margin;

@@ -50,7 +50,7 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
 	GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
 	gtk_widget_show(box);
 
-	GtkWidget* label = gtk_label_new(_C("Separator"));
+	GtkWidget* label = gtk_label_new(_("Separator"));
 	gtk_widget_show(label);
 	gtk_box_pack_end(GTK_BOX(box), label, false, false, 0);
 

@@ -14,8 +14,6 @@
 #include "control/Actions.h"
 #include "gui/GladeGui.h"
 
-#include <XournalType.h>
-
 #include <gdk/gdk.h>
 
 class Settings;

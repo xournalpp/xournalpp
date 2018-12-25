@@ -11,8 +11,8 @@ enum
 	COLUMN_STRING, COLUMN_BOLD, COLUMN_POINTER, COLUMN_EDITABLE, N_COLUMNS
 };
 
-ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, ToolbarModel* model) :
-		GladeGui(gladeSearchPath, "toolbarManageDialog.glade", "DialogManageToolbar")
+ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, ToolbarModel* model)
+ : GladeGui(gladeSearchPath, "toolbarManageDialog.glade", "DialogManageToolbar")
 {
 	XOJ_INIT_TYPE(ToolbarManageDialog);
 
@@ -22,7 +22,7 @@ ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, Toolb
 	GtkTreeIter iter;
 	this->model = gtk_list_store_new(N_COLUMNS, G_TYPE_STRING, G_TYPE_INT, G_TYPE_POINTER, G_TYPE_BOOLEAN);
 	gtk_list_store_append(this->model, &iter);
-	gtk_list_store_set(this->model, &iter, COLUMN_STRING, _C("Predefined"),
+	gtk_list_store_set(this->model, &iter, COLUMN_STRING, _("Predefined"),
 					   COLUMN_BOLD, PANGO_WEIGHT_BOLD, COLUMN_POINTER, NULL, COLUMN_EDITABLE, false, -1);
 
 	for (ToolbarData* data : *model->getToolbars())
@@ -37,7 +37,7 @@ ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, Toolb
 	}
 
 	gtk_list_store_append(this->model, &iter);
-	gtk_list_store_set(this->model, &iter, COLUMN_STRING, _C("Customized"),
+	gtk_list_store_set(this->model, &iter, COLUMN_STRING, _("Customized"),
 					   COLUMN_BOLD, PANGO_WEIGHT_BOLD, COLUMN_POINTER, NULL, COLUMN_EDITABLE, false, -1);
 
 	for (ToolbarData* data : *model->getToolbars())
@@ -54,7 +54,7 @@ ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, Toolb
 	gtk_tree_view_set_model(GTK_TREE_VIEW(tree), GTK_TREE_MODEL(this->model));
 
 	GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-	GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_C("Toolbars"), renderer, "text",
+	GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Toolbars"), renderer, "text",
 																		 COLUMN_STRING, "weight",
 																		 COLUMN_BOLD, "editable",
 																		 COLUMN_EDITABLE, NULL);

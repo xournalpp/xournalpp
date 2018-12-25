@@ -2,9 +2,6 @@
 
 #include "TextView.h"
 
-#include "gui/Cursor.h"
-extern int currentToolType;
-
 #include "background/MainBackgroundPainter.h"
 #include "control/tools/EditSelection.h"
 #include "control/tools/Selection.h"
@@ -15,15 +12,6 @@ extern int currentToolType;
 #include <config.h>
 #include <config-debug.h>
 
-#include <gdk/gdk.h>
-
-#include <typeinfo>
-
-#ifdef DEBUG_SHOW_REPAINT_BOUNDS
-#include <iostream>
-using std::cout;
-using std::endl;
-#endif
 
 DocumentView::DocumentView()
 {
@@ -40,21 +28,42 @@ DocumentView::DocumentView()
 
 	this->dontRenderEditingStroke = 0;
 	this->backgroundPainter = new MainBackgroundPainter();
+
+	this->markAudioStroke = false;
 }
 
 DocumentView::~DocumentView()
 {
+	XOJ_CHECK_TYPE(DocumentView);
+
 	delete this->backgroundPainter;
 	this->backgroundPainter = NULL;
 
 	XOJ_RELEASE_TYPE(DocumentView);
 }
 
+/**
+ * Mark stroke with Audio
+ */
+void DocumentView::setMarkAudioStroke(bool markAudioStroke)
+{
+	XOJ_CHECK_TYPE(DocumentView);
+
+	this->markAudioStroke = markAudioStroke;
+}
+
 void DocumentView::applyColor(cairo_t* cr, Stroke* s)
 {
 	if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
 	{
-		applyColor(cr, s, 120);
+		if (s->getFill() != -1)
+		{
+			applyColor(cr, s, s->getFill());
+		}
+		else
+		{
+			applyColor(cr, s, 120);
+		}
 	}
 	else
 	{
@@ -85,7 +94,32 @@ void DocumentView::drawEraseableStroke(cairo_t* cr, Stroke* s)
 	e->draw(cr, this->lX, this->lY, this->width, this->height);
 }
 
-void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool changeSource)
+void DocumentView::drawFillStroke(cairo_t* cr, Stroke* s)
+{
+	XOJ_CHECK_TYPE(DocumentView);
+
+	ArrayIterator<Point> points = s->pointIterator();
+
+	if (points.hasNext())
+	{
+		Point p = points.next();
+		cairo_move_to(cr, p.x, p.y);
+	}
+	else
+	{
+		return;
+	}
+
+	while (points.hasNext())
+	{
+		Point p = points.next();
+		cairo_line_to(cr, p.x, p.y);
+	}
+
+	cairo_fill(cr);
+}
+
+void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool changeSource, bool noAlpha)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
@@ -100,8 +134,23 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 
 	if (changeSource)
 	{
+
+		///////////////////////////////////////////////////////
+		// Fill stroke
+		///////////////////////////////////////////////////////
+		if (s->getFill() != -1 && s->getToolType() != STROKE_TOOL_HIGHLIGHTER)
+		{
+			cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+
+			// Set the color and transparency
+			applyColor(cr, s, s->getFill());
+
+			drawFillStroke(cr, s);
+		}
+
+
 		if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER ||
-			(s->getAudioFilename().length() == 0 && currentToolType == TOOL_PLAY_OBJECT))
+			(s->getAudioFilename().length() == 0 && this->markAudioStroke))
 		{
 			cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 			// Set the color
@@ -129,24 +178,27 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 	double width = s->getWidth();
 
 	// No pressure sensitivity, easy draw a line...
-	if (!s->hasPressure())
+	if (!s->hasPressure() || s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
 	{
-		if (scaleFactor == 1)
+		bool group = false;
+		if (s->getFill() != -1 && s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
 		{
-			// Set width
-			cairo_set_line_width(cr, width);
+			cairo_push_group(cr);
+			// Do not apply the alpha here, else the border and the fill
+			// are visible instead of one homogeneous area
+			applyColor(cr, s, 255);
+			drawFillStroke(cr, s);
+			group = true;
 		}
-		else
-		{
-			// Set width
-			cairo_set_line_width(cr, width * scaleFactor);
-		}
+
+		// Set width
+		cairo_set_line_width(cr, width * scaleFactor);
 
 		while (points.hasNext())
 		{
 			Point p = points.next();
 
-			if (startPoint <= count++)
+			if (startPoint <= count)
 			{
 				cairo_line_to(cr, p.x, p.y);
 			}
@@ -154,9 +206,26 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 			{
 				cairo_move_to(cr, p.x, p.y);
 			}
+
+			count++;
 		}
 
 		cairo_stroke(cr);
+
+		if (group)
+		{
+			cairo_pop_group_to_source(cr);
+
+			if (noAlpha)
+			{
+				// Currently drawing -> transparent applied on blitting
+				cairo_paint(cr);
+			}
+			else
+			{
+				cairo_paint_with_alpha(cr, s->getFill() / 255.0);
+			}
+		}
 		return;
 	}
 
@@ -178,16 +247,8 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 				width = lastPoint1.z;
 			}
 
-			if (scaleFactor == 1)
-			{
-				// Set width
-				cairo_set_line_width(cr, width);
-			}
-			else
-			{
-				// Set width
-				cairo_set_line_width(cr, width * scaleFactor);
-			}
+			// Set width
+			cairo_set_line_width(cr, width * scaleFactor);
 
 			cairo_move_to(cr, lastPoint1.x, lastPoint1.y);
 			cairo_line_to(cr, p.x, p.y);
@@ -335,7 +396,7 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 	}
 
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
-	cout << bl::format("DBG:DocumentView: draw {1} / not draw {2}") % drawed % notDrawed << endl;
+	g_message("DBG:DocumentView: draw %i / not draw %i", drawed, notDrawed);
 #endif // DEBUG_SHOW_REPAINT_BOUNDS
 }
 
@@ -411,7 +472,7 @@ void DocumentView::finializeDrawing()
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
 	if (this->lX != -1)
 	{
-		cout << "DBG:repaint area" << endl;
+		g_message("DBG:repaint area");
 		cairo_set_source_rgb(cr, 1, 0, 0);
 		cairo_set_line_width(cr, 1);
 		cairo_rectangle(cr, this->lX + 3, this->lY + 3, this->lWidth - 6, this->lHeight - 6);
@@ -419,7 +480,7 @@ void DocumentView::finializeDrawing()
 	}
 	else
 	{
-		cout << "DBG:repaint complete" << endl;
+		g_message("DBG:repaint complete");
 	}
 #endif // DEBUG_SHOW_REPAINT_BOUNDS
 

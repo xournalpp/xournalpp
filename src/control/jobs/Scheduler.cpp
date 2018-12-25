@@ -1,27 +1,12 @@
 #include "Scheduler.h"
-
 #include <config-debug.h>
 
+#include <inttypes.h>
+
 #ifdef DEBUG_SHEDULER
-
-#include <StringUtils.h>
-#include <iostream>
-#define SDEBUG(msg) std::cout << bl::format(CONCAT("Scheduler::", msg, "\n"))
-
+#define SDEBUG g_message
 #else
-
-//kind of workaround
-class no_debug_format
-{
-public:
-	template<class T>
-	no_debug_format& operator%(const T& x)
-	{
-		return *this;
-	}
-};
-#define SDEBUG(msg) no_debug_format()
-
+#define SDEBUG(msg, ...)
 #endif
 
 Scheduler::Scheduler()
@@ -121,7 +106,7 @@ void Scheduler::addJob(Job* job, JobPriority priority)
 	g_queue_push_tail(this->jobQueue[priority], job);
 	g_cond_broadcast(&this->jobQueueCond);
 
-	SDEBUG("add job: {1}") % (uint64_t) job;
+	SDEBUG("add job: %" PRId64, (uint64_t) job);
 
 	g_mutex_unlock(&this->jobQueueMutex);
 }
@@ -298,7 +283,7 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 			hasOnlyRenderJobs = false;
 		}
 
-		SDEBUG("get job: {1}") % (uint64_t) job;
+		SDEBUG("get job: %" PRId64, (uint64_t) job);
 
 		if (job == NULL)
 		{
@@ -320,7 +305,7 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 			continue;
 		}
 
-		SDEBUG("do job: {1}") % (uint64_t) job;
+		SDEBUG("do job: %" PRId64, (uint64_t) job);
 
 		g_mutex_unlock(&scheduler->jobQueueMutex);
 

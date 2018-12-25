@@ -16,8 +16,6 @@
 
 #include <XournalType.h>
 
-#include <vector>
-
 class Control;
 class Layout;
 class MainWindow;
@@ -27,6 +25,7 @@ class ToolbarData;
 class ToolbarModel;
 class XournalView;
 class MainWindowToolbarMenu;
+class ZoomGesture;
 
 class MainWindow : public GladeGui
 {
@@ -86,6 +85,8 @@ public:
 
 	Layout* getLayout();
 
+	bool isGestureActive();
+
 private:
 	void createToolbarAndMenu();
 
@@ -123,6 +124,8 @@ private:
 	Control* control;
 
 	XournalView* xournal;
+
+	ZoomGesture* zoomGesture;
 
 	// Toolbars
 	ToolMenuHandler* toolbar;

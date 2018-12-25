@@ -15,8 +15,6 @@
 
 #include <XournalType.h>
 
-#include <string>
-using std::string;
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 

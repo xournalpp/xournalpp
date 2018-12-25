@@ -4,10 +4,9 @@
 
 #include <config.h>
 #include <i18n.h>
+#include <XojMsgBox.h>
 
-#include <boost/format.hpp>
-
-#include <stdio.h>
+#include <inttypes.h>
 
 #ifdef UNDO_TRACE
 
@@ -15,11 +14,11 @@ void printAction(UndoAction* action)
 {
 	if (action)
 	{
-		cout << action << " / " << action->getClassName() << endl;
+		g_message("%" PRIu64 " / %s", (uint64_t)action, action->getClassName());
 	}
 	else
 	{
-		cout << "(null)" << endl;
+		g_message("(null)");
 	}
 }
 
@@ -36,12 +35,12 @@ void printUndoList(GList* list)
 
 #ifdef UNDO_TRACE
 #define PRINTCONTENTS()						\
-	cout << "redoList" << endl;				\
+	g_message("redoList");					\
 	printUndoList(this->redoList);			\
-	cout << "undoList" << endl;				\
+	g_message("undoList");					\
 	printUndoList(this->undoList);			\
-	cout << endl << "savedUndo" << endl;	\
-	if(this->savedUndo)						\
+	g_message("savedUndo");					\
+	if (this->savedUndo)					\
 	{										\
 		printAction(this->savedUndo);		\
 	}                                                        
@@ -81,7 +80,7 @@ void UndoRedoHandler::clearContents()
 		UndoAction* action = (UndoAction*) l->data;
 
 #ifdef UNDO_TRACE
-		cout << boost::format("clearContents()::Delete UndoAction: %p / %s") % action % action->getClassName() << endl; //
+		g_message("clearContents()::Delete UndoAction: %" PRIu64 " / %s", (uint64_t)action, action->getClassName());
 #endif //UNDO_TRACE
 
 		delete action;
@@ -106,9 +105,8 @@ void UndoRedoHandler::clearRedo()
 		UndoAction* action = (UndoAction*) l->data;
 
 #ifdef UNDO_TRACE
-		cout << "clearRedo()::Delete UndoAction: " << action
-				<< " / " << action->getClassName() << endl;
-#endif //UNDO_TRACE
+		g_message("clearRedo()::Delete UndoAction: %" PRIu64 " / %s", (uint64_t)action, action->getClassName());
+#endif
 
 		delete action;
 	}
@@ -145,7 +143,7 @@ void UndoRedoHandler::undo()
 	{
 		string msg = FS(_F("Could not undo \"{1}\"\n" "Something went wrong… Please write a bug report…")
 							% undo->getText());
-		Util::showErrorToUser(control->getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 	}
 
 	this->redoList = g_list_append(this->redoList, undo);
@@ -182,7 +180,7 @@ void UndoRedoHandler::redo()
 	{
 		string msg = FS(_F("Could not redo \"{1}\"\n" "Something went wrong… Please write a bug report…")
 							% redo->getText());
-		Util::showErrorToUser(control->getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 	}
 
 	this->undoList = g_list_append(this->undoList, redo);
@@ -213,7 +211,10 @@ void UndoRedoHandler::addUndoAction(UndoAction* action)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (action == NULL) return;
+	if (action == NULL)
+	{
+		return;
+	}
 
 	this->undoList = g_list_append(this->undoList, action);
 	clearRedo();
@@ -292,7 +293,7 @@ string UndoRedoHandler::redoDescription()
 	return _("Redo");
 }
 
-void UndoRedoHandler::fireUpdateUndoRedoButtons(XojPage** pages)
+void UndoRedoHandler::fireUpdateUndoRedoButtons(vector<PageRef> pages)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
@@ -301,14 +302,18 @@ void UndoRedoHandler::fireUpdateUndoRedoButtons(XojPage** pages)
 		((UndoRedoListener*) l->data)->undoRedoChanged();
 	}
 
-	for (int i = 0; pages[i]; i++)
+	for (PageRef page : pages)
 	{
+		if (!page.isValid())
+		{
+			continue;
+		}
+
 		for (GList* l = this->listener; l != NULL; l = l->next)
 		{
-			((UndoRedoListener*) l->data)->undoRedoPageChanged(pages[i]);
+			((UndoRedoListener*) l->data)->undoRedoPageChanged(page);
 		}
 	}
-	delete[] pages;
 }
 
 void UndoRedoHandler::addUndoRedoListener(UndoRedoListener* listener)

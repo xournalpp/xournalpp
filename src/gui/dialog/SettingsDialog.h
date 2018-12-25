@@ -14,10 +14,6 @@
 #include "control/settings/Settings.h"
 #include "gui/GladeGui.h"
 
-#include <XournalType.h>
-
-#include <vector>
-
 class ButtonConfigGui;
 
 class SettingsDialog : public GladeGui

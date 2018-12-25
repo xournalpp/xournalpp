@@ -14,9 +14,6 @@
 #include "Element.h"
 #include <XournalType.h>
 
-#include <string>
-using std::string;
-
 class Image : public Element
 {
 public:
@@ -43,7 +40,7 @@ public:
 public:
 	// Serialize interface
 	void serialize(ObjectOutputStream& out);
-	void readSerialized(ObjectInputStream& in) throw (InputStreamException);
+	void readSerialized(ObjectInputStream& in);
 
 private:
 	virtual void calcSize();

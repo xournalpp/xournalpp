@@ -448,7 +448,7 @@ void TextEditor::toggleBold()
 	std::size_t found = fontName.find("Bold");
 
 	//toggle bold
-	if (found == std::string::npos)
+	if (found == string::npos)
 	{
 		fontName = fontName + " Bold";
 	}

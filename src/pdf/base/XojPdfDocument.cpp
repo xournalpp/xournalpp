@@ -2,29 +2,16 @@
 
 #include <config-features.h>
 
-
-#ifdef ADVANCED_PDF_EXPORT_POPPLER
-#include "pdf/popplerdirect/poppler/XojPopplerIter.h"
-#else
 #include "pdf/popplerapi/PopplerGlibDocument.h"
-#endif
 
 XojPdfDocument::XojPdfDocument()
-#ifdef ADVANCED_PDF_EXPORT_POPPLER
- : doc(new XojPopplerDocument())
-#else
  : doc(new PopplerGlibDocument())
-#endif
 {
 	XOJ_INIT_TYPE(XojPdfDocument);
 }
 
 XojPdfDocument::XojPdfDocument(const XojPdfDocument& doc)
-#ifdef ADVANCED_PDF_EXPORT_POPPLER
- : doc(new XojPopplerDocument())
-#else
  : doc(new PopplerGlibDocument())
-#endif
 {
 	XOJ_INIT_TYPE(XojPdfDocument);
 }

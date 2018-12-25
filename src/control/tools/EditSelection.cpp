@@ -656,7 +656,7 @@ void EditSelection::snapRotation()
 
 	for (unsigned int i = 0; i < sizeof(ROTATION_LOCK) / sizeof(ROTATION_LOCK[0]); i++ )
 	{
-		if (std::abs(this->rotation - ROTATION_LOCK[i]) < epsilon)
+		if (abs(this->rotation - ROTATION_LOCK[i]) < epsilon)
 		{
 			this->rotation = ROTATION_LOCK[i];
 		}
@@ -787,7 +787,7 @@ void EditSelection::serialize(ObjectOutputStream& out)
 	for (Element* e : *this->getElements()) out << e;
 }
 
-void EditSelection::readSerialized(ObjectInputStream& in) throw (InputStreamException)
+void EditSelection::readSerialized(ObjectInputStream& in)
 {
 	in.readObject("EditSelection");
 	this->x = in.readDouble();

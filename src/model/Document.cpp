@@ -10,12 +10,7 @@
 #include <Stacktrace.h>
 #include <Util.h>
 
-#include <boost/locale/format.hpp>
-
 #include <string.h>
-#include <iostream>
-using std::cout;
-using std::endl;
 
 Document::Document(DocumentHandler* handler)
 {
@@ -189,45 +184,21 @@ path Document::createSaveFilename(DocumentType type, string defaultSaveName)
 {
 	if (!filename.empty())
 	{
-		//This can be any extension
-		return filename.filename();
+		// This can be any extension
+		return filename.stem();
 	}
 	else if (!pdfFilename.empty())
 	{
-		path extension;
-		if (type == Document::XOPP)
-		{
-			extension = path(".pdf.xopp");
-		}
-		else if (type == Document::PDF)
-		{
-			extension = path(".xopp.pdf");
-		}
-		else
-		{
-			extension = path("");
-		}
-		return pdfFilename.filename().replace_extension(extension);
+		return pdfFilename.stem();
 	}
 	else
 	{
 		time_t curtime = time(NULL);
 		char stime[128];
 		strftime(stime, sizeof(stime), defaultSaveName.c_str(), localtime(&curtime));
-		path automaticName = path(stime);
-		if (type == Document::XOPP)
-		{
-			automaticName.replace_extension(".xopp");
-		}
-		else if (type == Document::XOJ)
-		{
-			automaticName.replace_extension(".xoj");
-		}
-		else if (type == Document::PDF)
-		{
-			automaticName.replace_extension(".pdf");
-		}
-		return automaticName.c_str();
+
+		// Remove the extension, file format is handled by the filter combo box
+		return path(stime).replace_extension();
 	}
 }
 
@@ -415,14 +386,12 @@ bool Document::readPdf(path filename, bool initPages, bool attachToDocument)
 
 	if (!pdfDocument.load(filename.c_str(), password.c_str(), &popplerError))
 	{
-		lastError = FS(_F("Document not loaded! ({1}), {2}") % filename % popplerError->message);
+		lastError = FS(_F("Document not loaded! ({1}), {2}") % filename.string() % popplerError->message);
 		g_error_free(popplerError);
 		unlock();
 
 		return false;
 	}
-
-	cout << bl::format("attachToDocument: {1}") % attachToDocument << endl;
 
 	this->pdfFilename = filename;
 	this->attachPdf = attachToDocument;

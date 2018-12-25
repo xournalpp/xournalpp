@@ -60,17 +60,6 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	gtk_widget_grab_focus(this->widget);
 
 	this->cleanupTimeout = g_timeout_add_seconds(5, (GSourceFunc) clearMemoryTimer, this);
-	// pinch-to-zoom
-	this->zoom_gesture_active = false;
-
-	// use parent as the gestures widget and not this->widget as gesture gets
-	// buggy otherwise (scrolling interferes with gestures scale value)
-	this->zoom_gesture = gtk_gesture_zoom_new(parent);
-
-	gtk_event_controller_set_propagation_phase(GTK_EVENT_CONTROLLER(this->zoom_gesture), GTK_PHASE_CAPTURE);
-	g_signal_connect(this->zoom_gesture, "begin", G_CALLBACK (zoom_gesture_begin_cb), this);
-	g_signal_connect(this->zoom_gesture, "scale-changed", G_CALLBACK (zoom_gesture_scale_changed_cb), this);
-	g_signal_connect(this->zoom_gesture, "end", G_CALLBACK (zoom_gesture_end_cb), this);
 }
 
 XournalView::~XournalView()
@@ -279,24 +268,14 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 
 	if (event->keyval == GDK_KEY_Left)
 	{
-		//if (control->getSettings()->isPresentationMode())
-		//{
-			control->getScrollHandler()->goToPreviousPage();
-			return true;
-		//}
-		//layout->scrollRelativ(-scrollKeySize, 0);
-		//return true;
+		control->getScrollHandler()->goToPreviousPage();
+		return true;
 	}
 
 	if (event->keyval == GDK_KEY_Right)
 	{
-		//if (control->getSettings()->isPresentationMode())
-		//{
-			control->getScrollHandler()->goToNextPage();
-			return true;
-		//}
-		//layout->scrollRelativ(scrollKeySize, 0);
-		//return true;
+		control->getScrollHandler()->goToNextPage();
+		return true;
 	}
 
 	if (event->keyval == GDK_KEY_End)
@@ -365,51 +344,6 @@ void XournalView::onRealized(GtkWidget* widget, XournalView* view)
 	XOJ_CHECK_TYPE_OBJ(view, XournalView);
 
 	view->setEventCompression(view->getControl()->getSettings()->isEventCompression());
-}
-
-void XournalView::zoom_gesture_begin_cb(GtkGesture* gesture, GdkEventSequence* sequence, XournalView* view)
-{
-	XOJ_CHECK_TYPE_OBJ(view, XournalView);
-
-	Layout* layout = gtk_xournal_get_layout(view->widget);
-	// Save visible rectangle at beginning of gesture
-	view->visRect_gesture_begin = layout->getVisibleRect();
-
-	view->zoom_gesture_begin = view->getZoom();
-	view->zoom_gesture_active = true;
-
-	// get center of bounding box
-	ZoomControl* zoom = view->control->getZoomControl();
-	gdouble center_x;
-	gdouble center_y;
-	if(gtk_gesture_get_bounding_box_center(GTK_GESTURE(gesture), &center_x, &center_y))
-	{
-		zoom->setZoomCenterX(center_x);
-		zoom->setZoomCenterY(center_y);
-	}
-}
-
-void XournalView::zoom_gesture_end_cb(GtkGesture* gesture, GdkEventSequence* sequence, XournalView* view)
-{
-	XOJ_CHECK_TYPE_OBJ(view, XournalView);
-
-	ZoomControl* zoom = view->control->getZoomControl();
-	zoom->setZoomCenterX(-1);
-	zoom->setZoomCenterY(-1);
-	view->zoom_gesture_active = false;
-}
-
-void XournalView::zoom_gesture_scale_changed_cb(GtkGestureZoom* gesture, gdouble scale, XournalView* view)
-{
-	XOJ_CHECK_TYPE_OBJ(view, XournalView);
-
-	// Touch handling, cannot be solved this way
-//	if (view->shouldIgnoreTouchEvents())
-//	{
-//		return;
-//	}
-
-	view->setZoom(scale * view->zoom_gesture_begin);
 }
 
 // send the focus back to the appropriate widget
@@ -636,12 +570,6 @@ void XournalView::zoomOut()
 	control->getZoomControl()->zoomOut();
 }
 
-void XournalView::setZoom(gdouble scale)
-{
-	XOJ_CHECK_TYPE(XournalView);
-	control->getZoomControl()->setZoom(scale);
-}
-
 void XournalView::ensureRectIsVisible(int x, int y, int width, int height)
 {
 	XOJ_CHECK_TYPE(XournalView);
@@ -650,7 +578,7 @@ void XournalView::ensureRectIsVisible(int x, int y, int width, int height)
 	layout->ensureRectIsVisible(x, y, width, height);
 }
 
-void XournalView::zoomChanged(double lastZoom)
+void XournalView::zoomChanged()
 {
 	XOJ_CHECK_TYPE(XournalView);
 
@@ -664,63 +592,10 @@ void XournalView::zoomChanged(double lastZoom)
 		return;
 	}
 
-
-	// Keep zoom center at static position in current view
-	// by scrolling relative to counter motion induced by zoom
-	// in orignal version top left corner of first page static
-	// Pack into extra function later
-	double zoom_now = getZoom();
-	double zoom_eff = zoom_now / lastZoom;
-	// center of zooming for the scroll adjustment
-	double zoom_center_x;
-	double zoom_center_y;
-	// relative scrolling
-	double scroll_x;
-	double scroll_y;
-	// x,y position of visible rectangle for gesture scrolling
-	double vis_x;
-	double vis_y;
-	// get margins for relative scroll calculation
-	double marginLeft = (double) view->layout.getMarginLeft();
-	double marginTop = (double) view->layout.getMarginTop();
-
-	if (std::abs(zoom_now - lastZoom) < ZOOM_EPSILON)
-	{
-		return;
-	}
-
 	// move this somewhere else maybe
 	layout->layoutPages();
 
-	//TODO: what if gesture_active we should fire error
-	// Scroll by ZoomIn, ZoomOut or Slider towards the middle
-	if (zoom->getZoomCenterX() == -1 || zoom->getZoomCenterY() == -1)
-	{
-		Rectangle *vis_rect = getVisibleRect(view);
-		zoom_center_x = vis_rect->x + (vis_rect->width * 0.5);
-		zoom_center_y = vis_rect->y + (vis_rect->height * 0.5);
-	}
-	else
-	{
-		zoom_center_x = zoom->getZoomCenterX();
-		zoom_center_y = zoom->getZoomCenterY();
-	}
-	// Absolute centred scrolling used for gesture
-	if (this->zoom_gesture_active)
-	{
-		vis_x = (zoom_center_x - marginLeft) * (zoom_now / this->zoom_gesture_begin - 1);
-		vis_y = (zoom_center_y - marginTop) * (zoom_now / this->zoom_gesture_begin - 1);
-		layout->scrollAbs(this->visRect_gesture_begin.x + std::round(vis_x), this->visRect_gesture_begin.y + std::round(vis_y));
-	}
-	else
-	// Relative centered scrolling used for SHIFT-mousewheel
-	{
-		scroll_x = (zoom_center_x - marginLeft) * (zoom_eff - 1);
-		scroll_y = (zoom_center_y - marginTop) * (zoom_eff - 1);
-
-		// adjust view by scrolling
-		layout->scrollRelativ(std::round(scroll_x), std::round(scroll_y));
-	}
+	zoom->scrollToZoomPosition(view);
 
 	Document* doc = control->getDocument();
 	doc->lock();

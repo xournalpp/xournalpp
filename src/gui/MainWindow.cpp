@@ -6,6 +6,7 @@
 #include "XournalView.h"
 
 #include "control/Control.h"
+#include "control/zoom/ZoomGesture.h"
 #include "gui/GladeSearchpath.h"
 #include "ToolbarDefinitions.h"
 #include "toolbarMenubar/model/ToolbarData.h"
@@ -18,6 +19,7 @@
 #include <config-dev.h>
 #include <config-features.h>
 #include <i18n.h>
+#include <XojMsgBox.h>
 
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/path.hpp>
@@ -58,6 +60,8 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 
 	this->xournal = new XournalView(vpXournal, control);
 
+	this->zoomGesture = new ZoomGesture(get("winXournal"), control->getZoomControl());
+
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
 
 	// Window handler
@@ -80,7 +84,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 
 		string msg = FS(_F("Could not parse general toolbar.ini file: {1}\n"
 						   "No Toolbars will be available") % file);
-		Util::showErrorToUser(control->getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 	}
 
 	file = string(g_get_home_dir()) + G_DIR_SEPARATOR_S + CONFIG_DIR + G_DIR_SEPARATOR_S + TOOLBAR_CONFIG;
@@ -90,7 +94,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 		{
 			string msg = FS(_F("Could not parse custom toolbar.ini file: {1}\n"
 							   "Toolbars will not be available") % file);
-			Util::showErrorToUser(control->getGtkWindow(), msg);
+			XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 		}
 	}
 
@@ -145,6 +149,9 @@ MainWindow::~MainWindow()
 	delete this->toolbar;
 	this->toolbar = NULL;
 
+	delete this->zoomGesture;
+	this->zoomGesture = NULL;
+
 	XOJ_RELEASE_TYPE(MainWindow);
 }
 
@@ -152,8 +159,14 @@ Layout* MainWindow::getLayout()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	Layout* layout = gtk_xournal_get_layout(GTK_WIDGET(this->xournal->getWidget()));
-	return layout;
+	return gtk_xournal_get_layout(GTK_WIDGET(this->xournal->getWidget()));
+}
+
+bool MainWindow::isGestureActive()
+{
+	XOJ_CHECK_TYPE(MainWindow);
+
+	return zoomGesture->isGestureActive();
 }
 
 bool cancellable_cancel(GCancellable* cancel)

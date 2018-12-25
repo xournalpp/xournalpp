@@ -11,8 +11,6 @@
 
 #pragma once
 
-#include "StringUtils.h"
-
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 
@@ -39,8 +37,6 @@ private:
 	virtual ~Util();
 
 public:
-	static void showErrorToUser(GtkWindow* win, string msg);
-
 	static void cairo_set_source_rgbi(cairo_t* cr, int color);
 
 	static void apply_rgb_togdkrgba(GdkRGBA& col, int color);

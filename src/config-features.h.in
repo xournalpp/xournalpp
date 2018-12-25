@@ -13,10 +13,6 @@
 
 /* --- Stable features --- */
 
-/**
- * Export PDF with private Poppler API
- */
-#cmakedefine ADVANCED_PDF_EXPORT_POPPLER
 
 /**
  * Enable Mathtex support

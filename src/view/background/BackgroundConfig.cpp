@@ -1,19 +1,12 @@
 #include "BackgroundConfig.h"
 
-#include <boost/algorithm/string.hpp>
-
-#include <vector>
-using std::vector;
-using std::pair;
+#include <StringUtils.h>
 
 BackgroundConfig::BackgroundConfig(string config)
 {
 	XOJ_INIT_TYPE(BackgroundConfig);
 
-	vector<string> parts;
-	boost::split(parts, config, boost::is_any_of(","));
-
-	for (string s : parts)
+	for (string s : StringUtils::split(config, ','))
 	{
 		size_t dotPos = s.find_last_of("=");
 		if (dotPos != string::npos)

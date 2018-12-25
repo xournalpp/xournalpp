@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <StringUtils.h>
+#include <XournalType.h>
 
 #include <gtk/gtk.h>
 

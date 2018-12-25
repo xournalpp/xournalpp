@@ -540,7 +540,7 @@ void EditSelectionContents::serialize(ObjectOutputStream& out)
 	out.endObject();
 }
 
-void EditSelectionContents::readSerialized(ObjectInputStream& in) throw ( InputStreamException)
+void EditSelectionContents::readSerialized(ObjectInputStream& in)
 {
 	in.readObject("EditSelectionContents");
 

@@ -5,15 +5,15 @@
 
 #include <i18n.h>
 
-SwapUndoAction::SwapUndoAction(size_t pageNr, bool moveUp, PageRef swapped_page, PageRef other_page) :
-		UndoAction("SwapUndoAction")
+SwapUndoAction::SwapUndoAction(size_t pageNr, bool moveUp, PageRef swappedPage, PageRef otherPage)
+ : UndoAction("SwapUndoAction")
 {
 	XOJ_INIT_TYPE(SwapUndoAction);
 
 	this->pageNr = pageNr;
 	this->moveUp = moveUp;
-	this->swapped_page = swapped_page;
-	this->other_page = other_page;
+	this->swappedPage = swappedPage;
+	this->otherPage = otherPage;
 }
 
 SwapUndoAction::~SwapUndoAction()
@@ -60,7 +60,7 @@ void SwapUndoAction::swap(Control* control)
 	}
 
 	doc->deletePage(deletePos);
-	doc->insertPage(this->swapped_page, insertPos);
+	doc->insertPage(this->swappedPage, insertPos);
 
 	control->firePageDeleted(deletePos);
 	control->firePageInserted(insertPos);
@@ -71,14 +71,13 @@ void SwapUndoAction::swap(Control* control)
 	doc->lock();
 }
 
-XojPage** SwapUndoAction::getPages()
+vector<PageRef> SwapUndoAction::getPages()
 {
 	XOJ_CHECK_TYPE(SwapUndoAction);
 
-	XojPage** pages = new XojPage *[3];
-	pages[0] = this->swapped_page;
-	pages[1] = this->other_page;
-	pages[2] = NULL;
+	vector<PageRef> pages;
+	pages.push_back(this->swappedPage);
+	pages.push_back(this->otherPage);
 	return pages;
 }
 

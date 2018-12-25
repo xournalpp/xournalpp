@@ -34,23 +34,7 @@
 
 
 #ifdef DEBUG_RECOGNIZER
-
-#include <StringUtils.h>
-#include <iostream>
-using std::cout;
-using std::endl;
-
-#define RDEBUG(msg) cout << bl::format(CONCAT("ShapeReco::", msg, "\n"))
-		
+#define RDEBUG(msg, ...) g_message("ShapeReco::" msg, ##__VA_ARGS__)
 #else
-class no_debug_format
-{
-public:
-	template<class T>
-	no_debug_format& operator%(const T& x)
-	{
-		return *this;
-	}
-};
-#define RDEBUG(msg) no_debug_format()
+#define RDEBUG(msg, ...)
 #endif

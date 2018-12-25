@@ -13,7 +13,6 @@
 
 #include "control/Actions.h"
 
-#include <StringUtils.h>
 #include <XournalType.h>
 
 #include <gtk/gtk.h>

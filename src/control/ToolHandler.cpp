@@ -43,7 +43,10 @@ void ToolHandler::initTools()
 	thickness[TOOL_SIZE_MEDIUM] = 1.41;
 	thickness[TOOL_SIZE_THICK] = 2.26;
 	thickness[TOOL_SIZE_VERY_THICK] = 5.67;
-	t = new Tool("pen", TOOL_PEN, 0x3333CC, true, true, true, true, true, true, true, thickness);
+	t = new Tool("pen", TOOL_PEN, 0x3333CC,
+			TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE |
+			TOOL_CAP_CIRCLE | TOOL_CAP_ARROW | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
+			thickness);
 	tools[TOOL_PEN - TOOL_PEN] = t;
 
 	thickness = new double[5];
@@ -52,7 +55,7 @@ void ToolHandler::initTools()
 	thickness[TOOL_SIZE_MEDIUM] = 8.50;
 	thickness[TOOL_SIZE_THICK] = 19.84;
 	thickness[TOOL_SIZE_VERY_THICK] = 19.84;
-	t = new Tool("eraser", TOOL_ERASER, 0x000000, false, true, false, false, false, false, false, thickness);
+	t = new Tool("eraser", TOOL_ERASER, 0x000000, TOOL_CAP_SIZE, thickness);
 	tools[TOOL_ERASER - TOOL_PEN] = t;
 
 	// highlighter thicknesses = 1, 3, 7 mm
@@ -62,40 +65,43 @@ void ToolHandler::initTools()
 	thickness[TOOL_SIZE_MEDIUM] = 8.50;
 	thickness[TOOL_SIZE_THICK] = 19.84;
 	thickness[TOOL_SIZE_VERY_THICK] = 19.84;
-	t = new Tool("hilighter", TOOL_HILIGHTER, 0xFFFF00, true, true, true, true, true, true, true, thickness);
+	t = new Tool("hilighter", TOOL_HILIGHTER, 0xFFFF00,
+			TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE |
+			TOOL_CAP_CIRCLE | TOOL_CAP_ARROW | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
+			thickness);
 	tools[TOOL_HILIGHTER - TOOL_PEN] = t;
 
-	t = new Tool("text", TOOL_TEXT, 0x000000, true, false, false, false, false, false, false, NULL);
+	t = new Tool("text", TOOL_TEXT, 0x000000, TOOL_CAP_COLOR, NULL);
 	tools[TOOL_TEXT - TOOL_PEN] = t;
 
-	t = new Tool("image", TOOL_IMAGE, 0x000000, false, false, false, false, false, false, false, NULL);
+	t = new Tool("image", TOOL_IMAGE, 0x000000, TOOL_CAP_NONE, NULL);
 	tools[TOOL_IMAGE - TOOL_PEN] = t;
 
-	t = new Tool("selectRect", TOOL_SELECT_RECT, 0x000000, false, false, false, false, false, false, false, NULL);
+	t = new Tool("selectRect", TOOL_SELECT_RECT, 0x000000, TOOL_CAP_NONE, NULL);
 	tools[TOOL_SELECT_RECT - TOOL_PEN] = t;
 
-	t = new Tool("selectRegion", TOOL_SELECT_REGION, 0x000000, false, false, false, false, false, false, false, NULL);
+	t = new Tool("selectRegion", TOOL_SELECT_REGION, 0x000000, TOOL_CAP_NONE, NULL);
 	tools[TOOL_SELECT_REGION - TOOL_PEN] = t;
 
-	t = new Tool("selectObject", TOOL_SELECT_OBJECT, 0x000000, false, false, false, false, false, false, false, NULL);
+	t = new Tool("selectObject", TOOL_SELECT_OBJECT, 0x000000, TOOL_CAP_NONE, NULL);
 	tools[TOOL_SELECT_OBJECT - TOOL_PEN] = t;
 
-	t = new Tool("verticalSpace", TOOL_VERTICAL_SPACE, 0x000000, false, false, false, false, false, false, false, NULL);
+	t = new Tool("verticalSpace", TOOL_VERTICAL_SPACE, 0x000000, TOOL_CAP_NONE, NULL);
 	tools[TOOL_VERTICAL_SPACE - TOOL_PEN] = t;
 
-	t = new Tool("hand", TOOL_HAND, 0x000000, false, false, false, false, false, false, false, NULL);
+	t = new Tool("hand", TOOL_HAND, 0x000000, TOOL_CAP_NONE, NULL);
 	tools[TOOL_HAND - TOOL_PEN] = t;
 
-	t = new Tool("playObject", TOOL_PLAY_OBJECT, 0x000000, false, false, false, false, false, false, false, NULL);
+	t = new Tool("playObject", TOOL_PLAY_OBJECT, 0x000000, TOOL_CAP_NONE, NULL);
 	tools[TOOL_PLAY_OBJECT - TOOL_PEN] = t;
 	
-	t = new Tool("drawRect", TOOL_DRAW_RECT, 0x000000, false, false, false, false, false, false, false, NULL);
+	t = new Tool("drawRect", TOOL_DRAW_RECT, 0x000000, TOOL_CAP_NONE, NULL);
 	tools[TOOL_DRAW_RECT - TOOL_PEN] = t;
 
-	t = new Tool("drawCircle", TOOL_DRAW_CIRCLE, 0x000000, false, false, false, false, false, false, false, NULL);
+	t = new Tool("drawCircle", TOOL_DRAW_CIRCLE, 0x000000, TOOL_CAP_NONE, NULL);
 	tools[TOOL_DRAW_CIRCLE - TOOL_PEN] = t;
 
-	t = new Tool("drawArrow", TOOL_DRAW_ARROW, 0x000000, false, false, false, false, false, false, false, NULL);
+	t = new Tool("drawArrow", TOOL_DRAW_ARROW, 0x000000, TOOL_CAP_NONE, NULL);
 	tools[TOOL_DRAW_ARROW - TOOL_PEN] = t;
 
 	selectTool(TOOL_PEN);
@@ -185,7 +191,7 @@ void ToolHandler::fireToolChanged()
 	}
 }
 
-Tool &ToolHandler::getTool(ToolType type)
+Tool& ToolHandler::getTool(ToolType type)
 {
 	return *(this->tools[type - TOOL_PEN]);
 }
@@ -201,49 +207,49 @@ bool ToolHandler::isEnableColor()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return current->enableColor;
+	return current->capabilities & TOOL_CAP_COLOR != 0;
 }
 
 bool ToolHandler::isEnableSize()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return current->enableSize;
+	return current->capabilities & TOOL_CAP_SIZE != 0;
 }
 
 bool ToolHandler::isEnableRuler()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return current->enableRuler;
+	return current->capabilities & TOOL_CAP_RULER != 0;
 }
 
 bool ToolHandler::isEnableRectangle()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return current->enableRectangle;
+	return current->capabilities & TOOL_CAP_RECTANGLE != 0;
 }
 
 bool ToolHandler::isEnableCircle()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return current->enableCircle;
+	return current->capabilities & TOOL_CAP_CIRCLE != 0;
 }
 
 bool ToolHandler::isEnableArrow()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return current->enableArrow;
+	return current->capabilities & TOOL_CAP_ARROW != 0;
 }
 
 bool ToolHandler::isEnableShapreRecognizer()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return current->enableShapeRecognizer;
+	return current->capabilities & TOOL_CAP_RECOGNIZER != 0;
 }
 
 ToolSize ToolHandler::getSize()
@@ -310,6 +316,74 @@ void ToolHandler::setHilighterSize(ToolSize size)
 	}
 }
 
+void ToolHandler::setPenFillEnabled(bool fill)
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	this->tools[TOOL_PEN - TOOL_PEN]->fill = fill;
+
+	// TODO: Currently no toolbar event to send, but if there is a toolbar, here the event should be sent
+//	if (this->current->type == TOOL_PEN)
+//	{
+//		this->listener->toolSizeChanged();
+//	}
+}
+
+bool ToolHandler::getPenFillEnabled()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return this->tools[TOOL_PEN - TOOL_PEN]->fill;
+}
+
+void ToolHandler::setPenFill(int alpha)
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	this->tools[TOOL_PEN - TOOL_PEN]->fillAlpha = alpha;
+}
+
+int ToolHandler::getPenFill()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return this->tools[TOOL_PEN - TOOL_PEN]->fillAlpha;
+}
+
+void ToolHandler::setHilighterFillEnabled(bool fill)
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	this->tools[TOOL_HILIGHTER - TOOL_PEN]->fill = fill;
+
+	// TODO: Currently no toolbar event to send, but if there is a toolbar, here the event should be sent
+//	if (this->current->type == TOOL_HILIGHTER)
+//	{
+//		this->listener->toolSizeChanged();
+//	}
+}
+
+bool ToolHandler::getHilighterFillEnabled()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return this->tools[TOOL_HILIGHTER - TOOL_PEN]->fill;
+}
+
+void ToolHandler::setHilighterFill(int alpha)
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	this->tools[TOOL_HILIGHTER - TOOL_PEN]->fillAlpha = alpha;
+}
+
+int ToolHandler::getHilighterFill()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return this->tools[TOOL_HILIGHTER - TOOL_PEN]->fillAlpha;
+}
+
 double ToolHandler::getThickness()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
@@ -339,14 +413,23 @@ void ToolHandler::setSize(ToolSize size)
 	this->listener->toolSizeChanged();
 }
 
-void ToolHandler::setColor(int color)
+/**
+ * Select the color for the tool
+ *
+ * @param color Color
+ * @param userSelection
+ * 			true if the user selected the color
+ * 			false if the color is selected by a tool change
+ * 			and therefore should not be applied to a selection
+ */
+void ToolHandler::setColor(int color, bool userSelection)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	this->colorFound = false;
 
 	this->current->color = color;
-	this->listener->toolColorChanged();
+	this->listener->toolColorChanged(userSelection);
 
 	if (!colorFound)
 	{
@@ -359,6 +442,21 @@ int ToolHandler::getColor()
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	return current->color;
+}
+
+/**
+ * @return -1 if fill is disabled, else the fill alpha value
+ */
+int ToolHandler::getFill()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	if (!current->fill)
+	{
+		return -1;
+	}
+
+	return current->fillAlpha;
 }
 
 DrawingType ToolHandler::getDrawingType()
@@ -404,14 +502,14 @@ void ToolHandler::saveSettings()
 	{
 		Tool* t = it.next();
 		SElement& st = s.child(t->getName());
-		if (t->isEnableColor())
+		if (t->hasCapability(TOOL_CAP_COLOR))
 		{
 			st.setIntHex("color", t->getColor());
 		}
 
 		st.setString("drawingType", drawingTypeToString(t->getDrawingType()));
 
-		if (t->isEnableSize())
+		if (t->hasCapability(TOOL_CAP_SIZE))
 		{
 			string value;
 			switch (t->getSize())
@@ -480,7 +578,7 @@ void ToolHandler::loadSettings()
 			}
 
 			int color = 0;
-			if (t->isEnableColor() && st.getInt("color", color))
+			if (t->hasCapability(TOOL_CAP_COLOR) && st.getInt("color", color))
 			{
 				t->setColor(color);
 			}
@@ -493,7 +591,7 @@ void ToolHandler::loadSettings()
 
 			string value;
 
-			if (t->isEnableSize() && st.getString("size", value))
+			if (t->hasCapability(TOOL_CAP_SIZE) && st.getString("size", value))
 			{
 				if (value == "VERY_THIN")	  t->setSize(TOOL_SIZE_VERY_FINE);
 				else if (value == "THIN")	  t->setSize(TOOL_SIZE_FINE);
@@ -544,7 +642,7 @@ void ToolHandler::restoreLastConfig()
 	delete this->lastSelectedTool;
 	this->lastSelectedTool = NULL;
 
-	this->listener->toolColorChanged();
+	this->listener->toolColorChanged(false);
 	this->listener->toolSizeChanged();
 	this->fireToolChanged();
 }
@@ -556,6 +654,9 @@ const double* ToolHandler::getToolThickness(ToolType type)
 	return this->tools[type - TOOL_PEN]->thickness;
 }
 
+/**
+ * Change the selection tools capabilities, depending on the selected elements
+ */
 void ToolHandler::setSelectionEditTools(bool setColor, bool setSize)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
@@ -563,8 +664,8 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize)
 	for (int i = TOOL_SELECT_RECT - TOOL_PEN; i <= TOOL_SELECT_OBJECT - TOOL_PEN; i++)
 	{
 		Tool* t = tools[i];
-		t->enableColor = setColor;
-		t->enableSize = setSize;
+		t->setCapability(TOOL_CAP_COLOR, setColor);
+		t->setCapability(TOOL_CAP_SIZE, setSize);
 		t->size = TOOL_SIZE_NONE;
 		t->color = -1;
 	}
@@ -574,7 +675,7 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize)
 		this->current->type == TOOL_SELECT_OBJECT ||
 		this->current->type == TOOL_PLAY_OBJECT)
 	{
-		this->listener->toolColorChanged();
+		this->listener->toolColorChanged(false);
 		this->listener->toolSizeChanged();
 		this->fireToolChanged();
 	}

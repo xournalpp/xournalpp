@@ -14,9 +14,6 @@
 #include <config.h>
 #include <XournalType.h>
 
-#include <string>
-using std::string;
-
 class GladeSearchpath;
 
 class XournalMain

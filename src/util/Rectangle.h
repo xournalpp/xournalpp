@@ -11,9 +11,7 @@
 
 #pragma once
 
-#include "XournalType.h"
-
-#include <glib.h>
+#include <XournalType.h>
 
 class Range;
 

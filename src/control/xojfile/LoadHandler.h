@@ -20,8 +20,6 @@
 #include <XournalType.h>
 
 #include <zlib.h>
-#include <string>
-using std::string;
 
 enum ParserPosition
 {

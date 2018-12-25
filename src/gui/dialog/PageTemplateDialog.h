@@ -16,8 +16,6 @@
 #include "control/pagetype/PageTypeMenu.h"
 #include "control/settings/PageTemplateSettings.h"
 
-#include <XournalType.h>
-
 class PageTypeHandler;
 class PageTypeMenu;
 class PageTypeInfo;
@@ -36,7 +34,7 @@ public:
 	 */
 	bool isSaved();
 
-	void pageSelected(PageTypeInfo* info);
+	void changeCurrentPageBackground(PageTypeInfo* info);
 
 private:
 	void showPageSizeDialog();

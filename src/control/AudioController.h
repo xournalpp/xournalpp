@@ -3,8 +3,6 @@
 #include <XournalType.h>
 #include "settings/Settings.h"
 #include "Control.h"
-#include <string>
-using std::string;
 
 class AudioController
 {

@@ -2,7 +2,6 @@
 
 #include "model/Point.h"
 
-#include <glib.h>
 #include <math.h>
 
 Inertia::Inertia()

@@ -10,6 +10,7 @@
 
 #include <config.h>
 #include <i18n.h>
+#include <XojMsgBox.h>
 
 #include <boost/filesystem/operations.hpp>
 
@@ -42,7 +43,7 @@ void SaveJob::afterRun()
 
 	if (!this->lastError.empty())
 	{
-		Util::showErrorToUser(control->getGtkWindow(), this->lastError);
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), this->lastError);
 	}
 	else
 	{
@@ -127,12 +128,13 @@ bool SaveJob::save()
 	doc->lock();
 	h.prepareSave(doc);
 	path filename = doc->getFilename();
+	filename.replace_extension(".xopp");
 	doc->unlock();
 
 	if (doc->shouldCreateBackupOnSave())
 	{
 		path backup = filename.parent_path();
-		backup /= std::string(".") + filename.filename().replace_extension(".xopp.bak").string();
+		backup /= string(".") + filename.filename().replace_extension(".xopp.bak").string();
 
 		using namespace boost::filesystem;
 		try
@@ -141,7 +143,7 @@ bool SaveJob::save()
 		}
 		catch (const filesystem_error& e)
 		{
-			g_warning("%s\n%s", _C("Could not create backup! (The file was created from an older Xournal version)"), e.what());
+			g_warning("%s\n%s", _("Could not create backup! (The file was created from an older Xournal version)"), e.what());
 		}
 
 		doc->setCreateBackupOnSave(false);
@@ -150,6 +152,7 @@ bool SaveJob::save()
 	doc->lock();
 
 	h.saveTo(filename, this->control);
+	doc->setFilename(filename);
 	doc->unlock();
 
 	if (!h.getErrorMessage().empty())

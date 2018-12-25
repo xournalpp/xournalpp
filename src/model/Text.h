@@ -13,7 +13,6 @@
 
 #include "Element.h"
 #include "Font.h"
-#include <StringUtils.h>
 
 #include <gtk/gtk.h>
 
@@ -49,7 +48,7 @@ public:
 public:
 	// Serialize interface
 	void serialize(ObjectOutputStream& out);
-	void readSerialized(ObjectInputStream& in) throw (InputStreamException);
+	void readSerialized(ObjectInputStream& in);
 
 protected:
 	virtual void calcSize();

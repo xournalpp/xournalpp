@@ -6,11 +6,9 @@
 
 #include "gui/Cursor.h"
 
-// TODO Remove
-extern int currentToolType;
-
 #include "gui/dialog/AboutDialog.h"
 #include "gui/dialog/GotoDialog.h"
+#include "gui/dialog/FillTransparencyDialog.h"
 #include "gui/dialog/FormatDialog.h"
 #include "gui/dialog/PageTemplateDialog.h"
 #include "gui/dialog/SettingsDialog.h"
@@ -51,18 +49,17 @@ extern int currentToolType;
 #include <serializing/ObjectInputStream.h>
 #include <Stacktrace.h>
 #include <Util.h>
-#include <XInputUtils.h>
+#include <XojMsgBox.h>
 
 #include <boost/filesystem.hpp>
 namespace bf = boost::filesystem;
+#include <boost/algorithm/string.hpp>
+namespace ba = boost::algorithm;
 
 #include <gtk/gtk.h>
 
-#include <iostream>
+#include <sstream>
 #include <fstream>
-using std::cout;
-using std::cerr;
-using std::endl;
 using std::ifstream;
 
 #include <time.h>
@@ -225,7 +222,7 @@ void Control::renameLastAutosaveFile()
 		{
 			string msg = FS(_F("Autosave failed with an error: {1}") % e.what());
 			g_warning("%s", msg.c_str());
-			Util::showErrorToUser(getGtkWindow(), msg);
+			XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 		}
 	}
 }
@@ -300,7 +297,7 @@ void Control::initWindow(MainWindow* win)
 	win->setRecentMenu(recent->getMenu());
 	selectTool(toolHandler->getToolType());
 	this->win = win;
-	this->zoom->initZoomHandler(win->getXournal()->getWidget());
+	this->zoom->initZoomHandler(win->getXournal()->getWidget(), win->getXournal());
 	this->sidebar = new Sidebar(win, this);
 
 	updatePageNumbers(0, size_t_npos);
@@ -326,12 +323,9 @@ void Control::initWindow(MainWindow* win)
 
 	win->setFontButtonFont(settings->getFont());
 
-	XInputUtils::initUtils(win->getWindow());
-	XInputUtils::setLeafEnterWorkaroundEnabled(settings->isEnableLeafEnterWorkaround());
-
-	//rotation snapping enabled by default
+	// rotation snapping enabled by default
 	fireActionSelected(GROUP_SNAPPING,ACTION_ROTATION_SNAPPING);
-	//grid snapping enabled by default
+	// grid snapping enabled by default
 	fireActionSelected(GROUP_GRID_SNAPPING,ACTION_GRID_SNAPPING);
 }
 
@@ -346,7 +340,7 @@ bool Control::autosaveCallback(Control* control)
 	}
 	else
 	{
-		cout << "Info: autosave document..." << endl;
+		g_message("Info: autosave document...");
 	}
 
 	AutosaveJob* job = new AutosaveJob(control);
@@ -749,6 +743,14 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 			penSizeChanged();
 		}
 		break;
+	case ACTION_TOOL_PEN_FILL:
+		this->toolHandler->setPenFillEnabled(enabled);
+		break;
+	case ACTION_TOOL_PEN_FILL_TRANSPARENCY:
+		selectFillAlpha(true);
+		break;
+
+
 	case ACTION_TOOL_HILIGHTER_SIZE_FINE:
 		if (enabled)
 		{
@@ -769,6 +771,12 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 			this->toolHandler->setHilighterSize(TOOL_SIZE_THICK);
 			hilighterSizeChanged();
 		}
+		break;
+	case ACTION_TOOL_HILIGHTER_FILL:
+		this->toolHandler->setHilighterFillEnabled(enabled);
+		break;
+	case ACTION_TOOL_HILIGHTER_FILL_TRANSPARENCY:
+		selectFillAlpha(false);
 		break;
 
 	case ACTION_FONT_BUTTON_CHANGED:
@@ -876,7 +884,7 @@ void Control::help()
 	{
 
 		string msg = FS(_F("There was an error displaying help: {1}") % error->message);
-		Util::showErrorToUser(getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 
 		g_error_free(error);
 	}
@@ -907,6 +915,41 @@ bool Control::paste()
 		return true;
 	}
 	return this->clipboardHandler->paste();
+}
+
+void Control::selectFillAlpha(bool pen)
+{
+	XOJ_CHECK_TYPE(Control);
+
+	int alpha = 0;
+
+	if (pen)
+	{
+		alpha = toolHandler->getPenFill();
+	}
+	else
+	{
+		alpha = toolHandler->getHilighterFill();
+	}
+
+	FillTransparencyDialog dlg(gladeSearchPath, alpha);
+	dlg.show(getGtkWindow());
+
+	if (dlg.getResultAlpha() == -1)
+	{
+		return;
+	}
+
+	alpha = dlg.getResultAlpha();
+
+	if (pen)
+	{
+		toolHandler->setPenFill(alpha);
+	}
+	else
+	{
+		toolHandler->setHilighterFill(alpha);
+	}
 }
 
 void Control::clearSelectionEndText()
@@ -1001,7 +1044,7 @@ void Control::customizeToolbars()
 					{
 						string filename = data->getName();
 						filename += " ";
-						filename += FS(_("Copy"));
+						filename += _("Copy");
 						filename += " ";
 						filename += std::to_string(i);
 
@@ -1009,7 +1052,7 @@ void Control::customizeToolbars()
 					}
 					else
 					{
-						data->setName(data->getName() + " " + FS(_("Copy")));
+						data->setName(data->getName() + " " + _("Copy"));
 					}
 					data->setId(id);
 					break;
@@ -1292,7 +1335,9 @@ void Control::insertPage(PageRef page, size_t position)
 
 	if (visibleHeight < 10)
 	{
-		scrollHandler->scrollToPage(position);
+		Util::execInUiThread([=]() {
+			scrollHandler->scrollToPage(position);
+		});
 	}
 	firePageSelected(position);
 
@@ -1634,7 +1679,6 @@ void Control::selectTool(ToolType type)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	currentToolType = type;
 	toolHandler->selectTool(type);
 
 	if (win)
@@ -1687,7 +1731,7 @@ void Control::toolChanged()
 	// Update color
 	if (toolHandler->isEnableColor())
 	{
-		toolColorChanged();
+		toolColorChanged(false);
 	}
 
 	ActionType rulerAction = ACTION_NOT_SELECTED;
@@ -1833,14 +1877,22 @@ void Control::toolSizeChanged()
 	}
 }
 
-void Control::toolColorChanged()
+/**
+ * Select the color for the tool
+ *
+ * @param userSelection
+ * 			true if the user selected the color
+ * 			false if the color is selected by a tool change
+ * 			and therefore should not be applied to a selection
+ */
+void Control::toolColorChanged(bool userSelection)
 {
 	XOJ_CHECK_TYPE(Control);
 
 	fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR);
 	getCursor()->updateCursor();
 
-	if (this->win && toolHandler->getColor() != -1)
+	if (userSelection && this->win && toolHandler->getColor() != -1)
 	{
 		EditSelection* sel = this->win->getXournal()->getSelection();
 		if (sel)
@@ -1930,7 +1982,6 @@ bool Control::newFile(string pageTemplate)
 	return true;
 }
 
-
 /**
  * Check if this is an autosave file, return false in this case and display a user instruction
  */
@@ -1953,7 +2004,7 @@ bool Control::shouldFileOpen(string filename)
 		string msg = FS(_F("Do not open Autosave files. They may will be overwritten!\n"
 				"Copy the files to another folder.\n"
 				"Files from Folder {1} cannot be opened.") % basename);
-		Util::showErrorToUser(getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 		return false;
 	}
 
@@ -1980,7 +2031,7 @@ bool Control::openFile(path filename, int scrollToPage)
 		XojOpenDlg dlg(getGtkWindow(), this->settings);
 		filename = dlg.showOpenDialog(false, attachPdf);
 
-		cout << _F("Filename: {1}") % filename.string() << endl;
+		g_message("%s", (_F("Filename: {1}") % filename.string()).c_str());
 
 		if (filename.empty())
 		{
@@ -2015,12 +2066,12 @@ bool Control::openFile(path filename, int scrollToPage)
 												   GTK_DIALOG_MODAL,
 													   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
 													   loadHandler.isAttachedPdfMissing()
-															? _C("The attached background PDF could not be found.")
-															: _C("The background PDF could not be found."));
+															? _("The attached background PDF could not be found.")
+															: _("The background PDF could not be found."));
 
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Select another PDF"), 1);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Remove PDF Background"), 2);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Cancel"), 3);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), 1);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 2);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
 		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
@@ -2045,8 +2096,8 @@ bool Control::openFile(path filename, int scrollToPage)
 
 	if (!loadedDocument)
 	{
-		string msg = FS(_F("Error opening file \"{1}\"") % filename) + "\n" + loadHandler.getLastError();
-		Util::showErrorToUser(getGtkWindow(), msg);
+		string msg = FS(_F("Error opening file \"{1}\"") % filename.string()) + "\n" + loadHandler.getLastError();
+		XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 
 		fileLoaded(scrollToPage);
 		return false;
@@ -2229,8 +2280,8 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 		string errMsg = doc->getLastErrorMsg();
 		this->doc->unlock();
 
-		string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filename % errMsg);
-		Util::showErrorToUser(getGtkWindow(), msg);
+		string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filename.string() % errMsg);
+		XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 	}
 	getCursor()->setCursorBusy(false);
 
@@ -2349,14 +2400,14 @@ bool Control::showSaveDialog()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Save File"), getGtkWindow(),
-													GTK_FILE_CHOOSER_ACTION_SAVE, _C("_Cancel"), GTK_RESPONSE_CANCEL,
-													_C("_Save"), GTK_RESPONSE_OK, NULL);
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Save File"), getGtkWindow(),
+													GTK_FILE_CHOOSER_ACTION_SAVE, _("_Cancel"), GTK_RESPONSE_CANCEL,
+													_("_Save"), GTK_RESPONSE_OK, NULL);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
 	GtkFileFilter* filterXoj = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterXoj, _C("Xournal++ files"));
+	gtk_file_filter_set_name(filterXoj, _("Xournal++ files"));
 	gtk_file_filter_add_pattern(filterXoj, "*.xopp");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
@@ -2371,10 +2422,23 @@ bool Control::showSaveDialog()
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
 	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
-	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
+
+	while (true)
 	{
-		gtk_widget_destroy(dialog);
-		return false;
+		if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
+		{
+			gtk_widget_destroy(dialog);
+			return false;
+		}
+
+		path filenameTmp = path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog))).replace_extension(".xopp");
+		path currentFolder(gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog)));
+
+		// Since we add the extension after the OK button, we have to check manually on existing files
+		if (checkExistingFile(currentFolder, filenameTmp))
+		{
+			break;
+		}
 	}
 
 	char* name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
@@ -2477,7 +2541,7 @@ bool Control::saveAs()
 		return false;
 	}
 
-	// no lock needed, this is an uncritical operation
+	// no lock needed, this is an uncritically operation
 	this->doc->setCreateBackupOnSave(false);
 	return save();
 }
@@ -2512,11 +2576,11 @@ bool Control::close(bool destroy)
 	{
 		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL,
 												   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, "%s",
-												   _C("This document is not saved yet."));
+												   _("This document is not saved yet."));
 
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Save"), 1);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Discard"), 2);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Cancel"), 3);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save"), 1);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
 		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		int resNotSaved = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
@@ -2549,11 +2613,11 @@ bool Control::close(bool destroy)
 		{
 			GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL,
 													   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, "%s",
-													   _C("Document file was removed."));
+													   _("Document file was removed."));
 
-			gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Save As"), 1);
-			gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Discard"), 2);
-			gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Cancel"), 3);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save As"), 1);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
 			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 			int resDocRemoved = gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
@@ -2589,6 +2653,19 @@ bool Control::close(bool destroy)
 
 		//updateWindowTitle();
 		undoRedoChanged();
+	}
+	return true;
+}
+
+bool Control::checkExistingFile(path& folder, path& filename)
+{
+	XOJ_CHECK_TYPE(Control);
+	
+	if (boost::filesystem::exists(filename))
+	{
+		string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % filename.filename().string());
+		int res = XojMsgBox::replaceFileQuestion(getGtkWindow(), msg);
+		return res != 1; // res != 1 when user clicks on Replace
 	}
 	return true;
 }
@@ -2806,7 +2883,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 			}
 			else
 			{
-				throw INPUT_STREAM_EXCEPTION("Get unknown object {1}", name);
+				throw InputStreamException(FS(FORMAT_STR("Get unknown object {1}") % name), __FILE__, __LINE__);
 			}
 
 			in >> element;
@@ -2941,8 +3018,8 @@ void Control::runLatex()
 
 #else
 	// This should never occur, as the menupoint is also hidden.
-	cout << "Mathtex is disabled. Recompile with ./configure --enable-mathtex, "
-			"ensuring you have the mathtex command on your system." << endl;
+	g_warning("Mathtex is disabled. Recompile with cmake -DENABLE_MATHTEX=ON "
+			  "ensuring you have the mathtex command on your system.");
 #endif // ENABLE_MATHTEX
 }
 

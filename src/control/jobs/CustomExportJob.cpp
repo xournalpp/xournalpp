@@ -10,6 +10,8 @@
 
 #include <i18n.h>
 #include <config-features.h>
+#include <XojMsgBox.h>
+
 
 CustomExportJob::CustomExportJob(Control* control)
  : BaseExportJob(control, _("Custom Export")),
@@ -21,12 +23,12 @@ CustomExportJob::CustomExportJob(Control* control)
 {
 	XOJ_INIT_TYPE(CustomExportJob);
 
-	// Static vars are not translated, they are loaded before the translation is ready
-	EXPORT_PDF = _("PDF files");
-	EXPORT_PDF_NOBG = _("PDF with plain background");
-	EXPORT_PNG = _("PNG graphics");
-	EXPORT_PNG_NOBG = _("PNG with transparent background");
-	EXPORT_XOJ = _("Xournal (Compatibility)");
+	// Supported filters
+	filters[_("PDF files")] = new ExportType(".pdf", false); 
+	filters[_("PDF with plain background")] = new ExportType(".pdf", true);
+	filters[_("PNG graphics")] = new ExportType(".png", false);
+	filters[_("PNG with transparent background")] = new ExportType(".png", true);
+	filters[_("Xournal (Compatibility)")] =  new ExportType(".xoj", false);
 }
 
 CustomExportJob::~CustomExportJob()
@@ -39,6 +41,11 @@ CustomExportJob::~CustomExportJob()
 	}
 	exportRange.clear();
 
+	for(auto& filter : filters)
+	{
+		delete filter.second;
+	}
+
 
 	XOJ_RELEASE_TYPE(CustomExportJob);
 }
@@ -47,11 +54,11 @@ void CustomExportJob::addFilterToDialog()
 {
 	XOJ_CHECK_TYPE(CustomExportJob);
 
-	addFileFilterToDialog(EXPORT_PDF, "*.pdf");
-	addFileFilterToDialog(EXPORT_PDF_NOBG, "*.pdf");
-	addFileFilterToDialog(EXPORT_PNG, "*.png");
-	addFileFilterToDialog(EXPORT_PNG_NOBG, "*.png");
-	addFileFilterToDialog(EXPORT_XOJ, "*.xoj");
+	// Runs on every filter inside the filters map
+	for (auto& filter : filters)
+	{
+  		addFileFilterToDialog(filter.first, "*" + filter.second->extension); // Adds * for the pattern
+	}
 }
 
 bool CustomExportJob::isUriValid(string& uri)
@@ -63,17 +70,14 @@ bool CustomExportJob::isUriValid(string& uri)
 		return false;
 	}
 
+	// Extract the file filter selected	
 	this->chosenFilterName = BaseExportJob::getFilterName();
+	
+	// Remove any pre-existing extension and adds the chosen one
+	clearExtensions(filename);
+	filename.replace_extension(filters[this->chosenFilterName]->extension);
 
-	string ext = filename.extension().string();
-	if (ext != ".pdf" && ext != ".png" && ext != ".xoj")
-	{
-		string msg = _("File name needs to end with .pdf, .png or .xoj");
-		Util::showErrorToUser(control->getGtkWindow(), msg);
-		return false;
-	}
-
-	return true;
+	return checkOverwriteBackgroundPDF(filename);
 }
 
 bool CustomExportJob::showFilechooser()
@@ -189,14 +193,9 @@ void CustomExportJob::exportPngPage(int pageId, int id, double zoom, DocumentVie
 		PdfView::drawPage(NULL, popplerPage, cr, zoom, page->getWidth(), page->getHeight());
 	}
 
-	if (this->chosenFilterName == EXPORT_PNG_NOBG)
-	{
-		view.drawPage(page, this->cr, true, true);
-	}
-	else
-	{
-		view.drawPage(page, this->cr, true);
-	}
+	bool hideBackground = filters[this->chosenFilterName]->withoutBackground;
+	
+	view.drawPage(page, this->cr, true, hideBackground);
 
 	if (!freeSurface(id))
 	{
@@ -287,18 +286,10 @@ void CustomExportJob::run()
 		Document* doc = control->getDocument();
 
 		XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
-		
-		if (this->chosenFilterName == EXPORT_PDF_NOBG)
-		{
-			pdfe->setNoBackgroundExport(true);
-		}
 
-#ifdef ADVANCED_PDF_EXPORT_POPPLER
-		// Not working with ADVANCED_PDF_EXPORT_POPPLER
-		if (!pdfe->createPdf(this->filename))
-#else
+		pdfe->setNoBackgroundExport(filters[this->chosenFilterName]->withoutBackground);
+		
 		if (!pdfe->createPdf(this->filename, exportRange))
-#endif
 		{
 			this->errorMsg = pdfe->getLastError();
 		}
@@ -317,7 +308,7 @@ void CustomExportJob::afterRun()
 
 	if (!this->lastError.empty())
 	{
-		Util::showErrorToUser(control->getGtkWindow(), this->lastError);
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), this->lastError);
 	}
 }
 

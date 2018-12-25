@@ -11,13 +11,9 @@
 
 #pragma once
 
-#include <StringUtils.h>
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
-
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
 
 class BackgroundImageContents;
 
@@ -29,8 +25,8 @@ public:
 	virtual ~BackgroundImage();
 
 public:
-	path getFilename();
-	void loadFile(path filename, GError** error);
+	string getFilename();
+	void loadFile(string filename, GError** error);
 
 	void setAttach(bool attach);
 
@@ -43,7 +39,7 @@ public:
 	int getCloneId();
 	void setCloneId(int id);
 
-	void setFilename(path filename);
+	void setFilename(string filename);
 
 	bool isAttached();
 	bool isEmpty();

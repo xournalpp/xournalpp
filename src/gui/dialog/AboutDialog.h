@@ -13,8 +13,6 @@
 
 #include "gui/GladeGui.h"
 
-#include <XournalType.h>
-
 class AboutDialog : public GladeGui
 {
 public:

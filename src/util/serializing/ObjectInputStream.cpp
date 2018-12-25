@@ -2,6 +2,8 @@
 
 #include "Serializeable.h"
 
+#include <i18n.h>
+
 #include <string.h>
 
 ObjectInputStream::ObjectInputStream()
@@ -24,7 +26,7 @@ ObjectInputStream::~ObjectInputStream()
 	XOJ_RELEASE_TYPE(ObjectInputStream);
 }
 
-bool ObjectInputStream::read(const char* data, int len) throw (InputStreamException)
+bool ObjectInputStream::read(const char* data, int len)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -59,18 +61,19 @@ bool ObjectInputStream::read(const char* data, int len) throw (InputStreamExcept
 	return true;
 }
 
-void ObjectInputStream::readObject(const char* name) throw (InputStreamException)
+void ObjectInputStream::readObject(const char* name)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
 	string type = readObject();
 	if (type != name)
 	{
-		throw INPUT_STREAM_EXCEPTION("Try to read object type {1} but read object type {2}", name, type);
+		throw InputStreamException(FS(FORMAT_STR("Try to read object type {1} but read object type {2}")
+								   % name % type), __FILE__, __LINE__);
 	}
 }
 
-string ObjectInputStream::readObject() throw (InputStreamException)
+string ObjectInputStream::readObject()
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -78,7 +81,7 @@ string ObjectInputStream::readObject() throw (InputStreamException)
 	return readString();
 }
 
-string ObjectInputStream::getNextObjectName() throw (InputStreamException)
+string ObjectInputStream::getNextObjectName()
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -91,14 +94,14 @@ string ObjectInputStream::getNextObjectName() throw (InputStreamException)
 	return name;
 }
 
-void ObjectInputStream::endObject() throw (InputStreamException)
+void ObjectInputStream::endObject()
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
 	checkType('}');
 }
 
-int ObjectInputStream::readInt() throw (InputStreamException)
+int ObjectInputStream::readInt()
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -114,7 +117,7 @@ int ObjectInputStream::readInt() throw (InputStreamException)
 	return i;
 }
 
-double ObjectInputStream::readDouble() throw (InputStreamException)
+double ObjectInputStream::readDouble()
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -130,7 +133,7 @@ double ObjectInputStream::readDouble() throw (InputStreamException)
 	return d;
 }
 
-string ObjectInputStream::readString() throw (InputStreamException)
+string ObjectInputStream::readString()
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -154,7 +157,7 @@ string ObjectInputStream::readString() throw (InputStreamException)
 	return s;
 }
 
-void ObjectInputStream::readData(void** data, int* length) throw (InputStreamException)
+void ObjectInputStream::readData(void** data, int* length)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -223,7 +226,7 @@ cairo_status_t cairoReadFunction(PngDatasource* obj, unsigned char* data, unsign
 	return CAIRO_STATUS_SUCCESS;
 }
 
-cairo_surface_t* ObjectInputStream::readImage() throw (InputStreamException)
+cairo_surface_t* ObjectInputStream::readImage()
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -254,7 +257,6 @@ cairo_surface_t* ObjectInputStream::readImage() throw (InputStreamException)
 }
 
 ObjectInputStream& ObjectInputStream::operator>>(Serializeable* s)
-	throw (InputStreamException)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -262,25 +264,26 @@ ObjectInputStream& ObjectInputStream::operator>>(Serializeable* s)
 	return *this;
 }
 
-void ObjectInputStream::checkType(char type) throw (InputStreamException)
+void ObjectInputStream::checkType(char type)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
 	if (this->pos + 2 > this->str->len)
 	{
-		throw INPUT_STREAM_EXCEPTION("End reached, but try to read {1}, index {2} of {3}",
-									 getType(type), this->pos, this->str->len);
+		throw InputStreamException(FS(FORMAT_STR("End reached, but try to read {1}, index {2} of {3}")
+								   % getType(type) % this->pos % this->str->len), __FILE__, __LINE__);
 	}
 	if (this->str->str[this->pos] != '_')
 	{
-		throw INPUT_STREAM_EXCEPTION("Expected type signature of {1}, index {2} of {3}, but read '{4}'",
-									 getType(type), this->pos, this->str->len, this->str->str[this->pos]);
+		throw InputStreamException(FS(FORMAT_STR("Expected type signature of {1}, index {2} of {3}, but read '{4}'")
+								   % getType(type) % this->pos % this->str->len % this->str->str[this->pos]), __FILE__, __LINE__);
 	}
 	this->pos++;
 
 	if (this->str->str[this->pos] != type)
 	{
-		throw INPUT_STREAM_EXCEPTION("Expected {1} but read {2}", getType(type), getType(this->str->str[this->pos]));
+		throw InputStreamException(FS(FORMAT_STR("Expected {1} but read {2}")
+								   % getType(type) % getType(this->str->str[this->pos])), __FILE__, __LINE__);
 	}
 
 	this->pos++;

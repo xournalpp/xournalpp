@@ -21,9 +21,21 @@ dnf install cmake texlive-scheme-basic texlive-dvipng poppler-glib-devel
 ### For Ubuntu/Debian:
 ````bash
 sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev \
-libboost-filesystem-dev libboost-locale-dev libboost-iostreams-dev \
-libcppunit-dev dvipng texlive 
+libboost-filesystem-dev libcppunit-dev dvipng texlive 
 ````
+
+### For OpenSuse:
+```bash
+sudo zypper install cmake gtk3-devel cppunit-devel \
+libboost_filesystem-devel texlive-dvipng texlive libxml2-devel \
+libpoppler-glib-devel
+```
+
+### For Fedora:
+```bash
+sudo dnf install libxml2-devel cppunit-devel gtk3-devel boost-devel cmake-gui \
+texlive-scheme-basic texlive-dvipng poppler-glib-devel
+```
 
 ## Basic steps are:
 ````bash
@@ -37,11 +49,6 @@ make
 
 Use `cmake-gui ..` to see graphically all available options.
 
-With `-DADVANCED_PDF_EXPORT_POPPLER=ON` the internal Poppler API is used, and
-PDFs are exported with Bookmarks, but this is only working with some Poppler
-Versions.
-If not working, add `-DBUILD_POPPLER=ON` to build Poppler manually.
-
 With Cairo 1.16 PDF Bookmarks will be possible, but this Version is not yet
 common available, therefore the Cairo PDF Export is without PDF Bookmarks.
 
@@ -49,6 +56,6 @@ The binary executable will be in `build/src/` subdirectory.
 
 To install all needed files execute:
 ```bash
-make install
+sudo make install
 ```
 

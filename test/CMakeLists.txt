@@ -27,12 +27,34 @@ add_library (xournalpp-test-base OBJECT
     ${xournalpp-test_SOURCES}
 )
 
+## ------------------------
+
+# I18nTest
+add_executable (test-i18nTest $<TARGET_OBJECTS:xournalpp-core> $<TARGET_OBJECTS:xournalpp-test-base>
+    util/I18nTest.cpp
+)
+add_dependencies (test-i18nTest xournalpp-core xournalpp-test-base util)
+target_link_libraries (test-i18nTest ${xournalpp_LDFLAGS} ${CppUnit_LDFLAGS})
+
+## ------------------------
+
 # XojPreviewExtractor
 add_executable (test-xojPreviewExtractor $<TARGET_OBJECTS:xournalpp-core> $<TARGET_OBJECTS:xournalpp-test-base>
     util/XojPreviewExtractorTest.cpp
 )
 add_dependencies (test-xojPreviewExtractor xournalpp-core xournalpp-test-base util)
 target_link_libraries (test-xojPreviewExtractor ${xournalpp_LDFLAGS} ${CppUnit_LDFLAGS})
+
+## ------------------------
+
+# StringUtil
+add_executable (test-StringUtil $<TARGET_OBJECTS:xournalpp-core> $<TARGET_OBJECTS:xournalpp-test-base>
+    util/StringUtil.cpp
+)
+add_dependencies (test-StringUtil xournalpp-core xournalpp-test-base util)
+target_link_libraries (test-StringUtil ${xournalpp_LDFLAGS} ${CppUnit_LDFLAGS})
+
+## ------------------------
 
 # LoadHandler
 add_executable (test-loadHandler $<TARGET_OBJECTS:xournalpp-core> $<TARGET_OBJECTS:xournalpp-test-base>
@@ -42,5 +64,7 @@ add_dependencies (test-loadHandler xournalpp-core xournalpp-test-base util)
 target_link_libraries (test-loadHandler ${xournalpp_LDFLAGS} ${CppUnit_LDFLAGS})
 
 ## CTest ##
+add_test (I18nTest test-i18nTest)
+add_test (StringUtil test-StringUtil)
 add_test (XojPreviewExtractor test-xojPreviewExtractor)
 add_test (LoadHandler test-loadHandler)

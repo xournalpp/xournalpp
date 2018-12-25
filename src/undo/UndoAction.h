@@ -14,7 +14,6 @@
 #include "model/PageRef.h"
 
 #include <config.h>
-#include <StringUtils.h>
 
 class Control;
 class XojPage;
@@ -32,9 +31,9 @@ public:
 	virtual string getText() = 0;
 
 	/**
-	 * Get the affected pages, the Array is terminated with NULL and should be freed with delete[]
+	 * Get the affected pages
 	 */
-	virtual XojPage** getPages();
+	virtual vector<PageRef> getPages();
 
 	const char* getClassName() const;
 

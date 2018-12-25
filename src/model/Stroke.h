@@ -33,6 +33,11 @@ public:
 	Stroke* cloneStroke() const;
 	virtual Element* clone();
 
+	/**
+	 * Clone style attributes, but not the data (position, width etc.)
+	 */
+	void applyStyleFrom(const Stroke* other);
+
 	void setWidth(double width);
 	double getWidth() const;
 
@@ -41,6 +46,24 @@ public:
 
 	void setAudioFilename(string fn);
 	string getAudioFilename() const;
+
+	/**
+	 * Option to fill the shape:
+	 *  -1: The shape is not filled
+	 * 255: The shape is fully opaque filled
+	 * ...
+	 *   1: The shape is nearly fully transparent filled
+	 */
+	int getFill() const;
+
+	/**
+	 * Option to fill the shape:
+	 *  -1: The shape is not filled
+	 * 255: The shape is fully opaque filled
+	 * ...
+	 *   1: The shape is nearly fully transparent filled
+	 */
+	void setFill(int fill);
 
 	void addPoint(Point p);
 	void setLastPoint(double x, double y);
@@ -83,7 +106,7 @@ public:
 public:
 	// Serialize interface
 	void serialize(ObjectOutputStream& out);
-	void readSerialized(ObjectInputStream& in) throw (InputStreamException);
+	void readSerialized(ObjectInputStream& in);
 
 protected:
 	virtual void calcSize();
@@ -107,4 +130,13 @@ private:
 	string audioFilename;
 
 	EraseableStroke* eraseable;
+
+	/**
+	 * Option to fill the shape:
+	 *  -1: The shape is not filled
+	 * 255: The shape is fully opaque filled
+	 * ...
+	 *   1: The shape is nearly fully transparent filled
+	 */
+	int fill;
 };

@@ -11,14 +11,11 @@
 
 #pragma once
 
-#include <StringUtils.h>
 #include <XournalType.h>
 
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 #include <gtk/gtk.h>
-
-#include <vector>
 
 class RecentManagerListener
 {

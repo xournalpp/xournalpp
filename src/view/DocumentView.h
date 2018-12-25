@@ -46,8 +46,10 @@ public:
 
 
 
-	void drawStroke(cairo_t* cr, Stroke* s, int startPoint = 0, double scaleFactor = 1, bool changeSource = true);
+	void drawStroke(cairo_t* cr, Stroke* s, int startPoint = 0, double scaleFactor = 1, bool changeSource = true, bool noAlpha = false);
 	void drawEraseableStroke(cairo_t* cr, Stroke* s);
+
+	void drawFillStroke(cairo_t* cr, Stroke* s);
 
 	static void applyColor(cairo_t* cr, Stroke* s);
 	static void applyColor(cairo_t* cr, int c, int alpha = 255);
@@ -56,6 +58,11 @@ public:
 	void limitArea(double x, double y, double width, double height);
 
 	void drawSelection(cairo_t* cr, ElementContainer* container);
+
+	/**
+	 * Mark stroke with Audio
+	 */
+	void setMarkAudioStroke(bool markAudioStroke);
 
 	// API for special drawing, usually you won't call this methods
 public:
@@ -101,6 +108,7 @@ private:
 	double width;
 	double height;
 	bool dontRenderEditingStroke;
+	bool markAudioStroke;
 
 	double lX;
 	double lY;

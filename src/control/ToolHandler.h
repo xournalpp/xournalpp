@@ -22,7 +22,7 @@ class LastSelectedTool;
 class ToolListener
 {
 public:
-	virtual void toolColorChanged() = 0;
+	virtual void toolColorChanged(bool userSelection) = 0;
 	virtual void setCustomColorSelected() = 0;
 	virtual void toolSizeChanged() = 0;
 	virtual void toolChanged() = 0;
@@ -38,8 +38,22 @@ public:
 	ToolHandler(ToolListener* listener, ActionHandler* actionHandler, Settings* settings);
 	virtual ~ToolHandler();
 
-	void setColor(int color);
+	/**
+	 * Select the color for the tool
+	 *
+	 * @param color Color
+	 * @param userSelection
+	 * 			true if the user selected the color
+	 * 			false if the color is selected by a tool change
+	 * 			and therefore should not be applied to a selection
+	 */
+	void setColor(int color, bool userSelection);
 	int getColor();
+
+	/**
+	 * @return -1 if fill is disabled, else the fill alpha value
+	 */
+	int getFill();
 
 	DrawingType getDrawingType();
 	void setDrawingType(DrawingType drawingType);
@@ -57,12 +71,21 @@ public:
 	void setEraserSize(ToolSize size);
 	void setHilighterSize(ToolSize size);
 
+	void setPenFillEnabled(bool fill);
+	bool getPenFillEnabled();
+	void setPenFill(int alpha);
+	int getPenFill();
+
+	void setHilighterFillEnabled(bool fill);
+	bool getHilighterFillEnabled();
+	void setHilighterFill(int alpha);
+	int getHilighterFill();
 
 	void selectTool(ToolType type, bool fireToolChanged = true);
 	ToolType getToolType();
 	void fireToolChanged();
 
-	Tool &getTool(ToolType type);
+	Tool& getTool(ToolType type);
 
 	void setEraserType(EraserType eraserType);
 	EraserType getEraserType();
@@ -84,6 +107,9 @@ public:
 
 	ArrayIterator<Tool*> iterator();
 
+	/**
+	 * Change the selection tools capabilities, depending on the selected elements
+	 */
 	void setSelectionEditTools(bool setColor, bool setSize);
 
 	const double* getToolThickness(ToolType type);

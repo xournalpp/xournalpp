@@ -17,8 +17,6 @@
 
 #include "model/TexImage.h"
 
-#include <XournalType.h>
-
 class LatexDialog : public GladeGui
 {
   public:

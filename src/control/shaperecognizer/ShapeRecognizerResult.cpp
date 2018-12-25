@@ -24,7 +24,7 @@ ShapeRecognizerResult::ShapeRecognizerResult(Stroke* result, ShapeRecognizer* re
 		}
 	}
 
-	RDEBUG("source list length: {1}") % this->source.size();
+	RDEBUG("source list length: %i", (int)this->source.size());
 }
 
 ShapeRecognizerResult::~ShapeRecognizerResult()
@@ -44,9 +44,8 @@ void ShapeRecognizerResult::addSourceStroke(Stroke* s)
 	{
 		if (s == elem)
 		{
-			// TODO LOW PRIO: this is a bug in the ShapreRecognizer!!
-			//		g_warning("ShapeRecognizerResult::addSourceStroke() try to add a stroke twice!");
-			//		Stacktrace::printStracktrace();
+			// this is a bug in the ShapreRecognizer
+			// Ignore
 			return;
 		}
 	}

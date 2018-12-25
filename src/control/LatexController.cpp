@@ -9,6 +9,7 @@
 #include <i18n.h>
 #include <Util.h>
 #include <Stacktrace.h>
+#include <XojMsgBox.h>
 
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
@@ -115,7 +116,9 @@ bool LatexController::runCommand()
 	{
 		texres = "1000";
 	}
-	string command = FS(bl::format("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}") % binTex % fontcolour % texres % g_strescape(currentTex.c_str(), NULL) % texImage);
+	char* escapedCommand = g_strescape(currentTex.c_str(), NULL);
+	string command = FS(FORMAT_STR("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}") % binTex % fontcolour % texres % escapedCommand % texImage);
+	g_free(escapedCommand);
 
 	gint rt = 0;
 	void (*texhandler)(int) = signal(SIGCHLD, SIG_DFL);
@@ -309,7 +312,7 @@ void LatexController::insertTexImage(bool forTemporaryRender)
 
 	if (err)
 	{
-		Util::showErrorToUser(control->getGtkWindow(), FS(_F("Could not retrieve LaTeX image file: {1}") % err->message));
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not retrieve LaTeX image file: {1}") % err->message));
 		g_error_free(err);
 		return;
 	}
@@ -380,8 +383,8 @@ void LatexController::run()
 	if (!findTexExecutable())
 	{
 
-		string msg = FS(_("Could not find Xournal++ LaTeX executable relative or in Path.\nSearched for: mathtex-xournalpp.cgi"));
-		Util::showErrorToUser(control->getGtkWindow(), msg);
+		string msg = _("Could not find Xournal++ LaTeX executable relative or in Path.\nSearched for: mathtex-xournalpp.cgi");
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 		return;
 	}
 
@@ -397,8 +400,8 @@ void LatexController::run()
 	// now do all the LatexAction stuff
 	if (!runCommand())
 	{
-		string msg = FS(_("Failed to generate LaTeX image!"));
-		Util::showErrorToUser(control->getGtkWindow(), msg);
+		string msg = _("Failed to generate LaTeX image!");
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 		return;
 	}
 

@@ -2,6 +2,7 @@
 #include "PopplerGlibPage.h"
 #include "PopplerGlibPageBookmarkIterator.h"
 
+#include <Util.h>
 #include <memory>
 
 
@@ -58,6 +59,20 @@ bool PopplerGlibDocument::equals(XojPdfDocumentInterface* doc)
 	return document == ((PopplerGlibDocument*)doc)->document;
 }
 
+string pathToUri(path filename, GError** error)
+{
+	char * uri = g_filename_to_uri(PATH_TO_CSTR(filename), NULL, error);
+
+	if (uri == NULL)
+	{
+		return "";
+	}
+
+	string uriString = uri;
+	g_free(uri);
+	return uriString;
+}
+
 bool PopplerGlibDocument::save(path filename, GError** error)
 {
 	XOJ_CHECK_TYPE(PopplerGlibDocument);
@@ -67,8 +82,11 @@ bool PopplerGlibDocument::save(path filename, GError** error)
 		return false;
 	}
 
-	string uri = "file://";
-	uri += filename.string();
+	string uri = pathToUri(filename, error);
+	if (*error != NULL)
+	{
+		return false;
+	}
 	return poppler_document_save(document, uri.c_str(), error);
 }
 
@@ -76,10 +94,13 @@ bool PopplerGlibDocument::load(path filename, string password, GError** error)
 {
 	XOJ_CHECK_TYPE(PopplerGlibDocument);
 
-	string uri = "file://";
-	uri += filename.string();
-	this->document = poppler_document_new_from_file(uri.c_str(), password.c_str(), error);
+	string uri = pathToUri(filename, error);
+	if (*error != NULL)
+	{
+		return false;
+	}
 
+	this->document = poppler_document_new_from_file(uri.c_str(), password.c_str(), error);
 	return this->document != NULL;
 }
 

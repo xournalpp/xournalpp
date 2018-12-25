@@ -4,6 +4,7 @@
 
 #include <config.h>
 #include <i18n.h>
+#include <StringUtils.h>
 
 
 FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height)
@@ -61,7 +62,7 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 		GtkPaperSize* s = (GtkPaperSize*) l->data;
 
 		string displayName = gtk_paper_size_get_display_name(s);
-		if (boost::starts_with(displayName, "custom_"))
+		if (StringUtils::startsWith(displayName, "custom_"))
 		{
 			displayName = displayName.substr(7);
 		}
@@ -75,7 +76,7 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 
 	GtkTreeIter iter;
 	gtk_list_store_append(store, &iter);
-	gtk_list_store_set(store, &iter, 0, _C("Custom"), -1);
+	gtk_list_store_set(store, &iter, 0, _("Custom"), -1);
 	gtk_list_store_set(store, &iter, 1, NULL, -1);
 
 	// not found, select custom format
