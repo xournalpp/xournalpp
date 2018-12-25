@@ -4,6 +4,7 @@
 #include <config-dev.h>
 #include <i18n.h>
 #include <StringUtils.h>
+#include <XojMsgBox.h>
 
 #include <boost/filesystem.hpp>
 
@@ -44,33 +45,6 @@ static bool execInUiThreadCallback(CallbackUiData* cb)
 void Util::execInUiThread(std::function<void()> callback)
 {
 	gdk_threads_add_idle((GSourceFunc) execInUiThreadCallback, new CallbackUiData(callback));
-}
-
-void Util::showErrorToUser(GtkWindow* win, string msg)
-{
-	GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-											   "%s", msg.c_str());
-	if (win != NULL)
-	{
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
-	}
-	gtk_dialog_run(GTK_DIALOG(dialog));
-	gtk_widget_destroy(dialog);
-}
-
-int Util::replaceFileQuestion(GtkWindow* win, string msg)
-{
-	GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
-											   "%s", msg.c_str());
-	if (win != NULL)
-	{
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
-	}
-	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another name"), 1);
-	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Replace"), 2);
-	int res = gtk_dialog_run(GTK_DIALOG(dialog));
-	gtk_widget_destroy(dialog);
-	return res;
 }
 
 void Util::cairo_set_source_rgbi(cairo_t* cr, int c)
@@ -155,7 +129,7 @@ void Util::openFileWithDefaultApplicaion(path filename)
 	if (system(command.c_str()) != 0)
 	{
 		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename.string());
-		showErrorToUser(NULL, msg);
+		XojMsgBox::showErrorToUser(NULL, msg);
 	}
 }
 
@@ -182,7 +156,7 @@ void Util::openFileWithFilebrowser(path filename)
 	if (system(command.c_str()) != 0)
 	{
 		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename.string());
-		showErrorToUser(NULL, msg);
+		XojMsgBox::showErrorToUser(NULL, msg);
 	}
 }
 

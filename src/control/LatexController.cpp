@@ -9,6 +9,7 @@
 #include <i18n.h>
 #include <Util.h>
 #include <Stacktrace.h>
+#include <XojMsgBox.h>
 
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
@@ -311,7 +312,7 @@ void LatexController::insertTexImage(bool forTemporaryRender)
 
 	if (err)
 	{
-		Util::showErrorToUser(control->getGtkWindow(), FS(_F("Could not retrieve LaTeX image file: {1}") % err->message));
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not retrieve LaTeX image file: {1}") % err->message));
 		g_error_free(err);
 		return;
 	}
@@ -383,7 +384,7 @@ void LatexController::run()
 	{
 
 		string msg = _("Could not find Xournal++ LaTeX executable relative or in Path.\nSearched for: mathtex-xournalpp.cgi");
-		Util::showErrorToUser(control->getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 		return;
 	}
 
@@ -400,7 +401,7 @@ void LatexController::run()
 	if (!runCommand())
 	{
 		string msg = _("Failed to generate LaTeX image!");
-		Util::showErrorToUser(control->getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 		return;
 	}
 

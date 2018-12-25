@@ -4,6 +4,7 @@
 
 #include <config.h>
 #include <i18n.h>
+#include <XojMsgBox.h>
 
 #include <inttypes.h>
 
@@ -142,7 +143,7 @@ void UndoRedoHandler::undo()
 	{
 		string msg = FS(_F("Could not undo \"{1}\"\n" "Something went wrong… Please write a bug report…")
 							% undo->getText());
-		Util::showErrorToUser(control->getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 	}
 
 	this->redoList = g_list_append(this->redoList, undo);
@@ -179,7 +180,7 @@ void UndoRedoHandler::redo()
 	{
 		string msg = FS(_F("Could not redo \"{1}\"\n" "Something went wrong… Please write a bug report…")
 							% redo->getText());
-		Util::showErrorToUser(control->getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 	}
 
 	this->undoList = g_list_append(this->undoList, redo);

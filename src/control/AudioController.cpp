@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <i18n.h>
+#include <XojMsgBox.h>
 
 AudioController::AudioController(Settings* settings, Control* control)
 {
@@ -99,7 +100,7 @@ string AudioController::getAudioFolder()
 		string msg = _("Audio folder not set! Recording won't work!\nPlease set the "
 					   "recording folder under \"Preferences > Audio recording\"");
 		g_warning("%s", msg.c_str());
-		Util::showErrorToUser(this->control->getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(this->control->getGtkWindow(), msg);
 		return "";
 	}
 

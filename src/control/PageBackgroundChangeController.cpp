@@ -8,7 +8,7 @@
 #include "undo/GroupUndoAction.h"
 #include "undo/PageBackgroundChangedUndoAction.h"
 
-#include <Util.h>
+#include <XojMsgBox.h>
 #include <i18n.h>
 
 
@@ -174,7 +174,7 @@ bool PageBackgroundChangeController::applyImageBackground(PageRef page)
 		newImg.setAttach(attach);
 		if (err)
 		{
-			Util::showErrorToUser(control->getGtkWindow(), FS(_F("This image could not be loaded. Error message: {1}") % err->message));
+			XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("This image could not be loaded. Error message: {1}") % err->message));
 			g_error_free(err);
 			return false;
 		}
@@ -218,7 +218,7 @@ bool PageBackgroundChangeController::applyPdfBackground(PageRef page)
 
 		string msg = _("You don't have any PDF pages to select from. Cancel operation.\n"
 					   "Please select another background type: Menu \"Journal\" → \"Configure Page Template\".");
-		Util::showErrorToUser(control->getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 		return false;
 	}
 

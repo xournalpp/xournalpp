@@ -15,6 +15,7 @@
 #include <config-paths.h>
 #include <i18n.h>
 #include <Stacktrace.h>
+#include <XojMsgBox.h>
 
 #include <libintl.h>
 #include <gtk/gtk.h>
@@ -138,7 +139,7 @@ void XournalMain::checkForErrorlog()
 			{
 				string msg = FS(_F("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}")
 						% errorlogPath.string());
-				Util::showErrorToUser(NULL, msg);
+				XojMsgBox::showErrorToUser(NULL, msg);
 			}
 		}
 		else if (res == 5) // Cancel
@@ -298,7 +299,7 @@ int XournalMain::run(int argc, char* argv[])
 		{
 			string msg = _("Sorry, Xournal++ can only open one file at once.\n"
 						   "Others are ignored.");
-			Util::showErrorToUser((GtkWindow*) *win, msg);
+			XojMsgBox::showErrorToUser((GtkWindow*) *win, msg);
 		}
 
 		GFile* file = g_file_new_for_commandline_arg(optFilename[0]);
@@ -317,7 +318,7 @@ int XournalMain::run(int argc, char* argv[])
 		{
 			string msg = _("Sorry, Xournal++ cannot open remote files at the moment.\n"
 						   "You have to copy the file to a local directory.");
-			Util::showErrorToUser((GtkWindow*) *win, msg);
+			XojMsgBox::showErrorToUser((GtkWindow*) *win, msg);
 		}
 	}
 
@@ -464,7 +465,7 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath)
 	}
 
 	string msg = FS(_F("Missing the needed UI file, could not find them at any location.\nNot relative\nNot in the Working Path\nNot in {1}") % PACKAGE_DATA_DIR);
-	Util::showErrorToUser(NULL, msg.c_str());
+	XojMsgBox::showErrorToUser(NULL, msg);
 
 	exit(12);
 }

@@ -49,6 +49,7 @@
 #include <serializing/ObjectInputStream.h>
 #include <Stacktrace.h>
 #include <Util.h>
+#include <XojMsgBox.h>
 
 #include <boost/filesystem.hpp>
 namespace bf = boost::filesystem;
@@ -225,7 +226,7 @@ void Control::renameLastAutosaveFile()
 		{
 			string msg = FS(_F("Autosave failed with an error: {1}") % e.what());
 			g_warning("%s", msg.c_str());
-			Util::showErrorToUser(getGtkWindow(), msg);
+			XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 		}
 	}
 }
@@ -887,7 +888,7 @@ void Control::help()
 	{
 
 		string msg = FS(_F("There was an error displaying help: {1}") % error->message);
-		Util::showErrorToUser(getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 
 		g_error_free(error);
 	}
@@ -2007,7 +2008,7 @@ bool Control::shouldFileOpen(string filename)
 		string msg = FS(_F("Do not open Autosave files. They may will be overwritten!\n"
 				"Copy the files to another folder.\n"
 				"Files from Folder {1} cannot be opened.") % basename);
-		Util::showErrorToUser(getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 		return false;
 	}
 
@@ -2100,7 +2101,7 @@ bool Control::openFile(path filename, int scrollToPage)
 	if (!loadedDocument)
 	{
 		string msg = FS(_F("Error opening file \"{1}\"") % filename.string()) + "\n" + loadHandler.getLastError();
-		Util::showErrorToUser(getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 
 		fileLoaded(scrollToPage);
 		return false;
@@ -2284,7 +2285,7 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 		this->doc->unlock();
 
 		string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filename.string() % errMsg);
-		Util::showErrorToUser(getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 	}
 	getCursor()->setCursorBusy(false);
 
@@ -2667,7 +2668,7 @@ bool Control::checkExistingFile(path& folder, path& filename)
 	if (boost::filesystem::exists(filename))
 	{
 		string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % filename.filename().string() );
-		int res = Util::replaceFileQuestion(getGtkWindow(), msg);
+		int res = XojMsgBox::replaceFileQuestion(getGtkWindow(), msg);
 		return res != 1; // res != 1 when user clicks on Replace
 	}
 	return true;
