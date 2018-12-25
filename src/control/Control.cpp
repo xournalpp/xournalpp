@@ -1706,16 +1706,16 @@ void Control::toolChanged()
 
 	fireActionSelected(GROUP_TOOL, at);
 
-	fireEnableAction(ACTION_SELECT_COLOR, toolHandler->isEnableColor());
-	fireEnableAction(ACTION_SELECT_COLOR_CUSTOM, toolHandler->isEnableColor());
+	fireEnableAction(ACTION_SELECT_COLOR, toolHandler->hasCapability(TOOL_CAP_COLOR));
+	fireEnableAction(ACTION_SELECT_COLOR_CUSTOM, toolHandler->hasCapability(TOOL_CAP_COLOR));
 
-	fireEnableAction(ACTION_RULER, toolHandler->isEnableRuler());
-	fireEnableAction(ACTION_TOOL_DRAW_RECT, toolHandler->isEnableRectangle());
-	fireEnableAction(ACTION_TOOL_DRAW_CIRCLE, toolHandler->isEnableCircle());
-	fireEnableAction(ACTION_TOOL_DRAW_ARROW, toolHandler->isEnableArrow());
-	fireEnableAction(ACTION_SHAPE_RECOGNIZER, toolHandler->isEnableShapreRecognizer());
+	fireEnableAction(ACTION_RULER, toolHandler->hasCapability(TOOL_CAP_RULER));
+	fireEnableAction(ACTION_TOOL_DRAW_RECT, toolHandler->hasCapability(TOOL_CAP_RECTANGLE));
+	fireEnableAction(ACTION_TOOL_DRAW_CIRCLE, toolHandler->hasCapability(TOOL_CAP_CIRCLE));
+	fireEnableAction(ACTION_TOOL_DRAW_ARROW, toolHandler->hasCapability(TOOL_CAP_ARROW));
+	fireEnableAction(ACTION_SHAPE_RECOGNIZER, toolHandler->hasCapability(TOOL_CAP_RECOGNIZER));
 
-	bool enableSize = toolHandler->isEnableSize();
+	bool enableSize = toolHandler->hasCapability(TOOL_CAP_SIZE);
 
 	fireEnableAction(ACTION_SIZE_MEDIUM, enableSize);
 	fireEnableAction(ACTION_SIZE_THICK, enableSize);
@@ -1729,7 +1729,7 @@ void Control::toolChanged()
 	}
 
 	// Update color
-	if (toolHandler->isEnableColor())
+	if (toolHandler->hasCapability(TOOL_CAP_COLOR))
 	{
 		toolColorChanged(false);
 	}
