@@ -203,53 +203,11 @@ ToolType ToolHandler::getToolType()
 	return this->current->type;
 }
 
-bool ToolHandler::isEnableColor()
+bool ToolHandler::hasCapability(ToolCapabilities cap)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return current->capabilities & TOOL_CAP_COLOR != 0;
-}
-
-bool ToolHandler::isEnableSize()
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	return current->capabilities & TOOL_CAP_SIZE != 0;
-}
-
-bool ToolHandler::isEnableRuler()
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	return current->capabilities & TOOL_CAP_RULER != 0;
-}
-
-bool ToolHandler::isEnableRectangle()
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	return current->capabilities & TOOL_CAP_RECTANGLE != 0;
-}
-
-bool ToolHandler::isEnableCircle()
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	return current->capabilities & TOOL_CAP_CIRCLE != 0;
-}
-
-bool ToolHandler::isEnableArrow()
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	return current->capabilities & TOOL_CAP_ARROW != 0;
-}
-
-bool ToolHandler::isEnableShapreRecognizer()
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	return current->capabilities & TOOL_CAP_RECOGNIZER != 0;
+	return (current->capabilities & cap) != 0;
 }
 
 ToolSize ToolHandler::getSize()

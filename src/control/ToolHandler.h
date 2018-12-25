@@ -91,13 +91,7 @@ public:
 	EraserType getEraserType();
 	void eraserTypeChanged();
 
-	bool isEnableColor();
-	bool isEnableSize();
-	bool isEnableRuler();
-	bool isEnableRectangle();
-	bool isEnableCircle();
-	bool isEnableArrow();
-	bool isEnableShapreRecognizer();
+	bool hasCapability(ToolCapabilities cap);
 
 	void saveSettings();
 	void loadSettings();
