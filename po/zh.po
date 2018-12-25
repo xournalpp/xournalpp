@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-23 20:00+0100\n"
+"POT-Creation-Date: 2018-12-25 16:00+0100\n"
 "PO-Revision-Date: 2018-11-14 19:55+0100\n"
 "Last-Translator: Andreas Butti <andreasbutti at gmail dot com>\n"
 "Language-Team: Xournal++ team\n"
@@ -16,15 +16,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../src/undo/DeleteUndoAction.cpp:113 ../src/undo/AddUndoAction.cpp:119
+#: ../src/undo/AddUndoAction.cpp:119 ../src/undo/DeleteUndoAction.cpp:113
 msgid " elements"
 msgstr "元素"
 
-#: ../src/undo/DeleteUndoAction.cpp:128 ../src/undo/AddUndoAction.cpp:134
+#: ../src/undo/AddUndoAction.cpp:134 ../src/undo/DeleteUndoAction.cpp:128
 msgid " image"
 msgstr "图片"
 
-#: ../src/undo/DeleteUndoAction.cpp:132 ../src/undo/AddUndoAction.cpp:138
+#: ../src/undo/AddUndoAction.cpp:138 ../src/undo/DeleteUndoAction.cpp:132
 msgid " latex"
 msgstr "LaTeX"
 
@@ -33,11 +33,11 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr "页，共{1}页"
 
-#: ../src/undo/DeleteUndoAction.cpp:120 ../src/undo/AddUndoAction.cpp:126
+#: ../src/undo/AddUndoAction.cpp:126 ../src/undo/DeleteUndoAction.cpp:120
 msgid " stroke"
 msgstr "笔划"
 
-#: ../src/undo/DeleteUndoAction.cpp:124 ../src/undo/AddUndoAction.cpp:130
+#: ../src/undo/AddUndoAction.cpp:130 ../src/undo/DeleteUndoAction.cpp:124
 msgid " text"
 msgstr "文本"
 
@@ -452,8 +452,8 @@ msgstr "當前頁和選中項目的邊界顏色"
 msgid "Built on:"
 msgstr ""
 
-#: ../src/control/Control.cpp:2028 ../src/control/Control.cpp:2524
-#: ../src/control/Control.cpp:2561 ../src/control/XournalMain.cpp:116
+#: ../src/control/Control.cpp:2028 ../src/control/Control.cpp:2537
+#: ../src/control/Control.cpp:2574 ../src/control/XournalMain.cpp:116
 msgid "Cancel"
 msgstr "取消"
 
@@ -507,7 +507,7 @@ msgstr "末页"
 msgid "Copy page"
 msgstr "拷贝一页"
 
-#: ../src/control/jobs/SaveJob.cpp:144
+#: ../src/control/jobs/SaveJob.cpp:145
 msgid ""
 "Could not create backup! (The file was created from an older Xournal version)"
 msgstr "未能产生备份文件！(此文件应为老版本Xournal所建)"
@@ -575,11 +575,11 @@ msgstr ""
 "未能撤销操作\"{1}\"\n"
 "有错误发生***请提交一个错误报告***"
 
-#: ../src/control/xojfile/SaveHandler.cpp:271
+#: ../src/control/xojfile/SaveHandler.cpp:294
 msgid "Could not write background \"{1}\", {2}"
 msgstr "未能写上背景\"{1}\", {2}"
 
-#: ../src/control/xojfile/SaveHandler.cpp:396
+#: ../src/control/xojfile/SaveHandler.cpp:419
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "未能写上背景\"{1}\"，不管啦继续哦..."
 
@@ -649,7 +649,7 @@ msgstr "设备"
 msgid "Disable drawing for this device"
 msgstr "取消此设备绘制"
 
-#: ../src/control/Control.cpp:2523 ../src/control/Control.cpp:2560
+#: ../src/control/Control.cpp:2536 ../src/control/Control.cpp:2573
 msgid "Discard"
 msgstr "丢弃"
 
@@ -660,11 +660,11 @@ msgid ""
 "Files from Folder {1} cannot be opened."
 msgstr ""
 
-#: ../src/control/jobs/PdfExportJob.cpp:58
+#: ../src/control/jobs/BaseExportJob.cpp:59
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/control/Control.cpp:2557
+#: ../src/control/Control.cpp:2570
 msgid "Document file was removed."
 msgstr "文档已删除。"
 
@@ -672,7 +672,7 @@ msgstr "文档已删除。"
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "文档文件不完整"
 
-#: ../src/model/Document.cpp:416
+#: ../src/model/Document.cpp:392
 msgid "Document not loaded! ({1}), {2}"
 msgstr "文档未加载！({1}), {2}"
 
@@ -742,8 +742,8 @@ msgstr "编辑文本"
 msgid "Enter / edit LaTeX Text"
 msgstr ""
 
-#: ../src/undo/EraseUndoAction.cpp:130 ../src/undo/DeleteUndoAction.cpp:99
-#: ../src/undo/AddUndoAction.cpp:104
+#: ../src/undo/AddUndoAction.cpp:104 ../src/undo/DeleteUndoAction.cpp:99
+#: ../src/undo/EraseUndoAction.cpp:130
 msgid "Erase stroke"
 msgstr "擦除笔划"
 
@@ -768,7 +768,7 @@ msgstr ""
 "PDF文件\"{1}\"标注出错\n"
 "{2}"
 
-#: ../src/control/jobs/CustomExportJob.cpp:204
+#: ../src/control/jobs/CustomExportJob.cpp:201
 #, fuzzy
 msgid "Error export PDF Page"
 msgstr "输出为PDF"
@@ -789,7 +789,7 @@ msgstr "打开文件\"{1}\"出错"
 msgid "Error reading PDF: {1}"
 msgstr "读入PDF出错：{1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:501
+#: ../src/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading width of a stroke: {1}"
 msgstr "读入笔划粗细出错：{1}"
 
@@ -809,7 +809,7 @@ msgstr ""
 msgid "Export"
 msgstr "输出"
 
-#: ../src/control/jobs/BaseExportJob.cpp:26
+#: ../src/control/jobs/BaseExportJob.cpp:28
 msgid "Export PDF"
 msgstr "输出为PDF"
 
@@ -821,21 +821,13 @@ msgstr "输出为..."
 msgid "Failed to generate LaTeX image!"
 msgstr ""
 
-#: ../src/util/Util.cpp:142 ../src/util/Util.cpp:169
+#: ../src/util/Util.cpp:157 ../src/util/Util.cpp:184
 msgid ""
 "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr ""
 "未能打开文件，请手动操作：\n"
 "URL: {1}"
-
-#: ../src/control/jobs/PdfExportJob.cpp:51
-msgid "File name needs to end with .pdf"
-msgstr ""
-
-#: ../src/control/jobs/CustomExportJob.cpp:71
-msgid "File name needs to end with .pdf, .png or .xoj"
-msgstr ""
 
 #: ../src/control/Control.cpp:1988
 msgid "Filename: {1}"
@@ -979,7 +971,7 @@ msgstr ""
 msgid "Insert elements"
 msgstr "插入元素"
 
-#: ../src/undo/InsertUndoAction.cpp:47 ../src/gui/dialog/ButtonConfigGui.cpp:59
+#: ../src/gui/dialog/ButtonConfigGui.cpp:59 ../src/undo/InsertUndoAction.cpp:47
 msgid "Insert image"
 msgstr "插入图片"
 
@@ -1046,7 +1038,7 @@ msgstr "加载文件"
 msgid "Loading..."
 msgstr "加载中..."
 
-#: ../ui/toolbarManageDialog.glade:8 ../ui/toolbarCustomizeDialog.glade:10
+#: ../ui/toolbarCustomizeDialog.glade:10 ../ui/toolbarManageDialog.glade:8
 msgid "Manage Toolbar"
 msgstr "定制工具条"
 
@@ -1133,7 +1125,7 @@ msgstr ""
 msgid "Normal drawing"
 msgstr ""
 
-#: ../src/control/jobs/BaseExportJob.cpp:108
+#: ../src/control/jobs/BaseExportJob.cpp:125
 msgid ""
 "Only local files are supported\n"
 "Path: {1}"
@@ -1186,9 +1178,9 @@ msgstr "PDF背景丢失"
 msgid "PDF file successfully created"
 msgstr "PDF文件成功建立"
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:60
-#: ../src/control/jobs/PdfExportJob.cpp:26
 #: ../src/control/jobs/CustomExportJob.cpp:25
+#: ../src/control/jobs/PdfExportJob.cpp:26
+#: ../src/control/stockdlg/XojOpenDlg.cpp:60
 msgid "PDF files"
 msgstr "PDF文件"
 
@@ -1270,8 +1262,8 @@ msgid ""
 "by Denis Auroux"
 msgstr ""
 
-#: ../src/undo/AddUndoAction.cpp:108
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:322
+#: ../src/undo/AddUndoAction.cpp:108
 msgid "Paste"
 msgstr "粘贴"
 
@@ -1288,9 +1280,9 @@ msgstr "画笔选项(_O)"
 msgid "Plain"
 msgstr "空白"
 
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:32
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:106
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 #, fuzzy
 msgid "Play Object"
 msgstr "选择对象"
@@ -1328,8 +1320,8 @@ msgstr "最近文档(_D)"
 msgid "Red"
 msgstr "红色"
 
-#: ../src/undo/UndoRedoHandler.cpp:293
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:327
+#: ../src/undo/UndoRedoHandler.cpp:293
 msgid "Redo"
 msgstr "重复"
 
@@ -1347,6 +1339,10 @@ msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:198
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
+msgstr ""
+
+#: ../src/util/Util.cpp:70
+msgid "Replace"
 msgstr ""
 
 #: ../ui/exportSettings.glade:107
@@ -1371,12 +1367,12 @@ msgstr "定标"
 msgid "Ruler"
 msgstr "标尺"
 
-#: ../src/control/jobs/SaveJob.cpp:17 ../src/control/Control.cpp:2522
+#: ../src/control/Control.cpp:2535 ../src/control/jobs/SaveJob.cpp:17
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:315
 msgid "Save"
 msgstr "保存"
 
-#: ../src/control/Control.cpp:2559
+#: ../src/control/Control.cpp:2572
 msgid "Save As"
 msgstr "保存为"
 
@@ -1384,8 +1380,8 @@ msgstr "保存为"
 msgid "Save File"
 msgstr "保存文件"
 
-#: ../src/control/jobs/SaveJob.cpp:157
-#: ../src/control/jobs/CustomExportJob.cpp:278
+#: ../src/control/jobs/CustomExportJob.cpp:275
+#: ../src/control/jobs/SaveJob.cpp:158
 #, fuzzy
 msgid "Save file error: {1}"
 msgstr "打开文件出错：{1}"
@@ -1416,9 +1412,9 @@ msgstr "选择字体"
 msgid "Select Image"
 msgstr "选择图片"
 
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:31
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:99
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Select Object"
 msgstr "选择对象"
 
@@ -1426,22 +1422,27 @@ msgstr "选择对象"
 msgid "Select PDF Page"
 msgstr "选择PDF页面"
 
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:10
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:29
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:85
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:125
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Select Rectangle"
 msgstr "选择矩形"
 
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:30
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:92
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "Select Region"
 msgstr "选择区域"
 
 #: ../src/control/Control.cpp:2026
 msgid "Select another PDF"
+msgstr "选择其他PDF"
+
+#: ../src/util/Util.cpp:69
+#, fuzzy
+msgid "Select another name"
 msgstr "选择其他PDF"
 
 #: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:144
@@ -1534,9 +1535,9 @@ msgstr "标准"
 msgid "State PLACEHOLDER"
 msgstr ""
 
-#: ../src/undo/RecognizerUndoAction.cpp:101
 #: ../src/gui/dialog/ButtonConfigGui.cpp:103
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
+#: ../src/undo/RecognizerUndoAction.cpp:101
 msgid "Stroke recognizer"
 msgstr "笔划识别"
 
@@ -1654,12 +1655,12 @@ msgstr "粗细"
 msgid "Thin"
 msgstr "细"
 
-#: ../src/control/Control.cpp:2520
+#: ../src/control/Control.cpp:2533
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/control/tools/ImageHandler.cpp:55
 #: ../src/control/PageBackgroundChangeController.cpp:177
+#: ../src/control/tools/ImageHandler.cpp:55
 msgid "This image could not be loaded. Error message: {1}"
 msgstr ""
 
@@ -1693,8 +1694,8 @@ msgstr ""
 msgid "Two pages"
 msgstr "双页"
 
-#: ../src/undo/UndoRedoHandler.cpp:274
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:326
+#: ../src/undo/UndoRedoHandler.cpp:274
 msgid "Undo"
 msgstr "撤销"
 
@@ -1730,11 +1731,11 @@ msgstr ""
 msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:552
+#: ../src/control/xojfile/LoadHandler.cpp:558
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2414
+#: ../src/control/Control.cpp:2427
 msgid "Unsaved Document"
 msgstr "未保存文档"
 
@@ -1776,11 +1777,11 @@ msgstr ""
 msgid "Write text"
 msgstr "写文本"
 
-#: ../src/control/xojfile/LoadHandler.cpp:815
+#: ../src/control/xojfile/LoadHandler.cpp:821
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:830
+#: ../src/control/xojfile/LoadHandler.cpp:836
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr ""
 
@@ -1800,7 +1801,7 @@ msgstr "Xournal文件"
 msgid "Xournal++ Preferences"
 msgstr "Xournal++偏好设置"
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:81 ../src/control/Control.cpp:2364
+#: ../src/control/Control.cpp:2364 ../src/control/stockdlg/XojOpenDlg.cpp:81
 #, fuzzy
 msgid "Xournal++ files"
 msgstr "Xournal文件"
@@ -1866,9 +1867,9 @@ msgstr "原始尺寸"
 msgid "_Annotate PDF"
 msgstr "标注PDF(_A)"
 
+#: ../src/control/Control.cpp:2358 ../src/control/jobs/BaseExportJob.cpp:29
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:19
-#: ../src/control/jobs/BaseExportJob.cpp:27 ../src/control/Control.cpp:2358
 #: ../src/gui/dialog/PageTemplateDialog.cpp:187
 #, fuzzy
 msgid "_Cancel"
@@ -1972,7 +1973,7 @@ msgstr "前一页(_P)"
 msgid "_Previous Page"
 msgstr "前一页(_P)"
 
-#: ../src/control/jobs/BaseExportJob.cpp:28 ../src/control/Control.cpp:2359
+#: ../src/control/Control.cpp:2359 ../src/control/jobs/BaseExportJob.cpp:30
 #: ../src/gui/dialog/PageTemplateDialog.cpp:188
 #, fuzzy
 msgid "_Save"
@@ -2099,7 +2100,7 @@ msgstr "极粗(_y)"
 msgid "whiteout"
 msgstr "涂白"
 
-#: ../src/control/xojfile/LoadHandler.cpp:829
+#: ../src/control/xojfile/LoadHandler.cpp:835
 msgid "xoj-File: {1}"
 msgstr ""
 
