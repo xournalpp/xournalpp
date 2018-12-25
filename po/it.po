@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: xournalpp 1.0.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-25 16:00+0100\n"
-"PO-Revision-Date: 2018-12-25 17:09+0100\n"
+"PO-Revision-Date: 2018-12-25 17:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -152,6 +152,8 @@ msgid ""
 "<b>Configure Xournal++ Template Page</b>\n"
 "This settings will be used if you create a new document"
 msgstr ""
+"<b>Configura la Pagina Template di Xournal++</b>\n"
+"Queste impostazioni saranno usate quando creerai un nuovo documento"
 
 #: ../ui/pageTemplate.glade:229 ../ui/pageTemplate.glade:270
 #, fuzzy
@@ -189,6 +191,8 @@ msgid ""
 "<b>Document export settings</b>\n"
 "Select pages to export"
 msgstr ""
+"<b>Impostazioni Esportazione Documento</b>\n"
+"Seleziona le pagine da esportare"
 
 #: ../ui/settings.glade:961
 msgid "<b>Eraser</b>"
@@ -196,7 +200,7 @@ msgstr "<b>Gomma</b>"
 
 #: ../ui/settings.glade:169
 msgid "<b>Event compression</b>"
-msgstr ""
+msgstr "<b>Compressione eventi</b>"
 
 #: ../ui/settings.glade:87
 msgid "<b>Extended Input</b>"
@@ -229,6 +233,7 @@ msgstr "<b>Dimensione Pagina</b>"
 #: ../ui/settings.glade:1383
 msgid "<b>Presentation</b> Another Fullscreen Mode, <i>Start with F5</i>"
 msgstr ""
+"<b>Presentazione</b> Un'altra Modalità Schermo intero, <i>Inizia con F5</i>"
 
 #: ../ui/settings.glade:132
 msgid "<b>Pressure sensitivity</b>"
@@ -243,8 +248,9 @@ msgid "<b>Scrollbars</b>"
 msgstr "<b>Barre di scorrimento</b>"
 
 #: ../ui/settings.glade:215
+#, fuzzy
 msgid "<b>Scrolling outside the page</b>"
-msgstr ""
+msgstr "<b>Scrolling fuori dalla pagina</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:190
 msgid "<b>Separator</b>"
@@ -262,12 +268,16 @@ msgstr "<b>Pulsante Penna 2</b> Azionato se è premuto il pulsante sulla penna"
 msgid ""
 "<b>Touch Screen</b> <i>You can also configure other devices like mice</i>"
 msgstr ""
+"<b>Touch Screen</b> <i>Puoi configurare anche altri dispositivi, come un "
+"mouse</i>"
 
 #: ../ui/settings.glade:184
 msgid ""
 "<i>Disable the event compression if strokes appear segmented\n"
 "when drawn too fast</i>"
 msgstr ""
+"<i>Disabilita la compressione degli eventi se il tratto sembra segmentato\n"
+"quando viene disegnato troppo velocemente</i>"
 
 #: ../ui/exportSettings.glade:200
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
@@ -311,16 +321,23 @@ msgid ""
 "you can choose the area of the screen you would\n"
 "like to work on</i>"
 msgstr ""
+"<i>Se aggiungi <b>spazio addizionale</b> tra le pagine\n"
+"puoi scegliere l'area dello schermo in cui \n"
+"desideri lavorare</i>"
 
 #: ../ui/settings.glade:147
 msgid "<i>If you have a tablet pen you can get different line widths</i>"
 msgstr ""
+"<i>Se sei in possesso di una penna da tablet puoi ottenere linee di spessore "
+"diverso</i>"
 
 #: ../ui/settings.glade:641
 msgid ""
 "<i>If you open a PDF and there is a\n"
 "Xournal file with the same name it will open the xoj file.</i>"
 msgstr ""
+"<i>Se apri un PDF ed esiste un file\n"
+"Xournal con lo stesso nome, verrà aperto il file .xoj.</i>"
 
 #: ../ui/settings.glade:701
 msgid ""
@@ -328,20 +345,25 @@ msgid ""
 "screen. Takes effect after restarting xournalpp.\n"
 "The units are cm for the ruler, dpi for the slider.</i>"
 msgstr ""
+"<i>Aggiunge un righello allo schermo per calibrare il livello di zoom. Ha "
+"effetto dopo il riavvio di xournalpp.\n"
+"Le unità sono cm per il richello, dpi per lo slider.</i>"
 
 #: ../ui/settings.glade:110
 msgid "<i>Select some advanced input options</i>"
-msgstr ""
+msgstr "<i>Seleziona alcune opzioni di input avanzate</i>"
 
 #: ../ui/settings.glade:461
 msgid "<i>This name will be proposed if you save a new document</i>"
-msgstr ""
+msgstr "<i>Questo nome sarà proposto in fase di un nuovo salvataggio</i>"
 
 #: ../ui/about.glade:65
 msgid ""
 "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
 msgstr ""
+"<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+"<i>The next generation</i>"
 
 #: ../ui/about.glade:8
 #, fuzzy
@@ -417,6 +439,8 @@ msgid ""
 "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr ""
+"Cartella Audio non impostata! Le registrazioni non funzioneranno!\n"
+"Per favore, imposta la cartella Audio in \"Preferenze > Registrazione Audio\""
 
 #: ../ui/about.glade:151
 msgid "Authors:"
