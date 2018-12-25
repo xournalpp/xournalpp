@@ -16,9 +16,9 @@
 
 #include <cairo/cairo.h>
 #include <list>
+using std::list;
 
 class PdfCacheEntry;
-typedef std::list<PdfCacheEntry*> PdfCacheEntryList;
 
 class PdfCache
 {
@@ -44,8 +44,8 @@ private:
 
 	GMutex renderMutex;
 
-	PdfCacheEntryList data;
-	PdfCacheEntryList::size_type size;
+	list<PdfCacheEntry*> data;
+	list<PdfCacheEntry*>::size_type size;
 
 	double zoom;
 };

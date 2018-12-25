@@ -6,7 +6,7 @@
 #include <i18n.h>
 #include <Range.h>
 
-ScaleUndoAction::ScaleUndoAction(PageRef page, ElementVector* elements, double x0, double y0, double fx, double fy) :
+ScaleUndoAction::ScaleUndoAction(PageRef page, vector<Element*>* elements, double x0, double y0, double fx, double fy) :
 		UndoAction("ScaleUndoAction")
 {
 	XOJ_INIT_TYPE(ScaleUndoAction);

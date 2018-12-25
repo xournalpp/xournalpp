@@ -14,7 +14,6 @@
 #include <XournalType.h>
 
 class Stroke;
-typedef std::vector<Stroke*> StrokeVector;
 
 class ShapeRecognizer;
 
@@ -28,11 +27,11 @@ public:
 public:
 	void addSourceStroke(Stroke* s);
 	Stroke* getRecognized();
-	StrokeVector* getSources();
+	vector<Stroke*>* getSources();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	Stroke* recognized;
-	StrokeVector source;
+	vector<Stroke*> source;
 };

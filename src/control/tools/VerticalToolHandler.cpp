@@ -124,7 +124,7 @@ void VerticalToolHandler::currentPos(double x, double y)
 	//	}
 }
 
-ElementVector* VerticalToolHandler::getElements()
+vector<Element*>* VerticalToolHandler::getElements()
 {
 	XOJ_CHECK_TYPE(VerticalToolHandler);
 

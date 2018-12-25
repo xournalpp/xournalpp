@@ -14,7 +14,6 @@
 #include <XournalType.h>
 
 class ToolbarData;
-typedef std::vector<ToolbarData*> ToolbarDataVector;
 
 class ToolbarModel
 {
@@ -23,7 +22,7 @@ public:
 	virtual ~ToolbarModel();
 
 public:
-	ToolbarDataVector* getToolbars();
+	vector<ToolbarData*>* getToolbars();
 	bool parse(string filename, bool predefined);
 	void add(ToolbarData* data);
 	void remove(ToolbarData* data);
@@ -36,5 +35,5 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	ToolbarDataVector toolbars;
+	vector<ToolbarData*> toolbars;
 };

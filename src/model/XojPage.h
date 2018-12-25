@@ -56,10 +56,11 @@ public:
 	void setBackgroundColor(int color);
 	int getBackgroundColor();
 
-	LayerVector* getLayers();
+	vector<Layer*>* getLayers();
 	size_t getLayerCount();
 	int getSelectedLayerId();
 	void setSelectedLayerId(int id);
+	bool isLayerVisible(Layer* layer);
 
 	Layer* getSelectedLayer();
 
@@ -93,7 +94,7 @@ private:
 	/**
 	 * The layer list
 	 */
-	LayerVector layer;
+	vector<Layer*> layer;
 
 	/**
 	 * The current selected layer ID

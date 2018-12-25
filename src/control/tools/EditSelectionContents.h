@@ -72,7 +72,7 @@ public:
 	/**
 	 * Returns all containig elements of this selections
 	 */
-	ElementVector* getElements();
+	vector<Element*>* getElements();
 
 public:
 	/**
@@ -149,7 +149,7 @@ private:
 	/**
 	 * The selected element (the only one which are handled by this instance)
 	 */
-	ElementVector selected;
+	vector<Element*> selected;
 
 	/**
 	 * The rendered elements

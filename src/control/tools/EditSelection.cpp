@@ -302,7 +302,7 @@ void EditSelection::addElement(Element* e)
 /**
  * Returns all containig elements of this selections
  */
-ElementVector* EditSelection::getElements()
+vector<Element*>* EditSelection::getElements()
 {
 	XOJ_CHECK_TYPE(EditSelection);
 

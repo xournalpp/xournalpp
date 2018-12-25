@@ -15,8 +15,6 @@
 
 #include "gui/XojColor.h"
 
-typedef std::vector<XojColor*> XojColorVector;
-
 class CustomizeableColorList
 {
 public:
@@ -24,7 +22,7 @@ public:
 	virtual ~CustomizeableColorList();
 
 public:
-	XojColorVector* getPredefinedColors();
+	vector<XojColor*>* getPredefinedColors();
 
 private:
 	void addPredefinedColor(int color, string name);
@@ -32,6 +30,6 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XojColorVector colors;
+	vector<XojColor*> colors;
 
 };
