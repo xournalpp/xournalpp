@@ -56,7 +56,14 @@ void DocumentView::applyColor(cairo_t* cr, Stroke* s)
 {
 	if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
 	{
-		applyColor(cr, s, 120);
+		if (s->getFill() != -1)
+		{
+			applyColor(cr, s, s->getFill());
+		}
+		else
+		{
+			applyColor(cr, s, 120);
+		}
 	}
 	else
 	{
@@ -90,9 +97,6 @@ void DocumentView::drawEraseableStroke(cairo_t* cr, Stroke* s)
 void DocumentView::drawFillStroke(cairo_t* cr, Stroke* s)
 {
 	XOJ_CHECK_TYPE(DocumentView);
-
-	// Set the color and transparency
-	applyColor(cr, s, s->getFill());
 
 	ArrayIterator<Point> points = s->pointIterator();
 
@@ -134,9 +138,13 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 		///////////////////////////////////////////////////////
 		// Fill stroke
 		///////////////////////////////////////////////////////
-		if (s->getFill() != -1)
+		if (s->getFill() != -1 && s->getToolType() != STROKE_TOOL_HIGHLIGHTER)
 		{
 			cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+
+			// Set the color and transparency
+			applyColor(cr, s, s->getFill());
+
 			drawFillStroke(cr, s);
 		}
 
@@ -172,6 +180,17 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 	// No pressure sensitivity, easy draw a line...
 	if (!s->hasPressure() || s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
 	{
+		bool group = false;
+		if (s->getFill() != -1 && s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
+		{
+			cairo_push_group(cr);
+			// Do not apply the alpha here, else the border and the fill
+			// are visible instead of one homogeneous area
+			applyColor(cr, s, 255);
+			drawFillStroke(cr, s);
+			group = true;
+		}
+
 		// Set width
 		cairo_set_line_width(cr, width * scaleFactor);
 
@@ -192,6 +211,12 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 		}
 
 		cairo_stroke(cr);
+
+		if (group)
+		{
+			cairo_pop_group_to_source(cr);
+			cairo_paint_with_alpha(cr, s->getFill() / 255.0);
+		}
 		return;
 	}
 
