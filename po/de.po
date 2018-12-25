@@ -1093,7 +1093,6 @@ msgstr "Laden..."
 #: ../ui/toolbarManageDialog.glade:8 ../ui/toolbarCustomizeDialog.glade:10
 msgid "Manage Toolbar"
 msgstr "Werkzeugleisten verwalten"
-==== BASE ====
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:141
@@ -1621,7 +1620,6 @@ msgstr "Text auf dieser Seite %i mal gefunden"
 #: ../ui/main.glade:1010
 msgid "Text Font..."
 msgstr "Schriftart..."
-==== BASE ====
 
 #: ../src/undo/TextUndoAction.cpp:47
 msgid "Text changes"
@@ -1670,7 +1668,6 @@ msgstr "Der aktuelleste Logdateiname: {1}"
 #: ../ui/settings.glade:746
 msgid "The unit of the ruler is cm"
 msgstr "Die Einheit des Maßstabes ist cm"
-==== BASE ====
 
 #: ../src/control/XournalMain.cpp:100
 msgid ""
