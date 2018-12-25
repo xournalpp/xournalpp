@@ -1,22 +1,15 @@
 #include "XojPreviewExtractor.h"
 
 #include <glib.h>
-#include <glib/gstdio.h>
+#include <zlib.h>
+#include <string.h>
 
-#include <boost/iostreams/filter/gzip.hpp>
-#include <boost/iostreams/filtering_streambuf.hpp>
-#include <boost/algorithm/string.hpp>
-namespace bio = boost::iostreams;
-
-#include <iostream>
-using std::istream;
-#include <fstream>
-using std::ifstream;
-#include <memory>
-using std::unique_ptr;
-
-#define TAG_PREVIEW_NAME "preview"
-#define TAG_PAGE_NAME "page"
+const char* TAG_PREVIEW_NAME = "preview";
+const int TAG_PREVIEW_NAME_LEN = strlen(TAG_PREVIEW_NAME);
+const char* TAG_PAGE_NAME = "page";
+const int TAG_PAGE_NAME_LEN = strlen(TAG_PAGE_NAME);
+const char* TAG_PREVIEW_END_NAME = "/preview";
+const int TAG_PREVIEW_END_NAME_LEN = strlen(TAG_PREVIEW_END_NAME);
 #define BUF_SIZE 8192
 
 XojPreviewExtractor::XojPreviewExtractor()
@@ -32,7 +25,6 @@ XojPreviewExtractor::~XojPreviewExtractor()
 	dataLen = 0;
 }
 
-
 /**
  * @return The preview data, should be a binary PNG
  */
@@ -42,13 +34,67 @@ unsigned char* XojPreviewExtractor::getData(gsize& dataLen)
 	return this->data;
 }
 
-#define CLOSE		\
-	if (gzip)		\
-	{				\
-		delete in;	\
-	}				\
-	ifile.close();	\
-	return 
+/**
+ * Try to read the preview from byte buffer
+ * @param buffer Buffer
+ * @param len Buffer len
+ * @return If an image was read, or the error
+ */
+PreviewExtractResult XojPreviewExtractor::readPreview(char* buffer, int len)
+{
+	bool inTag = false;
+	int startTag = 0;
+	int startPreview = -1;
+	int endPreview = -1;
+	int pageStart = -1;
+	for (int i = 0; i < len; i++)
+	{
+		if (inTag)
+		{
+			if (buffer[i] == '>')
+			{
+				inTag = false;
+				int tagLen = i - startTag;
+				if (tagLen == TAG_PREVIEW_NAME_LEN && strncmp(TAG_PREVIEW_NAME, buffer + startTag, TAG_PREVIEW_NAME_LEN) == 0)
+				{
+					startPreview = i + 1;
+				}
+				if (tagLen == TAG_PREVIEW_END_NAME_LEN && strncmp(TAG_PREVIEW_END_NAME, buffer + startTag, TAG_PREVIEW_END_NAME_LEN) == 0)
+				{
+					endPreview = i - TAG_PREVIEW_END_NAME_LEN - 1;
+					break;
+				}
+				if (tagLen >= TAG_PAGE_NAME_LEN && strncmp(TAG_PAGE_NAME, buffer + startTag, TAG_PAGE_NAME_LEN) == 0)
+				{
+					pageStart = i;
+					break;
+				}
+			}
+			continue;
+		}
+
+		if (buffer[i] == '<')
+		{
+			inTag = true;
+			startTag = i + 1;
+			continue;
+		}
+	}
+
+	if (startPreview != -1 && endPreview != -1)
+	{
+		buffer[endPreview] = 0;
+		this->data = g_base64_decode(buffer + startPreview, &dataLen);
+		return PREVIEW_RESULT_IMAGE_READ;
+	}
+
+	if (pageStart != -1)
+	{
+		return PREVIEW_RESULT_NO_PREVIEW;
+	}
+
+	return PREVIEW_RESULT_ERROR_READING_PREVIEW;
+}
 
 /**
  * Try to read the preview from file
@@ -63,7 +109,6 @@ PreviewExtractResult XojPreviewExtractor::readFile(string file)
 	if (dotPos != string::npos)
 	{
 		ext = file.substr(dotPos);
-		boost::algorithm::to_lower(ext);
 	}
 
 	if (!(ext == ".xoj" || ext == ".xopp"))
@@ -71,79 +116,22 @@ PreviewExtractResult XojPreviewExtractor::readFile(string file)
 		return PREVIEW_RESULT_BAD_FILE_EXTENSION;
 	}
 
-	// open input file
-	ifstream ifile(file, ifstream::in | ifstream::binary);
-	if (!ifile.is_open())
+	gzFile fp = gzopen(file.c_str(), "r");
+	if (!fp)
 	{
 		return PREVIEW_RESULT_COULD_NOT_OPEN_FILE;
 	}
 
-	istream* in;
-	bio::filtering_istreambuf inbuf;
-	bool gzip;
-	
-	// check for gzip magic header
-	if (ifile.get() == 0x1F && ifile.get() == 0x8B)
-	{
-		gzip = true;
-		ifile.seekg(0); //seek back to beginning
-		
-		inbuf.push(bio::gzip_decompressor());
-		inbuf.push(ifile);
+	// The <preview> Tag is within the first 179 Bytes
+	// The Preview should end within the first 8k
 
-		in = new istream(&inbuf);
-	}
-	else
-	{
-		gzip = false;
-		in = &ifile;
-	}
-	
-	char buf[BUF_SIZE];
-	bool inPreview = false;
-	bool inTag = false;
-	string preview;
-	while (!in->eof())
-	{
-		if (in->peek() == '<')
-		{
-			in->ignore();
-			inTag = true;
-			continue;
-		}
-		
-		in->get(buf, BUF_SIZE, '<');
-		if (!inPreview)
-		{
-			if (inTag)
-			{
-				if (strncmp(TAG_PREVIEW_NAME, buf, sizeof(TAG_PREVIEW_NAME) - 1) == 0)
-				{
-					inPreview = true;
-					preview += (buf + sizeof(TAG_PREVIEW_NAME));
-				}
-				else if (strncmp(TAG_PAGE_NAME, buf, sizeof(TAG_PAGE_NAME) - 1) == 0)
-				{
-					CLOSE PREVIEW_RESULT_NO_PREVIEW;
-				}
-				inTag = false;
-			}
-		}
-		else
-		{
-			if (inTag)
-			{
-				this->data = g_base64_decode(preview.c_str(), &this->dataLen);
-				CLOSE PREVIEW_RESULT_IMAGE_READ;
-			}
-			else
-			{
-				preview += buf;
-			}
-		}
-	}
+	char buffer[BUF_SIZE];
+	int readLen = gzread(fp, buffer, BUF_SIZE);
 
-	CLOSE PREVIEW_RESULT_ERROR_READING_PREVIEW;
+	PreviewExtractResult result = readPreview(buffer, readLen);
+
+	gzclose(fp);
+	return result;
 }
 
 

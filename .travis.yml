@@ -25,7 +25,6 @@ addons:
     - cmake
 
     - libboost-filesystem-dev
-    - libboost-iostreams-dev
 
     - libcppunit-dev
 
