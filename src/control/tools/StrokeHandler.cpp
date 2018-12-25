@@ -169,7 +169,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 		// If the stroke has fill values, it needs to be re-rendered
 		// else the fill will not be visible.
 
-		view.drawStroke(crMask, stroke);
+		view.drawStroke(crMask, stroke, 0, 1, true, true);
 	}
 
 	layer->addElement(stroke);

@@ -119,7 +119,7 @@ void DocumentView::drawFillStroke(cairo_t* cr, Stroke* s)
 	cairo_fill(cr);
 }
 
-void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool changeSource)
+void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool changeSource, bool noAlpha)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
@@ -215,7 +215,16 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 		if (group)
 		{
 			cairo_pop_group_to_source(cr);
-			cairo_paint_with_alpha(cr, s->getFill() / 255.0);
+
+			if (noAlpha)
+			{
+				// Currently drawing -> transparent applied on blitting
+				cairo_paint(cr);
+			}
+			else
+			{
+				cairo_paint_with_alpha(cr, s->getFill() / 255.0);
+			}
 		}
 		return;
 	}

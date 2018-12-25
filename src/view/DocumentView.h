@@ -46,7 +46,7 @@ public:
 
 
 
-	void drawStroke(cairo_t* cr, Stroke* s, int startPoint = 0, double scaleFactor = 1, bool changeSource = true);
+	void drawStroke(cairo_t* cr, Stroke* s, int startPoint = 0, double scaleFactor = 1, bool changeSource = true, bool noAlpha = false);
 	void drawEraseableStroke(cairo_t* cr, Stroke* s);
 
 	void drawFillStroke(cairo_t* cr, Stroke* s);
