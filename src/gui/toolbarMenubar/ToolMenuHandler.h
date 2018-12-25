@@ -18,8 +18,6 @@
 #include <gtk/gtk.h>
 
 class AbstractToolItem;
-typedef std::vector<AbstractToolItem*> AbstractToolItemVector;
-
 class FontButton;
 class GladeGui;
 class ToolbarData;
@@ -72,7 +70,7 @@ public:
 
 	ToolbarModel* getModel();
 
-	AbstractToolItemVector* getToolItems();
+	vector<AbstractToolItem*>* getToolItems();
 
 	bool isColorInUse(int color);
 
@@ -87,7 +85,7 @@ private:
 	std::vector<ColorToolItem*> toolbarColorItems;
 	GtkWindow* parent;
 
-	AbstractToolItemVector toolItems;
+	vector<AbstractToolItem*> toolItems;
 	std::vector<MenuItem*> menuItems;
 
 	ToolButton* undoButton;

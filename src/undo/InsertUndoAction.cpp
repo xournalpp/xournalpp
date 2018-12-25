@@ -82,7 +82,7 @@ bool InsertUndoAction::redo(Control* control)
 	return true;
 }
 
-InsertsUndoAction::InsertsUndoAction(PageRef page, Layer* layer, ElementVector elements) : UndoAction("InsertsUndoAction")
+InsertsUndoAction::InsertsUndoAction(PageRef page, Layer* layer, vector<Element*> elements) : UndoAction("InsertsUndoAction")
 {
 	XOJ_INIT_TYPE(InsertsUndoAction);
 

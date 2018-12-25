@@ -606,7 +606,7 @@ bool ToolMenuHandler::isColorInUse(int color)
 	return false;
 }
 
-AbstractToolItemVector* ToolMenuHandler::getToolItems()
+vector<AbstractToolItem*>* ToolMenuHandler::getToolItems()
 {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 

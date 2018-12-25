@@ -106,7 +106,7 @@ void XojPage::setSelectedLayerId(int id)
 	this->currentLayer = id;
 }
 
-LayerVector* XojPage::getLayers()
+vector<Layer*>* XojPage::getLayers()
 {
 	XOJ_CHECK_TYPE(XojPage);
 
@@ -133,6 +133,21 @@ int XojPage::getSelectedLayerId()
 	}
 
 	return this->currentLayer;
+}
+
+bool XojPage::isLayerVisible(Layer* layer)
+{
+	XOJ_CHECK_TYPE(XojPage);
+
+	for (int i = 0; i < this->currentLayer; i++)
+	{
+		if (this->layer[i] == layer)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void XojPage::setBackgroundPdfPageNr(size_t page)

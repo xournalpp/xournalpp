@@ -48,7 +48,7 @@ public:
 	/**
 	 * Returns an iterator over the Element%s contained in this Layer
 	 */
-	ElementVector* getElements();
+	vector<Element*>* getElements();
 
 	/**
 	 * Returns whether or not the Layer is empty
@@ -63,8 +63,6 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	ElementVector elements;
+	vector<Element*> elements;
 
 };
-
-typedef std::vector<Layer*> LayerVector;

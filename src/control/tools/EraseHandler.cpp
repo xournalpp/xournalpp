@@ -64,7 +64,7 @@ void EraseHandler::erase(double x, double y)
 
 	Layer* l = page->getSelectedLayer();
 
-	ElementVector tmp(*l->getElements());
+	vector<Element*> tmp(*l->getElements());
 	for (Element* e : tmp)
 	{
 		if (e->getType() == ELEMENT_STROKE && e->intersectsArea(&eraserRect))

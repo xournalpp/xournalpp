@@ -16,7 +16,7 @@
 class RotateUndoAction : public UndoAction
 {
 public:
-	RotateUndoAction(PageRef page, ElementVector* elements, double x0, double y0, double xo, double yo, double rotation);
+	RotateUndoAction(PageRef page, vector<Element*>* elements, double x0, double y0, double xo, double yo, double rotation);
 	virtual ~RotateUndoAction();
 
 public:
@@ -30,7 +30,7 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	ElementVector elements;
+	vector<Element*> elements;
 
 	double x0;
 	double y0;

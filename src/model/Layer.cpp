@@ -145,7 +145,7 @@ bool Layer::isAnnotated()
 	return !this->elements.empty();
 }
 
-ElementVector* Layer::getElements()
+vector<Element*>* Layer::getElements()
 {
 	XOJ_CHECK_TYPE(Layer);
 

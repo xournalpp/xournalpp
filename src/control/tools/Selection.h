@@ -34,7 +34,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-	ElementVector selectedElements;
+	vector<Element*> selectedElements;
 	PageRef page;
 	Redrawable* view;
 

@@ -20,7 +20,7 @@ class XojPage;
 class MoveUndoAction : public UndoAction
 {
 public:
-	MoveUndoAction(Layer* sourceLayer, PageRef sourcePage, ElementVector* selected, double mx, double my,
+	MoveUndoAction(Layer* sourceLayer, PageRef sourcePage, vector<Element*>* selected, double mx, double my,
 				   Layer* targetLayer, PageRef targetPage);
 	virtual ~MoveUndoAction();
 
@@ -31,14 +31,14 @@ public:
 	virtual string getText();
 
 private:
-	void switchLayer(ElementVector* entries, Layer* oldLayer, Layer* newLayer);
+	void switchLayer(vector<Element*>* entries, Layer* oldLayer, Layer* newLayer);
 	void repaint();
 	void move();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	ElementVector elements;
+	vector<Element*> elements;
 	PageRef targetPage;
 
 	Layer* sourceLayer;

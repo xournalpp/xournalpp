@@ -31,7 +31,7 @@ public:
 
 	MoveUndoAction* finalize();
 
-	ElementVector* getElements();
+	vector<Element*>* getElements();
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -39,7 +39,7 @@ private:
 	Redrawable* view;
 	PageRef page;
 	Layer* layer;
-	ElementVector elements;
+	vector<Element*> elements;
 
 	cairo_surface_t* crBuffer;
 

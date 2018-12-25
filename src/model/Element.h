@@ -97,4 +97,3 @@ private:
 	int color;
 };
 
-typedef std::vector<Element*> ElementVector;

@@ -39,7 +39,7 @@ private:
 class InsertsUndoAction : public UndoAction
 {
 public:
-	InsertsUndoAction(PageRef page, Layer* layer, ElementVector elements);
+	InsertsUndoAction(PageRef page, Layer* layer, vector<Element*> elements);
 	virtual ~InsertsUndoAction();
 
 public:
@@ -52,6 +52,6 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	Layer* layer;
-	ElementVector elements;
+	vector<Element*> elements;
 
 };

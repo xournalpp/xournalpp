@@ -49,4 +49,3 @@ private:
 	XojPage* page;
 };
 
-typedef std::vector<PageRef> PageRefVector;

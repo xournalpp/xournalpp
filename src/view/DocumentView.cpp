@@ -534,14 +534,9 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStr
 	int layer = 0;
 	for (Layer* l : *page->getLayers())
 	{
-		if (l == NULL)
+		if (!page->isLayerVisible(l))
 		{
-			break;
-		}
-
-		if (layer >= page->getSelectedLayerId())
-		{
-			break;
+			continue;
 		}
 
 		drawLayer(cr, l);

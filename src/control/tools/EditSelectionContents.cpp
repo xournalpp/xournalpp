@@ -78,7 +78,7 @@ void EditSelectionContents::addElement(Element* e)
 /**
  * Returns all containig elements of this selections
  */
-ElementVector* EditSelectionContents::getElements()
+vector<Element*>* EditSelectionContents::getElements()
 {
 	XOJ_CHECK_TYPE(EditSelectionContents);
 
@@ -507,7 +507,7 @@ UndoAction* EditSelectionContents::copySelection(PageRef page, XojPageView *view
 {
 	Layer* layer = page->getSelectedLayer();
 
-	ElementVector new_elems;
+	vector<Element*> new_elems;
 
 	for (Element* e : *getElements())
 	{
