@@ -59,11 +59,7 @@ namespace ba = boost::algorithm;
 #include <gtk/gtk.h>
 
 #include <sstream>
-#include <iostream>
 #include <fstream>
-using std::cout;
-using std::cerr;
-using std::endl;
 using std::ifstream;
 
 #include <time.h>
@@ -344,7 +340,7 @@ bool Control::autosaveCallback(Control* control)
 	}
 	else
 	{
-		cout << "Info: autosave document..." << endl;
+		g_message("Info: autosave document...");
 	}
 
 	AutosaveJob* job = new AutosaveJob(control);
@@ -2035,7 +2031,7 @@ bool Control::openFile(path filename, int scrollToPage)
 		XojOpenDlg dlg(getGtkWindow(), this->settings);
 		filename = dlg.showOpenDialog(false, attachPdf);
 
-		cout << _F("Filename: {1}") % filename.string() << endl;
+		g_message("%s", (_F("Filename: {1}") % filename.string()).c_str());
 
 		if (filename.empty())
 		{
@@ -2667,7 +2663,7 @@ bool Control::checkExistingFile(path& folder, path& filename)
 	
 	if (boost::filesystem::exists(filename))
 	{
-		string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % filename.filename().string() );
+		string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % filename.filename().string());
 		int res = XojMsgBox::replaceFileQuestion(getGtkWindow(), msg);
 		return res != 1; // res != 1 when user clicks on Replace
 	}
@@ -3022,8 +3018,8 @@ void Control::runLatex()
 
 #else
 	// This should never occur, as the menupoint is also hidden.
-	cout << "Mathtex is disabled. Recompile with ./configure --enable-mathtex, "
-			"ensuring you have the mathtex command on your system." << endl;
+	g_warning("Mathtex is disabled. Recompile with cmake -DENABLE_MATHTEX=ON "
+			  "ensuring you have the mathtex command on your system.");
 #endif // ENABLE_MATHTEX
 }
 
