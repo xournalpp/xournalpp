@@ -78,60 +78,11 @@ void Tool::setCapability(int capability, bool enabled)
 	}
 }
 
-bool Tool::isEnableColor()
+bool Tool::hasCapability(ToolCapabilities cap)
 {
 	XOJ_CHECK_TYPE(Tool);
 
-	return this->capabilities & TOOL_CAP_COLOR != 0;
-}
-
-bool Tool::isEnableSize()
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	return this->capabilities & TOOL_CAP_SIZE != 0;
-}
-
-bool Tool::isEnableRuler()
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	return this->capabilities & TOOL_CAP_RULER != 0;
-}
-
-bool Tool::isEnableRectangle()
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	return this->capabilities & TOOL_CAP_RECTANGLE != 0;
-}
-
-bool Tool::isEnableCircle()
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	return this->capabilities & TOOL_CAP_CIRCLE != 0;
-}
-
-bool Tool::isEnableArrow()
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	return this->capabilities & TOOL_CAP_ARROW != 0;
-}
-
-bool Tool::isEnableShapeRecognizer()
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	return this->capabilities & TOOL_CAP_RECOGNIZER != 0;
-}
-
-bool Tool::isEnableFill()
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	return this->capabilities & TOOL_CAP_FILL != 0;
+	return (this->capabilities & cap) != 0;
 }
 
 DrawingType Tool::getDrawingType()

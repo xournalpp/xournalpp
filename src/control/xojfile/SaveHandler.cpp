@@ -333,7 +333,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 		else
 		{
 			background->setAttrib("domain", "absolute");
-			background->setAttrib("filename", p->getBackgroundImage().getFilename().string());
+			background->setAttrib("filename", p->getBackgroundImage().getFilename());
 			p->getBackgroundImage().setCloneId(id);
 		}
 	}
@@ -408,7 +408,7 @@ void SaveHandler::saveTo(OutputStream* out, path filename, ProgressListener* lis
 	{
 		BackgroundImage* img = (BackgroundImage*) l->data;
 
-		string tmpfn = filename.string() + "." + img->getFilename().string();
+		string tmpfn = filename.string() + "." + img->getFilename();
 		if (!gdk_pixbuf_save(img->getPixbuf(), tmpfn.c_str(), "png", NULL, NULL))
 		{
 			if (!this->errorMessage.empty())

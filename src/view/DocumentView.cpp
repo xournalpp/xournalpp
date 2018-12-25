@@ -370,7 +370,7 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 	}
 
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
-	cout << bl::format("DBG:DocumentView: draw {1} / not draw {2}") % drawed % notDrawed << endl;
+	g_message("DBG:DocumentView: draw %i / not draw %i", drawed, notDrawed);
 #endif // DEBUG_SHOW_REPAINT_BOUNDS
 }
 

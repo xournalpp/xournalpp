@@ -1,7 +1,6 @@
 #include "BackgroundImageContents.h"
-#include <Util.h>
 
-BackgroundImageContents::BackgroundImageContents(path filename, GError** error)
+BackgroundImageContents::BackgroundImageContents(string filename, GError** error)
 {
 	XOJ_INIT_TYPE(BackgroundImageContents);
 
@@ -9,7 +8,7 @@ BackgroundImageContents::BackgroundImageContents(path filename, GError** error)
 	this->ref = 1;
 	this->pageId = -1;
 	this->attach = false;
-	this->pixbuf = gdk_pixbuf_new_from_file(PATH_TO_CSTR(filename), error);
+	this->pixbuf = gdk_pixbuf_new_from_file(filename.c_str(), error);
 }
 
 BackgroundImageContents::~BackgroundImageContents()
@@ -17,6 +16,7 @@ BackgroundImageContents::~BackgroundImageContents()
 	XOJ_CHECK_TYPE(BackgroundImageContents);
 
 	g_object_unref(this->pixbuf);
+	this->pixbuf = NULL;
 
 	XOJ_RELEASE_TYPE(BackgroundImageContents);
 }
@@ -39,14 +39,14 @@ void BackgroundImageContents::reference()
 	this->ref++;
 }
 
-path BackgroundImageContents::getFilename()
+string BackgroundImageContents::getFilename()
 {
 	XOJ_CHECK_TYPE(BackgroundImageContents);
 
 	return this->filename;
 }
 
-void BackgroundImageContents::setFilename(path filename)
+void BackgroundImageContents::setFilename(string filename)
 {
 	XOJ_CHECK_TYPE(BackgroundImageContents);
 

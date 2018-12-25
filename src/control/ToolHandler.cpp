@@ -502,14 +502,14 @@ void ToolHandler::saveSettings()
 	{
 		Tool* t = it.next();
 		SElement& st = s.child(t->getName());
-		if (t->isEnableColor())
+		if (t->hasCapability(TOOL_CAP_COLOR))
 		{
 			st.setIntHex("color", t->getColor());
 		}
 
 		st.setString("drawingType", drawingTypeToString(t->getDrawingType()));
 
-		if (t->isEnableSize())
+		if (t->hasCapability(TOOL_CAP_SIZE))
 		{
 			string value;
 			switch (t->getSize())
@@ -578,7 +578,7 @@ void ToolHandler::loadSettings()
 			}
 
 			int color = 0;
-			if (t->isEnableColor() && st.getInt("color", color))
+			if (t->hasCapability(TOOL_CAP_COLOR) && st.getInt("color", color))
 			{
 				t->setColor(color);
 			}
@@ -591,7 +591,7 @@ void ToolHandler::loadSettings()
 
 			string value;
 
-			if (t->isEnableSize() && st.getString("size", value))
+			if (t->hasCapability(TOOL_CAP_SIZE) && st.getString("size", value))
 			{
 				if (value == "VERY_THIN")	  t->setSize(TOOL_SIZE_VERY_FINE);
 				else if (value == "THIN")	  t->setSize(TOOL_SIZE_FINE);
