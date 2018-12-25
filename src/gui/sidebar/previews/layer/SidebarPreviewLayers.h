@@ -39,6 +39,8 @@ public:
 	 */
 	virtual void updatePreviews();
 
+	void layerSelected(size_t layerIndex);
+
 public:
 	// DocumentListener interface (only the part which is not handled by SidebarPreviewBase)
 	virtual void pageSizeChanged(int page);

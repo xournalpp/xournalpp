@@ -29,6 +29,9 @@ public:
 	 */
 	virtual PreviewRenderType getRenderType();
 
+protected:
+	virtual void mouseButtonPressCallback();
+
 private:
 	XOJ_TYPE_ATTRIB;
 
