@@ -39,14 +39,15 @@ public:
 	SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, PageRef page);
 	virtual ~SidebarPreviewBaseEntry();
 
-	GtkWidget* getWidget();
-	int getWidth();
-	int getHeight();
+public:
+	virtual GtkWidget* getWidget();
+	virtual int getWidth();
+	virtual int getHeight();
 
-	void setSelected(bool selected);
+	virtual void setSelected(bool selected);
 
-	void repaint();
-	void updateSize();
+	virtual void repaint();
+	virtual void updateSize();
 
 	/**
 	 * @return What should be renderered
@@ -55,13 +56,20 @@ public:
 
 private:
 	static gboolean drawCallback(GtkWidget* widget, cairo_t* cr, SidebarPreviewBaseEntry* preview);
-	static gboolean mouseButtonPressCallback(GtkWidget* widget, GdkEventButton* event, SidebarPreviewBaseEntry* preview);
 
-	void paint(cairo_t* cr);
+protected:
+	virtual void mouseButtonPressCallback() = 0;
+
+	virtual int getWidgetWidth();
+	virtual int getWidgetHeight();
+
+	virtual void drawLoadingPage();
+	virtual void paint(cairo_t* cr);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
+protected:
 	/**
 	 * If this page is currently selected
 	 */
@@ -83,7 +91,7 @@ private:
 	GMutex drawingMutex;
 
 	/**
-	 * The Widget wich is used for drawing
+	 * The Widget which is used for drawing
 	 */
 	GtkWidget* widget;
 

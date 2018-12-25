@@ -119,8 +119,7 @@ void SidebarToolbar::btDeleteClicked(GtkToolButton* toolbutton, SidebarToolbar* 
 	toolbar->control->deletePage();
 }
 
-void SidebarToolbar::setButtonEnabled(bool enableUp, bool enableDown, bool enableCopy, bool enableDelete,
-									  PageRef currentPage)
+void SidebarToolbar::setButtonEnabled(bool enableUp, bool enableDown, bool enableCopy, bool enableDelete, PageRef currentPage)
 {
 	XOJ_CHECK_TYPE(SidebarToolbar);
 
