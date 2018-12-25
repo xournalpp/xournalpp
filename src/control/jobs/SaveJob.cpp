@@ -152,6 +152,7 @@ bool SaveJob::save()
 	doc->lock();
 
 	h.saveTo(filename, this->control);
+	doc->setFilename(filename);
 	doc->unlock();
 
 	if (!h.getErrorMessage().empty())

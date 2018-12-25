@@ -2541,7 +2541,7 @@ bool Control::saveAs()
 		return false;
 	}
 
-	// no lock needed, this is an uncritical operation
+	// no lock needed, this is an uncritically operation
 	this->doc->setCreateBackupOnSave(false);
 	return save();
 }
