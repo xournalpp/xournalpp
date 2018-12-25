@@ -187,7 +187,7 @@ path Document::createSaveFilename(DocumentType type, string defaultSaveName)
 {
 	if (!filename.empty())
 	{
-		//This can be any extension		
+		// This can be any extension
 		return filename.stem();
 	}
 	else if (!pdfFilename.empty())

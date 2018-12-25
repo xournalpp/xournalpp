@@ -121,19 +121,7 @@ add_includes_ldflags ("${GThread_LDFLAGS}" "${GThread_INCLUDE_DIRS}")
 pkg_check_modules (Libxml REQUIRED "libxml-2.0 >= 2.0.0")
 add_includes_ldflags ("${Libxml_LDFLAGS}" "${Libxml_INCLUDE_DIRS}")
 
-find_program(LSB_RELEASE_EXEC lsb_release)
-execute_process(COMMAND ${LSB_RELEASE_EXEC} -is
-  OUTPUT_VARIABLE LSB_RELEASE_ID_SHORT
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-find_program(LSB_RELEASE_EXEC lsb_release)
-execute_process(COMMAND ${LSB_RELEASE_EXEC} -rs
-  OUTPUT_VARIABLE LSB_RELEASE_NUMBER_SHORT
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-
 # Poppler
-
 pkg_check_modules (PopplerGlib REQUIRED "poppler-glib >= 0.41.0")
 add_includes_ldflags ("${PopplerGlib_LDFLAGS}" "${PopplerGlib_INCLUDE_DIRS}")
 set(POPPLER_INCLUDE_DIR, "${PopplerGlib_INCLUDE_DIRS}")
