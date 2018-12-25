@@ -49,6 +49,7 @@
 #include <serializing/ObjectInputStream.h>
 #include <Stacktrace.h>
 #include <Util.h>
+#include <XojMsgBox.h>
 
 #include <boost/filesystem.hpp>
 namespace bf = boost::filesystem;
@@ -58,11 +59,7 @@ namespace ba = boost::algorithm;
 #include <gtk/gtk.h>
 
 #include <sstream>
-#include <iostream>
 #include <fstream>
-using std::cout;
-using std::cerr;
-using std::endl;
 using std::ifstream;
 
 #include <time.h>
@@ -225,7 +222,7 @@ void Control::renameLastAutosaveFile()
 		{
 			string msg = FS(_F("Autosave failed with an error: {1}") % e.what());
 			g_warning("%s", msg.c_str());
-			Util::showErrorToUser(getGtkWindow(), msg);
+			XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 		}
 	}
 }
@@ -343,7 +340,7 @@ bool Control::autosaveCallback(Control* control)
 	}
 	else
 	{
-		cout << "Info: autosave document..." << endl;
+		g_message("Info: autosave document...");
 	}
 
 	AutosaveJob* job = new AutosaveJob(control);
@@ -887,7 +884,7 @@ void Control::help()
 	{
 
 		string msg = FS(_F("There was an error displaying help: {1}") % error->message);
-		Util::showErrorToUser(getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 
 		g_error_free(error);
 	}
@@ -2007,7 +2004,7 @@ bool Control::shouldFileOpen(string filename)
 		string msg = FS(_F("Do not open Autosave files. They may will be overwritten!\n"
 				"Copy the files to another folder.\n"
 				"Files from Folder {1} cannot be opened.") % basename);
-		Util::showErrorToUser(getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 		return false;
 	}
 
@@ -2034,7 +2031,7 @@ bool Control::openFile(path filename, int scrollToPage)
 		XojOpenDlg dlg(getGtkWindow(), this->settings);
 		filename = dlg.showOpenDialog(false, attachPdf);
 
-		cout << _F("Filename: {1}") % filename.string() << endl;
+		g_message("%s", (_F("Filename: {1}") % filename.string()).c_str());
 
 		if (filename.empty())
 		{
@@ -2100,7 +2097,7 @@ bool Control::openFile(path filename, int scrollToPage)
 	if (!loadedDocument)
 	{
 		string msg = FS(_F("Error opening file \"{1}\"") % filename.string()) + "\n" + loadHandler.getLastError();
-		Util::showErrorToUser(getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 
 		fileLoaded(scrollToPage);
 		return false;
@@ -2284,7 +2281,7 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 		this->doc->unlock();
 
 		string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filename.string() % errMsg);
-		Util::showErrorToUser(getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 	}
 	getCursor()->setCursorBusy(false);
 
@@ -2544,7 +2541,7 @@ bool Control::saveAs()
 		return false;
 	}
 
-	// no lock needed, this is an uncritical operation
+	// no lock needed, this is an uncritically operation
 	this->doc->setCreateBackupOnSave(false);
 	return save();
 }
@@ -2666,8 +2663,8 @@ bool Control::checkExistingFile(path& folder, path& filename)
 	
 	if (boost::filesystem::exists(filename))
 	{
-		string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % filename.filename().string() );
-		int res = Util::replaceFileQuestion(getGtkWindow(), msg);
+		string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % filename.filename().string());
+		int res = XojMsgBox::replaceFileQuestion(getGtkWindow(), msg);
 		return res != 1; // res != 1 when user clicks on Replace
 	}
 	return true;
@@ -3021,8 +3018,8 @@ void Control::runLatex()
 
 #else
 	// This should never occur, as the menupoint is also hidden.
-	cout << "Mathtex is disabled. Recompile with ./configure --enable-mathtex, "
-			"ensuring you have the mathtex command on your system." << endl;
+	g_warning("Mathtex is disabled. Recompile with cmake -DENABLE_MATHTEX=ON "
+			  "ensuring you have the mathtex command on your system.");
 #endif // ENABLE_MATHTEX
 }
 

@@ -8,6 +8,7 @@
 #include "undo/InsertUndoAction.h"
 
 #include <i18n.h>
+#include <XojMsgBox.h>
 
 ImageHandler::ImageHandler(Control* control, XojPageView* view)
 {
@@ -52,7 +53,7 @@ bool ImageHandler::insertImage(GFile* file, double x, double y)
 	}
 	else
 	{
-		Util::showErrorToUser(control->getGtkWindow(), FS(_F("This image could not be loaded. Error message: {1}") % err->message));
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("This image could not be loaded. Error message: {1}") % err->message));
 		g_error_free(err);
 		return false;
 	}

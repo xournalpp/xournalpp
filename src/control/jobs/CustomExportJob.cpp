@@ -10,6 +10,8 @@
 
 #include <i18n.h>
 #include <config-features.h>
+#include <XojMsgBox.h>
+
 
 CustomExportJob::CustomExportJob(Control* control)
  : BaseExportJob(control, _("Custom Export")),
@@ -306,7 +308,7 @@ void CustomExportJob::afterRun()
 
 	if (!this->lastError.empty())
 	{
-		Util::showErrorToUser(control->getGtkWindow(), this->lastError);
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), this->lastError);
 	}
 }
 

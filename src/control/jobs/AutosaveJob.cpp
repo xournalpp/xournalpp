@@ -4,6 +4,7 @@
 #include "control/xojfile/SaveHandler.h"
 
 #include <i18n.h>
+#include <XojMsgBox.h>
 
 AutosaveJob::AutosaveJob(Control* control)
 {
@@ -22,7 +23,7 @@ void AutosaveJob::afterRun()
 	XOJ_CHECK_TYPE(AutosaveJob);
 
 	string msg = FS(_F("Autosave: {1}") % this->error);
-	Util::showErrorToUser(control->getGtkWindow(), msg);
+	XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 }
 
 void AutosaveJob::run()

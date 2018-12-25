@@ -10,6 +10,7 @@
 
 #include <config.h>
 #include <i18n.h>
+#include <XojMsgBox.h>
 
 #include <boost/filesystem/operations.hpp>
 
@@ -42,7 +43,7 @@ void SaveJob::afterRun()
 
 	if (!this->lastError.empty())
 	{
-		Util::showErrorToUser(control->getGtkWindow(), this->lastError);
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), this->lastError);
 	}
 	else
 	{
@@ -151,6 +152,7 @@ bool SaveJob::save()
 	doc->lock();
 
 	h.saveTo(filename, this->control);
+	doc->setFilename(filename);
 	doc->unlock();
 
 	if (!h.getErrorMessage().empty())
