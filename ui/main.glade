@@ -749,6 +749,14 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkCheckMenuItem" id="menuToolsDrawCoordinateSystem">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Draw Arrow</property>
+                        <property name="use_underline">True</property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkCheckMenuItem" id="menuToolsRuler">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
