@@ -1985,7 +1985,6 @@ bool Control::newFile(string pageTemplate)
 	return true;
 }
 
-
 /**
  * Check if this is an autosave file, return false in this case and display a user instruction
  */

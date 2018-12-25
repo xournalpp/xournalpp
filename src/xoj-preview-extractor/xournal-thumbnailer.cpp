@@ -3,7 +3,7 @@
  *
  * This small program extracts a preview out of a xoj file
  *
- * @author MarPiRK
+ * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
  *
  * @license GPL
@@ -23,8 +23,6 @@
 using std::cerr;
 using std::cout;
 using std::endl;
-#include <string>
-using std::string;
 
 void initLocalisation()
 {
