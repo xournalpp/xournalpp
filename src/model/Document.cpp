@@ -11,9 +11,6 @@
 #include <Util.h>
 
 #include <string.h>
-#include <iostream>
-using std::cout;
-using std::endl;
 
 Document::Document(DocumentHandler* handler)
 {
@@ -395,8 +392,6 @@ bool Document::readPdf(path filename, bool initPages, bool attachToDocument)
 
 		return false;
 	}
-
-	cout << "attachToDocument: " << attachToDocument << endl;
 
 	this->pdfFilename = filename;
 	this->attachPdf = attachToDocument;

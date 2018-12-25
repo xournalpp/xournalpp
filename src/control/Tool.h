@@ -119,14 +119,7 @@ public:
 	DrawingType getDrawingType();
 	void setDrawingType(DrawingType drawingType);
 
-	bool isEnableColor();
-	bool isEnableSize();
-	bool isEnableRuler();
-	bool isEnableRectangle();
-	bool isEnableCircle();
-	bool isEnableArrow();
-	bool isEnableShapeRecognizer();
-	bool isEnableFill();
+	bool hasCapability(ToolCapabilities cap);
 
 	double getThickness(ToolSize size);
 
