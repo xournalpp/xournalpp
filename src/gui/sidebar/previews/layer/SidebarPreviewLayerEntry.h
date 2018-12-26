@@ -38,6 +38,11 @@ public:
 
 	virtual GtkWidget* getWidget();
 
+	/**
+	 * Set the value of the visible checkbox
+	 */
+	void setVisibleCheckbox(bool enabled);
+
 protected:
 	virtual void mouseButtonPressCallback();
 
@@ -63,6 +68,16 @@ private:
 	 * Container box for the preview and the button
 	 */
 	GtkWidget* box;
+
+	/**
+	 * Visible checkbox
+	 */
+	GtkWidget* cbVisible;
+
+	/**
+	 * Ignore events
+	 */
+	bool inUpdate;
 
 	friend class PreviewJob;
 };
