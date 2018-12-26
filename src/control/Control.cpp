@@ -155,8 +155,6 @@ Control::~Control()
 		page->unreference();
 	}
 
-	delete this->layerController;
-	this->layerController = NULL;
 	delete this->clipboardHandler;
 	this->clipboardHandler = NULL;
 	delete this->recent;
@@ -193,6 +191,8 @@ Control::~Control()
 	this->audioController = NULL;
 	delete this->pageBackgroundChangeController;
 	this->pageBackgroundChangeController = NULL;
+	delete this->layerController;
+	this->layerController = NULL;
 
 	XOJ_RELEASE_TYPE(Control);
 }

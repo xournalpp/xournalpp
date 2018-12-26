@@ -119,6 +119,16 @@ void SidebarToolbar::btDeleteClicked(GtkToolButton* toolbutton, SidebarToolbar* 
 	toolbar->control->deletePage();
 }
 
+void SidebarToolbar::setHidden(bool hidden)
+{
+	XOJ_CHECK_TYPE(SidebarToolbar);
+
+	gtk_widget_set_visible(GTK_WIDGET(this->btUp), !hidden);
+	gtk_widget_set_visible(GTK_WIDGET(this->btDown), !hidden);
+	gtk_widget_set_visible(GTK_WIDGET(this->btCopy), !hidden);
+	gtk_widget_set_visible(GTK_WIDGET(this->btDelete), !hidden);
+}
+
 void SidebarToolbar::setButtonEnabled(bool enableUp, bool enableDown, bool enableCopy, bool enableDelete, PageRef currentPage)
 {
 	XOJ_CHECK_TYPE(SidebarToolbar);

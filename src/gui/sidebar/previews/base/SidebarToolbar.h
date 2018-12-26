@@ -32,6 +32,8 @@ public:
 	 */
 	void setButtonEnabled(bool enableUp, bool enableDown, bool enableCopy, bool enableDelete, PageRef currentPage);
 
+	void setHidden(bool hidden);
+
 private:
 	XOJ_TYPE_ATTRIB;
 
