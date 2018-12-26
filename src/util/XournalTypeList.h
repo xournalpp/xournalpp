@@ -255,4 +255,3 @@ XOJ_DECLARE_TYPE(PopupMenuButton, 244);
 XOJ_DECLARE_TYPE(LayerCtrlListener, 245);
 XOJ_DECLARE_TYPE(CoordinateSystemHandler, 246);
 
-
