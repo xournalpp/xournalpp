@@ -28,6 +28,7 @@ ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* par
 	XOJ_INIT_TYPE(ToolMenuHandler);
 
 	this->parent = parent;
+	this->control = control;
 	this->listener = control;
 	this->zoom = control->getZoomControl();
 	this->gui = gui;
@@ -455,7 +456,7 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolButton(listener, gui, "PRESENTATION_MODE", ACTION_VIEW_PRESENTATION_MODE, GROUP_PRESENTATION_MODE, false,
 							   "showtwopages.svg", _("Presentation mode"), gui->get("menuViewPresMode")));
 
-	toolPageLayer = new ToolPageLayer(gui, listener, "LAYER", ACTION_FOOTER_LAYER);
+	toolPageLayer = new ToolPageLayer(control->getAudioController(), gui, listener, "LAYER", ACTION_FOOTER_LAYER);
 	addToolItem(toolPageLayer);
 
 	registerMenupoint(gui->get("menuEditSettings"), ACTION_SETTINGS);
@@ -568,20 +569,6 @@ void ToolMenuHandler::setPageText(string text)
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
 	this->toolPageSpinner->setText(text);
-}
-
-int ToolMenuHandler::getSelectedLayer()
-{
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
-	return this->toolPageLayer->getSelectedLayer();
-}
-
-void ToolMenuHandler::setLayerCount(int count, int selected)
-{
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
-	this->toolPageLayer->setLayerCount(count, selected);
 }
 
 ToolbarModel* ToolMenuHandler::getModel()

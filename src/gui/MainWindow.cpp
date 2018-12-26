@@ -681,26 +681,27 @@ void MainWindow::updateLayerCombobox()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	PageRef p = control->getCurrentPage();
-
-	int layer = 0;
-	int maxLayer = 0;
-
-	if (p)
-	{
-		layer = p->getSelectedLayerId();
-		maxLayer = p->getLayerCount();
-		toolbar->setLayerCount(maxLayer, layer);
-	}
-	else
-	{
-		toolbar->setLayerCount(-1, -1);
-	}
-
-	control->fireEnableAction(ACTION_DELETE_LAYER, layer > 0);
-	control->fireEnableAction(ACTION_GOTO_NEXT_LAYER, layer < maxLayer);
-	control->fireEnableAction(ACTION_GOTO_PREVIOUS_LAYER, layer > 0);
-	control->fireEnableAction(ACTION_GOTO_TOP_LAYER, layer < maxLayer);
+	// TODO !!!!!!!!!!!!!!!!!
+//	PageRef p = control->getCurrentPage();
+//
+//	int layer = 0;
+//	int maxLayer = 0;
+//
+//	if (p)
+//	{
+//		layer = p->getSelectedLayerId();
+//		maxLayer = p->getLayerCount();
+//		toolbar->setLayerCount(maxLayer, layer);
+//	}
+//	else
+//	{
+//		toolbar->setLayerCount(-1, -1);
+//	}
+//
+//	control->fireEnableAction(ACTION_DELETE_LAYER, layer > 0);
+//	control->fireEnableAction(ACTION_GOTO_NEXT_LAYER, layer < maxLayer);
+//	control->fireEnableAction(ACTION_GOTO_PREVIOUS_LAYER, layer > 0);
+//	control->fireEnableAction(ACTION_GOTO_TOP_LAYER, layer < maxLayer);
 }
 
 void MainWindow::setRecentMenu(GtkWidget* submenu)

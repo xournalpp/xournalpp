@@ -15,34 +15,45 @@
 #include <XournalType.h>
 
 class GladeGui;
+class PopupMenuButton;
+class LayerController;
 
 class ToolPageLayer : public AbstractToolItem
 {
 public:
-	ToolPageLayer(GladeGui* gui, ActionHandler* handler, string id, ActionType type);
+	ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, string id, ActionType type);
 	virtual ~ToolPageLayer();
 
 public:
-	static void cbSelectCallback(GtkComboBox* widget, ToolPageLayer* tpl);
-
-	int getSelectedLayer();
-	void setSelectedLayer(int selected);
-	void setLayerCount(int layer, int selected);
 	virtual string getToolDisplayName();
 
 protected:
+	GtkWidget* createSpecialMenuEntry(string name);
+	void createSeparator();
+
+	/**
+	 * Add special button to the top of the menu
+	 */
+	void addSpecialButtonTop();
+
+	/**
+	 * Rebuild the Menu
+	 */
+	void updateMenu();
+
 	virtual GtkToolItem* newItem();
 	virtual GtkWidget* getNewToolIcon();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GtkWidget* layerLabel;
-	GtkWidget* layerButton;
-
-	GtkWidget* layerComboBox;
+	LayerController* lc;
 	GladeGui* gui;
 
-	int layerCount;
-	bool inCbUpdate;
+	GtkWidget* layerLabel;
+	GtkWidget* layerButton;
+	GtkWidget* menu;
+
+	PopupMenuButton* popupMenuButton;
+	int menuY;
 };

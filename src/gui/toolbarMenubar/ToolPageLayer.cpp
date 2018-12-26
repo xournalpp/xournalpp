@@ -1,12 +1,17 @@
 #include "ToolPageLayer.h"
 
 #include "gui/GladeGui.h"
+#include "gui/widgets/PopupMenuButton.h"
 
 #include <config.h>
 #include <i18n.h>
 
-ToolPageLayer::ToolPageLayer(GladeGui* gui, ActionHandler* handler, string id, ActionType type)
- : AbstractToolItem(id, handler, type, NULL)
+ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, string id, ActionType type)
+ : AbstractToolItem(id, handler, type, NULL),
+   lc(lc),
+   gui(gui),
+   menu(gtk_menu_new()),
+   menuY(0)
 {
 	XOJ_INIT_TYPE(ToolPageLayer);
 
@@ -17,75 +22,121 @@ ToolPageLayer::ToolPageLayer(GladeGui* gui, ActionHandler* handler, string id, A
 	pango_attr_list_insert(attrs, pango_attr_weight_new(PANGO_WEIGHT_BOLD));
 	gtk_label_set_attributes(GTK_LABEL(this->layerLabel), attrs);
 
-	this->layerComboBox = gtk_combo_box_text_new();
-	this->layerCount = -5;
-	this->inCbUpdate = false;
-	this->gui = gui;
+	popupMenuButton = new PopupMenuButton(this->layerButton, menu);
 
-	g_signal_connect(this->layerComboBox, "changed", G_CALLBACK(&cbSelectCallback), this);
+	updateMenu();
+	updateMenu();
+	updateMenu();
 }
 
 ToolPageLayer::~ToolPageLayer()
 {
+	XOJ_CHECK_TYPE(ToolPageLayer);
+
+	delete popupMenuButton;
+	popupMenuButton = NULL;
+
 	XOJ_RELEASE_TYPE(ToolPageLayer);
 }
 
-void ToolPageLayer::cbSelectCallback(GtkComboBox* widget, ToolPageLayer* tpl)
-{
-	XOJ_CHECK_TYPE_OBJ(tpl, ToolPageLayer);
+const int MENU_WIDTH = 3;
 
-	if (tpl->inCbUpdate)
-	{
-		return;
-	}
-
-	tpl->handler->actionPerformed(ACTION_FOOTER_LAYER, GROUP_NOGROUP, NULL, NULL, NULL, true);
-}
-
-int ToolPageLayer::getSelectedLayer()
+void ToolPageLayer::createSeparator()
 {
 	XOJ_CHECK_TYPE(ToolPageLayer);
 
-	GtkComboBox* cb = GTK_COMBO_BOX(layerComboBox);
-	int count = gtk_tree_model_iter_n_children(gtk_combo_box_get_model(cb), NULL);
-	int selected = count - gtk_combo_box_get_active(cb) - 1;
-	return selected;
+	gtk_menu_attach(GTK_MENU(menu), gtk_separator_menu_item_new(), 0, MENU_WIDTH, menuY, menuY + 1);
+	menuY++;
 }
 
-void ToolPageLayer::setSelectedLayer(int selected)
+GtkWidget* ToolPageLayer::createSpecialMenuEntry(string name)
 {
 	XOJ_CHECK_TYPE(ToolPageLayer);
 
-	GtkComboBox* cb = GTK_COMBO_BOX(layerComboBox);
-	int count = gtk_tree_model_iter_n_children(gtk_combo_box_get_model(cb), NULL);
+	GtkWidget* it = gtk_menu_item_new();
+	GtkWidget* lb = gtk_label_new(name.c_str());
 
-	gtk_combo_box_set_active(cb, count - selected - 1);
+	PangoAttrList* attrs = pango_attr_list_new();
+	pango_attr_list_insert(attrs, pango_attr_weight_new(PANGO_WEIGHT_BOLD));
+	gtk_label_set_attributes(GTK_LABEL(lbShowAll), attrs);
+
+	gtk_container_add(GTK_CONTAINER(it), lb);
+	gtk_menu_attach(GTK_MENU(menu), it, 0, MENU_WIDTH, menuY, menuY + 1);
+	menuY++;
+
+	return it;
 }
 
-void ToolPageLayer::setLayerCount(int layer, int selected)
+/**
+ * Add special button to the top of the menu
+ */
+void ToolPageLayer::addSpecialButtonTop()
 {
 	XOJ_CHECK_TYPE(ToolPageLayer);
 
-	this->inCbUpdate = true;
+	GtkWidget* itShowAll = createSpecialMenuEntry(_("Show all"));
+	GtkWidget* itHideAll = createSpecialMenuEntry(_("Hide all"));
+	createSeparator();
 
-	int count = gtk_tree_model_iter_n_children(gtk_combo_box_get_model(GTK_COMBO_BOX(this->layerComboBox)), NULL);
+	g_signal_connect(itShowAll, "activate", G_CALLBACK(
+		+[](GtkWidget* menu, ToolPageLayer* self)
+		{
+			XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
+			printf("show all");
+		}), this);
 
-	for (int i = count - 1; i >= 0; i--)
-	{
-		gtk_combo_box_text_remove(GTK_COMBO_BOX_TEXT(this->layerComboBox), i);
-	}
 
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->layerComboBox), _("Background"));
-	for (int i = 1; i <= layer; i++)
-	{
-		string text = FS(_F("Layer {1}") % i);
-		gtk_combo_box_text_prepend_text(GTK_COMBO_BOX_TEXT(this->layerComboBox), text.c_str());
-	}
+	g_signal_connect(itHideAll, "activate", G_CALLBACK(
+		+[](GtkWidget* menu, ToolPageLayer* self)
+		{
+			XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
+			printf("hide all");
+		}), this);
+}
 
-	setSelectedLayer(selected);
+/**
+ * Rebuild the Menu
+ */
+void ToolPageLayer::updateMenu()
+{
+	XOJ_CHECK_TYPE(ToolPageLayer);
 
-	this->layerCount = layer;
-	this->inCbUpdate = false;
+	// Remove all items from Menu
+	gtk_container_foreach(GTK_CONTAINER(menu), (GtkCallback) gtk_widget_destroy, NULL);
+	menuY = 0;
+
+	addSpecialButtonTop();
+
+	int layerCount = 10;
+
+
+//	int menuY = layerCount + 10;
+//
+//	for (int layer = 0; layer < 10; layer++)
+//	{
+//		string text = FS(_F("Layer {1}") % (layer + 1));
+//
+//		GtkWidget* itLayer = gtk_check_menu_item_new_with_label(text.c_str());
+//		gtk_menu_attach(GTK_MENU(menu), itLayer, 0, 2, menuY, menuY + 1);
+//
+//		GtkWidget* itShow = gtk_check_menu_item_new_with_label(_("show"));
+//		gtk_menu_attach(GTK_MENU(menu), itShow, 2, 3, menuY, menuY + 1);
+//		gtk_widget_set_hexpand(itShow, false);
+//
+//		menuY--;
+//	}
+//
+//	gtk_menu_attach(GTK_MENU(menu), gtk_separator_menu_item_new(), 0, MENU_WIDTH, layerCount + 1, layerCount + 2);
+//	menuY++;
+//
+//	GtkWidget* itBackground = gtk_check_menu_item_new_with_label(_("Background"));
+//	gtk_menu_attach(GTK_MENU(menu), itBackground, 0, 2, layerCount + 2, layerCount + 3);
+//
+//	GtkWidget* itShowBackground = gtk_check_menu_item_new_with_label(_("show"));
+//	gtk_menu_attach(GTK_MENU(menu), itShowBackground, 2, 3, layerCount + 2, layerCount + 3);
+//	gtk_widget_set_hexpand(itShowBackground, false);
+
+	gtk_widget_show_all(menu);
 }
 
 string ToolPageLayer::getToolDisplayName()
@@ -113,8 +164,6 @@ GtkToolItem* ToolPageLayer::newItem()
 
 	gtk_box_pack_start(GTK_BOX(hbox), this->layerLabel, false, false, 0);
 	gtk_box_pack_start(GTK_BOX(hbox), this->layerButton, false, false, 0);
-
-//	gtk_box_pack_start(GTK_BOX(hbox), this->layerComboBox, false, false, 0);
 
 	gtk_container_add(GTK_CONTAINER(it), hbox);
 
