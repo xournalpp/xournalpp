@@ -37,6 +37,9 @@ protected:
 private:
 	XOJ_TYPE_ATTRIB;
 
+	GtkWidget* layerLabel;
+	GtkWidget* layerButton;
+
 	GtkWidget* layerComboBox;
 	GladeGui* gui;
 

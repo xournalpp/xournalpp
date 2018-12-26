@@ -630,13 +630,6 @@ void MainWindow::createToolbarAndMenu()
 	this->control->getScheduler()->unblockRerenderZoom();
 }
 
-int MainWindow::getCurrentLayer()
-{
-	XOJ_CHECK_TYPE(MainWindow);
-
-	return toolbar->getSelectedLayer();
-}
-
 void MainWindow::setFontButtonFont(XojFont& font)
 {
 	XOJ_CHECK_TYPE(MainWindow);

@@ -5,10 +5,17 @@
 #include <config.h>
 #include <i18n.h>
 
-ToolPageLayer::ToolPageLayer(GladeGui* gui, ActionHandler* handler, string id, ActionType type) :
-		AbstractToolItem(id, handler, type, NULL)
+ToolPageLayer::ToolPageLayer(GladeGui* gui, ActionHandler* handler, string id, ActionType type)
+ : AbstractToolItem(id, handler, type, NULL)
 {
 	XOJ_INIT_TYPE(ToolPageLayer);
+
+	this->layerLabel = gtk_label_new("Test123");
+	this->layerButton = gtk_button_new_with_label("⌄");
+
+	PangoAttrList* attrs = pango_attr_list_new();
+	pango_attr_list_insert(attrs, pango_attr_weight_new(PANGO_WEIGHT_BOLD));
+	gtk_label_set_attributes(GTK_LABEL(this->layerLabel), attrs);
 
 	this->layerComboBox = gtk_combo_box_text_new();
 	this->layerCount = -5;
@@ -104,7 +111,10 @@ GtkToolItem* ToolPageLayer::newItem()
 	GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
 	gtk_box_pack_start(GTK_BOX(hbox), gtk_label_new(_("Layer")), false, false, 7);
 
-	gtk_box_pack_start(GTK_BOX(hbox), this->layerComboBox, false, false, 0);
+	gtk_box_pack_start(GTK_BOX(hbox), this->layerLabel, false, false, 0);
+	gtk_box_pack_start(GTK_BOX(hbox), this->layerButton, false, false, 0);
+
+//	gtk_box_pack_start(GTK_BOX(hbox), this->layerComboBox, false, false, 0);
 
 	gtk_container_add(GTK_CONTAINER(it), hbox);
 
