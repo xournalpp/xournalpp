@@ -68,11 +68,6 @@ public:
 public:
 	// DocumentListener interface
 	virtual void documentChanged(DocumentChangeType type);
-	virtual void pageSizeChanged(size_t page);
-	virtual void pageChanged(size_t page);
-	virtual void pageInserted(size_t page);
-	virtual void pageDeleted(size_t page);
-	virtual void pageSelected(size_t page);
 
 private:
 
