@@ -45,6 +45,7 @@ public:
 
 protected:
 	virtual void mouseButtonPressCallback();
+	void checkboxToggled();
 
 private:
 	XOJ_TYPE_ATTRIB;

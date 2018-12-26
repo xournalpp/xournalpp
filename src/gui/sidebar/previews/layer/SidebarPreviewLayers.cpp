@@ -67,17 +67,12 @@ void SidebarPreviewLayers::updatePreviews()
 	int layerCount = page->getLayerCount();
 
 	size_t index = 0;
-	for (int i = layerCount - 1; i >= 0; i--)
+	for (int i = layerCount; i >= 0; i--)
 	{
-		SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, i, index++);
+		SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, i - 1, index++);
 		this->previews.push_back(p);
 		gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
 	}
-
-	// background
-	SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, -1, index);
-	this->previews.push_back(p);
-	gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
 
 	layout();
 	updateSelectedLayer();
@@ -140,4 +135,13 @@ void SidebarPreviewLayers::layerSelected(size_t layerIndex)
 	lc->switchToLay(this->previews.size() - layerIndex - 1);
 	updateSelectedLayer();
 }
+
+/**
+ * A layer was hidden / showed
+ */
+void SidebarPreviewLayers::layerVisibilityChanged(int layerIndex, bool enabled)
+{
+	lc->setLayerVisible(layerIndex, enabled);
+}
+
 

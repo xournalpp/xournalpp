@@ -30,6 +30,14 @@ SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, 
 
 	cbVisible = gtk_check_button_new_with_label(text.c_str());
 
+	g_signal_connect(cbVisible, "toggled", G_CALLBACK(
+		+[](GtkToggleButton* source, SidebarPreviewLayerEntry* self)
+		{
+			XOJ_CHECK_TYPE_OBJ(self, SidebarPreviewLayerEntry);
+			self->checkboxToggled();
+		}), this);
+
+
 	// Left padding
 	gtk_widget_set_margin_start(cbVisible, Shadow::getShadowTopLeftSize());
 
@@ -54,6 +62,19 @@ SidebarPreviewLayerEntry::~SidebarPreviewLayerEntry()
 	this->box = NULL;
 
 	XOJ_RELEASE_TYPE(SidebarPreviewLayerEntry);
+}
+
+void SidebarPreviewLayerEntry::checkboxToggled()
+{
+	XOJ_CHECK_TYPE(SidebarPreviewLayerEntry);
+
+	if (inUpdate)
+	{
+		return;
+	}
+
+	bool check = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbVisible));
+	((SidebarPreviewLayers*)sidebar)->layerVisibilityChanged(layer + 1, check);
 }
 
 void SidebarPreviewLayerEntry::mouseButtonPressCallback()

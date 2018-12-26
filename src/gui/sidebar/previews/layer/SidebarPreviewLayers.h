@@ -48,6 +48,11 @@ public:
 	 */
 	void layerSelected(size_t layerIndex);
 
+	/**
+	 * A layer was hidden / showed
+	 */
+	void layerVisibilityChanged(int layerIndex, bool enabled);
+
 protected:
 	void updateSelectedLayer();
 
