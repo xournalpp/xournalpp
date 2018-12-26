@@ -27,6 +27,7 @@ class I18nTest : public CppUnit::TestFixture
 	CPPUNIT_TEST(testReplace);
 	CPPUNIT_TEST(testMissing);
 	CPPUNIT_TEST(testOrder);
+	CPPUNIT_TEST(testLatexString);
 
 	CPPUNIT_TEST_SUITE_END();
 
@@ -72,6 +73,12 @@ public:
 		string msg = FS(FORMAT_STR(".. {2} .. {1} -- {2} {1}") % "a" % "b");
 
 		CPPUNIT_ASSERT_EQUAL(std::string(".. b .. a -- b a"), msg);
+	}
+
+	void testLatexString()
+	{
+		string command = FS(FORMAT_STR("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}") % "abc" % "red" % 45 % "asdf" % "asdf.png");
+		CPPUNIT_ASSERT_EQUAL(std::string("abc -m 0 \"\\png\\usepackage{color}\\color{red}\\dpi{45}\\normalsize asdf\" -o asdf.png"), command);
 	}
 };
 
