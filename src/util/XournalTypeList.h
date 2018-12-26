@@ -251,4 +251,5 @@ XOJ_DECLARE_TYPE(ZoomGesture, 240);
 XOJ_DECLARE_TYPE(GroupUndoAction, 241);
 XOJ_DECLARE_TYPE(FillTransparencyDialog, 242);
 XOJ_DECLARE_TYPE(Path, 243);
+XOJ_DECLARE_TYPE(CoordinateSystemHandler, 244);
 
