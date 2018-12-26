@@ -40,7 +40,7 @@ addons:
       name: "xournalpp/xournalpp"
       description: "Notetaking software designed around a tablet."
     notification_email: peter_klausing@wh2.tu-dresden.de
-    build_command_prepend: "cmake .. -DENABLE_MATHTEX=ON -DENABLE_CPPUNIT=ON -DUNSTABLE_LAYERS_SIDEBAR=ON"
+    build_command_prepend: "cmake .. -DENABLE_MATHTEX=ON -DENABLE_CPPUNIT=ON"
     build_command: "make"
     branch_pattern: coverity_scan
 
@@ -49,7 +49,7 @@ before_script:
   - "cd build"
 
 script:
-  - "cmake .. -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_MATHTEX=ON -DENABLE_CPPUNIT=ON -DUNSTABLE_LAYERS_SIDEBAR=ON -DDEBUG_COMPILE=ON"
+  - "cmake .. -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_MATHTEX=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON"
   - "make -j `grep processor /proc/cpuinfo | tail -c 2`"
   - "ctest"
 

@@ -144,7 +144,6 @@ endif ()
 
 # Unstable features
 
-option (UNSTABLE_LAYERS_SIDEBAR "Layers sidebar (unstable)" OFF)
 option (UNSTABLE_HIGHDPI_FIXES "HighDPI Fixes (unstable)" OFF)
 
 configure_file (
@@ -292,7 +291,6 @@ Configuration:
 	CppUnit enabled:            ${ENABLE_CPPUNIT}
 
 Unstable features:
-	Layers sidebar:             ${UNSTABLE_LAYERS_SIDEBAR}
 	HighDPI Fixes:              ${UNSTABLE_HIGHDPI_FIXES}
 
 Static libraries:

@@ -21,8 +21,3 @@
 
 
 /* --- Testing features --- */
-
-/**
- * Enable Layers sidebar
- */
-#cmakedefine UNSTABLE_LAYERS_SIDEBAR
