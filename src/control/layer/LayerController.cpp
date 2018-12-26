@@ -2,6 +2,8 @@
 #include "LayerCtrlListener.h"
 #include "control/Control.h"
 #include "gui/XournalView.h"
+#include "undo/RemoveLayerUndoAction.h"
+#include "undo/InsertLayerUndoAction.h"
 
 #include <Util.h>
 
@@ -122,31 +124,32 @@ bool LayerController::actionPerformed(ActionType type)
 		return true;
 
 	case ACTION_GOTO_NEXT_LAYER:
-//		{
-//			int layer = this->win->getCurrentLayer();
-//			PageRef p = getCurrentPage();
-//			if (layer < (int)p->getLayerCount())
-//			{
-//				switchToLay(layer + 1);
-//			}
-//		}
+		{
+			PageRef p = getCurrentPage();
+			int layer = p->getSelectedLayerId();
+			if (layer < (int)p->getLayerCount())
+			{
+				switchToLay(layer + 1);
+			}
+		}
 		return true;
 
 	case ACTION_GOTO_PREVIOUS_LAYER:
-//		{
-//			int layer = this->win->getCurrentLayer();
-//			if (layer > 0)
-//			{
-//				switchToLay(layer - 1);
-//			}
-//		}
+		{
+			PageRef p = getCurrentPage();
+			int layer = p->getSelectedLayerId();
+			if (layer > 0)
+			{
+				switchToLay(layer - 1);
+			}
+		}
 		return true;
 
 	case ACTION_GOTO_TOP_LAYER:
-//		{
-//			PageRef p = getCurrentPage();
-//			switchToLay(p->getLayerCount());
-//		}
+		{
+			PageRef p = getCurrentPage();
+			switchToLay(p->getLayerCount());
+		}
 		return true;
 	default:
 		return false;
@@ -190,51 +193,54 @@ void LayerController::addNewLayer()
 {
 	XOJ_CHECK_TYPE(LayerController);
 
-//	clearSelectionEndText();
-//	PageRef p = getCurrentPage();
-//	if (!p.isValid())
-//	{
-//		return;
-//	}
-//
-//	Layer* l = new Layer();
-//	p->insertLayer(l, p->getSelectedLayerId());
-//	if (win)
-//	{
-//		win->updateLayerCombobox();
-//	}
-//
-//	undoRedo->addUndoAction(new InsertLayerUndoAction(p, l));
+	control->clearSelectionEndText();
+	PageRef p = getCurrentPage();
+	if (!p.isValid())
+	{
+		return;
+	}
+
+	Layer* l = new Layer();
+	p->insertLayer(l, p->getSelectedLayerId());
+
+	control->getUndoRedoHandler()->addUndoAction(new InsertLayerUndoAction(this, p, l));
+
+	fireRebuildLayerMenu();
+	// Repaint is not needed here - the new layer is empty
 }
 
 void LayerController::deleteCurrentLayer()
 {
 	XOJ_CHECK_TYPE(LayerController);
 
-//	clearSelectionEndText();
-//	PageRef p = getCurrentPage();
-//	int pId = getCurrentPageNo();
-//	if (!p.isValid())
-//	{
-//		return;
-//	}
-//
-//	int lId = p->getSelectedLayerId();
-//	if (lId < 1)
-//	{
-//		return;
-//	}
-//	Layer* l = p->getSelectedLayer();
-//
-//	p->removeLayer(l);
-//	if (win)
-//	{
-//		win->getXournal()->layerChanged(pId);
-//		win->updateLayerCombobox();
-//	}
-//
-//	undoRedo->addUndoAction(new RemoveLayerUndoAction(p, l, lId - 1));
-//	this->resetShapeRecognizer();
+	control->clearSelectionEndText();
+
+	PageRef p = getCurrentPage();
+	int pId = selectedPage;
+	if (!p.isValid())
+	{
+		return;
+	}
+
+	int lId = p->getSelectedLayerId();
+	if (lId < 1)
+	{
+		return;
+	}
+	Layer* l = p->getSelectedLayer();
+
+	p->removeLayer(l);
+
+	MainWindow* win = control->getWindow();
+	if (win)
+	{
+		win->getXournal()->layerChanged(pId);
+	}
+
+	control->getUndoRedoHandler()->addUndoAction(new RemoveLayerUndoAction(this, p, l, lId - 1));
+	control->resetShapeRecognizer();
+
+	fireRebuildLayerMenu();
 }
 
 PageRef LayerController::getCurrentPage()

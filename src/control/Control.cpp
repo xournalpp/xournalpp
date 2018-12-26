@@ -37,9 +37,7 @@
 #include "undo/AddUndoAction.h"
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertDeletePageUndoAction.h"
-#include "undo/InsertLayerUndoAction.h"
 #include "undo/InsertUndoAction.h"
-#include "undo/RemoveLayerUndoAction.h"
 #include "view/DocumentView.h"
 
 #include <config.h>
