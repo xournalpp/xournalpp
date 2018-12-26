@@ -59,8 +59,11 @@ protected:
 
 private:
 	void createLayerMenuItem(string text, int layerId);
-	void selectLayer(int layerId);
 	void layerMenuClicked(GtkWidget* menu);
+	void createLayerMenuItemShow(int layerId);
+	void layerMenuShowClicked(GtkWidget* menu);
+
+	void selectLayer(int layerId);
 
 private:
 	XOJ_TYPE_ATTRIB;

@@ -18,6 +18,8 @@ XojPage::XojPage(double width, double height)
 
 	this->ref = 0;
 	this->currentLayer = size_t_npos;
+
+	this->backgroundVisible = true;
 }
 
 XojPage::~XojPage()
@@ -140,19 +142,58 @@ int XojPage::getSelectedLayerId()
 	return this->currentLayer;
 }
 
+void XojPage::setLayerVisible(int layerId, bool visible)
+{
+	XOJ_CHECK_TYPE(XojPage);
+
+	if (layerId < 0)
+	{
+		return;
+	}
+
+	if (layerId == 0)
+	{
+		backgroundVisible = visible;
+		return;
+	}
+
+	layerId--;
+	if (layerId >= this->layer.size())
+	{
+		return;
+	}
+
+	this->layer[layerId]->setVisible(visible);
+}
+
+bool XojPage::isLayerVisible(int layerId)
+{
+	XOJ_CHECK_TYPE(XojPage);
+
+	if (layerId < 0)
+	{
+		return false;
+	}
+
+	if (layerId == 0)
+	{
+		return backgroundVisible;
+	}
+
+	layerId--;
+	if (layerId >= this->layer.size())
+	{
+		return false;
+	}
+
+	return this->layer[layerId]->isVisible();
+}
+
 bool XojPage::isLayerVisible(Layer* layer)
 {
 	XOJ_CHECK_TYPE(XojPage);
 
-	for (int i = 0; i < this->currentLayer; i++)
-	{
-		if (this->layer[i] == layer)
-		{
-			return true;
-		}
-	}
-
-	return false;
+	return layer->isVisible();
 }
 
 void XojPage::setBackgroundPdfPageNr(size_t page)

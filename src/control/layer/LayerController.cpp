@@ -159,7 +159,7 @@ bool LayerController::actionPerformed(ActionType type)
 void LayerController::showAllLayer()
 {
 	XOJ_CHECK_TYPE(LayerController);
-	printf("LayerController::showAllLayer\n");
+	hideOrHideAllLayer(true);
 }
 
 /**
@@ -168,7 +168,22 @@ void LayerController::showAllLayer()
 void LayerController::hideAllLayer()
 {
 	XOJ_CHECK_TYPE(LayerController);
-	printf("LayerController::hideAllLayer\n");
+	hideOrHideAllLayer(false);
+}
+
+/**
+ * Show / Hide all layer on the current page
+ */
+void LayerController::hideOrHideAllLayer(bool show)
+{
+	PageRef page = getCurrentPage();
+	for (size_t i = 1; i <= page->getLayerCount(); i++)
+	{
+		page->setLayerVisible(i, show);
+	}
+
+	fireLayerVisibilityChanged();
+	control->getWindow()->getXournal()->layerChanged(selectedPage);
 }
 
 void LayerController::addNewLayer()
@@ -227,6 +242,16 @@ PageRef LayerController::getCurrentPage()
 	XOJ_CHECK_TYPE(LayerController);
 
 	return control->getDocument()->getPage(selectedPage);
+}
+
+void LayerController::setLayerVisible(int layerId, bool visible)
+{
+	XOJ_CHECK_TYPE(LayerController);
+
+	getCurrentPage()->setLayerVisible(layerId, visible);
+	fireLayerVisibilityChanged();
+
+	control->getWindow()->getXournal()->layerChanged(selectedPage);
 }
 
 void LayerController::switchToLay(int layer)

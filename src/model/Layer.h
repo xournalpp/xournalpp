@@ -56,6 +56,16 @@ public:
 	bool isAnnotated();
 
 	/**
+	 * @return true if the layer is visible
+	 */
+	bool isVisible();
+
+	/**
+	 * @param visible true if the layer is visible
+	 */
+	void setVisible(bool visible);
+
+	/**
 	 * Creates a deep copy of this Layer by copying all of the Element%s contained in it
 	 */
 	Layer* clone();
@@ -65,4 +75,5 @@ private:
 
 	vector<Element*> elements;
 
+	bool visible;
 };

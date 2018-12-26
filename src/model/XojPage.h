@@ -36,6 +36,7 @@ protected:
 	void addLayer(Layer* layer);
 	void insertLayer(Layer* layer, int index);
 	void removeLayer(Layer* layer);
+	void setLayerVisible(int layerId, bool visible);
 
 public:
 	// Also set the size over doc->setPageSize!
@@ -64,6 +65,7 @@ public:
 	int getSelectedLayerId();
 	void setSelectedLayerId(int id);
 	bool isLayerVisible(Layer* layer);
+	bool isLayerVisible(int layerId);
 
 	Layer* getSelectedLayer();
 
@@ -118,6 +120,11 @@ private:
 	 * The background color if the background type is palain
 	 */
 	int backgroundColor;
+
+	/**
+	 * Background visible
+	 */
+	bool backgroundVisible;
 
 	// Allow LoadHandler to add layers directly
 	friend class LoadHandler;

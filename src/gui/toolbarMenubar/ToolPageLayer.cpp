@@ -120,6 +120,11 @@ void ToolPageLayer::layerMenuClicked(GtkWidget* menu)
 {
 	XOJ_CHECK_TYPE(ToolPageLayer);
 
+	if (inMenuUpdate)
+	{
+		return;
+	}
+
 	int layerId = -1;
 
 	for (auto& kv : layerItems)
@@ -153,6 +158,36 @@ void ToolPageLayer::layerMenuClicked(GtkWidget* menu)
 	selectLayer(layerId);
 }
 
+void ToolPageLayer::layerMenuShowClicked(GtkWidget* menu)
+{
+
+	if (inMenuUpdate)
+	{
+		return;
+	}
+
+	int layerId = -1;
+
+	for (auto& kv : showLayerItems)
+	{
+		if (kv.second == menu)
+		{
+			layerId = kv.first;
+			break;
+		}
+	}
+
+	if (layerId < 0)
+	{
+		g_warning("Invalid Layer Show Menu selected - not handled");
+		return;
+	}
+
+	bool checked = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(menu));
+
+	lc->setLayerVisible(layerId, checked);
+}
+
 void ToolPageLayer::createLayerMenuItem(string text, int layerId)
 {
 	XOJ_CHECK_TYPE(ToolPageLayer);
@@ -170,6 +205,25 @@ void ToolPageLayer::createLayerMenuItem(string text, int layerId)
 		}), this);
 
 	layerItems[layerId] = itLayer;
+}
+
+void ToolPageLayer::createLayerMenuItemShow(int layerId)
+{
+	XOJ_CHECK_TYPE(ToolPageLayer);
+
+	GtkWidget* itShow = gtk_check_menu_item_new_with_label(_("show"));
+	gtk_menu_attach(GTK_MENU(menu), itShow, 2, 3, menuY, menuY + 1);
+	gtk_widget_set_hexpand(itShow, false);
+
+	g_signal_connect(itShow, "activate", G_CALLBACK(
+		+[](GtkWidget* menu, ToolPageLayer* self)
+		{
+			XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
+
+			self->layerMenuShowClicked(menu);
+		}), this);
+
+	showLayerItems[layerId] = itShow;
 }
 
 /**
@@ -196,13 +250,7 @@ void ToolPageLayer::updateMenu()
 	for (; layer > 0; layer--)
 	{
 		createLayerMenuItem(FS(_F("Layer {1}") % layer), layer);
-
-		GtkWidget* itShow = gtk_check_menu_item_new_with_label(_("show"));
-		gtk_menu_attach(GTK_MENU(menu), itShow, 2, 3, menuY, menuY + 1);
-		gtk_widget_set_hexpand(itShow, false);
-
-		showLayerItems[layer] = itShow;
-
+		createLayerMenuItemShow(layer);
 		menuY++;
 	}
 
@@ -214,10 +262,9 @@ void ToolPageLayer::updateMenu()
 
 	createLayerMenuItem(_("Background"), 0);
 
-	GtkWidget* itShowBackground = gtk_check_menu_item_new_with_label(_("show"));
-	gtk_menu_attach(GTK_MENU(menu), itShowBackground, 2, 3, menuY, menuY + 1);
-	gtk_widget_set_hexpand(itShowBackground, false);
-	showLayerItems[0] = itShowBackground;
+	// TODO allow to hide background
+	// (The checkbox is working, but the document view and PDF Rendering needs some changes)
+	// createLayerMenuItemShow(0);
 	menuY++;
 
 	gtk_widget_show_all(menu);
@@ -245,6 +292,16 @@ void ToolPageLayer::updateLayerData()
 		else
 		{
 			gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(kv.second), false);
+		}
+	}
+
+	PageRef page = lc->getCurrentPage();
+
+	if (page.isValid())
+	{
+		for (auto& kv : showLayerItems)
+		{
+			gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(kv.second), page->isLayerVisible(kv.first));
 		}
 	}
 

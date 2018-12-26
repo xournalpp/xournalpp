@@ -58,9 +58,15 @@ public:
 	 */
 	void hideAllLayer();
 
+	/**
+	 * Show / Hide all layer on the current page
+	 */
+	void hideOrHideAllLayer(bool show);
+
 	void addNewLayer();
 	void deleteCurrentLayer();
 	void switchToLay(int layer);
+	void setLayerVisible(int layerId, bool visible);
 
 	PageRef getCurrentPage();
 
