@@ -19,6 +19,7 @@
 class PageTypeHandler;
 class PageTypeMenu;
 class PageTypeInfo;
+class PopupMenuButton;
 
 class PageTemplateDialog : public GladeGui, public PageTypeMenuChangeListener
 {
@@ -52,6 +53,8 @@ private:
 	PageTemplateSettings model;
 
 	PageTypeMenu* pageMenu;
+
+	PopupMenuButton* popupMenuButton;
 
 	/**
 	 * The dialog was confirmed / saved

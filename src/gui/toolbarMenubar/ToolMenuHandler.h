@@ -55,9 +55,6 @@ public:
 	SpinPageAdapter* getPageSpinner();
 	void setPageText(string text);
 
-	int getSelectedLayer();
-	void setLayerCount(int count, int selected);
-
 	void setFontButtonFont(XojFont& font);
 	XojFont getFontButtonFont();
 
@@ -95,6 +92,7 @@ private:
 	ToolPageLayer* toolPageLayer;
 	FontButton* fontButton;
 
+	Control* control;
 	ActionHandler* listener;
 	ZoomControl* zoom;
 	GladeGui* gui;

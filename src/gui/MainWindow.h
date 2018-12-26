@@ -13,8 +13,7 @@
 
 #include "GladeGui.h"
 #include "model/Font.h"
-
-#include <XournalType.h>
+#include "control/layer/LayerCtrlListener.h"
 
 class Control;
 class Layout;
@@ -27,11 +26,16 @@ class XournalView;
 class MainWindowToolbarMenu;
 class ZoomGesture;
 
-class MainWindow : public GladeGui
+class MainWindow : public GladeGui, public LayerCtrlListener
 {
 public:
 	MainWindow(GladeSearchpath* gladeSearchPath, Control* control);
 	virtual ~MainWindow();
+
+	// LayerCtrlListener
+public:
+	virtual void rebuildLayerMenu();
+	virtual void layerVisibilityChanged();
 
 public:
 	virtual void show(GtkWindow* parent);
@@ -49,7 +53,6 @@ public:
 
 
 	void updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage);
-	int getCurrentLayer();
 
 	void setFontButtonFont(XojFont& font);
 	XojFont getFontButtonFont();
@@ -69,8 +72,6 @@ public:
 
 	void setUndoDescription(string description);
 	void setRedoDescription(string description);
-
-	void updateLayerCombobox();
 
 	SpinPageAdapter* getSpinPageNo();
 	ToolbarModel* getToolbarModel();

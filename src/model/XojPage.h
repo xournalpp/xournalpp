@@ -30,6 +30,14 @@ private:
 	virtual ~XojPage();
 	void operator=(const XojPage& p);
 
+	// Do not modify layers directly, use LayerController
+	// So notification can be sent on change
+protected:
+	void addLayer(Layer* layer);
+	void insertLayer(Layer* layer, int index);
+	void removeLayer(Layer* layer);
+	void setLayerVisible(int layerId, bool visible);
+
 public:
 	// Also set the size over doc->setPageSize!
 	void setBackgroundPdfPageNr(size_t page);
@@ -45,10 +53,6 @@ public:
 	double getWidth() const;
 	double getHeight() const;
 
-	void addLayer(Layer* layer);
-	void insertLayer(Layer* layer, int index);
-	void removeLayer(Layer* layer);
-
 	size_t getPdfPageNr();
 
 	bool isAnnotated();
@@ -61,6 +65,7 @@ public:
 	int getSelectedLayerId();
 	void setSelectedLayerId(int id);
 	bool isLayerVisible(Layer* layer);
+	bool isLayerVisible(int layerId);
 
 	Layer* getSelectedLayer();
 
@@ -115,4 +120,16 @@ private:
 	 * The background color if the background type is palain
 	 */
 	int backgroundColor;
+
+	/**
+	 * Background visible
+	 */
+	bool backgroundVisible;
+
+	// Allow LoadHandler to add layers directly
+	friend class LoadHandler;
+
+	// Allow LayerController to modify layers of a page
+	// Notifications were be sent
+	friend class LayerController;
 };

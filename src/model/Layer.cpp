@@ -7,6 +7,7 @@ using std::cout;
 using std::endl;
 
 Layer::Layer()
+ : visible(true)
 {
 	XOJ_INIT_TYPE(Layer);
 }
@@ -143,6 +144,26 @@ bool Layer::isAnnotated()
 	XOJ_CHECK_TYPE(Layer);
 
 	return !this->elements.empty();
+}
+
+/**
+ * @return true if the layer is visible
+ */
+bool Layer::isVisible()
+{
+	XOJ_CHECK_TYPE(Layer);
+
+	return visible;
+}
+
+/**
+ * @return true if the layer is visible
+ */
+void Layer::setVisible(bool visible)
+{
+	XOJ_CHECK_TYPE(Layer);
+
+	this->visible = visible;
 }
 
 vector<Element*>* Layer::getElements()

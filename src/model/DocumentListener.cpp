@@ -3,10 +3,9 @@
 #include "DocumentHandler.h"
 
 DocumentListener::DocumentListener()
+ : handler(NULL)
 {
 	XOJ_INIT_TYPE(DocumentListener);
-
-	this->handler = NULL;
 }
 
 DocumentListener::~DocumentListener()
@@ -35,3 +34,48 @@ void DocumentListener::unregisterListener()
 		this->handler->removeListener(this);
 	}
 }
+
+void DocumentListener::documentChanged(DocumentChangeType type)
+{
+	XOJ_CHECK_TYPE(DocumentListener);
+}
+
+void DocumentListener::pageSizeChanged(size_t page)
+{
+	XOJ_CHECK_TYPE(DocumentListener);
+}
+
+void DocumentListener::pageChanged(size_t page)
+{
+	XOJ_CHECK_TYPE(DocumentListener);
+}
+
+void DocumentListener::pageInserted(size_t page)
+{
+	XOJ_CHECK_TYPE(DocumentListener);
+}
+
+void DocumentListener::pageDeleted(size_t page)
+{
+	XOJ_CHECK_TYPE(DocumentListener);
+}
+
+void DocumentListener::pageSelected(size_t page)
+{
+	XOJ_CHECK_TYPE(DocumentListener);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

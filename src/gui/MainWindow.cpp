@@ -6,6 +6,7 @@
 #include "XournalView.h"
 
 #include "control/Control.h"
+#include "control/layer/LayerController.h"
 #include "control/zoom/ZoomGesture.h"
 #include "gui/GladeSearchpath.h"
 #include "ToolbarDefinitions.h"
@@ -126,6 +127,8 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	gtk_drag_dest_add_uri_targets(this->window);
 	gtk_drag_dest_add_image_targets(this->window);
 	gtk_drag_dest_add_text_targets(this->window);
+
+	LayerCtrlListener::registerListener(control->getLayerController());
 }
 
 MainWindow::~MainWindow()
@@ -630,13 +633,6 @@ void MainWindow::createToolbarAndMenu()
 	this->control->getScheduler()->unblockRerenderZoom();
 }
 
-int MainWindow::getCurrentLayer()
-{
-	XOJ_CHECK_TYPE(MainWindow);
-
-	return toolbar->getSelectedLayer();
-}
-
 void MainWindow::setFontButtonFont(XojFont& font)
 {
 	XOJ_CHECK_TYPE(MainWindow);
@@ -680,29 +676,23 @@ void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage
 		pdfText = string(", ") + FS(_F("PDF Page {1}") % (pdfpage + 1));
 	}
 	toolbar->setPageText(FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}{2}") % pagecount % pdfText));
-
-	updateLayerCombobox();
 }
 
-void MainWindow::updateLayerCombobox()
+void MainWindow::rebuildLayerMenu()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	PageRef p = control->getCurrentPage();
+	layerVisibilityChanged();
+}
 
-	int layer = 0;
-	int maxLayer = 0;
+void MainWindow::layerVisibilityChanged()
+{
+	XOJ_CHECK_TYPE(MainWindow);
 
-	if (p)
-	{
-		layer = p->getSelectedLayerId();
-		maxLayer = p->getLayerCount();
-		toolbar->setLayerCount(maxLayer, layer);
-	}
-	else
-	{
-		toolbar->setLayerCount(-1, -1);
-	}
+	LayerController* lc = control->getLayerController();
+
+	int layer = lc->getCurrentLayerId();
+	int maxLayer = lc->getLayerCount();
 
 	control->fireEnableAction(ACTION_DELETE_LAYER, layer > 0);
 	control->fireEnableAction(ACTION_GOTO_NEXT_LAYER, layer < maxLayer);
