@@ -12,11 +12,12 @@ ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* 
    lc(lc),
    gui(gui),
    menu(gtk_menu_new()),
-   menuY(0)
+   menuY(0),
+   inMenuUpdate(false)
 {
 	XOJ_INIT_TYPE(ToolPageLayer);
 
-	this->layerLabel = gtk_label_new("Test123");
+	this->layerLabel = gtk_label_new(_("Loading..."));
 	this->layerButton = gtk_button_new_with_label("⌄");
 
 	PangoAttrList* attrs = pango_attr_list_new();
@@ -49,7 +50,7 @@ void ToolPageLayer::layerVisibilityChanged()
 {
 	XOJ_CHECK_TYPE(ToolPageLayer);
 
-	// TODO !!!!!
+	updateLayerData();
 }
 
 const int MENU_WIDTH = 3;
@@ -108,6 +109,69 @@ void ToolPageLayer::addSpecialButtonTop()
 		}), this);
 }
 
+void ToolPageLayer::selectLayer(int layerId)
+{
+	XOJ_CHECK_TYPE(ToolPageLayer);
+
+	lc->switchToLay(layerId);
+}
+
+void ToolPageLayer::layerMenuClicked(GtkWidget* menu)
+{
+	XOJ_CHECK_TYPE(ToolPageLayer);
+
+	int layerId = -1;
+
+	for (auto& kv : layerItems)
+	{
+		if (kv.second == menu)
+		{
+			layerId = kv.first;
+			break;
+		}
+	}
+
+	if (layerId < 0)
+	{
+		g_warning("Invalid Layer Menu selected - not handled");
+		return;
+	}
+
+
+	if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(menu)))
+	{
+		if (layerId == lc->getCurrentLayerId())
+		{
+			// This is the current layer, don't allow to deselect it
+			inMenuUpdate = true;
+			gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menu), true);
+			inMenuUpdate = false;
+		}
+		return;
+	}
+
+	selectLayer(layerId);
+}
+
+void ToolPageLayer::createLayerMenuItem(string text, int layerId)
+{
+	XOJ_CHECK_TYPE(ToolPageLayer);
+
+	GtkWidget* itLayer = gtk_check_menu_item_new_with_label(text.c_str());
+	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(itLayer), true);
+	gtk_menu_attach(GTK_MENU(menu), itLayer, 0, 2, menuY, menuY + 1);
+
+	g_signal_connect(itLayer, "activate", G_CALLBACK(
+		+[](GtkWidget* menu, ToolPageLayer* self)
+		{
+			XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
+
+			self->layerMenuClicked(menu);
+		}), this);
+
+	layerItems[layerId] = itLayer;
+}
+
 /**
  * Rebuild the Menu
  */
@@ -121,45 +185,81 @@ void ToolPageLayer::updateMenu()
 	// Create a new menu on refresh
 	menu = gtk_menu_new();
 	popupMenuButton->setMenu(menu);
+	layerItems.clear();
+	showLayerItems.clear();
 
 	menuY = 0;
 
 	addSpecialButtonTop();
 
 	int layer = lc->getLayerCount();
-	if (layer < 1)
-	{
-		layer = 1;
-	}
-
-	g_message("Update layer menu. Count %i", layer);
-
 	for (; layer > 0; layer--)
 	{
-		string text = FS(_F("Layer {1}") % layer);
-
-		GtkWidget* itLayer = gtk_check_menu_item_new_with_label(text.c_str());
-		gtk_menu_attach(GTK_MENU(menu), itLayer, 0, 2, menuY, menuY + 1);
+		createLayerMenuItem(FS(_F("Layer {1}") % layer), layer);
 
 		GtkWidget* itShow = gtk_check_menu_item_new_with_label(_("show"));
 		gtk_menu_attach(GTK_MENU(menu), itShow, 2, 3, menuY, menuY + 1);
 		gtk_widget_set_hexpand(itShow, false);
 
+		showLayerItems[layer] = itShow;
+
 		menuY++;
 	}
 
-	gtk_menu_attach(GTK_MENU(menu), gtk_separator_menu_item_new(), 0, MENU_WIDTH, menuY, menuY + 1);
-	menuY++;
+	if (layer > 0)
+	{
+		gtk_menu_attach(GTK_MENU(menu), gtk_separator_menu_item_new(), 0, MENU_WIDTH, menuY, menuY + 1);
+		menuY++;
+	}
 
-	GtkWidget* itBackground = gtk_check_menu_item_new_with_label(_("Background"));
-	gtk_menu_attach(GTK_MENU(menu), itBackground, 0, 2, menuY, menuY + 1);
+	createLayerMenuItem(_("Background"), 0);
 
 	GtkWidget* itShowBackground = gtk_check_menu_item_new_with_label(_("show"));
 	gtk_menu_attach(GTK_MENU(menu), itShowBackground, 2, 3, menuY, menuY + 1);
 	gtk_widget_set_hexpand(itShowBackground, false);
+	showLayerItems[0] = itShowBackground;
 	menuY++;
 
 	gtk_widget_show_all(menu);
+
+	updateLayerData();
+}
+
+/**
+ * Update selected layer, update visible layer
+ */
+void ToolPageLayer::updateLayerData()
+{
+	XOJ_CHECK_TYPE(ToolPageLayer);
+
+	int layerId = lc->getCurrentLayerId();
+
+	inMenuUpdate = true;
+
+	for (auto& kv : layerItems)
+	{
+		if (kv.first == layerId)
+		{
+			gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(kv.second), true);
+		}
+		else
+		{
+			gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(kv.second), false);
+		}
+	}
+
+	inMenuUpdate = false;
+
+	string lb;
+	if (layerId > 0)
+	{
+		lb = FS(_F("Layer {1}") % layerId);
+	}
+	else
+	{
+		lb = _("Background");
+	}
+	gtk_label_set_text(GTK_LABEL(layerLabel), lb.c_str());
 }
 
 string ToolPageLayer::getToolDisplayName()

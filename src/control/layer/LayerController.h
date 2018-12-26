@@ -62,6 +62,8 @@ public:
 	void deleteCurrentLayer();
 	void switchToLay(int layer);
 
+	PageRef getCurrentPage();
+
 	/**
 	 * @return Layer count of the current page
 	 */

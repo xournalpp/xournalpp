@@ -14,6 +14,9 @@
 #include "AbstractToolItem.h"
 #include "control/layer/LayerCtrlListener.h"
 
+#include <map>
+using std::map;
+
 class GladeGui;
 class PopupMenuButton;
 class LayerController;
@@ -46,8 +49,18 @@ protected:
 	 */
 	void updateMenu();
 
+	/**
+	 * Update selected layer, update visible layer
+	 */
+	void updateLayerData();
+
 	virtual GtkToolItem* newItem();
 	virtual GtkWidget* getNewToolIcon();
+
+private:
+	void createLayerMenuItem(string text, int layerId);
+	void selectLayer(int layerId);
+	void layerMenuClicked(GtkWidget* menu);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -59,6 +72,14 @@ private:
 	GtkWidget* layerButton;
 	GtkWidget* menu;
 
+	map<int, GtkWidget*> layerItems;
+	map<int, GtkWidget*> showLayerItems;
+
 	PopupMenuButton* popupMenuButton;
 	int menuY;
+
+	/**
+	 * Menu is currently updating - ignore events
+	 */
+	bool inMenuUpdate;
 };

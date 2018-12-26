@@ -1,6 +1,7 @@
 #include "LayerController.h"
 #include "LayerCtrlListener.h"
 #include "control/Control.h"
+#include "gui/XournalView.h"
 
 #include <Util.h>
 
@@ -117,7 +118,7 @@ bool LayerController::actionPerformed(ActionType type)
 
 	case ACTION_FOOTER_LAYER:
 		// This event is not fired anymore
-		// Tis controller is called directly
+		// This controller is called directly
 		return true;
 
 	case ACTION_GOTO_NEXT_LAYER:
@@ -221,18 +222,28 @@ void LayerController::deleteCurrentLayer()
 //	this->resetShapeRecognizer();
 }
 
+PageRef LayerController::getCurrentPage()
+{
+	XOJ_CHECK_TYPE(LayerController);
+
+	return control->getDocument()->getPage(selectedPage);
+}
+
 void LayerController::switchToLay(int layer)
 {
 	XOJ_CHECK_TYPE(LayerController);
 
-//	clearSelectionEndText();
-//	PageRef p = getCurrentPage();
-//	if (p.isValid())
-//	{
-//		p->setSelectedLayerId(layer);
-//		this->win->getXournal()->layerChanged(getCurrentPageNo());
-//		this->win->updateLayerCombobox();
-//	}
+	control->clearSelectionEndText();
+	PageRef p = getCurrentPage();
+	if (p.isValid())
+	{
+		p->setSelectedLayerId(layer);
+
+		// Repaint page
+		control->getWindow()->getXournal()->layerChanged(selectedPage);
+	}
+
+	fireLayerVisibilityChanged();
 }
 
 /**
@@ -242,7 +253,7 @@ size_t LayerController::getLayerCount()
 {
 	XOJ_CHECK_TYPE(LayerController);
 
-	PageRef page = control->getDocument()->getPage(selectedPage);
+	PageRef page = getCurrentPage();
 	if (!page.isValid())
 	{
 		return 0;
@@ -258,7 +269,7 @@ size_t LayerController::getCurrentLayerId()
 {
 	XOJ_CHECK_TYPE(LayerController);
 
-	PageRef page = control->getDocument()->getPage(selectedPage);
+	PageRef page = getCurrentPage();
 	if (!page.isValid())
 	{
 		return 0;
