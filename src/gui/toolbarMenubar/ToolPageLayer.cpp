@@ -90,9 +90,6 @@ void ToolPageLayer::addSpecialButtonTop()
 	XOJ_CHECK_TYPE(ToolPageLayer);
 
 	GtkWidget* itShowAll = createSpecialMenuEntry(_("Show all"));
-	GtkWidget* itHideAll = createSpecialMenuEntry(_("Hide all"));
-	createSeparator();
-
 	g_signal_connect(itShowAll, "activate", G_CALLBACK(
 		+[](GtkWidget* menu, ToolPageLayer* self)
 		{
@@ -101,12 +98,25 @@ void ToolPageLayer::addSpecialButtonTop()
 		}), this);
 
 
+	GtkWidget* itHideAll = createSpecialMenuEntry(_("Hide all"));
 	g_signal_connect(itHideAll, "activate", G_CALLBACK(
 		+[](GtkWidget* menu, ToolPageLayer* self)
 		{
 			XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
 			self->lc->hideAllLayer();
 		}), this);
+
+	createSeparator();
+
+	GtkWidget* itNewLayer = createSpecialMenuEntry(_("Create new layer"));
+	g_signal_connect(itNewLayer, "activate", G_CALLBACK(
+		+[](GtkWidget* menu, ToolPageLayer* self)
+		{
+			XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
+			self->lc->addNewLayer();
+		}), this);
+
+	createSeparator();
 }
 
 void ToolPageLayer::selectLayer(int layerId)
@@ -246,18 +256,17 @@ void ToolPageLayer::updateMenu()
 
 	addSpecialButtonTop();
 
-	int layer = lc->getLayerCount();
-	for (; layer > 0; layer--)
+	int layerCount = lc->getLayerCount();
+	for (int layer = layerCount; layer > 0; layer--)
 	{
 		createLayerMenuItem(FS(_F("Layer {1}") % layer), layer);
 		createLayerMenuItemShow(layer);
 		menuY++;
 	}
 
-	if (layer > 0)
+	if (layerCount > 0)
 	{
-		gtk_menu_attach(GTK_MENU(menu), gtk_separator_menu_item_new(), 0, MENU_WIDTH, menuY, menuY + 1);
-		menuY++;
+		createSeparator();
 	}
 
 	createLayerMenuItem(_("Background"), 0);
