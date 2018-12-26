@@ -33,6 +33,7 @@ enum ToolType
 	TOOL_DRAW_RECT		= 12,
 	TOOL_DRAW_CIRCLE	= 13,
 	TOOL_DRAW_ARROW		= 14,
+//     TOOL_DRAW_COORDINATE_SYSTEM = 15,
 
 	TOOL_END_ENTRY
 };
@@ -84,6 +85,7 @@ enum DrawingType
 	DRAWING_TYPE_RECTANGLE,
 	DRAWING_TYPE_CIRCLE,
 	DRAWING_TYPE_ARROW,
+    DRAWING_TYPE_COORDINATE_SYSTEM,
 	DRAWING_TYPE_STROKE_RECOGNIZER
 };
 string drawingTypeToString(DrawingType type);
@@ -99,7 +101,8 @@ enum ToolCapabilities
 	TOOL_CAP_CIRCLE     = 1 << 4,
 	TOOL_CAP_ARROW      = 1 << 5,
 	TOOL_CAP_RECOGNIZER = 1 << 6,
-	TOOL_CAP_FILL       = 1 << 7
+	TOOL_CAP_FILL       = 1 << 7,
+    TOOL_CAP_COORDINATE_SYSTEM = 1 << 8,
 };
 
 class Tool

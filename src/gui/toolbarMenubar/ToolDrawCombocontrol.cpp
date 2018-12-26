@@ -39,7 +39,7 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, Act
 	drawTypes.push_back(new ToolDrawType(_("Draw Circle"),					"circle-draw.svg",					ACTION_TOOL_DRAW_CIRCLE ));
 	drawTypes.push_back(new ToolDrawType(_("Draw Arrow"),					"arrow-draw.svg",					ACTION_TOOL_DRAW_ARROW  ));
 	drawTypes.push_back(new ToolDrawType(_("Draw Line"),					"ruler.svg",						ACTION_RULER            ));
-	drawTypes.push_back(new ToolDrawType(_("Draw coordinate system"),		"coordinate-system-draw.svg",		ACTION_TOOL_DRAW_ARROW  ));
+	drawTypes.push_back(new ToolDrawType(_("Draw coordinate system"),		"coordinate-system-draw.svg",		ACTION_TOOL_DRAW_COORDINATE_SYSTEM  ));
 	drawTypes.push_back(new ToolDrawType(_("Stroke recognizer"),			"shape_recognizer.svg",				ACTION_SHAPE_RECOGNIZER ));
 
 	for (ToolDrawType* t : drawTypes)

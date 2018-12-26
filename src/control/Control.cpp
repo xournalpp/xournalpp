@@ -622,6 +622,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	case ACTION_TOOL_DRAW_RECT:
 	case ACTION_TOOL_DRAW_CIRCLE:
 	case ACTION_TOOL_DRAW_ARROW:
+	case ACTION_TOOL_DRAW_COORDINATE_SYSTEM:
 	case ACTION_RULER:
 	case ACTION_SHAPE_RECOGNIZER:
 		setShapeTool(type, enabled);
@@ -1087,6 +1088,7 @@ void Control::setShapeTool(ActionType type, bool enabled)
 	if ((this->toolHandler->getDrawingType() == DRAWING_TYPE_LINE && type == ACTION_RULER) ||
 		(this->toolHandler->getDrawingType() == DRAWING_TYPE_RECTANGLE && type == ACTION_TOOL_DRAW_RECT) ||
 		(this->toolHandler->getDrawingType() == DRAWING_TYPE_ARROW && type == ACTION_TOOL_DRAW_ARROW) ||
+		(this->toolHandler->getDrawingType() == DRAWING_TYPE_COORDINATE_SYSTEM && type == ACTION_TOOL_DRAW_COORDINATE_SYSTEM) ||
 		(this->toolHandler->getDrawingType() == DRAWING_TYPE_CIRCLE && type == ACTION_TOOL_DRAW_CIRCLE) ||
 		(this->toolHandler->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER && type == ACTION_SHAPE_RECOGNIZER))
 	{
@@ -1105,6 +1107,10 @@ void Control::setShapeTool(ActionType type, bool enabled)
 
 	case ACTION_TOOL_DRAW_ARROW:
 		this->toolHandler->setDrawingType(DRAWING_TYPE_ARROW);
+		break;
+
+	case ACTION_TOOL_DRAW_COORDINATE_SYSTEM:
+		this->toolHandler->setDrawingType(DRAWING_TYPE_COORDINATE_SYSTEM);
 		break;
 
 	case ACTION_RULER:
@@ -1606,6 +1612,7 @@ void Control::toolChanged()
 	fireEnableAction(ACTION_TOOL_DRAW_RECT, toolHandler->hasCapability(TOOL_CAP_RECTANGLE));
 	fireEnableAction(ACTION_TOOL_DRAW_CIRCLE, toolHandler->hasCapability(TOOL_CAP_CIRCLE));
 	fireEnableAction(ACTION_TOOL_DRAW_ARROW, toolHandler->hasCapability(TOOL_CAP_ARROW));
+	fireEnableAction(ACTION_TOOL_DRAW_COORDINATE_SYSTEM, toolHandler->hasCapability(TOOL_CAP_ARROW));
 	fireEnableAction(ACTION_SHAPE_RECOGNIZER, toolHandler->hasCapability(TOOL_CAP_RECOGNIZER));
 
 	bool enableSize = toolHandler->hasCapability(TOOL_CAP_SIZE);
@@ -1647,6 +1654,10 @@ void Control::toolChanged()
 	else if (toolHandler->getDrawingType() == DRAWING_TYPE_ARROW)
 	{
 		rulerAction = ACTION_TOOL_DRAW_ARROW;
+	}
+	else if (toolHandler->getDrawingType() == DRAWING_TYPE_COORDINATE_SYSTEM)
+	{
+		rulerAction = ACTION_TOOL_DRAW_COORDINATE_SYSTEM;
 	}
 
 	fireActionSelected(GROUP_RULER, rulerAction);
