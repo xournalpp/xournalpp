@@ -142,36 +142,36 @@ void PlaceholderString::process()
 	{
 		char c = text.at(i);
 
-		if (closeBacket && c == '}')
-		{
+		if (c == '{') {
 			closeBacket = false;
-			processed += '}';
-			continue;
-		}
-
-		if (c == '{' && openBracket && formatString.length() == 0)
-		{
-			openBracket = false;
-			processed += '{';
-			continue;
-		}
-
-		if (c == '}' && openBracket)
-		{
-			closeBacket = true;
-			processed += formatPart(formatString);
-
-			openBracket = false;
-			formatString = "";
+			if (openBracket)
+			{
+				openBracket = false;
+				processed += '{';
+				continue;
+			}
+			openBracket = true;
 			continue;
 		}
 
 		if (c == '}')
 		{
+			if (closeBacket)
+			{
+				processed += '}';
+				closeBacket = false;
+				continue;
+			}
+
 			closeBacket = true;
+			if (openBracket)
+			{
+				processed += formatPart(formatString);
+				openBracket = false;
+				formatString = "";
+			}
 			continue;
 		}
-
 
 		if (openBracket)
 		{
@@ -179,14 +179,8 @@ void PlaceholderString::process()
 			continue;
 		}
 
-		if (c == '{')
-		{
-			openBracket = true;
-			continue;
-		}
 
 		closeBacket = false;
-
 		processed += c;
 	}
 }
