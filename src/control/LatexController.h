@@ -84,10 +84,6 @@ private:
 	 * during the render in the Editor dialog
 	 */
 	void insertTexImage(bool forTemporaryRender);
-	
-	
-	
-	
 
 private:
 	XOJ_TYPE_ATTRIB;

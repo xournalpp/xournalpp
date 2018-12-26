@@ -18,8 +18,6 @@
 #include <gtk/gtk.h>
 
 class AbstractToolItem;
-typedef std::vector<AbstractToolItem*> AbstractToolItemVector;
-
 class FontButton;
 class GladeGui;
 class ToolbarData;
@@ -57,9 +55,6 @@ public:
 	SpinPageAdapter* getPageSpinner();
 	void setPageText(string text);
 
-	int getSelectedLayer();
-	void setLayerCount(int count, int selected);
-
 	void setFontButtonFont(XojFont& font);
 	XojFont getFontButtonFont();
 
@@ -72,7 +67,7 @@ public:
 
 	ToolbarModel* getModel();
 
-	AbstractToolItemVector* getToolItems();
+	vector<AbstractToolItem*>* getToolItems();
 
 	bool isColorInUse(int color);
 
@@ -87,7 +82,7 @@ private:
 	std::vector<ColorToolItem*> toolbarColorItems;
 	GtkWindow* parent;
 
-	AbstractToolItemVector toolItems;
+	vector<AbstractToolItem*> toolItems;
 	std::vector<MenuItem*> menuItems;
 
 	ToolButton* undoButton;
@@ -97,6 +92,7 @@ private:
 	ToolPageLayer* toolPageLayer;
 	FontButton* fontButton;
 
+	Control* control;
 	ActionHandler* listener;
 	ZoomControl* zoom;
 	GladeGui* gui;

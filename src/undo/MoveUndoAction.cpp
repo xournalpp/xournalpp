@@ -9,7 +9,7 @@
 
 #include <i18n.h>
 
-MoveUndoAction::MoveUndoAction(Layer* sourceLayer, PageRef sourcePage, ElementVector* selected, double mx, double my,
+MoveUndoAction::MoveUndoAction(Layer* sourceLayer, PageRef sourcePage, vector<Element*>* selected, double mx, double my,
 							   Layer* targetLayer, PageRef targetPage) : UndoAction("MoveUndoAction")
 {
 	XOJ_INIT_TYPE(MoveUndoAction);
@@ -92,7 +92,7 @@ bool MoveUndoAction::redo(Control* control)
 	return true;
 }
 
-void MoveUndoAction::switchLayer(ElementVector* entries, Layer* oldLayer, Layer* newLayer)
+void MoveUndoAction::switchLayer(vector<Element*>* entries, Layer* oldLayer, Layer* newLayer)
 {
 	XOJ_CHECK_TYPE(MoveUndoAction);
 

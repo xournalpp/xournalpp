@@ -14,11 +14,12 @@
 #include "UndoAction.h"
 
 class Layer;
+class LayerController;
 
 class RemoveLayerUndoAction : public UndoAction
 {
 public:
-	RemoveLayerUndoAction(PageRef page, Layer* layer, int layerPos);
+	RemoveLayerUndoAction(LayerController* layerController, PageRef page, Layer* layer, int layerPos);
 	virtual ~RemoveLayerUndoAction();
 
 public:
@@ -30,6 +31,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
+	LayerController* layerController;
 	Layer* layer;
 	int layerPos;
 };

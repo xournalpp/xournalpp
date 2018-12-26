@@ -31,6 +31,8 @@
 #include "view/TextView.h"
 #include "widgets/XournalWidget.h"
 
+#include "PageViewFindObjectHelper.h"
+
 #include <config.h>
 #include <config-debug.h>
 #include <i18n.h>
@@ -42,8 +44,6 @@
 
 #include <stdlib.h>
 #include <math.h>
-
-string lastfn = "";
 
 XojPageView::XojPageView(XournalView* xournal, PageRef page)
 {
@@ -329,130 +329,6 @@ void XojPageView::startText(double x, double y)
 	}
 }
 
-void XojPageView::playObjectAt(double x, double y)
-{
-	XOJ_CHECK_TYPE(XojPageView);
-
-	int selected = this->page->getSelectedLayerId();
-	GdkRectangle matchRect =
-	{ gint(x - 10), gint(y - 10), 20, 20 };
-
-	double gap = 1000000000;
-
-	// clear old selection anyway
-	this->xournal->getControl()->clearSelection();
-
-	for (Layer* l : *this->page->getLayers())
-	{
-		for (Element* e : *l->getElements())
-		{
-			if (e->intersectsArea(&matchRect))
-			{
-				if (e->getType() == ELEMENT_STROKE)
-				{
-					Stroke* s = (Stroke*) e;
-					double tmpGap = 0;
-					if ((s->intersects(x, y, 15, &tmpGap)) && (gap > tmpGap))
-					{
-						gap = tmpGap;
-
-						int ts = s->getTimestamp();
-						int buffer = 5;
-
-						if (ts >= buffer)
-						{
-							ts -= buffer;
-						}
-						else
-						{
-							ts = 0;
-						}
-
-						string fn = s->getAudioFilename();
-
-						if (fn != lastfn)
-						{
-							if (fn != "")
-							{
-								lastfn = fn;
-								string command(
-										"vlc --qt-start-minimized " + settings->getAudioFolder() + "/" + fn + " --start-time="
-												+ std::to_string(ts) + " &>/dev/null &");
-								system(command.c_str());
-							}
-						}
-						else
-						{	
-							//TODO: substitute system(..) with some c++ curl library
-							string psw("password");
-							string command(
-									"curl -s -u \"\":\""+psw+"\" --url \"http://127.0.0.1:8080/requests/status.xml?command=seek&val="
-											+ std::to_string(ts) + "\" >/dev/null"
-											+ "&& curl -s -u \"\":\""+psw+"\" --url \"http://127.0.0.1:8080/requests/status.xml?command=pl_play\" >/dev/null");
-							system(command.c_str());
-						}
-					}
-				}
-			}
-		}
-		selected--;
-	}
-}
-
-void XojPageView::selectObjectAt(double x, double y)
-{
-	XOJ_CHECK_TYPE(XojPageView);
-
-	int selected = this->page->getSelectedLayerId();
-	GdkRectangle matchRect = { gint(x - 10), gint(y - 10), 20, 20 };
-
-	Stroke* strokeMatch = NULL;
-	double gap = 1000000000;
-
-	Element* elementMatch = NULL;
-
-	// clear old selection anyway
-	this->xournal->getControl()->clearSelection();
-
-	for (Layer* l : *this->page->getLayers())
-	{
-		for (Element* e : *l->getElements())
-		{
-			if (e->intersectsArea(&matchRect))
-			{
-				if (e->getType() == ELEMENT_STROKE)
-				{
-					Stroke* s = (Stroke*) e;
-					double tmpGap = 0;
-					if ((s->intersects(x, y, 5, &tmpGap)) && (gap > tmpGap))
-					{
-						gap = tmpGap;
-						strokeMatch = s;
-					}
-				}
-				else
-				{
-					elementMatch = e;
-				}
-			}
-		}
-
-		selected--;
-	}
-
-	if (strokeMatch)
-	{
-		elementMatch = strokeMatch;
-	}
-
-	if (elementMatch)
-	{
-		xournal->setSelection(new EditSelection(xournal->getControl()->getUndoRedoHandler(), elementMatch, this, page));
-
-		repaintPage();
-	}
-}
-
 bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(XojPageView);
@@ -549,11 +425,13 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 		}
 		else if (h->getToolType() == TOOL_SELECT_OBJECT)
 		{
-			selectObjectAt(x, y);
+			SelectObject select(this);
+			select.at(x, y);
 		}
 		else if (h->getToolType() == TOOL_PLAY_OBJECT)
 		{
-			playObjectAt(x, y);
+			PlayObject play(this);
+			play.at(x, y);
 		}
 	}
 	else if (h->getToolType() == TOOL_TEXT)

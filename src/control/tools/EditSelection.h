@@ -129,7 +129,7 @@ public:
 	/**
 	 * Returns all containig elements of this selections
 	 */
-	ElementVector* getElements();
+	vector<Element*>* getElements();
 
 	/**
 	 * Finish the current movement

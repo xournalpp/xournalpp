@@ -22,7 +22,7 @@ ToolbarModel::~ToolbarModel()
 	XOJ_RELEASE_TYPE(ToolbarModel);
 }
 
-ToolbarDataVector* ToolbarModel::getToolbars()
+vector<ToolbarData*>* ToolbarModel::getToolbars()
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 

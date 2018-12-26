@@ -12,34 +12,77 @@
 #pragma once
 
 #include "AbstractToolItem.h"
-#include <XournalType.h>
+#include "control/layer/LayerCtrlListener.h"
+
+#include <map>
+using std::map;
 
 class GladeGui;
+class PopupMenuButton;
+class LayerController;
 
-class ToolPageLayer : public AbstractToolItem
+class ToolPageLayer : public AbstractToolItem, public LayerCtrlListener
 {
 public:
-	ToolPageLayer(GladeGui* gui, ActionHandler* handler, string id, ActionType type);
+	ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, string id, ActionType type);
 	virtual ~ToolPageLayer();
 
 public:
-	static void cbSelectCallback(GtkComboBox* widget, ToolPageLayer* tpl);
-
-	int getSelectedLayer();
-	void setSelectedLayer(int selected);
-	void setLayerCount(int layer, int selected);
 	virtual string getToolDisplayName();
 
+	// LayerCtrlListener
+public:
+	virtual void rebuildLayerMenu();
+	virtual void layerVisibilityChanged();
+
 protected:
+	GtkWidget* createSpecialMenuEntry(string name);
+	void createSeparator();
+
+	/**
+	 * Add special button to the top of the menu
+	 */
+	void addSpecialButtonTop();
+
+	/**
+	 * Rebuild the Menu
+	 */
+	void updateMenu();
+
+	/**
+	 * Update selected layer, update visible layer
+	 */
+	void updateLayerData();
+
 	virtual GtkToolItem* newItem();
 	virtual GtkWidget* getNewToolIcon();
 
 private:
+	void createLayerMenuItem(string text, int layerId);
+	void layerMenuClicked(GtkWidget* menu);
+	void createLayerMenuItemShow(int layerId);
+	void layerMenuShowClicked(GtkWidget* menu);
+
+	void selectLayer(int layerId);
+
+private:
 	XOJ_TYPE_ATTRIB;
 
-	GtkWidget* layerComboBox;
+	LayerController* lc;
 	GladeGui* gui;
 
-	int layerCount;
-	bool inCbUpdate;
+	GtkWidget* layerLabel;
+	GtkWidget* layerButton;
+	GtkWidget* menu;
+
+	map<int, GtkWidget*> layerItems;
+	map<int, GtkWidget*> showLayerItems;
+
+	PopupMenuButton* popupMenuButton;
+	int menuY;
+
+	/**
+	 * Menu is currently updating - ignore events
+	 */
+	bool inMenuUpdate;
 };

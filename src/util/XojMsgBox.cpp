@@ -30,4 +30,19 @@ int XojMsgBox::replaceFileQuestion(GtkWindow* win, string msg)
 	return res;
 }
 
+#define XOJ_HELP "https://github.com/xournalpp/xournalpp/wiki/User-Manual"
+
+void XojMsgBox::showHelp(GtkWindow* win)
+{
+	GError* error = NULL;
+	gtk_show_uri(gtk_window_get_screen(win), XOJ_HELP, gtk_get_current_event_time(), &error);
+
+	if (error)
+	{
+		string msg = FS(_F("There was an error displaying help: {1}") % error->message);
+		XojMsgBox::showErrorToUser(win, msg);
+
+		g_error_free(error);
+	}
+}
 

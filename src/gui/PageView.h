@@ -162,8 +162,6 @@ private:
 	void handleScrollEvent(GdkEventButton* event);
 
 	void startText(double x, double y);
-	void selectObjectAt(double x, double y);
-	void playObjectAt(double x, double y);
 
 	void addRerenderRect(double x, double y, double width, double height);
 
@@ -228,4 +226,7 @@ private:
 
 	friend class RenderJob;
 	friend class InputHandler;
+	friend class BaseSelectObject;
+	friend class SelectObject;
+	friend class PlayObject;
 };

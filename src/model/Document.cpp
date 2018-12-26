@@ -10,8 +10,6 @@
 #include <Stacktrace.h>
 #include <Util.h>
 
-#include <string.h>
-
 Document::Document(DocumentHandler* handler)
 {
 	XOJ_INIT_TYPE(Document);
@@ -448,9 +446,7 @@ void Document::deletePage(size_t pNr)
 {
 	XOJ_CHECK_TYPE(Document);
 
-	std::vector<PageRef>::iterator it;
-
-	it = this->pages.begin() + pNr;
+	vector<PageRef>::iterator it = this->pages.begin() + pNr;
 	this->pages.erase(it);
 
 	updateIndexPageNumbers();

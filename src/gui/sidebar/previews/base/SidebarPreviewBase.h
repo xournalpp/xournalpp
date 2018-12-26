@@ -22,8 +22,6 @@ class SidebarLayout;
 class SidebarPreviewBaseEntry;
 class SidebarToolbar;
 
-typedef std::vector<SidebarPreviewBaseEntry*> SidebarPreviewBaseEntryVector;
-
 class SidebarPreviewBase : public AbstractSidebarPage
 {
 public:
@@ -125,7 +123,7 @@ protected:
 	/**
 	 * The previews
 	 */
-	SidebarPreviewBaseEntryVector previews;
+	vector<SidebarPreviewBaseEntry*> previews;
 
 	friend class SidebarLayout;
 };

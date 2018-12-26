@@ -37,9 +37,7 @@ void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui)
 
 	addPage(new SidebarIndexPage(this->control));
 	addPage(new SidebarPreviewPages(this->control, this->gui, &this->toolbar));
-#ifdef UNSTABLE_LAYERS_SIDEBAR
 	addPage(new SidebarPreviewLayers(this->control, this->gui, &this->toolbar));
-#endif //UNSTABLE_LAYERS_SIDEBAR
 
 	// Init toolbar with icons
 
@@ -141,6 +139,9 @@ void Sidebar::setSelectedPage(size_t page)
 
 		i++;
 	}
+
+	// Hide the toolbar for all except the page preview
+	toolbar.setHidden(page != 1);
 }
 
 void Sidebar::updateEnableDisableButtons()
@@ -205,26 +206,6 @@ void Sidebar::documentChanged(DocumentChangeType type)
 	{
 		updateEnableDisableButtons();
 	}
-}
-
-void Sidebar::pageSizeChanged(size_t page)
-{
-}
-
-void Sidebar::pageChanged(size_t page)
-{
-}
-
-void Sidebar::pageInserted(size_t page)
-{
-}
-
-void Sidebar::pageDeleted(size_t page)
-{
-}
-
-void Sidebar::pageSelected(size_t page)
-{
 }
 
 SidebarPageButton::SidebarPageButton(Sidebar* sidebar, int index, AbstractSidebarPage* page)

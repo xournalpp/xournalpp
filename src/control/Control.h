@@ -47,6 +47,7 @@ class PageBackgroundChangeController;
 class PageTypeHandler;
 class PageTypeMenu;
 class BaseExportJob;
+class LayerController;
 
 class Control :
 	public ActionHandler,
@@ -131,10 +132,6 @@ public:
 
 	void setShapeTool(ActionType type, bool enabled);
 
-	void addNewLayer();
-	void deleteCurrentLayer();
-	void switchToLay(int layer);
-
 	void paperTemplate();
 	void paperFormat();
 	void changePageBackgroundColor();
@@ -214,6 +211,7 @@ public:
 	PageTypeHandler* getPageTypes();
 	PageTypeMenu* getNewPageType();
 	PageBackgroundChangeController* getPageBackgroundChangeController();
+	LayerController* getLayerController();
 
 
 	bool copy();
@@ -364,4 +362,6 @@ private:
 	PageTypeMenu* newPageType;
 
 	PageBackgroundChangeController* pageBackgroundChangeController;
+
+	LayerController* layerController;
 };

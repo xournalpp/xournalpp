@@ -58,11 +58,12 @@ bool SearchControl::search(string text, int* occures, double* top)
 		this->results = this->pdf->findText(text);
 	}
 
-	int selected = this->page->getSelectedLayerId();
-	
 	for (Layer* l : *this->page->getLayers())
 	{
-		if (!selected) break;
+		if (!this->page->isLayerVisible(l))
+		{
+			continue;
+		}
 		
 		for (Element* e : *l->getElements())
 		{
@@ -75,8 +76,6 @@ bool SearchControl::search(string text, int* occures, double* top)
 				this->results.insert(this->results.end(), textResult.begin(), textResult.end());
 			}
 		}
-
-		selected--;
 	}
 
 	if (occures)

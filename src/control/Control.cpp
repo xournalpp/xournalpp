@@ -2,6 +2,7 @@
 
 #include "PrintHandler.h"
 #include "LatexController.h"
+#include "layer/LayerController.h"
 #include "PageBackgroundChangeController.h"
 
 #include "gui/Cursor.h"
@@ -36,9 +37,7 @@
 #include "undo/AddUndoAction.h"
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertDeletePageUndoAction.h"
-#include "undo/InsertLayerUndoAction.h"
 #include "undo/InsertUndoAction.h"
-#include "undo/RemoveLayerUndoAction.h"
 #include "view/DocumentView.h"
 
 #include <config.h>
@@ -135,6 +134,9 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	this->dragDropHandler = NULL;
 
 	this->pageBackgroundChangeController = new PageBackgroundChangeController(this);
+
+	this->layerController = new LayerController(this);
+	this->layerController->registerListener(this);
 }
 
 Control::~Control()
@@ -189,6 +191,8 @@ Control::~Control()
 	this->audioController = NULL;
 	delete this->pageBackgroundChangeController;
 	this->pageBackgroundChangeController = NULL;
+	delete this->layerController;
+	this->layerController = NULL;
 
 	XOJ_RELEASE_TYPE(Control);
 }
@@ -324,9 +328,9 @@ void Control::initWindow(MainWindow* win)
 	win->setFontButtonFont(settings->getFont());
 
 	// rotation snapping enabled by default
-	fireActionSelected(GROUP_SNAPPING,ACTION_ROTATION_SNAPPING);
+	fireActionSelected(GROUP_SNAPPING, ACTION_ROTATION_SNAPPING);
 	// grid snapping enabled by default
-	fireActionSelected(GROUP_GRID_SNAPPING,ACTION_GRID_SNAPPING);
+	fireActionSelected(GROUP_GRID_SNAPPING, ACTION_GRID_SNAPPING);
 }
 
 bool Control::autosaveCallback(Control* control)
@@ -399,6 +403,11 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 							  GtkToolButton* toolbutton, bool enabled)
 {
 	XOJ_CHECK_TYPE(Control);
+
+	if (layerController->actionPerformed(type))
+	{
+		return;
+	}
 
 	switch (type)
 	{
@@ -485,31 +494,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	case ACTION_GOTO_LAST:
 		scrollHandler->scrollToPage(this->doc->getPageCount() - 1);
 		break;
-	case ACTION_GOTO_NEXT_LAYER:
-		{
-			int layer = this->win->getCurrentLayer();
-			PageRef p = getCurrentPage();
-			if (layer < (int)p->getLayerCount())
-			{
-				switchToLay(layer + 1);
-			}
-		}
-		break;
-	case ACTION_GOTO_PREVIOUS_LAYER:
-		{
-			int layer = this->win->getCurrentLayer();
-			if (layer > 0)
-			{
-				switchToLay(layer - 1);
-			}
-		}
-		break;
-	case ACTION_GOTO_TOP_LAYER:
-		{
-			PageRef p = getCurrentPage();
-			switchToLay(p->getLayerCount());
-		}
-		break;
 	case ACTION_GOTO_NEXT_ANNOTATED_PAGE:
 		scrollHandler->scrollToAnnotatedPage(true);
 		break;
@@ -529,12 +513,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 	case ACTION_DELETE_PAGE:
 		deletePage();
-		break;
-	case ACTION_NEW_LAYER:
-		addNewLayer();
-		break;
-	case ACTION_DELETE_LAYER:
-		deleteCurrentLayer();
 		break;
 	case ACTION_PAPER_FORMAT:
 		paperFormat();
@@ -817,10 +795,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		setViewPresentationMode(enabled);
 		break;
 
-	case ACTION_FOOTER_LAYER:
-		switchToLay(this->win->getCurrentLayer());
-		break;
-
 	case ACTION_MANAGE_TOOLBAR:
 		manageToolbars();
 		break;
@@ -852,7 +826,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 
 		// Menu Help
 	case ACTION_HELP:
-		this->help();
+		XojMsgBox::showHelp(getGtkWindow());
 		break;
 	case ACTION_ABOUT:
 		showAbout();
@@ -870,23 +844,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		{
 			fireActionSelected(GROUP_TOOL, at);
 		}
-	}
-}
-
-#define XOJ_HELP "https://github.com/xournalpp/xournalpp/wiki/User-Manual"
-
-void Control::help()
-{
-	GError* error = NULL;
-
-	gtk_show_uri(gtk_window_get_screen(getGtkWindow()), XOJ_HELP, gtk_get_current_event_time(), &error);
-	if (error)
-	{
-
-		string msg = FS(_F("There was an error displaying help: {1}") % error->message);
-		XojMsgBox::showErrorToUser(getGtkWindow(), msg);
-
-		g_error_free(error);
 	}
 }
 
@@ -1346,27 +1303,6 @@ void Control::insertPage(PageRef page, size_t position)
 	undoRedo->addUndoAction(new InsertDeletePageUndoAction(page, position, true));
 }
 
-void Control::addNewLayer()
-{
-	XOJ_CHECK_TYPE(Control);
-
-	clearSelectionEndText();
-	PageRef p = getCurrentPage();
-	if (!p.isValid())
-	{
-		return;
-	}
-
-	Layer* l = new Layer();
-	p->insertLayer(l, p->getSelectedLayerId());
-	if (win)
-	{
-		win->updateLayerCombobox();
-	}
-
-	undoRedo->addUndoAction(new InsertLayerUndoAction(p, l));
-}
-
 void Control::gotoPage()
 {
 	GotoDialog* dlg = new GotoDialog(this->gladeSearchPath, this->doc->getPageCount());
@@ -1480,48 +1416,6 @@ void Control::changePageBackgroundColor()
 		p->setBackgroundColor(color);
 		firePageChanged(pNr);
 	}
-}
-
-void Control::switchToLay(int layer)
-{
-	clearSelectionEndText();
-	PageRef p = getCurrentPage();
-	if (p.isValid())
-	{
-		p->setSelectedLayerId(layer);
-		this->win->getXournal()->layerChanged(getCurrentPageNo());
-		this->win->updateLayerCombobox();
-	}
-}
-
-void Control::deleteCurrentLayer()
-{
-	XOJ_CHECK_TYPE(Control);
-
-	clearSelectionEndText();
-	PageRef p = getCurrentPage();
-	int pId = getCurrentPageNo();
-	if (!p.isValid())
-	{
-		return;
-	}
-
-	int lId = p->getSelectedLayerId();
-	if (lId < 1)
-	{
-		return;
-	}
-	Layer* l = p->getSelectedLayer();
-
-	p->removeLayer(l);
-	if (win)
-	{
-		win->getXournal()->layerChanged(pId);
-		win->updateLayerCombobox();
-	}
-
-	undoRedo->addUndoAction(new RemoveLayerUndoAction(p, l, lId - 1));
-	this->resetShapeRecognizer();
 }
 
 void Control::calcZoomFitSize()
@@ -1642,7 +1536,6 @@ void Control::fileOpened(const char* uri)
 	XOJ_CHECK_TYPE(Control);
 
 	openFile(uri);
-	win->updateLayerCombobox();
 }
 
 void Control::undoRedoChanged()
@@ -2200,7 +2093,6 @@ void Control::fileLoaded(int scrollToPage)
 	}
 
 	updateWindowTitle();
-	win->updateLayerCombobox();
 	win->getXournal()->forceUpdatePagenumbers();
 	getCursor()->updateCursor();
 	updateDeletePageButton();
@@ -3216,5 +3108,12 @@ PageBackgroundChangeController* Control::getPageBackgroundChangeController()
 	XOJ_CHECK_TYPE(Control);
 
 	return this->pageBackgroundChangeController;
+}
+
+LayerController* Control::getLayerController()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	return this->layerController;
 }
 

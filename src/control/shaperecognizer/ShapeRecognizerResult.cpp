@@ -61,7 +61,7 @@ Stroke* ShapeRecognizerResult::getRecognized()
 	return this->recognized;
 }
 
-StrokeVector* ShapeRecognizerResult::getSources()
+vector<Stroke*>* ShapeRecognizerResult::getSources()
 {
 	XOJ_CHECK_TYPE(ShapeRecognizerResult);
 

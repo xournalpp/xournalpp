@@ -1,17 +1,21 @@
 #include "SidebarPreviewLayers.h"
-
 #include "SidebarPreviewLayerEntry.h"
 
 #include "control/Control.h"
 #include "control/PdfCache.h"
+#include "control/layer/LayerController.h"
 
 #include <i18n.h>
 
 SidebarPreviewLayers::SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
  : SidebarPreviewBase(control, gui, toolbar),
-   displayedPage(0)
+   lc(control->getLayerController())
 {
 	XOJ_INIT_TYPE(SidebarPreviewLayers);
+
+	LayerCtrlListener::registerListener(lc);
+
+	this->toolbar->setButtonEnabled(false, false, false, false, PageRef());
 }
 
 SidebarPreviewLayers::~SidebarPreviewLayers()
@@ -52,50 +56,74 @@ void SidebarPreviewLayers::updatePreviews()
 		delete p;
 	}
 	this->previews.clear();
+	this->selectedEntry = size_t_npos;
 
-	Document* doc = this->getControl()->getDocument();
-
-	int len = doc->getPageCount();
-	if (displayedPage < 0 || displayedPage >= len)
+	PageRef page = lc->getCurrentPage();
+	if (!page.isValid())
 	{
 		return;
 	}
 
-	PageRef page = doc->getPage(displayedPage);
-
 	int layerCount = page->getLayerCount();
 
 	size_t index = 0;
-	for (int i = layerCount - 1; i >= 0; i--)
+	for (int i = layerCount; i >= 0; i--)
 	{
-		SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, i, index++);
+		SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, i - 1, index++);
 		this->previews.push_back(p);
 		gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
 	}
 
-	// background
-	SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, -1, index);
-	this->previews.push_back(p);
-	gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
-
 	layout();
+	updateSelectedLayer();
+	layerVisibilityChanged();
 }
 
-void SidebarPreviewLayers::pageSelected(int page)
+void SidebarPreviewLayers::rebuildLayerMenu()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
 
-	displayedPage = page;
 	updatePreviews();
 }
 
-void SidebarPreviewLayers::pageSizeChanged(int page)
+void SidebarPreviewLayers::layerVisibilityChanged()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
 
-	if (displayedPage == page)
+	PageRef p = lc->getCurrentPage();
+	if (!p.isValid())
 	{
-		updatePreviews();
+		return;
+	}
+
+	for (int i = 0; i < this->previews.size(); i++)
+	{
+		SidebarPreviewLayerEntry* sp = (SidebarPreviewLayerEntry*)this->previews[this->previews.size() - i - 1];
+		sp->setVisibleCheckbox(p->isLayerVisible(i));
+	}
+}
+
+void SidebarPreviewLayers::updateSelectedLayer()
+{
+	// Layers are in reverse order (top index: 0, but bottom preview is 0)
+	size_t layerIndex = this->previews.size() - lc->getCurrentLayerId() - 1;
+
+	if (this->selectedEntry == layerIndex)
+	{
+		return;
+	}
+
+	if (this->selectedEntry != size_t_npos && this->selectedEntry < this->previews.size())
+	{
+		this->previews[this->selectedEntry]->setSelected(false);
+	}
+
+	this->selectedEntry = layerIndex;
+	if (this->selectedEntry != size_t_npos && this->selectedEntry < this->previews.size())
+	{
+		SidebarPreviewBaseEntry* p = this->previews[this->selectedEntry];
+		p->setSelected(true);
+		scrollToPreview(this);
 	}
 }
 
@@ -103,44 +131,17 @@ void SidebarPreviewLayers::layerSelected(size_t layerIndex)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
 
-	if (this->selectedEntry != size_t_npos && this->selectedEntry < this->previews.size())
-	{
-		this->previews[this->selectedEntry]->setSelected(false);
-	}
-	this->selectedEntry = layerIndex;
-
-	if (this->selectedEntry != size_t_npos && this->selectedEntry < this->previews.size())
-	{
-		SidebarPreviewBaseEntry* p = this->previews[this->selectedEntry];
-		p->setSelected(true);
-		scrollToPreview(this);
-
-		// TODO This needs also be implemented seperate for layer
-		this->toolbar->setButtonEnabled(layerIndex != 0 && this->previews.size() != 0,
-				layerIndex != this->previews.size() - 1 && this->previews.size() != 0,
-										true, this->previews.size() > 1, PageRef());
-	}
+	// Layers are in reverse order (top index: 0, but bottom preview is 0)
+	lc->switchToLay(this->previews.size() - layerIndex - 1);
+	updateSelectedLayer();
 }
 
-void SidebarPreviewLayers::pageChanged(int page)
+/**
+ * A layer was hidden / showed
+ */
+void SidebarPreviewLayers::layerVisibilityChanged(int layerIndex, bool enabled)
 {
-	XOJ_CHECK_TYPE(SidebarPreviewLayers);
-
-	if (displayedPage == page)
-	{
-		printf("->current page\n");
-
-//		Document* doc = this->getControl()->getDocument();
-//		PageRef page = doc->getPage(displayedPage);
-//		int layerCount = page->getLayerCount();
-//		if (layerCount + 1 == this->previews.size())
-//		{
-//			updatePreviews();
-//		}
-
-//		for (SidebarPreviewBaseEntry* p : this->previews)
-//		{
-//			p->repaint();
-//		}
-	}
+	lc->setLayerVisible(layerIndex, enabled);
 }
+
+

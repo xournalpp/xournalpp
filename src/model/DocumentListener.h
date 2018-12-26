@@ -26,12 +26,12 @@ public:
 	void registerListener(DocumentHandler* handler);
 	void unregisterListener();
 
-	virtual void documentChanged(DocumentChangeType type) = 0;
-	virtual void pageSizeChanged(size_t page) = 0;
-	virtual void pageChanged(size_t page) = 0;
-	virtual void pageInserted(size_t page) = 0;
-	virtual void pageDeleted(size_t page) = 0;
-	virtual void pageSelected(size_t page) = 0;
+	virtual void documentChanged(DocumentChangeType type);
+	virtual void pageSizeChanged(size_t page);
+	virtual void pageChanged(size_t page);
+	virtual void pageInserted(size_t page);
+	virtual void pageDeleted(size_t page);
+	virtual void pageSelected(size_t page);
 
 private:
 	XOJ_TYPE_ATTRIB;

@@ -33,7 +33,7 @@ CustomizeableColorList::~CustomizeableColorList()
 	XOJ_RELEASE_TYPE(CustomizeableColorList);
 }
 
-XojColorVector* CustomizeableColorList::getPredefinedColors()
+vector<XojColor*>* CustomizeableColorList::getPredefinedColors()
 {
 	XOJ_CHECK_TYPE(CustomizeableColorList);
 

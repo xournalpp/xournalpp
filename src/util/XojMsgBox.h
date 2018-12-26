@@ -25,4 +25,5 @@ private:
 public:
 	static void showErrorToUser(GtkWindow* win, string msg);
 	static int replaceFileQuestion(GtkWindow* win, string msg);
+	static void showHelp(GtkWindow* win);
 };

@@ -48,12 +48,22 @@ public:
 	/**
 	 * Returns an iterator over the Element%s contained in this Layer
 	 */
-	ElementVector* getElements();
+	vector<Element*>* getElements();
 
 	/**
 	 * Returns whether or not the Layer is empty
 	 */
 	bool isAnnotated();
+
+	/**
+	 * @return true if the layer is visible
+	 */
+	bool isVisible();
+
+	/**
+	 * @param visible true if the layer is visible
+	 */
+	void setVisible(bool visible);
 
 	/**
 	 * Creates a deep copy of this Layer by copying all of the Element%s contained in it
@@ -63,8 +73,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	ElementVector elements;
+	vector<Element*> elements;
 
+	bool visible;
 };
-
-typedef std::vector<Layer*> LayerVector;

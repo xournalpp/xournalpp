@@ -10,7 +10,8 @@ SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, 
  : SidebarPreviewBaseEntry(sidebar, page),
    box(gtk_box_new(GTK_ORIENTATION_VERTICAL, 2)),
    toolbarHeight(0),
-   index(index)
+   index(index),
+   inUpdate(false)
 {
 	XOJ_INIT_TYPE(SidebarPreviewLayerEntry);
 	this->layer = layer;
@@ -27,12 +28,20 @@ SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, 
 		text = FS(_F("Layer {1}") % (layer + 1));
 	}
 
-	GtkWidget* show = gtk_check_button_new_with_label(text.c_str());
+	cbVisible = gtk_check_button_new_with_label(text.c_str());
+
+	g_signal_connect(cbVisible, "toggled", G_CALLBACK(
+		+[](GtkToggleButton* source, SidebarPreviewLayerEntry* self)
+		{
+			XOJ_CHECK_TYPE_OBJ(self, SidebarPreviewLayerEntry);
+			self->checkboxToggled();
+		}), this);
+
 
 	// Left padding
-	gtk_widget_set_margin_start(show, Shadow::getShadowTopLeftSize());
+	gtk_widget_set_margin_start(cbVisible, Shadow::getShadowTopLeftSize());
 
-	gtk_container_add(GTK_CONTAINER(toolbar), show);
+	gtk_container_add(GTK_CONTAINER(toolbar), cbVisible);
 
 	gtk_widget_set_vexpand(widget, false);
 	gtk_container_add(GTK_CONTAINER(box), widget);
@@ -42,7 +51,7 @@ SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, 
 
 	gtk_widget_show_all(box);
 
-	toolbarHeight = gtk_widget_get_allocated_height(show) + Shadow::getShadowTopLeftSize() + 20;
+	toolbarHeight = gtk_widget_get_allocated_height(cbVisible) + Shadow::getShadowTopLeftSize() + 20;
 }
 
 SidebarPreviewLayerEntry::~SidebarPreviewLayerEntry()
@@ -53,6 +62,19 @@ SidebarPreviewLayerEntry::~SidebarPreviewLayerEntry()
 	this->box = NULL;
 
 	XOJ_RELEASE_TYPE(SidebarPreviewLayerEntry);
+}
+
+void SidebarPreviewLayerEntry::checkboxToggled()
+{
+	XOJ_CHECK_TYPE(SidebarPreviewLayerEntry);
+
+	if (inUpdate)
+	{
+		return;
+	}
+
+	bool check = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbVisible));
+	((SidebarPreviewLayers*)sidebar)->layerVisibilityChanged(layer + 1, check);
 }
 
 void SidebarPreviewLayerEntry::mouseButtonPressCallback()
@@ -89,3 +111,18 @@ GtkWidget* SidebarPreviewLayerEntry::getWidget()
 
 	return this->box;
 }
+
+/**
+ * Set the value of the visible checkbox
+ */
+void SidebarPreviewLayerEntry::setVisibleCheckbox(bool enabled)
+{
+	XOJ_CHECK_TYPE(SidebarPreviewLayerEntry);
+
+	inUpdate = true;
+
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cbVisible), enabled);
+
+	inUpdate = false;
+}
+
