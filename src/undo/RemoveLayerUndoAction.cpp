@@ -1,6 +1,7 @@
 #include "RemoveLayerUndoAction.h"
 
 #include "control/Control.h"
+#include "control/layer/LayerController.h"
 #include "gui/XournalView.h"
 #include "model/Document.h"
 #include "model/Layer.h"
@@ -8,7 +9,9 @@
 
 #include <i18n.h>
 
-RemoveLayerUndoAction::RemoveLayerUndoAction(PageRef page, Layer* layer, int layerPos) : UndoAction("RemoveLayerUndoAction")
+RemoveLayerUndoAction::RemoveLayerUndoAction(LayerController* layerController, PageRef page, Layer* layer, int layerPos)
+ : UndoAction("RemoveLayerUndoAction"),
+   layerController(layerController)
 {
 	XOJ_INIT_TYPE(RemoveLayerUndoAction);
 
@@ -42,7 +45,7 @@ bool RemoveLayerUndoAction::undo(Control* control)
 {
 	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
 
-	this->page->insertLayer(this->layer, layerPos);
+	layerController->insertLayer(this->page, this->layer, this->layerPos);
 	Document* doc = control->getDocument();
 
 	doc->lock();
@@ -50,8 +53,6 @@ bool RemoveLayerUndoAction::undo(Control* control)
 	doc->unlock();
 
 	control->getWindow()->getXournal()->layerChanged(id);
-	control->getWindow()->updateLayerCombobox();
-
 	this->undone = true;
 
 	return true;
@@ -64,12 +65,11 @@ bool RemoveLayerUndoAction::redo(Control* control)
 	Document* doc = control->getDocument();
 
 	doc->lock();
-	this->page->removeLayer(this->layer);
+	layerController->removeLayer(page, layer);
 	int id = doc->indexOf(this->page);
 	doc->unlock();
 
 	control->getWindow()->getXournal()->layerChanged(id);
-	control->getWindow()->updateLayerCombobox();
 
 	this->undone = false;
 

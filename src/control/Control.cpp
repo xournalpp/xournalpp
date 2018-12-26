@@ -2,8 +2,8 @@
 
 #include "PrintHandler.h"
 #include "LatexController.h"
+#include "layer/LayerController.h"
 #include "PageBackgroundChangeController.h"
-#include "LayerController.h"
 
 #include "gui/Cursor.h"
 
@@ -137,7 +137,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 
 	this->pageBackgroundChangeController = new PageBackgroundChangeController(this);
 
-	this->layerController = new LayerController();
+	this->layerController = new LayerController(this);
 	this->layerController->registerListener(this);
 }
 
@@ -1538,7 +1538,6 @@ void Control::fileOpened(const char* uri)
 	XOJ_CHECK_TYPE(Control);
 
 	openFile(uri);
-	win->updateLayerCombobox();
 }
 
 void Control::undoRedoChanged()
@@ -2096,7 +2095,6 @@ void Control::fileLoaded(int scrollToPage)
 	}
 
 	updateWindowTitle();
-	win->updateLayerCombobox();
 	win->getXournal()->forceUpdatePagenumbers();
 	getCursor()->updateCursor();
 	updateDeletePageButton();

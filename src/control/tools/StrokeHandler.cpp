@@ -1,5 +1,6 @@
 #include "StrokeHandler.h"
 
+#include "control/layer/LayerController.h"
 #include "gui/XournalView.h"
 #include "gui/PageView.h"
 #include "control/Control.h"
@@ -126,21 +127,16 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 
 	stroke->freeUnusedPointItems();
 
-	if (page->getSelectedLayerId() < 1)
-	{
-		// This creates a layer if none exists
-		page->getSelectedLayer();
-		page->setSelectedLayerId(1);
-		xournal->getControl()->getWindow()->updateLayerCombobox();
-	}
+	Control* control = xournal->getControl();
+	control->getLayerController()->ensureLayerExists(page);
 
 	Layer* layer = page->getSelectedLayer();
 
-	UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
+	UndoRedoHandler* undo = control->getUndoRedoHandler();
 
 	undo->addUndoAction(new InsertUndoAction(page, layer, stroke));
 
-	ToolHandler* h = xournal->getControl()->getToolHandler();
+	ToolHandler* h = control->getToolHandler();
 
 	if (h->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER)
 	{

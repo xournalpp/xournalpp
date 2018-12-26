@@ -1,6 +1,6 @@
 #include "ToolPageLayer.h"
 
-#include "control/LayerController.h"
+#include "control/layer/LayerController.h"
 #include "gui/GladeGui.h"
 #include "gui/widgets/PopupMenuButton.h"
 
@@ -25,7 +25,7 @@ ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* 
 
 	popupMenuButton = new PopupMenuButton(this->layerButton, menu);
 
-	updateMenu();
+	LayerCtrlListener::registerListener(lc);
 }
 
 ToolPageLayer::~ToolPageLayer()
@@ -36,6 +36,20 @@ ToolPageLayer::~ToolPageLayer()
 	popupMenuButton = NULL;
 
 	XOJ_RELEASE_TYPE(ToolPageLayer);
+}
+
+void ToolPageLayer::rebuildLayerMenu()
+{
+	XOJ_CHECK_TYPE(ToolPageLayer);
+
+	updateMenu();
+}
+
+void ToolPageLayer::layerVisibilityChanged()
+{
+	XOJ_CHECK_TYPE(ToolPageLayer);
+
+	// TODO !!!!!
 }
 
 const int MENU_WIDTH = 3;
@@ -101,15 +115,28 @@ void ToolPageLayer::updateMenu()
 {
 	XOJ_CHECK_TYPE(ToolPageLayer);
 
-	// Remove all items from Menu
-	gtk_container_foreach(GTK_CONTAINER(menu), (GtkCallback) gtk_widget_destroy, NULL);
+	// Remove all items from Menu (does sometimes not work)
+	// gtk_container_foreach(GTK_CONTAINER(menu), (GtkCallback) gtk_widget_destroy, NULL);
+
+	// Create a new menu on refresh
+	menu = gtk_menu_new();
+	popupMenuButton->setMenu(menu);
+
 	menuY = 0;
 
 	addSpecialButtonTop();
 
-	for (int layer = 10; layer > 0; layer--)
+	int layer = lc->getLayerCount();
+	if (layer < 1)
 	{
-		string text = FS(_F("Layer {1}") % (layer + 1));
+		layer = 1;
+	}
+
+	g_message("Update layer menu. Count %i", layer);
+
+	for (; layer > 0; layer--)
+	{
+		string text = FS(_F("Layer {1}") % layer);
 
 		GtkWidget* itLayer = gtk_check_menu_item_new_with_label(text.c_str());
 		gtk_menu_attach(GTK_MENU(menu), itLayer, 0, 2, menuY, menuY + 1);

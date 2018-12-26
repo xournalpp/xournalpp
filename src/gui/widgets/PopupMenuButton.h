@@ -22,6 +22,7 @@ public:
 	virtual ~PopupMenuButton();
 
 public:
+	void setMenu(GtkWidget* menu);
 
 private:
 	XOJ_TYPE_ATTRIB;

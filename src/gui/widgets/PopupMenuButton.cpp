@@ -93,3 +93,12 @@ PopupMenuButton::~PopupMenuButton()
 	XOJ_RELEASE_TYPE(PopupMenuButton);
 }
 
+void PopupMenuButton::setMenu(GtkWidget* menu)
+{
+	XOJ_CHECK_TYPE(PopupMenuButton);
+
+	gtk_menu_detach(GTK_MENU(this->menu));
+	this->menu = menu;
+
+	gtk_menu_attach_to_widget(GTK_MENU(menu), button, menu_detacher);
+}

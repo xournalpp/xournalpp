@@ -15,11 +15,12 @@
 #include <XournalType.h>
 
 class Layer;
+class LayerController;
 
 class InsertLayerUndoAction : public UndoAction
 {
 public:
-	InsertLayerUndoAction(PageRef page, Layer* layer);
+	InsertLayerUndoAction(LayerController* layerController, PageRef page, Layer* layer);
 	virtual ~InsertLayerUndoAction();
 
 public:
@@ -31,5 +32,6 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
+	LayerController* layerController;
 	Layer* layer;
 };

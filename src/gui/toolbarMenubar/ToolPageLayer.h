@@ -12,13 +12,13 @@
 #pragma once
 
 #include "AbstractToolItem.h"
-#include <XournalType.h>
+#include "control/layer/LayerCtrlListener.h"
 
 class GladeGui;
 class PopupMenuButton;
 class LayerController;
 
-class ToolPageLayer : public AbstractToolItem
+class ToolPageLayer : public AbstractToolItem, public LayerCtrlListener
 {
 public:
 	ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, string id, ActionType type);
@@ -26,6 +26,11 @@ public:
 
 public:
 	virtual string getToolDisplayName();
+
+	// LayerCtrlListener
+public:
+	virtual void rebuildLayerMenu();
+	virtual void layerVisibilityChanged();
 
 protected:
 	GtkWidget* createSpecialMenuEntry(string name);
