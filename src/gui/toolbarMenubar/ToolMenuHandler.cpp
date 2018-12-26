@@ -456,7 +456,7 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolButton(listener, gui, "PRESENTATION_MODE", ACTION_VIEW_PRESENTATION_MODE, GROUP_PRESENTATION_MODE, false,
 							   "showtwopages.svg", _("Presentation mode"), gui->get("menuViewPresMode")));
 
-	toolPageLayer = new ToolPageLayer(control->getAudioController(), gui, listener, "LAYER", ACTION_FOOTER_LAYER);
+	toolPageLayer = new ToolPageLayer(control->getLayerController(), gui, listener, "LAYER", ACTION_FOOTER_LAYER);
 	addToolItem(toolPageLayer);
 
 	registerMenupoint(gui->get("menuEditSettings"), ACTION_SETTINGS);

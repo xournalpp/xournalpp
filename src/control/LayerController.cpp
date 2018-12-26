@@ -12,6 +12,13 @@ LayerController::~LayerController()
 	XOJ_RELEASE_TYPE(LayerController);
 }
 
+void LayerController::pageChanged(size_t page)
+{
+	XOJ_CHECK_TYPE(LayerController);
+
+	printf("***page changed\n");
+}
+
 bool LayerController::actionPerformed(ActionType type)
 {
 	XOJ_CHECK_TYPE(LayerController);
@@ -60,6 +67,24 @@ bool LayerController::actionPerformed(ActionType type)
 	default:
 		return false;
 	}
+}
+
+/**
+ * Show all layer on the current page
+ */
+void LayerController::showAllLayer()
+{
+	XOJ_CHECK_TYPE(LayerController);
+	printf("LayerController::showAllLayer\n");
+}
+
+/**
+ * Hide all layer on the current page
+ */
+void LayerController::hideAllLayer()
+{
+	XOJ_CHECK_TYPE(LayerController);
+	printf("LayerController::hideAllLayer\n");
 }
 
 void LayerController::addNewLayer()

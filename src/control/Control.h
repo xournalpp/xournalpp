@@ -211,6 +211,7 @@ public:
 	PageTypeHandler* getPageTypes();
 	PageTypeMenu* getNewPageType();
 	PageBackgroundChangeController* getPageBackgroundChangeController();
+	LayerController* getLayerController();
 
 
 	bool copy();

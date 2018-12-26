@@ -1,5 +1,6 @@
 #include "ToolPageLayer.h"
 
+#include "control/LayerController.h"
 #include "gui/GladeGui.h"
 #include "gui/widgets/PopupMenuButton.h"
 
@@ -24,8 +25,6 @@ ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* 
 
 	popupMenuButton = new PopupMenuButton(this->layerButton, menu);
 
-	updateMenu();
-	updateMenu();
 	updateMenu();
 }
 
@@ -55,10 +54,11 @@ GtkWidget* ToolPageLayer::createSpecialMenuEntry(string name)
 
 	GtkWidget* it = gtk_menu_item_new();
 	GtkWidget* lb = gtk_label_new(name.c_str());
+	gtk_widget_set_halign(lb, GTK_ALIGN_START);
 
 	PangoAttrList* attrs = pango_attr_list_new();
 	pango_attr_list_insert(attrs, pango_attr_weight_new(PANGO_WEIGHT_BOLD));
-	gtk_label_set_attributes(GTK_LABEL(lbShowAll), attrs);
+	gtk_label_set_attributes(GTK_LABEL(lb), attrs);
 
 	gtk_container_add(GTK_CONTAINER(it), lb);
 	gtk_menu_attach(GTK_MENU(menu), it, 0, MENU_WIDTH, menuY, menuY + 1);
@@ -82,7 +82,7 @@ void ToolPageLayer::addSpecialButtonTop()
 		+[](GtkWidget* menu, ToolPageLayer* self)
 		{
 			XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
-			printf("show all");
+			self->lc->showAllLayer();
 		}), this);
 
 
@@ -90,7 +90,7 @@ void ToolPageLayer::addSpecialButtonTop()
 		+[](GtkWidget* menu, ToolPageLayer* self)
 		{
 			XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
-			printf("hide all");
+			self->lc->hideAllLayer();
 		}), this);
 }
 
@@ -107,34 +107,30 @@ void ToolPageLayer::updateMenu()
 
 	addSpecialButtonTop();
 
-	int layerCount = 10;
+	for (int layer = 10; layer > 0; layer--)
+	{
+		string text = FS(_F("Layer {1}") % (layer + 1));
 
+		GtkWidget* itLayer = gtk_check_menu_item_new_with_label(text.c_str());
+		gtk_menu_attach(GTK_MENU(menu), itLayer, 0, 2, menuY, menuY + 1);
 
-//	int menuY = layerCount + 10;
-//
-//	for (int layer = 0; layer < 10; layer++)
-//	{
-//		string text = FS(_F("Layer {1}") % (layer + 1));
-//
-//		GtkWidget* itLayer = gtk_check_menu_item_new_with_label(text.c_str());
-//		gtk_menu_attach(GTK_MENU(menu), itLayer, 0, 2, menuY, menuY + 1);
-//
-//		GtkWidget* itShow = gtk_check_menu_item_new_with_label(_("show"));
-//		gtk_menu_attach(GTK_MENU(menu), itShow, 2, 3, menuY, menuY + 1);
-//		gtk_widget_set_hexpand(itShow, false);
-//
-//		menuY--;
-//	}
-//
-//	gtk_menu_attach(GTK_MENU(menu), gtk_separator_menu_item_new(), 0, MENU_WIDTH, layerCount + 1, layerCount + 2);
-//	menuY++;
-//
-//	GtkWidget* itBackground = gtk_check_menu_item_new_with_label(_("Background"));
-//	gtk_menu_attach(GTK_MENU(menu), itBackground, 0, 2, layerCount + 2, layerCount + 3);
-//
-//	GtkWidget* itShowBackground = gtk_check_menu_item_new_with_label(_("show"));
-//	gtk_menu_attach(GTK_MENU(menu), itShowBackground, 2, 3, layerCount + 2, layerCount + 3);
-//	gtk_widget_set_hexpand(itShowBackground, false);
+		GtkWidget* itShow = gtk_check_menu_item_new_with_label(_("show"));
+		gtk_menu_attach(GTK_MENU(menu), itShow, 2, 3, menuY, menuY + 1);
+		gtk_widget_set_hexpand(itShow, false);
+
+		menuY++;
+	}
+
+	gtk_menu_attach(GTK_MENU(menu), gtk_separator_menu_item_new(), 0, MENU_WIDTH, menuY, menuY + 1);
+	menuY++;
+
+	GtkWidget* itBackground = gtk_check_menu_item_new_with_label(_("Background"));
+	gtk_menu_attach(GTK_MENU(menu), itBackground, 0, 2, menuY, menuY + 1);
+
+	GtkWidget* itShowBackground = gtk_check_menu_item_new_with_label(_("show"));
+	gtk_menu_attach(GTK_MENU(menu), itShowBackground, 2, 3, menuY, menuY + 1);
+	gtk_widget_set_hexpand(itShowBackground, false);
+	menuY++;
 
 	gtk_widget_show_all(menu);
 }

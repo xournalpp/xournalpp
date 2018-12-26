@@ -138,6 +138,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	this->pageBackgroundChangeController = new PageBackgroundChangeController(this);
 
 	this->layerController = new LayerController();
+	this->layerController->registerListener(this);
 }
 
 Control::~Control()
@@ -3111,5 +3112,12 @@ PageBackgroundChangeController* Control::getPageBackgroundChangeController()
 	XOJ_CHECK_TYPE(Control);
 
 	return this->pageBackgroundChangeController;
+}
+
+LayerController* Control::getLayerController()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	return this->layerController;
 }
 

@@ -14,15 +14,29 @@
 #include <XournalType.h>
 
 #include "Actions.h"
+#include "model/DocumentListener.h"
 
-class LayerController
+class LayerController : public DocumentListener
 {
 public:
 	LayerController();
 	virtual ~LayerController();
 
 public:
+	virtual void pageChanged(size_t page);
+
+public:
 	bool actionPerformed(ActionType type);
+
+	/**
+	 * Show all layer on the current page
+	 */
+	void showAllLayer();
+
+	/**
+	 * Hide all layer on the current page
+	 */
+	void hideAllLayer();
 
 	void addNewLayer();
 	void deleteCurrentLayer();
