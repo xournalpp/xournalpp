@@ -35,6 +35,7 @@ public:
 	// LayerCtrlListener
 public:
 	virtual void rebuildLayerMenu();
+	virtual void layerVisibilityChanged();
 
 public:
 	virtual void show(GtkWindow* parent);

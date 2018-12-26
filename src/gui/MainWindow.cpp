@@ -682,6 +682,13 @@ void MainWindow::rebuildLayerMenu()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
+	layerVisibilityChanged();
+}
+
+void MainWindow::layerVisibilityChanged()
+{
+	XOJ_CHECK_TYPE(MainWindow);
+
 	LayerController* lc = control->getLayerController();
 
 	int layer = lc->getCurrentLayerId();

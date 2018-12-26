@@ -129,7 +129,7 @@ bool LayerController::actionPerformed(ActionType type)
 			int layer = p->getSelectedLayerId();
 			if (layer < (int)p->getLayerCount())
 			{
-				switchToLay(layer + 1);
+				switchToLay(layer + 1, true);
 			}
 		}
 		return true;
@@ -140,7 +140,7 @@ bool LayerController::actionPerformed(ActionType type)
 			int layer = p->getSelectedLayerId();
 			if (layer > 0)
 			{
-				switchToLay(layer - 1);
+				switchToLay(layer - 1, true);
 			}
 		}
 		return true;
@@ -148,7 +148,7 @@ bool LayerController::actionPerformed(ActionType type)
 	case ACTION_GOTO_TOP_LAYER:
 		{
 			PageRef p = getCurrentPage();
-			switchToLay(p->getLayerCount());
+			switchToLay(p->getLayerCount(), true);
 		}
 		return true;
 	default:
@@ -260,20 +260,36 @@ void LayerController::setLayerVisible(int layerId, bool visible)
 	control->getWindow()->getXournal()->layerChanged(selectedPage);
 }
 
-void LayerController::switchToLay(int layer)
+/**
+ * Switch to a layer
+ *
+ * @param hideShow	Auto hide / show other layers,
+ * 					as it was before the advance layer menu
+ */
+void LayerController::switchToLay(int layer, bool hideShow)
 {
 	XOJ_CHECK_TYPE(LayerController);
 
 	control->clearSelectionEndText();
-	PageRef p = getCurrentPage();
-	if (p.isValid())
-	{
-		p->setSelectedLayerId(layer);
 
-		// Repaint page
-		control->getWindow()->getXournal()->layerChanged(selectedPage);
+	PageRef p = getCurrentPage();
+	if (!p.isValid())
+	{
+		return;
 	}
 
+	p->setSelectedLayerId(layer);
+
+	if (hideShow)
+	{
+		for (size_t i = 1; i <= p->getLayerCount(); i++)
+		{
+			p->setLayerVisible(i, i <= layer);
+		}
+	}
+
+	// Repaint page
+	control->getWindow()->getXournal()->layerChanged(selectedPage);
 	fireLayerVisibilityChanged();
 }
 

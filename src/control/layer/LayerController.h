@@ -65,7 +65,7 @@ public:
 
 	void addNewLayer();
 	void deleteCurrentLayer();
-	void switchToLay(int layer);
+	void switchToLay(int layer, bool hideShow = false);
 	void setLayerVisible(int layerId, bool visible);
 
 	PageRef getCurrentPage();

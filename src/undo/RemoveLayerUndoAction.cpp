@@ -47,11 +47,7 @@ bool RemoveLayerUndoAction::undo(Control* control)
 
 	layerController->insertLayer(this->page, this->layer, this->layerPos);
 	Document* doc = control->getDocument();
-
-	doc->lock();
 	int id = doc->indexOf(this->page);
-	doc->unlock();
-
 	control->getWindow()->getXournal()->layerChanged(id);
 	this->undone = true;
 
@@ -63,12 +59,8 @@ bool RemoveLayerUndoAction::redo(Control* control)
 	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
 
 	Document* doc = control->getDocument();
-
-	doc->lock();
 	layerController->removeLayer(page, layer);
 	int id = doc->indexOf(this->page);
-	doc->unlock();
-
 	control->getWindow()->getXournal()->layerChanged(id);
 
 	this->undone = false;
