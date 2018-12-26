@@ -33,7 +33,8 @@ enum ToolType
 	TOOL_DRAW_RECT		= 12,
 	TOOL_DRAW_CIRCLE	= 13,
 	TOOL_DRAW_ARROW		= 14,
-//     TOOL_DRAW_COORDINATE_SYSTEM = 15,
+//    I have to disable this here as it leads to a runtime error ("XojTypeCheck failed")
+//    TOOL_DRAW_COORDINATE_SYSTEM = 15,
 
 	TOOL_END_ENTRY
 };
