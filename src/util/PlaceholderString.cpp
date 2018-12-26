@@ -134,12 +134,20 @@ void PlaceholderString::process()
 	}
 
 	bool openBracket = false;
+	bool closeBacket = false;
 	string formatString;
 
 	// Should work, also for UTF-8
 	for (int i = 0; i < (int)text.length(); i++)
 	{
 		char c = text.at(i);
+
+		if (closeBacket && c == '}')
+		{
+			closeBacket = false;
+			processed += '}';
+			continue;
+		}
 
 		if (c == '{' && openBracket && formatString.length() == 0)
 		{
@@ -148,14 +156,22 @@ void PlaceholderString::process()
 			continue;
 		}
 
-		if (c == '}')
+		if (c == '}' && openBracket)
 		{
+			closeBacket = true;
 			processed += formatPart(formatString);
 
 			openBracket = false;
 			formatString = "";
 			continue;
 		}
+
+		if (c == '}')
+		{
+			closeBacket = true;
+			continue;
+		}
+
 
 		if (openBracket)
 		{
@@ -168,6 +184,8 @@ void PlaceholderString::process()
 			openBracket = true;
 			continue;
 		}
+
+		closeBacket = false;
 
 		processed += c;
 	}
