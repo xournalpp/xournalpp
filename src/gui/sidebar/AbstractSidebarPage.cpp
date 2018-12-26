@@ -24,37 +24,6 @@ bool AbstractSidebarPage::selectPageNr(size_t page, size_t pdfPage)
 	return false;
 }
 
-void AbstractSidebarPage::documentChanged(DocumentChangeType type)
-{
-	XOJ_CHECK_TYPE(AbstractSidebarPage);
-}
-
-void AbstractSidebarPage::pageSizeChanged(size_t page)
-{
-	XOJ_CHECK_TYPE(AbstractSidebarPage);
-}
-
-void AbstractSidebarPage::pageChanged(size_t page)
-{
-	XOJ_CHECK_TYPE(AbstractSidebarPage);
-}
-
-void AbstractSidebarPage::pageInserted(size_t page)
-{
-	XOJ_CHECK_TYPE(AbstractSidebarPage);
-}
-
-void AbstractSidebarPage::pageDeleted(size_t page)
-{
-	XOJ_CHECK_TYPE(AbstractSidebarPage);
-
-}
-
-void AbstractSidebarPage::pageSelected(size_t page)
-{
-	XOJ_CHECK_TYPE(AbstractSidebarPage);
-}
-
 Control* AbstractSidebarPage::getControl()
 {
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
