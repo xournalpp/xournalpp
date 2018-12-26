@@ -419,6 +419,8 @@ void ToolMenuHandler::initToolItems()
 							   "rect-draw.svg", _("Draw Rectangle"), gui->get("menuToolsDrawRect")));
 	addToolItem(new ToolButton(listener, gui, "DRAW_ARROW", ACTION_TOOL_DRAW_ARROW, GROUP_RULER, false,
 							   "arrow-draw.svg", _("Draw Arrow"), gui->get("menuToolsDrawArrow")));
+	addToolItem(new ToolButton(listener, gui, "DRAW_COORDINATE_SYSTEM", ACTION_TOOL_DRAW_COORDINATE_SYSTEM, GROUP_RULER, false,
+							   "coordinate-system-draw.svg", _("Draw coordinate system"), gui->get("menuToolsDrawCoordinateSystem")));
 
 	addToolItem(new ToolButton(listener, gui, "VERTICAL_SPACE", ACTION_TOOL_VERTICAL_SPACE, GROUP_TOOL, true,
 							   "stretch.svg", _("Vertical Space"), gui->get("menuToolsVerticalSpace")));
