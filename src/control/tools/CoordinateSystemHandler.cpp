@@ -31,31 +31,32 @@ void CoordinateSystemHandler::drawShape(Point& currentPoint, bool shiftDown)
 
 	if (count < 1)
 	{
-        // Add first point of coordinate system
+		// Add first point of coordinate system
 		stroke->addPoint(currentPoint);
 	}
-	else 
+	else
 	{
-        // This is the starting point of the coordinate system
+		// This is the starting point of the coordinate system
 		Point startingPoint = stroke->getPoint(0);
-        
-        // This ensures that no past points of the coordinate system are drawn
-        if (count > 2) {
-            stroke->deletePoint(2);
-            stroke->deletePoint(1);
-        }
 
-        // Draw the other two points
+		// This ensures that no past points of the coordinate system are drawn
+		if (count > 2)
+		{
+			stroke->deletePoint(2);
+			stroke->deletePoint(1);
+		}
+
+		// Draw the other two points
 		if (shiftDown || !xournal->getControl()->isRotationSnapping())
-		{		
-            stroke->addPoint(Point(startingPoint.x, currentPoint.y));
-            stroke->addPoint(Point(currentPoint.x , currentPoint.y));
-            // Can be equipped with some feature later.
+		{
+			stroke->addPoint(Point(startingPoint.x, currentPoint.y));
+			stroke->addPoint(Point(currentPoint.x, currentPoint.y));
+			// Can be equipped with some feature later.
 		}
 		else
 		{
-            stroke->addPoint(Point(startingPoint.x, currentPoint.y));
-            stroke->addPoint(Point(currentPoint.x , currentPoint.y));
+			stroke->addPoint(Point(startingPoint.x, currentPoint.y));
+			stroke->addPoint(Point(currentPoint.x, currentPoint.y));
 		}
 	}
 }
