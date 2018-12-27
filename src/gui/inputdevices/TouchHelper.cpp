@@ -1,4 +1,6 @@
 #include "TouchHelper.h"
+#include "touchdisable/TouchDisableCustom.h"
+#include "touchdisable/TouchDisableX11.h"
 
 #include "control/settings/Settings.h"
 
@@ -7,11 +9,21 @@ TouchHelper::TouchHelper(Settings* settings)
  : settings(settings),
    enabled(false),
    touchState(true),
-   disableTimeout(500)
+   disableTimeout(500),
+   x11Session(false),
+   touchImpl(NULL)
 {
 	XOJ_INIT_TYPE(TouchHelper);
 
 	reload();
+
+#ifdef X11_ENABLED
+	const char* sessionType = g_getenv("XDG_SESSION_TYPE");
+	if (sessionType != NULL && strcmp(sessionType, "xim") == 0)
+	{
+		x11Session = true;
+	}
+#endif
 }
 
 TouchHelper::~TouchHelper()
@@ -46,29 +58,46 @@ void TouchHelper::reload()
 		disableTimeout = 500;
 	}
 
+	delete touchImpl;
+	touchImpl = NULL;
 
-//	string disableMethod;
-//	touch.getString("method", disableMethod);
-//	int methodId = 0;
-//	if (disableMethod == "X11")
-//	{
-//		methodId = 1;
-//	}
-//	else if (disableMethod == "custom")
-//	{
-//		methodId = 2;
-//	}
-//
-//	gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbTouchDisableMethod")), methodId);
-//
-//	string cmd;
-//	touch.getString("cmdEnable", cmd);
-//	gtk_entry_set_text(GTK_ENTRY(get("txtEnableTouchCommand")), cmd.c_str());
-//
-//	cmd = "";
-//	touch.getString("cmdDisable", cmd);
-//	gtk_entry_set_text(GTK_ENTRY(get("txtDisableTouchCommand")), cmd.c_str());
+	string disableMethod;
+	touch.getString("method", disableMethod);
+	if (disableMethod == "X11")
+	{
+		if (x11Session == false)
+		{
+			g_warning("X11 Touch workaround is selected, but no X11 Session running!");
+			enabled = false;
+			return;
+		}
+#ifdef X11_ENABLED
+		touchImpl = new TouchDisableX11();
+#endif
+	}
+	else if (disableMethod == "custom")
+	{
+		string enableCommand;
+		touch.getString("cmdEnable", enableCommand);
+		string disableCommand;
+		touch.getString("cmdDisable", disableCommand);
 
+		touchImpl = new TouchDisableCustom(enableCommand, disableCommand);
+	}
+	else // Auto detect
+	{
+#ifdef X11_ENABLED
+		if (x11Session)
+		{
+			touchImpl = new TouchDisableX11();
+		}
+#endif
+	}
+
+	if (touchImpl)
+	{
+		touchImpl->init();
+	}
 }
 
 /**
@@ -127,7 +156,10 @@ void TouchHelper::penEvent()
  */
 void TouchHelper::enableTouch()
 {
-	printf("enable touch\n");
+	if (touchImpl)
+	{
+		touchImpl->enableTouch();
+	}
 }
 
 /**
@@ -135,8 +167,10 @@ void TouchHelper::enableTouch()
  */
 void TouchHelper::disableTouch()
 {
-	printf("disable touch\n");
-
+	if (touchImpl)
+	{
+		touchImpl->disableTouch();
+	}
 }
 
 /**

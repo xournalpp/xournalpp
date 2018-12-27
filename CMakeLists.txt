@@ -45,6 +45,11 @@ if (WIN32)
     set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-mwindows")
 endif ()
 
+## For touch workaround, may need to be disabled for a Wayland Build
+if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-lX11 -lXi")
+endif ()
+
 ## Libraries ##
 
 macro (add_includes_ldflags LDFLAGS INCLUDES)

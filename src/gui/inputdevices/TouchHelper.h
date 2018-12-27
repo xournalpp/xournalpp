@@ -16,6 +16,7 @@
 #include <gdk/gdk.h>
 
 class Settings;
+class TouchDisableInterface;
 
 class TouchHelper
 {
@@ -79,6 +80,16 @@ private:
 	 * Timeout in ms
 	 */
 	int disableTimeout;
+
+	/**
+	 * True if an X11 session is running
+	 */
+	bool x11Session;
+
+	/**
+	 * Implementation for touch disabling
+	 */
+	TouchDisableInterface* touchImpl;
 
 	/**
 	 * Settings
