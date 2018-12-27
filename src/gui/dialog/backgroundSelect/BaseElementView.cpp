@@ -116,7 +116,7 @@ void BaseElementView::paint(cairo_t* cr)
 		if (this->selected)
 		{
 			// Draw border
-			Util::cairo_set_source_rgbi(cr2, dlg->getSettings()->getSelectionColor());
+			Util::cairo_set_source_rgbi(cr2, dlg->getSettings()->getBorderColor());
 			cairo_set_line_width(cr2, 2);
 			cairo_set_line_cap(cr2, CAIRO_LINE_CAP_BUTT);
 			cairo_set_line_join(cr2, CAIRO_LINE_JOIN_BEVEL);

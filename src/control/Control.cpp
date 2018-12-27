@@ -1828,7 +1828,7 @@ void Control::showSettings()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	int selectionColor = settings->getSelectionColor();
+	int selectionColor = settings->getBorderColor();
 	bool verticalSpace = settings->getAddVerticalSpace();
 	bool horizontalSpace = settings->getAddHorizontalSpace();
 	bool bigCursor = settings->isShowBigCursor();
@@ -1836,7 +1836,7 @@ void Control::showSettings()
 	SettingsDialog* dlg = new SettingsDialog(this->gladeSearchPath, settings);
 	dlg->show(GTK_WINDOW(this->win->getWindow()));
 
-	if (selectionColor != settings->getSelectionColor())
+	if (selectionColor != settings->getBorderColor())
 	{
 		win->getXournal()->forceUpdatePagenumbers();
 	}

@@ -244,7 +244,7 @@ static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left,
 		Settings* settings = xournal->view->getControl()->getSettings();
 
 		// Draw border
-		Util::cairo_set_source_rgbi(cr, settings->getSelectionColor());
+		Util::cairo_set_source_rgbi(cr, settings->getBorderColor());
 		cairo_set_line_width(cr, 4.0);
 		cairo_set_line_cap(cr, CAIRO_LINE_CAP_BUTT);
 		cairo_set_line_join(cr, CAIRO_LINE_JOIN_BEVEL);

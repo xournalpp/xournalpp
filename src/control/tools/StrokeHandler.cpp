@@ -220,28 +220,18 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 	const double height = redrawable->getDisplayHeight();
 	const double zoom = xournal->getZoom();
 
-	/* TODO: The surface can be made much smaller, we
-	 *       only need the part of the page
-	 *       that is actually visible on the screen
-	 * 
-	 *       If you want to debug the mask, use
-	 *       CAIRO_FORMAT_RGB24 instead
-	 */
-
 	Rectangle *rectPtr = redrawable->getVisibleRect();
 
-	if(!rectPtr)
+	if (!rectPtr)
 	{
 		g_warning("Attempting to draw on an invisible surface");
 		return;
 	}
 
 	visRect = *(rectPtr);
-
 	delete rectPtr;
 
-	surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8,
-	                                      visRect.width, visRect.height);
+	surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, visRect.width, visRect.height);
 
 	crMask = cairo_create(surfMask);
 

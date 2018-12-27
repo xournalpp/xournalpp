@@ -104,7 +104,8 @@ void Settings::loadDefault()
 
 	this->pdfPageCacheSize = 10;
 
-	this->selectionColor = 0xff0000;
+	this->selectionBorderColor = 0xff0000; // red
+	this->selectionMarkerColor = 0x729FCF; // light blue
 
 	this->backgroundColor = 0xDCDAD5;
 
@@ -369,9 +370,13 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->pdfPageCacheSize = g_ascii_strtoll((const char*) value, NULL, 10);
 	}
-	else if (xmlStrcmp(name, (const xmlChar*) "selectionColor") == 0)
+	else if (xmlStrcmp(name, (const xmlChar*) "selectionBorderColor") == 0)
 	{
-		this->selectionColor = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->selectionBorderColor = g_ascii_strtoll((const char*) value, NULL, 10);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "selectionMarkerColor") == 0)
+	{
+		this->selectionMarkerColor = g_ascii_strtoll((const char*) value, NULL, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "backgroundColor") == 0)
 	{
@@ -719,8 +724,9 @@ void Settings::save()
 	WRITE_BOOL_PROP(addHorizontalSpace);
 	WRITE_BOOL_PROP(addVerticalSpace);
 
-	WRITE_INT_PROP(selectionColor);
+	WRITE_INT_PROP(selectionBorderColor);
 	WRITE_INT_PROP(backgroundColor);
+	WRITE_INT_PROP(selectionMarkerColor);
 
 	WRITE_INT_PROP(pdfPageCacheSize);
 	WRITE_COMMENT("The count of rendered PDF pages which will be cached.");
@@ -1501,22 +1507,41 @@ void Settings::setPdfPageCacheSize(int size)
 	save();
 }
 
+int Settings::getBorderColor()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->selectionBorderColor;
+}
+
+void Settings::setBorderColor(int color)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->selectionBorderColor == color)
+	{
+		return;
+	}
+	this->selectionBorderColor = color;
+	save();
+}
+
 int Settings::getSelectionColor()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	return this->selectionColor;
+	return this->selectionMarkerColor;
 }
 
 void Settings::setSelectionColor(int color)
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	if (this->selectionColor == color)
+	if (this->selectionMarkerColor == color)
 	{
 		return;
 	}
-	this->selectionColor = color;
+	this->selectionMarkerColor = color;
 	save();
 }
 

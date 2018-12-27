@@ -1530,7 +1530,7 @@ they are not blocking!&lt;/i&gt;</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="hexpand">True</property>
-                            <property name="label" translatable="yes">Border color for current page and other selections:</property>
+                            <property name="label" translatable="yes">Border color for current page and other selections</property>
                             <property name="justify">right</property>
                             <property name="xalign">0</property>
                           </object>
@@ -1572,6 +1572,29 @@ they are not blocking!&lt;/i&gt;</property>
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="top_attach">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label57">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Selection Color (Text, Stroke Selection etc.)</property>
+                            <property name="xalign">0</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkColorButton" id="colorSelection">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">2</property>
                           </packing>
                         </child>
                       </object>

@@ -11,6 +11,6 @@
 
 void installCrashHandlers()
 {
-	// TODO: Implement SE-Exception Handler for Windows
+	// Implement SE-Exception Handler for Windows
 }
 

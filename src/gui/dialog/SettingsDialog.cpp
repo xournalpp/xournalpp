@@ -181,10 +181,12 @@ void SettingsDialog::load()
 	gtk_range_set_value(GTK_RANGE(slider), dpi);
 
 	GdkRGBA color;
-	Util::apply_rgb_togdkrgba(color, settings->getSelectionColor());
+	Util::apply_rgb_togdkrgba(color, settings->getBorderColor());
 	gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorBorder")), &color);
 	Util::apply_rgb_togdkrgba(color, settings->getBackgroundColor());
 	gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorBackground")), &color);
+	Util::apply_rgb_togdkrgba(color, settings->getSelectionColor());
+	gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorSelection")), &color);
 
 
 	bool hideFullscreenMenubar = false;
@@ -346,10 +348,13 @@ void SettingsDialog::save()
 
 	GdkRGBA color;
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorBorder")), &color);
-	settings->setSelectionColor(Util::gdkrgba_to_hex(color));
+	settings->setBorderColor(Util::gdkrgba_to_hex(color));
 
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorBackground")), &color);
 	settings->setBackgroundColor(Util::gdkrgba_to_hex(color));
+
+	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorSelection")), &color);
+	settings->setSelectionColor(Util::gdkrgba_to_hex(color));
 
 
 	bool hideFullscreenMenubar = getCheckbox("cbHideFullscreenMenubar");

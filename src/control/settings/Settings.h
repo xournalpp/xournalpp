@@ -250,6 +250,9 @@ public:
 	string getPresentationHideElements();
 	void setPresentationHideElements(string elements);
 
+	int getBorderColor();
+	void setBorderColor(int color);
+
 	int getSelectionColor();
 	void setSelectionColor(int color);
 
@@ -489,7 +492,12 @@ private:
 	 * The color to draw borders on selected elements
 	 * (Page, insert image selection etc.)
 	 */
-	int selectionColor;
+	int selectionBorderColor;
+
+	/**
+	 * Color for Text selection, Stroke selection etc.
+	 */
+	int selectionMarkerColor;
 
 	/**
 	 * The color for Xournal page background

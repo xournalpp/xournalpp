@@ -5,7 +5,7 @@
 
 DeviceListHelper::DeviceListHelper()
 {
-	// TODO For never GTK versions, see example here:
+	// For never GTK versions, see example here:
 	// https://cvs.gnucash.org/docs/MASTER/gnc-cell-renderer-popup_8c_source.html
 
 	GdkDeviceManager* deviceManager = gdk_display_get_device_manager(gdk_display_get_default());

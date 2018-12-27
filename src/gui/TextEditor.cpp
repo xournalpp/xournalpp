@@ -1114,15 +1114,19 @@ void TextEditor::drawCursor(cairo_t* cr, double x, double y, double height, doub
 		cw *= 2;
 	}
 
-	// TODO LOW PRIO: with newer cairo use: CAIRO_OPERATOR_DIFFERENCE
-
 	// Not draw cursor if a move is pending
 	if (!this->markPosQueue)
 	{
 		if (this->cursorVisible)
 		{
+			cairo_save(cr);
+
+			cairo_set_operator(cr, CAIRO_OPERATOR_DIFFERENCE);
+			cairo_set_source_rgb(cr, 1, 1, 1);
 			cairo_rectangle(cr, x + dX, y, cw, height);
 			cairo_fill(cr);
+
+			cairo_restore(cr);
 		}
 	}
 	DocumentView::applyColor(cr, this->text);
