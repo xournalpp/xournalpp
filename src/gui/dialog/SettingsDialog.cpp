@@ -254,7 +254,7 @@ void SettingsDialog::load()
 	touch.getString("cmdDisable", cmd);
 	gtk_entry_set_text(GTK_ENTRY(get("txtDisableTouchCommand")), cmd.c_str());
 
-	int timeoutMs = 500;
+	int timeoutMs = 1000;
 	touch.getInt("timeout", timeoutMs);
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spTouchDisableTimeout")), timeoutMs / 1000.0);
 }
