@@ -64,8 +64,6 @@ using std::ifstream;
 
 #include <time.h>
 
-// TODO Check for error log on startup, also check for emergency save document!
-
 Control::Control(GladeSearchpath* gladeSearchPath)
 {
 	XOJ_INIT_TYPE(Control);
@@ -1690,7 +1688,6 @@ void Control::eraserSizeChanged()
 		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_THICK);
 		break;
 	default:
-		// TODO add very fine and very thick
 		break;
 	}
 }
@@ -1737,7 +1734,6 @@ void Control::hilighterSizeChanged()
 		fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_THICK);
 		break;
 	default:
-		// TODO add very fine and very thick!
 		break;
 	}
 }

@@ -17,8 +17,6 @@
 
 #include <string.h>
 
-// TODO LOW PRIO: implement drag & drop
-
 TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText)
 {
 	XOJ_INIT_TYPE(TextEditor);
