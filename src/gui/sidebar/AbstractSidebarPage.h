@@ -56,9 +56,9 @@ public:
 	virtual void setTmpDisabled(bool disabled);
 
 	/**
-	 * Page selected
+	 * A page was selected, supply additional to the Document Page the PDF Page
 	 */
-	virtual bool selectPageNr(size_t page, size_t pdfPage);
+	virtual void selectPageNr(size_t page, size_t pdfPage);
 
 	/**
 	 * Returns the Application controller

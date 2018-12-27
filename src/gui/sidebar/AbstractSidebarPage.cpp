@@ -15,13 +15,9 @@ AbstractSidebarPage::~AbstractSidebarPage()
 	this->control = NULL;
 }
 
-bool AbstractSidebarPage::selectPageNr(size_t page, size_t pdfPage)
+void AbstractSidebarPage::selectPageNr(size_t page, size_t pdfPage)
 {
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
-
-	// TODO LOW PRIO why not pageSelected?
-
-	return false;
 }
 
 Control* AbstractSidebarPage::getControl()

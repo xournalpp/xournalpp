@@ -336,11 +336,11 @@ int SidebarIndexPage::expandOpenLinks(GtkTreeModel* model, GtkTreeIter* parent)
 	return count;
 }
 
-bool SidebarIndexPage::selectPageNr(int page, int pdfPage)
+void SidebarIndexPage::selectPageNr(size_t page, size_t pdfPage)
 {
 	XOJ_CHECK_TYPE(SidebarIndexPage);
 
-	return selectPageNr(page, pdfPage, NULL);
+	selectPageNr(page, pdfPage, NULL);
 }
 
 bool SidebarIndexPage::selectPageNr(size_t page, size_t pdfPage, GtkTreeIter* parent)

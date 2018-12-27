@@ -51,7 +51,7 @@ public:
 	/**
 	 * @overwrite
 	 */
-	virtual bool selectPageNr(int page, int pdfPage);
+	virtual void selectPageNr(size_t page, size_t pdfPage);
 
 	/**
 	 * Select page in the tree
