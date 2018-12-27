@@ -2,6 +2,7 @@
 
 #ifdef X11_ENABLED
 
+#include <gdk/gdkx.h>
 
 TouchDisableX11::TouchDisableX11()
  : display(NULL),
@@ -23,11 +24,7 @@ TouchDisableX11::~TouchDisableX11()
 		touchdev = NULL;
 	}
 
-	if (display)
-	{
-		XCloseDisplay(display);
-		display = NULL;
-	}
+	display = NULL;
 
 	XOJ_RELEASE_TYPE(TouchDisableX11);
 }
@@ -36,7 +33,8 @@ void TouchDisableX11::init()
 {
 	XOJ_CHECK_TYPE(TouchDisableX11);
 
-	display = XOpenDisplay(NULL);
+	// Get display from GTK
+	display = gdk_x11_display_get_xdisplay(gdk_display_get_default());
 	if (display == NULL)
 	{
 		g_error("Could not open X11 display");
