@@ -152,34 +152,7 @@ void XournalMain::checkForErrorlog()
 }
 
 void XournalMain::checkForEmergencySave() {
-	// TODO Check for emergency save document!
-	//	gchar * filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, "errorlog.log", NULL);
-	//	if (g_file_test(filename, G_FILE_TEST_EXISTS)) {
-	//		GtkWidget * dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, _(
-	//				"There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may been fixed.\nLogfile: %s"), filename);
-	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
-	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), 2);
-	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), 3);
-	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 4);
-	//
-	//		int res = gtk_dialog_run(GTK_DIALOG(dialog));
-	//
-	//		if (res == 1) { // Send Bugreport
-	//			Util::openFileWithDefaultApplicaion("http://sourceforge.net/tracker/?group_id=163434&atid=827733");
-	//		} else if (res == 2) { // Open Logfile
-	//			Util::openFileWithFilebrowser(filename);
-	//		} else if (res == 3) { // Delete Logfile
-	//			if (g_unlink(filename) != 0) {
-	//				GtkWidget * dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", _(
-	//						"Errorlog could not be deleted. You have to delete it manually.\nLogfile: %s"), filename);
-	//				gtk_dialog_run(GTK_DIALOG(dlgError));
-	//			}
-	//		} else if (res == 4) { // Cancel
-	//			// Nothing to do
-	//		}
-	//
-	//		gtk_widget_destroy(dialog);
-	//	}
+	// Not implemented. See Ticket #627
 }
 
 int XournalMain::exportPdf(const char* input, const char* output)

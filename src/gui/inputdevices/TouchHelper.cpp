@@ -36,6 +36,9 @@ TouchHelper::~TouchHelper()
 		enableTouch();
 	}
 
+	delete touchImpl;
+	touchImpl = NULL;
+
 	XOJ_RELEASE_TYPE(TouchHelper);
 }
 

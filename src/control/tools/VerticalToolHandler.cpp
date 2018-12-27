@@ -109,19 +109,6 @@ void VerticalToolHandler::currentPos(double x, double y)
 	this->endY = y;
 
 	this->view->repaintRect(0, y1, this->page->getWidth(), this->page->getHeight());
-
-	// double dY = this->endY - this->startY;
-
-	// TODO LOW PRIO: we should move to a *new* page, but we should it do a bit more intelligent
-	// than only move all elements...
-	// But how?
-
-	//	printf("dY %lf / %lf\n", dY, this->jumpY);
-	//	if (this->jumpY + 10 < dY) {
-	//		printf("add page\n");
-	//	} else if (this->jumpY > dY) {
-	//		printf("remove page\n");
-	//	}
 }
 
 vector<Element*>* VerticalToolHandler::getElements()

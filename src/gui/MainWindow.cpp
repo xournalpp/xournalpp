@@ -288,8 +288,6 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
 		return;
 	}
 
-	// TODO LOW PRIO: use x and y for insert location!
-
 	gchar** uris = gtk_selection_data_get_uris(data);
 	if (uris)
 	{
@@ -297,23 +295,12 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
 		{
 			const char* uri = uris[i];
 
-			// TODO LOW PRIO: check first if its an image
-			//			GSList * imageFormats = gdk_pixbuf_get_formats();
-			//			for(GSList * l = imageFormats; l != NULL; l = l->next) {
-			//				GdkPixbufFormat * f = (GdkPixbufFormat *)l->data;
-			//				printf("", f);
-			//			}
-			//
-			//			g_slist_free(imageFormats);
+			GCancellable* cancel = g_cancellable_new();
+			int cancelTimeout = g_timeout_add(3000, (GSourceFunc) cancellable_cancel, cancel);
 
 			GFile* file = g_file_new_for_uri(uri);
 			GError* err = NULL;
-			GCancellable* cancel = g_cancellable_new();
-
-			int cancelTimeout = g_timeout_add(3000, (GSourceFunc) cancellable_cancel, cancel);
-
 			GFileInputStream* in = g_file_read(file, cancel, &err);
-
 			if (g_cancellable_is_cancelled(cancel))
 			{
 				continue;
@@ -350,9 +337,6 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
 				g_source_remove(cancelTimeout);
 			}
 			g_object_unref(cancel);
-
-			//TODO LOW PRIO: handle .xoj, .pdf and Images
-			cout << _F("Open URI: {1}") % uris[i] << endl;
 		}
 
 		gtk_drag_finish(dragContext, true, false, time);
