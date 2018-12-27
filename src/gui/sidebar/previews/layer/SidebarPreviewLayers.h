@@ -58,6 +58,11 @@ public:
 protected:
 	void updateSelectedLayer();
 
+public:
+	// DocumentListener interface (only the part which is not handled by SidebarPreviewBase)
+	virtual void pageSizeChanged(size_t page);
+	virtual void pageChanged(size_t page);
+
 private:
 	XOJ_TYPE_ATTRIB;
 

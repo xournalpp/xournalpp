@@ -54,6 +54,34 @@ string SidebarPreviewLayers::getIconName()
 	return "layer.svg";
 }
 
+void SidebarPreviewLayers::pageSizeChanged(size_t page)
+{
+	XOJ_CHECK_TYPE(SidebarPreviewLayers);
+
+	if (page != this->lc->getCurrentPageId())
+	{
+		return;
+	}
+
+	updatePreviews();
+}
+
+void SidebarPreviewLayers::pageChanged(size_t page)
+{
+	XOJ_CHECK_TYPE(SidebarPreviewLayers);
+
+	if (page != this->lc->getCurrentPageId())
+	{
+		return;
+	}
+
+	// Repaint all layer
+	for (SidebarPreviewBaseEntry* p : this->previews)
+	{
+		p->repaint();
+	}
+}
+
 void SidebarPreviewLayers::updatePreviews()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
