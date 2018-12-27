@@ -16,9 +16,6 @@
 
 #include <PageRange.h>
 
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
-
 class ExportDialog : public GladeGui
 {
 public:

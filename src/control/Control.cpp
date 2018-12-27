@@ -50,11 +50,10 @@
 #include <Stacktrace.h>
 #include <Util.h>
 #include <XojMsgBox.h>
+#include <StringUtils.h>
 
 #include <boost/filesystem.hpp>
 namespace bf = boost::filesystem;
-#include <boost/algorithm/string.hpp>
-namespace ba = boost::algorithm;
 
 #include <gtk/gtk.h>
 
@@ -1139,11 +1138,7 @@ void Control::enableFullscreen(bool enabled, bool presentation)
 
 		string str = presentation ? settings->getPresentationHideElements() : settings->getFullscreenHideElements();
 
-		using std::vector;
-		vector<string> part;
-		ba::split(part, str, boost::is_any_of(","));
-
-		for (string s : part)
+		for (string s : StringUtils::split(str, ','))
 		{
 			if ("sidebarContents" == s && settings->isSidebarVisible())
 			{
@@ -1892,8 +1887,9 @@ bool Control::newFile(string pageTemplate)
 bool Control::shouldFileOpen(string filename)
 {
 	// Compare case insensitive, just in case (Windows, FAT Filesystem etc.)
-	filename = boost::algorithm::to_lower_copy(filename);
-	string basename = boost::algorithm::to_lower_copy(Util::getConfigSubfolder("").string());
+
+	filename = StringUtils::toLowerCase(filename);
+	string basename = StringUtils::toLowerCase(Util::getConfigSubfolder("").string());
 
 	if (basename.size() > filename.size())
 	{
