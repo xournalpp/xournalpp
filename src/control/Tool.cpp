@@ -108,42 +108,44 @@ string toolTypeToString(ToolType type)
 {
 	switch (type)
 	{
-	case TOOL_NONE:				return "none";
-	case TOOL_PEN:				return "pen";
-	case TOOL_ERASER:			return "eraser";
-	case TOOL_HILIGHTER:		return "hilighter";
-	case TOOL_TEXT:				return "text";
-	case TOOL_IMAGE:			return "image";
-	case TOOL_SELECT_RECT:		return "selectRect";
-	case TOOL_SELECT_REGION:	return "selectRegion";
-	case TOOL_SELECT_OBJECT:	return "selectObject";
-	case TOOL_PLAY_OBJECT:		return "PlayObject";
-	case TOOL_VERTICAL_SPACE:	return "verticalSpace";
-	case TOOL_HAND:				return "hand";
-	case TOOL_DRAW_RECT:		return "drawRect";
-	case TOOL_DRAW_CIRCLE:		return "drawCircle";
-	case TOOL_DRAW_ARROW:		return "drawArrow";
-	default:					return "";
+	case TOOL_NONE:						return "none";
+	case TOOL_PEN:						return "pen";
+	case TOOL_ERASER:					return "eraser";
+	case TOOL_HILIGHTER:				return "hilighter";
+	case TOOL_TEXT:						return "text";
+	case TOOL_IMAGE:					return "image";
+	case TOOL_SELECT_RECT:				return "selectRect";
+	case TOOL_SELECT_REGION:			return "selectRegion";
+	case TOOL_SELECT_OBJECT:			return "selectObject";
+	case TOOL_PLAY_OBJECT:				return "PlayObject";
+	case TOOL_VERTICAL_SPACE:			return "verticalSpace";
+	case TOOL_HAND:						return "hand";
+	case TOOL_DRAW_RECT:				return "drawRect";
+	case TOOL_DRAW_CIRCLE:				return "drawCircle";
+	case TOOL_DRAW_ARROW:				return "drawArrow";
+	case TOOL_DRAW_COORDINATE_SYSTEM:	return "drawCoordinateSystem";
+	default:							return "";
 	}
 }
 
 ToolType toolTypeFromString(string type)
 {
-	if (type == "none")					return TOOL_NONE;
-	else if (type == "pen")				return TOOL_PEN;
-	else if (type == "eraser")			return TOOL_ERASER;
-	else if (type == "hilighter")		return TOOL_HILIGHTER;
-	else if (type == "image")			return TOOL_IMAGE;
-	else if (type == "selectRect")		return TOOL_SELECT_RECT;
-	else if (type == "selectRegion")	return TOOL_SELECT_REGION;
-	else if (type == "selectObject")	return TOOL_SELECT_OBJECT;
-	else if (type == "playObject")		return TOOL_PLAY_OBJECT;
-	else if (type == "verticalSpace")	return TOOL_VERTICAL_SPACE;
-	else if (type == "hand")			return TOOL_HAND;
-	else if (type == "drawRect")		return TOOL_DRAW_RECT;
-	else if (type == "drawCircle")		return TOOL_DRAW_CIRCLE;
-	else if (type == "drawArrow")		return TOOL_DRAW_ARROW;
-	else								return TOOL_NONE;
+	if (type == "none")							return TOOL_NONE;
+	else if (type == "pen")						return TOOL_PEN;
+	else if (type == "eraser")					return TOOL_ERASER;
+	else if (type == "hilighter")				return TOOL_HILIGHTER;
+	else if (type == "image")					return TOOL_IMAGE;
+	else if (type == "selectRect")				return TOOL_SELECT_RECT;
+	else if (type == "selectRegion")			return TOOL_SELECT_REGION;
+	else if (type == "selectObject")			return TOOL_SELECT_OBJECT;
+	else if (type == "playObject")				return TOOL_PLAY_OBJECT;
+	else if (type == "verticalSpace")			return TOOL_VERTICAL_SPACE;
+	else if (type == "hand")					return TOOL_HAND;
+	else if (type == "drawRect")				return TOOL_DRAW_RECT;
+	else if (type == "drawCircle")				return TOOL_DRAW_CIRCLE;
+	else if (type == "drawArrow")				return TOOL_DRAW_ARROW;
+	else if (type == "drawCoordinateSystem")	return TOOL_DRAW_COORDINATE_SYSTEM;
+	else										return TOOL_NONE;
 }
 
 string toolSizeToString(ToolSize size)
@@ -203,18 +205,20 @@ string drawingTypeToString(DrawingType type)
 	case DRAWING_TYPE_CIRCLE:				return "circle";
 	case DRAWING_TYPE_ARROW:				return "arrow";
 	case DRAWING_TYPE_STROKE_RECOGNIZER:	return "strokeRecognizer";
+	case DRAWING_TYPE_COORDINATE_SYSTEM:	return "drawCoordinateSystem";
 	default:								return "";
 	}
 }
 
 DrawingType drawingTypeFromString(string type)
 {
-	if (type == "dontChange")				return DRAWING_TYPE_DONT_CHANGE;
-	else if (type == "line")				return DRAWING_TYPE_LINE;
-	else if (type == "rectangle")			return DRAWING_TYPE_RECTANGLE;
-	else if (type == "circle")				return DRAWING_TYPE_CIRCLE;
-	else if (type == "arrow")				return DRAWING_TYPE_ARROW;
-	else if (type == "strokeRecognizer")	return DRAWING_TYPE_STROKE_RECOGNIZER;
-	else if (type == "default")				return DRAWING_TYPE_DEFAULT;
-	else									return DRAWING_TYPE_DEFAULT;
+	if (type == "dontChange")					return DRAWING_TYPE_DONT_CHANGE;
+	else if (type == "line")					return DRAWING_TYPE_LINE;
+	else if (type == "rectangle")				return DRAWING_TYPE_RECTANGLE;
+	else if (type == "circle")					return DRAWING_TYPE_CIRCLE;
+	else if (type == "arrow")					return DRAWING_TYPE_ARROW;
+	else if (type == "strokeRecognizer")		return DRAWING_TYPE_STROKE_RECOGNIZER;
+	else if (type == "drawCoordinateSystem")	return DRAWING_TYPE_COORDINATE_SYSTEM;
+	else if (type == "default")					return DRAWING_TYPE_DEFAULT;
+	else										return DRAWING_TYPE_DEFAULT;
 }

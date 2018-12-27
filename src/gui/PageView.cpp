@@ -11,6 +11,7 @@
 #include "control/settings/Settings.h"
 #include "control/jobs/BlockingJob.h"
 #include "control/tools/ArrowHandler.h"
+#include "control/tools/CoordinateSystemHandler.h"
 #include "control/tools/CircleHandler.h"
 #include "control/tools/EraseHandler.h"
 #include "control/tools/ImageHandler.h"
@@ -381,6 +382,10 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 		else if (h->getDrawingType() == DRAWING_TYPE_ARROW)
 		{
 			this->inputHandler = new ArrowHandler(this->xournal, this, getPage());
+		}
+		else if (h->getDrawingType() == DRAWING_TYPE_COORDINATE_SYSTEM)
+		{
+			this->inputHandler = new CoordinateSystemHandler(this->xournal, this, getPage());
 		}
 		else
 		{

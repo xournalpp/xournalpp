@@ -104,6 +104,9 @@ void ToolHandler::initTools()
 	t = new Tool("drawArrow", TOOL_DRAW_ARROW, 0x000000, TOOL_CAP_NONE, NULL);
 	tools[TOOL_DRAW_ARROW - TOOL_PEN] = t;
 
+	t = new Tool("drawCoordinateSystem", TOOL_DRAW_COORDINATE_SYSTEM, 0x000000, TOOL_CAP_NONE, NULL);
+	tools[TOOL_DRAW_COORDINATE_SYSTEM - TOOL_PEN] = t;
+
 	selectTool(TOOL_PEN);
 }
 

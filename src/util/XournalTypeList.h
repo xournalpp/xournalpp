@@ -253,4 +253,5 @@ XOJ_DECLARE_TYPE(FillTransparencyDialog, 242);
 XOJ_DECLARE_TYPE(LayerController, 243);
 XOJ_DECLARE_TYPE(PopupMenuButton, 244);
 XOJ_DECLARE_TYPE(LayerCtrlListener, 245);
+XOJ_DECLARE_TYPE(CoordinateSystemHandler, 246);
 
