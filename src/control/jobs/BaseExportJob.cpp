@@ -124,7 +124,7 @@ bool BaseExportJob::isUriValid(string& uri)
 
 	if (!ba::starts_with(uri, "file://"))
 	{
-		string msg = (_F("Only local files are supported\nPath: {1}") % uri).str();
+		string msg = FS(_F("Only local files are supported\nPath: {1}") % uri);
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 		return false;
 	}
