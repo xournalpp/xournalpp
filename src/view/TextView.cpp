@@ -15,12 +15,12 @@ PangoLayout* TextView::initPango(cairo_t* cr, Text* t)
 {
 	PangoLayout* layout = pango_cairo_create_layout(cr);
 
-	// TODO LOW PRIO: add autowrap and text field size for the next xournal release (with new fileformat...)
-	//pango_layout_set_wrap
+	// Additional Feature: add autowrap and text field size for
+	// the next xournal release (with new fileformat...)
+	// pango_layout_set_wrap
 
 	pango_cairo_context_set_resolution(pango_layout_get_context(layout), TextView::getDPI());
 	pango_cairo_update_layout(cr, layout);
-
 
 	pango_context_set_matrix(pango_layout_get_context(layout), NULL);
 	updatePangoFont(layout, t);
@@ -30,11 +30,16 @@ PangoLayout* TextView::initPango(cairo_t* cr, Text* t)
 int TextView::getDPI()
 {
 	static int myDPI;
-	if (myDPI != 0) return myDPI;
+	if (myDPI != 0)
+	{
+		return myDPI;
+	}
+
 	string settingsname = Util::getConfigFile(SETTINGS_XML_FILE).string();
 	Settings* mySettings = new Settings(settingsname);
 	mySettings->load();
 	myDPI = mySettings->getDisplayDpi();
+
 	delete mySettings;
 	return myDPI;
 }
@@ -115,8 +120,6 @@ void TextView::calcSize(Text* t, double& width, double& height)
 	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
 	cairo_t* cr = cairo_create(surface);
 
-
-	// TODO OPTIMIZE: cache the pango layout, check the size of pango layout first
 	PangoLayout* layout = initPango(cr, t);
 	string str = t->getText();
 	pango_layout_set_text(layout, str.c_str(), str.length());

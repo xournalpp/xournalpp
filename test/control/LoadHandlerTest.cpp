@@ -136,9 +136,6 @@ public:
 		checkPageType(doc, 2, "p3", PageType("ruled"));
 		checkPageType(doc, 3, "p4", PageType("graph"));
 		checkPageType(doc, 4, "p5", PageType(":image"));
-
-		// TODO: PDF not tested yet
-		// BACKGROUND_TYPE_PDF
 	}
 
 	void checkLayer(PageRef page, int layerIndex, string expectedText)

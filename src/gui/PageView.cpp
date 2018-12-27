@@ -889,31 +889,7 @@ int XojPageView::getBufferPixels()
 GtkColorWrapper XojPageView::getSelectionColor()
 {
 	XOJ_CHECK_TYPE(XojPageView);
-
-	XOJ_CHECK_TYPE(XojPageView);
-	GtkWidget* widget = getXournal()->getWidget();
-
-	GtkStyleContext *context = gtk_widget_get_style_context(widget);
-
-	gtk_style_context_save(context);
-	gtk_style_context_add_class(context, GTK_STYLE_CLASS_RUBBERBAND);
-
-	GdkRGBA col;
-	gtk_style_context_get_border_color(context,
-                                     gtk_widget_get_state_flags(widget),
-                                     &col);
-
-	// TODO: The correct border color is not sufficient,
-	//       we should also get the actual color and the GtkBorder
-	//       to draw the selection correctly
-
-	/*
-	gtk_style_context_get_border (context, state,
-	                              &border);
-	*/
-
-	gtk_style_context_restore(context);
-	return col;
+	return settings->getSelectionColor();
 }
 
 TextEditor* XojPageView::getTextEditor()

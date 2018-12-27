@@ -5,12 +5,20 @@ GtkColorWrapper::GtkColorWrapper() : red(0), green(0), blue(0)
 	XOJ_INIT_TYPE(GtkColorWrapper);
 }
 
-GtkColorWrapper::GtkColorWrapper(const GdkColor& color) : red(color.red), green(color.green), blue(color.blue)
+GtkColorWrapper::GtkColorWrapper(const int color)
+ : red((color >> 8) & 0xff00), green(color & 0xff00), blue(color << 8)
 {
 	XOJ_INIT_TYPE(GtkColorWrapper);
 }
 
-GtkColorWrapper::GtkColorWrapper(const GdkRGBA& color) : red(color.red), green(color.green), blue(color.blue)
+GtkColorWrapper::GtkColorWrapper(const GdkColor& color)
+ : red(color.red), green(color.green), blue(color.blue)
+{
+	XOJ_INIT_TYPE(GtkColorWrapper);
+}
+
+GtkColorWrapper::GtkColorWrapper(const GdkRGBA& color)
+ : red(color.red * 63535), green(color.green * 63535), blue(color.blue * 63535)
 {
 	XOJ_INIT_TYPE(GtkColorWrapper);
 }

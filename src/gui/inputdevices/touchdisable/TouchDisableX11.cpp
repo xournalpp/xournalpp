@@ -66,14 +66,14 @@ void TouchDisableX11::init()
 
 	if (touch == NULL)
 	{
-		g_error("Could not find touchscreen device for disabling");
+		g_warning("Could not find touchscreen device for disabling");
 		return;
 	}
 
 	touchdev = XOpenDevice(display, touch->id);
 	if (!touchdev)
 	{
-		g_error("Failed to open touch device «%s»", touch->name);
+		g_warning("Failed to open touch device «%s»", touch->name);
 		return;
 	}
 
