@@ -95,6 +95,7 @@ void TouchDisableX11::enableTouch()
 
 	unsigned char value = 1;
 	XChangeDeviceProperty(display, touchdev, enabledAtom, XA_INTEGER, 8, PropModeReplace, &value, 1);
+	g_message("X11 Touch enabled");
 }
 
 void TouchDisableX11::disableTouch()
@@ -107,6 +108,7 @@ void TouchDisableX11::disableTouch()
 	}
 	unsigned char value = 0;
 	XChangeDeviceProperty(display, touchdev, enabledAtom, XA_INTEGER, 8, PropModeReplace, &value, 1);
+	g_message("X11 Touch disabled");
 }
 
 #endif
