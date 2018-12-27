@@ -30,6 +30,7 @@ class PdfCache;
 class Rectangle;
 class RepaintHandler;
 class TextEditor;
+class TouchHelper;
 
 class XournalView : public DocumentListener, public ZoomListener
 {
@@ -117,6 +118,11 @@ public:
 	 */
 	bool shouldIgnoreTouchEvents();
 
+	/**
+	 * @return Helper class for Touch specific fixes
+	 */
+	TouchHelper* getTouchHelper();
+
 public:
 	// ZoomListener interface
 	void zoomChanged();
@@ -135,8 +141,8 @@ public:
 	bool onKeyReleaseEvent(GdkEventKey* event);
 
 	static void onRealized(GtkWidget* widget, XournalView* view);
-private:
 
+private:
 	void fireZoomChanged();
 
 	void addLoadPageToQue(PageRef page, int priority);
@@ -183,6 +189,11 @@ private:
 	 * Last Pen action, to ignore touch events within a time frame
 	 */
 	gint64 lastPenAction;
+
+	/**
+	 * Helper class for Touch specific fixes
+	 */
+	TouchHelper* touchHelper;
 
 	friend class Layout;
 };

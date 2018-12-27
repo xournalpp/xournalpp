@@ -9,6 +9,7 @@
 #include "control/Control.h"
 #include "control/PdfCache.h"
 #include "control/settings/MetadataManager.h"
+#include "gui/inputdevices/TouchHelper.h"
 #include "model/Document.h"
 #include "model/Stroke.h"
 #include "pageposition/PagePositionHandler.h"
@@ -43,6 +44,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 
 	this->repaintHandler = new RepaintHandler(this);
 	this->pagePosition = new PagePositionHandler();
+	this->touchHelper = new TouchHelper(control->getSettings());
 
 	this->viewPages = NULL;
 	this->viewPagesLen = 0;
@@ -86,6 +88,9 @@ XournalView::~XournalView()
 
 	gtk_widget_destroy(this->widget);
 	this->widget = NULL;
+
+	delete this->touchHelper;
+	this->touchHelper = NULL;
 
 	XOJ_RELEASE_TYPE(XournalView);
 }
@@ -547,6 +552,16 @@ bool XournalView::shouldIgnoreTouchEvents()
 		return true;
 	}
 	return false;
+}
+
+/**
+ * @return Helper class for Touch specific fixes
+ */
+TouchHelper* XournalView::getTouchHelper()
+{
+	XOJ_CHECK_TYPE(XournalView);
+
+	return touchHelper;
 }
 
 GtkWidget* XournalView::getWidget()

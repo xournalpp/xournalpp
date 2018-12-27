@@ -267,7 +267,8 @@ int XournalMain::run(int argc, char* argv[])
 
 	// Checks for input method compatibility
 	
-	if(g_getenv("GTK_IM_MODULE") != NULL && strcmp(g_getenv("GTK_IM_MODULE"), "xim") == 0)
+	const char* imModule = g_getenv("GTK_IM_MODULE");
+	if (imModule != NULL && strcmp(imModule, "xim") == 0)
 	{
 		g_setenv("GTK_IM_MODULE", "ibus", true);
 		g_warning("Unsupported input method: xim, changed to: ibus");

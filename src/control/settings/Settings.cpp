@@ -8,8 +8,6 @@
 #include <Util.h>
 
 #include <boost/filesystem.hpp>
-#include <boost/algorithm/string.hpp>
-namespace ba = boost::algorithm;
 
 #include <string.h>
 

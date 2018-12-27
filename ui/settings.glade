@@ -9,6 +9,13 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkAdjustment" id="adjustmentTouchTImeout">
+    <property name="lower">0.5</property>
+    <property name="upper">10</property>
+    <property name="value">1</property>
+    <property name="step_increment">0.10000000000000001</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="GtkAdjustment" id="adjustmentZoom">
     <property name="lower">50</property>
     <property name="upper">400</property>
@@ -81,6 +88,22 @@
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
+                  <object class="GtkBox" id="box26">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_top">10</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkLabel" id="label27">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
@@ -91,7 +114,7 @@
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">0</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
@@ -205,7 +228,7 @@ when drawn too fast&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
                 <child>
@@ -220,7 +243,7 @@ when drawn too fast&lt;/i&gt;</property>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="padding">10</property>
-                    <property name="position">2</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
@@ -307,7 +330,93 @@ like to work on&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">3</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label48">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Zoom</property>
+                    <property name="xalign">0</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="padding">10</property>
+                    <property name="position">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="box5">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel" id="label21">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">&lt;i&gt;Put a ruler on your screen to calibrate the zoom level to fit your screen. Takes effect after restarting xournalpp.
+The units are cm for the ruler, dpi for the slider.&lt;/i&gt;</property>
+                        <property name="use_markup">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkScale" id="zoomCallibSlider">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="margin_top">20</property>
+                        <property name="margin_bottom">20</property>
+                        <property name="adjustment">adjustmentZoom</property>
+                        <property name="round_digits">0</property>
+                        <property name="digits">0</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="zoomVBox">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <placeholder/>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label22">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">The unit of the ruler is cm</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">6</property>
                   </packing>
                 </child>
               </object>
@@ -328,6 +437,22 @@ like to work on&lt;/i&gt;</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
+                  <object class="GtkBox" id="box27">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_top">10</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkCheckButton" id="cbAutosave">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -346,7 +471,7 @@ like to work on&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">0</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
@@ -427,7 +552,7 @@ It the file was not saved you can find it in your home folder, in
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
                 <child>
@@ -442,7 +567,7 @@ It the file was not saved you can find it in your home folder, in
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="padding">10</property>
-                    <property name="position">2</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
@@ -600,7 +725,7 @@ It the file was not saved you can find it in your home folder, in
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">3</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
                 <child>
@@ -622,7 +747,7 @@ It the file was not saved you can find it in your home folder, in
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">4</property>
+                    <property name="position">5</property>
                   </packing>
                 </child>
                 <child>
@@ -670,7 +795,7 @@ Xournal file with the same name it will open the xoj file.&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">5</property>
+                    <property name="position">6</property>
                   </packing>
                 </child>
               </object>
@@ -690,44 +815,15 @@ Xournal file with the same name it will open the xoj file.&lt;/i&gt;</property>
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="zoomVBox2">
+              <object class="GtkBox" id="vbox4">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkLabel" id="label21">
+                  <object class="GtkBox" id="box28">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">&lt;i&gt;Put a ruler on your screen to calibrate the zoom level to fit your screen. Takes effect after restarting xournalpp.
-The units are cm for the ruler, dpi for the slider.&lt;/i&gt;</property>
-                    <property name="use_markup">True</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkScale" id="zoomCallibSlider">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="margin_top">20</property>
-                    <property name="margin_bottom">20</property>
-                    <property name="adjustment">adjustmentZoom</property>
-                    <property name="round_digits">0</property>
-                    <property name="digits">0</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkBox" id="zoomVBox">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="margin_top">10</property>
                     <property name="orientation">vertical</property>
                     <child>
                       <placeholder/>
@@ -736,42 +832,9 @@ The units are cm for the ruler, dpi for the slider.&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">2</property>
+                    <property name="position">0</property>
                   </packing>
                 </child>
-                <child>
-                  <object class="GtkLabel" id="label22">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">The unit of the ruler is cm</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">3</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="position">2</property>
-              </packing>
-            </child>
-            <child type="tab">
-              <object class="GtkLabel" id="label3">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Zoom</property>
-              </object>
-              <packing>
-                <property name="position">2</property>
-                <property name="tab_fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox" id="vbox4">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel" id="label23">
                     <property name="visible">True</property>
@@ -784,7 +847,7 @@ tool will be selected&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">0</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
@@ -800,7 +863,7 @@ tool will be selected&lt;/i&gt;</property>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="padding">10</property>
-                    <property name="position">1</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
                 <child>
@@ -814,7 +877,7 @@ tool will be selected&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="position">2</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
@@ -829,7 +892,7 @@ tool will be selected&lt;/i&gt;</property>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="padding">10</property>
-                    <property name="position">3</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
                 <child>
@@ -843,12 +906,12 @@ tool will be selected&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="position">4</property>
+                    <property name="position">5</property>
                   </packing>
                 </child>
               </object>
               <packing>
-                <property name="position">3</property>
+                <property name="position">2</property>
               </packing>
             </child>
             <child type="tab">
@@ -858,7 +921,7 @@ tool will be selected&lt;/i&gt;</property>
                 <property name="label" translatable="yes">Mouse Button</property>
               </object>
               <packing>
-                <property name="position">3</property>
+                <property name="position">2</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
@@ -867,6 +930,22 @@ tool will be selected&lt;/i&gt;</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkBox" id="box29">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_top">10</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
                 <child>
                   <object class="GtkScrolledWindow" id="scrolledwindow1">
                     <property name="visible">True</property>
@@ -1034,7 +1113,275 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="position">11</property>
+                    <property name="position">12</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="label5">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Input Device</property>
+              </object>
+              <packing>
+                <property name="position">3</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="box24">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">10</property>
+                <child>
+                  <object class="GtkBox" id="box30">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_top">10</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label49">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Settings for Touch devices which are detected by GTK.</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="cbDisableTouchOnPenNear">
+                    <property name="label" translatable="yes">Disable touch if pen is near screen</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="xalign">0</property>
+                    <property name="draw_indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="box25">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="spacing">10</property>
+                    <child>
+                      <object class="GtkLabel" id="label50">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Disabling Method</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkComboBoxText" id="cbTouchDisableMethod">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="active">0</property>
+                        <items>
+                          <item translatable="yes">Autodetect</item>
+                          <item translatable="yes">X11</item>
+                          <item translatable="yes">Custom</item>
+                        </items>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label55">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Timeout</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="spTouchDisableTimeout">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="adjustment">adjustmentTouchTImeout</property>
+                        <property name="climb_rate">0.5</property>
+                        <property name="digits">1</property>
+                        <property name="value">1</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label56">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">s</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">4</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label51">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Custom Commands (for Method "Custom")</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkGrid" id="grid3">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="column_spacing">10</property>
+                    <child>
+                      <object class="GtkLabel" id="label52">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Enable</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label53">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Disable</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="txtEnableTouchCommand">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="hexpand">True</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="txtDisableTouchCommand">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="hexpand">True</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="box34">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="spacing">10</property>
+                    <child>
+                      <object class="GtkButton" id="btTestEnable">
+                        <property name="label" translatable="yes">Test enable</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btTestDisable">
+                        <property name="label" translatable="yes">Test disable</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label54">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">&lt;i&gt;The commands will be executed in the UI Thread, make sure
+they are not blocking!&lt;/i&gt;</property>
+                    <property name="use_markup">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">7</property>
                   </packing>
                 </child>
               </object>
@@ -1043,10 +1390,10 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
               </packing>
             </child>
             <child type="tab">
-              <object class="GtkLabel" id="label5">
+              <object class="GtkLabel" id="label3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Input Device</property>
+                <property name="label" translatable="yes">Touch</property>
               </object>
               <packing>
                 <property name="position">4</property>
@@ -1059,6 +1406,22 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
+                  <object class="GtkBox" id="box31">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_top">10</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkLabel" id="label10">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
@@ -1070,7 +1433,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="padding">10</property>
-                    <property name="position">0</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
@@ -1125,7 +1488,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
                 <child>
@@ -1151,7 +1514,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="padding">10</property>
-                    <property name="position">2</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
@@ -1222,7 +1585,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">3</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
                 <child>
@@ -1248,7 +1611,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="padding">10</property>
-                    <property name="position">4</property>
+                    <property name="position">5</property>
                   </packing>
                 </child>
                 <child>
@@ -1303,7 +1666,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">5</property>
+                    <property name="position">6</property>
                   </packing>
                 </child>
                 <child>
@@ -1318,7 +1681,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="padding">10</property>
-                    <property name="position">6</property>
+                    <property name="position">7</property>
                   </packing>
                 </child>
                 <child>
@@ -1373,7 +1736,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">7</property>
+                    <property name="position">8</property>
                   </packing>
                 </child>
                 <child>
@@ -1388,7 +1751,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="padding">10</property>
-                    <property name="position">8</property>
+                    <property name="position">9</property>
                   </packing>
                 </child>
                 <child>
@@ -1477,7 +1840,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">9</property>
+                    <property name="position">10</property>
                   </packing>
                 </child>
                 <child>
@@ -1492,7 +1855,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="padding">10</property>
-                    <property name="position">10</property>
+                    <property name="position">11</property>
                   </packing>
                 </child>
                 <child>
@@ -1532,7 +1895,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">11</property>
+                    <property name="position">12</property>
                   </packing>
                 </child>
               </object>
@@ -1556,6 +1919,22 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkBox" id="box32">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_top">10</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
                 <child>
                   <object class="GtkBox" id="box1">
                     <property name="visible">True</property>
@@ -1590,7 +1969,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">0</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
@@ -1604,7 +1983,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="padding">5</property>
-                    <property name="position">1</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
                 <child>
@@ -1618,7 +1997,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="position">2</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
               </object>
@@ -1644,6 +2023,22 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">10</property>
                 <child>
+                  <object class="GtkBox" id="box33">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_top">10</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkLabel" id="label45">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
@@ -1655,7 +2050,7 @@ The Audio track is recorded to a separate folder, and liked to there.&lt;/i&gt;<
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">0</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
@@ -1693,7 +2088,7 @@ The Audio track is recorded to a separate folder, and liked to there.&lt;/i&gt;<
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
               </object>
