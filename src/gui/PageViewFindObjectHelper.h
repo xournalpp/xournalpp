@@ -183,7 +183,11 @@ protected:
 			}
 			else
 			{
-				//TODO: substitute system(..) with some c++ curl library
+				// curl is required, as also VLC, and other tools.
+				// May this can be replaced with some Socket calls, as HTTP GET is only a
+				// TCP Socket send
+				// e.g. https://stackoverflow.com/questions/28027937/cross-platform-sockets
+				// (Should be less tan 100 lines of code)
 				string psw("password");
 				string command(
 						"curl -s -u \"\":\"" + psw
