@@ -35,6 +35,21 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 			self->autosaveToggled();
 		}), this);
 
+
+	g_signal_connect(get("btTestEnable"), "clicked", G_CALLBACK(
+		+[](GtkButton* bt, SettingsDialog* self)
+		{
+			XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
+			system(gtk_entry_get_text(GTK_ENTRY(self->get("txtEnableTouchCommand"))));
+		}), this);
+
+	g_signal_connect(get("btTestDisable"), "clicked", G_CALLBACK(
+		+[](GtkButton* bt, SettingsDialog* self)
+		{
+			XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
+			system(gtk_entry_get_text(GTK_ENTRY(self->get("txtDisableTouchCommand"))));
+		}), this);
+
 	gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
 	gtk_widget_show(callib);
 
@@ -210,6 +225,38 @@ void SettingsDialog::load()
 	loadCheckbox("cbHidePresentationSidebar", hidePresentationSidebar);
 
 	autosaveToggled();
+
+
+	SElement& touch = settings->getCustomElement("touch");
+	bool disablePen = false;
+	touch.getBool("disableTouch", disablePen);
+	loadCheckbox("cbDisableTouchOnPenNear", disablePen);
+
+	string disableMethod;
+	touch.getString("method", disableMethod);
+	int methodId = 0;
+	if (disableMethod == "X11")
+	{
+		methodId = 1;
+	}
+	else if (disableMethod == "custom")
+	{
+		methodId = 2;
+	}
+
+	gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbTouchDisableMethod")), methodId);
+
+	string cmd;
+	touch.getString("cmdEnable", cmd);
+	gtk_entry_set_text(GTK_ENTRY(get("txtEnableTouchCommand")), cmd.c_str());
+
+	cmd = "";
+	touch.getString("cmdDisable", cmd);
+	gtk_entry_set_text(GTK_ENTRY(get("txtDisableTouchCommand")), cmd.c_str());
+
+	int timeoutMs = 500;
+	touch.getInt("timeout", timeoutMs);
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spTouchDisableTimeout")), timeoutMs / 1000.0);
 }
 
 string SettingsDialog::updateHideString(string hidden, bool hideMenubar, bool hideSidebar)
@@ -334,6 +381,28 @@ void SettingsDialog::save()
 	{
 		bcg->saveSettings();
 	}
+
+	SElement& touch = settings->getCustomElement("touch");
+	touch.setBool("disableTouch", getCheckbox("cbDisableTouchOnPenNear"));
+	int touchMethod = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbTouchDisableMethod")));
+
+	switch (touchMethod)
+	{
+	case 1:
+		touch.setString("method", "X11");
+		break;
+	case 2:
+		touch.setString("method", "custom");
+		break;
+	case 0:
+	default:
+		touch.setString("method", "auto");
+	}
+	touch.setString("cmdEnable", gtk_entry_get_text(GTK_ENTRY(get("txtEnableTouchCommand"))));
+	touch.setString("cmdDisable", gtk_entry_get_text(GTK_ENTRY(get("txtDisableTouchCommand"))));
+
+	touch.setInt("timeout", (int)(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spTouchDisableTimeout"))) * 1000));
+
 
 	settings->transactionEnd();
 }

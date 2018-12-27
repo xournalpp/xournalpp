@@ -9,6 +9,13 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkAdjustment" id="adjustmentTouchTImeout">
+    <property name="lower">0.5</property>
+    <property name="upper">10</property>
+    <property name="value">1</property>
+    <property name="step_increment">0.10000000000000001</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="GtkAdjustment" id="adjustmentZoom">
     <property name="lower">50</property>
     <property name="upper">400</property>
@@ -1151,7 +1158,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <object class="GtkLabel" id="label49">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Settings for devices which are detected by GTK.</property>
+                    <property name="label" translatable="yes">Settings for Touch devices which are detected by GTK.</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -1193,7 +1200,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkComboBoxText" id="comboboxtext2">
+                      <object class="GtkComboBoxText" id="cbTouchDisableMethod">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="active">0</property>
@@ -1210,11 +1217,10 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="btTestEnable">
-                        <property name="label" translatable="yes">Test enable</property>
+                      <object class="GtkLabel" id="label55">
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Timeout</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -1223,16 +1229,30 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="btTestDisable">
-                        <property name="label" translatable="yes">Test disable</property>
+                      <object class="GtkSpinButton" id="spTouchDisableTimeout">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
+                        <property name="adjustment">adjustmentTouchTImeout</property>
+                        <property name="climb_rate">0.5</property>
+                        <property name="digits">1</property>
+                        <property name="value">1</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label56">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">s</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">4</property>
                       </packing>
                     </child>
                   </object>
@@ -1246,7 +1266,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <object class="GtkLabel" id="label51">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Custom Commands</property>
+                    <property name="label" translatable="yes">Custom Commands (for Method "Custom")</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -1310,6 +1330,58 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="box34">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="spacing">10</property>
+                    <child>
+                      <object class="GtkButton" id="btTestEnable">
+                        <property name="label" translatable="yes">Test enable</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btTestDisable">
+                        <property name="label" translatable="yes">Test disable</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label54">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">&lt;i&gt;The commands will be executed in the UI Thread, make sure
+they are not blocking!&lt;/i&gt;</property>
+                    <property name="use_markup">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">7</property>
                   </packing>
                 </child>
               </object>

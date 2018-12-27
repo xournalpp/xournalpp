@@ -295,8 +295,6 @@ bool InputSequence::actionStart()
 		currentInputPage->onButtonReleaseEvent(pos);
 	}
 
-	ToolHandler* h = inputHandler->getToolHandler();
-
 	// Change the tool depending on the key or device
 	if (changeTool())
 	{
@@ -307,6 +305,7 @@ bool InputSequence::actionStart()
 
 	// hand tool don't change the selection, so you can scroll e.g.
 	// with your touchscreen without remove the selection
+	ToolHandler* h = inputHandler->getToolHandler();
 	if (h->getToolType() == TOOL_HAND)
 	{
 		Cursor* cursor = xournal->view->getCursor();
