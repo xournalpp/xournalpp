@@ -69,6 +69,7 @@ public:
 	void setLayerVisible(int layerId, bool visible);
 
 	PageRef getCurrentPage();
+	size_t getCurrentPageId();
 
 	/**
 	 * @return Layer count of the current page

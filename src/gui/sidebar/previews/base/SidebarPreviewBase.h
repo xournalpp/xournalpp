@@ -29,6 +29,8 @@ public:
 	virtual ~SidebarPreviewBase();
 
 public:
+	virtual void enableSidebar();
+	virtual void disableSidebar();
 
 	/**
 	 * Layout the pages to the current size of the sidebar
@@ -124,6 +126,11 @@ protected:
 	 * The previews
 	 */
 	vector<SidebarPreviewBaseEntry*> previews;
+
+	/**
+	 * The sidebar is enabled
+	 */
+	bool enabled;
 
 	friend class SidebarLayout;
 };

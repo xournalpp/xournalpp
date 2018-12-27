@@ -25,6 +25,8 @@ public:
 	virtual ~SidebarIndexPage();
 
 public:
+	virtual void enableSidebar();
+	virtual void disableSidebar();
 
 	/**
 	 * @overwrite

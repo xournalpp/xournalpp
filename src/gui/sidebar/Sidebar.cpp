@@ -130,9 +130,11 @@ void Sidebar::setSelectedPage(size_t page)
 			gtk_widget_show(p->getWidget());
 			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(p->tabButton), true);
 			this->visiblePage = p->getWidget();
+			p->enableSidebar();
 		}
 		else
 		{
+			p->disableSidebar();
 			gtk_widget_hide(p->getWidget());
 			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(p->tabButton), false);
 		}

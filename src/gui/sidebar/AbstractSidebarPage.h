@@ -27,6 +27,8 @@ public:
 	virtual ~AbstractSidebarPage();
 
 public:
+	virtual void enableSidebar() = 0;
+	virtual void disableSidebar() = 0;
 
 	/**
 	 * The name of this sidebar page

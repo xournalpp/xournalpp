@@ -250,6 +250,13 @@ PageRef LayerController::getCurrentPage()
 	return control->getDocument()->getPage(selectedPage);
 }
 
+size_t LayerController::getCurrentPageId()
+{
+	XOJ_CHECK_TYPE(LayerController);
+
+	return selectedPage;
+}
+
 void LayerController::setLayerVisible(int layerId, bool visible)
 {
 	XOJ_CHECK_TYPE(LayerController);
