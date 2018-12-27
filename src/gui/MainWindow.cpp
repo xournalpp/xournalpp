@@ -33,7 +33,8 @@ using std::endl;
 namespace bf = boost::filesystem;
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
- : GladeGui(gladeSearchPath, "main.glade", "mainWindow")
+ : GladeGui(gladeSearchPath, "main.glade", "mainWindow"),
+   ignoreNextHideEvent(false)
 {
 	XOJ_INIT_TYPE(MainWindow);
 
@@ -120,6 +121,12 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 
 	getSpinPageNo()->addListener(this->control->getScrollHandler());
 
+
+	Util::execInUiThread([=]() {
+		// Execute after the window is visible, else the check won't work
+		initHideMenu();
+	});
+
 	// Drag and Drop
 	g_signal_connect(this->window, "drag-data-received", G_CALLBACK(dragDataRecived), this);
 
@@ -156,6 +163,75 @@ MainWindow::~MainWindow()
 	this->zoomGesture = NULL;
 
 	XOJ_RELEASE_TYPE(MainWindow);
+}
+
+/**
+ * Topmost widgets, to check if there is a menu above
+ */
+const char* TOP_WIDGETS[] = {"tbTop1", "tbTop2", "mainContainerBox", NULL};
+
+
+void MainWindow::toggleMenuBar(MainWindow* win)
+{
+	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
+
+	if (win->ignoreNextHideEvent)
+	{
+		win->ignoreNextHideEvent = false;
+		return;
+	}
+
+	GtkWidget* menu = win->get("mainMenubar");
+	if (gtk_widget_is_visible(menu))
+	{
+		gtk_widget_hide(menu);
+	}
+	else
+	{
+		gtk_widget_show(menu);
+		win->ignoreNextHideEvent = true;
+	}
+}
+
+/**
+ * Allow to hide menubar, but only if global menu is not enabled
+ */
+void MainWindow::initHideMenu()
+{
+	int top = -1;
+	for (int i = 0; TOP_WIDGETS[i]; i++)
+	{
+		GtkWidget* w = get(TOP_WIDGETS[i]);
+		GtkAllocation allocation;
+		gtk_widget_get_allocation(w, &allocation);
+		if (allocation.y != -1)
+		{
+			top = allocation.y;
+			break;
+		}
+	}
+
+	GtkWidget* menuItem = get("menuHideMenu");
+	if (top < 5)
+	{
+		// There is no menu to hide, the menu is in the globalmenu!
+		gtk_widget_hide(menuItem);
+	}
+	else
+	{
+		// Menu found, allow to hide it
+		g_signal_connect(menuItem, "activate", G_CALLBACK(
+			+[](GtkMenuItem* menuitem, MainWindow* self)
+			{
+				XOJ_CHECK_TYPE_OBJ(self, MainWindow);
+				toggleMenuBar(self);
+			}), this);
+
+		GtkAccelGroup* accelGroup = gtk_accel_group_new();
+		gtk_accel_group_connect(accelGroup, GDK_KEY_F10, (GdkModifierType) 0, GTK_ACCEL_VISIBLE,
+				g_cclosure_new_swap(G_CALLBACK(toggleMenuBar), this, NULL));
+		gtk_window_add_accel_group(GTK_WINDOW(getWindow()), accelGroup);
+	}
 }
 
 Layout* MainWindow::getLayout()

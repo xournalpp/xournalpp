@@ -89,6 +89,12 @@ public:
 	bool isGestureActive();
 
 private:
+	/**
+	 * Allow to hide menubar, but only if global menu is not enabled
+	 */
+	void initHideMenu();
+	static void toggleMenuBar(MainWindow* win);
+
 	void createToolbarAndMenu();
 
 	static void buttonCloseSidebarClicked(GtkButton* button, MainWindow* win);
@@ -138,4 +144,9 @@ private:
 	GtkWidget** toolbarWidgets;
 
 	MainWindowToolbarMenu* toolbarSelectMenu;
+
+	/**
+	 * Workaround for double hide menubar event
+	 */
+	bool ignoreNextHideEvent;
 };
