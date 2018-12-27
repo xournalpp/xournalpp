@@ -284,6 +284,7 @@ void ToolHandler::setPenFillEnabled(bool fill)
 	this->tools[TOOL_PEN - TOOL_PEN]->fill = fill;
 
 	// TODO: Currently no toolbar event to send, but if there is a toolbar, here the event should be sent
+	// Ticket #598
 //	if (this->current->type == TOOL_PEN)
 //	{
 //		this->listener->toolSizeChanged();
@@ -318,6 +319,7 @@ void ToolHandler::setHilighterFillEnabled(bool fill)
 	this->tools[TOOL_HILIGHTER - TOOL_PEN]->fill = fill;
 
 	// TODO: Currently no toolbar event to send, but if there is a toolbar, here the event should be sent
+	// Ticket #598
 //	if (this->current->type == TOOL_HILIGHTER)
 //	{
 //		this->listener->toolSizeChanged();

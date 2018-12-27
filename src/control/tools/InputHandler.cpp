@@ -65,7 +65,6 @@ void InputHandler::createStroke(Point p)
 
 		if (xournal->getControl()->getAudioController()->isRecording())
 		{
-			//TODO: move this logic inside AudioController
 			string audioFilename = xournal->getControl()->getAudioController()->getAudioFilename();
 			gint sttime = xournal->getControl()->getAudioController()->getStartTime();
 			int seconds = ((g_get_monotonic_time() / 1000000) - sttime);
