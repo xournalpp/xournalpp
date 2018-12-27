@@ -58,7 +58,7 @@ void SidebarPreviewLayers::pageSizeChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
 
-	if (page != this->lc->getCurrentPageId())
+	if (page != this->lc->getCurrentPageId() || !enabled)
 	{
 		return;
 	}
@@ -70,7 +70,7 @@ void SidebarPreviewLayers::pageChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
 
-	if (page != this->lc->getCurrentPageId())
+	if (page != this->lc->getCurrentPageId() || !enabled)
 	{
 		return;
 	}
