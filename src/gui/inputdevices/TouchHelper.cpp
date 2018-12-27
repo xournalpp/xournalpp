@@ -19,7 +19,7 @@ TouchHelper::TouchHelper(Settings* settings)
 
 #ifdef X11_ENABLED
 	const char* sessionType = g_getenv("XDG_SESSION_TYPE");
-	if (sessionType != NULL && strcmp(sessionType, "xim") == 0)
+	if (sessionType != NULL && strcmp(sessionType, "x11") == 0)
 	{
 		x11Session = true;
 	}
