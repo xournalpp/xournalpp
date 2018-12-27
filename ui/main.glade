@@ -16,7 +16,7 @@
     <property name="can_focus">False</property>
     <property name="icon">pixmaps/xournalpp.svg</property>
     <child>
-      <object class="GtkBox" id="vbox1">
+      <object class="GtkBox" id="mainBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
@@ -368,6 +368,21 @@
                     </child>
                     <child>
                       <object class="GtkSeparatorMenuItem" id="separatormenuitem8">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="menuHideMenu">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Hide Menu</property>
+                        <property name="use_underline">True</property>
+                        <accelerator key="F10" signal="activate"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="menuitem3">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                       </object>
@@ -1141,7 +1156,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkBox" id="hbox5">
+          <object class="GtkBox" id="mainContainerBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
