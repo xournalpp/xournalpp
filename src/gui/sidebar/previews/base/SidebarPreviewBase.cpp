@@ -9,7 +9,8 @@
 
 SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
  : AbstractSidebarPage(control),
-   toolbar(toolbar)
+   toolbar(toolbar),
+   enabled(false)
 {
 	XOJ_INIT_TYPE(SidebarPreviewBase);
 
@@ -66,6 +67,20 @@ SidebarPreviewBase::~SidebarPreviewBase()
 	this->previews.clear();
 
 	XOJ_RELEASE_TYPE(SidebarPreviewBase);
+}
+
+void SidebarPreviewBase::enableSidebar()
+{
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
+
+	enabled = true;
+}
+
+void SidebarPreviewBase::disableSidebar()
+{
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
+
+	enabled = false;
 }
 
 void SidebarPreviewBase::sizeChanged(GtkWidget* widget, GtkAllocation* allocation, SidebarPreviewBase* sidebar)

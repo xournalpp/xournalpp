@@ -32,6 +32,14 @@ SidebarPreviewLayers::~SidebarPreviewLayers()
 	XOJ_RELEASE_TYPE(SidebarPreviewLayers);
 }
 
+void SidebarPreviewLayers::enableSidebar()
+{
+	XOJ_CHECK_TYPE(SidebarPreviewLayers);
+	SidebarPreviewBase::enableSidebar();
+
+	rebuildLayerMenu();
+}
+
 string SidebarPreviewLayers::getName()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
@@ -49,6 +57,11 @@ string SidebarPreviewLayers::getIconName()
 void SidebarPreviewLayers::updatePreviews()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
+
+	if (!enabled)
+	{
+		return;
+	}
 
 	// clear old previews
 	for (SidebarPreviewBaseEntry* p : this->previews)
@@ -82,6 +95,11 @@ void SidebarPreviewLayers::updatePreviews()
 void SidebarPreviewLayers::rebuildLayerMenu()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
+
+	if (!enabled)
+	{
+		return;
+	}
 
 	updatePreviews();
 }

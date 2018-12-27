@@ -59,7 +59,7 @@ SidebarIndexPage::SidebarIndexPage(Control* control) : AbstractSidebarPage(contr
 
 SidebarIndexPage::~SidebarIndexPage()
 {
-	XOJ_RELEASE_TYPE(SidebarIndexPage);
+	XOJ_CHECK_TYPE(SidebarIndexPage);
 
 	if (this->searchTimeout)
 	{
@@ -69,6 +69,20 @@ SidebarIndexPage::~SidebarIndexPage()
 
 	g_object_unref(this->treeViewBookmarks);
 	g_object_unref(this->scrollBookmarks);
+
+	XOJ_RELEASE_TYPE(SidebarIndexPage);
+}
+
+void SidebarIndexPage::enableSidebar()
+{
+	XOJ_CHECK_TYPE(SidebarIndexPage);
+	// Nothing to do at the moment
+}
+
+void SidebarIndexPage::disableSidebar()
+{
+	XOJ_CHECK_TYPE(SidebarIndexPage);
+	// Nothing to do at the moment
 }
 
 void SidebarIndexPage::askInsertPdfPage(size_t pdfPage)
@@ -208,30 +222,20 @@ gboolean SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, 
 	sidebar->searchTimeout = g_timeout_add_seconds_full(G_PRIORITY_DEFAULT_IDLE, 2,
 														(GSourceFunc) searchTimeoutFunc, sidebar, NULL);
 
-
 	// Source: Pidgin
-	gchar* enteredstring;
-	gchar* tmp;
 	gchar* text;
-	gchar* normalized;
-	gboolean result;
-	size_t i;
-	size_t len;
-	PangoLogAttr* log_attrs;
-	gchar* word;
-
 	gtk_tree_model_get(model, iter, DOCUMENT_LINKS_COLUMN_NAME, &text, -1);
 	if (text == NULL)
 	{
 		return TRUE;
 	}
 
-	tmp = g_utf8_normalize(key, -1, G_NORMALIZE_DEFAULT);
-	enteredstring = g_utf8_casefold(tmp, -1);
+	gchar* tmp = g_utf8_normalize(key, -1, G_NORMALIZE_DEFAULT);
+	gchar* enteredstring = g_utf8_casefold(tmp, -1);
 	g_free(tmp);
 
 	tmp = g_utf8_normalize(text, -1, G_NORMALIZE_DEFAULT);
-	normalized = g_utf8_casefold(tmp, -1);
+	gchar* normalized = g_utf8_casefold(tmp, -1);
 	g_free(tmp);
 
 	if (g_str_has_prefix(normalized, enteredstring))
@@ -242,14 +246,14 @@ gboolean SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, 
 	}
 
 	/* Use Pango to separate by words. */
-	len = g_utf8_strlen(normalized, -1);
-	log_attrs = g_new(PangoLogAttr, len + 1);
+	size_t len = g_utf8_strlen(normalized, -1);
+	PangoLogAttr* log_attrs = g_new(PangoLogAttr, len + 1);
 
 	pango_get_log_attrs(normalized, strlen(normalized), -1, NULL, log_attrs, len + 1);
 
-	word = normalized;
-	result = TRUE;
-	for (i = 0; i < (len - 1); i++)
+	gchar* word = normalized;
+	gboolean result = TRUE;
+	for (size_t i = 0; i < (len - 1); i++)
 	{
 		if (log_attrs[i].is_word_start && g_str_has_prefix(word, enteredstring))
 		{

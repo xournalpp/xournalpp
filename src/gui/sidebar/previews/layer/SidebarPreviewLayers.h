@@ -27,6 +27,8 @@ public:
 	virtual void layerVisibilityChanged();
 
 public:
+	virtual void enableSidebar();
+
 	/**
 	 * @overwrite
 	 */
