@@ -140,7 +140,7 @@ MetadataEntry MetadataManager::loadMetadataFile(string path, string file)
 	ifstream infile(path.c_str());
 
 	string time = file.substr(0, file.size() - 9);
-	entry.time = std::stol(time);
+	entry.time = strtoll(time.c_str(), NULL, 10);
 
 	if (!getline(infile, line))
 	{
@@ -165,7 +165,6 @@ MetadataEntry MetadataManager::loadMetadataFile(string path, string file)
 
 	entry.path = line;
 
-
 	if (!getline(infile, line))
 	{
 		deleteMetadataFile(path);
@@ -180,15 +179,7 @@ MetadataEntry MetadataManager::loadMetadataFile(string path, string file)
 		return entry;
 	}
 
-	try
-	{
-		entry.page = std::stoi(line.substr(5));
-	}
-	catch (const std::exception& e)
-	{
-		// Return invalid entry
-		return entry;
-	}
+	entry.page = strtoll(line.substr(5).c_str(), NULL, 10);
 
 	if (!getline(infile, line))
 	{
@@ -204,7 +195,7 @@ MetadataEntry MetadataManager::loadMetadataFile(string path, string file)
 		return entry;
 	}
 
-	entry.zoom = std::stod(line.substr(5));
+	entry.zoom = strtod(line.substr(5).c_str(), NULL);
 
 	entry.valid = true;
 	return entry;

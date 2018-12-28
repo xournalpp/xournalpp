@@ -4,11 +4,7 @@
 #include <i18n.h>
 #include <StringUtils.h>
 
-#include <stdio.h>
-#include <fstream>
-#include <iostream>
-using std::cout;
-using std::endl;
+#include <glib/gstdio.h>
 
 ToolbarColorNames::ToolbarColorNames()
 {
@@ -70,9 +66,15 @@ void ToolbarColorNames::saveFile(const string file)
 	gsize len = 0;
 	char* data = g_key_file_to_data(this->config, &len, NULL);
 
-	std::ofstream f(file, std::fstream::out);
-	f << data;
-	f.close();
+	FILE* fp = g_fopen(file.c_str(), "wb");
+	if (!fp)
+	{
+		g_error("Could not save color file «%s»", file.c_str());
+		return;
+	}
+
+	fwrite(data, len, 1, fp);
+	fclose(fp);
 
 	g_free(data);
 }

@@ -4,6 +4,8 @@
 #include <zlib.h>
 #include <string.h>
 
+#include <GzUtil.h>
+
 const char* TAG_PREVIEW_NAME = "preview";
 const int TAG_PREVIEW_NAME_LEN = strlen(TAG_PREVIEW_NAME);
 const char* TAG_PAGE_NAME = "page";
@@ -109,7 +111,7 @@ PreviewExtractResult XojPreviewExtractor::readFile(Path file)
 		return PREVIEW_RESULT_BAD_FILE_EXTENSION;
 	}
 
-	gzFile fp = gzopen(file.c_str(), "r");
+	gzFile fp = GzUtil::openPath(file, "r");
 	if (!fp)
 	{
 		return PREVIEW_RESULT_COULD_NOT_OPEN_FILE;
