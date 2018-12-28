@@ -5,8 +5,6 @@
 #include "dialog/toolbarCustomize/ToolbarDragDropHelper.h"
 #include "toolbarMenubar/ToolbarUtil.h"
 
-#include <string.h>
-
 const char* ATTACH_DRAG_DROP_DATA = "XOJ_DRAG_DROP_DATA";
 
 void ToolitemDragDrop::attachMetadata(GtkWidget* w, int id, AbstractToolItem* ait)

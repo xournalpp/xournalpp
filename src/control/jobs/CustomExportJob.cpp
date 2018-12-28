@@ -74,8 +74,8 @@ bool CustomExportJob::isUriValid(string& uri)
 	this->chosenFilterName = BaseExportJob::getFilterName();
 	
 	// Remove any pre-existing extension and adds the chosen one
-	clearExtensions(filename);
-	filename.replace_extension(filters[this->chosenFilterName]->extension);
+	filename.clearExtensions();
+	filename += filters[this->chosenFilterName]->extension;
 
 	return checkOverwriteBackgroundPDF(filename);
 }
@@ -87,8 +87,7 @@ bool CustomExportJob::showFilechooser()
 		return false;
 	}
 
-	string ext = filename.extension().string();
-	if (ext == ".xoj")
+	if (filename.hasExtension(".xoj"))
 	{
 		exportTypeXoj = true;
 		return true;
@@ -97,7 +96,7 @@ bool CustomExportJob::showFilechooser()
 	Document* doc = control->getDocument();
 	doc->lock();
 	ExportDialog* dlg = new ExportDialog(control->getGladeSearchPath());
-	if (ext == ".pdf")
+	if (filename.hasExtension(".pdf"))
 	{
 		dlg->removeDpiSelection();
 		exportTypePdf = true;
@@ -159,10 +158,10 @@ string CustomExportJob::getFilenameWithNumber(int no)
 	if (no == -1)
 	{
 		// No number to add
-		return filename.string();
+		return filename.str();
 	}
 
-	string filepath = filename.string();
+	string filepath = filename.str();
 	size_t dotPos = filepath.find_last_of(".");
 	if (dotPos == string::npos)
 	{

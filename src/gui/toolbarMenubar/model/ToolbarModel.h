@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <Path.h>
 #include <XournalType.h>
 
 class ToolbarData;
@@ -26,7 +27,7 @@ public:
 	bool parse(string filename, bool predefined);
 	void add(ToolbarData* data);
 	void remove(ToolbarData* data);
-	void save(string filename);
+	void save(Path filename);
 	bool existsId(string id);
 
 private:

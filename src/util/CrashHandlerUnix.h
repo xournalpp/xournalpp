@@ -10,7 +10,8 @@
  */
 
 #include <execinfo.h>
-
+#include <fstream> // std::ofstream
+using std::ofstream;
 
 static bool alreadyCrashed = false;
 
@@ -57,7 +58,7 @@ static void crashHandler(int sig)
 	}
 	alreadyCrashed = true;
 
-	cerr << FORMAT_STR("[Crash Handler] Crashed with signal {1}") % sig << endl;
+	g_warning("[Crash Handler] Crashed with signal %i", sig);
 
 	time_t lt;
 	void* array[100];
@@ -71,11 +72,11 @@ static void crashHandler(int sig)
 	time_t curtime = time(0);
 	char stime[128];
 	strftime(stime, sizeof(stime), "%Y%m%d-%H%M%S", localtime(&curtime));
-	string filename = Util::getConfigFile(std::string("errorlogs/errorlog.")  + stime + ".log").string();
+	string filename = Util::getConfigFile(std::string("errorlogs/errorlog.")  + stime + ".log").str();
 	ofstream fp(filename);
 	if (fp)
 	{
-		cerr << FORMAT_STR("[Crash Handler] Wrote crash log to: {1}") % filename << endl;
+		g_warning("[Crash Handler] Wrote crash log to: %s", filename.c_str());
 	}
 
 	lt = time(NULL);

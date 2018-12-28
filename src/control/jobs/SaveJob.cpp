@@ -1,9 +1,5 @@
 #include "SaveJob.h"
 
-//workaround for filesystem::copy_file (see http://polr.me/1db )
-//marked for removal after upgrade to boost 1.57
-#define BOOST_NO_CXX11_SCOPED_ENUMS
-
 #include "control/Control.h"
 #include "control/xojfile/SaveHandler.h"
 #include "view/DocumentView.h"
@@ -12,7 +8,6 @@
 #include <i18n.h>
 #include <XojMsgBox.h>
 
-#include <boost/filesystem/operations.hpp>
 
 SaveJob::SaveJob(Control* control)
  : BlockingJob(control, _("Save"))
@@ -50,7 +45,7 @@ void SaveJob::afterRun()
 		Document* doc = this->control->getDocument();
 
 		doc->lock();
-		path filename = doc->getFilename();
+		Path filename = doc->getFilename();
 		doc->unlock();
 
 		control->getUndoRedoHandler()->documentSaved();
@@ -127,23 +122,21 @@ bool SaveJob::save()
 
 	doc->lock();
 	h.prepareSave(doc);
-	path filename = doc->getFilename();
-	filename.replace_extension(".xopp");
+	Path filename = doc->getFilename();
+	filename.clearExtensions();
+	filename += ".xopp";
 	doc->unlock();
 
 	if (doc->shouldCreateBackupOnSave())
 	{
-		path backup = filename.parent_path();
-		backup /= string(".") + filename.filename().replace_extension(".xopp.bak").string();
+		Path backup = filename.getParentPath();
+		backup /= string(".") + filename.getFilename();
+		backup.clearExtensions();
+		backup += ".xopp.bak";
 
-		using namespace boost::filesystem;
-		try
+		if (!PathUtil::copy(doc->getFilename(), backup))
 		{
-			copy_file(doc->getFilename(), backup, copy_option::overwrite_if_exists);
-		}
-		catch (const filesystem_error& e)
-		{
-			g_warning("%s\n%s", _("Could not create backup! (The file was created from an older Xournal version)"), e.what());
+			g_warning(_("Could not create backup! (The file was created from an older Xournal version)"));
 		}
 
 		doc->setCreateBackupOnSave(false);

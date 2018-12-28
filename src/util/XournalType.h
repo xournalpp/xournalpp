@@ -25,6 +25,8 @@ using std::string;
 #include <vector>
 using std::vector;
 
+#include <string.h>
+
 #ifdef DEV_MEMORY_CHECKING
 
 #ifdef DEV_MEMORY_LEAK_CHECKING

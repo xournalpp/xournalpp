@@ -101,17 +101,10 @@ PreviewExtractResult XojPreviewExtractor::readPreview(char* buffer, int len)
  * @param file .xoj File
  * @return true if a preview was read, false if not
  */
-PreviewExtractResult XojPreviewExtractor::readFile(string file)
+PreviewExtractResult XojPreviewExtractor::readFile(Path file)
 {
 	// check file extensions
-	string ext = "";
-	size_t dotPos = file.find_last_of(".");
-	if (dotPos != string::npos)
-	{
-		ext = file.substr(dotPos);
-	}
-
-	if (!(ext == ".xoj" || ext == ".xopp"))
+	if (!file.hasXournalFileExt())
 	{
 		return PREVIEW_RESULT_BAD_FILE_EXTENSION;
 	}

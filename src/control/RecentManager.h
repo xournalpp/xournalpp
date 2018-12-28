@@ -11,10 +11,9 @@
 
 #pragma once
 
+#include <Path.h>
 #include <XournalType.h>
 
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
 #include <gtk/gtk.h>
 
 class RecentManagerListener
@@ -44,13 +43,13 @@ public:
 	 * Adds a file to the underlying GtkRecentManager
 	 * without altering the menu
 	 */
-	void addRecentFileFilename(path filename);
+	void addRecentFileFilename(Path filename);
 
 	/**
 	 * Removes a file from the underlying GtkRecentManager
 	 * without altering the menu
 	 */
-	void removeRecentFileFilename(path filename);
+	void removeRecentFileFilename(Path filename);
 
 	/**
 	 * Removes all of the menu items corresponding to recent files
@@ -76,7 +75,7 @@ public:
 	 * Notifies all RecentManagerListener%s that a new
 	 * file is opened
 	 */
-	void openRecent(path p);
+	void openRecent(Path p);
 
 	/**
 	 * Returns the root menu containing all the items

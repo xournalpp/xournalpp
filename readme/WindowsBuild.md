@@ -13,6 +13,7 @@ This manual is not yet completed.
 
 ## Preparation
 Install MSYS2
+Install NSIS to the standard Folder.
 
 Start Mingw-w64 64bit. (Always Check **64bit** not 32bit and not MSYS2)
 
@@ -46,7 +47,6 @@ pacman -S mingw-w64-x86_64-gcc
 ## Install dependencies
 
 ```bash
-pacman -S mingw-w64-x86_64-boost \
 pacman -S mingw-w64-x86_64-poppler \
 pacman -S mingw-w64-x86_64-gtk3
 ```
@@ -66,17 +66,13 @@ make
 ```
 
 ## Packaging and Setup
-There is no Script yet. This two StackOverflow entries describe how it works.
-
-https://stackoverflow.com/questions/49092784/how-to-distribute-a-gtk-application-on-windows
-https://stackoverflow.com/questions/26738025/gtk-icon-missing-when-running-in-ms-windows/34673860#34673860
-
-All libpixbufloader*.dll should be copied.
-
-loaders.cache don't need to be changed.
-
-But the dependencies of the libpixbufloader*.dll needs also to be copied into
-the bin directory.
-
+go to the folder
+```bash
+cd windows-setup
+```
+and execute
+```bash
+./build-setup.sh
+```
 
 

@@ -79,10 +79,6 @@ unset (xournalpp_SOURCES_RECURSE)
 add_library (xournalpp-core OBJECT ${xournalpp_SOURCES})
 add_dependencies (xournalpp-core util)
 
-if (BUILD_BOOST)
-  add_dependencies (xournalpp-core boost)
-endif ()
-
 ## xournalpp main program ##
 add_executable (xournalpp
   $<TARGET_OBJECTS:xournalpp-core>

@@ -4,6 +4,3 @@ file (GLOB_RECURSE util_SOURCES *.cpp)
 
 add_library (util STATIC ${util_SOURCES})
 
-if (BUILD_BOOST)
-  add_dependencies (util boost)
-endif ()

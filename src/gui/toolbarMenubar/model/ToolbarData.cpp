@@ -4,12 +4,11 @@
 
 #include <gtk/gtk.h>
 
+#include <StringUtils.h>
+
 #include <iostream>
 using std::cout;
 using std::endl;
-
-#include <boost/algorithm/string.hpp>
-namespace ba = boost::algorithm;
 
 ToolbarData::ToolbarData(bool predefined)
 {
@@ -106,7 +105,7 @@ void ToolbarData::load(GKeyFile* config, const char* group)
 
 		for (gsize x = 0; x < keyLen; x++)
 		{
-			e->addItem(ba::trim_copy(string(list[x])));
+			e->addItem(StringUtils::trim(string(list[x])));
 		}
 
 		contents.push_back(e);

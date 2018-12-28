@@ -1,6 +1,9 @@
 #include "PathUtil.h"
 #include "XojMsgBox.h"
 
+#include <glib.h>
+#include <glib/gstdio.h>
+
 /**
  * Read a file to a string
  *
@@ -33,4 +36,35 @@ bool PathUtil::readString(string& output, Path& path, bool showErrorToUser)
 	}
 }
 
+bool PathUtil::copy(Path src, Path dest)
+{
+	char buffer[16384]; // 16k
+
+	FILE* fpRead = g_fopen(src.c_str(), "rb");
+	if (!fpRead)
+	{
+		return false;
+	}
+
+	FILE* fpWrite = g_fopen(dest.c_str(), "wb");
+	if (!fpWrite)
+	{
+		fclose(fpRead);
+		return false;
+	}
+
+	while (!feof(fpRead))
+	{
+		size_t bytes = fread(buffer, 1, sizeof(buffer), fpRead);
+		if (bytes)
+		{
+			fwrite(buffer, 1, bytes, fpWrite);
+		}
+	}
+
+	fclose(fpRead);
+	fclose(fpWrite);
+
+	return true;
+}
 

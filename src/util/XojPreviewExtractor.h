@@ -14,6 +14,8 @@
 
 #include <gdk/gdk.h>
 
+#include <Path.h>
+
 #include <string>
 using std::string;
 
@@ -58,7 +60,7 @@ public:
 	 * @param file .xoj File
 	 * @return If an image was read, or the error
 	 */
-	PreviewExtractResult readFile(string file);
+	PreviewExtractResult readFile(Path file);
 
 	/**
 	 * Try to read the preview from byte buffer

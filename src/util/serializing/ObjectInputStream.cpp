@@ -4,8 +4,6 @@
 
 #include <i18n.h>
 
-#include <string.h>
-
 ObjectInputStream::ObjectInputStream()
 {
 	XOJ_INIT_TYPE(ObjectInputStream);

@@ -141,36 +141,36 @@ size_t Document::getPdfPageCount()
 	return pdfDocument.getPageCount();
 }
 
-void Document::setFilename(path filename)
+void Document::setFilename(Path filename)
 {
 	XOJ_CHECK_TYPE(Document);
 
 	this->filename = filename;
 }
 
-path Document::getFilename()
+Path Document::getFilename()
 {
 	XOJ_CHECK_TYPE(Document);
 
 	return filename;
 }
 
-path Document::getPdfFilename()
+Path Document::getPdfFilename()
 {
 	XOJ_CHECK_TYPE(Document);
 
 	return pdfFilename;
 }
 
-path Document::createSaveFolder(path lastSavePath)
+Path Document::createSaveFolder(Path lastSavePath)
 {
-	if (!filename.empty())
+	if (!filename.isEmpty())
 	{
-		return filename.parent_path();
+		return filename.getParentPath();
 	}
-	else if (!pdfFilename.empty())
+	else if (!pdfFilename.isEmpty())
 	{
-		return pdfFilename.parent_path();
+		return pdfFilename.getParentPath();
 	}
 	else
 	{
@@ -178,16 +178,20 @@ path Document::createSaveFolder(path lastSavePath)
 	}
 }
 
-path Document::createSaveFilename(DocumentType type, string defaultSaveName)
+Path Document::createSaveFilename(DocumentType type, string defaultSaveName)
 {
-	if (!filename.empty())
+	if (!filename.isEmpty())
 	{
 		// This can be any extension
-		return filename.stem();
+		Path p = filename;
+		p.clearExtensions();
+		return p;
 	}
-	else if (!pdfFilename.empty())
+	else if (!pdfFilename.isEmpty())
 	{
-		return pdfFilename.stem();
+		Path p = pdfFilename;
+		p.clearExtensions();
+		return p;
 	}
 	else
 	{
@@ -196,7 +200,9 @@ path Document::createSaveFilename(DocumentType type, string defaultSaveName)
 		strftime(stime, sizeof(stime), defaultSaveName.c_str(), localtime(&curtime));
 
 		// Remove the extension, file format is handled by the filter combo box
-		return path(stime).replace_extension();
+		Path p = stime;
+		p.clearExtensions();
+		return p;
 	}
 }
 
@@ -226,19 +232,19 @@ void Document::setPreview(cairo_surface_t* preview)
 	}
 }
 
-path Document::getEvMetadataFilename()
+Path Document::getEvMetadataFilename()
 {
 	XOJ_CHECK_TYPE(Document);
 
-	if (!this->filename.empty())
+	if (!this->filename.isEmpty())
 	{
 		return this->filename;
 	}
-	if (!this->pdfFilename.empty())
+	if (!this->pdfFilename.isEmpty())
 	{
 		return this->pdfFilename;
 	}
-	return path("");
+	return Path("");
 }
 
 bool Document::isPdfDocumentLoaded()
@@ -374,7 +380,7 @@ void Document::updateIndexPageNumbers()
 	}
 }
 
-bool Document::readPdf(path filename, bool initPages, bool attachToDocument)
+bool Document::readPdf(Path filename, bool initPages, bool attachToDocument)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -384,7 +390,7 @@ bool Document::readPdf(path filename, bool initPages, bool attachToDocument)
 
 	if (!pdfDocument.load(filename.c_str(), password.c_str(), &popplerError))
 	{
-		lastError = FS(_F("Document not loaded! ({1}), {2}") % filename.string() % popplerError->message);
+		lastError = FS(_F("Document not loaded! ({1}), {2}") % filename.str() % popplerError->message);
 		g_error_free(popplerError);
 		unlock();
 

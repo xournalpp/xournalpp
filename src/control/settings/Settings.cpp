@@ -7,10 +7,6 @@
 #include <i18n.h>
 #include <Util.h>
 
-#include <boost/filesystem.hpp>
-
-#include <string.h>
-
 #define DEFAULT_FONT "Sans"
 #define DEFAULT_FONT_SIZE 12
 
@@ -22,12 +18,10 @@
 
 const char* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default", "stylus", "stylus2"};
 
-Settings::Settings(path filename)
+Settings::Settings(Path filename)
+ : filename(filename)
 {
 	XOJ_INIT_TYPE(Settings);
-
-	this->filename = filename;
-
 	loadDefault();
 }
 
@@ -494,13 +488,13 @@ bool Settings::load()
 
 	xmlKeepBlanksDefault(0);
 
-	if (!boost::filesystem::exists(filename))
+	if (!filename.exists())
 	{
 		g_warning("configfile does not exist %s\n", filename.c_str());
 		return false;
 	}
 
-	xmlDocPtr doc = xmlParseFile(PATH_TO_CSTR(filename));
+	xmlDocPtr doc = xmlParseFile(filename.c_str());
 
 	if (doc == NULL)
 	{
@@ -671,8 +665,8 @@ void Settings::save()
 	WRITE_BOOL_PROP(presureSensitivity);
 
 	WRITE_STRING_PROP(selectedToolbar);
-	WRITE_STRING_PROP(lastSavePath.string());
-	WRITE_STRING_PROP(lastImagePath.string());
+	WRITE_STRING_PROP(lastSavePath.str());
+	WRITE_STRING_PROP(lastImagePath.str());
 
 	WRITE_INT_PROP(displayDpi);
 	WRITE_INT_PROP(mainWndWidth);
@@ -758,7 +752,7 @@ void Settings::save()
 		saveData(root, p.first, p.second);
 	}
 
-	xmlSaveFormatFileEnc(PATH_TO_CSTR(filename), doc, "UTF-8", 1);
+	xmlSaveFormatFileEnc(filename.c_str(), doc, "UTF-8", 1);
 	xmlFreeDoc(doc);
 }
 
@@ -1219,7 +1213,7 @@ void Settings::setPresureSensitivity(gboolean presureSensitivity)
 	save();
 }
 
-void Settings::setLastSavePath(path p)
+void Settings::setLastSavePath(Path p)
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1227,14 +1221,14 @@ void Settings::setLastSavePath(path p)
 	save();
 }
 
-path Settings::getLastSavePath()
+Path Settings::getLastSavePath()
 {
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->lastSavePath;
 }
 
-void Settings::setLastImagePath(path path)
+void Settings::setLastImagePath(Path path)
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1246,7 +1240,7 @@ void Settings::setLastImagePath(path path)
 	save();
 }
 
-path Settings::getLastImagePath()
+Path Settings::getLastImagePath()
 {
 	XOJ_CHECK_TYPE(Settings);
 

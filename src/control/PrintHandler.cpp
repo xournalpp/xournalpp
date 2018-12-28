@@ -88,9 +88,9 @@ void PrintHandler::print(Document* doc, int currentPage)
 {
 	XOJ_CHECK_TYPE(PrintHandler);
 
-	path filename = Util::getConfigFile(PRINT_CONFIG_FILE);
+	Path filename = Util::getConfigFile(PRINT_CONFIG_FILE);
 
-	GtkPrintSettings* settings = gtk_print_settings_new_from_file(PATH_TO_CSTR(filename), NULL);
+	GtkPrintSettings* settings = gtk_print_settings_new_from_file(filename.c_str(), NULL);
 
 	if (settings == NULL)
 	{
@@ -114,7 +114,7 @@ void PrintHandler::print(Document* doc, int currentPage)
 	{
 		g_object_unref(settings);
 		settings = gtk_print_operation_get_print_settings(op);
-		gtk_print_settings_to_file(settings, PATH_TO_CSTR(filename), NULL);
+		gtk_print_settings_to_file(settings, filename.c_str(), NULL);
 
 		settings = NULL;
 	}

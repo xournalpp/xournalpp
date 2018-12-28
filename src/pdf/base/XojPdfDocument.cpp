@@ -54,14 +54,14 @@ bool XojPdfDocument::equals(XojPdfDocumentInterface* doc)
     return this->doc->equals(doc);
 }
 
-bool XojPdfDocument::save(path filename, GError** error)
+bool XojPdfDocument::save(Path filename, GError** error)
 {
 	XOJ_CHECK_TYPE(XojPdfDocument);
 
 	return doc->save(filename, error);
 }
 
-bool XojPdfDocument::load(path filename, string password, GError** error)
+bool XojPdfDocument::load(Path filename, string password, GError** error)
 {
 	XOJ_CHECK_TYPE(XojPdfDocument);
 

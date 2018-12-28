@@ -21,10 +21,8 @@
 #include "pdf/base/XojPdfPage.h"
 #include "pdf/base/XojPdfBookmarkIterator.h"
 
+#include <Path.h>
 #include <XournalType.h>
-
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
 
 class Document
 {
@@ -40,7 +38,7 @@ public:
 		PDF
 	};
 
-	bool readPdf(path filename, bool initPages, bool attachToDocument);
+	bool readPdf(Path filename, bool initPages, bool attachToDocument);
 
 	size_t getPageCount();
 	size_t getPdfPageCount();
@@ -63,13 +61,13 @@ public:
 
 	void operator=(Document& doc);
 
-	void setFilename(path filename);
-	path getFilename();
-	path getPdfFilename();
-	path createSaveFolder(path);
-	path createSaveFilename(DocumentType, string);
+	void setFilename(Path filename);
+	Path getFilename();
+	Path getPdfFilename();
+	Path createSaveFolder(Path lastSavePath);
+	Path createSaveFilename(DocumentType type, string defaultSaveName);
 
-	path getEvMetadataFilename();
+	Path getEvMetadataFilename();
 
 	GtkTreeModel* getContentsModel();
 
@@ -104,8 +102,8 @@ private:
 
 	XojPdfDocument pdfDocument;
 
-	path filename;
-	path pdfFilename;
+	Path filename;
+	Path pdfFilename;
 	bool attachPdf;
 
 	/**

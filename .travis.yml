@@ -24,8 +24,6 @@ addons:
     packages:
     - cmake
 
-    - libboost-filesystem-dev
-
     - libcppunit-dev
 
 # Needed for mathtex

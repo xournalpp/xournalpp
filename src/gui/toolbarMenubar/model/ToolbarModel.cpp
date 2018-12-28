@@ -1,6 +1,7 @@
 #include "ToolbarModel.h"
-
 #include "ToolbarData.h"
+
+#include <XojMsgBox.h>
 
 #include <fstream>
 
@@ -129,7 +130,7 @@ const char* TOOLBAR_INI_HEADER =
 		"  LAYER: The layer dropdown menu\n"
 		"\n";
 
-void ToolbarModel::save(string filename)
+void ToolbarModel::save(Path filename)
 {
 	GKeyFile* config = g_key_file_new();
 	g_key_file_set_list_separator(config, ',');
@@ -147,9 +148,12 @@ void ToolbarModel::save(string filename)
 	gsize len = 0;
 	char* data = g_key_file_to_data(config, &len, NULL);
 
-	std::ofstream f(filename);
-	f.write(data, len);
-	f.close();
+	GError* error = NULL;
+	if (!g_file_set_contents(filename.c_str(), data, len, &error))
+	{
+		XojMsgBox::showErrorToUser(NULL, error->message);
+		g_error_free(error);
+	}
 	
 	g_free(data);
 }

@@ -57,51 +57,6 @@ macro (add_includes_ldflags LDFLAGS INCLUDES)
     set (xournalpp_INCLUDE_DIRS ${xournalpp_INCLUDE_DIRS} ${INCLUDES})
 endmacro (add_includes_ldflags LDFLAGS INCLUDES)
 
-# Boost (we start with boost, because if it'll be built it needs some linker tags)
-option (BUILD_BOOST "Build boost libraries into Xournal++" OFF)
-if (BUILD_BOOST)
-
-  set (BOOST_PREFIX "${CMAKE_BINARY_DIR}/boost-prefix")
-  if (COMPILER_CXX11_FLAG) # add flags only when needed
-    set (BOOST_CXXFLAGS cxxflags=${COMPILER_CXX11_FLAG})
-  endif ()
-
-  include (ExternalProject)
-  ExternalProject_Add (boost
-    GIT_REPOSITORY https://github.com/boostorg/boost.git
-    PREFIX "${BOOST_PREFIX}"
-
-    CONFIGURE_COMMAND cd "${BOOST_PREFIX}/src/boost" && ./bootstrap.sh --prefix="${BOOST_PREFIX}"
-
-    BUILD_COMMAND cd "${BOOST_PREFIX}/src/boost" && ./b2
-      ${BOOST_CXXFLAGS}
-      --with-filesystem
-      "--prefix=${BOOST_PREFIX}"
-      "--build-dir=${BOOST_PREFIX}/src/boost-build"
-      "--stagedir=${BOOST_PREFIX}"
-      threading=multi link=static
-
-    INSTALL_COMMAND ""
-  )
-
-  link_directories ("${BOOST_PREFIX}/lib/")
-  set (Boost_LIBRARIES
-    boost_filesystem
-    ${ICU_LIBRARIES}
-  )
-  set (Boost_INCLUDE_DIRS "${BOOST_PREFIX}/src/boost")
-
-else (BUILD_BOOST)
-
-  set (Boost_USE_MULTITHREADED ON)
-  find_package (Boost 1.54 COMPONENTS filesystem)
-  if (Boost_VERSION VERSION_LESS 1.54)
-    message (FATAL_ERROR "Boost 1.54 or newer not found – you should enable BUILD_BOOST CMake flag")
-  endif (Boost_VERSION VERSION_LESS 1.54)
-
-endif (BUILD_BOOST)
-add_includes_ldflags ("${Boost_LIBRARIES}" "${Boost_INCLUDE_DIRS}")
-
 # GTK+
 pkg_check_modules (GTK REQUIRED "gtk+-3.0 >= 3.18.9")
 add_includes_ldflags ("${GTK_LDFLAGS}" "${GTK_INCLUDE_DIRS}")
@@ -297,9 +252,6 @@ Configuration:
 
 Unstable features:
 	HighDPI Fixes:              ${UNSTABLE_HIGHDPI_FIXES}
-
-Static libraries:
-	Boost:                      ${BUILD_BOOST}
 ")
 
 option (CMAKE_DEBUG_INCLUDES_LDFLAGS "List include dirs and ldflags for xournalpp target" OFF)

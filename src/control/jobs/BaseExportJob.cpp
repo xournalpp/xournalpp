@@ -3,13 +3,8 @@
 #include "control/Control.h"
 
 #include <i18n.h>
+#include <StringUtils.h>
 #include <XojMsgBox.h>
-
-#include <boost/filesystem.hpp>
-using namespace boost::filesystem;
-
-#include <boost/algorithm/string.hpp>
-namespace ba = boost::algorithm;
 
 BaseExportJob::BaseExportJob(Control* control, string name)
  : BlockingJob(control, name),
@@ -42,21 +37,12 @@ void BaseExportJob::addFileFilterToDialog(string name, string pattern)
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 }
 
-void BaseExportJob::clearExtensions(path& filename)
-{
-	XOJ_CHECK_TYPE(BaseExportJob);
-	while (filename.has_extension())
-	{
-		filename.replace_extension();
-	}
-}
-
-bool BaseExportJob::checkOverwriteBackgroundPDF(path& filename)
+bool BaseExportJob::checkOverwriteBackgroundPDF(Path& filename)
 {
 	XOJ_CHECK_TYPE(BaseExportJob);
 	
 	// If the new file name (with the selected extension) is the previously selected pdf, warn the user
-	if (boost::iequals(filename.string(), control->getDocument()->getPdfFilename().string()))
+	if (StringUtils::iequals(filename.str(), control->getDocument()->getPdfFilename().str()))
 	{
 		string msg = _("Do not overwrite the background PDF! This will cause errors!");
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
@@ -83,12 +69,12 @@ bool BaseExportJob::showFilechooser()
 	Settings* settings = control->getSettings();
 	Document* doc = control->getDocument();
 	doc->lock();
-	path folder = doc->createSaveFolder(settings->getLastSavePath());
-	path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName());
+	Path folder = doc->createSaveFolder(settings->getLastSavePath());
+	Path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName());
 	doc->unlock();
 
-	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(folder));
-	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(name));
+	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), folder.c_str());
+	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), name.c_str());
 	
 	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
 
@@ -101,8 +87,9 @@ bool BaseExportJob::showFilechooser()
 		}
 
 		string uri(gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog)));
-		this->filename = path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog))).replace_extension();
-		path currentFolder(gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog)));
+		this->filename = Path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+		this->filename.clearExtensions();
+		Path currentFolder = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog));
 
 		// Since we add the extension after the OK button, we have to check manually on existing files
 		if (isUriValid(uri) && control->checkExistingFile(currentFolder, filename))
@@ -111,7 +98,7 @@ bool BaseExportJob::showFilechooser()
 		}
 	}
 
-	settings->setLastSavePath(this->filename.parent_path());
+	settings->setLastSavePath(this->filename.getParentPath());
 
 	gtk_widget_destroy(dialog);
 
@@ -122,7 +109,7 @@ bool BaseExportJob::isUriValid(string& uri)
 {
 	XOJ_CHECK_TYPE(BaseExportJob);
 
-	if (!ba::starts_with(uri, "file://"))
+	if (!StringUtils::startsWith(uri, "file://"))
 	{
 		string msg = FS(_F("Only local files are supported\nPath: {1}") % uri);
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);

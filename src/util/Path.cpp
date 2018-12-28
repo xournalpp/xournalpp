@@ -3,25 +3,25 @@
 
 Path::Path()
 {
-	XOJ_INIT_TYPE(Path);
 }
 
 Path::Path(const Path& other)
  : path(other.path)
 {
-	XOJ_INIT_TYPE(Path);
 }
 
 Path::Path(string path)
  : path(path)
 {
-	XOJ_INIT_TYPE(Path);
+}
+
+Path::Path(const char* path)
+ : path(path)
+{
 }
 
 Path::~Path()
 {
-	XOJ_CHECK_TYPE(Path);
-	XOJ_RELEASE_TYPE(Path);
 }
 
 /**
@@ -29,8 +29,6 @@ Path::~Path()
  */
 bool Path::isEmpty()
 {
-	XOJ_CHECK_TYPE(Path);
-
 	return path.empty();
 }
 
@@ -39,19 +37,70 @@ bool Path::isEmpty()
  */
 bool Path::exists()
 {
-	XOJ_CHECK_TYPE(Path);
-
 	return g_file_test(path.c_str(), G_FILE_TEST_EXISTS);
 }
 
 /**
+ * Compare the path with another one
+ */
+bool Path::operator ==(const Path& other)
+{
+	return this->path == other.path;
+}
+
+/**
+ * @return true if this file has .xopp or .xoj extension
+ */
+bool Path::hasXournalFileExt()
+{
+	return hasExtension(".xoj") || hasExtension(".xopp");
+}
+
+/**
  * Check if the path ends with this extension
+ *
+ * @param ext Extension, needs to be lowercase
+ * @return true if the extension is there
  */
 bool Path::hasExtension(string ext)
 {
-	XOJ_CHECK_TYPE(Path);
+	if (ext.length() > path.length())
+	{
+		return false;
+	}
 
-	return StringUtils::endsWith(path, ext);
+	string pathExt = path.substr(path.length() - ext.length());
+	pathExt = StringUtils::toLowerCase(pathExt);
+
+	return pathExt == ext;
+}
+
+/**
+ * Clear the extension (last .xyz or .pdf.xoj, .pdf.xopp)
+ */
+void Path::clearExtensions()
+{
+	string plower = StringUtils::toLowerCase(path);
+	if (StringUtils::endsWith(plower, ".pdf.xoj"))
+	{
+		path = path.substr(0, path.length() - 8);
+		return;
+	}
+
+	if (StringUtils::endsWith(plower, ".pdf.xopp"))
+	{
+		path = path.substr(0, path.length() - 9);
+		return;
+	}
+
+	size_t separator = path.find_last_of("/\\");
+	size_t dotPos = path.find_last_of(".");
+	if (dotPos == string::npos || dotPos < separator)
+	{
+		return;
+	}
+
+	path = path.substr(0, dotPos);
 }
 
 /**
@@ -59,8 +108,6 @@ bool Path::hasExtension(string ext)
  */
 string Path::str()
 {
-	XOJ_CHECK_TYPE(Path);
-
 	return path;
 }
 
@@ -69,9 +116,86 @@ string Path::str()
  */
 const char* Path::c_str()
 {
-	XOJ_CHECK_TYPE(Path);
-
 	return path.c_str();
+}
+
+/**
+ * Get escaped path, all " and \ are escaped
+ */
+string Path::getEscapedPath()
+{
+	string escaped = path;
+	StringUtils::replaceAllChars(escaped, {
+		replace_pair('\\', "\\\\"),
+		replace_pair('\"', "\\\"")
+	});
+
+	return escaped;
+}
+
+void Path::operator /=(Path p)
+{
+	path += G_DIR_SEPARATOR_S;
+	path += p.str();
+}
+
+void Path::operator /=(string p)
+{
+	path += G_DIR_SEPARATOR_S;
+	path += p;
+}
+
+void Path::operator /=(const char* p)
+{
+	path += G_DIR_SEPARATOR_S;
+	path += p;
+}
+
+void Path::operator +=(Path p)
+{
+	path += p.str();
+}
+
+void Path::operator +=(string p)
+{
+	path += p;
+}
+
+void Path::operator +=(const char* p)
+{
+	path += p;
+}
+
+/**
+ * Return the Filename of the path
+ */
+string Path::getFilename()
+{
+	size_t separator = path.find_last_of("/\\");
+
+	if (separator == string::npos)
+	{
+		return "";
+	}
+
+	return path.substr(separator + 1);
+}
+
+/**
+ * Convert this path to Uri
+ */
+string Path::toUri(GError** error)
+{
+	char * uri = g_filename_to_uri(path.c_str(), NULL, error);
+
+	if (uri == NULL)
+	{
+		return "";
+	}
+
+	string uriString = uri;
+	g_free(uri);
+	return uriString;
 }
 
 /**
@@ -79,8 +203,6 @@ const char* Path::c_str()
  */
 Path Path::getParentPath()
 {
-	XOJ_CHECK_TYPE(Path);
-
 	size_t separator = path.find_last_of("/\\");
 
 	if (separator == string::npos)

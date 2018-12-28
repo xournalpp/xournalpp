@@ -41,7 +41,6 @@
 
 #include "pixbuf-utils.h"
 
-#include <string.h>
 #include <math.h>
 #include <stdio.h>
 #include <errno.h>

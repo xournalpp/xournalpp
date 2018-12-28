@@ -33,8 +33,8 @@ public:
 	bool equals(XojPdfDocumentInterface* doc);
 
 public:
-	bool save(path filename, GError** error);
-	bool load(path filename, string password, GError** error);
+	bool save(Path filename, GError** error);
+	bool load(Path filename, string password, GError** error);
 	bool isLoaded();
 
 	XojPdfPageSPtr getPage(size_t page);

@@ -13,9 +13,7 @@
 
 #include "XournalType.h"
 
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
-
+#include <Path.h>
 #include <zlib.h>
 
 class OutputStream
@@ -35,7 +33,7 @@ public:
 class GzOutputStream : public OutputStream
 {
 public:
-	GzOutputStream(path filename);
+	GzOutputStream(Path filename);
 	virtual ~GzOutputStream();
 
 public:
@@ -53,5 +51,5 @@ private:
 	string error;
 
 	string target;
-	path filename;
+	Path filename;
 };

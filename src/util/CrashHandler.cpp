@@ -13,12 +13,6 @@
 
 using std::to_string;
 #include <ctime>
-#include <iostream>
-using std::cerr;
-using std::endl;
-#include <fstream>
-using std::ofstream;
-#include <sstream>
 
 static Document* document = NULL;
 
@@ -40,9 +34,9 @@ void emergencySave()
 		return;
 	}
 
-	cerr << endl << _("Trying to emergency save the current open document…") << endl;
+	g_warning(_("Trying to emergency save the current open document…"));
 
-	path filename = Util::getConfigFile("emergencysave.xopp");
+	Path filename = Util::getConfigFile("emergencysave.xopp");
 
 	SaveHandler handler;
 	handler.prepareSave(document);
@@ -50,10 +44,10 @@ void emergencySave()
 
 	if (!handler.getErrorMessage().empty())
 	{
-		cerr << _F("Error: {1}") % handler.getErrorMessage() << endl;
+		g_error("%s", FC(_F("Error: {1}") % handler.getErrorMessage()));
 	}
 	else
 	{
-		cerr << _F("Successfully saved document to \"{1}\"") % filename.string() << endl;
+		g_warning("%s", FC(_F("Successfully saved document to \"{1}\"") % filename.str()));
 	}
 }

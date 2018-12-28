@@ -6,7 +6,8 @@
 #include <serializing/ObjectOutputStream.h>
 #include <Stacktrace.h>
 
-Text::Text() : Element(ELEMENT_TEXT)
+Text::Text()
+ : Element(ELEMENT_TEXT)
 {
     XOJ_INIT_TYPE(Text);
 

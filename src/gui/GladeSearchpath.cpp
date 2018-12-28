@@ -1,10 +1,5 @@
 #include "GladeSearchpath.h"
 
-#include <boost/filesystem.hpp>
-#include <boost/filesystem/path.hpp>
-
-namespace bf = boost::filesystem;
-
 GladeSearchpath::GladeSearchpath()
 {
 	XOJ_INIT_TYPE(GladeSearchpath);
@@ -38,7 +33,7 @@ string GladeSearchpath::findFile(string subdir, string file)
 	{
 		string pathname = dir + G_DIR_SEPARATOR_S + filename;
 
-		if (bf::exists(bf::path(pathname)))
+		if (g_file_test(pathname.c_str(), G_FILE_TEST_EXISTS))
 		{
 			return pathname;
 		}

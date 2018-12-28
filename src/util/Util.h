@@ -11,8 +11,7 @@
 
 #pragma once
 
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
+#include "Path.h"
 
 #include <gtk/gtk.h>
 
@@ -20,14 +19,6 @@ using boost::filesystem::path;
 using std::string;
 
 #include <functional>
-
-
-// Path on Windows is UTF-16, but GTK is UTF-8
-#ifdef WIN32
-#define PATH_TO_CSTR(p) p.string().c_str()
-#else
-#define PATH_TO_CSTR(p) p.c_str()
-#endif
 
 
 class Util
@@ -42,15 +33,15 @@ public:
 	static void apply_rgb_togdkrgba(GdkRGBA& col, int color);
 	static int gdkrgba_to_hex(GdkRGBA& color);
 
-	static path getAutosaveFilename();
+	static Path getAutosaveFilename();
 
 	static int getPid();
 
-	static void openFileWithDefaultApplicaion(path filename);
-	static void openFileWithFilebrowser(path filename);
+	static void openFileWithDefaultApplicaion(Path filename);
+	static void openFileWithFilebrowser(Path filename);
 	
-	static path getConfigSubfolder(path subfolder = "");
-	static path getConfigFile(path relativeFileName = "");
+	static Path getConfigSubfolder(Path subfolder = "");
+	static Path getConfigFile(Path relativeFileName = "");
 
 	/**
 	 * Execute the callback in the UI Thread.

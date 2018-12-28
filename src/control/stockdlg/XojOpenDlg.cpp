@@ -2,12 +2,10 @@
 
 #include <config.h>
 #include <i18n.h>
+#include <StringUtils.h>
 #include <XojPreviewExtractor.h>
-#include <Util.h>
 
 #include <gio/gio.h>
-#include <boost/algorithm/string.hpp>
-
 
 XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings)
  : win(win),
@@ -21,9 +19,9 @@ XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings)
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
-	if (!settings->getLastSavePath().empty())
+	if (!settings->getLastSavePath().isEmpty())
 	{
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(settings->getLastSavePath()));
+		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
 	}
 	else
 	{
@@ -105,7 +103,7 @@ Path XojOpenDlg::runDialog()
 	}
 
 	Path file(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
-	settings->setLastSavePath(path(file.getParentPath().str()));
+	settings->setLastSavePath(file.getParentPath().str());
 
 	return file;
 }
@@ -175,19 +173,11 @@ void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userDa
 		return;
 	}
 
-	string filepath = filename;
+	Path filepath = filename;
 	g_free(filename);
 	filename = NULL;
 
-	string ext = "";
-	size_t dotPos = filepath.find_last_of(".");
-	if (dotPos != string::npos)
-	{
-		ext = filepath.substr(dotPos);
-		boost::algorithm::to_lower(ext);
-	}
-
-	if (!(ext == ".xoj" || ext == ".xopp"))
+	if (!filepath.hasXournalFileExt())
 	{
 		gtk_file_chooser_set_preview_widget_active(fileChooser, false);
 		return;

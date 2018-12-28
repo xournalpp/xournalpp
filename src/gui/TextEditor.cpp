@@ -15,8 +15,6 @@
 
 #include <gtk/gtkimmulticontext.h>
 
-#include <string.h>
-
 TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText)
 {
 	XOJ_INIT_TYPE(TextEditor);

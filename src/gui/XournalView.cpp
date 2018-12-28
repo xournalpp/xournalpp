@@ -404,10 +404,10 @@ void XournalView::pageSelected(size_t page)
 
 	Document* doc = control->getDocument();
 	doc->lock();
-	path file = doc->getEvMetadataFilename();
+	Path file = doc->getEvMetadataFilename();
 	doc->unlock();
 
-	control->getMetadataManager()->storeMetadata(file.string(), page, getZoom());
+	control->getMetadataManager()->storeMetadata(file.str(), page, getZoom());
 
 	if (this->lastSelectedPage != size_t_npos && this->lastSelectedPage < this->viewPagesLen)
 	{
@@ -614,10 +614,10 @@ void XournalView::zoomChanged()
 
 	Document* doc = control->getDocument();
 	doc->lock();
-	path file = doc->getEvMetadataFilename();
+	Path file = doc->getEvMetadataFilename();
 	doc->unlock();
 
-	control->getMetadataManager()->storeMetadata(file.string(), getCurrentPage(), getZoom());
+	control->getMetadataManager()->storeMetadata(file.str(), getCurrentPage(), getZoom());
 
 	this->control->getScheduler()->blockRerenderZoom();
 }

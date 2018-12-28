@@ -120,9 +120,9 @@ void PageTemplateDialog::saveToFile()
 	gtk_file_filter_add_pattern(filterXoj, "*.xopt");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
-	if (!settings->getLastSavePath().empty())
+	if (!settings->getLastSavePath().isEmpty())
 	{
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(settings->getLastSavePath()));
+		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
 	}
 
 

@@ -13,10 +13,8 @@
 
 #include "BlockingJob.h"
 
+#include <PathUtil.h>
 #include <XournalType.h>
-
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
 
 class Control;
 
@@ -39,8 +37,7 @@ protected:
 	void initDialog();
 	virtual void addFilterToDialog() = 0;
 	void addFileFilterToDialog(string name, string pattern);
-	void clearExtensions(path& filename);
-	bool checkOverwriteBackgroundPDF(path& filename);
+	bool checkOverwriteBackgroundPDF(Path& filename);
 	virtual bool isUriValid(string& uri);
 
 private:
@@ -49,7 +46,7 @@ private:
 protected:
 	GtkWidget* dialog;
 
-	path filename;
+	Path filename;
 
 	string errorMsg;
 

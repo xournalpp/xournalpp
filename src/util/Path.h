@@ -11,7 +11,10 @@
 
 #pragma once
 
-#include "XournalType.h"
+#include <glib.h>
+
+#include <string>
+using std::string;
 
 class Path
 {
@@ -19,6 +22,7 @@ public:
 	Path();
 	Path(const Path& other);
 	Path(string path);
+	Path(const char* path);
 	virtual ~Path();
 
 public:
@@ -33,9 +37,27 @@ public:
 	bool exists();
 
 	/**
+	 * Compare the path with another one
+	 */
+	bool operator ==(const Path& other);
+
+	/**
 	 * Check if the path ends with this extension
+	 *
+	 * @param ext Extension, needs to be lowercase
+	 * @return true if the extension is there
 	 */
 	bool hasExtension(string ext);
+
+	/**
+	 * Clear the extension (last .xyz or .pdf.xoj, .pdf.xopp)
+	 */
+	void clearExtensions();
+
+	/**
+	 * @return true if this file has .xopp or .xoj extension
+	 */
+	bool hasXournalFileExt();
 
 	/**
 	 * Return the Path as String
@@ -52,6 +74,31 @@ public:
 	 */
 	Path getParentPath();
 
+	/**
+	 * Return the Filename of the path
+	 */
+	string getFilename();
+
+	/**
+	 * Convert this path to Uri
+	 */
+	string toUri(GError** error = NULL);
+
+	/**
+	 * Get escaped path, all " and \ are escaped
+	 */
+	string getEscapedPath();
+
+	// Append operations
+public:
+	void operator /=(Path p);
+	void operator /=(string p);
+	void operator /=(const char* p);
+
+	void operator +=(Path p);
+	void operator +=(string p);
+	void operator +=(const char* p);
+
 
 public:
 	/**
@@ -60,7 +107,5 @@ public:
 	static Path fromUri(string uri);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	string path;
 };

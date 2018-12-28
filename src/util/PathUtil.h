@@ -30,4 +30,6 @@ public:
 	 * @return true if the file was read, false if not
 	 */
 	static bool readString(string& output, Path& path, bool showErrorToUser = true);
+
+	static bool copy(Path src, Path dest);
 };

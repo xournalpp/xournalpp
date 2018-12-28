@@ -279,8 +279,8 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 			{
 				cout << "doc->isAttachPdf()" << endl;
 				background->setAttrib("domain", "attach");
-				path filename = path(doc->getFilename().string() + ".bg.pdf");
-				background->setAttrib("filename", filename.string());
+				Path filename = Path(doc->getFilename().str() + ".bg.pdf");
+				background->setAttrib("filename", filename.str());
 
 				GError* error = NULL;
 				doc->getPdfDocument().save(filename, &error);
@@ -291,7 +291,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 					{
 						this->errorMessage += "\n";
 					}
-					this->errorMessage += FS(_F("Could not write background \"{1}\", {2}") % filename.string() % error->message);
+					this->errorMessage += FS(_F("Could not write background \"{1}\", {2}") % filename.str() % error->message);
 
 					g_error_free(error);
 				}
@@ -299,7 +299,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 			else
 			{
 				background->setAttrib("domain", "absolute");
-				background->setAttrib("filename", doc->getPdfFilename().string());
+				background->setAttrib("filename", doc->getPdfFilename().str());
 			}
 		}
 		background->setAttrib("pageno", p->getPdfPageNr() + 1);
@@ -370,7 +370,7 @@ void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p)
 	}
 }
 
-void SaveHandler::saveTo(path filename, ProgressListener* listener)
+void SaveHandler::saveTo(Path filename, ProgressListener* listener)
 {
 	GzOutputStream out(filename);
 
@@ -390,7 +390,7 @@ void SaveHandler::saveTo(path filename, ProgressListener* listener)
 	}
 }
 
-void SaveHandler::saveTo(OutputStream* out, path filename, ProgressListener* listener)
+void SaveHandler::saveTo(OutputStream* out, Path filename, ProgressListener* listener)
 {
 	XOJ_CHECK_TYPE(SaveHandler);
 
@@ -408,7 +408,7 @@ void SaveHandler::saveTo(OutputStream* out, path filename, ProgressListener* lis
 	{
 		BackgroundImage* img = (BackgroundImage*) l->data;
 
-		string tmpfn = filename.string() + "." + img->getFilename();
+		string tmpfn = filename.str() + "." + img->getFilename();
 		if (!gdk_pixbuf_save(img->getPixbuf(), tmpfn.c_str(), "png", NULL, NULL))
 		{
 			if (!this->errorMessage.empty())

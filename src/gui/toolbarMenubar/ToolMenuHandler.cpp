@@ -16,12 +16,11 @@
 #include "model/ToolbarData.h"
 #include "model/ToolbarModel.h"
 
+#include <StringUtils.h>
+
 #include <config.h>
 #include <config-features.h>
 #include <i18n.h>
-
-#include <boost/algorithm/string.hpp>
-namespace ba = boost::algorithm;
 
 ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* parent)
 {
@@ -145,10 +144,10 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 
 					continue;
 				}
-				if (ba::starts_with(name, "COLOR(") && name.length() == 15)
+				if (StringUtils::startsWith(name, "COLOR(") && name.length() == 15)
 				{
 					string color = name.substr(6, 8);
-					if (!ba::starts_with(color, "0x"))
+					if (!StringUtils::startsWith(color, "0x"))
 					{
 						g_warning("Toolbar:COLOR(...) has to start with 0x, get color: %s", color.c_str());
 						continue;
