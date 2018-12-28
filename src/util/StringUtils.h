@@ -25,4 +25,5 @@ public:
 	static void replaceAllChars(string& input, const std::vector<replace_pair> replaces);
 	static vector<string> split(string input, char delimiter);
 	static bool startsWith(string str, string start);
+	static bool endsWith(string str, string end);
 };

@@ -258,6 +258,7 @@ XOJ_DECLARE_TYPE(TouchHelper, 247);
 XOJ_DECLARE_TYPE(TouchDisableInterface, 248);
 XOJ_DECLARE_TYPE(TouchDisableCustom, 249);
 XOJ_DECLARE_TYPE(TouchDisableX11, 250);
+XOJ_DECLARE_TYPE(Path, 251);
 
 
 
