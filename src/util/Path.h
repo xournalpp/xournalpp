@@ -42,6 +42,21 @@ public:
 	bool operator ==(const Path& other);
 
 	/**
+	 * Assign path
+	 */
+	void operator =(const Path& other);
+
+	/**
+	 * Assign path
+	 */
+	void operator =(const string& path);
+
+	/**
+	 * Assign path
+	 */
+	void operator =(const char* path);
+
+	/**
 	 * Check if the path ends with this extension
 	 *
 	 * @param ext Extension, needs to be lowercase

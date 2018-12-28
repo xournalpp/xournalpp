@@ -2193,6 +2193,7 @@ bool Control::annotatePdf(Path filename, bool attachPdf, bool attachToDocument)
 
 	getCursor()->setCursorBusy(true);
 
+	this->doc->setFilename("");
 	bool res = this->doc->readPdf(filename, true, attachToDocument);
 
 	if (res)

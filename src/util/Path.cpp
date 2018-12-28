@@ -49,6 +49,30 @@ bool Path::operator ==(const Path& other)
 }
 
 /**
+ * Assign path
+ */
+void Path::operator =(const Path& other)
+{
+	this->path = other.path;
+}
+
+/**
+ * Assign path
+ */
+void Path::operator =(const string& path)
+{
+	this->path = path;
+}
+
+/**
+ * Assign path
+ */
+void Path::operator =(const char* path)
+{
+	this->path = path;
+}
+
+/**
  * @return true if this file has .xopp or .xoj extension
  */
 bool Path::hasXournalFileExt()
