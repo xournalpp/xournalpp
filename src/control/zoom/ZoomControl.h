@@ -18,10 +18,9 @@
 #include <gtk/gtk.h>
 #include <vector>
 
-// Hardcode max and min zoom
-// this should probably be user-adjustable in future
-#define MAX_ZOOM 7
-#define MIN_ZOOM 0.3
+#define DEFAULT_ZOOM_MAX 7
+#define DEFAULT_ZOOM_MIN 0.3
+#define DEFAULT_ZOOM_STEP 0.04
 
 class XournalView;
 class XojPageView;
@@ -88,6 +87,15 @@ public:
 	 */
 	Rectangle getVisibleRect();
 
+	double getZoomStep();
+	void setZoomStep(double zoomStep);
+
+	double getZoomMax();
+	void setZoomMax(double zoomMax);
+
+	double getZoomMin();
+	void setZoomMin(double zoomMin);
+
 protected:
 	void fireZoomChanged();
 	void fireZoomRangeValueChanged();
@@ -134,4 +142,8 @@ private:
 	 * Base zoom on start, for relative zoom (Gesture)
 	 */
 	double zoomSequenceStart;
+
+	double zoomStep;
+	double zoomMax;
+	double zoomMin;
 };

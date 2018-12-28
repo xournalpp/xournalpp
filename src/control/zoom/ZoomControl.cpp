@@ -5,8 +5,6 @@
 #include "gui/widgets/XournalWidget.h"
 #include "gui/XournalView.h"
 
-const double zoomStep = 0.04;
-
 ZoomControl::ZoomControl()
  : view(NULL)
 {
@@ -17,6 +15,10 @@ ZoomControl::ZoomControl()
 	this->zoom100Value = 1.0;
 	this->zoomFitValue = 1.0;
 	this->zoomFitMode = true;
+
+	this->zoomStep = DEFAULT_ZOOM_STEP;
+	this->zoomMax = DEFAULT_ZOOM_MAX;
+	this->zoomMin = DEFAULT_ZOOM_MIN;
 
 	this->zoomSequenceStart = -1;
 
@@ -150,14 +152,14 @@ void ZoomControl::fireZoomChanged()
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	if (this->zoom < MIN_ZOOM)
+	if (this->zoom < this->zoomMin)
 	{
-		this->zoom = MIN_ZOOM;
+		this->zoom = this->zoomMin;
 	}
 
-	if (this->zoom > MAX_ZOOM)
+	if (this->zoom > this->zoomMax)
 	{
-		this->zoom = MAX_ZOOM;
+		this->zoom = this->zoomMax;
 	}
 
 	for (ZoomListener* z : this->listener)
@@ -260,7 +262,7 @@ void ZoomControl::zoomIn(double x, double y)
 
 	startZoomSequence(x, y);
 
-	this->zoom += zoomStep;
+	this->zoom += this->zoomStep;
 	this->zoomFitMode = false;
 	fireZoomChanged();
 
@@ -273,12 +275,53 @@ void ZoomControl::zoomOut(double x, double y)
 
 	startZoomSequence(x, y);
 
-	this->zoom -= zoomStep;
+	this->zoom -= this->zoomStep;
 	this->zoomFitMode = false;
 	fireZoomChanged();
 
 	endZoomSequence();
 }
+
+double ZoomControl::getZoomStep()
+{
+	return this->zoomStep;
+}
+
+void ZoomControl::setZoomStep(double zoomStep)
+{
+	XOJ_CHECK_TYPE(ZoomControl);
+
+	this->zoomStep = zoomStep;
+}
+
+double ZoomControl::getZoomMax()
+{
+	XOJ_CHECK_TYPE(ZoomControl);
+
+	return this->zoomMax;
+}
+
+void ZoomControl::setZoomMax(double zoomMax)
+{
+	XOJ_CHECK_TYPE(ZoomControl);
+
+	this->zoomMax = zoomMax;
+}
+
+double ZoomControl::getZoomMin()
+{
+	XOJ_CHECK_TYPE(ZoomControl);
+
+	return this->zoomMin;
+}
+
+void ZoomControl::setZoomMin(double zoomMin)
+{
+	XOJ_CHECK_TYPE(ZoomControl);
+
+	this->zoomMin = zoomMin;
+}
+
 
 bool ZoomControl::onScrolledwindowMainScrollEvent(GdkEventScroll* event)
 {
