@@ -133,88 +133,72 @@ MetadataEntry MetadataManager::loadMetadataFile(string path, string file)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	try
+	MetadataEntry entry;
+	entry.metadataFile = path;
+
+	string line;
+	ifstream infile(path.c_str());
+
+	string time = file.substr(0, file.size() - 9);
+	entry.time = strtoll(time.c_str(), NULL, 10);
+
+	if (!getline(infile, line))
 	{
-		MetadataEntry entry;
-		entry.metadataFile = path;
-
-		string line;
-		ifstream infile(path.c_str());
-
-		string time = file.substr(0, file.size() - 9);
-		entry.time = std::stol(time);
-
-		if (!getline(infile, line))
-		{
-			deleteMetadataFile(path);
-			// Not valid
-			return entry;
-		}
-
-		if (line != "XOJ-METADATA/1.0")
-		{
-			deleteMetadataFile(path);
-			// Not valid
-			return entry;
-		}
-
-		if (!getline(infile, line))
-		{
-			deleteMetadataFile(path);
-			// Not valid
-			return entry;
-		}
-
-		entry.path = line;
-
-		if (!getline(infile, line))
-		{
-			deleteMetadataFile(path);
-			// Not valid
-			return entry;
-		}
-
-		if (line.length() < 6 || line.substr(0, 5) != "page=")
-		{
-			deleteMetadataFile(path);
-			// Not valid
-			return entry;
-		}
-
-		try
-		{
-			entry.page = std::stoi(line.substr(5));
-		}
-		catch (const std::exception& e)
-		{
-			// Return invalid entry
-			return entry;
-		}
-
-		if (!getline(infile, line))
-		{
-			deleteMetadataFile(path);
-			// Not valid
-			return entry;
-		}
-
-		if (line.length() < 6 || line.substr(0, 5) != "zoom=")
-		{
-			deleteMetadataFile(path);
-			// Not valid
-			return entry;
-		}
-
-		entry.zoom = std::stod(line.substr(5));
-
-		entry.valid = true;
+		deleteMetadataFile(path);
+		// Not valid
 		return entry;
 	}
-	catch (const std::exception& e)
+
+	if (line != "XOJ-METADATA/1.0")
 	{
-		g_error("Error pasing Metadata: %s", e.what());
-		return MetadataEntry();
+		deleteMetadataFile(path);
+		// Not valid
+		return entry;
 	}
+
+	if (!getline(infile, line))
+	{
+		deleteMetadataFile(path);
+		// Not valid
+		return entry;
+	}
+
+	entry.path = line;
+
+	if (!getline(infile, line))
+	{
+		deleteMetadataFile(path);
+		// Not valid
+		return entry;
+	}
+
+	if (line.length() < 6 || line.substr(0, 5) != "page=")
+	{
+		deleteMetadataFile(path);
+		// Not valid
+		return entry;
+	}
+
+	entry.page = strtoll(line.substr(5).c_str(), NULL, 10);
+
+	if (!getline(infile, line))
+	{
+		deleteMetadataFile(path);
+		// Not valid
+		return entry;
+	}
+
+	if (line.length() < 6 || line.substr(0, 5) != "zoom=")
+	{
+		deleteMetadataFile(path);
+		// Not valid
+		return entry;
+	}
+
+	entry.zoom = strtod(line.substr(5).c_str(), NULL);
+
+	entry.valid = true;
+	return entry;
 }
 
 /**
