@@ -7,6 +7,7 @@
 #include "control/pagetype/PageTypeHandler.h"
 
 #include <Util.h>
+#include <PathUtil.h>
 
 #include <config.h>
 #include <i18n.h>
@@ -164,11 +165,12 @@ void PageTemplateDialog::loadFromFile()
 	XojOpenDlg dlg(GTK_WINDOW(this->getWindow()), this->settings);
 	Path filename = dlg.showOpenTemplateDialog();
 
-	std::ifstream file(filename.c_str());
-	std::stringstream buffer;
-	buffer << file.rdbuf();
-
-	model.parse(buffer.str());
+	string contents;
+	if (!PathUtil::readString(contents, filename))
+	{
+		return;
+	}
+	model.parse(contents);
 
 	updateDataFromModel();
 }

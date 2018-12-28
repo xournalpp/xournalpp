@@ -302,6 +302,8 @@ void Control::initWindow(MainWindow* win)
 	this->zoom->initZoomHandler(win->getXournal()->getWidget(), win->getXournal());
 	this->sidebar = new Sidebar(win, this);
 
+	XojMsgBox::setDefaultWindow(getGtkWindow());
+
 	updatePageNumbers(0, size_t_npos);
 
 	toolHandler->eraserTypeChanged();

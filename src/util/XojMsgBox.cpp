@@ -2,9 +2,24 @@
 
 #include <i18n.h>
 
+GtkWindow* defaultWindow = NULL;
+
+/**
+ * Set window for messages without window
+ */
+void XojMsgBox::setDefaultWindow(GtkWindow* win)
+{
+	defaultWindow = win;
+}
+
 
 void XojMsgBox::showErrorToUser(GtkWindow* win, string msg)
 {
+	if (win == NULL)
+	{
+		win = defaultWindow;
+	}
+
 	GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 											   "%s", msg.c_str());
 	if (win != NULL)
