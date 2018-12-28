@@ -1815,16 +1815,6 @@ void Control::toolFillChanged()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	// TODO Not implemented
-//	if (toolHandler->getToolType() == TOOL_PEN)
-//	{
-//		penSizeChanged();
-//	}
-//	else if (toolHandler->getToolType() == TOOL_HILIGHTER)
-//	{
-//		hilighterSizeChanged();
-//	}
-
 	if (toolHandler->getFill())
 	{
 		fireActionSelected(GROUP_FILL, ACTION_TOOL_FILL);
