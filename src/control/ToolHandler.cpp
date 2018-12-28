@@ -277,18 +277,16 @@ void ToolHandler::setHilighterSize(ToolSize size)
 	}
 }
 
-void ToolHandler::setPenFillEnabled(bool fill)
+void ToolHandler::setPenFillEnabled(bool fill, bool fireEvent)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	this->tools[TOOL_PEN - TOOL_PEN]->fill = fill;
 
-	// TODO: Currently no toolbar event to send, but if there is a toolbar, here the event should be sent
-	// Ticket #598
-//	if (this->current->type == TOOL_PEN)
-//	{
-//		this->listener->toolSizeChanged();
-//	}
+	if (this->current->type == TOOL_PEN && fireEvent)
+	{
+		this->listener->toolFillChanged();
+	}
 }
 
 bool ToolHandler::getPenFillEnabled()
@@ -312,18 +310,16 @@ int ToolHandler::getPenFill()
 	return this->tools[TOOL_PEN - TOOL_PEN]->fillAlpha;
 }
 
-void ToolHandler::setHilighterFillEnabled(bool fill)
+void ToolHandler::setHilighterFillEnabled(bool fill, bool fireEvent)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	this->tools[TOOL_HILIGHTER - TOOL_PEN]->fill = fill;
 
-	// TODO: Currently no toolbar event to send, but if there is a toolbar, here the event should be sent
-	// Ticket #598
-//	if (this->current->type == TOOL_HILIGHTER)
-//	{
-//		this->listener->toolSizeChanged();
-//	}
+	if (this->current->type == TOOL_HILIGHTER && fireEvent)
+	{
+		this->listener->toolFillChanged();
+	}
 }
 
 bool ToolHandler::getHilighterFillEnabled()

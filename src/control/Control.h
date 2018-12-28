@@ -108,6 +108,7 @@ public:
 	virtual void setCustomColorSelected();
 	virtual void toolChanged();
 	virtual void toolSizeChanged();
+	virtual void toolFillChanged();
 
 	void selectTool(ToolType type);
 	void selectDefaultTool();
@@ -176,6 +177,8 @@ public:
 	void clearSelectionEndText();
 
 	void setToolSize(ToolSize size);
+
+	void setFill(bool fill);
 
 	TextEditor* getTextEditor();
 
