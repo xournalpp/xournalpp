@@ -1,5 +1,6 @@
 #include "OutputStream.h"
 
+#include "GzUtil.h"
 #include <i18n.h>
 
 #include <stdlib.h>
@@ -29,7 +30,7 @@ GzOutputStream::GzOutputStream(Path filename)
 	this->fp = NULL;
 	this->filename = filename;
 
-	this->fp = gzopen(filename.c_str(), "w");
+	this->fp = GzUtil::openPath(filename, "w");
 	if (this->fp == NULL)
 	{
 		this->error = FS(_F("Error opening file: \"{1}\"") % filename.str());

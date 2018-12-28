@@ -5,6 +5,7 @@
 #include "LoadHandlerHelper.h"
 
 #include <config.h>
+#include <GzUtil.h>
 #include <i18n.h>
 
 #include <glib/gstdio.h>
@@ -116,7 +117,7 @@ bool LoadHandler::openFile(string filename)
 	XOJ_CHECK_TYPE(LoadHandler);
 
 	this->filename = filename;
-	this->fp = gzopen(filename.c_str(), "r");
+	this->fp = GzUtil::openPath(filename, "r");
 	if (!this->fp)
 	{
 		this->lastError = FS(_F("Could not open file: \"{1}\"") % filename);
