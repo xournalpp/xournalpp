@@ -129,10 +129,8 @@ bool SaveJob::save()
 
 	if (doc->shouldCreateBackupOnSave())
 	{
-		Path backup = filename.getParentPath();
-		backup /= string(".") + filename.getFilename();
-		backup.clearExtensions();
-		backup += ".xopp.bak";
+		Path backup = filename;
+		backup += "~";
 
 		if (!PathUtil::copy(doc->getFilename(), backup))
 		{
