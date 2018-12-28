@@ -42,6 +42,17 @@ public:
 	 */
 	string str();
 
+	/**
+	 * Return the Path as String
+	 */
+	const char* c_str();
+
+	/**
+	 * Get the parent path
+	 */
+	Path getParentPath();
+
+
 public:
 	/**
 	 * Convert an uri to a path, if the uri does not start with file:// an empty Path is returned

@@ -93,7 +93,7 @@ void XojOpenDlg::addFilterXopt()
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXopt);
 }
 
-path XojOpenDlg::runDialog()
+Path XojOpenDlg::runDialog()
 {
 	XOJ_CHECK_TYPE(XojOpenDlg);
 
@@ -101,16 +101,16 @@ path XojOpenDlg::runDialog()
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
 	{
 		gtk_widget_destroy(dialog);
-		return path("");
+		return Path("");
 	}
 
-	path file(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
-	settings->setLastSavePath(file.parent_path());
+	Path file(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+	settings->setLastSavePath(path(file.getParentPath().str()));
 
 	return file;
 }
 
-path XojOpenDlg::showOpenTemplateDialog()
+Path XojOpenDlg::showOpenTemplateDialog()
 {
 	XOJ_CHECK_TYPE(XojOpenDlg);
 
@@ -120,7 +120,7 @@ path XojOpenDlg::showOpenTemplateDialog()
 	return runDialog();
 }
 
-path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
+Path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 {
 	XOJ_CHECK_TYPE(XojOpenDlg);
 
@@ -155,7 +155,7 @@ path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 	gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), image);
 	g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback), NULL);
 
-	path file = runDialog();
+	Path file = runDialog();
 
 	if (attachOpt)
 	{

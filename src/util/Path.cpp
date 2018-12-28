@@ -65,6 +65,33 @@ string Path::str()
 }
 
 /**
+ * Return the Path as String
+ */
+const char* Path::c_str()
+{
+	XOJ_CHECK_TYPE(Path);
+
+	return path.c_str();
+}
+
+/**
+ * Get the parent path
+ */
+Path Path::getParentPath()
+{
+	XOJ_CHECK_TYPE(Path);
+
+	size_t separator = path.find_last_of("/\\");
+
+	if (separator == string::npos)
+	{
+		return *this;
+	}
+
+	return path.substr(0, separator);
+}
+
+/**
  * Convert an uri to a path, if the uri does not start with file:// an empty Path is returned
  */
 Path Path::fromUri(string uri)

@@ -162,7 +162,7 @@ void PageTemplateDialog::loadFromFile()
 	XOJ_CHECK_TYPE(PageTemplateDialog);
 
 	XojOpenDlg dlg(GTK_WINDOW(this->getWindow()), this->settings);
-	path filename = dlg.showOpenTemplateDialog();
+	Path filename = dlg.showOpenTemplateDialog();
 
 	std::ifstream file(filename.c_str());
 	std::stringstream buffer;

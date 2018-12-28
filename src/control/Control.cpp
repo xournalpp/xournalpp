@@ -1929,7 +1929,7 @@ bool Control::openFile(path filename, int scrollToPage)
 	{
 		bool attachPdf = false;
 		XojOpenDlg dlg(getGtkWindow(), this->settings);
-		filename = dlg.showOpenDialog(false, attachPdf);
+		filename = path(dlg.showOpenDialog(false, attachPdf).str());
 
 		g_message("%s", (_F("Filename: {1}") % filename.string()).c_str());
 
@@ -1985,7 +1985,7 @@ bool Control::openFile(path filename, int scrollToPage)
 		{
 			bool attachToDocument = false;
 			XojOpenDlg dlg(getGtkWindow(), this->settings);
-			path pdfFilename = dlg.showOpenDialog(true, attachToDocument);
+			path pdfFilename = path(dlg.showOpenDialog(true, attachToDocument).str());
 			if (!pdfFilename.empty())
 			{
 				loadHandler.setPdfReplacement(pdfFilename.string(), attachToDocument);
@@ -2152,7 +2152,7 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 	if (filename.empty())
 	{
 		XojOpenDlg dlg(getGtkWindow(), this->settings);
-		filename = dlg.showOpenDialog(true, attachToDocument);
+		filename = path(dlg.showOpenDialog(true, attachToDocument).str());
 		if (filename.empty())
 		{
 			return false;
