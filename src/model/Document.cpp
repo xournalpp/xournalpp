@@ -183,13 +183,13 @@ Path Document::createSaveFilename(DocumentType type, string defaultSaveName)
 	if (!filename.isEmpty())
 	{
 		// This can be any extension
-		Path p = filename;
+		Path p = filename.getFilename();
 		p.clearExtensions();
 		return p;
 	}
 	else if (!pdfFilename.isEmpty())
 	{
-		Path p = pdfFilename;
+		Path p = pdfFilename.getFilename();
 		p.clearExtensions();
 		return p;
 	}

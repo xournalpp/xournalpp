@@ -95,7 +95,7 @@ void Path::clearExtensions()
 
 	size_t separator = path.find_last_of("/\\");
 	size_t dotPos = path.find_last_of(".");
-	if (dotPos == string::npos || dotPos < separator)
+	if (dotPos == string::npos || (dotPos < separator && separator != string::npos))
 	{
 		return;
 	}
@@ -135,20 +135,25 @@ string Path::getEscapedPath()
 
 void Path::operator /=(Path p)
 {
-	path += G_DIR_SEPARATOR_S;
-	path += p.str();
+	*this /= p.str();
 }
 
 void Path::operator /=(string p)
 {
-	path += G_DIR_SEPARATOR_S;
+	if (path.size() > 0)
+	{
+		char c = path.at(path.size() - 1);
+		if (c != '/' && c != '\\')
+		{
+			path += G_DIR_SEPARATOR_S;
+		}
+	}
 	path += p;
 }
 
 void Path::operator /=(const char* p)
 {
-	path += G_DIR_SEPARATOR_S;
-	path += p;
+	*this /= string(p);
 }
 
 void Path::operator +=(Path p)
@@ -175,7 +180,7 @@ string Path::getFilename()
 
 	if (separator == string::npos)
 	{
-		return "";
+		return str();
 	}
 
 	return path.substr(separator + 1);
@@ -207,7 +212,7 @@ Path Path::getParentPath()
 
 	if (separator == string::npos)
 	{
-		return *this;
+		return "";
 	}
 
 	return path.substr(0, separator);
