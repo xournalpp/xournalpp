@@ -40,6 +40,11 @@ struct _GtkXournal
 	XournalView* view;
 
 	/**
+	 * Scrollabel container
+	 */
+	GtkScrollable* parent;
+
+	/**
 	 * Visible area
 	 */
 	int x;
