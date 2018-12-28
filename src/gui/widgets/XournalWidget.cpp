@@ -78,6 +78,7 @@ GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 {
 	GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), NULL));
 	xoj->view = view;
+	xoj->parent = parent;
 	xoj->scrollX = 0;
 	xoj->scrollY = 0;
 	xoj->x = 0;
@@ -119,25 +120,21 @@ Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p)
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
-	GtkAllocation allocation = { 0 };
-	gtk_widget_get_allocation(widget, &allocation);
-	int viewHeight = allocation.height;
-	int viewWidth = allocation.width;
+	GdkRectangle r2;
+	GtkAdjustment* vadj = gtk_scrollable_get_vadjustment(xournal->parent);
+	GtkAdjustment* hadj = gtk_scrollable_get_hadjustment(xournal->parent);
+	r2.x = (int)gtk_adjustment_get_lower(hadj);
+	r2.y = (int)gtk_adjustment_get_lower(vadj);
+	r2.width = (int)gtk_adjustment_get_page_size(hadj);
+	r2.height = (int)gtk_adjustment_get_page_size(vadj);
 
 	GdkRectangle r1;
-	GdkRectangle r2;
-	GdkRectangle r3 = { 0, 0, 0, 0 };
-
 	r1.x = p->getX();
 	r1.y = p->getY();
 	r1.width = p->getDisplayWidth();
 	r1.height = p->getDisplayHeight();
 
-	r2.x = xournal->x;
-	r2.y = xournal->y;
-	r2.width = viewWidth;
-	r2.height = viewHeight;
-
+	GdkRectangle r3 = { 0, 0, 0, 0 };
 	gdk_rectangle_intersect(&r1, &r2, &r3);
 
 	if (r3.width == 0 && r3.height == 0)
