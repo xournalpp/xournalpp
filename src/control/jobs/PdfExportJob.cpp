@@ -33,7 +33,7 @@ bool PdfExportJob::isUriValid(string& uri)
 	}
 
 	// Remove any pre-existing extension and adds .pdf
-	clearExtensions(filename);
+	filename.clearExtensions();
 	filename += ".pdf";
 	
 	return checkOverwriteBackgroundPDF(filename);

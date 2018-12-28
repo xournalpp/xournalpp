@@ -14,11 +14,8 @@
 #include "XojPdfPage.h"
 #include "XojPdfBookmarkIterator.h"
 
+#include <Path.h>
 #include <XournalType.h>
-
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
-
 
 class XojPdfDocumentInterface
 {
@@ -31,8 +28,8 @@ public:
 	virtual bool equals(XojPdfDocumentInterface* doc) = 0;
 
 public:
-	virtual bool save(path filename, GError** error) = 0;
-	virtual bool load(path filename, string password, GError** error) = 0;
+	virtual bool save(Path filename, GError** error) = 0;
+	virtual bool load(Path filename, string password, GError** error) = 0;
 	virtual bool isLoaded() = 0;
 
 	virtual XojPdfPageSPtr getPage(size_t page) = 0;

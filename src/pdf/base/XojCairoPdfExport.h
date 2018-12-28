@@ -23,8 +23,8 @@ public:
 	virtual ~XojCairoPdfExport();
 
 public:
-	virtual bool createPdf(path file);
-	virtual bool createPdf(path file, PageRangeVector& range);
+	virtual bool createPdf(Path file);
+	virtual bool createPdf(Path file, PageRangeVector& range);
 	virtual string getLastError();
 
 	/**
@@ -33,7 +33,7 @@ public:
 	virtual void setNoBackgroundExport(bool noBackgroundExport);
 
 private:
-	bool startPdf(path file);
+	bool startPdf(Path file);
 	void endPdf();
 	void exportPage(size_t page);
 

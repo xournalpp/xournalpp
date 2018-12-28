@@ -8,7 +8,6 @@
 
 #include "control/jobs/ProgressListener.h"
 
-#include <string.h>
 
 XmlNode::XmlNode(const char* tag)
 {

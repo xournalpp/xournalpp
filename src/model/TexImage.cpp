@@ -4,8 +4,6 @@
 #include <serializing/ObjectInputStream.h>
 #include <serializing/ObjectOutputStream.h>
 
-#include <string.h>
-
 TexImage::TexImage() : Element(ELEMENT_TEXIMAGE)
 {
     XOJ_INIT_TYPE(TexImage);

@@ -1,15 +1,16 @@
 #include "MetadataManager.h"
 
 #include <Util.h>
+#include <XojMsgBox.h>
 
 #include <glib/gstdio.h>
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 
-
 #include <fstream>
 #include <sstream>
+#include <algorithm> // std::sort
 
 using namespace std;
 
@@ -91,16 +92,23 @@ vector<MetadataEntry> MetadataManager::loadList()
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	path folder = Util::getConfigSubfolder("metadata");
+	Path folder = Util::getConfigSubfolder("metadata");
 
 	vector<MetadataEntry> data;
 
 	GError* error = NULL;
-	GDir* home = g_dir_open(PATH_TO_CSTR(folder), 0, &error);
+	GDir* home = g_dir_open(folder.c_str(), 0, &error);
+	if (error != NULL)
+	{
+		XojMsgBox::showErrorToUser(NULL, error->message);
+		g_error_free(error);
+		return data;
+	}
+
 	const gchar* file;
 	while ((file = g_dir_read_name(home)) != NULL)
 	{
-		string path = PATH_TO_CSTR(folder);
+		string path = folder.str();
 		path += "/";
 		path += file;
 
@@ -245,8 +253,8 @@ void MetadataManager::storeMetadata(MetadataEntry* m)
 		}
 	}
 
-	path folder = Util::getConfigSubfolder("metadata");
-	string path = folder.string();
+	Path folder = Util::getConfigSubfolder("metadata");
+	string path = folder.str();
 	path += "/";
 	gint64 time = g_get_real_time();
 	path += std::to_string(time);

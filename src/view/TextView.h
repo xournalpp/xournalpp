@@ -24,6 +24,8 @@ private:
 	virtual ~TextView();
 
 public:
+	static void setDpi(int dpi);
+
 	/**
 	 * Calculates the size of a Text model
 	 */
@@ -48,7 +50,4 @@ public:
 	 * Sets the font name from Text model
 	 */
 	static void updatePangoFont(PangoLayout* layout, Text* t);
-
-	//Sets up DPI
-	static int getDPI();
 };

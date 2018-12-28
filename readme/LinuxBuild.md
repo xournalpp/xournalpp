@@ -21,19 +21,19 @@ dnf install cmake texlive-scheme-basic texlive-dvipng poppler-glib-devel
 ### For Ubuntu/Debian:
 ````bash
 sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev \
-libboost-filesystem-dev libcppunit-dev dvipng texlive 
+libcppunit-dev dvipng texlive 
 ````
 
 ### For OpenSuse:
 ```bash
 sudo zypper install cmake gtk3-devel cppunit-devel \
-libboost_filesystem-devel texlive-dvipng texlive libxml2-devel \
+texlive-dvipng texlive libxml2-devel \
 libpoppler-glib-devel
 ```
 
 ### For Fedora:
 ```bash
-sudo dnf install libxml2-devel cppunit-devel gtk3-devel boost-devel cmake-gui \
+sudo dnf install libxml2-devel cppunit-devel gtk3-devel cmake-gui \
 texlive-scheme-basic texlive-dvipng poppler-glib-devel
 ```
 

@@ -2,6 +2,7 @@
 #include <sstream> // std::istringstream
 
 #include <glib.h>
+#include <string.h>
 
 string StringUtils::toLowerCase(string input)
 {
@@ -61,6 +62,37 @@ bool StringUtils::endsWith(string str, string end)
 	}
 
 	return str.compare(str.length() - end.length(), end.length(), end) == 0;
+}
+
+const std::string TRIM_CHARS = "\t\n\v\f\r ";
+
+std::string StringUtils::ltrim(std::string str)
+{
+    str.erase(0, str.find_first_not_of(TRIM_CHARS));
+    return str;
+}
+
+std::string StringUtils::rtrim(std::string str)
+{
+    str.erase(str.find_last_not_of(TRIM_CHARS) + 1);
+    return str;
+}
+
+std::string StringUtils::trim(std::string str)
+{
+    return ltrim(rtrim(str));
+}
+
+bool StringUtils::iequals(string a, string b)
+{
+	gchar* ca = g_utf8_casefold (a.c_str(), a.size());
+	gchar* cb = g_utf8_casefold (b.c_str(), b.size());
+	int result = strcmp(ca, cb);
+	g_free(ca);
+	g_free(cb);
+
+
+	return result == 0;
 }
 
 

@@ -38,11 +38,11 @@ void XojCairoPdfExport::setNoBackgroundExport(bool noBackgroundExport)
 	this->noBackgroundExport = noBackgroundExport;
 }
 
-bool XojCairoPdfExport::startPdf(path file)
+bool XojCairoPdfExport::startPdf(Path file)
 {
 	XOJ_CHECK_TYPE(XojCairoPdfExport);
 
-	this->surface = cairo_pdf_surface_create(PATH_TO_CSTR(file), 0, 0);
+	this->surface = cairo_pdf_surface_create(file.c_str(), 0, 0);
 	this->cr = cairo_create(surface);
 
 	// Require Cairo 1.16
@@ -87,7 +87,7 @@ void XojCairoPdfExport::exportPage(size_t page)
 	cairo_show_page(this->cr);
 }
 
-bool XojCairoPdfExport::createPdf(path file, PageRangeVector& range)
+bool XojCairoPdfExport::createPdf(Path file, PageRangeVector& range)
 {
 	XOJ_CHECK_TYPE(XojCairoPdfExport);
 
@@ -136,7 +136,7 @@ bool XojCairoPdfExport::createPdf(path file, PageRangeVector& range)
 	return true;
 }
 
-bool XojCairoPdfExport::createPdf(path file)
+bool XojCairoPdfExport::createPdf(Path file)
 {
 	XOJ_CHECK_TYPE(XojCairoPdfExport);
 

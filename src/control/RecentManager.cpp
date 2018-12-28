@@ -6,12 +6,8 @@
 
 #include <gtk/gtk.h>
 
+#include <StringUtils.h>
 #include <Path.h>
-
-#include <boost/filesystem.hpp>
-using boost::filesystem::path;
-#include <boost/algorithm/string.hpp>
-namespace ba = boost::algorithm;
 
 #include <iostream>
 using std::cout;
@@ -64,11 +60,9 @@ void RecentManager::recentManagerChangedCallback(GtkRecentManager* manager, Rece
 	recentManager->updateMenu();
 }
 
-void RecentManager::addRecentFileFilename(path filename)
+void RecentManager::addRecentFileFilename(Path filename)
 {
 	XOJ_CHECK_TYPE(RecentManager);
-
-	cout << "addRecentFileFilename: " << filename << endl;
 
 	GtkRecentManager* recentManager;
 	GtkRecentData* recentData;
@@ -82,7 +76,7 @@ void RecentManager::addRecentFileFilename(path filename)
 	recentData->display_name = NULL;
 	recentData->description = NULL;
 
-	if (filename.extension() == ".pdf")
+	if (filename.hasExtension(".pdf"))
 	{
 		recentData->mime_type = (gchar*) g_strdup(MIME_PDF);
 	}
@@ -96,7 +90,7 @@ void RecentManager::addRecentFileFilename(path filename)
 	recentData->groups = groups;
 	recentData->is_private = FALSE;
 
-	GFile* file = g_file_new_for_path(PATH_TO_CSTR(filename));
+	GFile* file = g_file_new_for_path(filename.c_str());
 	gchar* uri = g_file_get_uri(file);
 	gtk_recent_manager_add_full(recentManager, uri, recentData);
 
@@ -107,11 +101,11 @@ void RecentManager::addRecentFileFilename(path filename)
 	g_object_unref(file);
 }
 
-void RecentManager::removeRecentFileFilename(path filename)
+void RecentManager::removeRecentFileFilename(Path filename)
 {
 	XOJ_CHECK_TYPE(RecentManager);
 
-	GFile* file = g_file_new_for_path(PATH_TO_CSTR(filename));
+	GFile* file = g_file_new_for_path(filename.c_str());
 
 	GtkRecentManager* recentManager = gtk_recent_manager_get_default();
 	gtk_recent_manager_remove_item(recentManager, g_file_get_uri(file), NULL);
@@ -133,18 +127,18 @@ void RecentManager::setMaxRecent(int maxRecent)
 	this->maxRecent = maxRecent;
 }
 
-void RecentManager::openRecent(path p)
+void RecentManager::openRecent(Path p)
 {
 	XOJ_CHECK_TYPE(RecentManager);
 
-	if (p.filename().empty())
+	if (p.getFilename().empty())
 	{
 		return;
 	}
 
 	for (RecentManagerListener* l : this->listener)
 	{
-		l->fileOpened(PATH_TO_CSTR(p));
+		l->fileOpened(p.c_str());
 	}
 }
 
@@ -214,7 +208,7 @@ void RecentManager::recentsMenuActivateCallback(GtkAction* action, RecentManager
 	GtkRecentInfo* info = (GtkRecentInfo*) g_object_get_data(G_OBJECT(action), "gtk-recent-info");
 	g_return_if_fail(info != NULL);
 
-	const gchar* uri = gtk_recent_info_get_uri(info); //topath
+	const gchar* uri = gtk_recent_info_get_uri(info);
 	recentManager->openRecent(string(uri).substr(7));
 }
 
@@ -222,8 +216,12 @@ void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
 {
 	XOJ_CHECK_TYPE(RecentManager);
 
-	string display_name(gtk_recent_info_get_display_name(info));
-	ba::replace_all(display_name, "_", "__"); // escape underscore
+	string display_name = gtk_recent_info_get_display_name(info);
+
+	// escape underscore
+	StringUtils::replaceAllChars(display_name, {
+		replace_pair('_', "__")
+	});
 	
 	string label = (i >= 10
 			? FS(FORMAT_STR("{1}. {2}") % i % display_name)
@@ -232,9 +230,13 @@ void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
 	/* gtk_recent_info_get_uri_display (info) is buggy and
 	 * works only for local files */
 	GFile* gfile = g_file_new_for_uri(gtk_recent_info_get_uri(info));
-	string ruri(g_file_get_parse_name(gfile));
+	string ruri = g_file_get_parse_name(gfile);
 	g_object_unref(gfile);
-	ba::replace_first(ruri, g_get_home_dir(), "~/"); //replace home dir with tilde
+
+	if (StringUtils::startsWith(ruri, "~/"))
+	{
+		ruri = string(g_get_home_dir()) +  ruri.substr(1);
+	}
 
 	string tip = FS(C_F("{1} is a URI", "Open {1}") % ruri);
 

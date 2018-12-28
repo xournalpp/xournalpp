@@ -3,7 +3,6 @@
 #include <i18n.h>
 
 #include <stdlib.h>
-#include <string.h>
 
 OutputStream::OutputStream() { }
 
@@ -23,20 +22,17 @@ void OutputStream::write(const char* str)
 /// GzOutputStream /////////////////////////////////////
 ////////////////////////////////////////////////////////
 
-GzOutputStream::GzOutputStream(path filename)
+GzOutputStream::GzOutputStream(Path filename)
 {
 	XOJ_INIT_TYPE(GzOutputStream);
 
 	this->fp = NULL;
 	this->filename = filename;
-#ifdef _WIN32
-	this->fp = gzopen_w(filename.c_str(), "w");
-#else
+
 	this->fp = gzopen(filename.c_str(), "w");
-#endif
 	if (this->fp == NULL)
 	{
-		this->error = FS(_F("Error opening file: \"{1}\"") % filename.string());
+		this->error = FS(_F("Error opening file: \"{1}\"") % filename.str());
 	}
 }
 

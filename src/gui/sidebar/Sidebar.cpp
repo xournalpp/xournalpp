@@ -11,8 +11,6 @@
 
 #include <config-features.h>
 
-#include <string.h>
-
 Sidebar::Sidebar(GladeGui* gui, Control* control)
  : toolbar(control, gui)
 {

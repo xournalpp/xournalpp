@@ -14,12 +14,10 @@
 #include "control/Tool.h"
 #include "model/Font.h"
 
+#include <Path.h>
+
 #include <config-dev.h>
-
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
 #include <libxml/xmlreader.h>
-
 #include <map>
 
 enum AttributeType
@@ -128,7 +126,7 @@ private:
 class Settings
 {
 public:
-	Settings(path filename);
+	Settings(Path filename);
 	virtual ~Settings();
 
 public:
@@ -178,11 +176,11 @@ public:
 	/**
 	 * The last saved path
 	 */
-	void setLastSavePath(path p);
-	path getLastSavePath();
+	void setLastSavePath(Path p);
+	Path getLastSavePath();
 
-	void setLastImagePath(path p);
-	path getLastImagePath();
+	void setLastImagePath(Path p);
+	Path getLastImagePath();
 
 	void setMainWndSize(int width, int height);
 	void setMainWndMaximized(bool max);
@@ -330,7 +328,7 @@ private:
 	/**
 	 *  The config filename
 	 */
-	path filename;
+	Path filename;
 
 private:
 	/**
@@ -376,12 +374,12 @@ private:
 	/**
 	 *  The last saved folder
 	 */
-	path lastSavePath;
+	Path lastSavePath;
 
 	/**
 	 *  The last "insert image" folder
 	 */
-	path lastImagePath;
+	Path lastImagePath;
 
 	/**
 	 * The last used font

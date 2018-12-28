@@ -11,7 +11,6 @@
 #include <gtk/gtk.h>
 
 #include <stdlib.h>
-#include <string.h>
 
 #define error2(var, ...)																	\
 	if (var == NULL)																		\

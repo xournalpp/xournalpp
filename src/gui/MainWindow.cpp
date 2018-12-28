@@ -22,15 +22,11 @@
 #include <i18n.h>
 #include <XojMsgBox.h>
 
-#include <boost/filesystem.hpp>
-#include <boost/filesystem/path.hpp>
-
 #include <gdk/gdk.h>
 
 #include <iostream>
 using std::cout;
 using std::endl;
-namespace bf = boost::filesystem;
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
  : GladeGui(gladeSearchPath, "main.glade", "mainWindow"),
@@ -90,7 +86,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	}
 
 	file = string(g_get_home_dir()) + G_DIR_SEPARATOR_S + CONFIG_DIR + G_DIR_SEPARATOR_S + TOOLBAR_CONFIG;
-	if (bf::exists(bf::path(file)))
+	if (g_file_test(file.c_str(), G_FILE_TEST_EXISTS))
 	{
 		if (!tbModel->parse(file, false))
 		{

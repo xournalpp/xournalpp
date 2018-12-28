@@ -30,6 +30,7 @@
 #include "zoom/ZoomControl.h"
 
 #include <XournalType.h>
+#include <PathUtil.h>
 
 #include "../gui/dialog/LatexDialog.h"
 
@@ -66,8 +67,8 @@ public:
 public:
 	// Menu File
 	bool newFile(string pageTemplate = "");
-	bool openFile(path filename = "", int scrollToPage = -1);
-	bool annotatePdf(path filename, bool attachPdf, bool attachToDocument);
+	bool openFile(Path filename ="", int scrollToPage = -1);
+	bool annotatePdf(Path filename, bool attachPdf, bool attachToDocument);
 	void print();
 	void exportAsPdf();
 	void exportAs();
@@ -79,7 +80,7 @@ public:
 
 	// Asks user to replace an existing file when saving / exporting, since we add the extension
 	// after the OK, we need to check manually
-	bool checkExistingFile(path& folder, path& filename);
+	bool checkExistingFile(Path& folder, Path& filename);
 
 	void resetShapeRecognizer();
 
@@ -188,8 +189,8 @@ public:
 	void unblock();
 
 	void renameLastAutosaveFile();
-	void setLastAutosaveFile(path newAutosaveFile);
-	void deleteLastAutosaveFile(path newAutosaveFile);
+	void setLastAutosaveFile(Path newAutosaveFile);
+	void deleteLastAutosaveFile(Path newAutosaveFile);
 	void setClipboardHandlerSelection(EditSelection* selection);
 
 	MetadataManager* getMetadataManager();
@@ -280,8 +281,8 @@ protected:
 	 */
 	bool shouldFileOpen(string filename);
 
-	bool loadXoptTemplate(path filename);
-	bool loadPdf(path filename, int scrollToPage);
+	bool loadXoptTemplate(Path filename);
+	bool loadPdf(Path filename, int scrollToPage);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -341,7 +342,7 @@ private:
 	 * The autosave handler ID
 	 */
 	int autosaveTimeout;
-	path lastAutosaveFilename;
+	Path lastAutosaveFilename;
 
 	XournalScheduler* scheduler;
 

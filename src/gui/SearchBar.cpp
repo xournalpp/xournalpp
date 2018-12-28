@@ -5,8 +5,6 @@
 #include <config.h>
 #include <i18n.h>
 
-#include <string.h>
-
 SearchBar::SearchBar(Control* control)
 {
 	XOJ_INIT_TYPE(SearchBar);

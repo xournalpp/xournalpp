@@ -7,6 +7,7 @@
 #include "control/pagetype/PageTypeHandler.h"
 
 #include <Util.h>
+#include <PathUtil.h>
 
 #include <config.h>
 #include <i18n.h>
@@ -119,9 +120,9 @@ void PageTemplateDialog::saveToFile()
 	gtk_file_filter_add_pattern(filterXoj, "*.xopt");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
-	if (!settings->getLastSavePath().empty())
+	if (!settings->getLastSavePath().isEmpty())
 	{
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), PATH_TO_CSTR(settings->getLastSavePath()));
+		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
 	}
 
 
@@ -162,13 +163,14 @@ void PageTemplateDialog::loadFromFile()
 	XOJ_CHECK_TYPE(PageTemplateDialog);
 
 	XojOpenDlg dlg(GTK_WINDOW(this->getWindow()), this->settings);
-	path filename = dlg.showOpenTemplateDialog();
+	Path filename = dlg.showOpenTemplateDialog();
 
-	std::ifstream file(filename.c_str());
-	std::stringstream buffer;
-	buffer << file.rdbuf();
-
-	model.parse(buffer.str());
+	string contents;
+	if (!PathUtil::readString(contents, filename))
+	{
+		return;
+	}
+	model.parse(contents);
 
 	updateDataFromModel();
 }

@@ -17,6 +17,7 @@
 #include "model/PageRef.h"
 #include "model/Text.h"
 
+#include <Path.h>
 #include <XournalType.h>
 #include "gui/dialog/LatexDialog.h"
 
@@ -93,7 +94,7 @@ private:
 	/**
 	 * Tex binary full path
 	 */
-	string binTex;
+	Path binTex;
 
 	/**
 	 * Orignal TeX, if editing

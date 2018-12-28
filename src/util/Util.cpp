@@ -6,8 +6,6 @@
 #include <StringUtils.h>
 #include <XojMsgBox.h>
 
-#include <boost/filesystem.hpp>
-
 #include <sys/types.h>
 #include <unistd.h>
 
@@ -78,37 +76,39 @@ int Util::getPid()
 	return (int) pid;
 }
 
-path Util::getAutosaveFilename()
+Path Util::getAutosaveFilename()
 {
-	path p(getConfigSubfolder("autosave"));
+	Path p(getConfigSubfolder("autosave"));
 	p /= std::to_string(getPid()) + ".xopp";
 	return p;
 }
 
-path Util::getConfigSubfolder(path subfolder)
+Path Util::getConfigSubfolder(Path subfolder)
 {
-	using namespace boost::filesystem;
-	path p(g_get_home_dir());
+	Path p(g_get_home_dir());
 	p /= CONFIG_DIR;
 	p /= subfolder;
 
-	if (!exists(p))
+	if (!p.exists())
 	{
-		create_directory(p);
-		permissions(p, owner_all);
+		if (g_mkdir_with_parents(p.c_str(), 0700))
+		{
+			string msg = FS(_F("Could not create folder: {1}") % p.str());
+			XojMsgBox::showErrorToUser(NULL, msg);
+		}
 	}
 
 	return p;
 }
 
-path Util::getConfigFile(path relativeFileName)
+Path Util::getConfigFile(Path relativeFileName)
 {
-	path p = getConfigSubfolder(relativeFileName.parent_path());
-	p /= relativeFileName.filename();
+	Path p = getConfigSubfolder(relativeFileName.getParentPath());
+	p /= relativeFileName.getFilename();
 	return p;
 }
 
-void Util::openFileWithDefaultApplicaion(path filename)
+void Util::openFileWithDefaultApplicaion(Path filename)
 {
 #ifdef __APPLE__
 #define OPEN_PATTERN "open \"{1}\""
@@ -118,22 +118,16 @@ void Util::openFileWithDefaultApplicaion(path filename)
 #define OPEN_PATTERN "xdg-open \"{1}\""
 #endif
 
-	string escaped = filename.string();
-	StringUtils::replaceAllChars(escaped, {
-		replace_pair('\\', "\\\\"),
-		replace_pair('\"', "\\\"")
-	});
-
-	string command = FS(FORMAT_STR(OPEN_PATTERN) % escaped);
+	string command = FS(FORMAT_STR(OPEN_PATTERN) % filename.getEscapedPath());
 	cout << FORMAT_STR("XPP Execute command: «{1}»") % command << endl;
 	if (system(command.c_str()) != 0)
 	{
-		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename.string());
+		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename.str());
 		XojMsgBox::showErrorToUser(NULL, msg);
 	}
 }
 
-void Util::openFileWithFilebrowser(path filename)
+void Util::openFileWithFilebrowser(Path filename)
 {
 #undef OPEN_PATTERN
 
@@ -145,17 +139,11 @@ void Util::openFileWithFilebrowser(path filename)
 #define OPEN_PATTERN "nautilus \"file://{1}\" || dolphin \"file://{1}\" || konqueror \"file://{1}\" &"
 #endif
 
-	string escaped = filename.string();
-	StringUtils::replaceAllChars(escaped, {
-		replace_pair('\\', "\\\\"),
-		replace_pair('\"', "\\\"")
-	});
-
-	string command = FS(FORMAT_STR(OPEN_PATTERN) % escaped);
+	string command = FS(FORMAT_STR(OPEN_PATTERN) % filename.getEscapedPath());
 	cout << FORMAT_STR("XPP show file in filebrowser command: «{1}»") % command << endl;
 	if (system(command.c_str()) != 0)
 	{
-		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename.string());
+		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename.str());
 		XojMsgBox::showErrorToUser(NULL, msg);
 	}
 }

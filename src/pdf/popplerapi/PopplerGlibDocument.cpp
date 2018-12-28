@@ -59,21 +59,7 @@ bool PopplerGlibDocument::equals(XojPdfDocumentInterface* doc)
 	return document == ((PopplerGlibDocument*)doc)->document;
 }
 
-string pathToUri(path filename, GError** error)
-{
-	char * uri = g_filename_to_uri(PATH_TO_CSTR(filename), NULL, error);
-
-	if (uri == NULL)
-	{
-		return "";
-	}
-
-	string uriString = uri;
-	g_free(uri);
-	return uriString;
-}
-
-bool PopplerGlibDocument::save(path filename, GError** error)
+bool PopplerGlibDocument::save(Path filename, GError** error)
 {
 	XOJ_CHECK_TYPE(PopplerGlibDocument);
 
@@ -82,7 +68,7 @@ bool PopplerGlibDocument::save(path filename, GError** error)
 		return false;
 	}
 
-	string uri = pathToUri(filename, error);
+	string uri = filename.toUri(error);
 	if (*error != NULL)
 	{
 		return false;
@@ -90,11 +76,11 @@ bool PopplerGlibDocument::save(path filename, GError** error)
 	return poppler_document_save(document, uri.c_str(), error);
 }
 
-bool PopplerGlibDocument::load(path filename, string password, GError** error)
+bool PopplerGlibDocument::load(Path filename, string password, GError** error)
 {
 	XOJ_CHECK_TYPE(PopplerGlibDocument);
 
-	string uri = pathToUri(filename, error);
+	string uri = filename.toUri(error);
 	if (*error != NULL)
 	{
 		return false;

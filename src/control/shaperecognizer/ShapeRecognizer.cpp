@@ -9,7 +9,6 @@
 #include <config-debug.h>
 
 #include <math.h>
-#include <string.h>
 
 ShapeRecognizer::ShapeRecognizer()
 {

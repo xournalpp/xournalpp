@@ -12,11 +12,8 @@
 #pragma once
 
 #include <PageRange.h>
-
+#include <Path.h>
 #include <XournalType.h>
-
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
 
 class XojPdfExport
 {
@@ -25,8 +22,8 @@ public:
 	virtual ~XojPdfExport();
 
 public:
-	virtual bool createPdf(path file) = 0;
-	virtual bool createPdf(path file, PageRangeVector& range) = 0;
+	virtual bool createPdf(Path file) = 0;
+	virtual bool createPdf(Path file, PageRangeVector& range) = 0;
 	virtual string getLastError() = 0;
 
 	/**

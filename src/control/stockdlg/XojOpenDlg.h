@@ -12,6 +12,7 @@
 #pragma once
 
 #include "control/settings/Settings.h"
+#include <Path.h>
 
 #include <gtk/gtk.h>
 
@@ -22,8 +23,8 @@ public:
 	virtual ~XojOpenDlg();
 
 public:
-	path showOpenDialog(bool pdf, bool& attachPdf);
-	path showOpenTemplateDialog();
+	Path showOpenDialog(bool pdf, bool& attachPdf);
+	Path showOpenTemplateDialog();
 
 protected:
 	void addFilterAllFiles();
@@ -32,7 +33,7 @@ protected:
 	void addFilterXopp();
 	void addFilterXopt();
 
-	path runDialog();
+	Path runDialog();
 
 private:
 	static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);

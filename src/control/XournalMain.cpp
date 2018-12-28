@@ -15,23 +15,17 @@
 #include <config-paths.h>
 #include <i18n.h>
 #include <Stacktrace.h>
+#include <StringUtils.h>
 #include <XojMsgBox.h>
 
 #include <libintl.h>
 #include <gtk/gtk.h>
 
-#include <boost/algorithm/string/predicate.hpp>
-#include <boost/filesystem.hpp>
-namespace bf = boost::filesystem;
-
 #if __linux__
 #include <libgen.h>
 #endif
 
-namespace bf = boost::filesystem;
-#include <boost/algorithm/string.hpp>
-namespace ba = boost::algorithm;
-
+#include <algorithm> // std::sort
 #include <iostream>
 using std::cout;
 using std::cerr;
@@ -78,77 +72,88 @@ void XournalMain::checkForErrorlog()
 {
 	XOJ_CHECK_TYPE(XournalMain);
 
-	bf::path errorDir = Util::getConfigSubfolder(ERRORLOG_DIR);
-	bf::directory_iterator end_iter;
+	Path errorDir = Util::getConfigSubfolder(ERRORLOG_DIR);
+	GDir* home = g_dir_open(errorDir.c_str(), 0, NULL);
+
+	if (home == NULL)
+	{
+		return;
+	}
+
 	vector<string> errorList;
-	for (bf::directory_iterator dir_iter(errorDir); dir_iter != end_iter; ++dir_iter)
+
+	const gchar* file;
+	while ((file = g_dir_read_name(home)) != NULL)
 	{
-		if (bf::is_regular_file(dir_iter->status()))
+		if (g_file_test(file, G_FILE_TEST_IS_REGULAR))
 		{
-			string name = dir_iter->path().filename().string();
-			if (boost::starts_with(name, "errorlog."))
+			if (StringUtils::startsWith(file, "errorlog."))
 			{
-				errorList.push_back(name);
+				errorList.push_back(file);
 			}
 		}
 	}
+	g_dir_close(home);
+
 	
-	if (!errorList.empty())
+	if (errorList.empty())
 	{
-		std::sort(errorList.begin(), errorList.end());
-		string msg = errorList.size() == 1
-				? _("There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed.")
-				: _("There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed.");
-		msg += "\n";
-#if defined(GIT_BRANCH) && defined(GIT_REPO_OWNER)
-		msg += FS(_F("You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker.")
-						% GIT_REPO_OWNER % GIT_BRANCH);
-		msg += "\n";
-#endif
-		msg += FS(_F("The most recent log file name: {1}") % errorList[0]);
-		
-		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-			GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
-		
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), 2);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile directory"), 3);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), 4);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 5);
-
-		int res = gtk_dialog_run(GTK_DIALOG(dialog));
-
-		path errorlogPath = Util::getConfigSubfolder(ERRORLOG_DIR);
-		errorlogPath /= errorList[0];
-		if (res == 1) // Send Bugreport
-		{
-			Util::openFileWithDefaultApplicaion(PROJECT_BUGREPORT);
-			Util::openFileWithDefaultApplicaion(errorlogPath);
-		}
-		else if (res == 2) // Open Logfile
-		{
-			Util::openFileWithDefaultApplicaion(errorlogPath);
-		}
-		else if (res == 3) // Open Logfile directory
-		{
-			Util::openFileWithFilebrowser(errorlogPath.parent_path());
-		}
-		else if (res == 4) // Delete Logfile
-		{
-			if (!bf::remove(errorlogPath))
-			{
-				string msg = FS(_F("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}")
-						% errorlogPath.string());
-				XojMsgBox::showErrorToUser(NULL, msg);
-			}
-		}
-		else if (res == 5) // Cancel
-		{
-			// Nothing to do
-		}
-
-		gtk_widget_destroy(dialog);
+		return;
 	}
+
+	std::sort(errorList.begin(), errorList.end());
+	string msg = errorList.size() == 1
+			? _("There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed.")
+			: _("There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed.");
+	msg += "\n";
+#if defined(GIT_BRANCH) && defined(GIT_REPO_OWNER)
+	msg += FS(_F("You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker.")
+					% GIT_REPO_OWNER % GIT_BRANCH);
+	msg += "\n";
+#endif
+	msg += FS(_F("The most recent log file name: {1}") % errorList[0]);
+
+	GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
+		GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
+
+	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
+	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), 2);
+	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile directory"), 3);
+	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), 4);
+	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 5);
+
+	int res = gtk_dialog_run(GTK_DIALOG(dialog));
+
+	Path errorlogPath = Util::getConfigSubfolder(ERRORLOG_DIR);
+	errorlogPath /= errorList[0];
+	if (res == 1) // Send Bugreport
+	{
+		Util::openFileWithDefaultApplicaion(PROJECT_BUGREPORT);
+		Util::openFileWithDefaultApplicaion(errorlogPath);
+	}
+	else if (res == 2) // Open Logfile
+	{
+		Util::openFileWithDefaultApplicaion(errorlogPath);
+	}
+	else if (res == 3) // Open Logfile directory
+	{
+		Util::openFileWithFilebrowser(errorlogPath.getParentPath());
+	}
+	else if (res == 4) // Delete Logfile
+	{
+		if (!errorlogPath.exists())
+		{
+			string msg = FS(_F("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}")
+					% errorlogPath.str());
+			XojMsgBox::showErrorToUser(NULL, msg);
+		}
+	}
+	else if (res == 5) // Cancel
+	{
+		// Nothing to do
+	}
+
+	gtk_widget_destroy(dialog);
 }
 
 void XournalMain::checkForEmergencySave() {
@@ -250,13 +255,11 @@ int XournalMain::run(int argc, char* argv[])
 	// Init GTK Display
 	gtk_init(&argc, &argv);
 
-	initSettingsPath();
-
 	GladeSearchpath* gladePath = new GladeSearchpath();
 	initResourcePath(gladePath);
 
 	// init singleton
-	string colorNameFile = Util::getConfigFile("colornames.ini").string();
+	string colorNameFile = Util::getConfigFile("colornames.ini").str();
 	ToolbarColorNames::getInstance().loadFile(colorNameFile);
 
 	Control* control = new Control(gladePath);
@@ -283,7 +286,7 @@ int XournalMain::run(int argc, char* argv[])
 		g_free(uri);
 		g_object_unref(file);
 
-		if (ba::starts_with(sUri, "file://"))
+		if (StringUtils::startsWith(sUri, "file://"))
 		{
 			opened = control->openFile(filename, openAtPageNumber);
 			g_free(filename);
@@ -330,16 +333,6 @@ int XournalMain::run(int argc, char* argv[])
 	return 0;
 }
 
-void XournalMain::initSettingsPath()
-{
-	XOJ_CHECK_TYPE(XournalMain);
-
-	// Create config directory if not exists
-	path file = Util::getConfigSubfolder("");
-	bf::create_directories(file);
-	bf::permissions(file, bf::perms::owner_all);
-}
-
 /**
  * Find a file in a resource folder, and return the resource folder path
  * Return an empty string, if the folder was not found
@@ -350,63 +343,63 @@ string XournalMain::findResourcePath(string searchFile)
 
 	// First check if the files are available relative to the path
 	// So a "portable" installation will be possible
-	path relative1 = searchFile;
+	Path relative1 = searchFile;
 
-	if (bf::exists(relative1))
+	if (relative1.exists())
 	{
-		return relative1.parent_path().normalize().string();
+		return relative1.getParentPath().str();
 	}
 
 	// -----------------------------------------------------------------------
 
 	// Check if we are in the "build" directory, and therefore the resources
 	// are installed two folders back
-	path relative2 = "../..";
+	Path relative2 = "../..";
 	relative2 /= searchFile;
 
-	if (bf::exists(relative2))
+	if (relative2.exists())
 	{
-		return relative2.parent_path().normalize().string();
+		return relative2.getParentPath().str();
 	}
 
 	// -----------------------------------------------------------------------
 
-	path executableDir = Stacktrace::getExePath();
-	executableDir = executableDir.parent_path();
+	Path executableDir = Stacktrace::getExePath();
+	executableDir = executableDir.getParentPath();
 
 	// First check if the files are available relative to the executable
 	// So a "portable" installation will be possible
-	path relative3 = executableDir;
+	Path relative3 = executableDir;
 	relative3 /= searchFile;
 
-	if (bf::exists(relative3))
+	if (relative3.exists())
 	{
-		return relative3.parent_path().normalize().string();
+		return relative3.getParentPath().str();
 	}
 
 	// -----------------------------------------------------------------------
 
 	// Check one folder back, for windows portable
-	path relative4 = executableDir;
+	Path relative4 = executableDir;
 	relative4 /= "..";
 	relative4 /= searchFile;
 
-	if (bf::exists(relative4))
+	if (relative4.exists())
 	{
-		return relative4.parent_path().normalize().string();
+		return relative4.getParentPath().str();
 	}
 
 	// -----------------------------------------------------------------------
 
 	// Check if we are in the "build" directory, and therefore the resources
 	// are installed two folders back
-	path relative5 = executableDir;
+	Path relative5 = executableDir;
 	relative5 /= "../..";
 	relative5 /= searchFile;
 
-	if (bf::exists(relative5))
+	if (relative5.exists())
 	{
-		return relative5.parent_path().normalize().string();
+		return relative5.getParentPath().str();
 	}
 
 	// Not found
@@ -428,13 +421,13 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath)
 	// -----------------------------------------------------------------------
 
 	// Check at the target installation directory
-	path absolute = PACKAGE_DATA_DIR;
+	Path absolute = PACKAGE_DATA_DIR;
 	absolute /= PROJECT_PACKAGE;
 	absolute /= "ui/about.glade";
 
-	if (bf::exists(absolute))
+	if (absolute.exists())
 	{
-		gladePath->addSearchDirectory(absolute.parent_path().string());
+		gladePath->addSearchDirectory(absolute.getParentPath().str());
 		return;
 	}
 

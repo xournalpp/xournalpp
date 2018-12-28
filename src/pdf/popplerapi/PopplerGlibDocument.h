@@ -13,9 +13,6 @@
 
 #include "pdf/base/XojPdfDocumentInterface.h"
 
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
-
 #include <poppler.h>
 
 class PopplerGlibDocument : public XojPdfDocumentInterface
@@ -30,8 +27,8 @@ public:
 	virtual bool equals(XojPdfDocumentInterface* doc);
 
 public:
-	virtual bool save(path filename, GError** error);
-	virtual bool load(path filename, string password, GError** error);
+	virtual bool save(Path filename, GError** error);
+	virtual bool load(Path filename, string password, GError** error);
 	virtual bool isLoaded();
 
 	virtual XojPdfPageSPtr getPage(size_t page);

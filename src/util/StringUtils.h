@@ -26,4 +26,8 @@ public:
 	static vector<string> split(string input, char delimiter);
 	static bool startsWith(string str, string start);
 	static bool endsWith(string str, string end);
+	static string ltrim(string str);
+	static string rtrim(string str);
+	static string trim(string str);
+	static bool iequals(string a, string b);
 };

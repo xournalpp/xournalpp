@@ -4,15 +4,6 @@ Details about installation process are on our [wiki](https://github.com/xournalp
 
 Here you can find complete list of Xournal++ CMake flags (sorted by categories). Advanced settings are marked with *[A]*.
 
-
-## `BUILD` – build dependency libraries and link them statically
-
-| Variable name   | Default | Description
-| --------------- | ------- | -----------
-| `BUILD_BOOST`   | OFF     | Build needed Boost libraries
-| `BUILD_POPPLER` | OFF     | Build Poppler statically
-
-
 ## `CMAKE` – some additional CMake related config
 
 | Variable name                        | Default | Description
@@ -63,16 +54,7 @@ Here you can find complete list of Xournal++ CMake flags (sorted by categories).
 | Variable name        | Default | Description
 | -------------------- | ------- | -----------
 | `ENABLE_MATHTEX`     | OFF     | Mathtex support (UNIX only)
-| `ENABLE_OS`          | OFF     | Overlay Scrollbar support
-| `ENABLE_LIBOPENJPEG` | ON      | Use libopenjpeg instead of builtin JPEG2000 decoder
 | `ENABLE_CPPUNIT`     | OFF     | Build CppUnit test instead of xournalpp application
-
-
-## `UNSTABLE` – unstable, in development features
-
-| Variable name             | Default | Description
-| ------------------------- | ------- | -----------
-| `UNSTABLE_LAYERS_SIDEBAR` | OFF     | Layers sidebar
 
 
 ## `TEST` – optional features of CppUnit tests
@@ -92,3 +74,4 @@ Here you can find complete list of Xournal++ CMake flags (sorted by categories).
 | `PATH_LATEX`  | `latex` is needed for MathTex module
 | `PATH_TAR`    | `tar` is needed to unpack debs (if any of `EXT` packages are added)
 | `PATH_WGET`   | `wget` is needed to download debs (if any of `EXT` packages are added)
+

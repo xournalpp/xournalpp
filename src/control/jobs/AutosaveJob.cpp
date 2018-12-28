@@ -4,6 +4,7 @@
 #include "control/xojfile/SaveHandler.h"
 
 #include <i18n.h>
+#include <Path.h>
 #include <XojMsgBox.h>
 
 AutosaveJob::AutosaveJob(Control* control)
@@ -38,19 +39,20 @@ void AutosaveJob::run()
 
 	doc->lock();
 	handler.prepareSave(doc);
-	path filename = doc->getFilename();
+	Path filename = doc->getFilename();
 	doc->unlock();
 
-	if (filename.empty())
+	if (filename.isEmpty())
 	{
 		filename = Util::getAutosaveFilename();
 	}
 	else
 	{
-		string file = filename.filename().string();
-		filename.remove_filename();
+		string file = filename.getFilename();
+		filename = filename.getParentPath();
 		filename /= string(".") + file;
-		filename.replace_extension(".autosave.xopp");
+		filename.clearExtensions();
+		filename += ".autosave.xopp";
 	}
 
 	control->renameLastAutosaveFile();
@@ -64,7 +66,7 @@ void AutosaveJob::run()
 	}
 	else
 	{
-		//control->deleteLastAutosaveFile(filename);
+		// control->deleteLastAutosaveFile(filename);
 		control->setLastAutosaveFile(filename);
 	}
 }

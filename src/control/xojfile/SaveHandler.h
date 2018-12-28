@@ -30,8 +30,8 @@ public:
 
 public:
 	void prepareSave(Document* doc);
-	void saveTo(path filename, ProgressListener* listener = NULL);
-	void saveTo(OutputStream* out, path filename, ProgressListener* listener = NULL);
+	void saveTo(Path filename, ProgressListener* listener = NULL);
+	void saveTo(OutputStream* out, Path filename, ProgressListener* listener = NULL);
 	string getErrorMessage();
 
 protected:

@@ -18,15 +18,16 @@
 
 using namespace std;
 
-class StringUtilTest : public CppUnit::TestFixture
+class StringUtilsTest : public CppUnit::TestFixture
 {
-	CPPUNIT_TEST_SUITE(StringUtilTest);
+	CPPUNIT_TEST_SUITE(StringUtilsTest);
 
 	CPPUNIT_TEST(testStartWith);
 	CPPUNIT_TEST(testSplit);
 	CPPUNIT_TEST(testSplitEmpty);
 	CPPUNIT_TEST(testSplitOne);
 	CPPUNIT_TEST(testEndsWith);
+	CPPUNIT_TEST(testCompare);
 
 	CPPUNIT_TEST_SUITE_END();
 
@@ -80,7 +81,16 @@ public:
 		CPPUNIT_ASSERT_EQUAL(false, StringUtils::endsWith("", "asdf"));
 		CPPUNIT_ASSERT_EQUAL(true, StringUtils::endsWith("aaaaaaa", ""));
 	}
+
+	void testCompare()
+	{
+		CPPUNIT_ASSERT_EQUAL(true, StringUtils::iequals("", ""));
+		CPPUNIT_ASSERT_EQUAL(true, StringUtils::iequals("aaaaaaaa", "aAAAaaaa"));
+		CPPUNIT_ASSERT_EQUAL(true, StringUtils::iequals("äää", "ÄÄÄ"));
+		CPPUNIT_ASSERT_EQUAL(true, StringUtils::iequals("ööaa", "Ööaa"));
+		CPPUNIT_ASSERT_EQUAL(false, StringUtils::iequals("ööaa", "ööaaa"));
+	}
 };
 
 // Registers the fixture into the 'registry'
-CPPUNIT_TEST_SUITE_REGISTRATION(StringUtilTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(StringUtilsTest);

@@ -10,14 +10,9 @@
 #include <Util.h>
 #include <Stacktrace.h>
 #include <XojMsgBox.h>
+#include <StringUtils.h>
 
-#include <boost/filesystem.hpp>
-#include <boost/algorithm/string.hpp>
 #include "pixbuf-utils.h"
-
-#include <iostream>
-using std::cout;
-using std::endl;
 
 LatexController::LatexController(Control* control)
 	: control(control),
@@ -30,7 +25,7 @@ LatexController::LatexController(Control* control)
 	  view(NULL),
 	  layer(NULL),
 	  // .png will be appended automatically => tex.png
-	  texImage(Util::getConfigFile("tex").string()),
+	  texImage(Util::getConfigFile("tex").str()),
 	  selectedTexImage(NULL),
 	  selectedText(NULL),
 	  dlg(NULL),
@@ -55,10 +50,10 @@ bool LatexController::findTexExecutable()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
-	path exePath = Stacktrace::getExePath();
-	binTex = exePath.parent_path().string() + "/mathtex/mathtex-xournalpp.cgi";
+	Path exePath = Stacktrace::getExePath();
+	binTex = exePath.getParentPath().str() + "/mathtex/mathtex-xournalpp.cgi";
 
-	if (boost::filesystem::exists(binTex))
+	if (binTex.exists())
 	{
 		// Found binary in relative path
 		return true;
@@ -117,7 +112,7 @@ bool LatexController::runCommand()
 		texres = "1000";
 	}
 	char* escapedCommand = g_strescape(currentTex.c_str(), NULL);
-	string command = FS(FORMAT_STR("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}") % binTex % fontcolour % texres % escapedCommand % texImage);
+	string command = FS(FORMAT_STR("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}") % binTex.str() % fontcolour % texres % escapedCommand % texImage);
 	g_free(escapedCommand);
 
 	gint rt = 0;
@@ -391,7 +386,7 @@ void LatexController::run()
 	findSelectedTexElement();
 	showTexEditDialog();
 
-	if (boost::algorithm::trim_copy(currentTex).empty() || initalTex == currentTex)
+	if (StringUtils::trim(currentTex).empty() || initalTex == currentTex)
 	{
 		// Nothing to insert / change
 		return;
