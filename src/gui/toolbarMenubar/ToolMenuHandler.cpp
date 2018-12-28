@@ -441,6 +441,9 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolButton(listener, gui, "DEFAULT_TOOL", ACTION_TOOL_DEFAULT, GROUP_NOGROUP, false,
 							   "default.svg", _("Default Tool"), gui->get("menuToolsDefault")));
 
+	addToolItem(new ToolButton(listener, gui, "TOOL_FILL", ACTION_TOOL_FILL, GROUP_FILL, false,
+							   "fill.svg", _("Fill")));
+
 	fontButton = new FontButton(listener, gui, "SELECT_FONT", ACTION_FONT_BUTTON_CHANGED, _("Select Font"));
 	addToolItem(fontButton);
 

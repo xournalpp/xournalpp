@@ -25,6 +25,7 @@ public:
 	virtual void toolColorChanged(bool userSelection) = 0;
 	virtual void setCustomColorSelected() = 0;
 	virtual void toolSizeChanged() = 0;
+	virtual void toolFillChanged() = 0;
 	virtual void toolChanged() = 0;
 
 	virtual ~ToolListener();
@@ -71,12 +72,12 @@ public:
 	void setEraserSize(ToolSize size);
 	void setHilighterSize(ToolSize size);
 
-	void setPenFillEnabled(bool fill);
+	void setPenFillEnabled(bool fill, bool fireEvent = true);
 	bool getPenFillEnabled();
 	void setPenFill(int alpha);
 	int getPenFill();
 
-	void setHilighterFillEnabled(bool fill);
+	void setHilighterFillEnabled(bool fill, bool fireEvent = true);
 	bool getHilighterFillEnabled();
 	void setHilighterFill(int alpha);
 	int getHilighterFill();

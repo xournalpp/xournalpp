@@ -661,6 +661,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 			selectDefaultTool();
 		}
 		break;
+	case ACTION_TOOL_FILL:
+		setFill(enabled);
+		break;
 
 	case ACTION_SIZE_VERY_THIN:
 		if (enabled)
@@ -1646,6 +1649,12 @@ void Control::toolChanged()
 	fireEnableAction(ACTION_SIZE_VERY_THICK, enableSize);
 	fireEnableAction(ACTION_SIZE_VERY_THIN, enableSize);
 
+	bool enableFill = toolHandler->hasCapability(TOOL_CAP_FILL);
+
+	fireEnableAction(ACTION_TOOL_FILL, enableFill);
+
+
+
 	if (enableSize)
 	{
 		toolSizeChanged();
@@ -1799,6 +1808,20 @@ void Control::toolSizeChanged()
 	case TOOL_SIZE_VERY_THICK:
 		fireActionSelected(GROUP_SIZE, ACTION_SIZE_VERY_THIN);
 		break;
+	}
+}
+
+void Control::toolFillChanged()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	if (toolHandler->getFill())
+	{
+		fireActionSelected(GROUP_FILL, ACTION_TOOL_FILL);
+	}
+	else
+	{
+		fireActionSelected(GROUP_FILL, ACTION_NONE);
 	}
 }
 
@@ -2885,6 +2908,22 @@ void Control::setCopyPasteEnabled(bool enabled)
 	XOJ_CHECK_TYPE(Control);
 
 	this->clipboardHandler->setCopyPasteEnabled(enabled);
+}
+
+void Control::setFill(bool fill)
+{
+	XOJ_CHECK_TYPE(Control);
+
+	if (toolHandler->getToolType() == TOOL_PEN)
+	{
+		fireActionSelected(GROUP_PEN_FILL, fill ? ACTION_TOOL_PEN_FILL : ACTION_NONE);
+		this->toolHandler->setPenFillEnabled(fill, false);
+	}
+	else if (toolHandler->getToolType() == TOOL_HILIGHTER)
+	{
+		fireActionSelected(GROUP_HILIGHTER_FILL, fill ? ACTION_TOOL_HILIGHTER_FILL : ACTION_NONE);
+		this->toolHandler->setHilighterFillEnabled(fill, false);
+	}
 }
 
 void Control::setToolSize(ToolSize size)
