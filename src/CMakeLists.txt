@@ -73,8 +73,6 @@ file (GLOB xournalpp_SOURCES_RECURSE
 set (xournalpp_SOURCES ${xournalpp_SOURCES_RECURSE} ${xournalpp_SOURCES})
 unset (xournalpp_SOURCES_RECURSE)
 
-list (REMOVE_ITEM xournalpp_SOURCES ${PROJECT_SOURCE_DIR}/src/model/LayerListener.cpp) # TOCHECK
-
 ## Core library ##
 
 # Used for xournalpp and xournalpp-test

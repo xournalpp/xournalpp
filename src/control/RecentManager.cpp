@@ -6,6 +6,8 @@
 
 #include <gtk/gtk.h>
 
+#include <Path.h>
+
 #include <boost/filesystem.hpp>
 using boost::filesystem::path;
 #include <boost/algorithm/string.hpp>
@@ -135,7 +137,10 @@ void RecentManager::openRecent(path p)
 {
 	XOJ_CHECK_TYPE(RecentManager);
 
-	if (p.filename().empty()) return;
+	if (p.filename().empty())
+	{
+		return;
+	}
 
 	for (RecentManagerListener* l : this->listener)
 	{
@@ -177,30 +182,20 @@ GList* RecentManager::filterRecent(GList* items, bool xoj)
 	for (GList* l = items; l != NULL; l = l->next)
 	{
 		GtkRecentInfo* info = (GtkRecentInfo*) l->data;
-		string uri(gtk_recent_info_get_uri(info));
+
+		Path p = Path::fromUri(gtk_recent_info_get_uri(info));
 
 		// Skip remote files
-		if (!ba::starts_with(uri, "file://"))
+		if (p.isEmpty() || !p.exists())
 		{
 			continue;
 		}
 
-		using namespace boost::filesystem;
-		try {
-			// substr is for removing uri's file://
-			if (!exists(path(uri.substr(7))))
-			{
-				continue;
-			}
-		} catch (boost::filesystem::filesystem_error&) {
-			continue;
-		}
-
-		if (xoj && (ba::ends_with(uri, ".xoj") || ba::ends_with(uri, ".xopp")))
+		if (xoj && (p.hasExtension(".xoj") || p.hasExtension(".xopp")))
 		{
 			filteredItems = g_list_prepend(filteredItems, info);
 		}
-		if (!xoj && ba::ends_with(uri, ".pdf"))
+		if (!xoj && p.hasExtension(".pdf"))
 		{
 			filteredItems = g_list_prepend(filteredItems, info);
 		}

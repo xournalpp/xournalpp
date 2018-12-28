@@ -29,30 +29,17 @@ add_library (xournalpp-test-base OBJECT
 
 ## ------------------------
 
-# I18nTest
-add_executable (test-i18nTest $<TARGET_OBJECTS:xournalpp-core> $<TARGET_OBJECTS:xournalpp-test-base>
-    util/I18nTest.cpp
+# These dirs are xournalpp only so it's safe to add then recursively
+file (GLOB_RECURSE util_sources_SOURCES_RECURSE
+  util/*.cpp
 )
-add_dependencies (test-i18nTest xournalpp-core xournalpp-test-base util)
-target_link_libraries (test-i18nTest ${xournalpp_LDFLAGS} ${CppUnit_LDFLAGS})
 
-## ------------------------
-
-# XojPreviewExtractor
-add_executable (test-xojPreviewExtractor $<TARGET_OBJECTS:xournalpp-core> $<TARGET_OBJECTS:xournalpp-test-base>
-    util/XojPreviewExtractorTest.cpp
+# Util Test
+add_executable (test-util $<TARGET_OBJECTS:xournalpp-core> $<TARGET_OBJECTS:xournalpp-test-base>
+    ${util_sources_SOURCES_RECURSE}
 )
-add_dependencies (test-xojPreviewExtractor xournalpp-core xournalpp-test-base util)
-target_link_libraries (test-xojPreviewExtractor ${xournalpp_LDFLAGS} ${CppUnit_LDFLAGS})
-
-## ------------------------
-
-# StringUtil
-add_executable (test-StringUtil $<TARGET_OBJECTS:xournalpp-core> $<TARGET_OBJECTS:xournalpp-test-base>
-    util/StringUtil.cpp
-)
-add_dependencies (test-StringUtil xournalpp-core xournalpp-test-base util)
-target_link_libraries (test-StringUtil ${xournalpp_LDFLAGS} ${CppUnit_LDFLAGS})
+add_dependencies (test-util xournalpp-core xournalpp-test-base util)
+target_link_libraries (test-util ${xournalpp_LDFLAGS} ${CppUnit_LDFLAGS})
 
 ## ------------------------
 
@@ -64,7 +51,9 @@ add_dependencies (test-loadHandler xournalpp-core xournalpp-test-base util)
 target_link_libraries (test-loadHandler ${xournalpp_LDFLAGS} ${CppUnit_LDFLAGS})
 
 ## CTest ##
-add_test (I18nTest test-i18nTest)
-add_test (StringUtil test-StringUtil)
-add_test (XojPreviewExtractor test-xojPreviewExtractor)
+add_test (util test-util)
 add_test (LoadHandler test-loadHandler)
+
+
+
+

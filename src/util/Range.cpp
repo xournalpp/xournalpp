@@ -1,7 +1,5 @@
 #include "Range.h"
 
-#include <glib.h>
-
 Range::Range(double x, double y)
 {
 	XOJ_INIT_TYPE(Range);

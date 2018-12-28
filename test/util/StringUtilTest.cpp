@@ -26,6 +26,7 @@ class StringUtilTest : public CppUnit::TestFixture
 	CPPUNIT_TEST(testSplit);
 	CPPUNIT_TEST(testSplitEmpty);
 	CPPUNIT_TEST(testSplitOne);
+	CPPUNIT_TEST(testEndsWith);
 
 	CPPUNIT_TEST_SUITE_END();
 
@@ -71,6 +72,14 @@ public:
 		CPPUNIT_ASSERT_EQUAL(std::string("aa"), splitted[0]);
 	}
 
+	void testEndsWith()
+	{
+		CPPUNIT_ASSERT_EQUAL(true, StringUtils::endsWith("asdfsfdafdasfda.xoj", ".xoj"));
+		CPPUNIT_ASSERT_EQUAL(false, StringUtils::endsWith("111111111111111", "2222"));
+		CPPUNIT_ASSERT_EQUAL(false, StringUtils::endsWith("111111111122221", "2222"));
+		CPPUNIT_ASSERT_EQUAL(false, StringUtils::endsWith("", "asdf"));
+		CPPUNIT_ASSERT_EQUAL(true, StringUtils::endsWith("aaaaaaa", ""));
+	}
 };
 
 // Registers the fixture into the 'registry'

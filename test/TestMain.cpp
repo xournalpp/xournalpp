@@ -12,14 +12,11 @@
 #include <config-dev.h>
 #include <config-test.h>
 #include <CrashHandler.h>
-#include <Stacktrace.h>
 #include <XournalType.h>
 
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/ui/text/TestRunner.h>
-
-#include <gtk/gtk.h>
 
 #include <iostream>
 using std::cout;
@@ -30,18 +27,12 @@ using std::endl;
  */
 int main(int argc, char* argv[])
 {
-
-	//gtk_init(&argc, &argv);
-
 	// init crash handler
 	installCrashHandlers();
 
 #ifdef DEV_CALL_LOG
 	Log::initlog();
 #endif
-
-	// Init GTK Display
-	//gdk_display_open_default_libgtk_only();
 
 	// Get the top level suite from the registry
 	CppUnit::Test *suite = CppUnit::TestFactoryRegistry::getRegistry().makeTest();

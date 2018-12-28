@@ -53,4 +53,14 @@ bool StringUtils::startsWith(string str, string start)
 	return str.compare(0, start.length(), start) == 0;
 }
 
+bool StringUtils::endsWith(string str, string end)
+{
+	if (end.size() > str.size())
+	{
+		return false;
+	}
+
+	return str.compare(str.length() - end.length(), end.length(), end) == 0;
+}
+
 
