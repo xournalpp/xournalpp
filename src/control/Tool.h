@@ -119,6 +119,11 @@ public:
 	ToolSize getSize();
 	void setSize(ToolSize size);
 
+	bool getFill();
+	void setFill(bool fill);
+	int getFillAlpha();
+	void setFillAlpha(int fillAlpha);
+
 	DrawingType getDrawingType();
 	void setDrawingType(DrawingType drawingType);
 

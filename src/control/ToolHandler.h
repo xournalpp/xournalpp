@@ -121,7 +121,7 @@ private:
 	/**
 	 * Last selected tool, reference with color values etc.
 	 */
-	LastSelectedTool* lastSelectedTool;
+	LastSelectedTool* lastSelectedTool = NULL;
 
 	EraserType eraserType;
 
@@ -130,9 +130,11 @@ private:
 	 * so its a "predefined" color for us, but may it is
 	 * not in the list, so its a "custom" color for us
 	 */
-	bool colorFound;
-	ToolListener* listener;
-	ActionHandler* actionHandler;
+	bool colorFound = false;
+
+	ToolListener* listener = NULL;
+
+	ActionHandler* actionHandler = NULL;
 
 	Settings* settings;
 };

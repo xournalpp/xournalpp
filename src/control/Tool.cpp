@@ -64,6 +64,34 @@ void Tool::setSize(ToolSize size)
 	this->size = size;
 }
 
+bool Tool::getFill()
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->fill;
+}
+
+void Tool::setFill(bool fill)
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	this->fill = fill;
+}
+
+int Tool::getFillAlpha()
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->fillAlpha;
+}
+
+void Tool::setFillAlpha(int fillAlpha)
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	this->fillAlpha = fillAlpha;
+}
+
 void Tool::setCapability(int capability, bool enabled)
 {
 	XOJ_CHECK_TYPE(Tool);
