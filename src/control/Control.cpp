@@ -662,12 +662,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		}
 		break;
 	case ACTION_TOOL_FILL:
-	{
-		int* x = NULL;
-		*x = 0;
-
 		setFill(enabled);
-	}
 		break;
 
 	case ACTION_SIZE_VERY_THIN:
