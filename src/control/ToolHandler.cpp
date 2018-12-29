@@ -13,15 +13,10 @@ ToolHandler::ToolHandler(ToolListener* listener, ActionHandler* actionHandler, S
 {
 	XOJ_INIT_TYPE(ToolHandler);
 
-	this->colorFound = false;
-	this->listener = NULL;
-	this->actionHandler = NULL;
 	this->settings = settings;
-	this->lastSelectedTool = NULL;
 	initTools();
 	this->listener = listener;
 	this->actionHandler = actionHandler;
-
 	this->eraserType = ERASER_TYPE_DEFAULT;
 }
 
@@ -495,6 +490,12 @@ void ToolHandler::saveSettings()
 			st.setString("size", value);
 		}
 
+		if (t->type == TOOL_PEN || t->type == TOOL_HILIGHTER)
+		{
+			st.setInt("fill", t->getFill());
+			st.setInt("fillAlpha", t->getFillAlpha());
+		}
+
 		if (t->type == TOOL_ERASER)
 		{
 			if (this->eraserType == ERASER_TYPE_DELETE_STROKE)
@@ -548,8 +549,18 @@ void ToolHandler::loadSettings()
 				t->setDrawingType(drawingTypeFromString(drawingType));
 			}
 
-			string value;
+			int fill = -1;
+			if (st.getInt("fill", fill))
+			{
+				t->setFill(fill);
+			}
+			int fillAlpha = -1;
+			if (st.getInt("fillAlpha", fillAlpha))
+			{
+				t->setFillAlpha(fillAlpha);
+			}
 
+			string value;
 			if (t->hasCapability(TOOL_CAP_SIZE) && st.getString("size", value))
 			{
 				if (value == "VERY_THIN")	  t->setSize(TOOL_SIZE_VERY_FINE);

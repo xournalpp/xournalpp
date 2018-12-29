@@ -1728,7 +1728,7 @@ void SElement::setInt(const string name, const int value)
 	XOJ_CHECK_TYPE_OBJ(&attrib, SAttribute);
 
 	attrib.iValue = value;
-	attrib.type = ATTRIBUTE_TYPE_INT_HEX;
+	attrib.type = ATTRIBUTE_TYPE_INT;
 }
 
 void SElement::setBool(const string name, const bool value)
