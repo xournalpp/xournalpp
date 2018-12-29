@@ -8,13 +8,14 @@
 
 SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, PageRef page, int layer, size_t index)
  : SidebarPreviewBaseEntry(sidebar, page),
-   box(gtk_box_new(GTK_ORIENTATION_VERTICAL, 2)),
-   toolbarHeight(0),
    index(index),
+   layer(layer),
+   toolbarHeight(0),
+   box(gtk_box_new(GTK_ORIENTATION_VERTICAL, 2)),
+   cbVisible(NULL),
    inUpdate(false)
 {
 	XOJ_INIT_TYPE(SidebarPreviewLayerEntry);
-	this->layer = layer;
 
 	GtkWidget* toolbar = gtk_box_new(GTK_ORIENTATION_HORIZONTAL,6);
 

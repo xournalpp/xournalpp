@@ -155,7 +155,7 @@ void ToolPageLayer::layerMenuClicked(GtkWidget* menu)
 
 	if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(menu)))
 	{
-		if (layerId == lc->getCurrentLayerId())
+		if (layerId == (int)lc->getCurrentLayerId())
 		{
 			// This is the current layer, don't allow to deselect it
 			inMenuUpdate = true;
