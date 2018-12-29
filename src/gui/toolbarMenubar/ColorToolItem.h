@@ -50,7 +50,7 @@ private:
 
     int color;
     string name;
-    GtkWidget* iconWidget;
+    GtkWidget* iconWidget = NULL;
     GtkWindow* parent;
 
     ToolHandler* toolHandler;

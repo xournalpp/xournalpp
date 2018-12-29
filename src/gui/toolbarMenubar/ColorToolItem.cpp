@@ -18,7 +18,6 @@ ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, G
 	this->color = color;
 	this->toolHandler = toolHandler;
 	this->group = GROUP_COLOR;
-	this->iconWidget = NULL;
 	this->parent = parent;
 
 	updateName();

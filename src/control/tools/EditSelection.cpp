@@ -254,6 +254,17 @@ UndoAction* EditSelection::setSize(ToolSize size,
 }
 
 /**
+ * Fills the stroke, return an undo action
+ * (Or NULL if nothing done, e.g. because there is only an image)
+ */
+UndoAction* EditSelection::setFill(int alphaPen, int alphaHighligther)
+{
+	XOJ_CHECK_TYPE(EditSelection);
+
+	return this->contents->setFill(alphaPen, alphaHighligther);
+}
+
+/**
  * Set the color of all elements, return an undo action
  * (Or NULL if nothing done, e.g. because there is only an image)
  */

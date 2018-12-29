@@ -290,13 +290,20 @@ protected:
 private:
 	XOJ_TYPE_ATTRIB;
 
-
 	RecentManager* recent;
 	UndoRedoHandler* undoRedo;
 	ZoomControl* zoom;
 	bool fullscreen = false;
-	bool snapRotation = true;	//rotation snapping enabled by default
-	bool snapGrid = true; 		//grid snapping enabled by default
+
+	/**
+	 * Rotation snapping enabled by default
+	 */
+	bool snapRotation = true;
+
+	/**
+	 * grid snapping enabled by default
+	 */
+	bool snapGrid = true;
 
 	Settings* settings;
 	MainWindow* win;
