@@ -213,13 +213,12 @@ void Control::renameLastAutosaveFile()
 	string error;
 	if (filename.exists())
 	{
-		int result = g_unlink(renamed.c_str());
-		if (result != 0)
+		if (!renamed.deleteFile())
 		{
 			error += FS(_F("Could not delete old autosave file \"{1}\"") % renamed.str());
 		}
 
-		result = g_rename(filename.c_str(), renamed.c_str());
+		int result = g_rename(filename.c_str(), renamed.c_str());
 		if (result != 0)
 		{
 			if (!error.empty())
@@ -231,15 +230,14 @@ void Control::renameLastAutosaveFile()
 	}
 	else
 	{
-		int result = g_unlink(renamed.c_str());
-		if (result != 0)
+		if (!renamed.deleteFile())
 		{
 			error += FS(_F("Could not delete old autosave file \"{1}\"") % renamed.str());
 		}
 
 		this->save(false);
 
-		result = g_rename(filename.c_str(), renamed.c_str());
+		int result = g_rename(filename.c_str(), renamed.c_str());
 		if (result != 0)
 		{
 			if (!error.empty())

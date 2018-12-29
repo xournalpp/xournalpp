@@ -38,6 +38,13 @@ public:
 	bool exists();
 
 	/**
+	 * Delete the file
+	 *
+	 * @return true if the file is deleted or does not exists
+	 */
+	bool deleteFile();
+
+	/**
 	 * Compare the path with another one
 	 */
 	bool operator ==(const Path& other);
