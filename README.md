@@ -17,10 +17,11 @@ Stroke recognizer and other parts are based on Xournal Code, which you can find 
 Xournal++ features:
 * Support for Pen preassure, e.g. Wacom Tablet
 * Support for annotating PDFs
+* Fill shape functionality
 * PDF Export (with and without paper style)
 * PNG Export (with and without transparent background)
 * Allow to map different tools / colors etc. to stylus buttons / mouse buttons
-* Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (Layers currently not enabled by default)
+* Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (can be individually hidden, editing layer can be selected)
 * enhanced support for image insertion
 * Eraser with multiple configurations
 * Significantly reduced memory usage and code to detect memory leaks compared to Xournal
@@ -41,12 +42,10 @@ Hopefully you'll enjoy it!
 ## How to use audio record and playback feature:
 
 - Install `vlc` and make sure `curl` and `arecord` are present on your system 
-- Make sure you installed xournalpp with `desktop-install` command (see install steps)
 - Under `vlc` settings: 
 - - enable `http interface` (see [this](https://github.com/azrafe7/vlc4youtube/blob/master/instructions/how-to-enable-vlc-web-interface.md) ) with blank username and password "password"
 - - tick `Allow only one instance` under `Interface -> Instance`
 - set the folder where do you want to store audio recordings under settings -> `audio recording`
-- Choose `Toolbar Left` layout under `View->Toolbars->Toolbar Left`
 
 You're ready to go! 
 Just press the red button to start/stop recording and use the `Play Object` tool to click on a stroke and listen to the corresponding audio.
