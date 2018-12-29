@@ -20,6 +20,7 @@
 
 #include <libintl.h>
 #include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #if __linux__
 #include <libgen.h>
@@ -156,8 +157,39 @@ void XournalMain::checkForErrorlog()
 	gtk_widget_destroy(dialog);
 }
 
-void XournalMain::checkForEmergencySave() {
-	// Not implemented. See Ticket #627
+void XournalMain::checkForEmergencySave(Control* control) {
+	Path filename = Util::getConfigFile("emergencysave.xopp");
+
+	if (!filename.exists())
+	{
+		return;
+	}
+
+	string msg = _("Xournal++ crashed last time. Would you restore it?");
+
+	GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
+		GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
+
+	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete file"), 1);
+	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Restore file"), 2);
+
+	int res = gtk_dialog_run(GTK_DIALOG(dialog));
+
+	if (res == 1) // Delete file
+	{
+		g_unlink(filename.c_str());
+	}
+	else if (res == 2) // Open File
+	{
+		if (control->openFile(filename, -1, true))
+		{
+			control->getDocument()->setFilename("");
+			control->updateWindowTitle();
+			g_unlink(filename.c_str());
+		}
+	}
+
+	gtk_widget_destroy(dialog);
 }
 
 int XournalMain::exportPdf(const char* input, const char* output)
@@ -280,16 +312,12 @@ int XournalMain::run(int argc, char* argv[])
 		}
 
 		GFile* file = g_file_new_for_commandline_arg(optFilename[0]);
-		char* filename = g_file_get_path(file);
-		char* uri = g_file_get_uri(file);
-		string sUri = uri;
-		g_free(uri);
+		Path p = Path::fromGFile(file);
 		g_object_unref(file);
 
-		if (StringUtils::startsWith(sUri, "file://"))
+		if (!p.isEmpty())
 		{
-			opened = control->openFile(filename, openAtPageNumber);
-			g_free(filename);
+			opened = control->openFile(p, openAtPageNumber);
 		}
 		else
 		{
@@ -307,7 +335,7 @@ int XournalMain::run(int argc, char* argv[])
 	}
 
 	checkForErrorlog();
-	checkForEmergencySave();
+	checkForEmergencySave(control);
 
 	// There is a timing issue with the layout
 	// This fixes it, see #405

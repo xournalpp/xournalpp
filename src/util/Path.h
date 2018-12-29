@@ -12,6 +12,7 @@
 #pragma once
 
 #include <glib.h>
+#include <gio/gio.h>
 
 #include <string>
 using std::string;
@@ -120,6 +121,7 @@ public:
 	 * Convert an uri to a path, if the uri does not start with file:// an empty Path is returned
 	 */
 	static Path fromUri(string uri);
+	static Path fromGFile(GFile* file);
 
 private:
 	string path;

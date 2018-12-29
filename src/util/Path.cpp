@@ -259,5 +259,13 @@ Path Path::fromUri(string uri)
 	return p;
 }
 
+#ifndef BUILD_THUMBNAILER
+Path Path::fromGFile(GFile* file)
+{
+	char* uri = g_file_get_uri(file);
+	string sUri = uri;
+	g_free(uri);
 
-
+	return fromUri(sUri);
+}
+#endif

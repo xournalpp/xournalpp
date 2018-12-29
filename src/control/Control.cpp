@@ -662,7 +662,12 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		}
 		break;
 	case ACTION_TOOL_FILL:
+	{
+		int* x = NULL;
+		*x = 0;
+
 		setFill(enabled);
+	}
 		break;
 
 	case ACTION_SIZE_VERY_THIN:
@@ -1965,11 +1970,11 @@ bool Control::shouldFileOpen(string filename)
 	return true;
 }
 
-bool Control::openFile(Path filename, int scrollToPage)
+bool Control::openFile(Path filename, int scrollToPage, bool forceOpen)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	if (!shouldFileOpen(filename.str()))
+	if (!forceOpen && !shouldFileOpen(filename.str()))
 	{
 		return false;
 	}

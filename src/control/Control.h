@@ -67,7 +67,7 @@ public:
 public:
 	// Menu File
 	bool newFile(string pageTemplate = "");
-	bool openFile(Path filename ="", int scrollToPage = -1);
+	bool openFile(Path filename = "", int scrollToPage = -1, bool forceOpen = false);
 	bool annotatePdf(Path filename, bool attachPdf, bool attachToDocument);
 	void print();
 	void exportAsPdf();

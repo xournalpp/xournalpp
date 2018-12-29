@@ -5,6 +5,8 @@ if (WIN32)
   return ()
 endif ()
 
+add_definitions (-DBUILD_THUMBNAILER)
+
 add_executable (xournal-thumbnailer
   xournal-thumbnailer.cpp
   "${PROJECT_SOURCE_DIR}/src/util/GzUtil.cpp"
