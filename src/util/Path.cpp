@@ -130,7 +130,7 @@ void Path::clearExtensions()
 /**
  * Return the Path as String
  */
-string Path::str()
+const string Path::str() const
 {
 	return path;
 }
@@ -138,7 +138,7 @@ string Path::str()
 /**
  * Return the Path as String
  */
-const char* Path::c_str()
+const char* Path::c_str() const
 {
 	return path.c_str();
 }

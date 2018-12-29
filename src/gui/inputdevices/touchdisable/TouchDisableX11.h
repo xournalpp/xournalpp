@@ -15,8 +15,7 @@
 
 #include "TouchDisableInterface.h"
 
-// Disabled at the moment, may cause issues
-//#define X11_ENABLED
+#define X11_ENABLED
 
 #ifdef WIN32
 #undef X11_ENABLED

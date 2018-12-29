@@ -78,12 +78,12 @@ public:
 	/**
 	 * Return the Path as String
 	 */
-	string str();
+	const string str() const;
 
 	/**
 	 * Return the Path as String
 	 */
-	const char* c_str();
+	const char* c_str() const;
 
 	/**
 	 * Get the parent path
