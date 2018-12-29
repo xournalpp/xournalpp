@@ -15,6 +15,7 @@
 #include <XournalType.h>
 
 class GladeSearchpath;
+class Control;
 
 class XournalMain
 {
@@ -29,7 +30,7 @@ private:
 	void initLocalisation();
 
 	void checkForErrorlog();
-	void checkForEmergencySave();
+	void checkForEmergencySave(Control* control);
 
 	int exportPdf(const char* input, const char* output);
 	void initSettingsPath();

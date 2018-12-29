@@ -1965,11 +1965,11 @@ bool Control::shouldFileOpen(string filename)
 	return true;
 }
 
-bool Control::openFile(Path filename, int scrollToPage)
+bool Control::openFile(Path filename, int scrollToPage, bool forceOpen)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	if (!shouldFileOpen(filename.str()))
+	if (!forceOpen && !shouldFileOpen(filename.str()))
 	{
 		return false;
 	}
