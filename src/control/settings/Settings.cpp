@@ -103,8 +103,6 @@ void Settings::loadDefault()
 
 	this->backgroundColor = 0xDCDAD5;
 
-	this->eventCompression = true;
-
 	this->pageTemplate = "xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
 
 	inTransaction = false;
@@ -299,10 +297,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "widthMaximumMultiplier") == 0)
 	{
 		this->widthMaximumMultiplier = g_ascii_strtod((const char*) value, NULL);
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "eventCompression") == 0)
-	{
-		this->eventCompression = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "sidebarOnRight") == 0)
 	{
@@ -730,8 +724,6 @@ void Settings::save()
 	WRITE_DOUBLE_PROP(widthMaximumMultiplier);
 	WRITE_COMMENT("The multiplier for the pressure sensitivity of the pen");
 
-	WRITE_BOOL_PROP(eventCompression);
-
 	WRITE_COMMENT("Config for new pages");
 	WRITE_STRING_PROP(pageTemplate);
 
@@ -1037,27 +1029,6 @@ void Settings::setDefaultSaveName(string name)
 	}
 
 	this->defaultSaveName = name;
-
-	save();
-}
-
-bool Settings::isEventCompression()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->eventCompression;
-}
-
-void Settings::setEventCompression(bool enabled)
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	if (this->eventCompression == enabled)
-	{
-		return;
-	}
-
-	this->eventCompression = enabled;
 
 	save();
 }

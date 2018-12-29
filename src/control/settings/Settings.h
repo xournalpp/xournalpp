@@ -260,9 +260,6 @@ public:
 	int getPdfPageCacheSize();
 	void setPdfPageCacheSize(int size);
 
-	bool isEventCompression();
-	void setEventCompression(bool enabled);
-
 	string getPageTemplate();
 	void setPageTemplate(string pageTemplate);
 
@@ -501,11 +498,6 @@ private:
 	 * The color for Xournal page background
 	 */
 	int backgroundColor;
-
-	/**
-	 * Whether event compression should be enabled
-	 */
-	bool eventCompression;
 
 	/**
 	 * Page template String
