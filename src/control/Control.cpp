@@ -252,8 +252,10 @@ void Control::renameLastAutosaveFile()
 
 	if (!error.empty())
 	{
-		string msg = FS(_F("Autosave failed with an error: {1}") % error);
-		XojMsgBox::showErrorToUser(getGtkWindow(), msg);
+		Util::execInUiThread([=]() {
+			string msg = FS(_F("Autosave failed with an error: {1}") % error);
+			XojMsgBox::showErrorToUser(getGtkWindow(), msg);
+		});
 	}
 }
 
