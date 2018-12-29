@@ -291,7 +291,7 @@ void LayerController::switchToLay(int layer, bool hideShow)
 	{
 		for (size_t i = 1; i <= p->getLayerCount(); i++)
 		{
-			p->setLayerVisible(i, i <= layer);
+			p->setLayerVisible(i, (int)i <= layer);
 		}
 	}
 

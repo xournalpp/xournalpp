@@ -142,7 +142,7 @@ void SidebarPreviewLayers::layerVisibilityChanged()
 		return;
 	}
 
-	for (int i = 0; i < this->previews.size(); i++)
+	for (int i = 0; i < (int)this->previews.size(); i++)
 	{
 		SidebarPreviewLayerEntry* sp = (SidebarPreviewLayerEntry*)this->previews[this->previews.size() - i - 1];
 		sp->setVisibleCheckbox(p->isLayerVisible(i));

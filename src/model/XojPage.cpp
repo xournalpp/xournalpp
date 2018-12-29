@@ -83,7 +83,7 @@ void XojPage::insertLayer(Layer* layer, int index)
 {
 	XOJ_CHECK_TYPE(XojPage);
 
-	if (index >= this->layer.size())
+	if (index >= (int)this->layer.size())
 	{
 		addLayer(layer);
 		return;
@@ -158,7 +158,7 @@ void XojPage::setLayerVisible(int layerId, bool visible)
 	}
 
 	layerId--;
-	if (layerId >= this->layer.size())
+	if (layerId >= (int)this->layer.size())
 	{
 		return;
 	}
@@ -181,7 +181,7 @@ bool XojPage::isLayerVisible(int layerId)
 	}
 
 	layerId--;
-	if (layerId >= this->layer.size())
+	if (layerId >= (int)this->layer.size())
 	{
 		return false;
 	}
