@@ -93,8 +93,10 @@ Path Util::getConfigSubfolder(Path subfolder)
 	{
 		if (g_mkdir_with_parents(p.c_str(), 0700))
 		{
-			string msg = FS(_F("Could not create folder: {1}") % p.str());
-			XojMsgBox::showErrorToUser(NULL, msg);
+			Util::execInUiThread([=]() {
+				string msg = FS(_F("Could not create folder: {1}") % p.str());
+				XojMsgBox::showErrorToUser(NULL, msg);
+			});
 		}
 	}
 

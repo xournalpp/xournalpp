@@ -1,6 +1,9 @@
 #include "Path.h"
 #include "StringUtils.h"
 
+#include <glib/gstdio.h>
+
+
 Path::Path()
 {
 }
@@ -38,6 +41,28 @@ bool Path::isEmpty()
 bool Path::exists()
 {
 	return g_file_test(path.c_str(), G_FILE_TEST_EXISTS);
+}
+
+/**
+ * Delete the file
+ *
+ * @return true if the file is deleted or does not exists
+ */
+bool Path::deleteFile()
+{
+	if (!exists())
+	{
+		// Does not exists, therefore cannot be deleted
+		return true;
+	}
+
+	int result = g_unlink(c_str());
+	if (result == 0)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 /**
@@ -130,7 +155,7 @@ void Path::clearExtensions()
 /**
  * Return the Path as String
  */
-string Path::str()
+const string Path::str() const
 {
 	return path;
 }
@@ -138,7 +163,7 @@ string Path::str()
 /**
  * Return the Path as String
  */
-const char* Path::c_str()
+const char* Path::c_str() const
 {
 	return path.c_str();
 }

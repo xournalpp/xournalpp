@@ -54,6 +54,13 @@ void TouchHelper::reload()
 	enabled = false;
 	touch.getBool("disableTouch", enabled);
 
+	if (!enabled)
+	{
+		delete touchImpl;
+		touchImpl = NULL;
+		return;
+	}
+
 	disableTimeout = 1000;
 	touch.getInt("timeout", disableTimeout);
 	if (disableTimeout < 500)
