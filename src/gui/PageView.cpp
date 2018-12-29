@@ -995,24 +995,6 @@ Text* XojPageView::getSelectedText()
 	return NULL;
 }
 
-Rectangle* XojPageView::getVisibleRect()
-{
-	XOJ_CHECK_TYPE(XojPageView);
-
-	Rectangle* rect = xournal->getVisibleRect(this);
-
-	if (!rect)
-	{
-		return NULL;
-	}
-
-	(*rect) *= xournal->getZoom();
-
-	(*rect) = rect->translated(-getX(), -getY());
-
-	return rect;
-}
-
 Rectangle XojPageView::getRect()
 {
 	XOJ_CHECK_TYPE(XojPageView);

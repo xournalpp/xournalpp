@@ -62,7 +62,6 @@ private:
 	cairo_t* crMask;
 
 	DocumentView view;
-	Rectangle visRect;
 
 	ShapeRecognizer* reco;
 };
