@@ -42,7 +42,7 @@ void StrokeHandler::draw(cairo_t* cr)
 
 	view.applyColor(cr, stroke);
 	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-	cairo_mask_surface(cr, surfMask, visRect.x, visRect.y);
+	cairo_mask_surface(cr, surfMask, 0, 0);
 }
 
 bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
@@ -216,22 +216,12 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 
 	destroySurface();
 
-	const double width = redrawable->getDisplayWidth();
-	const double height = redrawable->getDisplayHeight();
 	const double zoom = xournal->getZoom();
+	PageRef page = redrawable->getPage();
 
-	Rectangle *rectPtr = redrawable->getVisibleRect();
-
-	if (!rectPtr)
-	{
-		g_warning("Attempting to draw on an invisible surface");
-		return;
-	}
-
-	visRect = *(rectPtr);
-	delete rectPtr;
-
-	surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, visRect.width, visRect.height);
+	double width = page->getWidth() * zoom;
+	double height = page->getHeight() * zoom;
+	surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
 
 	crMask = cairo_create(surfMask);
 
@@ -242,7 +232,6 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 
 	cairo_fill(crMask);
 
-	cairo_translate(crMask, -visRect.x, -visRect.y);
 	cairo_scale(crMask, zoom, zoom);
 
 	if (!stroke)

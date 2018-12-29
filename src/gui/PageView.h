@@ -133,7 +133,6 @@ public:
 	TexImage* getSelectedTex();
 	Text* getSelectedText();
 
-	Rectangle* getVisibleRect();
 	Rectangle getRect();
 
 public: // event handler
