@@ -348,7 +348,15 @@ void XournalView::onRealized(GtkWidget* widget, XournalView* view)
 {
 	XOJ_CHECK_TYPE_OBJ(view, XournalView);
 
-	view->setEventCompression(view->getControl()->getSettings()->isEventCompression());
+	// Disable event compression
+	if (gtk_widget_get_realized(view->getWidget()))
+	{
+		gdk_window_set_event_compression(gtk_widget_get_window(view->getWidget()), false);
+	}
+	else
+	{
+		g_warning("could not disable event compression");
+	}
 }
 
 // send the focus back to the appropriate widget
@@ -860,15 +868,6 @@ void XournalView::repaintSelection(bool evenWithoutSelection)
 
 	// repaint always the whole widget
 	gtk_widget_queue_draw(this->widget);
-}
-
-void XournalView::setEventCompression(gboolean enable)
-{
-	// Enable this when gdk is new enough for the compression feature.
-	if (gtk_widget_get_realized(getWidget()))
-	{
-		gdk_window_set_event_compression(gtk_widget_get_window(getWidget()), enable);
-	}
 }
 
 void XournalView::layoutPages()

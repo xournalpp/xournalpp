@@ -88,8 +88,6 @@ public:
 	void deleteSelection(EditSelection* sel = NULL);
 	void repaintSelection(bool evenWithoutSelection = false);
 
-	void setEventCompression(gboolean enable);
-
 	TextEditor* getTextEditor();
 	ArrayIterator<XojPageView*> pageViewIterator();
 	Control* getControl();
