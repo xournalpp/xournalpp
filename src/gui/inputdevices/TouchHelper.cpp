@@ -54,7 +54,7 @@ void TouchHelper::reload()
 	enabled = false;
 	touch.getBool("disableTouch", enabled);
 
-	if (enabled)
+	if (!enabled)
 	{
 		delete touchImpl;
 		touchImpl = NULL;
