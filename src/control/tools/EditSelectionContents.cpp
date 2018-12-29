@@ -14,6 +14,7 @@
 #include "undo/ColorUndoAction.h"
 #include "undo/DeleteUndoAction.h"
 #include "undo/FontUndoAction.h"
+#include "undo/FillUndoAction.h"
 #include "undo/InsertUndoAction.h"
 #include "undo/MoveUndoAction.h"
 #include "undo/UndoRedoHandler.h"
@@ -133,6 +134,66 @@ UndoAction* EditSelectionContents::setSize(ToolSize size,
 			double* newPressure = SizeUndoAction::getPressure(s);
 
 			undo->addStroke(s, originalWidth, s->getWidth(), originalPressure, newPressure, pointCount);
+			found = true;
+		}
+	}
+
+	if (found)
+	{
+		this->deleteViewBuffer();
+		this->sourceView->getXournal()->repaintSelection();
+
+		return undo;
+	}
+	else
+	{
+		delete undo;
+		return NULL;
+	}
+}
+
+/**
+ * Fills the stroke, return an undo action
+ * (Or NULL if nothing done, e.g. because there is only an image)
+ */
+UndoAction* EditSelectionContents::setFill(int alphaPen, int alphaHighligther)
+{
+	XOJ_CHECK_TYPE(EditSelectionContents);
+
+	FillUndoAction* undo = new FillUndoAction(this->sourcePage, this->sourceLayer);
+
+	bool found = false;
+
+	for (Element* e : this->selected)
+	{
+		if (e->getType() == ELEMENT_STROKE)
+		{
+			Stroke* s = (Stroke*) e;
+			StrokeTool tool = s->getToolType();
+			int newFill = 128;
+
+			if (tool == STROKE_TOOL_PEN)
+			{
+				newFill = alphaPen;
+			}
+			else if (tool == STROKE_TOOL_HIGHLIGHTER)
+			{
+				newFill = alphaHighligther;
+			}
+			else
+			{
+				continue;
+			}
+
+			if (newFill == s->getFill())
+			{
+				continue;
+			}
+
+			bool originalFill = s->getFill();
+			s->setFill(newFill);
+
+			undo->addStroke(s, originalFill, newFill);
 			found = true;
 		}
 	}

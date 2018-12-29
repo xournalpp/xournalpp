@@ -1815,14 +1815,7 @@ void Control::toolFillChanged()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	if (toolHandler->getFill())
-	{
-		fireActionSelected(GROUP_FILL, ACTION_TOOL_FILL);
-	}
-	else
-	{
-		fireActionSelected(GROUP_FILL, ACTION_NONE);
-	}
+	fireActionSelected(GROUP_FILL, toolHandler->getFill() != -1 ? ACTION_TOOL_FILL : ACTION_NONE);
 }
 
 /**
@@ -2914,6 +2907,18 @@ void Control::setFill(bool fill)
 {
 	XOJ_CHECK_TYPE(Control);
 
+	EditSelection* sel = NULL;
+	if (this->win)
+	{
+		sel = this->win->getXournal()->getSelection();
+	}
+
+	if (sel)
+	{
+		UndoAction* undo = sel->setFill(fill ? toolHandler->getPenFill() : -1, fill ? toolHandler->getHilighterFill() : -1);
+		undoRedo->addUndoAction(undo);
+	}
+
 	if (toolHandler->getToolType() == TOOL_PEN)
 	{
 		fireActionSelected(GROUP_PEN_FILL, fill ? ACTION_TOOL_PEN_FILL : ACTION_NONE);
@@ -2941,10 +2946,7 @@ void Control::setToolSize(ToolSize size)
 		UndoAction* undo = sel->setSize(size, toolHandler->getToolThickness(TOOL_PEN),
 										toolHandler->getToolThickness(TOOL_HILIGHTER),
 										toolHandler->getToolThickness(TOOL_ERASER));
-		if (undo)
-		{
-			undoRedo->addUndoAction(undo);
-		}
+		undoRedo->addUndoAction(undo);
 	}
 	this->toolHandler->setSize(size);
 }
@@ -2964,10 +2966,7 @@ void Control::fontChanged()
 	if (sel)
 	{
 		UndoAction* undo = sel->setFont(font);
-		if (undo)
-		{
-			undoRedo->addUndoAction(undo);
-		}
+		undoRedo->addUndoAction(undo);
 	}
 
 	TextEditor* editor = getTextEditor();

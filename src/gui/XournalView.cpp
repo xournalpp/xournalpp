@@ -775,7 +775,7 @@ void XournalView::clearSelection()
 	control->setClipboardHandlerSelection(getSelection());
 
 	getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
-	control->getToolHandler()->setSelectionEditTools(false, false);
+	control->getToolHandler()->setSelectionEditTools(false, false, false);
 }
 
 void XournalView::deleteSelection(EditSelection* sel)
@@ -812,6 +812,7 @@ void XournalView::setSelection(EditSelection* selection)
 
 	bool canChangeSize = false;
 	bool canChangeColor = false;
+	bool canChangeFill = false;
 
 	for (Element* e : *selection->getElements())
 	{
@@ -825,17 +826,18 @@ void XournalView::setSelection(EditSelection* selection)
 			if (s->getToolType() != STROKE_TOOL_ERASER)
 			{
 				canChangeColor = true;
+				canChangeFill = true;
 			}
 			canChangeSize = true;
 		}
 
-		if (canChangeColor && canChangeSize)
+		if (canChangeColor && canChangeSize && canChangeFill)
 		{
 			break;
 		}
 	}
 
-	control->getToolHandler()->setSelectionEditTools(canChangeColor, canChangeSize);
+	control->getToolHandler()->setSelectionEditTools(canChangeColor, canChangeSize, canChangeFill);
 
 	repaintSelection();
 }
@@ -865,7 +867,7 @@ void XournalView::setEventCompression(gboolean enable)
 	// Enable this when gdk is new enough for the compression feature.
 	if (gtk_widget_get_realized(getWidget()))
 	{
-		gdk_window_set_event_compression(gtk_widget_get_window(getWidget()), FALSE);
+		gdk_window_set_event_compression(gtk_widget_get_window(getWidget()), enable);
 	}
 }
 

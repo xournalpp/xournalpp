@@ -616,17 +616,20 @@ const double* ToolHandler::getToolThickness(ToolType type)
 /**
  * Change the selection tools capabilities, depending on the selected elements
  */
-void ToolHandler::setSelectionEditTools(bool setColor, bool setSize)
+void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFill)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
+	// For all selection tools, apply the features
 	for (int i = TOOL_SELECT_RECT - TOOL_PEN; i <= TOOL_SELECT_OBJECT - TOOL_PEN; i++)
 	{
 		Tool* t = tools[i];
 		t->setCapability(TOOL_CAP_COLOR, setColor);
 		t->setCapability(TOOL_CAP_SIZE, setSize);
+		t->setCapability(TOOL_CAP_FILL, setFill);
 		t->size = TOOL_SIZE_NONE;
 		t->color = -1;
+		t->fill = false;
 	}
 
 	if (this->current->type == TOOL_SELECT_RECT ||
@@ -636,6 +639,7 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize)
 	{
 		this->listener->toolColorChanged(false);
 		this->listener->toolSizeChanged();
+		this->listener->toolFillChanged();
 		this->fireToolChanged();
 	}
 }

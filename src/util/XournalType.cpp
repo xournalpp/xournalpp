@@ -10,7 +10,7 @@ using std::endl;
 
 #ifdef DEV_MEMORY_CHECKING
 
-#define XOURNAL_TYPE_LIST_LENGTH 256
+#define XOURNAL_TYPE_LIST_LENGTH 512
 
 #undef XOJ_DECLARE_TYPE
 #define XOJ_DECLARE_TYPE(name, id) \
