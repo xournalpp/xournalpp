@@ -33,6 +33,7 @@ void RepaintHandler::repaintPage(XojPageView* view)
 
 	// Repainting is really fast, and there are painting issues from time to time
 	// Therefore do always a full repaint. The stroken are cached anyway.
+	// Tested on a 1.8GHz Core2Duo
 	gtk_widget_queue_draw(this->xournal->getWidget());
 }
 
@@ -46,6 +47,7 @@ void RepaintHandler::repaintPageArea(XojPageView* view, int x1, int y1, int x2, 
 
 	// Repainting is really fast, and there are painting issues from time to time
 	// Therefore do always a full repaint. The stroken are cached anyway.
+	// Tested on a 1.8GHz Core2Duo
 	gtk_widget_queue_draw(this->xournal->getWidget());
 }
 
