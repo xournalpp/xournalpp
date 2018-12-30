@@ -26,7 +26,6 @@ private:
 
 public:
 	static XojPdfExport* createExport(Document* doc, ProgressListener* listener);
-	static void setCompressPdfOutput(bool compress);
 
 private:
 	XOJ_TYPE_ATTRIB;
