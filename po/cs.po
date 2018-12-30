@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-29 19:00+0100\n"
+"POT-Creation-Date: 2018-12-30 12:21+0100\n"
 "PO-Revision-Date: 2017-09-18 09:58+0200\n"
 "Last-Translator: Jan Hrdina <jan.hrdka@gmail.com>\n"
 "Language-Team: čeština <>\n"
@@ -458,7 +458,7 @@ msgstr "Zpět"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:25
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:272
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:326
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:324
 msgid "Background"
 msgstr "Pozadí"
 
@@ -523,7 +523,7 @@ msgstr "Neznámá barva „{1}“ (nedefinovaná ve výchozím seznamu barev)!"
 msgid "Configure Page Template"
 msgstr ""
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:277
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:279
 msgid "Contents"
 msgstr "Obsah"
 
@@ -1089,7 +1089,7 @@ msgstr "Vložit obrázek"
 msgid "Insert latex"
 msgstr "Vložit LaTeX"
 
-#: ../src/undo/InsertLayerUndoAction.cpp:39
+#: ../src/undo/InsertLayerUndoAction.cpp:40
 msgid "Insert layer"
 msgstr "Vložit vrstvu"
 
@@ -1101,21 +1101,21 @@ msgstr "Vložit stránku"
 msgid "Jump to Page (first Page: 1)"
 msgstr "Přejít na stránku (první stránka: 1)"
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:352
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:350
 msgid "Layer"
 msgstr "Vrstva"
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:47
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:79
 msgid "Layer Preview"
 msgstr "Náhled vrstvy"
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:335
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:333
 msgid "Layer selection"
 msgstr "Výběr vrstvy"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:29
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:262
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:322
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:320
 msgid "Layer {1}"
 msgstr "Vrstva {1}"
 
@@ -1146,7 +1146,7 @@ msgid "Load file"
 msgstr "Načíst soubor"
 
 #: ../src/gui/PageView.cpp:738
-#: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:106
+#: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:105
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:20
 msgid "Loading..."
 msgstr "Načítání..."
@@ -1180,6 +1180,11 @@ msgstr "Tlačítko myši"
 #: ../src/undo/MoveUndoAction.cpp:19
 msgid "Move"
 msgstr "Přesunout"
+
+#: ../src/undo/MoveLayerUndoAction.cpp:38
+#, fuzzy
+msgid "Move layer"
+msgstr "Smazat vrstvu"
 
 #: ../src/undo/SwapUndoAction.cpp:88
 msgid "Move page downwards"
@@ -1320,7 +1325,7 @@ msgstr "_Předchozí anotovaná stránka"
 msgid "Page"
 msgstr "Stránka"
 
-#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:26
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:28
 msgid "Page Preview"
 msgstr "Náhledy stránek"
 
@@ -2007,7 +2012,7 @@ msgstr ""
 "Používáte větev {1}/{2}. Send Bugreport will direct you to this repo's issue "
 "tracker."
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:94
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:96
 msgid ""
 "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n"
