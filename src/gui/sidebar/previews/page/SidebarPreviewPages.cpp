@@ -131,6 +131,8 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 	case SIDEBAR_ACTION_DELETE:
 		control->deletePage();
 		break;
+	default:
+		break;
 	}
 }
 
@@ -262,7 +264,6 @@ void SidebarPreviewPages::pageSelected(size_t page)
 		scrollToPreview(this);
 
 		int actions = 0;
-
 		if (page != 0 && this->previews.size() != 0)
 		{
 			actions |= SIDEBAR_ACTION_MOVE_UP;
