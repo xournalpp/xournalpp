@@ -80,6 +80,11 @@ public:
 	void drawBackground();
 
 	/**
+	 * Draw background if there is no background shown, like in GIMP etc.
+	 */
+	void drawTransparentBackgroundPattern();
+
+	/**
 	 * Draw a single layer
 	 * @param cr Draw to thgis context
 	 * @param l The layer to draw

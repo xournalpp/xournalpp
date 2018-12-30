@@ -271,9 +271,7 @@ void ToolPageLayer::updateMenu()
 
 	createLayerMenuItem(_("Background"), 0);
 
-	// TODO allow to hide background
-	// (The checkbox is working, but the document view and PDF Rendering needs some changes)
-	// createLayerMenuItemShow(0);
+	createLayerMenuItemShow(0);
 	menuY++;
 
 	gtk_widget_show_all(menu);
