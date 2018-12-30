@@ -101,28 +101,7 @@ void SidebarPreviewLayers::actionPerformed(SidebarActions action)
 	}
 	case SIDEBAR_ACTION_COPY:
 	{
-//		Document* doc = control->getDocument();
-//		PageRef currentPage = control->getCurrentPage();
-//		if (!currentPage.isValid())
-//		{
-//			return;
-//		}
-//
-//		doc->lock();
-//		size_t page = doc->indexOf(currentPage);
-//
-//		PageRef newPage = currentPage.clone();
-//		doc->insertPage(newPage, page + 1);
-//
-//		doc->unlock();
-//
-//		UndoRedoHandler* undo = control->getUndoRedoHandler();
-//		undo->addUndoAction(new CopyUndoAction(newPage, page + 1));
-//
-//		control->firePageInserted(page + 1);
-//		control->firePageSelected(page + 1);
-//
-//		control->getScrollHandler()->scrollToPage(page + 1);
+		control->getLayerController()->copyCurrentLayer();
 		break;
 	}
 	case SIDEBAR_ACTION_DELETE:
@@ -282,10 +261,10 @@ void SidebarPreviewLayers::updateSelectedLayer()
 //		actions |= SIDEBAR_ACTION_MODE_DOWN;
 //	}
 //
-//	if (this->previews.size() != 0)
-//	{
-//		actions |= SIDEBAR_ACTION_COPY;
-//	}
+	if (this->selectedEntry < (this->previews.size() - 1)) // Background cannot be copied
+	{
+		actions |= SIDEBAR_ACTION_COPY;
+	}
 
 	if (this->selectedEntry < (this->previews.size() - 1)) // Background cannot be deleted
 	{

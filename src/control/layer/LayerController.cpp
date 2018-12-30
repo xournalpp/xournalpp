@@ -201,9 +201,10 @@ void LayerController::addNewLayer()
 	}
 
 	Layer* l = new Layer();
-	p->insertLayer(l, p->getSelectedLayerId());
+	int layerPos = p->getSelectedLayerId();
+	p->insertLayer(l, layerPos);
 
-	control->getUndoRedoHandler()->addUndoAction(new InsertLayerUndoAction(this, p, l));
+	control->getUndoRedoHandler()->addUndoAction(new InsertLayerUndoAction(this, p, l, layerPos));
 
 	fireRebuildLayerMenu();
 	// Repaint is not needed here - the new layer is empty
@@ -238,6 +239,41 @@ void LayerController::deleteCurrentLayer()
 	}
 
 	control->getUndoRedoHandler()->addUndoAction(new RemoveLayerUndoAction(this, p, l, lId - 1));
+	control->resetShapeRecognizer();
+
+	fireRebuildLayerMenu();
+}
+
+void LayerController::copyCurrentLayer()
+{
+	XOJ_CHECK_TYPE(LayerController);
+
+	control->clearSelectionEndText();
+
+	PageRef p = getCurrentPage();
+	int pId = selectedPage;
+	if (!p.isValid())
+	{
+		return;
+	}
+
+	int lId = p->getSelectedLayerId();
+	if (lId < 1)
+	{
+		return;
+	}
+	Layer* l = p->getSelectedLayer();
+	Layer* cloned = l->clone();
+
+	p->insertLayer(cloned, lId);
+
+	MainWindow* win = control->getWindow();
+	if (win)
+	{
+		win->getXournal()->layerChanged(pId);
+	}
+
+	control->getUndoRedoHandler()->addUndoAction(new InsertLayerUndoAction(this, p, cloned, lId));
 	control->resetShapeRecognizer();
 
 	fireRebuildLayerMenu();

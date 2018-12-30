@@ -9,8 +9,9 @@
 
 #include <i18n.h>
 
-InsertLayerUndoAction::InsertLayerUndoAction(LayerController* layerController, PageRef page, Layer* layer)
+InsertLayerUndoAction::InsertLayerUndoAction(LayerController* layerController, PageRef page, Layer* layer, int layerPosition)
  : UndoAction("InsertLayerUndoAction"),
+   layerPosition(layerPosition),
    layerController(layerController)
 {
 	XOJ_INIT_TYPE(InsertLayerUndoAction);
@@ -58,7 +59,7 @@ bool InsertLayerUndoAction::redo(Control* control)
 {
 	XOJ_CHECK_TYPE(InsertLayerUndoAction);
 
-	layerController->addLayer(this->page, this->layer);
+	layerController->insertLayer(this->page, this->layer, layerPosition);
 	Document* doc = control->getDocument();
 	int id = doc->indexOf(this->page);
 	control->getWindow()->getXournal()->layerChanged(id);

@@ -65,6 +65,7 @@ public:
 
 	void addNewLayer();
 	void deleteCurrentLayer();
+	void copyCurrentLayer();
 	void switchToLay(int layer, bool hideShow = false);
 	void setLayerVisible(int layerId, bool visible);
 

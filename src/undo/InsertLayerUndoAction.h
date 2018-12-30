@@ -20,7 +20,7 @@ class LayerController;
 class InsertLayerUndoAction : public UndoAction
 {
 public:
-	InsertLayerUndoAction(LayerController* layerController, PageRef page, Layer* layer);
+	InsertLayerUndoAction(LayerController* layerController, PageRef page, Layer* layer, int layerPosition);
 	virtual ~InsertLayerUndoAction();
 
 public:
@@ -32,6 +32,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
+	int layerPosition;
 	LayerController* layerController;
 	Layer* layer;
 };
