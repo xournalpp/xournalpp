@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-29 19:00+0100\n"
+"POT-Creation-Date: 2018-12-30 12:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,7 +109,7 @@ msgstr ""
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:25
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:272
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:326
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:324
 msgid "Background"
 msgstr ""
 
@@ -148,7 +148,7 @@ msgstr ""
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
 msgstr ""
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:277
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:279
 msgid "Contents"
 msgstr ""
 
@@ -520,7 +520,7 @@ msgstr ""
 msgid "Insert latex"
 msgstr ""
 
-#: ../src/undo/InsertLayerUndoAction.cpp:39
+#: ../src/undo/InsertLayerUndoAction.cpp:40
 msgid "Insert layer"
 msgstr ""
 
@@ -532,21 +532,21 @@ msgstr ""
 msgid "Jump to Page (first Page: 1)"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:352
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:350
 msgid "Layer"
 msgstr ""
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:47
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:79
 msgid "Layer Preview"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:335
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:333
 msgid "Layer selection"
 msgstr ""
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:29
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:262
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:322
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:320
 msgid "Layer {1}"
 msgstr ""
 
@@ -565,7 +565,7 @@ msgid "Lined"
 msgstr ""
 
 #: ../src/gui/PageView.cpp:738
-#: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:106
+#: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:105
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:20
 msgid "Loading..."
 msgstr ""
@@ -590,6 +590,10 @@ msgstr ""
 
 #: ../src/undo/MoveUndoAction.cpp:19
 msgid "Move"
+msgstr ""
+
+#: ../src/undo/MoveLayerUndoAction.cpp:38
+msgid "Move layer"
 msgstr ""
 
 #: ../src/undo/SwapUndoAction.cpp:88
@@ -704,7 +708,7 @@ msgstr ""
 msgid "Page"
 msgstr ""
 
-#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:26
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:28
 msgid "Page Preview"
 msgstr ""
 
@@ -1163,7 +1167,7 @@ msgid ""
 "issue tracker."
 msgstr ""
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:94
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:96
 msgid ""
 "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n"
