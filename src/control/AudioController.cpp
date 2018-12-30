@@ -53,7 +53,7 @@ void AudioController::recStartStop(bool rec)
 
 		audioFilename = data;
 
-		g_message("Start recording\n");
+		g_message("Start recording");
 		command = "xopp-recording.sh start " + getAudioFolder().str() + "/" + data;
 	}
 	else if (this->recording)
