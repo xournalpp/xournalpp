@@ -356,10 +356,8 @@ void Control::initWindow(MainWindow* win)
 
 	win->setFontButtonFont(settings->getFont());
 
-	// rotation snapping enabled by default
-	fireActionSelected(GROUP_SNAPPING, ACTION_ROTATION_SNAPPING);
-	// grid snapping enabled by default
-	fireActionSelected(GROUP_GRID_SNAPPING, ACTION_GRID_SNAPPING);
+	fireActionSelected(GROUP_SNAPPING, settings->isSnapRotation() ? ACTION_ROTATION_SNAPPING : ACTION_NONE);
+	fireActionSelected(GROUP_GRID_SNAPPING, settings->isSnapGrid() ? ACTION_GRID_SNAPPING : ACTION_NONE);
 }
 
 bool Control::autosaveCallback(Control* control)
@@ -3065,48 +3063,21 @@ GtkWindow* Control::getGtkWindow()
 bool Control::isFullscreen()
 {
 	XOJ_CHECK_TYPE(Control);
-
 	return this->fullscreen;
-}
-
-bool Control::isRotationSnapping()
-{
-	XOJ_CHECK_TYPE(Control);
-	return this->snapRotation;
-}
-
-bool Control::isGridSnapping()
-{
-	XOJ_CHECK_TYPE(Control);
-	return this->snapGrid;
 }
 
 void Control::rotationSnappingToggle()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	if (!this->snapRotation)
-	{
-		this->snapRotation = true;
-	}
-	else
-	{
-		this->snapRotation = false;
-	}
+	settings->setSnapRotation(!settings->isSnapRotation());
 }
 
 void Control::gridSnappingToggle()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	if (!this->snapGrid)
-	{
-		this->snapGrid = true;
-	}
-	else
-	{
-		this->snapGrid = false;
-	}
+	settings->setSnapGrid(!settings->isSnapGrid());
 }
 
 TextEditor* Control::getTextEditor()

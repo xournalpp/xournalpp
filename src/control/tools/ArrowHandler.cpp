@@ -51,7 +51,7 @@ void ArrowHandler::drawShape(Point& c, bool shiftDown)
 		// an appropriate delta is Pi/3 radians for an arrow shape
 		double delta = M_PI / 6.0;
 		
-		if (shiftDown || !xournal->getControl()->isRotationSnapping())
+		if (shiftDown || !xournal->getControl()->getSettings()->isSnapRotation())
 		{		
 			stroke->addPoint(c);
 			stroke->addPoint(Point(c.x - arrowDist * cos(angle + delta), c.y - arrowDist * sin(angle + delta)));

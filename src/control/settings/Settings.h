@@ -223,6 +223,12 @@ public:
 	bool getAddHorizontalSpace();
 	void setAddHorizontalSpace(bool space);
 
+	bool isSnapRotation();
+	void setSnapRotation(bool b);
+
+	bool isSnapGrid();
+	void setSnapGrid(bool b);
+
 	bool isShowBigCursor();
 	void setShowBigCursor(bool b);
 
@@ -452,6 +458,16 @@ private:
 	 * Allow scroll outside the page (vertical)
 	 */
 	bool addVerticalSpace;
+
+	/**
+	 * Rotation snapping enabled by default
+	 */
+	bool snapRotation;
+
+	/**
+	 * grid snapping enabled by default
+	 */
+	bool snapGrid;
 
 	/**
 	 * Default name if you save a new document

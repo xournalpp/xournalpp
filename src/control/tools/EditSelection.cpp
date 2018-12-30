@@ -661,7 +661,7 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 
 void EditSelection::snapRotation()
 {
-	bool snapping = this->view->getXournal()->getControl()->isRotationSnapping();
+	bool snapping = this->view->getXournal()->getControl()->getSettings()->isSnapRotation();
 	if (!snapping)
 	{
 		return;
