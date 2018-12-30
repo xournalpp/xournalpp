@@ -231,17 +231,14 @@ int XournalMain::run(int argc, char* argv[])
 	GError* error = NULL;
 	GOptionContext* context = g_option_context_new("FILE");
 
-	bool optNoPdfCompress = false;
 	gchar** optFilename = NULL;
 	gchar* pdfFilename = NULL;
 	int openAtPageNumber = -1;
 
-	string pdf_no_compress = _("Don't compress PDF files (for debugging)");
 	string create_pdf = _("PDF output filename");
 	string page_jump = _("Jump to Page (first Page: 1)");
 	string audio_folder = _("Absolute path for the audio files playback");
 	GOptionEntry options[] = {
-		{ "pdf-no-compress",   0, 0, G_OPTION_ARG_NONE,           &optNoPdfCompress, pdf_no_compress.c_str(), NULL },
 		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      create_pdf.c_str(), NULL },
 		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, page_jump.c_str(), "N" },
 		{G_OPTION_REMAINING,   0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>", NULL },
@@ -261,11 +258,6 @@ int XournalMain::run(int argc, char* argv[])
 		error = NULL;
 	}
 	g_option_context_free(context);
-
-	if (optNoPdfCompress)
-	{
-		XojPdfExportFactory::setCompressPdfOutput(false);
-	}
 
 	if (pdfFilename && optFilename && *optFilename)
 	{

@@ -19,7 +19,3 @@ XojPdfExport* XojPdfExportFactory::createExport(Document* doc, ProgressListener*
 	return new XojCairoPdfExport(doc, listener);
 }
 
-void XojPdfExportFactory::setCompressPdfOutput(bool compress)
-{
-	// Currently not supported for Cairo export
-}
