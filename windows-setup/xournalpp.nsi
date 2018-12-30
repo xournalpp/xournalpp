@@ -102,10 +102,13 @@ Section "Assign .xopp files" SecFileXopp
 	${registerExtension} "$INSTDIR\bin\xournalpp.exe" ".xopp" "Xournal++ file"
 SectionEnd
 
+Section "Assign .xoj files" SecFileXopt
+	${registerExtension} "$INSTDIR\bin\xournalpp.exe" ".xopt" "Xournal++ Template Files"
+SectionEnd
+
 Section "Assign .xoj files" SecFileXoj
 	${registerExtension} "$INSTDIR\bin\xournalpp.exe" ".xoj" "Xournal file"
 SectionEnd
-
 
 ;--------------------------------
 ;Descriptions
@@ -113,12 +116,14 @@ SectionEnd
 	;Language strings
 	LangString DESC_SecXournalpp ${LANG_ENGLISH} "Xournal++ executable"
 	LangString DESC_SecFileXopp ${LANG_ENGLISH} "Open .xopp files with Xournal++"
+	LangString DESC_SecFileXopt ${LANG_ENGLISH} "Open .xopt files with Xournal++"
 	LangString DESC_SecFileXoj ${LANG_ENGLISH} "Open .xoj files with Xournal++"
 
 	;Assign language strings to sections
 	!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
 		!insertmacro MUI_DESCRIPTION_TEXT ${SecXournalpp} $(DESC_SecXournalpp)
 		!insertmacro MUI_DESCRIPTION_TEXT ${SecFileXopp} $(DESC_SecFileXopp)
+		!insertmacro MUI_DESCRIPTION_TEXT ${SecFileXopt} $(DESC_SecFileXopt)
 		!insertmacro MUI_DESCRIPTION_TEXT ${SecFileXoj} $(DESC_SecFileXoj)
 	!insertmacro MUI_FUNCTION_DESCRIPTION_END
  

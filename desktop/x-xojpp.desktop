@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=MimeType
+MimeType=application/x-xojpp
+Icon=xopp
+Patterns=*.xoj;*.XOJ;*.Xoj;
+
+Comment=Xournal note file
+Comment[de]=Xournal Dokument
+Name[de_DE]=x-xojpp.desktop

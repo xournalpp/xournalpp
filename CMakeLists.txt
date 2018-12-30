@@ -205,7 +205,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
 	install(FILES ui/pixmaps/application-x-xopt.svg
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
-	install(FILES ui/pixmaps/application-x-xoj.svg
+	install(FILES ui/pixmaps/application-x-xojpp.svg
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
 
 	install(FILES ui/pixmaps/gnome-mime-application-x-xopp.svg
@@ -213,11 +213,11 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	install(FILES ui/pixmaps/gnome-mime-application-x-xopt.svg
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
 
-	install(FILES desktop/xournal.xml
+	install(FILES desktop/xournalpp.xml
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mime/packages)
 	install(FILES desktop/xournalpp.desktop
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
-	install(FILES desktop/x-xoj.desktop
+	install(FILES desktop/x-xojpp.desktop
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
 	install(FILES desktop/x-xopp.desktop
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
