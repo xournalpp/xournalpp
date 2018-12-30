@@ -14,14 +14,16 @@
 enum CursorSelectionType
 {
     CURSOR_SELECTION_NONE = 0,
-    //Inside the selection
+    // Inside the selection
     CURSOR_SELECTION_MOVE = 1,
-    // Edges
+
+	// Edges
     CURSOR_SELECTION_TOP_LEFT,
     CURSOR_SELECTION_TOP_RIGHT,
     CURSOR_SELECTION_BOTTOM_LEFT,
     CURSOR_SELECTION_BOTTOM_RIGHT,
-    // Sides
+
+	// Sides
     CURSOR_SELECTION_LEFT,
     CURSOR_SELECTION_RIGHT,
     CURSOR_SELECTION_TOP,
