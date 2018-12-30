@@ -261,6 +261,7 @@ XOJ_DECLARE_TYPE(TouchDisableX11, 250);
 XOJ_DECLARE_TYPE(Path, 251);
 XOJ_DECLARE_TYPE(FillUndoAction, 252);
 XOJ_DECLARE_TYPE(FillUndoActionEntry, 253);
+XOJ_DECLARE_TYPE(MoveLayerUndoAction, 254);
 
 
 

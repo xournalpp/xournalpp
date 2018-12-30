@@ -15,10 +15,7 @@
 #include "model/DocumentListener.h"
 #include "gui/sidebar/previews/base/SidebarToolbar.h"
 
-#include <XournalType.h>
-
 #include <gtk/gtk.h>
-
 #include <list>
 
 class AbstractSidebarPage;
@@ -26,7 +23,7 @@ class Control;
 class GladeGui;
 class SidebarPageButton;
 
-class Sidebar : public DocumentListener
+class Sidebar : public DocumentListener, public SidebarToolbarActionListener
 {
 public:
 	Sidebar(GladeGui* gui, Control* control);
@@ -36,8 +33,14 @@ private:
 	void initPages(GtkWidget* sidebar, GladeGui* gui);
 	void addPage(AbstractSidebarPage* page);
 
+	// SidebarToolbarActionListener
 public:
+	/**
+	 * Called when an action is performed
+	 */
+	virtual void actionPerformed(SidebarActions action);
 
+public:
 	/**
 	 * A page was selected, so also select this page in the sidebar
 	 */
@@ -101,7 +104,12 @@ private:
 	/**
 	 * The current visible page in the sidebar
 	 */
-	GtkWidget* visiblePage;
+	GtkWidget* visiblePage = NULL;
+
+	/**
+	 * Current active page
+	 */
+	AbstractSidebarPage* currentPage = NULL;
 
 	/**
 	 * The sidebar widget

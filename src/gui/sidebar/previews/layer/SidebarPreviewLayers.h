@@ -27,7 +27,12 @@ public:
 	virtual void layerVisibilityChanged();
 
 public:
-	virtual void enableSidebar();
+	/**
+	 * Called when an action is performed
+	 */
+	void actionPerformed(SidebarActions action);
+
+	void enableSidebar();
 
 	/**
 	 * @overwrite

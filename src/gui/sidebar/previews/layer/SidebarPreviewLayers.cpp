@@ -15,7 +15,7 @@ SidebarPreviewLayers::SidebarPreviewLayers(Control* control, GladeGui* gui, Side
 
 	LayerCtrlListener::registerListener(lc);
 
-	this->toolbar->setButtonEnabled(false, false, false, false, PageRef());
+	this->toolbar->setButtonEnabled(SIDEBAR_ACTION_NONE);
 }
 
 SidebarPreviewLayers::~SidebarPreviewLayers()
@@ -30,6 +30,36 @@ SidebarPreviewLayers::~SidebarPreviewLayers()
 	this->previews.clear();
 
 	XOJ_RELEASE_TYPE(SidebarPreviewLayers);
+}
+
+/**
+ * Called when an action is performed
+ */
+void SidebarPreviewLayers::actionPerformed(SidebarActions action)
+{
+	XOJ_CHECK_TYPE(SidebarPreviewLayers);
+
+	switch (action)
+	{
+	case SIDEBAR_ACTION_MOVE_UP:
+	{
+		control->getLayerController()->moveCurrentLayer(true);
+		break;
+	}
+	case SIDEBAR_ACTION_MODE_DOWN:
+	{
+		control->getLayerController()->moveCurrentLayer(false);
+		break;
+	}
+	case SIDEBAR_ACTION_COPY:
+	{
+		control->getLayerController()->copyCurrentLayer();
+		break;
+	}
+	case SIDEBAR_ACTION_DELETE:
+		control->getLayerController()->deleteCurrentLayer();
+		break;
+	}
 }
 
 void SidebarPreviewLayers::enableSidebar()
@@ -171,6 +201,34 @@ void SidebarPreviewLayers::updateSelectedLayer()
 		p->setSelected(true);
 		scrollToPreview(this);
 	}
+
+	int actions = 0;
+	// Background and top layer cannot be moved up
+	if (this->selectedEntry < (this->previews.size() - 1) && this->selectedEntry > 0)
+	{
+		actions |= SIDEBAR_ACTION_MOVE_UP;
+	}
+
+	// Background and first layer cannot be moved down
+	if (this->selectedEntry < (this->previews.size() - 2))
+	{
+		actions |= SIDEBAR_ACTION_MODE_DOWN;
+	}
+
+	// Background cannot be copied
+	if (this->selectedEntry < (this->previews.size() - 1))
+	{
+		actions |= SIDEBAR_ACTION_COPY;
+	}
+
+	// Background cannot be deleted
+	if (this->selectedEntry < (this->previews.size() - 1))
+	{
+		actions |= SIDEBAR_ACTION_DELETE;
+	}
+
+	this->toolbar->setHidden(false);
+	this->toolbar->setButtonEnabled((SidebarActions)actions);
 }
 
 void SidebarPreviewLayers::layerSelected(size_t layerIndex)

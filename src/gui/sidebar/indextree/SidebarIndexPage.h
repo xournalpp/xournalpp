@@ -21,7 +21,7 @@ class Control;
 class SidebarIndexPage : public AbstractSidebarPage
 {
 public:
-	SidebarIndexPage(Control* control);
+	SidebarIndexPage(Control* control, SidebarToolbar* toolbar);
 	virtual ~SidebarIndexPage();
 
 public:

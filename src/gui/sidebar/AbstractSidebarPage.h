@@ -13,17 +13,19 @@
 
 #include "model/DocumentChangeType.h"
 #include "model/DocumentListener.h"
+#include "gui/sidebar/previews/base/SidebarToolbar.h"
 
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
 
 class Control;
+class SidebarToolbar;
 
-class AbstractSidebarPage : public DocumentListener
+class AbstractSidebarPage : public DocumentListener, public SidebarToolbarActionListener
 {
 public:
-	AbstractSidebarPage(Control* control);
+	AbstractSidebarPage(Control* control, SidebarToolbar* toolbar);
 	virtual ~AbstractSidebarPage();
 
 public:
@@ -74,10 +76,15 @@ protected:
 	 */
 	Control* control;
 
+	/**
+	 * The Toolbar to move, copy & delete pages
+	 */
+	SidebarToolbar* toolbar;
+
 public:
 	/**
 	 * The Sidebar button
 	 */
-	GtkToolItem* tabButton;
+	GtkToolItem* tabButton = NULL;
 
 };

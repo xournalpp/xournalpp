@@ -107,11 +107,6 @@ private:
 protected:
 
 	/**
-	 * The Toolbar to move, copy & delete pages
-	 */
-	SidebarToolbar* toolbar;
-
-	/**
 	 * The currently selected entry in the sidebar, starting from 0
 	 * -1 means no valid selection
 	 */

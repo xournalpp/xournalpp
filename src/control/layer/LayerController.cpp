@@ -4,6 +4,7 @@
 #include "gui/XournalView.h"
 #include "undo/RemoveLayerUndoAction.h"
 #include "undo/InsertLayerUndoAction.h"
+#include "undo/MoveLayerUndoAction.h"
 
 #include <Util.h>
 
@@ -201,9 +202,10 @@ void LayerController::addNewLayer()
 	}
 
 	Layer* l = new Layer();
-	p->insertLayer(l, p->getSelectedLayerId());
+	int layerPos = p->getSelectedLayerId();
+	p->insertLayer(l, layerPos);
 
-	control->getUndoRedoHandler()->addUndoAction(new InsertLayerUndoAction(this, p, l));
+	control->getUndoRedoHandler()->addUndoAction(new InsertLayerUndoAction(this, p, l, layerPos));
 
 	fireRebuildLayerMenu();
 	// Repaint is not needed here - the new layer is empty
@@ -238,6 +240,93 @@ void LayerController::deleteCurrentLayer()
 	}
 
 	control->getUndoRedoHandler()->addUndoAction(new RemoveLayerUndoAction(this, p, l, lId - 1));
+	control->resetShapeRecognizer();
+
+	fireRebuildLayerMenu();
+}
+
+void LayerController::moveCurrentLayer(bool up)
+{
+	XOJ_CHECK_TYPE(LayerController);
+
+	control->clearSelectionEndText();
+
+	PageRef p = getCurrentPage();
+	int pId = selectedPage;
+	if (!p.isValid())
+	{
+		return;
+	}
+
+	int lId = p->getSelectedLayerId();
+	Layer* currentLayer = p->getSelectedLayer();
+	if (lId < 1)
+	{
+		// Background cannot be moved
+		return;
+	}
+
+	if (lId < 2 && !up)
+	{
+		// bottom layer cannot be moved down
+		return;
+	}
+
+	if (lId == p->getLayerCount() && up)
+	{
+		// top layer cannot be moved up
+		return;
+	}
+
+	p->removeLayer(currentLayer);
+
+	// Layer IDs are a bit strange, because background is 0
+	// so the first layer is 1, technical the first layer is still
+	// index 0 in the vector... confusing...
+	int newIndex = up ? lId : lId - 2;
+	p->insertLayer(currentLayer, newIndex);
+
+	MainWindow* win = control->getWindow();
+	if (win)
+	{
+		win->getXournal()->layerChanged(pId);
+	}
+
+	control->getUndoRedoHandler()->addUndoAction(new MoveLayerUndoAction(this, p, currentLayer, lId - 1, newIndex));
+
+	fireRebuildLayerMenu();
+}
+
+void LayerController::copyCurrentLayer()
+{
+	XOJ_CHECK_TYPE(LayerController);
+
+	control->clearSelectionEndText();
+
+	PageRef p = getCurrentPage();
+	int pId = selectedPage;
+	if (!p.isValid())
+	{
+		return;
+	}
+
+	int lId = p->getSelectedLayerId();
+	if (lId < 1)
+	{
+		return;
+	}
+	Layer* l = p->getSelectedLayer();
+	Layer* cloned = l->clone();
+
+	p->insertLayer(cloned, lId);
+
+	MainWindow* win = control->getWindow();
+	if (win)
+	{
+		win->getXournal()->layerChanged(pId);
+	}
+
+	control->getUndoRedoHandler()->addUndoAction(new InsertLayerUndoAction(this, p, cloned, lId));
 	control->resetShapeRecognizer();
 
 	fireRebuildLayerMenu();

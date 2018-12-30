@@ -12,25 +12,42 @@
 #pragma once
 
 #include "gui/GladeGui.h"
-#include "model/PageRef.h"
 
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
 
-class Control;
+enum SidebarActions
+{
+	SIDEBAR_ACTION_NONE      = 0,
+	SIDEBAR_ACTION_MOVE_UP   = 1 << 0,
+	SIDEBAR_ACTION_MODE_DOWN = 1 << 1,
+	SIDEBAR_ACTION_COPY      = 1 << 2,
+	SIDEBAR_ACTION_DELETE    = 1 << 3
+};
+
+class SidebarToolbarActionListener
+{
+public:
+	virtual ~SidebarToolbarActionListener();
+
+	/**
+	 * Called when an action is performed
+	 */
+	virtual void actionPerformed(SidebarActions action);
+};
 
 class SidebarToolbar
 {
 public:
-	SidebarToolbar(Control* control, GladeGui* gui);
+	SidebarToolbar(SidebarToolbarActionListener* listener, GladeGui* gui);
 	virtual ~SidebarToolbar();
 
 public:
 	/**
 	 * Sets the button enabled / disabled
 	 */
-	void setButtonEnabled(bool enableUp, bool enableDown, bool enableCopy, bool enableDelete, PageRef currentPage);
+	void setButtonEnabled(SidebarActions enabledActions);
 
 	void setHidden(bool hidden);
 
@@ -46,14 +63,9 @@ private:
 private:
 
 	/**
-	 * The Application Controller
+	 * Listener for actions
 	 */
-	Control* control;
-
-	/**
-	 * The current selected page
-	 */
-	PageRef currentPage;
+	SidebarToolbarActionListener* listener;
 
 	/**
 	 * Button move Page up

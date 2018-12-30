@@ -17,11 +17,11 @@
 class Layer;
 class LayerController;
 
-class InsertLayerUndoAction : public UndoAction
+class MoveLayerUndoAction : public UndoAction
 {
 public:
-	InsertLayerUndoAction(LayerController* layerController, PageRef page, Layer* layer, int layerPosition);
-	virtual ~InsertLayerUndoAction();
+	MoveLayerUndoAction(LayerController* layerController, PageRef page, Layer* layer, int oldLayerPos, int newLayerPos);
+	virtual ~MoveLayerUndoAction();
 
 public:
 	virtual bool undo(Control* control);
@@ -32,7 +32,8 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int layerPosition;
+	int oldLayerPos;
+	int newLayerPos;
 	LayerController* layerController;
 	Layer* layer;
 };
