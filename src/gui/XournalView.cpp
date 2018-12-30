@@ -556,7 +556,7 @@ bool XournalView::shouldIgnoreTouchEvents()
 	XOJ_CHECK_TYPE(XournalView);
 	if ((g_get_monotonic_time() / 1000 - this->lastPenAction) < 500)
 	{
-		// printf("Ignore touch, pen was active\n");
+		// g_message("Ignore touch, pen was active\n");
 		return true;
 	}
 	return false;

@@ -17,15 +17,11 @@
 #include "undo/SizeUndoAction.h"
 #include "undo/UndoRedoHandler.h"
 #include "util/GtkColorWrapper.h"
-#include "view/DocumentView.h"
 
 #include <serializing/ObjectOutputStream.h>
 #include <serializing/ObjectInputStream.h>
 
-#include <iostream>
 #include <math.h>
-using std::cout;
-using std::endl;
 
 EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page, XojPageView* view)
 {
@@ -525,17 +521,17 @@ void EditSelection::translateToView(XojPageView* v)
 
 	this->view = v;
 
-	int aX2 = getXOnViewAbsolute();
-	int aY2 = getYOnViewAbsolute();
-
-	if (aX1 != aX2)
-	{
-		cout << "aX1 != aX2!! " << aX1 << " / " << aX2 << endl;
-	}
-	if (aY1 != aY2)
-	{
-		cout << "aY1 != aY2!! " << aY1 << " / " << aY2 << endl;
-	}
+//	int aX2 = getXOnViewAbsolute();
+//	int aY2 = getYOnViewAbsolute();
+//
+//	if (aX1 != aX2)
+//	{
+//		g_message("aX1 != aX2!! %i / %i", aX1, aX2);
+//	}
+//	if (aY1 != aY2)
+//	{
+//		g_message("aY1 != aY2!! %i / %i", aY1, aY2);
+//	}
 }
 
 void EditSelection::copySelection()

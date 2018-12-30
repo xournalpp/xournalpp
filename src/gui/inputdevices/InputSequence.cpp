@@ -557,7 +557,7 @@ bool InputSequence::changeTool()
 			ToolType tool = h->getToolType();
 			if (tool == TOOL_PEN || tool == TOOL_ERASER || tool == TOOL_HILIGHTER)
 			{
-				printf("ignore touchscreen for drawing!\n");
+				g_message("ignore touchscreen for drawing!\n");
 				return true;
 			}
 		}

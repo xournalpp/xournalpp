@@ -3,6 +3,7 @@
 #include <XournalType.h>
 #include "settings/Settings.h"
 #include "Control.h"
+#include <Path.h>
 
 class AudioController
 {
@@ -15,7 +16,7 @@ public:
 	void recToggle();
 	void recStartStop(bool record);
 	string getAudioFilename();
-	string getAudioFolder();
+	Path getAudioFolder();
 	gint getStartTime();
 
 protected:
