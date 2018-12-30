@@ -22,7 +22,7 @@ void RulerHandler::snapToGrid(double& x, double& y)
 {
 	XOJ_CHECK_TYPE(RulerHandler);
 
-	if(!xournal->getControl()->isGridSnapping())
+	if (!xournal->getControl()->getSettings()->isSnapGrid())
 	{
 		return;
 	}
@@ -139,7 +139,7 @@ void RulerHandler::drawShape(Point& currentPoint, bool shiftDown)
 	/**
 	 * Snap first point to grid (if enabled)
 	 */
-	if (!shiftDown && xournal->getControl()->isGridSnapping())
+	if (!shiftDown && xournal->getControl()->getSettings()->isSnapGrid())
 	{
 		Point firstPoint = stroke->getPoint(0);
 		snapToGrid(firstPoint.x,firstPoint.y);
@@ -157,12 +157,12 @@ void RulerHandler::drawShape(Point& currentPoint, bool shiftDown)
 	}
 	else
 	{
-		if (xournal->getControl()->isRotationSnapping())
+		if (xournal->getControl()->getSettings()->isSnapRotation())
 		{
 			snapRotation(x,y);
 		}
 
-		if (xournal->getControl()->isGridSnapping())
+		if (xournal->getControl()->getSettings()->isSnapGrid())
 		{
 			snapToGrid(x,y);
 		}

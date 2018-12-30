@@ -47,7 +47,7 @@ void CoordinateSystemHandler::drawShape(Point& currentPoint, bool shiftDown)
 		}
 
 		// Draw the other two points
-		if (shiftDown || !xournal->getControl()->isRotationSnapping())
+		if (shiftDown || !xournal->getControl()->getSettings()->isSnapRotation())
 		{
 			stroke->addPoint(Point(startingPoint.x, currentPoint.y));
 			stroke->addPoint(Point(currentPoint.x, currentPoint.y));

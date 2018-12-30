@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-29 19:00+0100\n"
+"POT-Creation-Date: 2018-12-30 12:21+0100\n"
 "PO-Revision-Date: 2015-10-01 00:00+0200\n"
 "Last-Translator: Marek Pikuła <marek@pikula.co>\n"
 "Language-Team: Xournal++ team\n"
@@ -456,7 +456,7 @@ msgstr "Wstecz"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:25
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:272
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:326
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:324
 msgid "Background"
 msgstr "Tło"
 
@@ -521,7 +521,7 @@ msgstr "Nie rozpoznano koloru \"{1}\" (nie zdefiniowany w domyślnych)!"
 msgid "Configure Page Template"
 msgstr ""
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:277
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:279
 msgid "Contents"
 msgstr "Zawartość"
 
@@ -1089,7 +1089,7 @@ msgstr "Wstaw obraz"
 msgid "Insert latex"
 msgstr "Wstaw LaTeX"
 
-#: ../src/undo/InsertLayerUndoAction.cpp:39
+#: ../src/undo/InsertLayerUndoAction.cpp:40
 msgid "Insert layer"
 msgstr "Wstaw warstwę"
 
@@ -1101,21 +1101,21 @@ msgstr "Wstaw stronę"
 msgid "Jump to Page (first Page: 1)"
 msgstr "Skocz do strony (pierwsza strona: 1)"
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:352
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:350
 msgid "Layer"
 msgstr "Warstwa"
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:47
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:79
 msgid "Layer Preview"
 msgstr "Podgląd warstwy"
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:335
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:333
 msgid "Layer selection"
 msgstr "Wybór warstw"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:29
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:262
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:322
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:320
 msgid "Layer {1}"
 msgstr "Warstwa {1}"
 
@@ -1146,7 +1146,7 @@ msgid "Load file"
 msgstr "Wczytaj plik"
 
 #: ../src/gui/PageView.cpp:738
-#: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:106
+#: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:105
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:20
 msgid "Loading..."
 msgstr "Ładowanie..."
@@ -1180,6 +1180,11 @@ msgstr "Przycisk myszy"
 #: ../src/undo/MoveUndoAction.cpp:19
 msgid "Move"
 msgstr "Przesuń"
+
+#: ../src/undo/MoveLayerUndoAction.cpp:38
+#, fuzzy
+msgid "Move layer"
+msgstr "Usuń warstwę"
 
 #: ../src/undo/SwapUndoAction.cpp:88
 msgid "Move page downwards"
@@ -1320,7 +1325,7 @@ msgstr "P_oprzednia adnotowana strona"
 msgid "Page"
 msgstr "Strona"
 
-#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:26
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:28
 msgid "Page Preview"
 msgstr "Podgląd strony"
 
@@ -2009,7 +2014,7 @@ msgstr ""
 "Używasz gałęzi {1}/{2}. Raport błędu zostanie wysłany do repozytorium "
 "źródłowego."
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:94
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:96
 msgid ""
 "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n"

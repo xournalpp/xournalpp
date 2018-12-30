@@ -76,6 +76,9 @@ void Settings::loadDefault()
 	this->addHorizontalSpace = false;
 	this->addVerticalSpace = false;
 
+	this->snapRotation = true;
+	this->snapGrid = true;
+
 	this->defaultSaveName = _("%F-Note-%H-%M");
 
 	// Eraser
@@ -373,6 +376,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "addVerticalSpace") == 0)
 	{
 		this->addVerticalSpace = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "snapRotation") == 0)
+	{
+		this->snapRotation = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "snapGrid") == 0)
+	{
+		this->snapGrid = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "addHorizontalSpace") == 0)
 	{
@@ -712,6 +723,9 @@ void Settings::save()
 	WRITE_BOOL_PROP(addHorizontalSpace);
 	WRITE_BOOL_PROP(addVerticalSpace);
 
+	WRITE_BOOL_PROP(snapRotation);
+	WRITE_BOOL_PROP(snapGrid);
+
 	WRITE_INT_PROP(selectionBorderColor);
 	WRITE_INT_PROP(backgroundColor);
 	WRITE_INT_PROP(selectionMarkerColor);
@@ -969,6 +983,46 @@ void Settings::setShowBigCursor(bool b)
 	}
 
 	this->showBigCursor = b;
+	save();
+}
+
+bool Settings::isSnapRotation()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->snapRotation;
+}
+
+void Settings::setSnapRotation(bool b)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->snapRotation == b)
+	{
+		return;
+	}
+
+	this->snapRotation = b;
+	save();
+}
+
+bool Settings::isSnapGrid()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->snapGrid;
+}
+
+void Settings::setSnapGrid(bool b)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->snapGrid == b)
+	{
+		return;
+	}
+
+	this->snapGrid = b;
 	save();
 }
 

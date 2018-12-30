@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-29 19:00+0100\n"
+"POT-Creation-Date: 2018-12-30 12:21+0100\n"
 "PO-Revision-Date: 2018-12-25 17:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -469,7 +469,7 @@ msgstr "Indietro"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:25
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:272
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:326
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:324
 msgid "Background"
 msgstr "Sfondo"
 
@@ -537,7 +537,7 @@ msgstr "Colore sconosciuto: \"{1}\" (non definito nella lista di default)"
 msgid "Configure Page Template"
 msgstr "Configura Template Pagina"
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:277
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:279
 #, fuzzy
 msgid "Contents"
 msgstr "Contenuti"
@@ -1115,7 +1115,7 @@ msgstr "Inserisci immagine"
 msgid "Insert latex"
 msgstr "Inserisci latex"
 
-#: ../src/undo/InsertLayerUndoAction.cpp:39
+#: ../src/undo/InsertLayerUndoAction.cpp:40
 msgid "Insert layer"
 msgstr "Inserisci livello"
 
@@ -1127,22 +1127,22 @@ msgstr "Inserisci pagina"
 msgid "Jump to Page (first Page: 1)"
 msgstr "Vai a Pagina (prima Pagina: 1)"
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:352
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:350
 msgid "Layer"
 msgstr "Livello"
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:47
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:79
 msgid "Layer Preview"
 msgstr "Anteprima Livello"
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:335
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:333
 #, fuzzy
 msgid "Layer selection"
 msgstr "Selezione a livello"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:29
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:262
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:322
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:320
 #, fuzzy
 msgid "Layer {1}"
 msgstr "Livello {1}"
@@ -1174,7 +1174,7 @@ msgid "Load file"
 msgstr "Carica file"
 
 #: ../src/gui/PageView.cpp:738
-#: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:106
+#: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:105
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:20
 msgid "Loading..."
 msgstr "Caricamento..."
@@ -1208,6 +1208,11 @@ msgstr "Pulsante del Mouse"
 #: ../src/undo/MoveUndoAction.cpp:19
 msgid "Move"
 msgstr "Muovi"
+
+#: ../src/undo/MoveLayerUndoAction.cpp:38
+#, fuzzy
+msgid "Move layer"
+msgstr "Cancella livello"
 
 #: ../src/undo/SwapUndoAction.cpp:88
 #, fuzzy
@@ -1349,7 +1354,7 @@ msgstr "P_recedente pagina annotata"
 msgid "Page"
 msgstr "Pagina"
 
-#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:26
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:28
 msgid "Page Preview"
 msgstr "Anteprima Pagina"
 
@@ -2031,7 +2036,7 @@ msgid ""
 "issue tracker."
 msgstr ""
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:94
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:96
 msgid ""
 "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n"

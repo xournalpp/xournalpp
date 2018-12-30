@@ -144,8 +144,6 @@ public:
 	bool isInDragAndDropToolbar();
 
 	bool isFullscreen();
-	bool isRotationSnapping();
-	bool isGridSnapping();
 
 	bool searchTextOnPage(string text, int p, int* occures, double* top);
 
@@ -294,16 +292,6 @@ private:
 	UndoRedoHandler* undoRedo;
 	ZoomControl* zoom;
 	bool fullscreen = false;
-
-	/**
-	 * Rotation snapping enabled by default
-	 */
-	bool snapRotation = true;
-
-	/**
-	 * grid snapping enabled by default
-	 */
-	bool snapGrid = true;
 
 	Settings* settings;
 	MainWindow* win;
