@@ -1817,8 +1817,8 @@ void Control::toolFillChanged()
 	XOJ_CHECK_TYPE(Control);
 
 	fireActionSelected(GROUP_FILL, toolHandler->getFill() != -1 ? ACTION_TOOL_FILL : ACTION_NONE);
-	fireActionSelected(GROUP_PEN_FILL, toolHandler->getPenFillEnabled() != -1 ? ACTION_TOOL_PEN_FILL : ACTION_NONE);
-	fireActionSelected(GROUP_HILIGHTER_FILL, toolHandler->getHilighterFillEnabled() != -1 ? ACTION_TOOL_HILIGHTER_FILL : ACTION_NONE);
+	fireActionSelected(GROUP_PEN_FILL, toolHandler->getPenFillEnabled() ? ACTION_TOOL_PEN_FILL : ACTION_NONE);
+	fireActionSelected(GROUP_HILIGHTER_FILL, toolHandler->getHilighterFillEnabled() ? ACTION_TOOL_HILIGHTER_FILL : ACTION_NONE);
 }
 
 /**

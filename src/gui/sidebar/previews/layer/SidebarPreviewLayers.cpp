@@ -59,6 +59,8 @@ void SidebarPreviewLayers::actionPerformed(SidebarActions action)
 	case SIDEBAR_ACTION_DELETE:
 		control->getLayerController()->deleteCurrentLayer();
 		break;
+	default:
+		break;
 	}
 }
 
