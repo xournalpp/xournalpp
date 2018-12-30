@@ -34,7 +34,7 @@ void AudioController::recStartStop(bool rec)
 
 	if (rec)
 	{
-		if (getAudioFolder() == "")
+		if (getAudioFolder().isEmpty())
 		{
 			return;
 		}
@@ -45,7 +45,7 @@ void AudioController::recStartStop(bool rec)
 		char buffer[50];
 		time_t secs = time(0);
 		tm *t = localtime(&secs);
-		//This prints the date and time in ISO format.
+		// This prints the date and time in ISO format.
 		sprintf(buffer, "%04d-%02d-%02d_%02d-%02d-%02d", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour,
 				t->tm_min, t->tm_sec);
 		string data(buffer);
@@ -53,9 +53,8 @@ void AudioController::recStartStop(bool rec)
 
 		audioFilename = data;
 
-		printf("Start recording\n");
-		command = "xopp-recording.sh start " + getAudioFolder() + "/" + data;
-		//std::cout<<"COMMAND: "<<command<<"\n";
+		g_message("Start recording");
+		command = "xopp-recording.sh start " + getAudioFolder().str() + "/" + data;
 	}
 	else if (this->recording)
 	{
@@ -89,7 +88,7 @@ string AudioController::getAudioFilename()
 	return this->audioFilename;
 }
 
-string AudioController::getAudioFolder()
+Path AudioController::getAudioFolder()
 {
 	XOJ_CHECK_TYPE(AudioController);
 
@@ -101,11 +100,10 @@ string AudioController::getAudioFolder()
 					   "recording folder under \"Preferences > Audio recording\"");
 		g_warning("%s", msg.c_str());
 		XojMsgBox::showErrorToUser(this->control->getGtkWindow(), msg);
-		return "";
+		return Path("");
 	}
 
-	af.erase(af.begin(), af.begin() + 7);
-	return af;
+	return Path::fromUri(af);
 }
 
 gint AudioController::getStartTime()
