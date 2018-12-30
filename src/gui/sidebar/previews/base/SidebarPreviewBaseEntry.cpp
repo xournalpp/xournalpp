@@ -4,7 +4,6 @@
 
 #include "control/Control.h"
 #include "gui/Shadow.h"
-#include "view/PdfView.h"
 
 #include <i18n.h>
 

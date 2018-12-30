@@ -63,7 +63,8 @@ void RenderJob::rerenderRectangle(Rectangle* rect)
 	v.setMarkAudioStroke(control->getToolHandler()->getToolType() == TOOL_PLAY_OBJECT);
 	v.limitArea(rect->x, rect->y, rect->width, rect->height);
 
-	if (view->page->getBackgroundType().isPdfPage())
+	bool backgroundVisible = view->page->isLayerVisible(0);
+	if (backgroundVisible && view->page->getBackgroundType().isPdfPage())
 	{
 		int pgNo = view->page->getPdfPageNr();
 		XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
@@ -136,7 +137,11 @@ void RenderJob::run()
 		int width = this->view->page->getWidth();
 		int height = this->view->page->getHeight();
 
-		PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom, width, height);
+		bool backgroundVisible = this->view->page->isLayerVisible(0);
+		if (backgroundVisible)
+		{
+			PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom, width, height);
+		}
 		view.drawPage(this->view->page, cr2, false);
 
 		cairo_destroy(cr2);

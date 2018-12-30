@@ -514,6 +514,29 @@ void DocumentView::drawBackground()
 }
 
 /**
+ * Draw background if there is no background shown, like in GIMP etc.
+ */
+void DocumentView::drawTransparentBackgroundPattern()
+{
+	Util::cairo_set_source_rgbi(cr, 0x666666);
+	cairo_rectangle(cr, 0, 0, width, height);
+	cairo_fill(cr);
+
+	Util::cairo_set_source_rgbi(cr, 0x999999);
+
+	bool second = false;
+	for (int y = 0; y < height; y += 8)
+	{
+		second = !second;
+		for (int x = second ? 8 : 0; x < width; x += 16)
+		{
+			cairo_rectangle(cr, x, y, 8, 8);
+			cairo_fill(cr);
+		}
+	}
+}
+
+/**
  * Draw the full page, usually you would like to call this method
  * @param page The page to draw
  * @param cr Draw to thgis context
@@ -526,9 +549,16 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStr
 
 	initDrawing(page, cr, dontRenderEditingStroke);
 
-	if (!hideBackground)
+	bool backgroundVisible = page->isLayerVisible(0);
+
+	if (!hideBackground && backgroundVisible)
 	{
 		drawBackground();
+	}
+
+	if (!backgroundVisible)
+	{
+		drawTransparentBackgroundPattern();
 	}
 
 	int layer = 0;
