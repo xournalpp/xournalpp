@@ -9,10 +9,6 @@
 #include <StringUtils.h>
 #include <Path.h>
 
-#include <iostream>
-using std::cout;
-using std::endl;
-
 #define MIME "application/x-xoj"
 #define MIME_PDF "application/x-pdf"
 #define GROUP "xournal++"

@@ -11,8 +11,6 @@
 #include "view/DocumentView.h"
 #include "view/TextView.h"
 
-#include <iostream>
-
 #include <gtk/gtkimmulticontext.h>
 
 TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText)

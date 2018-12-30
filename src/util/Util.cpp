@@ -9,9 +9,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <iostream>
-using std::cout;
-using std::endl;
 
 class CallbackUiData {
 public:
@@ -121,7 +118,6 @@ void Util::openFileWithDefaultApplicaion(Path filename)
 #endif
 
 	string command = FS(FORMAT_STR(OPEN_PATTERN) % filename.getEscapedPath());
-	cout << FORMAT_STR("XPP Execute command: «{1}»") % command << endl;
 	if (system(command.c_str()) != 0)
 	{
 		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename.str());
@@ -142,7 +138,6 @@ void Util::openFileWithFilebrowser(Path filename)
 #endif
 
 	string command = FS(FORMAT_STR(OPEN_PATTERN) % filename.getEscapedPath());
-	cout << FORMAT_STR("XPP show file in filebrowser command: «{1}»") % command << endl;
 	if (system(command.c_str()) != 0)
 	{
 		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename.str());

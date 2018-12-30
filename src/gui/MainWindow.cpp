@@ -24,10 +24,6 @@
 
 #include <gdk/gdk.h>
 
-#include <iostream>
-using std::cout;
-using std::endl;
-
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
  : GladeGui(gladeSearchPath, "main.glade", "mainWindow"),
    ignoreNextHideEvent(false)

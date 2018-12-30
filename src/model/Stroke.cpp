@@ -6,9 +6,6 @@
 #include <i18n.h>
 
 #include <math.h>
-#include <iostream>
-using std::cout;
-using std::endl;
 
 Stroke::Stroke()
  : Element(ELEMENT_STROKE)
@@ -624,13 +621,13 @@ void Stroke::debugPrint()
 {
 	XOJ_CHECK_TYPE(Stroke);
 
-	cout << FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (uint64_t) this % this->hasPressure() << endl;
+	g_message("%s", FC(FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (uint64_t) this % this->hasPressure()));
 
 	for (int i = 0; i < this->pointCount; i++)
 	{
 		Point p = this->points[i];
-		cout << p.x << '/' << p.y;
+		g_message("%lf / %lf", p.x, p.y);
 	}
 
-	cout << endl;
+	g_message("\n");
 }
