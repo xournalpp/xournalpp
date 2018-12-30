@@ -272,7 +272,7 @@ void LayerController::moveCurrentLayer(bool up)
 		return;
 	}
 
-	if (lId == p->getLayerCount() && up)
+	if (lId == (int)p->getLayerCount() && up)
 	{
 		// top layer cannot be moved up
 		return;
