@@ -4,12 +4,10 @@
 #include "control/PdfCache.h"
 #include "SidebarLayout.h"
 #include "SidebarPreviewBaseEntry.h"
-#include "SidebarToolbar.h"
 
 
 SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
- : AbstractSidebarPage(control),
-   toolbar(toolbar),
+ : AbstractSidebarPage(control, toolbar),
    enabled(false)
 {
 	XOJ_INIT_TYPE(SidebarPreviewBase);

@@ -8,7 +8,8 @@
 #include <i18n.h>
 #include <Util.h>
 
-SidebarIndexPage::SidebarIndexPage(Control* control) : AbstractSidebarPage(control)
+SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar)
+ : AbstractSidebarPage(control, toolbar)
 {
 	XOJ_INIT_TYPE(SidebarIndexPage);
 
@@ -76,7 +77,8 @@ SidebarIndexPage::~SidebarIndexPage()
 void SidebarIndexPage::enableSidebar()
 {
 	XOJ_CHECK_TYPE(SidebarIndexPage);
-	// Nothing to do at the moment
+
+	toolbar->setHidden(true);
 }
 
 void SidebarIndexPage::disableSidebar()

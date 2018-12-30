@@ -1,15 +1,9 @@
 #include "SidebarToolbar.h"
 
-#include "control/Control.h"
-#include "undo/CopyUndoAction.h"
-#include "undo/SwapUndoAction.h"
-
-
-SidebarToolbar::SidebarToolbar(Control* control, GladeGui* gui)
+SidebarToolbar::SidebarToolbar(SidebarToolbarActionListener* listener, GladeGui* gui)
+ : listener(listener)
 {
 	XOJ_INIT_TYPE(SidebarToolbar);
-
-	this->control = control;
 
 	this->btUp = GTK_BUTTON(gui->get("btUp"));
 	this->btDown = GTK_BUTTON(gui->get("btDown"));
@@ -25,8 +19,6 @@ SidebarToolbar::SidebarToolbar(Control* control, GladeGui* gui)
 SidebarToolbar::~SidebarToolbar()
 {
 	XOJ_CHECK_TYPE(SidebarToolbar);
-
-	this->control = NULL;
 	XOJ_RELEASE_TYPE(SidebarToolbar);
 }
 
@@ -34,89 +26,28 @@ void SidebarToolbar::btUpClicked(GtkToolButton* toolbutton, SidebarToolbar* tool
 {
 	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
 
-	Document* doc = toolbar->control->getDocument();
-	doc->lock();
-
-	size_t page = doc->indexOf(toolbar->currentPage);
-	PageRef swappedPage = toolbar->currentPage;
-	PageRef otherPage = doc->getPage(page - 1);
-	if (page != size_t_npos)
-	{
-		doc->deletePage(page);
-		doc->insertPage(toolbar->currentPage, page - 1);
-	}
-	doc->unlock();
-
-	UndoRedoHandler* undo = toolbar->control->getUndoRedoHandler();
-	undo->addUndoAction(new SwapUndoAction(page - 1, true, swappedPage, otherPage));
-
-	toolbar->control->firePageDeleted(page);
-	toolbar->control->firePageInserted(page - 1);
-	toolbar->control->firePageSelected(page - 1);
-
-	toolbar->control->getScrollHandler()->scrollToPage(page - 1);
+	toolbar->listener->actionPerformed(SIDEBAR_ACTION_MOVE_UP);
 }
 
 void SidebarToolbar::btDownClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar)
 {
 	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
 
-	Document* doc = toolbar->control->getDocument();
-	PageRef swapped_page, other_page;
-	doc->lock();
-
-	size_t page = doc->indexOf(toolbar->currentPage);
-	swapped_page = toolbar->currentPage;
-	other_page = doc->getPage(page + 1);
-	if (page != size_t_npos)
-	{
-		doc->deletePage(page);
-		doc->insertPage(toolbar->currentPage, page + 1);
-	}
-	doc->unlock();
-
-	UndoRedoHandler* undo = toolbar->control->getUndoRedoHandler();
-	undo->addUndoAction(new SwapUndoAction(page, false, swapped_page, other_page));
-
-	toolbar->control->firePageDeleted(page);
-	toolbar->control->firePageInserted(page + 1);
-	toolbar->control->firePageSelected(page + 1);
-
-	toolbar->control->getScrollHandler()->scrollToPage(page + 1);
+	toolbar->listener->actionPerformed(SIDEBAR_ACTION_MODE_DOWN);
 }
 
 void SidebarToolbar::btCopyClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar)
 {
 	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
 
-	Document* doc = toolbar->control->getDocument();
-	doc->lock();
-
-	int page = doc->indexOf(toolbar->currentPage);
-	if (page < 0)
-	{
-		return;
-	}
-
-	PageRef newPage = toolbar->currentPage.clone();
-	doc->insertPage(newPage, page + 1);
-
-	doc->unlock();
-
-	UndoRedoHandler* undo = toolbar->control->getUndoRedoHandler();
-	undo->addUndoAction(new CopyUndoAction(newPage, page + 1));
-
-	toolbar->control->firePageInserted(page + 1);
-	toolbar->control->firePageSelected(page + 1);
-
-	toolbar->control->getScrollHandler()->scrollToPage(page + 1);
+	toolbar->listener->actionPerformed(SIDEBAR_ACTION_COPY);
 }
 
 void SidebarToolbar::btDeleteClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar)
 {
 	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
 
-	toolbar->control->deletePage();
+	toolbar->listener->actionPerformed(SIDEBAR_ACTION_DELETE);
 }
 
 void SidebarToolbar::setHidden(bool hidden)
@@ -129,15 +60,22 @@ void SidebarToolbar::setHidden(bool hidden)
 	gtk_widget_set_visible(GTK_WIDGET(this->btDelete), !hidden);
 }
 
-void SidebarToolbar::setButtonEnabled(bool enableUp, bool enableDown, bool enableCopy, bool enableDelete, PageRef currentPage)
+void SidebarToolbar::setButtonEnabled(SidebarActions enabledActions)
 {
 	XOJ_CHECK_TYPE(SidebarToolbar);
 
-	gtk_widget_set_sensitive(GTK_WIDGET(this->btUp), enableUp);
-	gtk_widget_set_sensitive(GTK_WIDGET(this->btDown), enableDown);
-	gtk_widget_set_sensitive(GTK_WIDGET(this->btCopy), enableCopy);
-	gtk_widget_set_sensitive(GTK_WIDGET(this->btDelete), enableDelete);
+	gtk_widget_set_sensitive(GTK_WIDGET(this->btUp), enabledActions & SIDEBAR_ACTION_MOVE_UP);
+	gtk_widget_set_sensitive(GTK_WIDGET(this->btDown), enabledActions & SIDEBAR_ACTION_MODE_DOWN);
+	gtk_widget_set_sensitive(GTK_WIDGET(this->btCopy), enabledActions & SIDEBAR_ACTION_COPY);
+	gtk_widget_set_sensitive(GTK_WIDGET(this->btDelete), enabledActions & SIDEBAR_ACTION_DELETE);
+}
 
-	this->currentPage = currentPage;
+
+SidebarToolbarActionListener::~SidebarToolbarActionListener()
+{
+}
+
+void SidebarToolbarActionListener::actionPerformed(SidebarActions action)
+{
 }
 

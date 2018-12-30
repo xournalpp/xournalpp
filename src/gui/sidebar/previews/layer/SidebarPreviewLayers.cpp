@@ -15,7 +15,7 @@ SidebarPreviewLayers::SidebarPreviewLayers(Control* control, GladeGui* gui, Side
 
 	LayerCtrlListener::registerListener(lc);
 
-	this->toolbar->setButtonEnabled(false, false, false, false, PageRef());
+	this->toolbar->setButtonEnabled(SIDEBAR_ACTION_NONE);
 }
 
 SidebarPreviewLayers::~SidebarPreviewLayers()
@@ -30,6 +30,14 @@ SidebarPreviewLayers::~SidebarPreviewLayers()
 	this->previews.clear();
 
 	XOJ_RELEASE_TYPE(SidebarPreviewLayers);
+}
+
+/**
+ * Called when an action is performed
+ */
+void SidebarPreviewLayers::actionPerformed(SidebarActions action)
+{
+
 }
 
 void SidebarPreviewLayers::enableSidebar()

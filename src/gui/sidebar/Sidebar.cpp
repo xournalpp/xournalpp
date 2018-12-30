@@ -12,7 +12,7 @@
 #include <config-features.h>
 
 Sidebar::Sidebar(GladeGui* gui, Control* control)
- : toolbar(control, gui)
+ : toolbar(this, gui)
 {
 	XOJ_INIT_TYPE(Sidebar);
 
@@ -20,7 +20,6 @@ Sidebar::Sidebar(GladeGui* gui, Control* control)
 	this->gui = gui;
 	this->tbSelectPage = GTK_TOOLBAR(gui->get("tbSelectSidebarPage"));
 	this->buttonCloseSidebar = gui->get("buttonCloseSidebar");
-	this->visiblePage = NULL;
 
 	this->sidebar = gui->get("sidebarContents");
 
@@ -33,7 +32,7 @@ void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui)
 {
 	XOJ_CHECK_TYPE(Sidebar);
 
-	addPage(new SidebarIndexPage(this->control));
+	addPage(new SidebarIndexPage(this->control, &this->toolbar));
 	addPage(new SidebarPreviewPages(this->control, this->gui, &this->toolbar));
 	addPage(new SidebarPreviewLayers(this->control, this->gui, &this->toolbar));
 
@@ -100,8 +99,24 @@ Sidebar::~Sidebar()
 	this->pages.clear();
 
 	this->sidebar = NULL;
+	this->currentPage = NULL;
 
 	XOJ_RELEASE_TYPE(Sidebar);
+}
+
+/**
+ * Called when an action is performed
+ */
+void Sidebar::actionPerformed(SidebarActions action)
+{
+	XOJ_CHECK_TYPE(Sidebar);
+
+	if (!this->currentPage)
+	{
+		return;
+	}
+
+	this->currentPage->actionPerformed(action);
 }
 
 void Sidebar::selectPageNr(size_t page, size_t pdfPage)
@@ -119,6 +134,7 @@ void Sidebar::setSelectedPage(size_t page)
 	XOJ_CHECK_TYPE(Sidebar);
 
 	this->visiblePage = NULL;
+	this->currentPage = NULL;
 
 	size_t i = 0;
 	for (AbstractSidebarPage* p : this->pages)
@@ -128,6 +144,7 @@ void Sidebar::setSelectedPage(size_t page)
 			gtk_widget_show(p->getWidget());
 			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(p->tabButton), true);
 			this->visiblePage = p->getWidget();
+			this->currentPage = p;
 			p->enableSidebar();
 		}
 		else
@@ -139,9 +156,6 @@ void Sidebar::setSelectedPage(size_t page)
 
 		i++;
 	}
-
-	// Hide the toolbar for all except the page preview
-	toolbar.setHidden(page != 1);
 }
 
 void Sidebar::updateEnableDisableButtons()

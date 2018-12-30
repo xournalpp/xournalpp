@@ -2,8 +2,10 @@
 
 #include "control/Control.h"
 #include "control/PdfCache.h"
-#include "../base/SidebarToolbar.h"
+#include "gui/sidebar/previews/base/SidebarToolbar.h"
 #include "SidebarPreviewPageEntry.h"
+#include "undo/CopyUndoAction.h"
+#include "undo/SwapUndoAction.h"
 
 #include <i18n.h>
 
@@ -33,6 +35,104 @@ string SidebarPreviewPages::getIconName()
 	return "sidebar-page-preview.svg";
 }
 
+/**
+ * Called when an action is performed
+ */
+void SidebarPreviewPages::actionPerformed(SidebarActions action)
+{
+	XOJ_CHECK_TYPE(SidebarPreviewPages);
+
+	switch (action)
+	{
+	case SIDEBAR_ACTION_MOVE_UP:
+	{
+		Document* doc = control->getDocument();
+		PageRef swappedPage = control->getCurrentPage();
+		if (!swappedPage.isValid())
+		{
+			return;
+		}
+
+		doc->lock();
+		size_t page = doc->indexOf(swappedPage);
+		PageRef otherPage = doc->getPage(page - 1);
+		if (page != size_t_npos)
+		{
+			doc->deletePage(page);
+			doc->insertPage(swappedPage, page - 1);
+		}
+		doc->unlock();
+
+		UndoRedoHandler* undo = control->getUndoRedoHandler();
+		undo->addUndoAction(new SwapUndoAction(page - 1, true, swappedPage, otherPage));
+
+		control->firePageDeleted(page);
+		control->firePageInserted(page - 1);
+		control->firePageSelected(page - 1);
+
+		control->getScrollHandler()->scrollToPage(page - 1);
+		break;
+	}
+	case SIDEBAR_ACTION_MODE_DOWN:
+	{
+		Document* doc = control->getDocument();
+		PageRef swappedPage = control->getCurrentPage();
+		if (!swappedPage.isValid())
+		{
+			return;
+		}
+
+		doc->lock();
+		size_t page = doc->indexOf(swappedPage);
+		PageRef otherPage = doc->getPage(page + 1);
+		if (page != size_t_npos)
+		{
+			doc->deletePage(page);
+			doc->insertPage(swappedPage, page + 1);
+		}
+		doc->unlock();
+
+		UndoRedoHandler* undo = control->getUndoRedoHandler();
+		undo->addUndoAction(new SwapUndoAction(page, false, swappedPage, otherPage));
+
+		control->firePageDeleted(page);
+		control->firePageInserted(page + 1);
+		control->firePageSelected(page + 1);
+
+		control->getScrollHandler()->scrollToPage(page + 1);
+		break;
+	}
+	case SIDEBAR_ACTION_COPY:
+	{
+		Document* doc = control->getDocument();
+		PageRef currentPage = control->getCurrentPage();
+		if (!currentPage.isValid())
+		{
+			return;
+		}
+
+		doc->lock();
+		size_t page = doc->indexOf(currentPage);
+
+		PageRef newPage = currentPage.clone();
+		doc->insertPage(newPage, page + 1);
+
+		doc->unlock();
+
+		UndoRedoHandler* undo = control->getUndoRedoHandler();
+		undo->addUndoAction(new CopyUndoAction(newPage, page + 1));
+
+		control->firePageInserted(page + 1);
+		control->firePageSelected(page + 1);
+
+		control->getScrollHandler()->scrollToPage(page + 1);
+		break;
+	}
+	case SIDEBAR_ACTION_DELETE:
+		control->deletePage();
+		break;
+	}
+}
 
 void SidebarPreviewPages::updatePreviews()
 {
@@ -161,9 +261,30 @@ void SidebarPreviewPages::pageSelected(size_t page)
 		p->setSelected(true);
 		scrollToPreview(this);
 
-		this->toolbar->setButtonEnabled(page != 0 && this->previews.size() != 0,
-										page != this->previews.size() - 1 && this->previews.size() != 0,
-										true, this->previews.size() > 1, this->control->getDocument()->getPage(page));
+		int actions = 0;
+
+		if (page != 0 && this->previews.size() != 0)
+		{
+			actions |= SIDEBAR_ACTION_MOVE_UP;
+		}
+
+		if (page != this->previews.size() - 1 && this->previews.size() != 0)
+		{
+			actions |= SIDEBAR_ACTION_MODE_DOWN;
+		}
+
+		if (this->previews.size() != 0)
+		{
+			actions |= SIDEBAR_ACTION_COPY;
+		}
+
+		if (this->previews.size() > 1)
+		{
+			actions |= SIDEBAR_ACTION_DELETE;
+		}
+
+		this->toolbar->setHidden(false);
+		this->toolbar->setButtonEnabled((SidebarActions)actions);
 	}
 }
 

@@ -1,18 +1,21 @@
 #include "AbstractSidebarPage.h"
 
-AbstractSidebarPage::AbstractSidebarPage(Control* control)
+AbstractSidebarPage::AbstractSidebarPage(Control* control, SidebarToolbar* toolbar)
 {
 	XOJ_INIT_TYPE(AbstractSidebarPage);
 
 	this->control = control;
-	this->tabButton = NULL;
+	this->toolbar = toolbar;
 }
 
 AbstractSidebarPage::~AbstractSidebarPage()
 {
-	XOJ_RELEASE_TYPE(AbstractSidebarPage);
+	XOJ_CHECK_TYPE(AbstractSidebarPage);
 
 	this->control = NULL;
+	this->toolbar = NULL;
+
+	XOJ_RELEASE_TYPE(AbstractSidebarPage);
 }
 
 void AbstractSidebarPage::selectPageNr(size_t page, size_t pdfPage)

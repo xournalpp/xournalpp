@@ -22,6 +22,10 @@ public:
 	virtual ~SidebarPreviewPages();
 
 public:
+	/**
+	 * Called when an action is performed
+	 */
+	void actionPerformed(SidebarActions action);
 
 	/**
 	 * @overwrite
