@@ -43,60 +43,12 @@ void SidebarPreviewLayers::actionPerformed(SidebarActions action)
 	{
 	case SIDEBAR_ACTION_MOVE_UP:
 	{
-//		Document* doc = control->getDocument();
-//		PageRef swappedPage = control->getCurrentPage();
-//		if (!swappedPage.isValid())
-//		{
-//			return;
-//		}
-//
-//		doc->lock();
-//		size_t page = doc->indexOf(swappedPage);
-//		PageRef otherPage = doc->getPage(page - 1);
-//		if (page != size_t_npos)
-//		{
-//			doc->deletePage(page);
-//			doc->insertPage(swappedPage, page - 1);
-//		}
-//		doc->unlock();
-//
-//		UndoRedoHandler* undo = control->getUndoRedoHandler();
-//		undo->addUndoAction(new SwapUndoAction(page - 1, true, swappedPage, otherPage));
-//
-//		control->firePageDeleted(page);
-//		control->firePageInserted(page - 1);
-//		control->firePageSelected(page - 1);
-//
-//		control->getScrollHandler()->scrollToPage(page - 1);
+		control->getLayerController()->moveCurrentLayer(true);
 		break;
 	}
 	case SIDEBAR_ACTION_MODE_DOWN:
 	{
-//		Document* doc = control->getDocument();
-//		PageRef swappedPage = control->getCurrentPage();
-//		if (!swappedPage.isValid())
-//		{
-//			return;
-//		}
-//
-//		doc->lock();
-//		size_t page = doc->indexOf(swappedPage);
-//		PageRef otherPage = doc->getPage(page + 1);
-//		if (page != size_t_npos)
-//		{
-//			doc->deletePage(page);
-//			doc->insertPage(swappedPage, page + 1);
-//		}
-//		doc->unlock();
-//
-//		UndoRedoHandler* undo = control->getUndoRedoHandler();
-//		undo->addUndoAction(new SwapUndoAction(page, false, swappedPage, otherPage));
-//
-//		control->firePageDeleted(page);
-//		control->firePageInserted(page + 1);
-//		control->firePageSelected(page + 1);
-//
-//		control->getScrollHandler()->scrollToPage(page + 1);
+		control->getLayerController()->moveCurrentLayer(false);
 		break;
 	}
 	case SIDEBAR_ACTION_COPY:
@@ -251,22 +203,26 @@ void SidebarPreviewLayers::updateSelectedLayer()
 	}
 
 	int actions = 0;
-//	if (page != 0 && this->previews.size() != 0)
-//	{
-//		actions |= SIDEBAR_ACTION_MOVE_UP;
-//	}
-//
-//	if (page != this->previews.size() - 1 && this->previews.size() != 0)
-//	{
-//		actions |= SIDEBAR_ACTION_MODE_DOWN;
-//	}
-//
-	if (this->selectedEntry < (this->previews.size() - 1)) // Background cannot be copied
+	// Background and top layer cannot be moved up
+	if (this->selectedEntry < (this->previews.size() - 1) && this->selectedEntry > 0)
+	{
+		actions |= SIDEBAR_ACTION_MOVE_UP;
+	}
+
+	// Background and first layer cannot be moved down
+	if (this->selectedEntry < (this->previews.size() - 2))
+	{
+		actions |= SIDEBAR_ACTION_MODE_DOWN;
+	}
+
+	// Background cannot be copied
+	if (this->selectedEntry < (this->previews.size() - 1))
 	{
 		actions |= SIDEBAR_ACTION_COPY;
 	}
 
-	if (this->selectedEntry < (this->previews.size() - 1)) // Background cannot be deleted
+	// Background cannot be deleted
+	if (this->selectedEntry < (this->previews.size() - 1))
 	{
 		actions |= SIDEBAR_ACTION_DELETE;
 	}
