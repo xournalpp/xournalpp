@@ -102,7 +102,7 @@ Section "Assign .xopp files" SecFileXopp
 	${registerExtension} "$INSTDIR\bin\xournalpp.exe" ".xopp" "Xournal++ file"
 SectionEnd
 
-Section "Assign .xoj files" SecFileXopt
+Section "Assign .xopt files" SecFileXopt
 	${registerExtension} "$INSTDIR\bin\xournalpp.exe" ".xopt" "Xournal++ Template Files"
 SectionEnd
 
