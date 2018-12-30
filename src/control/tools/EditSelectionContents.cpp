@@ -455,7 +455,7 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
 		RotateUndoAction* rotateUndo = new RotateUndoAction(this->sourcePage, &this->selected, x,
 															y, width / 2, height / 2, this->rotation);
 		undo->addUndoAction(rotateUndo);
-		this->rotation = 0;	//reset rotation for next usage
+		this->rotation = 0;	// reset rotation for next usage
 	}
 	if (scale)
 	{
@@ -469,7 +469,7 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
 		{
 		case CURSOR_SELECTION_TOP_LEFT:
 		case CURSOR_SELECTION_BOTTOM_LEFT:
-		//case CURSOR_SELECTION_LEFT://now reserved for rotation
+		case CURSOR_SELECTION_LEFT:
 			px = (this->lastWidth + this->lastX);
 			break;
 		default:
@@ -486,10 +486,9 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
 		default:
 			break;
 		}
-		printf("EditSelectionContents::updateContent - adding ScaleUndoAction for object\n");
+
 		ScaleUndoAction* scaleUndo = new ScaleUndoAction(this->sourcePage, &this->selected, px, py, fx, fy);
 		undo->addUndoAction(scaleUndo);
-
 	}
 
 	this->lastX = x;

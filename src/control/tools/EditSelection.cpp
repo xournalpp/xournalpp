@@ -308,6 +308,12 @@ void EditSelection::addElement(Element* e)
 	{
 		this->aspectRatio = true;
 	}
+
+	if (e->getType() != ELEMENT_STROKE)
+	{
+		// Currently only stroke supports rotation
+		supportRotation = false;
+	}
 }
 
 /**
@@ -470,12 +476,12 @@ void EditSelection::mouseMove(double x, double y)
 		this->width += dx;
 		
 	}
-	else if (this->mouseDownType == CURSOR_SELECTION_ROTATE)  //catch rotation here
+	else if (this->mouseDownType == CURSOR_SELECTION_ROTATE && supportRotation) // catch rotation here
 	{
-		double dx = x - this->x - this->width/2;
-		double dy = y - this->y - this->height/2;
+		double dx = x - this->x - this->width / 2;
+		double dy = y - this->y - this->height / 2;
 
-		double angle = atan2(dy,dx);
+		double angle = atan2(dy, dx);
 		this->rotation = angle;
 	}
 
@@ -611,7 +617,7 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 		return CURSOR_SELECTION_BOTTOM_RIGHT;
 	}
 
-	if (x2 + BORDER_PADDING + 4 <= x && x <= x2 + BORDER_PADDING + 16 && (y2 + y1)/2 - 4 <= y && (y2 + y1)/2 + 4 >= y )
+	if (supportRotation && x2 + BORDER_PADDING + 4 <= x && x <= x2 + BORDER_PADDING + 16 && (y2 + y1) / 2 - 4 <= y	&& (y2 + y1) / 2 + 4 >= y)
 	{
 		return CURSOR_SELECTION_ROTATE;
 	}
@@ -734,8 +740,12 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 		drawAnchorRect(cr, x, y + height / 2, zoom);
 		// right
 		drawAnchorRect(cr, x + width, y + height / 2, zoom);
-		// rotation handle
-		drawAnchorRotation(cr, x + width + 12/zoom, y + height / 2, zoom);
+
+		if (supportRotation)
+		{
+			// rotation handle
+			drawAnchorRotation(cr, x + width + 12/zoom, y + height / 2, zoom);
+		}
 	}
 
 	// top left

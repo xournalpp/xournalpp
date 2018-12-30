@@ -222,6 +222,11 @@ private: // DATA
 	XOJ_TYPE_ATTRIB;
 
 	/**
+	 * Support rotation
+	 */
+	bool supportRotation = true;
+
+	/**
 	 * The position (and rotation) relative to the current view
 	 */
 	double x;
