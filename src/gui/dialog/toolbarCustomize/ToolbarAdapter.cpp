@@ -13,10 +13,6 @@
 
 #include <i18n.h>
 
-#include <iostream>
-using std::cout;
-using std::endl;
-
 ToolbarAdapter::ToolbarAdapter(GtkWidget* toolbar, string toolbarName, ToolMenuHandler* toolHandler, MainWindow* window)
 {
 	XOJ_INIT_TYPE(ToolbarAdapter);
@@ -195,24 +191,24 @@ void ToolbarAdapter::removeFromToolbar(AbstractToolItem* item, string toolbarNam
 	{
 		if (item != NULL)
 		{
-			cout << _F("Removed tool item {1} from Toolbar {2} ID {3}") % item->getId() % toolbarName % id << endl;
+			g_message("%s", FS(_F("Removed tool item {1} from Toolbar {2} ID {3}") % item->getId() % toolbarName % id).c_str());
 		}
 		else
 		{
-			cout << _F("Removed tool item from Toolbar {1} ID {2}") % toolbarName % id << endl;
+			g_message("%s", FS(_F("Removed tool item from Toolbar {1} ID {2}") % toolbarName % id).c_str());
 		}
 	}
 	else
 	{
 		if (item != NULL)
 		{
-			cout << _F("Could not remove tool item {1} from Toolbar {2} on position {3}")
-					   % item->getId() % toolbarName % id << endl;
+			g_message("%s", FS(_F("Could not remove tool item {1} from Toolbar {2} on position {3}")
+					   % item->getId() % toolbarName % id).c_str());
 		}
 		else
 		{
-			cout << _F("Could not remove tool item from Toolbar {1} on position {2}")
-					   % toolbarName % id << endl;
+			g_message("%s", FS(_F("Could not remove tool item from Toolbar {1} on position {2}")
+					   % toolbarName % id).c_str());
 		}
 	}
 }
@@ -352,7 +348,6 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
 		string id = item->getId();
 
 		int newId = tb->insertItem(name, id, pos);
-		cout << "TOOL_ITEM_COLOR attach metadata" << endl;
 		ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), newId, d->color, item);
 
 		adapter->window->getToolMenuHandler()->addColorToolItem(item);

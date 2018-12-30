@@ -17,12 +17,6 @@
 #include <config.h>
 #include <i18n.h>
 
-#include <clocale>
-#include <iostream>
-
-using std::cout;
-using std::endl;
-
 SaveHandler::SaveHandler()
 {
 	XOJ_INIT_TYPE(SaveHandler);
@@ -277,7 +271,6 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 
 			if (doc->isAttachPdf())
 			{
-				cout << "doc->isAttachPdf()" << endl;
 				background->setAttrib("domain", "attach");
 				Path filename = Path(doc->getFilename().str() + ".bg.pdf");
 				background->setAttrib("filename", filename.str());

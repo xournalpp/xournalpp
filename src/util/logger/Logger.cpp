@@ -20,7 +20,9 @@ inline std::string NowTime()
 	const int MAX_LEN = 200;
 	char buffer[MAX_LEN];
 	if (GetTimeFormatA(LOCALE_USER_DEFAULT, 0, 0, "HH':'mm':'ss", buffer, MAX_LEN) == 0)
+	{
 		return "Error in NowTime()";
+	}
 
 	char result[100] = {0};
 	static DWORD first = GetTickCount();

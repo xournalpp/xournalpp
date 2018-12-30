@@ -1,7 +1,6 @@
 #include "AudioController.h"
 #include "Util.h"
 
-#include <iostream>
 #include <i18n.h>
 #include <XojMsgBox.h>
 

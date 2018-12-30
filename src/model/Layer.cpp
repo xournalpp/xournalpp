@@ -2,10 +2,6 @@
 
 #include <Stacktrace.h>
 
-#include <iostream>
-using std::cout;
-using std::endl;
-
 Layer::Layer()
  : visible(true)
 {
@@ -54,7 +50,7 @@ void Layer::addElement(Element* e)
 	{
 		if (e == elem2)
 		{
-			cout << "Layer::addElement: Element is already on this layer!" << endl;
+			g_warning("Layer::addElement: Element is already on this layer!");
 			return;
 		}
 	}

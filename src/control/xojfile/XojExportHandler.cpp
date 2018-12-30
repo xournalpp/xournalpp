@@ -17,12 +17,6 @@
 #include <config.h>
 #include <i18n.h>
 
-#include <clocale>
-#include <iostream>
-
-using std::cout;
-using std::endl;
-
 XojExportHandler::XojExportHandler()
 {
 	XOJ_INIT_TYPE(XojExportHandler);

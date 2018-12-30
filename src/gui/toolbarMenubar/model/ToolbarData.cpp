@@ -6,10 +6,6 @@
 
 #include <StringUtils.h>
 
-#include <iostream>
-using std::cout;
-using std::endl;
-
 ToolbarData::ToolbarData(bool predefined)
 {
 	XOJ_INIT_TYPE(ToolbarData);
@@ -145,7 +141,7 @@ int ToolbarData::insertItem(string toolbar, string item, int position)
 {
 	XOJ_CHECK_TYPE(ToolbarData);
 
-	cout << FORMAT_STR("ToolbarData::insertItem({1}, {2}, {3});") % toolbar % item % position << endl;
+	g_message("%s", FC(FORMAT_STR("ToolbarData::insertItem({1}, {2}, {3});") % toolbar % item % position));
 
 	g_return_val_if_fail(isPredefined() == false, -1);
 
@@ -153,11 +149,11 @@ int ToolbarData::insertItem(string toolbar, string item, int position)
 	{
 		if (e->getName() == toolbar)
 		{
-			cout << _F("Toolbar found: {1}") % toolbar << endl;
+			g_message("%s", FC(_F("Toolbar found: {1}") % toolbar));
 
 			int id = e->insertItem(item, position);
 
-			cout << FORMAT_STR("return {1}") % id << endl;
+			g_message("%s", FC(FORMAT_STR("return {1}") % id));
 			return id;
 		}
 	}

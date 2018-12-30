@@ -27,10 +27,7 @@
 #endif
 
 #include <algorithm> // std::sort
-#include <iostream>
-using std::cout;
-using std::cerr;
-using std::endl;
+
 
 XournalMain::XournalMain()
 {
@@ -201,7 +198,7 @@ int XournalMain::exportPdf(const char* input, const char* output)
 	Document* doc = loader.loadDocument(input);
 	if (doc == NULL)
 	{
-		cerr << loader.getLastError() << endl;
+		g_error("%s", loader.getLastError().c_str());
 		return -2;
 	}
 
@@ -210,7 +207,7 @@ int XournalMain::exportPdf(const char* input, const char* output)
 	XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, NULL);
 	if (!pdfe->createPdf(g_file_get_path(file)))
 	{
-		cerr << pdfe->getLastError() << endl;
+		g_error("%s", pdfe->getLastError().c_str());
 
 		g_object_unref(file);
 		delete pdfe;
@@ -220,7 +217,7 @@ int XournalMain::exportPdf(const char* input, const char* output)
 
 	g_object_unref(file);
 
-	cout << _("PDF file successfully created") << endl;
+	g_message("%s", _("PDF file successfully created"));
 
 	return 0; // no error
 }
@@ -256,10 +253,10 @@ int XournalMain::run(int argc, char* argv[])
 	g_option_context_add_group(context, gtk_get_option_group(false));
 	if (!g_option_context_parse(context, &argc, &argv, &error))
 	{
-		cerr << error->message << endl;
+		g_error("%s", error->message);
 		g_error_free(error);
 		gchar* help = g_option_context_get_help(context, true, NULL);
-		cout << help;
+		g_message("%s", help);
 		g_free(help);
 		error = NULL;
 	}
