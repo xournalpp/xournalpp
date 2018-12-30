@@ -1,4 +1,4 @@
 [Thumbnailer Entry]
 Exec=/usr/local/bin/xournal-thumbnailer %i %o
-MimeType=application/x-xoj;application/x-xopp;
+MimeType=application/x-xoj;application/x-xojpp;application/x-xopp;
 

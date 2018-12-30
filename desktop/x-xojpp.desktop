@@ -1,0 +1,14 @@
+ [Desktop Entry]
+ Encoding=UTF-8
+ Type=MimeType
+ MimeType=application/x-xojpp
+ Icon=xopp
+ Patterns=*.xoj;*.XOJ;*.Xoj;
+ 
+ Comment=Xournal note file
+ Comment[ca]=Fitxers de nota del Xournal
+ Comment[cs]=Poznámky Xournalu
+ Comment[de]=Xournal Dokument
+ Comment[fr]=Fichier Xournal
+ Comment[pl]=Notatnik Xournala
+ 
