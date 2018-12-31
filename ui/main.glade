@@ -87,8 +87,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                        <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -112,8 +112,8 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Export as...</property>
                         <property name="use_underline">True</property>
-                        <accelerator key="i" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                        <accelerator key="i" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -245,6 +245,34 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkSeparatorMenuItem" id="menuitem5">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckMenuItem" id="menuSnapRotation">
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Rotation Snapping</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckMenuItem" id="menuSnapGrid">
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Grid Snapping</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="menuitem4">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkMenuItem" id="menuEditSettings">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -289,30 +317,6 @@
                         <property name="label" translatable="yes">Fullscreen</property>
                         <property name="use_underline">True</property>
                         <accelerator key="F11" signal="activate"/>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkCheckMenuItem" id="menuRecStop">
-                        <property name="use_action_appearance">False</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Rec-Stop</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkCheckMenuItem" id="menuSnapRotation">
-                        <property name="use_action_appearance">False</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Rotation Snapping</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkCheckMenuItem" id="menuSnapGrid">
-                        <property name="use_action_appearance">False</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Grid Snapping</property>
                       </object>
                     </child>
                     <child>
@@ -394,8 +398,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -405,8 +409,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -1077,6 +1081,14 @@
                         <property name="label" translatable="yes">Text Font...</property>
                         <property name="use_underline">True</property>
                         <accelerator key="f" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckMenuItem" id="menuRecStop">
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Rec-Stop</property>
                       </object>
                     </child>
                     <child>

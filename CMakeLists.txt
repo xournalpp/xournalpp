@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 2.8.8)
 project ("Xournal++" CXX C)
 
 ## Also update changelog in debian folder!
-set (PROJECT_VERSION "1.0.5")
+set (PROJECT_VERSION "1.0.6")
 set (PROJECT_PACKAGE "xournalpp")
 set (PROJECT_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
 set (PROJECT_URL "https://github.com/xournalpp/xournalpp")
