@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: xournalpp 1.0.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-27 15:20+0100\n"
-"PO-Revision-Date: 2018-12-25 17:21+0100\n"
+"PO-Revision-Date: 2018-12-30 21:38+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -36,7 +36,6 @@ msgid " of {1}{2}"
 msgstr " di {1}{2}"
 
 #: ../src/undo/AddUndoAction.cpp:126 ../src/undo/DeleteUndoAction.cpp:120
-#, fuzzy
 msgid " stroke"
 msgstr " tratto"
 
@@ -126,6 +125,12 @@ msgid ""
 "It the file was not saved you can find it in your home folder, in\n"
 "~/.xournalpp/autosave</i>"
 msgstr ""
+"<b>Cartella di Autosalvataggio</b>\n"
+"<i>Se il documento è già stato salvato, puoi trovarlo nella stessa\n"
+"cartella con l'estensione .autosave.xoj\n"
+"Se il file non è ancora stato salvato, puoi trovarlo nella tua cartella "
+"Home, come\n"
+"~/.xournalpp/autosave</i>"
 
 #: ../ui/settings.glade:341
 msgid "<b>Autosave</b>"
@@ -610,7 +615,7 @@ msgid ""
 "Something went wrong… Please write a bug report…"
 msgstr ""
 "Impossibile ripetere \"{1}\"\n"
-"Qualcosa è andato storto... Per favore inviaci un bug report..."
+"Qualcosa è andato storto... Per favore inviaci un bug report…"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:214
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
@@ -634,7 +639,7 @@ msgid ""
 "Something went wrong… Please write a bug report…"
 msgstr ""
 "Impossibile annullare \"{1}\"\n"
-"Qualcosa è andato storto... Per favore inviaci un bug report..."
+"Qualcosa è andato storto... Per favore inviaci un bug report…"
 
 #: ../src/control/xojfile/SaveHandler.cpp:294
 msgid "Could not write background \"{1}\", {2}"
@@ -655,12 +660,14 @@ msgid "Current page"
 msgstr "Pagina corrente"
 
 #: ../src/gui/dialog/FormatDialog.cpp:79
+#, fuzzy
 msgid "Custom"
-msgstr ""
+msgstr "Personalizzato"
 
 #: ../src/control/jobs/CustomExportJob.cpp:17
+#, fuzzy
 msgid "Custom Export"
-msgstr ""
+msgstr "Esportazione Personalizzata"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:40
 msgid "Customized"
@@ -798,7 +805,7 @@ msgstr "Disegna _Linea"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw coordinate system"
-msgstr ""
+msgstr "Disegna il sistema di coordinate"
 
 #: ../src/undo/InsertUndoAction.cpp:39
 msgid "Draw stroke"
@@ -833,7 +840,7 @@ msgstr "Op_zioni Gomma"
 
 #: ../ui/settingsButtonConfig.glade:119
 msgid "Eraser Type - don't change"
-msgstr ""
+msgstr "Tipo di Gomma - non cambiare"
 
 #: ../src/control/Control.cpp:2186
 msgid ""
@@ -878,6 +885,8 @@ msgid ""
 "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
 msgstr ""
+"Il log dell'errore non può essere eliminato. Devi farlo manualmente.\n"
+"Logfile: {1]"
 
 #: ../ui/exportSettings.glade:24
 msgid "Export"
@@ -897,7 +906,7 @@ msgstr "Generazione dell'immagine LaTeX fallita!"
 
 #: ../ui/main.glade:920 ../ui/main.glade:1057
 msgid "Fi_ll"
-msgstr ""
+msgstr "R_iempi"
 
 #: ../src/util/Util.cpp:131 ../src/util/Util.cpp:158
 msgid ""
@@ -978,8 +987,9 @@ msgid "Green"
 msgstr "Verde"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:379
+#, fuzzy
 msgid "Grid Snapping"
-msgstr ""
+msgstr "Forza alla Griglia"
 
 #: ../ui/main.glade:843
 msgid "H_and Tool"
@@ -1145,12 +1155,18 @@ msgid "Medium"
 msgstr "Medio"
 
 #: ../src/control/XournalMain.cpp:467
+#, fuzzy
 msgid ""
 "Missing the needed UI file, could not find them at any location.\n"
 "Not relative\n"
 "Not in the Working Path\n"
 "Not in {1}"
 msgstr ""
+"Non è presente il file UI necessario, non è stato possibile trovarlo in "
+"nessun percorso.\n"
+"Non in quello relativo\n"
+"Non nel Percorso di Lavoro\n"
+"Non in {1]"
 
 #: ../ui/settings.glade:858
 msgid "Mouse Button"
@@ -1432,11 +1448,11 @@ msgstr "Rimuovi lo sfondo PDF"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:202
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr ""
+msgstr "Rimosso l'elemento dalla Barra degli Strumenti {1} ID {2}"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:198
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr ""
+msgstr "Rimosso l'elemento {1} dalla Barra degli Strumenti {2} ID {3}"
 
 #: ../src/util/XojMsgBox.cpp:27
 msgid "Replace"
@@ -1715,7 +1731,7 @@ msgstr "Il PDF di sfondo allegato non è stato trovato."
 
 #: ../src/control/Control.cpp:1974
 msgid "The background PDF could not be found."
-msgstr "Il PDF di sfondo non è stato trovato"
+msgstr "Il PDF di sfondo non è stato trovato."
 
 #: ../src/control/XournalMain.cpp:108
 msgid "The most recent log file name: {1}"
@@ -1767,7 +1783,7 @@ msgstr "Questo documento non è ancora stato salvato."
 #: ../src/control/PageBackgroundChangeController.cpp:177
 #: ../src/control/tools/ImageHandler.cpp:56
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "Questa immagine non può essere caricata. Errore: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Toggle fullscreen"
@@ -1791,6 +1807,8 @@ msgid ""
 "Touch Screens which are detected by GTK are handled specially, and don't "
 "need to be configured here."
 msgstr ""
+"Gli schermi Touch rilevati da GTK sono gestiti in maniera differente, e non "
+"devono essere configurati qui."
 
 #: ../ui/fillTransparency.glade:13
 #, fuzzy
@@ -1799,7 +1817,7 @@ msgstr "Copia le impostazioni dell'ultima pagina"
 
 #: ../src/util/CrashHandler.cpp:43
 msgid "Trying to emergency save the current open document…"
-msgstr "Tentativo di salvataggio d'emergenza per il documento corrente..."
+msgstr "Tentativo di salvataggio d'emergenza per il documento corrente…"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:456
 msgid "Two pages"
@@ -1812,11 +1830,12 @@ msgstr "Annulla"
 
 #: ../src/undo/UndoRedoHandler.cpp:269
 msgid "Undo: "
-msgstr "Annulla:"
+msgstr "Annulla: "
 
 #: ../src/control/xojfile/LoadHandler.cpp:241
+#, fuzzy
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "Root tag sconosciuto: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:270
 msgid "Unexpected tag in document: \"{1}\""
@@ -1841,8 +1860,9 @@ msgid "Unknown parser error"
 msgstr "Errore di interpretazione sconosciuto"
 
 #: ../src/control/xojfile/LoadHandler.cpp:345
+#, fuzzy
 msgid "Unknown pixmap::domain type: {1}"
-msgstr ""
+msgstr "Tipo di pixmap::domain sconosciuto: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:558
 #, fuzzy
@@ -1876,9 +1896,8 @@ msgid "White"
 msgstr "Bianco"
 
 #: ../ui/settingsButtonConfig.glade:121
-#, fuzzy
 msgid "Whiteout"
-msgstr "sbianca"
+msgstr "Sbianca"
 
 #: ../ui/pagesize.glade:182
 msgid "Width:"
@@ -1948,6 +1967,7 @@ msgid ""
 msgstr ""
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:80
+#, fuzzy
 msgid ""
 "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n"
@@ -1955,6 +1975,11 @@ msgid ""
 "Tip: You can select Journal → Paper Background → PDF Background to insert a "
 "PDF page."
 msgstr ""
+"Il documento corrente non contiene la Pagina PDF n. {1}\n"
+"Vuoi inserire questa pagina?\n"
+"\n"
+"Tip: Puoi selezionare Journal → Sfondo Pagina → Sfondo PDF per inserire una "
+"pagina PDF."
 
 #: ../ui/settings.glade:763
 msgid "Zoom"
@@ -2190,8 +2215,9 @@ msgid "save to file"
 msgstr "salva"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:224
+#, fuzzy
 msgid "show"
-msgstr ""
+msgstr "mostra"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:286
 msgid "standard"
@@ -2215,36 +2241,38 @@ msgstr "sbianca"
 
 #: ../src/control/xojfile/LoadHandler.cpp:835
 msgid "xoj-File: {1}"
-msgstr ""
+msgstr "file-xoj: {1}"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:75
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
-msgstr ""
+msgstr "xoj-preview-extractor: chiama con INPUT.xoj OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:97
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr ""
+msgstr "xoj-preview-extractor: il file \"{1}\" non contiene un'anteprima"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:89
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr ""
+msgstr "xoj-preview-extractor: il file \"{1}\" non è un file .xoj"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:102
 msgid ""
 "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr ""
+"xoj-preview-extractor: nessuna anteprima o pagine trovate, è forse un file "
+"non valido?"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:93
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: apertura del file di input \"{1}\" fallita"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:109
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: apertura del file di output \"{1}\" fallita"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:118
 msgid "xoj-preview-extractor: successfully extracted"
-msgstr ""
+msgstr "xoj-preview-extractor: estratto con successo"
 
 #~ msgid "Color"
 #~ msgstr "Colore"
