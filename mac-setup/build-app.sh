@@ -29,6 +29,10 @@ echo "prepare package"
 
 mkdir -p Xournal++.app/Contents/MacOS
 cp ../build/src/xournalpp ./Xournal++.app/Contents/MacOS/xournalpp
-./macdylibbundler/macdylibbundler -od -b -x ./Xournal++.app/Contents/MacOS/xournalpp -d ./Xournal++.app/Contents/libs/
+./macdylibbundler/dylibbundler -od -b -x ./Xournal++.app/Contents/MacOS/xournalpp -d ./Xournal++.app/Contents/libs/
+
+cp icon/xournalpp.icns ./Xournal++.app/Contents/Resources/xournalpp.icns
+cp Info.plist ./Xournal++.app/Contents/Info.plist
+
 
 echo "finished"

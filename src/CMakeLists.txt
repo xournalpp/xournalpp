@@ -19,6 +19,8 @@ add_definitions (-g -Wreturn-type -Wuninitialized -Wunused-value -Wunused-variab
 if (WIN32)
   # optimize for size (the Windows .exe is really big)
   set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-Os -s")
+elseif (APPLE)
+  # Nothing to do for APPLE
 else ()
   add_definitions (-rdynamic)
 endif ()
