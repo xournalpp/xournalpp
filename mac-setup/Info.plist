@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>English</string>
+    <key>CFBundleDocumentTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeExtensions</key>
+        <array>
+          <string>xopp</string>
+          <string>XOPP</string>
+          <string>xopt</string>
+          <string>XOPT</string>
+          <string>xoj</string>
+          <string>XOJ</string>
+        </array>
+        <key>CFBundleTypeIconFile</key>
+        <string>xournalpp.icns</string>
+        <key>CFBundleTypeMIMETypes</key>
+        <array>
+          <string>application/xopp</string>
+        </array>
+        <key>CFBundleTypeName</key>
+        <string>Xournal++ Document</string>
+        <key>CFBundleTypeOSTypes</key>
+        <array>
+          <string>XOPP </string>
+        </array>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>LSIsAppleDefaultForType</key>
+        <true/>
+        <key>LSItemContentTypes</key>
+        <array>
+          <string>com.github.xournalpp.xcf</string>
+        </array>
+      </dict>
+      <dict>
+        <key>CFBundleTypeExtensions</key>
+        <array>
+          <string>pdf</string>
+          <string>PDF</string>
+        </array>
+        <key>CFBundleTypeMIMETypes</key>
+        <array>
+          <string>application/pdf</string>
+        </array>
+        <key>CFBundleTypeName</key>
+        <string>NSPDFPboardType</string>
+        <key>CFBundleTypeOSTypes</key>
+        <array>
+          <string>PDF </string>
+        </array>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>LSIsAppleDefaultForType</key>
+        <true/>
+        <key>LSItemContentTypes</key>
+        <array>
+          <string>com.adobe.pdf</string>
+        </array>
+        <key>NSDocumentClass</key>
+        <string>PVPDFDocument</string>
+      </dict>
+    </array>
+    <key>CFBundleExecutable</key>
+    <string>xournalpp</string>
+    <key>CFBundleGetInfoString</key>
+    <string>Tablet Notetaking Application</string>
+    <key>CFBundleIconFile</key>
+    <string>xournalpp.icns</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.github.xournalpp</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>Xournal++ 1.0.6</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0.6-alpha</string>
+    <key>CFBundleSignature</key>
+    <string>Xournal++</string>
+    <key>CFBundleVersion</key>
+    <string>1.0.6-alpha</string>
+    <key>NSHumanReadableCopyright</key>
+    <string>© 2010-2019 Xournal++ Team</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSRequiresAquaSystemAppearance</key>
+    <true/>
+  </dict>
+</plist>
