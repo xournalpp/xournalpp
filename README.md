@@ -74,12 +74,16 @@ contact also contact us over an Issue.
 https://github.com/xournalpp/xournalpp/releases
 
 ### Mac OS X
-Work in Progress, it's possible to build, but no release yet.
+Pressure sensitivity is not working on Mac. (GTK-Issue)
+
+No release yet.
 
 
 ## Building
 
 [Linux Build](readme/LinuxBuild.md)
+
+[Mac Build](readme/MacBuild.md)
 
 [Windows Build](readme/WindowsBuild.md)
 

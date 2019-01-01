@@ -1,15 +1,5 @@
 # Xournal++ Linux Build
 
-Aside from legacy releases, this is currently the way to install Xournal++. For complete building documentation refer to wiki page:
-[Installation](https://github.com/xournalpp/xournalpp/wiki/Installing).
-
-There will be some binaries appearing in the future, so ideally you can make use of those as well.
-They'll be at [Xournal++ releases](https://github.com/xournalpp/xournalpp/releases).
-
-Current releases are out of Date, we are searching for Maintainer for PPA etc.
-[Issue for Contact](https://github.com/xournalpp/xournalpp/issues/176)
-
-
 ## Install dependencies
 ### For Fedora/CentOS/RHEL:
 ````bash
