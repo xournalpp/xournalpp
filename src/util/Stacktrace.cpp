@@ -8,6 +8,13 @@
 #include <limits.h>
 #endif
 
+#ifdef __APPLE__
+#include <mach-o/dyld.h>
+#endif
+
+#include <Path.h>
+
+
 #include <iostream>
 using std::endl;
 
@@ -36,12 +43,35 @@ void Stacktrace::printStracktrace(std::ostream& stream)
 }
 #else
 
+#ifdef __APPLE__
+
+std::string Stacktrace::getExePath()
+{
+	char c;
+	uint32_t size = 0;
+	_NSGetExecutablePath(&c, &size);
+
+	char* path = new char[size + 1];
+	if (_NSGetExecutablePath(path, &size) == 0)
+	{
+		Path p(path);
+		delete[] path;
+		return p.getParentPath().str();
+	}
+
+	g_error("Could not executable path!");
+
+	delete[] path;
+	return "";
+}
+#else
 std::string Stacktrace::getExePath()
 {
 	char result[PATH_MAX];
 	ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
 	return std::string(result, (count > 0) ? count : 0);
 }
+#endif
 
 void Stacktrace::printStracktrace(std::ostream& stream)
 {

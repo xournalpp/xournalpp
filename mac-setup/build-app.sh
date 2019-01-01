@@ -11,7 +11,11 @@ cd "${0%/*}"
 # delete old app, if there
 echo "clean old app"
 
-rm -rf ./Xournal++.app
+if [[ $1 == u ]]; then
+  echo "update app!"
+else
+  rm -rf ./Xournal++.app
+fi
 
 echo "prepare macdylibbundler"
 if [ ! -d "macdylibbundler" ]; then
@@ -28,11 +32,18 @@ cd ..
 echo "prepare package"
 
 mkdir -p Xournal++.app/Contents/MacOS
+mkdir -p Xournal++.app/Contents/Resources
 cp ../build/src/xournalpp ./Xournal++.app/Contents/MacOS/xournalpp
-./macdylibbundler/dylibbundler -od -b -x ./Xournal++.app/Contents/MacOS/xournalpp -d ./Xournal++.app/Contents/libs/
+
+if [[ $1 == u ]]; then
+  echo "update app!"
+else
+  ./macdylibbundler/dylibbundler -od -b -x ./Xournal++.app/Contents/MacOS/xournalpp -d ./Xournal++.app/Contents/libs/
+fi
 
 cp icon/xournalpp.icns ./Xournal++.app/Contents/Resources/xournalpp.icns
 cp Info.plist ./Xournal++.app/Contents/Info.plist
+cp -rvp ../ui ./Xournal++.app/Contents/Resources/
 
 
 echo "finished"

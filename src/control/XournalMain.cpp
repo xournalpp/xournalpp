@@ -52,11 +52,11 @@ void XournalMain::initLocalisation()
 
 	bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 	textdomain(GETTEXT_PACKAGE);
-	
+
 #ifdef WIN32
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif
-	
+
 #endif //ENABLE_NLS
 
 	// Not working on Windows! Working on Linux, but not sure if it's needed
@@ -93,7 +93,7 @@ void XournalMain::checkForErrorlog()
 	}
 	g_dir_close(home);
 
-	
+
 	if (errorList.empty())
 	{
 		return;
@@ -265,7 +265,7 @@ int XournalMain::run(int argc, char* argv[])
 	}
 
 	// Checks for input method compatibility
-	
+
 	const char* imModule = g_getenv("GTK_IM_MODULE");
 	if (imModule != NULL && strcmp(imModule, "xim") == 0)
 	{
@@ -437,6 +437,19 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath)
 
 	// -----------------------------------------------------------------------
 
+#ifdef __APPLE__
+	Path p = Stacktrace::getExePath();
+	p /= "../Resources/ui/about.glade";
+
+	if (p.exists())
+	{
+		gladePath->addSearchDirectory(p.getParentPath().str());
+		return;
+	}
+
+	string msg = FS(_F("Missing the needed UI file! .app corrupted?\nPath: {1}") % p.str());
+	XojMsgBox::showErrorToUser(NULL, msg);
+#else
 	// Check at the target installation directory
 	Path absolute = PACKAGE_DATA_DIR;
 	absolute /= PROJECT_PACKAGE;
@@ -450,6 +463,7 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath)
 
 	string msg = FS(_F("Missing the needed UI file, could not find them at any location.\nNot relative\nNot in the Working Path\nNot in {1}") % PACKAGE_DATA_DIR);
 	XojMsgBox::showErrorToUser(NULL, msg);
+#endif
 
 	exit(12);
 }
