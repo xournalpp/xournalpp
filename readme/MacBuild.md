@@ -9,7 +9,7 @@ https://brew.sh/
 
 ## Install dependencies
 ````bash
-brew install cmake pkg-config gtk+3 poppler-glib poppler librsvg adwaita-icon-theme
+brew install cmake pkg-config gtk+3 poppler librsvg adwaita-icon-theme
 ````
 
 ## Basic steps are:
@@ -29,4 +29,3 @@ Currently not ready, Xournal++ can be executed from Build directory with
 ````
 
 Work in progress
-
