@@ -231,7 +231,7 @@ private: // DATA
 	 */
 	double x;
 	double y;
-	double rotation;
+	double rotation = 0;
 
 	/**
 	 * The size

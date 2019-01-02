@@ -36,5 +36,5 @@ private:
 	double y0;
 	double xo;
 	double yo;
-	double rotation;
+	double rotation = 0;
 };

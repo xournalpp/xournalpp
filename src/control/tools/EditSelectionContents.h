@@ -143,7 +143,7 @@ private:
 	/**
 	 * The given rotation. Original rotation should always be zero (double)
 	 */
-	double rotation;
+	double rotation = 0;
 
 	/**
 	 * The offset to the original selection
