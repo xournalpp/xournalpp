@@ -31,4 +31,18 @@ echo "create package"
 
 gtk-mac-bundler xournalpp.bundle
 
+mkdir -p Xournal++.app/Contents/Resources
+
+export bundle_etc="./Xournal++.app/Contents/Resources/etc"
+export GTK_IM_MODULE_FILE="$bundle_etc/gtk-2.0/gtk.immodules"
+export GDK_PIXBUF_MODULE_FILE="$bundle_etc/gtk-2.0/gdk-pixbuf.loaders"
+
+mkdir -p ./Xournal++.app/Contents/Resources/etc/gtk-2.0/
+gdk-pixbuf-query-loaders > ./Xournal++.app/Contents/Resources/etc/gtk-2.0/gdk-pixbuf.loaders
+
+
+echo "Copy UI"
+
+cp -rvp ../ui ./Xournal++.app/Contents/Resources/
+
 echo "finished"
