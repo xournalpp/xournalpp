@@ -2,27 +2,8 @@
 <app-bundle>
 
   <meta>
-    <!-- Where to pick up the GTK+ installation, icon themes,
-         etc. Note that "${env:JHBUILD_PREFIX}" is evaluated to the
-         value of the environment variable JHBUILD_PREFIX. You can
-         define additional prefixes and refer to them in paths
-         throughout this file on the form "${prefix:name}". This is
-         useful for installing certain libraries or even the
-         application itself separately. Note that JHBUILD_PREFIX is
-         defined by jhbuild, so it you are not using jhbuild you can
-         either define your own or just hardcode the path here.
-    -->
-    <prefix name="default">${env:JHBUILD_PREFIX}</prefix>
-
-    <!-- The project directory is the default location of the created
-         app. If you leave out the path, the current directory is
-         used. Note the usage of an environment variable here again.
-    -->
-    <destination overwrite="yes">${env:HOME}/Desktop</destination>
-
-    <image>
-      <!-- Not implemented yet (DMG image). -->
-    </image>
+    <prefix name="default">${env:HOME}/gtk/inst</prefix>
+    <destination overwrite="yes">.</destination>
 
     <!-- Comment this out to keep the install names in binaries -->
     <run-install-name-tool/>
@@ -33,24 +14,14 @@
          not needed. If the source path is left out, the default
          script will be used.
     -->
-    <!-- <launcher-script>${project}/gtk3-launcher.sh</launcher-script >-->
+    <launcher-script></launcher-script >
 
-    <!-- Not implemented: Optional runtime, could be python or mono
-         for example.
-    -->
-    <!-- runtime copy="yes">/usr/bin/python</runtime -->
-    <!-- Indicate the active gtk version to use. This is needed only
-         for gtk+-3.0 projects. -->
     <gtk>gtk+-3.0</gtk>
   </meta>
 
-  <!-- The special macro "${project}" refers to the directory where
-       this bundle file is located. The application name and bundle
-       identifier are taken from the plist file.
-  -->
-  <plist>${project}/Info-gtk-demo.plist</plist>
+  <plist>${project}/Info.plist</plist>
 
-  <main-binary>${prefix}/bin/gtk3-demo</main-binary>
+  <main-binary>${prefix}/bin/xournalpp</main-binary>
 
   <!-- Copy in the input methods. Dunno if they actually work with
        OSX. Note the ${gtkdir} macro, which expands to the correct
@@ -64,16 +35,15 @@
     ${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/printbackends/*.so
   </binary>
 
-<!-- Starting with 2.24, gdk-pixbuf installs into its own directory. -->
+  <!-- Starting with 2.24, gdk-pixbuf installs into its own directory. -->
   <binary>
     ${prefix}/lib/gdk-pixbuf-2.0/${pkg:gdk-pixbuf-2.0:gdk_pixbuf_binary_version}/loaders/*.so
   </binary>
 
-<!-- No longer needed for pango >= 1.38
+  <!-- Poppler -->
   <binary>
-    ${prefix}/lib/pango/${pkg:pango:pango_module_version}/modules/
+    ${prefix}/lib/libpoppler-glib*.dynlib
   </binary>
--->
 
   <!-- Translation filenames, one for each program or library that you
        want to copy in to the bundle. The "dest" attribute is
@@ -104,12 +74,8 @@
     ${prefix}/share/icons
   </data>
 
-  <!-- Copy icons. Note that the .icns file is an Apple format which
-       contains up to 4 sizes of icon. You can use
-       /Developer/Applications/Utilities/Icon Composer.app to import
-       artwork and create the file. >
   <data dest="${bundle}/Contents/Resources">
-    ${project}/Giggle.icns
-  </data -->
+    ${project}/icon/xournalpp.icns
+  </data>
 
   </app-bundle>

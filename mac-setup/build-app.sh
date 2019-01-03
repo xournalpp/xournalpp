@@ -11,18 +11,9 @@ cd "${0%/*}"
 # delete old app, if there
 echo "clean old app"
 
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
 
 rm -rf ./Xournal++.app
-
-curl https://gitlab.gnome.org/GNOME/gtk-osx/raw/master/gtk-osx-build-setup.sh -o gtk-osx-build-setup.sh
-chmod +x gtk-osx-build-setup.sh
-./gtk-osx-build-setup.sh
-
-jhbuild bootstrap
-jhbuild build python meta-gtk-osx-bootstrap meta-gtk-osx-gtk3
-
-exit
 
 echo "prepare gtk-mac-bundler"
 if [ ! -d "gtk-mac-bundler" ]; then
@@ -33,37 +24,11 @@ else
   git pull
 fi
 
-cd gtk-mac-Bundler
 make install
 cd ..
 
-echo "copy binaries"
+echo "create package"
 
-
-
-exit
-
-mkdir -p Xournal++.app/Contents/MacOS
-mkdir -p Xournal++.app/Contents/Resources
-cp ../build/src/xournalpp ./Xournal++.app/Contents/MacOS/xournalpp
-
-./macdylibbundler/dylibbundler -od -b -x ./Xournal++.app/Contents/MacOS/xournalpp -d ./Xournal++.app/Contents/libs/
-
-mdkir -p ./Xournal++.app/Contents/lib
-
-echo "copy pixbuf libs"
-cp -r /usr/local/lib/gdk-pixbuf-2.0 ./Xournal++.app/Contents/lib
-
-echo "copy pixbuf lib dependencies"
-./macdylibbundler/dylibbundler -od -b -x ./Xournal++.app/Contents/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.so -d ./Xournal++.app/Contents/libs/
-
-echo "copy icons"
-## TODO
-
-echo "finalize packaging"
-
-cp icon/xournalpp.icns ./Xournal++.app/Contents/Resources/xournalpp.icns
-cp Info.plist ./Xournal++.app/Contents/Info.plist
-cp -rvp ../ui ./Xournal++.app/Contents/Resources/
+gtk-mac-bundler xournalpp.bundle
 
 echo "finished"

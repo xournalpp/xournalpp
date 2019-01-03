@@ -5,3 +5,5 @@ tmp-jhbuild-revision
 poppler-*
 poppler.tar.xz
 openjpeg*
+gtk-mac-bundler
+.xournalpp*
