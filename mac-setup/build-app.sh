@@ -11,6 +11,8 @@ cd "${0%/*}"
 # delete old app, if there
 echo "clean old app"
 
+export PATH="$HOME/.local/bin:$PATH"
+
 rm -rf ./Xournal++.app
 
 curl https://gitlab.gnome.org/GNOME/gtk-osx/raw/master/gtk-osx-build-setup.sh -o gtk-osx-build-setup.sh
@@ -36,8 +38,6 @@ make install
 cd ..
 
 echo "copy binaries"
-
-$HOME/.local/bin/gtk-mac-bundler xournalpp.bundle
 
 
 
