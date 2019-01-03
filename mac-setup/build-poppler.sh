@@ -13,8 +13,7 @@ make install
 cd ..
 cd ..
 
-
-ln -s $HOME/gtk/inst/lib/gio $HOME/gtk/inst/lib/gio-2.0
+export LIBRARY_PATH="$HOME/gtk/inst/lib:$LIBRARY_PATH"
 
 curl https://poppler.freedesktop.org/poppler-0.72.0.tar.xz -o poppler.tar.xz
 tar xf poppler.tar.xz
