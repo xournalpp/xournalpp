@@ -6,12 +6,13 @@ Open a Terminal, and type in **git**, confirm popup from Appstore with "Install"
 Build GTK3
 ./build-gtk3.sh
 
-After first failure (missing six)
+After first failure (missing python module six)
 # download TODO link, unpack and install with
 # /Users/yourname/gtk/inst/bin/python setup.py install
 
-
-execute ./build-app.sh
+Build Xournal++
+./build-app.sh
 
 
 Work in progress
+./configure --prefix /Users/andreas/gtk/inst --disable-gtk2-engine  
