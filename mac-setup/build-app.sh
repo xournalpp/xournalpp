@@ -13,19 +13,35 @@ echo "clean old app"
 
 rm -rf ./Xournal++.app
 
-echo "prepare macdylibbundler"
-if [ ! -d "macdylibbundler" ]; then
-  git clone https://github.com/auriamg/macdylibbundler.git macdylibbundler
-  cd macdylibbundler
+curl https://gitlab.gnome.org/GNOME/gtk-osx/raw/master/gtk-osx-build-setup.sh -o gtk-osx-build-setup.sh
+chmod +x gtk-osx-build-setup.sh
+./gtk-osx-build-setup.sh
+
+jhbuild bootstrap
+jhbuild build python meta-gtk-osx-bootstrap meta-gtk-osx-gtk3
+
+exit
+
+echo "prepare gtk-mac-bundler"
+if [ ! -d "gtk-mac-bundler" ]; then
+  git clone https://gitlab.gnome.org/GNOME/gtk-mac-bundler.git
+  cd gtk-mac-bundler
 else
-  cd macdylibbundler
+  cd gtk-mac-bundler
   git pull
 fi
 
-make -j 2
-
+cd gtk-mac-Bundler
+make install
 cd ..
+
 echo "copy binaries"
+
+$HOME/.local/bin/gtk-mac-bundler xournalpp.bundle
+
+
+
+exit
 
 mkdir -p Xournal++.app/Contents/MacOS
 mkdir -p Xournal++.app/Contents/Resources
