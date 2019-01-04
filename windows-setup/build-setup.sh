@@ -34,19 +34,21 @@ echo "copy ui"
 
 cp -r ../ui setup/
 
-mkdir -p setup/share/po/cs/LC_MESSAGES
-mkdir -p setup/share/po/zh_HK/LC_MESSAGES
-mkdir -p setup/share/po/de/LC_MESSAGES
-mkdir -p setup/share/po/pl/LC_MESSAGES
-mkdir -p setup/share/po/zh_TW/LC_MESSAGES
-mkdir -p setup/share/po/zh/LC_MESSAGES
+supportedLocales=("cs" "de" "it" "pl" "zh" "zh_TW" "zh_HK")
+for locale in "${supportedLocales[@]}" ; do
+	echo "Copy locale $locale"
+	mkdir -p setup/share/locale/$locale/LC_MESSAGES
+	
+	# Xournal Translation
+	cp -r ../po/$locale.mo setup/share/locale/$locale/LC_MESSAGES/xournalpp.mo
 
-cp -r ../po/cs.mo setup/share/po/cs/LC_MESSAGES/xournalpp.mo
-cp -r ../po/zh_HK.mo setup/share/po/zh_HK/LC_MESSAGES/xournalpp.mo
-cp -r ../po/de.mo setup/share/po/de/LC_MESSAGES/xournalpp.mo
-cp -r ../po/pl.mo setup/share/po/pl/LC_MESSAGES/xournalpp.mo
-cp -r ../po/zh_TW.mo setup/share/po/zh_TW/LC_MESSAGES/xournalpp.mo
-cp -r ../po/zh.mo setup/share/po/zh/LC_MESSAGES/xournalpp.mo
+	# GTK / GLib Translation
+	cp -r /usr/share/locale/$locale/LC_MESSAGES/glib20.mo			setup/share/locale/$locale/LC_MESSAGES/glib20.mo
+
+	cp -r /mingw64/share/locale/$locale/LC_MESSAGES/gdk-pixbuf.mo		setup/share/locale/$locale/LC_MESSAGES/gdk-pixbuf.mo
+	cp -r /mingw64/share/locale/$locale/LC_MESSAGES/gtk30.mo			setup/share/locale/$locale/LC_MESSAGES/gtk30.mo
+	cp -r /mingw64/share/locale/$locale/LC_MESSAGES/gtk30-properties.mo	setup/share/locale/$locale/LC_MESSAGES/gtk30-properties.mo
+done
 
 echo "copy pixbuf libs"
 cp -r /mingw64/lib/gdk-pixbuf-2.0 setup/lib
@@ -64,3 +66,4 @@ echo "pack setup"
 "/c/Program Files (x86)/NSIS/Bin/makensis.exe" xournalpp.nsi
 
 echo "finished"
+

@@ -47,7 +47,7 @@ void XournalMain::initLocalisation()
 
 #ifdef WIN32
 #undef PACKAGE_LOCALE_DIR
-#define PACKAGE_LOCALE_DIR "../share/po/"
+#define PACKAGE_LOCALE_DIR "../share/locale/"
 #endif
 
 	bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
