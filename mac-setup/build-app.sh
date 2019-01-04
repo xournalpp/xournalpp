@@ -42,8 +42,11 @@ mkdir -p ./Xournal++.app/Contents/Resources/etc/gtk-2.0/
 gdk-pixbuf-query-loaders > ./Xournal++.app/Contents/Resources/etc/gtk-2.0/gdk-pixbuf.loaders
 sed -i -e "s:$HOME/gtk/inst/:@executable_path/../Resources/:g" ./Xournal++.app/Contents/Resources/etc/gtk-2.0/gdk-pixbuf.loaders
 
-echo "Copy UI"
+echo "Copy GTK Schema"
+mkdir -p ./Xournal++.app/Contents/Resources/share/glib-2.0/schemas
+cp -rp $HOME/gtk/inst/share/glib-2.0/schemas ./Xournal++.app/Contents/Resources/share/glib-2.0/schemas
 
+echo "Copy UI"
 cp -rp ../ui ./Xournal++.app/Contents/Resources/
 
 echo "Create zip"
