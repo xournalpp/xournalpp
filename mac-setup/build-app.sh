@@ -11,43 +11,42 @@ cd "${0%/*}"
 # delete old app, if there
 echo "clean old app"
 
-rm -rf ./Xournal++.app
+export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
 
-echo "prepare macdylibbundler"
-if [ ! -d "macdylibbundler" ]; then
-  git clone https://github.com/auriamg/macdylibbundler.git macdylibbundler
-  cd macdylibbundler
+rm -rf ./Xournal++.app
+rm ./Xournal++.zip
+
+echo "prepare gtk-mac-bundler"
+if [ ! -d "gtk-mac-bundler" ]; then
+  git clone https://gitlab.gnome.org/GNOME/gtk-mac-bundler.git
+  cd gtk-mac-bundler
 else
-  cd macdylibbundler
+  cd gtk-mac-bundler
   git pull
 fi
 
-make -j 2
-
+make install
 cd ..
-echo "copy binaries"
 
-mkdir -p Xournal++.app/Contents/MacOS
+echo "create package"
+
+gtk-mac-bundler xournalpp.bundle
+
 mkdir -p Xournal++.app/Contents/Resources
-cp ../build/src/xournalpp ./Xournal++.app/Contents/MacOS/xournalpp
 
-./macdylibbundler/dylibbundler -od -b -x ./Xournal++.app/Contents/MacOS/xournalpp -d ./Xournal++.app/Contents/libs/
+export bundle_etc="./Xournal++.app/Contents/Resources/etc"
+export GTK_IM_MODULE_FILE="$bundle_etc/gtk-2.0/gtk.immodules"
+export GDK_PIXBUF_MODULE_FILE="$bundle_etc/gtk-2.0/gdk-pixbuf.loaders"
 
-mdkir -p ./Xournal++.app/Contents/lib
+mkdir -p ./Xournal++.app/Contents/Resources/etc/gtk-2.0/
+gdk-pixbuf-query-loaders > ./Xournal++.app/Contents/Resources/etc/gtk-2.0/gdk-pixbuf.loaders
+sed -i -e "s:$HOME/gtk/inst/:@executable_path/../Resources/:g" ./Xournal++.app/Contents/Resources/etc/gtk-2.0/gdk-pixbuf.loaders
 
-echo "copy pixbuf libs"
-cp -r /usr/local/lib/gdk-pixbuf-2.0 ./Xournal++.app/Contents/lib
+echo "Copy UI"
 
-echo "copy pixbuf lib dependencies"
-./macdylibbundler/dylibbundler -od -b -x ./Xournal++.app/Contents/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.so -d ./Xournal++.app/Contents/libs/
+cp -rp ../ui ./Xournal++.app/Contents/Resources/
 
-echo "copy icons"
-## TODO
-
-echo "finalize packaging"
-
-cp icon/xournalpp.icns ./Xournal++.app/Contents/Resources/xournalpp.icns
-cp Info.plist ./Xournal++.app/Contents/Info.plist
-cp -rvp ../ui ./Xournal++.app/Contents/Resources/
+echo "Create zip"
+zip -r Xournal++.zip Xournal++.app
 
 echo "finished"

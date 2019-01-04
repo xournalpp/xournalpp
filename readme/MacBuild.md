@@ -1,4 +1,6 @@
-# Xournal++ Mac Build
+# Xournal++ Mac Build (development)
+
+**To create an .app see [Mac Setup](../mac-setup/README.md)**
 
 ## Install Homebrew
 https://brew.sh/
@@ -21,11 +23,3 @@ cd build
 cmake .. -DENABLE_MATHTEX=OFF
 make
 ````
-
-## APP Building
-Currently not ready, Xournal++ can be executed from Build directory with
-````bash
-./src/xournalpp
-````
-
-Work in progress

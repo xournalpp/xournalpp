@@ -1,0 +1,12 @@
+export PATH="$HOME/.local/bin:$PATH"
+
+# missing six python lib:
+# after first failure download, unpack and install with
+# /Users/yourname/gtk/inst/bin/python setup.py install
+
+curl https://gitlab.gnome.org/GNOME/gtk-osx/raw/master/gtk-osx-build-setup.sh -o gtk-osx-build-setup.sh
+chmod +x gtk-osx-build-setup.sh
+./gtk-osx-build-setup.sh
+
+jhbuild bootstrap
+jhbuild build python meta-gtk-osx-bootstrap meta-gtk-osx-gtk3
