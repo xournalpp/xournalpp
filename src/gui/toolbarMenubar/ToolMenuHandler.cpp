@@ -486,7 +486,7 @@ void ToolMenuHandler::initToolItems()
 
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(gui->get("menuJournalPaperBackground")), pageBackgroundChangeController->getMenu());
 
-	registerMenupoint(gui->get("menuEditDelete"), ACTION_DELETE);
+	addToolItem(new ToolButton(listener, "DELETE", ACTION_DELETE, "edit-delete", _("Delete"), gui->get("menuEditDelete")));
 
 	registerMenupoint(gui->get("menuNavigationPreviousAnnotatedPage"), ACTION_GOTO_PREVIOUS_ANNOTATED_PAGE);
 
