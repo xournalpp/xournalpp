@@ -40,7 +40,7 @@ for locale in "${supportedLocales[@]}" ; do
 	mkdir -p setup/share/locale/$locale/LC_MESSAGES
 	
 	# Xournal Translation
-	cp -r ../po/$locale.mo setup/share/locale/$locale/LC_MESSAGES/xournalpp.mo
+	cp -r ../build/po/$locale.gmo setup/share/locale/$locale/LC_MESSAGES/xournalpp.mo
 
 	# GTK / GLib Translation
 	cp -r /usr/share/locale/$locale/LC_MESSAGES/glib20.mo			setup/share/locale/$locale/LC_MESSAGES/glib20.mo
