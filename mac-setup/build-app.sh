@@ -14,6 +14,7 @@ echo "clean old app"
 export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
 
 rm -rf ./Xournal++.app
+rm ./Xournal++.zip
 
 echo "prepare gtk-mac-bundler"
 if [ ! -d "gtk-mac-bundler" ]; then
@@ -39,10 +40,13 @@ export GDK_PIXBUF_MODULE_FILE="$bundle_etc/gtk-2.0/gdk-pixbuf.loaders"
 
 mkdir -p ./Xournal++.app/Contents/Resources/etc/gtk-2.0/
 gdk-pixbuf-query-loaders > ./Xournal++.app/Contents/Resources/etc/gtk-2.0/gdk-pixbuf.loaders
-
+sed -i -e "s:$HOME/gtk/inst/:@executable_path/../Resources/:g" ./Xournal++.app/Contents/Resources/etc/gtk-2.0/gdk-pixbuf.loaders
 
 echo "Copy UI"
 
-cp -rvp ../ui ./Xournal++.app/Contents/Resources/
+cp -rp ../ui ./Xournal++.app/Contents/Resources/
+
+echo "Create zip"
+zip -r Xournal++.zip Xournal++.app
 
 echo "finished"
