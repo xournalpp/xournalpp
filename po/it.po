@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: xournalpp 1.0.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-30 12:21+0100\n"
-"PO-Revision-Date: 2018-12-31 17:04+0100\n"
+"PO-Revision-Date: 2019-01-01 18:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -36,7 +36,6 @@ msgid " of {1}{2}"
 msgstr " di {1}{2}"
 
 #: ../src/undo/DeleteUndoAction.cpp:120 ../src/undo/AddUndoAction.cpp:126
-#, fuzzy
 msgid " stroke"
 msgstr " tratto"
 
@@ -105,12 +104,10 @@ msgid "<b>... or select already used Image:</b>"
 msgstr "<b>... o seleziona un'immagine già utilizzata:</b>"
 
 #: ../ui/settings.glade:271
-#, fuzzy
 msgid "<b>Add horizontal space</b>"
 msgstr "<b>Aggiungi spazio orizzontale</b>"
 
 #: ../ui/settings.glade:248
-#, fuzzy
 msgid "<b>Add vertical space</b>"
 msgstr "<b>Aggiungi spazio verticale</b>"
 
@@ -161,7 +158,6 @@ msgstr ""
 "Queste impostazioni saranno usate quando creerai un nuovo documento"
 
 #: ../ui/pageTemplate.glade:229 ../ui/pageTemplate.glade:270
-#, fuzzy
 msgid ""
 "<b>Copy last page</b>\n"
 "Use the settings above\n"
@@ -257,7 +253,6 @@ msgid "<b>Scrollbars</b>"
 msgstr "<b>Barre di scorrimento</b>"
 
 #: ../ui/settings.glade:200
-#, fuzzy
 msgid "<b>Scrolling outside the page</b>"
 msgstr "<b>Scrolling fuori dalla pagina</b>"
 
@@ -305,7 +300,6 @@ msgstr ""
 "lo strumento precedente</i>"
 
 #: ../ui/settings.glade:2030
-#, fuzzy
 msgid ""
 "<i>If audio recording is running, the time stamps are stored to the "
 "handwritten Text and can be replayed.\n"
@@ -355,7 +349,6 @@ msgid "<i>Select some advanced input options</i>"
 msgstr "<i>Seleziona alcune opzioni di input avanzate</i>"
 
 #: ../ui/settings.glade:1339
-#, fuzzy
 msgid ""
 "<i>The commands will be executed in the UI Thread, make sure\n"
 "they are not blocking!</i>"
@@ -376,9 +369,8 @@ msgstr ""
 "<i>The next generation</i>"
 
 #: ../ui/about.glade:8
-#, fuzzy
 msgid "About Xournal++"
-msgstr "Riguardo Xournal++"
+msgstr "Informazioni su Xournal++"
 
 #: ../src/control/XournalMain.cpp:245
 msgid "Absolute path for the audio files playback"
@@ -406,7 +398,6 @@ msgstr "Applica alla pagina corrente"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:30
 #: ../src/control/stockdlg/XojOpenDlg.cpp:147
-#, fuzzy
 msgid "Attach file to the journal"
 msgstr "Allega file al Journal"
 
@@ -484,12 +475,10 @@ msgid "Background"
 msgstr "Sfondo"
 
 #: ../ui/settings.glade:1520
-#, fuzzy
 msgid "Background color for window Background"
 msgstr "Colore di sfondo per lo Sfondo della finestra"
 
 #: ../ui/settings.glade:1857
-#, fuzzy
 msgid "Big cursor for pen"
 msgstr "Cursore Grande per Penna"
 
@@ -512,9 +501,8 @@ msgid "Border color for current page and other selections"
 msgstr "Colore bordi per la pagina corrente e le altre selezioni"
 
 #: ../ui/about.glade:119
-#, fuzzy
 msgid "Built on:"
-msgstr "Compilato su:"
+msgstr "Compilato il:"
 
 #: ../src/control/Control.cpp:2022 ../src/control/Control.cpp:2534
 #: ../src/control/Control.cpp:2570 ../src/control/XournalMain.cpp:124
@@ -530,16 +518,14 @@ msgid "Change font"
 msgstr "Cambia font"
 
 #: ../src/undo/FillUndoAction.cpp:116
-#, fuzzy
 msgid "Change stroke fill"
-msgstr "Cambia spessore tratto"
+msgstr "Cambia riempimento tratto"
 
 #: ../src/undo/SizeUndoAction.cpp:145
 msgid "Change stroke width"
 msgstr "Cambia spessore tratto"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:98
-#, fuzzy
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
 msgstr "Colore sconosciuto: \"{1}\" (non definito nella lista di default)"
 
@@ -548,7 +534,6 @@ msgid "Configure Page Template"
 msgstr "Configura Template Pagina"
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:279
-#, fuzzy
 msgid "Contents"
 msgstr "Contenuti"
 
@@ -558,7 +543,6 @@ msgid "Copy"
 msgstr "Copia"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:30
-#, fuzzy
 msgid "Copy current"
 msgstr "Copia corrente"
 
@@ -582,14 +566,12 @@ msgstr ""
 "Xournal più vecchia)"
 
 #: ../src/util/Util.cpp:97
-#, fuzzy
 msgid "Could not create folder: {1}"
-msgstr "Impossibile aprire il file: \"{1}\""
+msgstr "Impossibile creare la cartella: {1}"
 
 #: ../src/control/Control.cpp:218 ../src/control/Control.cpp:235
-#, fuzzy
 msgid "Could not delete old autosave file \"{1}\""
-msgstr "Impossibile aprire il file: \"{1}\""
+msgstr "Impossibile eliminare il file di autosalvataggio precedente: \"{1}\""
 
 #: ../src/control/LatexController.cpp:381
 msgid ""
@@ -648,11 +630,8 @@ msgstr ""
 "posizione {3}"
 
 #: ../src/control/Control.cpp:228 ../src/control/Control.cpp:247
-#, fuzzy
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\""
-msgstr ""
-"Impossibile rimuovere lo strumento dalla Barra degli Strumenti {1} in "
-"posizione {2}"
+msgstr "Impossibile rinominare il file di autosalvataggio da \"{1}\" a \"{2}\""
 
 #: ../src/control/LatexController.cpp:310
 msgid "Could not retrieve LaTeX image file: {1}"
@@ -671,12 +650,10 @@ msgid "Could not write background \"{1}\", {2}"
 msgstr "Impossibile scrivere lo sfondo \"{1}\", {2}"
 
 #: ../src/control/xojfile/SaveHandler.cpp:419
-#, fuzzy
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Impossibile scrivere lo sfondo \"{1}\". Continuando comunque."
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:111
-#, fuzzy
 msgid "Create new layer"
 msgstr "Cancella livello"
 
@@ -685,17 +662,14 @@ msgid "Current page"
 msgstr "Pagina corrente"
 
 #: ../src/gui/dialog/FormatDialog.cpp:79
-#, fuzzy
 msgid "Custom"
 msgstr "Personalizzato"
 
 #: ../ui/settings.glade:1231
-#, fuzzy
 msgid "Custom Commands (for Method \"Custom\")"
 msgstr "Comandi Personalizzati (per Metodo \"Personalizzato\")"
 
 #: ../src/control/jobs/CustomExportJob.cpp:17
-#, fuzzy
 msgid "Custom Export"
 msgstr "Esportazione Personalizzata"
 
@@ -708,12 +682,10 @@ msgid "Cut"
 msgstr "Taglia"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
-#, fuzzy
 msgid "Default Tool"
 msgstr "Strumento di Default"
 
 #: ../ui/settings.glade:1997
-#, fuzzy
 msgid "Defaults"
 msgstr "Predefinite"
 
@@ -727,23 +699,21 @@ msgstr "Cancella Livello"
 
 #: ../src/control/XournalMain.cpp:123
 msgid "Delete Logfile"
-msgstr "Cancella file di Log"
+msgstr "Cancella Logfile"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:387
 msgid "Delete current page"
 msgstr "Cancella pagina corrente"
 
 #: ../src/control/XournalMain.cpp:173
-#, fuzzy
 msgid "Delete file"
-msgstr "Cancella file di Log"
+msgstr "Cancella file"
 
 #: ../src/undo/RemoveLayerUndoAction.cpp:41
 msgid "Delete layer"
 msgstr "Cancella livello"
 
 #: ../ui/settingsButtonConfig.glade:122
-#, fuzzy
 msgid "Delete stroke"
 msgstr "Cancella tratto"
 
@@ -768,14 +738,12 @@ msgid "Disable touch if pen is near screen"
 msgstr "Disattiva il touch se la penna è vicina allo schermo"
 
 #: ../ui/settings.glade:1156
-#, fuzzy
 msgid "Disabling Method"
 msgstr "Disattiva Metodo"
 
 #: ../src/control/Control.cpp:2533 ../src/control/Control.cpp:2569
-#, fuzzy
 msgid "Discard"
-msgstr "Dimentica"
+msgstr "Non salvare"
 
 #: ../src/control/Control.cpp:1952
 msgid ""
@@ -788,7 +756,6 @@ msgstr ""
 "I files nella cartella {1} non possono essere aperti."
 
 #: ../src/control/jobs/BaseExportJob.cpp:47
-#, fuzzy
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Non sovrascrivere il PDF di sfondo! Potrebbe causare errori!"
 
@@ -797,7 +764,6 @@ msgid "Document file was removed."
 msgstr "Il file del documento è stato rimosso."
 
 #: ../src/control/xojfile/LoadHandler.cpp:202
-#, fuzzy
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Il documento non è completo (forse è stata tagliata la fine?)"
 
@@ -860,9 +826,8 @@ msgid "Draw stroke"
 msgstr "Disegna tratto"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
-#, fuzzy
 msgid "Drawing Type - don't change"
-msgstr "Non cambiare"
+msgstr "Stile Disegno - non cambiare"
 
 #: ../src/undo/TextBoxUndoAction.cpp:52
 msgid "Edit text"
@@ -903,9 +868,8 @@ msgstr ""
 "{2}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:202
-#, fuzzy
 msgid "Error export PDF Page"
-msgstr "Errore nell'esportazione della Pagina PDF"
+msgstr "Errore nell'esportazione PDF"
 
 #: ../src/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
@@ -1060,7 +1024,6 @@ msgid "Height:"
 msgstr "Altezza:"
 
 #: ../ui/main.glade:379
-#, fuzzy
 msgid "Hide Menu"
 msgstr "Nascondi Menu"
 
@@ -1073,9 +1036,8 @@ msgid "Hide Sidebar"
 msgstr "Nascondi Barra laterale"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:101
-#, fuzzy
 msgid "Hide all"
-msgstr "Nascondi Menu"
+msgstr "Nascondi tutto"
 
 #: ../ui/settings.glade:1613
 msgid "Hide the horizontal scrollbar"
@@ -1152,14 +1114,12 @@ msgid "Layer Preview"
 msgstr "Anteprima Livello"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:333
-#, fuzzy
 msgid "Layer selection"
 msgstr "Selezione a livello"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:29
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:262
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:320
-#, fuzzy
 msgid "Layer {1}"
 msgstr "Livello {1}"
 
@@ -1230,17 +1190,14 @@ msgid "Move"
 msgstr "Muovi"
 
 #: ../src/undo/MoveLayerUndoAction.cpp:38
-#, fuzzy
 msgid "Move layer"
-msgstr "Cancella livello"
+msgstr "Muovi livello"
 
 #: ../src/undo/SwapUndoAction.cpp:88
-#, fuzzy
 msgid "Move page downwards"
 msgstr "Muovi pagina giù"
 
 #: ../src/undo/SwapUndoAction.cpp:88
-#, fuzzy
 msgid "Move page upwards"
 msgstr "Muovi pagina su"
 
@@ -1307,7 +1264,7 @@ msgstr "Apri Immagine"
 
 #: ../src/control/XournalMain.cpp:121
 msgid "Open Logfile"
-msgstr "Apri file di Log"
+msgstr "Apri fLogfile"
 
 #: ../src/control/XournalMain.cpp:122
 msgid "Open Logfile directory"
@@ -1379,7 +1336,6 @@ msgid "Page Preview"
 msgstr "Anteprima Pagina"
 
 #: ../ui/pageTemplate.glade:17
-#, fuzzy
 msgid "Page Template"
 msgstr "Template Pagina"
 
@@ -1396,7 +1352,6 @@ msgid "Page inserted"
 msgstr "Pagina inserita"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:51
-#, fuzzy
 msgid "Page number"
 msgstr "Numero di Pagina"
 
@@ -1443,9 +1398,8 @@ msgid "Pen _Options"
 msgstr "_Opzioni Penna"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:22
-#, fuzzy
 msgid "Plain"
-msgstr "Vuoto"
+msgstr "Bianco"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:32
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:106
@@ -1496,7 +1450,6 @@ msgid "Redo: "
 msgstr "Ripeti: "
 
 #: ../src/control/Control.cpp:2021
-#, fuzzy
 msgid "Remove PDF Background"
 msgstr "Rimuovi lo sfondo PDF"
 
@@ -1517,7 +1470,6 @@ msgid "Resolution"
 msgstr "Risoluzione"
 
 #: ../src/control/XournalMain.cpp:174
-#, fuzzy
 msgid "Restore file"
 msgstr "Ricarica file"
 
@@ -1526,9 +1478,8 @@ msgid "Rotation"
 msgstr "Rotazione"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
-#, fuzzy
 msgid "Rotation Snapping"
-msgstr "Rotazione Guidata"
+msgstr "Rotazione Forzata"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:24
 msgid "Ruled"
@@ -1609,9 +1560,8 @@ msgid "Select another PDF"
 msgstr "Seleziona un altro PDF"
 
 #: ../src/util/XojMsgBox.cpp:41
-#, fuzzy
 msgid "Select another name"
-msgstr "Seleziona un altro PDF"
+msgstr "Seleziona un altro nome"
 
 #: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:144
 msgid "Select background color"
@@ -1631,7 +1581,6 @@ msgid "Select region"
 msgstr "Seleziona regione"
 
 #: ../ui/settings.glade:1964
-#, fuzzy
 msgid "Select the tool and Settings if you press the Default Button"
 msgstr "Seleziona lo strumento e Impostazioni se premi il Pulsante Default"
 
@@ -1640,13 +1589,12 @@ msgid "Select toolbar:"
 msgstr "Seleziona barra degli strumenti:"
 
 #: ../ui/settings.glade:1543
-#, fuzzy
 msgid "Selection Color (Text, Stroke Selection etc.)"
 msgstr "Colore della Selezione (Testo, Selezione Tratto, ecc.)"
 
 #: ../src/control/XournalMain.cpp:120
 msgid "Send Bugreport"
-msgstr "Invia report del bug"
+msgstr "Invia Bugreport"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:53
 msgid "Separator"
@@ -1657,14 +1605,12 @@ msgid "Settings for Touch devices which are detected by GTK."
 msgstr "Impostazioni per i dispositivi Touch rilevati da GTK."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
-#, fuzzy
 msgid "Shape Recognizer"
 msgstr "Riconoscitore di Forme"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:92
-#, fuzzy
 msgid "Show all"
-msgstr "Mostra barra laterale"
+msgstr "Mostra tutto"
 
 #: ../ui/pdfpages.glade:67
 msgid ""
@@ -1695,7 +1641,6 @@ msgid "Show vertical scrollbar on the left side"
 msgstr "Mostra barra di scorrimento a sinistra"
 
 #: ../src/control/XournalMain.cpp:309
-#, fuzzy
 msgid ""
 "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
@@ -1704,27 +1649,24 @@ msgstr ""
 "Gli altri saranno ignorati."
 
 #: ../src/control/XournalMain.cpp:324
-#, fuzzy
 msgid ""
 "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
 msgstr ""
 "Ci dispiace, Xournal++ non può aprire files in remoto al momento\n"
-"Devi copiare il file in una cartella locale."
+"È necessario copiare il file in una cartella locale."
 
 #: ../ui/settingsButtonConfig.glade:120
 msgid "Standard"
 msgstr "Standard"
 
 #: ../ui/main.glade:1610
-#, fuzzy
 msgid "State PLACEHOLDER"
 msgstr "Stato PLACEHOLDER"
 
 #: ../src/undo/RecognizerUndoAction.cpp:101
 #: ../src/gui/dialog/ButtonConfigGui.cpp:103
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:43
-#, fuzzy
 msgid "Stroke recognizer"
 msgstr "Riconosci Tratto"
 
@@ -1775,7 +1717,6 @@ msgid "Text Font..."
 msgstr "Font Testo..."
 
 #: ../src/undo/TextUndoAction.cpp:47
-#, fuzzy
 msgid "Text changes"
 msgstr "Modifiche al Testo"
 
@@ -1828,16 +1769,16 @@ msgid ""
 "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug "
 "may be fixed."
 msgstr ""
-"Ci sono files di errore generati da Xournal++. Per favore invia un report, "
-"così che il bug possa essere risolto."
+"Sono presenti files di errore generati da Xournal++. Per favore invia un "
+"report, così che l'eventuale bug possa essere risolto."
 
 #: ../src/control/XournalMain.cpp:107
 msgid ""
 "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug "
 "may be fixed."
 msgstr ""
-"C'è un file di errore generato da Xournal++. Per favore invia un report, "
-"così che il bug possa essere risolto."
+"È presente un file di errore generato da Xournal++. Per favore invia un "
+"report, così che l'eventuale bug possa essere risolto."
 
 #: ../src/util/XojMsgBox.cpp:57
 msgid "There was an error displaying help: {1}"
@@ -1849,9 +1790,8 @@ msgid "Thick"
 msgstr "Spesso"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:79
-#, fuzzy
 msgid "Thickness - don't change"
-msgstr "Non cambiare"
+msgstr "Spessore - non cambiare"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:80
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
@@ -1876,9 +1816,8 @@ msgid "Toggle fullscreen"
 msgstr "Attiva Schermo intero"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:54
-#, fuzzy
 msgid "Tool - don't change"
-msgstr "Non cambiare"
+msgstr "Strumento - non cambiare"
 
 #: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:156
 msgid "Toolbar found: {1}"
@@ -1901,9 +1840,8 @@ msgstr ""
 "non devono essere configurati qui."
 
 #: ../ui/fillTransparency.glade:13
-#, fuzzy
 msgid "Transparency settings"
-msgstr "Copia le impostazioni dell'ultima pagina"
+msgstr "Impostazioni trasparenza"
 
 #: ../src/util/CrashHandler.cpp:37
 msgid "Trying to emergency save the current open document…"
@@ -1935,16 +1873,14 @@ msgid "Unknown background type: {1}"
 msgstr "Tipo di sfondo sconosciuto: {1}"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:80
-#, fuzzy
 msgid "Unknown color value \"{1}\""
-msgstr "Valore di Colore sconosciuto: \"{1}\""
+msgstr "Colore sconosciuto: \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:410
 msgid "Unknown domain type: {1}"
 msgstr "Tipo di dominio sconosciuto: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:193
-#, fuzzy
 msgid "Unknown parser error"
 msgstr "Errore di interpretazione sconosciuto"
 
@@ -1953,12 +1889,10 @@ msgid "Unknown pixmap::domain type: {1}"
 msgstr "Tipo di pixmap::domain sconosciuto: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:558
-#, fuzzy
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Tipo di tratto sconosciuto: \"{1}\", ipotizzo penna"
 
 #: ../src/control/Control.cpp:2424
-#, fuzzy
 msgid "Unsaved Document"
 msgstr "Documento non Salvato"
 
@@ -2062,13 +1996,12 @@ msgstr ""
 "Template Pagina\"."
 
 #: ../src/control/XournalMain.cpp:111
-#, fuzzy
 msgid ""
 "You're using {1}/{2} branch. Send Bugreport will direct you to this repo's "
 "issue tracker."
 msgstr ""
-"Stai usando il branch {1}/{2}. Invia Bugreport ti indirizzerà alla pagina di "
-"questo repository."
+"Stai usando il branch {1}/{2}. \"Invia Bugreport\" ti indirizzerà alla "
+"pagina di questo repository."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:96
 msgid ""
@@ -2101,7 +2034,6 @@ msgid "Zoom out"
 msgstr "Diminuisci Zoom"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:72
-#, fuzzy
 msgid "Zoom slider"
 msgstr "Zoom slider"
 
@@ -2190,7 +2122,7 @@ msgstr "_Prossimo Livello"
 
 #: ../ui/main.glade:475
 msgid "_Next Page"
-msgstr "_Prossima Pagina"
+msgstr "_Pagina Sucessiva"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:18
@@ -2219,7 +2151,6 @@ msgid "_Save"
 msgstr "_Salva"
 
 #: ../ui/main.glade:737
-#, fuzzy
 msgid "_Shape Recognizer"
 msgstr "_Riconoscitore di Forme"
 
@@ -2232,12 +2163,10 @@ msgid "_Tools"
 msgstr "_Strumenti"
 
 #: ../ui/main.glade:517
-#, fuzzy
 msgid "_Top Layer"
-msgstr "_Livello Alto"
+msgstr "_Livello Superiore"
 
 #: ../ui/main.glade:273
-#, fuzzy
 msgid "_Two Pages"
 msgstr "_Due Pagine"
 
@@ -2314,7 +2243,6 @@ msgid "pen"
 msgstr "penna"
 
 #: ../ui/settings.glade:1212
-#, fuzzy
 msgid "s"
 msgstr "s"
 
