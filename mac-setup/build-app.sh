@@ -44,7 +44,7 @@ sed -i -e "s:$HOME/gtk/inst/:@executable_path/../Resources/:g" ./Xournal++.app/C
 
 echo "Copy GTK Schema"
 mkdir -p ./Xournal++.app/Contents/Resources/share/glib-2.0/schemas
-cp -rp $HOME/gtk/inst/share/glib-2.0/schemas ./Xournal++.app/Contents/Resources/share/glib-2.0/schemas
+cp -rp $HOME/gtk/inst/share/glib-2.0/schemas ./Xournal++.app/Contents/Resources/share/glib-2.0/
 
 echo "Copy UI"
 cp -rp ../ui ./Xournal++.app/Contents/Resources/
