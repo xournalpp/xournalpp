@@ -37,16 +37,17 @@ cp -r ../ui setup/
 supportedLocales=("cs" "de" "it" "pl" "zh" "zh_TW" "zh_HK")
 for locale in "${supportedLocales[@]}" ; do
 	echo "Copy locale $locale"
-	mkdir -p setup/share/po/cs/LC_MESSAGES
+	mkdir -p setup/share/locale/$locale/LC_MESSAGES
 	
 	# Xournal Translation
-	cp -r ../po/$locale.mo setup/share/po/$locale/LC_MESSAGES/xournalpp.mo
+	cp -r ../po/$locale.mo setup/share/locale/$locale/LC_MESSAGES/xournalpp.mo
 
 	# GTK / GLib Translation
-	cp -r /share/locale/$locale/gdk-pixbuf.mo setup/share/po/$locale/LC_MESSAGES/gdk-pixbuf.mo
-	cp -r /share/locale/$locale/glib20.mo setup/share/po/$locale/LC_MESSAGES/glib20.mo
-	cp -r /share/locale/$locale/gtk30.mo setup/share/po/$locale/LC_MESSAGES/gtk30.mo
-	cp -r /share/locale/$locale/gtk30-properties.mo setup/share/po/$locale/LC_MESSAGES/gtk30-properties.mo
+	cp -r /usr/share/locale/$locale/LC_MESSAGES/glib20.mo			setup/share/locale/$locale/LC_MESSAGES/glib20.mo
+
+	cp -r /mingw64/share/locale/$locale/LC_MESSAGES/gdk-pixbuf.mo		setup/share/locale/$locale/LC_MESSAGES/gdk-pixbuf.mo
+	cp -r /mingw64/share/locale/$locale/LC_MESSAGES/gtk30.mo			setup/share/locale/$locale/LC_MESSAGES/gtk30.mo
+	cp -r /mingw64/share/locale/$locale/LC_MESSAGES/gtk30-properties.mo	setup/share/locale/$locale/LC_MESSAGES/gtk30-properties.mo
 done
 
 echo "copy pixbuf libs"
