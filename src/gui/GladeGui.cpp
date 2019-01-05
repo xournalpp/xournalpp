@@ -24,6 +24,12 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, string glade, string mainWn
 	if (!gtk_builder_add_from_file(builder, filename.c_str(), &error))
 	{
 		string msg = FS(_F("Error loading glade file \"{1}\" (try to load \"{2}\")") % glade % filename);
+
+		if (error != NULL)
+		{
+			msg += "\n";
+			msg += error->message;
+		}
 		XojMsgBox::showErrorToUser(NULL, msg);
 
 		g_error_free(error);
