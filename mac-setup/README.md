@@ -3,10 +3,12 @@ Do not install macports or homebrew. If you have installed it, you need to
 create a new user, and use this for the whole process. jhbuild does not work,
 if there is such an environment installed.
 
-### Make sure the Development environement is installed
+### Make sure the Development environment is installed
 Open a Terminal, and type in **git**, confirm popup from Appstore with "Install" to install development tools.
 
-### Build GTK
+### Build Libraries, needs to be once
+
+#### 1. Build GTK
 Execute in this folder.
 ````bash
 ./build-gtk3.sh
@@ -17,6 +19,23 @@ Download from here: https://pypi.org/project/six/
 Execute
 ````bash
 $HOME/gtk/inst/bin/python setup.py install
+````
+
+Build again. It should now build
+````bash
+./build-gtk3.sh
+````
+
+#### 2. Build Poppler
+Execute in this folder.
+````bash
+./build-poppler.sh
+````
+
+#### 3. Build Mac integration
+Execute in this folder.
+````bash
+./build-mac-integration.sh
 ````
 
 ### Build Xournal++

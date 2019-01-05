@@ -52,7 +52,10 @@ for locale in "${supportedLocales[@]}" ; do
 	mkdir -p setup/share/locale/$locale/LC_MESSAGES
 
 	# Xournal Translation
-	cp -r ../build/po/$locale.gmo ./Xournal++.app/Contents/Resources/share/locale/$locale/LC_MESSAGES/xournalpp.mo
+	cp ../build/po/$locale.gmo ./Xournal++.app/Contents/Resources/share/locale/$locale/LC_MESSAGES/xournalpp.mo
+
+  # Mac Integration
+  cp $HOME/gtk/inst/share/locale/zh_CN/LC_MESSAGES/gtk-mac-integration.mo ./Xournal++.app/Contents/Resources/share/locale/$locale/LC_MESSAGES/gtk-mac-integration.mo
 done
 
 echo "Create zip"
