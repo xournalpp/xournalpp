@@ -66,7 +66,7 @@ https://build.opensuse.org/package/show/home:badshah400:Staging/xournalpp-gtk3
 Build by https://github.com/badshah400
 
 ### Windows
-** The windows Version has a Bug: **
+**The windows Version has a Bug:**
 Please start Xournal++, touch with the Pen, Quit Xournal++ and start again.
 Then Pen input will be working, until you restart Windows. #659
 
