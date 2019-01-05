@@ -165,11 +165,11 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_top">5</property>
-                <property name="label">Andreas Butti, 2010 - 2018
+                <property name="label">Andreas Butti, 2010 - 2019
 Wilson Brenna, 2012 - 2015 (tex support)
 Marek Pikuła, 2015 - 2018
-Moreno Razzoli, 2018
-Luca Errani, 2018</property>
+Moreno Razzoli, 2018 - 2019
+Luca Errani, 2018 - 2019</property>
                 <property name="use_markup">True</property>
                 <property name="justify">center</property>
               </object>
