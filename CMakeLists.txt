@@ -104,6 +104,14 @@ if (WIN32)
   message ("Automatically set ENABLE_MATHTEX OFF on Windows")
 endif ()
 
+# Mac integration
+pkg_check_modules (MacIntegration "gtk-mac-integration")
+if (MacIntegration_FOUND)
+	message("Enable Mac integration")
+	add_includes_ldflags ("${MacIntegration_LDFLAGS}" "${MacIntegration_INCLUDE_DIRS}")
+	add_definitions(-DMAC_INTEGRATION)
+endif ()
+
 # Unstable features
 
 option (UNSTABLE_HIGHDPI_FIXES "HighDPI Fixes (unstable)" OFF)
@@ -199,7 +207,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	# Install icons
 	install(FILES ui/pixmaps/xournalpp.svg
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps)
-	
+
 	# Symlink are not easy to use with CMake, therefor simple install a copy...
 	install(FILES ui/pixmaps/application-x-xopp.svg
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
@@ -223,7 +231,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
 	install(FILES desktop/x-xopt.desktop
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
-	
+
 	install(FILES desktop/xournalpp.thumbnailer
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/thumbnailers)
 	install(PROGRAMS utility/usr/local/bin/xopp-recording.sh
