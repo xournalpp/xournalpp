@@ -2427,7 +2427,7 @@ void Control::updateWindowTitle()
 			{
 				title += "*";
 			}
-			title += doc->getPdfFilename().str();
+			title += doc->getPdfFilename().getFilename();
 		}
 	}
 	else
