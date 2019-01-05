@@ -174,6 +174,12 @@ public:
 	int getDisplayDpi();
 
 	/**
+	 * Dark theme for white-coloured icons
+	 */
+	void setDarkTheme(bool dark);
+	bool isDarkTheme();
+
+	/**
 	 * The last saved path
 	 */
 	void setLastSavePath(Path p);
@@ -363,6 +369,12 @@ private:
 	 *  Show a better visible cursor for pen
 	 */
 	bool showBigCursor;
+
+	/**
+	 * If the user uses a dark-themed DE, he should enable this 
+	 * (white icons)
+	 */
+	bool darkTheme;
 
 	/**
 	 *  Hide the scrollbar

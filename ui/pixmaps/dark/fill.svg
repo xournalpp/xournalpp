@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 5.699955 5.699955"
+   height="5.699955mm"
+   width="5.699955mm">
+  <defs
+     id="defs2">
+    <style
+       type="text/css"
+       id="current-color-scheme">
+      .ColorScheme-Text {
+        color:#4d4d4d;
+      }
+      .ColorScheme-Background {
+        color:#eff0f1;
+      }
+      .ColorScheme-Highlight {
+        color:#3daee9;
+      }
+      .ColorScheme-ViewText {
+        color:#31363b;
+      }
+      .ColorScheme-ViewBackground {
+        color:#fcfcfc;
+      }
+      .ColorScheme-ViewHover {
+        color:#93cee9;
+      }
+      .ColorScheme-ViewFocus{
+        color:#3daee9;
+      }
+      .ColorScheme-ButtonText {
+        color:#31363b;
+      }
+      .ColorScheme-ButtonBackground {
+        color:#eff0f1;
+      }
+      .ColorScheme-ButtonHover {
+        color:#93cee9;
+      }
+      .ColorScheme-ButtonFocus{
+        color:#3daee9;
+      }
+      </style>
+    <style
+       type="text/css"
+       id="current-color-scheme-2">
+      .ColorScheme-Text {
+        color:#4d4d4d;
+      }
+      .ColorScheme-Background {
+        color:#eff0f1;
+      }
+      .ColorScheme-Highlight {
+        color:#3daee9;
+      }
+      .ColorScheme-ViewText {
+        color:#31363b;
+      }
+      .ColorScheme-ViewBackground {
+        color:#fcfcfc;
+      }
+      .ColorScheme-ViewHover {
+        color:#93cee9;
+      }
+      .ColorScheme-ViewFocus{
+        color:#3daee9;
+      }
+      .ColorScheme-ButtonText {
+        color:#31363b;
+      }
+      .ColorScheme-ButtonBackground {
+        color:#eff0f1;
+      }
+      .ColorScheme-ButtonHover {
+        color:#93cee9;
+      }
+      .ColorScheme-ButtonFocus{
+        color:#3daee9;
+      }
+      </style>
+  </defs>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-99.959546,-159.5905)"
+     id="layer1">
+    <g
+       id="layer1-2"
+       transform="translate(8.3154764,35.529762)">
+      <g
+         transform="translate(-19.718407,-12.608934)"
+         id="layer1-1">
+        <g
+           id="layer1-6-9"
+           transform="matrix(0.26458333,0,0,0.26458333,-0.27653341,-2.506233)">
+          <path
+             style="color:#4d4d4d;fill:#486cc9;fill-opacity:1;stroke:none"
+             d="m 425.48601,538.39703 c 0.46884,1.70916 1.63998,3.17393 2.1459,4.35033 0.17703,0.34977 0.26352,0.74689 0.26352,1.17124 0,1.39043 -1.0746,2.5098 -2.40942,2.5098 -1.33483,0 -2.40943,-1.11937 -2.40943,-2.5098 0,-0.42435 0.12417,-0.82147 0.30118,-1.17124 0.50591,-1.1764 1.63942,-2.64117 2.10825,-4.35033 z"
+             id="rect4112-8-1"
+             class="ColorScheme-Text" />
+          <path
+             style="color:#4d4d4d;fill:#ffffff;fill-opacity:0.99053626;stroke:none"
+             d="m 432.62308,527.15303 c 1.79104,0 3.24298,1.4383 3.24298,3.21257 v 2.811 l 6.48594,6.42514 -6.89132,6.82671 -9.17153,-9.08555 2.28022,-2.25884 0.81074,-0.80314 v -3.91532 c 0,-1.77427 1.45192,-3.21257 3.24297,-3.21257 z m 0,1.60629 c -0.89552,0 -1.62149,0.71916 -1.62149,1.60628 v 2.30904 l 2.17888,-2.15845 1.06409,1.05413 v -1.20472 c 0,-0.88712 -0.72596,-1.60628 -1.62148,-1.60628 z m 0.55739,4.01571 -4.6111,4.56787 c 4.81863,5.45019 5.28945,-1.81009 11.50241,2.25884 z"
+             id="rect3357-2"
+             class="ColorScheme-Text" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
