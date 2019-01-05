@@ -50,6 +50,12 @@ void XournalMain::initLocalisation()
 #define PACKAGE_LOCALE_DIR "../share/locale/"
 #endif
 
+#ifdef __APPLE__
+#undef PACKAGE_LOCALE_DIR
+	Path p = Stacktrace::getExePath();
+	p /= "../Resources/share/locale/";
+	const char* PACKAGE_LOCALE_DIR = p.c_str();
+#endif
 	bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 	textdomain(GETTEXT_PACKAGE);
 
