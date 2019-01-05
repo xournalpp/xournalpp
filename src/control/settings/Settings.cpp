@@ -67,6 +67,7 @@ void Settings::loadDefault()
 
 	this->autoloadPdfXoj = true;
 	this->showBigCursor = false;
+	this->darkTheme = false;
 	this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
 
 	//Set this for autosave frequency in minutes.
@@ -324,6 +325,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "showBigCursor") == 0)
 	{
 		this->showBigCursor = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "darkTheme") == 0)
+	{
+		this->darkTheme = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "defaultSaveName") == 0)
 	{
@@ -693,6 +698,7 @@ void Settings::save()
 	WRITE_COMMENT("Which gui elements are hidden if you are in Presentation mode, separated by a colon (,)");
 
 	WRITE_BOOL_PROP(showBigCursor);
+	WRITE_BOOL_PROP(darkTheme);
 
 	if (this->scrollbarHideType == SCROLLBAR_HIDE_BOTH)
 	{
@@ -1289,6 +1295,20 @@ void Settings::setDisplayDpi(int dpi)
 int Settings::getDisplayDpi()
 {
 	return this->displayDpi;
+}
+
+void Settings::setDarkTheme(bool dark)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	this->darkTheme = dark;
+}
+
+bool Settings::isDarkTheme()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->darkTheme;
 }
 
 bool Settings::isSidebarVisible()

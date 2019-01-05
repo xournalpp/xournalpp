@@ -25,7 +25,7 @@ public:
 	GdkPixbuf* pixbuf;
 };
 
-ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, GladeGui* gui, string id)
+ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, GladeGui* gui, string id, bool darkTheme)
  : ToolButton(handler, gui, id, ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "rect-draw.png", _("Draw Rectangle"))
 {
 	XOJ_INIT_TYPE(ToolDrawCombocontrol);
@@ -34,13 +34,14 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, Act
 	this->labelWidget = NULL;
 	this->iconWidget = NULL;
 	setPopupMenu(gtk_menu_new());
+	string darkThemeExt = darkTheme ? "-dark" : "";
 
-	drawTypes.push_back(new ToolDrawType(_("Draw Rectangle"),				"rect-draw.svg",					ACTION_TOOL_DRAW_RECT   ));
-	drawTypes.push_back(new ToolDrawType(_("Draw Circle"),					"circle-draw.svg",					ACTION_TOOL_DRAW_CIRCLE ));
-	drawTypes.push_back(new ToolDrawType(_("Draw Arrow"),					"arrow-draw.svg",					ACTION_TOOL_DRAW_ARROW  ));
-	drawTypes.push_back(new ToolDrawType(_("Draw Line"),					"ruler.svg",						ACTION_RULER            ));
-	drawTypes.push_back(new ToolDrawType(_("Draw coordinate system"),		"coordinate-system-draw.svg",		ACTION_TOOL_DRAW_COORDINATE_SYSTEM  ));
-	drawTypes.push_back(new ToolDrawType(_("Stroke recognizer"),			"shape_recognizer.svg",				ACTION_SHAPE_RECOGNIZER ));
+	drawTypes.push_back(new ToolDrawType(_("Draw Rectangle"),				"rect-draw" + darkThemeExt + ".svg",					ACTION_TOOL_DRAW_RECT   ));
+	drawTypes.push_back(new ToolDrawType(_("Draw Circle"),					"circle-draw" + darkThemeExt + ".svg",					ACTION_TOOL_DRAW_CIRCLE ));
+	drawTypes.push_back(new ToolDrawType(_("Draw Arrow"),					"arrow-draw" + darkThemeExt + ".svg",					ACTION_TOOL_DRAW_ARROW  ));
+	drawTypes.push_back(new ToolDrawType(_("Draw Line"),					"ruler" + darkThemeExt + ".svg",						ACTION_RULER            ));
+	drawTypes.push_back(new ToolDrawType(_("Draw coordinate system"),		"coordinate-system-draw" + darkThemeExt + ".svg",		ACTION_TOOL_DRAW_COORDINATE_SYSTEM  ));
+	drawTypes.push_back(new ToolDrawType(_("Stroke recognizer"),			"shape_recognizer" + darkThemeExt + ".svg",				ACTION_SHAPE_RECOGNIZER ));
 
 	for (ToolDrawType* t : drawTypes)
 	{
