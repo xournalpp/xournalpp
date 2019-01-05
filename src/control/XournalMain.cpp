@@ -8,6 +8,7 @@
 #include "gui/XournalView.h"
 #include "pdf/base/XojPdfExport.h"
 #include "pdf/base/XojPdfExportFactory.h"
+#include "undo/EmergencySaveRestore.h"
 #include "xojfile/LoadHandler.h"
 
 #include <config.h>
@@ -187,6 +188,9 @@ void XournalMain::checkForEmergencySave(Control* control) {
 		if (control->openFile(filename, -1, true))
 		{
 			control->getDocument()->setFilename("");
+
+			// Make sure the document is changed, there is a question to ask for save
+			control->getUndoRedoHandler()->addUndoAction(new EmergencySaveRestore());
 			control->updateWindowTitle();
 			g_unlink(filename.c_str());
 		}
