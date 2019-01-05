@@ -48,6 +48,7 @@ cp -rp $HOME/gtk/inst/share/glib-2.0/schemas ./Xournal++.app/Contents/Resources/
 
 echo "Copy UI"
 cp -rp ../ui ./Xournal++.app/Contents/Resources/
+sed -i -e 's/GDK_CONTROL_MASK/GDK_META_MASK/g' ./Xournal++.app/Contents/Resources/ui/main.glade
 
 supportedLocales=("cs" "de" "it" "pl" "zh" "zh_TW" "zh_HK")
 for locale in "${supportedLocales[@]}" ; do
