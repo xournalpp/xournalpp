@@ -45,6 +45,11 @@ ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* par
 	// still owned by Control
 	this->pageBackgroundChangeController = control->getPageBackgroundChangeController();
 
+	if (control->getSettings()->isDarkTheme())
+	{
+		gui->setThemePath("dark");
+	}
+
 	initToolItems();
 }
 
@@ -411,7 +416,7 @@ void ToolMenuHandler::initToolItems()
 
 	addToolItem(new ToolButton(listener, gui, "PLAY_OBJECT", ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL, true,
 							   "object-play.svg", _("Play Object"), gui->get("menuToolsPlayObject")));
-
+	
 	addToolItem(new ToolButton(listener, gui, "DRAW_CIRCLE", ACTION_TOOL_DRAW_CIRCLE, GROUP_RULER, false,
 							   "circle-draw.svg", _("Draw Circle"), gui->get("menuToolsDrawCircle")));
 	addToolItem(new ToolButton(listener, gui, "DRAW_RECTANGLE", ACTION_TOOL_DRAW_RECT, GROUP_RULER, false,

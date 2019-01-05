@@ -163,6 +163,7 @@ void SettingsDialog::load()
 	loadCheckbox("cbAddVerticalSpace", settings->getAddVerticalSpace());
 	loadCheckbox("cbAddHorizontalSpace", settings->getAddHorizontalSpace());
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
+	loadCheckbox("cbDarkTheme", settings->isDarkTheme());
 	loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
 	loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
 
@@ -334,6 +335,7 @@ void SettingsDialog::save()
 	settings->setAddVerticalSpace(getCheckbox("cbAddVerticalSpace"));
 	settings->setAddHorizontalSpace(getCheckbox("cbAddHorizontalSpace"));
 	settings->setShowBigCursor(getCheckbox("cbBigCursor"));
+	settings->setDarkTheme(getCheckbox("cbDarkTheme"));
 
 	int scrollbarHideType = SCROLLBAR_HIDE_NONE;
 	if (getCheckbox("cbHideHorizontalScrollbar"))
