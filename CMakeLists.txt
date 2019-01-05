@@ -106,9 +106,7 @@ endif ()
 
 # Mac integration
 pkg_check_modules (MacIntegration "gtk-mac-integration")
-if (${CMAKE_SYSTEM_NAME} MATCHES "")
-	message("Disable Mac integration")
-else()
+if (MacIntegration_FOUND)
 	message("Enable Mac integration")
 	add_includes_ldflags ("${MacIntegration_LDFLAGS}" "${MacIntegration_INCLUDE_DIRS}")
 	add_definitions(-DMAC_INTEGRATION)
