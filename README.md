@@ -6,7 +6,6 @@
   <img alt="Coverity Scan Build Status"
        src="https://scan.coverity.com/projects/17046/badge.svg"/>
 </a>
-(Currently run manually)
 
 
 ## Features
@@ -34,10 +33,26 @@ Xournal++ features:
 * Rotation snapping every 45 degrees
 * Rect snapping to grid 
 * Audio recording and playback alongside with handwritten notes
+* Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...
 
 ![Screenshot](readme/main.png?raw=true "Xournal++ Screenshot")
 
-Hopefully you'll enjoy it!
+## Windows 10
+![Screenshot](readme/main-win.png?raw=true "Xournal++ Screenshot on Win10")
+
+## macOS High Sierra
+![Screenshot](readme/main-mac.png?raw=true "Xournal++ Screenshot on macOS")
+
+## Toolbar / Page Background / Layer
+Multiple page background, easy selectable on the toolbar
+![Screenshot](readme/background.png?raw=true "Xournal++ Screenshot")
+
+Layer sidebar and advance Layer selection.
+![Screenshot](readme/layer.png?raw=true "Xournal++ Screenshot")
+
+Multiple predefined and fully customizeable Toolbar.
+![Screenshot](readme/toolbar.png?raw=true "Xournal++ Screenshot")
+
 
 ## How to use audio record and playback feature:
 
