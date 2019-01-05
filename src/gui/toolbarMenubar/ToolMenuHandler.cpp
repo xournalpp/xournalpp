@@ -416,6 +416,15 @@ void ToolMenuHandler::initToolItems()
 
 	addToolItem(new ToolButton(listener, gui, "PLAY_OBJECT", ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL, true,
 							   "object-play.svg", _("Play Object"), gui->get("menuToolsPlayObject")));
+	
+	addToolItem(new ToolButton(listener, gui, "DRAW_CIRCLE", ACTION_TOOL_DRAW_CIRCLE, GROUP_RULER, false,
+							   "circle-draw.svg", _("Draw Circle"), gui->get("menuToolsDrawCircle")));
+	addToolItem(new ToolButton(listener, gui, "DRAW_RECTANGLE", ACTION_TOOL_DRAW_RECT, GROUP_RULER, false,
+							   "rect-draw.svg", _("Draw Rectangle"), gui->get("menuToolsDrawRect")));
+	addToolItem(new ToolButton(listener, gui, "DRAW_ARROW", ACTION_TOOL_DRAW_ARROW, GROUP_RULER, false,
+							   "arrow-draw.svg", _("Draw Arrow"), gui->get("menuToolsDrawArrow")));
+	addToolItem(new ToolButton(listener, gui, "DRAW_COORDINATE_SYSTEM", ACTION_TOOL_DRAW_COORDINATE_SYSTEM, GROUP_RULER, false,
+							   "coordinate-system-draw.svg", _("Draw coordinate system"), gui->get("menuToolsDrawCoordinateSystem")));
 
 	addToolItem(new ToolButton(listener, gui, "VERTICAL_SPACE", ACTION_TOOL_VERTICAL_SPACE, GROUP_TOOL, true,
 							   "stretch.svg", _("Vertical Space"), gui->get("menuToolsVerticalSpace")));
