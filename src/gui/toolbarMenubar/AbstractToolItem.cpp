@@ -19,11 +19,7 @@ AbstractToolItem::~AbstractToolItem()
 {
 	XOJ_CHECK_TYPE(AbstractToolItem);
 
-	if (this->item)
-	{
-		g_object_unref(G_OBJECT(this->item));
-		this->item = NULL;
-	}
+	this->item = NULL;
 	if (this->popupMenu)
 	{
 		g_object_unref(G_OBJECT(this->popupMenu));
