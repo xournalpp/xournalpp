@@ -46,6 +46,15 @@ echo "Copy UI"
 
 cp -rp ../ui ./Xournal++.app/Contents/Resources/
 
+supportedLocales=("cs" "de" "it" "pl" "zh" "zh_TW" "zh_HK")
+for locale in "${supportedLocales[@]}" ; do
+	echo "Copy locale $locale"
+	mkdir -p setup/share/locale/$locale/LC_MESSAGES
+
+	# Xournal Translation
+	cp -r ../build/po/$locale.gmo ./Xournal++.app/Contents/Resources/share/locale/$locale/LC_MESSAGES/xournalpp.mo
+done
+
 echo "Create zip"
 zip -r Xournal++.zip Xournal++.app
 
