@@ -47,7 +47,7 @@ public:
 
 	void registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group = GROUP_NOGROUP);
 
-	void initToolItems(bool darkTheme);
+	void initToolItems();
 
 	void setUndoDescription(string description);
 	void setRedoDescription(string description);

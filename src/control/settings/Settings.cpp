@@ -1282,8 +1282,6 @@ void Settings::setDisplayDpi(int dpi)
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	this->displayDpi = dpi;
-
 	if (this->displayDpi == dpi)
 	{
 		return;
@@ -1300,8 +1298,12 @@ int Settings::getDisplayDpi()
 void Settings::setDarkTheme(bool dark)
 {
 	XOJ_CHECK_TYPE(Settings);
-
+	if (this->darkTheme == dark)
+	{
+		return;
+	}
 	this->darkTheme = dark;
+	save();
 }
 
 bool Settings::isDarkTheme()

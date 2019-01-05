@@ -1869,7 +1869,7 @@ they are not blocking!&lt;/i&gt;</property>
                           </child>
                           <child>
                           <object class="GtkCheckButton" id="cbDarkTheme">
-                            <property name="label" translatable="yes">Dark Theme</property>
+                            <property name="label" translatable="yes">Dark Theme (restart needed)</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>

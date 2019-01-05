@@ -45,7 +45,12 @@ ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* par
 	// still owned by Control
 	this->pageBackgroundChangeController = control->getPageBackgroundChangeController();
 
-	initToolItems(control->getSettings()->isDarkTheme());
+	if (control->getSettings()->isDarkTheme())
+	{
+		gui->setThemePath("dark");
+	}
+
+	initToolItems();
 }
 
 ToolMenuHandler::~ToolMenuHandler()
@@ -308,11 +313,9 @@ void ToolMenuHandler::initEraserToolItem()
 	addToolItem(tbEraser);
 }
 
-void ToolMenuHandler::initToolItems(bool darkTheme)
+void ToolMenuHandler::initToolItems()
 {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
-
-	string darkThemeExt = darkTheme ? "-dark" : "";
 
 	addToolItem(new ToolButton(listener, "SAVE", ACTION_SAVE, "document-save", _("Save"), gui->get("menuFileSave")));
 	addToolItem(new ToolButton(listener, "NEW", ACTION_NEW, "document-new", _("New Xournal"), gui->get("menuFileNew")));
@@ -374,10 +377,10 @@ void ToolMenuHandler::initToolItems(bool darkTheme)
 
 	//Icon snapping.svg made by www.freepik.com from www.flaticon.com
 	addToolItem(new ToolButton(listener, gui, "ROTATION_SNAPPING", ACTION_ROTATION_SNAPPING, GROUP_SNAPPING, false,
-								"snapping" + darkThemeExt + ".svg", _("Rotation Snapping"), gui->get("menuSnapRotation")));
+								"snapping.svg", _("Rotation Snapping"), gui->get("menuSnapRotation")));
 
 	addToolItem(new ToolButton(listener, gui, "GRID_SNAPPING", ACTION_GRID_SNAPPING, GROUP_GRID_SNAPPING, false,
-								"grid_snapping" + darkThemeExt + ".svg", _("Grid Snapping"), gui->get("menuSnapGrid")));
+								"grid_snapping.svg", _("Grid Snapping"), gui->get("menuSnapGrid")));
 
 	addToolItem(new ColorToolItem(listener, toolHandler, this->parent, 0xff0000, true));
 
@@ -390,7 +393,7 @@ void ToolMenuHandler::initToolItems(bool darkTheme)
 
 	addToolItem(new ToolSelectCombocontrol(this, listener, gui, "SELECT"));
 
-	addToolItem(new ToolDrawCombocontrol(this, listener, gui, "DRAW", darkTheme));
+	addToolItem(new ToolDrawCombocontrol(this, listener, gui, "DRAW"));
 
 	ToolButton* tbInsertNewPage = new ToolButton(listener, gui, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER,
 												 "addPage.svg", _("Insert page"));
@@ -400,7 +403,7 @@ void ToolMenuHandler::initToolItems(bool darkTheme)
 	addToolItem(new ToolButton(listener, gui, "HILIGHTER", ACTION_TOOL_HILIGHTER, GROUP_TOOL, true,
 							   "tool_highlighter.svg", _("Highlighter"), gui->get("menuToolsHighlighter")));
 	addToolItem(new ToolButton(listener, gui, "TEXT", ACTION_TOOL_TEXT, GROUP_TOOL, true,
-							   "tool_text" + darkThemeExt + ".svg", _("Text"), gui->get("menuToolsText")));
+							   "tool_text.svg", _("Text"), gui->get("menuToolsText")));
 	addToolItem(new ToolButton(listener, gui, "IMAGE", ACTION_TOOL_IMAGE, GROUP_TOOL, true,
 							   "tool_image.svg", _("Image"), gui->get("menuToolsImage")));
 
@@ -414,39 +417,28 @@ void ToolMenuHandler::initToolItems(bool darkTheme)
 	addToolItem(new ToolButton(listener, gui, "PLAY_OBJECT", ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL, true,
 							   "object-play.svg", _("Play Object"), gui->get("menuToolsPlayObject")));
 
-	// Aren't these already added in ToolDrawCombocontrol.cpp ??
-
-	// addToolItem(new ToolButton(listener, gui, "DRAW_CIRCLE", ACTION_TOOL_DRAW_CIRCLE, GROUP_RULER, false,
-	// 						   "circle-draw.svg", _("Draw Circle"), gui->get("menuToolsDrawCircle")));
-	// addToolItem(new ToolButton(listener, gui, "DRAW_RECTANGLE", ACTION_TOOL_DRAW_RECT, GROUP_RULER, false,
-	// 						   "rect-draw.svg", _("Draw Rectangle"), gui->get("menuToolsDrawRect")));
-	// addToolItem(new ToolButton(listener, gui, "DRAW_ARROW", ACTION_TOOL_DRAW_ARROW, GROUP_RULER, false,
-	// 						   "arrow-draw.svg", _("Draw Arrow"), gui->get("menuToolsDrawArrow")));
-	// addToolItem(new ToolButton(listener, gui, "DRAW_COORDINATE_SYSTEM", ACTION_TOOL_DRAW_COORDINATE_SYSTEM, GROUP_RULER, false,
-	// 						   "coordinate-system-draw.svg", _("Draw coordinate system"), gui->get("menuToolsDrawCoordinateSystem")));
-
 	addToolItem(new ToolButton(listener, gui, "VERTICAL_SPACE", ACTION_TOOL_VERTICAL_SPACE, GROUP_TOOL, true,
 							   "stretch.svg", _("Vertical Space"), gui->get("menuToolsVerticalSpace")));
 	addToolItem(new ToolButton(listener, gui, "HAND", ACTION_TOOL_HAND, GROUP_TOOL, true, "hand.svg", _("Hand"),
 							   gui->get("menuToolsHand")));
 
 	addToolItem(new ToolButton(listener, gui, "SHAPE_RECOGNIZER", ACTION_SHAPE_RECOGNIZER, GROUP_RULER, false,
-							   "shape_recognizer" + darkThemeExt + ".svg", _("Shape Recognizer"), gui->get("menuToolsShapeRecognizer")));
+							   "shape_recognizer.svg", _("Shape Recognizer"), gui->get("menuToolsShapeRecognizer")));
 	addToolItem(new ToolButton(listener, gui, "RULER", ACTION_RULER, GROUP_RULER, false,
-							   "ruler" + darkThemeExt + ".svg", _("Ruler"), gui->get("menuToolsRuler")));
+							   "ruler.svg", _("Ruler"), gui->get("menuToolsRuler")));
 
 	addToolItem(new ToolButton(listener, gui, "FINE", ACTION_SIZE_FINE, GROUP_SIZE, true,
-							   "thickness_thin" + darkThemeExt + ".svg", _("Thin")));
+							   "thickness_thin.svg", _("Thin")));
 	addToolItem(new ToolButton(listener, gui, "MEDIUM", ACTION_SIZE_MEDIUM, GROUP_SIZE, true,
-							   "thickness_medium" + darkThemeExt + ".svg", _("Medium")));
+							   "thickness_medium.svg", _("Medium")));
 	addToolItem(new ToolButton(listener, gui, "THICK", ACTION_SIZE_THICK, GROUP_SIZE, true,
-							   "thickness_thick" + darkThemeExt + ".svg", _("Thick")));
+							   "thickness_thick.svg", _("Thick")));
 
 	addToolItem(new ToolButton(listener, gui, "DEFAULT_TOOL", ACTION_TOOL_DEFAULT, GROUP_NOGROUP, false,
 							   "default.svg", _("Default Tool"), gui->get("menuToolsDefault")));
 
 	addToolItem(new ToolButton(listener, gui, "TOOL_FILL", ACTION_TOOL_FILL, GROUP_FILL, false,
-							   "fill" + darkThemeExt + ".svg", _("Fill")));
+							   "fill.svg", _("Fill")));
 
 	fontButton = new FontButton(listener, gui, "SELECT_FONT", ACTION_FONT_BUTTON_CHANGED, _("Select Font"));
 	addToolItem(fontButton);

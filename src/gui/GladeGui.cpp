@@ -14,6 +14,7 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, string glade, string mainWn
 
 	this->window = NULL;
 	this->gladeSearchPath = gladeSearchPath;
+	this->themePath = "";
 
 	string filename = this->gladeSearchPath->findFile("", glade);
 
@@ -80,8 +81,18 @@ GdkPixbuf* GladeGui::loadIconPixbuf(string filename)
 		return NULL;
 	}
 
-	string pathname = this->gladeSearchPath->findFile("pixmaps", filename);
-
+	string pathname;
+	// If a theme Path has been set, search for the svg in that path
+	if (themePath != "")
+	{
+		pathname = this->gladeSearchPath->findFile("pixmaps/" + themePath, filename);	
+	}
+	// If no themed-svg is present, search for it in the default location
+	if (pathname == "")
+	{
+		pathname = this->gladeSearchPath->findFile("pixmaps", filename);
+	}
+	
 	if (pathname == "")
 	{
 		g_warning("GladeGui::get: Couldn't find pixmap file: %s", filename.c_str());
@@ -97,6 +108,17 @@ GdkPixbuf* GladeGui::loadIconPixbuf(string filename)
 	}
 
 	return pixbuf;
+}
+
+void GladeGui::setThemePath(string themePath)
+{
+	XOJ_CHECK_TYPE(GladeGui);
+
+	if (this->themePath == themePath)
+	{
+		return;
+	}
+	this->themePath = themePath;
 }
 
 GtkWidget* GladeGui::getWindow()
