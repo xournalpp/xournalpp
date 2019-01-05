@@ -75,8 +75,8 @@ public:
 	void exportBase(BaseExportJob* job);
 	bool save(bool synchron = false);
 	bool saveAs();
-	void quit();
-	bool close(bool destroy = false);
+	void quit(bool allowCancel = true);
+	bool close(bool destroy = false, bool allowCancel = true);
 
 	// Asks user to replace an existing file when saving / exporting, since we add the extension
 	// after the OK, we need to check manually

@@ -144,7 +144,8 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 		+[](GtkosxApplication* osxApp, MainWindow* self)
 		{
 			XOJ_CHECK_TYPE_OBJ(self, MainWindow);
-			self->control->quit();
+			self->control->quit(false);
+			return true;
 		}), this);
 
 	gtkosx_application_ready(osxApp);
