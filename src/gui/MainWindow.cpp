@@ -134,15 +134,20 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	LayerCtrlListener::registerListener(control->getLayerController());
 
 #ifdef MAC_INTEGRATION
-  GtkosxApplication* osxApp = gtkosx_application_get();
+	GtkosxApplication* osxApp = gtkosx_application_get();
 
-  GtkWidget* menubar = get("mainMenubar");
-  gtk_widget_hide(menubar);
-  gtkosx_application_set_menu_bar(osxApp, GTK_MENU_SHELL(menubar));
+	GtkWidget* menubar = get("mainMenubar");
+	gtk_widget_hide(menubar);
+	gtkosx_application_set_menu_bar(osxApp, GTK_MENU_SHELL(menubar));
 
-//  g_signal_connect(osxApp, "NSApplicationWillTerminate", G_CALLBACK(on_quit_action_activate), window);
+	g_signal_connect(osxApp, "NSApplicationWillTerminate", G_CALLBACK(
+		+[](GtkosxApplication* osxApp, MainWindow* self)
+		{
+			XOJ_CHECK_TYPE_OBJ(self, MainWindow);
+			self->control->quit();
+		}), this);
 
-  gtkosx_application_ready(osxApp);
+	gtkosx_application_ready(osxApp);
 #endif
 }
 
