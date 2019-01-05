@@ -72,23 +72,19 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 
-	if (!stroke)
+	if (stroke == NULL)
 	{
 		return;
 	}
 
-	// Backward compatibility and also easier to handle for me;-)
-	// I cannot draw a line with one point, to draw a visible line I need two points,
-	// twice the same Point is also OK
-	if (stroke->getPointCount() == 1)
+	// This is not a valid stroke
+	if (stroke->getPointCount() < 2)
 	{
-		ArrayIterator<Point> it = stroke->pointIterator();
-		if (it.hasNext())
-		{
-			stroke->addPoint(it.next());
-		}
-		// No pressure sensitivity
-		stroke->clearPressure();
+		g_warning("Stroke incomplete!");
+
+		delete stroke;
+		stroke = NULL;
+		return;
 	}
 
 	stroke->freeUnusedPointItems();
