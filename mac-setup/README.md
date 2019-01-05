@@ -21,6 +21,8 @@ $HOME/gtk/inst/bin/python setup.py install
 
 ### Build Xournal++
 ````bash
+export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
+
 cmake -DCMAKE_INSTALL_PREFIX:PATH=$HOME/gtk/inst -DENABLE_MATHTEX=OFF ..
 make -j 4
 make install
