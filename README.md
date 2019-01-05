@@ -66,18 +66,18 @@ https://build.opensuse.org/package/show/home:badshah400:Staging/xournalpp-gtk3
 Build by https://github.com/badshah400
 
 ### Windows
-**Windows is not fully tested.** If you find errors, please let us know over the
-Issues page here on Github.
-If you are a developer, working with Windows and would like to help us, please
-contact also contact us over an Issue. 
+**The windows Version has a Bug:**
+Please start Xournal++, touch with the Pen, Quit Xournal++ and start again.
+Then Pen input will be working, until you restart Windows. #659
 
 https://github.com/xournalpp/xournalpp/releases
 
 ### Mac OS X
-Pressure sensitivity is not working on Mac. (GTK-Issue)
+Pressure sensitivity is not working on Mac #569. (GTK-Issue)
 
-No release yet.
+HighDpi Displays are not displayed sharp #172.
 
+https://github.com/xournalpp/xournalpp/releases
 
 ## Building
 
