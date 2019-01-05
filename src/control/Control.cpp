@@ -2495,12 +2495,20 @@ bool Control::saveAs()
 	return save();
 }
 
-void Control::quit()
+void Control::quit(bool allowCancel)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	if (!this->close(true))
+	if (!this->close(true, allowCancel))
 	{
+		if (!allowCancel)
+		{
+			// Cancel is not allowed, and the user close or did not save
+			// This is probably called from macOS, where the Application
+			// now will be killed - therefore do an emergency save.
+			emergencySave();
+		}
+
 		return;
 	}
 
@@ -2514,7 +2522,7 @@ void Control::quit()
 	gtk_main_quit();
 }
 
-bool Control::close(bool destroy)
+bool Control::close(bool destroy, bool allowCancel)
 {
 	XOJ_CHECK_TYPE(Control);
 
@@ -2529,7 +2537,12 @@ bool Control::close(bool destroy)
 
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
+
+		if (allowCancel)
+		{
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
+		}
+
 		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		int resNotSaved = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);

@@ -327,7 +327,10 @@ bool UndoRedoHandler::isChanged()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (!this->undoList) return this->savedUndo;
+	if (!this->undoList)
+	{
+		return this->savedUndo;
+	}
 
 	return this->savedUndo != g_list_last(this->undoList)->data;
 }
@@ -336,7 +339,10 @@ bool UndoRedoHandler::isChangedAutosave()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (!this->undoList) return this->autosavedUndo;
+	if (!this->undoList)
+	{
+		return this->autosavedUndo;
+	}
 
 	return this->autosavedUndo != g_list_last(this->undoList)->data;
 }
