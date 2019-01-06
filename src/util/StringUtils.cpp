@@ -2,15 +2,11 @@
 #include <sstream> // std::istringstream
 
 #include <glib.h>
-#include <string.h>
+#include <string>
 
 string StringUtils::toLowerCase(string input)
-{
-	char* lower = g_utf8_strdown(input.c_str(), input.size());
-	string strLower = lower;
-	g_free(lower);
-
-	return strLower;
+{	
+	return string(g_utf8_strdown(input.c_str(), input.size()));
 }
 
 void StringUtils::replaceAllChars(string& input, const std::vector<replace_pair> replaces)
