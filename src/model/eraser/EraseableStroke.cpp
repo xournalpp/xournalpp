@@ -38,7 +38,7 @@ EraseableStroke::~EraseableStroke()
 // This is done in a Thread, every thing else in the main loop /////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-void EraseableStroke::draw(cairo_t* cr, double x, double y, double width, double height)
+void EraseableStroke::draw(cairo_t* cr)
 {
 	XOJ_CHECK_TYPE(EraseableStroke);
 

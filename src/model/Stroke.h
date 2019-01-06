@@ -81,7 +81,12 @@ public:
 	void setToolType(StrokeTool type);
 	StrokeTool getToolType() const;
 
-	const double* getWidths() const;
+	/**
+	 * Get dash array and count
+	 *
+	 * @return true if dashed
+	 */
+	bool getDashes(const double*& dashes, int& dashCount);
 
 	bool intersects(double x, double y, double halfSize, double* gap = NULL);
 
@@ -124,6 +129,12 @@ private:
 	Point* points;
 	int pointCount;
 	int pointAllocCount;
+
+	/**
+	 * Dashed line
+	 */
+	double* dashes = NULL;
+	int dashCount = 0;
 
 	// Stroke timestamp, to match it to the audio stream
 	int timestamp;
