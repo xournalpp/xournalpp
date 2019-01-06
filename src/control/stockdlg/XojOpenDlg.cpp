@@ -131,6 +131,7 @@ Path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 		gtk_file_filter_add_pattern(filterSupported, "*.xopt");
 		gtk_file_filter_add_pattern(filterSupported, "*.pdf");
 		gtk_file_filter_add_pattern(filterSupported, "*.PDF");
+		gtk_file_filter_add_pattern(filterSupported, "*.moj"); // MrWriter
 		gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterSupported);
 
 		addFilterXoj();

@@ -214,8 +214,9 @@ void LoadHandler::parseStart()
 
 	if (strcmp(elementName, "xournal") == 0)
 	{
-		// Read the document version
+		endRootTag = "xournal";
 
+		// Read the document version
 		const char* version = LoadHandlerHelper::getAttrib("version", true, this);
 		if (version)
 		{
@@ -235,6 +236,26 @@ void LoadHandler::parseStart()
 		}
 
 		this->pos = PARSER_POS_STARTED;
+	}
+	else if (strcmp(elementName, "MrWriter") == 0)
+	{
+		endRootTag = "MrWriter";
+
+		// Read the document version
+		const char* version = LoadHandlerHelper::getAttrib("version", true, this);
+		if (version)
+		{
+			this->creator = "MrWriter ";
+			this->creator += version;
+		}
+
+		// Document version 1:
+		// Handle it the same as a Xournal document, and don't allow to overwrite
+		this->fileversion = 1;
+		this->pos = PARSER_POS_STARTED;
+
+		// Always create a Backup, this is a 3rd party format
+		doc.setCreateBackupOnSave(true);
 	}
 	else
 	{
@@ -714,7 +735,7 @@ void LoadHandler::parserStartElement(GMarkupParseContext* context, const gchar* 
 	handler->elementName = NULL;
 }
 
-void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* element_name,
+void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* elementName,
 								   gpointer userdata, GError** error)
 {
 	// Return on error
@@ -724,46 +745,44 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* el
 	}
 
 	LoadHandler* handler = (LoadHandler*) userdata;
-
 	XOJ_CHECK_TYPE_OBJ(handler, LoadHandler);
 
-
-	if (handler->pos == PARSER_POS_STARTED && strcmp(element_name, "xournal") == 0)
+	if (handler->pos == PARSER_POS_STARTED && strcmp(elementName, handler->endRootTag) == 0)
 	{
 		handler->pos = PASER_POS_FINISHED;
 	}
-	else if (handler->pos == PARSER_POS_IN_PAGE && strcmp(element_name, "page") == 0)
+	else if (handler->pos == PARSER_POS_IN_PAGE && strcmp(elementName, "page") == 0)
 	{
 		handler->pos = PARSER_POS_STARTED;
 		handler->page = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(element_name, "layer") == 0)
+	else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(elementName, "layer") == 0)
 	{
 		handler->pos = PARSER_POS_IN_PAGE;
 		handler->layer = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(element_name, "timestamp") == 0)
+	else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(elementName, "timestamp") == 0)
 	{
 		/** Used for backwards compatibility against xoj files with timestamps) */
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->stroke = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_STROKE && strcmp(element_name, "stroke") == 0)
+	else if (handler->pos == PARSER_POS_IN_STROKE && strcmp(elementName, "stroke") == 0)
 	{
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->stroke = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_TEXT && strcmp(element_name, "text") == 0)
+	else if (handler->pos == PARSER_POS_IN_TEXT && strcmp(elementName, "text") == 0)
 	{
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->text = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_IMAGE && strcmp(element_name, "image") == 0)
+	else if (handler->pos == PARSER_POS_IN_IMAGE && strcmp(elementName, "image") == 0)
 	{
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->image = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_TEXIMAGE && strcmp(element_name, "teximage") == 0)
+	else if (handler->pos == PARSER_POS_IN_TEXIMAGE && strcmp(elementName, "teximage") == 0)
 	{
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->teximage = NULL;

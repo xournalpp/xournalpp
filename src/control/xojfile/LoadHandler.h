@@ -141,6 +141,8 @@ private:
 	Image* image;
 	TexImage* teximage;
 
+	const char* endRootTag = "xournal";
+
 	string xournalFilename;
 
 	GError* error;
