@@ -97,14 +97,14 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 		return;
 	}
 
-	StrokeView sv(cr, s);
+	StrokeView sv(cr, s, startPoint, scaleFactor, noAlpha);
 
 	if (changeSource)
 	{
 		sv.changeCairoSource(this->markAudioStroke);
 	}
 
-	sv.paint(startPoint, scaleFactor, noAlpha, this->dontRenderEditingStroke);
+	sv.paint(this->dontRenderEditingStroke);
 }
 
 void DocumentView::drawText(cairo_t* cr, Text* t)

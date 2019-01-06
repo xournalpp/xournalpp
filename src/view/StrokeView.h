@@ -18,11 +18,11 @@ class Stroke;
 class StrokeView
 {
 public:
-	StrokeView(cairo_t* cr, Stroke* s);
+	StrokeView(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool noAlpha);
 	~StrokeView();
 
 public:
-	void paint(int startPoint, double scaleFactor, bool noAlpha, bool dontRenderEditingStroke);
+	void paint(bool dontRenderEditingStroke);
 
 	/**
 	 * Change cairo source, used to draw hilighter transparent,
@@ -35,7 +35,23 @@ private:
 	void applyDashed(cairo_t* cr, Stroke* s, double offset);
 	void drawEraseableStroke(cairo_t* cr, Stroke* s);
 
+	/**
+	 * No pressure sensitivity, one line is drawed
+	 */
+	void drawNoPressure();
+
+	/**
+	 * Draw a stroke with pressure, for this multiple
+	 * lines with different widths needs to be drawed
+	 */
+	void drawWithPressuire();
+
+
 private:
 	cairo_t* cr;
 	Stroke* s;
+
+	int startPoint;
+	double scaleFactor;
+	bool noAlpha;
 };

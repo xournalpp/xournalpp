@@ -4,9 +4,12 @@
 #include "model/eraser/EraseableStroke.h"
 #include "model/Stroke.h"
 
-StrokeView::StrokeView(cairo_t* cr, Stroke* s)
+StrokeView::StrokeView(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool noAlpha)
  : cr(cr),
-   s(s)
+   s(s),
+   startPoint(startPoint),
+   scaleFactor(scaleFactor),
+   noAlpha(noAlpha)
 {
 }
 
@@ -88,83 +91,76 @@ void StrokeView::changeCairoSource(bool markAudioStroke)
 	}
 }
 
-void StrokeView::paint(int startPoint, double scaleFactor, bool noAlpha, bool dontRenderEditingStroke)
+/**
+ * No pressure sensitivity, one line is drawed
+ */
+void StrokeView::drawNoPressure()
 {
+	int count = 1;
+	double width = s->getWidth();
 	ArrayIterator<Point> points = s->pointIterator();
 
-	cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
-	cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
-
-	// don't render eraseable for previews
-	if (s->getEraseable() && !dontRenderEditingStroke)
+	bool group = false;
+	if (s->getFill() != -1 && s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
 	{
-		drawEraseableStroke(cr, s);
-		return;
+		cairo_push_group(cr);
+		// Do not apply the alpha here, else the border and the fill
+		// are visible instead of one homogeneous area
+		DocumentView::applyColor(cr, s, 255);
+		drawFillStroke();
+		group = true;
 	}
+
+	// Set width
+	cairo_set_line_width(cr, width * scaleFactor);
+	//applyDashed(cr, s);
+
+	while (points.hasNext())
+	{
+		Point p = points.next();
+
+		if (startPoint <= count)
+		{
+			cairo_line_to(cr, p.x, p.y);
+		}
+		else
+		{
+			cairo_move_to(cr, p.x, p.y);
+		}
+
+		count++;
+	}
+
+	cairo_stroke(cr);
+
+	if (group)
+	{
+		cairo_pop_group_to_source(cr);
+
+		if (noAlpha)
+		{
+			// Currently drawing -> transparent applied on blitting
+			cairo_paint(cr);
+		}
+		else
+		{
+			cairo_paint_with_alpha(cr, s->getFill() / 255.0);
+		}
+	}
+}
+
+/**
+ * Draw a stroke with pressure, for this multiple
+ * lines with different widths needs to be drawed
+ */
+void StrokeView::drawWithPressuire()
+{
 
 	int count = 1;
 	double width = s->getWidth();
+	ArrayIterator<Point> points = s->pointIterator();
 
-	// No pressure sensitivity, easy draw a line...
-	if (!s->hasPressure() || s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
-	{
-		bool group = false;
-		if (s->getFill() != -1 && s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
-		{
-			cairo_push_group(cr);
-			// Do not apply the alpha here, else the border and the fill
-			// are visible instead of one homogeneous area
-			DocumentView::applyColor(cr, s, 255);
-			drawFillStroke();
-			group = true;
-		}
-
-		// Set width
-		cairo_set_line_width(cr, width * scaleFactor);
-		//applyDashed(cr, s);
-
-		while (points.hasNext())
-		{
-			Point p = points.next();
-
-			if (startPoint <= count)
-			{
-				cairo_line_to(cr, p.x, p.y);
-			}
-			else
-			{
-				cairo_move_to(cr, p.x, p.y);
-			}
-
-			count++;
-		}
-
-		cairo_stroke(cr);
-
-		if (group)
-		{
-			cairo_pop_group_to_source(cr);
-
-			if (noAlpha)
-			{
-				// Currently drawing -> transparent applied on blitting
-				cairo_paint(cr);
-			}
-			else
-			{
-				cairo_paint_with_alpha(cr, s->getFill() / 255.0);
-			}
-		}
-		return;
-	}
-
-	///////////////////////////////////////////////////////
-	// Presure sensitiv stroken
-	///////////////////////////////////////////////////////
-
-
-	Point lastPoint1(-1, -1);
-	lastPoint1 = points.next();
+	Point lastPoint1 = points.next();
 
 	while (points.hasNext())
 	{
@@ -188,5 +184,28 @@ void StrokeView::paint(int startPoint, double scaleFactor, bool noAlpha, bool do
 	}
 
 	cairo_stroke(cr);
+}
+
+void StrokeView::paint(bool dontRenderEditingStroke)
+{
+	cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
+	cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+
+	// don't render eraseable for previews
+	if (s->getEraseable() && !dontRenderEditingStroke)
+	{
+		drawEraseableStroke(cr, s);
+		return;
+	}
+
+	// No pressure sensitivity, easy draw a line...
+	if (!s->hasPressure() || s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
+	{
+		drawNoPressure();
+	}
+	else
+	{
+		drawWithPressuire();
+	}
 }
 
