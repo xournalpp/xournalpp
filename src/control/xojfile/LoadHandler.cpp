@@ -253,9 +253,6 @@ void LoadHandler::parseStart()
 		// Handle it the same as a Xournal document, and don't allow to overwrite
 		this->fileversion = 1;
 		this->pos = PARSER_POS_STARTED;
-
-		// Always create a Backup, this is a 3rd party format
-		doc.setCreateBackupOnSave(true);
 	}
 	else
 	{
