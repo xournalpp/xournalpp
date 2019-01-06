@@ -40,13 +40,18 @@ void StrokeView::drawFillStroke()
 	cairo_fill(cr);
 }
 
-void StrokeView::applyDashed(cairo_t* cr, Stroke* s, double offset)
+void StrokeView::applyDashed(double offset)
 {
 	const double* dashes = NULL;
 	int dashCount = 0;
 	if (s->getDashes(dashes, dashCount))
 	{
 		cairo_set_dash(cr, dashes, dashCount, offset);
+	}
+	else
+	{
+		// Disable dash
+		cairo_set_dash(cr, NULL, 0, 0);
 	}
 }
 
@@ -113,7 +118,9 @@ void StrokeView::drawNoPressure()
 
 	// Set width
 	cairo_set_line_width(cr, width * scaleFactor);
-	//applyDashed(cr, s);
+	applyDashed(0);
+
+	Point lastPoint = points.get();
 
 	while (points.hasNext())
 	{
@@ -129,6 +136,7 @@ void StrokeView::drawNoPressure()
 		}
 
 		count++;
+		lastPoint = p;
 	}
 
 	cairo_stroke(cr);
@@ -161,7 +169,7 @@ void StrokeView::drawWithPressuire()
 	ArrayIterator<Point> points = s->pointIterator();
 
 	Point lastPoint1 = points.next();
-
+	double dashOffset = 0;
 	while (points.hasNext())
 	{
 		Point p = points.next();
@@ -174,12 +182,15 @@ void StrokeView::drawWithPressuire()
 
 			// Set width
 			cairo_set_line_width(cr, width * scaleFactor);
+			applyDashed(dashOffset);
 
 			cairo_move_to(cr, lastPoint1.x, lastPoint1.y);
 			cairo_line_to(cr, p.x, p.y);
 			cairo_stroke(cr);
 		}
 		count++;
+		dashOffset += lastPoint1.lineLengthTo(p);
+
 		lastPoint1 = p;
 	}
 

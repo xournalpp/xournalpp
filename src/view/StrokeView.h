@@ -32,7 +32,7 @@ public:
 
 private:
 	void drawFillStroke();
-	void applyDashed(cairo_t* cr, Stroke* s, double offset);
+	void applyDashed(double offset);
 	void drawEraseableStroke(cairo_t* cr, Stroke* s);
 
 	/**
