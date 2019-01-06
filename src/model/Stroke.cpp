@@ -24,9 +24,9 @@ Stroke::Stroke()
 	this->eraseable = NULL;
 	this->fill = -1;
 
-	// TODO DEBUG
-	this->dashes = new double[2] {2, 5};
-	this->dashCount = 2;
+	// TODO Dashes
+//	this->dashes = new double[2] {2, 5};
+//	this->dashCount = 2;
 }
 
 Stroke::~Stroke()
