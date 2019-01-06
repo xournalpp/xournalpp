@@ -518,9 +518,11 @@ void LoadHandler::parseStroke()
 		return;
 	}
 
+	// MrWriter writes pressures as separate field
 	const char* pressure = LoadHandlerHelper::getAttrib("pressures", true, this);
 	if (pressure == NULL)
 	{
+		// Xournal / Xournal++ uses the width field
 		pressure = endPtr;
 	}
 
