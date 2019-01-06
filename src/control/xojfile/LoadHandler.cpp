@@ -510,24 +510,30 @@ void LoadHandler::parseStroke()
 
 	const char* width = LoadHandlerHelper::getAttrib("width", false, this);
 
-	char* ptr = NULL;
-	stroke->setWidth(g_ascii_strtod(width, &ptr));
-	if (ptr == width)
+	char* endPtr = NULL;
+	stroke->setWidth(g_ascii_strtod(width, &endPtr));
+	if (endPtr == width)
 	{
 		error("%s", FC(_F("Error reading width of a stroke: {1}") % width));
 		return;
 	}
 
-	while (*ptr != 0)
+	const char* pressure = LoadHandlerHelper::getAttrib("pressures", true, this);
+	if (pressure == NULL)
+	{
+		pressure = endPtr;
+	}
+
+	while (*pressure != 0)
 	{
 		char* tmpptr = NULL;
-		double val = g_ascii_strtod(ptr, &tmpptr);
-		if (tmpptr == ptr)
+		double val = g_ascii_strtod(pressure, &tmpptr);
+		if (tmpptr == pressure)
 		{
 			break;
 		}
-		ptr = tmpptr;
-		this->pressureBuffer.add(val);
+		pressure = tmpptr;
+		this->pressureBuffer.push_back(val);
 	}
 
 	int color = 0;
@@ -840,10 +846,9 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 
 		if (handler->pressureBuffer.size() != 0)
 		{
-			if (handler->pressureBuffer.size() == handler->stroke->getPointCount() - 1)
+			if (handler->pressureBuffer.size() >= handler->stroke->getPointCount() - 1)
 			{
-				const double* data = handler->pressureBuffer.getData();
-				handler->stroke->setPressure(data);
+				handler->stroke->setPressure(handler->pressureBuffer);
 				handler->pressureBuffer.clear();
 			}
 			else
@@ -950,57 +955,3 @@ Document* LoadHandler::loadDocument(string filename)
 	return &this->doc;
 }
 
-DoubleArrayBuffer::DoubleArrayBuffer()
-{
-	XOJ_INIT_TYPE(DoubleArrayBuffer);
-
-	this->data = NULL;
-	this->len = 0;
-	this->allocCount = 0;
-}
-
-DoubleArrayBuffer::~DoubleArrayBuffer()
-{
-	XOJ_CHECK_TYPE(DoubleArrayBuffer);
-
-	g_free(this->data);
-	this->data = NULL;
-	this->len = 0;
-	this->allocCount = 0;
-
-	XOJ_RELEASE_TYPE(DoubleArrayBuffer);
-}
-
-void DoubleArrayBuffer::clear()
-{
-	XOJ_CHECK_TYPE(DoubleArrayBuffer);
-
-	this->len = 0;
-}
-
-const double* DoubleArrayBuffer::getData()
-{
-	XOJ_CHECK_TYPE(DoubleArrayBuffer);
-
-	return this->data;
-}
-
-int DoubleArrayBuffer::size()
-{
-	XOJ_CHECK_TYPE(DoubleArrayBuffer);
-
-	return this->len;
-}
-
-void DoubleArrayBuffer::add(double d)
-{
-	XOJ_CHECK_TYPE(DoubleArrayBuffer);
-
-	if (this->len >= this->allocCount)
-	{
-		this->allocCount += 1024;
-		this->data = (double*) g_realloc(this->data, this->allocCount * sizeof(double));
-	}
-
-	this->data[this->len++] = d;
-}
