@@ -214,8 +214,9 @@ void LoadHandler::parseStart()
 
 	if (strcmp(elementName, "xournal") == 0)
 	{
-		// Read the document version
+		endRootTag = "xournal";
 
+		// Read the document version
 		const char* version = LoadHandlerHelper::getAttrib("version", true, this);
 		if (version)
 		{
@@ -234,6 +235,23 @@ void LoadHandler::parseStart()
 			this->creator = creator;
 		}
 
+		this->pos = PARSER_POS_STARTED;
+	}
+	else if (strcmp(elementName, "MrWriter") == 0)
+	{
+		endRootTag = "MrWriter";
+
+		// Read the document version
+		const char* version = LoadHandlerHelper::getAttrib("version", true, this);
+		if (version)
+		{
+			this->creator = "MrWriter ";
+			this->creator += version;
+		}
+
+		// Document version 1:
+		// Handle it the same as a Xournal document, and don't allow to overwrite
+		this->fileversion = 1;
 		this->pos = PARSER_POS_STARTED;
 	}
 	else
@@ -492,24 +510,32 @@ void LoadHandler::parseStroke()
 
 	const char* width = LoadHandlerHelper::getAttrib("width", false, this);
 
-	char* ptr = NULL;
-	stroke->setWidth(g_ascii_strtod(width, &ptr));
-	if (ptr == width)
+	char* endPtr = NULL;
+	stroke->setWidth(g_ascii_strtod(width, &endPtr));
+	if (endPtr == width)
 	{
 		error("%s", FC(_F("Error reading width of a stroke: {1}") % width));
 		return;
 	}
 
-	while (*ptr != 0)
+	// MrWriter writes pressures as separate field
+	const char* pressure = LoadHandlerHelper::getAttrib("pressures", true, this);
+	if (pressure == NULL)
+	{
+		// Xournal / Xournal++ uses the width field
+		pressure = endPtr;
+	}
+
+	while (*pressure != 0)
 	{
 		char* tmpptr = NULL;
-		double val = g_ascii_strtod(ptr, &tmpptr);
-		if (tmpptr == ptr)
+		double val = g_ascii_strtod(pressure, &tmpptr);
+		if (tmpptr == pressure)
 		{
 			break;
 		}
-		ptr = tmpptr;
-		this->pressureBuffer.add(val);
+		pressure = tmpptr;
+		this->pressureBuffer.push_back(val);
 	}
 
 	int color = 0;
@@ -714,7 +740,7 @@ void LoadHandler::parserStartElement(GMarkupParseContext* context, const gchar* 
 	handler->elementName = NULL;
 }
 
-void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* element_name,
+void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* elementName,
 								   gpointer userdata, GError** error)
 {
 	// Return on error
@@ -724,46 +750,44 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* el
 	}
 
 	LoadHandler* handler = (LoadHandler*) userdata;
-
 	XOJ_CHECK_TYPE_OBJ(handler, LoadHandler);
 
-
-	if (handler->pos == PARSER_POS_STARTED && strcmp(element_name, "xournal") == 0)
+	if (handler->pos == PARSER_POS_STARTED && strcmp(elementName, handler->endRootTag) == 0)
 	{
 		handler->pos = PASER_POS_FINISHED;
 	}
-	else if (handler->pos == PARSER_POS_IN_PAGE && strcmp(element_name, "page") == 0)
+	else if (handler->pos == PARSER_POS_IN_PAGE && strcmp(elementName, "page") == 0)
 	{
 		handler->pos = PARSER_POS_STARTED;
 		handler->page = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(element_name, "layer") == 0)
+	else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(elementName, "layer") == 0)
 	{
 		handler->pos = PARSER_POS_IN_PAGE;
 		handler->layer = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(element_name, "timestamp") == 0)
+	else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(elementName, "timestamp") == 0)
 	{
 		/** Used for backwards compatibility against xoj files with timestamps) */
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->stroke = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_STROKE && strcmp(element_name, "stroke") == 0)
+	else if (handler->pos == PARSER_POS_IN_STROKE && strcmp(elementName, "stroke") == 0)
 	{
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->stroke = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_TEXT && strcmp(element_name, "text") == 0)
+	else if (handler->pos == PARSER_POS_IN_TEXT && strcmp(elementName, "text") == 0)
 	{
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->text = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_IMAGE && strcmp(element_name, "image") == 0)
+	else if (handler->pos == PARSER_POS_IN_IMAGE && strcmp(elementName, "image") == 0)
 	{
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->image = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_TEXIMAGE && strcmp(element_name, "teximage") == 0)
+	else if (handler->pos == PARSER_POS_IN_TEXIMAGE && strcmp(elementName, "teximage") == 0)
 	{
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->teximage = NULL;
@@ -824,10 +848,9 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 
 		if (handler->pressureBuffer.size() != 0)
 		{
-			if (handler->pressureBuffer.size() == handler->stroke->getPointCount() - 1)
+			if (handler->pressureBuffer.size() >= handler->stroke->getPointCount() - 1)
 			{
-				const double* data = handler->pressureBuffer.getData();
-				handler->stroke->setPressure(data);
+				handler->stroke->setPressure(handler->pressureBuffer);
 				handler->pressureBuffer.clear();
 			}
 			else
@@ -934,57 +957,3 @@ Document* LoadHandler::loadDocument(string filename)
 	return &this->doc;
 }
 
-DoubleArrayBuffer::DoubleArrayBuffer()
-{
-	XOJ_INIT_TYPE(DoubleArrayBuffer);
-
-	this->data = NULL;
-	this->len = 0;
-	this->allocCount = 0;
-}
-
-DoubleArrayBuffer::~DoubleArrayBuffer()
-{
-	XOJ_CHECK_TYPE(DoubleArrayBuffer);
-
-	g_free(this->data);
-	this->data = NULL;
-	this->len = 0;
-	this->allocCount = 0;
-
-	XOJ_RELEASE_TYPE(DoubleArrayBuffer);
-}
-
-void DoubleArrayBuffer::clear()
-{
-	XOJ_CHECK_TYPE(DoubleArrayBuffer);
-
-	this->len = 0;
-}
-
-const double* DoubleArrayBuffer::getData()
-{
-	XOJ_CHECK_TYPE(DoubleArrayBuffer);
-
-	return this->data;
-}
-
-int DoubleArrayBuffer::size()
-{
-	XOJ_CHECK_TYPE(DoubleArrayBuffer);
-
-	return this->len;
-}
-
-void DoubleArrayBuffer::add(double d)
-{
-	XOJ_CHECK_TYPE(DoubleArrayBuffer);
-
-	if (this->len >= this->allocCount)
-	{
-		this->allocCount += 1024;
-		this->data = (double*) g_realloc(this->data, this->allocCount * sizeof(double));
-	}
-
-	this->data[this->len++] = d;
-}

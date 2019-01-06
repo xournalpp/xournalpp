@@ -111,7 +111,7 @@ UndoAction* EditSelectionContents::setSize(ToolSize size,
 			double originalWidth = s->getWidth();
 
 			int pointCount = s->getPointCount();
-			double* originalPressure = SizeUndoAction::getPressure(s);
+			vector<double> originalPressure = SizeUndoAction::getPressure(s);
 
 			if (tool == STROKE_TOOL_PEN)
 			{
@@ -131,7 +131,7 @@ UndoAction* EditSelectionContents::setSize(ToolSize size,
 			s->scalePressure(factor);
 
 			// save the new pressure
-			double* newPressure = SizeUndoAction::getPressure(s);
+			vector<double> newPressure = SizeUndoAction::getPressure(s);
 
 			undo->addStroke(s, originalWidth, s->getWidth(), originalPressure, newPressure, pointCount);
 			found = true;

@@ -85,7 +85,7 @@ public:
 
 	bool intersects(double x, double y, double halfSize, double* gap = NULL);
 
-	void setPressure(const double* data);
+	void setPressure(const vector<double>& pressure);
 	void setLastPressure(double pressure);
 	void clearPressure();
 	void scalePressure(double factor);

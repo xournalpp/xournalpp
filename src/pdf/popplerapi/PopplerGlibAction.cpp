@@ -97,25 +97,25 @@ void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest)
 		}
 		break;
 	case POPPLER_DEST_FIT:
-		g_warning("Unimplemented link type: POPPLER_DEST_FIT");
+		// g_warning("Unimplemented link type: POPPLER_DEST_FIT");
 		break;
 	case POPPLER_DEST_FITH:
-		g_warning("Unimplemented link type: POPPLER_DEST_FITH");
+		// g_warning("Unimplemented link type: POPPLER_DEST_FITH");
 		break;
 	case POPPLER_DEST_FITV:
-		g_warning("Unimplemented link type: POPPLER_DEST_FITV");
+		// g_warning("Unimplemented link type: POPPLER_DEST_FITV");
 		break;
 	case POPPLER_DEST_FITR:
-		g_warning("Unimplemented link type: POPPLER_DEST_FITR");
+		// g_warning("Unimplemented link type: POPPLER_DEST_FITR");
 		break;
 	case POPPLER_DEST_FITB:
-		g_warning("Unimplemented link type: POPPLER_DEST_FITB");
+		// g_warning("Unimplemented link type: POPPLER_DEST_FITB");
 		break;
 	case POPPLER_DEST_FITBH:
-		g_warning("Unimplemented link type: POPPLER_DEST_FITBH");
+		// g_warning("Unimplemented link type: POPPLER_DEST_FITBH");
 		break;
 	case POPPLER_DEST_FITBV:
-		g_warning("Unimplemented link type: POPPLER_DEST_FITBV");
+		// g_warning("Unimplemented link type: POPPLER_DEST_FITBV");
 		break;
 	case POPPLER_DEST_NAMED:
 		{

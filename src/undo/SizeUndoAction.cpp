@@ -9,8 +9,8 @@
 class SizeUndoActionEntry
 {
 public:
-	SizeUndoActionEntry(Stroke* s, double orignalWidth, double newWidth, double* originalPressure,
-						double* newPressure, int pressureCount)
+	SizeUndoActionEntry(Stroke* s, double orignalWidth, double newWidth, vector<double> originalPressure,
+					    vector<double> newPressure, int pressureCount)
 	{
 		XOJ_INIT_TYPE(SizeUndoActionEntry);
 
@@ -25,12 +25,6 @@ public:
 	~SizeUndoActionEntry()
 	{
 		XOJ_CHECK_TYPE(SizeUndoActionEntry);
-
-		delete this->originalPressure;
-		this->originalPressure = NULL;
-		delete this->newPressure;
-		this->newPressure = NULL;
-
 		XOJ_RELEASE_TYPE(SizeUndoActionEntry);
 	}
 
@@ -40,8 +34,8 @@ public:
 	double orignalWidth;
 	double newWidth;
 
-	double* originalPressure;
-	double* newPressure;
+	vector<double> originalPressure;
+	vector<double> newPressure;
 	int pressureCount;
 };
 
@@ -66,24 +60,24 @@ SizeUndoAction::~SizeUndoAction()
 	XOJ_RELEASE_TYPE(SizeUndoAction);
 }
 
-double* SizeUndoAction::getPressure(Stroke* s)
+vector<double> SizeUndoAction::getPressure(Stroke* s)
 {
 	int count = s->getPointCount();
-	double* data = new double[count];
+	vector<double> data;
 	for (int i = 0; i < count; i++)
 	{
-		data[i] = s->getPoint(i).z;
+		data.push_back(s->getPoint(i).z);
 	}
 
 	return data;
 }
 
-void SizeUndoAction::addStroke(Stroke* s, double originalWidth, double newWidt, double* originalPressure,
-							   double* newPressure, int pressureCount)
+void SizeUndoAction::addStroke(Stroke* s, double originalWidth, double newWidth, vector<double> originalPressure,
+							   vector<double> newPressure, int pressureCount)
 {
 	XOJ_CHECK_TYPE(SizeUndoAction);
 
-	this->data.push_back(new SizeUndoActionEntry(s, originalWidth, newWidt, originalPressure, newPressure, pressureCount));
+	this->data.push_back(new SizeUndoActionEntry(s, originalWidth, newWidth, originalPressure, newPressure, pressureCount));
 }
 
 bool SizeUndoAction::undo(Control* control)

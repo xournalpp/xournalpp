@@ -29,11 +29,11 @@ public:
 	virtual bool redo(Control* control);
 	virtual string getText();
 
-	void addStroke(Stroke* s, double originalWidth, double newWidt,
-				   double* originalPressure, double* newPressure, int pressureCount);
+	void addStroke(Stroke* s, double originalWidth, double newWidth,
+				   vector<double> originalPressure, vector<double> newPressure, int pressureCount);
 
 public:
-	static double* getPressure(Stroke* s);
+	static vector<double> getPressure(Stroke* s);
 
 private:
 	XOJ_TYPE_ATTRIB;

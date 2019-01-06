@@ -35,26 +35,6 @@ enum ParserPosition
     PASER_POS_FINISHED			// Document is parsed
 };
 
-class DoubleArrayBuffer
-{
-public:
-	DoubleArrayBuffer();
-	virtual ~DoubleArrayBuffer();
-
-public:
-	void clear();
-	const double* getData();
-	int size();
-	void add(double d);
-
-private:
-	XOJ_TYPE_ATTRIB;
-
-	double* data;
-	int len;
-	int allocCount;
-};
-
 class LoadHandler
 {
 public:
@@ -132,7 +112,7 @@ private:
 
 	gzFile fp;
 
-	DoubleArrayBuffer pressureBuffer;
+	vector<double> pressureBuffer;
 
 	PageRef page;
 	Layer* layer;
@@ -140,6 +120,8 @@ private:
 	Text* text;
 	Image* image;
 	TexImage* teximage;
+
+	const char* endRootTag = "xournal";
 
 	string xournalFilename;
 

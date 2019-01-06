@@ -195,7 +195,6 @@ XOJ_DECLARE_TYPE(SwapUndoAction, 184);
 XOJ_DECLARE_TYPE(PageHandler, 185);
 XOJ_DECLARE_TYPE(PageListener, 186);
 XOJ_DECLARE_TYPE(ToolDrawCombocontrol, 187);
-XOJ_DECLARE_TYPE(DoubleArrayBuffer, 188);
 XOJ_DECLARE_TYPE(SidebarPreviewPages, 189);
 XOJ_DECLARE_TYPE(SidebarPreviewLayers, 190);
 XOJ_DECLARE_TYPE(SidebarPreviewPageEntry, 191);
