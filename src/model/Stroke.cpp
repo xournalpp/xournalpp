@@ -212,9 +212,22 @@ double Stroke::getWidth() const
  */
 bool Stroke::getDashes(const double*& dashes, int& dashCount)
 {
+	XOJ_CHECK_TYPE(Stroke);
+
 	dashes = this->dashes;
 	dashCount = this->dashCount;
 
+	return this->dashCount > 0;
+}
+
+/**
+ * Get dash array and count
+ *
+ * @return true if dashed
+ */
+bool Stroke::hasDashes()
+{
+	XOJ_CHECK_TYPE(Stroke);
 	return this->dashCount > 0;
 }
 

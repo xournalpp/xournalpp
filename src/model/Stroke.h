@@ -87,6 +87,7 @@ public:
 	 * @return true if dashed
 	 */
 	bool getDashes(const double*& dashes, int& dashCount);
+	bool hasDashes();
 
 	bool intersects(double x, double y, double halfSize, double* gap = NULL);
 
