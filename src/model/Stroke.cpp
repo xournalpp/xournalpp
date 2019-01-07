@@ -23,6 +23,10 @@ Stroke::Stroke()
 
 	this->eraseable = NULL;
 	this->fill = -1;
+
+	// TODO Dashes
+//	this->dashes = new double[2] {2, 5};
+//	this->dashCount = 2;
 }
 
 Stroke::~Stroke()
@@ -35,6 +39,10 @@ Stroke::~Stroke()
 	this->pointAllocCount = 0;
 
 	this->timestamp = 0;
+
+	delete[] this->dashes;
+	this->dashes = NULL;
+	this->dashCount = 0;
 
 	XOJ_RELEASE_TYPE(Stroke);
 }
@@ -50,6 +58,7 @@ void Stroke::applyStyleFrom(const Stroke* other)
 	setAudioFilename(other->getAudioFilename());
 	setTimestamp(other->getTimestamp());
 	setFill(other->getFill());
+	// TODO Copy dashes
 }
 
 Stroke* Stroke::cloneStroke() const
@@ -93,6 +102,8 @@ void Stroke::serialize(ObjectOutputStream& out)
 
 	out.writeData(this->points, this->pointCount, sizeof(Point));
 
+	// TODO Dashes
+
 	out.endObject();
 }
 
@@ -122,6 +133,8 @@ void Stroke::readSerialized(ObjectInputStream& in)
 	this->pointCount = 0;
 
 	in.readData((void**) &this->points, &this->pointCount);
+
+	// TODO Dashes
 
 	in.endObject();
 }
@@ -190,6 +203,32 @@ double Stroke::getWidth() const
 	XOJ_CHECK_TYPE(Stroke);
 
 	return this->width;
+}
+
+/**
+ * Get dash array and count
+ *
+ * @return true if dashed
+ */
+bool Stroke::getDashes(const double*& dashes, int& dashCount)
+{
+	XOJ_CHECK_TYPE(Stroke);
+
+	dashes = this->dashes;
+	dashCount = this->dashCount;
+
+	return this->dashCount > 0;
+}
+
+/**
+ * Get dash array and count
+ *
+ * @return true if dashed
+ */
+bool Stroke::hasDashes()
+{
+	XOJ_CHECK_TYPE(Stroke);
+	return this->dashCount > 0;
 }
 
 bool Stroke::isInSelection(ShapeContainer* container)

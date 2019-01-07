@@ -35,7 +35,7 @@ public:
 
 	GList* getStroke(Stroke* original);
 
-	void draw(cairo_t* cr, double x, double y, double width, double height);
+	void draw(cairo_t* cr);
 
 private:
 	void erase(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list);

@@ -1,6 +1,7 @@
 #include "DocumentView.h"
 
 #include "TextView.h"
+#include "StrokeView.h"
 
 #include "background/MainBackgroundPainter.h"
 #include "control/tools/EditSelection.h"
@@ -85,180 +86,25 @@ void DocumentView::applyColor(cairo_t* cr, int c, int alpha)
 	cairo_set_source_rgba(cr, r, g, b, alpha / 255.0);
 }
 
-void DocumentView::drawEraseableStroke(cairo_t* cr, Stroke* s)
-{
-	XOJ_CHECK_TYPE(DocumentView);
-
-	EraseableStroke* e = s->getEraseable();
-
-	e->draw(cr, this->lX, this->lY, this->width, this->height);
-}
-
-void DocumentView::drawFillStroke(cairo_t* cr, Stroke* s)
-{
-	XOJ_CHECK_TYPE(DocumentView);
-
-	ArrayIterator<Point> points = s->pointIterator();
-
-	if (points.hasNext())
-	{
-		Point p = points.next();
-		cairo_move_to(cr, p.x, p.y);
-	}
-	else
-	{
-		return;
-	}
-
-	while (points.hasNext())
-	{
-		Point p = points.next();
-		cairo_line_to(cr, p.x, p.y);
-	}
-
-	cairo_fill(cr);
-}
-
 void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool changeSource, bool noAlpha)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	ArrayIterator<Point> points = s->pointIterator();
-
-	if (!points.hasNext())
+	if (s->getPointCount() < 2)
 	{
 		// Should not happen
 		g_warning("DocumentView::drawStroke empty stroke...");
 		return;
 	}
 
+	StrokeView sv(cr, s, startPoint, scaleFactor, noAlpha);
+
 	if (changeSource)
 	{
-
-		///////////////////////////////////////////////////////
-		// Fill stroke
-		///////////////////////////////////////////////////////
-		if (s->getFill() != -1 && s->getToolType() != STROKE_TOOL_HIGHLIGHTER)
-		{
-			cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-
-			// Set the color and transparency
-			applyColor(cr, s, s->getFill());
-
-			drawFillStroke(cr, s);
-		}
-
-
-		if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER ||
-			(s->getAudioFilename().length() == 0 && this->markAudioStroke))
-		{
-			cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-			// Set the color
-			applyColor(cr, s, 120);
-		}
-		else
-		{
-			cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
-			// Set the color
-			applyColor(cr, s);
-		}
+		sv.changeCairoSource(this->markAudioStroke);
 	}
 
-	cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
-	cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
-
-	// don't render eraseable for previews
-	if (s->getEraseable() && !this->dontRenderEditingStroke)
-	{
-		drawEraseableStroke(cr, s);
-		return;
-	}
-
-	int count = 1;
-	double width = s->getWidth();
-
-	// No pressure sensitivity, easy draw a line...
-	if (!s->hasPressure() || s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
-	{
-		bool group = false;
-		if (s->getFill() != -1 && s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
-		{
-			cairo_push_group(cr);
-			// Do not apply the alpha here, else the border and the fill
-			// are visible instead of one homogeneous area
-			applyColor(cr, s, 255);
-			drawFillStroke(cr, s);
-			group = true;
-		}
-
-		// Set width
-		cairo_set_line_width(cr, width * scaleFactor);
-
-		while (points.hasNext())
-		{
-			Point p = points.next();
-
-			if (startPoint <= count)
-			{
-				cairo_line_to(cr, p.x, p.y);
-			}
-			else
-			{
-				cairo_move_to(cr, p.x, p.y);
-			}
-
-			count++;
-		}
-
-		cairo_stroke(cr);
-
-		if (group)
-		{
-			cairo_pop_group_to_source(cr);
-
-			if (noAlpha)
-			{
-				// Currently drawing -> transparent applied on blitting
-				cairo_paint(cr);
-			}
-			else
-			{
-				cairo_paint_with_alpha(cr, s->getFill() / 255.0);
-			}
-		}
-		return;
-	}
-
-	///////////////////////////////////////////////////////
-	// Presure sensitiv stroken
-	///////////////////////////////////////////////////////
-
-
-	Point lastPoint1(-1, -1);
-	lastPoint1 = points.next();
-
-	while (points.hasNext())
-	{
-		Point p = points.next();
-		if (startPoint <= count)
-		{
-			if (lastPoint1.z != Point::NO_PRESURE)
-			{
-				width = lastPoint1.z;
-			}
-
-			// Set width
-			cairo_set_line_width(cr, width * scaleFactor);
-
-			cairo_move_to(cr, lastPoint1.x, lastPoint1.y);
-			cairo_line_to(cr, p.x, p.y);
-			cairo_stroke(cr);
-		}
-		count++;
-		lastPoint1 = p;
-	}
-
-	cairo_stroke(cr);
+	sv.paint(this->dontRenderEditingStroke);
 }
 
 void DocumentView::drawText(cairo_t* cr, Text* t)
