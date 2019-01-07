@@ -17,6 +17,7 @@ FillTransparencyDialog::FillTransparencyDialog(GladeSearchpath* gladeSearchPath,
 		{
 			XOJ_CHECK_TYPE_OBJ(self, FillTransparencyDialog);
 			self->setPreviewImage((int)(value / 100 * 255));
+			gtk_range_set_value(range, value);
 		}), this);
 }
 

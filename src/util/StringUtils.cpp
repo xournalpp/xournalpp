@@ -5,12 +5,11 @@
 #include <string.h>
 
 string StringUtils::toLowerCase(string input)
-{
+{	
 	char* lower = g_utf8_strdown(input.c_str(), input.size());
-	string strLower = lower;
+	string lowerStr = lower;
 	g_free(lower);
-
-	return strLower;
+	return lowerStr;
 }
 
 void StringUtils::replaceAllChars(string& input, const std::vector<replace_pair> replaces)
