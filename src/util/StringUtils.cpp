@@ -6,7 +6,10 @@
 
 string StringUtils::toLowerCase(string input)
 {	
-	return string(g_utf8_strdown(input.c_str(), input.size()));
+	char* lower = g_utf8_strdown(input.c_str(), input.size());
+	string lowerStr = lower;
+	g_free(lower);
+	return lowerStr;
 }
 
 void StringUtils::replaceAllChars(string& input, const std::vector<replace_pair> replaces)
