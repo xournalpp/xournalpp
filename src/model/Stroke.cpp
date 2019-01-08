@@ -54,7 +54,7 @@ void Stroke::applyStyleFrom(const Stroke* other)
 {
 	setColor(other->getColor());
 	setToolType(other->getToolType());
-	setWidth(other->getWidth());
+	setWidth(other->hasPressure() ? other->getAvgPressure() : other->getWidth());
 	setAudioFilename(other->getAudioFilename());
 	setTimestamp(other->getTimestamp());
 	setFill(other->getFill());
@@ -459,7 +459,7 @@ void Stroke::scale(double x0, double y0, double fx, double fy)
 	this->sizeCalculated = false;
 }
 
-bool Stroke::hasPressure()
+bool Stroke::hasPressure() const
 {
 	XOJ_CHECK_TYPE(Stroke);
 
@@ -468,6 +468,17 @@ bool Stroke::hasPressure()
 		return this->points[0].z != Point::NO_PRESURE;
 	}
 	return false;
+}
+
+double Stroke::getAvgPressure() const
+{
+	XOJ_CHECK_TYPE(Stroke);
+	double summatory = 0;
+	for (int i = 0; i < this->pointCount; i++)
+	{
+		summatory += this->points[i].z;
+	}
+	return summatory / this->pointCount;
 }
 
 void Stroke::scalePressure(double factor)

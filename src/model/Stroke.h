@@ -95,8 +95,9 @@ public:
 	void setLastPressure(double pressure);
 	void clearPressure();
 	void scalePressure(double factor);
-
-	bool hasPressure();
+	
+	bool hasPressure() const;
+	double getAvgPressure() const;
 
 	virtual void move(double dx, double dy);
 	virtual void scale(double x0, double y0, double fx, double fy);
