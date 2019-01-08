@@ -182,6 +182,7 @@ void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Laye
 	XOJ_CHECK_TYPE(StrokeHandler);
 
 	Stroke* recognized = result->getRecognized();
+	recognized->setWidth(stroke->hasPressure() ? stroke->getAvgPressure() : stroke->getWidth());
 
 	RecognizerUndoAction* recognizerUndo = new RecognizerUndoAction(page, layer, stroke, recognized);
 
