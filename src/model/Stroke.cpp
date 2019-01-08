@@ -54,7 +54,7 @@ void Stroke::applyStyleFrom(const Stroke* other)
 {
 	setColor(other->getColor());
 	setToolType(other->getToolType());
-	setWidth(other->hasPressure() ? other->getAvgPressure() : other->getWidth());
+	setWidth(other->getWidth());
 	setAudioFilename(other->getAudioFilename());
 	setTimestamp(other->getTimestamp());
 	setFill(other->getFill());
