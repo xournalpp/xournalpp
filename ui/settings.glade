@@ -1131,7 +1131,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="cbEnableZoomGestures">
-                    <property name="label" translatable="yes">Enable zoom gestures</property>
+                    <property name="label" translatable="yes">Enable zoom gestures (needs restart)</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
