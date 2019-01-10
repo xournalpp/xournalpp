@@ -86,8 +86,16 @@ public:
 	 *
 	 * @return true if dashed
 	 */
-	bool getDashes(const double*& dashes, int& dashCount);
+	bool getDashes(const double*& dashes, int& dashCount) const;
 	bool hasDashes();
+
+	/**
+	 * Set the dash array and count
+	 *
+	 * @param dashes Dash data, will be copied
+	 * @param dashCount Count of entries
+	 */
+	void setDashes(const double* dashes, int dashCount);
 
 	bool intersects(double x, double y, double halfSize, double* gap = NULL);
 

@@ -2,6 +2,7 @@
 
 #include "model/XojPage.h"
 #include "model/BackgroundImage.h"
+#include "model/StrokeStyle.h"
 #include "LoadHandlerHelper.h"
 
 #include <config.h>
@@ -563,6 +564,17 @@ void LoadHandler::parseStroke()
 	if (LoadHandlerHelper::getAttribInt("fill", true, this, fill))
 	{
 		stroke->setFill(fill);
+	}
+
+	const char* style = LoadHandlerHelper::getAttrib("style", true, this);
+	if (style != NULL)
+	{
+		const double* dashes = NULL;
+		int dashCount = 0;
+		if (StrokeStyle::parseStyle(style, dashes, dashCount))
+		{
+			stroke->setDashes(dashes, dashCount);
+		}
 	}
 
 	const char* tool = LoadHandlerHelper::getAttrib("tool", false, this);

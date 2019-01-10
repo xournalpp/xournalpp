@@ -23,10 +23,6 @@ Stroke::Stroke()
 
 	this->eraseable = NULL;
 	this->fill = -1;
-
-	// TODO Dashes
-//	this->dashes = new double[2] {2, 5};
-//	this->dashCount = 2;
 }
 
 Stroke::~Stroke()
@@ -40,7 +36,7 @@ Stroke::~Stroke()
 
 	this->timestamp = 0;
 
-	delete[] this->dashes;
+	g_free(this->dashes);
 	this->dashes = NULL;
 	this->dashCount = 0;
 
@@ -58,7 +54,14 @@ void Stroke::applyStyleFrom(const Stroke* other)
 	setAudioFilename(other->getAudioFilename());
 	setTimestamp(other->getTimestamp());
 	setFill(other->getFill());
-	// TODO Copy dashes
+
+	const double* dashes = NULL;
+	int dashCount = 0;
+
+	if (other->getDashes(dashes, dashCount))
+	{
+		setDashes(dashes, dashCount);
+	}
 }
 
 Stroke* Stroke::cloneStroke() const
@@ -102,7 +105,7 @@ void Stroke::serialize(ObjectOutputStream& out)
 
 	out.writeData(this->points, this->pointCount, sizeof(Point));
 
-	// TODO Dashes
+	out.writeData(this->dashes, this->dashCount, sizeof(double));
 
 	out.endObject();
 }
@@ -125,16 +128,16 @@ void Stroke::readSerialized(ObjectInputStream& in)
 
 	this->fill = in.readInt();
 
-	if (this->points)
-	{
-		g_free(this->points);
-	}
+	g_free(this->points);
 	this->points = NULL;
 	this->pointCount = 0;
-
 	in.readData((void**) &this->points, &this->pointCount);
 
-	// TODO Dashes
+
+	g_free(this->dashes);
+	this->dashes = NULL;
+	this->dashCount = 0;
+	in.readData((void**) &this->dashes, &this->dashCount);
 
 	in.endObject();
 }
@@ -210,7 +213,7 @@ double Stroke::getWidth() const
  *
  * @return true if dashed
  */
-bool Stroke::getDashes(const double*& dashes, int& dashCount)
+bool Stroke::getDashes(const double*& dashes, int& dashCount) const
 {
 	XOJ_CHECK_TYPE(Stroke);
 
@@ -218,6 +221,28 @@ bool Stroke::getDashes(const double*& dashes, int& dashCount)
 	dashCount = this->dashCount;
 
 	return this->dashCount > 0;
+}
+
+/**
+ * Set the dash array and count
+ *
+ * @param dashes Dash data, will be copied
+ * @param dashCount Count of entries
+ */
+void Stroke::setDashes(const double* dashes, int dashCount)
+{
+	g_free(this->dashes);
+	if (dashCount == 0 || dashes == NULL)
+	{
+		this->dashCount = 0;
+		this->dashes = NULL;
+		return;
+	}
+
+	this->dashes = (double*)g_malloc(dashCount * sizeof(double));
+	this->dashCount = dashCount;
+
+	memcpy(this->dashes, dashes, this->dashCount * sizeof(double));
 }
 
 /**
