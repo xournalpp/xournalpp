@@ -43,6 +43,7 @@ void Settings::loadDefault()
 	XOJ_CHECK_TYPE(Settings);
 
 	this->presureSensitivity = true;
+	this->zoomGesturesEnabled = true;
 	this->maximized = false;
 	this->showTwoPages = false;
 	this->presentationMode = false;
@@ -257,6 +258,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	if (xmlStrcmp(name, (const xmlChar*) "presureSensitivity") == 0)
 	{
 		setPresureSensitivity(xmlStrcmp(value, (const xmlChar*) "true") ? false : true);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "zoomGesturesEnabled") == 0)
+	{
+		this->zoomGesturesEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "selectedToolbar") == 0)
 	{
@@ -673,6 +678,7 @@ void Settings::save()
 	xmlAddPrevSibling(root, com);
 
 	WRITE_BOOL_PROP(presureSensitivity);
+	WRITE_BOOL_PROP(zoomGesturesEnabled);
 
 	WRITE_STRING_PROP(selectedToolbar);
 	WRITE_STRING_PROP(lastSavePath.str());
@@ -860,6 +866,25 @@ bool Settings::isPresureSensitivity()
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->presureSensitivity;
+}
+
+bool Settings::isZoomGesturesEnabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->zoomGesturesEnabled;
+}
+
+void Settings::setZoomGesturesEnabled(bool enable)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->zoomGesturesEnabled == enable)
+	{
+		return;
+	}
+	this->zoomGesturesEnabled = enable;
+	save();
 }
 
 bool Settings::isSidebarOnRight()

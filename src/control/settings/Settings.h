@@ -156,6 +156,12 @@ public:
 	void setPresureSensitivity(gboolean presureSensitivity);
 
 	/**
+	 * Getter, enable/disable
+	 */
+	bool isZoomGesturesEnabled();
+	void setZoomGesturesEnabled(bool enable);
+
+	/**
 	 * The last used font
 	 */
 	XojFont& getFont();
@@ -349,6 +355,11 @@ private:
 	 *  Use pen pressure to control stroke width?
 	 */
 	bool presureSensitivity;
+
+	/**
+	 * If the touch zoom gestures are enabled
+	 */
+	bool zoomGesturesEnabled;
 
 	/**
 	 *  If the sidebar is visible

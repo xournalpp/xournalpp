@@ -58,8 +58,15 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 
 	this->xournal = new XournalView(vpXournal, control);
 
-	this->zoomGesture = new ZoomGesture(get("winXournal"), control->getZoomControl());
-
+	if (control->getSettings()->isZoomGesturesEnabled())
+	{
+		this->zoomGesture = new ZoomGesture(get("winXournal"), control->getZoomControl());
+	}
+	else
+	{
+		this->zoomGesture = NULL;
+	}
+	
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
 
 	// Window handler
@@ -258,6 +265,11 @@ Layout* MainWindow::getLayout()
 bool MainWindow::isGestureActive()
 {
 	XOJ_CHECK_TYPE(MainWindow);
+
+	if (zoomGesture == NULL) // Gestures disabled
+	{
+		return false;
+	}
 
 	return zoomGesture->isGestureActive();
 }
