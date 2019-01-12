@@ -37,6 +37,7 @@ void XojExportHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s)
 	XOJ_CHECK_TYPE(XojExportHandler);
 
 	// Fill is not exported in .xoj
+	// Line style is also not supported
 }
 
 void XojExportHandler::writeHeader()

@@ -569,12 +569,7 @@ void LoadHandler::parseStroke()
 	const char* style = LoadHandlerHelper::getAttrib("style", true, this);
 	if (style != NULL)
 	{
-		const double* dashes = NULL;
-		int dashCount = 0;
-		if (StrokeStyle::parseStyle(style, dashes, dashCount))
-		{
-			stroke->setDashes(dashes, dashCount);
-		}
+		StrokeStyle::parseStyle(stroke, style);
 	}
 
 	const char* tool = LoadHandlerHelper::getAttrib("tool", false, this);
