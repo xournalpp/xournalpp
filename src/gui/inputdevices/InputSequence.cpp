@@ -412,6 +412,9 @@ void InputSequence::actionEnd()
 		return;
 	}
 
+	// Mouse button not pressed anymore
+	this->button = 0;
+
 	current_view = NULL;
 
 	GtkXournal* xournal = inputHandler->getXournal();
@@ -534,7 +537,7 @@ bool InputSequence::changeTool()
 			cfg = settings->getStylusButton2Config();
 		}
 	}
-	else if (button == 2 /* Middle Button */)
+	else if (button == 2 /* Middle Button */ && !xournal->selection)
 	{
 		cfg = settings->getMiddleButtonConfig();
 	}
