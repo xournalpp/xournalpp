@@ -183,12 +183,9 @@ void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s)
 		stroke->setAttrib("fill", s->getFill());
 	}
 
-	const double* dashes = NULL;
-	int dashCount = 0;
-
-	if (s->getLineStyle().getDashes(dashes, dashCount))
+	if (s->getLineStyle().hasDashes())
 	{
-		stroke->setAttrib("style", StrokeStyle::formatStyle(dashes, dashCount));
+		stroke->setAttrib("style", StrokeStyle::formatStyle(s->getLineStyle()));
 	}
 }
 

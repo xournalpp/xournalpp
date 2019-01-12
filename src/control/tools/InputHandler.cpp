@@ -58,6 +58,7 @@ void InputHandler::createStroke(Point p)
 	stroke->setWidth(h->getThickness());
 	stroke->setColor(h->getColor());
 	stroke->setFill(h->getFill());
+	stroke->setLineStyle(h->getLineStyle());
 
 	if (h->getToolType() == TOOL_PEN)
 	{

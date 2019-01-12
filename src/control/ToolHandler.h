@@ -26,6 +26,7 @@ public:
 	virtual void setCustomColorSelected() = 0;
 	virtual void toolSizeChanged() = 0;
 	virtual void toolFillChanged() = 0;
+	virtual void toolLineStyleChanged() = 0;
 	virtual void toolChanged() = 0;
 
 	virtual ~ToolListener();
@@ -59,11 +60,15 @@ public:
 	DrawingType getDrawingType();
 	void setDrawingType(DrawingType drawingType);
 
+	const LineStyle& getLineStyle();
+
 	void setColorFound();
 
 	ToolSize getSize();
 	void setSize(ToolSize size);
 	double getThickness();
+
+	void setLineStyle(const LineStyle& style);
 
 	ToolSize getPenSize();
 	ToolSize getEraserSize();

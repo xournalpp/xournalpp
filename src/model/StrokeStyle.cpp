@@ -92,3 +92,16 @@ string StrokeStyle::formatStyle(const double* dashes, int count)
 	return custom;
 }
 
+string StrokeStyle::formatStyle(const LineStyle& style)
+{
+	const double* dashes = NULL;
+	int dashCount = 0;
+	if (style.getDashes(dashes, dashCount))
+	{
+		return StrokeStyle::formatStyle(dashes, dashCount);
+	}
+
+	// Should not be returned, in this case the attribute is not written
+	return "plain";
+}
+

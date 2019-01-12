@@ -1,4 +1,4 @@
-#include "ToolDrawCombocontrol.h"
+#include "ToolLineStyleCombocontrol.h"
 
 #include "ToolMenuHandler.h"
 #include "gui/widgets/gtkmenutooltogglebutton.h"
@@ -6,13 +6,13 @@
 #include <config.h>
 #include <i18n.h>
 
-class ToolDrawType {
+class ToolLineStyleType {
 public:
-	ToolDrawType(string name, string icon, ActionType type)
+	ToolLineStyleType(string name, string icon, ActionType type)
 	 : name(name), icon(icon), type(type), pixbuf(NULL)
 	{
 	}
-	~ToolDrawType()
+	~ToolLineStyleType()
 	{
 		g_object_unref(pixbuf);
 		pixbuf = NULL;
@@ -25,24 +25,22 @@ public:
 	GdkPixbuf* pixbuf;
 };
 
-ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, GladeGui* gui, string id)
- : ToolButton(handler, gui, id, ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "rect-draw.png", _("Draw Rectangle"))
+ToolLineStyleCombocontrol::ToolLineStyleCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, GladeGui* gui, string id)
+ : ToolButton(handler, gui, id, ACTION_TOOL_LINE_STYLE_PLAIN, GROUP_LINE_STYLE, false, "line-style-plain.svg", _("Line Style"))
 {
-	XOJ_INIT_TYPE(ToolDrawCombocontrol);
+	XOJ_INIT_TYPE(ToolLineStyleCombocontrol);
 
 	this->toolMenuHandler = toolMenuHandler;
 	this->labelWidget = NULL;
 	this->iconWidget = NULL;
 	setPopupMenu(gtk_menu_new());
 
-	drawTypes.push_back(new ToolDrawType(_("Draw Rectangle"),				"rect-draw.svg",					ACTION_TOOL_DRAW_RECT   ));
-	drawTypes.push_back(new ToolDrawType(_("Draw Circle"),					"circle-draw.svg",					ACTION_TOOL_DRAW_CIRCLE ));
-	drawTypes.push_back(new ToolDrawType(_("Draw Arrow"),					"arrow-draw.svg",					ACTION_TOOL_DRAW_ARROW  ));
-	drawTypes.push_back(new ToolDrawType(_("Draw Line"),					"ruler.svg",						ACTION_RULER            ));
-	drawTypes.push_back(new ToolDrawType(_("Draw coordinate system"),		"coordinate-system-draw.svg",		ACTION_TOOL_DRAW_COORDINATE_SYSTEM  ));
-	drawTypes.push_back(new ToolDrawType(_("Stroke recognizer"),			"shape_recognizer.svg",				ACTION_SHAPE_RECOGNIZER ));
+	drawTypes.push_back(new ToolLineStyleType(_("Plain line"),		"line-style-plain.svg",		ACTION_TOOL_LINE_STYLE_PLAIN));
+	drawTypes.push_back(new ToolLineStyleType(_("Dashed line"),		"line-style-dash.svg",		ACTION_TOOL_LINE_STYLE_DASH));
+	drawTypes.push_back(new ToolLineStyleType(_("Dash-doted line"),	"line-style-dash-dot.svg",	ACTION_TOOL_LINE_STYLE_DASH_DOT));
+	drawTypes.push_back(new ToolLineStyleType(_("Dotted line"),		"line-style-dot.svg",		ACTION_TOOL_LINE_STYLE_DOT));
 
-	for (ToolDrawType* t : drawTypes)
+	for (ToolLineStyleType* t : drawTypes)
 	{
 		createMenuItem(t->name, t->icon, t->type);
 		t->pixbuf = gui->loadIconPixbuf(t->icon);
@@ -50,24 +48,22 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, Act
 	}
 }
 
-ToolDrawCombocontrol::~ToolDrawCombocontrol()
+ToolLineStyleCombocontrol::~ToolLineStyleCombocontrol()
 {
-	XOJ_CHECK_TYPE(ToolDrawCombocontrol);
+	XOJ_CHECK_TYPE(ToolLineStyleCombocontrol);
 
-	for (ToolDrawType* t : drawTypes)
+	for (ToolLineStyleType* t : drawTypes)
 	{
 		delete t;
 	}
 	this->drawTypes.clear();
 	this->toolMenuHandler = NULL;
 
-	XOJ_RELEASE_TYPE(ToolDrawCombocontrol);
+	XOJ_RELEASE_TYPE(ToolLineStyleCombocontrol);
 }
 
-void ToolDrawCombocontrol::createMenuItem(string name, string icon, ActionType type)
+void ToolLineStyleCombocontrol::createMenuItem(string name, string icon, ActionType type)
 {
-	XOJ_CHECK_TYPE(ToolDrawCombocontrol);
-
 	GtkWidget* menuItem =  gtk_menu_item_new ();
 	GtkWidget* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	gtk_container_add(GTK_CONTAINER(box), gui->loadIcon(icon));
@@ -79,9 +75,9 @@ void ToolDrawCombocontrol::createMenuItem(string name, string icon, ActionType t
 	gtk_widget_show_all(menuItem);
 }
 
-void ToolDrawCombocontrol::selected(ActionGroup group, ActionType action)
+void ToolLineStyleCombocontrol::selected(ActionGroup group, ActionType action)
 {
-	XOJ_CHECK_TYPE(ToolDrawCombocontrol);
+	XOJ_CHECK_TYPE(ToolLineStyleCombocontrol);
 
 	if (!this->item)
 	{
@@ -90,13 +86,13 @@ void ToolDrawCombocontrol::selected(ActionGroup group, ActionType action)
 
 	if (!GTK_IS_TOGGLE_TOOL_BUTTON(this->item))
 	{
-		g_warning("ToolDrawCombocontrol: selected action %i which is not a toggle action!", action);
+		g_warning("ToolLineStyleCombocontrol: selected action %i which is not a toggle action!", action);
 		return;
 	}
 
 	string description;
 
-	for (ToolDrawType* t : drawTypes)
+	for (ToolLineStyleType* t : drawTypes)
 	{
 		if (action == t->type && this->action != t->type)
 		{
@@ -115,14 +111,13 @@ void ToolDrawCombocontrol::selected(ActionGroup group, ActionType action)
 	}
 }
 
-GtkToolItem* ToolDrawCombocontrol::newItem()
+GtkToolItem* ToolLineStyleCombocontrol::newItem()
 {
-	XOJ_CHECK_TYPE(ToolDrawCombocontrol);
-
-	labelWidget = gtk_label_new(_("Draw Rectangle"));
+	XOJ_CHECK_TYPE(ToolLineStyleCombocontrol);
+	labelWidget = gtk_label_new(_("Line Style"));
 	iconWidget = gtk_image_new_from_pixbuf(drawTypes[0]->pixbuf);
 
-	GtkToolItem* it = gtk_menu_tool_toggle_button_new(iconWidget, _("Draw Rectangle"));
+	GtkToolItem* it = gtk_menu_tool_toggle_button_new(iconWidget, _("Line Style"));
 	gtk_tool_button_set_label_widget(GTK_TOOL_BUTTON(it), labelWidget);
 	gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popupMenu);
 	return it;

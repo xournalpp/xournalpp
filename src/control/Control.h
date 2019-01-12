@@ -109,6 +109,7 @@ public:
 	virtual void toolChanged();
 	virtual void toolSizeChanged();
 	virtual void toolFillChanged();
+	virtual void toolLineStyleChanged();
 
 	void selectTool(ToolType type);
 	void selectDefaultTool();
@@ -175,6 +176,8 @@ public:
 	void clearSelectionEndText();
 
 	void setToolSize(ToolSize size);
+
+	void setLineStyle(string style);
 
 	void setFill(bool fill);
 

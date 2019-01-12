@@ -26,6 +26,7 @@ private:
 public:
 	static LineStyle parseStyle(const char* style);
 	static string formatStyle(const double* dashes, int count);
+	static string formatStyle(const LineStyle& style);
 
 public:
 };

@@ -4,9 +4,10 @@
 #include "MenuItem.h"
 #include "ToolButton.h"
 #include "ToolDrawCombocontrol.h"
+#include "ToolLineStyleCombocontrol.h"
+#include "ToolSelectCombocontrol.h"
 #include "ToolPageLayer.h"
 #include "ToolPageSpinner.h"
-#include "ToolSelectCombocontrol.h"
 #include "ToolZoomSlider.h"
 
 #include "control/Actions.h"
@@ -394,6 +395,8 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolSelectCombocontrol(this, listener, gui, "SELECT"));
 
 	addToolItem(new ToolDrawCombocontrol(this, listener, gui, "DRAW"));
+
+	addToolItem(new ToolLineStyleCombocontrol(this, listener, gui, "LINE_STYLE"));
 
 	ToolButton* tbInsertNewPage = new ToolButton(listener, gui, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER,
 												 "addPage.svg", _("Insert page"));

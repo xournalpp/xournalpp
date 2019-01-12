@@ -1,6 +1,7 @@
 #include "Actions.h"
 #include "LastSelectedTool.h"
 #include "ToolHandler.h"
+#include "model/StrokeStyle.h"
 #include <Util.h>
 
 #include <gtk/gtk.h>
@@ -369,6 +370,14 @@ void ToolHandler::setSize(ToolSize size)
 	this->listener->toolSizeChanged();
 }
 
+void ToolHandler::setLineStyle(const LineStyle& style)
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	this->current->lineStyle = style;
+	this->listener->toolLineStyleChanged();
+}
+
 /**
  * Select the color for the tool
  *
@@ -413,6 +422,13 @@ int ToolHandler::getFill()
 	}
 
 	return current->fillAlpha;
+}
+
+const LineStyle& ToolHandler::getLineStyle()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return current->getLineStyle();
 }
 
 DrawingType ToolHandler::getDrawingType()
@@ -496,6 +512,8 @@ void ToolHandler::saveSettings()
 		{
 			st.setInt("fill", t->getFill());
 			st.setInt("fillAlpha", t->getFillAlpha());
+
+			st.setString("style", StrokeStyle::formatStyle(t->getLineStyle()));
 		}
 
 		if (t->type == TOOL_ERASER)
@@ -560,6 +578,12 @@ void ToolHandler::loadSettings()
 			if (st.getInt("fillAlpha", fillAlpha))
 			{
 				t->setFillAlpha(fillAlpha);
+			}
+
+			string style;
+			if (st.getString("style", style))
+			{
+				t->setLineStyle(StrokeStyle::parseStyle(style.c_str()));
 			}
 
 			string value;

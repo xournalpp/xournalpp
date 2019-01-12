@@ -13,6 +13,8 @@
 
 #include <XournalType.h>
 
+#include "model/LineStyle.h"
+
 // Has to be in the same order as in Action.h: ActionType!
 enum ToolType
 {
@@ -125,6 +127,9 @@ public:
 	int getFillAlpha();
 	void setFillAlpha(int fillAlpha);
 
+	const LineStyle& getLineStyle() const;
+	void setLineStyle(const LineStyle& style);
+
 	DrawingType getDrawingType();
 	void setDrawingType(DrawingType drawingType);
 
@@ -151,6 +156,8 @@ private:
 
 	bool fill;
 	int fillAlpha;
+
+	LineStyle lineStyle;
 
 	DrawingType drawingType;
 
