@@ -6,13 +6,14 @@
 #include "control/xml/XmlImageNode.h"
 #include "control/xml/XmlTexNode.h"
 #include "control/xml/XmlPointNode.h"
-#include "model/Stroke.h"
-#include "model/Text.h"
-#include "model/Image.h"
-#include "model/TexImage.h"
+#include "model/BackgroundImage.h"
 #include "model/Document.h"
 #include "model/Layer.h"
-#include "model/BackgroundImage.h"
+#include "model/Stroke.h"
+#include "model/StrokeStyle.h"
+#include "model/Text.h"
+#include "model/TexImage.h"
+#include "model/Image.h"
 
 #include <config.h>
 #include <i18n.h>
@@ -177,13 +178,18 @@ void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s)
 {
 	XOJ_CHECK_TYPE(SaveHandler);
 
-	if (s->getFill() == -1)
+	if (s->getFill() != -1)
 	{
-		// no fill to save
-		return;
+		stroke->setAttrib("fill", s->getFill());
 	}
 
-	stroke->setAttrib("fill", s->getFill());
+	const double* dashes = NULL;
+	int dashCount = 0;
+
+	if (s->getDashes(dashes, dashCount))
+	{
+		stroke->setAttrib("style", StrokeStyle::formatStyle(dashes, dashCount));
+	}
 }
 
 void SaveHandler::visitLayer(XmlNode* page, Layer* l)
