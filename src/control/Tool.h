@@ -104,8 +104,8 @@ enum ToolCapabilities
 	TOOL_CAP_ARROW				= 1 << 5,
 	TOOL_CAP_RECOGNIZER			= 1 << 6,
 	TOOL_CAP_FILL				= 1 << 7,
-    TOOL_CAP_COORDINATE_SYSTEM	= 1 << 8,
-    TOOL_CAP_DASH_LINE			= 1 << 9,
+	TOOL_CAP_COORDINATE_SYSTEM	= 1 << 8,
+	TOOL_CAP_DASH_LINE			= 1 << 9,
 };
 
 class Tool
