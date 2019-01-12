@@ -44,7 +44,7 @@ void StrokeView::applyDashed(double offset)
 {
 	const double* dashes = NULL;
 	int dashCount = 0;
-	if (s->getDashes(dashes, dashCount))
+	if (s->getLineStyle().getDashes(dashes, dashCount))
 	{
 		cairo_set_dash(cr, dashes, dashCount, offset);
 	}

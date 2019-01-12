@@ -13,6 +13,7 @@
 
 #include "Element.h"
 #include "Point.h"
+#include "LineStyle.h"
 
 #include <Arrayiterator.h>
 
@@ -81,21 +82,8 @@ public:
 	void setToolType(StrokeTool type);
 	StrokeTool getToolType() const;
 
-	/**
-	 * Get dash array and count
-	 *
-	 * @return true if dashed
-	 */
-	bool getDashes(const double*& dashes, int& dashCount) const;
-	bool hasDashes();
-
-	/**
-	 * Set the dash array and count
-	 *
-	 * @param dashes Dash data, will be copied
-	 * @param dashCount Count of entries
-	 */
-	void setDashes(const double* dashes, int dashCount);
+	const LineStyle& getLineStyle() const;
+	void setLineStyle(const LineStyle& style);
 
 	bool intersects(double x, double y, double halfSize, double* gap = NULL);
 
@@ -143,8 +131,7 @@ private:
 	/**
 	 * Dashed line
 	 */
-	double* dashes = NULL;
-	int dashCount = 0;
+	LineStyle lineStyle;
 
 	// Stroke timestamp, to match it to the audio stream
 	int timestamp;

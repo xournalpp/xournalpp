@@ -17,25 +17,21 @@ const double dotLinePattern[] = { 0.5, 3 };
 #define PARSE_STYLE(name, def) \
 	if (strcmp(style, name) == 0) \
 	{ \
-		dashes = def; \
-		count = sizeof(def) / sizeof(def[0]); \
-		return true; \
+		LineStyle style; \
+		style.setDashes(def, sizeof(def) / sizeof(def[0])); \
+		return style; \
 	}
 
-
-void StrokeStyle::parseStyle(Stroke* stroke, const char* style)
+LineStyle StrokeStyle::parseStyle(const char* style)
 {
-	const double* dashes = NULL;
-	int dashCount = 0;
-	if (StrokeStyle::parseStyle(style, dashes, dashCount))
-	{
-		stroke->setDashes(dashes, dashCount);
-		return;
-	}
+	PARSE_STYLE("dash", dashLinePattern);
+	PARSE_STYLE("dashdot", dashDotLinePattern);
+	PARSE_STYLE("dot", dotLinePattern);
+
 
 	if (strncmp("cust: ", style, 6) != 0)
 	{
-		return;
+		return LineStyle();
 	}
 
 	vector<double> dash;
@@ -55,7 +51,7 @@ void StrokeStyle::parseStyle(Stroke* stroke, const char* style)
 
 	if (dash.size() == 0)
 	{
-		return;
+		return LineStyle();
 	}
 
 	double* dashesArr = new double[dash.size()];
@@ -63,17 +59,12 @@ void StrokeStyle::parseStyle(Stroke* stroke, const char* style)
 	{
 		dashesArr[i] = dash[i];
 	}
-	stroke->setDashes(dashesArr, (int)dash.size());
-	delete[] dashes;
-}
 
-bool StrokeStyle::parseStyle(const char* style, const double*& dashes, int& count)
-{
-	PARSE_STYLE("dash", dashLinePattern);
-	PARSE_STYLE("dashdot", dashDotLinePattern);
-	PARSE_STYLE("dot", dotLinePattern);
+	LineStyle ls;
+	ls.setDashes(dashesArr, (int)dash.size());
+	delete[] dashesArr;
 
-	return false;
+	return ls;
 }
 
 #define FORMAT_STYLE(name, def) \

@@ -569,7 +569,7 @@ void LoadHandler::parseStroke()
 	const char* style = LoadHandlerHelper::getAttrib("style", true, this);
 	if (style != NULL)
 	{
-		StrokeStyle::parseStyle(stroke, style);
+		stroke->setLineStyle(StrokeStyle::parseStyle(style));
 	}
 
 	const char* tool = LoadHandlerHelper::getAttrib("tool", false, this);

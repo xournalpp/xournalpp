@@ -93,16 +93,17 @@ DrawingType drawingTypeFromString(string type);
 
 enum ToolCapabilities
 {
-	TOOL_CAP_NONE       = 0,
-	TOOL_CAP_COLOR      = 1 << 0,
-	TOOL_CAP_SIZE       = 1 << 1,
-	TOOL_CAP_RULER      = 1 << 2,
-	TOOL_CAP_RECTANGLE  = 1 << 3,
-	TOOL_CAP_CIRCLE     = 1 << 4,
-	TOOL_CAP_ARROW      = 1 << 5,
-	TOOL_CAP_RECOGNIZER = 1 << 6,
-	TOOL_CAP_FILL       = 1 << 7,
-    TOOL_CAP_COORDINATE_SYSTEM = 1 << 8,
+	TOOL_CAP_NONE				= 0,
+	TOOL_CAP_COLOR				= 1 << 0,
+	TOOL_CAP_SIZE				= 1 << 1,
+	TOOL_CAP_RULER				= 1 << 2,
+	TOOL_CAP_RECTANGLE			= 1 << 3,
+	TOOL_CAP_CIRCLE				= 1 << 4,
+	TOOL_CAP_ARROW				= 1 << 5,
+	TOOL_CAP_RECOGNIZER			= 1 << 6,
+	TOOL_CAP_FILL				= 1 << 7,
+    TOOL_CAP_COORDINATE_SYSTEM	= 1 << 8,
+    TOOL_CAP_DASH_LINE			= 1 << 9,
 };
 
 class Tool
