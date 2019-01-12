@@ -159,7 +159,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 		}
 	}
 
-	if (stroke->getFill() != -1 || stroke->hasDashes())
+	if (stroke->getFill() != -1 || stroke->getLineStyle().hasDashes())
 	{
 		// The stroke is not filled on drawing time
 		// If the stroke has fill values, it needs to be re-rendered

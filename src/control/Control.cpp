@@ -30,6 +30,7 @@
 #include "xojfile/LoadHandler.h"
 #include "model/BackgroundImage.h"
 #include "model/FormatDefinitions.h"
+#include "model/StrokeStyle.h"
 #include "model/XojPage.h"
 #include "pagetype/PageTypeHandler.h"
 #include "pagetype/PageTypeMenu.h"
@@ -693,6 +694,19 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		{
 			setToolSize(TOOL_SIZE_VERY_THICK);
 		}
+		break;
+
+	case ACTION_TOOL_LINE_STYLE_PLAIN:
+		setLineStyle("plain");
+		break;
+	case ACTION_TOOL_LINE_STYLE_DASH:
+		setLineStyle("dash");
+		break;
+	case ACTION_TOOL_LINE_STYLE_DASH_DOT:
+		setLineStyle("dashdot");
+		break;
+	case ACTION_TOOL_LINE_STYLE_DOT:
+		setLineStyle("dot");
 		break;
 
 	case ACTION_TOOL_ERASER_SIZE_FINE:
@@ -1819,6 +1833,14 @@ void Control::toolFillChanged()
 	fireActionSelected(GROUP_HILIGHTER_FILL, toolHandler->getHilighterFillEnabled() ? ACTION_TOOL_HILIGHTER_FILL : ACTION_NONE);
 }
 
+void Control::toolLineStyleChanged()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	// TODO Implement LineStyle
+	//fireActionSelected(GROUP_FILL, toolHandler->getFill() != -1 ? ACTION_TOOL_FILL : ACTION_NONE);
+}
+
 /**
  * Select the color for the tool
  *
@@ -2941,6 +2963,30 @@ void Control::setFill(bool fill)
 		fireActionSelected(GROUP_HILIGHTER_FILL, fill ? ACTION_TOOL_HILIGHTER_FILL : ACTION_NONE);
 		this->toolHandler->setHilighterFillEnabled(fill, false);
 	}
+}
+
+void Control::setLineStyle(string style)
+{
+	XOJ_CHECK_TYPE(Control);
+
+	LineStyle stl = StrokeStyle::parseStyle(style.c_str());
+
+	EditSelection* sel = NULL;
+	if (this->win)
+	{
+		sel = this->win->getXournal()->getSelection();
+	}
+
+	// TODO allow to change selection
+//	if (sel)
+//	{
+//		UndoAction* undo = sel->setSize(size, toolHandler->getToolThickness(TOOL_PEN),
+//										toolHandler->getToolThickness(TOOL_HILIGHTER),
+//										toolHandler->getToolThickness(TOOL_ERASER));
+//		undoRedo->addUndoAction(undo);
+//	}
+
+	this->toolHandler->setLineStyle(stl);
 }
 
 void Control::setToolSize(ToolSize size)

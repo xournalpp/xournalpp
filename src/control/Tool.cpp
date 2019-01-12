@@ -92,6 +92,20 @@ void Tool::setFillAlpha(int fillAlpha)
 	this->fillAlpha = fillAlpha;
 }
 
+void Tool::setLineStyle(const LineStyle& style)
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	this->lineStyle = style;
+}
+
+const LineStyle& Tool::getLineStyle() const
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->lineStyle;
+}
+
 void Tool::setCapability(int capability, bool enabled)
 {
 	XOJ_CHECK_TYPE(Tool);

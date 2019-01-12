@@ -22,6 +22,7 @@ public:
 	XojFont();
 	virtual ~XojFont();
 
+public:
 	string getName();
 	void setName(string name);
 
