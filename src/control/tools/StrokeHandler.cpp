@@ -165,17 +165,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 			return;
 		}
 	}
-/*
-	if (stroke->getFill() != -1 || stroke->getLineStyle().hasDashes())
-	{
-		// The stroke is not filled on drawing time
-		// If the stroke has fill values, it needs to be re-rendered
-		// else the fill will not be visible.
-		// The same for dashes
 
-		view.drawStroke(crMask, stroke, 0, 1, true, true);
-	}
-*/
 	layer->addElement(stroke);
 	page->fireElementChanged(stroke);
 
