@@ -115,6 +115,6 @@ void RulerHandler::drawShape(Point& currentPoint, bool shiftDown)
 		}
 	}
 
-	stroke->setLastPoint(x, y);
+    stroke->setLastPoint(x, y);
 }
 
