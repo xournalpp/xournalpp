@@ -38,8 +38,6 @@ public:
 	void readData(void** data, int* len);
 	cairo_surface_t* readImage();
 
-	ObjectInputStream& operator>>(Serializeable* s);
-
 private:
 	void checkType(char type);
 

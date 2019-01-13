@@ -4,6 +4,7 @@
 #include "LatexController.h"
 #include "layer/LayerController.h"
 #include "PageBackgroundChangeController.h"
+#include "UndoRedoController.h"
 
 #include "gui/Cursor.h"
 
@@ -471,16 +472,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 		// Menu Edit
 	case ACTION_UNDO:
-		this->clearSelection();
-		// Move out of text mode to allow textboxundo to work
-		clearSelectionEndText();
-		undoRedo->undo();
-		this->resetShapeRecognizer();
+		UndoRedoController::undo(this);
 		break;
 	case ACTION_REDO:
-		this->clearSelection();
-		undoRedo->redo();
-		this->resetShapeRecognizer();
+		UndoRedoController::redo(this);
 		break;
 	case ACTION_CUT:
 		cut();
@@ -2833,7 +2828,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 		}
 
 		selection = new EditSelection(this->undoRedo, page, view);
-		in >> selection;
+		selection->readSerialized(in);
 
 		// document lock not needed anymore, because we don't change the document, we only change the selection
 		this->doc->unlock();
@@ -2841,7 +2836,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 		int count = in.readInt();
 
 		AddUndoAction* pasteAddUndoAction = new AddUndoAction(page, false);
-		//this will undo a group of elements that are inserted
+		// this will undo a group of elements that are inserted
 
 		for (int i = 0; i < count; i++)
 		{
@@ -2869,9 +2864,8 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 				throw InputStreamException(FS(FORMAT_STR("Get unknown object {1}") % name), __FILE__, __LINE__);
 			}
 
-			in >> element;
+			element->readSerialized(in);
 
-			//undoRedo->addUndoAction(new InsertUndoAction(page, layer, element, view));
 			pasteAddUndoAction->addElement(layer, element, layer->indexOf(element));
 			selection->addElement(element);
 			element = NULL;
@@ -2894,7 +2888,10 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 
 		if (selection)
 		{
-			for (Element* e : *selection->getElements()) delete e;
+			for (Element* e : *selection->getElements())
+			{
+				delete e;
+			}
 			delete selection;
 		}
 	}

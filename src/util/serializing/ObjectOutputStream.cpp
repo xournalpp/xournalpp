@@ -24,14 +24,6 @@ ObjectOutputStream::~ObjectOutputStream()
 	XOJ_RELEASE_TYPE(ObjectOutputStream);
 }
 
-ObjectOutputStream& ObjectOutputStream::operator<<(Serializeable* s)
-{
-	XOJ_CHECK_TYPE(ObjectOutputStream);
-
-	s->serialize(*this);
-	return *this;
-}
-
 void ObjectOutputStream::writeObject(const char* name)
 {
 	XOJ_CHECK_TYPE(ObjectOutputStream);

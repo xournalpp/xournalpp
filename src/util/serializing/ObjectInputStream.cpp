@@ -254,14 +254,6 @@ cairo_surface_t* ObjectInputStream::readImage()
 	return img;
 }
 
-ObjectInputStream& ObjectInputStream::operator>>(Serializeable* s)
-{
-	XOJ_CHECK_TYPE(ObjectInputStream);
-
-	s->readSerialized(*this);
-	return *this;
-}
-
 void ObjectInputStream::checkType(char type)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);

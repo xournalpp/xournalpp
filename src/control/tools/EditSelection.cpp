@@ -40,7 +40,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection, XojPag
 {
 	XOJ_INIT_TYPE(EditSelection);
 
-	selection->getSelectedRect(this->x, this->y, this->width, this->height);
+	calcSizeFromElements(selection->selectedElements);
 
 	contstruct(undo, view, view->getPage());
 
@@ -68,6 +68,51 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* vie
 	this->sourceLayer->removeElement(e, false);
 
 	view->rerenderElement(e);
+}
+
+EditSelection::EditSelection(UndoRedoHandler* undo, vector<Element*> elements, XojPageView* view, PageRef page)
+{
+	XOJ_INIT_TYPE(EditSelection);
+
+	calcSizeFromElements(elements);
+
+	contstruct(undo, view, page);
+
+	for (Element* e : elements)
+	{
+		addElement(e);
+		this->sourceLayer->removeElement(e, false);
+	}
+
+	view->rerenderPage();
+}
+
+void EditSelection::calcSizeFromElements(vector<Element*> elements)
+{
+	XOJ_CHECK_TYPE(EditSelection);
+
+	if (elements.empty())
+	{
+		x = 0;
+		y = 0;
+		width = 0;
+		height = 0;
+		return;
+	}
+
+	Element* first = elements.front();
+	Range range(first->getX(), first->getY());
+
+	for (Element* e : elements)
+	{
+		range.addPoint(e->getX(), e->getY());
+		range.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
+	}
+
+	x = range.getX() - 3;
+	y = range.getY() - 3;
+	width = range.getWidth() + 6;
+	height = range.getHeight() + 6;
 }
 
 /**
@@ -182,13 +227,23 @@ double EditSelection::getHeight()
 }
 
 /**
- * get the source page (where the selection was done)
+ * Get the source page (where the selection was done)
  */
 PageRef EditSelection::getSourcePage()
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
 	return this->sourcePage;
+}
+
+/**
+ * Get the source layer (form where the Elements come)
+ */
+Layer* EditSelection::getSourceLayer()
+{
+	XOJ_CHECK_TYPE(EditSelection);
+
+	return this->sourceLayer;
 }
 
 /**
@@ -797,11 +852,14 @@ void EditSelection::serialize(ObjectOutputStream& out)
 	out.writeDouble(this->width);
 	out.writeDouble(this->height);
 
-	out << this->contents;
+	this->contents->serialize(out);
 	out.endObject();
 
 	out.writeInt(this->getElements()->size());
-	for (Element* e : *this->getElements()) out << e;
+	for (Element* e : *this->getElements())
+	{
+		e->serialize(out);
+	}
 }
 
 void EditSelection::readSerialized(ObjectInputStream& in)
@@ -812,7 +870,7 @@ void EditSelection::readSerialized(ObjectInputStream& in)
 	this->width = in.readDouble();
 	this->height = in.readDouble();
 
-	in >> this->contents;
+	this->contents->readSerialized(in);
 
 	in.endObject();
 }

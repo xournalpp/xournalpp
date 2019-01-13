@@ -183,7 +183,7 @@ bool ClipboardHandler::copy()
 
 	out.writeString(PROJECT_STRING);
 
-	out << this->selection;
+	this->selection->serialize(out);
 
 	/////////////////////////////////////////////////////////////////
 	// prepare text contents

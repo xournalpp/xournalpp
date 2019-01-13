@@ -26,34 +26,6 @@ Selection::~Selection()
 	XOJ_RELEASE_TYPE(Selection);
 }
 
-void Selection::getSelectedRect(double& x, double& y, double& width, double& height)
-{
-	XOJ_CHECK_TYPE(Selection);
-
-	if (this->selectedElements.empty())
-	{
-		x = 0;
-		y = 0;
-		width = 0;
-		height = 0;
-		return;
-	}
-
-	Element* first = this->selectedElements.front();
-	Range range(first->getX(), first->getY());
-
-	for (Element* e : this->selectedElements)
-	{
-		range.addPoint(e->getX(), e->getY());
-		range.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
-	}
-
-	x = range.getX() - 3;
-	y = range.getY() - 3;
-	width = range.getWidth() + 6;
-	height = range.getHeight() + 6;
-}
-
 //////////////////////////////////////////////////////////
 
 RectSelection::RectSelection(double x, double y, Redrawable* view) : Selection(view)
