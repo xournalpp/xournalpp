@@ -182,13 +182,23 @@ double EditSelection::getHeight()
 }
 
 /**
- * get the source page (where the selection was done)
+ * Get the source page (where the selection was done)
  */
 PageRef EditSelection::getSourcePage()
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
 	return this->sourcePage;
+}
+
+/**
+ * Get the source layer (form where the Elements come)
+ */
+Layer* EditSelection::getSourceLayer()
+{
+	XOJ_CHECK_TYPE(EditSelection);
+
+	return this->sourceLayer;
 }
 
 /**
@@ -801,7 +811,10 @@ void EditSelection::serialize(ObjectOutputStream& out)
 	out.endObject();
 
 	out.writeInt(this->getElements()->size());
-	for (Element* e : *this->getElements()) out << e;
+	for (Element* e : *this->getElements())
+	{
+		out << e;
+	}
 }
 
 void EditSelection::readSerialized(ObjectInputStream& in)

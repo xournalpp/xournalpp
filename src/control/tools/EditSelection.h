@@ -75,6 +75,11 @@ public:
 	PageRef getSourcePage();
 
 	/**
+	 * Get the source layer (form where the Elements come)
+	 */
+	Layer* getSourceLayer();
+
+	/**
 	 * Get the X coordinate in View coordinates (absolute)
 	 */
 	int getXOnViewAbsolute();

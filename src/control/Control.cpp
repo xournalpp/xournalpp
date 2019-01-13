@@ -4,6 +4,7 @@
 #include "LatexController.h"
 #include "layer/LayerController.h"
 #include "PageBackgroundChangeController.h"
+#include "UndoRedoController.h"
 
 #include "gui/Cursor.h"
 
@@ -471,16 +472,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 		// Menu Edit
 	case ACTION_UNDO:
-		this->clearSelection();
-		// Move out of text mode to allow textboxundo to work
-		clearSelectionEndText();
-		undoRedo->undo();
-		this->resetShapeRecognizer();
+		UndoRedoController::undo(this);
 		break;
 	case ACTION_REDO:
-		this->clearSelection();
-		undoRedo->redo();
-		this->resetShapeRecognizer();
+		UndoRedoController::redo(this);
 		break;
 	case ACTION_CUT:
 		cut();
