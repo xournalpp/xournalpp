@@ -36,6 +36,7 @@ public:
 	EditSelection(UndoRedoHandler* undo, PageRef page, XojPageView* view);
 	EditSelection(UndoRedoHandler* undo, Selection* selection, XojPageView* view);
 	EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* view, PageRef page);
+	EditSelection(UndoRedoHandler* undo, vector<Element*> elements, XojPageView* view, PageRef page);
 	virtual ~EditSelection();
 
 private:
@@ -43,6 +44,11 @@ private:
 	 * Our internal constructor
 	 */
 	void contstruct(UndoRedoHandler* undo, XojPageView* view, PageRef sourcePage);
+
+	/**
+	 * Calculate the size from the element list
+	 */
+	void calcSizeFromElements(vector<Element*> elements);
 
 	void snapRotation();
 

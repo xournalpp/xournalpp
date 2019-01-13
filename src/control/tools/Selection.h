@@ -28,7 +28,6 @@ public:
 	virtual bool finalize(PageRef page) = 0;
 	virtual void paint(cairo_t* cr, GdkRectangle* rect, double zoom) = 0;
 	virtual void currentPos(double x, double y) = 0;
-	virtual void getSelectedRect(double& x, double& y, double& width, double& height);
 
 private:
 	XOJ_TYPE_ATTRIB;

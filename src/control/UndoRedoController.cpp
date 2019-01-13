@@ -52,13 +52,31 @@ void UndoRedoController::after()
 		return;
 	}
 
-	for (Element* e: elements)
-	{
-		if (layer->indexOf(e) != -1)
-		{
+	Document* doc = control->getDocument();
 
-		}
+	PageRef page = control->getCurrentPage();
+	size_t pageNo = doc->indexOf(page);
+	XojPageView* view = control->getWindow()->getXournal()->getViewFor(pageNo);
+
+	if (!view || !page)
+	{
+		return;
 	}
+
+	vector<Element*> visibleElements;
+	for (Element* e : elements)
+	{
+		if (layer->indexOf(e) == -1)
+		{
+			// Element is gone - so it's not selectable
+			continue;
+		}
+
+		visibleElements.push_back(e);
+	}
+
+	EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), visibleElements, view, page);
+	control->getWindow()->getXournal()->setSelection(selection);
 }
 
 void UndoRedoController::undo(Control* control)
