@@ -51,7 +51,7 @@ void ArrowHandler::drawShape(Point& c, bool shiftDown)
 
 		if (!shiftDown && xournal->getControl()->getSettings()->isSnapGrid())
 		{
-			snapToGrid(p.x,p.y);
+			snapToGrid(c.x,c.y);
 		}
 
 		// We've now computed the line points for the arrow
