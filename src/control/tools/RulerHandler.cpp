@@ -6,7 +6,7 @@
 #include <cmath>
 
 RulerHandler::RulerHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
- : BaseStrokeHandler(xournal, redrawable, page)
+	: BaseStrokeHandler(xournal, redrawable, page)
 {
 	XOJ_INIT_TYPE(RulerHandler);
 }
@@ -115,6 +115,6 @@ void RulerHandler::drawShape(Point& currentPoint, bool shiftDown)
 		}
 	}
 
-    stroke->setLastPoint(x, y);
+	stroke->setLastPoint(x, y);
 }
 
