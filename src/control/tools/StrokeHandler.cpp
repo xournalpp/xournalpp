@@ -78,6 +78,14 @@ bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 
 	if (stroke->getFill() != -1 || stroke->getLineStyle().hasDashes())
 	{
+		// Clear surface
+
+		// for debugging purposes
+		// cairo_set_source_rgba(crMask, 1, 0, 0, 1);
+		cairo_set_source_rgba(crMask, 0, 0, 0, 0);
+		cairo_rectangle(crMask, 0, 0, cairo_image_surface_get_width(surfMask), cairo_image_surface_get_height(surfMask));
+		cairo_fill(crMask);
+
 		view.drawStroke(crMask, stroke, 0, 1, true, true);
 	}
 	else
