@@ -1,14 +1,13 @@
 #include "LastSelectedTool.h"
 
+#include "Tool.h"
 
 LastSelectedTool::LastSelectedTool(Tool* tool)
  : tool(tool)
 {
 	XOJ_INIT_TYPE(LastSelectedTool);
 
-	this->color = tool->getColor();
-	this->size = tool->getSize();
-	this->drawingType = tool->getDrawingType();
+	this->applyFrom(tool);
 }
 
 LastSelectedTool::~LastSelectedTool()
@@ -25,9 +24,7 @@ Tool* LastSelectedTool::restoreAndGet()
 {
 	XOJ_CHECK_TYPE(LastSelectedTool);
 
-	tool->setColor(this->color);
-	tool->setSize(this->size);
-	tool->setDrawingType(this->drawingType);
+	tool->applyFrom(this);
 
 	return tool;
 }

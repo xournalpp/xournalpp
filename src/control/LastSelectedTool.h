@@ -11,14 +11,13 @@
 
 #pragma once
 
-#include "Tool.h"
-
+#include "ToolBase.h"
 
 #include <XournalType.h>
 
 class Tool;
 
-class LastSelectedTool
+class LastSelectedTool : public ToolBase
 {
 public:
 	LastSelectedTool(Tool* tool);
@@ -37,8 +36,4 @@ private:
 	 * The last tool
 	 */
 	Tool* tool;
-
-	int color;
-	ToolSize size;
-	DrawingType drawingType;
 };
