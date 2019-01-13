@@ -76,7 +76,8 @@ bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 
 	stroke->addPoint(currentPoint);
 
-	if (stroke->getFill() != -1 || stroke->getLineStyle().hasDashes())
+	if ((stroke->getFill() != -1 || stroke->getLineStyle().hasDashes())
+			&& !(stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER))
 	{
 		// Clear surface
 
@@ -172,6 +173,15 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 			stroke = NULL;
 			return;
 		}
+	}
+
+	if (stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER)
+	{
+		// The stroke is not filled on drawing time
+		// If the stroke has fill values, it needs to be re-rendered
+		// else the fill will not be visible.
+
+		view.drawStroke(crMask, stroke, 0, 1, true, true);
 	}
 
 	layer->addElement(stroke);
