@@ -74,23 +74,30 @@ bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 		stroke->setLastPressure(pos.pressure * stroke->getWidth());
 	}
 
-	if (pointCount > 0)
-	{
-		Point prevPoint(stroke->getPoint(pointCount - 1));
-
-		Stroke lastSegment;
-
-		lastSegment.addPoint(prevPoint);
-		lastSegment.addPoint(currentPoint);
-		lastSegment.setWidth(stroke->getWidth());
-
-		cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
-		cairo_set_source_rgba(crMask, 1, 1, 1, 1);
-
-		view.drawStroke(crMask, &lastSegment, 0, 1, false);
-	}
-
 	stroke->addPoint(currentPoint);
+
+	if (stroke->getFill() != -1 || stroke->getLineStyle().hasDashes())
+	{
+		view.drawStroke(crMask, stroke, 0, 1, true, true);
+	}
+	else
+	{
+		if (pointCount > 0)
+		{			
+			Point prevPoint(stroke->getPoint(pointCount - 1));
+
+			Stroke lastSegment;
+
+			lastSegment.addPoint(prevPoint);
+			lastSegment.addPoint(currentPoint);
+			lastSegment.setWidth(stroke->getWidth());
+
+			cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
+			cairo_set_source_rgba(crMask, 1, 1, 1, 1);
+
+			view.drawStroke(crMask, &lastSegment, 0, 1, false);
+		}
+	}
 
 	const double w = stroke->getWidth();
 
@@ -158,7 +165,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 			return;
 		}
 	}
-
+/*
 	if (stroke->getFill() != -1 || stroke->getLineStyle().hasDashes())
 	{
 		// The stroke is not filled on drawing time
@@ -168,7 +175,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 
 		view.drawStroke(crMask, stroke, 0, 1, true, true);
 	}
-
+*/
 	layer->addElement(stroke);
 	page->fireElementChanged(stroke);
 
