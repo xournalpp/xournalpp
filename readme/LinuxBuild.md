@@ -11,7 +11,7 @@ dnf install cmake texlive-scheme-basic texlive-dvipng poppler-glib-devel
 ### For Ubuntu/Debian:
 ````bash
 sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev \
-libcppunit-dev dvipng texlive 
+libcppunit-dev dvipng texlive libxml2-dev
 ````
 
 ### For OpenSuse:
