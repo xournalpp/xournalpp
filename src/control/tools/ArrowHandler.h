@@ -23,6 +23,7 @@ private:
 	virtual void drawShape(Point& currentPoint, bool shiftDown);
 
 private:
+    void snapToGrid(double& x, double& y);
 	XOJ_TYPE_ATTRIB;
 };
 
