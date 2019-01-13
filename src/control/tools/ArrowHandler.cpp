@@ -5,64 +5,10 @@
 #include "undo/InsertUndoAction.h"
 #include <cmath>
 
-void ArrowHandler::snapToGrid(double& x, double& y)
-{
-    XOJ_CHECK_TYPE(ArrowHandler);
-
-    if (!xournal->getControl()->getSettings()->isSnapGrid())
-    {
-        return;
-    }
-
-    /**
-     * Snap points to a grid:
-     * If x/y coordinates are under a certain tolerance,
-     * fix the point to the grid intersection value
-     */
-    double gridSize = 14.17;
-    double tolerance = gridSize/2.0;
-
-    double xRem = fmod(x,gridSize);
-    double yRem = fmod(y,gridSize);
-
-    bool snapX = false;
-    bool snapY = false;
-
-    double tmpX = 0;
-    double tmpY = 0;
-
-    if (xRem < tolerance)
-    {
-        tmpX = x - xRem;
-        snapX = true;
-    }
-    if (xRem > gridSize - tolerance )
-    {
-        tmpX = x + (gridSize - xRem);
-        snapX = true;
-    }
-    if (yRem < tolerance)
-    {
-        tmpY = y - yRem;
-        snapY = true;
-    }
-    if (yRem > gridSize - tolerance )
-    {
-        tmpY = y + (gridSize - yRem);
-        snapY = true;
-    }
-
-    if (snapX && snapY)
-    {
-        x = tmpX;
-        y = tmpY;
-    }
-}
-
 ArrowHandler::ArrowHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
  : BaseStrokeHandler(xournal, redrawable, page)
 {
-	XOJ_INIT_TYPE(ArrowHandler);
+    XOJ_INIT_TYPE(ArrowHandler);
 }
 
 ArrowHandler::~ArrowHandler()

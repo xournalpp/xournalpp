@@ -21,7 +21,7 @@ public:
 
 private:
 	virtual void drawShape(Point& currentPoint, bool shiftDown);
-	void snapToGrid(double& x, double& y);
+//    void snapToGrid(double& x, double& y);
 	void snapRotation(double& x, double& y);
 
 private:
