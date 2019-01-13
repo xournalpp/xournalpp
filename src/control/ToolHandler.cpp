@@ -64,8 +64,7 @@ void ToolHandler::initTools()
 	thickness[TOOL_SIZE_VERY_THICK] = 19.84;
 	t = new Tool("hilighter", TOOL_HILIGHTER, 0xFFFF00,
 			TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE |
-			TOOL_CAP_CIRCLE | TOOL_CAP_ARROW | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL |
-			TOOL_CAP_DASH_LINE,
+			TOOL_CAP_CIRCLE | TOOL_CAP_ARROW | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
 			thickness);
 	tools[TOOL_HILIGHTER - TOOL_PEN] = t;
 
@@ -374,7 +373,7 @@ void ToolHandler::setLineStyle(const LineStyle& style)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	this->current->lineStyle = style;
+	this->tools[TOOL_PEN - TOOL_PEN]->lineStyle = style;
 	this->listener->toolLineStyleChanged();
 }
 
@@ -512,7 +511,10 @@ void ToolHandler::saveSettings()
 		{
 			st.setInt("fill", t->getFill());
 			st.setInt("fillAlpha", t->getFillAlpha());
+		}
 
+		if (t->type == TOOL_PEN)
+		{
 			st.setString("style", StrokeStyle::formatStyle(t->getLineStyle()));
 		}
 

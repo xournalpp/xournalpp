@@ -40,6 +40,47 @@ ToolButton::~ToolButton()
 	XOJ_RELEASE_TYPE(ToolButton);
 }
 
+/**
+ * Register a popup menu entry, create a popup menu, if none is there
+ *
+ * @param name The name of the item
+ * @return The created menu item
+ */
+GtkWidget* ToolButton::registerPopupMenuEntry(string name, string iconName)
+{
+	XOJ_CHECK_TYPE(ToolButton);
+
+	if (this->popupMenu == NULL)
+	{
+		setPopupMenu(gtk_menu_new());
+	}
+
+	GtkWidget* menuItem = NULL;
+	if (iconName == "")
+	{
+		menuItem = gtk_check_menu_item_new_with_label(name.c_str());
+	}
+	else
+	{
+		menuItem = gtk_check_menu_item_new();
+
+		GtkWidget* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+		gtk_container_add(GTK_CONTAINER(box), gui->loadIcon(iconName));
+
+		GtkWidget* label = gtk_label_new(name.c_str());
+		gtk_label_set_xalign(GTK_LABEL(label), 0.0);
+		gtk_box_pack_end(GTK_BOX(box), label, true, true, 0);
+
+		gtk_container_add(GTK_CONTAINER(menuItem), box);
+	}
+
+	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(menuItem), true);
+	gtk_widget_show_all(menuItem);
+	gtk_container_add(GTK_CONTAINER(this->popupMenu), menuItem);
+
+	return menuItem;
+}
+
 void ToolButton::updateDescription(string description)
 {
 	XOJ_CHECK_TYPE(ToolButton);

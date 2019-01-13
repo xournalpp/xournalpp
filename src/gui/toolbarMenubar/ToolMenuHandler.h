@@ -74,6 +74,7 @@ public:
 private:
 	void addToolItem(AbstractToolItem* it);
 
+	void initPenToolItem();
 	void initEraserToolItem();
 
 private:

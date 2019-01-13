@@ -351,6 +351,7 @@ void Control::initWindow(MainWindow* win)
 	hilighterSizeChanged();
 	updateDeletePageButton();
 	toolFillChanged();
+	toolLineStyleChanged();
 
 	this->clipboardHandler = new ClipboardHandler(this, win->getXournal()->getWidget());
 
@@ -1832,8 +1833,25 @@ void Control::toolLineStyleChanged()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	// TODO Implement LineStyle
-	//fireActionSelected(GROUP_FILL, toolHandler->getFill() != -1 ? ACTION_TOOL_FILL : ACTION_NONE);
+	const LineStyle& lineStyle = toolHandler->getTool(TOOL_PEN).getLineStyle();
+	string style = StrokeStyle::formatStyle(lineStyle);
+
+	if (style == "dash")
+	{
+		fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DASH);
+	}
+	else if (style == "dashdot")
+	{
+		fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DASH_DOT);
+	}
+	else if (style == "dot")
+	{
+		fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DOT);
+	}
+	else
+	{
+		fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_PLAIN);
+	}
 }
 
 /**
