@@ -29,18 +29,8 @@ ClipboardHandler::ClipboardHandler(ClipboardListener* listener, GtkWidget* widge
 
 	this->listener->clipboardCutCopyEnabled(false);
 
-	GdkDisplay* display = gtk_clipboard_get_display(clipboard);
-
-	if (gdk_display_supports_selection_notification(display))
-	{
-		gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"),
-									   (GtkClipboardReceivedFunc) receivedClipboardContents, this);
-	}
-	else
-	{
-		// XFIXES extension not available, make Paste always sensitive
-		this->listener->clipboardPasteEnabled(true);
-	}
+	gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"),
+								   (GtkClipboardReceivedFunc) receivedClipboardContents, this);
 }
 
 ClipboardHandler::~ClipboardHandler()
