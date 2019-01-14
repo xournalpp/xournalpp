@@ -7,8 +7,8 @@
 #include <i18n.h>
 #include <Stacktrace.h>
 
-RecognizerUndoAction::RecognizerUndoAction(PageRef page, Layer* layer, Stroke* original, Stroke* recognized) :
-		UndoAction("RecognizerUndoAction")
+RecognizerUndoAction::RecognizerUndoAction(PageRef page, Layer* layer, Stroke* original, Stroke* recognized)
+ : UndoAction("RecognizerUndoAction")
 {
 	XOJ_INIT_TYPE(RecognizerUndoAction);
 
