@@ -34,7 +34,7 @@ private:
 
 protected:
 	XOJ_TYPE_ATTRIB;
-
+	void snapToGrid(double& x, double& y);
 	DocumentView view;
 };
 

@@ -584,7 +584,7 @@ bool Stroke::intersects(double x, double y, double halfEraserSize, double* gap)
 
 /**
  * Updates the size
- * The size is needed to only redraw the requestetet part instead of redrawing
+ * The size is needed to only redraw the requested part instead of redrawing
  * the whole page (performance reason)
  */
 void Stroke::calcSize()

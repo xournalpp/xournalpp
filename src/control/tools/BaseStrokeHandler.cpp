@@ -4,11 +4,66 @@
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
 #include "undo/InsertUndoAction.h"
+#include <cmath>
 
 BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
- : InputHandler(xournal, redrawable, page)
+	: InputHandler(xournal, redrawable, page)
 {
 	XOJ_INIT_TYPE(BaseStrokeHandler);
+}
+
+void BaseStrokeHandler::snapToGrid(double& x, double& y)
+{
+	XOJ_CHECK_TYPE(BaseStrokeHandler);
+
+	if (!xournal->getControl()->getSettings()->isSnapGrid())
+	{
+		return;
+	}
+
+	/**
+	 * Snap points to a grid:
+	 * If x/y coordinates are under a certain tolerance,
+	 * fix the point to the grid intersection value
+	 */
+	double gridSize = 14.17;
+	double tolerance = 2.5; //gridSize/2.0; // if you want it to snap everywhere.
+
+	double xRem = fmod(x,gridSize);
+	double yRem = fmod(y,gridSize);
+
+	bool snapX = false;
+	bool snapY = false;
+
+	double tmpX = 0;
+	double tmpY = 0;
+
+	if (xRem < tolerance)
+	{
+		tmpX = x - xRem;
+		snapX = true;
+	}
+	if (xRem > gridSize - tolerance )
+	{
+		tmpX = x + (gridSize - xRem);
+		snapX = true;
+	}
+	if (yRem < tolerance)
+	{
+		tmpY = y - yRem;
+		snapY = true;
+	}
+	if (yRem > gridSize - tolerance )
+	{
+		tmpY = y + (gridSize - yRem);
+		snapY = true;
+	}
+
+	if (snapX && snapY)
+	{
+		x = tmpX;
+		y = tmpY;
+	}
 }
 
 BaseStrokeHandler::~BaseStrokeHandler()
@@ -54,7 +109,7 @@ bool BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 	}
 
 	this->redrawable->repaintRect(stroke->getX(), stroke->getY(),
-			stroke->getElementWidth(), stroke->getElementHeight());
+								  stroke->getElementWidth(), stroke->getElementHeight());
 
 	drawShape(currentPoint, pos.isShiftDown());
 	
@@ -62,8 +117,8 @@ bool BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 	double w = stroke->getWidth();
 
 	redrawable->repaintRect(rect.x - w, rect.y - w,
-	                        rect.width + 2 * w,
-	                        rect.height + 2 * w);
+							rect.width + 2 * w,
+							rect.height + 2 * w);
 
 	return true;
 }

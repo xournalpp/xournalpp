@@ -5,7 +5,7 @@
 #include "undo/InsertUndoAction.h"
 
 RectangleHandler::RectangleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
- : BaseStrokeHandler(xournal, redrawable, page)
+	: BaseStrokeHandler(xournal, redrawable, page)
 {
 	XOJ_INIT_TYPE(RectangleHandler);
 }
@@ -21,6 +21,16 @@ void RectangleHandler::drawShape(Point& c, bool shiftDown)
 {
 	int count = stroke->getPointCount();
 
+	/**
+	 * Snap first point to grid (if enabled)
+	 */
+	if (xournal->getControl()->getSettings()->isSnapGrid())
+	{
+		Point firstPoint = stroke->getPoint(0);
+		snapToGrid(firstPoint.x,firstPoint.y);
+		stroke->setFirstPoint(firstPoint.x,firstPoint.y);
+	}
+
 	if (count < 1)
 	{
 		stroke->addPoint(c);
@@ -33,15 +43,29 @@ void RectangleHandler::drawShape(Point& c, bool shiftDown)
 		stroke->deletePointsFrom(1);
 
 		int size = MAX(ABS(c.x - p.x), ABS(c.y - p.y));
-
-		if (c.x - p.x < 0 || c.y - p.y < 0)
+		int size_x, size_y;
+		if (c.x - p.x < 0 )
 		{
-			size = -size;
+			size_x = -size;
+			g_warning("size_x = -size");
+		}
+		else
+		{
+			size_x = size;
+		}
+		if  (c.y - p.y < 0)
+		{
+			size_y = -size;
+			g_warning("size_y = -size");
+		}
+		else
+		{
+			size_y = size;
 		}
 
-		stroke->addPoint(Point(p.x, p.y + size));
-		stroke->addPoint(Point(p.x + size, p.y + size));
-		stroke->addPoint(Point(p.x + size, p.y));
+		stroke->addPoint(Point(p.x, p.y + size_y));
+		stroke->addPoint(Point(p.x + size_x, p.y + size_y));
+		stroke->addPoint(Point(p.x + size_x, p.y));
 		stroke->addPoint(p);
 	}
 	else
@@ -49,9 +73,14 @@ void RectangleHandler::drawShape(Point& c, bool shiftDown)
 		Point p = stroke->getPoint(0);
 		stroke->deletePointsFrom(1);
 
-		stroke->addPoint(Point(c.x, p.y));
+		if (xournal->getControl()->getSettings()->isSnapGrid())
+		{
+			snapToGrid(c.x,c.y);
+		}
+		stroke->addPoint(Point(p.x, c.y)); // was p.y
 		stroke->addPoint(c);
-		stroke->addPoint(Point(p.x, c.y));
+		stroke->addPoint(Point(c.x, p.y));
 		stroke->addPoint(p);
 	}
+
 }

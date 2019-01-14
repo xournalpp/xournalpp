@@ -6,7 +6,7 @@
 #include <cmath>
 
 ArrowHandler::ArrowHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
- : BaseStrokeHandler(xournal, redrawable, page)
+	: BaseStrokeHandler(xournal, redrawable, page)
 {
 	XOJ_INIT_TYPE(ArrowHandler);
 }
@@ -20,13 +20,22 @@ ArrowHandler::~ArrowHandler()
 
 void ArrowHandler::drawShape(Point& c, bool shiftDown)
 {
-	int count = stroke->getPointCount();
+	/**
+	 * Snap first point to grid (if enabled)
+	 */
+	if (!shiftDown && xournal->getControl()->getSettings()->isSnapGrid())
+	{
+		Point firstPoint = stroke->getPoint(0);
+		snapToGrid(firstPoint.x,firstPoint.y);
+		stroke->setFirstPoint(firstPoint.x,firstPoint.y);
+	}
 
+	int count = stroke->getPointCount();
 	if (count < 1)
 	{
 		stroke->addPoint(c);
 	}
-	else 
+	else
 	{
 		Point p = stroke->getPoint(0);
 
@@ -38,6 +47,11 @@ void ArrowHandler::drawShape(Point& c, bool shiftDown)
 			stroke->deletePoint(3);
 			stroke->deletePoint(2);
 			stroke->deletePoint(1);
+		}
+
+		if (!shiftDown && xournal->getControl()->getSettings()->isSnapGrid())
+		{
+			snapToGrid(c.x,c.y);
 		}
 
 		// We've now computed the line points for the arrow
@@ -52,7 +66,7 @@ void ArrowHandler::drawShape(Point& c, bool shiftDown)
 		double delta = M_PI / 6.0;
 		
 		if (shiftDown || !xournal->getControl()->getSettings()->isSnapRotation())
-		{		
+		{
 			stroke->addPoint(c);
 			stroke->addPoint(Point(c.x - arrowDist * cos(angle + delta), c.y - arrowDist * sin(angle + delta)));
 			stroke->addPoint(c);
@@ -60,7 +74,7 @@ void ArrowHandler::drawShape(Point& c, bool shiftDown)
 		}
 		else
 		{
-			double epsilon = 0.1;
+			double epsilon = 0.2;
 			if (std::abs(angle) < epsilon)
 			{
 				angle = 0;
@@ -68,7 +82,7 @@ void ArrowHandler::drawShape(Point& c, bool shiftDown)
 				stroke->addPoint(Point(c.x - arrowDist * cos(angle + delta), p.y - arrowDist * sin(angle + delta)));
 				stroke->addPoint(Point(c.x, p.y));
 				stroke->addPoint(Point(c.x - arrowDist * cos(angle - delta), p.y - arrowDist * sin(angle - delta)));
-			}		
+			}
 			else if (std::abs(angle - M_PI / 4.0) < epsilon)
 			{
 				angle = M_PI / 4.0;
