@@ -1011,22 +1011,14 @@ void XojPageView::rectChanged(Rectangle& rect)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
-#ifdef UNSTABLE_HIGHDPI_FIXES
-	rerenderPage();
-#else
 	rerenderRect(rect.x, rect.y, rect.width, rect.height);
-#endif
 }
 
 void XojPageView::rangeChanged(Range &range)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
-#ifdef UNSTABLE_HIGHDPI_FIXES
-	rerenderPage();
-#else
 	rerenderRange(range);
-#endif
 }
 
 void XojPageView::pageChanged()
