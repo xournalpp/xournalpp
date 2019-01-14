@@ -2993,13 +2993,13 @@ void Control::setLineStyle(string style)
 	}
 
 	// TODO allow to change selection
-//	if (sel)
-//	{
+	if (sel)
+	{
 //		UndoAction* undo = sel->setSize(size, toolHandler->getToolThickness(TOOL_PEN),
 //										toolHandler->getToolThickness(TOOL_HILIGHTER),
 //										toolHandler->getToolThickness(TOOL_ERASER));
 //		undoRedo->addUndoAction(undo);
-//	}
+	}
 
 	this->toolHandler->setLineStyle(stl);
 }

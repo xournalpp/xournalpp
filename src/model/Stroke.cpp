@@ -496,13 +496,13 @@ void Stroke::setPressure(const vector<double>& pressure)
 	XOJ_CHECK_TYPE(Stroke);
 
 	// The last pressure is not used - as there is no line drawed from this point
-	if (this->pointCount - 1 > pressure.size())
+	if (this->pointCount - 1 > (int)pressure.size())
 	{
 		g_warning("invalid pressure point count: %i, expected %i", (int)pressure.size(), (int)this->pointCount - 1);
 		return;
 	}
 
-	for (int i = 0; i < this->pointCount && i < pressure.size(); i++)
+	for (int i = 0; i < this->pointCount && i < (int)pressure.size(); i++)
 	{
 		this->points[i].z = pressure[i];
 	}
