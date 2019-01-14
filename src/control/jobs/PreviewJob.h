@@ -63,5 +63,8 @@ private:
 	 */
 	double zoom;
 
+	/**
+	 * Sidebar preview
+	 */
 	SidebarPreviewBaseEntry* sidebarPreview;
 };

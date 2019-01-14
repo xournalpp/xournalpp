@@ -36,6 +36,7 @@
 
 #include <config.h>
 #include <config-debug.h>
+#include <config-features.h>
 #include <i18n.h>
 #include <pixbuf-utils.h>
 #include <Range.h>
@@ -1032,6 +1033,11 @@ void XojPageView::elementChanged(Element* elem)
 		g_mutex_lock(&this->drawingMutex);
 
 		cairo_t* cr = cairo_create(this->crBuffer);
+
+#ifdef UNSTABLE_HIGHDPI_FIXES
+		int dpiScaleFactor = xournal->getDpiScaleFactor();
+		cairo_scale(cr, dpiScaleFactor, dpiScaleFactor);
+#endif
 
 		this->inputHandler->draw(cr);
 

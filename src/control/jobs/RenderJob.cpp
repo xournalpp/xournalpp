@@ -10,6 +10,7 @@
 
 #include <Rectangle.h>
 #include <Util.h>
+#include <config-features.h>
 
 #include <list>
 
@@ -116,6 +117,13 @@ void RenderJob::run()
 
 		int dispWidth = this->view->getDisplayWidth();
 		int dispHeight = this->view->getDisplayHeight();
+
+#ifdef UNSTABLE_HIGHDPI_FIXES
+		int dpiScaleFactor = this->view->xournal->getDpiScaleFactor();
+		dispWidth *= dpiScaleFactor;
+		dispHeight *= dpiScaleFactor;
+		zoom *= dpiScaleFactor;
+#endif
 
 		cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight);
 		cairo_t* cr2 = cairo_create(crBuffer);
