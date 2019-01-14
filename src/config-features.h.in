@@ -21,3 +21,9 @@
 
 
 /* --- Testing features --- */
+
+
+/**
+ * High DPI support
+ */
+#cmakedefine UNSTABLE_HIGHDPI_FIXES

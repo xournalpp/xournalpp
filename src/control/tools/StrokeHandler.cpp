@@ -8,6 +8,8 @@
 #include "control/shaperecognizer/ShapeRecognizerResult.h"
 #include "undo/RecognizerUndoAction.h"
 
+#include <config-features.h>
+
 #include <gdk/gdk.h>
 #include <math.h>
 
@@ -233,11 +235,18 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 
 	destroySurface();
 
-	const double zoom = xournal->getZoom();
+	double zoom = xournal->getZoom();
 	PageRef page = redrawable->getPage();
+
+#ifdef UNSTABLE_HIGHDPI_FIXES
+//		Not working yet, input needs also be zoomed
+//		int dpiScaleFactor = xournal->getDpiScaleFactor();
+//		zoom *= dpiScaleFactor;
+#endif
 
 	double width = page->getWidth() * zoom;
 	double height = page->getHeight() * zoom;
+
 	surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
 
 	crMask = cairo_create(surfMask);
