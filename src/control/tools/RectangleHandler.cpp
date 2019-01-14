@@ -77,7 +77,7 @@ void RectangleHandler::drawShape(Point& c, bool shiftDown)
 		{
 			snapToGrid(c.x,c.y);
 		}
-		stroke->addPoint(Point(p.x, c.y)); // was p.y
+		stroke->addPoint(Point(p.x, c.y));
 		stroke->addPoint(c);
 		stroke->addPoint(Point(c.x, p.y));
 		stroke->addPoint(p);
