@@ -842,6 +842,10 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect)
 
 	if (this->inputHandler)
 	{
+#ifdef UNSTABLE_HIGHDPI_FIXES
+		int dpiScaleFactor = xournal->getDpiScaleFactor();
+		cairo_scale(cr, 1.0 / dpiScaleFactor, 1.0 / dpiScaleFactor);
+#endif
 		this->inputHandler->draw(cr);
 	}
 }
@@ -1041,11 +1045,6 @@ void XojPageView::elementChanged(Element* elem)
 		g_mutex_lock(&this->drawingMutex);
 
 		cairo_t* cr = cairo_create(this->crBuffer);
-
-#ifdef UNSTABLE_HIGHDPI_FIXES
-		int dpiScaleFactor = xournal->getDpiScaleFactor();
-		cairo_scale(cr, dpiScaleFactor, dpiScaleFactor);
-#endif
 
 		this->inputHandler->draw(cr);
 

@@ -238,14 +238,13 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 	double zoom = xournal->getZoom();
 	PageRef page = redrawable->getPage();
 
+	int dpiScaleFactor = 1;
 #ifdef UNSTABLE_HIGHDPI_FIXES
-//		Not working yet, input needs also be zoomed
-//		int dpiScaleFactor = xournal->getDpiScaleFactor();
-//		zoom *= dpiScaleFactor;
+	dpiScaleFactor = xournal->getDpiScaleFactor();
 #endif
 
-	double width = page->getWidth() * zoom;
-	double height = page->getHeight() * zoom;
+	double width = page->getWidth() * zoom * dpiScaleFactor;
+	double height = page->getHeight() * zoom * dpiScaleFactor;
 
 	surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
 
@@ -258,7 +257,7 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 
 	cairo_fill(crMask);
 
-	cairo_scale(crMask, zoom, zoom);
+	cairo_scale(crMask, zoom * dpiScaleFactor, zoom * dpiScaleFactor);
 
 	if (!stroke)
 	{
