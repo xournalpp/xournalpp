@@ -28,6 +28,7 @@ void BaseStrokeHandler::snapToGrid(double& x, double& y)
 	 */
 	double gridSize = 14.17;
 	double tolerance = 2.5; //gridSize/2.0; // if you want it to snap everywhere.
+	tolerance = gridSize/2.0;  // The way I like it.
 
 	double xRem = fmod(x,gridSize);
 	double yRem = fmod(y,gridSize);
