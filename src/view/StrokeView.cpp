@@ -163,7 +163,6 @@ void StrokeView::drawNoPressure()
  */
 void StrokeView::drawWithPressuire()
 {
-
 	int count = 1;
 	double width = s->getWidth();
 	ArrayIterator<Point> points = s->pointIterator();

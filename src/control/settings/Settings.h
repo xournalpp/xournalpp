@@ -237,9 +237,13 @@ public:
 
 	bool isSnapRotation();
 	void setSnapRotation(bool b);
+	double getSnapRotationTolerance();
+	void setSnapRotationTolerance(double tolerance);
 
 	bool isSnapGrid();
 	void setSnapGrid(bool b);
+	double getSnapGridTolerance();
+	void setSnapGridTolerance(double tolerance);
 
 	bool isShowBigCursor();
 	void setShowBigCursor(bool b);
@@ -557,4 +561,14 @@ private:
 	 * "Transaction" running, do not save until the end is reached
 	 */
 	bool inTransaction;
+
+	/**
+	 * Snap tolerance for the graph/dotted grid
+	 */
+	double snapGridTolerance;
+
+	/**
+	 * Rotation epsilon for rotation snapping feature
+	 */
+	double snapRotationTolerance; 
 };

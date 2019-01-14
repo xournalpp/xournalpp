@@ -27,6 +27,15 @@ public:
 	virtual ~ToolButton();
 
 public:
+	/**
+	 * Register a popup menu entry, create a popup menu, if none is there
+	 *
+	 * @param name The name of the item
+	 * @param iconName To load an icon
+	 * @return The created menu item
+	 */
+	GtkWidget* registerPopupMenuEntry(string name, string iconName = "");
+
 	void updateDescription(string description);
 	virtual string getToolDisplayName();
 

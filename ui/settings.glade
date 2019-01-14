@@ -9,6 +9,23 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+
+  <object class="GtkAdjustment" id="adjustmentSnapRotationTolerance">
+    <property name="lower">0.1</property>
+    <property name="upper">0.5</property>
+    <property name="value">0.2</property>
+    <property name="step_increment">0.05000000000000001</property>
+    <property name="page_increment">10</property>
+  </object>
+
+  <object class="GtkAdjustment" id="adjustmentSnapGridTolerance">
+    <property name="lower">0.2</property>
+    <property name="upper">10</property>
+    <property name="value">0.25</property>
+    <property name="step_increment">0.05000000000000001</property>
+    <property name="page_increment">10</property>
+  </object>
+
   <object class="GtkAdjustment" id="adjustmentTouchTImeout">
     <property name="lower">0.5</property>
     <property name="upper">10</property>
@@ -2028,11 +2045,85 @@ they are not blocking!&lt;/i&gt;</property>
                     <property name="position">3</property>
                   </packing>
                 </child>
+
+
+                <child>
+                  <object class="GtkBox" id="boxSnapping">
+                  <property name="visible">True</property>
+                  <property name="can_focus">False</property>
+ 
+    		  <child>
+                      <object class="GtkLabel" id="lbSnapRotationTolerance">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Rotation snapping tolerance:</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="padding">5</property>
+                        <property name="position">4</property>
+                      </packing>
+    		  </child>
+    		  <child>
+                      <object class="GtkSpinButton" id="spSnapRotationTolerance">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="adjustment">adjustmentSnapRotationTolerance</property>
+                        <property name="climb_rate">0.05</property>
+                        <property name="digits">2</property>
+                        <property name="value">0.2</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="padding">5</property>
+                        <property name="position">5</property>
+                      </packing>
+    		  </child>
+    
+    		  <child>
+                      <object class="GtkLabel" id="lbSnapGridTolerance">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Grid snapping tolerance:</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="padding">5</property>
+                        <property name="position">6</property>
+                      </packing>
+    		  </child>
+    		  <child>
+                      <object class="GtkSpinButton" id="spSnapGridTolerance">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="adjustment">adjustmentSnapGridTolerance</property>
+                        <property name="climb_rate">0.05</property>
+                        <property name="digits">2</property>
+                        <property name="value">0.25</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="padding">5</property>
+                        <property name="position">7</property>
+                      </packing>
+    		  </child>
+
+	  	</object>
+		</child>
+
+
               </object>
               <packing>
                 <property name="position">6</property>
               </packing>
             </child>
+
             <child type="tab">
               <object class="GtkLabel" id="label7">
                 <property name="visible">True</property>
@@ -2045,6 +2136,7 @@ they are not blocking!&lt;/i&gt;</property>
               </packing>
             </child>
             <child>
+
               <object class="GtkBox" id="box22">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -2060,6 +2152,8 @@ they are not blocking!&lt;/i&gt;</property>
                       <placeholder/>
                     </child>
                   </object>
+
+
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>

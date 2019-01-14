@@ -64,8 +64,7 @@ void ToolHandler::initTools()
 	thickness[TOOL_SIZE_VERY_THICK] = 19.84;
 	t = new Tool("hilighter", TOOL_HILIGHTER, 0xFFFF00,
 			TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE |
-			TOOL_CAP_CIRCLE | TOOL_CAP_ARROW | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL |
-			TOOL_CAP_DASH_LINE,
+			TOOL_CAP_CIRCLE | TOOL_CAP_ARROW | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
 			thickness);
 	tools[TOOL_HILIGHTER - TOOL_PEN] = t;
 
@@ -92,7 +91,7 @@ void ToolHandler::initTools()
 
 	t = new Tool("playObject", TOOL_PLAY_OBJECT, 0x000000, TOOL_CAP_NONE, NULL);
 	tools[TOOL_PLAY_OBJECT - TOOL_PEN] = t;
-	
+
 	t = new Tool("drawRect", TOOL_DRAW_RECT, 0x000000, TOOL_CAP_NONE, NULL);
 	tools[TOOL_DRAW_RECT - TOOL_PEN] = t;
 
@@ -215,35 +214,35 @@ ToolSize ToolHandler::getSize()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return this->current->size;
+	return this->current->getSize();
 }
 
 ToolSize ToolHandler::getPenSize()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return tools[TOOL_PEN - TOOL_PEN]->size;
+	return tools[TOOL_PEN - TOOL_PEN]->getSize();
 }
 
 ToolSize ToolHandler::getEraserSize()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return tools[TOOL_ERASER - TOOL_PEN]->size;
+	return tools[TOOL_ERASER - TOOL_PEN]->getSize();
 }
 
 ToolSize ToolHandler::getHilighterSize()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return tools[TOOL_HILIGHTER - TOOL_PEN]->size;
+	return tools[TOOL_HILIGHTER - TOOL_PEN]->getSize();
 }
 
 void ToolHandler::setPenSize(ToolSize size)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	this->tools[TOOL_PEN - TOOL_PEN]->size = size;
+	this->tools[TOOL_PEN - TOOL_PEN]->setSize(size);
 
 	if (this->current->type == TOOL_PEN)
 	{
@@ -255,7 +254,7 @@ void ToolHandler::setEraserSize(ToolSize size)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	this->tools[TOOL_ERASER - TOOL_PEN]->size = size;
+	this->tools[TOOL_ERASER - TOOL_PEN]->setSize(size);
 
 	if (this->current->type == TOOL_ERASER)
 	{
@@ -267,7 +266,7 @@ void ToolHandler::setHilighterSize(ToolSize size)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	this->tools[TOOL_HILIGHTER - TOOL_PEN]->size = size;
+	this->tools[TOOL_HILIGHTER - TOOL_PEN]->setSize(size);
 
 	if (this->current->type == TOOL_HILIGHTER)
 	{
@@ -279,7 +278,7 @@ void ToolHandler::setPenFillEnabled(bool fill, bool fireEvent)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	this->tools[TOOL_PEN - TOOL_PEN]->fill = fill;
+	this->tools[TOOL_PEN - TOOL_PEN]->setFill(fill);
 
 	if (this->current->type == TOOL_PEN && fireEvent)
 	{
@@ -291,28 +290,28 @@ bool ToolHandler::getPenFillEnabled()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return this->tools[TOOL_PEN - TOOL_PEN]->fill;
+	return this->tools[TOOL_PEN - TOOL_PEN]->getFill();
 }
 
 void ToolHandler::setPenFill(int alpha)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	this->tools[TOOL_PEN - TOOL_PEN]->fillAlpha = alpha;
+	this->tools[TOOL_PEN - TOOL_PEN]->setFillAlpha(alpha);
 }
 
 int ToolHandler::getPenFill()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return this->tools[TOOL_PEN - TOOL_PEN]->fillAlpha;
+	return this->tools[TOOL_PEN - TOOL_PEN]->getFillAlpha();
 }
 
 void ToolHandler::setHilighterFillEnabled(bool fill, bool fireEvent)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	this->tools[TOOL_HILIGHTER - TOOL_PEN]->fill = fill;
+	this->tools[TOOL_HILIGHTER - TOOL_PEN]->setFill(fill);
 
 	if (this->current->type == TOOL_HILIGHTER && fireEvent)
 	{
@@ -324,21 +323,21 @@ bool ToolHandler::getHilighterFillEnabled()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return this->tools[TOOL_HILIGHTER - TOOL_PEN]->fill;
+	return this->tools[TOOL_HILIGHTER - TOOL_PEN]->getFill();
 }
 
 void ToolHandler::setHilighterFill(int alpha)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	this->tools[TOOL_HILIGHTER - TOOL_PEN]->fillAlpha = alpha;
+	this->tools[TOOL_HILIGHTER - TOOL_PEN]->setFillAlpha(alpha);
 }
 
 int ToolHandler::getHilighterFill()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return this->tools[TOOL_HILIGHTER - TOOL_PEN]->fillAlpha;
+	return this->tools[TOOL_HILIGHTER - TOOL_PEN]->getFillAlpha();
 }
 
 double ToolHandler::getThickness()
@@ -347,7 +346,7 @@ double ToolHandler::getThickness()
 
 	if (this->current->thickness)
 	{
-		return this->current->thickness[this->current->size];
+		return this->current->thickness[this->current->getSize()];
 	}
 	else
 	{
@@ -366,7 +365,7 @@ void ToolHandler::setSize(ToolSize size)
 		return;
 	}
 
-	this->current->size = size;
+	this->current->setSize(size);
 	this->listener->toolSizeChanged();
 }
 
@@ -374,7 +373,7 @@ void ToolHandler::setLineStyle(const LineStyle& style)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	this->current->lineStyle = style;
+	this->tools[TOOL_PEN - TOOL_PEN]->setLineStyle(style);
 	this->listener->toolLineStyleChanged();
 }
 
@@ -393,7 +392,7 @@ void ToolHandler::setColor(int color, bool userSelection)
 
 	this->colorFound = false;
 
-	this->current->color = color;
+	this->current->setColor(color);
 	this->listener->toolColorChanged(userSelection);
 
 	if (!colorFound)
@@ -406,7 +405,7 @@ int ToolHandler::getColor()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return current->color;
+	return current->getColor();
 }
 
 /**
@@ -416,12 +415,12 @@ int ToolHandler::getFill()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	if (!current->fill)
+	if (!current->getFill())
 	{
 		return -1;
 	}
 
-	return current->fillAlpha;
+	return current->getFillAlpha();
 }
 
 const LineStyle& ToolHandler::getLineStyle()
@@ -512,7 +511,10 @@ void ToolHandler::saveSettings()
 		{
 			st.setInt("fill", t->getFill());
 			st.setInt("fillAlpha", t->getFillAlpha());
+		}
 
+		if (t->type == TOOL_PEN)
+		{
 			st.setString("style", StrokeStyle::formatStyle(t->getLineStyle()));
 		}
 
@@ -664,9 +666,9 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
 		t->setCapability(TOOL_CAP_COLOR, setColor);
 		t->setCapability(TOOL_CAP_SIZE, setSize);
 		t->setCapability(TOOL_CAP_FILL, setFill);
-		t->size = TOOL_SIZE_NONE;
-		t->color = -1;
-		t->fill = false;
+		t->setSize(TOOL_SIZE_NONE);
+		t->setColor(-1);
+		t->setFill(false);
 	}
 
 	if (this->current->type == TOOL_SELECT_RECT ||

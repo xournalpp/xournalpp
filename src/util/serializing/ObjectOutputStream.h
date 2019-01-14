@@ -36,8 +36,6 @@ public:
 	void writeData(const void* data, int len, int width);
 	void writeImage(cairo_surface_t* img);
 
-	ObjectOutputStream& operator<<(Serializeable* s);
-
 	GString* getStr();
 
 private:

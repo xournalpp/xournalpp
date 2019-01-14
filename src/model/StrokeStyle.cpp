@@ -68,7 +68,7 @@ LineStyle StrokeStyle::parseStyle(const char* style)
 }
 
 #define FORMAT_STYLE(name, def) \
-	if (count == (sizeof(def) / sizeof(def[0])) && memcmp(dashes, def, count) == 0) \
+	if (count == (sizeof(def) / sizeof(def[0])) && memcmp(dashes, def, count * sizeof(def[0])) == 0) \
 	{ \
 		return name; \
 	}

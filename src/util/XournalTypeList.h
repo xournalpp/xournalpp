@@ -263,7 +263,8 @@ XOJ_DECLARE_TYPE(FillUndoActionEntry, 253);
 XOJ_DECLARE_TYPE(MoveLayerUndoAction, 254);
 XOJ_DECLARE_TYPE(EmergencySaveRestore, 255);
 XOJ_DECLARE_TYPE(LineStyle, 256);
-XOJ_DECLARE_TYPE(ToolLineStyleCombocontrol, 257);
+XOJ_DECLARE_TYPE(UndoRedoController, 257);
+XOJ_DECLARE_TYPE(ToolBase, 258);
 
 
 

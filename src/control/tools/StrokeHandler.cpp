@@ -74,23 +74,39 @@ bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 		stroke->setLastPressure(pos.pressure * stroke->getWidth());
 	}
 
-	if (pointCount > 0)
-	{
-		Point prevPoint(stroke->getPoint(pointCount - 1));
-
-		Stroke lastSegment;
-
-		lastSegment.addPoint(prevPoint);
-		lastSegment.addPoint(currentPoint);
-		lastSegment.setWidth(stroke->getWidth());
-
-		cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
-		cairo_set_source_rgba(crMask, 1, 1, 1, 1);
-
-		view.drawStroke(crMask, &lastSegment, 0, 1, false);
-	}
-
 	stroke->addPoint(currentPoint);
+
+	if ((stroke->getFill() != -1 || stroke->getLineStyle().hasDashes())
+			&& !(stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER))
+	{
+		// Clear surface
+
+		// for debugging purposes
+		// cairo_set_source_rgba(crMask, 1, 0, 0, 1);
+		cairo_set_source_rgba(crMask, 0, 0, 0, 0);
+		cairo_rectangle(crMask, 0, 0, cairo_image_surface_get_width(surfMask), cairo_image_surface_get_height(surfMask));
+		cairo_fill(crMask);
+
+		view.drawStroke(crMask, stroke, 0, 1, true, true);
+	}
+	else
+	{
+		if (pointCount > 0)
+		{			
+			Point prevPoint(stroke->getPoint(pointCount - 1));
+
+			Stroke lastSegment;
+
+			lastSegment.addPoint(prevPoint);
+			lastSegment.addPoint(currentPoint);
+			lastSegment.setWidth(stroke->getWidth());
+
+			cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
+			cairo_set_source_rgba(crMask, 1, 1, 1, 1);
+
+			view.drawStroke(crMask, &lastSegment, 0, 1, false);
+		}
+	}
 
 	const double w = stroke->getWidth();
 
@@ -159,12 +175,11 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 		}
 	}
 
-	if (stroke->getFill() != -1 || stroke->getLineStyle().hasDashes())
+	if (stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER)
 	{
 		// The stroke is not filled on drawing time
 		// If the stroke has fill values, it needs to be re-rendered
 		// else the fill will not be visible.
-		// The same for dashes
 
 		view.drawStroke(crMask, stroke, 0, 1, true, true);
 	}

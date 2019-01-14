@@ -4,7 +4,6 @@
 #include "MenuItem.h"
 #include "ToolButton.h"
 #include "ToolDrawCombocontrol.h"
-#include "ToolLineStyleCombocontrol.h"
 #include "ToolSelectCombocontrol.h"
 #include "ToolPageLayer.h"
 #include "ToolPageSpinner.h"
@@ -280,36 +279,51 @@ void ToolMenuHandler::registerMenupoint(GtkWidget* widget, ActionType type, Acti
 	this->menuItems.push_back(new MenuItem(listener, widget, type, group));
 }
 
+void ToolMenuHandler::initPenToolItem()
+{
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
+	ToolButton* tbPen = new ToolButton(listener, gui, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, "tool_pencil.svg",
+									_("Pen"), gui->get("menuToolsPen"));
+
+	registerMenupoint(tbPen->registerPopupMenuEntry(_("standard"), "line-style-plain.svg"),
+			ACTION_TOOL_LINE_STYLE_PLAIN, GROUP_LINE_STYLE);
+	registerMenupoint(gui->get("penStandard"),
+			ACTION_TOOL_LINE_STYLE_PLAIN, GROUP_LINE_STYLE);
+
+	registerMenupoint(tbPen->registerPopupMenuEntry(_("dashed"), "line-style-dash.svg"),
+			ACTION_TOOL_LINE_STYLE_DASH, GROUP_LINE_STYLE);
+	registerMenupoint(gui->get("penStyleDashed"),
+			ACTION_TOOL_LINE_STYLE_DASH, GROUP_LINE_STYLE);
+
+	registerMenupoint(tbPen->registerPopupMenuEntry(_("dash-/ doted"), "line-style-dash-dot.svg"),
+			ACTION_TOOL_LINE_STYLE_DASH_DOT, GROUP_LINE_STYLE);
+	registerMenupoint(gui->get("penStyleDashDotted"),
+			ACTION_TOOL_LINE_STYLE_DASH_DOT, GROUP_LINE_STYLE);
+
+	registerMenupoint(tbPen->registerPopupMenuEntry(_("dotted"), "line-style-dot.svg"),
+			ACTION_TOOL_LINE_STYLE_DOT, GROUP_LINE_STYLE);
+	registerMenupoint(gui->get("penStyleDotted"),
+			ACTION_TOOL_LINE_STYLE_DOT, GROUP_LINE_STYLE);
+
+	addToolItem(tbPen);
+}
+
 void ToolMenuHandler::initEraserToolItem()
 {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
 	ToolButton* tbEraser = new ToolButton(listener, gui, "ERASER", ACTION_TOOL_ERASER, GROUP_TOOL, true,
 										  "tool_eraser.svg", _("Eraser"), gui->get("menuToolsEraser"));
-	GtkWidget* eraserPopup = gtk_menu_new();
 
-	GtkWidget* eraserPopupStandard = gtk_check_menu_item_new_with_label(_("standard"));
-	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(eraserPopupStandard), true);
-	gtk_widget_show(eraserPopupStandard);
-	gtk_container_add(GTK_CONTAINER(eraserPopup), eraserPopupStandard);
+	registerMenupoint(tbEraser->registerPopupMenuEntry(_("standard")), ACTION_TOOL_ERASER_STANDARD, GROUP_ERASER_MODE);
 	registerMenupoint(gui->get("eraserStandard"), ACTION_TOOL_ERASER_STANDARD, GROUP_ERASER_MODE);
-	registerMenupoint(eraserPopupStandard, ACTION_TOOL_ERASER_STANDARD, GROUP_ERASER_MODE);
 
-	GtkWidget* eraserPopupWhiteout = gtk_check_menu_item_new_with_label(_("whiteout"));
-	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(eraserPopupWhiteout), true);
-	gtk_widget_show(eraserPopupWhiteout);
-	gtk_container_add(GTK_CONTAINER(eraserPopup), eraserPopupWhiteout);
+	registerMenupoint(tbEraser->registerPopupMenuEntry(_("whiteout")), ACTION_TOOL_ERASER_WHITEOUT, GROUP_ERASER_MODE);
 	registerMenupoint(gui->get("eraserWhiteout"), ACTION_TOOL_ERASER_WHITEOUT, GROUP_ERASER_MODE);
-	registerMenupoint(eraserPopupWhiteout, ACTION_TOOL_ERASER_WHITEOUT, GROUP_ERASER_MODE);
 
-	GtkWidget* eraserPopupDeleteStroke = gtk_check_menu_item_new_with_label(_("delete stroke"));
-	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(eraserPopupDeleteStroke), true);
-	gtk_widget_show(eraserPopupDeleteStroke);
-	gtk_container_add(GTK_CONTAINER(eraserPopup), eraserPopupDeleteStroke);
+	registerMenupoint(tbEraser->registerPopupMenuEntry(_("delete stroke")), ACTION_TOOL_ERASER_DELETE_STROKE, GROUP_ERASER_MODE);
 	registerMenupoint(gui->get("eraserDeleteStrokes"), ACTION_TOOL_ERASER_DELETE_STROKE, GROUP_ERASER_MODE);
-	registerMenupoint(eraserPopupDeleteStroke, ACTION_TOOL_ERASER_DELETE_STROKE, GROUP_ERASER_MODE);
-
-	tbEraser->setPopupMenu(eraserPopup);
 
 	addToolItem(tbEraser);
 }
@@ -385,9 +399,7 @@ void ToolMenuHandler::initToolItems()
 
 	addToolItem(new ColorToolItem(listener, toolHandler, this->parent, 0xff0000, true));
 
-	addToolItem(new ToolButton(listener, gui, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, "tool_pencil.svg", _("Pen"),
-							   gui->get("menuToolsPen")));
-
+	initPenToolItem();
 	initEraserToolItem();
 
 	addToolItem(new ToolButton(listener, gui, "DELETE_CURRENT_PAGE", ACTION_DELETE_PAGE, "delPage.svg", _("Delete current page")));
@@ -395,8 +407,6 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolSelectCombocontrol(this, listener, gui, "SELECT"));
 
 	addToolItem(new ToolDrawCombocontrol(this, listener, gui, "DRAW"));
-
-	addToolItem(new ToolLineStyleCombocontrol(this, listener, gui, "LINE_STYLE"));
 
 	ToolButton* tbInsertNewPage = new ToolButton(listener, gui, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER,
 												 "addPage.svg", _("Insert page"));

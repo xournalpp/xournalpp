@@ -4,6 +4,7 @@
 #include "LatexController.h"
 #include "layer/LayerController.h"
 #include "PageBackgroundChangeController.h"
+#include "UndoRedoController.h"
 
 #include "gui/Cursor.h"
 
@@ -350,6 +351,7 @@ void Control::initWindow(MainWindow* win)
 	hilighterSizeChanged();
 	updateDeletePageButton();
 	toolFillChanged();
+	toolLineStyleChanged();
 
 	this->clipboardHandler = new ClipboardHandler(this, win->getXournal()->getWidget());
 
@@ -471,16 +473,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 		// Menu Edit
 	case ACTION_UNDO:
-		this->clearSelection();
-		// Move out of text mode to allow textboxundo to work
-		clearSelectionEndText();
-		undoRedo->undo();
-		this->resetShapeRecognizer();
+		UndoRedoController::undo(this);
 		break;
 	case ACTION_REDO:
-		this->clearSelection();
-		undoRedo->redo();
-		this->resetShapeRecognizer();
+		UndoRedoController::redo(this);
 		break;
 	case ACTION_CUT:
 		cut();
@@ -1837,8 +1833,25 @@ void Control::toolLineStyleChanged()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	// TODO Implement LineStyle
-	//fireActionSelected(GROUP_FILL, toolHandler->getFill() != -1 ? ACTION_TOOL_FILL : ACTION_NONE);
+	const LineStyle& lineStyle = toolHandler->getTool(TOOL_PEN).getLineStyle();
+	string style = StrokeStyle::formatStyle(lineStyle);
+
+	if (style == "dash")
+	{
+		fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DASH);
+	}
+	else if (style == "dashdot")
+	{
+		fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DASH_DOT);
+	}
+	else if (style == "dot")
+	{
+		fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DOT);
+	}
+	else
+	{
+		fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_PLAIN);
+	}
 }
 
 /**
@@ -2833,7 +2846,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 		}
 
 		selection = new EditSelection(this->undoRedo, page, view);
-		in >> selection;
+		selection->readSerialized(in);
 
 		// document lock not needed anymore, because we don't change the document, we only change the selection
 		this->doc->unlock();
@@ -2841,7 +2854,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 		int count = in.readInt();
 
 		AddUndoAction* pasteAddUndoAction = new AddUndoAction(page, false);
-		//this will undo a group of elements that are inserted
+		// this will undo a group of elements that are inserted
 
 		for (int i = 0; i < count; i++)
 		{
@@ -2869,9 +2882,8 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 				throw InputStreamException(FS(FORMAT_STR("Get unknown object {1}") % name), __FILE__, __LINE__);
 			}
 
-			in >> element;
+			element->readSerialized(in);
 
-			//undoRedo->addUndoAction(new InsertUndoAction(page, layer, element, view));
 			pasteAddUndoAction->addElement(layer, element, layer->indexOf(element));
 			selection->addElement(element);
 			element = NULL;
@@ -2894,7 +2906,10 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 
 		if (selection)
 		{
-			for (Element* e : *selection->getElements()) delete e;
+			for (Element* e : *selection->getElements())
+			{
+				delete e;
+			}
 			delete selection;
 		}
 	}
