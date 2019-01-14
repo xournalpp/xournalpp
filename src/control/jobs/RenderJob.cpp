@@ -111,6 +111,10 @@ void RenderJob::run()
 
 	g_mutex_unlock(&this->view->repaintRectMutex);
 
+#ifdef UNSTABLE_HIGHDPI_FIXES
+	rerenderComplete = true;
+#endif
+
 	if (rerenderComplete)
 	{
 		Document* doc = this->view->xournal->getDocument();
