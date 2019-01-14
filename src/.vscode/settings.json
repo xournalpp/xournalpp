@@ -56,6 +56,11 @@
         "typeinfo": "cpp",
         "utility": "cpp",
         "variant": "cpp",
-        "hash_map": "cpp"
+        "hash_map": "cpp",
+        "__bit_reference": "cpp",
+        "__functional_base": "cpp",
+        "algorithm": "cpp",
+        "iterator": "cpp",
+        "locale": "cpp"
     }
 }

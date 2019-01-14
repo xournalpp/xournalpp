@@ -79,7 +79,10 @@ void Settings::loadDefault()
 	this->addVerticalSpace = false;
 
 	this->snapRotation = true;
+	this->snapRotationTolerance = 0.20;
+
 	this->snapGrid = true;
+	this->snapGridTolerance = 0.25;
 
 	this->defaultSaveName = _("%F-Note-%H-%M");
 
@@ -391,9 +394,17 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->snapRotation = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "snapRotationTolerance") == 0)
+	{
+		this->snapRotationTolerance = g_strtod((const char*) value, NULL);
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "snapGrid") == 0)
 	{
 		this->snapGrid = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "snapGridTolerance") == 0)
+	{
+		this->snapGridTolerance = g_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "addHorizontalSpace") == 0)
 	{
@@ -736,7 +747,9 @@ void Settings::save()
 	WRITE_BOOL_PROP(addVerticalSpace);
 
 	WRITE_BOOL_PROP(snapRotation);
+	WRITE_DOUBLE_PROP(snapRotationTolerance);
 	WRITE_BOOL_PROP(snapGrid);
+	WRITE_DOUBLE_PROP(snapGridTolerance);
 
 	WRITE_INT_PROP(selectionBorderColor);
 	WRITE_INT_PROP(backgroundColor);
@@ -1037,6 +1050,21 @@ void Settings::setSnapRotation(bool b)
 	save();
 }
 
+double Settings::getSnapRotationTolerance()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->snapRotationTolerance;
+}
+
+void Settings::setSnapRotationTolerance(double tolerance)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	this->snapRotationTolerance = tolerance;
+	save();
+}
+
 bool Settings::isSnapGrid()
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1055,6 +1083,21 @@ void Settings::setSnapGrid(bool b)
 
 	this->snapGrid = b;
 	save();
+}
+
+void Settings::setSnapGridTolerance(double tolerance)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	this->snapGridTolerance = tolerance;
+	save();
+}
+
+double Settings::getSnapGridTolerance()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->snapGridTolerance;
 }
 
 ScrollbarHideType Settings::getScrollbarHideType()
