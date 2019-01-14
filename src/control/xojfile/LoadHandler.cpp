@@ -855,7 +855,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 
 		if (handler->pressureBuffer.size() != 0)
 		{
-			if (handler->pressureBuffer.size() >= handler->stroke->getPointCount() - 1)
+			if ((int)handler->pressureBuffer.size() >= handler->stroke->getPointCount() - 1)
 			{
 				handler->stroke->setPressure(handler->pressureBuffer);
 				handler->pressureBuffer.clear();
