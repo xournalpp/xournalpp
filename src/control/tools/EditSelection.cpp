@@ -718,7 +718,8 @@ void EditSelection::snapRotation()
 		return;
 	}
 	
-	double epsilon = 0.1;
+	double epsilon = this->view->getXournal()->getControl()->getSettings()->getSnapRotationTolerance();
+	
 	const double ROTATION_LOCK[8] = {0, M_PI / 2.0, M_PI, M_PI / 4.0, 3.0 * M_PI / 4.0,
 									- M_PI / 4.0, - 3.0 * M_PI / 4.0, - M_PI / 2.0};
 

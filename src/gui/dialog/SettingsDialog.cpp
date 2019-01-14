@@ -177,6 +177,12 @@ void SettingsDialog::load()
 	GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
 
+	GtkWidget* spSnapRotationTolerance = get("spSnapRotationTolerance");
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapRotationTolerance),settings->getSnapRotationTolerance());
+
+	GtkWidget* spSnapGridTolerance = get("spSnapGridTolerance");
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapGridTolerance),settings->getSnapGridTolerance());
+
 	GtkWidget* slider = get("zoomCallibSlider");
 
 	this->setDpi(settings->getDisplayDpi());
@@ -412,6 +418,8 @@ void SettingsDialog::save()
 
 	touch.setInt("timeout", (int)(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spTouchDisableTimeout"))) * 1000));
 
+	settings->setSnapRotationTolerance((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapRotationTolerance"))));
+	settings->setSnapGridTolerance((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridTolerance"))));
 
 	settings->transactionEnd();
 }

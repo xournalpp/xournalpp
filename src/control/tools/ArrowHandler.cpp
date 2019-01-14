@@ -74,7 +74,7 @@ void ArrowHandler::drawShape(Point& c, bool shiftDown)
 		}
 		else
 		{
-			double epsilon = 0.2;
+			double epsilon = xournal->getControl()->getSettings()->getSnapRotationTolerance();
 			if (std::abs(angle) < epsilon)
 			{
 				angle = 0;

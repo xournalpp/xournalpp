@@ -31,7 +31,7 @@ void RulerHandler::snapRotation(double& x, double& y)
 	
 	double dist = sqrt(pow(x - firstPoint.x, 2.0) + pow(y - firstPoint.y, 2.0));
 	double angle = atan2((y - firstPoint.y), (x - firstPoint.x));
-	double epsilon = 0.1;
+	double epsilon = xournal->getControl()->getSettings()->getSnapRotationTolerance();
 	
 	if (std::abs(angle) < epsilon)
 	{
