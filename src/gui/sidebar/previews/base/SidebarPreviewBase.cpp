@@ -148,14 +148,21 @@ bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 {
 	XOJ_CHECK_TYPE_OBJ(sidebar, SidebarPreviewBase);
 
-	MainWindow* win = sidebar->control->getWindow();
-	if (win)
+	if (!sidebar->enabled)
 	{
-		GtkWidget* w = win->get("sidebar");
-		if (!gtk_widget_get_visible(w))
-		{
-			return false;
-		}
+		return false;
+	}
+
+	MainWindow* win = sidebar->control->getWindow();
+	if (win == NULL)
+	{
+		return false;
+	}
+
+	GtkWidget* w = win->get("sidebar");
+	if (!gtk_widget_get_visible(w))
+	{
+		return false;
 	}
 
 	if (sidebar->selectedEntry != size_t_npos && sidebar->selectedEntry < sidebar->previews.size())
