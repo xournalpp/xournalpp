@@ -33,8 +33,11 @@ private:
 	virtual void drawShape(Point& currentPoint, bool shiftDown) = 0;
 
 protected:
-	XOJ_TYPE_ATTRIB;
 	void snapToGrid(double& x, double& y);
+
+protected:
+	XOJ_TYPE_ATTRIB;
+
 	DocumentView view;
 };
 

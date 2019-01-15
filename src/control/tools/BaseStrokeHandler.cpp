@@ -7,7 +7,7 @@
 #include <cmath>
 
 BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
-	: InputHandler(xournal, redrawable, page)
+ : InputHandler(xournal, redrawable, page)
 {
 	XOJ_INIT_TYPE(BaseStrokeHandler);
 }
@@ -27,12 +27,12 @@ void BaseStrokeHandler::snapToGrid(double& x, double& y)
 	 * fix the point to the grid intersection value
 	 */
 	double gridSize = 14.17;
-  
-	double t = xournal->getControl()->getSettings()->getSnapGridTolerance();
-	double tolerance = (gridSize/2) - (1/t); 
 
-  double xRem = fmod(x,gridSize);
-	double yRem = fmod(y,gridSize);
+	double t = xournal->getControl()->getSettings()->getSnapGridTolerance();
+	double tolerance = (gridSize / 2) - (1 / t);
+
+	double xRem = fmod(x, gridSize);
+	double yRem = fmod(y, gridSize);
 
 	bool snapX = false;
 	bool snapY = false;
