@@ -27,6 +27,15 @@ CoordinateSystemHandler::~CoordinateSystemHandler()
  */
 void CoordinateSystemHandler::drawShape(Point& currentPoint, bool shiftDown)
 {
+	/**
+	 * Snap first point to grid (if enabled)
+	 */
+	if (!shiftDown && xournal->getControl()->getSettings()->isSnapGrid())
+	{
+		Point firstPoint = stroke->getPoint(0);
+		snapToGrid(firstPoint.x,firstPoint.y);
+		stroke->setFirstPoint(firstPoint.x,firstPoint.y);
+	}
 	int count = stroke->getPointCount();
 
 	if (count < 1)
@@ -45,7 +54,11 @@ void CoordinateSystemHandler::drawShape(Point& currentPoint, bool shiftDown)
 			stroke->deletePoint(2);
 			stroke->deletePoint(1);
 		}
-
+		if (xournal->getControl()->getSettings()->isSnapGrid())
+		{
+			snapToGrid(startingPoint.x,startingPoint.y);
+			snapToGrid(currentPoint.x,currentPoint.y);
+		}
 		// Draw the other two points
 		if (shiftDown || !xournal->getControl()->getSettings()->isSnapRotation())
 		{

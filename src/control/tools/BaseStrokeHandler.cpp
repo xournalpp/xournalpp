@@ -27,10 +27,11 @@ void BaseStrokeHandler::snapToGrid(double& x, double& y)
 	 * fix the point to the grid intersection value
 	 */
 	double gridSize = 14.17;
+  
 	double t = xournal->getControl()->getSettings()->getSnapGridTolerance();
 	double tolerance = (gridSize/2) - (1/t); 
-	
-	double xRem = fmod(x,gridSize);
+
+  double xRem = fmod(x,gridSize);
 	double yRem = fmod(y,gridSize);
 
 	bool snapX = false;

@@ -20,6 +20,16 @@ CircleHandler::~CircleHandler()
 
 void CircleHandler::drawShape(Point& c, bool shiftDown)
 {
+	/**
+	 * Snap first point to grid (if enabled)
+	 */
+	if (!shiftDown && xournal->getControl()->getSettings()->isSnapGrid())
+	{
+		Point firstPoint = stroke->getPoint(0);
+		snapToGrid(firstPoint.x,firstPoint.y);
+		stroke->setFirstPoint(firstPoint.x,firstPoint.y);
+	}
+
 	int count = stroke->getPointCount();
 
 	if (count < 2)
@@ -29,6 +39,10 @@ void CircleHandler::drawShape(Point& c, bool shiftDown)
 	else
 	{
 		Point p = stroke->getPoint(0);
+		if (xournal->getControl()->getSettings()->isSnapGrid())
+		{
+			snapToGrid(c.x,c.y);
+		}
 		// set resolution proportional to radius
 		double diameter = sqrt(pow(c.x - p.x, 2.0) + pow(c.y - p.y, 2.0));
 		int npts = (int) (diameter * 2.0);
