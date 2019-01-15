@@ -80,6 +80,9 @@ https://build.opensuse.org/package/show/home:badshah400:Staging/xournalpp-gtk3
 
 Build by https://github.com/badshah400
 
+### Arch Linux
+The AUR Package [xournalpp](https://aur.archlinux.org/packages/xournalpp-git/) provides an easy way to compile and install the latest state of the master branch.
+
 ### Windows
 **The windows Version has a Bug:**
 Please start Xournal++, touch with the Pen, Quit Xournal++ and start again.
