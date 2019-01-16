@@ -779,6 +779,15 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect)
 	cairo_save(cr);
 
 	double width = cairo_image_surface_get_width(this->crBuffer);
+
+	bool rerender = true;
+#ifdef UNSTABLE_HIGHDPI_FIXES
+	if (width / xournal->getDpiScaleFactor() == dispWidth)
+	{
+		rerender = false;
+	}
+#endif
+
 	if (width != dispWidth)
 	{
 		double scale = ((double) dispWidth) / ((double) width);
@@ -789,7 +798,10 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect)
 
 		cairo_set_source_surface(cr, this->crBuffer, 0, 0);
 
-		rerenderPage();
+		if (rerender)
+		{
+			rerenderPage();
+		}
 
 		rect = NULL;
 	}
