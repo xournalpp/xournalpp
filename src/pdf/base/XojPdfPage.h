@@ -45,6 +45,8 @@ public:
 
 	virtual vector<XojPdfRectangle> findText(string& text) = 0;
 
+	virtual int getPageId() = 0;
+
 private:
 	XOJ_TYPE_ATTRIB;
 };
