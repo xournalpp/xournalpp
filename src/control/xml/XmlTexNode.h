@@ -33,5 +33,5 @@ private:
 
 	OutputStream* out;
 	int pos;
-	unsigned char buffer[30];
+	unsigned char buffer[30] = { 0 };
 };

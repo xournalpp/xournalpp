@@ -46,7 +46,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-	BackgroundConfig* config;
+	BackgroundConfig* config = NULL;
 	PageRef page;
 	cairo_t* cr;
 
