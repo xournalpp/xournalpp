@@ -21,6 +21,8 @@
 #include <XournalType.h>
 #include "gui/dialog/LatexDialog.h"
 
+#include <poppler.h>
+
 class Control;
 class TexImage;
 class Text;
@@ -80,11 +82,24 @@ private:
 	/*******/
 
 	/**
-	 * Actual image creation, if 'forTemporaryRender' is true, it does not
-	 * add the image to the doc because it means that it has been called
-	 * during the render in the Editor dialog
+	 * Load rendered PDF
 	 */
-	void insertTexImage(bool forTemporaryRender);
+	PopplerDocument* loadRenderedPDF();
+
+	/**
+	 * Convert PDF Document to TexImage
+	 */
+	TexImage* convertDocumentToImage(PopplerDocument* doc);
+
+	/**
+	 * Load PDF as TexImage
+	 */
+	TexImage* loadRendered();
+
+	/**
+	 * Actual image creation
+	 */
+	void insertTexImage();
 
 private:
 	XOJ_TYPE_ATTRIB;

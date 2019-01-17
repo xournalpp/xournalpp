@@ -81,7 +81,7 @@ bool LatexController::runCommand()
 	texContents += currentTex;
 	texContents += LATEX_TEMPLATE_2;
 
-	string texFile = texTmp + "/tex.tmp";
+	string texFile = texTmp + "/tex.tex";
 
 	GError* err = NULL;
 	if (!g_file_set_contents(texFile.c_str(), texContents.c_str(), texContents.length(), &err))
@@ -92,7 +92,7 @@ bool LatexController::runCommand()
 	}
 
 	char* texFileEscaped = g_strescape(texFile.c_str(), NULL);
-	char* cmd = g_strdup(binTex.str().c_str());
+	char* cmd = g_strdup(binTex.c_str());
 
 	char* argv[] = { cmd, texFileEscaped, NULL };
 
@@ -215,7 +215,8 @@ void LatexController::handleTexChanged(GtkTextBuffer* buffer, LatexController* s
 	self->setCurrentTex(gtk_text_buffer_get_text(buffer, self->getStartIterator(buffer), self->getEndIterator(buffer), TRUE));
 	self->deletePreviousRender();
 	self->runCommand();
-	self->insertTexImage(true);
+
+	self->temporaryRender = self->loadRendered();
 
 	if (self->getTemporaryRender() != NULL)
 	{
@@ -282,27 +283,63 @@ void LatexController::deleteOldImage()
 	}
 }
 
-void LatexController::insertTexImage(bool forTemporaryRender)
+/**
+ * Load rendered PDF
+ */
+PopplerDocument* LatexController::loadRenderedPDF()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
-	string imgPath = texTmp + ".png";
-	GFile* mygfile = g_file_new_for_path(imgPath.c_str());
+	Path pdfPath = texTmp + "/tex.pdf";
 	GError* err = NULL;
-	GFileInputStream* in = g_file_read(mygfile, NULL, &err);
-	g_object_unref(mygfile);
 
-	if (err)
+	string uri = pdfPath.toUri(&err);
+	if (err != NULL)
 	{
-		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not retrieve LaTeX image file: {1}") % err->message));
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not load LaTeX PDF file, URL-Error: {1}") % err->message));
 		g_error_free(err);
-		return;
+		return NULL;
 	}
 
-	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), NULL, &err);
-	g_input_stream_close(G_INPUT_STREAM(in), NULL, NULL);
+	PopplerDocument* doc = poppler_document_new_from_file(uri.c_str(), NULL, &err);
+	if (err != NULL)
+	{
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not load LaTeX PDF file: {1}") % err->message));
+		g_error_free(err);
+		return NULL;
+	}
 
-	deleteOldImage();
+	return doc;
+}
+
+TexImage* LatexController::convertDocumentToImage(PopplerDocument* doc)
+{
+	XOJ_CHECK_TYPE(LatexController);
+
+	if (poppler_document_get_n_pages(doc) < 1)
+	{
+		return NULL;
+	}
+
+	PopplerPage* page = poppler_document_get_page(doc, 0);
+
+
+	double zoom = 5;
+	double pageWidth = 0;
+	double pageHeight = 0;
+	poppler_page_get_size(page, &pageWidth, &pageHeight);
+
+	cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, (int)(pageWidth * zoom), (int)(pageHeight * zoom));
+	cairo_t* cr = cairo_create(crBuffer);
+
+	cairo_scale(cr, zoom, zoom);
+
+	poppler_page_render(page, cr);
+
+	GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crBuffer, 0, 0, cairo_image_surface_get_width(crBuffer), cairo_image_surface_get_height(crBuffer));
+
+	cairo_destroy(cr);
+	cairo_surface_destroy(crBuffer);
 
 	TexImage* img = new TexImage();
 	img->setX(posx);
@@ -336,13 +373,37 @@ void LatexController::insertTexImage(bool forTemporaryRender)
 		img->setHeight(gdk_pixbuf_get_height(pixbuf));
 	}
 
-	//Calling this function for 'on-the-go' LaTex render too, so
-	//if this is that case, return to the caller at this point
-	if (forTemporaryRender)
+	return img;
+}
+
+/**
+ * Load PDF as TexImage
+ */
+TexImage* LatexController::loadRendered()
+{
+	XOJ_CHECK_TYPE(LatexController);
+
+	PopplerDocument* pdf = loadRenderedPDF();
+
+	if (pdf == NULL)
 	{
-		this->temporaryRender = img;
-		return;
+		return NULL;
 	}
+
+	TexImage* img = convertDocumentToImage(pdf);
+
+	g_object_unref(pdf);
+
+	return img;
+}
+
+void LatexController::insertTexImage()
+{
+	XOJ_CHECK_TYPE(LatexController);
+
+	TexImage* img = loadRendered();
+
+	deleteOldImage();
 
 	doc->lock();
 	layer->addElement(img);
@@ -386,7 +447,5 @@ void LatexController::run()
 		return;
 	}
 
-	//False, because it's not for temporary render but this time
-	//we add it to the document
-	insertTexImage(false);
+	insertTexImage();
 }
