@@ -81,7 +81,7 @@ cairo_surface_t* PdfCache::lookup(XojPdfPageSPtr popplerPage)
 	for (PdfCacheEntry* e : this->data)
 	{
 		XOJ_CHECK_TYPE_OBJ(e, PdfCacheEntry);
-		if (e->popplerPage == popplerPage)
+		if (e->popplerPage->getPageId() == popplerPage->getPageId())
 		{
 			return e->rendered;
 		}

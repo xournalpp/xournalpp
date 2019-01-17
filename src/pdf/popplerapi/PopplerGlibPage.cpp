@@ -50,6 +50,13 @@ void PopplerGlibPage::render(cairo_t* cr, bool forPrinting)
 	}
 }
 
+int PopplerGlibPage::getPageId()
+{
+	XOJ_CHECK_TYPE(PopplerGlibPage);
+
+	return poppler_page_get_index(page);
+}
+
 vector<XojPdfRectangle> PopplerGlibPage::findText(string& text)
 {
 	XOJ_CHECK_TYPE(PopplerGlibPage);
