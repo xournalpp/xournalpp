@@ -97,12 +97,8 @@ if (ENABLE_CPPUNIT)
   enable_testing ()
 endif (ENABLE_CPPUNIT)
 
-# Mathtex
-option (ENABLE_MATHTEX "Mathtex support" ON)
-if (WIN32)
-  set(ENABLE_MATHTEX OFF)
-  message ("Automatically set ENABLE_MATHTEX OFF on Windows")
-endif ()
+# Tex
+option (ENABLE_TEX "Tex support" ON)
 
 # Mac integration
 pkg_check_modules (MacIntegration "gtk-mac-integration")
@@ -257,7 +253,7 @@ add_custom_target (uninstall
 message ("
 Configuration:
 	Compiler:                   ${CMAKE_CXX_COMPILER}
-	Mathtex enabled:            ${ENABLE_MATHTEX}
+	Tex enabled:                ${ENABLE_TEX}
 	CppUnit enabled:            ${ENABLE_CPPUNIT}
 
 Unstable features:

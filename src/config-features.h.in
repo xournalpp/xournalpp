@@ -15,9 +15,9 @@
 
 
 /**
- * Enable Mathtex support
+ * Enable Tex support
  */
-#cmakedefine ENABLE_MATHTEX
+#cmakedefine ENABLE_TEX
 
 
 /* --- Testing features --- */

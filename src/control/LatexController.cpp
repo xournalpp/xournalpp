@@ -14,9 +14,18 @@
 
 #include "pixbuf-utils.h"
 
+const char* LATEX_TEMPLATE_1 =
+"\\documentclass[border=5pt]{standalone}\n"
+"\\usepackage{amsmath}\n"
+"\\begin{document}\n"
+"\\(\\displaystyle\n";
+
+const char* LATEX_TEMPLATE_2 =
+"\n\\)\n"
+"\\end{document}\n";
+
 LatexController::LatexController(Control* control)
 	: control(control),
-	  texArea(0),
 	  posx(0),
 	  posy(0),
 	  imgwidth(0),
@@ -24,8 +33,7 @@ LatexController::LatexController(Control* control)
 	  doc(control->getDocument()),
 	  view(NULL),
 	  layer(NULL),
-	  // .png will be appended automatically => tex.png
-	  texImage(Util::getConfigFile("tex").str()),
+	  texTmp(Util::getConfigSubfolder("tex").str()),
 	  selectedTexImage(NULL),
 	  selectedText(NULL),
 	  dlg(NULL),
@@ -50,23 +58,14 @@ bool LatexController::findTexExecutable()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
-	Path exePath = Stacktrace::getExePath();
-	binTex = exePath.getParentPath().str() + "/mathtex/mathtex-xournalpp.cgi";
-
-	if (binTex.exists())
-	{
-		// Found binary in relative path
-		return true;
-	}
-
-	gchar* mathtex = g_find_program_in_path("mathtex-xournalpp.cgi");
-	if (!mathtex)
+	gchar* pdflatex = g_find_program_in_path("pdflatex");
+	if (!pdflatex)
 	{
 		return false;
 	}
 
-	binTex = mathtex;
-	g_free(mathtex);
+	binTex = pdflatex;
+	g_free(pdflatex);
 
 	return true;
 }
@@ -78,50 +77,40 @@ bool LatexController::runCommand()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
-#ifdef WIN32
-	g_error("LaTex is currently not Supported for Windows!");
-	return false;
-#else
+	string texContents = LATEX_TEMPLATE_1;
+	texContents += currentTex;
+	texContents += LATEX_TEMPLATE_2;
 
-	// can change font colour later with more features
-	string fontcolour = "black";
-	// dpi 300 is a good balance
-	string texres;
-	if (this->texArea < 1000)
-	{
-		texres = "300";
-	}
-	else if (this->texArea < 4000)
-	{
-		texres = "400";
-	}
-	else if (this->texArea < 8000)
-	{
-		texres = "500";
-	}
-	else if (this->texArea < 16000)
-	{
-		texres = "600";
-	}
-	else if (this->texArea < 32000)
-	{
-		texres = "800";
-	}
-	else
-	{
-		texres = "1000";
-	}
-	char* escapedCommand = g_strescape(currentTex.c_str(), NULL);
-	string command = FS(FORMAT_STR("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}") % binTex.str() % fontcolour % texres % escapedCommand % texImage);
-	g_free(escapedCommand);
+	string texFile = texTmp + "/tex.tmp";
 
-	gint rt = 0;
-	void (*texhandler)(int) = signal(SIGCHLD, SIG_DFL);
-	gboolean success = g_spawn_command_line_sync(command.c_str(), NULL, NULL, &rt, NULL);
-	signal(SIGCHLD, texhandler);
+	GError* err = NULL;
+	if (!g_file_set_contents(texFile.c_str(), texContents.c_str(), texContents.length(), &err))
+	{
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not save .tex file: {1}") % err->message));
+		g_error_free(err);
+		return false;
+	}
 
-	return success;
-#endif
+	char* texFileEscaped = g_strescape(texFile.c_str(), NULL);
+	char* cmd = g_strdup(binTex.str().c_str());
+
+	char* argv[] = { cmd, texFileEscaped, NULL };
+
+	gint returnCode = 0;
+	if (!g_spawn_sync(texTmp.c_str(), argv, NULL, GSpawnFlags(G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL),
+			NULL, NULL, NULL, NULL, &returnCode, &err))
+	{
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not convert tex to PDF: {1} (exit code: {2})") % err->message % returnCode));
+		g_error_free(err);
+		g_free(texFileEscaped);
+		g_free(cmd);
+		return false;
+	}
+
+	g_free(texFileEscaped);
+	g_free(cmd);
+
+	return true;
 }
 
 /**
@@ -173,8 +162,6 @@ void LatexController::findSelectedTexElement()
 			imgwidth = selectedText->getElementWidth();
 			imgheight = selectedText->getElementHeight();
 		}
-
-		texArea = imgwidth * imgheight;
 	}
 	if (initalTex.empty())
 	{
@@ -299,7 +286,7 @@ void LatexController::insertTexImage(bool forTemporaryRender)
 {
 	XOJ_CHECK_TYPE(LatexController);
 
-	string imgPath = texImage + ".png";
+	string imgPath = texTmp + ".png";
 	GFile* mygfile = g_file_new_for_path(imgPath.c_str());
 	GError* err = NULL;
 	GFileInputStream* in = g_file_read(mygfile, NULL, &err);
@@ -377,8 +364,7 @@ void LatexController::run()
 
 	if (!findTexExecutable())
 	{
-
-		string msg = _("Could not find Xournal++ LaTeX executable relative or in Path.\nSearched for: mathtex-xournalpp.cgi");
+		string msg = _("Could not find pdflatex in Path.");
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 		return;
 	}

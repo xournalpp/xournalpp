@@ -530,7 +530,7 @@ void ToolMenuHandler::initToolItems()
 
 	registerMenupoint(gui->get("menuToolsTextFont"), ACTION_SELECT_FONT);
 
-#ifdef ENABLE_MATHTEX
+#ifdef ENABLE_TEX
 	registerMenupoint(gui->get("menuEditTex"), ACTION_TEX);
 #endif
 

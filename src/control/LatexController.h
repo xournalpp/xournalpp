@@ -107,11 +107,6 @@ private:
 	string currentTex;
 
 	/**
-	 * Image area
-	 */
-	int texArea;
-
-	/**
 	 * X-Position
 	 */
 	int posx;
@@ -152,9 +147,9 @@ private:
 	Layer* layer;
 
 	/**
-	 * Image is temporary stored in configuration folder
+	 * Text tmp directory in configuration folder
 	 */
-	string texImage;
+	string texTmp;
 
 	/**
 	 * Previously existin TexImage

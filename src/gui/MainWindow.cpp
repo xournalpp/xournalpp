@@ -49,7 +49,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 
 	this->maximized = false;
 
-#ifndef ENABLE_MATHTEX
+#ifndef ENABLE_TEX
 	// if mathetex is disable disabled hide the menu entry
 	gtk_widget_destroy(get("menuEditTex"));
 #endif

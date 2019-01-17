@@ -20,6 +20,6 @@ git clone http://github.com/xournalpp/xournalpp.git
 cd xournalpp
 mkdir build
 cd build
-cmake .. -DENABLE_MATHTEX=OFF
+cmake ..
 make
 ````
