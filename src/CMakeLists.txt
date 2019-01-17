@@ -103,6 +103,3 @@ if (ENABLE_CPPUNIT)
   add_subdirectory (${CMAKE_SOURCE_DIR}/test ${CMAKE_BINARY_DIR}/test)
 endif (ENABLE_CPPUNIT)
 
-if (ENABLE_MATHTEX)
-  add_subdirectory (mathtex)
-endif (ENABLE_MATHTEX)

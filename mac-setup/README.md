@@ -42,7 +42,7 @@ Execute in this folder.
 ````bash
 export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
 
-cmake -DCMAKE_INSTALL_PREFIX:PATH=$HOME/gtk/inst -DENABLE_MATHTEX=OFF ..
+cmake -DCMAKE_INSTALL_PREFIX:PATH=$HOME/gtk/inst ..
 make -j 4
 make install
 ````

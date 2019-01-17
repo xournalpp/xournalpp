@@ -3056,15 +3056,15 @@ void Control::runLatex()
 {
 	XOJ_CHECK_TYPE(Control);
 
-#ifdef ENABLE_MATHTEX
+#ifdef ENABLE_TEX
 	LatexController latex(this);
 	latex.run();
 
 #else
 	// This should never occur, as the menupoint is also hidden.
-	g_warning("Mathtex is disabled. Recompile with cmake -DENABLE_MATHTEX=ON "
-			  "ensuring you have the mathtex command on your system.");
-#endif // ENABLE_MATHTEX
+	g_warning("Tex is disabled. Recompile with cmake -DENABLE_TEX=ON "
+			  "ensuring you have the pdflatex command on your system.");
+#endif // ENABLE_TEX
 }
 
 /**
