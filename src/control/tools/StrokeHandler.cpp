@@ -238,10 +238,7 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 	double zoom = xournal->getZoom();
 	PageRef page = redrawable->getPage();
 
-	int dpiScaleFactor = 1;
-#ifdef UNSTABLE_HIGHDPI_FIXES
-	dpiScaleFactor = xournal->getDpiScaleFactor();
-#endif
+	int dpiScaleFactor = xournal->getDpiScaleFactor();
 
 	double width = page->getWidth() * zoom * dpiScaleFactor;
 	double height = page->getHeight() * zoom * dpiScaleFactor;

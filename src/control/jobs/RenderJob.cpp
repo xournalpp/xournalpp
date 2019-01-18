@@ -111,23 +111,18 @@ void RenderJob::run()
 
 	g_mutex_unlock(&this->view->repaintRectMutex);
 
-#ifdef UNSTABLE_HIGHDPI_FIXES
-	rerenderComplete = true;
-#endif
+	int dpiScaleFactor = this->view->xournal->getDpiScaleFactor();
 
-	if (rerenderComplete)
+	if (rerenderComplete || dpiScaleFactor > 1)
 	{
 		Document* doc = this->view->xournal->getDocument();
 
 		int dispWidth = this->view->getDisplayWidth();
 		int dispHeight = this->view->getDisplayHeight();
 
-#ifdef UNSTABLE_HIGHDPI_FIXES
-		int dpiScaleFactor = this->view->xournal->getDpiScaleFactor();
 		dispWidth *= dpiScaleFactor;
 		dispHeight *= dpiScaleFactor;
 		zoom *= dpiScaleFactor;
-#endif
 
 		cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight);
 		cairo_t* cr2 = cairo_create(crBuffer);

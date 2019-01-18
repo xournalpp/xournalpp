@@ -13,12 +13,12 @@
 
 /* --- Stable features --- */
 
-
+// Currently none
 
 /* --- Testing features --- */
 
+// Currently none
 
-/**
- * High DPI support
- */
-#cmakedefine UNSTABLE_HIGHDPI_FIXES
+// Example: #cmakedefine NAME_FROM_Cmake_list
+// in CMakeFile.txt:
+// option (NAME_FROM_Cmake_list "Description" OFF)

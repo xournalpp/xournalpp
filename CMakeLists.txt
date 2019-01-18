@@ -105,10 +105,6 @@ if (MacIntegration_FOUND)
 	add_definitions(-DMAC_INTEGRATION)
 endif ()
 
-# Unstable features
-
-option (UNSTABLE_HIGHDPI_FIXES "HighDPI Fixes (unstable)" OFF)
-
 configure_file (
   src/config-features.h.in
   src/config-features.h
@@ -251,9 +247,6 @@ message ("
 Configuration:
 	Compiler:                   ${CMAKE_CXX_COMPILER}
 	CppUnit enabled:            ${ENABLE_CPPUNIT}
-
-Unstable features:
-	HighDPI Fixes:              ${UNSTABLE_HIGHDPI_FIXES}
 ")
 
 option (CMAKE_DEBUG_INCLUDES_LDFLAGS "List include dirs and ldflags for xournalpp target" OFF)
