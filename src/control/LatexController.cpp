@@ -425,7 +425,7 @@ void LatexController::run()
 
 	if (!findTexExecutable())
 	{
-		string msg = _("Could not find pdflatex in Path.");
+		string msg = _("Could not find pdflatex in Path.\nPlease install pdflatex first and make sure it's in the Path.");
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 		return;
 	}
