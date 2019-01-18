@@ -781,12 +781,10 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect)
 	double width = cairo_image_surface_get_width(this->crBuffer);
 
 	bool rerender = true;
-#ifdef UNSTABLE_HIGHDPI_FIXES
 	if (width / xournal->getDpiScaleFactor() == dispWidth)
 	{
 		rerender = false;
 	}
-#endif
 
 	if (width != dispWidth)
 	{
@@ -854,10 +852,8 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect)
 
 	if (this->inputHandler)
 	{
-#ifdef UNSTABLE_HIGHDPI_FIXES
 		int dpiScaleFactor = xournal->getDpiScaleFactor();
 		cairo_scale(cr, 1.0 / dpiScaleFactor, 1.0 / dpiScaleFactor);
-#endif
 		this->inputHandler->draw(cr);
 	}
 }
