@@ -97,9 +97,6 @@ if (ENABLE_CPPUNIT)
   enable_testing ()
 endif (ENABLE_CPPUNIT)
 
-# Tex
-option (ENABLE_TEX "Tex support" ON)
-
 # Mac integration
 pkg_check_modules (MacIntegration "gtk-mac-integration")
 if (MacIntegration_FOUND)
@@ -253,7 +250,6 @@ add_custom_target (uninstall
 message ("
 Configuration:
 	Compiler:                   ${CMAKE_CXX_COMPILER}
-	Tex enabled:                ${ENABLE_TEX}
 	CppUnit enabled:            ${ENABLE_CPPUNIT}
 
 Unstable features:
