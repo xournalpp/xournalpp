@@ -14,11 +14,6 @@
 /* --- Stable features --- */
 
 
-/**
- * Enable Tex support
- */
-#cmakedefine ENABLE_TEX
-
 
 /* --- Testing features --- */
 
