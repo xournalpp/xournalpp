@@ -343,6 +343,17 @@ void ToolMenuHandler::signalConnectCallback(GtkBuilder* builder, GObject* object
 
 	if (GTK_IS_MENU_ITEM(object))
 	{
+		for (AbstractToolItem* it : self->toolItems)
+		{
+			if (it->getActionType() == action)
+			{
+				// There is already a toolbar item -> attach menu to it
+				it->setMenuItem(GTK_WIDGET(object));
+				return;
+			}
+		}
+
+		// There is no toolbar item -> register the menu only
 		self->registerMenupoint(GTK_WIDGET(object), action);
 	}
 	else
@@ -355,10 +366,10 @@ void ToolMenuHandler::initToolItems()
 {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	addToolItem(new ToolButton(listener, "SAVE", ACTION_SAVE, "document-save", _("Save"), gui->get("menuFileSave")));
-	addToolItem(new ToolButton(listener, "NEW", ACTION_NEW, "document-new", _("New Xournal"), gui->get("menuFileNew")));
+	addToolItem(new ToolButton(listener, "NEW", ACTION_NEW, "document-new", _("New Xournal")));
+	addToolItem(new ToolButton(listener, "OPEN", ACTION_OPEN, "document-open", _("Open file")));
 
-	addToolItem(new ToolButton(listener, "OPEN", ACTION_OPEN, "document-open", _("Open file"), gui->get("menuFileOpen")));
+	addToolItem(new ToolButton(listener, "SAVE", ACTION_SAVE, "document-save", _("Save"), gui->get("menuFileSave")));
 
 	addToolItem(new ToolButton(listener, "CUT", ACTION_CUT, "edit-cut", _("Cut"), gui->get("menuEditCut")));
 	addToolItem(new ToolButton(listener, "COPY", ACTION_COPY, "edit-copy", _("Copy"), gui->get("menuEditCopy")));

@@ -39,6 +39,13 @@ public:
 	void setTmpDisabled(bool disabled);
 	bool isEnabled();
 
+	ActionType getActionType();
+
+	/**
+	 * Register a menu item. If there is already one registered, the new one will be ignored
+	 */
+	void setMenuItem(GtkWidget* menuitem);
+
 protected:
 	virtual void enable(bool enabled);
 
