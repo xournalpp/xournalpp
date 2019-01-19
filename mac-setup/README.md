@@ -14,7 +14,19 @@ Execute in this folder.
 ./build-gtk3.sh
 ````
 
-The build will fail. After first failure (missing python module six)
+The build will fail on expat:
+````
+configure: error: C compiler cannot create executables
+````
+* Press 4 to start a shell
+* Copy the command from above: ./configure --prefix /Users/..../gtk/inst
+* Execute configure, it will work now
+* Execute make install
+* exit
+
+Press 2 to ignore the error, as the build was manually successfully executed
+
+The build will fail again. (missing python module six)
 Download from here: https://pypi.org/project/six/
 Execute
 ````bash
@@ -51,3 +63,5 @@ make install
 ````bash
 ./build-app.sh
 ````
+
+
