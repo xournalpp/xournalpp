@@ -369,13 +369,13 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolButton(listener, "NEW", ACTION_NEW, "document-new", _("New Xournal")));
 	addToolItem(new ToolButton(listener, "OPEN", ACTION_OPEN, "document-open", _("Open file")));
 
-	addToolItem(new ToolButton(listener, "SAVE", ACTION_SAVE, "document-save", _("Save"), gui->get("menuFileSave")));
+	addToolItem(new ToolButton(listener, "SAVE", ACTION_SAVE, "document-save", _("Save")));
 
-	addToolItem(new ToolButton(listener, "CUT", ACTION_CUT, "edit-cut", _("Cut"), gui->get("menuEditCut")));
-	addToolItem(new ToolButton(listener, "COPY", ACTION_COPY, "edit-copy", _("Copy"), gui->get("menuEditCopy")));
-	addToolItem(new ToolButton(listener, "PASTE", ACTION_PASTE, "edit-paste", _("Paste"), gui->get("menuEditPaste")));
+	addToolItem(new ToolButton(listener, "CUT", ACTION_CUT, "edit-cut", _("Cut")));
+	addToolItem(new ToolButton(listener, "COPY", ACTION_COPY, "edit-copy", _("Copy")));
+	addToolItem(new ToolButton(listener, "PASTE", ACTION_PASTE, "edit-paste", _("Paste")));
 
-	addToolItem(new ToolButton(listener, "SEARCH", ACTION_SEARCH, "edit-find", _("Search"), gui->get("menuEditSearch")));
+	addToolItem(new ToolButton(listener, "SEARCH", ACTION_SEARCH, "edit-find", _("Search")));
 
 	undoButton = new ToolButton(listener, "UNDO", ACTION_UNDO, "edit-undo", _("Undo"), gui->get("menuEditUndo"));
 	redoButton = new ToolButton(listener, "REDO", ACTION_REDO, "edit-redo", _("Redo"), gui->get("menuEditRedo"));
@@ -426,10 +426,10 @@ void ToolMenuHandler::initToolItems()
 
 	//Icon snapping.svg made by www.freepik.com from www.flaticon.com
 	addToolItem(new ToolButton(listener, gui, "ROTATION_SNAPPING", ACTION_ROTATION_SNAPPING, GROUP_SNAPPING, false,
-								"snapping.svg", _("Rotation Snapping"), gui->get("menuSnapRotation")));
+								"snapping.svg", _("Rotation Snapping")));
 
 	addToolItem(new ToolButton(listener, gui, "GRID_SNAPPING", ACTION_GRID_SNAPPING, GROUP_GRID_SNAPPING, false,
-								"grid_snapping.svg", _("Grid Snapping"), gui->get("menuSnapGrid")));
+								"grid_snapping.svg", _("Grid Snapping")));
 
 	addToolItem(new ColorToolItem(listener, toolHandler, this->parent, 0xff0000, true));
 
@@ -515,16 +515,8 @@ void ToolMenuHandler::initToolItems()
 	toolPageLayer = new ToolPageLayer(control->getLayerController(), gui, listener, "LAYER", ACTION_FOOTER_LAYER);
 	addToolItem(toolPageLayer);
 
-	registerMenupoint(gui->get("menuEditSettings"), ACTION_SETTINGS);
 	registerMenupoint(gui->get("menuFileAnnotate"), ACTION_ANNOTATE_PDF);
 
-	registerMenupoint(gui->get("menuFileSaveAs"), ACTION_SAVE_AS);
-	registerMenupoint(gui->get("menuFileExportPdf"), ACTION_EXPORT_AS_PDF);
-	registerMenupoint(gui->get("menuFileExportAs"), ACTION_EXPORT_AS);
-
-	registerMenupoint(gui->get("menuFilePrint"), ACTION_PRINT);
-
-	registerMenupoint(gui->get("menuFileQuit"), ACTION_QUIT);
 
 	registerMenupoint(gui->get("menuJournalNewLayer"), ACTION_NEW_LAYER);
 	registerMenupoint(gui->get("menuJournalDeleteLayer"), ACTION_DELETE_LAYER);
@@ -538,7 +530,7 @@ void ToolMenuHandler::initToolItems()
 
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(gui->get("menuJournalPaperBackground")), pageBackgroundChangeController->getMenu());
 
-	addToolItem(new ToolButton(listener, "DELETE", ACTION_DELETE, "edit-delete", _("Delete"), gui->get("menuEditDelete")));
+	addToolItem(new ToolButton(listener, "DELETE", ACTION_DELETE, "edit-delete", _("Delete")));
 
 	registerMenupoint(gui->get("menuNavigationPreviousAnnotatedPage"), ACTION_GOTO_PREVIOUS_ANNOTATED_PAGE);
 
