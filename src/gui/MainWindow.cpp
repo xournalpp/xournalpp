@@ -147,7 +147,13 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 		{
 			XOJ_CHECK_TYPE_OBJ(self, MainWindow);
 			self->control->quit(false);
-			return true;
+		}), this);
+
+	g_signal_connect(osxApp, "NSApplicationOpenFile", G_CALLBACK(
+		+[](GtkosxApplication* osxApp, char* path, MainWindow* self)
+		{
+			XOJ_CHECK_TYPE_OBJ(self, MainWindow);
+			return self->control->openFile(path);
 		}), this);
 
 	gtkosx_application_ready(osxApp);
@@ -542,6 +548,8 @@ void MainWindow::setSidebarVisible(bool visible)
 
 void MainWindow::saveSidebarSize()
 {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	GtkWidget* panel = get("panelMainContents");
 
 	this->control->getSettings()->setSidebarWidth(gtk_paned_get_position(GTK_PANED(panel)));
