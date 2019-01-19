@@ -873,7 +873,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 
 	default:
-		g_warning("Unhandled action event: %i / %i", type, group);
+		g_warning("Unhandled action event: %s / %s (%i / %i)",
+				ActionType_toString(type).c_str(),
+				ActionGroup_toString(group).c_str(),
+				type, group);
 		Stacktrace::printStracktrace();
 	}
 

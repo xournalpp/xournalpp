@@ -51,6 +51,7 @@ add_subdirectory (util)
 unset (xournalpp_SOURCES_RECURSE)
 file (GLOB_RECURSE xournalpp_SOURCES_RECURSE
   control/*.cpp
+  enums/*.cpp
   gui/*.cpp
   model/*.cpp
   undo/*.cpp
