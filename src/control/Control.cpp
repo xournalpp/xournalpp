@@ -3141,6 +3141,7 @@ void Control::rotationSnappingToggle()
 	XOJ_CHECK_TYPE(Control);
 
 	settings->setSnapRotation(!settings->isSnapRotation());
+	fireActionSelected(GROUP_SNAPPING, settings->isSnapRotation() ? ACTION_ROTATION_SNAPPING : ACTION_NONE);
 }
 
 void Control::gridSnappingToggle()
@@ -3148,6 +3149,7 @@ void Control::gridSnappingToggle()
 	XOJ_CHECK_TYPE(Control);
 
 	settings->setSnapGrid(!settings->isSnapGrid());
+	fireActionSelected(GROUP_GRID_SNAPPING, settings->isSnapGrid() ? ACTION_GRID_SNAPPING : ACTION_NONE);
 }
 
 TextEditor* Control::getTextEditor()
