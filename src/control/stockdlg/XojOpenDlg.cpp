@@ -34,7 +34,10 @@ XojOpenDlg::~XojOpenDlg()
 {
 	XOJ_CHECK_TYPE(XojOpenDlg);
 
-	gtk_widget_destroy(dialog);
+	if (dialog)
+	{
+		gtk_widget_destroy(dialog);
+	}
 	dialog = NULL;
 
 	XOJ_RELEASE_TYPE(XojOpenDlg);
@@ -99,6 +102,7 @@ Path XojOpenDlg::runDialog()
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
 	{
 		gtk_widget_destroy(dialog);
+		dialog = NULL;
 		return Path("");
 	}
 
@@ -146,6 +150,7 @@ Path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 	if (pdf)
 	{
 		attachOpt = gtk_check_button_new_with_label(_("Attach file to the journal"));
+		g_object_ref(attachOpt);
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(attachOpt), FALSE);
 		gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(dialog), attachOpt);
 	}
@@ -159,6 +164,7 @@ Path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 	if (attachOpt)
 	{
 		attachPdf = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(attachOpt));
+		g_object_unref(attachOpt);
 	}
 
 	return file;
