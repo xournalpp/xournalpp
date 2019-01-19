@@ -316,6 +316,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Two Pages</property>
                         <property name="use_underline">True</property>
+                        <signal name="toggled" handler="ACTION_VIEW_TWO_PAGES" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -324,6 +325,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Presentation Mode</property>
                         <property name="use_underline">True</property>
+                        <signal name="toggled" handler="ACTION_VIEW_PRESENTATION_MODE" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -332,6 +334,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Fullscreen</property>
                         <property name="use_underline">True</property>
+                        <signal name="toggled" handler="ACTION_FULLSCREEN" swapped="no"/>
                         <accelerator key="F11" signal="activate"/>
                       </object>
                     </child>
@@ -372,6 +375,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_Manage</property>
                                 <property name="use_underline">True</property>
+                                <signal name="activate" handler="ACTION_MANAGE_TOOLBAR" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -380,6 +384,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_Customize</property>
                                 <property name="use_underline">True</property>
+                                <signal name="activate" handler="ACTION_CUSTOMIZE_TOOLBAR" swapped="no"/>
                               </object>
                             </child>
                           </object>
@@ -414,6 +419,7 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <signal name="activate" handler="ACTION_ZOOM_IN" swapped="no"/>
                         <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
@@ -425,6 +431,7 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <signal name="activate" handler="ACTION_ZOOM_OUT" swapped="no"/>
                         <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
@@ -436,6 +443,7 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <signal name="activate" handler="ACTION_ZOOM_100" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -445,6 +453,7 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <signal name="activate" handler="ACTION_ZOOM_FIT" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -467,6 +476,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_First Page</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_GOTO_FIRST" swapped="no"/>
                         <accelerator key="Home" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -476,6 +486,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Previous Page</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_GOTO_BACK" swapped="no"/>
                         <accelerator key="Page_Up" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -485,6 +496,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Goto Page</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_GOTO_PAGE" swapped="no"/>
                         <accelerator key="g" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -494,6 +506,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Next Page</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_GOTO_NEXT" swapped="no"/>
                         <accelerator key="Page_Down" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -503,6 +516,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Last Page</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_GOTO_LAST" swapped="no"/>
                         <accelerator key="End" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -518,6 +532,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Previous Layer</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_GOTO_PREVIOUS_LAYER" swapped="no"/>
                         <accelerator key="Left" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -527,6 +542,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Next Layer</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_GOTO_NEXT_LAYER" swapped="no"/>
                         <accelerator key="Right" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -536,6 +552,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Top Layer</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_GOTO_TOP_LAYER" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -550,6 +567,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">N_ext annotated page</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_GOTO_NEXT_ANNOTATED_PAGE" swapped="no"/>
                         <accelerator key="Page_Down" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -559,6 +577,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">P_revious annotated Page</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_GOTO_PREVIOUS_ANNOTATED_PAGE" swapped="no"/>
                         <accelerator key="Page_Up" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -582,6 +601,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">New Page _Before</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_NEW_PAGE_BEFORE" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -590,6 +610,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">New Page _After</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_NEW_PAGE_AFTER" swapped="no"/>
                         <accelerator key="d" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -599,6 +620,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">New Page at _End</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_NEW_PAGE_AT_END" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -607,6 +629,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Configure Page Template</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_CONFIGURE_PAGE_TEMPLATE" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -615,6 +638,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Delete Page</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_DELETE_PAGE" swapped="no"/>
                         <accelerator key="Delete" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -630,6 +654,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">New _Layer</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_NEW_LAYER" swapped="no"/>
                         <accelerator key="l" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -639,6 +664,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Delete Layer</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_DELETE_LAYER" swapped="no"/>
                         <accelerator key="l" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -654,6 +680,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Paper _Format</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_PAPER_FORMAT" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -662,6 +689,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Paper _Color</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_PAPER_BACKGROUND_COLOR" swapped="no"/>
                       </object>
                     </child>
                     <child>

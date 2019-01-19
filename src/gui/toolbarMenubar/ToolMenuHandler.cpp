@@ -382,44 +382,31 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(undoButton);
 	addToolItem(redoButton);
 
-	addToolItem(new ToolButton(listener, "GOTO_FIRST", ACTION_GOTO_FIRST, "go-first", _("Go to first page"),
-							   gui->get("menuViewFirstPage")));
-	addToolItem(new ToolButton(listener, "GOTO_BACK", ACTION_GOTO_BACK, "go-previous", _("Back"),
-							   gui->get("menuNavigationPreviousPage")));
+	addToolItem(new ToolButton(listener, "GOTO_FIRST", ACTION_GOTO_FIRST, "go-first", _("Go to first page")));
+	addToolItem(new ToolButton(listener, "GOTO_BACK", ACTION_GOTO_BACK, "go-previous", _("Back")));
 
 	addToolItem(new ToolButton(listener, "GOTO_BACK", ACTION_GOTO_BACK, "go-previous", _("Back"),
 							   gui->get("menuNavigationPreviousPage")));
 
-	addToolItem(new ToolButton(listener, gui, "GOTO_PAGE", ACTION_GOTO_PAGE, "goto.svg", _("Go to page"),
-							   gui->get("menuNavigationGotoPage")));
+	addToolItem(new ToolButton(listener, gui, "GOTO_PAGE", ACTION_GOTO_PAGE, "goto.svg", _("Go to page")));
 
-	addToolItem(new ToolButton(listener, "GOTO_NEXT", ACTION_GOTO_NEXT, "go-next", _("Next"),
-							   gui->get("menuNavigationNextPage")));
-	addToolItem(new ToolButton(listener, "GOTO_LAST", ACTION_GOTO_LAST, "go-last", _("Go to last page"),
-							   gui->get("menuNavigationLastPage")));
+	addToolItem(new ToolButton(listener, "GOTO_NEXT", ACTION_GOTO_NEXT, "go-next", _("Next")));
+	addToolItem(new ToolButton(listener, "GOTO_LAST", ACTION_GOTO_LAST, "go-last", _("Go to last page")));
 
-	addToolItem(new ToolButton(listener, "GOTO_PREVIOUS_LAYER", ACTION_GOTO_PREVIOUS_LAYER, "go-previous", _("Go to previous layer"),
-							   gui->get("menuNavigationPreviousLayer")));
-	addToolItem(new ToolButton(listener, "GOTO_NEXT_LAYER", ACTION_GOTO_NEXT_LAYER, "go-next", _("Go to next layer"),
-							   gui->get("menuNavigationNextLayer")));
-	addToolItem(new ToolButton(listener, "GOTO_TOP_LAYER", ACTION_GOTO_TOP_LAYER, "go-top", _("Go to top layer"),
-							   gui->get("menuNavigationTopLayer")));
+	addToolItem(new ToolButton(listener, "GOTO_PREVIOUS_LAYER", ACTION_GOTO_PREVIOUS_LAYER, "go-previous", _("Go to previous layer")));
+	addToolItem(new ToolButton(listener, "GOTO_NEXT_LAYER", ACTION_GOTO_NEXT_LAYER, "go-next", _("Go to next layer")));
+	addToolItem(new ToolButton(listener, "GOTO_TOP_LAYER", ACTION_GOTO_TOP_LAYER, "go-top", _("Go to top layer")));
 
 	addToolItem(new ToolButton(listener, gui, "GOTO_NEXT_ANNOTATED_PAGE", ACTION_GOTO_NEXT_ANNOTATED_PAGE,
-							   "nextAnnotatedPage.svg", _("Next annotated page"),
-							   gui->get("menuNavigationNextAnnotatedPage")));
+							   "nextAnnotatedPage.svg", _("Next annotated page")));
 
-	addToolItem(new ToolButton(listener, "ZOOM_OUT", ACTION_ZOOM_OUT, "zoom-out", _("Zoom out"),
-							   gui->get("menuViewZoomOut")));
-	addToolItem(new ToolButton(listener, "ZOOM_IN", ACTION_ZOOM_IN, "zoom-in", _("Zoom in"),
-							   gui->get("menuViewZoomIn")));
-	addToolItem(new ToolButton(listener, "ZOOM_FIT", ACTION_ZOOM_FIT, "zoom-fit-best", _("Zoom fit to screen"),
-							   gui->get("menuViewZoomFit")));
-	addToolItem(new ToolButton(listener, "ZOOM_100", ACTION_ZOOM_100, "zoom-original", _("Zoom to 100%"),
-							   gui->get("menuViewZoom100")));
+	addToolItem(new ToolButton(listener, "ZOOM_OUT", ACTION_ZOOM_OUT, "zoom-out", _("Zoom out")));
+	addToolItem(new ToolButton(listener, "ZOOM_IN", ACTION_ZOOM_IN, "zoom-in", _("Zoom in")));
+	addToolItem(new ToolButton(listener, "ZOOM_FIT", ACTION_ZOOM_FIT, "zoom-fit-best", _("Zoom fit to screen")));
+	addToolItem(new ToolButton(listener, "ZOOM_100", ACTION_ZOOM_100, "zoom-original", _("Zoom to 100%")));
 
 	addToolItem(new ToolButton(listener, gui, "FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, false,
-							   "fullscreen.svg", _("Toggle fullscreen"), gui->get("menuViewFullScreen")));
+							   "fullscreen.svg", _("Toggle fullscreen")));
 
 	addToolItem(new ToolButton(listener, gui, "RECSTOP", ACTION_RECSTOP, GROUP_REC, false,
 								"rec.svg", _("Rec / Stop"), gui->get("menuRecStop")));
@@ -507,10 +494,10 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(toolZoomSlider);
 
 	addToolItem(new ToolButton(listener, gui, "TWO_PAGES", ACTION_VIEW_TWO_PAGES, GROUP_TWOPAGES, false,
-							   "showtwopages.svg", _("Two pages"), gui->get("menuViewTwoPages")));
+							   "showtwopages.svg", _("Two pages")));
 
 	addToolItem(new ToolButton(listener, gui, "PRESENTATION_MODE", ACTION_VIEW_PRESENTATION_MODE, GROUP_PRESENTATION_MODE, false,
-							   "showtwopages.svg", _("Presentation mode"), gui->get("menuViewPresMode")));
+							   "showtwopages.svg", _("Presentation mode")));
 
 	toolPageLayer = new ToolPageLayer(control->getLayerController(), gui, listener, "LAYER", ACTION_FOOTER_LAYER);
 	addToolItem(toolPageLayer);
@@ -519,20 +506,10 @@ void ToolMenuHandler::initToolItems()
 
 
 	registerMenupoint(gui->get("menuJournalNewLayer"), ACTION_NEW_LAYER);
-	registerMenupoint(gui->get("menuJournalDeleteLayer"), ACTION_DELETE_LAYER);
-	registerMenupoint(gui->get("menuJournalNewPageBefore"), ACTION_NEW_PAGE_BEFORE);
-	registerMenupoint(gui->get("menuJournalNewPageAfter"), ACTION_NEW_PAGE_AFTER);
-	registerMenupoint(gui->get("menuJournalNewPageAtEnd"), ACTION_NEW_PAGE_AT_END);
-	registerMenupoint(gui->get("menuJournalTemplateConfig"), ACTION_CONFIGURE_PAGE_TEMPLATE);
-	registerMenupoint(gui->get("menuDeletePage"), ACTION_DELETE_PAGE);
-	registerMenupoint(gui->get("menuJournalPaperFormat"), ACTION_PAPER_FORMAT);
-	registerMenupoint(gui->get("menuJournalPaperColor"), ACTION_PAPER_BACKGROUND_COLOR);
 
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(gui->get("menuJournalPaperBackground")), pageBackgroundChangeController->getMenu());
 
 	addToolItem(new ToolButton(listener, "DELETE", ACTION_DELETE, "edit-delete", _("Delete")));
-
-	registerMenupoint(gui->get("menuNavigationPreviousAnnotatedPage"), ACTION_GOTO_PREVIOUS_ANNOTATED_PAGE);
 
 	registerMenupoint(gui->get("eraserFine"), ACTION_TOOL_ERASER_SIZE_FINE, GROUP_ERASER_SIZE);
 	registerMenupoint(gui->get("eraserMedium"), ACTION_TOOL_ERASER_SIZE_MEDIUM, GROUP_ERASER_SIZE);
@@ -557,9 +534,6 @@ void ToolMenuHandler::initToolItems()
 	registerMenupoint(gui->get("menuToolsTextFont"), ACTION_SELECT_FONT);
 
 	registerMenupoint(gui->get("menuEditTex"), ACTION_TEX);
-
-	registerMenupoint(gui->get("menuViewToolbarManage"), ACTION_MANAGE_TOOLBAR);
-	registerMenupoint(gui->get("menuViewToolbarCustomize"), ACTION_CUSTOMIZE_TOOLBAR);
 
 	gtk_builder_connect_signals_full(gui->getBuilder(), (GtkBuilderConnectFunc)signalConnectCallback, this);
 }
