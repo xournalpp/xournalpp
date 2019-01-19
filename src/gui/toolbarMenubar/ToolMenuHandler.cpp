@@ -385,9 +385,6 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolButton(listener, "GOTO_FIRST", ACTION_GOTO_FIRST, "go-first", _("Go to first page")));
 	addToolItem(new ToolButton(listener, "GOTO_BACK", ACTION_GOTO_BACK, "go-previous", _("Back")));
 
-	addToolItem(new ToolButton(listener, "GOTO_BACK", ACTION_GOTO_BACK, "go-previous", _("Back"),
-							   gui->get("menuNavigationPreviousPage")));
-
 	addToolItem(new ToolButton(listener, gui, "GOTO_PAGE", ACTION_GOTO_PAGE, "goto.svg", _("Go to page")));
 
 	addToolItem(new ToolButton(listener, "GOTO_NEXT", ACTION_GOTO_NEXT, "go-next", _("Next")));

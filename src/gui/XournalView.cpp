@@ -457,9 +457,18 @@ void XournalView::scrollTo(size_t pageNo, double yDocument)
 
 	XojPageView* v = this->viewPages[pageNo];
 
+	// Make sure it is visible
 	Layout* layout = gtk_xournal_get_layout(this->widget);
-	layout->ensureRectIsVisible(v->layout.getLayoutAbsoluteX(), v->layout.getLayoutAbsoluteY() + yDocument,
-								v->getDisplayWidth(), v->getDisplayHeight());
+
+	int x = v->layout.getLayoutAbsoluteX();
+	int y = v->layout.getLayoutAbsoluteY() + yDocument;
+	int width = v->getDisplayWidth();
+	int height = v->getDisplayHeight();
+
+	layout->ensureRectIsVisible(x, y, width, height);
+
+	// Select the page
+	control->firePageSelected(pageNo);
 }
 
 void XournalView::endTextAllPages(XojPageView* except)
