@@ -34,7 +34,7 @@
         <true/>
         <key>LSItemContentTypes</key>
         <array>
-          <string>com.github.xournalpp.xcf</string>
+          <string>com.github.xournalpp.xopp</string>
         </array>
       </dict>
       <dict>
@@ -79,14 +79,8 @@
     <string>Xournal++</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
-    <key>CFBundleShortVersionString</key>
-    <string>1.0.6-alpha</string>
     <key>CFBundleSignature</key>
     <string>Xournal++</string>
-    <key>CFBundleVersion</key>
-    <string>1.0.6-alpha</string>
-    <key>NSHumanReadableCopyright</key>
-    <string>© 2010-2019 Xournal++ Team</string>
     <key>NSHighResolutionCapable</key>
     <true/>
     <key>NSRequiresAquaSystemAppearance</key>

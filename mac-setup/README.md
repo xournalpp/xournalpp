@@ -50,7 +50,14 @@ Execute in this folder.
 ./build-mac-integration.sh
 ````
 
-### Build Xournal++
+### Build Xournal++ and .app
+````bash
+complete-build.sh
+````
+
+Technical it does:
+
+#### Build Xournal++
 ````bash
 export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
 
@@ -59,7 +66,7 @@ make -j 4
 make install
 ````
 
-### Build App
+#### Build App
 ````bash
 ./build-app.sh
 ````
