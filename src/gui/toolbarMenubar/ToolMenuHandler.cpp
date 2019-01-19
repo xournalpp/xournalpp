@@ -502,11 +502,6 @@ void ToolMenuHandler::initToolItems()
 	toolPageLayer = new ToolPageLayer(control->getLayerController(), gui, listener, "LAYER", ACTION_FOOTER_LAYER);
 	addToolItem(toolPageLayer);
 
-	registerMenupoint(gui->get("menuFileAnnotate"), ACTION_ANNOTATE_PDF);
-
-
-	registerMenupoint(gui->get("menuJournalNewLayer"), ACTION_NEW_LAYER);
-
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(gui->get("menuJournalPaperBackground")), pageBackgroundChangeController->getMenu());
 
 	addToolItem(new ToolButton(listener, "DELETE", ACTION_DELETE, "edit-delete", _("Delete")));

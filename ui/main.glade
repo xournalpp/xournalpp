@@ -70,6 +70,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Annotate PDF</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_ANNOTATE_PDF" swapped="no"/>
                       </object>
                     </child>
                     <child>
