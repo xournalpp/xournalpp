@@ -328,6 +328,29 @@ void ToolMenuHandler::initEraserToolItem()
 	addToolItem(tbEraser);
 }
 
+void ToolMenuHandler::signalConnectCallback(GtkBuilder* builder, GObject* object, const gchar* signalName,
+		const gchar* handlerName, GObject* connectObject, GConnectFlags flags, ToolMenuHandler* self)
+{
+	XOJ_CHECK_TYPE_OBJ(self, ToolMenuHandler);
+
+	ActionType action = ActionType_fromString(handlerName);
+
+	if (action == ACTION_NONE)
+	{
+		g_error("Unknown action name from glade file: «%s» / «%s»", signalName, handlerName);
+		return;
+	}
+
+	if (GTK_IS_MENU_ITEM(object))
+	{
+		self->registerMenupoint(GTK_WIDGET(object), action);
+	}
+	else
+	{
+		g_error("Unsupported signal handler from glade file: «%s» / «%s»", signalName, handlerName);
+	}
+}
+
 void ToolMenuHandler::initToolItems()
 {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
@@ -535,9 +558,7 @@ void ToolMenuHandler::initToolItems()
 	registerMenupoint(gui->get("menuViewToolbarManage"), ACTION_MANAGE_TOOLBAR);
 	registerMenupoint(gui->get("menuViewToolbarCustomize"), ACTION_CUSTOMIZE_TOOLBAR);
 
-	// Menu Help
-	registerMenupoint(gui->get("menuHelpAbout"), ACTION_ABOUT);
-	registerMenupoint(gui->get("menuHelpHelp"), ACTION_HELP);
+	gtk_builder_connect_signals_full(gui->getBuilder(), (GtkBuilderConnectFunc)signalConnectCallback, this);
 }
 
 void ToolMenuHandler::setFontButtonFont(XojFont& font)
