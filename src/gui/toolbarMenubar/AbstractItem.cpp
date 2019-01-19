@@ -19,21 +19,7 @@ AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action,
 
 	if (menuitem)
 	{
-		// Other signal available: "toggled", currently not sure, if this may fix some bugs or generate other...
-		menuSignalHandler = g_signal_connect(menuitem, "activate", G_CALLBACK(
-				+[](GtkMenuItem* menuitem, AbstractItem* self)
-				{
-					XOJ_CHECK_TYPE_OBJ(self, AbstractItem);
-					self->activated(NULL, menuitem, NULL);
-				}), this);
-
-		g_object_ref(G_OBJECT(menuitem));
-		this->menuitem = menuitem;
-
-		if (GTK_IS_CHECK_MENU_ITEM(menuitem))
-		{
-			checkMenuItem = !gtk_check_menu_item_get_draw_as_radio(GTK_CHECK_MENU_ITEM(menuitem));
-		}
+		setMenuItem(menuitem);
 	}
 }
 
@@ -48,6 +34,35 @@ AbstractItem::~AbstractItem()
 	}
 
 	XOJ_RELEASE_TYPE(AbstractItem);
+}
+
+/**
+ * Register a menu item. If there is already one registered, the new one will be ignored
+ */
+void AbstractItem::setMenuItem(GtkWidget* menuitem)
+{
+	XOJ_CHECK_TYPE(AbstractItem);
+
+	if (this->menuitem != NULL)
+	{
+		g_warning("The menu item %i / %s has already a menu item registered!", action, ActionType_toString(action).c_str());
+		return;
+	}
+
+	menuSignalHandler = g_signal_connect(menuitem, "activate", G_CALLBACK(
+			+[](GtkMenuItem* menuitem, AbstractItem* self)
+			{
+				XOJ_CHECK_TYPE_OBJ(self, AbstractItem);
+				self->activated(NULL, menuitem, NULL);
+			}), this);
+
+	g_object_ref(G_OBJECT(menuitem));
+	this->menuitem = menuitem;
+
+	if (GTK_IS_CHECK_MENU_ITEM(menuitem))
+	{
+		checkMenuItem = !gtk_check_menu_item_get_draw_as_radio(GTK_CHECK_MENU_ITEM(menuitem));
+	}
 }
 
 void AbstractItem::actionSelected(ActionGroup group, ActionType action)
@@ -194,4 +209,11 @@ bool AbstractItem::isEnabled()
 	XOJ_CHECK_TYPE(AbstractItem);
 
 	return this->enabled;
+}
+
+ActionType AbstractItem::getActionType()
+{
+	XOJ_CHECK_TYPE(AbstractItem);
+
+	return this->action;
 }
