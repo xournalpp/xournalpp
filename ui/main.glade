@@ -87,8 +87,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                        <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -112,8 +112,8 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Export as...</property>
                         <property name="use_underline">True</property>
-                        <accelerator key="i" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                        <accelerator key="i" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -398,8 +398,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -409,8 +409,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -740,7 +740,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Shape Recognizer</property>
                         <property name="use_underline">True</property>
-                        <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                        <accelerator key="1" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -749,6 +749,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Draw Rectangle</property>
                         <property name="use_underline">True</property>
+                        <accelerator key="2" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -757,6 +758,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Draw Circle</property>
                         <property name="use_underline">True</property>
+                        <accelerator key="3" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -765,6 +767,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Draw Arrow</property>
                         <property name="use_underline">True</property>
+                        <accelerator key="4" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -773,6 +776,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Draw Arrow</property>
                         <property name="use_underline">True</property>
+                        <accelerator key="5" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -781,7 +785,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Draw _Line</property>
                         <property name="use_underline">True</property>
-                        <accelerator key="l" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                        <accelerator key="6" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
