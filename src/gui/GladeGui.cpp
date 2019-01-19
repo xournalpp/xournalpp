@@ -141,6 +141,13 @@ GladeSearchpath* GladeGui::getGladeSearchPath()
 	return this->gladeSearchPath;
 }
 
+GtkBuilder* GladeGui::getBuilder()
+{
+	XOJ_CHECK_TYPE(GladeGui);
+
+	return this->builder;
+}
+
 GladeGui::operator GdkWindow* ()
 {
 	XOJ_CHECK_TYPE(GladeGui);

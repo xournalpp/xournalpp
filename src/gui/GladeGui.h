@@ -37,6 +37,8 @@ public:
 	GtkWidget* getWindow();
 	GladeSearchpath* getGladeSearchPath();
 
+ 	GtkBuilder* getBuilder();
+
 private:
 	XOJ_TYPE_ATTRIB;
 

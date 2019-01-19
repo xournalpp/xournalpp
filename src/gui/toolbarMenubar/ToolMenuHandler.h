@@ -74,6 +74,8 @@ public:
 private:
 	void addToolItem(AbstractToolItem* it);
 
+	static void signalConnectCallback(GtkBuilder* builder, GObject* object, const gchar* signalName,
+				const gchar* handlerName, GObject* connectObject, GConnectFlags flags, ToolMenuHandler* self);
 	void initPenToolItem();
 	void initEraserToolItem();
 
