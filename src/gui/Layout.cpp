@@ -25,6 +25,7 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
 			XOJ_CHECK_TYPE_OBJ(layout, Layout);
 			layout->checkScroll(adjustment, layout->lastScrollHorizontal);
 			layout->updateCurrentPage();
+			layout->scrollHandling->scrollChanged();
 		}), this);
 
 	g_signal_connect(scrollHandling->getVertical(), "value-changed", G_CALLBACK(
@@ -33,6 +34,7 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
 			XOJ_CHECK_TYPE_OBJ(layout, Layout);
 			layout->checkScroll(adjustment, layout->lastScrollVertical);
 			layout->updateCurrentPage();
+			layout->scrollHandling->scrollChanged();
 		}), this);
 
 	lastScrollHorizontal = gtk_adjustment_get_value(scrollHandling->getHorizontal());

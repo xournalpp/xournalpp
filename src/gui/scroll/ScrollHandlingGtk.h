@@ -25,6 +25,10 @@ public:
 	virtual int getPrefferedWidth();
 	virtual int getPrefferedHeight();
 
+	virtual void translate(cairo_t* cr, double& x1, double& x2, double& y1, double& y2);
+
+	virtual void scrollChanged();
+
 private:
 	XOJ_TYPE_ATTRIB;
 };

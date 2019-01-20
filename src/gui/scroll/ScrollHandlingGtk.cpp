@@ -35,3 +35,18 @@ int ScrollHandlingGtk::getPrefferedHeight()
 	return layout->getLayoutHeight();
 }
 
+void ScrollHandlingGtk::translate(cairo_t* cr, double& x1, double& x2, double& y1, double& y2)
+{
+	XOJ_CHECK_TYPE(ScrollHandlingGtk);
+
+	// Nothing to do here - all done by GTK
+}
+
+void ScrollHandlingGtk::scrollChanged()
+{
+	XOJ_CHECK_TYPE(ScrollHandlingGtk);
+
+	// Nothing to do here - all done by GTK
+}
+
+
