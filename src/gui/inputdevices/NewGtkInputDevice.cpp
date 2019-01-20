@@ -136,17 +136,13 @@ void NewGtkInputDevice::initWidget()
 			GDK_SCROLL_MASK |
 
 			// Touch / Pen / Mouse
+			GDK_TOUCH_MASK          |
 			GDK_POINTER_MOTION_MASK |
 			GDK_BUTTON_PRESS_MASK   |
 			GDK_BUTTON_RELEASE_MASK |
 			GDK_SMOOTH_SCROLL_MASK  |
 			GDK_ENTER_NOTIFY_MASK   |
 			GDK_LEAVE_NOTIFY_MASK;
-
-	if (!getSettings()->isTouchWorkaround())
-	{
-		mask |= GDK_TOUCH_MASK;
-	}
 
 	gtk_widget_add_events(widget, mask);
 
@@ -287,15 +283,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	if (event->type == GDK_TOUCH_BEGIN)
 	{
 		input->actionStart();
-	}
-
-	if (event->type == GDK_TOUCH_BEGIN || event->type == GDK_TOUCH_UPDATE)
-	{
-		if (sequence && event->touch.emulating_pointer)
-		{
-			g_hash_table_remove(pointerInputList, sourceDevice);
-			return true;
-		}
+		return true;
 	}
 
 	gdouble x, y;
@@ -322,7 +310,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		input->setState(state);
 	}
 
-	if (event->type == GDK_MOTION_NOTIFY)
+	if (event->type == GDK_MOTION_NOTIFY || event->type == GDK_TOUCH_UPDATE)
 	{
 		input->copyAxes(event);
 		input->actionMoved();
