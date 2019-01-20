@@ -92,8 +92,8 @@
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="ACTION_SAVE_AS" swapped="no"/>
-                        <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                         <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -119,8 +119,8 @@
                         <property name="label" translatable="yes">Export as...</property>
                         <property name="use_underline">True</property>
                         <signal name="activate" handler="ACTION_EXPORT_AS" swapped="no"/>
-                        <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                         <accelerator key="i" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -172,6 +172,7 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <signal name="activate" handler="ACTION_UNDO" swapped="no"/>
                         <accelerator key="z" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -182,6 +183,7 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <signal name="activate" handler="ACTION_REDO" swapped="no"/>
                         <accelerator key="y" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -421,8 +423,8 @@
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="ACTION_ZOOM_IN" swapped="no"/>
-                        <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -433,8 +435,8 @@
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="ACTION_ZOOM_OUT" swapped="no"/>
-                        <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -722,6 +724,7 @@
                         <property name="label" translatable="yes">_Pen</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
+                        <signal name="toggled" handler="ACTION_TOOL_PEN" swapped="no"/>
                         <accelerator key="p" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -732,6 +735,7 @@
                         <property name="label" translatable="yes">_Eraser</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
+                        <signal name="toggled" handler="ACTION_TOOL_ERASER" swapped="no"/>
                         <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -742,6 +746,7 @@
                         <property name="label" translatable="yes">_Highlighter</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
+                        <signal name="toggled" handler="ACTION_TOOL_HILIGHTER" swapped="no"/>
                         <accelerator key="h" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -752,6 +757,7 @@
                         <property name="label" translatable="yes">_Text</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
+                        <signal name="toggled" handler="ACTION_TOOL_TEXT" swapped="no"/>
                         <accelerator key="t" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -762,6 +768,7 @@
                         <property name="label" translatable="yes">_Image</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
+                        <signal name="toggled" handler="ACTION_TOOL_IMAGE" swapped="no"/>
                         <accelerator key="i" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -771,6 +778,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Default Tools</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_TOOL_DEFAULT" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -785,6 +793,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Shape Recognizer</property>
                         <property name="use_underline">True</property>
+                        <signal name="toggled" handler="ACTION_SHAPE_RECOGNIZER" swapped="no"/>
                         <accelerator key="1" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -794,6 +803,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Draw Rectangle</property>
                         <property name="use_underline">True</property>
+                        <signal name="toggled" handler="ACTION_TOOL_DRAW_RECT" swapped="no"/>
                         <accelerator key="2" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -803,6 +813,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Draw Circle</property>
                         <property name="use_underline">True</property>
+                        <signal name="toggled" handler="ACTION_TOOL_DRAW_CIRCLE" swapped="no"/>
                         <accelerator key="3" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -812,6 +823,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Draw Arrow</property>
                         <property name="use_underline">True</property>
+                        <signal name="toggled" handler="ACTION_TOOL_DRAW_ARROW" swapped="no"/>
                         <accelerator key="4" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -821,6 +833,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Draw Arrow</property>
                         <property name="use_underline">True</property>
+                        <signal name="toggled" handler="ACTION_TOOL_DRAW_COORDINATE_SYSTEM" swapped="no"/>
                         <accelerator key="5" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -830,6 +843,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Draw _Line</property>
                         <property name="use_underline">True</property>
+                        <signal name="toggled" handler="ACTION_RULER" swapped="no"/>
                         <accelerator key="6" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -846,6 +860,7 @@
                         <property name="label" translatable="yes">Select Region</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
+                        <signal name="toggled" handler="ACTION_TOOL_SELECT_REGION" swapped="no"/>
                         <accelerator key="g" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -856,6 +871,7 @@
                         <property name="label" translatable="yes">Select Rectangle</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
+                        <signal name="toggled" handler="ACTION_TOOL_SELECT_RECT" swapped="no"/>
                         <accelerator key="r" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -866,6 +882,7 @@
                         <property name="label" translatable="yes">Select Object</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
+                        <signal name="toggled" handler="ACTION_TOOL_SELECT_OBJECT" swapped="no"/>
                         <accelerator key="o" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -876,6 +893,7 @@
                         <property name="label" translatable="yes">_Vertical Space</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
+                        <signal name="toggled" handler="ACTION_TOOL_VERTICAL_SPACE" swapped="no"/>
                         <accelerator key="v" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -887,6 +905,7 @@
                         <property name="label" translatable="yes">Play Object</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
+                        <signal name="toggled" handler="ACTION_TOOL_PLAY_OBJECT" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -896,6 +915,7 @@
                         <property name="label" translatable="yes">H_and Tool</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
+                        <signal name="toggled" handler="ACTION_TOOL_HAND" swapped="no"/>
                         <accelerator key="a" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -922,6 +942,7 @@
                                 <property name="label" translatable="yes">_very fine</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_VERY_THIN:GROUP_PEN_SIZE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -931,6 +952,7 @@
                                 <property name="label" translatable="yes">_fine</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_FINE:GROUP_PEN_SIZE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -940,6 +962,7 @@
                                 <property name="label" translatable="yes">_medium</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_MEDIUM:GROUP_PEN_SIZE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -949,6 +972,7 @@
                                 <property name="label" translatable="yes">_thick</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_THICK:GROUP_PEN_SIZE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -958,6 +982,7 @@
                                 <property name="label" translatable="yes">ver_y thick</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_VERY_THICK:GROUP_PEN_SIZE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -973,6 +998,7 @@
                                 <property name="label" translatable="yes">standard</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_LINE_STYLE_PLAIN:GROUP_LINE_STYLE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -982,6 +1008,7 @@
                                 <property name="label" translatable="yes">dashed</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_LINE_STYLE_DASH:GROUP_LINE_STYLE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -991,6 +1018,7 @@
                                 <property name="label" translatable="yes">dash-/ doted</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_LINE_STYLE_DASH_DOT:GROUP_LINE_STYLE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -1000,6 +1028,7 @@
                                 <property name="label" translatable="yes">dotted</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_LINE_STYLE_DOT:GROUP_LINE_STYLE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -1014,6 +1043,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Fi_ll</property>
                                 <property name="use_underline">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_PEN_FILL:GROUP_PEN_FILL" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -1022,6 +1052,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Fill transparency</property>
                                 <property name="use_underline">True</property>
+                                <signal name="activate" handler="ACTION_TOOL_PEN_FILL_TRANSPARENCY" swapped="no"/>
                               </object>
                             </child>
                           </object>
@@ -1045,6 +1076,7 @@
                                 <property name="label" translatable="yes">_fine</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_FINE:GROUP_ERASER_SIZE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -1054,6 +1086,7 @@
                                 <property name="label" translatable="yes">_medium</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_MEDIUM:GROUP_ERASER_SIZE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -1063,6 +1096,7 @@
                                 <property name="label" translatable="yes">_thick</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_THICK:GROUP_ERASER_SIZE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -1078,6 +1112,7 @@
                                 <property name="label" translatable="yes">_standard</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_ERASER_STANDARD:GROUP_ERASER_MODE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -1087,6 +1122,7 @@
                                 <property name="label" translatable="yes">_whiteout</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_ERASER_WHITEOUT:GROUP_ERASER_MODE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -1096,6 +1132,7 @@
                                 <property name="label" translatable="yes">_delete strokes</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_ERASER_DELETE_STROKE:GROUP_ERASER_MODE" swapped="no"/>
                               </object>
                             </child>
                           </object>
@@ -1119,6 +1156,7 @@
                                 <property name="label" translatable="yes">_fine</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_HILIGHTER_SIZE_FINE:GROUP_HILIGHTER_SIZE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -1128,6 +1166,7 @@
                                 <property name="label" translatable="yes">_medium</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_HILIGHTER_SIZE_MEDIUM:GROUP_HILIGHTER_SIZE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -1137,6 +1176,7 @@
                                 <property name="label" translatable="yes">_thick</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_HILIGHTER_SIZE_THICK:GROUP_HILIGHTER_SIZE" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -1151,6 +1191,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Fi_ll</property>
                                 <property name="use_underline">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_HILIGHTER_FILL:GROUP_HILIGHTER_FILL" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -1159,6 +1200,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Fill transparency</property>
                                 <property name="use_underline">True</property>
+                                <signal name="activate" handler="ACTION_TOOL_HILIGHTER_FILL_TRANSPARENCY" swapped="no"/>
                               </object>
                             </child>
                           </object>
@@ -1171,6 +1213,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Text Font...</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_SELECT_FONT" swapped="no"/>
                         <accelerator key="f" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -1180,6 +1223,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Rec-Stop</property>
+                        <signal name="toggled" handler="ACTION_RECSTOP" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -1188,6 +1232,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Add/Edit Tex</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_TEX" swapped="no"/>
                         <accelerator key="x" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
