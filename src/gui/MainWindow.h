@@ -89,6 +89,8 @@ public:
 	bool isGestureActive();
 
 private:
+	void initXournalWidget();
+
 	/**
 	 * Allow to hide menubar, but only if global menu is not enabled
 	 */
@@ -130,7 +132,8 @@ private:
 
 	Control* control;
 
-	XournalView* xournal;
+	XournalView* xournal = NULL;
+	GtkWidget* winXournal = NULL;
 
 	ZoomGesture* zoomGesture;
 
