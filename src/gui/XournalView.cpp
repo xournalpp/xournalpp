@@ -23,7 +23,7 @@
 
 #include <math.h>
 
-XournalView::XournalView(GtkWidget* parent, Control* control, XojScrollbars scrollbar)
+XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling)
 {
 	XOJ_INIT_TYPE(XournalView);
 
@@ -31,7 +31,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, XojScrollbars scro
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
 
-	this->widget = gtk_xournal_new(this, scrollbar);
+	this->widget = gtk_xournal_new(this, scrollHandling);
 	// we need to refer widget here, because we unref it somewhere twice!?
 	g_object_ref(this->widget);
 

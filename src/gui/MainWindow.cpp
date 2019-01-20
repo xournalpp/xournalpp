@@ -9,6 +9,8 @@
 #include "control/layer/LayerController.h"
 #include "control/zoom/ZoomGesture.h"
 #include "gui/GladeSearchpath.h"
+#include "gui/scroll/ScrollHandlingGtk.h"
+#include "gui/scroll/ScrollHandlingXournalpp.h"
 #include "ToolbarDefinitions.h"
 #include "toolbarMenubar/model/ToolbarData.h"
 #include "toolbarMenubar/model/ToolbarModel.h"
@@ -173,6 +175,9 @@ MainWindow::~MainWindow()
 	delete this->zoomGesture;
 	this->zoomGesture = NULL;
 
+	delete scrollHandling;
+	scrollHandling = NULL;
+
 	XOJ_RELEASE_TYPE(MainWindow);
 }
 
@@ -208,31 +213,27 @@ void MainWindow::initXournalWidget()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	bool customScrollable = true;
-
 	GtkWidget* boxContents = get("boxContents");
 
-	if (customScrollable)
+	if (control->getSettings()->isTouchWorkaround())
 	{
 		GtkWidget* box1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 		gtk_container_add(GTK_CONTAINER(boxContents), box1);
 
 		GtkWidget* box2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 		gtk_container_add(GTK_CONTAINER(box1), box2);
-		XojScrollbars scrollbar;
-		scrollbar.adjHorizontal = gtk_adjustment_new(0, 0, 100, 5, 10, 10);
-		scrollbar.adjVertical = gtk_adjustment_new(0, 0, 100, 5, 10, 10);
 
-		this->xournal = new XournalView(box2, control, scrollbar);
+		scrollHandling = new ScrollHandlingXournalpp();
+
+		this->xournal = new XournalView(box2, control, scrollHandling);
 
 		if (control->getSettings()->isZoomGesturesEnabled())
 		{
-			this->zoomGesture = new ZoomGesture(winXournal, control->getZoomControl());
+			this->zoomGesture = new ZoomGesture(this->xournal->getWidget(), control->getZoomControl());
 		}
 
-		gtk_container_add(GTK_CONTAINER(box2), gtk_scrollbar_new(GTK_ORIENTATION_VERTICAL, scrollbar.adjVertical));
-		gtk_container_add(GTK_CONTAINER(box1), gtk_scrollbar_new(GTK_ORIENTATION_VERTICAL, scrollbar.adjHorizontal));
-
+		gtk_container_add(GTK_CONTAINER(box2), gtk_scrollbar_new(GTK_ORIENTATION_VERTICAL, scrollHandling->getVertical()));
+		gtk_container_add(GTK_CONTAINER(box1), gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, scrollHandling->getHorizontal()));
 
 		gtk_widget_show_all(box1);
 	}
@@ -246,11 +247,9 @@ void MainWindow::initXournalWidget()
 
 		gtk_container_add(GTK_CONTAINER(winXournal), vpXournal);
 
-		XojScrollbars scrollbar;
-		scrollbar.adjHorizontal = gtk_scrollable_get_hadjustment(GTK_SCROLLABLE(vpXournal));
-		scrollbar.adjVertical = gtk_scrollable_get_vadjustment(GTK_SCROLLABLE(vpXournal));
+		scrollHandling = new ScrollHandlingGtk(GTK_SCROLLABLE(vpXournal));
 
-		this->xournal = new XournalView(vpXournal, control, scrollbar);
+		this->xournal = new XournalView(vpXournal, control, scrollHandling);
 
 		if (control->getSettings()->isZoomGesturesEnabled())
 		{
@@ -259,6 +258,9 @@ void MainWindow::initXournalWidget()
 
 		gtk_widget_show_all(winXournal);
 	}
+
+	Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
+	scrollHandling->init(this->xournal->getWidget(), layout);
 }
 
 /**

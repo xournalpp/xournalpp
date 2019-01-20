@@ -125,7 +125,8 @@ void NewGtkInputDevice::initWidget()
 	XOJ_CHECK_TYPE(NewGtkInputDevice);
 
 	gtk_widget_set_support_multidevice(widget, true);
-	gtk_widget_add_events(widget,
+
+	int mask =
 			// Key handling
 			GDK_KEY_PRESS_MASK |
 
@@ -133,16 +134,19 @@ void NewGtkInputDevice::initWidget()
 			GDK_SCROLL_MASK |
 
 			// Touch / Pen / Mouse
-
-			// Disable touch
-//			GDK_TOUCH_MASK          |
-
 			GDK_POINTER_MOTION_MASK |
 			GDK_BUTTON_PRESS_MASK   |
 			GDK_BUTTON_RELEASE_MASK |
 			GDK_SMOOTH_SCROLL_MASK  |
 			GDK_ENTER_NOTIFY_MASK   |
-			GDK_LEAVE_NOTIFY_MASK);
+			GDK_LEAVE_NOTIFY_MASK;
+
+	if (!getSettings()->isTouchWorkaround())
+	{
+		mask |= GDK_TOUCH_MASK;
+	}
+
+	gtk_widget_add_events(widget, mask);
 
     g_signal_connect(widget, "event", G_CALLBACK(event_cb), this);
 }

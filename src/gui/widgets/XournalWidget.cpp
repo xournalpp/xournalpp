@@ -7,6 +7,7 @@
 #include "gui/inputdevices/NewGtkInputDevice.h"
 #include "gui/pageposition/PagePositionCache.h"
 #include "gui/pageposition/PagePositionHandler.h"
+#include "gui/scroll/ScrollHandling.h"
 #include "gui/Shadow.h"
 #include "gui/XournalView.h"
 
@@ -21,14 +22,9 @@
 
 static void gtk_xournal_class_init(GtkXournalClass* klass);
 static void gtk_xournal_init(GtkXournal* xournal);
-static void gtk_xournal_get_preferred_width(GtkWidget *widget,
-                                            gint *minimal_width,
-                                            gint *natural_width);
-static void gtk_xournal_get_preferred_height(GtkWidget *widget,
-                                             gint *minimal_height,
-                                             gint *natural_height);
-static void gtk_xournal_size_allocate(GtkWidget* widget,
-                                      GtkAllocation* allocation);
+static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width);
+static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height);
+static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocation);
 static void gtk_xournal_realize(GtkWidget* widget);
 static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr);
 static void gtk_xournal_destroy(GtkWidget* object);
@@ -37,7 +33,7 @@ GType gtk_xournal_get_type(void)
 {
 	static GType gtk_xournal_type = 0;
 
-	if(!gtk_xournal_type)
+	if (!gtk_xournal_type)
 	{
 		static const GTypeInfo gtk_xournal_info =
 		{
@@ -71,16 +67,14 @@ GType gtk_xournal_get_type(void)
 	return gtk_xournal_type;
 }
 
-GtkWidget* gtk_xournal_new(XournalView* view, XojScrollbars scrollbar)
+GtkWidget* gtk_xournal_new(XournalView* view, ScrollHandling* scrollHandling)
 {
 	GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), NULL));
 	xoj->view = view;
-	xoj->scrollbar = scrollbar;
-	xoj->scrollX = 0;
-	xoj->scrollY = 0;
+	xoj->scrollHandling = scrollHandling;
 	xoj->x = 0;
 	xoj->y = 0;
-	xoj->layout = new Layout(view, scrollbar.adjHorizontal, scrollbar.adjVertical);
+	xoj->layout = new Layout(view, scrollHandling);
 	xoj->pagePositionCache = new PagePositionCache();
 
 	xoj->selection = NULL;
@@ -115,9 +109,10 @@ Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p)
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
+	GtkAdjustment* vadj = xournal->scrollHandling->getVertical();
+	GtkAdjustment* hadj = xournal->scrollHandling->getHorizontal();
+
 	GdkRectangle r2;
-	GtkAdjustment* vadj = xournal->scrollbar.adjVertical;
-	GtkAdjustment* hadj = xournal->scrollbar.adjHorizontal;
 	r2.x = (int)gtk_adjustment_get_lower(hadj);
 	r2.y = (int)gtk_adjustment_get_lower(vadj);
 	r2.width = (int)gtk_adjustment_get_page_size(hadj);
@@ -161,13 +156,13 @@ static void gtk_xournal_init(GtkXournal* xournal)
 static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width)
 {
 	GtkXournal* xournal = GTK_XOURNAL(widget);
-	*minimal_width = *natural_width = xournal->layout->getLayoutWidth();
+	*minimal_width = *natural_width = xournal->scrollHandling->getPrefferedWidth();
 }
 
 static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height)
 {
 	GtkXournal* xournal = GTK_XOURNAL(widget);
-	*minimal_height = *natural_height = xournal->layout->getLayoutHeight();
+	*minimal_height = *natural_height = xournal->scrollHandling->getPrefferedHeight();
 }
 
 static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocation)

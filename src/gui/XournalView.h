@@ -30,13 +30,14 @@ class XojPageView;
 class PdfCache;
 class Rectangle;
 class RepaintHandler;
+class ScrollHandling;
 class TextEditor;
 class TouchHelper;
 
 class XournalView : public DocumentListener, public ZoomListener
 {
 public:
-	XournalView(GtkWidget* parent, Control* control, XojScrollbars scrollbar);
+	XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling);
 	virtual ~XournalView();
 
 public:
