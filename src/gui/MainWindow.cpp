@@ -208,7 +208,7 @@ void MainWindow::initXournalWidget()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	GtkWidget* winXournal = gtk_scrolled_window_new(NULL, NULL);
+	winXournal = gtk_scrolled_window_new(NULL, NULL);
 
 	gtk_container_add(GTK_CONTAINER(get("boxContents")), winXournal);
 
@@ -414,66 +414,63 @@ void MainWindow::updateScrollbarSidebarPosition()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	// TODO !!!!!!!!!!!!!!!!!!!!!
+	GtkWidget* panelMainContents = get("panelMainContents");
+	GtkScrolledWindow* scrolledWindow = GTK_SCROLLED_WINDOW(winXournal);
 
-//	GtkWidget* panelMainContents = get("panelMainContents");
-//	GtkWidget* sidebar = get("sidebar");
-//	GtkWidget* winXournal = get("winXournal");
-//	GtkScrolledWindow* scrolledWindow = GTK_SCROLLED_WINDOW(winXournal);
-//
-//	bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
-//
-//	ScrollbarHideType type =
-//	    this->getControl()->getSettings()->getScrollbarHideType();
-//
-//	if (scrollbarOnLeft)
-//	{
-//		gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_RIGHT);
-//	}
-//	else
-//	{
-//		gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_LEFT);
-//	}
-//
-//	gtk_widget_set_visible(gtk_scrolled_window_get_hscrollbar(scrolledWindow),
-//	                       !(type & SCROLLBAR_HIDE_HORIZONTAL));
-//
-//	gtk_widget_set_visible(gtk_scrolled_window_get_vscrollbar(scrolledWindow),
-//	                       !(type & SCROLLBAR_HIDE_VERTICAL));
-//
-//	int divider = gtk_paned_get_position(GTK_PANED(panelMainContents));
-//	bool sidebarRight = control->getSettings()->isSidebarOnRight();
-//	if (sidebarRight == (gtk_paned_get_child2(GTK_PANED(panelMainContents)) ==
-//	                     sidebar))
-//	{
-//		// Already correct
-//		return;
-//	}
-//	else
-//	{
-//		GtkAllocation allocation;
-//		gtk_widget_get_allocation(panelMainContents, &allocation);
-//		divider = allocation.width - divider;
-//	}
-//
-//	g_object_ref(sidebar);
-//
-//	gtk_container_remove(GTK_CONTAINER(panelMainContents), sidebar);
-//	gtk_container_remove(GTK_CONTAINER(panelMainContents), winXournal);
-//
-//	if (sidebarRight)
-//	{
-//		gtk_paned_pack1(GTK_PANED(panelMainContents), winXournal, TRUE, FALSE);
-//		gtk_paned_pack2(GTK_PANED(panelMainContents), sidebar, FALSE, FALSE);
-//	}
-//	else
-//	{
-//		gtk_paned_pack1(GTK_PANED(panelMainContents), sidebar, FALSE, FALSE);
-//		gtk_paned_pack2(GTK_PANED(panelMainContents), winXournal, TRUE, FALSE);
-//	}
-//
-//	gtk_paned_set_position(GTK_PANED(panelMainContents), divider);
-//	g_object_unref(sidebar);
+	ScrollbarHideType type = this->getControl()->getSettings()->getScrollbarHideType();
+
+	bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
+	if (scrollbarOnLeft)
+	{
+		gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_RIGHT);
+	}
+	else
+	{
+		gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_LEFT);
+	}
+
+	gtk_widget_set_visible(gtk_scrolled_window_get_hscrollbar(scrolledWindow), !(type & SCROLLBAR_HIDE_HORIZONTAL));
+	gtk_widget_set_visible(gtk_scrolled_window_get_vscrollbar(scrolledWindow), !(type & SCROLLBAR_HIDE_VERTICAL));
+
+
+
+	GtkWidget* sidebar = get("sidebar");
+	GtkWidget* boxContents = get("boxContents");
+
+	int divider = gtk_paned_get_position(GTK_PANED(panelMainContents));
+	bool sidebarRight = control->getSettings()->isSidebarOnRight();
+	if (sidebarRight == (gtk_paned_get_child2(GTK_PANED(panelMainContents)) == sidebar))
+	{
+		// Already correct
+		return;
+	}
+	else
+	{
+		GtkAllocation allocation;
+		gtk_widget_get_allocation(panelMainContents, &allocation);
+		divider = allocation.width - divider;
+	}
+
+	g_object_ref(sidebar);
+	g_object_ref(boxContents);
+
+	gtk_container_remove(GTK_CONTAINER(panelMainContents), sidebar);
+	gtk_container_remove(GTK_CONTAINER(panelMainContents), boxContents);
+
+	if (sidebarRight)
+	{
+		gtk_paned_pack1(GTK_PANED(panelMainContents), boxContents, TRUE, FALSE);
+		gtk_paned_pack2(GTK_PANED(panelMainContents), sidebar, FALSE, FALSE);
+	}
+	else
+	{
+		gtk_paned_pack1(GTK_PANED(panelMainContents), sidebar, FALSE, FALSE);
+		gtk_paned_pack2(GTK_PANED(panelMainContents), boxContents, TRUE, FALSE);
+	}
+
+	gtk_paned_set_position(GTK_PANED(panelMainContents), divider);
+	g_object_unref(sidebar);
+	g_object_unref(boxContents);
 }
 
 void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win)

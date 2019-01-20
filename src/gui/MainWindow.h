@@ -132,7 +132,8 @@ private:
 
 	Control* control;
 
-	XournalView* xournal;
+	XournalView* xournal = NULL;
+	GtkWidget* winXournal = NULL;
 
 	ZoomGesture* zoomGesture;
 
