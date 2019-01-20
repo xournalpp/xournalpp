@@ -133,13 +133,16 @@ void NewGtkInputDevice::initWidget()
 			GDK_SCROLL_MASK |
 
 			// Touch / Pen / Mouse
+
+			// Disable touch
+//			GDK_TOUCH_MASK          |
+
 			GDK_POINTER_MOTION_MASK |
 			GDK_BUTTON_PRESS_MASK   |
 			GDK_BUTTON_RELEASE_MASK |
 			GDK_SMOOTH_SCROLL_MASK  |
 			GDK_ENTER_NOTIFY_MASK   |
-			GDK_LEAVE_NOTIFY_MASK   |
-			GDK_TOUCH_MASK);
+			GDK_LEAVE_NOTIFY_MASK);
 
     g_signal_connect(widget, "event", G_CALLBACK(event_cb), this);
 }

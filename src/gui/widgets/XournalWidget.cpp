@@ -71,18 +71,16 @@ GType gtk_xournal_get_type(void)
 	return gtk_xournal_type;
 }
 
-GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
+GtkWidget* gtk_xournal_new(XournalView* view, XojScrollbars scrollbar)
 {
 	GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), NULL));
 	xoj->view = view;
-	xoj->parent = parent;
+	xoj->scrollbar = scrollbar;
 	xoj->scrollX = 0;
 	xoj->scrollY = 0;
 	xoj->x = 0;
 	xoj->y = 0;
-	xoj->layout = new Layout(view,
-	                         gtk_scrollable_get_hadjustment(parent),
-	                         gtk_scrollable_get_vadjustment(parent));
+	xoj->layout = new Layout(view, scrollbar.adjHorizontal, scrollbar.adjVertical);
 	xoj->pagePositionCache = new PagePositionCache();
 
 	xoj->selection = NULL;
@@ -118,8 +116,8 @@ Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p)
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
 	GdkRectangle r2;
-	GtkAdjustment* vadj = gtk_scrollable_get_vadjustment(xournal->parent);
-	GtkAdjustment* hadj = gtk_scrollable_get_hadjustment(xournal->parent);
+	GtkAdjustment* vadj = xournal->scrollbar.adjVertical;
+	GtkAdjustment* hadj = xournal->scrollbar.adjHorizontal;
 	r2.x = (int)gtk_adjustment_get_lower(hadj);
 	r2.y = (int)gtk_adjustment_get_lower(vadj);
 	r2.width = (int)gtk_adjustment_get_page_size(hadj);
@@ -160,23 +158,15 @@ static void gtk_xournal_init(GtkXournal* xournal)
 	gtk_widget_set_can_focus(widget, TRUE);
 }
 
-static void
-gtk_xournal_get_preferred_width(GtkWidget *widget,
-                                gint      *minimal_width,
-                                gint      *natural_width)
+static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width)
 {
 	GtkXournal* xournal = GTK_XOURNAL(widget);
-
 	*minimal_width = *natural_width = xournal->layout->getLayoutWidth();
 }
 
-static void
-gtk_xournal_get_preferred_height(GtkWidget *widget,
-                                 gint      *minimal_height,
-                                 gint      *natural_height)
+static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height)
 {
 	GtkXournal* xournal = GTK_XOURNAL(widget);
-
 	*minimal_height = *natural_height = xournal->layout->getLayoutHeight();
 }
 

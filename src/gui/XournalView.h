@@ -14,6 +14,7 @@
 #include "control/zoom/ZoomListener.h"
 #include "model/DocumentListener.h"
 #include "model/PageRef.h"
+#include "widgets/XournalWidget.h"
 
 #include <Arrayiterator.h>
 
@@ -35,7 +36,7 @@ class TouchHelper;
 class XournalView : public DocumentListener, public ZoomListener
 {
 public:
-	XournalView(GtkWidget* parent, Control* control);
+	XournalView(GtkWidget* parent, Control* control, XojScrollbars scrollbar);
 	virtual ~XournalView();
 
 public:

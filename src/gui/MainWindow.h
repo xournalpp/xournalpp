@@ -135,7 +135,7 @@ private:
 	XournalView* xournal = NULL;
 	GtkWidget* winXournal = NULL;
 
-	ZoomGesture* zoomGesture;
+	ZoomGesture* zoomGesture = NULL;
 
 	// Toolbars
 	ToolMenuHandler* toolbar;
