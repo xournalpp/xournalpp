@@ -27,8 +27,6 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 {
 	XOJ_INIT_TYPE(XournalView);
 
-	this->parent = GTK_CONTAINER(parent);
-
 	this->control = control;
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
@@ -538,13 +536,6 @@ Rectangle* XournalView::getVisibleRect(XojPageView* redrawable)
 	XOJ_CHECK_TYPE(XournalView);
 
 	return gtk_xournal_get_visible_area(this->widget, redrawable);
-}
-
-GtkContainer* XournalView::getParent()
-{
-	XOJ_CHECK_TYPE(XournalView);
-
-	return this->parent;
 }
 
 /**

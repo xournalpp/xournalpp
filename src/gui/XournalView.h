@@ -103,8 +103,6 @@ public:
 	Rectangle* getVisibleRect(int page);
 	Rectangle* getVisibleRect(XojPageView* redrawable);
 
-	GtkContainer* getParent();
-
 	/**
 	 * A pen action was detected now, therefore ignore touch events
 	 * for a short time
@@ -161,7 +159,6 @@ private:
 	size_t viewPagesLen;
 
 	Control* control;
-	GtkContainer* parent;
 
 	size_t currentPage;
 	size_t lastSelectedPage;

@@ -89,6 +89,8 @@ public:
 	bool isGestureActive();
 
 private:
+	void initXournalWidget();
+
 	/**
 	 * Allow to hide menubar, but only if global menu is not enabled
 	 */
