@@ -79,7 +79,7 @@ GtkWidget* gtk_xournal_new(XournalView* view, ScrollHandling* scrollHandling)
 
 	xoj->selection = NULL;
 
-	xoj->input = new NewGtkInputDevice(GTK_WIDGET(xoj), view);
+	xoj->input = new NewGtkInputDevice(GTK_WIDGET(xoj), view, scrollHandling);
 
 	xoj->input->initWidget();
 

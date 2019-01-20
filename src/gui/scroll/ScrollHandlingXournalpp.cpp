@@ -45,11 +45,29 @@ void ScrollHandlingXournalpp::translate(cairo_t* cr, double& x1, double& x2, dou
 	double v = gtk_adjustment_get_value(adjVertical);
 	cairo_translate(cr, -h, -v);
 
-	x1 -= v;
-	x2 -= v;
+	x1 += h;
+	x2 += h;
 
-	y1 -= h;
-	y2 -= h;
+	y1 += v;
+	y2 += v;
+}
+
+void ScrollHandlingXournalpp::translate(double& x, double& y)
+{
+	XOJ_CHECK_TYPE(ScrollHandlingXournalpp);
+
+	double h = gtk_adjustment_get_value(adjHorizontal);
+	double v = gtk_adjustment_get_value(adjVertical);
+
+	x += h;
+	y += v;
+}
+
+bool ScrollHandlingXournalpp::fullRepaint()
+{
+	XOJ_CHECK_TYPE(ScrollHandlingXournalpp);
+
+	return true;
 }
 
 void ScrollHandlingXournalpp::scrollChanged()

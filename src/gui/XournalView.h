@@ -121,6 +121,11 @@ public:
 	 */
 	TouchHelper* getTouchHelper();
 
+	/**
+	 * @returnScrollbars
+	 */
+	ScrollHandling* getScrollHandling();
+
 public:
 	// ZoomListener interface
 	void zoomChanged();
@@ -153,6 +158,11 @@ private:
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	/**
+	 * Scrollbars
+	 */
+	ScrollHandling* scrollHandling;
 
 	GtkWidget* widget;
 	double margin;

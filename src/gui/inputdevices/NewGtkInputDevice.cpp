@@ -5,14 +5,16 @@
 #include "control/Control.h"
 #include "gui/Cursor.h"
 #include "gui/PageView.h"
+#include "gui/scroll/ScrollHandling.h"
 #include "gui/XournalView.h"
 #include "util/DeviceListHelper.h"
 #include "model/Point.h"
 
 
-NewGtkInputDevice::NewGtkInputDevice(GtkWidget* widget, XournalView* view)
+NewGtkInputDevice::NewGtkInputDevice(GtkWidget* widget, XournalView* view, ScrollHandling* scrollHandling)
  : AbstractInputDevice(widget, view),
-   inputRunning(NULL)
+   inputRunning(NULL),
+   scrollHandling(scrollHandling)
 {
 	XOJ_INIT_TYPE(NewGtkInputDevice);
 
@@ -148,10 +150,10 @@ void NewGtkInputDevice::initWidget()
 
 	gtk_widget_add_events(widget, mask);
 
-    g_signal_connect(widget, "event", G_CALLBACK(event_cb), this);
+    g_signal_connect(widget, "event", G_CALLBACK(eventCallback), this);
 }
 
-bool NewGtkInputDevice::event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self)
+bool NewGtkInputDevice::eventCallback(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self)
 {
 	XOJ_CHECK_TYPE_OBJ(self, NewGtkInputDevice);
 
@@ -299,6 +301,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	gdouble x, y;
 	if (gdk_event_get_coords(event, &x, &y))
 	{
+		scrollHandling->translate(x, y);
 		input->setCurrentPosition(x, y);
 	}
 

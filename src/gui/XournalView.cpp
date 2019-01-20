@@ -24,6 +24,7 @@
 #include <math.h>
 
 XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling)
+ : scrollHandling(scrollHandling)
 {
 	XOJ_INIT_TYPE(XournalView);
 
@@ -570,6 +571,16 @@ TouchHelper* XournalView::getTouchHelper()
 	XOJ_CHECK_TYPE(XournalView);
 
 	return touchHelper;
+}
+
+/**
+ * @returnScrollbars
+ */
+ScrollHandling* XournalView::getScrollHandling()
+{
+	XOJ_CHECK_TYPE(XournalView);
+
+	return scrollHandling;
 }
 
 GtkWidget* XournalView::getWidget()

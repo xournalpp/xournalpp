@@ -26,6 +26,9 @@ public:
 	virtual int getPrefferedHeight();
 
 	virtual void translate(cairo_t* cr, double& x1, double& x2, double& y1, double& y2);
+	virtual void translate(double& x, double& y);
+
+	virtual bool fullRepaint();
 
 	virtual void scrollChanged();
 

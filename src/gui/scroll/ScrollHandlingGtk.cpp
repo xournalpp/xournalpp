@@ -42,6 +42,20 @@ void ScrollHandlingGtk::translate(cairo_t* cr, double& x1, double& x2, double& y
 	// Nothing to do here - all done by GTK
 }
 
+void ScrollHandlingGtk::translate(double& x, double& y)
+{
+	XOJ_CHECK_TYPE(ScrollHandlingGtk);
+
+	// Nothing to do here - all done by GTK
+}
+
+bool ScrollHandlingGtk::fullRepaint()
+{
+	XOJ_CHECK_TYPE(ScrollHandlingGtk);
+
+	return false;
+}
+
 void ScrollHandlingGtk::scrollChanged()
 {
 	XOJ_CHECK_TYPE(ScrollHandlingGtk);
