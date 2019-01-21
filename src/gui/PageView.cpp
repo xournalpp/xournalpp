@@ -477,7 +477,7 @@ bool XojPageView::onMotionNotifyEvent(const PositionInputData& pos)
 		this->inputHandler &&
 		this->inputHandler->onMotionNotifyEvent(pos))
 	{
-		//input	handler used this event
+		// input handler used this event
 	}
 	else if (this->selection)
 	{
