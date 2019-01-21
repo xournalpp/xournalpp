@@ -280,12 +280,6 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	input->setDevice(sourceDevice);
 	input->clearAxes();
 
-	if (event->type == GDK_TOUCH_BEGIN)
-	{
-		input->actionStart();
-		return true;
-	}
-
 	gdouble x, y;
 	if (gdk_event_get_coords(event, &x, &y))
 	{
@@ -320,7 +314,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 
 		view->getTouchHelper()->event(sourceDevice);
 	}
-	else if (event->type == GDK_BUTTON_PRESS)
+	else if (event->type == GDK_BUTTON_PRESS || event->type == GDK_TOUCH_BEGIN)
 	{
 		input->copyAxes(event);
 		input->actionStart();
