@@ -5,15 +5,52 @@ PopplerGlibPage::PopplerGlibPage(PopplerPage* page)
  : page(page)
 {
 	XOJ_INIT_TYPE(PopplerGlibPage);
+
+	if (page != NULL)
+	{
+		g_object_ref(page);
+	}
+}
+
+PopplerGlibPage::PopplerGlibPage(const PopplerGlibPage& other)
+ : page(other.page)
+{
+	XOJ_INIT_TYPE(PopplerGlibPage);
+
+	if (page != NULL)
+	{
+		g_object_ref(page);
+	}
 }
 
 PopplerGlibPage::~PopplerGlibPage()
 {
 	XOJ_CHECK_TYPE(PopplerGlibPage);
 
-	page = NULL;
+	if (page)
+	{
+		g_object_unref(page);
+		page = NULL;
+	}
 
 	XOJ_RELEASE_TYPE(PopplerGlibPage);
+}
+
+void PopplerGlibPage::operator=(const PopplerGlibPage& other)
+{
+	XOJ_CHECK_TYPE(PopplerGlibPage);
+
+	if (page)
+	{
+		g_object_unref(page);
+		page = NULL;
+	}
+
+	page = other.page;
+	if (page != NULL)
+	{
+		g_object_ref(page);
+	}
 }
 
 double PopplerGlibPage::getWidth()
