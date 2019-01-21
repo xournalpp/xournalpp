@@ -20,7 +20,9 @@ class PopplerGlibPage : public XojPdfPage
 {
 public:
 	PopplerGlibPage(PopplerPage* page);
+	PopplerGlibPage(const PopplerGlibPage& other);
 	virtual ~PopplerGlibPage();
+	void operator=(const PopplerGlibPage& other);
 
 public:
 	virtual double getWidth();

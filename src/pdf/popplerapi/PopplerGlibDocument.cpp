@@ -86,6 +86,11 @@ bool PopplerGlibDocument::load(Path filename, string password, GError** error)
 		return false;
 	}
 
+	if (document)
+	{
+		g_object_unref(document);
+	}
+
 	this->document = poppler_document_new_from_file(uri.c_str(), password.c_str(), error);
 	return this->document != NULL;
 }
@@ -107,8 +112,10 @@ XojPdfPageSPtr PopplerGlibDocument::getPage(size_t page)
 	}
 
 	PopplerPage* pg = poppler_document_get_page(document, page);
+	XojPdfPageSPtr pageptr = std::make_shared<PopplerGlibPage>(pg);
+	g_object_unref(pg);
 
-	return std::make_shared<PopplerGlibPage>(pg);
+	return pageptr;
 }
 
 size_t PopplerGlibDocument::getPageCount()

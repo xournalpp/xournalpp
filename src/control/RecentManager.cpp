@@ -63,7 +63,7 @@ void RecentManager::addRecentFileFilename(Path filename)
 	GtkRecentManager* recentManager;
 	GtkRecentData* recentData;
 
-	static gchar * groups[2] = {g_strdup(GROUP), NULL};
+	static gchar* groups[2] = { g_strdup(GROUP), NULL};
 
 	recentManager = gtk_recent_manager_get_default();
 
@@ -89,6 +89,7 @@ void RecentManager::addRecentFileFilename(Path filename)
 	GFile* file = g_file_new_for_path(filename.c_str());
 	gchar* uri = g_file_get_uri(file);
 	gtk_recent_manager_add_full(recentManager, uri, recentData);
+	g_free(uri);
 
 	g_free(recentData->app_exec);
 
@@ -229,7 +230,10 @@ void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
 	/* gtk_recent_info_get_uri_display (info) is buggy and
 	 * works only for local files */
 	GFile* gfile = g_file_new_for_uri(gtk_recent_info_get_uri(info));
-	string ruri = g_file_get_parse_name(gfile);
+	char* fileUri = g_file_get_parse_name(gfile);
+	string ruri = fileUri;
+	g_free(fileUri);
+
 	g_object_unref(gfile);
 
 	if (StringUtils::startsWith(ruri, "~/"))
