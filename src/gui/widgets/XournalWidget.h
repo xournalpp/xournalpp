@@ -25,7 +25,9 @@ class Layout;
 class XojPageView;
 class PagePositionCache;
 class Rectangle;
+class ScrollHandling;
 class XournalView;
+
 
 typedef struct _GtkXournal GtkXournal;
 typedef struct _GtkXournalClass GtkXournalClass;
@@ -40,18 +42,15 @@ struct _GtkXournal
 	XournalView* view;
 
 	/**
-	 * Scrollabel container
+	 * Scrollbars
 	 */
-	GtkScrollable* parent;
+	ScrollHandling* scrollHandling;
 
 	/**
 	 * Visible area
 	 */
 	int x;
 	int y;
-
-	int scrollX;
-	int scrollY;
 
 	Layout* layout;
 
@@ -75,7 +74,7 @@ struct _GtkXournalClass
 
 GType gtk_xournal_get_type();
 
-GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent);
+GtkWidget* gtk_xournal_new(XournalView* view, ScrollHandling* scrollHandling);
 
 Layout* gtk_xournal_get_layout(GtkWidget* widget);
 

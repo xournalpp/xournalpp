@@ -235,6 +235,9 @@ public:
 	bool getAddHorizontalSpace();
 	void setAddHorizontalSpace(bool space);
 
+	bool isTouchWorkaround();
+	void setTouchWorkaround(bool b);
+
 	bool isSnapRotation();
 	void setSnapRotation(bool b);
 	double getSnapRotationTolerance();
@@ -558,11 +561,6 @@ private:
 	string audioFolder;
 
 	/**
-	 * "Transaction" running, do not save until the end is reached
-	 */
-	bool inTransaction;
-
-	/**
 	 * Snap tolerance for the graph/dotted grid
 	 */
 	double snapGridTolerance;
@@ -570,5 +568,16 @@ private:
 	/**
 	 * Rotation epsilon for rotation snapping feature
 	 */
-	double snapRotationTolerance; 
+	double snapRotationTolerance;
+
+	/**
+	 * Do not use GTK Scrolling / Touch handling
+	 */
+	bool touchWorkaround;
+
+
+	/**
+	 * "Transaction" running, do not save until the end is reached
+	 */
+	bool inTransaction;
 };

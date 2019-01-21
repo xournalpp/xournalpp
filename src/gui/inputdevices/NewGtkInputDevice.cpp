@@ -5,14 +5,16 @@
 #include "control/Control.h"
 #include "gui/Cursor.h"
 #include "gui/PageView.h"
+#include "gui/scroll/ScrollHandling.h"
 #include "gui/XournalView.h"
 #include "util/DeviceListHelper.h"
 #include "model/Point.h"
 
 
-NewGtkInputDevice::NewGtkInputDevice(GtkWidget* widget, XournalView* view)
+NewGtkInputDevice::NewGtkInputDevice(GtkWidget* widget, XournalView* view, ScrollHandling* scrollHandling)
  : AbstractInputDevice(widget, view),
-   inputRunning(NULL)
+   inputRunning(NULL),
+   scrollHandling(scrollHandling)
 {
 	XOJ_INIT_TYPE(NewGtkInputDevice);
 
@@ -125,7 +127,8 @@ void NewGtkInputDevice::initWidget()
 	XOJ_CHECK_TYPE(NewGtkInputDevice);
 
 	gtk_widget_set_support_multidevice(widget, true);
-	gtk_widget_add_events(widget,
+
+	int mask =
 			// Key handling
 			GDK_KEY_PRESS_MASK |
 
@@ -133,18 +136,20 @@ void NewGtkInputDevice::initWidget()
 			GDK_SCROLL_MASK |
 
 			// Touch / Pen / Mouse
+			GDK_TOUCH_MASK          |
 			GDK_POINTER_MOTION_MASK |
 			GDK_BUTTON_PRESS_MASK   |
 			GDK_BUTTON_RELEASE_MASK |
 			GDK_SMOOTH_SCROLL_MASK  |
 			GDK_ENTER_NOTIFY_MASK   |
-			GDK_LEAVE_NOTIFY_MASK   |
-			GDK_TOUCH_MASK);
+			GDK_LEAVE_NOTIFY_MASK;
 
-    g_signal_connect(widget, "event", G_CALLBACK(event_cb), this);
+	gtk_widget_add_events(widget, mask);
+
+    g_signal_connect(widget, "event", G_CALLBACK(eventCallback), this);
 }
 
-bool NewGtkInputDevice::event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self)
+bool NewGtkInputDevice::eventCallback(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self)
 {
 	XOJ_CHECK_TYPE_OBJ(self, NewGtkInputDevice);
 
@@ -275,23 +280,10 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	input->setDevice(sourceDevice);
 	input->clearAxes();
 
-	if (event->type == GDK_TOUCH_BEGIN)
-	{
-		input->actionStart();
-	}
-
-	if (event->type == GDK_TOUCH_BEGIN || event->type == GDK_TOUCH_UPDATE)
-	{
-		if (sequence && event->touch.emulating_pointer)
-		{
-			g_hash_table_remove(pointerInputList, sourceDevice);
-			return true;
-		}
-	}
-
 	gdouble x, y;
 	if (gdk_event_get_coords(event, &x, &y))
 	{
+		scrollHandling->translate(x, y);
 		input->setCurrentPosition(x, y);
 	}
 
@@ -312,7 +304,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		input->setState(state);
 	}
 
-	if (event->type == GDK_MOTION_NOTIFY)
+	if (event->type == GDK_MOTION_NOTIFY || event->type == GDK_TOUCH_UPDATE)
 	{
 		input->copyAxes(event);
 		input->actionMoved();
@@ -322,7 +314,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 
 		view->getTouchHelper()->event(sourceDevice);
 	}
-	else if (event->type == GDK_BUTTON_PRESS)
+	else if (event->type == GDK_BUTTON_PRESS || event->type == GDK_TOUCH_BEGIN)
 	{
 		input->copyAxes(event);
 		input->actionStart();

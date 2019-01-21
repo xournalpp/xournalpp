@@ -265,6 +265,8 @@ XOJ_DECLARE_TYPE(EmergencySaveRestore, 255);
 XOJ_DECLARE_TYPE(LineStyle, 256);
 XOJ_DECLARE_TYPE(UndoRedoController, 257);
 XOJ_DECLARE_TYPE(ToolBase, 258);
-
+XOJ_DECLARE_TYPE(ScrollHandling, 259);
+XOJ_DECLARE_TYPE(ScrollHandlingGtk, 260);
+XOJ_DECLARE_TYPE(ScrollHandlingXournalpp, 261);
 
 

@@ -167,6 +167,7 @@ void SettingsDialog::load()
 	loadCheckbox("cbDarkTheme", settings->isDarkTheme());
 	loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
 	loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
+	loadCheckbox("cbTouchWorkaround", settings->isTouchWorkaround());
 
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
 	string txt = settings->getDefaultSaveName();
@@ -344,6 +345,7 @@ void SettingsDialog::save()
 	settings->setAddHorizontalSpace(getCheckbox("cbAddHorizontalSpace"));
 	settings->setShowBigCursor(getCheckbox("cbBigCursor"));
 	settings->setDarkTheme(getCheckbox("cbDarkTheme"));
+	settings->setTouchWorkaround(getCheckbox("cbTouchWorkaround"));
 
 	int scrollbarHideType = SCROLLBAR_HIDE_NONE;
 	if (getCheckbox("cbHideHorizontalScrollbar"))

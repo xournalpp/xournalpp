@@ -14,6 +14,7 @@
 #include "control/zoom/ZoomListener.h"
 #include "model/DocumentListener.h"
 #include "model/PageRef.h"
+#include "widgets/XournalWidget.h"
 
 #include <Arrayiterator.h>
 
@@ -29,13 +30,14 @@ class XojPageView;
 class PdfCache;
 class Rectangle;
 class RepaintHandler;
+class ScrollHandling;
 class TextEditor;
 class TouchHelper;
 
 class XournalView : public DocumentListener, public ZoomListener
 {
 public:
-	XournalView(GtkWidget* parent, Control* control);
+	XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling);
 	virtual ~XournalView();
 
 public:
@@ -119,6 +121,11 @@ public:
 	 */
 	TouchHelper* getTouchHelper();
 
+	/**
+	 * @returnScrollbars
+	 */
+	ScrollHandling* getScrollHandling();
+
 public:
 	// ZoomListener interface
 	void zoomChanged();
@@ -151,6 +158,11 @@ private:
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	/**
+	 * Scrollbars
+	 */
+	ScrollHandling* scrollHandling;
 
 	GtkWidget* widget;
 	double margin;

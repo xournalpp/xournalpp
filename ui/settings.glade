@@ -2,6 +2,20 @@
 <!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
+  <object class="GtkAdjustment" id="adjustmentSnapGridTolerance">
+    <property name="lower">0.20000000000000001</property>
+    <property name="upper">10</property>
+    <property name="value">0.25</property>
+    <property name="step_increment">0.05000000000000001</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentSnapRotationTolerance">
+    <property name="lower">0.10000000000000001</property>
+    <property name="upper">0.5</property>
+    <property name="value">0.20000000000000001</property>
+    <property name="step_increment">0.05000000000000001</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="GtkAdjustment" id="adjustmentTimeout">
     <property name="lower">1</property>
     <property name="upper">100</property>
@@ -9,23 +23,6 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
-
-  <object class="GtkAdjustment" id="adjustmentSnapRotationTolerance">
-    <property name="lower">0.1</property>
-    <property name="upper">0.5</property>
-    <property name="value">0.2</property>
-    <property name="step_increment">0.05000000000000001</property>
-    <property name="page_increment">10</property>
-  </object>
-
-  <object class="GtkAdjustment" id="adjustmentSnapGridTolerance">
-    <property name="lower">0.2</property>
-    <property name="upper">10</property>
-    <property name="value">0.25</property>
-    <property name="step_increment">0.05000000000000001</property>
-    <property name="page_increment">10</property>
-  </object>
-
   <object class="GtkAdjustment" id="adjustmentTouchTImeout">
     <property name="lower">0.5</property>
     <property name="upper">10</property>
@@ -1071,6 +1068,21 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkCheckButton" id="cbTouchWorkaround">
+                                <property name="label" translatable="yes">GTK Touch / Scrolling workaround. Change Scroll / Touch behavoir. Enabled touch drawing. Needs restart.</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="xalign">0</property>
+                                <property name="draw_indicator">True</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">9</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkBox" id="hboxTouch">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
@@ -1081,7 +1093,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                               <packing>
                                 <property name="expand">True</property>
                                 <property name="fill">True</property>
-                                <property name="position">9</property>
+                                <property name="position">10</property>
                               </packing>
                             </child>
                           </object>
@@ -1134,6 +1146,19 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkLabel" id="label49">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Settings for Touch devices which are detected by GTK.</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkLabel" id="labelZoomGesture">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
@@ -1159,19 +1184,6 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label49">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Settings for Touch devices which are detected by GTK.</property>
-                    <property name="xalign">0</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
@@ -2045,14 +2057,11 @@ they are not blocking!&lt;/i&gt;</property>
                     <property name="position">3</property>
                   </packing>
                 </child>
-
-
                 <child>
                   <object class="GtkBox" id="boxSnapping">
-                  <property name="visible">True</property>
-                  <property name="can_focus">False</property>
- 
-    		  <child>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
                       <object class="GtkLabel" id="lbSnapRotationTolerance">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -2065,15 +2074,15 @@ they are not blocking!&lt;/i&gt;</property>
                         <property name="padding">5</property>
                         <property name="position">4</property>
                       </packing>
-    		  </child>
-    		  <child>
+                    </child>
+                    <child>
                       <object class="GtkSpinButton" id="spSnapRotationTolerance">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="adjustment">adjustmentSnapRotationTolerance</property>
-                        <property name="climb_rate">0.05</property>
+                        <property name="climb_rate">0.050000000000000003</property>
                         <property name="digits">2</property>
-                        <property name="value">0.2</property>
+                        <property name="value">0.20000000000000001</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -2081,9 +2090,8 @@ they are not blocking!&lt;/i&gt;</property>
                         <property name="padding">5</property>
                         <property name="position">5</property>
                       </packing>
-    		  </child>
-    
-    		  <child>
+                    </child>
+                    <child>
                       <object class="GtkLabel" id="lbSnapGridTolerance">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -2096,13 +2104,13 @@ they are not blocking!&lt;/i&gt;</property>
                         <property name="padding">5</property>
                         <property name="position">6</property>
                       </packing>
-    		  </child>
-    		  <child>
+                    </child>
+                    <child>
                       <object class="GtkSpinButton" id="spSnapGridTolerance">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="adjustment">adjustmentSnapGridTolerance</property>
-                        <property name="climb_rate">0.05</property>
+                        <property name="climb_rate">0.050000000000000003</property>
                         <property name="digits">2</property>
                         <property name="value">0.25</property>
                       </object>
@@ -2112,18 +2120,19 @@ they are not blocking!&lt;/i&gt;</property>
                         <property name="padding">5</property>
                         <property name="position">7</property>
                       </packing>
-    		  </child>
-
-	  	</object>
-		</child>
-
-
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="position">6</property>
               </packing>
             </child>
-
             <child type="tab">
               <object class="GtkLabel" id="label7">
                 <property name="visible">True</property>
@@ -2136,7 +2145,6 @@ they are not blocking!&lt;/i&gt;</property>
               </packing>
             </child>
             <child>
-
               <object class="GtkBox" id="box22">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -2152,8 +2160,6 @@ they are not blocking!&lt;/i&gt;</property>
                       <placeholder/>
                     </child>
                   </object>
-
-
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>

@@ -84,6 +84,8 @@ void Settings::loadDefault()
 	this->snapGrid = true;
 	this->snapGridTolerance = 0.25;
 
+	this->touchWorkaround = false;
+
 	this->defaultSaveName = _("%F-Note-%H-%M");
 
 	// Eraser
@@ -402,9 +404,17 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->snapGrid = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "snapGrid") == 0)
+	{
+		this->snapGrid = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "snapGridTolerance") == 0)
 	{
 		this->snapGridTolerance = g_strtod((const char*) value, NULL);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "touchWorkaround") == 0)
+	{
+		this->touchWorkaround = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "addHorizontalSpace") == 0)
 	{
@@ -750,6 +760,8 @@ void Settings::save()
 	WRITE_DOUBLE_PROP(snapRotationTolerance);
 	WRITE_BOOL_PROP(snapGrid);
 	WRITE_DOUBLE_PROP(snapGridTolerance);
+
+	WRITE_BOOL_PROP(touchWorkaround);
 
 	WRITE_INT_PROP(selectionBorderColor);
 	WRITE_INT_PROP(backgroundColor);
@@ -1098,6 +1110,26 @@ double Settings::getSnapGridTolerance()
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->snapGridTolerance;
+}
+
+bool Settings::isTouchWorkaround()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->touchWorkaround;
+}
+
+void Settings::setTouchWorkaround(bool b)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->touchWorkaround == b)
+	{
+		return;
+	}
+
+	this->touchWorkaround = b;
+	save();
 }
 
 ScrollbarHideType Settings::getScrollbarHideType()

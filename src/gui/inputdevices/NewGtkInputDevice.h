@@ -15,6 +15,7 @@
 #include "AbstractInputDevice.h"
 #include "gui/widgets/XournalWidget.h"
 
+class ScrollHandling;
 class Settings;
 class ToolHandler;
 class InputSequence;
@@ -22,7 +23,7 @@ class InputSequence;
 class NewGtkInputDevice : public AbstractInputDevice
 {
 public:
-	NewGtkInputDevice(GtkWidget* widget, XournalView* view);
+	NewGtkInputDevice(GtkWidget* widget, XournalView* view, ScrollHandling* scrollHandling);
 	virtual ~NewGtkInputDevice();
 
 public:
@@ -65,7 +66,7 @@ protected:
 	bool eventKeyPressHandler(GdkEventKey* event);
 
 private:
-	static bool event_cb(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self);
+	static bool eventCallback(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -89,4 +90,9 @@ protected:
 	 * GdkEventSequence -> InputSequence
 	 */
 	GHashTable* touchInputList;
+
+	/**
+	 * Scrollbars
+	 */
+	ScrollHandling* scrollHandling;
 };

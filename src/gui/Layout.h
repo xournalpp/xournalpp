@@ -18,6 +18,7 @@
 
 class XojPageView;
 class XournalView;
+class ScrollHandling;
 
 /**
  * @brief The Layout manager for the XournalWidget
@@ -28,9 +29,7 @@ class XournalView;
 class Layout
 {
 public:
-	Layout(XournalView* view,
-	       GtkAdjustment* adjHorizontal,
-	       GtkAdjustment* adjVertical);
+	Layout(XournalView* view, ScrollHandling* scrollHandling);
 	virtual ~Layout();
 
 public:
@@ -93,8 +92,7 @@ private:
 
 	XournalView* view;
 
-	GtkAdjustment* adjHorizontal;
-	GtkAdjustment* adjVertical;
+	ScrollHandling* scrollHandling;
 
 	double lastScrollHorizontal;
 	double lastScrollVertical;

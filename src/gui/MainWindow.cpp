@@ -9,6 +9,8 @@
 #include "control/layer/LayerController.h"
 #include "control/zoom/ZoomGesture.h"
 #include "gui/GladeSearchpath.h"
+#include "gui/scroll/ScrollHandlingGtk.h"
+#include "gui/scroll/ScrollHandlingXournalpp.h"
 #include "ToolbarDefinitions.h"
 #include "toolbarMenubar/model/ToolbarData.h"
 #include "toolbarMenubar/model/ToolbarModel.h"
@@ -173,6 +175,9 @@ MainWindow::~MainWindow()
 	delete this->zoomGesture;
 	this->zoomGesture = NULL;
 
+	delete scrollHandling;
+	scrollHandling = NULL;
+
 	XOJ_RELEASE_TYPE(MainWindow);
 }
 
@@ -208,26 +213,54 @@ void MainWindow::initXournalWidget()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	winXournal = gtk_scrolled_window_new(NULL, NULL);
+	GtkWidget* boxContents = get("boxContents");
 
-	gtk_container_add(GTK_CONTAINER(get("boxContents")), winXournal);
-
-	GtkWidget* vpXournal = gtk_viewport_new(NULL, NULL);
-
-	gtk_container_add(GTK_CONTAINER(winXournal), vpXournal);
-
-	this->xournal = new XournalView(vpXournal, control);
-
-	if (control->getSettings()->isZoomGesturesEnabled())
+	if (control->getSettings()->isTouchWorkaround())
 	{
-		this->zoomGesture = new ZoomGesture(winXournal, control->getZoomControl());
+		GtkWidget* box1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+		gtk_container_add(GTK_CONTAINER(boxContents), box1);
+
+		GtkWidget* box2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+		gtk_container_add(GTK_CONTAINER(box1), box2);
+
+		scrollHandling = new ScrollHandlingXournalpp();
+
+		this->xournal = new XournalView(box2, control, scrollHandling);
+
+		if (control->getSettings()->isZoomGesturesEnabled())
+		{
+			this->zoomGesture = new ZoomGesture(this->xournal->getWidget(), control->getZoomControl());
+		}
+
+		gtk_container_add(GTK_CONTAINER(box2), gtk_scrollbar_new(GTK_ORIENTATION_VERTICAL, scrollHandling->getVertical()));
+		gtk_container_add(GTK_CONTAINER(box1), gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, scrollHandling->getHorizontal()));
+
+		gtk_widget_show_all(box1);
 	}
 	else
 	{
-		this->zoomGesture = NULL;
+		winXournal = gtk_scrolled_window_new(NULL, NULL);
+
+		gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
+
+		GtkWidget* vpXournal = gtk_viewport_new(NULL, NULL);
+
+		gtk_container_add(GTK_CONTAINER(winXournal), vpXournal);
+
+		scrollHandling = new ScrollHandlingGtk(GTK_SCROLLABLE(vpXournal));
+
+		this->xournal = new XournalView(vpXournal, control, scrollHandling);
+
+		if (control->getSettings()->isZoomGesturesEnabled())
+		{
+			this->zoomGesture = new ZoomGesture(winXournal, control->getZoomControl());
+		}
+
+		gtk_widget_show_all(winXournal);
 	}
 
-	gtk_widget_show_all(winXournal);
+	Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
+	scrollHandling->init(this->xournal->getWidget(), layout);
 }
 
 /**
@@ -415,24 +448,26 @@ void MainWindow::updateScrollbarSidebarPosition()
 	XOJ_CHECK_TYPE(MainWindow);
 
 	GtkWidget* panelMainContents = get("panelMainContents");
-	GtkScrolledWindow* scrolledWindow = GTK_SCROLLED_WINDOW(winXournal);
 
-	ScrollbarHideType type = this->getControl()->getSettings()->getScrollbarHideType();
-
-	bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
-	if (scrollbarOnLeft)
+	if (winXournal != NULL)
 	{
-		gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_RIGHT);
+		GtkScrolledWindow* scrolledWindow = GTK_SCROLLED_WINDOW(winXournal);
+
+		ScrollbarHideType type = this->getControl()->getSettings()->getScrollbarHideType();
+
+		bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
+		if (scrollbarOnLeft)
+		{
+			gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_RIGHT);
+		}
+		else
+		{
+			gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_LEFT);
+		}
+
+		gtk_widget_set_visible(gtk_scrolled_window_get_hscrollbar(scrolledWindow), !(type & SCROLLBAR_HIDE_HORIZONTAL));
+		gtk_widget_set_visible(gtk_scrolled_window_get_vscrollbar(scrolledWindow), !(type & SCROLLBAR_HIDE_VERTICAL));
 	}
-	else
-	{
-		gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_LEFT);
-	}
-
-	gtk_widget_set_visible(gtk_scrolled_window_get_hscrollbar(scrolledWindow), !(type & SCROLLBAR_HIDE_HORIZONTAL));
-	gtk_widget_set_visible(gtk_scrolled_window_get_vscrollbar(scrolledWindow), !(type & SCROLLBAR_HIDE_VERTICAL));
-
-
 
 	GtkWidget* sidebar = get("sidebar");
 	GtkWidget* boxContents = get("boxContents");
