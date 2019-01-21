@@ -86,7 +86,8 @@ bool PopplerGlibDocument::load(Path filename, string password, GError** error)
 		return false;
 	}
 
-	if (document){
+	if (document)
+	{
 		g_object_unref(document);
 	}
 
