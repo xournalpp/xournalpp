@@ -251,6 +251,9 @@ public:
 	bool isShowBigCursor();
 	void setShowBigCursor(bool b);
 
+	bool isHighlightPosition();
+	void setHighlightPosition(bool highlight);
+
 	ScrollbarHideType getScrollbarHideType();
 	void setScrollbarHideType(ScrollbarHideType type);
 
@@ -387,6 +390,11 @@ private:
 	 *  Show a better visible cursor for pen
 	 */
 	bool showBigCursor;
+
+	/**
+	 * Show a yellow circle around the cursor
+	 */
+	bool highlightPosition;
 
 	/**
 	 * If the user uses a dark-themed DE, he should enable this 

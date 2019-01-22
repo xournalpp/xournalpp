@@ -68,6 +68,7 @@ void Settings::loadDefault()
 
 	this->autoloadPdfXoj = true;
 	this->showBigCursor = false;
+	this->highlightPosition = false;
 	this->darkTheme = false;
 	this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
 
@@ -335,6 +336,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "showBigCursor") == 0)
 	{
 		this->showBigCursor = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "highlightPosition") == 0)
+	{
+		this->highlightPosition = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "darkTheme") == 0)
 	{
@@ -725,6 +730,7 @@ void Settings::save()
 	WRITE_COMMENT("Which gui elements are hidden if you are in Presentation mode, separated by a colon (,)");
 
 	WRITE_BOOL_PROP(showBigCursor);
+	WRITE_BOOL_PROP(highlightPosition);
 	WRITE_BOOL_PROP(darkTheme);
 
 	if (this->scrollbarHideType == SCROLLBAR_HIDE_BOTH)
@@ -1039,6 +1045,27 @@ void Settings::setShowBigCursor(bool b)
 	}
 
 	this->showBigCursor = b;
+	save();
+}
+
+bool Settings::isHighlightPosition()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->highlightPosition;
+
+}
+
+void Settings::setHighlightPosition(bool highlight)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->highlightPosition == highlight)
+	{
+		return;
+	}
+
+	this->highlightPosition = highlight;
 	save();
 }
 
