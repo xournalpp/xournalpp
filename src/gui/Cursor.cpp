@@ -323,14 +323,20 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 	double b = (rgb & 0xff) / 255.0;
 
 	bool big = control->getSettings()->isShowBigCursor();
+	bool highlightPosition = control->getSettings()->isHighlightPosition();
 
 	int height = size;
 	int width = size;
 	if (big)
 	{
-		height = 22;
-		width = 22;
+		height = width = 100;
 	}
+
+	// We change the drawing method, now the center with the colored dot of the pen
+	// is at the center of the cairo surface, and when we load the cursor, we load it
+	// with the relative offset
+	int centerX = width / 2;
+	int centerY = height / 2; 
 
 	cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
 	cairo_t* cr = cairo_create(crCursor);
@@ -358,24 +364,37 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 		// cairo_line_to(cr, 13, 14);
 
 
-		// Color dot
-		cairo_move_to(cr, 2, 19);
+		// Starting point
+		cairo_move_to(cr, centerX + 2, centerY);
 		// Pencil cursor
-		cairo_line_to(cr, 2, 15);
-		cairo_line_to(cr, 15, 0.5);
-		cairo_line_to(cr, 19, 4);
-		cairo_line_to(cr, 6, 19);
+		cairo_line_to(cr, centerX + 2, centerY - 4);
+		cairo_line_to(cr, centerX + 15, centerY - 17.5);
+		cairo_line_to(cr, centerX + 19, centerY - 14);
+		cairo_line_to(cr, centerX + 6, centerY );
 
 		cairo_close_path(cr);
+		cairo_fill_preserve(cr);
+		cairo_set_source_rgb(cr, 0, 0, 0);
+		cairo_stroke(cr);
+
+		
+		if(highlightPosition) 
+		{
+			// A yellow transparent circle with no border
+			cairo_set_line_width(cr, 0);
+			cairo_set_source_rgba(cr, 255, 255, 0, 0.5);
+			cairo_arc(cr, centerX, centerY, 45, 0, 2 * 3.1415);
+		}
+
 		cairo_fill_preserve(cr);
 
 		cairo_set_source_rgb(cr, 0, 0, 0);
 		cairo_stroke(cr);
 	}
-
+	
 	cairo_set_source_rgba(cr, r, g, b, alpha);
 	// Correct the offset of the coloured dot for big-cursor mode
-	cairo_rectangle(cr, 0, big ? height-size : 0, size, size);
+	cairo_rectangle(cr, centerX, centerY, size, size);
 	cairo_fill(cr);
 
 	cairo_destroy(cr);
@@ -388,7 +407,7 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 	cairo_surface_destroy(crCursor);
 	
 	GdkCursor* cursor = gdk_cursor_new_from_pixbuf(
-			gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, 1, height-size);
+	 		gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, centerX, centerY);
 
 	g_object_unref(pixbuf);
 
