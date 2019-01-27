@@ -10,8 +10,7 @@
 ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom)
  : AbstractToolItem(id, handler, type, NULL),
    ignoreChange(false),
-   sliderChangingByUser(false),
-   counter(0)
+   sliderChangingByUser(false)
 {
 	XOJ_INIT_TYPE(ToolZoomSlider);
 
@@ -38,20 +37,8 @@ void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self)
 		return;
 	}
 
-	if (self->counter++ == 0)
-	{
-		double back = scaleFuncInv(gtk_range_get_value(range));
-		self->zoom->zoomSequnceChange(back, false);
-	}
-	else if (self->counter < 5)
-	{
-		return;
-	}
-	else
-	{
-		self->counter = 0;
-	}
-
+	double back = scaleFuncInv(gtk_range_get_value(range));
+	self->zoom->zoomSequnceChange(back, false);
 }
 
 bool ToolZoomSlider::sliderFocusIn(GtkRange* range, GdkEvent *event, ToolZoomSlider* self)

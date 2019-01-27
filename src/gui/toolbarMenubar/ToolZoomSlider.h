@@ -54,7 +54,6 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	bool ignoreChange;
-	int counter;
 
 	/**
 	 * The slider is currently changing by user, do not update value
