@@ -5,11 +5,13 @@
 #include <config.h>
 #include <i18n.h>
 #include <StringUtils.h>
+#include <cmath>
 
 ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom)
  : AbstractToolItem(id, handler, type, NULL),
    ignoreChange(false),
-   sliderChangingByUser(false)
+   sliderChangingByUser(false),
+   counter(0)
 {
 	XOJ_INIT_TYPE(ToolZoomSlider);
 
@@ -30,18 +32,58 @@ void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self)
 {
 	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
 
-	if (self->ignoreChange)
+	//only render every 5th change
+	if (self->ignoreChange || !self->sliderChangingByUser)
 	{
 		return;
 	}
 
-	self->sliderChangingByUser = true;
+	if (self->counter++ == 0)
+	{
+		double back = scaleFuncInv(gtk_range_get_value(range));
+		self->zoom->zoomSequnceChange(back, false);
+	}
+	else if (self->counter < 5)
+	{
+		return;
+	}
+	else
+	{
+		self->counter = 0;
+	}
 
-	self->zoom->startZoomSequence(-1, -1);
-	self->zoom->zoomSequnceChange(gtk_range_get_value(range), false);
-	self->zoom->endZoomSequence();
+}
 
-	self->sliderChangingByUser = false;
+bool ToolZoomSlider::sliderFocusIn(GtkRange* range, GdkEvent *event, ToolZoomSlider* self)
+{
+	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
+
+	if(!self->sliderChangingByUser)
+	{
+		self->sliderChangingByUser = true;
+		self->zoom->startZoomSequence(-1, -1);
+	}
+	return true;
+}
+
+bool ToolZoomSlider::sliderFocusOut(GtkRange* range, GdkEvent *event, ToolZoomSlider* self)
+{
+	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
+
+	if(self->sliderChangingByUser)
+	{
+		double back = scaleFuncInv(gtk_range_get_value(range));
+		self->zoom->zoomSequnceChange(back, false);
+
+		self->zoom->endZoomSequence();
+		self->sliderChangingByUser = false;
+	}
+	return true;
+}
+
+gchar* ToolZoomSlider::sliderFormatValue(GtkRange *range, gdouble value)
+{
+	return g_strdup_printf("%d%%", (int) (100 * scaleFuncInv(value)));
 }
 
 void ToolZoomSlider::zoomChanged()
@@ -53,9 +95,10 @@ void ToolZoomSlider::zoomChanged()
 		return;
 	}
 
-	ignoreChange = true;
-	gtk_range_set_value(GTK_RANGE(this->slider), this->zoom->getZoom());
-	ignoreChange = false;
+	this->ignoreChange = true;
+	double slider_range = scaleFunc(this->zoom->getZoom());
+	gtk_range_set_value(GTK_RANGE(this->slider), slider_range);
+	this->ignoreChange = false;
 }
 
 void ToolZoomSlider::zoomRangeValuesChanged()
@@ -154,26 +197,36 @@ GtkToolItem* ToolZoomSlider::newItem()
 	if (this->slider)
 	{
 		g_signal_handlers_disconnect_by_func(this->slider, (void* )(sliderChanged), this);
+		g_signal_handlers_disconnect_by_func(this->slider, (void* )(sliderFocusIn), this);
+		g_signal_handlers_disconnect_by_func(this->slider, (void* )(sliderFocusOut), this);
 	}
+
+	double slider_min = scaleFunc(zoom->getZoomMin());
+	double slider_max = scaleFunc(zoom->getZoomMax());
+	//slider has 100 steps
+	double slider_step = (slider_max - slider_min)/100;
 
 	if (this->horizontal)
 	{
 		this->slider = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL,
-		                                        zoom->getZoomMin(),
-		                                        zoom->getZoomMax(),
-		                                        zoom->getZoomStep());
+		                                        slider_min,
+		                                        slider_max,
+		                                        slider_step);
 	}
 	else
 	{
 		this->slider = gtk_scale_new_with_range(GTK_ORIENTATION_VERTICAL,
-		                                        zoom->getZoomMin(),
-		                                        zoom->getZoomMax(),
-		                                        zoom->getZoomStep());
+		                                        slider_min,
+		                                        slider_max,
+		                                        slider_step);
 		gtk_range_set_inverted(GTK_RANGE(this->slider), true);
 	}
 
 	g_signal_connect(this->slider, "value-changed", G_CALLBACK(sliderChanged), this);
-	gtk_scale_set_draw_value(GTK_SCALE(this->slider), false);
+	g_signal_connect(this->slider, "focus-in-event", G_CALLBACK(sliderFocusIn), this);
+	g_signal_connect(this->slider, "focus-out-event", G_CALLBACK(sliderFocusOut), this);
+	g_signal_connect(this->slider, "format-value", G_CALLBACK(sliderFormatValue), this);
+	gtk_scale_set_draw_value(GTK_SCALE(this->slider), true);
 
 	if (this->horizontal)
 	{
@@ -193,4 +246,14 @@ GtkToolItem* ToolZoomSlider::newItem()
 	updateScaleMarks();
 
 	return it;
+}
+
+double ToolZoomSlider::scaleFunc(double x)
+{
+	return log(x - SCALE_LOG_OFFSET);
+}
+
+double ToolZoomSlider::scaleFuncInv(double x)
+{
+	return exp(x) + SCALE_LOG_OFFSET;
 }
