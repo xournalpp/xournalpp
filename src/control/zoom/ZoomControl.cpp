@@ -17,8 +17,8 @@ ZoomControl::ZoomControl()
 	this->zoomFitMode = true;
 
 	this->zoomStep = DEFAULT_ZOOM_STEP;
-	this->zoomMax = DEFAULT_ZOOM_MAX;
-	this->zoomMin = DEFAULT_ZOOM_MIN;
+	this->zoomMax = DEFAULT_ZOOM_MAX * this->zoom100Value;
+	this->zoomMin = DEFAULT_ZOOM_MIN * this->zoom100Value;
 
 	this->zoomSequenceStart = -1;
 
@@ -199,6 +199,8 @@ void ZoomControl::setZoom100(double zoom)
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	this->zoom100Value = zoom;
+	this->setZoomMax(DEFAULT_ZOOM_MAX * this->zoom100Value);
+	this->setZoomMin(DEFAULT_ZOOM_MIN * this->zoom100Value);
 	fireZoomRangeValueChanged();
 }
 

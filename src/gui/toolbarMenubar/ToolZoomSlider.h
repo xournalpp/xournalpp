@@ -30,7 +30,7 @@ public:
 	static void sliderChanged(GtkRange* range, ToolZoomSlider* self);
 	static bool sliderFocusIn(GtkRange* range, GdkEvent *event, ToolZoomSlider* self);
 	static bool sliderFocusOut(GtkRange* range, GdkEvent *event, ToolZoomSlider* self);
-	static gchar* sliderFormatValue(GtkRange *range, gdouble value);
+	static gchar* sliderFormatValue(GtkRange *range, gdouble value, ToolZoomSlider* self);
 
 	virtual void zoomChanged();
 	virtual void zoomRangeValuesChanged();

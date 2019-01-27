@@ -68,9 +68,9 @@ bool ToolZoomSlider::sliderFocusOut(GtkRange* range, GdkEvent *event, ToolZoomSl
 	return true;
 }
 
-gchar* ToolZoomSlider::sliderFormatValue(GtkRange *range, gdouble value)
+gchar* ToolZoomSlider::sliderFormatValue(GtkRange *range, gdouble value, ToolZoomSlider* self)
 {
-	return g_strdup_printf("%d%%", (int) (100 * scaleFuncInv(value)));
+	return g_strdup_printf("%d%%", (int) (100 * scaleFuncInv(value/self->zoom->getZoom100())));
 }
 
 void ToolZoomSlider::zoomChanged()
@@ -213,7 +213,7 @@ GtkToolItem* ToolZoomSlider::newItem()
 	g_signal_connect(this->slider, "focus-in-event", G_CALLBACK(sliderFocusIn), this);
 	g_signal_connect(this->slider, "focus-out-event", G_CALLBACK(sliderFocusOut), this);
 	g_signal_connect(this->slider, "format-value", G_CALLBACK(sliderFormatValue), this);
-	gtk_scale_set_draw_value(GTK_SCALE(this->slider), true);
+	gtk_scale_set_draw_value(GTK_SCALE(this->slider), false);
 
 	if (this->horizontal)
 	{
