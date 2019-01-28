@@ -45,19 +45,17 @@ void ZoomControl::startZoomSequence(double centerX, double centerY)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
+	Rectangle rect = getVisibleRect();
 	if (centerX == -1 || centerY == -1)
 	{
-		GtkWidget* widget = view->getWidget();
-		this->zoomWidgetPosX = gtk_widget_get_allocated_width(widget) / 2;
-		this->zoomWidgetPosY = gtk_widget_get_allocated_height(widget) / 2;
+		this->zoomWidgetPosX = rect.width/2;
+		this->zoomWidgetPosY = rect.height/2;
 	}
 	else
 	{
 		this->zoomWidgetPosX = centerX;
 		this->zoomWidgetPosY = centerY;
 	}
-
-	Rectangle rect = getVisibleRect();
 
 	this->scrollPositionX = (rect.x + this->zoomWidgetPosX) / this->zoom;
 	this->scrollPositionY = (rect.y + this->zoomWidgetPosY) / this->zoom;
