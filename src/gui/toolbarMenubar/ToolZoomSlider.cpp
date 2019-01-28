@@ -37,7 +37,7 @@ void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self)
 		return;
 	}
 
-	double back = scaleFuncInv(gtk_range_get_value(range));
+	double back = self->zoom->getZoom100() * scaleFuncInv(gtk_range_get_value(range));
 	self->zoom->zoomSequnceChange(back, false);
 }
 
@@ -59,7 +59,8 @@ bool ToolZoomSlider::sliderFocusOut(GtkRange* range, GdkEvent *event, ToolZoomSl
 
 	if(self->sliderChangingByUser)
 	{
-		double back = scaleFuncInv(gtk_range_get_value(range));
+		double back = self->zoom->getZoom100() *
+			scaleFuncInv(gtk_range_get_value(range));
 		self->zoom->zoomSequnceChange(back, false);
 
 		self->zoom->endZoomSequence();
@@ -70,7 +71,7 @@ bool ToolZoomSlider::sliderFocusOut(GtkRange* range, GdkEvent *event, ToolZoomSl
 
 gchar* ToolZoomSlider::sliderFormatValue(GtkRange *range, gdouble value, ToolZoomSlider* self)
 {
-	return g_strdup_printf("%d%%", (int) (100 * scaleFuncInv(value/self->zoom->getZoom100())));
+	return g_strdup_printf("%d%%", (int) (100 * scaleFuncInv(value)));
 }
 
 void ToolZoomSlider::zoomChanged()
@@ -83,7 +84,7 @@ void ToolZoomSlider::zoomChanged()
 	}
 
 	this->ignoreChange = true;
-	double slider_range = scaleFunc(this->zoom->getZoom());
+	double slider_range = scaleFunc(this->zoom->getZoom()/this->zoom->getZoom100());
 	gtk_range_set_value(GTK_RANGE(this->slider), slider_range);
 	this->ignoreChange = false;
 }
@@ -188,8 +189,8 @@ GtkToolItem* ToolZoomSlider::newItem()
 		g_signal_handlers_disconnect_by_func(this->slider, (void* )(sliderFocusOut), this);
 	}
 
-	double slider_min = scaleFunc(zoom->getZoomMin());
-	double slider_max = scaleFunc(zoom->getZoomMax());
+	double slider_min = scaleFunc(DEFAULT_ZOOM_MIN);
+	double slider_max = scaleFunc(DEFAULT_ZOOM_MAX);
 	//slider has 100 steps
 	double slider_step = (slider_max - slider_min)/100;
 
@@ -213,7 +214,7 @@ GtkToolItem* ToolZoomSlider::newItem()
 	g_signal_connect(this->slider, "focus-in-event", G_CALLBACK(sliderFocusIn), this);
 	g_signal_connect(this->slider, "focus-out-event", G_CALLBACK(sliderFocusOut), this);
 	g_signal_connect(this->slider, "format-value", G_CALLBACK(sliderFormatValue), this);
-	gtk_scale_set_draw_value(GTK_SCALE(this->slider), false);
+	gtk_scale_set_draw_value(GTK_SCALE(this->slider), true);
 
 	if (this->horizontal)
 	{
