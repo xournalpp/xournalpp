@@ -16,6 +16,8 @@
 
 #include <XournalType.h>
 
+#define SCALE_LOG_OFFSET 0.20753
+
 class ZoomControl;
 
 class ToolZoomSlider : public AbstractToolItem, public ZoomListener
@@ -26,6 +28,10 @@ public:
 
 public:
 	static void sliderChanged(GtkRange* range, ToolZoomSlider* self);
+	static bool sliderFocusIn(GtkRange* range, GdkEvent *event, ToolZoomSlider* self);
+	static bool sliderFocusOut(GtkRange* range, GdkEvent *event, ToolZoomSlider* self);
+	static gchar* sliderFormatValue(GtkRange *range, gdouble value, ToolZoomSlider* self);
+
 	virtual void zoomChanged();
 	virtual void zoomRangeValuesChanged();
 	virtual string getToolDisplayName();
@@ -39,6 +45,10 @@ protected:
 	virtual void enable(bool enabled);
 	virtual GtkToolItem* newItem();
 	virtual GtkWidget* getNewToolIcon();
+
+private:
+	static double scaleFunc(double x);
+	static double scaleFuncInv(double x);
 
 private:
 	XOJ_TYPE_ATTRIB;
