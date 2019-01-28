@@ -2207,8 +2207,8 @@ bool Control::loadMetadataCallback(MetadataCallbackData* data)
 		return false;
 	}
 
-	data->ctrl->scrollHandler->scrollToPage(data->md.page);
 	data->ctrl->zoom->setZoom(data->md.zoom);
+	data->ctrl->scrollHandler->scrollToPage(data->md.page);
 
 	delete data;
 
