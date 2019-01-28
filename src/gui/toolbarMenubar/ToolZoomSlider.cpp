@@ -40,7 +40,7 @@ void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self)
 	self->zoom->zoomSequnceChange(back, false);
 }
 
-bool ToolZoomSlider::sliderFocusIn(GtkRange* range, GdkEvent *event, ToolZoomSlider* self)
+bool ToolZoomSlider::sliderButtonPress(GtkRange* range, GdkEvent *event, ToolZoomSlider* self)
 {
 	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
 
@@ -49,23 +49,19 @@ bool ToolZoomSlider::sliderFocusIn(GtkRange* range, GdkEvent *event, ToolZoomSli
 		self->sliderChangingByUser = true;
 		self->zoom->startZoomSequence(-1, -1);
 	}
-	return true;
+	return false;
 }
 
-bool ToolZoomSlider::sliderFocusOut(GtkRange* range, GdkEvent *event, ToolZoomSlider* self)
+bool ToolZoomSlider::sliderButtonRelease(GtkRange* range, GdkEvent *event, ToolZoomSlider* self)
 {
 	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
 
 	if(self->sliderChangingByUser)
 	{
-		double back = self->zoom->getZoom100() *
-			scaleFuncInv(gtk_range_get_value(range));
-		self->zoom->zoomSequnceChange(back, false);
-
 		self->zoom->endZoomSequence();
 		self->sliderChangingByUser = false;
 	}
-	return true;
+	return false;
 }
 
 gchar* ToolZoomSlider::sliderFormatValue(GtkRange *range, gdouble value, ToolZoomSlider* self)
@@ -184,8 +180,8 @@ GtkToolItem* ToolZoomSlider::newItem()
 	if (this->slider)
 	{
 		g_signal_handlers_disconnect_by_func(this->slider, (void* )(sliderChanged), this);
-		g_signal_handlers_disconnect_by_func(this->slider, (void* )(sliderFocusIn), this);
-		g_signal_handlers_disconnect_by_func(this->slider, (void* )(sliderFocusOut), this);
+		g_signal_handlers_disconnect_by_func(this->slider, (void* )(sliderButtonPress), this);
+		g_signal_handlers_disconnect_by_func(this->slider, (void* )(sliderButtonRelease), this);
 	}
 
 	double slider_min = scaleFunc(DEFAULT_ZOOM_MIN);
@@ -210,8 +206,8 @@ GtkToolItem* ToolZoomSlider::newItem()
 	}
 
 	g_signal_connect(this->slider, "value-changed", G_CALLBACK(sliderChanged), this);
-	g_signal_connect(this->slider, "focus-in-event", G_CALLBACK(sliderFocusIn), this);
-	g_signal_connect(this->slider, "focus-out-event", G_CALLBACK(sliderFocusOut), this);
+	g_signal_connect(this->slider, "button-press-event", G_CALLBACK(sliderButtonPress), this);
+	g_signal_connect(this->slider, "button-release-event", G_CALLBACK(sliderButtonRelease), this);
 	g_signal_connect(this->slider, "format-value", G_CALLBACK(sliderFormatValue), this);
 	gtk_scale_set_draw_value(GTK_SCALE(this->slider), true);
 
