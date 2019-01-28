@@ -31,7 +31,6 @@ void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self)
 {
 	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
 
-	//only render every 5th change
 	if (self->ignoreChange || !self->sliderChangingByUser)
 	{
 		return;
