@@ -34,8 +34,8 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GladeSearchpath* gladeSear
 	{
 		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), _("No device"));
 
-		DeviceListHelper devList;
-		for (InputDevice& dev : devList.getDeviceList())
+		this->deviceList = new DeviceListHelper(true);
+		for (InputDevice& dev : this->deviceList->getDeviceList())
 		{
 			string txt = dev.getName()  + " (" + dev.getType() + ")";
 			gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), txt.c_str());
@@ -111,6 +111,11 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GladeSearchpath* gladeSear
 
 ButtonConfigGui::~ButtonConfigGui()
 {
+	XOJ_CHECK_TYPE(ButtonConfigGui);
+
+	delete this->deviceList;
+	this->deviceList = NULL;
+
 	XOJ_RELEASE_TYPE(ButtonConfigGui);
 }
 
@@ -198,8 +203,7 @@ void ButtonConfigGui::loadSettings()
 		int i = 0;
 
 
-		DeviceListHelper devList;
-		for (InputDevice& dev : devList.getDeviceList())
+		for (InputDevice& dev : this->deviceList->getDeviceList())
 		{
 			if (cfg->device == dev.getName())
 			{
@@ -283,8 +287,7 @@ void ButtonConfigGui::saveSettings()
 
 	if (this->withDevice)
 	{
-		DeviceListHelper devList;
-		std::vector<InputDevice>& devices = devList.getDeviceList();
+		std::vector<InputDevice>& devices = this->deviceList->getDeviceList();
 		int dev = gtk_combo_box_get_active(GTK_COMBO_BOX(cbDevice)) - 1;
 
 		if (dev < 0 || (int)devices.size() <= dev)
