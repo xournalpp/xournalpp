@@ -40,7 +40,7 @@ private:
 class DeviceListHelper
 {
 public:
-	DeviceListHelper();
+	DeviceListHelper(bool ignoreTouchDevices = false);
 	virtual ~DeviceListHelper();
 
 public:
@@ -50,5 +50,7 @@ private:
 	void addDevicesToList(GList* devList);
 
 private:
+	bool ignoreTouchDevices;
+
 	vector<InputDevice> deviceList;
 };
