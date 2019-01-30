@@ -57,6 +57,8 @@ enum ActionGroup
 	GROUP_GRID_SNAPPING,
 
 	GROUP_FILL,
+	
+	GROUP_COLUMNS,
 };
 
 ActionGroup ActionGroup_fromString(string value);

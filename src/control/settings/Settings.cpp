@@ -48,6 +48,8 @@ void Settings::loadDefault()
 	this->showTwoPages = false;
 	this->presentationMode = false;
 
+	this->numColumns = 1;
+	
 	this->displayDpi = 72;
 
 	this->font.setName(DEFAULT_FONT);
@@ -1394,6 +1396,26 @@ void Settings::setPresureSensitivity(gboolean presureSensitivity)
 	this->presureSensitivity = presureSensitivity;
 
 	save();
+}
+
+void Settings::setViewColumns(int numColumns)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->numColumns == numColumns)
+	{
+		return;
+	}
+
+	this->numColumns = numColumns;
+	save();
+}
+
+int Settings::getViewColumns()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->numColumns;
 }
 
 void Settings::setLastSavePath(Path p)

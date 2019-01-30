@@ -117,6 +117,11 @@ ActionGroup ActionGroup_fromString(string value)
 		return GROUP_FILL;
 	}
 
+	if (value == "GROUP_COLUMNS")
+	{
+		return GROUP_COLUMNS;
+	}
+
 	g_error("Invalid enum value for ActionGroup: «%s»", value.c_str());
 	return GROUP_NOGROUP;
 }
@@ -223,6 +228,11 @@ string ActionGroup_toString(ActionGroup value)
 	if (value == GROUP_FILL)
 	{
 		return "GROUP_FILL";
+	}
+
+	if (value == GROUP_COLUMNS)
+	{
+		return "GROUP_COLUMNS";
 	}
 
 	g_error("Invalid enum value for ActionGroup: %i", value);

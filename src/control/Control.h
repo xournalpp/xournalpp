@@ -128,6 +128,7 @@ public:
 	void calcZoomFitSize();
 	void setViewTwoPages(bool continous);
 	void setViewPresentationMode(bool continous);
+	void setViewColumns(int numColumns);
 	void manageToolbars();
 	void customizeToolbars();
 	void enableFullscreen(bool enabled, bool presentation = false);

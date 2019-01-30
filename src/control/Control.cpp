@@ -848,6 +848,40 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		enableFullscreen(enabled);
 		break;
 
+	case ACTION_SET_COLUMNS_1:
+		setViewColumns(1);
+		break;
+		
+	case ACTION_SET_COLUMNS_2:
+		setViewColumns(2);
+		break;
+		
+	case ACTION_SET_COLUMNS_3:
+		setViewColumns(3);
+		break;
+		
+	case ACTION_SET_COLUMNS_4:
+		setViewColumns(4);
+		break;
+		
+	case ACTION_SET_COLUMNS_5:
+		setViewColumns(5);
+		break;
+		
+	case ACTION_SET_COLUMNS_6:
+		setViewColumns(6);
+		break;
+		
+	case ACTION_SET_COLUMNS_7:
+		setViewColumns(7);
+		break;
+		
+	case ACTION_SET_COLUMNS_8:
+		setViewColumns(8);
+		break;
+		
+
+		
 	case ACTION_RECSTOP:
 	{
 		bool result;
@@ -1456,6 +1490,22 @@ void Control::setViewPresentationMode(bool presentationMode)
 	win->getXournal()->layoutPages();
 	scrollHandler->scrollToPage(currentPage);
 }
+
+
+
+void Control::setViewColumns(int numColumns)
+{
+	XOJ_CHECK_TYPE(Control);
+
+	settings->setViewColumns(numColumns);
+	fireActionSelected(GROUP_COLUMNS, numColumns ? ACTION_SET_COLUMNS: ACTION_NOT_SELECTED);
+
+	int currentPage = getCurrentPageNo();
+	win->getXournal()->layoutPages();
+	scrollHandler->scrollToPage(currentPage);
+}
+
+
 
 /**
  * This callback is used by used to be called later in the UI Thread

@@ -222,6 +222,9 @@ public:
 	void setPresentationMode(bool presentationMode);
 	bool isPresentationMode();
 
+	void setViewColumns(int numColumns);
+	int getViewColumns();
+	
 	bool isAutloadPdfXoj();
 	void setAutoloadPdfXoj(bool load);
 
@@ -466,7 +469,7 @@ private:
 	bool scrollbarOnLeft;
 
 	/**
-	 *  Displays two pages
+	 *  Pairs pages
 	 */
 	bool showTwoPages;
 
@@ -475,6 +478,11 @@ private:
 	 */
 	bool presentationMode;
 
+	/**
+	 *  Displays multiple columns
+	 */
+	int numColumns;	
+	
 	/**
 	 * Automatically load filename.pdf.xoj / .pdf.xopp instead of filename.pdf (true/false)
 	 */

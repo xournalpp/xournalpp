@@ -200,7 +200,7 @@ void Layout::layoutPages()
 	bool verticalSpace = settings->getAddVerticalSpace();
 	bool horizontalSpace = settings->getAddHorizontalSpace();
 	bool dualPage = settings->isShowTwoPages();
-	int columns = 5;
+	int columns = settings->getViewColumns();
 	int dualoffset = 0;
 
 	int size[columns];
@@ -219,8 +219,9 @@ void Layout::layoutPages()
 		
 		if (dualPage && len >1)		//offset 1st page
 		{
-			int future_prefs_setting_offset = 3;							//TODO  TODO  TODO  TODO  TODO  TODO  TODO  
-			dualoffset = MIN(MIN(future_prefs_setting_offset,columns-1),len);
+			int future_prefs_setting_offset = 1;							//TODO  TODO  TODO  TODO  TODO  TODO  TODO  
+			dualoffset = future_prefs_setting_offset%columns;
+			dualoffset = MIN( dualoffset, len );
 		}
 
 		int rId = (i+ dualoffset) % columns;
