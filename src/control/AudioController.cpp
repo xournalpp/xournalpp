@@ -9,11 +9,15 @@ AudioController::AudioController(Settings* settings, Control* control)
 	XOJ_INIT_TYPE(AudioController);
 	this->settings = settings;
 	this->control = control;
+	this->audioRecorder = new AudioRecorder(settings);
 }
 
 AudioController::~AudioController()
 {
 	XOJ_CHECK_TYPE(AudioController);
+
+	delete this->audioRecorder;
+	this->audioRecorder = nullptr;
 
 	XOJ_RELEASE_TYPE(AudioController);
 }
@@ -29,8 +33,6 @@ void AudioController::recStartStop(bool rec)
 {
 	XOJ_CHECK_TYPE(AudioController);
 
-	string command;
-
 	if (rec)
 	{
 		if (getAudioFolder().isEmpty())
@@ -42,7 +44,7 @@ void AudioController::recStartStop(bool rec)
 		sttime = (g_get_monotonic_time() / 1000000);
 
 		char buffer[50];
-		time_t secs = time(0);
+		time_t secs = time(nullptr);
 		tm *t = localtime(&secs);
 		// This prints the date and time in ISO format.
 		sprintf(buffer, "%04d-%02d-%02d_%02d-%02d-%02d", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour,
@@ -53,16 +55,19 @@ void AudioController::recStartStop(bool rec)
 		audioFilename = data;
 
 		g_message("Start recording");
-		command = "xopp-recording.sh start " + getAudioFolder().str() + "/" + data;
+
+		this->audioRecorder->start(getAudioFolder().str() + "/" + data);
 	}
 	else if (this->recording)
 	{
 		this->recording = false;
 		audioFilename = "";
 		sttime = 0;
-		command = "xopp-recording.sh stop";
+
+		g_message("Stop recording");
+
+		this->audioRecorder->stop();
 	}
-	system(command.c_str());
 }
 
 void AudioController::recToggle()

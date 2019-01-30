@@ -268,5 +268,8 @@ XOJ_DECLARE_TYPE(ToolBase, 258);
 XOJ_DECLARE_TYPE(ScrollHandling, 259);
 XOJ_DECLARE_TYPE(ScrollHandlingGtk, 260);
 XOJ_DECLARE_TYPE(ScrollHandlingXournalpp, 261);
-
-
+XOJ_DECLARE_TYPE(PortAudioProducer, 262);
+XOJ_DECLARE_TYPE(SoxConsumer, 263);
+XOJ_DECLARE_TYPE(AudioRecorder, 264);
+XOJ_DECLARE_TYPE(AudioQueue, 265);
+XOJ_DECLARE_TYPE(DeviceInfo, 266);
