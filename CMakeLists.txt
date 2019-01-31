@@ -89,11 +89,11 @@ find_package (Threads REQUIRED)
 set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} ${CMAKE_THREAD_LIBS_INIT})
 
 # portaudio
-pkg_check_modules(PORTAUDIOCPP portaudiocpp)
+pkg_check_modules(PORTAUDIOCPP REQUIRED "portaudiocpp >= 12")
 add_includes_ldflags ("${PORTAUDIOCPP_LDFLAGS}" "${PORTAUDIOCPP_INCLUDE_DIRS}")
 
 # SOX
-pkg_check_modules(SOX sox)
+pkg_check_modules(SOX REQUIRED "sox >= 14.4.1")
 add_includes_ldflags ("${SOX_LDFLAGS}" "${SOX_INCLUDE_DIRS}")
 
 ## Additional features ##

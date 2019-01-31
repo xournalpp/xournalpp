@@ -50,6 +50,9 @@ Execute in this folder.
 ./build-mac-integration.sh
 ````
 
+#### 4. Build SOX / PortAudio
+TODO: Manual compiling or find packages.
+
 ### Build Xournal++ and .app
 ````bash
 complete-build.sh
