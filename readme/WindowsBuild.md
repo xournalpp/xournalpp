@@ -52,7 +52,8 @@ pacman -S mingw-w64-x86_64-gtk3
 ```
 
 ### SOX / PortAudio
-TODO: Manual compiling or find packages.
+Build/Install portaudio with windows-setup/build-portaudio.sh
+TODO SOX
 
 ## Get sources and build
 
