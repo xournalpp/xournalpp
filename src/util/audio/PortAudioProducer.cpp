@@ -46,7 +46,7 @@ void PortAudioProducer::setInputDevice(DeviceInfo deviceInfo)
 {
     XOJ_CHECK_TYPE(PortAudioProducer);
 
-    this->selectedInputDevice = deviceInfo.index;
+    this->selectedInputDevice = deviceInfo.getIndex();
     portaudio::Device *device = &sys.deviceByIndex(this->selectedInputDevice);
     this->inputChannels = static_cast<unsigned int>(device->maxInputChannels());
 }
@@ -84,10 +84,11 @@ int PortAudioProducer::recordCallback(const void *inputBuffer, void *outputBuffe
                                       PaStreamCallbackFlags statusFlags)
 {
     XOJ_CHECK_TYPE(PortAudioProducer);
+    std::unique_lock<std::mutex> lock(this->audioQueue->syncMutex());
 
     if (statusFlags)
     {
-        g_message(("PortAudioProducer: statusFlag: " + std::to_string(statusFlags)).c_str());
+        g_message("PortAudioProducer: statusFlag: %s", std::to_string(statusFlags).c_str());
     }
 
     if (inputBuffer != nullptr)

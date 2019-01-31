@@ -31,16 +31,15 @@ public:
     std::vector<int> pop(unsigned long nSamples);
 
     void signalEndOfStream();
-    void waitForNewElements();
+    void waitForNewElements(std::unique_lock<std::mutex> &lock);
     bool hasStreamEnded();
+    std::mutex &syncMutex();
 
-private:
+protected:
     std::mutex queueLock;
-    std::unique_lock<std::mutex> lock;
     std::condition_variable lockCondition;
     bool streamEnd = false;
     bool notified = false;
-private:
     XOJ_TYPE_ATTRIB;
 };
 

@@ -25,7 +25,7 @@ void SoxConsumer::start(std::string filename, double sampleRate, const DeviceInf
     this->inputSignal = new sox_signalinfo_t;
     this->inputSignal->rate = sampleRate;
     this->inputSignal->length = SOX_UNSPEC;
-    this->inputSignal->channels = (unsigned int) inputDevice.inputChannels;
+    this->inputSignal->channels = (unsigned int) inputDevice.getInputChannels();
     this->inputSignal->mult = nullptr;
     this->inputSignal->precision = 32;
 
@@ -39,20 +39,18 @@ void SoxConsumer::start(std::string filename, double sampleRate, const DeviceInf
 
     this->consumerThread = new std::thread([&]
        {
-           unsigned long availableFrames;
-
+           std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
            while (!(this->stopConsumer || (audioQueue->hasStreamEnded() && audioQueue->empty())))
            {
-               audioQueue->waitForNewElements();
+               audioQueue->waitForNewElements(lock);
 
                while (!audioQueue->empty())
                {
-                   unsigned long queueSize = audioQueue->size();
-                   availableFrames = std::min(queueSize - queueSize % this->inputSignal->channels, (unsigned long) (64 * this->inputSignal->channels));
-                   if (availableFrames > 0)
+                   std::vector<int> tmpBuffer  = audioQueue->pop(64ul * this->inputSignal->channels);
+
+                   if (!tmpBuffer.empty())
                    {
-                       std::vector<int> tmpBuffer  = audioQueue->pop(availableFrames);
-                       sox_write(this->outputFile, tmpBuffer.data(), availableFrames);
+                       sox_write(this->outputFile, tmpBuffer.data(), tmpBuffer.size());
                    }
                }
            }
