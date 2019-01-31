@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "AudioRecorder.h"
 
 AudioRecorder::AudioRecorder(Settings *settings) : settings(settings)
@@ -31,7 +33,7 @@ void AudioRecorder::start(std::string filename)
 
     // Start the consumer for writing the data
     // TODO get sample rate from settings
-    this->soxConsumer->start(filename, 44100.0, this->portAudioProducer->getSelectedInputDevice());
+    this->soxConsumer->start(std::move(filename), 44100.0, this->portAudioProducer->getSelectedInputDevice());
 
     // Start recording
     this->portAudioProducer->startRecording();

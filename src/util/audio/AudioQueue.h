@@ -23,13 +23,20 @@ class AudioQueue : protected std::deque<int>
 public:
     AudioQueue();
     ~AudioQueue();
+
     void reset();
     bool empty();
     unsigned long size();
     void push(int *samples, unsigned long nSamples);
     std::vector<int> pop(unsigned long nSamples);
 
+    void signalEndOfStream();
+    void waitForNewElements();
+    bool hasStreamEnded();
+
+private:
     std::mutex queueLock;
+    std::unique_lock<std::mutex> lock;
     std::condition_variable lockCondition;
     bool streamEnd = false;
     bool notified = false;

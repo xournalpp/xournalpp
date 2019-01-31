@@ -28,6 +28,8 @@ addons:
 
     - libgtk-3-dev
     - libpoppler-glib-dev
+    - libportaudio-dev
+    - libsox-dev
 
   coverity_scan:
     project:

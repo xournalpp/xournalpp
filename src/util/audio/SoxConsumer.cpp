@@ -39,16 +39,11 @@ void SoxConsumer::start(std::string filename, double sampleRate, const DeviceInf
 
     this->consumerThread = new std::thread([&]
        {
-           std::unique_lock<std::mutex> lock(audioQueue->queueLock);
            unsigned long availableFrames;
 
-
-           while (!(this->stopConsumer || (audioQueue->streamEnd && audioQueue->empty())))
+           while (!(this->stopConsumer || (audioQueue->hasStreamEnded() && audioQueue->empty())))
            {
-               while (!audioQueue->notified)
-               {
-                   audioQueue->lockCondition.wait(lock);
-               }
+               audioQueue->waitForNewElements();
 
                while (!audioQueue->empty())
                {
@@ -60,7 +55,6 @@ void SoxConsumer::start(std::string filename, double sampleRate, const DeviceInf
                        sox_write(this->outputFile, tmpBuffer.data(), availableFrames);
                    }
                }
-               audioQueue->notified = false;
            }
 
            sox_close(this->outputFile);
@@ -75,7 +69,9 @@ void SoxConsumer::join()
 
     // Join the consumer thread to wait for completion
     if (this->consumerThread->joinable())
+    {
         this->consumerThread->join();
+    }
 }
 
 void SoxConsumer::stop()
@@ -83,12 +79,12 @@ void SoxConsumer::stop()
     XOJ_CHECK_TYPE(SoxConsumer);
 
     // Stop consumer
-    this->stopConsumer = true;
-    this->audioQueue->notified = true;
-    this->audioQueue->lockCondition.notify_one();
+    this->audioQueue->signalEndOfStream();
 
     // Wait for consumer to finish
     if (this->consumerThread->joinable())
+    {
         this->consumerThread->join();
+    }
 
 }

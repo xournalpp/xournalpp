@@ -64,7 +64,9 @@ void PortAudioProducer::startRecording()
 
     // Check if there already is a recording
     if (this->inputStream != nullptr)
+    {
         return;
+    }
 
     // Get the device information of our input device
     portaudio::Device *device = &sys.deviceByIndex(this->selectedInputDevice);
@@ -90,13 +92,9 @@ int PortAudioProducer::recordCallback(const void *inputBuffer, void *outputBuffe
 
     if (inputBuffer != nullptr)
     {
-        std::unique_lock<std::mutex> lock(this->audioQueue->queueLock);
         unsigned long providedFrames = framesPerBuffer * this->inputChannels;
 
         this->audioQueue->push(((int *) inputBuffer), providedFrames);
-
-        this->audioQueue->notified = true;
-        this->audioQueue->lockCondition.notify_one();
     }
     return paContinue;
 }
@@ -113,9 +111,7 @@ void PortAudioProducer::stopRecording()
     }
 
     // Notify the consumer at the other side that ther will be no more data
-    this->audioQueue->streamEnd = true;
-    this->audioQueue->notified = true;
-    this->audioQueue->lockCondition.notify_one();
+    this->audioQueue->signalEndOfStream();
 
     // Allow new recording by removing the old one
     delete this->inputStream;
