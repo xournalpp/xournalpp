@@ -88,6 +88,14 @@ add_includes_ldflags ("${ZLIB_LIBRARIES}" "${ZLIB_INCLUDE_DIRS}")
 find_package (Threads REQUIRED)
 set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} ${CMAKE_THREAD_LIBS_INIT})
 
+# portaudio
+pkg_check_modules(PORTAUDIOCPP portaudiocpp)
+add_includes_ldflags ("${PORTAUDIOCPP_LDFLAGS}" "${PORTAUDIOCPP_INCLUDE_DIRS}")
+
+# SOX
+pkg_check_modules(SOX sox)
+add_includes_ldflags ("${SOX_LDFLAGS}" "${SOX_INCLUDE_DIRS}")
+
 ## Additional features ##
 
 # CppUnit
