@@ -51,6 +51,9 @@ pacman -S mingw-w64-x86_64-poppler \
 pacman -S mingw-w64-x86_64-gtk3
 ```
 
+### SOX / PortAudio
+TODO: Manual compiling or find packages.
+
 ## Get sources and build
 
 ```bash
