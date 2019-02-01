@@ -22,6 +22,10 @@ public:
 	ToolbarModel();
 	virtual ~ToolbarModel();
 
+private:
+	ToolbarModel(const ToolbarModel& other);
+	void operator=(const ToolbarModel& other);
+
 public:
 	vector<ToolbarData*>* getToolbars();
 	bool parse(string filename, bool predefined);
@@ -29,6 +33,7 @@ public:
 	void remove(ToolbarData* data);
 	void save(Path filename);
 	bool existsId(string id);
+	void initCopyNameId(ToolbarData* data);
 
 private:
 	void parseGroup(GKeyFile* config, const char* group, bool predefined);

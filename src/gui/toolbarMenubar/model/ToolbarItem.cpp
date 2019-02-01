@@ -21,7 +21,6 @@ ToolbarItem::ToolbarItem(const ToolbarItem& item)
 
 	this->id = item.id;
 	this->name = item.name;
-	this->sid = item.sid;
 }
 
 ToolbarItem::ToolbarItem()

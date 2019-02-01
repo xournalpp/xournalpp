@@ -12,12 +12,10 @@ enum
 };
 
 ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, ToolbarModel* model)
- : GladeGui(gladeSearchPath, "toolbarManageDialog.glade", "DialogManageToolbar")
+ : GladeGui(gladeSearchPath, "toolbarManageDialog.glade", "DialogManageToolbar"),
+   tbModel(model)
 {
 	XOJ_INIT_TYPE(ToolbarManageDialog);
-
-	this->tbModel = model;
-	this->selected = NULL;
 
 	GtkTreeIter iter;
 	this->model = gtk_list_store_new(N_COLUMNS, G_TYPE_STRING, G_TYPE_INT, G_TYPE_POINTER, G_TYPE_BOOLEAN);
@@ -60,7 +58,6 @@ ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, Toolb
 																		 COLUMN_EDITABLE, NULL);
 
 	gtk_tree_view_append_column(GTK_TREE_VIEW(tree), column);
-	//gtk_tree_view_set_column_drag_function
 
 	GtkTreeSelection* select = gtk_tree_view_get_selection(GTK_TREE_VIEW(tree));
 	gtk_tree_selection_set_mode(select, GTK_SELECTION_SINGLE);
@@ -91,6 +88,8 @@ void ToolbarManageDialog::buttonNewCallback(GtkButton* button, ToolbarManageDial
 
 	ToolbarData* data = new ToolbarData(false);
 	data->setName(_("New"));
+	data->setId("custom");
+	dlg->tbModel->initCopyNameId(data);
 	dlg->addToolbarData(data);
 }
 
@@ -98,39 +97,47 @@ void ToolbarManageDialog::buttonDeleteCallback(GtkButton* button, ToolbarManageD
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarManageDialog);
 
-	if (dlg->selected)
+	ToolbarData* selected = dlg->getSelectedEntry();
+	if (selected == NULL)
 	{
-		dlg->tbModel->remove(dlg->selected);
-		GtkTreeIter iter;
-		if (gtk_tree_model_get_iter_first(GTK_TREE_MODEL(dlg->model), &iter))
-		{
-			do
-			{
-				ToolbarData* data = NULL;
-				gtk_tree_model_get(GTK_TREE_MODEL(dlg->model), &iter, COLUMN_POINTER, &data, -1);
-
-				if (data == dlg->selected)
-				{
-					gtk_list_store_remove(dlg->model, &iter);
-					break;
-				}
-			}
-			while (gtk_tree_model_iter_next(GTK_TREE_MODEL(dlg->model), &iter));
-		}
-
-		dlg->entrySelected(NULL);
+		return;
 	}
+
+	dlg->tbModel->remove(selected);
+	GtkTreeIter iter;
+	if (gtk_tree_model_get_iter_first(GTK_TREE_MODEL(dlg->model), &iter))
+	{
+		do
+		{
+			ToolbarData* data = NULL;
+			gtk_tree_model_get(GTK_TREE_MODEL(dlg->model), &iter, COLUMN_POINTER, &data, -1);
+
+			if (data == selected)
+			{
+				gtk_list_store_remove(dlg->model, &iter);
+				break;
+			}
+		}
+		while (gtk_tree_model_iter_next(GTK_TREE_MODEL(dlg->model), &iter));
+	}
+
+	dlg->updateSelectionData();
+	delete selected;
 }
 
 void ToolbarManageDialog::buttonCopyCallback(GtkButton* button, ToolbarManageDialog* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarManageDialog);
 
-	if (dlg->selected)
+	ToolbarData* selected = dlg->getSelectedEntry();
+	if (selected == NULL)
 	{
-		ToolbarData* data = new ToolbarData(*dlg->selected);
-		dlg->addToolbarData(data);
+		return;
 	}
+
+	ToolbarData* data = new ToolbarData(*selected);
+	dlg->tbModel->initCopyNameId(data);
+	dlg->addToolbarData(data);
 }
 
 void ToolbarManageDialog::addToolbarData(ToolbarData* data)
@@ -185,23 +192,47 @@ void ToolbarManageDialog::entrySelected(ToolbarData* data)
 		gtk_widget_set_sensitive(btCopy, true);
 		gtk_widget_set_sensitive(btDelete, !data->isPredefined());
 	}
+}
 
-	this->selected = data;
+ToolbarData* ToolbarManageDialog::getSelectedEntry()
+{
+	XOJ_CHECK_TYPE(ToolbarManageDialog);
+
+	GtkTreeIter iter;
+	GtkTreeModel* model = NULL;
+	ToolbarData* data = NULL;
+
+	GtkWidget* tree = get("toolbarList");
+
+	GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(tree));
+	if (selection == NULL)
+	{
+		return NULL;
+	}
+
+	if (gtk_tree_selection_get_selected(selection, &model, &iter))
+	{
+		gtk_tree_model_get(model, &iter, COLUMN_POINTER, &data, -1);
+		return data;
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+void ToolbarManageDialog::updateSelectionData()
+{
+	XOJ_CHECK_TYPE(ToolbarManageDialog);
+
+	entrySelected(getSelectedEntry());
 }
 
 void ToolbarManageDialog::treeSelectionChangedCallback(GtkTreeSelection* selection, ToolbarManageDialog* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarManageDialog);
 
-	GtkTreeIter iter;
-	GtkTreeModel* model = NULL;
-	ToolbarData* data = NULL;
-
-	if (gtk_tree_selection_get_selected(selection, &model, &iter))
-	{
-		gtk_tree_model_get(model, &iter, COLUMN_POINTER, &data, -1);
-		dlg->entrySelected(data);
-	}
+	dlg->updateSelectionData();
 }
 
 void ToolbarManageDialog::show(GtkWindow* parent)

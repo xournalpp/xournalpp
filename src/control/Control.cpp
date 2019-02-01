@@ -1029,38 +1029,7 @@ void Control::customizeToolbars()
 			ToolbarData* data = new ToolbarData(*this->win->getSelectedToolbar());
 
 			ToolbarModel* model = this->win->getToolbarModel();
-
-			for (int i = 0; i < 100; i++)
-			{
-				string id = data->getId() + " Copy";
-
-				if (i != 0)
-				{
-					id += " ";
-					id += std::to_string(i);
-				}
-
-				if (!model->existsId(id))
-				{
-					if (i != 0)
-					{
-						string filename = data->getName();
-						filename += " ";
-						filename += _("Copy");
-						filename += " ";
-						filename += std::to_string(i);
-
-						data->setName(filename);
-					}
-					else
-					{
-						data->setName(data->getName() + " " + _("Copy"));
-					}
-					data->setId(id);
-					break;
-				}
-			}
-
+			model->initCopyNameId(data);
 			model->add(data);
 			this->win->toolbarSelected(data);
 			this->win->updateToolbarMenu();

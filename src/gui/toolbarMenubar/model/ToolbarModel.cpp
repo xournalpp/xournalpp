@@ -2,6 +2,7 @@
 #include "ToolbarData.h"
 
 #include <XojMsgBox.h>
+#include <i18n.h>
 
 #include <fstream>
 
@@ -90,13 +91,52 @@ bool ToolbarModel::parse(string filename, bool predefined)
 	return true;
 }
 
+void ToolbarModel::initCopyNameId(ToolbarData* data)
+{
+	XOJ_CHECK_TYPE(ToolbarModel);
+
+	for (int i = 0; i < 100; i++)
+	{
+		string id = data->getId() + " Copy";
+
+		if (i != 0)
+		{
+			id += " ";
+			id += std::to_string(i);
+		}
+
+		if (!existsId(id))
+		{
+			if (i != 0)
+			{
+				string filename = data->getName();
+				filename += " ";
+				filename += _("Copy");
+				filename += " ";
+				filename += std::to_string(i);
+
+				data->setName(filename);
+			}
+			else
+			{
+				data->setName(data->getName() + " " + _("Copy"));
+			}
+			data->setId(id);
+			break;
+		}
+	}
+}
+
 bool ToolbarModel::existsId(string id)
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 
 	for (ToolbarData* data : this->toolbars)
 	{
-		if (data->getId() == id) return true;
+		if (data->getId() == id)
+		{
+			return true;
+		}
 	}
 	return false;
 }
