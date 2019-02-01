@@ -1,6 +1,7 @@
 #include "SoxConsumer.h"
 
-SoxConsumer::SoxConsumer(AudioQueue *audioQueue) : audioQueue(audioQueue)
+SoxConsumer::SoxConsumer(AudioQueue* audioQueue)
+ : audioQueue(audioQueue)
 {
     XOJ_INIT_TYPE(SoxConsumer);
 
@@ -18,11 +19,11 @@ SoxConsumer::~SoxConsumer()
     XOJ_RELEASE_TYPE(SoxConsumer);
 }
 
-void SoxConsumer::start(std::string filename, double sampleRate, const DeviceInfo &inputDevice)
+void SoxConsumer::start(std::string filename, double sampleRate, const DeviceInfo& inputDevice)
 {
     XOJ_CHECK_TYPE(SoxConsumer);
 
-    this->inputSignal = new sox_signalinfo_t;
+    this->inputSignal = new sox_signalinfo_t();
     this->inputSignal->rate = sampleRate;
     this->inputSignal->length = SOX_UNSPEC;
     this->inputSignal->channels = (unsigned int) inputDevice.getInputChannels();
@@ -46,7 +47,7 @@ void SoxConsumer::start(std::string filename, double sampleRate, const DeviceInf
 
                while (!audioQueue->empty())
                {
-                   std::vector<int> tmpBuffer  = audioQueue->pop(64ul * this->inputSignal->channels);
+                   std::vector<int> tmpBuffer = audioQueue->pop(64ul * this->inputSignal->channels);
 
                    if (!tmpBuffer.empty())
                    {
@@ -56,7 +57,6 @@ void SoxConsumer::start(std::string filename, double sampleRate, const DeviceInf
            }
 
            sox_close(this->outputFile);
-
        });
 }
 
@@ -84,5 +84,4 @@ void SoxConsumer::stop()
     {
         this->consumerThread->join();
     }
-
 }
