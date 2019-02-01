@@ -63,26 +63,14 @@ XojPageView::XojPageView(XournalView* xournal, PageRef page)
 	this->rerenderComplete = false;
 	g_mutex_init(&this->repaintRectMutex);
 
-	this->crBuffer = NULL;
-
 	this->inEraser = false;
-
-	this->verticalSpace = NULL;
-
-	this->selection = NULL;
-
-	this->textEditor = NULL;
 
 	// this does not have to be deleted afterwards:
 	// (we need it for undo commands)
 	this->oldtext = NULL;
 
-	this->search = NULL;
-
 	this->eraser = new EraseHandler(xournal->getControl()->getUndoRedoHandler(), xournal->getControl()->getDocument(),
 									this->page, xournal->getControl()->getToolHandler(), this);
-
-	this->inputHandler = NULL;
 }
 
 XojPageView::~XojPageView()
@@ -257,6 +245,20 @@ void XojPageView::startText(double x, double y)
 	this->xournal->endTextAllPages(this);
 	this->xournal->getControl()->getSearchBar()->showSearchBar(false);
 
+	if (this->textEditor != NULL)
+	{
+		Text* text = this->textEditor->getText();
+		GdkRectangle matchRect = {gint(x - 10), gint(y - 10), 20, 20};
+		if (!text->intersectsArea(&matchRect))
+		{
+			endText();
+		}
+		else
+		{
+			this->textEditor->mousePressed(x - text->getX(), y - text->getY());
+		}
+	}
+
 	if (this->textEditor == NULL)
 	{
 		// Is there already a textfield?
@@ -315,19 +317,6 @@ void XojPageView::startText(double x, double y)
 		}
 
 		this->rerenderPage();
-	}
-	else
-	{
-		Text* text = this->textEditor->getText();
-		GdkRectangle matchRect = {gint(x - 10), gint(y - 10), 20, 20};
-		if (!text->intersectsArea(&matchRect))
-		{
-			endText();
-		}
-		else
-		{
-			this->textEditor->mousePressed(x - text->getX(), y - text->getY());
-		}
 	}
 }
 

@@ -179,17 +179,17 @@ private:
 	XournalView* xournal;
 	Settings* settings;
 	EraseHandler* eraser;
-	InputHandler* inputHandler;
+	InputHandler* inputHandler = nullptr;
 
 	/**
 	 * The selected (while selection)
 	 */
-	Selection* selection;
+	Selection* selection = nullptr;
 
 	/**
 	 * The text editor View
 	 */
-	TextEditor* textEditor;
+	TextEditor* textEditor = nullptr;
 
 	/**
 	 * For keeping old text changes to undo!
@@ -198,19 +198,19 @@ private:
 
 	bool selected;
 
-	cairo_surface_t* crBuffer;
+	cairo_surface_t* crBuffer = nullptr;
 
 	bool inEraser;
 
 	/**
 	 * Vertical Space
 	 */
-	VerticalToolHandler* verticalSpace;
+	VerticalToolHandler* verticalSpace = nullptr;
 
 	/**
 	 * Search handling
 	 */
-	SearchControl* search;
+	SearchControl* search = nullptr;
 
 	/**
 	 * Unixtimestam when the page was last time in the visible area
