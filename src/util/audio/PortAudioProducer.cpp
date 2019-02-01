@@ -38,9 +38,10 @@ std::list<DeviceInfo> PortAudioProducer::getInputDevices()
 
 const DeviceInfo PortAudioProducer::getSelectedInputDevice()
 {
+    XOJ_CHECK_TYPE(PortAudioProducer);
+
     return DeviceInfo(&sys.deviceByIndex(this->selectedInputDevice), true);
 }
-
 
 void PortAudioProducer::setInputDevice(DeviceInfo deviceInfo)
 {
@@ -80,7 +81,7 @@ void PortAudioProducer::startRecording()
     this->inputStream->start();
 }
 
-int PortAudioProducer::recordCallback(const void *inputBuffer, void *outputBuffer, unsigned long framesPerBuffer, const PaStreamCallbackTimeInfo *timeInfo,
+int PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer, const PaStreamCallbackTimeInfo* timeInfo,
                                       PaStreamCallbackFlags statusFlags)
 {
     XOJ_CHECK_TYPE(PortAudioProducer);

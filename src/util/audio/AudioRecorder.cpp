@@ -2,7 +2,8 @@
 
 #include "AudioRecorder.h"
 
-AudioRecorder::AudioRecorder(Settings *settings) : settings(settings)
+AudioRecorder::AudioRecorder(Settings* settings)
+ : settings(settings)
 {
     XOJ_INIT_TYPE(AudioRecorder);
 
