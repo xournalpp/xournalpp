@@ -22,7 +22,8 @@ public:
 	XojFont newFont;
 };
 
-FontUndoAction::FontUndoAction(PageRef page, Layer* layer) : UndoAction("FontUndoAction")
+FontUndoAction::FontUndoAction(PageRef page, Layer* layer)
+ : UndoAction("FontUndoAction")
 {
 	XOJ_INIT_TYPE(FontUndoAction);
 

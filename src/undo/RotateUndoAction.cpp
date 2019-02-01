@@ -6,8 +6,8 @@
 #include <i18n.h>
 #include <Range.h>
 
-RotateUndoAction::RotateUndoAction(PageRef page, vector<Element*>* elements, double x0, double y0, double xo, double yo, double rotation) :
-		UndoAction("RotateUndoAction")
+RotateUndoAction::RotateUndoAction(PageRef page, vector<Element*>* elements, double x0, double y0, double xo, double yo, double rotation)
+ : UndoAction("RotateUndoAction")
 {
 	XOJ_INIT_TYPE(RotateUndoAction);
 

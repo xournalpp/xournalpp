@@ -8,8 +8,8 @@
 #include <i18n.h>
 #include <Rectangle.h>
 
-TextBoxUndoAction::TextBoxUndoAction(PageRef page, Layer* layer, Element* element, Element* oldelement) :
-		UndoAction("TextBoxUndoAction")
+TextBoxUndoAction::TextBoxUndoAction(PageRef page, Layer* layer, Element* element, Element* oldelement)
+ : UndoAction("TextBoxUndoAction")
 {
 	XOJ_INIT_TYPE(TextBoxUndoAction);
 

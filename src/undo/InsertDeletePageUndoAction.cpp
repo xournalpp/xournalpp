@@ -7,8 +7,8 @@
 
 #include <i18n.h>
 
-InsertDeletePageUndoAction::InsertDeletePageUndoAction(PageRef page, int pagePos, bool inserted) :
-		UndoAction("InsertDeletePageUndoAction")
+InsertDeletePageUndoAction::InsertDeletePageUndoAction(PageRef page, int pagePos, bool inserted)
+ : UndoAction("InsertDeletePageUndoAction")
 {
 	XOJ_INIT_TYPE(InsertDeletePageUndoAction);
 

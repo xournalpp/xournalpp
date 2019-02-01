@@ -8,7 +8,8 @@
 
 #include <i18n.h>
 
-DeleteUndoAction::DeleteUndoAction(PageRef page, bool eraser) : UndoAction("DeleteUndoAction")
+DeleteUndoAction::DeleteUndoAction(PageRef page, bool eraser)
+ : UndoAction("DeleteUndoAction")
 {
 	XOJ_INIT_TYPE(DeleteUndoAction);
 

@@ -10,7 +10,8 @@
 #include <i18n.h>
 
 MoveUndoAction::MoveUndoAction(Layer* sourceLayer, PageRef sourcePage, vector<Element*>* selected, double mx, double my,
-							   Layer* targetLayer, PageRef targetPage) : UndoAction("MoveUndoAction")
+							   Layer* targetLayer, PageRef targetPage)
+ : UndoAction("MoveUndoAction")
 {
 	XOJ_INIT_TYPE(MoveUndoAction);
 

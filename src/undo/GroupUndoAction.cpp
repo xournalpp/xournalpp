@@ -1,6 +1,7 @@
 #include "GroupUndoAction.h"
 
-GroupUndoAction::GroupUndoAction() : UndoAction("GroupUndoAction")
+GroupUndoAction::GroupUndoAction()
+ : UndoAction("GroupUndoAction")
 {
 	XOJ_INIT_TYPE(GroupUndoAction);
 }
