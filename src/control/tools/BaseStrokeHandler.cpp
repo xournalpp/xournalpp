@@ -80,8 +80,9 @@ void BaseStrokeHandler::draw(cairo_t* cr)
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 
 	double zoom = xournal->getZoom();
-	cairo_scale(cr, zoom, zoom);
+	int dpiScaleFactor = xournal->getDpiScaleFactor();
 
+	cairo_scale(cr, zoom * dpiScaleFactor, zoom * dpiScaleFactor);
 	view.drawStroke(cr, stroke, 0);
 }
 
