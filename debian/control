@@ -3,7 +3,7 @@ Maintainer: Andreas Butti <andreasbutti@gmail.com>
 Section: misc
 Priority: optional
 Standards-Version: 3.9.2
-Build-Depends: debhelper (>= 9), cmake, git, libgtk-3-dev, libpoppler-glib-dev, libxml2-dev
+Build-Depends: debhelper (>= 9), cmake, git, libgtk-3-dev, libpoppler-glib-dev, libxml2-dev, portaudio19-dev, libsox-dev
 Homepage: https://github.com/xournalpp/xournalpp/
 
 Package: xournalpp
