@@ -343,6 +343,8 @@ UndoAction* EditSelection::setFont(XojFont& font)
  */
 void EditSelection::fillUndoItem(DeleteUndoAction* undo)
 {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	this->contents->fillUndoItem(undo);
 }
 
@@ -401,6 +403,8 @@ void EditSelection::mouseUp()
  */
 void EditSelection::mouseDown(CursorSelectionType type, double x, double y)
 {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	double zoom = this->view->getXournal()->getZoom();
 	x /= zoom;
 	y /= zoom;
@@ -415,6 +419,8 @@ void EditSelection::mouseDown(CursorSelectionType type, double x, double y)
  */
 void EditSelection::mouseMove(double x, double y)
 {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	double zoom = this->view->getXournal()->getZoom();
 	x /= zoom;
 	y /= zoom;
@@ -553,6 +559,8 @@ void EditSelection::mouseMove(double x, double y)
 
 XojPageView* EditSelection::getBestMatchingPageView()
 {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	PagePositionHandler* pp = this->view->getXournal()->getPagePositionHandler();
 	int rx = this->getXOnViewAbsolute();
 	int ry = this->getYOnViewAbsolute();
@@ -566,6 +574,8 @@ XojPageView* EditSelection::getBestMatchingPageView()
  */
 void EditSelection::translateToView(XojPageView* v)
 {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	double zoom = view->getXournal()->getZoom();
 
 	int aX1 = getXOnViewAbsolute();
@@ -591,6 +601,8 @@ void EditSelection::translateToView(XojPageView* v)
 
 void EditSelection::copySelection()
 {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	undo->addUndoAction(contents->copySelection(this->view->getPage(), this->view, this->x, this->y));
 }
 
@@ -599,6 +611,8 @@ void EditSelection::copySelection()
  */
 bool EditSelection::isMoving()
 {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	return this->mouseDownType != CURSOR_SELECTION_NONE;
 }
 
@@ -712,6 +726,8 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 
 void EditSelection::snapRotation()
 {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	bool snapping = this->view->getXournal()->getControl()->getSettings()->isSnapRotation();
 	if (!snapping)
 	{
@@ -846,6 +862,8 @@ XojPageView* EditSelection::getView()
 
 void EditSelection::serialize(ObjectOutputStream& out)
 {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	out.writeObject("EditSelection");
 
 	out.writeDouble(this->x);
@@ -865,6 +883,8 @@ void EditSelection::serialize(ObjectOutputStream& out)
 
 void EditSelection::readSerialized(ObjectInputStream& in)
 {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	in.readObject("EditSelection");
 	this->x = in.readDouble();
 	this->y = in.readDouble();

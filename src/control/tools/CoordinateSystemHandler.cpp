@@ -27,6 +27,8 @@ CoordinateSystemHandler::~CoordinateSystemHandler()
  */
 void CoordinateSystemHandler::drawShape(Point& currentPoint, bool shiftDown)
 {
+	XOJ_CHECK_TYPE(CoordinateSystemHandler);
+
 	/**
 	 * Snap first point to grid (if enabled)
 	 */
