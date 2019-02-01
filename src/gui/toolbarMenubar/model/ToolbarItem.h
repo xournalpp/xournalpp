@@ -21,6 +21,10 @@ public:
 	ToolbarItem();
 	virtual ~ToolbarItem();
 
+private:
+	void operator=(const ToolbarItem& other);
+
+public:
 	string getName();
 
 	bool operator==(ToolbarItem& other);

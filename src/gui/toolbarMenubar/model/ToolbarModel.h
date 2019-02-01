@@ -22,6 +22,10 @@ public:
 	ToolbarModel();
 	virtual ~ToolbarModel();
 
+private:
+	ToolbarModel(const ToolbarModel& other);
+	void operator=(const ToolbarModel& other);
+
 public:
 	vector<ToolbarData*>* getToolbars();
 	bool parse(string filename, bool predefined);

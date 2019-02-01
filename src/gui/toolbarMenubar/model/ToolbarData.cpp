@@ -23,6 +23,8 @@ ToolbarData::ToolbarData(const ToolbarData& data)
 
 void ToolbarData::operator=(const ToolbarData& other)
 {
+	XOJ_CHECK_TYPE(ToolbarData);
+
 	this->id = other.id;
 	this->name = other.name;
 	this->predefined = other.predefined;
