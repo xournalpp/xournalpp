@@ -91,6 +91,8 @@ void ToolbarManageDialog::buttonNewCallback(GtkButton* button, ToolbarManageDial
 
 	ToolbarData* data = new ToolbarData(false);
 	data->setName(_("New"));
+	data->setId("custom");
+	dlg->tbModel->initCopyNameId(data);
 	dlg->addToolbarData(data);
 }
 
@@ -129,6 +131,7 @@ void ToolbarManageDialog::buttonCopyCallback(GtkButton* button, ToolbarManageDia
 	if (dlg->selected)
 	{
 		ToolbarData* data = new ToolbarData(*dlg->selected);
+		dlg->tbModel->initCopyNameId(data);
 		dlg->addToolbarData(data);
 	}
 }

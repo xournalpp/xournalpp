@@ -29,6 +29,7 @@ public:
 	void remove(ToolbarData* data);
 	void save(Path filename);
 	bool existsId(string id);
+	void initCopyNameId(ToolbarData* data);
 
 private:
 	void parseGroup(GKeyFile* config, const char* group, bool predefined);
