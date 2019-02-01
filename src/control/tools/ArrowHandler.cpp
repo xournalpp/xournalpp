@@ -6,7 +6,7 @@
 #include <cmath>
 
 ArrowHandler::ArrowHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
-	: BaseStrokeHandler(xournal, redrawable, page)
+ : BaseStrokeHandler(xournal, redrawable, page)
 {
 	XOJ_INIT_TYPE(ArrowHandler);
 }
@@ -20,6 +20,8 @@ ArrowHandler::~ArrowHandler()
 
 void ArrowHandler::drawShape(Point& c, bool shiftDown)
 {
+	XOJ_CHECK_TYPE(ArrowHandler);
+
 	/**
 	 * Snap first point to grid (if enabled)
 	 */

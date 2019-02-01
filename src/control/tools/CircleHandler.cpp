@@ -6,7 +6,7 @@
 #include <cmath>
 
 CircleHandler::CircleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
-	: BaseStrokeHandler(xournal, redrawable, page)
+ : BaseStrokeHandler(xournal, redrawable, page)
 {
 	XOJ_INIT_TYPE(CircleHandler);
 }
@@ -20,6 +20,8 @@ CircleHandler::~CircleHandler()
 
 void CircleHandler::drawShape(Point& c, bool shiftDown)
 {
+	XOJ_CHECK_TYPE(CircleHandler);
+
 	/**
 	 * Snap first point to grid (if enabled)
 	 */
