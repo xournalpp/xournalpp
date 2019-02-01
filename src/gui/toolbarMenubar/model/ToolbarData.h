@@ -22,6 +22,8 @@ public:
 	ToolbarData(const ToolbarData& data);
 	virtual ~ToolbarData();
 
+	void operator=(const ToolbarData& other);
+
 public:
 	string getName();
 	void setName(string name);

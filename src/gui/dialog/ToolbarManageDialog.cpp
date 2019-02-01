@@ -120,7 +120,8 @@ void ToolbarManageDialog::buttonDeleteCallback(GtkButton* button, ToolbarManageD
 			while (gtk_tree_model_iter_next(GTK_TREE_MODEL(dlg->model), &iter));
 		}
 
-		dlg->entrySelected(NULL);
+		dlg->updateSelectionData();
+		delete dlg->selected;
 	}
 }
 
@@ -192,19 +193,39 @@ void ToolbarManageDialog::entrySelected(ToolbarData* data)
 	this->selected = data;
 }
 
-void ToolbarManageDialog::treeSelectionChangedCallback(GtkTreeSelection* selection, ToolbarManageDialog* dlg)
+void ToolbarManageDialog::updateSelectionData()
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarManageDialog);
+	XOJ_CHECK_TYPE(ToolbarManageDialog);
 
 	GtkTreeIter iter;
 	GtkTreeModel* model = NULL;
 	ToolbarData* data = NULL;
 
+	GtkWidget* tree = get("toolbarList");
+
+	GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(tree));
+	if (selection == NULL)
+	{
+		entrySelected(NULL);
+		return;
+	}
+
 	if (gtk_tree_selection_get_selected(selection, &model, &iter))
 	{
 		gtk_tree_model_get(model, &iter, COLUMN_POINTER, &data, -1);
-		dlg->entrySelected(data);
+		entrySelected(data);
 	}
+	else
+	{
+		entrySelected(NULL);
+	}
+}
+
+void ToolbarManageDialog::treeSelectionChangedCallback(GtkTreeSelection* selection, ToolbarManageDialog* dlg)
+{
+	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarManageDialog);
+
+	dlg->updateSelectionData();
 }
 
 void ToolbarManageDialog::show(GtkWindow* parent)

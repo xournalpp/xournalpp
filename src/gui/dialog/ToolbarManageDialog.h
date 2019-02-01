@@ -37,6 +37,8 @@ private:
 	void addToolbarData(ToolbarData* data);
 	void entrySelected(ToolbarData* data);
 
+	void updateSelectionData();
+
 private:
 	XOJ_TYPE_ATTRIB;
 
