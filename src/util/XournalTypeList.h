@@ -273,3 +273,5 @@ XOJ_DECLARE_TYPE(SoxConsumer, 263);
 XOJ_DECLARE_TYPE(AudioRecorder, 264);
 XOJ_DECLARE_TYPE(AudioQueue, 265);
 XOJ_DECLARE_TYPE(DeviceInfo, 266);
+XOJ_DECLARE_TYPE(FullscreenHandler, 267);
+
