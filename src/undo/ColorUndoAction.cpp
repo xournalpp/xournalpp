@@ -22,7 +22,8 @@ public:
 	int newColor;
 };
 
-ColorUndoAction::ColorUndoAction(PageRef page, Layer* layer) : UndoAction("ColorUndoAction")
+ColorUndoAction::ColorUndoAction(PageRef page, Layer* layer)
+ : UndoAction("ColorUndoAction")
 {
 	XOJ_INIT_TYPE(ColorUndoAction);
 

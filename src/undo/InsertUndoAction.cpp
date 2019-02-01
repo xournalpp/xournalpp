@@ -7,7 +7,8 @@
 
 #include <i18n.h>
 
-InsertUndoAction::InsertUndoAction(PageRef page, Layer* layer, Element* element) : UndoAction("InsertUndoAction")
+InsertUndoAction::InsertUndoAction(PageRef page, Layer* layer, Element* element)
+ : UndoAction("InsertUndoAction")
 {
 	XOJ_INIT_TYPE(InsertUndoAction);
 

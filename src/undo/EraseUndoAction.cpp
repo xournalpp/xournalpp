@@ -9,7 +9,8 @@
 
 #include <i18n.h>
 
-EraseUndoAction::EraseUndoAction(PageRef page) : UndoAction("EraseUndoAction")
+EraseUndoAction::EraseUndoAction(PageRef page)
+ : UndoAction("EraseUndoAction")
 {
 	XOJ_INIT_TYPE(EraseUndoAction);
 
