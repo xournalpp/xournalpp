@@ -91,15 +91,31 @@ public:
 	{
 		Path a = Path("C:\\test\\abc\\xyz.txt");
 		a.clearExtensions();
-		CPPUNIT_ASSERT_EQUAL(string("C:\\test\\abc\\xyz"), a.str());
+		CPPUNIT_ASSERT_EQUAL(string("C:\\test\\abc\\xyz.txt"), a.str());
 
 		Path b = Path("/test/asdf.TXT");
 		b.clearExtensions();
-		CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+		CPPUNIT_ASSERT_EQUAL(string("/test/asdf.TXT"), b.str());
 
 		b = Path("/test/asdf.asdf/asdf");
 		b.clearExtensions();
 		CPPUNIT_ASSERT_EQUAL(string("/test/asdf.asdf/asdf"), b.str());
+
+		b = Path("/test/asdf.PDF");
+		b.clearExtensions();
+		CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+
+		b = Path("/test/asdf.PDF.xoj");
+		b.clearExtensions();
+		CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+
+		b = Path("/test/asdf.xoj");
+		b.clearExtensions();
+		CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+
+		b = Path("/test/asdf.pdf");
+		b.clearExtensions();
+		CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
 	}
 };
 
