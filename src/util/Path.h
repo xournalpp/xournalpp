@@ -73,7 +73,7 @@ public:
 	bool hasExtension(string ext);
 
 	/**
-	 * Clear the extension (last .xyz or .pdf.xoj, .pdf.xopp)
+	 * Clear the the last known extension (last .pdf, .pdf.xoj, .pdf.xopp etc.)
 	 */
 	void clearExtensions();
 
