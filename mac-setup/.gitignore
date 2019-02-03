@@ -9,3 +9,6 @@ gtk-mac-bundler
 .xournalpp*
 *.zip
 gtk-mac-integration
+portaudio
+pa_stable_*.tgz
+sox-code

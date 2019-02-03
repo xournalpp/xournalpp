@@ -53,6 +53,35 @@ Execute in this folder.
 #### 4. Build SOX / PortAudio
 TODO: Manual compiling or find packages.
 
+````bash
+./build-portaudio.sh
+./build-sox.sh
+````
+
+If there is an error like:
+xcode-select: error: tool 'xcodebuild' requires Xcode, but active developer directory '/Library/Developer/CommandLineTools' is a command line tools instance
+
+https://stackoverflow.com/questions/17980759/xcode-select-active-developer-directory-error/17980786#17980786
+https://github.com/VCVRack/Rack/issues/144
+
+**Because autoreconf may not run easy, may you change configure directly at Line 15866**
+
+Add the following to Makefile.in at line 261
+
+````
+elif xcodebuild -version -sdk macosx10.13 Path >/dev/null 2>&1 ; then  
+    mac_version_min="-mmacosx-version-min=10.5"
+    mac_sysroot="-isysroot `xcodebuild -version -sdk macosx10.13 Path`"
+elif xcodebuild -version -sdk macosx10.14 Path >/dev/null 2>&1 ; then  
+    mac_version_min="-mmacosx-version-min=10.6"
+    mac_sysroot="-isysroot `xcodebuild -version -sdk macosx10.14 Path`"
+````
+
+````bash
+export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
+autoreconf -if && ./configure --enable-cxx --prefix=$HOME/gtk/inst
+````
+
 ### Build Xournal++ and .app
 ````bash
 complete-build.sh
@@ -73,5 +102,3 @@ make install
 ````bash
 ./build-app.sh
 ````
-
-
