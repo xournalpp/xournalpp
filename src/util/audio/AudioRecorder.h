@@ -26,7 +26,7 @@ public:
 	~AudioRecorder();
 
 public:
-	void start(std::string filename);
+	void start(string filename);
 	void stop();
 
 private:
@@ -35,9 +35,9 @@ private:
 protected:
 	Settings* settings;
 
-	AudioQueue* audioQueue;
-	PortAudioProducer* portAudioProducer;
-	SoxConsumer* soxConsumer;
+	AudioQueue* audioQueue = nullptr;
+	PortAudioProducer* portAudioProducer = nullptr;
+	SoxConsumer* soxConsumer = nullptr;
 };
 
 

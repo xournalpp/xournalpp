@@ -28,7 +28,7 @@ AudioRecorder::~AudioRecorder()
 	XOJ_RELEASE_TYPE(AudioRecorder);
 }
 
-void AudioRecorder::start(std::string filename)
+void AudioRecorder::start(string filename)
 {
 	XOJ_CHECK_TYPE(AudioRecorder);
 
