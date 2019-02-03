@@ -28,7 +28,7 @@ public:
 	~SoxConsumer();
 
 public:
-	void start(std::string filename, double sampleRate, const DeviceInfo& inputDevice);
+	void start(string filename, double sampleRate, const DeviceInfo& inputDevice);
 	void join();
 	void stop();
 
