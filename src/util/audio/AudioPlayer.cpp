@@ -22,7 +22,7 @@ AudioPlayer::~AudioPlayer()
     delete this->audioQueue;
     this->audioQueue = nullptr;
 
-    XOJ_RELEASE_TYPE(AudioRecorder);
+    XOJ_RELEASE_TYPE(AudioPlayer);
 }
 
 void AudioPlayer::start(string filename, unsigned int timestamp)
