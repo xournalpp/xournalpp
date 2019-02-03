@@ -183,171 +183,120 @@ const int XOURNAL_PADDING = 10;
  */
 const int XOURNAL_PADDING_BETWEEN = 15;
 
+
+
+/**
+ * decides whether we use book mode, when dual page is active or not
+ * currently unused; remove the 3 pragmas after implementing left aligned page start
+ */
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCSimplifyInspection"
+constexpr bool second_p_start = true;
+
+
 void Layout::layoutPages()
 {
 	XOJ_CHECK_TYPE(Layout);
 
-	int y = 0;
+	size_t len = this->view->viewPagesLen;
 
-	int len = this->view->viewPagesLen;
-
-	Settings* settings = this->view->getControl()->getSettings();
+	Settings *settings = this->view->getControl()->getSettings();
 	bool verticalSpace = settings->getAddVerticalSpace();
 	bool horizontalSpace = settings->getAddHorizontalSpace();
 	bool dualPage = settings->isShowTwoPages();
-
-	int size[2] = { 0, 0 };
-
-	// we need at least 2 page for dual page view
-	if (len < 2)
-	{
-		dualPage = false;
-	}
-
+//   dualPage &= len > 1;
 	// calculate maximum size
-	for (int i = 0; i < len; i++)
+	int size[2] = {0, 0};
+	for (size_t i = 0; i < len; i++)
 	{
-		XojPageView* v = this->view->viewPages[i];
+		XojPageView *v = this->view->viewPages[i];
 
-		int rId = 0;
-		if (dualPage && i % 2 == 1)
-		{
-			rId = 1;
-		}
+		size_t rId = dualPage ? ((i % 2u) + (second_p_start ? 1u : 0u)) % 2u : 0u;
 
-		if (size[rId] < v->getDisplayWidth())
-		{
-			size[rId] = v->getDisplayWidth();
-		}
+		size[rId] = std::max(size[rId], v->getDisplayWidth());
+	}
+	if (len == 1)
+	{
+		size[0] = size[1] = std::max(size[0], size[1]);
 	}
 
+	int marginLeft = XOURNAL_PADDING;
+	int marginTop = XOURNAL_PADDING;
+	int y = marginTop;
 
-	int marginLeft = 0;
-	int marginTop = 0;
-
-	y += XOURNAL_PADDING;
-
-	int width = XOURNAL_PADDING + size[0];
+	int width = size[0] + 2 * XOURNAL_PADDING;
 	if (dualPage)
 	{
-		width += XOURNAL_PADDING_BETWEEN + size[1] + XOURNAL_PADDING;
-	}
-	else
-	{
-		width += XOURNAL_PADDING;
+		width += XOURNAL_PADDING_BETWEEN + size[1];
 	}
 
-	Rectangle visRect = getVisibleRect();
+	auto visRect = getVisibleRect();
 
-	marginLeft = MAX(XOURNAL_PADDING, (visRect.width - width) / 2.f);
+	marginLeft = std::max(marginLeft, (int) ((visRect.width - width) / 2.f));
 
 	if (horizontalSpace)
 	{
 		//A quarter of the document is always visible in window
-		marginLeft = MAX(marginLeft, visRect.width * 0.75);
+		marginLeft = std::max(marginLeft, (int) (visRect.width * 0.75));
 	}
 
-	int verticalSpaceBetweenSlides = 0;
-
-	if (len > 0 && verticalSpace)
+	if (verticalSpace)
 	{
-		marginTop = MAX(marginTop, visRect.height * 0.75);
+		marginTop = std::max(marginTop, (int) (visRect.height * 0.75));
 	}
 
+	int last_height = 0;
 	for (int i = 0; i < len; i++)
 	{
-		XojPageView* v = this->view->viewPages[i];
+		auto v = this->view->viewPages[i];
+		bool second = (i % 2 != 0) ^ second_p_start;
+		int x;
 
-		int height = 0;
+		/*
+		 * Center pages vertically, like this
+		 *  single          double
+		 *
+		 * |  [=]  |      | [=][=]  |
+		 * | [===] |      |[==][===]|
+		 * | [===] |      |[==][==] |
+		 * |  [=]  |      | [=][===]|
+		 */
 
-		if (dualPage)
+		if (!dualPage)
 		{
-			/*
-			 * Align the left page right and the right page left, like this
-			 * (first page at right)
-			 *
-			 *       [===]
-			 *  [==] [=]
-			 * [===] [===]
-			 */
-			if (i == 0)
-			{
-				int x = XOURNAL_PADDING + size[0] + XOURNAL_PADDING_BETWEEN;
-
-				v->layout.setX(x);
-				v->layout.setY(y);
-				v->layout.setMarginLeft(marginLeft);
-				v->layout.setMarginTop(marginTop);
-
-				height = v->getDisplayHeight();
-			}
-			else
-			{
-				XojPageView* v2 = NULL;
-				height = v->getDisplayHeight();
-
-				if (i + 1 < len)
-				{
-					i++;
-
-					v2 = this->view->viewPages[i];
-					if (height < v2->getDisplayHeight())
-					{
-						height = v2->getDisplayHeight();
-					}
-				}
-
-				// left page, align right
-				int x1 = XOURNAL_PADDING + (size[0] - v->getDisplayWidth());
-				v->layout.setX(x1);
-				v->layout.setY(y);
-				v->layout.setMarginLeft(marginLeft);
-				v->layout.setMarginTop(marginTop);
-
-				// if right page available, align left
-				if (v2 != NULL)
-				{
-					int x2 = XOURNAL_PADDING + size[0] + XOURNAL_PADDING_BETWEEN;
-
-					v2->layout.setX(x2);
-					v2->layout.setY(y);
-					v2->layout.setMarginLeft(marginLeft);
-					v2->layout.setMarginTop(marginTop);
-				}
-			}
+			x = (size[0] - v->getDisplayWidth() + 1) / 2 + XOURNAL_PADDING;
 		}
 		else
 		{
-			/*
-			 * Center vertically, like this
-			 *
-			 *  [=]
-			 * [===]
-			 * [===]
-			 *  [=]
-			 */
-			int x = (size[0] - v->getDisplayWidth()) / 2 + XOURNAL_PADDING;
-
-			v->layout.setX(x);
-			v->layout.setY(y);
-			v->layout.setMarginLeft(marginLeft);
-			v->layout.setMarginTop(marginTop);
-
-			height = v->getDisplayHeight();
+			if (!second)
+			{
+				x = size[0] - v->getDisplayWidth() + XOURNAL_PADDING;
+			}
+			else
+			{
+				x = size[0] + XOURNAL_PADDING_BETWEEN + XOURNAL_PADDING;
+			}
 		}
 
-		y += height;
+		v->layout.setX(x);
+		v->layout.setY(y);
+		v->layout.setMarginLeft(marginLeft);
+		v->layout.setMarginTop(marginTop);
 
-		y += XOURNAL_PADDING_BETWEEN + verticalSpaceBetweenSlides;
+		last_height = dualPage && second ? std::max(last_height, v->getDisplayHeight()) : v->getDisplayHeight();
+		if (!dualPage || second)
+		{
+			y += XOURNAL_PADDING_BETWEEN + last_height;
+			last_height = 0;
+		}
 	}
-
-	int height = 2 * marginTop + XOURNAL_PADDING + y + XOURNAL_PADDING;
-
+	y += last_height + 2 * marginTop + XOURNAL_PADDING - XOURNAL_PADDING_BETWEEN;
 	width += 2 * marginLeft;
 
-	this->setLayoutSize(width, height);
-	this->view->pagePosition->update(this->view->viewPages, len, height);
+	this->setLayoutSize(width, y);
+	this->view->pagePosition->update(this->view->viewPages, len, y);
 }
+#pragma clang diagnostic pop
 
 void Layout::setLayoutSize(int width, int height)
 {
