@@ -18,44 +18,40 @@
 
 #include <control/settings/Settings.h>
 
-#include <list>
-
 #include <portaudiocpp/PortAudioCpp.hxx>
 
+#include <list>
 
 class PortAudioConsumer
 {
 public:
     explicit PortAudioConsumer(Settings *settings, AudioQueue *audioQueue);
-
     ~PortAudioConsumer();
 
+public:
     std::list<DeviceInfo> getOutputDevices();
-
     const DeviceInfo getSelectedOutputDevice();
-
     bool isPlaying();
-
     void startPlaying(double sampleRate, unsigned int channels);
-
     int playCallback(const void *inputBuffer, void *outputBuffer, unsigned long framesPerBuffer, const PaStreamCallbackTimeInfo * timeInfo, PaStreamCallbackFlags statusFlags);
-
     void stopPlaying();
+
+private:
+    XOJ_TYPE_ATTRIB;
+
 protected:
     const unsigned long framesPerBuffer = 64;
 
     portaudio::AutoSystem autoSys;
-    portaudio::System &sys;
-    Settings *settings;
-    AudioQueue *audioQueue;
+    portaudio::System& sys;
+    Settings* settings = nullptr;
+    AudioQueue* audioQueue = nullptr;
 
-    int outputChannels;
-    int playbackBufferLength;
-    int *playbackBuffer = nullptr;
+    int outputChannels = 0;
+    int playbackBufferLength = 0;
+    int* playbackBuffer = nullptr;
 
-    portaudio::MemFunCallbackStream<PortAudioConsumer> *outputStream = nullptr;
-private:
-    XOJ_TYPE_ATTRIB;
+    portaudio::MemFunCallbackStream<PortAudioConsumer>* outputStream = nullptr;
 };
 
 

@@ -44,7 +44,7 @@ const DeviceInfo PortAudioConsumer::getSelectedOutputDevice()
     }
     catch (portaudio::PaException &e)
     {
-        g_message("PortAudioConsumer: Selected output device was not found - fallback to default output device");
+        g_warning("PortAudioConsumer: Selected output device was not found - fallback to default output device");
         return DeviceInfo(&sys.defaultOutputDevice(), true);
     }
 }
@@ -74,13 +74,13 @@ void PortAudioConsumer::startPlaying(double sampleRate, unsigned int channels)
     }
     catch (portaudio::PaException &e)
     {
-        g_message("PortAudioConsumer: Unable to find selected output device");
+        g_warning("PortAudioConsumer: Unable to find selected output device");
         return;
     }
 
     if (device->maxOutputChannels() < channels)
     {
-        g_message("Output device has not enough channels to play audio file. (Requires at least 2 channels)");
+        g_warning("Output device has not enough channels to play audio file. (Requires at least 2 channels)");
         return;
     }
 
@@ -96,7 +96,7 @@ void PortAudioConsumer::startPlaying(double sampleRate, unsigned int channels)
     }
     catch (portaudio::PaException &e)
     {
-        g_message("PortAudioConsumer: Unable to open stream to device");
+        g_warning("PortAudioConsumer: Unable to open stream to device");
         return;
     }
     // Start the recording
@@ -106,7 +106,7 @@ void PortAudioConsumer::startPlaying(double sampleRate, unsigned int channels)
     }
     catch (portaudio::PaException &e)
     {
-        g_message("PortAudioConsumer: Unable to start stream");
+        g_warning("PortAudioConsumer: Unable to start stream");
         return;
     }
 }
@@ -118,7 +118,7 @@ int PortAudioConsumer::playCallback(const void *inputBuffer, void *outputBuffer,
 
     if (statusFlags)
     {
-        g_message("PortAudioConsumer: statusFlag: %s", std::to_string(statusFlags).c_str());
+        g_warning("PortAudioConsumer: statusFlag: %s", std::to_string(statusFlags).c_str());
     }
 
     this->outputChannels = 2;
@@ -136,7 +136,7 @@ int PortAudioConsumer::playCallback(const void *inputBuffer, void *outputBuffer,
         // Fill buffer to requested length if necessary
         for (unsigned long i = 0; i < framesPerBuffer * this->outputChannels - this->playbackBufferLength; ++i)
         {
-            g_message("PortAudioConsumer: Frame underflow");
+            g_warning("PortAudioConsumer: Frame underflow");
             outputBufferImpl[i] = 0;
         }
 
@@ -168,7 +168,7 @@ void PortAudioConsumer::stopPlaying()
         }
         catch (portaudio::PaException &e)
         {
-            g_message("PortAudioConsumer: Closing stream failed");
+            g_warning("PortAudioConsumer: Closing stream failed");
         }
     }
 

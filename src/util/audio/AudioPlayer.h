@@ -22,23 +22,24 @@
 class AudioPlayer
 {
 public:
-    explicit AudioPlayer(Settings *settings);
+    explicit AudioPlayer(Settings* settings);
     ~AudioPlayer();
-    void start(std::string filename, unsigned int timestamp = 0);
+    void start(string filename, unsigned int timestamp = 0);
     void stop();
     void abort();
 
     vector<DeviceInfo> getOutputDevices();
 
-protected:
-    Settings* settings;
-
-    AudioQueue *audioQueue;
-    PortAudioConsumer *portAudioConsumer;
-    SoxProducer *soxProducer;
-    std::thread stopThread;
-
+private:
     XOJ_TYPE_ATTRIB;
+
+protected:
+    Settings* settings = nullptr;
+
+    AudioQueue* audioQueue = nullptr;
+    PortAudioConsumer* portAudioConsumer = nullptr;
+    SoxProducer* soxProducer = nullptr;
+    std::thread stopThread;
 };
 
 

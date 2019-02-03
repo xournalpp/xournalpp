@@ -25,7 +25,7 @@ AudioPlayer::~AudioPlayer()
     XOJ_RELEASE_TYPE(AudioRecorder);
 }
 
-void AudioPlayer::start(std::string filename, unsigned int timestamp)
+void AudioPlayer::start(string filename, unsigned int timestamp)
 {
     XOJ_CHECK_TYPE(AudioPlayer);
 
@@ -85,6 +85,8 @@ void AudioPlayer::abort()
 
 vector<DeviceInfo> AudioPlayer::getOutputDevices()
 {
+    XOJ_CHECK_TYPE(AudioPlayer);
+
     std::list<DeviceInfo> deviceList = this->portAudioConsumer->getOutputDevices();
     return vector<DeviceInfo>{std::make_move_iterator(std::begin(deviceList)),
                               std::make_move_iterator(std::end(deviceList))};

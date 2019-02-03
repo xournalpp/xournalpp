@@ -20,7 +20,7 @@ void SoxProducer::start(std::string filename, const DeviceInfo &outputDevice, so
 
     if (this->inputFile == nullptr)
     {
-        g_message("SoxProducer: input file could not be opened");
+        g_warning("SoxConsumer: output file \"%s\" could not be opened", filename.c_str());
         return;
     }
 
@@ -48,7 +48,10 @@ void SoxProducer::start(std::string filename, const DeviceInfo &outputDevice, so
         });
 }
 
-sox_signalinfo_t* SoxProducer::getSignalInformation() {
+sox_signalinfo_t* SoxProducer::getSignalInformation()
+{
+    XOJ_CHECK_TYPE(SoxProducer);
+
     return &this->inputFile->signal;
 }
 
@@ -58,10 +61,7 @@ void SoxProducer::abort()
 
     this->stopProducer = true;
     // Wait for producer to finish
-    if (this->producerThread->joinable())
-    {
-        this->producerThread->join();
-    }
+    stop();
     this->stopProducer = false;
 
 }
@@ -71,7 +71,7 @@ void SoxProducer::stop()
     XOJ_CHECK_TYPE(SoxProducer);
 
     // Wait for producer to finish
-    if (this->producerThread->joinable())
+    if (this->producerThread && this->producerThread->joinable())
     {
         this->producerThread->join();
     }
