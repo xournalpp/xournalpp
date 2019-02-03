@@ -28,16 +28,16 @@ XojPdfDocument::~XojPdfDocument()
 
 void XojPdfDocument::operator=(XojPdfDocument& doc)
 {
-    XOJ_CHECK_TYPE(XojPdfDocument);
+	XOJ_CHECK_TYPE(XojPdfDocument);
 
 	this->doc->assign(doc.doc);
 }
 
 bool XojPdfDocument::operator==(XojPdfDocument& doc)
 {
-    XOJ_CHECK_TYPE(XojPdfDocument);
+	XOJ_CHECK_TYPE(XojPdfDocument);
 
-    return this->doc->equals(doc.doc);
+	return this->doc->equals(doc.doc);
 }
 
 void XojPdfDocument::assign(XojPdfDocumentInterface* doc)
@@ -51,7 +51,7 @@ bool XojPdfDocument::equals(XojPdfDocumentInterface* doc)
 {
 	XOJ_CHECK_TYPE(XojPdfDocument);
 
-    return this->doc->equals(doc);
+	return this->doc->equals(doc);
 }
 
 bool XojPdfDocument::save(Path filename, GError** error)

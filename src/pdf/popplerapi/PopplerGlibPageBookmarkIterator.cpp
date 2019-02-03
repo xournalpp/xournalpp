@@ -4,8 +4,8 @@ PopplerGlibPageBookmarkIterator::PopplerGlibPageBookmarkIterator(PopplerIndexIte
  : iter(iter),
    document(document)
 {
-    XOJ_INIT_TYPE(PopplerGlibPageBookmarkIterator);
-   	g_object_ref(document);
+	XOJ_INIT_TYPE(PopplerGlibPageBookmarkIterator);
+	g_object_ref(document);
 }
 
 PopplerGlibPageBookmarkIterator::~PopplerGlibPageBookmarkIterator()
@@ -18,10 +18,10 @@ PopplerGlibPageBookmarkIterator::~PopplerGlibPageBookmarkIterator()
 	if (document)
 	{
 		g_object_unref(document);
-	    document = NULL;
+		document = NULL;
 	}
 
-    XOJ_RELEASE_TYPE(PopplerGlibPageBookmarkIterator);
+	XOJ_RELEASE_TYPE(PopplerGlibPageBookmarkIterator);
 }
 
 bool PopplerGlibPageBookmarkIterator::next()

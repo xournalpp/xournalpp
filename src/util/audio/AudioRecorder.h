@@ -22,22 +22,22 @@
 class AudioRecorder
 {
 public:
-    explicit AudioRecorder(Settings* settings);
-    ~AudioRecorder();
+	explicit AudioRecorder(Settings* settings);
+	~AudioRecorder();
 
 public:
-    void start(std::string filename);
-    void stop();
+	void start(std::string filename);
+	void stop();
 
 private:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
 protected:
-    Settings* settings;
+	Settings* settings;
 
-    AudioQueue* audioQueue;
-    PortAudioProducer* portAudioProducer;
-    SoxConsumer* soxConsumer;
+	AudioQueue* audioQueue;
+	PortAudioProducer* portAudioProducer;
+	SoxConsumer* soxConsumer;
 };
 
 

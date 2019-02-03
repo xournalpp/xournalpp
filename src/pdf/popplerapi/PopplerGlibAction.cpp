@@ -4,8 +4,8 @@ PopplerGlibAction::PopplerGlibAction(PopplerAction* action, PopplerDocument* doc
  : action(action),
    document(document)
 {
-    XOJ_INIT_TYPE(PopplerGlibAction);
-   	g_object_ref(document);
+	XOJ_INIT_TYPE(PopplerGlibAction);
+	g_object_ref(document);
 }
 
 PopplerGlibAction::~PopplerGlibAction()
@@ -18,10 +18,10 @@ PopplerGlibAction::~PopplerGlibAction()
 	if (document)
 	{
 		g_object_unref(document);
-	    document = NULL;
+		document = NULL;
 	}
 
-    XOJ_RELEASE_TYPE(PopplerGlibAction);
+	XOJ_RELEASE_TYPE(PopplerGlibAction);
 }
 
 XojLinkDest* PopplerGlibAction::getDestination()

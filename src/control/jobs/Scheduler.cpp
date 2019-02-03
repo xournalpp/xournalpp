@@ -89,10 +89,10 @@ void Scheduler::stop()
 	this->threadRunning = false;
 	g_cond_broadcast(&this->jobQueueCond);
 
-    if (this->thread)
-    {
-    	g_thread_join(this->thread);
-    }
+	if (this->thread)
+	{
+		g_thread_join(this->thread);
+	}
 }
 
 void Scheduler::addJob(Job* job, JobPriority priority)

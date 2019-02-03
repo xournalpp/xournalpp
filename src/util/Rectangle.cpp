@@ -99,8 +99,7 @@ void Rectangle::add(const Rectangle &other)
 
 Rectangle Rectangle::translated(double dx, double dy)
 {
-	return Rectangle(this->x + dx, this->y + dy,
-	                 this->width, this->height);
+	return Rectangle(this->x + dx, this->y + dy, this->width, this->height);
 }
 
 Rectangle Rectangle::intersect(const Rectangle &other)

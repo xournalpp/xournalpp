@@ -16,8 +16,9 @@
 #include "Job.h"
 #include <XournalType.h>
 
-/** @file Scheduler.h
-    @brief A file containing the defintion of the Scheduler
+/**
+ * @file Scheduler.h
+ * @brief A file containing the defintion of the Scheduler
 */
 
 /**
@@ -29,12 +30,32 @@
  */
 enum JobPriority
 {
-	JOB_PRIORITY_URGENT, ///< Urgent: used for rendering the current page
-	JOB_PRIORITY_HIGH,   ///< High: used for rendering thumbnail ranges
-	JOB_PRIORITY_LOW,    ///< Low: used for rendering of pages not in the current range
-	JOB_PRIORITY_NONE,   ///< None: used for any other job (loading / saving / printing...)
-	JOB_N_PRIORITIES     ///< The number of priorities
+	/**
+	 * Urgent: used for rendering the current page
+	 */
+	JOB_PRIORITY_URGENT,
+
+	/**
+	 * High: used for rendering thumbnail ranges
+	 */
+	JOB_PRIORITY_HIGH,
+
+	/**
+	 * Low: used for rendering of pages not in the current range
+	 */
+	JOB_PRIORITY_LOW,
+
+	/**
+	 * None: used for any other job (loading / saving / printing...)
+	 */
+	JOB_PRIORITY_NONE,
+
+	/**
+	 * The number of priorities
+	 */
+	JOB_N_PRIORITIES
 };
+
 
 class Scheduler
 {

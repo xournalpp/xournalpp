@@ -30,7 +30,7 @@ PopplerGlibDocument::~PopplerGlibDocument()
 	if (document)
 	{
 		g_object_unref(document);
-	    document = NULL;
+		document = NULL;
 	}
 
 	XOJ_RELEASE_TYPE(PopplerGlibDocument);

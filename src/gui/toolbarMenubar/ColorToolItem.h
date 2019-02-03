@@ -19,41 +19,42 @@
 class ColorToolItem : public AbstractToolItem
 {
 public:
-    ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, int color, bool selektor = false);
-    virtual ~ColorToolItem();
+	ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, int color,
+			bool selektor = false);
+	virtual ~ColorToolItem();
 
 public:
-    virtual void actionSelected(ActionGroup group, ActionType action);
-    void enableColor(int color);
-    bool colorEqualsMoreOreLess(int color);
-    virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
+	virtual void actionSelected(ActionGroup group, ActionType action);
+	void enableColor(int color);
+	bool colorEqualsMoreOreLess(int color);
+	virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
 
-    virtual string getToolDisplayName();
-    virtual GtkWidget* getNewToolIcon();
+	virtual string getToolDisplayName();
+	virtual GtkWidget* getNewToolIcon();
 
-    virtual string getId();
+	virtual string getId();
 
-    int getColor();
+	int getColor();
 
 protected:
-    virtual GtkToolItem* newItem();
-    void updateName();
-    bool isSelector();
+	virtual GtkToolItem* newItem();
+	void updateName();
+	bool isSelector();
 
-    /**
-     * Show colochooser to select a custom color
-     */
-    void showColorchooser();
+	/**
+	 * Show colochooser to select a custom color
+	 */
+	void showColorchooser();
 
 private:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
-    int color;
-    string name;
-    GtkWidget* iconWidget = NULL;
-    GtkWindow* parent;
+	int color;
+	string name;
+	GtkWidget* iconWidget = NULL;
+	GtkWindow* parent;
 
-    ToolHandler* toolHandler;
+	ToolHandler* toolHandler;
 
-    static bool inUpdate;
+	static bool inUpdate;
 };
