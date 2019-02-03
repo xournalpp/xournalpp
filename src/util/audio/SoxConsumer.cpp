@@ -66,7 +66,7 @@ void SoxConsumer::join()
 	XOJ_CHECK_TYPE(SoxConsumer);
 
 	// Join the consumer thread to wait for completion
-	if (this->consumerThread->joinable())
+	if (this->consumerThread && this->consumerThread->joinable())
 	{
 		this->consumerThread->join();
 	}
@@ -80,8 +80,5 @@ void SoxConsumer::stop()
 	this->audioQueue->signalEndOfStream();
 
 	// Wait for consumer to finish
-	if (this->consumerThread && this->consumerThread->joinable())
-	{
-		this->consumerThread->join();
-	}
+	join();
 }

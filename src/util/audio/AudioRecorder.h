@@ -35,9 +35,9 @@ private:
 protected:
 	Settings* settings;
 
-	AudioQueue* audioQueue;
-	PortAudioProducer* portAudioProducer;
-	SoxConsumer* soxConsumer;
+	AudioQueue* audioQueue = nullptr;
+	PortAudioProducer* portAudioProducer = nullptr;
+	SoxConsumer* soxConsumer = nullptr;
 };
 
 
