@@ -126,7 +126,7 @@ int PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuffe
     {
         unsigned long providedFrames = framesPerBuffer * this->inputChannels;
 
-        this->audioQueue->push(((int *) inputBuffer), providedFrames);
+        this->audioQueue->push((int *) inputBuffer, providedFrames);
     }
     return paContinue;
 }

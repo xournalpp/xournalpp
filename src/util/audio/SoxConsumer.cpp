@@ -40,12 +40,12 @@ void SoxConsumer::start(string filename, unsigned int inputChannels)
         return;
     }
 
-    int buffer[64 * this->inputSignal->channels];
-    int bufferLength;
-
     this->consumerThread = new std::thread([&]
        {
            std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
+           int buffer[64 * this->inputSignal->channels];
+           int bufferLength;
+
            while (!(this->stopConsumer || (audioQueue->hasStreamEnded() && audioQueue->empty())))
            {
                audioQueue->waitForNewElements(lock);

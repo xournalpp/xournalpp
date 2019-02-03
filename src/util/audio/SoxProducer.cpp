@@ -30,7 +30,7 @@ void SoxProducer::start(std::string filename, const DeviceInfo &outputDevice, so
         {
             unsigned long framesRead;
             auto *buffer = new sox_sample_t[1024];
-            g_message("Start");
+
             while(!this->stopProducer && (framesRead = sox_read(this->inputFile, buffer, 1024)))
             {
                 while(this->audioQueue->size() > 4096)
@@ -40,7 +40,6 @@ void SoxProducer::start(std::string filename, const DeviceInfo &outputDevice, so
                 this->audioQueue->push(buffer, framesRead);
             }
             this->audioQueue->signalEndOfStream();
-            g_message("Stop");
 
             delete[] buffer;
             buffer = nullptr;
