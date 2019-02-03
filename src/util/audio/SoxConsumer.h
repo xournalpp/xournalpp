@@ -12,6 +12,7 @@
 #pragma once
 
 #include <XournalType.h>
+#include <control/settings/Settings.h>
 
 #include "AudioQueue.h"
 #include "DeviceInfo.h"
@@ -24,24 +25,25 @@
 class SoxConsumer
 {
 public:
-	explicit SoxConsumer(AudioQueue *audioQueue);
-	~SoxConsumer();
+    explicit SoxConsumer(Settings *settings, AudioQueue *audioQueue);
+    ~SoxConsumer();
 
 public:
-	void start(string filename, double sampleRate, const DeviceInfo& inputDevice);
-	void join();
-	void stop();
+    void start(string filename, unsigned int inputChannels);
+    void join();
+    void stop();
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
 protected:
-	sox_signalinfo_t* inputSignal = nullptr;
-	sox_format_t* outputFile = nullptr;
-	bool stopConsumer = false;
+    sox_signalinfo_t* inputSignal = nullptr;
+    sox_format_t* outputFile = nullptr;
+    bool stopConsumer = false;
 
-	AudioQueue* audioQueue;
-	std::thread* consumerThread = nullptr;
+    Settings* settings = nullptr;
+    AudioQueue* audioQueue = nullptr;
+    std::thread* consumerThread = nullptr;
 };
 
 

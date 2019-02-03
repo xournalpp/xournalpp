@@ -13,6 +13,8 @@
 
 // No include needed, this is included after PageView.h
 
+#include <util/audio/AudioPlayer.h>
+
 class BaseSelectObject
 {
 public:
@@ -172,29 +174,18 @@ protected:
 
 			if (fn != lastfn)
 			{
-				if (fn != "")
+				if (!fn.empty())
 				{
 					lastfn = fn;
-					string command(
-							"vlc --qt-start-minimized " + view->settings->getAudioFolder() + "/" + fn + " --start-time="
-									+ std::to_string(ts) + " &>/dev/null &");
-					system(command.c_str());
+					AudioPlayer *audioPlayer = view->getXournal()->getControl()->getAudioController()->getAudioPlayer();
+					audioPlayer->start(Path::fromUri(view->settings->getAudioFolder()).str() + "/" + fn, (unsigned int) ts);
 				}
 			}
 			else
 			{
-				// curl is required, as also VLC, and other tools.
-				// May this can be replaced with some Socket calls, as HTTP GET is only a
-				// TCP Socket send
-				// e.g. https://stackoverflow.com/questions/28027937/cross-platform-sockets
-				// (Should be less tan 100 lines of code)
-				string psw("password");
-				string command(
-						"curl -s -u \"\":\"" + psw
-								+ "\" --url \"http://127.0.0.1:8080/requests/status.xml?command=seek&val="
-								+ std::to_string(ts) + "\" >/dev/null" + "&& curl -s -u \"\":\"" + psw
-								+ "\" --url \"http://127.0.0.1:8080/requests/status.xml?command=pl_play\" >/dev/null");
-				system(command.c_str());
+				AudioPlayer *audioPlayer = view->getXournal()->getControl()->getAudioController()->getAudioPlayer();
+				audioPlayer->abort();
+				audioPlayer->start(Path::fromUri(view->settings->getAudioFolder()).str() + "/" + fn, (unsigned int) ts);
 			}
 		}
 	}

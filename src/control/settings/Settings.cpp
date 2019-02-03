@@ -116,6 +116,10 @@ void Settings::loadDefault()
 
 	this->pageTemplate = "xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
 
+	this->audioSampleRate = 44100.0;
+	this->audioInputDevice = -1;
+	this->audioOutputDevice = -1;
+
 	inTransaction = false;
 }
 
@@ -443,6 +447,18 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 		{
 			this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
 		}
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "audioSampleRate") == 0)
+	{
+		this->audioSampleRate = g_ascii_strtod((const char *) value, NULL);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "audioInputDevice") == 0)
+	{
+		this->audioInputDevice = g_ascii_strtoll((const char *) value, NULL, 10);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "audioOutputDevice") == 0)
+	{
+		this->audioOutputDevice = g_ascii_strtoll((const char *) value, NULL, 10);
 	}
 
 	xmlFree(name);
@@ -787,6 +803,9 @@ void Settings::save()
 	WRITE_STRING_PROP(sizeUnit);
 
 	WRITE_STRING_PROP(audioFolder);
+	WRITE_INT_PROP(audioInputDevice);
+	WRITE_INT_PROP(audioOutputDevice);
+	WRITE_DOUBLE_PROP(audioSampleRate);
 
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
@@ -1744,6 +1763,64 @@ void Settings::setFont(const XojFont& font)
 	XOJ_CHECK_TYPE(Settings);
 
 	this->font = font;
+	save();
+}
+
+
+PaDeviceIndex Settings::getAudioInputDevice()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->audioInputDevice;
+}
+
+void Settings::setAudioInputDevice(PaDeviceIndex deviceIndex)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->audioInputDevice == deviceIndex)
+	{
+		return;
+	}
+	this->audioInputDevice = deviceIndex;
+	save();
+}
+
+PaDeviceIndex Settings::getAudioOutputDevice()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->audioOutputDevice;
+}
+
+void Settings::setAudioOutputDevice(PaDeviceIndex deviceIndex)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->audioOutputDevice == deviceIndex)
+	{
+		return;
+	}
+	this->audioOutputDevice = deviceIndex;
+	save();
+}
+
+double Settings::getAudioSampleRate()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->audioSampleRate;
+}
+
+void Settings::setAudioSampleRate(double sampleRate)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->audioSampleRate == sampleRate)
+	{
+		return;
+	}
+	this->audioSampleRate = sampleRate;
 	save();
 }
 

@@ -21,29 +21,28 @@
 class AudioQueue : protected std::deque<int>
 {
 public:
-	AudioQueue();
-	~AudioQueue();
+    AudioQueue();
+    ~AudioQueue();
 
-public:
-	void reset();
-	bool empty();
-	unsigned long size();
-	void push(int* samples, unsigned long nSamples);
-	std::vector<int> pop(unsigned long nSamples);
+    void reset();
+    bool empty();
+    unsigned long size();
+    void push(int* samples, unsigned long nSamples);
+    void pop(int* returnBuffer, int* bufferLength, unsigned long nSamples, int numChannels);
 
-	void signalEndOfStream();
-	void waitForNewElements(std::unique_lock<std::mutex>& lock);
-	bool hasStreamEnded();
-	std::mutex &syncMutex();
+    void signalEndOfStream();
+    void waitForNewElements(std::unique_lock<std::mutex>& lock);
+    bool hasStreamEnded();
+    std::mutex &syncMutex();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-	std::mutex queueLock;
-	std::condition_variable lockCondition;
-	bool streamEnd = false;
-	bool notified = false;
+    std::mutex queueLock;
+    std::condition_variable lockCondition;
+    bool streamEnd = false;
+    bool notified = false;
 };
 
 

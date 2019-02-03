@@ -5,6 +5,7 @@
 #include "Control.h"
 #include <Path.h>
 #include <util/audio/AudioRecorder.h>
+#include <util/audio/AudioPlayer.h>
 
 class AudioController
 {
@@ -19,14 +20,16 @@ public:
 	string getAudioFilename();
 	Path getAudioFolder();
 	gint getStartTime();
+	AudioRecorder* getAudioRecorder();
+	AudioPlayer* getAudioPlayer();
 
 protected:
-	bool recording = false;
 	string audioFilename;
 	gint sttime = 0;	
 	Settings* settings;
 	Control* control;
 	AudioRecorder* audioRecorder;
+	AudioPlayer* audioPlayer;
 
 private:
 	XOJ_TYPE_ATTRIB;

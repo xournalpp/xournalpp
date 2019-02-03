@@ -1829,7 +1829,7 @@ void Control::showSettings()
 	bool horizontalSpace = settings->getAddHorizontalSpace();
 	bool bigCursor = settings->isShowBigCursor();
 
-	SettingsDialog* dlg = new SettingsDialog(this->gladeSearchPath, settings);
+	SettingsDialog* dlg = new SettingsDialog(this->gladeSearchPath, settings, this);
 	dlg->show(GTK_WINDOW(this->win->getWindow()));
 
 	if (selectionColor != settings->getBorderColor())

@@ -1,83 +1,87 @@
 #include "SoxConsumer.h"
 
-SoxConsumer::SoxConsumer(AudioQueue* audioQueue)
- : audioQueue(audioQueue)
+SoxConsumer::SoxConsumer(Settings *settings, AudioQueue* audioQueue)
+ : settings(settings),
+   audioQueue(audioQueue)
 {
-	XOJ_INIT_TYPE(SoxConsumer);
+    XOJ_INIT_TYPE(SoxConsumer);
 
-	sox_init();
-	sox_format_init();
+    sox_init();
+    sox_format_init();
 }
 
 SoxConsumer::~SoxConsumer()
 {
-	XOJ_CHECK_TYPE(SoxConsumer);
+    XOJ_CHECK_TYPE(SoxConsumer);
 
-	sox_format_quit();
-	sox_quit();
+    sox_format_quit();
+    sox_quit();
 
-	XOJ_RELEASE_TYPE(SoxConsumer);
+    XOJ_RELEASE_TYPE(SoxConsumer);
 }
 
-void SoxConsumer::start(string filename, double sampleRate, const DeviceInfo& inputDevice)
+void SoxConsumer::start(string filename, unsigned int inputChannels)
 {
-	XOJ_CHECK_TYPE(SoxConsumer);
+    XOJ_CHECK_TYPE(SoxConsumer);
 
-	this->inputSignal = new sox_signalinfo_t();
-	this->inputSignal->rate = sampleRate;
-	this->inputSignal->length = SOX_UNSPEC;
-	this->inputSignal->channels = (unsigned int) inputDevice.getInputChannels();
-	this->inputSignal->mult = nullptr;
-	this->inputSignal->precision = 32;
+    this->inputSignal = new sox_signalinfo_t();
+    this->inputSignal->rate = this->settings->getAudioSampleRate();
+    this->inputSignal->length = SOX_UNSPEC;
+    this->inputSignal->channels = inputChannels;
+    this->inputSignal->mult = nullptr;
+    this->inputSignal->precision = 32;
 
-	this->outputFile = sox_open_write(filename.c_str(), this->inputSignal, nullptr, nullptr, nullptr, nullptr);
+    this->outputFile = sox_open_write(filename.c_str(), this->inputSignal, nullptr, nullptr, nullptr, nullptr);
 
-	if (this->outputFile == nullptr)
-	{
-		// TODO Stop recording in this case, so the users sees that recording is not running!
-		g_warning("SoxConsumer: output file \"%s\" could not be opened", filename.c_str());
-		return;
-	}
+    if (this->outputFile == nullptr)
+    {
+        // TODO Stop recording in this case, so the users sees that recording is not running!
+        g_warning("SoxConsumer: output file \"%s\" could not be opened", filename.c_str());
+        return;
+    }
 
-	this->consumerThread = new std::thread([&]
-		{
-			std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
-			while (!(this->stopConsumer || (audioQueue->hasStreamEnded() && audioQueue->empty())))
-			{
-				audioQueue->waitForNewElements(lock);
+    this->consumerThread = new std::thread([&]
+       {
+           std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
+           int buffer[64 * this->inputSignal->channels];
+           int bufferLength;
 
-				while (!audioQueue->empty())
-				{
-					std::vector<int> tmpBuffer = audioQueue->pop(64ul * this->inputSignal->channels);
+           while (!(this->stopConsumer || (audioQueue->hasStreamEnded() && audioQueue->empty())))
+           {
+               audioQueue->waitForNewElements(lock);
 
-					if (!tmpBuffer.empty())
-					{
-						sox_write(this->outputFile, tmpBuffer.data(), tmpBuffer.size());
-					}
-				}
-			}
+               while (!audioQueue->empty())
+               {
+                   audioQueue->pop(buffer, &bufferLength, 64ul * this->inputSignal->channels, this->inputSignal->channels);
 
-			sox_close(this->outputFile);
-		});
+                   if (bufferLength > 0)
+                   {
+                       sox_write(this->outputFile, buffer, (unsigned int) bufferLength);
+                   }
+               }
+           }
+
+           sox_close(this->outputFile);
+       });
 }
 
 void SoxConsumer::join()
 {
-	XOJ_CHECK_TYPE(SoxConsumer);
+    XOJ_CHECK_TYPE(SoxConsumer);
 
-	// Join the consumer thread to wait for completion
-	if (this->consumerThread && this->consumerThread->joinable())
-	{
-		this->consumerThread->join();
-	}
+    // Join the consumer thread to wait for completion
+    if (this->consumerThread && this->consumerThread->joinable())
+    {
+        this->consumerThread->join();
+    }
 }
 
 void SoxConsumer::stop()
 {
-	XOJ_CHECK_TYPE(SoxConsumer);
+    XOJ_CHECK_TYPE(SoxConsumer);
 
-	// Stop consumer
-	this->audioQueue->signalEndOfStream();
+    // Stop consumer
+    this->audioQueue->signalEndOfStream();
 
 	// Wait for consumer to finish
 	join();

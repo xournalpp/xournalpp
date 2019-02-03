@@ -7,9 +7,10 @@
 #include <Util.h>
 #include <StringUtils.h>
 
-SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings)
+SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control)
  : GladeGui(gladeSearchPath, "settings.glade", "settingsDialog"),
    settings(settings),
+   control(control),
    callib(zoomcallib_new()),
    dpi(72)
 {
@@ -269,6 +270,47 @@ void SettingsDialog::load()
 	int timeoutMs = 1000;
 	touch.getInt("timeout", timeoutMs);
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spTouchDisableTimeout")), timeoutMs / 1000.0);
+
+    this->audioInputDevices = this->control->getAudioController()->getAudioRecorder()->getInputDevices();
+    for (auto &audioInputDevice : this->audioInputDevices)
+	{
+    	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioInputDevice")), "", audioInputDevice.getDeviceName().c_str());
+	}
+    for (int i = 0; i < this->audioInputDevices.size(); i++)
+    {
+    	if (this->audioInputDevices[i].getSelected())
+		{
+			gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioInputDevice")), i);
+		}
+    }
+
+    this->audioOutputDevices = this->control->getAudioController()->getAudioPlayer()->getOutputDevices();
+	for (auto &audioOutputDevice : this->audioOutputDevices)
+	{
+		gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "", audioOutputDevice.getDeviceName().c_str());
+	}
+	for (int i = 0; i < this->audioOutputDevices.size(); i++)
+	{
+		if (this->audioOutputDevices[i].getSelected())
+		{
+			gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")), i);
+		}
+	}
+
+	switch((int)settings->getAudioSampleRate())
+	{
+		default:
+		case 44100:
+			gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 0);
+			break;
+		case 96100:
+			gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 1);
+			break;
+		case 192000:
+			gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 2);
+			break;
+	}
+
 }
 
 string SettingsDialog::updateHideString(string hidden, bool hideMenubar, bool hideSidebar)
@@ -424,6 +466,23 @@ void SettingsDialog::save()
 
 	settings->setSnapRotationTolerance((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapRotationTolerance"))));
 	settings->setSnapGridTolerance((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridTolerance"))));
+
+	settings->setAudioInputDevice((int) this->audioInputDevices[gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioInputDevice")))].getIndex());
+	settings->setAudioOutputDevice((int) this->audioOutputDevices[gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")))].getIndex());
+
+	switch (gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioSampleRate"))))
+	{
+		default:
+		case 0:
+			settings->setAudioSampleRate(44100.0);
+			break;
+		case 1:
+			settings->setAudioSampleRate(96100.0);
+			break;
+		case 2:
+			settings->setAudioSampleRate(192000.0);
+			break;
+	}
 
 	settings->transactionEnd();
 }
