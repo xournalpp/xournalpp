@@ -24,24 +24,25 @@
 class SoxProducer
 {
 public:
-    explicit SoxProducer(AudioQueue* audioQueue);
-    ~SoxProducer();
+	explicit SoxProducer(AudioQueue* audioQueue);
+	~SoxProducer();
 
 public:
-    void start(string filename, const DeviceInfo& outputDevice, sox_uint64_t timestamp);
-    sox_signalinfo_t* getSignalInformation();
-    void abort();
-    void stop();
+	void start(string filename, const DeviceInfo& outputDevice, sox_uint64_t timestamp);
+	sox_signalinfo_t* getSignalInformation();
+	void abort();
+	void stop();
 
 private:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
-protected:protected:
-    sox_format_t* inputFile = nullptr;
-    bool stopProducer = false;
+protected:
+protected:
+	sox_format_t* inputFile = nullptr;
+	bool stopProducer = false;
 
-    AudioQueue* audioQueue = nullptr;
-    std::thread* producerThread = nullptr;
+	AudioQueue* audioQueue = nullptr;
+	std::thread* producerThread = nullptr;
 };
 
 

@@ -17,7 +17,7 @@
 class DeviceInfo
 {
 public:
-	DeviceInfo(portaudio::Device *device, bool selected);
+	DeviceInfo(portaudio::Device* device, bool selected);
 	DeviceInfo(const DeviceInfo& other);
 	~DeviceInfo();
 
