@@ -19,23 +19,23 @@ class DeviceInfo
 public:
 	DeviceInfo(portaudio::Device *device, bool selected);
 	DeviceInfo(const DeviceInfo& other);
-    ~DeviceInfo();
+	~DeviceInfo();
 
 public:
-    const string& getDeviceName() const;
-    const PaDeviceIndex getIndex() const;
-    const bool getSelected() const;
-    const int getInputChannels() const;
-    const int getOutputChannels() const;
+	const string& getDeviceName() const;
+	const PaDeviceIndex getIndex() const;
+	const bool getSelected() const;
+	const int getInputChannels() const;
+	const int getOutputChannels() const;
 
 private:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
-    const std::string deviceName;
-    const PaDeviceIndex index;
-    const bool selected;
-    const int inputChannels;
-    const int outputChannels;
+	const std::string deviceName;
+	const PaDeviceIndex index;
+	const bool selected;
+	const int inputChannels;
+	const int outputChannels;
 };
 
 

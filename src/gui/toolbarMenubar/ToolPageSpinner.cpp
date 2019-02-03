@@ -73,8 +73,7 @@ GtkToolItem* ToolPageSpinner::newItem()
 	gtk_box_pack_start(GTK_BOX(hbox), pageLabel, false, false, 7);
 
 	gtk_widget_set_valign(spinner, GTK_ALIGN_BASELINE);
-	gtk_box_pack_start(GTK_BOX(hbox), spinner, false, false,
-	                   0);
+	gtk_box_pack_start(GTK_BOX(hbox), spinner, false, false, 0);
 
 	this->lbPageNo = gtk_label_new("");
 	gtk_widget_set_valign(this->lbPageNo, GTK_ALIGN_BASELINE);

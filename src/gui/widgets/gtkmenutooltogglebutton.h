@@ -63,19 +63,14 @@ struct _GtkMenuToolToggleButtonClass
 };
 
 GType gtk_menu_tool_toggle_button_get_type(void) G_GNUC_CONST;
-GtkToolItem* gtk_menu_tool_toggle_button_new(GtkWidget* icon_widget,
-                                             const gchar* label);
+GtkToolItem* gtk_menu_tool_toggle_button_new(GtkWidget* icon_widget, const gchar* label);
 GtkToolItem* gtk_menu_tool_toggle_button_new_from_stock(const gchar* stock_id);
 
-void gtk_menu_tool_toggle_button_set_menu(GtkMenuToolToggleButton* button,
-                                          GtkWidget* menu);
-GtkWidget* gtk_menu_tool_toggle_button_get_menu(GtkMenuToolToggleButton*
-                                                button);
+void gtk_menu_tool_toggle_button_set_menu(GtkMenuToolToggleButton* button, GtkWidget* menu);
+GtkWidget* gtk_menu_tool_toggle_button_get_menu(GtkMenuToolToggleButton* button);
 
-void gtk_menu_tool_toggle_button_set_arrow_tooltip_text(
-    GtkMenuToolToggleButton* button, const gchar* text);
-void gtk_menu_tool_toggle_button_set_arrow_tooltip_markup(
-    GtkMenuToolToggleButton* button, const gchar* markup);
+void gtk_menu_tool_toggle_button_set_arrow_tooltip_text(GtkMenuToolToggleButton* button, const gchar* text);
+void gtk_menu_tool_toggle_button_set_arrow_tooltip_markup(GtkMenuToolToggleButton* button, const gchar* markup);
 
 G_END_DECLS
 

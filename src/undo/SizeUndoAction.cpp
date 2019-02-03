@@ -10,7 +10,7 @@ class SizeUndoActionEntry
 {
 public:
 	SizeUndoActionEntry(Stroke* s, double orignalWidth, double newWidth, vector<double> originalPressure,
-					    vector<double> newPressure, int pressureCount)
+						vector<double> newPressure, int pressureCount)
 	{
 		XOJ_INIT_TYPE(SizeUndoActionEntry);
 

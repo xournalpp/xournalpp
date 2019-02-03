@@ -592,10 +592,9 @@ void gtk_menu_tool_toggle_button_set_arrow_tooltip_text(GtkMenuToolToggleButton*
  *
  * Since: 2.12
  **/
-void gtk_menu_tool_toggle_button_set_arrow_tooltip_markup(
-    GtkMenuToolToggleButton* button, const gchar* markup)
+void gtk_menu_tool_toggle_button_set_arrow_tooltip_markup(GtkMenuToolToggleButton* button, const gchar* markup)
 {
-	g_return_if_fail (GTK_IS_MENU_TOOL_TOGGLE_BUTTON (button));
+	g_return_if_fail(GTK_IS_MENU_TOOL_TOGGLE_BUTTON (button));
 
 	gtk_widget_set_tooltip_markup(button->priv->arrow_button, markup);
 }

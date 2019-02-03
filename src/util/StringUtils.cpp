@@ -67,19 +67,19 @@ const std::string TRIM_CHARS = "\t\n\v\f\r ";
 
 std::string StringUtils::ltrim(std::string str)
 {
-    str.erase(0, str.find_first_not_of(TRIM_CHARS));
-    return str;
+	str.erase(0, str.find_first_not_of(TRIM_CHARS));
+	return str;
 }
 
 std::string StringUtils::rtrim(std::string str)
 {
-    str.erase(str.find_last_not_of(TRIM_CHARS) + 1);
-    return str;
+	str.erase(str.find_last_not_of(TRIM_CHARS) + 1);
+	return str;
 }
 
 std::string StringUtils::trim(std::string str)
 {
-    return ltrim(rtrim(str));
+	return ltrim(rtrim(str));
 }
 
 bool StringUtils::iequals(string a, string b)
