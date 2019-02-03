@@ -35,7 +35,7 @@ void SoxConsumer::start(string filename, double sampleRate, const DeviceInfo& in
 	if (this->outputFile == nullptr)
 	{
 		// TODO Stop recording in this case, so the users sees that recording is not running!
-		g_error("SoxConsumer: output file «%s» could not be opened", filename.c_str());
+		g_warning("SoxConsumer: output file \"%s\" could not be opened", filename.c_str());
 		return;
 	}
 

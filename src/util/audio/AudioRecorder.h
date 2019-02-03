@@ -26,7 +26,7 @@ public:
 	~AudioRecorder();
 
 public:
-	void start(std::string filename);
+	void start(string filename);
 	void stop();
 
 private:
