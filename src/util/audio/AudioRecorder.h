@@ -29,8 +29,7 @@ public:
     void start(string filename);
     void stop();
     bool isRecording();
-    std::vector<DeviceInfo> getInputDevices();
-    void setInputDevice(DeviceInfo deviceInfo);
+    vector<DeviceInfo> getInputDevices();
 
 private:
 	XOJ_TYPE_ATTRIB;

@@ -31,7 +31,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	const std::string deviceName;
+	const string deviceName;
 	const PaDeviceIndex index;
 	const bool selected;
 	const int inputChannels;

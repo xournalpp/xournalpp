@@ -20,6 +20,9 @@ AudioController::~AudioController()
 	delete this->audioRecorder;
 	this->audioRecorder = nullptr;
 
+	delete this->audioPlayer;
+	this->audioPlayer = nullptr;
+
 	XOJ_RELEASE_TYPE(AudioController);
 }
 

@@ -80,6 +80,7 @@ void PortAudioConsumer::startPlaying(double sampleRate, unsigned int channels)
 
     if (device->maxOutputChannels() < channels)
     {
+    	this->audioQueue->signalEndOfStream();
         g_warning("Output device has not enough channels to play audio file. (Requires at least 2 channels)");
         return;
     }
@@ -88,14 +89,16 @@ void PortAudioConsumer::startPlaying(double sampleRate, unsigned int channels)
     portaudio::DirectionSpecificStreamParameters outParams(*device, channels, portaudio::INT32, true, device->defaultLowOutputLatency(), nullptr);
     portaudio::StreamParameters params(portaudio::DirectionSpecificStreamParameters::null(), outParams, sampleRate, this->framesPerBuffer, paNoFlag);
 
-    // Specify the callback used for buffering the recorded data
+    // Specify the buffer used for buffering the recorded data
     this->playbackBuffer = new int[this->framesPerBuffer * this->outputChannels];
+
     try
     {
         this->outputStream = new portaudio::MemFunCallbackStream<PortAudioConsumer>(params, *this, &PortAudioConsumer::playCallback);
     }
     catch (portaudio::PaException &e)
     {
+		this->audioQueue->signalEndOfStream();
         g_warning("PortAudioConsumer: Unable to open stream to device");
         return;
     }
@@ -106,6 +109,7 @@ void PortAudioConsumer::startPlaying(double sampleRate, unsigned int channels)
     }
     catch (portaudio::PaException &e)
     {
+		this->audioQueue->signalEndOfStream();
         g_warning("PortAudioConsumer: Unable to start stream");
         return;
     }
