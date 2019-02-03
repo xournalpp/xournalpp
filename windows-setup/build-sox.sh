@@ -3,7 +3,7 @@
 # go to script directory
 cd "${0%/*}"
 
-# Generation does not work...
+# Generation does not work... (really buggy with CMake, but does not work at all with automake on MingW)
 # So do this manually...
 ./sox-pc.sh > /mingw64/lib/pkgconfig/sox.pc
 
