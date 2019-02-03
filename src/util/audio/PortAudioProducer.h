@@ -34,7 +34,7 @@ public:
 
 	bool isRecording();
 
-	void startRecording();
+	bool startRecording();
 
 	int recordCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer, const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags);
 

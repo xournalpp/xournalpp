@@ -29,7 +29,7 @@ public:
 	~SoxConsumer();
 
 public:
-	void start(string filename, unsigned int inputChannels);
+	bool start(string filename, unsigned int inputChannels);
 	void join();
 	void stop();
 

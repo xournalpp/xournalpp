@@ -60,6 +60,7 @@ void AudioController::recStartStop(bool rec)
 		g_message("Start recording");
 
 		this->getAudioRecorder()->start(getAudioFolder().str() + "/" + data);
+		// TODO use the return value of the previous call to determine which state the recording button should have
 	}
 	else if (this->isRecording())
 	{

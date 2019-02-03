@@ -28,15 +28,17 @@ AudioRecorder::~AudioRecorder()
 	XOJ_RELEASE_TYPE(AudioRecorder);
 }
 
-void AudioRecorder::start(string filename)
+bool AudioRecorder::start(string filename)
 {
 	XOJ_CHECK_TYPE(AudioRecorder);
 
 	// Start the consumer for writing the data
-	this->soxConsumer->start(std::move(filename), static_cast<unsigned int>(this->portAudioProducer->getSelectedInputDevice().getInputChannels()));
+	bool status = this->soxConsumer->start(std::move(filename), static_cast<unsigned int>(this->portAudioProducer->getSelectedInputDevice().getInputChannels()));
 
 	// Start recording
-	this->portAudioProducer->startRecording();
+	status &= this->portAudioProducer->startRecording();
+
+	return status;
 }
 
 void AudioRecorder::stop()

@@ -61,14 +61,14 @@ bool PortAudioProducer::isRecording()
 	return this->inputStream != nullptr && this->inputStream->isActive();
 }
 
-void PortAudioProducer::startRecording()
+bool PortAudioProducer::startRecording()
 {
 	XOJ_CHECK_TYPE(PortAudioProducer);
 
 	// Check if there already is a recording
 	if (this->inputStream != nullptr)
 	{
-		return;
+		return false;
 	}
 
 	// Get the device information of our input device
@@ -80,7 +80,7 @@ void PortAudioProducer::startRecording()
 	catch (portaudio::PaException& e)
 	{
 		g_message("PortAudioProducer: Unable to find selected input device");
-		return;
+		return false;
 	}
 
 	// Restrict recording channels to 2 as playback devices should have 2 channels at least
@@ -96,7 +96,7 @@ void PortAudioProducer::startRecording()
 	catch (portaudio::PaException& e)
 	{
 		g_message("PortAudioProducer: Unable to open stream");
-		return;
+		return false;
 	}
 
 	// Start the recording
@@ -107,8 +107,10 @@ void PortAudioProducer::startRecording()
 	catch (portaudio::PaException& e)
 	{
 		g_message("PortAudioProducer: Unable to start stream");
-		return;
+		return false;
 	}
+
+	return true;
 }
 
 int PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer,
