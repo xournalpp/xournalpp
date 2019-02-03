@@ -27,6 +27,11 @@ public:
     void start(std::string filename);
     void stop();
 
+    bool isRecording();
+
+    std::vector<DeviceInfo> getInputDevices();
+    void setInputDevice(DeviceInfo deviceInfo);
+
 protected:
     Settings* settings;
 
@@ -34,7 +39,6 @@ protected:
     PortAudioProducer *portAudioProducer;
     SoxConsumer *soxConsumer;
 
-private:
     XOJ_TYPE_ATTRIB;
 };
 

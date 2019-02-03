@@ -33,8 +33,6 @@ public:
 
     const DeviceInfo getSelectedInputDevice();
 
-    void setInputDevice(DeviceInfo deviceInfo);
-
     bool isRecording();
 
     void startRecording();
@@ -43,7 +41,6 @@ public:
 
     void stopRecording();
 protected:
-    double sampleRate = 44100.0;
     const unsigned long framesPerBuffer = 64;
 
     portaudio::AutoSystem autoSys;
@@ -51,8 +48,7 @@ protected:
     Settings *settings;
     AudioQueue *audioQueue;
 
-    PaDeviceIndex selectedInputDevice;
-    unsigned int inputChannels;
+    int inputChannels;
 
     portaudio::MemFunCallbackStream<PortAudioProducer> *inputStream = nullptr;
 private:

@@ -1,6 +1,6 @@
 #include "SoxConsumer.h"
 
-SoxConsumer::SoxConsumer(AudioQueue *audioQueue) : audioQueue(audioQueue)
+SoxConsumer::SoxConsumer(Settings *settings, AudioQueue *audioQueue) : settings(settings), audioQueue(audioQueue)
 {
     XOJ_INIT_TYPE(SoxConsumer);
 
@@ -18,14 +18,14 @@ SoxConsumer::~SoxConsumer()
     XOJ_RELEASE_TYPE(SoxConsumer);
 }
 
-void SoxConsumer::start(std::string filename, double sampleRate, const DeviceInfo &inputDevice)
+void SoxConsumer::start(std::string filename, unsigned int inputChannels)
 {
     XOJ_CHECK_TYPE(SoxConsumer);
 
     this->inputSignal = new sox_signalinfo_t;
-    this->inputSignal->rate = sampleRate;
+    this->inputSignal->rate = this->settings->getAudioSampleRate();
     this->inputSignal->length = SOX_UNSPEC;
-    this->inputSignal->channels = (unsigned int) inputDevice.getInputChannels();
+    this->inputSignal->channels = inputChannels;
     this->inputSignal->mult = nullptr;
     this->inputSignal->precision = 32;
 
@@ -37,6 +37,9 @@ void SoxConsumer::start(std::string filename, double sampleRate, const DeviceInf
         return;
     }
 
+    int buffer[64 * this->inputSignal->channels];
+    int bufferLength;
+
     this->consumerThread = new std::thread([&]
        {
            std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
@@ -46,11 +49,11 @@ void SoxConsumer::start(std::string filename, double sampleRate, const DeviceInf
 
                while (!audioQueue->empty())
                {
-                   std::vector<int> tmpBuffer  = audioQueue->pop(64ul * this->inputSignal->channels);
+                   audioQueue->pop(buffer, &bufferLength, 64ul * this->inputSignal->channels, this->inputSignal->channels);
 
-                   if (!tmpBuffer.empty())
+                   if (bufferLength > 0)
                    {
-                       sox_write(this->outputFile, tmpBuffer.data(), tmpBuffer.size());
+                       sox_write(this->outputFile, buffer, (unsigned int) bufferLength);
                    }
                }
            }

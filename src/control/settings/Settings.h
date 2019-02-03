@@ -19,6 +19,7 @@
 #include <config-dev.h>
 #include <libxml/xmlreader.h>
 #include <map>
+#include <portaudio.h>
 
 enum AttributeType
 {
@@ -293,6 +294,15 @@ public:
 
 	string getAudioFolder();
 	void setAudioFolder(string audioFolder);
+
+	PaDeviceIndex getAudioInputDevice();
+	void setAudioInputDevice(PaDeviceIndex deviceIndex);
+
+	PaDeviceIndex getAudioOutputDevice();
+	void setAudioOutputDevice(PaDeviceIndex deviceIndex);
+
+	double getAudioSampleRate();
+	void setAudioSampleRate(double sampleRate);
 
 	/**
 	 * Get name, e.g. "cm"
@@ -582,6 +592,10 @@ private:
 	 * Do not use GTK Scrolling / Touch handling
 	 */
 	bool touchWorkaround;
+
+	PaDeviceIndex audioInputDevice;
+	PaDeviceIndex audioOutputDevice;
+	double audioSampleRate;
 
 
 	/**

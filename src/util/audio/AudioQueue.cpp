@@ -40,7 +40,7 @@ void AudioQueue::push(int *samples, unsigned long nSamples)
 {
     XOJ_CHECK_TYPE(AudioQueue);
 
-    for (long i = nSamples - 1; i >= 0; i--)
+    for (long i = 0; i < nSamples; i++)
     {
         this->push_front(samples[i]);
     }
@@ -49,19 +49,17 @@ void AudioQueue::push(int *samples, unsigned long nSamples)
     this->lockCondition.notify_one();
 }
 
-std::vector<int> AudioQueue::pop(unsigned long nSamples)
+void AudioQueue::pop(int *returnBuffer, int *bufferLength, unsigned long nSamples, int numChannels)
 {
     XOJ_CHECK_TYPE(AudioQueue);
 
-    nSamples = std::min(nSamples, this->size());
-    std::vector<int> buffer(nSamples);
-    for (long i = nSamples - 1; i >= 0; i--)
+    *bufferLength = std::min(nSamples, this->size() - this->size() % numChannels);
+    for (long i = 0; i < *bufferLength; i++)
     {
-        buffer[i] = this->back();
+        returnBuffer[i] = this->back();
         this->pop_back();
     }
     this->notified = false;
-    return buffer;
 }
 
 void AudioQueue::signalEndOfStream()

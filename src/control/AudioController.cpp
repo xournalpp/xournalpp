@@ -10,6 +10,7 @@ AudioController::AudioController(Settings* settings, Control* control)
 	this->settings = settings;
 	this->control = control;
 	this->audioRecorder = new AudioRecorder(settings);
+	this->audioPlayer = new AudioPlayer(settings);
 }
 
 AudioController::~AudioController()
@@ -26,7 +27,7 @@ bool AudioController::isRecording()
 {
 	XOJ_CHECK_TYPE(AudioController);
 
-	return this->recording;
+	return this->audioRecorder->isRecording();
 }
 
 void AudioController::recStartStop(bool rec)
@@ -40,7 +41,6 @@ void AudioController::recStartStop(bool rec)
 			return;
 		}
 
-		this->recording = true;
 		sttime = (g_get_monotonic_time() / 1000000);
 
 		char buffer[50];
@@ -56,11 +56,10 @@ void AudioController::recStartStop(bool rec)
 
 		g_message("Start recording");
 
-		this->audioRecorder->start(getAudioFolder().str() + "/" + data);
+		this->getAudioRecorder()->start(getAudioFolder().str() + "/" + data);
 	}
-	else if (this->recording)
+	else if (this->isRecording())
 	{
-		this->recording = false;
 		audioFilename = "";
 		sttime = 0;
 
@@ -74,7 +73,7 @@ void AudioController::recToggle()
 {
 	XOJ_CHECK_TYPE(AudioController);
 
-	if (!this->recording)
+	if (!this->isRecording())
 	{
 		recStartStop(true);
 	}
@@ -115,4 +114,14 @@ gint AudioController::getStartTime()
 	XOJ_CHECK_TYPE(AudioController);
 
 	return this->sttime;
+}
+
+AudioRecorder* AudioController::getAudioRecorder()
+{
+	return this->audioRecorder;
+}
+
+AudioPlayer* AudioController::getAudioPlayer()
+{
+	return this->audioPlayer;
 }

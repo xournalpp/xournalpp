@@ -28,7 +28,7 @@ public:
     bool empty();
     unsigned long size();
     void push(int *samples, unsigned long nSamples);
-    std::vector<int> pop(unsigned long nSamples);
+    void pop(int *returnBuffer, int *bufferLength, unsigned long nSamples, int numChannels);
 
     void signalEndOfStream();
     void waitForNewElements(std::unique_lock<std::mutex> &lock);

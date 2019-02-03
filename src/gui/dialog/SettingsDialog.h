@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <util/audio/DeviceInfo.h>
+#include <control/Control.h>
 #include "control/settings/Settings.h"
 #include "gui/GladeGui.h"
 
@@ -19,7 +21,7 @@ class ButtonConfigGui;
 class SettingsDialog : public GladeGui
 {
 public:
-	SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings);
+	SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control);
 	virtual ~SettingsDialog();
 
 public:
@@ -48,8 +50,12 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	Settings* settings;
+	Control* control;
 	GtkWidget* callib;
 	int dpi;
+	std::vector<DeviceInfo> audioInputDevices;
+	std::vector<DeviceInfo> audioOutputDevices;
+
 
 	std::vector<ButtonConfigGui*> buttonConfigs;
 };

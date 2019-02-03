@@ -8,7 +8,7 @@ AudioRecorder::AudioRecorder(Settings *settings) : settings(settings)
 
     this->audioQueue = new AudioQueue();
     this->portAudioProducer = new PortAudioProducer(settings, this->audioQueue);
-    this->soxConsumer = new SoxConsumer(this->audioQueue);
+    this->soxConsumer = new SoxConsumer(settings, this->audioQueue);
 }
 
 AudioRecorder::~AudioRecorder()
@@ -32,8 +32,7 @@ void AudioRecorder::start(std::string filename)
     XOJ_CHECK_TYPE(AudioRecorder);
 
     // Start the consumer for writing the data
-    // TODO get sample rate from settings
-    this->soxConsumer->start(std::move(filename), 44100.0, this->portAudioProducer->getSelectedInputDevice());
+    this->soxConsumer->start(std::move(filename), static_cast<unsigned int>(this->portAudioProducer->getSelectedInputDevice().getInputChannels()));
 
     // Start recording
     this->portAudioProducer->startRecording();
@@ -51,4 +50,16 @@ void AudioRecorder::stop()
 
     // Reset the queue for the next recording
     this->audioQueue->reset();
+}
+
+bool AudioRecorder::isRecording()
+{
+    return this->portAudioProducer->isRecording();
+}
+
+std::vector<DeviceInfo> AudioRecorder::getInputDevices()
+{
+    std::list<DeviceInfo> deviceList = this->portAudioProducer->getInputDevices();
+    return vector<DeviceInfo>{std::make_move_iterator(std::begin(deviceList)),
+                              std::make_move_iterator(std::end(deviceList))};
 }
