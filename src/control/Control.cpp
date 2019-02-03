@@ -1,5 +1,6 @@
 #include "Control.h"
 
+#include "FullscreenHandler.h"
 #include "PrintHandler.h"
 #include "LatexController.h"
 #include "layer/LayerController.h"
@@ -83,7 +84,6 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	this->lastAction = ACTION_NONE;
 	this->lastGroup = GROUP_NOGROUP;
 	this->lastEnabled = false;
-	this->fullscreen = false;
 
 	Path name = Path(g_get_home_dir());
 	name /= CONFIG_DIR;
@@ -105,8 +105,6 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 
 	this->scheduler = new XournalScheduler();
 
-	this->hiddenFullscreenWidgets = NULL;
-	this->sidebarHidden = false;
 	this->autosaveTimeout = 0;
 
 	this->statusbar = NULL;
@@ -138,6 +136,8 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 
 	this->layerController = new LayerController(this);
 	this->layerController->registerListener(this);
+
+	this->fullscreenHandler = new FullscreenHandler(settings);
 }
 
 Control::~Control()
@@ -194,6 +194,8 @@ Control::~Control()
 	this->pageBackgroundChangeController = NULL;
 	delete this->layerController;
 	this->layerController = NULL;
+	delete this->fullscreenHandler;
+	this->fullscreenHandler = NULL;
 
 	XOJ_RELEASE_TYPE(Control);
 }
@@ -1027,38 +1029,7 @@ void Control::customizeToolbars()
 			ToolbarData* data = new ToolbarData(*this->win->getSelectedToolbar());
 
 			ToolbarModel* model = this->win->getToolbarModel();
-
-			for (int i = 0; i < 100; i++)
-			{
-				string id = data->getId() + " Copy";
-
-				if (i != 0)
-				{
-					id += " ";
-					id += std::to_string(i);
-				}
-
-				if (!model->existsId(id))
-				{
-					if (i != 0)
-					{
-						string filename = data->getName();
-						filename += " ";
-						filename += _("Copy");
-						filename += " ";
-						filename += std::to_string(i);
-
-						data->setName(filename);
-					}
-					else
-					{
-						data->setName(data->getName() + " " + _("Copy"));
-					}
-					data->setId(id);
-					break;
-				}
-			}
-
+			model->initCopyNameId(data);
 			model->add(data);
 			this->win->toolbarSelected(data);
 			this->win->updateToolbarMenu();
@@ -1176,59 +1147,9 @@ void Control::enableFullscreen(bool enabled, bool presentation)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	if (enabled)
-	{
-		gtk_window_fullscreen((GtkWindow*) *win);
-
-		string str = presentation ? settings->getPresentationHideElements() : settings->getFullscreenHideElements();
-
-		for (string s : StringUtils::split(str, ','))
-		{
-			if ("sidebarContents" == s && settings->isSidebarVisible())
-			{
-				this->sidebarHidden = true;
-				win->setSidebarVisible(false);
-			}
-			else
-			{
-				GtkWidget* w = win->get(s.c_str());
-				if (w == NULL)
-				{
-					g_warning("Fullscreen: Try to hide \"%s\", but coulden't find it. Wrong entry in ~/"
-							  CONFIG_DIR "/" SETTINGS_XML_FILE "?", s.c_str());
-				}
-				else
-				{
-					if (gtk_widget_get_visible(w))
-					{
-						gtk_widget_hide(w);
-						this->hiddenFullscreenWidgets = g_list_append(this->hiddenFullscreenWidgets, w);
-					}
-				}
-			}
-		}
-	}
-	else
-	{
-		gtk_window_unfullscreen((GtkWindow*) *win);
-
-		for (GList* l = this->hiddenFullscreenWidgets; l != NULL; l = l->next)
-		{
-			gtk_widget_show(GTK_WIDGET(l->data));
-		}
-
-		if (this->sidebarHidden)
-		{
-			this->sidebarHidden = false;
-			win->setSidebarVisible(true);
-		}
-
-		g_list_free(this->hiddenFullscreenWidgets);
-		this->hiddenFullscreenWidgets = NULL;
-	}
+	fullscreenHandler->enableFullscreen(win, enabled, presentation);
 
 	fireActionSelected(GROUP_FULLSCREEN, enabled ? ACTION_FULLSCREEN : ACTION_NONE);
-	this->fullscreen = enabled;
 }
 
 void Control::disableSidebarTmp(bool disabled)
@@ -2207,8 +2128,8 @@ bool Control::loadMetadataCallback(MetadataCallbackData* data)
 		return false;
 	}
 
-	data->ctrl->scrollHandler->scrollToPage(data->md.page);
 	data->ctrl->zoom->setZoom(data->md.zoom);
+	data->ctrl->scrollHandler->scrollToPage(data->md.page);
 
 	delete data;
 
@@ -3133,7 +3054,7 @@ GtkWindow* Control::getGtkWindow()
 bool Control::isFullscreen()
 {
 	XOJ_CHECK_TYPE(Control);
-	return this->fullscreen;
+	return this->fullscreenHandler->isFullscreen();
 }
 
 void Control::rotationSnappingToggle()

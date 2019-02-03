@@ -3,7 +3,8 @@
 #include <i18n.h>
 
 
-DeviceListHelper::DeviceListHelper()
+DeviceListHelper::DeviceListHelper(bool ignoreTouchDevices)
+ : ignoreTouchDevices(ignoreTouchDevices)
 {
 	// For never GTK versions, see example here:
 	// https://cvs.gnucash.org/docs/MASTER/gnc-cell-renderer-popup_8c_source.html
@@ -30,6 +31,11 @@ void DeviceListHelper::addDevicesToList(GList* devList)
 		if (GDK_SOURCE_KEYBOARD == gdk_device_get_source(dev))
 		{
 			// Skip keyboard
+			devList = devList->next;
+			continue;
+		}
+		if (ignoreTouchDevices && GDK_SOURCE_TOUCHSCREEN == gdk_device_get_source(dev))
+		{
 			devList = devList->next;
 			continue;
 		}

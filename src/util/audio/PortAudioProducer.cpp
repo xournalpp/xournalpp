@@ -1,6 +1,9 @@
 #include "PortAudioProducer.h"
 
-PortAudioProducer::PortAudioProducer(Settings *settings, AudioQueue *audioQueue) : sys(portaudio::System::instance()), settings(settings), audioQueue(audioQueue)
+PortAudioProducer::PortAudioProducer(Settings *settings, AudioQueue *audioQueue)
+ : sys(portaudio::System::instance()),
+   settings(settings),
+   audioQueue(audioQueue)
 {
     XOJ_INIT_TYPE(PortAudioProducer);
 }
@@ -38,6 +41,8 @@ std::list<DeviceInfo> PortAudioProducer::getInputDevices()
 
 const DeviceInfo PortAudioProducer::getSelectedInputDevice()
 {
+    XOJ_CHECK_TYPE(PortAudioProducer);
+
     try
     {
         return DeviceInfo(&sys.deviceByIndex(this->settings->getAudioInputDevice()), true);
@@ -106,8 +111,8 @@ void PortAudioProducer::startRecording()
     }
 }
 
-int PortAudioProducer::recordCallback(const void *inputBuffer, void *outputBuffer, unsigned long framesPerBuffer, const PaStreamCallbackTimeInfo *timeInfo,
-                                      PaStreamCallbackFlags statusFlags)
+int PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer,
+		const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags)
 {
     XOJ_CHECK_TYPE(PortAudioProducer);
     std::unique_lock<std::mutex> lock(this->audioQueue->syncMutex());

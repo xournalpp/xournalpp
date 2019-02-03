@@ -70,6 +70,9 @@ public:
 	 */
 	virtual void onButtonPressEvent(const PositionInputData& pos) = 0;
 
+	/**
+	 * @return Current editing stroke
+	 */
 	Stroke* getStroke();
 
 	/**

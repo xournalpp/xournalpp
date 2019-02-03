@@ -2,7 +2,8 @@
 
 #include <Rectangle.h>
 
-UndoAction::UndoAction(const char* className) : className(className)
+UndoAction::UndoAction(const char* className)
+ : className(className)
 {
 	XOJ_INIT_TYPE(UndoAction);
 

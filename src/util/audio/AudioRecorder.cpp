@@ -2,7 +2,8 @@
 
 #include "AudioRecorder.h"
 
-AudioRecorder::AudioRecorder(Settings *settings) : settings(settings)
+AudioRecorder::AudioRecorder(Settings* settings)
+ : settings(settings)
 {
     XOJ_INIT_TYPE(AudioRecorder);
 
@@ -27,7 +28,7 @@ AudioRecorder::~AudioRecorder()
     XOJ_RELEASE_TYPE(AudioRecorder);
 }
 
-void AudioRecorder::start(std::string filename)
+void AudioRecorder::start(string filename)
 {
     XOJ_CHECK_TYPE(AudioRecorder);
 
@@ -54,11 +55,15 @@ void AudioRecorder::stop()
 
 bool AudioRecorder::isRecording()
 {
+    XOJ_CHECK_TYPE(AudioRecorder);
+
     return this->portAudioProducer->isRecording();
 }
 
 std::vector<DeviceInfo> AudioRecorder::getInputDevices()
 {
+    XOJ_CHECK_TYPE(AudioRecorder);
+
     std::list<DeviceInfo> deviceList = this->portAudioProducer->getInputDevices();
     return vector<DeviceInfo>{std::make_move_iterator(std::begin(deviceList)),
                               std::make_move_iterator(std::end(deviceList))};

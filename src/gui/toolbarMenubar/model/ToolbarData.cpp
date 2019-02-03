@@ -21,6 +21,21 @@ ToolbarData::ToolbarData(const ToolbarData& data)
 	this->predefined = false;
 }
 
+void ToolbarData::operator=(const ToolbarData& other)
+{
+	XOJ_CHECK_TYPE(ToolbarData);
+
+	this->id = other.id;
+	this->name = other.name;
+	this->predefined = other.predefined;
+
+	contents.clear();
+	for (const ToolbarEntry* e : other.contents)
+	{
+		contents.push_back(new ToolbarEntry(*e));
+	}
+}
+
 ToolbarData::~ToolbarData()
 {
 	XOJ_CHECK_TYPE(ToolbarData);

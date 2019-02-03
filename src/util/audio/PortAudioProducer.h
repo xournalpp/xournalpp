@@ -25,9 +25,8 @@
 class PortAudioProducer
 {
 public:
-    explicit PortAudioProducer(Settings *settings, AudioQueue *audioQueue);
-
-    ~PortAudioProducer();
+	explicit PortAudioProducer(Settings *settings, AudioQueue *audioQueue);
+	~PortAudioProducer();
 
     std::list<DeviceInfo> getInputDevices();
 
@@ -37,22 +36,24 @@ public:
 
     void startRecording();
 
-    int recordCallback(const void *inputBuffer, void *outputBuffer, unsigned long framesPerBuffer, const PaStreamCallbackTimeInfo * timeInfo, PaStreamCallbackFlags statusFlags);
+    int recordCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer, const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags);
 
     void stopRecording();
+
+private:
+    XOJ_TYPE_ATTRIB;
+
 protected:
     const unsigned long framesPerBuffer = 64;
 
     portaudio::AutoSystem autoSys;
-    portaudio::System &sys;
-    Settings *settings;
-    AudioQueue *audioQueue;
+    portaudio::System& sys;
+    Settings* settings;
+    AudioQueue* audioQueue;
 
-    int inputChannels;
+    int inputChannels = 0;
 
-    portaudio::MemFunCallbackStream<PortAudioProducer> *inputStream = nullptr;
-private:
-    XOJ_TYPE_ATTRIB;
+    portaudio::MemFunCallbackStream<PortAudioProducer>* inputStream = nullptr;
 };
 
 

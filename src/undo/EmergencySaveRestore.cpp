@@ -2,7 +2,8 @@
 
 #include <i18n.h>
 
-EmergencySaveRestore::EmergencySaveRestore() : UndoAction("EmergencySaveRestore")
+EmergencySaveRestore::EmergencySaveRestore()
+ : UndoAction("EmergencySaveRestore")
 {
 	XOJ_INIT_TYPE(EmergencySaveRestore);
 }

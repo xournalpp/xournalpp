@@ -50,7 +50,7 @@ Multiple predefined and fully customizeable Toolbar.
 
 
 ## How to use audio record and playback feature:
-
+**Currently rewritten to portaudio, this manual needs to be updated when finished!**
 - Install `vlc` and make sure `curl` and `arecord` are present on your system 
 - Under `vlc` settings: 
 - - enable `http interface` (see [this](https://github.com/azrafe7/vlc4youtube/blob/master/instructions/how-to-enable-vlc-web-interface.md) ) with blank username and password "password"

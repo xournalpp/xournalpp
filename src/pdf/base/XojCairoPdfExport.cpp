@@ -14,7 +14,7 @@ XojCairoPdfExport::XojCairoPdfExport(Document* doc, ProgressListener* progressLi
    cr(NULL),
    noBackgroundExport(false)
 {
-    XOJ_INIT_TYPE(XojCairoPdfExport);
+	XOJ_INIT_TYPE(XojCairoPdfExport);
 }
 
 XojCairoPdfExport::~XojCairoPdfExport()
@@ -26,7 +26,7 @@ XojCairoPdfExport::~XojCairoPdfExport()
 		endPdf();
 	}
 
-    XOJ_RELEASE_TYPE(XojCairoPdfExport);
+	XOJ_RELEASE_TYPE(XojCairoPdfExport);
 }
 
 /**

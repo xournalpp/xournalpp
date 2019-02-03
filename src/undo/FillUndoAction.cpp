@@ -31,7 +31,8 @@ public:
 	int newFill;
 };
 
-FillUndoAction::FillUndoAction(PageRef page, Layer* layer) : UndoAction("FillUndoAction")
+FillUndoAction::FillUndoAction(PageRef page, Layer* layer)
+ : UndoAction("FillUndoAction")
 {
 	XOJ_INIT_TYPE(FillUndoAction);
 

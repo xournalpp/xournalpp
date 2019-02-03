@@ -37,11 +37,13 @@ private:
 	void addToolbarData(ToolbarData* data);
 	void entrySelected(ToolbarData* data);
 
+	void updateSelectionData();
+
+	ToolbarData* getSelectedEntry();
+
 private:
 	XOJ_TYPE_ATTRIB;
 
 	ToolbarModel* tbModel;
 	GtkListStore* model;
-
-	ToolbarData* selected;
 };

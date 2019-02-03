@@ -2,7 +2,7 @@
 #include "StringUtils.h"
 
 #include <glib/gstdio.h>
-
+#include <string.h>
 
 Path::Path()
 {
@@ -124,32 +124,25 @@ bool Path::hasExtension(string ext)
 	return pathExt == ext;
 }
 
+#define REMOVE_EXTENSION(ext) \
+	if (StringUtils::endsWith(plower, ext)) \
+	{ \
+		path = path.substr(0, path.length() - strlen(ext)); \
+		return;\
+	}
+
 /**
- * Clear the extension (last .xyz or .pdf.xoj, .pdf.xopp)
+ * Clear the the last known extension (last .pdf, .pdf.xoj, .pdf.xopp etc.)
  */
 void Path::clearExtensions()
 {
 	string plower = StringUtils::toLowerCase(path);
-	if (StringUtils::endsWith(plower, ".pdf.xoj"))
-	{
-		path = path.substr(0, path.length() - 8);
-		return;
-	}
 
-	if (StringUtils::endsWith(plower, ".pdf.xopp"))
-	{
-		path = path.substr(0, path.length() - 9);
-		return;
-	}
-
-	size_t separator = path.find_last_of("/\\");
-	size_t dotPos = path.find_last_of(".");
-	if (dotPos == string::npos || (dotPos < separator && separator != string::npos))
-	{
-		return;
-	}
-
-	path = path.substr(0, dotPos);
+	REMOVE_EXTENSION(".pdf.xoj");
+	REMOVE_EXTENSION(".pdf.xopp");
+	REMOVE_EXTENSION(".xoj");
+	REMOVE_EXTENSION(".xopp");
+	REMOVE_EXTENSION(".pdf");
 }
 
 /**

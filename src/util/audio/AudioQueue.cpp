@@ -21,7 +21,6 @@ void AudioQueue::reset()
     this->clear();
 }
 
-
 bool AudioQueue::empty()
 {
     XOJ_CHECK_TYPE(AudioQueue);
@@ -36,7 +35,7 @@ unsigned long AudioQueue::size()
     return deque<int>::size();
 }
 
-void AudioQueue::push(int *samples, unsigned long nSamples)
+void AudioQueue::push(int* samples, unsigned long nSamples)
 {
     XOJ_CHECK_TYPE(AudioQueue);
 
@@ -49,7 +48,7 @@ void AudioQueue::push(int *samples, unsigned long nSamples)
     this->lockCondition.notify_one();
 }
 
-void AudioQueue::pop(int *returnBuffer, int *bufferLength, unsigned long nSamples, int numChannels)
+void AudioQueue::pop(int* returnBuffer, int* bufferLength, unsigned long nSamples, int numChannels)
 {
     XOJ_CHECK_TYPE(AudioQueue);
 
@@ -64,13 +63,17 @@ void AudioQueue::pop(int *returnBuffer, int *bufferLength, unsigned long nSample
 
 void AudioQueue::signalEndOfStream()
 {
+    XOJ_CHECK_TYPE(AudioQueue);
+
     this->streamEnd = true;
     this->notified = true;
     this->lockCondition.notify_one();
 }
 
-void AudioQueue::waitForNewElements(std::unique_lock<std::mutex> &lock)
+void AudioQueue::waitForNewElements(std::unique_lock<std::mutex>& lock)
 {
+    XOJ_CHECK_TYPE(AudioQueue);
+
     while (!this->notified)
     {
         this->lockCondition.wait(lock);
@@ -79,10 +82,14 @@ void AudioQueue::waitForNewElements(std::unique_lock<std::mutex> &lock)
 
 bool AudioQueue::hasStreamEnded()
 {
+    XOJ_CHECK_TYPE(AudioQueue);
+
     return this->streamEnd;
 }
 
 std::mutex &AudioQueue::syncMutex()
 {
+    XOJ_CHECK_TYPE(AudioQueue);
+
     return this->queueLock;
 }

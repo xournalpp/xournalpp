@@ -16,6 +16,7 @@
 
 #include <gdk/gdk.h>
 
+class DeviceListHelper;
 class Settings;
 class SettingsDialog;
 
@@ -43,6 +44,8 @@ private:
 	Settings* settings;
 	int button;
 	bool withDevice;
+
+	DeviceListHelper* deviceList = NULL;
 
 	GtkWidget* cbDevice;
 	GtkWidget* cbDisableDrawing;

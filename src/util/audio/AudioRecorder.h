@@ -24,22 +24,23 @@ class AudioRecorder
 public:
     explicit AudioRecorder(Settings *settings);
     ~AudioRecorder();
-    void start(std::string filename);
+
+public:
+    void start(string filename);
     void stop();
-
     bool isRecording();
-
     std::vector<DeviceInfo> getInputDevices();
     void setInputDevice(DeviceInfo deviceInfo);
 
+private:
+	XOJ_TYPE_ATTRIB;
+
 protected:
-    Settings* settings;
+	Settings* settings = nullptr;
 
-    AudioQueue *audioQueue;
-    PortAudioProducer *portAudioProducer;
-    SoxConsumer *soxConsumer;
-
-    XOJ_TYPE_ATTRIB;
+	AudioQueue* audioQueue = nullptr;
+	PortAudioProducer* portAudioProducer = nullptr;
+	SoxConsumer* soxConsumer = nullptr;
 };
 
 

@@ -35,6 +35,7 @@
 #include "../gui/dialog/LatexDialog.h"
 
 class AudioController;
+class FullscreenHandler;
 class Sidebar;
 class XojPageView;
 class SaveHandler;
@@ -243,7 +244,7 @@ public:
 	virtual void clipboardPasteEnabled(bool enabled);
 	virtual void clipboardPasteText(string text);
 	virtual void clipboardPasteImage(GdkPixbuf* img);
-    virtual void clipboardPasteTex(GdkPixbuf* img, const char* text, int textLength);
+	virtual void clipboardPasteTex(GdkPixbuf* img, const char* text, int textLength);
 	virtual void clipboardPasteXournal(ObjectInputStream& in);
 	virtual void deleteSelection();
 
@@ -294,7 +295,6 @@ private:
 	RecentManager* recent;
 	UndoRedoHandler* undoRedo;
 	ZoomControl* zoom;
-	bool fullscreen = false;
 
 	Settings* settings;
 	MainWindow* win;
@@ -309,9 +309,6 @@ private:
 	ActionType lastAction;
 	ActionGroup lastGroup;
 	bool lastEnabled;
-
-	GList* hiddenFullscreenWidgets;
-	bool sidebarHidden;
 
 	ScrollHandler* scrollHandler;
 
@@ -366,4 +363,9 @@ private:
 	PageBackgroundChangeController* pageBackgroundChangeController;
 
 	LayerController* layerController;
+
+	/**
+	 * Fullscreen handler
+	 */
+	FullscreenHandler* fullscreenHandler;
 };

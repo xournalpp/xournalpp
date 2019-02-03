@@ -2,12 +2,12 @@
 
 XojPdfExport::XojPdfExport()
 {
-    XOJ_INIT_TYPE(XojPdfExport);
+	XOJ_INIT_TYPE(XojPdfExport);
 }
 
 XojPdfExport::~XojPdfExport()
 {
-    XOJ_RELEASE_TYPE(XojPdfExport);
+	XOJ_RELEASE_TYPE(XojPdfExport);
 }
 
 /**

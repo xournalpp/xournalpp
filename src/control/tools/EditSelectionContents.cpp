@@ -318,6 +318,8 @@ UndoAction* EditSelectionContents::setColor(int color)
  */
 void EditSelectionContents::fillUndoItem(DeleteUndoAction* undo)
 {
+	XOJ_CHECK_TYPE(EditSelectionContents);
+
 	Layer* layer = this->sourceLayer;
 
 	// Always insert the elements on top
@@ -368,6 +370,8 @@ void EditSelectionContents::deleteViewBuffer()
  */
 double EditSelectionContents::getOriginalWidth()
 {
+	XOJ_CHECK_TYPE(EditSelectionContents);
+
 	return this->originalWidth;
 }
 
@@ -376,6 +380,8 @@ double EditSelectionContents::getOriginalWidth()
  */
 double EditSelectionContents::getOriginalHeight()
 {
+	XOJ_CHECK_TYPE(EditSelectionContents);
+
 	return this->originalHeight;
 }
 
@@ -385,6 +391,8 @@ double EditSelectionContents::getOriginalHeight()
 void EditSelectionContents::finalizeSelection(double x, double y, double width, double height, bool aspectRatio,
 											  Layer* layer, PageRef targetPage, XojPageView* targetView, UndoRedoHandler* undo)
 {
+	XOJ_CHECK_TYPE(EditSelectionContents);
+
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
 
@@ -425,6 +433,8 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
 										  Layer* layer, PageRef targetPage, XojPageView* targetView,
 										  UndoRedoHandler* undo, CursorSelectionType type)
 {
+	XOJ_CHECK_TYPE(EditSelectionContents);
+
 	double mx = x - this->lastX;
 	double my = y - this->lastY;
 	this->rotation = rotation;
@@ -503,6 +513,8 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
  */
 void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotation, double width, double height, double zoom)
 {
+	XOJ_CHECK_TYPE(EditSelectionContents);
+
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
 		
@@ -565,6 +577,8 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
 
 UndoAction* EditSelectionContents::copySelection(PageRef page, XojPageView *view, double x, double y)
 {
+	XOJ_CHECK_TYPE(EditSelectionContents);
+
 	Layer* layer = page->getSelectedLayer();
 
 	vector<Element*> new_elems;
@@ -586,6 +600,8 @@ UndoAction* EditSelectionContents::copySelection(PageRef page, XojPageView *view
 
 void EditSelectionContents::serialize(ObjectOutputStream& out)
 {
+	XOJ_CHECK_TYPE(EditSelectionContents);
+
 	out.writeObject("EditSelectionContents");
 
 	out.writeDouble(this->originalWidth);
@@ -602,6 +618,8 @@ void EditSelectionContents::serialize(ObjectOutputStream& out)
 
 void EditSelectionContents::readSerialized(ObjectInputStream& in)
 {
+	XOJ_CHECK_TYPE(EditSelectionContents);
+
 	in.readObject("EditSelectionContents");
 
 	this->originalWidth = in.readDouble();

@@ -43,7 +43,7 @@ void printUndoList(GList* list)
 	if (this->savedUndo)					\
 	{										\
 		printAction(this->savedUndo);		\
-	}                                                        
+	}
 #else
 #define PRINTCONTENTS()
 #endif //UNDO_TRACE

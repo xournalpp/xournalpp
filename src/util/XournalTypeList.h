@@ -276,3 +276,5 @@ XOJ_DECLARE_TYPE(DeviceInfo, 266);
 XOJ_DECLARE_TYPE(PortAudioConsumer, 267);
 XOJ_DECLARE_TYPE(SoxProducer, 268);
 XOJ_DECLARE_TYPE(AudioPlayer, 269);
+XOJ_DECLARE_TYPE(FullscreenHandler, 270);
+

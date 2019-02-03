@@ -9,8 +9,8 @@
 #include <i18n.h>
 #include <Rectangle.h>
 
-TextUndoAction::TextUndoAction(PageRef page, Layer* layer, Text* text, string lastText, TextEditor* textEditor) :
-		UndoAction("TextUndoAction")
+TextUndoAction::TextUndoAction(PageRef page, Layer* layer, Text* text, string lastText, TextEditor* textEditor)
+ : UndoAction("TextUndoAction")
 {
 	XOJ_INIT_TYPE(TextUndoAction);
 

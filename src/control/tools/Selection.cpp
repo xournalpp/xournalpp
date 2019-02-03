@@ -336,7 +336,7 @@ bool RegionSelect::contains(double x, double y)
 		}
 	}
 
-	return ((hits & 1) != 0);
+	return (hits & 1) != 0;
 }
 
 bool RegionSelect::finalize(PageRef page)

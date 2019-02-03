@@ -1,6 +1,8 @@
 #include "SoxConsumer.h"
 
-SoxConsumer::SoxConsumer(Settings *settings, AudioQueue *audioQueue) : settings(settings), audioQueue(audioQueue)
+SoxConsumer::SoxConsumer(Settings *settings, AudioQueue* audioQueue)
+ : settings(settings),
+   audioQueue(audioQueue)
 {
     XOJ_INIT_TYPE(SoxConsumer);
 
@@ -18,11 +20,11 @@ SoxConsumer::~SoxConsumer()
     XOJ_RELEASE_TYPE(SoxConsumer);
 }
 
-void SoxConsumer::start(std::string filename, unsigned int inputChannels)
+void SoxConsumer::start(string filename, unsigned int inputChannels)
 {
     XOJ_CHECK_TYPE(SoxConsumer);
 
-    this->inputSignal = new sox_signalinfo_t;
+    this->inputSignal = new sox_signalinfo_t();
     this->inputSignal->rate = this->settings->getAudioSampleRate();
     this->inputSignal->length = SOX_UNSPEC;
     this->inputSignal->channels = inputChannels;
@@ -33,7 +35,8 @@ void SoxConsumer::start(std::string filename, unsigned int inputChannels)
 
     if (this->outputFile == nullptr)
     {
-        g_message("SoxConsumer: output file could not be opened");
+        // TODO Stop recording in this case, so the users sees that recording is not running!
+        g_warning("SoxConsumer: output file \"%s\" could not be opened", filename.c_str());
         return;
     }
 
@@ -59,17 +62,15 @@ void SoxConsumer::start(std::string filename, unsigned int inputChannels)
            }
 
            sox_close(this->outputFile);
-
        });
 }
-
 
 void SoxConsumer::join()
 {
     XOJ_CHECK_TYPE(SoxConsumer);
 
     // Join the consumer thread to wait for completion
-    if (this->consumerThread->joinable())
+    if (this->consumerThread && this->consumerThread->joinable())
     {
         this->consumerThread->join();
     }
@@ -82,10 +83,6 @@ void SoxConsumer::stop()
     // Stop consumer
     this->audioQueue->signalEndOfStream();
 
-    // Wait for consumer to finish
-    if (this->consumerThread->joinable())
-    {
-        this->consumerThread->join();
-    }
-
+	// Wait for consumer to finish
+	join();
 }

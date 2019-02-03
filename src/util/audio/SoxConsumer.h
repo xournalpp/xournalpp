@@ -22,27 +22,28 @@
 #include <thread>
 #include <utility>
 
-
 class SoxConsumer
 {
 public:
     explicit SoxConsumer(Settings *settings, AudioQueue *audioQueue);
     ~SoxConsumer();
-    void start(std::string filename, unsigned int inputChannels);
+
+public:
+    void start(string filename, unsigned int inputChannels);
     void join();
     void stop();
 
-protected:protected:
-    sox_signalinfo_t *inputSignal = nullptr;
-    sox_format_t *outputFile = nullptr;
-    bool stopConsumer = false;
-
-    Settings *settings;
-    AudioQueue *audioQueue;
-    std::thread *consumerThread;
-
 private:
     XOJ_TYPE_ATTRIB;
+
+protected:
+    sox_signalinfo_t* inputSignal = nullptr;
+    sox_format_t* outputFile = nullptr;
+    bool stopConsumer = false;
+
+    Settings* settings = nullptr;
+    AudioQueue* audioQueue = nullptr;
+    std::thread* consumerThread = nullptr;
 };
 
 

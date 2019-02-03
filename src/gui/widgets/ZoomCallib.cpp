@@ -51,24 +51,17 @@ static void zoomcallib_init(ZoomCallib* zc)
 	zc->val = 72;
 }
 
-static void
-zoomcallib_get_preferred_width(GtkWidget* widget,
-                               gint* minimal_width,
-                               gint* natural_width)
+static void zoomcallib_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width)
 {
-  *minimal_width = *natural_width = 200;
+	*minimal_width = *natural_width = 200;
 }
 
-static void
-zoomcallib_get_preferred_height(GtkWidget* widget,
-                                gint* minimal_height,
-                                gint* natural_height)
+static void zoomcallib_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height)
 {
-  *minimal_height = *natural_height = 75;
+	*minimal_height = *natural_height = 75;
 }
 
-static void zoomcallib_size_allocate(GtkWidget* widget,
-                                     GtkAllocation* allocation)
+static void zoomcallib_size_allocate(GtkWidget* widget, GtkAllocation* allocation)
 {
 	g_return_if_fail(widget != NULL);
 	g_return_if_fail(IS_ZOOM_CALLIB(widget));
@@ -78,9 +71,8 @@ static void zoomcallib_size_allocate(GtkWidget* widget,
 
 	if (gtk_widget_get_realized(widget))
 	{
-		gdk_window_move_resize(gtk_widget_get_window(widget),
-		                       allocation->x, allocation->y,
-		                       allocation->width, allocation->height);
+		gdk_window_move_resize(gtk_widget_get_window(widget), allocation->x, allocation->y, allocation->width,
+				allocation->height);
 	}
 }
 

@@ -32,6 +32,9 @@ InputHandler::~InputHandler()
 	XOJ_RELEASE_TYPE(InputHandler);
 }
 
+/**
+ * @return Current editing stroke
+ */
 Stroke* InputHandler::getStroke()
 {
 	XOJ_CHECK_TYPE(InputHandler);
@@ -90,5 +93,5 @@ bool InputHandler::validMotion(Point p, Point q)
 {
 	XOJ_CHECK_TYPE(InputHandler);
 
-	return (hypot(p.x - q.x, p.y - q.y) >= PIXEL_MOTION_THRESHOLD);
+	return hypot(p.x - q.x, p.y - q.y) >= PIXEL_MOTION_THRESHOLD;
 }

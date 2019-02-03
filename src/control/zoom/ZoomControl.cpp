@@ -17,8 +17,8 @@ ZoomControl::ZoomControl()
 	this->zoomFitMode = true;
 
 	this->zoomStep = DEFAULT_ZOOM_STEP;
-	this->zoomMax = DEFAULT_ZOOM_MAX;
-	this->zoomMin = DEFAULT_ZOOM_MIN;
+	this->zoomMax = DEFAULT_ZOOM_MAX * this->zoom100Value;
+	this->zoomMin = DEFAULT_ZOOM_MIN * this->zoom100Value;
 
 	this->zoomSequenceStart = -1;
 
@@ -45,19 +45,17 @@ void ZoomControl::startZoomSequence(double centerX, double centerY)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
+	Rectangle rect = getVisibleRect();
 	if (centerX == -1 || centerY == -1)
 	{
-		GtkWidget* widget = view->getWidget();
-		this->zoomWidgetPosX = gtk_widget_get_allocated_width(widget) / 2;
-		this->zoomWidgetPosY = gtk_widget_get_allocated_height(widget) / 2;
+		this->zoomWidgetPosX = rect.width/2;
+		this->zoomWidgetPosY = rect.height/2;
 	}
 	else
 	{
 		this->zoomWidgetPosX = centerX;
 		this->zoomWidgetPosY = centerY;
 	}
-
-	Rectangle rect = getVisibleRect();
 
 	this->scrollPositionX = (rect.x + this->zoomWidgetPosX) / this->zoom;
 	this->scrollPositionY = (rect.y + this->zoomWidgetPosY) / this->zoom;
@@ -199,6 +197,8 @@ void ZoomControl::setZoom100(double zoom)
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	this->zoom100Value = zoom;
+	this->setZoomMax(DEFAULT_ZOOM_MAX * this->zoom100Value);
+	this->setZoomMin(DEFAULT_ZOOM_MIN * this->zoom100Value);
 	fireZoomRangeValueChanged();
 }
 
