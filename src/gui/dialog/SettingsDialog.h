@@ -53,9 +53,8 @@ private:
 	Control* control;
 	GtkWidget* callib;
 	int dpi;
-	std::vector<DeviceInfo> audioInputDevices;
-	std::vector<DeviceInfo> audioOutputDevices;
+	vector<DeviceInfo> audioInputDevices;
+	vector<DeviceInfo> audioOutputDevices;
 
-
-	std::vector<ButtonConfigGui*> buttonConfigs;
+	vector<ButtonConfigGui*> buttonConfigs;
 };

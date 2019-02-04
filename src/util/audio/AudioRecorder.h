@@ -22,15 +22,14 @@
 class AudioRecorder
 {
 public:
-    explicit AudioRecorder(Settings *settings);
-    ~AudioRecorder();
+	explicit AudioRecorder(Settings* settings);
+	~AudioRecorder();
 
 public:
-    void start(string filename);
-    void stop();
-    bool isRecording();
-    std::vector<DeviceInfo> getInputDevices();
-    void setInputDevice(DeviceInfo deviceInfo);
+	bool start(string filename);
+	void stop();
+	bool isRecording();
+	vector<DeviceInfo> getInputDevices();
 
 private:
 	XOJ_TYPE_ATTRIB;
