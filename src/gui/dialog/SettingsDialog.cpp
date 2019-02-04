@@ -471,7 +471,6 @@ void SettingsDialog::save()
 
 	switch (gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioSampleRate"))))
 	{
-
 		case 1:
 			settings->setAudioSampleRate(96100.0);
 			break;
