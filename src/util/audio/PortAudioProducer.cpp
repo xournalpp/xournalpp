@@ -49,7 +49,7 @@ const DeviceInfo PortAudioProducer::getSelectedInputDevice()
 	}
 	catch (portaudio::PaException& e)
 	{
-		g_message("PortAudioProducer: Selected input device not found - fallback to default input device");
+		g_message("PortAudioProducer: Selected input device not found - fallback to default input device\nCaused by: %s", e.what());
 		return DeviceInfo(&sys.defaultInputDevice(), true);
 	}
 }

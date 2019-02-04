@@ -44,7 +44,7 @@ const DeviceInfo PortAudioConsumer::getSelectedOutputDevice()
 	}
 	catch (portaudio::PaException& e)
 	{
-		g_warning("PortAudioConsumer: Selected output device was not found - fallback to default output device");
+		g_warning("PortAudioConsumer: Selected output device was not found - fallback to default output device\nCaused by: %s", e.what());
 		return DeviceInfo(&sys.defaultOutputDevice(), true);
 	}
 }
