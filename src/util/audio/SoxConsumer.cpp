@@ -1,6 +1,6 @@
 #include "SoxConsumer.h"
 
-SoxConsumer::SoxConsumer(Settings* settings, AudioQueue* audioQueue)
+SoxConsumer::SoxConsumer(Settings* settings, AudioQueue<int>* audioQueue)
 		: settings(settings),
 		  audioQueue(audioQueue)
 {

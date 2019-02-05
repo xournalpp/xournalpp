@@ -277,4 +277,6 @@ XOJ_DECLARE_TYPE(PortAudioConsumer, 267);
 XOJ_DECLARE_TYPE(SoxProducer, 268);
 XOJ_DECLARE_TYPE(AudioPlayer, 269);
 XOJ_DECLARE_TYPE(FullscreenHandler, 270);
+XOJ_DECLARE_TYPE(VorbisConsumer, 271);
+XOJ_DECLARE_TYPE(VorbisProducer, 272);
 

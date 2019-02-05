@@ -96,6 +96,22 @@ add_includes_ldflags ("${PORTAUDIOCPP_LDFLAGS}" "${PORTAUDIOCPP_INCLUDE_DIRS}")
 pkg_check_modules(SOX REQUIRED "sox >= 14.4.1")
 add_includes_ldflags ("${SOX_LDFLAGS}" "${SOX_INCLUDE_DIRS}")
 
+# vorbis
+pkg_check_modules(VORBIS REQUIRED "vorbis >= 1.3.2")
+add_includes_ldflags ("${VORBIS_LDFLAGS}" "${VORBIS_INCLUDE_DIRS}")
+
+# vorbisenc
+pkg_check_modules(VORBISENC REQUIRED "vorbisenc >= 1.3.2")
+add_includes_ldflags ("${VORBISENC_LDFLAGS}" "${VORBISENC_INCLUDE_DIRS}")
+
+# vorbisfile
+pkg_check_modules(VORBISFILE REQUIRED "vorbisfile >= 1.3.5")
+add_includes_ldflags ("${VORBISFILE_LDFLAGS}" "${VORBISFILE_INCLUDE_DIRS}")
+
+# ogg
+pkg_check_modules(OGG REQUIRED "ogg >= 1.3.2")
+add_includes_ldflags ("${OGG_LDFLAGS}" "${OGG_INCLUDE_DIRS}")
+
 ## Additional features ##
 
 # CppUnit

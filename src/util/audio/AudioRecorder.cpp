@@ -7,9 +7,9 @@ AudioRecorder::AudioRecorder(Settings* settings)
 {
 	XOJ_INIT_TYPE(AudioRecorder);
 
-	this->audioQueue = new AudioQueue();
+	this->audioQueue = new AudioQueue<float>();
 	this->portAudioProducer = new PortAudioProducer(settings, this->audioQueue);
-	this->soxConsumer = new SoxConsumer(settings, this->audioQueue);
+	this->vorbisConsumer = new VorbisConsumer(settings, this->audioQueue);
 }
 
 AudioRecorder::~AudioRecorder()
@@ -19,8 +19,8 @@ AudioRecorder::~AudioRecorder()
 	delete this->portAudioProducer;
 	this->portAudioProducer = nullptr;
 
-	delete this->soxConsumer;
-	this->soxConsumer = nullptr;
+	delete this->vorbisConsumer;
+	this->vorbisConsumer = nullptr;
 
 	delete this->audioQueue;
 	this->audioQueue = nullptr;
@@ -33,7 +33,7 @@ bool AudioRecorder::start(string filename)
 	XOJ_CHECK_TYPE(AudioRecorder);
 
 	// Start the consumer for writing the data
-	bool status = this->soxConsumer->start(std::move(filename), static_cast<unsigned int>(this->portAudioProducer->getSelectedInputDevice().getInputChannels()));
+	bool status = this->vorbisConsumer->start(std::move(filename), static_cast<unsigned int>(this->portAudioProducer->getSelectedInputDevice().getInputChannels()));
 
 	// Start recording
 	status &= this->portAudioProducer->startRecording();
@@ -49,7 +49,7 @@ void AudioRecorder::stop()
 	this->portAudioProducer->stopRecording();
 
 	// Wait for libsox to write all the data
-	this->soxConsumer->join();
+	this->vorbisConsumer->join();
 
 	// Reset the queue for the next recording
 	this->audioQueue->reset();

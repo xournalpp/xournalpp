@@ -16,6 +16,7 @@
 #include "AudioQueue.h"
 #include "PortAudioConsumer.h"
 #include "SoxProducer.h"
+#include "VorbisProducer.h"
 
 #include <control/settings/Settings.h>
 
@@ -36,9 +37,9 @@ private:
 protected:
 	Settings* settings = nullptr;
 
-	AudioQueue* audioQueue = nullptr;
+	AudioQueue<float>* audioQueue = nullptr;
 	PortAudioConsumer* portAudioConsumer = nullptr;
-	SoxProducer* soxProducer = nullptr;
+	VorbisProducer* vorbisProducer = nullptr;
 	std::thread stopThread;
 };
 

@@ -24,7 +24,7 @@
 class SoxProducer
 {
 public:
-	explicit SoxProducer(AudioQueue* audioQueue);
+	explicit SoxProducer(AudioQueue<int>* audioQueue);
 	~SoxProducer();
 
 public:
@@ -41,7 +41,7 @@ protected:
 	sox_format_t* inputFile = nullptr;
 	bool stopProducer = false;
 
-	AudioQueue* audioQueue = nullptr;
+	AudioQueue<int>* audioQueue = nullptr;
 	std::thread* producerThread = nullptr;
 };
 

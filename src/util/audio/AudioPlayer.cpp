@@ -4,9 +4,9 @@ AudioPlayer::AudioPlayer(Settings* settings) : settings(settings)
 {
 	XOJ_INIT_TYPE(AudioPlayer);
 
-	this->audioQueue = new AudioQueue();
+	this->audioQueue = new AudioQueue<float>();
 	this->portAudioConsumer = new PortAudioConsumer(settings, this->audioQueue);
-	this->soxProducer = new SoxProducer(this->audioQueue);
+	this->vorbisProducer = new VorbisProducer(this->audioQueue);
 }
 
 AudioPlayer::~AudioPlayer()
@@ -16,8 +16,8 @@ AudioPlayer::~AudioPlayer()
 	delete this->portAudioConsumer;
 	this->portAudioConsumer = nullptr;
 
-	delete this->soxProducer;
-	this->soxProducer = nullptr;
+	delete this->vorbisProducer;
+	this->vorbisProducer = nullptr;
 
 	delete this->audioQueue;
 	this->audioQueue = nullptr;
@@ -30,17 +30,11 @@ void AudioPlayer::start(string filename, unsigned int timestamp)
 	XOJ_CHECK_TYPE(AudioPlayer);
 
 	// Start the producer for reading the data
-	this->soxProducer->start(std::move(filename), this->portAudioConsumer->getSelectedOutputDevice(), timestamp);
-	sox_signalinfo_t* signal = this->soxProducer->getSignalInformation();
+	this->vorbisProducer->start(std::move(filename), this->portAudioConsumer->getSelectedOutputDevice(), timestamp);
+	vorbis_info* vi = this->vorbisProducer->getSignalInformation();
 
 	// Start playing
-	if (signal->rate > 1)
-	{
-		this->portAudioConsumer->startPlaying(signal->rate, signal->channels);
-	} else
-	{
-		this->portAudioConsumer->startPlaying(44100.0, signal->channels);
-	}
+	this->portAudioConsumer->startPlaying(static_cast<double>(vi->rate), static_cast<unsigned int>(vi->channels));
 
 	// Clean up after audio is played
 	stopThread = std::thread([&]
@@ -60,7 +54,7 @@ void AudioPlayer::stop()
 	XOJ_CHECK_TYPE(AudioPlayer);
 
 	// Wait for libsox to read all the data
-	this->soxProducer->stop();
+	this->vorbisProducer->stop();
 
 	// Stop playing audio
 	this->portAudioConsumer->stopPlaying();
@@ -77,7 +71,7 @@ void AudioPlayer::abort()
 	this->portAudioConsumer->stopPlaying();
 
 	// Abort libsox
-	this->soxProducer->abort();
+	this->vorbisProducer->abort();
 
 	// Reset the queue for the next playback
 	this->audioQueue->reset();

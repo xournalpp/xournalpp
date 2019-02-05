@@ -53,7 +53,7 @@ void AudioController::recStartStop(bool rec)
 		sprintf(buffer, "%04d-%02d-%02d_%02d-%02d-%02d", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour,
 				t->tm_min, t->tm_sec);
 		string data(buffer);
-		data += ".mp3";
+		data += ".ogg";
 
 		audioFilename = data;
 

@@ -1,6 +1,6 @@
 #include "SoxProducer.h"
 
-SoxProducer::SoxProducer(AudioQueue* audioQueue) : audioQueue(audioQueue)
+SoxProducer::SoxProducer(AudioQueue<int>* audioQueue) : audioQueue(audioQueue)
 {
 	XOJ_INIT_TYPE(SoxProducer);
 }
