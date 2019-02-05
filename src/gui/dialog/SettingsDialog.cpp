@@ -272,6 +272,8 @@ void SettingsDialog::load()
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spTouchDisableTimeout")), timeoutMs / 1000.0);
 
     this->audioInputDevices = this->control->getAudioController()->getAudioRecorder()->getInputDevices();
+	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioInputDevice")), "", "System default");
+	gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioInputDevice")), 0);
     for (auto &audioInputDevice : this->audioInputDevices)
 	{
     	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioInputDevice")), "", audioInputDevice.getDeviceName().c_str());
@@ -280,11 +282,13 @@ void SettingsDialog::load()
     {
     	if (this->audioInputDevices[i].getSelected())
 		{
-			gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioInputDevice")), i);
+			gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioInputDevice")), i + 1);
 		}
     }
 
     this->audioOutputDevices = this->control->getAudioController()->getAudioPlayer()->getOutputDevices();
+	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "", "System default");
+	gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")), 0);
 	for (auto &audioOutputDevice : this->audioOutputDevices)
 	{
 		gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "", audioOutputDevice.getDeviceName().c_str());
@@ -293,7 +297,7 @@ void SettingsDialog::load()
 	{
 		if (this->audioOutputDevices[i].getSelected())
 		{
-			gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")), i);
+			gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")), i + 1);
 		}
 	}
 
@@ -466,8 +470,17 @@ void SettingsDialog::save()
 	settings->setSnapRotationTolerance((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapRotationTolerance"))));
 	settings->setSnapGridTolerance((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridTolerance"))));
 
-	settings->setAudioInputDevice((int) this->audioInputDevices[gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioInputDevice")))].getIndex());
-	settings->setAudioOutputDevice((int) this->audioOutputDevices[gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")))].getIndex());
+	int selectedInputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioInputDevice"))) - 1;
+	if (selectedInputDeviceIndex >= 0 && selectedInputDeviceIndex < this->audioInputDevices.size())
+	{
+		settings->setAudioInputDevice((int) this->audioInputDevices[selectedInputDeviceIndex].getIndex());
+	}
+
+	int selectedOutputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioOutputDevice"))) - 1;
+	if (selectedOutputDeviceIndex >= 0 && selectedOutputDeviceIndex < this->audioOutputDevices.size())
+	{
+		settings->setAudioOutputDevice((int) this->audioOutputDevices[selectedOutputDeviceIndex].getIndex());
+	}
 
 	switch (gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioSampleRate"))))
 	{
