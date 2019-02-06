@@ -7,7 +7,7 @@ AudioRecorder::AudioRecorder(Settings* settings)
 {
 	XOJ_INIT_TYPE(AudioRecorder);
 
-	this->audioQueue = new AudioQueue<float>();
+	this->audioQueue = new AudioQueue<int>();
 	this->portAudioProducer = new PortAudioProducer(settings, this->audioQueue);
 	this->vorbisConsumer = new VorbisConsumer(settings, this->audioQueue);
 }

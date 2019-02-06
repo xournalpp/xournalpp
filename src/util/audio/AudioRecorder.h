@@ -37,7 +37,7 @@ private:
 protected:
 	Settings* settings = nullptr;
 
-	AudioQueue<float>* audioQueue = nullptr;
+	AudioQueue<int>* audioQueue = nullptr;
 	PortAudioProducer* portAudioProducer = nullptr;
 	VorbisConsumer* vorbisConsumer = nullptr;
 };

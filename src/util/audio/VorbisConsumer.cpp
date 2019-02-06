@@ -1,6 +1,6 @@
 #include "VorbisConsumer.h"
 
-VorbisConsumer::VorbisConsumer(Settings* settings, AudioQueue<float>* audioQueue)
+VorbisConsumer::VorbisConsumer(Settings* settings, AudioQueue<int>* audioQueue)
 		: settings(settings),
 		  audioQueue(audioQueue)
 {
@@ -23,62 +23,19 @@ bool VorbisConsumer::start(string filename, unsigned int inputChannels)
 			{
 				std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
 
-				std::ofstream outputFile(filename, std::ios::out | std::ios::binary);
-				try
+				SF_INFO sfInfo;
+				sfInfo.channels = inputChannels;
+				sfInfo.format = SF_FORMAT_OGG | SF_FORMAT_VORBIS;
+				sfInfo.samplerate = static_cast<int>(this->settings->getAudioSampleRate());
+
+				SNDFILE_tag* sfFile = sf_open(filename.c_str(), SFM_WRITE, &sfInfo);
+				if (sfFile == nullptr)
 				{
-					outputFile.exceptions(outputFile.failbit);
-				}
-				catch (const std::ios_base::failure& e)
-				{
-					g_warning("VorbisConsumer: output file \"%s\" could not be opened", filename.c_str());
+					g_warning("VorbisConsumer: output file \"%s\" could not be opened\ncaused by:%s", filename.c_str(), sf_strerror(sfFile));
 					return;
 				}
 
-				ogg_stream_state os;
-				ogg_page og;
-				ogg_packet op;
-				vorbis_info vi;
-				vorbis_comment vc;
-				vorbis_dsp_state vd;
-				vorbis_block vb;
-
-				vorbis_info_init(&vi);
-				int vorbis_error = 0;
-				vorbis_error = vorbis_encode_init_vbr(&vi, (long) inputChannels, (long) this->settings->getAudioSampleRate(), 0.1);
-				if (vorbis_error)
-				{
-					g_warning("VorbisConsumer: Failed to initialize encoder");
-				}
-
-				vorbis_comment_init(&vc);
-				vorbis_comment_add_tag(&vc, "ENCODER", "Xournal++");
-
-				vorbis_analysis_init(&vd, &vi);
-				vorbis_block_init(&vd, &vb);
-
-				ogg_stream_init(&os, 0);
-
-				ogg_packet header;
-				ogg_packet header_comm;
-				ogg_packet header_code;
-
-				vorbis_analysis_headerout(&vd, &vc, &header, &header_comm, &header_code);
-				ogg_stream_packetin(&os, &header);
-				ogg_stream_packetin(&os, &header_comm);
-				ogg_stream_packetin(&os, &header_code);
-
-				while (true)
-				{
-					int result = ogg_stream_flush(&os, &og);
-					if (result == 0)
-					{
-						break;
-					}
-					outputFile.write(reinterpret_cast<const char*>(og.header), og.header_len);
-					outputFile.write(reinterpret_cast<const char*>(og.body), og.body_len);
-				}
-
-				float buffer[64 * inputChannels];
+				int buffer[64 * inputChannels];
 				int bufferLength;
 
 				while (!(this->stopConsumer || (audioQueue->hasStreamEnded() && audioQueue->empty())))
@@ -87,57 +44,12 @@ bool VorbisConsumer::start(string filename, unsigned int inputChannels)
 
 					while (!audioQueue->empty())
 					{
-						audioQueue->pop(buffer, &bufferLength, 64ul * inputChannels, inputChannels);
-
-						if (bufferLength > 0)
-						{
-							float** vorbisBuffer = vorbis_analysis_buffer(&vd, bufferLength / inputChannels);
-
-							for (int i = 0; i < bufferLength / inputChannels; i++)
-							{
-								for (int j = 0; j < inputChannels; j++)
-								{
-									vorbisBuffer[j][i] = buffer[i * inputChannels + j];
-								}
-							}
-
-							vorbis_analysis_wrote(&vd, bufferLength / inputChannels);
-						} else
-						{
-							vorbis_analysis_wrote(&vd, 0);
-						}
-
-						while (vorbis_analysis_blockout(&vd, &vb) == 1)
-						{
-							vorbis_analysis(&vb, nullptr);
-							vorbis_bitrate_addblock(&vb);
-
-							while (vorbis_bitrate_flushpacket(&vd, &op))
-							{
-								ogg_stream_packetin(&os, &op);
-
-								while (true)
-								{
-									int result = ogg_stream_pageout(&os, &og);
-									if (result == 0 || ogg_page_eos(&og))
-									{
-										break;
-									}
-									outputFile.write(reinterpret_cast<const char*>(og.header), og.header_len);
-									outputFile.write(reinterpret_cast<const char*>(og.body), og.body_len);
-								}
-							}
-						}
+						this->audioQueue->pop(buffer, &bufferLength, 64 * inputChannels, inputChannels);
+						sf_writef_int(sfFile, buffer, 64);
 					}
 				}
 
-				ogg_stream_clear(&os);
-				vorbis_block_clear(&vb);
-				vorbis_dsp_clear(&vd);
-				vorbis_comment_clear(&vc);
-				vorbis_info_clear(&vi);
-
-				outputFile.close();
+				sf_close(sfFile);
 			});
 	return true;
 }

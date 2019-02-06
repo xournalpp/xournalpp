@@ -1,6 +1,6 @@
 #include "PortAudioConsumer.h"
 
-PortAudioConsumer::PortAudioConsumer(Settings* settings, AudioQueue<float>* audioQueue) : sys(portaudio::System::instance()), settings(settings), audioQueue(audioQueue)
+PortAudioConsumer::PortAudioConsumer(Settings* settings, AudioQueue<int>* audioQueue) : sys(portaudio::System::instance()), settings(settings), audioQueue(audioQueue)
 {
 	XOJ_INIT_TYPE(PortAudioConsumer);
 }
@@ -86,7 +86,7 @@ void PortAudioConsumer::startPlaying(double sampleRate, unsigned int channels)
 	}
 
 	this->outputChannels = channels;
-	portaudio::DirectionSpecificStreamParameters outParams(*device, channels, portaudio::FLOAT32, true, device->defaultLowOutputLatency(), nullptr);
+	portaudio::DirectionSpecificStreamParameters outParams(*device, channels, portaudio::INT32, true, device->defaultLowOutputLatency(), nullptr);
 	portaudio::StreamParameters params(portaudio::DirectionSpecificStreamParameters::null(), outParams, sampleRate, this->framesPerBuffer, paNoFlag);
 
 	try
@@ -125,7 +125,7 @@ int PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer,
 	if (outputBuffer != nullptr)
 	{
 		int outputBufferLength;
-		this->audioQueue->pop(((float*) outputBuffer), &outputBufferLength, framesPerBuffer * this->outputChannels, this->outputChannels);
+		this->audioQueue->pop(((int*) outputBuffer), &outputBufferLength, framesPerBuffer * this->outputChannels, this->outputChannels);
 
 		// Fill buffer to requested length if necessary
 
@@ -133,7 +133,7 @@ int PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer,
 		{
 			g_warning("PortAudioConsumer: Frame underflow");
 
-			auto outputBufferImpl = (float*) outputBuffer;
+			auto outputBufferImpl = (int*) outputBuffer;
 			for (int i = outputBufferLength; i < framesPerBuffer * this->outputChannels; ++i)
 			{
 				outputBufferImpl[i] = 0;

@@ -4,7 +4,7 @@ AudioPlayer::AudioPlayer(Settings* settings) : settings(settings)
 {
 	XOJ_INIT_TYPE(AudioPlayer);
 
-	this->audioQueue = new AudioQueue<float>();
+	this->audioQueue = new AudioQueue<int>();
 	this->portAudioConsumer = new PortAudioConsumer(settings, this->audioQueue);
 	this->vorbisProducer = new VorbisProducer(this->audioQueue);
 }
@@ -31,10 +31,10 @@ void AudioPlayer::start(string filename, unsigned int timestamp)
 
 	// Start the producer for reading the data
 	this->vorbisProducer->start(std::move(filename), this->portAudioConsumer->getSelectedOutputDevice(), timestamp);
-	vorbis_info* vi = this->vorbisProducer->getSignalInformation();
+	SF_INFO* vi = this->vorbisProducer->getSignalInformation();
 
 	// Start playing
-	this->portAudioConsumer->startPlaying(static_cast<double>(vi->rate), static_cast<unsigned int>(vi->channels));
+	this->portAudioConsumer->startPlaying(static_cast<double>(vi->samplerate), static_cast<unsigned int>(vi->channels));
 
 	// Clean up after audio is played
 	stopThread = std::thread([&]

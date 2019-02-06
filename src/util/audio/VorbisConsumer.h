@@ -17,8 +17,7 @@
 #include "AudioQueue.h"
 #include "DeviceInfo.h"
 
-#include <vorbis/vorbisenc.h>
-#include <vorbis/vorbisfile.h>
+#include <sndfile.h>
 
 #include <thread>
 #include <utility>
@@ -27,7 +26,7 @@
 class VorbisConsumer
 {
 public:
-	explicit VorbisConsumer(Settings* settings, AudioQueue<float>* audioQueue);
+	explicit VorbisConsumer(Settings* settings, AudioQueue<int>* audioQueue);
 	~VorbisConsumer();
 
 public:
@@ -42,7 +41,7 @@ protected:
 	bool stopConsumer = false;
 
 	Settings* settings = nullptr;
-	AudioQueue<float>* audioQueue = nullptr;
+	AudioQueue<int>* audioQueue = nullptr;
 	std::thread* consumerThread = nullptr;
 };
 

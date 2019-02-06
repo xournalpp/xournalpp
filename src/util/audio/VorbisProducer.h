@@ -16,7 +16,7 @@
 #include "AudioQueue.h"
 #include "DeviceInfo.h"
 
-#include <vorbis/vorbisfile.h>
+#include <sndfile.h>
 
 #include <thread>
 #include <utility>
@@ -25,30 +25,24 @@
 class VorbisProducer
 {
 public:
-	explicit VorbisProducer(AudioQueue<float>* audioQueue);
+	explicit VorbisProducer(AudioQueue<int>* audioQueue);
 	~VorbisProducer();
 
 public:
 	void start(string filename, const DeviceInfo& outputDevice, unsigned int timestamp);
-	vorbis_info* getSignalInformation();
+	SF_INFO* getSignalInformation();
 	void abort();
 	void stop();
-
-	static size_t read(void* buffer, size_t elementSize, size_t elementCount, void* dataSource);
-	static int seek(void* dataSource, ogg_int64_t offset, int origin);
-	static long tell(void* dataSource);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-protected:
 	bool stopProducer = false;
-	std::ifstream inputFile;
-	OggVorbis_File vf;
-	vorbis_info* vi = nullptr;
+	SF_INFO sfInfo;
+	SNDFILE_tag* sfFile = nullptr;
 
-	AudioQueue<float>* audioQueue = nullptr;
+	AudioQueue<int>* audioQueue = nullptr;
 	std::thread* producerThread = nullptr;
 };
 
