@@ -304,6 +304,9 @@ public:
 	double getAudioSampleRate();
 	void setAudioSampleRate(double sampleRate);
 
+	double getAudioGain();
+	void setAudioGain(double gain);
+
 	/**
 	 * Get name, e.g. "cm"
 	 */
@@ -593,9 +596,25 @@ private:
 	 */
 	bool touchWorkaround;
 
+	/**
+	 * The index of the audio device used for recording
+	 */
 	PaDeviceIndex audioInputDevice;
+
+	/**
+	 * The index of the audio device used for playback
+	 */
 	PaDeviceIndex audioOutputDevice;
+
+	/**
+	 * The sample rate used for recording
+	 */
 	double audioSampleRate;
+
+	/**
+	 * The gain by which to amplify the recorded audio samples
+	 */
+	double audioGain;
 
 
 	/**

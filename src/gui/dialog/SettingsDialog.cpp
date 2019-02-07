@@ -310,6 +310,8 @@ void SettingsDialog::load()
 			gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 0);
 			break;
 	}
+
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spAudioGain")), settings->getAudioGain());
 }
 
 string SettingsDialog::updateHideString(string hidden, bool hideMenubar, bool hideSidebar)
@@ -482,6 +484,8 @@ void SettingsDialog::save()
 			settings->setAudioSampleRate(44100.0);
 			break;
 	}
+
+	settings->setAudioGain((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spAudioGain"))));
 
 	settings->transactionEnd();
 }

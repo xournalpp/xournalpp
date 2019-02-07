@@ -119,6 +119,7 @@ void Settings::loadDefault()
 	this->audioSampleRate = 44100.0;
 	this->audioInputDevice = -1;
 	this->audioOutputDevice = -1;
+	this->audioGain = 1.0;
 
 	inTransaction = false;
 }
@@ -451,6 +452,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "audioSampleRate") == 0)
 	{
 		this->audioSampleRate = g_ascii_strtod((const char *) value, NULL);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "audioGain") == 0)
+	{
+		this->audioGain = g_ascii_strtod((const char *) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioInputDevice") == 0)
 	{
@@ -806,6 +811,7 @@ void Settings::save()
 	WRITE_INT_PROP(audioInputDevice);
 	WRITE_INT_PROP(audioOutputDevice);
 	WRITE_DOUBLE_PROP(audioSampleRate);
+	WRITE_DOUBLE_PROP(audioGain);
 
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
@@ -1821,6 +1827,25 @@ void Settings::setAudioSampleRate(double sampleRate)
 		return;
 	}
 	this->audioSampleRate = sampleRate;
+	save();
+}
+
+double Settings::getAudioGain()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->audioGain;
+}
+
+void Settings::setAudioGain(double gain)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->audioGain == gain)
+	{
+		return;
+	}
+	this->audioGain = gain;
 	save();
 }
 
