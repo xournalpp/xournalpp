@@ -50,6 +50,8 @@ endif ()
 ## For touch workaround, may need to be disabled for a Wayland Build
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-lX11 -lXi")
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
+	set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-lX11 -lXi -lexecinfo")
 endif ()
 
 ## Libraries ##
