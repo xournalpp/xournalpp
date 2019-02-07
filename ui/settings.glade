@@ -2,6 +2,11 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
+  <object class="GtkAdjustment" id="adjustmentAudioGain">
+    <property name="upper">10</property>
+    <property name="value">1</property>
+    <property name="step_increment">0.10000000000000001</property>
+  </object>
   <object class="GtkAdjustment" id="adjustmentSnapGridTolerance">
     <property name="lower">0.20000000000000001</property>
     <property name="upper">10</property>
@@ -1928,8 +1933,8 @@ they are not blocking!&lt;/i&gt;</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkCheckButton" id="cbHighlightPosition">
-                            <property name="label" translatable="yes">Highlight cursor position</property>
+                          <object class="GtkCheckButton" id="cbBigCursor">
+                            <property name="label" translatable="yes">Big cursor for pen</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
@@ -1943,8 +1948,8 @@ they are not blocking!&lt;/i&gt;</property>
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkCheckButton" id="cbBigCursor">
-                            <property name="label" translatable="yes">Big cursor for pen</property>
+                          <object class="GtkCheckButton" id="cbHighlightPosition">
+                            <property name="label" translatable="yes">Highlight cursor position</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
@@ -2241,7 +2246,7 @@ The Audio track is recorded to a separate folder, and linked to there.&lt;/i&gt;
                   <object class="GtkLabel" id="label60">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">&lt;i&gt;Changing the following settings has only effect for new recordings and playbacks.&lt;/i&gt;</property>
+                    <property name="label" translatable="yes">&lt;i&gt;Changes to the following settings take only effect on new recordings and playbacks.&lt;/i&gt;</property>
                     <property name="use_markup">True</property>
                     <property name="xalign">0</property>
                   </object>
@@ -2331,21 +2336,39 @@ The Audio track is recorded to a separate folder, and linked to there.&lt;/i&gt;
                         <property name="top_attach">2</property>
                       </packing>
                     </child>
+                    <child>
+                      <object class="GtkLabel" id="label61">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Gain</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="spAudioGain">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="adjustment">adjustmentAudioGain</property>
+                        <property name="climb_rate">0.10000000000000001</property>
+                        <property name="digits">2</property>
+                        <property name="numeric">True</property>
+                        <property name="value">1</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">3</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">4</property>
                   </packing>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
                 </child>
               </object>
               <packing>

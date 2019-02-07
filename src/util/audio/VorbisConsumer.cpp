@@ -1,3 +1,4 @@
+#include <cmath>
 #include "VorbisConsumer.h"
 
 VorbisConsumer::VorbisConsumer(Settings* settings, AudioQueue<int>* audioQueue)
@@ -37,6 +38,7 @@ bool VorbisConsumer::start(string filename, unsigned int inputChannels)
 
 				int buffer[64 * inputChannels];
 				int bufferLength;
+				double audioGain = this->settings->getAudioGain();
 
 				while (!(this->stopConsumer || (audioQueue->hasStreamEnded() && audioQueue->empty())))
 				{
@@ -45,6 +47,30 @@ bool VorbisConsumer::start(string filename, unsigned int inputChannels)
 					while (!audioQueue->empty())
 					{
 						this->audioQueue->pop(buffer, &bufferLength, 64 * inputChannels, inputChannels);
+
+						// apply gain
+						if (audioGain != 1.0)
+						{
+							for (int i = 0; i < 64 * inputChannels; ++i)
+							{
+								// check for overflow
+								if (std::abs(buffer[i]) < std::floor(INT_MAX / audioGain))
+								{
+									buffer[i] = static_cast<int>(buffer[i] * audioGain);
+								} else
+								{
+									// clip audio
+									if (buffer[i] > 0)
+									{
+										buffer[i] = INT_MAX;
+									} else
+									{
+										buffer[i] = INT_MIN;
+									}
+								}
+							}
+						}
+
 						sf_writef_int(sfFile, buffer, 64);
 					}
 				}
