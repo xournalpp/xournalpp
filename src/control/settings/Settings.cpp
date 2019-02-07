@@ -455,7 +455,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioGain") == 0)
 	{
-		this->audioGain = g_ascii_strtod((const char *) value, NULL);
+		this->audioGain = g_strtod((const char *) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioInputDevice") == 0)
 	{
