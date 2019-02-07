@@ -44,5 +44,3 @@ protected:
 	AudioQueue<int>* audioQueue = nullptr;
 	std::thread* consumerThread = nullptr;
 };
-
-

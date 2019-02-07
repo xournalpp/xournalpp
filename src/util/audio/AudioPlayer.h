@@ -41,5 +41,3 @@ protected:
 	VorbisProducer* vorbisProducer = nullptr;
 	std::thread stopThread;
 };
-
-

@@ -55,5 +55,3 @@ protected:
 
 	portaudio::MemFunCallbackStream<PortAudioProducer>* inputStream = nullptr;
 };
-
-

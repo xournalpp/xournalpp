@@ -41,5 +41,3 @@ protected:
 	PortAudioProducer* portAudioProducer = nullptr;
 	VorbisConsumer* vorbisConsumer = nullptr;
 };
-
-

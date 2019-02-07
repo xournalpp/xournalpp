@@ -37,5 +37,3 @@ private:
 	const int inputChannels;
 	const int outputChannels;
 };
-
-
