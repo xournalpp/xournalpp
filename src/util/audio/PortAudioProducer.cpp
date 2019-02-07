@@ -1,6 +1,6 @@
 #include "PortAudioProducer.h"
 
-PortAudioProducer::PortAudioProducer(Settings* settings, AudioQueue* audioQueue)
+PortAudioProducer::PortAudioProducer(Settings* settings, AudioQueue<int>* audioQueue)
 		: sys(portaudio::System::instance()),
 		  settings(settings),
 		  audioQueue(audioQueue)

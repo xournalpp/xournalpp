@@ -25,7 +25,7 @@
 class PortAudioProducer
 {
 public:
-	explicit PortAudioProducer(Settings* settings, AudioQueue* audioQueue);
+	explicit PortAudioProducer(Settings* settings, AudioQueue<int>* audioQueue);
 	~PortAudioProducer();
 
 	std::list<DeviceInfo> getInputDevices();
@@ -49,11 +49,9 @@ protected:
 	portaudio::AutoSystem autoSys;
 	portaudio::System& sys;
 	Settings* settings;
-	AudioQueue* audioQueue;
+	AudioQueue<int>* audioQueue;
 
 	int inputChannels = 0;
 
 	portaudio::MemFunCallbackStream<PortAudioProducer>* inputStream = nullptr;
 };
-
-

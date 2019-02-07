@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Class to save audio data in an mp3 file
+ * Class to save audio data in an opus file
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -17,16 +17,17 @@
 #include "AudioQueue.h"
 #include "DeviceInfo.h"
 
-#include <sox.h>
+#include <sndfile.h>
 
 #include <thread>
 #include <utility>
+#include <fstream>
 
-class SoxConsumer
+class VorbisConsumer
 {
 public:
-	explicit SoxConsumer(Settings* settings, AudioQueue* audioQueue);
-	~SoxConsumer();
+	explicit VorbisConsumer(Settings* settings, AudioQueue<int>* audioQueue);
+	~VorbisConsumer();
 
 public:
 	bool start(string filename, unsigned int inputChannels);
@@ -37,13 +38,9 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-	sox_signalinfo_t* inputSignal = nullptr;
-	sox_format_t* outputFile = nullptr;
 	bool stopConsumer = false;
 
 	Settings* settings = nullptr;
-	AudioQueue* audioQueue = nullptr;
+	AudioQueue<int>* audioQueue = nullptr;
 	std::thread* consumerThread = nullptr;
 };
-
-

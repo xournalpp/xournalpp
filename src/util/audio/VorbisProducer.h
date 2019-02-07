@@ -16,20 +16,21 @@
 #include "AudioQueue.h"
 #include "DeviceInfo.h"
 
-#include <sox.h>
+#include <sndfile.h>
 
 #include <thread>
 #include <utility>
+#include <fstream>
 
-class SoxProducer
+class VorbisProducer
 {
 public:
-	explicit SoxProducer(AudioQueue* audioQueue);
-	~SoxProducer();
+	explicit VorbisProducer(AudioQueue<int>* audioQueue);
+	~VorbisProducer();
 
 public:
-	void start(string filename, const DeviceInfo& outputDevice, sox_uint64_t timestamp);
-	sox_signalinfo_t* getSignalInformation();
+	void start(string filename, const DeviceInfo& outputDevice, unsigned int timestamp);
+	SF_INFO* getSignalInformation();
 	void abort();
 	void stop();
 
@@ -37,12 +38,10 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-protected:
-	sox_format_t* inputFile = nullptr;
 	bool stopProducer = false;
+	SF_INFO sfInfo;
+	SNDFILE_tag* sfFile = nullptr;
 
-	AudioQueue* audioQueue = nullptr;
+	AudioQueue<int>* audioQueue = nullptr;
 	std::thread* producerThread = nullptr;
 };
-
-

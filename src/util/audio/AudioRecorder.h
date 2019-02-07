@@ -15,7 +15,7 @@
 
 #include "AudioQueue.h"
 #include "PortAudioProducer.h"
-#include "SoxConsumer.h"
+#include "VorbisConsumer.h"
 
 #include <control/settings/Settings.h>
 
@@ -37,9 +37,7 @@ private:
 protected:
 	Settings* settings = nullptr;
 
-	AudioQueue* audioQueue = nullptr;
+	AudioQueue<int>* audioQueue = nullptr;
 	PortAudioProducer* portAudioProducer = nullptr;
-	SoxConsumer* soxConsumer = nullptr;
+	VorbisConsumer* vorbisConsumer = nullptr;
 };
-
-

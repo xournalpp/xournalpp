@@ -25,7 +25,7 @@
 class PortAudioConsumer
 {
 public:
-	explicit PortAudioConsumer(Settings* settings, AudioQueue* audioQueue);
+	explicit PortAudioConsumer(Settings* settings, AudioQueue<int>* audioQueue);
 	~PortAudioConsumer();
 
 public:
@@ -45,13 +45,9 @@ protected:
 	portaudio::AutoSystem autoSys;
 	portaudio::System& sys;
 	Settings* settings = nullptr;
-	AudioQueue* audioQueue = nullptr;
+	AudioQueue<int>* audioQueue = nullptr;
 
 	int outputChannels = 0;
-	int playbackBufferLength = 0;
-	int* playbackBuffer = nullptr;
 
 	portaudio::MemFunCallbackStream<PortAudioConsumer>* outputStream = nullptr;
 };
-
-
