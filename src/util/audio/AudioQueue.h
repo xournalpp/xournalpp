@@ -18,31 +18,111 @@
 #include <mutex>
 #include <condition_variable>
 
-class AudioQueue : protected std::deque<int>
+template <typename T>
+class AudioQueue : protected std::deque<T>
 {
 public:
-    AudioQueue();
-    ~AudioQueue();
+	AudioQueue()
+	{
+		XOJ_INIT_TYPE(AudioQueue);
+	}
 
-    void reset();
-    bool empty();
-    unsigned long size();
-    void push(int* samples, unsigned long nSamples);
-    void pop(int* returnBuffer, int* bufferLength, unsigned long nSamples, int numChannels);
+	~AudioQueue()
+	{
+		XOJ_CHECK_TYPE(AudioQueue);
 
-    void signalEndOfStream();
-    void waitForNewElements(std::unique_lock<std::mutex>& lock);
-    bool hasStreamEnded();
-    std::mutex &syncMutex();
+		XOJ_RELEASE_TYPE(AudioQueue);
+	}
+
+public:
+	void reset()
+	{
+		XOJ_CHECK_TYPE(AudioQueue);
+
+		this->notified = false;
+		this->streamEnd = false;
+		this->clear();
+	}
+
+	bool empty()
+	{
+		XOJ_CHECK_TYPE(AudioQueue);
+
+		return std::deque<T>::empty();
+	}
+
+	unsigned long size()
+	{
+		XOJ_CHECK_TYPE(AudioQueue);
+
+		return std::deque<T>::size();
+	}
+
+	void push(T* samples, unsigned long nSamples)
+	{
+		XOJ_CHECK_TYPE(AudioQueue);
+
+		for (long i = 0; i < nSamples; i++)
+		{
+			this->push_front(samples[i]);
+		}
+
+		this->notified = true;
+		this->lockCondition.notify_one();
+	}
+
+	void pop(T* returnBuffer, int* bufferLength, unsigned long nSamples, int numChannels)
+	{
+		XOJ_CHECK_TYPE(AudioQueue);
+
+		*bufferLength = std::min(nSamples, this->size() - this->size() % numChannels);
+		for (long i = 0; i < *bufferLength; i++)
+		{
+			returnBuffer[i] = this->back();
+			this->pop_back();
+		}
+		this->notified = false;
+	}
+
+	void signalEndOfStream()
+	{
+		XOJ_CHECK_TYPE(AudioQueue);
+
+		this->streamEnd = true;
+		this->notified = true;
+		this->lockCondition.notify_one();
+	}
+
+	void waitForNewElements(std::unique_lock<std::mutex>& lock)
+	{
+		XOJ_CHECK_TYPE(AudioQueue);
+
+		while (!this->notified)
+		{
+			this->lockCondition.wait(lock);
+		}
+	}
+
+	bool hasStreamEnded()
+	{
+		XOJ_CHECK_TYPE(AudioQueue);
+
+		return this->streamEnd;
+	}
+
+	std::mutex& syncMutex()
+	{
+		XOJ_CHECK_TYPE(AudioQueue);
+
+		return this->queueLock;
+	}
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-    std::mutex queueLock;
-    std::condition_variable lockCondition;
-    bool streamEnd = false;
-    bool notified = false;
+	std::mutex queueLock;
+	std::condition_variable lockCondition;
+	bool streamEnd = false;
+	bool notified = false;
 };
-
-

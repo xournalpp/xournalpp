@@ -15,22 +15,21 @@
 
 #include "AudioQueue.h"
 #include "PortAudioProducer.h"
-#include "SoxConsumer.h"
+#include "VorbisConsumer.h"
 
 #include <control/settings/Settings.h>
 
 class AudioRecorder
 {
 public:
-    explicit AudioRecorder(Settings *settings);
-    ~AudioRecorder();
+	explicit AudioRecorder(Settings* settings);
+	~AudioRecorder();
 
 public:
-    void start(string filename);
-    void stop();
-    bool isRecording();
-    std::vector<DeviceInfo> getInputDevices();
-    void setInputDevice(DeviceInfo deviceInfo);
+	bool start(string filename);
+	void stop();
+	bool isRecording();
+	vector<DeviceInfo> getInputDevices();
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -38,9 +37,7 @@ private:
 protected:
 	Settings* settings = nullptr;
 
-	AudioQueue* audioQueue = nullptr;
+	AudioQueue<int>* audioQueue = nullptr;
 	PortAudioProducer* portAudioProducer = nullptr;
-	SoxConsumer* soxConsumer = nullptr;
+	VorbisConsumer* vorbisConsumer = nullptr;
 };
-
-

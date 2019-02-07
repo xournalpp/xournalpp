@@ -20,6 +20,9 @@ AudioController::~AudioController()
 	delete this->audioRecorder;
 	this->audioRecorder = nullptr;
 
+	delete this->audioPlayer;
+	this->audioPlayer = nullptr;
+
 	XOJ_RELEASE_TYPE(AudioController);
 }
 
@@ -50,13 +53,14 @@ void AudioController::recStartStop(bool rec)
 		sprintf(buffer, "%04d-%02d-%02d_%02d-%02d-%02d", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour,
 				t->tm_min, t->tm_sec);
 		string data(buffer);
-		data += ".mp3";
+		data += ".ogg";
 
 		audioFilename = data;
 
 		g_message("Start recording");
 
 		this->getAudioRecorder()->start(getAudioFolder().str() + "/" + data);
+		// TODO use the return value of the previous call to determine which state the recording button should have
 	}
 	else if (this->isRecording())
 	{
