@@ -50,12 +50,10 @@ Execute in this folder.
 ./build-mac-integration.sh
 ````
 
-#### 4. Build SOX / PortAudio
-TODO: Manual compiling or find packages.
+#### 4. PortAudio
 
 ````bash
 ./build-portaudio.sh
-./build-sox.sh
 ````
 
 If there is an error like:
@@ -65,6 +63,7 @@ https://stackoverflow.com/questions/17980759/xcode-select-active-developer-direc
 https://github.com/VCVRack/Rack/issues/144
 
 **Because autoreconf may not run easy, may you change configure directly at Line 15866**
+(search for "Could not find 10.5 to 10.12 SDK")
 
 Add the following to Makefile.in at line 261
 
@@ -81,6 +80,13 @@ elif xcodebuild -version -sdk macosx10.14 Path >/dev/null 2>&1 ; then
 export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
 autoreconf -if && ./configure --enable-cxx --prefix=$HOME/gtk/inst
 ````
+
+#### 5. PortAudio
+
+````bash
+./build-sox.sh
+````
+
 
 ### Build Xournal++ and .app
 ````bash

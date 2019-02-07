@@ -9,6 +9,6 @@ tar xzf pa_stable_*.tgz
 
 cd portaudio
 
-./configure --enable-cxx --prefix=$HOME/gtk/inst
+./configure --enable-cxx --disable-mac-universal --prefix=$HOME/gtk/inst
 make -j2
 make install
