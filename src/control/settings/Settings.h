@@ -222,6 +222,9 @@ public:
 	void setPresentationMode(bool presentationMode);
 	bool isPresentationMode();
 
+	void setPairsOffset(int numPairsOffset);
+	int getPairsOffset();
+	
 	void setViewColumns(int numColumns);
 	int getViewColumns();
 	
@@ -478,6 +481,11 @@ private:
 	 */
 	bool presentationMode;
 
+	/**
+	 *  Offsets first page ( to align pairing )
+	 */
+	int numPairsOffset;	
+	
 	/**
 	 *  Displays multiple columns
 	 */

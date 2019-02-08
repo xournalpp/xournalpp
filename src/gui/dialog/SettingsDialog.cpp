@@ -180,6 +180,9 @@ void SettingsDialog::load()
 	GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
 
+	GtkWidget* spPairsOffset = get("spPairsOffset");
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spPairsOffset), settings->getPairsOffset());
+	
 	GtkWidget* spSnapRotationTolerance = get("spSnapRotationTolerance");
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapRotationTolerance),settings->getSnapRotationTolerance());
 
@@ -441,6 +444,12 @@ void SettingsDialog::save()
 	int autosaveTimeout = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout));
 	settings->setAutosaveTimeout(autosaveTimeout);
 
+	GtkWidget* spPairsOffset = get("spPairsOffset");
+	int numPairsOffset = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spPairsOffset));
+	settings->setPairsOffset(numPairsOffset);
+
+	
+	
 	settings->setDisplayDpi(dpi);
 
 	for (ButtonConfigGui* bcg : this->buttonConfigs)

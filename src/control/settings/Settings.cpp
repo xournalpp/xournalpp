@@ -50,6 +50,8 @@ void Settings::loadDefault()
 
 	this->numColumns = 1;
 	
+	this->numPairsOffset = 0;
+	
 	this->displayDpi = 72;
 
 	this->font.setName(DEFAULT_FONT);
@@ -328,9 +330,17 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->scrollbarOnLeft = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "numColumns") == 0)
+	{
+		this->numColumns = g_ascii_strtoll((const char*) value, NULL, 10);
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "showTwoPages") == 0)
 	{
 		this->showTwoPages = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "numPairsOffset") == 0)
+	{
+		this->numPairsOffset = g_ascii_strtoll((const char*) value, NULL, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "presentationMode") == 0)
 	{
@@ -743,7 +753,9 @@ void Settings::save()
 
 	WRITE_BOOL_PROP(sidebarOnRight);
 	WRITE_BOOL_PROP(scrollbarOnLeft);
+	WRITE_INT_PROP(numColumns);
 	WRITE_BOOL_PROP(showTwoPages);
+	WRITE_INT_PROP(numPairsOffset);
 	WRITE_BOOL_PROP(presentationMode);
 
 	WRITE_STRING_PROP(fullscreenHideElements);
@@ -1396,6 +1408,26 @@ void Settings::setPresureSensitivity(gboolean presureSensitivity)
 	this->presureSensitivity = presureSensitivity;
 
 	save();
+}
+
+void Settings::setPairsOffset(int numOffset)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->numPairsOffset == numOffset)
+	{
+		return;
+	}
+
+	this->numPairsOffset = numOffset;
+	save();
+}
+
+int Settings::getPairsOffset()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->numPairsOffset;
 }
 
 void Settings::setViewColumns(int numColumns)

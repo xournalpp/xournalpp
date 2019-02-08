@@ -192,6 +192,7 @@ void Layout::layoutPages()
 {
 	XOJ_CHECK_TYPE(Layout);
 
+	bool  alignColumns = true;
 	int y = 0;
 
 	int len = this->view->viewPagesLen;
@@ -201,30 +202,26 @@ void Layout::layoutPages()
 	bool horizontalSpace = settings->getAddHorizontalSpace();
 	bool dualPage = settings->isShowTwoPages();
 	int columns = settings->getViewColumns();
-	int dualoffset = 0;
+	int pairsOffset = settings->getPairsOffset();
+	int pagesOffset = 0;
 
 	int size[columns];
 	for ( int i =0; i< columns; i++){  size[i] = 0;  }
 
 	
-	if (len < columns)
+	
+	if (dualPage )
 	{
-		columns = len;
+		pagesOffset = pairsOffset % columns;
 	}
+
 
 	// calculate maximum size
 	for (int i = 0; i < len; i++)
 	{
 		XojPageView* v = this->view->viewPages[i];
 		
-		if (dualPage && len >1)		//offset 1st page
-		{
-			int future_prefs_setting_offset = 1;							//TODO  TODO  TODO  TODO  TODO  TODO  TODO  
-			dualoffset = future_prefs_setting_offset%columns;
-			dualoffset = MIN( dualoffset, len );
-		}
-
-		int rId = (i+ dualoffset) % columns;
+		int rId = (i+ pagesOffset) % columns;
 
 		if (size[rId] < v->getDisplayWidth())
 		{
@@ -238,17 +235,14 @@ void Layout::layoutPages()
 
 	y += XOURNAL_PADDING;
 
-	int width = XOURNAL_PADDING *2 +    ( columns>1?(columns-1):0 ) * XOURNAL_PADDING_BETWEEN;
-	for (int c = 0; c<columns;c++) width+= size[c];
-	g_message("entire width required = %d ", width);
+	int totalWidth = XOURNAL_PADDING *2 +    ( columns>1?(columns-1):0 ) * XOURNAL_PADDING_BETWEEN;
+	for (int c = 0; c<columns;c++) totalWidth+= size[c];
 	
-	int offsetwidth =  dualoffset * XOURNAL_PADDING_BETWEEN;
-	for (int c = 0; c<dualoffset;c++) offsetwidth+= size[c];
-	g_message("initial offset = %d ", offsetwidth);
+
 
 	Rectangle visRect = getVisibleRect();
 
-	marginLeft = MAX(XOURNAL_PADDING, (visRect.width - width) / 2.f);
+	marginLeft = MAX(XOURNAL_PADDING, (visRect.width - totalWidth) / 2.f);
 
 	if (horizontalSpace)
 	{
@@ -263,54 +257,78 @@ void Layout::layoutPages()
 		marginTop = MAX(marginTop, visRect.height * 0.75);
 	}
 
-	int x = offsetwidth;
-	g_message("\n****************\nx starting at x = %d ", x);
+	int x;  
+	int height = 0;	
+		
 	for (int i = 0; i < len; i++)
 	{
 		XojPageView* v = this->view->viewPages[i];
-
-		int height = 0;
+		int vDisplayWidth = v->getDisplayWidth();
+		
+		if( i ==0 ) //calculate initial offset for first page
 		{
-			int paddingoffset;
-			int paddingremains;
-			if (dualPage && len >1){																			// dual page mode...
-				if ((i+dualoffset)%2 == 0 )	paddingoffset = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW;	//right justify left pages
-				else paddingoffset = XOURNAL_ROOM_FOR_SHADOW;													// left justify right pages
+			if( alignColumns ){
+				x =  XOURNAL_PADDING + pagesOffset * XOURNAL_PADDING_BETWEEN;
+				for (int c = 0; c<pagesOffset;c++) x+= size[c];
 			}
 			else{
-				paddingoffset = XOURNAL_PADDING_BETWEEN/2;      //center justify
+				x =  XOURNAL_PADDING + (XOURNAL_PADDING_BETWEEN +  vDisplayWidth )*  pagesOffset;
+			}
+			
+		}
+		
+			
+		{
+			int paddingLeft;
+			int paddingRight;
+			int columnPadding = 0;
+			if(alignColumns) {
+				columnPadding = (size[(i+pagesOffset)%columns] - vDisplayWidth );
+			}
+			if (dualPage && len >1){	// dual page mode
+				if ((i+pagesOffset)%2 == 0 ){ 		//align right
+					paddingLeft = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;	
+					paddingRight = XOURNAL_ROOM_FOR_SHADOW;
+				}
+				else{								//align left
+					paddingLeft = XOURNAL_ROOM_FOR_SHADOW;
+					paddingRight = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
+				}
+			}
+			else{	// not dual page mode - center
+				paddingLeft = XOURNAL_PADDING_BETWEEN/2 + columnPadding/2;      //center justify
+				paddingRight = XOURNAL_PADDING_BETWEEN - paddingLeft + columnPadding/2;
 			}
 
-			paddingremains = XOURNAL_PADDING_BETWEEN - paddingoffset;
-			x += (size[(i+dualoffset)%columns] - v->getDisplayWidth() ) / 2 + paddingoffset;
-			g_message("other columns x = %d ", x);
-
+			
+			x += paddingLeft;
+			
 			
 			v->layout.setX(x);
 			v->layout.setY(y);
-			v->layout.setMarginLeft(marginLeft);
-			v->layout.setMarginTop(marginTop);
 
-			height = v->getDisplayHeight();		
-			x += v->getDisplayWidth() + paddingremains;
+			height = MAX( height, v->getDisplayHeight());		
+			x += vDisplayWidth + paddingRight;
+		
 		}
 			
 		
-        if( (i+dualoffset)%columns +1 == columns    ||   i == len -1  ){     //   end of row or last page of document
+        if( (i+pagesOffset)%columns +1 == columns    ||   i == len -1  ){     //   end of row or last page of document: calc total height.
 			y += height;
-
 			y += XOURNAL_PADDING_BETWEEN + verticalSpaceBetweenSlides;
 			
-			x = 0; // new row
+			// starting a new row
+			x = XOURNAL_PADDING; 
+			height = 0;
 		}
 	}
 
-	int height = 2 * marginTop + XOURNAL_PADDING + y + XOURNAL_PADDING;
+	int totalHeight = 2 * marginTop + XOURNAL_PADDING + y + XOURNAL_PADDING;
 
-	width += 2 * marginLeft;
-
-	this->setLayoutSize(width, height);
-	this->view->pagePosition->update(this->view->viewPages, len, height);
+	totalWidth += 2 * marginLeft;
+	
+	this->setLayoutSize(totalWidth, totalHeight);
+	this->view->pagePosition->update(this->view->viewPages, len, totalHeight);
 }
 
 void Layout::setLayoutSize(int width, int height)

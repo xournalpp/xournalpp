@@ -59,6 +59,7 @@ enum ActionGroup
 	GROUP_FILL,
 	
 	GROUP_COLUMNS,
+
 };
 
 ActionGroup ActionGroup_fromString(string value);

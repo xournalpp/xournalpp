@@ -517,6 +517,11 @@ ActionType ActionType_fromString(string value)
 		return ACTION_RECSTOP;
 	}
 
+	if (value == "ACTION_SET_PAIRS_OFFSET")
+	{
+		return ACTION_SET_PAIRS_OFFSET;
+	}
+
 	if (value == "ACTION_SET_COLUMNS")
 	{
 		return ACTION_SET_COLUMNS;
@@ -1098,6 +1103,11 @@ string ActionType_toString(ActionType value)
 	if (value == ACTION_RECSTOP)
 	{
 		return "ACTION_RECSTOP";
+	}
+
+	if (value == ACTION_SET_PAIRS_OFFSET)
+	{
+		return "ACTION_SET_PAIRS_OFFSET";
 	}
 
 	if (value == ACTION_SET_COLUMNS)

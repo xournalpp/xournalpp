@@ -345,6 +345,8 @@ void Control::initWindow(MainWindow* win)
 	// Disable undo buttons
 	undoRedoChanged();
 
+	setViewColumns(settings->getViewColumns());
+	
 	setViewTwoPages(settings->isShowTwoPages());
 	setViewPresentationMode(settings->isPresentationMode());
 
@@ -832,7 +834,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	case ACTION_VIEW_TWO_PAGES:
 		setViewTwoPages(enabled);
 		break;
-
+		
 	case ACTION_VIEW_PRESENTATION_MODE:
 		setViewPresentationMode(enabled);
 		break;
@@ -1491,14 +1493,38 @@ void Control::setViewPresentationMode(bool presentationMode)
 	scrollHandler->scrollToPage(currentPage);
 }
 
+void Control::setPairsOffset(int numOffset)
+{
+	XOJ_CHECK_TYPE(Control);
 
+	settings->setPairsOffset(numOffset);
+	fireActionSelected(GROUP_TWOPAGES, numOffset ? ACTION_SET_PAIRS_OFFSET: ACTION_NOT_SELECTED);
+	int currentPage = getCurrentPageNo();
+	win->getXournal()->layoutPages();
+	scrollHandler->scrollToPage(currentPage);
+}
 
 void Control::setViewColumns(int numColumns)
 {
 	XOJ_CHECK_TYPE(Control);
 
 	settings->setViewColumns(numColumns);
-	fireActionSelected(GROUP_COLUMNS, numColumns ? ACTION_SET_COLUMNS: ACTION_NOT_SELECTED);
+	
+	ActionType action;
+	
+	switch(numColumns){
+		case 1: action = ACTION_SET_COLUMNS_1; break;
+		case 2: action = ACTION_SET_COLUMNS_2; break;
+		case 3: action = ACTION_SET_COLUMNS_3; break;
+		case 4: action = ACTION_SET_COLUMNS_4; break;
+		case 5: action = ACTION_SET_COLUMNS_5; break;
+		case 6: action = ACTION_SET_COLUMNS_6; break;
+		case 7: action = ACTION_SET_COLUMNS_7; break;
+		case 8: action = ACTION_SET_COLUMNS_8; break;
+		default: action = ACTION_SET_COLUMNS;
+	}
+	
+	fireActionSelected(GROUP_COLUMNS, action);
 
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();

@@ -365,89 +365,83 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
-                              <object class="GtkRadioMenuItem" id="menuViewColumns1">
+                              <object class="GtkCheckMenuItem" id="menuViewColumns1">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_1</property>
                                 <property name="use_underline">True</property>
-                                <signal name="group-changed" handler="ACTION_SET_COLUMNS_1" swapped="no"/>
+                                <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_SET_COLUMNS_1:GROUP_COLUMNS" swapped="no"/>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="menuViewColumns2">
+                              <object class="GtkCheckMenuItem" id="menuViewColumns2">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_2</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">menuViewColumns1</property>
-                                <signal name="group-changed" handler="ACTION_SET_COLUMNS_2" swapped="no"/>
+                                <signal name="toggled" handler="ACTION_SET_COLUMNS_2:GROUP_COLUMNS" swapped="no"/>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="menuViewColumns3">
+                              <object class="GtkCheckMenuItem" id="menuViewColumns3">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_3</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">menuViewColumns1</property>
-                                <signal name="group-changed" handler="ACTION_SET_COLUMNS_3" swapped="no"/>
+                                <signal name="toggled" handler="ACTION_SET_COLUMNS_3:GROUP_COLUMNS" swapped="no"/>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="menuViewColumns4">
+                              <object class="GtkCheckMenuItem" id="menuViewColumns4">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_4</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">menuViewColumns1</property>
-                                <signal name="group-changed" handler="ACTION_SET_COLUMNS_4" swapped="no"/>
+                                <signal name="toggled" handler="ACTION_SET_COLUMNS_4:GROUP_COLUMNS" swapped="no"/>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="menuViewColumns5">
+                              <object class="GtkCheckMenuItem" id="menuViewColumns5">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_5</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">menuViewColumns1</property>
-                                <signal name="group-changed" handler="ACTION_SET_COLUMNS_5" swapped="no"/>
+                                <signal name="toggled" handler="ACTION_SET_COLUMNS_5:GROUP_COLUMNS" swapped="no"/>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="menuViewColumns6">
+                              <object class="GtkCheckMenuItem" id="menuViewColumns6">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">6</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">menuViewColumns1</property>
-                                <signal name="group-changed" handler="ACTION_SET_COLUMNS_6" swapped="no"/>
+                                <signal name="toggled" handler="ACTION_SET_COLUMNS_6:GROUP_COLUMNS" swapped="no"/>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="menuViewColumns7">
+                              <object class="GtkCheckMenuItem" id="menuViewColumns7">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">7</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">menuViewColumns1</property>
-                                <signal name="group-changed" handler="ACTION_SET_COLUMNS_7" swapped="no"/>
+                                <signal name="toggled" handler="ACTION_SET_COLUMNS_7:GROUP_COLUMNS" swapped="no"/>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="menuViewColumns8">
+                              <object class="GtkCheckMenuItem" id="menuViewColumns8">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">8</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">menuViewColumns1</property>
-                                <signal name="group-changed" handler="ACTION_SET_COLUMNS_8" swapped="no"/>
+                                <signal name="toggled" handler="ACTION_SET_COLUMNS_8:GROUP_COLUMNS" swapped="no"/>
                               </object>
                             </child>
                           </object>
