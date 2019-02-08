@@ -2,18 +2,17 @@
 
 #include "PagePosition.h"
 #include "PagePositionCache.h"
-#include "PageViewIndex.h"
 
-#include <gtk/gtk.h>
+
 
 PagePositionHandler::PagePositionHandler()
 {
 	XOJ_INIT_TYPE(PagePositionHandler);
 
-	this->dataCount = 0;
-	this->dataAllocSize = 0;
-	this->data = NULL;
-	this->maxY = 0;
+	dataCount = 0;
+	dataAllocSize = 0;
+	data = NULL;
+	maxY = 0;
 }
 
 PagePositionHandler::~PagePositionHandler()
@@ -29,95 +28,61 @@ void PagePositionHandler::freeData()
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-	for (int i = 0; i < this->dataCount; i++)
+	for (int i = 0; i < dataCount; i++)
 	{
-		delete this->data[i];
+		delete data[i];
 	}
 
-	g_free(this->data);
-	this->data = NULL;
-	this->dataCount = 0;
-	this->dataAllocSize = 0;
+	g_free(data);
+	data = NULL;
+	dataCount = 0;
+	dataAllocSize = 0;
 }
 
-void PagePositionHandler::update(XojPageView** viewPages, int viewPagesLen, int maxY)
+void PagePositionHandler::update(XojPageView** viewPages, int viewPagesLen, int theMaxY)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
 	freeData();
 
-	this->maxY = maxY;
-
-	PagePosition* lastPp = new PagePosition();
-	addData(lastPp);
-
+	maxY = theMaxY;
+	
 	for (int i = 0; i < viewPagesLen; i++)
 	{
-
 		XojPageView* pv = viewPages[i];
-
-		if (!lastPp->add(pv))
-		{
-			PagePosition* pp = new PagePosition(pv);
-			lastPp->y2 = pp->y1 - 1;
-			lastPp = pp;
-			addData(pp);
-		}
+		PagePosition* pp = new PagePosition(pv);
+		addData(pp);
 	}
 
-	PagePosition* pp = new PagePosition();
-	pp->y1 = lastPp->y2 + 1;
-	pp->y2 = maxY;
-	addData(pp);
 }
 
 XojPageView* PagePositionHandler::getBestMatchingView(int x, int y, int width, int height)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-	if (y + height < 0 || y > this->maxY)
-	{
-		return NULL;
-	}
-
-	int id = -1;
-	PagePosition* pp1 = binarySearch(this->data, 0, this->dataCount - 1, y, id);
-	id = -1;
-	PagePosition* pp2 = binarySearch(this->data, 0, this->dataCount - 1, y + height, id);
-
-	PageViewIndex index(x, y, width, height);
-	if (pp1 != NULL)
-	{
-		index.add(pp1, y);
-	}
-
-	if (pp2 != NULL && pp1 != pp2)
-	{
-		index.add(pp2, y + height);
-	}
-
-	return index.getHighestIntersects();
+	// Does this simplification result in expected behaviour? 
+	return getViewAt( x + width/2, y + height/2 );
 }
 
 XojPageView* PagePositionHandler::getViewAt(int x, int y, PagePositionCache* cache)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-	if (y < 0 || y > this->maxY)
+	if (y < 0 || y >maxY)
 	{
 		return NULL;
 	}
 
-	if (cache && cache->ppId >= 0 && cache->ppId < this->dataCount)
+	if (cache && cache->ppId >= 0 && cache->ppId < dataCount)
 	{
-		if (this->data[cache->ppId]->containsY(y))
+		if (data[cache->ppId]->containsPoint(x, y))
 		{
-			return this->data[cache->ppId]->getViewAt(x, y);
+			return data[cache->ppId]->pv;
 		}
 	}
 
 	int index = -1;
-	PagePosition* pp = binarySearch(this->data, 0, this->dataCount - 1, y, index);
+	PagePosition* pp = linearSearch(x,y, index);
 
 
 	if (cache)
@@ -129,48 +94,43 @@ XojPageView* PagePositionHandler::getViewAt(int x, int y, PagePositionCache* cac
 		return NULL;
 	}
 
-	return pp->getViewAt(x, y);
+	return pp->pv;
 }
 
-PagePosition* PagePositionHandler::binarySearch(PagePosition** sortedArray, int first, int last, int y, int& index)
+PagePosition* PagePositionHandler::linearSearch( int x,int y, int& index)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-	while (first <= last)
-	{
-		int mid = (first + last) / 2; // compute mid point.
-		if (sortedArray[mid]->isYSmallerThan(y))
-		{
-			first = mid + 1; // repeat search in top half.
-		}
-		else if (sortedArray[mid]->isYGraterThan(y))
-		{
-			last = mid - 1; // repeat search in bottom half.
-		}
-		else
-		{
-			index = mid;
-			return sortedArray[mid]; // found it. return position
-		}
-	}
+		
+			for ( int i = 0; i <dataCount; i++ )
+			{
+				if ( data[i]->containsPoint( x , y ) ){
+					index = i;
+					return data[i];
+				}
+			}
+			
+		
 	return NULL; // nothing found
 }
+
+
 
 void PagePositionHandler::addData(PagePosition* p)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-	if (this->dataCount >= this->dataAllocSize - 1)
+	if (dataCount >= dataAllocSize - 1)
 	{
-		this->allocDataSize(this->dataAllocSize + 100);
+		allocDataSize(dataAllocSize + 100);
 	}
-	this->data[this->dataCount++] = p;
+	data[dataCount++] = p;
 }
 
 void PagePositionHandler::allocDataSize(int size)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-	this->dataAllocSize = size;
-	this->data = (PagePosition**) g_realloc(this->data, this->dataAllocSize * sizeof(PagePosition*));
+	dataAllocSize = size;
+	data = (PagePosition**) g_realloc(data, dataAllocSize * sizeof(PagePosition*));
 }

@@ -3,7 +3,7 @@
  *
  * Knows the positions of pages in the view
  *
- * @author Xournal++ Team
+ * @author Xournal++ Team, Justin Jones
  * https://github.com/xournalpp/xournalpp
  *
  * @license GNU GPLv2 or later
@@ -20,8 +20,8 @@ class XojPageView;
 /**
  * @brief Look up XojPageView's from display coordinates
  * 
- * The PagePositionHandler maintains a set of PagePosition%s
- * sorted according to their respective intervals
+ * The PagePositionHandler maintains a set of PagePosition's
+ * not necessarily sorted.
  */
 class PagePositionHandler
 {
@@ -43,7 +43,9 @@ private:
 	void allocDataSize(int size);
 	void freeData();
 
-	PagePosition* binarySearch(PagePosition** sortedArray, int first, int last, int y, int& index);
+	// the PagePositions are no longer sorted for the binary search ( due to LayoutMapper ) but a brute force search of 300 pages is fine for when the cached result fails.
+	PagePosition* linearSearch(int x, int y, int& index); 
+	
 
 private:
 	XOJ_TYPE_ATTRIB;

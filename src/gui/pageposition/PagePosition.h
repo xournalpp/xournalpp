@@ -3,7 +3,7 @@
  *
  * A page position (a vertical rect)
  *
- * @author Xournal++ Team
+ * @author Xournal++ Team, Justin Jones
  * https://github.com/xournalpp/xournalpp
  *
  * @license GNU GPLv2 or later
@@ -21,52 +21,30 @@ class XojPageView;
 class PagePosition
 {
 public:
-	PagePosition();
 	PagePosition(XojPageView* pv);
+	PagePosition();
 	virtual ~PagePosition();
 
 public:
-	/**
-	 * Adds a XojPageView to this PagePosition provided that the
-	 * y interval is not split up
-	 * 
-	 * @return whether or not the XojPageView was added
-	 */
-	bool add(XojPageView* pv);
 
 	/**
-	 * Returns whether or not the given y value is in
-	 * the current interval
+	 * Returns whether or not the given x,y value is in
+	 * this pageview
 	 */
-	bool containsY(int y) const;
+	bool containsPoint(int x, int y) const;
 
-	/**
-	 * Returns whether the given y value is below the
-	 * current interval
-	 */
-	bool isYSmallerThan(int y) const;
-
-	/**
-	 * Returns whether the given y value is above the
-	 * current interval
-	 */
-	bool isYGraterThan(int y) const;
-
-	/**
-	 * Returns the XojPageView containing the given
-	 * point display point
-	 */
-	XojPageView* getViewAt(int x, int y);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	// the minimal/maximal y coordinates
+	// the minimal/maximal y and x  coordinates
 	int y1;
 	int y2;
-
-	// a list of XojPageView
-	std::vector<XojPageView*> views;
+	int x1;
+	int x2;
+	
+	// the associated XojPageView
+	XojPageView* pv;
 
 	friend class PagePositionHandler;
 };

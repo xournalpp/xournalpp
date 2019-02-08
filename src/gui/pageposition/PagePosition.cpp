@@ -2,23 +2,27 @@
 
 #include "gui/PageView.h"
 
-PagePosition::PagePosition(XojPageView* pv)
+PagePosition::PagePosition(XojPageView* aPv)
 {
 	XOJ_INIT_TYPE(PagePosition);
 
-	this->y1 = pv->getY();
-	this->y2 = this->y1 + pv->getDisplayHeight();
+	y1 = aPv->getY();
+	y2 = y1 + aPv->getDisplayHeight();
+	x1 = aPv->getX();
+	x2 = x1 + aPv->getDisplayWidth();
 
-	this->views.push_back(pv);
+	pv = aPv;
 }
 
 PagePosition::PagePosition()
 {
 	XOJ_INIT_TYPE(PagePosition);
 
-	this->y1 = 0;
-	this->y2 = 0;
+	y1 = y2 = x1 =x2 = 0;
+	pv = 0;	
+	
 }
+
 
 PagePosition::~PagePosition()
 {
@@ -27,57 +31,12 @@ PagePosition::~PagePosition()
 	XOJ_RELEASE_TYPE(PagePosition);
 }
 
-bool PagePosition::add(XojPageView* pv)
+
+
+bool PagePosition::containsPoint(int x, int y) const
 {
 	XOJ_CHECK_TYPE(PagePosition);
 
-	int y1 = pv->getY();
-	int y2 = y1 + pv->getDisplayHeight();
-
-	if (containsY(y1) || containsY(y2) || pv->containsY(this->y1) || pv->containsY(this->y2))
-	{
-		this->views.push_back(pv);
-
-		this->y1 = MIN(this->y1, y1);
-		this->y2 = MAX(this->y2, y2);
-
-		return true;
-	}
-
-	return false;
+	return (     y >= y1      &&       y <= y2      &&       x>= x1       &&       x <= x2    )  ;
 }
 
-XojPageView* PagePosition::getViewAt(int x, int y)
-{
-	XOJ_CHECK_TYPE(PagePosition);
-
-	for (XojPageView* v : this->views)
-	{
-		if (v->containsPoint(x, y))
-		{
-			return v;
-		}
-	}
-	return NULL;
-}
-
-bool PagePosition::containsY(int y) const
-{
-	XOJ_CHECK_TYPE(PagePosition);
-
-	return (y >= this->y1 && y <= this->y2);
-}
-
-bool PagePosition::isYSmallerThan(int y) const
-{
-	XOJ_CHECK_TYPE(PagePosition);
-
-	return y > this->y2;
-}
-
-bool PagePosition::isYGraterThan(int y) const
-{
-	XOJ_CHECK_TYPE(PagePosition);
-
-	return y < this->y1;
-}

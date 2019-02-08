@@ -1,9 +1,9 @@
 /*
  * Xournal++
  *
- * Cache for Query the page position handler
+ * Cache for Query the page osition handler
  *
- * @author Xournal++ Team
+ * @author Xournal++ Team, Justin Jones
  * https://github.com/xournalpp/xournalpp
  *
  * @license GNU GPLv2 or later
