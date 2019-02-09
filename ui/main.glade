@@ -355,6 +355,92 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkMenuItem" id="menuitemLayout">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Layout</property>
+                        <property name="use_underline">True</property>
+                        <child type="submenu">
+                          <object class="GtkMenu" id="layoutmenu">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <child>
+                              <object class="GtkCheckMenuItem" id="menuLayoutHorizontal">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">_Horizontal</property>
+                                <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_SET_LAYOUT_HORIZONTAL:GROUP_LAYOUT_HORIZONTAL" swapped="no"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckMenuItem" id="menuLayoutVertical">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">_Vertical</property>
+                                <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_SET_LAYOUT_VERTICAL:GROUP_LAYOUT_HORIZONTAL" swapped="no"/>
+                              </object>
+                            </child>
+                            <child>
+                                <object class="GtkSeparatorMenuItem" id="separatormenuitemLayout1">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckMenuItem" id="menuLayoutLR">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">_Left To Right</property>
+                                <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_SET_LAYOUT_L2R:GROUP_LAYOUT_LR" swapped="no"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckMenuItem" id="menuLayoutRL">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">_Right To Left</property>
+                                <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_SET_LAYOUT_R2L:GROUP_LAYOUT_LR" swapped="no"/>
+                              </object>
+                            </child>
+                            <child>
+                                <object class="GtkSeparatorMenuItem" id="separatormenuitemLayout2">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckMenuItem" id="menuLayoutTB">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">_Top to Bottom</property>
+                                <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_SET_LAYOUT_T2B:GROUP_LAYOUT_TB" swapped="no"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckMenuItem" id="menuLayoutBT">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">_Bottom to Top</property>
+                                <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_SET_LAYOUT_B2T:GROUP_LAYOUT_TB" swapped="no"/>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkMenuItem" id="menuitemViewColumns">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>

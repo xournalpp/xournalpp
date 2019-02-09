@@ -12,7 +12,7 @@
 #pragma once
 
 enum LayoutType {					//		1		2		4
-	Horizontal = 0,							//									
+	Horizontal = 0,						//									
 	Vertical = 1,							//		V							
 	Horizontal_RL = 2,				//				RL			
 	Vertical_RL = 3,						//		V		RL		
@@ -59,6 +59,11 @@ public:
 	 */	
 	LayoutMapper( int pages, int rORc, bool isR , int off, LayoutType type, bool paired );
 	
+	/**
+	 *  LayoutMapper with individual layout arguments
+	 */
+	LayoutMapper( int pages, int rORc, bool isR , int off, bool vertical, bool r2l, bool b2t, bool isPaired);
+	
 	
 	
 	
@@ -71,5 +76,10 @@ public:
 	 * @return Page index to put at coordinates 
 	 */
 	int map(int x, int y);
+	
+	
+private:
+	//called by constructors
+	void layoutMapperInit( int pages, int rORc, bool isR , int off, LayoutType type, bool paired );
 		
 };

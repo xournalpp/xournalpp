@@ -567,6 +567,36 @@ ActionType ActionType_fromString(string value)
 		return ACTION_SET_COLUMNS_8;
 	}
 
+	if (value == "ACTION_SET_LAYOUT_HORIZONTAL")
+	{
+		return ACTION_SET_LAYOUT_HORIZONTAL;
+	}
+
+	if (value == "ACTION_SET_LAYOUT_VERTICAL")
+	{
+		return ACTION_SET_LAYOUT_VERTICAL;
+	}
+
+	if (value == "ACTION_SET_LAYOUT_L2R")
+	{
+		return ACTION_SET_LAYOUT_L2R;
+	}
+
+	if (value == "ACTION_SET_LAYOUT_R2L")
+	{
+		return ACTION_SET_LAYOUT_R2L;
+	}
+
+	if (value == "ACTION_SET_LAYOUT_T2B")
+	{
+		return ACTION_SET_LAYOUT_T2B;
+	}
+
+	if (value == "ACTION_SET_LAYOUT_B2T")
+	{
+		return ACTION_SET_LAYOUT_B2T;
+	}
+
 	if (value == "ACTION_ABOUT")
 	{
 		return ACTION_ABOUT;
@@ -1153,6 +1183,36 @@ string ActionType_toString(ActionType value)
 	if (value == ACTION_SET_COLUMNS_8)
 	{
 		return "ACTION_SET_COLUMNS_8";
+	}
+
+	if (value == ACTION_SET_LAYOUT_HORIZONTAL)
+	{
+		return "ACTION_SET_LAYOUT_HORIZONTAL";
+	}
+
+	if (value == ACTION_SET_LAYOUT_VERTICAL)
+	{
+		return "ACTION_SET_LAYOUT_VERTICAL";
+	}
+
+	if (value == ACTION_SET_LAYOUT_L2R)
+	{
+		return "ACTION_SET_LAYOUT_L2R";
+	}
+
+	if (value == ACTION_SET_LAYOUT_R2L)
+	{
+		return "ACTION_SET_LAYOUT_R2L";
+	}
+
+	if (value == ACTION_SET_LAYOUT_T2B)
+	{
+		return "ACTION_SET_LAYOUT_T2B";
+	}
+
+	if (value == ACTION_SET_LAYOUT_B2T)
+	{
+		return "ACTION_SET_LAYOUT_B2T";
 	}
 
 	if (value == ACTION_ABOUT)

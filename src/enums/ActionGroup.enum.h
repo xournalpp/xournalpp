@@ -59,6 +59,13 @@ enum ActionGroup
 	GROUP_FILL,
 	
 	GROUP_COLUMNS,
+	
+	GROUP_LAYOUT_HORIZONTAL,
+	
+	GROUP_LAYOUT_LR,
+	
+	GROUP_LAYOUT_TB,
+	
 
 };
 

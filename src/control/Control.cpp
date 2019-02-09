@@ -347,6 +347,13 @@ void Control::initWindow(MainWindow* win)
 
 	setViewColumns(settings->getViewColumns());
 	
+	
+	setViewLayoutVert(settings->getViewLayoutVert());
+	setViewLayoutR2L(settings->getViewLayoutR2L());
+	setViewLayoutB2T(settings->getViewLayoutB2T());
+	
+	
+	
 	setViewTwoPages(settings->isShowTwoPages());
 	setViewPresentationMode(settings->isPresentationMode());
 
@@ -882,6 +889,29 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		setViewColumns(8);
 		break;
 		
+	case ACTION_SET_LAYOUT_HORIZONTAL:
+		setViewLayoutVert(false);
+		break;	
+		
+	case ACTION_SET_LAYOUT_VERTICAL:
+		setViewLayoutVert(true);
+		break;	
+
+	case ACTION_SET_LAYOUT_L2R:
+		setViewLayoutR2L(false);
+		break;	
+
+	case ACTION_SET_LAYOUT_R2L:
+		setViewLayoutR2L(true);
+		break;	
+
+	case ACTION_SET_LAYOUT_T2B:
+		setViewLayoutB2T(false);
+		break;	
+
+	case ACTION_SET_LAYOUT_B2T:
+		setViewLayoutB2T(true);
+		break;	
 
 		
 	case ACTION_RECSTOP:
@@ -1531,6 +1561,61 @@ void Control::setViewColumns(int numColumns)
 	scrollHandler->scrollToPage(currentPage);
 }
 
+void Control::setViewLayoutVert(bool vert)
+{
+	XOJ_CHECK_TYPE(Control);
+
+	settings->setViewLayoutVert(vert);
+	
+	ActionType action;
+		
+	if(vert){ 	action = ACTION_SET_LAYOUT_VERTICAL;}
+	else {action = ACTION_SET_LAYOUT_HORIZONTAL;}
+	
+	fireActionSelected(GROUP_LAYOUT_HORIZONTAL, action);
+
+	int currentPage = getCurrentPageNo();
+	win->getXournal()->layoutPages();
+	scrollHandler->scrollToPage(currentPage);
+}
+
+void Control::setViewLayoutR2L(bool r2l)
+{
+	XOJ_CHECK_TYPE(Control);
+
+	settings->setViewLayoutR2L(r2l);
+	
+	ActionType action;
+	
+	if(r2l){ 	action = ACTION_SET_LAYOUT_R2L;}
+	else {action = ACTION_SET_LAYOUT_L2R;}
+	
+	
+	fireActionSelected(GROUP_LAYOUT_LR, action);
+
+	int currentPage = getCurrentPageNo();
+	win->getXournal()->layoutPages();
+	scrollHandler->scrollToPage(currentPage);
+}
+
+void Control::setViewLayoutB2T(bool b2t)
+{
+	XOJ_CHECK_TYPE(Control);
+
+	settings->setViewLayoutB2T(b2t);
+	
+	ActionType action;
+	
+	if(b2t){ 	action = ACTION_SET_LAYOUT_B2T;}
+	else {action = ACTION_SET_LAYOUT_T2B;}
+	
+	
+	fireActionSelected(GROUP_LAYOUT_TB, action);
+
+	int currentPage = getCurrentPageNo();
+	win->getXournal()->layoutPages();
+	scrollHandler->scrollToPage(currentPage);
+}
 
 
 /**

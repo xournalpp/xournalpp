@@ -122,6 +122,21 @@ ActionGroup ActionGroup_fromString(string value)
 		return GROUP_COLUMNS;
 	}
 
+	if (value == "GROUP_LAYOUT_HORIZONTAL")
+	{
+		return GROUP_LAYOUT_HORIZONTAL;
+	}
+
+	if (value == "GROUP_LAYOUT_LR")
+	{
+		return GROUP_LAYOUT_LR;
+	}
+
+	if (value == "GROUP_LAYOUT_TB")
+	{
+		return GROUP_LAYOUT_TB;
+	}
+
 	g_error("Invalid enum value for ActionGroup: «%s»", value.c_str());
 	return GROUP_NOGROUP;
 }
@@ -233,6 +248,21 @@ string ActionGroup_toString(ActionGroup value)
 	if (value == GROUP_COLUMNS)
 	{
 		return "GROUP_COLUMNS";
+	}
+
+	if (value == GROUP_LAYOUT_HORIZONTAL)
+	{
+		return "GROUP_LAYOUT_HORIZONTAL";
+	}
+
+	if (value == GROUP_LAYOUT_LR)
+	{
+		return "GROUP_LAYOUT_LR";
+	}
+
+	if (value == GROUP_LAYOUT_TB)
+	{
+		return "GROUP_LAYOUT_TB";
 	}
 
 	g_error("Invalid enum value for ActionGroup: %i", value);

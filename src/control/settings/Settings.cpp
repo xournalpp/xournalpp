@@ -50,6 +50,10 @@ void Settings::loadDefault()
 
 	this->numColumns = 1;
 	
+	this->layoutVertical = false;
+	this->layoutRightToLeft = false;
+	this->layoutBottomToTop = false;
+	
 	this->numPairsOffset = 0;
 	
 	this->displayDpi = 72;
@@ -333,6 +337,18 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "numColumns") == 0)
 	{
 		this->numColumns = g_ascii_strtoll((const char*) value, NULL, 10);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "layoutVertical") == 0)
+	{
+		this->layoutVertical = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "layoutRightToLeft") == 0)
+	{
+		this->layoutRightToLeft = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "layoutBottomToTop") == 0)
+	{
+		this->layoutBottomToTop = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "showTwoPages") == 0)
 	{
@@ -755,6 +771,9 @@ void Settings::save()
 	WRITE_BOOL_PROP(scrollbarOnLeft);
 	WRITE_INT_PROP(numColumns);
 	WRITE_BOOL_PROP(showTwoPages);
+	WRITE_BOOL_PROP(layoutVertical);
+	WRITE_BOOL_PROP(layoutRightToLeft);
+	WRITE_BOOL_PROP(layoutBottomToTop);
 	WRITE_INT_PROP(numPairsOffset);
 	WRITE_BOOL_PROP(presentationMode);
 
@@ -1449,6 +1468,73 @@ int Settings::getViewColumns()
 
 	return this->numColumns;
 }
+
+
+void Settings::setViewLayoutVert(bool vert)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->layoutVertical == vert)
+	{
+		return;
+	}
+
+	this->layoutVertical = vert;
+	save();	
+}
+
+bool Settings::getViewLayoutVert()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->layoutVertical;
+}
+
+
+void Settings::setViewLayoutR2L(bool r2l)
+{
+		XOJ_CHECK_TYPE(Settings);
+
+	if (this->layoutRightToLeft == r2l)
+	{
+		return;
+	}
+
+	this->layoutRightToLeft = r2l;
+	save();
+}
+
+bool Settings::getViewLayoutR2L()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->layoutRightToLeft;
+}
+
+
+void Settings::setViewLayoutB2T(bool b2t)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->layoutBottomToTop == b2t)
+	{
+		return;
+	}
+
+	this->layoutBottomToTop = b2t;
+	save();	
+	
+}
+
+bool Settings::getViewLayoutB2T()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->layoutBottomToTop;
+}
+
+
+
 
 void Settings::setLastSavePath(Path p)
 {

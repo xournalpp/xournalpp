@@ -207,13 +207,17 @@ void Layout::layoutPagesUsingMapper()
 	bool verticalSpace = settings->getAddVerticalSpace();
 	bool horizontalSpace = settings->getAddHorizontalSpace();
 	bool dualPage = settings->isShowTwoPages();
-	int columnSetting = settings->getViewColumns();
+	int numRowsOrColumns = settings->getViewColumns();
 	int pairsOffset = settings->getPairsOffset();
+	bool vert = settings->getViewLayoutVert();
+	bool r2l = settings->getViewLayoutR2L();
+	bool b2t = settings->getViewLayoutB2T();
+	
 	int pagesOffset = 0;
 	
 	if (!dualPage ) pairsOffset = 0;
 	
-	LayoutMapper mapper( len, columnSetting, false, pairsOffset, LayoutType::Vertical_RL, dualPage );
+	LayoutMapper mapper( len, numRowsOrColumns, false, pairsOffset, vert, r2l, b2t , dualPage );
 
 	pagesOffset = mapper.offset;
 	

@@ -228,6 +228,16 @@ public:
 	void setViewColumns(int numColumns);
 	int getViewColumns();
 	
+	void setViewLayoutVert(bool vert);
+	bool getViewLayoutVert();
+	
+	void setViewLayoutR2L(bool r2l);
+	bool getViewLayoutR2L();
+
+	void setViewLayoutB2T(bool b2t);
+	bool getViewLayoutB2T();
+	
+	
 	bool isAutloadPdfXoj();
 	void setAutoloadPdfXoj(bool load);
 
@@ -490,6 +500,24 @@ private:
 	 *  Displays multiple columns
 	 */
 	int numColumns;	
+	
+	/**
+	 *  Layout Vertical then Horizontal 
+	 */
+	bool layoutVertical;	
+	/**
+	 *  Layout pages right to left
+	 */
+	
+	bool layoutRightToLeft;	
+	
+	/**
+	 *  Layout Bottom to Top
+	 */
+	bool layoutBottomToTop;	
+	
+	
+	
 	
 	/**
 	 * Automatically load filename.pdf.xoj / .pdf.xopp instead of filename.pdf (true/false)

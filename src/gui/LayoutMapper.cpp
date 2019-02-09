@@ -10,6 +10,25 @@
 
 
 LayoutMapper::LayoutMapper( int pages, int rORc, bool isR , int off, LayoutType type, bool isPaired){
+	
+	layoutMapperInit(  pages,  rORc,  isR ,  off,  type,  isPaired);
+	
+}
+
+
+LayoutMapper::LayoutMapper( int pages, int rORc, bool isR , int off, bool vertical, bool r2l, bool b2t, bool isPaired){
+	
+	int type = vertical?LayoutBitFlags::ColMajor:0;
+	    type |=  r2l?LayoutBitFlags::RightToLeft:0;
+		type |=  b2t?LayoutBitFlags::BottomToTop:0;
+		
+	
+	layoutMapperInit(  pages,  rORc,  isR ,  off,   (LayoutType)type,  isPaired);
+}
+
+
+
+void LayoutMapper::layoutMapperInit( int pages, int rORc, bool isR , int off, LayoutType type, bool isPaired){
 
 	paired = isPaired;
 	if(isR){
