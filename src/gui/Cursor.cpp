@@ -205,11 +205,11 @@ void Cursor::updateCursor()
 		}
 		else if (type == TOOL_ERASER)
 		{
-			cursor = eraserCursor();
+			cursor = getEraserCursor();
 		}
 		else if (type == TOOL_HILIGHTER)
 		{
-			cursor = highlighterCursor();
+			cursor = getHighlighterCursor();
 		}
 		else if (type == TOOL_TEXT)
 		{
@@ -266,9 +266,11 @@ void Cursor::updateCursor()
 	}
 }
 
-GdkCursor* Cursor::eraserCursor()
+GdkCursor* Cursor::getEraserCursor()
 {
-	const double cursorSize = 8;
+	// Eraser's size follow a quadratic increment, so the cursor will do the same
+	double cursorSize = control->getToolHandler()->getSize();
+	cursorSize *= cursorSize * 7;
 
 	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
 	                                                      cursorSize,
@@ -298,7 +300,7 @@ GdkCursor* Cursor::eraserCursor()
 	return cursor;
 }
 
-GdkCursor* Cursor::highlighterCursor()
+GdkCursor* Cursor::getHighlighterCursor()
 {
 	XOJ_CHECK_TYPE(Cursor);
 
