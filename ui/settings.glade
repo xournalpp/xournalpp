@@ -2016,7 +2016,7 @@ they are not blocking!&lt;/i&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label36">
+                      <object class="GtkLabel" id="label36a">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="tooltip_text" translatable="yes">Offset first page this many pages when &lt;b&gt;Pair Pages&lt;/b&gt; enabled</property>
@@ -2041,7 +2041,7 @@ they are not blocking!&lt;/i&gt;</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
-                              <object class="GtkLabel" id="label58">
+                              <object class="GtkLabel" id="label58a">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="tooltip_markup" translatable="yes">Offset first page this many pages when &lt;b&gt;Pair Pages&lt;/b&gt; enabled</property>
