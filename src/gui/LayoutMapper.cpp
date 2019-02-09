@@ -9,8 +9,9 @@
 #define  MAX(A, B)  ((A) > (B) ? (A) : (B))
 
 
-LayoutMapper::LayoutMapper( int pages, int rORc, bool isR , int off, LayoutType type ){
+LayoutMapper::LayoutMapper( int pages, int rORc, bool isR , int off, LayoutType type, bool isPaired){
 
+	paired = isPaired;
 	if(isR){
 		r = MAX(1, rORc);
 		c = MAX(1, (pages + off + (rORc -1) )/rORc);	// using  + ( rORc-1) to round up (int)pages/rows
@@ -18,43 +19,68 @@ LayoutMapper::LayoutMapper( int pages, int rORc, bool isR , int off, LayoutType 
 		c = MAX(1, rORc);
 		r = MAX(1, (pages + off + (rORc -1) )/rORc);	
 	}
-	
+
+	if(paired) c += c%2;	 // add another column if pairing and odd number of columns.
+
+							 
 	layoutType = type;
-	switch ( type){
-		case Horizontal:
-			offset = off % c;
-			break;
-		case Vertical:	//vertical layout
-			offset = off % r;
-			break;
-		case VerticalPaired:
+	
+	if(type & LayoutBitFlags::ColMajor)
+	{
+		if( paired){
 			offset = off % (2*r);
-			break;	
+		}
+		else{
+			offset = off % r;
+		}
 	}
+	else //Horizontal Layout
+	{
+		offset = off % c;
+	}
+	
+	
 	possiblePages = r * c;
-	rORc = rORc;
 	actualPages = pages;
 }
 	
 	
 int LayoutMapper::map(int x, int y){ 
 	int res;
-	switch( layoutType)
+	
+	if( layoutType < BitFlagsUsed)
 	{
-		case Horizontal:
-			res = (x + c * y);
-			break;
-			
-		case Vertical:	//vertical layout
-			res = (y + r* x);
-			break;
-			
-		case VerticalPaired:
-			res = ((( y + r*( (int)(x/2) )) * 2 ) + x %2);
-			break;
+		if ( layoutType & LayoutBitFlags::RightToLeft)
+		{
+				x = c-1-x;	//mirror x
+		}
+		if ( layoutType & LayoutBitFlags::BottomToTop)
+		{
+					y = r-1-y;
+		}		
+				
+		
+		if(  layoutType & LayoutBitFlags::ColMajor) 	// aka Vertical
+		{
+			if( paired)
+			{
+				res = ((( y + r*( (int)(x/2) )) * 2 ) + x %2);
+			}
+			else{
+				res = (y + r* x);
+			}
+		}
+		else //Horizontal
+		{
+				res = (x + c * y);
+		}
+
+		
+		res -= offset;
+		if( res>=actualPages) res = -1;
+								
+		return res;
 	}
-	res -= offset;
-	if( res>=actualPages) res = -1;
-							 
-	return res;
+	
+	
 }

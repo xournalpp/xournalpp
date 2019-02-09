@@ -213,7 +213,7 @@ void Layout::layoutPagesUsingMapper()
 	
 	if (!dualPage ) pairsOffset = 0;
 	
-	LayoutMapper mapper( len, columnSetting, false, pairsOffset, dualPage?LayoutType::VerticalPaired: LayoutType::Vertical );
+	LayoutMapper mapper( len, columnSetting, false, pairsOffset, LayoutType::Vertical_RL, dualPage );
 
 	pagesOffset = mapper.offset;
 	
