@@ -81,10 +81,10 @@ export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
 autoreconf -if && ./configure --enable-cxx --prefix=$HOME/gtk/inst
 ````
 
-#### 5. PortAudio
+#### 5. sndfile
 
 ````bash
-./build-sox.sh
+./build-sndfile.sh
 ````
 
 
