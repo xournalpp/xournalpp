@@ -23,7 +23,7 @@ PageBackgroundChangeController::PageBackgroundChangeController(Control* control)
 
 	currentPageType->hideCopyPage();
 
-	currentPageType->addApplyBackgroundButton(control->getPageBackgroundChangeController(), true);
+	currentPageType->addApplyBackgroundButton(this, true);
 
 	registerListener(control);
 }
