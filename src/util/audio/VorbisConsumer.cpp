@@ -51,7 +51,7 @@ bool VorbisConsumer::start(string filename, unsigned int inputChannels)
 						// apply gain
 						if (audioGain != 1.0)
 						{
-							for (int i = 0; i < 64 * inputChannels; ++i)
+							for (unsigned int i = 0; i < 64 * inputChannels; ++i)
 							{
 								// check for overflow
 								if (std::abs(buffer[i]) < std::floor(INT_MAX / audioGain))
