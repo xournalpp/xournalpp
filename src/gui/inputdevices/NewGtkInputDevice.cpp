@@ -20,6 +20,8 @@ NewGtkInputDevice::NewGtkInputDevice(GtkWidget* widget, XournalView* view, Scrol
 
 	pointerInputList = g_hash_table_new_full(NULL, NULL, NULL, (GDestroyNotify) InputSequence::free);
 	touchInputList = g_hash_table_new_full(NULL, NULL, NULL, (GDestroyNotify) InputSequence::free);
+
+	ignoreTouch = !view->getControl()->getSettings()->isTouchWorkaround();
 }
 
 NewGtkInputDevice::~NewGtkInputDevice()
@@ -233,6 +235,11 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	if (sourceDevice == NULL)
 	{
 		sourceDevice = device;
+	}
+
+	if (ignoreTouch && GDK_SOURCE_TOUCHSCREEN == gdk_device_get_source(sourceDevice))
+	{
+		return false;
 	}
 
 	if (event->type == GDK_TOUCH_END || event->type == GDK_TOUCH_CANCEL)

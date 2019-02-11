@@ -95,4 +95,9 @@ protected:
 	 * Scrollbars
 	 */
 	ScrollHandling* scrollHandling;
+
+	/**
+	 * If touch drawing is not enabled, disable it
+	 */
+	bool ignoreTouch = false;
 };
