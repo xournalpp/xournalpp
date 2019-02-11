@@ -19,13 +19,13 @@ public:
 	void recStartStop(bool record);
 	string getAudioFilename();
 	Path getAudioFolder();
-	gint getStartTime();
+	size_t getStartTime();
 	AudioRecorder* getAudioRecorder();
 	AudioPlayer* getAudioPlayer();
 
 protected:
 	string audioFilename;
-	gint sttime = 0;	
+	size_t sttime = 0;
 	Settings* settings;
 	Control* control;
 	AudioRecorder* audioRecorder;

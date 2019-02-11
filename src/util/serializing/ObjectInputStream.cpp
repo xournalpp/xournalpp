@@ -131,6 +131,22 @@ double ObjectInputStream::readDouble()
 	return d;
 }
 
+size_t ObjectInputStream::readSizeT()
+{
+	XOJ_CHECK_TYPE(ObjectInputStream);
+
+	checkType('l');
+
+	if (this->pos + sizeof(size_t) >= this->str->len)
+	{
+		throw InputStreamException("End reached, but try to read an integer", __FILE__, __LINE__);
+	}
+
+	size_t st = *((size_t*) (this->str->str + this->pos));
+	this->pos += sizeof(size_t);
+	return st;
+}
+
 string ObjectInputStream::readString()
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);

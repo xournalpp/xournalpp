@@ -88,7 +88,7 @@ void Stroke::serialize(ObjectOutputStream& out)
 
 	out.writeString(this->audioFilename);
 
-	out.writeInt(this->timestamp);
+	out.writeSizeT(this->timestamp);
 
 	out.writeInt(fill);
 
@@ -113,7 +113,7 @@ void Stroke::readSerialized(ObjectInputStream& in)
 
 	this->audioFilename = in.readString();
 
-	this->timestamp = in.readInt();
+	this->timestamp = in.readSizeT();
 
 	this->fill = in.readInt();
 
@@ -137,14 +137,14 @@ string Stroke::getAudioFilename() const
 	return this->audioFilename;
 }
 
-void Stroke::setTimestamp(int seconds)
+void Stroke::setTimestamp(size_t seconds)
 {
 	XOJ_CHECK_TYPE(Stroke);
 
 	this->timestamp = seconds;
 }
 
-int Stroke::getTimestamp() const
+size_t Stroke::getTimestamp() const
 {
 	XOJ_CHECK_TYPE(Stroke);
 

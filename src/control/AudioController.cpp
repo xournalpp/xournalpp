@@ -44,7 +44,7 @@ void AudioController::recStartStop(bool rec)
 			return;
 		}
 
-		sttime = (g_get_monotonic_time() / 1000000);
+		sttime = static_cast<size_t>(g_get_monotonic_time() / 1000);
 
 		char buffer[50];
 		time_t secs = time(nullptr);
@@ -113,7 +113,7 @@ Path AudioController::getAudioFolder()
 	return Path::fromUri(af);
 }
 
-gint AudioController::getStartTime()
+size_t AudioController::getStartTime()
 {
 	XOJ_CHECK_TYPE(AudioController);
 

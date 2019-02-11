@@ -42,8 +42,8 @@ public:
 	void setWidth(double width);
 	double getWidth() const;
 
-	void setTimestamp(int seconds);
-	int getTimestamp() const;
+	void setTimestamp(size_t seconds);
+	size_t getTimestamp() const;
 
 	void setAudioFilename(string fn);
 	string getAudioFilename() const;
@@ -134,7 +134,7 @@ private:
 	LineStyle lineStyle;
 
 	// Stroke timestamp, to match it to the audio stream
-	int timestamp;
+	size_t timestamp = 0;
 	string audioFilename;
 
 	EraseableStroke* eraseable;

@@ -25,9 +25,18 @@ void VorbisProducer::start(std::string filename, const DeviceInfo& outputDevice,
 	}
 
 	//TODO implement seeking (this is hard since we need to get the frame offset)
+	sf_count_t seekPosition = this->sfInfo.samplerate / 1000 * timestamp;
+	if (seekPosition < this->sfInfo.frames)
+	{
+		sf_seek(this->sfFile, seekPosition, SF_SEEK_SET);
+	}
+	else
+	{
+		g_warning("VorbisProducer: Seeking outside of audio file extent");
+	}
 
 	this->producerThread = new std::thread(
-			[&, filename, timestamp]
+			[&, filename]
 			{
 				long numSamples = 1;
 				auto sampleBuffer = new int[1024 * this->sfInfo.channels];
@@ -36,7 +45,7 @@ void VorbisProducer::start(std::string filename, const DeviceInfo& outputDevice,
 				{
 					numSamples = sf_readf_int(this->sfFile, sampleBuffer, 1024);
 
-					while (this->audioQueue->size() > 4096 && !this->audioQueue->hasStreamEnded())
+					while (this->audioQueue->size() > 4096 && !this->audioQueue->hasStreamEnded() && !this->stopProducer)
 					{
 						std::this_thread::sleep_for(std::chrono::microseconds(100));
 					}
