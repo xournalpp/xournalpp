@@ -19,22 +19,22 @@ bool VorbisConsumer::start(string filename, unsigned int inputChannels)
 {
 	XOJ_CHECK_TYPE(VorbisConsumer);
 
+	SF_INFO sfInfo;
+	sfInfo.channels = inputChannels;
+	sfInfo.format = SF_FORMAT_OGG | SF_FORMAT_VORBIS;
+	sfInfo.samplerate = static_cast<int>(this->settings->getAudioSampleRate());
+
+	SNDFILE_tag* sfFile = sf_open(filename.c_str(), SFM_WRITE, &sfInfo);
+	if (sfFile == nullptr)
+	{
+		g_warning("VorbisConsumer: output file \"%s\" could not be opened\ncaused by:%s", filename.c_str(), sf_strerror(sfFile));
+		return false;
+	}
+
 	this->consumerThread = new std::thread(
-			[&, filename, inputChannels]
+			[&, sfFile, inputChannels]
 			{
 				std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
-
-				SF_INFO sfInfo;
-				sfInfo.channels = inputChannels;
-				sfInfo.format = SF_FORMAT_OGG | SF_FORMAT_VORBIS;
-				sfInfo.samplerate = static_cast<int>(this->settings->getAudioSampleRate());
-
-				SNDFILE_tag* sfFile = sf_open(filename.c_str(), SFM_WRITE, &sfInfo);
-				if (sfFile == nullptr)
-				{
-					g_warning("VorbisConsumer: output file \"%s\" could not be opened\ncaused by:%s", filename.c_str(), sf_strerror(sfFile));
-					return;
-				}
 
 				int buffer[64 * inputChannels];
 				int bufferLength;

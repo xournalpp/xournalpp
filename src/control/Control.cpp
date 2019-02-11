@@ -865,6 +865,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 					[=]()
 					{
 						gtk_toggle_tool_button_set_active((GtkToggleToolButton*) toolbutton, !enabled);
+						string msg = _("Recorder could not be started.");
+						g_warning("%s", msg.c_str());
+						XojMsgBox::showErrorToUser(Control::getGtkWindow(), msg);
 					});
 		}
 		break;
