@@ -11,10 +11,10 @@
 
 #pragma once
 
-#include "XmlNode.h"
 #include "model/Point.h"
+#include "XmlAudioNode.h"
 
-class XmlPointNode : public XmlNode
+class XmlPointNode : public XmlAudioNode
 {
 public:
 	XmlPointNode(const char* tag);
@@ -26,13 +26,10 @@ private:
 
 public:
 	void addPoint(const Point* point);
-	string getAudioFilename();
-	void setAudioFilename(string filename);
 	virtual void writeOut(OutputStream* out);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	GList* points;
-	string audioFilename;
 };

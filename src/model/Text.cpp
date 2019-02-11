@@ -7,7 +7,7 @@
 #include <Stacktrace.h>
 
 Text::Text()
- : Element(ELEMENT_TEXT)
+ : AudioElement(ELEMENT_TEXT)
 {
 	XOJ_INIT_TYPE(Text);
 
@@ -31,6 +31,7 @@ Element* Text::clone()
 	text->setColor(this->getColor());
 	text->x = this->x;
 	text->y = this->y;
+	text->cloneAudioData(this);
 
 	return text;
 }
@@ -136,13 +137,32 @@ bool Text::rescaleOnlyAspectRatio()
 	return true;
 }
 
+bool Text::intersects(double x, double y, double halfEraserSize)
+{
+	XOJ_CHECK_TYPE(Text);
+
+	return intersects(x, y, halfEraserSize, nullptr);
+}
+
+bool Text::intersects(double x, double y, double halfEraserSize, double* gap)
+{
+	XOJ_CHECK_TYPE(Text);
+
+	double x1 = this->x - halfEraserSize;
+	double x2 = this->x + this->getElementWidth() + halfEraserSize;
+	double y1 = this->y - halfEraserSize;
+	double y2 = this->y + this->getElementHeight() + halfEraserSize;
+
+	return x >= x1 && x <= x2 && y >= y1 && y <= y2;
+}
+
 void Text::serialize(ObjectOutputStream& out)
 {
 	XOJ_CHECK_TYPE(Text);
 
 	out.writeObject("Text");
 
-	serializeElement(out);
+	serializeAudioElement(out);
 
 	out.writeString(this->text);
 
@@ -157,7 +177,7 @@ void Text::readSerialized(ObjectInputStream& in)
 
 	in.readObject("Text");
 
-	readSerializedElement(in);
+	readSerializedAudioElement(in);
 
 	this->text = in.readString();
 

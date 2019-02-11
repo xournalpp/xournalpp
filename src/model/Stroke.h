@@ -11,9 +11,10 @@
 
 #pragma once
 
-#include "Element.h"
+#include "AudioElement.h"
 #include "Point.h"
 #include "LineStyle.h"
+#include "Element.h"
 
 #include <Arrayiterator.h>
 
@@ -24,7 +25,7 @@ enum StrokeTool
 
 class EraseableStroke;
 
-class Stroke : public Element
+class Stroke : public AudioElement
 {
 public:
 	Stroke();
@@ -41,12 +42,6 @@ public:
 
 	void setWidth(double width);
 	double getWidth() const;
-
-	void setTimestamp(size_t seconds);
-	size_t getTimestamp() const;
-
-	void setAudioFilename(string fn);
-	string getAudioFilename() const;
 
 	/**
 	 * Option to fill the shape:
@@ -85,7 +80,8 @@ public:
 	const LineStyle& getLineStyle() const;
 	void setLineStyle(const LineStyle& style);
 
-	bool intersects(double x, double y, double halfSize, double* gap = NULL);
+	bool intersects(double x, double y, double halfSize) override;
+	bool intersects(double x, double y, double halfSize, double* gap) override;
 
 	void setPressure(const vector<double>& pressure);
 	void setLastPressure(double pressure);
@@ -132,10 +128,6 @@ private:
 	 * Dashed line
 	 */
 	LineStyle lineStyle;
-
-	// Stroke timestamp, to match it to the audio stream
-	size_t timestamp = 0;
-	string audioFilename;
 
 	EraseableStroke* eraseable;
 

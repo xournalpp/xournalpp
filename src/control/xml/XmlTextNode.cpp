@@ -2,14 +2,14 @@
 
 #include <StringUtils.h>
 
-XmlTextNode::XmlTextNode(const char* tag, const char* text) : XmlNode(tag)
+XmlTextNode::XmlTextNode(const char* tag, const char* text) : XmlAudioNode(tag)
 {
 	XOJ_INIT_TYPE(XmlTextNode);
 
 	this->text = g_strdup(text);
 }
 
-XmlTextNode::XmlTextNode(const char* tag) : XmlNode(tag)
+XmlTextNode::XmlTextNode(const char* tag) : XmlAudioNode(tag)
 {
 	XOJ_INIT_TYPE(XmlTextNode);
 

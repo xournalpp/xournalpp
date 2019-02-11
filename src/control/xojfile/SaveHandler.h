@@ -17,6 +17,7 @@
 
 #include <OutputStream.h>
 #include <XournalType.h>
+#include <control/xml/XmlAudioNode.h>
 
 class XmlNode;
 class XmlPointNode;
@@ -48,7 +49,7 @@ protected:
 
 	virtual void writeHeader();
 	virtual void writeSolidBackground(XmlNode* background, PageRef p);
-	virtual void writeTimestamp(Stroke* s, XmlPointNode* stroke);
+	virtual void writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode);
 
 protected:
 	XOJ_TYPE_ATTRIB;

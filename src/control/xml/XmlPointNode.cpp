@@ -1,7 +1,7 @@
 #include "XmlPointNode.h"
 
 XmlPointNode::XmlPointNode(const char* tag)
- : XmlNode(tag),
+ : XmlAudioNode(tag),
    points(NULL)
 {
 	XOJ_INIT_TYPE(XmlPointNode);
@@ -20,16 +20,6 @@ XmlPointNode::~XmlPointNode()
 	this->points = NULL;
 
 	XOJ_RELEASE_TYPE(XmlPointNode);
-}
-
-string XmlPointNode::getAudioFilename()
-{
-	return this->audioFilename;
-}
-
-void XmlPointNode::setAudioFilename(string filename)
-{
-	this->audioFilename = filename;
 }
 
 void XmlPointNode::addPoint(const Point* point)

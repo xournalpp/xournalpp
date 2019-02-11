@@ -277,4 +277,5 @@ XOJ_DECLARE_TYPE(AudioPlayer, 267);
 XOJ_DECLARE_TYPE(VorbisConsumer, 268);
 XOJ_DECLARE_TYPE(VorbisProducer, 269);
 XOJ_DECLARE_TYPE(FullscreenHandler, 270);
-
+XOJ_DECLARE_TYPE(AudioElement, 271);
+XOJ_DECLARE_TYPE(XmlAudioNode, 272);
