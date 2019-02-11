@@ -33,7 +33,8 @@ bool AudioRecorder::start(string filename)
 	XOJ_CHECK_TYPE(AudioRecorder);
 
 	// Start the consumer for writing the data
-	bool status = this->vorbisConsumer->start(std::move(filename), static_cast<unsigned int>(this->portAudioProducer->getSelectedInputDevice().getInputChannels()));
+	int inputChannels = std::min(2, this->portAudioProducer->getSelectedInputDevice().getInputChannels());
+	bool status = this->vorbisConsumer->start(std::move(filename), static_cast<unsigned int>(inputChannels));
 
 	// Start recording
 	status &= this->portAudioProducer->startRecording();
