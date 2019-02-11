@@ -51,15 +51,15 @@ pacman -S mingw-w64-x86_64-poppler \
 pacman -S mingw-w64-x86_64-gtk3
 ```
 
-### SOX / PortAudio
+### sndfile / PortAudio
 Build/Install portaudio with
 ```bash
 windows-setup/build-portaudio.sh
 ```
 
-Build/Install sox with
+Build/Install portaudio with
 ```bash
-windows-setup/build-sox.sh
+windows-setup/build-sndfile.sh
 ```
 **Read the comments in the .sh file - there are currently manual steps required! Help is welcome to automate it!**
 
