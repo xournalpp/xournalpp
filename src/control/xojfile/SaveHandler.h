@@ -49,7 +49,7 @@ protected:
 
 	virtual void writeHeader();
 	virtual void writeSolidBackground(XmlNode* background, PageRef p);
-	virtual void writeTimestamp(AudioElement* s, XmlAudioNode* stroke);
+	virtual void writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode);
 
 protected:
 	XOJ_TYPE_ATTRIB;

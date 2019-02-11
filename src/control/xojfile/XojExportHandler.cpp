@@ -65,7 +65,7 @@ void XojExportHandler::writeSolidBackground(XmlNode* background, PageRef p)
 	background->setAttrib("style", format);
 }
 
-void XojExportHandler::writeTimestamp(Stroke* s, XmlPointNode* stroke)
+void XojExportHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode)
 {
 	XOJ_CHECK_TYPE(XojExportHandler);	
 	// Do nothing since timestamp are not supported by Xournal

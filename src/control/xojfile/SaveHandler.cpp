@@ -105,13 +105,13 @@ string SaveHandler::getColorStr(int c, unsigned char alpha)
 	return color;
 }
 
-void SaveHandler::writeTimestamp(AudioElement* s, XmlAudioNode* stroke)
+void SaveHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode)
 {
 	XOJ_CHECK_TYPE(SaveHandler);
 
 	/** set stroke timestamp value to the XmlPointNode */
-	stroke->setAttrib("ts",s->getTimestamp());
-	stroke->setAttrib("fn",s->getAudioFilename());
+	xmlAudioNode->setAttrib("ts",audioElement->getTimestamp());
+	xmlAudioNode->setAttrib("fn",audioElement->getAudioFilename());
 }
 
 void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s)
