@@ -12,8 +12,9 @@
 #pragma once
 
 #include "XmlNode.h"
+#include "XmlAudioNode.h"
 
-class XmlTextNode : public XmlNode
+class XmlTextNode : public XmlAudioNode
 {
 public:
 	XmlTextNode(const char* tag, const char* text);

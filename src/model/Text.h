@@ -13,10 +13,11 @@
 
 #include "Element.h"
 #include "Font.h"
+#include "AudioElement.h"
 
 #include <gtk/gtk.h>
 
-class Text : public Element
+class Text : public AudioElement
 {
 public:
 	Text();
@@ -44,6 +45,9 @@ public:
 	 * @overwrite
 	 */
 	virtual Element* clone();
+
+	bool intersects(double x, double y, double halfSize) override;
+	bool intersects(double x, double y, double halfSize, double* gap) override;
 
 public:
 	// Serialize interface

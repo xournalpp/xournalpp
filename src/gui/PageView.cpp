@@ -287,6 +287,15 @@ void XojPageView::startText(double x, double y)
 			text->setY(y);
 			text->setColor(h->getColor());
 			text->setFont(settings->getFont());
+
+			if (xournal->getControl()->getAudioController()->getAudioRecorder()->isRecording())
+			{
+				string audioFilename = xournal->getControl()->getAudioController()->getAudioFilename();
+				size_t sttime = xournal->getControl()->getAudioController()->getStartTime();
+				size_t milliseconds = ((g_get_monotonic_time() / 1000) - sttime);
+				text->setTimestamp(milliseconds);
+				text->setAudioFilename(audioFilename);
+			}
 		}
 		else
 		{
@@ -303,6 +312,8 @@ void XojPageView::startText(double x, double y)
 			text->setColor(oldtext->getColor());
 			text->setFont(oldtext->getFont());
 			text->setText(oldtext->getText());
+			text->setTimestamp(oldtext->getTimestamp());
+			text->setAudioFilename(oldtext->getAudioFilename());
 
 			Layer* layer = this->page->getSelectedLayer();
 			layer->removeElement(this->oldtext, false);

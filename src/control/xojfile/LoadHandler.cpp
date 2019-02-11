@@ -639,6 +639,18 @@ void LoadHandler::parseText()
 	int color = 0;
 	LoadHandlerHelper::parseColor(sColor, color, this);
 	text->setColor(color);
+
+	const char* fn = LoadHandlerHelper::getAttrib("fn", true, this);
+	if (fn != NULL)
+	{
+		text->setAudioFilename(fn);
+	}
+
+	size_t ts = 0;
+	if (LoadHandlerHelper::getAttribSizeT("ts", true, this, ts))
+	{
+		text->setTimestamp(ts);
+	}
 }
 
 void LoadHandler::parseImage()

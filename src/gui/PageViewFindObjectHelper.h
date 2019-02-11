@@ -147,12 +147,12 @@ public:
 protected:
 	virtual void checkElement(Element* e)
 	{
-		if (e->getType() != ELEMENT_STROKE)
+		if (e->getType() != ELEMENT_STROKE && e->getType() != ELEMENT_TEXT)
 		{
 			return;
 		}
 
-		Stroke* s = (Stroke*) e;
+		AudioElement* s = (AudioElement*) e;
 		double tmpGap = 0;
 		if ((s->intersects(x, y, 15, &tmpGap)))
 		{

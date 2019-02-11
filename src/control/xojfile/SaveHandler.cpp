@@ -105,7 +105,7 @@ string SaveHandler::getColorStr(int c, unsigned char alpha)
 	return color;
 }
 
-void SaveHandler::writeTimestamp(Stroke* s, XmlPointNode* stroke)
+void SaveHandler::writeTimestamp(AudioElement* s, XmlAudioNode* stroke)
 {
 	XOJ_CHECK_TYPE(SaveHandler);
 
@@ -217,6 +217,8 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 			text->setAttrib("x", t->getX());
 			text->setAttrib("y", t->getY());
 			text->setAttrib("color", getColorStr(t->getColor()).c_str());
+
+			writeTimestamp(t, text);
 		}
 		else if (e->getType() == ELEMENT_IMAGE)
 		{

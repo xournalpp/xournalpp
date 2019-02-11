@@ -8,7 +8,7 @@
 #include <math.h>
 
 Stroke::Stroke()
- : Element(ELEMENT_STROKE)
+ : AudioElement(ELEMENT_STROKE)
 {
 	XOJ_INIT_TYPE(Stroke);
 
@@ -18,8 +18,6 @@ Stroke::Stroke()
 	this->pointCount = 0;
 	this->points = NULL;
 	this->toolType = STROKE_TOOL_PEN;
-
-	this->timestamp = 0;
 
 	this->eraseable = NULL;
 	this->fill = -1;
@@ -34,8 +32,6 @@ Stroke::~Stroke()
 	this->pointCount = 0;
 	this->pointAllocCount = 0;
 
-	this->timestamp = 0;
-
 	XOJ_RELEASE_TYPE(Stroke);
 }
 
@@ -47,10 +43,10 @@ void Stroke::applyStyleFrom(const Stroke* other)
 	setColor(other->getColor());
 	setToolType(other->getToolType());
 	setWidth(other->getWidth());
-	setAudioFilename(other->getAudioFilename());
-	setTimestamp(other->getTimestamp());
 	setFill(other->getFill());
 	setLineStyle(other->getLineStyle());
+
+	cloneAudioData(other);
 }
 
 Stroke* Stroke::cloneStroke() const
@@ -80,15 +76,11 @@ void Stroke::serialize(ObjectOutputStream& out)
 
 	out.writeObject("Stroke");
 
-	serializeElement(out);
+	serializeAudioElement(out);
 
 	out.writeDouble(this->width);
 
 	out.writeInt(this->toolType);
-
-	out.writeString(this->audioFilename);
-
-	out.writeSizeT(this->timestamp);
 
 	out.writeInt(fill);
 
@@ -105,15 +97,11 @@ void Stroke::readSerialized(ObjectInputStream& in)
 
 	in.readObject("Stroke");
 
-	readSerializedElement(in);
+	readSerializedAudioElement(in);
 
 	this->width = in.readDouble();
 
 	this->toolType = (StrokeTool) in.readInt();
-
-	this->audioFilename = in.readString();
-
-	this->timestamp = in.readSizeT();
 
 	this->fill = in.readInt();
 
@@ -125,30 +113,6 @@ void Stroke::readSerialized(ObjectInputStream& in)
 	this->lineStyle.readSerialized(in);
 
 	in.endObject();
-}
-
-void Stroke::setAudioFilename(string fn)
-{
-	this->audioFilename = fn;
-}
-
-string Stroke::getAudioFilename() const
-{
-	return this->audioFilename;
-}
-
-void Stroke::setTimestamp(size_t seconds)
-{
-	XOJ_CHECK_TYPE(Stroke);
-
-	this->timestamp = seconds;
-}
-
-size_t Stroke::getTimestamp() const
-{
-	XOJ_CHECK_TYPE(Stroke);
-
-	return this->timestamp;
 }
 
 /**
@@ -506,6 +470,16 @@ void Stroke::setPressure(const vector<double>& pressure)
 	{
 		this->points[i].z = pressure[i];
 	}
+}
+
+/**
+ * split index is the split point, minimimum is 1 NOT 0
+ */
+bool Stroke::intersects(double x, double y, double halfEraserSize)
+{
+	XOJ_CHECK_TYPE(Stroke);
+
+	return intersects(x, y, halfEraserSize, nullptr);
 }
 
 /**
