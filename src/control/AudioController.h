@@ -14,9 +14,8 @@ public:
 	virtual ~AudioController();
 
 public:
-	bool isRecording();
-	void recToggle();
-	void recStartStop(bool record);
+	bool recStart();
+	bool recStop();
 	string getAudioFilename();
 	Path getAudioFolder();
 	size_t getStartTime();
@@ -25,7 +24,7 @@ public:
 
 protected:
 	string audioFilename;
-	size_t sttime = 0;
+	size_t timestamp = 0;
 	Settings* settings;
 	Control* control;
 	AudioRecorder* audioRecorder;

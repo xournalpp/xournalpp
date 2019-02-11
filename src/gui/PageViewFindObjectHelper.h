@@ -160,9 +160,12 @@ protected:
 
 			string fn = s->getAudioFilename();
 
-			AudioPlayer *audioPlayer = view->getXournal()->getControl()->getAudioController()->getAudioPlayer();
-			audioPlayer->abort();
-			audioPlayer->start(Path::fromUri(view->settings->getAudioFolder()).str() + "/" + fn, (unsigned int) ts);
+			if (!fn.empty())
+			{
+				AudioPlayer* audioPlayer = view->getXournal()->getControl()->getAudioController()->getAudioPlayer();
+				audioPlayer->abort();
+				audioPlayer->start(Path::fromUri(view->settings->getAudioFolder()).str() + "/" + fn, (unsigned int) ts);
+			}
 		}
 	}
 };

@@ -67,7 +67,7 @@ void InputHandler::createStroke(Point p)
 	{
 		stroke->setToolType(STROKE_TOOL_PEN);
 
-		if (xournal->getControl()->getAudioController()->isRecording())
+		if (xournal->getControl()->getAudioController()->getAudioRecorder()->isRecording())
 		{
 			string audioFilename = xournal->getControl()->getAudioController()->getAudioFilename();
 			size_t sttime = xournal->getControl()->getAudioController()->getStartTime();
