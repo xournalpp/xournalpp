@@ -134,7 +134,7 @@ int PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer,
 			g_warning("PortAudioConsumer: Frame underflow");
 
 			auto outputBufferImpl = (int*) outputBuffer;
-			for (int i = outputBufferLength; i < framesPerBuffer * this->outputChannels; ++i)
+			for (auto i = (unsigned int) outputBufferLength; i < framesPerBuffer * this->outputChannels; ++i)
 			{
 				outputBufferImpl[i] = 0;
 			}
