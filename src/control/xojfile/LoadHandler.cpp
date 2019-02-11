@@ -554,10 +554,22 @@ void LoadHandler::parseStroke()
 		stroke->setAudioFilename(fn);
 	}
 
-	int ts = 0;
-	if (LoadHandlerHelper::getAttribInt("ts", true, this, ts))
+
+	if (this->fileversion < 4)
 	{
-		stroke->setTimestamp(ts);
+		int ts = 0;
+		if (LoadHandlerHelper::getAttribInt("ts", true, this, ts))
+		{
+			stroke->setTimestamp(ts * 1000);
+		}
+	}
+	else
+	{
+		size_t ts = 0;
+		if (LoadHandlerHelper::getAttribSizeT("ts", true, this, ts))
+		{
+			stroke->setTimestamp(ts);
+		}
 	}
 
 	int fill = -1;

@@ -26,29 +26,22 @@ AudioController::~AudioController()
 	XOJ_RELEASE_TYPE(AudioController);
 }
 
-bool AudioController::isRecording()
+bool AudioController::recStart()
 {
 	XOJ_CHECK_TYPE(AudioController);
 
-	return this->audioRecorder->isRecording();
-}
-
-void AudioController::recStartStop(bool rec)
-{
-	XOJ_CHECK_TYPE(AudioController);
-
-	if (rec)
+	if (!this->getAudioRecorder()->isRecording())
 	{
 		if (getAudioFolder().isEmpty())
 		{
-			return;
+			return false;
 		}
 
-		sttime = (g_get_monotonic_time() / 1000000);
+		this->timestamp = static_cast<size_t>(g_get_monotonic_time() / 1000);
 
 		char buffer[50];
 		time_t secs = time(nullptr);
-		tm *t = localtime(&secs);
+		tm* t = localtime(&secs);
 		// This prints the date and time in ISO format.
 		sprintf(buffer, "%04d-%02d-%02d_%02d-%02d-%02d", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour,
 				t->tm_min, t->tm_sec);
@@ -59,33 +52,31 @@ void AudioController::recStartStop(bool rec)
 
 		g_message("Start recording");
 
-		this->getAudioRecorder()->start(getAudioFolder().str() + "/" + data);
-		// TODO use the return value of the previous call to determine which state the recording button should have
+		bool isRecording = this->getAudioRecorder()->start(getAudioFolder().str() + "/" + data);
+
+		if (!isRecording)
+		{
+			audioFilename = "";
+			this->timestamp = 0;
+		}
+
+		return isRecording;
 	}
-	else if (this->isRecording())
+	return false;
+}
+
+bool AudioController::recStop()
+{
+	if (this->audioRecorder->isRecording())
 	{
 		audioFilename = "";
-		sttime = 0;
+		this->timestamp = 0;
 
 		g_message("Stop recording");
 
 		this->audioRecorder->stop();
 	}
-}
-
-void AudioController::recToggle()
-{
-	XOJ_CHECK_TYPE(AudioController);
-
-	if (!this->isRecording())
-	{
-		recStartStop(true);
-	}
-	else
-	{
-		recStartStop(false);
-	}
-
+	return true;
 }
 
 string AudioController::getAudioFilename()
@@ -113,11 +104,11 @@ Path AudioController::getAudioFolder()
 	return Path::fromUri(af);
 }
 
-gint AudioController::getStartTime()
+size_t AudioController::getStartTime()
 {
 	XOJ_CHECK_TYPE(AudioController);
 
-	return this->sttime;
+	return this->timestamp;
 }
 
 AudioRecorder* AudioController::getAudioRecorder()

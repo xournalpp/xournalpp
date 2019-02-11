@@ -56,6 +56,14 @@ void ObjectOutputStream::writeDouble(double d)
 	this->encoder->addData(&d, sizeof(double));
 }
 
+void ObjectOutputStream::writeSizeT(size_t st)
+{
+	XOJ_CHECK_TYPE(ObjectOutputStream);
+
+	this->encoder->addStr("_l");
+	this->encoder->addData(&st, sizeof(size_t));
+}
+
 void ObjectOutputStream::writeString(const char* str)
 {
 	XOJ_CHECK_TYPE(ObjectOutputStream);

@@ -78,7 +78,7 @@ void PortAudioConsumer::startPlaying(double sampleRate, unsigned int channels)
 		return;
 	}
 
-	if (device->maxOutputChannels() < channels)
+	if ((unsigned int) device->maxOutputChannels() < channels)
 	{
 		this->audioQueue->signalEndOfStream();
 		g_warning("Output device has not enough channels to play audio file. (Requires at least 2 channels)");
@@ -129,12 +129,12 @@ int PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer,
 
 		// Fill buffer to requested length if necessary
 
-		if (outputBufferLength < framesPerBuffer * this->outputChannels)
+		if ((unsigned int) outputBufferLength < framesPerBuffer * this->outputChannels)
 		{
 			g_warning("PortAudioConsumer: Frame underflow");
 
 			auto outputBufferImpl = (int*) outputBuffer;
-			for (int i = outputBufferLength; i < framesPerBuffer * this->outputChannels; ++i)
+			for (auto i = (unsigned int) outputBufferLength; i < framesPerBuffer * this->outputChannels; ++i)
 			{
 				outputBufferImpl[i] = 0;
 			}

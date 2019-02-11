@@ -14,18 +14,17 @@ public:
 	virtual ~AudioController();
 
 public:
-	bool isRecording();
-	void recToggle();
-	void recStartStop(bool record);
+	bool recStart();
+	bool recStop();
 	string getAudioFilename();
 	Path getAudioFolder();
-	gint getStartTime();
+	size_t getStartTime();
 	AudioRecorder* getAudioRecorder();
 	AudioPlayer* getAudioPlayer();
 
 protected:
 	string audioFilename;
-	gint sttime = 0;	
+	size_t timestamp = 0;
 	Settings* settings;
 	Control* control;
 	AudioRecorder* audioRecorder;

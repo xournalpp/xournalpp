@@ -849,9 +849,30 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 
 	case ACTION_RECSTOP:
-		audioController->recToggle();
+	{
+		bool result;
+		if (enabled)
+		{
+			result = audioController->recStart();
+		} else
+		{
+			result = audioController->recStop();
+		}
+
+		if (!result)
+		{
+			Util::execInUiThread(
+					[=]()
+					{
+						gtk_toggle_tool_button_set_active((GtkToggleToolButton*) toolbutton, !enabled);
+						string msg = _("Recorder could not be started.");
+						g_warning("%s", msg.c_str());
+						XojMsgBox::showErrorToUser(Control::getGtkWindow(), msg);
+					});
+		}
 		break;
-	
+	}
+
 	case ACTION_ROTATION_SNAPPING:
 		rotationSnappingToggle();
 		break;
@@ -2473,7 +2494,7 @@ void Control::quit(bool allowCancel)
 
 	this->scheduler->lock();
 
-	audioController->recStartStop(false);
+	audioController->recStop();
 	settings->save();
 
 	this->scheduler->removeAllJobs();

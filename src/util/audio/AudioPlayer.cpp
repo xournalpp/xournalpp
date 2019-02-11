@@ -45,7 +45,6 @@ void AudioPlayer::start(string filename, unsigned int timestamp)
 								 }
 								 this->stop();
 							 });
-	//TODO we need something nicer here then detaching the thread
 	stopThread.detach();
 }
 
@@ -66,6 +65,8 @@ void AudioPlayer::stop()
 void AudioPlayer::abort()
 {
 	XOJ_CHECK_TYPE(AudioPlayer);
+
+	this->audioQueue->signalEndOfStream();
 
 	// Stop playing audio
 	this->portAudioConsumer->stopPlaying();

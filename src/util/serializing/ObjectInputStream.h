@@ -33,6 +33,7 @@ public:
 
 	int readInt();
 	double readDouble();
+	size_t readSizeT();
 	string readString();
 
 	void readData(void** data, int* len);

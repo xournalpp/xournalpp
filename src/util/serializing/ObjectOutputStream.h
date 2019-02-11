@@ -30,6 +30,7 @@ public:
 
 	void writeInt(int i);
 	void writeDouble(double d);
+	void writeSizeT(size_t st);
 	void writeString(const char* str);
 	void writeString(const string& s);
 

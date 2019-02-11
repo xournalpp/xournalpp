@@ -67,12 +67,12 @@ void InputHandler::createStroke(Point p)
 	{
 		stroke->setToolType(STROKE_TOOL_PEN);
 
-		if (xournal->getControl()->getAudioController()->isRecording())
+		if (xournal->getControl()->getAudioController()->getAudioRecorder()->isRecording())
 		{
 			string audioFilename = xournal->getControl()->getAudioController()->getAudioFilename();
-			gint sttime = xournal->getControl()->getAudioController()->getStartTime();
-			int seconds = ((g_get_monotonic_time() / 1000000) - sttime);
-			stroke->setTimestamp(seconds);
+			size_t sttime = xournal->getControl()->getAudioController()->getStartTime();
+			size_t milliseconds = ((g_get_monotonic_time() / 1000) - sttime);
+			stroke->setTimestamp(milliseconds);
 			stroke->setAudioFilename(audioFilename);
 		}
 	}

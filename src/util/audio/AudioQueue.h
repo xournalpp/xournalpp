@@ -62,7 +62,7 @@ public:
 	{
 		XOJ_CHECK_TYPE(AudioQueue);
 
-		for (long i = 0; i < nSamples; i++)
+		for (unsigned long i = 0; i < nSamples; i++)
 		{
 			this->push_front(samples[i]);
 		}

@@ -187,3 +187,48 @@ bool LoadHandlerHelper::getAttribInt(const char* name, bool optional, LoadHandle
 
 	return true;
 }
+
+size_t LoadHandlerHelper::getAttribSizeT(const char* name, LoadHandler* loadHandler)
+{
+	const char* attrib = getAttrib(name, false, loadHandler);
+
+	if (attrib == NULL)
+	{
+		error("%s", FC(_F("Attribute \"{1}\" could not be parsed as size_t, the value is NULL") % name));
+		return 0;
+	}
+
+	char* ptr = NULL;
+	size_t val = g_ascii_strtoull(attrib, &ptr, 10);
+	if (ptr == attrib)
+	{
+		error("%s", FC(_F("Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\"") % name % attrib));
+	}
+
+	return val;
+}
+
+bool LoadHandlerHelper::getAttribSizeT(const char* name, bool optional, LoadHandler* loadHandler, size_t& rValue)
+{
+	const char* attrib = getAttrib(name, optional, loadHandler);
+
+	if (attrib == NULL)
+	{
+		if (!optional)
+		{
+			g_warning("Parser: attribute %s not found!", name);
+		}
+		return false;
+	}
+
+	char* ptr = NULL;
+	size_t val = strtoull(attrib, &ptr, 10);
+	if (ptr == attrib)
+	{
+		error("%s", FC(_F("Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\"") % name % attrib));
+	}
+
+	rValue = val;
+
+	return true;
+}

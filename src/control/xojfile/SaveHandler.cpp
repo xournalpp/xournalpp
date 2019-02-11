@@ -93,7 +93,7 @@ void SaveHandler::prepareSave(Document* doc)
 void SaveHandler::writeHeader()
 {
 	this->root->setAttrib("creator", PROJECT_STRING);
-	this->root->setAttrib("fileversion", "3");
+	this->root->setAttrib("fileversion", "4");
 	this->root->addChild(new XmlTextNode("title", "Xournal++ document - see " PROJECT_URL));
 }
 

@@ -126,8 +126,6 @@ private:
 	double gap;
 };
 
-string lastfn = "";
-
 class PlayObject : public BaseSelectObject
 {
 public:
@@ -158,32 +156,13 @@ protected:
 		double tmpGap = 0;
 		if ((s->intersects(x, y, 15, &tmpGap)))
 		{
-			int ts = s->getTimestamp();
-			int buffer = 5;
-
-			if (ts >= buffer)
-			{
-				ts -= buffer;
-			}
-			else
-			{
-				ts = 0;
-			}
+			size_t ts = s->getTimestamp();
 
 			string fn = s->getAudioFilename();
 
-			if (fn != lastfn)
+			if (!fn.empty())
 			{
-				if (!fn.empty())
-				{
-					lastfn = fn;
-					AudioPlayer *audioPlayer = view->getXournal()->getControl()->getAudioController()->getAudioPlayer();
-					audioPlayer->start(Path::fromUri(view->settings->getAudioFolder()).str() + "/" + fn, (unsigned int) ts);
-				}
-			}
-			else
-			{
-				AudioPlayer *audioPlayer = view->getXournal()->getControl()->getAudioController()->getAudioPlayer();
+				AudioPlayer* audioPlayer = view->getXournal()->getControl()->getAudioController()->getAudioPlayer();
 				audioPlayer->abort();
 				audioPlayer->start(Path::fromUri(view->settings->getAudioFolder()).str() + "/" + fn, (unsigned int) ts);
 			}
