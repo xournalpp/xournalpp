@@ -68,7 +68,14 @@ void XournalMain::initLocalisation()
 
 	// Not working on Windows! Working on Linux, but not sure if it's needed
 #ifndef WIN32
+try
+{
 	std::locale::global(std::locale("")); // "" - system default locale
+}
+catch (std::runtime_error &e)
+{
+	g_warning("XournalMain: System default locale could not be set.\nCaused by: %s", e.what());
+}
 #endif
 	std::cout.imbue(std::locale());
 }
