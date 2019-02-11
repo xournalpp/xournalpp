@@ -24,11 +24,10 @@ void VorbisProducer::start(std::string filename, const DeviceInfo& outputDevice,
 		return;
 	}
 
-	//TODO implement seeking (this is hard since we need to get the frame offset)
 	sf_count_t seekPosition = this->sfInfo.samplerate / 1000 * timestamp;
 	if (seekPosition < this->sfInfo.frames)
 	{
-		sf_seek(this->sfFile, seekPosition, SF_SEEK_SET);
+		sf_seek(this->sfFile, seekPosition, SEEK_SET);
 	}
 	else
 	{
