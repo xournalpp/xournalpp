@@ -15,5 +15,5 @@ make -j8
 make install
 
 # Fix linker flags
-cp portaudio-2.0.pc /Users/andreas/gtk/inst/lib/pkgconfig
+cp portaudio-2.0.pc $HOME/gtk/inst/lib/pkgconfig
 
