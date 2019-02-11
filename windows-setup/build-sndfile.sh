@@ -8,6 +8,6 @@ cd libsndfile
 mkdir build
 cd build
 
-cmake -G "MSYS Makefiles" ..
+cmake -G "MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=/mingw64 ..
 make -j8
 make install
