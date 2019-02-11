@@ -3,15 +3,9 @@ cd "${0%/*}"
 
 export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
 
-# Generation does not work... (really buggy with CMake, but does not work at all with automake on MingW)
-# So do this manually...
-./sox-pc.sh > $HOME/gtk/inst/lib/pkgconfig/sox.pc
+git clone https://github.com/erikd/libsndfile.git
 
-
-git clone https://git.code.sf.net/p/sox/code sox-code
-
-cd sox-code
-git checkout tags/sox-14.4.2 -b sox-14.4.2
+cd libsndfile
 
 mkdir build
 cd build
