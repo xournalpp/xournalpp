@@ -1,0 +1,12 @@
+prefix=/Users/andreas/gtk/inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: PortAudio
+Description: Portable audio I/O
+Requires:
+Version: 19
+
+Libs: -L${libdir} -lportaudio
+Cflags: -I${includedir} 
