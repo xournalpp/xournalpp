@@ -12,3 +12,5 @@ gtk-mac-integration
 portaudio
 pa_stable_*.tgz
 sox-code
+libsndfile
+
