@@ -29,4 +29,6 @@ public:
 	static double getAttribDouble(const char* name, LoadHandler* loadHandler);
 	static int getAttribInt(const char* name, LoadHandler* loadHandler);
 	static bool getAttribInt(const char* name, bool optional, LoadHandler* loadHandler, int& rValue);
+	static size_t getAttribSizeT(const char* name, LoadHandler* loadHandler);
+	static bool getAttribSizeT(const char* name, bool optional, LoadHandler* loadHandler, size_t& rValue);
 };
