@@ -12,3 +12,4 @@ cd build
 
 $HOME/gtk/inst/bin/cmake -DCMAKE_INSTALL_PREFIX:PATH=$HOME/gtk/inst ..
 make -j8
+make install
