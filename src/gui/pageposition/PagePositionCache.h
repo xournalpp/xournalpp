@@ -3,7 +3,7 @@
  *
  * Cache for Query the page osition handler
  *
- * @author Xournal++ Team, Justin Jones
+ * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
  *
  * @license GNU GPLv2 or later

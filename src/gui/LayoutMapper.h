@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <XournalType.h>
+
 enum LayoutType {					//		1		2		4
 	Horizontal = 0,						//									
 	Vertical = 1,							//		V							
@@ -20,7 +22,7 @@ enum LayoutType {					//		1		2		4
 	Vertical_BT = 5,						//		V				BT	
 	Horizontal_RL_BT = 6,			//				RL		BT			
 	Vertical_BT_RL = 7,				//		V		RL		BT		
-	BitFlagsUsed,		//do not modify this or above
+	BitFlagsUsedToHere = 8,		//do not modify this or above
 
 };
 
@@ -31,38 +33,59 @@ enum LayoutBitFlags{
 };
 
 /** 
- * @brief Allow different orderings of document pages in layout.
+ * @brief Layout asks this mapper what page ( if any ) should be at a given column,row.
  */
 	
 class LayoutMapper
 {
 
-public:
-	int c=0;
-	int r=0;
-	int actualPages=0;
-	int possiblePages=0;
+private:
+
+	XOJ_TYPE_ATTRIB;
+
+	int cols = 0;
+	int rows = 0;
+	int actualPages = 0;
+	int possiblePages = 0;
 	int offset = 0;
-	LayoutType layoutType;
+	LayoutType layoutType = Horizontal;
 	bool paired = false;
 
+	//called by constructors
+	void layoutMapperInit( int pages, int numRows, int numCols, bool useRows, LayoutType type, bool paired   , int firstPageOffset);
+
+	
+public:
 	
 	/**
 	 * Initialize mapper of LayoutType with number of pages and of fixed rows or columns
 	 * @param  pages  The number of pages in the document
-	 * @param  rORc Number of rows OR columns depending on boolean flag isR
-	 * @param  isR  How to interpret rORc: True is rows
-	 * @param  off  Pages to offset - usually one or zero in order to pair up properly
-	 * @param  type Specify LayoutType desired.  Options include: Horizontal, Vertical, VerticalPaired 
+	 * @param  numRows Number of rows ( used if useRows )
+	 * @param  numCols  Number of columns ( used if !useRows )
+	 * @param  useRows  use pages/rows to recalculate cols else recalculate rows
+	 * @param  type Specify LayoutType desired.  Options include: Horizontal, Vertical, 
+	 * @param  isPaired Display pages in pairs including offset 
+	 * @param  firstPageOffset  Pages to offset - usually one or zero in order to pair up properly
 	 * 
-	 * @return Page index to put at coordinates 
 	 */	
-	LayoutMapper( int pages, int rORc, bool isR , int off, LayoutType type, bool paired );
+	LayoutMapper( int pages, int numRows, int numCols, bool useRows, LayoutType type, bool isPaired , int firstPageOffset );
 	
 	/**
-	 *  LayoutMapper with individual layout arguments
+	 *  LayoutMapper with broken out layout arguments
+	 * 
+	 * @param  pages  The number of pages in the document
+	 * @param  numRows Number of rows ( used if useRows )
+	 * @param  numCols  Number of columns ( used if !useRows )
+	 * @param  useRows  use pages/rows to recalculate cols else recalculate rows
+	 * @param  isVertical  lay out pages by filling columns first
+	 * @param  isRightToLeft  go from right to left
+	 * @param  isBottomToTop  go from bottom to top
+	 * @param  isPaired Display pages in pairs including offset 
+	 * @param  firstPageOffset  Pages to offset - usually one or zero in order to pair up properly
+	 * 
+	 * 
 	 */
-	LayoutMapper( int pages, int rORc, bool isR , int off, bool vertical, bool r2l, bool b2t, bool isPaired);
+	LayoutMapper( int pages,  int numRows, int numCols, bool useRows , bool isVertical, bool isRightToLeft, bool isBottomToTop, bool isPaired, int firstPageOffset);
 	
 	
 	
@@ -77,9 +100,27 @@ public:
 	 */
 	int map(int x, int y);
 	
+	/**
+	 * Get number of columns
+	 * 
+	 * @return number of columns
+	 */
+	int getColumns();
 	
-private:
-	//called by constructors
-	void layoutMapperInit( int pages, int rORc, bool isR , int off, LayoutType type, bool paired );
-		
-};
+	/**
+	 * Get number of rows
+	 * 
+	 * @return number of rows
+	 */
+	int getRows();
+	
+	/**
+	 * Get offset
+	 * 
+	 * @return first page offset
+	 */
+	int getFirstPageOffset();
+	
+};	
+	
+

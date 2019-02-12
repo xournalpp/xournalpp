@@ -1,102 +1,143 @@
 #include "gui/LayoutMapper.h"
 
 
-#define XYH( x,y,r,c,off)	(( c * y + x) - off%c)
-#define XYV( x,y,r,c,off) (( r* x  + y) - off%r)
-#define XYVP( x,y,r,c,off ) (((( y+ r* int(x/2))*2 + x%2 ) - off % 2)
 
+LayoutMapper::LayoutMapper( int pages, int numRows, int numCols, bool useRows, LayoutType type, bool isPaired, int firstPageOffset)
+{
 
-#define  MAX(A, B)  ((A) > (B) ? (A) : (B))
-
-
-LayoutMapper::LayoutMapper( int pages, int rORc, bool isR , int off, LayoutType type, bool isPaired){
+	XOJ_INIT_TYPE(LayoutMapper);
 	
-	layoutMapperInit(  pages,  rORc,  isR ,  off,  type,  isPaired);
+	layoutMapperInit(  pages,  numRows, numCols,  useRows, type,  isPaired, firstPageOffset);
 	
 }
 
 
-LayoutMapper::LayoutMapper( int pages, int rORc, bool isR , int off, bool vertical, bool r2l, bool b2t, bool isPaired){
+LayoutMapper::LayoutMapper( int pages,  int numRows, int numCols, bool useRows , bool isVertical, bool isRightToLeft, bool isBottomToTop, bool isPaired, int firstPageOffset)
+{
+
+	XOJ_INIT_TYPE(LayoutMapper);
 	
-	int type = vertical?LayoutBitFlags::ColMajor:0;
-	    type |=  r2l?LayoutBitFlags::RightToLeft:0;
-		type |=  b2t?LayoutBitFlags::BottomToTop:0;
+	int type = isVertical?LayoutBitFlags::ColMajor:0;
+	    type |=  isRightToLeft?LayoutBitFlags::RightToLeft:0;
+		type |=  isBottomToTop?LayoutBitFlags::BottomToTop:0;
 		
 	
-	layoutMapperInit(  pages,  rORc,  isR ,  off,   (LayoutType)type,  isPaired);
+	layoutMapperInit(  pages,  numRows, numCols,  useRows,  (LayoutType)type,  isPaired,  firstPageOffset);
 }
 
 
 
-void LayoutMapper::layoutMapperInit( int pages, int rORc, bool isR , int off, LayoutType type, bool isPaired){
+void LayoutMapper::layoutMapperInit( int pages, int numRows, int numCols, bool useRows , LayoutType type, bool isPaired, int firstPageOffset)
+{
 
-	paired = isPaired;
-	if(isR){
-		r = MAX(1, rORc);
-		c = MAX(1, (pages + off + (rORc -1) )/rORc);	// using  + ( rORc-1) to round up (int)pages/rows
-	}else{
-		c = MAX(1, rORc);
-		r = MAX(1, (pages + off + (rORc -1) )/rORc);	
+	XOJ_CHECK_TYPE(LayoutMapper);
+	
+	this->paired = isPaired;
+	if(useRows)
+	{
+		this->rows = MAX(1, numRows);
+		this->cols = MAX(1, (pages + firstPageOffset + (this->rows  -1) )/this->rows );	// using  + ( rows-1) to round up (int)pages/rows
+	}
+	else
+	{
+		this->cols = MAX(1, numCols);
+		this->rows = MAX(1, (pages + firstPageOffset + (this->cols  -1) )/this->cols );	
 	}
 
-	if(paired) c += c%2;	 // add another column if pairing and odd number of columns.
+	if(isPaired)
+	{
+		this->cols += this->cols % 2;	 // add another column if pairing and odd number of columns.
+	}
 
 							 
-	layoutType = type;
+	this->layoutType = type;
 	
-	if(type & LayoutBitFlags::ColMajor)
+	if(type & LayoutBitFlags::ColMajor) 							// Vertical Layout
 	{
-		if( paired){
-			offset = off % (2*r);
+		if( isPaired)
+		{
+			this->offset = firstPageOffset % (2*this->rows);
 		}
-		else{
-			offset = off % r;
+		else
+		{
+			this->offset = firstPageOffset % this->rows;
 		}
 	}
-	else //Horizontal Layout
+	else																				// Horizontal Layout
 	{
-		offset = off % c;
+		this->offset = firstPageOffset % this->cols;
 	}
 	
 	
-	possiblePages = r * c;
-	actualPages = pages;
+	this->possiblePages = this->rows * this->cols;
+	this->actualPages = pages;
 }
 	
 	
-int LayoutMapper::map(int x, int y){ 
+int LayoutMapper::getColumns()
+{
+	XOJ_CHECK_TYPE(LayoutMapper);
+
+	return this->cols;
+}
+
+int LayoutMapper::getRows()
+{
+	XOJ_CHECK_TYPE(LayoutMapper);
+
+	return this->rows;
+}
+
+int LayoutMapper::getFirstPageOffset()
+{
+	XOJ_CHECK_TYPE(LayoutMapper);
+
+	return this->offset;
+}
+	
+	
+	
+int LayoutMapper::map(int x, int y)
+{ 
+	XOJ_CHECK_TYPE(LayoutMapper);
+
 	int res;
 	
-	if( layoutType < BitFlagsUsed)
+	if( this->layoutType < BitFlagsUsedToHere)
 	{
-		if ( layoutType & LayoutBitFlags::RightToLeft)
+		if ( this->layoutType & LayoutBitFlags::RightToLeft)
 		{
-				x = c-1-x;	//mirror x
+				x = this->cols - 1 - x;	 	// reverse x
 		}
-		if ( layoutType & LayoutBitFlags::BottomToTop)
+		if ( this->layoutType & LayoutBitFlags::BottomToTop)
 		{
-					y = r-1-y;
+					y = this->rows - 1 - y; 	// reverse y 
 		}		
 				
 		
-		if(  layoutType & LayoutBitFlags::ColMajor) 	// aka Vertical
+		if(  this->layoutType & LayoutBitFlags::ColMajor) 	// aka Vertical
 		{
-			if( paired)
+			if( this->paired)
 			{
-				res = ((( y + r*( (int)(x/2) )) * 2 ) + x %2);
+				res = (( y + this->rows * (   (int)(x/2)   )  ) * 2 ) + x % 2;
 			}
-			else{
-				res = (y + r* x);
+			else
+			{
+				res = y + this->rows * x;
 			}
 		}
 		else //Horizontal
 		{
-				res = (x + c * y);
+				res = x + this->cols * y ;
 		}
 
 		
-		res -= offset;
-		if( res>=actualPages) res = -1;
+		res -= this->offset;
+		
+		if( res >= this->actualPages)
+		{
+			res = -1;
+		}
 								
 		return res;
 	}

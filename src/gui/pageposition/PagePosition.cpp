@@ -6,20 +6,23 @@ PagePosition::PagePosition(XojPageView* aPv)
 {
 	XOJ_INIT_TYPE(PagePosition);
 
-	y1 = aPv->getY();
-	y2 = y1 + aPv->getDisplayHeight();
-	x1 = aPv->getX();
-	x2 = x1 + aPv->getDisplayWidth();
+	this->y1 = aPv->getY();
+	this->y2 = this->y1 + aPv->getDisplayHeight();
+	this->x1 = aPv->getX();
+	this->x2 = this->x1 + aPv->getDisplayWidth();
 
-	pv = aPv;
+	this->pv = aPv;
 }
 
 PagePosition::PagePosition()
 {
 	XOJ_INIT_TYPE(PagePosition);
 
-	y1 = y2 = x1 =x2 = 0;
-	pv = 0;	
+	this->y1 = 0;
+	this->y2 = 0;
+	this->x1 = 0;
+	this->x2 = 0;
+	this->pv = 0;	
 	
 }
 
@@ -37,6 +40,6 @@ bool PagePosition::containsPoint(int x, int y) const
 {
 	XOJ_CHECK_TYPE(PagePosition);
 
-	return (     y >= y1      &&       y <= y2      &&       x>= x1       &&       x <= x2    )  ;
+	return (     y >= this->y1      &&       y <= this->y2      &&       x>= this->x1       &&       x <= this->x2    )  ;
 }
 

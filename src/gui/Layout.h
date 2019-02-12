@@ -74,10 +74,7 @@ public:
 	/**
 	 * Performs a layout of the XojPageView's managed in this Layout
 	 */
-	void layoutPages();	//calls one of the following two:
-	
-	void layoutPagesOriginal();
-	void layoutPagesUsingMapper();
+	void layoutPages();
 
 	/**
 	 * Updates the current XojPageView. The XojPageView is selected based on

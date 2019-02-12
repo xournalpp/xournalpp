@@ -9,17 +9,17 @@ PagePositionHandler::PagePositionHandler()
 {
 	XOJ_INIT_TYPE(PagePositionHandler);
 
-	dataCount = 0;
-	dataAllocSize = 0;
-	data = NULL;
-	maxY = 0;
+	this->dataCount = 0;
+	this->dataAllocSize = 0;
+	this->data = NULL;
+	this->maxY = 0;
 }
 
 PagePositionHandler::~PagePositionHandler()
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-	freeData();
+	this->freeData();
 
 	XOJ_RELEASE_TYPE(PagePositionHandler);
 }
@@ -28,30 +28,30 @@ void PagePositionHandler::freeData()
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-	for (int i = 0; i < dataCount; i++)
+	for (int i = 0; i < this->dataCount; i++)
 	{
-		delete data[i];
+		delete this->data[i];
 	}
 
-	g_free(data);
-	data = NULL;
-	dataCount = 0;
-	dataAllocSize = 0;
+	g_free(this->data);
+	this->data = NULL;
+	this->dataCount = 0;
+	this->dataAllocSize = 0;
 }
 
 void PagePositionHandler::update(XojPageView** viewPages, int viewPagesLen, int theMaxY)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-	freeData();
+	this->freeData();
 
-	maxY = theMaxY;
+	this->maxY = theMaxY;
 	
 	for (int i = 0; i < viewPagesLen; i++)
 	{
 		XojPageView* pv = viewPages[i];
 		PagePosition* pp = new PagePosition(pv);
-		addData(pp);
+		this->addData(pp);
 	}
 
 }
@@ -61,28 +61,28 @@ XojPageView* PagePositionHandler::getBestMatchingView(int x, int y, int width, i
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
 	// Does this simplification result in expected behaviour? 
-	return getViewAt( x + width/2, y + height/2 );
+	return  this->getViewAt( x + width/2, y + height/2 );
 }
 
 XojPageView* PagePositionHandler::getViewAt(int x, int y, PagePositionCache* cache)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-	if (y < 0 || y >maxY)
+	if (y < 0 || y > this->maxY)
 	{
 		return NULL;
 	}
 
-	if (cache && cache->ppId >= 0 && cache->ppId < dataCount)
+	if (cache && cache->ppId >= 0 && cache->ppId < this->dataCount)
 	{
-		if (data[cache->ppId]->containsPoint(x, y))
+		if (this->data[cache->ppId]->containsPoint(x, y))
 		{
-			return data[cache->ppId]->pv;
+			return this->data[cache->ppId]->pv;
 		}
 	}
 
 	int index = -1;
-	PagePosition* pp = linearSearch(x,y, index);
+	PagePosition* pp = this->linearSearch(x,y, index);
 
 
 	if (cache)
@@ -102,11 +102,12 @@ PagePosition* PagePositionHandler::linearSearch( int x,int y, int& index)
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
 		
-			for ( int i = 0; i <dataCount; i++ )
+			for ( int i = 0; i <this->dataCount; i++ )
 			{
-				if ( data[i]->containsPoint( x , y ) ){
+				if ( this->data[i]->containsPoint( x , y ) )
+				{
 					index = i;
-					return data[i];
+					return this->data[i];
 				}
 			}
 			
@@ -120,17 +121,17 @@ void PagePositionHandler::addData(PagePosition* p)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-	if (dataCount >= dataAllocSize - 1)
+	if ( this->dataCount >= this->dataAllocSize - 1)
 	{
-		allocDataSize(dataAllocSize + 100);
+		this->allocDataSize(this->dataAllocSize + 100);
 	}
-	data[dataCount++] = p;
+	this->data[this->dataCount++] = p;
 }
 
 void PagePositionHandler::allocDataSize(int size)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-	dataAllocSize = size;
-	data = (PagePosition**) g_realloc(data, dataAllocSize * sizeof(PagePosition*));
+	this->dataAllocSize = size;
+	this->data = (PagePosition**) g_realloc(this->data, this->dataAllocSize * sizeof(PagePosition*));
 }
