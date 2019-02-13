@@ -155,8 +155,8 @@ XOJ_DECLARE_TYPE(PdfExportJob, 144);
 XOJ_DECLARE_TYPE(BackgroundImage, 145);
 XOJ_DECLARE_TYPE(PartList, 146);
 XOJ_DECLARE_TYPE(PageRangeEntry, 147);
-XOJ_DECLARE_TYPE(PageViewIndex, 148);
-XOJ_DECLARE_TYPE(PageViewIndexEntry, 149);
+
+
 XOJ_DECLARE_TYPE(EditSelectionContents, 150);
 XOJ_DECLARE_TYPE(PageLayerPosEntry, 151);
 XOJ_DECLARE_TYPE(BackgroundImageContents, 152);

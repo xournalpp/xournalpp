@@ -180,7 +180,7 @@ double Layout::getLayoutWidth()
 const int XOURNAL_PADDING = 10;
 
 /**
- * Allowance for shadow between page pairs in dual mode
+ * Allowance for shadow between page pairs in paired page mode
  */
 const int XOURNAL_ROOM_FOR_SHADOW = 3;
 
@@ -200,7 +200,7 @@ void Layout::layoutPages()
 	Settings* settings = this->view->getControl()->getSettings();
 	bool verticalSpace = settings->getAddVerticalSpace();				//TODO: Use these again
 	bool horizontalSpace = settings->getAddHorizontalSpace();		//TODO: Use these again
-	bool dualPage = settings->isShowTwoPages();
+	bool isPairedPages = settings->isShowTwoPages();
 	int numRowsOrColumns = settings->getViewColumns();
 	int pairsOffset = settings->getPairsOffset();
 	bool vert = settings->getViewLayoutVert();
@@ -209,9 +209,9 @@ void Layout::layoutPages()
 	
 	int pagesOffset = 0;
 	
-	if (!dualPage ) pairsOffset = 0;
+	if (!isPairedPages ) pairsOffset = 0;
 	
-	LayoutMapper mapper( len, numRowsOrColumns, numRowsOrColumns, false, vert, r2l, b2t , dualPage, pairsOffset );
+	LayoutMapper mapper( len, numRowsOrColumns, numRowsOrColumns, false, vert, r2l, b2t , isPairedPages, pairsOffset );
 
 	pagesOffset = mapper.getFirstPageOffset();
 	
@@ -219,20 +219,10 @@ void Layout::layoutPages()
 	int columns = mapper.getColumns();
 
 	
-	int sizeCol[columns];
+	int sizeCol[columns] = {};
+
 	
-	for ( int i =0; i< columns; i++)
-	{  
-		sizeCol[i] = 0;  
-	}
-	
-	int sizeRow[rows];
-	
-	for ( int i =0; i< rows; i++)
-	{ 
-		sizeRow[i] = 0;  
-	}
-	
+	int sizeRow[rows] = {};
 	
 
 	for ( int r=0; r < rows; r++ )
@@ -260,13 +250,18 @@ void Layout::layoutPages()
 
 	int x = XOURNAL_PADDING;
 	int y = XOURNAL_PADDING;
+	
+	// Iterate over ALL possible rows and columns and let the mapper tell us what page, if any,  is found there.
+	
 	for ( int r=0; r < rows; r++ )
 	{
 		for ( int c=0; c < columns; c++ )
 		{
-			int k = mapper.map(c,r);
-			if(k>=0){
-				XojPageView* v = this->view->viewPages[k];
+			int pageAtRowCol = mapper.map(c,r);
+			
+			if(pageAtRowCol>=0){ 
+				
+				XojPageView* v = this->view->viewPages[pageAtRowCol];
 				int vDisplayWidth = v->getDisplayWidth();
 				{
 					int paddingLeft;
@@ -274,7 +269,7 @@ void Layout::layoutPages()
 					int columnPadding = 0;
 					columnPadding = (sizeCol[c] - vDisplayWidth );
 					
-					if (dualPage && len >1){	// dual page mode
+					if (isPairedPages && len >1){	// pair pages mode
 						if (c%2 == 0 ){ 		//align right
 							paddingLeft = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;	
 							paddingRight = XOURNAL_ROOM_FOR_SHADOW;
@@ -284,7 +279,7 @@ void Layout::layoutPages()
 							paddingRight = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
 						}
 					}
-					else{	// not dual page mode - center
+					else{	// not paired page mode - center
 						paddingLeft = XOURNAL_PADDING_BETWEEN/2 + columnPadding/2;      //center justify
 						paddingRight = XOURNAL_PADDING_BETWEEN - paddingLeft + columnPadding/2;
 					}

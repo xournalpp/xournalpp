@@ -17,7 +17,7 @@ LayoutMapper::LayoutMapper( int pages,  int numRows, int numCols, bool useRows ,
 
 	XOJ_INIT_TYPE(LayoutMapper);
 	
-	int type = isVertical?LayoutBitFlags::ColMajor:0;
+	int type = isVertical?LayoutBitFlags::Columns:0;
 	    type |=  isRightToLeft?LayoutBitFlags::RightToLeft:0;
 		type |=  isBottomToTop?LayoutBitFlags::BottomToTop:0;
 		
@@ -52,7 +52,7 @@ void LayoutMapper::layoutMapperInit( int pages, int numRows, int numCols, bool u
 							 
 	this->layoutType = type;
 	
-	if(type & LayoutBitFlags::ColMajor) 							// Vertical Layout
+	if(type & LayoutBitFlags::Columns) 							// Vertical Layout
 	{
 		if( isPaired)
 		{
@@ -115,7 +115,7 @@ int LayoutMapper::map(int x, int y)
 		}		
 				
 		
-		if(  this->layoutType & LayoutBitFlags::ColMajor) 	// aka Vertical
+		if(  this->layoutType & LayoutBitFlags::Columns) 
 		{
 			if( this->paired)
 			{

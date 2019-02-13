@@ -505,10 +505,10 @@ private:
 	 *  Layout Vertical then Horizontal 
 	 */
 	bool layoutVertical;	
+	
 	/**
 	 *  Layout pages right to left
 	 */
-	
 	bool layoutRightToLeft;	
 	
 	/**

@@ -13,23 +13,23 @@
 
 #include <XournalType.h>
 
-enum LayoutType {					//		1		2		4
-	Horizontal = 0,						//									
-	Vertical = 1,							//		V							
-	Horizontal_RL = 2,				//				RL			
-	Vertical_RL = 3,						//		V		RL		
-	Horizontal_BT = 4,				//						BT		
-	Vertical_BT = 5,						//		V				BT	
-	Horizontal_RL_BT = 6,			//				RL		BT			
-	Vertical_BT_RL = 7,				//		V		RL		BT		
-	BitFlagsUsedToHere = 8,		//do not modify this or above
+enum LayoutType {				//		1		2		4
+	Horizontal 			= 0,	//									
+	Vertical 			= 1,	//		V							
+	Horizontal_RL 		= 2,	//				RL			
+	Vertical_RL 		= 3,	//		V		RL		
+	Horizontal_BT 		= 4,	//						BT		
+	Vertical_BT 		= 5,	//		V				BT	
+	Horizontal_RL_BT 	= 6,	//				RL		BT			
+	Vertical_BT_RL 		= 7,	//		V		RL		BT		
+	BitFlagsUsedToHere 	= 8,	//	do not modify this or above
 
 };
 
 enum LayoutBitFlags{
-		ColMajor = 1,		//aka Vertical
-		RightToLeft = 2,
-		BottomToTop = 4,
+		Columns 		= 1,	
+		RightToLeft 	= 2,
+		BottomToTop 	= 4,
 };
 
 /** 
