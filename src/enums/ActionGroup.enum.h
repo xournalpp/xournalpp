@@ -41,7 +41,7 @@ enum ActionGroup
 	// Need group for toggle button, this is the first Toggle Group
 	GROUP_TOGGLE_GROUP,
 
-	GROUP_TWOPAGES,
+	GROUP_PAIRED_PAGES,
 	GROUP_PRESENTATION_MODE,
 
 	GROUP_FULLSCREEN,

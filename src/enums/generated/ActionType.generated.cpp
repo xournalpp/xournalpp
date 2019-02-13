@@ -492,9 +492,9 @@ ActionType ActionType_fromString(string value)
 		return ACTION_FULLSCREEN;
 	}
 
-	if (value == "ACTION_VIEW_TWO_PAGES")
+	if (value == "ACTION_VIEW_PAIRED_PAGES")
 	{
-		return ACTION_VIEW_TWO_PAGES;
+		return ACTION_VIEW_PAIRED_PAGES;
 	}
 
 	if (value == "ACTION_VIEW_PRESENTATION_MODE")
@@ -1110,9 +1110,9 @@ string ActionType_toString(ActionType value)
 		return "ACTION_FULLSCREEN";
 	}
 
-	if (value == ACTION_VIEW_TWO_PAGES)
+	if (value == ACTION_VIEW_PAIRED_PAGES)
 	{
-		return "ACTION_VIEW_TWO_PAGES";
+		return "ACTION_VIEW_PAIRED_PAGES";
 	}
 
 	if (value == ACTION_VIEW_PRESENTATION_MODE)

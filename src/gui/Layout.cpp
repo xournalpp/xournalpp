@@ -65,11 +65,11 @@ void Layout::updateCurrentPage()
 
 	Control* control = this->view->getControl();
 
-	bool twoPages = control->getSettings()->isShowTwoPages();
+	bool pairedPages = control->getSettings()->isShowPairedPages();
 
 	if (visRect.y < 1)
 	{
-		if (twoPages && this->view->viewPagesLen > 1 &&
+		if (pairedPages && this->view->viewPagesLen > 1 &&
 		    this->view->viewPages[1]->isSelected())
 		{
 			// page 2 already selected
@@ -126,7 +126,7 @@ void Layout::updateCurrentPage()
 		}
 	}
 
-	if (twoPages && mostPageNr < this->view->viewPagesLen - 1)
+	if (pairedPages && mostPageNr < this->view->viewPagesLen - 1)
 	{
 		int y1 = this->view->viewPages[mostPageNr]->getY();
 		int y2 = this->view->viewPages[mostPageNr + 1]->getY();
@@ -200,7 +200,7 @@ void Layout::layoutPages()
 	Settings* settings = this->view->getControl()->getSettings();
 	bool verticalSpace = settings->getAddVerticalSpace();				//TODO: Use these again
 	bool horizontalSpace = settings->getAddHorizontalSpace();		//TODO: Use these again
-	bool isPairedPages = settings->isShowTwoPages();
+	bool isPairedPages = settings->isShowPairedPages();
 	int numRowsOrColumns = settings->getViewColumns();
 	int pairsOffset = settings->getPairsOffset();
 	bool vert = settings->getViewLayoutVert();

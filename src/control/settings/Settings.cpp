@@ -45,7 +45,7 @@ void Settings::loadDefault()
 	this->presureSensitivity = true;
 	this->zoomGesturesEnabled = true;
 	this->maximized = false;
-	this->showTwoPages = false;
+	this->showPairedPages = false;
 	this->presentationMode = false;
 
 	this->numColumns = 1;
@@ -350,9 +350,9 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->layoutBottomToTop = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
-	else if (xmlStrcmp(name, (const xmlChar*) "showTwoPages") == 0)
+	else if (xmlStrcmp(name, (const xmlChar*) "showPairedPages") == 0)
 	{
-		this->showTwoPages = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+		this->showPairedPages = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "numPairsOffset") == 0)
 	{
@@ -770,7 +770,7 @@ void Settings::save()
 	WRITE_BOOL_PROP(sidebarOnRight);
 	WRITE_BOOL_PROP(scrollbarOnLeft);
 	WRITE_INT_PROP(numColumns);
-	WRITE_BOOL_PROP(showTwoPages);
+	WRITE_BOOL_PROP(showPairedPages);
 	WRITE_BOOL_PROP(layoutVertical);
 	WRITE_BOOL_PROP(layoutRightToLeft);
 	WRITE_BOOL_PROP(layoutBottomToTop);
@@ -1376,24 +1376,24 @@ void Settings::setSizeUnitIndex(int sizeUnitId)
 	setSizeUnit(XOJ_UNITS[sizeUnitId].name);
 }
 
-void Settings::setShowTwoPages(bool showTwoPages)
+void Settings::setShowPairedPages(bool showPairedPages)
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	if (this->showTwoPages == showTwoPages)
+	if (this->showPairedPages == showPairedPages)
 	{
 		return;
 	}
 
-	this->showTwoPages = showTwoPages;
+	this->showPairedPages = showPairedPages;
 	save();
 }
 
-bool Settings::isShowTwoPages()
+bool Settings::isShowPairedPages()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	return this->showTwoPages;
+	return this->showPairedPages;
 }
 
 void Settings::setPresentationMode(bool presentationMode)

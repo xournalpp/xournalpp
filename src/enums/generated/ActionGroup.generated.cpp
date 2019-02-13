@@ -72,9 +72,9 @@ ActionGroup ActionGroup_fromString(string value)
 		return GROUP_TOGGLE_GROUP;
 	}
 
-	if (value == "GROUP_TWOPAGES")
+	if (value == "GROUP_PAIRED_PAGES")
 	{
-		return GROUP_TWOPAGES;
+		return GROUP_PAIRED_PAGES;
 	}
 
 	if (value == "GROUP_PRESENTATION_MODE")
@@ -200,9 +200,9 @@ string ActionGroup_toString(ActionGroup value)
 		return "GROUP_TOGGLE_GROUP";
 	}
 
-	if (value == GROUP_TWOPAGES)
+	if (value == GROUP_PAIRED_PAGES)
 	{
-		return "GROUP_TWOPAGES";
+		return "GROUP_PAIRED_PAGES";
 	}
 
 	if (value == GROUP_PRESENTATION_MODE)

@@ -216,8 +216,8 @@ public:
 	double getWidthMinimumMultiplier();
 	double getWidthMaximumMultiplier();
 
-	void setShowTwoPages(bool showTwoPages);
-	bool isShowTwoPages();
+	void setShowPairedPages(bool showPairedPages);
+	bool isShowPairedPages();
 
 	void setPresentationMode(bool presentationMode);
 	bool isPresentationMode();
@@ -484,7 +484,7 @@ private:
 	/**
 	 *  Pairs pages
 	 */
-	bool showTwoPages;
+	bool showPairedPages;
 
 	/**
 	 *  Sets presentation mode

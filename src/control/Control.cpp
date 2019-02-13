@@ -354,7 +354,7 @@ void Control::initWindow(MainWindow* win)
 	
 	
 	
-	setViewTwoPages(settings->isShowTwoPages());
+	setViewPairedPages(settings->isShowPairedPages());
 	setViewPresentationMode(settings->isPresentationMode());
 
 	penSizeChanged();
@@ -838,8 +838,8 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		});
 		break;
 
-	case ACTION_VIEW_TWO_PAGES:
-		setViewTwoPages(enabled);
+	case ACTION_VIEW_PAIRED_PAGES:
+		setViewPairedPages(enabled);
 		break;
 		
 	case ACTION_VIEW_PRESENTATION_MODE:
@@ -1499,12 +1499,12 @@ void Control::zoomFit()
 	zoom->zoomFit();
 }
 
-void Control::setViewTwoPages(bool twoPages)
+void Control::setViewPairedPages(bool pairedPages)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	settings->setShowTwoPages(twoPages);
-	fireActionSelected(GROUP_TWOPAGES, twoPages ? ACTION_VIEW_TWO_PAGES : ACTION_NOT_SELECTED);
+	settings->setShowPairedPages(pairedPages);
+	fireActionSelected(GROUP_PAIRED_PAGES, pairedPages ? ACTION_VIEW_PAIRED_PAGES : ACTION_NOT_SELECTED);
 
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();
@@ -1528,7 +1528,7 @@ void Control::setPairsOffset(int numOffset)
 	XOJ_CHECK_TYPE(Control);
 
 	settings->setPairsOffset(numOffset);
-	fireActionSelected(GROUP_TWOPAGES, numOffset ? ACTION_SET_PAIRS_OFFSET: ACTION_NOT_SELECTED);
+	fireActionSelected(GROUP_PAIRED_PAGES, numOffset ? ACTION_SET_PAIRS_OFFSET: ACTION_NOT_SELECTED);
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();
 	scrollHandler->scrollToPage(currentPage);

@@ -126,7 +126,7 @@ public:
 
 	void updateWindowTitle();
 	void calcZoomFitSize();
-	void setViewTwoPages(bool continous);
+	void setViewPairedPages(bool continous);
 	void setViewPresentationMode(bool continous);
 	void setPairsOffset(int numOffset);
 	void setViewColumns(int numColumns);

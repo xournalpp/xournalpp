@@ -145,7 +145,7 @@ bool ToolbarModel::existsId(string id)
 const char* TOOLBAR_INI_HEADER =
 		"# Xournal++ Toolbar configuration\n"
 		"# Here you can customize the Toolbars\n"
-		" Delte this file to generate a new config file with default values\n"
+		" Delete this file to generate a new config file with default values\n"
 		"\n"
 		" Available buttons:\n"
 		" File: NEW,SAVE,OPEN\n"
@@ -154,7 +154,7 @@ const char* TOOLBAR_INI_HEADER =
 		"\n"
 		" Navigation: GOTO_FIRST,GOTO_BACK,GOTO_NEXT,GOTO_LAST,GOTO_NEXT_ANNOTATED_PAGE\n"
 		"\n"
-		" Zoom: ZOOM_OUT,ZOOM_IN,ZOOM_FIT,ZOOM_100,FULLSCREEN,TWO_PAGES\n"
+		" Zoom: ZOOM_OUT,ZOOM_IN,ZOOM_FIT,ZOOM_100,FULLSCREEN,PAIRED_PAGES\n"
 		"\n"
 		" Color: COLOR(0xffffff),COLOR(0xffff00),COLOR(0xff8000),COLOR(0xff00ff),COLOR(0x00ff00),COLOR(0x00c0ff),COLOR(0x808080),COLOR(0x008000),COLOR(0xff0000),COLOR(0x3333cc),COLOR(0x000000),COLOR_SELECT\n"
 		"  Notice: This are the default Xournal colors, each other color in HEX can also be used, eg COLOR(0x12ABCF);\n"
