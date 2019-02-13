@@ -26,6 +26,12 @@ LayoutMapper::LayoutMapper( int pages,  int numRows, int numCols, bool useRows ,
 }
 
 
+LayoutMapper::~LayoutMapper()
+{
+	XOJ_RELEASE_TYPE(LayoutMapper);
+}
+
+
 
 void LayoutMapper::layoutMapperInit( int pages, int numRows, int numCols, bool useRows , LayoutType type, bool isPaired, int firstPageOffset)
 {

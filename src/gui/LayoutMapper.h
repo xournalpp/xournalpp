@@ -90,6 +90,9 @@ public:
 	
 	
 	
+	virtual ~LayoutMapper();
+	
+	
 	/**
 	 * Map page location to document index
 	 * 
