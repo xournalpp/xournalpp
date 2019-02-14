@@ -130,6 +130,7 @@ public:
 	void setViewPresentationMode(bool continous);
 	void setPairsOffset(int numOffset);
 	void setViewColumns(int numColumns);
+	void setViewRows(int numRows);
 	void setViewLayoutVert(bool vert);
 	void setViewLayoutR2L(bool r2l);
 	void setViewLayoutB2T(bool b2t);

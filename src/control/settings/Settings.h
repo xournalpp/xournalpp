@@ -227,6 +227,12 @@ public:
 	
 	void setViewColumns(int numColumns);
 	int getViewColumns();
+
+	void setViewRows(int numRows);
+	int getViewRows();
+	
+	void setViewFixedRows(bool viewFixedRows);
+	bool isViewFixedRows();
 	
 	void setViewLayoutVert(bool vert);
 	bool getViewLayoutVert();
@@ -497,9 +503,19 @@ private:
 	int numPairsOffset;	
 	
 	/**
-	 *  Displays multiple columns
+	 *  Use when fixed number of columns
 	 */
 	int numColumns;	
+
+	/**
+	 *  Use when fixed number of rows
+	 */
+	int numRows;	
+
+	/**
+	 *  USE  fixed rows, otherwise fixed columns
+	 */
+	bool viewFixedRows;	
 	
 	/**
 	 *  Layout Vertical then Horizontal 

@@ -346,6 +346,7 @@ void Control::initWindow(MainWindow* win)
 	undoRedoChanged();
 
 	setViewColumns(settings->getViewColumns());
+	setViewRows(settings->getViewRows());
 	
 	
 	setViewLayoutVert(settings->getViewLayoutVert());
@@ -887,6 +888,38 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		
 	case ACTION_SET_COLUMNS_8:
 		setViewColumns(8);
+		break;
+		
+	case ACTION_SET_ROWS_1:
+		setViewRows(1);
+		break;
+		
+	case ACTION_SET_ROWS_2:
+		setViewRows(2);
+		break;
+		
+	case ACTION_SET_ROWS_3:
+		setViewRows(3);
+		break;
+		
+	case ACTION_SET_ROWS_4:
+		setViewRows(4);
+		break;
+		
+	case ACTION_SET_ROWS_5:
+		setViewRows(5);
+		break;
+		
+	case ACTION_SET_ROWS_6:
+		setViewRows(6);
+		break;
+		
+	case ACTION_SET_ROWS_7:
+		setViewRows(7);
+		break;
+		
+	case ACTION_SET_ROWS_8:
+		setViewRows(8);
 		break;
 		
 	case ACTION_SET_LAYOUT_HORIZONTAL:
@@ -1555,6 +1588,33 @@ void Control::setViewColumns(int numColumns)
 	}
 	
 	fireActionSelected(GROUP_COLUMNS, action);
+
+	int currentPage = getCurrentPageNo();
+	win->getXournal()->layoutPages();
+	scrollHandler->scrollToPage(currentPage);
+}
+
+void Control::setViewRows(int numRows)
+{
+	XOJ_CHECK_TYPE(Control);
+
+	settings->setViewRows(numRows);
+	
+	ActionType action;
+	
+	switch(numRows){
+		case 1: action = ACTION_SET_ROWS_1; break;
+		case 2: action = ACTION_SET_ROWS_2; break;
+		case 3: action = ACTION_SET_ROWS_3; break;
+		case 4: action = ACTION_SET_ROWS_4; break;
+		case 5: action = ACTION_SET_ROWS_5; break;
+		case 6: action = ACTION_SET_ROWS_6; break;
+		case 7: action = ACTION_SET_ROWS_7; break;
+		case 8: action = ACTION_SET_ROWS_8; break;
+		default: action = ACTION_SET_ROWS;
+	}
+	
+	fireActionSelected(GROUP_ROWS, action);
 
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();

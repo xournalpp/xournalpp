@@ -48,7 +48,9 @@ void Settings::loadDefault()
 	this->showPairedPages = false;
 	this->presentationMode = false;
 
-	this->numColumns = 1;
+	this->numColumns = 1;	// only one of these applies at a time
+	this->numRows = 1;
+	this->viewFixedRows = false;	
 	
 	this->layoutVertical = false;
 	this->layoutRightToLeft = false;
@@ -337,6 +339,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "numColumns") == 0)
 	{
 		this->numColumns = g_ascii_strtoll((const char*) value, NULL, 10);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "numRows") == 0)
+	{
+		this->numRows = g_ascii_strtoll((const char*) value, NULL, 10);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "viewFixedRows") == 0)
+	{
+		this->viewFixedRows = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "layoutVertical") == 0)
 	{
@@ -770,6 +780,8 @@ void Settings::save()
 	WRITE_BOOL_PROP(sidebarOnRight);
 	WRITE_BOOL_PROP(scrollbarOnLeft);
 	WRITE_INT_PROP(numColumns);
+	WRITE_INT_PROP(numRows);
+	WRITE_BOOL_PROP(viewFixedRows);
 	WRITE_BOOL_PROP(showPairedPages);
 	WRITE_BOOL_PROP(layoutVertical);
 	WRITE_BOOL_PROP(layoutRightToLeft);
@@ -1468,6 +1480,49 @@ int Settings::getViewColumns()
 
 	return this->numColumns;
 }
+
+
+void Settings::setViewRows(int numRows)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->numRows == numRows)
+	{
+		return;
+	}
+
+	this->numRows = numRows;
+	save();
+}
+
+int Settings::getViewRows()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->numRows;
+}
+
+void Settings::setViewFixedRows(bool viewFixedRows)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->viewFixedRows == viewFixedRows)
+	{
+		return;
+	}
+
+	this->viewFixedRows = viewFixedRows;
+	save();	
+}
+
+bool Settings::isViewFixedRows()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->viewFixedRows;
+}
+
+
 
 
 void Settings::setViewLayoutVert(bool vert)

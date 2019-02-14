@@ -567,6 +567,51 @@ ActionType ActionType_fromString(string value)
 		return ACTION_SET_COLUMNS_8;
 	}
 
+	if (value == "ACTION_SET_ROWS")
+	{
+		return ACTION_SET_ROWS;
+	}
+
+	if (value == "ACTION_SET_ROWS_1")
+	{
+		return ACTION_SET_ROWS_1;
+	}
+
+	if (value == "ACTION_SET_ROWS_2")
+	{
+		return ACTION_SET_ROWS_2;
+	}
+
+	if (value == "ACTION_SET_ROWS_3")
+	{
+		return ACTION_SET_ROWS_3;
+	}
+
+	if (value == "ACTION_SET_ROWS_4")
+	{
+		return ACTION_SET_ROWS_4;
+	}
+
+	if (value == "ACTION_SET_ROWS_5")
+	{
+		return ACTION_SET_ROWS_5;
+	}
+
+	if (value == "ACTION_SET_ROWS_6")
+	{
+		return ACTION_SET_ROWS_6;
+	}
+
+	if (value == "ACTION_SET_ROWS_7")
+	{
+		return ACTION_SET_ROWS_7;
+	}
+
+	if (value == "ACTION_SET_ROWS_8")
+	{
+		return ACTION_SET_ROWS_8;
+	}
+
 	if (value == "ACTION_SET_LAYOUT_HORIZONTAL")
 	{
 		return ACTION_SET_LAYOUT_HORIZONTAL;
@@ -1183,6 +1228,51 @@ string ActionType_toString(ActionType value)
 	if (value == ACTION_SET_COLUMNS_8)
 	{
 		return "ACTION_SET_COLUMNS_8";
+	}
+
+	if (value == ACTION_SET_ROWS)
+	{
+		return "ACTION_SET_ROWS";
+	}
+
+	if (value == ACTION_SET_ROWS_1)
+	{
+		return "ACTION_SET_ROWS_1";
+	}
+
+	if (value == ACTION_SET_ROWS_2)
+	{
+		return "ACTION_SET_ROWS_2";
+	}
+
+	if (value == ACTION_SET_ROWS_3)
+	{
+		return "ACTION_SET_ROWS_3";
+	}
+
+	if (value == ACTION_SET_ROWS_4)
+	{
+		return "ACTION_SET_ROWS_4";
+	}
+
+	if (value == ACTION_SET_ROWS_5)
+	{
+		return "ACTION_SET_ROWS_5";
+	}
+
+	if (value == ACTION_SET_ROWS_6)
+	{
+		return "ACTION_SET_ROWS_6";
+	}
+
+	if (value == ACTION_SET_ROWS_7)
+	{
+		return "ACTION_SET_ROWS_7";
+	}
+
+	if (value == ACTION_SET_ROWS_8)
+	{
+		return "ACTION_SET_ROWS_8";
 	}
 
 	if (value == ACTION_SET_LAYOUT_HORIZONTAL)

@@ -122,6 +122,11 @@ ActionGroup ActionGroup_fromString(string value)
 		return GROUP_COLUMNS;
 	}
 
+	if (value == "GROUP_ROWS")
+	{
+		return GROUP_ROWS;
+	}
+
 	if (value == "GROUP_LAYOUT_HORIZONTAL")
 	{
 		return GROUP_LAYOUT_HORIZONTAL;
@@ -248,6 +253,11 @@ string ActionGroup_toString(ActionGroup value)
 	if (value == GROUP_COLUMNS)
 	{
 		return "GROUP_COLUMNS";
+	}
+
+	if (value == GROUP_ROWS)
+	{
+		return "GROUP_ROWS";
 	}
 
 	if (value == GROUP_LAYOUT_HORIZONTAL)

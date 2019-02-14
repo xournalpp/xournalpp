@@ -52,8 +52,8 @@ LayoutMapper::LayoutMapper( int numPages, Settings* settings)
 	bool horizontalSpace = settings->getAddHorizontalSpace();		// TODO: Use these again?
 	bool isPairedPages = settings->isShowPairedPages();
 	int  numCols = settings->getViewColumns();
-	int  numRows = numCols; 										// TODO: not yet user-configuarable	
-	bool fixRows = false; 											// TODO: not yet user-configuarable
+	int  numRows = settings->getViewRows();	
+	bool fixRows = settings->isViewFixedRows(); 
 	int  pairsOffset = settings->getPairsOffset();
 	bool isVertical = settings->getViewLayoutVert();
 	bool isRightToLeft = settings->getViewLayoutR2L();
