@@ -2744,8 +2744,12 @@ void Control::clipboardPaste(Element* e)
 	win->getXournal()->getPasteTarget(x, y);
 
 	double width = e->getElementWidth();
+	double height = e->getElementHeight();
 
-	e->setX(x - width / 2);
+	x = MAX(0, x - width / 2);
+	y = MAX(0, y - height / 2);
+
+	e->setX(x);
 	e->setY(y);
 	layer->addElement(e);
 

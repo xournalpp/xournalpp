@@ -113,8 +113,8 @@ Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p)
 	GtkAdjustment* hadj = xournal->scrollHandling->getHorizontal();
 
 	GdkRectangle r2;
-	r2.x = (int)gtk_adjustment_get_lower(hadj);
-	r2.y = (int)gtk_adjustment_get_lower(vadj);
+	r2.x = (int)gtk_adjustment_get_value(hadj);
+	r2.y = (int)gtk_adjustment_get_value(vadj);
 	r2.width = (int)gtk_adjustment_get_page_size(hadj);
 	r2.height = (int)gtk_adjustment_get_page_size(vadj);
 
@@ -132,7 +132,15 @@ Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p)
 		return NULL;
 	}
 
+	r3.x -= r1.x;
+	r3.y -= r1.y;
+
 	double zoom = xournal->view->getZoom();
+
+	if (r3.x < 0 || r3.y < 0)
+	{
+		g_warning("XournalWidget:gtk_xournal_get_visible_area: intersection rectangle coordinates are negative which should never happen");
+	}
 
 	return new Rectangle(MAX(r3.x, 0) / zoom, MAX(r3.y, 0) / zoom, r3.width / zoom, r3.height / zoom);
 }
