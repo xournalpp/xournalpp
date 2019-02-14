@@ -117,14 +117,9 @@ ActionGroup ActionGroup_fromString(string value)
 		return GROUP_FILL;
 	}
 
-	if (value == "GROUP_COLUMNS")
+	if (value == "GROUP_FIXED_ROW_OR_COLS")
 	{
-		return GROUP_COLUMNS;
-	}
-
-	if (value == "GROUP_ROWS")
-	{
-		return GROUP_ROWS;
+		return GROUP_FIXED_ROW_OR_COLS;
 	}
 
 	if (value == "GROUP_LAYOUT_HORIZONTAL")
@@ -250,14 +245,9 @@ string ActionGroup_toString(ActionGroup value)
 		return "GROUP_FILL";
 	}
 
-	if (value == GROUP_COLUMNS)
+	if (value == GROUP_FIXED_ROW_OR_COLS)
 	{
-		return "GROUP_COLUMNS";
-	}
-
-	if (value == GROUP_ROWS)
-	{
-		return "GROUP_ROWS";
+		return "GROUP_FIXED_ROW_OR_COLS";
 	}
 
 	if (value == GROUP_LAYOUT_HORIZONTAL)

@@ -345,9 +345,13 @@ void Control::initWindow(MainWindow* win)
 	// Disable undo buttons
 	undoRedoChanged();
 
-	setViewColumns(settings->getViewColumns());
-	setViewRows(settings->getViewRows());
-	
+	if( settings->isViewFixedRows()){
+		setViewRows(settings->getViewRows());
+	}
+	else
+	{
+		setViewColumns(settings->getViewColumns());
+	}	
 	
 	setViewLayoutVert(settings->getViewLayoutVert());
 	setViewLayoutR2L(settings->getViewLayoutR2L());
@@ -1572,6 +1576,7 @@ void Control::setViewColumns(int numColumns)
 	XOJ_CHECK_TYPE(Control);
 
 	settings->setViewColumns(numColumns);
+	settings->setViewFixedRows(false);
 	
 	ActionType action;
 	
@@ -1587,7 +1592,7 @@ void Control::setViewColumns(int numColumns)
 		default: action = ACTION_SET_COLUMNS;
 	}
 	
-	fireActionSelected(GROUP_COLUMNS, action);
+	fireActionSelected(GROUP_FIXED_ROW_OR_COLS, action);
 
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();
@@ -1599,6 +1604,8 @@ void Control::setViewRows(int numRows)
 	XOJ_CHECK_TYPE(Control);
 
 	settings->setViewRows(numRows);
+	settings->setViewFixedRows(true);
+	
 	
 	ActionType action;
 	
@@ -1614,7 +1621,7 @@ void Control::setViewRows(int numRows)
 		default: action = ACTION_SET_ROWS;
 	}
 	
-	fireActionSelected(GROUP_ROWS, action);
+	fireActionSelected(GROUP_FIXED_ROW_OR_COLS, action);
 
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();
