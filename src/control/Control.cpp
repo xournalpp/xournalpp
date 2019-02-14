@@ -2746,8 +2746,11 @@ void Control::clipboardPaste(Element* e)
 	double width = e->getElementWidth();
 	double height = e->getElementHeight();
 
-	e->setX(x - width / 2);
-	e->setY(y - height / 2);
+	x = MAX(0, x - width / 2);
+	y = MAX(0, y - height / 2);
+
+	e->setX(x);
+	e->setY(y);
 	layer->addElement(e);
 
 	this->doc->unlock();
