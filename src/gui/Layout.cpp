@@ -197,24 +197,15 @@ void Layout::layoutPages()
 
 	int len = this->view->viewPagesLen;
 
-	Settings* settings = this->view->getControl()->getSettings();
-	bool verticalSpace = settings->getAddVerticalSpace();				//TODO: Use these again
-	bool horizontalSpace = settings->getAddHorizontalSpace();		//TODO: Use these again
-	bool isPairedPages = settings->isShowPairedPages();
-	int numRowsOrColumns = settings->getViewColumns();
-	int pairsOffset = settings->getPairsOffset();
-	bool vert = settings->getViewLayoutVert();
-	bool r2l = settings->getViewLayoutR2L();
-	bool b2t = settings->getViewLayoutB2T();
-	
-	int pagesOffset = 0;
-	
-	if (!isPairedPages ) pairsOffset = 0;
-	
-	LayoutMapper mapper( len, numRowsOrColumns, numRowsOrColumns, false, vert, r2l, b2t , isPairedPages, pairsOffset );
+ 	Settings* settings = this->view->getControl()->getSettings();
 
-	pagesOffset = mapper.getFirstPageOffset();
 	
+	LayoutMapper mapper(len, settings);		//obtain  rows,cols, paired and layout from view settings
+
+	
+	// get from mapper  ( some may have changed to accomodate paired setting etc. )
+	bool isPairedPages = mapper.getPairedPages();
+	int  pagesOffset = mapper.getFirstPageOffset();
 	int rows = mapper.getRows();
 	int columns = mapper.getColumns();
 

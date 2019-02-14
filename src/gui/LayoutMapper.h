@@ -12,6 +12,7 @@
 #pragma once
 
 #include <XournalType.h>
+#include "control/settings/Settings.h"
 
 enum LayoutType {				//		1		2		4
 	Horizontal 			= 0,	//									
@@ -27,7 +28,7 @@ enum LayoutType {				//		1		2		4
 };
 
 enum LayoutBitFlags{
-		Columns 		= 1,	
+		Vertically 		= 1,	
 		RightToLeft 	= 2,
 		BottomToTop 	= 4,
 };
@@ -49,7 +50,7 @@ private:
 	int possiblePages = 0;
 	int offset = 0;
 	LayoutType layoutType = Horizontal;
-	bool paired = false;
+	bool isPairedPages = false;
 
 	//called by constructors
 	void layoutMapperInit( int pages, int numRows, int numCols, bool useRows, LayoutType type, bool paired   , int firstPageOffset);
@@ -88,6 +89,16 @@ public:
 	LayoutMapper( int pages,  int numRows, int numCols, bool useRows , bool isVertical, bool isRightToLeft, bool isBottomToTop, bool isPaired, int firstPageOffset);
 	
 	
+	/**
+	 *  LayoutMapper using view to get settings
+	 * 
+	 * @param  pages  The number of pages in the document
+	 * @param  settings  The Settings from which users settings are obtained
+	 * 
+	 */
+	LayoutMapper( int pages, Settings* settings);
+	
+	
 	
 	
 	virtual ~LayoutMapper();
@@ -123,6 +134,16 @@ public:
 	 * @return first page offset
 	 */
 	int getFirstPageOffset();
+	
+	
+	/**
+	 * Get PairedPages
+	 * 
+	 * @return isPairedPages
+	 */
+	int getPairedPages();
+	
+	
 	
 };	
 	
