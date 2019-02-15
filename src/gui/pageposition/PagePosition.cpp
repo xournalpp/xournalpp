@@ -22,10 +22,8 @@ PagePosition::PagePosition()
 	this->y2 = 0;
 	this->x1 = 0;
 	this->x2 = 0;
-	this->pv = 0;	
-	
+	this->pv = 0;
 }
-
 
 PagePosition::~PagePosition()
 {
@@ -34,12 +32,10 @@ PagePosition::~PagePosition()
 	XOJ_RELEASE_TYPE(PagePosition);
 }
 
-
-
 bool PagePosition::containsPoint(int x, int y) const
 {
 	XOJ_CHECK_TYPE(PagePosition);
 
-	return (     y >= this->y1      &&       y <= this->y2      &&       x>= this->x1       &&       x <= this->x2    )  ;
+	return y >= this->y1 && y <= this->y2 && x >= this->x1 && x <= this->x2;
 }
 

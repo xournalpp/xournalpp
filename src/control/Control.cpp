@@ -345,20 +345,19 @@ void Control::initWindow(MainWindow* win)
 	// Disable undo buttons
 	undoRedoChanged();
 
-	if( settings->isViewFixedRows()){
+	if (settings->isViewFixedRows())
+	{
 		setViewRows(settings->getViewRows());
 	}
 	else
 	{
 		setViewColumns(settings->getViewColumns());
-	}	
-	
+	}
+
 	setViewLayoutVert(settings->getViewLayoutVert());
 	setViewLayoutR2L(settings->getViewLayoutR2L());
 	setViewLayoutB2T(settings->getViewLayoutB2T());
-	
-	
-	
+
 	setViewPairedPages(settings->isShowPairedPages());
 	setViewPresentationMode(settings->isPresentationMode());
 
@@ -846,7 +845,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	case ACTION_VIEW_PAIRED_PAGES:
 		setViewPairedPages(enabled);
 		break;
-		
+
 	case ACTION_VIEW_PRESENTATION_MODE:
 		setViewPresentationMode(enabled);
 		break;
@@ -854,6 +853,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	case ACTION_MANAGE_TOOLBAR:
 		manageToolbars();
 		break;
+
 	case ACTION_CUSTOMIZE_TOOLBAR:
 		customizeToolbars();
 		break;
@@ -865,86 +865,86 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	case ACTION_SET_COLUMNS_1:
 		setViewColumns(1);
 		break;
-		
+
 	case ACTION_SET_COLUMNS_2:
 		setViewColumns(2);
 		break;
-		
+
 	case ACTION_SET_COLUMNS_3:
 		setViewColumns(3);
 		break;
-		
+
 	case ACTION_SET_COLUMNS_4:
 		setViewColumns(4);
 		break;
-		
+
 	case ACTION_SET_COLUMNS_5:
 		setViewColumns(5);
 		break;
-		
+
 	case ACTION_SET_COLUMNS_6:
 		setViewColumns(6);
 		break;
-		
+
 	case ACTION_SET_COLUMNS_7:
 		setViewColumns(7);
 		break;
-		
+
 	case ACTION_SET_COLUMNS_8:
 		setViewColumns(8);
 		break;
-		
+
 	case ACTION_SET_ROWS_1:
 		setViewRows(1);
 		break;
-		
+
 	case ACTION_SET_ROWS_2:
 		setViewRows(2);
 		break;
-		
+
 	case ACTION_SET_ROWS_3:
 		setViewRows(3);
 		break;
-		
+
 	case ACTION_SET_ROWS_4:
 		setViewRows(4);
 		break;
-		
+
 	case ACTION_SET_ROWS_5:
 		setViewRows(5);
 		break;
-		
+
 	case ACTION_SET_ROWS_6:
 		setViewRows(6);
 		break;
-		
+
 	case ACTION_SET_ROWS_7:
 		setViewRows(7);
 		break;
-		
+
 	case ACTION_SET_ROWS_8:
 		setViewRows(8);
 		break;
-		
+
 	case ACTION_SET_LAYOUT_HORIZONTAL:
 		setViewLayoutVert(false);
-		break;	
-		
+		break;
+
 	case ACTION_SET_LAYOUT_VERTICAL:
 		setViewLayoutVert(true);
-		break;	
+		break;
 
 	case ACTION_SET_LAYOUT_L2R:
 		setViewLayoutR2L(false);
-		break;	
+		break;
 
 	case ACTION_SET_LAYOUT_R2L:
 		setViewLayoutR2L(true);
-		break;	
+		break;
 
 	case ACTION_SET_LAYOUT_T2B:
 		setViewLayoutB2T(false);
-		break;	
+		break;
 
 	case ACTION_SET_LAYOUT_B2T:
 		setViewLayoutB2T(true);
@@ -1565,7 +1565,7 @@ void Control::setPairsOffset(int numOffset)
 	XOJ_CHECK_TYPE(Control);
 
 	settings->setPairsOffset(numOffset);
-	fireActionSelected(GROUP_PAIRED_PAGES, numOffset ? ACTION_SET_PAIRS_OFFSET: ACTION_NOT_SELECTED);
+	fireActionSelected(GROUP_PAIRED_PAGES, numOffset ? ACTION_SET_PAIRS_OFFSET : ACTION_NOT_SELECTED);
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();
 	scrollHandler->scrollToPage(currentPage);
@@ -1577,10 +1577,11 @@ void Control::setViewColumns(int numColumns)
 
 	settings->setViewColumns(numColumns);
 	settings->setViewFixedRows(false);
-	
+
 	ActionType action;
-	
-	switch(numColumns){
+
+	switch (numColumns)
+	{
 		case 1: action = ACTION_SET_COLUMNS_1; break;
 		case 2: action = ACTION_SET_COLUMNS_2; break;
 		case 3: action = ACTION_SET_COLUMNS_3; break;
@@ -1591,7 +1592,7 @@ void Control::setViewColumns(int numColumns)
 		case 8: action = ACTION_SET_COLUMNS_8; break;
 		default: action = ACTION_SET_COLUMNS;
 	}
-	
+
 	fireActionSelected(GROUP_FIXED_ROW_OR_COLS, action);
 
 	int currentPage = getCurrentPageNo();
@@ -1605,11 +1606,11 @@ void Control::setViewRows(int numRows)
 
 	settings->setViewRows(numRows);
 	settings->setViewFixedRows(true);
-	
-	
+
 	ActionType action;
-	
-	switch(numRows){
+
+	switch (numRows)
+	{
 		case 1: action = ACTION_SET_ROWS_1; break;
 		case 2: action = ACTION_SET_ROWS_2; break;
 		case 3: action = ACTION_SET_ROWS_3; break;
@@ -1620,7 +1621,7 @@ void Control::setViewRows(int numRows)
 		case 8: action = ACTION_SET_ROWS_8; break;
 		default: action = ACTION_SET_ROWS;
 	}
-	
+
 	fireActionSelected(GROUP_FIXED_ROW_OR_COLS, action);
 
 	int currentPage = getCurrentPageNo();
@@ -1633,12 +1634,18 @@ void Control::setViewLayoutVert(bool vert)
 	XOJ_CHECK_TYPE(Control);
 
 	settings->setViewLayoutVert(vert);
-	
+
 	ActionType action;
-		
-	if(vert){ 	action = ACTION_SET_LAYOUT_VERTICAL;}
-	else {action = ACTION_SET_LAYOUT_HORIZONTAL;}
-	
+
+	if (vert)
+	{
+		action = ACTION_SET_LAYOUT_VERTICAL;
+	}
+	else
+	{
+		action = ACTION_SET_LAYOUT_HORIZONTAL;
+	}
+
 	fireActionSelected(GROUP_LAYOUT_HORIZONTAL, action);
 
 	int currentPage = getCurrentPageNo();
@@ -1651,13 +1658,18 @@ void Control::setViewLayoutR2L(bool r2l)
 	XOJ_CHECK_TYPE(Control);
 
 	settings->setViewLayoutR2L(r2l);
-	
+
 	ActionType action;
-	
-	if(r2l){ 	action = ACTION_SET_LAYOUT_R2L;}
-	else {action = ACTION_SET_LAYOUT_L2R;}
-	
-	
+
+	if (r2l)
+	{
+		action = ACTION_SET_LAYOUT_R2L;
+	}
+	else
+	{
+		action = ACTION_SET_LAYOUT_L2R;
+	}
+
 	fireActionSelected(GROUP_LAYOUT_LR, action);
 
 	int currentPage = getCurrentPageNo();
@@ -1670,20 +1682,24 @@ void Control::setViewLayoutB2T(bool b2t)
 	XOJ_CHECK_TYPE(Control);
 
 	settings->setViewLayoutB2T(b2t);
-	
+
 	ActionType action;
-	
-	if(b2t){ 	action = ACTION_SET_LAYOUT_B2T;}
-	else {action = ACTION_SET_LAYOUT_T2B;}
-	
-	
+
+	if (b2t)
+	{
+		action = ACTION_SET_LAYOUT_B2T;
+	}
+	else
+	{
+		action = ACTION_SET_LAYOUT_T2B;
+	}
+
 	fireActionSelected(GROUP_LAYOUT_TB, action);
 
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();
 	scrollHandler->scrollToPage(currentPage);
 }
-
 
 /**
  * This callback is used by used to be called later in the UI Thread

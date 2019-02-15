@@ -189,100 +189,99 @@ const int XOURNAL_ROOM_FOR_SHADOW = 3;
  */
 const int XOURNAL_PADDING_BETWEEN = 15;
 
-	
-
 void Layout::layoutPages()
 {
 	XOJ_CHECK_TYPE(Layout);
 
 	int len = this->view->viewPagesLen;
 
- 	Settings* settings = this->view->getControl()->getSettings();
+	Settings* settings = this->view->getControl()->getSettings();
 
-	
-	LayoutMapper mapper(len, settings);		//obtain  rows,cols, paired and layout from view settings
+	// obtain rows, cols, paired and layout from view settings
+	LayoutMapper mapper(len, settings);
 
-	
-	// get from mapper  ( some may have changed to accomodate paired setting etc. )
+	// get from mapper (some may have changed to accomodate paired setting etc.)
 	bool isPairedPages = mapper.getPairedPages();
-	int  pagesOffset = mapper.getFirstPageOffset();
+	int pagesOffset = mapper.getFirstPageOffset();
 	int rows = mapper.getRows();
 	int columns = mapper.getColumns();
 
-	
-	int sizeCol[columns] = {};
+	int sizeCol[columns] = { };
 
-	
-	int sizeRow[rows] = {};
-	
+	int sizeRow[rows] = { };
 
-	for ( int r=0; r < rows; r++ )
+	for (int r = 0; r < rows; r++)
 	{
-		for ( int c=0; c < columns; c++ )
+		for (int c = 0; c < columns; c++)
 		{
-			int k = mapper.map(c,r);
-			if(k>=0){
-				
+			int k = mapper.map(c, r);
+			if (k >= 0)
+			{
+
 				XojPageView* v = this->view->viewPages[k];
-				
+
 				if (sizeCol[c] < v->getDisplayWidth())
 				{
 					sizeCol[c] = v->getDisplayWidth();
 				}
-				if ( sizeRow[r] < v->getDisplayHeight())
+				if (sizeRow[r] < v->getDisplayHeight())
 				{
 					sizeRow[r] = v->getDisplayHeight();
 				}
 			}
-			
+
 		}
 	}
 
-
 	int x = XOURNAL_PADDING;
 	int y = XOURNAL_PADDING;
-	
+
 	// Iterate over ALL possible rows and columns and let the mapper tell us what page, if any,  is found there.
-	
-	for ( int r=0; r < rows; r++ )
+	for (int r = 0; r < rows; r++)
 	{
-		for ( int c=0; c < columns; c++ )
+		for (int c = 0; c < columns; c++)
 		{
-			int pageAtRowCol = mapper.map(c,r);
-			
-			if(pageAtRowCol>=0){ 
-				
+			int pageAtRowCol = mapper.map(c, r);
+
+			if (pageAtRowCol >= 0)
+			{
+
 				XojPageView* v = this->view->viewPages[pageAtRowCol];
 				int vDisplayWidth = v->getDisplayWidth();
 				{
 					int paddingLeft;
 					int paddingRight;
 					int columnPadding = 0;
-					columnPadding = (sizeCol[c] - vDisplayWidth );
-					
-					if (isPairedPages && len >1){	// pair pages mode
-						if (c%2 == 0 ){ 		//align right
-							paddingLeft = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;	
+					columnPadding = (sizeCol[c] - vDisplayWidth);
+
+					if (isPairedPages && len > 1)
+					{
+						// pair pages mode
+						if (c % 2 == 0)
+						{
+							//align right
+							paddingLeft = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
 							paddingRight = XOURNAL_ROOM_FOR_SHADOW;
 						}
-						else{								//align left
+						else
+						{								//align left
 							paddingLeft = XOURNAL_ROOM_FOR_SHADOW;
 							paddingRight = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
 						}
 					}
-					else{	// not paired page mode - center
-						paddingLeft = XOURNAL_PADDING_BETWEEN/2 + columnPadding/2;      //center justify
-						paddingRight = XOURNAL_PADDING_BETWEEN - paddingLeft + columnPadding/2;
+					else
+					{	// not paired page mode - center
+						paddingLeft = XOURNAL_PADDING_BETWEEN / 2 + columnPadding / 2;      //center justify
+						paddingRight = XOURNAL_PADDING_BETWEEN - paddingLeft + columnPadding / 2;
 					}
 
-					
 					x += paddingLeft;
-					
+
 					v->layout.setX(x);
 					v->layout.setY(y);
-					
+
 					x += vDisplayWidth + paddingRight;
-				
+
 				}
 			}
 			else
@@ -291,23 +290,25 @@ void Layout::layoutPages()
 			}
 		}
 		x = XOURNAL_PADDING;
-		y+=sizeRow[r] + XOURNAL_PADDING_BETWEEN ;
-	
+		y += sizeRow[r] + XOURNAL_PADDING_BETWEEN;
+
 	}
-	
-	int totalWidth = XOURNAL_PADDING *2 + XOURNAL_PADDING_BETWEEN * columns;
-	for ( int c =0; c< columns; c++){  totalWidth += sizeCol[c];  }
-	int totalHeight = XOURNAL_PADDING *2 + XOURNAL_PADDING_BETWEEN * rows;
-	for ( int r =0; r< rows; r++){  totalHeight += sizeRow[r];  }
-	
-		
+
+	int totalWidth = XOURNAL_PADDING * 2 + XOURNAL_PADDING_BETWEEN * columns;
+	for (int c = 0; c < columns; c++)
+	{
+		totalWidth += sizeCol[c];
+	}
+
+	int totalHeight = XOURNAL_PADDING * 2 + XOURNAL_PADDING_BETWEEN * rows;
+	for (int r = 0; r < rows; r++)
+	{
+		totalHeight += sizeRow[r];
+	}
+
 	this->setLayoutSize(totalWidth, totalHeight);
 	this->view->pagePosition->update(this->view->viewPages, len, totalHeight);
-
-	
 }
-
-
 
 
 void Layout::setLayoutSize(int width, int height)
