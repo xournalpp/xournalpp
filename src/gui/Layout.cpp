@@ -281,7 +281,7 @@ void Layout::layoutPages()
 					v->layout.setX(x);
 					v->layout.setY(y);
 					
-					x += sizeCol[c] + paddingRight;
+					x += vDisplayWidth + paddingRight;
 				
 				}
 			}
