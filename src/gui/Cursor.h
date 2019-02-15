@@ -36,8 +36,8 @@ public:
 private:
 	GdkCursor* getPenCursor();
 
-	GdkCursor* eraserCursor();
-	GdkCursor* highlighterCursor();
+	GdkCursor* getEraserCursor();
+	GdkCursor* getHighlighterCursor();
 
 	GdkCursor* createHighlighterOrPenCursor(int size, double alpha);
 

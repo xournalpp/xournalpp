@@ -2093,6 +2093,7 @@ void Control::showSettings()
 	bool verticalSpace = settings->getAddVerticalSpace();
 	bool horizontalSpace = settings->getAddHorizontalSpace();
 	bool bigCursor = settings->isShowBigCursor();
+	bool highlightPosition = settings->isHighlightPosition();
 
 	SettingsDialog* dlg = new SettingsDialog(this->gladeSearchPath, settings, this);
 	dlg->show(GTK_WINDOW(this->win->getWindow()));
@@ -2109,7 +2110,7 @@ void Control::showSettings()
 		scrollHandler->scrollToPage(currentPage);
 	}
 
-	if (bigCursor != settings->isShowBigCursor())
+	if (bigCursor != settings->isShowBigCursor() || highlightPosition != settings->isHighlightPosition())
 	{
 		getCursor()->updateCursor();
 	}
