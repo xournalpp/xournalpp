@@ -126,8 +126,15 @@ public:
 
 	void updateWindowTitle();
 	void calcZoomFitSize();
-	void setViewTwoPages(bool continous);
+	void setViewPairedPages(bool continous);
 	void setViewPresentationMode(bool continous);
+	void setPairsOffset(int numOffset);
+	void setViewColumns(int numColumns);
+	void setViewRows(int numRows);
+	void setViewLayoutVert(bool vert);
+	void setViewLayoutR2L(bool r2l);
+	void setViewLayoutB2T(bool b2t);
+	
 	void manageToolbars();
 	void customizeToolbars();
 	void enableFullscreen(bool enabled, bool presentation = false);

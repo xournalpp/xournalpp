@@ -41,7 +41,7 @@ enum ActionGroup
 	// Need group for toggle button, this is the first Toggle Group
 	GROUP_TOGGLE_GROUP,
 
-	GROUP_TWOPAGES,
+	GROUP_PAIRED_PAGES,
 	GROUP_PRESENTATION_MODE,
 
 	GROUP_FULLSCREEN,
@@ -57,6 +57,16 @@ enum ActionGroup
 	GROUP_GRID_SNAPPING,
 
 	GROUP_FILL,
+	
+	GROUP_FIXED_ROW_OR_COLS,
+	
+	GROUP_LAYOUT_HORIZONTAL,
+	
+	GROUP_LAYOUT_LR,
+	
+	GROUP_LAYOUT_TB,
+	
+
 };
 
 ActionGroup ActionGroup_fromString(string value);

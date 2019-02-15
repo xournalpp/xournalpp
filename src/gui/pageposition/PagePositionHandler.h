@@ -3,7 +3,7 @@
  *
  * Knows the positions of pages in the view
  *
- * @author Xournal++ Team
+ * @author Xournal++ Team, Justin Jones
  * https://github.com/xournalpp/xournalpp
  *
  * @license GNU GPLv2 or later
@@ -20,8 +20,8 @@ class XojPageView;
 /**
  * @brief Look up XojPageView's from display coordinates
  * 
- * The PagePositionHandler maintains a set of PagePosition%s
- * sorted according to their respective intervals
+ * The PagePositionHandler maintains a set of PagePosition's
+ * not necessarily sorted.
  */
 class PagePositionHandler
 {
@@ -43,7 +43,18 @@ private:
 	void allocDataSize(int size);
 	void freeData();
 
-	PagePosition* binarySearch(PagePosition** sortedArray, int first, int last, int y, int& index);
+
+	/**
+	 * Find page containing x,y coordinates
+	 * 
+	 * @param  x x pixel coordinate
+	 * @param  y y pixel coordinate
+	 * 
+	 * @return Page containing coordinate.  Index set to data index ( to try first next time )
+	 */
+
+	PagePosition* linearSearch(int x, int y, int& index); 
+	
 
 private:
 	XOJ_TYPE_ATTRIB;

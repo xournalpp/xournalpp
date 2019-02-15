@@ -492,9 +492,9 @@ ActionType ActionType_fromString(string value)
 		return ACTION_FULLSCREEN;
 	}
 
-	if (value == "ACTION_VIEW_TWO_PAGES")
+	if (value == "ACTION_VIEW_PAIRED_PAGES")
 	{
-		return ACTION_VIEW_TWO_PAGES;
+		return ACTION_VIEW_PAIRED_PAGES;
 	}
 
 	if (value == "ACTION_VIEW_PRESENTATION_MODE")
@@ -515,6 +515,131 @@ ActionType ActionType_fromString(string value)
 	if (value == "ACTION_RECSTOP")
 	{
 		return ACTION_RECSTOP;
+	}
+
+	if (value == "ACTION_SET_PAIRS_OFFSET")
+	{
+		return ACTION_SET_PAIRS_OFFSET;
+	}
+
+	if (value == "ACTION_SET_COLUMNS")
+	{
+		return ACTION_SET_COLUMNS;
+	}
+
+	if (value == "ACTION_SET_COLUMNS_1")
+	{
+		return ACTION_SET_COLUMNS_1;
+	}
+
+	if (value == "ACTION_SET_COLUMNS_2")
+	{
+		return ACTION_SET_COLUMNS_2;
+	}
+
+	if (value == "ACTION_SET_COLUMNS_3")
+	{
+		return ACTION_SET_COLUMNS_3;
+	}
+
+	if (value == "ACTION_SET_COLUMNS_4")
+	{
+		return ACTION_SET_COLUMNS_4;
+	}
+
+	if (value == "ACTION_SET_COLUMNS_5")
+	{
+		return ACTION_SET_COLUMNS_5;
+	}
+
+	if (value == "ACTION_SET_COLUMNS_6")
+	{
+		return ACTION_SET_COLUMNS_6;
+	}
+
+	if (value == "ACTION_SET_COLUMNS_7")
+	{
+		return ACTION_SET_COLUMNS_7;
+	}
+
+	if (value == "ACTION_SET_COLUMNS_8")
+	{
+		return ACTION_SET_COLUMNS_8;
+	}
+
+	if (value == "ACTION_SET_ROWS")
+	{
+		return ACTION_SET_ROWS;
+	}
+
+	if (value == "ACTION_SET_ROWS_1")
+	{
+		return ACTION_SET_ROWS_1;
+	}
+
+	if (value == "ACTION_SET_ROWS_2")
+	{
+		return ACTION_SET_ROWS_2;
+	}
+
+	if (value == "ACTION_SET_ROWS_3")
+	{
+		return ACTION_SET_ROWS_3;
+	}
+
+	if (value == "ACTION_SET_ROWS_4")
+	{
+		return ACTION_SET_ROWS_4;
+	}
+
+	if (value == "ACTION_SET_ROWS_5")
+	{
+		return ACTION_SET_ROWS_5;
+	}
+
+	if (value == "ACTION_SET_ROWS_6")
+	{
+		return ACTION_SET_ROWS_6;
+	}
+
+	if (value == "ACTION_SET_ROWS_7")
+	{
+		return ACTION_SET_ROWS_7;
+	}
+
+	if (value == "ACTION_SET_ROWS_8")
+	{
+		return ACTION_SET_ROWS_8;
+	}
+
+	if (value == "ACTION_SET_LAYOUT_HORIZONTAL")
+	{
+		return ACTION_SET_LAYOUT_HORIZONTAL;
+	}
+
+	if (value == "ACTION_SET_LAYOUT_VERTICAL")
+	{
+		return ACTION_SET_LAYOUT_VERTICAL;
+	}
+
+	if (value == "ACTION_SET_LAYOUT_L2R")
+	{
+		return ACTION_SET_LAYOUT_L2R;
+	}
+
+	if (value == "ACTION_SET_LAYOUT_R2L")
+	{
+		return ACTION_SET_LAYOUT_R2L;
+	}
+
+	if (value == "ACTION_SET_LAYOUT_T2B")
+	{
+		return ACTION_SET_LAYOUT_T2B;
+	}
+
+	if (value == "ACTION_SET_LAYOUT_B2T")
+	{
+		return ACTION_SET_LAYOUT_B2T;
 	}
 
 	if (value == "ACTION_ABOUT")
@@ -1030,9 +1155,9 @@ string ActionType_toString(ActionType value)
 		return "ACTION_FULLSCREEN";
 	}
 
-	if (value == ACTION_VIEW_TWO_PAGES)
+	if (value == ACTION_VIEW_PAIRED_PAGES)
 	{
-		return "ACTION_VIEW_TWO_PAGES";
+		return "ACTION_VIEW_PAIRED_PAGES";
 	}
 
 	if (value == ACTION_VIEW_PRESENTATION_MODE)
@@ -1053,6 +1178,131 @@ string ActionType_toString(ActionType value)
 	if (value == ACTION_RECSTOP)
 	{
 		return "ACTION_RECSTOP";
+	}
+
+	if (value == ACTION_SET_PAIRS_OFFSET)
+	{
+		return "ACTION_SET_PAIRS_OFFSET";
+	}
+
+	if (value == ACTION_SET_COLUMNS)
+	{
+		return "ACTION_SET_COLUMNS";
+	}
+
+	if (value == ACTION_SET_COLUMNS_1)
+	{
+		return "ACTION_SET_COLUMNS_1";
+	}
+
+	if (value == ACTION_SET_COLUMNS_2)
+	{
+		return "ACTION_SET_COLUMNS_2";
+	}
+
+	if (value == ACTION_SET_COLUMNS_3)
+	{
+		return "ACTION_SET_COLUMNS_3";
+	}
+
+	if (value == ACTION_SET_COLUMNS_4)
+	{
+		return "ACTION_SET_COLUMNS_4";
+	}
+
+	if (value == ACTION_SET_COLUMNS_5)
+	{
+		return "ACTION_SET_COLUMNS_5";
+	}
+
+	if (value == ACTION_SET_COLUMNS_6)
+	{
+		return "ACTION_SET_COLUMNS_6";
+	}
+
+	if (value == ACTION_SET_COLUMNS_7)
+	{
+		return "ACTION_SET_COLUMNS_7";
+	}
+
+	if (value == ACTION_SET_COLUMNS_8)
+	{
+		return "ACTION_SET_COLUMNS_8";
+	}
+
+	if (value == ACTION_SET_ROWS)
+	{
+		return "ACTION_SET_ROWS";
+	}
+
+	if (value == ACTION_SET_ROWS_1)
+	{
+		return "ACTION_SET_ROWS_1";
+	}
+
+	if (value == ACTION_SET_ROWS_2)
+	{
+		return "ACTION_SET_ROWS_2";
+	}
+
+	if (value == ACTION_SET_ROWS_3)
+	{
+		return "ACTION_SET_ROWS_3";
+	}
+
+	if (value == ACTION_SET_ROWS_4)
+	{
+		return "ACTION_SET_ROWS_4";
+	}
+
+	if (value == ACTION_SET_ROWS_5)
+	{
+		return "ACTION_SET_ROWS_5";
+	}
+
+	if (value == ACTION_SET_ROWS_6)
+	{
+		return "ACTION_SET_ROWS_6";
+	}
+
+	if (value == ACTION_SET_ROWS_7)
+	{
+		return "ACTION_SET_ROWS_7";
+	}
+
+	if (value == ACTION_SET_ROWS_8)
+	{
+		return "ACTION_SET_ROWS_8";
+	}
+
+	if (value == ACTION_SET_LAYOUT_HORIZONTAL)
+	{
+		return "ACTION_SET_LAYOUT_HORIZONTAL";
+	}
+
+	if (value == ACTION_SET_LAYOUT_VERTICAL)
+	{
+		return "ACTION_SET_LAYOUT_VERTICAL";
+	}
+
+	if (value == ACTION_SET_LAYOUT_L2R)
+	{
+		return "ACTION_SET_LAYOUT_L2R";
+	}
+
+	if (value == ACTION_SET_LAYOUT_R2L)
+	{
+		return "ACTION_SET_LAYOUT_R2L";
+	}
+
+	if (value == ACTION_SET_LAYOUT_T2B)
+	{
+		return "ACTION_SET_LAYOUT_T2B";
+	}
+
+	if (value == ACTION_SET_LAYOUT_B2T)
+	{
+		return "ACTION_SET_LAYOUT_B2T";
 	}
 
 	if (value == ACTION_ABOUT)

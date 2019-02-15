@@ -72,9 +72,9 @@ ActionGroup ActionGroup_fromString(string value)
 		return GROUP_TOGGLE_GROUP;
 	}
 
-	if (value == "GROUP_TWOPAGES")
+	if (value == "GROUP_PAIRED_PAGES")
 	{
-		return GROUP_TWOPAGES;
+		return GROUP_PAIRED_PAGES;
 	}
 
 	if (value == "GROUP_PRESENTATION_MODE")
@@ -115,6 +115,26 @@ ActionGroup ActionGroup_fromString(string value)
 	if (value == "GROUP_FILL")
 	{
 		return GROUP_FILL;
+	}
+
+	if (value == "GROUP_FIXED_ROW_OR_COLS")
+	{
+		return GROUP_FIXED_ROW_OR_COLS;
+	}
+
+	if (value == "GROUP_LAYOUT_HORIZONTAL")
+	{
+		return GROUP_LAYOUT_HORIZONTAL;
+	}
+
+	if (value == "GROUP_LAYOUT_LR")
+	{
+		return GROUP_LAYOUT_LR;
+	}
+
+	if (value == "GROUP_LAYOUT_TB")
+	{
+		return GROUP_LAYOUT_TB;
 	}
 
 	g_error("Invalid enum value for ActionGroup: «%s»", value.c_str());
@@ -180,9 +200,9 @@ string ActionGroup_toString(ActionGroup value)
 		return "GROUP_TOGGLE_GROUP";
 	}
 
-	if (value == GROUP_TWOPAGES)
+	if (value == GROUP_PAIRED_PAGES)
 	{
-		return "GROUP_TWOPAGES";
+		return "GROUP_PAIRED_PAGES";
 	}
 
 	if (value == GROUP_PRESENTATION_MODE)
@@ -223,6 +243,26 @@ string ActionGroup_toString(ActionGroup value)
 	if (value == GROUP_FILL)
 	{
 		return "GROUP_FILL";
+	}
+
+	if (value == GROUP_FIXED_ROW_OR_COLS)
+	{
+		return "GROUP_FIXED_ROW_OR_COLS";
+	}
+
+	if (value == GROUP_LAYOUT_HORIZONTAL)
+	{
+		return "GROUP_LAYOUT_HORIZONTAL";
+	}
+
+	if (value == GROUP_LAYOUT_LR)
+	{
+		return "GROUP_LAYOUT_LR";
+	}
+
+	if (value == GROUP_LAYOUT_TB)
+	{
+		return "GROUP_LAYOUT_TB";
 	}
 
 	g_error("Invalid enum value for ActionGroup: %i", value);

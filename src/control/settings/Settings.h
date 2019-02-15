@@ -216,12 +216,34 @@ public:
 	double getWidthMinimumMultiplier();
 	double getWidthMaximumMultiplier();
 
-	void setShowTwoPages(bool showTwoPages);
-	bool isShowTwoPages();
+	void setShowPairedPages(bool showPairedPages);
+	bool isShowPairedPages();
 
 	void setPresentationMode(bool presentationMode);
 	bool isPresentationMode();
 
+	void setPairsOffset(int numPairsOffset);
+	int getPairsOffset();
+	
+	void setViewColumns(int numColumns);
+	int getViewColumns();
+
+	void setViewRows(int numRows);
+	int getViewRows();
+	
+	void setViewFixedRows(bool viewFixedRows);
+	bool isViewFixedRows();
+	
+	void setViewLayoutVert(bool vert);
+	bool getViewLayoutVert();
+	
+	void setViewLayoutR2L(bool r2l);
+	bool getViewLayoutR2L();
+
+	void setViewLayoutB2T(bool b2t);
+	bool getViewLayoutB2T();
+	
+	
 	bool isAutloadPdfXoj();
 	void setAutoloadPdfXoj(bool load);
 
@@ -466,15 +488,53 @@ private:
 	bool scrollbarOnLeft;
 
 	/**
-	 *  Displays two pages
+	 *  Pairs pages
 	 */
-	bool showTwoPages;
+	bool showPairedPages;
 
 	/**
 	 *  Sets presentation mode
 	 */
 	bool presentationMode;
 
+	/**
+	 *  Offsets first page ( to align pairing )
+	 */
+	int numPairsOffset;	
+	
+	/**
+	 *  Use when fixed number of columns
+	 */
+	int numColumns;	
+
+	/**
+	 *  Use when fixed number of rows
+	 */
+	int numRows;	
+
+	/**
+	 *  USE  fixed rows, otherwise fixed columns
+	 */
+	bool viewFixedRows;	
+	
+	/**
+	 *  Layout Vertical then Horizontal 
+	 */
+	bool layoutVertical;	
+	
+	/**
+	 *  Layout pages right to left
+	 */
+	bool layoutRightToLeft;	
+	
+	/**
+	 *  Layout Bottom to Top
+	 */
+	bool layoutBottomToTop;	
+	
+	
+	
+	
 	/**
 	 * Automatically load filename.pdf.xoj / .pdf.xopp instead of filename.pdf (true/false)
 	 */

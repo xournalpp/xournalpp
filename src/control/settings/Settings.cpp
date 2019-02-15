@@ -45,9 +45,19 @@ void Settings::loadDefault()
 	this->presureSensitivity = true;
 	this->zoomGesturesEnabled = true;
 	this->maximized = false;
-	this->showTwoPages = false;
+	this->showPairedPages = false;
 	this->presentationMode = false;
 
+	this->numColumns = 1;	// only one of these applies at a time
+	this->numRows = 1;
+	this->viewFixedRows = false;	
+	
+	this->layoutVertical = false;
+	this->layoutRightToLeft = false;
+	this->layoutBottomToTop = false;
+	
+	this->numPairsOffset = 0;
+	
 	this->displayDpi = 72;
 
 	this->font.setName(DEFAULT_FONT);
@@ -326,9 +336,37 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->scrollbarOnLeft = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
-	else if (xmlStrcmp(name, (const xmlChar*) "showTwoPages") == 0)
+	else if (xmlStrcmp(name, (const xmlChar*) "numColumns") == 0)
 	{
-		this->showTwoPages = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+		this->numColumns = g_ascii_strtoll((const char*) value, NULL, 10);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "numRows") == 0)
+	{
+		this->numRows = g_ascii_strtoll((const char*) value, NULL, 10);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "viewFixedRows") == 0)
+	{
+		this->viewFixedRows = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "layoutVertical") == 0)
+	{
+		this->layoutVertical = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "layoutRightToLeft") == 0)
+	{
+		this->layoutRightToLeft = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "layoutBottomToTop") == 0)
+	{
+		this->layoutBottomToTop = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "showPairedPages") == 0)
+	{
+		this->showPairedPages = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "numPairsOffset") == 0)
+	{
+		this->numPairsOffset = g_ascii_strtoll((const char*) value, NULL, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "presentationMode") == 0)
 	{
@@ -741,7 +779,14 @@ void Settings::save()
 
 	WRITE_BOOL_PROP(sidebarOnRight);
 	WRITE_BOOL_PROP(scrollbarOnLeft);
-	WRITE_BOOL_PROP(showTwoPages);
+	WRITE_INT_PROP(numColumns);
+	WRITE_INT_PROP(numRows);
+	WRITE_BOOL_PROP(viewFixedRows);
+	WRITE_BOOL_PROP(showPairedPages);
+	WRITE_BOOL_PROP(layoutVertical);
+	WRITE_BOOL_PROP(layoutRightToLeft);
+	WRITE_BOOL_PROP(layoutBottomToTop);
+	WRITE_INT_PROP(numPairsOffset);
 	WRITE_BOOL_PROP(presentationMode);
 
 	WRITE_STRING_PROP(fullscreenHideElements);
@@ -1343,24 +1388,24 @@ void Settings::setSizeUnitIndex(int sizeUnitId)
 	setSizeUnit(XOJ_UNITS[sizeUnitId].name);
 }
 
-void Settings::setShowTwoPages(bool showTwoPages)
+void Settings::setShowPairedPages(bool showPairedPages)
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	if (this->showTwoPages == showTwoPages)
+	if (this->showPairedPages == showPairedPages)
 	{
 		return;
 	}
 
-	this->showTwoPages = showTwoPages;
+	this->showPairedPages = showPairedPages;
 	save();
 }
 
-bool Settings::isShowTwoPages()
+bool Settings::isShowPairedPages()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	return this->showTwoPages;
+	return this->showPairedPages;
 }
 
 void Settings::setPresentationMode(bool presentationMode)
@@ -1395,6 +1440,156 @@ void Settings::setPresureSensitivity(gboolean presureSensitivity)
 
 	save();
 }
+
+void Settings::setPairsOffset(int numOffset)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->numPairsOffset == numOffset)
+	{
+		return;
+	}
+
+	this->numPairsOffset = numOffset;
+	save();
+}
+
+int Settings::getPairsOffset()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->numPairsOffset;
+}
+
+void Settings::setViewColumns(int numColumns)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->numColumns == numColumns)
+	{
+		return;
+	}
+
+	this->numColumns = numColumns;
+	save();
+}
+
+int Settings::getViewColumns()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->numColumns;
+}
+
+
+void Settings::setViewRows(int numRows)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->numRows == numRows)
+	{
+		return;
+	}
+
+	this->numRows = numRows;
+	save();
+}
+
+int Settings::getViewRows()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->numRows;
+}
+
+void Settings::setViewFixedRows(bool viewFixedRows)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->viewFixedRows == viewFixedRows)
+	{
+		return;
+	}
+
+	this->viewFixedRows = viewFixedRows;
+	save();	
+}
+
+bool Settings::isViewFixedRows()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->viewFixedRows;
+}
+
+
+
+
+void Settings::setViewLayoutVert(bool vert)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->layoutVertical == vert)
+	{
+		return;
+	}
+
+	this->layoutVertical = vert;
+	save();	
+}
+
+bool Settings::getViewLayoutVert()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->layoutVertical;
+}
+
+
+void Settings::setViewLayoutR2L(bool r2l)
+{
+		XOJ_CHECK_TYPE(Settings);
+
+	if (this->layoutRightToLeft == r2l)
+	{
+		return;
+	}
+
+	this->layoutRightToLeft = r2l;
+	save();
+}
+
+bool Settings::getViewLayoutR2L()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->layoutRightToLeft;
+}
+
+
+void Settings::setViewLayoutB2T(bool b2t)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->layoutBottomToTop == b2t)
+	{
+		return;
+	}
+
+	this->layoutBottomToTop = b2t;
+	save();	
+	
+}
+
+bool Settings::getViewLayoutB2T()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->layoutBottomToTop;
+}
+
+
+
 
 void Settings::setLastSavePath(Path p)
 {

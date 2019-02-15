@@ -155,8 +155,8 @@ XOJ_DECLARE_TYPE(PdfExportJob, 144);
 XOJ_DECLARE_TYPE(BackgroundImage, 145);
 XOJ_DECLARE_TYPE(PartList, 146);
 XOJ_DECLARE_TYPE(PageRangeEntry, 147);
-XOJ_DECLARE_TYPE(PageViewIndex, 148);
-XOJ_DECLARE_TYPE(PageViewIndexEntry, 149);
+
+
 XOJ_DECLARE_TYPE(EditSelectionContents, 150);
 XOJ_DECLARE_TYPE(PageLayerPosEntry, 151);
 XOJ_DECLARE_TYPE(BackgroundImageContents, 152);
@@ -279,3 +279,5 @@ XOJ_DECLARE_TYPE(VorbisProducer, 269);
 XOJ_DECLARE_TYPE(FullscreenHandler, 270);
 XOJ_DECLARE_TYPE(AudioElement, 271);
 XOJ_DECLARE_TYPE(XmlAudioNode, 272);
+XOJ_DECLARE_TYPE(LayoutMapper, 273);
+
