@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Xournalpp 0.9\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-23 10:36+0100\n"
-"PO-Revision-Date: 2018-12-30 12:21+0100\n"
+"PO-Revision-Date: 2019-02-15 10:40+0100\n"
 "Last-Translator: Andreas Butti <andreasbutti at gmail dot com>\n"
 "Language-Team: DE\n"
 "Language: de\n"
@@ -561,7 +561,7 @@ msgstr "Kopiere Seite"
 
 #: ../src/control/LatexController.cpp:103
 msgid "Could not convert tex to PDF: {1} (exit code: {2})"
-msgstr ""
+msgstr "Konnte TeX nicht nach PDF Konvertieren: {1} (exit code: {2})"
 
 #: ../src/control/jobs/SaveJob.cpp:137
 msgid ""
@@ -583,16 +583,17 @@ msgid ""
 "Could not find pdflatex in Path.\n"
 "Please install pdflatex first and make sure it's in the Path."
 msgstr ""
+"Konnte pdflatex nicht im Pfad finden.\n"
+"Bitte installieren Sie pdflatex und stellen sicher, das es im Pfad "
+"eingetragen ist."
 
 #: ../src/control/LatexController.cpp:299
-#, fuzzy
 msgid "Could not load LaTeX PDF file, URL-Error: {1}"
-msgstr "Die LaTeX-Bilddatei konnte nicht geladen werden: {1}"
+msgstr "Die LaTeX-PDF Datei konnte nicht geladen werden, URL Fehler: {1}"
 
 #: ../src/control/LatexController.cpp:307
-#, fuzzy
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr "Konnte die Datei nicht öffnen: \"{1}\""
+msgstr "Konnte .tex PDF Datei nicht öffnen: \"{1}\""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:18
 msgid "Could not load pagetemplates.ini file"
@@ -645,9 +646,8 @@ msgid "Could not rename autosave file from \"{1}\" to \"{2}\""
 msgstr "Konnte Datei \"{1}\" nicht umbennen zu \"{2}\""
 
 #: ../src/control/LatexController.cpp:89
-#, fuzzy
 msgid "Could not save .tex file: {1}"
-msgstr "Konnte den Ordner \"{1}\" nicht erstellen"
+msgstr "Konnte .tex Datei \"{1}\" nicht speichern:"
 
 #: ../src/undo/UndoRedoHandler.cpp:144
 msgid ""
@@ -695,7 +695,7 @@ msgstr "Ausschneiden"
 
 #: ../ui/settings.glade:1621
 msgid "Dark Theme (restart needed)"
-msgstr ""
+msgstr "Dunkles Thema (benötigt Neustart)"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:460
 msgid "Default Tool"
@@ -847,9 +847,8 @@ msgid "Edit text"
 msgstr "Text schreiben"
 
 #: ../src/undo/EmergencySaveRestore.cpp:35
-#, fuzzy
 msgid "Emergency saved document"
-msgstr "Ungespeichertes Dokument"
+msgstr "Notfall gespeichertes Dokument"
 
 #: ../ui/settings.glade:1306
 msgid "Enable"
@@ -857,7 +856,7 @@ msgstr "Aktivieren"
 
 #: ../ui/settings.glade:1176
 msgid "Enable zoom gestures (needs restart)"
-msgstr ""
+msgstr "Zoom Gesten atkivieren (benötigt Neustart)"
 
 #: ../ui/texdialog.glade:66
 msgid "Enter / edit LaTeX Text"
@@ -991,6 +990,8 @@ msgid ""
 "GTK Touch / Scrolling workaround. Change Scroll / Touch behavoir. Enabled "
 "touch drawing. Needs restart."
 msgstr ""
+"GTK Touch / Scrolling Workaround: Ändert Scroll / Touch Verhalten. "
+"Ermöglicht Zeichnen mit dem Touch, benötigt Neustart."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Go to first page"
@@ -1039,9 +1040,8 @@ msgid "Grid Snapping"
 msgstr "Am Raster einrasten"
 
 #: ../ui/settings.glade:2113
-#, fuzzy
 msgid "Grid snapping tolerance:"
-msgstr "Am Raster einrasten"
+msgstr "Raster Einrasten bei:"
 
 #: ../ui/main.glade:915
 msgid "H_and Tool"
@@ -1081,9 +1081,8 @@ msgid "Hide the vertical scrollbar"
 msgstr "Vertikale Scrollbar ausblenden"
 
 #: ../ui/settings.glade:1944
-#, fuzzy
 msgid "Highlight cursor position"
-msgstr "Textmarker _Optionen"
+msgstr "Markierungscursor Position"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:57
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:457
@@ -1212,6 +1211,8 @@ msgid ""
 "Missing the needed UI file! .app corrupted?\n"
 "Path: {1}"
 msgstr ""
+"Fehlende UI Datei! .app Fehlerhaft?\n"
+"Pfad: {1}"
 
 #: ../src/control/XournalMain.cpp:474
 msgid ""
@@ -1526,9 +1527,8 @@ msgid "Rotation Snapping"
 msgstr "Drehung einrasten"
 
 #: ../ui/settings.glade:2083
-#, fuzzy
 msgid "Rotation snapping tolerance:"
-msgstr "Drehung einrasten"
+msgstr "Drehungsraster Toleranz:"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:24
 msgid "Ruled"
@@ -1652,9 +1652,8 @@ msgid "Separator"
 msgstr "Trenner"
 
 #: ../ui/settings.glade:1165
-#, fuzzy
 msgid "Settings for Touch devices"
-msgstr "Einstellungen für Touchgeräte welche von GTK erkannt werden"
+msgstr "Einstellungen für Touchgeräte"
 
 #: ../ui/settings.glade:1152
 msgid "Settings for Touch devices which are detected by GTK."
@@ -2274,18 +2273,17 @@ msgstr "Cursor"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:294
 msgid "dash-/ doted"
-msgstr ""
+msgstr "gepunkted / gestrichelt"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "dashed"
-msgstr ""
+msgstr "gestichelt"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:312
 msgid "delete stroke"
 msgstr "Linie löschen"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:297
-#, fuzzy
 msgid "dotted"
 msgstr "Gepunktet"
 
