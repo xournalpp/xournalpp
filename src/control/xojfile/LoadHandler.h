@@ -87,8 +87,11 @@ private:
 	void parseBgPixmap();
 	void parseBgPdf();
 
-	void readImage(const gchar* base64_str, gsize base64_strlen);
-	void readTexImage(const gchar* base64_str, gsize base64_strlen);
+	void readImage(const gchar* base64string, gsize base64stringLen);
+	void readTexImage(const gchar* base64string, gsize base64stringLen);
+
+private:
+	string parseBase64(const gchar* base64, gsize lenght);
 
 private:
 	XOJ_TYPE_ATTRIB;

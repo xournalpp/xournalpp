@@ -140,6 +140,8 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage)
 	cairo_get_matrix(cr, &defaultMatrix);
 
 	PopplerDocument* pdf = texImage->getPdf();
+	cairo_surface_t* img = texImage->getImage();
+
 	if (pdf != nullptr)
 	{
 		if (poppler_document_get_n_pages(pdf) < 1)
@@ -157,13 +159,12 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage)
 		double xFactor = texImage->getElementWidth() / pageWidth;
 		double yFactor = texImage->getElementHeight() / pageHeight;
 
+		cairo_translate(cr, texImage->getX(), texImage->getY());
 		cairo_scale(cr, xFactor, yFactor);
-
 		poppler_page_render(page, cr);
 	}
-	else
+	else if (img != nullptr)
 	{
-		cairo_surface_t* img = texImage->getImage();
 		int width = cairo_image_surface_get_width(img);
 		int height = cairo_image_surface_get_height(img);
 

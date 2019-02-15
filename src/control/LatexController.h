@@ -74,17 +74,12 @@ private:
 	//Wrappers for signal handler who can't access non-static fields 
 	//(see implementation for further explanation)
 	TexImage* getTemporaryRender();
-	void setImageInDialog(cairo_surface_t* image);
+	void setImageInDialog(PopplerDocument* pdf);
 	void deletePreviousRender();
 	void setCurrentTex(string currentTex);
 	GtkTextIter* getStartIterator(GtkTextBuffer* buffer);
 	GtkTextIter* getEndIterator(GtkTextBuffer* buffer);
 	/*******/
-
-	/**
-	 * Load rendered PDF
-	 */
-	PopplerDocument* loadRenderedPDF();
 
 	/**
 	 * Convert PDF Document to TexImage

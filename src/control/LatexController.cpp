@@ -188,7 +188,7 @@ void LatexController::showTexEditDialog()
 	// The controller owns the tempRender because, on signal changed, he has to handle the old/new renders
 	if (temporaryRender != NULL)
 	{
-		dlg->setTempRender(temporaryRender->getImage(), initalTex.size());
+		dlg->setTempRender(temporaryRender->getPdf(), initalTex.size());
 	}
 
 	dlg->show(GTK_WINDOW(control->getWindow()->getWindow()));
@@ -211,7 +211,7 @@ void LatexController::handleTexChanged(GtkTextBuffer* buffer, LatexController* s
 {
 	XOJ_CHECK_TYPE_OBJ(self, LatexController);
 	
-	//Right now, this is the only way I know to extract text from TextBuffer
+	// Right now, this is the only way I know to extract text from TextBuffer
 	self->setCurrentTex(gtk_text_buffer_get_text(buffer, self->getStartIterator(buffer), self->getEndIterator(buffer), TRUE));
 	self->deletePreviousRender();
 	self->runCommand();
@@ -220,7 +220,7 @@ void LatexController::handleTexChanged(GtkTextBuffer* buffer, LatexController* s
 
 	if (self->getTemporaryRender() != NULL)
 	{
-		self->setImageInDialog(self->getTemporaryRender()->getImage());
+		self->setImageInDialog(self->getTemporaryRender()->getPdf());
 	}
 }
 
@@ -230,10 +230,10 @@ TexImage* LatexController::getTemporaryRender()
 	return this->temporaryRender;
 }
 
-void LatexController::setImageInDialog(cairo_surface_t* image)
+void LatexController::setImageInDialog(PopplerDocument* pdf)
 {
 	XOJ_CHECK_TYPE(LatexController);
-	dlg->setTempRender(image, currentTex.size());
+	dlg->setTempRender(pdf, currentTex.size());
 }
 
 void LatexController::deletePreviousRender()
@@ -283,35 +283,6 @@ void LatexController::deleteOldImage()
 	}
 }
 
-/**
- * Load rendered PDF
- */
-PopplerDocument* LatexController::loadRenderedPDF()
-{
-	XOJ_CHECK_TYPE(LatexController);
-
-	Path pdfPath = texTmp + "/tex.pdf";
-	GError* err = NULL;
-
-	string uri = pdfPath.toUri(&err);
-	if (err != NULL)
-	{
-		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not load LaTeX PDF file, URL-Error: {1}") % err->message));
-		g_error_free(err);
-		return NULL;
-	}
-
-	PopplerDocument* doc = poppler_document_new_from_file(uri.c_str(), NULL, &err);
-	if (err != NULL)
-	{
-		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not load LaTeX PDF file: {1}") % err->message));
-		g_error_free(err);
-		return NULL;
-	}
-
-	return doc;
-}
-
 TexImage* LatexController::convertDocumentToImage(PopplerDocument* doc)
 {
 	XOJ_CHECK_TYPE(LatexController);
@@ -324,32 +295,18 @@ TexImage* LatexController::convertDocumentToImage(PopplerDocument* doc)
 	PopplerPage* page = poppler_document_get_page(doc, 0);
 
 
-	double zoom = 5;
 	double pageWidth = 0;
 	double pageHeight = 0;
 	poppler_page_get_size(page, &pageWidth, &pageHeight);
 
-	cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, (int)(pageWidth * zoom), (int)(pageHeight * zoom));
-	cairo_t* cr = cairo_create(crBuffer);
-
-	cairo_scale(cr, zoom, zoom);
-
-	poppler_page_render(page, cr);
-
-	GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crBuffer, 0, 0, cairo_image_surface_get_width(crBuffer), cairo_image_surface_get_height(crBuffer));
-
-	cairo_destroy(cr);
-	cairo_surface_destroy(crBuffer);
-
 	TexImage* img = new TexImage();
 	img->setX(posx);
 	img->setY(posy);
-	img->setImage(pixbuf);
 	img->setText(currentTex);
 
 	if (imgheight)
 	{
-		double ratio = (gdouble)gdk_pixbuf_get_width(pixbuf) / gdk_pixbuf_get_height(pixbuf);
+		double ratio = pageWidth / pageHeight;
 		if (ratio == 0)
 		{
 			if (imgwidth == 0)
@@ -369,8 +326,8 @@ TexImage* LatexController::convertDocumentToImage(PopplerDocument* doc)
 	}
 	else
 	{
-		img->setWidth(gdk_pixbuf_get_width(pixbuf));
-		img->setHeight(gdk_pixbuf_get_height(pixbuf));
+		img->setWidth(pageWidth);
+		img->setHeight(pageHeight);
 	}
 
 	return img;
@@ -383,17 +340,41 @@ TexImage* LatexController::loadRendered()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
-	PopplerDocument* pdf = loadRenderedPDF();
+	Path pdfPath = texTmp + "/tex.pdf";
+	GError* err = NULL;
+
+	gchar* fileContents = NULL;
+	gsize fileLength = 0;
+	if (!g_file_get_contents(pdfPath.c_str(), &fileContents, &fileLength, &err))
+	{
+		XojMsgBox::showErrorToUser(control->getGtkWindow(),
+				FS(_F("Could not load LaTeX PDF file, File Error: {1}") % err->message));
+		g_error_free(err);
+		return NULL;
+	}
+
+	PopplerDocument* pdf = poppler_document_new_from_data(fileContents, fileLength, NULL, &err);
+	if (err != NULL)
+	{
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not load LaTeX PDF file: {1}") % err->message));
+		g_error_free(err);
+		return NULL;
+	}
 
 	if (pdf == NULL)
 	{
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not load LaTeX PDF file")));
 		return NULL;
 	}
 
 	TexImage* img = convertDocumentToImage(pdf);
-	img->setPdf(pdf);
-
 	g_object_unref(pdf);
+
+	// Do not assign the PDF, theoretical it should work, but it gets a Poppler PDF error
+	// img->setPdf(pdf);
+	img->setBinaryData(string(fileContents, fileLength));
+
+	g_free(fileContents);
 
 	return img;
 }

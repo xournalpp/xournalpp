@@ -37,32 +37,44 @@ string LatexDialog::getTex()
 	return this->theLatex;
 }
 
-void LatexDialog::setTempRender(cairo_surface_t* cairoTexTempRender, size_t length)
+void LatexDialog::setTempRender(PopplerDocument* pdf, size_t length)
 {
 	XOJ_CHECK_TYPE(LatexDialog);
 
-	//If a previous render exists, destroy it
-	if(this->scaledRender != NULL)
+	if (poppler_document_get_n_pages(pdf) < 1)
 	{
-		cairo_surface_destroy(this->scaledRender);
+		return;
 	}
 
-	int width = cairo_image_surface_get_width(cairoTexTempRender);
-	int height = cairo_image_surface_get_height(cairoTexTempRender);
+	// If a previous render exists, destroy it
+	if (this->scaledRender != NULL)
+	{
+		cairo_surface_destroy(this->scaledRender);
+		this->scaledRender = NULL;
+	}
 
-	//Max size = 100%, Min size = 40% (width is > 2000 only when editing an existing LaTex)
-	double factor = MAX(width > 2500 ? 0.20 : 0.40, 1 -  length / 100.0 );
-	
-	// Every time the controller updates the temporary render, we update
-	// our corresponding GtkWidget	
-	this->scaledRender = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width*factor, height*factor);
+	PopplerPage* page = poppler_document_get_page(pdf, 0);
+
+	double zoom = 5;
+	double pageWidth = 0;
+	double pageHeight = 0;
+	poppler_page_get_size(page, &pageWidth, &pageHeight);
+
+	if ((pageWidth * zoom) > 1200)
+	{
+		zoom = 1200 / pageWidth;
+	}
+
+	this->scaledRender = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, (int)(pageWidth * zoom), (int)(pageHeight * zoom));
 	cairo_t* cr = cairo_create(this->scaledRender);
-	cairo_scale(cr, factor, factor);
-		
-	cairo_set_source_surface(cr, cairoTexTempRender, 0, 0);
-	cairo_paint(cr);
-	cairo_destroy(cr);	
 
+	cairo_scale(cr, zoom, zoom);
+
+	poppler_page_render(page, cr);
+
+	cairo_destroy(cr);
+
+	// Update GTK widget
 	gtk_image_set_from_surface(GTK_IMAGE(this->texTempRender), this->scaledRender);
 }
 

@@ -28,11 +28,14 @@ public:
 	void setHeight(double height);
 
 	/**
-	 * Set the Image, if rendered as image
+	 * Sets the binary data, a .PNG image or a .PDF
 	 */
-	void setImage(string data);
-	void setImage(cairo_surface_t* image);
-	void setImage(GdkPixbuf* img);
+	void setBinaryData(string binaryData);
+
+	/**
+	 * Gets the binary data, a .PNG image or a .PDF
+	 */
+	string& getBinaryData();
 
 	/**
 	 * Get the Image, if rendered as image
@@ -71,6 +74,17 @@ private:
 	virtual void calcSize();
 
 	static cairo_status_t cairoReadFunction(TexImage* image, unsigned char* data, unsigned int length);
+
+	/**
+	 * Free image and PDF
+	 */
+	void freeImageAndPdf();
+
+	/**
+	 * Load the binary data, either .PNG or .PDF
+	 */
+	void loadBinaryData();
+
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -85,12 +99,17 @@ private:
 	cairo_surface_t* image = NULL;
 
 	/**
-	 * PNG Image
+	 * PNG Image / PDF Document
 	 */
-	string data;
+	string binaryData;
 
 	/**
-	 * Read position in data
+	 * Flag if the binary data is already parsed
+	 */
+	bool parsedBinaryData = false;
+
+	/**
+	 * Read position in binaryData
 	 */
 	string::size_type read = 0;
 

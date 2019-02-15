@@ -245,6 +245,16 @@ string Path::toUri(GError** error)
 	return uriString;
 }
 
+#ifndef BUILD_THUMBNAILER
+/**
+ * Convert this path to GFile
+ */
+GFile* Path::toGFile()
+{
+	return g_file_new_for_path(path.c_str());
+}
+#endif
+
 /**
  * Get the parent path
  */
