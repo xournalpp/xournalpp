@@ -56,7 +56,7 @@ void Settings::loadDefault()
 	this->layoutRightToLeft = false;
 	this->layoutBottomToTop = false;
 	
-	this->numPairsOffset = 0;
+	this->numPairsOffset = 1;
 	
 	this->displayDpi = 72;
 
