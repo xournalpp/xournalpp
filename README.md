@@ -77,9 +77,14 @@ sudo apt install xournalpp
 ````
 
 ### OpenSuse
-https://build.opensuse.org/package/show/home:badshah400:Staging/xournalpp-gtk3
+On openSUSE Tumbleweed, the released version of xournalpp is available from the main repository:
+````bash
+sudo zypper in xournalpp
+````
 
-Build by https://github.com/badshah400
+For openSUSE Leap 15.0 and earlier, use the install link from [X11:Utilities](https://software.opensuse.org//download.html?project=X11%3AUtilities&package=xournalpp).
+
+For all versions of openSUSE, bleeding edge packages synced to xournalpp git master on a weekly basis are available from [home:badshah400:Staging](https://software.opensuse.org//download.html?project=home%3Abadshah400%3AStaging&package=xournalpp).
 
 ### Arch Linux
 The AUR Package [xournalpp](https://aur.archlinux.org/packages/xournalpp-git/) provides an easy way to compile and install the latest state of the master branch.
