@@ -680,9 +680,9 @@ void LoadHandler::parseTexImage()
 	double bottom = LoadHandlerHelper::getAttribDouble("bottom", this);
 
 	const char* imText = LoadHandlerHelper::getAttrib("text", false, this);
-	const char* compatibilityTest = LoadHandlerHelper::getAttrib("texlength", false, this);
+	const char* compatibilityTest = LoadHandlerHelper::getAttrib("texlength", true, this);
 	int imTextLen = strlen(imText);
-	if(compatibilityTest != NULL)
+	if (compatibilityTest != NULL)
 	{
 		imTextLen = LoadHandlerHelper::getAttribInt("texlength", this);
 	}
@@ -909,38 +909,36 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 	}
 }
 
-void LoadHandler::readImage(const gchar* base64_str, gsize base64_strlen)
+string LoadHandler::parseBase64(const gchar* base64, gsize lenght)
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	gsize png_buflen;
-
 	// We have to copy the string in order to null terminate it, sigh.
-	gchar* base64_str2 = (gchar*) g_memdup(base64_str, base64_strlen + 1);
-	base64_str2[base64_strlen] = '\0';
+	gchar* base64data = (gchar*) g_memdup(base64, lenght + 1);
+	base64data[lenght] = '\0';
 
-	guchar* png_buf = g_base64_decode(base64_str2, &png_buflen);
-	g_free(base64_str2);
+	gsize binaryBufferLen = 0;
+	guchar* binaryBuffer = g_base64_decode(base64data, &binaryBufferLen);
+	g_free(base64data);
 
-	this->image->setImage(string((char*)png_buf, png_buflen));
-	g_free(png_buf);
+	string str = string((char*)binaryBuffer, binaryBufferLen);
+	g_free(binaryBuffer);
+
+	return str;
 }
 
-void LoadHandler::readTexImage(const gchar* base64_str, gsize base64_strlen)
+void LoadHandler::readImage(const gchar* base64string, gsize base64stringLen)
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	gsize png_buflen;
+	this->image->setImage(parseBase64((char*)base64string, base64stringLen));
+}
 
-	// We have to copy the string in order to null terminate it, sigh.
-	gchar* base64_str2 = (gchar*) g_memdup(base64_str, base64_strlen + 1);
-	base64_str2[base64_strlen] = '\0';
+void LoadHandler::readTexImage(const gchar* base64string, gsize base64stringLen)
+{
+	XOJ_CHECK_TYPE(LoadHandler);
 
-	guchar* png_buf = g_base64_decode(base64_str2, &png_buflen);
-	g_free(base64_str2);
-
-	this->teximage->setImage(string((char*)png_buf, png_buflen));
-	g_free(png_buf);
+	this->teximage->setBinaryData(parseBase64((char*)base64string, base64stringLen));
 }
 
 /**

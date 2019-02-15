@@ -17,20 +17,8 @@
 DocumentView::DocumentView()
 {
 	XOJ_INIT_TYPE(DocumentView);
-	this->page = NULL;
-	this->cr = NULL;
-	this->lX = -1;
-	this->lY = -1;
-	this->lWidth = -1;
-	this->lHeight = -1;
 
-	this->width = 0;
-	this->height = 0;
-
-	this->dontRenderEditingStroke = 0;
 	this->backgroundPainter = new MainBackgroundPainter();
-
-	this->markAudioStroke = false;
 }
 
 DocumentView::~DocumentView()
@@ -144,26 +132,52 @@ void DocumentView::drawImage(cairo_t* cr, Image* i)
 	cairo_set_matrix(cr, &defaultMatrix);
 }
 
-void DocumentView::drawTexImage(cairo_t* cr, TexImage* i)
+void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
 	cairo_matrix_t defaultMatrix = { 0 };
 	cairo_get_matrix(cr, &defaultMatrix);
 
-	cairo_surface_t* img = i->getImage();
-	int width = cairo_image_surface_get_width(img);
-	int height = cairo_image_surface_get_height(img);
+	PopplerDocument* pdf = texImage->getPdf();
+	cairo_surface_t* img = texImage->getImage();
 
-	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+	if (pdf != nullptr)
+	{
+		if (poppler_document_get_n_pages(pdf) < 1)
+		{
+			g_warning("Got latex PDf without pages!: %s", texImage->getText().c_str());
+			return;
+		}
 
-	double xFactor = i->getElementWidth() / width;
-	double yFactor = i->getElementHeight() / height;
+		PopplerPage* page = poppler_document_get_page(pdf, 0);
 
-	cairo_scale(cr, xFactor, yFactor);
+		double pageWidth = 0;
+		double pageHeight = 0;
+		poppler_page_get_size(page, &pageWidth, &pageHeight);
 
-	cairo_set_source_surface(cr, img, i->getX() / xFactor, i->getY() / yFactor);
-	cairo_paint(cr);
+		double xFactor = texImage->getElementWidth() / pageWidth;
+		double yFactor = texImage->getElementHeight() / pageHeight;
+
+		cairo_translate(cr, texImage->getX(), texImage->getY());
+		cairo_scale(cr, xFactor, yFactor);
+		poppler_page_render(page, cr);
+	}
+	else if (img != nullptr)
+	{
+		int width = cairo_image_surface_get_width(img);
+		int height = cairo_image_surface_get_height(img);
+
+		cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+
+		double xFactor = texImage->getElementWidth() / width;
+		double yFactor = texImage->getElementHeight() / height;
+
+		cairo_scale(cr, xFactor, yFactor);
+
+		cairo_set_source_surface(cr, img, texImage->getX() / xFactor, texImage->getY() / yFactor);
+		cairo_paint(cr);
+	}
 
 	cairo_set_matrix(cr, &defaultMatrix);
 }

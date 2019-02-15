@@ -94,9 +94,14 @@ protected:
 	bool sizeCalculated;
 
 private:
+	/**
+	 * Type of this element
+	 */
 	ElementType type;
 
-	// The color in RGB format
+	/**
+	 * The color in RGB format
+	 */
 	int color;
 };
 

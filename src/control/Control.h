@@ -251,7 +251,6 @@ public:
 	virtual void clipboardPasteEnabled(bool enabled);
 	virtual void clipboardPasteText(string text);
 	virtual void clipboardPasteImage(GdkPixbuf* img);
-	virtual void clipboardPasteTex(GdkPixbuf* img, const char* text, int textLength);
 	virtual void clipboardPasteXournal(ObjectInputStream& in);
 	virtual void deleteSelection();
 

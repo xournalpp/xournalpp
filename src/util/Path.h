@@ -107,6 +107,13 @@ public:
 	 */
 	string toUri(GError** error = NULL);
 
+#ifndef BUILD_THUMBNAILER
+	/**
+	 * Convert this path to GFile
+	 */
+	GFile* toGFile();
+#endif
+
 	/**
 	 * Get escaped path, all " and \ are escaped
 	 */
@@ -128,7 +135,9 @@ public:
 	 * Convert an uri to a path, if the uri does not start with file:// an empty Path is returned
 	 */
 	static Path fromUri(string uri);
+#ifndef BUILD_THUMBNAILER
 	static Path fromGFile(GFile* file);
+#endif
 
 private:
 	string path;

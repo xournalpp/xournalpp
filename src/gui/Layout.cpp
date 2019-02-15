@@ -202,7 +202,6 @@ void Layout::layoutPages()
 
 	// get from mapper (some may have changed to accomodate paired setting etc.)
 	bool isPairedPages = mapper.getPairedPages();
-	int pagesOffset = mapper.getFirstPageOffset();
 	int rows = mapper.getRows();
 	int columns = mapper.getColumns();
 

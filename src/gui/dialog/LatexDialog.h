@@ -33,7 +33,7 @@ class LatexDialog : public GladeGui
 	string getTex();
 	
 	//Set and retrieve temporary Tex render
-	void setTempRender(cairo_surface_t* cairoTexTempRender, size_t length);
+	void setTempRender(PopplerDocument* pdf, size_t length);
 
 	// Necessary for the controller in order to connect the 'text-changed'
 	// signal handler

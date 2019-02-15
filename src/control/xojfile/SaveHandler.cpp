@@ -236,10 +236,8 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 		else if (e->getType() == ELEMENT_TEXIMAGE)
 		{
 			TexImage* i = (TexImage*) e;
-			XmlTexNode* image = new XmlTexNode("teximage");
+			XmlTexNode* image = new XmlTexNode("teximage", i->getBinaryData());
 			layer->addChild(image);
-
-			image->setImage(i->getImage());
 
 			image->setAttrib("text", i->getText().c_str());
 			image->setAttrib("left", i->getX());
