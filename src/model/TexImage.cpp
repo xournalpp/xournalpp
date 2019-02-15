@@ -4,8 +4,6 @@
 #include <serializing/ObjectInputStream.h>
 #include <serializing/ObjectOutputStream.h>
 
-// TODO Serialize PDF
-
 TexImage::TexImage()
  : Element(ELEMENT_TEXIMAGE)
 {
@@ -41,6 +39,8 @@ void TexImage::freeImageAndPdf()
 		g_object_unref(this->pdf);
 		this->pdf = NULL;
 	}
+
+	this->parsedBinaryData = false;
 }
 
 Element* TexImage::clone()
@@ -255,7 +255,7 @@ void TexImage::serialize(ObjectOutputStream& out)
 	out.writeDouble(this->height);
 	out.writeString(this->text);
 
-	out.writeImage(this->image);
+	out.writeData(this->binaryData.c_str(), this->binaryData.length(), 1);
 
 	out.endObject();
 }
@@ -272,13 +272,13 @@ void TexImage::readSerialized(ObjectInputStream& in)
 	this->height = in.readDouble();
 	this->text = in.readString();
 
-	if (this->image)
-	{
-		cairo_surface_destroy(this->image);
-		this->image = NULL;
-	}
+	freeImageAndPdf();
 
-	this->image = in.readImage();
+	char* data = NULL;
+	int len = 0;
+	in.readData((void**)&data, &len);
+
+	this->binaryData = string(data, len);
 
 	in.endObject();
 }
