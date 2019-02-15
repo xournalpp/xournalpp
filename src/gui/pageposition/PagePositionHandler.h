@@ -43,18 +43,15 @@ private:
 	void allocDataSize(int size);
 	void freeData();
 
-
 	/**
 	 * Find page containing x,y coordinates
 	 * 
 	 * @param  x x pixel coordinate
 	 * @param  y y pixel coordinate
 	 * 
-	 * @return Page containing coordinate.  Index set to data index ( to try first next time )
+	 * @return Page containing coordinate.  Index set to data index (to try first next time)
 	 */
-
-	PagePosition* linearSearch(int x, int y, int& index); 
-	
+	PagePosition* linearSearch(int x, int y, int& index);
 
 private:
 	XOJ_TYPE_ATTRIB;

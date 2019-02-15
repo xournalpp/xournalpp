@@ -4,7 +4,6 @@
 #include "PagePositionCache.h"
 
 
-
 PagePositionHandler::PagePositionHandler()
 {
 	XOJ_INIT_TYPE(PagePositionHandler);
@@ -61,7 +60,7 @@ XojPageView* PagePositionHandler::getBestMatchingView(int x, int y, int width, i
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
 	// Does this simplification result in expected behaviour? 
-	return  this->getViewAt( x + width/2, y + height/2 );
+	return this->getViewAt(x + width / 2, y + height / 2);
 }
 
 XojPageView* PagePositionHandler::getViewAt(int x, int y, PagePositionCache* cache)
@@ -82,8 +81,7 @@ XojPageView* PagePositionHandler::getViewAt(int x, int y, PagePositionCache* cac
 	}
 
 	int index = -1;
-	PagePosition* pp = this->linearSearch(x,y, index);
-
+	PagePosition* pp = this->linearSearch(x, y, index);
 
 	if (cache)
 	{
@@ -97,31 +95,27 @@ XojPageView* PagePositionHandler::getViewAt(int x, int y, PagePositionCache* cac
 	return pp->pv;
 }
 
-PagePosition* PagePositionHandler::linearSearch( int x,int y, int& index)
+PagePosition* PagePositionHandler::linearSearch(int x, int y, int& index)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-		
-			for ( int i = 0; i <this->dataCount; i++ )
-			{
-				if ( this->data[i]->containsPoint( x , y ) )
-				{
-					index = i;
-					return this->data[i];
-				}
-			}
-			
-		
+	for (int i = 0; i < this->dataCount; i++)
+	{
+		if (this->data[i]->containsPoint(x, y))
+		{
+			index = i;
+			return this->data[i];
+		}
+	}
+
 	return NULL; // nothing found
 }
-
-
 
 void PagePositionHandler::addData(PagePosition* p)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-	if ( this->dataCount >= this->dataAllocSize - 1)
+	if (this->dataCount >= this->dataAllocSize - 1)
 	{
 		this->allocDataSize(this->dataAllocSize + 100);
 	}

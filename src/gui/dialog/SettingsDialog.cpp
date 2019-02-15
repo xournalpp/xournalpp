@@ -182,12 +182,12 @@ void SettingsDialog::load()
 
 	GtkWidget* spPairsOffset = get("spPairsOffset");
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spPairsOffset), settings->getPairsOffset());
-	
+
 	GtkWidget* spSnapRotationTolerance = get("spSnapRotationTolerance");
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapRotationTolerance),settings->getSnapRotationTolerance());
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapRotationTolerance), settings->getSnapRotationTolerance());
 
 	GtkWidget* spSnapGridTolerance = get("spSnapGridTolerance");
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapGridTolerance),settings->getSnapGridTolerance());
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapGridTolerance), settings->getSnapGridTolerance());
 
 	GtkWidget* slider = get("zoomCallibSlider");
 
@@ -448,8 +448,6 @@ void SettingsDialog::save()
 	int numPairsOffset = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spPairsOffset));
 	settings->setPairsOffset(numPairsOffset);
 
-	
-	
 	settings->setDisplayDpi(dpi);
 
 	for (ButtonConfigGui* bcg : this->buttonConfigs)

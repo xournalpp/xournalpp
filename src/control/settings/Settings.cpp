@@ -1512,7 +1512,7 @@ void Settings::setViewFixedRows(bool viewFixedRows)
 	}
 
 	this->viewFixedRows = viewFixedRows;
-	save();	
+	save();
 }
 
 bool Settings::isViewFixedRows()
@@ -1521,9 +1521,6 @@ bool Settings::isViewFixedRows()
 
 	return this->viewFixedRows;
 }
-
-
-
 
 void Settings::setViewLayoutVert(bool vert)
 {
@@ -1535,7 +1532,7 @@ void Settings::setViewLayoutVert(bool vert)
 	}
 
 	this->layoutVertical = vert;
-	save();	
+	save();
 }
 
 bool Settings::getViewLayoutVert()
@@ -1545,10 +1542,9 @@ bool Settings::getViewLayoutVert()
 	return this->layoutVertical;
 }
 
-
 void Settings::setViewLayoutR2L(bool r2l)
 {
-		XOJ_CHECK_TYPE(Settings);
+	XOJ_CHECK_TYPE(Settings);
 
 	if (this->layoutRightToLeft == r2l)
 	{
@@ -1566,7 +1562,6 @@ bool Settings::getViewLayoutR2L()
 	return this->layoutRightToLeft;
 }
 
-
 void Settings::setViewLayoutB2T(bool b2t)
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1577,8 +1572,7 @@ void Settings::setViewLayoutB2T(bool b2t)
 	}
 
 	this->layoutBottomToTop = b2t;
-	save();	
-	
+	save();
 }
 
 bool Settings::getViewLayoutB2T()
@@ -1587,9 +1581,6 @@ bool Settings::getViewLayoutB2T()
 
 	return this->layoutBottomToTop;
 }
-
-
-
 
 void Settings::setLastSavePath(Path p)
 {

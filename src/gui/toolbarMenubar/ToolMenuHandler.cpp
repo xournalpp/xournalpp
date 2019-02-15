@@ -125,9 +125,9 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 			for (ToolbarItem* dataItem : e->getItems())
 			{
 				string name = dataItem->getName();
-				
-				// recognize previous name:
-				if (name == "TWO_PAGES")	// V1.07 (Jan 2019) and earlier. 
+
+				// recognize previous name, V1.07 (Jan 2019) and earlier.
+				if (name == "TWO_PAGES")
 				{
 					name = "PAIRED_PAGES";
 				}
