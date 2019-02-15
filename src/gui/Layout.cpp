@@ -6,6 +6,7 @@
 #include "pageposition/PagePositionHandler.h"
 #include "widgets/XournalWidget.h"
 #include "gui/scroll/ScrollHandling.h"
+#include "gui/LayoutMapper.h"
 
 
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
@@ -64,11 +65,11 @@ void Layout::updateCurrentPage()
 
 	Control* control = this->view->getControl();
 
-	bool twoPages = control->getSettings()->isShowTwoPages();
+	bool pairedPages = control->getSettings()->isShowPairedPages();
 
 	if (visRect.y < 1)
 	{
-		if (twoPages && this->view->viewPagesLen > 1 &&
+		if (pairedPages && this->view->viewPagesLen > 1 &&
 		    this->view->viewPages[1]->isSelected())
 		{
 			// page 2 already selected
@@ -125,7 +126,7 @@ void Layout::updateCurrentPage()
 		}
 	}
 
-	if (twoPages && mostPageNr < this->view->viewPagesLen - 1)
+	if (pairedPages && mostPageNr < this->view->viewPagesLen - 1)
 	{
 		int y1 = this->view->viewPages[mostPageNr]->getY();
 		int y2 = this->view->viewPages[mostPageNr + 1]->getY();
@@ -179,175 +180,135 @@ double Layout::getLayoutWidth()
 const int XOURNAL_PADDING = 10;
 
 /**
+ * Allowance for shadow between page pairs in paired page mode
+ */
+const int XOURNAL_ROOM_FOR_SHADOW = 3;
+
+/**
  * Padding between the pages
  */
 const int XOURNAL_PADDING_BETWEEN = 15;
+
+	
 
 void Layout::layoutPages()
 {
 	XOJ_CHECK_TYPE(Layout);
 
-	int y = 0;
-
 	int len = this->view->viewPagesLen;
 
-	Settings* settings = this->view->getControl()->getSettings();
-	bool verticalSpace = settings->getAddVerticalSpace();
-	bool horizontalSpace = settings->getAddHorizontalSpace();
-	bool dualPage = settings->isShowTwoPages();
+ 	Settings* settings = this->view->getControl()->getSettings();
 
-	int size[2] = { 0, 0 };
+	
+	LayoutMapper mapper(len, settings);		//obtain  rows,cols, paired and layout from view settings
 
-	// we need at least 2 page for dual page view
-	if (len < 2)
+	
+	// get from mapper  ( some may have changed to accomodate paired setting etc. )
+	bool isPairedPages = mapper.getPairedPages();
+	int  pagesOffset = mapper.getFirstPageOffset();
+	int rows = mapper.getRows();
+	int columns = mapper.getColumns();
+
+	
+	int sizeCol[columns] = {};
+
+	
+	int sizeRow[rows] = {};
+	
+
+	for ( int r=0; r < rows; r++ )
 	{
-		dualPage = false;
-	}
-
-	// calculate maximum size
-	for (int i = 0; i < len; i++)
-	{
-		XojPageView* v = this->view->viewPages[i];
-
-		int rId = 0;
-		if (dualPage && i % 2 == 1)
+		for ( int c=0; c < columns; c++ )
 		{
-			rId = 1;
+			int k = mapper.map(c,r);
+			if(k>=0){
+				
+				XojPageView* v = this->view->viewPages[k];
+				
+				if (sizeCol[c] < v->getDisplayWidth())
+				{
+					sizeCol[c] = v->getDisplayWidth();
+				}
+				if ( sizeRow[r] < v->getDisplayHeight())
+				{
+					sizeRow[r] = v->getDisplayHeight();
+				}
+			}
+			
 		}
+	}
 
-		if (size[rId] < v->getDisplayWidth())
+
+	int x = XOURNAL_PADDING;
+	int y = XOURNAL_PADDING;
+	
+	// Iterate over ALL possible rows and columns and let the mapper tell us what page, if any,  is found there.
+	
+	for ( int r=0; r < rows; r++ )
+	{
+		for ( int c=0; c < columns; c++ )
 		{
-			size[rId] = v->getDisplayWidth();
-		}
-	}
+			int pageAtRowCol = mapper.map(c,r);
+			
+			if(pageAtRowCol>=0){ 
+				
+				XojPageView* v = this->view->viewPages[pageAtRowCol];
+				int vDisplayWidth = v->getDisplayWidth();
+				{
+					int paddingLeft;
+					int paddingRight;
+					int columnPadding = 0;
+					columnPadding = (sizeCol[c] - vDisplayWidth );
+					
+					if (isPairedPages && len >1){	// pair pages mode
+						if (c%2 == 0 ){ 		//align right
+							paddingLeft = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;	
+							paddingRight = XOURNAL_ROOM_FOR_SHADOW;
+						}
+						else{								//align left
+							paddingLeft = XOURNAL_ROOM_FOR_SHADOW;
+							paddingRight = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
+						}
+					}
+					else{	// not paired page mode - center
+						paddingLeft = XOURNAL_PADDING_BETWEEN/2 + columnPadding/2;      //center justify
+						paddingRight = XOURNAL_PADDING_BETWEEN - paddingLeft + columnPadding/2;
+					}
 
-
-	int marginLeft = 0;
-	int marginTop = 0;
-
-	y += XOURNAL_PADDING;
-
-	int width = XOURNAL_PADDING + size[0];
-	if (dualPage)
-	{
-		width += XOURNAL_PADDING_BETWEEN + size[1] + XOURNAL_PADDING;
-	}
-	else
-	{
-		width += XOURNAL_PADDING;
-	}
-
-	Rectangle visRect = getVisibleRect();
-
-	marginLeft = MAX(XOURNAL_PADDING, (visRect.width - width) / 2.f);
-
-	if (horizontalSpace)
-	{
-		//A quarter of the document is always visible in window
-		marginLeft = MAX(marginLeft, visRect.width * 0.75);
-	}
-
-	int verticalSpaceBetweenSlides = 0;
-
-	if (len > 0 && verticalSpace)
-	{
-		marginTop = MAX(marginTop, visRect.height * 0.75);
-	}
-
-	for (int i = 0; i < len; i++)
-	{
-		XojPageView* v = this->view->viewPages[i];
-
-		int height = 0;
-
-		if (dualPage)
-		{
-			/*
-			 * Align the left page right and the right page left, like this
-			 * (first page at right)
-			 *
-			 *       [===]
-			 *  [==] [=]
-			 * [===] [===]
-			 */
-			if (i == 0)
-			{
-				int x = XOURNAL_PADDING + size[0] + XOURNAL_PADDING_BETWEEN;
-
-				v->layout.setX(x);
-				v->layout.setY(y);
-				v->layout.setMarginLeft(marginLeft);
-				v->layout.setMarginTop(marginTop);
-
-				height = v->getDisplayHeight();
+					
+					x += paddingLeft;
+					
+					v->layout.setX(x);
+					v->layout.setY(y);
+					
+					x += vDisplayWidth + paddingRight;
+				
+				}
 			}
 			else
 			{
-				XojPageView* v2 = NULL;
-				height = v->getDisplayHeight();
-
-				if (i + 1 < len)
-				{
-					i++;
-
-					v2 = this->view->viewPages[i];
-					if (height < v2->getDisplayHeight())
-					{
-						height = v2->getDisplayHeight();
-					}
-				}
-
-				// left page, align right
-				int x1 = XOURNAL_PADDING + (size[0] - v->getDisplayWidth());
-				v->layout.setX(x1);
-				v->layout.setY(y);
-				v->layout.setMarginLeft(marginLeft);
-				v->layout.setMarginTop(marginTop);
-
-				// if right page available, align left
-				if (v2 != NULL)
-				{
-					int x2 = XOURNAL_PADDING + size[0] + XOURNAL_PADDING_BETWEEN;
-
-					v2->layout.setX(x2);
-					v2->layout.setY(y);
-					v2->layout.setMarginLeft(marginLeft);
-					v2->layout.setMarginTop(marginTop);
-				}
+				x += sizeCol[c] + XOURNAL_PADDING_BETWEEN;
 			}
 		}
-		else
-		{
-			/*
-			 * Center vertically, like this
-			 *
-			 *  [=]
-			 * [===]
-			 * [===]
-			 *  [=]
-			 */
-			int x = (size[0] - v->getDisplayWidth()) / 2 + XOURNAL_PADDING;
-
-			v->layout.setX(x);
-			v->layout.setY(y);
-			v->layout.setMarginLeft(marginLeft);
-			v->layout.setMarginTop(marginTop);
-
-			height = v->getDisplayHeight();
-		}
-
-		y += height;
-
-		y += XOURNAL_PADDING_BETWEEN + verticalSpaceBetweenSlides;
+		x = XOURNAL_PADDING;
+		y+=sizeRow[r] + XOURNAL_PADDING_BETWEEN ;
+	
 	}
+	
+	int totalWidth = XOURNAL_PADDING *2 + XOURNAL_PADDING_BETWEEN * columns;
+	for ( int c =0; c< columns; c++){  totalWidth += sizeCol[c];  }
+	int totalHeight = XOURNAL_PADDING *2 + XOURNAL_PADDING_BETWEEN * rows;
+	for ( int r =0; r< rows; r++){  totalHeight += sizeRow[r];  }
+	
+		
+	this->setLayoutSize(totalWidth, totalHeight);
+	this->view->pagePosition->update(this->view->viewPages, len, totalHeight);
 
-	int height = 2 * marginTop + XOURNAL_PADDING + y + XOURNAL_PADDING;
-
-	width += 2 * marginLeft;
-
-	this->setLayoutSize(width, height);
-	this->view->pagePosition->update(this->view->viewPages, len, height);
+	
 }
+
+
+
 
 void Layout::setLayoutSize(int width, int height)
 {

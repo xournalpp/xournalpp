@@ -312,12 +312,12 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkCheckMenuItem" id="menuViewTwoPages">
+                      <object class="GtkCheckMenuItem" id="menuViewPairedPages">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">_Two Pages</property>
+                        <property name="label" translatable="yes">_Pair Pages</property>
                         <property name="use_underline">True</property>
-                        <signal name="toggled" handler="ACTION_VIEW_TWO_PAGES" swapped="no"/>
+                        <signal name="toggled" handler="ACTION_VIEW_PAIRED_PAGES" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -348,6 +348,304 @@
                         <accelerator key="F12" signal="activate"/>
                       </object>
                     </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="separatormenuitem3">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="menuitemLayout">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Layout</property>
+                        <property name="use_underline">True</property>
+                        <child type="submenu">
+                          <object class="GtkMenu" id="layoutmenu">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <child>
+                              <object class="GtkCheckMenuItem" id="menuLayoutHorizontal">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">_Horizontal</property>
+                                <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_SET_LAYOUT_HORIZONTAL:GROUP_LAYOUT_HORIZONTAL" swapped="no"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckMenuItem" id="menuLayoutVertical">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">_Vertical</property>
+                                <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_SET_LAYOUT_VERTICAL:GROUP_LAYOUT_HORIZONTAL" swapped="no"/>
+                              </object>
+                            </child>
+                            <child>
+                                <object class="GtkSeparatorMenuItem" id="separatormenuitemLayout1">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckMenuItem" id="menuLayoutLR">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">_Left To Right</property>
+                                <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_SET_LAYOUT_L2R:GROUP_LAYOUT_LR" swapped="no"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckMenuItem" id="menuLayoutRL">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">_Right To Left</property>
+                                <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_SET_LAYOUT_R2L:GROUP_LAYOUT_LR" swapped="no"/>
+                              </object>
+                            </child>
+                            <child>
+                                <object class="GtkSeparatorMenuItem" id="separatormenuitemLayout2">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckMenuItem" id="menuLayoutTB">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">_Top to Bottom</property>
+                                <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_SET_LAYOUT_T2B:GROUP_LAYOUT_TB" swapped="no"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckMenuItem" id="menuLayoutBT">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">_Bottom to Top</property>
+                                <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
+                                <signal name="toggled" handler="ACTION_SET_LAYOUT_B2T:GROUP_LAYOUT_TB" swapped="no"/>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="menuitemViewDimensions">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">_Cols/Rows</property>
+                        <property name="use_underline">True</property>
+                        <child type="submenu">
+                          <object class="GtkMenu" id="menuViewDimensions">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <child>
+                              <object class="GtkMenuItem" id="menuitemViewColumns">
+                                <property name="width_request">-1</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">set Cols</property>
+                                <property name="use_underline">True</property>
+                                <child type="submenu">
+                                  <object class="GtkMenu" id="menuViewColumns">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <child>
+                                      <object class="GtkCheckMenuItem" id="menuViewColumns1">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">_1</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="draw_as_radio">True</property>
+                                        <signal name="toggled" handler="ACTION_SET_COLUMNS_1:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckMenuItem" id="menuViewColumns2">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">_2</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="draw_as_radio">True</property>
+                                        <signal name="toggled" handler="ACTION_SET_COLUMNS_2:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckMenuItem" id="menuViewColumns3">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">_3</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="draw_as_radio">True</property>
+                                        <signal name="toggled" handler="ACTION_SET_COLUMNS_3:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckMenuItem" id="menuViewColumns4">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">_4</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="draw_as_radio">True</property>
+                                        <signal name="toggled" handler="ACTION_SET_COLUMNS_4:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckMenuItem" id="menuViewColumns5">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">_5</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="draw_as_radio">True</property>
+                                        <signal name="toggled" handler="ACTION_SET_COLUMNS_5:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckMenuItem" id="menuViewColumns6">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">6</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="draw_as_radio">True</property>
+                                        <signal name="toggled" handler="ACTION_SET_COLUMNS_6:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckMenuItem" id="menuViewColumns7">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">7</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="draw_as_radio">True</property>
+                                        <signal name="toggled" handler="ACTION_SET_COLUMNS_7:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckMenuItem" id="menuViewColumns8">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">8</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="draw_as_radio">True</property>
+                                        <signal name="toggled" handler="ACTION_SET_COLUMNS_8:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkMenuItem" id="menuitemViewRows">
+                                <property name="width_request">-1</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">set Rows</property>
+                                <property name="use_underline">True</property>
+                                <child type="submenu">
+                                  <object class="GtkMenu" id="menuViewRows">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <child>
+                                      <object class="GtkCheckMenuItem" id="menuViewRows1">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">_1</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="draw_as_radio">True</property>
+                                        <signal name="toggled" handler="ACTION_SET_ROWS_1:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckMenuItem" id="menuViewRows2">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">_2</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="draw_as_radio">True</property>
+                                        <signal name="toggled" handler="ACTION_SET_ROWS_2:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckMenuItem" id="menuViewRows3">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">_3</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="draw_as_radio">True</property>
+                                        <signal name="toggled" handler="ACTION_SET_ROWS_3:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckMenuItem" id="menuViewRows4">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">_4</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="draw_as_radio">True</property>
+                                        <signal name="toggled" handler="ACTION_SET_ROWS_4:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckMenuItem" id="menuViewRows5">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">_5</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="draw_as_radio">True</property>
+                                        <signal name="toggled" handler="ACTION_SET_ROWS_5:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckMenuItem" id="menuViewRows6">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">6</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="draw_as_radio">True</property>
+                                        <signal name="toggled" handler="ACTION_SET_ROWS_6:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckMenuItem" id="menuViewRows7">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">7</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="draw_as_radio">True</property>
+                                        <signal name="toggled" handler="ACTION_SET_ROWS_7:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckMenuItem" id="menuViewRows8">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">8</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="draw_as_radio">True</property>
+                                        <signal name="toggled" handler="ACTION_SET_ROWS_8:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    
+                    
                     <child>
                       <object class="GtkSeparatorMenuItem" id="separatormenuitem7">
                         <property name="visible">True</property>

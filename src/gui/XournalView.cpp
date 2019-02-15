@@ -508,8 +508,8 @@ void XournalView::getPasteTarget(double& x, double& y)
 
 	if (rect)
 	{
-		x = rect->width / 2;
-		y = rect->height / 2;
+		x = rect->x + rect->width / 2;
+		y = rect->y + rect->height / 2;
 		delete rect;
 	}
 }

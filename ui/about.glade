@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkDialog" id="aboutDialog">
@@ -11,6 +11,9 @@
     <property name="destroy_with_parent">True</property>
     <property name="icon_name">dialog-information</property>
     <property name="type_hint">dialog</property>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox2">
         <property name="visible">True</property>
@@ -169,7 +172,8 @@
 Wilson Brenna, 2012 - 2015 (tex support)
 Marek Pikuła, 2015 - 2018
 Moreno Razzoli, 2018 - 2019
-Luca Errani, 2018 - 2019</property>
+Luca Errani, 2018 - 2019
+Ulrich Huber, 2019</property>
                 <property name="use_markup">True</property>
                 <property name="justify">center</property>
               </object>
@@ -202,6 +206,7 @@ Luca Errani, 2018 - 2019</property>
                 <property name="label" translatable="yes">Partial based on Xournal
 by Denis Auroux</property>
                 <property name="use_markup">True</property>
+                <property name="justify">center</property>
               </object>
               <packing>
                 <property name="expand">False</property>

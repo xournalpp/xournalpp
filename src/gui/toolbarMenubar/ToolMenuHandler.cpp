@@ -125,6 +125,13 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 			for (ToolbarItem* dataItem : e->getItems())
 			{
 				string name = dataItem->getName();
+				
+				// recognize previous name:
+				if (name == "TWO_PAGES")	// V1.07 (Jan 2019) and earlier. 
+				{
+					name = "PAIRED_PAGES";
+				}
+				
 
 				if (name == "SEPARATOR")
 				{
@@ -413,8 +420,8 @@ void ToolMenuHandler::initToolItems()
 	// Menu View
 	// ************************************************************************
 
-	ADD_CUSTOM_ITEM_TGL("TWO_PAGES", ACTION_VIEW_TWO_PAGES, GROUP_TWOPAGES, false, "showtwopages.svg", _("Two pages"));
-	ADD_CUSTOM_ITEM_TGL("PRESENTATION_MODE", ACTION_VIEW_PRESENTATION_MODE, GROUP_PRESENTATION_MODE, false, "showtwopages.svg", _("Presentation mode"));
+	ADD_CUSTOM_ITEM_TGL("PAIRED_PAGES", ACTION_VIEW_PAIRED_PAGES, GROUP_PAIRED_PAGES, false, "showpairedpages.svg", _("Paired pages"));
+	ADD_CUSTOM_ITEM_TGL("PRESENTATION_MODE", ACTION_VIEW_PRESENTATION_MODE, GROUP_PRESENTATION_MODE, false, "showpairedpages.svg", _("Presentation mode"));
 	ADD_CUSTOM_ITEM_TGL("FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, false, "fullscreen.svg", _("Toggle fullscreen"));
 
 	ADD_STOCK_ITEM("ZOOM_OUT", ACTION_ZOOM_OUT, "zoom-out", _("Zoom out"));
