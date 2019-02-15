@@ -682,7 +682,7 @@ void LoadHandler::parseTexImage()
 	const char* imText = LoadHandlerHelper::getAttrib("text", false, this);
 	const char* compatibilityTest = LoadHandlerHelper::getAttrib("texlength", false, this);
 	int imTextLen = strlen(imText);
-	if(compatibilityTest != NULL)
+	if (compatibilityTest != NULL)
 	{
 		imTextLen = LoadHandlerHelper::getAttribInt("texlength", this);
 	}

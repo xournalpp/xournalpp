@@ -391,6 +391,7 @@ TexImage* LatexController::loadRendered()
 	}
 
 	TexImage* img = convertDocumentToImage(pdf);
+	img->setPdf(pdf);
 
 	g_object_unref(pdf);
 

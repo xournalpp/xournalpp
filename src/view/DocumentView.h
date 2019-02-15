@@ -96,7 +96,7 @@ public:
 private:
 	void drawText(cairo_t* cr, Text* t);
 	void drawImage(cairo_t* cr, Image* i);
-	void drawTexImage(cairo_t* cr, TexImage* i);
+	void drawTexImage(cairo_t* cr, TexImage* texImage);
 
 	void drawElement(cairo_t* cr, Element* e);
 
@@ -105,17 +105,17 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	cairo_t* cr;
-	PageRef page;
-	double width;
-	double height;
-	bool dontRenderEditingStroke;
-	bool markAudioStroke;
+	cairo_t* cr = NULL;
+	PageRef page = NULL;
+	double width = 0;
+	double height = 0;
+	bool dontRenderEditingStroke = false;
+	bool markAudioStroke = false;
 
-	double lX;
-	double lY;
-	double lWidth;
-	double lHeight;
+	double lX = -1;
+	double lY = -1;
+	double lWidth = -1;
+	double lHeight = -1;
 
 	MainBackgroundPainter* backgroundPainter;
 };

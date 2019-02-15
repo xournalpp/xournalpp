@@ -2948,23 +2948,6 @@ void Control::clipboardPasteImage(GdkPixbuf* img)
 	clipboardPaste(image);
 }
 
-void Control::clipboardPasteTex(GdkPixbuf* img, const char* text, int textLength)
-{
-	XOJ_CHECK_TYPE(Control);
-
-	TexImage* image = new TexImage();
-	image->setImage(img);
-
-	int width = gdk_pixbuf_get_width(img);
-	int height = gdk_pixbuf_get_height(img);
-
-	image->setWidth(width);
-	image->setHeight(height);
-	image->setText(string(text, textLength));
-
-	clipboardPaste(image);
-}
-
 void Control::clipboardPaste(Element* e)
 {
 	XOJ_CHECK_TYPE(Control);

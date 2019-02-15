@@ -4,14 +4,14 @@
 #include <serializing/ObjectInputStream.h>
 #include <serializing/ObjectOutputStream.h>
 
+// TODO Serialize PDF
+
 TexImage::TexImage()
  : Element(ELEMENT_TEXIMAGE)
 {
 	XOJ_INIT_TYPE(TexImage);
 
 	this->sizeCalculated = true;
-	this->image = NULL;
-	this->read = false;
 }
 
 TexImage::~TexImage()
@@ -22,6 +22,12 @@ TexImage::~TexImage()
 	{
 		cairo_surface_destroy(this->image);
 		this->image = NULL;
+	}
+
+	if (this->pdf)
+	{
+		g_object_unref(this->pdf);
+		this->pdf = NULL;
 	}
 
 	XOJ_RELEASE_TYPE(TexImage);
@@ -40,6 +46,12 @@ Element* TexImage::clone()
 	img->height = this->height;
 	img->text = this->text;
 	img->data = this->data;
+
+	if (this->pdf)
+	{
+		img->pdf = this->pdf;
+		g_object_ref(img->pdf);
+	}
 
 	img->image = cairo_surface_reference(this->image);
 
@@ -129,6 +141,40 @@ cairo_surface_t* TexImage::getImage()
 	return this->image;
 }
 
+/**
+ * @return The PDF Document, if rendered as .pdf
+ *
+ * The document needs to be referenced, if it will be hold somewhere
+ */
+PopplerDocument* TexImage::getPdf()
+{
+	XOJ_CHECK_TYPE(TexImage);
+
+	return this->pdf;
+}
+
+/**
+ * @param pdf The PDF Document, if rendered as .pdf
+ *
+ * The PDF will be referenced
+ */
+void TexImage::setPdf(PopplerDocument* pdf)
+{
+	XOJ_CHECK_TYPE(TexImage);
+
+	if (this->pdf != nullptr)
+	{
+		g_object_unref(this->pdf);
+	}
+
+	this->pdf = pdf;
+
+	if (this->pdf != nullptr)
+	{
+		g_object_ref(this->pdf);
+	}
+}
+
 void TexImage::scale(double x0, double y0, double fx, double fy)
 {
 	XOJ_CHECK_TYPE(TexImage);
@@ -147,6 +193,8 @@ void TexImage::scale(double x0, double y0, double fx, double fy)
 void TexImage::rotate(double x0, double y0, double xo, double yo, double th)
 {
 	XOJ_CHECK_TYPE(TexImage);
+
+	// Rotation for TexImages not yet implemented
 }
 
 void TexImage::serialize(ObjectOutputStream& out)
