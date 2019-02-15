@@ -92,8 +92,8 @@
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="ACTION_SAVE_AS" swapped="no"/>
-                        <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                        <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -385,10 +385,10 @@
                               </object>
                             </child>
                             <child>
-                                <object class="GtkSeparatorMenuItem" id="separatormenuitemLayout1">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                </object>
+                              <object class="GtkSeparatorMenuItem" id="separatormenuitemLayout1">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                              </object>
                             </child>
                             <child>
                               <object class="GtkCheckMenuItem" id="menuLayoutLR">
@@ -411,10 +411,10 @@
                               </object>
                             </child>
                             <child>
-                                <object class="GtkSeparatorMenuItem" id="separatormenuitemLayout2">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                </object>
+                              <object class="GtkSeparatorMenuItem" id="separatormenuitemLayout2">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                              </object>
                             </child>
                             <child>
                               <object class="GtkCheckMenuItem" id="menuLayoutTB">
@@ -455,7 +455,7 @@
                                 <property name="width_request">-1</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">set Cols</property>
+                                <property name="label" translatable="yes">Set Columns</property>
                                 <property name="use_underline">True</property>
                                 <child type="submenu">
                                   <object class="GtkMenu" id="menuViewColumns">
@@ -550,7 +550,7 @@
                                 <property name="width_request">-1</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">set Rows</property>
+                                <property name="label" translatable="yes">Set Rows</property>
                                 <property name="use_underline">True</property>
                                 <child type="submenu">
                                   <object class="GtkMenu" id="menuViewRows">
@@ -644,8 +644,6 @@
                         </child>
                       </object>
                     </child>
-                    
-                    
                     <child>
                       <object class="GtkSeparatorMenuItem" id="separatormenuitem7">
                         <property name="visible">True</property>
@@ -719,8 +717,8 @@
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="ACTION_ZOOM_IN" swapped="no"/>
-                        <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -731,8 +729,8 @@
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="ACTION_ZOOM_OUT" swapped="no"/>
-                        <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
