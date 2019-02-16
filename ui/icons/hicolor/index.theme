@@ -1,0 +1,19 @@
+[Icon Theme]
+Name=Hicolor
+Comment=Fallback icon theme
+Hidden=true
+Directories=24x24/actions,scalable/actions
+
+[scalable/actions]
+MinSize=1
+Size=128
+MaxSize=256
+Context=Actions
+Type=Scalable
+
+[24x24/actions]
+Size=24
+Context=Actions
+Type=Threshold
+
+

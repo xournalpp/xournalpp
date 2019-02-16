@@ -296,6 +296,9 @@ int XournalMain::run(int argc, char* argv[])
 	GladeSearchpath* gladePath = new GladeSearchpath();
 	initResourcePath(gladePath);
 
+	string icon = gladePath->getFirstSearchPath() + "/icons/";
+	gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.c_str());
+
 	// init singleton
 	string colorNameFile = Util::getConfigFile("colornames.ini").str();
 	ToolbarColorNames::getInstance().loadFile(colorNameFile);

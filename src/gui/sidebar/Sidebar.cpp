@@ -44,7 +44,7 @@ void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui)
 		GtkToolItem* it = gtk_toggle_tool_button_new();
 		p->tabButton = it;
 
-		gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), gui->loadIcon(p->getIconName().c_str()));
+		gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), gtk_image_new_from_icon_name(p->getIconName().c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR));
 		g_signal_connect(it, "clicked", G_CALLBACK(&buttonClicked), new SidebarPageButton(this, i, p));
 		gtk_tool_item_set_tooltip_text(it, p->getName().c_str());
 		gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), p->getName().c_str());

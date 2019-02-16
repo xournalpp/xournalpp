@@ -6,8 +6,8 @@
 #include <config.h>
 #include <i18n.h>
 
-ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, GladeGui* gui, string id)
- : ToolButton(handler, gui, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select.svg", _("Select Rectangle")),
+ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id)
+ : ToolButton(handler, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select", _("Select Rectangle")),
    toolMenuHandler(toolMenuHandler),
    popup(gtk_menu_new())
 {
@@ -17,19 +17,10 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler,
 	this->labelWidget = NULL;
 	this->iconWidget = NULL;
 
-	this->iconSelectRect = gui->loadIconPixbuf("rect-select.svg");
-	this->iconSelectRgion = gui->loadIconPixbuf("lasso.svg");
-	this->iconSelectObject = gui->loadIconPixbuf("object-select.svg");
-	this->iconPlayObject = gui->loadIconPixbuf("object-play.svg");
-	g_object_ref(this->iconSelectRect);
-	g_object_ref(this->iconSelectRgion);
-	g_object_ref(this->iconSelectObject);
-	g_object_ref(this->iconPlayObject);
-
-	addMenuitem(_("Select Rectangle"), "rect-select.svg", ACTION_TOOL_SELECT_RECT, GROUP_TOOL);
-	addMenuitem(_("Select Region"), "lasso.svg", ACTION_TOOL_SELECT_REGION, GROUP_TOOL);
-	addMenuitem(_("Select Object"), "object-select.svg", ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL);
-	addMenuitem(_("Play Object"), "object-play.svg", ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL);
+	addMenuitem(_("Select Rectangle"), "rect-select", ACTION_TOOL_SELECT_RECT, GROUP_TOOL);
+	addMenuitem(_("Select Region"), "lasso", ACTION_TOOL_SELECT_REGION, GROUP_TOOL);
+	addMenuitem(_("Select Object"), "object-select", ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL);
+	addMenuitem(_("Play Object"), "object-play", ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL);
 
 	setPopupMenu(popup);
 }
@@ -37,11 +28,6 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler,
 ToolSelectCombocontrol::~ToolSelectCombocontrol()
 {
 	XOJ_CHECK_TYPE(ToolSelectCombocontrol);
-
-	g_object_unref(this->iconSelectRect);
-	g_object_unref(this->iconSelectRgion);
-	g_object_unref(this->iconSelectObject);
-	g_object_unref(this->iconPlayObject);
 
 	XOJ_RELEASE_TYPE(ToolSelectCombocontrol);
 }
@@ -52,7 +38,7 @@ void ToolSelectCombocontrol::addMenuitem(string text, string icon, ActionType ty
 	GtkWidget* label = gtk_label_new(text.c_str());
 	GtkWidget* menuItem = gtk_menu_item_new();
 
-	gtk_container_add(GTK_CONTAINER(box), gui->loadIcon(icon));
+	gtk_container_add(GTK_CONTAINER(box), gtk_image_new_from_icon_name(icon.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_label_set_xalign(GTK_LABEL(label), 0.0);
 	gtk_box_pack_end(GTK_BOX(box), label, true, true, 0);
 
@@ -80,28 +66,28 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action)
 		if (action == ACTION_TOOL_SELECT_RECT && this->action != ACTION_TOOL_SELECT_RECT)
 		{
 			this->action = ACTION_TOOL_SELECT_RECT;
-			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconSelectRect);
+			gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), "rect-select", GTK_ICON_SIZE_SMALL_TOOLBAR);
 
 			description = _("Select Rectangle");
 		}
 		else if (action == ACTION_TOOL_SELECT_REGION && this->action != ACTION_TOOL_SELECT_REGION)
 		{
 			this->action = ACTION_TOOL_SELECT_REGION;
-			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconSelectRgion);
+			gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), "lasso", GTK_ICON_SIZE_SMALL_TOOLBAR);
 
 			description = _("Select Region");
 		}
 		else if (action == ACTION_TOOL_SELECT_OBJECT && this->action != ACTION_TOOL_SELECT_OBJECT)
 		{
 			this->action = ACTION_TOOL_SELECT_OBJECT;
-			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconSelectObject);
+			gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), "object-select", GTK_ICON_SIZE_SMALL_TOOLBAR);
 
 			description = _("Select Object");
 		}
 		else if (action == ACTION_TOOL_PLAY_OBJECT && this->action != ACTION_TOOL_PLAY_OBJECT)
 		{
 			this->action = ACTION_TOOL_PLAY_OBJECT;
-			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconPlayObject);
+			gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), "object-play", GTK_ICON_SIZE_SMALL_TOOLBAR);
 
 			description = _("Play Object");
 		}
@@ -123,7 +109,7 @@ GtkToolItem* ToolSelectCombocontrol::newItem()
 	GtkToolItem* it;
 
 	labelWidget = gtk_label_new(_("Select Rectangle"));
-	iconWidget = gtk_image_new_from_pixbuf(this->iconSelectRect);
+	iconWidget = gtk_image_new_from_icon_name("rect-select", GTK_ICON_SIZE_SMALL_TOOLBAR);
 
 	it = gtk_menu_tool_toggle_button_new(iconWidget, "test0");
 	gtk_tool_button_set_label_widget(GTK_TOOL_BUTTON(it), labelWidget);

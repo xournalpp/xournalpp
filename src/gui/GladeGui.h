@@ -29,8 +29,6 @@ public:
 	operator GdkWindow* ();
 
 	GtkWidget* get(string name);
-	GtkWidget* loadIcon(string name);
-	GdkPixbuf* loadIconPixbuf(string filename);
 
 	void setThemePath(string themePath);
 
@@ -51,11 +49,6 @@ private:
 	 * Our search paths
 	 */
 	GladeSearchpath* gladeSearchPath;
-
-	/**
-	 * Path for icons loading, white icons on dark environment
-	 */
-	string themePath;
 
 protected:
 	/**

@@ -337,7 +337,7 @@ GtkWidget* ToolPageLayer::getNewToolIcon()
 {
 	XOJ_CHECK_TYPE(ToolPageLayer);
 
-	return gui->loadIcon("layers.svg");
+	return gtk_image_new_from_icon_name("layers", GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
 GtkToolItem* ToolPageLayer::newItem()
