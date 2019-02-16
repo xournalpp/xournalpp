@@ -9,24 +9,18 @@
 class ToolDrawType {
 public:
 	ToolDrawType(string name, string icon, ActionType type)
-	 : name(name), icon(icon), type(type), pixbuf(NULL)
+	 : name(name), icon(icon), type(type)
 	{
-	}
-	~ToolDrawType()
-	{
-		g_object_unref(pixbuf);
-		pixbuf = NULL;
 	}
 
 public:
 	string name;
 	string icon;
 	ActionType type;
-	GdkPixbuf* pixbuf;
 };
 
-ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, GladeGui* gui, string id)
- : ToolButton(handler, gui, id, ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "rect-draw.png", _("Draw Rectangle"))
+ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id)
+ : ToolButton(handler, id, ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "rect-draw.png", _("Draw Rectangle"))
 {
 	XOJ_INIT_TYPE(ToolDrawCombocontrol);
 
@@ -35,18 +29,16 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, Act
 	this->iconWidget = NULL;
 	setPopupMenu(gtk_menu_new());
 
-	drawTypes.push_back(new ToolDrawType(_("Draw Rectangle"),				"rect-draw.svg",					ACTION_TOOL_DRAW_RECT   ));
-	drawTypes.push_back(new ToolDrawType(_("Draw Circle"),					"circle-draw.svg",					ACTION_TOOL_DRAW_CIRCLE ));
-	drawTypes.push_back(new ToolDrawType(_("Draw Arrow"),					"arrow-draw.svg",					ACTION_TOOL_DRAW_ARROW  ));
-	drawTypes.push_back(new ToolDrawType(_("Draw Line"),					"ruler.svg",						ACTION_RULER            ));
-	drawTypes.push_back(new ToolDrawType(_("Draw coordinate system"),		"coordinate-system-draw.svg",		ACTION_TOOL_DRAW_COORDINATE_SYSTEM  ));
-	drawTypes.push_back(new ToolDrawType(_("Stroke recognizer"),			"shape_recognizer.svg",				ACTION_SHAPE_RECOGNIZER ));
+	drawTypes.push_back(new ToolDrawType(_("Draw Rectangle"),				"rect-draw",					ACTION_TOOL_DRAW_RECT   ));
+	drawTypes.push_back(new ToolDrawType(_("Draw Circle"),					"circle-draw",					ACTION_TOOL_DRAW_CIRCLE ));
+	drawTypes.push_back(new ToolDrawType(_("Draw Arrow"),					"arrow-draw",					ACTION_TOOL_DRAW_ARROW  ));
+	drawTypes.push_back(new ToolDrawType(_("Draw Line"),					"ruler",						ACTION_RULER            ));
+	drawTypes.push_back(new ToolDrawType(_("Draw coordinate system"),		"coordinate-system-draw",		ACTION_TOOL_DRAW_COORDINATE_SYSTEM  ));
+	drawTypes.push_back(new ToolDrawType(_("Stroke recognizer"),			"shape_recognizer",				ACTION_SHAPE_RECOGNIZER ));
 
 	for (ToolDrawType* t : drawTypes)
 	{
 		createMenuItem(t->name, t->icon, t->type);
-		t->pixbuf = gui->loadIconPixbuf(t->icon);
-		g_object_ref(t->pixbuf);
 	}
 }
 
@@ -70,7 +62,7 @@ void ToolDrawCombocontrol::createMenuItem(string name, string icon, ActionType t
 
 	GtkWidget* menuItem =  gtk_menu_item_new ();
 	GtkWidget* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
-	gtk_container_add(GTK_CONTAINER(box), gui->loadIcon(icon));
+	gtk_container_add(GTK_CONTAINER(box), gtk_image_new_from_icon_name(icon.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_container_add(GTK_CONTAINER(box), gtk_label_new(name.c_str()));
 	gtk_container_add(GTK_CONTAINER(menuItem), box);
 
@@ -101,7 +93,7 @@ void ToolDrawCombocontrol::selected(ActionGroup group, ActionType action)
 		if (action == t->type && this->action != t->type)
 		{
 			this->action = t->type;
-			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), t->pixbuf);
+			gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), t->icon.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
 			description = t->name;
 			break;
 		}
@@ -120,7 +112,7 @@ GtkToolItem* ToolDrawCombocontrol::newItem()
 	XOJ_CHECK_TYPE(ToolDrawCombocontrol);
 
 	labelWidget = gtk_label_new(_("Draw Rectangle"));
-	iconWidget = gtk_image_new_from_pixbuf(drawTypes[0]->pixbuf);
+	iconWidget = gtk_image_new_from_icon_name(drawTypes[0]->icon.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
 
 	GtkToolItem* it = gtk_menu_tool_toggle_button_new(iconWidget, _("Draw Rectangle"));
 	gtk_tool_button_set_label_widget(GTK_TOOL_BUTTON(it), labelWidget);

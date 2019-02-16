@@ -32,7 +32,7 @@ string SidebarPreviewPages::getIconName()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 
-	return "sidebar-page-preview.svg";
+	return "sidebar-page-preview";
 }
 
 /**

@@ -17,11 +17,9 @@
 class ToolButton : public AbstractToolItem
 {
 public:
-	ToolButton(ActionHandler* handler, string id, ActionType type, string stock, string description,
+	ToolButton(ActionHandler* handler, string id, ActionType type, string iconName, string description,
 			   GtkWidget* menuitem = NULL);
-	ToolButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, string iconName, string description,
-			   GtkWidget* menuitem = NULL);
-	ToolButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, ActionGroup group,
+	ToolButton(ActionHandler* handler, string id, ActionType type, ActionGroup group,
 			   bool toolToggleOnlyEnable, string iconName, string description, GtkWidget* menuitem = NULL);
 
 	virtual ~ToolButton();
@@ -44,13 +42,8 @@ protected:
 
 	virtual GtkWidget* getNewToolIcon();
 
-protected:
-	GladeGui* gui;
-
 private:
 	XOJ_TYPE_ATTRIB;
-
-	string stock;
 
 	string iconName;
 	string description;

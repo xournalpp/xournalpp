@@ -283,7 +283,7 @@ string SidebarIndexPage::getIconName()
 {
 	XOJ_CHECK_TYPE(SidebarIndexPage);
 
-	return "sidebar_index.svg";
+	return "sidebar_index";
 }
 
 bool SidebarIndexPage::hasData()

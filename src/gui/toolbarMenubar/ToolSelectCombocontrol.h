@@ -21,7 +21,7 @@ class ToolMenuHandler;
 class ToolSelectCombocontrol : public ToolButton
 {
 public:
-	ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, GladeGui* gui, string id);
+	ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id);
 	virtual ~ToolSelectCombocontrol();
 
 public:
@@ -39,9 +39,4 @@ private:
 
 	GtkWidget* iconWidget;
 	GtkWidget* labelWidget;
-
-	GdkPixbuf* iconSelectRect;
-	GdkPixbuf* iconSelectRgion;
-	GdkPixbuf* iconSelectObject;
-	GdkPixbuf* iconPlayObject;
 };

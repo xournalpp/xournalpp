@@ -22,7 +22,7 @@ class ToolDrawType;
 class ToolDrawCombocontrol : public ToolButton
 {
 public:
-	ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, GladeGui* gui, string id);
+	ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id);
 	virtual ~ToolDrawCombocontrol();
 
 public:

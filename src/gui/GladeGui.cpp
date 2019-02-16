@@ -14,7 +14,6 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, string glade, string mainWn
 
 	this->window = NULL;
 	this->gladeSearchPath = gladeSearchPath;
-	this->themePath = "";
 
 	string filename = this->gladeSearchPath->findFile("", glade);
 
@@ -59,72 +58,6 @@ GtkWidget* GladeGui::get(string name)
 		g_warning("GladeGui::get: Could not find glade Widget: \"%s\"", name.c_str());
 	}
 	return w;
-}
-
-GtkWidget* GladeGui::loadIcon(string filename)
-{
-	XOJ_CHECK_TYPE(GladeGui);
-
-	GdkPixbuf* icon = loadIconPixbuf(filename);
-	if (icon == NULL)
-	{
-		return gtk_image_new();
-	}
-
-	GtkWidget* w = gtk_image_new_from_pixbuf(icon);
-
-	g_object_unref(icon);
-
-	return w;
-}
-
-GdkPixbuf* GladeGui::loadIconPixbuf(string filename)
-{
-	XOJ_CHECK_TYPE(GladeGui);
-
-	if (filename == "")
-	{
-		return NULL;
-	}
-
-	string pathname;
-	// If a theme Path has been set, search for the svg in that path
-	if (themePath != "")
-	{
-		pathname = this->gladeSearchPath->findFile("pixmaps/" + themePath, filename);	
-	}
-	// If no themed-svg is present, search for it in the default location
-	if (pathname == "")
-	{
-		pathname = this->gladeSearchPath->findFile("pixmaps", filename);
-	}
-	
-	if (pathname == "")
-	{
-		g_warning("GladeGui::get: Couldn't find pixmap file: %s", filename.c_str());
-		return NULL;
-	}
-
-	GError* error = NULL;
-	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file(pathname.c_str(), &error);
-	if (pixbuf == NULL)
-	{
-		g_error("Failed to load pixbuf file: %s: %s\n", pathname.c_str(), error->message);
-		g_error_free(error);
-	}
-
-	return pixbuf;
-}
-
-void GladeGui::setThemePath(string themePath)
-{
-	XOJ_CHECK_TYPE(GladeGui);
-
-	if (this->themePath == themePath)
-	{
-		return;
-	}
-	this->themePath = themePath;
 }
 
 GtkWidget* GladeGui::getWindow()

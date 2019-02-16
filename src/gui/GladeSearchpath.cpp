@@ -43,6 +43,19 @@ string GladeSearchpath::findFile(string subdir, string file)
 }
 
 /**
+ * @return The first search path
+ */
+string GladeSearchpath::getFirstSearchPath()
+{
+	if (this->directories.size() < 1)
+	{
+		return "";
+	}
+
+	return this->directories[0];
+}
+
+/**
  * Use this function to set the directory containing installed pixmaps and Glade XML files.
  */
 void GladeSearchpath::addSearchDirectory(string directory)

@@ -40,7 +40,6 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-
 	Settings* settings;
 	int button;
 	bool withDevice;

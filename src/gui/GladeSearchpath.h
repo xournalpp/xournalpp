@@ -27,6 +27,11 @@ public:
 	 */
 	string findFile(string subdir, string file);
 
+	/**
+	 * @return The first search path
+	 */
+	string getFirstSearchPath();
+
 private:
 	XOJ_TYPE_ATTRIB;
 

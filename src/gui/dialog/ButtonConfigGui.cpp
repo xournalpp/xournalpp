@@ -10,8 +10,17 @@
 #include <Util.h>
 
 #define	ADD_TYPE_CB(icon, name, action) \
-	gtk_list_store_append(typeModel, &iter); \
-	gtk_list_store_set(typeModel, &iter, 0, dlg->loadIconPixbuf(icon), 1, name, 2, action, -1);
+	addToolToList(typeModel, icon, name, action)
+
+void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, ToolType action)
+{
+	GtkTreeIter iter;
+
+	gtk_list_store_append(typeModel, &iter);
+	GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon, 24, (GtkIconLookupFlags) 0, NULL);
+	gtk_list_store_set(typeModel, &iter, 0, pixbuf, -1);
+	gtk_list_store_set(typeModel, &iter, 1, name, 2, action, -1);
+}
 
 ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GladeSearchpath* gladeSearchPath, GtkWidget* w,  Settings* settings, int button, bool withDevice)
  : GladeGui(gladeSearchPath, "settingsButtonConfig.glade", "offscreenwindow")
@@ -49,19 +58,17 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GladeSearchpath* gladeSear
 	}
 
 	GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
-	GtkTreeIter iter;
 
-	ADD_TYPE_CB("empty.svg",			_("Tool - don't change"),	TOOL_NONE);
-	ADD_TYPE_CB("tool_pencil.svg",		_("Pen"),					TOOL_PEN);
-	ADD_TYPE_CB("tool_eraser.svg",		_("Eraser"),				TOOL_ERASER);
-	ADD_TYPE_CB("tool_highlighter.svg",	_("Highlighter"),			TOOL_HILIGHTER);
-	ADD_TYPE_CB("tool_text.svg",		_("Text"),					TOOL_TEXT);
-	ADD_TYPE_CB("tool_image.svg",		_("Insert image"),			TOOL_IMAGE);
-	ADD_TYPE_CB("stretch.svg",			_("Vertical space"),		TOOL_VERTICAL_SPACE);
-	ADD_TYPE_CB("lasso.svg",			_("Select region"),			TOOL_SELECT_REGION);
-	ADD_TYPE_CB("rect-select.svg",		_("Select rectangle"),		TOOL_SELECT_RECT);
-	ADD_TYPE_CB("hand.svg",				_("Hand"),					TOOL_HAND);
-
+	ADD_TYPE_CB("transparent",		_("Tool - don't change"),	TOOL_NONE);
+	ADD_TYPE_CB("tool_pencil",		_("Pen"),					TOOL_PEN);
+	ADD_TYPE_CB("tool_eraser",		_("Eraser"),				TOOL_ERASER);
+	ADD_TYPE_CB("tool_highlighter",	_("Highlighter"),			TOOL_HILIGHTER);
+	ADD_TYPE_CB("tool_text",		_("Text"),					TOOL_TEXT);
+	ADD_TYPE_CB("tool_image",		_("Insert image"),			TOOL_IMAGE);
+	ADD_TYPE_CB("stretch",			_("Vertical space"),		TOOL_VERTICAL_SPACE);
+	ADD_TYPE_CB("lasso",			_("Select region"),			TOOL_SELECT_REGION);
+	ADD_TYPE_CB("rect-select",		_("Select rectangle"),		TOOL_SELECT_RECT);
+	ADD_TYPE_CB("hand",				_("Hand"),					TOOL_HAND);
 
 	this->cbTool = get("cbTool");
 	gtk_combo_box_set_model(GTK_COMBO_BOX(this->cbTool), GTK_TREE_MODEL(typeModel));

@@ -55,7 +55,7 @@ GtkWidget* ToolPageSpinner::getNewToolIcon()
 {
 	XOJ_CHECK_TYPE(ToolPageSpinner);
 
-	return this->gui->loadIcon("pageSpinner.png");
+	return gtk_image_new_from_icon_name("pageSpinner", GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
 GtkToolItem* ToolPageSpinner::newItem()

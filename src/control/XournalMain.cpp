@@ -302,6 +302,15 @@ int XournalMain::run(int argc, char* argv[])
 
 	Control* control = new Control(gladePath);
 
+	if (control->getSettings()->isDarkTheme())
+	{
+		string icon = gladePath->getFirstSearchPath() + "/iconsDark/";
+		gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.c_str());
+	}
+
+	string icon = gladePath->getFirstSearchPath() + "/icons/";
+	gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.c_str());
+
 	MainWindow* win = new MainWindow(gladePath, control);
 	control->initWindow(win);
 
