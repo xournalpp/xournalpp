@@ -296,14 +296,20 @@ int XournalMain::run(int argc, char* argv[])
 	GladeSearchpath* gladePath = new GladeSearchpath();
 	initResourcePath(gladePath);
 
-	string icon = gladePath->getFirstSearchPath() + "/icons/";
-	gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.c_str());
-
 	// init singleton
 	string colorNameFile = Util::getConfigFile("colornames.ini").str();
 	ToolbarColorNames::getInstance().loadFile(colorNameFile);
 
 	Control* control = new Control(gladePath);
+
+	if (control->getSettings()->isDarkTheme())
+	{
+		string icon = gladePath->getFirstSearchPath() + "/iconsDark/";
+		gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.c_str());
+	}
+
+	string icon = gladePath->getFirstSearchPath() + "/icons/";
+	gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.c_str());
 
 	MainWindow* win = new MainWindow(gladePath, control);
 	control->initWindow(win);

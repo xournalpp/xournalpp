@@ -83,7 +83,7 @@ string SidebarPreviewLayers::getIconName()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
 
-	return "layer.svg";
+	return "layer";
 }
 
 void SidebarPreviewLayers::pageSizeChanged(size_t page)

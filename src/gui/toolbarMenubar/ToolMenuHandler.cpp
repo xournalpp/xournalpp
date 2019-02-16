@@ -45,11 +45,6 @@ ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* par
 	// still owned by Control
 	this->pageBackgroundChangeController = control->getPageBackgroundChangeController();
 
-	if (control->getSettings()->isDarkTheme())
-	{
-		gui->setThemePath("dark");
-	}
-
 	initToolItems();
 }
 
@@ -290,18 +285,18 @@ void ToolMenuHandler::initPenToolItem()
 {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	ToolButton* tbPen = new ToolButton(listener, gui, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, "tool_pencil.svg", _("Pen"));
+	ToolButton* tbPen = new ToolButton(listener, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, "tool_pencil", _("Pen"));
 
-	registerMenupoint(tbPen->registerPopupMenuEntry(_("standard"), "line-style-plain.svg"),
+	registerMenupoint(tbPen->registerPopupMenuEntry(_("standard"), "line-style-plain"),
 			ACTION_TOOL_LINE_STYLE_PLAIN, GROUP_LINE_STYLE);
 
-	registerMenupoint(tbPen->registerPopupMenuEntry(_("dashed"), "line-style-dash.svg"),
+	registerMenupoint(tbPen->registerPopupMenuEntry(_("dashed"), "line-style-dash"),
 			ACTION_TOOL_LINE_STYLE_DASH, GROUP_LINE_STYLE);
 
-	registerMenupoint(tbPen->registerPopupMenuEntry(_("dash-/ doted"), "line-style-dash-dot.svg"),
+	registerMenupoint(tbPen->registerPopupMenuEntry(_("dash-/ doted"), "line-style-dash-dot"),
 			ACTION_TOOL_LINE_STYLE_DASH_DOT, GROUP_LINE_STYLE);
 
-	registerMenupoint(tbPen->registerPopupMenuEntry(_("dotted"), "line-style-dot.svg"),
+	registerMenupoint(tbPen->registerPopupMenuEntry(_("dotted"), "line-style-dot"),
 			ACTION_TOOL_LINE_STYLE_DOT, GROUP_LINE_STYLE);
 
 	addToolItem(tbPen);
@@ -311,8 +306,7 @@ void ToolMenuHandler::initEraserToolItem()
 {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	ToolButton* tbEraser = new ToolButton(listener, gui, "ERASER", ACTION_TOOL_ERASER, GROUP_TOOL, true,
-										  "tool_eraser.svg", _("Eraser"));
+	ToolButton* tbEraser = new ToolButton(listener, "ERASER", ACTION_TOOL_ERASER, GROUP_TOOL, true, "tool_eraser", _("Eraser"));
 
 	registerMenupoint(tbEraser->registerPopupMenuEntry(_("standard")), ACTION_TOOL_ERASER_STANDARD, GROUP_ERASER_MODE);
 	registerMenupoint(tbEraser->registerPopupMenuEntry(_("whiteout")), ACTION_TOOL_ERASER_WHITEOUT, GROUP_ERASER_MODE);
@@ -375,11 +369,11 @@ void ToolMenuHandler::signalConnectCallback(GtkBuilder* builder, GObject* object
 #define ADD_STOCK_ITEM(name, action, stockIcon, text) addToolItem(new ToolButton(listener, name, action, stockIcon, text))
 
 // Use Custom loading Icon
-#define ADD_CUSTOM_ITEM(name, action, icon, text) addToolItem(new ToolButton(listener, gui, name, action, icon, text))
+#define ADD_CUSTOM_ITEM(name, action, icon, text) addToolItem(new ToolButton(listener, name, action, icon, text))
 
 // Use Custom loading Icon, toggle item
 // switchOnly: You can select pen, eraser etc. but you cannot unselect pen.
-#define ADD_CUSTOM_ITEM_TGL(name, action, group, switchOnly, icon, text) addToolItem(new ToolButton(listener, gui, name, action, group, switchOnly, icon, text))
+#define ADD_CUSTOM_ITEM_TGL(name, action, group, switchOnly, icon, text) addToolItem(new ToolButton(listener, name, action, group, switchOnly, icon, text))
 
 void ToolMenuHandler::initToolItems()
 {
@@ -414,15 +408,15 @@ void ToolMenuHandler::initToolItems()
 	ADD_STOCK_ITEM("DELETE", ACTION_DELETE, "edit-delete", _("Delete"));
 
 	// Icon snapping.svg made by www.freepik.com from www.flaticon.com
-	ADD_CUSTOM_ITEM_TGL("ROTATION_SNAPPING", ACTION_ROTATION_SNAPPING, GROUP_SNAPPING, false, "snapping.svg", _("Rotation Snapping"));
-	ADD_CUSTOM_ITEM_TGL("GRID_SNAPPING", ACTION_GRID_SNAPPING, GROUP_GRID_SNAPPING, false, "grid_snapping.svg", _("Grid Snapping"));
+	ADD_CUSTOM_ITEM_TGL("ROTATION_SNAPPING", ACTION_ROTATION_SNAPPING, GROUP_SNAPPING, false, "snapping", _("Rotation Snapping"));
+	ADD_CUSTOM_ITEM_TGL("GRID_SNAPPING", ACTION_GRID_SNAPPING, GROUP_GRID_SNAPPING, false, "grid_snapping", _("Grid Snapping"));
 
 	// Menu View
 	// ************************************************************************
 
-	ADD_CUSTOM_ITEM_TGL("PAIRED_PAGES", ACTION_VIEW_PAIRED_PAGES, GROUP_PAIRED_PAGES, false, "showpairedpages.svg", _("Paired pages"));
-	ADD_CUSTOM_ITEM_TGL("PRESENTATION_MODE", ACTION_VIEW_PRESENTATION_MODE, GROUP_PRESENTATION_MODE, false, "showpairedpages.svg", _("Presentation mode"));
-	ADD_CUSTOM_ITEM_TGL("FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, false, "fullscreen.svg", _("Toggle fullscreen"));
+	ADD_CUSTOM_ITEM_TGL("PAIRED_PAGES", ACTION_VIEW_PAIRED_PAGES, GROUP_PAIRED_PAGES, false, "showpairedpages", _("Paired pages"));
+	ADD_CUSTOM_ITEM_TGL("PRESENTATION_MODE", ACTION_VIEW_PRESENTATION_MODE, GROUP_PRESENTATION_MODE, false, "showpairedpages", _("Presentation mode"));
+	ADD_CUSTOM_ITEM_TGL("FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, false, "fullscreen", _("Toggle fullscreen"));
 
 	ADD_STOCK_ITEM("ZOOM_OUT", ACTION_ZOOM_OUT, "zoom-out", _("Zoom out"));
 	ADD_STOCK_ITEM("ZOOM_IN", ACTION_ZOOM_IN, "zoom-in", _("Zoom in"));
@@ -434,7 +428,7 @@ void ToolMenuHandler::initToolItems()
 
 	ADD_STOCK_ITEM("GOTO_FIRST", ACTION_GOTO_FIRST, "go-first", _("Go to first page"));
 	ADD_STOCK_ITEM("GOTO_BACK", ACTION_GOTO_BACK, "go-previous", _("Back"));
-	ADD_CUSTOM_ITEM("GOTO_PAGE", ACTION_GOTO_PAGE, "goto.svg", _("Go to page"));
+	ADD_CUSTOM_ITEM("GOTO_PAGE", ACTION_GOTO_PAGE, "goto", _("Go to page"));
 	ADD_STOCK_ITEM("GOTO_NEXT", ACTION_GOTO_NEXT, "go-next", _("Next"));
 	ADD_STOCK_ITEM("GOTO_LAST", ACTION_GOTO_LAST, "go-last", _("Go to last page"));
 
@@ -442,16 +436,16 @@ void ToolMenuHandler::initToolItems()
 	ADD_STOCK_ITEM("GOTO_NEXT_LAYER", ACTION_GOTO_NEXT_LAYER, "go-next", _("Go to next layer"));
 	ADD_STOCK_ITEM("GOTO_TOP_LAYER", ACTION_GOTO_TOP_LAYER, "go-top", _("Go to top layer"));
 
-	ADD_CUSTOM_ITEM("GOTO_NEXT_ANNOTATED_PAGE", ACTION_GOTO_NEXT_ANNOTATED_PAGE, "nextAnnotatedPage.svg", _("Next annotated page"));
+	ADD_CUSTOM_ITEM("GOTO_NEXT_ANNOTATED_PAGE", ACTION_GOTO_NEXT_ANNOTATED_PAGE, "nextAnnotatedPage", _("Next annotated page"));
 
 	// Menu Journal
 	// ************************************************************************
 
-	ToolButton* tbInsertNewPage = new ToolButton(listener, gui, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER, "addPage.svg", _("Insert page"));
+	ToolButton* tbInsertNewPage = new ToolButton(listener, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER, "addPage", _("Insert page"));
 	addToolItem(tbInsertNewPage);
 	tbInsertNewPage->setPopupMenu(this->newPageType->getMenu());
 
-	ADD_CUSTOM_ITEM("DELETE_CURRENT_PAGE", ACTION_DELETE_PAGE, "delPage.svg", _("Delete current page"));
+	ADD_CUSTOM_ITEM("DELETE_CURRENT_PAGE", ACTION_DELETE_PAGE, "delPage", _("Delete current page"));
 
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(gui->get("menuJournalPaperBackground")), pageBackgroundChangeController->getMenu());
 
@@ -461,29 +455,30 @@ void ToolMenuHandler::initToolItems()
 	initPenToolItem();
 	initEraserToolItem();
 
-	ADD_CUSTOM_ITEM_TGL("HILIGHTER", ACTION_TOOL_HILIGHTER, GROUP_TOOL, true, "tool_highlighter.svg", _("Highlighter"));
-	ADD_CUSTOM_ITEM_TGL("TEXT", ACTION_TOOL_TEXT, GROUP_TOOL, true, "tool_text.svg", _("Text"));
-	ADD_CUSTOM_ITEM_TGL("IMAGE", ACTION_TOOL_IMAGE, GROUP_TOOL, true, "tool_image.svg", _("Image"));
-	ADD_CUSTOM_ITEM("DEFAULT_TOOL", ACTION_TOOL_DEFAULT, "default.svg", _("Default Tool"));
+	ADD_CUSTOM_ITEM_TGL("HILIGHTER", ACTION_TOOL_HILIGHTER, GROUP_TOOL, true, "tool_highlighter", _("Highlighter"));
 
-	ADD_CUSTOM_ITEM_TGL("SHAPE_RECOGNIZER", ACTION_SHAPE_RECOGNIZER, GROUP_RULER, false, "shape_recognizer.svg", _("Shape Recognizer"));
-	ADD_CUSTOM_ITEM_TGL("DRAW_RECTANGLE", ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "rect-draw.svg", _("Draw Rectangle"));
-	ADD_CUSTOM_ITEM_TGL("DRAW_CIRCLE", ACTION_TOOL_DRAW_CIRCLE, GROUP_RULER, false, "circle-draw.svg", _("Draw Circle"));
-	ADD_CUSTOM_ITEM_TGL("DRAW_ARROW", ACTION_TOOL_DRAW_ARROW, GROUP_RULER, false, "arrow-draw.svg", _("Draw Arrow"));
-	ADD_CUSTOM_ITEM_TGL("DRAW_COORDINATE_SYSTEM", ACTION_TOOL_DRAW_COORDINATE_SYSTEM, GROUP_RULER, false, "coordinate-system-draw.svg", _("Draw coordinate system"));
-	ADD_CUSTOM_ITEM_TGL("RULER", ACTION_RULER, GROUP_RULER, false, "ruler.svg", _("Ruler"));
+	ADD_CUSTOM_ITEM_TGL("TEXT", ACTION_TOOL_TEXT, GROUP_TOOL, true, "tool_text", _("Text"));
+	ADD_CUSTOM_ITEM_TGL("IMAGE", ACTION_TOOL_IMAGE, GROUP_TOOL, true, "tool_image", _("Image"));
+	ADD_CUSTOM_ITEM("DEFAULT_TOOL", ACTION_TOOL_DEFAULT, "default", _("Default Tool"));
 
-	ADD_CUSTOM_ITEM_TGL("SELECT_REGION", ACTION_TOOL_SELECT_REGION, GROUP_TOOL, true, "lasso.svg", _("Select Region"));
-	ADD_CUSTOM_ITEM_TGL("SELECT_RECTANGLE", ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select.svg", _("Select Rectangle"));
-	ADD_CUSTOM_ITEM_TGL("SELECT_OBJECT", ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL, true, "object-select.svg", _("Select Object"));
-	ADD_CUSTOM_ITEM_TGL("VERTICAL_SPACE", ACTION_TOOL_VERTICAL_SPACE, GROUP_TOOL, true, "stretch.svg", _("Vertical Space"));
-	ADD_CUSTOM_ITEM_TGL("PLAY_OBJECT", ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL, true, "object-play.svg", _("Play Object"));
-	ADD_CUSTOM_ITEM_TGL("HAND", ACTION_TOOL_HAND, GROUP_TOOL, true, "hand.svg", _("Hand"));
+	ADD_CUSTOM_ITEM_TGL("SHAPE_RECOGNIZER", ACTION_SHAPE_RECOGNIZER, GROUP_RULER, false, "shape_recognizer", _("Shape Recognizer"));
+	ADD_CUSTOM_ITEM_TGL("DRAW_RECTANGLE", ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "rect-draw", _("Draw Rectangle"));
+	ADD_CUSTOM_ITEM_TGL("DRAW_CIRCLE", ACTION_TOOL_DRAW_CIRCLE, GROUP_RULER, false, "circle-draw", _("Draw Circle"));
+	ADD_CUSTOM_ITEM_TGL("DRAW_ARROW", ACTION_TOOL_DRAW_ARROW, GROUP_RULER, false, "arrow-draw", _("Draw Arrow"));
+	ADD_CUSTOM_ITEM_TGL("DRAW_COORDINATE_SYSTEM", ACTION_TOOL_DRAW_COORDINATE_SYSTEM, GROUP_RULER, false, "coordinate-system-draw", _("Draw coordinate system"));
+	ADD_CUSTOM_ITEM_TGL("RULER", ACTION_RULER, GROUP_RULER, false, "ruler", _("Ruler"));
+
+	ADD_CUSTOM_ITEM_TGL("SELECT_REGION", ACTION_TOOL_SELECT_REGION, GROUP_TOOL, true, "lasso", _("Select Region"));
+	ADD_CUSTOM_ITEM_TGL("SELECT_RECTANGLE", ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select", _("Select Rectangle"));
+	ADD_CUSTOM_ITEM_TGL("SELECT_OBJECT", ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL, true, "object-select", _("Select Object"));
+	ADD_CUSTOM_ITEM_TGL("VERTICAL_SPACE", ACTION_TOOL_VERTICAL_SPACE, GROUP_TOOL, true, "stretch", _("Vertical Space"));
+	ADD_CUSTOM_ITEM_TGL("PLAY_OBJECT", ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL, true, "object-play", _("Play Object"));
+	ADD_CUSTOM_ITEM_TGL("HAND", ACTION_TOOL_HAND, GROUP_TOOL, true, "hand", _("Hand"));
 
 	fontButton = new FontButton(listener, gui, "SELECT_FONT", ACTION_FONT_BUTTON_CHANGED, _("Select Font"));
 	addToolItem(fontButton);
 
-	ADD_CUSTOM_ITEM_TGL("RECSTOP", ACTION_RECSTOP, GROUP_REC, false, "rec.svg", _("Rec / Stop"));
+	ADD_CUSTOM_ITEM_TGL("RECSTOP", ACTION_RECSTOP, GROUP_REC, false, "rec", _("Rec / Stop"));
 
 	// Menu Help
 	// ************************************************************************
@@ -504,7 +499,7 @@ void ToolMenuHandler::initToolItems()
 	toolPageLayer = new ToolPageLayer(control->getLayerController(), gui, listener, "LAYER", ACTION_FOOTER_LAYER);
 	addToolItem(toolPageLayer);
 
-	ADD_CUSTOM_ITEM_TGL("TOOL_FILL", ACTION_TOOL_FILL, GROUP_FILL, false, "fill.svg", _("Fill"));
+	ADD_CUSTOM_ITEM_TGL("TOOL_FILL", ACTION_TOOL_FILL, GROUP_FILL, false, "fill", _("Fill"));
 
 
 	// Non-menu items
@@ -513,13 +508,13 @@ void ToolMenuHandler::initToolItems()
 	// Color item - not in the menu
 	addToolItem(new ColorToolItem(listener, toolHandler, this->parent, 0xff0000, true));
 
-	addToolItem(new ToolSelectCombocontrol(this, listener, gui, "SELECT"));
-	addToolItem(new ToolDrawCombocontrol(this, listener, gui, "DRAW"));
+	addToolItem(new ToolSelectCombocontrol(this, listener, "SELECT"));
+	addToolItem(new ToolDrawCombocontrol(this, listener, "DRAW"));
 
 	// General tool configuration - working for every tool which support it
-	ADD_CUSTOM_ITEM_TGL("FINE", ACTION_SIZE_FINE, GROUP_SIZE, true, "thickness_thin.svg", _("Thin"));
-	ADD_CUSTOM_ITEM_TGL("MEDIUM", ACTION_SIZE_MEDIUM, GROUP_SIZE, true, "thickness_medium.svg", _("Medium"));
-	ADD_CUSTOM_ITEM_TGL("THICK", ACTION_SIZE_THICK, GROUP_SIZE, true, "thickness_thick.svg", _("Thick"));
+	ADD_CUSTOM_ITEM_TGL("FINE", ACTION_SIZE_FINE, GROUP_SIZE, true, "thickness_thin", _("Thin"));
+	ADD_CUSTOM_ITEM_TGL("MEDIUM", ACTION_SIZE_MEDIUM, GROUP_SIZE, true, "thickness_medium", _("Medium"));
+	ADD_CUSTOM_ITEM_TGL("THICK", ACTION_SIZE_THICK, GROUP_SIZE, true, "thickness_thick", _("Thick"));
 
 
 	// now connect all Glade Signals
