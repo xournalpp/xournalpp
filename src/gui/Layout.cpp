@@ -205,9 +205,9 @@ void Layout::layoutPages()
 	int rows = mapper.getRows();
 	int columns = mapper.getColumns();
 
-	int sizeCol[columns] = { };
+	int sizeCol[columns] = { 0 };
 
-	int sizeRow[rows] = { };
+	int sizeRow[rows] = { 0 };
 
 	for (int r = 0; r < rows; r++)
 	{
