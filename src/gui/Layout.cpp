@@ -205,9 +205,12 @@ void Layout::layoutPages()
 	int rows = mapper.getRows();
 	int columns = mapper.getColumns();
 
-	int sizeCol[columns] = { };
+	int sizeCol[columns];
+	// Needs dynamic initialisation, else clang will not compile...
+	memset(sizeCol, 0, columns * sizeof(int));
 
-	int sizeRow[rows] = { };
+	int sizeRow[rows];
+	memset(sizeRow, 0, rows * sizeof(int));
 
 	for (int r = 0; r < rows; r++)
 	{
