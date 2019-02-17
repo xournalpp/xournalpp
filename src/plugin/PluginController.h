@@ -14,6 +14,7 @@
 #include <XournalType.h>
 
 class Control;
+class Plugin;
 
 class PluginController
 {
@@ -36,4 +37,9 @@ private:
 	 * The main controller
 	 */
 	Control* control;
+
+	/**
+	 * All loaded Plugins
+	 */
+	vector<Plugin*> plugins;
 };

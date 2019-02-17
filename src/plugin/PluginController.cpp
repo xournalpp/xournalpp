@@ -1,4 +1,5 @@
 #include "PluginController.h"
+#include "Plugin.h"
 
 #include "control/Control.h"
 #include "gui/GladeSearchpath.h"
@@ -19,6 +20,14 @@ PluginController::PluginController(Control* control)
 PluginController::~PluginController()
 {
 	XOJ_CHECK_TYPE(PluginController);
+
+	for (Plugin* p : this->plugins)
+	{
+		delete p;
+	}
+
+	this->plugins.clear();
+
 	XOJ_RELEASE_TYPE(PluginController);
 }
 
@@ -48,7 +57,14 @@ void PluginController::loadPluginsFrom(string path)
 		pluginFolder += "/";
 		pluginFolder += file;
 
-		printf("->%s\n", pluginFolder.c_str());
+		Plugin* p = new Plugin(pluginFolder);
+		if (!p->isValid())
+		{
+			delete p;
+			continue;
+		}
+
+		this->plugins.push_back(p);
 	}
 	g_dir_close(dir);
 #endif

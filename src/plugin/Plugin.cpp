@@ -4,9 +4,12 @@
 
 #ifdef ENABLE_PLUGINS
 
-Plugin::Plugin()
+Plugin::Plugin(string path)
+ : path(path)
 {
 	XOJ_INIT_TYPE(Plugin);
+
+
 }
 
 Plugin::~Plugin()

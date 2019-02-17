@@ -16,9 +16,14 @@
 class Plugin
 {
 public:
-	Plugin();
+	Plugin(string path);
 	virtual ~Plugin();
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	/**
+	 * Plugin root path
+	 */
+	string path;
 };
