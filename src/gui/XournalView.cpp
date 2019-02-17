@@ -638,6 +638,9 @@ void XournalView::zoomChanged()
 
 	control->getMetadataManager()->storeMetadata(file.str(), getCurrentPage(), getZoom());
 
+	// Updates the Eraser's cursor icon in order to make it as big as the erasing area
+	control->getCursor()->updateCursor();
+
 	this->control->getScheduler()->blockRerenderZoom();
 }
 

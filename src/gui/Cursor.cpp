@@ -269,7 +269,7 @@ void Cursor::updateCursor()
 GdkCursor* Cursor::getEraserCursor()
 {
 	// Eraser's size follow a quadratic increment, so the cursor will do the same
-	double cursorSize = control->getToolHandler()->getThickness() * 7;
+	double cursorSize = control->getToolHandler()->getThickness() * 2 * control->getZoomControl()->getZoom();
 
 	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
 	                                                      cursorSize,
