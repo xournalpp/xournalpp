@@ -50,6 +50,7 @@ class PageTypeHandler;
 class PageTypeMenu;
 class BaseExportJob;
 class LayerController;
+class PluginController;
 
 class Control :
 	public ActionHandler,
@@ -369,6 +370,11 @@ private:
 	PageBackgroundChangeController* pageBackgroundChangeController;
 
 	LayerController* layerController;
+
+	/**
+	 * Manage all Xournal++ plugins
+	 */
+	PluginController* pluginController;
 
 	/**
 	 * Fullscreen handler

@@ -38,6 +38,7 @@
 #include "pagetype/PageTypeMenu.h"
 #include "settings/ButtonConfig.h"
 #include "stockdlg/XojOpenDlg.h"
+#include "plugin/PluginController.h"
 #include "undo/AddUndoAction.h"
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertDeletePageUndoAction.h"
@@ -138,6 +139,8 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	this->layerController->registerListener(this);
 
 	this->fullscreenHandler = new FullscreenHandler(settings);
+
+	this->pluginController = new PluginController(this);
 }
 
 Control::~Control()
@@ -156,6 +159,8 @@ Control::~Control()
 		page->unreference();
 	}
 
+	delete this->pluginController;
+	this->pluginController = NULL;
 	delete this->clipboardHandler;
 	this->clipboardHandler = NULL;
 	delete this->recent;
