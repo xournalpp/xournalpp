@@ -30,6 +30,11 @@ public:
 	 */
 	void loadPluginsFrom(string path);
 
+	/**
+	 * Register toolbar item and all other UI stuff
+	 */
+	void registerToolbar();
+
 private:
 	XOJ_TYPE_ATTRIB;
 

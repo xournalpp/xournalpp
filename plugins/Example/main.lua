@@ -1,3 +1,10 @@
 -- This is an example Xournal++ Plugin - copy this to get started
 
-print("test123\n");
+print("Hello from Lua Plugin\n");
+
+-- Register all Toolbar actions and intialize all UI stuff  
+function initUi()
+  print("Plugin initUi called\n");
+end
+
+

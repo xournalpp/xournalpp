@@ -20,6 +20,7 @@ PluginController::PluginController(Control* control)
 PluginController::~PluginController()
 {
 	XOJ_CHECK_TYPE(PluginController);
+#ifdef ENABLE_PLUGINS
 
 	for (Plugin* p : this->plugins)
 	{
@@ -28,6 +29,7 @@ PluginController::~PluginController()
 
 	this->plugins.clear();
 
+#endif
 	XOJ_RELEASE_TYPE(PluginController);
 }
 
@@ -57,9 +59,10 @@ void PluginController::loadPluginsFrom(string path)
 		pluginFolder += "/";
 		pluginFolder += file;
 
-		Plugin* p = new Plugin(pluginFolder);
+		Plugin* p = new Plugin(file, pluginFolder);
 		if (!p->isValid())
 		{
+			g_warning("Error loading plugin «%s»", file);
 			delete p;
 			continue;
 		}
@@ -69,4 +72,20 @@ void PluginController::loadPluginsFrom(string path)
 	g_dir_close(dir);
 #endif
 }
+
+/**
+ * Register toolbar item and all other UI stuff
+ */
+void PluginController::registerToolbar()
+{
+	XOJ_CHECK_TYPE(PluginController);
+
+#ifdef ENABLE_PLUGINS
+	for (Plugin* p : this->plugins)
+	{
+		p->registerToolbar();
+	}
+#endif
+}
+
 

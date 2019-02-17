@@ -304,12 +304,12 @@ private:
 	ZoomControl* zoom;
 
 	Settings* settings;
-	MainWindow* win;
+	MainWindow* win = NULL;
 
-	Document* doc;
+	Document* doc = NULL;
 
-	Sidebar* sidebar;
-	SearchBar* searchBar;
+	Sidebar* sidebar = NULL;
+	SearchBar* searchBar = NULL;
 
 	ToolHandler* toolHandler;
 
@@ -321,7 +321,7 @@ private:
 
 	AudioController* audioController;
 
-	ToolbarDragDropHandler* dragDropHandler;
+	ToolbarDragDropHandler* dragDropHandler = NULL;
 
 	/**
 	 * The cursor handler
@@ -341,12 +341,12 @@ private:
 	/**
 	 * Our clipboard abstraction
 	 */
-	ClipboardHandler* clipboardHandler;
+	ClipboardHandler* clipboardHandler = NULL;
 
 	/**
 	 * The autosave handler ID
 	 */
-	int autosaveTimeout;
+	int autosaveTimeout = 0;
 	Path lastAutosaveFilename;
 
 	XournalScheduler* scheduler;
@@ -354,10 +354,10 @@ private:
 	/**
 	 * State / Blocking attributes
 	 */
-	GtkWidget* statusbar;
-	GtkLabel* lbState;
-	GtkProgressBar* pgState;
-	int maxState;
+	GtkWidget* statusbar = NULL;
+	GtkLabel* lbState = NULL;
+	GtkProgressBar* pgState = NULL;
+	int maxState = 0;
 	bool isBlocking;
 
 	GladeSearchpath* gladeSearchPath;
