@@ -1,40 +1,17 @@
 #include "gui/LayoutMapper.h"
 
 
-/**
- * compileLayout - assemble bitflags to create basic layouts
- */
-LayoutType compileLayout(bool isVertical, bool isRightToLeft, bool isBottomToTop)
-{
-	int type = isVertical ? LayoutBitFlags::Vertically : 0;
-	type |= isRightToLeft ? LayoutBitFlags::RightToLeft : 0;
-	type |= isBottomToTop ? LayoutBitFlags::BottomToTop : 0;
-
-	return (LayoutType) type;
+LayoutMapper::LayoutMapper(){
+	this->actualPages = 0;
+	this->possiblePages = 0;
+	this->rows = 0;
+	this->cols = 0;
+	this->layoutType = Horizontal;
+	
 }
 
-LayoutMapper::LayoutMapper(int pages, int numRows, int numCols, bool useRows, LayoutType type, bool isPaired,
-		int firstPageOffset)
-{
 
-	XOJ_INIT_TYPE(LayoutMapper);
-
-	layoutMapperInit(pages, numRows, numCols, useRows, type, isPaired, firstPageOffset);
-
-}
-
-LayoutMapper::LayoutMapper(int pages, int numRows, int numCols, bool useRows, bool isVertical, bool isRightToLeft,
-		bool isBottomToTop, bool isPaired, int firstPageOffset)
-{
-
-	XOJ_INIT_TYPE(LayoutMapper);
-
-	LayoutType type = compileLayout(isVertical, isRightToLeft, isBottomToTop);
-
-	layoutMapperInit(pages, numRows, numCols, useRows, type, isPaired, firstPageOffset);
-}
-
-LayoutMapper::LayoutMapper(int numPages, Settings* settings)
+void LayoutMapper::configureFromSettings(int numPages, Settings* settings)
 {
 	XOJ_INIT_TYPE(LayoutMapper);
 
@@ -55,8 +32,13 @@ LayoutMapper::LayoutMapper(int numPages, Settings* settings)
 		pairsOffset = 0;
 	}
 
-	LayoutType type = compileLayout(isVertical, isRightToLeft, isBottomToTop);
-	layoutMapperInit(pages, numRows, numCols, fixRows, type, isPairedPages, pairsOffset);
+	//assemble bitflags for LayoutType
+	int type = isVertical ? LayoutBitFlags::Vertically : 0;
+	type |= isRightToLeft ? LayoutBitFlags::RightToLeft : 0;
+	type |= isBottomToTop ? LayoutBitFlags::BottomToTop : 0;
+
+	
+	layoutMapperInit(pages, numRows, numCols, fixRows, (LayoutType)type, isPairedPages, pairsOffset);
 }
 
 LayoutMapper::~LayoutMapper()
