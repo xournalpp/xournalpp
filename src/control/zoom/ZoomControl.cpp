@@ -6,26 +6,29 @@
 #include "gui/XournalView.h"
 
 ZoomControl::ZoomControl()
- : view(NULL)
+ : view(NULL),
+   zoom(1.0),
+   zoomReal(1.0),
+   lastZoomValue(1.0),
+   zoomFitMode(true),
+   zoom100Value(1.0),
+   zoomFitValue(1.0),
+   zoomSequenceStart(-1),
+   zoomWidgetPosX(0),
+   zoomWidgetPosY(0),
+   scrollPositionX(0),
+   scrollPositionY(0),
+   zoomStepReal(DEFAULT_ZOOM_STEP),
+   zoomStepScrollReal(DEFAULT_ZOOM_STEP_SCROLL),
+   zoomMaxReal(DEFAULT_ZOOM_MAX),
+   zoomMinReal(DEFAULT_ZOOM_MIN)
 {
 	XOJ_INIT_TYPE(ZoomControl);
 
-	this->zoom = 1.0;
-	this->lastZoomValue = 1.0;
-	this->zoom100Value = 1.0;
-	this->zoomFitValue = 1.0;
-	this->zoomFitMode = true;
-
-	this->zoomStep = DEFAULT_ZOOM_STEP;
+	this->zoomStep = DEFAULT_ZOOM_STEP * this->zoom100Value;
+	this->zoomStepScroll = DEFAULT_ZOOM_STEP_SCROLL * this->zoom100Value;
 	this->zoomMax = DEFAULT_ZOOM_MAX * this->zoom100Value;
 	this->zoomMin = DEFAULT_ZOOM_MIN * this->zoom100Value;
-
-	this->zoomSequenceStart = -1;
-
-	this->zoomWidgetPosX = 0;
-	this->zoomWidgetPosY = 0;
-	this->scrollPositionX = 0;
-	this->scrollPositionY = 0;
 }
 
 ZoomControl::~ZoomControl()
@@ -33,6 +36,38 @@ ZoomControl::~ZoomControl()
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	XOJ_RELEASE_TYPE(ZoomControl);
+}
+
+void ZoomControl::zoomOneStep(bool zoomIn, double x, double y)
+{
+	XOJ_CHECK_TYPE(ZoomControl);
+
+	startZoomSequence(x, y);
+
+	if(zoomIn)
+		this->zoom += this->zoomStep;
+	else
+		this->zoom -= this->zoomStep;
+	this->zoomFitMode = false;
+	fireZoomChanged();
+
+	endZoomSequence();
+}
+
+void ZoomControl::zoomScroll(bool zoomIn, double x, double y)
+{
+	XOJ_CHECK_TYPE(ZoomControl);
+
+	startZoomSequence(x, y);
+
+	if(zoomIn)
+		this->zoom += this->zoomStepScroll;
+	else
+		this->zoom -= this->zoomStepScroll;
+	this->zoomFitMode = false;
+	fireZoomChanged();
+
+	endZoomSequence();
 }
 
 /**
@@ -197,8 +232,10 @@ void ZoomControl::setZoom100(double zoom)
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	this->zoom100Value = zoom;
-	this->setZoomMax(DEFAULT_ZOOM_MAX * this->zoom100Value);
-	this->setZoomMin(DEFAULT_ZOOM_MIN * this->zoom100Value);
+	this->zoomStep = this->zoomStepReal * zoom;
+	this->zoomStepScroll = this->zoomStepScrollReal * zoom;
+	this->zoomMax = this->zoomMaxReal * zoom;
+	this->zoomMin = this->zoomMinReal * zoom;
 	fireZoomRangeValueChanged();
 }
 
@@ -256,42 +293,48 @@ void ZoomControl::zoomFit()
 	endZoomSequence();
 }
 
-void ZoomControl::zoomIn(double x, double y)
-{
-	XOJ_CHECK_TYPE(ZoomControl);
-
-	startZoomSequence(x, y);
-
-	this->zoom += this->zoomStep;
-	this->zoomFitMode = false;
-	fireZoomChanged();
-
-	endZoomSequence();
-}
-
-void ZoomControl::zoomOut(double x, double y)
-{
-	XOJ_CHECK_TYPE(ZoomControl);
-
-	startZoomSequence(x, y);
-
-	this->zoom -= this->zoomStep;
-	this->zoomFitMode = false;
-	fireZoomChanged();
-
-	endZoomSequence();
-}
-
 double ZoomControl::getZoomStep()
 {
+	XOJ_CHECK_TYPE(ZoomControl);
+
 	return this->zoomStep;
+}
+
+double ZoomControl::getZoomStepReal()
+{
+	XOJ_CHECK_TYPE(ZoomControl);
+
+	return this->zoomStepReal;
 }
 
 void ZoomControl::setZoomStep(double zoomStep)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	this->zoomStep = zoomStep;
+	this->zoomStepReal = zoomStep;
+	this->zoomStepReal = zoomStep * this->zoom100Value;
+}
+
+double ZoomControl::getZoomStepScroll()
+{
+	XOJ_CHECK_TYPE(ZoomControl);
+
+	return this->zoomStepScroll;
+}
+
+double ZoomControl::getZoomStepScrollReal()
+{
+	XOJ_CHECK_TYPE(ZoomControl);
+
+	return this->zoomStepScrollReal;
+}
+
+void ZoomControl::setZoomStepScroll(double zoomStep)
+{
+	XOJ_CHECK_TYPE(ZoomControl);
+
+	this->zoomStepScrollReal = zoomStep;
+	this->zoomStepScrollReal = zoomStep * this->zoom100Value;
 }
 
 double ZoomControl::getZoomMax()
@@ -301,11 +344,19 @@ double ZoomControl::getZoomMax()
 	return this->zoomMax;
 }
 
+double ZoomControl::getZoomMaxReal()
+{
+	XOJ_CHECK_TYPE(ZoomControl);
+
+	return this->zoomMaxReal;
+}
+
 void ZoomControl::setZoomMax(double zoomMax)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	this->zoomMax = zoomMax;
+	this->zoomMaxReal = zoomMax;
+	this->zoomMax = zoomMax * this->zoom100Value;
 }
 
 double ZoomControl::getZoomMin()
@@ -315,13 +366,20 @@ double ZoomControl::getZoomMin()
 	return this->zoomMin;
 }
 
+double ZoomControl::getZoomMinReal()
+{
+	XOJ_CHECK_TYPE(ZoomControl);
+
+	return this->zoomMinReal;
+}
+
 void ZoomControl::setZoomMin(double zoomMin)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	this->zoomMin = zoomMin;
+	this->zoomMinReal = zoomMin;
+	this->zoomMin = zoomMin * this->zoom100Value;
 }
-
 
 bool ZoomControl::onScrolledwindowMainScrollEvent(GdkEventScroll* event)
 {
@@ -345,12 +403,12 @@ bool ZoomControl::onScrolledwindowMainScrollEvent(GdkEventScroll* event)
 		if (event->direction == GDK_SCROLL_UP ||
 			(event->direction == GDK_SCROLL_SMOOTH && event->delta_y > 0))
 		{
-			zoomOut(event->x + wx, event->y + wy);
+			zoomScroll(ZOOM_IN, event->x + wx, event->y + wy);
 		}
 		else if (event->direction == GDK_SCROLL_DOWN ||
 			(event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0))
 		{
-			zoomIn(event->x + wx, event->y + wy);
+			zoomScroll(ZOOM_OUT, event->x + wx, event->y + wy);
 		}
 		return true;
 	}

@@ -594,14 +594,14 @@ void XournalView::zoomIn()
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	control->getZoomControl()->zoomIn();
+	control->getZoomControl()->zoomOneStep(ZOOM_IN);
 }
 
 void XournalView::zoomOut()
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	control->getZoomControl()->zoomOut();
+	control->getZoomControl()->zoomOneStep(ZOOM_OUT);
 }
 
 void XournalView::ensureRectIsVisible(int x, int y, int width, int height)

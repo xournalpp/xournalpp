@@ -1719,10 +1719,10 @@ void Control::zoomCallback(ActionType type)
 		zoomFit();
 		break;
 	case ACTION_ZOOM_IN:
-		zoom->zoomIn();
+		zoom->zoomOneStep(ZOOM_IN);
 		break;
 	case ACTION_ZOOM_OUT:
-		zoom->zoomOut();
+		zoom->zoomOneStep(ZOOM_OUT);
 		break;
 	default:
 		break;
