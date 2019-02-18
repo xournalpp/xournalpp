@@ -7,4 +7,5 @@ function initUi()
   print("Plugin initUi called\n");
 end
 
+app.msgbox("Test123")
 

@@ -7,6 +7,9 @@
 #include <lua.h>
 #include <lauxlib.h>
 #include <lualib.h>
+#include <lauxlib.h>
+
+#include "luapi_application.h"
 
 #define LOAD_FROM_INI(target, group, key) \
 	{ \
@@ -18,6 +21,14 @@
 		} \
 	}
 
+/*
+ ** these libs are loaded by lua.c and are readily available to any Lua
+ ** program
+ */
+static const luaL_Reg loadedlibs[] = {
+	{ "app", luaopen_app },
+	{ NULL, NULL }
+};
 
 Plugin::Plugin(string name, string path)
  : name(name),
@@ -43,14 +54,21 @@ Plugin::~Plugin()
 	XOJ_RELEASE_TYPE(Plugin);
 }
 
-Plgin* getPluginFromLua(lua_State* lua)
+/**
+ * Get Plugin from lua engine
+ */
+Plugin* Plugin::getPluginFromLua(lua_State* lua)
 {
 	lua_getfield(lua, LUA_REGISTRYINDEX, "Xournalpp_Plugin");
 
-	if (lua_islightuserdata(luaState, -1))
+	if (lua_islightuserdata(lua, -1))
 	{
-		lua_
-		lua_pop(luaState, 1);
+		Plugin* data = (Plugin*)lua_touserdata(lua, -1);
+		lua_pop(lua, 1);
+
+		XOJ_CHECK_TYPE_OBJ(data, Plugin);
+
+		return data;
 	}
 
 	return NULL;
@@ -68,9 +86,9 @@ void Plugin::registerToolbar()
 		return;
 	}
 
+	// TODO Errorhandling etc.
 	// lua_register
 	// lua_atpanic
-	// luaL_ref LUA_REGISTRYINDEX
 
 	if (callFunction("initUi"))
 	{
@@ -80,6 +98,16 @@ void Plugin::registerToolbar()
 	{
 		g_message("Plugin «%s» has no UI init", name.c_str());
 	}
+}
+
+/**
+ * @return the Plugin name
+ */
+string Plugin::getName()
+{
+	XOJ_CHECK_TYPE(Plugin);
+
+	return name;
 }
 
 /**
@@ -112,6 +140,18 @@ void Plugin::loadIni()
 	g_key_file_free(config);
 
 	this->valid = true;
+}
+
+/**
+ * Load custom Lua Libraries
+ */
+void Plugin::registerXournalppLibs(lua_State* lua)
+{
+	for (const luaL_Reg* lib = loadedlibs; lib->func; lib++)
+	{
+		luaL_requiref(lua, lib->name, lib->func, 1);
+		lua_pop(lua, 1); /* remove lib */
+	}
 }
 
 /**
@@ -151,15 +191,18 @@ void Plugin::loadScript()
 	}
 
 	// Register Plugin object to Lua instance
-	// lua_newuserdata
 	lua_pushlightuserdata(lua, this);
 	lua_setfield(lua, LUA_REGISTRYINDEX, "Xournalpp_Plugin");
 
+	registerXournalppLibs(lua);
 
 	// Run the loaded Lua script
-	if (lua_pcall(lua, 0, 0, 0))
+	if (lua_pcall(lua, 0, 0, 0) != LUA_OK)
 	{
-		g_warning("Could not run plugin Lua file: «%s», error.", luafile.c_str());
+		const char* errMsg = lua_tostring(lua, -1);
+		XojMsgBox::showPluginMessage(name, errMsg, MSG_BT_OK, true);
+
+		g_warning("Could not run plugin Lua file: «%s», error: «%s»", luafile.c_str(), errMsg);
 		this->valid = false;
 		return;
 	}

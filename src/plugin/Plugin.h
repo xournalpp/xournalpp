@@ -36,6 +36,11 @@ public:
 	 */
 	void registerToolbar();
 
+	/**
+	 * @return the Plugin name
+	 */
+	string getName();
+
 private:
 	/**
 	 * Load ini file
@@ -51,6 +56,17 @@ private:
 	 * Execute lua function
 	 */
 	bool callFunction(string fnc);
+
+	/**
+	 * Load custom Lua Libraries
+	 */
+	void registerXournalppLibs(lua_State* lua);
+
+public:
+	/**
+	 * Get Plugin from lua engine
+	 */
+	static Plugin* getPluginFromLua(lua_State* lua);
 
 private:
 	XOJ_TYPE_ATTRIB;

@@ -121,7 +121,9 @@ pkg_check_modules (Lua "lua5.3")
 if (Lua_FOUND)
 	message("Enable Xournal++ Plugins")
 	add_includes_ldflags ("${Lua_LDFLAGS}" "${Lua_INCLUDE_DIRS}")
-	set (ENABLE_PLUGINS "true")
+	
+## Plugins are not yet ready - therefore disabled at the moment
+#	set (ENABLE_PLUGINS "true")
 endif ()
 
 configure_file (
