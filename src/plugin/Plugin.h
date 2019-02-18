@@ -83,7 +83,7 @@ private:
 	/**
 	 * Lua engine
 	 */
-    lua_State* lua = NULL;
+	lua_State* lua = NULL;
 
 	/**
 	 * Flag if the plugin is valid / correct loaded

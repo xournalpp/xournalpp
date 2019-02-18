@@ -43,6 +43,18 @@ Plugin::~Plugin()
 	XOJ_RELEASE_TYPE(Plugin);
 }
 
+Plgin* getPluginFromLua(lua_State* lua)
+{
+	lua_getfield(lua, LUA_REGISTRYINDEX, "Xournalpp_Plugin");
+
+	if (lua_islightuserdata(luaState, -1))
+	{
+		lua_
+		lua_pop(luaState, 1);
+	}
+
+	return NULL;
+}
 
 /**
  * Register toolbar item and all other UI stuff
@@ -59,20 +71,6 @@ void Plugin::registerToolbar()
 	// lua_register
 	// lua_atpanic
 	// luaL_ref LUA_REGISTRYINDEX
-/*
- *
-
-			lua_getfield(luaState, LUA_REGISTRYINDEX, "SciTE_InitialState");
-			if (lua_istable(luaState, -1)) {
-				clear_table(luaState, LUA_GLOBALSINDEX, true);
-				merge_table(luaState, LUA_GLOBALSINDEX, -1, true);
-				lua_pop(luaState, 1);
-
-
- *
- *
- *
- * */
 
 	if (callFunction("initUi"))
 	{
@@ -153,7 +151,8 @@ void Plugin::loadScript()
 	}
 
 	// Register Plugin object to Lua instance
-	lua_pushnil(luaState);
+	// lua_newuserdata
+	lua_pushlightuserdata(lua, this);
 	lua_setfield(lua, LUA_REGISTRYINDEX, "Xournalpp_Plugin");
 
 
