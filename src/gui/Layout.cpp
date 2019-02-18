@@ -9,6 +9,27 @@
 #include "gui/LayoutMapper.h"
 
 
+/**
+ * Padding outside the pages, including shadow
+ */
+const int XOURNAL_PADDING = 10;
+
+/**
+ * Padding outside the pages, if additional padding is set
+ */
+const int XOURNAL_PADDING_FREE_SPACE = 150;
+
+/**
+ * Allowance for shadow between page pairs in paired page mode
+ */
+const int XOURNAL_ROOM_FOR_SHADOW = 3;
+
+/**
+ * Padding between the pages
+ */
+const int XOURNAL_PADDING_BETWEEN = 15;
+
+
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
  : view(view),
    scrollHandling(scrollHandling),
@@ -174,21 +195,6 @@ double Layout::getLayoutWidth()
 	return layoutWidth;
 }
 
-/**
- * Padding outside the pages, including shadow
- */
-const int XOURNAL_PADDING = 10;
-
-/**
- * Allowance for shadow between page pairs in paired page mode
- */
-const int XOURNAL_ROOM_FOR_SHADOW = 3;
-
-/**
- * Padding between the pages
- */
-const int XOURNAL_PADDING_BETWEEN = 15;
-
 void Layout::layoutPages()
 {
 	XOJ_CHECK_TYPE(Layout);
@@ -237,6 +243,19 @@ void Layout::layoutPages()
 
 	int x = XOURNAL_PADDING;
 	int y = XOURNAL_PADDING;
+
+	bool verticalSpace = settings->getAddVerticalSpace();
+	bool horizontalSpace = settings->getAddHorizontalSpace();
+
+	if (verticalSpace)
+	{
+		x += XOURNAL_PADDING_FREE_SPACE;
+	}
+
+	if (horizontalSpace)
+	{
+		y += XOURNAL_PADDING_FREE_SPACE;
+	}
 
 	// Iterate over ALL possible rows and columns and let the mapper tell us what page, if any,  is found there.
 	for (int r = 0; r < rows; r++)
@@ -306,6 +325,16 @@ void Layout::layoutPages()
 	for (int r = 0; r < rows; r++)
 	{
 		totalHeight += sizeRow[r];
+	}
+
+	if (verticalSpace)
+	{
+		totalWidth += XOURNAL_PADDING_FREE_SPACE * 2;
+	}
+
+	if (horizontalSpace)
+	{
+		totalHeight += XOURNAL_PADDING_FREE_SPACE * 2;
 	}
 
 	this->setLayoutSize(totalWidth, totalHeight);
