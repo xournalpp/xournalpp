@@ -4,6 +4,8 @@
 #include "control/Control.h"
 #include "gui/GladeSearchpath.h"
 
+#include <StringUtils.h>
+
 #include <config-features.h>
 
 
@@ -13,7 +15,16 @@ PluginController::PluginController(Control* control)
 	XOJ_INIT_TYPE(PluginController);
 
 #ifdef ENABLE_PLUGINS
-	loadPluginsFrom(control->getGladeSearchPath()->getFirstSearchPath() + "/../plugins/");
+	string path = control->getGladeSearchPath()->getFirstSearchPath();
+	if (StringUtils::endsWith(path, "ui"))
+	{
+		path = path.substr(0, path.length() - 2) + "plugins";
+	}
+	else
+	{
+		path += "/../plugins";
+	}
+	loadPluginsFrom(path);
 #endif
 }
 

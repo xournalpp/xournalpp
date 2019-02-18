@@ -41,6 +41,18 @@ public:
 	 */
 	string getName();
 
+	/**
+	 * @return Flag to check if init ui is currently running
+	 */
+	bool isInInitUi();
+
+	/**
+	 * Register a menu item
+	 *
+	 * @return Internal ID, can e.g. be used to disable the menu
+	 */
+	int registerMenu(string menu, string callback);
+
 private:
 	/**
 	 * Load ini file
@@ -61,6 +73,11 @@ private:
 	 * Load custom Lua Libraries
 	 */
 	void registerXournalppLibs(lua_State* lua);
+
+	/**
+	 * Add the plugin folder to the lua path
+	 */
+	void addPluginToLuaPath();
 
 public:
 	/**
@@ -100,6 +117,11 @@ private:
 	 * Lua engine
 	 */
 	lua_State* lua = NULL;
+
+	/**
+	 * Flag to check if init ui is currently running
+	 */
+	bool inInitUi = false;
 
 	/**
 	 * Flag if the plugin is valid / correct loaded
