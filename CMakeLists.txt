@@ -98,6 +98,7 @@ add_includes_ldflags ("${PORTAUDIOCPP_LDFLAGS}" "${PORTAUDIOCPP_INCLUDE_DIRS}")
 pkg_check_modules(SNDFILE REQUIRED "sndfile >= 1.0.25")
 add_includes_ldflags ("${SNDFILE_LDFLAGS}" "${SNDFILE_INCLUDE_DIRS}")
 
+
 ## Additional features ##
 
 # CppUnit
@@ -112,7 +113,17 @@ pkg_check_modules (MacIntegration "gtk-mac-integration")
 if (MacIntegration_FOUND)
 	message("Enable Mac integration")
 	add_includes_ldflags ("${MacIntegration_LDFLAGS}" "${MacIntegration_INCLUDE_DIRS}")
-	add_definitions(-DMAC_INTEGRATION)
+	add_definitions (-DMAC_INTEGRATION)
+endif ()
+
+# Plugins / scripting
+pkg_check_modules (Lua "lua5.3")
+if (Lua_FOUND)
+	message("Enable Xournal++ Plugins")
+	add_includes_ldflags ("${Lua_LDFLAGS}" "${Lua_INCLUDE_DIRS}")
+	
+## Plugins are not yet ready - therefore disabled at the moment
+#	set (ENABLE_PLUGINS "true")
 endif ()
 
 configure_file (

@@ -54,6 +54,7 @@ file (GLOB_RECURSE xournalpp_SOURCES_RECURSE
   enums/*.cpp
   gui/*.cpp
   model/*.cpp
+  plugin/*.cpp
   undo/*.cpp
   view/*.cpp
 )

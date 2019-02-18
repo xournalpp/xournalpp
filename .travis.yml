@@ -30,6 +30,8 @@ addons:
     - libpoppler-glib-dev
     - portaudio19-dev
     - libsndfile-dev
+    
+    - liblua5.3-dev
 
   coverity_scan:
     project:

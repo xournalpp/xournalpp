@@ -38,6 +38,7 @@
 #include "pagetype/PageTypeMenu.h"
 #include "settings/ButtonConfig.h"
 #include "stockdlg/XojOpenDlg.h"
+#include "plugin/PluginController.h"
 #include "undo/AddUndoAction.h"
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertDeletePageUndoAction.h"
@@ -69,7 +70,6 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 {
 	XOJ_INIT_TYPE(Control);
 
-	this->win = NULL;
 	this->recent = new RecentManager();
 	this->undoRedo = new UndoRedoHandler(this);
 	this->recent->addListener(this);
@@ -96,21 +96,11 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	this->pageTypes = new PageTypeHandler(gladeSearchPath);
 	this->newPageType = new PageTypeMenu(this->pageTypes, settings, true, true);
 
-	this->sidebar = NULL;
-	this->searchBar = NULL;
-	
 	this->audioController = new AudioController(this->settings,this);
 
 	this->scrollHandler = new ScrollHandler(this);
 
 	this->scheduler = new XournalScheduler();
-
-	this->autosaveTimeout = 0;
-
-	this->statusbar = NULL;
-	this->lbState = NULL;
-	this->pgState = NULL;
-	this->maxState = 0;
 
 	this->doc = new Document(this);
 
@@ -128,16 +118,15 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	 */
 	this->changeTimout = g_timeout_add_seconds(5, (GSourceFunc) checkChangedDocument, this);
 	
-	this->clipboardHandler = NULL;
-
-	this->dragDropHandler = NULL;
-
 	this->pageBackgroundChangeController = new PageBackgroundChangeController(this);
 
 	this->layerController = new LayerController(this);
 	this->layerController->registerListener(this);
 
 	this->fullscreenHandler = new FullscreenHandler(settings);
+
+	this->pluginController = new PluginController(this);
+	this->pluginController->registerToolbar();
 }
 
 Control::~Control()
@@ -156,6 +145,8 @@ Control::~Control()
 		page->unreference();
 	}
 
+	delete this->pluginController;
+	this->pluginController = NULL;
 	delete this->clipboardHandler;
 	this->clipboardHandler = NULL;
 	delete this->recent;

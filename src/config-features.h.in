@@ -17,7 +17,7 @@
 
 /* --- Testing features --- */
 
-// Currently none
+#cmakedefine ENABLE_PLUGINS
 
 // Example: #cmakedefine NAME_FROM_Cmake_list
 // in CMakeFile.txt:
