@@ -7,5 +7,5 @@ function initUi()
   print("Plugin initUi called\n");
 end
 
-app.msgbox("Test123")
+app.msgbox("Test123", "yes,no")
 
