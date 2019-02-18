@@ -6,7 +6,7 @@
 #include "pageposition/PagePositionHandler.h"
 #include "widgets/XournalWidget.h"
 #include "gui/scroll/ScrollHandling.h"
-#include "gui/LayoutMapper.h"
+
 
 
 /**
@@ -199,23 +199,22 @@ void Layout::layoutPages()
 	Settings* settings = this->view->getControl()->getSettings();
 
 	// obtain rows, cols, paired and layout from view settings
-	LayoutMapper mapper(len, settings);
+	mapper.configureFromSettings(len, settings);
 
 	// get from mapper (some may have changed to accomodate paired setting etc.)
 	bool isPairedPages = mapper.getPairedPages();
-	int rows = mapper.getRows();
-	int columns = mapper.getColumns();
+	int pagesOffset = mapper.getFirstPageOffset();
+	this->rows = mapper.getRows();
+	this->columns = mapper.getColumns();
 
-	int sizeCol[columns];
-	// Needs dynamic initialisation, else clang will not compile...
-	memset(sizeCol, 0, columns * sizeof(int));
 
-	int sizeRow[rows];
-	memset(sizeRow, 0, rows * sizeof(int));
+	this->sizeCol.assign(this->columns,0); //new size, clear to 0's
 
-	for (int r = 0; r < rows; r++)
+	this->sizeRow.assign(this->rows,0);
+
+	for (int r = 0; r < this->rows; r++)
 	{
-		for (int c = 0; c < columns; c++)
+		for (int c = 0; c < this->columns; c++)
 		{
 			int k = mapper.map(c, r);
 			if (k >= 0)
@@ -223,13 +222,13 @@ void Layout::layoutPages()
 
 				XojPageView* v = this->view->viewPages[k];
 
-				if (sizeCol[c] < v->getDisplayWidth())
+				if (this->sizeCol[c] < v->getDisplayWidth())
 				{
-					sizeCol[c] = v->getDisplayWidth();
+					this->sizeCol[c] = v->getDisplayWidth();
 				}
-				if (sizeRow[r] < v->getDisplayHeight())
+				if (this->sizeRow[r] < v->getDisplayHeight())
 				{
-					sizeRow[r] = v->getDisplayHeight();
+					this->sizeRow[r] = v->getDisplayHeight();
 				}
 			}
 
@@ -253,9 +252,9 @@ void Layout::layoutPages()
 	}
 
 	// Iterate over ALL possible rows and columns and let the mapper tell us what page, if any,  is found there.
-	for (int r = 0; r < rows; r++)
+	for (int r = 0; r < this->rows; r++)
 	{
-		for (int c = 0; c < columns; c++)
+		for (int c = 0; c < this->columns; c++)
 		{
 			int pageAtRowCol = mapper.map(c, r);
 
@@ -268,7 +267,7 @@ void Layout::layoutPages()
 					int paddingLeft;
 					int paddingRight;
 					int columnPadding = 0;
-					columnPadding = (sizeCol[c] - vDisplayWidth);
+					columnPadding = (this->sizeCol[c] - vDisplayWidth);
 
 					if (isPairedPages && len > 1)
 					{
@@ -302,24 +301,24 @@ void Layout::layoutPages()
 			}
 			else
 			{
-				x += sizeCol[c] + XOURNAL_PADDING_BETWEEN;
+				x += this->sizeCol[c] + XOURNAL_PADDING_BETWEEN;
 			}
 		}
 		x = XOURNAL_PADDING;
-		y += sizeRow[r] + XOURNAL_PADDING_BETWEEN;
+		y += this->sizeRow[r] + XOURNAL_PADDING_BETWEEN;
 
 	}
 
-	int totalWidth = XOURNAL_PADDING * 2 + XOURNAL_PADDING_BETWEEN * columns;
-	for (int c = 0; c < columns; c++)
+	int totalWidth = XOURNAL_PADDING * 2 + XOURNAL_PADDING_BETWEEN * this->columns;
+	for (int c = 0; c < this->columns; c++)
 	{
-		totalWidth += sizeCol[c];
+		totalWidth += this->sizeCol[c];
 	}
 
-	int totalHeight = XOURNAL_PADDING * 2 + XOURNAL_PADDING_BETWEEN * rows;
-	for (int r = 0; r < rows; r++)
+	int totalHeight = XOURNAL_PADDING * 2 + XOURNAL_PADDING_BETWEEN * this->rows;
+	for (int r = 0; r < this->rows; r++)
 	{
-		totalHeight += sizeRow[r];
+		totalHeight += this->sizeRow[r];
 	}
 
 	if (verticalSpace)

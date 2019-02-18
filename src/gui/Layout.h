@@ -16,9 +16,12 @@
 
 #include <gtk/gtk.h>
 
+#include "gui/LayoutMapper.h"
+
 class XojPageView;
 class XournalView;
 class ScrollHandling;
+
 
 /**
  * @brief The Layout manager for the XournalWidget
@@ -91,7 +94,9 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XournalView* view = NULL;
+	XournalView* view = NULL;	
+
+	LayoutMapper mapper;
 
 	ScrollHandling* scrollHandling = NULL;
 
@@ -108,4 +113,16 @@ private:
 	 */
 	int layoutWidth = 0;
 	int layoutHeight = 0;
+	
+	
+	/**
+	 *The following are useful for locating page at a pixel location
+	 */
+	
+	int rows;
+	int columns;
+	
+	std::vector<int> sizeCol;
+	std::vector<int> sizeRow;
+	
 };
