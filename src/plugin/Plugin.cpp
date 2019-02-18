@@ -86,18 +86,26 @@ void Plugin::registerToolbar()
 		return;
 	}
 
-	// TODO Errorhandling etc.
-	// lua_register
-	// lua_atpanic
+	inInitUi = true;
 
-	if (callFunction("initUi"))
+	lua_getglobal(lua, "initUi");
+	if (lua_isfunction (lua, -1) == 1)
 	{
-		g_message("Plugin «%s» UI initialized", name.c_str());
+		if (callFunction("initUi"))
+		{
+			g_message("Plugin «%s» UI initialized", name.c_str());
+		}
+		else
+		{
+			g_warning("Plugin «%s» init failed!", name.c_str());
+		}
 	}
 	else
 	{
 		g_message("Plugin «%s» has no UI init", name.c_str());
 	}
+
+	inInitUi = false;
 }
 
 /**
@@ -108,6 +116,27 @@ string Plugin::getName()
 	XOJ_CHECK_TYPE(Plugin);
 
 	return name;
+}
+
+/**
+ * @return Flag to check if init ui is currently running
+ */
+bool Plugin::isInInitUi()
+{
+	XOJ_CHECK_TYPE(Plugin);
+
+	return inInitUi;
+}
+
+/**
+ * Register a menu item
+ *
+ * @return Internal ID, can e.g. be used to disable the menu
+ */
+int Plugin::registerMenu(string menu, string callback)
+{
+	// TODO
+	return 0;
 }
 
 /**
@@ -150,8 +179,41 @@ void Plugin::registerXournalppLibs(lua_State* lua)
 	for (const luaL_Reg* lib = loadedlibs; lib->func; lib++)
 	{
 		luaL_requiref(lua, lib->name, lib->func, 1);
-		lua_pop(lua, 1); /* remove lib */
+
+		// remove lib
+		lua_pop(lua, 1);
 	}
+}
+
+/**
+ * Add the plugin folder to the lua path
+ */
+void Plugin::addPluginToLuaPath()
+{
+	lua_getglobal(lua, "package");
+
+	// get field "path" from table at top of stack (-1)
+	lua_getfield(lua, -1, "path");
+
+	// For now: limit the include path to the current plugin folder, for security and compatibility reasons
+	// grab path string from top of stack
+	// string curPath = lua_tostring(lua, -1);
+	// curPath.append(";");
+	string curPath;
+	curPath.append(path);
+	curPath.append("/?.lua");
+
+	// get rid of the string on the stack we just pushed on line 5
+	lua_pop(lua, 1);
+
+	// push the new one
+	lua_pushstring(lua, curPath.c_str());
+
+	// set the field "path" in table at -2 with value at top of stack
+	lua_setfield(lua, -2, "path");
+
+	// get rid of package table from top of stack
+	lua_pop(lua, 1);
 }
 
 /**
@@ -196,6 +258,8 @@ void Plugin::loadScript()
 
 	registerXournalppLibs(lua);
 
+	addPluginToLuaPath();
+
 	// Run the loaded Lua script
 	if (lua_pcall(lua, 0, 0, 0) != LUA_OK)
 	{
@@ -218,7 +282,10 @@ bool Plugin::callFunction(string fnc)
 	// Run the function
 	if (lua_pcall(lua, 0, 0, 0))
 	{
-		// Failed
+		const char* errMsg = lua_tostring(lua, -1);
+		XojMsgBox::showPluginMessage(name, errMsg, MSG_BT_OK, true);
+
+		g_warning("Error in Plugin: «%s», error: «%s»", name.c_str(), errMsg);
 		return false;
 	}
 
