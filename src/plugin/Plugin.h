@@ -13,11 +13,52 @@
 
 #include <XournalType.h>
 
+#include <gtk/gtk.h>
+
 #include <config-features.h>
 
 #ifdef ENABLE_PLUGINS
 #include <lua.h>
 
+class Plugin;
+
+class MenuEntry {
+public:
+	MenuEntry(Plugin* plugin)
+	 : plugin(plugin)
+	{
+		XOJ_INIT_TYPE(MenuEntry);
+	}
+
+	~MenuEntry()
+	{
+		XOJ_CHECK_TYPE(MenuEntry);
+		XOJ_RELEASE_TYPE(MenuEntry);
+	}
+
+public:
+	XOJ_TYPE_ATTRIB;
+
+	/**
+	 * The Plugin
+	 */
+	Plugin* plugin;
+
+	/**
+	 * Menu item
+	 */
+	GtkWidget* widget = NULL;
+
+	/**
+	 * Menu display name
+	 */
+	string menu;
+
+	/**
+	 * Callback function name
+	 */
+	string callback;
+};
 
 class Plugin
 {
@@ -35,6 +76,16 @@ public:
 	 * Register toolbar item and all other UI stuff
 	 */
 	void registerToolbar();
+
+	/**
+	 * Register all menu entries to the menu
+	 */
+	void registerMenu(GtkWidget* menu);
+
+	/**
+	 * Execute menu entry
+	 */
+	void executeMenuEntry(MenuEntry* entry);
 
 	/**
 	 * @return the Plugin name
@@ -117,6 +168,11 @@ private:
 	 * Lua engine
 	 */
 	lua_State* lua = NULL;
+
+	/**
+	 * All registered menu entries
+	 */
+	vector<MenuEntry*> menuEntries;
 
 	/**
 	 * Flag to check if init ui is currently running

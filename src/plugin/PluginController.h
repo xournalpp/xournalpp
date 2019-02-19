@@ -35,6 +35,11 @@ public:
 	 */
 	void registerToolbar();
 
+	/**
+	 * Register menu stuff
+	 */
+	void registerMenu();
+
 private:
 	XOJ_TYPE_ATTRIB;
 

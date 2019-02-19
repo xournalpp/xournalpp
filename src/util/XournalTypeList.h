@@ -282,6 +282,7 @@ XOJ_DECLARE_TYPE(XmlAudioNode, 272);
 XOJ_DECLARE_TYPE(LayoutMapper, 273);
 XOJ_DECLARE_TYPE(PluginController, 274);
 XOJ_DECLARE_TYPE(Plugin, 275);
+XOJ_DECLARE_TYPE(MenuEntry, 276);
 
 
 
