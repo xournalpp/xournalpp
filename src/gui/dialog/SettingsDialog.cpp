@@ -281,7 +281,7 @@ void SettingsDialog::load()
 	{
     	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioInputDevice")), "", audioInputDevice.getDeviceName().c_str());
 	}
-    for (int i = 0; i < this->audioInputDevices.size(); i++)
+    for (size_t i = 0; i < this->audioInputDevices.size(); i++)
     {
     	if (this->audioInputDevices[i].getSelected())
 		{
@@ -296,7 +296,7 @@ void SettingsDialog::load()
 	{
 		gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "", audioOutputDevice.getDeviceName().c_str());
 	}
-	for (int i = 0; i < this->audioOutputDevices.size(); i++)
+	for (size_t i = 0; i < this->audioOutputDevices.size(); i++)
 	{
 		if (this->audioOutputDevices[i].getSelected())
 		{
@@ -480,13 +480,13 @@ void SettingsDialog::save()
 	settings->setSnapGridTolerance((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridTolerance"))));
 
 	int selectedInputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioInputDevice"))) - 1;
-	if (selectedInputDeviceIndex >= 0 && selectedInputDeviceIndex < this->audioInputDevices.size())
+	if (selectedInputDeviceIndex >= 0 && selectedInputDeviceIndex < (int)this->audioInputDevices.size())
 	{
 		settings->setAudioInputDevice((int) this->audioInputDevices[selectedInputDeviceIndex].getIndex());
 	}
 
 	int selectedOutputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioOutputDevice"))) - 1;
-	if (selectedOutputDeviceIndex >= 0 && selectedOutputDeviceIndex < this->audioOutputDevices.size())
+	if (selectedOutputDeviceIndex >= 0 && selectedOutputDeviceIndex < (int)this->audioOutputDevices.size())
 	{
 		settings->setAudioOutputDevice((int) this->audioOutputDevices[selectedOutputDeviceIndex].getIndex());
 	}

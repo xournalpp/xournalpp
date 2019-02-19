@@ -92,7 +92,7 @@ static int applib_registerUi(lua_State* L)
 
 	if (menu)
 	{
-		plugin->registerMenu(menu, callback);
+		menuId = plugin->registerMenu(menu, callback);
 	}
 
 	// Make sure to remove all vars which are put to the stack before!
