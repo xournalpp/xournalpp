@@ -51,6 +51,12 @@ Plugin::~Plugin()
 		lua = NULL;
 	}
 
+	for (MenuEntry* m : menuEntries)
+	{
+		delete m;
+	}
+	menuEntries.clear();
+
 	XOJ_RELEASE_TYPE(Plugin);
 }
 
@@ -108,6 +114,47 @@ void Plugin::registerToolbar()
 	inInitUi = false;
 }
 
+
+/**
+ * Register all menu entries to the menu
+ */
+void Plugin::registerMenu(GtkWidget* menu)
+{
+	XOJ_CHECK_TYPE(Plugin);
+
+	if (menuEntries.empty())
+	{
+		// No entries - nothing to do
+		return;
+	}
+
+    gtk_menu_shell_append(GTK_MENU_SHELL(menu), gtk_separator_menu_item_new());
+
+	for (MenuEntry* m : menuEntries)
+	{
+		GtkWidget* mi = gtk_menu_item_new_with_label(m->menu.c_str());
+		m->widget = mi;
+		gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+
+		g_signal_connect(mi, "activate", G_CALLBACK(
+			+[](GtkWidget* bt, MenuEntry* me)
+			{
+				XOJ_CHECK_TYPE_OBJ(me, MenuEntry);
+				me->plugin->executeMenuEntry(me);
+			}), m);
+	}
+}
+
+/**
+ * Execute menu entry
+ */
+void Plugin::executeMenuEntry(MenuEntry* entry)
+{
+	XOJ_CHECK_TYPE(Plugin);
+
+	callFunction(entry->callback);
+}
+
 /**
  * @return the Plugin name
  */
@@ -135,8 +182,12 @@ bool Plugin::isInInitUi()
  */
 int Plugin::registerMenu(string menu, string callback)
 {
-	// TODO
-	return 0;
+	MenuEntry* m = new MenuEntry(this);
+	m->menu = menu;
+	m->callback = callback;
+	menuEntries.push_back(m);
+
+	return menuEntries.size() - 1;
 }
 
 /**

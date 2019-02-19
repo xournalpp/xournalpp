@@ -365,6 +365,8 @@ void Control::initWindow(MainWindow* win)
 
 	win->setFontButtonFont(settings->getFont());
 
+	this->pluginController->registerMenu();
+
 	fireActionSelected(GROUP_SNAPPING, settings->isSnapRotation() ? ACTION_ROTATION_SNAPPING : ACTION_NONE);
 	fireActionSelected(GROUP_GRID_SNAPPING, settings->isSnapGrid() ? ACTION_GRID_SNAPPING : ACTION_NONE);
 }

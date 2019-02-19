@@ -13,7 +13,6 @@ PluginController::PluginController(Control* control)
  : control(control)
 {
 	XOJ_INIT_TYPE(PluginController);
-
 #ifdef ENABLE_PLUGINS
 	string path = control->getGladeSearchPath()->getFirstSearchPath();
 	if (StringUtils::endsWith(path, "ui"))
@@ -96,6 +95,29 @@ void PluginController::registerToolbar()
 	{
 		p->registerToolbar();
 	}
+#endif
+}
+
+/**
+ * Register menu stuff
+ */
+void PluginController::registerMenu()
+{
+	XOJ_CHECK_TYPE(PluginController);
+
+#ifdef ENABLE_PLUGINS
+	GtkWidget* menuPlugin = control->getWindow()->get("menuPlugin");
+	for (Plugin* p : this->plugins)
+	{
+		p->registerMenu(menuPlugin);
+	}
+
+	gtk_widget_show_all(menuPlugin);
+
+#else
+	// If plugins are disabled - disable menu also
+	GtkWidget* menuitemPlugin = control->getWindow()->get("menuitemPlugin");
+	gtk_widget_hide(menuitemPlugin);
 #endif
 }
 
