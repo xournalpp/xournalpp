@@ -18,6 +18,8 @@ ZoomControl::ZoomControl()
    zoomWidgetPosY(0),
    scrollPositionX(0),
    scrollPositionY(0),
+   scrollCursorPositionX(0),
+   scrollCursorPositionY(0),
    zoomStepReal(DEFAULT_ZOOM_STEP),
    zoomStepScrollReal(DEFAULT_ZOOM_STEP_SCROLL),
    zoomMaxReal(DEFAULT_ZOOM_MAX),
@@ -58,7 +60,13 @@ void ZoomControl::zoomScroll(bool zoomIn, double x, double y)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	startZoomSequence(x, y);
+	if(this->zoomSequenceStart == -1 ||
+		scrollCursorPositionX != x || scrollCursorPositionY != y)
+	{
+		scrollCursorPositionX = x;
+		scrollCursorPositionY = y;
+		startZoomSequence(x, y);
+	}
 
 	if(zoomIn)
 		this->zoom += this->zoomStepScroll;
@@ -66,8 +74,6 @@ void ZoomControl::zoomScroll(bool zoomIn, double x, double y)
 		this->zoom -= this->zoomStepScroll;
 	this->zoomFitMode = false;
 	fireZoomChanged();
-
-	endZoomSequence();
 }
 
 /**

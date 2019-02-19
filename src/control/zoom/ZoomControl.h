@@ -203,6 +203,15 @@ private:
 	double scrollPositionY;
 
 	/**
+	 * Cursorposition x for Ctrl + Scroll
+	 */
+	double scrollCursorPositionX;
+	/**
+	 * Cursorposition y for Ctrl + Scroll
+	 */
+	double scrollCursorPositionY;
+
+	/**
 	 * Zoomstep value for Ctrl - and Zoom In and Out Button
 	 * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
 	 */
