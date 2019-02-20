@@ -47,9 +47,13 @@ void ZoomControl::zoomOneStep(bool zoomIn, double x, double y)
 	startZoomSequence(x, y);
 
 	if(zoomIn)
+	{
 		this->zoom += this->zoomStep;
+	}
 	else
+	{
 		this->zoom -= this->zoomStep;
+	}
 	this->zoomFitMode = false;
 	fireZoomChanged();
 
