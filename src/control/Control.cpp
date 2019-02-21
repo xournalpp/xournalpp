@@ -118,6 +118,8 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	setEmergencyDocument(this->doc);
 
 	this->zoom = new ZoomControl();
+	this->zoom->setZoomStep(this->settings->getZoomStep());
+	this->zoom->setZoomStepScroll(this->settings->getZoomStepScroll());
 	this->zoom->setZoom100(this->settings->getDisplayDpi() / 72.0);
 
 	this->toolHandler = new ToolHandler(this, this, this->settings);
@@ -2119,6 +2121,8 @@ void Control::showSettings()
 
 	enableAutosave(settings->isAutosaveEnabled());
 
+	this->zoom->setZoomStep(settings->getZoomStep());
+	this->zoom->setZoomStepScroll(settings->getZoomStepScroll());
 	this->zoom->setZoom100(settings->getDisplayDpi() / 72.0);
 
 	getWindow()->getXournal()->getTouchHelper()->reload();

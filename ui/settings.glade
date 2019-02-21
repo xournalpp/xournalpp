@@ -46,6 +46,20 @@
     <property name="value">72</property>
     <property name="step_increment">1</property>
   </object>
+  <object class="GtkAdjustment" id="adjustmentZoomStep">
+    <property name="lower">0.10000000000000001</property>
+    <property name="upper">50</property>
+    <property name="value">10</property>
+    <property name="step_increment">0.5</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentZoomStepScroll">
+    <property name="lower">0.10000000000000001</property>
+    <property name="upper">50</property>
+    <property name="value">2</property>
+    <property name="step_increment">0.5</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="GtkDialog" id="settingsDialog">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
@@ -861,8 +875,8 @@ use the eraser or other device.&lt;/i&gt;</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="cbEnableZoomGestures">
-                    <property name="label" translatable="yes">Enable zoom gestures (needs restart)</property>
+                  <object class="GtkCheckButton" id="cbDisableTouchOnPenNear">
+                    <property name="label" translatable="yes">Disable touch if pen is near screen</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
@@ -876,8 +890,8 @@ use the eraser or other device.&lt;/i&gt;</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="cbDisableTouchOnPenNear">
-                    <property name="label" translatable="yes">Disable touch if pen is near screen</property>
+                  <object class="GtkCheckButton" id="cbEnableZoomGestures">
+                    <property name="label" translatable="yes">Enable zoom gestures (needs restart)</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
@@ -1468,8 +1482,8 @@ they are not blocking!&lt;/i&gt;</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkCheckButton" id="cbBigCursor">
-                            <property name="label" translatable="yes">Big cursor for pen</property>
+                          <object class="GtkCheckButton" id="cbHighlightPosition">
+                            <property name="label" translatable="yes">Highlight cursor position</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
@@ -1483,8 +1497,8 @@ they are not blocking!&lt;/i&gt;</property>
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkCheckButton" id="cbHighlightPosition">
-                            <property name="label" translatable="yes">Highlight cursor position</property>
+                          <object class="GtkCheckButton" id="cbBigCursor">
+                            <property name="label" translatable="yes">Big cursor for pen</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
@@ -1537,6 +1551,62 @@ they are not blocking!&lt;/i&gt;</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
+                      <object class="GtkLabel" id="settingZoomCtrlScrollSpeedLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Speed in percent for Ctrl + Scroll </property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="spZoomStepScroll">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="adjustment">adjustmentZoomStepScroll</property>
+                        <property name="digits">1</property>
+                        <property name="numeric">True</property>
+                        <property name="value">2</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="settingZoomStepSpeedLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Speed in percent for a Zoomstep</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="spZoomStep">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="adjustment">adjustmentZoomStep</property>
+                        <property name="digits">1</property>
+                        <property name="numeric">True</property>
+                        <property name="value">10</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">4</property>
+                      </packing>
+                    </child>
+                    <child>
                       <object class="GtkLabel" id="label21">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -1547,7 +1617,7 @@ The units are cm for the ruler, dpi for the slider.&lt;/i&gt;</property>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">0</property>
+                        <property name="position">5</property>
                       </packing>
                     </child>
                     <child>
@@ -1563,7 +1633,7 @@ The units are cm for the ruler, dpi for the slider.&lt;/i&gt;</property>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">1</property>
+                        <property name="position">6</property>
                       </packing>
                     </child>
                     <child>
@@ -1578,7 +1648,7 @@ The units are cm for the ruler, dpi for the slider.&lt;/i&gt;</property>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">2</property>
+                        <property name="position">7</property>
                       </packing>
                     </child>
                     <child>
@@ -1590,7 +1660,7 @@ The units are cm for the ruler, dpi for the slider.&lt;/i&gt;</property>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">3</property>
+                        <property name="position">8</property>
                       </packing>
                     </child>
                   </object>

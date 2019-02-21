@@ -189,6 +189,13 @@ void SettingsDialog::load()
 	GtkWidget* spSnapGridTolerance = get("spSnapGridTolerance");
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapGridTolerance), settings->getSnapGridTolerance());
 
+	GtkWidget* spZoomStep = get("spZoomStep");
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spZoomStep), settings->getZoomStep());
+
+	GtkWidget* spZoomStepScroll = get("spZoomStepScroll");
+	gtk_spin_button_set_value(
+		GTK_SPIN_BUTTON(spZoomStepScroll), settings->getZoomStepScroll());
+
 	GtkWidget* slider = get("zoomCallibSlider");
 
 	this->setDpi(settings->getDisplayDpi());
@@ -447,6 +454,16 @@ void SettingsDialog::save()
 	GtkWidget* spPairsOffset = get("spPairsOffset");
 	int numPairsOffset = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spPairsOffset));
 	settings->setPairsOffset(numPairsOffset);
+
+	GtkWidget* spZoomStep = get("spZoomStep");
+	double zoomStep = gtk_spin_button_get_value(
+		GTK_SPIN_BUTTON(spZoomStep));
+	settings->setZoomStep(zoomStep);
+
+	GtkWidget* spZoomStepScroll = get("spZoomStepScroll");
+	double zoomStepScroll = gtk_spin_button_get_value(
+		GTK_SPIN_BUTTON(spZoomStepScroll));
+	settings->setZoomStepScroll(zoomStepScroll);
 
 	settings->setDisplayDpi(dpi);
 
