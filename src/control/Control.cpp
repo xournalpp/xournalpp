@@ -118,8 +118,8 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	setEmergencyDocument(this->doc);
 
 	this->zoom = new ZoomControl();
-	this->zoom->setZoomStep(this->settings->getZoomStep());
-	this->zoom->setZoomStepScroll(this->settings->getZoomStepScroll());
+	this->zoom->setZoomStep(this->settings->getZoomStep()/100.0);
+	this->zoom->setZoomStepScroll(this->settings->getZoomStepScroll()/100.0);
 	this->zoom->setZoom100(this->settings->getDisplayDpi() / 72.0);
 
 	this->toolHandler = new ToolHandler(this, this, this->settings);
@@ -430,7 +430,7 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage)
 	this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
 	this->sidebar->selectPageNr(page, pdfPage);
 
-	this->metadata->storeMetadata(this->doc->getEvMetadataFilename().str(), page, getZoomControl()->getZoom());
+	this->metadata->storeMetadata(this->doc->getEvMetadataFilename().str(), page, getZoomControl()->getZoomReal());
 
 	int current = this->win->getXournal()->getCurrentPage();
 	int count = this->doc->getPageCount();
@@ -2121,8 +2121,8 @@ void Control::showSettings()
 
 	enableAutosave(settings->isAutosaveEnabled());
 
-	this->zoom->setZoomStep(settings->getZoomStep());
-	this->zoom->setZoomStepScroll(settings->getZoomStepScroll());
+	this->zoom->setZoomStep(settings->getZoomStep()/100.0);
+	this->zoom->setZoomStepScroll(settings->getZoomStepScroll()/100.0);
 	this->zoom->setZoom100(settings->getDisplayDpi() / 72.0);
 
 	getWindow()->getXournal()->getTouchHelper()->reload();
@@ -2397,8 +2397,8 @@ bool Control::loadMetadataCallback(MetadataCallbackData* data)
 		delete data;
 		return false;
 	}
-
-	data->ctrl->zoom->setZoom(data->md.zoom);
+	ZoomControl* zoom = data->ctrl->zoom;
+	zoom->setZoom(data->md.zoom * zoom->getZoom100());
 	data->ctrl->scrollHandler->scrollToPage(data->md.page);
 
 	delete data;

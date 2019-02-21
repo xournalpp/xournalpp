@@ -69,6 +69,11 @@ public:
 	double getZoom();
 
 	/**
+	 * @return real zoom value in percent
+	 */
+	double getZoomReal();
+
+	/**
 	 * Set the current zoom, does not preserve the current page position.
 	 * Use startZoomSequence() / zoomSequnceChange() / endZoomSequence() to preserve position
 	 * e.g. use zoomOneStep function
@@ -158,10 +163,6 @@ private:
 	 * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
 	 */
 	double zoom;
-	/**
-	 * Real current Zoom value
-	 */
-	double zoomReal;
 
 	/**
 	 * for zoom sequence start zoom value

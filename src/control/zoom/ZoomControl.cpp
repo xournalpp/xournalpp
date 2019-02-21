@@ -8,7 +8,6 @@
 ZoomControl::ZoomControl()
  : view(NULL),
    zoom(1.0),
-   zoomReal(1.0),
    lastZoomValue(1.0),
    zoomFitMode(true),
    zoom100Value(1.0),
@@ -228,6 +227,13 @@ double ZoomControl::getZoom()
 	return this->zoom;
 }
 
+double ZoomControl::getZoomReal()
+{
+	XOJ_CHECK_TYPE(ZoomControl);
+
+	return this->zoom / this->zoom100Value;
+}
+
 void ZoomControl::setZoom(double zoom)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
@@ -242,8 +248,8 @@ void ZoomControl::setZoom100(double zoom)
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	this->zoom100Value = zoom;
-	this->zoomStep = (this->zoomStepReal * zoom)/100.0;
-	this->zoomStepScroll = (this->zoomStepScrollReal * zoom)/100.0;
+	setZoomStep(this->zoomStepReal);
+	setZoomStepScroll(this->zoomStepScrollReal);
 	this->zoomMax = this->zoomMaxReal * zoom;
 	this->zoomMin = this->zoomMinReal * zoom;
 	fireZoomRangeValueChanged();
@@ -322,7 +328,7 @@ void ZoomControl::setZoomStep(double zoomStep)
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	this->zoomStepReal = zoomStep;
-	this->zoomStep = (zoomStep * this->zoom100Value)/100.0;
+	this->zoomStep = zoomStep * this->zoom100Value;
 }
 
 double ZoomControl::getZoomStepScroll()
@@ -344,7 +350,7 @@ void ZoomControl::setZoomStepScroll(double zoomStep)
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	this->zoomStepScrollReal = zoomStep;
-	this->zoomStepScroll = (zoomStep * this->zoom100Value)/100.0;
+	this->zoomStepScroll = zoomStep * this->zoom100Value;
 }
 
 double ZoomControl::getZoomMax()
