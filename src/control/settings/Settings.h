@@ -329,6 +329,12 @@ public:
 	double getAudioGain();
 	void setAudioGain(double gain);
 
+	string getPluginEnabled();
+	void setPluginEnabled(string pluginEnabled);
+
+	string getPluginDisabled();
+	void setPluginDisabled(string pluginEnabled);
+
 	/**
 	 * Get name, e.g. "cm"
 	 */
@@ -676,6 +682,15 @@ private:
 	 */
 	double audioGain;
 
+	/**
+	 * List of enabled plugins (only the one which are not enabled by default)
+	 */
+	string pluginEnabled;
+
+	/**
+	 * List of disabled plugins (only the one which are not disabled by default)
+	 */
+	string pluginDisabled;
 
 	/**
 	 * "Transaction" running, do not save until the end is reached

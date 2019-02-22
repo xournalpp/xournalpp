@@ -983,6 +983,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		// nothing to do here
 		break;
 
+
+		// Plugin menu
+	case ACTION_PLUGIN_MANAGER:
+		this->pluginController->showPluginManager();
+		break;
+
+
 		// Menu Help
 	case ACTION_HELP:
 		XojMsgBox::showHelp(getGtkWindow());

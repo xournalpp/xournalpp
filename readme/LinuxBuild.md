@@ -4,6 +4,8 @@
 
 Please create pull requests (or file issues) if you have more precise dependencies.
 
+Lua is needed for plugins, if it is missing, the plugins will be disabled.
+
 ### For Fedora/CentOS/RHEL:
 ```bash
 sudo dnf install cmake gtk3-devel libxml2-devel cppunit-devel portaudio-devel libsndfile-devel \
@@ -13,7 +15,7 @@ poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' get
 ### For Ubuntu/Debian:
 ````bash
 sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
-libcppunit-dev dvipng texlive libxml2-dev
+libcppunit-dev dvipng texlive libxml2-dev liblua5.3-dev
 ````
 
 ### For OpenSuse:

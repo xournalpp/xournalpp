@@ -121,9 +121,7 @@ pkg_check_modules (Lua "lua5.3")
 if (Lua_FOUND)
 	message("Enable Xournal++ Plugins")
 	add_includes_ldflags ("${Lua_LDFLAGS}" "${Lua_INCLUDE_DIRS}")
-	
-## Plugins are not yet ready - therefore disabled at the moment
-#	set (ENABLE_PLUGINS "true")
+	set (ENABLE_PLUGINS "true")
 endif ()
 
 configure_file (
@@ -204,6 +202,10 @@ add_subdirectory (src)
 
 # Install resources
 install (DIRECTORY ui
+  DESTINATION "share/xournalpp"
+  COMPONENT xournalpp
+)
+install (DIRECTORY plugins
   DESTINATION "share/xournalpp"
   COMPONENT xournalpp
 )

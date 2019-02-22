@@ -2,11 +2,14 @@
 #include "Plugin.h"
 
 #include "control/Control.h"
+#include "gui/dialog/PluginDialog.h"
 #include "gui/GladeSearchpath.h"
 
 #include <StringUtils.h>
 
 #include <config-features.h>
+
+#include <algorithm>
 
 
 PluginController::PluginController(Control* control)
@@ -62,6 +65,10 @@ void PluginController::loadPluginsFrom(string path)
 		return;
 	}
 
+	Settings* settings = control->getSettings();
+	vector<string> pluginEnabled = StringUtils::split(settings->getPluginEnabled(), ',');
+	vector<string> pluginDisabled = StringUtils::split(settings->getPluginDisabled(), ',');
+
 	const gchar* file;
 	while ((file = g_dir_read_name(dir)) != NULL)
 	{
@@ -76,6 +83,17 @@ void PluginController::loadPluginsFrom(string path)
 			delete p;
 			continue;
 		}
+
+		if (p->isDefaultEnabled())
+		{
+			p->setEnabled(!(std::find(pluginDisabled.begin(), pluginDisabled.end(), p->getName()) != pluginDisabled.end()));
+		}
+		else
+		{
+			p->setEnabled(std::find(pluginEnabled.begin(), pluginEnabled.end(), p->getName()) != pluginEnabled.end());
+		}
+
+		p->loadScript();
 
 		this->plugins.push_back(p);
 	}
@@ -96,6 +114,18 @@ void PluginController::registerToolbar()
 		p->registerToolbar();
 	}
 #endif
+}
+
+/**
+ * Show Plugin manager Dialog
+ */
+void PluginController::showPluginManager()
+{
+	XOJ_CHECK_TYPE(PluginController);
+
+	PluginDialog dlg(control->getGladeSearchPath(), control->getSettings());
+	dlg.loadPluginList(this);
+	dlg.show(control->getGtkWindow());
 }
 
 /**
@@ -121,4 +151,13 @@ void PluginController::registerMenu()
 #endif
 }
 
+/**
+ * Return the plugin list
+ */
+vector<Plugin*>& PluginController::getPlugins()
+{
+	XOJ_CHECK_TYPE(PluginController);
+
+	return plugins;
+}
 

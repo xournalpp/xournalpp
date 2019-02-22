@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.10"/>
   <object class="GtkAdjustment" id="adjHorizontal">
@@ -1550,6 +1550,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Plugin _Manager</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_PLUGIN_MANAGER" swapped="no"/>
                       </object>
                     </child>
                   </object>

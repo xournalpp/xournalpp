@@ -76,6 +76,11 @@ public:
 
 public:
 	/**
+	 * Load the plugin script
+	 */
+	void loadScript();
+
+	/**
 	 * Check if this plugin is valid
 	 */
 	bool isValid();
@@ -101,6 +106,31 @@ public:
 	string getName();
 
 	/**
+	 * Author of the plugin
+	 */
+	string getAuthor();
+
+	/**
+	 * Plugin version
+	 */
+	string getVersion();
+
+	/**
+	 * The plugin is enabled
+	 */
+	bool isEnabled();
+
+	/**
+	 * The plugin is enabled
+	 */
+	void setEnabled(bool enabled);
+
+	/**
+	 * The plugin is default enabled
+	 */
+	bool isDefaultEnabled();
+
+	/**
 	 * @return Flag to check if init ui is currently running
 	 */
 	bool isInInitUi();
@@ -122,11 +152,6 @@ private:
 	 * Load ini file
 	 */
 	void loadIni();
-
-	/**
-	 * Load the plugin script
-	 */
-	void loadScript();
 
 	/**
 	 * Execute lua function
@@ -176,6 +201,16 @@ private:
 	 * Main plugin script
 	 */
 	string mainfile;
+
+	/**
+	 * The plugin is enabled
+	 */
+	bool enabled = false;
+
+	/**
+	 * The plugin is default enabled
+	 */
+	bool defaultEnabled = false;
 
 	/**
 	 * Lua engine

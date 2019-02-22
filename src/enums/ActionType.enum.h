@@ -181,9 +181,8 @@ enum ActionType
 	ACTION_SET_LAYOUT_T2B,
 	ACTION_SET_LAYOUT_B2T,
 	
-	
-	
-	
+	// Plugin Menu
+	ACTION_PLUGIN_MANAGER = 700,
 	
 	// Menu Help
 	ACTION_ABOUT = 800,
