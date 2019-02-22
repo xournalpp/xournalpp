@@ -6,7 +6,7 @@ var_dump = require "var_dump"
 function initUi()
   print("Hello from Example: Plugin initUi called\n");
 
-  ref = app.registerUi({["menu"] = "Test123", ["callback"] = "exampleCallback"});
+  ref = app.registerUi({["menu"] = "Test123", ["callback"] = "exampleCallback", ["accelerator"] = "<Control>t"});
   print("Menu reference:");
   var_dump(ref);
 
@@ -15,5 +15,6 @@ end
 
 -- Callback if the menu item is executed
 function exampleCallback()
-  app.msgbox("Test123", "yes,no");
+  result = app.msgbox("Test123", {[1] = "Yes", [2] = "No"});
+  print("result = " .. result)
 end

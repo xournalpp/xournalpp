@@ -58,6 +58,13 @@ public:
 	 * Callback function name
 	 */
 	string callback;
+
+	/**
+	 * Accelerator key
+	 *
+	 * See https://developer.gnome.org/gtk3/stable/gtk3-Keyboard-Accelerators.html#gtk-accelerator-parse
+	 */
+	string accelerator;
 };
 
 class Plugin
@@ -80,7 +87,7 @@ public:
 	/**
 	 * Register all menu entries to the menu
 	 */
-	void registerMenu(GtkWidget* menu);
+	void registerMenu(GtkWindow* mainWindow, GtkWidget* menu);
 
 	/**
 	 * Execute menu entry
@@ -102,7 +109,7 @@ public:
 	 *
 	 * @return Internal ID, can e.g. be used to disable the menu
 	 */
-	int registerMenu(string menu, string callback);
+	int registerMenu(string menu, string callback, string accelerator);
 
 private:
 	/**
