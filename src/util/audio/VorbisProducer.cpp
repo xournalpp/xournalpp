@@ -12,7 +12,7 @@ VorbisProducer::~VorbisProducer()
 	XOJ_RELEASE_TYPE(VorbisProducer);
 }
 
-void VorbisProducer::start(std::string filename, const DeviceInfo& outputDevice, unsigned int timestamp)
+bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 {
 	XOJ_CHECK_TYPE(VorbisProducer);
 
@@ -21,7 +21,7 @@ void VorbisProducer::start(std::string filename, const DeviceInfo& outputDevice,
 	if (sfFile == nullptr)
 	{
 		g_warning("VorbisProducer: input file \"%s\" could not be opened\ncaused by:%s", filename.c_str(), sf_strerror(sfFile));
-		return;
+		return false;
 	}
 
 	sf_count_t seekPosition = this->sfInfo.samplerate / 1000 * timestamp;
@@ -33,6 +33,8 @@ void VorbisProducer::start(std::string filename, const DeviceInfo& outputDevice,
 	{
 		g_warning("VorbisProducer: Seeking outside of audio file extent");
 	}
+
+	this->audioQueue->setAudioAttributes(this->sfInfo.samplerate, static_cast<unsigned int>(this->sfInfo.channels));
 
 	this->producerThread = new std::thread(
 			[&, filename]
@@ -58,13 +60,7 @@ void VorbisProducer::start(std::string filename, const DeviceInfo& outputDevice,
 
 				sf_close(this->sfFile);
 			});
-}
-
-SF_INFO* VorbisProducer::getSignalInformation()
-{
-	XOJ_CHECK_TYPE(VorbisProducer);
-
-	return &this->sfInfo;
+	return true;
 }
 
 void VorbisProducer::abort()

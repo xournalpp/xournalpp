@@ -88,6 +88,8 @@ bool PortAudioProducer::startRecording()
 	portaudio::DirectionSpecificStreamParameters inParams(*device, this->inputChannels, portaudio::INT32, true, device->defaultLowInputLatency(), nullptr);
 	portaudio::StreamParameters params(inParams, portaudio::DirectionSpecificStreamParameters::null(), this->settings->getAudioSampleRate(), this->framesPerBuffer, paNoFlag);
 
+	this->audioQueue->setAudioAttributes(this->settings->getAudioSampleRate(), static_cast<unsigned int>(this->inputChannels));
+
 	// Specify the callback used for buffering the recorded data
 	try
 	{

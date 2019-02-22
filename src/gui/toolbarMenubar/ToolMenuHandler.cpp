@@ -478,7 +478,11 @@ void ToolMenuHandler::initToolItems()
 	fontButton = new FontButton(listener, gui, "SELECT_FONT", ACTION_FONT_BUTTON_CHANGED, _("Select Font"));
 	addToolItem(fontButton);
 
-	ADD_CUSTOM_ITEM_TGL("RECSTOP", ACTION_RECSTOP, GROUP_REC, false, "rec", _("Rec / Stop"));
+	ADD_CUSTOM_ITEM_TGL("AUDIO_RECORDING", ACTION_AUDIO_RECORD, GROUP_AUDIO, false, "audio-record", _("Record Audio / Stop Recording"));
+	audioPausePlaybackButton = new ToolButton(listener, "AUDIO_PAUSE_PLAYBACK", ACTION_AUDIO_PAUSE_PLAYBACK, GROUP_AUDIO, false, "audio-playback-pause", _("Pause / Play"));
+	addToolItem(audioPausePlaybackButton);
+	audioStopPlaybackButton = new ToolButton(listener, "AUDIO_STOP_PLAYBACK", ACTION_AUDIO_STOP_PLAYBACK, "audio-playback-stop", _("Stop"));
+	addToolItem(audioStopPlaybackButton);
 
 	// Menu Help
 	// ************************************************************************
@@ -599,4 +603,36 @@ vector<AbstractToolItem*>* ToolMenuHandler::getToolItems()
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
 	return &this->toolItems;
+}
+
+void ToolMenuHandler::disableAudioPlaybackButtons()
+{
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
+	setAudioPlaybackPaused(false);
+
+	this->audioPausePlaybackButton->enable(false);
+	this->audioStopPlaybackButton->enable(false);
+
+	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioPausePlayback")), false);
+	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioStopPlayback")), false);
+}
+
+void ToolMenuHandler::enableAudioPlaybackButtons()
+{
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
+	this->audioPausePlaybackButton->enable(true);
+	this->audioStopPlaybackButton->enable(true);
+
+	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioPausePlayback")), true);
+	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioStopPlayback")), true);
+}
+
+void ToolMenuHandler::setAudioPlaybackPaused(bool paused)
+{
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
+	this->audioPausePlaybackButton->setActive(paused);
+	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(gui->get("menuAudioPausePlayback")), paused);
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.10"/>
   <object class="GtkAdjustment" id="adjHorizontal">
@@ -1512,12 +1512,30 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkCheckMenuItem" id="menuRecStop">
+                      <object class="GtkCheckMenuItem" id="menuAudioRecord">
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Rec-Stop</property>
-                        <signal name="toggled" handler="ACTION_RECSTOP" swapped="no"/>
+                        <property name="label" translatable="yes">Record / Stop</property>
+                        <signal name="toggled" handler="ACTION_AUDIO_RECORD" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckMenuItem" id="menuAudioPausePlayback">
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Pause</property>
+                        <signal name="toggled" handler="ACTION_AUDIO_PAUSE_PLAYBACK" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="menuAudioStopPlayback">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Stop</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_AUDIO_STOP_PLAYBACK" swapped="no"/>
                       </object>
                     </child>
                     <child>

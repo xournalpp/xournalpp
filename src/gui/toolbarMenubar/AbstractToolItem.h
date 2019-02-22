@@ -33,10 +33,10 @@ public:
 	virtual string getToolDisplayName() = 0;
 	virtual GtkWidget* getNewToolIcon() = 0;
 
+	virtual void enable(bool enabled);
+
 protected:
 	virtual GtkToolItem* newItem() = 0;
-
-	virtual void enable(bool enabled);
 
 public:
 	XOJ_TYPE_ATTRIB;

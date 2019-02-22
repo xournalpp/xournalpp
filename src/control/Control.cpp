@@ -944,15 +944,15 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;	
 
 		
-	case ACTION_RECSTOP:
+	case ACTION_AUDIO_RECORD:
 	{
 		bool result;
 		if (enabled)
 		{
-			result = audioController->recStart();
+			result = audioController->startRecording();
 		} else
 		{
-			result = audioController->recStop();
+			result = audioController->stopRecording();
 		}
 
 		if (!result)
@@ -968,6 +968,20 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		}
 		break;
 	}
+
+	case ACTION_AUDIO_PAUSE_PLAYBACK:
+		if (enabled)
+		{
+			this->getAudioController()->pausePlayback();
+		} else
+		{
+			this->getAudioController()->continuePlayback();
+		}
+		break;
+
+	case ACTION_AUDIO_STOP_PLAYBACK:
+		this->getAudioController()->stopPlayback();
+		break;
 
 	case ACTION_ROTATION_SNAPPING:
 		rotationSnappingToggle();
@@ -2732,7 +2746,7 @@ void Control::quit(bool allowCancel)
 
 	this->scheduler->lock();
 
-	audioController->recStop();
+	audioController->stopRecording();
 	settings->save();
 
 	this->scheduler->removeAllJobs();

@@ -39,9 +39,13 @@ public:
 	{
 		XOJ_CHECK_TYPE(AudioQueue);
 
-		this->notified = false;
+		this->popNotified = false;
+		this->pushNotified = false;
 		this->streamEnd = false;
 		this->clear();
+
+		this->sampleRate = -1;
+		this->channels = 0;
 	}
 
 	bool empty()
@@ -67,21 +71,37 @@ public:
 			this->push_front(samples[i]);
 		}
 
-		this->notified = true;
-		this->lockCondition.notify_one();
+		this->popNotified = false;
+
+		this->pushNotified = true;
+		this->pushLockCondition.notify_one();
 	}
 
-	void pop(T* returnBuffer, int* bufferLength, unsigned long nSamples, int numChannels)
+	void pop(T* returnBuffer, unsigned long& returnBufferLength, unsigned long nSamples)
 	{
 		XOJ_CHECK_TYPE(AudioQueue);
 
-		*bufferLength = std::min(nSamples, this->size() - this->size() % numChannels);
-		for (long i = 0; i < *bufferLength; i++)
+		if (this->channels == 0)
+		{
+			returnBufferLength = 0;
+
+			this->popNotified = true;
+			this->popLockCondition.notify_one();
+
+			return;
+		}
+
+		returnBufferLength = std::min(nSamples, this->size() - this->size() % this->channels);
+		for (long i = 0; i < returnBufferLength; i++)
 		{
 			returnBuffer[i] = this->back();
 			this->pop_back();
 		}
-		this->notified = false;
+
+		this->pushNotified = false;
+
+		this->popNotified = true;
+		this->popLockCondition.notify_one();
 	}
 
 	void signalEndOfStream()
@@ -89,17 +109,29 @@ public:
 		XOJ_CHECK_TYPE(AudioQueue);
 
 		this->streamEnd = true;
-		this->notified = true;
-		this->lockCondition.notify_one();
+		this->pushNotified = true;
+		this->pushLockCondition.notify_one();
+		this->popNotified = true;
+		this->popLockCondition.notify_one();
 	}
 
-	void waitForNewElements(std::unique_lock<std::mutex>& lock)
+	void waitForProducer(std::unique_lock<std::mutex>& lock)
 	{
 		XOJ_CHECK_TYPE(AudioQueue);
 
-		while (!this->notified)
+		while (!this->pushNotified)
 		{
-			this->lockCondition.wait(lock);
+			this->pushLockCondition.wait(lock);
+		}
+	}
+
+	void waitForConsumer(std::unique_lock<std::mutex>& lock)
+	{
+		XOJ_CHECK_TYPE(AudioQueue);
+
+		while (!this->popNotified)
+		{
+			this->popLockCondition.wait(lock);
 		}
 	}
 
@@ -117,12 +149,29 @@ public:
 		return this->queueLock;
 	}
 
+	void setAudioAttributes(double sampleRate, unsigned int channels)
+	{
+		this->sampleRate = sampleRate;
+		this->channels = channels;
+	}
+
+	void getAudioAttributes(double &sampleRate, unsigned int &channels)
+	{
+		sampleRate = this->sampleRate;
+		channels = this->channels;
+	}
+
 private:
 	XOJ_TYPE_ATTRIB;
 
 protected:
 	std::mutex queueLock;
-	std::condition_variable lockCondition;
 	bool streamEnd = false;
-	bool notified = false;
+	std::condition_variable pushLockCondition;
+	bool pushNotified = false;
+	std::condition_variable popLockCondition;
+	bool popNotified = false;
+
+	double sampleRate = -1;
+	unsigned int channels = 0;
 };

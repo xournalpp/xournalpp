@@ -1,6 +1,7 @@
+#include <control/Control.h>
 #include "AudioPlayer.h"
 
-AudioPlayer::AudioPlayer(Settings* settings) : settings(settings)
+AudioPlayer::AudioPlayer(Control* control, Settings* settings) : control(control), settings(settings)
 {
 	XOJ_INIT_TYPE(AudioPlayer);
 
@@ -25,44 +26,78 @@ AudioPlayer::~AudioPlayer()
 	XOJ_RELEASE_TYPE(AudioPlayer);
 }
 
-void AudioPlayer::start(string filename, unsigned int timestamp)
+bool AudioPlayer::start(string filename, unsigned int timestamp)
 {
 	XOJ_CHECK_TYPE(AudioPlayer);
 
 	// Start the producer for reading the data
-	this->vorbisProducer->start(std::move(filename), this->portAudioConsumer->getSelectedOutputDevice(), timestamp);
-	SF_INFO* vi = this->vorbisProducer->getSignalInformation();
+	bool status = this->vorbisProducer->start(std::move(filename), timestamp);
 
 	// Start playing
-	this->portAudioConsumer->startPlaying(static_cast<double>(vi->samplerate), static_cast<unsigned int>(vi->channels));
+	if (status)
+	{
+		status &= this->play();
+	}
 
-	// Clean up after audio is played
-	stopThread = std::thread([&]
-							 {
-								 while (this->portAudioConsumer->isPlaying())
-								 {
-									 Pa_Sleep(100);
-								 }
-								 this->stop();
-							 });
-	stopThread.detach();
+	return status;
 }
 
-void AudioPlayer::stop()
+bool AudioPlayer::isPlaying()
 {
 	XOJ_CHECK_TYPE(AudioPlayer);
 
-	// Wait for libsox to read all the data
-	this->vorbisProducer->stop();
+	return this->portAudioConsumer->isPlaying();
+}
+
+void AudioPlayer::pause()
+{
+	XOJ_CHECK_TYPE(AudioPlayer);
+
+	if (!this->portAudioConsumer->isPlaying())
+	{
+		return;
+	}
 
 	// Stop playing audio
 	this->portAudioConsumer->stopPlaying();
-
-	// Reset the queue for the next playback
-	this->audioQueue->reset();
 }
 
-void AudioPlayer::abort()
+bool AudioPlayer::play()
+{
+	XOJ_CHECK_TYPE(AudioPlayer);
+
+	if (this->portAudioConsumer->isPlaying())
+	{
+		return false;
+	}
+
+	bool status = this->portAudioConsumer->startPlaying();
+
+	if (status)
+	{
+		// Clean up after audio is played
+		stopThread = std::thread(
+				[&]
+				{
+					while (isPlaying())
+					{
+						Pa_Sleep(100);
+					}
+					this->portAudioConsumer->stopPlaying();
+
+					// If the stream is played completely update the UI elements accordingly
+					if (this->audioQueue->hasStreamEnded())
+					{
+						this->control->getWindow()->disableAudioPlaybackButtons();
+					}
+				});
+		stopThread.detach();
+	}
+
+	return status;
+}
+
+void AudioPlayer::stop()
 {
 	XOJ_CHECK_TYPE(AudioPlayer);
 

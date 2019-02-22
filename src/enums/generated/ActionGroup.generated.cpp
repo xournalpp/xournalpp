@@ -97,9 +97,9 @@ ActionGroup ActionGroup_fromString(string value)
 		return GROUP_LINE_STYLE;
 	}
 
-	if (value == "GROUP_REC")
+	if (value == "GROUP_AUDIO")
 	{
-		return GROUP_REC;
+		return GROUP_AUDIO;
 	}
 
 	if (value == "GROUP_SNAPPING")
@@ -225,9 +225,9 @@ string ActionGroup_toString(ActionGroup value)
 		return "GROUP_LINE_STYLE";
 	}
 
-	if (value == GROUP_REC)
+	if (value == GROUP_AUDIO)
 	{
-		return "GROUP_REC";
+		return "GROUP_AUDIO";
 	}
 
 	if (value == GROUP_SNAPPING)
