@@ -88,6 +88,13 @@ void PageBackgroundChangeController::changeCurrentPageBackground(PageTypeInfo* i
 {
 	XOJ_CHECK_TYPE(PageBackgroundChangeController);
 
+	changeCurrentPageBackground(info->page);
+}
+
+void PageBackgroundChangeController::changeCurrentPageBackground(PageType& pageType)
+{
+	XOJ_CHECK_TYPE(PageBackgroundChangeController);
+
 	if (ignoreEvent)
 	{
 		return;
@@ -116,7 +123,7 @@ void PageBackgroundChangeController::changeCurrentPageBackground(PageTypeInfo* i
 	PageType origType = page->getBackgroundType();
 
 	// Apply the new background
-	applyPageBackground(page, info->page);
+	applyPageBackground(page, pageType);
 
 	control->firePageChanged(pageNr);
 	control->updateBackgroundSizeButton();

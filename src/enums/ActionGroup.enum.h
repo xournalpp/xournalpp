@@ -65,8 +65,6 @@ enum ActionGroup
 	GROUP_LAYOUT_LR,
 	
 	GROUP_LAYOUT_TB,
-	
-
 };
 
 ActionGroup ActionGroup_fromString(string value);

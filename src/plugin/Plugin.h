@@ -21,6 +21,7 @@
 #include <lua.h>
 
 class Plugin;
+class Control;
 
 class MenuEntry {
 public:
@@ -70,7 +71,7 @@ public:
 class Plugin
 {
 public:
-	Plugin(string name, string path);
+	Plugin(Control* control, string name, string path);
 	virtual ~Plugin();
 
 public:
@@ -110,6 +111,11 @@ public:
 	 * @return Internal ID, can e.g. be used to disable the menu
 	 */
 	int registerMenu(string menu, string callback, string accelerator);
+
+	/**
+	 * @return The main controller
+	 */
+	Control* getControl();
 
 private:
 	/**
@@ -180,6 +186,11 @@ private:
 	 * All registered menu entries
 	 */
 	vector<MenuEntry*> menuEntries;
+
+	/**
+	 * The main controller
+	 */
+	Control* control;
 
 	/**
 	 * Flag to check if init ui is currently running

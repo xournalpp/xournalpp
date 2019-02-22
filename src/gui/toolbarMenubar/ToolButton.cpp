@@ -3,7 +3,8 @@
 #include "gui/widgets/gtkmenutooltogglebutton.h"
 
 ToolButton::ToolButton(ActionHandler* handler, string id, ActionType type, string iconName, string description,
-					   GtkWidget* menuitem) : AbstractToolItem(id, handler, type, menuitem)
+					   GtkWidget* menuitem)
+ : AbstractToolItem(id, handler, type, menuitem)
 {
 	XOJ_INIT_TYPE(ToolButton);
 
@@ -13,7 +14,8 @@ ToolButton::ToolButton(ActionHandler* handler, string id, ActionType type, strin
 
 ToolButton::ToolButton(ActionHandler* handler, string id, ActionType type, ActionGroup group,
 					   bool toolToggleOnlyEnable, string iconName, string description,
-					   GtkWidget* menuitem) : AbstractToolItem(id, handler, type, menuitem)
+					   GtkWidget* menuitem)
+ : AbstractToolItem(id, handler, type, menuitem)
 {
 	XOJ_INIT_TYPE(ToolButton);
 
