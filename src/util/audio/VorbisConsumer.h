@@ -30,7 +30,7 @@ public:
 	~VorbisConsumer();
 
 public:
-	bool start(string filename, unsigned int inputChannels);
+	bool start(string filename);
 	void join();
 	void stop();
 

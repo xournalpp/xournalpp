@@ -28,8 +28,7 @@ public:
 	~VorbisProducer();
 
 public:
-	void start(string filename, const DeviceInfo& outputDevice, unsigned int timestamp);
-	SF_INFO* getSignalInformation();
+	bool start(string filename, unsigned int timestamp);
 	void abort();
 	void stop();
 

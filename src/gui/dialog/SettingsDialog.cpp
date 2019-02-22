@@ -274,7 +274,7 @@ void SettingsDialog::load()
 	touch.getInt("timeout", timeoutMs);
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spTouchDisableTimeout")), timeoutMs / 1000.0);
 
-    this->audioInputDevices = this->control->getAudioController()->getAudioRecorder()->getInputDevices();
+    this->audioInputDevices = this->control->getAudioController()->getInputDevices();
 	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioInputDevice")), "", "System default");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioInputDevice")), 0);
     for (auto &audioInputDevice : this->audioInputDevices)
@@ -289,7 +289,7 @@ void SettingsDialog::load()
 		}
     }
 
-    this->audioOutputDevices = this->control->getAudioController()->getAudioPlayer()->getOutputDevices();
+    this->audioOutputDevices = this->control->getAudioController()->getOutputDevices();
 	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "", "System default");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")), 0);
 	for (auto &audioOutputDevice : this->audioOutputDevices)
