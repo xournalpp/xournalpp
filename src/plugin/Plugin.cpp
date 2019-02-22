@@ -39,7 +39,6 @@ Plugin::Plugin(Control* control, string name, string path)
 	XOJ_INIT_TYPE(Plugin);
 
 	loadIni();
-	loadScript();
 }
 
 Plugin::~Plugin()
@@ -89,7 +88,7 @@ void Plugin::registerToolbar()
 {
 	XOJ_CHECK_TYPE(Plugin);
 
-	if (!this->valid)
+	if (!this->valid || !this->enabled)
 	{
 		return;
 	}
@@ -124,7 +123,7 @@ void Plugin::registerMenu(GtkWindow* mainWindow, GtkWidget* menu)
 {
 	XOJ_CHECK_TYPE(Plugin);
 
-	if (menuEntries.empty())
+	if (menuEntries.empty() || !this->enabled)
 	{
 		// No entries - nothing to do
 		return;
@@ -178,6 +177,54 @@ string Plugin::getName()
 	XOJ_CHECK_TYPE(Plugin);
 
 	return name;
+}
+
+/**
+ * Author of the plugin
+ */
+string Plugin::getAuthor()
+{
+	XOJ_CHECK_TYPE(Plugin);
+
+	return author;
+}
+
+/**
+ * Plugin version
+ */
+string Plugin::getVersion()
+{
+	XOJ_CHECK_TYPE(Plugin);
+
+	return version;
+}
+
+/**
+ * The plugin is enabled
+ */
+bool Plugin::isEnabled()
+{
+	XOJ_CHECK_TYPE(Plugin);
+
+	return enabled;
+}
+
+/**
+ * The plugin is enabled
+ */
+void Plugin::setEnabled(bool enabled)
+{
+	this->enabled = enabled;
+}
+
+/**
+ * The plugin is default enabled
+ */
+bool Plugin::isDefaultEnabled()
+{
+	XOJ_CHECK_TYPE(Plugin);
+
+	return defaultEnabled;
 }
 
 /**
@@ -242,6 +289,12 @@ void Plugin::loadIni()
 	}
 
 	LOAD_FROM_INI(mainfile, "plugin", "mainfile");
+
+	string defaultEnabledStr;
+	LOAD_FROM_INI(defaultEnabledStr, "default", "enabled");
+
+	defaultEnabled = defaultEnabledStr == "true";
+	enabled = defaultEnabled;
 
 	g_key_file_free(config);
 
@@ -312,6 +365,12 @@ void Plugin::loadScript()
 		this->valid = false;
 		return;
 	}
+
+	if (!this->enabled)
+	{
+		return;
+	}
+
 
 	// Create Lua state variable
     lua = luaL_newstate();

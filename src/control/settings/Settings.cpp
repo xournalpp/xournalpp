@@ -131,6 +131,9 @@ void Settings::loadDefault()
 	this->audioOutputDevice = -1;
 	this->audioGain = 1.0;
 
+	this->pluginEnabled = "";
+	this->pluginDisabled = "";
+
 	inTransaction = false;
 }
 
@@ -391,6 +394,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "defaultSaveName") == 0)
 	{
 		this->defaultSaveName = (const char*) value;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "pluginEnabled") == 0)
+	{
+		this->pluginEnabled = (const char*) value;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "pluginDisabled") == 0)
+	{
+		this->pluginDisabled = (const char*) value;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "pageTemplate") == 0)
 	{
@@ -857,6 +868,9 @@ void Settings::save()
 	WRITE_INT_PROP(audioOutputDevice);
 	WRITE_DOUBLE_PROP(audioSampleRate);
 	WRITE_DOUBLE_PROP(audioGain);
+
+	WRITE_STRING_PROP(pluginEnabled);
+	WRITE_STRING_PROP(pluginDisabled);
 
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
@@ -2032,6 +2046,44 @@ void Settings::setAudioGain(double gain)
 		return;
 	}
 	this->audioGain = gain;
+	save();
+}
+
+string Settings::getPluginEnabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->pluginEnabled;
+}
+
+void Settings::setPluginEnabled(string pluginEnabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->pluginEnabled == pluginEnabled)
+	{
+		return;
+	}
+	this->pluginEnabled = pluginEnabled;
+	save();
+}
+
+string Settings::getPluginDisabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->pluginDisabled;
+}
+
+void Settings::setPluginDisabled(string pluginEnabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->pluginDisabled == pluginDisabled)
+	{
+		return;
+	}
+	this->pluginDisabled = pluginDisabled;
 	save();
 }
 

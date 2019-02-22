@@ -22,7 +22,7 @@ void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, 
 	gtk_list_store_set(typeModel, &iter, 1, name, 2, action, -1);
 }
 
-ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GladeSearchpath* gladeSearchPath, GtkWidget* w,  Settings* settings, int button, bool withDevice)
+ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, int button, bool withDevice)
  : GladeGui(gladeSearchPath, "settingsButtonConfig.glade", "offscreenwindow")
 {
 	XOJ_INIT_TYPE(ButtonConfigGui);
@@ -208,8 +208,6 @@ void ButtonConfigGui::loadSettings()
 		gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), 0);
 
 		int i = 0;
-
-
 		for (InputDevice& dev : this->deviceList->getDeviceList())
 		{
 			if (cfg->device == dev.getName())
@@ -225,9 +223,9 @@ void ButtonConfigGui::loadSettings()
 	}
 }
 
-// Not implemented! This is not a dialog!
 void ButtonConfigGui::show(GtkWindow* parent)
 {
+	// Not implemented! This is not a dialog!
 }
 
 void ButtonConfigGui::saveSettings()

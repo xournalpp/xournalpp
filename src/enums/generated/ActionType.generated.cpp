@@ -652,6 +652,11 @@ ActionType ActionType_fromString(string value)
 		return ACTION_SET_LAYOUT_B2T;
 	}
 
+	if (value == "ACTION_PLUGIN_MANAGER")
+	{
+		return ACTION_PLUGIN_MANAGER;
+	}
+
 	if (value == "ACTION_ABOUT")
 	{
 		return ACTION_ABOUT;
@@ -1323,6 +1328,11 @@ string ActionType_toString(ActionType value)
 	if (value == ACTION_SET_LAYOUT_B2T)
 	{
 		return "ACTION_SET_LAYOUT_B2T";
+	}
+
+	if (value == ACTION_PLUGIN_MANAGER)
+	{
+		return "ACTION_PLUGIN_MANAGER";
 	}
 
 	if (value == ACTION_ABOUT)

@@ -1568,6 +1568,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Plugin _Manager</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="ACTION_PLUGIN_MANAGER" swapped="no"/>
                       </object>
                     </child>
                   </object>

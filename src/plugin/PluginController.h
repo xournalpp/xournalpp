@@ -36,9 +36,19 @@ public:
 	void registerToolbar();
 
 	/**
+	 * Show Plugin manager Dialog
+	 */
+	void showPluginManager();
+
+	/**
 	 * Register menu stuff
 	 */
 	void registerMenu();
+
+	/**
+	 * Return the plugin list
+	 */
+	vector<Plugin*>& getPlugins();
 
 private:
 	XOJ_TYPE_ATTRIB;
