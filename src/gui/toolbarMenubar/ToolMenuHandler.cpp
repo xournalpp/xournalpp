@@ -126,6 +126,12 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 				{
 					name = "PAIRED_PAGES";
 				}
+
+				// recognize previous name, V1.08 (Feb 2019) and earlier.
+				if (name == "RECSTOP")
+				{
+					name = "AUDIO_RECORDING";
+				}
 				
 
 				if (name == "SEPARATOR")
