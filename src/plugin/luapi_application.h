@@ -68,18 +68,29 @@ static int applib_registerUi(lua_State* L)
 	// 'unpack' the table by putting the values onto
 	// the stack first. Then convert those stack values
 	// into an appropriate C type.
+	lua_getfield(L, 1, "accelerator");
 	lua_getfield(L, 1, "menu");
 	lua_getfield(L, 1, "callback");
 	// stack now has following:
-	//    1 = {"menu"="MenuName", callback="functionName"}
+	//    1 = {"menu"="MenuName", callback="functionName", accelerator="<Control>a"}
+	//   -3 = "<Control>a"
 	//   -2 = "MenuName"
 	//   -1 = "functionName"
 
+	const char* accelerator = luaL_optstring(L, -3, NULL);
 	const char* menu = luaL_optstring(L, -2, NULL);
 	const char* callback = luaL_optstring(L, -1, NULL);
 	if (callback == NULL)
 	{
 		luaL_error(L, "Missing callback function!");
+	}
+	if (menu == NULL)
+	{
+		menu = "";
+	}
+	if (accelerator == NULL)
+	{
+		accelerator = "";
 	}
 
 	int menuId = -1;
@@ -87,11 +98,11 @@ static int applib_registerUi(lua_State* L)
 
 	if (menu)
 	{
-		menuId = plugin->registerMenu(menu, callback);
+		menuId = plugin->registerMenu(menu, callback, accelerator);
 	}
 
 	// Make sure to remove all vars which are put to the stack before!
-	lua_pop(L, 2);
+	lua_pop(L, 3);
 
 	// Add return value to the Stack
 	lua_createtable(L, 0, 2);

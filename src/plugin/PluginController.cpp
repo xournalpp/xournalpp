@@ -109,7 +109,7 @@ void PluginController::registerMenu()
 	GtkWidget* menuPlugin = control->getWindow()->get("menuPlugin");
 	for (Plugin* p : this->plugins)
 	{
-		p->registerMenu(menuPlugin);
+		p->registerMenu(control->getGtkWindow(), menuPlugin);
 	}
 
 	gtk_widget_show_all(menuPlugin);

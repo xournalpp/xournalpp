@@ -119,7 +119,7 @@ void Plugin::registerToolbar()
 /**
  * Register all menu entries to the menu
  */
-void Plugin::registerMenu(GtkWidget* menu)
+void Plugin::registerMenu(GtkWindow* mainWindow, GtkWidget* menu)
 {
 	XOJ_CHECK_TYPE(Plugin);
 
@@ -131,11 +131,22 @@ void Plugin::registerMenu(GtkWidget* menu)
 
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), gtk_separator_menu_item_new());
 
+	GtkAccelGroup* accelGroup = gtk_accel_group_new();
+
 	for (MenuEntry* m : menuEntries)
 	{
 		GtkWidget* mi = gtk_menu_item_new_with_label(m->menu.c_str());
 		m->widget = mi;
 		gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+
+		if (m->accelerator != "")
+		{
+			guint acceleratorKey = 0;
+			GdkModifierType mods = (GdkModifierType)0;
+			gtk_accelerator_parse(m->accelerator.c_str(), &acceleratorKey, &mods);
+
+			gtk_widget_add_accelerator(mi, "activate", accelGroup, acceleratorKey, mods, GTK_ACCEL_VISIBLE);
+		}
 
 		g_signal_connect(mi, "activate", G_CALLBACK(
 			+[](GtkWidget* bt, MenuEntry* me)
@@ -144,6 +155,8 @@ void Plugin::registerMenu(GtkWidget* menu)
 				me->plugin->executeMenuEntry(me);
 			}), m);
 	}
+
+	gtk_window_add_accel_group(GTK_WINDOW(mainWindow), accelGroup);
 }
 
 /**
@@ -181,11 +194,12 @@ bool Plugin::isInInitUi()
  *
  * @return Internal ID, can e.g. be used to disable the menu
  */
-int Plugin::registerMenu(string menu, string callback)
+int Plugin::registerMenu(string menu, string callback, string accelerator)
 {
 	MenuEntry* m = new MenuEntry(this);
 	m->menu = menu;
 	m->callback = callback;
+	m->accelerator = accelerator;
 	menuEntries.push_back(m);
 
 	return menuEntries.size() - 1;
