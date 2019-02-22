@@ -12,6 +12,9 @@
 #include <XojMsgBox.h>
 #include <StringUtils.h>
 
+#include "control/Control.h"
+#include "control/PageBackgroundChangeController.h"
+
 #include <map>
 using std::map;
 
@@ -118,17 +121,103 @@ static int applib_registerUi(lua_State* L)
 	return 1;
 }
 
+/**
+ * Execute an UI action (usually internal called from Toolbar / Menu)
+ */
+static int applib_uiAction(lua_State* L)
+{
+	Plugin* plugin = Plugin::getPluginFromLua(L);
+
+	// discard any extra arguments passed in
+	lua_settop(L, 1);
+	luaL_checktype(L, 1, LUA_TTABLE);
+
+	lua_getfield(L, 1, "group");
+	lua_getfield(L, 1, "enabled");
+	lua_getfield(L, 1, "action");
+	// stack now has following:
+	//    1 = {["action"] = "ACTION_GRID_SNAPPING", ["group"] = "GROUP_GRID_SNAPPING", ["enabled"] = true}
+	//   -3 = GROUP_GRID_SNAPPING
+	//   -2 = true
+	//   -1 = "ACTION_GRID_SNAPPING"
+
+	bool enabled = true;
+
+	ActionGroup group = GROUP_NOGROUP;
+	const char* groupStr = luaL_optstring(L, -3, NULL);
+	if (groupStr != NULL)
+	{
+		group = ActionGroup_fromString(groupStr);
+	}
+
+	if (lua_isboolean(L, -2))
+	{
+		enabled = lua_toboolean(L, -2);
+	}
+
+	const char* actionStr = luaL_optstring(L, -1, NULL);
+	if (actionStr == NULL)
+	{
+		luaL_error(L, "Missing action!");
+	}
+
+	ActionType action = ActionType_fromString(actionStr);
+	GdkEvent* event = NULL;
+	GtkMenuItem* menuitem = NULL;
+	GtkToolButton* toolbutton = NULL;
+
+	Control* ctrl = plugin->getControl();
+	ctrl->actionPerformed(action, group, event, menuitem, toolbutton, enabled);
+
+	// Make sure to remove all vars which are put to the stack before!
+	lua_pop(L, 3);
+
+	return 1;
+}
+
+/**
+ * Select UI action
+ */
+static int applib_uiActionSelected(lua_State* L)
+{
+	Plugin* plugin = Plugin::getPluginFromLua(L);
+
+	ActionGroup group = group = ActionGroup_fromString(luaL_checkstring(L, 1));
+	ActionType action = ActionType_fromString(luaL_checkstring(L, 2));
+
+	Control* ctrl = plugin->getControl();
+	ctrl->fireActionSelected(group, action);
+
+	return 1;
+}
+
+/**
+ * Select UI action
+ */
+static int applib_changeCurrentPageBackground(lua_State* L)
+{
+	PageType pt;
+	pt.format = luaL_checkstring(L, 1);
+	pt.config = luaL_optstring(L, 2, "");
+
+	Plugin* plugin = Plugin::getPluginFromLua(L);
+	Control* ctrl = plugin->getControl();
+	PageBackgroundChangeController* pageBgCtrl = ctrl->getPageBackgroundChangeController();
+	pageBgCtrl->changeCurrentPageBackground(pt);
+
+	return 1;
+}
 
 
 static const luaL_Reg applib[] = {
 	{ "msgbox", applib_msgbox },
 	{ "registerUi", applib_registerUi },
+	{ "uiAction", applib_uiAction },
+	{ "uiActionSelected", applib_uiActionSelected },
+	{ "changeCurrentPageBackground", applib_changeCurrentPageBackground },
 
 	// Placeholder
 //	{"MSG_BT_OK", NULL},
-//	{"MSG_BT_YES", NULL},
-//	{"MSG_BT_NO", NULL},
-//	{"MSG_BT_CANCEL", NULL},
 
 	{NULL, NULL}
 };
@@ -141,12 +230,6 @@ LUAMOD_API int luaopen_app(lua_State* L)
 	luaL_newlib(L, applib);
 //	lua_pushnumber(L, MSG_BT_OK);
 //	lua_setfield(L, -2, "MSG_BT_OK");
-//	lua_pushnumber(L, MSG_BT_YES);
-//	lua_setfield(L, -2, "MSG_BT_YES");
-//	lua_pushnumber(L, MSG_BT_NO);
-//	lua_setfield(L, -2, "MSG_BT_NO");
-//	lua_pushnumber(L, MSG_BT_CANCEL);
-//	lua_setfield(L, -2, "MSG_BT_CANCEL");
 	return 1;
 }
 

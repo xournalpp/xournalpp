@@ -31,8 +31,9 @@ static const luaL_Reg loadedlibs[] = {
 	{ NULL, NULL }
 };
 
-Plugin::Plugin(string name, string path)
- : name(name),
+Plugin::Plugin(Control* control, string name, string path)
+ : control(control),
+   name(name),
    path(path)
 {
 	XOJ_INIT_TYPE(Plugin);
@@ -203,6 +204,16 @@ int Plugin::registerMenu(string menu, string callback, string accelerator)
 	menuEntries.push_back(m);
 
 	return menuEntries.size() - 1;
+}
+
+/**
+ * @return The main controller
+ */
+Control* Plugin::getControl()
+{
+	XOJ_CHECK_TYPE(Plugin);
+
+	return control;
 }
 
 /**

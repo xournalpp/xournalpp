@@ -29,6 +29,7 @@ public:
 	virtual ~PageBackgroundChangeController();
 
 public:
+	virtual void changeCurrentPageBackground(PageType& pageType);
 	virtual void changeCurrentPageBackground(PageTypeInfo* info);
 	void changeAllPagesBackground(PageType pt);
 	void insertNewPage(size_t position);

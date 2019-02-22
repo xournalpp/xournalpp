@@ -69,7 +69,7 @@ void PluginController::loadPluginsFrom(string path)
 		pluginFolder += "/";
 		pluginFolder += file;
 
-		Plugin* p = new Plugin(file, pluginFolder);
+		Plugin* p = new Plugin(control, file, pluginFolder);
 		if (!p->isValid())
 		{
 			g_warning("Error loading plugin «%s»", file);
