@@ -36,6 +36,7 @@ public:
 
 	void updateDescription(string description);
 	virtual string getToolDisplayName();
+	void setActive(bool active);
 
 protected:
 	virtual GtkToolItem* newItem();

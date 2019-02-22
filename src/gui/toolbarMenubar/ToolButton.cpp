@@ -133,3 +133,13 @@ GtkWidget* ToolButton::getNewToolIcon()
 
 	return gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
+
+void ToolButton::setActive(bool active)
+{
+	XOJ_CHECK_TYPE(ToolButton);
+
+	if (GTK_IS_TOGGLE_TOOL_BUTTON(item))
+	{
+		gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(item), active);
+	}
+}

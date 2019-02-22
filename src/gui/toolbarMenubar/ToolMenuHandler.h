@@ -71,6 +71,12 @@ public:
 
 	bool isColorInUse(int color);
 
+	void disableAudioPlaybackButtons();
+
+	void enableAudioPlaybackButtons();
+
+	void setAudioPlaybackPaused(bool paused);
+
 private:
 	void addToolItem(AbstractToolItem* it);
 
@@ -90,6 +96,9 @@ private:
 
 	ToolButton* undoButton;
 	ToolButton* redoButton;
+
+	ToolButton* audioPausePlaybackButton;
+	ToolButton* audioStopPlaybackButton;
 
 	ToolPageSpinner* toolPageSpinner;
 	ToolPageLayer* toolPageLayer;

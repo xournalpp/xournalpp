@@ -78,6 +78,10 @@ public:
 	ToolbarModel* getToolbarModel();
 	ToolMenuHandler* getToolMenuHandler();
 
+	void disableAudioPlaybackButtons();
+	void enableAudioPlaybackButtons();
+	void setAudioPlaybackPaused(bool paused);
+
 	void setControlTmpDisabled(bool disabled);
 
 	void updateToolbarMenu();

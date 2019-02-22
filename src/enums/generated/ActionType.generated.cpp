@@ -512,9 +512,19 @@ ActionType ActionType_fromString(string value)
 		return ACTION_CUSTOMIZE_TOOLBAR;
 	}
 
-	if (value == "ACTION_RECSTOP")
+	if (value == "ACTION_AUDIO_RECORD")
 	{
-		return ACTION_RECSTOP;
+		return ACTION_AUDIO_RECORD;
+	}
+
+	if (value == "ACTION_AUDIO_PAUSE_PLAYBACK")
+	{
+		return ACTION_AUDIO_PAUSE_PLAYBACK;
+	}
+
+	if (value == "ACTION_AUDIO_STOP_PLAYBACK")
+	{
+		return ACTION_AUDIO_STOP_PLAYBACK;
 	}
 
 	if (value == "ACTION_SET_PAIRS_OFFSET")
@@ -1180,9 +1190,19 @@ string ActionType_toString(ActionType value)
 		return "ACTION_CUSTOMIZE_TOOLBAR";
 	}
 
-	if (value == ACTION_RECSTOP)
+	if (value == ACTION_AUDIO_RECORD)
 	{
-		return "ACTION_RECSTOP";
+		return "ACTION_AUDIO_RECORD";
+	}
+
+	if (value == ACTION_AUDIO_PAUSE_PLAYBACK)
+	{
+		return "ACTION_AUDIO_PAUSE_PLAYBACK";
+	}
+
+	if (value == ACTION_AUDIO_STOP_PLAYBACK)
+	{
+		return "ACTION_AUDIO_STOP_PLAYBACK";
 	}
 
 	if (value == ACTION_SET_PAIRS_OFFSET)

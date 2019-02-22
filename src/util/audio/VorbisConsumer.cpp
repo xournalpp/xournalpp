@@ -15,12 +15,22 @@ VorbisConsumer::~VorbisConsumer()
 	XOJ_RELEASE_TYPE(VorbisConsumer);
 }
 
-bool VorbisConsumer::start(string filename, unsigned int inputChannels)
+bool VorbisConsumer::start(string filename)
 {
 	XOJ_CHECK_TYPE(VorbisConsumer);
 
+	double sampleRate;
+	unsigned int channels;
+	this->audioQueue->getAudioAttributes(sampleRate, channels);
+
+	if (sampleRate == -1)
+	{
+		g_warning("VorbisConsumer: Timing issue - Sample rate requested before known");
+		return false;
+	}
+
 	SF_INFO sfInfo;
-	sfInfo.channels = inputChannels;
+	sfInfo.channels = channels;
 	sfInfo.format = SF_FORMAT_OGG | SF_FORMAT_VORBIS;
 	sfInfo.samplerate = static_cast<int>(this->settings->getAudioSampleRate());
 
@@ -32,26 +42,26 @@ bool VorbisConsumer::start(string filename, unsigned int inputChannels)
 	}
 
 	this->consumerThread = new std::thread(
-			[&, sfFile, inputChannels]
+			[&, sfFile, channels]
 			{
 				std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
 
-				int buffer[64 * inputChannels];
-				int bufferLength;
+				int buffer[64 * channels];
+				unsigned long bufferLength;
 				double audioGain = this->settings->getAudioGain();
 
 				while (!(this->stopConsumer || (audioQueue->hasStreamEnded() && audioQueue->empty())))
 				{
-					audioQueue->waitForNewElements(lock);
+					audioQueue->waitForProducer(lock);
 
 					while (!audioQueue->empty())
 					{
-						this->audioQueue->pop(buffer, &bufferLength, 64 * inputChannels, inputChannels);
+						this->audioQueue->pop(buffer, bufferLength, 64 * channels);
 
 						// apply gain
 						if (audioGain != 1.0)
 						{
-							for (unsigned int i = 0; i < 64 * inputChannels; ++i)
+							for (unsigned int i = 0; i < 64 * channels; ++i)
 							{
 								// check for overflow
 								if (std::abs(buffer[i]) < std::floor(INT_MAX / audioGain))

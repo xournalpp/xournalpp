@@ -17,6 +17,7 @@
 #include <Path.h>
 #include <util/audio/AudioRecorder.h>
 #include <util/audio/AudioPlayer.h>
+#include <gui/toolbarMenubar/ToolMenuHandler.h>
 
 class AudioController
 {
@@ -25,13 +26,21 @@ public:
 	virtual ~AudioController();
 
 public:
-	bool recStart();
-	bool recStop();
+	bool startRecording();
+	bool stopRecording();
+	bool isRecording();
+
+	bool isPlaying();
+	bool startPlayback(string filename, unsigned int timestamp);
+	void pausePlayback();
+	void continuePlayback();
+	void stopPlayback();
+
 	string getAudioFilename();
 	Path getAudioFolder();
 	size_t getStartTime();
-	AudioRecorder* getAudioRecorder();
-	AudioPlayer* getAudioPlayer();
+	vector<DeviceInfo> getOutputDevices();
+	vector<DeviceInfo> getInputDevices();
 
 protected:
 	string audioFilename;

@@ -288,7 +288,7 @@ void XojPageView::startText(double x, double y)
 			text->setColor(h->getColor());
 			text->setFont(settings->getFont());
 
-			if (xournal->getControl()->getAudioController()->getAudioRecorder()->isRecording())
+			if (xournal->getControl()->getAudioController()->isRecording())
 			{
 				string audioFilename = xournal->getControl()->getAudioController()->getAudioFilename();
 				size_t sttime = xournal->getControl()->getAudioController()->getStartTime();
