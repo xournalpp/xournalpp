@@ -36,7 +36,7 @@ bool AudioPlayer::start(string filename, unsigned int timestamp)
 	// Start playing
 	if (status)
 	{
-		status &= this->play();
+		status = status && this->play();
 	}
 
 	return status;

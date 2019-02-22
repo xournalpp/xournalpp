@@ -36,7 +36,7 @@ bool AudioRecorder::start(string filename)
 	bool status = this->portAudioProducer->startRecording();
 
 	// Start the consumer for writing the data
-	status &= this->vorbisConsumer->start(std::move(filename));
+	status = status && this->vorbisConsumer->start(std::move(filename));
 
 	return status;
 }
