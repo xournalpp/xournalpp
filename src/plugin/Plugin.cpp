@@ -1,6 +1,7 @@
 #include "Plugin.h"
 
 #include <config.h>
+#include <i18n.h>
 
 #ifdef ENABLE_PLUGINS
 
@@ -315,7 +316,9 @@ void Plugin::loadScript()
 	if (lua_pcall(lua, 0, 0, 0) != LUA_OK)
 	{
 		const char* errMsg = lua_tostring(lua, -1);
-		XojMsgBox::showPluginMessage(name, errMsg, MSG_BT_OK, true);
+		map<int, string> button;
+		button.insert(std::pair<int, string>(0, _("OK")));
+		XojMsgBox::showPluginMessage(name, errMsg, button, true);
 
 		g_warning("Could not run plugin Lua file: «%s», error: «%s»", luafile.c_str(), errMsg);
 		this->valid = false;
@@ -334,7 +337,9 @@ bool Plugin::callFunction(string fnc)
 	if (lua_pcall(lua, 0, 0, 0))
 	{
 		const char* errMsg = lua_tostring(lua, -1);
-		XojMsgBox::showPluginMessage(name, errMsg, MSG_BT_OK, true);
+		map<int, string> button;
+		button.insert(std::pair<int, string>(0, _("OK")));
+		XojMsgBox::showPluginMessage(name, errMsg, button, true);
 
 		g_warning("Error in Plugin: «%s», error: «%s»", name.c_str(), errMsg);
 		return false;

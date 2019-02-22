@@ -15,5 +15,6 @@ end
 
 -- Callback if the menu item is executed
 function exampleCallback()
-  app.msgbox("Test123", "yes,no");
+  result = app.msgbox("Test123", {[1] = "Yes", [2] = "No"});
+  print("result = " .. result)
 end

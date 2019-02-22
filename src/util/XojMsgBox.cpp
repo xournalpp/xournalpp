@@ -30,7 +30,7 @@ void XojMsgBox::showErrorToUser(GtkWindow* win, string msg)
 	gtk_widget_destroy(dialog);
 }
 
-int XojMsgBox::showPluginMessage(string pluginName, string msg, int type, bool error)
+int XojMsgBox::showPluginMessage(string pluginName, string msg, map<int, string> button, bool error)
 {
 	string header = string("Xournal++ Plugin «") + pluginName + "»";
 
@@ -52,21 +52,9 @@ int XojMsgBox::showPluginMessage(string pluginName, string msg, int type, bool e
 	g_object_set_property(G_OBJECT(dialog), "secondary-text", &val);
 	g_value_unset(&val);
 
-	if (MSG_BT_OK & type)
+	for (auto& kv : button)
 	{
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("OK"), MSG_BT_OK);
-	}
-	if (MSG_BT_YES & type)
-	{
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Yes"), MSG_BT_YES);
-	}
-	if (MSG_BT_NO & type)
-	{
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("No"), MSG_BT_NO);
-	}
-	if (MSG_BT_CANCEL & type)
-	{
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), MSG_BT_CANCEL);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), kv.second.c_str(), kv.first);
 	}
 
 	int res = gtk_dialog_run(GTK_DIALOG(dialog));

@@ -12,43 +12,38 @@
 #include <XojMsgBox.h>
 #include <StringUtils.h>
 
+#include <map>
+using std::map;
+
 /**
  * Example:
- * app.msgbox("Test123", "yes,no")
+ * app.msgbox("Test123", {[1] = "Yes", [2] = "No"})
+ * Return 1 for yes, 2 for no in this example
  */
 static int applib_msgbox(lua_State* L)
 {
 	const char* msg = luaL_checkstring(L, 1);
-	const char* flags = luaL_checkstring(L, 2);
 
-	int type = 0;
-	for (string element : StringUtils::split(flags, ','))
+	// discard any extra arguments passed in
+	lua_settop(L, 2);
+	luaL_checktype(L, 2, LUA_TTABLE);
+
+	lua_pushnil(L);
+
+	map<int, string> button;
+
+	while (lua_next(L, 2) != 0)
 	{
-		if (element == "ok")
-		{
-			type |= MSG_BT_OK;
-		}
-		else if (element == "yes")
-		{
-			type |= MSG_BT_YES;
-		}
-		else if (element == "no")
-		{
-			type |= MSG_BT_NO;
-		}
-		else if (element == "cancel")
-		{
-			type |= MSG_BT_CANCEL;
-		}
-		else
-		{
-			g_warning("Plugin: Unsupported button type for app.msgbox «%s»", element.c_str());
-		}
+		int index = lua_tointeger(L, -2);
+		const char* buttonText = luaL_checkstring(L, -1);
+		lua_pop(L, 1);
+
+		button.insert(button.begin(), std::pair<int, string>(index, buttonText));
 	}
 
 	Plugin* plugin = Plugin::getPluginFromLua(L);
 
-	int result = XojMsgBox::showPluginMessage(plugin->getName(), msg, type);
+	int result = XojMsgBox::showPluginMessage(plugin->getName(), msg, button);
 	lua_pushinteger(L, result);
 	return 1;
 }
@@ -76,7 +71,7 @@ static int applib_registerUi(lua_State* L)
 	lua_getfield(L, 1, "menu");
 	lua_getfield(L, 1, "callback");
 	// stack now has following:
-	//   1  = {"menu"="MenuName", callback="functionName"}
+	//    1 = {"menu"="MenuName", callback="functionName"}
 	//   -2 = "MenuName"
 	//   -1 = "functionName"
 
@@ -119,10 +114,10 @@ static const luaL_Reg applib[] = {
 	{ "registerUi", applib_registerUi },
 
 	// Placeholder
-	{"MSG_BT_OK", NULL},
-	{"MSG_BT_YES", NULL},
-	{"MSG_BT_NO", NULL},
-	{"MSG_BT_CANCEL", NULL},
+//	{"MSG_BT_OK", NULL},
+//	{"MSG_BT_YES", NULL},
+//	{"MSG_BT_NO", NULL},
+//	{"MSG_BT_CANCEL", NULL},
 
 	{NULL, NULL}
 };
@@ -133,14 +128,14 @@ static const luaL_Reg applib[] = {
 LUAMOD_API int luaopen_app(lua_State* L)
 {
 	luaL_newlib(L, applib);
-	lua_pushnumber(L, MSG_BT_OK);
-	lua_setfield(L, -2, "MSG_BT_OK");
-	lua_pushnumber(L, MSG_BT_YES);
-	lua_setfield(L, -2, "MSG_BT_YES");
-	lua_pushnumber(L, MSG_BT_NO);
-	lua_setfield(L, -2, "MSG_BT_NO");
-	lua_pushnumber(L, MSG_BT_CANCEL);
-	lua_setfield(L, -2, "MSG_BT_CANCEL");
+//	lua_pushnumber(L, MSG_BT_OK);
+//	lua_setfield(L, -2, "MSG_BT_OK");
+//	lua_pushnumber(L, MSG_BT_YES);
+//	lua_setfield(L, -2, "MSG_BT_YES");
+//	lua_pushnumber(L, MSG_BT_NO);
+//	lua_setfield(L, -2, "MSG_BT_NO");
+//	lua_pushnumber(L, MSG_BT_CANCEL);
+//	lua_setfield(L, -2, "MSG_BT_CANCEL");
 	return 1;
 }
 
