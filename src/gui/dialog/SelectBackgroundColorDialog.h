@@ -49,7 +49,7 @@ private:
 	/**
 	 * Last used background colors (stored in settings)
 	 */
-	GdkRGBA lastBackgroundColors[LAST_BACKGROUND_COLOR_COUNT] = { 0 };
+	GdkRGBA lastBackgroundColors[LAST_BACKGROUND_COLOR_COUNT];
 
 	/**
 	 * Selected color
