@@ -85,22 +85,22 @@ private:
 	/**
 	 * The scrollbar with the icons
 	 */
-	GtkWidget* scrollPreview;
+	GtkWidget* scrollPreview = NULL;
 
 	/**
 	 * The Zoom of the previews
 	 */
-	double zoom;
+	double zoom = 0.15;
 
 	/**
 	 * For preview rendering
 	 */
-	PdfCache* cache;
+	PdfCache* cache = NULL;
 
 	/**
 	 * The layouting class for the prviews
 	 */
-	SidebarLayout* layoutmanager;
+	SidebarLayout* layoutmanager = NULL;
 
 
 	// Members also used by subclasses
@@ -110,12 +110,12 @@ protected:
 	 * The currently selected entry in the sidebar, starting from 0
 	 * -1 means no valid selection
 	 */
-	size_t selectedEntry;
+	size_t selectedEntry = -1;
 
 	/**
 	 * The widget within the scrollarea with the page icons
 	 */
-	GtkWidget* iconViewPreview;
+	GtkWidget* iconViewPreview = NULL;
 
 	/**
 	 * The previews
@@ -125,7 +125,7 @@ protected:
 	/**
 	 * The sidebar is enabled
 	 */
-	bool enabled;
+	bool enabled = false;
 
 	friend class SidebarLayout;
 };

@@ -57,31 +57,31 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-	ActionGroup group;
-	ActionType action;
+	ActionGroup group = GROUP_NOGROUP;
+	ActionType action = ACTION_NONE;
 
 	string id;
 
-	ActionHandler* handler;
+	ActionHandler* handler = NULL;
 
-	bool enabled;
+	bool enabled = true;
 
 private:
-	gulong menuSignalHandler;
-	GtkWidget* menuitem;
+	gulong menuSignalHandler = 0;
+	GtkWidget* menuitem = NULL;
 
 	/**
 	 * This is a check menu item which is not displayed as radio
 	 */
-	bool checkMenuItem;
+	bool checkMenuItem = false;
 
 	/**
 	 * ignore event if the menu is programmatically changed
 	 */
-	bool ignoreNextCheckMenuEvent;
+	bool ignoreNextCheckMenuEvent = false;
 
 	/**
 	 * Keep the state for toggle / radio menu handling
 	 */
-	bool itemActive;
+	bool itemActive = false;
 };

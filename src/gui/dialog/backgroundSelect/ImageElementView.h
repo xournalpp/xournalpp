@@ -48,11 +48,11 @@ protected:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	double zoom;
+	double zoom = 1;
 
 	BackgroundImage backgroundImage;
-	int width;
-	int height;
+	int width = -1;
+	int height = -1;
 
 	friend class ImagesDialog;
 };

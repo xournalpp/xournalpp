@@ -46,7 +46,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	gzFile fp;
+	gzFile fp = NULL;
 
 	string error;
 

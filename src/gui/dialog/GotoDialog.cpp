@@ -5,8 +5,6 @@ GotoDialog::GotoDialog(GladeSearchpath* gladeSearchPath, int maxPage)
 {
 	XOJ_INIT_TYPE(GotoDialog);
 
-	this->selectedPage = -1;
-
 	gtk_spin_button_set_range(GTK_SPIN_BUTTON(get("spinPage")), 1, maxPage);
 }
 

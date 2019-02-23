@@ -48,10 +48,10 @@ private:
 protected:
 	BackgroundConfig* config = NULL;
 	PageRef page;
-	cairo_t* cr;
+	cairo_t* cr = NULL;
 
-	double width;
-	double height;
+	double width = 0;
+	double height = 0;
 
 	// Drawing attributes
 	// ParserKey=Value
@@ -60,38 +60,38 @@ protected:
 	 * c1=XXXXXX
 	 * e.g. FF0000 for Red
 	 */
-	int foregroundColor1;
+	int foregroundColor1 = 0;
 
 	/**
 	 * c2=XXXXXX
 	 * e.g. FF0000 for Red
 	 */
-	int foregroundColor2;
+	int foregroundColor2 = 0;
 
 	/**
 	 * lw=1.23
 	 */
-	double lineWidth;
+	double lineWidth = 0;
 
 	/**
 	 * r1=1.23
 	 */
-	double drawRaster1;
+	double drawRaster1 = 1;
 
 	/**
 	 * m1=40
 	 */
-	double margin1;
+	double margin1 = 0;
 
 	/**
 	 * rm=1
 	 * Round margin = 0 => No rounding
 	 * Round margin = 1 => Round to next grid etc.
 	 */
-	int roundMargin;
+	int roundMargin = 0;
 
 	/**
 	 * Line width factor, to use to draw Previews
 	 */
-	double lineWidthFactor;
+	double lineWidthFactor = 1;
 };

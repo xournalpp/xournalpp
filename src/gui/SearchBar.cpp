@@ -6,10 +6,9 @@
 #include <i18n.h>
 
 SearchBar::SearchBar(Control* control)
+ : control(control)
 {
 	XOJ_INIT_TYPE(SearchBar);
-
-	this->control = control;
 
 	MainWindow* win = control->getWindow();
 

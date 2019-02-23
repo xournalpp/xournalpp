@@ -15,8 +15,6 @@ const int TAG_PREVIEW_END_NAME_LEN = strlen(TAG_PREVIEW_END_NAME);
 #define BUF_SIZE 8192
 
 XojPreviewExtractor::XojPreviewExtractor()
- : data(NULL),
-   dataLen(0)
 {
 }
 

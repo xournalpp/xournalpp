@@ -77,21 +77,21 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-	// The position on the screen
-	double x;
-	double y;
-
 	virtual void calcSize() = 0;
-
-	double width;
-	double height;
 
 	void serializeElement(ObjectOutputStream& out);
 	void readSerializedElement(ObjectInputStream& in);
 
 protected:
 	// If the size has been calculated
-	bool sizeCalculated;
+	bool sizeCalculated = false;
+
+	double width = 0;
+	double height = 0;
+
+	// The position on the screen
+	double x = 0;
+	double y = 0;
 
 private:
 	/**
@@ -102,6 +102,6 @@ private:
 	/**
 	 * The color in RGB format
 	 */
-	int color;
+	int color = 0;
 };
 

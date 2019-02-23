@@ -64,35 +64,35 @@ private:
 	/**
 	 * If touch disabling is enabled
 	 */
-	bool enabled;
+	bool enabled = false;
 
 	/**
 	 * true if touch is enabled, false if disabled
 	 */
-	bool touchState;
+	bool touchState = true;
 
 	/**
 	 * When the pen last was seen
 	 */
-	gint64 lastPenAction;
+	gint64 lastPenAction = -1;
 
 	/**
 	 * Timeout in ms
 	 */
-	int disableTimeout;
+	int disableTimeout = 500;
 
 	/**
 	 * True if an X11 session is running
 	 */
-	bool x11Session;
+	bool x11Session = false;
 
 	/**
 	 * Implementation for touch disabling
 	 */
-	TouchDisableInterface* touchImpl;
+	TouchDisableInterface* touchImpl = NULL;
 
 	/**
 	 * Settings
 	 */
-	Settings* settings;
+	Settings* settings = NULL;
 };

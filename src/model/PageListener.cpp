@@ -5,8 +5,6 @@
 PageListener::PageListener()
 {
 	XOJ_INIT_TYPE(PageListener);
-
-	this->handler = NULL;
 }
 
 PageListener::~PageListener()

@@ -40,6 +40,6 @@ private:
 
 	Control* control;
 
-	ToolbarAdapter** toolbars;
-	ToolbarCustomizeDialog* customizeDialog;
+	ToolbarAdapter** toolbars = NULL;
+	ToolbarCustomizeDialog* customizeDialog = NULL;
 };

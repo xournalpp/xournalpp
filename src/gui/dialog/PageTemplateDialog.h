@@ -59,5 +59,5 @@ private:
 	/**
 	 * The dialog was confirmed / saved
 	 */
-	bool saved;
+	bool saved = false;
 };

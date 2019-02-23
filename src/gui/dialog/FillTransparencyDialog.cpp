@@ -1,8 +1,7 @@
 #include "FillTransparencyDialog.h"
 
 FillTransparencyDialog::FillTransparencyDialog(GladeSearchpath* gladeSearchPath, int alpha)
- : GladeGui(gladeSearchPath, "fillTransparency.glade", "fillTransparencyDialog"),
-   resultAlpha(-1)
+ : GladeGui(gladeSearchPath, "fillTransparency.glade", "fillTransparencyDialog")
 {
 	XOJ_INIT_TYPE(FillTransparencyDialog);
 

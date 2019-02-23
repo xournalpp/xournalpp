@@ -18,9 +18,6 @@ PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page, P
 	this->origBackgroundImage = origBackgroundImage;
 	this->origW = origW;
 	this->origH = origH;
-	this->newW = 0;
-	this->newH = 0;
-	this->newPdfPage = -1;
 	this->newType.format = "plain";
 }
 

@@ -44,11 +44,11 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	MainWindow* win;
+	MainWindow* win = NULL;
 
 	vector<GtkWidget*> menuitems;
-	std::vector<MenuSelectToolbarData*> toolbarMenuData;
+	vector<MenuSelectToolbarData*> toolbarMenuData;
 
-	ToolbarData* selectedToolbar;
-	bool inPredefinedSection;
+	ToolbarData* selectedToolbar = NULL;
+	bool inPredefinedSection = false;
 };

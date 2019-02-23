@@ -1,11 +1,10 @@
 #include "XojColor.h"
 
 XojColor::XojColor(int color, string name)
+ : color(color),
+   name(name)
 {
 	XOJ_INIT_TYPE(XojColor);
-
-	this->color = color;
-	this->name = name;
 }
 
 XojColor::~XojColor()

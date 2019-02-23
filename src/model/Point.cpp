@@ -5,10 +5,6 @@
 Point::Point()
 {
 	XOJ_INIT_TYPE(Point);
-
-	this->x = 0;
-	this->y = 0;
-	this->z = NO_PRESURE;
 }
 
 Point::Point(const Point& p)
@@ -26,7 +22,6 @@ Point::Point(double x, double y)
 
 	this->x = x;
 	this->y = y;
-	this->z = NO_PRESURE;
 }
 
 Point::Point(double x, double y, double z)

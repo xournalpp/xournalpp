@@ -30,5 +30,5 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int resultAlpha;
+	int resultAlpha = -1;
 };

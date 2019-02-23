@@ -1,11 +1,10 @@
 #include "AbstractSidebarPage.h"
 
 AbstractSidebarPage::AbstractSidebarPage(Control* control, SidebarToolbar* toolbar)
+ : control(control),
+   toolbar(toolbar)
 {
 	XOJ_INIT_TYPE(AbstractSidebarPage);
-
-	this->control = control;
-	this->toolbar = toolbar;
 }
 
 AbstractSidebarPage::~AbstractSidebarPage()

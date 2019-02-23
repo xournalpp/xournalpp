@@ -4,13 +4,12 @@
 #include <serializing/ObjectInputStream.h>
 #include <serializing/ObjectOutputStream.h>
 
-Image::Image() : Element(ELEMENT_IMAGE)
+Image::Image()
+ : Element(ELEMENT_IMAGE)
 {
 	XOJ_INIT_TYPE(Image);
 
 	this->sizeCalculated = true;
-	this->image = NULL;
-	this->read = false;
 }
 
 Image::~Image()

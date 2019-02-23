@@ -44,15 +44,15 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Control* control;
+	Control* control = NULL;
 
 	/**
 	 * Last used background colors (stored in settings)
 	 */
-	GdkRGBA lastBackgroundColors[LAST_BACKGROUND_COLOR_COUNT];
+	GdkRGBA lastBackgroundColors[LAST_BACKGROUND_COLOR_COUNT] = { 0 };
 
 	/**
 	 * Selected color
 	 */
-	int selected;
+	int selected = -1;
 };

@@ -3,7 +3,6 @@
 #include "DocumentHandler.h"
 
 DocumentListener::DocumentListener()
- : handler(NULL)
 {
 	XOJ_INIT_TYPE(DocumentListener);
 }

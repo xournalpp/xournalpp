@@ -5,11 +5,6 @@
 #include <gdk/gdkx.h>
 
 TouchDisableX11::TouchDisableX11()
- : display(NULL),
-   touchAtom(None),
-   touch(NULL),
-   touchdev(NULL),
-   enabledAtom(None)
 {
 	XOJ_INIT_TYPE(TouchDisableX11);
 }

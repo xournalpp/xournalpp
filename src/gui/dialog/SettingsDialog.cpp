@@ -11,8 +11,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
  : GladeGui(gladeSearchPath, "settings.glade", "settingsDialog"),
    settings(settings),
    control(control),
-   callib(zoomcallib_new()),
-   dpi(72)
+   callib(zoomcallib_new())
 {
 	XOJ_INIT_TYPE(SettingsDialog);
 

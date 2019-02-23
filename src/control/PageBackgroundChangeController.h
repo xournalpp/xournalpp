@@ -79,7 +79,7 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Control* control;
-	PageTypeMenu* currentPageType;
-	bool ignoreEvent;
+	Control* control = NULL;
+	PageTypeMenu* currentPageType = NULL;
+	bool ignoreEvent = false;
 };

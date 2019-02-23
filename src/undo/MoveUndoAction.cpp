@@ -19,9 +19,6 @@ MoveUndoAction::MoveUndoAction(Layer* sourceLayer, PageRef sourcePage, vector<El
 	this->sourceLayer = sourceLayer;
 	this->text = _("Move");
 
-	this->targetLayer = NULL;
-	this->targetPage = NULL;
-
 	this->dx = mx;
 	this->dy = my;
 
@@ -32,8 +29,6 @@ MoveUndoAction::MoveUndoAction(Layer* sourceLayer, PageRef sourcePage, vector<El
 		this->targetPage = targetPage;
 		this->targetLayer = targetLayer;
 	}
-
-	this->undone = false;
 }
 
 MoveUndoAction::~MoveUndoAction()

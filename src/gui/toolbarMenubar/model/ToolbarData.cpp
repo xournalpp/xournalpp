@@ -7,10 +7,9 @@
 #include <StringUtils.h>
 
 ToolbarData::ToolbarData(bool predefined)
+ : predefined(predefined)
 {
 	XOJ_INIT_TYPE(ToolbarData);
-
-	this->predefined = predefined;
 }
 
 ToolbarData::ToolbarData(const ToolbarData& data)

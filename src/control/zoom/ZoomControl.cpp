@@ -6,23 +6,6 @@
 #include "gui/XournalView.h"
 
 ZoomControl::ZoomControl()
- : view(NULL),
-   zoom(1.0),
-   lastZoomValue(1.0),
-   zoomFitMode(true),
-   zoom100Value(1.0),
-   zoomFitValue(1.0),
-   zoomSequenceStart(-1),
-   zoomWidgetPosX(0),
-   zoomWidgetPosY(0),
-   scrollPositionX(0),
-   scrollPositionY(0),
-   scrollCursorPositionX(0),
-   scrollCursorPositionY(0),
-   zoomStepReal(DEFAULT_ZOOM_STEP),
-   zoomStepScrollReal(DEFAULT_ZOOM_STEP_SCROLL),
-   zoomMaxReal(DEFAULT_ZOOM_MAX),
-   zoomMinReal(DEFAULT_ZOOM_MIN)
 {
 	XOJ_INIT_TYPE(ZoomControl);
 
@@ -45,7 +28,7 @@ void ZoomControl::zoomOneStep(bool zoomIn, double x, double y)
 
 	startZoomSequence(x, y);
 
-	if(zoomIn)
+	if (zoomIn)
 	{
 		this->zoom += this->zoomStep;
 	}
@@ -63,18 +46,21 @@ void ZoomControl::zoomScroll(bool zoomIn, double x, double y)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	if(this->zoomSequenceStart == -1 ||
-		scrollCursorPositionX != x || scrollCursorPositionY != y)
+	if (this->zoomSequenceStart == -1 || scrollCursorPositionX != x || scrollCursorPositionY != y)
 	{
 		scrollCursorPositionX = x;
 		scrollCursorPositionY = y;
 		startZoomSequence(x, y);
 	}
 
-	if(zoomIn)
+	if (zoomIn)
+	{
 		this->zoom += this->zoomStepScroll;
+	}
 	else
+	{
 		this->zoom -= this->zoomStepScroll;
+	}
 	this->zoomFitMode = false;
 	fireZoomChanged();
 }
@@ -92,8 +78,8 @@ void ZoomControl::startZoomSequence(double centerX, double centerY)
 	Rectangle rect = getVisibleRect();
 	if (centerX == -1 || centerY == -1)
 	{
-		this->zoomWidgetPosX = rect.width/2;
-		this->zoomWidgetPosY = rect.height/2;
+		this->zoomWidgetPosX = rect.width / 2;
+		this->zoomWidgetPosY = rect.height / 2;
 	}
 	else
 	{
@@ -131,6 +117,7 @@ void ZoomControl::zoomSequnceChange(double zoom, bool relative)
 void ZoomControl::endZoomSequence()
 {
 	XOJ_CHECK_TYPE(ZoomControl);
+
 	scrollPositionX = -1;
 	scrollPositionY = -1;
 
@@ -142,6 +129,8 @@ void ZoomControl::endZoomSequence()
  */
 Rectangle ZoomControl::getVisibleRect()
 {
+	XOJ_CHECK_TYPE(ZoomControl);
+
 	GtkWidget* widget = view->getWidget();
 	Layout* layout = gtk_xournal_get_layout(widget);
 	return layout->getVisibleRect();
@@ -152,6 +141,8 @@ Rectangle ZoomControl::getVisibleRect()
  */
 void ZoomControl::scrollToZoomPosition(XojPageView* view)
 {
+	XOJ_CHECK_TYPE(ZoomControl);
+
 	if (this->zoomSequenceStart == -1)
 	{
 		return;

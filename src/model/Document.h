@@ -98,13 +98,13 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 
-	DocumentHandler* handler;
+	DocumentHandler* handler = NULL;
 
 	XojPdfDocument pdfDocument;
 
 	Path filename;
 	Path pdfFilename;
-	bool attachPdf;
+	bool attachPdf = false;
 
 	/**
 	 *  Password: not handled yet
@@ -116,22 +116,22 @@ private:
 	/**
 	 * The pages in the document
 	 */
-	std::vector<PageRef> pages;
+	vector<PageRef> pages;
 
 	/**
 	 * The bookmark contents model
 	 */
-	GtkTreeModel* contentsModel;
+	GtkTreeModel* contentsModel = NULL;
 
 	/**
 	 *  create a backup before save, because the original file was an older fileversion
 	 */
-	bool createBackupOnSave;
+	bool createBackupOnSave = false;
 
 	/**
 	 * The preview for the file
 	 */
-	cairo_surface_t* preview;
+	cairo_surface_t* preview = NULL;
 
 	/**
 	 * The lock of the document

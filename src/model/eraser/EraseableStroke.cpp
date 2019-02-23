@@ -9,14 +9,12 @@
 #include <math.h>
 
 EraseableStroke::EraseableStroke(Stroke* stroke)
+ : stroke(stroke)
 {
 	XOJ_INIT_TYPE(EraseableStroke);
 
 	this->parts = new PartList();
 	g_mutex_init(&this->partLock);
-
-	this->stroke = stroke;
-	this->repaintRect = NULL;
 
 	for (int i = 1; i < stroke->getPointCount(); i++)
 	{

@@ -6,8 +6,6 @@
 XojFont::XojFont()
 {
 	XOJ_INIT_TYPE(XojFont);
-
-	this->size = 0;
 }
 
 XojFont::~XojFont()

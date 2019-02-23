@@ -3,7 +3,7 @@
 #include "gui/Shadow.h"
 
 ImageElementView::ImageElementView(int id, BackgroundSelectDialogBase* dlg)
- : BaseElementView(id, dlg), zoom(1), width(-1), height(-1)
+ : BaseElementView(id, dlg)
 {
 	XOJ_INIT_TYPE(ImageElementView);
 }

@@ -10,12 +10,9 @@
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
 
 ToolbarDragDropHandler::ToolbarDragDropHandler(Control* control)
+ : control(control)
 {
 	XOJ_INIT_TYPE(ToolbarDragDropHandler);
-
-	this->control = control;
-	this->toolbars = NULL;
-	this->customizeDialog = NULL;
 }
 
 ToolbarDragDropHandler::~ToolbarDragDropHandler()

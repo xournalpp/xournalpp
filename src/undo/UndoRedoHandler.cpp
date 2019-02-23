@@ -51,15 +51,9 @@ void printUndoList(GList* list)
 UndoRedoListener::~UndoRedoListener() { }
 
 UndoRedoHandler::UndoRedoHandler(Control* control)
+ : control(control)
 {
 	XOJ_INIT_TYPE(UndoRedoHandler);
-
-	this->undoList = NULL;
-	this->savedUndo = NULL;
-	this->autosavedUndo = NULL;
-	this->redoList = NULL;
-	this->listener = NULL;
-	this->control = control;
 }
 
 UndoRedoHandler::~UndoRedoHandler()

@@ -45,7 +45,7 @@ private:
 	GMutex renderMutex;
 
 	list<PdfCacheEntry*> data;
-	list<PdfCacheEntry*>::size_type size;
+	list<PdfCacheEntry*>::size_type size = 0;
 
-	double zoom;
+	double zoom = -1;
 };

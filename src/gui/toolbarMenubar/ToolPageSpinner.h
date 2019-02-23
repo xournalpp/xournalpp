@@ -35,8 +35,8 @@ protected:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GladeGui* gui;
+	GladeGui* gui = NULL;
 
-	SpinPageAdapter* pageSpinner;
-	GtkWidget* lbPageNo;
+	SpinPageAdapter* pageSpinner = NULL;
+	GtkWidget* lbPageNo = NULL;
 };

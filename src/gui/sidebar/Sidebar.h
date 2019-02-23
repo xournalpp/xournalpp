@@ -82,9 +82,9 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Control* control;
+	Control* control = NULL;
 
-	GladeGui* gui;
+	GladeGui* gui = NULL;
 
 	/**
 	 * The sidebar pages
@@ -94,12 +94,12 @@ private:
 	/**
 	 * The Toolbar with the pages
 	 */
-	GtkToolbar* tbSelectPage;
+	GtkToolbar* tbSelectPage = NULL;
 
 	/**
 	 * The close button of the sidebar
 	 */
-	GtkWidget* buttonCloseSidebar;
+	GtkWidget* buttonCloseSidebar = NULL;
 
 	/**
 	 * The current visible page in the sidebar
@@ -114,7 +114,7 @@ private:
 	/**
 	 * The sidebar widget
 	 */
-	GtkWidget* sidebar;
+	GtkWidget* sidebar = NULL;
 
 	/**
 	 * Sidebar toolbar
@@ -128,8 +128,8 @@ public:
 	SidebarPageButton(Sidebar* sidebar, int index, AbstractSidebarPage* page);
 
 public:
-	Sidebar* sidebar;
-	int index;
-	AbstractSidebarPage* page;
+	Sidebar* sidebar = NULL;
+	int index = 0;
+	AbstractSidebarPage* page = NULL;
 
 };

@@ -6,8 +6,6 @@ UndoAction::UndoAction(const char* className)
  : className(className)
 {
 	XOJ_INIT_TYPE(UndoAction);
-
-	this->undone = false;
 }
 
 UndoAction::~UndoAction()

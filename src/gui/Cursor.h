@@ -45,11 +45,11 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 
-	Control* control;
-	bool busy;
-	bool insidePage;
-	CursorSelectionType selectionType;
+	Control* control = NULL;
+	bool busy = false;
+	bool insidePage = false;
+	CursorSelectionType selectionType = CURSOR_SELECTION_NONE;
 
-	bool mouseDown;
-	bool invisible;
+	bool mouseDown = false;
+	bool invisible = false;
 };

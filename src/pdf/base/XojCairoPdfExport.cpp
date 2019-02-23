@@ -9,10 +9,7 @@
 
 XojCairoPdfExport::XojCairoPdfExport(Document* doc, ProgressListener* progressListener)
  : doc(doc),
-   progressListener(progressListener),
-   surface(NULL),
-   cr(NULL),
-   noBackgroundExport(false)
+   progressListener(progressListener)
 {
 	XOJ_INIT_TYPE(XojCairoPdfExport);
 }

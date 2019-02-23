@@ -5,11 +5,6 @@
 LayoutData::LayoutData()
 {
 	XOJ_INIT_TYPE(LayoutData);
-	this->x = 0;
-	this->y = 0;
-	this->marginLeft = 0;
-	this->marginTop = 0;
-	this->pageIndex = 0;
 }
 
 LayoutData::~LayoutData()

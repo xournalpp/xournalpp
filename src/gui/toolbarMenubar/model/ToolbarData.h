@@ -45,7 +45,7 @@ private:
 	string name;
 	std::vector<ToolbarEntry*> contents;
 
-	bool predefined;
+	bool predefined = false;
 
 	friend class ToolbarModel;
 	friend class ToolMenuHandler;

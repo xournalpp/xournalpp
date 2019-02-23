@@ -25,7 +25,7 @@ private:
 	/**
 	 * PagePositionCache ID
 	 */
-	int ppId;
+	int ppId = -1;
 
 	friend class PagePositionHandler;
 };

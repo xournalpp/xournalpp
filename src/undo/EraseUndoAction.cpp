@@ -10,13 +10,10 @@
 #include <i18n.h>
 
 EraseUndoAction::EraseUndoAction(PageRef page)
- : UndoAction("EraseUndoAction")
+ : UndoAction("EraseUndoAction"),
+   page(page)
 {
 	XOJ_INIT_TYPE(EraseUndoAction);
-
-	this->page = page;
-	this->edited = NULL;
-	this->original = NULL;
 }
 
 EraseUndoAction::~EraseUndoAction()

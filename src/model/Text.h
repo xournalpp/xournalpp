@@ -64,5 +64,5 @@ private:
 
 	string text;
 
-	bool inEditing;
+	bool inEditing = false;
 };

@@ -22,18 +22,7 @@ TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool own
 	this->text = text;
 	this->text->setInEditing(true);
 	this->ownText = ownText;
-	this->cursorVisible = false;
-	this->blinkTimeout = 0;
-	this->cursorOverwrite = false;
-	this->needImReset = false;
 	this->textWidget = gtk_xoj_int_txt_new(this);
-	this->layout = NULL;
-	this->virtualCursor = 0;
-	this->markPosX = 0;
-	this->markPosY = 0;
-	this->markPosExtendSelection = false;
-	this->markPosQueue = false;
-	this->mouseDown = 0;
 	this->lastText = text->getText();
 
 	this->buffer = gtk_text_buffer_new(NULL);

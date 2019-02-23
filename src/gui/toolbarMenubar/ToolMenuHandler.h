@@ -88,30 +88,30 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	std::vector<ColorToolItem*> toolbarColorItems;
-	GtkWindow* parent;
+	vector<ColorToolItem*> toolbarColorItems;
+	GtkWindow* parent = NULL;
 
 	vector<AbstractToolItem*> toolItems;
-	std::vector<MenuItem*> menuItems;
+	vector<MenuItem*> menuItems;
 
-	ToolButton* undoButton;
-	ToolButton* redoButton;
+	ToolButton* undoButton = NULL;
+	ToolButton* redoButton = NULL;
 
-	ToolButton* audioPausePlaybackButton;
-	ToolButton* audioStopPlaybackButton;
+	ToolButton* audioPausePlaybackButton = NULL;
+	ToolButton* audioStopPlaybackButton = NULL;
 
-	ToolPageSpinner* toolPageSpinner;
-	ToolPageLayer* toolPageLayer;
-	FontButton* fontButton;
+	ToolPageSpinner* toolPageSpinner = NULL;
+	ToolPageLayer* toolPageLayer = NULL;
+	FontButton* fontButton = NULL;
 
-	Control* control;
-	ActionHandler* listener;
-	ZoomControl* zoom;
-	GladeGui* gui;
-	ToolHandler* toolHandler;
+	Control* control = NULL;
+	ActionHandler* listener = NULL;
+	ZoomControl* zoom = NULL;
+	GladeGui* gui = NULL;
+	ToolHandler* toolHandler = NULL;
 
-	ToolbarModel* tbModel;
+	ToolbarModel* tbModel = NULL;
 
-	PageTypeMenu* newPageType;
-	PageBackgroundChangeController* pageBackgroundChangeController;
+	PageTypeMenu* newPageType = NULL;
+	PageBackgroundChangeController* pageBackgroundChangeController = NULL;
 };

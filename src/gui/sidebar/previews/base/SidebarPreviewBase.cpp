@@ -7,16 +7,11 @@
 
 
 SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
- : AbstractSidebarPage(control, toolbar),
-   enabled(false)
+ : AbstractSidebarPage(control, toolbar)
 {
 	XOJ_INIT_TYPE(SidebarPreviewBase);
 
 	this->layoutmanager = new SidebarLayout();
-
-	this->zoom = 0.15;
-
-	this->selectedEntry = -1;
 
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 

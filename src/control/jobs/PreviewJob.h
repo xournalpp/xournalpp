@@ -51,20 +51,20 @@ private:
 	/**
 	 * Graphics buffer
 	 */
-	cairo_surface_t* crBuffer;
+	cairo_surface_t* crBuffer = NULL;
 
 	/**
 	 * Graphics drawing
 	 */
-	cairo_t* cr2;
+	cairo_t* cr2 = NULL;
 
 	/**
 	 * Zoom factor
 	 */
-	double zoom;
+	double zoom = 0;
 
 	/**
 	 * Sidebar preview
 	 */
-	SidebarPreviewBaseEntry* sidebarPreview;
+	SidebarPreviewBaseEntry* sidebarPreview = NULL;
 };

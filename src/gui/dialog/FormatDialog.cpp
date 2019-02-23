@@ -9,22 +9,15 @@
 
 FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height)
  : GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog"),
-   list(NULL),
-   ignoreSpinChange(false)
+   settings(settings)
 {
 	XOJ_INIT_TYPE(FormatDialog);
-
-	this->orientation = ORIENTATION_NOT_DEFINED;
-	this->settings = settings;
 
 	this->selectedScale = settings->getSizeUnitIndex();
 
 	this->scale = XOJ_UNITS[this->selectedScale].scale;
 	this->origHeight = height;
 	this->origWidth = width;
-
-	this->width = -1;
-	this->height = -1;
 
 	setSpinValues(this->origWidth / this->scale, this->origHeight / this->scale);
 

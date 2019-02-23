@@ -42,11 +42,14 @@ public:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-	GtkToolItem* item;
-	GtkWidget* popupMenu;
+	GtkToolItem* item = NULL;
+	GtkWidget* popupMenu = NULL;
 
-	bool toolToggleButtonActive;
-	bool toolToggleOnlyEnable;
+	bool toolToggleButtonActive = false;
+	bool toolToggleOnlyEnable = false;
 
-	bool used;
+	/**
+	 * This item is already somewhere in the toolbar
+	 */
+	bool used = false;
 };

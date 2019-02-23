@@ -6,13 +6,6 @@ AbstractToolItem::AbstractToolItem(string id, ActionHandler* handler, ActionType
  : AbstractItem(id, handler, type, menuitem)
 {
 	XOJ_INIT_TYPE(AbstractToolItem);
-
-	this->item = NULL;
-	this->popupMenu = NULL;
-	this->used = false;
-
-	this->toolToggleButtonActive = false;
-	this->toolToggleOnlyEnable = false;
 }
 
 AbstractToolItem::~AbstractToolItem()

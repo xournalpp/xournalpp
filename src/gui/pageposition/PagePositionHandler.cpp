@@ -7,11 +7,6 @@
 PagePositionHandler::PagePositionHandler()
 {
 	XOJ_INIT_TYPE(PagePositionHandler);
-
-	this->dataCount = 0;
-	this->dataAllocSize = 0;
-	this->data = NULL;
-	this->maxY = 0;
 }
 
 PagePositionHandler::~PagePositionHandler()

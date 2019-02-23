@@ -56,9 +56,9 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int dataCount;
-	int dataAllocSize;
-	PagePosition** data;
+	int dataCount = 0;
+	int dataAllocSize = 0;
+	PagePosition** data = NULL;
 
-	int maxY;
+	int maxY = 0;
 };

@@ -68,21 +68,21 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	LayerController* lc;
-	GladeGui* gui;
+	LayerController* lc = NULL;
+	GladeGui* gui = NULL;
 
-	GtkWidget* layerLabel;
-	GtkWidget* layerButton;
-	GtkWidget* menu;
+	GtkWidget* layerLabel = NULL;
+	GtkWidget* layerButton = NULL;
+	GtkWidget* menu = NULL;
 
 	map<int, GtkWidget*> layerItems;
 	map<int, GtkWidget*> showLayerItems;
 
-	PopupMenuButton* popupMenuButton;
-	int menuY;
+	PopupMenuButton* popupMenuButton = NULL;
+	int menuY = 0;
 
 	/**
 	 * Menu is currently updating - ignore events
 	 */
-	bool inMenuUpdate;
+	bool inMenuUpdate = false;
 };

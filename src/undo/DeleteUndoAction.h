@@ -35,6 +35,6 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList* elements;
-	bool eraser;
+	GList* elements = NULL;
+	bool eraser = true;
 };

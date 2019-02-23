@@ -1,18 +1,11 @@
 #include "AbstractItem.h"
 
 AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action, GtkWidget* menuitem)
+ : id(id),
+   handler(handler),
+   action(action)
 {
 	XOJ_INIT_TYPE(AbstractItem);
-	this->id = id;
-	this->handler = handler;
-	this->action = action;
-	this->menuitem = NULL;
-	this->checkMenuItem = false;
-	this->ignoreNextCheckMenuEvent = false;
-	this->menuSignalHandler = 0;
-	this->group = GROUP_NOGROUP;
-	this->enabled = true;
-	this->itemActive = false;
 
 	ActionEnabledListener::registerListener(handler);
 	ActionSelectionListener::registerListener(handler);

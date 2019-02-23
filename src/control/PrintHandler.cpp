@@ -11,8 +11,6 @@
 PrintHandler::PrintHandler()
 {
 	XOJ_INIT_TYPE(PrintHandler);
-	
-	doc = NULL;
 }
 
 PrintHandler::~PrintHandler()

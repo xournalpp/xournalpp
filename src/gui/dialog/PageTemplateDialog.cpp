@@ -19,8 +19,7 @@ using std::ofstream;
 PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types)
  : GladeGui(gladeSearchPath, "pageTemplate.glade", "templateDialog"),
    settings(settings),
-   pageMenu(new PageTypeMenu(types, settings, true, false)),
-   saved(false)
+   pageMenu(new PageTypeMenu(types, settings, true, false))
 {
 	XOJ_INIT_TYPE(PageTemplateDialog);
 

@@ -7,8 +7,7 @@
 #include <XojMsgBox.h>
 
 BaseExportJob::BaseExportJob(Control* control, string name)
- : BlockingJob(control, name),
-   dialog(NULL)
+ : BlockingJob(control, name)
 {
 	XOJ_INIT_TYPE(BaseExportJob);
 }

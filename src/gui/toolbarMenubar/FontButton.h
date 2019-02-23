@@ -45,8 +45,8 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 
-	GtkWidget* fontButton;
-	GladeGui* gui;
+	GtkWidget* fontButton = NULL;
+	GladeGui* gui = NULL;
 	string description;
 
 	XojFont font;

@@ -6,10 +6,9 @@
 #include "gui/XournalView.h"
 
 ScrollHandler::ScrollHandler(Control* control)
+ : control(control)
 {
 	XOJ_INIT_TYPE(ScrollHandler);
-
-	this->control = control;
 }
 
 ScrollHandler::~ScrollHandler()

@@ -42,5 +42,5 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	ObjectEncoding* encoder;
+	ObjectEncoding* encoder = NULL;
 };

@@ -83,10 +83,10 @@ private:
 	/**
 	 * Element ID, starting with 0
 	 */
-	int id;
+	int id = -1;
 
-	bool selected;
+	bool selected = false;
 
-	GtkWidget* widget;
-	cairo_surface_t* crBuffer;
+	GtkWidget* widget = NULL;
+	cairo_surface_t* crBuffer = NULL;
 };

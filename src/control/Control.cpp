@@ -2135,8 +2135,8 @@ void Control::showSettings()
 
 	enableAutosave(settings->isAutosaveEnabled());
 
-	this->zoom->setZoomStep(settings->getZoomStep()/100.0);
-	this->zoom->setZoomStepScroll(settings->getZoomStepScroll()/100.0);
+	this->zoom->setZoomStep(settings->getZoomStep() / 100.0);
+	this->zoom->setZoomStepScroll(settings->getZoomStepScroll() / 100.0);
 	this->zoom->setZoom100(settings->getDisplayDpi() / 72.0);
 
 	getWindow()->getXournal()->getTouchHelper()->reload();

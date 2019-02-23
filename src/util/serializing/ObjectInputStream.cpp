@@ -7,9 +7,6 @@
 ObjectInputStream::ObjectInputStream()
 {
 	XOJ_INIT_TYPE(ObjectInputStream);
-
-	this->str = NULL;
-	this->pos = 0;
 }
 
 ObjectInputStream::~ObjectInputStream()
@@ -19,6 +16,7 @@ ObjectInputStream::~ObjectInputStream()
 	if (this->str)
 	{
 		g_string_free(this->str, true);
+		this->str = NULL;
 	}
 
 	XOJ_RELEASE_TYPE(ObjectInputStream);

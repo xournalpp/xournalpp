@@ -33,8 +33,8 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int currentPage;
-	int pageCount;
+	int currentPage = 0;
+	int pageCount = 0;
 
-	bool confirmed;
+	bool confirmed = false;
 };

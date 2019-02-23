@@ -16,7 +16,6 @@ Scheduler::Scheduler()
 	this->name = "Scheduler";
 
 	// Thread
-	this->threadRunning = true;
 	g_cond_init(&this->jobQueueCond);
 
 	g_mutex_init(&this->jobQueueMutex);
@@ -34,12 +33,6 @@ Scheduler::Scheduler()
 	this->jobQueue[JOB_PRIORITY_HIGH] = &this->queueHigh;
 	this->jobQueue[JOB_PRIORITY_LOW] = &this->queueLow;
 	this->jobQueue[JOB_PRIORITY_NONE] = &this->queueNone;
-
-	this->thread = NULL;
-
-	this->blockRenderZoomTime = NULL;
-
-	this->jobRenderThreadTimerId = 0;
 }
 
 Scheduler::~Scheduler()

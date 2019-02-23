@@ -45,20 +45,19 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
+	Settings* settings = NULL;
 
-	Settings* settings;
+	GList* list = NULL;
 
-	GList* list;
+	Orientation orientation = ORIENTATION_NOT_DEFINED;
+	double scale = 0;
+	int selectedScale = 0;
 
-	Orientation orientation;
-	double scale;
-	int selectedScale;
+	double origWidth = 0;
+	double origHeight = 0;
 
-	double origWidth;
-	double origHeight;
+	double width = -1;
+	double height = -1;
 
-	double width;
-	double height;
-
-	double ignoreSpinChange;
+	double ignoreSpinChange = false;
 };

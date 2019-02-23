@@ -4,17 +4,9 @@
 #include <serializing/ObjectOutputStream.h>
 
 Element::Element(ElementType type)
+ : type(type)
 {
 	XOJ_INIT_TYPE(Element);
-
-	this->type = type;
-	this->x = 0;
-	this->y = 0;
-	this->color = 0;
-	this->width = 0;
-	this->height = 0;
-
-	this->sizeCalculated = false;
 }
 
 Element::~Element()
