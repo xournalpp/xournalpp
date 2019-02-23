@@ -117,7 +117,11 @@ if (MacIntegration_FOUND)
 endif ()
 
 # Plugins / scripting
-pkg_check_modules (Lua "lua >= 5.3")
+pkg_check_modules (Lua "lua5.3")
+if (NOT Lua_FOUND)
+	pkg_check_modules (Lua "lua >= 5.3")
+endif()
+
 if (Lua_FOUND)
 	message("Enable Xournal++ Plugins")
 	add_includes_ldflags ("${Lua_LDFLAGS}" "${Lua_INCLUDE_DIRS}")
