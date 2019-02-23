@@ -77,6 +77,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="shadow_type">in</property>
+                <property name="min_content_width">400</property>
                 <property name="min_content_height">300</property>
                 <child>
                   <object class="GtkViewport">
@@ -112,6 +113,8 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_top">5</property>
+                <property name="margin_bottom">5</property>
                 <property name="label" translatable="yes">Plugin changes are only applied after Xournal++ restart</property>
               </object>
               <packing>

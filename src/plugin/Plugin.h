@@ -106,6 +106,11 @@ public:
 	string getName();
 
 	/**
+	 * @return Description of the plugin
+	 */
+	string getDescription();
+
+	/**
 	 * Author of the plugin
 	 */
 	string getAuthor();
@@ -186,6 +191,11 @@ private:
 	 * Plugin name
 	 */
 	string name;
+
+	/**
+	 * Description of the plugin
+	 */
+	string description;
 
 	/**
 	 * Author of the plugin
