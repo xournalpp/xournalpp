@@ -180,6 +180,16 @@ string Plugin::getName()
 }
 
 /**
+ * @return Description of the plugin
+ */
+string Plugin::getDescription()
+{
+	XOJ_CHECK_TYPE(Plugin);
+
+	return description;
+}
+
+/**
  * Author of the plugin
  */
 string Plugin::getAuthor()
@@ -282,6 +292,7 @@ void Plugin::loadIni()
 
 	LOAD_FROM_INI(author, "about", "author");
 	LOAD_FROM_INI(version, "about", "version");
+	LOAD_FROM_INI(description, "about", "description");
 
 	if (version == "<xournalpp>")
 	{
