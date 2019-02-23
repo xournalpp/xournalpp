@@ -5,11 +5,6 @@
 Rectangle::Rectangle()
 {
 	XOJ_INIT_TYPE(Rectangle);
-
-	this->x = 0;
-	this->y = 0;
-	this->width = 0;
-	this->height = 0;
 }
 
 Rectangle::Rectangle(double x, double y, double width, double height)

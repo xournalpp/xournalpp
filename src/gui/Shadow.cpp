@@ -8,16 +8,6 @@ typedef const unsigned char* u8ptr;
 
 Shadow::Shadow()
 {
-	this->edgeBottomLeft = NULL;
-	this->edgeBottomRight = NULL;
-	this->edgeTopLeft = NULL;
-	this->edgeTopRight = NULL;
-
-	this->left = NULL;
-	this->top = NULL;
-	this->right = NULL;
-	this->bottom = NULL;
-
 	const int sBrSize = shadowBottomRightSize;
 	const int sTlSize = shadowTopLeftSize;
 

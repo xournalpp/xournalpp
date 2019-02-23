@@ -126,7 +126,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 
-	int maxRecent;
+	int maxRecent = 10;
 	int recentHandlerId;
 
 	std::vector<RecentManagerListener*> listener;

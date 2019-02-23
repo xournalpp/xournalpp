@@ -8,16 +8,9 @@
 #include <cmath>
 
 Cursor::Cursor(Control* control)
+ : control(control)
 {
 	XOJ_INIT_TYPE(Cursor);
-
-	this->control = control;
-	this->busy = false;
-	this->invisible = false;
-	this->selectionType = CURSOR_SELECTION_NONE;
-	this->insidePage = false;
-
-	this->mouseDown = false;
 }
 
 Cursor::~Cursor()

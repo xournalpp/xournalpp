@@ -32,12 +32,7 @@ const int XOURNAL_PADDING_BETWEEN = 15;
 
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
  : view(view),
-   scrollHandling(scrollHandling),
-   lastScrollHorizontal(-1),
-   lastScrollVertical(-1),
-   lastWidgetWidth(0),
-   layoutWidth(0),
-   layoutHeight(0)
+   scrollHandling(scrollHandling)
 {
 	XOJ_INIT_TYPE(Layout);
 

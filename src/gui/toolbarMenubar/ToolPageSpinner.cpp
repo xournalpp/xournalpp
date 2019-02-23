@@ -12,9 +12,7 @@ ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string i
 	XOJ_INIT_TYPE(ToolPageSpinner);
 
 	this->gui = gui;
-
 	this->pageSpinner = new SpinPageAdapter();
-	this->lbPageNo = NULL;
 }
 
 ToolPageSpinner::~ToolPageSpinner()

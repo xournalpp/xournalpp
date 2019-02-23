@@ -5,8 +5,6 @@
 PartList::PartList()
 {
 	XOJ_INIT_TYPE(PartList);
-
-	this->data = NULL;
 }
 
 PartList::~PartList()

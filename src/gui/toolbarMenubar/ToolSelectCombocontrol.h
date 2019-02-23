@@ -34,9 +34,9 @@ protected:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	ToolMenuHandler* toolMenuHandler;
-	GtkWidget* popup;
+	ToolMenuHandler* toolMenuHandler = NULL;
+	GtkWidget* popup = NULL;
 
-	GtkWidget* iconWidget;
-	GtkWidget* labelWidget;
+	GtkWidget* iconWidget = NULL;
+	GtkWidget* labelWidget = NULL;
 };

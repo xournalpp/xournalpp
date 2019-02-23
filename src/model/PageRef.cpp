@@ -6,7 +6,6 @@
 PageRef::PageRef()
 {
 	XOJ_INIT_TYPE(PageRef);
-	this->page = NULL;
 }
 
 PageRef::PageRef(const PageRef& ref)

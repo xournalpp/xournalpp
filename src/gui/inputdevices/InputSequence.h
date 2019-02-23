@@ -138,7 +138,7 @@ private:
 	/**
 	 * true if this input is running, false to ignore
 	 */
-	bool inputRunning;
+	bool inputRunning = false;
 
 	/**
 	 * Input Handler
@@ -148,85 +148,85 @@ private:
 	/**
 	 * Current editing page
 	 */
-	XojPageView* current_view;
+	XojPageView* current_view = NULL;
 
 	/**
 	 * Current input page. Mege together with current_view??
 	 */
-	XojPageView* currentInputPage;
+	XojPageView* currentInputPage = NULL;
 
 	/**
 	 * Current input device
 	 */
-	GdkDevice* device;
+	GdkDevice* device = NULL;
 
 	/**
 	 * This is a pen / eraser device
 	 */
-	bool penDevice;
+	bool penDevice = false;
 
 	/**
 	 * Axes of the input
 	 */
-	gdouble* axes;
+	gdouble* axes = NULL;
 
 	/**
 	 * Pressure sensitivity enabled
 	 */
-	bool presureSensitivity;
+	bool presureSensitivity = false;
 
 	/**
 	 * Current mouse button
 	 */
-	guint button;
+	guint button = 0;
 
 	/**
 	 * State flags from GDKevent (Shift down etc.)
 	 */
-	GdkModifierType state;
+	GdkModifierType state = (GdkModifierType)0;
 
 	/**
 	 * Position X
 	 */
-	double x;
+	double x = -1;
 
 	/**
 	 * Position Y
 	 */
-	double y;
+	double y = -1;
 
 	/**
 	 * Root Position X
 	 */
-	double rootX;
+	double rootX = 0;
 
 	/**
 	 * Root Position Y
 	 */
-	double rootY;
+	double rootY = 0;
 
 	/**
 	 * Last mouse position for Scrolling
 	 */
-	int lastMousePositionX;
+	int lastMousePositionX = 0;
 
 	/**
 	 * Last mouse position for Scrolling
 	 */
-	int lastMousePositionY;
+	int lastMousePositionY = 0;
 
 	/**
 	 * Currently scrolling active
 	 */
-	bool inScrolling;
+	bool inScrolling = false;
 
 	/**
 	 * The last Mouse Position, for scrolling
 	 */
-	int scrollOffsetX;
+	int scrollOffsetX = 0;
 
 	/**
 	 * The last Mouse Position, for scrolling
 	 */
-	int scrollOffsetY;
+	int scrollOffsetY = 0;
 };

@@ -39,6 +39,6 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList* edited;
-	GList* original;
+	GList* edited = NULL;
+	GList* original = NULL;
 };

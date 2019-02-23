@@ -7,10 +7,9 @@
 #include "widgets/XournalWidget.h"
 
 RepaintHandler::RepaintHandler(XournalView* xournal)
+ : xournal(xournal)
 {
 	XOJ_INIT_TYPE(RepaintHandler);
-
-	this->xournal = xournal;
 }
 
 RepaintHandler::~RepaintHandler()

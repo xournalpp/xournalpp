@@ -43,5 +43,5 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	string name;
-	double size;
+	double size = 0;
 };

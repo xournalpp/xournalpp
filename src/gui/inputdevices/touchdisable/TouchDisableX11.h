@@ -47,27 +47,27 @@ private:
 	/**
 	 * X11 Display
 	 */
-	Display* display;
+	Display* display = NULL;
 
 	/**
 	 * Touch device ID
 	 */
-	Atom touchAtom;
+	Atom touchAtom = None;
 
 	/**
 	 * Touch device
 	 */
-	XDeviceInfo* touch;
+	XDeviceInfo* touch = NULL;
 
 	/**
 	 * Touch device
 	 */
-	XDevice* touchdev;
+	XDevice* touchdev = NULL;
 
 	/**
 	 * Enable flag
 	 */
-	Atom enabledAtom;
+	Atom enabledAtom = None;
 };
 
 #endif

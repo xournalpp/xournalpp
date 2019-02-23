@@ -44,7 +44,7 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Control* control;
+	Control* control = NULL;
 
 	/**
 	 * Last used background colors (stored in settings)
@@ -54,5 +54,5 @@ private:
 	/**
 	 * Selected color
 	 */
-	int selected;
+	int selected = -1;
 };

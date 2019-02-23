@@ -74,12 +74,12 @@ protected:
 	/**
 	 * The Control of the Application
 	 */
-	Control* control;
+	Control* control = NULL;
 
 	/**
 	 * The Toolbar to move, copy & delete pages
 	 */
-	SidebarToolbar* toolbar;
+	SidebarToolbar* toolbar = NULL;
 
 public:
 	/**

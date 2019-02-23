@@ -9,15 +9,9 @@
 
 ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom)
  : AbstractToolItem(id, handler, type, NULL),
-   ignoreChange(false),
-   sliderChangingByUser(false)
+   zoom(zoom)
 {
 	XOJ_INIT_TYPE(ToolZoomSlider);
-
-	this->slider = NULL;
-	this->zoom = zoom;
-
-	this->horizontal = true;
 
 	zoom->addZoomListener(this);
 }

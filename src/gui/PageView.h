@@ -196,11 +196,11 @@ private:
 	 */
 	Text* oldtext;
 
-	bool selected;
+	bool selected = false;
 
 	cairo_surface_t* crBuffer = nullptr;
 
-	bool inEraser;
+	bool inEraser = false;
 
 	/**
 	 * Vertical Space
@@ -215,11 +215,11 @@ private:
 	/**
 	 * Unixtimestam when the page was last time in the visible area
 	 */
-	int lastVisibleTime;
+	int lastVisibleTime = -1;
 
 	GMutex repaintRectMutex;
-	std::vector<Rectangle*> rerenderRects;
-	bool rerenderComplete;
+	vector<Rectangle*> rerenderRects;
+	bool rerenderComplete = false;
 
 	GMutex drawingMutex;
 

@@ -38,5 +38,5 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	PopplerDocument* document;
+	PopplerDocument* document = NULL;
 };

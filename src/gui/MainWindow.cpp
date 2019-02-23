@@ -37,8 +37,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	XOJ_INIT_TYPE(MainWindow);
 
 	this->control = control;
-	this->toolbarIntialized = false;
-	this->selectedToolbar = NULL;
 	this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
 	this->toolbarSelectMenu = new MainWindowToolbarMenu(this);
 
@@ -48,8 +46,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 		g_object_ref(w);
 		this->toolbarWidgets[i] = w;
 	}
-
-	this->maximized = false;
 
 	initXournalWidget();
 	

@@ -10,13 +10,9 @@
 #include "view/DocumentView.h"
 
 PreviewJob::PreviewJob(SidebarPreviewBaseEntry* sidebar)
+ : sidebarPreview(sidebar)
 {
 	XOJ_INIT_TYPE(PreviewJob);
-
-	this->sidebarPreview = sidebar;
-	this->crBuffer = NULL;
-	this->cr2 = NULL;
-	this->zoom = 0;
 }
 
 PreviewJob::~PreviewJob()

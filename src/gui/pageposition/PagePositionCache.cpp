@@ -3,8 +3,6 @@
 PagePositionCache::PagePositionCache()
 {
 	XOJ_INIT_TYPE(PagePositionCache);
-
-	this->ppId = -1;
 }
 
 PagePositionCache::~PagePositionCache()

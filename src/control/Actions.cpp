@@ -2,8 +2,6 @@
 
 ActionEnabledListener::ActionEnabledListener()
 {
-	this->handler = NULL;
-
 	XOJ_INIT_TYPE(ActionEnabledListener);
 }
 

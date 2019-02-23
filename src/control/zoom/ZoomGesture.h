@@ -34,8 +34,8 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	ZoomControl* zoomControl;
-	GtkGesture* gesture;
+	ZoomControl* zoomControl = NULL;
+	GtkGesture* gesture = NULL;
 
-	bool gestureActive;
+	bool gestureActive = false;
 };

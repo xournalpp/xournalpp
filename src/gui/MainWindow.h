@@ -145,10 +145,10 @@ private:
 
 	// Toolbars
 	ToolMenuHandler* toolbar;
-	ToolbarData* selectedToolbar;
-	bool toolbarIntialized;
+	ToolbarData* selectedToolbar = NULL;
+	bool toolbarIntialized = false;
 
-	bool maximized;
+	bool maximized = false;
 
 	GtkWidget** toolbarWidgets;
 

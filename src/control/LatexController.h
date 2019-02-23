@@ -99,7 +99,7 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Control* control;
+	Control* control = NULL;
 
 	/**
 	 * Tex binary full path
@@ -119,32 +119,32 @@ private:
 	/**
 	 * X-Position
 	 */
-	int posx;
+	int posx = 0;
 
 	/**
 	 * Y-Position
 	 */
-	int posy;
+	int posy = 0;
 
 	/**
 	 * Image width
 	 */
-	int imgwidth;
+	int imgwidth = 0;
 
 	/**
 	 * Image height
 	 */
-	int imgheight;
+	int imgheight = 0;
 
 	/**
 	 * Document
 	 */
-	Document* doc;
+	Document* doc = NULL;
 
 	/**
 	 * Page View
 	 */
-	XojPageView* view;
+	XojPageView* view = NULL;
 
 	/**
 	 * Selected Page
@@ -154,7 +154,7 @@ private:
 	/**
 	 * Selected layer
 	 */
-	Layer* layer;
+	Layer* layer = NULL;
 
 	/**
 	 * Text tmp directory in configuration folder
@@ -164,20 +164,20 @@ private:
 	/**
 	 * Previously existin TexImage
 	 */
-	TexImage* selectedTexImage;
+	TexImage* selectedTexImage = NULL;
 
-	Text* selectedText;
+	Text* selectedText = NULL;
 
 	/**
 	 * LaTex editor dialog
 	 */
-	LatexDialog* dlg;
+	LatexDialog* dlg = NULL;
 
 	/**
 	 * The controller holds the 'on-the-go' render in order
 	 * to be able to delete it when a new render is created
 	 */
-	TexImage* temporaryRender;
+	TexImage* temporaryRender = NULL;
 
 
 	/**

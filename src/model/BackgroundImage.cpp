@@ -6,8 +6,6 @@
 BackgroundImage::BackgroundImage()
 {
 	XOJ_INIT_TYPE(BackgroundImage);
-
-	this->img = NULL;
 }
 
 BackgroundImage::BackgroundImage(const BackgroundImage& img)

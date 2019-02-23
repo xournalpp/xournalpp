@@ -47,9 +47,17 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int ref;
+	/**
+	 * Reference counter
+	 */
+	int ref = 1;
+
 	string filename;
-	bool attach;
-	int pageId;
-	GdkPixbuf* pixbuf;
+	bool attach = false;
+
+	/**
+	 *
+	 */
+	int pageId = -1;
+	GdkPixbuf* pixbuf = NULL;
 };

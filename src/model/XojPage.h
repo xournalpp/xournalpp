@@ -17,6 +17,8 @@
 #include "PageType.h"
 
 #include <XournalType.h>
+#include <Util.h>
+
 
 class XojPage : public PageHandler
 {
@@ -83,7 +85,7 @@ private:
 	/**
 	 * The reference counter
 	 */
-	int ref;
+	int ref = 0;
 
 	/**
 	 * The Background image if any
@@ -93,8 +95,8 @@ private:
 	/**
 	 * The size of the page
 	 */
-	double width;
-	double height;
+	double width = 0;
+	double height = 0;
 
 	/**
 	 * The layer list
@@ -104,7 +106,7 @@ private:
 	/**
 	 * The current selected layer ID
 	 */
-	size_t currentLayer;
+	size_t currentLayer = size_t_npos;
 
 	/**
 	 * The Background Type of the page
@@ -114,17 +116,17 @@ private:
 	/**
 	 * If the page has a PDF background, the page number of the PDF Page
 	 */
-	size_t pdfBackgroundPage;
+	size_t pdfBackgroundPage = size_t_npos;
 
 	/**
 	 * The background color if the background type is palain
 	 */
-	int backgroundColor;
+	int backgroundColor = 0xffffff;
 
 	/**
 	 * Background visible
 	 */
-	bool backgroundVisible;
+	bool backgroundVisible = true;
 
 	// Allow LoadHandler to add layers directly
 	friend class LoadHandler;

@@ -63,13 +63,13 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList* undoList;
-	GList* redoList;
+	GList* undoList = NULL;
+	GList* redoList = NULL;
 
-	UndoAction* savedUndo;
-	UndoAction* autosavedUndo;
+	UndoAction* savedUndo = NULL;
+	UndoAction* autosavedUndo = NULL;
 
-	GList* listener;
+	GList* listener = NULL;
 
-	Control* control;
+	Control* control = NULL;
 };

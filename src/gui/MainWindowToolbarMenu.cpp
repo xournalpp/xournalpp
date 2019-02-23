@@ -24,7 +24,7 @@ public:
 
 
 MainWindowToolbarMenu::MainWindowToolbarMenu(MainWindow* win)
- : win(win), selectedToolbar(NULL), inPredefinedSection(false)
+ : win(win)
 {
 	XOJ_INIT_TYPE(MainWindowToolbarMenu);
 }

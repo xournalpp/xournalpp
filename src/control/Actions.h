@@ -37,7 +37,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 
-	ActionHandler* handler;
+	ActionHandler* handler = NULL;
 };
 
 class ActionSelectionListener

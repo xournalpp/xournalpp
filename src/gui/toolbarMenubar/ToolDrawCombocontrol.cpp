@@ -20,13 +20,11 @@ public:
 };
 
 ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id)
- : ToolButton(handler, id, ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "rect-draw.png", _("Draw Rectangle"))
+ : ToolButton(handler, id, ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "rect-draw.png", _("Draw Rectangle")),
+   toolMenuHandler(toolMenuHandler)
 {
 	XOJ_INIT_TYPE(ToolDrawCombocontrol);
 
-	this->toolMenuHandler = toolMenuHandler;
-	this->labelWidget = NULL;
-	this->iconWidget = NULL;
 	setPopupMenu(gtk_menu_new());
 
 	drawTypes.push_back(new ToolDrawType(_("Draw Rectangle"),				"rect-draw",					ACTION_TOOL_DRAW_RECT   ));

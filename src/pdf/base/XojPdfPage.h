@@ -25,10 +25,10 @@ public:
 	XojPdfRectangle(double x1, double y1, double x2, double y2);
 
 public:
-	double x1;
-	double y1;
-	double x2;
-	double y2;
+	double x1 = -1;
+	double y1 = -1;
+	double x2 = -1;
+	double y2 = -1;
 };
 
 class XojPdfPage

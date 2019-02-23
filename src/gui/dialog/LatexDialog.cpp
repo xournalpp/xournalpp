@@ -8,7 +8,6 @@ LatexDialog::LatexDialog(GladeSearchpath *gladeSearchPath)
 	this->texBox = get("texView");
 	this->textBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(this->texBox));
 	this->texTempRender = get("texImage");
-	this->scaledRender = NULL;
 
 	// increase the maximum length to something reasonable.
 	//gtk_entry_set_max_length(GTK_TEXT_BUFFER(this->texBox), 500);

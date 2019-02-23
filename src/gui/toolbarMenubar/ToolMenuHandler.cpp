@@ -32,10 +32,6 @@ ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* par
 	this->zoom = control->getZoomControl();
 	this->gui = gui;
 	this->toolHandler = control->getToolHandler();
-	this->undoButton = NULL;
-	this->redoButton = NULL;
-	this->toolPageSpinner = NULL;
-	this->toolPageLayer = NULL;
 	this->tbModel = new ToolbarModel();
 
 	// still owned by Control

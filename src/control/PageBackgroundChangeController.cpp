@@ -14,8 +14,7 @@
 
 PageBackgroundChangeController::PageBackgroundChangeController(Control* control)
  : control(control),
-   currentPageType(new PageTypeMenu(control->getPageTypes(), control->getSettings(), false, true)),
-   ignoreEvent(false)
+   currentPageType(new PageTypeMenu(control->getPageTypes(), control->getSettings(), false, true))
 {
 	XOJ_INIT_TYPE(PageBackgroundChangeController);
 

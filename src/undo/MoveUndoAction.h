@@ -41,10 +41,11 @@ private:
 	vector<Element*> elements;
 	PageRef targetPage;
 
-	Layer* sourceLayer;
-	Layer* targetLayer;
+	Layer* sourceLayer = NULL;
+	Layer* targetLayer = NULL;
 
 	string text;
 
-	double dx, dy;
+	double dx = 0;
+	double dy = 0;
 };

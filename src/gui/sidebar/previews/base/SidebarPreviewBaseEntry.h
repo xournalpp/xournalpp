@@ -73,7 +73,7 @@ protected:
 	/**
 	 * If this page is currently selected
 	 */
-	bool selected;
+	bool selected = false;
 
 	/**
 	 * The sidebar which displays the previews
@@ -98,7 +98,7 @@ protected:
 	/**
 	 * Buffer because of performance reasons
 	 */
-	cairo_surface_t* crBuffer;
+	cairo_surface_t* crBuffer = NULL;
 
 	friend class PreviewJob;
 };

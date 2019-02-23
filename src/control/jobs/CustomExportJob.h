@@ -57,20 +57,20 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	PageRangeVector exportRange;
-	int pngDpi;
+	int pngDpi = 300;
 
-	cairo_surface_t* surface;
-	cairo_t* cr;
+	cairo_surface_t* surface = NULL;
+	cairo_t* cr = NULL;
 
 	/**
 	 * PDF Export, else PNG Export
 	 */
-	bool exportTypePdf;
+	bool exportTypePdf = false;
 
 	/**
 	 * XOJ Export, else PNG Export
 	 */
-	bool exportTypeXoj;
+	bool exportTypeXoj = false;
 
 	string lastError;
 

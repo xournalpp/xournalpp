@@ -35,7 +35,6 @@ PdfCache::PdfCache(int size)
 	XOJ_INIT_TYPE(PdfCache);
 
 	this->size = size;
-	this->zoom = -1;
 
 	g_mutex_init(&this->renderMutex);
 }

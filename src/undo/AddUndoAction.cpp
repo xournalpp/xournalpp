@@ -16,7 +16,6 @@ AddUndoAction::AddUndoAction(PageRef page, bool eraser)
 
 	this->page = page;
 	this->eraser = eraser;
-	this->elements = NULL;
 }
 
 AddUndoAction::~AddUndoAction()

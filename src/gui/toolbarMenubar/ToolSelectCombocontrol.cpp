@@ -14,9 +14,6 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler,
 
 	XOJ_INIT_TYPE(ToolSelectCombocontrol);
 
-	this->labelWidget = NULL;
-	this->iconWidget = NULL;
-
 	addMenuitem(_("Select Rectangle"), "rect-select", ACTION_TOOL_SELECT_RECT, GROUP_TOOL);
 	addMenuitem(_("Select Region"), "lasso", ACTION_TOOL_SELECT_REGION, GROUP_TOOL);
 	addMenuitem(_("Select Object"), "object-select", ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL);

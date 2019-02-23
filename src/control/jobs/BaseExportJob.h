@@ -44,7 +44,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-	GtkWidget* dialog;
+	GtkWidget* dialog = NULL;
 
 	Path filename;
 
@@ -52,9 +52,14 @@ protected:
 
 	class ExportType
 	{
-		public:
-			string extension;
-			bool withoutBackground;
-			ExportType(string ext, bool hideBg) : extension(ext), withoutBackground(hideBg){}
+	public:
+		string extension;
+		bool withoutBackground;
+
+		ExportType(string ext, bool hideBg)
+		 : extension(ext),
+		   withoutBackground(hideBg)
+		{
+		}
 	};
 };

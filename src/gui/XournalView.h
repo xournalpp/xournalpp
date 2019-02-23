@@ -162,45 +162,45 @@ private:
 	/**
 	 * Scrollbars
 	 */
-	ScrollHandling* scrollHandling;
+	ScrollHandling* scrollHandling = NULL;
 
-	GtkWidget* widget;
-	double margin;
+	GtkWidget* widget = NULL;
+	double margin = 75;
 
-	XojPageView** viewPages;
-	size_t viewPagesLen;
+	XojPageView** viewPages = NULL;
+	size_t viewPagesLen = 0;
 
-	Control* control;
+	Control* control = NULL;
 
-	size_t currentPage;
-	size_t lastSelectedPage;
+	size_t currentPage = 0;
+	size_t lastSelectedPage = -1;
 
-	PdfCache* cache;
+	PdfCache* cache = NULL;
 
 	/**
 	 * Handler for rerendering pages / repainting pages
 	 */
-	RepaintHandler* repaintHandler;
+	RepaintHandler* repaintHandler = NULL;
 
 	/**
 	 * The positions of all pages
 	 */
-	PagePositionHandler* pagePosition;
+	PagePositionHandler* pagePosition = NULL;
 
 	/**
 	 * Memory cleanup timeout
 	 */
-	int cleanupTimeout;
+	int cleanupTimeout = -1;
 
 	/**
 	 * Last Pen action, to ignore touch events within a time frame
 	 */
-	gint64 lastPenAction;
+	gint64 lastPenAction = 0;
 
 	/**
 	 * Helper class for Touch specific fixes
 	 */
-	TouchHelper* touchHelper;
+	TouchHelper* touchHelper = NULL;
 
 	friend class Layout;
 };

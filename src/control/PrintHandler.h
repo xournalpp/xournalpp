@@ -37,5 +37,5 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Document* doc;
+	Document* doc = NULL;
 };

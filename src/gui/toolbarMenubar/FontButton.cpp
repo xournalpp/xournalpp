@@ -10,7 +10,6 @@ FontButton::FontButton(ActionHandler* handler, GladeGui* gui, string id, ActionT
 
 	this->gui = gui;
 	this->description = description;
-	this->fontButton = NULL;
 }
 
 FontButton::~FontButton()

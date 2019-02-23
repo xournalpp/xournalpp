@@ -154,7 +154,7 @@ protected:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XournalView* view;
+	XournalView* view = NULL;
 
 	std::vector<ZoomListener*> listener;
 
@@ -162,96 +162,99 @@ private:
 	 * current Zoom value
 	 * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
 	 */
-	double zoom;
+	double zoom = 1.0;
 
 	/**
 	 * for zoom sequence start zoom value
 	 * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
 	 */
-	double lastZoomValue;
+	double lastZoomValue = 1.0;
 
-	bool zoomFitMode;
+	bool zoomFitMode = true;
 
 	/**
 	 * Zoom value for 100% depends on the dpi
 	 */
-	double zoom100Value;
-	double zoomFitValue;
+	double zoom100Value = 1.0;
+	double zoomFitValue = 1.0;
 
 	/**
 	 * Base zoom on start, for relative zoom (Gesture)
 	 */
-	double zoomSequenceStart;
+	double zoomSequenceStart = -1;
 
 	/**
 	 * Zoom point on widget, will not be zoomed!
 	 */
-	double zoomWidgetPosX;
+	double zoomWidgetPosX = 0;
 
 	/**
 	 * Zoom point on widget, will not be zoomed!
 	 */
-	double zoomWidgetPosY;
+	double zoomWidgetPosY = 0;
 
 	/**
 	 * Scroll position to scale
 	 */
-	double scrollPositionX;
+	double scrollPositionX = 0;
 
 	/**
 	 * Scroll position to scale
 	 */
-	double scrollPositionY;
+	double scrollPositionY = 0;
 
 	/**
 	 * Cursorposition x for Ctrl + Scroll
 	 */
-	double scrollCursorPositionX;
+	double scrollCursorPositionX = 0;
+
 	/**
 	 * Cursorposition y for Ctrl + Scroll
 	 */
-	double scrollCursorPositionY;
+	double scrollCursorPositionY = 0;
 
 	/**
 	 * Zoomstep value for Ctrl - and Zoom In and Out Button
 	 * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
 	 */
-	double zoomStep;
+	double zoomStep = 0;
+
 	/**
 	 * Real zoomstep value for Ctrl + and Zoom In and Out Button
 	 */
-	double zoomStepReal;
+	double zoomStepReal = DEFAULT_ZOOM_STEP;
 
 	/**
 	 * Zoomstep value for Ctrl-Scroll zooming
 	 * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
 	 */
-	double zoomStepScroll;
+	double zoomStepScroll = 0;
+
 	/**
 	 * Real zoomstep value for Ctrl-Scroll zooming
 	 */
-	double zoomStepScrollReal;
-
+	double zoomStepScrollReal = DEFAULT_ZOOM_STEP_SCROLL;
 
 	/**
 	 * Zoom maximal value
 	 * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
 	 */
-	double zoomMax;
+	double zoomMax = 0;
+
 	/**
 	 * Real zoom maximal value
 	 */
-	double zoomMaxReal;
-
+	double zoomMaxReal = DEFAULT_ZOOM_MAX;
 
 	/**
 	 * Zoom mininmal value
 	 * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
 	 */
-	double zoomMin;
+	double zoomMin = 0;
+
 	/**
 	 * Real zoom mininmal value
 	 * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
 	 */
-	double zoomMinReal;
+	double zoomMinReal = DEFAULT_ZOOM_MIN;
 };

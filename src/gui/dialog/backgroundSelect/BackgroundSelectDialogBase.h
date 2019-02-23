@@ -40,26 +40,26 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-	Settings* settings;
-	GtkWidget* scrollPreview;
-	GtkWidget* layoutContainer;
+	Settings* settings = NULL;
+	GtkWidget* scrollPreview = NULL;
+	GtkWidget* layoutContainer = NULL;
 
-	Document* doc;
+	Document* doc = NULL;
 
 	/**
 	 * Selection confirmed
 	 */
-	bool confirmed;
+	bool confirmed = false;
 
 	/**
 	 * Selected image, none if negative
 	 */
-	int selected;
+	int selected = -1;
 
 	/**
 	 * To check if the size has real changed
 	 */
-	int lastWidth;
+	int lastWidth = 0;
 
 	/**
 	 * Elements to display

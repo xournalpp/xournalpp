@@ -11,16 +11,6 @@ Stroke::Stroke()
  : AudioElement(ELEMENT_STROKE)
 {
 	XOJ_INIT_TYPE(Stroke);
-
-	this->width = 0;
-
-	this->pointAllocCount = 0;
-	this->pointCount = 0;
-	this->points = NULL;
-	this->toolType = STROKE_TOOL_PEN;
-
-	this->eraseable = NULL;
-	this->fill = -1;
 }
 
 Stroke::~Stroke()

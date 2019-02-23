@@ -54,5 +54,5 @@ private:
 	/**
 	 * This page is already used as background
 	 */
-	bool used;
+	bool used = false;
 };

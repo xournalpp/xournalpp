@@ -1,10 +1,9 @@
 #include "AudioElement.h"
 
-AudioElement::AudioElement(ElementType type) : Element(type)
+AudioElement::AudioElement(ElementType type)
+ : Element(type)
 {
 	XOJ_INIT_TYPE(AudioElement);
-
-	this->timestamp = 0;
 }
 
 AudioElement::~AudioElement()
