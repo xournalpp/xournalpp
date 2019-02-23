@@ -29,6 +29,7 @@ void PluginDialogEntry::loadSettings()
 {
 	XOJ_CHECK_TYPE(PluginDialogEntry);
 
+#ifdef ENABLE_PLUGINS
 	gtk_label_set_text(GTK_LABEL(get("pluginName")), plugin->getName().c_str());
 	gtk_label_set_text(GTK_LABEL(get("lbAuthor")), plugin->getAuthor().c_str());
 	gtk_label_set_text(GTK_LABEL(get("lbVersion")), plugin->getVersion().c_str());
@@ -36,6 +37,7 @@ void PluginDialogEntry::loadSettings()
 
 	gtk_label_set_text(GTK_LABEL(get("lbDefaultText")), plugin->isDefaultEnabled() ? _("default enabled") : _("default disabled"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbEnabled")), plugin->isEnabled());
+#endif
 }
 
 void PluginDialogEntry::show(GtkWindow* parent)
@@ -47,6 +49,7 @@ void PluginDialogEntry::saveSettings(string& pluginEnabled, string& pluginDisabl
 {
 	XOJ_CHECK_TYPE(PluginDialogEntry);
 
+#ifdef ENABLE_PLUGINS
 	bool state = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("cbEnabled")));
 
 	if (state == plugin->isDefaultEnabled())
@@ -70,5 +73,5 @@ void PluginDialogEntry::saveSettings(string& pluginEnabled, string& pluginDisabl
 		}
 		pluginDisabled += plugin->getName();
 	}
+#endif
 }
-

@@ -160,4 +160,3 @@ vector<Plugin*>& PluginController::getPlugins()
 
 	return plugins;
 }
-
