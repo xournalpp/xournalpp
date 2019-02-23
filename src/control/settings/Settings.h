@@ -175,6 +175,18 @@ public:
 	string getSelectedToolbar();
 
 	/**
+	 * Set the Zoomstep for one step in percent
+	 */
+	void setZoomStep(double zoomStep);
+	double getZoomStep();
+
+	/**
+	 * Set the Zoomstep for Ctrl + Scroll in percent
+	 */
+	void setZoomStepScroll(double zoomStepScroll);
+	double getZoomStepScroll();
+
+	/**
 	 * Sets the screen resolution in DPI
 	 */
 	void setDisplayDpi(int dpi);
@@ -467,6 +479,16 @@ private:
 	 * The last used font
 	 */
 	XojFont font;
+
+	/**
+	 * Zoomstep for one step
+	 */
+	double zoomStep;
+
+	/**
+	 * Zoomstep for Ctrl + Scroll zooming
+	 */
+	double zoomStepScroll;
 
 	/**
 	 * The display resolution, in pixels per inch

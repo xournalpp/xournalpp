@@ -70,7 +70,10 @@ void ZoomGesture::zoomChanged(double zoom)
 {
 	XOJ_CHECK_TYPE(ZoomGesture);
 
-	zoomControl->zoomSequnceChange(zoom, true);
+	if (gestureActive)
+	{
+		zoomControl->zoomSequnceChange(zoom, true);
+	}
 }
 
 void ZoomGesture::zoomEnd()

@@ -79,7 +79,7 @@ void ToolZoomSlider::zoomChanged()
 	}
 
 	this->ignoreChange = true;
-	double slider_range = scaleFunc(this->zoom->getZoom()/this->zoom->getZoom100());
+	double slider_range = scaleFunc(this->zoom->getZoomReal());
 	gtk_range_set_value(GTK_RANGE(this->slider), slider_range);
 	this->ignoreChange = false;
 }
@@ -223,7 +223,8 @@ GtkToolItem* ToolZoomSlider::newItem()
 	gtk_container_add(GTK_CONTAINER(it), this->slider);
 
 	ignoreChange = true;
-	gtk_range_set_value(GTK_RANGE(this->slider), this->zoom->getZoom());
+	double slider_range = scaleFunc(this->zoom->getZoomReal());
+	gtk_range_set_value(GTK_RANGE(this->slider), slider_range);
 	ignoreChange = false;
 
 	updateScaleMarks();
