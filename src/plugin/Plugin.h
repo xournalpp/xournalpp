@@ -18,7 +18,9 @@
 #include <config-features.h>
 
 #ifdef ENABLE_PLUGINS
+extern "C" {
 #include <lua.h>
+}
 
 class Plugin;
 class Control;

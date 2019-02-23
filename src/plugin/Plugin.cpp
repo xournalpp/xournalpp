@@ -5,10 +5,12 @@
 
 #ifdef ENABLE_PLUGINS
 
+extern "C" {
 #include <lua.h>
 #include <lauxlib.h>
 #include <lualib.h>
 #include <lauxlib.h>
+}
 
 #include "luapi_application.h"
 
