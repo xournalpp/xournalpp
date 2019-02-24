@@ -19,6 +19,13 @@
 #include <i18n.h>
 #include <map>
 
+enum ExportGraphicsFormat {
+	EXPORT_GRAPHICS_UNDEFINED,
+	EXPORT_GRAPHICS_PDF,
+	EXPORT_GRAPHICS_PNG,
+	EXPORT_GRAPHICS_SVG
+};
+
 class CustomExportJob : public BaseExportJob
 {
 public:
@@ -39,16 +46,16 @@ protected:
 	virtual void addFilterToDialog();
 
 	/**
-	 * Export a single PNG page
+	 * Export a single Image page
 	 */
-	void exportPngPage(int pageId, int id, double zoom, DocumentView& view);
+	void exportImagePage(int pageId, int id, double zoom, ExportGraphicsFormat format, DocumentView& view);
 
 	/**
-	 * Create one PNG file per page
+	 * Create one Graphics file per page
 	 */
-	void exportPng();
+	void exportGraphics();
 
-	void createSurface(double width, double height);
+	void createSurface(double width, double height, int id);
 	bool freeSurface(int id);
 	string getFilenameWithNumber(int no);
 	virtual bool isUriValid(string& uri);
@@ -63,9 +70,9 @@ private:
 	cairo_t* cr = NULL;
 
 	/**
-	 * PDF Export, else PNG Export
+	 * Export graphics format
 	 */
-	bool exportTypePdf = false;
+	ExportGraphicsFormat format = EXPORT_GRAPHICS_UNDEFINED;
 
 	/**
 	 * XOJ Export, else PNG Export

@@ -12,6 +12,8 @@
 #include <config-features.h>
 #include <XojMsgBox.h>
 
+#include <cairo-svg.h>
+
 
 CustomExportJob::CustomExportJob(Control* control)
  : BaseExportJob(control, _("Custom Export"))
@@ -23,6 +25,8 @@ CustomExportJob::CustomExportJob(Control* control)
 	filters[_("PDF with plain background")] = new ExportType(".pdf", true);
 	filters[_("PNG graphics")] = new ExportType(".png", false);
 	filters[_("PNG with transparent background")] = new ExportType(".png", true);
+	filters[_("SVG graphics")] = new ExportType(".svg", false);
+	filters[_("SVG with transparent background")] = new ExportType(".svg", true);
 	filters[_("Xournal (Compatibility)")] =  new ExportType(".xoj", false);
 }
 
@@ -40,7 +44,6 @@ CustomExportJob::~CustomExportJob()
 	{
 		delete filter.second;
 	}
-
 
 	XOJ_RELEASE_TYPE(CustomExportJob);
 }
@@ -94,7 +97,17 @@ bool CustomExportJob::showFilechooser()
 	if (filename.hasExtension(".pdf"))
 	{
 		dlg->removeDpiSelection();
-		exportTypePdf = true;
+		format = EXPORT_GRAPHICS_PDF;
+	}
+	else if (filename.hasExtension(".svg"))
+	{
+		dlg->removeDpiSelection();
+		format = EXPORT_GRAPHICS_SVG;
+	}
+	else if (filename.hasExtension(".png"))
+	{
+		dlg->removeDpiSelection();
+		format = EXPORT_GRAPHICS_PNG;
 	}
 
 	dlg->initPages(control->getCurrentPageNo() + 1, doc->getPageCount());
@@ -114,16 +127,30 @@ bool CustomExportJob::showFilechooser()
 	return true;
 }
 
-void CustomExportJob::createSurface(double width, double height)
+void CustomExportJob::createSurface(double width, double height, int id)
 {
 	XOJ_CHECK_TYPE(CustomExportJob);
 
-	this->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-											   width * this->pngDpi / 72.0,
-											   height * this->pngDpi / 72.0);
-	this->cr = cairo_create(this->surface);
-	double factor = this->pngDpi / 72.0;
-	cairo_scale(this->cr, factor, factor);
+	if (format == EXPORT_GRAPHICS_PNG)
+	{
+		this->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+												   width * this->pngDpi / 72.0,
+												   height * this->pngDpi / 72.0);
+		this->cr = cairo_create(this->surface);
+		double factor = this->pngDpi / 72.0;
+		cairo_scale(this->cr, factor, factor);
+	}
+	else if (format == EXPORT_GRAPHICS_SVG)
+	{
+		string filepath = getFilenameWithNumber(id);
+		this->surface = cairo_svg_surface_create(filepath.c_str(), width, height);
+		cairo_svg_surface_restrict_to_version(this->surface, CAIRO_SVG_VERSION_1_2);
+		this->cr = cairo_create(this->surface);
+	}
+	else
+	{
+		g_error("Unsupported graphics format: %i", format);
+	}
 }
 
 bool CustomExportJob::freeSurface(int id)
@@ -132,8 +159,12 @@ bool CustomExportJob::freeSurface(int id)
 
 	cairo_destroy(this->cr);
 
-	string filepath = getFilenameWithNumber(id);
-	cairo_status_t status = cairo_surface_write_to_png(surface, filepath.c_str());
+	cairo_status_t status = CAIRO_STATUS_SUCCESS;
+	if (format == EXPORT_GRAPHICS_PNG)
+	{
+		string filepath = getFilenameWithNumber(id);
+		status = cairo_surface_write_to_png(surface, filepath.c_str());
+	}
 	cairo_surface_destroy(surface);
 
 	// we ignore this problem
@@ -170,14 +201,21 @@ string CustomExportJob::getFilenameWithNumber(int no)
 /**
  * Export a single PNG page
  */
-void CustomExportJob::exportPngPage(int pageId, int id, double zoom, DocumentView& view)
+void CustomExportJob::exportImagePage(int pageId, int id, double zoom, ExportGraphicsFormat format, DocumentView& view)
 {
 	Document* doc = control->getDocument();
 	doc->lock();
 	PageRef page = doc->getPage(pageId);
 	doc->unlock();
 
-	createSurface(page->getWidth(), page->getHeight());
+	createSurface(page->getWidth(), page->getHeight(), id);
+
+	cairo_status_t state = cairo_surface_status(this->surface);
+	if (state != CAIRO_STATUS_SUCCESS)
+	{
+		this->errorMsg = _("Error save image #1");
+		return;
+	}
 
 	if (page->getBackgroundType().isPdfPage())
 	{
@@ -188,21 +226,21 @@ void CustomExportJob::exportPngPage(int pageId, int id, double zoom, DocumentVie
 	}
 
 	bool hideBackground = filters[this->chosenFilterName]->withoutBackground;
-	
+
 	view.drawPage(page, this->cr, true, hideBackground);
 
 	if (!freeSurface(id))
 	{
 		// could not create this file...
-		this->errorMsg = _("Error export PDF Page");
+		this->errorMsg = _("Error save image #2");
 		return;
 	}
 }
 
 /**
- * Create one PNG file per page
+ * Create one Graphics file per page
  */
-void CustomExportJob::exportPng()
+void CustomExportJob::exportGraphics()
 {
 	XOJ_CHECK_TYPE(CustomExportJob);
 
@@ -246,7 +284,8 @@ void CustomExportJob::exportPng()
 		if (selectedPages[i])
 		{
 			this->control->setCurrentState(current++);
-			exportPngPage(i, id, zoom, view);
+
+			exportImagePage(i, id, zoom, format, view);
 		}
 	}
 }
@@ -273,7 +312,7 @@ void CustomExportJob::run()
 			callAfterRun();
 		}
 	}
-	else if (exportTypePdf)
+	else if (format == EXPORT_GRAPHICS_PDF)
 	{
 		// don't lock the page here for the whole flow, else we get a dead lock...
 		// the ui is blocked, so there should be no changes...
@@ -292,7 +331,7 @@ void CustomExportJob::run()
 	}
 	else
 	{
-		exportPng();
+		exportGraphics();
 	}
 }
 
