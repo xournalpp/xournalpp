@@ -19,3 +19,12 @@ public:
 
 	virtual ~ProgressListener() { };
 };
+
+class DummyProgressListener : public ProgressListener
+{
+public:
+	virtual void setMaximumState(int max) {};
+	virtual void setCurrentState(int state) {};
+
+	virtual ~DummyProgressListener() { };
+};

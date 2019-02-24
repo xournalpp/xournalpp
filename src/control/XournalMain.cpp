@@ -2,6 +2,8 @@
 
 #include "Control.h"
 
+#include "control/jobs/ImageExport.h"
+#include "control/jobs/ProgressListener.h"
 #include "gui/GladeSearchpath.h"
 #include "gui/MainWindow.h"
 #include "gui/toolbarMenubar/model/ToolbarColorNames.h"
@@ -10,6 +12,7 @@
 #include "pdf/base/XojPdfExportFactory.h"
 #include "undo/EmergencySaveRestore.h"
 #include "xojfile/LoadHandler.h"
+
 
 #include <config.h>
 #include <config-dev.h>
@@ -206,6 +209,58 @@ void XournalMain::checkForEmergencySave(Control* control) {
 	gtk_widget_destroy(dialog);
 }
 
+int XournalMain::exportImg(const char* input, const char* output)
+{
+	XOJ_CHECK_TYPE(XournalMain);
+
+	LoadHandler loader;
+
+	Document* doc = loader.loadDocument(input);
+	if (doc == NULL)
+	{
+		g_error("%s", loader.getLastError().c_str());
+		return -2;
+	}
+
+	GFile* file = g_file_new_for_commandline_arg(output);
+
+	char* cpath = g_file_get_path(file);
+	string path = cpath;
+	g_free(cpath);
+	g_object_unref(file);
+
+	ExportGraphicsFormat format = EXPORT_GRAPHICS_PNG;
+
+	if (StringUtils::endsWith(path, ".svg"))
+	{
+		format = EXPORT_GRAPHICS_SVG;
+	}
+
+	PageRangeVector exportRange;
+	exportRange.push_back(new PageRangeEntry(0, doc->getPageCount() - 1));
+	DummyProgressListener progress;
+
+	ImageExport imgExport(doc, path, format, false, exportRange);
+	imgExport.exportGraphics(&progress);
+
+	for (PageRangeEntry* e : exportRange)
+	{
+		delete e;
+	}
+	exportRange.clear();
+
+	string errorMsg = imgExport.getLastErrorMsg();
+	if (errorMsg != "")
+	{
+		g_message("Error exporting image: %s\n", errorMsg.c_str());
+		return -3;
+	}
+
+	g_message("%s", _("Image file successfully created"));
+
+	return 0; // no error
+}
+
 int XournalMain::exportPdf(const char* input, const char* output)
 {
 	XOJ_CHECK_TYPE(XournalMain);
@@ -222,17 +277,19 @@ int XournalMain::exportPdf(const char* input, const char* output)
 	GFile* file = g_file_new_for_commandline_arg(output);
 
 	XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, NULL);
-	if (!pdfe->createPdf(g_file_get_path(file)))
+	char* cpath = g_file_get_path(file);
+	string path = cpath;
+	g_free(cpath);
+	g_object_unref(file);
+
+	if (!pdfe->createPdf(path))
 	{
 		g_error("%s", pdfe->getLastError().c_str());
 
-		g_object_unref(file);
 		delete pdfe;
 		return -3;
 	}
 	delete pdfe;
-
-	g_object_unref(file);
 
 	g_message("%s", _("PDF file successfully created"));
 
@@ -250,13 +307,16 @@ int XournalMain::run(int argc, char* argv[])
 
 	gchar** optFilename = NULL;
 	gchar* pdfFilename = NULL;
+	gchar* imgFilename = NULL;
 	int openAtPageNumber = -1;
 
 	string create_pdf = _("PDF output filename");
+	string create_img = _("Image output filename (.png / .svg)");
 	string page_jump = _("Jump to Page (first Page: 1)");
 	string audio_folder = _("Absolute path for the audio files playback");
 	GOptionEntry options[] = {
 		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      create_pdf.c_str(), NULL },
+		{ "create-img",      'i', 0, G_OPTION_ARG_FILENAME,       &imgFilename,      create_img.c_str(), NULL },
 		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, page_jump.c_str(), "N" },
 		{G_OPTION_REMAINING,   0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>", NULL },
 		{NULL}
@@ -279,6 +339,10 @@ int XournalMain::run(int argc, char* argv[])
 	if (pdfFilename && optFilename && *optFilename)
 	{
 		return exportPdf(*optFilename, pdfFilename);
+	}
+	if (imgFilename && optFilename && *optFilename)
+	{
+		return exportImg(*optFilename, imgFilename);
 	}
 
 	// Checks for input method compatibility
