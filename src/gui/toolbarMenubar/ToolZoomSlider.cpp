@@ -109,11 +109,9 @@ void ToolZoomSlider::updateScaleMarks()
 		return;
 	}
 
-	gtk_scale_clear_marks( GTK_SCALE(this->slider));
-	gtk_scale_add_mark(GTK_SCALE(this->slider), zoom->getZoom100(),
-	                   horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
-	gtk_scale_add_mark(GTK_SCALE(this->slider), zoom->getZoomFit(),
-	                   horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
+	gtk_scale_clear_marks(GTK_SCALE(this->slider));
+	gtk_scale_add_mark(GTK_SCALE(this->slider), zoom->getZoom100(), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
+	gtk_scale_add_mark(GTK_SCALE(this->slider), zoom->getZoomFit(), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
 }
 
 GtkToolItem* ToolZoomSlider::createItem(bool horizontal)
@@ -128,6 +126,7 @@ GtkToolItem* ToolZoomSlider::createItem(bool horizontal)
 	{
 		gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(this->item), false);
 	}
+
 	if (GTK_IS_TOOL_BUTTON(this->item) || GTK_IS_TOGGLE_TOOL_BUTTON(this->item))
 	{
 		g_signal_connect(this->item, "clicked", G_CALLBACK(&toolButtonCallback), this);
@@ -178,25 +177,19 @@ GtkToolItem* ToolZoomSlider::newItem()
 		g_signal_handlers_disconnect_by_func(this->slider, (void* )(sliderButtonRelease), this);
 	}
 
-	double slider_min = scaleFunc(DEFAULT_ZOOM_MIN);
-	double slider_max = scaleFunc(DEFAULT_ZOOM_MAX);
-	//slider has 100 steps
-	double slider_step = (slider_max - slider_min)/100;
+	double sliderMin = scaleFunc(DEFAULT_ZOOM_MIN);
+	double sliderMax = scaleFunc(DEFAULT_ZOOM_MAX);
+	// slider has 100 steps
+	double sliderStep = (sliderMax - sliderMin) / 100;
 
 	if (this->horizontal)
 	{
-		this->slider = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL,
-		                                        slider_min,
-		                                        slider_max,
-		                                        slider_step);
+		this->slider = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL, sliderMin, sliderMax, sliderStep);
 	}
 	else
 	{
-		this->slider = gtk_scale_new_with_range(GTK_ORIENTATION_VERTICAL,
-		                                        slider_min,
-		                                        slider_max,
-		                                        slider_step);
-		gtk_range_set_inverted(GTK_RANGE(this->slider), true);
+		this->slider = gtk_scale_new_with_range(GTK_ORIENTATION_VERTICAL, sliderMin, sliderMax, sliderStep);
+		//gtk_range_set_inverted(GTK_RANGE(this->slider), true);
 	}
 
 	g_signal_connect(this->slider, "value-changed", G_CALLBACK(sliderChanged), this);
@@ -207,11 +200,11 @@ GtkToolItem* ToolZoomSlider::newItem()
 
 	if (this->horizontal)
 	{
-		gtk_widget_set_size_request(GTK_WIDGET(this->slider), 120, 0);
+		gtk_widget_set_size_request(GTK_WIDGET(this->slider), 120, 16);
 	}
 	else
 	{
-		gtk_widget_set_size_request(GTK_WIDGET(this->slider), 0, 120);
+		gtk_widget_set_size_request(GTK_WIDGET(this->slider), 16, 120);
 	}
 
 	gtk_container_add(GTK_CONTAINER(it), this->slider);
