@@ -48,6 +48,9 @@ protected:
 
 	Path filename;
 
+	/**
+	 * Error message to show to the user
+	 */
 	string errorMsg;
 
 	class ExportType
