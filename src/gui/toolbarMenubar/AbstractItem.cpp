@@ -1,9 +1,9 @@
 #include "AbstractItem.h"
 
 AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action, GtkWidget* menuitem)
- : id(id),
-   handler(handler),
-   action(action)
+ : action(action),
+   id(id),
+   handler(handler)
 {
 	XOJ_INIT_TYPE(AbstractItem);
 
