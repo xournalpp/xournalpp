@@ -189,7 +189,11 @@ GtkToolItem* ToolZoomSlider::newItem()
 	else
 	{
 		this->slider = gtk_scale_new_with_range(GTK_ORIENTATION_VERTICAL, sliderMin, sliderMax, sliderStep);
+<<<<<<< HEAD
 		gtk_range_set_inverted(GTK_RANGE(this->slider), true);
+=======
+		//gtk_range_set_inverted(GTK_RANGE(this->slider), true);
+>>>>>>> branch 'master' of https://github.com/andreasb242/xournalpp.git
 	}
 
 	g_signal_connect(this->slider, "value-changed", G_CALLBACK(sliderChanged), this);
