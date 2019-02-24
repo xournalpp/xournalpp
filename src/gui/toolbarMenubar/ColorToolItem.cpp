@@ -193,12 +193,11 @@ void ColorToolItem::enable(bool enabled)
 
 	if (enabled)
 	{
-		//TODO!!!!!!!!!!!!
+		icon->setState(COLOR_ICON_STATE_ENABLED);
 	}
 	else
 	{
-//		cairo_surface_t* surface = ColorSelectImage::newColorIconSurface(color, 16, !isSelector());
-//		gtk_image_set_from_surface(GTK_IMAGE(this->iconWidget), surface);
+		icon->setState(COLOR_ICON_STATE_DISABLED);
 	}
 }
 

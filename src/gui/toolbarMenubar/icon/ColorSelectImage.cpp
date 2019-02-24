@@ -37,7 +37,7 @@ void ColorSelectImage::drawWidget(cairo_t* cr)
 	XOJ_CHECK_TYPE(ColorSelectImage);
 
 	int y = (gtk_widget_get_allocated_height(widget) - size) / 2;
-	drawWidget(cr, color, size, y, circle);
+	drawWidget(cr, color, size, y, state, circle);
 }
 
 /**
@@ -62,6 +62,17 @@ void ColorSelectImage::setColor(int color)
 }
 
 /**
+ * Set State of the Icon
+ */
+void ColorSelectImage::setState(ColorIconState state)
+{
+	XOJ_CHECK_TYPE(ColorSelectImage);
+
+	this->state = state;
+	gtk_widget_queue_draw(widget);
+}
+
+/**
  * Create a new GtkImage with preview color
  */
 GtkWidget* ColorSelectImage::newColorIcon(int color, int size, bool circle)
@@ -76,15 +87,22 @@ GtkWidget* ColorSelectImage::newColorIcon(int color, int size, bool circle)
 /**
  * Draw the widget
  */
-void ColorSelectImage::drawWidget(cairo_t* cr, int color, int size, int y, bool circle)
+void ColorSelectImage::drawWidget(cairo_t* cr, int color, int size, int y, ColorIconState state, bool circle)
 {
+	float alpha = 1.0;
+	if (state == COLOR_ICON_STATE_DISABLED)
+	{
+		alpha = 0.5;
+	}
+
+	// Fill transparent
 	cairo_set_source_rgba(cr, 1, 1, 1, 0);
 	cairo_fill(cr);
 
 	double r = ((color & 0xff0000) >> 16) / 255.0;
 	double g = ((color & 0xff00) >> 8) / 255.0;
 	double b = ((color & 0xff)) / 255.0;
-	cairo_set_source_rgb(cr, r, g, b);
+	cairo_set_source_rgba(cr, r, g, b, alpha);
 
 	int x = 0;
 	int width = size;
@@ -101,7 +119,7 @@ void ColorSelectImage::drawWidget(cairo_t* cr, int color, int size, int y, bool 
 	}
 	cairo_fill(cr);
 
-	cairo_set_source_rgb(cr, 0, 0, 0);
+	cairo_set_source_rgba(cr, 0, 0, 0, alpha);
 
 	if (circle)
 	{
@@ -123,7 +141,7 @@ cairo_surface_t* ColorSelectImage::newColorIconSurface(int color, int size, bool
 {
 	cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, size, size);
 	cairo_t* cr = cairo_create(crBuffer);
-	drawWidget(cr, color, size, 0, circle);
+	drawWidget(cr, color, size, 0, COLOR_ICON_STATE_ENABLED, circle);
 	cairo_destroy(cr);
 
 	return crBuffer;

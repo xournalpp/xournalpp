@@ -14,6 +14,11 @@
 #include <XournalType.h>
 #include <gtk/gtk.h>
 
+enum ColorIconState {
+	COLOR_ICON_STATE_ENABLED,
+	COLOR_ICON_STATE_DISABLED
+};
+
 class ColorSelectImage
 {
 public:
@@ -30,6 +35,11 @@ public:
 	 * Color of the icon
 	 */
 	void setColor(int color);
+
+	/**
+	 * Set State of the Icon
+	 */
+	void setState(ColorIconState state);
 
 	/**
 	 * Create a new GtkImage with preview color
@@ -55,7 +65,7 @@ private:
 	/**
 	 * Draw the widget
 	 */
-	static void drawWidget(cairo_t* cr, int color, int size, int y, bool circle);
+	static void drawWidget(cairo_t* cr, int color, int size, int y, ColorIconState state, bool circle);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -79,4 +89,9 @@ private:
 	 * Draw as circle
 	 */
 	bool circle = true;
+
+	/**
+	 * State of the icon
+	 */
+	ColorIconState state = COLOR_ICON_STATE_ENABLED;
 };
