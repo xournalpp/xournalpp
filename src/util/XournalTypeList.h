@@ -285,6 +285,7 @@ XOJ_DECLARE_TYPE(Plugin, 275);
 XOJ_DECLARE_TYPE(MenuEntry, 276);
 XOJ_DECLARE_TYPE(PluginDialog, 277);
 XOJ_DECLARE_TYPE(PluginDialogEntry, 278);
+XOJ_DECLARE_TYPE(ColorSelectImage, 279);
 
 
 

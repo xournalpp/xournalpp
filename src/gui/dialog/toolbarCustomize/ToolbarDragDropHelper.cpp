@@ -1,8 +1,5 @@
 #include "ToolbarDragDropHelper.h"
 
-#include "gui/toolbarMenubar/ToolbarUtil.h"
-
-
 GdkAtom ToolbarDragDropHelper::atomToolItem = gdk_atom_intern_static_string("application/xournal-ToolbarItem");
 GtkTargetEntry ToolbarDragDropHelper::dropTargetEntry = { (gchar *)"move-buffer", GTK_TARGET_SAME_APP, 1 };
 

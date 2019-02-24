@@ -33,6 +33,9 @@ public:
 	virtual string getToolDisplayName() = 0;
 	virtual GtkWidget* getNewToolIcon() = 0;
 
+	/**
+	 * Enable / Disable the tool item
+	 */
 	virtual void enable(bool enabled);
 
 protected:
