@@ -338,7 +338,7 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 	if (big)
 	{
 		// When using highlighter, paint the icon with the current color
-		if(size == 5)
+		if (size == 5)
 		{
 			cairo_set_source_rgb(cr, r, g, b);
 		}
@@ -374,18 +374,17 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 		cairo_fill_preserve(cr);
 	}
 
-	if(highlightPosition) 
-		{
-			// A yellow transparent circle with no border
-			cairo_set_line_width(cr, 0);
-			cairo_set_source_rgba(cr, 255, 255, 0, 0.5);
-			cairo_arc(cr, centerX, centerY, 45, 0, 2 * 3.1415);
-			cairo_fill_preserve(cr);
-			cairo_set_source_rgb(cr, 0, 0, 0);
-			cairo_stroke(cr);
+	if (highlightPosition)
+	{
+		// A yellow transparent circle with no border
+		cairo_set_line_width(cr, 0);
+		cairo_set_source_rgba(cr, 255, 255, 0, 0.5);
+		cairo_arc(cr, centerX, centerY, 45, 0, 2 * 3.1415);
+		cairo_fill_preserve(cr);
+		cairo_set_source_rgb(cr, 0, 0, 0);
+		cairo_stroke(cr);
 
-
-		}
+	}
 	
 	cairo_set_source_rgba(cr, r, g, b, alpha);
 	// Correct the offset of the coloured dot for big-cursor mode

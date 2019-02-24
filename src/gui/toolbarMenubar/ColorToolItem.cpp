@@ -189,8 +189,16 @@ void ColorToolItem::showColorchooser()
  */
 void ColorToolItem::enable(bool enabled)
 {
-	AbstractToolItem::enable(enabled);
+	if (!enabled && toolHandler->getToolType() == TOOL_ERASER)
+	{
+		icon->setState(COLOR_ICON_STATE_PEN);
+		AbstractToolItem::enable(true);
+		switchToPen = true;
+		return;
+	}
 
+	switchToPen = false;
+	AbstractToolItem::enable(enabled);
 	if (enabled)
 	{
 		icon->setState(COLOR_ICON_STATE_ENABLED);
@@ -204,6 +212,11 @@ void ColorToolItem::enable(bool enabled)
 void ColorToolItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton)
 {
 	XOJ_CHECK_TYPE(ColorToolItem);
+
+	if (switchToPen)
+	{
+		toolHandler->selectTool(TOOL_PEN, true);
+	}
 
 	if (inUpdate)
 	{

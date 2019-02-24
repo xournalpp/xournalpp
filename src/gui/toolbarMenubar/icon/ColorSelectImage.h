@@ -15,8 +15,54 @@
 #include <gtk/gtk.h>
 
 enum ColorIconState {
+	/**
+	 * Draw color icon enabled
+	 */
 	COLOR_ICON_STATE_ENABLED,
-	COLOR_ICON_STATE_DISABLED
+
+	/**
+	 * Draw color icon disabled
+	 */
+	COLOR_ICON_STATE_DISABLED,
+
+	/**
+	 * Draw color icon with a pen symbol, switch to pen when clicked
+	 */
+	COLOR_ICON_STATE_PEN
+};
+
+class IconConfig
+{
+public:
+	/**
+	 * Color of the icon
+	 */
+	int color = 0;
+
+	/**
+	 * Size of the icon
+	 */
+	int size = 16;
+
+	/**
+	 * Draw as circle
+	 */
+	bool circle = true;
+
+	/**
+	 * Size of the widget
+	 */
+	int width = 16;
+
+	/**
+	 * Size of the widget
+	 */
+	int height = 16;
+
+	/**
+	 * State of the icon
+	 */
+	ColorIconState state = COLOR_ICON_STATE_ENABLED;
 };
 
 class ColorSelectImage
@@ -65,7 +111,7 @@ private:
 	/**
 	 * Draw the widget
 	 */
-	static void drawWidget(cairo_t* cr, int color, int size, int y, ColorIconState state, bool circle);
+	static void drawWidget(cairo_t* cr, const IconConfig& config);
 
 private:
 	XOJ_TYPE_ATTRIB;
