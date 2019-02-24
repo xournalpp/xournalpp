@@ -19,7 +19,6 @@ ColorSelectImage::ColorSelectImage(int color, bool circle)
 			XOJ_CHECK_TYPE_OBJ(self, ColorSelectImage);
 			self->drawWidget(cr);
 		}), this);
-
 }
 
 ColorSelectImage::~ColorSelectImage()
@@ -36,8 +35,16 @@ void ColorSelectImage::drawWidget(cairo_t* cr)
 {
 	XOJ_CHECK_TYPE(ColorSelectImage);
 
-	int y = (gtk_widget_get_allocated_height(widget) - size) / 2;
-	drawWidget(cr, color, size, y, state, circle);
+	IconConfig config;
+	config.color = color;
+	config.size = size;
+	config.state = COLOR_ICON_STATE_ENABLED;
+	config.circle = circle;
+	config.state = state;
+	config.width = gtk_widget_get_allocated_width(widget);
+	config.height = gtk_widget_get_allocated_height(widget);
+
+	drawWidget(cr, config);
 }
 
 /**
@@ -87,10 +94,10 @@ GtkWidget* ColorSelectImage::newColorIcon(int color, int size, bool circle)
 /**
  * Draw the widget
  */
-void ColorSelectImage::drawWidget(cairo_t* cr, int color, int size, int y, ColorIconState state, bool circle)
+void ColorSelectImage::drawWidget(cairo_t* cr, const IconConfig& config)
 {
 	float alpha = 1.0;
-	if (state == COLOR_ICON_STATE_DISABLED)
+	if (config.state == COLOR_ICON_STATE_DISABLED)
 	{
 		alpha = 0.5;
 	}
@@ -99,17 +106,19 @@ void ColorSelectImage::drawWidget(cairo_t* cr, int color, int size, int y, Color
 	cairo_set_source_rgba(cr, 1, 1, 1, 0);
 	cairo_fill(cr);
 
-	double r = ((color & 0xff0000) >> 16) / 255.0;
-	double g = ((color & 0xff00) >> 8) / 255.0;
-	double b = ((color & 0xff)) / 255.0;
+	int y = (config.height - config.size) / 2;
+
+	double r = ((config.color & 0xff0000) >> 16) / 255.0;
+	double g = ((config.color & 0xff00) >> 8) / 255.0;
+	double b = ((config.color & 0xff)) / 255.0;
 	cairo_set_source_rgba(cr, r, g, b, alpha);
 
 	int x = 0;
-	int width = size;
+	int width = config.size;
 
-	double radius = size / 2.0;
+	double radius = config.size / 2.0;
 
-	if (circle)
+	if (config.circle)
 	{
 		cairo_arc(cr, radius + x, radius + y, radius - 1, 0, 2 * M_PI);
 	}
@@ -121,7 +130,7 @@ void ColorSelectImage::drawWidget(cairo_t* cr, int color, int size, int y, Color
 
 	cairo_set_source_rgba(cr, 0, 0, 0, alpha);
 
-	if (circle)
+	if (config.circle)
 	{
 		cairo_arc(cr, radius + x, radius + y, radius - 1, 0, 2 * M_PI);
 	}
@@ -132,6 +141,26 @@ void ColorSelectImage::drawWidget(cairo_t* cr, int color, int size, int y, Color
 
 	cairo_set_line_width(cr, 0.8);
 	cairo_stroke(cr);
+
+
+	if (config.state == COLOR_ICON_STATE_PEN)
+	{
+		// Pencil cursor from cursor drawing, a little shrinked, so that it fits to the color item
+		cairo_move_to(cr, x, y + 16);
+		cairo_line_to(cr, x, y + 16 - 4);
+		cairo_line_to(cr, x + 13, y + 16 - 16);
+		cairo_line_to(cr, x + 16, y + 16 - 14);
+		cairo_line_to(cr, x + 4, y + 16);
+
+		cairo_close_path(cr);
+
+		cairo_set_source_rgba(cr, 1, 1, 1, 0.9);
+		cairo_fill_preserve(cr);
+
+		cairo_set_source_rgba(cr, 0, 0, 0, 0.7);
+		cairo_set_line_width(cr, 0.8);
+		cairo_stroke(cr);
+	}
 }
 
 /**
@@ -141,7 +170,14 @@ cairo_surface_t* ColorSelectImage::newColorIconSurface(int color, int size, bool
 {
 	cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, size, size);
 	cairo_t* cr = cairo_create(crBuffer);
-	drawWidget(cr, color, size, 0, COLOR_ICON_STATE_ENABLED, circle);
+
+	IconConfig config;
+	config.color = color;
+	config.size = size;
+	config.state = COLOR_ICON_STATE_ENABLED;
+	config.circle = circle;
+
+	drawWidget(cr, config);
 	cairo_destroy(cr);
 
 	return crBuffer;
