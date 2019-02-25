@@ -2,6 +2,9 @@
 
 
 LayoutMapper::LayoutMapper(){
+	
+	XOJ_INIT_TYPE(LayoutMapper);
+	
 	this->actualPages = 0;
 	this->possiblePages = 0;
 	this->rows = 0;
@@ -13,7 +16,7 @@ LayoutMapper::LayoutMapper(){
 
 void LayoutMapper::configureFromSettings(int numPages, Settings* settings)
 {
-	XOJ_INIT_TYPE(LayoutMapper);
+	XOJ_CHECK_TYPE(LayoutMapper);
 
 	int pages = numPages;
 

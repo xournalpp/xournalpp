@@ -139,10 +139,8 @@ XojPageView* InputSequence::getPageAtCurrentPosition()
 
 	double x = this->x + xournal->x;
 	double y = this->y + xournal->y;
-
-	PagePositionHandler* pph = xournal->view->getPagePositionHandler();
-
-	return pph->getViewAt(x, y, xournal->pagePositionCache);
+	
+	return xournal->layout->getViewAt(x,y);
 }
 
 /**

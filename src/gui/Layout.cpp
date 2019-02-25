@@ -389,4 +389,82 @@ void Layout::ensureRectIsVisible(int x, int y, int width, int height)
 }
 
 
+XojPageView* Layout::getViewAt(int x, int y)
+{
+	
+	XOJ_CHECK_TYPE(Layout);
+	
+	int r;
+	int rTotalPixels = 0;
+	int c;
+	int cTotalPixels = 0;
+	int numRows = mapper.getRows();
+	int numCols = mapper.getColumns();
+	
+	for( r = 0; r < numRows; r++)
+	{
+		rTotalPixels += sizeRow[r] + XOURNAL_PADDING_BETWEEN;
+		if ( y < rTotalPixels) break;	// found region
+	}
 
+	
+	for( c = 0; c < numCols; c++)
+	{
+		cTotalPixels += sizeCol[c] +XOURNAL_PADDING_BETWEEN;
+		if ( x < cTotalPixels) break;
+	}
+	
+				
+	
+	if ( c > numCols  || r > numRows ) 
+	{
+		return NULL;  //not found
+	}
+	else
+	{
+		int page = mapper.map(c,r);
+		//this->view->viewPages[1];
+		if ( page>=0 && this->view->viewPages[page]->containsPoint(x,y,false) )
+		{
+				return this->view->viewPages[page];
+		}
+		else
+		{
+			return NULL;
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
