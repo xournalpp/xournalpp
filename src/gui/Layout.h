@@ -87,6 +87,14 @@ public:
 	 */
 	void updateCurrentPage();
 
+	
+	
+	/**
+	 * Return the pageview containing co-ordinates.
+	 */	
+	XojPageView* getViewAt(int x, int y);
+
+	
 private:
 	void checkScroll(GtkAdjustment* adjustment, double& lastScroll);
 	void setLayoutSize(int width, int height);
