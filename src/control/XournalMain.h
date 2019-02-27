@@ -33,11 +33,12 @@ private:
 	void checkForEmergencySave(Control* control);
 
 	int exportPdf(const char* input, const char* output);
+	int exportImg(const char* input, const char* output);
+
 	void initSettingsPath();
 	void initResourcePath(GladeSearchpath* gladePath);
 	string findResourcePath(string searchFile);
 
 private:
 	XOJ_TYPE_ATTRIB;
-
 };

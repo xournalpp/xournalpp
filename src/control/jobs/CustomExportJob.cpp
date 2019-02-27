@@ -1,5 +1,6 @@
 #include "CustomExportJob.h"
 #include "SaveJob.h"
+#include "ImageExport.h"
 
 #include "control/Control.h"
 #include "control/xojfile/XojExportHandler.h"
@@ -23,6 +24,8 @@ CustomExportJob::CustomExportJob(Control* control)
 	filters[_("PDF with plain background")] = new ExportType(".pdf", true);
 	filters[_("PNG graphics")] = new ExportType(".png", false);
 	filters[_("PNG with transparent background")] = new ExportType(".png", true);
+	filters[_("SVG graphics")] = new ExportType(".svg", false);
+	filters[_("SVG with transparent background")] = new ExportType(".svg", true);
 	filters[_("Xournal (Compatibility)")] =  new ExportType(".xoj", false);
 }
 
@@ -40,7 +43,6 @@ CustomExportJob::~CustomExportJob()
 	{
 		delete filter.second;
 	}
-
 
 	XOJ_RELEASE_TYPE(CustomExportJob);
 }
@@ -94,7 +96,17 @@ bool CustomExportJob::showFilechooser()
 	if (filename.hasExtension(".pdf"))
 	{
 		dlg->removeDpiSelection();
-		exportTypePdf = true;
+		format = EXPORT_GRAPHICS_PDF;
+	}
+	else if (filename.hasExtension(".svg"))
+	{
+		dlg->removeDpiSelection();
+		format = EXPORT_GRAPHICS_SVG;
+	}
+	else if (filename.hasExtension(".png"))
+	{
+		dlg->removeDpiSelection();
+		format = EXPORT_GRAPHICS_PNG;
 	}
 
 	dlg->initPages(control->getCurrentPageNo() + 1, doc->getPageCount());
@@ -114,141 +126,20 @@ bool CustomExportJob::showFilechooser()
 	return true;
 }
 
-void CustomExportJob::createSurface(double width, double height)
+/**
+ * Create one Graphics file per page
+ */
+void CustomExportJob::exportGraphics()
 {
 	XOJ_CHECK_TYPE(CustomExportJob);
-
-	this->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-											   width * this->pngDpi / 72.0,
-											   height * this->pngDpi / 72.0);
-	this->cr = cairo_create(this->surface);
-	double factor = this->pngDpi / 72.0;
-	cairo_scale(this->cr, factor, factor);
-}
-
-bool CustomExportJob::freeSurface(int id)
-{
-	XOJ_CHECK_TYPE(CustomExportJob);
-
-	cairo_destroy(this->cr);
-
-	string filepath = getFilenameWithNumber(id);
-	cairo_status_t status = cairo_surface_write_to_png(surface, filepath.c_str());
-	cairo_surface_destroy(surface);
-
-	// we ignore this problem
-	if (status != CAIRO_STATUS_SUCCESS)
-	{
-		return false;
-	}
-
-	return true;
-}
-
-/**
- * Get a filename with a numer, e.g. .../export-1.png, if the no is -1, return .../export.png
- */
-string CustomExportJob::getFilenameWithNumber(int no)
-{
-	if (no == -1)
-	{
-		// No number to add
-		return filename.str();
-	}
-
-	string filepath = filename.str();
-	size_t dotPos = filepath.find_last_of(".");
-	if (dotPos == string::npos)
-	{
-		// No file extension, add number
-		return filepath + "-" + std::to_string(no);
-	}
-
-	return filepath.substr(0, dotPos) + "-" + std::to_string(no) + filepath.substr(dotPos);
-}
-
-/**
- * Export a single PNG page
- */
-void CustomExportJob::exportPngPage(int pageId, int id, double zoom, DocumentView& view)
-{
-	Document* doc = control->getDocument();
-	doc->lock();
-	PageRef page = doc->getPage(pageId);
-	doc->unlock();
-
-	createSurface(page->getWidth(), page->getHeight());
-
-	if (page->getBackgroundType().isPdfPage())
-	{
-		int pgNo = page->getPdfPageNr();
-		XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
-
-		PdfView::drawPage(NULL, popplerPage, cr, zoom, page->getWidth(), page->getHeight());
-	}
 
 	bool hideBackground = filters[this->chosenFilterName]->withoutBackground;
-	
-	view.drawPage(page, this->cr, true, hideBackground);
 
-	if (!freeSurface(id))
-	{
-		// could not create this file...
-		this->errorMsg = _("Error export PDF Page");
-		return;
-	}
-}
+	ImageExport imgExport(control->getDocument(), filename, format, hideBackground, exportRange);
+	imgExport.setPngDpi(pngDpi);
+	imgExport.exportGraphics(control);
 
-/**
- * Create one PNG file per page
- */
-void CustomExportJob::exportPng()
-{
-	XOJ_CHECK_TYPE(CustomExportJob);
-
-	// don't lock the page here for the whole flow, else we get a dead lock...
-	// the ui is blocked, so there should be no changes...
-	Document* doc = control->getDocument();
-
-	int count = doc->getPageCount();
-
-	bool onePage = ((this->exportRange.size() == 1) && (this->exportRange[0]->getFirst() == this->exportRange[0]->getLast()));
-
-	char selectedPages[count];
-	int selectedCount = 0;
-	for (int i = 0; i < count; i++)
-	{
-		selectedPages[i] = 0;
-	}
-	for (PageRangeEntry* e : this->exportRange)
-	{
-		for (int x = e->getFirst(); x <= e->getLast(); x++)
-		{
-			selectedPages[x] = 1;
-			selectedCount++;
-		}
-	}
-
-	this->control->setMaximumState(selectedCount);
-
-	DocumentView view;
-	double zoom = this->pngDpi / 72.0;
-	int current = 0;
-
-	for (int i = 0; i < count; i++)
-	{
-		int id = i + 1;
-		if (onePage)
-		{
-			id = -1;
-		}
-
-		if (selectedPages[i])
-		{
-			this->control->setCurrentState(current++);
-			exportPngPage(i, id, zoom, view);
-		}
-	}
+	errorMsg = imgExport.getLastErrorMsg();
 }
 
 void CustomExportJob::run()
@@ -273,7 +164,7 @@ void CustomExportJob::run()
 			callAfterRun();
 		}
 	}
-	else if (exportTypePdf)
+	else if (format == EXPORT_GRAPHICS_PDF)
 	{
 		// don't lock the page here for the whole flow, else we get a dead lock...
 		// the ui is blocked, so there should be no changes...
@@ -292,7 +183,7 @@ void CustomExportJob::run()
 	}
 	else
 	{
-		exportPng();
+		exportGraphics();
 	}
 }
 

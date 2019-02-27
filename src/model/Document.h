@@ -54,6 +54,9 @@ public:
 
 	size_t indexOf(PageRef page);
 
+	/**
+	 * @return The last error message to show to the user
+	 */
 	string getLastErrorMsg();
 
 	bool isPdfDocumentLoaded();

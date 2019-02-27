@@ -12,12 +12,14 @@
 #pragma once
 
 #include "BaseExportJob.h"
+#include "ImageExport.h"
 
 #include "view/DocumentView.h"
 
 #include <PageRange.h>
 #include <i18n.h>
 #include <map>
+
 
 class CustomExportJob : public BaseExportJob
 {
@@ -39,33 +41,29 @@ protected:
 	virtual void addFilterToDialog();
 
 	/**
-	 * Export a single PNG page
+	 * Create one Graphics file per page
 	 */
-	void exportPngPage(int pageId, int id, double zoom, DocumentView& view);
+	void exportGraphics();
 
-	/**
-	 * Create one PNG file per page
-	 */
-	void exportPng();
-
-	void createSurface(double width, double height);
-	bool freeSurface(int id);
-	string getFilenameWithNumber(int no);
 	virtual bool isUriValid(string& uri);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
+	/**
+	 * The range to export
+	 */
 	PageRangeVector exportRange;
-	int pngDpi = 300;
-
-	cairo_surface_t* surface = NULL;
-	cairo_t* cr = NULL;
 
 	/**
-	 * PDF Export, else PNG Export
+	 * PNG dpi
 	 */
-	bool exportTypePdf = false;
+	int pngDpi = 300;
+
+	/**
+	 * Export graphics format
+	 */
+	ExportGraphicsFormat format = EXPORT_GRAPHICS_UNDEFINED;
 
 	/**
 	 * XOJ Export, else PNG Export

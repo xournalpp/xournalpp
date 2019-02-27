@@ -435,6 +435,9 @@ void Document::setPageSize(PageRef p, double width, double height)
 	}
 }
 
+/**
+ * @return The last error message to show to the user
+ */
 string Document::getLastErrorMsg()
 {
 	XOJ_CHECK_TYPE(Document);

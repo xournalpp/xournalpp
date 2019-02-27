@@ -118,7 +118,7 @@ into the file, so if the PDF is deleted, the background is lost.
 Therefor Xournal++ reads *.xoj files, and can also export *.xoj.
 On exporting to *.xoj all Xournal++ specific Extension are lost, like addtional
 Background types.
-*.xopp can theretically be read by Xournal, as long as you do not use any new
+*.xopp can theoretically be read by Xournal, as long as you do not use any new
 feature, Xournal does not open files at all if there are new attributes or
 unknown values, because of this Xournal++ will add the extension .xopp to all
 saved files.
@@ -135,6 +135,23 @@ merged, even if they are not 100% finished.
 
 See [GitHub:xournalpp](http://github.com/xournalpp/xournalpp) for current development. You can also join
 our Gitter channel via badge on top.
+
+## FAQ
+### Q: Secondary stylus button only works when there is no contact
+This is due to a driver setting, which you can configure with `TPCButton` or `TabletPCButton` directive if using `Wacom` driver (but other drivers might have this setting too). 
+
+Here's a `/usr/share/X11/xorg.conf.d/30-wacom.conf` example snippet:
+```
+Section "InputClass"
+	Identifier "Wacom tablets class"
+	MatchProduct "Wacom"
+	MatchDevicePath "/dev/input/event*"
+	MatchIsTablet "on"
+	Driver "wacom"
+	Option "TabletPCButton" "on"
+	Option "TPCButton" "on"
+EndSection
+```
 
 ## Code documentation
 
