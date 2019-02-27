@@ -87,7 +87,7 @@ find_package (ZLIB REQUIRED)
 add_includes_ldflags ("${ZLIB_LIBRARIES}" "${ZLIB_INCLUDE_DIRS}")
 
 # libzip
-pkg_check_modules (ZIP REQUIRED "libzip >= 1.1.2")
+pkg_check_modules (ZIP REQUIRED "libzip >= 1.0.1")
 add_includes_ldflags ("${ZIP_LIBRARIES}" "${ZIP_INCLUDE_DIRS}")
 
 # pthreads
