@@ -73,9 +73,6 @@ void Settings::loadDefault()
 
 	this->scrollbarOnLeft = false;
 
-	this->widthMinimumMultiplier = 0.0;
-	this->widthMaximumMultiplier = 1.25;
-
 	this->autoloadPdfXoj = true;
 	this->showBigCursor = false;
 	this->highlightPosition = false;
@@ -319,14 +316,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "sidebarWidth") == 0)
 	{
 		this->sidebarWidth = g_ascii_strtoll((const char*) value, NULL, 10);
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "widthMinimumMultiplier") == 0)
-	{
-		this->widthMinimumMultiplier = g_ascii_strtod((const char*) value, NULL);
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "widthMaximumMultiplier") == 0)
-	{
-		this->widthMaximumMultiplier = g_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "sidebarOnRight") == 0)
 	{
@@ -841,11 +830,6 @@ void Settings::save()
 
 	WRITE_INT_PROP(pdfPageCacheSize);
 	WRITE_COMMENT("The count of rendered PDF pages which will be cached.");
-
-	WRITE_DOUBLE_PROP(widthMinimumMultiplier);
-	WRITE_COMMENT("The multiplier for the pressure sensitivity of the pen");
-	WRITE_DOUBLE_PROP(widthMaximumMultiplier);
-	WRITE_COMMENT("The multiplier for the pressure sensitivity of the pen");
 
 	WRITE_COMMENT("Config for new pages");
 	WRITE_STRING_PROP(pageTemplate);
@@ -1729,20 +1713,6 @@ void Settings::setMainWndMaximized(bool max)
 	XOJ_CHECK_TYPE(Settings);
 
 	this->maximized = max;
-}
-
-double Settings::getWidthMinimumMultiplier()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->widthMinimumMultiplier;
-}
-
-double Settings::getWidthMaximumMultiplier()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->widthMaximumMultiplier;
 }
 
 void Settings::setSelectedToolbar(string name)

@@ -541,16 +541,6 @@ private:
 	bool autoloadPdfXoj;
 
 	/**
-	 *  Minimum width multiplier
-	 */
-	double widthMinimumMultiplier;
-
-	/**
-	 *  Maximum width multiplier
-	 */
-	double widthMaximumMultiplier;
-
-	/**
 	 * Automatically save documents for crash recovery each x minutes
 	 */
 	int autosaveTimeout;
