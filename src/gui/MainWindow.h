@@ -78,6 +78,10 @@ public:
 	ToolbarModel* getToolbarModel();
 	ToolMenuHandler* getToolMenuHandler();
 
+	void disableAudioPlaybackButtons();
+	void enableAudioPlaybackButtons();
+	void setAudioPlaybackPaused(bool paused);
+
 	void setControlTmpDisabled(bool disabled);
 
 	void updateToolbarMenu();
@@ -141,10 +145,10 @@ private:
 
 	// Toolbars
 	ToolMenuHandler* toolbar;
-	ToolbarData* selectedToolbar;
-	bool toolbarIntialized;
+	ToolbarData* selectedToolbar = NULL;
+	bool toolbarIntialized = false;
 
-	bool maximized;
+	bool maximized = false;
 
 	GtkWidget** toolbarWidgets;
 

@@ -38,6 +38,7 @@
 #include "pagetype/PageTypeMenu.h"
 #include "settings/ButtonConfig.h"
 #include "stockdlg/XojOpenDlg.h"
+#include "plugin/PluginController.h"
 #include "undo/AddUndoAction.h"
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertDeletePageUndoAction.h"
@@ -69,7 +70,6 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 {
 	XOJ_INIT_TYPE(Control);
 
-	this->win = NULL;
 	this->recent = new RecentManager();
 	this->undoRedo = new UndoRedoHandler(this);
 	this->recent->addListener(this);
@@ -96,21 +96,11 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	this->pageTypes = new PageTypeHandler(gladeSearchPath);
 	this->newPageType = new PageTypeMenu(this->pageTypes, settings, true, true);
 
-	this->sidebar = NULL;
-	this->searchBar = NULL;
-	
 	this->audioController = new AudioController(this->settings,this);
 
 	this->scrollHandler = new ScrollHandler(this);
 
 	this->scheduler = new XournalScheduler();
-
-	this->autosaveTimeout = 0;
-
-	this->statusbar = NULL;
-	this->lbState = NULL;
-	this->pgState = NULL;
-	this->maxState = 0;
 
 	this->doc = new Document(this);
 
@@ -118,6 +108,8 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	setEmergencyDocument(this->doc);
 
 	this->zoom = new ZoomControl();
+	this->zoom->setZoomStep(this->settings->getZoomStep()/100.0);
+	this->zoom->setZoomStepScroll(this->settings->getZoomStepScroll()/100.0);
 	this->zoom->setZoom100(this->settings->getDisplayDpi() / 72.0);
 
 	this->toolHandler = new ToolHandler(this, this, this->settings);
@@ -128,16 +120,15 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	 */
 	this->changeTimout = g_timeout_add_seconds(5, (GSourceFunc) checkChangedDocument, this);
 	
-	this->clipboardHandler = NULL;
-
-	this->dragDropHandler = NULL;
-
 	this->pageBackgroundChangeController = new PageBackgroundChangeController(this);
 
 	this->layerController = new LayerController(this);
 	this->layerController->registerListener(this);
 
 	this->fullscreenHandler = new FullscreenHandler(settings);
+
+	this->pluginController = new PluginController(this);
+	this->pluginController->registerToolbar();
 }
 
 Control::~Control()
@@ -156,6 +147,8 @@ Control::~Control()
 		page->unreference();
 	}
 
+	delete this->pluginController;
+	this->pluginController = NULL;
 	delete this->clipboardHandler;
 	this->clipboardHandler = NULL;
 	delete this->recent;
@@ -374,6 +367,8 @@ void Control::initWindow(MainWindow* win)
 
 	win->setFontButtonFont(settings->getFont());
 
+	this->pluginController->registerMenu();
+
 	fireActionSelected(GROUP_SNAPPING, settings->isSnapRotation() ? ACTION_ROTATION_SNAPPING : ACTION_NONE);
 	fireActionSelected(GROUP_GRID_SNAPPING, settings->isSnapGrid() ? ACTION_GRID_SNAPPING : ACTION_NONE);
 }
@@ -428,7 +423,7 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage)
 	this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
 	this->sidebar->selectPageNr(page, pdfPage);
 
-	this->metadata->storeMetadata(this->doc->getEvMetadataFilename().str(), page, getZoomControl()->getZoom());
+	this->metadata->storeMetadata(this->doc->getEvMetadataFilename().str(), page, getZoomControl()->getZoomReal());
 
 	int current = this->win->getXournal()->getCurrentPage();
 	int count = this->doc->getPageCount();
@@ -951,15 +946,15 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;	
 
 		
-	case ACTION_RECSTOP:
+	case ACTION_AUDIO_RECORD:
 	{
 		bool result;
 		if (enabled)
 		{
-			result = audioController->recStart();
+			result = audioController->startRecording();
 		} else
 		{
-			result = audioController->recStop();
+			result = audioController->stopRecording();
 		}
 
 		if (!result)
@@ -976,6 +971,20 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 	}
 
+	case ACTION_AUDIO_PAUSE_PLAYBACK:
+		if (enabled)
+		{
+			this->getAudioController()->pausePlayback();
+		} else
+		{
+			this->getAudioController()->continuePlayback();
+		}
+		break;
+
+	case ACTION_AUDIO_STOP_PLAYBACK:
+		this->getAudioController()->stopPlayback();
+		break;
+
 	case ACTION_ROTATION_SNAPPING:
 		rotationSnappingToggle();
 		break;
@@ -989,6 +998,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	case ACTION_FOOTER_ZOOM_SLIDER:
 		// nothing to do here
 		break;
+
+
+		// Plugin menu
+	case ACTION_PLUGIN_MANAGER:
+		this->pluginController->showPluginManager();
+		break;
+
 
 		// Menu Help
 	case ACTION_HELP:
@@ -1719,10 +1735,10 @@ void Control::zoomCallback(ActionType type)
 		zoomFit();
 		break;
 	case ACTION_ZOOM_IN:
-		zoom->zoomIn();
+		zoom->zoomOneStep(ZOOM_IN);
 		break;
 	case ACTION_ZOOM_OUT:
-		zoom->zoomOut();
+		zoom->zoomOneStep(ZOOM_OUT);
 		break;
 	default:
 		break;
@@ -2119,6 +2135,8 @@ void Control::showSettings()
 
 	enableAutosave(settings->isAutosaveEnabled());
 
+	this->zoom->setZoomStep(settings->getZoomStep() / 100.0);
+	this->zoom->setZoomStepScroll(settings->getZoomStepScroll() / 100.0);
 	this->zoom->setZoom100(settings->getDisplayDpi() / 72.0);
 
 	getWindow()->getXournal()->getTouchHelper()->reload();
@@ -2393,8 +2411,8 @@ bool Control::loadMetadataCallback(MetadataCallbackData* data)
 		delete data;
 		return false;
 	}
-
-	data->ctrl->zoom->setZoom(data->md.zoom);
+	ZoomControl* zoom = data->ctrl->zoom;
+	zoom->setZoom(data->md.zoom * zoom->getZoom100());
 	data->ctrl->scrollHandler->scrollToPage(data->md.page);
 
 	delete data;
@@ -2739,7 +2757,7 @@ void Control::quit(bool allowCancel)
 
 	this->scheduler->lock();
 
-	audioController->recStop();
+	audioController->stopRecording();
 	settings->save();
 
 	this->scheduler->removeAllJobs();

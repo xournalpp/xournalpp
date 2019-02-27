@@ -71,6 +71,12 @@ public:
 
 	bool isColorInUse(int color);
 
+	void disableAudioPlaybackButtons();
+
+	void enableAudioPlaybackButtons();
+
+	void setAudioPlaybackPaused(bool paused);
+
 private:
 	void addToolItem(AbstractToolItem* it);
 
@@ -82,27 +88,30 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	std::vector<ColorToolItem*> toolbarColorItems;
-	GtkWindow* parent;
+	vector<ColorToolItem*> toolbarColorItems;
+	GtkWindow* parent = NULL;
 
 	vector<AbstractToolItem*> toolItems;
-	std::vector<MenuItem*> menuItems;
+	vector<MenuItem*> menuItems;
 
-	ToolButton* undoButton;
-	ToolButton* redoButton;
+	ToolButton* undoButton = NULL;
+	ToolButton* redoButton = NULL;
 
-	ToolPageSpinner* toolPageSpinner;
-	ToolPageLayer* toolPageLayer;
-	FontButton* fontButton;
+	ToolButton* audioPausePlaybackButton = NULL;
+	ToolButton* audioStopPlaybackButton = NULL;
 
-	Control* control;
-	ActionHandler* listener;
-	ZoomControl* zoom;
-	GladeGui* gui;
-	ToolHandler* toolHandler;
+	ToolPageSpinner* toolPageSpinner = NULL;
+	ToolPageLayer* toolPageLayer = NULL;
+	FontButton* fontButton = NULL;
 
-	ToolbarModel* tbModel;
+	Control* control = NULL;
+	ActionHandler* listener = NULL;
+	ZoomControl* zoom = NULL;
+	GladeGui* gui = NULL;
+	ToolHandler* toolHandler = NULL;
 
-	PageTypeMenu* newPageType;
-	PageBackgroundChangeController* pageBackgroundChangeController;
+	ToolbarModel* tbModel = NULL;
+
+	PageTypeMenu* newPageType = NULL;
+	PageBackgroundChangeController* pageBackgroundChangeController = NULL;
 };

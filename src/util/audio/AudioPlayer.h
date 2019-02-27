@@ -22,11 +22,13 @@
 class AudioPlayer
 {
 public:
-	explicit AudioPlayer(Settings* settings);
+	explicit AudioPlayer(Control* control, Settings* settings);
 	~AudioPlayer();
-	void start(string filename, unsigned int timestamp = 0);
+	bool start(string filename, unsigned int timestamp = 0);
+	bool isPlaying();
 	void stop();
-	void abort();
+	bool play();
+	void pause();
 
 	vector<DeviceInfo> getOutputDevices();
 
@@ -35,6 +37,7 @@ private:
 
 protected:
 	Settings* settings = nullptr;
+	Control* control = nullptr;
 
 	AudioQueue<int>* audioQueue = nullptr;
 	PortAudioConsumer* portAudioConsumer = nullptr;

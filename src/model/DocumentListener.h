@@ -36,5 +36,5 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	DocumentHandler* handler;
+	DocumentHandler* handler = NULL;
 };

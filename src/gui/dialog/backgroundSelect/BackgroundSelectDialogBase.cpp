@@ -8,12 +8,7 @@
 BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings, string glade, string mainWnd)
  : GladeGui(gladeSearchPath, glade, mainWnd),
    settings(settings),
-   scrollPreview(NULL),
-   layoutContainer(NULL),
-   doc(doc),
-   confirmed(false),
-   selected(-1),
-   lastWidth(0)
+   doc(doc)
 {
 	XOJ_INIT_TYPE(BackgroundSelectDialogBase);
 

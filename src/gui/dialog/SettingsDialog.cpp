@@ -11,8 +11,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
  : GladeGui(gladeSearchPath, "settings.glade", "settingsDialog"),
    settings(settings),
    control(control),
-   callib(zoomcallib_new()),
-   dpi(72)
+   callib(zoomcallib_new())
 {
 	XOJ_INIT_TYPE(SettingsDialog);
 
@@ -65,6 +64,7 @@ SettingsDialog::~SettingsDialog()
 	{
 		delete bcg;
 	}
+	this->buttonConfigs.clear();
 
 	// DO NOT delete settings!
 	this->settings = NULL;
@@ -76,7 +76,7 @@ void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool wi
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	this->buttonConfigs.push_back(new ButtonConfigGui(this, getGladeSearchPath(), get(hbox), settings, button, withDevice));
+	this->buttonConfigs.push_back(new ButtonConfigGui(getGladeSearchPath(), get(hbox), settings, button, withDevice));
 }
 
 void SettingsDialog::initMouseButtonEvents()
@@ -189,6 +189,13 @@ void SettingsDialog::load()
 	GtkWidget* spSnapGridTolerance = get("spSnapGridTolerance");
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapGridTolerance), settings->getSnapGridTolerance());
 
+	GtkWidget* spZoomStep = get("spZoomStep");
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spZoomStep), settings->getZoomStep());
+
+	GtkWidget* spZoomStepScroll = get("spZoomStepScroll");
+	gtk_spin_button_set_value(
+		GTK_SPIN_BUTTON(spZoomStepScroll), settings->getZoomStepScroll());
+
 	GtkWidget* slider = get("zoomCallibSlider");
 
 	this->setDpi(settings->getDisplayDpi());
@@ -274,14 +281,14 @@ void SettingsDialog::load()
 	touch.getInt("timeout", timeoutMs);
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spTouchDisableTimeout")), timeoutMs / 1000.0);
 
-    this->audioInputDevices = this->control->getAudioController()->getAudioRecorder()->getInputDevices();
+    this->audioInputDevices = this->control->getAudioController()->getInputDevices();
 	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioInputDevice")), "", "System default");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioInputDevice")), 0);
     for (auto &audioInputDevice : this->audioInputDevices)
 	{
     	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioInputDevice")), "", audioInputDevice.getDeviceName().c_str());
 	}
-    for (int i = 0; i < this->audioInputDevices.size(); i++)
+    for (size_t i = 0; i < this->audioInputDevices.size(); i++)
     {
     	if (this->audioInputDevices[i].getSelected())
 		{
@@ -289,14 +296,14 @@ void SettingsDialog::load()
 		}
     }
 
-    this->audioOutputDevices = this->control->getAudioController()->getAudioPlayer()->getOutputDevices();
+    this->audioOutputDevices = this->control->getAudioController()->getOutputDevices();
 	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "", "System default");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")), 0);
 	for (auto &audioOutputDevice : this->audioOutputDevices)
 	{
 		gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "", audioOutputDevice.getDeviceName().c_str());
 	}
-	for (int i = 0; i < this->audioOutputDevices.size(); i++)
+	for (size_t i = 0; i < this->audioOutputDevices.size(); i++)
 	{
 		if (this->audioOutputDevices[i].getSelected())
 		{
@@ -448,6 +455,16 @@ void SettingsDialog::save()
 	int numPairsOffset = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spPairsOffset));
 	settings->setPairsOffset(numPairsOffset);
 
+	GtkWidget* spZoomStep = get("spZoomStep");
+	double zoomStep = gtk_spin_button_get_value(
+		GTK_SPIN_BUTTON(spZoomStep));
+	settings->setZoomStep(zoomStep);
+
+	GtkWidget* spZoomStepScroll = get("spZoomStepScroll");
+	double zoomStepScroll = gtk_spin_button_get_value(
+		GTK_SPIN_BUTTON(spZoomStepScroll));
+	settings->setZoomStepScroll(zoomStepScroll);
+
 	settings->setDisplayDpi(dpi);
 
 	for (ButtonConfigGui* bcg : this->buttonConfigs)
@@ -480,13 +497,13 @@ void SettingsDialog::save()
 	settings->setSnapGridTolerance((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridTolerance"))));
 
 	int selectedInputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioInputDevice"))) - 1;
-	if (selectedInputDeviceIndex >= 0 && selectedInputDeviceIndex < this->audioInputDevices.size())
+	if (selectedInputDeviceIndex >= 0 && selectedInputDeviceIndex < (int)this->audioInputDevices.size())
 	{
 		settings->setAudioInputDevice((int) this->audioInputDevices[selectedInputDeviceIndex].getIndex());
 	}
 
 	int selectedOutputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioOutputDevice"))) - 1;
-	if (selectedOutputDeviceIndex >= 0 && selectedOutputDeviceIndex < this->audioOutputDevices.size())
+	if (selectedOutputDeviceIndex >= 0 && selectedOutputDeviceIndex < (int)this->audioOutputDevices.size())
 	{
 		settings->setAudioOutputDevice((int) this->audioOutputDevices[selectedOutputDeviceIndex].getIndex());
 	}

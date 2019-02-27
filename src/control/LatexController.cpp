@@ -26,18 +26,8 @@ const char* LATEX_TEMPLATE_2 =
 
 LatexController::LatexController(Control* control)
 	: control(control),
-	  posx(0),
-	  posy(0),
-	  imgwidth(0),
-	  imgheight(0),
 	  doc(control->getDocument()),
-	  view(NULL),
-	  layer(NULL),
-	  texTmp(Util::getConfigSubfolder("tex").str()),
-	  selectedTexImage(NULL),
-	  selectedText(NULL),
-	  dlg(NULL),
-	  temporaryRender(NULL)
+	  texTmp(Util::getConfigSubfolder("tex").str())
 {
 	XOJ_INIT_TYPE(LatexController);
 }

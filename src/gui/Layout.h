@@ -91,21 +91,21 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XournalView* view;
+	XournalView* view = NULL;
 
-	ScrollHandling* scrollHandling;
+	ScrollHandling* scrollHandling = NULL;
 
-	double lastScrollHorizontal;
-	double lastScrollVertical;
+	double lastScrollHorizontal = -1;
+	double lastScrollVertical = -1;
 
 	/**
 	 * The last width of the widget
 	 */
-	int lastWidgetWidth;
+	int lastWidgetWidth = 0;
 
 	/**
 	 * The width and height of all our pages
 	 */
-	int layoutWidth;
-	int layoutHeight;
+	int layoutWidth = 0;
+	int layoutHeight = 0;
 };

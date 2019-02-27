@@ -13,7 +13,6 @@ Text::Text()
 
 	this->font.setName("Sans");
 	this->font.setSize(12);
-	this->inEditing = false;
 }
 
 Text::~Text()

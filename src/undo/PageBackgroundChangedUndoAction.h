@@ -40,8 +40,8 @@ private:
 	double origH;
 
 	PageType newType;
-	int newPdfPage;
+	int newPdfPage = -1;
 	BackgroundImage newBackgroundImage;
-	double newW;
-	double newH;
+	double newW = 0;
+	double newH = 0;
 };

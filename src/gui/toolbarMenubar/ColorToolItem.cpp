@@ -1,7 +1,7 @@
 #include "ColorToolItem.h"
 
 #include "model/ToolbarColorNames.h"
-#include "gui/toolbarMenubar/ToolbarUtil.h"
+#include "gui/toolbarMenubar/icon/ColorSelectImage.h"
 
 #include <config.h>
 #include <i18n.h>
@@ -11,36 +11,49 @@
 bool ColorToolItem::inUpdate = false;
 
 ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, int color, bool selektor)
- : AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR)
+ : AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR),
+   color(color),
+   toolHandler(toolHandler),
+   parent(parent)
 {
 	XOJ_INIT_TYPE(ColorToolItem);
 
-	this->color = color;
-	this->toolHandler = toolHandler;
 	this->group = GROUP_COLOR;
-	this->parent = parent;
 
 	updateName();
 }
 
 ColorToolItem::~ColorToolItem()
 {
-	XOJ_RELEASE_TYPE(ColorToolItem);
+	XOJ_CHECK_TYPE(ColorToolItem);
 
-	if (this->iconWidget)
-	{
-		g_object_unref(this->iconWidget);
-		this->iconWidget = NULL;
-	}
+	freeIcons();
+
+	XOJ_RELEASE_TYPE(ColorToolItem);
+}
+
+/**
+ * Free the allocated icons
+ */
+void ColorToolItem::freeIcons()
+{
+	XOJ_CHECK_TYPE(ColorToolItem);
+
+	delete this->icon;
+	this->icon = NULL;
 }
 
 bool ColorToolItem::isSelector()
 {
+	XOJ_CHECK_TYPE(ColorToolItem);
+
 	return this->action == ACTION_SELECT_COLOR_CUSTOM;
 }
 
 void ColorToolItem::updateName()
 {
+	XOJ_CHECK_TYPE(ColorToolItem);
+
 	if (this->action == ACTION_SELECT_COLOR_CUSTOM)
 	{
 		this->name = _("Select color");
@@ -73,7 +86,7 @@ void ColorToolItem::enableColor(int color)
 
 	if (isSelector())
 	{
-		gtk_image_set_from_pixbuf(GTK_IMAGE(this->iconWidget), ToolbarUtil::newColorIconPixbuf(color, 16, !isSelector()));
+		this->icon->setColor(color);
 		this->color = color;
 		if (GTK_IS_TOGGLE_BUTTON(this->item))
 		{
@@ -171,9 +184,39 @@ void ColorToolItem::showColorchooser()
 	gtk_widget_destroy(dialog);
 }
 
+/**
+ * Enable / Disable the tool item
+ */
+void ColorToolItem::enable(bool enabled)
+{
+	if (!enabled && toolHandler->getToolType() == TOOL_ERASER)
+	{
+		icon->setState(COLOR_ICON_STATE_PEN);
+		AbstractToolItem::enable(true);
+		switchToPen = true;
+		return;
+	}
+
+	switchToPen = false;
+	AbstractToolItem::enable(enabled);
+	if (enabled)
+	{
+		icon->setState(COLOR_ICON_STATE_ENABLED);
+	}
+	else
+	{
+		icon->setState(COLOR_ICON_STATE_DISABLED);
+	}
+}
+
 void ColorToolItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton)
 {
 	XOJ_CHECK_TYPE(ColorToolItem);
+
+	if (switchToPen)
+	{
+		toolHandler->selectTool(TOOL_PEN, true);
+	}
 
 	if (inUpdate)
 	{
@@ -195,14 +238,15 @@ GtkToolItem* ColorToolItem::newItem()
 {
 	XOJ_CHECK_TYPE(ColorToolItem);
 
-	this->iconWidget = ToolbarUtil::newColorIcon(this->color, 16, !isSelector());
+	this->icon = new ColorSelectImage(this->color, !isSelector());
+
 	GtkToolItem* it = gtk_toggle_tool_button_new();
 
 	const gchar* name = this->name.c_str();
 	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), name);
 	gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), name);
 
-	gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), this->iconWidget);
+	gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), this->icon->getWidget());
 
 	return it;
 }
@@ -218,5 +262,5 @@ GtkWidget* ColorToolItem::getNewToolIcon()
 {
 	XOJ_CHECK_TYPE(ColorToolItem);
 
-	return ToolbarUtil::newColorIcon(this->color, 16, !isSelector());
+	return ColorSelectImage::newColorIcon(this->color, 16, !isSelector());
 }

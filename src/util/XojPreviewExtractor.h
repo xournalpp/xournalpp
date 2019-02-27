@@ -81,6 +81,6 @@ private:
 	/**
 	 * Preview data
 	 */
-	unsigned char* data;
-	gsize dataLen;
+	unsigned char* data = NULL;
+	gsize dataLen = 0;
 };

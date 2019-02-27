@@ -1,8 +1,5 @@
 #include "ToolbarDragDropHelper.h"
 
-#include "gui/toolbarMenubar/ToolbarUtil.h"
-
-
 GdkAtom ToolbarDragDropHelper::atomToolItem = gdk_atom_intern_static_string("application/xournal-ToolbarItem");
 GtkTargetEntry ToolbarDragDropHelper::dropTargetEntry = { (gchar *)"move-buffer", GTK_TARGET_SAME_APP, 1 };
 
@@ -24,7 +21,7 @@ GdkPixbuf* ToolbarDragDropHelper::getImagePixbuf(GtkImage* image)
 	{
 		const gchar* iconName = NULL;
 		gtk_image_get_icon_name(image, &iconName, NULL);
-		return gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), iconName, 22, (GtkIconLookupFlags)0, NULL);
+		return gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), iconName, 22, (GtkIconLookupFlags) 0, NULL);
 	}
 
 	default:

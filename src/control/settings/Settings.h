@@ -175,6 +175,18 @@ public:
 	string getSelectedToolbar();
 
 	/**
+	 * Set the Zoomstep for one step in percent
+	 */
+	void setZoomStep(double zoomStep);
+	double getZoomStep();
+
+	/**
+	 * Set the Zoomstep for Ctrl + Scroll in percent
+	 */
+	void setZoomStepScroll(double zoomStepScroll);
+	double getZoomStepScroll();
+
+	/**
 	 * Sets the screen resolution in DPI
 	 */
 	void setDisplayDpi(int dpi);
@@ -329,6 +341,12 @@ public:
 	double getAudioGain();
 	void setAudioGain(double gain);
 
+	string getPluginEnabled();
+	void setPluginEnabled(string pluginEnabled);
+
+	string getPluginDisabled();
+	void setPluginDisabled(string pluginEnabled);
+
 	/**
 	 * Get name, e.g. "cm"
 	 */
@@ -461,6 +479,16 @@ private:
 	 * The last used font
 	 */
 	XojFont font;
+
+	/**
+	 * Zoomstep for one step
+	 */
+	double zoomStep;
+
+	/**
+	 * Zoomstep for Ctrl + Scroll zooming
+	 */
+	double zoomStepScroll;
 
 	/**
 	 * The display resolution, in pixels per inch
@@ -666,6 +694,15 @@ private:
 	 */
 	double audioGain;
 
+	/**
+	 * List of enabled plugins (only the one which are not enabled by default)
+	 */
+	string pluginEnabled;
+
+	/**
+	 * List of disabled plugins (only the one which are not disabled by default)
+	 */
+	string pluginDisabled;
 
 	/**
 	 * "Transaction" running, do not save until the end is reached

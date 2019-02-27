@@ -40,13 +40,13 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Document* doc;
-	ProgressListener* progressListener;
+	Document* doc = NULL;
+	ProgressListener* progressListener = NULL;
 
-	cairo_surface_t* surface;
-	cairo_t* cr;
+	cairo_surface_t* surface = NULL;
+	cairo_t* cr = NULL;
 
-	bool noBackgroundExport;
+	bool noBackgroundExport = false;
 
 	string lastError;
 };

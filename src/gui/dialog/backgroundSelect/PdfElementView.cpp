@@ -7,8 +7,7 @@
 
 PdfElementView::PdfElementView(int id, XojPdfPageSPtr page, PdfPagesDialog* dlg)
  : BaseElementView(id, dlg),
-   page(page),
-   used(false)
+   page(page)
 {
 	XOJ_INIT_TYPE(PdfElementView);
 }

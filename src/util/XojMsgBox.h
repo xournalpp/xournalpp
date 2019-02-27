@@ -15,6 +15,8 @@
 
 #include <string>
 using std::string;
+#include <map>
+using std::map;
 
 class XojMsgBox
 {
@@ -29,6 +31,7 @@ public:
 	static void setDefaultWindow(GtkWindow* win);
 
 	static void showErrorToUser(GtkWindow* win, string msg);
+	static int showPluginMessage(string pluginName, string msg, map<int, string> button, bool error = false);
 	static int replaceFileQuestion(GtkWindow* win, string msg);
 	static void showHelp(GtkWindow* win);
 };

@@ -8,16 +8,9 @@
 #include <cmath>
 
 Cursor::Cursor(Control* control)
+ : control(control)
 {
 	XOJ_INIT_TYPE(Cursor);
-
-	this->control = control;
-	this->busy = false;
-	this->invisible = false;
-	this->selectionType = CURSOR_SELECTION_NONE;
-	this->insidePage = false;
-
-	this->mouseDown = false;
 }
 
 Cursor::~Cursor()
@@ -269,7 +262,7 @@ void Cursor::updateCursor()
 GdkCursor* Cursor::getEraserCursor()
 {
 	// Eraser's size follow a quadratic increment, so the cursor will do the same
-	double cursorSize = control->getToolHandler()->getThickness() * 7;
+	double cursorSize = control->getToolHandler()->getThickness() * 2 * control->getZoomControl()->getZoom();
 
 	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
 	                                                      cursorSize,
@@ -345,7 +338,7 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 	if (big)
 	{
 		// When using highlighter, paint the icon with the current color
-		if(size == 5)
+		if (size == 5)
 		{
 			cairo_set_source_rgb(cr, r, g, b);
 		}
@@ -381,18 +374,17 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 		cairo_fill_preserve(cr);
 	}
 
-	if(highlightPosition) 
-		{
-			// A yellow transparent circle with no border
-			cairo_set_line_width(cr, 0);
-			cairo_set_source_rgba(cr, 255, 255, 0, 0.5);
-			cairo_arc(cr, centerX, centerY, 45, 0, 2 * 3.1415);
-			cairo_fill_preserve(cr);
-			cairo_set_source_rgb(cr, 0, 0, 0);
-			cairo_stroke(cr);
+	if (highlightPosition)
+	{
+		// A yellow transparent circle with no border
+		cairo_set_line_width(cr, 0);
+		cairo_set_source_rgba(cr, 255, 255, 0, 0.5);
+		cairo_arc(cr, centerX, centerY, 45, 0, 2 * 3.1415);
+		cairo_fill_preserve(cr);
+		cairo_set_source_rgb(cr, 0, 0, 0);
+		cairo_stroke(cr);
 
-
-		}
+	}
 	
 	cairo_set_source_rgba(cr, r, g, b, alpha);
 	// Correct the offset of the coloured dot for big-cursor mode

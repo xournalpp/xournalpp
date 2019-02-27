@@ -54,5 +54,5 @@ protected:
 	/**
 	 * This window
 	 */
-	GtkWidget* window;
+	GtkWidget* window = NULL;
 };

@@ -280,4 +280,13 @@ XOJ_DECLARE_TYPE(FullscreenHandler, 270);
 XOJ_DECLARE_TYPE(AudioElement, 271);
 XOJ_DECLARE_TYPE(XmlAudioNode, 272);
 XOJ_DECLARE_TYPE(LayoutMapper, 273);
+XOJ_DECLARE_TYPE(PluginController, 274);
+XOJ_DECLARE_TYPE(Plugin, 275);
+XOJ_DECLARE_TYPE(MenuEntry, 276);
+XOJ_DECLARE_TYPE(PluginDialog, 277);
+XOJ_DECLARE_TYPE(PluginDialogEntry, 278);
+XOJ_DECLARE_TYPE(ColorSelectImage, 279);
+
+
+
 

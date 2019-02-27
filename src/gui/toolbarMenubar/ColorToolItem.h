@@ -16,6 +16,8 @@
 
 #include <XournalType.h>
 
+class ColorSelectImage;
+
 class ColorToolItem : public AbstractToolItem
 {
 public:
@@ -36,10 +38,20 @@ public:
 
 	int getColor();
 
+	/**
+	 * Enable / Disable the tool item
+	 */
+	virtual void enable(bool enabled);
+
 protected:
 	virtual GtkToolItem* newItem();
 	void updateName();
 	bool isSelector();
+
+	/**
+	 * Free the allocated icons
+	 */
+	void freeIcons();
 
 	/**
 	 * Show colochooser to select a custom color
@@ -49,12 +61,28 @@ protected:
 private:
 	XOJ_TYPE_ATTRIB;
 
+	/**
+	 * Color
+	 */
 	int color;
-	string name;
-	GtkWidget* iconWidget = NULL;
-	GtkWindow* parent;
 
-	ToolHandler* toolHandler;
+	/**
+	 * Name of the Color
+	 */
+	string name;
+
+	/**
+	 * Icon to display
+	 */
+	ColorSelectImage* icon = NULL;
+
+	/**
+	 * Switch to pen if the color icon is pressed
+	 */
+	bool switchToPen = false;
+
+	GtkWindow* parent = NULL;
+	ToolHandler* toolHandler = NULL;
 
 	static bool inUpdate;
 };

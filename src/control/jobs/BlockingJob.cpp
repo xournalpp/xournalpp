@@ -4,10 +4,10 @@
 #include "control/xojfile/SaveHandler.h"
 
 BlockingJob::BlockingJob(Control* control, string name)
+ : control(control)
 {
 	XOJ_INIT_TYPE(BlockingJob);
 
-	this->control = control;
 	control->block(name);
 }
 

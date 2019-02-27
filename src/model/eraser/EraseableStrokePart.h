@@ -48,15 +48,15 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	double width;
-	double splitSize;
+	double width = 0;
+	double splitSize = 0;
 
-	GList* points;
+	GList* points = NULL;
 
-	double x;
-	double y;
-	double elementWidth;
-	double elementHeight;
+	double x = 0;
+	double y = 0;
+	double elementWidth = 0;
+	double elementHeight = 0;
 
 	friend class EraseableStroke;
 };

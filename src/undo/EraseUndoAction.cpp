@@ -15,8 +15,6 @@ EraseUndoAction::EraseUndoAction(PageRef page)
 	XOJ_INIT_TYPE(EraseUndoAction);
 
 	this->page = page;
-	this->edited = NULL;
-	this->original = NULL;
 }
 
 EraseUndoAction::~EraseUndoAction()

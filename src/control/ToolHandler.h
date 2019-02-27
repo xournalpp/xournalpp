@@ -120,15 +120,15 @@ protected:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Tool* tools[TOOL_COUNT];
-	Tool* current;
+	Tool* tools[TOOL_COUNT] = { 0 };
+	Tool* current = NULL;
 
 	/**
 	 * Last selected tool, reference with color values etc.
 	 */
 	LastSelectedTool* lastSelectedTool = NULL;
 
-	EraserType eraserType;
+	EraserType eraserType = ERASER_TYPE_DEFAULT;
 
 	/**
 	 * If a color is selected, it may be in the list,
@@ -141,5 +141,5 @@ private:
 
 	ActionHandler* actionHandler = NULL;
 
-	Settings* settings;
+	Settings* settings = NULL;
 };

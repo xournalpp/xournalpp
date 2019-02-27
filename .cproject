@@ -35,6 +35,7 @@
 									<listOptionValue builtIn="false" value="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
 									<listOptionValue builtIn="false" value="/usr/include/libxml2"/>
 									<listOptionValue builtIn="false" value="/usr/include/librsvg-2.0"/>
+									<listOptionValue builtIn="false" value="/usr/include/lua5.3"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1449567466" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -48,6 +49,7 @@
 									<listOptionValue builtIn="false" value="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
 									<listOptionValue builtIn="false" value="/usr/include/libxml2"/>
 									<listOptionValue builtIn="false" value="/usr/include/librsvg-2.0"/>
+									<listOptionValue builtIn="false" value="/usr/include/lua5.3"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.2018836825" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>

@@ -19,7 +19,6 @@ RecentManager::RecentManager()
 {
 	XOJ_INIT_TYPE(RecentManager);
 
-	this->maxRecent = 10;
 	this->menu = gtk_menu_new();
 
 	GtkRecentManager* recentManager = gtk_recent_manager_get_default();

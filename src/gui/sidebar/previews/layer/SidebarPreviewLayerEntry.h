@@ -63,7 +63,7 @@ private:
 	/**
 	 * Toolbar with controls
 	 */
-	int toolbarHeight;
+	int toolbarHeight = 0;
 
 	/**
 	 * Container box for the preview and the button
@@ -73,12 +73,12 @@ private:
 	/**
 	 * Visible checkbox
 	 */
-	GtkWidget* cbVisible;
+	GtkWidget* cbVisible = NULL;
 
 	/**
 	 * Ignore events
 	 */
-	bool inUpdate;
+	bool inUpdate = false;
 
 	friend class PreviewJob;
 };

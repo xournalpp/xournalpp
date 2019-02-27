@@ -58,6 +58,9 @@ void Settings::loadDefault()
 	
 	this->numPairsOffset = 1;
 	
+	this->zoomStep = 10.0;
+	this->zoomStepScroll = 2.0;
+
 	this->displayDpi = 72;
 
 	this->font.setName(DEFAULT_FONT);
@@ -127,6 +130,9 @@ void Settings::loadDefault()
 	this->audioInputDevice = -1;
 	this->audioOutputDevice = -1;
 	this->audioGain = 1.0;
+
+	this->pluginEnabled = "";
+	this->pluginDisabled = "";
 
 	inTransaction = false;
 }
@@ -293,6 +299,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->lastImagePath = (const char*) value;
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "zoomStep") == 0)
+	{
+		this->zoomStep = g_strtod((const char*) value, NULL);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "zoomStepScroll") == 0)
+	{
+		this->zoomStepScroll = g_strtod((const char*) value, NULL);
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "displayDpi") == 0)
 	{
 		this->displayDpi = g_ascii_strtoll((const char*) value, NULL, 10);
@@ -380,6 +394,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "defaultSaveName") == 0)
 	{
 		this->defaultSaveName = (const char*) value;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "pluginEnabled") == 0)
+	{
+		this->pluginEnabled = (const char*) value;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "pluginDisabled") == 0)
+	{
+		this->pluginDisabled = (const char*) value;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "pageTemplate") == 0)
 	{
@@ -758,6 +780,8 @@ void Settings::save()
 	WRITE_STRING_PROP(lastSavePath.str());
 	WRITE_STRING_PROP(lastImagePath.str());
 
+	WRITE_DOUBLE_PROP(zoomStep);
+	WRITE_DOUBLE_PROP(zoomStepScroll);
 	WRITE_INT_PROP(displayDpi);
 	WRITE_INT_PROP(mainWndWidth);
 	WRITE_INT_PROP(mainWndHeight);
@@ -841,6 +865,9 @@ void Settings::save()
 	WRITE_INT_PROP(audioOutputDevice);
 	WRITE_DOUBLE_PROP(audioSampleRate);
 	WRITE_DOUBLE_PROP(audioGain);
+
+	WRITE_STRING_PROP(pluginEnabled);
+	WRITE_STRING_PROP(pluginDisabled);
 
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
@@ -1600,6 +1627,44 @@ Path Settings::getLastImagePath()
 	return this->lastImagePath;
 }
 
+void Settings::setZoomStep(double zoomStep)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->zoomStep == zoomStep)
+	{
+		return;
+	}
+	this->zoomStep = zoomStep;
+	save();
+}
+
+double Settings::getZoomStep()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->zoomStep;
+}
+
+void Settings::setZoomStepScroll(double zoomStepScroll)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->zoomStepScroll == zoomStepScroll)
+	{
+		return;
+	}
+	this->zoomStepScroll = zoomStepScroll;
+	save();
+}
+
+double Settings::getZoomStepScroll()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->zoomStepScroll;
+}
+
 void Settings::setDisplayDpi(int dpi)
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -2002,6 +2067,44 @@ void Settings::setAudioGain(double gain)
 		return;
 	}
 	this->audioGain = gain;
+	save();
+}
+
+string Settings::getPluginEnabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->pluginEnabled;
+}
+
+void Settings::setPluginEnabled(string pluginEnabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->pluginEnabled == pluginEnabled)
+	{
+		return;
+	}
+	this->pluginEnabled = pluginEnabled;
+	save();
+}
+
+string Settings::getPluginDisabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->pluginDisabled;
+}
+
+void Settings::setPluginDisabled(string pluginEnabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->pluginDisabled == pluginDisabled)
+	{
+		return;
+	}
+	this->pluginDisabled = pluginDisabled;
 	save();
 }
 

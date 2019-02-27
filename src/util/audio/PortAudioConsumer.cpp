@@ -56,14 +56,24 @@ bool PortAudioConsumer::isPlaying()
 	return this->outputStream != nullptr && this->outputStream->isActive();
 }
 
-void PortAudioConsumer::startPlaying(double sampleRate, unsigned int channels)
+bool PortAudioConsumer::startPlaying()
 {
 	XOJ_CHECK_TYPE(PortAudioConsumer);
 
 	// Check if there already is a recording
 	if (this->outputStream != nullptr)
 	{
-		return;
+		return false;
+	}
+
+	double sampleRate;
+	unsigned int channels;
+	this->audioQueue->getAudioAttributes(sampleRate, channels);
+
+	if (sampleRate == -1)
+	{
+		g_warning("PortAudioConsumer: Timing issue - Sample rate requested before known");
+		return false;
 	}
 
 	// Get the device information of our output device
@@ -75,14 +85,14 @@ void PortAudioConsumer::startPlaying(double sampleRate, unsigned int channels)
 	catch (portaudio::PaException& e)
 	{
 		g_warning("PortAudioConsumer: Unable to find selected output device");
-		return;
+		return false;
 	}
 
 	if ((unsigned int) device->maxOutputChannels() < channels)
 	{
 		this->audioQueue->signalEndOfStream();
 		g_warning("Output device has not enough channels to play audio file. (Requires at least 2 channels)");
-		return;
+		return false;
 	}
 
 	this->outputChannels = channels;
@@ -97,7 +107,7 @@ void PortAudioConsumer::startPlaying(double sampleRate, unsigned int channels)
 	{
 		this->audioQueue->signalEndOfStream();
 		g_warning("PortAudioConsumer: Unable to open stream to device");
-		return;
+		return false;
 	}
 	// Start the recording
 	try
@@ -108,8 +118,9 @@ void PortAudioConsumer::startPlaying(double sampleRate, unsigned int channels)
 	{
 		this->audioQueue->signalEndOfStream();
 		g_warning("PortAudioConsumer: Unable to start stream");
-		return;
+		return false;
 	}
+	return true;
 }
 
 int PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer, const PaStreamCallbackTimeInfo* timeInfo,
@@ -124,17 +135,17 @@ int PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer,
 
 	if (outputBuffer != nullptr)
 	{
-		int outputBufferLength;
-		this->audioQueue->pop(((int*) outputBuffer), &outputBufferLength, framesPerBuffer * this->outputChannels, this->outputChannels);
+		unsigned long outputBufferLength;
+		this->audioQueue->pop(((int*) outputBuffer), outputBufferLength, framesPerBuffer * this->outputChannels);
 
 		// Fill buffer to requested length if necessary
 
-		if ((unsigned int) outputBufferLength < framesPerBuffer * this->outputChannels)
+		if (outputBufferLength < framesPerBuffer * this->outputChannels)
 		{
 			g_warning("PortAudioConsumer: Frame underflow");
 
 			auto outputBufferImpl = (int*) outputBuffer;
-			for (auto i = (unsigned int) outputBufferLength; i < framesPerBuffer * this->outputChannels; ++i)
+			for (auto i = outputBufferLength; i < framesPerBuffer * this->outputChannels; ++i)
 			{
 				outputBufferImpl[i] = 0;
 			}

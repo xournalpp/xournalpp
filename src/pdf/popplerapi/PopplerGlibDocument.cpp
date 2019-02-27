@@ -7,7 +7,6 @@
 
 
 PopplerGlibDocument::PopplerGlibDocument()
- : document(NULL)
 {
 	XOJ_INIT_TYPE(PopplerGlibDocument);
 }

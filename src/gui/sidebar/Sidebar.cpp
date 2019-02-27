@@ -12,12 +12,12 @@
 #include <config-features.h>
 
 Sidebar::Sidebar(GladeGui* gui, Control* control)
- : toolbar(this, gui)
+ : toolbar(this, gui),
+   control(control),
+   gui(gui)
 {
 	XOJ_INIT_TYPE(Sidebar);
 
-	this->control = control;
-	this->gui = gui;
 	this->tbSelectPage = GTK_TOOLBAR(gui->get("tbSelectSidebarPage"));
 	this->buttonCloseSidebar = gui->get("buttonCloseSidebar");
 

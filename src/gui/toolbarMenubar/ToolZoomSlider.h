@@ -53,14 +53,14 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	bool ignoreChange;
+	bool ignoreChange = false;
 
 	/**
 	 * The slider is currently changing by user, do not update value
 	 */
-	bool sliderChangingByUser;
-	GtkWidget* slider;
-	ZoomControl* zoom;
-	bool horizontal;
+	bool sliderChangingByUser = false;
+	GtkWidget* slider = NULL;
+	ZoomControl* zoom = NULL;
+	bool horizontal = true;
 };
 

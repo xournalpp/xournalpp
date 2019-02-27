@@ -6,9 +6,6 @@ Job::Job()
 {
 	XOJ_INIT_TYPE(Job);
 
-	this->afterRunId = 0;
-
-	this->refCount = 1;
 	g_mutex_init(&this->refMutex);
 }
 

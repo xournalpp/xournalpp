@@ -41,11 +41,6 @@ LayoutMapper::LayoutMapper(int numPages, Settings* settings)
 	int pages = numPages;
 
 	// get from user settings:
-
-	// TODO: Use these again?
-	bool verticalSpace = settings->getAddVerticalSpace();
-	// TODO: Use these again?
-	bool horizontalSpace = settings->getAddHorizontalSpace();
 	bool isPairedPages = settings->isShowPairedPages();
 	int numCols = settings->getViewColumns();
 	int numRows = settings->getViewRows();

@@ -41,8 +41,8 @@ protected:
 	XOJ_TYPE_ATTRIB;
 
 	// This is only for debugging / Testing purpose
-	const char* className;
+	const char* className = NULL;
 
 	PageRef page;
-	bool undone;
+	bool undone = false;
 };

@@ -115,21 +115,21 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	// The stroke width cannot be inherited from Element
-	double width;
+	double width = 0;
 
-	StrokeTool toolType;
+	StrokeTool toolType = STROKE_TOOL_PEN;
 
 	// The array with the points
-	Point* points;
-	int pointCount;
-	int pointAllocCount;
+	Point* points = NULL;
+	int pointCount = 0;
+	int pointAllocCount = 0;
 
 	/**
 	 * Dashed line
 	 */
 	LineStyle lineStyle;
 
-	EraseableStroke* eraseable;
+	EraseableStroke* eraseable = NULL;
 
 	/**
 	 * Option to fill the shape:
@@ -138,5 +138,5 @@ private:
 	 * ...
 	 *   1: The shape is nearly fully transparent filled
 	 */
-	int fill;
+	int fill = -1;
 };

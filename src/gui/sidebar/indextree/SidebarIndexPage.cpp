@@ -13,9 +13,6 @@ SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar)
 {
 	XOJ_INIT_TYPE(SidebarIndexPage);
 
-	this->searchTimeout = 0;
-	this->hasContents = false;
-
 	this->treeViewBookmarks = gtk_tree_view_new();
 	g_object_ref(this->treeViewBookmarks);
 

@@ -3,23 +3,14 @@
 #include "BackgroundImage.h"
 #include "Document.h"
 
-#include <Util.h>
-
 XojPage::XojPage(double width, double height)
 {
 	XOJ_INIT_TYPE(XojPage);
 
-	this->pdfBackgroundPage = size_t_npos;
-	this->backgroundColor = 0xffffff;
 	this->bgType.format = "lined";
 
 	this->width = width;
 	this->height = height;
-
-	this->ref = 0;
-	this->currentLayer = size_t_npos;
-
-	this->backgroundVisible = true;
 }
 
 XojPage::~XojPage()

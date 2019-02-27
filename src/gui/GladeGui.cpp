@@ -12,7 +12,6 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, string glade, string mainWn
 {
 	XOJ_INIT_TYPE(GladeGui);
 
-	this->window = NULL;
 	this->gladeSearchPath = gladeSearchPath;
 
 	string filename = this->gladeSearchPath->findFile("", glade);

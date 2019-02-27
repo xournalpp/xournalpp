@@ -1,18 +1,9 @@
 #include "AbstractToolItem.h"
-#include "gui/toolbarMenubar/ToolbarUtil.h"
-
 
 AbstractToolItem::AbstractToolItem(string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem)
  : AbstractItem(id, handler, type, menuitem)
 {
 	XOJ_INIT_TYPE(AbstractToolItem);
-
-	this->item = NULL;
-	this->popupMenu = NULL;
-	this->used = false;
-
-	this->toolToggleButtonActive = false;
-	this->toolToggleOnlyEnable = false;
 }
 
 AbstractToolItem::~AbstractToolItem()
@@ -59,13 +50,13 @@ void AbstractToolItem::toolButtonCallback(GtkToolButton* toolbutton, AbstractToo
 	{
 		bool selected = gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(toolbutton));
 
-		// ignor this event... GTK Broadcast to much eventes, e.g. if you call set_active
+		// ignore this event... GTK Broadcast to much events, e.g. if you call set_active
 		if (item->toolToggleButtonActive == selected)
 		{
 			return;
 		}
 
-		// don't allow disselect this button
+		// don't allow deselect this button
 		if (item->toolToggleOnlyEnable && selected == false)
 		{
 			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(toolbutton), true);
@@ -141,6 +132,9 @@ void AbstractToolItem::setUsed(bool used)
 	this->used = used;
 }
 
+/**
+ * Enable / Disable the tool item
+ */
 void AbstractToolItem::enable(bool enabled)
 {
 	XOJ_CHECK_TYPE(AbstractToolItem);

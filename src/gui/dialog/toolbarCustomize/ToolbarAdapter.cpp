@@ -6,7 +6,7 @@
 #include "gui/toolbarMenubar/AbstractToolItem.h"
 #include "gui/toolbarMenubar/ColorToolItem.h"
 #include "gui/toolbarMenubar/model/ToolbarData.h"
-#include "gui/toolbarMenubar/ToolbarUtil.h"
+#include "gui/toolbarMenubar/icon/ColorSelectImage.h"
 #include "gui/ToolitemDragDrop.h"
 #include "ToolbarDragDropHelper.h"
 #include "ToolItemDragCurrentData.h"
@@ -248,8 +248,7 @@ void ToolbarAdapter::toolitemDragDataGet(GtkWidget* widget, GdkDragContext* cont
 /**
  * A tool item was dragged to the toolbar
  */
-bool ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* context,
-								gint x, gint y, guint time, ToolbarAdapter* adapter)
+bool ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* context, gint x, gint y, guint time, ToolbarAdapter* adapter)
 {
 	XOJ_CHECK_TYPE_OBJ(adapter, ToolbarAdapter);
 
@@ -281,7 +280,7 @@ bool ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* co
 	}
 	else if (d->type == TOOL_ITEM_COLOR)
 	{
-		GtkWidget* iconWidget = ToolbarUtil::newColorIcon(d->color, 16, true);
+		GtkWidget* iconWidget = ColorSelectImage::newColorIcon(d->color, 16, true);
 		GtkToolItem* it = gtk_tool_button_new(iconWidget, "");
 		gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
 	}

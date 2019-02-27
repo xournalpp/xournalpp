@@ -30,6 +30,38 @@ void XojMsgBox::showErrorToUser(GtkWindow* win, string msg)
 	gtk_widget_destroy(dialog);
 }
 
+int XojMsgBox::showPluginMessage(string pluginName, string msg, map<int, string> button, bool error)
+{
+	string header = string("Xournal++ Plugin «") + pluginName + "»";
+
+	if (error)
+	{
+		header = "Error in " + header;
+	}
+
+	GtkWidget* dialog = gtk_message_dialog_new(defaultWindow, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE,
+											   "%s", header.c_str());
+	if (defaultWindow != NULL)
+	{
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), defaultWindow);
+	}
+
+	GValue val = G_VALUE_INIT;
+	g_value_init(&val, G_TYPE_STRING);
+	g_value_set_string(&val, msg.c_str());
+	g_object_set_property(G_OBJECT(dialog), "secondary-text", &val);
+	g_value_unset(&val);
+
+	for (auto& kv : button)
+	{
+		gtk_dialog_add_button(GTK_DIALOG(dialog), kv.second.c_str(), kv.first);
+	}
+
+	int res = gtk_dialog_run(GTK_DIALOG(dialog));
+	gtk_widget_destroy(dialog);
+	return res;
+}
+
 int XojMsgBox::replaceFileQuestion(GtkWindow* win, string msg)
 {
 	GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,

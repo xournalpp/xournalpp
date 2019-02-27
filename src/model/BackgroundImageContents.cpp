@@ -5,9 +5,6 @@ BackgroundImageContents::BackgroundImageContents(string filename, GError** error
 	XOJ_INIT_TYPE(BackgroundImageContents);
 
 	this->filename = filename;
-	this->ref = 1;
-	this->pageId = -1;
-	this->attach = false;
 	this->pixbuf = gdk_pixbuf_new_from_file(filename.c_str(), error);
 }
 

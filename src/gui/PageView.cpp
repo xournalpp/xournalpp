@@ -54,16 +54,11 @@ XojPageView::XojPageView(XournalView* xournal, PageRef page)
 	this->page = page;
 	this->registerListener(this->page);
 	this->xournal = xournal;
-	this->selected = false;
 	this->settings = xournal->getControl()->getSettings();
-	this->lastVisibleTime = -1;
 
 	g_mutex_init(&this->drawingMutex);
 
-	this->rerenderComplete = false;
 	g_mutex_init(&this->repaintRectMutex);
-
-	this->inEraser = false;
 
 	// this does not have to be deleted afterwards:
 	// (we need it for undo commands)
@@ -288,7 +283,7 @@ void XojPageView::startText(double x, double y)
 			text->setColor(h->getColor());
 			text->setFont(settings->getFont());
 
-			if (xournal->getControl()->getAudioController()->getAudioRecorder()->isRecording())
+			if (xournal->getControl()->getAudioController()->isRecording())
 			{
 				string audioFilename = xournal->getControl()->getAudioController()->getAudioFilename();
 				size_t sttime = xournal->getControl()->getAudioController()->getStartTime();

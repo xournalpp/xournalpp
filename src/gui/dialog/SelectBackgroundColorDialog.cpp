@@ -47,8 +47,7 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control* control)
 	RGBA_FROM_HEX(0xffffff),
 	RGBA_FROM_HEX(0xffffff),
 	RGBA_FROM_HEX(0xffffff)
-   },
-   selected(-1)
+   }
 {
 	XOJ_INIT_TYPE(SelectBackgroundColorDialog);
 

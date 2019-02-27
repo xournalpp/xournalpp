@@ -28,5 +28,5 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int selectedPage;
+	int selectedPage = -1;
 };

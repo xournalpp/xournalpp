@@ -53,7 +53,6 @@ Here you can find complete list of Xournal++ CMake flags (sorted by categories).
 
 | Variable name        | Default | Description
 | -------------------- | ------- | -----------
-| `ENABLE_TEX`         | OFF     | Tex support
 | `ENABLE_CPPUNIT`     | OFF     | Build CppUnit test instead of xournalpp application
 
 

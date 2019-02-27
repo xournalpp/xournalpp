@@ -3,16 +3,6 @@
 #include <Util.h>
 
 BaseBackgroundPainter::BaseBackgroundPainter()
- : cr(NULL),
-   width(0),
-   height(0),
-   foregroundColor1(0),
-   foregroundColor2(0),
-   lineWidth(0),
-   drawRaster1(1),
-   margin1(0),
-   roundMargin(0),
-   lineWidthFactor(1)
 {
 	XOJ_INIT_TYPE(BaseBackgroundPainter);
 

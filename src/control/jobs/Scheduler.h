@@ -106,11 +106,11 @@ private:
 protected:
 	XOJ_TYPE_ATTRIB;
 
-	bool threadRunning;
+	bool threadRunning = true;
 
-	int jobRenderThreadTimerId;
+	int jobRenderThreadTimerId = 0;
 
-	GThread* thread;
+	GThread* thread = NULL;
 
 	GCond jobQueueCond;
 	GMutex jobQueueMutex;
@@ -129,7 +129,7 @@ protected:
 
 	GQueue* jobQueue[JOB_N_PRIORITIES];
 
-	GTimeVal* blockRenderZoomTime;
+	GTimeVal* blockRenderZoomTime = NULL;
 	GMutex blockRenderMutex;
 
 	string name;

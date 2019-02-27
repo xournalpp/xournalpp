@@ -5,10 +5,7 @@
 #include <PageRange.h>
 
 ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath)
- : GladeGui(gladeSearchPath, "exportSettings.glade", "exportDialog"),
-   currentPage(0),
-   pageCount(0),
-   confirmed(false)
+ : GladeGui(gladeSearchPath, "exportSettings.glade", "exportDialog")
 {
 	XOJ_INIT_TYPE(ExportDialog);
 

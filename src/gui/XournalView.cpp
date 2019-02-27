@@ -24,11 +24,11 @@
 #include <math.h>
 
 XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling)
- : scrollHandling(scrollHandling)
+ : scrollHandling(scrollHandling),
+   control(control)
 {
 	XOJ_INIT_TYPE(XournalView);
 
-	this->control = control;
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
 
@@ -44,14 +44,6 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 	this->repaintHandler = new RepaintHandler(this);
 	this->pagePosition = new PagePositionHandler();
 	this->touchHelper = new TouchHelper(control->getSettings());
-
-	this->viewPages = NULL;
-	this->viewPagesLen = 0;
-	this->margin = 75;
-	this->currentPage = 0;
-	this->lastSelectedPage = -1;
-
-	this->lastPenAction = 0;
 
 	control->getZoomControl()->addZoomListener(this);
 
@@ -594,14 +586,14 @@ void XournalView::zoomIn()
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	control->getZoomControl()->zoomIn();
+	control->getZoomControl()->zoomOneStep(ZOOM_IN);
 }
 
 void XournalView::zoomOut()
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	control->getZoomControl()->zoomOut();
+	control->getZoomControl()->zoomOneStep(ZOOM_OUT);
 }
 
 void XournalView::ensureRectIsVisible(int x, int y, int width, int height)
@@ -637,6 +629,9 @@ void XournalView::zoomChanged()
 	doc->unlock();
 
 	control->getMetadataManager()->storeMetadata(file.str(), getCurrentPage(), getZoom());
+
+	// Updates the Eraser's cursor icon in order to make it as big as the erasing area
+	control->getCursor()->updateCursor();
 
 	this->control->getScheduler()->blockRerenderZoom();
 }

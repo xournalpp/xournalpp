@@ -2,10 +2,6 @@
 
 XojPdfRectangle::XojPdfRectangle()
 {
-	this->x1 = -1;
-	this->x2 = -1;
-	this->y1 = -1;
-	this->y2 = -1;
 }
 
 XojPdfRectangle::XojPdfRectangle(double x1, double y1, double x2, double y2)

@@ -3,7 +3,7 @@
 #include "dialog/toolbarCustomize/ToolbarAdapter.h"
 #include "dialog/toolbarCustomize/ToolbarDragDropHelper.h"
 #include "dialog/toolbarCustomize/ToolbarDragDropHelper.h"
-#include "toolbarMenubar/ToolbarUtil.h"
+#include "gui/toolbarMenubar/icon/ToolbarSeparatorImage.h"
 
 const char* ATTACH_DRAG_DROP_DATA = "XOJ_DRAG_DROP_DATA";
 
@@ -63,7 +63,7 @@ GtkWidget* ToolitemDragDrop::getIcon(ToolItemDragDropData* data)
 	}
 	else if (data->type == TOOL_ITEM_SEPARATOR)
 	{
-		return ToolbarUtil::newSepeartorImage();
+		return ToolbarSeparatorImage::newSepeartorImage();
 	}
 
 	g_warning("ToolitemDragDrop::getIcon unhandled type: %i\n", data->type);

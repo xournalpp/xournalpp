@@ -37,8 +37,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	XOJ_INIT_TYPE(MainWindow);
 
 	this->control = control;
-	this->toolbarIntialized = false;
-	this->selectedToolbar = NULL;
 	this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
 	this->toolbarSelectMenu = new MainWindowToolbarMenu(this);
 
@@ -48,8 +46,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 		g_object_ref(w);
 		this->toolbarWidgets[i] = w;
 	}
-
-	this->maximized = false;
 
 	initXournalWidget();
 	
@@ -770,6 +766,11 @@ void MainWindow::createToolbarAndMenu()
 		toolbarSelected(td);
 	}
 
+	if (!this->control->getAudioController()->isPlaying())
+	{
+		this->getToolMenuHandler()->disableAudioPlaybackButtons();
+	}
+
 	this->control->getScheduler()->unblockRerenderZoom();
 }
 
@@ -889,4 +890,27 @@ ToolMenuHandler* MainWindow::getToolMenuHandler()
 	XOJ_CHECK_TYPE(MainWindow);
 
 	return this->toolbar;
+}
+
+void MainWindow::disableAudioPlaybackButtons()
+{
+	XOJ_CHECK_TYPE(MainWindow);
+
+	setAudioPlaybackPaused(false);
+
+	this->getToolMenuHandler()->disableAudioPlaybackButtons();
+}
+
+void MainWindow::enableAudioPlaybackButtons()
+{
+	XOJ_CHECK_TYPE(MainWindow);
+
+	this->getToolMenuHandler()->enableAudioPlaybackButtons();
+}
+
+void MainWindow::setAudioPlaybackPaused(bool paused)
+{
+	XOJ_CHECK_TYPE(MainWindow);
+
+	this->getToolMenuHandler()->setAudioPlaybackPaused(paused);
 }

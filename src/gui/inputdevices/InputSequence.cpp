@@ -17,24 +17,7 @@
 
 
 InputSequence::InputSequence(NewGtkInputDevice* inputHandler)
- : inputRunning(false),
-   inputHandler(inputHandler),
-   current_view(NULL),
-   currentInputPage(NULL),
-   device(NULL),
-   penDevice(false),
-   axes(NULL),
-   button(0),
-   state((GdkModifierType)0),
-   x(-1),
-   y(-1),
-   rootX(0),
-   rootY(0),
-   lastMousePositionX(0),
-   lastMousePositionY(0),
-   inScrolling(false),
-   scrollOffsetX(0),
-   scrollOffsetY(0)
+ : inputHandler(inputHandler)
 {
 	XOJ_INIT_TYPE(InputSequence);
 

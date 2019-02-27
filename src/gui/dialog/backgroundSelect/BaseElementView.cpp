@@ -8,10 +8,7 @@
 
 BaseElementView::BaseElementView(int id, BackgroundSelectDialogBase* dlg)
  : dlg(dlg),
-   id(id),
-   selected(false),
-   widget(NULL),
-   crBuffer(NULL)
+   id(id)
 {
 	XOJ_INIT_TYPE(BaseElementView);
 

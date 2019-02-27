@@ -75,5 +75,5 @@ private:
 
 	vector<Element*> elements;
 
-	bool visible;
+	bool visible = true;
 };

@@ -49,9 +49,9 @@ private:
 
 
 	GMutex partLock;
-	PartList * parts;
+	PartList * parts = NULL;
 
-	Range* repaintRect;
+	Range* repaintRect = NULL;
 
-	Stroke* stroke;
+	Stroke* stroke = NULL;
 };

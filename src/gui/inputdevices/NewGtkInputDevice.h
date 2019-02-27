@@ -75,7 +75,7 @@ protected:
 	/**
 	 * Running input
 	 */
-	InputSequence* inputRunning;
+	InputSequence* inputRunning = NULL;
 
 	/**
 	 * Current ongoing pointer events

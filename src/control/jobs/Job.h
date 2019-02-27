@@ -80,8 +80,8 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int afterRunId;
+	int afterRunId = 0;
 
-	int refCount;
+	int refCount = 1;
 	GMutex refMutex;
 };

@@ -86,35 +86,34 @@ private:
 	static bool searchTimeoutFunc(SidebarIndexPage* sidebar);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-private:
-
 	/**
 	 * Expand links
 	 */
 	int expandOpenLinks(GtkTreeModel* model, GtkTreeIter* parent);
 
+private:
+	XOJ_TYPE_ATTRIB;
+
 	/**
 	 * The Tree with the Bookmarks
 	 */
-	GtkWidget* treeViewBookmarks;
+	GtkWidget* treeViewBookmarks = NULL;
 
 	/**
 	 * The scrollbars for the Tree
 	 */
-	GtkWidget* scrollBookmarks;
+	GtkWidget* scrollBookmarks = NULL;
 
 	/**
 	 * If currently searching, scroll to the page is disable, else search is not really working
 	 *
 	 * After a timeout we scroll to the selected page
 	 */
-	int searchTimeout;
+	int searchTimeout = 0;
 
 	/**
 	 * If there is something to display in the tree
 	 */
-	bool hasContents;
+	bool hasContents = false;
 
 };

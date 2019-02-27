@@ -4,7 +4,6 @@ EraseableStrokePart::EraseableStrokePart(Point a, Point b)
 {
 	XOJ_INIT_TYPE(EraseableStrokePart);
 
-	this->points = NULL;
 	addPoint(a);
 	addPoint(b);
 	this->width = a.z;

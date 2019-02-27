@@ -27,7 +27,6 @@ GzOutputStream::GzOutputStream(Path filename)
 {
 	XOJ_INIT_TYPE(GzOutputStream);
 
-	this->fp = NULL;
 	this->filename = filename;
 
 	this->fp = GzUtil::openPath(filename, "w");

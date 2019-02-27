@@ -85,17 +85,17 @@ public:
 	/**
 	 * @brief Private storage for x coordinate.
 	 */
-	double x;
+	double x = 0;
 
 	/**
 	 * @brief Private storage for y coordinate.
 	 */
-	double y;
+	double y = 0;
 
 	/**
 	 * @brief Private storage for pressure.
 	 */
-	double z;
+	double z = NO_PRESURE;
 
 	static constexpr double NO_PRESURE = -1;
 };

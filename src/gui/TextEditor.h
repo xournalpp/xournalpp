@@ -97,28 +97,28 @@ private:
 
 	GtkIMContext* imContext;
 	string preeditString;
-	bool needImReset;
+	bool needImReset = false;
 	GtkTextBuffer* buffer;
-	double virtualCursor;
+	double virtualCursor = 0;
 
 	std::vector<TextUndoAction*> undoActions;
 
-	double markPosX;
-	double markPosY;
-	bool markPosExtendSelection;
-	bool markPosQueue;
+	double markPosX = 0;
+	double markPosY = 0;
+	bool markPosExtendSelection = false;
+	bool markPosQueue = false;
 
-	bool cursorOverwrite;
+	bool cursorOverwrite = false;
 
-	bool mouseDown;
+	bool mouseDown = false;
 
 	string lastText;
 
-	PangoLayout* layout;
+	PangoLayout* layout = NULL;
 
 	int cursorBlinkTime;
 	int cursorBlinkTimeout;
-	bool cursorVisible;
+	bool cursorVisible = false;
 
-	int blinkTimeout; // handler id
+	int blinkTimeout = 0; // handler id
 };

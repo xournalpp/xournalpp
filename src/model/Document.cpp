@@ -11,15 +11,9 @@
 #include <Util.h>
 
 Document::Document(DocumentHandler* handler)
+ : handler(handler)
 {
 	XOJ_INIT_TYPE(Document);
-
-	this->handler = handler;
-	this->contentsModel = NULL;
-	this->preview = NULL;
-	this->attachPdf = false;
-	this->createBackupOnSave = false;
-
 	g_mutex_init(&this->documentLock);
 }
 

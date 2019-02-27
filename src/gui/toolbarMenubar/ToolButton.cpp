@@ -3,7 +3,8 @@
 #include "gui/widgets/gtkmenutooltogglebutton.h"
 
 ToolButton::ToolButton(ActionHandler* handler, string id, ActionType type, string iconName, string description,
-					   GtkWidget* menuitem) : AbstractToolItem(id, handler, type, menuitem)
+					   GtkWidget* menuitem)
+ : AbstractToolItem(id, handler, type, menuitem)
 {
 	XOJ_INIT_TYPE(ToolButton);
 
@@ -13,7 +14,8 @@ ToolButton::ToolButton(ActionHandler* handler, string id, ActionType type, strin
 
 ToolButton::ToolButton(ActionHandler* handler, string id, ActionType type, ActionGroup group,
 					   bool toolToggleOnlyEnable, string iconName, string description,
-					   GtkWidget* menuitem) : AbstractToolItem(id, handler, type, menuitem)
+					   GtkWidget* menuitem)
+ : AbstractToolItem(id, handler, type, menuitem)
 {
 	XOJ_INIT_TYPE(ToolButton);
 
@@ -130,4 +132,14 @@ GtkWidget* ToolButton::getNewToolIcon()
 	XOJ_CHECK_TYPE(ToolButton);
 
 	return gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
+}
+
+void ToolButton::setActive(bool active)
+{
+	XOJ_CHECK_TYPE(ToolButton);
+
+	if (GTK_IS_TOGGLE_TOOL_BUTTON(item))
+	{
+		gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(item), active);
+	}
 }

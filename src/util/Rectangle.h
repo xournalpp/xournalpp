@@ -61,8 +61,8 @@ public:
 public:
 	XOJ_TYPE_ATTRIB;
 
-	double x;
-	double y;
-	double width;
-	double height;
+	double x = 0;
+	double y = 0;
+	double width = 0;
+	double height = 0;
 };

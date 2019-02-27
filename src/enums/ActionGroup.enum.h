@@ -50,7 +50,7 @@ enum ActionGroup
 
 	GROUP_LINE_STYLE,
 
-	GROUP_REC,
+	GROUP_AUDIO,
 
 	GROUP_SNAPPING,
 
@@ -65,8 +65,6 @@ enum ActionGroup
 	GROUP_LAYOUT_LR,
 	
 	GROUP_LAYOUT_TB,
-	
-
 };
 
 ActionGroup ActionGroup_fromString(string value);

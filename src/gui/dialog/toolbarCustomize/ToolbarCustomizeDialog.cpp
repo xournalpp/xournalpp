@@ -7,9 +7,10 @@
 
 #include "gui/MainWindow.h"
 #include "gui/toolbarMenubar/AbstractToolItem.h"
+#include "gui/toolbarMenubar/icon/ToolbarSeparatorImage.h"
 #include "gui/toolbarMenubar/model/ToolbarData.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
-#include "gui/toolbarMenubar/ToolbarUtil.h"
+#include "gui/toolbarMenubar/icon/ColorSelectImage.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
 
 #include <config.h>
@@ -26,8 +27,7 @@ struct _ToolItemDragData
 	GtkWidget* ebox;
 };
 
-ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath, MainWindow* win,
-											   ToolbarDragDropHandler* handler)
+ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath, MainWindow* win, ToolbarDragDropHandler* handler)
  : GladeGui(gladeSearchPath, "toolbarCustomizeDialog.glade", "DialogCustomizeToolbar")
 {
 	XOJ_INIT_TYPE(ToolbarCustomizeDialog);
@@ -102,7 +102,7 @@ void ToolbarCustomizeDialog::toolitemDragBeginSeparator(GtkWidget* widget, GdkDr
 {
 	ToolItemDragCurrentData::setData(TOOL_ITEM_SEPARATOR, -1, NULL);
 
-	GtkWidget* icon = ToolbarUtil::newSepeartorImage();
+	GtkWidget* icon = ToolbarSeparatorImage::newSepeartorImage();
 	gtk_drag_set_icon_pixbuf(context, ToolbarDragDropHelper::getImagePixbuf(GTK_IMAGE(icon)), -2, -2);
 	g_object_unref(icon);
 }
@@ -175,7 +175,7 @@ void ToolbarCustomizeDialog::toolitemColorDragBegin(GtkWidget* widget, GdkDragCo
 	int color = GPOINTER_TO_INT(data);
 	ToolItemDragCurrentData::setDataColor(-1, color);
 
-	GdkPixbuf* image = ToolbarUtil::newColorIconPixbuf(color, 32, true);
+	GdkPixbuf* image = ColorSelectImage::newColorIconPixbuf(color, 32, true);
 
 	gtk_drag_set_icon_pixbuf(context, image, -2, -2);
 
@@ -372,7 +372,7 @@ void ToolbarCustomizeDialog::rebuildColorIcons()
 			continue;
 		}
 
-		GtkWidget* icon = ToolbarUtil::newColorIcon(color->getColor(), 16, true);
+		GtkWidget* icon = ColorSelectImage::newColorIcon(color->getColor(), 16, true);
 
 		GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
 		gtk_widget_show(box);

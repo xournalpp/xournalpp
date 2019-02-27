@@ -17,6 +17,8 @@ using std::string;
 #include <vector>
 using std::vector;
 
+#include <ostream>
+
 class PlaceholderElement;
 
 /**

@@ -6,12 +6,7 @@
 
 
 TouchHelper::TouchHelper(Settings* settings)
- : enabled(false),
-   touchState(true),
-   disableTimeout(500),
-   x11Session(false),
-   touchImpl(NULL),
-   settings(settings)
+ : settings(settings)
 {
 	XOJ_INIT_TYPE(TouchHelper);
 

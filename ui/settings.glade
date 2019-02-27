@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkAdjustment" id="adjustmentAudioGain">
@@ -46,6 +46,20 @@
     <property name="value">72</property>
     <property name="step_increment">1</property>
   </object>
+  <object class="GtkAdjustment" id="adjustmentZoomStep">
+    <property name="lower">0.10000000000000001</property>
+    <property name="upper">50</property>
+    <property name="value">10</property>
+    <property name="step_increment">0.5</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentZoomStepScroll">
+    <property name="lower">0.10000000000000001</property>
+    <property name="upper">50</property>
+    <property name="value">2</property>
+    <property name="step_increment">0.5</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="GtkDialog" id="settingsDialog">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
@@ -54,6 +68,9 @@
     <property name="icon">pixmaps/xournalpp.svg</property>
     <property name="type_hint">normal</property>
     <signal name="close" handler="gtk_widget_hide" swapped="no"/>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox3">
         <property name="visible">True</property>
@@ -1394,7 +1411,6 @@ they are not blocking!&lt;/i&gt;</property>
                         </child>
                         <child>
                           <object class="GtkBox" id="box8">
-                            <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
                               <object class="GtkLabel" id="label16">
@@ -1513,12 +1529,50 @@ they are not blocking!&lt;/i&gt;</property>
                     <property name="position">7</property>
                   </packing>
                 </child>
+              </object>
+              <packing>
+                <property name="position">4</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="label6">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">View</property>
+              </object>
+              <packing>
+                <property name="position">4</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel" id="label48">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_top">5</property>
-                    <property name="label" translatable="yes">Zoom</property>
+                    <property name="label" translatable="yes">&lt;b&gt;Zoom&lt;/b&gt;
+Configure Zoom Settings</property>
+                    <property name="use_markup">True</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="padding">10</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_top">10</property>
+                    <property name="label" translatable="yes">Zoom Speed</property>
                     <property name="xalign">0</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
@@ -1527,8 +1581,91 @@ they are not blocking!&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="padding">10</property>
-                    <property name="position">8</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkGrid">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_left">10</property>
+                    <child>
+                      <object class="GtkLabel" id="settingZoomCtrlScrollSpeedLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Speed in percent for Ctrl + Scroll </property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="spZoomStepScroll">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="margin_left">10</property>
+                        <property name="text" translatable="yes">2.0</property>
+                        <property name="adjustment">adjustmentZoomStepScroll</property>
+                        <property name="digits">1</property>
+                        <property name="numeric">True</property>
+                        <property name="value">2</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="settingZoomStepSpeedLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Speed in percent for a Zoomstep</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="spZoomStep">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="margin_left">10</property>
+                        <property name="text" translatable="yes">10.0</property>
+                        <property name="adjustment">adjustmentZoomStep</property>
+                        <property name="digits">1</property>
+                        <property name="numeric">True</property>
+                        <property name="value">10</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_top">10</property>
+                    <property name="label" translatable="yes">&lt;b&gt;Display DPI Calibration&lt;/b&gt;
+To make sure on 100% Zoom the size is correct</property>
+                    <property name="use_markup">True</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
@@ -1537,9 +1674,13 @@ they are not blocking!&lt;/i&gt;</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
+                      <placeholder/>
+                    </child>
+                    <child>
                       <object class="GtkLabel" id="label21">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="margin_top">5</property>
                         <property name="label" translatable="yes">&lt;i&gt;Put a ruler on your screen to calibrate the zoom level to fit your screen. Takes effect after restarting xournalpp.
 The units are cm for the ruler, dpi for the slider.&lt;/i&gt;</property>
                         <property name="use_markup">True</property>
@@ -1547,7 +1688,7 @@ The units are cm for the ruler, dpi for the slider.&lt;/i&gt;</property>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">0</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                     <child>
@@ -1563,7 +1704,7 @@ The units are cm for the ruler, dpi for the slider.&lt;/i&gt;</property>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">1</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                     <child>
@@ -1578,7 +1719,7 @@ The units are cm for the ruler, dpi for the slider.&lt;/i&gt;</property>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">2</property>
+                        <property name="position">3</property>
                       </packing>
                     </child>
                     <child>
@@ -1590,29 +1731,29 @@ The units are cm for the ruler, dpi for the slider.&lt;/i&gt;</property>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">3</property>
+                        <property name="position">4</property>
                       </packing>
                     </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">9</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
               </object>
               <packing>
-                <property name="position">4</property>
+                <property name="position">5</property>
               </packing>
             </child>
             <child type="tab">
-              <object class="GtkLabel" id="label6">
+              <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">View</property>
+                <property name="label" translatable="yes">Zoom</property>
               </object>
               <packing>
-                <property name="position">4</property>
+                <property name="position">5</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
@@ -1904,7 +2045,7 @@ like to work on&lt;/i&gt;</property>
                 </child>
               </object>
               <packing>
-                <property name="position">5</property>
+                <property name="position">6</property>
               </packing>
             </child>
             <child type="tab">
@@ -1914,7 +2055,7 @@ like to work on&lt;/i&gt;</property>
                 <property name="label" translatable="yes">Layout</property>
               </object>
               <packing>
-                <property name="position">5</property>
+                <property name="position">6</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
@@ -2077,7 +2218,7 @@ like to work on&lt;/i&gt;</property>
                 </child>
               </object>
               <packing>
-                <property name="position">6</property>
+                <property name="position">7</property>
               </packing>
             </child>
             <child type="tab">
@@ -2087,7 +2228,7 @@ like to work on&lt;/i&gt;</property>
                 <property name="label" translatable="yes">Defaults</property>
               </object>
               <packing>
-                <property name="position">6</property>
+                <property name="position">7</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
@@ -2296,7 +2437,7 @@ The Audio track is recorded to a separate folder, and linked to there.&lt;/i&gt;
                 </child>
               </object>
               <packing>
-                <property name="position">7</property>
+                <property name="position">8</property>
               </packing>
             </child>
             <child type="tab">
@@ -2306,7 +2447,7 @@ The Audio track is recorded to a separate folder, and linked to there.&lt;/i&gt;
                 <property name="label" translatable="yes">Audio Recording</property>
               </object>
               <packing>
-                <property name="position">7</property>
+                <property name="position">8</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>

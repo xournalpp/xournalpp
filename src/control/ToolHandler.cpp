@@ -18,7 +18,6 @@ ToolHandler::ToolHandler(ToolListener* listener, ActionHandler* actionHandler, S
 	initTools();
 	this->listener = listener;
 	this->actionHandler = actionHandler;
-	this->eraserType = ERASER_TYPE_DEFAULT;
 }
 
 void ToolHandler::initTools()

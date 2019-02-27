@@ -32,7 +32,7 @@ public:
 	std::list<DeviceInfo> getOutputDevices();
 	const DeviceInfo getSelectedOutputDevice();
 	bool isPlaying();
-	void startPlaying(double sampleRate, unsigned int channels);
+	bool startPlaying();
 	int playCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer, const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags);
 	void stopPlaying();
 

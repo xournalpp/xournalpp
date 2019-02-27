@@ -47,6 +47,6 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GString* str;
-	gsize pos;
+	GString* str = NULL;
+	gsize pos = 0;
 };

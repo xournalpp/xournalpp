@@ -44,7 +44,7 @@ class LatexDialog : public GladeGui
 	
 	// Temporary render
 	GtkWidget* texTempRender;
-	cairo_surface_t* scaledRender;
+	cairo_surface_t* scaledRender = NULL;
 	GtkCssProvider* cssProvider;
 	
 	// Text field

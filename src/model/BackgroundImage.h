@@ -49,5 +49,5 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	BackgroundImageContents* img;
+	BackgroundImageContents* img = NULL;
 };

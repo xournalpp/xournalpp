@@ -3,7 +3,6 @@
 #include <Stacktrace.h>
 
 Layer::Layer()
- : visible(true)
 {
 	XOJ_INIT_TYPE(Layer);
 }

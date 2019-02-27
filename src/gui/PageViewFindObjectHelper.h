@@ -162,9 +162,7 @@ protected:
 
 			if (!fn.empty())
 			{
-				AudioPlayer* audioPlayer = view->getXournal()->getControl()->getAudioController()->getAudioPlayer();
-				audioPlayer->abort();
-				audioPlayer->start(Path::fromUri(view->settings->getAudioFolder()).str() + "/" + fn, (unsigned int) ts);
+				view->getXournal()->getControl()->getAudioController()->startPlayback(Path::fromUri(view->settings->getAudioFolder()).str() + "/" + fn, (unsigned int) ts);
 			}
 		}
 	}

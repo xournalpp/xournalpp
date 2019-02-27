@@ -8,17 +8,14 @@
 #include <i18n.h>
 
 SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, PageRef page)
+ : sidebar(sidebar),
+   page(page)
 {
 	XOJ_INIT_TYPE(SidebarPreviewBaseEntry);
 
 	this->widget = gtk_drawing_area_new();
 	gtk_widget_show(this->widget);
 	g_object_ref(this->widget);
-
-	this->crBuffer = NULL;
-	this->sidebar = sidebar;
-	this->page = page;
-	this->selected = false;
 
 	g_mutex_init(&this->drawingMutex);
 

@@ -8,10 +8,9 @@
 #include <XojMsgBox.h>
 
 AutosaveJob::AutosaveJob(Control* control)
+ : control(control)
 {
 	XOJ_INIT_TYPE(AutosaveJob);
-
-	this->control = control;
 }
 
 AutosaveJob::~AutosaveJob()

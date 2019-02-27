@@ -50,9 +50,9 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 
-	cairo_surface_t* image;
+	cairo_surface_t* image = NULL;
 
 	string data;
 
-	string::size_type read;
+	string::size_type read = false;
 };

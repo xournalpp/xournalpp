@@ -11,9 +11,7 @@ ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* 
  : AbstractToolItem(id, handler, type, NULL),
    lc(lc),
    gui(gui),
-   menu(gtk_menu_new()),
-   menuY(0),
-   inMenuUpdate(false)
+   menu(gtk_menu_new())
 {
 	XOJ_INIT_TYPE(ToolPageLayer);
 

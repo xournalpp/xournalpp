@@ -42,13 +42,13 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	// page position in layout, in px to the layout contents BORDER, not ABSOLUTE
-	int x;
-	int y;
+	int x = 0;
+	int y = 0;
 
 	// the margin of the layout to the top
-	int marginLeft;
-	int marginTop;
+	int marginLeft = 0;
+	int marginTop = 0;
 
 	// 0: left page, 1: right page, will may be extended later
-	int pageIndex;
+	int pageIndex = 0;
 };

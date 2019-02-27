@@ -10,7 +10,7 @@ AudioController::AudioController(Settings* settings, Control* control)
 	this->settings = settings;
 	this->control = control;
 	this->audioRecorder = new AudioRecorder(settings);
-	this->audioPlayer = new AudioPlayer(settings);
+	this->audioPlayer = new AudioPlayer(control, settings);
 }
 
 AudioController::~AudioController()
@@ -26,11 +26,11 @@ AudioController::~AudioController()
 	XOJ_RELEASE_TYPE(AudioController);
 }
 
-bool AudioController::recStart()
+bool AudioController::startRecording()
 {
 	XOJ_CHECK_TYPE(AudioController);
 
-	if (!this->getAudioRecorder()->isRecording())
+	if (!this->isRecording())
 	{
 		if (getAudioFolder().isEmpty())
 		{
@@ -52,7 +52,7 @@ bool AudioController::recStart()
 
 		g_message("Start recording");
 
-		bool isRecording = this->getAudioRecorder()->start(getAudioFolder().str() + "/" + data);
+		bool isRecording = this->audioRecorder->start(getAudioFolder().str() + "/" + data);
 
 		if (!isRecording)
 		{
@@ -65,8 +65,10 @@ bool AudioController::recStart()
 	return false;
 }
 
-bool AudioController::recStop()
+bool AudioController::stopRecording()
 {
+	XOJ_CHECK_TYPE(AudioController);
+
 	if (this->audioRecorder->isRecording())
 	{
 		audioFilename = "";
@@ -77,6 +79,59 @@ bool AudioController::recStop()
 		this->audioRecorder->stop();
 	}
 	return true;
+}
+
+bool AudioController::isRecording()
+{
+	XOJ_CHECK_TYPE(AudioController);
+
+	return this->audioRecorder->isRecording();
+}
+
+bool AudioController::isPlaying()
+{
+	XOJ_CHECK_TYPE(AudioController);
+
+	return this->audioPlayer->isPlaying();
+}
+
+bool AudioController::startPlayback(string filename, unsigned int timestamp)
+{
+	XOJ_CHECK_TYPE(AudioController);
+
+	this->audioPlayer->stop();
+	bool status = this->audioPlayer->start(std::move(filename), timestamp);
+	if (status)
+	{
+		this->control->getWindow()->getToolMenuHandler()->enableAudioPlaybackButtons();
+	}
+	return status;
+}
+
+void AudioController::pausePlayback()
+{
+	XOJ_CHECK_TYPE(AudioController);
+
+	this->control->getWindow()->getToolMenuHandler()->setAudioPlaybackPaused(true);
+
+	this->audioPlayer->pause();
+}
+
+void AudioController::continuePlayback()
+{
+	XOJ_CHECK_TYPE(AudioController);
+
+	this->control->getWindow()->getToolMenuHandler()->setAudioPlaybackPaused(false);
+
+	this->audioPlayer->play();
+}
+
+void AudioController::stopPlayback()
+{
+	XOJ_CHECK_TYPE(AudioController);
+
+	this->control->getWindow()->getToolMenuHandler()->disableAudioPlaybackButtons();
+	this->audioPlayer->stop();
 }
 
 string AudioController::getAudioFilename()
@@ -111,12 +166,16 @@ size_t AudioController::getStartTime()
 	return this->timestamp;
 }
 
-AudioRecorder* AudioController::getAudioRecorder()
+vector<DeviceInfo> AudioController::getOutputDevices()
 {
-	return this->audioRecorder;
+	XOJ_CHECK_TYPE(AudioController);
+
+	return this->audioPlayer->getOutputDevices();
 }
 
-AudioPlayer* AudioController::getAudioPlayer()
+vector<DeviceInfo> AudioController::getInputDevices()
 {
-	return this->audioPlayer;
+	XOJ_CHECK_TYPE(AudioController);
+
+	return this->audioRecorder->getInputDevices();
 }

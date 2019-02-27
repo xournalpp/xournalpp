@@ -13,7 +13,6 @@
 
 NewGtkInputDevice::NewGtkInputDevice(GtkWidget* widget, XournalView* view, ScrollHandling* scrollHandling)
  : AbstractInputDevice(widget, view),
-   inputRunning(NULL),
    scrollHandling(scrollHandling)
 {
 	XOJ_INIT_TYPE(NewGtkInputDevice);

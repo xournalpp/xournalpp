@@ -50,5 +50,5 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Control* control;
+	Control* control = NULL;
 };

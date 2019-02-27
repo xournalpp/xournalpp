@@ -33,20 +33,26 @@ public:
 	virtual string getToolDisplayName() = 0;
 	virtual GtkWidget* getNewToolIcon() = 0;
 
+	/**
+	 * Enable / Disable the tool item
+	 */
+	virtual void enable(bool enabled);
+
 protected:
 	virtual GtkToolItem* newItem() = 0;
-
-	virtual void enable(bool enabled);
 
 public:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-	GtkToolItem* item;
-	GtkWidget* popupMenu;
+	GtkToolItem* item = NULL;
+	GtkWidget* popupMenu = NULL;
 
-	bool toolToggleButtonActive;
-	bool toolToggleOnlyEnable;
+	bool toolToggleButtonActive = false;
+	bool toolToggleOnlyEnable = false;
 
-	bool used;
+	/**
+	 * This item is already somewhere in the toolbar
+	 */
+	bool used = false;
 };
