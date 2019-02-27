@@ -53,6 +53,7 @@ file (GLOB_RECURSE xournalpp_SOURCES_RECURSE
   control/*.cpp
   enums/*.cpp
   gui/*.cpp
+  io/*.cpp
   model/*.cpp
   plugin/*.cpp
   undo/*.cpp

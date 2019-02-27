@@ -32,8 +32,11 @@ LoadHandler::LoadHandler()
    pdfReplacementAttach(false),
    pdfFilenameParsed(false),
    pos(PARSER_POS_NOT_STARTED),
-   fileversion(0),
-   fp(NULL),
+   fileVersion(0),
+   minimalFileVersion(0),
+   zipFp(NULL),
+   zipContentFile(NULL),
+   gzFp(NULL),
    layer(NULL),
    stroke(NULL),
    text(NULL),
@@ -61,7 +64,10 @@ void LoadHandler::initAttributes()
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	this->fp = NULL;
+	this->zipFp = NULL;
+	this->zipContentFile = NULL;
+	this->gzFp = NULL;
+	this->isGzFile = false;
 	this->error = NULL;
 	this->attributeNames = NULL;
 	this->attributeValues = NULL;
@@ -118,8 +124,65 @@ bool LoadHandler::openFile(string filename)
 	XOJ_CHECK_TYPE(LoadHandler);
 
 	this->filename = filename;
-	this->fp = GzUtil::openPath(filename, "r");
-	if (!this->fp)
+	int zipError = 0;
+	this->zipFp = zip_open(filename.c_str(), ZIP_RDONLY, &zipError);
+
+	//Check if the file is actually an old XOPP-File and open it
+	if (!this->zipFp && zipError == ZIP_ER_NOZIP)
+	{
+		this->gzFp = GzUtil::openPath(filename, "r");
+		this->isGzFile = true;
+	}
+
+	if (this->zipFp && !this->isGzFile)
+	{
+		// Check the mimetype
+		zip_file_t* mimetypeFp = zip_fopen(this->zipFp, "mimetype", 0);
+		if (!mimetypeFp)
+		{
+			this->lastError = zip_error_strerror(zip_get_error(zipFp));
+			this->lastError = FS(_F("The file is no valid .xopp file (Mimetype missing): \"{1}\"") % filename);
+			return false;
+		}
+		char mimetype[25];
+		//read the mimetype and a few more bytes to make sure we do not only read a subset
+		zip_fread(mimetypeFp, mimetype, 25);
+		if (!strcmp(mimetype, "application/xournal++"))
+		{
+			this->lastError = FS(_F("The file is no valid .xopp file (Mimetype wrong): \"{1}\"") % filename);
+			return false;
+		}
+		zip_fclose(mimetypeFp);
+
+		//Get the file version
+		zip_file_t* versionFp = zip_fopen(this->zipFp, "META-INF/version", 0);
+		if (!versionFp)
+		{
+			this->lastError = FS(_F("The file is no valid .xopp file (Version missing): \"{1}\"") % filename);
+			return false;
+		}
+		char versionString[50];
+		zip_fread(versionFp, versionString, 50);
+		std::string versions(versionString);
+		std::regex versionRegex("current=(\\d+?)(?:\n|\r\n)min=(\\d+?)");
+		std::smatch match;
+		if (std::regex_search(versions, match, versionRegex))
+		{
+			this->fileVersion = std::stoi(match.str(1));
+			this->minimalFileVersion = std::stoi(match.str(2));
+		} else
+		{
+			this->lastError = FS(_F("The file is not a valid .xopp file (Version string corrupted): \"{1}\"") % filename);
+			return false;
+		}
+		zip_fclose(versionFp);
+
+		//open the main content file
+		this->zipContentFile = zip_fopen(this->zipFp, "content.xml", 0);
+	}
+
+	//Fail if neither utility could open the file
+	if (!this->zipFp && !this->gzFp)
 	{
 		this->lastError = FS(_F("Could not open file: \"{1}\"") % filename);
 		return false;
@@ -131,18 +194,39 @@ bool LoadHandler::closeFile()
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	return gzclose(this->fp);
+	if (this->isGzFile)
+	{
+		return static_cast<bool>(gzclose(this->gzFp));
+	} else
+	{
+		zip_fclose(this->zipContentFile);
+		int zipError = zip_close(this->zipFp);
+		return zipError == 0;
+	}
 }
 
-int LoadHandler::readFile(char* buffer, int len)
+zip_int64_t LoadHandler::readContentFile(char* buffer, zip_uint64_t len)
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	if (gzeof(this->fp))
+	if (this->isGzFile)
 	{
-		return -1;
+		if (gzeof(this->gzFp))
+		{
+			return -1;
+		}
+		return gzread(this->gzFp, buffer, (unsigned int) len);
+	} else
+	{
+		zip_int64_t lengthRead = zip_fread(this->zipContentFile, buffer, len);
+		if (lengthRead > 0)
+		{
+			return lengthRead;
+		} else
+		{
+			return -1;
+		}
 	}
-	return gzread(this->fp, buffer, len);
 }
 
 bool LoadHandler::parseXml()
@@ -155,15 +239,15 @@ bool LoadHandler::parseXml()
 
 	this->pos = PARSER_POS_NOT_STARTED;
 	this->creator = "Unknown";
-	this->fileversion = 1;
+	this->fileVersion = 1;
 
 	GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags) 0, this, NULL);
 
-	int len = 0;
+	zip_int64_t len = 0;
 	do
 	{
 		char buffer[1024];
-		len = readFile(buffer, sizeof(buffer));
+		len = readContentFile(buffer, sizeof(buffer));
 		if (len > 0)
 		{
 			valid = g_markup_parse_context_parse(context, buffer, len, &error);
@@ -204,7 +288,7 @@ bool LoadHandler::parseXml()
 		return false;
 	}
 
-	doc.setCreateBackupOnSave(this->fileversion >= 3);
+	doc.setCreateBackupOnSave(this->fileVersion >= 3);
 
 	return valid;
 }
@@ -225,10 +309,10 @@ void LoadHandler::parseStart()
 			this->creator += version;
 		}
 
-		const char* fileversion = LoadHandlerHelper::getAttrib("fileversion", true, this);
+		const char* fileversion = LoadHandlerHelper::getAttrib("fileVersion", true, this);
 		if (fileversion)
 		{
-			this->fileversion = atoi(fileversion);
+			this->fileVersion = atoi(fileversion);
 		}
 		const char* creator = LoadHandlerHelper::getAttrib("creator", true, this);
 		if (creator)
@@ -252,7 +336,7 @@ void LoadHandler::parseStart()
 
 		// Document version 1:
 		// Handle it the same as a Xournal document, and don't allow to overwrite
-		this->fileversion = 1;
+		this->fileVersion = 1;
 		this->pos = PARSER_POS_STARTED;
 	}
 	else
@@ -555,7 +639,7 @@ void LoadHandler::parseStroke()
 	}
 
 
-	if (this->fileversion < 4)
+	if (this->fileVersion < 4)
 	{
 		int ts = 0;
 		if (LoadHandlerHelper::getAttribInt("ts", true, this, ts))
@@ -966,7 +1050,7 @@ Document* LoadHandler::loadDocument(string filename)
 		return NULL;
 	}
 
-	if (fileversion == 1)
+	if (fileVersion == 1)
 	{
 		// This is a Xournal document, not a Xournal++
 		// Even if the new fileextension is .xopp, allow to

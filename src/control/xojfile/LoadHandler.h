@@ -19,7 +19,10 @@
 
 #include <XournalType.h>
 
+#include <regex>
+
 #include <zlib.h>
+#include <zip.h>
 
 enum ParserPosition
 {
@@ -66,7 +69,7 @@ private:
 	void initAttributes();
 
 	string readLine();
-	int readFile(char* buffer, int len);
+	zip_int64_t readContentFile(char* buffer, zip_uint64_t len);
 	bool closeFile();
 	bool openFile(string filename);
 	bool parseXml();
@@ -111,9 +114,13 @@ private:
 	ParserPosition pos;
 
 	string creator;
-	int fileversion;
+	int fileVersion;
+	int minimalFileVersion;
 
-	gzFile fp;
+	zip_t* zipFp;
+	zip_file_t* zipContentFile;
+	gzFile gzFp;
+	bool isGzFile = false;
 
 	vector<double> pressureBuffer;
 
