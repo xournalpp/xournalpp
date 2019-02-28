@@ -150,7 +150,7 @@ Section "InputClass"
 	Option "TPCButton" "on"
 EndSection
 ```
-If you are using `libinput` as driver, take a look at [#940](https://github.com/xournalpp/xournalpp/issues/944) and the ticket over at libinput which adresses this issue (https://gitlab.freedesktop.org/libinput/libinput/issues/193)
+If you are using `libinput` as driver, take a look at [#940](https://github.com/xournalpp/xournalpp/issues/940) and the ticket over at libinput which adresses this issue (https://gitlab.freedesktop.org/libinput/libinput/issues/193)
 
 ## Code documentation
 
