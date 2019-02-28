@@ -29,6 +29,7 @@ Xournal++ features:
 * Rect snapping to grid 
 * Audio recording and playback alongside with handwritten notes
 * Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...
+* Plugins using LUA Scripting
 
 ![Screenshot](readme/main.png?raw=true "Xournal++ Screenshot")
 
@@ -53,6 +54,8 @@ Multiple predefined and fully customizeable Toolbar.
 ### Instructions for releases > 1.0.7
 - Go to `Edit > Preferences > Audio Recording` and set the `Audio Folder` as well as the appropriate `Input Device` and `Output Device`.
 
+If you need to edit the recording audio gain, take a look at the preferences tab mentioned above.
+
 **Please test this new feature in advance before relying on it to work. It could contain bugs specific to some hard-/software, which we have not yet found.**
 
 ### Instructions for releases <= 1.0.7
@@ -62,11 +65,13 @@ Multiple predefined and fully customizeable Toolbar.
 - - tick `Allow only one instance` under `Interface -> Instance`
 - set the folder where do you want to store audio recordings under settings -> `audio recording`
 
-### How to record
-Just press the red button to start/stop recording and draw strokes using the `Pen` tool. The recording is associated with the drawn strokes.
-Use the `Play Object` tool to click on a stroke and listen to the corresponding audio.
+If you need to, you can edit the recording audio gain in the script under `/usr/local/bin/xopp-recording.sh`
 
-If you need to, you can edit the recording audio gain in the script under `/usr/local/bin/xopp-recording.sh` (an option for this will be availabe through xournalpp's settings in the future)
+### How to record
+Just press the red button to start/stop recording and draw strokes using the `Pen` tool. The recording is associated with the drawn strokes and typed text while it is running.
+
+### Play the recorded audio
+Use the `Play Object` tool to click on a stroke or text node and listen to the corresponding audio. You can pause and stop the playback of the audio with the buttons next to the recording button in the toolbar.
 
 ## Installing
 ### Ubuntu and derivates
@@ -92,14 +97,12 @@ The AUR Package [xournalpp](https://aur.archlinux.org/packages/xournalpp-git/) p
 ### Windows
 **The windows Version has a Bug:**
 Please start Xournal++, touch with the Pen, Quit Xournal++ and start again.
-Then Pen input will be working, until you restart Windows. #659
+Then Pen input will be working, until you restart Windows. [#659](https://github.com/xournalpp/xournalpp/issues/659)
 
 https://github.com/xournalpp/xournalpp/releases
 
 ### Mac OS X
-Pressure sensitivity is not working on Mac #569. (GTK-Issue)
-
-HighDpi Displays are not displayed sharp #172.
+Pressure sensitivity is not working on Mac [#569](https://github.com/xournalpp/xournalpp/issues/569). (GTK-Issue)
 
 https://github.com/xournalpp/xournalpp/releases
 
@@ -112,20 +115,13 @@ https://github.com/xournalpp/xournalpp/releases
 [Windows Build](readme/WindowsBuild.md)
 
 ## Fileformat
-The fileformat *.xopp is an XML which is .gz compressed. PDFs are not embedded
-into the file, so if the PDF is deleted, the background is lost.
-*.xopp is basically the same fileformat as *.xoj, which is used by Xournal.
-Therefor Xournal++ reads *.xoj files, and can also export *.xoj.
-On exporting to *.xoj all Xournal++ specific Extension are lost, like addtional
-Background types.
-*.xopp can theoretically be read by Xournal, as long as you do not use any new
-feature, Xournal does not open files at all if there are new attributes or
-unknown values, because of this Xournal++ will add the extension .xopp to all
-saved files.
-All new files will be saved as *.xopp, if an *.xoj file is opened which was
-created by Xournal, the Save-As dialog will be displayed on save. If the *.xoj
-file was by Xournal++ created, Xournal++ overwrite the file on save, and does
-not change the extension.
+The fileformat *.xopp is an XML which is .gz compressed. PDFs are not embedded into the file, so if the PDF is deleted, the background is lost. *.xopp is basically the same fileformat as *.xoj, which is used by Xournal. Therefor Xournal++ reads *.xoj files, and can also export *.xoj. On exporting to *.xoj all Xournal++ specific Extension are lost, like addtional Background types.
+
+*.xopp can theoretically be read by Xournal, as long as you do not use any new feature, Xournal does not open files at all if there are new attributes or unknown values, because of this Xournal++ will add the extension .xopp to all saved files.
+
+All new files will be saved as *.xopp, if an *.xoj file is opened which was created by Xournal, the Save-As dialog will be displayed on save. If the *.xoj file was by Xournal++ created, Xournal++ overwrite the file on save, and does not change the extension.
+
+**We are currently introducing a new file format that can efficiently store attached PDF files and other attachments internally. We will still allow for attachments that are linked to external files. Please refer to [#937](https://github.com/xournalpp/xournalpp/issues/937) for futher details.**
 
 ## Development
 For developping new features, write a Ticket, so others know what you are doing.
@@ -134,7 +130,9 @@ Do not create big pull requests, as long as you don't break anything features al
 merged, even if they are not 100% finished.
 
 See [GitHub:xournalpp](http://github.com/xournalpp/xournalpp) for current development. You can also join
-our Gitter channel via badge on top.
+our Gitter channel via the badge on top.
+
+Also take a look at our [Coding Conventions](https://github.com/xournalpp/xournalpp/wiki/Coding-conventions) 
 
 ## FAQ
 ### Q: Secondary stylus button only works when there is no contact
@@ -152,6 +150,7 @@ Section "InputClass"
 	Option "TPCButton" "on"
 EndSection
 ```
+If you are using `libinput` as driver, take a look at [#940](https://github.com/xournalpp/xournalpp/issues/944) and the ticket over at libinput which adresses this issue (https://gitlab.freedesktop.org/libinput/libinput/issues/193)
 
 ## Code documentation
 
