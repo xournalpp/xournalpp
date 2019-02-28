@@ -91,6 +91,7 @@ public:
 	
 	/**
 	 * Return the pageview containing co-ordinates.
+	 * 
 	 */	
 	XojPageView* getViewAt(int x, int y);
 

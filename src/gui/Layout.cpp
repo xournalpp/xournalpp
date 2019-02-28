@@ -7,7 +7,15 @@
 #include "widgets/XournalWidget.h"
 #include "gui/scroll/ScrollHandling.h"
 
+#define COMPARE_LAYOUT_BINARY_VS_LINEAR_SEARCH
 
+#ifdef COMPARE_LAYOUT_BINARY_VS_LINEAR_SEARCH
+
+	#include <iostream>
+	#include <chrono>
+	typedef std::chrono::high_resolution_clock Clock;
+
+#endif
 
 /**
  * Padding outside the pages, including shadow
@@ -346,21 +354,28 @@ void Layout::layoutPages()
 
 	}
 
-	int totalWidth = borderX * 2  + XOURNAL_PADDING_BETWEEN * (this->columns-1);
+
+	int totalWidth = borderX;
 	for (int c = 0; c < this->columns; c++)
 	{
-		totalWidth += this->sizeCol[c];	// this includes paddingLeft and paddingRight
+		totalWidth += this->sizeCol[c] + XOURNAL_PADDING_BETWEEN;
+		this->sizeCol[c] = totalWidth;	//accumulated for use by getViewAt()
 	}
+	totalWidth += borderX - XOURNAL_PADDING_BETWEEN;
 
-	int totalHeight = borderY * 2 + XOURNAL_PADDING_BETWEEN * (this->rows-1);
+	
+	int totalHeight = borderY;
 	for (int r = 0; r < this->rows; r++)
 	{
-		totalHeight += this->sizeRow[r];
+		totalHeight += this->sizeRow[r]+ XOURNAL_PADDING_BETWEEN;
+		this->sizeRow[r] = totalHeight; 
 	}
+	totalHeight += borderY - XOURNAL_PADDING_BETWEEN;
 
 
 	this->setLayoutSize(totalWidth, totalHeight);
 	this->view->pagePosition->update(this->view->viewPages, len, totalHeight);
+	
 }
 
 
@@ -429,78 +444,78 @@ XojPageView* Layout::getViewAt(int x, int y)
 	}
 	
 	int r;
-	int rTotalPixels = 0;
 	int c;
-	int cTotalPixels = 0;
-	int numRows = mapper.getRows();
-	int numCols = mapper.getColumns();
+	int numRows = this->mapper.getRows();
+	int numCols = this->mapper.getColumns();
 	
+						#ifdef COMPARE_LAYOUT_BINARY_VS_LINEAR_SEARCH
+							auto t1 = Clock::now();
+						#endif
+		
+			  
+			  
+	auto rit = std::lower_bound( this->sizeRow.begin(),  this->sizeRow.end(), y);	//binary search
+	r = rit -  this->sizeRow.begin();	//get index
+	
+	
+	auto cit = std::lower_bound( this->sizeCol.begin(),  this->sizeCol.end(), x);
+	c = cit -  this->sizeCol.begin();
+
+						#ifdef COMPARE_LAYOUT_BINARY_VS_LINEAR_SEARCH
+							auto t2 = Clock::now();
+						#endif 
+
+	/* test against linear search: */
 	for( r = 0; r < numRows; r++)
 	{
-		rTotalPixels += sizeRow[r] + XOURNAL_PADDING_BETWEEN;
-		if ( y < rTotalPixels) break;	// found region
+		if ( y <=   this->sizeRow[r] ) break;	// found region
 	}
 
-	
+
 	for( c = 0; c < numCols; c++)
 	{
-		cTotalPixels += sizeCol[c] +XOURNAL_PADDING_BETWEEN;
-		if ( x < cTotalPixels) break;
+		if ( x <=  this->sizeCol[c]) break;
 	}
+	//*/
+
 	
-				
+						#ifdef COMPARE_LAYOUT_BINARY_VS_LINEAR_SEARCH
+							auto t3 = Clock::now();
+							
+							double binarySearchtime = std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
+							double linearSearchTime = std::chrono::duration_cast<std::chrono::nanoseconds>(t3 - t2).count();
+							double diff = linearSearchTime - binarySearchtime ;
+							if ( diff < 0)
+							{
+									
+								std::cout << "binarySearch SLOWER by: " 
+									<< -diff
+									<< " nanoseconds" << std::endl;
+							}
+							else
+							{
+								std::cout << "binarySearch faster by: " 
+									<< diff
+									<< " nanoseconds" << std::endl;			
+								
+							}
+						#endif
+		
 	
-	if ( c > numCols  || r > numRows ) 
+	if ( c <= numCols  && r <= numRows ) 
 	{
-		return NULL;  //not found
-	}
-	else
-	{
-		int page = mapper.map(c,r);
-		//this->view->viewPages[1];
+		int page = this->mapper.map(c,r);
+
 		if ( page>=0 && this->view->viewPages[page]->containsPoint(x,y,false) )
 
 		{
 			this->lastGetViewAtPage = page;
 			return this->view->viewPages[page];
 		}
-		else
-		{
-			return NULL;
-		}
-		
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	return NULL;
 	
 	
 }
