@@ -19,6 +19,7 @@ add_executable (xournal-thumbnailer
 target_link_libraries (xournal-thumbnailer
   ${ZLIB_LIBRARIES}
   ${Glib_LDFLAGS}
+  ${ZIP_LDFLAGS}
 )
 
 set (THUMBNAILER_BIN "xournal-thumbnailer")
