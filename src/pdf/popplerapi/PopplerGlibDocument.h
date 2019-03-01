@@ -29,6 +29,7 @@ public:
 public:
 	virtual bool save(Path filename, GError** error);
 	virtual bool load(Path filename, string password, GError** error);
+	virtual bool load(gpointer data, gsize length, string password, GError** error);
 	virtual bool isLoaded();
 
 	virtual XojPdfPageSPtr getPage(size_t page);

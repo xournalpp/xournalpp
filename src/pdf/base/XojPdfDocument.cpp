@@ -68,6 +68,13 @@ bool XojPdfDocument::load(Path filename, string password, GError** error)
 	return doc->load(filename, password, error);
 }
 
+bool XojPdfDocument::load(gpointer data, gsize length, string password, GError** error)
+{
+	XOJ_CHECK_TYPE(XojPdfDocument);
+
+	return doc->load(data, length, password, error);
+}
+
 bool XojPdfDocument::isLoaded()
 {
 	XOJ_CHECK_TYPE(XojPdfDocument);

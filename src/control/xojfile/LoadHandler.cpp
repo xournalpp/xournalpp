@@ -402,27 +402,23 @@ void LoadHandler::parseBgPixmap()
 	XOJ_CHECK_TYPE(LoadHandler);
 
 	const char* domain = LoadHandlerHelper::getAttrib("domain", false, this);
-	const char* filename = LoadHandlerHelper::getAttrib("filename", false, this);
+	const string filename(LoadHandlerHelper::getAttrib("filename", false, this));
 
-	string fileToLoad;
-	bool loadFile = false;
+	if (!strcmp(domain, "absolute") || (!strcmp(domain, "attach") && this->isGzFile))
+	{
+		string fileToLoad;
+		if (!strcmp(domain, "attach"))
+		{
+			fileToLoad = this->filename;
+			fileToLoad += ".";
+			fileToLoad += filename;
+		}
+		else
+		{
+			fileToLoad = filename;
+		}
 
-	if (!strcmp(domain, "absolute"))
-	{
-		fileToLoad = filename;
-		loadFile = true;
-	}
-	else if (!strcmp(domain, "attach"))
-	{
-		fileToLoad = this->filename;
-		fileToLoad += ".";
-		fileToLoad += filename;
-		loadFile = true;
-	}
-
-	if (loadFile)
-	{
-		GError* error = NULL;
+		GError* error = nullptr;
 		BackgroundImage img;
 		img.loadFile(fileToLoad, &error);
 
@@ -434,9 +430,37 @@ void LoadHandler::parseBgPixmap()
 
 		this->page->setBackgroundImage(img);
 	}
+	else if (!strcmp(domain, "attach"))
+	{
+		//This is the new zip file attach domain
+		gpointer data = nullptr;
+		gsize dataLength;
+		bool success = readZipAttachment(filename, data, dataLength);
+		if (!success)
+		{
+			return;
+		}
+
+		GBytes* attachment = g_bytes_new_take(data, dataLength);
+		GInputStream* inputStream = g_memory_input_stream_new_from_bytes(attachment);
+
+		GError* error = nullptr;
+		BackgroundImage img;
+		img.loadFile(inputStream, filename, &error);
+
+		g_input_stream_close(inputStream, nullptr, nullptr);
+
+		if (error)
+		{
+			error("%s", FC(_F("Could not read image: {1}. Error message: {2}") % filename % error->message));
+			g_error_free(error);
+		}
+
+		this->page->setBackgroundImage(img);
+	}
 	else if (!strcmp(domain, "clone"))
 	{
-		PageRef p = doc.getPage(atoi(filename));
+		PageRef p = doc.getPage(stoull(filename));
 
 		if (p.isValid())
 		{
@@ -498,15 +522,37 @@ void LoadHandler::parseBgPdf()
 			}
 			else if (!strcmp("attach", domain))
 			{
-				attachToDocument = true;
-				char* tmpFilename = g_strdup_printf("%s.%s", xournalFilename.c_str(), sFilename);
-
-				if (g_file_test(tmpFilename, G_FILE_TEST_EXISTS))
+				// Handle old format separately
+				if (this->isGzFile)
 				{
-					pdfFilename = tmpFilename;
-				}
+					char* tmpFilename = g_strdup_printf("%s.%s", xournalFilename.c_str(), sFilename);
 
-				g_free(tmpFilename);
+					if (g_file_test(tmpFilename, G_FILE_TEST_EXISTS))
+					{
+						pdfFilename = tmpFilename;
+					}
+
+					g_free(tmpFilename);
+				} else
+				{
+					gpointer data = nullptr;
+					gsize dataLength;
+					bool success = readZipAttachment(pdfFilename, data, dataLength);
+					if (!success)
+					{
+						return;
+					}
+
+					doc.readPdf(pdfFilename, false, attachToDocument, data, dataLength);
+
+					if (!doc.getLastErrorMsg().empty())
+					{
+						error("%s", FC(_F("Error reading PDF: {1}") % doc.getLastErrorMsg()));
+					}
+
+					this->pdfFilenameParsed = true;
+					return;
+				}
 			}
 			else
 			{
@@ -526,7 +572,7 @@ void LoadHandler::parseBgPdf()
 		if (g_file_test(pdfFilename.c_str(), G_FILE_TEST_EXISTS))
 		{
 			doc.readPdf(pdfFilename, false, attachToDocument);
-			if (doc.getLastErrorMsg() != "")
+			if (!doc.getLastErrorMsg().empty())
 			{
 				error("%s", FC(_F("Error reading PDF: {1}") % doc.getLastErrorMsg()));
 			}
@@ -539,7 +585,7 @@ void LoadHandler::parseBgPdf()
 			}
 			else
 			{
-				this->pdfMissing = pdfFilename.c_str();
+				this->pdfMissing = pdfFilename;
 			}
 		}
 	}
@@ -632,6 +678,7 @@ void LoadHandler::parseStroke()
 	stroke->setColor(color);
 
 	/** read stroke timestamps (xopp fileformat) */
+	//TODO how to handle attached audio files?
 	const char* fn = LoadHandlerHelper::getAttrib("fn", true, this);
 	if (fn != NULL)
 	{
@@ -724,6 +771,7 @@ void LoadHandler::parseText()
 	LoadHandlerHelper::parseColor(sColor, color, this);
 	text->setColor(color);
 
+	//TODO how to handle attached audio files
 	const char* fn = LoadHandlerHelper::getAttrib("fn", true, this);
 	if (fn != NULL)
 	{
@@ -779,6 +827,40 @@ void LoadHandler::parseTexImage()
 	this->teximage->setHeight(bottom - top);
 
 	this->teximage->setText(string(imText, imTextLen));
+}
+
+void LoadHandler::parseAttachment()
+{
+	XOJ_CHECK_TYPE(LoadHandler);
+
+	const char* path = LoadHandlerHelper::getAttrib("path",false, this);
+
+	switch(this->pos)
+	{
+		case PARSER_POS_IN_IMAGE:
+		{
+			gpointer data = nullptr;
+			gsize dataLength;
+			readZipAttachment(path, data, dataLength);
+
+			string imgData = string((char*)data, dataLength);
+			this->image->setImage(imgData);
+			break;
+		}
+		case PARSER_POS_IN_TEXIMAGE:
+		{
+			gpointer data = nullptr;
+			gsize dataLength;
+			readZipAttachment(path, data, dataLength);
+
+			string imgData = string((char*)data, dataLength);
+			this->teximage->setBinaryData(imgData);
+			break;
+		}
+		default:
+			g_warning("Found attachment tag as child of a tag that should not have such a child (ignoring this tag)");
+			break;
+	}
 }
 
 void LoadHandler::parseLayer()
@@ -848,6 +930,14 @@ void LoadHandler::parserStartElement(GMarkupParseContext* context, const gchar* 
 	else if (handler->pos == PARSER_POS_IN_LAYER)
 	{
 		handler->parseLayer();
+	}
+	else if (handler->pos == PARSER_POS_IN_IMAGE || handler->pos == PARSER_POS_IN_TEXIMAGE)
+	{
+		//Handle the attachment node within the appropriate nodes
+		if (!strcmp(elementName, "attachment"))
+		{
+			handler->parseAttachment();
+		}
 	}
 
 	handler->attributeNames = NULL;
@@ -1015,12 +1105,22 @@ void LoadHandler::readImage(const gchar* base64string, gsize base64stringLen)
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
+	if (base64stringLen == 1 && !strcmp(base64string, "\n"))
+	{
+		return;
+	}
+
 	this->image->setImage(parseBase64((char*)base64string, base64stringLen));
 }
 
 void LoadHandler::readTexImage(const gchar* base64string, gsize base64stringLen)
 {
 	XOJ_CHECK_TYPE(LoadHandler);
+
+	if (base64stringLen == 1 && !strcmp(base64string, "\n"))
+	{
+		return;
+	}
 
 	this->teximage->setBinaryData(parseBase64((char*)base64string, base64stringLen));
 }
@@ -1070,3 +1170,49 @@ Document* LoadHandler::loadDocument(string filename)
 	return &this->doc;
 }
 
+bool LoadHandler::readZipAttachment(string filename, gpointer& data, gsize& length)
+{
+	zip_stat_t attachmentFileStat;
+	int statStatus = zip_stat(this->zipFp, filename.c_str(), 0, &attachmentFileStat);
+	if (statStatus != 0)
+	{
+		error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename % zip_error_strerror(zip_get_error(this->zipFp))));
+		return false;
+	}
+
+	if (attachmentFileStat.valid & ZIP_STAT_SIZE)
+	{
+		length = attachmentFileStat.size;
+	} else
+	{
+		error("%s", FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") % filename));
+		return false;
+	}
+
+	zip_file_t* attachmentFile = zip_fopen(this->zipFp, filename.c_str(), 0);
+
+	if (!attachmentFile)
+	{
+		error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename % zip_error_strerror(zip_get_error(this->zipFp))));
+		return false;
+	}
+
+	data = g_malloc(attachmentFileStat.size);
+	zip_uint64_t readBytes = 0;
+	while (readBytes < length)
+	{
+		zip_int64_t read = zip_fread(attachmentFile, data, attachmentFileStat.size);
+		if (read == -1)
+		{
+			g_free(data);
+			error("%s", FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") % filename));
+			return false;
+		}
+
+		readBytes += read;
+	}
+
+	zip_fclose(attachmentFile);
+
+	return true;
+}

@@ -94,6 +94,19 @@ bool PopplerGlibDocument::load(Path filename, string password, GError** error)
 	return this->document != NULL;
 }
 
+bool PopplerGlibDocument::load(gpointer data, gsize length, string password, GError** error)
+{
+	XOJ_CHECK_TYPE(PopplerGlibDocument);
+
+	if (document)
+	{
+		g_object_unref(document);
+	}
+
+	this->document = poppler_document_new_from_data(static_cast<char*>(data), static_cast<int>(length), password.c_str(), error);
+	return this->document != NULL;
+}
+
 bool PopplerGlibDocument::isLoaded()
 {
 	XOJ_CHECK_TYPE(PopplerGlibDocument);

@@ -89,9 +89,12 @@ private:
 	void parseBgSolid();
 	void parseBgPixmap();
 	void parseBgPdf();
+	void parseAttachment();
 
 	void readImage(const gchar* base64string, gsize base64stringLen);
 	void readTexImage(const gchar* base64string, gsize base64stringLen);
+
+	bool readZipAttachment(string filename, gpointer& data, gsize& length);
 
 private:
 	string parseBase64(const gchar* base64, gsize lenght);
