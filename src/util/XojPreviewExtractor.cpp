@@ -132,6 +132,9 @@ PreviewExtractResult XojPreviewExtractor::readFile(Path file)
 
 		gzclose(fp);
 		return result;
+	} else if (!zipFp)
+	{
+		return PREVIEW_RESULT_COULD_NOT_OPEN_FILE;
 	}
 
 	zip_stat_t thumbStat;
