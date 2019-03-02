@@ -93,6 +93,30 @@ public:
 		CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string((char*)imageData, (size_t)dataLen));
 	}
 
+	void testLoad1Zipped()
+	{
+		XojPreviewExtractor extractor;
+		PreviewExtractResult result = extractor.readFile(GET_TESTFILE("packaged_xopp/testPreview.xopp"));
+
+		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
+
+		gsize dataLen = 0;
+		unsigned char* imageData = extractor.getData(dataLen);
+		CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string((char*)imageData, (size_t)dataLen));
+	}
+
+	void testLoad2Zipped()
+	{
+		XojPreviewExtractor extractor;
+		PreviewExtractResult result = extractor.readFile(GET_TESTFILE("packaged_xopp/testPreview2.xopp"));
+
+		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
+
+		gsize dataLen = 0;
+		extractor.getData(dataLen);
+		CPPUNIT_ASSERT_EQUAL((std::string::size_type) 2856, dataLen);
+	}
+
 	void testNoPreview()
 	{
 		XojPreviewExtractor extractor;
