@@ -162,7 +162,11 @@ protected:
 
 			if (!fn.empty())
 			{
-				view->getXournal()->getControl()->getAudioController()->startPlayback(Path::fromUri(view->settings->getAudioFolder()).str() + "/" + fn, (unsigned int) ts);
+				if (fn.rfind('/', 0) != 0)
+				{
+					fn = Path::fromUri(view->settings->getAudioFolder()).str() + "/" + fn;
+				}
+				view->getXournal()->getControl()->getAudioController()->startPlayback(fn, (unsigned int) ts);
 			}
 		}
 	}

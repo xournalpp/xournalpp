@@ -81,6 +81,12 @@ void LoadHandler::initAttributes()
 	this->image = NULL;
 	this->teximage = NULL;
 	this->text = NULL;
+
+	if (this->audioFiles)
+	{
+		g_hash_table_unref(this->audioFiles);
+	}
+	this->audioFiles = g_hash_table_new(g_str_hash, g_str_equal);
 }
 
 string LoadHandler::getLastError()
@@ -359,6 +365,10 @@ void LoadHandler::parseContents()
 		this->page = new XojPage(width, height);
 
 		this->doc.addPage(this->page);
+	}
+	else if (strcmp(elementName, "audio") == 0)
+	{
+		this->parseAudio();
 	}
 	else if (strcmp(elementName, "title") == 0)
 	{
@@ -678,11 +688,20 @@ void LoadHandler::parseStroke()
 	stroke->setColor(color);
 
 	/** read stroke timestamps (xopp fileformat) */
-	//TODO how to handle attached audio files?
 	const char* fn = LoadHandlerHelper::getAttrib("fn", true, this);
 	if (fn != NULL)
 	{
-		stroke->setAudioFilename(fn);
+		if (this->isGzFile)
+		{
+			stroke->setAudioFilename(fn);
+		} else
+		{
+			string tempFile = getTempFileForPath(fn);
+			if (!tempFile.empty())
+			{
+				stroke->setAudioFilename(tempFile);
+			}
+		}
 	}
 
 
@@ -771,11 +790,20 @@ void LoadHandler::parseText()
 	LoadHandlerHelper::parseColor(sColor, color, this);
 	text->setColor(color);
 
-	//TODO how to handle attached audio files
 	const char* fn = LoadHandlerHelper::getAttrib("fn", true, this);
 	if (fn != NULL)
 	{
-		text->setAudioFilename(fn);
+		if (this->isGzFile)
+		{
+			text->setAudioFilename(fn);
+		} else
+		{
+			string tempFile = getTempFileForPath(fn);
+			if (!tempFile.empty())
+			{
+				text->setAudioFilename(tempFile);
+			}
+		}
 	}
 
 	size_t ts = 0;
@@ -897,6 +925,81 @@ void LoadHandler::parseLayer()
 		this->pos = PARSER_POS_IN_TEXIMAGE;
 		parseTexImage();
 	}
+}
+
+/**
+ * Create a temporary file for the attached audio file.
+ * The OS should take care of removing the file.
+ */
+void LoadHandler::parseAudio()
+{
+	XOJ_CHECK_TYPE(LoadHandler);
+	const char* filename = LoadHandlerHelper::getAttrib("fn", false, this);
+
+	GFileIOStream* fileStream;
+	GFile* tmpFile = g_file_new_tmp("xournal_audio_XXXXXX.tmp", &fileStream, nullptr);
+	if (!tmpFile)
+	{
+		g_warning("Unable to create temporary file for audio attachment.");
+		return;
+	}
+
+	GOutputStream* outputStream = g_io_stream_get_output_stream(G_IO_STREAM(fileStream));
+
+	zip_stat_t attachmentFileStat;
+	int statStatus = zip_stat(this->zipFp, filename, 0, &attachmentFileStat);
+	if (statStatus != 0)
+	{
+		error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename % zip_error_strerror(zip_get_error(this->zipFp))));
+		return;
+	}
+
+	gsize length;
+	if (attachmentFileStat.valid & ZIP_STAT_SIZE)
+	{
+		length = attachmentFileStat.size;
+	} else
+	{
+		error("%s", FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") % filename));
+		return;
+	}
+
+	zip_file_t* attachmentFile = zip_fopen(this->zipFp, filename, 0);
+
+	if (!attachmentFile)
+	{
+		error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename % zip_error_strerror(zip_get_error(this->zipFp))));
+		return;
+	}
+
+	gpointer data = g_malloc(1024);
+	zip_uint64_t readBytes = 0;
+	while (readBytes < length)
+	{
+		zip_int64_t read = zip_fread(attachmentFile, data, 1024);
+		if (read == -1)
+		{
+			g_object_unref(tmpFile);
+			g_free(data);
+			error("%s", FC(_F("Could not open attachment: {1}. Error message: Could not read file") % filename));
+			return;
+		}
+
+		gboolean writeSuccessful = g_output_stream_write_all(outputStream, data, static_cast<gsize>(read), nullptr, nullptr, nullptr);
+		if (!writeSuccessful)
+		{
+			g_object_unref(tmpFile);
+			g_free(data);
+			error("%s", FC(_F("Could not open attachment: {1}. Error message: Could not write file") % filename));
+			return;
+		}
+
+		readBytes += read;
+	}
+
+	zip_fclose(attachmentFile);
+
+	g_hash_table_insert(this->audioFiles, g_strdup(filename), g_file_get_path(tmpFile));
 }
 
 void LoadHandler::parserStartElement(GMarkupParseContext* context, const gchar* elementName, const gchar** attributeNames,
@@ -1215,4 +1318,17 @@ bool LoadHandler::readZipAttachment(string filename, gpointer& data, gsize& leng
 	zip_fclose(attachmentFile);
 
 	return true;
+}
+
+string LoadHandler::getTempFileForPath(string filename)
+{
+	gpointer tmpFilename = g_hash_table_lookup(this->audioFiles, filename.c_str());
+	if (tmpFilename)
+	{
+		return string((char*) tmpFilename);
+	} else
+	{
+		error("%s", FC(_F("Requested temporary file was not found for attachment {1}") % filename));
+		return "";
+	}
 }

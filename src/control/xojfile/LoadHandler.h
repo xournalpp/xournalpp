@@ -59,6 +59,7 @@ private:
 	void parseContents();
 	void parsePage();
 	void parseLayer();
+	void parseAudio();
 
 	void parseStroke();
 	void parseText();
@@ -94,10 +95,10 @@ private:
 	void readImage(const gchar* base64string, gsize base64stringLen);
 	void readTexImage(const gchar* base64string, gsize base64stringLen);
 
-	bool readZipAttachment(string filename, gpointer& data, gsize& length);
-
 private:
 	string parseBase64(const gchar* base64, gsize lenght);
+	bool readZipAttachment(string filename, gpointer& data, gsize& length);
+	string getTempFileForPath(string filename);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -133,6 +134,7 @@ private:
 	Text* text;
 	Image* image;
 	TexImage* teximage;
+	GHashTable* audioFiles = nullptr;
 
 	const char* endRootTag = "xournal";
 
