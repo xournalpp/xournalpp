@@ -28,16 +28,17 @@ void ZoomControl::zoomOneStep(bool zoomIn, double x, double y)
 
 	startZoomSequence(x, y);
 
+	this->zoomFitMode = false;
+	double newZoom;
 	if (zoomIn)
 	{
-		this->zoom += this->zoomStep;
+		newZoom = this->zoom + this->zoomStep;
 	}
 	else
 	{
-		this->zoom -= this->zoomStep;
+		newZoom = this->zoom - this->zoomStep;
 	}
-	this->zoomFitMode = false;
-	fireZoomChanged();
+	this->zoomSequnceChange(newZoom, false);
 
 	endZoomSequence();
 }
@@ -53,16 +54,17 @@ void ZoomControl::zoomScroll(bool zoomIn, double x, double y)
 		startZoomSequence(x, y);
 	}
 
+	this->zoomFitMode = false;
+	double newZoom;
 	if (zoomIn)
 	{
-		this->zoom += this->zoomStepScroll;
+		newZoom = this->zoom + this->zoomStepScroll;
 	}
 	else
 	{
-		this->zoom -= this->zoomStepScroll;
+		newZoom = this->zoom - this->zoomStepScroll;
 	}
-	this->zoomFitMode = false;
-	fireZoomChanged();
+	this->zoomSequnceChange(newZoom, false);
 }
 
 /**
@@ -255,8 +257,7 @@ void ZoomControl::setZoomFit(double zoom)
 
 	if (this->zoomFitMode)
 	{
-		this->zoom = this->zoomFitValue;
-		fireZoomChanged();
+		zoomFit();
 	}
 }
 
@@ -278,12 +279,10 @@ void ZoomControl::zoom100()
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	startZoomSequence(-1, -1);
-
-	this->zoom = this->zoom100Value;
 	this->zoomFitMode = false;
-	fireZoomChanged();
 
+	startZoomSequence(-1, -1);
+	this->zoomSequnceChange(this->zoom100Value, false);
 	endZoomSequence();
 }
 
@@ -291,12 +290,9 @@ void ZoomControl::zoomFit()
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	startZoomSequence(-1, -1);
-
-	this->zoom = this->zoomFitValue;
 	this->zoomFitMode = true;
-	fireZoomChanged();
-
+	startZoomSequence(-1, -1);
+	this->zoomSequnceChange(this->zoomFitValue, false);
 	endZoomSequence();
 }
 
