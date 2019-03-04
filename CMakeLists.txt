@@ -250,8 +250,6 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 	install(FILES desktop/xournalpp.thumbnailer
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/thumbnailers)
-	install(PROGRAMS utility/usr/local/bin/xopp-recording.sh
-			DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
 
 	install(CODE "execute_process(COMMAND ${CMAKE_CURRENT_BINARY_DIR}/cmake/postinst configure)")
 
