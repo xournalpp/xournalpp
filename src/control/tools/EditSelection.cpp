@@ -562,9 +562,16 @@ XojPageView* EditSelection::getBestMatchingPageView()
 	XOJ_CHECK_TYPE(EditSelection);
 
 	PagePositionHandler* pp = this->view->getXournal()->getPagePositionHandler();
-	int rx = this->getXOnViewAbsolute();
-	int ry = this->getYOnViewAbsolute();
-	XojPageView* v = pp->getBestMatchingView(rx, ry, this->getViewWidth(), this->getViewHeight());
+	
+	double zoom = view->getXournal()->getZoom();
+	
+	
+	//get grabbing hand position
+	double hx = this->view->getX() + (this->x + this->relMousePosX)*zoom;
+	double hy = this->view->getY() + (this->y + this->relMousePosY)*zoom;
+	
+	XojPageView* v = pp->getViewAt(hx,hy);
+
 	return v;
 }
 
