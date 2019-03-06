@@ -429,6 +429,22 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 
 }
 
+double EditSelectionContents::getOriginalX()
+{
+	return this->originalX;
+}
+
+double EditSelectionContents::getOriginalY()
+{
+	return this->originalY;
+}
+
+XojPageView* EditSelectionContents::getSourceView()
+{
+	return this->sourceView;
+}
+
+
 void EditSelectionContents::updateContent(double x, double y, double rotation, double width, double height, bool aspectRatio,
 										  Layer* layer, PageRef targetPage, XojPageView* targetView,
 										  UndoRedoHandler* undo, CursorSelectionType type)

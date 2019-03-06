@@ -165,23 +165,25 @@ void EditSelection::finalizeSelection()
 
 	XojPageView* v = getBestMatchingPageView();
 	if (v == NULL)
-	{
-		this->view->getXournal()->deleteSelection(this);
+	{	// Not on any page - move back to original page and position
+		this->x = this->contents->getOriginalX();
+		this->y = this->contents->getOriginalY();
+		v = this->contents->getSourceView();
 	}
-	else
-	{
-		this->view = v;
+	
 
-		PageRef page = this->view->getPage();
-		Layer* layer = page->getSelectedLayer();
-		this->contents->finalizeSelection(this->x, this->y, this->width, this->height,
-										  this->aspectRatio, layer, page, this->view, this->undo);
+	this->view = v;
 
-		this->view->rerenderRect(this->x, this->y, this->width, this->height);
+	PageRef page = this->view->getPage();
+	Layer* layer = page->getSelectedLayer();
+	this->contents->finalizeSelection(this->x, this->y, this->width, this->height,
+										this->aspectRatio, layer, page, this->view, this->undo);
 
-		// This is needed if the selection not was 100% on a page
-		this->view->getXournal()->repaintSelection(true);
-	}
+	this->view->rerenderRect(this->x, this->y, this->width, this->height);
+
+	// This is needed if the selection not was 100% on a page
+	this->view->getXournal()->repaintSelection(true);
+
 }
 
 /**
