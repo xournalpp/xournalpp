@@ -1988,7 +1988,6 @@ like to work on&lt;/i&gt;</property>
                   <object class="GtkLabel" id="label36a">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="tooltip_text" translatable="yes">Offset first page this many pages when &lt;b&gt;Pair Pages&lt;/b&gt; enabled</property>
                     <property name="margin_top">10</property>
                     <property name="label" translatable="yes">&lt;b&gt;Pairs Offset&lt;/b&gt;</property>
                     <property name="use_markup">True</property>
