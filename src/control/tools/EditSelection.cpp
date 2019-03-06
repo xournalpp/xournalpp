@@ -163,7 +163,7 @@ void EditSelection::finalizeSelection()
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	XojPageView* v = getBestMatchingPageView();
+	XojPageView* v = getPageViewUnderCursor();
 	if (v == NULL)
 	{	// Not on any page - move back to original page and position
 		this->x = this->contents->getOriginalX();
@@ -546,7 +546,7 @@ void EditSelection::mouseMove(double x, double y)
 
 	this->view->getXournal()->repaintSelection();
 
-	XojPageView* v = getBestMatchingPageView();
+	XojPageView* v = getPageViewUnderCursor();
 
 	if (v && v != this->view)
 	{
@@ -559,7 +559,7 @@ void EditSelection::mouseMove(double x, double y)
 	}
 }
 
-XojPageView* EditSelection::getBestMatchingPageView()
+XojPageView* EditSelection::getPageViewUnderCursor()
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
