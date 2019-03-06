@@ -50,14 +50,6 @@ void PagePositionHandler::update(XojPageView** viewPages, int viewPagesLen, int 
 
 }
 
-XojPageView* PagePositionHandler::getBestMatchingView(int x, int y, int width, int height)
-{
-	XOJ_CHECK_TYPE(PagePositionHandler);
-
-	// Does this simplification result in expected behaviour? 
-	return this->getViewAt(x + width / 2, y + height / 2);
-}
-
 XojPageView* PagePositionHandler::getViewAt(int x, int y, PagePositionCache* cache)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);

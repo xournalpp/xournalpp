@@ -163,25 +163,27 @@ void EditSelection::finalizeSelection()
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	XojPageView* v = getBestMatchingPageView();
+	XojPageView* v = getPageViewUnderCursor();
 	if (v == NULL)
-	{
-		this->view->getXournal()->deleteSelection(this);
+	{	// Not on any page - move back to original page and position
+		this->x = this->contents->getOriginalX();
+		this->y = this->contents->getOriginalY();
+		v = this->contents->getSourceView();
 	}
-	else
-	{
-		this->view = v;
+	
 
-		PageRef page = this->view->getPage();
-		Layer* layer = page->getSelectedLayer();
-		this->contents->finalizeSelection(this->x, this->y, this->width, this->height,
-										  this->aspectRatio, layer, page, this->view, this->undo);
+	this->view = v;
 
-		this->view->rerenderRect(this->x, this->y, this->width, this->height);
+	PageRef page = this->view->getPage();
+	Layer* layer = page->getSelectedLayer();
+	this->contents->finalizeSelection(this->x, this->y, this->width, this->height,
+										this->aspectRatio, layer, page, this->view, this->undo);
 
-		// This is needed if the selection not was 100% on a page
-		this->view->getXournal()->repaintSelection(true);
-	}
+	this->view->rerenderRect(this->x, this->y, this->width, this->height);
+
+	// This is needed if the selection not was 100% on a page
+	this->view->getXournal()->repaintSelection(true);
+
 }
 
 /**
@@ -544,7 +546,7 @@ void EditSelection::mouseMove(double x, double y)
 
 	this->view->getXournal()->repaintSelection();
 
-	XojPageView* v = getBestMatchingPageView();
+	XojPageView* v = getPageViewUnderCursor();
 
 	if (v && v != this->view)
 	{
@@ -557,14 +559,21 @@ void EditSelection::mouseMove(double x, double y)
 	}
 }
 
-XojPageView* EditSelection::getBestMatchingPageView()
+XojPageView* EditSelection::getPageViewUnderCursor()
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
 	PagePositionHandler* pp = this->view->getXournal()->getPagePositionHandler();
-	int rx = this->getXOnViewAbsolute();
-	int ry = this->getYOnViewAbsolute();
-	XojPageView* v = pp->getBestMatchingView(rx, ry, this->getViewWidth(), this->getViewHeight());
+	
+	double zoom = view->getXournal()->getZoom();
+	
+	
+	//get grabbing hand position
+	double hx = this->view->getX() + (this->x + this->relMousePosX)*zoom;
+	double hy = this->view->getY() + (this->y + this->relMousePosY)*zoom;
+	
+	XojPageView* v = pp->getViewAt(hx,hy);
+
 	return v;
 }
 

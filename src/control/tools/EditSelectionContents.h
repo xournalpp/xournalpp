@@ -108,6 +108,24 @@ private:
 	static bool repaintSelection(EditSelectionContents* selection);
 
 public:
+	
+	/**
+	 * Gets the original view of the contents
+	 */
+	XojPageView * getSourceView();
+	
+	
+	/**
+	 * Gets the original X of the contents
+	 */
+	double getOriginalX();
+
+	/**
+	 * Gets the original Y of the contents
+	 */
+	double getOriginalY();
+
+	
 	/**
 	 * Gets the original width of the contents
 	 */

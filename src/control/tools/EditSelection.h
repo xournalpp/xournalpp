@@ -219,9 +219,9 @@ private:
 	void finalizeSelection();
 
 	/**
-	 * Gets the PageView where the selection is located on
+	 * Gets the PageView under the cursor
 	 */
-	XojPageView* getBestMatchingPageView();
+	XojPageView* getPageViewUnderCursor();
 
 	/**
 	 * Translate all coordinates which are relative to the current view to the new view,
