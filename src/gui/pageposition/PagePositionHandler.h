@@ -3,7 +3,7 @@
  *
  * Knows the positions of pages in the view
  *
- * @author Xournal++ Team, Justin Jones
+ * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
  *
  * @license GNU GPLv2 or later
@@ -36,7 +36,6 @@ public:
 	 * Returns the XojPageView with the given coordinates
 	 */
 	XojPageView* getViewAt(int x, int y, PagePositionCache* cache = NULL);
-	XojPageView* getBestMatchingView(int x, int y, int width, int height);
 
 private:
 	void addData(PagePosition* p);
