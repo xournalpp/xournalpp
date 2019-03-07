@@ -86,7 +86,11 @@ void ColorToolItem::enableColor(int color)
 
 	if (isSelector())
 	{
-		this->icon->setColor(color);
+		if (this->icon)
+		{
+			this->icon->setColor(color);
+		}
+
 		this->color = color;
 		if (GTK_IS_TOGGLE_BUTTON(this->item))
 		{
@@ -191,7 +195,10 @@ void ColorToolItem::enable(bool enabled)
 {
 	if (!enabled && toolHandler->getToolType() == TOOL_ERASER)
 	{
-		icon->setState(COLOR_ICON_STATE_PEN);
+		if (this->icon)
+		{
+			icon->setState(COLOR_ICON_STATE_PEN);
+		}
 		AbstractToolItem::enable(true);
 		switchToPen = true;
 		return;
@@ -199,13 +206,15 @@ void ColorToolItem::enable(bool enabled)
 
 	switchToPen = false;
 	AbstractToolItem::enable(enabled);
-	if (enabled)
+	if (this->icon)
 	{
-		icon->setState(COLOR_ICON_STATE_ENABLED);
-	}
-	else
-	{
-		icon->setState(COLOR_ICON_STATE_DISABLED);
+		if (enabled)
+		{
+			icon->setState(COLOR_ICON_STATE_ENABLED);
+		} else
+		{
+			icon->setState(COLOR_ICON_STATE_DISABLED);
+		}
 	}
 }
 
