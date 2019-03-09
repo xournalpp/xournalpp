@@ -6,6 +6,12 @@ Please create pull requests (or file issues) if you have more precise dependenci
 
 Lua is needed for plugins, if it is missing, the plugins will be disabled.
 
+### Arch
+```bash
+sudo pacman -S cmake gtk3 base-devel libxml2 cppunit portaudio libsndfile\ 
+poppler-glib texlive-bin texlive-pictures gettext
+```
+
 ### For Fedora/CentOS/RHEL:
 ```bash
 sudo dnf install cmake gtk3-devel libxml2-devel cppunit-devel portaudio-devel libsndfile-devel \
