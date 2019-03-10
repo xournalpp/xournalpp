@@ -56,8 +56,19 @@ public:
 		speed.startTest("document load");
 		
 		LoadHandler handler;
-		handler.loadDocument(GET_TESTFILE("big-test2.xoj"));
+		handler.loadDocument(GET_TESTFILE("big-test.xoj"));
 		
+		speed.endTest();
+	}
+
+	void testSpeedZipped()
+	{
+		SpeedTest speed;
+		speed.startTest("document load");
+
+		LoadHandler handler;
+		handler.loadDocument(GET_TESTFILE("packaged_xopp/big-test.xopp"));
+
 		speed.endTest();
 	}
 #endif
@@ -66,6 +77,25 @@ public:
 	{
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("test1.xoj"));
+
+		CPPUNIT_ASSERT_EQUAL(1UL, doc->getPageCount());
+		PageRef page = doc->getPage(0);
+
+		CPPUNIT_ASSERT_EQUAL(1UL, (*page).getLayerCount());
+		Layer* layer = (*(*page).getLayers())[0];
+
+		Element* element = (*layer->getElements())[0];
+		CPPUNIT_ASSERT_EQUAL(ELEMENT_TEXT, element->getType());
+
+		Text* text = (Text*) element;
+
+		CPPUNIT_ASSERT_EQUAL(string("12345"), text->getText());
+	}
+
+	void testLoadZipped()
+	{
+		LoadHandler handler;
+		Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/test.xopp"));
 
 		CPPUNIT_ASSERT_EQUAL(1UL, doc->getPageCount());
 		PageRef page = doc->getPage(0);
@@ -108,6 +138,14 @@ public:
 		CPPUNIT_ASSERT_EQUAL(5UL, doc->getPageCount());
 	}
 
+	void testPagesZipped()
+	{
+		LoadHandler handler;
+		Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/pages.xopp"));
+
+		CPPUNIT_ASSERT_EQUAL(5UL, doc->getPageCount());
+	}
+
 	void checkPageType(Document* doc, int pageIndex, string expectedText, PageType expectedBgType)
 	{
 		PageRef page = doc->getPage(pageIndex);
@@ -129,6 +167,19 @@ public:
 	{
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("load/pages.xoj"));
+
+		CPPUNIT_ASSERT_EQUAL(5UL, doc->getPageCount());
+		checkPageType(doc, 0, "p1", PageType("plain"));
+		checkPageType(doc, 1, "p2", PageType("lined"));
+		checkPageType(doc, 2, "p3", PageType("ruled"));
+		checkPageType(doc, 3, "p4", PageType("graph"));
+		checkPageType(doc, 4, "p5", PageType(":image"));
+	}
+
+	void testPageTypeZipped()
+	{
+		LoadHandler handler;
+		Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/pages.xopp"));
 
 		CPPUNIT_ASSERT_EQUAL(5UL, doc->getPageCount());
 		checkPageType(doc, 0, "p1", PageType("plain"));
@@ -163,10 +214,53 @@ public:
 		checkLayer(page, 2, "l3");
 	}
 
+	void testLayerZipped()
+	{
+		LoadHandler handler;
+		Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/layer.xopp"));
+
+		CPPUNIT_ASSERT_EQUAL(1UL, doc->getPageCount());
+		PageRef page = doc->getPage(0);
+
+		CPPUNIT_ASSERT_EQUAL(3UL, (*page).getLayerCount());
+		checkLayer(page, 0, "l1");
+		checkLayer(page, 1, "l2");
+		checkLayer(page, 2, "l3");
+	}
+
 	void testText()
 	{
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("load/text.xml"));
+
+		CPPUNIT_ASSERT_EQUAL(1UL, doc->getPageCount());
+		PageRef page = doc->getPage(0);
+
+		CPPUNIT_ASSERT_EQUAL(1UL, (*page).getLayerCount());
+		Layer* layer = (*(*page).getLayers())[0];
+
+		Text* t1 = (Text*)(*layer->getElements())[0];
+		CPPUNIT_ASSERT_EQUAL(ELEMENT_TEXT, t1->getType());
+
+		Text* t2 = (Text*)(*layer->getElements())[1];
+		CPPUNIT_ASSERT_EQUAL(ELEMENT_TEXT, t2->getType());
+
+		Text* t3 = (Text*)(*layer->getElements())[2];
+		CPPUNIT_ASSERT_EQUAL(ELEMENT_TEXT, t3->getType());
+
+		CPPUNIT_ASSERT_EQUAL(string("red"), t1->getText());
+		CPPUNIT_ASSERT_EQUAL(string("blue"), t2->getText());
+		CPPUNIT_ASSERT_EQUAL(string("green"), t3->getText());
+
+		CPPUNIT_ASSERT_EQUAL(0xff0000, t1->getColor());
+		CPPUNIT_ASSERT_EQUAL(0x3333CC, t2->getColor());
+		CPPUNIT_ASSERT_EQUAL(0x00f000, t3->getColor());
+	}
+
+	void testTextZipped()
+	{
+		LoadHandler handler;
+		Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/text.xopp"));
 
 		CPPUNIT_ASSERT_EQUAL(1UL, doc->getPageCount());
 		PageRef page = doc->getPage(0);
