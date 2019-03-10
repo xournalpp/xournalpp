@@ -7,16 +7,6 @@
 #include "widgets/XournalWidget.h"
 #include "gui/scroll/ScrollHandling.h"
 
-#define COMPARE_LAYOUT_BINARY_VS_LINEAR_SEARCH
-
-#ifdef COMPARE_LAYOUT_BINARY_VS_LINEAR_SEARCH
-
-	#include <iostream>
-	#include <chrono>
-	typedef std::chrono::high_resolution_clock Clock;
-
-#endif
-
 /**
  * Padding outside the pages, including shadow
  */
@@ -422,63 +412,44 @@ XojPageView* Layout::getViewAt(int x, int y)
 	int numRows = this->mapper.getRows();
 	int numCols = this->mapper.getColumns();
 	
-						#ifdef COMPARE_LAYOUT_BINARY_VS_LINEAR_SEARCH
-							auto t1 = Clock::now();
-						#endif
-		
-			  
-			  
-	auto rit = std::lower_bound( this->sizeRow.begin(),  this->sizeRow.end(), y);	//binary search
-	if (rit != this->sizeRow.end() ) 
+	
+	
+	if( numRows < 250 ) //For most of our use cases the linear search is faster - see earlier check-in.
 	{
-		r = rit -  this->sizeRow.begin();	//get index
+		for( r = 0; r < numRows; r++)
+		{
+			if ( y <=   this->sizeRow[r] ) break;	// found region
+		}
+	}
+	else  //use binary search
+	{
+				
+		auto rit = std::lower_bound( this->sizeRow.begin(),  this->sizeRow.end(), y);	//binary search
+		if (rit != this->sizeRow.end() ) 
+		{
+			r = rit -  this->sizeRow.begin();	//get index
+		}
 	}
 	
-	auto cit = std::lower_bound( this->sizeCol.begin(),  this->sizeCol.end(), x);
-	if (cit !=  this->sizeCol.end() ) {
-		c = cit -  this->sizeCol.begin();
-	}
-
-						#ifdef COMPARE_LAYOUT_BINARY_VS_LINEAR_SEARCH
-							auto t2 = Clock::now();
-						#endif 
-
-	/* test against linear search: */
-	for( r = 0; r < numRows; r++)
-	{
-		if ( y <=   this->sizeRow[r] ) break;	// found region
-	}
-
-
-	for( c = 0; c < numCols; c++)
-	{
-		if ( x <=  this->sizeCol[c]) break;
-	}
-	//*/
-
 	
-						#ifdef COMPARE_LAYOUT_BINARY_VS_LINEAR_SEARCH
-							auto t3 = Clock::now();
-							
-							double binarySearchtime = std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
-							double linearSearchTime = std::chrono::duration_cast<std::chrono::nanoseconds>(t3 - t2).count();
-							double diff = linearSearchTime - binarySearchtime ;
-							if ( diff < 0)
-							{
-									
-								std::cout << "binarySearch SLOWER by: " 
-									<< -diff
-									<< " nanoseconds" << std::endl;
-							}
-							else
-							{
-								std::cout << "binarySearch faster by: " 
-									<< diff
-									<< " nanoseconds" << std::endl;			
-								
-							}
-						#endif
-		
+	
+	
+	if ( numCols <250 )	
+	{
+		for( c = 0; c < numCols; c++)
+		{
+			if ( x <=  this->sizeCol[c]) break;
+		}
+	}
+	else	
+	{
+		auto cit = std::lower_bound( this->sizeCol.begin(),  this->sizeCol.end(), x);
+		if (cit !=  this->sizeCol.end() ) {
+			c = cit -  this->sizeCol.begin();
+		}
+	}
+
+
 	
 	if ( c <= numCols  && r <= numRows ) 
 	{
