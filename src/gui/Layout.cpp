@@ -53,6 +53,8 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
 			layout->updateCurrentPage();
 			layout->scrollHandling->scrollChanged();
 		}), this);
+	
+	this->lastGetViewAtPage = 0;
 
 	lastScrollHorizontal = gtk_adjustment_get_value(scrollHandling->getHorizontal());
 	lastScrollVertical = gtk_adjustment_get_value(scrollHandling->getVertical());
@@ -195,7 +197,9 @@ void Layout::layoutPages()
 	XOJ_CHECK_TYPE(Layout);
 
 	int len = this->view->viewPagesLen;
-
+	
+	this->lastGetViewAtPage = len;  // invalidate cache index.
+	
 	Settings* settings = this->view->getControl()->getSettings();
 
 	// obtain rows, cols, paired and layout from view settings
@@ -418,6 +422,12 @@ XojPageView* Layout::getViewAt(int x, int y)
 	
 	XOJ_CHECK_TYPE(Layout);
 	
+	//try cached result first
+	if  ( this->lastGetViewAtPage < this->view->viewPagesLen    &&     this->view->viewPages[this->lastGetViewAtPage]->containsPoint(x,y,false) )
+	{
+			return this->view->viewPages[this->lastGetViewAtPage];
+	}
+	
 	int r;
 	int rTotalPixels = 0;
 	int c;
@@ -449,8 +459,10 @@ XojPageView* Layout::getViewAt(int x, int y)
 		int page = mapper.map(c,r);
 		//this->view->viewPages[1];
 		if ( page>=0 && this->view->viewPages[page]->containsPoint(x,y,false) )
+
 		{
-				return this->view->viewPages[page];
+			this->lastGetViewAtPage = page;
+			return this->view->viewPages[page];
 		}
 		else
 		{
