@@ -86,7 +86,7 @@ int main(int argc, char* argv[])
 		break;
 		
 	case PREVIEW_RESULT_BAD_FILE_EXTENSION:
-		logMessage((_F("xoj-preview-extractor: file \"{1}\" is not .xoj file") % argv[2]).str(), true);
+		logMessage((_F("xoj-preview-extractor: file \"{1}\" is not .xoj file") % argv[1]).str(), true);
 		return 2;
 
 	case PREVIEW_RESULT_COULD_NOT_OPEN_FILE:
