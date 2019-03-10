@@ -8,7 +8,7 @@ Lua is needed for plugins, if it is missing, the plugins will be disabled.
 
 ### Arch
 ```bash
-sudo pacman -S cmake gtk3 base-devel libxml2 cppunit portaudio libsndfile\ 
+sudo pacman -S cmake gtk3 base-devel libxml2 cppunit portaudio libsndfile \
 poppler-glib texlive-bin texlive-pictures gettext
 ```
 
