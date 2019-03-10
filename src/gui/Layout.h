@@ -133,4 +133,9 @@ private:
 	std::vector<int> sizeCol;
 	std::vector<int> sizeRow;
 	
+	/**
+	 * cache the last GetViewAt() page#
+	 */
+	int lastGetViewAtPage;
+	
 };
