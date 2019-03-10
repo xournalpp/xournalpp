@@ -4,7 +4,6 @@
 #include "Selection.h"
 
 #include "control/Control.h"
-#include "gui/pageposition/PagePositionHandler.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
 #include "model/Document.h"

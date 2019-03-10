@@ -3,7 +3,6 @@
 #include "XournalView.h"
 
 #include "control/Control.h"
-#include "pageposition/PagePositionHandler.h"
 #include "widgets/XournalWidget.h"
 #include "gui/scroll/ScrollHandling.h"
 
@@ -368,7 +367,6 @@ void Layout::layoutPages()
 
 
 	this->setLayoutSize(totalWidth, totalHeight);
-	this->view->pagePosition->update(this->view->viewPages, len, totalHeight);
 	
 }
 

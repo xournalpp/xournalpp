@@ -23,7 +23,6 @@ class AbstractInputDevice;
 class EditSelection;
 class Layout;
 class XojPageView;
-class PagePositionCache;
 class Rectangle;
 class ScrollHandling;
 class XournalView;
@@ -54,7 +53,6 @@ struct _GtkXournal
 
 	Layout* layout;
 
-	PagePositionCache* pagePositionCache;
 
 	/**
 	 * Selected content, if any

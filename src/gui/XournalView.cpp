@@ -12,7 +12,6 @@
 #include "gui/inputdevices/TouchHelper.h"
 #include "model/Document.h"
 #include "model/Stroke.h"
-#include "pageposition/PagePositionHandler.h"
 #include "undo/DeleteUndoAction.h"
 #include "widgets/XournalWidget.h"
 
@@ -42,7 +41,6 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 	g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
 
 	this->repaintHandler = new RepaintHandler(this);
-	this->pagePosition = new PagePositionHandler();
 	this->touchHelper = new TouchHelper(control->getSettings());
 
 	control->getZoomControl()->addZoomListener(this);
@@ -74,8 +72,6 @@ XournalView::~XournalView()
 	delete this->repaintHandler;
 	this->repaintHandler = NULL;
 
-	delete this->pagePosition;
-	this->pagePosition = NULL;
 
 	gtk_widget_destroy(this->widget);
 	this->widget = NULL;
@@ -1034,12 +1030,6 @@ ArrayIterator<XojPageView*> XournalView::pageViewIterator()
 	return ArrayIterator<XojPageView*> (viewPages, viewPagesLen);
 }
 
-PagePositionHandler* XournalView::getPagePositionHandler()
-{
-	XOJ_CHECK_TYPE(XournalView);
-
-	return this->pagePosition;
-}
 
 Cursor* XournalView::getCursor()
 {

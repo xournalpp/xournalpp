@@ -96,7 +96,6 @@ public:
 	double getZoom();
 	int getDpiScaleFactor();
 	Document* getDocument();
-	PagePositionHandler* getPagePositionHandler();
 	PdfCache* getCache();
 	RepaintHandler* getRepaintHandler();
 	GtkWidget* getWidget();
@@ -181,11 +180,6 @@ private:
 	 * Handler for rerendering pages / repainting pages
 	 */
 	RepaintHandler* repaintHandler = NULL;
-
-	/**
-	 * The positions of all pages
-	 */
-	PagePositionHandler* pagePosition = NULL;
 
 	/**
 	 * Memory cleanup timeout

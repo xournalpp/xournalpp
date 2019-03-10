@@ -7,7 +7,6 @@
 #include "control/tools/EditSelection.h"
 #include "control/ToolHandler.h"
 #include "gui/Cursor.h"
-#include "gui/pageposition/PagePositionHandler.h"
 #include "gui/PageView.h"
 #include "gui/Layout.h"
 #include "gui/XournalView.h"
