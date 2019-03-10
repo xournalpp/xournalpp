@@ -4,7 +4,6 @@
 #include "control/settings/ButtonConfig.h"
 #include "gui/Cursor.h"
 #include "gui/Layout.h"
-#include "gui/pageposition/PagePositionHandler.h"
 #include "gui/widgets/XournalWidget.h"
 #include "gui/XournalView.h"
 
