@@ -162,9 +162,12 @@ protected:
 
 			if (!fn.empty())
 			{
-				if (fn.rfind('/', 0) != 0)
+				if (fn.rfind(G_DIR_SEPARATOR, 0) != 0)
 				{
-					fn = Path::fromUri(view->settings->getAudioFolder()).str() + "/" + fn;
+					Path path = Path::fromUri(view->settings->getAudioFolder());
+					path /= fn;
+
+					fn = path.str();
 				}
 				view->getXournal()->getControl()->getAudioController()->startPlayback(fn, (unsigned int) ts);
 			}
