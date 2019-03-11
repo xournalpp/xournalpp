@@ -27,6 +27,7 @@ public:
 public:
 	string getFilename();
 	void loadFile(string filename, GError** error);
+	void loadFile(GInputStream* stream, string filename, GError** error);
 
 	void setAttach(bool attach);
 

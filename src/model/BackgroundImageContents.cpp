@@ -8,6 +8,14 @@ BackgroundImageContents::BackgroundImageContents(string filename, GError** error
 	this->pixbuf = gdk_pixbuf_new_from_file(filename.c_str(), error);
 }
 
+BackgroundImageContents::BackgroundImageContents(GInputStream* stream, string filename, GError** error)
+{
+	XOJ_INIT_TYPE(BackgroundImageContents);
+
+	this->filename = filename;
+	this->pixbuf = gdk_pixbuf_new_from_stream(stream, nullptr, error);
+}
+
 BackgroundImageContents::~BackgroundImageContents()
 {
 	XOJ_CHECK_TYPE(BackgroundImageContents);

@@ -86,6 +86,10 @@ set(POPPLER_INCLUDE_DIR, "${PopplerGlib_INCLUDE_DIRS}")
 find_package (ZLIB REQUIRED)
 add_includes_ldflags ("${ZLIB_LIBRARIES}" "${ZLIB_INCLUDE_DIRS}")
 
+# libzip
+pkg_check_modules (ZIP REQUIRED "libzip >= 1.0.1")
+add_includes_ldflags ("${ZIP_LIBRARIES}" "${ZIP_INCLUDE_DIRS}")
+
 # pthreads
 find_package (Threads REQUIRED)
 set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} ${CMAKE_THREAD_LIBS_INIT})

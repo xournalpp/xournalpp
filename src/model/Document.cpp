@@ -374,7 +374,7 @@ void Document::updateIndexPageNumbers()
 	}
 }
 
-bool Document::readPdf(Path filename, bool initPages, bool attachToDocument)
+bool Document::readPdf(Path filename, bool initPages, bool attachToDocument, gpointer data, gsize length)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -382,14 +382,28 @@ bool Document::readPdf(Path filename, bool initPages, bool attachToDocument)
 
 	lock();
 
-	if (!pdfDocument.load(filename.c_str(), password.c_str(), &popplerError))
+	if (data != nullptr)
 	{
-		lastError = FS(_F("Document not loaded! ({1}), {2}") % filename.str() % popplerError->message);
-		g_error_free(popplerError);
-		unlock();
+		if (!pdfDocument.load(data, length, password, &popplerError))
+		{
+			lastError = FS(_F("Document not loaded! ({1}), {2}") % filename.str() % popplerError->message);
+			g_error_free(popplerError);
+			unlock();
 
-		return false;
+			return false;
+		}
+	} else
+	{
+		if (!pdfDocument.load(filename.c_str(), password, &popplerError))
+		{
+			lastError = FS(_F("Document not loaded! ({1}), {2}") % filename.str() % popplerError->message);
+			g_error_free(popplerError);
+			unlock();
+
+			return false;
+		}
 	}
+
 
 	this->pdfFilename = filename;
 	this->attachPdf = attachToDocument;

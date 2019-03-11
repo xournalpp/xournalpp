@@ -55,6 +55,17 @@ void BackgroundImage::loadFile(string filename, GError** error)
 	this->img = new BackgroundImageContents(filename, error);
 }
 
+void BackgroundImage::loadFile(GInputStream* stream, string filename, GError** error)
+{
+	XOJ_CHECK_TYPE(BackgroundImage);
+
+	if (this->img != NULL)
+	{
+		this->img->unreference();
+	}
+	this->img = new BackgroundImageContents(stream, filename, error);
+}
+
 void BackgroundImage::setAttach(bool attach)
 {
 	XOJ_CHECK_TYPE(BackgroundImage);

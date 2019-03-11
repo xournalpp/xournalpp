@@ -35,6 +35,7 @@ public:
 public:
 	bool save(Path filename, GError** error);
 	bool load(Path filename, string password, GError** error);
+	bool load(gpointer data, gsize length, string password, GError** error);
 	bool isLoaded();
 
 	XojPdfPageSPtr getPage(size_t page);

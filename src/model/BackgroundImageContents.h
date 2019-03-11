@@ -19,6 +19,7 @@ class BackgroundImageContents
 {
 public:
 	BackgroundImageContents(string filename, GError** error);
+	BackgroundImageContents(GInputStream* stream, string filename, GError** error);
 
 private:
 	BackgroundImageContents();

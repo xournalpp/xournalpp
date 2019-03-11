@@ -19,7 +19,10 @@
 
 #include <XournalType.h>
 
+#include <regex>
+
 #include <zlib.h>
+#include <zip.h>
 
 enum ParserPosition
 {
@@ -56,6 +59,7 @@ private:
 	void parseContents();
 	void parsePage();
 	void parseLayer();
+	void parseAudio();
 
 	void parseStroke();
 	void parseText();
@@ -66,7 +70,7 @@ private:
 	void initAttributes();
 
 	string readLine();
-	int readFile(char* buffer, int len);
+	zip_int64_t readContentFile(char* buffer, zip_uint64_t len);
 	bool closeFile();
 	bool openFile(string filename);
 	bool parseXml();
@@ -86,12 +90,15 @@ private:
 	void parseBgSolid();
 	void parseBgPixmap();
 	void parseBgPdf();
+	void parseAttachment();
 
 	void readImage(const gchar* base64string, gsize base64stringLen);
 	void readTexImage(const gchar* base64string, gsize base64stringLen);
 
 private:
 	string parseBase64(const gchar* base64, gsize lenght);
+	bool readZipAttachment(string filename, gpointer& data, gsize& length);
+	string getTempFileForPath(string filename);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -111,9 +118,13 @@ private:
 	ParserPosition pos;
 
 	string creator;
-	int fileversion;
+	int fileVersion;
+	int minimalFileVersion;
 
-	gzFile fp;
+	zip_t* zipFp;
+	zip_file_t* zipContentFile;
+	gzFile gzFp;
+	bool isGzFile = false;
 
 	vector<double> pressureBuffer;
 
@@ -123,6 +134,7 @@ private:
 	Text* text;
 	Image* image;
 	TexImage* teximage;
+	GHashTable* audioFiles = nullptr;
 
 	const char* endRootTag = "xournal";
 

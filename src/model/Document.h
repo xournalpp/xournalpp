@@ -38,7 +38,7 @@ public:
 		PDF
 	};
 
-	bool readPdf(Path filename, bool initPages, bool attachToDocument);
+	bool readPdf(Path filename, bool initPages, bool attachToDocument, gpointer data = nullptr, gsize length = 0);
 
 	size_t getPageCount();
 	size_t getPdfPageCount();

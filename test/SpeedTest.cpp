@@ -20,6 +20,8 @@ using std::function;
 using std::cout;
 using std::endl;
 #include <string>
+#include <zconf.h>
+
 using std::string;
 
 class SpeedTest
