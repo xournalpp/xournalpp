@@ -139,4 +139,7 @@ private:
 	 */
 	int lastGetViewAtPage;
 	
+	int lastGetViewRow;
+	int lastGetViewCol;
+	
 };
