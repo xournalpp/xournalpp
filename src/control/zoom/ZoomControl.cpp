@@ -404,12 +404,12 @@ bool ZoomControl::onScrolledwindowMainScrollEvent(GdkEventScroll* event)
 		gtk_widget_translate_coordinates(view->getWidget(), topLevel, 0, 0, &wx, &wy);
 
 		if (event->direction == GDK_SCROLL_UP ||
-			(event->direction == GDK_SCROLL_SMOOTH && event->delta_y > 0))
+			(event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0))
 		{
 			zoomScroll(ZOOM_IN, event->x + wx, event->y + wy);
 		}
 		else if (event->direction == GDK_SCROLL_DOWN ||
-			(event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0))
+			(event->direction == GDK_SCROLL_SMOOTH && event->delta_y > 0))
 		{
 			zoomScroll(ZOOM_OUT, event->x + wx, event->y + wy);
 		}
