@@ -76,17 +76,20 @@ void LayoutMapper::layoutMapperInit(int pages, int numRows, int numCols, bool us
 
 		// using  + ( rows-1) to round up (int)pages/rows
 		this->cols = MAX(1, (pages + firstPageOffset + (this->rows - 1)) / this->rows);
+		if (isPaired)
+		{
+			this->cols += this->cols % 2;	//make even
+		}
+
 	}
 	else
 	{
 		this->cols = MAX(1, numCols);
+		if (isPaired)
+		{
+			this->cols += this->cols % 2;	//make even
+		}
 		this->rows = MAX(1, (pages + firstPageOffset + (this->cols - 1)) / this->cols);
-	}
-
-	if (isPaired)
-	{
-		// add another column if pairing and odd number of columns.
-		this->cols += this->cols % 2;
 	}
 
 	this->layoutType = type;
