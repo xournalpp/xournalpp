@@ -9,26 +9,25 @@ Lua is needed for plugins, if it is missing, the plugins will be disabled.
 ### Arch
 ```bash
 sudo pacman -S cmake gtk3 base-devel libxml2 cppunit portaudio libsndfile \
-poppler-glib texlive-bin texlive-pictures gettext
+poppler-glib texlive-bin texlive-pictures gettext libzip
 ```
 
 ### For Fedora/CentOS/RHEL:
 ```bash
 sudo dnf install cmake gtk3-devel libxml2-devel cppunit-devel portaudio-devel libsndfile-devel \
-poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext
+poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel
 ```
 
 ### For Ubuntu/Debian:
 ````bash
 sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
-libcppunit-dev dvipng texlive libxml2-dev liblua5.3-dev
+libcppunit-dev dvipng texlive libxml2-dev liblua5.3-dev libzip-dev
 ````
 
 ### For OpenSuse:
 ```bash
 sudo zypper install cmake gtk3-devel cppunit-devel portaudio-devel libsndfile-devel \
-texlive-dvipng texlive libxml2-devel \
-libpoppler-glib-devel
+texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel
 ```
 
 
