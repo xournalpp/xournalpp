@@ -236,21 +236,30 @@ void Layout::layoutPages()
 		}
 	}
 
-	int x = XOURNAL_PADDING;
-	int y = XOURNAL_PADDING;
+	
+	//add space around the entire page area to accomodate older Wacom tablets with limited sense area.
+	int initialXPos = XOURNAL_PADDING;
+	if (settings->getAddHorizontalSpace() )
+	{
+		initialXPos += XOURNAL_PADDING_FREE_SPACE;	// this adds extra space to the left and right 
+	}
+	
+	int initialYPos = XOURNAL_PADDING;
+	if (settings->getAddVerticalSpace() )
+	{
+		initialYPos += XOURNAL_PADDING_FREE_SPACE;	// this adds space to the top and bottom
+	}	
+
+	
+	int x = initialXPos;
+	int y = initialYPos;
 
 	bool verticalSpace = settings->getAddVerticalSpace();
 	bool horizontalSpace = settings->getAddHorizontalSpace();
 
-	if (verticalSpace)
-	{
-		x += XOURNAL_PADDING_FREE_SPACE;
-	}
 
-	if (horizontalSpace)
-	{
-		y += XOURNAL_PADDING_FREE_SPACE;
-	}
+
+
 
 	// Iterate over ALL possible rows and columns and let the mapper tell us what page, if any,  is found there.
 	for (int r = 0; r < rows; r++)
@@ -305,32 +314,23 @@ void Layout::layoutPages()
 				x += sizeCol[c] + XOURNAL_PADDING_BETWEEN;
 			}
 		}
-		x = XOURNAL_PADDING;
+		x = initialXPos;
 		y += sizeRow[r] + XOURNAL_PADDING_BETWEEN;
 
 	}
 
-	int totalWidth = XOURNAL_PADDING * 2 + XOURNAL_PADDING_BETWEEN * columns;
+	int totalWidth = initialXPos * 2  + XOURNAL_PADDING_BETWEEN * columns;
 	for (int c = 0; c < columns; c++)
 	{
-		totalWidth += sizeCol[c];
+		totalWidth += sizeCol[c];	// this includes paddingLeft and paddingRight
 	}
 
-	int totalHeight = XOURNAL_PADDING * 2 + XOURNAL_PADDING_BETWEEN * rows;
+	int totalHeight = initialYPos * 2 + XOURNAL_PADDING_BETWEEN * rows;
 	for (int r = 0; r < rows; r++)
 	{
 		totalHeight += sizeRow[r];
 	}
 
-	if (verticalSpace)
-	{
-		totalWidth += XOURNAL_PADDING_FREE_SPACE * 2;
-	}
-
-	if (horizontalSpace)
-	{
-		totalHeight += XOURNAL_PADDING_FREE_SPACE * 2;
-	}
 
 	this->setLayoutSize(totalWidth, totalHeight);
 	this->view->pagePosition->update(this->view->viewPages, len, totalHeight);
