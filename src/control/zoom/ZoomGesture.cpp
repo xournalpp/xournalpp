@@ -62,6 +62,10 @@ void ZoomGesture::zoomBegin()
 
 	Rectangle zoomSequenceRectangle = zoomControl->getVisibleRect();
 
+	if(zoomControl->isZoomFitMode())
+	{
+		zoomControl->setZoomFitMode(false);
+	}
 	zoomControl->startZoomSequence(x - zoomSequenceRectangle.x, y - zoomSequenceRectangle.y);
 }
 

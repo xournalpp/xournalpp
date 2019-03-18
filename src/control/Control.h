@@ -127,6 +127,7 @@ public:
 
 	void updateWindowTitle();
 	void calcZoomFitSize();
+	void setZoomFitButton(bool enabled);
 	void setViewPairedPages(bool continous);
 	void setViewPresentationMode(bool continous);
 	void setPairsOffset(int numOffset);
@@ -263,8 +264,7 @@ protected:
 	 * On slower machine this feels more fluent, therefore this will not
 	 * be removed
 	 */
-	void zoomCallback(ActionType type);
-	void zoomFit();
+	void zoomCallback(ActionType type, bool enabled);
 
 	void rotationSnappingToggle();
 	void gridSnappingToggle();

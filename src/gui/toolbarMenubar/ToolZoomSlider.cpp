@@ -30,7 +30,7 @@ void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self)
 		return;
 	}
 
-	double back = self->zoom->getZoom100() * scaleFuncInv(gtk_range_get_value(range));
+	double back = self->zoom->getZoom100Value() * scaleFuncInv(gtk_range_get_value(range));
 	self->zoom->zoomSequnceChange(back, false);
 }
 
@@ -41,6 +41,7 @@ bool ToolZoomSlider::sliderButtonPress(GtkRange* range, GdkEvent *event, ToolZoo
 	if(!self->sliderChangingByUser)
 	{
 		self->sliderChangingByUser = true;
+		self->zoom->setZoomFitMode(false);
 		self->zoom->startZoomSequence(-1, -1);
 	}
 	return false;
@@ -110,8 +111,8 @@ void ToolZoomSlider::updateScaleMarks()
 	}
 
 	gtk_scale_clear_marks(GTK_SCALE(this->slider));
-	gtk_scale_add_mark(GTK_SCALE(this->slider), zoom->getZoom100(), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
-	gtk_scale_add_mark(GTK_SCALE(this->slider), zoom->getZoomFit(), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
+	gtk_scale_add_mark(GTK_SCALE(this->slider), scaleFunc(zoom->getZoom100Value()), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
+	gtk_scale_add_mark(GTK_SCALE(this->slider), scaleFunc(zoom->getZoomFitValue()), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
 }
 
 GtkToolItem* ToolZoomSlider::createItem(bool horizontal)

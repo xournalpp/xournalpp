@@ -55,8 +55,8 @@ public:
 	/**
 	 * Zoom so that the page fits the current size of the window
 	 */
-	void zoomFit();
-
+	void setZoomFitMode(bool isZoomFitMode);
+	bool isZoomFitMode();
 	/**
 	 * Zoom so that the displayed page on the screen has the same size as the real size
 	 * The dpi has to be set correctly
@@ -88,11 +88,11 @@ public:
 	 *
 	 * @param zoom zoom value depending zoom100Value
 	 */
-	void setZoom100(double zoom);
-	void setZoomFit(double zoom);
+	void setZoom100Value(double zoom);
+	void setZoomFitValue(double zoom);
 
-	double getZoomFit();
-	double getZoom100();
+	double getZoomFitValue();
+	double getZoom100Value();
 
 	void addZoomListener(ZoomListener* listener);
 
