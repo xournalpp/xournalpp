@@ -110,7 +110,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	this->zoom = new ZoomControl();
 	this->zoom->setZoomStep(this->settings->getZoomStep()/100.0);
 	this->zoom->setZoomStepScroll(this->settings->getZoomStepScroll()/100.0);
-	this->zoom->setZoom100(this->settings->getDisplayDpi() / 72.0);
+	this->zoom->setZoom100Value(this->settings->getDisplayDpi() / 72.0);
 
 	this->toolHandler = new ToolHandler(this, this, this->settings);
 	this->toolHandler->loadSettings();
@@ -833,7 +833,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	case ACTION_ZOOM_IN:
 	case ACTION_ZOOM_OUT:
 		Util::execInUiThread([=]() {
-			zoomCallback(type);
+			zoomCallback(type, enabled);
 		});
 		break;
 
@@ -1534,22 +1534,19 @@ void Control::calcZoomFitSize()
 		{
 			return;
 		}
-		double width = p->getWidth() + 20;
+		double page_width = p->getWidth() + 20;
 
-		GtkAllocation allocation = {0};
-
-		gtk_widget_get_allocation(win->getXournal()->getWidget(), &allocation);
-		double factor = ((double) allocation.width) / width;
-		zoom->setZoomFit(factor);
+		Rectangle widget_rect = zoom->getVisibleRect();
+		double factor = widget_rect.width / page_width;
+		zoom->setZoomFitValue(factor);
 	}
 }
 
-void Control::zoomFit()
+void Control::setZoomFitButton(bool zoomFit)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	calcZoomFitSize();
-	zoom->zoomFit();
+	fireActionSelected(GROUP_ZOOM_FIT, zoomFit ? ACTION_ZOOM_FIT : ACTION_NOT_SELECTED);
 }
 
 void Control::setViewPairedPages(bool pairedPages)
@@ -1722,7 +1719,7 @@ void Control::setViewLayoutB2T(bool b2t)
  * On slower machine this feels more fluent, therefore this will not
  * be removed
  */
-void Control::zoomCallback(ActionType type)
+void Control::zoomCallback(ActionType type, bool enabled)
 {
 	XOJ_CHECK_TYPE(Control);
 
@@ -1732,7 +1729,12 @@ void Control::zoomCallback(ActionType type)
 		zoom->zoom100();
 		break;
 	case ACTION_ZOOM_FIT:
-		zoomFit();
+		if(enabled)
+		{
+			calcZoomFitSize();
+		}
+		//enable/disable ZoomFit
+		zoom->setZoomFitMode(enabled);
 		break;
 	case ACTION_ZOOM_IN:
 		zoom->zoomOneStep(ZOOM_IN);
@@ -2137,7 +2139,7 @@ void Control::showSettings()
 
 	this->zoom->setZoomStep(settings->getZoomStep() / 100.0);
 	this->zoom->setZoomStepScroll(settings->getZoomStepScroll() / 100.0);
-	this->zoom->setZoom100(settings->getDisplayDpi() / 72.0);
+	this->zoom->setZoom100Value(settings->getDisplayDpi() / 72.0);
 
 	getWindow()->getXournal()->getTouchHelper()->reload();
 
@@ -2386,7 +2388,8 @@ void Control::fileLoaded(int scrollToPage)
 	}
 	else
 	{
-		this->zoom->zoomFit();
+		calcZoomFitSize();
+		zoom->setZoomFitMode(true);
 	}
 
 	updateWindowTitle();
@@ -2412,7 +2415,16 @@ bool Control::loadMetadataCallback(MetadataCallbackData* data)
 		return false;
 	}
 	ZoomControl* zoom = data->ctrl->zoom;
-	zoom->setZoom(data->md.zoom * zoom->getZoom100());
+	if(zoom->isZoomFitMode())
+	{
+		data->ctrl->calcZoomFitSize();
+		zoom->setZoomFitMode(true);
+	}
+	else
+	{
+		zoom->setZoomFitMode(false);
+		zoom->setZoom(data->md.zoom * zoom->getZoom100Value());
+	}
 	data->ctrl->scrollHandler->scrollToPage(data->md.page);
 
 	delete data;

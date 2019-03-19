@@ -422,7 +422,7 @@ void ToolMenuHandler::initToolItems()
 
 	ADD_STOCK_ITEM("ZOOM_OUT", ACTION_ZOOM_OUT, "zoom-out", _("Zoom out"));
 	ADD_STOCK_ITEM("ZOOM_IN", ACTION_ZOOM_IN, "zoom-in", _("Zoom in"));
-	ADD_STOCK_ITEM("ZOOM_FIT", ACTION_ZOOM_FIT, "zoom-fit-best", _("Zoom fit to screen"));
+	ADD_CUSTOM_ITEM_TGL("ZOOM_FIT", ACTION_ZOOM_FIT,  GROUP_ZOOM_FIT, false, "zoom-fit-best", _("Zoom fit to screen"));
 	ADD_STOCK_ITEM("ZOOM_100", ACTION_ZOOM_100, "zoom-original", _("Zoom to 100%"));
 
 	// Menu Navigation

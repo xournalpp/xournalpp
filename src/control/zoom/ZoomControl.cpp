@@ -1,5 +1,6 @@
 #include "ZoomControl.h"
 
+#include "control/Control.h"
 #include "gui/Layout.h"
 #include "gui/PageView.h"
 #include "gui/widgets/XournalWidget.h"
@@ -28,7 +29,10 @@ void ZoomControl::zoomOneStep(bool zoomIn, double x, double y)
 
 	startZoomSequence(x, y);
 
-	this->zoomFitMode = false;
+	if (this->zoomFitMode)
+	{
+		this->setZoomFitMode(false);
+	}
 	double newZoom;
 	if (zoomIn)
 	{
@@ -47,6 +51,11 @@ void ZoomControl::zoomScroll(bool zoomIn, double x, double y)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
+	if (this->zoomFitMode)
+	{
+		this->setZoomFitMode(false);
+	}
+
 	if (this->zoomSequenceStart == -1 || scrollCursorPositionX != x || scrollCursorPositionY != y)
 	{
 		scrollCursorPositionX = x;
@@ -54,7 +63,6 @@ void ZoomControl::zoomScroll(bool zoomIn, double x, double y)
 		startZoomSequence(x, y);
 	}
 
-	this->zoomFitMode = false;
 	double newZoom;
 	if (zoomIn)
 	{
@@ -232,11 +240,10 @@ void ZoomControl::setZoom(double zoom)
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	this->zoom = zoom;
-	this->zoomFitMode = false;
 	fireZoomChanged();
 }
 
-void ZoomControl::setZoom100(double zoom)
+void ZoomControl::setZoom100Value(double zoom)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
@@ -248,27 +255,22 @@ void ZoomControl::setZoom100(double zoom)
 	fireZoomRangeValueChanged();
 }
 
-void ZoomControl::setZoomFit(double zoom)
+void ZoomControl::setZoomFitValue(double zoom)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	this->zoomFitValue = zoom;
 	fireZoomRangeValueChanged();
-
-	if (this->zoomFitMode)
-	{
-		zoomFit();
-	}
 }
 
-double ZoomControl::getZoomFit()
+double ZoomControl::getZoomFitValue()
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	return this->zoomFitValue;
 }
 
-double ZoomControl::getZoom100()
+double ZoomControl::getZoom100Value()
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
@@ -279,21 +281,33 @@ void ZoomControl::zoom100()
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	this->zoomFitMode = false;
+	if(this->zoomFitMode)
+	{
+		this->setZoomFitMode(false);
+	}
 
 	startZoomSequence(-1, -1);
 	this->zoomSequnceChange(this->zoom100Value, false);
 	endZoomSequence();
 }
 
-void ZoomControl::zoomFit()
+void ZoomControl::setZoomFitMode(bool isZoomFitMode)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	this->zoomFitMode = true;
-	startZoomSequence(-1, -1);
-	this->zoomSequnceChange(this->zoomFitValue, false);
-	endZoomSequence();
+	this->zoomFitMode = isZoomFitMode;
+	if(isZoomFitMode)
+	{
+		startZoomSequence(-1, -1);
+		this->zoomSequnceChange(this->zoomFitValue, false);
+		endZoomSequence();
+	}
+	this->view->getControl()->setZoomFitButton(isZoomFitMode);
+}
+
+bool ZoomControl::isZoomFitMode()
+{
+	return this->zoomFitMode;
 }
 
 double ZoomControl::getZoomStep()
