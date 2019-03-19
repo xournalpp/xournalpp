@@ -237,31 +237,55 @@ void Layout::layoutPages()
 	}
 
 	
+	
+	
 	//add space around the entire page area to accomodate older Wacom tablets with limited sense area.
-	int initialXPos = XOURNAL_PADDING;
+	int borderPrefX =  XOURNAL_PADDING;
 	if (settings->getAddHorizontalSpace() )
 	{
-		initialXPos += XOURNAL_PADDING_FREE_SPACE;	// this adds extra space to the left and right 
+		borderPrefX += XOURNAL_PADDING_FREE_SPACE;	// this adds extra space to the left and right 
 	}
 	
-	int initialYPos = XOURNAL_PADDING;
+	int borderPrefY = XOURNAL_PADDING;
 	if (settings->getAddVerticalSpace() )
 	{
-		initialYPos += XOURNAL_PADDING_FREE_SPACE;	// this adds space to the top and bottom
+		borderPrefY += XOURNAL_PADDING_FREE_SPACE;	// this adds space to the top and bottom
 	}	
 
 	
-	int x = initialXPos;
-	int y = initialYPos;
+	
+	//Calculate border offset which will center pages in viewing area
+	int visibleWidth = gtk_adjustment_get_page_size(scrollHandling->getHorizontal());
+	int minRequiredWidth = XOURNAL_PADDING_BETWEEN * (columns-1);
+	for( int c = 0 ; c< columns; c++ )
+	{
+		minRequiredWidth += sizeCol[c];
+	}
+	int centeringXBorder = ( visibleWidth - minRequiredWidth )/2;	// this will center if all pages fit on screen.
 
-	bool verticalSpace = settings->getAddVerticalSpace();
-	bool horizontalSpace = settings->getAddHorizontalSpace();
+	
+	int visibleHeight = gtk_adjustment_get_page_size(scrollHandling->getVertical());
+	int minRequiredHeight = XOURNAL_PADDING_BETWEEN * (rows-1);
+	for( int r = 0 ; r< rows; r++ )
+	{
+		minRequiredHeight += sizeRow[r];
+	}
+	int centeringYBorder = ( visibleHeight - minRequiredHeight )/2;	// this will center if all pages fit on screen vertically.
+
+	
+		
+	int borderX = MAX ( borderPrefX , centeringXBorder);
+	int borderY = MAX ( borderPrefY , centeringYBorder);
+	
+	
+	// initialize here and x again in loop below.
+	int x = borderX;
+	int y = borderY;
 
 
-
-
-
-	// Iterate over ALL possible rows and columns and let the mapper tell us what page, if any,  is found there.
+	// Iterate over ALL possible rows and columns. 
+	//We don't know which page, if any,  is to be displayed in each row, column -  ask the mapper object!
+	//Then assign that page coordinates with center, left or right justify within row,column grid cell as required.
 	for (int r = 0; r < rows; r++)
 	{
 		for (int c = 0; c < columns; c++)
@@ -314,18 +338,18 @@ void Layout::layoutPages()
 				x += sizeCol[c] + XOURNAL_PADDING_BETWEEN;
 			}
 		}
-		x = initialXPos;
+		x = borderX;
 		y += sizeRow[r] + XOURNAL_PADDING_BETWEEN;
 
 	}
 
-	int totalWidth = initialXPos * 2  + XOURNAL_PADDING_BETWEEN * columns;
+	int totalWidth = borderX * 2  + XOURNAL_PADDING_BETWEEN * (columns-1);
 	for (int c = 0; c < columns; c++)
 	{
 		totalWidth += sizeCol[c];	// this includes paddingLeft and paddingRight
 	}
 
-	int totalHeight = initialYPos * 2 + XOURNAL_PADDING_BETWEEN * rows;
+	int totalHeight = borderY * 2 + XOURNAL_PADDING_BETWEEN * (rows-1);
 	for (int r = 0; r < rows; r++)
 	{
 		totalHeight += sizeRow[r];
