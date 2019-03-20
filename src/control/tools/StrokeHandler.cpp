@@ -43,7 +43,14 @@ void StrokeHandler::draw(cairo_t* cr)
 	}
 
 	view.applyColor(cr, stroke);
-	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+
+	if (stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+	  cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
+	}
+	else {
+	  cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+	}
+
 	cairo_mask_surface(cr, surfMask, 0, 0);
 }
 
@@ -94,7 +101,7 @@ bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 	else
 	{
 		if (pointCount > 0)
-		{			
+		{
 			Point prevPoint(stroke->getPoint(pointCount - 1));
 
 			Stroke lastSegment;
