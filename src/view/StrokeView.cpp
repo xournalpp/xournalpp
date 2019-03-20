@@ -84,7 +84,13 @@ void StrokeView::changeCairoSource(bool markAudioStroke)
 	if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER ||
 		(s->getAudioFilename().length() == 0 && markAudioStroke))
 	{
-		cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+		if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+			cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
+		}
+		else {
+			cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+		}
+
 		// Set the color
 		DocumentView::applyColor(cr, s, 120);
 	}
