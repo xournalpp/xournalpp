@@ -403,7 +403,7 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 		fy = f;
 	}
 	bool scale = (width != this->originalWidth || height != this->originalHeight);
-	bool rotate = (abs(this->rotation) > __DBL_EPSILON__);
+	bool rotate = (std::abs(this->rotation) > __DBL_EPSILON__);
 
 	double mx = x - this->originalX;
 	double my = y - this->originalY;
@@ -466,7 +466,7 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
 	}
 
 	bool scale = (width != this->lastWidth || height != this->lastHeight);
-	bool rotate = (abs(this->rotation) > __DBL_EPSILON__);
+	bool rotate = (std::abs(this->rotation) > __DBL_EPSILON__);
 
 	if (type == CURSOR_SELECTION_MOVE)
 	{
@@ -540,8 +540,8 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
 		this->relativeY = y;
 	}
 
-	if (abs(rotation) > __DBL_EPSILON__)	
-	{	
+	if (std::abs(rotation) > __DBL_EPSILON__)
+	{
 		this->rotation = rotation;
 	}
 
@@ -573,7 +573,7 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
 	double sx = (double) wTarget / wImg;
 	double sy = (double) hTarget / hImg;
 
-	if (wTarget != wImg || hTarget != hImg || abs(rotation) > __DBL_EPSILON__)
+	if (wTarget != wImg || hTarget != hImg || std::abs(rotation) > __DBL_EPSILON__)
 	{
 		if (!this->rescaleId)
 		{
