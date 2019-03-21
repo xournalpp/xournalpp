@@ -15,7 +15,7 @@
 #include <Range.h>
 #include <Rectangle.h>
 
-#include <math.h>
+#include <cmath>
 
 EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page, ToolHandler* handler, Redrawable* view)
 {

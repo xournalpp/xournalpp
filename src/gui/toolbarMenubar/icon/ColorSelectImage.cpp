@@ -2,7 +2,7 @@
 
 #include <pixbuf-utils.h>
 
-#include <math.h>
+#include <cmath>
 
 ColorSelectImage::ColorSelectImage(int color, bool circle)
  : color(color),

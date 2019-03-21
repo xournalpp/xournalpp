@@ -8,7 +8,7 @@
 
 #include <config-debug.h>
 
-#include <math.h>
+#include <cmath>
 
 ShapeRecognizer::ShapeRecognizer()
 {

@@ -11,7 +11,7 @@
 #include <config-features.h>
 
 #include <gdk/gdk.h>
-#include <math.h>
+#include <cmath>
 
 StrokeHandler::StrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
  : InputHandler(xournal, redrawable, page),
