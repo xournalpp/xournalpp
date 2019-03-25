@@ -14,6 +14,8 @@ AudioPlayer::~AudioPlayer()
 {
 	XOJ_CHECK_TYPE(AudioPlayer);
 
+	this->stop();
+
 	delete this->portAudioConsumer;
 	this->portAudioConsumer = nullptr;
 
