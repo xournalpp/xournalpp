@@ -278,10 +278,10 @@ void XojPageView::startText(double x, double y)
 			ToolHandler* h = xournal->getControl()->getToolHandler();
 			ownText = true;
 			text = new Text();
-			text->setX(x);
-			text->setY(y);
 			text->setColor(h->getColor());
 			text->setFont(settings->getFont());
+			text->setX(x);
+			text->setY(y - text->getElementHeight() / 2);
 
 			if (xournal->getControl()->getAudioController()->isRecording())
 			{
