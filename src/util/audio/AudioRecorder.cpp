@@ -16,6 +16,8 @@ AudioRecorder::~AudioRecorder()
 {
 	XOJ_CHECK_TYPE(AudioRecorder);
 
+	this->stop();
+
 	delete this->portAudioProducer;
 	this->portAudioProducer = nullptr;
 
