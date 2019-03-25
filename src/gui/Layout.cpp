@@ -7,13 +7,6 @@
 #include "widgets/XournalWidget.h"
 #include "gui/scroll/ScrollHandling.h"
 
-// TODO: REMOVE AFTER TEST
-	#include <iostream>
-	#include <chrono>
-	typedef std::chrono::high_resolution_clock Clock;
-
-
-
 /**
  * Padding outside the pages, including shadow
  */
@@ -34,17 +27,6 @@ const int XOURNAL_ROOM_FOR_SHADOW = 3;
  */
 const int XOURNAL_PADDING_BETWEEN = 15;
 
-
-// TODO: REMOVE AFTER TEST
-double binarySearchtime = 0;
-double linearSearchTime = 0;
-double fromLastLinearSearchTime = 0;
-double fromCalcLinearSearchTime = 0;
-double fromB4LastLinearSearchTime = 0;
-double fromB4LastLinearBackSearchTime = 0;
-double plotindex = 0;
-						
-						
 
 
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
@@ -71,9 +53,9 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
 			layout->scrollHandling->scrollChanged();
 		}), this);
 	
-	this->lastGetViewAtPage = 0;
-	this->lastGetViewRow = 0;
-	this->lastGetViewCol = 0;
+	this->lastGetViewAtPageNum = 0;
+	this->lastGetViewAtRow = 0;
+	this->lastGetViewAtCol = 0;
 
 	lastScrollHorizontal = gtk_adjustment_get_value(scrollHandling->getHorizontal());
 	lastScrollVertical = gtk_adjustment_get_value(scrollHandling->getVertical());
@@ -217,9 +199,9 @@ void Layout::layoutPages()
 
 	int len = this->view->viewPagesLen;
 	
-	this->lastGetViewAtPage = len;  // invalidate cache index.
-	this->lastGetViewRow = 0;
-	this->lastGetViewCol = 0;
+	this->lastGetViewAtPageNum = len;  // invalidate cache index.
+	this->lastGetViewAtRow = 0;
+	this->lastGetViewAtCol = 0;
 	
 	Settings* settings = this->view->getControl()->getSettings();
 
@@ -228,7 +210,6 @@ void Layout::layoutPages()
 
 	// get from mapper (some may have changed to accomodate paired setting etc.)
 	bool isPairedPages = mapper.getPairedPages();
-	int pagesOffset = mapper.getFirstPageOffset();
 	this->rows = mapper.getRows();
 	this->columns = mapper.getColumns();
 
@@ -450,292 +431,83 @@ XojPageView* Layout::getViewAt(int x, int y)
 	
 	XOJ_CHECK_TYPE(Layout);
 
-//	//try cached result first
-	if  ( this->lastGetViewAtPage < this->view->viewPagesLen    &&     this->view->viewPages[this->lastGetViewAtPage]->containsPoint(x,y,false) )
+	//try cached result first
+	if  ( this->lastGetViewAtPageNum < this->view->viewPagesLen    &&     this->view->viewPages[this->lastGetViewAtPageNum]->containsPoint(x,y,false) )
 	{
-			return this->view->viewPages[this->lastGetViewAtPage];
+			return this->view->viewPages[this->lastGetViewAtPageNum];
 	}
 	
 	int r;
 	int c;
 	int numRows = this->mapper.getRows();
 	int numCols = this->mapper.getColumns();
-	
-
-	auto t1 = Clock::now();	// TODO: REMOVE AFTER TEST					************* 	BINARY SEARCH 	***************
-
-		
-			  
-			  
-	auto rit = std::lower_bound( this->sizeRow.begin(),  this->sizeRow.end(), y);	//binary search
-	r = rit -  this->sizeRow.begin();	//get index
-	
-	
-	auto cit = std::lower_bound( this->sizeCol.begin(),  this->sizeCol.end(), x);
-	c = cit -  this->sizeCol.begin();
+			
+//  Binary Search ... too much overhead makes this a slower option. Leave here for checking against.  
+// 	auto rit = std::lower_bound( this->sizeRow.begin(),  this->sizeRow.end(), y);	//binary search
+// 	int rb = rit -  this->sizeRow.begin();	//get index
+// 	
+// 	
+// 	auto cit = std::lower_bound( this->sizeCol.begin(),  this->sizeCol.end(), x);
+// 	int cb = cit -  this->sizeCol.begin();
 
 
-	auto t2 = Clock::now();	// TODO: REMOVE AFTER TEST					************* 	LINEAR SEARCH: From 0	***************
 
-
-	/* test against linear search: */
-	int r1;
-	for( r1 = 0; r1 < numRows; r1++)
-	{
-		if ( y <=   this->sizeRow[r1] ) break;	// found region
-	}
-
-	int c1;
-	for( c1 = 0; c1 < numCols; c1++)
-	{
-		if ( x <=  this->sizeCol[c1]) break;
-	}
-	//*/
-	
-
-	auto t3 = Clock::now();	// TODO: REMOVE AFTER TEST					************* 	LINEAR SEARCH: From Previous 	***************
 
 						
-	/* Linear Search from last position: */
+	/* Linear Up or Down Search from last position: */
 	
 	// Rows:
-	int r2 = this->lastGetViewRow;
-	if( r2 > 0 && y <= this->sizeRow[r2] ) //search lower
+	r = MAX(0, this->lastGetViewAtRow - 1);
+	if( r > 0 && y <= this->sizeRow[r] ) //search lower
 	{
-		for( r2--; r2>=0; r2--)
+		for( r--; r>=0; r--)
 		{
-			if ( y >   this->sizeRow[r2] ) 
+			if ( y >   this->sizeRow[r] ) 
 			{	
-				break;	// past region
+				break;	// past region - it's back up one
 			}
 		}
-		r2++;
+		r++;
 	}
-	else
+	else	//search higher
 	{
-		for( ;  r2 < numRows; r2++)
+		for( ;  r < numRows; r++)
 		{
-			if ( y <=   this->sizeRow[r2] ) break;	// found region
+			if ( y <=   this->sizeRow[r] ) break;	// found region
 		}		
 		
 	}
 	
 	
-	//Columns:
-	int c2 = this->lastGetViewCol;						
-	if( c2 >0 && x <= this->sizeCol[c2] ) //search lower
+	//Now for columns:
+	c = MAX(0, this->lastGetViewAtCol - 1);			
+	if( c >0 && x <= this->sizeCol[c] ) //search lower
 	{
-		for( c2--; c2>=0; c2--)
+		for( c--; c>=0; c--)
 		{
-			if ( x >   this->sizeCol[c2] ) 
+			if ( x >   this->sizeCol[c] ) 
 			{	
 				break;	// past region
 			}
 		}
-		c2++;
+		c++;
 	}
 	else
 	{
-		for( ;  c2 < numCols; c2++)
+		for( ;  c < numCols; c++)
 		{
-			if ( x <=   this->sizeCol[c2] ) break;	// found region
-		}		
-		
-	}
-	
-
-							auto t4 = Clock::now();	// TODO: REMOVE AFTER TEST					************* 	LINEAR SEARCH: From Approximation - would be bad with irregular sized pages - bi-directional	***************
-
-						
-	/* Linear Search from calculated position: */
-	
-	// Rows:
-	int r3 = y / ( this->sizeRow[numRows-1]/numRows);
-	int calcR = r3;
-	if( r3 > 0 && y <= this->sizeRow[r3] ) //search lower
-	{
-		for( r3--; r3>=0; r3--)
-		{
-			if ( y >   this->sizeRow[r3] ) 
-			{	
-				break;	// past region
-			}
-		}
-		r3++;
-	}
-	else
-	{
-		for( ;  r3 < numRows; r3++)
-		{
-			if ( y <=   this->sizeRow[r3] ) break;	// found region
+			if ( x <=   this->sizeCol[c] ) break;	// found region
 		}		
 		
 	}
 	
 	
-	//Columns:					
-	int c3 = x / ( this->sizeCol[numCols-1]/numCols);
-	int calcC = c3;
-	if( c3 >0 && x <= this->sizeCol[c3] ) //search lower
-	{
-		for( c3--; c3>=0; c3--)
-		{
-			if ( x >   this->sizeCol[c3] ) 
-			{	
-				break;	// past region
-			}
-		}
-		c3++;
-	}
-	else
-	{
-		for( ;  c3 < numCols; c3++)
-		{
-			if ( x <=   this->sizeCol[c3] ) break;	// found region
-		}		
-		
-	}			
-		
-		
-		
-	auto t5 = Clock::now();	// TODO: REMOVE AFTER TEST					************* 	LINEAR SEARCH: From previous - 2	forward only ***************
-
-
-	/* test against linear search: */
-	int r4 = MAX(0, this->lastGetViewRow - 3);
-	if ( y >   this->sizeRow[r4] )	//search forward
-	{
-		r4++;
-		for( ; r4 < numRows; r4++)
-		{
-			if ( y <=   this->sizeRow[r4] ) break;	// found region
-		}
-	}
-	else
-	{
-		for( r4 = 0; r4 < numRows; r4++)
-		{
-			if ( y <=   this->sizeRow[r4] ) break;	// found region
-		}
-	}
-	
-
-	int c4 = MAX(0, this->lastGetViewCol - 3);
-	if ( x >  this->sizeCol[c4])	//search forward
-	{
-		c4++;	
-		for( ; c4 < numCols; c4++)
-		{
-			if ( x <=  this->sizeCol[c4]) break;
-		}
-	}
-	else
-	{
-		for( c4 = 0; c4 < numCols; c4++)
-		{
-			if ( x <=  this->sizeCol[c4]) break;
-		}
-	}
-	//*/
-	
-	
-		auto t6 = Clock::now();	// TODO: REMOVE AFTER TEST					************* 	LINEAR SEARCH: From Previous - Bidriectional	***************
-
-						
-	/* Linear Search from last position: */
-	
-	// Rows:
-	int r5 = MAX(0, this->lastGetViewRow - 1);
-	if( r5 > 0 && y <= this->sizeRow[r5] ) //search lower
-	{
-		for( r5--; r5>=0; r5--)
-		{
-			if ( y >   this->sizeRow[r5] ) 
-			{	
-				break;	// past region
-			}
-		}
-		r5++;
-	}
-	else
-	{
-		for( ;  r5 < numRows; r5++)
-		{
-			if ( y <=   this->sizeRow[r5] ) break;	// found region
-		}		
-		
-	}
-	
-	
-	//Columns:
-	int c5 = MAX(0, this->lastGetViewCol - 1);			
-	if( c5 >0 && x <= this->sizeCol[c5] ) //search lower
-	{
-		for( c5--; c5>=0; c5--)
-		{
-			if ( x >   this->sizeCol[c5] ) 
-			{	
-				break;	// past region
-			}
-		}
-		c5++;
-	}
-	else
-	{
-		for( ;  c5 < numCols; c5++)
-		{
-			if ( x <=   this->sizeCol[c5] ) break;	// found region
-		}		
-		
-	}
-	
-
-	
-	
-
-		
-							// TODO: REMOVE BELOW AFTER TEST
-							auto t7 = Clock::now();
-							
-							binarySearchtime += std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
-							linearSearchTime += std::chrono::duration_cast<std::chrono::nanoseconds>(t3 - t2).count();
-							fromLastLinearSearchTime += std::chrono::duration_cast<std::chrono::nanoseconds>(t4 - t3).count();
-							fromCalcLinearSearchTime += std::chrono::duration_cast<std::chrono::nanoseconds>(t5 - t4).count();
-							fromB4LastLinearSearchTime += std::chrono::duration_cast<std::chrono::nanoseconds>(t6 - t5).count();
-							fromB4LastLinearBackSearchTime += std::chrono::duration_cast<std::chrono::nanoseconds>(t7 - t6).count();
-								
-							string cOK =  ( c == c1 &&  c == c2 && c == c3 &&  c == c4 && c == c5)? "cOK" : "cBAD";  
-							string rOK =  ( r == r1 &&  r == r2 && r == r3 &&  r == r4 && r == r5)? "rOK" : "rBAD";  
-								if( plotindex == 0 )
-								{
-									std::clog << " index \t binary \tlinear \t fromlast \t fromCalc \t fromB4Last \t fromB4LastBiDir" << std::endl;
-								}
-								std::clog << plotindex++ << '\t' 
-									<< binarySearchtime << '\t'
-									<< linearSearchTime << '\t'
-									<< fromLastLinearSearchTime << "\t"
-									<< fromCalcLinearSearchTime << "\t"
-									<< fromB4LastLinearSearchTime << "\t"									
-									<< fromB4LastLinearBackSearchTime 
-									<< "\t\t"									
-									<< c << '=' << c1 << '=' << c2 << '=' << c3 << '=' << c4 << '=' << c5 <<" \t" << cOK << "\t"
-									<< r << '=' << r1 << '=' << r2 << '=' << r3 << '=' << r4 << '=' << r5 << " \t" << rOK << "\t"
-									<< " \t Last " << this->lastGetViewCol << ":" << this->lastGetViewRow << "\t\t"
-									<< " \t Calc " << calcC << ":" << calcR
-									<< std::endl;
-									
-							c = c3;
-							r = r3;
-
-
-		
-	
-	if ( c <= numCols  && r <= numRows ) 
+	if ( c < numCols  && r < numRows ) 
 	{
 		int page = this->mapper.map(c,r);
-		this->lastGetViewAtPage = page;
-		this->lastGetViewRow = r;
-		this->lastGetViewCol = c;
+		this->lastGetViewAtPageNum = page;
+		this->lastGetViewAtRow = r;
+		this->lastGetViewAtCol = c;
 
 		if ( page>=0 && this->view->viewPages[page]->containsPoint(x,y,false) )
 		{

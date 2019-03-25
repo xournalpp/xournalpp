@@ -135,11 +135,11 @@ private:
 	std::vector<int> sizeRow;
 	
 	/**
-	 * cache the last GetViewAt() page#
+	 * cache the last GetViewAt() page#, row and column.
 	 */
-	int lastGetViewAtPage;
+	int lastGetViewAtPageNum;
 	
-	int lastGetViewRow;
-	int lastGetViewCol;
+	int lastGetViewAtRow;
+	int lastGetViewAtCol;
 	
 };
