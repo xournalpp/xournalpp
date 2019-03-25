@@ -110,7 +110,7 @@ void Layout::updateCurrentPage()
 
 		// if we are already under the visible rectangle
 		// then everything below will not be visible...
-		if(currentRect.y > visRect.y + visRect.height)
+		if (currentRect.y > visRect.y + visRect.height)
 		{
 			p->setIsVisible(false);
 			for (; page < this->view->viewPagesLen; page++)
@@ -261,7 +261,7 @@ void Layout::layoutPages()
 	//Calculate border offset which will center pages in viewing area
 	int visibleWidth = gtk_adjustment_get_page_size(scrollHandling->getHorizontal());
 	int minRequiredWidth = XOURNAL_PADDING_BETWEEN * (columns-1);
-	for( int c = 0 ; c< columns; c++ )
+	for (int c = 0 ; c< columns; c++ )
 	{
 		minRequiredWidth += this->sizeCol[c];
 	}
@@ -270,7 +270,7 @@ void Layout::layoutPages()
 	
 	int visibleHeight = gtk_adjustment_get_page_size(scrollHandling->getVertical());
 	int minRequiredHeight = XOURNAL_PADDING_BETWEEN * (rows-1);
-	for( int r = 0 ; r< rows; r++ )
+	for (int r = 0 ; r< rows; r++ )
 	{
 		minRequiredHeight += this->sizeRow[r];
 	}
@@ -430,9 +430,9 @@ XojPageView* Layout::getViewAt(int x, int y)
 	XOJ_CHECK_TYPE(Layout);
 
 	//try cached result first
-	if  ( this->lastGetViewAtPageNum < this->view->viewPagesLen    &&     this->view->viewPages[this->lastGetViewAtPageNum]->containsPoint(x,y,false) )
+	if (this->lastGetViewAtPageNum < this->view->viewPagesLen && this->view->viewPages[this->lastGetViewAtPageNum]->containsPoint(x,y,false))
 	{
-			return this->view->viewPages[this->lastGetViewAtPageNum];
+		return this->view->viewPages[this->lastGetViewAtPageNum];
 	}
 	
 	int r;
@@ -440,13 +440,13 @@ XojPageView* Layout::getViewAt(int x, int y)
 	int numRows = this->mapper.getRows();
 	int numCols = this->mapper.getColumns();
 			
-//  Binary Search ... too much overhead makes this a slower option. Leave here for checking against.  
+//  //Binary Search ... too much overhead makes this a slower option. Leave here for checking against.  
 // 	auto rit = std::lower_bound( this->sizeRow.begin(),  this->sizeRow.end(), y);	//binary search
-// 	int rb = rit -  this->sizeRow.begin();	//get index
+// 	int rb = rit - this->sizeRow.begin();	//get index
 // 	
 // 	
 // 	auto cit = std::lower_bound( this->sizeCol.begin(),  this->sizeCol.end(), x);
-// 	int cb = cit -  this->sizeCol.begin();
+// 	int cb = cit - this->sizeCol.begin();
 
 
 
@@ -456,58 +456,58 @@ XojPageView* Layout::getViewAt(int x, int y)
 	
 	// Rows:
 	r = MAX(0, this->lastGetViewAtRow - 1);
-	if( r > 0 && y <= this->sizeRow[r] ) //search lower
+	if (r > 0 && y <= this->sizeRow[r]) //search lower
 	{
-		for( r--; r>=0; r--)
+		for (r--; r>=0; r--)
 		{
 			if ( y >   this->sizeRow[r] ) 
-			{	
-				break;	// past region - it's back up one
+			{
+				break;	// past region
 			}
 		}
-		r++;
+		r++;	// it's back up one
 	}
 	else	//search higher
 	{
-		for( ;  r < numRows; r++)
+		for (; r < numRows; r++)
 		{
-			if ( y <=   this->sizeRow[r] ) break;	// found region
-		}		
+			if (y <=   this->sizeRow[r]) break;	// found region
+		}
 		
 	}
 	
 	
 	//Now for columns:
 	c = MAX(0, this->lastGetViewAtCol - 1);			
-	if( c >0 && x <= this->sizeCol[c] ) //search lower
+	if (c >0 && x <= this->sizeCol[c]) //search lower
 	{
-		for( c--; c>=0; c--)
+		for (c--; c>=0; c--)
 		{
-			if ( x >   this->sizeCol[c] ) 
-			{	
-				break;	// past region
+			if (x >   this->sizeCol[c]) 
+			{
+				break;
 			}
 		}
 		c++;
 	}
 	else
 	{
-		for( ;  c < numCols; c++)
+		for (; c < numCols; c++)
 		{
-			if ( x <=   this->sizeCol[c] ) break;	// found region
-		}		
+			if (x <=   this->sizeCol[c]) break;
+		}
 		
 	}
 	
 	
-	if ( c < numCols  && r < numRows ) 
+	if (c < numCols && r < numRows) 
 	{
 		int page = this->mapper.map(c,r);
 		this->lastGetViewAtPageNum = page;
 		this->lastGetViewAtRow = r;
 		this->lastGetViewAtCol = c;
 
-		if ( page>=0 && this->view->viewPages[page]->containsPoint(x,y,false) )
+		if (page>=0 && this->view->viewPages[page]->containsPoint(x,y,false))
 		{
 			return this->view->viewPages[page];
 		}

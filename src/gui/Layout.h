@@ -137,8 +137,7 @@ private:
 	/**
 	 * cache the last GetViewAt() page#, row and column.
 	 */
-	int lastGetViewAtPageNum;
-	
+	int lastGetViewAtPageNum;	
 	int lastGetViewAtRow;
 	int lastGetViewAtCol;
 	
