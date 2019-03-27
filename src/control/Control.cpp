@@ -2821,6 +2821,10 @@ bool Control::close(bool destroy, bool allowCancel)
 		{
 			return false;
 		}
+		else
+		{
+			destroy = true;
+		}
 	}
 	
 	if (!doc->getFilename().isEmpty())
@@ -2855,6 +2859,10 @@ bool Control::close(bool destroy, bool allowCancel)
 			if (resDocRemoved != 2) // 2 = discard
 			{
 				return false;
+			}
+			else
+			{
+				destroy = true;
 			}
 		}
 	}
