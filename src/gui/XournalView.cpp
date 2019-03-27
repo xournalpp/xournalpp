@@ -746,7 +746,7 @@ void XournalView::pageInserted(size_t page)
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	layout->layoutPages();
-	layout->updateCurrentPage();
+	layout->updateVisibility();
 }
 
 double XournalView::getZoom()

@@ -6,6 +6,12 @@
 #include "widgets/XournalWidget.h"
 #include "gui/scroll/ScrollHandling.h"
 
+											// TODO: DELME after TEST
+											#include <iostream>  //DELME and next two lines after testing
+											#include <locale>
+											#include <chrono>
+											typedef std::chrono::high_resolution_clock Clock;
+ 	
 /**
  * Padding outside the pages, including shadow
  */
@@ -39,7 +45,7 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
 		{
 			XOJ_CHECK_TYPE_OBJ(layout, Layout);
 			layout->checkScroll(adjustment, layout->lastScrollHorizontal);
-			layout->updateCurrentPage();
+			layout->updateVisibility();
 			layout->scrollHandling->scrollChanged();
 		}), this);
 
@@ -48,7 +54,7 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
 		{
 			XOJ_CHECK_TYPE_OBJ(layout, Layout);
 			layout->checkScroll(adjustment, layout->lastScrollVertical);
-			layout->updateCurrentPage();
+			layout->updateVisibility();
 			layout->scrollHandling->scrollChanged();
 		}), this);
 	
@@ -70,93 +76,192 @@ void Layout::checkScroll(GtkAdjustment* adjustment, double& lastScroll)
 }
 
 /**
- * Check which page should be selected
+ * Update Visibilty for each page
  */
-void Layout::updateCurrentPage()
+void Layout::updateVisibility()
 {
 	XOJ_CHECK_TYPE(Layout);
 
 	Rectangle visRect = getVisibleRect();
 
-	Control* control = this->view->getControl();
+	// DELME - original function also selected a new page based on visibility but this behaviour interferes with zooming etc.
+	//		Control* control = this->view->getControl();
+	//		control->firePageSelected(mostPageNr);
+	
+	
+	// step through every possible page position and call p->setIsVisible(false)
+	// if currently selected page is visible then keep it selected otherwise select page in the middle of visible area.
+	// only  "control->firePageSelected(mostPageNr)" if new selection 
+	int x1 = 0;
+	int y1 = 0;	
+	
+	
+											// TODO: DELME after TEST
+											auto t0 = Clock::now();
 
-	bool pairedPages = control->getSettings()->isShowPairedPages();
 
-	if (visRect.y < 1)
+	x1 = 0;
+	y1 = 0;
+	
+	for (int onRow = 0; onRow < this->rows; onRow++)
 	{
-		if (pairedPages && this->view->viewPagesLen > 1 &&
-		    this->view->viewPages[1]->isSelected())
+		int y2 = this->sizeRow[onRow];
+		for (int onCol = 0; onCol < this->columns; onCol++)
 		{
-			// page 2 already selected
-		}
-		else
-		{
-			control->firePageSelected(0);
-		}
-		return;
-	}
-
-	size_t mostPageNr = 0;
-	double mostPagePercent = 0;
-
-	for (size_t page = 0; page < this->view->viewPagesLen; page++)
-	{
-		XojPageView* p = this->view->viewPages[page];
-
-		Rectangle currentRect = p->getRect();
-
-		// if we are already under the visible rectangle
-		// then everything below will not be visible...
-		if (currentRect.y > visRect.y + visRect.height)
-		{
-			p->setIsVisible(false);
-			for (; page < this->view->viewPagesLen; page++)
+			int x2 = this->sizeCol[onCol];		
+			int pageIndex = this->mapper.map(onCol, onRow);
+			if (pageIndex >= 0)	// a page exists at this grid location
 			{
-				p = this->view->viewPages[page];
-				p->setIsVisible(false);
+
+				XojPageView* pageView = this->view->viewPages[pageIndex];
+				
+							// TODO - DELME - TESTING
+							//if( onCol ==3 && onRow ==3 )
+							// {
+							// 	int dx = ( MIN(x2,(visRect.x+visRect.width)) -  MAX( x1, visRect.x));
+							// 	int dy = ( MIN(y2,(visRect.y+visRect.height)) -  MAX( y1, visRect.y));
+							// 	int area = dx * dy;
+							// 	std::clog << "dx=" << dx << " \tdy=" << dy << " \tArea=" << area ;
+							// }
+				
+
+				Rectangle pageRect = pageView->getRect();
+				if(		!(visRect.x >pageRect.x+pageRect.width  || visRect.x+visRect.width < pageRect.x) // visrect not outside current row/col 
+					&& 	!(visRect.y >pageRect.y+pageRect.height  || visRect.y+visRect.height < pageRect.y))
+				{
+					pageView->setIsVisible(true);
+							// if( onCol ==3 && onRow ==3 ) std::clog << "\t VISIBLE " <<std::endl; // TODO - DELME - TESTING
+				}
+				else{
+					pageView->setIsVisible(false);
+							// if( onCol ==3 && onRow ==3 ) std::clog << "\t ------ " <<std::endl; // TODO - DELME - TESTING
+				}
 			}
-
-			break;
+			x1 = x2;
 		}
+		y1 = y2;
+	}
 
-		// if the condition is satisfied we know that
-		// the rectangles intersect vertically
-		if (currentRect.y + currentRect.height >= visRect.y)
+											// TODO: DELME after TEST
+											auto t1 = Clock::now();	 
+
+
+	x1 = 0;
+	y1 = 0;
+	
+	for (int onRow = 0; onRow < this->rows; onRow++)
+	{
+		int y2 = this->sizeRow[onRow];
+		for (int onCol = 0; onCol < this->columns; onCol++)
 		{
-
-			double percent =
-				currentRect.intersect(visRect).area() / currentRect.area();
-
-			if (percent > mostPagePercent)
+			int x2 = this->sizeCol[onCol];		
+			int pageIndex = this->mapper.map(onCol, onRow);
+			if (pageIndex >= 0)	// a page exists at this grid location
 			{
-				mostPagePercent = percent;
-				mostPageNr = page;
+
+				XojPageView* pageView = this->view->viewPages[pageIndex];
+				
+							// TODO - DELME - TESTING
+							//if( onCol ==3 && onRow ==3 )
+							// {
+							// 	int dx = ( MIN(x2,(visRect.x+visRect.width)) -  MAX( x1, visRect.x));
+							// 	int dy = ( MIN(y2,(visRect.y+visRect.height)) -  MAX( y1, visRect.y));
+							// 	int area = dx * dy;
+							// 	std::clog << "dx=" << dx << " \tdy=" << dy << " \tArea=" << area ;
+							// }
+				
+				//This checks if actual page is visible but runs 5x slower. Actual timing: 304457 vs 62168ns
+				// Rectangle pageRect = pageView->getRect();
+				// if(		!(visRect.x >pageRect.x+pageRect.width  || visRect.x+visRect.width < pageRect.x) // visrect not outside current row/col 
+				// 	&& 	!(visRect.y >pageRect.y+pageRect.height  || visRect.y+visRect.height < pageRect.y))
+
+				//check if grid location is visible as an aprox for page visiblity:
+				if(		!(visRect.x >x2  || visRect.x+visRect.width < x1) // visrect not outside current row/col 
+					&& 	!(visRect.y >y2  || visRect.y+visRect.height < y1))
+				{
+					pageView->setIsVisible(true);
+							//if( onCol ==3 && onRow ==3 ) std::clog << "\t VISIBLE " <<std::endl;// TODO - DELME - TESTING
+				}
+				else{
+					pageView->setIsVisible(false);
+							//if( onCol ==3 && onRow ==3 ) std::clog << "\t ------ " <<std::endl;// TODO - DELME - TESTING
+				}
 			}
-
-			p->setIsVisible(true);
+			x1 = x2;
 		}
-		else
-		{
-			p->setIsVisible(false);
-		}
+		y1 = y2;
 	}
 
-	if (pairedPages && mostPageNr < this->view->viewPagesLen - 1)
+												// TODO: DELME after TEST
+											auto t2 = Clock::now();	 
+
+	// Combine the two:  Check page visibility but only if it's grid location is visible.
+	x1 = 0;
+	y1 = 0;
+	
+	for (int onRow = 0; onRow < this->rows; onRow++)
 	{
-		int y1 = this->view->viewPages[mostPageNr]->getY();
-		int y2 = this->view->viewPages[mostPageNr + 1]->getY();
-
-		if (y1 != y2 || !this->view->viewPages[mostPageNr + 1]->isSelected())
+		int y2 = this->sizeRow[onRow];
+		for (int onCol = 0; onCol < this->columns; onCol++)
 		{
-			// if the second page is selected DON'T select the first page.
-			// Only select the first page if none is selected
-			control->firePageSelected(mostPageNr);
+			int x2 = this->sizeCol[onCol];		
+			int pageIndex = this->mapper.map(onCol, onRow);
+			if (pageIndex >= 0)	// a page exists at this grid location
+			{
+
+				XojPageView* pageView = this->view->viewPages[pageIndex];
+				
+							// TODO - DELME - TESTING
+							//if( onCol ==3 && onRow ==3 )
+							// {
+							// 	int dx = ( MIN(x2,(visRect.x+visRect.width)) -  MAX( x1, visRect.x));
+							// 	int dy = ( MIN(y2,(visRect.y+visRect.height)) -  MAX( y1, visRect.y));
+							// 	int area = dx * dy;
+							// 	std::clog << "dx=" << dx << " \tdy=" << dy << " \tArea=" << area ;
+							// }
+				
+				//check if grid location is visible as an aprox for page visiblity:
+				if(		!(visRect.x >x2  || visRect.x+visRect.width < x1) // visrect not outside current row/col 
+					&& 	!(visRect.y >y2  || visRect.y+visRect.height < y1))
+				{
+					Rectangle pageRect = pageView->getRect();
+					if(		!(visRect.x >pageRect.x+pageRect.width  || visRect.x+visRect.width < pageRect.x) // visrect not outside current row/col 
+						&& 	!(visRect.y >pageRect.y+pageRect.height  || visRect.y+visRect.height < pageRect.y))
+					{
+						pageView->setIsVisible(true);
+					}	
+					else 
+					{
+						pageView->setIsVisible(false);
+					}
+				}
+				else
+				{
+					pageView->setIsVisible(false);
+							
+				}
+			}
+			x1 = x2;
 		}
+		y1 = y2;
 	}
-	else
-	{
-		control->firePageSelected(mostPageNr);
-	}
+	
+											// TODO: DELME after TEST
+											auto t3 = Clock::now();	
+												
+											double page = std::chrono::duration_cast<std::chrono::nanoseconds>(t1 - t0).count();
+											double gridAprox = std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
+											double gridThenPage = std::chrono::duration_cast<std::chrono::nanoseconds>(t3 - t2).count();
+											std::clog.imbue(std::locale("")); //print with nice thousands separators etc.
+											std::clog << "updateVisibility Timing ( page, grid, gridThenPage):\t"
+														<< page << '\t'
+														<< gridAprox << '\t'
+														<< gridThenPage << std::endl ;
+														
+											//example output:
+											//	updateVisibility Timing ( page, grid, gridThenPage):	521,726	63,086	80,718
+
+	
 }
 
 Rectangle Layout::getVisibleRect()
@@ -189,6 +294,12 @@ double Layout::getLayoutWidth()
 	return layoutWidth;
 }
 
+
+/**
+ * layoutPages
+ *  Sets out pages in a grid.
+ *  Document pages are assigned to grid positions by the mapper object and may be ordered in a myriad of ways.
+ */
 void Layout::layoutPages()
 {
 	XOJ_CHECK_TYPE(Layout);
@@ -199,12 +310,12 @@ void Layout::layoutPages()
 	Settings* settings = this->view->getControl()->getSettings();
 
 	// obtain rows, cols, paired and layout from view settings
-	mapper.configureFromSettings(len, settings);
+	this->mapper.configureFromSettings(len, settings);
 
 	// get from mapper (some may have changed to accomodate paired setting etc.)
-	bool isPairedPages = mapper.getPairedPages();
-	this->rows = mapper.getRows();
-	this->columns = mapper.getColumns();
+	bool isPairedPages = this->mapper.getPairedPages();
+	this->rows = this->mapper.getRows();
+	this->columns = this->mapper.getColumns();
 	
 	this->lastGetViewAtRow = this->rows/2;		//reset to middle
 	this->lastGetViewAtCol = this->columns/2;
@@ -213,16 +324,18 @@ void Layout::layoutPages()
 	this->sizeCol.assign(this->columns,0); //new size, clear to 0's
 
 	this->sizeRow.assign(this->rows,0);
+	
+	// look through every grid position, get assigned page from mapper and find out minimal row and column sizes to fit largest pages.
 
 	for (int r = 0; r < this->rows; r++)
 	{
 		for (int c = 0; c < this->columns; c++)
 		{
-			int k = mapper.map(c, r);
-			if (k >= 0)
+			int pageIndex = this->mapper.map(c, r);
+			if (pageIndex >= 0)
 			{
 
-				XojPageView* v = this->view->viewPages[k];
+				XojPageView* v = this->view->viewPages[pageIndex];
 
 				if (this->sizeCol[c] < v->getDisplayWidth())
 				{
@@ -291,7 +404,7 @@ void Layout::layoutPages()
 	{
 		for (int c = 0; c < this->columns; c++)
 		{
-			int pageAtRowCol = mapper.map(c, r);
+			int pageAtRowCol = this->mapper.map(c, r);
 
 			if (pageAtRowCol >= 0)
 			{
@@ -348,7 +461,7 @@ void Layout::layoutPages()
 	for (int c = 0; c < this->columns; c++)
 	{
 		totalWidth += this->sizeCol[c] + XOURNAL_PADDING_BETWEEN;
-		this->sizeCol[c] = totalWidth;	//accumulated for use by getViewAt()
+		this->sizeCol[c] = totalWidth;	//accumulated - absolute pixel location for use by getViewAt() and updateVisibility()
 	}
 	totalWidth += borderX - XOURNAL_PADDING_BETWEEN;
 

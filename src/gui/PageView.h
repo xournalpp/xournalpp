@@ -129,7 +129,7 @@ public:
 	 * respect to the display
 	 */
 	int getY() const;
-
+	
 	TexImage* getSelectedTex();
 	Text* getSelectedText();
 
