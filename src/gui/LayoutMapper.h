@@ -49,8 +49,8 @@ public:
 			
 
 	/**
-	 *  configureFromSettings
-	 * configure layoutMapper from user settings settings
+	 * configureFromSettings
+	 * Obtain user settings to determine arguments to configure().
 	 * 
 	 * @param  pages  The number of pages in the document
 	 * @param  settings  The Settings from which users settings are obtained
@@ -62,9 +62,9 @@ public:
 	virtual ~LayoutMapper();
 private:
 	/**
-	 * layoutMapperInit
+	 * configure
 	 * 
-	 * Initialize mapper of LayoutType with number of pages and of fixed rows or columns
+	 * Set mapper to LayoutType with number of pages and of fixed rows or columns
 	 * @param  pages  The number of pages in the document
 	 * @param  numRows Number of rows ( used if useRows )
 	 * @param  numCols  Number of columns ( used if !useRows )
@@ -73,7 +73,7 @@ private:
 	 * @param  isPaired Display pages in pairs including offset 
 	 * @param  firstPageOffset  Pages to offset - usually one or zero in order to pair up properly
 	 */
-	void layoutMapperInit(int pages, int numRows, int numCols, bool useRows, LayoutType type, bool paired,
+	void configure(int pages, int numRows, int numCols, bool useRows, LayoutType type, bool paired,
 		int firstPageOffset);
 
 public:

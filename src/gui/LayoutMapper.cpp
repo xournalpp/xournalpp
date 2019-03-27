@@ -13,6 +13,11 @@ LayoutMapper::LayoutMapper(){
 	
 }
 
+LayoutMapper::~LayoutMapper()
+{
+	XOJ_RELEASE_TYPE(LayoutMapper);
+}
+
 
 void LayoutMapper::configureFromSettings(int numPages, Settings* settings)
 {
@@ -41,15 +46,10 @@ void LayoutMapper::configureFromSettings(int numPages, Settings* settings)
 	type |= isBottomToTop ? LayoutBitFlags::BottomToTop : 0;
 
 	
-	layoutMapperInit(pages, numRows, numCols, fixRows, (LayoutType)type, isPairedPages, pairsOffset);
+	this->configure(pages, numRows, numCols, fixRows, (LayoutType)type, isPairedPages, pairsOffset);
 }
 
-LayoutMapper::~LayoutMapper()
-{
-	XOJ_RELEASE_TYPE(LayoutMapper);
-}
-
-void LayoutMapper::layoutMapperInit(int pages, int numRows, int numCols, bool useRows, LayoutType type, bool isPaired,
+void LayoutMapper::configure(int pages, int numRows, int numCols, bool useRows, LayoutType type, bool isPaired,
 		int firstPageOffset)
 {
 	XOJ_CHECK_TYPE(LayoutMapper);
