@@ -447,8 +447,8 @@ void XournalView::scrollTo(size_t pageNo, double yDocument)
 	// Make sure it is visible
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 
-	int x = v->layout.getLayoutAbsoluteX();
-	int y = v->layout.getLayoutAbsoluteY() + yDocument;
+	int x = v->getX();
+	int y = v->getY() + yDocument;
 	int width = v->getDisplayWidth();
 	int height = v->getDisplayHeight();
 

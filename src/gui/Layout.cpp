@@ -326,8 +326,8 @@ void Layout::layoutPages()
 
 					x += paddingLeft;
 
-					v->layout.setX(x);
-					v->layout.setY(y);
+					v->setX(x);		//set the page position
+					v->setY(y);
 
 					x += vDisplayWidth + paddingRight;
 

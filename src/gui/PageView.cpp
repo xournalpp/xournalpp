@@ -142,10 +142,10 @@ bool XojPageView::containsPoint(int x, int y, bool local)
 
 	if (!local)
 	{
-		bool leftOk = this->layout.getLayoutAbsoluteX() <= x;
-		bool rightOk = x <= this->layout.getLayoutAbsoluteX() + this->getDisplayWidth();
-		bool topOk = this->layout.getLayoutAbsoluteY() <= y;
-		bool bottomOk = y <= this->layout.getLayoutAbsoluteY() + this->getDisplayHeight();
+		bool leftOk = this->getX() <= x;
+		bool rightOk = x <= this->getX() + this->getDisplayWidth();
+		bool topOk = this->getY() <= y;
+		bool bottomOk = y <= this->getY() + this->getDisplayHeight();
 
 		return leftOk && rightOk && topOk && bottomOk;
 	}
@@ -911,14 +911,28 @@ int XojPageView::getX() const
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
-	return this->layout.getLayoutAbsoluteX();
+	return this->dispX;
+}
+
+void XojPageView::setX( int x )
+{
+	XOJ_CHECK_TYPE(XojPageView);
+
+	this->dispX = x;
 }
 
 int XojPageView::getY() const
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
-	return this->layout.getLayoutAbsoluteY();
+	return this->dispY;
+}
+
+void XojPageView::setY( int y )
+{
+	XOJ_CHECK_TYPE(XojPageView);
+
+	this->dispY = y;
 }
 
 PageRef XojPageView::getPage()
