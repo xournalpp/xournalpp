@@ -2621,7 +2621,7 @@ bool Control::showSaveDialog()
 	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), suggested_folder.c_str());
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), suggested_name.c_str());
 
-	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
+	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), false); //handled below
 
 	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 
@@ -2821,6 +2821,10 @@ bool Control::close(bool destroy, bool allowCancel)
 		{
 			return false;
 		}
+		else
+		{
+			destroy = true;
+		}
 	}
 	
 	if (!doc->getFilename().isEmpty())
@@ -2855,6 +2859,10 @@ bool Control::close(bool destroy, bool allowCancel)
 			if (resDocRemoved != 2) // 2 = discard
 			{
 				return false;
+			}
+			else
+			{
+				destroy = true;
 			}
 		}
 	}
