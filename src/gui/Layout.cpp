@@ -52,9 +52,6 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
 			layout->scrollHandling->scrollChanged();
 		}), this);
 	
-	this->lastGetViewAtPageNum = 0;
-	this->lastGetViewAtRow = 0;
-	this->lastGetViewAtCol = 0;
 
 	lastScrollHorizontal = gtk_adjustment_get_value(scrollHandling->getHorizontal());
 	lastScrollVertical = gtk_adjustment_get_value(scrollHandling->getVertical());
@@ -198,9 +195,6 @@ void Layout::layoutPages()
 
 	int len = this->view->viewPagesLen;
 	
-	this->lastGetViewAtPageNum = len;  // invalidate cache index.
-	this->lastGetViewAtRow = 0;
-	this->lastGetViewAtCol = 0;
 	
 	Settings* settings = this->view->getControl()->getSettings();
 
@@ -211,7 +205,10 @@ void Layout::layoutPages()
 	bool isPairedPages = mapper.getPairedPages();
 	this->rows = mapper.getRows();
 	this->columns = mapper.getColumns();
-
+	
+	this->lastGetViewAtRow = this->rows/2;		//reset to middle
+	this->lastGetViewAtCol = this->columns/2;
+	
 
 	this->sizeCol.assign(this->columns,0); //new size, clear to 0's
 
@@ -304,8 +301,7 @@ void Layout::layoutPages()
 				{
 					int paddingLeft;
 					int paddingRight;
-					int columnPadding = 0;
-					columnPadding = (this->sizeCol[c] - vDisplayWidth);
+					int columnPadding = this->sizeCol[c] - vDisplayWidth;
 
 					if (isPairedPages && len > 1)
 					{
@@ -429,83 +425,80 @@ XojPageView* Layout::getViewAt(int x, int y)
 	
 	XOJ_CHECK_TYPE(Layout);
 
-	//try cached result first
-	if (this->lastGetViewAtPageNum < this->view->viewPagesLen && this->view->viewPages[this->lastGetViewAtPageNum]->containsPoint(x,y,false))
-	{
-		return this->view->viewPages[this->lastGetViewAtPageNum];
-	}
-	
-	int r;
-	int c;
-	int numRows = this->mapper.getRows();
-	int numCols = this->mapper.getColumns();
-			
-//  //Binary Search ... too much overhead makes this a slower option. Leave here for checking against.  
-// 	auto rit = std::lower_bound( this->sizeRow.begin(),  this->sizeRow.end(), y);	//binary search
+//  No need to check page cache as the Linear search below starts at cached position.
+//  Keep Binary search handy to check against.
+//	
+//  //Binary Search ... too much overhead makes this a slower option in our use case.
+// 	auto rit = std::lower_bound( this->sizeRow.begin(),  this->sizeRow.end(), y);
 // 	int rb = rit - this->sizeRow.begin();	//get index
-// 	
-// 	
 // 	auto cit = std::lower_bound( this->sizeCol.begin(),  this->sizeCol.end(), x);
 // 	int cb = cit - this->sizeCol.begin();
 
 
 
+	int numRows = this->mapper.getRows();
+	int numCols = this->mapper.getColumns();
 
 						
 	/* Linear Up or Down Search from last position: */
 	
 	// Rows:
-	r = MAX(0, this->lastGetViewAtRow - 1);
-	if (r > 0 && y <= this->sizeRow[r]) //search lower
+	int testRow = MAX(0, this->lastGetViewAtRow - 1);
+	if (testRow > 0 && y <= this->sizeRow[testRow]) //search lower
 	{
-		for (r--; r>=0; r--)
+		for (testRow--; testRow>=0; testRow--)
 		{
-			if ( y >   this->sizeRow[r] ) 
+			if ( y >   this->sizeRow[testRow] ) 
 			{
 				break;	// past region
 			}
 		}
-		r++;	// it's back up one
+		testRow++;	// it's back up one
 	}
 	else	//search higher
 	{
-		for (; r < numRows; r++)
+		for (; testRow < numRows; testRow++)
 		{
-			if (y <=   this->sizeRow[r]) break;	// found region
+			if (y <=   this->sizeRow[testRow]) 
+			{
+				break;	// found region
+			}
 		}
 		
 	}
 	
 	
 	//Now for columns:
-	c = MAX(0, this->lastGetViewAtCol - 1);			
-	if (c >0 && x <= this->sizeCol[c]) //search lower
+	int testCol = MAX(0, this->lastGetViewAtCol - 1);			
+	if (testCol >0 && x <= this->sizeCol[testCol]) //search lower
 	{
-		for (c--; c>=0; c--)
+		for (testCol--; testCol>=0; testCol--)
 		{
-			if (x >   this->sizeCol[c]) 
+			if (x >   this->sizeCol[testCol]) 
 			{
 				break;
 			}
 		}
-		c++;
+		testCol++;
 	}
 	else
 	{
-		for (; c < numCols; c++)
+		for (; testCol < numCols; testCol++)
 		{
-			if (x <=   this->sizeCol[c]) break;
+			if (x <=   this->sizeCol[testCol])
+			{
+				break;
+			}
 		}
 		
 	}
 	
 	
-	if (c < numCols && r < numRows) 
+	if (testCol < numCols && testRow < numRows) 
 	{
-		int page = this->mapper.map(c,r);
-		this->lastGetViewAtPageNum = page;
-		this->lastGetViewAtRow = r;
-		this->lastGetViewAtCol = c;
+		int page = this->mapper.map(testCol,testRow);
+		this->lastGetViewAtRow = testRow;
+		this->lastGetViewAtCol = testCol;
 
 		if (page>=0 && this->view->viewPages[page]->containsPoint(x,y,false))
 		{
