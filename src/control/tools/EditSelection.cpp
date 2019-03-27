@@ -4,7 +4,6 @@
 #include "Selection.h"
 
 #include "control/Control.h"
-#include "gui/pageposition/PagePositionHandler.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
 #include "model/Document.h"
@@ -17,6 +16,7 @@
 #include "undo/SizeUndoAction.h"
 #include "undo/UndoRedoHandler.h"
 #include "util/GtkColorWrapper.h"
+#include "gui/Layout.h"
 
 #include <serializing/ObjectOutputStream.h>
 #include <serializing/ObjectInputStream.h>
@@ -562,17 +562,16 @@ void EditSelection::mouseMove(double x, double y)
 XojPageView* EditSelection::getPageViewUnderCursor()
 {
 	XOJ_CHECK_TYPE(EditSelection);
-
-	PagePositionHandler* pp = this->view->getXournal()->getPagePositionHandler();
 	
 	double zoom = view->getXournal()->getZoom();
-	
 	
 	//get grabbing hand position
 	double hx = this->view->getX() + (this->x + this->relMousePosX)*zoom;
 	double hy = this->view->getY() + (this->y + this->relMousePosY)*zoom;
 	
-	XojPageView* v = pp->getViewAt(hx,hy);
+	
+	Layout* layout = gtk_xournal_get_layout(this->view->getXournal()->getWidget());
+	XojPageView* v = layout->getViewAt(hx,hy);
 
 	return v;
 }

@@ -5,8 +5,6 @@
 #include "control/settings/Settings.h"
 #include "gui/Layout.h"
 #include "gui/inputdevices/NewGtkInputDevice.h"
-#include "gui/pageposition/PagePositionCache.h"
-#include "gui/pageposition/PagePositionHandler.h"
 #include "gui/scroll/ScrollHandling.h"
 #include "gui/Shadow.h"
 #include "gui/XournalView.h"
@@ -75,8 +73,6 @@ GtkWidget* gtk_xournal_new(XournalView* view, ScrollHandling* scrollHandling)
 	xoj->x = 0;
 	xoj->y = 0;
 	xoj->layout = new Layout(view, scrollHandling);
-	xoj->pagePositionCache = new PagePositionCache();
-
 	xoj->selection = NULL;
 
 	xoj->input = new NewGtkInputDevice(GTK_WIDGET(xoj), view, scrollHandling);
@@ -343,8 +339,6 @@ static void gtk_xournal_destroy(GtkWidget* object)
 	g_return_if_fail(GTK_IS_XOURNAL(object));
 
 	GtkXournal* xournal = GTK_XOURNAL(object);
-	delete xournal->pagePositionCache;
-	xournal->pagePositionCache = NULL;
 
 	delete xournal->selection;
 	xournal->selection = NULL;

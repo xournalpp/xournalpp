@@ -41,6 +41,29 @@ class LayoutMapper
 {
 public:
 	/**
+	 * LayoutMapper
+	 * 
+	 * Create a bare mapper to be configured before use.
+	 */
+	LayoutMapper();
+			
+
+	/**
+	 *  configureFromSettings
+	 * configure layoutMapper from user settings settings
+	 * 
+	 * @param  pages  The number of pages in the document
+	 * @param  settings  The Settings from which users settings are obtained
+	 */
+
+	
+	void configureFromSettings(int numPages, Settings* settings);
+
+	virtual ~LayoutMapper();
+private:
+	/**
+	 * layoutMapperInit
+	 * 
 	 * Initialize mapper of LayoutType with number of pages and of fixed rows or columns
 	 * @param  pages  The number of pages in the document
 	 * @param  numRows Number of rows ( used if useRows )
@@ -50,38 +73,8 @@ public:
 	 * @param  isPaired Display pages in pairs including offset 
 	 * @param  firstPageOffset  Pages to offset - usually one or zero in order to pair up properly
 	 */
-	LayoutMapper(int pages, int numRows, int numCols, bool useRows, LayoutType type, bool isPaired,
-			int firstPageOffset);
-
-	/**
-	 *  LayoutMapper with broken out layout arguments
-	 * 
-	 * @param  pages  The number of pages in the document
-	 * @param  numRows Number of rows ( used if useRows )
-	 * @param  numCols  Number of columns ( used if !useRows )
-	 * @param  useRows  use pages/rows to recalculate cols else recalculate rows
-	 * @param  isVertical  lay out pages by filling columns first
-	 * @param  isRightToLeft  go from right to left
-	 * @param  isBottomToTop  go from bottom to top
-	 * @param  isPaired Display pages in pairs including offset 
-	 * @param  firstPageOffset  Pages to offset - usually one or zero in order to pair up properly
-	 */
-	LayoutMapper(int pages, int numRows, int numCols, bool useRows, bool isVertical, bool isRightToLeft,
-			bool isBottomToTop, bool isPaired, int firstPageOffset);
-
-	/**
-	 *  LayoutMapper using view to get settings
-	 * 
-	 * @param  pages  The number of pages in the document
-	 * @param  settings  The Settings from which users settings are obtained
-	 */
-	LayoutMapper(int pages, Settings* settings);
-
-	virtual ~LayoutMapper();
-private:
-	// called by constructors
 	void layoutMapperInit(int pages, int numRows, int numCols, bool useRows, LayoutType type, bool paired,
-			int firstPageOffset);
+		int firstPageOffset);
 
 public:
 	/**

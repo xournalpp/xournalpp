@@ -7,7 +7,6 @@
 #include "control/tools/EditSelection.h"
 #include "control/ToolHandler.h"
 #include "gui/Cursor.h"
-#include "gui/pageposition/PagePositionHandler.h"
 #include "gui/PageView.h"
 #include "gui/Layout.h"
 #include "gui/XournalView.h"
@@ -139,10 +138,8 @@ XojPageView* InputSequence::getPageAtCurrentPosition()
 
 	double x = this->x + xournal->x;
 	double y = this->y + xournal->y;
-
-	PagePositionHandler* pph = xournal->view->getPagePositionHandler();
-
-	return pph->getViewAt(x, y, xournal->pagePositionCache);
+	
+	return xournal->layout->getViewAt(x,y);
 }
 
 /**
