@@ -315,7 +315,7 @@ void LoadHandler::parseStart()
 			this->creator += version;
 		}
 
-		const char* fileversion = LoadHandlerHelper::getAttrib("fileVersion", true, this);
+		const char* fileversion = LoadHandlerHelper::getAttrib("fileversion", true, this);
 		if (fileversion)
 		{
 			this->fileVersion = atoi(fileversion);
