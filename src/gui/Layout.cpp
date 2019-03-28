@@ -34,27 +34,29 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
 {
 	XOJ_INIT_TYPE(Layout);
 
-	g_signal_connect(scrollHandling->getHorizontal(), "value-changed", G_CALLBACK(
-		+[](GtkAdjustment* adjustment, Layout* layout)
-		{
-			XOJ_CHECK_TYPE_OBJ(layout, Layout);
-			layout->checkScroll(adjustment, layout->lastScrollHorizontal);
-			layout->updateCurrentPage();
-			layout->scrollHandling->scrollChanged();
-		}), this);
+	g_signal_connect(scrollHandling->getHorizontal(), "value-changed", G_CALLBACK(horizontalScrollChanged), this);
 
-	g_signal_connect(scrollHandling->getVertical(), "value-changed", G_CALLBACK(
-		+[](GtkAdjustment* adjustment, Layout* layout)
-		{
-			XOJ_CHECK_TYPE_OBJ(layout, Layout);
-			layout->checkScroll(adjustment, layout->lastScrollVertical);
-			layout->updateCurrentPage();
-			layout->scrollHandling->scrollChanged();
-		}), this);
+	g_signal_connect(scrollHandling->getVertical(), "value-changed", G_CALLBACK(verticalScrollChanged), this);
 	
 
 	lastScrollHorizontal = gtk_adjustment_get_value(scrollHandling->getHorizontal());
 	lastScrollVertical = gtk_adjustment_get_value(scrollHandling->getVertical());
+}
+
+void Layout::horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout)
+{
+	XOJ_CHECK_TYPE_OBJ(layout, Layout);
+	layout->checkScroll(adjustment, layout->lastScrollHorizontal);
+	layout->updateCurrentPage();
+	layout->scrollHandling->scrollChanged();
+}
+
+void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout)
+{
+	XOJ_CHECK_TYPE_OBJ(layout, Layout);
+	layout->checkScroll(adjustment, layout->lastScrollVertical);
+	layout->updateCurrentPage();
+	layout->scrollHandling->scrollChanged();
 }
 
 Layout::~Layout()
@@ -390,21 +392,29 @@ void Layout::setSize(int widgetWidth, int widgetHeight)
 	{
 		this->setLayoutSize(this->layoutWidth, this->layoutHeight);
 	}
-
-	this->view->getControl()->calcZoomFitSize();
 }
 
-void Layout::scrollRelativ(int x, int y)
+void Layout::scrollRelativ(double x, double y)
 {
 	XOJ_CHECK_TYPE(Layout);
+
+	if(this->view->getControl()->getSettings()->isPresentationMode())
+	{
+		return;
+	}
 
 	gtk_adjustment_set_value(scrollHandling->getHorizontal(), gtk_adjustment_get_value(scrollHandling->getHorizontal()) + x);
 	gtk_adjustment_set_value(scrollHandling->getVertical(), gtk_adjustment_get_value(scrollHandling->getVertical()) + y);
 }
 
-void Layout::scrollAbs(int x, int y)
+void Layout::scrollAbs(double x, double y)
 {
 	XOJ_CHECK_TYPE(Layout);
+
+	if(this->view->getControl()->getSettings()->isPresentationMode())
+	{
+		return;
+	}
 
 	gtk_adjustment_set_value(scrollHandling->getHorizontal(), x);
 	gtk_adjustment_set_value(scrollHandling->getVertical(), y);

@@ -53,6 +53,11 @@ void ZoomGesture::zoomBegin()
 {
 	XOJ_CHECK_TYPE(ZoomGesture);
 
+	if(zoomControl->isZoomPresentationMode())
+	{
+		return;
+	}
+
 	gestureActive = true;
 
 	double x = 0;
@@ -73,6 +78,11 @@ void ZoomGesture::zoomChanged(double zoom)
 {
 	XOJ_CHECK_TYPE(ZoomGesture);
 
+	if(zoomControl->isZoomPresentationMode())
+	{
+		return;
+	}
+
 	if (gestureActive)
 	{
 		zoomControl->zoomSequnceChange(zoom, true);
@@ -82,6 +92,11 @@ void ZoomGesture::zoomChanged(double zoom)
 void ZoomGesture::zoomEnd()
 {
 	XOJ_CHECK_TYPE(ZoomGesture);
+
+	if(zoomControl->isZoomPresentationMode())
+	{
+		return;
+	}
 
 	gestureActive = false;
 

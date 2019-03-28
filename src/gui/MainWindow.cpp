@@ -53,7 +53,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 
 	// Window handler
 	g_signal_connect(this->window, "delete-event", G_CALLBACK(deleteEventCallback), this->control);
-	g_signal_connect(this->window, "configure-event", G_CALLBACK(configureEventCallback), this->control);
 	g_signal_connect(this->window, "window_state_event", G_CALLBACK(windowStateEventCallback), this);
 
 	g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
@@ -525,32 +524,6 @@ bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 		//editing text - give that control
 		return false;
 	}
-	else if (event->keyval == GDK_KEY_Down)
-	{
-		if (win->getControl()->getSettings()->isPresentationMode())
-		{
-			win->getControl()->getScrollHandler()->goToNextPage();
-			return true;
-		}
-		else
-		{
-			win->getLayout()->scrollRelativ(0, 30);
-			return true;
-		}
-	}
-	else if (event->keyval == GDK_KEY_Up)
-	{
-		if (win->getControl()->getSettings()->isPresentationMode())
-		{
-			win->getControl()->getScrollHandler()->goToPreviousPage();
-			return true;
-		}
-		else
-		{
-			win->getLayout()->scrollRelativ(0, -30);
-			return true;
-		}
-	}
 	else if (event->keyval == GDK_KEY_Escape)
 	{
 		win->getControl()->getSearchBar()->showSearchBar(false);
@@ -567,17 +540,6 @@ bool MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control
 	control->quit();
 
 	return true;
-}
-
-bool MainWindow::configureEventCallback(GtkWidget* widget, GdkEventConfigure* event, Control* control)
-{
-	control->calcZoomFitSize();
-	ZoomControl *zoom = control->getZoomControl();
-	if(zoom->isZoomFitMode())
-	{
-		zoom->setZoomFitMode(true);
-	}
-	return false;
 }
 
 void MainWindow::setSidebarVisible(bool visible)

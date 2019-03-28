@@ -51,6 +51,8 @@ public:
 	void deletePage(size_t pNr);
 
 	void setPageSize(PageRef p, double width, double height);
+	double getPageWidth(PageRef p);
+	double getPageHeight(PageRef p);
 
 	size_t indexOf(PageRef page);
 

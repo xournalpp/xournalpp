@@ -11,9 +11,12 @@
 
 #pragma once
 
+#include <model/DocumentListener.h>
+
 #include <XournalType.h>
 
 #include <Rectangle.h>
+#include <tuple>
 
 #include <gtk/gtk.h>
 
@@ -25,10 +28,13 @@
 #define ZOOM_OUT false
 
 class XournalView;
+class Control;
 class XojPageView;
 class ZoomListener;
+class DocumentListener;
 
-class ZoomControl
+class ZoomControl :
+	public DocumentListener
 {
 public:
 	ZoomControl();
@@ -57,6 +63,13 @@ public:
 	 */
 	void setZoomFitMode(bool isZoomFitMode);
 	bool isZoomFitMode();
+
+	/**
+	 * Zoom so that the document completely fits the View.
+	 */
+	void setZoomPresentationMode(bool isZoomPresentationMode);
+	bool isZoomPresentationMode();
+
 	/**
 	 * Zoom so that the displayed page on the screen has the same size as the real size
 	 * The dpi has to be set correctly
@@ -89,14 +102,29 @@ public:
 	 * @param zoom zoom value depending zoom100Value
 	 */
 	void setZoom100Value(double zoom);
-	void setZoomFitValue(double zoom);
 
-	double getZoomFitValue();
+	/**
+	 * @return zoom value for zoom 100% depending zoom100Value
+	 */
 	double getZoom100Value();
+
+	/**
+	 * Updates when, the window size changes
+	 * @param zoom zoom value depending zoom100Value
+	 */
+	bool updateZoomFitValue(size_t pageNo = 0);
+
+	/**
+	 * @return zoom value for zoom fit depending zoom100Value
+	 */
+	double getZoomFitValue();
+
+	bool updateZoomPresentationValue(size_t pageNo = 0);
+	double getZoomPresentationValue();
 
 	void addZoomListener(ZoomListener* listener);
 
-	void initZoomHandler(GtkWidget* widget, XournalView* view);
+	void initZoomHandler(GtkWidget* widget, XournalView* view, Control* control);
 
 	/**
 	 * Call this before any zoom is done, it saves the current page and position
@@ -122,7 +150,7 @@ public:
 	/**
 	 * Zoom to correct position on zooming
 	 */
-	void scrollToZoomPosition(XojPageView* view);
+	std::tuple<double, double> getScrollPositionAfterZoom(XojPageView* view);
 
 	/**
 	 * Get visible rect on xournal view, for Zoom Gesture
@@ -149,12 +177,22 @@ protected:
 	void fireZoomChanged();
 	void fireZoomRangeValueChanged();
 
-	bool onScrolledwindowMainScrollEvent(GdkEventScroll* event);
+	void pageSizeChanged(size_t page);
+// 	void pageChanged(size_t page);
+	void pageSelected(size_t page);
+
+	static bool onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom);
+	static bool onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle *allocation, ZoomControl* zoom);
+
+private:
+	void zoomFit();
+	void zoomPresentation();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	XournalView* view = NULL;
+	Control* control = NULL;
 
 	std::vector<ZoomListener*> listener;
 
@@ -170,13 +208,15 @@ private:
 	 */
 	double lastZoomValue = 1.0;
 
-	bool zoomFitMode = true;
+	bool zoomFitMode = false;
+	bool zoomPresentationMode = false;
 
 	/**
 	 * Zoom value for 100% depends on the dpi
 	 */
 	double zoom100Value = 1.0;
 	double zoomFitValue = 1.0;
+	double zoomPresentationValue = 1.0;
 
 	/**
 	 * Base zoom on start, for relative zoom (Gesture)

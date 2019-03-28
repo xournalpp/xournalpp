@@ -26,11 +26,10 @@ public:
 
 public:
 	bool isFullscreen();
-
-	void enableFullscreen(MainWindow* win, bool enabled, bool presentation = false);
+	void setFullscreen(MainWindow* win, bool enabled);
 
 private:
-	void enableFullscreen(MainWindow* win, string hideWidgets);
+	void enableFullscreen(MainWindow* win);
 	void hideWidget(MainWindow* win, string widgetName);
 	void disableFullscreen(MainWindow* win);
 

@@ -20,6 +20,7 @@
 
 #include <gdk/gdk.h>
 
+#include <tuple>
 #include <math.h>
 
 XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling)
@@ -170,7 +171,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	{
 		if (control->isFullscreen())
 		{
-			control->enableFullscreen(false);
+			control->setFullscreen(false);
 			return true;
 		}
 	}
@@ -180,7 +181,8 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	{
 		if (!control->isFullscreen())
 		{
-			control->enableFullscreen(true, true);
+			control->setViewPresentationMode(true);
+			control->setFullscreen(true);
 			return true;
 		}
 	}
@@ -453,9 +455,6 @@ void XournalView::scrollTo(size_t pageNo, double yDocument)
 	int height = v->getDisplayHeight();
 
 	layout->ensureRectIsVisible(x, y, width, height);
-
-	// Select the page
-	control->firePageSelected(pageNo);
 }
 
 void XournalView::endTextAllPages(XojPageView* except)
@@ -617,14 +616,25 @@ void XournalView::zoomChanged()
 	// move this somewhere else maybe
 	layout->layoutPages();
 
-	zoom->scrollToZoomPosition(view);
+	if(zoom->isZoomPresentationMode() || zoom->isZoomFitMode())
+	{
+		scrollTo(currentPage);
+	}
+	else
+	{
+		std::tuple<double, double> pos = zoom->getScrollPositionAfterZoom(view);
+		if(std::get<0>(pos) != -1 && std::get<1>(pos) != -1)
+		{
+			layout->scrollAbs(std::get<0>(pos), std::get<1>(pos));
+		}
+	}
 
 	Document* doc = control->getDocument();
 	doc->lock();
 	Path file = doc->getEvMetadataFilename();
 	doc->unlock();
 
-	control->getMetadataManager()->storeMetadata(file.str(), getCurrentPage(), getZoom());
+	control->getMetadataManager()->storeMetadata(file.str(), getCurrentPage(), zoom->getZoomReal());
 
 	// Updates the Eraser's cursor icon in order to make it as big as the erasing area
 	control->getCursor()->updateCursor();
@@ -752,18 +762,6 @@ void XournalView::pageInserted(size_t page)
 double XournalView::getZoom()
 {
 	XOJ_CHECK_TYPE(XournalView);
-
-	size_t p = getCurrentPage();
-	if (p != size_t_npos && p < viewPagesLen)
-	{
-		XojPageView* page = viewPages[p];
-		if (this->getControl()->getSettings()->isPresentationMode())
-		{
-			double heightZoom = this->getDisplayHeight() / page->getHeight();
-			double widthZoom = this->getDisplayWidth() / page->getWidth();
-			return (heightZoom < widthZoom) ? heightZoom : widthZoom;
-		}
-	}
 
 	return control->getZoomControl()->getZoom();
 }

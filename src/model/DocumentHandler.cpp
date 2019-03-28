@@ -72,6 +72,8 @@ void DocumentHandler::firePageInserted(size_t page)
 
 void DocumentHandler::firePageDeleted(size_t page)
 {
+	XOJ_CHECK_TYPE(DocumentHandler);
+
 	for (DocumentListener* dl : this->listener)
 	{
 		dl->pageDeleted(page);
@@ -80,6 +82,8 @@ void DocumentHandler::firePageDeleted(size_t page)
 
 void DocumentHandler::firePageSelected(size_t page)
 {
+	XOJ_CHECK_TYPE(DocumentHandler);
+
 	for (DocumentListener* dl : this->listener)
 	{
 		dl->pageSelected(page);

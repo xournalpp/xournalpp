@@ -25,7 +25,7 @@ void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self)
 {
 	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
 
-	if (self->ignoreChange || !self->sliderChangingByUser)
+	if (self->ignoreChange || !self->sliderChangingByUser || self->zoom->isZoomPresentationMode())
 	{
 		return;
 	}
@@ -38,7 +38,7 @@ bool ToolZoomSlider::sliderButtonPress(GtkRange* range, GdkEvent *event, ToolZoo
 {
 	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
 
-	if(!self->sliderChangingByUser)
+	if(!self->sliderChangingByUser && !self->zoom->isZoomPresentationMode())
 	{
 		self->sliderChangingByUser = true;
 		self->zoom->setZoomFitMode(false);
@@ -51,7 +51,7 @@ bool ToolZoomSlider::sliderButtonRelease(GtkRange* range, GdkEvent *event, ToolZ
 {
 	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
 
-	if(self->sliderChangingByUser)
+	if(self->sliderChangingByUser && !self->zoom->isZoomPresentationMode())
 	{
 		self->zoom->endZoomSequence();
 		self->sliderChangingByUser = false;
