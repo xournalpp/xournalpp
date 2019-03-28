@@ -5,13 +5,7 @@
 #include "control/Control.h"
 #include "widgets/XournalWidget.h"
 #include "gui/scroll/ScrollHandling.h"
-
-											// TODO: DELME after TEST
-											#include <iostream>  //DELME and next two lines after testing
-											#include <locale>
-											#include <chrono>
-											typedef std::chrono::high_resolution_clock Clock;
- 	
+	
 /**
  * Padding outside the pages, including shadow
  */
@@ -83,26 +77,12 @@ void Layout::updateVisibility()
 	XOJ_CHECK_TYPE(Layout);
 
 	Rectangle visRect = getVisibleRect();
-
-	// DELME - original function also selected a new page based on visibility but this behaviour interferes with zooming etc.
-	//		Control* control = this->view->getControl();
-	//		control->firePageSelected(mostPageNr);
 	
-	
-	// step through every possible page position and call p->setIsVisible(false)
-	// if currently selected page is visible then keep it selected otherwise select page in the middle of visible area.
-	// only  "control->firePageSelected(mostPageNr)" if new selection 
+	// step through every possible page position and update using p->setIsVisible()
+	// Using initial grid aprox speeds things up by a factor of 5.  See previous git check-in for specifics.
 	int x1 = 0;
 	int y1 = 0;	
-	
-	
-											// TODO: DELME after TEST
-											auto t0 = Clock::now();
-
-
-	x1 = 0;
-	y1 = 0;
-	
+ 	
 	for (int onRow = 0; onRow < this->rows; onRow++)
 	{
 		int y2 = this->sizeRow[onRow];
@@ -115,117 +95,14 @@ void Layout::updateVisibility()
 
 				XojPageView* pageView = this->view->viewPages[pageIndex];
 				
-							// TODO - DELME - TESTING
-							//if( onCol ==3 && onRow ==3 )
-							// {
-							// 	int dx = ( MIN(x2,(visRect.x+visRect.width)) -  MAX( x1, visRect.x));
-							// 	int dy = ( MIN(y2,(visRect.y+visRect.height)) -  MAX( y1, visRect.y));
-							// 	int area = dx * dy;
-							// 	std::clog << "dx=" << dx << " \tdy=" << dy << " \tArea=" << area ;
-							// }
-				
-
-				Rectangle pageRect = pageView->getRect();
-				if(		!(visRect.x >pageRect.x+pageRect.width  || visRect.x+visRect.width < pageRect.x) // visrect not outside current row/col 
-					&& 	!(visRect.y >pageRect.y+pageRect.height  || visRect.y+visRect.height < pageRect.y))
-				{
-					pageView->setIsVisible(true);
-							// if( onCol ==3 && onRow ==3 ) std::clog << "\t VISIBLE " <<std::endl; // TODO - DELME - TESTING
-				}
-				else{
-					pageView->setIsVisible(false);
-							// if( onCol ==3 && onRow ==3 ) std::clog << "\t ------ " <<std::endl; // TODO - DELME - TESTING
-				}
-			}
-			x1 = x2;
-		}
-		y1 = y2;
-	}
-
-											// TODO: DELME after TEST
-											auto t1 = Clock::now();	 
-
-
-	x1 = 0;
-	y1 = 0;
-	
-	for (int onRow = 0; onRow < this->rows; onRow++)
-	{
-		int y2 = this->sizeRow[onRow];
-		for (int onCol = 0; onCol < this->columns; onCol++)
-		{
-			int x2 = this->sizeCol[onCol];		
-			int pageIndex = this->mapper.map(onCol, onRow);
-			if (pageIndex >= 0)	// a page exists at this grid location
-			{
-
-				XojPageView* pageView = this->view->viewPages[pageIndex];
-				
-							// TODO - DELME - TESTING
-							//if( onCol ==3 && onRow ==3 )
-							// {
-							// 	int dx = ( MIN(x2,(visRect.x+visRect.width)) -  MAX( x1, visRect.x));
-							// 	int dy = ( MIN(y2,(visRect.y+visRect.height)) -  MAX( y1, visRect.y));
-							// 	int area = dx * dy;
-							// 	std::clog << "dx=" << dx << " \tdy=" << dy << " \tArea=" << area ;
-							// }
-				
-				//This checks if actual page is visible but runs 5x slower. Actual timing: 304457 vs 62168ns
-				// Rectangle pageRect = pageView->getRect();
-				// if(		!(visRect.x >pageRect.x+pageRect.width  || visRect.x+visRect.width < pageRect.x) // visrect not outside current row/col 
-				// 	&& 	!(visRect.y >pageRect.y+pageRect.height  || visRect.y+visRect.height < pageRect.y))
-
-				//check if grid location is visible as an aprox for page visiblity:
-				if(		!(visRect.x >x2  || visRect.x+visRect.width < x1) // visrect not outside current row/col 
-					&& 	!(visRect.y >y2  || visRect.y+visRect.height < y1))
-				{
-					pageView->setIsVisible(true);
-							//if( onCol ==3 && onRow ==3 ) std::clog << "\t VISIBLE " <<std::endl;// TODO - DELME - TESTING
-				}
-				else{
-					pageView->setIsVisible(false);
-							//if( onCol ==3 && onRow ==3 ) std::clog << "\t ------ " <<std::endl;// TODO - DELME - TESTING
-				}
-			}
-			x1 = x2;
-		}
-		y1 = y2;
-	}
-
-												// TODO: DELME after TEST
-											auto t2 = Clock::now();	 
-
-	// Combine the two:  Check page visibility but only if it's grid location is visible.
-	x1 = 0;
-	y1 = 0;
-	
-	for (int onRow = 0; onRow < this->rows; onRow++)
-	{
-		int y2 = this->sizeRow[onRow];
-		for (int onCol = 0; onCol < this->columns; onCol++)
-		{
-			int x2 = this->sizeCol[onCol];		
-			int pageIndex = this->mapper.map(onCol, onRow);
-			if (pageIndex >= 0)	// a page exists at this grid location
-			{
-
-				XojPageView* pageView = this->view->viewPages[pageIndex];
-				
-							// TODO - DELME - TESTING
-							//if( onCol ==3 && onRow ==3 )
-							// {
-							// 	int dx = ( MIN(x2,(visRect.x+visRect.width)) -  MAX( x1, visRect.x));
-							// 	int dy = ( MIN(y2,(visRect.y+visRect.height)) -  MAX( y1, visRect.y));
-							// 	int area = dx * dy;
-							// 	std::clog << "dx=" << dx << " \tdy=" << dy << " \tArea=" << area ;
-							// }
 				
 				//check if grid location is visible as an aprox for page visiblity:
 				if(		!(visRect.x >x2  || visRect.x+visRect.width < x1) // visrect not outside current row/col 
 					&& 	!(visRect.y >y2  || visRect.y+visRect.height < y1))
 				{
+					// now use exact check of page itself:
 					Rectangle pageRect = pageView->getRect();
-					if(		!(visRect.x >pageRect.x+pageRect.width  || visRect.x+visRect.width < pageRect.x) // visrect not outside current row/col 
+					if(		!(visRect.x >pageRect.x+pageRect.width  || visRect.x+visRect.width < pageRect.x) // visrect not outside current page dimensions 
 						&& 	!(visRect.y >pageRect.y+pageRect.height  || visRect.y+visRect.height < pageRect.y))
 					{
 						pageView->setIsVisible(true);
@@ -245,22 +122,6 @@ void Layout::updateVisibility()
 		}
 		y1 = y2;
 	}
-	
-											// TODO: DELME after TEST
-											auto t3 = Clock::now();	
-												
-											double page = std::chrono::duration_cast<std::chrono::nanoseconds>(t1 - t0).count();
-											double gridAprox = std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
-											double gridThenPage = std::chrono::duration_cast<std::chrono::nanoseconds>(t3 - t2).count();
-											std::clog.imbue(std::locale("")); //print with nice thousands separators etc.
-											std::clog << "updateVisibility Timing ( page, grid, gridThenPage):\t"
-														<< page << '\t'
-														<< gridAprox << '\t'
-														<< gridThenPage << std::endl ;
-														
-											//example output:
-											//	updateVisibility Timing ( page, grid, gridThenPage):	521,726	63,086	80,718
-
 	
 }
 
