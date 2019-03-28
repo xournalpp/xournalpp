@@ -301,6 +301,13 @@ void MainWindow::initHideMenu()
 				g_cclosure_new_swap(G_CALLBACK(toggleMenuBar), this, NULL));
 		gtk_window_add_accel_group(GTK_WINDOW(getWindow()), accelGroup);
 	}
+
+	// Hide menubar at startup if specified in settings
+	Settings* settings = control->getSettings();
+	if (settings && !settings->isMenubarVisible())
+	{
+		toggleMenuBar(this);
+	}
 }
 
 Layout* MainWindow::getLayout()

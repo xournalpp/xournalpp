@@ -76,6 +76,8 @@ void Settings::loadDefault()
 
 	this->scrollbarOnLeft = false;
 
+	this->menubarVisible = true;
+
 	this->autoloadPdfXoj = true;
 	this->showBigCursor = false;
 	this->highlightPosition = false;
@@ -338,6 +340,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "scrollbarOnLeft") == 0)
 	{
 		this->scrollbarOnLeft = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "menubarVisible") == 0)
+	{
+		this->menubarVisible = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "numColumns") == 0)
 	{
@@ -792,6 +798,7 @@ void Settings::save()
 
 	WRITE_BOOL_PROP(sidebarOnRight);
 	WRITE_BOOL_PROP(scrollbarOnLeft);
+	WRITE_BOOL_PROP(menubarVisible);
 	WRITE_INT_PROP(numColumns);
 	WRITE_INT_PROP(numRows);
 	WRITE_BOOL_PROP(viewFixedRows);
@@ -1037,6 +1044,22 @@ void Settings::setScrollbarOnLeft(bool right)
 	}
 
 	this->scrollbarOnLeft = right;
+
+	save();
+}
+
+bool Settings::isMenubarVisible()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->menubarVisible;
+}
+
+void Settings::setMenubarVisible(bool visible)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	this->menubarVisible = visible;
 
 	save();
 }

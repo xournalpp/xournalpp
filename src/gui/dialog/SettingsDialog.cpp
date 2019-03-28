@@ -246,6 +246,7 @@ void SettingsDialog::load()
 	loadCheckbox("cbHideFullscreenSidebar", hideFullscreenSidebar);
 	loadCheckbox("cbHidePresentationMenubar", hidePresentationMenubar);
 	loadCheckbox("cbHidePresentationSidebar", hidePresentationSidebar);
+	loadCheckbox("cbHideMenubarStartup", settings->isMenubarVisible());
 
 	autosaveToggled();
 
@@ -438,6 +439,8 @@ void SettingsDialog::save()
 	settings->setPresentationHideElements(
 			updateHideString(settings->getPresentationHideElements(), hidePresentationMenubar,
 					hidePresentationSidebar));
+
+	settings->setMenubarVisible(getCheckbox("cbHideMenubarStartup"));
 
 	settings->setDefaultSaveName(gtk_entry_get_text(GTK_ENTRY(get("txtDefaultSaveName"))));
 	char* uri = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(get("fcAudioPath")));
