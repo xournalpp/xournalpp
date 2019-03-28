@@ -92,7 +92,9 @@ For openSUSE Leap 15.0 and earlier, use the install link from [X11:Utilities](ht
 For all versions of openSUSE, bleeding edge packages synced to xournalpp git master on a weekly basis are available from [home:badshah400:Staging](https://software.opensuse.org//download.html?project=home%3Abadshah400%3AStaging&package=xournalpp).
 
 ### Arch Linux
-The AUR Package [xournalpp](https://aur.archlinux.org/packages/xournalpp-git/) provides an easy way to compile and install the latest state of the master branch.
+The most recent stable release is available [in the [extra] repository](https://www.archlinux.org/packages/?q=xournalpp).
+
+To build the latest state of the master branch yourself, use [this AUR package](https://aur.archlinux.org/packages/xournalpp-git/).
 
 ### Windows
 **The windows Version has a Bug:**
