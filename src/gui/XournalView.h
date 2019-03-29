@@ -51,6 +51,17 @@ public:
 	void layoutPages();
 
 	void scrollTo(size_t pageNo, double y);
+	
+	//Relative navigation in current layout:
+	void goToPageAbove();
+	
+	void goToPageBelow();
+	
+	void goToPageToRight();
+	
+	void goToPageToLeft();
+	
+	void goToPageLayoutOffsetRowCol(int offRow,int offCol);
 
 	size_t getCurrentPage();
 

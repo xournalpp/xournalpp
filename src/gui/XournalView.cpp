@@ -239,7 +239,8 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		}
 		else
 		{
-			layout->scrollRelativ(0, -scrollKeySize);
+			//layout->scrollRelativ(0, -scrollKeySize);
+			this->goToPageAbove();
 			return true;
 		}
 	}
@@ -253,20 +254,23 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		}
 		else
 		{
-			layout->scrollRelativ(0, scrollKeySize);
+			//layout->scrollRelativ(0, scrollKeySize);
+			this->goToPageBelow();
 			return true;
 		}
 	}
 
 	if (event->keyval == GDK_KEY_Left)
 	{
-		control->getScrollHandler()->goToPreviousPage();
+		//control->getScrollHandler()->goToPreviousPage();
+		this->goToPageToLeft();
 		return true;
 	}
 
 	if (event->keyval == GDK_KEY_Right)
 	{
-		control->getScrollHandler()->goToNextPage();
+		//control->getScrollHandler()->goToNextPage();
+		this->goToPageToRight();
 		return true;
 	}
 
@@ -458,6 +462,60 @@ void XournalView::scrollTo(size_t pageNo, double yDocument)
 	control->firePageSelected(pageNo);
 }
 
+
+void XournalView::goToPageAbove()
+{
+	XOJ_CHECK_TYPE(XournalView);
+
+	this->goToPageLayoutOffsetRowCol(-1,0);
+
+}
+
+
+void XournalView::goToPageBelow()
+{
+	XOJ_CHECK_TYPE(XournalView);
+
+	this->goToPageLayoutOffsetRowCol(1,0);
+
+}
+	
+void XournalView::goToPageToRight()
+{
+	XOJ_CHECK_TYPE(XournalView);
+
+	this->goToPageLayoutOffsetRowCol(0,1);
+
+}
+	
+void XournalView::goToPageToLeft()
+{
+	XOJ_CHECK_TYPE(XournalView);
+
+	this->goToPageLayoutOffsetRowCol(0,-1);
+
+}
+	
+void XournalView::goToPageLayoutOffsetRowCol(int offRow, int offCol)
+{
+	XOJ_CHECK_TYPE(XournalView);
+
+	int currPage = getCurrentPage();
+
+    XojPageView* view = getViewFor(currPage );
+	int row = view->getMappedRow();
+	int col = view->getMappedCol();
+				
+	Layout* layout = gtk_xournal_get_layout(this->widget);
+	int page = layout->getIndexAtGridMap(row +offRow  ,col + offCol);
+	if( page >=0)
+	{
+		this-> scrollTo(page, 0);
+	}
+
+}
+
+	
 void XournalView::endTextAllPages(XojPageView* except)
 {
 	XOJ_CHECK_TYPE(XournalView);
