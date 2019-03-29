@@ -160,7 +160,7 @@ bool ColorToolItem::colorEqualsMoreOreLess(int color)
 	int g2 = (this->color & 0xff00) >> 8;
 	int b2 = (this->color & 0xff);
 
-	if (abs(r1 - r2) < 10 && abs(g1 - g2) < 10 && abs(b1 - b2) < 10)
+	if (std::abs(r1 - r2) < 10 && std::abs(g1 - g2) < 10 && std::abs(b1 - b2) < 10)
 	{
 		return true;
 	}

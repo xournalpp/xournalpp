@@ -45,7 +45,6 @@
 #include <gdk/gdk.h>
 
 #include <stdlib.h>
-#include <math.h>
 
 XojPageView::XojPageView(XournalView* xournal, PageRef page)
 {

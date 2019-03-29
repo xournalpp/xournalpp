@@ -16,7 +16,6 @@
 #include <gdk/gdk.h>
 
 #include <gdk/gdkkeysyms.h>
-#include <math.h>
 
 static void gtk_xournal_class_init(GtkXournalClass* klass);
 static void gtk_xournal_init(GtkXournal* xournal);
