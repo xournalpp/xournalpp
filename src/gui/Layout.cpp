@@ -5,7 +5,7 @@
 #include "control/Control.h"
 #include "widgets/XournalWidget.h"
 #include "gui/scroll/ScrollHandling.h"
-
+	
 /**
  * Padding outside the pages, including shadow
  */
@@ -39,7 +39,7 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
 		{
 			XOJ_CHECK_TYPE_OBJ(layout, Layout);
 			layout->checkScroll(adjustment, layout->lastScrollHorizontal);
-			layout->updateCurrentPage();
+			layout->updateVisibility();
 			layout->scrollHandling->scrollChanged();
 		}), this);
 
@@ -48,7 +48,7 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
 		{
 			XOJ_CHECK_TYPE_OBJ(layout, Layout);
 			layout->checkScroll(adjustment, layout->lastScrollVertical);
-			layout->updateCurrentPage();
+			layout->updateVisibility();
 			layout->scrollHandling->scrollChanged();
 		}), this);
 	
@@ -70,93 +70,59 @@ void Layout::checkScroll(GtkAdjustment* adjustment, double& lastScroll)
 }
 
 /**
- * Check which page should be selected
+ * Update Visibilty for each page
  */
-void Layout::updateCurrentPage()
+void Layout::updateVisibility()
 {
 	XOJ_CHECK_TYPE(Layout);
 
 	Rectangle visRect = getVisibleRect();
-
-	Control* control = this->view->getControl();
-
-	bool pairedPages = control->getSettings()->isShowPairedPages();
-
-	if (visRect.y < 1)
+	
+	// step through every possible page position and update using p->setIsVisible()
+	// Using initial grid aprox speeds things up by a factor of 5.  See previous git check-in for specifics.
+	int x1 = 0;
+	int y1 = 0;	
+ 	
+	for (int onRow = 0; onRow < this->rows; onRow++)
 	{
-		if (pairedPages && this->view->viewPagesLen > 1 &&
-		    this->view->viewPages[1]->isSelected())
+		int y2 = this->sizeRow[onRow];
+		for (int onCol = 0; onCol < this->columns; onCol++)
 		{
-			// page 2 already selected
-		}
-		else
-		{
-			control->firePageSelected(0);
-		}
-		return;
-	}
-
-	size_t mostPageNr = 0;
-	double mostPagePercent = 0;
-
-	for (size_t page = 0; page < this->view->viewPagesLen; page++)
-	{
-		XojPageView* p = this->view->viewPages[page];
-
-		Rectangle currentRect = p->getRect();
-
-		// if we are already under the visible rectangle
-		// then everything below will not be visible...
-		if (currentRect.y > visRect.y + visRect.height)
-		{
-			p->setIsVisible(false);
-			for (; page < this->view->viewPagesLen; page++)
+			int x2 = this->sizeCol[onCol];		
+			int pageIndex = this->mapper.map(onCol, onRow);
+			if (pageIndex >= 0)	// a page exists at this grid location
 			{
-				p = this->view->viewPages[page];
-				p->setIsVisible(false);
+
+				XojPageView* pageView = this->view->viewPages[pageIndex];
+				
+				
+				//check if grid location is visible as an aprox for page visiblity:
+				if(		!(visRect.x >x2  || visRect.x+visRect.width < x1) // visrect not outside current row/col 
+					&& 	!(visRect.y >y2  || visRect.y+visRect.height < y1))
+				{
+					// now use exact check of page itself:
+					Rectangle pageRect = pageView->getRect();
+					if(		!(visRect.x >pageRect.x+pageRect.width  || visRect.x+visRect.width < pageRect.x) // visrect not outside current page dimensions 
+						&& 	!(visRect.y >pageRect.y+pageRect.height  || visRect.y+visRect.height < pageRect.y))
+					{
+						pageView->setIsVisible(true);
+					}	
+					else 
+					{
+						pageView->setIsVisible(false);
+					}
+				}
+				else
+				{
+					pageView->setIsVisible(false);
+							
+				}
 			}
-
-			break;
+			x1 = x2;
 		}
-
-		// if the condition is satisfied we know that
-		// the rectangles intersect vertically
-		if (currentRect.y + currentRect.height >= visRect.y)
-		{
-
-			double percent =
-				currentRect.intersect(visRect).area() / currentRect.area();
-
-			if (percent > mostPagePercent)
-			{
-				mostPagePercent = percent;
-				mostPageNr = page;
-			}
-
-			p->setIsVisible(true);
-		}
-		else
-		{
-			p->setIsVisible(false);
-		}
+		y1 = y2;
 	}
-
-	if (pairedPages && mostPageNr < this->view->viewPagesLen - 1)
-	{
-		int y1 = this->view->viewPages[mostPageNr]->getY();
-		int y2 = this->view->viewPages[mostPageNr + 1]->getY();
-
-		if (y1 != y2 || !this->view->viewPages[mostPageNr + 1]->isSelected())
-		{
-			// if the second page is selected DON'T select the first page.
-			// Only select the first page if none is selected
-			control->firePageSelected(mostPageNr);
-		}
-	}
-	else
-	{
-		control->firePageSelected(mostPageNr);
-	}
+	
 }
 
 Rectangle Layout::getVisibleRect()
@@ -189,6 +155,12 @@ double Layout::getLayoutWidth()
 	return layoutWidth;
 }
 
+
+/**
+ * layoutPages
+ *  Sets out pages in a grid.
+ *  Document pages are assigned to grid positions by the mapper object and may be ordered in a myriad of ways.
+ */
 void Layout::layoutPages()
 {
 	XOJ_CHECK_TYPE(Layout);
@@ -199,12 +171,12 @@ void Layout::layoutPages()
 	Settings* settings = this->view->getControl()->getSettings();
 
 	// obtain rows, cols, paired and layout from view settings
-	mapper.configureFromSettings(len, settings);
+	this->mapper.configureFromSettings(len, settings);
 
 	// get from mapper (some may have changed to accomodate paired setting etc.)
-	bool isPairedPages = mapper.getPairedPages();
-	this->rows = mapper.getRows();
-	this->columns = mapper.getColumns();
+	bool isPairedPages = this->mapper.getPairedPages();
+	this->rows = this->mapper.getRows();
+	this->columns = this->mapper.getColumns();
 	
 	this->lastGetViewAtRow = this->rows/2;		//reset to middle
 	this->lastGetViewAtCol = this->columns/2;
@@ -213,16 +185,18 @@ void Layout::layoutPages()
 	this->sizeCol.assign(this->columns,0); //new size, clear to 0's
 
 	this->sizeRow.assign(this->rows,0);
+	
+	// look through every grid position, get assigned page from mapper and find out minimal row and column sizes to fit largest pages.
 
 	for (int r = 0; r < this->rows; r++)
 	{
 		for (int c = 0; c < this->columns; c++)
 		{
-			int k = mapper.map(c, r);
-			if (k >= 0)
+			int pageIndex = this->mapper.map(c, r);
+			if (pageIndex >= 0)
 			{
 
-				XojPageView* v = this->view->viewPages[k];
+				XojPageView* v = this->view->viewPages[pageIndex];
 
 				if (this->sizeCol[c] < v->getDisplayWidth())
 				{
@@ -291,7 +265,7 @@ void Layout::layoutPages()
 	{
 		for (int c = 0; c < this->columns; c++)
 		{
-			int pageAtRowCol = mapper.map(c, r);
+			int pageAtRowCol = this->mapper.map(c, r);
 
 			if (pageAtRowCol >= 0)
 			{
@@ -326,8 +300,8 @@ void Layout::layoutPages()
 
 					x += paddingLeft;
 
-					v->layout.setX(x);
-					v->layout.setY(y);
+					v->setX(x);		//set the page position
+					v->setY(y);
 
 					x += vDisplayWidth + paddingRight;
 
@@ -348,7 +322,7 @@ void Layout::layoutPages()
 	for (int c = 0; c < this->columns; c++)
 	{
 		totalWidth += this->sizeCol[c] + XOURNAL_PADDING_BETWEEN;
-		this->sizeCol[c] = totalWidth;	//accumulated for use by getViewAt()
+		this->sizeCol[c] = totalWidth;	//accumulated - absolute pixel location for use by getViewAt() and updateVisibility()
 	}
 	totalWidth += borderX - XOURNAL_PADDING_BETWEEN;
 

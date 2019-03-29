@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include "LayoutData.h"
 #include "Redrawable.h"
+#include "Layout.h"
 
 #include "model/PageListener.h"
 #include "model/PageRef.h"
@@ -129,7 +129,7 @@ public:
 	 * respect to the display
 	 */
 	int getY() const;
-
+	
 	TexImage* getSelectedTex();
 	Text* getSelectedText();
 
@@ -165,12 +165,9 @@ private:
 	void addRerenderRect(double x, double y, double width, double height);
 
 	void drawLoadingPage(cairo_t* cr);
-
-public:
-	/**
-	 * position in the layout
-	 */
-	LayoutData layout;
+	
+	void setX(int x);
+	void setY(int y);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -222,10 +219,14 @@ private:
 	bool rerenderComplete = false;
 
 	GMutex drawingMutex;
+	
+	int dispX;	//position on display - set in Layout::layoutPages
+	int dispY;
 
 	friend class RenderJob;
 	friend class InputHandler;
 	friend class BaseSelectObject;
 	friend class SelectObject;
 	friend class PlayObject;
+	friend void Layout::layoutPages();	//only function allowed to setX(), setY()
 };
