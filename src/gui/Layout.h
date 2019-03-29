@@ -95,6 +95,12 @@ public:
 	 */	
 	XojPageView* getViewAt(int x, int y);
 
+	/**
+	 * Return the page index found ( or -1 if not found) at layout grid row,col
+	 * 
+	 */	
+	int getIndexAtGridMap(int row, int col);
+	
 	
 private:
 	void checkScroll(GtkAdjustment* adjustment, double& lastScroll);

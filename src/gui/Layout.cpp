@@ -297,6 +297,7 @@ void Layout::layoutPages()
 			{
 
 				XojPageView* v = this->view->viewPages[pageAtRowCol];
+				v->setMappedRowCol( r,c );  					//store row and column for e.g. proper arrow key navigation
 				int vDisplayWidth = v->getDisplayWidth();
 				{
 					int paddingLeft;
@@ -509,5 +510,12 @@ XojPageView* Layout::getViewAt(int x, int y)
 	
 	return NULL;
 	
+	
+}
+
+
+int Layout::getIndexAtGridMap(int row, int col)
+{
+	return this->mapper.map( col, row); //watch out.. x,y --> c,r
 	
 }

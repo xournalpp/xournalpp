@@ -921,6 +921,31 @@ int XojPageView::getY() const
 	return this->layout.getLayoutAbsoluteY();
 }
 
+void XojPageView::setMappedRowCol(int row, int col )
+{
+	XOJ_CHECK_TYPE(XojPageView);
+	
+	this->mappedRow = row;
+	this->mappedCol = col;
+}
+
+
+int XojPageView::getMappedRow()
+{
+	XOJ_CHECK_TYPE(XojPageView);
+	
+	return this->mappedRow;
+}
+	
+
+int XojPageView::getMappedCol()
+{
+	XOJ_CHECK_TYPE(XojPageView);
+	
+	return this->mappedCol;
+}	
+	
+
 PageRef XojPageView::getPage()
 {
 	XOJ_CHECK_TYPE(XojPageView);
