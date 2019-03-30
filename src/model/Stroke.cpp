@@ -5,7 +5,7 @@
 
 #include <i18n.h>
 
-#include <math.h>
+#include <cmath>
 
 Stroke::Stroke()
  : AudioElement(ELEMENT_STROKE)

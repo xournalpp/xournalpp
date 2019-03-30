@@ -4,7 +4,7 @@
 #include "ShapeRecognizerConfig.h"
 #include "model/Stroke.h"
 
-#include <math.h>
+#include <cmath>
 
 /**
  * Create circle stroke for inertia

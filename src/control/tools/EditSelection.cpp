@@ -21,7 +21,7 @@
 #include <serializing/ObjectOutputStream.h>
 #include <serializing/ObjectInputStream.h>
 
-#include <math.h>
+#include <cmath>
 
 EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page, XojPageView* view)
 {

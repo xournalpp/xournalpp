@@ -878,8 +878,8 @@ use the eraser or other device.&lt;/i&gt;</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="cbEnableZoomGestures">
-                    <property name="label" translatable="yes">Enable zoom gestures (needs restart)</property>
+                  <object class="GtkCheckButton" id="cbDisableTouchOnPenNear">
+                    <property name="label" translatable="yes">Disable touch if pen is near screen</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
@@ -893,8 +893,8 @@ use the eraser or other device.&lt;/i&gt;</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="cbDisableTouchOnPenNear">
-                    <property name="label" translatable="yes">Disable touch if pen is near screen</property>
+                  <object class="GtkCheckButton" id="cbEnableZoomGestures">
+                    <property name="label" translatable="yes">Enable zoom gestures (needs restart)</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
@@ -1146,22 +1146,38 @@ they are not blocking!&lt;/i&gt;</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkBox" id="box31">
+                  <object class="GtkLabel" id="label1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_top">10</property>
-                    <property name="orientation">vertical</property>
+                    <property name="label" translatable="yes">&lt;b&gt;Global&lt;/b&gt;</property>
+                    <property name="use_markup">True</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="padding">10</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="box2">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkBox" id="box3">
+                      <object class="GtkBox" id="vbox6">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkLabel" id="label11">
+                          <object class="GtkCheckButton" id="cbHideMenubarStartup">
+                            <property name="label" translatable="yes">Show Menubar on Startup</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">&lt;b&gt;Colors&lt;/b&gt;</property>
-                            <property name="use_markup">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
                             <property name="xalign">0</property>
+                            <property name="draw_indicator">True</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -1171,9 +1187,10 @@ they are not blocking!&lt;/i&gt;</property>
                         </child>
                       </object>
                       <packing>
-                        <property name="expand">False</property>
+                        <property name="expand">True</property>
                         <property name="fill">True</property>
                         <property name="padding">10</property>
+                        <property name="pack_type">end</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
@@ -1181,14 +1198,30 @@ they are not blocking!&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">0</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label11">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_left">10</property>
+                    <property name="margin_top">5</property>
+                    <property name="label" translatable="yes">&lt;b&gt;Colors&lt;/b&gt;</property>
+                    <property name="use_markup">True</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkGrid" id="grid2">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="margin_left">10</property>
+                    <property name="margin_left">20</property>
                     <child>
                       <object class="GtkLabel" id="label10">
                         <property name="visible">True</property>
@@ -1280,7 +1313,7 @@ they are not blocking!&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
                 <child>
@@ -1296,7 +1329,7 @@ they are not blocking!&lt;/i&gt;</property>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="padding">10</property>
-                    <property name="position">2</property>
+                    <property name="position">5</property>
                   </packing>
                 </child>
                 <child>
@@ -1351,7 +1384,7 @@ they are not blocking!&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">3</property>
+                    <property name="position">6</property>
                   </packing>
                 </child>
                 <child>
@@ -1367,7 +1400,7 @@ they are not blocking!&lt;/i&gt;</property>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="padding">10</property>
-                    <property name="position">4</property>
+                    <property name="position">7</property>
                   </packing>
                 </child>
                 <child>
@@ -1455,7 +1488,7 @@ they are not blocking!&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">5</property>
+                    <property name="position">8</property>
                   </packing>
                 </child>
                 <child>
@@ -1471,7 +1504,7 @@ they are not blocking!&lt;/i&gt;</property>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="padding">10</property>
-                    <property name="position">6</property>
+                    <property name="position">9</property>
                   </packing>
                 </child>
                 <child>
@@ -1484,8 +1517,8 @@ they are not blocking!&lt;/i&gt;</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkCheckButton" id="cbBigCursor">
-                            <property name="label" translatable="yes">Big cursor for pen</property>
+                          <object class="GtkCheckButton" id="cbHighlightPosition">
+                            <property name="label" translatable="yes">Highlight cursor position</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
@@ -1499,8 +1532,8 @@ they are not blocking!&lt;/i&gt;</property>
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkCheckButton" id="cbHighlightPosition">
-                            <property name="label" translatable="yes">Highlight cursor position</property>
+                          <object class="GtkCheckButton" id="cbBigCursor">
+                            <property name="label" translatable="yes">Big cursor for pen</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
@@ -1526,7 +1559,7 @@ they are not blocking!&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">7</property>
+                    <property name="position">10</property>
                   </packing>
                 </child>
               </object>

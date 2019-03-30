@@ -225,8 +225,8 @@ public:
 	bool isScrollbarOnLeft();
 	void setScrollbarOnLeft(bool right);
 
-	double getWidthMinimumMultiplier();
-	double getWidthMaximumMultiplier();
+	bool isMenubarVisible();
+	void setMenubarVisible(bool visible);
 
 	void setShowPairedPages(bool showPairedPages);
 	bool isShowPairedPages();
@@ -454,6 +454,11 @@ private:
 	 * (white icons)
 	 */
 	bool darkTheme;
+
+	/**
+	 * If the menu bar is visible on startup
+	 */
+	 bool menubarVisible;
 
 	/**
 	 *  Hide the scrollbar

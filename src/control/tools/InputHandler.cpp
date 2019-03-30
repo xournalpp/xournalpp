@@ -12,7 +12,7 @@
 
 #include "gui/MainWindow.h"
 
-#include <math.h>
+#include <cmath>
 
 #define PIXEL_MOTION_THRESHOLD 0.3
 
