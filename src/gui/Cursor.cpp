@@ -323,7 +323,7 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 	int width = size;
 	if (big || highlightPosition)
 	{
-		height = width = 100;
+		height = width = 60;
 	}
 
 	// We change the drawing method, now the center with the colored dot of the pen
@@ -379,7 +379,7 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 		// A yellow transparent circle with no border
 		cairo_set_line_width(cr, 0);
 		cairo_set_source_rgba(cr, 255, 255, 0, 0.5);
-		cairo_arc(cr, centerX, centerY, 45, 0, 2 * 3.1415);
+		cairo_arc(cr, centerX, centerY, 30, 0, 2 * 3.1415);
 		cairo_fill_preserve(cr);
 		cairo_set_source_rgb(cr, 0, 0, 0);
 		cairo_stroke(cr);

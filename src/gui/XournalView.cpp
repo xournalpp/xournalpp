@@ -20,8 +20,6 @@
 
 #include <gdk/gdk.h>
 
-#include <math.h>
-
 XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling)
  : scrollHandling(scrollHandling),
    control(control)
@@ -451,8 +449,8 @@ void XournalView::scrollTo(size_t pageNo, double yDocument)
 	// Make sure it is visible
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 
-	int x = v->layout.getLayoutAbsoluteX();
-	int y = v->layout.getLayoutAbsoluteY() + yDocument;
+	int x = v->getX();
+	int y = v->getY() + yDocument;
 	int width = v->getDisplayWidth();
 	int height = v->getDisplayHeight();
 
@@ -804,7 +802,7 @@ void XournalView::pageInserted(size_t page)
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	layout->layoutPages();
-	layout->updateCurrentPage();
+	layout->updateVisibility();
 }
 
 double XournalView::getZoom()

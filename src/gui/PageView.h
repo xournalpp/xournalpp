@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include "LayoutData.h"
 #include "Redrawable.h"
 #include "Layout.h"
 
@@ -141,7 +140,7 @@ public:
 	 * respect to the display
 	 */
 	int getY() const;
-
+	
 	TexImage* getSelectedTex();
 	Text* getSelectedText();
 
@@ -180,12 +179,8 @@ private:
 
 	void setMappedRowCol(int row, int col );	//row, column assigned by mapper during layout.
 
-public:
-	/**
-	 * position in the layout
-	 */
-	LayoutData layout;
-
+	void setX(int x);
+	void setY(int y);
 	
 
 
@@ -239,6 +234,9 @@ private:
 	bool rerenderComplete = false;
 
 	GMutex drawingMutex;
+	
+	int dispX;	//position on display - set in Layout::layoutPages
+	int dispY;
 
 
 	int mappedRow;
@@ -250,5 +248,6 @@ private:
 	friend class BaseSelectObject;
 	friend class SelectObject;
 	friend class PlayObject;
-	friend void Layout::layoutPages();	//only function allowed to setMappedRowCol()
+	friend void Layout::layoutPages();	//only function allowed to setX(), setY(), setMappedRowCol()
+
 };

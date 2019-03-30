@@ -6,7 +6,7 @@
 #include "model/Document.h"
 #include "view/DocumentView.h"
 
-#include <math.h>
+#include <cmath>
 
 PrintHandler::PrintHandler()
 {

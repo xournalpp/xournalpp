@@ -85,7 +85,7 @@ public:
 	 * the percentage of the visible area of the XojPageView relative
 	 * to its total area.
 	 */
-	void updateCurrentPage();
+	void updateVisibility();
 
 	
 	

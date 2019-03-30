@@ -6,7 +6,7 @@
 
 #include <Range.h>
 
-#include <math.h>
+#include <cmath>
 
 EraseableStroke::EraseableStroke(Stroke* stroke)
  : stroke(stroke)
