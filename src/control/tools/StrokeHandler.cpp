@@ -13,6 +13,14 @@
 #include <gdk/gdk.h>
 #include <cmath>
 
+#define IGNORE_STROKE_POINTS  8		//this many point in IGNORE_STROKE_TIME_MS will be ignored unless successive - pen input requires larger count
+#define IGNORE_STROKE_TIME_MS  300
+#define DO_NOT_IGNORE_SUCCESSIVE_TIME 500	//only ignore once every this ms
+
+guint32 StrokeHandler::lastIgnorePointTime;		//persist for next stroke
+
+
+
 StrokeHandler::StrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
  : InputHandler(xournal, redrawable, page),
    surfMask(NULL),
@@ -143,10 +151,32 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 		return;
 	}
 
+	int pointCount = stroke->getPointCount();
+	
+	if ( pointCount < IGNORE_STROKE_POINTS && pos.time - this->startStrokeTime < IGNORE_STROKE_TIME_MS)
+	{
+		if ( pos.time - this->lastIgnorePointTime  < DO_NOT_IGNORE_SUCCESSIVE_TIME )
+		{
+			this->lastIgnorePointTime = pos.time;
+			g_print("NOT_IGNORED: %d\n",pos.time - startStrokeTime);
+		}
+		else
+		{
+			this->lastIgnorePointTime = pos.time;
+			g_print("IGNORED: %d\tlength:%d\n",pos.time - startStrokeTime, pointCount);
+			//stroke not being added to layer... delete here.
+			delete stroke;
+			stroke = NULL;
+			return;
+		}
+	}
+	
+	
+	
 	// Backward compatibility and also easier to handle for me;-)
 	// I cannot draw a line with one point, to draw a visible line I need two points,
 	// twice the same Point is also OK
-	if (stroke->getPointCount() == 1)
+	if (pointCount == 1)
 	{
 		ArrayIterator<Point> it = stroke->pointIterator();
 		if (it.hasNext())
@@ -283,6 +313,8 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 
 		createStroke(Point(x, y));
 	}
+	
+	this->startStrokeTime = pos.time;
 }
 
 void StrokeHandler::destroySurface()

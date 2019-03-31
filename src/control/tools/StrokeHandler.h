@@ -64,5 +64,10 @@ private:
 	DocumentView view;
 
 	ShapeRecognizer* reco;
+
+	guint32 startStrokeTime;
+	
+	static guint32 lastIgnorePointTime;	//persist across strokes - allow us to not ignore persistent dotting.
+	
 };
 
