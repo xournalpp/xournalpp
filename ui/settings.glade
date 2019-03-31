@@ -373,6 +373,7 @@ If the file was not yet saved you can find it in your home folder, in ~/.xournal
                                               <object class="GtkLabel" id="label33">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
+                                                <property name="margin_left">20</property>
                                                 <property name="label" translatable="yes">%a		Abbreviated weekday name (e.g. Thu)
 %A		Full weekday name (e.g. Thursday)
 %b		Abbreviated month name (e.g. Aug)
