@@ -24,6 +24,8 @@ public:
 	double x;
 	double y;
 	double pressure;
+	
+	guint32 time;	//event time
 
 	/**
 	 * State flags from GDKevent (Shift down etc.)
