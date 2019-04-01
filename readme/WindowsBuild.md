@@ -49,8 +49,11 @@ pacman -S mingw-w64-x86_64-gcc
 ```bash
 pacman -S mingw-w64-x86_64-poppler \
 pacman -S mingw-w64-x86_64-gtk3 \
-pacman -S mingw-w64-x86_64-libsndfile
+pacman -S mingw-w64-x86_64-libsndfile \
+pacman -S mingw-w64-x86_64-libzip
 ```
+
+TODO: Lua 5.3 is missing for MSYS2?
 
 ### sndfile / PortAudio
 Build/Install portaudio with
