@@ -1266,7 +1266,7 @@ If the file was not yet saved you can find it in your home folder, in ~/.xournal
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="row_spacing">5</property>
-                                                            <property name="column_spacing">10</property>
+                                                            <property name="column_spacing">5</property>
                                                             <child>
                                                             <object class="GtkLabel" id="label52">
                                                             <property name="visible">True</property>
@@ -1471,7 +1471,8 @@ If the file was not yet saved you can find it in your home folder, in ~/.xournal
                                           <object class="GtkLabel">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">&lt;i&gt;For some specific hardware the scroll / touch behaviour of the system is not as expected. For these cases Xournal++ has a workaround. This mode also enables touch drawing.&lt;/i&gt;</property>
+                                            <property name="label" translatable="yes">&lt;i&gt;For some specific hardware the scroll / touch behaviour of the system is not as expected. For these cases Xournal++ has a workaround.
+This also enables touch drawing.&lt;/i&gt;</property>
                                             <property name="use_markup">True</property>
                                             <property name="wrap">True</property>
                                             <property name="width_chars">85</property>
@@ -1486,7 +1487,7 @@ If the file was not yet saved you can find it in your home folder, in ~/.xournal
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="cbTouchWorkaround">
-                                            <property name="label" translatable="yes">Enable GTK Touch / Scrolling workaround  (needs restart)</property>
+                                            <property name="label" translatable="yes">Enable GTK Touch / Scrolling workaround  (requires restart)</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -1948,8 +1949,8 @@ If the file was not yet saved you can find it in your home folder, in ~/.xournal
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbBigCursor">
-                                            <property name="label" translatable="yes">Big cursor for pen</property>
+                                          <object class="GtkCheckButton" id="cbHighlightPosition">
+                                            <property name="label" translatable="yes">Highlight cursor position</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -1963,8 +1964,8 @@ If the file was not yet saved you can find it in your home folder, in ~/.xournal
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbHighlightPosition">
-                                            <property name="label" translatable="yes">Highlight cursor position</property>
+                                          <object class="GtkCheckButton" id="cbBigCursor">
+                                            <property name="label" translatable="yes">Big cursor for pen</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -2066,7 +2067,7 @@ If the file was not yet saved you can find it in your home folder, in ~/.xournal
                                           <object class="GtkLabel" id="settingZoomCtrlScrollSpeedLabel">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">Speed in percent for Ctrl + Scroll </property>
+                                            <property name="label" translatable="yes">Speed for Ctrl + Scroll</property>
                                             <property name="xalign">0</property>
                                           </object>
                                           <packing>
@@ -2093,7 +2094,7 @@ If the file was not yet saved you can find it in your home folder, in ~/.xournal
                                           <object class="GtkLabel" id="settingZoomStepSpeedLabel">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">Speed in percent for a Zoomstep</property>
+                                            <property name="label" translatable="yes">Speed for a Zoomstep</property>
                                             <property name="xalign">0</property>
                                           </object>
                                           <packing>
@@ -2178,7 +2179,7 @@ If the file was not yet saved you can find it in your home folder, in ~/.xournal
                                           <object class="GtkLabel">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">&lt;i&gt;To make sure on 100% Zoom the size is correct.&lt;/i&gt;</property>
+                                            <property name="label" translatable="yes">&lt;i&gt;To make sure on 100% zoom the size of elements is natural. (requires restart)&lt;/i&gt;</property>
                                             <property name="use_markup">True</property>
                                             <property name="width_chars">85</property>
                                             <property name="max_width_chars">85</property>
@@ -2200,8 +2201,7 @@ If the file was not yet saved you can find it in your home folder, in ~/.xournal
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="margin_top">5</property>
-                                                <property name="label" translatable="yes">&lt;i&gt;Put a ruler on your screen to calibrate the zoom level to fit your screen. Takes effect after restarting xournalpp.
-The units are cm for the ruler, dpi for the slider.&lt;/i&gt;</property>
+                                                <property name="label" translatable="yes">&lt;i&gt;Put a ruler on your screen and move the slider until both rulers match.&lt;/i&gt;</property>
                                                 <property name="use_markup">True</property>
                                                 <property name="width_chars">85</property>
                                                 <property name="max_width_chars">85</property>
@@ -2217,7 +2217,7 @@ The units are cm for the ruler, dpi for the slider.&lt;/i&gt;</property>
                                               <object class="GtkScale" id="zoomCallibSlider">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
-                                                <property name="margin_top">20</property>
+                                                <property name="margin_top">10</property>
                                                 <property name="margin_bottom">20</property>
                                                 <property name="adjustment">adjustmentZoom</property>
                                                 <property name="round_digits">0</property>

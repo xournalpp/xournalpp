@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-28 23:16+0100\n"
+"POT-Creation-Date: 2019-04-01 11:01+0200\n"
 "PO-Revision-Date: 2018-11-14 20:04+0100\n"
 "Last-Translator: Andreas Butti <andreasbutti at gmail dot com>\n"
 "Language-Team: Xournal++ team\n"
@@ -41,7 +41,7 @@ msgstr "筆劃"
 msgid " text"
 msgstr "文本"
 
-#: ../ui/settings.glade:1973 ../ui/settings.glade:1984
+#: ../ui/settings.glade:2125 ../ui/settings.glade:2136
 msgid "%"
 msgstr ""
 
@@ -50,7 +50,7 @@ msgstr ""
 msgid "%F-Note-%H-%M"
 msgstr "%F-Note-%H-%M.xoj"
 
-#: ../ui/settings.glade:359
+#: ../ui/settings.glade:377
 msgid ""
 "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%A\t\tFull weekday name (e.g. Thursday)\n"
@@ -78,15 +78,15 @@ msgid ""
 "%%\tA % sign"
 msgstr ""
 
-#: ../ui/settings.glade:2472
+#: ../ui/settings.glade:2651
 msgid "0"
 msgstr ""
 
-#: ../ui/settings.glade:2546
+#: ../ui/settings.glade:2725
 msgid "0,20"
 msgstr ""
 
-#: ../ui/settings.glade:2561
+#: ../ui/settings.glade:2740
 msgid "0,25"
 msgstr ""
 
@@ -94,11 +94,11 @@ msgstr ""
 msgid "1.2.3"
 msgstr ""
 
-#: ../ui/settings.glade:1958
+#: ../ui/settings.glade:2110
 msgid "10.0"
 msgstr ""
 
-#: ../ui/settings.glade:1931
+#: ../ui/settings.glade:2082
 msgid "2.0"
 msgstr ""
 
@@ -117,11 +117,6 @@ msgstr ""
 #: ../ui/images.glade:82
 msgid "<b>... or select already used Image:</b>"
 msgstr "<b>...或者選擇已用圖片：</b>"
-
-#: ../ui/settings.glade:405
-#, fuzzy
-msgid "<b>Available Placeholders</b>"
-msgstr "<b>幫助</b> "
 
 #: ../ui/pageTemplate.glade:244
 #, fuzzy
@@ -154,7 +149,7 @@ msgstr ""
 msgid "<b>Default Tools</b>"
 msgstr "<b>預設工具</b>"
 
-#: ../ui/settings.glade:2720
+#: ../ui/settings.glade:2893
 msgid "<b>Default</b>"
 msgstr "<b>預設</b>"
 
@@ -183,17 +178,17 @@ msgstr "<b>頁面尺寸</b>"
 msgid "<b>Separator</b>"
 msgstr "<b>分割線</b>"
 
-#: ../ui/settings.glade:2782
+#: ../ui/settings.glade:2983
 msgid ""
 "<i>Audio recordings are currently stored in a separate folder and referenced "
 "from the journal.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:3055
+#: ../ui/settings.glade:3256
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:546
+#: ../ui/settings.glade:593
 #, fuzzy
 msgid ""
 "<i>Define which tools will be selected if you press a mouse button. After "
@@ -206,14 +201,14 @@ msgstr ""
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
 msgstr "<i>比如：</i> 1-3 或者 1,3,5-7 等。"
 
-#: ../ui/settings.glade:1382
+#: ../ui/settings.glade:1474
 msgid ""
 "<i>For some specific hardware the scroll / touch behaviour of the system is "
-"not as expected. For these cases Xournal++ has a workaround. This mode also "
-"enables touch drawing.</i>"
+"not as expected. For these cases Xournal++ has a workaround.\n"
+"This also enables touch drawing.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:166
+#: ../ui/settings.glade:183
 #, fuzzy
 msgid ""
 "<i>If the document already was saved you can find it in the same folder with "
@@ -225,7 +220,7 @@ msgstr ""
 "<i>如果文檔已經保存，您可以在同一目錄中使用副檔名.autosave.xoj找到該文檔。\n"
 "如果檔案沒有保存，您可以在目錄~/.xournalpp/autosave中找到。</i>"
 
-#: ../ui/settings.glade:2176
+#: ../ui/settings.glade:2355
 #, fuzzy
 msgid ""
 "<i>If you add additional space beside the pages you can choose the area of "
@@ -234,7 +229,7 @@ msgstr ""
 "<i>如果在頁面之間加入了<b>額外的空隙</b>\n"
 "則可以選擇屏幕上額外的操作區域</i>"
 
-#: ../ui/settings.glade:463
+#: ../ui/settings.glade:482
 #, fuzzy
 msgid ""
 "<i>If you open a PDF and there is a Xournal file with the same name it will "
@@ -243,37 +238,33 @@ msgstr ""
 "<i>如果您打開一個PDF檔案，但是此處有一個有同樣的檔案名的xoj檔案，\n"
 "則Xournal檔案將會被打開。</i>"
 
-#: ../ui/settings.glade:1024
+#: ../ui/settings.glade:1115
 msgid ""
 "<i>If your hardware does not support hand recognition, Xournal++ can disable "
 "your touchscreen when your pen is near the screen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:699
+#: ../ui/settings.glade:769
 msgid ""
 "<i>Pressure Sensitivity allows you to draw lines with different widths, "
 "depending on how much pressure you apply to the pen. If your tablet does not "
 "support this feature this setting has no effect.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:2052
+#: ../ui/settings.glade:2204
 msgid ""
-"<i>Put a ruler on your screen to calibrate the zoom level to fit your "
-"screen. Takes effect after restarting xournalpp.\n"
-"The units are cm for the ruler, dpi for the slider.</i>"
+"<i>Put a ruler on your screen and move the slider until both rulers match.</"
+"i>"
 msgstr ""
-"<i>在屏幕上繪製標尺可對放大的程度進行校準。\n"
-"在Xournal++重啟時將會發揮作用。\n"
-"標尺的長度單位是釐米，游標的單位是dpi。</i>"
 
-#: ../ui/settings.glade:1160
+#: ../ui/settings.glade:1251
 msgid ""
 "<i>Specify commands that are called once Hand Recognition triggers. The "
 "commands will be executed in the UI Thread, make sure they are not blocking!"
 "</i>"
 msgstr ""
 
-#: ../ui/settings.glade:2871
+#: ../ui/settings.glade:3072
 msgid ""
 "<i>Specify the audio devices used for recording and playback of audio "
 "attachments. \n"
@@ -281,7 +272,7 @@ msgid ""
 "i>"
 msgstr ""
 
-#: ../ui/settings.glade:766
+#: ../ui/settings.glade:836
 #, fuzzy
 msgid ""
 "<i>Specify the tools that will be selected if a button of the stylus is "
@@ -291,23 +282,25 @@ msgstr ""
 "<i>此處可以設定如果按鍵就會選擇的工具；\n"
 "該鍵被鬆開時原先的工具將會被選擇</i>"
 
-#: ../ui/settings.glade:292
+#: ../ui/settings.glade:309
 msgid "<i>This name will be proposed if you save a new document</i>"
 msgstr "這個名字是在檔案保存時候的建議名。"
 
-#: ../ui/settings.glade:2030
-msgid "<i>To make sure on 100% Zoom the size is correct.</i>"
+#: ../ui/settings.glade:2182
+msgid ""
+"<i>To make sure on 100% zoom the size of elements is natural. (requires "
+"restart)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1492
+#: ../ui/settings.glade:1613
 msgid "<i>Toggle visibility of menubar with F10</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1318
+#: ../ui/settings.glade:1410
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:958
+#: ../ui/settings.glade:1049
 msgid ""
 "<i>You can configure devices, not identified by GTK as touchscreen, to "
 "behave as if they were one.</i>"
@@ -329,12 +322,12 @@ msgstr "關於Xournal++"
 msgid "Absolute path for the audio files playback"
 msgstr ""
 
-#: ../ui/settings.glade:2227
+#: ../ui/settings.glade:2406
 #, fuzzy
 msgid "Add additional horizontal space of"
 msgstr "<b>增加水平間距</b>"
 
-#: ../ui/settings.glade:2206
+#: ../ui/settings.glade:2385
 #, fuzzy
 msgid "Add additional vertical space of"
 msgstr "<b>增加垂直間距</b>"
@@ -398,12 +391,12 @@ msgstr "變數\"{1\"}不能為整數，其值為NULL"
 msgid "Attribute color not set!"
 msgstr "顏色未設置"
 
-#: ../ui/settings.glade:2950
+#: ../ui/settings.glade:3151
 #, fuzzy
 msgid "Audio Devices"
 msgstr "輸入設備"
 
-#: ../ui/settings.glade:3076
+#: ../ui/settings.glade:3288
 msgid "Audio Recording"
 msgstr ""
 
@@ -428,11 +421,11 @@ msgstr "<b>作者：</b>"
 msgid "Authors:"
 msgstr "<b>作者：</b>"
 
-#: ../ui/settings.glade:1092
+#: ../ui/settings.glade:1183
 msgid "Autodetect"
 msgstr ""
 
-#: ../ui/settings.glade:498
+#: ../ui/settings.glade:517
 msgid "Autoloading Journals"
 msgstr ""
 
@@ -445,10 +438,15 @@ msgstr "打開檔案出錯：{1}"
 msgid "Autosave: {1}"
 msgstr "自動保存：{1}"
 
-#: ../ui/settings.glade:262
+#: ../ui/settings.glade:279
 #, fuzzy
 msgid "Autosaving"
 msgstr "自動保存：{1}"
+
+#: ../ui/settings.glade:424
+#, fuzzy
+msgid "Available Placeholders"
+msgstr "<b>幫助</b> "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 msgid "Back"
@@ -460,11 +458,11 @@ msgstr "後退"
 msgid "Background"
 msgstr "背景"
 
-#: ../ui/settings.glade:1554
+#: ../ui/settings.glade:1675
 msgid "Background color for window Background"
 msgstr ""
 
-#: ../ui/settings.glade:1845
+#: ../ui/settings.glade:1968
 msgid "Big cursor for pen"
 msgstr "畫筆使用大光標"
 
@@ -478,11 +476,11 @@ msgstr "黑色"
 msgid "Blue"
 msgstr "藍色"
 
-#: ../ui/settings.glade:1543
+#: ../ui/settings.glade:1664
 msgid "Border color"
 msgstr "邊界顏色"
 
-#: ../ui/settings.glade:1529
+#: ../ui/settings.glade:1650
 #, fuzzy
 msgid "Border color for current page and other selections"
 msgstr "當前頁和選中項目的邊界顏色"
@@ -491,12 +489,12 @@ msgstr "當前頁和選中項目的邊界顏色"
 msgid "Built on:"
 msgstr ""
 
-#: ../ui/settings.glade:806
+#: ../ui/settings.glade:876
 #, fuzzy
 msgid "Button 1"
 msgstr "滑鼠按鈕"
 
-#: ../ui/settings.glade:843
+#: ../ui/settings.glade:913
 #, fuzzy
 msgid "Button 2"
 msgstr "滑鼠按鈕"
@@ -527,7 +525,7 @@ msgstr "改變筆劃粗細"
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
 msgstr "色彩\"{1}\"未定義！"
 
-#: ../ui/settings.glade:1619
+#: ../ui/settings.glade:1742
 #, fuzzy
 msgid "Colors"
 msgstr "顏色"
@@ -710,7 +708,7 @@ msgstr "刪除層"
 msgid "Current page"
 msgstr "當前頁"
 
-#: ../ui/settings.glade:1866
+#: ../ui/settings.glade:1989
 #, fuzzy
 msgid "Cursor"
 msgstr "光標"
@@ -719,7 +717,7 @@ msgstr "光標"
 msgid "Custom"
 msgstr "設置"
 
-#: ../ui/settings.glade:1262
+#: ../ui/settings.glade:1354
 msgid "Custom Commands (for Method \"Custom\")"
 msgstr ""
 
@@ -736,11 +734,11 @@ msgstr "設置過"
 msgid "Cut"
 msgstr "剪切"
 
-#: ../ui/settings.glade:1598
+#: ../ui/settings.glade:1721
 msgid "Dark Theme (requires restart)"
 msgstr ""
 
-#: ../ui/settings.glade:432
+#: ../ui/settings.glade:451
 #, fuzzy
 msgid "Default Save Name"
 msgstr "<b>預設保存名</b>"
@@ -749,12 +747,12 @@ msgstr "<b>預設保存名</b>"
 msgid "Default Tool"
 msgstr "預設工具"
 
-#: ../ui/settings.glade:323
+#: ../ui/settings.glade:340
 #, fuzzy
 msgid "Default name: "
 msgstr "<b>預設名：</b>"
 
-#: ../ui/settings.glade:2748
+#: ../ui/settings.glade:2932
 msgid "Defaults"
 msgstr "預設"
 
@@ -801,7 +799,7 @@ msgstr ""
 msgid "Device"
 msgstr "設備"
 
-#: ../ui/settings.glade:1194
+#: ../ui/settings.glade:1286
 msgid "Disable"
 msgstr ""
 
@@ -809,7 +807,7 @@ msgstr ""
 msgid "Disable drawing for this device"
 msgstr "取消此設備繪製"
 
-#: ../ui/settings.glade:1067
+#: ../ui/settings.glade:1158
 msgid "Disabling Method"
 msgstr ""
 
@@ -817,7 +815,7 @@ msgstr ""
 msgid "Discard"
 msgstr "丟棄"
 
-#: ../ui/settings.glade:2123
+#: ../ui/settings.glade:2274
 msgid "Display DPI Calibration"
 msgstr ""
 
@@ -893,7 +891,7 @@ msgstr ""
 msgid "Draw stroke"
 msgstr "繪製筆劃"
 
-#: ../ui/settings.glade:2633
+#: ../ui/settings.glade:2789
 #, fuzzy
 msgid "Drawing Area"
 msgstr "繪製直線"
@@ -912,34 +910,34 @@ msgstr "編輯文本"
 msgid "Emergency saved document"
 msgstr "未保存文檔"
 
-#: ../ui/settings.glade:1182
+#: ../ui/settings.glade:1274
 #, fuzzy
 msgid "Enable"
 msgstr "激活標尺"
 
-#: ../ui/settings.glade:477
+#: ../ui/settings.glade:496
 msgid "Enable Autoloading of Journals"
 msgstr ""
 
-#: ../ui/settings.glade:186
+#: ../ui/settings.glade:203
 msgid "Enable Autosaving"
 msgstr ""
 
-#: ../ui/settings.glade:1397
-msgid "Enable GTK Touch / Scrolling workaround  (needs restart)"
+#: ../ui/settings.glade:1490
+msgid "Enable GTK Touch / Scrolling workaround  (requires restart)"
 msgstr ""
 
-#: ../ui/settings.glade:714
+#: ../ui/settings.glade:784
 #, fuzzy
 msgid "Enable Pressure Sensitivity"
 msgstr "<b>壓力敏感</b>"
 
-#: ../ui/settings.glade:1039
+#: ../ui/settings.glade:1130
 #, fuzzy
 msgid "Enable internal Hand Recognition"
 msgstr "激活筆劃識別"
 
-#: ../ui/settings.glade:1330
+#: ../ui/settings.glade:1422
 msgid "Enable zoom gestures (requires restart)"
 msgstr ""
 
@@ -1062,7 +1060,7 @@ msgstr ""
 msgid "Find previous occurrence of the search string"
 msgstr ""
 
-#: ../ui/settings.glade:2458
+#: ../ui/settings.glade:2637
 #, fuzzy
 msgid "First Page Offset "
 msgstr "首頁(_F)"
@@ -1071,7 +1069,7 @@ msgstr "首頁(_F)"
 msgid "Font"
 msgstr "字型"
 
-#: ../ui/main.glade:336 ../ui/settings.glade:1703
+#: ../ui/main.glade:336 ../ui/settings.glade:1826
 msgid "Fullscreen"
 msgstr "全屏"
 
@@ -1079,11 +1077,11 @@ msgstr "全屏"
 msgid "GNU GPLv2 or later"
 msgstr ""
 
-#: ../ui/settings.glade:2994
+#: ../ui/settings.glade:3195
 msgid "Gain"
 msgstr ""
 
-#: ../ui/settings.glade:1637
+#: ../ui/settings.glade:1760
 msgid "Global"
 msgstr ""
 
@@ -1137,7 +1135,7 @@ msgstr "綠色"
 msgid "Grid Snapping"
 msgstr ""
 
-#: ../ui/settings.glade:2534
+#: ../ui/settings.glade:2713
 msgid "Grid snapping tolerance"
 msgstr ""
 
@@ -1150,7 +1148,7 @@ msgstr "手形工具(_a)"
 msgid "Hand"
 msgstr "手形工具"
 
-#: ../ui/settings.glade:1287
+#: ../ui/settings.glade:1379
 msgid "Hand Recognition"
 msgstr ""
 
@@ -1163,11 +1161,11 @@ msgstr "高度："
 msgid "Hide Menu"
 msgstr "隱藏菜單條"
 
-#: ../ui/settings.glade:1667 ../ui/settings.glade:1732
+#: ../ui/settings.glade:1790 ../ui/settings.glade:1855
 msgid "Hide Menubar"
 msgstr "隱藏菜單條"
 
-#: ../ui/settings.glade:1682 ../ui/settings.glade:1747
+#: ../ui/settings.glade:1805 ../ui/settings.glade:1870
 msgid "Hide Sidebar"
 msgstr "隱藏側邊欄"
 
@@ -1176,15 +1174,15 @@ msgstr "隱藏側邊欄"
 msgid "Hide all"
 msgstr "隱藏菜單條"
 
-#: ../ui/settings.glade:2325
+#: ../ui/settings.glade:2504
 msgid "Hide the horizontal scrollbar"
 msgstr ""
 
-#: ../ui/settings.glade:2340
+#: ../ui/settings.glade:2519
 msgid "Hide the vertical scrollbar"
 msgstr ""
 
-#: ../ui/settings.glade:1830
+#: ../ui/settings.glade:1953
 #, fuzzy
 msgid "Highlight cursor position"
 msgstr "高亮選項(_i)"
@@ -1218,7 +1216,7 @@ msgstr ""
 msgid "Images"
 msgstr "圖片"
 
-#: ../ui/settings.glade:2895
+#: ../ui/settings.glade:3096
 msgid "Input Device"
 msgstr "輸入設備"
 
@@ -1276,7 +1274,7 @@ msgstr "{1}圖層"
 msgid "Layout"
 msgstr ""
 
-#: ../ui/settings.glade:2426
+#: ../ui/settings.glade:2605
 #, fuzzy
 msgid "Left / Right-Handed"
 msgstr "<b>左/右</b>"
@@ -1299,7 +1297,7 @@ msgstr "淺綠"
 msgid "Lined"
 msgstr "畫綫的"
 
-#: ../ui/settings.glade:514
+#: ../ui/settings.glade:544
 msgid "Load / Save"
 msgstr "加載/保存"
 
@@ -1307,7 +1305,7 @@ msgstr "加載/保存"
 msgid "Load file"
 msgstr "加載檔案"
 
-#: ../src/gui/PageView.cpp:734
+#: ../src/gui/PageView.cpp:733
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:102
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:18
 msgid "Loading..."
@@ -1327,7 +1325,7 @@ msgstr "品紅"
 msgid "Medium"
 msgstr "中"
 
-#: ../ui/settings.glade:586
+#: ../ui/settings.glade:633
 #, fuzzy
 msgid "Middle Mouse Button"
 msgstr "<b>滑鼠中鍵</b>"
@@ -1346,12 +1344,12 @@ msgid ""
 "Not in {1}"
 msgstr ""
 
-#: ../ui/settings.glade:660
+#: ../ui/settings.glade:718
 #, fuzzy
 msgid "Mouse"
 msgstr "滑鼠"
 
-#: ../ui/settings.glade:641
+#: ../ui/settings.glade:688
 #, fuzzy
 msgid "Mouse Buttons"
 msgstr "滑鼠按鈕"
@@ -1426,7 +1424,7 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: ../ui/settings.glade:2457
+#: ../ui/settings.glade:2636
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr ""
 
@@ -1463,7 +1461,7 @@ msgstr "打開{1}"
 msgid "Orange"
 msgstr "橙色"
 
-#: ../ui/settings.glade:2917
+#: ../ui/settings.glade:3118
 #, fuzzy
 msgid "Output Device"
 msgstr "輸入設備"
@@ -1546,7 +1544,7 @@ msgstr "頁碼"
 msgid "Pages:"
 msgstr "頁碼："
 
-#: ../ui/settings.glade:2490
+#: ../ui/settings.glade:2669
 #, fuzzy
 msgid "Paired Pages"
 msgstr "首頁(_F)"
@@ -1631,7 +1629,7 @@ msgstr "預定"
 msgid "Preferences"
 msgstr "偏好設置"
 
-#: ../ui/settings.glade:1801
+#: ../ui/settings.glade:1924
 #, fuzzy
 msgid "Presentation Mode"
 msgstr "演講模式(_P)"
@@ -1640,7 +1638,7 @@ msgstr "演講模式(_P)"
 msgid "Presentation mode"
 msgstr "演講模式"
 
-#: ../ui/settings.glade:735
+#: ../ui/settings.glade:805
 #, fuzzy
 msgid "Pressure Sensitivity"
 msgstr "<b>壓力敏感</b>"
@@ -1665,7 +1663,7 @@ msgstr ""
 msgid "Recorder could not be started."
 msgstr ""
 
-#: ../ui/settings.glade:3041
+#: ../ui/settings.glade:3242
 msgid "Recording Quality"
 msgstr ""
 
@@ -1713,7 +1711,7 @@ msgstr "解析度："
 msgid "Restore file"
 msgstr "保存檔案"
 
-#: ../ui/settings.glade:623
+#: ../ui/settings.glade:670
 #, fuzzy
 msgid "Right Mouse Button"
 msgstr "<b>滑鼠右鍵</b>"
@@ -1727,7 +1725,7 @@ msgstr "解析度："
 msgid "Rotation Snapping"
 msgstr ""
 
-#: ../ui/settings.glade:2522
+#: ../ui/settings.glade:2701
 msgid "Rotation snapping tolerance"
 msgstr ""
 
@@ -1748,7 +1746,7 @@ msgstr ""
 msgid "SVG with transparent background"
 msgstr "紙張背景(_a)"
 
-#: ../ui/settings.glade:2982
+#: ../ui/settings.glade:3183
 msgid "Sample Rate"
 msgstr ""
 
@@ -1775,12 +1773,12 @@ msgstr "打開檔案出錯：{1}"
 msgid "Scale"
 msgstr "縮放"
 
-#: ../ui/settings.glade:2361
+#: ../ui/settings.glade:2540
 #, fuzzy
 msgid "Scrollbars"
 msgstr "<b>顏色</b>"
 
-#: ../ui/settings.glade:2296
+#: ../ui/settings.glade:2475
 #, fuzzy
 msgid "Scrolling outside the page"
 msgstr "<b>捲出頁面</b>"
@@ -1794,7 +1792,7 @@ msgstr "搜索"
 msgid "Select Background Color"
 msgstr "選色"
 
-#: ../ui/settings.glade:2818
+#: ../ui/settings.glade:3019
 #, fuzzy
 msgid "Select Folder"
 msgstr "選色"
@@ -1858,15 +1856,15 @@ msgstr "選擇矩形"
 msgid "Select region"
 msgstr "選擇區域"
 
-#: ../ui/settings.glade:2667
+#: ../ui/settings.glade:2840
 msgid "Select the tool and Settings if you press the Default Button"
 msgstr "按下預設按鈕，此工具及其設置將會生效"
 
-#: ../ui/settings.glade:1767
+#: ../ui/settings.glade:1890
 msgid "Select toolbar:"
 msgstr "選擇工具條："
 
-#: ../ui/settings.glade:1577
+#: ../ui/settings.glade:1699
 msgid "Selection Color (Text, Stroke Selection etc.)"
 msgstr ""
 
@@ -1890,7 +1888,7 @@ msgstr ""
 msgid "Shape Recognizer"
 msgstr "識別形狀"
 
-#: ../ui/settings.glade:1474
+#: ../ui/settings.glade:1595
 #, fuzzy
 msgid "Show Menubar on Startup"
 msgstr "側邊欄右置"
@@ -1918,15 +1916,15 @@ msgstr "只顯示未使用頁面({1}個未使用頁面)"
 msgid "Show sidebar"
 msgstr "顯示側邊欄"
 
-#: ../ui/settings.glade:2390
+#: ../ui/settings.glade:2569
 msgid "Show sidebar on the right side"
 msgstr "側邊欄右置"
 
-#: ../ui/settings.glade:2405
+#: ../ui/settings.glade:2584
 msgid "Show vertical scrollbar on the left side"
 msgstr "垂直捲動條左置"
 
-#: ../ui/settings.glade:2580
+#: ../ui/settings.glade:2759
 msgid "Snapping"
 msgstr ""
 
@@ -1948,12 +1946,12 @@ msgstr ""
 "Xournal目前不能打開遠程檔案。\n"
 "請先將檔案拷貝到本地。"
 
-#: ../ui/settings.glade:1919
-msgid "Speed in percent for Ctrl + Scroll "
+#: ../ui/settings.glade:2070
+msgid "Speed for Ctrl + Scroll"
 msgstr ""
 
-#: ../ui/settings.glade:1946
-msgid "Speed in percent for a Zoomstep"
+#: ../ui/settings.glade:2097
+msgid "Speed for a Zoomstep"
 msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:120
@@ -1968,7 +1966,7 @@ msgstr ""
 msgid "Stop"
 msgstr ""
 
-#: ../ui/settings.glade:2804 ../ui/settings.glade:2840
+#: ../ui/settings.glade:3005 ../ui/settings.glade:3041
 #, fuzzy
 msgid "Storage Folder"
 msgstr "選色"
@@ -1979,11 +1977,11 @@ msgstr "選色"
 msgid "Stroke recognizer"
 msgstr "筆劃識別"
 
-#: ../ui/settings.glade:924
+#: ../ui/settings.glade:998
 msgid "Stylus"
 msgstr ""
 
-#: ../ui/settings.glade:898
+#: ../ui/settings.glade:968
 #, fuzzy
 msgid "Stylus Buttons"
 msgstr "滑鼠按鈕"
@@ -2012,7 +2010,7 @@ msgstr "工具條(_o)"
 msgid "Template:"
 msgstr "模板："
 
-#: ../ui/settings.glade:1225 ../ui/settings.glade:1237
+#: ../ui/settings.glade:1317 ../ui/settings.glade:1329
 msgid "Test"
 msgstr ""
 
@@ -2088,7 +2086,7 @@ msgstr ""
 msgid "The most recent log file name: {1}"
 msgstr "最近的日誌檔案名：{1}"
 
-#: ../ui/settings.glade:2100
+#: ../ui/settings.glade:2251
 msgid "The unit of the ruler is cm"
 msgstr "標尺的單位是釐米"
 
@@ -2132,7 +2130,7 @@ msgstr ""
 msgid "This image could not be loaded. Error message: {1}"
 msgstr ""
 
-#: ../ui/settings.glade:1078
+#: ../ui/settings.glade:1169
 #, fuzzy
 msgid "Timeout"
 msgstr "涂白"
@@ -2154,7 +2152,7 @@ msgstr "發現工具條：{1}"
 msgid "Toolbars"
 msgstr "工具條"
 
-#: ../ui/settings.glade:993 ../ui/settings.glade:1437
+#: ../ui/settings.glade:1084 ../ui/settings.glade:1541
 #, fuzzy
 msgid "Touchscreen"
 msgstr "全屏"
@@ -2212,7 +2210,7 @@ msgstr ""
 msgid "Unsaved Document"
 msgstr "未保存文檔"
 
-#: ../ui/settings.glade:2469
+#: ../ui/settings.glade:2648
 msgid "Usually 0 or 1"
 msgstr ""
 
@@ -2234,7 +2232,7 @@ msgstr "垂直間距"
 msgid "Vertical space"
 msgstr "垂直間距"
 
-#: ../ui/settings.glade:1885
+#: ../ui/settings.glade:2019
 msgid "View"
 msgstr "視圖"
 
@@ -2259,7 +2257,7 @@ msgstr "使用PDF背景"
 msgid "With help from the community"
 msgstr ""
 
-#: ../ui/settings.glade:1418
+#: ../ui/settings.glade:1511
 #, fuzzy
 msgid "Workaround"
 msgstr "背景"
@@ -2276,7 +2274,7 @@ msgstr ""
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr ""
 
-#: ../ui/settings.glade:1093
+#: ../ui/settings.glade:1184
 msgid "X11"
 msgstr ""
 
@@ -2338,15 +2336,15 @@ msgid ""
 "PDF page."
 msgstr ""
 
-#: ../ui/settings.glade:2142
+#: ../ui/settings.glade:2304
 msgid "Zoom"
 msgstr "縮放"
 
-#: ../ui/settings.glade:1351
+#: ../ui/settings.glade:1443
 msgid "Zoom Gestures"
 msgstr ""
 
-#: ../ui/settings.glade:1999
+#: ../ui/settings.glade:2151
 msgid "Zoom Speed"
 msgstr ""
 
@@ -2648,7 +2646,7 @@ msgstr "激活標尺"
 msgid "eraser"
 msgstr "橡皮"
 
-#: ../ui/settings.glade:207
+#: ../ui/settings.glade:224
 msgid "every"
 msgstr ""
 
@@ -2661,7 +2659,7 @@ msgstr ""
 msgid "load from file"
 msgstr "加載檔案"
 
-#: ../ui/settings.glade:232
+#: ../ui/settings.glade:249
 msgid "minutes"
 msgstr ""
 
@@ -2673,7 +2671,7 @@ msgstr "滑鼠"
 msgid "pen"
 msgstr "畫筆"
 
-#: ../ui/settings.glade:2263 ../ui/settings.glade:2274
+#: ../ui/settings.glade:2442 ../ui/settings.glade:2453
 msgid "pixels"
 msgstr ""
 
@@ -2681,7 +2679,7 @@ msgstr ""
 msgid "pluginName"
 msgstr ""
 
-#: ../ui/settings.glade:1120
+#: ../ui/settings.glade:1211
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr ""
 
@@ -2837,6 +2835,15 @@ msgstr ""
 
 #~ msgid "<i>If you have a tablet pen you can get different line widths</i>"
 #~ msgstr "<i>如果您有Tablet筆則可以獲得不同的綫寬。</i>"
+
+#~ msgid ""
+#~ "<i>Put a ruler on your screen to calibrate the zoom level to fit your "
+#~ "screen. Takes effect after restarting xournalpp.\n"
+#~ "The units are cm for the ruler, dpi for the slider.</i>"
+#~ msgstr ""
+#~ "<i>在屏幕上繪製標尺可對放大的程度進行校準。\n"
+#~ "在Xournal++重啟時將會發揮作用。\n"
+#~ "標尺的長度單位是釐米，游標的單位是dpi。</i>"
 
 #~ msgid "A file named \"{1}\" already exists. Do you want to replace it?"
 #~ msgstr "名為\"{1}\"的檔案已經存在。您要覆蓋它麼？"

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xournalpp 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-28 23:16+0100\n"
-"PO-Revision-Date: 2019-03-29 00:25+0100\n"
+"POT-Creation-Date: 2019-04-01 11:01+0200\n"
+"PO-Revision-Date: 2019-04-01 11:34+0200\n"
 "Last-Translator: Andreas Butti <andreasbutti at gmail dot com>\n"
 "Language-Team: DE\n"
 "Language: de\n"
@@ -44,7 +44,7 @@ msgstr " Linie"
 msgid " text"
 msgstr " Text"
 
-#: ../ui/settings.glade:1973 ../ui/settings.glade:1984
+#: ../ui/settings.glade:2125 ../ui/settings.glade:2136
 msgid "%"
 msgstr "%"
 
@@ -52,7 +52,7 @@ msgstr "%"
 msgid "%F-Note-%H-%M"
 msgstr "Notiz-%d-%m-%Y-%H-%M.xoj"
 
-#: ../ui/settings.glade:359
+#: ../ui/settings.glade:377
 msgid ""
 "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%A\t\tFull weekday name (e.g. Thursday)\n"
@@ -103,15 +103,15 @@ msgstr ""
 "%Z\t\tZeitzone (z.B. CET)\n"
 "%%\tein % Zeichen"
 
-#: ../ui/settings.glade:2472
+#: ../ui/settings.glade:2651
 msgid "0"
 msgstr ""
 
-#: ../ui/settings.glade:2546
+#: ../ui/settings.glade:2725
 msgid "0,20"
 msgstr ""
 
-#: ../ui/settings.glade:2561
+#: ../ui/settings.glade:2740
 msgid "0,25"
 msgstr ""
 
@@ -119,11 +119,11 @@ msgstr ""
 msgid "1.2.3"
 msgstr ""
 
-#: ../ui/settings.glade:1958
+#: ../ui/settings.glade:2110
 msgid "10.0"
 msgstr ""
 
-#: ../ui/settings.glade:1931
+#: ../ui/settings.glade:2082
 msgid "2.0"
 msgstr ""
 
@@ -142,10 +142,6 @@ msgstr ""
 #: ../ui/images.glade:82
 msgid "<b>... or select already used Image:</b>"
 msgstr "<b>... oder wählen Sie ein bereits verwendetes Bild:</b>"
-
-#: ../ui/settings.glade:405
-msgid "<b>Available Placeholders</b>"
-msgstr "<b>Verfügbare Platzhalter</b>"
 
 #: ../ui/pageTemplate.glade:244
 msgid "<b>Background Color</b>"
@@ -181,7 +177,7 @@ msgstr ""
 msgid "<b>Default Tools</b>"
 msgstr "<b>Standard Werkzeuge</b>"
 
-#: ../ui/settings.glade:2720
+#: ../ui/settings.glade:2893
 msgid "<b>Default</b>"
 msgstr "<b>Standard</b>"
 
@@ -213,7 +209,7 @@ msgstr "<b>Seitengröße</b>"
 msgid "<b>Separator</b>"
 msgstr "<b>Separator</b>"
 
-#: ../ui/settings.glade:2782
+#: ../ui/settings.glade:2983
 msgid ""
 "<i>Audio recordings are currently stored in a separate folder and referenced "
 "from the journal.</i>"
@@ -221,12 +217,12 @@ msgstr ""
 "<i>Aufnahmen werden aktuell in einem separaten Verzeichnis abgelegt und "
 "innerhalb eines Journals referenziert.</i>"
 
-#: ../ui/settings.glade:3055
+#: ../ui/settings.glade:3256
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr ""
 "<i>Veränderungen wirken sich nur auf neue Aufnahmen und Wiedergaben aus</i>"
 
-#: ../ui/settings.glade:546
+#: ../ui/settings.glade:593
 msgid ""
 "<i>Define which tools will be selected if you press a mouse button. After "
 "you release the button the previously selected tool will be selected.</i>"
@@ -238,17 +234,17 @@ msgstr ""
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
 msgstr "<i>Beispiel</i> 1-3 oder 1,3,5-7 etc."
 
-#: ../ui/settings.glade:1382
+#: ../ui/settings.glade:1474
 msgid ""
 "<i>For some specific hardware the scroll / touch behaviour of the system is "
-"not as expected. For these cases Xournal++ has a workaround. This mode also "
-"enables touch drawing.</i>"
+"not as expected. For these cases Xournal++ has a workaround.\n"
+"This also enables touch drawing.</i>"
 msgstr ""
-"<i>Für bestimmte Geräte ist das  Scroll-/Touchverhalten nicht gemäß der "
-"Erwartung. Für diese Fälle bietet Xournal++ eine Abhilfe. Dieser Modus "
-"aktiviert Zeichnen mit dem Finger"
+"<i>Für bestimmte Geräte ist das Scroll-/Touchverhalten nicht gemäß der "
+"Erwartung. Für diese Fälle bietet Xournal++ eine Abhilfe.\n"
+"Dieser Modus aktiviert zusätzlich Zeichnen mit dem Finger.</i>"
 
-#: ../ui/settings.glade:166
+#: ../ui/settings.glade:183
 msgid ""
 "<i>If the document already was saved you can find it in the same folder with "
 "the extension .autosave.xoj\n"
@@ -260,7 +256,7 @@ msgstr ""
 "Wenn die Datei noch nicht gespeichert wurde, finden Sie das Dokument in ~/."
 "xournalpp/autosave</i>"
 
-#: ../ui/settings.glade:2176
+#: ../ui/settings.glade:2355
 msgid ""
 "<i>If you add additional space beside the pages you can choose the area of "
 "the screen you would like to work on.</i>"
@@ -269,7 +265,7 @@ msgstr ""
 "eingefügt. Sie können die Seite somit weiter verschieben und wählen, wo auf "
 "dem Bildschirm Sie arbeiten möchten.</i>"
 
-#: ../ui/settings.glade:463
+#: ../ui/settings.glade:482
 msgid ""
 "<i>If you open a PDF and there is a Xournal file with the same name it will "
 "open the xoj file.</i>"
@@ -277,7 +273,7 @@ msgstr ""
 "<i>Wenn Sie ein PDF öffnen, wird das dazugehörige xoj-Dokument geöffnet, "
 "falls vorhanden.</i>"
 
-#: ../ui/settings.glade:1024
+#: ../ui/settings.glade:1115
 msgid ""
 "<i>If your hardware does not support hand recognition, Xournal++ can disable "
 "your touchscreen when your pen is near the screen.</i>"
@@ -286,7 +282,7 @@ msgstr ""
 "kann Xournal++ den Touchscreen deaktivieren wenn der Stift dem Bildschirm "
 "nahe kommt.</i>"
 
-#: ../ui/settings.glade:699
+#: ../ui/settings.glade:769
 msgid ""
 "<i>Pressure Sensitivity allows you to draw lines with different widths, "
 "depending on how much pressure you apply to the pen. If your tablet does not "
@@ -297,18 +293,15 @@ msgstr ""
 "verwendete Tablet diese Funktion nicht unterstützt, zeigt die Einstellung "
 "keine Wirkung.</i>"
 
-#: ../ui/settings.glade:2052
+#: ../ui/settings.glade:2204
 msgid ""
-"<i>Put a ruler on your screen to calibrate the zoom level to fit your "
-"screen. Takes effect after restarting xournalpp.\n"
-"The units are cm for the ruler, dpi for the slider.</i>"
+"<i>Put a ruler on your screen and move the slider until both rulers match.</"
+"i>"
 msgstr ""
-"<i>Legen Sie einen Maßstab auf den Bildschirm, um die Vergrößerung\n"
-"des Bildschirms zu kalibrieren. Dies wirkt sich erst nach einem Neustart "
-"aus.\n"
-"Die Einheit des Maßstabs ist cm, für den Regler DPI.</i>"
+"<i>Platziere ein Lineal auf dem Bildschirm und bewege den Schieber bis beide "
+"Lineale übereinstimmen.</i>"
 
-#: ../ui/settings.glade:1160
+#: ../ui/settings.glade:1251
 msgid ""
 "<i>Specify commands that are called once Hand Recognition triggers. The "
 "commands will be executed in the UI Thread, make sure they are not blocking!"
@@ -318,7 +311,7 @@ msgstr ""
 "anschlägt. Die Kommandos werden im UI Thread ausgeführt. Sie dürfen somit "
 "nicht blockierend sein!</i>"
 
-#: ../ui/settings.glade:2871
+#: ../ui/settings.glade:3072
 msgid ""
 "<i>Specify the audio devices used for recording and playback of audio "
 "attachments. \n"
@@ -330,7 +323,7 @@ msgstr ""
 "Wenn möglich <small><tt>pulse</tt></small> als Ein-/Ausgabegerät auswählen.</"
 "i>"
 
-#: ../ui/settings.glade:766
+#: ../ui/settings.glade:836
 msgid ""
 "<i>Specify the tools that will be selected if a button of the stylus is "
 "pressed or the eraser is used. After releasing the button, the previous tool "
@@ -340,26 +333,28 @@ msgstr ""
 "Stifts drücken oder den Radierer verwenden. Beim Loslassen wird wieder das "
 "vorherige Werkzeug gewählt.</i>"
 
-#: ../ui/settings.glade:292
+#: ../ui/settings.glade:309
 msgid "<i>This name will be proposed if you save a new document</i>"
 msgstr ""
 "<i>Dieser Name wird vorgeschlagen, wenn Sie ein neues Dokument speichern</i>"
 
-#: ../ui/settings.glade:2030
-msgid "<i>To make sure on 100% Zoom the size is correct.</i>"
+#: ../ui/settings.glade:2182
+msgid ""
+"<i>To make sure on 100% zoom the size of elements is natural. (requires "
+"restart)</i>"
 msgstr ""
-"<i>Um sicherzugehen dass bei 100% Zoom die Darstellung in der korrekten "
-"Größe erfolgt.</i>"
+"<i>Um sicherzugehen, dass bei 100% Zoom, Elemente in der korrekten Größe "
+"dargestellt werden. (erfordert Neustart)</i>"
 
-#: ../ui/settings.glade:1492
+#: ../ui/settings.glade:1613
 msgid "<i>Toggle visibility of menubar with F10</i>"
 msgstr "<i>Ändere die Sichtbarkeit der Menüleiste mit F10</i>"
 
-#: ../ui/settings.glade:1318
+#: ../ui/settings.glade:1410
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
 msgstr "<i>Nutze Gesten um im Dokument zu zoomen.</i>"
 
-#: ../ui/settings.glade:958
+#: ../ui/settings.glade:1049
 msgid ""
 "<i>You can configure devices, not identified by GTK as touchscreen, to "
 "behave as if they were one.</i>"
@@ -383,11 +378,11 @@ msgstr "Über Xournal++"
 msgid "Absolute path for the audio files playback"
 msgstr "Absoluter Pfad für die Audiodateien"
 
-#: ../ui/settings.glade:2227
+#: ../ui/settings.glade:2406
 msgid "Add additional horizontal space of"
 msgstr "<b>Füge Horizontalen Platz von</b>"
 
-#: ../ui/settings.glade:2206
+#: ../ui/settings.glade:2385
 msgid "Add additional vertical space of"
 msgstr "<b>Füge Vertikalen Platz von</b>"
 
@@ -457,11 +452,11 @@ msgstr ""
 msgid "Attribute color not set!"
 msgstr "Attribut Farbe ist nicht gesetzt!"
 
-#: ../ui/settings.glade:2950
+#: ../ui/settings.glade:3151
 msgid "Audio Devices"
 msgstr "Audiogeräte"
 
-#: ../ui/settings.glade:3076
+#: ../ui/settings.glade:3288
 msgid "Audio Recording"
 msgstr "Audioaufzeichnung"
 
@@ -485,11 +480,11 @@ msgstr "Autor:"
 msgid "Authors:"
 msgstr "Autoren:"
 
-#: ../ui/settings.glade:1092
+#: ../ui/settings.glade:1183
 msgid "Autodetect"
 msgstr "Automatisch"
 
-#: ../ui/settings.glade:498
+#: ../ui/settings.glade:517
 msgid "Autoloading Journals"
 msgstr "Dokumente Auto-Laden"
 
@@ -501,9 +496,13 @@ msgstr "Autospeichern fehlgeschlagen mit Fehler: {1}"
 msgid "Autosave: {1}"
 msgstr "Autospeichern: {1}"
 
-#: ../ui/settings.glade:262
+#: ../ui/settings.glade:279
 msgid "Autosaving"
 msgstr "Autospeichern"
+
+#: ../ui/settings.glade:424
+msgid "Available Placeholders"
+msgstr "Verfügbare Platzhalter"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 msgid "Back"
@@ -515,11 +514,11 @@ msgstr "Zurück"
 msgid "Background"
 msgstr "Hintergrund"
 
-#: ../ui/settings.glade:1554
+#: ../ui/settings.glade:1675
 msgid "Background color for window Background"
 msgstr "Hintergrundfarbe des Fensters"
 
-#: ../ui/settings.glade:1845
+#: ../ui/settings.glade:1968
 msgid "Big cursor for pen"
 msgstr "Großer Cursor für den Stift"
 
@@ -533,11 +532,11 @@ msgstr "schwarz"
 msgid "Blue"
 msgstr "blau"
 
-#: ../ui/settings.glade:1543
+#: ../ui/settings.glade:1664
 msgid "Border color"
 msgstr "Rahmenfarbe"
 
-#: ../ui/settings.glade:1529
+#: ../ui/settings.glade:1650
 msgid "Border color for current page and other selections"
 msgstr "Rahmenfarbe der gewählten Seite und anderer Auswahlen"
 
@@ -545,11 +544,11 @@ msgstr "Rahmenfarbe der gewählten Seite und anderer Auswahlen"
 msgid "Built on:"
 msgstr "Kompiliert am:"
 
-#: ../ui/settings.glade:806
+#: ../ui/settings.glade:876
 msgid "Button 1"
 msgstr "Taste 1"
 
-#: ../ui/settings.glade:843
+#: ../ui/settings.glade:913
 msgid "Button 2"
 msgstr "Taste 2"
 
@@ -578,7 +577,7 @@ msgstr "Liniendicke ändern"
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
 msgstr "Farbe \"{1}\" unbekannt (nicht in der Farbliste)"
 
-#: ../ui/settings.glade:1619
+#: ../ui/settings.glade:1742
 msgid "Colors"
 msgstr "Farben"
 
@@ -759,7 +758,7 @@ msgstr "Neue Ebene erstellen"
 msgid "Current page"
 msgstr "Aktuelle Seite"
 
-#: ../ui/settings.glade:1866
+#: ../ui/settings.glade:1989
 msgid "Cursor"
 msgstr "Cursor"
 
@@ -767,7 +766,7 @@ msgstr "Cursor"
 msgid "Custom"
 msgstr "Benutzerdefiniert"
 
-#: ../ui/settings.glade:1262
+#: ../ui/settings.glade:1354
 msgid "Custom Commands (for Method \"Custom\")"
 msgstr "Kommandos (für die Methode \"Custom\")"
 
@@ -783,11 +782,11 @@ msgstr "Anpassen"
 msgid "Cut"
 msgstr "Ausschneiden"
 
-#: ../ui/settings.glade:1598
+#: ../ui/settings.glade:1721
 msgid "Dark Theme (requires restart)"
 msgstr "Dunkles Thema (benötigt Neustart)"
 
-#: ../ui/settings.glade:432
+#: ../ui/settings.glade:451
 msgid "Default Save Name"
 msgstr "Standard Dateiname"
 
@@ -795,11 +794,11 @@ msgstr "Standard Dateiname"
 msgid "Default Tool"
 msgstr "Standard Werkzeug"
 
-#: ../ui/settings.glade:323
+#: ../ui/settings.glade:340
 msgid "Default name: "
 msgstr "Standard Name:"
 
-#: ../ui/settings.glade:2748
+#: ../ui/settings.glade:2932
 msgid "Defaults"
 msgstr "Standards"
 
@@ -844,7 +843,7 @@ msgstr "Beschreibung"
 msgid "Device"
 msgstr "Eingabegerät"
 
-#: ../ui/settings.glade:1194
+#: ../ui/settings.glade:1286
 msgid "Disable"
 msgstr "Deaktivieren"
 
@@ -852,7 +851,7 @@ msgstr "Deaktivieren"
 msgid "Disable drawing for this device"
 msgstr "Deaktivieren des Zeichnens mit diesem Gerät"
 
-#: ../ui/settings.glade:1067
+#: ../ui/settings.glade:1158
 msgid "Disabling Method"
 msgstr "Deaktivierungsmethode"
 
@@ -860,7 +859,7 @@ msgstr "Deaktivierungsmethode"
 msgid "Discard"
 msgstr "Verwerfen"
 
-#: ../ui/settings.glade:2123
+#: ../ui/settings.glade:2274
 msgid "Display DPI Calibration"
 msgstr "Bildschirm DPI-Kalibrierung"
 
@@ -940,7 +939,7 @@ msgstr "Koordinatensystem zeichnen"
 msgid "Draw stroke"
 msgstr "Linie zeichen"
 
-#: ../ui/settings.glade:2633
+#: ../ui/settings.glade:2789
 msgid "Drawing Area"
 msgstr "Zeichnungsbereich"
 
@@ -956,31 +955,31 @@ msgstr "Text schreiben"
 msgid "Emergency saved document"
 msgstr "Notfall gespeichertes Dokument"
 
-#: ../ui/settings.glade:1182
+#: ../ui/settings.glade:1274
 msgid "Enable"
 msgstr "Aktivieren"
 
-#: ../ui/settings.glade:477
+#: ../ui/settings.glade:496
 msgid "Enable Autoloading of Journals"
 msgstr "Automatisches Laden aktivieren"
 
-#: ../ui/settings.glade:186
+#: ../ui/settings.glade:203
 msgid "Enable Autosaving"
 msgstr "Automatisches Speichern aktivieren"
 
-#: ../ui/settings.glade:1397
-msgid "Enable GTK Touch / Scrolling workaround  (needs restart)"
+#: ../ui/settings.glade:1490
+msgid "Enable GTK Touch / Scrolling workaround  (requires restart)"
 msgstr "Abhilfe für GTK Touch-/Scrollhandling aktivieren (erfordert Neustart)"
 
-#: ../ui/settings.glade:714
+#: ../ui/settings.glade:784
 msgid "Enable Pressure Sensitivity"
 msgstr "Druckempfindlichkeit aktivieren"
 
-#: ../ui/settings.glade:1039
+#: ../ui/settings.glade:1130
 msgid "Enable internal Hand Recognition"
 msgstr "Interne Handerkennung aktivieren"
 
-#: ../ui/settings.glade:1330
+#: ../ui/settings.glade:1422
 msgid "Enable zoom gestures (requires restart)"
 msgstr "Zoom-Gesten aktivieren (erfordert Neustart)"
 
@@ -1104,7 +1103,7 @@ msgstr "Nächstes Vorkommen des Textes suchen"
 msgid "Find previous occurrence of the search string"
 msgstr "Vorheriges Vorkommen des Textes suchen"
 
-#: ../ui/settings.glade:2458
+#: ../ui/settings.glade:2637
 msgid "First Page Offset "
 msgstr "Verschiebung der ersten Seite"
 
@@ -1112,7 +1111,7 @@ msgstr "Verschiebung der ersten Seite"
 msgid "Font"
 msgstr "Schriftart"
 
-#: ../ui/main.glade:336 ../ui/settings.glade:1703
+#: ../ui/main.glade:336 ../ui/settings.glade:1826
 msgid "Fullscreen"
 msgstr "Vollbild"
 
@@ -1120,11 +1119,11 @@ msgstr "Vollbild"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 oder neuer"
 
-#: ../ui/settings.glade:2994
+#: ../ui/settings.glade:3195
 msgid "Gain"
 msgstr "Gain"
 
-#: ../ui/settings.glade:1637
+#: ../ui/settings.glade:1760
 msgid "Global"
 msgstr "Global"
 
@@ -1174,7 +1173,7 @@ msgstr "grün"
 msgid "Grid Snapping"
 msgstr "Am Raster einrasten"
 
-#: ../ui/settings.glade:2534
+#: ../ui/settings.glade:2713
 msgid "Grid snapping tolerance"
 msgstr "Toleranz um in Gitter einzurasten"
 
@@ -1187,7 +1186,7 @@ msgstr "Hand-Werkzeug"
 msgid "Hand"
 msgstr "Hand"
 
-#: ../ui/settings.glade:1287
+#: ../ui/settings.glade:1379
 msgid "Hand Recognition"
 msgstr "Handerkennung"
 
@@ -1199,11 +1198,11 @@ msgstr "Höhe:"
 msgid "Hide Menu"
 msgstr "Menüleiste ausblenden"
 
-#: ../ui/settings.glade:1667 ../ui/settings.glade:1732
+#: ../ui/settings.glade:1790 ../ui/settings.glade:1855
 msgid "Hide Menubar"
 msgstr "Menüleiste ausblenden"
 
-#: ../ui/settings.glade:1682 ../ui/settings.glade:1747
+#: ../ui/settings.glade:1805 ../ui/settings.glade:1870
 msgid "Hide Sidebar"
 msgstr "Seitenleiste ausblenden"
 
@@ -1211,15 +1210,15 @@ msgstr "Seitenleiste ausblenden"
 msgid "Hide all"
 msgstr "Alle ausblenden"
 
-#: ../ui/settings.glade:2325
+#: ../ui/settings.glade:2504
 msgid "Hide the horizontal scrollbar"
 msgstr "Horizontale Scrollbar ausblenden"
 
-#: ../ui/settings.glade:2340
+#: ../ui/settings.glade:2519
 msgid "Hide the vertical scrollbar"
 msgstr "Vertikale Scrollbar ausblenden"
 
-#: ../ui/settings.glade:1830
+#: ../ui/settings.glade:1953
 msgid "Highlight cursor position"
 msgstr "Markierungscursor Position"
 
@@ -1249,7 +1248,7 @@ msgstr "Dateiname der Bild-Ausgabe (.png / .svg)"
 msgid "Images"
 msgstr "Bilddateien"
 
-#: ../ui/settings.glade:2895
+#: ../ui/settings.glade:3096
 msgid "Input Device"
 msgstr "Eingabegerät"
 
@@ -1307,7 +1306,7 @@ msgstr "Ebene {1}"
 msgid "Layout"
 msgstr "Layout"
 
-#: ../ui/settings.glade:2426
+#: ../ui/settings.glade:2605
 msgid "Left / Right-Handed"
 msgstr "Links / Rechtshändig"
 
@@ -1329,7 +1328,7 @@ msgstr "hellgrün"
 msgid "Lined"
 msgstr "Liniert mit Rand"
 
-#: ../ui/settings.glade:514
+#: ../ui/settings.glade:544
 msgid "Load / Save"
 msgstr "Laden / Speichern"
 
@@ -1337,7 +1336,7 @@ msgstr "Laden / Speichern"
 msgid "Load file"
 msgstr "Datei laden"
 
-#: ../src/gui/PageView.cpp:734
+#: ../src/gui/PageView.cpp:733
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:102
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:18
 msgid "Loading..."
@@ -1357,7 +1356,7 @@ msgstr "magenta"
 msgid "Medium"
 msgstr "mittel"
 
-#: ../ui/settings.glade:586
+#: ../ui/settings.glade:633
 msgid "Middle Mouse Button"
 msgstr "Mittlere Maustaste"
 
@@ -1381,11 +1380,11 @@ msgstr ""
 "Nicht im Arbeitspfad\n"
 "Nicht in {1}"
 
-#: ../ui/settings.glade:660
+#: ../ui/settings.glade:718
 msgid "Mouse"
 msgstr "Maus"
 
-#: ../ui/settings.glade:641
+#: ../ui/settings.glade:688
 msgid "Mouse Buttons"
 msgstr "Maustasten"
 
@@ -1458,7 +1457,7 @@ msgstr "Normal zeichnen"
 msgid "OK"
 msgstr "OK"
 
-#: ../ui/settings.glade:2457
+#: ../ui/settings.glade:2636
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr ""
 "Verschiebe die erste Seite um so viele Seiten wenn das <b>Mehrseitige "
@@ -1499,7 +1498,7 @@ msgstr "Öffne {1}"
 msgid "Orange"
 msgstr "orange"
 
-#: ../ui/settings.glade:2917
+#: ../ui/settings.glade:3118
 msgid "Output Device"
 msgstr "Ausgabegerät"
 
@@ -1577,7 +1576,7 @@ msgstr "Seitennummer"
 msgid "Pages:"
 msgstr "Seiten:"
 
-#: ../ui/settings.glade:2490
+#: ../ui/settings.glade:2669
 msgid "Paired Pages"
 msgstr "Mehrseitiges Layout"
 
@@ -1662,7 +1661,7 @@ msgstr "Vordefiniert"
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: ../ui/settings.glade:1801
+#: ../ui/settings.glade:1924
 msgid "Presentation Mode"
 msgstr "Präsentationsmodus"
 
@@ -1670,7 +1669,7 @@ msgstr "Präsentationsmodus"
 msgid "Presentation mode"
 msgstr "Präsentationsmodus"
 
-#: ../ui/settings.glade:735
+#: ../ui/settings.glade:805
 msgid "Pressure Sensitivity"
 msgstr "Druckempfindlichkeit"
 
@@ -1694,7 +1693,7 @@ msgstr "Aufzeichnung starten / stoppen"
 msgid "Recorder could not be started."
 msgstr "Aufzeichnung konnte nicht gestartet werden."
 
-#: ../ui/settings.glade:3041
+#: ../ui/settings.glade:3242
 msgid "Recording Quality"
 msgstr "Aufnahmequalität"
 
@@ -1740,7 +1739,7 @@ msgstr "Auflösung"
 msgid "Restore file"
 msgstr "Datei widerherstellen"
 
-#: ../ui/settings.glade:623
+#: ../ui/settings.glade:670
 msgid "Right Mouse Button"
 msgstr "Rechte Maustaste"
 
@@ -1752,7 +1751,7 @@ msgstr "Drehung"
 msgid "Rotation Snapping"
 msgstr "Drehung einrasten"
 
-#: ../ui/settings.glade:2522
+#: ../ui/settings.glade:2701
 msgid "Rotation snapping tolerance"
 msgstr "Drehungsraster Toleranz"
 
@@ -1772,7 +1771,7 @@ msgstr "SVG Bild"
 msgid "SVG with transparent background"
 msgstr "SVG mit transparentem Hintergrund"
 
-#: ../ui/settings.glade:2982
+#: ../ui/settings.glade:3183
 msgid "Sample Rate"
 msgstr "Abtastrate"
 
@@ -1798,11 +1797,11 @@ msgstr "Fehler beim Speichern der Datei: {1}"
 msgid "Scale"
 msgstr "Skalieren"
 
-#: ../ui/settings.glade:2361
+#: ../ui/settings.glade:2540
 msgid "Scrollbars"
 msgstr "Scrollbalken"
 
-#: ../ui/settings.glade:2296
+#: ../ui/settings.glade:2475
 msgid "Scrolling outside the page"
 msgstr "Scrollen über die Seitenränder hinaus"
 
@@ -1814,7 +1813,7 @@ msgstr "Suchen"
 msgid "Select Background Color"
 msgstr "Hintergrundfarbe wählen"
 
-#: ../ui/settings.glade:2818
+#: ../ui/settings.glade:3019
 msgid "Select Folder"
 msgstr "Ordner auswählen"
 
@@ -1875,17 +1874,17 @@ msgstr "Rechteck auswählen"
 msgid "Select region"
 msgstr "Bereich auswählen"
 
-#: ../ui/settings.glade:2667
+#: ../ui/settings.glade:2840
 msgid "Select the tool and Settings if you press the Default Button"
 msgstr ""
 "Wählen Sie die Werkzeuge und Einstellungen, die als Standard festgelegt "
 "werden sollen"
 
-#: ../ui/settings.glade:1767
+#: ../ui/settings.glade:1890
 msgid "Select toolbar:"
 msgstr "Wähle Werkzeugleiste:"
 
-#: ../ui/settings.glade:1577
+#: ../ui/settings.glade:1699
 msgid "Selection Color (Text, Stroke Selection etc.)"
 msgstr "Auswahlfarbe (Text-, Figuren Selektion etc.)"
 
@@ -1909,7 +1908,7 @@ msgstr "Zeilen setzen"
 msgid "Shape Recognizer"
 msgstr "Figurenerkennung"
 
-#: ../ui/settings.glade:1474
+#: ../ui/settings.glade:1595
 msgid "Show Menubar on Startup"
 msgstr "Menüleiste beim Start zeigen"
 
@@ -1937,15 +1936,15 @@ msgstr "Nur nicht benutzte Seiten anzeigen ({1} nicht benutzte Seiten)"
 msgid "Show sidebar"
 msgstr "Seitenleiste anzeigen"
 
-#: ../ui/settings.glade:2390
+#: ../ui/settings.glade:2569
 msgid "Show sidebar on the right side"
 msgstr "Seitenleiste auf der rechten Seite anzeigen"
 
-#: ../ui/settings.glade:2405
+#: ../ui/settings.glade:2584
 msgid "Show vertical scrollbar on the left side"
 msgstr "Vertikale Bildlaufleiste auf der linken Seite anzeigen"
 
-#: ../ui/settings.glade:2580
+#: ../ui/settings.glade:2759
 msgid "Snapping"
 msgstr "Raster"
 
@@ -1965,12 +1964,12 @@ msgstr ""
 "Entschuldigung, Xournal++ kann derzeit keine entfernten Dateien öffnen.\n"
 "Kopieren Sie die Datei in einen lokalen Ordner."
 
-#: ../ui/settings.glade:1919
-msgid "Speed in percent for Ctrl + Scroll "
+#: ../ui/settings.glade:2070
+msgid "Speed for Ctrl + Scroll"
 msgstr "Geschwindigkeit für Strg + Scroll"
 
-#: ../ui/settings.glade:1946
-msgid "Speed in percent for a Zoomstep"
+#: ../ui/settings.glade:2097
+msgid "Speed for a Zoomstep"
 msgstr "Geschwindigkeit für Zoomstufe"
 
 #: ../ui/settingsButtonConfig.glade:120
@@ -1985,7 +1984,7 @@ msgstr "Zustand PLATZHALTER"
 msgid "Stop"
 msgstr "Aufnahme stoppen"
 
-#: ../ui/settings.glade:2804 ../ui/settings.glade:2840
+#: ../ui/settings.glade:3005 ../ui/settings.glade:3041
 msgid "Storage Folder"
 msgstr "Speicherplatz"
 
@@ -1995,11 +1994,11 @@ msgstr "Speicherplatz"
 msgid "Stroke recognizer"
 msgstr "Figurenerkennung"
 
-#: ../ui/settings.glade:924
+#: ../ui/settings.glade:998
 msgid "Stylus"
 msgstr "Stift"
 
-#: ../ui/settings.glade:898
+#: ../ui/settings.glade:968
 msgid "Stylus Buttons"
 msgstr "Stifttasten"
 
@@ -2027,7 +2026,7 @@ msgstr "Werkzeugleisten"
 msgid "Template:"
 msgstr "Vorlage:"
 
-#: ../ui/settings.glade:1225 ../ui/settings.glade:1237
+#: ../ui/settings.glade:1317 ../ui/settings.glade:1329
 msgid "Test"
 msgstr "Test"
 
@@ -2106,7 +2105,7 @@ msgstr ""
 msgid "The most recent log file name: {1}"
 msgstr "Der aktuelleste Logdateiname: {1}"
 
-#: ../ui/settings.glade:2100
+#: ../ui/settings.glade:2251
 msgid "The unit of the ruler is cm"
 msgstr "Die Einheit des Maßstabes ist cm"
 
@@ -2155,7 +2154,7 @@ msgstr "Dieses Dokument wurde noch nicht gespeichert."
 msgid "This image could not be loaded. Error message: {1}"
 msgstr "Das Bild konnte nicht geladen werden. Fehlermeldung: {1}"
 
-#: ../ui/settings.glade:1078
+#: ../ui/settings.glade:1169
 msgid "Timeout"
 msgstr "Wartezeit"
 
@@ -2175,7 +2174,7 @@ msgstr "Werkzeugleiste gefunden: {1}"
 msgid "Toolbars"
 msgstr "Werkzeugleisten"
 
-#: ../ui/settings.glade:993 ../ui/settings.glade:1437
+#: ../ui/settings.glade:1084 ../ui/settings.glade:1541
 msgid "Touchscreen"
 msgstr "Touchscreen"
 
@@ -2232,7 +2231,7 @@ msgstr "Unbekannter Linientyp: \"{1}\", verwende Stift"
 msgid "Unsaved Document"
 msgstr "Ungespeichertes Dokument"
 
-#: ../ui/settings.glade:2469
+#: ../ui/settings.glade:2648
 msgid "Usually 0 or 1"
 msgstr "Normalerweise 0 oder 1"
 
@@ -2252,7 +2251,7 @@ msgstr "Vertikaler Platz"
 msgid "Vertical space"
 msgstr "Vertikaler Platz"
 
-#: ../ui/settings.glade:1885
+#: ../ui/settings.glade:2019
 msgid "View"
 msgstr "Ansicht"
 
@@ -2277,7 +2276,7 @@ msgstr "Mit PDF-Hintergrund"
 msgid "With help from the community"
 msgstr "mit Hilfe der Community"
 
-#: ../ui/settings.glade:1418
+#: ../ui/settings.glade:1511
 msgid "Workaround"
 msgstr "Abhilfe"
 
@@ -2293,7 +2292,7 @@ msgstr "Falsche Punktanzahl ({1})"
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Falsche Punktzahl {1}, erwartet wurde {2}"
 
-#: ../ui/settings.glade:1093
+#: ../ui/settings.glade:1184
 msgid "X11"
 msgstr "X11"
 
@@ -2365,15 +2364,15 @@ msgstr ""
 "Tipp: Sie können im Menü Journal / Seitenhintergrund / PDF-Hintergrund eine "
 "beliebige PDF Seite einfügen."
 
-#: ../ui/settings.glade:2142
+#: ../ui/settings.glade:2304
 msgid "Zoom"
 msgstr "Zoom"
 
-#: ../ui/settings.glade:1351
+#: ../ui/settings.glade:1443
 msgid "Zoom Gestures"
 msgstr "Zoom-Gesten"
 
-#: ../ui/settings.glade:1999
+#: ../ui/settings.glade:2151
 msgid "Zoom Speed"
 msgstr "Zoomgeschwindigkeit"
 
@@ -2662,7 +2661,7 @@ msgstr "aktiviert,"
 msgid "eraser"
 msgstr "Radierer"
 
-#: ../ui/settings.glade:207
+#: ../ui/settings.glade:224
 msgid "every"
 msgstr "alle"
 
@@ -2674,7 +2673,7 @@ msgstr "Tastatur"
 msgid "load from file"
 msgstr "Von Datei laden"
 
-#: ../ui/settings.glade:232
+#: ../ui/settings.glade:249
 msgid "minutes"
 msgstr "Minuten"
 
@@ -2687,7 +2686,7 @@ msgid "pen"
 msgstr "Stift"
 
 # Übersetzung unterscheidet sich wegen Satzbau
-#: ../ui/settings.glade:2263 ../ui/settings.glade:2274
+#: ../ui/settings.glade:2442 ../ui/settings.glade:2453
 msgid "pixels"
 msgstr "Pixeln hinzu"
 
@@ -2695,7 +2694,7 @@ msgstr "Pixeln hinzu"
 msgid "pluginName"
 msgstr "Name des Plugins"
 
-#: ../ui/settings.glade:1120
+#: ../ui/settings.glade:1211
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(nach denen der Touchscreen reaktiviert wird)</i>"
 
@@ -2883,6 +2882,16 @@ msgstr "xoj-Vorschau-Extraktor: erfolgreich extrahiert"
 #~ msgstr ""
 #~ "<i>Wenn Sie einen Tablet-Stift verwenden, wird die Linienbreite durch den "
 #~ "Druck festgelegt.</i>"
+
+#~ msgid ""
+#~ "<i>Put a ruler on your screen to calibrate the zoom level to fit your "
+#~ "screen. Takes effect after restarting xournalpp.\n"
+#~ "The units are cm for the ruler, dpi for the slider.</i>"
+#~ msgstr ""
+#~ "<i>Legen Sie einen Maßstab auf den Bildschirm, um die Vergrößerung\n"
+#~ "des Bildschirms zu kalibrieren. Dies wirkt sich erst nach einem Neustart "
+#~ "aus.\n"
+#~ "Die Einheit des Maßstabs ist cm, für den Regler DPI.</i>"
 
 #~ msgid "<i>Select some advanced input options</i>"
 #~ msgstr "<i>Wähle erweiterte Eingabe Einstellungen</i>"
