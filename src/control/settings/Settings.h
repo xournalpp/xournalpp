@@ -375,6 +375,16 @@ public:
 	 * Set size index in XOJ_UNITS
 	 */
 	void setSizeUnitIndex(int sizeUnitId);
+	
+	/**
+	 * get strokeFilter settings
+	 */
+	void getStrokeFilter( int* strokeFilterIgnoreTime, int* strokeFilterIgnorePoints, int* strokeFilterSuccessiveTime);
+
+	/**
+	 * configure stroke filter
+	 */
+	void setStrokeFilter( int strokeFilterIgnoreTime, int strokeFilterIgnorePoints, int strokeFilterSuccessiveTime);
 
 public:
 	// Custom settings
@@ -737,8 +747,22 @@ private:
 	 */
 	string pluginDisabled;
 
+	
+	/**
+	 * Used to filter strokes of short time and length unless successive
+	 * strokeFilterIgnorePoints			this many points 
+	 * strokeFilterIgnoreTime 			within this time (ms)  will be ignored..
+	 * strokeFilterSuccessiveTime		...unless successive within this time.
+	 */
+	int strokeFilterIgnoreTime;
+	int strokeFilterIgnorePoints;
+	int strokeFilterSuccessiveTime;
+	
+	
 	/**
 	 * "Transaction" running, do not save until the end is reached
 	 */
 	bool inTransaction;
+	
+	
 };
