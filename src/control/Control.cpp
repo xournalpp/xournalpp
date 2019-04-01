@@ -1529,23 +1529,23 @@ void Control::changePageBackgroundColor()
 	}
 }
 
-void Control::setViewPairedPages(bool pairedPages)
+void Control::setViewPairedPages(bool enabled)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	settings->setShowPairedPages(pairedPages);
-	fireActionSelected(GROUP_PAIRED_PAGES, pairedPages ? ACTION_VIEW_PAIRED_PAGES : ACTION_NOT_SELECTED);
+	settings->setShowPairedPages(enabled);
+	fireActionSelected(GROUP_PAIRED_PAGES, enabled ? ACTION_VIEW_PAIRED_PAGES : ACTION_NOT_SELECTED);
 
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();
 	scrollHandler->scrollToPage(currentPage);
 }
 
-void Control::setViewPresentationMode(bool presentationMode)
+void Control::setViewPresentationMode(bool enabled)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	if(presentationMode)
+	if(enabled)
 	{
 		// Disable PresentationMode if ZoomValue could not calculated correctly
 		zoom->updateZoomPresentationValue();
@@ -1554,18 +1554,18 @@ void Control::setViewPresentationMode(bool presentationMode)
 		setViewRows(0);
 		setViewColumns(0);
 	}
-	zoom->setZoomPresentationMode(presentationMode);
-	settings->setPresentationMode(presentationMode);
+	zoom->setZoomPresentationMode(enabled);
+	settings->setPresentationMode(enabled);
 
-	fireActionSelected(GROUP_PRESENTATION_MODE, presentationMode ? ACTION_VIEW_PRESENTATION_MODE : ACTION_NOT_SELECTED);
-	fireEnableAction(ACTION_ZOOM_IN, !presentationMode);
-	fireEnableAction(ACTION_ZOOM_OUT, !presentationMode);
-	fireEnableAction(ACTION_ZOOM_FIT, !presentationMode);
-	fireEnableAction(ACTION_ZOOM_100, !presentationMode);
-	fireEnableAction(ACTION_FOOTER_ZOOM_SLIDER, !presentationMode);
+	fireActionSelected(GROUP_PRESENTATION_MODE, enabled ? ACTION_VIEW_PRESENTATION_MODE : ACTION_NOT_SELECTED);
+	fireEnableAction(ACTION_ZOOM_IN, !enabled);
+	fireEnableAction(ACTION_ZOOM_OUT, !enabled);
+	fireEnableAction(ACTION_ZOOM_FIT, !enabled);
+	fireEnableAction(ACTION_ZOOM_100, !enabled);
+	fireEnableAction(ACTION_FOOTER_ZOOM_SLIDER, !enabled);
 
 	selectDefaultTool();
-	fireEnableAction(ACTION_TOOL_HAND, !presentationMode);
+	fireEnableAction(ACTION_TOOL_HAND, !enabled);
 
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();

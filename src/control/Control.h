@@ -126,8 +126,8 @@ public:
 	void saveSettings();
 
 	void updateWindowTitle();
-	void setViewPairedPages(bool continous);
-	void setViewPresentationMode(bool);
+	void setViewPairedPages(bool enabled);
+	void setViewPresentationMode(bool enabled);
 	void setPairsOffset(int numOffset);
 	void setViewColumns(int numColumns);
 	void setViewRows(int numRows);
