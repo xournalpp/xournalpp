@@ -7,15 +7,14 @@
 #include "undo/InsertUndoAction.h"
 #include "control/shaperecognizer/ShapeRecognizerResult.h"
 #include "undo/RecognizerUndoAction.h"
+#include "control/settings/Settings.h"
 
 #include <config-features.h>
 
 #include <gdk/gdk.h>
 #include <cmath>
 
-#define IGNORE_STROKE_POINTS  8		//this many point in IGNORE_STROKE_TIME_MS will be ignored unless successive - pen input requires larger count
-#define IGNORE_STROKE_TIME_MS  300
-#define DO_NOT_IGNORE_SUCCESSIVE_TIME 500	//only ignore once every this ms
+
 
 guint32 StrokeHandler::lastIgnorePointTime;		//persist for next stroke
 
@@ -151,11 +150,16 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 		return;
 	}
 
+	Control* control = xournal->getControl();
+	Settings* settings = control->getSettings();
 	int pointCount = stroke->getPointCount();
+	int strokeFilterIgnoreTime,strokeFilterIgnorePoints,strokeFilterSuccessiveTime;
 	
-	if ( pointCount < IGNORE_STROKE_POINTS && pos.time - this->startStrokeTime < IGNORE_STROKE_TIME_MS)
+	settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnorePoints, &strokeFilterSuccessiveTime  );
+	
+	if ( pointCount < strokeFilterIgnorePoints && pos.time - this->startStrokeTime < strokeFilterIgnoreTime)
 	{
-		if ( pos.time - this->lastIgnorePointTime  < DO_NOT_IGNORE_SUCCESSIVE_TIME )
+		if ( pos.time - this->lastIgnorePointTime  < strokeFilterSuccessiveTime )
 		{
 			this->lastIgnorePointTime = pos.time;
 			g_print("NOT_IGNORED: %d\n",pos.time - startStrokeTime);
@@ -189,7 +193,6 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 
 	stroke->freeUnusedPointItems();
 
-	Control* control = xournal->getControl();
 	control->getLayerController()->ensureLayerExists(page);
 
 	Layer* layer = page->getSelectedLayer();

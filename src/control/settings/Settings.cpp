@@ -142,7 +142,12 @@ void Settings::loadDefault()
 	this->pluginEnabled = "";
 	this->pluginDisabled = "";
 	
-	inTransaction = false;
+	this->strokeFilterIgnoreTime = 300;
+	this->strokeFilterIgnorePoints = 8;
+	this->strokeFilterSuccessiveTime = 500;
+	
+	this->inTransaction = false;
+	
 }
 
 void Settings::parseData(xmlNodePtr cur, SElement& elem)
@@ -542,7 +547,19 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->audioOutputDevice = g_ascii_strtoll((const char *) value, NULL, 10);
 	}
-
+	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterIgnoreTime") == 0)
+	{
+		this->strokeFilterIgnoreTime = g_ascii_strtoll((const char*) value, NULL, 10);
+	}	
+	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterIgnorePoints") == 0)
+	{
+		this->strokeFilterIgnorePoints = g_ascii_strtoll((const char*) value, NULL, 10);
+	}	
+	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterSuccessiveTime") == 0)
+	{
+		this->strokeFilterSuccessiveTime = g_ascii_strtoll((const char*) value, NULL, 10);
+	}
+	
 	xmlFree(name);
 	xmlFree(value);
 }
@@ -903,6 +920,11 @@ void Settings::save()
 
 	WRITE_STRING_PROP(pluginEnabled);
 	WRITE_STRING_PROP(pluginDisabled);
+	
+	WRITE_INT_PROP(strokeFilterIgnoreTime);
+	WRITE_INT_PROP(strokeFilterIgnorePoints);
+	WRITE_INT_PROP(strokeFilterSuccessiveTime);
+	
 
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
@@ -2236,6 +2258,26 @@ void Settings::setPluginDisabled(string pluginEnabled)
 	save();
 }
 
+
+void Settings::getStrokeFilter( int* ignoreTime, int* ignorePoints, int* successiveTime)
+{
+	XOJ_CHECK_TYPE(Settings);
+	*ignoreTime = this->strokeFilterIgnoreTime;
+	*ignorePoints = this->strokeFilterIgnorePoints;
+	*successiveTime = this->strokeFilterSuccessiveTime;
+	
+}
+
+void Settings::setStrokeFilter( int ignoreTime, int ignorePoints, int successiveTime)
+{
+	XOJ_CHECK_TYPE(Settings);
+	this->strokeFilterIgnoreTime = ignoreTime;
+	this->strokeFilterIgnorePoints = ignorePoints;
+	this->strokeFilterSuccessiveTime = successiveTime;
+	
+}
+	
+	
 //////////////////////////////////////////////////
 
 SAttribute::SAttribute()
