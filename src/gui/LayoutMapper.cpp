@@ -23,8 +23,6 @@ void LayoutMapper::configureFromSettings(int numPages, Settings* settings)
 {
 	XOJ_CHECK_TYPE(LayoutMapper);
 
-	int pages = numPages;
-
 	// get from user settings:
 	bool isPairedPages = settings->isShowPairedPages();
 	int numCols = settings->getViewColumns();
@@ -46,9 +44,25 @@ void LayoutMapper::configureFromSettings(int numPages, Settings* settings)
 	type |= isBottomToTop ? LayoutBitFlags::BottomToTop : 0;
 
 	
-	this->configure(pages, numRows, numCols, fixRows, (LayoutType)type, isPairedPages, pairsOffset);
+	this->configure(numPages, numRows, numCols, fixRows, (LayoutType)type, isPairedPages, pairsOffset);
 }
 
+void LayoutMapper::configureForPresentation(int numPages, Settings* settings)
+{
+	bool isPairedPages = settings->isShowPairedPages();
+	int numCols = 1;
+	int numRows = 1;
+	bool fixRows = false; //i.e. use columns
+	int pairsOffset = settings->getPairsOffset();
+	if (!isPairedPages)
+	{
+		pairsOffset = 0;
+	}
+
+	this->configure(numPages, numRows, numCols, fixRows, Vertical, isPairedPages, pairsOffset);
+}	
+	
+	
 void LayoutMapper::configure(int pages, int numRows, int numCols, bool useRows, LayoutType type, bool isPaired,
 		int firstPageOffset)
 {

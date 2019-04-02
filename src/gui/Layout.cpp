@@ -170,9 +170,14 @@ void Layout::layoutPages()
 	
 	Settings* settings = this->view->getControl()->getSettings();
 
-	// obtain rows, cols, paired and layout from view settings
-	this->mapper.configureFromSettings(len, settings);
-
+	if( settings->isPresentationMode() )	//fix some settings for presentation mode
+	{
+		this->mapper.configureForPresentation(len, settings);
+	}
+	else{    // obtain rows, cols, paired and layout from view settings
+		this->mapper.configureFromSettings(len, settings);
+	}
+	
 	// get from mapper (some may have changed to accomodate paired setting etc.)
 	bool isPairedPages = this->mapper.getPairedPages();
 	this->rows = this->mapper.getRows();
