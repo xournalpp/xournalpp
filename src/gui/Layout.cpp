@@ -218,13 +218,13 @@ void Layout::layoutPages()
 	int borderPrefX =  XOURNAL_PADDING;
 	if (settings->getAddHorizontalSpace() )
 	{
-		borderPrefX += XOURNAL_PADDING_FREE_SPACE;	// this adds extra space to the left and right 
+		borderPrefX += settings->getAddHorizontalSpaceAmount();	// this adds extra space to the left and right 
 	}
 	
 	int borderPrefY = XOURNAL_PADDING;
 	if (settings->getAddVerticalSpace() )
 	{
-		borderPrefY += XOURNAL_PADDING_FREE_SPACE;	// this adds space to the top and bottom
+		borderPrefY += settings->getAddVerticalSpaceAmount();	// this adds space to the top and bottom
 	}	
 
 	
