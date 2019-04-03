@@ -233,6 +233,12 @@ void SettingsDialog::load()
 	GtkWidget* spZoomStepScroll = get("spZoomStepScroll");
 	gtk_spin_button_set_value(
 		GTK_SPIN_BUTTON(spZoomStepScroll), settings->getZoomStepScroll());
+	
+	GtkWidget* spAddHorizontalSpace = get("spAddHorizontalSpace");
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAddHorizontalSpace), settings->getAddHorizontalSpaceAmount());
+	
+	GtkWidget* spAddVerticalSpace = get("spAddVerticalSpace");
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAddVerticalSpace), settings->getAddVerticalSpaceAmount());
 
 	GtkWidget* slider = get("zoomCallibSlider");
 
@@ -509,6 +515,16 @@ void SettingsDialog::save()
 	double zoomStepScroll = gtk_spin_button_get_value(
 		GTK_SPIN_BUTTON(spZoomStepScroll));
 	settings->setZoomStepScroll(zoomStepScroll);
+	
+	
+	GtkWidget* spAddHorizontalSpace = get("spAddHorizontalSpace");
+	int addHorizontalSpaceAmount = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAddHorizontalSpace));
+	settings->setAddHorizontalSpaceAmount(addHorizontalSpaceAmount);
+
+	GtkWidget* spAddVerticalSpace = get("spAddVerticalSpace");
+	int addVerticalSpaceAmount = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAddVerticalSpace));
+	settings->setAddVerticalSpaceAmount(addVerticalSpaceAmount);
+	
 
 	settings->setDisplayDpi(dpi);
 

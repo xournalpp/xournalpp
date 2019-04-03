@@ -89,7 +89,9 @@ void Settings::loadDefault()
 	this->autosaveEnabled = true;
 
 	this->addHorizontalSpace = false;
+	this->addHorizontalSpaceAmount = 150;
 	this->addVerticalSpace = false;
+	this->addVerticalSpaceAmount = 150;
 
 	this->snapRotation = true;
 	this->snapRotationTolerance = 0.20;
@@ -453,9 +455,21 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->backgroundColor = g_ascii_strtoll((const char*) value, NULL, 10);
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "addHorizontalSpace") == 0)
+	{
+		this->addHorizontalSpace = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "addHorizontalSpaceAmount") == 0)
+	{
+		this->addHorizontalSpaceAmount = g_ascii_strtoll((const char*) value, NULL, 10);
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "addVerticalSpace") == 0)
 	{
 		this->addVerticalSpace = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "addVerticalSpaceAmount") == 0)
+	{
+		this->addVerticalSpaceAmount = g_ascii_strtoll((const char*) value, NULL, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "snapRotation") == 0)
 	{
@@ -480,10 +494,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "touchWorkaround") == 0)
 	{
 		this->touchWorkaround = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "addHorizontalSpace") == 0)
-	{
-		this->addHorizontalSpace = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "scrollbarHideType") == 0)
 	{
@@ -846,7 +856,9 @@ void Settings::save()
 	WRITE_INT_PROP(autosaveTimeout);
 
 	WRITE_BOOL_PROP(addHorizontalSpace);
+	WRITE_INT_PROP(addHorizontalSpaceAmount);	
 	WRITE_BOOL_PROP(addVerticalSpace);
+	WRITE_INT_PROP(addVerticalSpaceAmount);
 
 	WRITE_BOOL_PROP(snapRotation);
 	WRITE_DOUBLE_PROP(snapRotationTolerance);
@@ -1118,6 +1130,27 @@ void Settings::setAddVerticalSpace(bool space)
 	this->addVerticalSpace = space;
 }
 
+int Settings::getAddVerticalSpaceAmount()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->addVerticalSpaceAmount;
+}
+
+void Settings::setAddVerticalSpaceAmount(int pixels)
+{
+	XOJ_CHECK_TYPE(Settings);
+	
+	if (this->addVerticalSpaceAmount == pixels)
+	{
+		return;
+	}
+
+	this->addVerticalSpaceAmount = pixels;
+	save();
+}
+
+
 bool Settings::getAddHorizontalSpace()
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1130,6 +1163,26 @@ void Settings::setAddHorizontalSpace(bool space)
 	XOJ_CHECK_TYPE(Settings);
 
 	this->addHorizontalSpace = space;
+}
+
+int Settings::getAddHorizontalSpaceAmount()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->addHorizontalSpaceAmount;
+}
+
+void Settings::setAddHorizontalSpaceAmount(int pixels)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->addHorizontalSpaceAmount == pixels)
+	{
+		return;
+	}
+
+	this->addHorizontalSpaceAmount = pixels;
+	save();
 }
 
 bool Settings::isShowBigCursor()
