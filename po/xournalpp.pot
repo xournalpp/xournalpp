@@ -397,6 +397,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:108
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:470
+#: ../ui/main.glade:1128
 msgid "Draw coordinate system"
 msgstr ""
 
