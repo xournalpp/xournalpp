@@ -368,7 +368,7 @@ void Layout::setSize(int widgetWidth, int widgetHeight)
 	this->view->getControl()->calcZoomFitSize();
 }
 
-void Layout::scrollRelativ(int x, int y)
+void Layout::scrollRelativ(double x, double y)
 {
 	XOJ_CHECK_TYPE(Layout);
 
