@@ -152,10 +152,6 @@ void InputSequence::handleScrollEvent()
 	// use root coordinates as reference point because
 	// scrolling changes window relative coordinates
 	// see github Gnome/evince@1adce5486b10e763bed869
-	if (lastMousePositionX  == (int)rootX && lastMousePositionY == (int)rootY)
-	{
-		return;
-	}
 
 	if (scrollOffsetX == 0 && scrollOffsetY == 0)
 	{
