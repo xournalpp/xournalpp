@@ -1125,7 +1125,7 @@
                       <object class="GtkCheckMenuItem" id="menuToolsDrawCoordinateSystem">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Draw Arrow</property>
+                        <property name="label" translatable="yes">Draw coordinate system</property>
                         <property name="use_underline">True</property>
                         <signal name="toggled" handler="ACTION_TOOL_DRAW_COORDINATE_SYSTEM" swapped="no"/>
                         <accelerator key="5" signal="activate" modifiers="GDK_CONTROL_MASK"/>
