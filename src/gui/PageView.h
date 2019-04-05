@@ -77,6 +77,17 @@ public:
 	 */
 	bool containsPoint(int x, int y, bool local = false);
 	bool containsY(int y);
+	
+	/**
+	 * Returns Row assigned in current layout
+	 */ 
+	int getMappedRow();
+	
+	/**
+	 * Returns Column assigned in current layout
+	 */ 
+	int getMappedCol();
+	
 
 	GtkColorWrapper getSelectionColor();
 	int getBufferPixels();
@@ -169,6 +180,11 @@ private:
 	void setX(int x);
 	void setY(int y);
 
+	void setMappedRowCol(int row, int col );	//row, column assigned by mapper during layout.
+
+	
+
+
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -223,10 +239,15 @@ private:
 	int dispX;	//position on display - set in Layout::layoutPages
 	int dispY;
 
+
+	int mappedRow;
+	int mappedCol;
+
+
 	friend class RenderJob;
 	friend class InputHandler;
 	friend class BaseSelectObject;
 	friend class SelectObject;
 	friend class PlayObject;
-	friend void Layout::layoutPages();	//only function allowed to setX(), setY()
+	friend void Layout::layoutPages();	//only function allowed to setX(), setY(), setMappedRowCol()
 };

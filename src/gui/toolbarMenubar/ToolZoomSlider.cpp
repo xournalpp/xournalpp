@@ -199,6 +199,8 @@ GtkToolItem* ToolZoomSlider::newItem()
 	g_signal_connect(this->slider, "format-value", G_CALLBACK(sliderFormatValue), this);
 	gtk_scale_set_draw_value(GTK_SCALE(this->slider), true);
 
+	gtk_widget_set_can_focus(this->slider, false);
+	
 	if (this->horizontal)
 	{
 		gtk_widget_set_size_request(GTK_WIDGET(this->slider), 120, 16);

@@ -532,32 +532,6 @@ bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 		//editing text - give that control
 		return false;
 	}
-	else if (event->keyval == GDK_KEY_Down)
-	{
-		if (win->getControl()->getSettings()->isPresentationMode())
-		{
-			win->getControl()->getScrollHandler()->goToNextPage();
-			return true;
-		}
-		else
-		{
-			win->getLayout()->scrollRelativ(0, 30);
-			return true;
-		}
-	}
-	else if (event->keyval == GDK_KEY_Up)
-	{
-		if (win->getControl()->getSettings()->isPresentationMode())
-		{
-			win->getControl()->getScrollHandler()->goToPreviousPage();
-			return true;
-		}
-		else
-		{
-			win->getLayout()->scrollRelativ(0, -30);
-			return true;
-		}
-	}
 	else if (event->keyval == GDK_KEY_Escape)
 	{
 		win->getControl()->getSearchBar()->showSearchBar(false);
