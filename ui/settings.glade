@@ -147,7 +147,6 @@
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
-                    <property name="propagate_natural_width">True</property>
                     <child>
                       <object class="GtkViewport">
                         <property name="visible">True</property>
@@ -559,7 +558,6 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
-                    <property name="propagate_natural_width">True</property>
                     <child>
                       <object class="GtkViewport">
                         <property name="visible">True</property>
@@ -734,7 +732,6 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
-                    <property name="propagate_natural_width">True</property>
                     <child>
                       <object class="GtkViewport">
                         <property name="visible">True</property>
@@ -1014,7 +1011,6 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
-                    <property name="propagate_natural_width">True</property>
                     <child>
                       <object class="GtkViewport">
                         <property name="visible">True</property>
@@ -1557,7 +1553,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
-                    <property name="propagate_natural_width">True</property>
                     <child>
                       <object class="GtkViewport">
                         <property name="visible">True</property>
@@ -1787,8 +1782,8 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbBigCursor">
-                                            <property name="label" translatable="yes">Big cursor for pen</property>
+                                          <object class="GtkCheckButton" id="cbHighlightPosition">
+                                            <property name="label" translatable="yes">Highlight cursor position</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -1802,8 +1797,8 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbHighlightPosition">
-                                            <property name="label" translatable="yes">Highlight cursor position</property>
+                                          <object class="GtkCheckButton" id="cbBigCursor">
+                                            <property name="label" translatable="yes">Big cursor for pen</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -2165,7 +2160,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
-                    <property name="propagate_natural_width">True</property>
                     <child>
                       <object class="GtkViewport">
                         <property name="visible">True</property>
@@ -2450,7 +2444,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
-                    <property name="propagate_natural_width">True</property>
                     <child>
                       <object class="GtkViewport">
                         <property name="visible">True</property>
@@ -2811,7 +2804,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
-                    <property name="propagate_natural_width">True</property>
                     <child>
                       <object class="GtkViewport">
                         <property name="visible">True</property>
@@ -2955,7 +2947,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
-                    <property name="propagate_natural_width">True</property>
                     <child>
                       <object class="GtkViewport">
                         <property name="visible">True</property>
