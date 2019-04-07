@@ -208,12 +208,12 @@ private:
 	/**
 	 * Last mouse position for Scrolling
 	 */
-	int lastMousePositionX = 0;
+	double lastMousePositionX = 0;
 
 	/**
 	 * Last mouse position for Scrolling
 	 */
-	int lastMousePositionY = 0;
+	double lastMousePositionY = 0;
 
 	/**
 	 * Currently scrolling active
@@ -223,10 +223,10 @@ private:
 	/**
 	 * The last Mouse Position, for scrolling
 	 */
-	int scrollOffsetX = 0;
+	double scrollOffsetX = 0;
 
 	/**
 	 * The last Mouse Position, for scrolling
 	 */
-	int scrollOffsetY = 0;
+	double scrollOffsetY = 0;
 };

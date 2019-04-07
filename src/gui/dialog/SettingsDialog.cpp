@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "SettingsDialog.h"
 
 #include "ButtonConfigGui.h"
@@ -32,7 +34,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 		+[](GtkToggleButton* togglebutton, SettingsDialog* self)
 		{
 			XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-			self->autosaveToggled();
+			self->enableWithCheckbox("cbAutosave", "boxAutosave");
 		}), this);
 
 
@@ -49,6 +51,34 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 			XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
 			system(gtk_entry_get_text(GTK_ENTRY(self->get("txtDisableTouchCommand"))));
 		}), this);
+
+	g_signal_connect(get("cbAddVerticalSpace"), "toggled", G_CALLBACK(
+			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
+			{
+				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
+				self->enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpace");
+			}), this);
+
+	g_signal_connect(get("cbAddHorizontalSpace"), "toggled", G_CALLBACK(
+			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
+			{
+				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
+				self->enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpace");
+			}), this);
+
+	g_signal_connect(get("cbDisableTouchOnPenNear"), "toggled", G_CALLBACK(
+			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
+			{
+				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
+				self->enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
+			}), this);
+
+	g_signal_connect(get("cbTouchDisableMethod"), "changed", G_CALLBACK(
+			+[](GtkComboBox* comboBox, SettingsDialog* self)
+			{
+				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
+				self->customHandRecognitionToggled();
+			}), this);
 
 	gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
 	gtk_widget_show(callib);
@@ -142,14 +172,22 @@ bool SettingsDialog::getCheckbox(const char* name)
 /**
  * Autosave was toggled, enable / disable autosave config
  */
-void SettingsDialog::autosaveToggled()
+void SettingsDialog::enableWithCheckbox(string checkbox, string widget)
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	GtkWidget* cbAutosave = get("cbAutosave");
+	GtkWidget* cbAutosave = get(std::move(checkbox));
 	bool autosaveEnabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbAutosave));
-	gtk_widget_set_sensitive(get("lbAutosaveTimeout"), autosaveEnabled);
-	gtk_widget_set_sensitive(get("spAutosaveTimeout"), autosaveEnabled);
+	gtk_widget_set_sensitive(get(std::move(widget)), autosaveEnabled);
+}
+
+void SettingsDialog::customHandRecognitionToggled()
+{
+	XOJ_CHECK_TYPE(SettingsDialog);
+
+	GtkWidget* cbTouchDisableMethod = get("cbTouchDisableMethod");
+	int touchMethod = gtk_combo_box_get_active(GTK_COMBO_BOX(cbTouchDisableMethod));
+	gtk_widget_set_sensitive(get("boxCustomTouchDisableSettings"), touchMethod == 2);
 }
 
 void SettingsDialog::load()
@@ -195,6 +233,12 @@ void SettingsDialog::load()
 	GtkWidget* spZoomStepScroll = get("spZoomStepScroll");
 	gtk_spin_button_set_value(
 		GTK_SPIN_BUTTON(spZoomStepScroll), settings->getZoomStepScroll());
+	
+	GtkWidget* spAddHorizontalSpace = get("spAddHorizontalSpace");
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAddHorizontalSpace), settings->getAddHorizontalSpaceAmount());
+	
+	GtkWidget* spAddVerticalSpace = get("spAddVerticalSpace");
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAddVerticalSpace), settings->getAddVerticalSpaceAmount());
 
 	GtkWidget* slider = get("zoomCallibSlider");
 
@@ -248,7 +292,11 @@ void SettingsDialog::load()
 	loadCheckbox("cbHidePresentationSidebar", hidePresentationSidebar);
 	loadCheckbox("cbHideMenubarStartup", settings->isMenubarVisible());
 
-	autosaveToggled();
+	enableWithCheckbox("cbAutosave", "boxAutosave");
+	enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpace");
+	enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpace");
+	enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
+	customHandRecognitionToggled();
 
 
 	SElement& touch = settings->getCustomElement("touch");
@@ -467,6 +515,16 @@ void SettingsDialog::save()
 	double zoomStepScroll = gtk_spin_button_get_value(
 		GTK_SPIN_BUTTON(spZoomStepScroll));
 	settings->setZoomStepScroll(zoomStepScroll);
+	
+	
+	GtkWidget* spAddHorizontalSpace = get("spAddHorizontalSpace");
+	int addHorizontalSpaceAmount = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAddHorizontalSpace));
+	settings->setAddHorizontalSpaceAmount(addHorizontalSpaceAmount);
+
+	GtkWidget* spAddVerticalSpace = get("spAddVerticalSpace");
+	int addVerticalSpaceAmount = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAddVerticalSpace));
+	settings->setAddVerticalSpaceAmount(addVerticalSpaceAmount);
+	
 
 	settings->setDisplayDpi(dpi);
 

@@ -13,6 +13,7 @@
 #include "model/Point.h"
 
 #include <Util.h>
+#include <cmath>
 
 
 InputSequence::InputSequence(NewGtkInputDevice* inputHandler)
@@ -152,10 +153,13 @@ void InputSequence::handleScrollEvent()
 	// use root coordinates as reference point because
 	// scrolling changes window relative coordinates
 	// see github Gnome/evince@1adce5486b10e763bed869
-	if (lastMousePositionX  == (int)rootX && lastMousePositionY == (int)rootY)
+
+	// GTK handles event compression/filtering differently between versions - this may be needed on certain hardware/GTK combinations.
+	if (std::abs(lastMousePositionX - rootX) < 0.1 && std::abs( lastMousePositionY - rootY) < 0.1 )
 	{
 		return;
 	}
+
 
 	if (scrollOffsetX == 0 && scrollOffsetY == 0)
 	{

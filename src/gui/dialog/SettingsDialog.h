@@ -34,7 +34,8 @@ public:
 	/**
 	 * Autosave was toggled, enable / disable autosave config
 	 */
-	void autosaveToggled();
+	void enableWithCheckbox(string checkbox, string widget);
+	void customHandRecognitionToggled();
 
 private:
 	void load();

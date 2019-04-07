@@ -2131,21 +2131,26 @@ void Control::showSettings()
 {
 	XOJ_CHECK_TYPE(Control);
 
+	// take note of some settings before to compare with after
 	int selectionColor = settings->getBorderColor();
 	bool verticalSpace = settings->getAddVerticalSpace();
+	int verticalSpaceAmount = settings->getAddVerticalSpaceAmount();
 	bool horizontalSpace = settings->getAddHorizontalSpace();
+	int horizontalSpaceAmount = settings->getAddHorizontalSpaceAmount();
 	bool bigCursor = settings->isShowBigCursor();
 	bool highlightPosition = settings->isHighlightPosition();
 
 	SettingsDialog* dlg = new SettingsDialog(this->gladeSearchPath, settings, this);
 	dlg->show(GTK_WINDOW(this->win->getWindow()));
 
+	// note which settings have changed and act accordingly
 	if (selectionColor != settings->getBorderColor())
 	{
 		win->getXournal()->forceUpdatePagenumbers();
 	}
 
-	if (verticalSpace != settings->getAddVerticalSpace() || horizontalSpace != settings->getAddHorizontalSpace())
+	if (verticalSpace != settings->getAddVerticalSpace() || horizontalSpace != settings->getAddHorizontalSpace()
+		|| verticalSpaceAmount != settings->getAddVerticalSpaceAmount() || horizontalSpaceAmount != settings->getAddHorizontalSpaceAmount() )
 	{
 		int currentPage = getCurrentPageNo();
 		win->getXournal()->layoutPages();

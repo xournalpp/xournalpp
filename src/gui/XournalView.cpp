@@ -211,12 +211,12 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	}
 	else
 	{
-		if (event->keyval == GDK_KEY_Page_Down)
+		if (event->keyval == GDK_KEY_Page_Down || event->keyval == GDK_KEY_KP_Page_Down)
 		{
 			control->getScrollHandler()->goToNextPage();
 			return true;
 		}
-		if (event->keyval == GDK_KEY_Page_Up)
+		if (event->keyval == GDK_KEY_Page_Up || event->keyval == GDK_KEY_KP_Page_Up)
 		{
 			control->getScrollHandler()->goToPreviousPage();
 			return true;
@@ -232,6 +232,32 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		return true;
 	}
 
+	//Numeric keypad always navigates by page
+	if (event->keyval == GDK_KEY_KP_Up)
+	{
+		this->pageRelativeXY(0,-1);
+		return true;
+	}
+
+	if (event->keyval == GDK_KEY_KP_Down)
+	{
+		this->pageRelativeXY(0,1);
+		return true;
+	}
+
+	if (event->keyval == GDK_KEY_KP_Left)
+	{
+		this->pageRelativeXY(-1, 0);
+		return true;
+	}
+
+	if (event->keyval == GDK_KEY_KP_Right)
+	{
+		this->pageRelativeXY(1,0);
+		return true;
+	}
+
+	
 	if (event->keyval == GDK_KEY_Up)
 	{
 		if (control->getSettings()->isPresentationMode())
@@ -241,7 +267,14 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		}
 		else
 		{
-			layout->scrollRelativ(0, -scrollKeySize);
+			if (state & GDK_SHIFT_MASK)
+			{
+				this->pageRelativeXY(0,-1);
+			}
+			else
+			{
+				layout->scrollRelativ(0, -scrollKeySize);
+			}
 			return true;
 		}
 	}
@@ -255,30 +288,51 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		}
 		else
 		{
-			layout->scrollRelativ(0, scrollKeySize);
+			if (state & GDK_SHIFT_MASK)
+			{
+				this->pageRelativeXY(0,1);
+			}
+			else
+			{
+				layout->scrollRelativ(0, scrollKeySize);
+			}
 			return true;
 		}
 	}
 
 	if (event->keyval == GDK_KEY_Left)
 	{
-		control->getScrollHandler()->goToPreviousPage();
+		if (state & GDK_SHIFT_MASK)
+		{
+			this->pageRelativeXY(-1,0);
+		}
+		else
+		{
+			layout->scrollRelativ(-scrollKeySize, 0);
+		}
 		return true;
 	}
 
 	if (event->keyval == GDK_KEY_Right)
 	{
-		control->getScrollHandler()->goToNextPage();
+		if (state & GDK_SHIFT_MASK)
+		{
+			this->pageRelativeXY(1,0);
+		}
+		else
+		{
+			layout->scrollRelativ(scrollKeySize, 0);
+		}
 		return true;
 	}
 
-	if (event->keyval == GDK_KEY_End)
+	if (event->keyval == GDK_KEY_End || event->keyval == GDK_KEY_KP_End)
 	{
 		control->getScrollHandler()->goToLastPage();
 		return true;
 	}
 
-	if (event->keyval == GDK_KEY_Home)
+	if (event->keyval == GDK_KEY_Home || event->keyval == GDK_KEY_KP_Home)
 	{
 		control->getScrollHandler()->goToFirstPage();
 		return true;
@@ -460,6 +514,27 @@ void XournalView::scrollTo(size_t pageNo, double yDocument)
 	control->firePageSelected(pageNo);
 }
 
+	
+void XournalView::pageRelativeXY(int offCol, int offRow)
+{
+	XOJ_CHECK_TYPE(XournalView);
+
+	int currPage = getCurrentPage();
+
+    XojPageView* view = getViewFor(currPage );
+	int row = view->getMappedRow();
+	int col = view->getMappedCol();
+				
+	Layout* layout = gtk_xournal_get_layout(this->widget);
+	int page = layout->getIndexAtGridMap(row +offRow  ,col + offCol);
+	if( page >=0)
+	{
+		this-> scrollTo(page, 0);
+	}
+
+}
+
+	
 void XournalView::endTextAllPages(XojPageView* except)
 {
 	XOJ_CHECK_TYPE(XournalView);

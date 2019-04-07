@@ -3,6 +3,27 @@
 [![Build Status](https://travis-ci.org/xournalpp/xournalpp.svg?branch=string_new)](https://travis-ci.org/xournalpp/xournalpp)
 [![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+## Shout out
+Recently we revisited the settings dialog to improve the feeling and usability. 
+While doing that we also added better descriptions, for which we require 
+new translations. If you would like to help us, please contact us by creating an issue 
+or write us on [Gitter](https://gitter.im/xournalpp/xournalpp)!
+
+Partial translations, which need to be updated:
+- Czech
+- Polish
+- Chinese
+
+Full translations for all languages not mentioned previously except:
+- English
+- German
+- Italian
+
+Previous knowledge in creating translations using `gettext` would be nice but is not necessary.
+We are happy to help you set everything up for translating.
+
+**Thanks in advance!**
+
 ## Features
 
 Xournal++ is a hand note taking software written in C++ with the target of flexibility, functionality and speed.

@@ -266,9 +266,13 @@ public:
 
 	bool getAddVerticalSpace();
 	void setAddVerticalSpace(bool space);
+	int  getAddVerticalSpaceAmount();
+	void setAddVerticalSpaceAmount(int pixels);
 
 	bool getAddHorizontalSpace();
 	void setAddHorizontalSpace(bool space);
+	int  getAddHorizontalSpaceAmount();
+	void setAddHorizontalSpaceAmount(int pixels);
 
 	bool isTouchWorkaround();
 	void setTouchWorkaround(bool b);
@@ -584,14 +588,23 @@ private:
 	bool autosaveEnabled;
 
 	/**
-	 * Allow scroll outside the page (horizontal)
+	 * Allow scroll outside the page display area (horizontal)
 	 */
 	bool addHorizontalSpace;
 
 	/**
-	 * Allow scroll outside the page (vertical)
+	 * How much allowance to scroll outside the page display area (either side of )
+	 */
+	int addHorizontalSpaceAmount;
+
+	/**
+	 * Allow scroll outside the page display area (vertical)
 	 */
 	bool addVerticalSpace;
+
+	 /** How much allowance to scroll outside the page display area (above and below)
+	 */
+	int addVerticalSpaceAmount;
 
 	/**
 	 * Rotation snapping enabled by default

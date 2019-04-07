@@ -225,13 +225,13 @@ void Layout::layoutPages()
 	int borderPrefX =  XOURNAL_PADDING;
 	if (settings->getAddHorizontalSpace() )
 	{
-		borderPrefX += XOURNAL_PADDING_FREE_SPACE;	// this adds extra space to the left and right 
+		borderPrefX += settings->getAddHorizontalSpaceAmount();	// this adds extra space to the left and right 
 	}
 	
 	int borderPrefY = XOURNAL_PADDING;
 	if (settings->getAddVerticalSpace() )
 	{
-		borderPrefY += XOURNAL_PADDING_FREE_SPACE;	// this adds space to the top and bottom
+		borderPrefY += settings->getAddVerticalSpaceAmount();	// this adds space to the top and bottom
 	}	
 
 	
@@ -278,6 +278,7 @@ void Layout::layoutPages()
 			{
 
 				XojPageView* v = this->view->viewPages[pageAtRowCol];
+				v->setMappedRowCol( r,c );  					//store row and column for e.g. proper arrow key navigation
 				int vDisplayWidth = v->getDisplayWidth();
 				{
 					int paddingLeft;
@@ -498,5 +499,12 @@ XojPageView* Layout::getViewAt(int x, int y)
 	
 	return NULL;
 	
+	
+}
+
+
+int Layout::getIndexAtGridMap(int row, int col)
+{
+	return this->mapper.map( col, row); //watch out.. x,y --> c,r
 	
 }
