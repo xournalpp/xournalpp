@@ -21,7 +21,7 @@
 #include <gdk/gdk.h>
 
 #include <tuple>
-#include <math.h>
+#include <cmath>
 
 XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling)
  : scrollHandling(scrollHandling),
