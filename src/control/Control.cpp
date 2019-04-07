@@ -338,6 +338,11 @@ void Control::initWindow(MainWindow* win)
 	// Disable undo buttons
 	undoRedoChanged();
 
+	if(settings->isPresentationMode())
+	{
+		setViewPresentationMode(true);
+	}
+	else
 	if (settings->isViewFixedRows())
 	{
 		setViewRows(settings->getViewRows());
@@ -352,7 +357,6 @@ void Control::initWindow(MainWindow* win)
 	setViewLayoutB2T(settings->getViewLayoutB2T());
 
 	setViewPairedPages(settings->isShowPairedPages());
-	setViewPresentationMode(settings->isPresentationMode());
 
 	penSizeChanged();
 	eraserSizeChanged();
@@ -1547,24 +1551,47 @@ void Control::setViewPresentationMode(bool enabled)
 
 	if(enabled)
 	{
-		// Disable PresentationMode if ZoomValue could not calculated correctly
-		zoom->updateZoomPresentationValue();
-		//TODO: write out to settings previous layout
-		setViewPairedPages(false);
-		setViewRows(0);
-		setViewColumns(0);
+		bool success = zoom->updateZoomPresentationValue();
+		if (success)
+		{
+			//TODO: Errormessage if the zoom could not be calculated
+			return;
+		}
+	}
+	else
+	{
+		if (settings->isViewFixedRows())
+		{
+			setViewRows(settings->getViewRows());
+		}
+		else
+		{
+			setViewColumns(settings->getViewColumns());
+		}
+
+		setViewLayoutVert(settings->getViewLayoutVert());
+		setViewLayoutR2L(settings->getViewLayoutR2L());
+		setViewLayoutB2T(settings->getViewLayoutB2T());
+
+		setViewPairedPages(settings->isShowPairedPages());
 	}
 	zoom->setZoomPresentationMode(enabled);
 	settings->setPresentationMode(enabled);
 
 	fireActionSelected(GROUP_PRESENTATION_MODE, enabled ? ACTION_VIEW_PRESENTATION_MODE : ACTION_NOT_SELECTED);
+	//Disable Zoom
 	fireEnableAction(ACTION_ZOOM_IN, !enabled);
 	fireEnableAction(ACTION_ZOOM_OUT, !enabled);
 	fireEnableAction(ACTION_ZOOM_FIT, !enabled);
 	fireEnableAction(ACTION_ZOOM_100, !enabled);
 	fireEnableAction(ACTION_FOOTER_ZOOM_SLIDER, !enabled);
+	//Disable Viewmodes without unsetting them
+	fireEnableAction(ACTION_VIEW_PAIRED_PAGES, !enabled);
 
-	selectDefaultTool();
+	gtk_widget_set_sensitive(win->get("menuitemLayout"), !enabled);
+	gtk_widget_set_sensitive(win->get("menuitemViewDimensions"), !enabled);
+
+	// disable selection of scroll hand tool
 	fireEnableAction(ACTION_TOOL_HAND, !enabled);
 
 	int currentPage = getCurrentPageNo();
