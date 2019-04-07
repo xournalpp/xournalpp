@@ -455,6 +455,9 @@ void XournalView::scrollTo(size_t pageNo, double yDocument)
 	int height = v->getDisplayHeight();
 
 	layout->ensureRectIsVisible(x, y, width, height);
+
+	// Select the page
+	control->firePageSelected(pageNo);
 }
 
 void XournalView::endTextAllPages(XojPageView* except)
