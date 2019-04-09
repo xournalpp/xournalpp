@@ -749,7 +749,7 @@ void EditSelection::snapRotation()
 
 	for (unsigned int i = 0; i < sizeof(ROTATION_LOCK) / sizeof(ROTATION_LOCK[0]); i++ )
 	{
-		if (abs(this->rotation - ROTATION_LOCK[i]) < epsilon)
+		if (std::abs(this->rotation - ROTATION_LOCK[i]) < epsilon)
 		{
 			this->rotation = ROTATION_LOCK[i];
 		}
@@ -768,7 +768,7 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 	double y = this->y;
 	
 
-	if (abs(this->rotation) > __DBL_EPSILON__)
+	if (std::abs(this->rotation) > __DBL_EPSILON__)
 	{
 		snapRotation();
 
