@@ -385,6 +385,7 @@ GList* EraseableStroke::getStroke(Stroke* original)
 			s = new Stroke();
 			s->setColor(original->getColor());
 			s->setToolType(original->getToolType());
+			s->setLineStyle(original->getLineStyle());
 			s->setWidth(original->getWidth());
 			list = g_list_append(list, s);
 		}

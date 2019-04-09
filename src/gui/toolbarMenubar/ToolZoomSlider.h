@@ -30,6 +30,7 @@ public:
 	static void sliderChanged(GtkRange* range, ToolZoomSlider* self);
 	static bool sliderButtonPress(GtkRange* range, GdkEvent *event, ToolZoomSlider* self);
 	static bool sliderButtonRelease(GtkRange* range, GdkEvent *event, ToolZoomSlider* self);
+	static bool sliderHoverScroll(GtkWidget* range,  GdkEventScroll* event, ToolZoomSlider* self);
 	static gchar* sliderFormatValue(GtkRange *range, gdouble value, ToolZoomSlider* self);
 
 	virtual void zoomChanged();
@@ -53,12 +54,15 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	bool ignoreChange = false;
 
 	/**
 	 * The slider is currently changing by user, do not update value
 	 */
-	bool sliderChangingByUser = false;
+	bool sliderChangingByZoomControlOrInit = false;
+	bool sliderChangingBySliderDrag = false;
+	bool sliderChangingBySliderHoverScroll = false;
+	gint64 sliderHoverScrollLastTime = 0;
+
 	GtkWidget* slider = NULL;
 	ZoomControl* zoom = NULL;
 	bool horizontal = true;
