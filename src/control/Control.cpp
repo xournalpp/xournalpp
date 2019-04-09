@@ -1552,9 +1552,10 @@ void Control::setViewPresentationMode(bool enabled)
 	if(enabled)
 	{
 		bool success = zoom->updateZoomPresentationValue();
-		if (success)
+		if (!success)
 		{
 			//TODO: Errormessage if the zoom could not be calculated
+			fireActionSelected(GROUP_PRESENTATION_MODE, ACTION_NOT_SELECTED);
 			return;
 		}
 	}
