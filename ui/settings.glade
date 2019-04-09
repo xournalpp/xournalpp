@@ -142,36 +142,36 @@
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkScrolledWindow">
+                  <object class="GtkScrolledWindow" id="sid01">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
                     <child>
-                      <object class="GtkViewport">
+                      <object class="GtkViewport" id="sid02">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="shadow_type">none</property>
                         <child>
-                          <object class="GtkBox">
+                          <object class="GtkBox" id="sid03">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid04">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid05">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox">
+                                      <object class="GtkBox" id="sid06">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
@@ -194,7 +194,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkBox">
+                                          <object class="GtkBox" id="sid07">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <child>
@@ -272,7 +272,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid08">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Autosaving</property>
@@ -286,12 +286,12 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid09">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid10">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="left_padding">12</property>
@@ -444,7 +444,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid11">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Default Save Name</property>
@@ -458,24 +458,24 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid12">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid13">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox">
+                                      <object class="GtkBox" id="sid14">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkLabel">
+                                          <object class="GtkLabel" id="sid15">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">&lt;i&gt;If you open a PDF and there is a Xournal file with the same name it will open the xoj file.&lt;/i&gt;</property>
@@ -511,7 +511,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid16">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Autoloading Journals</property>
@@ -553,35 +553,35 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkScrolledWindow">
+                  <object class="GtkScrolledWindow" id="sid17">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
                     <child>
-                      <object class="GtkViewport">
+                      <object class="GtkViewport" id="sid18">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="shadow_type">none</property>
                         <child>
-                          <object class="GtkBox">
+                          <object class="GtkBox" id="sid19">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid20">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid21">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">12</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox">
+                                      <object class="GtkBox" id="sid22">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
@@ -603,12 +603,12 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkFrame">
+                                          <object class="GtkFrame" id="sid23">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label_xalign">0.0099999997764825821</property>
                                             <child>
-                                              <object class="GtkAlignment">
+                                              <object class="GtkAlignment" id="sid24">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="bottom_padding">8</property>
@@ -626,7 +626,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                               </object>
                                             </child>
                                             <child type="label">
-                                              <object class="GtkLabel">
+                                              <object class="GtkLabel" id="sid25">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="label" translatable="yes">Middle Mouse Button</property>
@@ -640,12 +640,12 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkFrame">
+                                          <object class="GtkFrame" id="sid26">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label_xalign">0.0099999997764825821</property>
                                             <child>
-                                              <object class="GtkAlignment">
+                                              <object class="GtkAlignment" id="sid27">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="bottom_padding">8</property>
@@ -663,7 +663,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                               </object>
                                             </child>
                                             <child type="label">
-                                              <object class="GtkLabel">
+                                              <object class="GtkLabel" id="sid28">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="label" translatable="yes">Right Mouse Button</property>
@@ -681,7 +681,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid29">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Mouse Buttons</property>
@@ -727,41 +727,41 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkScrolledWindow">
+                  <object class="GtkScrolledWindow" id="sid30">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
                     <child>
-                      <object class="GtkViewport">
+                      <object class="GtkViewport" id="sid31">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="shadow_type">none</property>
                         <child>
-                          <object class="GtkBox">
+                          <object class="GtkBox" id="sid32">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid33">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid34">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox">
+                                      <object class="GtkBox" id="sid35">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkLabel">
+                                          <object class="GtkLabel" id="sid36">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">&lt;i&gt;Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.&lt;/i&gt;</property>
@@ -797,7 +797,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid37">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Pressure Sensitivity</property>
@@ -811,24 +811,24 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid38">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid39">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">12</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox">
+                                      <object class="GtkBox" id="sid40">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkLabel">
+                                          <object class="GtkLabel" id="sid41">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">&lt;i&gt;Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.&lt;/i&gt;</property>
@@ -845,12 +845,12 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkFrame">
+                                          <object class="GtkFrame" id="sid42">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label_xalign">0.0099999997764825821</property>
                                             <child>
-                                              <object class="GtkAlignment">
+                                              <object class="GtkAlignment" id="sid43">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="bottom_padding">8</property>
@@ -868,7 +868,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                               </object>
                                             </child>
                                             <child type="label">
-                                              <object class="GtkLabel">
+                                              <object class="GtkLabel" id="sid44">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="label" translatable="yes">Button 1</property>
@@ -882,12 +882,12 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkFrame">
+                                          <object class="GtkFrame" id="sid45">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label_xalign">0.0099999997764825821</property>
                                             <child>
-                                              <object class="GtkAlignment">
+                                              <object class="GtkAlignment" id="sid46">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="bottom_padding">8</property>
@@ -905,7 +905,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                               </object>
                                             </child>
                                             <child type="label">
-                                              <object class="GtkLabel">
+                                              <object class="GtkLabel" id="sid47">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="label" translatable="yes">Button 2</property>
@@ -919,12 +919,12 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkFrame">
+                                          <object class="GtkFrame" id="sid48">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label_xalign">0.0099999997764825821</property>
                                             <child>
-                                              <object class="GtkAlignment">
+                                              <object class="GtkAlignment" id="sid49">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="bottom_padding">8</property>
@@ -942,7 +942,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                               </object>
                                             </child>
                                             <child type="label">
-                                              <object class="GtkLabel">
+                                              <object class="GtkLabel" id="sid50">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="label" translatable="yes">Eraser</property>
@@ -960,7 +960,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid51">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Stylus Buttons</property>
@@ -1006,41 +1006,41 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkScrolledWindow">
+                  <object class="GtkScrolledWindow" id="sid52">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
                     <child>
-                      <object class="GtkViewport">
+                      <object class="GtkViewport" id="sid53">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="shadow_type">none</property>
                         <child>
-                          <object class="GtkBox">
+                          <object class="GtkBox" id="sid54">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid55">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid56">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox">
+                                      <object class="GtkBox" id="sid57">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkLabel">
+                                          <object class="GtkLabel" id="sid58">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">&lt;i&gt;You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.&lt;/i&gt;</property>
@@ -1075,7 +1075,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid59">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Touchscreen</property>
@@ -1089,24 +1089,24 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid60">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid61">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox">
+                                      <object class="GtkBox" id="sid62">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkLabel">
+                                          <object class="GtkLabel" id="sid63">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">&lt;i&gt;If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.&lt;/i&gt;</property>
@@ -1143,7 +1143,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             <property name="can_focus">False</property>
                                             <property name="orientation">vertical</property>
                                             <child>
-                                              <object class="GtkGrid">
+                                              <object class="GtkGrid" id="sid64">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="row_spacing">5</property>
@@ -1230,14 +1230,14 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                 <property name="can_focus">False</property>
                                                 <property name="label_xalign">0.0099999997764825821</property>
                                                 <child>
-                                                  <object class="GtkAlignment">
+                                                  <object class="GtkAlignment" id="sid65">
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <property name="bottom_padding">8</property>
                                                     <property name="left_padding">12</property>
                                                     <property name="right_padding">12</property>
                                                     <child>
-                                                      <object class="GtkBox">
+                                                      <object class="GtkBox" id="sid66">
                                                         <property name="visible">True</property>
                                                         <property name="can_focus">False</property>
                                                         <property name="orientation">vertical</property>
@@ -1345,7 +1345,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                   </object>
                                                 </child>
                                                 <child type="label">
-                                                  <object class="GtkLabel">
+                                                  <object class="GtkLabel" id="sid67">
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <property name="label" translatable="yes">Custom Commands (for Method "Custom")</property>
@@ -1370,7 +1370,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid68">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Hand Recognition</property>
@@ -1384,24 +1384,24 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid69">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid70">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox">
+                                      <object class="GtkBox" id="sid71">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkLabel">
+                                          <object class="GtkLabel" id="sid72">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">&lt;i&gt;Use pinch gestures to zoom journal pages.&lt;/i&gt;</property>
@@ -1434,7 +1434,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid73">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Zoom Gestures</property>
@@ -1448,24 +1448,24 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid74">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid75">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox">
+                                      <object class="GtkBox" id="sid76">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkLabel">
+                                          <object class="GtkLabel" id="sid77">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">&lt;i&gt;For some specific hardware the scroll / touch behaviour of the system is not as expected. For these cases Xournal++ has a workaround.
@@ -1502,7 +1502,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid78">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Workaround</property>
@@ -1548,36 +1548,36 @@ This also enables touch drawing.&lt;/i&gt;</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkScrolledWindow">
+                  <object class="GtkScrolledWindow" id="sid79">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
                     <child>
-                      <object class="GtkViewport">
+                      <object class="GtkViewport" id="sid80">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="shadow_type">none</property>
                         <child>
-                          <object class="GtkBox">
+                          <object class="GtkBox" id="sid81">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid82">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid83">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">12</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox">
+                                      <object class="GtkBox" id="sid84">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
@@ -1602,7 +1602,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkLabel">
+                                              <object class="GtkLabel" id="sid85">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="margin_left">5</property>
@@ -1628,7 +1628,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             <property name="can_focus">False</property>
                                             <property name="label_xalign">0.0099999997764825821</property>
                                             <child>
-                                              <object class="GtkAlignment">
+                                              <object class="GtkAlignment" id="sid86">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="bottom_padding">8</property>
@@ -1732,7 +1732,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                               </object>
                                             </child>
                                             <child type="label">
-                                              <object class="GtkLabel">
+                                              <object class="GtkLabel" id="sid87">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="label" translatable="yes">Colors</property>
@@ -1750,7 +1750,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid88">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Global</property>
@@ -1765,12 +1765,12 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid89">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid90">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
@@ -1816,7 +1816,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid91">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Cursor</property>
@@ -1830,12 +1830,12 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid92">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid93">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
@@ -1881,7 +1881,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid94">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Left / Right-Handed</property>
@@ -1895,12 +1895,12 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid95">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid96">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
@@ -1946,7 +1946,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid97">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Scrollbars</property>
@@ -1960,12 +1960,12 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid98">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid99">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
@@ -2011,7 +2011,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid100">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Fullscreen</property>
@@ -2025,12 +2025,12 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid101">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid102">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
@@ -2109,7 +2109,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid103">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Presentation Mode</property>
@@ -2155,36 +2155,36 @@ This also enables touch drawing.&lt;/i&gt;</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkScrolledWindow">
+                  <object class="GtkScrolledWindow" id="sid104">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
                     <child>
-                      <object class="GtkViewport">
+                      <object class="GtkViewport" id="sid105">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="shadow_type">none</property>
                         <child>
-                          <object class="GtkBox">
+                          <object class="GtkBox" id="sid106">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid107">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid108">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkGrid">
+                                      <object class="GtkGrid" id="sid109">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="column_spacing">5</property>
@@ -2244,7 +2244,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLabel">
+                                          <object class="GtkLabel" id="sid110">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">%</property>
@@ -2255,7 +2255,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLabel">
+                                          <object class="GtkLabel" id="sid111">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">%</property>
@@ -2270,7 +2270,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid112">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Zoom Speed</property>
@@ -2284,24 +2284,24 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid113">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid114">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox">
+                                      <object class="GtkBox" id="sid115">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkLabel">
+                                          <object class="GtkLabel" id="sid116">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">&lt;i&gt;To make sure on 100% zoom the size of elements is natural. (requires restart)&lt;/i&gt;</property>
@@ -2393,7 +2393,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid117">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Display DPI Calibration</property>
@@ -2439,29 +2439,29 @@ This also enables touch drawing.&lt;/i&gt;</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkScrolledWindow">
+                  <object class="GtkScrolledWindow" id="sid118">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
                     <child>
-                      <object class="GtkViewport">
+                      <object class="GtkViewport" id="sid119">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="shadow_type">none</property>
                         <child>
-                          <object class="GtkBox">
+                          <object class="GtkBox" id="sid120">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid121">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid122">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
@@ -2490,7 +2490,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkGrid">
+                                          <object class="GtkGrid" id="sid123">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="row_spacing">5</property>
@@ -2560,7 +2560,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkLabel">
+                                              <object class="GtkLabel" id="sid124">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="label" translatable="yes">pixels</property>
@@ -2571,7 +2571,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkLabel">
+                                              <object class="GtkLabel" id="sid125">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="label" translatable="yes">pixels</property>
@@ -2593,7 +2593,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid126">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Scrolling outside the page</property>
@@ -2613,12 +2613,12 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               <placeholder/>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid127">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid128">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
@@ -2663,7 +2663,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid129">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Paired Pages</property>
@@ -2677,19 +2677,19 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid130">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid131">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkGrid">
+                                      <object class="GtkGrid" id="sid132">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="row_spacing">5</property>
@@ -2753,7 +2753,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid133">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Snapping</property>
@@ -2799,36 +2799,36 @@ This also enables touch drawing.&lt;/i&gt;</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkScrolledWindow">
+                  <object class="GtkScrolledWindow" id="sid134">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
                     <child>
-                      <object class="GtkViewport">
+                      <object class="GtkViewport" id="sid135">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="shadow_type">none</property>
                         <child>
-                          <object class="GtkBox">
+                          <object class="GtkBox" id="sid136">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid137">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid138">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox">
+                                      <object class="GtkBox" id="sid139">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
@@ -2942,36 +2942,36 @@ This also enables touch drawing.&lt;/i&gt;</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkScrolledWindow">
+                  <object class="GtkScrolledWindow" id="sid140">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
                     <child>
-                      <object class="GtkViewport">
+                      <object class="GtkViewport" id="sid141">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="shadow_type">none</property>
                         <child>
-                          <object class="GtkBox">
+                          <object class="GtkBox" id="sid142">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid143">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid144">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox">
+                                      <object class="GtkBox" id="sid145">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
@@ -3034,7 +3034,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid146">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Storage Folder</property>
@@ -3048,24 +3048,24 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid147">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid148">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox">
+                                      <object class="GtkBox" id="sid149">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkLabel">
+                                          <object class="GtkLabel" id="sid150">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">&lt;i&gt;Specify the audio devices used for recording and playback of audio attachments. 
@@ -3144,7 +3144,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid151">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Audio Devices</property>
@@ -3158,19 +3158,19 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid152">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid153">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkGrid">
+                                      <object class="GtkGrid" id="sid154">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="row_spacing">10</property>
@@ -3235,7 +3235,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid155">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Recording Quality</property>
@@ -3249,7 +3249,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkLabel">
+                              <object class="GtkLabel" id="sid156">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">&lt;i&gt;Changes take only effect on new recordings and playbacks.&lt;/i&gt;</property>
