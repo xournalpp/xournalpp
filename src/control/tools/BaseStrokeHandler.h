@@ -30,7 +30,7 @@ public:
 	void onButtonPressEvent(const PositionInputData& pos);
 
 private:
-	virtual void drawShape(Point& currentPoint, bool shiftDown) = 0;
+	virtual void drawShape(Point& currentPoint, const PositionInputData& pos) = 0;
 
 protected:
 	void snapToGrid(double& x, double& y);

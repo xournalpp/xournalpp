@@ -17,7 +17,7 @@ RectangleHandler::~RectangleHandler()
 	XOJ_RELEASE_TYPE(RectangleHandler);
 }
 
-void RectangleHandler::drawShape(Point& c, bool shiftDown)
+void RectangleHandler::drawShape(Point& c, const PositionInputData& pos)
 {
 	int count = stroke->getPointCount();
 
@@ -35,7 +35,7 @@ void RectangleHandler::drawShape(Point& c, bool shiftDown)
 	{
 		stroke->addPoint(c);
 	}
-	else if (shiftDown)
+	else if (pos.isShiftDown())
 	{
 		// Draw square if shift is pressed
 		Point p = stroke->getPoint(0);

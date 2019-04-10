@@ -114,7 +114,7 @@ bool BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 	this->redrawable->repaintRect(stroke->getX(), stroke->getY(),
 								  stroke->getElementWidth(), stroke->getElementHeight());
 
-	drawShape(currentPoint, pos.isShiftDown());
+	drawShape(currentPoint, pos);
 	
 	rect.add(stroke->boundingRect());
 	double w = stroke->getWidth();

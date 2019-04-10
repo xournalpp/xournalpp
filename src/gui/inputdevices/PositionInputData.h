@@ -17,6 +17,7 @@
 class PositionInputData {
 public:
 	bool isShiftDown() const;
+	bool isControlDown() const;
 
 public:
 	double x;

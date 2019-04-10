@@ -18,53 +18,68 @@ CircleHandler::~CircleHandler()
 	XOJ_RELEASE_TYPE(CircleHandler);
 }
 
-void CircleHandler::drawShape(Point& c, bool shiftDown)
+void CircleHandler::drawShape(Point& c, const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(CircleHandler);
 
 	/**
 	 * Snap first point to grid (if enabled)
 	 */
-	if (!shiftDown && xournal->getControl()->getSettings()->isSnapGrid())
+	if (!pos.isShiftDown() && xournal->getControl()->getSettings()->isSnapGrid())
 	{
-		Point firstPoint = stroke->getPoint(0);
-		snapToGrid(firstPoint.x,firstPoint.y);
-		stroke->setFirstPoint(firstPoint.x,firstPoint.y);
+		snapToGrid(c.x,c.y);
 	}
 
-	int count = stroke->getPointCount();
 
-	if (count < 2)
+	if (!this->started) //initialize circle
 	{
-		stroke->addPoint(c);
+		this->start = c;
+		this->started = true;
 	}
 	else
 	{
-		Point p = stroke->getPoint(0);
+		Point p = this->start;
 		if (xournal->getControl()->getSettings()->isSnapGrid())
 		{
 			snapToGrid(c.x,c.y);
 		}
+		
+		double diameter;
+		int npts;
+		double center_x;
+		double center_y;
+		double angle;
+			
 		// set resolution proportional to radius
-		double diameter = sqrt(pow(c.x - p.x, 2.0) + pow(c.y - p.y, 2.0));
-		int npts = (int) (diameter * 2.0);
-		double center_x = (c.x + p.x) / 2.0;
-		double center_y = (c.y + p.y) / 2.0;
-		double angle = atan2((c.y - p.y), (c.x - p.x));
-
+		if( !pos.isControlDown())
+		{
+			diameter = sqrt(pow(c.x - p.x, 2.0) + pow(c.y - p.y, 2.0));
+			npts = (int) (diameter * 2.0);
+			center_x = (c.x + p.x) / 2.0;
+			center_y = (c.y + p.y) / 2.0;
+			angle = atan2((c.y - p.y), (c.x - p.x));
+		}
+		else
+		{	//control key down, draw centered at cursor
+			diameter = sqrt(pow((c.x - p.x)*2, 2.0) + pow((c.y - p.y)*2, 2.0));
+			npts = (int) (diameter * 2.0);
+			center_x = p.x;
+			center_y = p.y;
+			angle = 0;
+		}
 		if (npts < 24)
 		{
 			npts = 24; // min. number of points
 		}
 
 		// remove previous points
-		stroke->deletePointsFrom(1);
-		for (int i = 1; i < npts; i++)
+		stroke->deletePointsFrom(0);
+		for (int j = 0; j <= npts; j++)
 		{
+			int i = j%npts;	//so that we end exactly where we started.
 			double xp = center_x + diameter / 2.0 * cos((2 * M_PI * i) / npts + angle + M_PI);
 			double yp = center_y + diameter / 2.0 * sin((2 * M_PI * i) / npts + angle + M_PI);
 			stroke->addPoint(Point(xp, yp));
 		}
-		stroke->addPoint(p);
 	}
 }

@@ -20,8 +20,10 @@ public:
 	virtual ~CircleHandler();
 
 private:
-	virtual void drawShape(Point& currentPoint, bool shiftDown);
-
+	virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+	Point start;
+	bool started = false;
+	
 private:
 	XOJ_TYPE_ATTRIB;
 };

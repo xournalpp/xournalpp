@@ -25,13 +25,14 @@ CoordinateSystemHandler::~CoordinateSystemHandler()
  * @param shiftDown Boolean to indicate if "shift" is currently pressed.
  *                  It is currently not used.
  */
-void CoordinateSystemHandler::drawShape(Point& currentPoint, bool shiftDown)
+void CoordinateSystemHandler::drawShape(Point& currentPoint, const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(CoordinateSystemHandler);
 
 	/**
 	 * Snap first point to grid (if enabled)
 	 */
+	bool shiftDown = pos.isShiftDown();
 	if (!shiftDown && xournal->getControl()->getSettings()->isSnapGrid())
 	{
 		Point firstPoint = stroke->getPoint(0);

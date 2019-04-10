@@ -20,7 +20,7 @@ public:
 	virtual ~RectangleHandler();
 
 private:
-	virtual void drawShape(Point& currentPoint, bool shiftDown);
+	virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
 
 private:
 	XOJ_TYPE_ATTRIB;

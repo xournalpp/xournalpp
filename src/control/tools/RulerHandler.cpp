@@ -76,7 +76,7 @@ void RulerHandler::snapRotation(double& x, double& y)
 }
 
 
-void RulerHandler::drawShape(Point& currentPoint, bool shiftDown)
+void RulerHandler::drawShape(Point& currentPoint, const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(RulerHandler);
 
@@ -86,6 +86,7 @@ void RulerHandler::drawShape(Point& currentPoint, bool shiftDown)
 	/**
 	 * Snap first point to grid (if enabled)
 	 */
+	bool shiftDown = pos.isShiftDown();
 	if (!shiftDown && xournal->getControl()->getSettings()->isSnapGrid())
 	{
 		Point firstPoint = stroke->getPoint(0);

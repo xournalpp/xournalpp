@@ -18,13 +18,14 @@ ArrowHandler::~ArrowHandler()
 	XOJ_RELEASE_TYPE(ArrowHandler);
 }
 
-void ArrowHandler::drawShape(Point& c, bool shiftDown)
+void ArrowHandler::drawShape(Point& c, const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(ArrowHandler);
 
 	/**
 	 * Snap first point to grid (if enabled)
 	 */
+	bool shiftDown = pos.isShiftDown();
 	if (!shiftDown && xournal->getControl()->getSettings()->isSnapGrid())
 	{
 		Point firstPoint = stroke->getPoint(0);
