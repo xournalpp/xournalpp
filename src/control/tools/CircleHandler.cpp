@@ -33,12 +33,12 @@ void CircleHandler::drawShape(Point& c, const PositionInputData& pos)
 
 	if (!this->started) //initialize circle
 	{
-		this->start = c;
+		this->startPoint = c;
 		this->started = true;
 	}
 	else
 	{
-		Point p = this->start;
+		Point p = this->startPoint;
 		if (xournal->getControl()->getSettings()->isSnapGrid())
 		{
 			snapToGrid(c.x,c.y);

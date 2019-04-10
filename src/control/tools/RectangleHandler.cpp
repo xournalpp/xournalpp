@@ -3,6 +3,7 @@
 #include "gui/XournalView.h"
 #include "control/Control.h"
 #include "undo/InsertUndoAction.h"
+#include <cmath>
 
 RectangleHandler::RectangleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
  : BaseStrokeHandler(xournal, redrawable, page)
@@ -19,68 +20,50 @@ RectangleHandler::~RectangleHandler()
 
 void RectangleHandler::drawShape(Point& c, const PositionInputData& pos)
 {
-	int count = stroke->getPointCount();
-
 	/**
-	 * Snap first point to grid (if enabled)
+	 * Snap point to grid (if enabled)
 	 */
 	if (xournal->getControl()->getSettings()->isSnapGrid())
 	{
-		Point firstPoint = stroke->getPoint(0);
-		snapToGrid(firstPoint.x,firstPoint.y);
-		stroke->setFirstPoint(firstPoint.x,firstPoint.y);
+		snapToGrid(c.x,c.y);
 	}
 
-	if (count < 1)
+	if (!this->started) //initialize first point
 	{
-		stroke->addPoint(c);
-	}
-	else if (pos.isShiftDown())
-	{
-		// Draw square if shift is pressed
-		Point p = stroke->getPoint(0);
-
-		stroke->deletePointsFrom(1);
-
-		int size = MAX(ABS(c.x - p.x), ABS(c.y - p.y));
-		int size_x, size_y;
-		if (c.x - p.x < 0 )
-		{
-			size_x = -size;
-			g_warning("size_x = -size");
-		}
-		else
-		{
-			size_x = size;
-		}
-		if  (c.y - p.y < 0)
-		{
-			size_y = -size;
-			g_warning("size_y = -size");
-		}
-		else
-		{
-			size_y = size;
-		}
-
-		stroke->addPoint(Point(p.x, p.y + size_y));
-		stroke->addPoint(Point(p.x + size_x, p.y + size_y));
-		stroke->addPoint(Point(p.x + size_x, p.y));
-		stroke->addPoint(p);
+		this->startPoint = c;
+		this->started = true;
 	}
 	else
 	{
-		Point p = stroke->getPoint(0);
-		stroke->deletePointsFrom(1);
-
-		if (xournal->getControl()->getSettings()->isSnapGrid())
+		double width = c.x - this->startPoint.x;
+		double height = c.y - this->startPoint.y;
+	
+		if (pos.isShiftDown())	// make square
 		{
-			snapToGrid(c.x,c.y);
+			width = MAX( width, height);
+			height = width;
 		}
-		stroke->addPoint(Point(p.x, c.y));
-		stroke->addPoint(c);
-		stroke->addPoint(Point(c.x, p.y));
-		stroke->addPoint(p);
+		
+		Point p1;
+		if ( !pos.isControlDown() )
+		{
+			p1 = this->startPoint;
+			
+		}
+		else	//Control is down - drawing from center
+		{
+			p1 = Point( this->startPoint.x - width, this->startPoint.y - height);
+		}
+		
+		Point p2 = Point( this->startPoint.x + width, this->startPoint.y + height);
+		
+		stroke->deletePointsFrom(0);	//delete previous points
+		
+		stroke->addPoint(p1);
+		stroke->addPoint(Point(p1.x, p2.y ));
+		stroke->addPoint(p2);
+		stroke->addPoint(Point(p2.x, p1.y));
+		stroke->addPoint(p1);
 	}
 
 }

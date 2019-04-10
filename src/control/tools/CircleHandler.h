@@ -21,7 +21,7 @@ public:
 
 private:
 	virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
-	Point start;
+	Point startPoint;
 	bool started = false;
 	
 private:
