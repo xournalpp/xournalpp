@@ -329,10 +329,6 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
-	if ((pos.state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)) != 0)
-	{
-		return false; // not handled here
-	}
 
 	if (!this->selected)
 	{
