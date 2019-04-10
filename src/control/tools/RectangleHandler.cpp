@@ -23,7 +23,7 @@ void RectangleHandler::drawShape(Point& c, const PositionInputData& pos)
 	/**
 	 * Snap point to grid (if enabled)
 	 */
-	if (xournal->getControl()->getSettings()->isSnapGrid())
+	if (pos.isAltDown() != xournal->getControl()->getSettings()->isSnapGrid())
 	{
 		snapToGrid(c.x,c.y);
 	}
@@ -40,8 +40,10 @@ void RectangleHandler::drawShape(Point& c, const PositionInputData& pos)
 	
 		if (pos.isShiftDown())	// make square
 		{
-			width = MAX( width, height);
-			height = width;
+			int signW = width>0?1:-1;
+			int signH = height>0?1:-1;
+			width = MAX( width*signW, height*signH) * signW;	
+			height = (width * signW) * signH;
 		}
 		
 		Point p1;
