@@ -408,3 +408,26 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 	return cursor;
 }
 
+
+
+void Cursor::setTempCursor(GdkCursorType type)
+{
+	XOJ_CHECK_TYPE(Cursor);
+	
+	MainWindow* win = control->getWindow();
+	
+	if( !win) return;
+	
+	XournalView* xournal = win->getXournal();
+	
+	if(!xournal) return;
+	
+	GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
+	
+	if( !window ) return;
+	
+	GdkCursor* cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), type);
+	gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
+	gdk_window_set_cursor(window, cursor);
+	g_object_unref(cursor);
+}

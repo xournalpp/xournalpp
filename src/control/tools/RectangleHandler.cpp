@@ -38,7 +38,9 @@ void RectangleHandler::drawShape(Point& c, const PositionInputData& pos)
 		double width = c.x - this->startPoint.x;
 		double height = c.y - this->startPoint.y;
 	
-		if (pos.isShiftDown())	// make square
+		this->setModifiers(width, height,  pos);	// sets this->modShift and this->modControl
+		
+		if (this->modShift)	// make square
 		{
 			int signW = width>0?1:-1;
 			int signH = height>0?1:-1;
@@ -47,7 +49,7 @@ void RectangleHandler::drawShape(Point& c, const PositionInputData& pos)
 		}
 		
 		Point p1;
-		if ( !pos.isControlDown() )
+		if ( !this->modControl )
 		{
 			p1 = this->startPoint;
 			

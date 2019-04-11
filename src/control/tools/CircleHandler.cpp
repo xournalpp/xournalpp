@@ -5,6 +5,7 @@
 #include "undo/InsertUndoAction.h"
 #include <cmath>
 
+
 CircleHandler::CircleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
  : BaseStrokeHandler(xournal, redrawable, page)
 {
@@ -37,10 +38,14 @@ void CircleHandler::drawShape(Point& c, const PositionInputData& pos)
 	}
 	else
 	{
+		
 		double width = c.x - this->startPoint.x;
 		double height = c.y - this->startPoint.y;
+		
+		this->setModifiers(width, height,  pos);	// sets this->modShift and this->modControl
+		
 	
-		if (pos.isShiftDown())	// make square
+		if (this->modShift )	// make circle
 		{
 			int signW = width>0?1:-1;
 			int signH = height>0?1:-1;
@@ -55,7 +60,7 @@ void CircleHandler::drawShape(Point& c, const PositionInputData& pos)
 		double angle;
 			
 		// set resolution proportional to radius
-		if( !pos.isControlDown())
+		if( !this->modControl)
 		{
 			diameterX = width;
 			diameterY = height;

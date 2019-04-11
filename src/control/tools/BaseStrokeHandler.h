@@ -16,6 +16,15 @@
 #include "model/Point.h"
 #include "view/DocumentView.h"
 
+enum DIRSET_MODIFIERS
+{
+	NONE = 0,
+	SET = 1,
+	SHIFT = 1 << 1,
+	CONTROL = 1 << 2
+};
+
+
 class BaseStrokeHandler : public InputHandler
 {
 public:
@@ -31,9 +40,14 @@ public:
 
 private:
 	virtual void drawShape(Point& currentPoint, const PositionInputData& pos) = 0;
-
+	DIRSET_MODIFIERS drawModifier = NONE;
+	int lastCursor = -1;	//avoid same setCursor
+	
 protected:
 	void snapToGrid(double& x, double& y);
+	void setModifiers(double width, double height, const PositionInputData& pos, bool changeCursor = true);
+	bool modShift = false;
+	bool modControl = false;
 
 protected:
 	XOJ_TYPE_ATTRIB;

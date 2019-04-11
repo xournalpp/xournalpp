@@ -32,6 +32,7 @@ public:
 	void setMouseDown(bool mouseDown);
 	void setInvisible(bool invisible);
 	void setInsidePage(bool insidePage);
+	void setTempCursor(GdkCursorType type);
 
 private:
 	GdkCursor* getPenCursor();
