@@ -1573,8 +1573,6 @@ void Control::setViewPresentationMode(bool enabled)
 		setViewLayoutVert(settings->getViewLayoutVert());
 		setViewLayoutR2L(settings->getViewLayoutR2L());
 		setViewLayoutB2T(settings->getViewLayoutB2T());
-
-		setViewPairedPages(settings->isShowPairedPages());
 	}
 	zoom->setZoomPresentationMode(enabled);
 	settings->setPresentationMode(enabled);
@@ -1586,8 +1584,6 @@ void Control::setViewPresentationMode(bool enabled)
 	fireEnableAction(ACTION_ZOOM_FIT, !enabled);
 	fireEnableAction(ACTION_ZOOM_100, !enabled);
 	fireEnableAction(ACTION_FOOTER_ZOOM_SLIDER, !enabled);
-	//Disable Viewmodes without unsetting them
-	fireEnableAction(ACTION_VIEW_PAIRED_PAGES, !enabled);
 
 	gtk_widget_set_sensitive(win->get("menuitemLayout"), !enabled);
 	gtk_widget_set_sensitive(win->get("menuitemViewDimensions"), !enabled);
