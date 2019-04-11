@@ -2,6 +2,7 @@
 
 #include <Util.h>
 #include <cmath>
+#include <iostream>
 
 GraphBackgroundPainter::GraphBackgroundPainter()
 {
@@ -49,23 +50,23 @@ void GraphBackgroundPainter::paintBackgroundGraph()
 	Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
 
 	cairo_set_line_width(cr, lineWidth * lineWidthFactor);
-
 	double marginTopBottom = margin1;
 	double marginLeftRight = margin1;
 	double startX = drawRaster1;
 	double startY = drawRaster1;
+	double snappingOffset = 2.5;
 
 	if (roundMargin)
 	{
 		double w = width - 2 * marginLeftRight;
 		double r = w - floor(w / drawRaster1) * drawRaster1;
 		marginLeftRight += r / 2;
-		startX = marginLeftRight;
+		//startX = marginLeftRight;
 
 		double h = height - 2 * marginTopBottom;
 		r = h - floor(h / drawRaster1) * drawRaster1;
 		marginTopBottom += r / 2;
-		startY = marginTopBottom;
+		//startY = marginTopBottom;
 	}
 
 	for (double x = startX; x < width; x += drawRaster1)
@@ -74,8 +75,8 @@ void GraphBackgroundPainter::paintBackgroundGraph()
 		{
 			continue;
 		}
-		cairo_move_to(cr, x, marginTopBottom);
-		cairo_line_to(cr, x, height - marginTopBottom);
+		cairo_move_to(cr, x, marginTopBottom-snappingOffset);
+		cairo_line_to(cr, x, height - marginTopBottom-snappingOffset);
 	}
 
 	for (double y = startY; y < height; y += drawRaster1)
