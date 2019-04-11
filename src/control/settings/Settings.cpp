@@ -93,6 +93,10 @@ void Settings::loadDefault()
 	this->addVerticalSpace = false;
 	this->addVerticalSpaceAmount = 150;
 
+	//Drawing direction emulates modifier keys
+	this->drawDirModsRadius = 50;
+	this->drawDirModsEnabled = false;
+	
 	this->snapRotation = true;
 	this->snapRotationTolerance = 0.20;
 
@@ -137,7 +141,7 @@ void Settings::loadDefault()
 
 	this->pluginEnabled = "";
 	this->pluginDisabled = "";
-
+	
 	inTransaction = false;
 }
 
@@ -471,6 +475,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->addVerticalSpaceAmount = g_ascii_strtoll((const char*) value, NULL, 10);
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "drawDirModsEnabled") == 0)
+	{
+		this->drawDirModsEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "drawDirModsRadius") == 0)
+	{
+		this->drawDirModsRadius = g_ascii_strtoll((const char*) value, NULL, 10);
+	}	
 	else if (xmlStrcmp(name, (const xmlChar*) "snapRotation") == 0)
 	{
 		this->snapRotation = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
@@ -859,6 +871,10 @@ void Settings::save()
 	WRITE_INT_PROP(addHorizontalSpaceAmount);	
 	WRITE_BOOL_PROP(addVerticalSpace);
 	WRITE_INT_PROP(addVerticalSpaceAmount);
+	
+	WRITE_BOOL_PROP(drawDirModsEnabled);
+	WRITE_INT_PROP(drawDirModsRadius);
+	
 
 	WRITE_BOOL_PROP(snapRotation);
 	WRITE_DOUBLE_PROP(snapRotationTolerance);
@@ -1184,6 +1200,42 @@ void Settings::setAddHorizontalSpaceAmount(int pixels)
 	this->addHorizontalSpaceAmount = pixels;
 	save();
 }
+
+
+bool Settings::getDrawDirModsEnabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->drawDirModsEnabled;
+}
+
+void Settings::setDrawDirModsEnabled(bool enable)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	this->drawDirModsEnabled = enable;
+}
+
+int Settings::getDrawDirModsRadius()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->drawDirModsRadius;
+}
+
+void Settings::setDrawDirModsRadius(int pixels)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->drawDirModsRadius == pixels)
+	{
+		return;
+	}
+
+	this->drawDirModsRadius = pixels;
+	save();
+}
+
 
 bool Settings::isShowBigCursor()
 {

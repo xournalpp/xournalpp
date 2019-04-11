@@ -66,6 +66,14 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 				self->enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpace");
 			}), this);
 
+	g_signal_connect(get("cbDrawDirModsEnabled"), "toggled", G_CALLBACK(
+			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
+			{
+				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
+				self->enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
+			}), this);
+	
+	
 	g_signal_connect(get("cbDisableTouchOnPenNear"), "toggled", G_CALLBACK(
 			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
 			{
@@ -202,6 +210,7 @@ void SettingsDialog::load()
 	loadCheckbox("cbAutosave", settings->isAutosaveEnabled());
 	loadCheckbox("cbAddVerticalSpace", settings->getAddVerticalSpace());
 	loadCheckbox("cbAddHorizontalSpace", settings->getAddHorizontalSpace());
+	loadCheckbox("cbDrawDirModsEnabled", settings->getDrawDirModsEnabled());
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
 	loadCheckbox("cbHighlightPosition", settings->isHighlightPosition());
 	loadCheckbox("cbDarkTheme", settings->isDarkTheme());
@@ -239,6 +248,9 @@ void SettingsDialog::load()
 	
 	GtkWidget* spAddVerticalSpace = get("spAddVerticalSpace");
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAddVerticalSpace), settings->getAddVerticalSpaceAmount());
+
+	GtkWidget* spDrawDirModsRadius = get("spDrawDirModsRadius");
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spDrawDirModsRadius), settings->getDrawDirModsRadius());
 
 	GtkWidget* slider = get("zoomCallibSlider");
 
@@ -295,6 +307,7 @@ void SettingsDialog::load()
 	enableWithCheckbox("cbAutosave", "boxAutosave");
 	enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpace");
 	enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpace");
+	enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
 	enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
 	customHandRecognitionToggled();
 
@@ -450,6 +463,7 @@ void SettingsDialog::save()
 	settings->setAutosaveEnabled(getCheckbox("cbAutosave"));
 	settings->setAddVerticalSpace(getCheckbox("cbAddVerticalSpace"));
 	settings->setAddHorizontalSpace(getCheckbox("cbAddHorizontalSpace"));
+	settings->setDrawDirModsEnabled(getCheckbox("cbDrawDirModsEnabled"));
 	settings->setShowBigCursor(getCheckbox("cbBigCursor"));
 	settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
 	settings->setDarkTheme(getCheckbox("cbDarkTheme"));
@@ -525,6 +539,10 @@ void SettingsDialog::save()
 	int addVerticalSpaceAmount = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAddVerticalSpace));
 	settings->setAddVerticalSpaceAmount(addVerticalSpaceAmount);
 	
+	GtkWidget* spDrawDirModsRadius = get("spDrawDirModsRadius");
+	int drawDirModsRadius = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spDrawDirModsRadius));
+	settings->setDrawDirModsRadius(drawDirModsRadius);
+
 
 	settings->setDisplayDpi(dpi);
 

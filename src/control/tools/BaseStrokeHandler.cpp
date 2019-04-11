@@ -171,6 +171,10 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
+	
+	Settings* settings = xournal->getControl()->getSettings();
+	this->settingsDrawDirModsEnabled = settings->getDrawDirModsEnabled();
+	this->settingsDrawDirModsRadius =  settings->getDrawDirModsRadius();
 
 	double zoom = xournal->getZoom();
 	double x = pos.x / zoom;
@@ -183,63 +187,66 @@ void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 }
 
 
-void BaseStrokeHandler::setModifiers(double width, double height, const PositionInputData& pos, bool changeCursor)
+void BaseStrokeHandler::setModifiers(double width, double height, const PositionInputData& pos, bool doDirMods, bool changeCursor)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 		
 	bool gestureShift = false;
 	bool gestureControl = false;
 	
-	if( this->drawModifier == NONE){
-		gestureShift = (width  < 0);
-		gestureControl =  (height < 0 );
-		
-		double zoom = xournal->getZoom();
-		double fixate_Dir_Mods_Dist = FIX_DRAW_TYPE_LOCK_DISTANCE / zoom; 
-		if (std::abs(width) > fixate_Dir_Mods_Dist ||  std::abs(height) > fixate_Dir_Mods_Dist )
-		{
-			this->drawModifier = (DIRSET_MODIFIERS)(SET |
-				(gestureShift? SHIFT:NONE) |
-				(gestureControl? CONTROL:NONE) );
-			if(changeCursor)
+	if (doDirMods && this->settingsDrawDirModsEnabled)
+	{
+
+		if( this->drawModifier == NONE){
+			gestureShift = (width  < 0);
+			gestureControl =  (height < 0 );
+			
+			double zoom = xournal->getZoom();
+			double fixate_Dir_Mods_Dist = std::pow( this->settingsDrawDirModsRadius / zoom, 2.0); 
+			if (std::pow(width,2.0) > fixate_Dir_Mods_Dist ||  std::pow(height,2.0) > fixate_Dir_Mods_Dist )
 			{
-				xournal->getCursor()->updateCursor();
+				this->drawModifier = (DIRSET_MODIFIERS)(SET |
+					(gestureShift? SHIFT:NONE) |
+					(gestureControl? CONTROL:NONE) );
+				if(changeCursor)
+				{
+					xournal->getCursor()->updateCursor();
+				}
+			}
+			else
+			{
+				if (changeCursor)
+				{
+					int corner = ( gestureShift?0:1 ) + ( gestureControl?2:0);
+					
+					if( corner != this-> lastCursor)
+					{
+						switch (corner)
+						{
+							case 1:
+								xournal->getCursor()->setTempCursor(GDK_BOTTOM_RIGHT_CORNER);
+								break;
+							case 3:
+								xournal->getCursor()->setTempCursor(GDK_TOP_RIGHT_CORNER);
+								break;
+							case 0:
+								xournal->getCursor()->setTempCursor(GDK_BOTTOM_LEFT_CORNER);
+								break;
+							case 2:
+								xournal->getCursor()->setTempCursor(GDK_TOP_LEFT_CORNER);
+								break;
+						}
+						this->lastCursor = corner;
+					}
+				}
 			}
 		}
 		else
 		{
-			if (changeCursor)
-			{
-				int corner = ( gestureShift?0:1 ) + ( gestureControl?2:0);
-				
-				if( corner != this-> lastCursor)
-				{
-					switch (corner)
-					{
-						case 1:
-							xournal->getCursor()->setTempCursor(GDK_BOTTOM_RIGHT_CORNER);
-							break;
-						case 3:
-							xournal->getCursor()->setTempCursor(GDK_TOP_RIGHT_CORNER);
-							break;
-						case 0:
-							xournal->getCursor()->setTempCursor(GDK_BOTTOM_LEFT_CORNER);
-							break;
-						case 2:
-							xournal->getCursor()->setTempCursor(GDK_TOP_LEFT_CORNER);
-							break;
-					}
-					this->lastCursor = corner;
-				}
-			}
+			gestureShift = this->drawModifier & SHIFT;
+			gestureControl = this->drawModifier & CONTROL;
 		}
 	}
-	else
-	{
-		gestureShift = this->drawModifier & SHIFT;
-		gestureControl = this->drawModifier & CONTROL;
-	}
-	
 	this->modShift = pos.isShiftDown() ==  !gestureShift;
 	this->modControl = pos.isControlDown() == !gestureControl;
 		
