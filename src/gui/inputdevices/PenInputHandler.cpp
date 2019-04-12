@@ -10,6 +10,7 @@
 #include <gui/inputdevices/old/PositionInputData.h>
 #include "gui/XournalView.h"
 #include <control/settings/ButtonConfig.h>
+#include <cmath>
 
 PenInputHandler::PenInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)
 {
