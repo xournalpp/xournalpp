@@ -80,8 +80,8 @@ bool TouchDrawingInputHandler::handleImpl(GdkEvent* event)
 	/*
 	 * Trigger motion actions
 	 */
-	// Trigger motion action when pen/mouse is pressed and moved
-	if (this->deviceClassPressed && event->type == GDK_TOUCH_UPDATE) //mouse or pen moved
+	// Trigger motion action when finger is pressed and moved
+	if (this->deviceClassPressed && event->type == GDK_TOUCH_UPDATE)
 	{
 		this->actionMotion(event);
 	}

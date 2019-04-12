@@ -55,7 +55,9 @@ void InputContext::connect()
 			GDK_BUTTON_RELEASE_MASK |
 			GDK_SMOOTH_SCROLL_MASK  |
 			GDK_ENTER_NOTIFY_MASK   |
-			GDK_LEAVE_NOTIFY_MASK;
+			GDK_LEAVE_NOTIFY_MASK	|
+			GDK_PROXIMITY_IN_MASK	|
+			GDK_PROXIMITY_OUT_MASK;
 
 	gtk_widget_add_events(widget, mask);
 
