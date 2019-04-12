@@ -1,6 +1,6 @@
 #include "TouchHelper.h"
-#include "touchdisable/TouchDisableCustom.h"
-#include "touchdisable/TouchDisableX11.h"
+#include "gui/inputdevices/old/touchdisable/TouchDisableCustom.h"
+#include "gui/inputdevices/old/touchdisable/TouchDisableX11.h"
 
 #include "control/settings/Settings.h"
 

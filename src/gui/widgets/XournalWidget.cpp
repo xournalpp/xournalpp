@@ -4,7 +4,7 @@
 #include "control/tools/EditSelection.h"
 #include "control/settings/Settings.h"
 #include "gui/Layout.h"
-#include "gui/inputdevices/NewGtkInputDevice.h"
+#include "gui/inputdevices/old/NewGtkInputDevice.h"
 #include "gui/scroll/ScrollHandling.h"
 #include "gui/Shadow.h"
 #include "gui/XournalView.h"
@@ -16,6 +16,7 @@
 #include <gdk/gdk.h>
 
 #include <gdk/gdkkeysyms.h>
+#include <gui/inputdevices/InputContext.h>
 
 static void gtk_xournal_class_init(GtkXournalClass* klass);
 static void gtk_xournal_init(GtkXournal* xournal);
@@ -74,9 +75,11 @@ GtkWidget* gtk_xournal_new(XournalView* view, ScrollHandling* scrollHandling)
 	xoj->layout = new Layout(view, scrollHandling);
 	xoj->selection = NULL;
 
-	xoj->input = new NewGtkInputDevice(GTK_WIDGET(xoj), view, scrollHandling);
+	//xoj->input = new NewGtkInputDevice(GTK_WIDGET(xoj), view, scrollHandling);
+	xoj->input = new InputContext(GTK_WIDGET(xoj), view, scrollHandling);
 
-	xoj->input->initWidget();
+	//xoj->input->initWidget();
+	xoj->input->connect();
 
 	return GTK_WIDGET(xoj);
 }

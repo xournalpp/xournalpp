@@ -12,6 +12,7 @@
 #pragma once
 
 #include <gtk/gtk.h>
+#include <gui/inputdevices/InputContext.h>
 
 G_BEGIN_DECLS
 
@@ -26,6 +27,7 @@ class XojPageView;
 class Rectangle;
 class ScrollHandling;
 class XournalView;
+class InputContext;
 
 
 typedef struct _GtkXournal GtkXournal;
@@ -62,7 +64,7 @@ struct _GtkXournal
 	/**
 	 * Input handling
 	 */
-	AbstractInputDevice* input;
+	InputContext* input;
 };
 
 struct _GtkXournalClass

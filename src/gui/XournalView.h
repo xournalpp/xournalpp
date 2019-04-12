@@ -114,11 +114,6 @@ public:
 	void penActionDetected();
 
 	/**
-	 * If the pen was active a short time before, ignore touch events
-	 */
-	bool shouldIgnoreTouchEvents();
-
-	/**
 	 * @return Helper class for Touch specific fixes
 	 */
 	TouchHelper* getTouchHelper();
@@ -188,11 +183,6 @@ private:
 	 * Memory cleanup timeout
 	 */
 	int cleanupTimeout = -1;
-
-	/**
-	 * Last Pen action, to ignore touch events within a time frame
-	 */
-	gint64 lastPenAction = 0;
 
 	/**
 	 * Helper class for Touch specific fixes

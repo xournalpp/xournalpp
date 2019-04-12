@@ -20,7 +20,7 @@
 
 #include <Range.h>
 
-#include "inputdevices/PositionInputData.h"
+#include "gui/inputdevices/old/PositionInputData.h"
 
 class EditSelection;
 class EraseHandler;

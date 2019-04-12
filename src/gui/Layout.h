@@ -44,7 +44,7 @@ public:
 	/**
 	 * Increases the adjustments by the given amounts
 	 */
-	void scrollRelativ(double x, double y);
+	void scrollRelative(double x, double y);
 
 	/**
 	 * Changes the adjustments by absolute amounts (for pinch-to-zoom)

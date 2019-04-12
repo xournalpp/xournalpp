@@ -18,7 +18,7 @@
 #include "gui/dialog/SelectBackgroundColorDialog.h"
 #include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"
 #include "gui/dialog/ToolbarManageDialog.h"
-#include "gui/inputdevices/TouchHelper.h"
+#include "gui/inputdevices/old/TouchHelper.h"
 #include "gui/TextEditor.h"
 #include "gui/toolbarMenubar/model/ToolbarData.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"

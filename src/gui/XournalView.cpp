@@ -9,7 +9,7 @@
 #include "control/Control.h"
 #include "control/PdfCache.h"
 #include "control/settings/MetadataManager.h"
-#include "gui/inputdevices/TouchHelper.h"
+#include "gui/inputdevices/old/TouchHelper.h"
 #include "model/Document.h"
 #include "model/Stroke.h"
 #include "undo/DeleteUndoAction.h"
@@ -196,12 +196,12 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 
 		if (event->keyval == GDK_KEY_Page_Down)
 		{
-			layout->scrollRelativ(0, windowHeight);
+			layout->scrollRelative(0, windowHeight);
 			return false;
 		}
 		if (event->keyval == GDK_KEY_Page_Up || event->keyval == GDK_KEY_space)
 		{
-			layout->scrollRelativ(0, -windowHeight);
+			layout->scrollRelative(0, -windowHeight);
 			return true;
 		}
 	}
@@ -224,7 +224,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
 		int windowHeight = alloc.height - scrollKeySize;
 
-		layout->scrollRelativ(0, windowHeight);
+		layout->scrollRelative(0, windowHeight);
 		return true;
 	}
 
@@ -269,7 +269,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 			}
 			else
 			{
-				layout->scrollRelativ(0, -scrollKeySize);
+				layout->scrollRelative(0, -scrollKeySize);
 			}
 			return true;
 		}
@@ -290,7 +290,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 			}
 			else
 			{
-				layout->scrollRelativ(0, scrollKeySize);
+				layout->scrollRelative(0, scrollKeySize);
 			}
 			return true;
 		}
@@ -304,7 +304,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		}
 		else
 		{
-			layout->scrollRelativ(-scrollKeySize, 0);
+			layout->scrollRelative(-scrollKeySize, 0);
 		}
 		return true;
 	}
@@ -317,7 +317,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		}
 		else
 		{
-			layout->scrollRelativ(scrollKeySize, 0);
+			layout->scrollRelative(scrollKeySize, 0);
 		}
 		return true;
 	}
@@ -337,22 +337,22 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	// vim like scrolling
 	if (event->keyval == GDK_KEY_j)
 	{
-		layout->scrollRelativ(0, 60);
+		layout->scrollRelative(0, 60);
 		return true;
 	}
 	if (event->keyval == GDK_KEY_k)
 	{
-		layout->scrollRelativ(0, -60);
+		layout->scrollRelative(0, -60);
 		return true;
 	}
 	if (event->keyval == GDK_KEY_h)
 	{
-		layout->scrollRelativ(-60, 0);
+		layout->scrollRelative(-60, 0);
 		return true;
 	}
 	if (event->keyval == GDK_KEY_l)
 	{
-		layout->scrollRelativ(60, 0);
+		layout->scrollRelative(60, 0);
 		return true;
 	}
 
@@ -598,30 +598,6 @@ Rectangle* XournalView::getVisibleRect(XojPageView* redrawable)
 	XOJ_CHECK_TYPE(XournalView);
 
 	return gtk_xournal_get_visible_area(this->widget, redrawable);
-}
-
-/**
- * A pen action was detected now, therefore ignore touch events
- * for a short time
- */
-void XournalView::penActionDetected()
-{
-	XOJ_CHECK_TYPE(XournalView);
-	this->lastPenAction = g_get_monotonic_time() / 1000;
-}
-
-/**
- * If the pen was active a short time before, ignore touch events
- */
-bool XournalView::shouldIgnoreTouchEvents()
-{
-	XOJ_CHECK_TYPE(XournalView);
-	if ((g_get_monotonic_time() / 1000 - this->lastPenAction) < 500)
-	{
-		// g_message("Ignore touch, pen was active\n");
-		return true;
-	}
-	return false;
 }
 
 /**

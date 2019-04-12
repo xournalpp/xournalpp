@@ -167,7 +167,7 @@ void InputSequence::handleScrollEvent()
 		scrollOffsetY = lastMousePositionY - rootY;
 
 		Util::execInUiThread([=]() {
-			inputHandler->getXournal()->layout->scrollRelativ(scrollOffsetX, scrollOffsetY);
+			inputHandler->getXournal()->layout->scrollRelative(scrollOffsetX, scrollOffsetY);
 
 			// Scrolling done, so reset our counters
 			scrollOffsetX = 0;
@@ -193,7 +193,7 @@ bool InputSequence::actionMoved()
 
 	if (penDevice)
 	{
-		inputHandler->getView()->penActionDetected();
+		//inputHandler->getView()->penActionDetected();
 	}
 
 	if (xournal->view->getControl()->getWindow()->isGestureActive())
@@ -454,7 +454,7 @@ PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* 
 	PositionInputData pos;
 	pos.x = x - page->getX() - xournal->x;
 	pos.y = y - page->getY() - xournal->y;
-	pos.pressure = Point::NO_PRESURE;
+	pos.pressure = Point::NO_PRESSURE;
 
 	if (presureSensitivity)
 	{

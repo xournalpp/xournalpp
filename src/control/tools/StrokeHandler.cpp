@@ -78,7 +78,7 @@ bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 		}
 	}
 
-	if (Point::NO_PRESURE != pos.pressure && stroke->getToolType() == STROKE_TOOL_PEN)
+	if (Point::NO_PRESSURE != pos.pressure && stroke->getToolType() == STROKE_TOOL_PEN)
 	{
 		stroke->setLastPressure(pos.pressure * stroke->getWidth());
 	}

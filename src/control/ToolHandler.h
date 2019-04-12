@@ -114,6 +114,10 @@ public:
 
 	const double* getToolThickness(ToolType type);
 
+	void actionStart();
+	void actionMotion();
+	void actionEnd();
+
 protected:
 	void initTools();
 

@@ -15,7 +15,7 @@
 #include "model/Stroke.h"
 #include "model/PageRef.h"
 #include "control/shaperecognizer/ShapeRecognizer.h"
-#include "gui/inputdevices/PositionInputData.h"
+#include "gui/inputdevices/old/PositionInputData.h"
 
 #include <XournalType.h>
 
