@@ -92,7 +92,7 @@ bool InputContext::handle(GdkEvent* event)
 	{
 		return this->stylusHandler->handle(event);
 	}
-	if (gdk_device_get_source(device) == GDK_SOURCE_MOUSE || gdk_device_get_source(device) == GDK_SOURCE_TOUCHPAD || gdk_device_get_source(device) == GDK_SOURCE_TRACKPOINT)
+	if (gdk_device_get_source(device) == GDK_SOURCE_MOUSE || gdk_device_get_source(device) == GDK_SOURCE_TOUCHPAD)
 	{
 		return this->mouseHandler->handle(event);
 	}
