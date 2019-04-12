@@ -33,6 +33,9 @@ public:
 	void setInvisible(bool invisible);
 	void setInsidePage(bool insidePage);
 	void setTempCursor(GdkCursorType type);
+	void setDrawDirCursor(bool shift, bool ctrl);
+	
+
 
 private:
 	GdkCursor* getPenCursor();
@@ -41,7 +44,8 @@ private:
 	GdkCursor* getHighlighterCursor();
 
 	GdkCursor* createHighlighterOrPenCursor(int size, double alpha);
-
+	GdkCursor* createCustomDrawDirCursor(int size, bool shift, bool ctrl);
+	
 private:
 	XOJ_TYPE_ATTRIB;
 

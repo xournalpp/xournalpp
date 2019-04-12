@@ -165,6 +165,8 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 
 	stroke = NULL;
 
+	xournal->getCursor()->updateCursor();
+	
 	return;
 }
 
@@ -221,21 +223,23 @@ void BaseStrokeHandler::setModifiers(double width, double height, const Position
 					
 					if( corner != this-> lastCursor)
 					{
-						switch (corner)
-						{
-							case 1:
-								xournal->getCursor()->setTempCursor(GDK_BOTTOM_RIGHT_CORNER);
-								break;
-							case 3:
-								xournal->getCursor()->setTempCursor(GDK_TOP_RIGHT_CORNER);
-								break;
-							case 0:
-								xournal->getCursor()->setTempCursor(GDK_BOTTOM_LEFT_CORNER);
-								break;
-							case 2:
-								xournal->getCursor()->setTempCursor(GDK_TOP_LEFT_CORNER);
-								break;
-						}
+// 						switch (corner)
+// 						{
+// 							case 1:
+// 								xournal->getCursor()->setTempCursor(GDK_BOTTOM_RIGHT_CORNER);
+// 								break;
+// 							case 3:
+// 								xournal->getCursor()->setTempCursor(GDK_TOP_RIGHT_CORNER);
+// 								break;
+// 							case 0:
+// 								xournal->getCursor()->setTempCursor(GDK_BOTTOM_LEFT_CORNER);
+// 								break;
+// 							case 2:
+// 								xournal->getCursor()->setTempCursor(GDK_TOP_LEFT_CORNER);
+// 								break;
+// 						}
+						
+						xournal->getCursor()->setDrawDirCursor( gestureShift, gestureControl);
 						this->lastCursor = corner;
 					}
 				}

@@ -431,3 +431,121 @@ void Cursor::setTempCursor(GdkCursorType type)
 	gdk_window_set_cursor(window, cursor);
 	g_object_unref(cursor);
 }
+
+void Cursor::setDrawDirCursor(bool shift, bool ctrl)
+{
+	XOJ_CHECK_TYPE(Cursor);
+	
+	MainWindow* win = control->getWindow();
+	
+	if( !win) return;
+	
+	XournalView* xournal = win->getXournal();
+	
+	if(!xournal) return;
+	
+	GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
+	
+	if( !window ) return;
+	
+	GdkCursor* cursor = createCustomDrawDirCursor(48, shift, ctrl);
+	gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
+	gdk_window_set_cursor(window, cursor);
+	g_object_unref(cursor);
+	
+}
+
+
+
+GdkCursor* Cursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
+{
+	XOJ_CHECK_TYPE(Cursor);
+
+	bool big = control->getSettings()->isShowBigCursor();
+	bool highlightPosition = control->getSettings()->isHighlightPosition();
+
+	int height = size;
+	int width = size;
+	int fontSize = 8;
+	if (big || highlightPosition)
+	{
+		height = width = 60;
+		fontSize = 12;
+	}
+	
+	
+	int centerX = width - width/ 4;
+	int centerY = height - height/4; 
+	
+
+	cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+	cairo_t* cr = cairo_create(crCursor);
+
+	cairo_set_line_width(cr, 1.2);
+	
+
+	// Starting point
+	cairo_move_to(cr, centerX , height/2);
+	cairo_line_to(cr, centerX, height );
+	cairo_stroke(cr);
+	
+	cairo_move_to(cr, width/2 , centerY);	
+	cairo_line_to(cr,width, centerY);
+	cairo_stroke(cr);
+	
+
+	if( ctrl)
+	{
+		cairo_text_extents_t extents;
+
+		const char *utf8 = "CONTROL";
+		double x,y;
+
+		cairo_select_font_face (cr, "Sans",
+		CAIRO_FONT_SLANT_NORMAL,
+		CAIRO_FONT_WEIGHT_NORMAL);
+
+		cairo_set_font_size (cr, fontSize);
+		cairo_text_extents (cr, utf8, &extents);
+		x = 0; //centerX -(extents.width/2 + extents.x_bearing);
+		y = extents.height;
+
+		cairo_move_to (cr, x, y);
+		cairo_show_text (cr, utf8);
+	}
+	
+	if( shift)
+	{
+		cairo_text_extents_t extents;
+
+		const char *utf8 = "SHIFT";
+		double x,y;
+
+		cairo_select_font_face (cr, "Sans",
+		CAIRO_FONT_SLANT_NORMAL,
+		CAIRO_FONT_WEIGHT_NORMAL);
+
+		cairo_set_font_size (cr, fontSize);
+		cairo_text_extents (cr, utf8, &extents);
+		x = 0;
+		y = extents.height*2.5 ;
+
+		cairo_move_to (cr, x, y);
+		cairo_show_text (cr, utf8);
+	}		
+		
+
+	cairo_destroy(cr);
+
+	GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
+
+
+	cairo_surface_destroy(crCursor);
+	
+	GdkCursor* cursor = gdk_cursor_new_from_pixbuf(
+	 		gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, centerX, centerY);
+
+	g_object_unref(pixbuf);
+
+	return cursor;
+}
