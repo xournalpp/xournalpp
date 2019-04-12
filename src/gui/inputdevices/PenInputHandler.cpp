@@ -109,7 +109,7 @@ void PenInputHandler::handleScrollEvent(GdkEvent* event)
 	gdk_event_get_root_coords(this->lastEvent, &rootX, &rootY);
 
 	// GTK handles event compression/filtering differently between versions - this may be needed on certain hardware/GTK combinations.
-	if (std::abs(lastRootX - rootX) < 0.1 && std::abs(lastRootY - rootY) < 0.1 )
+	if (std::abs((double)(lastRootX - rootX)) < 0.1 && std::abs((double)(lastRootY - rootY)) < 0.1 )
 	{
 		return;
 	}
