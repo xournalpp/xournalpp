@@ -1,7 +1,7 @@
 ---
 app-id: com.github.xournalpp.xournalpp
 runtime: org.gnome.Platform
-runtime-version: '3.30'
+runtime-version: '3.32'
 sdk: org.gnome.Sdk
 command: xournalpp
 rename-icon: xournalpp
@@ -45,6 +45,17 @@ modules:
       - type: archive
         url: https://poppler.freedesktop.org/poppler-0.69.0.tar.xz
         sha256: 637ff943f805f304ff1da77ba2e7f1cbd675f474941fd8ae1e0fc01a5b45a3f9
+  - name: libzip
+    buildsystem: cmake-ninja
+    config-opts:
+      - "-DCMAKE_INSTALL_LIBDIR=/app/lib"
+      - "-DCMAKE_INSTALL_INCLUDEDIR=/app/include"
+    cleanup:
+      - "/bin"
+    sources:
+      - type: archive
+        url: https://libzip.org/download/libzip-1.5.2.tar.xz
+        sha256: b3de4d4bd49a01e0cab3507fc163f88e1651695b6b9cb25ad174dbe319d4a3b4
   - name: libportaudiocpp
     buildsystem: autotools
     config-opts:
@@ -83,6 +94,6 @@ modules:
       - type: git
         path: .
         #url: https://github.com/xournalpp/xournalpp
-        commit: 4d28632b023c7efd17eb85e520cefbd681e7b8c7
-        tag: 1.0.7
+        commit: 14e9012b94e005112387dbb7d2ed59274d542885
+        tag: 1.0.10
 

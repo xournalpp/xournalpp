@@ -44,3 +44,9 @@ doc/latex
 
 src/view/.DS_Store
 src/view/background/.DS_Store
+
+# Flatpak
+repo/
+flatpak-build/
+.flatpak-builder/
+*.flatpak
