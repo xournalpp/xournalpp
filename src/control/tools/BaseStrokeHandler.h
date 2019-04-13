@@ -40,11 +40,13 @@ public:
 
 private:
 	virtual void drawShape(Point& currentPoint, const PositionInputData& pos) = 0;
+	void redrawShape( const PositionInputData& pos );	//use if modifiers change w/o movement
 	DIRSET_MODIFIERS drawModifierFixed = NONE;
 	int lastCursor = -1;	//avoid same setCursor
 	
 protected:
 	void snapToGrid(double& x, double& y);
+	Point currPoint;
 	/**
 	 * modifyModifiersByDrawDir  -  toggle shift and control modifiers depending on initial drawing direction/
 	 */

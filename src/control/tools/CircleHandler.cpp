@@ -19,6 +19,7 @@ CircleHandler::~CircleHandler()
 	XOJ_RELEASE_TYPE(CircleHandler);
 }
 
+
 void CircleHandler::drawShape(Point& c, const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(CircleHandler);
@@ -41,6 +42,8 @@ void CircleHandler::drawShape(Point& c, const PositionInputData& pos)
 	{		
 		double width = c.x - this->startPoint.x;
 		double height = c.y - this->startPoint.y;
+		
+		this->currPoint = c;
 		
 		
 		this->modShift = pos.isShiftDown();

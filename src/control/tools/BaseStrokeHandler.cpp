@@ -184,6 +184,13 @@ void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 }
 
 
+void BaseStrokeHandler::redrawShape( const PositionInputData& pos )
+{
+	XOJ_CHECK_TYPE(BaseStrokeHandler);
+	
+	this->drawShape( this->currPoint, pos );
+}
+
 void BaseStrokeHandler::modifyModifiersByDrawDir(double width, double height,  bool changeCursor)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
