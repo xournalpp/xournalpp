@@ -33,7 +33,7 @@ public:
 	void setInvisible(bool invisible);
 	void setInsidePage(bool insidePage);
 	void setTempCursor(GdkCursorType type);
-	void setDrawDirCursor(bool shift, bool ctrl);
+	void setTempDrawDirCursor(bool shift, bool ctrl);
 	
 
 

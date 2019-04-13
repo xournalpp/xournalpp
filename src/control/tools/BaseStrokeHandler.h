@@ -40,19 +40,15 @@ public:
 
 private:
 	virtual void drawShape(Point& currentPoint, const PositionInputData& pos) = 0;
-	DIRSET_MODIFIERS drawModifier = NONE;
+	DIRSET_MODIFIERS drawModifierFixed = NONE;
 	int lastCursor = -1;	//avoid same setCursor
-	bool settingsDrawDirModsEnabled;
-	int settingsDrawDirModsRadius;
 	
 protected:
 	void snapToGrid(double& x, double& y);
 	/**
-	 * setModifiers  - checks shift and control keys and also direction of initial drawing for emulating them
-	 * set doDirMods to false if you only want actual key modifiers to be checked.
-	 * note: doDirMods=true can be overridden by settings->getDrawDirModsEnabled()
+	 * modifyModifiersByDrawDir  -  toggle shift and control modifiers depending on initial drawing direction/
 	 */
-	void setModifiers(double width, double height, const PositionInputData& pos, bool doDirMods = true, bool changeCursor = true);
+	void modifyModifiersByDrawDir(double width, double height, bool changeCursor = true);
 	bool modShift = false;
 	bool modControl = false;
 

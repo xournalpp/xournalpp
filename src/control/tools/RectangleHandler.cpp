@@ -23,7 +23,8 @@ void RectangleHandler::drawShape(Point& c, const PositionInputData& pos)
 	/**
 	 * Snap point to grid (if enabled)
 	 */
-	if (pos.isAltDown() != xournal->getControl()->getSettings()->isSnapGrid())
+	Settings* settings = xournal->getControl()->getSettings();
+	if (pos.isAltDown() != settings->isSnapGrid())
 	{
 		snapToGrid(c.x,c.y);
 	}
@@ -38,7 +39,13 @@ void RectangleHandler::drawShape(Point& c, const PositionInputData& pos)
 		double width = c.x - this->startPoint.x;
 		double height = c.y - this->startPoint.y;
 	
-		this->setModifiers(width, height,  pos);	// sets this->modShift and this->modControl
+		this->modShift = pos.isShiftDown() ;
+		this->modControl = pos.isControlDown() ;
+		
+		if ( settings->getDrawDirModsEnabled()) //change modifiers based on draw dir
+		{
+			this->modifyModifiersByDrawDir(width, height, true);
+		}
 		
 		if (this->modShift)	// make square
 		{

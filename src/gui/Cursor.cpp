@@ -348,16 +348,6 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 		}
 		cairo_set_line_width(cr, 1.2);
 		
-		// Plain cursor drawing + color dot
-		// cairo_move_to(cr, 1.5, 1.5);
-		// cairo_line_to(cr, 2, 19);
-		// cairo_line_to(cr, 5.5, 15.5);
-		// cairo_line_to(cr, 8.5, 20.5);
-		// cairo_line_to(cr, 10.5, 19);
-		// cairo_line_to(cr, 8.5, 14);
-		// cairo_line_to(cr, 13, 14);
-
-
 		// Starting point
 		cairo_move_to(cr, centerX + 2, centerY);
 		// Pencil cursor
@@ -383,7 +373,6 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 		cairo_fill_preserve(cr);
 		cairo_set_source_rgb(cr, 0, 0, 0);
 		cairo_stroke(cr);
-
 	}
 	
 	cairo_set_source_rgba(cr, r, g, b, alpha);
@@ -432,7 +421,7 @@ void Cursor::setTempCursor(GdkCursorType type)
 	g_object_unref(cursor);
 }
 
-void Cursor::setDrawDirCursor(bool shift, bool ctrl)
+void Cursor::setTempDrawDirCursor(bool shift, bool ctrl)
 {
 	XOJ_CHECK_TYPE(Cursor);
 	

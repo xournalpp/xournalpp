@@ -7,7 +7,6 @@
 #include "gui/Cursor.h"
 #include <cmath>
 
-#define FIX_DRAW_TYPE_LOCK_DISTANCE 50 
 
 BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
  : InputHandler(xournal, redrawable, page)
@@ -174,10 +173,6 @@ void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 	
-	Settings* settings = xournal->getControl()->getSettings();
-	this->settingsDrawDirModsEnabled = settings->getDrawDirModsEnabled();
-	this->settingsDrawDirModsRadius =  settings->getDrawDirModsRadius();
-
 	double zoom = xournal->getZoom();
 	double x = pos.x / zoom;
 	double y = pos.y / zoom;
@@ -189,69 +184,54 @@ void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 }
 
 
-void BaseStrokeHandler::setModifiers(double width, double height, const PositionInputData& pos, bool doDirMods, bool changeCursor)
+void BaseStrokeHandler::modifyModifiersByDrawDir(double width, double height,  bool changeCursor)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 		
 	bool gestureShift = false;
 	bool gestureControl = false;
 	
-	if (doDirMods && this->settingsDrawDirModsEnabled)
-	{
-
-		if( this->drawModifier == NONE){
-			gestureShift = (width  < 0);
-			gestureControl =  (height < 0 );
-			
-			double zoom = xournal->getZoom();
-			double fixate_Dir_Mods_Dist = std::pow( this->settingsDrawDirModsRadius / zoom, 2.0); 
-			if (std::pow(width,2.0) > fixate_Dir_Mods_Dist ||  std::pow(height,2.0) > fixate_Dir_Mods_Dist )
+	if( this->drawModifierFixed == NONE){		//User hasn't dragged out past DrawDirModsRadius  i.e. modifier not yet locked.
+		gestureShift = (width  < 0);
+		gestureControl =  (height < 0 );
+		
+		this->modShift = this->modShift ==  !gestureShift;
+		this->modControl = this->modControl == !gestureControl;	
+		
+		double zoom = xournal->getZoom();
+		double fixate_Dir_Mods_Dist = std::pow( xournal->getControl()->getSettings()->getDrawDirModsRadius() / zoom, 2.0); 
+		if (std::pow(width,2.0) > fixate_Dir_Mods_Dist ||  std::pow(height,2.0) > fixate_Dir_Mods_Dist )
+		{
+			this->drawModifierFixed = (DIRSET_MODIFIERS)(SET |
+				(gestureShift? SHIFT:NONE) |
+				(gestureControl? CONTROL:NONE) );
+			if(changeCursor)
 			{
-				this->drawModifier = (DIRSET_MODIFIERS)(SET |
-					(gestureShift? SHIFT:NONE) |
-					(gestureControl? CONTROL:NONE) );
-				if(changeCursor)
-				{
-					xournal->getCursor()->updateCursor();
-				}
-			}
-			else
-			{
-				if (changeCursor)
-				{
-					int corner = ( gestureShift?0:1 ) + ( gestureControl?2:0);
-					
-					if( corner != this-> lastCursor)
-					{
-// 						switch (corner)
-// 						{
-// 							case 1:
-// 								xournal->getCursor()->setTempCursor(GDK_BOTTOM_RIGHT_CORNER);
-// 								break;
-// 							case 3:
-// 								xournal->getCursor()->setTempCursor(GDK_TOP_RIGHT_CORNER);
-// 								break;
-// 							case 0:
-// 								xournal->getCursor()->setTempCursor(GDK_BOTTOM_LEFT_CORNER);
-// 								break;
-// 							case 2:
-// 								xournal->getCursor()->setTempCursor(GDK_TOP_LEFT_CORNER);
-// 								break;
-// 						}
-						
-						xournal->getCursor()->setDrawDirCursor( gestureShift, gestureControl);
-						this->lastCursor = corner;
-					}
-				}
+				xournal->getCursor()->updateCursor();
 			}
 		}
 		else
 		{
-			gestureShift = this->drawModifier & SHIFT;
-			gestureControl = this->drawModifier & CONTROL;
+			if (changeCursor)
+			{
+				int corner = ( this->modShift?0:1 ) + ( this->modControl?2:0);
+				
+				if( corner != this-> lastCursor)
+				{
+					xournal->getCursor()->setTempDrawDirCursor(  this->modShift, this->modControl);
+					this->lastCursor = corner;
+				}
+			}
 		}
 	}
-	this->modShift = pos.isShiftDown() ==  !gestureShift;
-	this->modControl = pos.isControlDown() == !gestureControl;
+	else
+	{
+		gestureShift = this->drawModifierFixed & SHIFT;
+		gestureControl = this->drawModifierFixed & CONTROL;
+		this->modShift = this->modShift ==  !gestureShift;
+		this->modControl = this->modControl == !gestureControl;	
+	}
+
+
 		
 }
