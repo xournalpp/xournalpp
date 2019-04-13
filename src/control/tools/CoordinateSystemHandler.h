@@ -21,7 +21,8 @@ public:
 
 private:
 	virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
-
+	Point startPoint;
+	bool started = false;
 private:
 	XOJ_TYPE_ATTRIB;
 };
