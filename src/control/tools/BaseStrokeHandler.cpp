@@ -100,11 +100,14 @@ bool BaseStrokeHandler::onKeyEvent(GdkEventKey* event)
 			{
 				pos.state = (GdkModifierType)(event->state ^ GDK_SHIFT_MASK);	// event state does not include current this modifier keypress - so ^toggle will work for press and release.
 			}
-			else
-			if( event->keyval == GDK_KEY_Control_L || event->keyval == GDK_KEY_Control_R)
+			else if( event->keyval == GDK_KEY_Control_L || event->keyval == GDK_KEY_Control_R)
 			{
 				pos.state = (GdkModifierType)(event->state ^ GDK_CONTROL_MASK);
-			} 
+			}
+			else if( event->keyval == GDK_KEY_Alt_L || event->keyval == GDK_KEY_Alt_R)
+			{
+				pos.state = (GdkModifierType)(event->state ^ GDK_MOD1_MASK);
+			} 				
 				
 				
 			this->redrawable->repaintRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight()); 	
