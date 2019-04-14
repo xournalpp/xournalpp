@@ -20,6 +20,8 @@ RectangleHandler::~RectangleHandler()
 
 void RectangleHandler::drawShape(Point& c, const PositionInputData& pos)
 {
+	this->currPoint = c;
+	
 	/**
 	 * Snap point to grid (if enabled)
 	 */
@@ -39,7 +41,6 @@ void RectangleHandler::drawShape(Point& c, const PositionInputData& pos)
 		double width = c.x - this->startPoint.x;
 		double height = c.y - this->startPoint.y;
 
-		this->currPoint = c;
 
 		this->modShift = pos.isShiftDown() ;
 		this->modControl = pos.isControlDown() ;

@@ -571,11 +571,18 @@ bool XojPageView::onKeyPressEvent(GdkEventKey* event)
 		}
 	}
 
-	if (this->textEditor && this->textEditor->onKeyPressEvent(event))
+	if (this->textEditor )
 	{
-		return true;
+		return this->textEditor->onKeyPressEvent(event);
 	}
 
+	
+	if( this->inputHandler)
+	{
+		return this->inputHandler->onKeyEvent((GdkEventKey *)event);
+	}
+	
+	
 	return false;
 }
 
@@ -588,6 +595,11 @@ bool XojPageView::onKeyReleaseEvent(GdkEventKey* event)
 		return true;
 	}
 
+	if( this->inputHandler && this->inputHandler->onKeyEvent((GdkEventKey *)event))
+	{
+		return true;
+	}
+	
 	return false;
 }
 

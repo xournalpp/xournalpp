@@ -21,6 +21,8 @@ ArrowHandler::~ArrowHandler()
 void ArrowHandler::drawShape(Point& c, const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(ArrowHandler);
+	
+	this->currPoint = c;	// in case redrawn by keypress event in base class.
 
 	/**
 	 * Snap first point to grid (if enabled)
@@ -33,7 +35,6 @@ void ArrowHandler::drawShape(Point& c, const PositionInputData& pos)
 		stroke->setFirstPoint(firstPoint.x,firstPoint.y);
 	}
 	
-	this->currPoint = c;	// in case redrawn by keypress event in base class.
 
 	int count = stroke->getPointCount();
 	if (count < 1)

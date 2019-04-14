@@ -23,6 +23,8 @@ CircleHandler::~CircleHandler()
 void CircleHandler::drawShape(Point& c, const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(CircleHandler);
+	
+	this->currPoint = c;
 		
 	/**
 	 * Snap point to grid (if enabled - Alt key pressed will toggle)
@@ -43,7 +45,6 @@ void CircleHandler::drawShape(Point& c, const PositionInputData& pos)
 		double width = c.x - this->startPoint.x;
 		double height = c.y - this->startPoint.y;
 		
-		this->currPoint = c;
 		
 		
 		this->modShift = pos.isShiftDown();

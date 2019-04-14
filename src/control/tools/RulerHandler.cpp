@@ -79,6 +79,8 @@ void RulerHandler::snapRotation(double& x, double& y)
 void RulerHandler::drawShape(Point& currentPoint, const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(RulerHandler);
+	
+	this->currPoint = currentPoint;	// in case redrawn by keypress event in base class.
 
 	double x = currentPoint.x;
 	double y = currentPoint.y;
@@ -94,7 +96,6 @@ void RulerHandler::drawShape(Point& currentPoint, const PositionInputData& pos)
 		stroke->setFirstPoint(firstPoint.x,firstPoint.y);
 	}
 
-	this->currPoint = currentPoint;	// in case redrawn by keypress event in base class.
 
 		
 	if (stroke->getPointCount() < 2)

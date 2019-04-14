@@ -37,10 +37,10 @@ public:
 	bool onMotionNotifyEvent(const PositionInputData& pos);
 	void onButtonReleaseEvent(const PositionInputData& pos);
 	void onButtonPressEvent(const PositionInputData& pos);
+	virtual bool onKeyEvent(GdkEventKey* event);
 
 private:
 	virtual void drawShape(Point& currentPoint, const PositionInputData& pos) = 0;
-	void redrawShape( const PositionInputData& pos );	//use if modifiers change w/o movement
 	DIRSET_MODIFIERS drawModifierFixed = NONE;
 	int lastCursor = -1;	//avoid same setCursor
 	
