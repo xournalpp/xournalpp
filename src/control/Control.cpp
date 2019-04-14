@@ -1577,7 +1577,6 @@ void Control::setViewPresentationMode(bool enabled)
 	zoom->setZoomPresentationMode(enabled);
 	settings->setPresentationMode(enabled);
 
-	fireActionSelected(GROUP_PRESENTATION_MODE, enabled ? ACTION_VIEW_PRESENTATION_MODE : ACTION_NOT_SELECTED);
 	//Disable Zoom
 	fireEnableAction(ACTION_ZOOM_IN, !enabled);
 	fireEnableAction(ACTION_ZOOM_OUT, !enabled);
@@ -1590,6 +1589,7 @@ void Control::setViewPresentationMode(bool enabled)
 
 	// disable selection of scroll hand tool
 	fireEnableAction(ACTION_TOOL_HAND, !enabled);
+	fireActionSelected(GROUP_PRESENTATION_MODE, enabled ? ACTION_VIEW_PRESENTATION_MODE : ACTION_NOT_SELECTED);
 
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();

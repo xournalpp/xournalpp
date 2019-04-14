@@ -405,11 +405,7 @@ void ZoomControl::setZoomPresentationMode(bool isZoomPresentationMode)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	if(this->zoomPresentationMode != isZoomPresentationMode)
-	{
-		this->zoomPresentationMode = isZoomPresentationMode;
-		this->control->fireActionSelected(GROUP_PRESENTATION_MODE, isZoomPresentationMode ? ACTION_VIEW_PRESENTATION_MODE: ACTION_NOT_SELECTED);
-	}
+	this->zoomPresentationMode = isZoomPresentationMode;
 
 	if(isZoomPresentationMode)
 	{
