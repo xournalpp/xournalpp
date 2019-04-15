@@ -58,6 +58,9 @@ public:
 
 	
 	void configureFromSettings(int numPages, Settings* settings);
+	
+	
+	void configureForPresentation(int numPages, Settings* settings);
 
 	virtual ~LayoutMapper();
 private:

@@ -89,12 +89,13 @@ void FullscreenHandler::hideWidget(MainWindow* win, string widgetName)
 	}
 }
 
-void FullscreenHandler::enableFullscreen(MainWindow* win, string hideWidgets)
+void FullscreenHandler::enableFullscreen(MainWindow* win)
 {
 	XOJ_CHECK_TYPE(FullscreenHandler);
 
 	gtk_window_fullscreen((GtkWindow*) *win);
 
+	string hideWidgets = settings->getFullscreenHideElements();
 	for (string s : StringUtils::split(hideWidgets, ','))
 	{
 		hideWidget(win, s);
@@ -143,13 +144,13 @@ void FullscreenHandler::disableFullscreen(MainWindow* win)
 	}
 }
 
-void FullscreenHandler::enableFullscreen(MainWindow* win, bool enabled, bool presentation)
+void FullscreenHandler::setFullscreen(MainWindow* win, bool enabled)
 {
 	XOJ_CHECK_TYPE(FullscreenHandler);
 
 	if (enabled)
 	{
-		enableFullscreen(win, presentation ? settings->getPresentationHideElements() : settings->getFullscreenHideElements());
+		enableFullscreen(win);
 	}
 	else
 	{
@@ -158,7 +159,6 @@ void FullscreenHandler::enableFullscreen(MainWindow* win, bool enabled, bool pre
 
 	this->fullscreen = enabled;
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Widget which allow to hide the menu, but let the shortcuts active

@@ -324,7 +324,7 @@ void Control::initWindow(MainWindow* win)
 	win->setRecentMenu(recent->getMenu());
 	selectTool(toolHandler->getToolType());
 	this->win = win;
-	this->zoom->initZoomHandler(win->getXournal()->getWidget(), win->getXournal());
+	this->zoom->initZoomHandler(win->getXournal()->getWidget(), win->getXournal(), this);
 	this->sidebar = new Sidebar(win, this);
 
 	XojMsgBox::setDefaultWindow(getGtkWindow());
@@ -338,6 +338,11 @@ void Control::initWindow(MainWindow* win)
 	// Disable undo buttons
 	undoRedoChanged();
 
+	if(settings->isPresentationMode())
+	{
+		setViewPresentationMode(true);
+	}
+	else
 	if (settings->isViewFixedRows())
 	{
 		setViewRows(settings->getViewRows());
@@ -352,7 +357,6 @@ void Control::initWindow(MainWindow* win)
 	setViewLayoutB2T(settings->getViewLayoutB2T());
 
 	setViewPairedPages(settings->isShowPairedPages());
-	setViewPresentationMode(settings->isPresentationMode());
 
 	penSizeChanged();
 	eraserSizeChanged();
@@ -425,7 +429,7 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage)
 
 	this->metadata->storeMetadata(this->doc->getEvMetadataFilename().str(), page, getZoomControl()->getZoomReal());
 
-	int current = this->win->getXournal()->getCurrentPage();
+	int current = getCurrentPageNo();
 	int count = this->doc->getPageCount();
 
 	fireEnableAction(ACTION_GOTO_FIRST, current != 0);
@@ -854,7 +858,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 
 	case ACTION_FULLSCREEN:
-		enableFullscreen(enabled);
+		setFullscreen(enabled);
 		break;
 
 	case ACTION_SET_COLUMNS_1:
@@ -1283,11 +1287,11 @@ void Control::setShapeTool(ActionType type, bool enabled)
 	fireActionSelected(GROUP_RULER, type);
 }
 
-void Control::enableFullscreen(bool enabled, bool presentation)
+void Control::setFullscreen(bool enabled)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	fullscreenHandler->enableFullscreen(win, enabled, presentation);
+	fullscreenHandler->setFullscreen(win, enabled);
 
 	fireActionSelected(GROUP_FULLSCREEN, enabled ? ACTION_FULLSCREEN : ACTION_NONE);
 }
@@ -1487,6 +1491,12 @@ void Control::paperFormat()
 		this->doc->unlock();
 	}
 
+	size_t pageNo = doc->indexOf(page);
+	if (pageNo != size_t_npos && pageNo < doc->getPageCount())
+	{
+		this->firePageSizeChanged(pageNo);
+	}
+
 	delete dlg;
 }
 
@@ -1523,50 +1533,63 @@ void Control::changePageBackgroundColor()
 	}
 }
 
-void Control::calcZoomFitSize()
+void Control::setViewPairedPages(bool enabled)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	if (this->doc && this->win)
-	{
-		PageRef p = getCurrentPage();
-		if (!p.isValid())
-		{
-			return;
-		}
-		double page_width = p->getWidth() + 20;
-
-		Rectangle widget_rect = zoom->getVisibleRect();
-		double factor = widget_rect.width / page_width;
-		zoom->setZoomFitValue(factor);
-	}
-}
-
-void Control::setZoomFitButton(bool zoomFit)
-{
-	XOJ_CHECK_TYPE(Control);
-
-	fireActionSelected(GROUP_ZOOM_FIT, zoomFit ? ACTION_ZOOM_FIT : ACTION_NOT_SELECTED);
-}
-
-void Control::setViewPairedPages(bool pairedPages)
-{
-	XOJ_CHECK_TYPE(Control);
-
-	settings->setShowPairedPages(pairedPages);
-	fireActionSelected(GROUP_PAIRED_PAGES, pairedPages ? ACTION_VIEW_PAIRED_PAGES : ACTION_NOT_SELECTED);
+	settings->setShowPairedPages(enabled);
+	fireActionSelected(GROUP_PAIRED_PAGES, enabled ? ACTION_VIEW_PAIRED_PAGES : ACTION_NOT_SELECTED);
 
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();
 	scrollHandler->scrollToPage(currentPage);
 }
 
-void Control::setViewPresentationMode(bool presentationMode)
+void Control::setViewPresentationMode(bool enabled)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	settings->setPresentationMode(presentationMode);
-	fireActionSelected(GROUP_PRESENTATION_MODE, presentationMode ? ACTION_VIEW_PRESENTATION_MODE : ACTION_NOT_SELECTED);
+	if(enabled)
+	{
+		bool success = zoom->updateZoomPresentationValue();
+		if (!success)
+		{
+			//TODO: Errormessage if the zoom could not be calculated
+			fireActionSelected(GROUP_PRESENTATION_MODE, ACTION_NOT_SELECTED);
+			return;
+		}
+	}
+	else
+	{
+		if (settings->isViewFixedRows())
+		{
+			setViewRows(settings->getViewRows());
+		}
+		else
+		{
+			setViewColumns(settings->getViewColumns());
+		}
+
+		setViewLayoutVert(settings->getViewLayoutVert());
+		setViewLayoutR2L(settings->getViewLayoutR2L());
+		setViewLayoutB2T(settings->getViewLayoutB2T());
+	}
+	zoom->setZoomPresentationMode(enabled);
+	settings->setPresentationMode(enabled);
+
+	//Disable Zoom
+	fireEnableAction(ACTION_ZOOM_IN, !enabled);
+	fireEnableAction(ACTION_ZOOM_OUT, !enabled);
+	fireEnableAction(ACTION_ZOOM_FIT, !enabled);
+	fireEnableAction(ACTION_ZOOM_100, !enabled);
+	fireEnableAction(ACTION_FOOTER_ZOOM_SLIDER, !enabled);
+
+	gtk_widget_set_sensitive(win->get("menuitemLayout"), !enabled);
+	gtk_widget_set_sensitive(win->get("menuitemViewDimensions"), !enabled);
+
+	// disable selection of scroll hand tool
+	fireEnableAction(ACTION_TOOL_HAND, !enabled);
+	fireActionSelected(GROUP_PRESENTATION_MODE, enabled ? ACTION_VIEW_PRESENTATION_MODE : ACTION_NOT_SELECTED);
 
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();
@@ -1731,7 +1754,7 @@ void Control::zoomCallback(ActionType type, bool enabled)
 	case ACTION_ZOOM_FIT:
 		if(enabled)
 		{
-			calcZoomFitSize();
+			zoom->updateZoomFitValue();
 		}
 		//enable/disable ZoomFit
 		zoom->setZoomFitMode(enabled);
@@ -1770,10 +1793,8 @@ PageRef Control::getCurrentPage()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	int page = this->win->getXournal()->getCurrentPage();
-
 	this->doc->lock();
-	PageRef p = this->doc->getPage(page);
+	PageRef p = this->doc->getPage(getCurrentPageNo());
 	this->doc->unlock();
 
 	return p;
@@ -2393,7 +2414,7 @@ void Control::fileLoaded(int scrollToPage)
 	}
 	else
 	{
-		calcZoomFitSize();
+		zoom->updateZoomFitValue();
 		zoom->setZoomFitMode(true);
 	}
 
@@ -2420,9 +2441,14 @@ bool Control::loadMetadataCallback(MetadataCallbackData* data)
 		return false;
 	}
 	ZoomControl* zoom = data->ctrl->zoom;
+	if(zoom->isZoomPresentationMode())
+	{
+		data->ctrl->setViewPresentationMode(true);
+	}
+	else
 	if(zoom->isZoomFitMode())
 	{
-		data->ctrl->calcZoomFitSize();
+		zoom->updateZoomFitValue();
 		zoom->setZoomFitMode(true);
 	}
 	else

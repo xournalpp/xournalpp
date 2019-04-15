@@ -50,7 +50,7 @@ public:
 
 	void layoutPages();
 
-	void scrollTo(size_t pageNo, double y);
+	void scrollTo(size_t pageNo, double y = 0);
 	
 	//Relative navigation in current layout:
 	void pageRelativeXY(int offCol, int offRow );

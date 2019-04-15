@@ -126,10 +126,8 @@ public:
 	void saveSettings();
 
 	void updateWindowTitle();
-	void calcZoomFitSize();
-	void setZoomFitButton(bool enabled);
-	void setViewPairedPages(bool continous);
-	void setViewPresentationMode(bool continous);
+	void setViewPairedPages(bool enabled);
+	void setViewPresentationMode(bool enabled);
 	void setPairsOffset(int numOffset);
 	void setViewColumns(int numColumns);
 	void setViewRows(int numRows);
@@ -139,7 +137,7 @@ public:
 	
 	void manageToolbars();
 	void customizeToolbars();
-	void enableFullscreen(bool enabled, bool presentation = false);
+	void setFullscreen(bool enabled);
 
 	void gotoPage();
 

@@ -26,8 +26,8 @@ void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self)
 	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
 
 	if (!self->sliderChangingByZoomControlOrInit &&
-		(self->sliderChangingBySliderDrag ||
-		self->sliderChangingBySliderHoverScroll))
+		!self->zoom->isZoomPresentationMode() &&
+		(self->sliderChangingBySliderDrag || self->sliderChangingBySliderHoverScroll))
 	{
 		double back = self->zoom->getZoom100Value() * scaleFuncInv(gtk_range_get_value(range));
 		self->zoom->zoomSequnceChange(back, false);
@@ -39,12 +39,12 @@ bool ToolZoomSlider::sliderButtonPress(GtkRange* range, GdkEvent *event, ToolZoo
 {
 	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
 
-	if(!self->sliderChangingBySliderDrag)
+	if(!self->sliderChangingBySliderDrag && !self->zoom->isZoomPresentationMode())
 	{
 		self->zoom->setZoomFitMode(false);
 		self->zoom->startZoomSequence(-1, -1);
+		self->sliderChangingBySliderDrag = true;
 	}
-	self->sliderChangingBySliderDrag = true;
 	return false;
 }
 
@@ -52,11 +52,8 @@ bool ToolZoomSlider::sliderButtonRelease(GtkRange* range, GdkEvent *event, ToolZ
 {
 	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
 
-	if(self->sliderChangingBySliderDrag)
-	{
-		self->sliderChangingBySliderDrag = false;
-		self->zoom->endZoomSequence();
-	}
+	self->zoom->endZoomSequence();
+	self->sliderChangingBySliderDrag = false;
 	return false;
 }
 
