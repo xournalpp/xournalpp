@@ -16,7 +16,7 @@
 class CircleHandler : public BaseStrokeHandler
 {
 public:
-	CircleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page);
+	CircleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift = false, bool flipControl = false);
 	virtual ~CircleHandler();
 
 private:

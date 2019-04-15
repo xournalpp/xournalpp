@@ -5,8 +5,8 @@
 #include "undo/InsertUndoAction.h"
 #include <cmath>
 
-CoordinateSystemHandler::CoordinateSystemHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
- : BaseStrokeHandler(xournal, redrawable, page)
+CoordinateSystemHandler::CoordinateSystemHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift, bool flipControl)
+ : BaseStrokeHandler(xournal, redrawable, page, flipShift, flipControl)
 {
 	XOJ_INIT_TYPE(CoordinateSystemHandler);
 }

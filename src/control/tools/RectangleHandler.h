@@ -16,7 +16,7 @@
 class RectangleHandler : public BaseStrokeHandler
 {
 public:
-	RectangleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page);
+	RectangleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift = false, bool flipControl = false);
 	virtual ~RectangleHandler();
 
 private:

@@ -8,10 +8,14 @@
 #include <cmath>
 
 
-BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
+BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift, bool flipControl)
  : InputHandler(xournal, redrawable, page)
 {
 	XOJ_INIT_TYPE(BaseStrokeHandler);
+	
+	this->flipShift = flipShift;
+	this->flipControl = flipControl;
+	
 }
 
 void BaseStrokeHandler::snapToGrid(double& x, double& y)
@@ -227,12 +231,13 @@ void BaseStrokeHandler::modifyModifiersByDrawDir(double width, double height,  b
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 		
-	bool gestureShift = false;
-	bool gestureControl = false;
+
+	bool gestureShift = this->flipShift;
+	bool gestureControl = this->flipControl;
 	
 	if( this->drawModifierFixed == NONE){		//User hasn't dragged out past DrawDirModsRadius  i.e. modifier not yet locked.
-		gestureShift = (width  < 0);
-		gestureControl =  (height < 0 );
+		gestureShift = (width  < 0) != gestureShift;
+		gestureControl =  (height < 0 ) != gestureControl;
 		
 		this->modShift = this->modShift ==  !gestureShift;
 		this->modControl = this->modControl == !gestureControl;	
@@ -265,8 +270,8 @@ void BaseStrokeHandler::modifyModifiersByDrawDir(double width, double height,  b
 	}
 	else
 	{
-		gestureShift = this->drawModifierFixed & SHIFT;
-		gestureControl = this->drawModifierFixed & CONTROL;
+		gestureShift = gestureShift == !(this->drawModifierFixed & SHIFT);
+		gestureControl = gestureControl == !(this->drawModifierFixed & CONTROL);
 		this->modShift = this->modShift ==  !gestureShift;
 		this->modControl = this->modControl == !gestureControl;	
 	}

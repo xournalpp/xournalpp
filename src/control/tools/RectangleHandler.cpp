@@ -5,8 +5,8 @@
 #include "undo/InsertUndoAction.h"
 #include <cmath>
 
-RectangleHandler::RectangleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
- : BaseStrokeHandler(xournal, redrawable, page)
+RectangleHandler::RectangleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift, bool flipControl)
+ : BaseStrokeHandler(xournal, redrawable, page, flipShift, flipControl)
 {
 	XOJ_INIT_TYPE(RectangleHandler);
 }
