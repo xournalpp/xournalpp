@@ -40,6 +40,7 @@ void CoordinateSystemHandler::drawShape(Point& c, const PositionInputData& pos)
 	{
 		this->startPoint = c;
 		this->started = true;
+		stroke->addPoint(c);	//avoid complaints about <2 points.
 	}
 	else
 	{
