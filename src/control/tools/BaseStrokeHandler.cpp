@@ -94,41 +94,44 @@ void BaseStrokeHandler::draw(cairo_t* cr)
 
 bool BaseStrokeHandler::onKeyEvent(GdkEventKey* event) 
 {
-		if(event->is_modifier)
+	if(event->is_modifier)
+	{
+		Rectangle rect = stroke->boundingRect();
+			
+		PositionInputData pos;
+		pos.x = pos.y = pos.pressure = 0; //not used in redraw
+		if( event->keyval == GDK_KEY_Shift_L || event->keyval == GDK_KEY_Shift_R)
 		{
-			Rectangle rect = stroke->boundingRect();
-				
-			PositionInputData pos;
-			pos.x = pos.y = pos.pressure = 0; //not used in redraw
-			if( event->keyval == GDK_KEY_Shift_L || event->keyval == GDK_KEY_Shift_R)
-			{
-				pos.state = (GdkModifierType)(event->state ^ GDK_SHIFT_MASK);	// event state does not include current this modifier keypress - so ^toggle will work for press and release.
-			}
-			else if( event->keyval == GDK_KEY_Control_L || event->keyval == GDK_KEY_Control_R)
-			{
-				pos.state = (GdkModifierType)(event->state ^ GDK_CONTROL_MASK);
-			}
-			else if( event->keyval == GDK_KEY_Alt_L || event->keyval == GDK_KEY_Alt_R)
-			{
-				pos.state = (GdkModifierType)(event->state ^ GDK_MOD1_MASK);
-			} 				
-				
-				
-			this->redrawable->repaintRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight()); 	
-
-			
-			Point malleablePoint = this->currPoint;		//make a copy as it might get snapped to grid.
-			this->drawShape( malleablePoint, pos );
-	
-			
-			
-			rect.add(stroke->boundingRect());
-			
-			double w = stroke->getWidth();
-			redrawable->repaintRect(rect.x - w, rect.y - w, rect.width + 2 * w, rect.height + 2 * w);
-	
-	
+			pos.state = (GdkModifierType)(event->state ^ GDK_SHIFT_MASK);	// event state does not include current this modifier keypress - so ^toggle will work for press and release.
 		}
+		else if( event->keyval == GDK_KEY_Control_L || event->keyval == GDK_KEY_Control_R)
+		{
+			pos.state = (GdkModifierType)(event->state ^ GDK_CONTROL_MASK);
+		}
+		else if( event->keyval == GDK_KEY_Alt_L || event->keyval == GDK_KEY_Alt_R)
+		{
+			pos.state = (GdkModifierType)(event->state ^ GDK_MOD1_MASK);
+		} 				
+		else{
+			return false;
+		}
+			
+		this->redrawable->repaintRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight()); 	
+
+		
+		Point malleablePoint = this->currPoint;		//make a copy as it might get snapped to grid.
+		this->drawShape( malleablePoint, pos );
+
+		
+		
+		rect.add(stroke->boundingRect());
+		
+		double w = stroke->getWidth();
+		redrawable->repaintRect(rect.x - w, rect.y - w, rect.width + 2 * w, rect.height + 2 * w);
+
+		return true;
+	}
+	return false;
 }
 
 bool BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)

@@ -64,11 +64,12 @@ void CircleHandler::drawShape(Point& c, const PositionInputData& pos)
 			height = (width * signW) * signH;
 		}
 
-		double diameterX, diameterY;
-		int npts;
-		double center_x;
-		double center_y;
-		double angle;
+		double diameterX = 0;
+		double diameterY = 0;
+		int npts = 0;
+		double center_x = 0;
+		double center_y = 0;
+		double angle = 0;
 			
 		// set resolution proportional to radius
 		if( !this->modControl)

@@ -48,17 +48,18 @@ private:
 	
 protected:
 	void snapToGrid(double& x, double& y);
-	Point currPoint;
 	/**
-	 * modifyModifiersByDrawDir  -  toggle shift and control modifiers depending on initial drawing direction/
+	 * modifyModifiersByDrawDir  
+	 * @brief 	Toggle shift and control modifiers depending on initial drawing direction.
 	 */
 	void modifyModifiersByDrawDir(double width, double height, bool changeCursor = true);
-	bool modShift = false;
-	bool modControl = false;
 
 protected:
 	XOJ_TYPE_ATTRIB;
 
 	DocumentView view;
+	Point currPoint;
+	bool modShift = false;
+	bool modControl = false;
 };
 

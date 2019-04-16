@@ -3,7 +3,7 @@
  *
  * A layout manager - map where( row,column) to which page( document index)
  *
- * @author Justin Jones
+ * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
  *
  * @license GNU GPLv2 or later
