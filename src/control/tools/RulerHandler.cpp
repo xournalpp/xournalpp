@@ -76,9 +76,11 @@ void RulerHandler::snapRotation(double& x, double& y)
 }
 
 
-void RulerHandler::drawShape(Point& currentPoint, bool shiftDown)
+void RulerHandler::drawShape(Point& currentPoint, const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(RulerHandler);
+	
+	this->currPoint = currentPoint;	// in case redrawn by keypress event in base class.
 
 	double x = currentPoint.x;
 	double y = currentPoint.y;
@@ -86,18 +88,21 @@ void RulerHandler::drawShape(Point& currentPoint, bool shiftDown)
 	/**
 	 * Snap first point to grid (if enabled)
 	 */
-	if (!shiftDown && xournal->getControl()->getSettings()->isSnapGrid())
+	bool altDown = pos.isAltDown();
+	if (!altDown && xournal->getControl()->getSettings()->isSnapGrid())
 	{
 		Point firstPoint = stroke->getPoint(0);
 		snapToGrid(firstPoint.x,firstPoint.y);
 		stroke->setFirstPoint(firstPoint.x,firstPoint.y);
 	}
 
+
+		
 	if (stroke->getPointCount() < 2)
 	{
 		stroke->addPoint(currentPoint);
 	}
-	else if (shiftDown)
+	else if (altDown)
 	{
 		x = currentPoint.x;
 		y = currentPoint.y;

@@ -16,13 +16,15 @@
 class CircleHandler : public BaseStrokeHandler
 {
 public:
-	CircleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page);
+	CircleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift = false, bool flipControl = false);
 	virtual ~CircleHandler();
 
 private:
-	virtual void drawShape(Point& currentPoint, bool shiftDown);
-
+	virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+	
 private:
 	XOJ_TYPE_ATTRIB;
+	Point startPoint;
+	bool started = false;
 };
 

@@ -5,8 +5,9 @@
 #include "undo/InsertUndoAction.h"
 #include <cmath>
 
-CircleHandler::CircleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
- : BaseStrokeHandler(xournal, redrawable, page)
+
+CircleHandler::CircleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift, bool flipControl)
+ : BaseStrokeHandler(xournal, redrawable, page, flipShift, flipControl)
 {
 	XOJ_INIT_TYPE(CircleHandler);
 }
@@ -18,53 +19,91 @@ CircleHandler::~CircleHandler()
 	XOJ_RELEASE_TYPE(CircleHandler);
 }
 
-void CircleHandler::drawShape(Point& c, bool shiftDown)
+
+void CircleHandler::drawShape(Point& c, const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(CircleHandler);
-
+	
+	this->currPoint = c;
+		
 	/**
-	 * Snap first point to grid (if enabled)
+	 * Snap point to grid (if enabled - Alt key pressed will toggle)
 	 */
-	if (!shiftDown && xournal->getControl()->getSettings()->isSnapGrid())
+	Settings* settings = xournal->getControl()->getSettings();
+	if ( pos.isAltDown() != settings->isSnapGrid())
 	{
-		Point firstPoint = stroke->getPoint(0);
-		snapToGrid(firstPoint.x,firstPoint.y);
-		stroke->setFirstPoint(firstPoint.x,firstPoint.y);
+		snapToGrid(c.x,c.y);
 	}
 
-	int count = stroke->getPointCount();
-
-	if (count < 2)
+	if (!this->started) //initialize first point
 	{
-		stroke->addPoint(c);
+		this->startPoint = c;
+		this->started = true;
+		stroke->addPoint(c);	//avoid complaints about <2 points.
 	}
 	else
-	{
-		Point p = stroke->getPoint(0);
-		if (xournal->getControl()->getSettings()->isSnapGrid())
+	{		
+		double width = c.x - this->startPoint.x;
+		double height = c.y - this->startPoint.y;
+		
+		
+		
+		this->modShift = pos.isShiftDown();
+		this->modControl = pos.isControlDown();
+		
+		if ( settings->getDrawDirModsEnabled()) //change modifiers based on draw dir
 		{
-			snapToGrid(c.x,c.y);
+			this->modifyModifiersByDrawDir(width, height, true);
 		}
-		// set resolution proportional to radius
-		double diameter = sqrt(pow(c.x - p.x, 2.0) + pow(c.y - p.y, 2.0));
-		int npts = (int) (diameter * 2.0);
-		double center_x = (c.x + p.x) / 2.0;
-		double center_y = (c.y + p.y) / 2.0;
-		double angle = atan2((c.y - p.y), (c.x - p.x));
+	
+		if (this->modShift )	// make circle
+		{
+			int signW = width>0?1:-1;
+			int signH = height>0?1:-1;
+			width = MAX( width*signW, height*signH) * signW;	
+			height = (width * signW) * signH;
+		}
 
+		double diameterX = 0;
+		double diameterY = 0;
+		int npts = 0;
+		double center_x = 0;
+		double center_y = 0;
+		double angle = 0;
+			
+		// set resolution proportional to radius
+		if( !this->modControl)
+		{
+			diameterX = width;
+			diameterY = height;
+			npts = (int) std::abs(diameterX * 2.0);
+			center_x = this->startPoint.x + width / 2.0;
+			center_y = this->startPoint.y + height / 2.0;
+			angle = 0;
+		}
+		else
+		{	//control key down, draw centered at cursor
+			diameterX = width*2.0;
+			diameterY = height*2.0;
+			npts = (int) (std::abs(diameterX) + std::abs(diameterY));
+			center_x = this->startPoint.x;
+			center_y = this->startPoint.y;
+			angle = 0;
+		}
 		if (npts < 24)
 		{
 			npts = 24; // min. number of points
 		}
 
 		// remove previous points
-		stroke->deletePointsFrom(1);
-		for (int i = 1; i < npts; i++)
+		stroke->deletePointsFrom(0);
+		for (int j = 0; j <= npts; j++)
 		{
-			double xp = center_x + diameter / 2.0 * cos((2 * M_PI * i) / npts + angle + M_PI);
-			double yp = center_y + diameter / 2.0 * sin((2 * M_PI * i) / npts + angle + M_PI);
+			int i = j%npts;	//so that we end exactly where we started.
+			double xp = center_x + diameterX / 2.0 * cos((2 * M_PI * i) / npts + angle + M_PI);
+			double yp = center_y + diameterY / 2.0 * sin((2 * M_PI * i) / npts + angle + M_PI);
 			stroke->addPoint(Point(xp, yp));
 		}
-		stroke->addPoint(p);
 	}
+	
 }

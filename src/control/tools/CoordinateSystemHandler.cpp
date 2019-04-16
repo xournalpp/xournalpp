@@ -5,8 +5,8 @@
 #include "undo/InsertUndoAction.h"
 #include <cmath>
 
-CoordinateSystemHandler::CoordinateSystemHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
- : BaseStrokeHandler(xournal, redrawable, page)
+CoordinateSystemHandler::CoordinateSystemHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift, bool flipControl)
+ : BaseStrokeHandler(xournal, redrawable, page, flipShift, flipControl)
 {
 	XOJ_INIT_TYPE(CoordinateSystemHandler);
 }
@@ -25,53 +25,70 @@ CoordinateSystemHandler::~CoordinateSystemHandler()
  * @param shiftDown Boolean to indicate if "shift" is currently pressed.
  *                  It is currently not used.
  */
-void CoordinateSystemHandler::drawShape(Point& currentPoint, bool shiftDown)
+void CoordinateSystemHandler::drawShape(Point& c, const PositionInputData& pos)
 {
-	XOJ_CHECK_TYPE(CoordinateSystemHandler);
-
 	/**
-	 * Snap first point to grid (if enabled)
+	 * Snap point to grid (if enabled)
 	 */
-	if (!shiftDown && xournal->getControl()->getSettings()->isSnapGrid())
+	Settings* settings = xournal->getControl()->getSettings();
+	if (pos.isAltDown() != settings->isSnapGrid())
 	{
-		Point firstPoint = stroke->getPoint(0);
-		snapToGrid(firstPoint.x,firstPoint.y);
-		stroke->setFirstPoint(firstPoint.x,firstPoint.y);
+		snapToGrid(c.x,c.y);
 	}
-	int count = stroke->getPointCount();
 
-	if (count < 1)
+	if (!this->started) //initialize first point
 	{
-		// Add first point of coordinate system
-		stroke->addPoint(currentPoint);
+		this->startPoint = c;
+		this->started = true;
+		stroke->addPoint(c);	//avoid complaints about <2 points.
 	}
 	else
 	{
-		// This is the starting point of the coordinate system
-		Point startingPoint = stroke->getPoint(0);
+		double width = c.x - this->startPoint.x;
+		double height = c.y - this->startPoint.y;
 
-		// This ensures that no past points of the coordinate system are drawn
-		if (count > 2)
+		this->currPoint = c;
+
+		this->modShift = pos.isShiftDown() ;
+		this->modControl = pos.isControlDown() ;
+		
+		if ( settings->getDrawDirModsEnabled()) //change modifiers based on draw dir
 		{
-			stroke->deletePoint(2);
-			stroke->deletePoint(1);
+			this->modifyModifiersByDrawDir(width, height, true);
 		}
-		if (xournal->getControl()->getSettings()->isSnapGrid())
+		
+		if (this->modShift)	// make square
 		{
-			snapToGrid(startingPoint.x,startingPoint.y);
-			snapToGrid(currentPoint.x,currentPoint.y);
+			int signW = width>0?1:-1;
+			int signH = height>0?1:-1;
+			width = MAX( width*signW, height*signH) * signW;	
+			height = (width * signW) * signH;
 		}
-		// Draw the other two points
-		if (shiftDown || !xournal->getControl()->getSettings()->isSnapRotation())
+		
+		Point p1 = this->startPoint;
+		
+		stroke->deletePointsFrom(0);	//delete previous points
+		
+		if ( !this->modControl )	//draw out from starting point
+		{			
+			stroke->addPoint(p1);		
+			stroke->addPoint(Point(p1.x + width, p1.y  ));
+			stroke->addPoint(Point(p1.x + width, p1.y + height));
+		}
+		else	//Control is down 
 		{
-			stroke->addPoint(Point(startingPoint.x, currentPoint.y));
-			stroke->addPoint(Point(currentPoint.x, currentPoint.y));
-			// Can be equipped with some feature later.
+			stroke->addPoint(Point(p1.x, p1.y + height ));
+			stroke->addPoint(p1);		
+			stroke->addPoint(Point(p1.x + width, p1.y ));
 		}
-		else
-		{
-			stroke->addPoint(Point(startingPoint.x, currentPoint.y));
-			stroke->addPoint(Point(currentPoint.x, currentPoint.y));
-		}
+		
+		
+		
+
+		
+		
+
 	}
+
+	
 }

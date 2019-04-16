@@ -7,6 +7,13 @@
     <property name="value">1</property>
     <property name="step_increment">0.10000000000000001</property>
   </object>
+  <object class="GtkAdjustment" id="adjustmentDrawDirModRadius">
+    <property name="lower">2</property>
+    <property name="upper">1000</property>
+    <property name="value">50</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="GtkAdjustment" id="adjustmentHorizontalSpace">
     <property name="upper">1000</property>
     <property name="value">150</property>
@@ -2526,6 +2533,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                                     <property name="can_focus">False</property>
                                                     <property name="label" translatable="yes">Add additional horizontal space of</property>
                                                     <property name="use_markup">True</property>
+                                                    <property name="ellipsize">end</property>
                                                   </object>
                                                 </child>
                                               </object>
@@ -2761,6 +2769,89 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
                                 <property name="position">4</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkFrame" id="sid1">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label_xalign">0.0099999997764825821</property>
+                                <child>
+                                  <object class="GtkAlignment" id="sid2">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="bottom_padding">8</property>
+                                    <property name="left_padding">12</property>
+                                    <property name="right_padding">12</property>
+                                    <child>
+                                      <object class="GtkGrid" id="grid6">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="column_spacing">5</property>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbDrawDirModsEnabled">
+                                            <property name="label" translatable="yes">Enable  with determination radius of </property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_markup" translatable="yes">Drag LEFT from start point acts like shift key is being held.
+Drag UP acts as if Control key is being held.
+
+Determination Radius: Radius at which modifiers will lock in until finished drawing.
+
+&lt;i&gt;Useful for operating without keyboard.&lt;/i&gt;</property>
+                                            <property name="xalign">0</property>
+                                            <property name="draw_indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">0</property>
+                                            <property name="top_attach">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSpinButton" id="spDrawDirModsRadius">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="valign">start</property>
+                                            <property name="max_width_chars">0</property>
+                                            <property name="text" translatable="yes">0</property>
+                                            <property name="adjustment">adjustmentDrawDirModRadius</property>
+                                            <property name="numeric">True</property>
+                                            <property name="update_policy">if-valid</property>
+                                            <property name="value">50</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">1</property>
+                                            <property name="top_attach">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="sid4">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="label" translatable="yes">pixels</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">2</property>
+                                            <property name="top_attach">0</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel" id="sid3">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">Drawing Tools - Set Modifiers by Draw Direction ( Experimental)</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">5</property>
                               </packing>
                             </child>
                           </object>
