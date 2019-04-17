@@ -46,6 +46,10 @@ private:
 	bool flipShift = false;	//use to reverse Shift key modifier action. i.e.  for separate Rectangle and Square Tool buttons.
 	bool flipControl = false; //use to reverse Control key modifier action.
 	
+	// to filter out short strokes (usually the user tapping on the page to select it)
+	guint32 startStrokeTime;
+	static guint32 lastIgnorePointTime;	//persist across strokes - allow us to not ignore persistent dotting.
+	
 protected:
 	void snapToGrid(double& x, double& y);
 	/**

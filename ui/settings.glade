@@ -3000,7 +3000,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="cbdoActionOnStrokeFiltered">
-                                            <property name="label" translatable="yes">  </property>
+                                            <property name="label" translatable="yes">Try select instead</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>

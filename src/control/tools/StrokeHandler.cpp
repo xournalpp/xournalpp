@@ -174,6 +174,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 				//stroke not being added to layer... delete here.
 				delete stroke;
 				stroke = NULL;
+				this->trySelect = true;
 				return;
 			}
 		}
