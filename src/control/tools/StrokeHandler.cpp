@@ -153,29 +153,31 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	Control* control = xournal->getControl();
 	Settings* settings = control->getSettings();
 	int pointCount = stroke->getPointCount();
-	int strokeFilterIgnoreTime,strokeFilterIgnorePoints,strokeFilterSuccessiveTime;
 	
-	settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnorePoints, &strokeFilterSuccessiveTime  );
-	
-	if ( pointCount < strokeFilterIgnorePoints && pos.time - this->startStrokeTime < strokeFilterIgnoreTime)
-	{
-		if ( pos.time - this->lastIgnorePointTime  < strokeFilterSuccessiveTime )
+	if ( settings->getStrokeFilterEnabled() )
+	{	
+		int strokeFilterIgnoreTime,strokeFilterIgnorePoints,strokeFilterSuccessiveTime;
+		
+		settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnorePoints, &strokeFilterSuccessiveTime  );
+		
+		if ( pointCount < strokeFilterIgnorePoints && pos.time - this->startStrokeTime < strokeFilterIgnoreTime)
 		{
-			this->lastIgnorePointTime = pos.time;
-			g_print("NOT_IGNORED: %d\n",pos.time - startStrokeTime);
-		}
-		else
-		{
-			this->lastIgnorePointTime = pos.time;
-			g_print("IGNORED: %d\tlength:%d\n",pos.time - startStrokeTime, pointCount);
-			//stroke not being added to layer... delete here.
-			delete stroke;
-			stroke = NULL;
-			return;
+			if ( pos.time - this->lastIgnorePointTime  < strokeFilterSuccessiveTime )
+			{
+				this->lastIgnorePointTime = pos.time;
+				g_print("NOT_IGNORED: %d\n",pos.time - startStrokeTime);
+			}
+			else
+			{
+				this->lastIgnorePointTime = pos.time;
+				g_print("IGNORED: %d\tlength:%d\n",pos.time - startStrokeTime, pointCount);
+				//stroke not being added to layer... delete here.
+				delete stroke;
+				stroke = NULL;
+				return;
+			}
 		}
 	}
-	
-	
 	
 	// Backward compatibility and also easier to handle for me;-)
 	// I cannot draw a line with one point, to draw a visible line I need two points,

@@ -145,6 +145,8 @@ void Settings::loadDefault()
 	this->strokeFilterIgnoreTime = 300;
 	this->strokeFilterIgnorePoints = 8;
 	this->strokeFilterSuccessiveTime = 500;
+	this->strokeFilterEnabled = false;
+	this->doActionOnStrokeFiltered = false;
 	
 	this->inTransaction = false;
 	
@@ -559,6 +561,16 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->strokeFilterSuccessiveTime = g_ascii_strtoll((const char*) value, NULL, 10);
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterEnabled") == 0)
+	{
+		this->strokeFilterEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "doActionOnStrokeFiltered") == 0)
+	{
+		this->doActionOnStrokeFiltered = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	
+	
 	
 	xmlFree(name);
 	xmlFree(value);
@@ -925,6 +937,9 @@ void Settings::save()
 	WRITE_INT_PROP(strokeFilterIgnorePoints);
 	WRITE_INT_PROP(strokeFilterSuccessiveTime);
 	
+	WRITE_BOOL_PROP(strokeFilterEnabled);
+	WRITE_BOOL_PROP(doActionOnStrokeFiltered);
+
 
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
@@ -2277,6 +2292,31 @@ void Settings::setStrokeFilter( int ignoreTime, int ignorePoints, int successive
 	
 }
 	
+void Settings::setStrokeFilterEnabled(bool enabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+	this->strokeFilterEnabled = enabled;
+}
+
+bool Settings::getStrokeFilterEnabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->strokeFilterEnabled;
+}
+
+void Settings::setDoActionOnStrokeFiltered(bool enabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+	this->doActionOnStrokeFiltered = enabled;
+}
+
+bool Settings::getDoActionOnStrokeFiltered()
+{
+	XOJ_CHECK_TYPE(Settings);
+	return this->doActionOnStrokeFiltered;
+}
+
 	
 //////////////////////////////////////////////////
 

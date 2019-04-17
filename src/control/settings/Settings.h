@@ -375,6 +375,17 @@ public:
 	 * Set size index in XOJ_UNITS
 	 */
 	void setSizeUnitIndex(int sizeUnitId);
+
+	/**
+	 * Set StrokeFilter enabled
+	 */
+	void setStrokeFilterEnabled(bool enabled);	
+
+	/**
+	 * Get StrokeFilter enabled
+	 */
+	bool getStrokeFilterEnabled();		
+
 	
 	/**
 	 * get strokeFilter settings
@@ -386,6 +397,16 @@ public:
 	 */
 	void setStrokeFilter( int strokeFilterIgnoreTime, int strokeFilterIgnorePoints, int strokeFilterSuccessiveTime);
 
+	/**
+	 * Set StrokeFilter enabled
+	 */
+	void setDoActionOnStrokeFiltered(bool enabled);	
+
+	/**
+	 * Get StrokeFilter enabled
+	 */
+	bool getDoActionOnStrokeFiltered();		
+	
 public:
 	// Custom settings
 	SElement& getCustomElement(string name);
@@ -757,7 +778,8 @@ private:
 	int strokeFilterIgnoreTime;
 	int strokeFilterIgnorePoints;
 	int strokeFilterSuccessiveTime;
-	
+	bool strokeFilterEnabled;
+	bool doActionOnStrokeFiltered;
 	
 	/**
 	 * "Transaction" running, do not save until the end is reached
