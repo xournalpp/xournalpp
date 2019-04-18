@@ -2046,6 +2046,8 @@ void Control::toolSizeChanged()
 		fireActionSelected(GROUP_SIZE, ACTION_SIZE_VERY_THIN);
 		break;
 	}
+
+	getCursor()->updateCursor();
 }
 
 void Control::toolFillChanged()
