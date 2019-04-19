@@ -389,14 +389,22 @@ void EditSelection::mouseUp()
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	PageRef page = this->view->getPage();
-	Layer* layer = page->getSelectedLayer();
+	
+	if (this->mouseDownType == CURSOR_SELECTION_DELETE )
+	{
+		this->view->getXournal()->deleteSelection();
+		
+	}
+	else
+	{
+		PageRef page = this->view->getPage();
+		Layer* layer = page->getSelectedLayer();
 
-	snapRotation();
+		snapRotation();
 
-	this->contents->updateContent(this->x, this->y, this->rotation, this->width, this->height, this->aspectRatio,
-								  layer, page, this->view, this->undo, this->mouseDownType);
-
+		this->contents->updateContent(this->x, this->y, this->rotation, this->width, this->height, this->aspectRatio,
+									layer, page, this->view, this->undo, this->mouseDownType);
+	}
 	this->mouseDownType = CURSOR_SELECTION_NONE;
 }
 
@@ -690,6 +698,12 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 		return CURSOR_SELECTION_BOTTOM_RIGHT;
 	}
 
+	if ( (((x2-x1)*3.0)/4.0) + x1 - 4*zoom <=x && (((x2-x1)*3.0)/4.0) + x1 + 4*zoom >=x  && (y1-10*zoom) - 4*zoom <= y	&& (y1-10*zoom) + 4*zoom >= y)
+	{
+		return CURSOR_SELECTION_DELETE;
+	}
+	
+	
 	if (supportRotation && x2 + BORDER_PADDING + 4 <= x && x <= x2 + BORDER_PADDING + 16 && (y2 + y1) / 2 - 4 <= y	&& (y2 + y1) / 2 + 4 >= y)
 	{
 		return CURSOR_SELECTION_ROTATE;
@@ -758,7 +772,7 @@ void EditSelection::snapRotation()
 
 /**
  * Paints the selection to cr, with the given zoom factor. The coordinates of cr
- * should be relative to the provideded view by getView() (use translateEvent())
+ * should be relative to the provided view by getView() (use translateEvent())
  */
 void EditSelection::paint(cairo_t* cr, double zoom)
 {
@@ -832,6 +846,9 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 	drawAnchorRect(cr, x, y + height, zoom);
 	// bottom right
 	drawAnchorRect(cr, x + width, y + height, zoom);
+	
+	
+	drawDeleteRect(cr, x + (3 * width)/4, y - 10 , zoom);
 }
 
 void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double zoom)
@@ -860,6 +877,28 @@ void EditSelection::drawAnchorRect(cairo_t* cr, double x, double y, double zoom)
 	cairo_set_source_rgb(cr, 1, 1, 1);
 	cairo_fill(cr);
 }
+
+
+/**
+ * draws an idicator where you can delete the selection
+ */
+void EditSelection::drawDeleteRect(cairo_t* cr, double x, double y, double zoom)
+{
+	XOJ_CHECK_TYPE(EditSelection);
+
+	cairo_set_source_rgb(cr, 0, 0, 0);
+	cairo_rectangle(cr, x * zoom - 4, y * zoom - 4, 8, 8);
+	cairo_stroke(cr);
+	cairo_set_source_rgb(cr, 1, 0, 0);
+	cairo_move_to(cr, x * zoom - 4, y * zoom - 4);
+	cairo_rel_move_to(cr, 8,0);
+	cairo_rel_line_to(cr, -8,8);
+	cairo_rel_move_to(cr, 8,0);
+	cairo_rel_line_to(cr, -8,-8);
+	cairo_stroke(cr);
+}
+
+
 
 XojPageView* EditSelection::getView()
 {

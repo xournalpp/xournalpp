@@ -183,6 +183,9 @@ void Cursor::updateCursor()
 			case CURSOR_SELECTION_ROTATE:
 				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_EXCHANGE);
 				break;
+			case CURSOR_SELECTION_DELETE:
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_PIRATE);
+				break;				
 			case CURSOR_SELECTION_TOP:
 			case CURSOR_SELECTION_BOTTOM:
 				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_SB_V_DOUBLE_ARROW);

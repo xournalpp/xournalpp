@@ -212,6 +212,15 @@ private:
 	 */
 	void drawAnchorRotation(cairo_t* cr, double x, double y, double zoom);
 
+	
+	/**
+	 * Draws an indicator where you can delete the selection
+	 */
+	void drawDeleteRect(cairo_t* cr, double x, double y, double zoom);
+	
+
+
+
 	/**
 	 * Finishes all pending changes, move the elements, scale the elements and add
 	 * them to new layer if any or to the old if no new layer
