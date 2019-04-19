@@ -13,18 +13,19 @@ SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, Pa
 {
 	XOJ_INIT_TYPE(SidebarPreviewBaseEntry);
 
-	this->widget = gtk_drawing_area_new();
+	this->widget = gtk_button_new();	// re: issue 1072
+	
 	gtk_widget_show(this->widget);
 	g_object_ref(this->widget);
 
 	g_mutex_init(&this->drawingMutex);
 
 	updateSize();
-	gtk_widget_set_events(widget, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
+	gtk_widget_set_events(widget, GDK_EXPOSURE_MASK ); 
 
 	g_signal_connect(this->widget, "draw", G_CALLBACK(drawCallback), this);
 
-	g_signal_connect(this->widget, "button-press-event", G_CALLBACK(
+	g_signal_connect(this->widget, "clicked", G_CALLBACK(
 		+[](GtkWidget* widget, GdkEventButton* event, SidebarPreviewBaseEntry* self)
 		{
 			XOJ_CHECK_TYPE_OBJ(self, SidebarPreviewBaseEntry);
