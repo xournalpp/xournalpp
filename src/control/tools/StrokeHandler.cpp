@@ -168,6 +168,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 			}
 			else
 			{
+				this->redrawable->rerenderRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight() ); // Remove intermediate drawing //!
 				g_print("IGNORED: %d\tlength:%d\n",pos.time - startStrokeTime, pointCount);
 				//stroke not being added to layer... delete here.
 				delete stroke;
@@ -246,7 +247,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	//Manually force the rendering of the stroke, if no motion event occurred inbetween, that would rerender the page.
 	if (stroke->getPointCount() == 2)
 	{
-		this->redrawable->rerenderElement(stroke);
+		this->redrawable->rerenderElement(stroke); 
 	}
 
 	stroke = NULL;
