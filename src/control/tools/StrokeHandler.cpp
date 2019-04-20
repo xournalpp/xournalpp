@@ -162,15 +162,11 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 		
 		if ( pointCount < strokeFilterIgnorePoints && pos.time - this->startStrokeTime < strokeFilterIgnoreTime) 	//!
 		{
-			if ( pos.time - this->lastStrokeTime  < strokeFilterSuccessiveTime )
+			if ( pos.time - this->lastStrokeTime  > strokeFilterSuccessiveTime )
 			{
-				g_print("NOT_IGNORED: %d\n",pos.time - startStrokeTime);
-			}
-			else
-			{
-				this->redrawable->rerenderRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight() ); // Remove intermediate drawing //!
-				g_print("IGNORED: %d\tlength:%d\n",pos.time - startStrokeTime, pointCount);
 				//stroke not being added to layer... delete here.
+				this->redrawable->rerenderRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight() ); // clear onMotionNotifyEvent drawing //!
+
 				delete stroke;
 				stroke = NULL;
 				if( pointCount <4) //limit to filtered 'dots' only.  //!
@@ -178,7 +174,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 					this->trySelect = true;
 				}
 				this->lastStrokeTime = pos.time;
-				//! xournal->getCursor()->updateCursor();
+
 				return;
 			}
 		}

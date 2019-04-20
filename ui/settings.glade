@@ -2922,7 +2922,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                             <property name="can_focus">True</property>
                                             <property name="tooltip_markup" translatable="yes">How short (time)  AND...
 
-&lt;i&gt;Recommended: 300ms&lt;/i&gt;</property>
+&lt;i&gt;Recommended: 200ms&lt;/i&gt;</property>
                                             <property name="valign">start</property>
                                             <property name="max_width_chars">0</property>
                                             <property name="text" translatable="yes">50</property>
@@ -3000,11 +3000,11 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="cbdoActionOnStrokeFiltered">
-                                            <property name="label" translatable="yes">Try select instead</property>
+                                            <property name="label" translatable="yes">Select on quick tap.</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
-                                            <property name="tooltip_markup" translatable="yes">If the stroke is filtered out try selecting instead.</property>
+                                            <property name="tooltip_markup" translatable="yes">On quick tap select object.</property>
                                             <property name="xalign">0</property>
                                             <property name="draw_indicator">True</property>
                                           </object>

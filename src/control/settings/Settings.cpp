@@ -142,7 +142,7 @@ void Settings::loadDefault()
 	this->pluginEnabled = "";
 	this->pluginDisabled = "";
 	
-	this->strokeFilterIgnoreTime = 300;
+	this->strokeFilterIgnoreTime = 200;
 	this->strokeFilterIgnorePoints = 8;
 	this->strokeFilterSuccessiveTime = 500;
 	this->strokeFilterEnabled = false;

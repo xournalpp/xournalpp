@@ -190,7 +190,6 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	
 	Control* control = xournal->getControl();
 	Settings* settings = control->getSettings();
-	int pointCount = stroke->getPointCount();
 	
 	if ( settings->getStrokeFilterEnabled() )		// Note: For simple strokes see StrokeHandler which has a slightly different version of this filter.  See //!
 	{	
@@ -200,19 +199,16 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 		
 		if (  pos.time - this->startStrokeTime < strokeFilterIgnoreTime)  // don't filter on points as shapes have fixed or minimum. //!
 		{
-			if ( pos.time - this->lastStrokeTime  < strokeFilterSuccessiveTime )
+			if ( pos.time - this->lastStrokeTime  > strokeFilterSuccessiveTime )
 			{
-				g_print("NOT_IGNORED: %d\n",pos.time - startStrokeTime);
-			}
-			else
-			{
-				g_print("IGNORED: %d\tlength:%d\n",pos.time - startStrokeTime, pointCount);
 				//stroke not being added to layer... delete here.
 				delete stroke;
 				stroke = NULL;
 				this->trySelect = true; 	//!
 				this->lastStrokeTime = pos.time;
+				
 				xournal->getCursor()->updateCursor();
+				
 				return;
 			}
 
