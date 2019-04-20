@@ -16,7 +16,7 @@
 
 
 
-guint32 StrokeHandler::lastIgnorePointTime;		//persist for next stroke
+guint32 StrokeHandler::lastStrokeTime;		//persist for next stroke
 
 
 
@@ -154,30 +154,34 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	Settings* settings = control->getSettings();
 	int pointCount = stroke->getPointCount();
 	
-	if ( settings->getStrokeFilterEnabled() )
+	if ( settings->getStrokeFilterEnabled() )		// Note: For shape tools see BaseStrokeHandler which has a slightly different version of this filter. See //!
 	{	
 		int strokeFilterIgnoreTime,strokeFilterIgnorePoints,strokeFilterSuccessiveTime;
 		
 		settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnorePoints, &strokeFilterSuccessiveTime  );
 		
-		if ( pointCount < strokeFilterIgnorePoints && pos.time - this->startStrokeTime < strokeFilterIgnoreTime)
+		if ( pointCount < strokeFilterIgnorePoints && pos.time - this->startStrokeTime < strokeFilterIgnoreTime) 	//!
 		{
-			if ( pos.time - this->lastIgnorePointTime  < strokeFilterSuccessiveTime )
+			if ( pos.time - this->lastStrokeTime  < strokeFilterSuccessiveTime )
 			{
-				this->lastIgnorePointTime = pos.time;
 				g_print("NOT_IGNORED: %d\n",pos.time - startStrokeTime);
 			}
 			else
 			{
-				this->lastIgnorePointTime = pos.time;
 				g_print("IGNORED: %d\tlength:%d\n",pos.time - startStrokeTime, pointCount);
 				//stroke not being added to layer... delete here.
 				delete stroke;
 				stroke = NULL;
-				this->trySelect = true;
+				if( pointCount <4) //limit to filtered 'dots' only.  //!
+				{
+					this->trySelect = true;
+				}
+				this->lastStrokeTime = pos.time;
+				//! xournal->getCursor()->updateCursor();
 				return;
 			}
 		}
+		this->lastStrokeTime = pos.time;
 	}
 	
 	// Backward compatibility and also easier to handle for me;-)

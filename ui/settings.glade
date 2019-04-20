@@ -2982,7 +2982,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                           <object class="GtkSpinButton" id="spStrokeSuccessiveTime">
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <property name="tooltip_markup" translatable="yes">... AND How much time must have passed since last ignore.
+                                            <property name="tooltip_markup" translatable="yes">... AND How much time must have passed since last stroke.
 
 &lt;i&gt;Recommended: 500ms&lt;/i&gt;</property>
                                             <property name="valign">start</property>
