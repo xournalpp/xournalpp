@@ -441,12 +441,16 @@ void Document::setPageSize(PageRef p, double width, double height)
 	XOJ_CHECK_TYPE(Document);
 
 	p->setSize(width, height);
+}
 
-	size_t id = indexOf(p);
-	if (id != size_t_npos && id < getPageCount())
-	{
-		this->handler->firePageSizeChanged(id);
-	}
+double Document::getPageWidth(PageRef p)
+{
+	return p->getWidth();
+}
+
+double Document::getPageHeight(PageRef p)
+{
+	return p->getHeight();
 }
 
 /**

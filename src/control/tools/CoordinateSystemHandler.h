@@ -16,13 +16,14 @@
 class CoordinateSystemHandler : public BaseStrokeHandler
 {
 public:
-	CoordinateSystemHandler(XournalView* xournal, XojPageView* redrawable, PageRef page);
+	CoordinateSystemHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift = false, bool flipControl = false);
 	virtual ~CoordinateSystemHandler();
 
 private:
-	virtual void drawShape(Point& currentPoint, bool shiftDown);
-
+	virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
 private:
 	XOJ_TYPE_ATTRIB;
+	Point startPoint;
+	bool started = false;
 };
 

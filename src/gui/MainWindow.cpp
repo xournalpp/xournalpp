@@ -53,7 +53,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 
 	// Window handler
 	g_signal_connect(this->window, "delete-event", G_CALLBACK(deleteEventCallback), this->control);
-	g_signal_connect(this->window, "configure-event", G_CALLBACK(configureEventCallback), this->control);
 	g_signal_connect(this->window, "window_state_event", G_CALLBACK(windowStateEventCallback), this);
 
 	g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
@@ -548,17 +547,6 @@ bool MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control
 	control->quit();
 
 	return true;
-}
-
-bool MainWindow::configureEventCallback(GtkWidget* widget, GdkEventConfigure* event, Control* control)
-{
-	control->calcZoomFitSize();
-	ZoomControl *zoom = control->getZoomControl();
-	if(zoom->isZoomFitMode())
-	{
-		zoom->setZoomFitMode(true);
-	}
-	return false;
 }
 
 void MainWindow::setSidebarVisible(bool visible)

@@ -117,11 +117,6 @@ private:
 	static bool deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control);
 
 	/**
-	 * Window has been moved or resized. Needed for Zoomfit
-	 */
-	static bool configureEventCallback(GtkWidget* widget, GdkEventConfigure* event, Control* control);
-
-	/**
 	 * Key is pressed
 	 */
 	static bool onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainWindow* win);

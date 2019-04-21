@@ -172,8 +172,14 @@ GList* RecentManager::filterRecent(GList* items, bool xoj)
 	for (GList* l = items; l != NULL; l = l->next)
 	{
 		GtkRecentInfo* info = (GtkRecentInfo*) l->data;
-
-		Path p = Path::fromUri(gtk_recent_info_get_uri(info));
+		
+		const gchar * uri = gtk_recent_info_get_uri(info);
+		if( !uri )	// issue #1071
+		{
+			continue;
+		}
+		
+		Path p = Path::fromUri(uri);
 
 		// Skip remote files
 		if (p.isEmpty() || !p.exists())

@@ -274,6 +274,11 @@ public:
 	int  getAddHorizontalSpaceAmount();
 	void setAddHorizontalSpaceAmount(int pixels);
 
+	bool getDrawDirModsEnabled();
+	void setDrawDirModsEnabled(bool enable);
+	int  getDrawDirModsRadius();
+	void setDrawDirModsRadius(int pixels);
+		
 	bool isTouchWorkaround();
 	void setTouchWorkaround(bool b);
 
@@ -602,10 +607,20 @@ private:
 	 */
 	bool addVerticalSpace;
 
-	 /** How much allowance to scroll outside the page display area (above and below)
-	 */
+	/** How much allowance to scroll outside the page display area (above and below)
+	*/
 	int addVerticalSpaceAmount;
 
+	/**
+	 * Emulate modifier keys based on initial direction of drawing tool ( for Rectangle, Ellipse etc. )
+	 */
+	bool drawDirModsEnabled;
+
+	/**
+	 * Radius at which emulated modifiers are locked on for the rest of drawing operation
+	 */	
+	int drawDirModsRadius;
+	
 	/**
 	 * Rotation snapping enabled by default
 	 */

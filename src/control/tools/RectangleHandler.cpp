@@ -3,9 +3,10 @@
 #include "gui/XournalView.h"
 #include "control/Control.h"
 #include "undo/InsertUndoAction.h"
+#include <cmath>
 
-RectangleHandler::RectangleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
- : BaseStrokeHandler(xournal, redrawable, page)
+RectangleHandler::RectangleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift, bool flipControl)
+ : BaseStrokeHandler(xournal, redrawable, page, flipShift, flipControl)
 {
 	XOJ_INIT_TYPE(RectangleHandler);
 }
@@ -17,70 +18,67 @@ RectangleHandler::~RectangleHandler()
 	XOJ_RELEASE_TYPE(RectangleHandler);
 }
 
-void RectangleHandler::drawShape(Point& c, bool shiftDown)
+void RectangleHandler::drawShape(Point& c, const PositionInputData& pos)
 {
-	int count = stroke->getPointCount();
-
+	this->currPoint = c;
+	
 	/**
-	 * Snap first point to grid (if enabled)
+	 * Snap point to grid (if enabled)
 	 */
-	if (xournal->getControl()->getSettings()->isSnapGrid())
+	Settings* settings = xournal->getControl()->getSettings();
+	if (pos.isAltDown() != settings->isSnapGrid())
 	{
-		Point firstPoint = stroke->getPoint(0);
-		snapToGrid(firstPoint.x,firstPoint.y);
-		stroke->setFirstPoint(firstPoint.x,firstPoint.y);
+		snapToGrid(c.x,c.y);
 	}
 
-	if (count < 1)
+	if (!this->started) //initialize first point
 	{
-		stroke->addPoint(c);
-	}
-	else if (shiftDown)
-	{
-		// Draw square if shift is pressed
-		Point p = stroke->getPoint(0);
-
-		stroke->deletePointsFrom(1);
-
-		int size = MAX(ABS(c.x - p.x), ABS(c.y - p.y));
-		int size_x, size_y;
-		if (c.x - p.x < 0 )
-		{
-			size_x = -size;
-			g_warning("size_x = -size");
-		}
-		else
-		{
-			size_x = size;
-		}
-		if  (c.y - p.y < 0)
-		{
-			size_y = -size;
-			g_warning("size_y = -size");
-		}
-		else
-		{
-			size_y = size;
-		}
-
-		stroke->addPoint(Point(p.x, p.y + size_y));
-		stroke->addPoint(Point(p.x + size_x, p.y + size_y));
-		stroke->addPoint(Point(p.x + size_x, p.y));
-		stroke->addPoint(p);
+		this->startPoint = c;
+		this->started = true;
+		stroke->addPoint(c);	//avoid complaints about <2 points.
 	}
 	else
 	{
-		Point p = stroke->getPoint(0);
-		stroke->deletePointsFrom(1);
+		double width = c.x - this->startPoint.x;
+		double height = c.y - this->startPoint.y;
 
-		if (xournal->getControl()->getSettings()->isSnapGrid())
+
+		this->modShift = pos.isShiftDown() ;
+		this->modControl = pos.isControlDown() ;
+		
+		if ( settings->getDrawDirModsEnabled()) //change modifiers based on draw dir
 		{
-			snapToGrid(c.x,c.y);
+			this->modifyModifiersByDrawDir(width, height, true);
 		}
-		stroke->addPoint(Point(p.x, c.y));
-		stroke->addPoint(c);
-		stroke->addPoint(Point(c.x, p.y));
-		stroke->addPoint(p);
+		
+		if (this->modShift)	// make square
+		{
+			int signW = width>0?1:-1;
+			int signH = height>0?1:-1;
+			width = MAX( width*signW, height*signH) * signW;	
+			height = (width * signW) * signH;
+		}
+		
+		Point p1;
+		if ( !this->modControl )
+		{
+			p1 = this->startPoint;
+			
+		}
+		else	//Control is down - drawing from center
+		{
+			p1 = Point( this->startPoint.x - width, this->startPoint.y - height);
+		}
+		
+		Point p2 = Point( this->startPoint.x + width, this->startPoint.y + height);
+		
+		stroke->deletePointsFrom(0);	//delete previous points
+		
+		stroke->addPoint(p1);
+		stroke->addPoint(Point(p1.x, p2.y ));
+		stroke->addPoint(p2);
+		stroke->addPoint(Point(p2.x, p1.y));
+		stroke->addPoint(p1);
 	}
 
 }

@@ -18,19 +18,23 @@ ArrowHandler::~ArrowHandler()
 	XOJ_RELEASE_TYPE(ArrowHandler);
 }
 
-void ArrowHandler::drawShape(Point& c, bool shiftDown)
+void ArrowHandler::drawShape(Point& c, const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(ArrowHandler);
+	
+	this->currPoint = c;	// in case redrawn by keypress event in base class.
 
 	/**
 	 * Snap first point to grid (if enabled)
 	 */
-	if (!shiftDown && xournal->getControl()->getSettings()->isSnapGrid())
+	bool altDown = pos.isAltDown();
+	if (!altDown && xournal->getControl()->getSettings()->isSnapGrid())
 	{
 		Point firstPoint = stroke->getPoint(0);
 		snapToGrid(firstPoint.x,firstPoint.y);
 		stroke->setFirstPoint(firstPoint.x,firstPoint.y);
 	}
+	
 
 	int count = stroke->getPointCount();
 	if (count < 1)
@@ -51,7 +55,7 @@ void ArrowHandler::drawShape(Point& c, bool shiftDown)
 			stroke->deletePoint(1);
 		}
 
-		if (!shiftDown && xournal->getControl()->getSettings()->isSnapGrid())
+		if (!altDown && xournal->getControl()->getSettings()->isSnapGrid())
 		{
 			snapToGrid(c.x,c.y);
 		}
@@ -67,7 +71,7 @@ void ArrowHandler::drawShape(Point& c, bool shiftDown)
 		// an appropriate delta is Pi/3 radians for an arrow shape
 		double delta = M_PI / 6.0;
 		
-		if (shiftDown || !xournal->getControl()->getSettings()->isSnapRotation())
+		if (altDown || !xournal->getControl()->getSettings()->isSnapRotation())
 		{
 			stroke->addPoint(c);
 			stroke->addPoint(Point(c.x - arrowDist * cos(angle + delta), c.y - arrowDist * sin(angle + delta)));

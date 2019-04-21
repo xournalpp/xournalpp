@@ -25,24 +25,25 @@ void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self)
 {
 	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
 
-	if (self->ignoreChange || !self->sliderChangingByUser)
+	if (!self->sliderChangingByZoomControlOrInit &&
+		!self->zoom->isZoomPresentationMode() &&
+		(self->sliderChangingBySliderDrag || self->sliderChangingBySliderHoverScroll))
 	{
-		return;
+		double back = self->zoom->getZoom100Value() * scaleFuncInv(gtk_range_get_value(range));
+		self->zoom->zoomSequnceChange(back, false);
 	}
-
-	double back = self->zoom->getZoom100Value() * scaleFuncInv(gtk_range_get_value(range));
-	self->zoom->zoomSequnceChange(back, false);
+	self->sliderChangingBySliderHoverScroll = false;
 }
 
 bool ToolZoomSlider::sliderButtonPress(GtkRange* range, GdkEvent *event, ToolZoomSlider* self)
 {
 	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
 
-	if(!self->sliderChangingByUser)
+	if(!self->sliderChangingBySliderDrag && !self->zoom->isZoomPresentationMode())
 	{
-		self->sliderChangingByUser = true;
 		self->zoom->setZoomFitMode(false);
 		self->zoom->startZoomSequence(-1, -1);
+		self->sliderChangingBySliderDrag = true;
 	}
 	return false;
 }
@@ -51,11 +52,23 @@ bool ToolZoomSlider::sliderButtonRelease(GtkRange* range, GdkEvent *event, ToolZ
 {
 	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
 
-	if(self->sliderChangingByUser)
+	self->zoom->endZoomSequence();
+	self->sliderChangingBySliderDrag = false;
+	return false;
+}
+
+bool ToolZoomSlider::sliderHoverScroll(GtkWidget* range,  GdkEventScroll* event, ToolZoomSlider* self)
+{
+	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
+
+	gint64 now = g_get_monotonic_time();
+	if (now > self->sliderHoverScrollLastTime + 500)
 	{
-		self->zoom->endZoomSequence();
-		self->sliderChangingByUser = false;
+		self->zoom->setZoomFitMode(false);
+		self->zoom->startZoomSequence(-1, -1);
 	}
+	self->sliderChangingBySliderHoverScroll = true;
+	self->sliderHoverScrollLastTime = now;
 	return false;
 }
 
@@ -68,15 +81,15 @@ void ToolZoomSlider::zoomChanged()
 {
 	XOJ_CHECK_TYPE(ToolZoomSlider);
 
-	if (this->slider == NULL || this->sliderChangingByUser)
+	if (this->slider == NULL || this->sliderChangingBySliderDrag)
 	{
 		return;
 	}
 
-	this->ignoreChange = true;
+	this->sliderChangingByZoomControlOrInit = true;
 	double slider_range = scaleFunc(this->zoom->getZoomReal());
 	gtk_range_set_value(GTK_RANGE(this->slider), slider_range);
-	this->ignoreChange = false;
+	this->sliderChangingByZoomControlOrInit = false;
 }
 
 void ToolZoomSlider::zoomRangeValuesChanged()
@@ -176,6 +189,8 @@ GtkToolItem* ToolZoomSlider::newItem()
 		g_signal_handlers_disconnect_by_func(this->slider, (void* )(sliderChanged), this);
 		g_signal_handlers_disconnect_by_func(this->slider, (void* )(sliderButtonPress), this);
 		g_signal_handlers_disconnect_by_func(this->slider, (void* )(sliderButtonRelease), this);
+		g_signal_handlers_disconnect_by_func(this->slider, (void* )(sliderHoverScroll), this);
+		g_signal_handlers_disconnect_by_func(this->slider, (void* )(sliderFormatValue), this);
 	}
 
 	double sliderMin = scaleFunc(DEFAULT_ZOOM_MIN);
@@ -196,6 +211,7 @@ GtkToolItem* ToolZoomSlider::newItem()
 	g_signal_connect(this->slider, "value-changed", G_CALLBACK(sliderChanged), this);
 	g_signal_connect(this->slider, "button-press-event", G_CALLBACK(sliderButtonPress), this);
 	g_signal_connect(this->slider, "button-release-event", G_CALLBACK(sliderButtonRelease), this);
+	g_signal_connect(this->slider, "scroll-event", G_CALLBACK(sliderHoverScroll), this);
 	g_signal_connect(this->slider, "format-value", G_CALLBACK(sliderFormatValue), this);
 	gtk_scale_set_draw_value(GTK_SCALE(this->slider), true);
 
@@ -212,10 +228,10 @@ GtkToolItem* ToolZoomSlider::newItem()
 
 	gtk_container_add(GTK_CONTAINER(it), this->slider);
 
-	ignoreChange = true;
+	sliderChangingByZoomControlOrInit = true;
 	double slider_range = scaleFunc(this->zoom->getZoomReal());
 	gtk_range_set_value(GTK_RANGE(this->slider), slider_range);
-	ignoreChange = false;
+	sliderChangingByZoomControlOrInit = false;
 
 	updateScaleMarks();
 

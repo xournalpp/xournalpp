@@ -54,6 +54,13 @@ void StrokeHandler::draw(cairo_t* cr)
 	cairo_mask_surface(cr, surfMask, 0, 0);
 }
 
+
+bool StrokeHandler::onKeyEvent(GdkEventKey* event )
+{
+		return false;
+}
+ 
+ 
 bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(StrokeHandler);

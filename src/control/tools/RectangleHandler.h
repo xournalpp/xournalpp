@@ -16,13 +16,15 @@
 class RectangleHandler : public BaseStrokeHandler
 {
 public:
-	RectangleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page);
+	RectangleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift = false, bool flipControl = false);
 	virtual ~RectangleHandler();
 
 private:
-	virtual void drawShape(Point& currentPoint, bool shiftDown);
-
+	virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+	
 private:
 	XOJ_TYPE_ATTRIB;
+	Point startPoint;
+	bool started = false;
 };
 

@@ -49,7 +49,7 @@ public:
 	/**
 	 * Changes the adjustments by absolute amounts (for pinch-to-zoom)
 	 */
-	void scrollAbs(int x, int y);
+	void scrollAbs(double x, double y);
 
 	/**
 	 * Changes the adjustments in such a way as to make sure that
@@ -100,8 +100,11 @@ public:
 	 * 
 	 */	
 	int getIndexAtGridMap(int row, int col);
-	
-	
+
+protected:
+	static void horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
+	static void verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
+
 private:
 	void checkScroll(GtkAdjustment* adjustment, double& lastScroll);
 	void setLayoutSize(int width, int height);
@@ -145,5 +148,4 @@ private:
 	 */
 	int lastGetViewAtRow = 0;
 	int lastGetViewAtCol = 0;
-	
 };

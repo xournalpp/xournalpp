@@ -329,10 +329,6 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
-	if ((pos.state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)) != 0)
-	{
-		return false; // not handled here
-	}
 
 	if (!this->selected)
 	{
@@ -575,11 +571,18 @@ bool XojPageView::onKeyPressEvent(GdkEventKey* event)
 		}
 	}
 
-	if (this->textEditor && this->textEditor->onKeyPressEvent(event))
+	if (this->textEditor )
 	{
-		return true;
+		return this->textEditor->onKeyPressEvent(event);
 	}
 
+	
+	if( this->inputHandler)
+	{
+		return this->inputHandler->onKeyEvent((GdkEventKey *)event);
+	}
+	
+	
 	return false;
 }
 
@@ -592,6 +595,11 @@ bool XojPageView::onKeyReleaseEvent(GdkEventKey* event)
 		return true;
 	}
 
+	if( this->inputHandler && this->inputHandler->onKeyEvent((GdkEventKey *)event))
+	{
+		return true;
+	}
+	
 	return false;
 }
 

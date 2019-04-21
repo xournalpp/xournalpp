@@ -57,6 +57,13 @@ public:
 	 */
 	virtual bool onMotionNotifyEvent(const PositionInputData& pos) = 0;
 
+	/**
+	 * This method is called from the XojPageView when a keypress is detected.
+	 * It is used to update internal data structures and queue 
+	 * repaints of the XojPageView if necessary.
+	 */
+	virtual bool onKeyEvent(GdkEventKey* event) = 0;
+	
  	/**
 	 * The current input device for stroken, do not react on other devices (linke mices)
 	 * This method is called from the XojPageView as soon

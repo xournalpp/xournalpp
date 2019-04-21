@@ -20,7 +20,7 @@ public:
 	virtual ~RulerHandler();
 
 private:
-	virtual void drawShape(Point& currentPoint, bool shiftDown);
+	virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
 	void snapRotation(double& x, double& y);
 
 private:

@@ -72,21 +72,11 @@ Multiple predefined and fully customizeable Toolbar.
 
 
 ## How to use audio record and playback feature:
-### Instructions for releases > 1.0.7
 - Go to `Edit > Preferences > Audio Recording` and set the `Audio Folder` as well as the appropriate `Input Device` and `Output Device`.
 
 If you need to edit the recording audio gain, take a look at the preferences tab mentioned above.
 
 **Please test this new feature in advance before relying on it to work. It could contain bugs specific to some hard-/software, which we have not yet found.**
-
-### Instructions for releases <= 1.0.7
-- Install `vlc` and make sure `curl` and `arecord` are present on your system 
-- Under `vlc` settings: 
-- - enable `http interface` (see [this](https://github.com/azrafe7/vlc4youtube/blob/master/instructions/how-to-enable-vlc-web-interface.md) ) with blank username and password "password"
-- - tick `Allow only one instance` under `Interface -> Instance`
-- set the folder where do you want to store audio recordings under settings -> `audio recording`
-
-If you need to, you can edit the recording audio gain in the script under `/usr/local/bin/xopp-recording.sh`
 
 ### How to record
 Just press the red button to start/stop recording and draw strokes using the `Pen` tool. The recording is associated with the drawn strokes and typed text while it is running.
