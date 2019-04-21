@@ -23,6 +23,10 @@
 
 #include <cmath>
 
+#define BTNHALF 8
+#define BTNFULL BTNHALF*2
+
+
 EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page, XojPageView* view)
 {
 	XOJ_INIT_TYPE(EditSelection);
@@ -675,8 +679,8 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 	double y1 = getYOnView() * zoom;
 	double y2 = y1 + (this->height * zoom);
 
-	const int EDGE_PADDING = 5;
-	const int BORDER_PADDING = 3;
+	const int EDGE_PADDING = BTNHALF + 2;
+	const int BORDER_PADDING = BTNHALF;
 
 	if (x1 - EDGE_PADDING <= x && x <= x1 + EDGE_PADDING && y1 - EDGE_PADDING <= y && y <= y1 + EDGE_PADDING)
 	{
@@ -698,13 +702,13 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 		return CURSOR_SELECTION_BOTTOM_RIGHT;
 	}
 
-	if ( (((x2-x1)*3.0)/4.0) + x1 - 4*zoom <=x && (((x2-x1)*3.0)/4.0) + x1 + 4*zoom >=x  && (y1-10*zoom) - 4*zoom <= y	&& (y1-10*zoom) + 4*zoom >= y)
+	if ( x1 - (20+BTNFULL) - BORDER_PADDING <=x &&  x1 - (20+BTNFULL) + BORDER_PADDING >=x  &&  y1- BORDER_PADDING <= y	&&  y1 + BORDER_PADDING >= y)
 	{
 		return CURSOR_SELECTION_DELETE;
 	}
 	
 	
-	if (supportRotation && x2 + BORDER_PADDING + 4 <= x && x <= x2 + BORDER_PADDING + 16 && (y2 + y1) / 2 - 4 <= y	&& (y2 + y1) / 2 + 4 >= y)
+	if (supportRotation && x2 - BORDER_PADDING + 8 + BTNFULL <= x && x <= x2 + BORDER_PADDING + 8 + BTNFULL  && (y2 + y1) / 2 - 4 - BORDER_PADDING <= y	&& (y2 + y1) / 2 + 4 + BORDER_PADDING>= y)
 	{
 		return CURSOR_SELECTION_ROTATE;
 	}
@@ -834,7 +838,7 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 		if (supportRotation)
 		{
 			// rotation handle
-			drawAnchorRotation(cr, x + width + 12/zoom, y + height / 2, zoom);
+			drawAnchorRotation(cr, x + width + (8 + BTNFULL)/zoom, y + height / 2, zoom);
 		}
 	}
 
@@ -848,7 +852,7 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 	drawAnchorRect(cr, x + width, y + height, zoom);
 	
 	
-	drawDeleteRect(cr, x + (3 * width)/4, y - 10 , zoom);
+	drawDeleteRect(cr, x - (20+BTNFULL)/zoom, y  , zoom);
 }
 
 void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double zoom)
@@ -857,7 +861,7 @@ void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double z
 
 	GtkColorWrapper selectionColor = view->getSelectionColor();
 	selectionColor.apply(cr);
-	cairo_rectangle(cr, x * zoom - 4, y * zoom - 4, 8, 8);
+	cairo_rectangle(cr, x * zoom - BTNHALF, y * zoom - BTNHALF, BTNFULL, BTNFULL);
 	cairo_stroke_preserve(cr);
 	cairo_set_source_rgb(cr, 1, 0, 0);
 	cairo_fill(cr);	
@@ -872,7 +876,7 @@ void EditSelection::drawAnchorRect(cairo_t* cr, double x, double y, double zoom)
 
 	GtkColorWrapper selectionColor = view->getSelectionColor();
 	selectionColor.apply(cr);
-	cairo_rectangle(cr, x * zoom - 4, y * zoom - 4, 8, 8);
+	cairo_rectangle(cr, x * zoom - BTNHALF, y * zoom - BTNHALF, BTNFULL, BTNFULL);
 	cairo_stroke_preserve(cr);
 	cairo_set_source_rgb(cr, 1, 1, 1);
 	cairo_fill(cr);
@@ -887,14 +891,14 @@ void EditSelection::drawDeleteRect(cairo_t* cr, double x, double y, double zoom)
 	XOJ_CHECK_TYPE(EditSelection);
 
 	cairo_set_source_rgb(cr, 0, 0, 0);
-	cairo_rectangle(cr, x * zoom - 4, y * zoom - 4, 8, 8);
+	cairo_rectangle(cr, x * zoom - BTNHALF, y * zoom - BTNHALF, BTNFULL, BTNFULL);
 	cairo_stroke(cr);
 	cairo_set_source_rgb(cr, 1, 0, 0);
-	cairo_move_to(cr, x * zoom - 4, y * zoom - 4);
-	cairo_rel_move_to(cr, 8,0);
-	cairo_rel_line_to(cr, -8,8);
-	cairo_rel_move_to(cr, 8,0);
-	cairo_rel_line_to(cr, -8,-8);
+	cairo_move_to(cr, x * zoom - BTNHALF, y * zoom - BTNHALF);
+	cairo_rel_move_to(cr, BTNFULL,0);
+	cairo_rel_line_to(cr, -BTNFULL,BTNFULL);
+	cairo_rel_move_to(cr, BTNFULL,0);
+	cairo_rel_line_to(cr, -BTNFULL,-BTNFULL);
 	cairo_stroke(cr);
 }
 
