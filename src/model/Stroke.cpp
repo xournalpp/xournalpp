@@ -260,6 +260,36 @@ void Stroke::deletePoint(int index)
 	this->pointCount--;
 }
 
+/**
+ * delete numDelete points starting at index 
+ */
+void Stroke::deletePoints(int index, int numDelete =1 )
+{
+	XOJ_CHECK_TYPE(Stroke);
+
+	if ( index >=this->pointCount || index <0) 
+	{
+		g_warning("Stroke::deletePoints(%i, %i) starting out of bounds!", index, numDelete);
+		return;	// trying to delete beyond end.
+	}
+	
+	if (numDelete <0)
+	{
+		g_warning("Stroke::deletePoints(%i, %i) invalid count!", index, numDelete);
+		return;
+	}
+	
+	numDelete = MIN( numDelete,  this->pointCount - index);   // only delete points we have - this needs to be accurate.
+	
+	for (int i = index+numDelete; i < this->pointCount;  i++)
+	{
+		this->points[i-numDelete] = this->points[i];	
+	}
+	
+	this->pointCount -= numDelete;
+
+}
+
 Point Stroke::getPoint(int index) const
 {
 	XOJ_CHECK_TYPE(Stroke);
@@ -610,6 +640,38 @@ void Stroke::setEraseable(EraseableStroke* eraseable)
 	this->eraseable = eraseable;
 }
 
+/**
+ * removePrePressure
+ *  remove points from before pen gains initial pressure
+ * 
+ * @param pctGain: percent gain threshold - considered pre-stroke while this gain is happening.
+ */
+void Stroke::removePrePressure( float  percentGain,  int backoff  )
+{
+	XOJ_CHECK_TYPE(Stroke);
+
+	if( this->pointCount < 3 || !hasPressure() )
+	{
+		return;
+	}
+	
+	for (int i = 1; i < this->pointCount; i++)
+	{
+		float pressureGain = this->points[i].z / this->points[i-1].z;
+		if( pressureGain < percentGain )
+		{
+
+			if( i < this->pointCount /2 ){
+				this->deletePoints(0,i-backoff);
+			}
+			return;
+		}
+	}
+
+}
+
+
+
 void Stroke::debugPrint()
 {
 	XOJ_CHECK_TYPE(Stroke);
@@ -619,7 +681,7 @@ void Stroke::debugPrint()
 	for (int i = 0; i < this->pointCount; i++)
 	{
 		Point p = this->points[i];
-		g_message("%lf / %lf", p.x, p.y);
+		g_message("%lf / %lf / %lf ", p.x, p.y, p.z);
 	}
 
 	g_message("\n");

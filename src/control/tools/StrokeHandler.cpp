@@ -13,6 +13,11 @@
 #include <gdk/gdk.h>
 #include <cmath>
 
+													//Testing stroke->removePrePressure() filter
+static float GAIN = 1.2;				// remove points until less than this increase in pressure.  >1 on way to peak, <1 after peak
+static int BACKOFF = 0;				// but keep this many points before above gain triggered.
+
+
 StrokeHandler::StrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
  : InputHandler(xournal, redrawable, page),
    surfMask(NULL),
@@ -157,6 +162,10 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 		stroke->clearPressure();
 	}
 
+	
+	stroke->removePrePressure(GAIN, BACKOFF);
+	
+	
 	stroke->freeUnusedPointItems();
 
 	Control* control = xournal->getControl();

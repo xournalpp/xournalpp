@@ -72,6 +72,7 @@ public:
 	const Point* getPoints() const;
 
 	void deletePoint(int index);
+	void deletePoints(int index, int numDelete);
 	void deletePointsFrom(int index);
 
 	void setToolType(StrokeTool type);
@@ -90,6 +91,7 @@ public:
 	
 	bool hasPressure() const;
 	double getAvgPressure() const;
+	void removePrePressure( float  percentGain, int backoff = 1);		//filter out stroke before hitting paper.
 
 	virtual void move(double dx, double dy);
 	virtual void scale(double x0, double y0, double fx, double fy);
