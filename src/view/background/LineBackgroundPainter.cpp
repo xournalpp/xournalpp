@@ -1,9 +1,11 @@
 #include "LineBackgroundPainter.h"
+#include "LineBackgroundType.h"
 
 #include <Util.h>
 
-LineBackgroundPainter::LineBackgroundPainter(bool ruled)
- : ruled(ruled)
+LineBackgroundPainter::LineBackgroundPainter(LineBackgroundType lineType, bool verticalLine) :
+	lineType(lineType),
+	verticalLine(verticalLine)
 {
 	XOJ_INIT_TYPE(LineBackgroundPainter);
 }
@@ -30,24 +32,34 @@ void LineBackgroundPainter::paint()
 
 	paintBackgroundColor();
 
-	paintBackgroundRuled();
-
-	if (!ruled)
+	switch(lineType)
 	{
-		paintBackgroundLined();
+		case LINE_BACKGROUND_STAVES:
+			paintBackgroundStaves();
+			break;
+		case LINE_BACKGROUND_LINED:
+			paintBackgroundLined();
+			break;
+	}
+	if(verticalLine)
+	{
+		paintBackgroundVerticalLine();
 	}
 }
 
+const double headerSize = 80;
+const double footerSize = 20;
+
 const double roulingSize = 24;
 
-void LineBackgroundPainter::paintBackgroundRuled()
+void LineBackgroundPainter::paintBackgroundLined()
 {
 	XOJ_CHECK_TYPE(LineBackgroundPainter);
 
 	Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
 	cairo_set_line_width(cr, lineWidth * lineWidthFactor);
 
-	for (double y = 80; y < height; y += roulingSize)
+	for (double y = headerSize; y < (height - footerSize); y += roulingSize)
 	{
 		cairo_move_to(cr, 0, y);
 		cairo_line_to(cr, width, y);
@@ -56,7 +68,31 @@ void LineBackgroundPainter::paintBackgroundRuled()
 	cairo_stroke(cr);
 }
 
-void LineBackgroundPainter::paintBackgroundLined()
+const double roulingSizeStave = 50;
+const double staveLineDistance = 5;
+
+void LineBackgroundPainter::paintBackgroundStaves()
+{
+	XOJ_CHECK_TYPE(LineBackgroundPainter);
+
+	Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
+	cairo_set_line_width(cr, lineWidth * lineWidthFactor);
+
+	double start_y;
+	for (double y = headerSize; y < (height - footerSize - (5*staveLineDistance)); y += roulingSizeStave)
+	{
+		for(int i = 0; i < 5; i++)
+		{
+			start_y = y + (staveLineDistance * i);
+			cairo_move_to(cr, 0, start_y);
+			cairo_line_to(cr, width, start_y);
+		}
+	}
+
+	cairo_stroke(cr);
+}
+
+void LineBackgroundPainter::paintBackgroundVerticalLine()
 {
 	XOJ_CHECK_TYPE(LineBackgroundPainter);
 

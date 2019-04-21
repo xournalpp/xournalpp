@@ -7,7 +7,7 @@ XojPage::XojPage(double width, double height)
 {
 	XOJ_INIT_TYPE(XojPage);
 
-	this->bgType.format = "lined";
+	this->bgType.format = "lined_vline";
 
 	this->width = width;
 	this->height = height;
