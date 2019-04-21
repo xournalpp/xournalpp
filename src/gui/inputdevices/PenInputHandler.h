@@ -53,6 +53,7 @@ protected:
 
 public:
 	explicit PenInputHandler(InputContext* inputContext);
+	virtual ~PenInputHandler();
 
 protected:
 	/**

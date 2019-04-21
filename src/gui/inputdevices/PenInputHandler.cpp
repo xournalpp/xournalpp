@@ -17,6 +17,8 @@ PenInputHandler::PenInputHandler(InputContext* inputContext) : AbstractInputHand
 
 }
 
+PenInputHandler::~PenInputHandler() = default;
+
 void PenInputHandler::updateLastEvent(GdkEvent* event)
 {
 	if (!event)

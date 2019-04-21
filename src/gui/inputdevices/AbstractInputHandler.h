@@ -39,7 +39,7 @@ protected:
 
 public:
 	explicit AbstractInputHandler(InputContext* inputContext);
-	~AbstractInputHandler();
+	virtual ~AbstractInputHandler();
 
 	void block(bool block);
 	virtual void onBlock();
