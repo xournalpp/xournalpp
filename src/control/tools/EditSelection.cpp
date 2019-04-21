@@ -23,8 +23,6 @@
 
 #include <cmath>
 
-#define BTNHALF 8
-#define BTNFULL BTNHALF*2
 
 
 EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page, XojPageView* view)
@@ -136,6 +134,9 @@ void EditSelection::contstruct(UndoRedoHandler* undo, XojPageView* view, PageRef
 	this->relMousePosX = 0;
 	this->relMousePosY = 0;
 	this->mouseDownType = CURSOR_SELECTION_NONE;
+	
+	int dpi = this->view->getXournal()->getControl()->getSettings()->getDisplayDpi();
+	this->btnWidth = MAX(10,dpi/8);
 
 	this->contents = new EditSelectionContents(this->x, this->y, this->width, this->height,
 											   this->sourcePage, this->sourceLayer, this->view);
@@ -679,8 +680,9 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 	double y1 = getYOnView() * zoom;
 	double y2 = y1 + (this->height * zoom);
 
-	const int EDGE_PADDING = BTNHALF + 2;
-	const int BORDER_PADDING = BTNHALF;
+	
+	const int EDGE_PADDING = (this->btnWidth/2) + 2;
+	const int BORDER_PADDING = (this->btnWidth/2);
 
 	if (x1 - EDGE_PADDING <= x && x <= x1 + EDGE_PADDING && y1 - EDGE_PADDING <= y && y <= y1 + EDGE_PADDING)
 	{
@@ -702,13 +704,13 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 		return CURSOR_SELECTION_BOTTOM_RIGHT;
 	}
 
-	if ( x1 - (20+BTNFULL) - BORDER_PADDING <=x &&  x1 - (20+BTNFULL) + BORDER_PADDING >=x  &&  y1- BORDER_PADDING <= y	&&  y1 + BORDER_PADDING >= y)
+	if ( x1 - (20+this->btnWidth) - BORDER_PADDING <=x &&  x1 - (20+this->btnWidth) + BORDER_PADDING >=x  &&  y1- BORDER_PADDING <= y	&&  y1 + BORDER_PADDING >= y)
 	{
 		return CURSOR_SELECTION_DELETE;
 	}
 	
 	
-	if (supportRotation && x2 - BORDER_PADDING + 8 + BTNFULL <= x && x <= x2 + BORDER_PADDING + 8 + BTNFULL  && (y2 + y1) / 2 - 4 - BORDER_PADDING <= y	&& (y2 + y1) / 2 + 4 + BORDER_PADDING>= y)
+	if (supportRotation && x2 - BORDER_PADDING + 8 + this->btnWidth <= x && x <= x2 + BORDER_PADDING + 8 + this->btnWidth  && (y2 + y1) / 2 - 4 - BORDER_PADDING <= y	&& (y2 + y1) / 2 + 4 + BORDER_PADDING>= y)
 	{
 		return CURSOR_SELECTION_ROTATE;
 	}
@@ -838,7 +840,7 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 		if (supportRotation)
 		{
 			// rotation handle
-			drawAnchorRotation(cr, x + width + (8 + BTNFULL)/zoom, y + height / 2, zoom);
+			drawAnchorRotation(cr, x + width + (8 + this->btnWidth)/zoom, y + height / 2, zoom);
 		}
 	}
 
@@ -852,7 +854,7 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 	drawAnchorRect(cr, x + width, y + height, zoom);
 	
 	
-	drawDeleteRect(cr, x - (20+BTNFULL)/zoom, y  , zoom);
+	drawDeleteRect(cr, x - (20+this->btnWidth)/zoom, y  , zoom);
 }
 
 void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double zoom)
@@ -861,7 +863,7 @@ void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double z
 
 	GtkColorWrapper selectionColor = view->getSelectionColor();
 	selectionColor.apply(cr);
-	cairo_rectangle(cr, x * zoom - BTNHALF, y * zoom - BTNHALF, BTNFULL, BTNFULL);
+	cairo_rectangle(cr, x * zoom - (this->btnWidth/2), y * zoom - (this->btnWidth/2), this->btnWidth, this->btnWidth);
 	cairo_stroke_preserve(cr);
 	cairo_set_source_rgb(cr, 1, 0, 0);
 	cairo_fill(cr);	
@@ -876,7 +878,7 @@ void EditSelection::drawAnchorRect(cairo_t* cr, double x, double y, double zoom)
 
 	GtkColorWrapper selectionColor = view->getSelectionColor();
 	selectionColor.apply(cr);
-	cairo_rectangle(cr, x * zoom - BTNHALF, y * zoom - BTNHALF, BTNFULL, BTNFULL);
+	cairo_rectangle(cr, x * zoom - (this->btnWidth/2), y * zoom - (this->btnWidth/2), this->btnWidth, this->btnWidth);
 	cairo_stroke_preserve(cr);
 	cairo_set_source_rgb(cr, 1, 1, 1);
 	cairo_fill(cr);
@@ -891,14 +893,14 @@ void EditSelection::drawDeleteRect(cairo_t* cr, double x, double y, double zoom)
 	XOJ_CHECK_TYPE(EditSelection);
 
 	cairo_set_source_rgb(cr, 0, 0, 0);
-	cairo_rectangle(cr, x * zoom - BTNHALF, y * zoom - BTNHALF, BTNFULL, BTNFULL);
+	cairo_rectangle(cr, x * zoom - (this->btnWidth/2), y * zoom - (this->btnWidth/2), this->btnWidth, this->btnWidth);
 	cairo_stroke(cr);
 	cairo_set_source_rgb(cr, 1, 0, 0);
-	cairo_move_to(cr, x * zoom - BTNHALF, y * zoom - BTNHALF);
-	cairo_rel_move_to(cr, BTNFULL,0);
-	cairo_rel_line_to(cr, -BTNFULL,BTNFULL);
-	cairo_rel_move_to(cr, BTNFULL,0);
-	cairo_rel_line_to(cr, -BTNFULL,-BTNFULL);
+	cairo_move_to(cr, x * zoom - (this->btnWidth/2), y * zoom - (this->btnWidth/2));
+	cairo_rel_move_to(cr, this->btnWidth,0);
+	cairo_rel_line_to(cr, -this->btnWidth,this->btnWidth);
+	cairo_rel_move_to(cr, this->btnWidth,0);
+	cairo_rel_line_to(cr, -this->btnWidth,-this->btnWidth);
 	cairo_stroke(cr);
 }
 

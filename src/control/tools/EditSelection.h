@@ -271,7 +271,13 @@ private: // DATA
 	 * (we cannot only set the font size for text)
 	 */
 	bool aspectRatio;
+	
+	/**
+	 * Size of the editing handles 
+	 */
 
+	int btnWidth = 8;
+	
 	/**
 	 * The source page (form where the Elements come)
 	 */
