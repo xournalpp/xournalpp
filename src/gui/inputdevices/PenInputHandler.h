@@ -39,15 +39,21 @@ protected:
 	/**
 	 * Reference to the last event actually hitting a page
 	 */
-	 GdkEvent* lastHitEvent = nullptr;
+	GdkEvent* lastHitEvent = nullptr;
 
 	/**
-	 * The last Mouse Position, for scrolling
+	 * Start position to reference scroll offset
+	 */
+	double scrollStartX = 0;
+	double scrollStartY = 0;
+
+	/**
+	 * The offset to scroll in x-direction
 	 */
 	double scrollOffsetX = 0;
 
 	/**
-	 * The last Mouse Position, for scrolling
+	 * The offset to scroll in y-direction
 	 */
 	double scrollOffsetY = 0;
 

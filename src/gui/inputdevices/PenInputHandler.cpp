@@ -106,21 +106,19 @@ void PenInputHandler::handleScrollEvent(GdkEvent* event)
 	// scrolling changes window relative coordinates
 	// see github Gnome/evince@1adce5486b10e763bed869
 
-	gdouble lastRootX, lastRootY;
-	gdk_event_get_root_coords(this->lastEvent, &lastRootX, &lastRootY);
 	gdouble rootX, rootY;
-	gdk_event_get_root_coords(this->lastEvent, &rootX, &rootY);
+	gdk_event_get_root_coords(event, &rootX, &rootY);
 
 	// GTK handles event compression/filtering differently between versions - this may be needed on certain hardware/GTK combinations.
-	if (std::abs((double)(lastRootX - rootX)) < 0.1 && std::abs((double)(lastRootY - rootY)) < 0.1 )
+	if (std::abs((double)(this->scrollStartX - rootX)) < 0.1 && std::abs((double)(this->scrollStartY - rootY)) < 0.1 )
 	{
 		return;
 	}
 
 	if (this->scrollOffsetX == 0 && this->scrollOffsetY == 0)
 	{
-		this->scrollOffsetX = lastRootX - rootX;
-		this->scrollOffsetY = lastRootY - rootY;
+		this->scrollOffsetX = this->scrollStartX - rootX;
+		this->scrollOffsetY = this->scrollStartY - rootY;
 
 		Util::execInUiThread([&]() {
 			this->inputContext->getXournal()->layout->scrollRelative(this->scrollOffsetX, this->scrollOffsetY);
@@ -129,6 +127,10 @@ void PenInputHandler::handleScrollEvent(GdkEvent* event)
 			this->scrollOffsetX = 0;
 			this->scrollOffsetY = 0;
 		});
+
+		// Update the reference for the scroll-offset
+		this->scrollStartX = rootX;
+		this->scrollStartY = rootY;
 	}
 }
 
@@ -151,9 +153,16 @@ bool PenInputHandler::actionStart(GdkEvent* event)
 	Cursor* cursor = xournal->view->getCursor();
 	cursor->setMouseDown(true);
 
-	// hand tool don't change the selection, so you can scroll e.g.
-	// with your touchscreen without remove the selection
+
 	ToolHandler* toolHandler = this->inputContext->getToolHandler();
+
+	// Save the starting offset when hand-tool is selected to get a reference for the scroll-offset
+	if (toolHandler->getToolType() == TOOL_HAND)
+	{
+		gdk_event_get_root_coords(event, &this->scrollStartX, &this->scrollStartY);
+	}
+
+	// hand tool don't change the selection, so you can scroll e.g. with your touchscreen without remove the selection
 	if (toolHandler->getToolType() != TOOL_HAND && xournal->selection)
 	{
 		EditSelection* selection = xournal->selection;
