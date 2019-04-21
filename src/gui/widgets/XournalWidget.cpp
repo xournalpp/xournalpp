@@ -75,6 +75,7 @@ GtkWidget* gtk_xournal_new(XournalView* view, ScrollHandling* scrollHandling)
 	xoj->layout = new Layout(view, scrollHandling);
 	xoj->selection = NULL;
 
+	// TODO hide old method behind setting flag
 	//xoj->input = new NewGtkInputDevice(GTK_WIDGET(xoj), view, scrollHandling);
 	xoj->input = new InputContext(GTK_WIDGET(xoj), view, scrollHandling);
 

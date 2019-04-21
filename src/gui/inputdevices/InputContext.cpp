@@ -88,10 +88,13 @@ bool InputContext::handle(GdkEvent* event)
 	}
 
 	// separate events to appropriate handlers
+	// handle tablet stylus
 	if (gdk_device_get_source(device) == GDK_SOURCE_PEN || gdk_device_get_source(device) == GDK_SOURCE_ERASER)
 	{
 		return this->stylusHandler->handle(event);
 	}
+
+	// handle mouse devices
 #if (GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 22)
 	if (gdk_device_get_source(device) == GDK_SOURCE_MOUSE || gdk_device_get_source(device) == GDK_SOURCE_TOUCHPAD || gdk_device_get_source(device) == GDK_SOURCE_TRACKPOINT)
 #else
@@ -100,15 +103,21 @@ bool InputContext::handle(GdkEvent* event)
 	{
 		return this->mouseHandler->handle(event);
 	}
+
+	// handle touchscreens
 	if (gdk_device_get_source(device) == GDK_SOURCE_TOUCHSCREEN)
 	{
+		// trigger touch drawing depending on the setting
 		if (this->touchWorkaroundEnabled)
 		{
 			return this->touchDrawingHandler->handle(event);
-		} else {
-
+		} else
+		{
+			return this->touchHandler->handle(event);
 		}
 	}
+
+	// handle keyboard
 	if (gdk_device_get_source(device) == GDK_SOURCE_KEYBOARD)
 	{
 		return this->keyboardHandler->handle(event);

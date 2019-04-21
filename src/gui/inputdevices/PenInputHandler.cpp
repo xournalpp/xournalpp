@@ -54,11 +54,12 @@ void PenInputHandler::setPressedState(GdkEvent* event)
 
 	this->inputContext->getXournal()->view->getCursor()->setInsidePage(currentPage != nullptr);
 
-	if (currentPage)
+	// TODO what do we need this for?
+	/*if (currentPage)
 	{
 		PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
 		currentPage->onMotionNotifyEvent(pos);
-	}
+	}*/
 
 	if (event->type == GDK_BUTTON_PRESS) //mouse button pressed or pen touching surface
 	{
@@ -282,7 +283,7 @@ bool PenInputHandler::actionMotion(GdkEvent* event)
 
 	// Update the cursor
 	xournal->view->getCursor()->setInsidePage(currentPage != nullptr);
-	if (currentPage)
+	if (currentPage && this->penInWidget)
 	{
 		// Relay the event to the page
 		PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
@@ -347,10 +348,86 @@ bool PenInputHandler::actionEnd(GdkEvent* event)
 
 void PenInputHandler::actionLeaveWindow(GdkEvent* event)
 {
-	// TODO: method stub
+	if (!this->penInWidget)
+	{
+		return;
+	}
+
+	this->penInWidget = false;
+
+	// Stop input sequence if the tool is not a selection tool
+	ToolHandler* toolHandler = this->inputContext->getToolHandler();
+	ToolType toolType = toolHandler->getToolType();
+	if (this->inputRunning && toolType != TOOL_SELECT_OBJECT && toolType != TOOL_SELECT_RECT && toolType != TOOL_SELECT_REGION)
+	{
+		this->actionEnd(this->lastHitEvent);
+	} else if (this->deviceClassPressed)
+	{
+		// scroll if we have an active selection
+		gdouble eventX, eventY;
+		gdk_event_get_coords(event, &eventX, &eventY);
+
+		GtkWidget* widget = this->inputContext->getView()->getWidget();
+		gint width = gtk_widget_get_allocated_width(widget);
+		gint height = gtk_widget_get_allocated_height(widget);
+
+		new std::thread([&]()
+		{
+			int offsetX = 0, offsetY = 0;
+
+			// TODO: make offset dependent on how big the distance between pen and view is
+			if (eventX < 25)
+			{
+				offsetX = -10;
+			}
+
+			if (eventY < 25)
+			{
+				offsetY = -10;
+			}
+
+			if (eventX > width - 25)
+			{
+				offsetX = 10;
+			}
+
+			if (eventY > height - 25)
+			{
+				offsetY = 10;
+			}
+
+#ifdef DEBUG_INPUT
+			g_message("Offset: X:%d\tY:%d", offsetX, offsetY);
+#endif
+
+			while (!this->penInWidget)
+			{
+				Util::execInUiThread([&]()
+				{
+					GtkXournal* xournal = this->inputContext->getXournal();
+					xournal->layout->scrollRelative(offsetX, offsetY);
+				});
+
+				//sleep for half a second until we scroll again
+				g_usleep((gulong) (0.5 * G_USEC_PER_SEC));
+			}
+		});
+
+	}
 }
 
 void PenInputHandler::actionEnterWindow(GdkEvent* event)
 {
-	// TODO: method stub
+	this->penInWidget = true;
+
+	// Restart input sequence if the tool is pressed and not a selection tool
+	ToolHandler* toolHandler = this->inputContext->getToolHandler();
+	ToolType toolType = toolHandler->getToolType();
+	// TODO should we use the event state to determine the pressed state of the device? This currently disallows strokes starting outside of the widget
+	if (this->deviceClassPressed && toolType != TOOL_SELECT_OBJECT && toolType != TOOL_SELECT_RECT && toolType != TOOL_SELECT_REGION)
+	{
+		this->actionStart(event);
+	}
+
+	// TODO: stop relative scrolling
 }

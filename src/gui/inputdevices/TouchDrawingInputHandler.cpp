@@ -86,13 +86,12 @@ bool TouchDrawingInputHandler::handleImpl(GdkEvent* event)
 		this->actionMotion(event);
 	}
 
-	// Scroll view if mouse or pen is pressed and leaves screen
-	if (this->deviceClassPressed && event->type == GDK_ENTER_NOTIFY)
+	// Notify if finger enters/leaves widget
+	if (event->type == GDK_ENTER_NOTIFY)
 	{
 		this->actionEnterWindow(event);
 	}
-
-	if (this->deviceClassPressed && event->type == GDK_LEAVE_NOTIFY)
+	if (event->type == GDK_LEAVE_NOTIFY)
 	{
 		this->actionLeaveWindow(event);
 	}

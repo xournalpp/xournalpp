@@ -57,9 +57,14 @@ protected:
 	 */
 	double scrollOffsetY = 0;
 
+	/**
+	 * Flag whether pen is within the widget
+	 */
+	bool penInWidget = false;
+
 public:
 	explicit PenInputHandler(InputContext* inputContext);
-	virtual ~PenInputHandler();
+	~PenInputHandler();
 
 protected:
 	/**
