@@ -24,6 +24,7 @@
 #include <cmath>
 
 
+#define MINPIXSIZE 5	// smallest can scale down to, in pixels.
 
 EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page, XojPageView* view)
 {
@@ -439,6 +440,7 @@ void EditSelection::mouseMove(double x, double y)
 	double zoom = this->view->getXournal()->getZoom();
 	x /= zoom;
 	y /= zoom;
+	double minSize = MINPIXSIZE/zoom;
 
 	if (this->mouseDownType == CURSOR_SELECTION_MOVE)
 	{
@@ -464,8 +466,8 @@ void EditSelection::mouseMove(double x, double y)
 		this->width /= f;
 		this->height /= f;
 
-		this->x += oldW - this->width;
-		this->y += oldH - this->height;
+		this->x = MIN( this->x + oldW - minSize, this->x + oldW - this->width);
+		this->y = MIN( this->y + oldH - minSize, this->y + oldH - this->height);
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_TOP_RIGHT)
 	{
@@ -485,8 +487,8 @@ void EditSelection::mouseMove(double x, double y)
 		double oldH = this->height;
 		this->width *= f;
 		this->height *= f;
-		
-		this->y += oldH - this->height;
+
+		this->y = MIN( this->y + oldH - minSize, this->y + oldH - this->height);
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_LEFT)
 	{
@@ -506,7 +508,7 @@ void EditSelection::mouseMove(double x, double y)
 		this->width *= f;
 		this->height *= f;
 
-		this->x += oldW - this->width;
+		this->x = MIN( this->x + oldW - minSize, this->x + oldW - this->width);
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_RIGHT)
 	{
@@ -528,8 +530,10 @@ void EditSelection::mouseMove(double x, double y)
 	else if (this->mouseDownType == CURSOR_SELECTION_TOP)
 	{
 		double dy = y - this->y;
+
+		this->y = MIN( this->y+height-minSize, this->y +dy);
 		this->height -= dy;
-		this->y += dy;
+
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM)
 	{
@@ -539,8 +543,8 @@ void EditSelection::mouseMove(double x, double y)
 	else if (this->mouseDownType == CURSOR_SELECTION_LEFT)
 	{
 		double dx = x - this->x;
+		this->x = MIN( this->x+width-minSize, this->x +dx);
 		this->width -= dx;
-		this->x += dx;
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_RIGHT)	
 	{
@@ -557,6 +561,9 @@ void EditSelection::mouseMove(double x, double y)
 		this->rotation = angle;
 	}
 
+	this->width = MAX( this->width , minSize);
+	this->height = MAX( this->height, minSize);
+	
 	this->view->getXournal()->repaintSelection();
 
 	XojPageView* v = getPageViewUnderCursor();
