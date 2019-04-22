@@ -43,7 +43,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 	g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
 
 	this->repaintHandler = new RepaintHandler(this);
-	this->handRecognition = new HandRecognition(this->widget, ((GtkXournal*)this->widget)->input, control->getSettings());
+	this->handRecognition = new HandRecognition(this->widget, control->getSettings());
 
 	control->getZoomControl()->addZoomListener(this);
 
