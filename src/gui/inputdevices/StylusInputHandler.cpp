@@ -3,6 +3,7 @@
 //
 
 #include <gui/widgets/XournalWidget.h>
+#include "gui/Cursor.h"
 #include "StylusInputHandler.h"
 
 StylusInputHandler::StylusInputHandler(InputContext* inputContext) : PenInputHandler(inputContext)
@@ -18,8 +19,6 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 	GtkXournal* xournal = inputContext->getXournal();
 	if (xournal->view->getControl()->getWindow()->isGestureActive())
 	{
-		//TODO what to do if motion is detected while input is active?
-
 		// Do not further relay events as they are of no interest
 		return true;
 	}
@@ -30,8 +29,7 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 	// Block devices if pen is within proximity of screen
 	if (event->type == GDK_PROXIMITY_IN)
 	{
-		this->inputContext->blockDevice(InputContext::TOUCHSCREEN);
-		this->inputContext->blockDevice(InputContext::MOUSE);
+		this->blockDevices();
 	}
 
 	// Trigger start of action when pen/mouse is pressed
@@ -42,8 +40,7 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 
 		if (button == 1)
 		{
-			this->inputContext->blockDevice(InputContext::TOUCHSCREEN);
-			this->inputContext->blockDevice(InputContext::MOUSE);
+			this->blockDevices();
 			this->actionStart(event);
 			return true;
 		}
@@ -55,13 +52,32 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 		this->actionMotion(event);
 	}
 
-	// Notify if pen enters/leaves widget
-	if (event->type == GDK_ENTER_NOTIFY)
+
+	// Check if enter/leave events occur in possible locations. This is a bug of the hardware (there are such devices!)
+	if ((event->type == GDK_ENTER_NOTIFY || event->type == GDK_LEAVE_NOTIFY) && this->deviceClassPressed && this->lastEvent)
 	{
+		gdouble lastX, lastY, currentX, currentY;
+		gdk_event_get_coords(this->lastEvent, &lastX, &lastY);
+		gdk_event_get_coords(event, &currentX, &currentY);
+
+		if (std::abs(currentX - lastX) > 100 || std::abs(currentY - lastY) > 100)
+		{
+			g_message("Discard impossible event - this is a sign of bugged hardware or drivers");
+			return true;
+		}
+	}
+
+	// Notify if pen enters/leaves widget
+	//TODO how to handle sequences with enter but no leave event in terms of blocked devices?
+	if (event->type == GDK_ENTER_NOTIFY && !this->inputRunning)
+	{
+		this->blockDevices();
 		this->actionEnterWindow(event);
 	}
 	if (event->type == GDK_LEAVE_NOTIFY)
 	{
+		this->unblockDevices();
+		this->inputContext->getView()->getHandRecognition()->unblock();
 		this->actionLeaveWindow(event);
 	}
 
@@ -74,8 +90,7 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 		if (button == 1)
 		{
 			this->actionEnd(event);
-			this->inputContext->unblockDevice(InputContext::TOUCHSCREEN);
-			this->inputContext->unblockDevice(InputContext::MOUSE);
+			this->unblockDevices();
 			return true;
 		}
 	}
@@ -85,16 +100,15 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 	{
 		// TODO: We may need to update pressed state manually here
 		this->actionEnd(event);
-		this->inputContext->unblockDevice(InputContext::TOUCHSCREEN);
-		this->inputContext->unblockDevice(InputContext::MOUSE);
+		this->unblockDevices();
+		this->inputContext->getView()->getHandRecognition()->unblock();
 		return true;
 	}
 
 	// Unblock devices if pen is out of proximity (required if pen never touches screen)
 	if (event->type == GDK_PROXIMITY_OUT)
 	{
-		this->inputContext->unblockDevice(InputContext::TOUCHSCREEN);
-		this->inputContext->unblockDevice(InputContext::MOUSE);
+		this->unblockDevices();
 		return true;
 	}
 
@@ -136,4 +150,16 @@ bool StylusInputHandler::changeTool(GdkEvent* event)
 	}
 
 	return false;
+}
+
+void StylusInputHandler::blockDevices()
+{
+	this->inputContext->blockDevice(InputContext::MOUSE);
+	this->inputContext->blockDevice(InputContext::TOUCHSCREEN);
+}
+
+void StylusInputHandler::unblockDevices()
+{
+	this->inputContext->unblockDevice(InputContext::MOUSE);
+	this->inputContext->unblockDevice(InputContext::TOUCHSCREEN);
 }

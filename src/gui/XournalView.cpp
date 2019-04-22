@@ -9,7 +9,7 @@
 #include "control/Control.h"
 #include "control/PdfCache.h"
 #include "control/settings/MetadataManager.h"
-#include "gui/inputdevices/old/TouchHelper.h"
+#include "gui/inputdevices/HandRecognition.h"
 #include "model/Document.h"
 #include "model/Stroke.h"
 #include "undo/DeleteUndoAction.h"
@@ -23,9 +23,10 @@
 #include <tuple>
 #include <cmath>
 
-XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling)
+XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling, ZoomGesture* zoomGesture)
  : scrollHandling(scrollHandling),
-   control(control)
+   control(control),
+   zoomGesture(zoomGesture)
 {
 	XOJ_INIT_TYPE(XournalView);
 
@@ -42,7 +43,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 	g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
 
 	this->repaintHandler = new RepaintHandler(this);
-	this->touchHelper = new TouchHelper(control->getSettings());
+	this->handRecognition = new HandRecognition(this->widget, ((GtkXournal*)this->widget)->input, control->getSettings());
 
 	control->getZoomControl()->addZoomListener(this);
 
@@ -77,8 +78,8 @@ XournalView::~XournalView()
 	gtk_widget_destroy(this->widget);
 	this->widget = NULL;
 
-	delete this->touchHelper;
-	this->touchHelper = NULL;
+	delete this->handRecognition;
+	this->handRecognition = NULL;
 
 	XOJ_RELEASE_TYPE(XournalView);
 }
@@ -607,11 +608,11 @@ Rectangle* XournalView::getVisibleRect(XojPageView* redrawable)
 /**
  * @return Helper class for Touch specific fixes
  */
-TouchHelper* XournalView::getTouchHelper()
+HandRecognition* XournalView::getHandRecognition()
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	return touchHelper;
+	return handRecognition;
 }
 
 /**
@@ -622,6 +623,13 @@ ScrollHandling* XournalView::getScrollHandling()
 	XOJ_CHECK_TYPE(XournalView);
 
 	return scrollHandling;
+}
+
+ZoomGesture* XournalView::getZoomGestureHandler()
+{
+	XOJ_CHECK_TYPE(XournalView);
+
+	return zoomGesture;
 }
 
 GtkWidget* XournalView::getWidget()

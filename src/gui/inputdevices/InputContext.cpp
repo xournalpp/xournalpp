@@ -80,6 +80,9 @@ bool InputContext::handle(GdkEvent* event)
 		return false;
 	}
 
+	// Deactivate touchscreen when a pen event occurs
+	this->getView()->getHandRecognition()->event(device);
+
 	// Get the state of all modifiers
 	auto state = (GdkModifierType)0;
 	if (gdk_event_get_state(event, &state))
@@ -182,6 +185,7 @@ void InputContext::blockDevice(InputContext::DeviceType deviceType)
 		case TOUCHSCREEN:
 			this->touchDrawingHandler->block(true);
 			this->touchHandler->block(true);
+			this->getView()->getZoomGestureHandler()->disable();
 			break;
 	}
 }
@@ -199,6 +203,20 @@ void InputContext::unblockDevice(InputContext::DeviceType deviceType)
 		case TOUCHSCREEN:
 			this->touchDrawingHandler->block(false);
 			this->touchHandler->block(false);
+			this->getView()->getZoomGestureHandler()->enable();
 			break;
+	}
+}
+
+bool InputContext::isBlocked(InputContext::DeviceType deviceType)
+{
+	switch (deviceType)
+	{
+		case MOUSE:
+			return this->mouseHandler->isBlocked();
+		case STYLUS:
+			return this->stylusHandler->isBlocked();
+		case TOUCHSCREEN:
+			return this->touchDrawingHandler->isBlocked();
 	}
 }

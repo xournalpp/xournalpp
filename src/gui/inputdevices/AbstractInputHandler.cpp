@@ -19,6 +19,11 @@ void AbstractInputHandler::block(bool block)
 	this->onBlock();
 }
 
+bool AbstractInputHandler::isBlocked()
+{
+	return this->blocked;
+}
+
 bool AbstractInputHandler::handle(GdkEvent* event)
 {
 	if (!this->blocked)

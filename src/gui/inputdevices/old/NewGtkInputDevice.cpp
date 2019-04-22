@@ -1,6 +1,6 @@
 #include "NewGtkInputDevice.h"
 #include "InputSequence.h"
-#include "TouchHelper.h"
+#include "gui/inputdevices/HandRecognition.h"
 
 #include "control/Control.h"
 #include "gui/Cursor.h"
@@ -318,7 +318,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		Cursor* cursor = view->getControl()->getWindow()->getXournal()->getCursor();
 		cursor->setInvisible(false);
 
-		view->getTouchHelper()->event(sourceDevice);
+		view->getHandRecognition()->event(sourceDevice);
 	}
 	else if (event->type == GDK_BUTTON_PRESS || event->type == GDK_TOUCH_BEGIN)
 	{

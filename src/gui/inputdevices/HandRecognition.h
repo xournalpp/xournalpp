@@ -18,11 +18,11 @@
 class Settings;
 class TouchDisableInterface;
 
-class TouchHelper
+class HandRecognition
 {
 public:
-	TouchHelper(Settings* settings);
-	virtual ~TouchHelper();
+	HandRecognition(GtkWidget* widget, Settings* settings);
+	virtual ~HandRecognition();
 
 public:
 	/**
@@ -35,13 +35,18 @@ public:
 	 */
 	void event(GdkDevice* device);
 
+	/**
+	 * Unblock the touchscreen immediately
+	 */
+	void unblock();
+
 private:
 	/**
 	 * Called after the timeout
 	 *
 	 * @return true to call again
 	 */
-	static bool enableTimeout(TouchHelper* self);
+	static bool enableTimeout(HandRecognition* self);
 
 	/**
 	 * There was a pen event, restart the timer
@@ -79,7 +84,7 @@ private:
 	/**
 	 * Timeout in ms
 	 */
-	int disableTimeout = 500;
+	int disableTimeout = 100;
 
 	/**
 	 * True if an X11 session is running
@@ -90,6 +95,11 @@ private:
 	 * Implementation for touch disabling
 	 */
 	TouchDisableInterface* touchImpl = NULL;
+
+	/**
+	 * XournalView
+	 */
+	 GtkWidget* widget;
 
 	/**
 	 * Settings

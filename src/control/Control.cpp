@@ -18,7 +18,7 @@
 #include "gui/dialog/SelectBackgroundColorDialog.h"
 #include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"
 #include "gui/dialog/ToolbarManageDialog.h"
-#include "gui/inputdevices/old/TouchHelper.h"
+#include "gui/inputdevices/HandRecognition.h"
 #include "gui/TextEditor.h"
 #include "gui/toolbarMenubar/model/ToolbarData.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
@@ -2169,7 +2169,7 @@ void Control::showSettings()
 	this->zoom->setZoomStepScroll(settings->getZoomStepScroll() / 100.0);
 	this->zoom->setZoom100Value(settings->getDisplayDpi() / 72.0);
 
-	getWindow()->getXournal()->getTouchHelper()->reload();
+	getWindow()->getXournal()->getHandRecognition()->reload();
 
 	TextView::setDpi(settings->getDisplayDpi());
 

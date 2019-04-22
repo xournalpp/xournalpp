@@ -12,6 +12,7 @@
 #pragma once
 
 #include "control/zoom/ZoomListener.h"
+#include "control/zoom/ZoomGesture.h"
 #include "model/DocumentListener.h"
 #include "model/PageRef.h"
 #include "widgets/XournalWidget.h"
@@ -32,12 +33,12 @@ class Rectangle;
 class RepaintHandler;
 class ScrollHandling;
 class TextEditor;
-class TouchHelper;
+class HandRecognition;
 
 class XournalView : public DocumentListener, public ZoomListener
 {
 public:
-	XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling);
+	XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling, ZoomGesture* zoomGesture);
 	virtual ~XournalView();
 
 public:
@@ -116,12 +117,18 @@ public:
 	/**
 	 * @return Helper class for Touch specific fixes
 	 */
-	TouchHelper* getTouchHelper();
+	HandRecognition* getHandRecognition();
 
 	/**
 	 * @returnScrollbars
 	 */
 	ScrollHandling* getScrollHandling();
+
+	/**
+	 * Get the handler for the zoom gesture
+	 * @return The handler
+	 */
+	ZoomGesture* getZoomGestureHandler();
 
 public:
 	// ZoomListener interface
@@ -161,6 +168,8 @@ private:
 	 */
 	ScrollHandling* scrollHandling = NULL;
 
+	ZoomGesture* zoomGesture;
+
 	GtkWidget* widget = NULL;
 	double margin = 75;
 
@@ -187,7 +196,7 @@ private:
 	/**
 	 * Helper class for Touch specific fixes
 	 */
-	TouchHelper* touchHelper = NULL;
+	HandRecognition* handRecognition = NULL;
 
 	friend class Layout;
 };

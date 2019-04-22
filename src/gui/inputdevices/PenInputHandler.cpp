@@ -145,6 +145,7 @@ bool PenInputHandler::actionStart(GdkEvent* event)
 
 	// Flag running input
 	this->inputRunning = true;
+	this->penInWidget = true;
 
 	// Change the tool depending on the key
 	changeTool(event);
@@ -324,8 +325,11 @@ bool PenInputHandler::actionEnd(GdkEvent* event)
 		currentPage = getPageAtCurrentPosition(this->lastHitEvent);
 	}
 
-	PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
-	currentPage->onButtonReleaseEvent(pos);
+	if (currentPage)
+	{
+		PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
+		currentPage->onButtonReleaseEvent(pos);
+	}
 
 	//Reset the selection
 	EditSelection* tmpSelection = xournal->selection;
@@ -428,6 +432,4 @@ void PenInputHandler::actionEnterWindow(GdkEvent* event)
 	{
 		this->actionStart(event);
 	}
-
-	// TODO: stop relative scrolling
 }

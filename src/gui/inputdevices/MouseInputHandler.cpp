@@ -18,8 +18,6 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 	GtkXournal* xournal = inputContext->getXournal();
 	if (xournal->view->getControl()->getWindow()->isGestureActive())
 	{
-		//TODO what to do if motion is detected while input is active?
-
 		// Do not further relay events as they are of no interest
 		return true;
 	}
@@ -60,6 +58,8 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 	}
 	if (event->type == GDK_LEAVE_NOTIFY)
 	{
+		//this->inputContext->unblockDevice(InputContext::TOUCHSCREEN);
+		//this->inputContext->getView()->getHandRecognition()->unblock();
 		this->actionLeaveWindow(event);
 	}
 
@@ -83,6 +83,7 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 		// TODO: We may need to update pressed state manually here
 		this->actionEnd(event);
 		this->inputContext->unblockDevice(InputContext::TOUCHSCREEN);
+		//this->inputContext->getView()->getHandRecognition()->unblock();
 		return true;
 	}
 

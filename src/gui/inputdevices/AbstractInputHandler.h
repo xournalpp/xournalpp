@@ -42,6 +42,7 @@ public:
 	virtual ~AbstractInputHandler();
 
 	void block(bool block);
+	bool isBlocked();
 	virtual void onBlock();
 	bool handle(GdkEvent* event);
 	virtual bool handleImpl(GdkEvent* event) = 0;

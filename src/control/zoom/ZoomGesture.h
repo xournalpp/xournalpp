@@ -20,11 +20,14 @@ class ZoomControl;
 class ZoomGesture
 {
 public:
-	ZoomGesture(GtkWidget* parent, ZoomControl* zoomControl);
+	ZoomGesture(ZoomControl* zoomControl);
 	virtual ~ZoomGesture();
 
 public:
+	void connect(GtkWidget* parent);
 	bool isGestureActive();
+	void disable();
+	void enable();
 
 private:
 	void zoomBegin();
@@ -38,4 +41,5 @@ private:
 	GtkGesture* gesture = NULL;
 
 	bool gestureActive = false;
+	bool enabled = true;
 };

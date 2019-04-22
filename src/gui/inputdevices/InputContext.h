@@ -17,6 +17,7 @@
 #include "TouchDrawingInputHandler.h"
 #include "TouchInputHandler.h"
 #include "KeyboardInputHandler.h"
+#include "HandRecognition.h"
 
 #include <gui/widgets/XournalWidget.h>
 #include <control/ToolHandler.h>
@@ -92,6 +93,7 @@ public:
 	void focusWidget();
 	void blockDevice(DeviceType deviceType);
 	void unblockDevice(DeviceType deviceType);
+	bool isBlocked(DeviceType deviceType);
 };
 
 

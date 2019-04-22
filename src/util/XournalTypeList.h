@@ -253,7 +253,7 @@ XOJ_DECLARE_TYPE(LayerController, 243);
 XOJ_DECLARE_TYPE(PopupMenuButton, 244);
 XOJ_DECLARE_TYPE(LayerCtrlListener, 245);
 XOJ_DECLARE_TYPE(CoordinateSystemHandler, 246);
-XOJ_DECLARE_TYPE(TouchHelper, 247);
+XOJ_DECLARE_TYPE(HandRecognition, 247);
 XOJ_DECLARE_TYPE(TouchDisableInterface, 248);
 XOJ_DECLARE_TYPE(TouchDisableCustom, 249);
 XOJ_DECLARE_TYPE(TouchDisableX11, 250);
