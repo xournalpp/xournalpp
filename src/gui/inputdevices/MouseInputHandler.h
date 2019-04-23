@@ -11,14 +11,16 @@
 
 #pragma once
 
-
+#include <XournalType.h>
 #include "PenInputHandler.h"
 
 class MouseInputHandler : public PenInputHandler
 {
+private:
+	XOJ_TYPE_ATTRIB;
 public:
 	explicit MouseInputHandler(InputContext* inputContext);
-	~MouseInputHandler();
+	~MouseInputHandler() override;
 
 	bool handleImpl(GdkEvent* event) override;
 	bool changeTool(GdkEvent* event) override;

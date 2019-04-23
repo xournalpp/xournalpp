@@ -6,6 +6,8 @@
 
 InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling)
 {
+	XOJ_INIT_TYPE(InputContext);
+
 	this->view = view;
 	this->scrollHandling = scrollHandling;
 
@@ -20,6 +22,8 @@ InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling)
 
 InputContext::~InputContext()
 {
+	XOJ_CHECK_TYPE(InputContext);
+
 	delete this->stylusHandler;
 	this->stylusHandler = nullptr;
 
@@ -34,10 +38,14 @@ InputContext::~InputContext()
 	
 	delete this->keyboardHandler;
 	this->keyboardHandler = nullptr;
+
+	XOJ_RELEASE_TYPE(InputContext);
 }
 
 void InputContext::connect(GtkWidget* pWidget)
 {
+	XOJ_CHECK_TYPE(InputContext);
+
 	this->widget = pWidget;
 	gtk_widget_set_support_multidevice(widget, true);
 
@@ -71,6 +79,8 @@ bool InputContext::eventCallback(GtkWidget* widget, GdkEvent* event, InputContex
 
 bool InputContext::handle(GdkEvent* event)
 {
+	XOJ_CHECK_TYPE(InputContext);
+
 	GdkDevice* device = gdk_event_get_source_device(event);
 
 	// We do not handle scroll events manually but let GTK do it for us
@@ -132,31 +142,43 @@ bool InputContext::handle(GdkEvent* event)
 
 GtkXournal* InputContext::getXournal()
 {
+	XOJ_CHECK_TYPE(InputContext);
+
 	return GTK_XOURNAL(widget);
 }
 
 XournalView* InputContext::getView()
 {
+	XOJ_CHECK_TYPE(InputContext);
+
 	return view;
 }
 
 Settings* InputContext::getSettings()
 {
+	XOJ_CHECK_TYPE(InputContext);
+
 	return view->getControl()->getSettings();
 }
 
 ToolHandler* InputContext::getToolHandler()
 {
+	XOJ_CHECK_TYPE(InputContext);
+
 	return view->getControl()->getToolHandler();
 }
 
 ScrollHandling* InputContext::getScrollHandling()
 {
+	XOJ_CHECK_TYPE(InputContext);
+
 	return this->scrollHandling;
 }
 
 GdkModifierType InputContext::getModifierState()
 {
+	XOJ_CHECK_TYPE(InputContext);
+
 	return this->modifierState;
 }
 
@@ -165,6 +187,8 @@ GdkModifierType InputContext::getModifierState()
  */
 void InputContext::focusWidget()
 {
+	XOJ_CHECK_TYPE(InputContext);
+
 	if (!gtk_widget_has_focus(widget))
 	{
 		gtk_widget_grab_focus(widget);
@@ -173,6 +197,8 @@ void InputContext::focusWidget()
 
 void InputContext::blockDevice(InputContext::DeviceType deviceType)
 {
+	XOJ_CHECK_TYPE(InputContext);
+
 	switch (deviceType)
 	{
 		case MOUSE:
@@ -191,6 +217,8 @@ void InputContext::blockDevice(InputContext::DeviceType deviceType)
 
 void InputContext::unblockDevice(InputContext::DeviceType deviceType)
 {
+	XOJ_CHECK_TYPE(InputContext);
+
 	switch (deviceType)
 	{
 		case MOUSE:
@@ -209,6 +237,8 @@ void InputContext::unblockDevice(InputContext::DeviceType deviceType)
 
 bool InputContext::isBlocked(InputContext::DeviceType deviceType)
 {
+	XOJ_CHECK_TYPE(InputContext);
+
 	switch (deviceType)
 	{
 		case MOUSE:

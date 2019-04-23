@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <XournalType.h>
+
 #include <model/Point.h>
 #include <gui/PageView.h>
 #include <gui/inputdevices/old/PositionInputData.h>
@@ -26,6 +28,8 @@ class InputContext;
 class AbstractInputHandler
 {
 private:
+	XOJ_TYPE_ATTRIB;
+
 	bool blocked = false;
 
 protected:

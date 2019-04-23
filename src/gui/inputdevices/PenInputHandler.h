@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <XournalType.h>
 #include "AbstractInputHandler.h"
 
 class InputContext;
@@ -18,6 +19,8 @@ class InputContext;
 class PenInputHandler : public AbstractInputHandler
 {
 private:
+	XOJ_TYPE_ATTRIB;
+
 	XojPageView* lastActivePage = nullptr;
 
 protected:
@@ -64,7 +67,7 @@ protected:
 
 public:
 	explicit PenInputHandler(InputContext* inputContext);
-	~PenInputHandler();
+	~PenInputHandler() override;
 
 protected:
 	/**

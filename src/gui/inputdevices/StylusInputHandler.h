@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <XournalType.h>
 #include "PenInputHandler.h"
 
 class InputContext;
@@ -24,11 +25,7 @@ public:
 	bool handleImpl(GdkEvent* event) override;
 	bool changeTool(GdkEvent* event) override;
 private:
-	/*
-	 * On some devices tapping the finger on the screen is matched on the pen if it also touches the surface.
-	 * These taps are matched as GDK_ENTER_NOTIFY which we filter out using this flag.
-	 */
-	bool isInWidget = false;
+	XOJ_TYPE_ATTRIB;
 };
 
 

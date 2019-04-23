@@ -166,6 +166,8 @@ void HandRecognition::penEvent()
  */
 void HandRecognition::enableTouch()
 {
+	XOJ_CHECK_TYPE(HandRecognition);
+
 	if (inputContext)
 	{
 		inputContext->unblockDevice(InputContext::TOUCHSCREEN);
@@ -181,6 +183,8 @@ void HandRecognition::enableTouch()
  */
 void HandRecognition::disableTouch()
 {
+	XOJ_CHECK_TYPE(HandRecognition);
+
 	if (inputContext)
 	{
 		inputContext->blockDevice(InputContext::TOUCHSCREEN);
@@ -213,6 +217,8 @@ void HandRecognition::event(GdkDevice* device)
 
 void HandRecognition::unblock()
 {
+	XOJ_CHECK_TYPE(HandRecognition);
+
 	this->enableTouch();
 	this->touchState = true;
 }

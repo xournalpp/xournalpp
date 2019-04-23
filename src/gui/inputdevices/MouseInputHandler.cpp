@@ -8,13 +8,20 @@
 
 MouseInputHandler::MouseInputHandler(InputContext* inputContext) : PenInputHandler(inputContext)
 {
-
+	XOJ_INIT_TYPE(MouseInputHandler);
 }
 
-MouseInputHandler::~MouseInputHandler() = default;
+MouseInputHandler::~MouseInputHandler()
+{
+	XOJ_CHECK_TYPE(MouseInputHandler);
+
+	XOJ_RELEASE_TYPE(MouseInputHandler);
+}
 
 bool MouseInputHandler::handleImpl(GdkEvent* event)
 {
+	XOJ_CHECK_TYPE(MouseInputHandler);
+
 	// Only handle events when there is no active gesture
 	GtkXournal* xournal = inputContext->getXournal();
 	if (xournal->view->getControl()->getWindow()->isGestureActive())
@@ -89,6 +96,8 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 
 bool MouseInputHandler::changeTool(GdkEvent* event)
 {
+	XOJ_CHECK_TYPE(MouseInputHandler);
+
 	Settings* settings = this->inputContext->getSettings();
 	ToolHandler* toolHandler = this->inputContext->getToolHandler();
 	GtkXournal* xournal = this->inputContext->getXournal();
@@ -118,5 +127,5 @@ bool MouseInputHandler::changeTool(GdkEvent* event)
 
 void MouseInputHandler::onBlock()
 {
-
+	XOJ_CHECK_TYPE(MouseInputHandler);
 }

@@ -9,46 +9,20 @@
 
 TouchDrawingInputHandler::TouchDrawingInputHandler(InputContext* inputContext) : PenInputHandler(inputContext)
 {
+	XOJ_INIT_TYPE(TouchDrawingInputHandler);
+}
 
-}bool TouchDrawingInputHandler::changeTool(GdkEvent* event)
+TouchDrawingInputHandler::~TouchDrawingInputHandler()
 {
-	Settings* settings = this->inputContext->getSettings();
-	ButtonConfig* cfgTouch = settings->getTouchButtonConfig();
-	ToolHandler* toolHandler = this->inputContext->getToolHandler();
-	GdkDevice* device = gdk_event_get_source_device(event);
+	XOJ_CHECK_TYPE(TouchDrawingInputHandler);
 
-	ButtonConfig* cfg = nullptr;
-	if (cfgTouch->device == gdk_device_get_name(device))
-	{
-		cfg = cfgTouch;
-
-		// If an action is defined we do it, even if it's a drawing action...
-		if (cfg->getDisableDrawing() && cfg->getAction() == TOOL_NONE)
-		{
-			ToolType tool = toolHandler->getToolType();
-			if (tool == TOOL_PEN || tool == TOOL_ERASER || tool == TOOL_HILIGHTER)
-			{
-				g_message("ignore touchscreen for drawing!\n");
-				return true;
-			}
-		}
-	}
-
-	if (cfg && cfg->getAction() != TOOL_NONE)
-	{
-		toolHandler->copyCurrentConfig();
-		cfg->acceptActions(toolHandler);
-	}
-	else
-	{
-		toolHandler->restoreLastConfig();
-	}
-
-	return false;
+	XOJ_RELEASE_TYPE(TouchDrawingInputHandler);
 }
 
 bool TouchDrawingInputHandler::handleImpl(GdkEvent* event)
 {
+	XOJ_CHECK_TYPE(TouchDrawingInputHandler);
+
 	// Only handle events when there is no active gesture
 	GtkXournal* xournal = inputContext->getXournal();
 	if (xournal->view->getControl()->getWindow()->isGestureActive())
@@ -112,6 +86,45 @@ bool TouchDrawingInputHandler::handleImpl(GdkEvent* event)
 		this->actionEnd(event);
 		this->deviceClassPressed = false;
 		return true;
+	}
+
+	return false;
+}
+
+bool TouchDrawingInputHandler::changeTool(GdkEvent* event)
+{
+	XOJ_CHECK_TYPE(TouchDrawingInputHandler);
+
+	Settings* settings = this->inputContext->getSettings();
+	ButtonConfig* cfgTouch = settings->getTouchButtonConfig();
+	ToolHandler* toolHandler = this->inputContext->getToolHandler();
+	GdkDevice* device = gdk_event_get_source_device(event);
+
+	ButtonConfig* cfg = nullptr;
+	if (cfgTouch->device == gdk_device_get_name(device))
+	{
+		cfg = cfgTouch;
+
+		// If an action is defined we do it, even if it's a drawing action...
+		if (cfg->getDisableDrawing() && cfg->getAction() == TOOL_NONE)
+		{
+			ToolType tool = toolHandler->getToolType();
+			if (tool == TOOL_PEN || tool == TOOL_ERASER || tool == TOOL_HILIGHTER)
+			{
+				g_message("ignore touchscreen for drawing!\n");
+				return true;
+			}
+		}
+	}
+
+	if (cfg && cfg->getAction() != TOOL_NONE)
+	{
+		toolHandler->copyCurrentConfig();
+		cfg->acceptActions(toolHandler);
+	}
+	else
+	{
+		toolHandler->restoreLastConfig();
 	}
 
 	return false;

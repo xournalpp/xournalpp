@@ -7,25 +7,38 @@
 
 AbstractInputHandler::AbstractInputHandler(InputContext* inputContext)
 {
+	XOJ_INIT_TYPE(AbstractInputHandler);
+
 	this->inputContext = inputContext;
 	this->pressureSensitivity = inputContext->getSettings()->isPresureSensitivity();
 }
 
-AbstractInputHandler::~AbstractInputHandler() = default;
+AbstractInputHandler::~AbstractInputHandler()
+{
+	XOJ_CHECK_TYPE(AbstractInputHandler);
+
+	XOJ_RELEASE_TYPE(AbstractInputHandler);
+}
 
 void AbstractInputHandler::block(bool block)
 {
+	XOJ_CHECK_TYPE(AbstractInputHandler);
+
 	this->blocked = block;
 	this->onBlock();
 }
 
 bool AbstractInputHandler::isBlocked()
 {
+	XOJ_CHECK_TYPE(AbstractInputHandler);
+
 	return this->blocked;
 }
 
 bool AbstractInputHandler::handle(GdkEvent* event)
 {
+	XOJ_CHECK_TYPE(AbstractInputHandler);
+
 	if (!this->blocked)
 	{
 		return this->handleImpl(event);
@@ -41,6 +54,8 @@ bool AbstractInputHandler::handle(GdkEvent* event)
  */
 XojPageView* AbstractInputHandler::getPageAtCurrentPosition(GdkEvent* event)
 {
+	XOJ_CHECK_TYPE(AbstractInputHandler);
+
 	if (event == nullptr)
 	{
 		return nullptr;
@@ -65,6 +80,8 @@ XojPageView* AbstractInputHandler::getPageAtCurrentPosition(GdkEvent* event)
  */
 PositionInputData AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, GdkEvent* event)
 {
+	XOJ_CHECK_TYPE(AbstractInputHandler);
+
 	GtkXournal* xournal = inputContext->getXournal();
 
 	gdouble eventX, eventY;
@@ -91,5 +108,5 @@ PositionInputData AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPag
 
 void AbstractInputHandler::onBlock()
 {
-
+	XOJ_CHECK_TYPE(AbstractInputHandler);
 }

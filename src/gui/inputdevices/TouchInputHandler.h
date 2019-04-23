@@ -11,15 +11,19 @@
 
 #pragma once
 
-
+#include <XournalType.h>
 #include "AbstractInputHandler.h"
 
 class InputContext;
 
 class TouchInputHandler : public AbstractInputHandler
 {
+private:
+	XOJ_TYPE_ATTRIB;
 public:
 	explicit TouchInputHandler(InputContext* inputContext);
+	~TouchInputHandler() override;
+
 	bool handleImpl(GdkEvent* event) override;
 };
 

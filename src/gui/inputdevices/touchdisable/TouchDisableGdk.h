@@ -11,7 +11,7 @@
 
 #pragma once
 
-
+#include <XournalType.h>
 #include "TouchDisableInterface.h"
 #include "gtk/gtk.h"
 
@@ -24,8 +24,9 @@ public:
 	void enableTouch() override;
 	void disableTouch() override;
 	void init() override;
-	static bool eventCallback(GtkWidget* widget, GdkEvent* event, TouchDisableGdk* self);
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GtkWidget* widget;
 };
 

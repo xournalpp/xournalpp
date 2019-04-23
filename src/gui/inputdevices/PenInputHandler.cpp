@@ -17,13 +17,20 @@
 
 PenInputHandler::PenInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)
 {
-
+	XOJ_INIT_TYPE(PenInputHandler);
 }
 
-PenInputHandler::~PenInputHandler() = default;
+PenInputHandler::~PenInputHandler()
+{
+	XOJ_CHECK_TYPE(PenInputHandler);
+
+	XOJ_RELEASE_TYPE(PenInputHandler);
+}
 
 void PenInputHandler::updateLastEvent(GdkEvent* event)
 {
+	XOJ_CHECK_TYPE(PenInputHandler);
+
 	if (!event)
 	{
 		return;
@@ -53,6 +60,8 @@ void PenInputHandler::updateLastEvent(GdkEvent* event)
 
 void PenInputHandler::setPressedState(GdkEvent* event)
 {
+	XOJ_CHECK_TYPE(PenInputHandler);
+
 	XojPageView* currentPage = getPageAtCurrentPosition(event);
 
 	this->inputContext->getXournal()->view->getCursor()->setInsidePage(currentPage != nullptr);
@@ -99,6 +108,8 @@ void PenInputHandler::setPressedState(GdkEvent* event)
 
 void PenInputHandler::handleScrollEvent(GdkEvent* event)
 {
+	XOJ_CHECK_TYPE(PenInputHandler);
+
 	// use root coordinates as reference point because
 	// scrolling changes window relative coordinates
 	// see github Gnome/evince@1adce5486b10e763bed869
@@ -133,6 +144,8 @@ void PenInputHandler::handleScrollEvent(GdkEvent* event)
 
 bool PenInputHandler::actionStart(GdkEvent* event)
 {
+	XOJ_CHECK_TYPE(PenInputHandler);
+
 	this->inputContext->focusWidget();
 
 	XojPageView* currentPage = this->getPageAtCurrentPosition(event);
@@ -206,6 +219,8 @@ bool PenInputHandler::actionStart(GdkEvent* event)
 
 bool PenInputHandler::actionMotion(GdkEvent* event)
 {
+	XOJ_CHECK_TYPE(PenInputHandler);
+
 	GtkXournal* xournal = this->inputContext->getXournal();
 	ToolHandler* h = this->inputContext->getToolHandler();
 
@@ -293,6 +308,8 @@ bool PenInputHandler::actionMotion(GdkEvent* event)
 
 bool PenInputHandler::actionEnd(GdkEvent* event)
 {
+	XOJ_CHECK_TYPE(PenInputHandler);
+
 	GtkXournal* xournal = inputContext->getXournal();
 	XournalppCursor* cursor = xournal->view->getCursor();
 	ToolHandler* toolHandler = inputContext->getToolHandler();
@@ -347,6 +364,8 @@ bool PenInputHandler::actionEnd(GdkEvent* event)
 
 void PenInputHandler::actionLeaveWindow(GdkEvent* event)
 {
+	XOJ_CHECK_TYPE(PenInputHandler);
+
 	if (!this->penInWidget)
 	{
 		return;
@@ -417,6 +436,8 @@ void PenInputHandler::actionLeaveWindow(GdkEvent* event)
 
 void PenInputHandler::actionEnterWindow(GdkEvent* event)
 {
+	XOJ_CHECK_TYPE(PenInputHandler);
+
 	this->penInWidget = true;
 
 	// Restart input sequence if the tool is pressed and not a selection tool

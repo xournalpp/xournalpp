@@ -285,7 +285,12 @@ XOJ_DECLARE_TYPE(Plugin, 275);
 XOJ_DECLARE_TYPE(MenuEntry, 276);
 XOJ_DECLARE_TYPE(PluginDialog, 277);
 XOJ_DECLARE_TYPE(PluginDialogEntry, 278);
-
-
-
-
+XOJ_DECLARE_TYPE(InputContext, 279);
+XOJ_DECLARE_TYPE(AbstractInputHandler, 280);
+XOJ_DECLARE_TYPE(KeyboardInputHandler, 281);
+XOJ_DECLARE_TYPE(MouseInputHandler, 282);
+XOJ_DECLARE_TYPE(PenInputHandler, 283);
+XOJ_DECLARE_TYPE(StylusInputHandler, 284);
+XOJ_DECLARE_TYPE(TouchDrawingInputHandler, 285);
+XOJ_DECLARE_TYPE(TouchInputHandler, 286);
+XOJ_DECLARE_TYPE(TouchDisableGdk, 287);

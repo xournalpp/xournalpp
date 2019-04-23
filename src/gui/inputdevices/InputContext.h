@@ -11,6 +11,9 @@
 
 #pragma once
 
+
+#include <XournalType.h>
+
 #include "AbstractInputHandler.h"
 #include "MouseInputHandler.h"
 #include "StylusInputHandler.h"
@@ -32,6 +35,8 @@ class InputContext
 {
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	StylusInputHandler* stylusHandler;
 	TouchInputHandler* touchHandler;
 	MouseInputHandler* mouseHandler;
