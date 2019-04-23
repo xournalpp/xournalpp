@@ -165,7 +165,6 @@ GdkModifierType InputContext::getModifierState()
  */
 void InputContext::focusWidget()
 {
-	// TODO this may fix the flicker of the scrollbars
 	if (!gtk_widget_has_focus(widget))
 	{
 		gtk_widget_grab_focus(widget);

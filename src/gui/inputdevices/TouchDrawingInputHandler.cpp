@@ -53,8 +53,6 @@ bool TouchDrawingInputHandler::handleImpl(GdkEvent* event)
 	GtkXournal* xournal = inputContext->getXournal();
 	if (xournal->view->getControl()->getWindow()->isGestureActive())
 	{
-		//TODO what to do if motion is detected while input is active?
-
 		// Do not further relay events as they are of no interest
 		return true;
 	}

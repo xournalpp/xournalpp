@@ -57,13 +57,6 @@ void PenInputHandler::setPressedState(GdkEvent* event)
 
 	this->inputContext->getXournal()->view->getCursor()->setInsidePage(currentPage != nullptr);
 
-	// TODO what do we need this for?
-	/*if (currentPage)
-	{
-		PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
-		currentPage->onMotionNotifyEvent(pos);
-	}*/
-
 	if (event->type == GDK_BUTTON_PRESS) //mouse button pressed or pen touching surface
 	{
 		guint button;
@@ -349,7 +342,6 @@ bool PenInputHandler::actionEnd(GdkEvent* event)
 	this->inputRunning = false;
 	this->lastHitEvent = nullptr;
 
-	// TODO why?
 	return false;
 }
 
