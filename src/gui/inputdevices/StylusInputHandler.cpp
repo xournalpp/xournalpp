@@ -5,6 +5,7 @@
 #include <gui/widgets/XournalWidget.h>
 #include "gui/XournalppCursor.h"
 #include "StylusInputHandler.h"
+#include <cmath>
 
 StylusInputHandler::StylusInputHandler(InputContext* inputContext) : PenInputHandler(inputContext)
 {
