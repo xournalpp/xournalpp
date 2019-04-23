@@ -84,6 +84,7 @@ PositionInputData AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPag
 	}
 
 	pos.state = this->inputContext->getModifierState();
+	pos.timestamp = gdk_event_get_time(event);
 
 	return pos;
 }
