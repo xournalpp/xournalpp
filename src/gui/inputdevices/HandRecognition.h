@@ -14,6 +14,7 @@
 #include <XournalType.h>
 
 #include <gdk/gdk.h>
+#include "InputContext.h"
 
 class Settings;
 class TouchDisableInterface;
@@ -21,7 +22,7 @@ class TouchDisableInterface;
 class HandRecognition
 {
 public:
-	HandRecognition(GtkWidget* widget, Settings* settings);
+	HandRecognition(GtkWidget* widget, InputContext* inputContext, Settings* settings);
 	virtual ~HandRecognition();
 
 public:
@@ -84,7 +85,7 @@ private:
 	/**
 	 * Timeout in ms
 	 */
-	int disableTimeout = 100;
+	int disableTimeout = 500;
 
 	/**
 	 * True if an X11 session is running
@@ -100,6 +101,11 @@ private:
 	 * XournalView
 	 */
 	 GtkWidget* widget;
+
+	 /**
+	  * InputContext
+	  */
+	  InputContext* inputContext;
 
 	/**
 	 * Settings

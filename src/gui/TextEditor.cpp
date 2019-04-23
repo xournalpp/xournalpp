@@ -1,6 +1,6 @@
 #include "TextEditor.h"
 
-#include "Cursor.h"
+#include "XournalppCursor.h"
 #include "PageView.h"
 #include "TextEditorWidget.h"
 #include "XournalView.h"
@@ -369,7 +369,7 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 
 	if (obscure)
 	{
-		Cursor* cursor = gui->getXournal()->getCursor();
+		XournalppCursor* cursor = gui->getXournal()->getCursor();
 		cursor->setInvisible(true);
 	}
 

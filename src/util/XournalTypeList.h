@@ -36,7 +36,7 @@ XOJ_DECLARE_TYPE(AbstractItem, 24);
 XOJ_DECLARE_TYPE(AbstractToolItem, 25);
 XOJ_DECLARE_TYPE(ColorToolItem, 26);
 XOJ_DECLARE_TYPE(FontButton, 27);
-XOJ_DECLARE_TYPE(Cursor, 28);
+XOJ_DECLARE_TYPE(XournalppCursor, 28);
 XOJ_DECLARE_TYPE(GladeGui, 29);
 XOJ_DECLARE_TYPE(GladeSearchpath, 30);
 XOJ_DECLARE_TYPE(EraseableStroke, 31);

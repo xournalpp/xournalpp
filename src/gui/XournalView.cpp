@@ -1,6 +1,6 @@
 #include "XournalView.h"
 
-#include "Cursor.h"
+#include "XournalppCursor.h"
 #include "Layout.h"
 #include "PageView.h"
 #include "RepaintHandler.h"
@@ -33,7 +33,8 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
 
-	this->widget = gtk_xournal_new(this, scrollHandling);
+	auto* inputContext = new InputContext(this, scrollHandling);
+	this->widget = gtk_xournal_new(this, inputContext);
 	// we need to refer widget here, because we unref it somewhere twice!?
 	g_object_ref(this->widget);
 
@@ -43,7 +44,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 	g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
 
 	this->repaintHandler = new RepaintHandler(this);
-	this->handRecognition = new HandRecognition(this->widget, control->getSettings());
+	this->handRecognition = new HandRecognition(this->widget, inputContext, control->getSettings());
 
 	control->getZoomControl()->addZoomListener(this);
 
@@ -1091,7 +1092,7 @@ ArrayIterator<XojPageView*> XournalView::pageViewIterator()
 }
 
 
-Cursor* XournalView::getCursor()
+XournalppCursor* XournalView::getCursor()
 {
 	XOJ_CHECK_TYPE(XournalView);
 

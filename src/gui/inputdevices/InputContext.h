@@ -41,7 +41,7 @@ private:
 	TouchDrawingInputHandler* touchDrawingHandler;
 	KeyboardInputHandler* keyboardHandler;
 
-	GtkWidget* widget;
+	GtkWidget* widget = nullptr;
 	XournalView* view;
 	ScrollHandling* scrollHandling;
 
@@ -57,7 +57,7 @@ public:
 	};
 
 public:
-	InputContext(GtkWidget* widget, XournalView* view, ScrollHandling* scrollHandling);
+	InputContext(XournalView* view, ScrollHandling* scrollHandling);
 	~InputContext();
 
 private:
@@ -81,7 +81,7 @@ public:
 	/**
 	 * Connect the input handling to the window to receive events
 	 */
-	void connect();
+	void connect(GtkWidget* widget);
 
 	GtkXournal* getXournal();
 	XournalView* getView();

@@ -22,7 +22,7 @@
 #include <gtk/gtk.h>
 
 class Control;
-class Cursor;
+class XournalppCursor;
 class Document;
 class EditSelection;
 class Layout;
@@ -103,7 +103,7 @@ public:
 	PdfCache* getCache();
 	RepaintHandler* getRepaintHandler();
 	GtkWidget* getWidget();
-	Cursor* getCursor();
+	XournalppCursor* getCursor();
 
 	Rectangle* getVisibleRect(int page);
 	Rectangle* getVisibleRect(XojPageView* redrawable);

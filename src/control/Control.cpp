@@ -7,7 +7,7 @@
 #include "PageBackgroundChangeController.h"
 #include "UndoRedoController.h"
 
-#include "gui/Cursor.h"
+#include "gui/XournalppCursor.h"
 
 #include "gui/dialog/AboutDialog.h"
 #include "gui/dialog/GotoDialog.h"
@@ -79,7 +79,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	this->gladeSearchPath = gladeSearchPath;
 
 	this->metadata = new MetadataManager();
-	this->cursor = new Cursor(this);
+	this->cursor = new XournalppCursor(this);
 
 	this->lastAction = ACTION_NONE;
 	this->lastGroup = GROUP_NOGROUP;
@@ -3326,7 +3326,7 @@ ZoomControl* Control::getZoomControl()
 	return this->zoom;
 }
 
-Cursor* Control::getCursor()
+XournalppCursor* Control::getCursor()
 {
 	XOJ_CHECK_TYPE(Control);
 

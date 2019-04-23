@@ -26,9 +26,7 @@ public:
 	void init() override;
 	static bool eventCallback(GtkWidget* widget, GdkEvent* event, TouchDisableGdk* self);
 private:
-	gulong handlerID = 0;
 	GtkWidget* widget;
-	GdkSeat* touchSeat = nullptr;
 };
 
 

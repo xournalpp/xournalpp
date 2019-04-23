@@ -6,7 +6,7 @@
 #include "AbstractInputHandler.h"
 #include <gui/widgets/XournalWidget.h>
 #include <control/ToolHandler.h>
-#include <gui/Cursor.h>
+#include <gui/XournalppCursor.h>
 #include <gui/inputdevices/old/PositionInputData.h>
 #include "gui/XournalView.h"
 #include <control/settings/ButtonConfig.h>
@@ -152,7 +152,7 @@ bool PenInputHandler::actionStart(GdkEvent* event)
 
 	GtkXournal* xournal = this->inputContext->getXournal();
 
-	Cursor* cursor = xournal->view->getCursor();
+	XournalppCursor* cursor = xournal->view->getCursor();
 	cursor->setMouseDown(true);
 
 
@@ -298,7 +298,7 @@ bool PenInputHandler::actionMotion(GdkEvent* event)
 bool PenInputHandler::actionEnd(GdkEvent* event)
 {
 	GtkXournal* xournal = inputContext->getXournal();
-	Cursor* cursor = xournal->view->getCursor();
+	XournalppCursor* cursor = xournal->view->getCursor();
 	ToolHandler* toolHandler = inputContext->getToolHandler();
 
 	cursor->setMouseDown(false);

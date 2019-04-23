@@ -36,7 +36,6 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 
 		if (button == 1)
 		{
-			this->inputContext->blockDevice(InputContext::TOUCHSCREEN);
 			this->actionStart(event);
 			return true;
 		}
@@ -72,7 +71,6 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 		if (button == 1)
 		{
 			this->actionEnd(event);
-			this->inputContext->unblockDevice(InputContext::TOUCHSCREEN);
 			return true;
 		}
 	}
@@ -82,8 +80,6 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 	{
 		// TODO: We may need to update pressed state manually here
 		this->actionEnd(event);
-		this->inputContext->unblockDevice(InputContext::TOUCHSCREEN);
-		//this->inputContext->getView()->getHandRecognition()->unblock();
 		return true;
 	}
 

@@ -3,7 +3,7 @@
 //
 
 #include <gui/widgets/XournalWidget.h>
-#include "gui/Cursor.h"
+#include "gui/XournalppCursor.h"
 #include "StylusInputHandler.h"
 
 StylusInputHandler::StylusInputHandler(InputContext* inputContext) : PenInputHandler(inputContext)
@@ -26,12 +26,6 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 	// Determine the pressed states of devices and associate them to the current event
 	setPressedState(event);
 
-	// Block devices if pen is within proximity of screen
-	if (event->type == GDK_PROXIMITY_IN)
-	{
-		this->blockDevices();
-	}
-
 	// Trigger start of action when pen/mouse is pressed
 	if (event->type == GDK_BUTTON_PRESS)
 	{
@@ -40,7 +34,6 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 
 		if (button == 1)
 		{
-			this->blockDevices();
 			this->actionStart(event);
 			return true;
 		}
@@ -68,15 +61,12 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 	}
 
 	// Notify if pen enters/leaves widget
-	//TODO how to handle sequences with enter but no leave event in terms of blocked devices?
 	if (event->type == GDK_ENTER_NOTIFY && !this->inputRunning)
 	{
-		this->blockDevices();
 		this->actionEnterWindow(event);
 	}
 	if (event->type == GDK_LEAVE_NOTIFY)
 	{
-		this->unblockDevices();
 		this->inputContext->getView()->getHandRecognition()->unblock();
 		this->actionLeaveWindow(event);
 	}
@@ -90,7 +80,6 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 		if (button == 1)
 		{
 			this->actionEnd(event);
-			this->unblockDevices();
 			return true;
 		}
 	}
@@ -100,15 +89,6 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 	{
 		// TODO: We may need to update pressed state manually here
 		this->actionEnd(event);
-		this->unblockDevices();
-		this->inputContext->getView()->getHandRecognition()->unblock();
-		return true;
-	}
-
-	// Unblock devices if pen is out of proximity (required if pen never touches screen)
-	if (event->type == GDK_PROXIMITY_OUT)
-	{
-		this->unblockDevices();
 		return true;
 	}
 
@@ -152,14 +132,3 @@ bool StylusInputHandler::changeTool(GdkEvent* event)
 	return false;
 }
 
-void StylusInputHandler::blockDevices()
-{
-	this->inputContext->blockDevice(InputContext::MOUSE);
-	this->inputContext->blockDevice(InputContext::TOUCHSCREEN);
-}
-
-void StylusInputHandler::unblockDevices()
-{
-	this->inputContext->unblockDevice(InputContext::MOUSE);
-	this->inputContext->unblockDevice(InputContext::TOUCHSCREEN);
-}

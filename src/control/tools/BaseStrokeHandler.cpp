@@ -4,7 +4,7 @@
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
 #include "undo/InsertUndoAction.h"
-#include "gui/Cursor.h"
+#include "gui/XournalppCursor.h"
 #include <cmath>
 
 

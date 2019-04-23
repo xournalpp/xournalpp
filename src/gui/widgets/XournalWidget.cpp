@@ -65,22 +65,22 @@ GType gtk_xournal_get_type(void)
 	return gtk_xournal_type;
 }
 
-GtkWidget* gtk_xournal_new(XournalView* view, ScrollHandling* scrollHandling)
+GtkWidget* gtk_xournal_new(XournalView* view, InputContext* inputContext)
 {
 	GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), NULL));
 	xoj->view = view;
-	xoj->scrollHandling = scrollHandling;
+	xoj->scrollHandling = inputContext->getScrollHandling();
 	xoj->x = 0;
 	xoj->y = 0;
-	xoj->layout = new Layout(view, scrollHandling);
+	xoj->layout = new Layout(view, inputContext->getScrollHandling());
 	xoj->selection = NULL;
 
 	// TODO hide old method behind setting flag
 	//xoj->input = new NewGtkInputDevice(GTK_WIDGET(xoj), view, scrollHandling);
-	xoj->input = new InputContext(GTK_WIDGET(xoj), view, scrollHandling);
+	xoj->input = inputContext;
 
 	//xoj->input->initWidget();
-	xoj->input->connect();
+	xoj->input->connect(GTK_WIDGET(xoj));
 
 	return GTK_WIDGET(xoj);
 }

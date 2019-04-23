@@ -6,10 +6,11 @@
 #include "control/settings/Settings.h"
 
 #include "gtk/gtk.h"
+#include "InputContext.h"
 
 
-HandRecognition::HandRecognition(GtkWidget* widget, Settings* settings)
- : widget(widget), settings(settings)
+HandRecognition::HandRecognition(GtkWidget* widget, InputContext* inputContext, Settings* settings)
+ : widget(widget), inputContext(inputContext), settings(settings)
 {
 	XOJ_INIT_TYPE(HandRecognition);
 
@@ -59,13 +60,12 @@ void HandRecognition::reload()
 		return;
 	}
 
-	disableTimeout = 50;
-	/*disableTimeout = 1000;
+	disableTimeout = 1000;
 	touch.getInt("timeout", disableTimeout);
 	if (disableTimeout < 500)
 	{
 		disableTimeout = 500;
-	}*/
+	}
 
 	delete touchImpl;
 	touchImpl = NULL;
@@ -95,11 +95,11 @@ void HandRecognition::reload()
 	}
 	else // Auto detect
 	{
-		touchImpl = new TouchDisableGdk(this->widget);
+		//touchImpl = new TouchDisableGdk(this->widget);
 #ifdef X11_ENABLED
 		if (x11Session)
 		{
-			//touchImpl = new TouchDisableX11();
+			touchImpl = new TouchDisableX11();
 		}
 #endif
 	}
@@ -166,6 +166,10 @@ void HandRecognition::penEvent()
  */
 void HandRecognition::enableTouch()
 {
+	if (inputContext)
+	{
+		inputContext->unblockDevice(InputContext::TOUCHSCREEN);
+	}
 	if (touchImpl)
 	{
 		touchImpl->enableTouch();
@@ -177,6 +181,10 @@ void HandRecognition::enableTouch()
  */
 void HandRecognition::disableTouch()
 {
+	if (inputContext)
+	{
+		inputContext->blockDevice(InputContext::TOUCHSCREEN);
+	}
 	if (touchImpl)
 	{
 		touchImpl->disableTouch();

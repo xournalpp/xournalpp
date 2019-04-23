@@ -18,10 +18,7 @@ TouchDisableGdk::~TouchDisableGdk()
 
 void TouchDisableGdk::init()
 {
-	GdkDisplay* display = gdk_display_get_default();
-	GdkSeat* displaySeat = gdk_display_get_default_seat(display);
-	GdkDevice* pointerDevice = gdk_seat_get_pointer(displaySeat);
-	this->touchSeat = gdk_device_get_seat(pointerDevice);
+
 }
 
 void TouchDisableGdk::enableTouch()
@@ -30,8 +27,8 @@ void TouchDisableGdk::enableTouch()
 	g_message("Enable touch");
 #endif
 
-	//gdk_seat_ungrab(this->touchSeat);
 	gtk_grab_remove(this->widget);
+	gdk_pointer_ungrab(GDK_CURRENT_TIME);
 }
 
 void TouchDisableGdk::disableTouch()
@@ -45,9 +42,7 @@ void TouchDisableGdk::disableTouch()
 	 * See the following link if window dragging by double clicks on empty widget space occurs
 	 * https://www.reddit.com/r/kde/comments/aaeo91
 	 */
-
-	// Discard all events that are not meant for our view
+	gdk_pointer_grab(window, false, GDK_TOUCH_MASK, nullptr, nullptr, GDK_CURRENT_TIME);
 	gtk_grab_add(this->widget);
-	//gdk_seat_grab(this->touchSeat, window, GDK_SEAT_CAPABILITY_TOUCH, true, nullptr, nullptr, nullptr, nullptr);
 }
 

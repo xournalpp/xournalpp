@@ -3,7 +3,7 @@
 #include "gui/inputdevices/HandRecognition.h"
 
 #include "control/Control.h"
-#include "gui/Cursor.h"
+#include "gui/XournalppCursor.h"
 #include "gui/PageView.h"
 #include "gui/scroll/ScrollHandling.h"
 #include "gui/XournalView.h"
@@ -315,7 +315,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		input->copyAxes(event);
 		input->actionMoved();
 
-		Cursor* cursor = view->getControl()->getWindow()->getXournal()->getCursor();
+		XournalppCursor* cursor = view->getControl()->getWindow()->getXournal()->getCursor();
 		cursor->setInvisible(false);
 
 		view->getHandRecognition()->event(sourceDevice);

@@ -6,7 +6,7 @@
 #include "control/settings/Settings.h"
 #include "control/tools/EditSelection.h"
 #include "control/ToolHandler.h"
-#include "gui/Cursor.h"
+#include "gui/XournalppCursor.h"
 #include "gui/PageView.h"
 #include "gui/Layout.h"
 #include "gui/XournalView.h"
@@ -292,7 +292,7 @@ bool InputSequence::actionStart()
 	ToolHandler* h = inputHandler->getToolHandler();
 	if (h->getToolType() == TOOL_HAND)
 	{
-		Cursor* cursor = xournal->view->getCursor();
+		XournalppCursor* cursor = xournal->view->getCursor();
 		cursor->setMouseDown(true);
 		inScrolling = true;
 		// set reference
@@ -402,7 +402,7 @@ void InputSequence::actionEnd()
 	current_view = NULL;
 
 	GtkXournal* xournal = inputHandler->getXournal();
-	Cursor* cursor = xournal->view->getCursor();
+	XournalppCursor* cursor = xournal->view->getCursor();
 	ToolHandler* h = inputHandler->getToolHandler();
 
 	if (xournal->view->getControl()->getWindow()->isGestureActive())

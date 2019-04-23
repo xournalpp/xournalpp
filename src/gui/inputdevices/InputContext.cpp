@@ -4,9 +4,8 @@
 
 #include "InputContext.h"
 
-InputContext::InputContext(GtkWidget* widget, XournalView* view, ScrollHandling* scrollHandling)
+InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling)
 {
-	this->widget = widget;
 	this->view = view;
 	this->scrollHandling = scrollHandling;
 
@@ -37,8 +36,9 @@ InputContext::~InputContext()
 	this->keyboardHandler = nullptr;
 }
 
-void InputContext::connect()
+void InputContext::connect(GtkWidget* pWidget)
 {
+	this->widget = pWidget;
 	gtk_widget_set_support_multidevice(widget, true);
 
 	int mask =
@@ -59,9 +59,9 @@ void InputContext::connect()
 			GDK_PROXIMITY_IN_MASK	|
 			GDK_PROXIMITY_OUT_MASK;
 
-	gtk_widget_add_events(widget, mask);
+	gtk_widget_add_events(pWidget, mask);
 
-	g_signal_connect(widget, "event", G_CALLBACK(eventCallback), this);
+	g_signal_connect(pWidget, "event", G_CALLBACK(eventCallback), this);
 }
 
 bool InputContext::eventCallback(GtkWidget* widget, GdkEvent* event, InputContext* self)
@@ -219,4 +219,5 @@ bool InputContext::isBlocked(InputContext::DeviceType deviceType)
 		case TOUCHSCREEN:
 			return this->touchDrawingHandler->isBlocked();
 	}
+	return false;
 }
