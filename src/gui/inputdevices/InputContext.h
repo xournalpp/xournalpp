@@ -28,9 +28,6 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
-// TODO: this is duplicated from XournalWidget - required to make build process work - How to do this in a good way?
-typedef struct _GtkXournal GtkXournal;
-
 class InputContext
 {
 

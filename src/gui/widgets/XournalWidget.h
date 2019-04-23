@@ -12,7 +12,6 @@
 #pragma once
 
 #include <gtk/gtk.h>
-#include <gui/inputdevices/InputContext.h>
 
 G_BEGIN_DECLS
 

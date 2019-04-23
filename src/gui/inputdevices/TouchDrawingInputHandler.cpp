@@ -2,8 +2,10 @@
 // Created by ulrich on 08.04.19.
 //
 
-#include <gui/widgets/XournalWidget.h>
 #include "TouchDrawingInputHandler.h"
+#include "InputContext.h"
+
+#include <gui/widgets/XournalWidget.h>
 
 TouchDrawingInputHandler::TouchDrawingInputHandler(InputContext* inputContext) : PenInputHandler(inputContext)
 {

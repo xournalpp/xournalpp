@@ -4,12 +4,15 @@
 
 #include "PenInputHandler.h"
 #include "AbstractInputHandler.h"
+#include "InputContext.h"
+
 #include <gui/widgets/XournalWidget.h>
 #include <control/ToolHandler.h>
 #include <gui/XournalppCursor.h>
 #include <gui/inputdevices/old/PositionInputData.h>
 #include "gui/XournalView.h"
 #include <control/settings/ButtonConfig.h>
+
 #include <cmath>
 
 PenInputHandler::PenInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)

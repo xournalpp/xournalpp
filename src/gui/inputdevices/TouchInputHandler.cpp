@@ -3,6 +3,7 @@
 //
 
 #include "TouchInputHandler.h"
+#include "InputContext.h"
 
 TouchInputHandler::TouchInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)
 {

@@ -4,6 +4,7 @@
 
 #include <gui/widgets/XournalWidget.h>
 #include "KeyboardInputHandler.h"
+#include "InputContext.h"
 
 KeyboardInputHandler::KeyboardInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)
 {

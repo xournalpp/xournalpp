@@ -4,6 +4,7 @@
 
 #include <gui/widgets/XournalWidget.h>
 #include "MouseInputHandler.h"
+#include "InputContext.h"
 
 MouseInputHandler::MouseInputHandler(InputContext* inputContext) : PenInputHandler(inputContext)
 {
