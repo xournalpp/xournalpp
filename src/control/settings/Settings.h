@@ -356,6 +356,9 @@ public:
 	string getPluginDisabled();
 	void setPluginDisabled(string pluginEnabled);
 
+	bool getNewInputSystemEnabled();
+	void setNewInputSystemEnabled(bool systemEnabled);
+
 	/**
 	 * Get name, e.g. "cm"
 	 */
@@ -736,6 +739,11 @@ private:
 	 * List of disabled plugins (only the one which are not disabled by default)
 	 */
 	string pluginDisabled;
+
+	/**
+	 * Whether the new experimental input system is activated
+	 */
+	bool inputSystemEnabled;
 
 	/**
 	 * "Transaction" running, do not save until the end is reached

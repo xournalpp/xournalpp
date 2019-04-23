@@ -141,6 +141,8 @@ void Settings::loadDefault()
 
 	this->pluginEnabled = "";
 	this->pluginDisabled = "";
+
+	this->inputSystemEnabled = false;
 	
 	inTransaction = false;
 }
@@ -542,6 +544,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->audioOutputDevice = g_ascii_strtoll((const char *) value, NULL, 10);
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "inputSystemEnabled") == 0)
+	{
+		this->inputSystemEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
 
 	xmlFree(name);
 	xmlFree(value);
@@ -903,6 +909,8 @@ void Settings::save()
 
 	WRITE_STRING_PROP(pluginEnabled);
 	WRITE_STRING_PROP(pluginDisabled);
+
+	WRITE_BOOL_PROP(inputSystemEnabled);
 
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
@@ -2234,6 +2242,25 @@ void Settings::setPluginDisabled(string pluginEnabled)
 	}
 	this->pluginDisabled = pluginDisabled;
 	save();
+}
+
+void Settings::setNewInputSystemEnabled(bool systemEnabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->inputSystemEnabled == systemEnabled)
+	{
+		return;
+	}
+	this->inputSystemEnabled = systemEnabled;
+	save();
+}
+
+bool Settings::getNewInputSystemEnabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->inputSystemEnabled;
 }
 
 //////////////////////////////////////////////////

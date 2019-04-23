@@ -217,6 +217,7 @@ void SettingsDialog::load()
 	loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
 	loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
 	loadCheckbox("cbTouchWorkaround", settings->isTouchWorkaround());
+	loadCheckbox("cbNewInputSystem", settings->getNewInputSystemEnabled());
 
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
 	string txt = settings->getDefaultSaveName();
@@ -468,6 +469,7 @@ void SettingsDialog::save()
 	settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
 	settings->setDarkTheme(getCheckbox("cbDarkTheme"));
 	settings->setTouchWorkaround(getCheckbox("cbTouchWorkaround"));
+	settings->setNewInputSystemEnabled(getCheckbox("cbNewInputSystem"));
 
 	int scrollbarHideType = SCROLLBAR_HIDE_NONE;
 	if (getCheckbox("cbHideHorizontalScrollbar"))
