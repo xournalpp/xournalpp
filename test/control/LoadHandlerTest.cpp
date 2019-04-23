@@ -171,9 +171,11 @@ public:
 		CPPUNIT_ASSERT_EQUAL(5UL, doc->getPageCount());
 		checkPageType(doc, 0, "p1", PageType("plain"));
 		checkPageType(doc, 1, "p2", PageType("lined"));
-		checkPageType(doc, 2, "p3", PageType("ruled"));
-		checkPageType(doc, 3, "p4", PageType("graph"));
-		checkPageType(doc, 4, "p5", PageType(":image"));
+		checkPageType(doc, 2, "p3", PageType("lined_vline"));
+		checkPageType(doc, 3, "p4", PageType("staves"));
+		checkPageType(doc, 4, "p5", PageType("staves_vline"));
+		checkPageType(doc, 5, "p6", PageType("graph"));
+		checkPageType(doc, 6, "p7", PageType(":image"));
 	}
 
 	void testPageTypeZipped()
@@ -184,9 +186,11 @@ public:
 		CPPUNIT_ASSERT_EQUAL(5UL, doc->getPageCount());
 		checkPageType(doc, 0, "p1", PageType("plain"));
 		checkPageType(doc, 1, "p2", PageType("lined"));
-		checkPageType(doc, 2, "p3", PageType("ruled"));
-		checkPageType(doc, 3, "p4", PageType("graph"));
-		checkPageType(doc, 4, "p5", PageType(":image"));
+		checkPageType(doc, 2, "p3", PageType("lined_vline"));
+		checkPageType(doc, 3, "p4", PageType("staves"));
+		checkPageType(doc, 4, "p5", PageType("staves_vline"));
+		checkPageType(doc, 5, "p6", PageType("graph"));
+		checkPageType(doc, 6, "p7", PageType(":image"));
 	}
 
 	void checkLayer(PageRef page, int layerIndex, string expectedText)
