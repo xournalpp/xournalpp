@@ -254,6 +254,11 @@ private: // DATA
 	double rotation = 0;
 
 	/**
+	 * Use to translate to rotated selection
+	 */
+		_cairo_matrix cmatrix;
+	
+	/**
 	 * The size
 	 */
 	double width;

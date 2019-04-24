@@ -141,6 +141,9 @@ void EditSelection::contstruct(UndoRedoHandler* undo, XojPageView* view, PageRef
 
 	this->contents = new EditSelectionContents(this->x, this->y, this->width, this->height,
 											   this->sourcePage, this->sourceLayer, this->view);
+	
+	cairo_matrix_init_identity(&this->cmatrix);
+	
 }
 
 EditSelection::~EditSelection()
@@ -399,6 +402,7 @@ void EditSelection::mouseUp()
 	if (this->mouseDownType == CURSOR_SELECTION_DELETE )
 	{
 		this->view->getXournal()->deleteSelection();
+		return;
 		
 	}
 	else
@@ -412,6 +416,22 @@ void EditSelection::mouseUp()
 									layer, page, this->view, this->undo, this->mouseDownType);
 	}
 	this->mouseDownType = CURSOR_SELECTION_NONE;
+
+	double zoom = this->view->getXournal()->getZoom();
+	//store translation matrix for pointer use
+	double rx = (this->x + this->width/2) * zoom;
+	double ry = (this->y + this->height/2) * zoom;
+
+	cairo_matrix_init_identity(&this->cmatrix);
+	cairo_matrix_translate(&this->cmatrix, rx, ry);
+	cairo_matrix_rotate(&this->cmatrix, -this->rotation);
+	cairo_matrix_translate(&this->cmatrix, -rx, -ry);
+	
+//	cairo_matrix_transform_point( &this->cmatrix, &x, &y);
+	
+	
+	
+	
 }
 
 /**
@@ -686,6 +706,9 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 	double x2 = x1 + (this->width * zoom);
 	double y1 = getYOnView() * zoom;
 	double y2 = y1 + (this->height * zoom);
+
+
+	cairo_matrix_transform_point( &this->cmatrix, &x, &y);
 
 	
 	const int EDGE_PADDING = (this->btnWidth/2) + 2;
