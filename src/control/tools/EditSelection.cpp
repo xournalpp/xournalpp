@@ -188,7 +188,13 @@ void EditSelection::finalizeSelection()
 	this->contents->finalizeSelection(this->x, this->y, this->width, this->height,
 										this->aspectRatio, layer, page, this->view, this->undo);
 
-	this->view->rerenderRect(this->x, this->y, this->width, this->height);
+	
+	//Calculate new clip region delta due to rotation:
+    double addW =std::abs(this->width * cos(this->rotation)) + std::abs(this->height * sin(this->rotation)) - this->width ;
+	double addH = std::abs(this->width * sin(this->rotation)) + std::abs(this->height * cos(this->rotation)) - this->height;
+
+
+	this->view->rerenderRect(this->x - addW/2.0, this->y-addH/2.0, this->width+addW, this->height+addH);
 
 	// This is needed if the selection not was 100% on a page
 	this->view->getXournal()->repaintSelection(true);
