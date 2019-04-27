@@ -448,9 +448,15 @@ void EditSelection::mouseDown(CursorSelectionType type, double x, double y)
 	XOJ_CHECK_TYPE(EditSelection);
 
 	double zoom = this->view->getXournal()->getZoom();
+
+
+	if ( type != CURSOR_SELECTION_ROTATE && type != CURSOR_SELECTION_MOVE )	//NOT rotate nor move
+	{
+		cairo_matrix_transform_point( &this->cmatrix, &x, &y);
+	}	
 	x /= zoom;
 	y /= zoom;
-
+	
 	this->mouseDownType = type;
 	this->relMousePosX = x - this->x;
 	this->relMousePosY = y - this->y;
@@ -458,137 +464,175 @@ void EditSelection::mouseDown(CursorSelectionType type, double x, double y)
 
 /**
  * Handles mouse input for moving and resizing, coordinates are relative to "view"
+ * 
+ * For Move and Rotate the mouse position is not modified by the transformation matrix.
+ * For Scale width and height it is... but the dx and dy moved to drag only one side has to be translated back out of the rotated coordinates.
+ * 
  */
-void EditSelection::mouseMove(double x, double y)
+void EditSelection::mouseMove(double mouseX, double mouseY)
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
 	double zoom = this->view->getXournal()->getZoom();
-	x /= zoom;
-	y /= zoom;
-	double minSize = MINPIXSIZE/zoom;
-
+	
+	g_print("%f\t%f\t%f\t%f\t%f\t\t\t",this->x,this->y,this->rotation, this->width, this->height);
+	
+	
 	if (this->mouseDownType == CURSOR_SELECTION_MOVE)
 	{
-		this->x = x - this->relMousePosX;
-		this->y = y - this->relMousePosY;
-	}
-	else if (this->mouseDownType == CURSOR_SELECTION_TOP_LEFT)
-	{
-		double dx = x - this->x;
-		double dy = y - this->y;
-		double f;
-		if (ABS(dy) < ABS(dx))
-		{
-			f = (this->height + dy) / this->height;
-		}
-		else
-		{
-			f = (this->width + dx) / this->width;
-		}
-
-		double oldW = this->width;
-		double oldH = this->height;
-		this->width /= f;
-		this->height /= f;
-
-		this->x = MIN( this->x + oldW - minSize, this->x + oldW - this->width);
-		this->y = MIN( this->y + oldH - minSize, this->y + oldH - this->height);
-	}
-	else if (this->mouseDownType == CURSOR_SELECTION_TOP_RIGHT)
-	{
-		double dx = x - this->x - this->width;
-		double dy = y - this->y;
-
-		double f;
-		if (ABS(dy) < ABS(dx))
-		{
-			f = this->height / (this->height + dy);
-		}
-		else
-		{
-			f = (this->width + dx) / this->width;
-		}
-		
-		double oldH = this->height;
-		this->width *= f;
-		this->height *= f;
-
-		this->y = MIN( this->y + oldH - minSize, this->y + oldH - this->height);
-	}
-	else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_LEFT)
-	{
-		double dx = x - this->x;
-		double dy = y - this->y - this->height;
-		double f;
-		if (ABS(dy) < ABS(dx))
-		{
-			f = (this->height + dy) / this->height;
-		}
-		else
-		{
-			f = this->width / (this->width + dx);
-		}
-
-		double oldW = this->width;
-		this->width *= f;
-		this->height *= f;
-
-		this->x = MIN( this->x + oldW - minSize, this->x + oldW - this->width);
-	}
-	else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_RIGHT)
-	{
-		double dx = x - this->x - this->width;
-		double dy = y - this->y - this->height;
-		double f;
-		if (ABS(dy) < ABS(dx))
-		{
-			f = (this->height + dy) / this->height;
-		}
-		else
-		{
-			f = (this->width + dx) / this->width;
-		}
-
-		this->width *= f;
-		this->height *= f;
-	}
-	else if (this->mouseDownType == CURSOR_SELECTION_TOP)
-	{
-		double dy = y - this->y;
-
-		this->y = MIN( this->y+height-minSize, this->y +dy);
-		this->height -= dy;
-
-	}
-	else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM)
-	{
-		double dy = y - this->y - this->height;
-		this->height += dy;
-	}
-	else if (this->mouseDownType == CURSOR_SELECTION_LEFT)
-	{
-		double dx = x - this->x;
-		this->x = MIN( this->x+width-minSize, this->x +dx);
-		this->width -= dx;
-	}
-	else if (this->mouseDownType == CURSOR_SELECTION_RIGHT)	
-	{
-		double dx = x - this->x - this->width;
-		this->width += dx;
-		
+		this->x = mouseX/zoom - this->relMousePosX;
+		this->y = mouseY/zoom - this->relMousePosY;
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_ROTATE && supportRotation) // catch rotation here
 	{
-		double dx = x - this->x - this->width / 2;
-		double dy = y - this->y - this->height / 2;
+		double rdx = mouseX/zoom- this->x - this->width / 2;
+		double rdy = mouseY/zoom - this->y - this->height / 2;
 
-		double angle = atan2(dy, dx);
+		double angle = atan2(rdy, rdx);
 		this->rotation = angle;
 	}
+	else
+	{
+		//Translate mouse position into rotated coordinate system:
+		double rx = mouseX;
+		double ry = mouseY;
+		cairo_matrix_transform_point( &this->cmatrix, &rx, &ry);
+		rx /= zoom;
+		ry /= zoom;
+		
+		double minSize = MINPIXSIZE/zoom;
+		double dx = 0;
+		double dy = 0;
+		
+		
+		if (this->mouseDownType == CURSOR_SELECTION_TOP_LEFT)
+		{
+			dx = rx - this->x;
+			dy = ry - this->y;
+			double f;
+			if (ABS(dy) < ABS(dx))
+			{
+				f = (this->height + dy) / this->height;
+			}
+			else
+			{
+				f = (this->width + dx) / this->width;
+			}
 
-	this->width = MAX( this->width , minSize);
-	this->height = MAX( this->height, minSize);
+			double oldW = this->width;
+			double oldH = this->height;
+			this->width /= f;
+			this->height /= f;
+
+			this->x = MIN( this->x + oldW - minSize, this->x + oldW - this->width);
+			this->y = MIN( this->y + oldH - minSize, this->y + oldH - this->height);
+		}
+		else if (this->mouseDownType == CURSOR_SELECTION_TOP_RIGHT)
+		{
+			dx = rx - this->x - this->width;
+			dy = ry - this->y;
+
+			double f;
+			if (ABS(dy) < ABS(dx))
+			{
+				f = this->height / (this->height + dy);
+			}
+			else
+			{
+				f = (this->width + dx) / this->width;
+			}
+			
+			double oldH = this->height;
+			this->width *= f;
+			this->height *= f;
+
+			this->y = MIN( this->y + oldH - minSize, this->y + oldH - this->height);
+		}
+		else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_LEFT)
+		{
+			dx = rx - this->x;
+			dy = ry - this->y - this->height;
+			double f;
+			if (ABS(dy) < ABS(dx))
+			{
+				f = (this->height + dy) / this->height;
+			}
+			else
+			{
+				f = this->width / (this->width + dx);
+			}
+
+			double oldW = this->width;
+			this->width *= f;
+			this->height *= f;
+
+			this->x = MIN( this->x + oldW - minSize, this->x + oldW - this->width);
+		}
+		else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_RIGHT)
+		{
+			dx = rx - this->x - this->width;
+			dy = ry - this->y - this->height;
+			double f;
+			if (ABS(dy) < ABS(dx))
+			{
+				f = (this->height + dy) / this->height;
+			}
+			else
+			{
+				f = (this->width + dx) / this->width;
+			}
+
+			this->width *= f;
+			this->height *= f;
+		}
+		else if (this->mouseDownType == CURSOR_SELECTION_TOP)
+		{
+			dy = ry - this->y;
+
+			this->y = MIN( this->y+height-minSize, this->y +dy);
+			this->height -= dy;
+
+		}
+		else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM)
+		{
+			dy = ry - this->y - this->height;
+			this->height += dy;
+		}
+		else if (this->mouseDownType == CURSOR_SELECTION_LEFT)
+		{
+			dx = rx - this->x;
+			this->x = MIN( this->x+width-minSize, this->x +dx);
+			this->width -= dx;
+		}
+		else if (this->mouseDownType == CURSOR_SELECTION_RIGHT)	
+		{
+			dx = rx - this->x - this->width;
+			this->width += dx;
+			
+		}
+
+
+	//	this->width = MAX( this->width , minSize);
+	//	this->height = MAX( this->height, minSize);
+		
+		if( this->width < minSize)
+		{
+				dx += minSize - this->width;
+				this->width =  minSize;
+		}
+		if( this->height < minSize)
+		{
+				dy += minSize - this->height;
+				this->height =  minSize;
+		}
+		
+		//Calculate new clip region delta due to rotation:
+		double addW =std::abs(this->width * cos(this->rotation)) + std::abs(this->height * sin(this->rotation)) - this->width ;
+		double addH = std::abs(this->width * sin(this->rotation)) + std::abs(this->height * cos(this->rotation)) - this->height;
+
+		g_print("%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\n",dx,dy,this->x,this->y,this->rotation, this->width, this->height,addW,addH);
+	
+	}
 	
 	this->view->getXournal()->repaintSelection();
 
