@@ -142,7 +142,14 @@ void Settings::loadDefault()
 	this->pluginEnabled = "";
 	this->pluginDisabled = "";
 	
-	inTransaction = false;
+	this->strokeFilterIgnoreTime = 200;
+	this->strokeFilterIgnorePoints = 8;
+	this->strokeFilterSuccessiveTime = 500;
+	this->strokeFilterEnabled = false;
+	this->doActionOnStrokeFiltered = false;
+	
+	this->inTransaction = false;
+	
 }
 
 void Settings::parseData(xmlNodePtr cur, SElement& elem)
@@ -542,7 +549,29 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->audioOutputDevice = g_ascii_strtoll((const char *) value, NULL, 10);
 	}
-
+	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterIgnoreTime") == 0)
+	{
+		this->strokeFilterIgnoreTime = g_ascii_strtoll((const char*) value, NULL, 10);
+	}	
+	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterIgnorePoints") == 0)
+	{
+		this->strokeFilterIgnorePoints = g_ascii_strtoll((const char*) value, NULL, 10);
+	}	
+	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterSuccessiveTime") == 0)
+	{
+		this->strokeFilterSuccessiveTime = g_ascii_strtoll((const char*) value, NULL, 10);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterEnabled") == 0)
+	{
+		this->strokeFilterEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "doActionOnStrokeFiltered") == 0)
+	{
+		this->doActionOnStrokeFiltered = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	
+	
+	
 	xmlFree(name);
 	xmlFree(value);
 }
@@ -903,6 +932,14 @@ void Settings::save()
 
 	WRITE_STRING_PROP(pluginEnabled);
 	WRITE_STRING_PROP(pluginDisabled);
+	
+	WRITE_INT_PROP(strokeFilterIgnoreTime);
+	WRITE_INT_PROP(strokeFilterIgnorePoints);
+	WRITE_INT_PROP(strokeFilterSuccessiveTime);
+	
+	WRITE_BOOL_PROP(strokeFilterEnabled);
+	WRITE_BOOL_PROP(doActionOnStrokeFiltered);
+
 
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
@@ -2236,6 +2273,51 @@ void Settings::setPluginDisabled(string pluginEnabled)
 	save();
 }
 
+
+void Settings::getStrokeFilter( int* ignoreTime, int* ignorePoints, int* successiveTime)
+{
+	XOJ_CHECK_TYPE(Settings);
+	*ignoreTime = this->strokeFilterIgnoreTime;
+	*ignorePoints = this->strokeFilterIgnorePoints;
+	*successiveTime = this->strokeFilterSuccessiveTime;
+	
+}
+
+void Settings::setStrokeFilter( int ignoreTime, int ignorePoints, int successiveTime)
+{
+	XOJ_CHECK_TYPE(Settings);
+	this->strokeFilterIgnoreTime = ignoreTime;
+	this->strokeFilterIgnorePoints = ignorePoints;
+	this->strokeFilterSuccessiveTime = successiveTime;
+	
+}
+	
+void Settings::setStrokeFilterEnabled(bool enabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+	this->strokeFilterEnabled = enabled;
+}
+
+bool Settings::getStrokeFilterEnabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->strokeFilterEnabled;
+}
+
+void Settings::setDoActionOnStrokeFiltered(bool enabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+	this->doActionOnStrokeFiltered = enabled;
+}
+
+bool Settings::getDoActionOnStrokeFiltered()
+{
+	XOJ_CHECK_TYPE(Settings);
+	return this->doActionOnStrokeFiltered;
+}
+
+	
 //////////////////////////////////////////////////
 
 SAttribute::SAttribute()

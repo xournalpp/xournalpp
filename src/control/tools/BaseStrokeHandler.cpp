@@ -8,6 +8,10 @@
 #include <cmath>
 
 
+guint32 BaseStrokeHandler::lastStrokeTime;		//persist for next stroke
+
+
+
 BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift, bool flipControl)
  : InputHandler(xournal, redrawable, page)
 {
@@ -182,12 +186,41 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	{
 		return;
 	}
+	
+	
+	Control* control = xournal->getControl();
+	Settings* settings = control->getSettings();
+	
+	if ( settings->getStrokeFilterEnabled() )		// Note: For simple strokes see StrokeHandler which has a slightly different version of this filter.  See //!
+	{	
+		int strokeFilterIgnoreTime,strokeFilterIgnorePoints,strokeFilterSuccessiveTime;
+		
+		settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnorePoints, &strokeFilterSuccessiveTime  );
+		
+		if (  pos.time - this->startStrokeTime < strokeFilterIgnoreTime)  // don't filter on points as shapes have fixed or minimum. //!
+		{
+			if ( pos.time - this->lastStrokeTime  > strokeFilterSuccessiveTime )
+			{
+				//stroke not being added to layer... delete here.
+				delete stroke;
+				stroke = NULL;
+				this->trySelect = true; 	//!
+				this->lastStrokeTime = pos.time;
+				
+				xournal->getCursor()->updateCursor();
+				
+				return;
+			}
 
+		}
+		this->lastStrokeTime = pos.time;
+	}
+	
+	
 	// This is not a valid stroke
 	if (stroke->getPointCount() < 2)
 	{
 		g_warning("Stroke incomplete!");
-
 		delete stroke;
 		stroke = NULL;
 		return;
@@ -196,7 +229,6 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	stroke->freeUnusedPointItems();
 
 
-	Control* control = xournal->getControl();
 	control->getLayerController()->ensureLayerExists(page);
 
 	Layer* layer = page->getSelectedLayer();
@@ -227,6 +259,8 @@ void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 	{
 		createStroke(Point(x, y));
 	}
+	
+	this->startStrokeTime = pos.time;
 }
 
 

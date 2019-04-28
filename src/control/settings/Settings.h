@@ -376,6 +376,37 @@ public:
 	 */
 	void setSizeUnitIndex(int sizeUnitId);
 
+	/**
+	 * Set StrokeFilter enabled
+	 */
+	void setStrokeFilterEnabled(bool enabled);	
+
+	/**
+	 * Get StrokeFilter enabled
+	 */
+	bool getStrokeFilterEnabled();		
+
+	
+	/**
+	 * get strokeFilter settings
+	 */
+	void getStrokeFilter( int* strokeFilterIgnoreTime, int* strokeFilterIgnorePoints, int* strokeFilterSuccessiveTime);
+
+	/**
+	 * configure stroke filter
+	 */
+	void setStrokeFilter( int strokeFilterIgnoreTime, int strokeFilterIgnorePoints, int strokeFilterSuccessiveTime);
+
+	/**
+	 * Set StrokeFilter enabled
+	 */
+	void setDoActionOnStrokeFiltered(bool enabled);	
+
+	/**
+	 * Get StrokeFilter enabled
+	 */
+	bool getDoActionOnStrokeFiltered();		
+	
 public:
 	// Custom settings
 	SElement& getCustomElement(string name);
@@ -737,8 +768,23 @@ private:
 	 */
 	string pluginDisabled;
 
+	
+	/**
+	 * Used to filter strokes of short time and length unless successive
+	 * strokeFilterIgnorePoints			this many points 
+	 * strokeFilterIgnoreTime 			within this time (ms)  will be ignored..
+	 * strokeFilterSuccessiveTime		...unless successive within this time.
+	 */
+	int strokeFilterIgnoreTime;
+	int strokeFilterIgnorePoints;
+	int strokeFilterSuccessiveTime;
+	bool strokeFilterEnabled;
+	bool doActionOnStrokeFiltered;
+	
 	/**
 	 * "Transaction" running, do not save until the end is reached
 	 */
 	bool inTransaction;
+	
+	
 };

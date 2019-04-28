@@ -30,7 +30,7 @@ InputSequence::~InputSequence()
 
 	if (inputRunning)
 	{
-		actionEnd();
+		actionEnd(__UINT32_MAX__);
 	}
 	clearAxes();
 
@@ -109,11 +109,12 @@ void InputSequence::setCurrentRootPosition(double x, double y)
 /**
  * Set (mouse)button
  */
-void InputSequence::setButton(guint button)
+void InputSequence::setButton(guint button, guint time)
 {
 	XOJ_CHECK_TYPE(InputSequence);
 
 	this->button = button;
+	this->eventTime = time;
 }
 
 /**
@@ -182,13 +183,15 @@ void InputSequence::handleScrollEvent()
 /**
  * Mouse / Pen / Touch move
  */
-bool InputSequence::actionMoved()
+bool InputSequence::actionMoved(guint32 time)
 {
 	XOJ_CHECK_TYPE(InputSequence);
 
 	GtkXournal* xournal = inputHandler->getXournal();
 	ToolHandler* h = inputHandler->getToolHandler();
 
+	this->eventTime = time;
+	
 	changeTool();
 
 	if (penDevice)
@@ -258,10 +261,12 @@ bool InputSequence::actionMoved()
 /**
  * Mouse / Pen down / touch start
  */
-bool InputSequence::actionStart()
+bool InputSequence::actionStart(guint32 time)
 {
 	XOJ_CHECK_TYPE(InputSequence);
 
+	this->eventTime = time;
+	
 	inputHandler->focusWidget();
 
 	checkCanStartInput();
@@ -379,7 +384,7 @@ bool InputSequence::checkStillRunning()
 
 	// Button is not down, stop input now!
 	// So the new input can start
-	actionEnd();
+	actionEnd(__UINT32_MAX__);
 
 	return true;
 }
@@ -387,7 +392,7 @@ bool InputSequence::checkStillRunning()
 /**
  * Mouse / Pen up / touch end
  */
-void InputSequence::actionEnd()
+void InputSequence::actionEnd(guint32 time)
 {
 	XOJ_CHECK_TYPE(InputSequence);
 
@@ -396,6 +401,8 @@ void InputSequence::actionEnd()
 		return;
 	}
 
+	this->eventTime = time;
+	
 	// Mouse button not pressed anymore
 	this->button = 0;
 
@@ -452,9 +459,10 @@ PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* 
 	GtkXournal* xournal = inputHandler->getXournal();
 
 	PositionInputData pos;
-	pos.x = x - page->getX() - xournal->x;
-	pos.y = y - page->getY() - xournal->y;
+	pos.x = this->x - page->getX() - xournal->x;
+	pos.y = this->y - page->getY() - xournal->y;
 	pos.pressure = Point::NO_PRESURE;
+	pos.time = this->eventTime;
 
 	if (presureSensitivity)
 	{

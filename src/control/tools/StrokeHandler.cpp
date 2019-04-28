@@ -7,11 +7,18 @@
 #include "undo/InsertUndoAction.h"
 #include "control/shaperecognizer/ShapeRecognizerResult.h"
 #include "undo/RecognizerUndoAction.h"
+#include "control/settings/Settings.h"
 
 #include <config-features.h>
 
 #include <gdk/gdk.h>
 #include <cmath>
+
+
+
+guint32 StrokeHandler::lastStrokeTime;		//persist for next stroke
+
+
 
 StrokeHandler::StrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
  : InputHandler(xournal, redrawable, page),
@@ -143,10 +150,41 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 		return;
 	}
 
+	Control* control = xournal->getControl();
+	Settings* settings = control->getSettings();
+	int pointCount = stroke->getPointCount();
+	
+	if ( settings->getStrokeFilterEnabled() )		// Note: For shape tools see BaseStrokeHandler which has a slightly different version of this filter. See //!
+	{	
+		int strokeFilterIgnoreTime,strokeFilterIgnorePoints,strokeFilterSuccessiveTime;
+		
+		settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnorePoints, &strokeFilterSuccessiveTime  );
+		
+		if ( pointCount < strokeFilterIgnorePoints && pos.time - this->startStrokeTime < strokeFilterIgnoreTime) 	//!
+		{
+			if ( pos.time - this->lastStrokeTime  > strokeFilterSuccessiveTime )
+			{
+				//stroke not being added to layer... delete here.
+				this->redrawable->rerenderRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight() ); // clear onMotionNotifyEvent drawing //!
+
+				delete stroke;
+				stroke = NULL;
+				if( pointCount <4) //limit to filtered 'dots' only.  //!
+				{
+					this->trySelect = true;
+				}
+				this->lastStrokeTime = pos.time;
+
+				return;
+			}
+		}
+		this->lastStrokeTime = pos.time;
+	}
+	
 	// Backward compatibility and also easier to handle for me;-)
 	// I cannot draw a line with one point, to draw a visible line I need two points,
 	// twice the same Point is also OK
-	if (stroke->getPointCount() == 1)
+	if (pointCount == 1)
 	{
 		ArrayIterator<Point> it = stroke->pointIterator();
 		if (it.hasNext())
@@ -159,7 +197,6 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 
 	stroke->freeUnusedPointItems();
 
-	Control* control = xournal->getControl();
 	control->getLayerController()->ensureLayerExists(page);
 
 	Layer* layer = page->getSelectedLayer();
@@ -206,7 +243,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	//Manually force the rendering of the stroke, if no motion event occurred inbetween, that would rerender the page.
 	if (stroke->getPointCount() == 2)
 	{
-		this->redrawable->rerenderElement(stroke);
+		this->redrawable->rerenderElement(stroke); 
 	}
 
 	stroke = NULL;
@@ -283,6 +320,8 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 
 		createStroke(Point(x, y));
 	}
+	
+	this->startStrokeTime = pos.time;
 }
 
 void StrokeHandler::destroySurface()
