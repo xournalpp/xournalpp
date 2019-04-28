@@ -474,10 +474,7 @@ void EditSelection::mouseMove(double mouseX, double mouseY)
 	XOJ_CHECK_TYPE(EditSelection);
 
 	double zoom = this->view->getXournal()->getZoom();
-	
-	g_print("%f\t%f\t%f\t%f\t%f\t\t\t",this->x,this->y,this->rotation, this->width, this->height);
-	
-	
+		
 	if (this->mouseDownType == CURSOR_SELECTION_MOVE)
 	{
 		this->x = mouseX/zoom - this->relMousePosX;
@@ -626,11 +623,7 @@ void EditSelection::mouseMove(double mouseX, double mouseY)
 				this->height =  minSize;
 		}
 		
-		//Calculate new clip region delta due to rotation:
-		double addW =std::abs(this->width * cos(this->rotation)) + std::abs(this->height * sin(this->rotation)) - this->width ;
-		double addH = std::abs(this->width * sin(this->rotation)) + std::abs(this->height * cos(this->rotation)) - this->height;
-
-		g_print("%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\n",dx,dy,this->x,this->y,this->rotation, this->width, this->height,addW,addH);
+		// idea was to use dx and dy to accommodate scaling issues when rotated ( a bit of a hack) but we've got problems with undoScaling and everything would be better served if we re-wrote parts EditSelection and EditSelectionContents  so that scaling and rotation were all based off of center coordinates instead of topLeft.  Leaving for now to finish other checkins.
 	
 	}
 	
