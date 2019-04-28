@@ -162,6 +162,7 @@ private:
 	 * The given rotation. Original rotation should always be zero (double)
 	 */
 	double rotation = 0;
+	double lastRotation = 0; // for undoing multiple rotations during one selection edit.
 
 	/**
 	 * The offset to the original selection

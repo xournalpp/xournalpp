@@ -41,6 +41,7 @@ EditSelectionContents::EditSelectionContents(double x, double y, double width, d
 	this->relativeX = -9999999999;
 	this->relativeY = -9999999999;
 	this->rotation = 0;
+	this->lastRotation = 0;
 
 	this->lastX = this->originalX = x;
 	this->lastY = this->originalY = y;
@@ -475,12 +476,13 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
 		undo->addUndoAction(moveUndo);
 
 	}
-	else if (rotate)
+	else if (type == CURSOR_SELECTION_ROTATE)
 	{
 		RotateUndoAction* rotateUndo = new RotateUndoAction(this->sourcePage, &this->selected, x,
-															y, width / 2, height / 2, this->rotation);
+															y, width / 2, height / 2, rotation - this->lastRotation);
 		undo->addUndoAction(rotateUndo);
 		this->rotation = 0;	// reset rotation for next usage
+		this->lastRotation = rotation;		// undo one rotation at a time.
 	}
 	if (scale)
 	{
@@ -512,8 +514,9 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
 			break;
 		}
 
-		ScaleUndoAction* scaleUndo = new ScaleUndoAction(this->sourcePage, &this->selected, px, py, fx, fy);
+		ScaleUndoAction* scaleUndo = new ScaleUndoAction(this->sourcePage, &this->selected, px, py, fx, fy);		//this needs to be aware of the rotation...  this should all be rewritten to scale and rotate from center... !!!!!!!!!  TODO
 		undo->addUndoAction(scaleUndo);
+
 	}
 
 	this->lastX = x;
