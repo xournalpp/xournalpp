@@ -179,7 +179,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem)
 			}
 			else if (sType == "double")
 			{
-				double d = atof((const char*) value);
+				double d = g_ascii_strtod((const char*) value, NULL);	//g_ascii_strtod ignores locale setting.
 				elem.setDouble((const char*) name, d);
 			}
 			else if (sType == "hex")
@@ -316,11 +316,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "zoomStep") == 0)
 	{
-		this->zoomStep = g_strtod((const char*) value, NULL);
+		this->zoomStep = g_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "zoomStepScroll") == 0)
 	{
-		this->zoomStepScroll = g_strtod((const char*) value, NULL);
+		this->zoomStepScroll = g_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "displayDpi") == 0)
 	{
@@ -496,7 +496,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "snapRotationTolerance") == 0)
 	{
-		this->snapRotationTolerance = g_strtod((const char*) value, NULL);
+		this->snapRotationTolerance = g_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "snapGrid") == 0)
 	{
@@ -508,7 +508,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "snapGridTolerance") == 0)
 	{
-		this->snapGridTolerance = g_strtod((const char*) value, NULL);
+		this->snapGridTolerance = g_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "touchWorkaround") == 0)
 	{
@@ -539,7 +539,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioGain") == 0)
 	{
-		this->audioGain = g_strtod((const char *) value, NULL);
+		this->audioGain = g_ascii_strtod((const char *) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioInputDevice") == 0)
 	{
@@ -708,9 +708,9 @@ xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value, xmlNodeP
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	char* text = g_strdup_printf("%0.3lf", value);
+	char text[G_ASCII_DTOSTR_BUF_SIZE];
+	g_ascii_dtostr( text, G_ASCII_DTOSTR_BUF_SIZE, value);	//  g_ascii_ version uses C locale always.
 	xmlNodePtr xmlNode = saveProperty(key, text, parent);
-	g_free(text);
 	return xmlNode;
 }
 
@@ -945,9 +945,11 @@ void Settings::save()
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
 	xmlSetProp(xmlFont, (const xmlChar*) "name", (const xmlChar*) "font");
 	xmlSetProp(xmlFont, (const xmlChar*) "font", (const xmlChar*) this->font.getName().c_str());
-	gchar* sSize = g_strdup_printf("%0.1lf", this->font.getSize());
+
+	char sSize[G_ASCII_DTOSTR_BUF_SIZE];
+	g_ascii_dtostr( sSize, G_ASCII_DTOSTR_BUF_SIZE, this->font.getSize());	//no locale
 	xmlSetProp(xmlFont, (const xmlChar*) "size", (const xmlChar*) sSize);
-	g_free(sSize);
+
 
 	for (std::map<string, SElement>::value_type p: data)
 	{
@@ -1001,9 +1003,9 @@ void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 		{
 			type = "double";
 
-			char* tmp = g_strdup_printf("%lf", attrib.dValue);
+			char tmp[G_ASCII_DTOSTR_BUF_SIZE];
+			g_ascii_dtostr( tmp, G_ASCII_DTOSTR_BUF_SIZE, attrib.dValue);
 			value = tmp;
-			g_free(tmp);
 		}
 		else if (attrib.type == ATTRIBUTE_TYPE_INT_HEX)
 		{

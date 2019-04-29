@@ -16,7 +16,8 @@ void DoubleAttribute::writeOut(OutputStream* out)
 {
 	XOJ_CHECK_TYPE(DoubleAttribute);
 
-	char* str = g_strdup_printf("%0.2lf", value);
+	char str[G_ASCII_DTOSTR_BUF_SIZE];
+	g_ascii_dtostr( str, G_ASCII_DTOSTR_BUF_SIZE, value);	//  g_ascii_ version uses C locale always.
 	out->write(str);
-	g_free(str);
+
 }
