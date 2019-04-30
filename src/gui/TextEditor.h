@@ -66,6 +66,8 @@ private:
 	int getByteOffset(int charOffset);
 	int getCharOffset(int byteOffset);
 
+	static void bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* clipboard, TextEditor* te);
+
 	static void iMCommitCallback(GtkIMContext* context, const gchar* str,
 								 TextEditor* te);
 	static void iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te);
