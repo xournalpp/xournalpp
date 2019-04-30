@@ -29,6 +29,8 @@ TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool own
 	string txt = this->text->getText();
 	gtk_text_buffer_set_text(this->buffer, txt.c_str(), -1);
 
+	g_signal_connect(this->buffer, "paste-done", G_CALLBACK(bufferPasteDoneCallback), this);
+
 	GtkTextIter first = { 0 };
 	gtk_text_buffer_get_iter_at_offset(this->buffer, &first, 0);
 	gtk_text_buffer_place_cursor(this->buffer, &first);
@@ -1005,9 +1007,12 @@ void TextEditor::pasteFromClipboard()
 
 	GtkClipboard* clipboard = gtk_widget_get_clipboard(this->widget, GDK_SELECTION_PRIMARY);
 	gtk_text_buffer_paste_clipboard(this->buffer, clipboard, NULL, true);
+}
 
-	this->repaintEditor();
-	this->contentsChanged(true);
+void TextEditor::bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* clipboard, TextEditor* te)
+{
+	te->repaintEditor();
+	te->contentsChanged(true);
 }
 
 void TextEditor::resetImContext()
