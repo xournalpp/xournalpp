@@ -30,6 +30,12 @@ sudo zypper install cmake gtk3-devel cppunit-devel portaudio-devel libsndfile-de
 texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel
 ```
 
+### For Solus:
+```bash
+sudo eopkg it -c system.devel
+sudo eopkg it cmake libgtk-3-devel libxml2-devel poppler-devel libzip-devel \
+portaudio-devel libsndfile-devel alsa-lib-devel cppunit-devel lua-devel
+```
 
 ## Basic steps are:
 ````bash
