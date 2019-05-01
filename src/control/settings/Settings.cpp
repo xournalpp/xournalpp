@@ -838,9 +838,13 @@ void Settings::save()
 	WRITE_BOOL_PROP(zoomGesturesEnabled);
 
 	WRITE_STRING_PROP(selectedToolbar);
-	WRITE_STRING_PROP(lastSavePath.str());
-	WRITE_STRING_PROP(lastOpenPath.str());
-	WRITE_STRING_PROP(lastImagePath.str());
+
+	auto lastSavePath = this->lastSavePath.str();
+	auto lastOpenPath = this->lastOpenPath.str();
+	auto lastImagePath = this->lastImagePath.str();
+	WRITE_STRING_PROP(lastSavePath);
+	WRITE_STRING_PROP(lastOpenPath);
+	WRITE_STRING_PROP(lastImagePath);
 
 	WRITE_DOUBLE_PROP(zoomStep);
 	WRITE_DOUBLE_PROP(zoomStepScroll);
