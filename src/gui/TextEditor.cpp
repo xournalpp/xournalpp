@@ -986,7 +986,7 @@ void TextEditor::copyToCliboard()
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	GtkClipboard* clipboard = gtk_widget_get_clipboard(this->widget, GDK_SELECTION_PRIMARY);
+	GtkClipboard* clipboard = gtk_widget_get_clipboard(this->widget, GDK_SELECTION_CLIPBOARD);
 	gtk_text_buffer_copy_clipboard(this->buffer, clipboard);
 }
 
@@ -994,7 +994,7 @@ void TextEditor::cutToClipboard()
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	GtkClipboard* clipboard = gtk_widget_get_clipboard(this->widget, GDK_SELECTION_PRIMARY);
+	GtkClipboard* clipboard = gtk_widget_get_clipboard(this->widget, GDK_SELECTION_CLIPBOARD);
 	gtk_text_buffer_cut_clipboard(this->buffer, clipboard, true);
 
 	this->repaintEditor();
@@ -1005,7 +1005,7 @@ void TextEditor::pasteFromClipboard()
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	GtkClipboard* clipboard = gtk_widget_get_clipboard(this->widget, GDK_SELECTION_PRIMARY);
+	GtkClipboard* clipboard = gtk_widget_get_clipboard(this->widget, GDK_SELECTION_CLIPBOARD);
 	gtk_text_buffer_paste_clipboard(this->buffer, clipboard, NULL, true);
 }
 
