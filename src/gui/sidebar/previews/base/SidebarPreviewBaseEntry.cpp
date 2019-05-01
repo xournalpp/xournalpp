@@ -26,7 +26,7 @@ SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, Pa
 	g_signal_connect(this->widget, "draw", G_CALLBACK(drawCallback), this);
 
 	g_signal_connect(this->widget, "clicked", G_CALLBACK(
-		+[](GtkWidget* widget, GdkEventButton* event, SidebarPreviewBaseEntry* self)
+		+[](GtkWidget* widget, SidebarPreviewBaseEntry* self)
 		{
 			XOJ_CHECK_TYPE_OBJ(self, SidebarPreviewBaseEntry);
 			self->mouseButtonPressCallback();
