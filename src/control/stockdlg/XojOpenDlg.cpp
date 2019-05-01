@@ -28,6 +28,16 @@ XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings)
 		g_warning("lastSavePath is not set!");
 		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), g_get_home_dir());
 	}
+
+	if (!settings->getLastOpenPath().isEmpty())
+	{
+		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastOpenPath().c_str());
+	}
+	else
+	{
+		g_warning("lastOpenPath is not set!");
+		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), g_get_home_dir());
+	}
 }
 
 XojOpenDlg::~XojOpenDlg()
@@ -159,12 +169,27 @@ Path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 	gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), image);
 	g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback), NULL);
 
+	auto lastPath = this->settings->getLastOpenPath();
+	if (!lastPath.isEmpty())
+	{
+		// TODO: Can either set current folder or add as a shortcut
+		// gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(this->dialog), lastPath.c_str());
+		//
+		gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(this->dialog), lastPath.c_str(), nullptr);
+	}
+
 	Path file = runDialog();
 
 	if (attachOpt)
 	{
 		attachPdf = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(attachOpt));
 		g_object_unref(attachOpt);
+	}
+
+	if (!file.isEmpty())
+	{
+		g_message("lastOpenPath set");
+		this->settings->setLastOpenPath(file.getParentPath().str());
 	}
 
 	return file;

@@ -204,6 +204,12 @@ public:
 	void setLastSavePath(Path p);
 	Path getLastSavePath();
 
+    /**
+     * The last open path
+     */
+    void setLastOpenPath(Path p);
+	Path getLastOpenPath();
+
 	void setLastImagePath(Path p);
 	Path getLastImagePath();
 
@@ -514,6 +520,11 @@ private:
 	 *  The last saved folder
 	 */
 	Path lastSavePath;
+
+    /**
+	 *  The last opened folder
+	 */
+	Path lastOpenPath;
 
 	/**
 	 *  The last "insert image" folder
