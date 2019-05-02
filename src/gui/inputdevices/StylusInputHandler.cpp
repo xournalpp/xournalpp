@@ -42,10 +42,19 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 		guint button;
 		gdk_event_get_button(event, &button);
 
-		if (button == 1)
+#ifdef DEBUG_INPUT
+		g_message("Button press: %d", button);
+#endif
+
+		if (button == 1 || this->inputContext->getSettings()->getInputSystemTPCButtonEnabled())
 		{
 			this->actionStart(event);
 			return true;
+		} else if (this->inputRunning)
+		{
+			// TPCButton is disabled and modifier button was pressed
+			this->actionEnd(event);
+			this->actionStart(event);
 		}
 	}
 
@@ -87,10 +96,19 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 		guint button;
 		gdk_event_get_button(event, &button);
 
-		if (button == 1)
+#ifdef DEBUG_INPUT
+		g_message("Button release: %d", button);
+#endif
+
+		if (button == 1 || this->inputContext->getSettings()->getInputSystemTPCButtonEnabled())
 		{
 			this->actionEnd(event);
 			return true;
+		} else if (this->inputRunning)
+		{
+			// TPCButton is disabled and modifier button was released
+			this->actionEnd(event);
+			this->actionStart(event);
 		}
 	}
 

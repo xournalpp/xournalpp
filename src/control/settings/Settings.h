@@ -359,6 +359,9 @@ public:
 	bool getNewInputSystemEnabled();
 	void setNewInputSystemEnabled(bool systemEnabled);
 
+	bool getInputSystemTPCButtonEnabled();
+	void setInputSystemTPCButtonEnabled(bool tpcButtonEnabled);
+
 	/**
 	 * Get name, e.g. "cm"
 	 */
@@ -744,6 +747,11 @@ private:
 	 * Whether the new experimental input system is activated
 	 */
 	bool inputSystemEnabled;
+
+	/**
+	 * Whether Wacom parameter TabletPCButton is enabled
+	 */
+	bool inputSystemTPCButtonEnabled;
 
 	/**
 	 * "Transaction" running, do not save until the end is reached

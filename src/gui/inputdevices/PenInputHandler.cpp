@@ -104,6 +104,11 @@ void PenInputHandler::setPressedState(GdkEvent* event)
 				break;
 		}
 	}
+
+	if (this->inputContext->getSettings()->getInputSystemTPCButtonEnabled())
+	{
+		this->deviceClassPressed = this->deviceClassPressed || this->modifier2 || this->modifier3;
+	}
 }
 
 void PenInputHandler::handleScrollEvent(GdkEvent* event)

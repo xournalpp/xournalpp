@@ -143,6 +143,7 @@ void Settings::loadDefault()
 	this->pluginDisabled = "";
 
 	this->inputSystemEnabled = false;
+	this->inputSystemTPCButtonEnabled = false;
 	
 	inTransaction = false;
 }
@@ -548,6 +549,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->inputSystemEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "inputSystemTPCButtonEnabled") == 0)
+	{
+		this->inputSystemTPCButtonEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
 
 	xmlFree(name);
 	xmlFree(value);
@@ -911,6 +916,7 @@ void Settings::save()
 	WRITE_STRING_PROP(pluginDisabled);
 
 	WRITE_BOOL_PROP(inputSystemEnabled);
+	WRITE_BOOL_PROP(inputSystemTPCButtonEnabled);
 
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
@@ -2261,6 +2267,25 @@ bool Settings::getNewInputSystemEnabled()
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->inputSystemEnabled;
+}
+
+void Settings::setInputSystemTPCButtonEnabled(bool tpcButtonEnabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->inputSystemTPCButtonEnabled == tpcButtonEnabled)
+	{
+		return;
+	}
+	this->inputSystemTPCButtonEnabled = tpcButtonEnabled;
+	save();
+}
+
+bool Settings::getInputSystemTPCButtonEnabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->inputSystemTPCButtonEnabled;
 }
 
 //////////////////////////////////////////////////

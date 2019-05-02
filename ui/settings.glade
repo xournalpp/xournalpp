@@ -2864,27 +2864,93 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkGrid" id="grid7">
+                                      <object class="GtkBox">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
+                                        <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbNewInputSystem">
-                                            <property name="label" translatable="yes">Enable new input system (Experimental)</property>
+                                          <object class="GtkLabel">
                                             <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="receives_default">False</property>
-                                            <property name="tooltip_markup" translatable="yes">Drag LEFT from start point acts like shift key is being held.
+                                            <property name="can_focus">False</property>
+                                            <property name="label" translatable="yes">This is an experimental feature! Use it with care. </property>
+                                            <property name="xalign">0</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkGrid" id="grid7">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <child>
+                                              <object class="GtkCheckButton" id="cbNewInputSystem">
+                                                <property name="label" translatable="yes">Enable new input system (Requires restart)</property>
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="receives_default">False</property>
+                                                <property name="tooltip_markup" translatable="yes">Drag LEFT from start point acts like shift key is being held.
 Drag UP acts as if Control key is being held.
 
 Determination Radius: Radius at which modifiers will lock in until finished drawing.
 
 &lt;i&gt;Useful for operating without keyboard.&lt;/i&gt;</property>
-                                            <property name="xalign">0</property>
-                                            <property name="draw_indicator">True</property>
+                                                <property name="xalign">0</property>
+                                                <property name="draw_indicator">True</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left_attach">0</property>
+                                                <property name="top_attach">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkCheckButton" id="cbNewInputSystemTPCButton">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="receives_default">False</property>
+                                                <property name="tooltip_markup" translatable="yes">Drag LEFT from start point acts like shift key is being held.
+Drag UP acts as if Control key is being held.
+
+Determination Radius: Radius at which modifiers will lock in until finished drawing.
+
+&lt;i&gt;Useful for operating without keyboard.&lt;/i&gt;</property>
+                                                <property name="xalign">0</property>
+                                                <property name="draw_indicator">True</property>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="label" translatable="yes">TabletPCButton enabled</property>
+                                                    <property name="use_markup">True</property>
+                                                    <property name="wrap">True</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="left_attach">0</property>
+                                                <property name="top_attach">1</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="margin_left">25</property>
+                                                <property name="label" translatable="yes">&lt;i&gt;Check this if&lt;/i&gt; "&lt;tt&gt;xsetwacom get *deviceId* TabletPCButton&lt;/tt&gt;" &lt;i&gt;returns&lt;/i&gt; "&lt;tt&gt;on&lt;/tt&gt;"&lt;i&gt;.&lt;/i&gt;</property>
+                                                <property name="use_markup">True</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left_attach">0</property>
+                                                <property name="top_attach">2</property>
+                                              </packing>
+                                            </child>
                                           </object>
                                           <packing>
-                                            <property name="left_attach">0</property>
-                                            <property name="top_attach">0</property>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
                                           </packing>
                                         </child>
                                       </object>
