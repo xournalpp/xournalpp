@@ -197,15 +197,15 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 		
 		settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnorePoints, &strokeFilterSuccessiveTime  );
 		
-		if (  pos.time - this->startStrokeTime < strokeFilterIgnoreTime)  // don't filter on points as shapes have fixed or minimum. //!
+		if (  pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime)  // don't filter on points as shapes have fixed or minimum. //!
 		{
-			if ( pos.time - this->lastStrokeTime  > strokeFilterSuccessiveTime )
+			if ( pos.timestamp - this->lastStrokeTime  > strokeFilterSuccessiveTime )
 			{
 				//stroke not being added to layer... delete here.
 				delete stroke;
 				stroke = NULL;
 				this->trySelect = true; 	//!
-				this->lastStrokeTime = pos.time;
+				this->lastStrokeTime = pos.timestamp;
 				
 				xournal->getCursor()->updateCursor();
 				
@@ -213,7 +213,7 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 			}
 
 		}
-		this->lastStrokeTime = pos.time;
+		this->lastStrokeTime = pos.timestamp;
 	}
 	
 	
@@ -260,7 +260,7 @@ void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 		createStroke(Point(x, y));
 	}
 	
-	this->startStrokeTime = pos.time;
+	this->startStrokeTime = pos.timestamp;
 }
 
 

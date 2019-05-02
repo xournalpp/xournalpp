@@ -160,9 +160,9 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 		
 		settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnorePoints, &strokeFilterSuccessiveTime  );
 		
-		if ( pointCount < strokeFilterIgnorePoints && pos.time - this->startStrokeTime < strokeFilterIgnoreTime) 	//!
+		if ( pointCount < strokeFilterIgnorePoints && pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) 	//!
 		{
-			if ( pos.time - this->lastStrokeTime  > strokeFilterSuccessiveTime )
+			if ( pos.timestamp - this->lastStrokeTime  > strokeFilterSuccessiveTime )
 			{
 				//stroke not being added to layer... delete here.
 				this->redrawable->rerenderRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight() ); // clear onMotionNotifyEvent drawing //!
@@ -173,12 +173,12 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 				{
 					this->trySelect = true;
 				}
-				this->lastStrokeTime = pos.time;
+				this->lastStrokeTime = pos.timestamp;
 
 				return;
 			}
 		}
-		this->lastStrokeTime = pos.time;
+		this->lastStrokeTime = pos.timestamp;
 	}
 	
 	// Backward compatibility and also easier to handle for me;-)
@@ -321,7 +321,7 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 		createStroke(Point(x, y));
 	}
 	
-	this->startStrokeTime = pos.time;
+	this->startStrokeTime = pos.timestamp;
 }
 
 void StrokeHandler::destroySurface()

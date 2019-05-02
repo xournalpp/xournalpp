@@ -194,11 +194,6 @@ bool InputSequence::actionMoved(guint32 time)
 
 	changeTool();
 
-	if (penDevice)
-	{
-		inputHandler->getView()->penActionDetected();
-	}
-
 	if (xournal->view->getControl()->getWindow()->isGestureActive())
 	{
 		return false;
@@ -462,7 +457,7 @@ PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* 
 	pos.x = x - page->getX() - xournal->x;
 	pos.y = y - page->getY() - xournal->y;
 	pos.pressure = Point::NO_PRESSURE;
-	pos.time = this->eventTime;
+	pos.timestamp = this->eventTime;
 
 	if (presureSensitivity)
 	{

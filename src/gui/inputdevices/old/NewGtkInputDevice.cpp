@@ -236,6 +236,8 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		sourceDevice = device;
 	}
 
+	this->getView()->getHandRecognition()->event(sourceDevice);
+
 	if (ignoreTouch && GDK_SOURCE_TOUCHSCREEN == gdk_device_get_source(sourceDevice))
 	{
 		return false;
