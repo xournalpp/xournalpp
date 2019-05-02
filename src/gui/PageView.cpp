@@ -502,6 +502,12 @@ bool XojPageView::onButtonReleaseEvent(const PositionInputData& pos)
 	if (this->inputHandler)
 	{
 		this->inputHandler->onButtonReleaseEvent(pos);
+		
+		if( control->getSettings()->getDoActionOnStrokeFiltered() && this->inputHandler->trySelect){  //experimental feature
+			double zoom = xournal->getZoom();
+			SelectObject select(this);
+			select.at(pos.x/zoom, pos.y/zoom);
+		}
 		delete this->inputHandler;
 		this->inputHandler = NULL;
 	}

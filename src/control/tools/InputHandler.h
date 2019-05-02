@@ -87,7 +87,11 @@ public:
 	 * but needs to be in the base interface.
 	 */
 	virtual void resetShapeRecognizer();
-
+	
+	/**
+	 * trySelect - experimental feature to try select on filtered draw. See cbDoActionOnStrokeFilter
+	 */
+	bool trySelect = false;	
 
 protected:
 

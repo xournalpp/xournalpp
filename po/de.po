@@ -775,7 +775,7 @@ msgstr "Benutzerdefiniert"
 
 #: ../ui/settings.glade:1358
 msgid "Custom Commands (for Method \"Custom\")"
-msgstr "Kommandos (für die Methode \"Custom\")"
+msgstr "Kommandos (für die Methode \"Benutzerdefiniert\")"
 
 #: ../src/control/jobs/CustomExportJob.cpp:18
 msgid "Custom Export"
@@ -1759,7 +1759,7 @@ msgstr "Entferne Werkzeug {1} von der Werkzeugleiste {2} ID {3}"
 
 #: ../src/util/XojMsgBox.cpp:74
 msgid "Replace"
-msgstr "Ersetzten"
+msgstr "Ersetzen"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1331
 msgid "Requested temporary file was not found for attachment {1}"
@@ -2663,7 +2663,7 @@ msgstr "Standard deaktivieren"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:38
 msgid "default enabled"
-msgstr "Standard atkvieren"
+msgstr "Standard aktivieren"
 
 #: ../ui/pluginEntry.glade:140
 msgid "default enabled / disabled"

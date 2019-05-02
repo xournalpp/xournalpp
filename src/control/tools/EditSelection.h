@@ -212,6 +212,15 @@ private:
 	 */
 	void drawAnchorRotation(cairo_t* cr, double x, double y, double zoom);
 
+	
+	/**
+	 * Draws an indicator where you can delete the selection
+	 */
+	void drawDeleteRect(cairo_t* cr, double x, double y, double zoom);
+	
+
+
+
 	/**
 	 * Finishes all pending changes, move the elements, scale the elements and add
 	 * them to new layer if any or to the old if no new layer
@@ -245,6 +254,11 @@ private: // DATA
 	double rotation = 0;
 
 	/**
+	 * Use to translate to rotated selection
+	 */
+		_cairo_matrix cmatrix;
+	
+	/**
 	 * The size
 	 */
 	double width;
@@ -262,7 +276,13 @@ private: // DATA
 	 * (we cannot only set the font size for text)
 	 */
 	bool aspectRatio;
+	
+	/**
+	 * Size of the editing handles 
+	 */
 
+	int btnWidth = 8;
+	
 	/**
 	 * The source page (form where the Elements come)
 	 */
