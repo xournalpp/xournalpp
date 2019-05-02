@@ -681,18 +681,3 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
 		this->fireToolChanged();
 	}
 }
-
-void ToolHandler::actionStart()
-{
-
-}
-
-void ToolHandler::actionMotion()
-{
-
-}
-
-void ToolHandler::actionEnd()
-{
-
-}
