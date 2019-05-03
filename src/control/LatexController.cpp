@@ -74,15 +74,13 @@ bool LatexController::findTexExecutable()
 	return true;
 }
 
-/**
- * Run LaTeX Command
- */
-bool LatexController::runCommand()
+GPid* LatexController::runCommandAsync()
 {
 	XOJ_CHECK_TYPE(LatexController);
+	g_assert(!this->isUpdating);
 
 	string texContents = LATEX_TEMPLATE_1;
-	texContents += currentTex;
+	texContents += this->currentTex;
 	texContents += LATEX_TEMPLATE_2;
 
 	string texFile = texTmp + "/tex.tex";
@@ -92,46 +90,36 @@ bool LatexController::runCommand()
 	{
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not save .tex file: {1}") % err->message));
 		g_error_free(err);
-		return false;
+		return nullptr;
 	}
 
 	char* texFileEscaped = g_strescape(texFile.c_str(), NULL);
 	char* cmd = g_strdup(binTex.c_str());
 
-	char* texFlag = g_strdup("-interaction=nonstopmode");
+	static char* texFlag = g_strdup("-interaction=nonstopmode");
 	char* argv[] = { cmd, texFlag, texFileEscaped, NULL };
 
-	gint returnCode = 0;
-	gboolean success = g_spawn_sync(texTmp.c_str(), argv, NULL, GSpawnFlags(G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL),
-								NULL, NULL, NULL, NULL, &returnCode, &err);
-	success = success ? g_spawn_check_exit_status(returnCode, &err) : success;
+	GPid* pdflatex_pid = reinterpret_cast<GPid*>(g_malloc(sizeof(GPid)));
+	GSpawnFlags flags = GSpawnFlags(G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL | G_SPAWN_DO_NOT_REAP_CHILD);
+	this->isUpdating = true;
+	this->lastPreviewedTex = this->currentTex;
+	bool success = g_spawn_async(texTmp.c_str(), argv, nullptr, flags, nullptr, nullptr, pdflatex_pid, &err);
 	if (!success)
 	{
-		if (!g_error_matches(err, G_SPAWN_EXIT_ERROR, 1))
-		{
-			string message = FS(_F("Could not convert tex to PDF: {1} (exit code: {2})") % err->message % returnCode);
-			g_warning(message.c_str());
-			XojMsgBox::showErrorToUser(control->getGtkWindow(), message);
-		}
-		else
-		{
-			Path pdfPath = this->texTmp + "/tex.pdf";
-			if (pdfPath.exists())
-			{
-				// Delete the pdf to prevent more errors
-				pdfPath.deleteFile();
-			}
-		}
+		string message = FS(_F("Could not start pdflatex: {1} (exit code: {2})") % err->message % err->code);
+		g_warning(message.c_str());
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), message);
+
 		g_error_free(err);
-		g_free(texFileEscaped);
-		g_free(cmd);
-		return false;
+		g_free(pdflatex_pid);
+		pdflatex_pid = nullptr;
+		this->isUpdating = false;
 	}
 
 	g_free(texFileEscaped);
 	g_free(cmd);
 
-	return true;
+	return pdflatex_pid;
 }
 
 /**
@@ -204,8 +192,8 @@ void LatexController::showTexEditDialog()
 	// For 'real time' LaTex rendering in the dialog
 	dlg->setTex(initalTex);
 	g_signal_connect(dlg->getTextBuffer(), "changed", G_CALLBACK(handleTexChanged), this);
-	
-	
+
+
 	// The controller owns the tempRender because, on signal changed, he has to handle the old/new renders
 	if (temporaryRender != NULL)
 	{
@@ -221,27 +209,90 @@ void LatexController::showTexEditDialog()
 	delete dlg;
 }
 
+void LatexController::triggerPreviewUpdate(bool hasTexImage)
+{
+	if (this->isUpdating)
+	{
+		return;
+	}
+
+	GPid* pid = this->runCommandAsync();
+	if (pid != nullptr)
+	{
+		g_assert(this->isUpdating);
+		auto data = reinterpret_cast<PdfRenderCallbackData*>(g_malloc(sizeof(PdfRenderCallbackData)));
+		*data = std::make_pair(this, hasTexImage);
+		g_child_watch_add(*pid, reinterpret_cast<GChildWatchFunc>(onPdfRenderComplete), data);
+		g_free(pid);
+	}
+}
+
 /**
- * Text-changed handler: when the Buffer in the dialog changes,
- * this handler updates currentTex, removes the previous existing render and creates
- * a new one. We need to do it through 'self' because signal handlers
- * cannot directly access non-static methods and non-static fields such as
- * 'dlg' so we need to wrap all the dlg method inside small methods in 'self'
+ * Text-changed handler: when the Buffer in the dialog changes, this handler
+ * updates currentTex, removes the previous existing render and creates a new
+ * one. We need to do it through 'self' because signal handlers cannot directly
+ * access non-static methods and non-static fields such as 'dlg' so we need to
+ * wrap all the dlg method inside small methods in 'self'. To improve
+ * performance, we render the text asynchronously.
  */
 void LatexController::handleTexChanged(GtkTextBuffer* buffer, LatexController* self)
 {
 	XOJ_CHECK_TYPE_OBJ(self, LatexController);
-	
+
 	// Right now, this is the only way I know to extract text from TextBuffer
 	self->setCurrentTex(gtk_text_buffer_get_text(buffer, self->getStartIterator(buffer), self->getEndIterator(buffer), TRUE));
-	self->deletePreviousRender();
-	self->runCommand();
 
-	self->temporaryRender = self->loadRendered();
+	self->triggerPreviewUpdate(true);
+}
 
-	if (self->getTemporaryRender() != NULL)
+void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, PdfRenderCallbackData* data)
+{
+	LatexController* self = data->first;
+	bool hasTexImage = data->second;
+	XOJ_CHECK_TYPE_OBJ(self, LatexController);
+	g_assert(self->isUpdating);
+	GError* err = nullptr;
+	g_spawn_check_exit_status(returnCode, &err);
+	if (err != nullptr)
 	{
-		self->setImageInDialog(self->getTemporaryRender()->getPdf());
+		if (!g_error_matches(err, G_SPAWN_EXIT_ERROR, 1))
+		{
+			// The error was not caused by invalid LaTeX.
+			// TODO: error message
+			string message = FS(_F("pdflatex encountered an error: {1} (exit code: {2})") % err->message % err->code);
+			g_warning(message.c_str());
+			XojMsgBox::showErrorToUser(self->control->getGtkWindow(), message);
+		}
+		Path pdfPath = self->texTmp + "/tex.pdf";
+		if (pdfPath.exists())
+		{
+			// Delete the pdf to prevent more errors
+			pdfPath.deleteFile();
+		}
+		g_error_free(err);
+		self->isUpdating = false;
+		return;
+	}
+	g_spawn_close_pid(pid);
+
+	if (hasTexImage)
+	{
+		self->deletePreviousRender();
+		self->temporaryRender = self->loadRendered();
+		if (self->getTemporaryRender() != NULL)
+		{
+			self->setImageInDialog(self->getTemporaryRender()->getPdf());
+		}
+	}
+	else
+	{
+		self->insertTexImage();
+	}
+
+	self->isUpdating = false;
+	if (self->lastPreviewedTex != self->currentTex)
+	{
+		self->triggerPreviewUpdate(true);
 	}
 }
 
@@ -366,7 +417,7 @@ TexImage* LatexController::loadRendered()
 
 	if (!pdfPath.exists())
 	{
-		g_warning("Latex preview PDF file does not exist");
+		g_warning("LaTeX preview PDF file does not exist");
 		return nullptr;
 	}
 
@@ -436,7 +487,7 @@ void LatexController::run()
 
 	if (!findTexExecutable())
 	{
-		string msg = _("Could not find pdflatex in Path.\nPlease install pdflatex first and make sure it's in the Path.");
+		string msg = _("Could not find pdflatex in Path.\nPlease install pdflatex first and make sure it's in the PATH.");
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 		return;
 	}
@@ -451,12 +502,5 @@ void LatexController::run()
 	}
 
 	// now do all the LatexAction stuff
-	if (!runCommand())
-	{
-		string msg = _("Failed to generate LaTeX image!");
-		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
-		return;
-	}
-
-	insertTexImage();
+	this->triggerPreviewUpdate(false);
 }

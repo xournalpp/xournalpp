@@ -23,6 +23,8 @@
 
 #include <poppler.h>
 
+#include <utility>
+
 class Control;
 class TexImage;
 class Text;
@@ -56,9 +58,20 @@ private:
 	void deleteOldImage();
 
 	/**
-	 * Run LaTeX Command
+	 * Run the LaTeX command asynchronously. Note that this method can only be
+	 * called when the preview is not updating.
+	 *
+	 * @return The PID of the spawned process, or nullptr if the .tex file could
+	 * not be written or the command failed to start. This pointer is managed by
+	 * GTK+, and as such should be freed with g_free.
 	 */
-	bool runCommand();
+	GPid* runCommandAsync();
+
+	/**
+	 * Asynchronously runs the LaTeX command and then updates the TeX image. If
+	 * the preview is already being updated, then this method will be a no-op.
+	 */
+	void triggerPreviewUpdate(bool hasTexImage);
 
 	/**
 	 * Show the LaTex Editor dialog
@@ -66,9 +79,24 @@ private:
 	void showTexEditDialog();
 
 	/**
-	 * Signal handler, updates the rendered image when the text in the editor changes
+	 * Signal handler, updates the rendered image when the text in the editor
+	 * changes.
 	 */
 	static void handleTexChanged(GtkTextBuffer* buffer, LatexController* self);
+
+	/** User data for onPdfRenderComplete */
+	typedef std::pair<LatexController*, bool> PdfRenderCallbackData;
+
+	/**
+	 * Updates the display once the PDF file is generated. The data pair
+	 * contains a pointer to the LatexController from which it is called, as
+	 * well as a flag that indicates whether the TexImage element has been
+	 * inserted yet.
+	 *
+	 * If the Latex text has changed since the last update, triggerPreviewUpdate
+	 * will be called again.
+	 */
+	static void onPdfRenderComplete(GPid pid, gint returnCode, PdfRenderCallbackData* data);
 
 	/*******/
 	//Wrappers for signal handler who can't access non-static fields 
@@ -115,6 +143,16 @@ private:
 	 * Updated TeX string
 	 */
 	string currentTex;
+
+	/**
+	 * The last TeX string shown in the preview.
+	 */
+	string lastPreviewedTex;
+
+	/**
+	 * Whether a preview is currently being generated.
+	 */
+	bool isUpdating = false;
 
 	/**
 	 * X-Position
