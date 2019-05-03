@@ -19,25 +19,17 @@ XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings)
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
-	if (!settings->getLastSavePath().isEmpty())
-	{
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
-	}
-	else
-	{
-		g_warning("lastSavePath is not set!");
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), g_get_home_dir());
-	}
-
+	const gchar* currentFolder = nullptr;
 	if (!settings->getLastOpenPath().isEmpty())
 	{
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastOpenPath().c_str());
+		currentFolder = settings->getLastOpenPath().c_str();
 	}
 	else
 	{
 		g_warning("lastOpenPath is not set!");
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), g_get_home_dir());
+		currentFolder = g_get_home_dir();
 	}
+	gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), currentFolder);
 }
 
 XojOpenDlg::~XojOpenDlg()
@@ -117,7 +109,7 @@ Path XojOpenDlg::runDialog()
 	}
 
 	Path file(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
-	settings->setLastSavePath(file.getParentPath().str());
+	settings->setLastOpenPath(file.getParentPath().str());
 
 	return file;
 }
@@ -169,13 +161,16 @@ Path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 	gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), image);
 	g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback), NULL);
 
-	auto lastPath = this->settings->getLastOpenPath();
-	if (!lastPath.isEmpty())
+	auto lastOpenPath = this->settings->getLastOpenPath();
+	if (!lastOpenPath.isEmpty())
 	{
-		// TODO: Can either set current folder or add as a shortcut
-		// gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(this->dialog), lastPath.c_str());
-		//
-		gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(this->dialog), lastPath.c_str(), nullptr);
+		gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(this->dialog), lastOpenPath.c_str());
+	}
+
+	auto lastSavePath = this->settings->getLastSavePath();
+	if (!lastSavePath.isEmpty())
+	{
+		gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(this->dialog), lastSavePath.c_str(), nullptr);
 	}
 
 	Path file = runDialog();
