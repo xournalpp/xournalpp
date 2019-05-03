@@ -84,13 +84,30 @@ bool LatexController::runCommand()
 	char* texFileEscaped = g_strescape(texFile.c_str(), NULL);
 	char* cmd = g_strdup(binTex.c_str());
 
-	char* argv[] = { cmd, texFileEscaped, NULL };
+	char* texFlag = g_strdup("-interaction=nonstopmode");
+	char* argv[] = { cmd, texFlag, texFileEscaped, NULL };
 
 	gint returnCode = 0;
-	if (!g_spawn_sync(texTmp.c_str(), argv, NULL, GSpawnFlags(G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL),
-			NULL, NULL, NULL, NULL, &returnCode, &err))
+	gboolean success = g_spawn_sync(texTmp.c_str(), argv, NULL, GSpawnFlags(G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL),
+								NULL, NULL, NULL, NULL, &returnCode, &err);
+	success = success ? g_spawn_check_exit_status(returnCode, &err) : success;
+	if (!success)
 	{
-		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not convert tex to PDF: {1} (exit code: {2})") % err->message % returnCode));
+		if (!g_error_matches(err, G_SPAWN_EXIT_ERROR, 1))
+		{
+			string message = FS(_F("Could not convert tex to PDF: {1} (exit code: {2})") % err->message % returnCode);
+			g_warning(message.c_str());
+			XojMsgBox::showErrorToUser(control->getGtkWindow(), message);
+		}
+		else
+		{
+			Path pdfPath = this->texTmp + "/tex.pdf";
+			if (pdfPath.exists())
+			{
+				// Delete the pdf to prevent more errors
+				pdfPath.deleteFile();
+			}
+		}
 		g_error_free(err);
 		g_free(texFileEscaped);
 		g_free(cmd);
@@ -333,6 +350,12 @@ TexImage* LatexController::loadRendered()
 	Path pdfPath = texTmp + "/tex.pdf";
 	GError* err = NULL;
 
+	if (!pdfPath.exists())
+	{
+		g_warning("Latex preview PDF file does not exist");
+		return nullptr;
+	}
+
 	gchar* fileContents = NULL;
 	gsize fileLength = 0;
 	if (!g_file_get_contents(pdfPath.c_str(), &fileContents, &fileLength, &err))
@@ -346,7 +369,9 @@ TexImage* LatexController::loadRendered()
 	PopplerDocument* pdf = poppler_document_new_from_data(fileContents, fileLength, NULL, &err);
 	if (err != NULL)
 	{
-		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not load LaTeX PDF file: {1}") % err->message));
+		string message = FS(_F("Could not load LaTeX PDF file: {1}") % err->message);
+		g_message(message.c_str());
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), message);
 		g_error_free(err);
 		return NULL;
 	}
