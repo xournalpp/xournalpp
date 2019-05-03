@@ -14,15 +14,29 @@
 
 #include "pixbuf-utils.h"
 
+/**
+ * First half of the LaTeX template used to generate preview PDFs. User-supplied
+ * formulas will be inserted between the two halves.
+ *
+ * This template is necessarily complicated because we need to cause an error if
+ * the rendered formula is blank. Otherwise, a completely blank, sizeless PDF
+ * will be generated, which Poppler will be unable to load.
+ */
 const char* LATEX_TEMPLATE_1 =
-"\\documentclass[border=5pt]{standalone}\n"
-"\\usepackage{amsmath}\n"
-"\\begin{document}\n"
-"\\(\\displaystyle\n";
+	R"(\documentclass[crop, border=5pt]{standalone})" "\n"
+	R"(\usepackage{amsmath})" "\n"
+	R"(\usepackage{ifthen})" "\n"
+	R"(\begin{document})" "\n"
+	R"(\def\preview{\(\displaystyle)" "\n";
 
 const char* LATEX_TEMPLATE_2 =
-"\n\\)\n"
-"\\end{document}\n";
+	"\n\\)}\n"
+	R"(\newlength{\pheight})" "\n"
+	R"(\settoheight{\pheight}{\hbox{\preview}})" "\n"
+	R"(\ifthenelse{\pheight=0.0pt})" "\n"
+	R"({\GenericError{}{xournalpp: blank formula}{}{}})" "\n"
+	R"({\preview})" "\n"
+	R"(\end{document})" "\n";
 
 LatexController::LatexController(Control* control)
 	: control(control),
