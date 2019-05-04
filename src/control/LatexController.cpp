@@ -101,7 +101,7 @@ GPid* LatexController::runCommandAsync()
 
 	GPid* pdflatex_pid = reinterpret_cast<GPid*>(g_malloc(sizeof(GPid)));
 	GSpawnFlags flags = GSpawnFlags(G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL | G_SPAWN_DO_NOT_REAP_CHILD);
-	this->isUpdating = true;
+	this->setUpdating(true);
 	this->lastPreviewedTex = this->currentTex;
 	bool success = g_spawn_async(texTmp.c_str(), argv, nullptr, flags, nullptr, nullptr, pdflatex_pid, &err);
 	if (!success)
@@ -113,7 +113,7 @@ GPid* LatexController::runCommandAsync()
 		g_error_free(err);
 		g_free(pdflatex_pid);
 		pdflatex_pid = nullptr;
-		this->isUpdating = false;
+		this->setUpdating(false);
 	}
 
 	g_free(texFileEscaped);
@@ -209,7 +209,7 @@ void LatexController::showTexEditDialog()
 	delete dlg;
 }
 
-void LatexController::triggerPreviewUpdate(bool hasTexImage)
+void LatexController::triggerImageUpdate(bool isPreview)
 {
 	if (this->isUpdating)
 	{
@@ -221,7 +221,8 @@ void LatexController::triggerPreviewUpdate(bool hasTexImage)
 	{
 		g_assert(this->isUpdating);
 		auto data = reinterpret_cast<PdfRenderCallbackData*>(g_malloc(sizeof(PdfRenderCallbackData)));
-		*data = std::make_pair(this, hasTexImage);
+		*data = std::make_pair(this, isPreview);
+		XOJ_CHECK_TYPE_OBJ(data->first, LatexController);
 		g_child_watch_add(*pid, reinterpret_cast<GChildWatchFunc>(onPdfRenderComplete), data);
 		g_free(pid);
 	}
@@ -242,17 +243,19 @@ void LatexController::handleTexChanged(GtkTextBuffer* buffer, LatexController* s
 	// Right now, this is the only way I know to extract text from TextBuffer
 	self->setCurrentTex(gtk_text_buffer_get_text(buffer, self->getStartIterator(buffer), self->getEndIterator(buffer), TRUE));
 
-	self->triggerPreviewUpdate(true);
+
+	self->triggerImageUpdate(true);
 }
 
 void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, PdfRenderCallbackData* data)
 {
 	LatexController* self = data->first;
-	bool hasTexImage = data->second;
+	bool isPreview = data->second;
 	XOJ_CHECK_TYPE_OBJ(self, LatexController);
 	g_assert(self->isUpdating);
 	GError* err = nullptr;
 	g_spawn_check_exit_status(returnCode, &err);
+	g_spawn_close_pid(pid);
 	if (err != nullptr)
 	{
 		if (!g_error_matches(err, G_SPAWN_EXIT_ERROR, 1))
@@ -270,30 +273,48 @@ void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, PdfRenderCa
 			pdfPath.deleteFile();
 		}
 		g_error_free(err);
-		self->isUpdating = false;
-		return;
-	}
-	g_spawn_close_pid(pid);
-
-	if (hasTexImage)
-	{
-		self->deletePreviousRender();
-		self->temporaryRender = self->loadRendered();
-		if (self->getTemporaryRender() != NULL)
-		{
-			self->setImageInDialog(self->getTemporaryRender()->getPdf());
-		}
+		self->setUpdating(false);
 	}
 	else
 	{
-		self->insertTexImage();
-	}
 
-	self->isUpdating = false;
-	if (self->lastPreviewedTex != self->currentTex)
-	{
-		self->triggerPreviewUpdate(true);
+		bool shouldUpdate = self->lastPreviewedTex != self->currentTex;
+		if (isPreview)
+		{
+			self->deletePreviousRender();
+			self->temporaryRender = self->loadRendered();
+			if (self->getTemporaryRender() != NULL)
+			{
+				self->setImageInDialog(self->getTemporaryRender()->getPdf());
+			}
+		}
+		else
+		{
+			self->insertTexImage();
+		}
+
+		self->setUpdating(false);
+		if (shouldUpdate)
+		{
+			self->triggerImageUpdate(true);
+		}
 	}
+	g_free(data);
+}
+
+void LatexController::setUpdating(bool newValue)
+{
+	if ((!this->isUpdating && newValue) || (this->isUpdating && !newValue))
+	{
+		// Disable LatexDialog OK button while updating. This is a workaround
+		// for the fact that 1) the LatexController only lives while the dialog
+		// is open; 2) the preview is generated asynchronously; and 3) the `run`
+		// method that inserts the TexImage object is called synchronously after
+		// the dialog is closed with the OK button.
+		GtkWidget* okButton = this->dlg->get("texokbutton");
+		gtk_widget_set_sensitive(okButton, !newValue);
+	}
+	this->isUpdating = newValue;
 }
 
 TexImage* LatexController::getTemporaryRender()
@@ -502,5 +523,5 @@ void LatexController::run()
 	}
 
 	// now do all the LatexAction stuff
-	this->triggerPreviewUpdate(false);
+	this->insertTexImage();
 }

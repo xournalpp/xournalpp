@@ -71,7 +71,7 @@ private:
 	 * Asynchronously runs the LaTeX command and then updates the TeX image. If
 	 * the preview is already being updated, then this method will be a no-op.
 	 */
-	void triggerPreviewUpdate(bool hasTexImage);
+	void triggerImageUpdate(bool isPreview);
 
 	/**
 	 * Show the LaTex Editor dialog
@@ -90,13 +90,14 @@ private:
 	/**
 	 * Updates the display once the PDF file is generated. The data pair
 	 * contains a pointer to the LatexController from which it is called, as
-	 * well as a flag that indicates whether the TexImage element has been
-	 * inserted yet.
+	 * well as a flag that indicates whether this render is for a preview.
 	 *
 	 * If the Latex text has changed since the last update, triggerPreviewUpdate
 	 * will be called again.
 	 */
 	static void onPdfRenderComplete(GPid pid, gint returnCode, PdfRenderCallbackData* data);
+
+	void setUpdating(bool newValue);
 
 	/*******/
 	//Wrappers for signal handler who can't access non-static fields 
