@@ -26,16 +26,16 @@ const char* LATEX_TEMPLATE_1 =
 	R"(\documentclass[crop, border=5pt]{standalone})" "\n"
 	R"(\usepackage{amsmath})" "\n"
 	R"(\usepackage{ifthen})" "\n"
-	R"(\begin{document})" "\n"
+	R"(\newlength{\pheight})" "\n"
 	R"(\def\preview{\(\displaystyle)" "\n";
 
 const char* LATEX_TEMPLATE_2 =
 	"\n\\)}\n"
-	R"(\newlength{\pheight})" "\n"
-	R"(\settoheight{\pheight}{\hbox{\preview}})" "\n"
-	R"(\ifthenelse{\pheight=0.0pt})" "\n"
+	R"(\begin{document})" "\n"
+	R"(\settoheight{\pheight}{\preview} %)" "\n"
+	R"(\ifthenelse{\pheight=0})" "\n"
 	R"({\GenericError{}{xournalpp: blank formula}{}{}})" "\n"
-	R"({\preview})" "\n"
+	R"(\preview)" "\n"
 	R"(\end{document})" "\n";
 
 LatexController::LatexController(Control* control)
@@ -303,7 +303,9 @@ void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, PdfRenderCa
 
 void LatexController::setUpdating(bool newValue)
 {
+	XOJ_CHECK_TYPE(LatexController);
 	GtkWidget* okButton = this->dlg->get("texokbutton");
+	bool buttonEnabled = true;
 	if ((!this->isUpdating && newValue) || (this->isUpdating && !newValue))
 	{
 		// Disable LatexDialog OK button while updating. This is a workaround
@@ -311,12 +313,15 @@ void LatexController::setUpdating(bool newValue)
 		// is open; 2) the preview is generated asynchronously; and 3) the `run`
 		// method that inserts the TexImage object is called synchronously after
 		// the dialog is closed with the OK button.
-		gtk_widget_set_sensitive(okButton, !newValue);
+		buttonEnabled = !newValue;
 	}
+
 
 	// Invalid LaTeX will generate an invalid PDF, so disable the OK button if
 	// needed.
-	gtk_widget_set_sensitive(okButton, this->isValidTex);
+	buttonEnabled = buttonEnabled ? this->isValidTex : buttonEnabled;
+
+	gtk_widget_set_sensitive(okButton, buttonEnabled);
 
 	GtkLabel* errorLabel = GTK_LABEL(this->dlg->get("texErrorLabel"));
 	gtk_label_set_text(errorLabel, this->isValidTex ? "" : "The formula is empty when rendered or invalid.");

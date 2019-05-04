@@ -26,7 +26,6 @@
             <child>
               <object class="GtkButton" id="texcancelbutton">
                 <property name="label">gtk-cancel</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -41,7 +40,6 @@
             <child>
               <object class="GtkButton" id="texokbutton">
                 <property name="label">gtk-ok</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -116,8 +114,8 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="2">texcancelbutton</action-widget>
-      <action-widget response="1">texokbutton</action-widget>
+      <action-widget response="-6">texcancelbutton</action-widget>
+      <action-widget response="-5">texokbutton</action-widget>
     </action-widgets>
   </object>
 </interface>
