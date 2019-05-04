@@ -318,6 +318,9 @@ void LatexController::setUpdating(bool newValue)
 	// needed.
 	gtk_widget_set_sensitive(okButton, this->isValidTex);
 
+	GtkLabel* errorLabel = GTK_LABEL(this->dlg->get("texErrorLabel"));
+	gtk_label_set_text(errorLabel, this->isValidTex ? "" : "The formula is empty when rendered or invalid.");
+
 	this->isUpdating = newValue;
 }
 
