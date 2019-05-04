@@ -53,7 +53,7 @@ private:
 	void findSelectedTexElement();
 
 	/**
-	 * If a previous image/text is selected, delete it 
+	 * If a previous image/text is selected, delete it
 	 */
 	void deleteOldImage();
 
@@ -154,6 +154,11 @@ private:
 	 * Whether a preview is currently being generated.
 	 */
 	bool isUpdating = false;
+
+	/**
+	 * Whether the current TeX string is valid.
+	 */
+	bool isValidTex = false;
 
 	/**
 	 * X-Position

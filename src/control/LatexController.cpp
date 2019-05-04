@@ -220,8 +220,7 @@ void LatexController::triggerImageUpdate(bool isPreview)
 	if (pid != nullptr)
 	{
 		g_assert(this->isUpdating);
-		auto data = reinterpret_cast<PdfRenderCallbackData*>(g_malloc(sizeof(PdfRenderCallbackData)));
-		*data = std::make_pair(this, isPreview);
+		auto data = new PdfRenderCallbackData(this, isPreview);
 		XOJ_CHECK_TYPE_OBJ(data->first, LatexController);
 		g_child_watch_add(*pid, reinterpret_cast<GChildWatchFunc>(onPdfRenderComplete), data);
 		g_free(pid);
@@ -256,12 +255,13 @@ void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, PdfRenderCa
 	GError* err = nullptr;
 	g_spawn_check_exit_status(returnCode, &err);
 	g_spawn_close_pid(pid);
+	bool shouldUpdate = self->lastPreviewedTex != self->currentTex;
 	if (err != nullptr)
 	{
+		self->isValidTex = false;
 		if (!g_error_matches(err, G_SPAWN_EXIT_ERROR, 1))
 		{
 			// The error was not caused by invalid LaTeX.
-			// TODO: error message
 			string message = FS(_F("pdflatex encountered an error: {1} (exit code: {2})") % err->message % err->code);
 			g_warning(message.c_str());
 			XojMsgBox::showErrorToUser(self->control->getGtkWindow(), message);
@@ -273,12 +273,10 @@ void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, PdfRenderCa
 			pdfPath.deleteFile();
 		}
 		g_error_free(err);
-		self->setUpdating(false);
 	}
 	else
 	{
-
-		bool shouldUpdate = self->lastPreviewedTex != self->currentTex;
+		self->isValidTex = true;
 		if (isPreview)
 		{
 			self->deletePreviousRender();
@@ -293,17 +291,19 @@ void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, PdfRenderCa
 			self->insertTexImage();
 		}
 
-		self->setUpdating(false);
-		if (shouldUpdate)
-		{
-			self->triggerImageUpdate(true);
-		}
 	}
-	g_free(data);
+	self->setUpdating(false);
+	if (shouldUpdate)
+	{
+		self->triggerImageUpdate(true);
+	}
+	data->first = nullptr;
+	delete data;
 }
 
 void LatexController::setUpdating(bool newValue)
 {
+	GtkWidget* okButton = this->dlg->get("texokbutton");
 	if ((!this->isUpdating && newValue) || (this->isUpdating && !newValue))
 	{
 		// Disable LatexDialog OK button while updating. This is a workaround
@@ -311,9 +311,13 @@ void LatexController::setUpdating(bool newValue)
 		// is open; 2) the preview is generated asynchronously; and 3) the `run`
 		// method that inserts the TexImage object is called synchronously after
 		// the dialog is closed with the OK button.
-		GtkWidget* okButton = this->dlg->get("texokbutton");
 		gtk_widget_set_sensitive(okButton, !newValue);
 	}
+
+	// Invalid LaTeX will generate an invalid PDF, so disable the OK button if
+	// needed.
+	gtk_widget_set_sensitive(okButton, this->isValidTex);
+
 	this->isUpdating = newValue;
 }
 
