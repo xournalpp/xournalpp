@@ -204,6 +204,12 @@ public:
 	void setLastSavePath(Path p);
 	Path getLastSavePath();
 
+	/**
+	 * The last open path
+	 */
+	void setLastOpenPath(Path p);
+	Path getLastOpenPath();
+
 	void setLastImagePath(Path p);
 	Path getLastImagePath();
 
@@ -236,26 +242,26 @@ public:
 
 	void setPairsOffset(int numPairsOffset);
 	int getPairsOffset();
-	
+
 	void setViewColumns(int numColumns);
 	int getViewColumns();
 
 	void setViewRows(int numRows);
 	int getViewRows();
-	
+
 	void setViewFixedRows(bool viewFixedRows);
 	bool isViewFixedRows();
-	
+
 	void setViewLayoutVert(bool vert);
 	bool getViewLayoutVert();
-	
+
 	void setViewLayoutR2L(bool r2l);
 	bool getViewLayoutR2L();
 
 	void setViewLayoutB2T(bool b2t);
 	bool getViewLayoutB2T();
-	
-	
+
+
 	bool isAutloadPdfXoj();
 	void setAutoloadPdfXoj(bool load);
 
@@ -278,7 +284,7 @@ public:
 	void setDrawDirModsEnabled(bool enable);
 	int  getDrawDirModsRadius();
 	void setDrawDirModsRadius(int pixels);
-		
+
 	bool isTouchWorkaround();
 	void setTouchWorkaround(bool b);
 
@@ -379,14 +385,14 @@ public:
 	/**
 	 * Set StrokeFilter enabled
 	 */
-	void setStrokeFilterEnabled(bool enabled);	
+	void setStrokeFilterEnabled(bool enabled);
 
 	/**
 	 * Get StrokeFilter enabled
 	 */
-	bool getStrokeFilterEnabled();		
+	bool getStrokeFilterEnabled();
 
-	
+
 	/**
 	 * get strokeFilter settings
 	 */
@@ -400,13 +406,13 @@ public:
 	/**
 	 * Set StrokeFilter enabled
 	 */
-	void setDoActionOnStrokeFiltered(bool enabled);	
+	void setDoActionOnStrokeFiltered(bool enabled);
 
 	/**
 	 * Get StrokeFilter enabled
 	 */
-	bool getDoActionOnStrokeFiltered();		
-	
+	bool getDoActionOnStrokeFiltered();
+
 public:
 	// Custom settings
 	SElement& getCustomElement(string name);
@@ -490,7 +496,7 @@ private:
 	bool highlightPosition;
 
 	/**
-	 * If the user uses a dark-themed DE, he should enable this 
+	 * If the user uses a dark-themed DE, he should enable this
 	 * (white icons)
 	 */
 	bool darkTheme;
@@ -514,6 +520,11 @@ private:
 	 *  The last saved folder
 	 */
 	Path lastSavePath;
+
+	/**
+	 *  The last opened folder
+	 */
+	Path lastOpenPath;
 
 	/**
 	 *  The last "insert image" folder
@@ -573,41 +584,41 @@ private:
 	/**
 	 *  Offsets first page ( to align pairing )
 	 */
-	int numPairsOffset;	
-	
+	int numPairsOffset;
+
 	/**
 	 *  Use when fixed number of columns
 	 */
-	int numColumns;	
+	int numColumns;
 
 	/**
 	 *  Use when fixed number of rows
 	 */
-	int numRows;	
+	int numRows;
 
 	/**
 	 *  USE  fixed rows, otherwise fixed columns
 	 */
-	bool viewFixedRows;	
-	
+	bool viewFixedRows;
+
 	/**
-	 *  Layout Vertical then Horizontal 
+	 *  Layout Vertical then Horizontal
 	 */
-	bool layoutVertical;	
-	
+	bool layoutVertical;
+
 	/**
 	 *  Layout pages right to left
 	 */
-	bool layoutRightToLeft;	
-	
+	bool layoutRightToLeft;
+
 	/**
 	 *  Layout Bottom to Top
 	 */
-	bool layoutBottomToTop;	
-	
-	
-	
-	
+	bool layoutBottomToTop;
+
+
+
+
 	/**
 	 * Automatically load filename.pdf.xoj / .pdf.xopp instead of filename.pdf (true/false)
 	 */
@@ -649,9 +660,9 @@ private:
 
 	/**
 	 * Radius at which emulated modifiers are locked on for the rest of drawing operation
-	 */	
+	 */
 	int drawDirModsRadius;
-	
+
 	/**
 	 * Rotation snapping enabled by default
 	 */
@@ -768,10 +779,10 @@ private:
 	 */
 	string pluginDisabled;
 
-	
+
 	/**
 	 * Used to filter strokes of short time and length unless successive
-	 * strokeFilterIgnorePoints			this many points 
+	 * strokeFilterIgnorePoints			this many points
 	 * strokeFilterIgnoreTime 			within this time (ms)  will be ignored..
 	 * strokeFilterSuccessiveTime		...unless successive within this time.
 	 */
@@ -780,11 +791,11 @@ private:
 	int strokeFilterSuccessiveTime;
 	bool strokeFilterEnabled;
 	bool doActionOnStrokeFiltered;
-	
+
 	/**
 	 * "Transaction" running, do not save until the end is reached
 	 */
 	bool inTransaction;
-	
-	
+
+
 };

@@ -310,6 +310,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->lastSavePath = (const char*) value;
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "lastOpenPath") == 0)
+	{
+		this->lastOpenPath = (const char*) value;
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "lastImagePath") == 0)
 	{
 		this->lastImagePath = (const char*) value;
@@ -834,8 +838,13 @@ void Settings::save()
 	WRITE_BOOL_PROP(zoomGesturesEnabled);
 
 	WRITE_STRING_PROP(selectedToolbar);
-	WRITE_STRING_PROP(lastSavePath.str());
-	WRITE_STRING_PROP(lastImagePath.str());
+
+	auto lastSavePath = this->lastSavePath.str();
+	auto lastOpenPath = this->lastOpenPath.str();
+	auto lastImagePath = this->lastImagePath.str();
+	WRITE_STRING_PROP(lastSavePath);
+	WRITE_STRING_PROP(lastOpenPath);
+	WRITE_STRING_PROP(lastImagePath);
 
 	WRITE_DOUBLE_PROP(zoomStep);
 	WRITE_DOUBLE_PROP(zoomStepScroll);
@@ -1771,6 +1780,21 @@ Path Settings::getLastSavePath()
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->lastSavePath;
+}
+
+void Settings::setLastOpenPath(Path p)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	this->lastOpenPath = p;
+	save();
+}
+
+Path Settings::getLastOpenPath()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->lastOpenPath;
 }
 
 void Settings::setLastImagePath(Path path)
