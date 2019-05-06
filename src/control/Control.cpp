@@ -2653,6 +2653,7 @@ bool Control::showSaveDialog()
 
 	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), suggested_folder.c_str());
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), suggested_name.c_str());
+	gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), this->settings->getLastOpenPath().c_str(), nullptr);
 
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), false); //handled below
 
