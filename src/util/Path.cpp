@@ -137,12 +137,9 @@ bool Path::hasExtension(string ext)
 void Path::clearExtensions()
 {
 	string plower = StringUtils::toLowerCase(path);
-
-	//REMOVE_EXTENSION(".pdf.xoj");
-	//REMOVE_EXTENSION(".pdf.xopp");
+	
 	REMOVE_EXTENSION(".xoj");
 	REMOVE_EXTENSION(".xopp");
-	//REMOVE_EXTENSION(".pdf");
 }
 
 /**
