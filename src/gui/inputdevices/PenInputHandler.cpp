@@ -15,6 +15,8 @@
 
 #include <cmath>
 
+#define WIDGET_SCROLL_BORDER 25
+
 PenInputHandler::PenInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)
 {
 	XOJ_INIT_TYPE(PenInputHandler);
@@ -226,6 +228,33 @@ bool PenInputHandler::actionMotion(GdkEvent* event)
 {
 	XOJ_CHECK_TYPE(PenInputHandler);
 
+	/*
+	 * Workaround for misbehaving devices where Enter events are not published every time
+	 * This is required to disable outside scrolling again
+	 */
+	gdouble eventX, eventY;
+	if (gdk_event_get_coords(event, &eventX, &eventY))
+	{
+		GtkAdjustment* adjHorizontal = this->inputContext->getScrollHandling()->getHorizontal();
+		GtkAdjustment* adjVertical = this->inputContext->getScrollHandling()->getVertical();
+		double h = gtk_adjustment_get_value(adjHorizontal);
+		double v = gtk_adjustment_get_value(adjVertical);
+		eventX -= h;
+		eventY -= v;
+
+		GtkWidget* widget = gtk_widget_get_parent(this->inputContext->getView()->getWidget());
+		gint width = gtk_widget_get_allocated_width(widget);
+		gint height = gtk_widget_get_allocated_height(widget);
+
+
+		if (!this->penInWidget && eventX > WIDGET_SCROLL_BORDER && eventY > WIDGET_SCROLL_BORDER && eventX < width - WIDGET_SCROLL_BORDER && eventY < height - WIDGET_SCROLL_BORDER)
+		{
+			this->penInWidget = true;
+		}
+	}
+
+
+
 	GtkXournal* xournal = this->inputContext->getXournal();
 	ToolHandler* h = this->inputContext->getToolHandler();
 
@@ -264,35 +293,40 @@ bool PenInputHandler::actionMotion(GdkEvent* event)
 	XojPageView* lastHitEventPage = getPageAtCurrentPosition(this->lastHitEvent);
 	XojPageView* currentPage = getPageAtCurrentPosition(event);
 
-	/*
-	 * Get all events where the input sequence moved from one page to another without stopping the input.
-	 * Only trigger once the new page was entered to ensure that an input device can leave the page temporarily.
-	 * For these events we need to fake an end point in the old page and a start point in the new page.
-	 */
-	if (currentPage && !lastEventPage && lastHitEventPage)
+	ToolHandler* toolHandler = this->inputContext->getToolHandler();
+	ToolType toolType = toolHandler->getToolType();
+	if (toolType != TOOL_SELECT_OBJECT && toolType != TOOL_SELECT_RECT && toolType != TOOL_SELECT_REGION)
 	{
+		/*
+		 * Get all events where the input sequence moved from one page to another without stopping the input.
+		 * Only trigger once the new page was entered to ensure that an input device can leave the page temporarily.
+		 * For these events we need to fake an end point in the old page and a start point in the new page.
+		 */
+		if (currentPage && !lastEventPage && lastHitEventPage)
+		{
 #ifdef DEBUG_INPUT
-		g_message("PenInputHandler: Start new input on switching page...");
+			g_message("PenInputHandler: Start new input on switching page...");
 #endif
-		this->actionEnd(this->lastHitEvent);
-		this->updateLastEvent(event);
+			this->actionEnd(this->lastHitEvent);
+			this->updateLastEvent(event);
 
-		bool result =  this->actionStart(event);
-		this->updateLastEvent(event);
-		return result;
-	}
-	/*
-	 * Get all events where the input sequence started outside of a page and moved into one.
-	 * For these events we need to fake a start point in the current page.
-	 */
-	if (currentPage && !lastEventPage && !lastHitEventPage)
-	{
+			bool result = this->actionStart(event);
+			this->updateLastEvent(event);
+			return result;
+		}
+		/*
+		 * Get all events where the input sequence started outside of a page and moved into one.
+		 * For these events we need to fake a start point in the current page.
+		 */
+		if (currentPage && !lastEventPage && !lastHitEventPage)
+		{
 #ifdef DEBUG_INPUT
-		g_message("PenInputHandler: Start new input on entering page...");
+			g_message("PenInputHandler: Start new input on entering page...");
 #endif
-		bool result =  this->actionStart(event);
-		this->updateLastEvent(event);
-		return result;
+			bool result = this->actionStart(event);
+			this->updateLastEvent(event);
+			return result;
+		}
 	}
 
 	// Update the last position of the input device
@@ -388,33 +422,44 @@ void PenInputHandler::actionLeaveWindow(GdkEvent* event)
 	{
 		// scroll if we have an active selection
 		gdouble eventX, eventY;
-		gdk_event_get_coords(event, &eventX, &eventY);
+		if (!gdk_event_get_coords(event, &eventX, &eventY))
+		{
+			g_warning("PenInputHandler: LeaveWindow: Could not get coordinates!");
+			return;
+		}
 
-		GtkWidget* widget = this->inputContext->getView()->getWidget();
+		GtkAdjustment* adjHorizontal = this->inputContext->getScrollHandling()->getHorizontal();
+		GtkAdjustment* adjVertical = this->inputContext->getScrollHandling()->getVertical();
+		double h = gtk_adjustment_get_value(adjHorizontal);
+		double v = gtk_adjustment_get_value(adjVertical);
+		eventX -= h;
+		eventY -= v;
+
+		GtkWidget* widget = gtk_widget_get_parent(this->inputContext->getView()->getWidget());
 		gint width = gtk_widget_get_allocated_width(widget);
 		gint height = gtk_widget_get_allocated_height(widget);
 
-		new std::thread([&]()
+		new std::thread([&,eventX,eventY, width, height]()
 		{
 			int offsetX = 0, offsetY = 0;
 
 			// TODO: make offset dependent on how big the distance between pen and view is
-			if (eventX < 25)
+			if (eventX < WIDGET_SCROLL_BORDER)
 			{
 				offsetX = -10;
 			}
 
-			if (eventY < 25)
+			if (eventY < WIDGET_SCROLL_BORDER)
 			{
 				offsetY = -10;
 			}
 
-			if (eventX > width - 25)
+			if (eventX > width - WIDGET_SCROLL_BORDER)
 			{
 				offsetX = 10;
 			}
 
-			if (eventY > height - 25)
+			if (eventY > height - WIDGET_SCROLL_BORDER)
 			{
 				offsetY = 10;
 			}
@@ -448,7 +493,6 @@ void PenInputHandler::actionEnterWindow(GdkEvent* event)
 	// Restart input sequence if the tool is pressed and not a selection tool
 	ToolHandler* toolHandler = this->inputContext->getToolHandler();
 	ToolType toolType = toolHandler->getToolType();
-	// TODO should we use the event state to determine the pressed state of the device? This currently disallows strokes starting outside of the widget
 	if (this->deviceClassPressed && toolType != TOOL_SELECT_OBJECT && toolType != TOOL_SELECT_RECT && toolType != TOOL_SELECT_REGION)
 	{
 		this->actionStart(event);
