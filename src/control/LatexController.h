@@ -23,7 +23,7 @@
 
 #include <poppler.h>
 
-#include <utility>
+#include <memory>
 
 class Control;
 class TexImage;
@@ -39,6 +39,11 @@ public:
 	virtual ~LatexController();
 
 public:
+	/**
+	 * Open a LatexDialog, wait for the user to provide the LaTeX formula, and
+	 * insert the rendered formula into the document if the supplied LaTeX is
+	 * valid.
+	 */
 	void run();
 
 private:
@@ -62,16 +67,15 @@ private:
 	 * called when the preview is not updating.
 	 *
 	 * @return The PID of the spawned process, or nullptr if the .tex file could
-	 * not be written or the command failed to start. This pointer is managed by
-	 * GTK+, and as such should be freed with g_free.
+	 * not be written or the command failed to start.
 	 */
-	GPid* runCommandAsync();
+	std::unique_ptr<GPid> runCommandAsync();
 
 	/**
 	 * Asynchronously runs the LaTeX command and then updates the TeX image. If
 	 * the preview is already being updated, then this method will be a no-op.
 	 */
-	void triggerImageUpdate(bool isPreview);
+	void triggerImageUpdate();
 
 	/**
 	 * Show the LaTex Editor dialog
@@ -84,27 +88,20 @@ private:
 	 */
 	static void handleTexChanged(GtkTextBuffer* buffer, LatexController* self);
 
-	/** User data for onPdfRenderComplete */
-	typedef std::pair<LatexController*, bool> PdfRenderCallbackData;
-
 	/**
-	 * Updates the display once the PDF file is generated. The data pair
-	 * contains a pointer to the LatexController from which it is called, as
-	 * well as a flag that indicates whether this render is for a preview.
+	 * Updates the display once the PDF file is generated.
 	 *
 	 * If the Latex text has changed since the last update, triggerPreviewUpdate
 	 * will be called again.
 	 */
-	static void onPdfRenderComplete(GPid pid, gint returnCode, PdfRenderCallbackData* data);
+	static void onPdfRenderComplete(GPid pid, gint returnCode, LatexController* self);
 
 	void setUpdating(bool newValue);
 
 	/*******/
 	//Wrappers for signal handler who can't access non-static fields 
 	//(see implementation for further explanation)
-	TexImage* getTemporaryRender();
 	void setImageInDialog(PopplerDocument* pdf);
-	void deletePreviousRender();
 	void setCurrentTex(string currentTex);
 	GtkTextIter* getStartIterator(GtkTextBuffer* buffer);
 	GtkTextIter* getEndIterator(GtkTextBuffer* buffer);
@@ -113,12 +110,12 @@ private:
 	/**
 	 * Convert PDF Document to TexImage
 	 */
-	TexImage* convertDocumentToImage(PopplerDocument* doc);
+	std::unique_ptr<TexImage> convertDocumentToImage(PopplerDocument* doc);
 
 	/**
 	 * Load PDF as TexImage
 	 */
-	TexImage* loadRendered();
+	std::unique_ptr<TexImage> loadRendered();
 
 	/**
 	 * Actual image creation
@@ -206,7 +203,7 @@ private:
 	string texTmp;
 
 	/**
-	 * Previously existin TexImage
+	 * Previously existing TexImage
 	 */
 	TexImage* selectedTexImage = NULL;
 
@@ -215,20 +212,11 @@ private:
 	/**
 	 * LaTex editor dialog
 	 */
-	LatexDialog* dlg = NULL;
+	LatexDialog* dlg = nullptr;
 
 	/**
 	 * The controller holds the 'on-the-go' render in order
 	 * to be able to delete it when a new render is created
 	 */
-	TexImage* temporaryRender = NULL;
-
-
-	/**
-	 * TextBuffer iterators
-	 * I don't understand why, but declaring these as pointers
-	 * makes the TextView widget crash
-	 */
-	GtkTextIter start;
-	GtkTextIter end;
+	std::unique_ptr<TexImage> temporaryRender;
 };
