@@ -65,6 +65,11 @@ protected:
 	 */
 	bool penInWidget = false;
 
+	/**
+	 * Page a selection started at as we require this for motion updates
+	 */
+	 XojPageView* selectionStartPage = nullptr;
+
 public:
 	explicit PenInputHandler(InputContext* inputContext);
 	~PenInputHandler() override;

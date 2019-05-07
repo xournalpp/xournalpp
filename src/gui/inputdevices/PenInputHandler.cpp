@@ -173,11 +173,18 @@ bool PenInputHandler::actionStart(GdkEvent* event)
 
 
 	ToolHandler* toolHandler = this->inputContext->getToolHandler();
+	ToolType toolType = toolHandler->getToolType();
 
 	// Save the starting offset when hand-tool is selected to get a reference for the scroll-offset
-	if (toolHandler->getToolType() == TOOL_HAND)
+	if (toolType == TOOL_HAND)
 	{
 		gdk_event_get_root_coords(event, &this->scrollStartX, &this->scrollStartY);
+	}
+
+	// Set the reference page for selections so motion events are passed to the right page everytime
+	if (toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_OBJECT)
+	{
+		this->selectionStartPage = currentPage;
 	}
 
 	// hand tool don't change the selection, so you can scroll e.g. with your touchscreen without remove the selection
@@ -334,6 +341,34 @@ bool PenInputHandler::actionMotion(GdkEvent* event)
 
 	// Update the cursor
 	xournal->view->getCursor()->setInsidePage(currentPage != nullptr);
+
+	// Selections will always work on one page so we need to handle them differently
+	if (this->selectionStartPage && (toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_OBJECT))
+	{
+		// Relay the event to the page
+		PositionInputData pos = getInputDataRelativeToCurrentPage(selectionStartPage, event);
+
+		// Enforce selection to stay within page
+		if (pos.x < 0)
+		{
+			pos.x = 0;
+		}
+		if (pos.y < 0)
+		{
+			pos.y = 0;
+		}
+		if (pos.x > selectionStartPage->getDisplayWidth())
+		{
+			pos.x = selectionStartPage->getDisplayWidth();
+		}
+		if (pos.y > selectionStartPage->getDisplayHeight())
+		{
+			pos.y = selectionStartPage->getDisplayHeight();
+		}
+
+		return selectionStartPage->onMotionNotifyEvent(pos);
+	}
+
 	if (currentPage && this->penInWidget)
 	{
 		// Relay the event to the page
@@ -352,6 +387,7 @@ bool PenInputHandler::actionEnd(GdkEvent* event)
 	GtkXournal* xournal = inputContext->getXournal();
 	XournalppCursor* cursor = xournal->view->getCursor();
 	ToolHandler* toolHandler = inputContext->getToolHandler();
+	ToolType toolType = toolHandler->getToolType();
 
 	cursor->setMouseDown(false);
 
@@ -361,31 +397,39 @@ bool PenInputHandler::actionEnd(GdkEvent* event)
 		sel->mouseUp();
 	}
 
-	//Relay the event to the page
-	XojPageView* currentPage = getPageAtCurrentPosition(event);
-
-	/*
-	 * Use the last active page if you can't find a page under the cursor position.
-	 * This is a workaround for input leaving the page while being active and then stopping outside.
-	 */
-	if (!currentPage)
+	if (this->selectionStartPage && (toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_OBJECT))
 	{
-		if (!this->lastHitEvent)
+		PositionInputData pos = getInputDataRelativeToCurrentPage(this->selectionStartPage, event);
+		this->selectionStartPage->onButtonReleaseEvent(pos);
+	} else
+	{
+		//Relay the event to the page
+		XojPageView* currentPage = getPageAtCurrentPosition(event);
+
+		/*
+		 * Use the last active page if you can't find a page under the cursor position.
+		 * This is a workaround for input leaving the page while being active and then stopping outside.
+		 */
+		if (!currentPage)
 		{
-			return false;
+			if (!this->lastHitEvent)
+			{
+				return false;
+			}
+			currentPage = getPageAtCurrentPosition(this->lastHitEvent);
 		}
-		currentPage = getPageAtCurrentPosition(this->lastHitEvent);
-	}
 
-	if (currentPage)
-	{
-		PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
-		currentPage->onButtonReleaseEvent(pos);
+		if (currentPage)
+		{
+			PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
+			currentPage->onButtonReleaseEvent(pos);
+		}
 	}
 
 	//Reset the selection
 	EditSelection* tmpSelection = xournal->selection;
 	xournal->selection = nullptr;
+	this->selectionStartPage = nullptr;
 
 	toolHandler->restoreLastConfig();
 
