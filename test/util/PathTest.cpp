@@ -103,19 +103,27 @@ public:
 
 		b = Path("/test/asdf.PDF");
 		b.clearExtensions();
-		CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+		CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.str());
 
 		b = Path("/test/asdf.PDF.xoj");
 		b.clearExtensions();
-		CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+		CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.str());
+        
+        	b = Path("/test/asdf.PDF.xopp");
+		b.clearExtensions();
+		CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.str());
 
 		b = Path("/test/asdf.xoj");
+		b.clearExtensions();
+		CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+        
+        	b = Path("/test/asdf.xopp");
 		b.clearExtensions();
 		CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
 
 		b = Path("/test/asdf.pdf");
 		b.clearExtensions();
-		CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+		CPPUNIT_ASSERT_EQUAL(string("/test/asdf.pdf"), b.str());
 	}
 };
 
