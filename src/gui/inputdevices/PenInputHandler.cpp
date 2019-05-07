@@ -9,7 +9,7 @@
 #include <gui/widgets/XournalWidget.h>
 #include <control/ToolHandler.h>
 #include <gui/XournalppCursor.h>
-#include <gui/inputdevices/old/PositionInputData.h>
+#include <gui/inputdevices/PositionInputData.h>
 #include "gui/XournalView.h"
 #include <control/settings/ButtonConfig.h>
 

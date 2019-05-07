@@ -15,7 +15,7 @@
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
-#include "PositionInputData.h"
+#include "gui/inputdevices/PositionInputData.h"
 
 class NewGtkInputDevice;
 class XojPageView;

@@ -15,7 +15,7 @@
 
 #include <model/Point.h>
 #include <gui/PageView.h>
-#include <gui/inputdevices/old/PositionInputData.h>
+#include <gui/inputdevices/PositionInputData.h>
 #include <control/settings/ButtonConfig.h>
 
 #include <gdk/gdk.h>
