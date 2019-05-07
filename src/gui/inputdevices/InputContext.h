@@ -12,6 +12,7 @@
 #pragma once
 
 
+#include "config-debug.h"
 #include <XournalType.h>
 
 #include "AbstractInputHandler.h"
