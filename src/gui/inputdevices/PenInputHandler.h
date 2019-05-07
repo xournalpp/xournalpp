@@ -68,7 +68,7 @@ protected:
 	/**
 	 * Page a selection started at as we require this for motion updates
 	 */
-	 XojPageView* selectionStartPage = nullptr;
+	 XojPageView* sequenceStartPage = nullptr;
 
 public:
 	explicit PenInputHandler(InputContext* inputContext);

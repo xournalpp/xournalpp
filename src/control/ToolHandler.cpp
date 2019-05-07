@@ -681,3 +681,13 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
 		this->fireToolChanged();
 	}
 }
+
+bool ToolHandler::isSinglePageTool()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	ToolType toolType = this->getToolType();
+	return toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_OBJECT
+		   || this->hasCapability(TOOL_CAP_ARROW) || this->hasCapability(TOOL_CAP_CIRCLE) || this->hasCapability(TOOL_CAP_COORDINATE_SYSTEM) ||
+		   this->hasCapability(TOOL_CAP_RECTANGLE) || this->hasCapability(TOOL_CAP_RULER);
+}

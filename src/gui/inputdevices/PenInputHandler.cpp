@@ -181,10 +181,10 @@ bool PenInputHandler::actionStart(GdkEvent* event)
 		gdk_event_get_root_coords(event, &this->scrollStartX, &this->scrollStartY);
 	}
 
-	// Set the reference page for selections so motion events are passed to the right page everytime
-	if (toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_OBJECT)
+	// Set the reference page for selections and other single-page elements so motion events are passed to the right page everytime
+	if (toolHandler->isSinglePageTool())
 	{
-		this->selectionStartPage = currentPage;
+		this->sequenceStartPage = currentPage;
 	}
 
 	// hand tool don't change the selection, so you can scroll e.g. with your touchscreen without remove the selection
@@ -301,8 +301,7 @@ bool PenInputHandler::actionMotion(GdkEvent* event)
 	XojPageView* currentPage = getPageAtCurrentPosition(event);
 
 	ToolHandler* toolHandler = this->inputContext->getToolHandler();
-	ToolType toolType = toolHandler->getToolType();
-	if (toolType != TOOL_SELECT_OBJECT && toolType != TOOL_SELECT_RECT && toolType != TOOL_SELECT_REGION)
+	if (!toolHandler->isSinglePageTool())
 	{
 		/*
 		 * Get all events where the input sequence moved from one page to another without stopping the input.
@@ -342,11 +341,11 @@ bool PenInputHandler::actionMotion(GdkEvent* event)
 	// Update the cursor
 	xournal->view->getCursor()->setInsidePage(currentPage != nullptr);
 
-	// Selections will always work on one page so we need to handle them differently
-	if (this->selectionStartPage && (toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_OBJECT))
+	// Selections and single-page elements will always work on one page so we need to handle them differently
+	if (this->sequenceStartPage && toolHandler->isSinglePageTool())
 	{
 		// Relay the event to the page
-		PositionInputData pos = getInputDataRelativeToCurrentPage(selectionStartPage, event);
+		PositionInputData pos = getInputDataRelativeToCurrentPage(sequenceStartPage, event);
 
 		// Enforce selection to stay within page
 		if (pos.x < 0)
@@ -357,16 +356,16 @@ bool PenInputHandler::actionMotion(GdkEvent* event)
 		{
 			pos.y = 0;
 		}
-		if (pos.x > selectionStartPage->getDisplayWidth())
+		if (pos.x > sequenceStartPage->getDisplayWidth())
 		{
-			pos.x = selectionStartPage->getDisplayWidth();
+			pos.x = sequenceStartPage->getDisplayWidth();
 		}
-		if (pos.y > selectionStartPage->getDisplayHeight())
+		if (pos.y > sequenceStartPage->getDisplayHeight())
 		{
-			pos.y = selectionStartPage->getDisplayHeight();
+			pos.y = sequenceStartPage->getDisplayHeight();
 		}
 
-		return selectionStartPage->onMotionNotifyEvent(pos);
+		return sequenceStartPage->onMotionNotifyEvent(pos);
 	}
 
 	if (currentPage && this->penInWidget)
@@ -387,7 +386,6 @@ bool PenInputHandler::actionEnd(GdkEvent* event)
 	GtkXournal* xournal = inputContext->getXournal();
 	XournalppCursor* cursor = xournal->view->getCursor();
 	ToolHandler* toolHandler = inputContext->getToolHandler();
-	ToolType toolType = toolHandler->getToolType();
 
 	cursor->setMouseDown(false);
 
@@ -397,10 +395,11 @@ bool PenInputHandler::actionEnd(GdkEvent* event)
 		sel->mouseUp();
 	}
 
-	if (this->selectionStartPage && (toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_OBJECT))
+	// Selections and single-page elements will always work on one page so we need to handle them differently
+	if (this->sequenceStartPage && toolHandler->isSinglePageTool())
 	{
-		PositionInputData pos = getInputDataRelativeToCurrentPage(this->selectionStartPage, event);
-		this->selectionStartPage->onButtonReleaseEvent(pos);
+		PositionInputData pos = getInputDataRelativeToCurrentPage(this->sequenceStartPage, event);
+		this->sequenceStartPage->onButtonReleaseEvent(pos);
 	} else
 	{
 		//Relay the event to the page
@@ -429,7 +428,7 @@ bool PenInputHandler::actionEnd(GdkEvent* event)
 	//Reset the selection
 	EditSelection* tmpSelection = xournal->selection;
 	xournal->selection = nullptr;
-	this->selectionStartPage = nullptr;
+	this->sequenceStartPage = nullptr;
 
 	toolHandler->restoreLastConfig();
 
@@ -458,8 +457,7 @@ void PenInputHandler::actionLeaveWindow(GdkEvent* event)
 
 	// Stop input sequence if the tool is not a selection tool
 	ToolHandler* toolHandler = this->inputContext->getToolHandler();
-	ToolType toolType = toolHandler->getToolType();
-	if (this->inputRunning && toolType != TOOL_SELECT_OBJECT && toolType != TOOL_SELECT_RECT && toolType != TOOL_SELECT_REGION)
+	if (this->inputRunning && !toolHandler->isSinglePageTool())
 	{
 		this->actionEnd(this->lastHitEvent);
 	} else if (this->deviceClassPressed)
@@ -534,10 +532,9 @@ void PenInputHandler::actionEnterWindow(GdkEvent* event)
 
 	this->penInWidget = true;
 
-	// Restart input sequence if the tool is pressed and not a selection tool
+	// Restart input sequence if the tool is pressed and not a single-page tool
 	ToolHandler* toolHandler = this->inputContext->getToolHandler();
-	ToolType toolType = toolHandler->getToolType();
-	if (this->deviceClassPressed && toolType != TOOL_SELECT_OBJECT && toolType != TOOL_SELECT_RECT && toolType != TOOL_SELECT_REGION)
+	if (this->deviceClassPressed && !toolHandler->isSinglePageTool())
 	{
 		this->actionStart(event);
 	}
