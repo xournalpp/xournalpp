@@ -347,23 +347,11 @@ bool PenInputHandler::actionMotion(GdkEvent* event)
 		// Relay the event to the page
 		PositionInputData pos = getInputDataRelativeToCurrentPage(sequenceStartPage, event);
 
-		// Enforce selection to stay within page
-		if (pos.x < 0)
-		{
-			pos.x = 0;
-		}
-		if (pos.y < 0)
-		{
-			pos.y = 0;
-		}
-		if (pos.x > sequenceStartPage->getDisplayWidth())
-		{
-			pos.x = sequenceStartPage->getDisplayWidth();
-		}
-		if (pos.y > sequenceStartPage->getDisplayHeight())
-		{
-			pos.y = sequenceStartPage->getDisplayHeight();
-		}
+		// Enforce input to stay within page
+		pos.x = std::max(0.0, pos.x);
+		pos.y = std::max(0.0, pos.y);
+		pos.x = std::min(pos.x, (double) sequenceStartPage->getDisplayWidth());
+		pos.y = std::min(pos.y, (double) sequenceStartPage->getDisplayHeight());
 
 		return sequenceStartPage->onMotionNotifyEvent(pos);
 	}
