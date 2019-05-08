@@ -198,9 +198,10 @@ private:
 	Layer* layer = NULL;
 
 	/**
-	 * Text tmp directory in configuration folder
+	 * The directory in which the LaTeX files will be generated. Note that this
+	 * should be within a system temporary directory.
 	 */
-	string texTmp;
+	Path texTmp;
 
 	/**
 	 * Previously existing TexImage

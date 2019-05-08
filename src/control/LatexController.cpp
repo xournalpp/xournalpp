@@ -41,9 +41,11 @@ const char* LATEX_TEMPLATE_2 =
 LatexController::LatexController(Control* control)
 	: control(control),
 	  doc(control->getDocument()),
-	  texTmp(Util::getConfigSubfolder("tex").str())
+	  // NOTE: Could get a race condition if multiple Xournal++ processes are running
+	  texTmp(Util::getTmpDirSubfolder("tex"))
 {
 	XOJ_INIT_TYPE(LatexController);
+	Util::ensureFolderExists(this->texTmp);
 }
 
 LatexController::~LatexController()
@@ -83,7 +85,7 @@ std::unique_ptr<GPid> LatexController::runCommandAsync()
 	texContents += this->currentTex;
 	texContents += LATEX_TEMPLATE_2;
 
-	string texFile = texTmp + "/tex.tex";
+	Path texFile = texTmp / "tex.tex";
 
 	GError* err = NULL;
 	if (!g_file_set_contents(texFile.c_str(), texContents.c_str(), texContents.length(), &err))
@@ -261,7 +263,7 @@ void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, LatexContro
 			g_warning(message.c_str());
 			XojMsgBox::showErrorToUser(self->control->getGtkWindow(), message);
 		}
-		Path pdfPath = self->texTmp + "/tex.pdf";
+		Path pdfPath = self->texTmp / "tex.pdf";
 		if (pdfPath.exists())
 		{
 			// Delete the pdf to prevent more errors
@@ -407,7 +409,7 @@ std::unique_ptr<TexImage> LatexController::loadRendered()
 		return nullptr;
 	}
 
-	Path pdfPath = texTmp + "/tex.pdf";
+	Path pdfPath = texTmp / "tex.pdf";
 	GError* err = NULL;
 
 	gchar* fileContents = NULL;
