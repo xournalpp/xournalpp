@@ -6,6 +6,7 @@
 
 #include <gtk/gtk.h>
 #include <stdio.h>
+#include <config-debug.h>
 
 ToolListener::~ToolListener() { }
 
@@ -687,7 +688,10 @@ bool ToolHandler::isSinglePageTool()
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	ToolType toolType = this->getToolType();
-	return toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_OBJECT
-		   || this->hasCapability(TOOL_CAP_ARROW) || this->hasCapability(TOOL_CAP_CIRCLE) || this->hasCapability(TOOL_CAP_COORDINATE_SYSTEM) ||
-		   this->hasCapability(TOOL_CAP_RECTANGLE) || this->hasCapability(TOOL_CAP_RULER);
+	DrawingType drawingType = this->getDrawingType();
+
+	return toolType == (TOOL_PEN && (drawingType == DRAWING_TYPE_ARROW || drawingType == DRAWING_TYPE_CIRCLE || drawingType == DRAWING_TYPE_COORDINATE_SYSTEM
+		|| drawingType == DRAWING_TYPE_LINE || drawingType == DRAWING_TYPE_RECTANGLE))
+		|| toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_OBJECT || toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_CIRCLE
+		|| toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW;
 }
