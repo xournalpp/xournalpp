@@ -117,6 +117,19 @@ public:
 		b.clearExtensions();
 		CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
 	}
+
+	void testOperators()
+	{
+		Path a = Path("/test/a");
+		Path b = a / "foo.pdf";
+		CPPUNIT_ASSERT_EQUAL(string("/test/a"), a.str());
+		CPPUNIT_ASSERT_EQUAL(string("/test/foo.pdf"), b.str());
+
+		a /= "bar.pdf";
+		CPPUNIT_ASSERT_EQUAL(string("/test/a/bar.pdf"), a.str());
+		// b should not be affected by a
+		CPPUNIT_ASSERT_EQUAL(string("/test/foo.pdf"), b.str());
+	}
 };
 
 // Registers the fixture into the 'registry'

@@ -121,14 +121,26 @@ public:
 
 	// Append operations
 public:
+	/**
+	 * Modifies this path by appending the other path.
+	 */
 	void operator /=(Path p);
 	void operator /=(string p);
 	void operator /=(const char* p);
 
+	/**
+	 * Creates a copy of this path with the other path appended.
+	 *
+	 * If this method is going to be used multiple times, instead use /= to
+	 * avoid making multiple copies.
+	 */
+	Path operator /(Path p);
+	Path operator /(string p);
+	Path operator /(const char* p);
+
 	void operator +=(Path p);
 	void operator +=(string p);
 	void operator +=(const char* p);
-
 
 public:
 	/**

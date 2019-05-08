@@ -86,24 +86,34 @@ Path Util::getConfigSubfolder(Path subfolder)
 	p /= CONFIG_DIR;
 	p /= subfolder;
 
-	if (!p.exists())
-	{
-		if (g_mkdir_with_parents(p.c_str(), 0700))
-		{
-			Util::execInUiThread([=]() {
-				string msg = FS(_F("Could not create folder: {1}") % p.str());
-				XojMsgBox::showErrorToUser(NULL, msg);
-			});
-		}
-	}
-
-	return p;
+	return Util::ensureFolderExists(p);
 }
 
 Path Util::getConfigFile(Path relativeFileName)
 {
 	Path p = getConfigSubfolder(relativeFileName.getParentPath());
 	p /= relativeFileName.getFilename();
+	return p;
+}
+
+Path Util::getTmpDirSubfolder(Path subfolder)
+{
+	Path p(g_get_tmp_dir());
+	p /= "xournalpp";
+	p /= subfolder;
+	return Util::ensureFolderExists(p);
+}
+
+Path Util::ensureFolderExists(Path p)
+{
+	if (g_mkdir_with_parents(p.c_str(), 0700) == -1)
+	{
+		Util::execInUiThread([=]() {
+			string msg = FS(_F("Could not create folder: {1}") % p.str());
+			g_warning(msg.c_str());
+			XojMsgBox::showErrorToUser(nullptr, msg);
+		});
+	}
 	return p;
 }
 
