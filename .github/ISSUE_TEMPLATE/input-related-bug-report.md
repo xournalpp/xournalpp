@@ -1,8 +1,8 @@
 ---
-name: Bug report
-about: Create a report to help us improve Xournal++
+name: Input related bug report
+about: Create a report to help us improve
 title: ''
-labels: bug
+labels: Input
 assignees: ''
 
 ---
@@ -22,11 +22,14 @@ Steps to reproduce the behavior:
 2. Step 2
 3. etc.
 
+**Input Logs**
+Follow this tutorial https://github.com/xournalpp/xournalpp/wiki/How-to-provide-debug-info-for-input-related-bugs and attach the generated files.
+
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
 **Screenshots of Problem**
-(Optional) If applicable, add screenshots to help explain your problem.
+If applicable, add screenshots to help explain your problem.
 
 **Additional context**
 Add any other context about the problem here.
