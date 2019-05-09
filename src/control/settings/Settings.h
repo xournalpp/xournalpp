@@ -304,6 +304,10 @@ public:
 	bool isHighlightPosition();
 	void setHighlightPosition(bool highlight);
 
+
+	bool isBlankPenCursor();
+	void setBlankPenCursor(bool highlight);
+
 	ScrollbarHideType getScrollbarHideType();
 	void setScrollbarHideType(ScrollbarHideType type);
 
@@ -494,6 +498,11 @@ private:
 	 * Show a yellow circle around the cursor
 	 */
 	bool highlightPosition;
+
+	/**
+	 * No cursor for the pen
+	 */
+	bool blankPenCursor;
 
 	/**
 	 * If the user uses a dark-themed DE, he should enable this

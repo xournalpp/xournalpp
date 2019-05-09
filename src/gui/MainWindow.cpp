@@ -459,6 +459,7 @@ void MainWindow::updateScrollbarSidebarPosition()
 		ScrollbarHideType type = this->getControl()->getSettings()->getScrollbarHideType();
 
 		bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
+
 		if (scrollbarOnLeft)
 		{
 			gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_RIGHT);

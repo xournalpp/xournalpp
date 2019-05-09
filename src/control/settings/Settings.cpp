@@ -81,6 +81,7 @@ void Settings::loadDefault()
 	this->autoloadPdfXoj = true;
 	this->showBigCursor = false;
 	this->highlightPosition = false;
+	this->blankPenCursor = false;
 	this->darkTheme = false;
 	this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
 
@@ -409,6 +410,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "highlightPosition") == 0)
 	{
 		this->highlightPosition = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "blankPenCursor") == 0)
+	{
+		this->blankPenCursor = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "darkTheme") == 0)
 	{
@@ -877,6 +882,7 @@ void Settings::save()
 
 	WRITE_BOOL_PROP(showBigCursor);
 	WRITE_BOOL_PROP(highlightPosition);
+	WRITE_BOOL_PROP(blankPenCursor);
 	WRITE_BOOL_PROP(darkTheme);
 
 	if (this->scrollbarHideType == SCROLLBAR_HIDE_BOTH)
@@ -1324,6 +1330,25 @@ void Settings::setHighlightPosition(bool highlight)
 	save();
 }
 
+bool Settings::isBlankPenCursor()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->blankPenCursor;
+}
+
+void Settings::setBlankPenCursor(bool blank)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->blankPenCursor == blank)
+	{
+		return;
+	}
+
+	this->blankPenCursor = blank;
+	save();
+}
 bool Settings::isSnapRotation()
 {
 	XOJ_CHECK_TYPE(Settings);

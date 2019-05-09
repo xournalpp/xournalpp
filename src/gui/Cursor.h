@@ -44,6 +44,7 @@ private:
 	GdkCursor* getHighlighterCursor();
 
 	GdkCursor* createHighlighterOrPenCursor(int size, double alpha);
+	GdkCursor* createPenCursor(int size, double alpha);
 	GdkCursor* createCustomDrawDirCursor(int size, bool shift, bool ctrl);
 	
 private:
