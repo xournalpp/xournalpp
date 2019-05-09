@@ -42,11 +42,8 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 		guint button;
 		gdk_event_get_button(event, &button);
 
-		if (button == 1)
-		{
-			this->actionStart(event);
-			return true;
-		}
+		this->actionStart(event);
+		return true;
 	}
 
 	/*
@@ -76,11 +73,8 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 		guint button;
 		gdk_event_get_button(event, &button);
 
-		if (button == 1)
-		{
-			this->actionEnd(event);
-			return true;
-		}
+		this->actionEnd(event);
+		return true;
 	}
 
 	// If we loose our Grab on the device end the current action
