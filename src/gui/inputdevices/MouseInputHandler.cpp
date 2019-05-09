@@ -5,6 +5,7 @@
 #include <gui/widgets/XournalWidget.h>
 #include "MouseInputHandler.h"
 #include "InputContext.h"
+#include <gui/XournalppCursor.h>
 
 MouseInputHandler::MouseInputHandler(InputContext* inputContext) : PenInputHandler(inputContext)
 {
@@ -86,6 +87,52 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 	}
 
 	return false;
+}
+
+void MouseInputHandler::setPressedState(GdkEvent* event)
+{
+	XOJ_CHECK_TYPE(MouseInputHandler);
+
+	XojPageView* currentPage = getPageAtCurrentPosition(event);
+
+	this->inputContext->getXournal()->view->getCursor()->setInsidePage(currentPage != nullptr);
+
+	if (event->type == GDK_BUTTON_PRESS) //mouse button pressed or pen touching surface
+	{
+		guint button;
+		gdk_event_get_button(event, &button);
+
+		this->deviceClassPressed = true;
+
+		switch (button)
+		{
+			case 2:
+				this->modifier2 = true;
+				break;
+			case 3:
+				this->modifier3 = true;
+			default:
+				break;
+		}
+	}
+	if (event->type == GDK_BUTTON_RELEASE) //mouse button released or pen not touching surface anymore
+	{
+		guint button;
+		gdk_event_get_button(event, &button);
+
+		this->deviceClassPressed = false;
+
+		switch (button)
+		{
+			case 2:
+				this->modifier2 = false;
+				break;
+			case 3:
+				this->modifier3 = false;
+			default:
+				break;
+		}
+	}
 }
 
 bool MouseInputHandler::changeTool(GdkEvent* event)

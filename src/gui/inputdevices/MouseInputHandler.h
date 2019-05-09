@@ -18,6 +18,8 @@ class MouseInputHandler : public PenInputHandler
 {
 private:
 	XOJ_TYPE_ATTRIB;
+
+	void setPressedState(GdkEvent*);
 public:
 	explicit MouseInputHandler(InputContext* inputContext);
 	~MouseInputHandler() override;

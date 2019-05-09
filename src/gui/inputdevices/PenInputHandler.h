@@ -96,8 +96,6 @@ protected:
 	 */
 	bool actionEnd(GdkEvent* event);
 
-	void setPressedState(GdkEvent*);
-
 	virtual bool changeTool(GdkEvent* event) = 0;
 
 	/**

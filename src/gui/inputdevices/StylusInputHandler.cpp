@@ -115,6 +115,59 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 	return false;
 }
 
+void StylusInputHandler::setPressedState(GdkEvent* event)
+{
+	XOJ_CHECK_TYPE(StylusInputHandler);
+
+	XojPageView* currentPage = getPageAtCurrentPosition(event);
+
+	this->inputContext->getXournal()->view->getCursor()->setInsidePage(currentPage != nullptr);
+
+	if (event->type == GDK_BUTTON_PRESS) //mouse button pressed or pen touching surface
+	{
+		guint button;
+		gdk_event_get_button(event, &button);
+
+		switch (button)
+		{
+			case 1:
+				this->deviceClassPressed = true;
+				break;
+			case 2:
+				this->modifier2 = true;
+				break;
+			case 3:
+				this->modifier3 = true;
+			default:
+				break;
+		}
+	}
+	if (event->type == GDK_BUTTON_RELEASE) //mouse button released or pen not touching surface anymore
+	{
+		guint button;
+		gdk_event_get_button(event, &button);
+
+		switch (button)
+		{
+			case 1:
+				this->deviceClassPressed = false;
+				break;
+			case 2:
+				this->modifier2 = false;
+				break;
+			case 3:
+				this->modifier3 = false;
+			default:
+				break;
+		}
+	}
+
+	if (this->inputContext->getSettings()->getInputSystemTPCButtonEnabled())
+	{
+		this->deviceClassPressed = this->deviceClassPressed || this->modifier2 || this->modifier3;
+	}
+}
+
 bool StylusInputHandler::changeTool(GdkEvent* event)
 {
 	XOJ_CHECK_TYPE(StylusInputHandler);

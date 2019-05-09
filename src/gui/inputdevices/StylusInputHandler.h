@@ -26,6 +26,8 @@ public:
 	bool changeTool(GdkEvent* event) override;
 private:
 	XOJ_TYPE_ATTRIB;
+
+	void setPressedState(GdkEvent*);
 };
 
 
