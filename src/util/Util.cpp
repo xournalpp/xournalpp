@@ -99,7 +99,7 @@ Path Util::getConfigFile(Path relativeFileName)
 Path Util::getTmpDirSubfolder(Path subfolder)
 {
 	Path p(g_get_tmp_dir());
-	p /= "xournalpp";
+	p /= FS(_F("xournalpp-{1}") % Util::getPid());
 	p /= subfolder;
 	return Util::ensureFolderExists(p);
 }

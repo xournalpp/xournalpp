@@ -41,7 +41,6 @@ const char* LATEX_TEMPLATE_2 =
 LatexController::LatexController(Control* control)
 	: control(control),
 	  doc(control->getDocument()),
-	  // NOTE: Could get a race condition if multiple Xournal++ processes are running
 	  texTmp(Util::getTmpDirSubfolder("tex"))
 {
 	XOJ_INIT_TYPE(LatexController);
