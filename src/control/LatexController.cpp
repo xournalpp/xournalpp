@@ -25,6 +25,7 @@
 const char* LATEX_TEMPLATE_1 =
 	R"(\documentclass[crop, border=5pt]{standalone})" "\n"
 	R"(\usepackage{amsmath})" "\n"
+	R"(\usepackage{amssymb})" "\n"
 	R"(\usepackage{ifthen})" "\n"
 	R"(\newlength{\pheight})" "\n"
 	R"(\def\preview{\(\displaystyle)" "\n";
