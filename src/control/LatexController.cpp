@@ -17,6 +17,7 @@
 const char* LATEX_TEMPLATE_1 =
 "\\documentclass[border=5pt]{standalone}\n"
 "\\usepackage{amsmath}\n"
+"\\usepackage{amsmath}\n"
 "\\begin{document}\n"
 "\\(\\displaystyle\n";
 
