@@ -390,12 +390,7 @@ void SaveHandler::saveTo(OutputStream* out, Path filename, ProgressListener* lis
 {
 	XOJ_CHECK_TYPE(SaveHandler);
 
-	char* old_locale, *saved_locale;
-
-	old_locale = setlocale(LC_NUMERIC, NULL);
-	saved_locale = g_strdup(old_locale);
-
-	setlocale(LC_NUMERIC, "C");
+	// XMLNode should be locale-safe ( store doubles using Locale 'C' format
 
 	out->write("<?xml version=\"1.0\" standalone=\"no\"?>\n");
 	root->writeOut(out, listener);
@@ -416,8 +411,6 @@ void SaveHandler::saveTo(OutputStream* out, Path filename, ProgressListener* lis
 		}
 	}
 
-	setlocale(LC_NUMERIC, saved_locale);
-	g_free(saved_locale);
 }
 
 string SaveHandler::getErrorMessage()
