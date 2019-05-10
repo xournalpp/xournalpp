@@ -7,7 +7,7 @@
 #include "PageBackgroundChangeController.h"
 #include "UndoRedoController.h"
 
-#include "gui/Cursor.h"
+#include "gui/XournalppCursor.h"
 
 #include "gui/dialog/AboutDialog.h"
 #include "gui/dialog/GotoDialog.h"
@@ -18,7 +18,7 @@
 #include "gui/dialog/SelectBackgroundColorDialog.h"
 #include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"
 #include "gui/dialog/ToolbarManageDialog.h"
-#include "gui/inputdevices/TouchHelper.h"
+#include "gui/inputdevices/HandRecognition.h"
 #include "gui/TextEditor.h"
 #include "gui/toolbarMenubar/model/ToolbarData.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
@@ -79,7 +79,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	this->gladeSearchPath = gladeSearchPath;
 
 	this->metadata = new MetadataManager();
-	this->cursor = new Cursor(this);
+	this->cursor = new XournalppCursor(this);
 
 	this->lastAction = ACTION_NONE;
 	this->lastGroup = GROUP_NOGROUP;
@@ -2169,7 +2169,7 @@ void Control::showSettings()
 	this->zoom->setZoomStepScroll(settings->getZoomStepScroll() / 100.0);
 	this->zoom->setZoom100Value(settings->getDisplayDpi() / 72.0);
 
-	getWindow()->getXournal()->getTouchHelper()->reload();
+	getWindow()->getXournal()->getHandRecognition()->reload();
 
 	TextView::setDpi(settings->getDisplayDpi());
 
@@ -3327,7 +3327,7 @@ ZoomControl* Control::getZoomControl()
 	return this->zoom;
 }
 
-Cursor* Control::getCursor()
+XournalppCursor* Control::getCursor()
 {
 	XOJ_CHECK_TYPE(Control);
 

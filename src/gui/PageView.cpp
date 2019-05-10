@@ -1,6 +1,6 @@
 #include "PageView.h"
 
-#include "Cursor.h"
+#include "XournalppCursor.h"
 #include "RepaintHandler.h"
 #include "TextEditor.h"
 #include "XournalView.h"
@@ -349,7 +349,7 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 	x /= zoom;
 	y /= zoom;
 
-	Cursor* cursor = xournal->getCursor();
+	XournalppCursor* cursor = xournal->getCursor();
 	cursor->setMouseDown(true);
 
 	if (h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HILIGHTER ||
@@ -479,7 +479,7 @@ bool XojPageView::onMotionNotifyEvent(const PositionInputData& pos)
 	}
 	else if (this->textEditor)
 	{
-		Cursor* cursor = getXournal()->getCursor();
+		XournalppCursor* cursor = getXournal()->getCursor();
 		cursor->setInvisible(false);
 
 		Text* text = this->textEditor->getText();

@@ -150,6 +150,8 @@ option (DEV_CALL_LOG "Call log" OFF)
 
 # Debug options
 option (DEBUG_INPUT "Input debugging, e.g. eraser events etc" OFF)
+option (DEBUG_INPUT_PRINT_ALL_MOTION_EVENTS "Input debugging, print all motion events" OFF)
+option (DEBUG_INPUT_GDK_PRINT_EVENTS "Input debugging, print all GDK events" OFF)
 option (DEBUG_RECOGNIZER "Shape recognizer debug: output score etc" OFF)
 option (DEBUG_SHEDULER "Scheduler debug: show jobs etc" OFF)
 option (DEBUG_SHOW_ELEMENT_BOUNDS "Draw a surrounding border to all elements" OFF)

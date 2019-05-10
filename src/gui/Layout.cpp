@@ -374,7 +374,7 @@ void Layout::setSize(int widgetWidth, int widgetHeight)
 	}
 }
 
-void Layout::scrollRelativ(double x, double y)
+void Layout::scrollRelative(double x, double y)
 {
 	XOJ_CHECK_TYPE(Layout);
 

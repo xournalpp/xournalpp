@@ -1,9 +1,9 @@
 #include "NewGtkInputDevice.h"
 #include "InputSequence.h"
-#include "TouchHelper.h"
+#include "gui/inputdevices/HandRecognition.h"
 
 #include "control/Control.h"
-#include "gui/Cursor.h"
+#include "gui/XournalppCursor.h"
 #include "gui/PageView.h"
 #include "gui/scroll/ScrollHandling.h"
 #include "gui/XournalView.h"
@@ -236,6 +236,8 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		sourceDevice = device;
 	}
 
+	this->getView()->getHandRecognition()->event(sourceDevice);
+
 	if (ignoreTouch && GDK_SOURCE_TOUCHSCREEN == gdk_device_get_source(sourceDevice))
 	{
 		return false;
@@ -316,10 +318,10 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		guint32 time = event->type == GDK_MOTION_NOTIFY ? ((GdkEventMotion *)event)->time : ((GdkEventTouch *)event)->time;	// or call gdk_event_get_time(event)
 		input->actionMoved(time);
 
-		Cursor* cursor = view->getControl()->getWindow()->getXournal()->getCursor();
+		XournalppCursor* cursor = view->getControl()->getWindow()->getXournal()->getCursor();
 		cursor->setInvisible(false);
 
-		view->getTouchHelper()->event(sourceDevice);
+		view->getHandRecognition()->event(sourceDevice);
 	}
 	else if (event->type == GDK_BUTTON_PRESS || event->type == GDK_TOUCH_BEGIN)
 	{

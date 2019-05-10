@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Handles the Cursor
+ * Handles the XournalppCursor
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -18,11 +18,11 @@
 
 class Control;
 
-class Cursor
+class XournalppCursor
 {
 public:
-	Cursor(Control* control);
-	virtual ~Cursor();
+	XournalppCursor(Control* control);
+	virtual ~XournalppCursor();
 
 	void setCursorBusy(bool busy);
 	void updateCursor();

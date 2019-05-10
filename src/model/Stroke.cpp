@@ -267,7 +267,7 @@ Point Stroke::getPoint(int index) const
 	if (index < 0 || index >= pointCount)
 	{
 		g_warning("Stroke::getPoint(%i) out of bounds!", index);
-		return Point(0, 0, Point::NO_PRESURE);
+		return Point(0, 0, Point::NO_PRESSURE);
 	}
 	return points[index];
 }
@@ -379,7 +379,7 @@ void Stroke::scale(double x0, double y0, double fx, double fy)
 		p.y *= fy;
 		p.y += y0;
 
-		if (p.z != Point::NO_PRESURE)
+		if (p.z != Point::NO_PRESSURE)
 		{
 			p.z *= fz;
 		}
@@ -395,7 +395,7 @@ bool Stroke::hasPressure() const
 
 	if (this->pointCount > 0)
 	{
-		return this->points[0].z != Point::NO_PRESURE;
+		return this->points[0].z != Point::NO_PRESSURE;
 	}
 	return false;
 }
@@ -431,7 +431,7 @@ void Stroke::clearPressure()
 
 	for (int i = 0; i < this->pointCount; i++)
 	{
-		this->points[i].z = Point::NO_PRESURE;
+		this->points[i].z = Point::NO_PRESSURE;
 	}
 }
 

@@ -14,15 +14,16 @@
 #include <XournalType.h>
 
 #include <gdk/gdk.h>
+#include "InputContext.h"
 
 class Settings;
 class TouchDisableInterface;
 
-class TouchHelper
+class HandRecognition
 {
 public:
-	TouchHelper(Settings* settings);
-	virtual ~TouchHelper();
+	HandRecognition(GtkWidget* widget, InputContext* inputContext, Settings* settings);
+	virtual ~HandRecognition();
 
 public:
 	/**
@@ -35,13 +36,18 @@ public:
 	 */
 	void event(GdkDevice* device);
 
+	/**
+	 * Unblock the touchscreen immediately
+	 */
+	void unblock();
+
 private:
 	/**
 	 * Called after the timeout
 	 *
 	 * @return true to call again
 	 */
-	static bool enableTimeout(TouchHelper* self);
+	static bool enableTimeout(HandRecognition* self);
 
 	/**
 	 * There was a pen event, restart the timer
@@ -90,6 +96,16 @@ private:
 	 * Implementation for touch disabling
 	 */
 	TouchDisableInterface* touchImpl = NULL;
+
+	/**
+	 * XournalView
+	 */
+	 GtkWidget* widget;
+
+	 /**
+	  * InputContext
+	  */
+	  InputContext* inputContext;
 
 	/**
 	 * Settings
