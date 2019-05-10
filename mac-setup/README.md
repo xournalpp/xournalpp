@@ -56,6 +56,12 @@ Execute in this folder.
 ./build-portaudio.sh
 ````
 
+#### 5. LibZip
+
+````bash
+./build-libzip.sh
+````
+
 If there is an error like:
 xcode-select: error: tool 'xcodebuild' requires Xcode, but active developer directory '/Library/Developer/CommandLineTools' is a command line tools instance
 
