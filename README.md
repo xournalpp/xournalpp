@@ -4,9 +4,9 @@
 [![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Shout out
-Recently we revisited the settings dialog to improve the feeling and usability. 
-While doing that we also added better descriptions, for which we require 
-new translations. If you would like to help us, please contact us by creating an issue 
+Recently we revisited the settings dialog to improve the feeling and usability.
+While doing that we also added better descriptions, for which we require
+new translations. If you would like to help us, please contact us by creating an issue
 or write us on [Gitter](https://gitter.im/xournalpp/xournalpp)!
 
 Partial translations, which need to be updated:
@@ -47,7 +47,7 @@ Xournal++ features:
 * Shape drawing (line, arrow, circle, rect)
 * Shape resizing and rotation
 * Rotation snapping every 45 degrees
-* Rect snapping to grid 
+* Rect snapping to grid
 * Audio recording and playback alongside with handwritten notes
 * Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...
 * Plugins using LUA Scripting
@@ -115,7 +115,7 @@ Then Pen input will be working, until you restart Windows. [#659](https://github
 https://github.com/xournalpp/xournalpp/releases
 
 ### Mac OS X
-Pressure sensitivity is not working on Mac [#569](https://github.com/xournalpp/xournalpp/issues/569). (GTK-Issue)
+Xournal++ will be deliverd with a patched GTK. Else pressure sensitivity is not working on Mac [#569](https://github.com/xournalpp/xournalpp/issues/569). (GTK-Issue)
 
 https://github.com/xournalpp/xournalpp/releases
 
@@ -145,11 +145,11 @@ merged, even if they are not 100% finished.
 See [GitHub:xournalpp](http://github.com/xournalpp/xournalpp) for current development. You can also join
 our Gitter channel via the badge on top.
 
-Also take a look at our [Coding Conventions](https://github.com/xournalpp/xournalpp/wiki/Coding-conventions) 
+Also take a look at our [Coding Conventions](https://github.com/xournalpp/xournalpp/wiki/Coding-conventions)
 
 ## FAQ
 ### Q: Secondary stylus button only works when there is no contact
-This is due to a driver setting, which you can configure with `TPCButton` or `TabletPCButton` directive if using `Wacom` driver (but other drivers might have this setting too). 
+This is due to a driver setting, which you can configure with `TPCButton` or `TabletPCButton` directive if using `Wacom` driver (but other drivers might have this setting too).
 
 Here's a `/usr/share/X11/xorg.conf.d/30-wacom.conf` example snippet:
 ```
@@ -180,4 +180,3 @@ on Debian or Ubuntu. Finally, type in `doxygen` in the root directory of the rep
 The documentation can be found in `doc/html` and `doc/latex`. Conveniently display the
 documentation with `python3 -m http.server 8000` and visit the shown URL to view the
 documentation.
-
