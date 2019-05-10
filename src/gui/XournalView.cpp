@@ -34,7 +34,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 	registerListener(control);
 
 	InputContext* inputContext = nullptr;
-	if (this->control->getSettings()->getNewInputSystemEnabled())
+	if (this->control->getSettings()->getExperimentalInputSystemEnabled())
 	{
 		inputContext = new InputContext(this, scrollHandling);
 		this->widget = gtk_xournal_new(this, inputContext);

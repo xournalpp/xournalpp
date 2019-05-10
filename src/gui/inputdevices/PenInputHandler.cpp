@@ -16,6 +16,7 @@
 #include <cmath>
 
 #define WIDGET_SCROLL_BORDER 25
+#define INPUT_STOP_DRAWING_ON_LEAVE false
 
 PenInputHandler::PenInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)
 {
@@ -388,13 +389,19 @@ void PenInputHandler::actionLeaveWindow(GdkEvent* event)
 		return;
 	}
 
-	this->penInWidget = false;
+	if (!this->inputContext->getSettings()->getInputSystemDrawOutsideWindowEnabled())
+	{
+		this->penInWidget = false;
+	}
 
 	// Stop input sequence if the tool is not a selection tool
 	ToolHandler* toolHandler = this->inputContext->getToolHandler();
 	if (this->inputRunning && !toolHandler->isSinglePageTool())
 	{
-		this->actionEnd(this->lastHitEvent);
+		if (!this->inputContext->getSettings()->getInputSystemDrawOutsideWindowEnabled())
+		{
+			this->actionEnd(this->lastHitEvent);
+		}
 	} else if (this->deviceClassPressed)
 	{
 		// scroll if we have an active selection
@@ -467,10 +474,13 @@ void PenInputHandler::actionEnterWindow(GdkEvent* event)
 
 	this->penInWidget = true;
 
-	// Restart input sequence if the tool is pressed and not a single-page tool
-	ToolHandler* toolHandler = this->inputContext->getToolHandler();
-	if (this->deviceClassPressed && !toolHandler->isSinglePageTool())
+	if (!this->inputContext->getSettings()->getInputSystemDrawOutsideWindowEnabled())
 	{
-		this->actionStart(event);
+		// Restart input sequence if the tool is pressed and not a single-page tool
+		ToolHandler* toolHandler = this->inputContext->getToolHandler();
+		if (this->deviceClassPressed && !toolHandler->isSinglePageTool())
+		{
+			this->actionStart(event);
+		}
 	}
 }

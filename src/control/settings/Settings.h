@@ -362,11 +362,14 @@ public:
 	string getPluginDisabled();
 	void setPluginDisabled(string pluginEnabled);
 
-	bool getNewInputSystemEnabled();
-	void setNewInputSystemEnabled(bool systemEnabled);
+	bool getExperimentalInputSystemEnabled();
+	void setExperimentalInputSystemEnabled(bool systemEnabled);
 
 	bool getInputSystemTPCButtonEnabled();
 	void setInputSystemTPCButtonEnabled(bool tpcButtonEnabled);
+
+	bool getInputSystemDrawOutsideWindowEnabled();
+	void setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnabled);
 
 	/**
 	 * Get name, e.g. "cm"
@@ -801,12 +804,14 @@ private:
 	/**
 	 * Whether the new experimental input system is activated
 	 */
-	bool inputSystemEnabled;
+	bool experimentalInputSystemEnabled;
 
 	/**
 	 * Whether Wacom parameter TabletPCButton is enabled
 	 */
-	bool inputSystemTPCButtonEnabled;
+	bool inputSystemTPCButton;
+
+	bool inputSystemDrawOutsideWindow;
 
 	/**
 	 * "Transaction" running, do not save until the end is reached

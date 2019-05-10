@@ -142,8 +142,9 @@ void Settings::loadDefault()
 	this->pluginEnabled = "";
 	this->pluginDisabled = "";
 
-	this->inputSystemEnabled = false;
-	this->inputSystemTPCButtonEnabled = false;
+	this->experimentalInputSystemEnabled = false;
+	this->inputSystemTPCButton = false;
+	this->inputSystemDrawOutsideWindow = true;
 
 	this->strokeFilterIgnoreTime = 200;
 	this->strokeFilterIgnorePoints = 8;
@@ -556,13 +557,17 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->audioOutputDevice = g_ascii_strtoll((const char *) value, NULL, 10);
 	}
-	else if (xmlStrcmp(name, (const xmlChar*) "inputSystemEnabled") == 0)
+	else if (xmlStrcmp(name, (const xmlChar*) "experimentalInputSystemEnabled") == 0)
 	{
-		this->inputSystemEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+		this->experimentalInputSystemEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
-	else if (xmlStrcmp(name, (const xmlChar*) "inputSystemTPCButtonEnabled") == 0)
+	else if (xmlStrcmp(name, (const xmlChar*) "inputSystemTPCButton") == 0)
 	{
-		this->inputSystemTPCButtonEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+		this->inputSystemTPCButton = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "inputSystemDrawOutsideWindow") == 0)
+	{
+		this->inputSystemDrawOutsideWindow = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterIgnoreTime") == 0)
 	{
@@ -958,8 +963,9 @@ void Settings::save()
 	WRITE_BOOL_PROP(strokeFilterEnabled);
 	WRITE_BOOL_PROP(doActionOnStrokeFiltered);
 
-	WRITE_BOOL_PROP(inputSystemEnabled);
-	WRITE_BOOL_PROP(inputSystemTPCButtonEnabled);
+	WRITE_BOOL_PROP(experimentalInputSystemEnabled);
+	WRITE_BOOL_PROP(inputSystemTPCButton);
+	WRITE_BOOL_PROP(inputSystemDrawOutsideWindow);
 
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
@@ -2353,34 +2359,34 @@ bool Settings::getDoActionOnStrokeFiltered()
 }
 
 
-void Settings::setNewInputSystemEnabled(bool systemEnabled)
+void Settings::setExperimentalInputSystemEnabled(bool systemEnabled)
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	if (this->inputSystemEnabled == systemEnabled)
+	if (this->experimentalInputSystemEnabled == systemEnabled)
 	{
 		return;
 	}
-	this->inputSystemEnabled = systemEnabled;
+	this->experimentalInputSystemEnabled = systemEnabled;
 	save();
 }
 
-bool Settings::getNewInputSystemEnabled()
+bool Settings::getExperimentalInputSystemEnabled()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	return this->inputSystemEnabled;
+	return this->experimentalInputSystemEnabled;
 }
 
 void Settings::setInputSystemTPCButtonEnabled(bool tpcButtonEnabled)
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	if (this->inputSystemTPCButtonEnabled == tpcButtonEnabled)
+	if (this->inputSystemTPCButton == tpcButtonEnabled)
 	{
 		return;
 	}
-	this->inputSystemTPCButtonEnabled = tpcButtonEnabled;
+	this->inputSystemTPCButton = tpcButtonEnabled;
 	save();
 }
 
@@ -2388,7 +2394,26 @@ bool Settings::getInputSystemTPCButtonEnabled()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	return this->inputSystemTPCButtonEnabled;
+	return this->inputSystemTPCButton;
+}
+
+void Settings::setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->inputSystemDrawOutsideWindow == drawOutsideWindowEnabled)
+	{
+		return;
+	}
+	this->inputSystemDrawOutsideWindow = drawOutsideWindowEnabled;
+	save();
+}
+
+bool Settings::getInputSystemDrawOutsideWindowEnabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->inputSystemDrawOutsideWindow;
 }
 
 //////////////////////////////////////////////////
