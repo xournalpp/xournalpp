@@ -154,30 +154,30 @@ void LatexController::findSelectedTexElement()
 	if (this->selectedTexImage || this->selectedText)
 	{
 		// this will get the position of the Latex properly
-		EditSelection *theSelection = control->getWindow()->getXournal()->getSelection();
-		posx = theSelection->getXOnView();
-		posy = theSelection->getYOnView();
+		EditSelection* theSelection = control->getWindow()->getXournal()->getSelection();
+		this->posx = theSelection->getXOnView();
+		this->posy = theSelection->getYOnView();
 
 		if (this->selectedTexImage != nullptr)
 		{
-			initalTex = this->selectedTexImage->getText();
-			imgwidth = this->selectedTexImage->getElementWidth();
-			imgheight = this->selectedTexImage->getElementHeight();
+			this->initialTex = this->selectedTexImage->getText();
+			this->imgwidth = this->selectedTexImage->getElementWidth();
+			this->imgheight = this->selectedTexImage->getElementHeight();
 		}
 		else
 		{
-			initalTex += "\\text{";
-			initalTex += this->selectedText->getText();
-			initalTex += "}";
-			imgwidth = this->selectedText->getElementWidth();
-			imgheight = this->selectedText->getElementHeight();
+			this->initialTex += "\\text{";
+			this->initialTex += this->selectedText->getText();
+			this->initialTex += "}";
+			this->imgwidth = this->selectedText->getElementWidth();
+			this->imgheight = this->selectedText->getElementHeight();
 		}
 	}
-	if (this->initalTex.empty())
+	if (this->initialTex.empty())
 	{
-		this->initalTex = "x^2";
+		this->initialTex = "x^2";
 	}
-	this->currentTex = this->initalTex;
+	this->currentTex = this->initialTex;
 	this->doc->unlock();
 
 	// need to do this otherwise we can't remove the image for its replacement
@@ -189,16 +189,15 @@ void LatexController::showTexEditDialog()
 	XOJ_CHECK_TYPE(LatexController);
 
 	this->dlg = new LatexDialog(control->getGladeSearchPath());
-
-	// For 'real time' LaTex rendering in the dialog
-	this->dlg->setTex(initalTex);
+	this->dlg->setTex(initialTex);
 	g_signal_connect(dlg->getTextBuffer(), "changed", G_CALLBACK(handleTexChanged), this);
 
+	// Assume that the LaTeX is initially invalid.
+	this->isValidTex = false;
 
-	// The controller owns the tempRender because, on signal changed, it has to handle the old/new renders
 	if (this->temporaryRender != nullptr)
 	{
-		this->dlg->setTempRender(this->temporaryRender->getPdf(), initalTex.size());
+		this->dlg->setTempRender(this->temporaryRender->getPdf(), initialTex.size());
 	}
 
 	this->dlg->show(GTK_WINDOW(control->getWindow()->getWindow()));
@@ -332,19 +331,19 @@ void LatexController::deleteOldImage()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
-	if (selectedTexImage)
+	if (this->selectedTexImage != nullptr)
 	{
-		EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), selectedTexImage, view, page);
-		view->getXournal()->deleteSelection(selection);
-		delete selection;
-		selectedTexImage = NULL;
+		g_assert(this->selectedText == nullptr);
+		EditSelection selection(control->getUndoRedoHandler(), selectedTexImage, view, page);
+		this->view->getXournal()->deleteSelection(&selection);
+		this->selectedTexImage = nullptr;
 	}
-	else if (selectedText)
+	else if (this->selectedText)
 	{
-		EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), selectedText, view, page);
-		view->getXournal()->deleteSelection(selection);
-		delete selection;
-		selectedText = NULL;
+		g_assert(this->selectedTexImage == nullptr);
+		EditSelection selection(control->getUndoRedoHandler(), selectedText, view, page);
+		view->getXournal()->deleteSelection(&selection);
+		this->selectedText = nullptr;
 	}
 }
 
@@ -405,7 +404,8 @@ std::unique_ptr<TexImage> LatexController::loadRendered()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
-	if (!this->isValidTex) {
+	if (!this->isValidTex)
+	{
 		return nullptr;
 	}
 
@@ -486,7 +486,7 @@ void LatexController::run()
 	showTexEditDialog();
 
 	// At this point, either the user cancelled or entered a valid LaTeX formula
-	if (initalTex != currentTex)
+	if (this->initialTex != this->currentTex)
 	{
 		g_assert(this->isValidTex);
 		this->insertTexImage();

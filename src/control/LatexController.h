@@ -135,7 +135,7 @@ private:
 	/**
 	 * Orignal TeX, if editing
 	 */
-	string initalTex;
+	string initialTex;
 
 	/**
 	 * Updated TeX string
@@ -216,8 +216,8 @@ private:
 	LatexDialog* dlg = nullptr;
 
 	/**
-	 * The controller holds the 'on-the-go' render in order
-	 * to be able to delete it when a new render is created
+	 * The controller owns the rendered preview in order to be able to delete it
+	 * when a new render is created
 	 */
 	std::unique_ptr<TexImage> temporaryRender;
 };
