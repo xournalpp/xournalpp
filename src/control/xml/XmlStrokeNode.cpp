@@ -74,6 +74,7 @@ void XmlStrokeNode::writeOut(OutputStream* out)
 	{
 		char tmp[G_ASCII_DTOSTR_BUF_SIZE];
 		g_ascii_dtostr( tmp, G_ASCII_DTOSTR_BUF_SIZE,widths[i]);
+		out->write(" ");
 		out->write(tmp);
 	}
 
@@ -104,6 +105,7 @@ void XmlStrokeNode::writeOut(OutputStream* out)
 			g_ascii_dtostr( tmpY, G_ASCII_DTOSTR_BUF_SIZE, points[i].y);
 
 			char* tmp = g_strdup_printf("%s %s", tmpX, tmpY);
+			out->write(" ");
 			out->write(tmp);
 			g_free(tmp);
 		}
