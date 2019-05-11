@@ -60,9 +60,11 @@
 
 #include <gtk/gtk.h>
 #include <glib/gstdio.h>
+#include <gio/gio.h>
 
 #include <sstream>
 #include <fstream>
+#include <numeric>
 
 #include <time.h>
 
@@ -207,46 +209,44 @@ void Control::renameLastAutosaveFile()
 	renamed.clearExtensions();
 	renamed += filename.getFilename();
 
-	string error;
-	if (filename.exists())
+	if (!filename.exists())
 	{
-		if (!renamed.deleteFile())
-		{
-			error += FS(_F("Could not delete old autosave file \"{1}\"") % renamed.str());
-		}
-
-		int result = g_rename(filename.c_str(), renamed.c_str());
-		if (result != 0)
-		{
-			if (!error.empty())
-			{
-				error += ",\n";
-			}
-			error += FS(_F("Could not rename autosave file from \"{1}\" to \"{2}\"") % filename.str() % renamed.str());
-		}
-	}
-	else
-	{
-		if (!renamed.deleteFile())
-		{
-			error += FS(_F("Could not delete old autosave file \"{1}\"") % renamed.str());
-		}
-
 		this->save(false);
-
-		int result = g_rename(filename.c_str(), renamed.c_str());
-		if (result != 0)
-		{
-			if (!error.empty())
-			{
-				error += ",\n";
-			}
-			error += FS(_F("Could not rename autosave file from \"{1}\" to \"{2}\"") % filename.str() % renamed.str());
-		}
 	}
 
-	if (!error.empty())
+	std::vector<string> errors;
+
+	// See https://github.com/xournalpp/xournalpp/issues/1122 for why we use
+	// `g_file_copy` instead of `g_rename` here.
+	GFile* src = g_file_new_for_path(filename.c_str());
+	GFile* dest = g_file_new_for_path(renamed.c_str());
+	GError* err = nullptr;
+	// Use target default perms; the source partition may have different file
+	// system attributes than the target, and we don't want anything bad in the
+	// autosave directory
+	auto flags = static_cast<GFileCopyFlags>(G_FILE_COPY_TARGET_DEFAULT_PERMS | G_FILE_COPY_OVERWRITE);
+	g_file_copy(src, dest, flags , nullptr, nullptr, nullptr, &err);
+	if (err == nullptr)
 	{
+		g_file_delete(src, nullptr, &err);
+	}
+	g_object_unref(src);
+	g_object_unref(dest);
+
+	if (err != nullptr)
+	{
+		auto fmtstr = _F("Could not rename autosave file from \"{1}\" to \"{2}\": {3}");
+		errors.push_back(FS(fmtstr % filename.str() % renamed.str() % err->message));
+		g_error_free(err);
+	}
+
+	if (!errors.empty())
+	{
+		string error = std::accumulate(
+			errors.begin() + 1, errors.end(), *errors.begin(),
+			[](string e1, string e2) {
+				return e1 + "\n" + e2;
+			});
 		Util::execInUiThread([=]() {
 			string msg = FS(_F("Autosave failed with an error: {1}") % error);
 			XojMsgBox::showErrorToUser(getGtkWindow(), msg);
