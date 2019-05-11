@@ -133,12 +133,14 @@ private:
 	Path binTex;
 
 	/**
-	 * Orignal TeX, if editing
+	 * The original TeX string when the dialog was opened, or the empty string
+	 * if creating a new LaTeX element.
 	 */
 	string initialTex;
 
 	/**
-	 * Updated TeX string
+	 * The TeX string that the LaTeX element should display after editing
+	 * finishes.
 	 */
 	string currentTex;
 
@@ -213,7 +215,7 @@ private:
 	/**
 	 * LaTex editor dialog
 	 */
-	LatexDialog* dlg = nullptr;
+	std::unique_ptr<LatexDialog> dlg = nullptr;
 
 	/**
 	 * The controller owns the rendered preview in order to be able to delete it

@@ -173,12 +173,12 @@ void LatexController::findSelectedTexElement()
 			this->imgheight = this->selectedText->getElementHeight();
 		}
 	}
+	this->doc->unlock();
+	this->currentTex = this->initialTex;
 	if (this->initialTex.empty())
 	{
-		this->initialTex = "x^2";
+		this->currentTex = "x^2";
 	}
-	this->currentTex = this->initialTex;
-	this->doc->unlock();
 
 	// need to do this otherwise we can't remove the image for its replacement
 	this->control->clearSelectionEndText();
@@ -188,24 +188,22 @@ void LatexController::showTexEditDialog()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
-	this->dlg = new LatexDialog(control->getGladeSearchPath());
-	this->dlg->setTex(initialTex);
+	this->dlg.reset(new LatexDialog(control->getGladeSearchPath()));
+	this->dlg->setTex(currentTex);
 	g_signal_connect(dlg->getTextBuffer(), "changed", G_CALLBACK(handleTexChanged), this);
-
-	// Assume that the LaTeX is initially invalid.
-	this->isValidTex = false;
 
 	if (this->temporaryRender != nullptr)
 	{
-		this->dlg->setTempRender(this->temporaryRender->getPdf(), initialTex.size());
+		this->dlg->setTempRender(this->temporaryRender->getPdf());
 	}
 
 	this->dlg->show(GTK_WINDOW(control->getWindow()->getWindow()));
 
-	currentTex = this->dlg->getTex();
-	currentTex += " ";
+	this->currentTex = this->dlg->getTex();
+	// If the user cancelled, there is no change in the latex string.
+	this->currentTex = this->currentTex == "" ? initialTex : this->currentTex;
 
-	delete this->dlg;
+	this->dlg.reset();
 }
 
 void LatexController::triggerImageUpdate()
@@ -318,7 +316,7 @@ void LatexController::setUpdating(bool newValue)
 void LatexController::setImageInDialog(PopplerDocument* pdf)
 {
 	XOJ_CHECK_TYPE(LatexController);
-	this->dlg->setTempRender(pdf, currentTex.size());
+	this->dlg->setTempRender(pdf);
 }
 
 void LatexController::setCurrentTex(string currentTex)
@@ -475,17 +473,16 @@ void LatexController::run()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
-	if (!findTexExecutable())
+	if (!this->findTexExecutable())
 	{
 		string msg = _("Could not find pdflatex in Path.\nPlease install pdflatex first and make sure it's in the PATH.");
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 		return;
 	}
 
-	findSelectedTexElement();
-	showTexEditDialog();
+	this->findSelectedTexElement();
+	this->showTexEditDialog();
 
-	// At this point, either the user cancelled or entered a valid LaTeX formula
 	if (this->initialTex != this->currentTex)
 	{
 		g_assert(this->isValidTex);

@@ -36,7 +36,7 @@ string LatexDialog::getTex()
 	return this->theLatex;
 }
 
-void LatexDialog::setTempRender(PopplerDocument* pdf, size_t length)
+void LatexDialog::setTempRender(PopplerDocument* pdf)
 {
 	XOJ_CHECK_TYPE(LatexDialog);
 
@@ -96,12 +96,6 @@ void LatexDialog::save()
 void LatexDialog::load()
 {
 	XOJ_CHECK_TYPE(LatexDialog);
-
-	if (theLatex.empty())
-	{
-		theLatex = "x^2";
-	}
-
 	gtk_text_buffer_set_text(this->textBuffer, this->theLatex.c_str(), -1);
 }
 
