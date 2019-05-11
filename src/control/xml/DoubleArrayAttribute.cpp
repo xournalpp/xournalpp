@@ -33,6 +33,7 @@ void DoubleArrayAttribute::writeOut(OutputStream* out)
 	{
 		char str[G_ASCII_DTOSTR_BUF_SIZE];
 		g_ascii_dtostr( str, G_ASCII_DTOSTR_BUF_SIZE, this->values[i]);
+		out->write(" ");
 		out->write(str);
 	}
 }
