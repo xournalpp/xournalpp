@@ -503,10 +503,22 @@ bool XojPageView::onButtonReleaseEvent(const PositionInputData& pos)
 	{
 		this->inputHandler->onButtonReleaseEvent(pos);
 		
-		if( control->getSettings()->getTrySelectOnStrokeFiltered() && this->inputHandler->userTapped){  //experimental feature
-			double zoom = xournal->getZoom();
-			SelectObject select(this);
-			select.at(pos.x/zoom, pos.y/zoom);
+		if( this->inputHandler->userTapped)
+		{ 
+			bool doAction = control->getSettings()->getDoActionOnStrokeFiltered();
+			if( control->getSettings()->getTrySelectOnStrokeFiltered() )
+			{
+				double zoom = xournal->getZoom();
+				SelectObject select(this);
+				if ( select.at(pos.x/zoom, pos.y/zoom))
+				{
+					doAction = false;	// selection made.. no action.
+				}
+			}
+			if ( doAction)		// pop up a menu
+			{
+				control->getWindow()->showPopupTools(1, pos.x,pos.y);
+			}
 		}
 		delete this->inputHandler;
 		this->inputHandler = NULL;

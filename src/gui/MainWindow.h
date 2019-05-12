@@ -92,6 +92,9 @@ public:
 	Layout* getLayout();
 
 	bool isGestureActive();
+	
+	
+	void showPopupTools(int menutype, int x, int y);
 
 private:
 	void initXournalWidget();
@@ -132,6 +135,13 @@ private:
 	static void dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y,
 								GtkSelectionData* data, guint info, guint time, MainWindow* win);
 
+	
+	/**
+	 * Callback for positioning overlayed popup menu
+	 */
+	static gboolean  getOverlayPosition (GtkOverlay *overlay, GtkWidget *widget, GdkRectangle *allocation, MainWindow* win);
+	
+	
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -158,4 +168,8 @@ private:
 	 * Workaround for double hide menubar event
 	 */
 	bool ignoreNextHideEvent;
+	
+	int overlayX = 0;
+	int overlayY = 0;
+	
 };

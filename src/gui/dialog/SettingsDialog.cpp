@@ -80,7 +80,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
 				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
 				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
-//				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
+				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
 				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
 			}), this);	
 	
@@ -342,7 +342,7 @@ void SettingsDialog::load()
 	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
 	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
 	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
-//	enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
+	enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
 	enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
 	enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
 	customHandRecognitionToggled();

@@ -56,6 +56,10 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	g_signal_connect(this->window, "window_state_event", G_CALLBACK(windowStateEventCallback), this);
 
 	g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
+	
+	//position overlay widgets
+	g_signal_connect(get("mainOverlay"), "get-child-position", G_CALLBACK(getOverlayPosition), this);
+	
 
 	// "watch over" all events
 	g_signal_connect(this->window, "key-press-event", G_CALLBACK(onKeyPressCallback), this);
@@ -898,4 +902,53 @@ void MainWindow::setAudioPlaybackPaused(bool paused)
 	XOJ_CHECK_TYPE(MainWindow);
 
 	this->getToolMenuHandler()->setAudioPlaybackPaused(paused);
+}
+
+
+void MainWindow::showPopupTools(int menutype, int x, int y)
+{
+	XOJ_CHECK_TYPE(MainWindow);
+
+
+		GtkWidget *overlay = get("mainOverlay");
+		GtkWidget *button;
+		GtkWidget *vbox;
+		GtkWidget *label;
+		GtkWidget *entry;
+		int i, j;
+		char *text;
+
+		this->overlayX = x;
+		this->overlayY = y;
+		
+		vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 10);
+		gtk_overlay_add_overlay (GTK_OVERLAY (overlay), vbox);
+		gtk_overlay_set_overlay_pass_through (GTK_OVERLAY (overlay), vbox, TRUE);
+//		gtk_widget_set_halign (vbox, GTK_ALIGN_CENTER);
+//		gtk_widget_set_valign (vbox, GTK_ALIGN_CENTER);
+
+		label = gtk_label_new ("<span foreground='blue' weight='ultrabold' font='40'>Numbers</span>");
+		gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+		gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 8);
+
+
+		gtk_widget_show_all (overlay);
+
+
+}
+
+
+gboolean  MainWindow::getOverlayPosition (GtkOverlay   *overlay,
+               GtkWidget    *widget,
+               GdkRectangle *allocation,
+               MainWindow* win)
+{
+	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
+	
+	
+	//testing testing testing  									TODO
+	allocation->x = win->overlayX;
+	allocation->y = win->overlayY;
+	allocation->width =200;
+	allocation->height = 200;
 }
