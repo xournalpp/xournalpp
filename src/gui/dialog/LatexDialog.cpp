@@ -1,6 +1,6 @@
 #include "LatexDialog.h"
 
-LatexDialog::LatexDialog(GladeSearchpath *gladeSearchPath)
+LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath)
  : GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
 {
 	XOJ_INIT_TYPE(LatexDialog);
@@ -24,17 +24,16 @@ LatexDialog::~LatexDialog()
 	XOJ_RELEASE_TYPE(LatexDialog);
 }
 
-void LatexDialog::setTex(string texString, bool preselect)
+void LatexDialog::setFinalTex(string texString)
 {
 	XOJ_CHECK_TYPE(LatexDialog);
-	this->theLatex = texString;
-	this->preselect = preselect;
+	this->finalLatex = texString;
 }
 
-string LatexDialog::getTex()
+string LatexDialog::getFinalTex()
 {
 	XOJ_CHECK_TYPE(LatexDialog);
-	return this->theLatex;
+	return this->finalLatex;
 }
 
 void LatexDialog::setTempRender(PopplerDocument* pdf)
@@ -84,44 +83,35 @@ GtkTextBuffer* LatexDialog::getTextBuffer()
 	return this->textBuffer;
 }
 
-
-void LatexDialog::save()
-{
-	XOJ_CHECK_TYPE(LatexDialog);
-
+string LatexDialog::getBufferContents() {
 	GtkTextIter start, end;
 	gtk_text_buffer_get_bounds(this->textBuffer, &start, &end);
-	this->theLatex = gtk_text_buffer_get_slice(this->textBuffer, &start, &end, FALSE);
-}
-
-void LatexDialog::load()
-{
-	XOJ_CHECK_TYPE(LatexDialog);
-	gtk_text_buffer_set_text(this->textBuffer, this->theLatex.c_str(), -1);
-
-	// preselect all text in the box if desired
-	if (this->preselect) {
-		GtkTextIter start, end;
-		gtk_text_buffer_get_start_iter(this->textBuffer, &start);
-		gtk_text_buffer_get_end_iter(this->textBuffer, &end);
-		gtk_text_buffer_select_range(this->textBuffer, &start, &end);
-	}
+	gchar* chars = gtk_text_buffer_get_text(this->textBuffer, &start, &end, false);
+	string s = chars;
+	g_free(chars);
+	return s;
 }
 
 void LatexDialog::show(GtkWindow *parent)
 {
+	this->show(parent, false);
+}
+
+void LatexDialog::show(GtkWindow *parent, bool selectText)
+{
 	XOJ_CHECK_TYPE(LatexDialog);
-	this->load();
+
+	gtk_text_buffer_set_text(this->textBuffer, this->finalLatex.c_str(), -1);
+	if (selectText)
+	{
+		GtkTextIter start, end;
+		gtk_text_buffer_get_bounds(this->textBuffer, &start, &end);
+		gtk_text_buffer_select_range(this->textBuffer, &start, &end);
+	}
+
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 	int res = gtk_dialog_run(GTK_DIALOG(this->window));
-	if (res == GTK_RESPONSE_OK)
-	{
-		this->save();
-	}
-	else
-	{
-		this->theLatex = "";
-	}
+	this->finalLatex = res == GTK_RESPONSE_OK ? this->getBufferContents() : "";
 
 	gtk_widget_hide(this->window);
 }
