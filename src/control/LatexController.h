@@ -23,6 +23,8 @@
 
 #include <poppler.h>
 
+#include <memory>
+
 class Control;
 class TexImage;
 class Text;
@@ -37,6 +39,11 @@ public:
 	virtual ~LatexController();
 
 public:
+	/**
+	 * Open a LatexDialog, wait for the user to provide the LaTeX formula, and
+	 * insert the rendered formula into the document if the supplied LaTeX is
+	 * valid.
+	 */
 	void run();
 
 private:
@@ -51,14 +58,24 @@ private:
 	void findSelectedTexElement();
 
 	/**
-	 * If a previous image/text is selected, delete it 
+	 * If a previous image/text is selected, delete it
 	 */
 	void deleteOldImage();
 
 	/**
-	 * Run LaTeX Command
+	 * Run the LaTeX command asynchronously. Note that this method can only be
+	 * called when the preview is not updating.
+	 *
+	 * @return The PID of the spawned process, or nullptr if the .tex file could
+	 * not be written or the command failed to start.
 	 */
-	bool runCommand();
+	std::unique_ptr<GPid> runCommandAsync();
+
+	/**
+	 * Asynchronously runs the LaTeX command and then updates the TeX image. If
+	 * the preview is already being updated, then this method will be a no-op.
+	 */
+	void triggerImageUpdate();
 
 	/**
 	 * Show the LaTex Editor dialog
@@ -66,16 +83,25 @@ private:
 	void showTexEditDialog();
 
 	/**
-	 * Signal handler, updates the rendered image when the text in the editor changes
+	 * Signal handler, updates the rendered image when the text in the editor
+	 * changes.
 	 */
 	static void handleTexChanged(GtkTextBuffer* buffer, LatexController* self);
+
+	/**
+	 * Updates the display once the PDF file is generated.
+	 *
+	 * If the Latex text has changed since the last update, triggerPreviewUpdate
+	 * will be called again.
+	 */
+	static void onPdfRenderComplete(GPid pid, gint returnCode, LatexController* self);
+
+	void setUpdating(bool newValue);
 
 	/*******/
 	//Wrappers for signal handler who can't access non-static fields 
 	//(see implementation for further explanation)
-	TexImage* getTemporaryRender();
 	void setImageInDialog(PopplerDocument* pdf);
-	void deletePreviousRender();
 	void setCurrentTex(string currentTex);
 	GtkTextIter* getStartIterator(GtkTextBuffer* buffer);
 	GtkTextIter* getEndIterator(GtkTextBuffer* buffer);
@@ -84,12 +110,12 @@ private:
 	/**
 	 * Convert PDF Document to TexImage
 	 */
-	TexImage* convertDocumentToImage(PopplerDocument* doc);
+	std::unique_ptr<TexImage> convertDocumentToImage(PopplerDocument* doc);
 
 	/**
 	 * Load PDF as TexImage
 	 */
-	TexImage* loadRendered();
+	std::unique_ptr<TexImage> loadRendered();
 
 	/**
 	 * Actual image creation
@@ -107,14 +133,31 @@ private:
 	Path binTex;
 
 	/**
-	 * Orignal TeX, if editing
+	 * The original TeX string when the dialog was opened, or the empty string
+	 * if creating a new LaTeX element.
 	 */
-	string initalTex;
+	string initialTex;
 
 	/**
-	 * Updated TeX string
+	 * The TeX string that the LaTeX element should display after editing
+	 * finishes.
 	 */
 	string currentTex;
+
+	/**
+	 * The last TeX string shown in the preview.
+	 */
+	string lastPreviewedTex;
+
+	/**
+	 * Whether a preview is currently being generated.
+	 */
+	bool isUpdating = false;
+
+	/**
+	 * Whether the current TeX string is valid.
+	 */
+	bool isValidTex = false;
 
 	/**
 	 * X-Position
@@ -157,12 +200,13 @@ private:
 	Layer* layer = NULL;
 
 	/**
-	 * Text tmp directory in configuration folder
+	 * The directory in which the LaTeX files will be generated. Note that this
+	 * should be within a system temporary directory.
 	 */
-	string texTmp;
+	Path texTmp;
 
 	/**
-	 * Previously existin TexImage
+	 * Previously existing TexImage
 	 */
 	TexImage* selectedTexImage = NULL;
 
@@ -171,20 +215,11 @@ private:
 	/**
 	 * LaTex editor dialog
 	 */
-	LatexDialog* dlg = NULL;
+	std::unique_ptr<LatexDialog> dlg = nullptr;
 
 	/**
-	 * The controller holds the 'on-the-go' render in order
-	 * to be able to delete it when a new render is created
+	 * The controller owns the rendered preview in order to be able to delete it
+	 * when a new render is created
 	 */
-	TexImage* temporaryRender = NULL;
-
-
-	/**
-	 * TextBuffer iterators
-	 * I don't understand why, but declaring these as pointers
-	 * makes the TextView widget crash
-	 */
-	GtkTextIter start;
-	GtkTextIter end;
+	std::unique_ptr<TexImage> temporaryRender;
 };

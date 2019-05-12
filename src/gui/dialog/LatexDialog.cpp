@@ -36,7 +36,7 @@ string LatexDialog::getTex()
 	return this->theLatex;
 }
 
-void LatexDialog::setTempRender(PopplerDocument* pdf, size_t length)
+void LatexDialog::setTempRender(PopplerDocument* pdf)
 {
 	XOJ_CHECK_TYPE(LatexDialog);
 
@@ -88,8 +88,6 @@ void LatexDialog::save()
 {
 	XOJ_CHECK_TYPE(LatexDialog);
 
-	//I don't understand why this doesn't works 
-	//if start and end are declared as pointers
 	GtkTextIter start, end;
 	gtk_text_buffer_get_bounds(this->textBuffer, &start, &end);
 	this->theLatex = gtk_text_buffer_get_slice(this->textBuffer, &start, &end, FALSE);
@@ -98,12 +96,6 @@ void LatexDialog::save()
 void LatexDialog::load()
 {
 	XOJ_CHECK_TYPE(LatexDialog);
-
-	if (theLatex.empty())
-	{
-		theLatex = "x^2";
-	}
-	
 	gtk_text_buffer_set_text(this->textBuffer, this->theLatex.c_str(), -1);
 }
 
@@ -113,7 +105,7 @@ void LatexDialog::show(GtkWindow *parent)
 	this->load();
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 	int res = gtk_dialog_run(GTK_DIALOG(this->window));
-	if (res == 1)
+	if (res == GTK_RESPONSE_OK)
 	{
 		this->save();
 	}

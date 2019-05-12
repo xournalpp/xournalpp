@@ -39,9 +39,13 @@ public:
 
 	static void openFileWithDefaultApplicaion(Path filename);
 	static void openFileWithFilebrowser(Path filename);
-	
+
 	static Path getConfigSubfolder(Path subfolder = "");
 	static Path getConfigFile(Path relativeFileName = "");
+
+	static Path getTmpDirSubfolder(Path subfolder = "");
+
+	static Path ensureFolderExists(Path p);
 
 	/**
 	 * Execute the callback in the UI Thread.
