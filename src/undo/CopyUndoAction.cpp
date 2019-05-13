@@ -1,7 +1,7 @@
 #include "CopyUndoAction.h"
 
 #include "control/Control.h"
-#include "gui/Cursor.h"
+#include "gui/XournalppCursor.h"
 #include "model/PageRef.h"
 
 #include <i18n.h>

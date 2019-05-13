@@ -142,16 +142,32 @@ void Settings::loadDefault()
 
 	this->pluginEnabled = "";
 	this->pluginDisabled = "";
-	
+
+	this->experimentalInputSystemEnabled = false;
+	this->inputSystemTPCButton = false;
+	this->inputSystemDrawOutsideWindow = true;
+
 	this->strokeFilterIgnoreTime = 200;
 	this->strokeFilterIgnorePoints = 8;
 	this->strokeFilterSuccessiveTime = 500;
 	this->strokeFilterEnabled = false;
 	this->doActionOnStrokeFiltered = false;
-	
+
 	this->inTransaction = false;
-	
+
 }
+
+/**
+ * tempg_ascii_strtod
+* 	Transition to using g_ascii_strtod to minimize disruption. May, 2019. 
+*  Delete this and replace calls to this function with calls to g_ascii_strtod() in 2020.
+* 	See: https://developer.gnome.org/glib/stable/glib-String-Utility-Functions.html#g-strtod
+*/
+double tempg_ascii_strtod( const gchar* txt, gchar ** endptr )
+{
+	return g_strtod ( txt, endptr  );		//  makes best guess between locale formatted and C formatted numbers. See link above.
+}
+
 
 void Settings::parseData(xmlNodePtr cur, SElement& elem)
 {
@@ -180,7 +196,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem)
 			}
 			else if (sType == "double")
 			{
-				double d = atof((const char*) value);
+				double d = tempg_ascii_strtod((const char*) value, NULL);	//g_ascii_strtod ignores locale setting.
 				elem.setDouble((const char*) name, d);
 			}
 			else if (sType == "hex")
@@ -321,11 +337,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "zoomStep") == 0)
 	{
-		this->zoomStep = g_strtod((const char*) value, NULL);
+		this->zoomStep = tempg_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "zoomStepScroll") == 0)
 	{
-		this->zoomStepScroll = g_strtod((const char*) value, NULL);
+		this->zoomStepScroll = tempg_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "displayDpi") == 0)
 	{
@@ -505,7 +521,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "snapRotationTolerance") == 0)
 	{
-		this->snapRotationTolerance = g_strtod((const char*) value, NULL);
+		this->snapRotationTolerance = tempg_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "snapGrid") == 0)
 	{
@@ -517,7 +533,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "snapGridTolerance") == 0)
 	{
-		this->snapGridTolerance = g_strtod((const char*) value, NULL);
+		this->snapGridTolerance = tempg_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "touchWorkaround") == 0)
 	{
@@ -544,11 +560,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioSampleRate") == 0)
 	{
-		this->audioSampleRate = g_ascii_strtod((const char *) value, NULL);
+		this->audioSampleRate = tempg_ascii_strtod((const char *) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioGain") == 0)
 	{
-		this->audioGain = g_strtod((const char *) value, NULL);
+		this->audioGain = tempg_ascii_strtod((const char *) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioInputDevice") == 0)
 	{
@@ -558,14 +574,26 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->audioOutputDevice = g_ascii_strtoll((const char *) value, NULL, 10);
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "experimentalInputSystemEnabled") == 0)
+	{
+		this->experimentalInputSystemEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "inputSystemTPCButton") == 0)
+	{
+		this->inputSystemTPCButton = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "inputSystemDrawOutsideWindow") == 0)
+	{
+		this->inputSystemDrawOutsideWindow = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterIgnoreTime") == 0)
 	{
 		this->strokeFilterIgnoreTime = g_ascii_strtoll((const char*) value, NULL, 10);
-	}	
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterIgnorePoints") == 0)
 	{
 		this->strokeFilterIgnorePoints = g_ascii_strtoll((const char*) value, NULL, 10);
-	}	
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterSuccessiveTime") == 0)
 	{
 		this->strokeFilterSuccessiveTime = g_ascii_strtoll((const char*) value, NULL, 10);
@@ -578,9 +606,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->doActionOnStrokeFiltered = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
-	
-	
-	
+
 	xmlFree(name);
 	xmlFree(value);
 }
@@ -661,6 +687,7 @@ void Settings::loadButtonConfig()
 
 bool Settings::load()
 {
+	
 	XOJ_CHECK_TYPE(Settings);
 
 	xmlKeepBlanksDefault(0);
@@ -717,9 +744,9 @@ xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value, xmlNodeP
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	char* text = g_strdup_printf("%0.3lf", value);
+	char text[G_ASCII_DTOSTR_BUF_SIZE];
+	g_ascii_dtostr( text, G_ASCII_DTOSTR_BUF_SIZE, value);	//  g_ascii_ version uses C locale always.
 	xmlNodePtr xmlNode = saveProperty(key, text, parent);
-	g_free(text);
 	return xmlNode;
 }
 
@@ -947,22 +974,27 @@ void Settings::save()
 
 	WRITE_STRING_PROP(pluginEnabled);
 	WRITE_STRING_PROP(pluginDisabled);
-	
+
 	WRITE_INT_PROP(strokeFilterIgnoreTime);
 	WRITE_INT_PROP(strokeFilterIgnorePoints);
 	WRITE_INT_PROP(strokeFilterSuccessiveTime);
-	
+
 	WRITE_BOOL_PROP(strokeFilterEnabled);
 	WRITE_BOOL_PROP(doActionOnStrokeFiltered);
 
+	WRITE_BOOL_PROP(experimentalInputSystemEnabled);
+	WRITE_BOOL_PROP(inputSystemTPCButton);
+	WRITE_BOOL_PROP(inputSystemDrawOutsideWindow);
 
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
 	xmlSetProp(xmlFont, (const xmlChar*) "name", (const xmlChar*) "font");
 	xmlSetProp(xmlFont, (const xmlChar*) "font", (const xmlChar*) this->font.getName().c_str());
-	gchar* sSize = g_strdup_printf("%0.1lf", this->font.getSize());
+
+	char sSize[G_ASCII_DTOSTR_BUF_SIZE];
+	g_ascii_dtostr( sSize, G_ASCII_DTOSTR_BUF_SIZE, this->font.getSize());	//no locale
 	xmlSetProp(xmlFont, (const xmlChar*) "size", (const xmlChar*) sSize);
-	g_free(sSize);
+
 
 	for (std::map<string, SElement>::value_type p: data)
 	{
@@ -1016,9 +1048,9 @@ void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 		{
 			type = "double";
 
-			char* tmp = g_strdup_printf("%lf", attrib.dValue);
+			char tmp[G_ASCII_DTOSTR_BUF_SIZE];
+			g_ascii_dtostr( tmp, G_ASCII_DTOSTR_BUF_SIZE, attrib.dValue);
 			value = tmp;
-			g_free(tmp);
 		}
 		else if (attrib.type == ATTRIBUTE_TYPE_INT_HEX)
 		{
@@ -2329,7 +2361,7 @@ void Settings::getStrokeFilter( int* ignoreTime, int* ignorePoints, int* success
 	*ignoreTime = this->strokeFilterIgnoreTime;
 	*ignorePoints = this->strokeFilterIgnorePoints;
 	*successiveTime = this->strokeFilterSuccessiveTime;
-	
+
 }
 
 void Settings::setStrokeFilter( int ignoreTime, int ignorePoints, int successiveTime)
@@ -2338,9 +2370,9 @@ void Settings::setStrokeFilter( int ignoreTime, int ignorePoints, int successive
 	this->strokeFilterIgnoreTime = ignoreTime;
 	this->strokeFilterIgnorePoints = ignorePoints;
 	this->strokeFilterSuccessiveTime = successiveTime;
-	
+
 }
-	
+
 void Settings::setStrokeFilterEnabled(bool enabled)
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -2366,7 +2398,64 @@ bool Settings::getDoActionOnStrokeFiltered()
 	return this->doActionOnStrokeFiltered;
 }
 
-	
+
+void Settings::setExperimentalInputSystemEnabled(bool systemEnabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->experimentalInputSystemEnabled == systemEnabled)
+	{
+		return;
+	}
+	this->experimentalInputSystemEnabled = systemEnabled;
+	save();
+}
+
+bool Settings::getExperimentalInputSystemEnabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->experimentalInputSystemEnabled;
+}
+
+void Settings::setInputSystemTPCButtonEnabled(bool tpcButtonEnabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->inputSystemTPCButton == tpcButtonEnabled)
+	{
+		return;
+	}
+	this->inputSystemTPCButton = tpcButtonEnabled;
+	save();
+}
+
+bool Settings::getInputSystemTPCButtonEnabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->inputSystemTPCButton;
+}
+
+void Settings::setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->inputSystemDrawOutsideWindow == drawOutsideWindowEnabled)
+	{
+		return;
+	}
+	this->inputSystemDrawOutsideWindow = drawOutsideWindowEnabled;
+	save();
+}
+
+bool Settings::getInputSystemDrawOutsideWindowEnabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->inputSystemDrawOutsideWindow;
+}
+
 //////////////////////////////////////////////////
 
 SAttribute::SAttribute()

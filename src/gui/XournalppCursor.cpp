@@ -1,4 +1,4 @@
-#include "Cursor.h"
+#include "XournalppCursor.h"
 
 #include "XournalView.h"
 #include "control/Control.h"
@@ -7,20 +7,20 @@
 #include <pixbuf-utils.h>
 #include <cmath>
 
-Cursor::Cursor(Control* control)
+XournalppCursor::XournalppCursor(Control* control)
  : control(control)
 {
-	XOJ_INIT_TYPE(Cursor);
+	XOJ_INIT_TYPE(XournalppCursor);
 }
 
-Cursor::~Cursor()
+XournalppCursor::~XournalppCursor()
 {
-	XOJ_RELEASE_TYPE(Cursor);
+	XOJ_RELEASE_TYPE(XournalppCursor);
 }
 
-void Cursor::setMouseDown(bool mouseDown)
+void XournalppCursor::setMouseDown(bool mouseDown)
 {
-	XOJ_CHECK_TYPE(Cursor);
+	XOJ_CHECK_TYPE(XournalppCursor);
 
 	if (this->mouseDown == mouseDown)
 	{
@@ -38,9 +38,9 @@ void Cursor::setMouseDown(bool mouseDown)
 	}
 }
 
-void Cursor::setMouseSelectionType(CursorSelectionType selectionType)
+void XournalppCursor::setMouseSelectionType(CursorSelectionType selectionType)
 {
-	XOJ_CHECK_TYPE(Cursor);
+	XOJ_CHECK_TYPE(XournalppCursor);
 
 	if (this->selectionType == selectionType)
 	{
@@ -50,9 +50,9 @@ void Cursor::setMouseSelectionType(CursorSelectionType selectionType)
 	updateCursor();
 }
 
-void Cursor::setCursorBusy(bool busy)
+void XournalppCursor::setCursorBusy(bool busy)
 {
-	XOJ_CHECK_TYPE(Cursor);
+	XOJ_CHECK_TYPE(XournalppCursor);
 
 	MainWindow* win = control->getWindow();
 	if (!win)
@@ -85,9 +85,9 @@ void Cursor::setCursorBusy(bool busy)
 	updateCursor();
 }
 
-void Cursor::setInsidePage(bool insidePage)
+void XournalppCursor::setInsidePage(bool insidePage)
 {
-	XOJ_CHECK_TYPE(Cursor);
+	XOJ_CHECK_TYPE(XournalppCursor);
 
 	if (this->insidePage == insidePage)
 	{
@@ -99,9 +99,9 @@ void Cursor::setInsidePage(bool insidePage)
 	updateCursor();
 }
 
-void Cursor::setInvisible(bool invisible)
+void XournalppCursor::setInvisible(bool invisible)
 {
-	XOJ_CHECK_TYPE(Cursor);
+	XOJ_CHECK_TYPE(XournalppCursor);
 
 	if (this->invisible == invisible)
 	{
@@ -113,9 +113,9 @@ void Cursor::setInvisible(bool invisible)
 	updateCursor();
 }
 
-void Cursor::updateCursor()
+void XournalppCursor::updateCursor()
 {
-	XOJ_CHECK_TYPE(Cursor);
+	XOJ_CHECK_TYPE(XournalppCursor);
 
 	MainWindow* win = control->getWindow();
 	if (!win)
@@ -262,7 +262,7 @@ void Cursor::updateCursor()
 	}
 }
 
-GdkCursor* Cursor::getEraserCursor()
+GdkCursor* XournalppCursor::getEraserCursor()
 {
 	// Eraser's size follow a quadratic increment, so the cursor will do the same
 	double cursorSize = control->getToolHandler()->getThickness() * 2 * control->getZoomControl()->getZoom();
@@ -295,25 +295,25 @@ GdkCursor* Cursor::getEraserCursor()
 	return cursor;
 }
 
-GdkCursor* Cursor::getHighlighterCursor()
+GdkCursor* XournalppCursor::getHighlighterCursor()
 {
-	XOJ_CHECK_TYPE(Cursor);
+	XOJ_CHECK_TYPE(XournalppCursor);
 
 	return createHighlighterOrPenCursor(5, 120 / 255.0);
 }
 
 
-GdkCursor* Cursor::getPenCursor()
+GdkCursor* XournalppCursor::getPenCursor()
 {
-	XOJ_CHECK_TYPE(Cursor);
+	XOJ_CHECK_TYPE(XournalppCursor);
 
 	return createHighlighterOrPenCursor(3, 1.0);
 
 }
 
-GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
+GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 {
-	XOJ_CHECK_TYPE(Cursor);
+	XOJ_CHECK_TYPE(XournalppCursor);
 
 	int rgb = control->getToolHandler()->getColor();
 	double r = ((rgb >> 16) & 0xff) / 255.0;
@@ -410,9 +410,9 @@ GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 	return cursor;
 }
 
-void Cursor::setTempCursor(GdkCursorType type)
+void XournalppCursor::setTempCursor(GdkCursorType type)
 {
-	XOJ_CHECK_TYPE(Cursor);
+	XOJ_CHECK_TYPE(XournalppCursor);
 	
 	MainWindow* win = control->getWindow();
 	
@@ -432,9 +432,9 @@ void Cursor::setTempCursor(GdkCursorType type)
 	g_object_unref(cursor);
 }
 
-void Cursor::setTempDrawDirCursor(bool shift, bool ctrl)
+void XournalppCursor::setTempDrawDirCursor(bool shift, bool ctrl)
 {
-	XOJ_CHECK_TYPE(Cursor);
+	XOJ_CHECK_TYPE(XournalppCursor);
 	
 	MainWindow* win = control->getWindow();
 	
@@ -457,9 +457,9 @@ void Cursor::setTempDrawDirCursor(bool shift, bool ctrl)
 
 
 
-GdkCursor* Cursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
+GdkCursor* XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
 {
-	XOJ_CHECK_TYPE(Cursor);
+	XOJ_CHECK_TYPE(XournalppCursor);
 
 	bool big = control->getSettings()->isShowBigCursor();
 	bool highlightPosition = control->getSettings()->isHighlightPosition();

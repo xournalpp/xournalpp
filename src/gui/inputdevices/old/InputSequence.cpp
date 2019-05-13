@@ -6,7 +6,7 @@
 #include "control/settings/Settings.h"
 #include "control/tools/EditSelection.h"
 #include "control/ToolHandler.h"
-#include "gui/Cursor.h"
+#include "gui/XournalppCursor.h"
 #include "gui/PageView.h"
 #include "gui/Layout.h"
 #include "gui/XournalView.h"
@@ -168,7 +168,7 @@ void InputSequence::handleScrollEvent()
 		scrollOffsetY = lastMousePositionY - rootY;
 
 		Util::execInUiThread([=]() {
-			inputHandler->getXournal()->layout->scrollRelativ(scrollOffsetX, scrollOffsetY);
+			inputHandler->getXournal()->layout->scrollRelative(scrollOffsetX, scrollOffsetY);
 
 			// Scrolling done, so reset our counters
 			scrollOffsetX = 0;
@@ -191,13 +191,8 @@ bool InputSequence::actionMoved(guint32 time)
 	ToolHandler* h = inputHandler->getToolHandler();
 
 	this->eventTime = time;
-	
-	changeTool();
 
-	if (penDevice)
-	{
-		inputHandler->getView()->penActionDetected();
-	}
+	changeTool();
 
 	if (xournal->view->getControl()->getWindow()->isGestureActive())
 	{
@@ -266,7 +261,7 @@ bool InputSequence::actionStart(guint32 time)
 	XOJ_CHECK_TYPE(InputSequence);
 
 	this->eventTime = time;
-	
+
 	inputHandler->focusWidget();
 
 	checkCanStartInput();
@@ -297,7 +292,7 @@ bool InputSequence::actionStart(guint32 time)
 	ToolHandler* h = inputHandler->getToolHandler();
 	if (h->getToolType() == TOOL_HAND)
 	{
-		Cursor* cursor = xournal->view->getCursor();
+		XournalppCursor* cursor = xournal->view->getCursor();
 		cursor->setMouseDown(true);
 		inScrolling = true;
 		// set reference
@@ -402,14 +397,14 @@ void InputSequence::actionEnd(guint32 time)
 	}
 
 	this->eventTime = time;
-	
+
 	// Mouse button not pressed anymore
 	this->button = 0;
 
 	current_view = NULL;
 
 	GtkXournal* xournal = inputHandler->getXournal();
-	Cursor* cursor = xournal->view->getCursor();
+	XournalppCursor* cursor = xournal->view->getCursor();
 	ToolHandler* h = inputHandler->getToolHandler();
 
 	if (xournal->view->getControl()->getWindow()->isGestureActive())
@@ -459,10 +454,10 @@ PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* 
 	GtkXournal* xournal = inputHandler->getXournal();
 
 	PositionInputData pos;
-	pos.x = this->x - page->getX() - xournal->x;
-	pos.y = this->y - page->getY() - xournal->y;
-	pos.pressure = Point::NO_PRESURE;
-	pos.time = this->eventTime;
+	pos.x = x - page->getX() - xournal->x;
+	pos.y = y - page->getY() - xournal->y;
+	pos.pressure = Point::NO_PRESSURE;
+	pos.timestamp = this->eventTime;
 
 	if (presureSensitivity)
 	{

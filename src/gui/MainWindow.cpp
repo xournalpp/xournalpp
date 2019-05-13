@@ -221,11 +221,13 @@ void MainWindow::initXournalWidget()
 
 		scrollHandling = new ScrollHandlingXournalpp();
 
-		this->xournal = new XournalView(box2, control, scrollHandling);
+		this->zoomGesture = new ZoomGesture(control->getZoomControl());
+
+		this->xournal = new XournalView(box2, control, scrollHandling, zoomGesture);
 
 		if (control->getSettings()->isZoomGesturesEnabled())
 		{
-			this->zoomGesture = new ZoomGesture(this->xournal->getWidget(), control->getZoomControl());
+			this->zoomGesture->connect(this->xournal->getWidget());
 		}
 
 		gtk_container_add(GTK_CONTAINER(box2), gtk_scrollbar_new(GTK_ORIENTATION_VERTICAL, scrollHandling->getVertical()));
@@ -245,11 +247,13 @@ void MainWindow::initXournalWidget()
 
 		scrollHandling = new ScrollHandlingGtk(GTK_SCROLLABLE(vpXournal));
 
-		this->xournal = new XournalView(vpXournal, control, scrollHandling);
+		this->zoomGesture = new ZoomGesture(control->getZoomControl());
+
+		this->xournal = new XournalView(vpXournal, control, scrollHandling, zoomGesture);
 
 		if (control->getSettings()->isZoomGesturesEnabled())
 		{
-			this->zoomGesture = new ZoomGesture(winXournal, control->getZoomControl());
+			this->zoomGesture->connect(winXournal);
 		}
 
 		gtk_widget_show_all(winXournal);

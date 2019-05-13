@@ -366,6 +366,15 @@ public:
 	string getPluginDisabled();
 	void setPluginDisabled(string pluginEnabled);
 
+	bool getExperimentalInputSystemEnabled();
+	void setExperimentalInputSystemEnabled(bool systemEnabled);
+
+	bool getInputSystemTPCButtonEnabled();
+	void setInputSystemTPCButtonEnabled(bool tpcButtonEnabled);
+
+	bool getInputSystemDrawOutsideWindowEnabled();
+	void setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnabled);
+
 	/**
 	 * Get name, e.g. "cm"
 	 */
@@ -800,6 +809,18 @@ private:
 	int strokeFilterSuccessiveTime;
 	bool strokeFilterEnabled;
 	bool doActionOnStrokeFiltered;
+
+	/**
+	 * Whether the new experimental input system is activated
+	 */
+	bool experimentalInputSystemEnabled;
+
+	/**
+	 * Whether Wacom parameter TabletPCButton is enabled
+	 */
+	bool inputSystemTPCButton;
+
+	bool inputSystemDrawOutsideWindow;
 
 	/**
 	 * "Transaction" running, do not save until the end is reached

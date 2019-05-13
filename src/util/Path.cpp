@@ -198,6 +198,23 @@ void Path::operator /=(const char* p)
 	*this /= string(p);
 }
 
+Path Path::operator /(Path p)
+{
+	return *this / p.c_str();
+}
+
+Path Path::operator /(string p)
+{
+	return *this / p.c_str();
+}
+
+Path Path::operator /(const char* p)
+{
+	Path ret(*this);
+	ret /= p;
+	return ret;
+}
+
 void Path::operator +=(Path p)
 {
 	path += p.str();

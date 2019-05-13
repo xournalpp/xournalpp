@@ -41,7 +41,7 @@ class XojPageView;
 class SaveHandler;
 class GladeSearchpath;
 class MetadataManager;
-class Cursor;
+class XournalppCursor;
 class ToolbarDragDropHandler;
 class MetadataEntry;
 class MetadataCallbackData;
@@ -217,7 +217,7 @@ public:
 	ScrollHandler* getScrollHandler();
 	PageRef getCurrentPage();
 	size_t getCurrentPageNo();
-	Cursor* getCursor();
+	XournalppCursor* getCursor();
 	Sidebar* getSidebar();
 	SearchBar* getSearchBar();
 	AudioController* getAudioController();
@@ -324,7 +324,7 @@ private:
 	/**
 	 * The cursor handler
 	 */
-	Cursor* cursor;
+	XournalppCursor* cursor;
 
 	/**
 	 * Timeout id: the timeout watches the changes and actualizes the previews from time to time

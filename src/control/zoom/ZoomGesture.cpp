@@ -1,35 +1,10 @@
 #include "ZoomGesture.h"
 #include "ZoomControl.h"
 
-ZoomGesture::ZoomGesture(GtkWidget* parent, ZoomControl* zoomControl)
+ZoomGesture::ZoomGesture(ZoomControl* zoomControl)
  : zoomControl(zoomControl)
 {
 	XOJ_INIT_TYPE(ZoomGesture);
-
-	this->gesture = gtk_gesture_zoom_new(parent);
-
-	gtk_event_controller_set_propagation_phase(GTK_EVENT_CONTROLLER(this->gesture), GTK_PHASE_CAPTURE);
-
-	g_signal_connect(this->gesture, "begin", G_CALLBACK(
-		+[](GtkGesture* gesture, GdkEventSequence* sequence, ZoomGesture* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, ZoomGesture);
-			self->zoomBegin();
-		}), this);
-
-	g_signal_connect(this->gesture, "scale-changed", G_CALLBACK(
-		+[](GtkGestureZoom* gesture, gdouble scale, ZoomGesture* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, ZoomGesture);
-			self->zoomChanged(scale);
-		}), this);
-
-	g_signal_connect(this->gesture, "end", G_CALLBACK(
-		+[](GtkGesture* gesture, GdkEventSequence* sequence, ZoomGesture* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, ZoomGesture);
-			self->zoomEnd();
-		}), this);
 }
 
 ZoomGesture::~ZoomGesture()
@@ -42,6 +17,34 @@ ZoomGesture::~ZoomGesture()
 	XOJ_RELEASE_TYPE(ZoomGesture);
 }
 
+void ZoomGesture::connect(GtkWidget* parent)
+{
+	this->gesture = gtk_gesture_zoom_new(parent);
+
+	gtk_event_controller_set_propagation_phase(GTK_EVENT_CONTROLLER(this->gesture), GTK_PHASE_CAPTURE);
+
+	g_signal_connect(this->gesture, "begin", G_CALLBACK(
+			+[](GtkGesture* gesture, GdkEventSequence* sequence, ZoomGesture* self)
+			{
+				XOJ_CHECK_TYPE_OBJ(self, ZoomGesture);
+				self->zoomBegin();
+			}), this);
+
+	g_signal_connect(this->gesture, "scale-changed", G_CALLBACK(
+			+[](GtkGestureZoom* gesture, gdouble scale, ZoomGesture* self)
+			{
+				XOJ_CHECK_TYPE_OBJ(self, ZoomGesture);
+				self->zoomChanged(scale);
+			}), this);
+
+	g_signal_connect(this->gesture, "end", G_CALLBACK(
+			+[](GtkGesture* gesture, GdkEventSequence* sequence, ZoomGesture* self)
+			{
+				XOJ_CHECK_TYPE_OBJ(self, ZoomGesture);
+				self->zoomEnd();
+			}), this);
+}
+
 bool ZoomGesture::isGestureActive()
 {
 	XOJ_CHECK_TYPE(ZoomGesture);
@@ -49,11 +52,29 @@ bool ZoomGesture::isGestureActive()
 	return gestureActive;
 }
 
+void ZoomGesture::disable()
+{
+	XOJ_CHECK_TYPE(ZoomGesture);
+
+	this->enabled = false;
+	this->gestureActive = false;
+
+	// GTK should call this method anyway but this is to make sure
+	zoomControl->endZoomSequence();
+}
+
+void ZoomGesture::enable()
+{
+	XOJ_CHECK_TYPE(ZoomGesture);
+
+	this->enabled = true;
+}
+
 void ZoomGesture::zoomBegin()
 {
 	XOJ_CHECK_TYPE(ZoomGesture);
 
-	if(zoomControl->isZoomPresentationMode())
+	if(!enabled || zoomControl->isZoomPresentationMode())
 	{
 		return;
 	}
@@ -71,6 +92,7 @@ void ZoomGesture::zoomBegin()
 	{
 		zoomControl->setZoomFitMode(false);
 	}
+	this->zoomControl->getZoom();
 	zoomControl->startZoomSequence(x - zoomSequenceRectangle.x, y - zoomSequenceRectangle.y);
 }
 
@@ -78,7 +100,7 @@ void ZoomGesture::zoomChanged(double zoom)
 {
 	XOJ_CHECK_TYPE(ZoomGesture);
 
-	if(zoomControl->isZoomPresentationMode())
+	if(!enabled || zoomControl->isZoomPresentationMode())
 	{
 		return;
 	}
@@ -93,7 +115,7 @@ void ZoomGesture::zoomEnd()
 {
 	XOJ_CHECK_TYPE(ZoomGesture);
 
-	if(zoomControl->isZoomPresentationMode())
+	if(!enabled || zoomControl->isZoomPresentationMode())
 	{
 		return;
 	}

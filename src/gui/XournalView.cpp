@@ -1,6 +1,6 @@
 #include "XournalView.h"
 
-#include "Cursor.h"
+#include "XournalppCursor.h"
 #include "Layout.h"
 #include "PageView.h"
 #include "RepaintHandler.h"
@@ -9,7 +9,7 @@
 #include "control/Control.h"
 #include "control/PdfCache.h"
 #include "control/settings/MetadataManager.h"
-#include "gui/inputdevices/TouchHelper.h"
+#include "gui/inputdevices/HandRecognition.h"
 #include "model/Document.h"
 #include "model/Stroke.h"
 #include "undo/DeleteUndoAction.h"
@@ -23,16 +23,26 @@
 #include <tuple>
 #include <cmath>
 
-XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling)
+XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling, ZoomGesture* zoomGesture)
  : scrollHandling(scrollHandling),
-   control(control)
+   control(control),
+   zoomGesture(zoomGesture)
 {
 	XOJ_INIT_TYPE(XournalView);
 
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
 
-	this->widget = gtk_xournal_new(this, scrollHandling);
+	InputContext* inputContext = nullptr;
+	if (this->control->getSettings()->getExperimentalInputSystemEnabled())
+	{
+		inputContext = new InputContext(this, scrollHandling);
+		this->widget = gtk_xournal_new(this, inputContext);
+	}
+	else
+	{
+		this->widget = gtk_xournal_new_deprecated(this, scrollHandling);
+	}
 	// we need to refer widget here, because we unref it somewhere twice!?
 	g_object_ref(this->widget);
 
@@ -42,7 +52,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 	g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
 
 	this->repaintHandler = new RepaintHandler(this);
-	this->touchHelper = new TouchHelper(control->getSettings());
+	this->handRecognition = new HandRecognition(this->widget, inputContext, control->getSettings());
 
 	control->getZoomControl()->addZoomListener(this);
 
@@ -77,8 +87,8 @@ XournalView::~XournalView()
 	gtk_widget_destroy(this->widget);
 	this->widget = NULL;
 
-	delete this->touchHelper;
-	this->touchHelper = NULL;
+	delete this->handRecognition;
+	this->handRecognition = NULL;
 
 	XOJ_RELEASE_TYPE(XournalView);
 }
@@ -200,12 +210,12 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 
 		if (event->keyval == GDK_KEY_Page_Down)
 		{
-			layout->scrollRelativ(0, windowHeight);
+			layout->scrollRelative(0, windowHeight);
 			return false;
 		}
 		if (event->keyval == GDK_KEY_Page_Up || event->keyval == GDK_KEY_space)
 		{
-			layout->scrollRelativ(0, -windowHeight);
+			layout->scrollRelative(0, -windowHeight);
 			return true;
 		}
 	}
@@ -228,7 +238,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
 		int windowHeight = alloc.height - scrollKeySize;
 
-		layout->scrollRelativ(0, windowHeight);
+		layout->scrollRelative(0, windowHeight);
 		return true;
 	}
 
@@ -273,7 +283,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 			}
 			else
 			{
-				layout->scrollRelativ(0, -scrollKeySize);
+				layout->scrollRelative(0, -scrollKeySize);
 			}
 			return true;
 		}
@@ -294,7 +304,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 			}
 			else
 			{
-				layout->scrollRelativ(0, scrollKeySize);
+				layout->scrollRelative(0, scrollKeySize);
 			}
 			return true;
 		}
@@ -308,7 +318,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		}
 		else
 		{
-			layout->scrollRelativ(-scrollKeySize, 0);
+			layout->scrollRelative(-scrollKeySize, 0);
 		}
 		return true;
 	}
@@ -321,7 +331,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		}
 		else
 		{
-			layout->scrollRelativ(scrollKeySize, 0);
+			layout->scrollRelative(scrollKeySize, 0);
 		}
 		return true;
 	}
@@ -341,22 +351,22 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	// vim like scrolling
 	if (event->keyval == GDK_KEY_j)
 	{
-		layout->scrollRelativ(0, 60);
+		layout->scrollRelative(0, 60);
 		return true;
 	}
 	if (event->keyval == GDK_KEY_k)
 	{
-		layout->scrollRelativ(0, -60);
+		layout->scrollRelative(0, -60);
 		return true;
 	}
 	if (event->keyval == GDK_KEY_h)
 	{
-		layout->scrollRelativ(-60, 0);
+		layout->scrollRelative(-60, 0);
 		return true;
 	}
 	if (event->keyval == GDK_KEY_l)
 	{
-		layout->scrollRelativ(60, 0);
+		layout->scrollRelative(60, 0);
 		return true;
 	}
 
@@ -605,37 +615,13 @@ Rectangle* XournalView::getVisibleRect(XojPageView* redrawable)
 }
 
 /**
- * A pen action was detected now, therefore ignore touch events
- * for a short time
- */
-void XournalView::penActionDetected()
-{
-	XOJ_CHECK_TYPE(XournalView);
-	this->lastPenAction = g_get_monotonic_time() / 1000;
-}
-
-/**
- * If the pen was active a short time before, ignore touch events
- */
-bool XournalView::shouldIgnoreTouchEvents()
-{
-	XOJ_CHECK_TYPE(XournalView);
-	if ((g_get_monotonic_time() / 1000 - this->lastPenAction) < 500)
-	{
-		// g_message("Ignore touch, pen was active\n");
-		return true;
-	}
-	return false;
-}
-
-/**
  * @return Helper class for Touch specific fixes
  */
-TouchHelper* XournalView::getTouchHelper()
+HandRecognition* XournalView::getHandRecognition()
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	return touchHelper;
+	return handRecognition;
 }
 
 /**
@@ -646,6 +632,13 @@ ScrollHandling* XournalView::getScrollHandling()
 	XOJ_CHECK_TYPE(XournalView);
 
 	return scrollHandling;
+}
+
+ZoomGesture* XournalView::getZoomGestureHandler()
+{
+	XOJ_CHECK_TYPE(XournalView);
+
+	return zoomGesture;
 }
 
 GtkWidget* XournalView::getWidget()
@@ -1107,7 +1100,7 @@ ArrayIterator<XojPageView*> XournalView::pageViewIterator()
 }
 
 
-Cursor* XournalView::getCursor()
+XournalppCursor* XournalView::getCursor()
 {
 	XOJ_CHECK_TYPE(XournalView);
 

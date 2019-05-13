@@ -180,7 +180,7 @@ void StrokeView::drawWithPressuire()
 		Point p = points.next();
 		if (startPoint <= count)
 		{
-			if (lastPoint1.z != Point::NO_PRESURE)
+			if (lastPoint1.z != Point::NO_PRESSURE)
 			{
 				width = lastPoint1.z;
 			}

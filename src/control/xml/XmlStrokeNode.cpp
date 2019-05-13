@@ -65,15 +65,17 @@ void XmlStrokeNode::writeOut(OutputStream* out)
 	writeAttributes(out);
 
 	out->write(" width=\"");
-	char* tmp = g_strdup_printf("%1.2lf", width);
+	
+	char tmp[G_ASCII_DTOSTR_BUF_SIZE];
+	g_ascii_dtostr( tmp, G_ASCII_DTOSTR_BUF_SIZE,width);	//  g_ascii_ version uses C locale always.
 	out->write(tmp);
-	g_free(tmp);
 
 	for (int i = 0; i < widthsLength; i++)
 	{
-		char* tmp = g_strdup_printf(" %1.2lf", widths[i]);
+		char tmp[G_ASCII_DTOSTR_BUF_SIZE];
+		g_ascii_dtostr( tmp, G_ASCII_DTOSTR_BUF_SIZE,widths[i]);
+		out->write(" ");
 		out->write(tmp);
-		g_free(tmp);
 	}
 
 	out->write("\"");
@@ -86,13 +88,24 @@ void XmlStrokeNode::writeOut(OutputStream* out)
 	{
 		out->write(">");
 
-		char* tmp = g_strdup_printf("%1.2lf %1.2lf", points[0].x, points[0].y);
+		char tmpX[G_ASCII_DTOSTR_BUF_SIZE];
+		g_ascii_dtostr( tmpX, G_ASCII_DTOSTR_BUF_SIZE, points[0].x);
+		char tmpY[G_ASCII_DTOSTR_BUF_SIZE];
+		g_ascii_dtostr( tmpY, G_ASCII_DTOSTR_BUF_SIZE, points[0].y);
+
+		char* tmp = g_strdup_printf("%s %s", tmpX, tmpY);
 		out->write(tmp);
 		g_free(tmp);
 
 		for (int i = 1; i < this->pointsLength; i++)
 		{
-			char* tmp = g_strdup_printf(" %1.2lf %1.2lf", points[i].x, points[i].y);
+			char tmpX[G_ASCII_DTOSTR_BUF_SIZE];
+			g_ascii_dtostr( tmpX, G_ASCII_DTOSTR_BUF_SIZE, points[i].x);
+			char tmpY[G_ASCII_DTOSTR_BUF_SIZE];
+			g_ascii_dtostr( tmpY, G_ASCII_DTOSTR_BUF_SIZE, points[i].y);
+
+			char* tmp = g_strdup_printf("%s %s", tmpX, tmpY);
+			out->write(" ");
 			out->write(tmp);
 			g_free(tmp);
 		}

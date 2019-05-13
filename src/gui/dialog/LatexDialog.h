@@ -31,9 +31,9 @@ class LatexDialog : public GladeGui
 	// Set and retrieve text from text box
 	void setTex(string texString);
 	string getTex();
-	
+
 	//Set and retrieve temporary Tex render
-	void setTempRender(PopplerDocument* pdf, size_t length);
+	void setTempRender(PopplerDocument* pdf);
 
 	// Necessary for the controller in order to connect the 'text-changed'
 	// signal handler
@@ -41,12 +41,12 @@ class LatexDialog : public GladeGui
 
   private:
 	XOJ_TYPE_ATTRIB;
-	
+
 	// Temporary render
 	GtkWidget* texTempRender;
 	cairo_surface_t* scaledRender = NULL;
 	GtkCssProvider* cssProvider;
-	
+
 	// Text field
 	GtkWidget* texBox;
 	GtkTextBuffer* textBuffer;
