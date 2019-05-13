@@ -223,6 +223,7 @@ void SettingsDialog::load()
 	loadCheckbox("cbStrokeFilterEnabled", settings->getStrokeFilterEnabled());
 	loadCheckbox("cbdoActionOnStrokeFiltered", settings->getDoActionOnStrokeFiltered());	
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
+	loadCheckbox("cbBlankPenCursor", settings->isBlankPenCursor());
 	loadCheckbox("cbHighlightPosition", settings->isHighlightPosition());
 	loadCheckbox("cbDarkTheme", settings->isDarkTheme());
 	loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
@@ -496,6 +497,7 @@ void SettingsDialog::save()
 	settings->setStrokeFilterEnabled(getCheckbox("cbStrokeFilterEnabled"));
 	settings->setDoActionOnStrokeFiltered(getCheckbox("cbdoActionOnStrokeFiltered"));
 	settings->setShowBigCursor(getCheckbox("cbBigCursor"));
+	settings->setBlankPenCursor(getCheckbox("cbBlankPenCursor"));
 	settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
 	settings->setDarkTheme(getCheckbox("cbDarkTheme"));
 	settings->setTouchWorkaround(getCheckbox("cbTouchWorkaround"));

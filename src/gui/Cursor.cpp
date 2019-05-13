@@ -307,10 +307,11 @@ GdkCursor* Cursor::getPenCursor()
 {
 	XOJ_CHECK_TYPE(Cursor);
 
-	return createPenCursor(3, 1.0);
+	return createHighlighterOrPenCursor(3, 1.0);
+
 }
 
-GdkCursor* Cursor::createPenCursor(int size, double alpha)
+GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
 {
 	XOJ_CHECK_TYPE(Cursor);
 
@@ -408,97 +409,6 @@ GdkCursor* Cursor::createPenCursor(int size, double alpha)
 
 	return cursor;
 }
-
-GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
-{
-	XOJ_CHECK_TYPE(Cursor);
-
-	int rgb = control->getToolHandler()->getColor();
-	double r = ((rgb >> 16) & 0xff) / 255.0;
-	double g = ((rgb >> 8) & 0xff) / 255.0;
-	double b = (rgb & 0xff) / 255.0;
-
-	bool big = control->getSettings()->isShowBigCursor();
-	bool highlightPosition = control->getSettings()->isHighlightPosition();
-
-	int height = size;
-	int width = size;
-	if (big || highlightPosition)
-	{
-		height = width = 60;
-	}
-
-	// We change the drawing method, now the center with the colored dot of the pen
-	// is at the center of the cairo surface, and when we load the cursor, we load it
-	// with the relative offset
-	int centerX = width / 2;
-	int centerY = height / 2; 
-
-	cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
-	cairo_t* cr = cairo_create(crCursor);
-
-	if (big)
-	{
-		// When using highlighter, paint the icon with the current color
-		if (size == 5)
-		{
-			cairo_set_source_rgb(cr, r, g, b);
-		}
-		else
-		{
-			cairo_set_source_rgb(cr, 1, 1, 1);
-		}
-		cairo_set_line_width(cr, 1.2);
-		
-		// Starting point
-		cairo_move_to(cr, centerX + 2, centerY);
-		// Pencil cursor
-		cairo_line_to(cr, centerX + 2, centerY - 4);
-		cairo_line_to(cr, centerX + 15, centerY - 17.5);
-		cairo_line_to(cr, centerX + 19, centerY - 14);
-		cairo_line_to(cr, centerX + 6, centerY );
-
-		cairo_close_path(cr);
-		cairo_fill_preserve(cr);
-		cairo_set_source_rgb(cr, 0, 0, 0);
-		cairo_stroke(cr);
-
-		cairo_fill_preserve(cr);
-	}
-
-	if (highlightPosition)
-	{
-		// A yellow transparent circle with no border
-		cairo_set_line_width(cr, 0);
-		cairo_set_source_rgba(cr, 255, 255, 0, 0.5);
-		cairo_arc(cr, centerX, centerY, 30, 0, 2 * 3.1415);
-		cairo_fill_preserve(cr);
-		cairo_set_source_rgb(cr, 0, 0, 0);
-		cairo_stroke(cr);
-	}
-	
-	cairo_set_source_rgba(cr, r, g, b, alpha);
-	// Correct the offset of the coloured dot for big-cursor mode
-	cairo_rectangle(cr, centerX, centerY, size, size);
-	cairo_fill(cr);
-
-	cairo_destroy(cr);
-
-	GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
-
-	//	cairo_surface_write_to_png(crCursor, "/home/andreas/xoj-cursor-orig.png");
-	//	gdk_pixbuf_save(pixbuf, "/home/andreas/xoj-cursor.png", "png", NULL, NULL);
-
-	cairo_surface_destroy(crCursor);
-	GdkCursor* cursor = gdk_cursor_new_from_pixbuf(
-				gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, centerX, centerY);
-
-	g_object_unref(pixbuf);
-
-	return cursor;
-}
-
-
 
 void Cursor::setTempCursor(GdkCursorType type)
 {
