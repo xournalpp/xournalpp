@@ -35,7 +35,11 @@ const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {
 	{ "tbRight1",  "toolbarRight1",  false },
 	{ "tbRight2",  "toolbarRight2",  false },
 	{ "tbBottom1", "toolbarBottom1", true  },
-	{ "tbBottom2", "toolbarBottom2", true  }
+	{ "tbBottom2", "toolbarBottom2", true  },
+	{ "tbOverlay1", "toolbarOverlay1", true },
+	{ "tbOverlay2", "toolbarOverlay2", true },
+	{ "tbOverlay3", "toolbarOverlay3", true },
+	{ "tbOverlay4", "toolbarOverlay4", true }
 };
 
 const static int TOOLBAR_DEFINITIONS_LEN = G_N_ELEMENTS(TOOLBAR_DEFINITIONS);

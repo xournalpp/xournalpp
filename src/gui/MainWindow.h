@@ -94,7 +94,7 @@ public:
 	bool isGestureActive();
 	
 	
-	void showPopupTools(int menutype, int x, int y);
+	void showFloatingToolbox(int menutype, int x, int y);
 
 private:
 	void initXournalWidget();
@@ -106,6 +106,8 @@ private:
 	static void toggleMenuBar(MainWindow* win);
 
 	void createToolbarAndMenu();
+	
+	void initFloatingToolbar();
 
 	static void buttonCloseSidebarClicked(GtkButton* button, MainWindow* win);
 
@@ -137,7 +139,7 @@ private:
 
 	
 	/**
-	 * Callback for positioning overlayed popup menu
+	 * Callback for positioning overlayed floating menu
 	 */
 	static gboolean  getOverlayPosition (GtkOverlay *overlay, GtkWidget *widget, GdkRectangle *allocation, MainWindow* win);
 	

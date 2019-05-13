@@ -517,7 +517,11 @@ bool XojPageView::onButtonReleaseEvent(const PositionInputData& pos)
 			}
 			if ( doAction)		// pop up a menu
 			{
-				control->getWindow()->showPopupTools(1, pos.x,pos.y);
+				gint wx, wy;
+				GtkWidget *widget = xournal->getWidget();
+				gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
+
+				control->getWindow()->showFloatingToolbox(1, pos.x+wx,pos.y+wy);	
 			}
 		}
 		delete this->inputHandler;

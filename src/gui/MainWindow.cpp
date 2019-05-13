@@ -40,6 +40,9 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
 	this->toolbarSelectMenu = new MainWindowToolbarMenu(this);
 
+	initFloatingToolbar();
+
+		
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++)
 	{
 		GtkWidget* w = get(TOOLBAR_DEFINITIONS[i].guiName);
@@ -905,38 +908,81 @@ void MainWindow::setAudioPlaybackPaused(bool paused)
 }
 
 
-void MainWindow::showPopupTools(int menutype, int x, int y)
+void MainWindow::initFloatingToolbar()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
-
+	GtkWidget *overlay = get("mainOverlay");
+	GtkWidget* floatingToolbox = get("floatingToolbox");
+	
+		this->overlayX = 200;
+		this->overlayY = 200;
+		
+		gtk_overlay_add_overlay (GTK_OVERLAY (overlay), floatingToolbox);
+		gtk_overlay_set_overlay_pass_through (GTK_OVERLAY (overlay), floatingToolbox, TRUE);
+		gtk_widget_show_all (overlay);
+/*
 		GtkWidget *overlay = get("mainOverlay");
 		GtkWidget *button;
 		GtkWidget *vbox;
-		GtkWidget *label;
+		GtkWidget *tbOverlay1;
+		GtkWidget *tbOverlay2;
+		GtkWidget *tbOverlay3;
+		GtkWidget *tbOverlay4;
 		GtkWidget *entry;
-		int i, j;
-		char *text;
+		
+		vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+		gtk_overlay_add_overlay (GTK_OVERLAY (overlay), vbox);
+		gtk_overlay_set_overlay_pass_through (GTK_OVERLAY (overlay), vbox, TRUE);
+
+		tbOverlay1 = gtk_toolbar_new();
+		tbOverlay2 = gtk_toolbar_new();
+		tbOverlay3 = gtk_toolbar_new();
+		tbOverlay4 = gtk_toolbar_new();
+		
+		gtk_box_pack_start (GTK_BOX (vbox), tbOverlay1, FALSE, FALSE, 0);
+		gtk_box_pack_start (GTK_BOX (vbox), tbOverlay2, FALSE, FALSE, 0);
+		gtk_box_pack_start (GTK_BOX (vbox), tbOverlay3, FALSE, FALSE, 0);
+		gtk_box_pack_start (GTK_BOX (vbox), tbOverlay4, FALSE, FALSE, 0);
+		gtk_widget_show_all (overlay);
+*/
+}
+
+void MainWindow::showFloatingToolbox(int menutype, int x, int y)
+{
+	XOJ_CHECK_TYPE(MainWindow);
+
+	GtkWidget *overlay = get("mainOverlay");
+	GtkWidget* floatingToolbox = get("floatingToolbox");
+	
+		this->overlayX = x;
+		this->overlayY = y;
+		gtk_widget_hide (floatingToolbox);
+		//gtk_overlay_add_overlay (GTK_OVERLAY (overlay), floatingToolbox);
+		//gtk_overlay_set_overlay_pass_through (GTK_OVERLAY (overlay), floatingToolbox, TRUE);
+		gtk_widget_show_all (floatingToolbox);
+		
+		/*
+		GtkWidget *overlay = get("mainOverlay");
+		GtkWidget *button;
+		GtkWidget *vbox = get("boxOverlay");
 
 		this->overlayX = x;
 		this->overlayY = y;
 		
-		vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 10);
 		gtk_overlay_add_overlay (GTK_OVERLAY (overlay), vbox);
 		gtk_overlay_set_overlay_pass_through (GTK_OVERLAY (overlay), vbox, TRUE);
 //		gtk_widget_set_halign (vbox, GTK_ALIGN_CENTER);
 //		gtk_widget_set_valign (vbox, GTK_ALIGN_CENTER);
 
-		label = gtk_label_new ("<span foreground='blue' weight='ultrabold' font='40'>Numbers</span>");
-		gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-		gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 8);
-
+//		label = gtk_label_new ("<span foreground='blue' weight='ultrabold' font='40'>Numbers</span>");
+//		gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+//		gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 8);
 
 		gtk_widget_show_all (overlay);
-
+*/
 
 }
-
 
 gboolean  MainWindow::getOverlayPosition (GtkOverlay   *overlay,
                GtkWidget    *widget,
