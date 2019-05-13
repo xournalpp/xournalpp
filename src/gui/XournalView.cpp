@@ -693,7 +693,7 @@ void XournalView::zoomChanged()
 	}
 	else
 	{
-		std::tuple<double, double> pos = zoom->getScrollPositionAfterZoom(view);
+		std::tuple<double, double> pos = zoom->getScrollPositionAfterZoom();
 		if(std::get<0>(pos) != -1 && std::get<1>(pos) != -1)
 		{
 			layout->scrollAbs(std::get<0>(pos), std::get<1>(pos));

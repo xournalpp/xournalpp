@@ -80,6 +80,11 @@ private:
 	 */
 	bool handle(GdkEvent* event);
 
+	/**
+	 * Print debug output
+	 */
+	void printDebug(GdkEvent* event);
+
 public:
 	/**
 	 * Connect the input handling to the window to receive events
