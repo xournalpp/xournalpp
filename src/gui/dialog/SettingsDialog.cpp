@@ -229,7 +229,7 @@ void SettingsDialog::load()
 	loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
 	loadCheckbox("cbTouchWorkaround", settings->isTouchWorkaround());
 	loadCheckbox("cbNewInputSystem", settings->getExperimentalInputSystemEnabled());
-	loadCheckbox("cbNewInputSystemTPCButton", settings->getInputSystemTPCButtonEnabled());
+	loadCheckbox("cbInputSystemTPCButton", settings->getInputSystemTPCButtonEnabled());
 	loadCheckbox("cbInputSystemDrawOutsideWindow", settings->getInputSystemDrawOutsideWindowEnabled());
 
 

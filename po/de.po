@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Xournalpp 0.9\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-12 19:21+0200\n"
-"PO-Revision-Date: 2019-05-12 19:45+0200\n"
+"PO-Revision-Date: 2019-05-13 22:19+0200\n"
 "Last-Translator: Ulrich Huber <ulrich@huberulrich.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../src/undo/AddUndoAction.cpp:119 ../src/undo/DeleteUndoAction.cpp:113
 msgid " elements"
-msgstr " Elemente"
+msgstr "Elemente"
 
 #: ../src/undo/AddUndoAction.cpp:134 ../src/undo/DeleteUndoAction.cpp:128
 msgid " image"
