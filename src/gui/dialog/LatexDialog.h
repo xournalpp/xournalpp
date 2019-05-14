@@ -29,7 +29,7 @@ class LatexDialog : public GladeGui
 	void load();
 
 	// Set and retrieve text from text box
-	void setTex(string texString);
+	void setTex(string texString, bool preselect = false);
 	string getTex();
 
 	//Set and retrieve temporary Tex render
@@ -52,4 +52,5 @@ class LatexDialog : public GladeGui
 	GtkTextBuffer* textBuffer;
 
 	string theLatex;
+	bool preselect = false;
 };
