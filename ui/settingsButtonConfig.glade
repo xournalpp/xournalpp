@@ -29,7 +29,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkComboBoxText" id="cbDevice">
+              <object class="GtkComboBoxText" id="labelDevice">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
