@@ -207,7 +207,19 @@ void Control::renameLastAutosaveFile()
 	Path filename = this->lastAutosaveFilename;
 	Path renamed = Util::getAutosaveFilename();
 	renamed.clearExtensions();
-	renamed += filename.getFilename();
+	if (filename.str().find_first_of(".") != 0)
+	{
+		// This file must be a fresh, unsaved document. Since this file is
+		// already in ~/.xournalpp/autosave/, we need to change the renamed filename.
+		renamed += ".old.autosave.xopp";
+	}
+	else
+	{
+		// The file is a saved document with the form ".<filename>.autosave.xopp"
+		renamed += filename.getFilename();
+	}
+
+	g_message(FS(_F("Autosave renamed from {1} to {2}") % this->lastAutosaveFilename.str() % renamed.str()).c_str());
 
 	if (!filename.exists())
 	{
