@@ -189,7 +189,10 @@ void LatexController::showTexEditDialog()
 	XOJ_CHECK_TYPE(LatexController);
 
 	this->dlg.reset(new LatexDialog(control->getGladeSearchPath()));
-	this->dlg->setTex(currentTex);
+
+	// preselect default text so user can overwrite it easily
+	this->dlg->setTex(currentTex, this->initialTex.empty());
+
 	g_signal_connect(dlg->getTextBuffer(), "changed", G_CALLBACK(handleTexChanged), this);
 
 	if (this->temporaryRender != nullptr)

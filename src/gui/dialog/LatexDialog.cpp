@@ -24,10 +24,11 @@ LatexDialog::~LatexDialog()
 	XOJ_RELEASE_TYPE(LatexDialog);
 }
 
-void LatexDialog::setTex(string texString)
+void LatexDialog::setTex(string texString, bool preselect)
 {
 	XOJ_CHECK_TYPE(LatexDialog);
 	this->theLatex = texString;
+	this->preselect = preselect;
 }
 
 string LatexDialog::getTex()
@@ -97,6 +98,14 @@ void LatexDialog::load()
 {
 	XOJ_CHECK_TYPE(LatexDialog);
 	gtk_text_buffer_set_text(this->textBuffer, this->theLatex.c_str(), -1);
+
+	// preselect all text in the box if desired
+	if (this->preselect) {
+		GtkTextIter start, end;
+		gtk_text_buffer_get_start_iter(this->textBuffer, &start);
+		gtk_text_buffer_get_end_iter(this->textBuffer, &end);
+		gtk_text_buffer_select_range(this->textBuffer, &start, &end);
+	}
 }
 
 void LatexDialog::show(GtkWindow *parent)
