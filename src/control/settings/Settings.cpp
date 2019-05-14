@@ -2460,14 +2460,21 @@ bool Settings::getInputSystemDrawOutsideWindowEnabled()
 
 void Settings::setDeviceClassForDevice(GdkDevice* device, int deviceClass)
 {
-	inputDeviceClasses.insert(std::pair<string, int>(string(gdk_device_get_vendor_id(device)) + ":" + string(gdk_device_get_product_id(device)), deviceClass));
+	string name = gdk_device_get_name(device);
+	auto it = inputDeviceClasses.find(name);
+	if (it != inputDeviceClasses.end())
+	{
+		it->second = deviceClass;
+	}
+	else
+	{
+		inputDeviceClasses.insert(std::pair<string, int>(name, deviceClass));
+	}
 }
 
 int Settings::getDeviceClassForDevice(GdkDevice* device)
 {
-	string vendorId = gdk_device_get_vendor_id(device);
-	string productId = gdk_device_get_product_id(device);
-	auto search = inputDeviceClasses.find(vendorId + ":" + productId);
+	auto search = inputDeviceClasses.find(gdk_device_get_name(device));
 	if (search != inputDeviceClasses.end())
 	{
 		return search->second;
