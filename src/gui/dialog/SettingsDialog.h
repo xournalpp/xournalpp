@@ -15,6 +15,7 @@
 #include <control/Control.h>
 #include "control/settings/Settings.h"
 #include "gui/GladeGui.h"
+#include "DeviceClassConfigGui.h"
 
 class ButtonConfigGui;
 
@@ -58,4 +59,5 @@ private:
 	vector<DeviceInfo> audioOutputDevices;
 
 	vector<ButtonConfigGui*> buttonConfigs;
+	vector<DeviceClassConfigGui*> deviceClassConfigs;
 };

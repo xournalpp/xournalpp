@@ -4,10 +4,12 @@
 
 #include "ButtonConfigGui.h"
 #include "gui/widgets/ZoomCallib.h"
+#include <DeviceListHelper.h>
 
 #include <config.h>
 #include <Util.h>
 #include <StringUtils.h>
+#include <i18n.h>
 
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control)
  : GladeGui(gladeSearchPath, "settings.glade", "settingsDialog"),
@@ -101,6 +103,26 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 	gtk_widget_show(callib);
 
 	initMouseButtonEvents();
+
+	auto deviceListHelper = new DeviceListHelper(false);
+	vector<InputDevice> deviceList = deviceListHelper->getDeviceList();
+	GtkWidget* container = get("hboxInputDeviceClasses");
+	for(InputDevice inputDevice : deviceList)
+	{
+		// Only add real devices (core pointers have vendor and product id NULL) and ignore keyboards
+		GdkDevice* device = inputDevice.getDevice();
+		if (gdk_device_get_vendor_id(device) != nullptr && gdk_device_get_product_id(device) != nullptr && gdk_device_get_source(device) != GDK_SOURCE_KEYBOARD)
+		{
+			this->deviceClassConfigs.push_back(new DeviceClassConfigGui(getGladeSearchPath(), container, settings, inputDevice));
+		}
+	}
+	if (deviceList.empty())
+	{
+		GtkWidget* label = gtk_label_new("");
+		gtk_label_set_markup(GTK_LABEL(label), _("<b>No devices were found. This seems wrong - maybe file a bug report?</b>"));
+		gtk_box_pack_end(GTK_BOX(container), label, true, true, 0);
+		gtk_widget_show(label);
+	}
 }
 
 SettingsDialog::~SettingsDialog()
@@ -649,6 +671,11 @@ void SettingsDialog::save()
 	}
 
 	settings->setAudioGain((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spAudioGain"))));
+
+	for (DeviceClassConfigGui* deviceClassConfigGui : this->deviceClassConfigs)
+	{
+		deviceClassConfigGui->saveSettings();
+	}
 
 	settings->transactionEnd();
 }
