@@ -2491,7 +2491,9 @@ int Settings::getDeviceClassForDevice(GdkDevice* device)
 				break;
 			case GDK_SOURCE_MOUSE:
 			case GDK_SOURCE_TOUCHPAD:
+#if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
 			case GDK_SOURCE_TRACKPOINT:
+#endif
 				deviceType = 1;
 				break;
 			case GDK_SOURCE_PEN:
