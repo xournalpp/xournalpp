@@ -2485,7 +2485,9 @@ int Settings::getDeviceClassForDevice(GdkDevice* device)
 		switch(gdk_device_get_source(device))
 		{
 			case GDK_SOURCE_CURSOR:
+#if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
 			case GDK_SOURCE_TABLET_PAD:
+#end
 			case GDK_SOURCE_KEYBOARD:
 				deviceType = 0;
 				break;
