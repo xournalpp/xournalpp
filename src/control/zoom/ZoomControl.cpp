@@ -157,10 +157,16 @@ Rectangle ZoomControl::getVisibleRect()
 	return layout->getVisibleRect();
 }
 
+void ZoomControl::setScrollPositionAfterZoom(double x, double y)
+{
+	this->scrollPositionX = (x + this->zoomWidgetPosX) / this->zoom;
+	this->scrollPositionY = (y + this->zoomWidgetPosY) / this->zoom;
+}
+
 /**
  * Zoom to correct position on zooming
  */
-std::tuple<double, double> ZoomControl::getScrollPositionAfterZoom(XojPageView* view)
+std::tuple<double, double> ZoomControl::getScrollPositionAfterZoom()
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
