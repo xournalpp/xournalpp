@@ -6,12 +6,18 @@
 DeviceListHelper::DeviceListHelper(bool ignoreTouchDevices)
  : ignoreTouchDevices(ignoreTouchDevices)
 {
-	// For never GTK versions, see example here:
-	// https://cvs.gnucash.org/docs/MASTER/gnc-cell-renderer-popup_8c_source.html
-
+#if (GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 20)
+	GdkDisplay* display = gdk_display_get_default();
+	GdkSeat* defaultSeat = gdk_display_get_default_seat(display);
+	GdkDevice* pointer = gdk_seat_get_pointer(defaultSeat);
+	GdkSeat* pointerSeat = gdk_device_get_seat(pointer);
+	GList* pointerSlaves = gdk_seat_get_slaves(pointerSeat, GDK_SEAT_CAPABILITY_ALL_POINTING);
+	addDevicesToList(pointerSlaves);
+#else
 	GdkDeviceManager* deviceManager = gdk_display_get_device_manager(gdk_display_get_default());
 
 	addDevicesToList(gdk_device_manager_list_devices(deviceManager, GDK_DEVICE_TYPE_SLAVE));
+#endif
 
 	if (deviceList.size() == 0)
 	{
@@ -104,6 +110,12 @@ string InputDevice::getType()
 	{
 		return _("touchpad");
 	}
+#if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
+	else if (source == GDK_SOURCE_TRACKPOINT)
+	{
+		return _("trackpoint");
+	}
+#endif
 
 	return "";
 }
