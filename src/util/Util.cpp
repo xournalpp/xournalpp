@@ -110,7 +110,7 @@ Path Util::ensureFolderExists(Path p)
 	{
 		Util::execInUiThread([=]() {
 			string msg = FS(_F("Could not create folder: {1}") % p.str());
-			g_warning(msg.c_str());
+			g_warning("%s", msg.c_str());
 			XojMsgBox::showErrorToUser(nullptr, msg);
 		});
 	}
