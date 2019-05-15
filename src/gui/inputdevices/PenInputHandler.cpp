@@ -13,6 +13,7 @@
 #include "gui/XournalView.h"
 #include <control/settings/ButtonConfig.h>
 
+#include <algorithm>
 #include <cmath>
 
 #define WIDGET_SCROLL_BORDER 25
@@ -229,7 +230,7 @@ bool PenInputHandler::actionMotion(GdkEvent* event)
 		EditSelection* selection = xournal->selection;
 		XojPageView* view = selection->getView();
 
-		PositionInputData pos = getInputDataRelativeToCurrentPage(view, event);
+		PositionInputData pos = this->getInputDataRelativeToCurrentPage(view, event);
 
 		if (xournal->selection->isMoving())
 		{
@@ -378,6 +379,48 @@ bool PenInputHandler::actionEnd(GdkEvent* event)
 	this->lastHitEvent = nullptr;
 
 	return false;
+}
+
+void PenInputHandler::actionPerform(GdkEvent* event)
+{
+	XOJ_CHECK_TYPE(PenInputHandler);
+	GtkXournal* xournal = this->inputContext->getXournal();
+	EditSelection* selection = xournal->selection;
+
+	ToolHandler* toolHandler = this->inputContext->getToolHandler();
+	ToolType toolType = toolHandler->getToolType();
+	bool isSelectTool = toolType == TOOL_SELECT_OBJECT || TOOL_SELECT_RECT || TOOL_SELECT_REGION;
+	if (isSelectTool && selection != nullptr)
+	{
+		XojPageView* currentPage = this->getPageAtCurrentPosition(event);
+		PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
+
+		// Find a selected object under the cursor, if possible
+		std::vector<Element*>* elems = selection->getElements();
+		auto it = std::find_if(elems->begin(), elems->end(), [&](Element*& elem) {
+				return elem->intersectsArea(pos.x - 5, pos.y - 5, 5, 5);
+			});
+		if (it != elems->end())
+		{
+			// Enter editing mode on the selected object
+			Element* object = *it;
+			ElementType elemType = object->getType();
+			if (elemType == ELEMENT_TEXT)
+			{
+				xournal->view->clearSelection();
+				toolHandler->selectTool(TOOL_TEXT);
+				currentPage->onButtonPressEvent(pos);
+			}
+			else if (elemType == ELEMENT_TEXIMAGE)
+			{
+				Control* control = xournal->view->getControl();
+				xournal->view->clearSelection();
+				EditSelection* sel = new EditSelection(control->getUndoRedoHandler(), object, currentPage, currentPage->getPage());
+				xournal->view->setSelection(sel);
+				control->runLatex();
+			}
+		}
+	}
 }
 
 void PenInputHandler::actionLeaveWindow(GdkEvent* event)
