@@ -351,6 +351,7 @@ bool cancellable_cancel(GCancellable* cancel)
 void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y,
 								 GtkSelectionData* data, guint info, guint time, MainWindow* win)
 {
+	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
 
 	GtkWidget* source = gtk_drag_get_source_widget(dragContext);
 	if (source && widget == gtk_widget_get_toplevel(source))
@@ -913,75 +914,89 @@ void MainWindow::initFloatingToolbar()
 	XOJ_CHECK_TYPE(MainWindow);
 
 	GtkWidget *overlay = get("mainOverlay");
-	GtkWidget* floatingToolbox = get("floatingToolbox");
-	
-		this->overlayX = 200;
-		this->overlayY = 200;
-		
-		gtk_overlay_add_overlay (GTK_OVERLAY (overlay), floatingToolbox);
-		gtk_overlay_set_overlay_pass_through (GTK_OVERLAY (overlay), floatingToolbox, TRUE);
-		gtk_widget_show_all (overlay);
-/*
-		GtkWidget *overlay = get("mainOverlay");
-		GtkWidget *button;
-		GtkWidget *vbox;
-		GtkWidget *tbOverlay1;
-		GtkWidget *tbOverlay2;
-		GtkWidget *tbOverlay3;
-		GtkWidget *tbOverlay4;
-		GtkWidget *entry;
-		
-		vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
-		gtk_overlay_add_overlay (GTK_OVERLAY (overlay), vbox);
-		gtk_overlay_set_overlay_pass_through (GTK_OVERLAY (overlay), vbox, TRUE);
+	this->floatingToolbox = get("floatingToolbox");
 
-		tbOverlay1 = gtk_toolbar_new();
-		tbOverlay2 = gtk_toolbar_new();
-		tbOverlay3 = gtk_toolbar_new();
-		tbOverlay4 = gtk_toolbar_new();
+	
+
+// 	GtkCssProvider *cssForTB = gtk_css_provider_new();
+// 	gtk_css_provider_load_from_data(cssForTB, ".tbCss:fadeout {background-color: rgba(255,255,255,0);transition: 500ms ease-in-out;}", -1, NULL);
+// 	gtk_style_context_add_provider_for_screen(Gdk.Screen.Default, GTK_STYLE_PROVIDER(cssForTB), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+/*	GtkCssProvider *css2 = gtk_css_provider_new();
+	gtk_css_provider_load_from_data(cssFloatingToolbox, "*{background-color: rgba(1,1,1,0);}", -1, NULL);
+	gtk_style_context_add_provider(gtk_widget_get_style_context(get("tbOverlay1")), GTK_STYLE_PROVIDER(css2), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+*/	
+	
+	this->overlayX = 200;
+	this->overlayY = 200;
+	
+	gtk_overlay_add_overlay (GTK_OVERLAY (overlay), this->floatingToolbox);
+	gtk_overlay_set_overlay_pass_through (GTK_OVERLAY (overlay), this->floatingToolbox, TRUE);
+	
+	gtk_widget_add_events(this->floatingToolbox, GDK_LEAVE_NOTIFY_MASK);
+	g_signal_connect(this->floatingToolbox, "leave-notify-event", G_CALLBACK(handleLeaveFloatingToolbox), this);
 		
-		gtk_box_pack_start (GTK_BOX (vbox), tbOverlay1, FALSE, FALSE, 0);
-		gtk_box_pack_start (GTK_BOX (vbox), tbOverlay2, FALSE, FALSE, 0);
-		gtk_box_pack_start (GTK_BOX (vbox), tbOverlay3, FALSE, FALSE, 0);
-		gtk_box_pack_start (GTK_BOX (vbox), tbOverlay4, FALSE, FALSE, 0);
-		gtk_widget_show_all (overlay);
-*/
+
 }
 
-void MainWindow::showFloatingToolbox(int menutype, int x, int y)
+void MainWindow::showFloatingToolbox( int x, int y, bool sticky )
+{
+	XOJ_CHECK_TYPE(MainWindow);
+
+	GdkRectangle allocation = {0,0,0,0};
+	
+	gtk_widget_get_allocation (this->floatingToolbox, &allocation);	//get existing allocation
+
+	if( allocation.height < 10){
+		GtkRequisition natural;		
+		gtk_widget_get_preferred_size  (this->floatingToolbox,  NULL,  &natural);
+		allocation.width = natural.width;
+		allocation.height = natural.height;
+	}
+	
+	
+	
+	this->overlayX = x - allocation.width/2;
+	this->overlayY = y - allocation.height/2;
+	
+	this->showFloatingToolbox(sticky);
+}
+
+void MainWindow::showFloatingToolboxForConfiguration()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
 	GtkWidget *overlay = get("mainOverlay");
-	GtkWidget* floatingToolbox = get("floatingToolbox");
 	
-		this->overlayX = x;
-		this->overlayY = y;
-		gtk_widget_hide (floatingToolbox);
-		//gtk_overlay_add_overlay (GTK_OVERLAY (overlay), floatingToolbox);
-		//gtk_overlay_set_overlay_pass_through (GTK_OVERLAY (overlay), floatingToolbox, TRUE);
-		gtk_widget_show_all (floatingToolbox);
+	gint wx, wy;
+	gtk_widget_translate_coordinates(winXournal, gtk_widget_get_toplevel(winXournal), 0, 0, &wx, &wy);
+
+	this->overlayX = wx+40;
+	this->overlayY = wy+40;
+	
+	this->showFloatingToolbox(true);
+}
+
+
+void MainWindow::showFloatingToolbox( bool sticky)
+{
+	
+	this->autohideFloatingToolbox = !sticky;
+
+	gtk_widget_hide (this->floatingToolbox);		//hide first to force showing in new position
+
+	gtk_widget_show_all (this->floatingToolbox);
+	
+}
+
+void MainWindow::hideFloatingToolbox()
+{
+	
+	this->autohideFloatingToolbox = true;
+
+	gtk_widget_hide (this->floatingToolbox);
+
 		
-		/*
-		GtkWidget *overlay = get("mainOverlay");
-		GtkWidget *button;
-		GtkWidget *vbox = get("boxOverlay");
-
-		this->overlayX = x;
-		this->overlayY = y;
-		
-		gtk_overlay_add_overlay (GTK_OVERLAY (overlay), vbox);
-		gtk_overlay_set_overlay_pass_through (GTK_OVERLAY (overlay), vbox, TRUE);
-//		gtk_widget_set_halign (vbox, GTK_ALIGN_CENTER);
-//		gtk_widget_set_valign (vbox, GTK_ALIGN_CENTER);
-
-//		label = gtk_label_new ("<span foreground='blue' weight='ultrabold' font='40'>Numbers</span>");
-//		gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-//		gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 8);
-
-		gtk_widget_show_all (overlay);
-*/
-
 }
 
 gboolean  MainWindow::getOverlayPosition (GtkOverlay   *overlay,
@@ -990,11 +1005,28 @@ gboolean  MainWindow::getOverlayPosition (GtkOverlay   *overlay,
                MainWindow* win)
 {
 	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
-	
-	
-	//testing testing testing  									TODO
+		
+	// Get width and height
+	gtk_widget_get_allocation (widget, allocation);	//get existing allocation
+	if( allocation->width < 10){
+		GtkRequisition natural;		
+		gtk_widget_get_preferred_size  (widget,  NULL,  &natural);
+		allocation->width = natural.width;
+		allocation->height = natural.height;
+	}	
 	allocation->x = win->overlayX;
 	allocation->y = win->overlayY;
-	allocation->width =200;
-	allocation->height = 200;
+
 }
+
+
+
+void MainWindow::handleLeaveFloatingToolbox( GtkWidget* floatingToolbox, GdkEvent  *event,  MainWindow* win)
+{
+	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
+	
+	if( win->autohideFloatingToolbox ){
+		win->hideFloatingToolbox();
+	}
+}
+

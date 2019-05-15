@@ -521,9 +521,13 @@ bool XojPageView::onButtonReleaseEvent(const PositionInputData& pos)
 				GtkWidget *widget = xournal->getWidget();
 				gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
 
-				control->getWindow()->showFloatingToolbox(1, pos.x+wx,pos.y+wy);	
+				wx += pos.x + this->getX();// + widget->x;
+				wy += pos.y + this->getY();// + widget->y;
+				
+				control->getWindow()->showFloatingToolbox( wx,wy);
 			}
 		}
+		
 		delete this->inputHandler;
 		this->inputHandler = NULL;
 	}

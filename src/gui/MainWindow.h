@@ -94,7 +94,9 @@ public:
 	bool isGestureActive();
 	
 	
-	void showFloatingToolbox(int menutype, int x, int y);
+	void showFloatingToolbox( int x, int y, bool sticky = false);
+	void showFloatingToolboxForConfiguration();
+	void hideFloatingToolbox( );
 
 private:
 	void initXournalWidget();
@@ -143,6 +145,13 @@ private:
 	 */
 	static gboolean  getOverlayPosition (GtkOverlay *overlay, GtkWidget *widget, GdkRectangle *allocation, MainWindow* win);
 	
+	/**
+	 * Callback to hide floating Toolbar when mouse leaves it
+	 */
+	static void handleLeaveFloatingToolbox(GtkWidget * floatingToolbox, GdkEvent  *event, MainWindow* win);
+	
+	void showFloatingToolbox( bool sticky = false);
+
 	
 private:
 	XOJ_TYPE_ATTRIB;
@@ -163,6 +172,10 @@ private:
 	bool maximized = false;
 
 	GtkWidget** toolbarWidgets;
+	
+	GtkWidget *floatingToolbox;
+	
+	bool autohideFloatingToolbox;
 
 	MainWindowToolbarMenu* toolbarSelectMenu;
 
