@@ -390,7 +390,10 @@ void PenInputHandler::actionPerform(GdkEvent* event)
 	ToolHandler* toolHandler = this->inputContext->getToolHandler();
 	ToolType toolType = toolHandler->getToolType();
 	bool isSelectTool = toolType == TOOL_SELECT_OBJECT || TOOL_SELECT_RECT || TOOL_SELECT_REGION;
-	if (isSelectTool && selection != nullptr)
+
+	// Double click selection to edit;
+	// Only applies to double left clicks / taps
+	if (!this->modifier2 && !this->modifier3 && isSelectTool && selection != nullptr)
 	{
 		XojPageView* currentPage = this->getPageAtCurrentPosition(event);
 		PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
@@ -409,6 +412,8 @@ void PenInputHandler::actionPerform(GdkEvent* event)
 			{
 				xournal->view->clearSelection();
 				toolHandler->selectTool(TOOL_TEXT);
+				// Simulate a button press; there's too many things that we
+				// could forget to do if we manually call XojPageView::startText
 				currentPage->onButtonPressEvent(pos);
 			}
 			else if (elemType == ELEMENT_TEXIMAGE)
