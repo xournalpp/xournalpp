@@ -69,6 +69,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 	ADD_TYPE_CB("lasso",			_("Select region"),			TOOL_SELECT_REGION);
 	ADD_TYPE_CB("rect-select",		_("Select rectangle"),		TOOL_SELECT_RECT);
 	ADD_TYPE_CB("hand",				_("Hand"),					TOOL_HAND);
+	ADD_TYPE_CB("floating_toolbox",	_("Floating Toolbox"),		TOOL_FLOATING_TOOLBOX);
 
 	this->cbTool = get("cbTool");
 	gtk_combo_box_set_model(GTK_COMBO_BOX(this->cbTool), GTK_TREE_MODEL(typeModel));

@@ -329,13 +329,14 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
-
+	Control* control = xournal->getControl();
+	
 	if (!this->selected)
 	{
-		xournal->getControl()->firePageSelected(this->page);
+		control->firePageSelected(this->page);
 	}
 
-	ToolHandler* h = xournal->getControl()->getToolHandler();
+	ToolHandler* h = control->getToolHandler();
 
 	double x = pos.x;
 	double y = pos.y;
@@ -436,10 +437,22 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 	}
 	else if (h->getToolType() == TOOL_IMAGE)
 	{
-		ImageHandler imgHandler(xournal->getControl(), this);
+		ImageHandler imgHandler(control, this);
 		imgHandler.insertImage(x, y);
 	}
+	else if (h->getToolType() == TOOL_FLOATING_TOOLBOX)
+	{
+		gint wx, wy;
+		GtkWidget *widget = xournal->getWidget();
+		gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
 
+		wx += pos.x + this->getX();
+		wy += pos.y + this->getY();
+		
+		control->getWindow()->showFloatingToolbox( wx,wy);
+				
+				
+	}
 	return true;
 }
 
