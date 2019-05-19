@@ -927,8 +927,9 @@ void MainWindow::initFloatingToolbar()
 	gtk_style_context_add_provider(gtk_widget_get_style_context(get("tbOverlay1")), GTK_STYLE_PROVIDER(css2), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 */	
 	
-	this->overlayX = 200;
-	this->overlayY = 200;
+	this->floatingToolboxX = 200;
+	this->floatingToolboxY = 200;
+	this->floatingToolboxState = recalcSize;
 	
 	gtk_overlay_add_overlay (GTK_OVERLAY (overlay), this->floatingToolbox);
 	gtk_overlay_set_overlay_pass_through (GTK_OVERLAY (overlay), this->floatingToolbox, TRUE);
@@ -939,27 +940,14 @@ void MainWindow::initFloatingToolbar()
 
 }
 
-void MainWindow::showFloatingToolbox( int x, int y, bool sticky )
+void MainWindow::showFloatingToolbox( int x, int y )
 {
 	XOJ_CHECK_TYPE(MainWindow);
-
-	GdkRectangle allocation = {0,0,0,0};
 	
-	gtk_widget_get_allocation (this->floatingToolbox, &allocation);	//get existing allocation
-
-	if( allocation.height < 10){
-		GtkRequisition natural;		
-		gtk_widget_get_preferred_size  (this->floatingToolbox,  NULL,  &natural);
-		allocation.width = natural.width;
-		allocation.height = natural.height;
-	}
+	this->floatingToolboxX = x;
+	this->floatingToolboxY = y;
 	
-	
-	
-	this->overlayX = x - allocation.width/2;
-	this->overlayY = y - allocation.height/2;
-	
-	this->showFloatingToolbox(sticky);
+	this->showFloatingToolbox();
 }
 
 void MainWindow::showFloatingToolboxForConfiguration()
@@ -971,19 +959,18 @@ void MainWindow::showFloatingToolboxForConfiguration()
 	gint wx, wy;
 	gtk_widget_translate_coordinates(winXournal, gtk_widget_get_toplevel(winXournal), 0, 0, &wx, &wy);
 
-	this->overlayX = wx+40;
-	this->overlayY = wy+40;
+	this->floatingToolboxX = wx+40;	//when configuration state these are
+	this->floatingToolboxY = wy+40;	// topleft coordinates ( otherwise center).
+	this->floatingToolboxState = configuration;
 	
-	this->showFloatingToolbox(true);
+	this->showFloatingToolbox();
 }
 
 
-void MainWindow::showFloatingToolbox( bool sticky)
+void MainWindow::showFloatingToolbox( )
 {
 	
-	this->autohideFloatingToolbox = !sticky;
-
-	gtk_widget_hide (this->floatingToolbox);		//hide first to force showing in new position
+	gtk_widget_hide (this->floatingToolbox);		//force showing in new position
 
 	gtk_widget_show_all (this->floatingToolbox);
 	
@@ -991,14 +978,24 @@ void MainWindow::showFloatingToolbox( bool sticky)
 
 void MainWindow::hideFloatingToolbox()
 {
-	
-	this->autohideFloatingToolbox = true;
-
+	if( this->floatingToolboxState == configuration)
+	{
+		this->floatingToolboxState = recalcSize;
+	}
 	gtk_widget_hide (this->floatingToolbox);
-
 		
 }
 
+/**
+ * getOverlayPosition - this is how we position the widget in the overlay under the mouse
+ * 
+ * The requested location is communicated via the main window's member variables: 
+ * ->floatingToolbox,		so we can operate on the right widget
+ * -> floatingToolboxState,	are we configuring, resizing or just moving
+ * ->floatingToolboxX,		where to display
+ * ->floatingToolboxY.
+ * 
+ */
 gboolean  MainWindow::getOverlayPosition (GtkOverlay   *overlay,
                GtkWidget    *widget,
                GdkRectangle *allocation,
@@ -1006,17 +1003,39 @@ gboolean  MainWindow::getOverlayPosition (GtkOverlay   *overlay,
 {
 	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
 		
-	// Get width and height
-	gtk_widget_get_allocation (widget, allocation);	//get existing allocation
-	if( allocation->width < 10){
-		GtkRequisition natural;		
-		gtk_widget_get_preferred_size  (widget,  NULL,  &natural);
-		allocation->width = natural.width;
-		allocation->height = natural.height;
-	}	
-	allocation->x = win->overlayX;
-	allocation->y = win->overlayY;
+	if( widget == win->floatingToolbox ){
 
+	
+		// Get width and height
+		gtk_widget_get_allocation (widget, allocation);	//get existing allocation
+		if( win->floatingToolboxState != noChange ||  allocation->height < 2)	//need to catch initiation.
+		{
+			GtkRequisition natural;		
+			gtk_widget_get_preferred_size  (widget,  NULL,  &natural);
+			allocation->width = natural.width;
+			allocation->height = natural.height;
+		}	
+		
+		switch  (win->floatingToolboxState)
+		{
+			case recalcSize: case noChange:	// show centered on x,y
+				allocation->x = win->floatingToolboxX - allocation->width/2;
+				allocation->y = win->floatingToolboxY - allocation->height/2;
+				win->floatingToolboxState = noChange;
+				break;
+			
+			case configuration:
+				allocation->x = win->floatingToolboxX;
+				allocation->y = win->floatingToolboxY;
+				allocation->width = std::max( allocation->width+32 ,50); //always room for one more...
+				allocation->height  = std::max( allocation->height ,50);
+		}
+		
+
+
+		return true;
+	}
+	return false;
 }
 
 
@@ -1025,7 +1044,7 @@ void MainWindow::handleLeaveFloatingToolbox( GtkWidget* floatingToolbox, GdkEven
 {
 	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
 	
-	if( win->autohideFloatingToolbox ){
+	if( win->floatingToolboxState !=  configuration ){
 		win->hideFloatingToolbox();
 	}
 }

@@ -27,6 +27,12 @@ class XournalView;
 class MainWindowToolbarMenu;
 class ZoomGesture;
 
+enum FloatingToolBoxState {
+		recalcSize = 0,
+		configuration,
+		noChange
+};
+
 class MainWindow : public GladeGui, public LayerCtrlListener
 {
 public:
@@ -94,7 +100,7 @@ public:
 	bool isGestureActive();
 	
 	
-	void showFloatingToolbox( int x, int y, bool sticky = false);
+	void showFloatingToolbox( int x, int y);
 	void showFloatingToolboxForConfiguration();
 	void hideFloatingToolbox( );
 
@@ -150,7 +156,7 @@ private:
 	 */
 	static void handleLeaveFloatingToolbox(GtkWidget * floatingToolbox, GdkEvent  *event, MainWindow* win);
 	
-	void showFloatingToolbox( bool sticky = false);
+	void showFloatingToolbox( );
 
 	
 private:
@@ -175,8 +181,6 @@ private:
 	
 	GtkWidget *floatingToolbox;
 	
-	bool autohideFloatingToolbox;
-
 	MainWindowToolbarMenu* toolbarSelectMenu;
 
 	/**
@@ -184,7 +188,13 @@ private:
 	 */
 	bool ignoreNextHideEvent;
 	
-	int overlayX = 0;
-	int overlayY = 0;
+	/**
+	 * For communicating with getOverlayPosition callback
+	 * */
+	
+	int floatingToolboxX = 0;
+	int floatingToolboxY = 0;
+	
+	FloatingToolBoxState floatingToolboxState = recalcSize;
 	
 };

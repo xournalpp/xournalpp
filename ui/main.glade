@@ -13,8 +13,6 @@
     <property name="page_increment">10</property>
   </object>
   <object class="GtkRevealer" id="floatingToolbox">
-    <property name="width_request">300</property>
-    <property name="height_request">192</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="transition_type">crossfade</property>
@@ -22,21 +20,17 @@
     <child>
       <object class="GtkBox" id="floatingvbox">
         <property name="can_focus">False</property>
-        <property name="hexpand">True</property>
-        <property name="vexpand">True</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkToolbar" id="tbOverlay1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="hexpand">False</property>
-            <property name="vexpand">True</property>
             <style>
               <class name="tbCss"/>
             </style>
           </object>
           <packing>
-            <property name="expand">False</property>
+            <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">0</property>
           </packing>
@@ -45,14 +39,12 @@
           <object class="GtkToolbar" id="tbOverlay2">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="hexpand">True</property>
-            <property name="vexpand">True</property>
             <style>
               <class name="tbCss"/>
             </style>
           </object>
           <packing>
-            <property name="expand">False</property>
+            <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
@@ -61,14 +53,12 @@
           <object class="GtkToolbar" id="tbOverlay3">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="hexpand">True</property>
-            <property name="vexpand">True</property>
             <style>
               <class name="tbCss"/>
             </style>
           </object>
           <packing>
-            <property name="expand">False</property>
+            <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">2</property>
           </packing>
@@ -77,14 +67,12 @@
           <object class="GtkToolbar" id="tbOverlay4">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="hexpand">True</property>
-            <property name="vexpand">True</property>
             <style>
               <class name="tbCss"/>
             </style>
           </object>
           <packing>
-            <property name="expand">False</property>
+            <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">3</property>
           </packing>
