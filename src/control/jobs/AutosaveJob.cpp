@@ -23,7 +23,7 @@ void AutosaveJob::afterRun()
 	XOJ_CHECK_TYPE(AutosaveJob);
 
 	string msg = FS(_F("Error while autosaving: {1}") % this->error);
-	g_warning(msg.c_str());
+	g_warning("%s", msg.c_str());
 	XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 }
 
