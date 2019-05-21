@@ -109,7 +109,7 @@ std::unique_ptr<GPid> LatexController::runCommandAsync()
 	if (!success)
 	{
 		string message = FS(_F("Could not start pdflatex: {1} (exit code: {2})") % err->message % err->code);
-		g_warning(message.c_str());
+		g_warning("%s", message.c_str());
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), message);
 
 		g_error_free(err);
@@ -260,7 +260,7 @@ void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, LatexContro
 		{
 			// The error was not caused by invalid LaTeX.
 			string message = FS(_F("pdflatex encountered an error: {1} (exit code: {2})") % err->message % err->code);
-			g_warning(message.c_str());
+			g_warning("%s", message.c_str());
 			XojMsgBox::showErrorToUser(self->control->getGtkWindow(), message);
 		}
 		Path pdfPath = self->texTmp / "tex.pdf";
