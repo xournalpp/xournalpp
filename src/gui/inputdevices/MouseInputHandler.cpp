@@ -49,8 +49,6 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 
 	if (event->type == GDK_DOUBLE_BUTTON_PRESS)
 	{
-		guint button;
-		gdk_event_get_button(event, &button);
 		this->actionPerform(event);
 		return true;
 	}

@@ -391,6 +391,11 @@ void PenInputHandler::actionPerform(GdkEvent* event)
 	ToolType toolType = toolHandler->getToolType();
 	bool isSelectTool = toolType == TOOL_SELECT_OBJECT || TOOL_SELECT_RECT || TOOL_SELECT_REGION;
 
+#ifdef DEBUG_INPUT
+	g_message("Discrete input action; modifier1=%s, modifier2=%2",
+	          this->modifier2 ? "true" : "false", this->modifier3 ? "true" : "false");
+#endif
+
 	// Double click selection to edit;
 	// Only applies to double left clicks / taps
 	if (!this->modifier2 && !this->modifier3 && isSelectTool && selection != nullptr)
@@ -398,11 +403,16 @@ void PenInputHandler::actionPerform(GdkEvent* event)
 		XojPageView* currentPage = this->getPageAtCurrentPosition(event);
 		PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
 
-		// Find a selected object under the cursor, if possible
+		// Find a selected object under the cursor, if possible. The selection doesn't change the
+		// element coordinates until it is finalized, so we need to use position relative to the
+		// original coordinates of the selection.
+		double zoom = xournal->view->getZoom();
+		double x = (pos.x - selection->getXOnView() + selection->getOriginalXOnView()) / zoom;
+		double y = (pos.y - selection->getYOnView() + selection->getOriginalYOnView()) / zoom;
 		std::vector<Element*>* elems = selection->getElements();
 		auto it = std::find_if(elems->begin(), elems->end(), [&](Element*& elem) {
-				return elem->intersectsArea(pos.x - 5, pos.y - 5, 5, 5);
-			});
+			return elem->intersectsArea(x - 5, y - 5, 5, 5);
+		});
 		if (it != elems->end())
 		{
 			// Enter editing mode on the selected object

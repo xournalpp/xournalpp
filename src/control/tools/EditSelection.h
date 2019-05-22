@@ -66,6 +66,18 @@ public:
 	double getYOnView();
 
 	/**
+	 * @return The original X coordinates of the provided view in document
+	 * coordinates.
+	 */
+	double getOriginalXOnView();
+
+	/**
+	 * @return The original Y coordinates of the provided view in document
+	 * coordinates.
+	 */
+	double getOriginalYOnView();
+
+	/**
 	 * Get the width in document coordinates (multiple with zoom)
 	 */
 	double getWidth();
