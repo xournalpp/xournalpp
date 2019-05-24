@@ -19,7 +19,7 @@ MouseInputHandler::~MouseInputHandler()
 	XOJ_RELEASE_TYPE(MouseInputHandler);
 }
 
-bool MouseInputHandler::handleImpl(GdkEvent* event)
+bool MouseInputHandler::handleImpl(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(MouseInputHandler);
 
@@ -38,11 +38,8 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 	 * Trigger start action
 	 */
 	// Trigger start of action when pen/mouse is pressed
-	if (event->type == GDK_BUTTON_PRESS)
+	if (event->type == BUTTON_PRESS_EVENT)
 	{
-		guint button;
-		gdk_event_get_button(event, &button);
-
 		this->actionStart(event);
 		return true;
 	}
@@ -51,17 +48,17 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 	 * Trigger motion actions
 	 */
 	// Trigger motion action when pen/mouse is pressed and moved
-	if (this->deviceClassPressed && event->type == GDK_MOTION_NOTIFY) //mouse or pen moved
+	if (this->deviceClassPressed && event->type == MOTION_EVENT) //mouse or pen moved
 	{
 		this->actionMotion(event);
 	}
 
 	// Notify if mouse enters/leaves widget
-	if (event->type == GDK_ENTER_NOTIFY)
+	if (event->type == ENTER_EVENT)
 	{
 		this->actionEnterWindow(event);
 	}
-	if (event->type == GDK_LEAVE_NOTIFY)
+	if (event->type == LEAVE_EVENT)
 	{
 		//this->inputContext->unblockDevice(InputContext::TOUCHSCREEN);
 		//this->inputContext->getView()->getHandRecognition()->unblock();
@@ -69,17 +66,14 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 	}
 
 	// Trigger end of action if mouse button is released
-	if (event->type == GDK_BUTTON_RELEASE)
+	if (event->type == BUTTON_RELEASE_EVENT)
 	{
-		guint button;
-		gdk_event_get_button(event, &button);
-
 		this->actionEnd(event);
 		return true;
 	}
 
 	// If we loose our Grab on the device end the current action
-	if (event->type == GDK_GRAB_BROKEN && this->deviceClassPressed)
+	if (event->type == GRAB_BROKEN_EVENT && this->deviceClassPressed)
 	{
 		// TODO: We may need to update pressed state manually here
 		this->actionEnd(event);
@@ -89,7 +83,7 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 	return false;
 }
 
-void MouseInputHandler::setPressedState(GdkEvent* event)
+void MouseInputHandler::setPressedState(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(MouseInputHandler);
 
@@ -97,14 +91,11 @@ void MouseInputHandler::setPressedState(GdkEvent* event)
 
 	this->inputContext->getXournal()->view->getCursor()->setInsidePage(currentPage != nullptr);
 
-	if (event->type == GDK_BUTTON_PRESS) //mouse button pressed or pen touching surface
+	if (event->type == BUTTON_PRESS_EVENT) //mouse button pressed or pen touching surface
 	{
-		guint button;
-		gdk_event_get_button(event, &button);
-
 		this->deviceClassPressed = true;
 
-		switch (button)
+		switch (event->button)
 		{
 			case 2:
 				this->modifier2 = true;
@@ -115,14 +106,11 @@ void MouseInputHandler::setPressedState(GdkEvent* event)
 				break;
 		}
 	}
-	if (event->type == GDK_BUTTON_RELEASE) //mouse button released or pen not touching surface anymore
+	if (event->type == BUTTON_RELEASE_EVENT) //mouse button released or pen not touching surface anymore
 	{
-		guint button;
-		gdk_event_get_button(event, &button);
-
 		this->deviceClassPressed = false;
 
-		switch (button)
+		switch (event->button)
 		{
 			case 2:
 				this->modifier2 = false;
@@ -135,7 +123,7 @@ void MouseInputHandler::setPressedState(GdkEvent* event)
 	}
 }
 
-bool MouseInputHandler::changeTool(GdkEvent* event)
+bool MouseInputHandler::changeTool(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(MouseInputHandler);
 

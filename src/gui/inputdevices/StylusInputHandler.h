@@ -22,12 +22,12 @@ public:
 	explicit StylusInputHandler(InputContext* inputContext);
 	~StylusInputHandler();
 
-	bool handleImpl(GdkEvent* event) override;
-	bool changeTool(GdkEvent* event) override;
+	bool handleImpl(InputEvent* event) override;
+	bool changeTool(InputEvent* event) override;
 private:
 	XOJ_TYPE_ATTRIB;
 
-	void setPressedState(GdkEvent*);
+	void setPressedState(InputEvent*);
 };
 
 

@@ -19,6 +19,7 @@
 #include <control/settings/ButtonConfig.h>
 
 #include <gdk/gdk.h>
+#include "InputEvents.h"
 
 class InputContext;
 
@@ -38,8 +39,8 @@ protected:
 	bool inputRunning = false;
 
 protected:
-	XojPageView* getPageAtCurrentPosition(GdkEvent* event);
-	PositionInputData getInputDataRelativeToCurrentPage(XojPageView* page, GdkEvent* event);
+	XojPageView* getPageAtCurrentPosition(InputEvent* event);
+	PositionInputData getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent* event);
 
 public:
 	explicit AbstractInputHandler(InputContext* inputContext);
@@ -48,8 +49,8 @@ public:
 	void block(bool block);
 	bool isBlocked();
 	virtual void onBlock();
-	bool handle(GdkEvent* event);
-	virtual bool handleImpl(GdkEvent* event) = 0;
+	bool handle(InputEvent* event);
+	virtual bool handleImpl(InputEvent* event) = 0;
 };
 
 

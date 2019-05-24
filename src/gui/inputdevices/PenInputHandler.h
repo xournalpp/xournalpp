@@ -37,12 +37,12 @@ protected:
 	/**
 	 * Reference to the last event
 	 */
-	GdkEvent* lastEvent = nullptr;
+	InputEvent* lastEvent = nullptr;
 
 	/**
 	 * Reference to the last event actually hitting a page
 	 */
-	GdkEvent* lastHitEvent = nullptr;
+	InputEvent* lastHitEvent = nullptr;
 
 	/**
 	 * Start position to reference scroll offset
@@ -79,29 +79,29 @@ protected:
 	 * Action for the start of an input
 	 * @param event The event triggering the action
 	 */
-	bool actionStart(GdkEvent* event);
+	bool actionStart(InputEvent* event);
 
 	/**
 	 * Action for motion during an input
 	 * @param event The event triggering the action
 	 */
-	bool actionMotion(GdkEvent* event);
+	bool actionMotion(InputEvent* event);
 
-	void actionLeaveWindow(GdkEvent* event);
-	void actionEnterWindow(GdkEvent* event);
+	void actionLeaveWindow(InputEvent* event);
+	void actionEnterWindow(InputEvent* event);
 
 	/**
 	 * Action for the end of an input
 	 * @param event The event triggering the action
 	 */
-	bool actionEnd(GdkEvent* event);
+	bool actionEnd(InputEvent* event);
 
-	virtual bool changeTool(GdkEvent* event) = 0;
+	virtual bool changeTool(InputEvent* event) = 0;
 
 	/**
 	 * Do the scrolling with the hand tool
 	 */
-	void handleScrollEvent(GdkEvent* event);
+	void handleScrollEvent(InputEvent* event);
 
 	/**
 	 * Stores references to the provided event in lastEvent and lastHitEvent
@@ -109,7 +109,7 @@ protected:
 	 * lastHitEvent will only be updated when the event did hit a page
 	 * @param event
 	 */
-	void updateLastEvent(GdkEvent* event);
+	void updateLastEvent(InputEvent* event);
 };
 
 

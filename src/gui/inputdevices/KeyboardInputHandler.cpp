@@ -18,11 +18,11 @@ KeyboardInputHandler::~KeyboardInputHandler()
 	XOJ_RELEASE_TYPE(KeyboardInputHandler);
 }
 
-bool KeyboardInputHandler::handleImpl(GdkEvent* event)
+bool KeyboardInputHandler::handleImpl(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(KeyboardInputHandler);
 
-	auto keyEvent = (GdkEventKey*) event;
+	auto keyEvent = (GdkEventKey*) event->sourceEvent;
 	GtkXournal* xournal = inputContext->getXournal();
 
 	if (keyEvent->type == GDK_KEY_PRESS)
@@ -65,6 +65,6 @@ bool KeyboardInputHandler::handleImpl(GdkEvent* event)
 		return xournal->view->onKeyPressEvent(keyEvent);
 	} else
 	{
-		return inputContext->getView()->onKeyReleaseEvent(&event->key);
+		return inputContext->getView()->onKeyReleaseEvent(keyEvent);
 	}
 }
