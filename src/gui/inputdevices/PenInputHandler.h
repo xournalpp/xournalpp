@@ -90,7 +90,7 @@ protected:
 	/**
 	 * Action for a discrete input.
 	 */
-	void actionPerform(GdkEvent* event);
+	void actionPerform(InputEvent* event);
 
 	void actionLeaveWindow(InputEvent* event);
 	void actionEnterWindow(InputEvent* event);

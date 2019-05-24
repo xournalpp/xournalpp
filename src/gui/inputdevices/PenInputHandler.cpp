@@ -376,7 +376,7 @@ bool PenInputHandler::actionEnd(InputEvent* event)
 	return false;
 }
 
-void PenInputHandler::actionPerform(GdkEvent* event)
+void PenInputHandler::actionPerform(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(PenInputHandler);
 	GtkXournal* xournal = this->inputContext->getXournal();

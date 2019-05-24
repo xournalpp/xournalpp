@@ -53,7 +53,7 @@ bool StylusInputHandler::handleImpl(InputEvent* event)
 	}
 
 	// Trigger discrete action on double tap
-	if (event->type == GDK_DOUBLE_BUTTON_PRESS)
+	if (event->type == BUTTON_2_PRESS_EVENT)
 	{
 		this->actionPerform(event);
 		return true;
