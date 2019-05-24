@@ -87,6 +87,11 @@ protected:
 	 */
 	bool actionMotion(InputEvent* event);
 
+	/**
+	 * Action for a discrete input.
+	 */
+	void actionPerform(GdkEvent* event);
+
 	void actionLeaveWindow(InputEvent* event);
 	void actionEnterWindow(InputEvent* event);
 
