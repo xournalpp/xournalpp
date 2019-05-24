@@ -3,6 +3,7 @@
 //
 
 #include "InputContext.h"
+#include "InputEvents.h"
 
 InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling)
 {
@@ -77,50 +78,43 @@ bool InputContext::eventCallback(GtkWidget* widget, GdkEvent* event, InputContex
 	return self->handle(event);
 }
 
-bool InputContext::handle(GdkEvent* event)
+bool InputContext::handle(GdkEvent* sourceEvent)
 {
 	XOJ_CHECK_TYPE(InputContext);
 
-	GdkDevice* device = gdk_event_get_source_device(event);
+	printDebug(sourceEvent);
 
-	printDebug(event);
+	InputEvent* event = InputEvents::translateEvent(sourceEvent, this->getSettings());
 
 	// We do not handle scroll events manually but let GTK do it for us
-	if (event->type == GDK_SCROLL)
+	if (event->type == SCROLL_EVENT)
 	{
 		// Hand over to standard GTK Scroll / Zoom handling
 		return false;
 	}
+	g_message("%d", event->type);
 
 	// Deactivate touchscreen when a pen event occurs
-	this->getView()->getHandRecognition()->event(device);
+	this->getView()->getHandRecognition()->event(event->deviceClass);
 
 	// Get the state of all modifiers
-	auto state = (GdkModifierType) 0;
-	if (gdk_event_get_state(event, &state))
-	{
-		this->modifierState = state;
-	}
+	this->modifierState = event->state;
 
 	// separate events to appropriate handlers
 	// handle tablet stylus
-	if (gdk_device_get_source(device) == GDK_SOURCE_PEN || gdk_device_get_source(device) == GDK_SOURCE_ERASER)
+	if (event->deviceClass == INPUT_DEVICE_PEN || event->deviceClass == INPUT_DEVICE_ERASER)
 	{
 		return this->stylusHandler->handle(event);
 	}
 
 	// handle mouse devices
-#if (GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 22)
-	if (gdk_device_get_source(device) == GDK_SOURCE_MOUSE || gdk_device_get_source(device) == GDK_SOURCE_TOUCHPAD || gdk_device_get_source(device) == GDK_SOURCE_TRACKPOINT)
-#else
-	if (gdk_device_get_source(device) == GDK_SOURCE_MOUSE || gdk_device_get_source(device) == GDK_SOURCE_TOUCHPAD)
-#endif
+	if (event->deviceClass == INPUT_DEVICE_MOUSE)
 	{
 		return this->mouseHandler->handle(event);
 	}
 
 	// handle touchscreens
-	if (gdk_device_get_source(device) == GDK_SOURCE_TOUCHSCREEN)
+	if (event->deviceClass == INPUT_DEVICE_TOUCHSCREEN)
 	{
 		// trigger touch drawing depending on the setting
 		if (this->touchWorkaroundEnabled)
@@ -133,7 +127,7 @@ bool InputContext::handle(GdkEvent* event)
 	}
 
 	// handle keyboard
-	if (gdk_device_get_source(device) == GDK_SOURCE_KEYBOARD)
+	if (event->deviceClass == INPUT_DEVICE_KEYBOARD)
 	{
 		return this->keyboardHandler->handle(event);
 	}
