@@ -92,7 +92,6 @@ bool InputContext::handle(GdkEvent* sourceEvent)
 		// Hand over to standard GTK Scroll / Zoom handling
 		return false;
 	}
-	g_message("%d", event->type);
 
 	// Deactivate touchscreen when a pen event occurs
 	this->getView()->getHandRecognition()->event(event->deviceClass);
@@ -131,6 +130,8 @@ bool InputContext::handle(GdkEvent* sourceEvent)
 	{
 		return this->keyboardHandler->handle(event);
 	}
+
+	delete event;
 
 	//We received an event we do not have a handler for
 	return false;
@@ -273,6 +274,11 @@ void InputContext::printDebug(GdkEvent* event)
 	};
 	GdkDevice* device = gdk_event_get_source_device(event);
 	message += "Source device:\t" + gdkInputSources[gdk_device_get_source(device)] + "\n";
+	string gdkInputClasses[] = {
+			"INPUT_DEVICE_MOUSE", "INPUT_DEVICE_PEN", "INPUT_DEVICE_ERASER", "INPUT_DEVICE_TOUCHSCREEN", "INPUT_DEVICE_KEYBOARD", "INPUT_DEVICE_IGNORE"
+	};
+	InputDeviceClass deviceClass = InputEvents::translateDeviceType(device, this->getSettings());
+	message += "Device Class:\t" + gdkInputClasses[deviceClass] + "\n";
 
 	if (event->type == GDK_BUTTON_PRESS || event->type == GDK_DOUBLE_BUTTON_PRESS || event->type == GDK_TRIPLE_BUTTON_PRESS || event->type == GDK_BUTTON_RELEASE)
 	{
