@@ -3159,14 +3159,14 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                             <property name="can_focus">True</property>
                                             <property name="tooltip_markup" translatable="yes">How short (time)  AND...
 
-&lt;i&gt;Recommended: 200ms&lt;/i&gt;</property>
+&lt;i&gt;Recommended: 150ms&lt;/i&gt;</property>
                                             <property name="valign">start</property>
                                             <property name="max_width_chars">0</property>
-                                            <property name="text" translatable="yes">50</property>
+                                            <property name="text" translatable="yes">8</property>
                                             <property name="adjustment">adjustmentStrokeIgnoreTime</property>
                                             <property name="numeric">True</property>
                                             <property name="update_policy">if-valid</property>
-                                            <property name="value">50</property>
+                                            <property name="value">150</property>
                                           </object>
                                           <packing>
                                             <property name="left_attach">2</property>
@@ -3177,16 +3177,16 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                           <object class="GtkSpinButton" id="spStrokeIgnorePoints">
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <property name="tooltip_markup" translatable="yes">How short (length in points)  of the stroke  AND...
+                                            <property name="tooltip_markup" translatable="yes">How short (length in screen mm)  of the stroke  AND...
 
-&lt;i&gt;Recommended: 8 points&lt;/i&gt;</property>
+&lt;i&gt;Recommended: 1 mm&lt;/i&gt;</property>
                                             <property name="valign">start</property>
                                             <property name="max_width_chars">0</property>
                                             <property name="text" translatable="yes">8</property>
                                             <property name="adjustment">adjustmentStrokeIgnorePoints</property>
                                             <property name="numeric">True</property>
                                             <property name="update_policy">if-valid</property>
-                                            <property name="value">8</property>
+                                            <property name="value">1</property>
                                           </object>
                                           <packing>
                                             <property name="left_attach">3</property>
@@ -3197,7 +3197,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                           <object class="GtkLabel" id="sid157">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">Max Length (points)</property>
+                                            <property name="label" translatable="yes">Max Length (mm)</property>
                                           </object>
                                           <packing>
                                             <property name="left_attach">3</property>

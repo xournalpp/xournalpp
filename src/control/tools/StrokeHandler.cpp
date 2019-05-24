@@ -15,7 +15,6 @@
 #include <cmath>
 
 
-
 guint32 StrokeHandler::lastStrokeTime;		//persist for next stroke
 
 
@@ -152,27 +151,30 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 
 	Control* control = xournal->getControl();
 	Settings* settings = control->getSettings();
-	int pointCount = stroke->getPointCount();
 	
 	if ( settings->getStrokeFilterEnabled() )		// Note: For shape tools see BaseStrokeHandler which has a slightly different version of this filter. See //!
 	{	
 		int strokeFilterIgnoreTime,strokeFilterIgnorePoints,strokeFilterSuccessiveTime;
 		
 		settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnorePoints, &strokeFilterSuccessiveTime  );
+		double dpmm = settings->getDisplayDpi()/25.4;
 		
-		if ( pointCount < strokeFilterIgnorePoints && pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) 	//!
+		double zoom = xournal->getZoom();
+		double lengthSqrd =  ( pow(   ((pos.x / zoom) - (this->buttonDownPoint.x))  ,2) 
+					+ pow(   ((pos.y / zoom) - (this->buttonDownPoint.y))  ,2) ) * pow(xournal->getZoom(),2);
+								    
+		if ( lengthSqrd < pow((strokeFilterIgnorePoints*dpmm),2) && pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) 
 		{
 			if ( pos.timestamp - this->lastStrokeTime  > strokeFilterSuccessiveTime )
 			{
-				//stroke not being added to layer... delete here.
+				//stroke not being added to layer... delete here but clear first!
+				
 				this->redrawable->rerenderRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight() ); // clear onMotionNotifyEvent drawing //!
-
+				
 				delete stroke;
 				stroke = NULL;
-				if( pointCount <4) //limit to filtered 'dots' only.  //!
-				{
-					this->trySelect = true;
-				}
+				this->trySelect = true;
+				
 				this->lastStrokeTime = pos.timestamp;
 
 				return;
@@ -184,7 +186,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	// Backward compatibility and also easier to handle for me;-)
 	// I cannot draw a line with one point, to draw a visible line I need two points,
 	// twice the same Point is also OK
-	if (pointCount == 1)
+	if (stroke->getPointCount() == 1)
 	{
 		ArrayIterator<Point> it = stroke->pointIterator();
 		if (it.hasNext())
@@ -315,10 +317,10 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 
 	if (!stroke)
 	{
-		double x = pos.x / zoom;
-		double y = pos.y / zoom;
+		this->buttonDownPoint.x = pos.x / zoom;
+		this->buttonDownPoint.y =  pos.y / zoom;
 
-		createStroke(Point(x, y));
+		createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y));
 	}
 	
 	this->startStrokeTime = pos.timestamp;
