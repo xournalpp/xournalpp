@@ -47,6 +47,12 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 		return true;
 	}
 
+	if (event->type == GDK_DOUBLE_BUTTON_PRESS)
+	{
+		this->actionPerform(event);
+		return true;
+	}
+
 	/*
 	 * Trigger motion actions
 	 */

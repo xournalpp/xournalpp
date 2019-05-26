@@ -223,6 +223,18 @@ double EditSelection::getYOnView()
 	return this->y;
 }
 
+double EditSelection::getOriginalXOnView()
+{
+	XOJ_CHECK_TYPE(EditSelection);
+	return this->contents->getOriginalX();
+}
+
+double EditSelection::getOriginalYOnView()
+{
+	XOJ_CHECK_TYPE(EditSelection);
+	return this->contents->getOriginalY();
+}
+
 /**
  * get the width in document coordinates (multiple with zoom)
  */

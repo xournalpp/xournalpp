@@ -54,6 +54,13 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 		}
 	}
 
+	// Trigger discrete action on double tap
+	if (event->type == GDK_DOUBLE_BUTTON_PRESS)
+	{
+		this->actionPerform(event);
+		return true;
+	}
+
 	// Trigger motion action when pen/mouse is pressed and moved
 	if (this->deviceClassPressed && event->type == GDK_MOTION_NOTIFY) //mouse or pen moved
 	{
