@@ -13,7 +13,6 @@
 #include "gui/XournalView.h"
 #include <control/settings/ButtonConfig.h>
 
-#include <algorithm>
 #include <cmath>
 
 #define WIDGET_SCROLL_BORDER 25
@@ -385,58 +384,15 @@ bool PenInputHandler::actionEnd(GdkEvent* event)
 void PenInputHandler::actionPerform(GdkEvent* event)
 {
 	XOJ_CHECK_TYPE(PenInputHandler);
-	GtkXournal* xournal = this->inputContext->getXournal();
-	EditSelection* selection = xournal->selection;
-
-	ToolHandler* toolHandler = this->inputContext->getToolHandler();
-	ToolType toolType = toolHandler->getToolType();
-	bool isSelectTool = toolType == TOOL_SELECT_OBJECT || TOOL_SELECT_RECT || TOOL_SELECT_REGION;
 
 #ifdef DEBUG_INPUT
 	g_message("Discrete input action; modifier1=%s, modifier2=%2",
 	          this->modifier2 ? "true" : "false", this->modifier3 ? "true" : "false");
 #endif
 
-	// Double click selection to edit;
-	// Only applies to double left clicks / taps
-	if (!this->modifier2 && !this->modifier3 && isSelectTool && selection != nullptr)
-	{
-		XojPageView* currentPage = this->getPageAtCurrentPosition(event);
-		PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
-
-		// Find a selected object under the cursor, if possible. The selection doesn't change the
-		// element coordinates until it is finalized, so we need to use position relative to the
-		// original coordinates of the selection.
-		double zoom = xournal->view->getZoom();
-		double x = (pos.x - selection->getXOnView() + selection->getOriginalXOnView()) / zoom;
-		double y = (pos.y - selection->getYOnView() + selection->getOriginalYOnView()) / zoom;
-		std::vector<Element*>* elems = selection->getElements();
-		auto it = std::find_if(elems->begin(), elems->end(), [&](Element*& elem) {
-			return elem->intersectsArea(x - 5, y - 5, 5, 5);
-		});
-		if (it != elems->end())
-		{
-			// Enter editing mode on the selected object
-			Element* object = *it;
-			ElementType elemType = object->getType();
-			if (elemType == ELEMENT_TEXT)
-			{
-				xournal->view->clearSelection();
-				toolHandler->selectTool(TOOL_TEXT);
-				// Simulate a button press; there's too many things that we
-				// could forget to do if we manually call XojPageView::startText
-				currentPage->onButtonPressEvent(pos);
-			}
-			else if (elemType == ELEMENT_TEXIMAGE)
-			{
-				Control* control = xournal->view->getControl();
-				xournal->view->clearSelection();
-				EditSelection* sel = new EditSelection(control->getUndoRedoHandler(), object, currentPage, currentPage->getPage());
-				xournal->view->setSelection(sel);
-				control->runLatex();
-			}
-		}
-	}
+	XojPageView* currentPage = this->getPageAtCurrentPosition(event);
+	PositionInputData pos = this->getInputDataRelativeToCurrentPage(currentPage, event);
+	currentPage->onButtonDoublePressEvent(pos);
 }
 
 void PenInputHandler::actionLeaveWindow(GdkEvent* event)
