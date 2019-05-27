@@ -151,6 +151,7 @@ void Settings::loadDefault()
 	this->strokeFilterSuccessiveTime = 500;
 	this->strokeFilterEnabled = false;
 	this->doActionOnStrokeFiltered = false;
+	this->trySelectOnStrokeFiltered = false;
 
 	this->inTransaction = false;
 
@@ -601,6 +602,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->doActionOnStrokeFiltered = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "trySelectOnStrokeFiltered") == 0)
+	{
+		this->trySelectOnStrokeFiltered = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
 
 	xmlFree(name);
 	xmlFree(value);
@@ -975,6 +980,7 @@ void Settings::save()
 
 	WRITE_BOOL_PROP(strokeFilterEnabled);
 	WRITE_BOOL_PROP(doActionOnStrokeFiltered);
+	WRITE_BOOL_PROP(trySelectOnStrokeFiltered);
 
 	WRITE_BOOL_PROP(experimentalInputSystemEnabled);
 	WRITE_BOOL_PROP(inputSystemTPCButton);
@@ -2371,6 +2377,18 @@ bool Settings::getDoActionOnStrokeFiltered()
 {
 	XOJ_CHECK_TYPE(Settings);
 	return this->doActionOnStrokeFiltered;
+}
+
+void Settings::setTrySelectOnStrokeFiltered(bool enabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+	this->trySelectOnStrokeFiltered = enabled;
+}
+
+bool Settings::getTrySelectOnStrokeFiltered()
+{
+	XOJ_CHECK_TYPE(Settings);
+	return this->trySelectOnStrokeFiltered;
 }
 
 

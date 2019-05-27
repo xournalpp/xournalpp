@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkAdjustment" id="adjustmentAudioGain">
@@ -106,9 +106,6 @@
     <property name="type_hint">normal</property>
     <property name="gravity">center</property>
     <signal name="close" handler="gtk_widget_hide" swapped="no"/>
-    <child>
-      <placeholder/>
-    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox3">
         <property name="visible">True</property>
@@ -726,6 +723,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
+                                <property name="xalign">0.5</property>
                                 <property name="draw_indicator">True</property>
                                 <child>
                                   <object class="GtkLabel" id="sid92">
@@ -3128,11 +3126,11 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         <property name="column_spacing">5</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbStrokeFilterEnabled">
-                                            <property name="label" translatable="yes">Enable  Stroke Filter</property>
+                                            <property name="label" translatable="yes">Enable Tap action.</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
-                                            <property name="tooltip_markup" translatable="yes">Ignore inputs of short time and length unless it comes in short succession.</property>
+                                            <property name="tooltip_markup" translatable="yes">Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox.</property>
                                             <property name="xalign">0</property>
                                             <property name="draw_indicator">True</property>
                                           </object>
@@ -3236,13 +3234,14 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbdoActionOnStrokeFiltered">
-                                            <property name="label" translatable="yes">Select on quick tap.</property>
+                                          <object class="GtkCheckButton" id="cbTrySelectOnStrokeFiltered">
+                                            <property name="label" translatable="yes">Try to select object first.</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
-                                            <property name="tooltip_markup" translatable="yes">On quick tap select object.</property>
+                                            <property name="tooltip_markup" translatable="yes">Try to select object first; if nothing selected then show floating toolbox if enabled.</property>
                                             <property name="xalign">0</property>
+                                            <property name="yalign">0.43999999761581421</property>
                                             <property name="draw_indicator">True</property>
                                           </object>
                                           <packing>
@@ -3264,7 +3263,21 @@ It must be short in time and length and we can't have ignored another stroke rec
                                           </packing>
                                         </child>
                                         <child>
-                                          <placeholder/>
+                                          <object class="GtkCheckButton" id="cbDoActionOnStrokeFiltered">
+                                            <property name="label" translatable="yes">Show Floating Toolbox</property>
+                                            <property name="visible">True</property>
+                                            <property name="sensitive">False</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_markup" translatable="yes">Try to select object first; if nothing selected then show floating toolbox if enabled.</property>
+                                            <property name="xalign">0</property>
+                                            <property name="yalign">0.43000000715255737</property>
+                                            <property name="draw_indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">1</property>
+                                            <property name="top_attach">1</property>
+                                          </packing>
                                         </child>
                                       </object>
                                     </child>
@@ -3274,7 +3287,8 @@ It must be short in time and length and we can't have ignored another stroke rec
                                   <object class="GtkLabel" id="sid159">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="label" translatable="yes">Stroke Filter - w/ try quick Select ( Experimental )</property>
+                                    <property name="label" translatable="yes">Action on Tool Tap</property>
+                                    <property name="angle">0.040000000000000001</property>
                                   </object>
                                 </child>
                               </object>

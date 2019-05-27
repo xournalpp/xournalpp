@@ -413,15 +413,25 @@ public:
 	void setStrokeFilter( int strokeFilterIgnoreTime, int strokeFilterIgnoreLength, int strokeFilterSuccessiveTime);
 
 	/**
-	 * Set StrokeFilter enabled
+	 * Set DoActionOnStrokeFilter enabled
 	 */
 	void setDoActionOnStrokeFiltered(bool enabled);
 
 	/**
-	 * Get StrokeFilter enabled
+	 * Get DoActionOnStrokeFilter enabled
 	 */
 	bool getDoActionOnStrokeFiltered();
 
+		/**
+	 * Set TrySelectOnStrokeFilter enabled
+	 */
+	void setTrySelectOnStrokeFiltered(bool enabled);
+
+	/**
+	 * Get TrySelectOnStrokeFilter enabled
+	 */
+	bool getTrySelectOnStrokeFiltered();
+	
 public:
 	// Custom settings
 	SElement& getCustomElement(string name);
@@ -790,7 +800,7 @@ private:
 
 
 	/**
-	 * Used to filter strokes of short time and length unless successive
+	 * Used to filter strokes of short time and length unless successive in order to do something else ( i.e. select object, float Toolbox menu ).
 	 * strokeFilterIgnoreLength			this many points
 	 * strokeFilterIgnoreTime 			within this time (ms)  will be ignored..
 	 * strokeFilterSuccessiveTime		...unless successive within this time.
@@ -800,6 +810,7 @@ private:
 	int strokeFilterSuccessiveTime;
 	bool strokeFilterEnabled;
 	bool doActionOnStrokeFiltered;
+	bool trySelectOnStrokeFiltered;
 
 	/**
 	 * Whether the new experimental input system is activated

@@ -80,7 +80,8 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
 				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
 				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
-				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbdoActionOnStrokeFiltered");
+//				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
+				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
 			}), this);	
 	
 	g_signal_connect(get("cbDisableTouchOnPenNear"), "toggled", G_CALLBACK(
@@ -221,7 +222,8 @@ void SettingsDialog::load()
 	loadCheckbox("cbAddHorizontalSpace", settings->getAddHorizontalSpace());
 	loadCheckbox("cbDrawDirModsEnabled", settings->getDrawDirModsEnabled());
 	loadCheckbox("cbStrokeFilterEnabled", settings->getStrokeFilterEnabled());
-	loadCheckbox("cbdoActionOnStrokeFiltered", settings->getDoActionOnStrokeFiltered());	
+	loadCheckbox("cbDoActionOnStrokeFiltered", settings->getDoActionOnStrokeFiltered());	
+	loadCheckbox("cbTrySelectOnStrokeFiltered", settings->getTrySelectOnStrokeFiltered());	
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
 	loadCheckbox("cbHighlightPosition", settings->isHighlightPosition());
 	loadCheckbox("cbDarkTheme", settings->isDarkTheme());
@@ -340,7 +342,8 @@ void SettingsDialog::load()
 	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
 	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
 	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
-	enableWithCheckbox("cbStrokeFilterEnabled", "cbdoActionOnStrokeFiltered");
+//	enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
+	enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
 	enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
 	customHandRecognitionToggled();
 
@@ -498,7 +501,8 @@ void SettingsDialog::save()
 	settings->setAddHorizontalSpace(getCheckbox("cbAddHorizontalSpace"));
 	settings->setDrawDirModsEnabled(getCheckbox("cbDrawDirModsEnabled"));
 	settings->setStrokeFilterEnabled(getCheckbox("cbStrokeFilterEnabled"));
-	settings->setDoActionOnStrokeFiltered(getCheckbox("cbdoActionOnStrokeFiltered"));
+	settings->setDoActionOnStrokeFiltered(getCheckbox("cbDoActionOnStrokeFiltered"));
+	settings->setTrySelectOnStrokeFiltered(getCheckbox("cbTrySelectOnStrokeFiltered"));
 	settings->setShowBigCursor(getCheckbox("cbBigCursor"));
 	settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
 	settings->setDarkTheme(getCheckbox("cbDarkTheme"));
