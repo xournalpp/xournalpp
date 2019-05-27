@@ -470,8 +470,8 @@ bool XojPageView::onButtonDoublePressEvent(const PositionInputData& pos)
 		// Find a selected object under the cursor, if possible. The selection doesn't change the
 		// element coordinates until it is finalized, so we need to use position relative to the
 		// original coordinates of the selection.
-		double origx = x - (selection->getXOnView() - selection->getOriginalXOnView()) / zoom;
-		double origy = y - (selection->getYOnView() - selection->getOriginalYOnView()) / zoom;
+		double origx = x - (selection->getXOnView() - selection->getOriginalXOnView());
+		double origy = y - (selection->getYOnView() - selection->getOriginalYOnView());
 		std::vector<Element*>* elems = selection->getElements();
 		auto it = std::find_if(elems->begin(), elems->end(), [&](Element*& elem) {
 			return elem->intersectsArea(origx - 5, origy - 5, 5, 5);
