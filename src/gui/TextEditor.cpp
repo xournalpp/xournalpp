@@ -449,6 +449,36 @@ void TextEditor::toggleBold()
 	//this->repaintEditor();
 }
 
+void TextEditor::selectWord()
+{
+	XOJ_CHECK_TYPE(TextEditor);
+
+	GtkTextMark* mark = gtk_text_buffer_get_insert(this->buffer);
+	GtkTextIter currentPos;
+	gtk_text_buffer_get_iter_at_mark(this->buffer, &currentPos, mark);
+
+	// Only process double click
+	if (!gtk_text_iter_inside_word(&currentPos))
+	{
+		return;
+	}
+
+	GtkTextIter startPos = currentPos;
+	GtkTextIter endPos = currentPos;
+	if (!gtk_text_iter_starts_word(&currentPos))
+	{
+		gtk_text_iter_backward_word_start(&startPos);
+	}
+	if (!gtk_text_iter_ends_word(&currentPos))
+	{
+		gtk_text_iter_forward_word_end(&endPos);
+	}
+
+	gtk_text_buffer_select_range(this->buffer, &startPos, &endPos);
+
+	this->repaintEditor();
+}
+
 void TextEditor::selectAll()
 {
 	XOJ_CHECK_TYPE(TextEditor);

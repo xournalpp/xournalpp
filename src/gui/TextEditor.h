@@ -32,6 +32,7 @@ public:
 	bool onKeyReleaseEvent(GdkEventKey* event);
 
 	void toggleOverwrite();
+	void selectWord();
 	void selectAll();
 	void toggleBold();
 	void incSize();
