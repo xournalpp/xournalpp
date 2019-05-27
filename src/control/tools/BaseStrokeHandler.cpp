@@ -193,23 +193,23 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	
 	if ( settings->getStrokeFilterEnabled() )		// Note: For simple strokes see StrokeHandler which has a slightly different version of this filter.  See //!
 	{	
-		int strokeFilterIgnoreTime,strokeFilterIgnorePoints,strokeFilterSuccessiveTime;
+		int strokeFilterIgnoreTime,strokeFilterIgnoreLength,strokeFilterSuccessiveTime;
 		
-		settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnorePoints, &strokeFilterSuccessiveTime  );
+		settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnoreLength, &strokeFilterSuccessiveTime  );
 		double dpmm = settings->getDisplayDpi()/25.4;
 		
 		double zoom = xournal->getZoom();
 		double lengthSqrd =  ( pow(   ((pos.x / zoom) - (this->buttonDownPoint.x))  ,2) 
 					+ pow(   ((pos.y / zoom) - (this->buttonDownPoint.y))  ,2) ) * pow(xournal->getZoom(),2);
 								    
-		if (   lengthSqrd < pow((strokeFilterIgnorePoints*dpmm),2) && pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) 
+		if (   lengthSqrd < pow((strokeFilterIgnoreLength*dpmm),2) && pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) 
 		{
 			if ( pos.timestamp - this->lastStrokeTime  > strokeFilterSuccessiveTime )
 			{
 				//stroke not being added to layer... delete here.
 				delete stroke;
 				stroke = NULL;
-				this->trySelect = true;
+				this->userTapped = true;
 				
 				this->lastStrokeTime = pos.timestamp;
 				

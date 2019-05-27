@@ -146,8 +146,8 @@ void Settings::loadDefault()
 	this->inputSystemTPCButton = false;
 	this->inputSystemDrawOutsideWindow = true;
 
-	this->strokeFilterIgnoreTime = 200;
-	this->strokeFilterIgnorePoints = 8;
+	this->strokeFilterIgnoreTime = 150;
+	this->strokeFilterIgnoreLength = 1;
 	this->strokeFilterSuccessiveTime = 500;
 	this->strokeFilterEnabled = false;
 	this->doActionOnStrokeFiltered = false;
@@ -585,9 +585,9 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->strokeFilterIgnoreTime = g_ascii_strtoll((const char*) value, NULL, 10);
 	}
-	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterIgnorePoints") == 0)
+	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterIgnoreLength") == 0)
 	{
-		this->strokeFilterIgnorePoints = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->strokeFilterIgnoreLength = g_ascii_strtoll((const char*) value, NULL, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterSuccessiveTime") == 0)
 	{
@@ -970,7 +970,7 @@ void Settings::save()
 	WRITE_STRING_PROP(pluginDisabled);
 
 	WRITE_INT_PROP(strokeFilterIgnoreTime);
-	WRITE_INT_PROP(strokeFilterIgnorePoints);
+	WRITE_INT_PROP(strokeFilterIgnoreLength);
 	WRITE_INT_PROP(strokeFilterSuccessiveTime);
 
 	WRITE_BOOL_PROP(strokeFilterEnabled);
@@ -2330,20 +2330,20 @@ void Settings::setPluginDisabled(string pluginEnabled)
 }
 
 
-void Settings::getStrokeFilter( int* ignoreTime, int* ignorePoints, int* successiveTime)
+void Settings::getStrokeFilter( int* ignoreTime, int* ignoreLength, int* successiveTime)
 {
 	XOJ_CHECK_TYPE(Settings);
 	*ignoreTime = this->strokeFilterIgnoreTime;
-	*ignorePoints = this->strokeFilterIgnorePoints;
+	*ignoreLength = this->strokeFilterIgnoreLength;
 	*successiveTime = this->strokeFilterSuccessiveTime;
 
 }
 
-void Settings::setStrokeFilter( int ignoreTime, int ignorePoints, int successiveTime)
+void Settings::setStrokeFilter( int ignoreTime, int ignoreLength, int successiveTime)
 {
 	XOJ_CHECK_TYPE(Settings);
 	this->strokeFilterIgnoreTime = ignoreTime;
-	this->strokeFilterIgnorePoints = ignorePoints;
+	this->strokeFilterIgnoreLength = ignoreLength;
 	this->strokeFilterSuccessiveTime = successiveTime;
 
 }

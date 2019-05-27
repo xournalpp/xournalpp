@@ -89,9 +89,9 @@ public:
 	virtual void resetShapeRecognizer();
 	
 	/**
-	 * trySelect - experimental feature to try select on filtered draw. See cbDoActionOnStrokeFilter
+	 * userTapped - experimental feature to take action on filtered draw. See cbDoActionOnStrokeFilter
 	 */
-	bool trySelect = false;	
+	bool userTapped = false;	
 
 protected:
 

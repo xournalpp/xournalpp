@@ -405,12 +405,12 @@ public:
 	/**
 	 * get strokeFilter settings
 	 */
-	void getStrokeFilter( int* strokeFilterIgnoreTime, int* strokeFilterIgnorePoints, int* strokeFilterSuccessiveTime);
+	void getStrokeFilter( int* strokeFilterIgnoreTime, int* strokeFilterIgnoreLength, int* strokeFilterSuccessiveTime);
 
 	/**
 	 * configure stroke filter
 	 */
-	void setStrokeFilter( int strokeFilterIgnoreTime, int strokeFilterIgnorePoints, int strokeFilterSuccessiveTime);
+	void setStrokeFilter( int strokeFilterIgnoreTime, int strokeFilterIgnoreLength, int strokeFilterSuccessiveTime);
 
 	/**
 	 * Set StrokeFilter enabled
@@ -791,12 +791,12 @@ private:
 
 	/**
 	 * Used to filter strokes of short time and length unless successive
-	 * strokeFilterIgnorePoints			this many points
+	 * strokeFilterIgnoreLength			this many points
 	 * strokeFilterIgnoreTime 			within this time (ms)  will be ignored..
 	 * strokeFilterSuccessiveTime		...unless successive within this time.
 	 */
 	int strokeFilterIgnoreTime;
-	int strokeFilterIgnorePoints;
+	int strokeFilterIgnoreLength;
 	int strokeFilterSuccessiveTime;
 	bool strokeFilterEnabled;
 	bool doActionOnStrokeFiltered;

@@ -78,7 +78,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 			{
 				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
 				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
-				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnorePoints");
+				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
 				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
 				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbdoActionOnStrokeFiltered");
 			}), this);	
@@ -275,8 +275,8 @@ void SettingsDialog::load()
 		
 		GtkWidget* spStrokeIgnoreTime = get("spStrokeIgnoreTime");
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeIgnoreTime), time);
-		GtkWidget* spStrokeIgnorePoints = get("spStrokeIgnorePoints");
-		gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeIgnorePoints), points);
+		GtkWidget* spStrokeIgnoreLength = get("spStrokeIgnoreLength");
+		gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeIgnoreLength), points);
 		GtkWidget* spStrokeSuccessiveTime = get("spStrokeSuccessiveTime");
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime), successive);
 	}
@@ -338,7 +338,7 @@ void SettingsDialog::load()
 	enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpace");
 	enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
 	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
-	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnorePoints");
+	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
 	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
 	enableWithCheckbox("cbStrokeFilterEnabled", "cbdoActionOnStrokeFiltered");
 	enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
@@ -583,11 +583,11 @@ void SettingsDialog::save()
 
 	GtkWidget* spStrokeIgnoreTime = get("spStrokeIgnoreTime");
 	int strokeIgnoreTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreTime));
-	GtkWidget* spStrokeIgnorePoints = get("spStrokeIgnorePoints");
-	int strokeIgnorePoints = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnorePoints));
+	GtkWidget* spStrokeIgnoreLength = get("spStrokeIgnoreLength");
+	int strokeIgnoreLength = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreLength));
 	GtkWidget* spStrokeSuccessiveTime = get("spStrokeSuccessiveTime");
 	int strokeSuccessiveTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime));
-	settings->setStrokeFilter( strokeIgnoreTime, strokeIgnorePoints, strokeSuccessiveTime);
+	settings->setStrokeFilter( strokeIgnoreTime, strokeIgnoreLength, strokeSuccessiveTime);
 
 	
 
