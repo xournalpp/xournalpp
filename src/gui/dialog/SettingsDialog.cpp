@@ -78,9 +78,10 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 			{
 				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
 				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
-				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnorePoints");
+				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
 				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
-				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbdoActionOnStrokeFiltered");
+//				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
+				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
 			}), this);	
 	
 	g_signal_connect(get("cbDisableTouchOnPenNear"), "toggled", G_CALLBACK(
@@ -221,7 +222,8 @@ void SettingsDialog::load()
 	loadCheckbox("cbAddHorizontalSpace", settings->getAddHorizontalSpace());
 	loadCheckbox("cbDrawDirModsEnabled", settings->getDrawDirModsEnabled());
 	loadCheckbox("cbStrokeFilterEnabled", settings->getStrokeFilterEnabled());
-	loadCheckbox("cbdoActionOnStrokeFiltered", settings->getDoActionOnStrokeFiltered());	
+	loadCheckbox("cbDoActionOnStrokeFiltered", settings->getDoActionOnStrokeFiltered());	
+	loadCheckbox("cbTrySelectOnStrokeFiltered", settings->getTrySelectOnStrokeFiltered());	
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
 	loadCheckbox("cbHighlightPosition", settings->isHighlightPosition());
 	loadCheckbox("cbDarkTheme", settings->isDarkTheme());
@@ -269,14 +271,14 @@ void SettingsDialog::load()
 
 	{
 		int time = 0;
-		int points = 0;
+		double length = 0;
 		int successive = 0;
-		settings->getStrokeFilter( &time, & points, & successive);
+		settings->getStrokeFilter( &time, &length, &successive);
 		
 		GtkWidget* spStrokeIgnoreTime = get("spStrokeIgnoreTime");
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeIgnoreTime), time);
-		GtkWidget* spStrokeIgnorePoints = get("spStrokeIgnorePoints");
-		gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeIgnorePoints), points);
+		GtkWidget* spStrokeIgnoreLength = get("spStrokeIgnoreLength");
+		gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeIgnoreLength), length);
 		GtkWidget* spStrokeSuccessiveTime = get("spStrokeSuccessiveTime");
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime), successive);
 	}
@@ -338,9 +340,10 @@ void SettingsDialog::load()
 	enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpace");
 	enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
 	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
-	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnorePoints");
+	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
 	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
-	enableWithCheckbox("cbStrokeFilterEnabled", "cbdoActionOnStrokeFiltered");
+//	enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
+	enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
 	enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
 	customHandRecognitionToggled();
 
@@ -498,7 +501,8 @@ void SettingsDialog::save()
 	settings->setAddHorizontalSpace(getCheckbox("cbAddHorizontalSpace"));
 	settings->setDrawDirModsEnabled(getCheckbox("cbDrawDirModsEnabled"));
 	settings->setStrokeFilterEnabled(getCheckbox("cbStrokeFilterEnabled"));
-	settings->setDoActionOnStrokeFiltered(getCheckbox("cbdoActionOnStrokeFiltered"));
+	settings->setDoActionOnStrokeFiltered(getCheckbox("cbDoActionOnStrokeFiltered"));
+	settings->setTrySelectOnStrokeFiltered(getCheckbox("cbTrySelectOnStrokeFiltered"));
 	settings->setShowBigCursor(getCheckbox("cbBigCursor"));
 	settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
 	settings->setDarkTheme(getCheckbox("cbDarkTheme"));
@@ -583,11 +587,11 @@ void SettingsDialog::save()
 
 	GtkWidget* spStrokeIgnoreTime = get("spStrokeIgnoreTime");
 	int strokeIgnoreTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreTime));
-	GtkWidget* spStrokeIgnorePoints = get("spStrokeIgnorePoints");
-	int strokeIgnorePoints = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnorePoints));
+	GtkWidget* spStrokeIgnoreLength = get("spStrokeIgnoreLength");
+	double strokeIgnoreLength = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreLength));
 	GtkWidget* spStrokeSuccessiveTime = get("spStrokeSuccessiveTime");
 	int strokeSuccessiveTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime));
-	settings->setStrokeFilter( strokeIgnoreTime, strokeIgnorePoints, strokeSuccessiveTime);
+	settings->setStrokeFilter( strokeIgnoreTime, strokeIgnoreLength, strokeSuccessiveTime);
 
 	
 

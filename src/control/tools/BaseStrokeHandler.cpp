@@ -193,18 +193,25 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	
 	if ( settings->getStrokeFilterEnabled() )		// Note: For simple strokes see StrokeHandler which has a slightly different version of this filter.  See //!
 	{	
-		int strokeFilterIgnoreTime,strokeFilterIgnorePoints,strokeFilterSuccessiveTime;
+		int strokeFilterIgnoreTime,strokeFilterSuccessiveTime;
+		double strokeFilterIgnoreLength;
 		
-		settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnorePoints, &strokeFilterSuccessiveTime  );
+		settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnoreLength, &strokeFilterSuccessiveTime  );
+		double dpmm = settings->getDisplayDpi()/25.4;
 		
-		if (  pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime)  // don't filter on points as shapes have fixed or minimum. //!
+		double zoom = xournal->getZoom();
+		double lengthSqrd =  ( pow(   ((pos.x / zoom) - (this->buttonDownPoint.x))  ,2) 
+					+ pow(   ((pos.y / zoom) - (this->buttonDownPoint.y))  ,2) ) * pow(xournal->getZoom(),2);
+								    
+		if (   lengthSqrd < pow((strokeFilterIgnoreLength*dpmm),2) && pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) 
 		{
 			if ( pos.timestamp - this->lastStrokeTime  > strokeFilterSuccessiveTime )
 			{
 				//stroke not being added to layer... delete here.
 				delete stroke;
 				stroke = NULL;
-				this->trySelect = true; 	//!
+				this->userTapped = true;
+				
 				this->lastStrokeTime = pos.timestamp;
 				
 				xournal->getCursor()->updateCursor();
@@ -252,12 +259,12 @@ void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 	
 	double zoom = xournal->getZoom();
-	double x = pos.x / zoom;
-	double y = pos.y / zoom;
+	this->buttonDownPoint.x = pos.x / zoom;
+	this->buttonDownPoint.y =  pos.y / zoom;
 
 	if (!stroke)
 	{
-		createStroke(Point(x, y));
+		createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y));
 	}
 	
 	this->startStrokeTime = pos.timestamp;

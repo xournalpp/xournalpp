@@ -48,6 +48,8 @@ protected:
 	void strokeRecognizerDetected(ShapeRecognizerResult* result, Layer* layer);
 	void destroySurface();
 
+protected:
+		Point buttonDownPoint;	// used for tapSelect and filtering - never snapped to grid.
 private:
 	XOJ_TYPE_ATTRIB;
 
