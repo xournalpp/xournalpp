@@ -55,22 +55,25 @@ pacman -S mingw-w64-x86_64-libzip
 
 TODO: Lua 5.3 is missing for MSYS2?
 
-### sndfile / PortAudio
+
+
+## Get sources
+
+```bash
+git clone https://github.com/xournalpp/xournalpp.git
+cd xournalpp/
+```
+
+## sndfile / PortAudio
 Build/Install portaudio with
 ```bash
 windows-setup/build-portaudio.sh
 ```
 
-## Get sources and build
-
+## Build
 ```bash
-git clone https://github.com/xournalpp/xournalpp.git
-cd xournalpp/
 mkdir build
 cd build/
-```
-
-```bash
 cmake ..
 make
 ```
