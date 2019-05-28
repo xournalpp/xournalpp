@@ -31,10 +31,11 @@ pacman -S git
 
 ## Install Build tools
 ```bash
-pacman -S mingw-w64-x86_64-cmake \
-pacman -S make \
-pacman -S mingw-w64-x86_64-toolchain \
-pacman -S --needed base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
+pacman -S mingw-w64-x86_64-cmake; \
+pacman -S make; \
+pacman -S mingw-w64-x86_64-toolchain; \
+pacman -S --needed base-devel mingw-w64-x86_64-toolchain \
+mingw-w64-x86_64-cmake
 ```
 (this is a duplicate of the lines above, probably only this line is needed.
 Can anybody confirm this?)
@@ -47,9 +48,9 @@ pacman -S mingw-w64-x86_64-gcc
 ## Install dependencies
 
 ```bash
-pacman -S mingw-w64-x86_64-poppler \
-pacman -S mingw-w64-x86_64-gtk3 \
-pacman -S mingw-w64-x86_64-libsndfile \
+pacman -S mingw-w64-x86_64-poppler; \
+pacman -S mingw-w64-x86_64-gtk3; \
+pacman -S mingw-w64-x86_64-libsndfile; \
 pacman -S mingw-w64-x86_64-libzip
 ```
 
