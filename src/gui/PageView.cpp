@@ -448,16 +448,14 @@ bool XojPageView::onButtonDoublePressEvent(const PositionInputData& pos)
 {
 	// This method assumes that it is called after onButtonPressEvent but before
 	// onButtonReleaseEvent
-	double x = pos.x;
-	double y = pos.y;
+	double zoom = this->xournal->getZoom();
+	double x = pos.x / zoom;
+	double y = pos.y / zoom;
 	if (x < 0 || y < 0)
 	{
 		return false;
 	}
 
-	double zoom = this->xournal->getZoom();
-	x /= zoom;
-	y /= zoom;
 	ToolHandler* toolHandler = this->xournal->getControl()->getToolHandler();
 	ToolType toolType = toolHandler->getToolType();
 	bool isSelectTool = toolType == TOOL_SELECT_OBJECT || TOOL_SELECT_RECT || TOOL_SELECT_REGION;
@@ -499,12 +497,34 @@ bool XojPageView::onButtonDoublePressEvent(const PositionInputData& pos)
 			}
 		}
 	}
-	else if (toolHandler->getToolType() == TOOL_TEXT)
+	else if (toolType == TOOL_TEXT)
 	{
 		this->startText(x, y);
 		this->textEditor->selectAtCursor(TextEditor::SelectType::word);
 	}
 
+	return true;
+}
+
+bool XojPageView::onButtonTriplePressEvent(const PositionInputData& pos)
+{
+	// This method assumes that it is called after onButtonDoubleEvent but before
+	// onButtonReleaseEvent
+	double zoom = this->xournal->getZoom();
+	double x = pos.x / zoom;
+	double y = pos.y / zoom;
+	if (x < 0 || y < 0)
+	{
+		return false;
+	}
+
+	ToolHandler* toolHandler = this->xournal->getControl()->getToolHandler();
+
+	if (toolHandler->getToolType() == TOOL_TEXT)
+	{
+		this->startText(x, y);
+		this->textEditor->selectAtCursor(TextEditor::SelectType::paragraph);
+	}
 	return true;
 }
 

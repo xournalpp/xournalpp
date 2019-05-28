@@ -392,7 +392,14 @@ void PenInputHandler::actionPerform(GdkEvent* event)
 
 	XojPageView* currentPage = this->getPageAtCurrentPosition(event);
 	PositionInputData pos = this->getInputDataRelativeToCurrentPage(currentPage, event);
-	currentPage->onButtonDoublePressEvent(pos);
+	if (event->type == GDK_DOUBLE_BUTTON_PRESS)
+	{
+		currentPage->onButtonDoublePressEvent(pos);
+	}
+	else if (event->type == GDK_TRIPLE_BUTTON_PRESS)
+	{
+		currentPage->onButtonTriplePressEvent(pos);
+	}
 }
 
 void PenInputHandler::actionLeaveWindow(GdkEvent* event)
