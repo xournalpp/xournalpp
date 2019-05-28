@@ -502,7 +502,7 @@ bool XojPageView::onButtonDoublePressEvent(const PositionInputData& pos)
 	else if (toolHandler->getToolType() == TOOL_TEXT)
 	{
 		this->startText(x, y);
-		this->textEditor->selectWord();
+		this->textEditor->selectAtCursor(TextEditor::SelectType::word);
 	}
 
 	return true;

@@ -449,7 +449,7 @@ void TextEditor::toggleBold()
 	//this->repaintEditor();
 }
 
-void TextEditor::selectWord()
+void TextEditor::selectAtCursor(TextEditor::SelectType ty)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
@@ -465,28 +465,34 @@ void TextEditor::selectWord()
 
 	GtkTextIter startPos = currentPos;
 	GtkTextIter endPos = currentPos;
-	if (!gtk_text_iter_starts_word(&currentPos))
-	{
-		gtk_text_iter_backward_word_start(&startPos);
-	}
-	if (!gtk_text_iter_ends_word(&currentPos))
-	{
-		gtk_text_iter_forward_word_end(&endPos);
+
+	switch(ty) {
+	case TextEditor::SelectType::word:
+		if (!gtk_text_iter_starts_word(&currentPos))
+		{
+			gtk_text_iter_backward_word_start(&startPos);
+		}
+		if (!gtk_text_iter_ends_word(&currentPos))
+		{
+			gtk_text_iter_forward_word_end(&endPos);
+		}
+		break;
+	case TextEditor::SelectType::paragraph:
+		if (!gtk_text_iter_starts_line(&currentPos))
+		{
+			gtk_text_iter_backward_line(&startPos);
+		}
+		if (!gtk_text_iter_ends_line(&currentPos))
+		{
+			gtk_text_iter_forward_to_line_end(&endPos);
+		}
+		break;
+	case TextEditor::SelectType::all:
+		gtk_text_buffer_get_bounds(this->buffer, &startPos, &endPos);
+		break;
 	}
 
 	gtk_text_buffer_select_range(this->buffer, &startPos, &endPos);
-
-	this->repaintEditor();
-}
-
-void TextEditor::selectAll()
-{
-	XOJ_CHECK_TYPE(TextEditor);
-
-	GtkTextIter start_iter, end_iter;
-
-	gtk_text_buffer_get_bounds(buffer, &start_iter, &end_iter);
-	gtk_text_buffer_select_range(buffer, &start_iter, &end_iter);
 
 	this->repaintEditor();
 }

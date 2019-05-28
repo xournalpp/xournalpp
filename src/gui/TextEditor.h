@@ -26,14 +26,16 @@ public:
 	TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText);
 	virtual ~TextEditor();
 
+	/** Represents the different kinds of text selection */
+	enum class SelectType { word, paragraph, all };
+
 	void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
 
 	bool onKeyPressEvent(GdkEventKey* event);
 	bool onKeyReleaseEvent(GdkEventKey* event);
 
 	void toggleOverwrite();
-	void selectWord();
-	void selectAll();
+	void selectAtCursor(TextEditor::SelectType ty);
 	void toggleBold();
 	void incSize();
 	void decSize();
