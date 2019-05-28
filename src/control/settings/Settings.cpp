@@ -588,7 +588,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterIgnoreLength") == 0)
 	{
-		this->strokeFilterIgnoreLength = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->strokeFilterIgnoreLength = tempg_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterSuccessiveTime") == 0)
 	{
@@ -975,7 +975,7 @@ void Settings::save()
 	WRITE_STRING_PROP(pluginDisabled);
 
 	WRITE_INT_PROP(strokeFilterIgnoreTime);
-	WRITE_INT_PROP(strokeFilterIgnoreLength);
+	WRITE_DOUBLE_PROP(strokeFilterIgnoreLength);
 	WRITE_INT_PROP(strokeFilterSuccessiveTime);
 
 	WRITE_BOOL_PROP(strokeFilterEnabled);
@@ -2336,7 +2336,7 @@ void Settings::setPluginDisabled(string pluginEnabled)
 }
 
 
-void Settings::getStrokeFilter( int* ignoreTime, int* ignoreLength, int* successiveTime)
+void Settings::getStrokeFilter( int* ignoreTime, double* ignoreLength, int* successiveTime)
 {
 	XOJ_CHECK_TYPE(Settings);
 	*ignoreTime = this->strokeFilterIgnoreTime;
@@ -2345,7 +2345,7 @@ void Settings::getStrokeFilter( int* ignoreTime, int* ignoreLength, int* success
 
 }
 
-void Settings::setStrokeFilter( int ignoreTime, int ignoreLength, int successiveTime)
+void Settings::setStrokeFilter( int ignoreTime, double ignoreLength, int successiveTime)
 {
 	XOJ_CHECK_TYPE(Settings);
 	this->strokeFilterIgnoreTime = ignoreTime;

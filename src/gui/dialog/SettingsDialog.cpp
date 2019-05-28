@@ -271,14 +271,14 @@ void SettingsDialog::load()
 
 	{
 		int time = 0;
-		int points = 0;
+		double length = 0;
 		int successive = 0;
-		settings->getStrokeFilter( &time, & points, & successive);
+		settings->getStrokeFilter( &time, &length, &successive);
 		
 		GtkWidget* spStrokeIgnoreTime = get("spStrokeIgnoreTime");
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeIgnoreTime), time);
 		GtkWidget* spStrokeIgnoreLength = get("spStrokeIgnoreLength");
-		gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeIgnoreLength), points);
+		gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeIgnoreLength), length);
 		GtkWidget* spStrokeSuccessiveTime = get("spStrokeSuccessiveTime");
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime), successive);
 	}
@@ -588,7 +588,7 @@ void SettingsDialog::save()
 	GtkWidget* spStrokeIgnoreTime = get("spStrokeIgnoreTime");
 	int strokeIgnoreTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreTime));
 	GtkWidget* spStrokeIgnoreLength = get("spStrokeIgnoreLength");
-	int strokeIgnoreLength = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreLength));
+	double strokeIgnoreLength = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreLength));
 	GtkWidget* spStrokeSuccessiveTime = get("spStrokeSuccessiveTime");
 	int strokeSuccessiveTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime));
 	settings->setStrokeFilter( strokeIgnoreTime, strokeIgnoreLength, strokeSuccessiveTime);

@@ -154,7 +154,8 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	
 	if ( settings->getStrokeFilterEnabled() )		// Note: For shape tools see BaseStrokeHandler which has a slightly different version of this filter. See //!
 	{	
-		int strokeFilterIgnoreTime,strokeFilterIgnoreLength,strokeFilterSuccessiveTime;
+		int strokeFilterIgnoreTime,strokeFilterSuccessiveTime;
+		double strokeFilterIgnoreLength;
 		
 		settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnoreLength, &strokeFilterSuccessiveTime  );
 		double dpmm = settings->getDisplayDpi()/25.4;

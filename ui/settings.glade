@@ -40,14 +40,15 @@
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustmentStrokeIgnoreLength">
+    <property name="lower">0.010000000000000011</property>
     <property name="upper">100</property>
-    <property name="value">30</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">5</property>
+    <property name="value">1</property>
+    <property name="step_increment">0.10000000000000001</property>
+    <property name="page_increment">2</property>
   </object>
   <object class="GtkAdjustment" id="adjustmentStrokeIgnoreTime">
     <property name="upper">1000</property>
-    <property name="value">300</property>
+    <property name="value">150</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
@@ -3182,6 +3183,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                             <property name="max_width_chars">0</property>
                                             <property name="text" translatable="yes">8</property>
                                             <property name="adjustment">adjustmentStrokeIgnoreLength</property>
+                                            <property name="digits">2</property>
                                             <property name="numeric">True</property>
                                             <property name="update_policy">if-valid</property>
                                             <property name="value">1</property>

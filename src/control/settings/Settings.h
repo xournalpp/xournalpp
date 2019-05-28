@@ -405,12 +405,12 @@ public:
 	/**
 	 * get strokeFilter settings
 	 */
-	void getStrokeFilter( int* strokeFilterIgnoreTime, int* strokeFilterIgnoreLength, int* strokeFilterSuccessiveTime);
+	void getStrokeFilter( int* strokeFilterIgnoreTime, double* strokeFilterIgnoreLength, int* strokeFilterSuccessiveTime);
 
 	/**
 	 * configure stroke filter
 	 */
-	void setStrokeFilter( int strokeFilterIgnoreTime, int strokeFilterIgnoreLength, int strokeFilterSuccessiveTime);
+	void setStrokeFilter( int strokeFilterIgnoreTime, double strokeFilterIgnoreLength, int strokeFilterSuccessiveTime);
 
 	/**
 	 * Set DoActionOnStrokeFilter enabled
@@ -801,12 +801,12 @@ private:
 
 	/**
 	 * Used to filter strokes of short time and length unless successive in order to do something else ( i.e. select object, float Toolbox menu ).
-	 * strokeFilterIgnoreLength			this many points
+	 * strokeFilterIgnoreLength			this many mm ( double )
 	 * strokeFilterIgnoreTime 			within this time (ms)  will be ignored..
 	 * strokeFilterSuccessiveTime		...unless successive within this time.
 	 */
 	int strokeFilterIgnoreTime;
-	int strokeFilterIgnoreLength;
+	double strokeFilterIgnoreLength;
 	int strokeFilterSuccessiveTime;
 	bool strokeFilterEnabled;
 	bool doActionOnStrokeFiltered;
