@@ -42,4 +42,16 @@ const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {
 	{ "tbOverlay4", "toolbarOverlay4", true }
 };
 
+
 const static int TOOLBAR_DEFINITIONS_LEN = G_N_ELEMENTS(TOOLBAR_DEFINITIONS);
+
+
+//Used in FloatingToolbox.cpp to check if the Toolbox isempty.
+const static ToolbarEntryDefintion  FLOATINGTOOLBOX_TOOLBARS[] = {
+	{ "tbOverlay1", "toolbarOverlay1", true },
+	{ "tbOverlay2", "toolbarOverlay2", true },
+	{ "tbOverlay3", "toolbarOverlay3", true },
+	{ "tbOverlay4", "toolbarOverlay4", true }
+};
+
+const static int FLOATINGTOOLBOX_TOOLBARS_LEN = G_N_ELEMENTS(FLOATINGTOOLBOX_TOOLBARS);

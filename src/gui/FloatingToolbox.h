@@ -22,6 +22,17 @@ enum FloatingToolBoxState {
 		noChange
 };
 
+/************************
+ * FloatingToolbox:
+ *  Uses a GtkOverlay to show a widget containing toolbars.
+ *  The getOverlayPosition callback is used to position the toolbox widget relative to the users input device.
+ *  The ui/main.glade file defines the floatingToolbox as a GtkRevealer widget - attempts to use another widget 
+ *  had issues with leave-notify-event.
+ * 
+ * 
+ * 
+ * 
+ */
 
 class FloatingToolbox 
 {
@@ -30,9 +41,9 @@ public:
 	virtual ~FloatingToolbox();
 
 public:
-	void show( int x, int y);
+	void show(int x, int y);
 	void showForConfiguration();
-	void hide( );
+	void hide();
 	void flagRecalculateSizeRequired();	// trigger recalc size on next getOverlayPosition. Used when new toolbars loaded.
 
 private:
@@ -46,7 +57,14 @@ private:
 	 */
 	static void handleLeaveFloatingToolbox(GtkWidget * floatingToolbox, GdkEvent  *event,  FloatingToolbox* self);
 	
-	void show( );
+	
+	
+	void show(bool showTitle = false);
+	
+	/**
+	 * check if user has assigned a button to activate, or has put tools in the FloatingToolbox.
+	 */
+	bool floatingToolboxActivated();
 
 	
 private:

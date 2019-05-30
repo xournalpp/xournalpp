@@ -1,9 +1,11 @@
 #include "FloatingToolbox.h"
 
 #include "MainWindow.h"
-
+#include "control/Control.h"
 #include "GladeGui.h"
 #include <gdk/gdk.h>
+#include "control/settings/ButtonConfig.h"
+#include "gui/ToolbarDefinitions.h"
 
 
 FloatingToolbox::FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay)
@@ -43,28 +45,93 @@ void FloatingToolbox::show(int x, int y)
 	this->show();
 }
 
+/****
+ * floatingToolboxActivated
+ *  True if the user has:
+ *    assigned a mouse or stylus button to bring up the floatingToolbox;
+ *    or enabled tapAction and Show FloatingToolbox( prefs->DrawingArea->ActionOnToolTap );
+ *    or put tools in the FloatingToolbox.
+ *
+ */
+bool FloatingToolbox::floatingToolboxActivated()
+{
+	Settings* settings = this->mainWindow->getControl()->getSettings();
+
+	bool show = false;
+
+	ButtonConfig* cfg = nullptr;
+
+	//check if any buttons assigned to bring up toolbox
+	for (int id = 0; id < BUTTON_COUNT; id++)
+	{
+		cfg = settings->getButtonConfig(id);
+
+		if (cfg->getAction() == TOOL_FLOATING_TOOLBOX)
+		{
+			return true;													// return TRUE
+		}
+	}
+
+	//check if user can show Floating Menu with tap.
+
+	if (settings->getDoActionOnStrokeFiltered() && settings->getStrokeFilterEnabled())
+	{
+		return true;													// return TRUE
+	}
+
+
+	//check for tools in toolbox:
+
+	for (int index = 0; index < FLOATINGTOOLBOX_TOOLBARS_LEN; index++)
+	{
+		const char* guiName = FLOATINGTOOLBOX_TOOLBARS[index].guiName;
+		GtkToolbar* toolbar1 = GTK_TOOLBAR(this->mainWindow->get(guiName));
+		int num = gtk_toolbar_get_n_items(toolbar1);
+
+		if (num > 0)
+		{
+			return true;													// return TRUE
+		}
+	}
+
+	return false;
+}
+
 
 void FloatingToolbox::showForConfiguration()
 {
 	XOJ_CHECK_TYPE(FloatingToolbox);
 
-	GtkWidget* overlay = this->mainWindow->get("mainOverlay");
-	GtkWidget* boxContents = this->mainWindow->get("boxContents");
-	gint wx, wy;
-	gtk_widget_translate_coordinates(boxContents, gtk_widget_get_toplevel(boxContents), 0, 0, &wx, &wy);
-	this->floatingToolboxX = wx + 40;	//when configuration state these are
-	this->floatingToolboxY = wy + 40;	// topleft coordinates( otherwise center).
-	this->floatingToolboxState = configuration;
-	this->show();
+	if (this->floatingToolboxActivated())		// Do not show if not being used - at least while experimental.
+	{
+		GtkWidget* overlay = this->mainWindow->get("mainOverlay");
+		GtkWidget* label = this->mainWindow->get("labelOverlay");
+		GtkWidget* boxContents = this->mainWindow->get("boxContents");
+		gint wx, wy;
+		gtk_widget_translate_coordinates(boxContents, gtk_widget_get_toplevel(boxContents), 0, 0, &wx, &wy);
+		this->floatingToolboxX = wx + 40;	//when configuration state these are
+		this->floatingToolboxY = wy + 40;	// topleft coordinates( otherwise center).
+		this->floatingToolboxState = configuration;
+		this->show(true);
+	}
 }
 
 
-void FloatingToolbox::show()
+void FloatingToolbox::show(bool showTitle)
 {
 	XOJ_CHECK_TYPE(FloatingToolbox);
 
 	gtk_widget_hide(this->floatingToolbox);		//force showing in new position
 	gtk_widget_show_all(this->floatingToolbox);
+
+	if (showTitle)
+	{
+		gtk_widget_show(this->mainWindow->get("labelOverlay"));
+	}
+	else
+	{
+		gtk_widget_hide(this->mainWindow->get("labelOverlay"));
+	}
 }
 
 
