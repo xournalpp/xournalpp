@@ -14,6 +14,7 @@
 #include "GladeGui.h"
 #include "model/Font.h"
 #include "control/layer/LayerCtrlListener.h"
+#include "gui/FloatingToolbox.h"
 
 class Control;
 class Layout;
@@ -27,11 +28,6 @@ class XournalView;
 class MainWindowToolbarMenu;
 class ZoomGesture;
 
-enum FloatingToolBoxState {
-		recalcSize = 0,
-		configuration,
-		noChange
-};
 
 class MainWindow : public GladeGui, public LayerCtrlListener
 {
@@ -43,6 +39,8 @@ public:
 public:
 	virtual void rebuildLayerMenu();
 	virtual void layerVisibilityChanged();
+
+	FloatingToolbox*  floatingToolbox;
 
 public:
 	virtual void show(GtkWindow* parent);
@@ -99,10 +97,6 @@ public:
 
 	bool isGestureActive();
 	
-	
-	void showFloatingToolbox( int x, int y);
-	void showFloatingToolboxForConfiguration();
-	void hideFloatingToolbox( );
 
 private:
 	void initXournalWidget();
@@ -115,7 +109,7 @@ private:
 
 	void createToolbarAndMenu();
 	
-	void initFloatingToolbar();
+	void initFloatingToolbox();
 
 	static void buttonCloseSidebarClicked(GtkButton* button, MainWindow* win);
 
@@ -145,18 +139,6 @@ private:
 	static void dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y,
 								GtkSelectionData* data, guint info, guint time, MainWindow* win);
 
-	
-	/**
-	 * Callback for positioning overlayed floating menu
-	 */
-	static gboolean  getOverlayPosition (GtkOverlay *overlay, GtkWidget *widget, GdkRectangle *allocation, MainWindow* win);
-	
-	/**
-	 * Callback to hide floating Toolbar when mouse leaves it
-	 */
-	static void handleLeaveFloatingToolbox(GtkWidget * floatingToolbox, GdkEvent  *event, MainWindow* win);
-	
-	void showFloatingToolbox( );
 
 	
 private:
@@ -179,22 +161,11 @@ private:
 
 	GtkWidget** toolbarWidgets;
 	
-	GtkWidget *floatingToolbox;
-	
 	MainWindowToolbarMenu* toolbarSelectMenu;
 
 	/**
 	 * Workaround for double hide menubar event
 	 */
 	bool ignoreNextHideEvent;
-	
-	/**
-	 * For communicating with getOverlayPosition callback
-	 * */
-	
-	int floatingToolboxX = 0;
-	int floatingToolboxY = 0;
-	
-	FloatingToolBoxState floatingToolboxState = recalcSize;
 	
 };

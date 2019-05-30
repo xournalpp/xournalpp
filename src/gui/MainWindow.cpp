@@ -40,7 +40,10 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
 	this->toolbarSelectMenu = new MainWindowToolbarMenu(this);
 
-	initFloatingToolbar();
+	
+	
+	GtkOverlay *overlay = GTK_OVERLAY (get("mainOverlay"));
+	this->floatingToolbox = new FloatingToolbox (this, overlay);  
 
 		
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++)
@@ -59,10 +62,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	g_signal_connect(this->window, "window_state_event", G_CALLBACK(windowStateEventCallback), this);
 
 	g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
-	
-	//position overlay widgets
-	g_signal_connect(get("mainOverlay"), "get-child-position", G_CALLBACK(getOverlayPosition), this);
-	
+		
 
 	// "watch over" all events
 	g_signal_connect(this->window, "key-press-event", G_CALLBACK(onKeyPressCallback), this);
@@ -169,6 +169,9 @@ MainWindow::~MainWindow()
 	delete this->toolbarSelectMenu;
 	this->toolbarSelectMenu = NULL;
 
+	delete this->floatingToolbox;
+	this->floatingToolbox = NULL;
+	
 	delete this->xournal;
 	this->xournal = NULL;
 
@@ -693,6 +696,8 @@ void MainWindow::loadToolbar(ToolbarData* d)
 	{
 		this->toolbar->load(d, this->toolbarWidgets[i], TOOLBAR_DEFINITIONS[i].propName, TOOLBAR_DEFINITIONS[i].horizontal);
 	}
+	
+	this->floatingToolbox->flagRecalculateSizeRequired();	
 }
 
 ToolbarData* MainWindow::getSelectedToolbar()
@@ -906,146 +911,5 @@ void MainWindow::setAudioPlaybackPaused(bool paused)
 	XOJ_CHECK_TYPE(MainWindow);
 
 	this->getToolMenuHandler()->setAudioPlaybackPaused(paused);
-}
-
-
-void MainWindow::initFloatingToolbar()
-{
-	XOJ_CHECK_TYPE(MainWindow);
-
-	GtkWidget *overlay = get("mainOverlay");
-	this->floatingToolbox = get("floatingToolbox");
-
-	
-
-// 	GtkCssProvider *cssForTB = gtk_css_provider_new();
-// 	gtk_css_provider_load_from_data(cssForTB, ".tbCss:fadeout {background-color: rgba(255,255,255,0);transition: 500ms ease-in-out;}", -1, NULL);
-// 	gtk_style_context_add_provider_for_screen(Gdk.Screen.Default, GTK_STYLE_PROVIDER(cssForTB), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-/*	GtkCssProvider *css2 = gtk_css_provider_new();
-	gtk_css_provider_load_from_data(cssFloatingToolbox, "*{background-color: rgba(1,1,1,0);}", -1, NULL);
-	gtk_style_context_add_provider(gtk_widget_get_style_context(get("tbOverlay1")), GTK_STYLE_PROVIDER(css2), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-*/	
-	
-	this->floatingToolboxX = 200;
-	this->floatingToolboxY = 200;
-	this->floatingToolboxState = recalcSize;
-	
-	gtk_overlay_add_overlay (GTK_OVERLAY (overlay), this->floatingToolbox);
-	gtk_overlay_set_overlay_pass_through (GTK_OVERLAY (overlay), this->floatingToolbox, TRUE);
-	
-	gtk_widget_add_events(this->floatingToolbox, GDK_LEAVE_NOTIFY_MASK);
-	g_signal_connect(this->floatingToolbox, "leave-notify-event", G_CALLBACK(handleLeaveFloatingToolbox), this);
-		
-
-}
-
-void MainWindow::showFloatingToolbox( int x, int y )
-{
-	XOJ_CHECK_TYPE(MainWindow);
-	
-	this->floatingToolboxX = x;
-	this->floatingToolboxY = y;
-	
-	this->showFloatingToolbox();
-}
-
-void MainWindow::showFloatingToolboxForConfiguration()
-{
-	XOJ_CHECK_TYPE(MainWindow);
-
-	GtkWidget *overlay = get("mainOverlay");
-	
-	gint wx, wy;
-	gtk_widget_translate_coordinates(winXournal, gtk_widget_get_toplevel(winXournal), 0, 0, &wx, &wy);
-
-	this->floatingToolboxX = wx+40;	//when configuration state these are
-	this->floatingToolboxY = wy+40;	// topleft coordinates ( otherwise center).
-	this->floatingToolboxState = configuration;
-	
-	this->showFloatingToolbox();
-}
-
-
-void MainWindow::showFloatingToolbox( )
-{
-	
-	gtk_widget_hide (this->floatingToolbox);		//force showing in new position
-
-	gtk_widget_show_all (this->floatingToolbox);
-	
-}
-
-void MainWindow::hideFloatingToolbox()
-{
-	if( this->floatingToolboxState == configuration)
-	{
-		this->floatingToolboxState = recalcSize;
-	}
-	gtk_widget_hide (this->floatingToolbox);
-		
-}
-
-/**
- * getOverlayPosition - this is how we position the widget in the overlay under the mouse
- * 
- * The requested location is communicated via the main window's member variables: 
- * ->floatingToolbox,		so we can operate on the right widget
- * -> floatingToolboxState,	are we configuring, resizing or just moving
- * ->floatingToolboxX,		where to display
- * ->floatingToolboxY.
- * 
- */
-gboolean  MainWindow::getOverlayPosition (GtkOverlay   *overlay,
-               GtkWidget    *widget,
-               GdkRectangle *allocation,
-               MainWindow* win)
-{
-	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
-		
-	if( widget == win->floatingToolbox ){
-
-	
-		// Get width and height
-		gtk_widget_get_allocation (widget, allocation);	//get existing allocation
-		if( win->floatingToolboxState != noChange ||  allocation->height < 2)	//need to catch initiation.
-		{
-			GtkRequisition natural;		
-			gtk_widget_get_preferred_size  (widget,  NULL,  &natural);
-			allocation->width = natural.width;
-			allocation->height = natural.height;
-		}	
-		
-		switch  (win->floatingToolboxState)
-		{
-			case recalcSize: case noChange:	// show centered on x,y
-				allocation->x = win->floatingToolboxX - allocation->width/2;
-				allocation->y = win->floatingToolboxY - allocation->height/2;
-				win->floatingToolboxState = noChange;
-				break;
-			
-			case configuration:
-				allocation->x = win->floatingToolboxX;
-				allocation->y = win->floatingToolboxY;
-				allocation->width = std::max( allocation->width+32 ,50); //always room for one more...
-				allocation->height  = std::max( allocation->height ,50);
-		}
-		
-
-
-		return true;
-	}
-	return false;
-}
-
-
-
-void MainWindow::handleLeaveFloatingToolbox( GtkWidget* floatingToolbox, GdkEvent  *event,  MainWindow* win)
-{
-	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
-	
-	if( win->floatingToolboxState !=  configuration ){
-		win->hideFloatingToolbox();
-	}
 }
 

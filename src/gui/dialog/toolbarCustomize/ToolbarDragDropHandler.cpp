@@ -74,7 +74,7 @@ void ToolbarDragDropHandler::toolbarConfigDialogClosed()
 
 	Path file = Util::getConfigFile(TOOLBAR_CONFIG);
 	win->getToolbarModel()->save(file);
-	win->hideFloatingToolbox();
+	win->floatingToolbox->hide();
 }
 
 void ToolbarDragDropHandler::configure()
@@ -86,7 +86,7 @@ void ToolbarDragDropHandler::configure()
 	
 
 				
-	win->showFloatingToolboxForConfiguration();
+	win->floatingToolbox->showForConfiguration();
 
 	this->prepareToolbarsForDragAndDrop();
 

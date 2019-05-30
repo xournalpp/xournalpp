@@ -449,7 +449,7 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 		wx += pos.x + this->getX();
 		wy += pos.y + this->getY();
 		
-		control->getWindow()->showFloatingToolbox( wx,wy);
+		control->getWindow()->floatingToolbox->show( wx,wy);
 				
 				
 	}
@@ -528,17 +528,17 @@ bool XojPageView::onButtonReleaseEvent(const PositionInputData& pos)
 					doAction = false;	// selection made.. no action.
 				}
 			}
+			
 			if ( doAction)		// pop up a menu
 			{
 				gint wx, wy;
 				GtkWidget *widget = xournal->getWidget();
 				gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
-
-				wx += pos.x + this->getX();// + widget->x;
-				wy += pos.y + this->getY();// + widget->y;
-				
-				control->getWindow()->showFloatingToolbox( wx,wy);
+				wx += pos.x + this->getX();
+				wy += pos.y + this->getY();
+				control->getWindow()->floatingToolbox->show( wx,wy);
 			}
+			
 		}
 		
 		delete this->inputHandler;
