@@ -22,10 +22,12 @@
 
 #include <list>
 
+class AudioPlayer;
+
 class PortAudioConsumer
 {
 public:
-	explicit PortAudioConsumer(Settings* settings, AudioQueue<int>* audioQueue);
+	explicit PortAudioConsumer(AudioPlayer* audioPlayer, AudioQueue<int>* audioQueue);
 	~PortAudioConsumer();
 
 public:
@@ -44,7 +46,7 @@ protected:
 
 	portaudio::AutoSystem autoSys;
 	portaudio::System& sys;
-	Settings* settings = nullptr;
+	AudioPlayer* audioPlayer;
 	AudioQueue<int>* audioQueue = nullptr;
 
 	int outputChannels = 0;
