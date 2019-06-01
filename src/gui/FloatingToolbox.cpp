@@ -1,5 +1,4 @@
 #include "FloatingToolbox.h"
-
 #include "MainWindow.h"
 #include "control/Control.h"
 #include "GladeGui.h"
@@ -24,7 +23,6 @@ FloatingToolbox::FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay)
 	g_signal_connect(this->floatingToolbox, "leave-notify-event", G_CALLBACK(handleLeaveFloatingToolbox), this);
 	//position overlay widgets
 	g_signal_connect(theMainWindow->get("mainOverlay"), "get-child-position", G_CALLBACK(this->getOverlayPosition), this);
-
 }
 
 
@@ -45,6 +43,7 @@ void FloatingToolbox::show(int x, int y)
 	this->show();
 }
 
+
 /****
  * floatingToolboxActivated
  *  True if the user has:
@@ -56,9 +55,7 @@ void FloatingToolbox::show(int x, int y)
 bool FloatingToolbox::floatingToolboxActivated()
 {
 	Settings* settings = this->mainWindow->getControl()->getSettings();
-
 	bool show = false;
-
 	ButtonConfig* cfg = nullptr;
 
 	//check if any buttons assigned to bring up toolbox
@@ -73,15 +70,12 @@ bool FloatingToolbox::floatingToolboxActivated()
 	}
 
 	//check if user can show Floating Menu with tap.
-
 	if (settings->getDoActionOnStrokeFiltered() && settings->getStrokeFilterEnabled())
 	{
 		return true;													// return TRUE
 	}
 
-
 	//check for tools in toolbox:
-
 	for (int index = 0; index < FLOATINGTOOLBOX_TOOLBARS_LEN; index++)
 	{
 		const char* guiName = FLOATINGTOOLBOX_TOOLBARS[index].guiName;
@@ -105,7 +99,7 @@ void FloatingToolbox::showForConfiguration()
 	if (this->floatingToolboxActivated())		// Do not show if not being used - at least while experimental.
 	{
 		GtkWidget* overlay = this->mainWindow->get("mainOverlay");
-		GtkWidget* label = this->mainWindow->get("labelOverlay");
+		GtkWidget* label = this->mainWindow->get("labelFloatingToolbox");
 		GtkWidget* boxContents = this->mainWindow->get("boxContents");
 		gint wx, wy;
 		gtk_widget_translate_coordinates(boxContents, gtk_widget_get_toplevel(boxContents), 0, 0, &wx, &wy);
@@ -126,11 +120,11 @@ void FloatingToolbox::show(bool showTitle)
 
 	if (showTitle)
 	{
-		gtk_widget_show(this->mainWindow->get("labelOverlay"));
+		gtk_widget_show(this->mainWindow->get("labelFloatingToolbox"));
 	}
 	else
 	{
-		gtk_widget_hide(this->mainWindow->get("labelOverlay"));
+		gtk_widget_hide(this->mainWindow->get("labelFloatingToolbox"));
 	}
 }
 

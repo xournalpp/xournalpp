@@ -22,7 +22,7 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkLabel" id="labelOverlay">
+          <object class="GtkLabel" id="labelFloatingToolbox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes"> = Floating Toolbox (experimental) =</property>
@@ -39,7 +39,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkToolbar" id="tbOverlay1">
+          <object class="GtkToolbar" id="tbFloat1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <style>
@@ -53,7 +53,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkToolbar" id="tbOverlay2">
+          <object class="GtkToolbar" id="tbFloat2">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <style>
@@ -67,7 +67,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkToolbar" id="tbOverlay3">
+          <object class="GtkToolbar" id="tbFloat3">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <style>
@@ -81,7 +81,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkToolbar" id="tbOverlay4">
+          <object class="GtkToolbar" id="tbFloat4">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <style>

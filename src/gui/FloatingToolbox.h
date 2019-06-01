@@ -57,8 +57,6 @@ private:
 	 */
 	static void handleLeaveFloatingToolbox(GtkWidget * floatingToolbox, GdkEvent  *event,  FloatingToolbox* self);
 	
-	
-	
 	void show(bool showTitle = false);
 	
 	/**
