@@ -251,7 +251,7 @@ void MainWindow::initXournalWidget()
 		{
 			GdkDevice* device = inputDevice.getDevice();
 			int deviceClass = this->getControl()->getSettings()->getDeviceClassForDevice(device);
-			if (gdk_device_get_source(device) == GDK_SOURCE_TOUCHSCREEN && deviceClass != INPUT_DEVICE_TOUCHSCREEN && deviceClass != INPUT_DEVICE_IGNORE)
+			if (gdk_device_get_source(device) == GDK_SOURCE_TOUCHSCREEN && deviceClass != INPUT_DEVICE_TOUCHSCREEN)
 			{
 				gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), false);
 			}
