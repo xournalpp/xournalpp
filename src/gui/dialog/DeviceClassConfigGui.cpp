@@ -21,7 +21,14 @@ DeviceClassConfigGui::DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, Gtk
 
 	this->labelDevice = get("labelDevice");
 	this->cbDeviceClass = get("cbDeviceClass");
-	gtk_label_set_text(GTK_LABEL(this->labelDevice), (device.getName() + " (" + device.getType() + ")").c_str());
+	if (gdk_device_get_source(device.getDevice()) == GDK_SOURCE_TOUCHSCREEN)
+	{
+		gtk_label_set_markup(GTK_LABEL(this->labelDevice), (device.getName() + " (" + device.getType() + ")"+ _(" <i>(Requires restart)</i>")).c_str());
+	}
+	else
+	{
+		gtk_label_set_text(GTK_LABEL(this->labelDevice), (device.getName() + " (" + device.getType() + ")").c_str());
+	}
 
 	loadSettings();
 }
