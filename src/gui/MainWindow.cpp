@@ -267,6 +267,24 @@ void MainWindow::initXournalWidget()
 	scrollHandling->init(this->xournal->getWidget(), layout);
 }
 
+void MainWindow::setTouchscreenScrollingForDeviceMapping()
+{
+	XOJ_CHECK_TYPE(MainWindow);
+
+	auto deviceListHelper = new DeviceListHelper(false);
+	vector<InputDevice> deviceList = deviceListHelper->getDeviceList();
+	for(InputDevice inputDevice : deviceList)
+	{
+		GdkDevice* device = inputDevice.getDevice();
+		InputDeviceClass deviceClass = InputEvents::translateDeviceType(device, this->getControl()->getSettings());
+		if (gdk_device_get_source(device) == GDK_SOURCE_TOUCHSCREEN && deviceClass != INPUT_DEVICE_TOUCHSCREEN)
+		{
+			gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), false);
+			break;
+		}
+	}
+}
+
 /**
  * Allow to hide menubar, but only if global menu is not enabled
  */
