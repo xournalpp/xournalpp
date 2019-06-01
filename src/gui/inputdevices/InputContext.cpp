@@ -131,6 +131,11 @@ bool InputContext::handle(GdkEvent* sourceEvent)
 		return this->keyboardHandler->handle(event);
 	}
 
+	if (event->deviceClass == INPUT_DEVICE_IGNORE)
+	{
+		return true;
+	}
+
 	delete event;
 
 	//We received an event we do not have a handler for
