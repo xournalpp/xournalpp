@@ -29,6 +29,8 @@
 #endif
 
 #include <gdk/gdk.h>
+#include <util/DeviceListHelper.h>
+#include <gui/inputdevices/InputEvents.h>
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
  : GladeGui(gladeSearchPath, "main.glade", "mainWindow"),
@@ -239,6 +241,8 @@ void MainWindow::initXournalWidget()
 	{
 		winXournal = gtk_scrolled_window_new(NULL, NULL);
 
+		setTouchscreenScrollingForDeviceMapping();
+
 		gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
 
 		GtkWidget* vpXournal = gtk_viewport_new(NULL, NULL);
@@ -261,6 +265,22 @@ void MainWindow::initXournalWidget()
 
 	Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
 	scrollHandling->init(this->xournal->getWidget(), layout);
+}
+
+void MainWindow::setTouchscreenScrollingForDeviceMapping() {
+	XOJ_CHECK_TYPE(MainWindow);
+
+	auto deviceListHelper = new DeviceListHelper(false);
+	vector<InputDevice> deviceList = deviceListHelper->getDeviceList();
+	for(InputDevice inputDevice : deviceList)
+	{
+		GdkDevice* device = inputDevice.getDevice();
+		int deviceClass = this->getControl()->getSettings()->getDeviceClassForDevice(device);
+		if (gdk_device_get_source(device) == GDK_SOURCE_TOUCHSCREEN && deviceClass != INPUT_DEVICE_TOUCHSCREEN && deviceClass != INPUT_DEVICE_IGNORE)
+		{
+			gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), false);
+		}
+	}
 }
 
 /**
