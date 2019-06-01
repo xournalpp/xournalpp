@@ -241,22 +241,7 @@ void MainWindow::initXournalWidget()
 	{
 		winXournal = gtk_scrolled_window_new(NULL, NULL);
 
-		/*
-		 * Disable kinetic scrolling if there is a touchscreen device that was manually mapped to another enabled input device class.
-		 * This is required so the GtkScrolledWindow does not swallow all the events.
-		 */
-		auto deviceListHelper = new DeviceListHelper(false);
-		vector<InputDevice> deviceList = deviceListHelper->getDeviceList();
-		for(InputDevice inputDevice : deviceList)
-		{
-			GdkDevice* device = inputDevice.getDevice();
-			InputDeviceClass deviceClass = InputEvents::translateDeviceType(device, this->getControl()->getSettings());
-			if (gdk_device_get_source(device) == GDK_SOURCE_TOUCHSCREEN && deviceClass != INPUT_DEVICE_TOUCHSCREEN)
-			{
-				gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), false);
-				break;
-			}
-		}
+		setTouchscreenScrollingForDeviceMapping();
 
 		gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
 
