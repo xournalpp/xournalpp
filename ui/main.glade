@@ -289,43 +289,6 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkMenuItem" id="menuitemEditToolbar">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">T_oolbars</property>
-                        <property name="use_underline">True</property>
-                        <child type="submenu">
-                          <object class="GtkMenu" id="menuEditToolbar">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <child>
-                              <object class="GtkMenuItem" id="menuEditToolbarManage">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">_Manage</property>
-                                <property name="use_underline">True</property>
-                                <signal name="activate" handler="ACTION_MANAGE_TOOLBAR" swapped="no"/>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkMenuItem" id="menuEditToolbarCustomize">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">_Customize</property>
-                                <property name="use_underline">True</property>
-                                <signal name="activate" handler="ACTION_CUSTOMIZE_TOOLBAR" swapped="no"/>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                     </child>                    
-                     <child>
-                      <object class="GtkSeparatorMenuItem" id="menuitem4B">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                      </object>
-                    </child>                   <child>
                       <object class="GtkMenuItem" id="menuEditSettings">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
