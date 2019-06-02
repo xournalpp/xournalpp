@@ -174,7 +174,7 @@ void MainWindowToolbarMenu::updateToolbarMenu(GtkMenuShell* menubar, Settings* s
 
 	inPredefinedSection = true;
 
-	int menuPos = 0;
+	int menuPos = 3;
 	for (ToolbarData* d : *toolbar->getModel()->getToolbars())
 	{
 		addToolbarMenuEntry(d, menubar, menuPos);
