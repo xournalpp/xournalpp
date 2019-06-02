@@ -1,7 +1,7 @@
 #include "PortAudioConsumer.h"
 #include "AudioPlayer.h"
 
-PortAudioConsumer::PortAudioConsumer(AudioPlayer* audioPlayer, AudioQueue<int>* audioQueue) : sys(portaudio::System::instance()), audioPlayer(audioPlayer), audioQueue(audioQueue)
+PortAudioConsumer::PortAudioConsumer(AudioPlayer* audioPlayer, AudioQueue<float>* audioQueue) : sys(portaudio::System::instance()), audioPlayer(audioPlayer), audioQueue(audioQueue)
 {
 	XOJ_INIT_TYPE(PortAudioConsumer);
 }
@@ -97,7 +97,7 @@ bool PortAudioConsumer::startPlaying()
 	}
 
 	this->outputChannels = channels;
-	portaudio::DirectionSpecificStreamParameters outParams(*device, channels, portaudio::INT32, true, device->defaultLowOutputLatency(), nullptr);
+	portaudio::DirectionSpecificStreamParameters outParams(*device, channels, portaudio::FLOAT32, true, device->defaultLowOutputLatency(), nullptr);
 	portaudio::StreamParameters params(portaudio::DirectionSpecificStreamParameters::null(), outParams, sampleRate, this->framesPerBuffer, paNoFlag);
 
 	try
@@ -137,7 +137,7 @@ int PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer,
 	if (outputBuffer != nullptr)
 	{
 		unsigned long outputBufferLength;
-		this->audioQueue->pop(((int*) outputBuffer), outputBufferLength, framesPerBuffer * this->outputChannels);
+		this->audioQueue->pop(((float*) outputBuffer), outputBufferLength, framesPerBuffer * this->outputChannels);
 
 		// Fill buffer to requested length if necessary
 
@@ -149,7 +149,8 @@ int PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer,
 				g_warning("PortAudioConsumer: Not enough audio samples available to fill requested frame");
 			}
 
-			auto outputBufferImpl = (int*) outputBuffer;
+			auto outputBufferImpl = (float*) outputBuffer;
+
 			if (outputBufferLength > this->outputChannels)
 			{
 				// If there is previous audio data use this data to ramp down the audio samples

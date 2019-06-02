@@ -42,7 +42,7 @@ protected:
 	Settings* settings = nullptr;
 	Control* control = nullptr;
 
-	AudioQueue<int>* audioQueue = nullptr;
+	AudioQueue<float>* audioQueue = nullptr;
 	PortAudioConsumer* portAudioConsumer = nullptr;
 	VorbisProducer* vorbisProducer = nullptr;
 	std::thread stopThread;

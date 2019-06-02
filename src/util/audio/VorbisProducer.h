@@ -24,7 +24,7 @@
 class VorbisProducer
 {
 public:
-	explicit VorbisProducer(AudioQueue<int>* audioQueue);
+	explicit VorbisProducer(AudioQueue<float>* audioQueue);
 	~VorbisProducer();
 
 public:
@@ -40,6 +40,6 @@ protected:
 	SF_INFO sfInfo;
 	SNDFILE_tag* sfFile = nullptr;
 
-	AudioQueue<int>* audioQueue = nullptr;
+	AudioQueue<float>* audioQueue = nullptr;
 	std::thread* producerThread = nullptr;
 };

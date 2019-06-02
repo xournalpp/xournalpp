@@ -27,7 +27,7 @@ class AudioPlayer;
 class PortAudioConsumer
 {
 public:
-	explicit PortAudioConsumer(AudioPlayer* audioPlayer, AudioQueue<int>* audioQueue);
+	explicit PortAudioConsumer(AudioPlayer* audioPlayer, AudioQueue<float>* audioQueue);
 	~PortAudioConsumer();
 
 public:
@@ -47,7 +47,7 @@ protected:
 	portaudio::AutoSystem autoSys;
 	portaudio::System& sys;
 	AudioPlayer* audioPlayer;
-	AudioQueue<int>* audioQueue = nullptr;
+	AudioQueue<float>* audioQueue = nullptr;
 
 	int outputChannels = 0;
 

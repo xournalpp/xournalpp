@@ -5,7 +5,7 @@ AudioPlayer::AudioPlayer(Control* control, Settings* settings) : control(control
 {
 	XOJ_INIT_TYPE(AudioPlayer);
 
-	this->audioQueue = new AudioQueue<int>();
+	this->audioQueue = new AudioQueue<float>();
 	this->portAudioConsumer = new PortAudioConsumer(this, this->audioQueue);
 	this->vorbisProducer = new VorbisProducer(this->audioQueue);
 }
