@@ -40,6 +40,12 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
 	this->toolbarSelectMenu = new MainWindowToolbarMenu(this);
 
+	
+	
+	GtkOverlay *overlay = GTK_OVERLAY (get("mainOverlay"));
+	this->floatingToolbox = new FloatingToolbox (this, overlay);  
+
+		
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++)
 	{
 		GtkWidget* w = get(TOOLBAR_DEFINITIONS[i].guiName);
@@ -56,6 +62,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	g_signal_connect(this->window, "window_state_event", G_CALLBACK(windowStateEventCallback), this);
 
 	g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
+		
 
 	// "watch over" all events
 	g_signal_connect(this->window, "key-press-event", G_CALLBACK(onKeyPressCallback), this);
@@ -162,6 +169,9 @@ MainWindow::~MainWindow()
 	delete this->toolbarSelectMenu;
 	this->toolbarSelectMenu = NULL;
 
+	delete this->floatingToolbox;
+	this->floatingToolbox = NULL;
+	
 	delete this->xournal;
 	this->xournal = NULL;
 
@@ -344,6 +354,7 @@ bool cancellable_cancel(GCancellable* cancel)
 void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y,
 								 GtkSelectionData* data, guint info, guint time, MainWindow* win)
 {
+	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
 
 	GtkWidget* source = gtk_drag_get_source_widget(dragContext);
 	if (source && widget == gtk_widget_get_toplevel(source))
@@ -685,6 +696,8 @@ void MainWindow::loadToolbar(ToolbarData* d)
 	{
 		this->toolbar->load(d, this->toolbarWidgets[i], TOOLBAR_DEFINITIONS[i].propName, TOOLBAR_DEFINITIONS[i].horizontal);
 	}
+	
+	this->floatingToolbox->flagRecalculateSizeRequired();	
 }
 
 ToolbarData* MainWindow::getSelectedToolbar()
@@ -899,3 +912,4 @@ void MainWindow::setAudioPlaybackPaused(bool paused)
 
 	this->getToolMenuHandler()->setAudioPlaybackPaused(paused);
 }
+

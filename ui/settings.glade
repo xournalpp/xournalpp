@@ -3268,7 +3268,6 @@ It must be short in time and length and we can't have ignored another stroke rec
                                           <object class="GtkCheckButton" id="cbDoActionOnStrokeFiltered">
                                             <property name="label" translatable="yes">Show Floating Toolbox</property>
                                             <property name="visible">True</property>
-                                            <property name="sensitive">False</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
                                             <property name="tooltip_markup" translatable="yes">Try to select object first; if nothing selected then show floating toolbox if enabled.</property>

@@ -137,6 +137,11 @@ ActionGroup ActionGroup_fromString(string value)
 		return GROUP_LAYOUT_TB;
 	}
 
+	if (value == "GROUP_ZOOM_FIT")
+	{
+		return GROUP_ZOOM_FIT;
+	}
+
 	g_error("Invalid enum value for ActionGroup: «%s»", value.c_str());
 	return GROUP_NOGROUP;
 }
@@ -263,6 +268,11 @@ string ActionGroup_toString(ActionGroup value)
 	if (value == GROUP_LAYOUT_TB)
 	{
 		return "GROUP_LAYOUT_TB";
+	}
+
+	if (value == GROUP_ZOOM_FIT)
+	{
+		return "GROUP_ZOOM_FIT";
 	}
 
 	g_error("Invalid enum value for ActionGroup: %i", value);

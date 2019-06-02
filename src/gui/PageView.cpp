@@ -330,13 +330,14 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
-
+	Control* control = xournal->getControl();
+	
 	if (!this->selected)
 	{
-		xournal->getControl()->firePageSelected(this->page);
+		control->firePageSelected(this->page);
 	}
 
-	ToolHandler* h = xournal->getControl()->getToolHandler();
+	ToolHandler* h = control->getToolHandler();
 
 	double x = pos.x;
 	double y = pos.y;
@@ -437,10 +438,22 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 	}
 	else if (h->getToolType() == TOOL_IMAGE)
 	{
-		ImageHandler imgHandler(xournal->getControl(), this);
+		ImageHandler imgHandler(control, this);
 		imgHandler.insertImage(x, y);
 	}
+	else if (h->getToolType() == TOOL_FLOATING_TOOLBOX)
+	{
+		gint wx, wy;
+		GtkWidget *widget = xournal->getWidget();
+		gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
 
+		wx += pos.x + this->getX();
+		wy += pos.y + this->getY();
+		
+		control->getWindow()->floatingToolbox->show( wx,wy);
+				
+				
+	}
 	return true;
 }
 
@@ -588,11 +601,31 @@ bool XojPageView::onButtonReleaseEvent(const PositionInputData& pos)
 	{
 		this->inputHandler->onButtonReleaseEvent(pos);
 		
-		if( control->getSettings()->getTrySelectOnStrokeFiltered() && this->inputHandler->userTapped){  //experimental feature
-			double zoom = xournal->getZoom();
-			SelectObject select(this);
-			select.at(pos.x/zoom, pos.y/zoom);
+		if( this->inputHandler->userTapped)
+		{ 
+			bool doAction = control->getSettings()->getDoActionOnStrokeFiltered();
+			if( control->getSettings()->getTrySelectOnStrokeFiltered() )
+			{
+				double zoom = xournal->getZoom();
+				SelectObject select(this);
+				if ( select.at(pos.x/zoom, pos.y/zoom))
+				{
+					doAction = false;	// selection made.. no action.
+				}
+			}
+			
+			if ( doAction)		// pop up a menu
+			{
+				gint wx, wy;
+				GtkWidget *widget = xournal->getWidget();
+				gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
+				wx += pos.x + this->getX();
+				wy += pos.y + this->getY();
+				control->getWindow()->floatingToolbox->show( wx,wy);
+			}
+			
 		}
+		
 		delete this->inputHandler;
 		this->inputHandler = NULL;
 	}
