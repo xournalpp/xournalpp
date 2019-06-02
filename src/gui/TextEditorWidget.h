@@ -65,7 +65,7 @@ static guint signals[LAST_SIGNAL] = {0};
 static void gtk_xoj_int_txt_select_all(GtkWidget* widget)
 {
 	GtkXojIntTxt* txt = GTK_XOJ_INT_TXT(widget);
-	txt->te->selectAll();
+	txt->te->selectAtCursor(TextEditor::SelectType::all);
 }
 
 static void gtk_xoj_int_txt_move_cursor(GtkWidget* widget, gint step, gint bitmask)

@@ -47,7 +47,7 @@ bool MouseInputHandler::handleImpl(GdkEvent* event)
 		return true;
 	}
 
-	if (event->type == GDK_DOUBLE_BUTTON_PRESS)
+	if (event->type == GDK_DOUBLE_BUTTON_PRESS || event->type == GDK_TRIPLE_BUTTON_PRESS)
 	{
 		this->actionPerform(event);
 		return true;
