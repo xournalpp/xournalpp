@@ -41,10 +41,22 @@ public:
 	virtual ~FloatingToolbox();
 
 public:
-	void show(int x, int y);
+	/**
+	 *  show(x,y): Show Toolbox at centered at x,y relative to main window. 
+	 */
+	void show(int x, int y); 
+	
+	/**
+	 * showForConfiguration(): Does not hide when pointer leaves so that user can drag and drop.
+	 */
 	void showForConfiguration();
+	
 	void hide();
-	void flagRecalculateSizeRequired();	// trigger recalc size on next getOverlayPosition. Used when new toolbars loaded.
+	
+	/**
+	 * flagRecalculateSizeRequired(): trigger recalc size on next getOverlayPosition. Used when new toolbars loaded.
+	 */
+	void flagRecalculateSizeRequired();
 
 private:
 	/**

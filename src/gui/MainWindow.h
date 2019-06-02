@@ -109,7 +109,6 @@ private:
 
 	void createToolbarAndMenu();
 	
-	void initFloatingToolbox();
 
 	static void buttonCloseSidebarClicked(GtkButton* button, MainWindow* win);
 

@@ -118,11 +118,7 @@ void FloatingToolbox::show(bool showTitle)
 	gtk_widget_hide(this->floatingToolbox);		//force showing in new position
 	gtk_widget_show_all(this->floatingToolbox);
 
-	if (showTitle)
-	{
-		gtk_widget_show(this->mainWindow->get("labelFloatingToolbox"));
-	}
-	else
+	if (!showTitle)
 	{
 		gtk_widget_hide(this->mainWindow->get("labelFloatingToolbox"));
 	}
