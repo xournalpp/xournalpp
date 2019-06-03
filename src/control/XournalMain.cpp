@@ -509,6 +509,19 @@ string XournalMain::findResourcePath(string searchFile)
 		return relative5.getParentPath().str();
 	}
 
+	// -----------------------------------------------------------------------
+
+	// Check for .../share resources directory relative to binary to support
+	// relocatable installations (such as e.g., AppImages)
+	Path relative6 = executableDir;
+	relative6 /= "../share/xournalpp/";
+	relative6 /= searchFile;
+
+	if (relative6.exists())
+	{
+		return relative6.getParentPath().str();
+	}
+
 	// Not found
 	return "";
 }
