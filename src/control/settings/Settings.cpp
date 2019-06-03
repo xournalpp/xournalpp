@@ -2499,7 +2499,7 @@ int Settings::getDeviceClassForDevice(GdkDevice* device)
 	}
 	else
 	{
-		uint deviceType = 0;
+		guint deviceType = 0;
 		switch(gdk_device_get_source(device))
 		{
 			case GDK_SOURCE_CURSOR:
