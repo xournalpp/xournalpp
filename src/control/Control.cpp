@@ -219,7 +219,7 @@ void Control::renameLastAutosaveFile()
 		renamed += filename.getFilename();
 	}
 
-	g_message(FS(_F("Autosave renamed from {1} to {2}") % this->lastAutosaveFilename.str() % renamed.str()).c_str());
+	g_message("%s", FS(_F("Autosave renamed from {1} to {2}") % this->lastAutosaveFilename.str() % renamed.str()).c_str());
 
 	if (!filename.exists())
 	{
