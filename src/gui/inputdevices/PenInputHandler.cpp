@@ -387,11 +387,11 @@ void PenInputHandler::actionPerform(InputEvent* event)
 
 	XojPageView* currentPage = this->getPageAtCurrentPosition(event);
 	PositionInputData pos = this->getInputDataRelativeToCurrentPage(currentPage, event);
-	if (event->type == GDK_DOUBLE_BUTTON_PRESS)
+	if (event->type == BUTTON_2_PRESS_EVENT)
 	{
 		currentPage->onButtonDoublePressEvent(pos);
 	}
-	else if (event->type == GDK_TRIPLE_BUTTON_PRESS)
+	else if (event->type == BUTTON_3_PRESS_EVENT)
 	{
 		currentPage->onButtonTriplePressEvent(pos);
 	}

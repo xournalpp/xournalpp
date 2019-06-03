@@ -45,6 +45,8 @@ InputEventType InputEvents::translateEventType(GdkEventType type)
 			return BUTTON_PRESS_EVENT;
 		case GDK_2BUTTON_PRESS:
 			return BUTTON_2_PRESS_EVENT;
+		case GDK_3BUTTON_PRESS:
+			return BUTTON_3_PRESS_EVENT;
 		case GDK_BUTTON_RELEASE:
 		case GDK_TOUCH_END:
 		case GDK_TOUCH_CANCEL:
