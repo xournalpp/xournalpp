@@ -427,7 +427,7 @@ std::unique_ptr<TexImage> LatexController::loadRendered()
 	if (err != NULL)
 	{
 		string message = FS(_F("Could not load LaTeX PDF file: {1}") % err->message);
-		g_message(message.c_str());
+		g_message("%s", message.c_str());
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), message);
 		g_error_free(err);
 		return NULL;
