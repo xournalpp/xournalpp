@@ -49,6 +49,11 @@ bool StylusInputHandler::handleImpl(InputEvent* event)
 			// TPCButton is disabled and modifier button was pressed
 			this->actionEnd(event);
 			this->actionStart(event);
+		} else
+		{
+			// No input running but modifier key was pressed
+			// Change the tool depending on the key
+			changeTool(event);
 		}
 	}
 
