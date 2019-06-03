@@ -124,7 +124,7 @@ InputEvent* InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* setting
 	{
 		gdk_event_get_button(sourceEvent, &(targetEvent->button));
 	}
-	if (sourceEventType & (GDK_TOUCH_BEGIN | GDK_TOUCH_END | GDK_TOUCH_CANCEL))
+	if (sourceEventType == GDK_TOUCH_BEGIN || sourceEventType == GDK_TOUCH_END || sourceEventType == GDK_TOUCH_CANCEL)
 	{
 		// As we only handle single finger events we can set the button statically to 1
 		targetEvent->button = 1;
@@ -136,7 +136,7 @@ InputEvent* InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* setting
 	}
 
 	// Copy the event sequence if there is any
-	if (sourceEventType & (GDK_TOUCH_BEGIN | GDK_TOUCH_UPDATE | GDK_TOUCH_END | GDK_TOUCH_CANCEL))
+	if (sourceEventType == GDK_TOUCH_BEGIN || sourceEventType == GDK_TOUCH_UPDATE || sourceEventType == GDK_TOUCH_END || sourceEventType == GDK_TOUCH_CANCEL)
 	{
 		targetEvent->sequence = gdk_event_get_event_sequence(sourceEvent);
 	}
