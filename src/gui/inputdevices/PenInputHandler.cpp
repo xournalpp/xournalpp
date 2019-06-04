@@ -283,7 +283,6 @@ bool PenInputHandler::actionMotion(InputEvent* event)
 
 	// Update the cursor
 	xournal->view->getCursor()->setInsidePage(currentPage != nullptr);
-	xournal->view->getCursor()->setInvisible(false);
 
 	// Selections and single-page elements will always work on one page so we need to handle them differently
 	if (this->sequenceStartPage && toolHandler->isSinglePageTool())
