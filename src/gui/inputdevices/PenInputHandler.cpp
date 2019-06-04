@@ -105,12 +105,22 @@ bool PenInputHandler::actionStart(InputEvent* event)
 	// set reference data for handling of entering/leaving page
 	this->updateLastEvent(event);
 
-	// Flag running input
-	this->inputRunning = true;
-	this->penInWidget = true;
-
 	// Change the tool depending on the key
 	changeTool(event);
+
+	// Flag running input
+	ToolHandler* toolHandler = this->inputContext->getToolHandler();
+	ToolType toolType = toolHandler->getToolType();
+
+	//
+	if (toolType != TOOL_IMAGE)
+	{
+		this->inputRunning = true;
+	} else {
+		this->deviceClassPressed = false;
+	}
+
+	this->penInWidget = true;
 
 	GtkXournal* xournal = this->inputContext->getXournal();
 
@@ -118,8 +128,6 @@ bool PenInputHandler::actionStart(InputEvent* event)
 	cursor->setMouseDown(true);
 
 
-	ToolHandler* toolHandler = this->inputContext->getToolHandler();
-	ToolType toolType = toolHandler->getToolType();
 
 	// Save the starting offset when hand-tool is selected to get a reference for the scroll-offset
 	if (toolType == TOOL_HAND)
@@ -371,6 +379,7 @@ bool PenInputHandler::actionEnd(InputEvent* event)
 	}
 
 	this->inputRunning = false;
+	delete this->lastHitEvent;
 	this->lastHitEvent = nullptr;
 
 	return false;
