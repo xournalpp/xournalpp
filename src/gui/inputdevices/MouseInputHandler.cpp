@@ -59,11 +59,14 @@ bool MouseInputHandler::handleImpl(InputEvent* event)
 		if (this->deviceClassPressed)
 		{
 			this->actionMotion(event);
-		} else
+		}
+		else
 		{
 			XournalppCursor* cursor = xournal->view->getCursor();
 			cursor->setTempCursor(GDK_ARROW);
 		}
+		// Update cursor visibility
+		xournal->view->getCursor()->setInvisible(false);
 	}
 
 	// Notify if mouse enters/leaves widget
