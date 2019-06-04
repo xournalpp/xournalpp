@@ -136,6 +136,12 @@ SettingsDialog::~SettingsDialog()
 	}
 	this->buttonConfigs.clear();
 
+	for (DeviceClassConfigGui* dev : this->deviceClassConfigs)
+	{
+		delete dev;
+	}
+	this->deviceClassConfigs.clear();
+
 	// DO NOT delete settings!
 	this->settings = NULL;
 
