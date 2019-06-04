@@ -14,24 +14,17 @@
 #include <XournalType.h>
 #include "control/settings/Settings.h"
 
-enum LayoutType
-{								//		1		2		4
-	Horizontal 			= 0,	//
-	Vertical 			= 1,	//		V
-	Horizontal_RL 		= 2,	//				RL
-	Vertical_RL 		= 3,	//		V		RL
-	Horizontal_BT 		= 4,	//						BT
-	Vertical_BT 		= 5,	//		V				BT
-	Horizontal_RL_BT 	= 6,	//				RL		BT
-	Vertical_BT_RL 		= 7,	//		V		RL		BT
-	BitFlagsUsedToHere 	= 8,	//	do not modify this or above
-};
-
-enum LayoutBitFlags
-{
-	Vertically  = 1,
-	RightToLeft = 2,
-	BottomToTop = 4,
+enum LayoutType : unsigned
+{                             // V RTL BTT
+	Horizontal = 0,           // 0 0   0
+	Vertical = 1,             // 1 0   0
+	RightToLeft = 2,          // 0 1   0
+	// Vertical_RL = 3,       // 1 1   0
+	BottomToTop = 4,          // 0 0   1
+	// Vertical_BT = 5,       // 1 0   1
+	// Horizontal_RL_BT = 6,  // 0 1   1
+	// Vertical_BT_RL = 7,    // 1 1   1
+	Size = 8                  // EnumSize
 };
 
 /** 
@@ -46,7 +39,7 @@ public:
 	 * Create a bare mapper to be configured before use.
 	 */
 	LayoutMapper();
-			
+
 
 	/**
 	 * configureFromSettings
@@ -56,13 +49,14 @@ public:
 	 * @param  settings  The Settings from which users settings are obtained
 	 */
 
-	
-	void configureFromSettings(int numPages, Settings* settings);
-	
-	
+
+	void configureFromSettings(size_t numPages, Settings* settings);
+
+	[[deprecated ("use LayoutMapper::configureFromSettings")]]
 	void configureForPresentation(int numPages, Settings* settings);
 
 	virtual ~LayoutMapper();
+
 private:
 	/**
 	 * configure
@@ -77,7 +71,7 @@ private:
 	 * @param  firstPageOffset  Pages to offset - usually one or zero in order to pair up properly
 	 */
 	void configure(int pages, int numRows, int numCols, bool useRows, LayoutType type, bool paired,
-		int firstPageOffset);
+	               int firstPageOffset);
 
 public:
 	/**
@@ -116,7 +110,9 @@ public:
 	 * 
 	 * @return isPairedPages
 	 */
-	int getPairedPages();
+	bool getPairedPages();
+
+	bool isRightToLeft();
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -128,5 +124,9 @@ private:
 	int offset = 0;
 	LayoutType layoutType = Horizontal;
 	bool isPairedPages = false;
+
+	bool isBottomToTop() const;
+
+	bool isVertical() const;
 };
 

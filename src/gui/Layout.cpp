@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <numeric>
 #include "Layout.h"
 
 #include "XournalView.h"
@@ -5,7 +7,7 @@
 #include "control/Control.h"
 #include "widgets/XournalWidget.h"
 #include "gui/scroll/ScrollHandling.h"
-	
+
 /**
  * Padding outside the pages, including shadow
  */
@@ -27,20 +29,20 @@ const int XOURNAL_ROOM_FOR_SHADOW = 3;
 const int XOURNAL_PADDING_BETWEEN = 15;
 
 
-
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
- : view(view),
-   scrollHandling(scrollHandling)
+		: view(view),
+		  scrollHandling(scrollHandling)
 {
 	XOJ_INIT_TYPE(Layout);
 
 	g_signal_connect(scrollHandling->getHorizontal(), "value-changed", G_CALLBACK(horizontalScrollChanged), this);
 
 	g_signal_connect(scrollHandling->getVertical(), "value-changed", G_CALLBACK(verticalScrollChanged), this);
-	
+
 
 	lastScrollHorizontal = gtk_adjustment_get_value(scrollHandling->getHorizontal());
 	lastScrollVertical = gtk_adjustment_get_value(scrollHandling->getVertical());
+	recalculate();
 }
 
 void Layout::horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout)
@@ -79,37 +81,38 @@ void Layout::updateVisibility()
 	XOJ_CHECK_TYPE(Layout);
 
 	Rectangle visRect = getVisibleRect();
-	
+
 	// step through every possible page position and update using p->setIsVisible()
 	// Using initial grid aprox speeds things up by a factor of 5.  See previous git check-in for specifics.
 	int x1 = 0;
-	int y1 = 0;	
- 	
-	for (int onRow = 0; onRow < this->rows; onRow++)
+	int y1 = 0;
+
+	for (int row = 0; row < this->heightRows.size(); ++row)
 	{
-		int y2 = this->sizeRow[onRow];
-		for (int onCol = 0; onCol < this->columns; onCol++)
+		int y2 = this->heightRows[row];
+		for (int col = 0; col < this->widthCols.size(); ++col)
 		{
-			int x2 = this->sizeCol[onCol];		
-			int pageIndex = this->mapper.map(onCol, onRow);
-			if (pageIndex >= 0)	// a page exists at this grid location
+			int x2 = this->widthCols[col];
+			int pageIndex = this->mapper.map(col, row);
+			if (pageIndex >= 0)    // a page exists at this grid location
 			{
 
 				XojPageView* pageView = this->view->viewPages[pageIndex];
-				
-				
+
+
 				//check if grid location is visible as an aprox for page visiblity:
-				if(		!(visRect.x >x2  || visRect.x+visRect.width < x1) // visrect not outside current row/col 
-					&& 	!(visRect.y >y2  || visRect.y+visRect.height < y1))
+				if (!(visRect.x > x2 || visRect.x + visRect.width < x1) // visrect not outside current row/col
+				    && !(visRect.y > y2 || visRect.y + visRect.height < y1))
 				{
 					// now use exact check of page itself:
 					Rectangle pageRect = pageView->getRect();
-					if(		!(visRect.x >pageRect.x+pageRect.width  || visRect.x+visRect.width < pageRect.x) // visrect not outside current page dimensions 
-						&& 	!(visRect.y >pageRect.y+pageRect.height  || visRect.y+visRect.height < pageRect.y))
+					if (!(visRect.x > pageRect.x + pageRect.width ||
+					      visRect.x + visRect.width < pageRect.x) // visrect not outside current page dimensions
+					    && !(visRect.y > pageRect.y + pageRect.height || visRect.y + visRect.height < pageRect.y))
 					{
 						pageView->setIsVisible(true);
-					}	
-					else 
+					}
+					else
 					{
 						pageView->setIsVisible(false);
 					}
@@ -117,14 +120,14 @@ void Layout::updateVisibility()
 				else
 				{
 					pageView->setIsVisible(false);
-							
+
 				}
 			}
 			x1 = x2;
 		}
 		y1 = y2;
 	}
-	
+
 }
 
 Rectangle Layout::getVisibleRect()
@@ -137,140 +140,118 @@ Rectangle Layout::getVisibleRect()
 	                 gtk_adjustment_get_page_size(scrollHandling->getVertical()));
 }
 
-/**
- * Returns the height of the entire Layout
- */
-double Layout::getLayoutHeight()
+int addif(int lhs, int rhs, bool b)
+{
+	if (b)
+	{
+		return lhs + rhs;
+	}
+	return lhs;
+}
+
+
+void Layout::recalculate()
 {
 	XOJ_CHECK_TYPE(Layout);
 
-	return layoutHeight;
+	auto* settings = view->getControl()->getSettings();
+	auto len = view->viewPagesLen;
+	mapper.configureFromSettings(len, settings);
+	auto colCount = mapper.getColumns();
+	auto rowCount = mapper.getRows();
+
+	widthCols.assign(colCount, 0);
+	heightRows.assign(rowCount, 0);
+
+	//Todo: Mapper invert function  (index -> x,y) it is possible and faster!
+	for (size_t r = 0; r < rowCount; r++)
+	{
+		for (size_t c = 0; c < colCount; c++)
+		{
+			auto page = mapper.map(c, r);
+			if (page != -1)
+			{
+				auto* v = view->viewPages[page];
+				widthCols[c] = std::max(widthCols[c], v->getDisplayWidth());
+				heightRows[r] = std::max(heightRows[r], v->getDisplayHeight());
+			}
+		}
+	}
+
+	//add space around the entire page area to accomodate older Wacom tablets with limited sense area.
+	auto vPadding = addif(XOURNAL_PADDING, settings->getAddVerticalSpaceAmount(), settings->getAddVerticalSpace());
+	auto hPadding = addif(XOURNAL_PADDING, settings->getAddHorizontalSpaceAmount(), settings->getAddHorizontalSpace());
+
+	minWidth = 2 * hPadding + (widthCols.size() - 1) * XOURNAL_PADDING_BETWEEN;
+	minHeight = 2 * vPadding + (heightRows.size() - 1) * XOURNAL_PADDING_BETWEEN;
+
+	minWidth = std::accumulate(begin(widthCols), end(widthCols), minWidth);
+	minHeight = std::accumulate(begin(heightRows), end(heightRows), minHeight);
+
+	setLayoutSize(minWidth, minHeight);
+	valid = true;
 }
-
-/**
- * Returns the width of the entire Layout
- */
-double Layout::getLayoutWidth()
-{
-	XOJ_CHECK_TYPE(Layout);
-
-	return layoutWidth;
-}
-
 
 /**
  * layoutPages
  *  Sets out pages in a grid.
  *  Document pages are assigned to grid positions by the mapper object and may be ordered in a myriad of ways.
  */
-void Layout::layoutPages()
+void Layout::layoutPages(int width, int height)
 {
 	XOJ_CHECK_TYPE(Layout);
 
-	int len = this->view->viewPagesLen;
-	
-	
+	if (!valid)
+	{
+		recalculate();
+	}
+	valid = false;
+
+	auto len = this->view->viewPagesLen;
 	Settings* settings = this->view->getControl()->getSettings();
 
-	if( settings->isPresentationMode() )	//fix some settings for presentation mode
-	{
-		this->mapper.configureForPresentation(len, settings);
-	}
-	else{    // obtain rows, cols, paired and layout from view settings
-		this->mapper.configureFromSettings(len, settings);
-	}
-	
 	// get from mapper (some may have changed to accomodate paired setting etc.)
 	bool isPairedPages = this->mapper.getPairedPages();
-	this->rows = this->mapper.getRows();
-	this->columns = this->mapper.getColumns();
-	
-	this->lastGetViewAtRow = this->rows/2;		//reset to middle
-	this->lastGetViewAtCol = this->columns/2;
-	
 
-	this->sizeCol.assign(this->columns,0); //new size, clear to 0's
+	auto rows = this->heightRows.size();
+	auto columns = this->widthCols.size();
 
-	this->sizeRow.assign(this->rows,0);
-	
-	// look through every grid position, get assigned page from mapper and find out minimal row and column sizes to fit largest pages.
+	this->lastGetViewAtRow = rows / 2;        //reset to middle
+	this->lastGetViewAtCol = columns / 2;
 
-	for (int r = 0; r < this->rows; r++)
-	{
-		for (int c = 0; c < this->columns; c++)
-		{
-			int pageIndex = this->mapper.map(c, r);
-			if (pageIndex >= 0)
-			{
-
-				XojPageView* v = this->view->viewPages[pageIndex];
-
-				if (this->sizeCol[c] < v->getDisplayWidth())
-				{
-					this->sizeCol[c] = v->getDisplayWidth();
-				}
-				if (this->sizeRow[r] < v->getDisplayHeight())
-				{
-					this->sizeRow[r] = v->getDisplayHeight();
-				}
-			}
-
-		}
-	}
-
-	
-	
-	
 	//add space around the entire page area to accomodate older Wacom tablets with limited sense area.
-	int borderPrefX =  XOURNAL_PADDING;
-	if (settings->getAddHorizontalSpace() )
-	{
-		borderPrefX += settings->getAddHorizontalSpaceAmount();	// this adds extra space to the left and right 
-	}
-	
-	int borderPrefY = XOURNAL_PADDING;
-	if (settings->getAddVerticalSpace() )
-	{
-		borderPrefY += settings->getAddVerticalSpaceAmount();	// this adds space to the top and bottom
-	}	
+	auto v_padding = addif(XOURNAL_PADDING, settings->getAddVerticalSpaceAmount(), settings->getAddVerticalSpace());
+	auto h_padding = addif(XOURNAL_PADDING, settings->getAddHorizontalSpaceAmount(), settings->getAddHorizontalSpace());
 
-	
-	
 	//Calculate border offset which will center pages in viewing area
-	int visibleWidth = gtk_adjustment_get_page_size(scrollHandling->getHorizontal());
-	int minRequiredWidth = XOURNAL_PADDING_BETWEEN * (columns-1);
-	for (int c = 0 ; c< columns; c++ )
+	int minRequiredWidth = XOURNAL_PADDING_BETWEEN * (columns - 1);
+	for (auto const& c: this->widthCols)
 	{
-		minRequiredWidth += this->sizeCol[c];
+		minRequiredWidth += c;
 	}
-	int centeringXBorder = ( visibleWidth - minRequiredWidth )/2;	// this will center if all pages fit on screen.
+	int centeringXBorder = (width - minRequiredWidth) / 2;    // this will center if all pages fit on screen.
 
-	
-	int visibleHeight = gtk_adjustment_get_page_size(scrollHandling->getVertical());
-	int minRequiredHeight = XOURNAL_PADDING_BETWEEN * (rows-1);
-	for (int r = 0 ; r< rows; r++ )
+	int minRequiredHeight = XOURNAL_PADDING_BETWEEN * (rows - 1);
+	for (auto const& r: this->heightRows)
 	{
-		minRequiredHeight += this->sizeRow[r];
+		minRequiredHeight += r;
 	}
-	int centeringYBorder = ( visibleHeight - minRequiredHeight )/2;	// this will center if all pages fit on screen vertically.
+	int centeringYBorder =
+			(height - minRequiredHeight) / 2;    // this will center if all pages fit on screen vertically.
 
-	
-		
-	int borderX = MAX ( borderPrefX , centeringXBorder);
-	int borderY = MAX ( borderPrefY , centeringYBorder);
-	
-	
+	int borderX = MAX (h_padding, centeringXBorder);
+	int borderY = MAX (v_padding, centeringYBorder);
+
 	// initialize here and x again in loop below.
 	int x = borderX;
 	int y = borderY;
 
-
 	// Iterate over ALL possible rows and columns. 
 	//We don't know which page, if any,  is to be displayed in each row, column -  ask the mapper object!
 	//Then assign that page coordinates with center, left or right justify within row,column grid cell as required.
-	for (int r = 0; r < this->rows; r++)
+	for (int r = 0; r < rows; r++)
 	{
-		for (int c = 0; c < this->columns; c++)
+		for (int c = 0; c < columns; c++)
 		{
 			int pageAtRowCol = this->mapper.map(c, r);
 
@@ -278,12 +259,12 @@ void Layout::layoutPages()
 			{
 
 				XojPageView* v = this->view->viewPages[pageAtRowCol];
-				v->setMappedRowCol( r,c );  					//store row and column for e.g. proper arrow key navigation
+				v->setMappedRowCol(r, c);                    //store row and column for e.g. proper arrow key navigation
 				int vDisplayWidth = v->getDisplayWidth();
 				{
 					int paddingLeft;
 					int paddingRight;
-					int columnPadding = this->sizeCol[c] - vDisplayWidth;
+					int columnPadding = this->widthCols[c] - vDisplayWidth;
 
 					if (isPairedPages && len > 1)
 					{
@@ -295,103 +276,85 @@ void Layout::layoutPages()
 							paddingRight = XOURNAL_ROOM_FOR_SHADOW;
 						}
 						else
-						{								//align left
+						{                                //align left
 							paddingLeft = XOURNAL_ROOM_FOR_SHADOW;
 							paddingRight = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
 						}
 					}
 					else
-					{	// not paired page mode - center
+					{    // not paired page mode - center
 						paddingLeft = XOURNAL_PADDING_BETWEEN / 2 + columnPadding / 2;      //center justify
 						paddingRight = XOURNAL_PADDING_BETWEEN - paddingLeft + columnPadding / 2;
 					}
 
 					x += paddingLeft;
 
-					v->setX(x);		//set the page position
+					v->setX(x);        //set the page position
 					v->setY(y);
 
 					x += vDisplayWidth + paddingRight;
-
 				}
 			}
 			else
 			{
-				x += this->sizeCol[c] + XOURNAL_PADDING_BETWEEN;
+				x += this->widthCols[c] + XOURNAL_PADDING_BETWEEN;
 			}
 		}
 		x = borderX;
-		y += this->sizeRow[r] + XOURNAL_PADDING_BETWEEN;
+		y += this->heightRows[r] + XOURNAL_PADDING_BETWEEN;
 
 	}
 
 
+	//This seems to be wrong:
 	int totalWidth = borderX;
-	for (int c = 0; c < this->columns; c++)
+	for (int c = 0; c < columns; c++)
 	{
-		totalWidth += this->sizeCol[c] + XOURNAL_PADDING_BETWEEN;
-		this->sizeCol[c] = totalWidth;	//accumulated - absolute pixel location for use by getViewAt() and updateVisibility()
+		totalWidth += this->widthCols[c] + XOURNAL_PADDING_BETWEEN;
+		this->widthCols[c] = totalWidth;    //accumulated - absolute pixel location for use by getViewAt() and updateVisibility()
 	}
-	totalWidth += borderX - XOURNAL_PADDING_BETWEEN;
 
-	
+	//This seems to be wrong:
 	int totalHeight = borderY;
-	for (int r = 0; r < this->rows; r++)
+	for (int r = 0; r < rows; r++)
 	{
-		totalHeight += this->sizeRow[r]+ XOURNAL_PADDING_BETWEEN;
-		this->sizeRow[r] = totalHeight; 
+		totalHeight += this->heightRows[r] + XOURNAL_PADDING_BETWEEN;
+		this->heightRows[r] = totalHeight;
 	}
-	totalHeight += borderY - XOURNAL_PADDING_BETWEEN;
-
-
-	this->setLayoutSize(totalWidth, totalHeight);
-	
 }
-
 
 void Layout::setLayoutSize(int width, int height)
 {
 	XOJ_CHECK_TYPE(Layout);
-
-	this->layoutHeight = height;
-	this->layoutWidth = width;
-
 	this->scrollHandling->setLayoutSize(width, height);
 }
 
 void Layout::setSize(int widgetWidth, int widgetHeight)
 {
 	XOJ_CHECK_TYPE(Layout);
-
-	if (this->lastWidgetWidth != widgetWidth)
-	{
-		this->layoutPages();
-		this->lastWidgetWidth = widgetWidth;
-	}
-	else
-	{
-		this->setLayoutSize(this->layoutWidth, this->layoutHeight);
-	}
+	layoutPages(widgetWidth, widgetHeight);
 }
 
 void Layout::scrollRelative(double x, double y)
 {
 	XOJ_CHECK_TYPE(Layout);
 
-	if(this->view->getControl()->getSettings()->isPresentationMode())
+	if (this->view->getControl()->getSettings()->isPresentationMode())
 	{
 		return;
 	}
 
-	gtk_adjustment_set_value(scrollHandling->getHorizontal(), gtk_adjustment_get_value(scrollHandling->getHorizontal()) + x);
-	gtk_adjustment_set_value(scrollHandling->getVertical(), gtk_adjustment_get_value(scrollHandling->getVertical()) + y);
+	gtk_adjustment_set_value(scrollHandling->getHorizontal(),
+	                         gtk_adjustment_get_value(scrollHandling->getHorizontal()) + x);
+	gtk_adjustment_set_value(scrollHandling->getVertical(),
+	                         gtk_adjustment_get_value(scrollHandling->getVertical()) + y);
 }
 
 void Layout::scrollAbs(double x, double y)
 {
 	XOJ_CHECK_TYPE(Layout);
 
-	if(this->view->getControl()->getSettings()->isPresentationMode())
+	if (this->view->getControl()->getSettings()->isPresentationMode())
 	{
 		return;
 	}
@@ -412,59 +375,59 @@ void Layout::ensureRectIsVisible(int x, int y, int width, int height)
 
 XojPageView* Layout::getViewAt(int x, int y)
 {
-	
+
 	XOJ_CHECK_TYPE(Layout);
 
 //  No need to check page cache as the Linear search below starts at cached position.
 //  Keep Binary search handy to check against.
 //	
 //  //Binary Search ... too much overhead makes this a slower option in our use case.
-// 	auto rit = std::lower_bound( this->sizeRow.begin(),  this->sizeRow.end(), y);
-// 	int rb = rit - this->sizeRow.begin();	//get index
-// 	auto cit = std::lower_bound( this->sizeCol.begin(),  this->sizeCol.end(), x);
-// 	int cb = cit - this->sizeCol.begin();
+// 	auto rit = std::lower_bound( this->heightRows.begin(),  this->heightRows.end(), y);
+// 	int rb = rit - this->heightRows.begin();	//get index
+// 	auto cit = std::lower_bound( this->widthCols.begin(),  this->widthCols.end(), x);
+// 	int cb = cit - this->widthCols.begin();
 
 
 
-	int numRows = this->mapper.getRows();
-	int numCols = this->mapper.getColumns();
+	auto numRows = this->heightRows.size();//this->mapper.getRows();
+	auto numCols = this->widthCols.size();//this->mapper.getColumns();
 
-						
+
 	/* Linear Up or Down Search from last position: */
-	
+
 	// Rows:
 	int testRow = MAX(0, this->lastGetViewAtRow - 1);
-	if (testRow > 0 && y <= this->sizeRow[testRow]) //search lower
+	if (testRow > 0 && y <= this->heightRows[testRow]) //search lower
 	{
-		for (testRow--; testRow>=0; testRow--)
+		for (testRow--; testRow >= 0; testRow--)
 		{
-			if ( y >   this->sizeRow[testRow] ) 
+			if (y > this->heightRows[testRow])
 			{
-				break;	// past region
+				break;    // past region
 			}
 		}
-		testRow++;	// it's back up one
+		testRow++;    // it's back up one
 	}
-	else	//search higher
+	else    //search higher
 	{
 		for (; testRow < numRows; testRow++)
 		{
-			if (y <=   this->sizeRow[testRow]) 
+			if (y <= this->heightRows[testRow])
 			{
-				break;	// found region
+				break;    // found region
 			}
 		}
-		
+
 	}
-	
-	
+
+
 	//Now for columns:
-	int testCol = MAX(0, this->lastGetViewAtCol - 1);			
-	if (testCol >0 && x <= this->sizeCol[testCol]) //search lower
+	int testCol = MAX(0, this->lastGetViewAtCol - 1);
+	if (testCol > 0 && x <= this->widthCols[testCol]) //search lower
 	{
-		for (testCol--; testCol>=0; testCol--)
+		for (testCol--; testCol >= 0; testCol--)
 		{
-			if (x >   this->sizeCol[testCol]) 
+			if (x > this->widthCols[testCol])
 			{
 				break;
 			}
@@ -475,36 +438,46 @@ XojPageView* Layout::getViewAt(int x, int y)
 	{
 		for (; testCol < numCols; testCol++)
 		{
-			if (x <=   this->sizeCol[testCol])
+			if (x <= this->widthCols[testCol])
 			{
 				break;
 			}
 		}
-		
+
 	}
-	
-	
-	if (testCol < numCols && testRow < numRows) 
+
+
+	if (testCol < numCols && testRow < numRows)
 	{
-		int page = this->mapper.map(testCol,testRow);
+		int page = this->mapper.map(testCol, testRow);
 		this->lastGetViewAtRow = testRow;
 		this->lastGetViewAtCol = testCol;
 
-		if (page>=0 && this->view->viewPages[page]->containsPoint(x,y,false))
+		if (page >= 0 && this->view->viewPages[page]->containsPoint(x, y, false))
 		{
 			return this->view->viewPages[page];
 		}
-		
+
 	}
-	
+
 	return NULL;
-	
-	
+
+
 }
 
 
 int Layout::getIndexAtGridMap(int row, int col)
 {
-	return this->mapper.map( col, row); //watch out.. x,y --> c,r
-	
+	return this->mapper.map(col, row); //watch out.. x,y --> c,r
+
+}
+
+double Layout::getMinimalHeight()
+{
+	return this->minHeight;
+}
+
+double Layout::getMinimalWidth()
+{
+	return this->minWidth;
 }

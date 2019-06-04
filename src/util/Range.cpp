@@ -27,42 +27,42 @@ void Range::addPoint(double x, double y)
 	this->y2 = MAX(this->y2, y);
 }
 
-double Range::getX()
+double Range::getX() const
 {
 	XOJ_CHECK_TYPE(Range);
 
 	return this->x1;
 }
 
-double Range::getY()
+double Range::getY() const
 {
 	XOJ_CHECK_TYPE(Range);
 
 	return this->y1;
 }
 
-double Range::getWidth()
+double Range::getWidth() const
 {
 	XOJ_CHECK_TYPE(Range);
 
 	return this->x2 - this->x1;
 }
 
-double Range::getHeight()
+double Range::getHeight() const
 {
 	XOJ_CHECK_TYPE(Range);
 
 	return this->y2 - this->y1;
 }
 
-double Range::getX2()
+double Range::getX2() const
 {
 	XOJ_CHECK_TYPE(Range);
 
 	return this->x2;
 }
 
-double Range::getY2()
+double Range::getY2() const
 {
 	XOJ_CHECK_TYPE(Range);
 

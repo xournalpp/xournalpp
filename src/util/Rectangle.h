@@ -19,7 +19,7 @@ class Rectangle
 {
 public:
 	Rectangle();
-	Rectangle(Range& rect);
+	explicit Rectangle(const Range& rect);
 	Rectangle(double x, double y, double width, double height);
 	virtual ~Rectangle();
 
@@ -50,9 +50,9 @@ public:
 	/**
 	 * Same as the above, provided for convenience
 	 */
-	void add(const Rectangle &other);
+	void add(const Rectangle& other);
 
-	Rectangle intersect(const Rectangle &other);
+	Rectangle intersect(const Rectangle& other);
 
 	Rectangle& operator*=(double factor);
 

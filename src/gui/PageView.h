@@ -249,5 +249,5 @@ private:
 	friend class BaseSelectObject;
 	friend class SelectObject;
 	friend class PlayObject;
-	friend void Layout::layoutPages();	//only function allowed to setX(), setY(), setMappedRowCol()
+	friend void Layout::layoutPages(int width, int height);	//only function allowed to setX(), setY(), setMappedRowCol()
 };
