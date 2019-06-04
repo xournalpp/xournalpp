@@ -2365,14 +2365,14 @@ bool Control::loadPdf(Path filename, int scrollToPage)
 	{
 		Path f = filename;
 		f.clearExtensions();
-		f += ".pdf.xopp";
+		f += ".xopp";
 		Document* tmp = loadHandler.loadDocument(f.str());
 
 		if (tmp == NULL)
 		{
 			f = filename;
 			f.clearExtensions();
-			f += ".pdf.xoj";
+			f += ".xoj";
 			tmp = loadHandler.loadDocument(f.str());
 		}
 
