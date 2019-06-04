@@ -216,8 +216,8 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
 
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
-	int drawed = 0;
-	int notDrawed = 0;
+	int drawn = 0;
+	int notDrawn = 0;
 #endif // DEBUG_SHOW_REPAINT_BOUNDS
 	for (Element* e : *l->getElements())
 	{
@@ -235,13 +235,13 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 			{
 				drawElement(cr, e);
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
-				drawed++;
+				drawn++;
 #endif // DEBUG_SHOW_REPAINT_BOUNDS
 			}
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
 			else
 			{
-				notDrawed++;
+				notDrawn++;
 			}
 #endif // DEBUG_SHOW_REPAINT_BOUNDS
 
@@ -249,14 +249,14 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 		else
 		{
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
-			drawed++;
+			drawn++;
 #endif // DEBUG_SHOW_REPAINT_BOUNDS
 			drawElement(cr, e);
 		}
 	}
 
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
-	g_message("DBG:DocumentView: draw %i / not draw %i", drawed, notDrawed);
+	g_message("DBG:DocumentView: draw %i / not draw %i", drawn, notDrawn);
 #endif // DEBUG_SHOW_REPAINT_BOUNDS
 }
 

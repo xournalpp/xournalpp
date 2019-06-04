@@ -36,13 +36,13 @@ private:
 	void drawEraseableStroke(cairo_t* cr, Stroke* s);
 
 	/**
-	 * No pressure sensitivity, one line is drawed
+	 * No pressure sensitivity, one line is drawn
 	 */
 	void drawNoPressure();
 
 	/**
 	 * Draw a stroke with pressure, for this multiple
-	 * lines with different widths needs to be drawed
+	 * lines with different widths needs to be drawn
 	 */
 	void drawWithPressuire();
 
