@@ -46,6 +46,7 @@ public:
 				return checkLayer(l);
 			}
 		}
+		return false;
 	}
 
 protected:
