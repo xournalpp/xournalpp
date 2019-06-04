@@ -215,6 +215,24 @@ void HandRecognition::event(GdkDevice* device)
 	}
 }
 
+/**
+ * An event from a device occurred
+ */
+void HandRecognition::event(InputDeviceClass device)
+{
+	XOJ_CHECK_TYPE(HandRecognition);
+
+	if (!enabled)
+	{
+		return;
+	}
+
+	if (device == INPUT_DEVICE_PEN || device == INPUT_DEVICE_ERASER)
+	{
+		penEvent();
+	}
+}
+
 void HandRecognition::unblock()
 {
 	XOJ_CHECK_TYPE(HandRecognition);

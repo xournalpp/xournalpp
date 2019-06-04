@@ -371,6 +371,11 @@ public:
 	bool getInputSystemDrawOutsideWindowEnabled();
 	void setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnabled);
 
+	void loadDeviceClasses();
+	void saveDeviceClasses();
+	void setDeviceClassForDevice(GdkDevice* device, int deviceClass);
+	int getDeviceClassForDevice(GdkDevice* device);
+
 	/**
 	 * Get name, e.g. "cm"
 	 */
@@ -823,6 +828,8 @@ private:
 	bool inputSystemTPCButton;
 
 	bool inputSystemDrawOutsideWindow;
+
+	std::map<string, int> inputDeviceClasses = {};
 
 	/**
 	 * "Transaction" running, do not save until the end is reached

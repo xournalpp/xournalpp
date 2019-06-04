@@ -21,19 +21,19 @@ class TouchInputHandler : public AbstractInputHandler
 private:
 	XOJ_TYPE_ATTRIB;
 	GdkEventSequence* currentSequence = nullptr;
-	double lastPosX = 0.0;
-	double lastPosY = 0.0;
+	double lastPosX = -1.0;
+	double lastPosY = -1.0;
 
 private:
-	void actionStart(GdkEvent* event);
-	void actionMotion(GdkEvent* event);
-	void actionEnd(GdkEvent* event);
+	void actionStart(InputEvent* event);
+	void actionMotion(InputEvent* event);
+	void actionEnd(InputEvent* event);
 
 public:
 	explicit TouchInputHandler(InputContext* inputContext);
 	~TouchInputHandler() override;
 
-	bool handleImpl(GdkEvent* event) override;
+	bool handleImpl(InputEvent* event) override;
 
 };
 

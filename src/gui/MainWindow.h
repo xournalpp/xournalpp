@@ -98,6 +98,12 @@ public:
 	bool isGestureActive();
 	
 
+	/**
+	 * Disable kinetic scrolling if there is a touchscreen device that was manually mapped to another enabled input device class.
+	 * This is required so the GtkScrolledWindow does not swallow all the events.
+	 */
+	void setTouchscreenScrollingForDeviceMapping();
+
 private:
 	void initXournalWidget();
 

@@ -35,7 +35,7 @@ bool AbstractInputHandler::isBlocked()
 	return this->blocked;
 }
 
-bool AbstractInputHandler::handle(GdkEvent* event)
+bool AbstractInputHandler::handle(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(AbstractInputHandler);
 
@@ -52,7 +52,7 @@ bool AbstractInputHandler::handle(GdkEvent* event)
  *
  * @return page or NULL if none
  */
-XojPageView* AbstractInputHandler::getPageAtCurrentPosition(GdkEvent* event)
+XojPageView* AbstractInputHandler::getPageAtCurrentPosition(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(AbstractInputHandler);
 
@@ -61,8 +61,8 @@ XojPageView* AbstractInputHandler::getPageAtCurrentPosition(GdkEvent* event)
 		return nullptr;
 	}
 
-	gdouble eventX, eventY;
-	gdk_event_get_coords(event, &eventX, &eventY);
+	gdouble eventX = event->relativeX;
+	gdouble eventY = event->relativeY;
 
 	//take scroll offset into account
 	this->inputContext->getScrollHandling()->translate(eventX, eventY);
@@ -78,14 +78,14 @@ XojPageView* AbstractInputHandler::getPageAtCurrentPosition(GdkEvent* event)
 /**
  * Get input data relative to current input page
  */
-PositionInputData AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, GdkEvent* event)
+PositionInputData AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent* event)
 {
 	XOJ_CHECK_TYPE(AbstractInputHandler);
 
 	GtkXournal* xournal = inputContext->getXournal();
 
-	gdouble eventX, eventY;
-	gdk_event_get_coords(event, &eventX, &eventY);
+	gdouble eventX = event->relativeX;
+	gdouble eventY = event->relativeY;
 
 	//take scroll offset into account
 	this->inputContext->getScrollHandling()->translate(eventX, eventY);
@@ -97,11 +97,11 @@ PositionInputData AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPag
 
 	if (pressureSensitivity)
 	{
-		gdk_event_get_axis(event, GDK_AXIS_PRESSURE, &pos.pressure);
+		pos.pressure = event->pressure;
 	}
 
 	pos.state = this->inputContext->getModifierState();
-	pos.timestamp = gdk_event_get_time(event);
+	pos.timestamp = event->timestamp;
 
 	return pos;
 }

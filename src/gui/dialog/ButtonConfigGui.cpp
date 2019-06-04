@@ -36,7 +36,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 	gtk_container_add(GTK_CONTAINER(w), mainGrid);
 	gtk_widget_show_all(mainGrid);
 
-	this->cbDevice = get("cbDevice");
+	this->cbDevice = get("labelDevice");
 	this->cbDisableDrawing = get("cbDisableDrawing");
 
 	if (withDevice)

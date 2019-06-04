@@ -611,6 +611,18 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	xmlFree(value);
 }
 
+void Settings::loadDeviceClasses()
+{
+	SElement& s = getCustomElement("deviceClasses");
+	for (auto device : s.children())
+	{
+		SElement& deviceNode = device.second;
+		int deviceClass;
+		deviceNode.getInt("deviceClass", deviceClass);
+		inputDeviceClasses.insert(std::pair<string, int>(device.first, deviceClass));
+	}
+}
+
 void Settings::loadButtonConfig()
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -736,6 +748,7 @@ bool Settings::load()
 	xmlFreeDoc(doc);
 
 	loadButtonConfig();
+	loadDeviceClasses();
 
 	return true;
 }
@@ -771,6 +784,19 @@ xmlNodePtr Settings::saveProperty(const gchar* key, const gchar* value, xmlNodeP
 	xmlSetProp(xmlNode, (const xmlChar*) "value", (const xmlChar*) value);
 
 	return xmlNode;
+}
+
+void Settings::saveDeviceClasses()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	SElement& s = getCustomElement("deviceClasses");
+
+	for (const std::map<string, int>::value_type& device : inputDeviceClasses)
+	{
+		SElement& e = s.child(device.first);
+		e.setInt("deviceClass", device.second);
+	}
 }
 
 void Settings::saveButtonConfig()
@@ -856,6 +882,7 @@ void Settings::save()
 	}
 
 	saveButtonConfig();
+	saveDeviceClasses();
 
 	/* Create metadata root */
 	root = xmlNewDocNode(doc, NULL, (const xmlChar*) "settings", NULL);
@@ -2447,6 +2474,60 @@ bool Settings::getInputSystemDrawOutsideWindowEnabled()
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->inputSystemDrawOutsideWindow;
+}
+
+void Settings::setDeviceClassForDevice(GdkDevice* device, int deviceClass)
+{
+	string name = gdk_device_get_name(device);
+	auto it = inputDeviceClasses.find(name);
+	if (it != inputDeviceClasses.end())
+	{
+		it->second = deviceClass;
+	}
+	else
+	{
+		inputDeviceClasses.insert(std::pair<string, int>(name, deviceClass));
+	}
+}
+
+int Settings::getDeviceClassForDevice(GdkDevice* device)
+{
+	auto search = inputDeviceClasses.find(gdk_device_get_name(device));
+	if (search != inputDeviceClasses.end())
+	{
+		return search->second;
+	}
+	else
+	{
+		guint deviceType = 0;
+		switch(gdk_device_get_source(device))
+		{
+			case GDK_SOURCE_CURSOR:
+#if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
+			case GDK_SOURCE_TABLET_PAD:
+#endif
+			case GDK_SOURCE_KEYBOARD:
+				deviceType = 0;
+				break;
+			case GDK_SOURCE_MOUSE:
+			case GDK_SOURCE_TOUCHPAD:
+#if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
+			case GDK_SOURCE_TRACKPOINT:
+#endif
+				deviceType = 1;
+				break;
+			case GDK_SOURCE_PEN:
+				deviceType = 2;
+				break;
+			case GDK_SOURCE_ERASER:
+				deviceType = 3;
+				break;
+			case GDK_SOURCE_TOUCHSCREEN:
+				deviceType = 4;
+				break;
+		}
+		return deviceType;
+	}
 }
 
 //////////////////////////////////////////////////

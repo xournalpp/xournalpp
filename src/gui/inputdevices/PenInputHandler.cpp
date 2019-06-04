@@ -16,7 +16,6 @@
 #include <cmath>
 
 #define WIDGET_SCROLL_BORDER 25
-#define INPUT_STOP_DRAWING_ON_LEAVE false
 
 PenInputHandler::PenInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)
 {
@@ -30,7 +29,7 @@ PenInputHandler::~PenInputHandler()
 	XOJ_RELEASE_TYPE(PenInputHandler);
 }
 
-void PenInputHandler::updateLastEvent(GdkEvent* event)
+void PenInputHandler::updateLastEvent(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(PenInputHandler);
 
@@ -39,29 +38,31 @@ void PenInputHandler::updateLastEvent(GdkEvent* event)
 		return;
 	}
 
-	GdkEvent* oldEvent = this->lastEvent;
-	this->lastEvent = gdk_event_copy(event);
+	InputEvent* oldEvent = this->lastEvent;
+	this->lastEvent = event->copy();
 
 	//Update the refcount of the events for the GTK garbage collector
 	if (oldEvent != nullptr)
 	{
-		gdk_event_free(oldEvent);
+		delete oldEvent;
+		oldEvent = nullptr;
 	}
 
 	if (getPageAtCurrentPosition(event))
 	{
-		GdkEvent* oldHitEvent = this->lastHitEvent;
-		this->lastHitEvent = gdk_event_copy(event);
+		InputEvent* oldHitEvent = this->lastHitEvent;
+		this->lastHitEvent = event->copy();
 
 		//Update the refcount of the events for the GTK garbage collector
 		if (oldHitEvent != nullptr)
 		{
-			gdk_event_free(oldHitEvent);
+			delete oldHitEvent;
+			oldHitEvent = nullptr;
 		}
 	}
 }
 
-void PenInputHandler::handleScrollEvent(GdkEvent* event)
+void PenInputHandler::handleScrollEvent(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(PenInputHandler);
 
@@ -69,19 +70,16 @@ void PenInputHandler::handleScrollEvent(GdkEvent* event)
 	// scrolling changes window relative coordinates
 	// see github Gnome/evince@1adce5486b10e763bed869
 
-	gdouble rootX, rootY;
-	gdk_event_get_root_coords(event, &rootX, &rootY);
-
 	// GTK handles event compression/filtering differently between versions - this may be needed on certain hardware/GTK combinations.
-	if (std::abs((double)(this->scrollStartX - rootX)) < 0.1 && std::abs((double)(this->scrollStartY - rootY)) < 0.1 )
+	if (std::abs((double)(this->scrollStartX - event->absoluteX)) < 0.1 && std::abs((double)(this->scrollStartY - event->absoluteY)) < 0.1 )
 	{
 		return;
 	}
 
 	if (this->scrollOffsetX == 0 && this->scrollOffsetY == 0)
 	{
-		this->scrollOffsetX = this->scrollStartX - rootX;
-		this->scrollOffsetY = this->scrollStartY - rootY;
+		this->scrollOffsetX = this->scrollStartX - event->absoluteX;
+		this->scrollOffsetY = this->scrollStartY - event->absoluteY;
 
 		Util::execInUiThread([&]() {
 			this->inputContext->getXournal()->layout->scrollRelative(this->scrollOffsetX, this->scrollOffsetY);
@@ -92,12 +90,12 @@ void PenInputHandler::handleScrollEvent(GdkEvent* event)
 		});
 
 		// Update the reference for the scroll-offset
-		this->scrollStartX = rootX;
-		this->scrollStartY = rootY;
+		this->scrollStartX = event->absoluteX;
+		this->scrollStartY = event->absoluteY;
 	}
 }
 
-bool PenInputHandler::actionStart(GdkEvent* event)
+bool PenInputHandler::actionStart(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(PenInputHandler);
 
@@ -126,7 +124,8 @@ bool PenInputHandler::actionStart(GdkEvent* event)
 	// Save the starting offset when hand-tool is selected to get a reference for the scroll-offset
 	if (toolType == TOOL_HAND)
 	{
-		gdk_event_get_root_coords(event, &this->scrollStartX, &this->scrollStartY);
+		this->scrollStartX = event->absoluteX;
+		this->scrollStartY = event->absoluteY;
 	}
 
 	// Set the reference page for selections and other single-page elements so motion events are passed to the right page everytime
@@ -179,7 +178,7 @@ bool PenInputHandler::actionStart(GdkEvent* event)
 	return false;
 }
 
-bool PenInputHandler::actionMotion(GdkEvent* event)
+bool PenInputHandler::actionMotion(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(PenInputHandler);
 
@@ -187,35 +186,32 @@ bool PenInputHandler::actionMotion(GdkEvent* event)
 	 * Workaround for misbehaving devices where Enter events are not published every time
 	 * This is required to disable outside scrolling again
 	 */
-	gdouble eventX, eventY;
-	if (gdk_event_get_coords(event, &eventX, &eventY))
+	gdouble eventX = event->relativeX;
+	gdouble eventY = event->relativeY;
+	GtkAdjustment* adjHorizontal = this->inputContext->getScrollHandling()->getHorizontal();
+	GtkAdjustment* adjVertical = this->inputContext->getScrollHandling()->getVertical();
+	double h = gtk_adjustment_get_value(adjHorizontal);
+	double v = gtk_adjustment_get_value(adjVertical);
+	eventX -= h;
+	eventY -= v;
+
+	GtkWidget* widget = gtk_widget_get_parent(this->inputContext->getView()->getWidget());
+	gint width = gtk_widget_get_allocated_width(widget);
+	gint height = gtk_widget_get_allocated_height(widget);
+
+	if (!this->penInWidget && eventX > WIDGET_SCROLL_BORDER && eventY > WIDGET_SCROLL_BORDER && eventX < width - WIDGET_SCROLL_BORDER && eventY < height - WIDGET_SCROLL_BORDER)
 	{
-		GtkAdjustment* adjHorizontal = this->inputContext->getScrollHandling()->getHorizontal();
-		GtkAdjustment* adjVertical = this->inputContext->getScrollHandling()->getVertical();
-		double h = gtk_adjustment_get_value(adjHorizontal);
-		double v = gtk_adjustment_get_value(adjVertical);
-		eventX -= h;
-		eventY -= v;
-
-		GtkWidget* widget = gtk_widget_get_parent(this->inputContext->getView()->getWidget());
-		gint width = gtk_widget_get_allocated_width(widget);
-		gint height = gtk_widget_get_allocated_height(widget);
-
-
-		if (!this->penInWidget && eventX > WIDGET_SCROLL_BORDER && eventY > WIDGET_SCROLL_BORDER && eventX < width - WIDGET_SCROLL_BORDER && eventY < height - WIDGET_SCROLL_BORDER)
-		{
-			this->penInWidget = true;
-		}
+		this->penInWidget = true;
 	}
 
 
 
 	GtkXournal* xournal = this->inputContext->getXournal();
-	ToolHandler* h = this->inputContext->getToolHandler();
+	ToolHandler* toolHandler = this->inputContext->getToolHandler();
 
 	this->changeTool(event);
 
-	if (h->getToolType() == TOOL_HAND)
+	if (toolHandler->getToolType() == TOOL_HAND)
 	{
 		if (this->deviceClassPressed)
 		{
@@ -248,7 +244,6 @@ bool PenInputHandler::actionMotion(GdkEvent* event)
 	XojPageView* lastHitEventPage = getPageAtCurrentPosition(this->lastHitEvent);
 	XojPageView* currentPage = getPageAtCurrentPosition(event);
 
-	ToolHandler* toolHandler = this->inputContext->getToolHandler();
 	if (!toolHandler->isSinglePageTool())
 	{
 		/*
@@ -316,7 +311,7 @@ bool PenInputHandler::actionMotion(GdkEvent* event)
 	}
 }
 
-bool PenInputHandler::actionEnd(GdkEvent* event)
+bool PenInputHandler::actionEnd(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(PenInputHandler);
 
@@ -381,7 +376,7 @@ bool PenInputHandler::actionEnd(GdkEvent* event)
 	return false;
 }
 
-void PenInputHandler::actionPerform(GdkEvent* event)
+void PenInputHandler::actionPerform(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(PenInputHandler);
 
@@ -392,17 +387,17 @@ void PenInputHandler::actionPerform(GdkEvent* event)
 
 	XojPageView* currentPage = this->getPageAtCurrentPosition(event);
 	PositionInputData pos = this->getInputDataRelativeToCurrentPage(currentPage, event);
-	if (event->type == GDK_DOUBLE_BUTTON_PRESS)
+	if (event->type == BUTTON_2_PRESS_EVENT)
 	{
 		currentPage->onButtonDoublePressEvent(pos);
 	}
-	else if (event->type == GDK_TRIPLE_BUTTON_PRESS)
+	else if (event->type == BUTTON_3_PRESS_EVENT)
 	{
 		currentPage->onButtonTriplePressEvent(pos);
 	}
 }
 
-void PenInputHandler::actionLeaveWindow(GdkEvent* event)
+void PenInputHandler::actionLeaveWindow(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(PenInputHandler);
 
@@ -427,12 +422,8 @@ void PenInputHandler::actionLeaveWindow(GdkEvent* event)
 	} else if (this->deviceClassPressed)
 	{
 		// scroll if we have an active selection
-		gdouble eventX, eventY;
-		if (!gdk_event_get_coords(event, &eventX, &eventY))
-		{
-			g_warning("PenInputHandler: LeaveWindow: Could not get coordinates!");
-			return;
-		}
+		gdouble eventX = event->relativeX;
+		gdouble eventY = event->relativeY;
 
 		GtkAdjustment* adjHorizontal = this->inputContext->getScrollHandling()->getHorizontal();
 		GtkAdjustment* adjVertical = this->inputContext->getScrollHandling()->getVertical();
@@ -490,7 +481,7 @@ void PenInputHandler::actionLeaveWindow(GdkEvent* event)
 	}
 }
 
-void PenInputHandler::actionEnterWindow(GdkEvent* event)
+void PenInputHandler::actionEnterWindow(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(PenInputHandler);
 
