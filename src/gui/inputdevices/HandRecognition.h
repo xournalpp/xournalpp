@@ -15,6 +15,7 @@
 
 #include <gdk/gdk.h>
 #include "InputContext.h"
+#include "InputEvents.h"
 
 class Settings;
 class TouchDisableInterface;
@@ -35,6 +36,11 @@ public:
 	 * An event from a device occurred
 	 */
 	void event(GdkDevice* device);
+
+	/**
+	 * An event from a device occurred
+	 */
+	void event(InputDeviceClass device);
 
 	/**
 	 * Unblock the touchscreen immediately

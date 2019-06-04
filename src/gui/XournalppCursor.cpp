@@ -222,6 +222,10 @@ void XournalppCursor::updateCursor()
 		{
 			// No special cursor needed
 		}
+		else if (type == TOOL_FLOATING_TOOLBOX)
+		{
+			// No special cursor needed
+		}
 		else if (type == TOOL_VERTICAL_SPACE)
 		{
 			if (this->mouseDown)

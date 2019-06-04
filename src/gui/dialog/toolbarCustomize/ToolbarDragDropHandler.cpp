@@ -74,6 +74,7 @@ void ToolbarDragDropHandler::toolbarConfigDialogClosed()
 
 	Path file = Util::getConfigFile(TOOLBAR_CONFIG);
 	win->getToolbarModel()->save(file);
+	win->floatingToolbox->hide();
 }
 
 void ToolbarDragDropHandler::configure()
@@ -81,6 +82,11 @@ void ToolbarDragDropHandler::configure()
 	XOJ_CHECK_TYPE(ToolbarDragDropHandler);
 
 	MainWindow* win = control->getWindow();
+	
+	
+
+				
+	win->floatingToolbox->showForConfiguration();
 
 	this->prepareToolbarsForDragAndDrop();
 

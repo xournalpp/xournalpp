@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkAdjustment" id="adjustmentAudioGain">
@@ -39,15 +39,16 @@
     <property name="step_increment">0.05000000000000001</property>
     <property name="page_increment">10</property>
   </object>
-  <object class="GtkAdjustment" id="adjustmentStrokeIgnorePoints">
+  <object class="GtkAdjustment" id="adjustmentStrokeIgnoreLength">
+    <property name="lower">0.010000000000000011</property>
     <property name="upper">100</property>
-    <property name="value">8</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">5</property>
+    <property name="value">1</property>
+    <property name="step_increment">0.10000000000000001</property>
+    <property name="page_increment">2</property>
   </object>
   <object class="GtkAdjustment" id="adjustmentStrokeIgnoreTime">
     <property name="upper">1000</property>
-    <property name="value">300</property>
+    <property name="value">150</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
@@ -106,9 +107,6 @@
     <property name="type_hint">normal</property>
     <property name="gravity">center</property>
     <signal name="close" handler="gtk_widget_hide" swapped="no"/>
-    <child>
-      <placeholder/>
-    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox3">
         <property name="visible">True</property>
@@ -160,11 +158,13 @@
           <object class="GtkNotebook" id="notebook1">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="tab_pos">left</property>
             <property name="show_border">False</property>
             <child>
               <object class="GtkBox" id="saveLoadTabBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="sid01">
@@ -186,7 +186,6 @@
                               <object class="GtkFrame" id="sid04">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
                                   <object class="GtkAlignment" id="sid05">
@@ -576,6 +575,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
               <object class="GtkBox" id="inputTabBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkFrame" id="sid79">
@@ -669,10 +669,41 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                         <property name="left_padding">12</property>
                         <property name="right_padding">12</property>
                         <child>
-                          <object class="GtkLabel" id="sid86">
+                          <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">This feature is not yet implemented - this is only a placeholder</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">&lt;i&gt;Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)&lt;/i&gt;</property>
+                                <property name="use_markup">True</property>
+                                <property name="wrap">True</property>
+                                <property name="max_width_chars">85</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkBox" id="hboxInputDeviceClasses">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
                           </object>
                         </child>
                       </object>
@@ -726,6 +757,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
+                                <property name="xalign">0.5</property>
                                 <property name="draw_indicator">True</property>
                                 <child>
                                   <object class="GtkLabel" id="sid92">
@@ -813,6 +845,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
               <object class="GtkBox" id="mouseTabBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="sid17">
@@ -987,6 +1020,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
               <object class="GtkBox" id="stylusTabBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="sid30">
@@ -1008,7 +1042,6 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                               <object class="GtkFrame" id="sid33">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
                                   <object class="GtkAlignment" id="sid34">
@@ -1266,6 +1299,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
               <object class="GtkBox" id="touchTabBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="sid52">
@@ -1287,7 +1321,6 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                               <object class="GtkFrame" id="sid55">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
                                   <object class="GtkAlignment" id="sid56">
@@ -1808,6 +1841,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
               <object class="GtkBox" id="viewTabBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="sid95">
@@ -1829,7 +1863,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               <object class="GtkFrame" id="sid98">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
                                   <object class="GtkAlignment" id="sid99">
@@ -2415,6 +2448,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
               <object class="GtkBox" id="zoomTabBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="sid120">
@@ -2436,7 +2470,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               <object class="GtkFrame" id="sid123">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
                                   <object class="GtkAlignment" id="sid124">
@@ -2699,6 +2732,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
               <object class="GtkBox" id="drawingAreaTabBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="sid134">
@@ -2720,7 +2754,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               <object class="GtkFrame" id="sid137">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
                                   <object class="GtkAlignment" id="sid138">
@@ -3128,11 +3161,11 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         <property name="column_spacing">5</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbStrokeFilterEnabled">
-                                            <property name="label" translatable="yes">Enable  Stroke Filter</property>
+                                            <property name="label" translatable="yes">Enable Tap action.</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
-                                            <property name="tooltip_markup" translatable="yes">Ignore inputs of short time and length unless it comes in short succession.</property>
+                                            <property name="tooltip_markup" translatable="yes">Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox.</property>
                                             <property name="xalign">0</property>
                                             <property name="draw_indicator">True</property>
                                           </object>
@@ -3145,7 +3178,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                           <object class="GtkLabel" id="sid156">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">Ignore Time ( ms)</property>
+                                            <property name="label" translatable="yes">Ignore Time (ms)</property>
                                             <property name="angle">0.029999999999999999</property>
                                           </object>
                                           <packing>
@@ -3159,14 +3192,14 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                             <property name="can_focus">True</property>
                                             <property name="tooltip_markup" translatable="yes">How short (time)  AND...
 
-&lt;i&gt;Recommended: 200ms&lt;/i&gt;</property>
+&lt;i&gt;Recommended: 150ms&lt;/i&gt;</property>
                                             <property name="valign">start</property>
                                             <property name="max_width_chars">0</property>
-                                            <property name="text" translatable="yes">50</property>
+                                            <property name="text" translatable="yes">8</property>
                                             <property name="adjustment">adjustmentStrokeIgnoreTime</property>
                                             <property name="numeric">True</property>
                                             <property name="update_policy">if-valid</property>
-                                            <property name="value">50</property>
+                                            <property name="value">150</property>
                                           </object>
                                           <packing>
                                             <property name="left_attach">2</property>
@@ -3174,19 +3207,20 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkSpinButton" id="spStrokeIgnorePoints">
+                                          <object class="GtkSpinButton" id="spStrokeIgnoreLength">
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <property name="tooltip_markup" translatable="yes">How short (length in points)  of the stroke  AND...
+                                            <property name="tooltip_markup" translatable="yes">How short (screen mm)  of the stroke  AND...
 
-&lt;i&gt;Recommended: 8 points&lt;/i&gt;</property>
+&lt;i&gt;Recommended: 1 mm&lt;/i&gt;</property>
                                             <property name="valign">start</property>
                                             <property name="max_width_chars">0</property>
                                             <property name="text" translatable="yes">8</property>
-                                            <property name="adjustment">adjustmentStrokeIgnorePoints</property>
+                                            <property name="adjustment">adjustmentStrokeIgnoreLength</property>
+                                            <property name="digits">2</property>
                                             <property name="numeric">True</property>
                                             <property name="update_policy">if-valid</property>
-                                            <property name="value">8</property>
+                                            <property name="value">1</property>
                                           </object>
                                           <packing>
                                             <property name="left_attach">3</property>
@@ -3197,7 +3231,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                           <object class="GtkLabel" id="sid157">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">Max Length (points)</property>
+                                            <property name="label" translatable="yes">Max Length (mm)</property>
                                           </object>
                                           <packing>
                                             <property name="left_attach">3</property>
@@ -3236,13 +3270,14 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbdoActionOnStrokeFiltered">
-                                            <property name="label" translatable="yes">Select on quick tap.</property>
+                                          <object class="GtkCheckButton" id="cbTrySelectOnStrokeFiltered">
+                                            <property name="label" translatable="yes">Try to select object first.</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
-                                            <property name="tooltip_markup" translatable="yes">On quick tap select object.</property>
+                                            <property name="tooltip_markup" translatable="yes">Try to select object first; if nothing selected then show floating toolbox if enabled.</property>
                                             <property name="xalign">0</property>
+                                            <property name="yalign">0.43999999761581421</property>
                                             <property name="draw_indicator">True</property>
                                           </object>
                                           <packing>
@@ -3264,7 +3299,20 @@ It must be short in time and length and we can't have ignored another stroke rec
                                           </packing>
                                         </child>
                                         <child>
-                                          <placeholder/>
+                                          <object class="GtkCheckButton" id="cbDoActionOnStrokeFiltered">
+                                            <property name="label" translatable="yes">Show Floating Toolbox</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_markup" translatable="yes">Try to select object first; if nothing selected then show floating toolbox if enabled.</property>
+                                            <property name="xalign">0</property>
+                                            <property name="yalign">0.43000000715255737</property>
+                                            <property name="draw_indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">1</property>
+                                            <property name="top_attach">1</property>
+                                          </packing>
                                         </child>
                                       </object>
                                     </child>
@@ -3274,7 +3322,8 @@ It must be short in time and length and we can't have ignored another stroke rec
                                   <object class="GtkLabel" id="sid159">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="label" translatable="yes">Stroke Filter - w/ try quick Select ( Experimental )</property>
+                                    <property name="label" translatable="yes">Action on Tool Tap</property>
+                                    <property name="angle">0.040000000000000001</property>
                                   </object>
                                 </child>
                               </object>
@@ -3315,6 +3364,7 @@ It must be short in time and length and we can't have ignored another stroke rec
               <object class="GtkBox" id="defaultTabBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="sid160">
@@ -3336,7 +3386,6 @@ It must be short in time and length and we can't have ignored another stroke rec
                               <object class="GtkFrame" id="sid163">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
                                   <object class="GtkAlignment" id="sid164">
@@ -3458,6 +3507,7 @@ It must be short in time and length and we can't have ignored another stroke rec
               <object class="GtkBox" id="audioRecordingTabBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="sid166">
@@ -3479,7 +3529,6 @@ It must be short in time and length and we can't have ignored another stroke rec
                               <object class="GtkFrame" id="sid169">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
                                   <object class="GtkAlignment" id="sid170">

@@ -35,6 +35,9 @@ class Layer;
 class LatexController
 {
 public:
+	LatexController() = delete;
+	LatexController(const LatexController& other) = delete;
+	LatexController& operator=(const LatexController& other) = delete;
 	LatexController(Control* control);
 	virtual ~LatexController();
 
@@ -63,24 +66,28 @@ private:
 	void deleteOldImage();
 
 	/**
-	 * Run the LaTeX command asynchronously. Note that this method can only be
-	 * called when the preview is not updating.
+	 * Run the LaTeX command asynchronously to generate a preview for the given
+	 * LaTeX string. Note that this method can only be called when the preview
+	 * is not updating.
 	 *
 	 * @return The PID of the spawned process, or nullptr if the .tex file could
 	 * not be written or the command failed to start.
 	 */
-	std::unique_ptr<GPid> runCommandAsync();
+	std::unique_ptr<GPid> runCommandAsync(string texString);
 
 	/**
-	 * Asynchronously runs the LaTeX command and then updates the TeX image. If
-	 * the preview is already being updated, then this method will be a no-op.
+	 * Asynchronously runs the LaTeX command and then updates the TeX image with
+	 * the given LaTeX string. If the preview is already being updated, then
+	 * this method will be a no-op.
 	 */
-	void triggerImageUpdate();
+	void triggerImageUpdate(string texString);
 
 	/**
-	 * Show the LaTex Editor dialog
+	 * Show the LaTex Editor dialog, returning the final formula input by the
+	 * user. If the input was cancelled, the resulting string will be the same
+	 * as the initial formula.
 	 */
-	void showTexEditDialog();
+	string showTexEditDialog();
 
 	/**
 	 * Signal handler, updates the rendered image when the text in the editor
@@ -98,27 +105,19 @@ private:
 
 	void setUpdating(bool newValue);
 
-	/*******/
-	//Wrappers for signal handler who can't access non-static fields 
-	//(see implementation for further explanation)
-	void setImageInDialog(PopplerDocument* pdf);
-	void setCurrentTex(string currentTex);
-	GtkTextIter* getStartIterator(GtkTextBuffer* buffer);
-	GtkTextIter* getEndIterator(GtkTextBuffer* buffer);
-	/*******/
-
 	/**
-	 * Convert PDF Document to TexImage
+	 * Convert the given PDF Document to a TexImage and set the formula to the
+	 * given formula.
 	 */
-	std::unique_ptr<TexImage> convertDocumentToImage(PopplerDocument* doc);
+	std::unique_ptr<TexImage> convertDocumentToImage(PopplerDocument* doc, string formula);
 
 	/**
-	 * Load PDF as TexImage
+	 * Load the preview PDF from disk and create a TexImage object.
 	 */
-	std::unique_ptr<TexImage> loadRendered();
+	std::unique_ptr<TexImage> loadRendered(string renderedTex);
 
 	/**
-	 * Actual image creation
+	 * Insert the generated preview TexImage into the current page.
 	 */
 	void insertTexImage();
 
@@ -128,21 +127,20 @@ private:
 	Control* control = NULL;
 
 	/**
+	 * LaTex editor dialog
+	 */
+	LatexDialog dlg;
+
+	/**
 	 * Tex binary full path
 	 */
-	Path binTex;
+	Path pdflatexPath;
 
 	/**
 	 * The original TeX string when the dialog was opened, or the empty string
 	 * if creating a new LaTeX element.
 	 */
 	string initialTex;
-
-	/**
-	 * The TeX string that the LaTeX element should display after editing
-	 * finishes.
-	 */
-	string currentTex;
 
 	/**
 	 * The last TeX string shown in the preview.
@@ -203,7 +201,7 @@ private:
 	 * The directory in which the LaTeX files will be generated. Note that this
 	 * should be within a system temporary directory.
 	 */
-	Path texTmp;
+	Path texTmpDir;
 
 	/**
 	 * Previously existing TexImage
@@ -211,11 +209,6 @@ private:
 	TexImage* selectedTexImage = NULL;
 
 	Text* selectedText = NULL;
-
-	/**
-	 * LaTex editor dialog
-	 */
-	std::unique_ptr<LatexDialog> dlg = nullptr;
 
 	/**
 	 * The controller owns the rendered preview in order to be able to delete it

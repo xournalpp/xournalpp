@@ -29,6 +29,8 @@
 #endif
 
 #include <gdk/gdk.h>
+#include <util/DeviceListHelper.h>
+#include <gui/inputdevices/InputEvents.h>
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 		: GladeGui(gladeSearchPath, "main.glade", "mainWindow"),
@@ -39,6 +41,12 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	this->control = control;
 	this->toolbarWidgets = new GtkWidget* [TOOLBAR_DEFINITIONS_LEN];
 	this->toolbarSelectMenu = new MainWindowToolbarMenu(this);
+
+
+
+	GtkOverlay *overlay = GTK_OVERLAY (get("mainOverlay"));
+	this->floatingToolbox = new FloatingToolbox (this, overlay);
+
 
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++)
 	{
@@ -56,6 +64,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	g_signal_connect(this->window, "window_state_event", G_CALLBACK(windowStateEventCallback), this);
 
 	g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
+
 
 	// "watch over" all events
 	g_signal_connect(this->window, "key-press-event", G_CALLBACK(onKeyPressCallback), this);
@@ -163,6 +172,9 @@ MainWindow::~MainWindow()
 	delete this->toolbarSelectMenu;
 	this->toolbarSelectMenu = NULL;
 
+	delete this->floatingToolbox;
+	this->floatingToolbox = NULL;
+
 	delete this->xournal;
 	this->xournal = NULL;
 
@@ -241,6 +253,9 @@ void MainWindow::initXournalWidget()
 	else
 	{
 		winXournal = gtk_scrolled_window_new(NULL, NULL);
+
+		setTouchscreenScrollingForDeviceMapping();
+
 		gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
 
 		GtkWidget* vpXournal = gtk_viewport_new(NULL, NULL);
@@ -264,6 +279,24 @@ void MainWindow::initXournalWidget()
 	Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
 	scrollHandling->init(this->xournal->getWidget(), layout);
 	control->getZoomControl()->initZoomHandler(winXournal, xournal, control);
+}
+
+void MainWindow::setTouchscreenScrollingForDeviceMapping()
+{
+	XOJ_CHECK_TYPE(MainWindow);
+
+	auto deviceListHelper = new DeviceListHelper(false);
+	vector<InputDevice> deviceList = deviceListHelper->getDeviceList();
+	for(InputDevice inputDevice : deviceList)
+	{
+		GdkDevice* device = inputDevice.getDevice();
+		InputDeviceClass deviceClass = InputEvents::translateDeviceType(device, this->getControl()->getSettings());
+		if (gdk_device_get_source(device) == GDK_SOURCE_TOUCHSCREEN && deviceClass != INPUT_DEVICE_TOUCHSCREEN)
+		{
+			gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), false);
+			break;
+		}
+	}
 }
 
 /**
@@ -347,6 +380,7 @@ bool cancellable_cancel(GCancellable* cancel)
 void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y,
                                  GtkSelectionData* data, guint info, guint time, MainWindow* win)
 {
+	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
 
 	GtkWidget* source = gtk_drag_get_source_widget(dragContext);
 	if (source && widget == gtk_widget_get_toplevel(source))
@@ -689,6 +723,8 @@ void MainWindow::loadToolbar(ToolbarData* d)
 		this->toolbar->load(d, this->toolbarWidgets[i], TOOLBAR_DEFINITIONS[i].propName,
 		                    TOOLBAR_DEFINITIONS[i].horizontal);
 	}
+
+	this->floatingToolbox->flagRecalculateSizeRequired();
 }
 
 ToolbarData* MainWindow::getSelectedToolbar()
@@ -903,3 +939,4 @@ void MainWindow::setAudioPlaybackPaused(bool paused)
 
 	this->getToolMenuHandler()->setAudioPlaybackPaused(paused);
 }
+

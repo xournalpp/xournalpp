@@ -36,7 +36,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 	gtk_container_add(GTK_CONTAINER(w), mainGrid);
 	gtk_widget_show_all(mainGrid);
 
-	this->cbDevice = get("cbDevice");
+	this->cbDevice = get("labelDevice");
 	this->cbDisableDrawing = get("cbDisableDrawing");
 
 	if (withDevice)
@@ -69,6 +69,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 	ADD_TYPE_CB("lasso",			_("Select region"),			TOOL_SELECT_REGION);
 	ADD_TYPE_CB("rect-select",		_("Select rectangle"),		TOOL_SELECT_RECT);
 	ADD_TYPE_CB("hand",				_("Hand"),					TOOL_HAND);
+	ADD_TYPE_CB("floating_toolbox",	_("Floating Toolbox (experimental)"),		TOOL_FLOATING_TOOLBOX);
 
 	this->cbTool = get("cbTool");
 	gtk_combo_box_set_model(GTK_COMBO_BOX(this->cbTool), GTK_TREE_MODEL(typeModel));

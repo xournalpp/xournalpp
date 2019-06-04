@@ -21,7 +21,7 @@ private:
 public:
 	explicit KeyboardInputHandler(InputContext* inputContext);
 	~KeyboardInputHandler() override;
-	bool handleImpl(GdkEvent* event) override;
+	bool handleImpl(InputEvent* event) override;
 };
 
 

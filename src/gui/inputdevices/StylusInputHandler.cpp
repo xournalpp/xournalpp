@@ -21,7 +21,7 @@ StylusInputHandler::~StylusInputHandler()
 	XOJ_RELEASE_TYPE(StylusInputHandler);
 }
 
-bool StylusInputHandler::handleImpl(GdkEvent* event)
+bool StylusInputHandler::handleImpl(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(StylusInputHandler);
 
@@ -37,12 +37,10 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 	setPressedState(event);
 
 	// Trigger start of action when pen/mouse is pressed
-	if (event->type == GDK_BUTTON_PRESS)
+	if (event->type == BUTTON_PRESS_EVENT)
 	{
-		guint button;
-		gdk_event_get_button(event, &button);
 
-		if (button == 1 || this->inputContext->getSettings()->getInputSystemTPCButtonEnabled())
+		if (event->button == 1 || this->inputContext->getSettings()->getInputSystemTPCButtonEnabled())
 		{
 			this->actionStart(event);
 			return true;
@@ -51,31 +49,42 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 			// TPCButton is disabled and modifier button was pressed
 			this->actionEnd(event);
 			this->actionStart(event);
+		} else
+		{
+			// No input running but modifier key was pressed
+			// Change the tool depending on the key
+			changeTool(event);
 		}
 	}
 
 	// Trigger discrete action on double tap
-	if (event->type == GDK_DOUBLE_BUTTON_PRESS)
+	if (event->type == BUTTON_2_PRESS_EVENT || event->type == BUTTON_3_PRESS_EVENT)
 	{
 		this->actionPerform(event);
 		return true;
 	}
 
 	// Trigger motion action when pen/mouse is pressed and moved
-	if (this->deviceClassPressed && event->type == GDK_MOTION_NOTIFY) //mouse or pen moved
+	if (event->type == MOTION_EVENT) //mouse or pen moved
 	{
-		this->actionMotion(event);
+		if (this->deviceClassPressed)
+		{
+			this->actionMotion(event);
+		}
+		else
+		{
+			XournalppCursor* cursor = xournal->view->getCursor();
+			cursor->updateCursor();
+		}
+		// Update cursor visibility
+		xournal->view->getCursor()->setInvisible(false);
 	}
 
 
 	// Check if enter/leave events occur in possible locations. This is a bug of the hardware (there are such devices!)
-	if ((event->type == GDK_ENTER_NOTIFY || event->type == GDK_LEAVE_NOTIFY) && this->deviceClassPressed && this->lastEvent)
+	if ((event->type == ENTER_EVENT || event->type == LEAVE_EVENT) && this->deviceClassPressed && this->lastEvent)
 	{
-		gdouble lastX, lastY, currentX, currentY;
-		gdk_event_get_coords(this->lastEvent, &lastX, &lastY);
-		gdk_event_get_coords(event, &currentX, &currentY);
-
-		if (std::abs(currentX - lastX) > 100 || std::abs(currentY - lastY) > 100)
+		if (std::abs(event->relativeX - lastEvent->relativeX) > 100 || std::abs(event->relativeY - lastEvent->relativeY) > 100)
 		{
 			g_message("Discard impossible event - this is a sign of bugged hardware or drivers");
 			return true;
@@ -83,23 +92,20 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 	}
 
 	// Notify if pen enters/leaves widget
-	if (event->type == GDK_ENTER_NOTIFY && !this->inputRunning)
+	if (event->type == ENTER_EVENT && !this->inputRunning)
 	{
 		this->actionEnterWindow(event);
 	}
-	if (event->type == GDK_LEAVE_NOTIFY)
+	if (event->type == LEAVE_EVENT)
 	{
 		this->inputContext->getView()->getHandRecognition()->unblock();
 		this->actionLeaveWindow(event);
 	}
 
 	// Trigger end of action if pen tip leaves screen or mouse button is released
-	if (event->type == GDK_BUTTON_RELEASE)
+	if (event->type == BUTTON_RELEASE_EVENT)
 	{
-		guint button;
-		gdk_event_get_button(event, &button);
-
-		if (button == 1 || this->inputContext->getSettings()->getInputSystemTPCButtonEnabled())
+		if (event->button == 1 || this->inputContext->getSettings()->getInputSystemTPCButtonEnabled())
 		{
 			this->actionEnd(event);
 			return true;
@@ -108,11 +114,16 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 			// TPCButton is disabled and modifier button was released
 			this->actionEnd(event);
 			this->actionStart(event);
+		} else
+		{
+			// No input running but modifier key was pressed
+			// Change the tool depending on the key
+			changeTool(event);
 		}
 	}
 
 	// If we loose our Grab on the device end the current action
-	if (event->type == GDK_GRAB_BROKEN && this->deviceClassPressed)
+	if (event->type == GRAB_BROKEN_EVENT && this->deviceClassPressed)
 	{
 		// TODO: We may need to update pressed state manually here
 		this->actionEnd(event);
@@ -122,7 +133,7 @@ bool StylusInputHandler::handleImpl(GdkEvent* event)
 	return false;
 }
 
-void StylusInputHandler::setPressedState(GdkEvent* event)
+void StylusInputHandler::setPressedState(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(StylusInputHandler);
 
@@ -130,12 +141,9 @@ void StylusInputHandler::setPressedState(GdkEvent* event)
 
 	this->inputContext->getXournal()->view->getCursor()->setInsidePage(currentPage != nullptr);
 
-	if (event->type == GDK_BUTTON_PRESS) //mouse button pressed or pen touching surface
+	if (event->type == BUTTON_PRESS_EVENT) //mouse button pressed or pen touching surface
 	{
-		guint button;
-		gdk_event_get_button(event, &button);
-
-		switch (button)
+		switch (event->button)
 		{
 			case 1:
 				this->deviceClassPressed = true;
@@ -149,12 +157,9 @@ void StylusInputHandler::setPressedState(GdkEvent* event)
 				break;
 		}
 	}
-	if (event->type == GDK_BUTTON_RELEASE) //mouse button released or pen not touching surface anymore
+	if (event->type == BUTTON_RELEASE_EVENT) //mouse button released or pen not touching surface anymore
 	{
-		guint button;
-		gdk_event_get_button(event, &button);
-
-		switch (button)
+		switch (event->button)
 		{
 			case 1:
 				this->deviceClassPressed = false;
@@ -175,17 +180,16 @@ void StylusInputHandler::setPressedState(GdkEvent* event)
 	}
 }
 
-bool StylusInputHandler::changeTool(GdkEvent* event)
+bool StylusInputHandler::changeTool(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(StylusInputHandler);
 
 	Settings* settings = this->inputContext->getSettings();
 	ToolHandler* toolHandler = this->inputContext->getToolHandler();
-	GdkDevice* device = gdk_event_get_source_device(event);
 
 	ButtonConfig* cfg = nullptr;
 	//Stylus
-	if (gdk_device_get_source(device) == GDK_SOURCE_PEN)
+	if (event->deviceClass == INPUT_DEVICE_PEN)
 	{
 		if (this->modifier2)
 		{
@@ -196,7 +200,7 @@ bool StylusInputHandler::changeTool(GdkEvent* event)
 			cfg = settings->getStylusButton2Config();
 		}
 	}
-	else if (gdk_device_get_source(device) == GDK_SOURCE_ERASER)
+	else if (event->deviceClass == INPUT_DEVICE_ERASER)
 	{
 		cfg = settings->getEraserButtonConfig();
 	}

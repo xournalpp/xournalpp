@@ -1,0 +1,11 @@
+version: 1
+
+project:
+  name: com.github.xournalpp.xournalpp
+  version_command: git describe --tags
+
+build:
+  cmake:
+
+appimage:
+  linuxdeploy:

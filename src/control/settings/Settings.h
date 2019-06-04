@@ -371,6 +371,11 @@ public:
 	bool getInputSystemDrawOutsideWindowEnabled();
 	void setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnabled);
 
+	void loadDeviceClasses();
+	void saveDeviceClasses();
+	void setDeviceClassForDevice(GdkDevice* device, int deviceClass);
+	int getDeviceClassForDevice(GdkDevice* device);
+
 	/**
 	 * Get name, e.g. "cm"
 	 */
@@ -405,23 +410,33 @@ public:
 	/**
 	 * get strokeFilter settings
 	 */
-	void getStrokeFilter( int* strokeFilterIgnoreTime, int* strokeFilterIgnorePoints, int* strokeFilterSuccessiveTime);
+	void getStrokeFilter( int* strokeFilterIgnoreTime, double* strokeFilterIgnoreLength, int* strokeFilterSuccessiveTime);
 
 	/**
 	 * configure stroke filter
 	 */
-	void setStrokeFilter( int strokeFilterIgnoreTime, int strokeFilterIgnorePoints, int strokeFilterSuccessiveTime);
+	void setStrokeFilter( int strokeFilterIgnoreTime, double strokeFilterIgnoreLength, int strokeFilterSuccessiveTime);
 
 	/**
-	 * Set StrokeFilter enabled
+	 * Set DoActionOnStrokeFilter enabled
 	 */
 	void setDoActionOnStrokeFiltered(bool enabled);
 
 	/**
-	 * Get StrokeFilter enabled
+	 * Get DoActionOnStrokeFilter enabled
 	 */
 	bool getDoActionOnStrokeFiltered();
 
+		/**
+	 * Set TrySelectOnStrokeFilter enabled
+	 */
+	void setTrySelectOnStrokeFiltered(bool enabled);
+
+	/**
+	 * Get TrySelectOnStrokeFilter enabled
+	 */
+	bool getTrySelectOnStrokeFiltered();
+	
 public:
 	// Custom settings
 	SElement& getCustomElement(string name);
@@ -790,16 +805,17 @@ private:
 
 
 	/**
-	 * Used to filter strokes of short time and length unless successive
-	 * strokeFilterIgnorePoints			this many points
+	 * Used to filter strokes of short time and length unless successive in order to do something else ( i.e. select object, float Toolbox menu ).
+	 * strokeFilterIgnoreLength			this many mm ( double )
 	 * strokeFilterIgnoreTime 			within this time (ms)  will be ignored..
 	 * strokeFilterSuccessiveTime		...unless successive within this time.
 	 */
 	int strokeFilterIgnoreTime;
-	int strokeFilterIgnorePoints;
+	double strokeFilterIgnoreLength;
 	int strokeFilterSuccessiveTime;
 	bool strokeFilterEnabled;
 	bool doActionOnStrokeFiltered;
+	bool trySelectOnStrokeFiltered;
 
 	/**
 	 * Whether the new experimental input system is activated
@@ -812,6 +828,8 @@ private:
 	bool inputSystemTPCButton;
 
 	bool inputSystemDrawOutsideWindow;
+
+	std::map<string, int> inputDeviceClasses = {};
 
 	/**
 	 * "Transaction" running, do not save until the end is reached

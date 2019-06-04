@@ -20,17 +20,26 @@
 class LatexDialog : public GladeGui
 {
   public:
+	LatexDialog() = delete;
+	LatexDialog(const LatexDialog& other) = delete;
+	LatexDialog& operator=(const LatexDialog& other) = delete;
 	LatexDialog(GladeSearchpath* gladeSearchPath);
 	virtual ~LatexDialog();
 
   public:
+	/**
+	 * Show the dialog.
+	 */
 	virtual void show(GtkWindow* parent);
-	void save();
-	void load();
+
+	/**
+	 * Show the dialog, optionally selecting the text field contents by default.
+	 */
+	void show(GtkWindow* parent, bool selectTex);
 
 	// Set and retrieve text from text box
-	void setTex(string texString, bool preselect = false);
-	string getTex();
+	void setFinalTex(string texString);
+	string getFinalTex();
 
 	//Set and retrieve temporary Tex render
 	void setTempRender(PopplerDocument* pdf);
@@ -38,6 +47,11 @@ class LatexDialog : public GladeGui
 	// Necessary for the controller in order to connect the 'text-changed'
 	// signal handler
 	GtkTextBuffer* getTextBuffer();
+
+	/**
+	 * @return The contents of the formula input text buffer.
+	 */
+	string getBufferContents();
 
   private:
 	XOJ_TYPE_ATTRIB;
@@ -51,6 +65,8 @@ class LatexDialog : public GladeGui
 	GtkWidget* texBox;
 	GtkTextBuffer* textBuffer;
 
-	string theLatex;
-	bool preselect = false;
+	/**
+	 * The final LaTeX string to save once the dialog is closed.
+	 */
+	string finalLatex;
 };

@@ -449,14 +449,76 @@ void TextEditor::toggleBold()
 	//this->repaintEditor();
 }
 
-void TextEditor::selectAll()
+void TextEditor::selectAtCursor(TextEditor::SelectType ty)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	GtkTextIter start_iter, end_iter;
+	GtkTextMark* mark = gtk_text_buffer_get_insert(this->buffer);
+	GtkTextIter startPos;
+	GtkTextIter endPos;
+	gtk_text_buffer_get_selection_bounds(this->buffer, &startPos, &endPos);
+	const auto searchFlag = GTK_TEXT_SEARCH_TEXT_ONLY; // To be used to find double newlines
 
-	gtk_text_buffer_get_bounds(buffer, &start_iter, &end_iter);
-	gtk_text_buffer_select_range(buffer, &start_iter, &end_iter);
+	switch(ty) {
+	case TextEditor::SelectType::word:
+		// Do nothing if cursor is over whitespace
+		GtkTextIter currentPos;
+		gtk_text_buffer_get_iter_at_mark(this->buffer, &currentPos, mark);
+		if (!gtk_text_iter_inside_word(&currentPos))
+		{
+			return;
+		}
+
+		if (!gtk_text_iter_starts_word(&currentPos))
+		{
+			gtk_text_iter_backward_word_start(&startPos);
+		}
+		if (!gtk_text_iter_ends_word(&currentPos))
+		{
+			gtk_text_iter_forward_word_end(&endPos);
+		}
+		break;
+	case TextEditor::SelectType::paragraph:
+		// Note that a GTK "paragraph" is a line, so there's no nice one-liner.
+		// We define a paragraph as text separated by double newlines.
+		while (!gtk_text_iter_is_start(&startPos))
+		{
+			// There's no GTK function to go to line start, so do it manually.
+			while (!gtk_text_iter_starts_line(&startPos))
+			{
+				if (!gtk_text_iter_backward_word_start(&startPos))
+				{
+					break;
+				}
+			}
+			// Check for paragraph start
+			GtkTextIter searchPos = startPos;
+			gtk_text_iter_backward_chars(&searchPos, 2);
+			if (gtk_text_iter_backward_search(&startPos, "\n\n", searchFlag, nullptr, nullptr, &searchPos))
+			{
+				break;
+			}
+			gtk_text_iter_backward_line(&startPos);
+		}
+		while (!gtk_text_iter_ends_line(&endPos))
+		{
+			gtk_text_iter_forward_to_line_end(&endPos);
+			// Check for paragraph end
+			GtkTextIter searchPos = endPos;
+			gtk_text_iter_forward_chars(&searchPos, 2);
+			if (gtk_text_iter_forward_search(&endPos, "\n\n", searchFlag, nullptr, nullptr, &searchPos))
+			{
+				break;
+			}
+			gtk_text_iter_forward_line(&endPos);
+		}
+		break;
+	case TextEditor::SelectType::all:
+		gtk_text_buffer_get_bounds(this->buffer, &startPos, &endPos);
+		break;
+	}
+
+	gtk_text_buffer_select_range(this->buffer, &startPos, &endPos);
 
 	this->repaintEditor();
 }

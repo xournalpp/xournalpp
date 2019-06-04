@@ -146,11 +146,12 @@ void Settings::loadDefault()
 	this->inputSystemTPCButton = false;
 	this->inputSystemDrawOutsideWindow = true;
 
-	this->strokeFilterIgnoreTime = 200;
-	this->strokeFilterIgnorePoints = 8;
+	this->strokeFilterIgnoreTime = 150;
+	this->strokeFilterIgnoreLength = 1;
 	this->strokeFilterSuccessiveTime = 500;
 	this->strokeFilterEnabled = false;
 	this->doActionOnStrokeFiltered = false;
+	this->trySelectOnStrokeFiltered = false;
 
 	this->inTransaction = false;
 
@@ -585,9 +586,9 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->strokeFilterIgnoreTime = g_ascii_strtoll((const char*) value, NULL, 10);
 	}
-	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterIgnorePoints") == 0)
+	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterIgnoreLength") == 0)
 	{
-		this->strokeFilterIgnorePoints = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->strokeFilterIgnoreLength = tempg_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterSuccessiveTime") == 0)
 	{
@@ -601,9 +602,25 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->doActionOnStrokeFiltered = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "trySelectOnStrokeFiltered") == 0)
+	{
+		this->trySelectOnStrokeFiltered = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
 
 	xmlFree(name);
 	xmlFree(value);
+}
+
+void Settings::loadDeviceClasses()
+{
+	SElement& s = getCustomElement("deviceClasses");
+	for (auto device : s.children())
+	{
+		SElement& deviceNode = device.second;
+		int deviceClass;
+		deviceNode.getInt("deviceClass", deviceClass);
+		inputDeviceClasses.insert(std::pair<string, int>(device.first, deviceClass));
+	}
 }
 
 void Settings::loadButtonConfig()
@@ -731,6 +748,7 @@ bool Settings::load()
 	xmlFreeDoc(doc);
 
 	loadButtonConfig();
+	loadDeviceClasses();
 
 	return true;
 }
@@ -766,6 +784,19 @@ xmlNodePtr Settings::saveProperty(const gchar* key, const gchar* value, xmlNodeP
 	xmlSetProp(xmlNode, (const xmlChar*) "value", (const xmlChar*) value);
 
 	return xmlNode;
+}
+
+void Settings::saveDeviceClasses()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	SElement& s = getCustomElement("deviceClasses");
+
+	for (const std::map<string, int>::value_type& device : inputDeviceClasses)
+	{
+		SElement& e = s.child(device.first);
+		e.setInt("deviceClass", device.second);
+	}
 }
 
 void Settings::saveButtonConfig()
@@ -851,6 +882,7 @@ void Settings::save()
 	}
 
 	saveButtonConfig();
+	saveDeviceClasses();
 
 	/* Create metadata root */
 	root = xmlNewDocNode(doc, NULL, (const xmlChar*) "settings", NULL);
@@ -970,11 +1002,12 @@ void Settings::save()
 	WRITE_STRING_PROP(pluginDisabled);
 
 	WRITE_INT_PROP(strokeFilterIgnoreTime);
-	WRITE_INT_PROP(strokeFilterIgnorePoints);
+	WRITE_DOUBLE_PROP(strokeFilterIgnoreLength);
 	WRITE_INT_PROP(strokeFilterSuccessiveTime);
 
 	WRITE_BOOL_PROP(strokeFilterEnabled);
 	WRITE_BOOL_PROP(doActionOnStrokeFiltered);
+	WRITE_BOOL_PROP(trySelectOnStrokeFiltered);
 
 	WRITE_BOOL_PROP(experimentalInputSystemEnabled);
 	WRITE_BOOL_PROP(inputSystemTPCButton);
@@ -2330,20 +2363,20 @@ void Settings::setPluginDisabled(string pluginEnabled)
 }
 
 
-void Settings::getStrokeFilter( int* ignoreTime, int* ignorePoints, int* successiveTime)
+void Settings::getStrokeFilter( int* ignoreTime, double* ignoreLength, int* successiveTime)
 {
 	XOJ_CHECK_TYPE(Settings);
 	*ignoreTime = this->strokeFilterIgnoreTime;
-	*ignorePoints = this->strokeFilterIgnorePoints;
+	*ignoreLength = this->strokeFilterIgnoreLength;
 	*successiveTime = this->strokeFilterSuccessiveTime;
 
 }
 
-void Settings::setStrokeFilter( int ignoreTime, int ignorePoints, int successiveTime)
+void Settings::setStrokeFilter( int ignoreTime, double ignoreLength, int successiveTime)
 {
 	XOJ_CHECK_TYPE(Settings);
 	this->strokeFilterIgnoreTime = ignoreTime;
-	this->strokeFilterIgnorePoints = ignorePoints;
+	this->strokeFilterIgnoreLength = ignoreLength;
 	this->strokeFilterSuccessiveTime = successiveTime;
 
 }
@@ -2371,6 +2404,18 @@ bool Settings::getDoActionOnStrokeFiltered()
 {
 	XOJ_CHECK_TYPE(Settings);
 	return this->doActionOnStrokeFiltered;
+}
+
+void Settings::setTrySelectOnStrokeFiltered(bool enabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+	this->trySelectOnStrokeFiltered = enabled;
+}
+
+bool Settings::getTrySelectOnStrokeFiltered()
+{
+	XOJ_CHECK_TYPE(Settings);
+	return this->trySelectOnStrokeFiltered;
 }
 
 
@@ -2429,6 +2474,60 @@ bool Settings::getInputSystemDrawOutsideWindowEnabled()
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->inputSystemDrawOutsideWindow;
+}
+
+void Settings::setDeviceClassForDevice(GdkDevice* device, int deviceClass)
+{
+	string name = gdk_device_get_name(device);
+	auto it = inputDeviceClasses.find(name);
+	if (it != inputDeviceClasses.end())
+	{
+		it->second = deviceClass;
+	}
+	else
+	{
+		inputDeviceClasses.insert(std::pair<string, int>(name, deviceClass));
+	}
+}
+
+int Settings::getDeviceClassForDevice(GdkDevice* device)
+{
+	auto search = inputDeviceClasses.find(gdk_device_get_name(device));
+	if (search != inputDeviceClasses.end())
+	{
+		return search->second;
+	}
+	else
+	{
+		guint deviceType = 0;
+		switch(gdk_device_get_source(device))
+		{
+			case GDK_SOURCE_CURSOR:
+#if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
+			case GDK_SOURCE_TABLET_PAD:
+#endif
+			case GDK_SOURCE_KEYBOARD:
+				deviceType = 0;
+				break;
+			case GDK_SOURCE_MOUSE:
+			case GDK_SOURCE_TOUCHPAD:
+#if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
+			case GDK_SOURCE_TRACKPOINT:
+#endif
+				deviceType = 1;
+				break;
+			case GDK_SOURCE_PEN:
+				deviceType = 2;
+				break;
+			case GDK_SOURCE_ERASER:
+				deviceType = 3;
+				break;
+			case GDK_SOURCE_TOUCHSCREEN:
+				deviceType = 4;
+				break;
+		}
+		return deviceType;
+	}
 }
 
 //////////////////////////////////////////////////

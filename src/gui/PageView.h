@@ -149,6 +149,8 @@ public:
 public: // event handler
 	bool onButtonPressEvent(const PositionInputData& pos);
 	bool onButtonReleaseEvent(const PositionInputData& pos);
+	bool onButtonDoublePressEvent(const PositionInputData& pos);
+	bool onButtonTriplePressEvent(const PositionInputData& pos);
 	bool onMotionNotifyEvent(const PositionInputData& pos);
 
 	/**

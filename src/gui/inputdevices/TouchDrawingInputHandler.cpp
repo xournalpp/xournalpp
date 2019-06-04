@@ -19,7 +19,7 @@ TouchDrawingInputHandler::~TouchDrawingInputHandler()
 	XOJ_RELEASE_TYPE(TouchDrawingInputHandler);
 }
 
-bool TouchDrawingInputHandler::handleImpl(GdkEvent* event)
+bool TouchDrawingInputHandler::handleImpl(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(TouchDrawingInputHandler);
 
@@ -31,10 +31,8 @@ bool TouchDrawingInputHandler::handleImpl(GdkEvent* event)
 		return true;
 	}
 
-	GdkEventSequence* sequence = gdk_event_get_event_sequence(event);
-
 	// Disallow multitouch
-	if (this->currentSequence && this->currentSequence != sequence)
+	if (this->currentSequence && this->currentSequence != event->sequence)
 	{
 		return false;
 	}
@@ -43,9 +41,9 @@ bool TouchDrawingInputHandler::handleImpl(GdkEvent* event)
 	 * Trigger start action
 	 */
 	// Trigger start of action when pen/mouse is pressed
-	if (event->type == GDK_TOUCH_BEGIN && this->currentSequence == nullptr)
+	if (event->type == BUTTON_PRESS_EVENT && this->currentSequence == nullptr)
 	{
-		this->currentSequence = sequence;
+		this->currentSequence = event->sequence;
 		this->deviceClassPressed = true;
 		this->actionStart(event);
 		return true;
@@ -55,23 +53,23 @@ bool TouchDrawingInputHandler::handleImpl(GdkEvent* event)
 	 * Trigger motion actions
 	 */
 	// Trigger motion action when finger is pressed and moved
-	if (this->deviceClassPressed && event->type == GDK_TOUCH_UPDATE)
+	if (this->deviceClassPressed && event->type == MOTION_EVENT)
 	{
 		this->actionMotion(event);
 	}
 
 	// Notify if finger enters/leaves widget
-	if (event->type == GDK_ENTER_NOTIFY)
+	if (event->type == ENTER_EVENT)
 	{
 		this->actionEnterWindow(event);
 	}
-	if (event->type == GDK_LEAVE_NOTIFY)
+	if (event->type == LEAVE_EVENT)
 	{
 		this->actionLeaveWindow(event);
 	}
 
 	// Trigger end of action if mouse button is released
-	if (event->type == GDK_TOUCH_END || event->type == GDK_TOUCH_CANCEL)
+	if (event->type == BUTTON_RELEASE_EVENT)
 	{
 		this->currentSequence = nullptr;
 		this->actionEnd(event);
@@ -80,7 +78,7 @@ bool TouchDrawingInputHandler::handleImpl(GdkEvent* event)
 	}
 
 	// If we loose our Grab on the device end the current action
-	if (event->type == GDK_GRAB_BROKEN && this->deviceClassPressed)
+	if (event->type == GRAB_BROKEN_EVENT && this->deviceClassPressed)
 	{
 		this->currentSequence = nullptr;
 		this->actionEnd(event);
@@ -91,17 +89,16 @@ bool TouchDrawingInputHandler::handleImpl(GdkEvent* event)
 	return false;
 }
 
-bool TouchDrawingInputHandler::changeTool(GdkEvent* event)
+bool TouchDrawingInputHandler::changeTool(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(TouchDrawingInputHandler);
 
 	Settings* settings = this->inputContext->getSettings();
 	ButtonConfig* cfgTouch = settings->getTouchButtonConfig();
 	ToolHandler* toolHandler = this->inputContext->getToolHandler();
-	GdkDevice* device = gdk_event_get_source_device(event);
 
 	ButtonConfig* cfg = nullptr;
-	if (cfgTouch->device == gdk_device_get_name(device))
+	if (cfgTouch->device == event->deviceName)
 	{
 		cfg = cfgTouch;
 
