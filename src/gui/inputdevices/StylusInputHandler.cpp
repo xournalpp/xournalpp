@@ -65,9 +65,16 @@ bool StylusInputHandler::handleImpl(InputEvent* event)
 	}
 
 	// Trigger motion action when pen/mouse is pressed and moved
-	if (this->deviceClassPressed && event->type == MOTION_EVENT) //mouse or pen moved
+	if (event->type == MOTION_EVENT) //mouse or pen moved
 	{
-		this->actionMotion(event);
+		if (this->deviceClassPressed)
+		{
+			this->actionMotion(event);
+		} else
+		{
+			XournalppCursor* cursor = xournal->view->getCursor();
+			cursor->updateCursor();
+		}
 	}
 
 
