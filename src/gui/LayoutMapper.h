@@ -14,17 +14,27 @@
 #include <XournalType.h>
 #include "control/settings/Settings.h"
 
+/**
+ * @brief The Type of the Layout as bitmask.
+ * V RTL BT
+ * 0 0   0
+ * 1 0   0
+ * 0 1   0
+ * 1 1   0
+ * 0 0   1
+ * 1 0   1
+ * 0 1   1
+ * 1 1   1
+ */
 enum LayoutType : unsigned
-{                             // V RTL BTT
-	Horizontal = 0,           // 0 0   0
-	Vertical = 1,             // 1 0   0
-	RightToLeft = 2,          // 0 1   0
-	// Vertical_RL = 3,       // 1 1   0
-	BottomToTop = 4,          // 0 0   1
-	// Vertical_BT = 5,       // 1 0   1
-	// Horizontal_RL_BT = 6,  // 0 1   1
-	// Vertical_BT_RL = 7,    // 1 1   1
-	Size = 8                  // EnumSize
+{
+	TopToBottom = 0,
+	LeftToRight = 0,
+	Horizontal = 0,
+	Vertical = 1,
+	RightToLeft = 2,
+	BottomToTop = 4,
+	Size = 8
 };
 
 /** 
@@ -112,7 +122,9 @@ public:
 	 */
 	bool getPairedPages();
 
-	bool isRightToLeft();
+	bool isRightToLeft() const;
+	bool isBottomToTop() const;
+	bool isVertical() const;
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -124,9 +136,5 @@ private:
 	int offset = 0;
 	LayoutType layoutType = Horizontal;
 	bool isPairedPages = false;
-
-	bool isBottomToTop() const;
-
-	bool isVertical() const;
 };
 

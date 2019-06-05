@@ -121,32 +121,32 @@ private:
 
 	LayoutMapper mapper;
 
-	XournalView* view{};
-	ScrollHandling* scrollHandling{};
+	XournalView* view = nullptr;
+	ScrollHandling* scrollHandling = nullptr;
 
 	std::vector<int> widthCols;
 	std::vector<int> heightRows;
 
-	double lastScrollHorizontal{-1};
-	double lastScrollVertical{-1};
+	double lastScrollHorizontal = -1;
+	double lastScrollVertical = -1;
 
 	/**
 	 * The last width and height of the widget
 	 */
-	int lastWidgetWidth{0};
-	int lastWidgetHeight{0};
+	int lastWidgetWidth = 0;
+	int lastWidgetHeight = 0;
 
 	/**
 	 * The width and height of all our pages
 	 */
-	int minWidth{0};
-	int minHeight{0};
+	int minWidth = 0;
+	int minHeight = 0;
 
 	/**
 	 * cache the last GetViewAt() row and column.
 	 */
-	int lastGetViewAtRow{0};
-	int lastGetViewAtCol{0};
+	int lastGetViewAtRow = 0;
+	int lastGetViewAtCol = 0;
 
-	bool valid{false};
+	bool valid = false;
 };

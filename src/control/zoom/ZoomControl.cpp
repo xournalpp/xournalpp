@@ -7,8 +7,6 @@
 #include "gui/widgets/XournalWidget.h"
 #include "gui/XournalView.h"
 
-#include <cassert>
-
 ZoomControl::ZoomControl()
 {
 	XOJ_INIT_TYPE(ZoomControl);
@@ -585,7 +583,7 @@ bool ZoomControl::onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle* allo
 
 	Rectangle r(allocation->x, allocation->y, allocation->width, allocation->height);
 	auto layout = gtk_xournal_get_layout(zoom->view->getWidget());
-	assert(widget != zoom->view->getWidget());
+	g_assert_true(widget != zoom->view->getWidget());
 
 	zoom->updateZoomPresentationValue();
 	zoom->updateZoomFitValue(r);

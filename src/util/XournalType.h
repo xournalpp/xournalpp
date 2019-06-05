@@ -38,11 +38,9 @@ void xoj_momoryleak_printRemainingObjects();
 #endif
 
 #ifdef DEV_CALL_LOG
-#define CALL_LOG(type, clazz, obj) { \
-		Log::trace(type, clazz, __FUNCTION__, (long)obj); \
-	}
+#define CALL_LOG(type, clazz, obj) Log::trace(type, clazz, __FUNCTION__, (long)obj)
 #else
-#define CALL_LOG(type, clazz, obj)
+#define CALL_LOG(type, clazz, obj) (void(0))
 #endif
 
 #define XOJ_DECLARE_TYPE(type, id) \
@@ -80,7 +78,7 @@ const char* xoj_type_getName(int id);
  */
 #ifdef DEV_MEMORY_LEAK_CHECKING
 #define XOJ_RELEASE_TYPE(type) do { \
-		XOJ_CHECK_TYPE(type) \
+		XOJ_CHECK_TYPE(type); \
 		this->z__xoj_type = -(__XOJ_TYPE_ ## type); \
 		this->z__xoj_typeCheckvalue = 0xFFAA00AA; \
 		CALL_LOG("release", #type, this); \

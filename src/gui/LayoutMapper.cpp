@@ -35,9 +35,9 @@ void LayoutMapper::configureFromSettings(size_t numPages, Settings* settings)
 	};
 	//assemble bitflags for LayoutType
 	auto type = settings->isPresentationMode() ? Vertical :
-	            isVertical ? Vertical : 0u |
-	                                    isRightToLeft ? RightToLeft : 0u |
-	                                                                  isBottomToTop ? BottomToTop : 0u;
+	            ((isVertical ? Vertical : Horizontal) |
+	            (isRightToLeft ? RightToLeft : LeftToRight) |
+	            (isBottomToTop ? BottomToTop : TopToBottom));
 
 	this->configure(numPages, numRows, numCols, fixRows, static_cast<LayoutType>(type), isPairedPages, pairsOffset);
 }
@@ -188,7 +188,7 @@ bool LayoutMapper::isBottomToTop() const
 	return (layoutType & BottomToTop) == BottomToTop;
 }
 
-bool LayoutMapper::isRightToLeft()
+bool LayoutMapper::isRightToLeft() const
 {
 	return (this->layoutType & RightToLeft) == RightToLeft;
 }

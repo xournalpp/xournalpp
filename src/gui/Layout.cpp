@@ -305,8 +305,6 @@ void Layout::layoutPages(int width, int height)
 
 	}
 
-
-	//This seems to be wrong:
 	int totalWidth = borderX;
 	for (int c = 0; c < columns; c++)
 	{
@@ -314,7 +312,6 @@ void Layout::layoutPages(int width, int height)
 		this->widthCols[c] = totalWidth;    //accumulated - absolute pixel location for use by getViewAt() and updateVisibility()
 	}
 
-	//This seems to be wrong:
 	int totalHeight = borderY;
 	for (int r = 0; r < rows; r++)
 	{
@@ -387,11 +384,8 @@ XojPageView* Layout::getViewAt(int x, int y)
 // 	auto cit = std::lower_bound( this->widthCols.begin(),  this->widthCols.end(), x);
 // 	int cb = cit - this->widthCols.begin();
 
-
-
-	auto numRows = this->heightRows.size();//this->mapper.getRows();
-	auto numCols = this->widthCols.size();//this->mapper.getColumns();
-
+	auto numRows = this->heightRows.size();
+	auto numCols = this->widthCols.size();
 
 	/* Linear Up or Down Search from last position: */
 
@@ -461,8 +455,6 @@ XojPageView* Layout::getViewAt(int x, int y)
 	}
 
 	return NULL;
-
-
 }
 
 
@@ -472,10 +464,12 @@ int Layout::getIndexAtGridMap(int row, int col)
 
 }
 
+
 double Layout::getMinimalHeight()
 {
 	return this->minHeight;
 }
+
 
 double Layout::getMinimalWidth()
 {
