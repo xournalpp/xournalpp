@@ -16,9 +16,8 @@ void LayoutMapper::configureFromSettings(size_t numPages, Settings* settings)
 {
 	XOJ_CHECK_TYPE(LayoutMapper);
 
-	auto isPairedPages = settings->isShowPairedPages();
-	auto pairsOffset = isPairedPages ? settings->getPairsOffset() : 0;
-
+	auto showPairedPages = settings->isShowPairedPages();
+	auto pairsOffset = showPairedPages ? settings->getPairsOffset() : 0;
 
 	auto numCols = settings->isPresentationMode() ? 1 : settings->getViewColumns();
 	auto numRows = settings->isPresentationMode() ? 1 : settings->getViewRows();
@@ -36,31 +35,25 @@ void LayoutMapper::configureFromSettings(size_t numPages, Settings* settings)
 	//assemble bitflags for LayoutType
 	auto type = settings->isPresentationMode() ? Vertical :
 	            ((isVertical ? Vertical : Horizontal) |
-	            (isRightToLeft ? RightToLeft : LeftToRight) |
-	            (isBottomToTop ? BottomToTop : TopToBottom));
+	             (isRightToLeft ? RightToLeft : LeftToRight) |
+	             (isBottomToTop ? BottomToTop : TopToBottom));
 
-	this->configure(numPages, numRows, numCols, fixRows, static_cast<LayoutType>(type), isPairedPages, pairsOffset);
+	this->configure(numPages, numRows, numCols, fixRows, static_cast<LayoutType>(type), showPairedPages, pairsOffset);
 }
 
-void LayoutMapper::configureForPresentation(int numPages, Settings* settings)
-{
-	configureFromSettings(numPages, settings);
-}
-
-
-void LayoutMapper::configure(int pages, int numRows, int numCols, bool useRows, LayoutType type, bool isPaired,
+void LayoutMapper::configure(int pages, int numRows, int numCols, bool useRows, LayoutType type, bool showPairedPages,
                              int firstPageOffset)
 {
 	XOJ_CHECK_TYPE(LayoutMapper);
 
-	this->isPairedPages = isPaired;
+	this->showPairedPages = showPairedPages;
 	if (useRows)
 	{
 		this->rows = MAX(1, numRows);
 
 		// using  + ( rows-1) to round up (int)pages/rows
 		this->cols = MAX(1, (pages + firstPageOffset + (this->rows - 1)) / this->rows);
-		if (isPaired)
+		if (showPairedPages)
 		{
 			this->cols += this->cols % 2;    //make even
 		}
@@ -69,7 +62,7 @@ void LayoutMapper::configure(int pages, int numRows, int numCols, bool useRows, 
 	else
 	{
 		this->cols = MAX(1, numCols);
-		if (isPaired)
+		if (showPairedPages)
 		{
 			this->cols += this->cols % 2;    //make even
 		}
@@ -81,7 +74,7 @@ void LayoutMapper::configure(int pages, int numRows, int numCols, bool useRows, 
 	if (type & Vertical)
 	{
 		// Vertical Layout
-		if (isPaired)
+		if (showPairedPages)
 		{
 			this->offset = firstPageOffset % (2 * this->rows);
 		}
@@ -125,7 +118,7 @@ bool LayoutMapper::getPairedPages()
 {
 	XOJ_CHECK_TYPE(LayoutMapper);
 
-	return this->isPairedPages;
+	return this->showPairedPages;
 }
 
 int LayoutMapper::map(int x, int y)
@@ -138,21 +131,21 @@ int LayoutMapper::map(int x, int y)
 	}
 
 	int res;
-	if (isRightToLeft())
+	if (this->isRightToLeft())
 	{
 		// reverse x
 		x = this->cols - 1 - x;
 	}
 
-	if (isBottomToTop())
+	if (this->isBottomToTop())
 	{
 		// reverse y
 		y = this->rows - 1 - y;
 	}
 
-	if (isVertical())
+	if (this->isVertical())
 	{
-		if (this->isPairedPages)
+		if (this->showPairedPages)
 		{
 			res = ((y + this->rows * ((int) (x / 2))) * 2) + x % 2;
 		}
@@ -180,12 +173,12 @@ int LayoutMapper::map(int x, int y)
 
 bool LayoutMapper::isVertical() const
 {
-	return (layoutType & Vertical) == Vertical;
+	return (this->layoutType & Vertical) == Vertical;
 }
 
 bool LayoutMapper::isBottomToTop() const
 {
-	return (layoutType & BottomToTop) == BottomToTop;
+	return (this->layoutType & BottomToTop) == BottomToTop;
 }
 
 bool LayoutMapper::isRightToLeft() const

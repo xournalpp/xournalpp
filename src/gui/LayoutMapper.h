@@ -62,9 +62,6 @@ public:
 
 	void configureFromSettings(size_t numPages, Settings* settings);
 
-	[[deprecated ("use LayoutMapper::configureFromSettings")]]
-	void configureForPresentation(int numPages, Settings* settings);
-
 	virtual ~LayoutMapper();
 
 private:
@@ -80,7 +77,7 @@ private:
 	 * @param  isPaired Display pages in pairs including offset 
 	 * @param  firstPageOffset  Pages to offset - usually one or zero in order to pair up properly
 	 */
-	void configure(int pages, int numRows, int numCols, bool useRows, LayoutType type, bool paired,
+	void configure(int pages, int numRows, int numCols, bool useRows, LayoutType type, bool showPairedPages,
 	               int firstPageOffset);
 
 public:
@@ -135,6 +132,6 @@ private:
 	int possiblePages = 0;
 	int offset = 0;
 	LayoutType layoutType = Horizontal;
-	bool isPairedPages = false;
+	bool showPairedPages = false;
 };
 

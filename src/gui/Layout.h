@@ -37,12 +37,6 @@ public:
 
 public:
 	/**
-	 * Adjusts the layout size to the given values
-	 */
-	// This should never happen from the outside, since it must recalculated for every change
-	void setSize(int widgetWidth, int widgetHeight);
-
-	/**
 	 * Increases the adjustments by the given amounts
 	 */
 	void scrollRelative(double x, double y);

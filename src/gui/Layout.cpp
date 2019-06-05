@@ -326,12 +326,6 @@ void Layout::setLayoutSize(int width, int height)
 	this->scrollHandling->setLayoutSize(width, height);
 }
 
-void Layout::setSize(int widgetWidth, int widgetHeight)
-{
-	XOJ_CHECK_TYPE(Layout);
-	layoutPages(widgetWidth, widgetHeight);
-}
-
 void Layout::scrollRelative(double x, double y)
 {
 	XOJ_CHECK_TYPE(Layout);
