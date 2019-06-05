@@ -48,7 +48,7 @@ void ColorSelectImage::drawWidget(cairo_t* cr)
 }
 
 /**
- * @return The widget which is drawed
+ * @return The widget which is drawn
  */
 GtkWidget* ColorSelectImage::getWidget()
 {

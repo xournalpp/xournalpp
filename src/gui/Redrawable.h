@@ -26,7 +26,7 @@ public:
 
 	/**
 	 * Call this if you only need to repaint the view, this means the buffer will be painted again,
-	 * and all selections, text edtiors etc. are drawed again, but the view buffer is not refreshed.
+	 * and all selections, text editors etc. are drawn again, but the view buffer is not refreshed.
 	 *
 	 * for refreshing the view buffer (if you have changed the document) call rerender.
 	 */
@@ -37,7 +37,7 @@ public:
 
 	/**
 	 * Call this if you only need to readraw the view, this means the buffer will be painted again,
-	 * and all selections, text edtiors etc. are drawed again, but the view buffer is not refreshed.
+	 * and all selections, text edtiors etc. are drawn again, but the view buffer is not refreshed.
 	 *
 	 * for refreshing the view buffer (if you have changed the document) call repaint.
 	 */
