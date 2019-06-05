@@ -61,20 +61,40 @@ LatexController::~LatexController()
 /**
  * Find the tex executable, return false if not found
  */
-bool LatexController::findTexExecutable()
+LatexController::FindDependencyStatus LatexController::findTexDependencies()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
 	gchar* pdflatex = g_find_program_in_path("pdflatex");
 	if (!pdflatex)
 	{
-		return false;
+		string msg = _("Could not find pdflatex in PATH.\nPlease install pdflatex first and make sure it's in the PATH.");
+		return LatexController::FindDependencyStatus(false, msg);
 	}
-
 	this->pdflatexPath = pdflatex;
 	g_free(pdflatex);
 
-	return true;
+	// Check for 'standalone' latex package
+	static gchar* kpsewhichArgs[] = { g_strdup("kpsewhich"), g_strdup("standalone") };
+	auto kpsewhichFlags = GSpawnFlags(G_SPAWN_DEFAULT | G_SPAWN_SEARCH_PATH | G_SPAWN_STDOUT_TO_DEV_NULL);
+	GError* kpsewhichErr = nullptr;
+	gint kpsewhichStatus;
+	g_spawn_sync(
+		nullptr, kpsewhichArgs, nullptr, kpsewhichFlags, nullptr, nullptr, nullptr,
+		nullptr, &kpsewhichStatus, &kpsewhichErr);
+	if (kpsewhichErr != nullptr)
+	{
+		g_error_free(kpsewhichErr);
+		string msg = _("Could not find kpsewhich in PATH; please install kpsewhich and put it on path.");
+		return LatexController::FindDependencyStatus(false, msg);
+	}
+	else if (kpsewhichStatus != 0)
+	{
+		string msg = FS(_F("Could not find the LaTeX package 'standalone'.\nPlease install standalone and make sure it's accessible by your LaTeX installation."));
+		return LatexController::FindDependencyStatus(false, msg);
+	}
+
+	return LatexController::FindDependencyStatus(true, "");
 }
 
 std::unique_ptr<GPid> LatexController::runCommandAsync(string texString)
@@ -445,10 +465,10 @@ void LatexController::run()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
-	if (!this->findTexExecutable())
+	auto depStatus = this->findTexDependencies();
+	if (!depStatus.success)
 	{
-		string msg = _("Could not find pdflatex in Path.\nPlease install pdflatex first and make sure it's in the PATH.");
-		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), depStatus.errorMsg);
 		return;
 	}
 

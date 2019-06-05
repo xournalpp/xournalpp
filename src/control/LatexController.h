@@ -50,10 +50,21 @@ public:
 	void run();
 
 private:
+
 	/**
-	 * Find the tex executable, return false if not found
+	 * Provides information about whether a particular dependency was found or not.
 	 */
-	bool findTexExecutable();
+	class FindDependencyStatus {
+	public:
+		FindDependencyStatus(bool success, string errorMsg) : success(success), errorMsg(errorMsg) {};
+		bool success;
+		string errorMsg;
+	};
+
+	/**
+	 * Set the required LaTeX files, returning false if at least one of them is not found.
+	 */
+	LatexController::FindDependencyStatus findTexDependencies();
 
 	/**
 	 * Find a selected tex element, and load it
