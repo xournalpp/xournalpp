@@ -61,13 +61,15 @@ macro (add_includes_ldflags LDFLAGS INCLUDES)
     set (xournalpp_INCLUDE_DIRS ${xournalpp_INCLUDE_DIRS} ${INCLUDES})
 endmacro (add_includes_ldflags LDFLAGS INCLUDES)
 
-# GTK+
-pkg_check_modules (GTK REQUIRED "gtk+-3.0 >= 3.18.9")
-add_includes_ldflags ("${GTK_LDFLAGS}" "${GTK_INCLUDE_DIRS}")
-
 # GLIB
 pkg_check_modules (Glib REQUIRED "glib-2.0 >= 2.32.0")
+add_definitions (-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_32)
 add_includes_ldflags ("${Glib_LDFLAGS}" "${Glib_INCLUDE_DIRS}")
+
+# GTK+
+pkg_check_modules (GTK REQUIRED "gtk+-3.0 >= 3.18.9")
+add_definitions (-DGDK_VERSION_MIN_REQUIRED=GDK_VERSION_3_18)
+add_includes_ldflags ("${GTK_LDFLAGS}" "${GTK_INCLUDE_DIRS}")
 
 # GThread
 pkg_check_modules (GThread REQUIRED "gthread-2.0 >= 2.4.0")
