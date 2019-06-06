@@ -195,7 +195,7 @@ void ZoomControl::initZoomHandler(GtkWidget* widget, XournalView* view, Control*
 
 	g_signal_connect(widget, "scroll_event", G_CALLBACK(onScrolledwindowMainScrollEvent), this);
 
-	g_signal_connect(widget, "configure-event", G_CALLBACK(onWidgetSizeChangedEvent), this);
+	g_signal_connect(widget, "size-allocate", G_CALLBACK(onWidgetSizeChangedEvent), this);
 
 	registerListener(control);
 	this->view = view;
@@ -582,9 +582,19 @@ bool ZoomControl::onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle* allo
 	XOJ_CHECK_TYPE_OBJ(zoom, ZoomControl);
 
 	Rectangle r(allocation->x, allocation->y, allocation->width, allocation->height);
+	auto layout = gtk_xournal_get_layout(zoom->view->getWidget());
+	g_assert_true(widget != zoom->view->getWidget());
 
 	zoom->updateZoomPresentationValue();
 	zoom->updateZoomFitValue(r);
 
-	return false;
+	GdkRectangle allNew = {allocation->x, allocation->y,
+	                       std::max(allocation->width, layout->getMinimalWidth()),
+	                       std::max(allocation->height ,layout->getMinimalHeight())};
+
+	layout->layoutPages(allocation->width, allocation->height);
+	gtk_widget_set_allocation(zoom->view->getWidget(),&allNew);
+
+
+	return true;
 }
