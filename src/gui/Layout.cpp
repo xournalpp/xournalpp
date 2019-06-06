@@ -451,21 +451,18 @@ XojPageView* Layout::getViewAt(int x, int y)
 	return NULL;
 }
 
-
 int Layout::getIndexAtGridMap(int row, int col)
 {
 	return this->mapper.map(col, row); //watch out.. x,y --> c,r
 
 }
 
-
-double Layout::getMinimalHeight()
+int Layout::getMinimalHeight()
 {
 	return this->minHeight;
 }
 
-
-double Layout::getMinimalWidth()
+int Layout::getMinimalWidth()
 {
 	return this->minWidth;
 }

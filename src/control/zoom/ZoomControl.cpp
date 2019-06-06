@@ -588,6 +588,13 @@ bool ZoomControl::onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle* allo
 	zoom->updateZoomPresentationValue();
 	zoom->updateZoomFitValue(r);
 
+	GdkRectangle allNew = {allocation->x, allocation->y,
+	                       std::max(allocation->width, layout->getMinimalWidth()),
+	                       std::max(allocation->height ,layout->getMinimalHeight())};
+
 	layout->layoutPages(allocation->width, allocation->height);
+	gtk_widget_set_allocation(zoom->view->getWidget(),&allNew);
+
+
 	return true;
 }

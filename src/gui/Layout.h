@@ -58,12 +58,12 @@ public:
 	/**
 	 * Returns the height of the entire Layout
 	 */
-	double getMinimalHeight();
+	int getMinimalHeight();
 
 	/**
 	 * Returns the width of the entire Layout
 	 */
-	double getMinimalWidth();
+	int getMinimalWidth();
 
 	/**
 	 * Returns the Rectangle which is currently visible
