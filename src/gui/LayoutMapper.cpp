@@ -15,28 +15,22 @@ LayoutMapper::~LayoutMapper()
 void LayoutMapper::configureFromSettings(size_t numPages, Settings* settings)
 {
 	XOJ_CHECK_TYPE(LayoutMapper);
-
-	auto showPairedPages = settings->isShowPairedPages();
-	auto pairsOffset = showPairedPages ? settings->getPairsOffset() : 0;
-
-	auto numCols = settings->isPresentationMode() ? 1 : settings->getViewColumns();
-	auto numRows = settings->isPresentationMode() ? 1 : settings->getViewRows();
-	auto fixRows = settings->isPresentationMode() ? false : settings->isViewFixedRows(); //i.e. use columns
-
 	// get from user settings:
+	bool showPairedPages = settings->isShowPairedPages();
 	auto isVertical = settings->getViewLayoutVert();
 	auto isRightToLeft = settings->getViewLayoutR2L();
 	auto isBottomToTop = settings->getViewLayoutB2T();
+	auto fixRows = settings->isPresentationMode() ? false : settings->isViewFixedRows();
 
-	if (settings->isPresentationMode())
-	{
+	int pairsOffset = showPairedPages ? settings->getPairsOffset() : 0;
+	auto numCols = settings->isPresentationMode() ? 1 : settings->getViewColumns();
+	auto numRows = settings->isPresentationMode() ? 1 : settings->getViewRows();
 
-	};
 	//assemble bitflags for LayoutType
-	auto type = settings->isPresentationMode() ? Vertical :
-	            ((isVertical ? Vertical : Horizontal) |
-	             (isRightToLeft ? RightToLeft : LeftToRight) |
-	             (isBottomToTop ? BottomToTop : TopToBottom));
+	unsigned type = settings->isPresentationMode() ? Vertical :
+	                ((isVertical ? Vertical : Horizontal) |
+	                 (isRightToLeft ? RightToLeft : LeftToRight) |
+	                 (isBottomToTop ? BottomToTop : TopToBottom));
 
 	this->configure(numPages, numRows, numCols, fixRows, static_cast<LayoutType>(type), showPairedPages, pairsOffset);
 }
