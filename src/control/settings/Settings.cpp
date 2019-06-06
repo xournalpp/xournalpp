@@ -677,6 +677,17 @@ void Settings::loadButtonConfig()
 					// If not specified: do not change
 					cfg->eraserMode = ERASER_TYPE_NONE;
 				}
+
+				string sSize;
+				if (e.getString("size", sSize))
+				{
+					cfg->size = toolSizeFromString(sSize);
+				}
+				else
+				{
+					// If not specified: do not change
+					cfg->size = TOOL_SIZE_NONE;
+				}
 			}
 
 			// Touch device
@@ -828,6 +839,7 @@ void Settings::saveButtonConfig()
 		if (type == TOOL_ERASER)
 		{
 			e.setString("eraserMode", eraserTypeToString(cfg->eraserMode));
+			e.setString("size", toolSizeToString(cfg->size));
 		}
 
 		// Touch device
