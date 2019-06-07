@@ -536,10 +536,10 @@ void XournalView::pageRelativeXY(int offCol, int offRow)
 	auto col = view->getMappedCol();
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
-	auto page = layout->getIndexAtGridMap(row + offRow, col + offCol);
-	if (page >= 0)
+	auto optionalPage = layout->getIndexAtGridMap(row + offRow, col + offCol);
+	if (optionalPage)
 	{
-		this->scrollTo(page, 0);
+		this->scrollTo(*optionalPage, 0);
 	}
 
 }

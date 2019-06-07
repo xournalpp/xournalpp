@@ -72,12 +72,14 @@ public:
 
 
 	/**
-	 * recalculate and resize window
-	 * */
+	 * recalculate and resize Layout
+	 */
 	void recalculate();
 
 	/**
 	 * Performs a layout of the XojPageView's managed in this Layout
+	 * Sets out pages in a grid.
+	 * Document pages are assigned to grid positions by the mapper object and may be ordered in a myriad of ways.
 	 * only call this on size allocation
 	 */
 	void layoutPages(int width, int height);
@@ -91,7 +93,6 @@ public:
 
 	/**
 	 * Return the pageview containing co-ordinates.
-	 * 
 	 */
 	XojPageView* getViewAt(int x, int y);
 
@@ -99,7 +100,7 @@ public:
 	 * Return the page index found ( or -1 if not found) at layout grid row,col
 	 * 
 	 */
-	int getIndexAtGridMap(int row, int col);
+	boost::optional<size_t> getIndexAtGridMap(size_t row, size_t col);
 
 protected:
 	static void horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
@@ -142,5 +143,10 @@ private:
 	int lastGetViewAtRow = 0;
 	int lastGetViewAtCol = 0;
 
+	/**
+	 * layoutPages invalidates the precalculation of recalculate
+	 * this bool prevents that layotPages can be called without a previously call to recalculate
+	 * Todo: we may want to remove the additional calculation in layoutPages, since we stored those values in
+	 */
 	bool valid = false;
 };

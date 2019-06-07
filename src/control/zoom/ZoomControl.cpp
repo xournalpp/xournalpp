@@ -577,24 +577,28 @@ bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScr
 	return false;
 }
 
+
+// Todo: try to connect this function with the "expose_event", it would be way cleaner and we dont need to allign/layout
+//       the pages manually, but it only works with the top Widget (GtkWindow) for now this works fine
+//       see https://stackoverflow.com/questions/1060039/gtk-detecting-window-resize-from-the-user
 bool ZoomControl::onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle* allocation, ZoomControl* zoom)
 {
 	XOJ_CHECK_TYPE_OBJ(zoom, ZoomControl);
+	g_assert_true(widget != zoom->view->getWidget());
 
 	Rectangle r(allocation->x, allocation->y, allocation->width, allocation->height);
-	auto layout = gtk_xournal_get_layout(zoom->view->getWidget());
-	g_assert_true(widget != zoom->view->getWidget());
 
 	zoom->updateZoomPresentationValue();
 	zoom->updateZoomFitValue(r);
 
+	// Todo: remove after change to "expose_event"
+	auto layout = gtk_xournal_get_layout(zoom->view->getWidget());
 	GdkRectangle allNew = {allocation->x, allocation->y,
 	                       std::max(allocation->width, layout->getMinimalWidth()),
-	                       std::max(allocation->height ,layout->getMinimalHeight())};
+	                       std::max(allocation->height, layout->getMinimalHeight())};
 
 	layout->layoutPages(allocation->width, allocation->height);
-	gtk_widget_set_allocation(zoom->view->getWidget(),&allNew);
-
+	gtk_widget_set_allocation(zoom->view->getWidget(), &allNew);
 
 	return true;
 }

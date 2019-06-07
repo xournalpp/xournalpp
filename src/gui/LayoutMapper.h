@@ -11,37 +11,43 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include "XournalType.h"
 #include "control/settings/Settings.h"
 
-/**
- * @brief The Type of the Layout as bitmask.
- * V RTL BT
- * 0 0   0
- * 1 0   0
- * 0 1   0
- * 1 1   0
- * 0 0   1
- * 1 0   1
- * 0 1   1
- * 1 1   1
- */
-enum LayoutType : unsigned
-{
-	TopToBottom = 0,
-	LeftToRight = 0,
-	Horizontal = 0,
-	Vertical = 1,
-	RightToLeft = 2,
-	BottomToTop = 4,
-	Size = 8
-};
+#include <boost/optional.hpp>
 
 /** 
  * @brief Layout asks this mapper what page ( if any ) should be at a given column,row.
  */
 class LayoutMapper
 {
+	/**
+	 * @brief The Layout of the pages
+	 */
+	enum Orientation : bool
+	{
+		Horizontal = false,
+		Vertical = true,
+	};
+
+	/**
+	 * Horizontal read direction
+	 */
+	enum HorizontalDirection : bool
+	{
+		LeftToRight = false,
+		RightToLeft = true,
+	};
+
+	/**
+	 * Vertical read direction
+	 */
+	enum VerticalDirection : bool
+	{
+		TopToBottom = false,
+		BottomToTop = true,
+	};
+
 public:
 	/**
 	 * LayoutMapper
@@ -77,8 +83,7 @@ private:
 	 * @param  isPaired Display pages in pairs including offset 
 	 * @param  firstPageOffset  Pages to offset - usually one or zero in order to pair up properly
 	 */
-	void configure(int pages, int numRows, int numCols, bool useRows, LayoutType type, bool showPairedPages,
-	               int firstPageOffset);
+	void configure(size_t numRows, size_t numCols, bool useRows, int firstPageOffset);
 
 public:
 	/**
@@ -89,21 +94,21 @@ public:
 	 * 
 	 * @return Page index to put at coordinates 
 	 */
-	int map(int x, int y);
+	boost::optional<size_t> map(size_t x, size_t y);
 
 	/**
 	 * Get number of columns
 	 * 
 	 * @return number of columns
 	 */
-	int getColumns();
+	size_t getColumns();
 
 	/**
 	 * Get number of rows
 	 * 
 	 * @return number of rows
 	 */
-	int getRows();
+	size_t getRows();
 
 	/**
 	 * Get offset
@@ -126,12 +131,15 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int cols = 0;
-	int rows = 0;
-	int actualPages = 0;
-	int possiblePages = 0;
+	size_t cols = 0;
+	size_t rows = 0;
+	size_t actualPages = 0;
+
 	int offset = 0;
-	LayoutType layoutType = Horizontal;
+
 	bool showPairedPages = false;
+	Orientation orientation = Vertical;
+	HorizontalDirection horizontalDir = LeftToRight;
+	VerticalDirection verticalDir = TopToBottom;
 };
 
