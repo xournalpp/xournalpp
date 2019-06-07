@@ -108,7 +108,10 @@ bool LayoutMapper::getPairedPages()
 
 // Todo: replace with map<pair(x,y)> -> index and vector<index> -> pair(x,y)
 //       precalculate it in configure
-boost::optional<size_t> LayoutMapper::map(size_t x, size_t y)
+// Todo: replace with
+//       boost::optional<size_t> LayoutMapper::map(size_t x, size_t y) or
+//       std::optional<size_t> LayoutMapper::map(size_t x, size_t y)
+LayoutMapper::optional_size_t LayoutMapper::map(size_t x, size_t y)
 {
 	XOJ_CHECK_TYPE(LayoutMapper);
 	if (this->isRightToLeft())
@@ -144,7 +147,7 @@ boost::optional<size_t> LayoutMapper::map(size_t x, size_t y)
 
 	if (res >= this->actualPages)
 	{
-		return boost::none;
+		return {};
 	}
 
 	return res;

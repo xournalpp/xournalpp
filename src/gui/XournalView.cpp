@@ -543,17 +543,17 @@ void XournalView::pageRelativeXY(int offCol, int offRow)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	int currPage = getCurrentPage();
+	size_t currPage = getCurrentPage();
 
 	XojPageView* view = getViewFor(currPage);
 	int row = view->getMappedRow();
 	int col = view->getMappedCol();
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
-	auto optionalPage = layout->getIndexAtGridMap(row + offRow, col + offCol);
-	if (optionalPage)
+	auto optionalPageIndex = layout->getIndexAtGridMap(row + offRow, col + offCol);
+	if (optionalPageIndex)
 	{
-		this->scrollTo(*optionalPage, 0);
+		this->scrollTo(*optionalPageIndex, 0);
 	}
 
 }
@@ -689,7 +689,7 @@ void XournalView::zoomChanged()
 	XOJ_CHECK_TYPE(XournalView);
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
-	int currentPage = this->getCurrentPage();
+	size_t currentPage = this->getCurrentPage();
 	XojPageView* view = getViewFor(currentPage);
 	ZoomControl* zoom = control->getZoomControl();
 
