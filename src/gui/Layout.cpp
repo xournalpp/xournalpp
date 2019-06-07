@@ -440,16 +440,11 @@ XojPageView* Layout::getViewAt(int x, int y)
 	
 	
 }
-
-boost::optional<size_t> Layout::getIndexAtGridMap(size_t row, size_t col)
+// Todo replace with boost::optional<size_t> Layout::getIndexAtGridMap(size_t row, size_t col)
+//                  or std::optional<size_t> Layout::getIndexAtGridMap(size_t row, size_t col)
+LayoutMapper::optional_size_t Layout::getIndexAtGridMap(size_t row, size_t col)
 {
 	return this->mapper.map(col, row); //watch out.. x,y --> c,r
-}
-
-int Layout::getIndexAtGridMap(int row, int col)
-{
-	return this->mapper.map( col, row); //watch out.. x,y --> c,r
-	
 }
 
 int Layout::getMinimalHeight()

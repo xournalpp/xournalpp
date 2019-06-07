@@ -14,8 +14,6 @@
 #include "XournalType.h"
 #include "control/settings/Settings.h"
 
-#include <boost/optional.hpp>
-
 /** 
  * @brief Layout asks this mapper what page ( if any ) should be at a given column,row.
  */
@@ -49,6 +47,48 @@ class LayoutMapper
 	};
 
 public:
+
+	/**
+	 * This is an implementation for boost::optional or std::optional (c++17)
+	 * all its functions behave like the equivalent of boost/std::optional
+	 */
+	// Todo: remove it after switching to one of those, the interface wont change, so we don't need to replace other
+	//       parts of the code because its only used with auto types, just replace it here.
+
+	struct optional_size_t
+	{
+		optional_size_t() = default;
+
+		optional_size_t(size_t index) : valid(true), index(index)
+		{
+		}
+
+		optional_size_t(optional_size_t const&) = default;
+		optional_size_t& operator=(optional_size_t const&) = default;
+
+		optional_size_t& operator=(size_t index)
+		{
+			valid = true;
+			this->index = index;
+			return *this;
+		};
+
+		size_t& operator*()
+		{
+			g_assert_true(valid);
+			return this->index;
+		}
+
+		explicit operator bool()
+		{
+			return this->valid;
+		}
+
+	private:
+		bool valid = false;
+		size_t index = 0;
+	};
+
 	/**
 	 * LayoutMapper
 	 * 
@@ -86,15 +126,19 @@ private:
 	void configure(size_t numRows, size_t numCols, bool useRows, int firstPageOffset);
 
 public:
+	// Todo: replace with
+	//       boost::optional<size_t> LayoutMapper::map(size_t x, size_t y) or
+	//       std::optional<size_t> LayoutMapper::map(size_t x, size_t y)
+
 	/**
 	 * Map page location to document index
-	 * 
+	 *
 	 * @param  x Row we are interested in
 	 * @param  y Column we are interested in
-	 * 
-	 * @return Page index to put at coordinates 
+	 *
+	 * @return Page index to put at coordinates
 	 */
-	boost::optional<size_t> map(size_t x, size_t y);
+	optional_size_t map(size_t x, size_t y);
 
 	/**
 	 * Get number of columns
