@@ -128,7 +128,7 @@ Rectangle Layout::getVisibleRect()
 /**
  * adds the addend to base if the predicate is true
  */
-int sumIf(int base, int addend, bool predicate)
+inline int sumIf(int base, int addend, bool predicate)
 {
 	if (predicate)
 	{
