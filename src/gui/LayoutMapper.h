@@ -14,8 +14,6 @@
 #include "XournalType.h"
 #include "control/settings/Settings.h"
 
-#include <boost/optional.hpp>
-
 /** 
  * @brief Layout asks this mapper what page ( if any ) should be at a given column,row.
  */
