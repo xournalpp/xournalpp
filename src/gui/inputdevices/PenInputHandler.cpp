@@ -259,7 +259,7 @@ bool PenInputHandler::actionMotion(InputEvent* event)
 		 * Only trigger once the new page was entered to ensure that an input device can leave the page temporarily.
 		 * For these events we need to fake an end point in the old page and a start point in the new page.
 		 */
-		if (currentPage && !lastEventPage && lastHitEventPage)
+		if (this->deviceClassPressed && currentPage && !lastEventPage && lastHitEventPage)
 		{
 #ifdef DEBUG_INPUT
 			g_message("PenInputHandler: Start new input on switching page...");
@@ -275,7 +275,7 @@ bool PenInputHandler::actionMotion(InputEvent* event)
 		 * Get all events where the input sequence started outside of a page and moved into one.
 		 * For these events we need to fake a start point in the current page.
 		 */
-		if (currentPage && !lastEventPage && !lastHitEventPage)
+		if (this->deviceClassPressed && currentPage && !lastEventPage && !lastHitEventPage)
 		{
 #ifdef DEBUG_INPUT
 			g_message("PenInputHandler: Start new input on entering page...");
