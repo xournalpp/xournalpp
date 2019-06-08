@@ -132,10 +132,11 @@ void XournalppCursor::updateCursor()
 	GdkWindow* window = gtk_widget_get_window(win->getWindow());
 
 	GdkCursor* cursor = NULL;
+	bool useDefault = false;
 
 	if (this->busy)
 	{
-		cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_WATCH);
+		setStockCursor(GDK_WATCH);
 	}
 	else
 	{
@@ -146,49 +147,50 @@ void XournalppCursor::updateCursor()
 		{
 			if (this->mouseDown)
 			{
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_FLEUR);
+	
+				setStockCursor(GDK_FLEUR);
 			}
 			else
 			{
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_HAND1);
+				setStockCursor(GDK_HAND1);
 			}
 		}
 		else if (!this->insidePage)
 		{
-			// not inside page: so use default cursor
+			useDefault = true; // not inside page: so use default cursor
 		}
 		else if (this->selectionType)
 		{
 			switch (this->selectionType)
 			{
 			case CURSOR_SELECTION_MOVE:
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_FLEUR);
+				setStockCursor(GDK_FLEUR);
 				break;
 			case CURSOR_SELECTION_TOP_LEFT:
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_TOP_LEFT_CORNER);
+				setStockCursor(GDK_TOP_LEFT_CORNER);
 				break;
 			case CURSOR_SELECTION_TOP_RIGHT:
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_TOP_RIGHT_CORNER);
+				setStockCursor(GDK_TOP_RIGHT_CORNER);
 				break;
 			case CURSOR_SELECTION_BOTTOM_LEFT:
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_BOTTOM_LEFT_CORNER);
+				setStockCursor(GDK_BOTTOM_LEFT_CORNER);
 				break;
 			case CURSOR_SELECTION_BOTTOM_RIGHT:
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_BOTTOM_RIGHT_CORNER);
+				setStockCursor(GDK_BOTTOM_RIGHT_CORNER);
 				break;
 			case CURSOR_SELECTION_LEFT:
 			case CURSOR_SELECTION_RIGHT:
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_SB_H_DOUBLE_ARROW);
+				setStockCursor(GDK_SB_H_DOUBLE_ARROW);
 				break;
 			case CURSOR_SELECTION_ROTATE:
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_EXCHANGE);
+				setStockCursor(GDK_EXCHANGE);
 				break;
 			case CURSOR_SELECTION_DELETE:
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_PIRATE);
+				setStockCursor(GDK_PIRATE);
 				break;				
 			case CURSOR_SELECTION_TOP:
 			case CURSOR_SELECTION_BOTTOM:
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_SB_V_DOUBLE_ARROW);
+				setStockCursor(GDK_SB_V_DOUBLE_ARROW);
 				break;
 			default:
 				break;
@@ -211,26 +213,26 @@ void XournalppCursor::updateCursor()
 		{
 			if (this->invisible)
 			{
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_BLANK_CURSOR);
+				setStockCursor(GDK_BLANK_CURSOR);
 			}
 			else
 			{
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_XTERM);
+				setStockCursor(GDK_XTERM);
 			}
 		}
 		else if (type == TOOL_IMAGE)
 		{
-			// No special cursor needed
+			useDefault = true; // No special cursor needed
 		}
 		else if (type == TOOL_FLOATING_TOOLBOX)
 		{
-			// No special cursor needed
+			useDefault = true; // No special cursor needed
 		}
 		else if (type == TOOL_VERTICAL_SPACE)
 		{
 			if (this->mouseDown)
 			{
-				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_SB_V_DOUBLE_ARROW);
+				setStockCursor(GDK_SB_V_DOUBLE_ARROW);
 			}
 		}
 		else if (type == TOOL_SELECT_OBJECT)
@@ -239,12 +241,13 @@ void XournalppCursor::updateCursor()
 		}
 		else if (type == TOOL_PLAY_OBJECT) 
 		{
-			cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_HAND2);
+			setStockCursor(GDK_HAND2);
 		}
 		else // other selections are handled before anyway, because you can move a selection with every tool
 		{
-			cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_TCROSS);
+			setStockCursor(GDK_TCROSS);
 		}
+		
 
 	}
 
@@ -254,8 +257,12 @@ void XournalppCursor::updateCursor()
 		{
 			gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
 		}
-
-		gtk_widget_set_sensitive(xournal->getWidget(), !this->busy);
+		else if(useDefault)
+		{
+			
+			
+			gtk_widget_set_sensitive(xournal->getWidget(), !this->busy);
+		}
 	}
 
 	gdk_display_sync(gdk_display_get_default());
@@ -406,11 +413,14 @@ GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 
 
 
-void XournalppCursor::setTempCursor(GdkCursorType type)
+void XournalppCursor::setStockCursor(GdkCursorType type)
 {
 	XOJ_CHECK_TYPE(XournalppCursor);
 	
+	
+	
 	MainWindow* win = control->getWindow();
+	
 	
 	if( !win) return;
 	
@@ -419,14 +429,25 @@ void XournalppCursor::setTempCursor(GdkCursorType type)
 	if(!xournal) return;
 	
 	GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
-	
+		
 	if( !window ) return;
+	
+	GdkCursor *currentcursor =gdk_window_get_cursor(window);
+	
+	if ( type == gdk_cursor_get_cursor_type (currentcursor))
+	{
+		return;
+	}
+	
 	
 	GdkCursor* cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), type);
 	gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
 	gdk_window_set_cursor(window, cursor);
 	g_object_unref(cursor);
 }
+
+
+
 
 void XournalppCursor::setTempDrawDirCursor(bool shift, bool ctrl)
 {

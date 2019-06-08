@@ -32,7 +32,7 @@ public:
 	void setMouseDown(bool mouseDown);
 	void setInvisible(bool invisible);
 	void setInsidePage(bool insidePage);
-	void setTempCursor(GdkCursorType type);
+	void setStockCursor(GdkCursorType type);
 	void setTempDrawDirCursor(bool shift, bool ctrl);
 	
 
@@ -57,4 +57,9 @@ private:
 
 	bool mouseDown = false;
 	bool invisible = false;
+	
+	
+	//combination to avoid making same cursor
+	void* lastCustomCursorAddress = NULL;	//for comparison only
+	int lastCustomCursorType = 0;	//our own id
 };

@@ -63,7 +63,7 @@ bool MouseInputHandler::handleImpl(InputEvent* event)
 		else
 		{
 			XournalppCursor* cursor = xournal->view->getCursor();
-			cursor->setTempCursor(GDK_ARROW);
+			cursor->setStockCursor(GDK_ARROW);
 		}
 		// Update cursor visibility
 		xournal->view->getCursor()->setInvisible(false);
