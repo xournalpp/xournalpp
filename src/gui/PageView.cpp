@@ -972,8 +972,10 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect)
 
 	if (this->search)
 	{
+		cairo_save(cr);
 		cairo_scale(cr, zoom, zoom);
 		this->search->paint(cr, rect, zoom, getSelectionColor());
+		cairo_restore(cr);
 	}
 
 	if (this->inputHandler)
