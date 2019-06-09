@@ -54,19 +54,12 @@ bool MouseInputHandler::handleImpl(InputEvent* event)
 	 * Trigger motion actions
 	 */
 	// Trigger motion action when pen/mouse is pressed and moved
-	if (event->type == MOTION_EVENT) //mouse or pen moved
+	if ( event->type == MOTION_EVENT) //mouse or pen moved
 	{
-		if (this->deviceClassPressed)
-		{
-			this->actionMotion(event);
-		}
-		else
-		{
-			XournalppCursor* cursor = xournal->view->getCursor();
-			cursor->setStockCursor(GDK_ARROW);
-		}
-		// Update cursor visibility
-		xournal->view->getCursor()->setInvisible(false);
+		this->actionMotion(event);
+		XournalppCursor* cursor = xournal->view->getCursor();
+		cursor->setInvisible(false);
+		cursor->updateCursor();
 	}
 
 	// Notify if mouse enters/leaves widget

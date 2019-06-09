@@ -4,6 +4,7 @@
 
 #include "AbstractInputHandler.h"
 #include "InputContext.h"
+#include <gui/XournalppCursor.h>
 
 AbstractInputHandler::AbstractInputHandler(InputContext* inputContext)
 {
@@ -41,6 +42,7 @@ bool AbstractInputHandler::handle(InputEvent* event)
 
 	if (!this->blocked)
 	{
+		this->inputContext->getXournal()->view->getCursor()->setInputDeviceClass(event->deviceClass);
 		return this->handleImpl(event);
 	} else {
 		return true;

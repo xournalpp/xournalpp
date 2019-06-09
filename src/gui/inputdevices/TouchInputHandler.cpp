@@ -4,7 +4,6 @@
 
 #include "TouchInputHandler.h"
 #include "InputContext.h"
-#include "../XournalppCursor.h"
 
 TouchInputHandler::TouchInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)
 {
@@ -37,8 +36,6 @@ bool TouchInputHandler::handleImpl(InputEvent* event)
 	if (event->type == MOTION_EVENT)
 	{
 		actionMotion(event);
-		XournalppCursor* cursor = inputContext->getXournal()->view->getCursor();
-		cursor->updateCursor();
 	}
 
 	if (event->type == BUTTON_RELEASE_EVENT)
