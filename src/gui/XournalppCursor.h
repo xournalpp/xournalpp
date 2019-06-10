@@ -33,13 +33,12 @@ public:
 	void setMouseDown(bool mouseDown);
 	void setInvisible(bool invisible);
 	void setInsidePage(bool insidePage);
-	void setStockCursor(GdkCursorType type);
 	void activateDrawDirCursor(bool enable, bool shift=false, bool ctrl=false);
 	void setInputDeviceClass(InputDeviceClass inputDevice);
-	
-
 
 private:
+	void setCursor(int id);
+	
 	GdkCursor* getPenCursor();
 
 	GdkCursor* getEraserCursor();
@@ -48,9 +47,8 @@ private:
 	GdkCursor* createHighlighterOrPenCursor(int size, double alpha);
 	GdkCursor* createCustomDrawDirCursor(int size, bool shift, bool ctrl);
 	
-	void doDrawDirCursor();
+	void setDrawDirCursor(bool shift, bool ctrl);
 
-	
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -69,8 +67,6 @@ private:
 	bool drawDirShift = false;
 	bool drawDirCtrl = false;	
 	
-	
-	//combination to avoid making same cursor
-	void* lastCustomCursorAddress = NULL;	//for comparison only
-	int lastCustomCursorType = 0;	//our own id
+	//avoid re-assigning same cursor
+	uint currentCursor = 0;	// enum AVAILABLECURSORS
 };

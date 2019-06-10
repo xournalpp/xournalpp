@@ -8,19 +8,108 @@
 #include <cmath>
 
 
+
 /* Work In Progress:
  * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
  * 
  * NOTE     Please consult with JJones780 before making any changes to this file or its header. 
  * 
+ * see 	https://developer.gnome.org/gtk3/stable/chap-css-overview.html
+ *    	https://blog.gtk.org/2016/05/18/cursors-in-gtk/
+ * old cursors: https://developer.gimp.org/api/2.0/gdk/gdk-Cursors.html
+ * 
+ * FIXME: fixes #1223
+ * 
  * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
  */
+
+//  All the cursors we want to use. WARNING Make sure to set their css names below WARNING
+enum AVAILABLECURSORS
+{	
+	CRSR_NULL = 0,	// <--- Do Not Modify
+	CRSR_BUSY,
+	CRSR_MOVE,
+	CRSR_MOVING,
+	CRSR_GRAB,
+	CRSR_GRABBING,
+	CRSR_TOP_LEFT_CORNER,
+	CRSR_TOP_RIGHT_CORNER,
+	CRSR_BOTTOM_LEFT_CORNER,
+	CRSR_BOTTOM_RIGHT_CORNER,
+	CRSR_SB_H_DOUBLE_ARROW,
+	CRSR_EXCHANGE,
+	CRSR_PIRATE,
+	CRSR_SB_V_DOUBLE_ARROW,
+	CRSR_ARROW,
+	CRSR_BLANK_CURSOR,
+	CRSR_XTERM,
+	CRSR_DEFAULT,
+	CRSR_HAND2,
+	CRSR_TCROSS,
+	CRSR_PEN,
+	CRSR_PEN_BRIGHT,
+	CRSR_HI,
+	CRSR_HI_BRIGHT,
+	CRSR_ERASER,
+	CRSR_DRAWDIRNONE, 			//drawdir* consecutive and in order: none,shift,ctrl,shiftctrl
+	CRSR_DRAWDIRSHIFT,			// "
+	CRSR_DRAWDIRCTRL,			// "
+	CRSR_DRAWDIRSHIFTCTRL,		// "
+	
+
+	CRSR_END_OF_CURSORS
+};
+
+
+struct cursorStruct
+{
+	const gchar* cssName;	
+	const gchar* cssBackupName;
+};
+
+//  our enum mapped to css name and a place to store the cursor pointer.
+// Note: including enum as error check (for now?)
+cursorStruct cssCursors[CRSR_END_OF_CURSORS];
+
 
 XournalppCursor::XournalppCursor(Control* control)
  : control(control)
 {
 	XOJ_INIT_TYPE(XournalppCursor);
-}
+	
+	// NOTE: Go ahead and use an esoteric cursor... but define a mundane backup cursor.
+	
+	cssCursors[CRSR_NULL                ] = 	{"",""};
+	cssCursors[CRSR_BUSY                ] = 	{"wait", 		""					};
+	cssCursors[CRSR_MOVE                ] = 	{"all-scroll", 	""					};
+	cssCursors[CRSR_MOVING              ] = 	{"grabbing", 	""					};
+	cssCursors[CRSR_GRAB                ] = 	{"grab", 		""					};
+	cssCursors[CRSR_GRABBING            ] = 	{"grabbing", 	""					};
+	cssCursors[CRSR_TOP_LEFT_CORNER     ] = 	{"nw-resize", 	""					};
+	cssCursors[CRSR_TOP_RIGHT_CORNER    ] = 	{"ne-resize", 	""					};
+	cssCursors[CRSR_BOTTOM_LEFT_CORNER  ] = 	{"sw-resize", 	""					};
+	cssCursors[CRSR_BOTTOM_RIGHT_CORNER ] = 	{"se-resize", 	""					};
+	cssCursors[CRSR_SB_H_DOUBLE_ARROW   ] = 	{"ew-resize", 	""					};
+	cssCursors[CRSR_EXCHANGE            ] = 	{"exchange", 	"arrow"				};
+	cssCursors[CRSR_PIRATE              ] = 	{"pirate", 		"arrow" 			};
+	cssCursors[CRSR_SB_V_DOUBLE_ARROW   ] = 	{"ns-resize", 	""					};
+	cssCursors[CRSR_ARROW               ] = 	{"default", 	""					};
+	cssCursors[CRSR_BLANK_CURSOR        ] = 	{"none", 		""					};
+	cssCursors[CRSR_XTERM               ] = 	{"text", 		""					};
+	cssCursors[CRSR_DEFAULT             ] = 	{"default", 	""					};
+	cssCursors[CRSR_HAND2               ] = 	{"hand2", 		""					};
+	cssCursors[CRSR_TCROSS              ] = 	{"crosshair", 	""					};
+	cssCursors[CRSR_PEN                 ] = 	{"",""};			// custom cursor - enum used only for check
+	cssCursors[CRSR_PEN_BRIGHT          ] = 	{"",""};			// "
+	cssCursors[CRSR_HI                  ] = 	{"",""};			// "
+	cssCursors[CRSR_HI_BRIGHT           ] = 	{"",""};			// "
+	cssCursors[CRSR_ERASER              ] = 	{"",""};			// "
+	cssCursors[CRSR_DRAWDIRNONE         ] = 	{"",""};			// "
+	cssCursors[CRSR_DRAWDIRSHIFT        ] = 	{"",""};			// "
+	cssCursors[CRSR_DRAWDIRCTRL         ] = 	{"",""};			// "
+	cssCursors[CRSR_DRAWDIRSHIFTCTRL    ] = 	{"",""};			// "
+};
+
 
 XournalppCursor::~XournalppCursor()
 {
@@ -34,6 +123,17 @@ void XournalppCursor::setInputDeviceClass(InputDeviceClass device)
 
 	this->inputDevice = device;
 }
+
+
+// pen or hi-light cursor will be a DrawDir cursor instead
+void XournalppCursor::activateDrawDirCursor(bool enable, bool shift, bool ctrl)
+{
+	XOJ_CHECK_TYPE(XournalppCursor);
+	this->drawDirActive = enable;
+	this->drawDirShift = shift;
+	this->drawDirCtrl = ctrl;
+}
+
 
 void XournalppCursor::setMouseDown(bool mouseDown)
 {
@@ -55,6 +155,7 @@ void XournalppCursor::setMouseDown(bool mouseDown)
 	}
 }
 
+
 void XournalppCursor::setMouseSelectionType(CursorSelectionType selectionType)
 {
 	XOJ_CHECK_TYPE(XournalppCursor);
@@ -67,6 +168,10 @@ void XournalppCursor::setMouseSelectionType(CursorSelectionType selectionType)
 	updateCursor();
 }
 
+
+/*This handles setting the busy cursor for the main window and calls
+ * updateCursor to set the busy cursor for the XournalWidget region.
+ */
 void XournalppCursor::setCursorBusy(bool busy)
 {
 	XOJ_CHECK_TYPE(XournalppCursor);
@@ -84,7 +189,7 @@ void XournalppCursor::setCursorBusy(bool busy)
 	if (busy)
 	{
 		GdkWindow* window = gtk_widget_get_window(win->getWindow());
-		GdkCursor* cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_WATCH);
+		GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), cssCursors[CRSR_BUSY].cssName);
 		gdk_window_set_cursor(window, cursor);
 		g_object_unref(cursor);
 	}
@@ -140,12 +245,11 @@ void XournalppCursor::updateCursor()
 	GdkWindow* window = gtk_widget_get_window(win->getWindow());
 
 	GdkCursor* cursor = NULL;
-	bool useDefault = false;
 	
 	
 	if (this->busy)
 	{
-		setStockCursor(GDK_WATCH);
+		setCursor(CRSR_BUSY);
 	}
 	else
 	{
@@ -157,60 +261,66 @@ void XournalppCursor::updateCursor()
 		{
 			if (this->mouseDown)
 			{
-	
-				setStockCursor(GDK_FLEUR);
+				setCursor(CRSR_GRABBING);
 			}
 			else
 			{
-				setStockCursor(GDK_HAND1);
+				setCursor(CRSR_GRAB);
 			}
 		}
 		else if (!this->insidePage)
 		{
-			useDefault = true; // not inside page: so use default cursor
+			setCursor(CRSR_DEFAULT);
 		}
 		else if (this->selectionType)
 		{
 			switch (this->selectionType)
 			{
 			case CURSOR_SELECTION_MOVE:
-				setStockCursor(GDK_FLEUR);
+				if (this->mouseDown)
+				{
+					setCursor(CRSR_MOVING);
+				}
+				else
+				{
+					setCursor(CRSR_MOVE);
+				}
 				break;
 			case CURSOR_SELECTION_TOP_LEFT:
-				setStockCursor(GDK_TOP_LEFT_CORNER);
+				setCursor(CRSR_TOP_LEFT_CORNER);
 				break;
 			case CURSOR_SELECTION_TOP_RIGHT:
-				setStockCursor(GDK_TOP_RIGHT_CORNER);
+				setCursor(CRSR_TOP_RIGHT_CORNER);
 				break;
 			case CURSOR_SELECTION_BOTTOM_LEFT:
-				setStockCursor(GDK_BOTTOM_LEFT_CORNER);
+				setCursor(CRSR_BOTTOM_LEFT_CORNER);
 				break;
 			case CURSOR_SELECTION_BOTTOM_RIGHT:
-				setStockCursor(GDK_BOTTOM_RIGHT_CORNER);
+				setCursor(CRSR_BOTTOM_RIGHT_CORNER);
 				break;
 			case CURSOR_SELECTION_LEFT:
 			case CURSOR_SELECTION_RIGHT:
-				setStockCursor(GDK_SB_H_DOUBLE_ARROW);
+				setCursor(CRSR_SB_H_DOUBLE_ARROW);
 				break;
 			case CURSOR_SELECTION_ROTATE:
-				setStockCursor(GDK_EXCHANGE);
+				setCursor(CRSR_EXCHANGE);
 				break;
 			case CURSOR_SELECTION_DELETE:
-				setStockCursor(GDK_PIRATE);
+				setCursor(CRSR_PIRATE);
 				break;				
 			case CURSOR_SELECTION_TOP:
 			case CURSOR_SELECTION_BOTTOM:
-				setStockCursor(GDK_SB_V_DOUBLE_ARROW);
+				setCursor(CRSR_SB_V_DOUBLE_ARROW);
 				break;
 			default:
 				break;
 			}
 		}		
-		else if ( type == TOOL_PEN || type == TOOL_HILIGHTER )
+		else if (type == TOOL_PEN || type == TOOL_HILIGHTER)
 		{
-			if ( this->inputDevice == INPUT_DEVICE_MOUSE && !this->mouseDown ) //mouse and not pressed
+			if (this->inputDevice == INPUT_DEVICE_MOUSE && !this->mouseDown) //mouse and not pressed
 			{
-				setStockCursor(GDK_ARROW);
+				setCursor(CRSR_ARROW);
 			}
 			else
 			{
@@ -233,39 +343,39 @@ void XournalppCursor::updateCursor()
 		{
 			if (this->invisible)
 			{
-				setStockCursor(GDK_BLANK_CURSOR);
+				setCursor(CRSR_BLANK_CURSOR);
 			}
 			else
 			{
-				setStockCursor(GDK_XTERM);
+				setCursor(CRSR_XTERM);
 			}
 		}
 		else if (type == TOOL_IMAGE)
 		{
-			useDefault = true; // No special cursor needed
+			setCursor(CRSR_DEFAULT);
 		}
 		else if (type == TOOL_FLOATING_TOOLBOX)
 		{
-			useDefault = true; // No special cursor needed
+			setCursor(CRSR_DEFAULT);
 		}
 		else if (type == TOOL_VERTICAL_SPACE)
 		{
 			if (this->mouseDown)
 			{
-				setStockCursor(GDK_SB_V_DOUBLE_ARROW);
+				setCursor(CRSR_SB_V_DOUBLE_ARROW);
 			}
 		}
 		else if (type == TOOL_SELECT_OBJECT)
 		{
-			cursor = gdk_cursor_new_from_name(gdk_window_get_display(window),"default");
+			setCursor(CRSR_DEFAULT);
 		}
 		else if (type == TOOL_PLAY_OBJECT) 
 		{
-			setStockCursor(GDK_HAND2);
+			setCursor(CRSR_HAND2);
 		}
 		else // other selections are handled before anyway, because you can move a selection with every tool
 		{
-			setStockCursor(GDK_TCROSS);
+			setCursor(CRSR_TCROSS);
 		}
 	}
 
@@ -275,15 +385,13 @@ void XournalppCursor::updateCursor()
 		{
 			gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
 		}
-		else if(useDefault)
-		{
-			gtk_widget_set_sensitive(xournal->getWidget(), !this->busy);
-		}
+		
+		gtk_widget_set_sensitive(xournal->getWidget(), !this->busy);
 	}
 
 	gdk_display_sync(gdk_display_get_default());
 
-	if (cursor)
+	if (cursor != NULL)
 	{
 		g_object_unref(cursor);
 	}
@@ -293,34 +401,25 @@ GdkCursor* XournalppCursor::getEraserCursor()
 {
 	// Eraser's size follow a quadratic increment, so the cursor will do the same
 	double cursorSize = control->getToolHandler()->getThickness() * 2 * control->getZoomControl()->getZoom();
-
 	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
 	                                                      cursorSize,
 	                                                      cursorSize);
-
 	cairo_t* cr = cairo_create(surface);
-
 	cairo_rectangle(cr, 0, 0, cursorSize, cursorSize);
-
 	cairo_set_source_rgb(cr, 1, 1, 1);
 	cairo_fill(cr);
-
 	cairo_rectangle(cr, 0, 0, cursorSize, cursorSize);
-
 	cairo_set_source_rgb(cr, 0, 0, 0);
 	cairo_stroke(cr);
-
 	cairo_destroy(cr);
-
 	GdkCursor* cursor = gdk_cursor_new_from_surface(gdk_display_get_default(),
 													surface,
 													cursorSize / 2.0,
 													cursorSize / 2.0);
-
 	cairo_surface_destroy(surface);
-
 	return cursor;
 }
+
 
 GdkCursor* XournalppCursor::getHighlighterCursor()
 {
@@ -328,14 +427,15 @@ GdkCursor* XournalppCursor::getHighlighterCursor()
 	
 	if (this->drawDirActive)
 	{
-		this->drawDirActive = false;
+		//setDrawDirCursor(this->drawDirShift, this->drawDirCtrl);		
 		return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
 	}
 	else
 	{
+		if (CRSR_HI == this->currentCursor) return NULL;	//not noticing changes to BigCursor or highlight settings here.
+		this->currentCursor = CRSR_HI;
 		return createHighlighterOrPenCursor(5, 120 / 255.0);
 	}
-
 }
 
 
@@ -345,13 +445,21 @@ GdkCursor* XournalppCursor::getPenCursor()
 
 	if (this->drawDirActive)
 	{
+		//setDrawDirCursor(this->drawDirShift, this->drawDirCtrl);
 		return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
 	}
 	else
 	{
+
+		if (CRSR_PEN == this->currentCursor) return NULL;	//not noticing changes to BigCursor or highlight settings here.
+		this->currentCursor = CRSR_PEN;
+	
+	
+		//setCursor(CRSR_PEN);
 		return createHighlighterOrPenCursor(3, 1.0);
 	}
 }
+
 
 GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 {
@@ -361,12 +469,11 @@ GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 	double r = ((rgb >> 16) & 0xff) / 255.0;
 	double g = ((rgb >> 8) & 0xff) / 255.0;
 	double b = (rgb & 0xff) / 255.0;
-
 	bool big = control->getSettings()->isShowBigCursor();
 	bool highlightPosition = control->getSettings()->isHighlightPosition();
-
 	int height = size;
 	int width = size;
+	
 	if (big || highlightPosition)
 	{
 		height = width = 60;
@@ -377,7 +484,6 @@ GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 	// with the relative offset
 	int centerX = width / 2;
 	int centerY = height / 2; 
-
 	cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
 	cairo_t* cr = cairo_create(crCursor);
 
@@ -400,7 +506,7 @@ GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 		cairo_line_to(cr, centerX + 2, centerY - 4);
 		cairo_line_to(cr, centerX + 15, centerY - 17.5);
 		cairo_line_to(cr, centerX + 19, centerY - 14);
-		cairo_line_to(cr, centerX + 6, centerY );
+		cairo_line_to(cr, centerX + 6, centerY);
 
 		cairo_close_path(cr);
 		cairo_fill_preserve(cr);
@@ -425,98 +531,73 @@ GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 	// Correct the offset of the coloured dot for big-cursor mode
 	cairo_rectangle(cr, centerX, centerY, size, size);
 	cairo_fill(cr);
-
 	cairo_destroy(cr);
-
 	GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
-
-	//	cairo_surface_write_to_png(crCursor, "/home/andreas/xoj-cursor-orig.png");
-	//	gdk_pixbuf_save(pixbuf, "/home/andreas/xoj-cursor.png", "png", NULL, NULL);
-
 	cairo_surface_destroy(crCursor);
-	
 	GdkCursor* cursor = gdk_cursor_new_from_pixbuf(
 	 		gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, centerX, centerY);
-
 	g_object_unref(pixbuf);
-
 	return cursor;
 }
 
 
-
-void XournalppCursor::setStockCursor(GdkCursorType type)
+void XournalppCursor::setCursor(int cursorID)
 {
 	XOJ_CHECK_TYPE(XournalppCursor);
 	
+	if (cursorID ==  this->currentCursor) return;
+
 	MainWindow* win = control->getWindow();
 	if (!win) return;
-	
-	XournalView* xournal = win->getXournal();	
+
+	XournalView* xournal = win->getXournal();
 	if (!xournal) return;
 	
 	GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
 	if (!window) return;
 	
-	GdkCursor *currentcursor =gdk_window_get_cursor(window);
-	
-	if (type == gdk_cursor_get_cursor_type (currentcursor))
+	GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window),cssCursors[cursorID].cssName);
+	if (cursor == NULL) //failed to get a cursor, try backup cursor.
 	{
-		return;
+		if (cursorID != CRSR_NULL)
+		{
+			cursor = gdk_cursor_new_from_name(gdk_window_get_display(window),cssCursors[cursorID].cssBackupName);
+			
+			// Null cursor is ok but not wanted ... warn user
+			if (cursor == NULL)
+			{
+					if (CRSR_NULL == this->currentCursor) return;	//We've already been here
+					g_warning("CSS Cursor and backup not valid '%s', '%s'", cssCursors[cursorID].cssName, cssCursors[cursorID].cssBackupName);
+			}
+		}
+		cursorID = cursor==NULL?CRSR_NULL:cursorID;
 	}
 	
-	
-	GdkCursor* cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), type);
+	this->currentCursor = cursorID;
 	gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
 	gdk_window_set_cursor(window, cursor);
-	g_object_unref(cursor);
+	if (cursor) g_object_unref(cursor);
 }
 
 
-
-// next pen or hi-light cursor will be a DrawDir cursor instead
-void XournalppCursor::activateDrawDirCursor(bool enable, bool shift, bool ctrl)
-{
-		XOJ_CHECK_TYPE(XournalppCursor);
-		this->drawDirActive = enable;
-		this->drawDirShift = shift;
-		this->drawDirCtrl = ctrl;
-}
-	
-	
-	
-void XournalppCursor::doDrawDirCursor()
+void XournalppCursor::setDrawDirCursor(bool shift, bool ctrl)
 {
 	XOJ_CHECK_TYPE(XournalppCursor);
-	
-	MainWindow* win = control->getWindow();
-	
-	if (!win) return;
-	
-	XournalView* xournal = win->getXournal();
-	
-	if (!xournal) return;
-	
-	GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
-	
-	if (!window) return;
-	
-	GdkCursor* cursor = createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
-	gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
-	gdk_window_set_cursor(window, cursor);
-	g_object_unref(cursor);
-	
+	int offset = (shift?1:0) + (ctrl?2:0); 
+	setCursor(CRSR_DRAWDIRNONE + offset);	
 }
-
 
 
 GdkCursor* XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
 {
 	XOJ_CHECK_TYPE(XournalppCursor);
 
+	int newCursorID  = CRSR_DRAWDIRNONE + (shift?1:0) + (ctrl?2:0); 
+	if (newCursorID == this->currentCursor) return NULL;		//not noticing changes to BigCursor or highlight settings here.
+	this->currentCursor = newCursorID;
+
 	bool big = control->getSettings()->isShowBigCursor();
 	bool highlightPosition = control->getSettings()->isHighlightPosition();
-
 	int height = size;
 	int width = size;
 	int fontSize = 8;
@@ -525,44 +606,35 @@ GdkCursor* XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool
 		height = width = 60;
 		fontSize = 12;
 	}
-	
-	
 	int centerX = width - width/ 4;
 	int centerY = height - height/4; 
 	
 
 	cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
 	cairo_t* cr = cairo_create(crCursor);
-
 	cairo_set_line_width(cr, 1.2);
-	
 
 	// Starting point
 	cairo_move_to(cr, centerX , height/2);
-	cairo_line_to(cr, centerX, height );
+	cairo_line_to(cr, centerX, height);
 	cairo_stroke(cr);
 	
 	cairo_move_to(cr, width/2 , centerY);	
 	cairo_line_to(cr,width, centerY);
 	cairo_stroke(cr);
 	
-
 	if (ctrl)
 	{
 		cairo_text_extents_t extents;
-
 		const char *utf8 = "CONTROL";
 		double x,y;
-
 		cairo_select_font_face (cr, "Sans",
 		CAIRO_FONT_SLANT_NORMAL,
 		CAIRO_FONT_WEIGHT_NORMAL);
-
 		cairo_set_font_size (cr, fontSize);
 		cairo_text_extents (cr, utf8, &extents);
-		x = 0; //centerX -(extents.width/2 + extents.x_bearing);
+		x = 0;
 		y = extents.height;
-
 		cairo_move_to (cr, x, y);
 		cairo_show_text (cr, utf8);
 	}
@@ -570,34 +642,24 @@ GdkCursor* XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool
 	if (shift)
 	{
 		cairo_text_extents_t extents;
-
 		const char *utf8 = "SHIFT";
 		double x,y;
-
 		cairo_select_font_face (cr, "Sans",
 		CAIRO_FONT_SLANT_NORMAL,
 		CAIRO_FONT_WEIGHT_NORMAL);
-
 		cairo_set_font_size (cr, fontSize);
 		cairo_text_extents (cr, utf8, &extents);
 		x = 0;
 		y = extents.height*2.5 ;
-
 		cairo_move_to (cr, x, y);
 		cairo_show_text (cr, utf8);
 	}		
 		
-
 	cairo_destroy(cr);
-
 	GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
-
-
 	cairo_surface_destroy(crCursor);
-	
 	GdkCursor* cursor = gdk_cursor_new_from_pixbuf(
 	 		gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, centerX, centerY);
-
 	g_object_unref(pixbuf);
 
 	return cursor;
