@@ -202,6 +202,30 @@ void LatexController::findSelectedTexElement()
 			this->imgheight = this->selectedText->getElementHeight();
 		}
 	}
+	else
+	{
+		// This is a new latex object, so here we pick a convenient initial location
+		const double zoom = this->control->getWindow()->getXournal()->getZoom();
+		Layout* const layout = this->control->getWindow()->getLayout();
+
+		// Calculate coordinates (screen) of the center of the visible area
+		const auto visibleBounds = layout->getVisibleRect();
+		const double centerX = visibleBounds.x + 0.5 * visibleBounds.width;
+		const double centerY = visibleBounds.y + 0.5 * visibleBounds.height;
+
+		if (layout->getViewAt(centerX, centerY) == this->view)
+		{
+			// Pick the center of the visible area (converting from screen to page coordinates)
+			this->posx = (centerX - this->view->getX()) / zoom;
+			this->posy = (centerY - this->view->getY()) / zoom;
+		}
+		else
+		{
+			// No better location, so just center it on the page (possibly out of viewport)
+			this->posx = 0.5 * this->page->getWidth();
+			this->posy = 0.5 * this->page->getHeight();
+		}
+	}
 	this->doc->unlock();
 
 	// need to do this otherwise we can't remove the image for its replacement
