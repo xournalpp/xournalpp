@@ -6,6 +6,7 @@
 #include "InputContext.h"
 
 #include <gui/widgets/XournalWidget.h>
+#include <gui/XournalppCursor.h>
 
 TouchDrawingInputHandler::TouchDrawingInputHandler(InputContext* inputContext) : PenInputHandler(inputContext)
 {
@@ -56,6 +57,8 @@ bool TouchDrawingInputHandler::handleImpl(InputEvent* event)
 	if (this->deviceClassPressed && event->type == MOTION_EVENT)
 	{
 		this->actionMotion(event);
+		XournalppCursor* cursor = xournal->view->getCursor();
+		cursor->updateCursor();
 	}
 
 	// Notify if finger enters/leaves widget

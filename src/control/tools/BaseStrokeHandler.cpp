@@ -182,6 +182,8 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 
+	xournal->getCursor()->activateDrawDirCursor(false);	//in case released within  fixate_Dir_Mods_Dist
+	
 	if (stroke == NULL)
 	{
 		return;
@@ -293,23 +295,17 @@ void BaseStrokeHandler::modifyModifiersByDrawDir(double width, double height,  b
 			this->drawModifierFixed = (DIRSET_MODIFIERS)(SET |
 				(gestureShift? SHIFT:NONE) |
 				(gestureControl? CONTROL:NONE) );
-			if(changeCursor)
-			{
-				xournal->getCursor()->updateCursor();
-			}
+ 			if(changeCursor)
+ 			{
+				xournal->getCursor()->activateDrawDirCursor(false);
+ 			}
 		}
 		else
 		{
-			if (changeCursor)
-			{
-				int corner = ( this->modShift?0:1 ) + ( this->modControl?2:0);
-				
-				if( corner != this-> lastCursor)
-				{
-					xournal->getCursor()->setTempDrawDirCursor(  this->modShift, this->modControl);
-					this->lastCursor = corner;
-				}
-			}
+ 			if (changeCursor)
+ 			{
+				xournal->getCursor()->activateDrawDirCursor( true,  this->modShift, this->modControl);
+ 			}
 		}
 	}
 	else
