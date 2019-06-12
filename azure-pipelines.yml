@@ -88,6 +88,7 @@ stages:
     - script: |
         set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
         %CD:~0,2%\msys64\usr\bin\bash -lc "ls -l %CD:~0,2%\msys64\mingw64\bin"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "echo $PATH"
         %CD:~0,2%\msys64\usr\bin\bash -lc "bash build-portaudio.sh"
       workingDirectory: ./windows-setup
       env:
