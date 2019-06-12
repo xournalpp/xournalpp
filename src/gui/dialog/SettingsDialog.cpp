@@ -105,17 +105,13 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 
 	initMouseButtonEvents();
 
-	auto deviceListHelper = new DeviceListHelper(false);
+	auto deviceListHelper = new DeviceListHelper(this->settings, false);
 	vector<InputDevice> deviceList = deviceListHelper->getDeviceList();
 	GtkWidget* container = get("hboxInputDeviceClasses");
-	for(InputDevice inputDevice : deviceList)
+	for(const InputDevice& inputDevice : deviceList)
 	{
-		// Only add real devices (core pointers have vendor and product id NULL) and ignore keyboards
-		GdkDevice* device = inputDevice.getDevice();
-		if (gdk_device_get_vendor_id(device) != nullptr && gdk_device_get_product_id(device) != nullptr && gdk_device_get_source(device) != GDK_SOURCE_KEYBOARD)
-		{
-			this->deviceClassConfigs.push_back(new DeviceClassConfigGui(getGladeSearchPath(), container, settings, inputDevice));
-		}
+		// Only add real devices (core pointers have vendor and product id NULL)
+		this->deviceClassConfigs.push_back(new DeviceClassConfigGui(getGladeSearchPath(), container, settings, inputDevice));
 	}
 	if (deviceList.empty())
 	{

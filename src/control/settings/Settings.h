@@ -41,6 +41,7 @@ enum ScrollbarHideType
 };
 
 class ButtonConfig;
+class InputDevice;
 
 extern const char* BUTTON_NAMES[];
 const int BUTTON_COUNT = 7;
@@ -374,7 +375,10 @@ public:
 	void loadDeviceClasses();
 	void saveDeviceClasses();
 	void setDeviceClassForDevice(GdkDevice* device, int deviceClass);
+	void setDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource, int deviceClass);
 	int getDeviceClassForDevice(GdkDevice* device);
+	int getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource);
+	std::vector<InputDevice> getKnownInputDevices();
 
 	/**
 	 * Get name, e.g. "cm"
@@ -829,7 +833,7 @@ private:
 
 	bool inputSystemDrawOutsideWindow;
 
-	std::map<string, int> inputDeviceClasses = {};
+	std::map<string, std::pair<int, GdkInputSource>> inputDeviceClasses = {};
 
 	/**
 	 * "Transaction" running, do not save until the end is reached

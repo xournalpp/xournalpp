@@ -79,6 +79,7 @@ class InputEvents
 public:
 
 	static InputDeviceClass translateDeviceType(GdkDevice* device, Settings* settings);
+	static InputDeviceClass translateDeviceType(const string& name, GdkInputSource source, Settings* settings);
 
 	static InputEvent* translateEvent(GdkEvent* sourceEvent, Settings* settings);
 };

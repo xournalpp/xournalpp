@@ -5,6 +5,8 @@
 #include "InputContext.h"
 #include "InputEvents.h"
 
+#include <util/DeviceListHelper.h>
+
 InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling)
 {
 	XOJ_INIT_TYPE(InputContext);
@@ -19,6 +21,11 @@ InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling)
 	this->keyboardHandler = new KeyboardInputHandler(this);
 
 	this->touchWorkaroundEnabled = this->getSettings()->isTouchWorkaround();
+
+	for (const InputDevice& savedDevices : this->view->getControl()->getSettings()->getKnownInputDevices())
+	{
+		this->knownDevices.insert(savedDevices.getName());
+	}
 }
 
 InputContext::~InputContext()
@@ -85,6 +92,15 @@ bool InputContext::handle(GdkEvent* sourceEvent)
 	printDebug(sourceEvent);
 
 	InputEvent* event = InputEvents::translateEvent(sourceEvent, this->getSettings());
+
+	// Add the device to the list of known devices if it is currently unknown
+	if (this->knownDevices.find(string(event->deviceName)) == this->knownDevices.end())
+	{
+		this->knownDevices.insert(string(event->deviceName));
+		this->getSettings()->transactionStart();
+		this->getSettings()->setDeviceClassForDevice(gdk_event_get_source_device(sourceEvent), event->deviceClass);
+		this->getSettings()->transactionEnd();
+	}
 
 	// We do not handle scroll events manually but let GTK do it for us
 	if (event->type == SCROLL_EVENT)
