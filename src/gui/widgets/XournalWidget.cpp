@@ -4,7 +4,6 @@
 #include "control/tools/EditSelection.h"
 #include "control/settings/Settings.h"
 #include "gui/Layout.h"
-#include "gui/inputdevices/old/NewGtkInputDevice.h"
 #include "gui/scroll/ScrollHandling.h"
 #include "gui/Shadow.h"
 #include "gui/XournalView.h"
