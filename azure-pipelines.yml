@@ -33,29 +33,29 @@ stages:
 
 - stage: Release
   jobs:
-  - job: Linux
-    pool:
-      vmImage: 'ubuntu-16.04'
-    displayName: 'Build for Linux'
-    steps:
-    - bash: |
-        sudo apt-get update
-        sudo apt-get install -y cmake libcppunit-dev libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev
-      displayName: 'Install dependencies'
-    - bash: |
-        mkdir build
-      displayName: 'Create build directory'
-    - bash: |
-        cmake ..
-        make
-      workingDirectory: ./build
-      displayName: 'Build Xournal++'
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: './build'
-        ArtifactName: 'release_linux'
-        publishLocation: 'Container'
-      displayName: 'Publish Linux Build'
+#  - job: Linux
+#    pool:
+#      vmImage: 'ubuntu-16.04'
+#    displayName: 'Build for Linux'
+#    steps:
+#    - bash: |
+#        sudo apt-get update
+#        sudo apt-get install -y cmake libcppunit-dev libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev
+#      displayName: 'Install dependencies'
+#    - bash: |
+#        mkdir build
+#      displayName: 'Create build directory'
+#    - bash: |
+#        cmake ..
+#        make
+#      workingDirectory: ./build
+#      displayName: 'Build Xournal++'
+#    - task: PublishBuildArtifacts@1
+#      inputs:
+#        PathtoPublish: './build'
+#        ArtifactName: 'release_linux'
+#        publishLocation: 'Container'
+#      displayName: 'Publish Linux Build'
 
   - job: Windows
     pool:
@@ -80,7 +80,7 @@ stages:
         CHERE_INVOKING: yes
       displayName: 'Install dependencies on Windows'
     - script: |
-        set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        set PATH=%CD:~0,2%\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
         %CD:~0,2%\msys64\usr\bin\bash -lc "./build-portaudio.sh"
       workingDirectory: ./windows-setup
       env:
@@ -89,11 +89,11 @@ stages:
         CHERE_INVOKING: yes
       displayName: 'Build Portaudio'
     - script: |
-        set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        set PATH=%CD:~0,2%\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
         %CD:~0,2%\msys64\usr\bin\bash -lc "mkdir build"
       displayName: 'Create build directory'
     - script: |
-        set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        set PATH=%CD:~0,2%\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
         %CD:~0,2%\msys64\usr\bin\bash -lc "cmake ..""
         %CD:~0,2%\msys64\usr\bin\bash -lc "make"
       workingDirectory: ./build
@@ -103,7 +103,7 @@ stages:
         CHERE_INVOKING: yes
       displayName: 'Build Xournal++'
     - script: |
-        set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        set PATH=%CD:~0,2%\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
         %CD:~0,2%\msys64\usr\bin\bash -lc "./build-setup.sh"
       workingDirectory: ./windows-setup
       env:
@@ -118,11 +118,11 @@ stages:
         publishLocation: 'Container'
       displayName: 'Publish Windows Build'
 
-  - job: macOS
-    pool:
-      vmImage: 'macOS-10.13'
-    displayName: 'Build for macOS'
-    steps:
-    - bash: |
-        echo !!!TODO!!!
-      displayName: 'Install dependencies on macOS'
+#  - job: macOS
+#    pool:
+#      vmImage: 'macOS-10.13'
+#    displayName: 'Build for macOS'
+#    steps:
+#    - bash: |
+#        echo !!!TODO!!!
+#      displayName: 'Install dependencies on macOS'
