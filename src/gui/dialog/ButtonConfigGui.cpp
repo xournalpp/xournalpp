@@ -43,7 +43,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 	{
 		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), _("No device"));
 
-		this->deviceList = DeviceListHelper::getDeviceList(true);
+		this->deviceList = DeviceListHelper::getDeviceList(this->settings, true);
 		for (InputDevice const& dev: this->deviceList)
 		{
 			string txt = dev.getName()  + " (" + dev.getType() + ")";

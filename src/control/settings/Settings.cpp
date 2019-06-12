@@ -6,6 +6,7 @@
 #include <config.h>
 #include <i18n.h>
 #include <Util.h>
+#include <util/DeviceListHelper.h>
 
 #define DEFAULT_FONT "Sans"
 #define DEFAULT_FONT_SIZE 12
@@ -623,8 +624,11 @@ void Settings::loadDeviceClasses()
 	{
 		SElement& deviceNode = device.second;
 		int deviceClass;
+		int deviceSource;
 		deviceNode.getInt("deviceClass", deviceClass);
-		inputDeviceClasses.insert(std::pair<string, int>(device.first, deviceClass));
+		deviceNode.getInt("deviceSource", deviceSource);
+		inputDeviceClasses.insert(std::pair<string, std::pair<int, GdkInputSource>>(
+		        device.first, std::pair<int, GdkInputSource>(deviceClass, (GdkInputSource) deviceSource)));
 	}
 }
 
@@ -808,10 +812,11 @@ void Settings::saveDeviceClasses()
 
 	SElement& s = getCustomElement("deviceClasses");
 
-	for (const std::map<string, int>::value_type& device : inputDeviceClasses)
+	for (const std::map<string, std::pair<int, GdkInputSource>>::value_type& device : inputDeviceClasses)
 	{
 		SElement& e = s.child(device.first);
-		e.setInt("deviceClass", device.second);
+		e.setInt("deviceClass", device.second.first);
+		e.setInt("deviceSource", device.second.second);
 	}
 }
 
@@ -2495,29 +2500,50 @@ bool Settings::getInputSystemDrawOutsideWindowEnabled()
 
 void Settings::setDeviceClassForDevice(GdkDevice* device, int deviceClass)
 {
-	string name = gdk_device_get_name(device);
-	auto it = inputDeviceClasses.find(name);
+	this->setDeviceClassForDevice(gdk_device_get_name(device), gdk_device_get_source(device), deviceClass);
+}
+
+void Settings::setDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource, int deviceClass)
+{
+	auto it = inputDeviceClasses.find(deviceName);
 	if (it != inputDeviceClasses.end())
 	{
-		it->second = deviceClass;
+		it->second.first = deviceClass;
+		it->second.second = deviceSource;
 	}
 	else
 	{
-		inputDeviceClasses.insert(std::pair<string, int>(name, deviceClass));
+		inputDeviceClasses.insert(std::pair<string, std::pair<int, GdkInputSource>>(
+		        deviceName, std::pair<int, GdkInputSource>(deviceClass, deviceSource)));
 	}
+}
+
+std::vector<InputDevice> Settings::getKnownInputDevices()
+{
+	std::vector<InputDevice> inputDevices;
+	for (std::pair<string, std::pair<int, GdkInputSource>> device: inputDeviceClasses)
+	{
+		inputDevices.emplace_back(device.first, device.second.second);
+	}
+	return inputDevices;
 }
 
 int Settings::getDeviceClassForDevice(GdkDevice* device)
 {
-	auto search = inputDeviceClasses.find(gdk_device_get_name(device));
+	return this->getDeviceClassForDevice(gdk_device_get_name(device), gdk_device_get_source(device));
+}
+
+int Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource)
+{
+	auto search = inputDeviceClasses.find(deviceName);
 	if (search != inputDeviceClasses.end())
 	{
-		return search->second;
+		return search->second.first;
 	}
 	else
 	{
 		guint deviceType = 0;
-		switch(gdk_device_get_source(device))
+		switch (deviceSource)
 		{
 			case GDK_SOURCE_CURSOR:
 #if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
@@ -2542,6 +2568,8 @@ int Settings::getDeviceClassForDevice(GdkDevice* device)
 			case GDK_SOURCE_TOUCHSCREEN:
 				deviceType = 4;
 				break;
+		    default:
+			    deviceType = 0;
 		}
 		return deviceType;
 	}
