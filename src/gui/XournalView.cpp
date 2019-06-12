@@ -33,16 +33,8 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
 
-	InputContext* inputContext = nullptr;
-	if (this->control->getSettings()->getExperimentalInputSystemEnabled())
-	{
-		inputContext = new InputContext(this, scrollHandling);
-		this->widget = gtk_xournal_new(this, inputContext);
-	}
-	else
-	{
-		this->widget = gtk_xournal_new_deprecated(this, scrollHandling);
-	}
+	auto* inputContext = new InputContext(this, scrollHandling);
+	this->widget = gtk_xournal_new(this, inputContext);
 	// we need to refer widget here, because we unref it somewhere twice!?
 	g_object_ref(this->widget);
 

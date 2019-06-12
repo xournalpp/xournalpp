@@ -287,7 +287,7 @@ void MainWindow::setTouchscreenScrollingForDeviceMapping()
 	{
 		GdkDevice* device = inputDevice.getDevice();
 		InputDeviceClass deviceClass = InputEvents::translateDeviceType(device, this->getControl()->getSettings());
-		if (gdk_device_get_source(device) == GDK_SOURCE_TOUCHSCREEN && deviceClass != INPUT_DEVICE_TOUCHSCREEN)
+		if (gdk_device_get_source(device) == GDK_SOURCE_TOUCHSCREEN && deviceClass != INPUT_DEVICE_TOUCHSCREEN && !this->getControl()->getSettings()->isTouchWorkaround())
 		{
 			gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), false);
 			break;

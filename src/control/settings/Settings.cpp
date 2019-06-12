@@ -142,7 +142,6 @@ void Settings::loadDefault()
 	this->pluginEnabled = "";
 	this->pluginDisabled = "";
 
-	this->experimentalInputSystemEnabled = false;
 	this->inputSystemTPCButton = false;
 	this->inputSystemDrawOutsideWindow = true;
 
@@ -569,10 +568,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "audioOutputDevice") == 0)
 	{
 		this->audioOutputDevice = g_ascii_strtoll((const char *) value, NULL, 10);
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "experimentalInputSystemEnabled") == 0)
-	{
-		this->experimentalInputSystemEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "inputSystemTPCButton") == 0)
 	{
@@ -1021,7 +1016,6 @@ void Settings::save()
 	WRITE_BOOL_PROP(doActionOnStrokeFiltered);
 	WRITE_BOOL_PROP(trySelectOnStrokeFiltered);
 
-	WRITE_BOOL_PROP(experimentalInputSystemEnabled);
 	WRITE_BOOL_PROP(inputSystemTPCButton);
 	WRITE_BOOL_PROP(inputSystemDrawOutsideWindow);
 
@@ -2428,26 +2422,6 @@ bool Settings::getTrySelectOnStrokeFiltered()
 {
 	XOJ_CHECK_TYPE(Settings);
 	return this->trySelectOnStrokeFiltered;
-}
-
-
-void Settings::setExperimentalInputSystemEnabled(bool systemEnabled)
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	if (this->experimentalInputSystemEnabled == systemEnabled)
-	{
-		return;
-	}
-	this->experimentalInputSystemEnabled = systemEnabled;
-	save();
-}
-
-bool Settings::getExperimentalInputSystemEnabled()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->experimentalInputSystemEnabled;
 }
 
 void Settings::setInputSystemTPCButtonEnabled(bool tpcButtonEnabled)

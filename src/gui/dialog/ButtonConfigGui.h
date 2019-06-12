@@ -23,7 +23,7 @@ class SettingsDialog;
 class ButtonConfigGui : public GladeGui
 {
 public:
-	ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, int button, bool withDevice);
+	ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, int button);
 	virtual ~ButtonConfigGui();
 
 public:
@@ -42,12 +42,6 @@ private:
 
 	Settings* settings;
 	int button;
-	bool withDevice;
-
-	DeviceListHelper* deviceList = NULL;
-
-	GtkWidget* cbDevice;
-	GtkWidget* cbDisableDrawing;
 
 	GtkWidget* cbTool;
 	GtkWidget* cbThickness;

@@ -148,11 +148,11 @@ SettingsDialog::~SettingsDialog()
 	XOJ_RELEASE_TYPE(SettingsDialog);
 }
 
-void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool withDevice)
+void SettingsDialog::initMouseButtonEvents(const char* hbox, int button)
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	this->buttonConfigs.push_back(new ButtonConfigGui(getGladeSearchPath(), get(hbox), settings, button, withDevice));
+	this->buttonConfigs.push_back(new ButtonConfigGui(getGladeSearchPath(), get(hbox), settings, button));
 }
 
 void SettingsDialog::initMouseButtonEvents()
@@ -162,7 +162,6 @@ void SettingsDialog::initMouseButtonEvents()
 	initMouseButtonEvents("hboxMidleMouse", 1);
 	initMouseButtonEvents("hboxRightMouse", 2);
 	initMouseButtonEvents("hboxEraser", 0);
-	initMouseButtonEvents("hboxTouch", 3, true);
 	initMouseButtonEvents("hboxPenButton1", 5);
 	initMouseButtonEvents("hboxPenButton2", 6);
 
@@ -258,7 +257,6 @@ void SettingsDialog::load()
 	loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
 	loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
 	loadCheckbox("cbTouchWorkaround", settings->isTouchWorkaround());
-	loadCheckbox("cbNewInputSystem", settings->getExperimentalInputSystemEnabled());
 	loadCheckbox("cbInputSystemTPCButton", settings->getInputSystemTPCButtonEnabled());
 	loadCheckbox("cbInputSystemDrawOutsideWindow", settings->getInputSystemDrawOutsideWindowEnabled());
 
@@ -535,7 +533,6 @@ void SettingsDialog::save()
 	settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
 	settings->setDarkTheme(getCheckbox("cbDarkTheme"));
 	settings->setTouchWorkaround(getCheckbox("cbTouchWorkaround"));
-	settings->setExperimentalInputSystemEnabled(getCheckbox("cbNewInputSystem"));
 	settings->setInputSystemTPCButtonEnabled(getCheckbox("cbInputSystemTPCButton"));
 	settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
 

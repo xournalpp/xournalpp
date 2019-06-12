@@ -14,11 +14,8 @@ InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling)
 
 	this->stylusHandler = new StylusInputHandler(this);
 	this->touchHandler = new TouchInputHandler(this);
-	this->touchDrawingHandler = new TouchDrawingInputHandler(this);
 	this->mouseHandler = new MouseInputHandler(this);
 	this->keyboardHandler = new KeyboardInputHandler(this);
-
-	this->touchWorkaroundEnabled = this->getSettings()->isTouchWorkaround();
 }
 
 InputContext::~InputContext()
@@ -30,9 +27,6 @@ InputContext::~InputContext()
 
 	delete this->touchHandler;
 	this->touchHandler = nullptr;
-
-	delete this->touchDrawingHandler;
-	this->touchDrawingHandler = nullptr;
 
 	delete this->mouseHandler;
 	this->mouseHandler = nullptr;
@@ -115,14 +109,7 @@ bool InputContext::handle(GdkEvent* sourceEvent)
 	// handle touchscreens
 	if (event->deviceClass == INPUT_DEVICE_TOUCHSCREEN)
 	{
-		// trigger touch drawing depending on the setting
-		if (this->touchWorkaroundEnabled)
-		{
-			return this->touchDrawingHandler->handle(event);
-		} else
-		{
-			return this->touchHandler->handle(event);
-		}
+		return this->touchHandler->handle(event);
 	}
 
 	// handle keyboard
@@ -210,7 +197,6 @@ void InputContext::blockDevice(InputContext::DeviceType deviceType)
 			this->stylusHandler->block(true);
 			break;
 		case TOUCHSCREEN:
-			this->touchDrawingHandler->block(true);
 			this->touchHandler->block(true);
 			this->getView()->getZoomGestureHandler()->disable();
 			break;
@@ -230,7 +216,6 @@ void InputContext::unblockDevice(InputContext::DeviceType deviceType)
 			this->stylusHandler->block(false);
 			break;
 		case TOUCHSCREEN:
-			this->touchDrawingHandler->block(false);
 			this->touchHandler->block(false);
 			this->getView()->getZoomGestureHandler()->enable();
 			break;
@@ -248,7 +233,7 @@ bool InputContext::isBlocked(InputContext::DeviceType deviceType)
 		case STYLUS:
 			return this->stylusHandler->isBlocked();
 		case TOUCHSCREEN:
-			return this->touchDrawingHandler->isBlocked();
+			return this->touchHandler->isBlocked();
 	}
 	return false;
 }

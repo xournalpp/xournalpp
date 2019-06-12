@@ -65,11 +65,6 @@ struct _GtkXournal
 	 * Input handling
 	 */
 	InputContext* input = nullptr;
-
-	/**
-	 * Deprecated input handling
-	 */
-	 NewGtkInputDevice* depInput = nullptr;
 };
 
 struct _GtkXournalClass

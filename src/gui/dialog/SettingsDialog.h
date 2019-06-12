@@ -46,7 +46,7 @@ private:
 	string updateHideString(string hidden, bool hideMenubar, bool hideSidebar);
 
 	void initMouseButtonEvents();
-	void initMouseButtonEvents(const char* hbox, int button, bool withDevice = false);
+	void initMouseButtonEvents(const char* hbox, int button);
 
 private:
 	XOJ_TYPE_ATTRIB;

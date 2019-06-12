@@ -22,40 +22,18 @@ void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, 
 	gtk_list_store_set(typeModel, &iter, 1, name, 2, action, -1);
 }
 
-ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, int button, bool withDevice)
+ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, int button)
  : GladeGui(gladeSearchPath, "settingsButtonConfig.glade", "offscreenwindow")
 {
 	XOJ_INIT_TYPE(ButtonConfigGui);
 
 	this->settings = settings;
 	this->button = button;
-	this->withDevice = withDevice;
 
 	GtkWidget* mainGrid = get("mainGrid");
 	gtk_container_remove(GTK_CONTAINER(getWindow()), mainGrid);
 	gtk_container_add(GTK_CONTAINER(w), mainGrid);
 	gtk_widget_show_all(mainGrid);
-
-	this->cbDevice = get("labelDevice");
-	this->cbDisableDrawing = get("cbDisableDrawing");
-
-	if (withDevice)
-	{
-		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), _("No device"));
-
-		this->deviceList = new DeviceListHelper(true);
-		for (InputDevice& dev : this->deviceList->getDeviceList())
-		{
-			string txt = dev.getName()  + " (" + dev.getType() + ")";
-			gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), txt.c_str());
-		}
-	}
-	else
-	{
-		gtk_widget_hide(get("lbDevice"));
-		gtk_widget_hide(this->cbDevice);
-		gtk_widget_hide(this->cbDisableDrawing);
-	}
 
 	GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
 
@@ -120,9 +98,6 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 ButtonConfigGui::~ButtonConfigGui()
 {
 	XOJ_CHECK_TYPE(ButtonConfigGui);
-
-	delete this->deviceList;
-	this->deviceList = NULL;
 
 	XOJ_RELEASE_TYPE(ButtonConfigGui);
 }
@@ -203,25 +178,6 @@ void ButtonConfigGui::loadSettings()
 	{
 		gtk_combo_box_set_active(GTK_COMBO_BOX(cbEraserType), 0);
 	}
-
-	if (withDevice)
-	{
-		gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), 0);
-
-		int i = 0;
-		for (InputDevice& dev : this->deviceList->getDeviceList())
-		{
-			if (cfg->device == dev.getName())
-			{
-				gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), i + 1);
-				break;
-			}
-
-			i++;
-		}
-
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cbDisableDrawing), cfg->disableDrawing);
-	}
 }
 
 void ButtonConfigGui::show(GtkWindow* parent)
@@ -289,23 +245,6 @@ void ButtonConfigGui::saveSettings()
 	else
 	{
 		cfg->eraserMode = ERASER_TYPE_NONE;
-	}
-
-	if (this->withDevice)
-	{
-		std::vector<InputDevice>& devices = this->deviceList->getDeviceList();
-		int dev = gtk_combo_box_get_active(GTK_COMBO_BOX(cbDevice)) - 1;
-
-		if (dev < 0 || (int)devices.size() <= dev)
-		{
-			cfg->device = "";
-		}
-		else
-		{
-			cfg->device = devices[dev].getName();
-		}
-
-		cfg->disableDrawing = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbDisableDrawing));
 	}
 
 	settings->customSettingsChanged();

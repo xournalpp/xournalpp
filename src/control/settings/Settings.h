@@ -362,9 +362,6 @@ public:
 	string getPluginDisabled();
 	void setPluginDisabled(string pluginEnabled);
 
-	bool getExperimentalInputSystemEnabled();
-	void setExperimentalInputSystemEnabled(bool systemEnabled);
-
 	bool getInputSystemTPCButtonEnabled();
 	void setInputSystemTPCButtonEnabled(bool tpcButtonEnabled);
 

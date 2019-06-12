@@ -18,7 +18,6 @@
 #include "AbstractInputHandler.h"
 #include "MouseInputHandler.h"
 #include "StylusInputHandler.h"
-#include "TouchDrawingInputHandler.h"
 #include "TouchInputHandler.h"
 #include "KeyboardInputHandler.h"
 #include "HandRecognition.h"
@@ -41,16 +40,13 @@ private:
 	StylusInputHandler* stylusHandler;
 	TouchInputHandler* touchHandler;
 	MouseInputHandler* mouseHandler;
-	TouchDrawingInputHandler* touchDrawingHandler;
 	KeyboardInputHandler* keyboardHandler;
 
 	GtkWidget* widget = nullptr;
 	XournalView* view;
 	ScrollHandling* scrollHandling;
 
-	GdkModifierType modifierState = (GdkModifierType)0;
-
-	bool touchWorkaroundEnabled = false;
+	GdkModifierType modifierState = {};
 
 public:
 	enum DeviceType {
