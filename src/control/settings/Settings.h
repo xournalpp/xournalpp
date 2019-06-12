@@ -153,8 +153,8 @@ private:
 
 public:
 	// Getter- / Setter
-	bool isPresureSensitivity();
-	void setPresureSensitivity(gboolean presureSensitivity);
+	bool isPressureSensitivity();
+	void setPressureSensitivity(gboolean presureSensitivity);
 
 	/**
 	 * Getter, enable/disable
@@ -484,7 +484,7 @@ private:
 	/**
 	 *  Use pen pressure to control stroke width?
 	 */
-	bool presureSensitivity;
+	bool pressureSensitivity;
 
 	/**
 	 * If the touch zoom gestures are enabled

@@ -42,7 +42,7 @@ void Settings::loadDefault()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	this->presureSensitivity = true;
+	this->pressureSensitivity = true;
 	this->zoomGesturesEnabled = true;
 	this->maximized = false;
 	this->showPairedPages = false;
@@ -310,9 +310,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 		return;
 	}
 
+	// TODO: remove this typo fix in 2-3 release cycles
 	if (xmlStrcmp(name, (const xmlChar*) "presureSensitivity") == 0)
 	{
-		setPresureSensitivity(xmlStrcmp(value, (const xmlChar*) "true") ? false : true);
+		setPressureSensitivity(xmlStrcmp(value, (const xmlChar*) "true") ? false : true);
+	}
+	if (xmlStrcmp(name, (const xmlChar*) "pressureSensitivity") == 0)
+	{
+		setPressureSensitivity(xmlStrcmp(value, (const xmlChar*) "true") ? false : true);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "zoomGesturesEnabled") == 0)
 	{
@@ -900,7 +905,7 @@ void Settings::save()
 								   "the others are commented in this file, but handle with care!");
 	xmlAddPrevSibling(root, com);
 
-	WRITE_BOOL_PROP(presureSensitivity);
+	WRITE_BOOL_PROP(pressureSensitivity);
 	WRITE_BOOL_PROP(zoomGesturesEnabled);
 
 	WRITE_STRING_PROP(selectedToolbar);
@@ -1125,11 +1130,11 @@ void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 }
 
 // Getter- / Setter
-bool Settings::isPresureSensitivity()
+bool Settings::isPressureSensitivity()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	return this->presureSensitivity;
+	return this->pressureSensitivity;
 }
 
 bool Settings::isZoomGesturesEnabled()
@@ -1684,15 +1689,15 @@ bool Settings::isPresentationMode()
 	return this->presentationMode;
 }
 
-void Settings::setPresureSensitivity(gboolean presureSensitivity)
+void Settings::setPressureSensitivity(gboolean presureSensitivity)
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	if (this->presureSensitivity == presureSensitivity)
+	if (this->pressureSensitivity == presureSensitivity)
 	{
 		return;
 	}
-	this->presureSensitivity = presureSensitivity;
+	this->pressureSensitivity = presureSensitivity;
 
 	save();
 }
