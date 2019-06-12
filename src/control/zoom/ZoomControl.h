@@ -13,12 +13,12 @@
 
 #include <model/DocumentListener.h>
 
+#include <Rectangle.h>
 #include <XournalType.h>
 
-#include <Rectangle.h>
-#include <tuple>
-
 #include <gtk/gtk.h>
+
+#include <tuple>
 
 #define DEFAULT_ZOOM_MAX 7
 #define DEFAULT_ZOOM_MIN 0.3
@@ -33,11 +33,11 @@ class XojPageView;
 class ZoomListener;
 class DocumentListener;
 
-class ZoomControl :
-	public DocumentListener
+class ZoomControl : public DocumentListener
 {
 public:
 	ZoomControl();
+
 	virtual ~ZoomControl();
 
 	/**
@@ -113,6 +113,7 @@ public:
 	 * @param zoom zoom value depending zoom100Value
 	 */
 	bool updateZoomFitValue(size_t pageNo = 0);
+	bool updateZoomFitValue(const Rectangle& allocation, size_t pageNo = 0);
 
 	/**
 	 * @return zoom value for zoom fit depending zoom100Value
@@ -187,10 +188,11 @@ protected:
 	void pageSelected(size_t page);
 
 	static bool onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom);
-	static bool onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle *allocation, ZoomControl* zoom);
+	static bool onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle* allocation, ZoomControl* zoom);
 
 private:
 	void zoomFit();
+
 	void zoomPresentation();
 
 private:

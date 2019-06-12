@@ -336,7 +336,6 @@ void Control::initWindow(MainWindow* win)
 	win->setRecentMenu(recent->getMenu());
 	selectTool(toolHandler->getToolType());
 	this->win = win;
-	this->zoom->initZoomHandler(win->getXournal()->getWidget(), win->getXournal(), this);
 	this->sidebar = new Sidebar(win, this);
 
 	XojMsgBox::setDefaultWindow(getGtkWindow());

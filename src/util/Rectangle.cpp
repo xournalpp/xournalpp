@@ -8,23 +8,14 @@ Rectangle::Rectangle()
 }
 
 Rectangle::Rectangle(double x, double y, double width, double height)
+		: x(x), y(y), width(width), height(height)
 {
 	XOJ_INIT_TYPE(Rectangle);
-
-	this->x = x;
-	this->y = y;
-	this->width = width;
-	this->height = height;
 }
 
-Rectangle::Rectangle(Range& rect)
+Rectangle::Rectangle(const Range& rect)
+		: x(rect.getX()), y(rect.getY()), width(rect.getWidth()), height(rect.getHeight())
 {
-	XOJ_INIT_TYPE(Rectangle);
-
-	this->x = rect.getX();
-	this->y = rect.getY();
-	this->width = rect.getWidth();
-	this->height = rect.getHeight();
 }
 
 Rectangle::~Rectangle()
@@ -87,7 +78,7 @@ void Rectangle::add(double x, double y, double width, double height)
 	this->height = y2 - y1;
 }
 
-void Rectangle::add(const Rectangle &other)
+void Rectangle::add(const Rectangle& other)
 {
 	add(other.x, other.y, other.width, other.height);
 }
@@ -97,7 +88,7 @@ Rectangle Rectangle::translated(double dx, double dy)
 	return Rectangle(this->x + dx, this->y + dy, this->width, this->height);
 }
 
-Rectangle Rectangle::intersect(const Rectangle &other)
+Rectangle Rectangle::intersect(const Rectangle& other)
 {
 	double x1 = MAX(this->x, other.x);
 	double y1 = MAX(this->y, other.y);

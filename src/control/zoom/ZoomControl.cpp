@@ -1,6 +1,7 @@
 #include "ZoomControl.h"
 
 #include "control/Control.h"
+
 #include "gui/Layout.h"
 #include "gui/PageView.h"
 #include "gui/widgets/XournalWidget.h"
@@ -27,7 +28,7 @@ void ZoomControl::zoomOneStep(bool zoomIn, double x, double y)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	if(this->zoomPresentationMode)
+	if (this->zoomPresentationMode)
 	{
 		return;
 	}
@@ -57,7 +58,7 @@ void ZoomControl::zoomScroll(bool zoomIn, double x, double y)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	if(this->zoomPresentationMode)
+	if (this->zoomPresentationMode)
 	{
 		return;
 	}
@@ -170,9 +171,9 @@ std::tuple<double, double> ZoomControl::getScrollPositionAfterZoom()
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	if (this->zoomSequenceStart == -1 )
+	if (this->zoomSequenceStart == -1)
 	{
-		return std::make_tuple(-1,-1);
+		return std::make_tuple(-1, -1);
 	}
 
 	double x = (this->scrollPositionX * this->zoom) - this->zoomWidgetPosX;
@@ -267,29 +268,33 @@ void ZoomControl::setZoom100Value(double zoom)
 
 bool ZoomControl::updateZoomFitValue(size_t pageNo)
 {
+	return updateZoomFitValue(getVisibleRect(), pageNo);
+}
+
+bool ZoomControl::updateZoomFitValue(const Rectangle& widget_rect, size_t pageNo)
+{
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	if(pageNo == 0)
+	if (pageNo == 0)
 	{
 		pageNo = view->getCurrentPage();
 	}
 	XojPageView* page = view->getViewFor(pageNo);
-	if(!page)
+	if (!page)
 	{
 		//no page
 		return false;
 	}
 
-	Rectangle widget_rect = getVisibleRect();
 	double zoom_fit_width = widget_rect.width / (page->getWidth() + 20.0);
-	if(zoom_fit_width < this->zoomMin || zoom_fit_width > this->zoomMax)
+	if (zoom_fit_width < this->zoomMin || zoom_fit_width > this->zoomMax)
 	{
 		return false;
 	}
 
 	this->zoomFitValue = zoom_fit_width;
 	fireZoomRangeValueChanged();
-	if(this->zoomFitMode && !this->zoomPresentationMode)
+	if (this->zoomFitMode && !this->zoomPresentationMode)
 	{
 		this->setZoomFitMode(true);
 	}
@@ -308,7 +313,7 @@ bool ZoomControl::updateZoomPresentationValue(size_t pageNo)
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	XojPageView* page = view->getViewFor(view->getCurrentPage());
-	if(!page)
+	if (!page)
 	{
 		//no page
 		return false;
@@ -318,13 +323,13 @@ bool ZoomControl::updateZoomPresentationValue(size_t pageNo)
 	double zoom_fit_width = widget_rect.width / (page->getWidth() + 14.0);
 	double zoom_fit_height = widget_rect.height / (page->getHeight() + 14.0);
 	double zoom_presentation = zoom_fit_width < zoom_fit_height ? zoom_fit_width : zoom_fit_height;
-	if(zoom_presentation < this->zoomMin)
+	if (zoom_presentation < this->zoomMin)
 	{
 		return false;
 	}
 
 	this->zoomPresentationValue = zoom_presentation;
-	if(this->zoomPresentationMode)
+	if (this->zoomPresentationMode)
 	{
 		this->setZoomPresentationMode(true);
 	}
@@ -349,12 +354,12 @@ void ZoomControl::zoom100()
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	if(this->zoomPresentationMode)
+	if (this->zoomPresentationMode)
 	{
 		return;
 	}
 
-	if(this->zoomFitMode)
+	if (this->zoomFitMode)
 	{
 		this->setZoomFitMode(false);
 	}
@@ -366,7 +371,7 @@ void ZoomControl::zoom100()
 
 void ZoomControl::zoomFit()
 {
-	if(this->zoomFitMode && !this->zoomPresentationMode && this->zoom != this->zoomFitValue)
+	if (this->zoomFitMode && !this->zoomPresentationMode && this->zoom != this->zoomFitValue)
 	{
 		startZoomSequence(-1, -1);
 		this->zoomSequnceChange(this->zoomFitValue, false);
@@ -376,7 +381,7 @@ void ZoomControl::zoomFit()
 
 void ZoomControl::zoomPresentation()
 {
-	if(this->zoomPresentationMode && this->zoom != this->zoomPresentationValue)
+	if (this->zoomPresentationMode && this->zoom != this->zoomPresentationValue)
 	{
 		startZoomSequence(-1, -1);
 		this->zoomSequnceChange(this->zoomPresentationValue, false);
@@ -388,13 +393,13 @@ void ZoomControl::setZoomFitMode(bool isZoomFitMode)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	if(this->zoomFitMode != isZoomFitMode)
+	if (this->zoomFitMode != isZoomFitMode)
 	{
 		this->zoomFitMode = isZoomFitMode;
 		this->control->fireActionSelected(GROUP_ZOOM_FIT, isZoomFitMode ? ACTION_ZOOM_FIT : ACTION_NOT_SELECTED);
 	}
 
-	if(isZoomFitMode)
+	if (isZoomFitMode)
 	{
 		zoomFit();
 	}
@@ -413,7 +418,7 @@ void ZoomControl::setZoomPresentationMode(bool isZoomPresentationMode)
 
 	this->zoomPresentationMode = isZoomPresentationMode;
 
-	if(isZoomPresentationMode)
+	if (isZoomPresentationMode)
 	{
 		zoomPresentation();
 	}
@@ -550,12 +555,12 @@ bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScr
 		gtk_widget_translate_coordinates(widget, topLevel, 0, 0, &wx, &wy);
 
 		if (event->direction == GDK_SCROLL_UP ||
-			(event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0))
+		    (event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0))
 		{
 			zoom->zoomScroll(ZOOM_IN, event->x + wx, event->y + wy);
 		}
 		else if (event->direction == GDK_SCROLL_DOWN ||
-			(event->direction == GDK_SCROLL_SMOOTH && event->delta_y > 0))
+		         (event->direction == GDK_SCROLL_SMOOTH && event->delta_y > 0))
 		{
 			zoom->zoomScroll(ZOOM_OUT, event->x + wx, event->y + wy);
 		}
@@ -563,7 +568,7 @@ bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScr
 	}
 
 	//TODO: Disabling scroll here is maybe a bit hacky
-	if(zoom->isZoomPresentationMode())
+	if (zoom->isZoomPresentationMode())
 	{
 		//disable scroll while presentationMode
 		return true;
@@ -572,11 +577,28 @@ bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScr
 	return false;
 }
 
-bool ZoomControl::onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle *allocation, ZoomControl* zoom)
+
+// Todo: try to connect this function with the "expose_event", it would be way cleaner and we dont need to allign/layout
+//       the pages manually, but it only works with the top Widget (GtkWindow) for now this works fine
+//       see https://stackoverflow.com/questions/1060039/gtk-detecting-window-resize-from-the-user
+bool ZoomControl::onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle* allocation, ZoomControl* zoom)
 {
 	XOJ_CHECK_TYPE_OBJ(zoom, ZoomControl);
+	g_assert_true(widget != zoom->view->getWidget());
+
+	Rectangle r(allocation->x, allocation->y, allocation->width, allocation->height);
 
 	zoom->updateZoomPresentationValue();
-	zoom->updateZoomFitValue();
+	zoom->updateZoomFitValue(r);
+
+	// Todo: remove after change to "expose_event"
+	auto layout = gtk_xournal_get_layout(zoom->view->getWidget());
+	GdkRectangle allNew = {allocation->x, allocation->y,
+	                       std::max(allocation->width, layout->getMinimalWidth()),
+	                       std::max(allocation->height, layout->getMinimalHeight())};
+
+	layout->layoutPages(allocation->width, allocation->height);
+	gtk_widget_set_allocation(zoom->view->getWidget(), &allNew);
+
 	return true;
 }
