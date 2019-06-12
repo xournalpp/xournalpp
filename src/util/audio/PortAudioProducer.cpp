@@ -1,6 +1,6 @@
 #include "PortAudioProducer.h"
 
-PortAudioProducer::PortAudioProducer(Settings* settings, AudioQueue<int>* audioQueue)
+PortAudioProducer::PortAudioProducer(Settings* settings, AudioQueue<float>* audioQueue)
 		: sys(portaudio::System::instance()),
 		  settings(settings),
 		  audioQueue(audioQueue)
@@ -85,7 +85,7 @@ bool PortAudioProducer::startRecording()
 
 	// Restrict recording channels to 2 as playback devices should have 2 channels at least
 	this->inputChannels = std::min(2, device->maxInputChannels());
-	portaudio::DirectionSpecificStreamParameters inParams(*device, this->inputChannels, portaudio::INT32, true, device->defaultLowInputLatency(), nullptr);
+	portaudio::DirectionSpecificStreamParameters inParams(*device, this->inputChannels, portaudio::FLOAT32, true, device->defaultLowInputLatency(), nullptr);
 	portaudio::StreamParameters params(inParams, portaudio::DirectionSpecificStreamParameters::null(), this->settings->getAudioSampleRate(), this->framesPerBuffer, paNoFlag);
 
 	this->audioQueue->setAudioAttributes(this->settings->getAudioSampleRate(), static_cast<unsigned int>(this->inputChannels));
@@ -130,7 +130,7 @@ int PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuffe
 	{
 		unsigned long providedFrames = framesPerBuffer * this->inputChannels;
 
-		this->audioQueue->push((int*) inputBuffer, providedFrames);
+		this->audioQueue->push((float*) inputBuffer, providedFrames);
 	}
 	return paContinue;
 }

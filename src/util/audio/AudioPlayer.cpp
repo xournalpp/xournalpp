@@ -5,8 +5,8 @@ AudioPlayer::AudioPlayer(Control* control, Settings* settings) : control(control
 {
 	XOJ_INIT_TYPE(AudioPlayer);
 
-	this->audioQueue = new AudioQueue<int>();
-	this->portAudioConsumer = new PortAudioConsumer(settings, this->audioQueue);
+	this->audioQueue = new AudioQueue<float>();
+	this->portAudioConsumer = new PortAudioConsumer(this, this->audioQueue);
 	this->vorbisProducer = new VorbisProducer(this->audioQueue);
 }
 
@@ -73,40 +73,27 @@ bool AudioPlayer::play()
 		return false;
 	}
 
-	bool status = this->portAudioConsumer->startPlaying();
+	return this->portAudioConsumer->startPlaying();
+}
 
-	if (status)
+void AudioPlayer::disableAudioPlaybackButtons()
+{
+	XOJ_CHECK_TYPE(AudioPlayer);
+
+	if (this->audioQueue->hasStreamEnded())
 	{
-		// Clean up after audio is played
-		stopThread = std::thread(
-				[&]
-				{
-					while (isPlaying())
-					{
-						Pa_Sleep(100);
-					}
-					this->portAudioConsumer->stopPlaying();
-
-					// If the stream is played completely update the UI elements accordingly
-					if (this->audioQueue->hasStreamEnded())
-					{
-						this->control->getWindow()->disableAudioPlaybackButtons();
-					}
-				});
-		stopThread.detach();
+		this->control->getWindow()->disableAudioPlaybackButtons();
 	}
-
-	return status;
 }
 
 void AudioPlayer::stop()
 {
 	XOJ_CHECK_TYPE(AudioPlayer);
 
-	this->audioQueue->signalEndOfStream();
-
 	// Stop playing audio
 	this->portAudioConsumer->stopPlaying();
+
+	this->audioQueue->signalEndOfStream();
 
 	// Abort libsox
 	this->vorbisProducer->abort();
@@ -122,4 +109,9 @@ vector<DeviceInfo> AudioPlayer::getOutputDevices()
 	std::list<DeviceInfo> deviceList = this->portAudioConsumer->getOutputDevices();
 	return vector<DeviceInfo>{std::make_move_iterator(std::begin(deviceList)),
 							  std::make_move_iterator(std::end(deviceList))};
+}
+
+Settings* AudioPlayer::getSettings()
+{
+	return this->settings;
 }

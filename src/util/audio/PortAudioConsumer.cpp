@@ -1,6 +1,7 @@
 #include "PortAudioConsumer.h"
+#include "AudioPlayer.h"
 
-PortAudioConsumer::PortAudioConsumer(Settings* settings, AudioQueue<int>* audioQueue) : sys(portaudio::System::instance()), settings(settings), audioQueue(audioQueue)
+PortAudioConsumer::PortAudioConsumer(AudioPlayer* audioPlayer, AudioQueue<float>* audioQueue) : sys(portaudio::System::instance()), audioPlayer(audioPlayer), audioQueue(audioQueue)
 {
 	XOJ_INIT_TYPE(PortAudioConsumer);
 }
@@ -28,7 +29,7 @@ std::list<DeviceInfo> PortAudioConsumer::getOutputDevices()
 
 		if (i->isFullDuplexDevice() || i->isOutputOnlyDevice())
 		{
-			DeviceInfo deviceInfo(&(*i), this->settings->getAudioOutputDevice() == i->index());
+			DeviceInfo deviceInfo(&(*i), this->audioPlayer->getSettings()->getAudioOutputDevice() == i->index());
 			deviceList.push_back(deviceInfo);
 		}
 
@@ -40,7 +41,7 @@ const DeviceInfo PortAudioConsumer::getSelectedOutputDevice()
 {
 	try
 	{
-		return DeviceInfo(&sys.deviceByIndex(this->settings->getAudioOutputDevice()), true);
+		return DeviceInfo(&sys.deviceByIndex(this->audioPlayer->getSettings()->getAudioOutputDevice()), true);
 	}
 	catch (portaudio::PaException& e)
 	{
@@ -60,10 +61,10 @@ bool PortAudioConsumer::startPlaying()
 {
 	XOJ_CHECK_TYPE(PortAudioConsumer);
 
-	// Check if there already is a recording
-	if (this->outputStream != nullptr)
+	// Abort a playback stream if one is currently active
+	if (this->outputStream != nullptr && this->outputStream->isActive())
 	{
-		return false;
+		this->outputStream->abort();
 	}
 
 	double sampleRate;
@@ -96,7 +97,7 @@ bool PortAudioConsumer::startPlaying()
 	}
 
 	this->outputChannels = channels;
-	portaudio::DirectionSpecificStreamParameters outParams(*device, channels, portaudio::INT32, true, device->defaultLowOutputLatency(), nullptr);
+	portaudio::DirectionSpecificStreamParameters outParams(*device, channels, portaudio::FLOAT32, true, device->defaultLowOutputLatency(), nullptr);
 	portaudio::StreamParameters params(portaudio::DirectionSpecificStreamParameters::null(), outParams, sampleRate, this->framesPerBuffer, paNoFlag);
 
 	try
@@ -106,7 +107,7 @@ bool PortAudioConsumer::startPlaying()
 	catch (portaudio::PaException& e)
 	{
 		this->audioQueue->signalEndOfStream();
-		g_warning("PortAudioConsumer: Unable to open stream to device");
+		g_warning("PortAudioConsumer: Unable to open stream to device\nCaused by: %s", e.what());
 		return false;
 	}
 	// Start the recording
@@ -117,7 +118,7 @@ bool PortAudioConsumer::startPlaying()
 	catch (portaudio::PaException& e)
 	{
 		this->audioQueue->signalEndOfStream();
-		g_warning("PortAudioConsumer: Unable to start stream");
+		g_warning("PortAudioConsumer: Unable to start stream\nCaused by: %s", e.what());
 		return false;
 	}
 	return true;
@@ -130,34 +131,60 @@ int PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer,
 
 	if (statusFlags)
 	{
-		g_warning("PortAudioConsumer: statusFlag: %s", std::to_string(statusFlags).c_str());
+		g_warning("PortAudioConsumer: PortAudio reported a stream warning: %s", std::to_string(statusFlags).c_str());
 	}
 
 	if (outputBuffer != nullptr)
 	{
 		unsigned long outputBufferLength;
-		this->audioQueue->pop(((int*) outputBuffer), outputBufferLength, framesPerBuffer * this->outputChannels);
+		this->audioQueue->pop(((float*) outputBuffer), outputBufferLength, framesPerBuffer * this->outputChannels);
 
 		// Fill buffer to requested length if necessary
 
 		if (outputBufferLength < framesPerBuffer * this->outputChannels)
 		{
-			g_warning("PortAudioConsumer: Frame underflow");
-
-			auto outputBufferImpl = (int*) outputBuffer;
-			for (auto i = outputBufferLength; i < framesPerBuffer * this->outputChannels; ++i)
+			// Show frame underflow warning if there are not enough samples and the stream is not yet finished
+			if (!this->audioQueue->hasStreamEnded())
 			{
-				outputBufferImpl[i] = 0;
+				g_warning("PortAudioConsumer: Not enough audio samples available to fill requested frame");
+			}
+
+			auto outputBufferImpl = (float*) outputBuffer;
+
+			if (outputBufferLength > this->outputChannels)
+			{
+				// If there is previous audio data use this data to ramp down the audio samples
+				for (auto i = outputBufferLength; i < framesPerBuffer * this->outputChannels; ++i)
+				{
+					outputBufferImpl[i] = outputBufferImpl[i - this->outputChannels] / 2;
+				}
+			}
+			else
+			{
+				// If there is no data that could be used to ramp down just output silence
+				for (auto i = outputBufferLength; i < framesPerBuffer * this->outputChannels; ++i)
+				{
+					outputBufferImpl[i] = 0;
+				}
 			}
 		}
 
-
-		if (!this->audioQueue->hasStreamEnded() || !this->audioQueue->empty())
+		// Continue playback if there is still data available
+		if (this->audioQueue->hasStreamEnded() && this->audioQueue->empty())
+		{
+			this->audioPlayer->disableAudioPlaybackButtons();
+			return paComplete;
+		}
+		else
 		{
 			return paContinue;
 		}
 	}
-	return paComplete;
+
+	// The output buffer is no longer available - Abort!
+	this->audioQueue->signalEndOfStream();
+	this->audioPlayer->disableAudioPlaybackButtons();
+	return paAbort;
 }
 
 void PortAudioConsumer::stopPlaying()
@@ -173,18 +200,13 @@ void PortAudioConsumer::stopPlaying()
 			{
 				this->outputStream->stop();
 			}
-			if (this->outputStream->isOpen())
-			{
-				this->outputStream->close();
-			}
 		}
 		catch (portaudio::PaException& e)
 		{
-			g_warning("PortAudioConsumer: Closing stream failed");
+			/*
+			 * We try closing the stream but this->outputStream might be an invalid object at this time if the stream was previously closed by the backend.
+			 * Just ignore this as the stream is closed either way.
+			 */
 		}
 	}
-
-	// Allow new playback by removing the old one
-	delete this->outputStream;
-	this->outputStream = nullptr;
 }
