@@ -20,8 +20,9 @@ void XojMsgBox::showErrorToUser(GtkWindow* win, string msg)
 		win = defaultWindow;
 	}
 
-	GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-											   "%s", msg.c_str());
+	GtkWidget* dialog = gtk_message_dialog_new_with_markup(win, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+											   NULL);
+	gtk_message_dialog_set_markup( GTK_MESSAGE_DIALOG (dialog), msg.c_str());
 	if (win != NULL)
 	{
 		gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
@@ -36,11 +37,13 @@ int XojMsgBox::showPluginMessage(string pluginName, string msg, map<int, string>
 
 	if (error)
 	{
-		header = "Error in " + header;
+		header = "<b>Error in </b>" + header;
 	}
 
-	GtkWidget* dialog = gtk_message_dialog_new(defaultWindow, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE,
-											   "%s", header.c_str());
+	GtkWidget* dialog = gtk_message_dialog_new_with_markup(defaultWindow, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE,
+											   NULL);
+	gtk_message_dialog_set_markup( GTK_MESSAGE_DIALOG (dialog), header.c_str());
+	
 	if (defaultWindow != NULL)
 	{
 		gtk_window_set_transient_for(GTK_WINDOW(dialog), defaultWindow);
