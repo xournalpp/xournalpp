@@ -1,5 +1,6 @@
 #include "VorbisProducer.h"
 
+
 VorbisProducer::VorbisProducer(AudioQueue<float>* audioQueue) : audioQueue(audioQueue)
 {
 	XOJ_INIT_TYPE(VorbisProducer);
@@ -46,7 +47,7 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 				{
 					numSamples = sf_readf_float(this->sfFile, sampleBuffer, 1024);
 
-					while (this->audioQueue->size() >= 16384 && !this->audioQueue->hasStreamEnded() && !this->stopProducer)
+					while (this->audioQueue->size() >= this->sample_buffer_size && !this->audioQueue->hasStreamEnded() && !this->stopProducer)
 					{
 						std::this_thread::sleep_for(std::chrono::microseconds(100));
 					}

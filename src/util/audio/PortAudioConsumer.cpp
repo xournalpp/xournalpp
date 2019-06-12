@@ -170,14 +170,14 @@ int PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer,
 		}
 
 		// Continue playback if there is still data available
-		if (!this->audioQueue->hasStreamEnded() || !this->audioQueue->empty())
-		{
-			return paContinue;
-		}
-		else
+		if (this->audioQueue->hasStreamEnded() && this->audioQueue->empty())
 		{
 			this->audioPlayer->disableAudioPlaybackButtons();
 			return paComplete;
+		}
+		else
+		{
+			return paContinue;
 		}
 	}
 

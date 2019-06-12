@@ -33,6 +33,7 @@ public:
 	void stop();
 
 private:
+	const int sample_buffer_size = 16384;
 	XOJ_TYPE_ATTRIB;
 
 protected:
