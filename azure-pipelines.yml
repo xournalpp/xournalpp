@@ -7,29 +7,29 @@ trigger:
 - master
 
 stages:
-- stage: 'Build_Test_Stage'
-  jobs:
-  - job: 'Build_Test'
-    pool:
-      vmImage: 'ubuntu-16.04'
-    displayName: 'Test Xournal++ on Linux'
-    steps:
-    - bash: |
-        sudo apt-get update
-        sudo apt-get install -y cmake libcppunit-dev libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev
-      displayName: 'Install dependencies'
-    - bash: |
-        mkdir build
-      displayName: 'Create build directory'
-    - bash: |
-        cmake .. -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON
-        make -j `grep processor /proc/cpuinfo | tail -c 2`
-      workingDirectory: ./build
-      displayName: 'Build Xournal++'
-    - bash: |
-        ctest
-      workingDirectory: ./build
-      displayName: 'Run tests'
+#- stage: 'Build_Test_Stage'
+#  jobs:
+#  - job: 'Build_Test'
+#    pool:
+#      vmImage: 'ubuntu-16.04'
+#    displayName: 'Test Xournal++ on Linux'
+#    steps:
+#    - bash: |
+#        sudo apt-get update
+#        sudo apt-get install -y cmake libcppunit-dev libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev
+#      displayName: 'Install dependencies'
+#    - bash: |
+#        mkdir build
+#      displayName: 'Create build directory'
+#    - bash: |
+#        cmake .. -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON
+#        make -j `grep processor /proc/cpuinfo | tail -c 2`
+#      workingDirectory: ./build
+#      displayName: 'Build Xournal++'
+#    - bash: |
+#        ctest
+#      workingDirectory: ./build
+#      displayName: 'Run tests'
 
 - stage: Release
   jobs:
@@ -50,6 +50,12 @@ stages:
         make
       workingDirectory: ./build
       displayName: 'Build Xournal++'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: './build'
+        ArtifactName: 'release_linux'
+        publishLocation: 'Container'
+      displayName: 'Publish Linux Build'
 
   - job: Windows
     pool:
@@ -59,46 +65,58 @@ stages:
         MSYS2_ARCH: x86_64
     displayName: 'Build for Windows'
     steps:
-      - script: |
-          choco install msys2 --params="/InstallDir:%CD:~0,2%\msys64 /NoUpdate /NoPath"
-        displayName: 'Install MSYS2'
-      - script: |
-          pacman -Syuu --noconfirm
-          pacman -S  --noconfirm mingw-w64-x86_64-cmake make mingw-w64-x86_64-toolchain
-          pacman -S  --noconfirm --needed base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
-          pacman -S  --noconfirm mingw-w64-x86_64-poppler mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip
-        env:
-          MSYS2_ARCH: $(MSYS2_ARCH)
-          MSYSTEM: $(MSYSTEM)
-          CHERE_INVOKING: yes
-        displayName: 'Install dependencies on Windows'
-      - script: ./build-portaudio.sh
-        workingDirectory: ./windows-setup
-        env:
-          MSYS2_ARCH: $(MSYS2_ARCH)
-          MSYSTEM: $(MSYSTEM)
-          CHERE_INVOKING: yes
-        displayName: 'Build Portaudio'
-      - script: |
-          mkdir build
-        displayName: 'Create build directory'
-      - script: |
-          cmake ..
-          make
-        workingDirectory: ./build
-        env:
-          MSYS2_ARCH: $(MSYS2_ARCH)
-          MSYSTEM: $(MSYSTEM)
-          CHERE_INVOKING: yes
-        displayName: 'Build Xournal++'
-      - script: |
-          ./build-setup.sh
-        workingDirectory: ./windows-setup
-        env:
-          MSYS2_ARCH: $(MSYS2_ARCH)
-          MSYSTEM: $(MSYSTEM)
-          CHERE_INVOKING: yes
-        displayName: 'Create Setup'
+    - script: |
+        choco install msys2 --params="/InstallDir:%CD:~0,2%\msys64 /NoUpdate /NoPath"
+      displayName: 'Install MSYS2'
+    - script: |
+        set PATH=%CD:~0,2%\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        %CD:~0,2%\msys64\usr\bin\pacman -Syuu --noconfirm
+        %CD:~0,2%\msys64\usr\bin\pacman -S  --noconfirm mingw-w64-x86_64-cmake make mingw-w64-x86_64-toolchain
+        %CD:~0,2%\msys64\usr\bin\pacman -S  --noconfirm --needed base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
+        %CD:~0,2%\msys64\usr\bin\pacman -S  --noconfirm mingw-w64-x86_64-poppler mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip
+      env:
+        MSYS2_ARCH: $(MSYS2_ARCH)
+        MSYSTEM: $(MSYSTEM)
+        CHERE_INVOKING: yes
+      displayName: 'Install dependencies on Windows'
+    - script: |
+        set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        %CD:~0,2%\msys64\usr\bin\bash -lc "./build-portaudio.sh"
+      workingDirectory: ./windows-setup
+      env:
+        MSYS2_ARCH: $(MSYS2_ARCH)
+        MSYSTEM: $(MSYSTEM)
+        CHERE_INVOKING: yes
+      displayName: 'Build Portaudio'
+    - script: |
+        set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        %CD:~0,2%\msys64\usr\bin\bash -lc "mkdir build"
+      displayName: 'Create build directory'
+    - script: |
+        set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        %CD:~0,2%\msys64\usr\bin\bash -lc "cmake ..""
+        %CD:~0,2%\msys64\usr\bin\bash -lc "make"
+      workingDirectory: ./build
+      env:
+        MSYS2_ARCH: $(MSYS2_ARCH)
+        MSYSTEM: $(MSYSTEM)
+        CHERE_INVOKING: yes
+      displayName: 'Build Xournal++'
+    - script: |
+        set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        %CD:~0,2%\msys64\usr\bin\bash -lc "./build-setup.sh"
+      workingDirectory: ./windows-setup
+      env:
+        MSYS2_ARCH: $(MSYS2_ARCH)
+        MSYSTEM: $(MSYSTEM)
+        CHERE_INVOKING: yes
+      displayName: 'Create Setup'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: './build'
+        ArtifactName: 'release_windows'
+        publishLocation: 'Container'
+      displayName: 'Publish Windows Build'
 
   - job: macOS
     pool:
@@ -108,7 +126,3 @@ stages:
     - bash: |
         echo !!!TODO!!!
       displayName: 'Install dependencies on macOS'
-
-#- stage: Deploy_Release
-#  jobs:
-#  - job: GitHub
