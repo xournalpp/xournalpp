@@ -84,12 +84,9 @@ stages:
         MSYSTEM: $(MSYSTEM)
         CHERE_INVOKING: yes
       displayName: 'Install dependencies on Windows'
-    - task: ManualIntervention@8
-      inputs:
-        instructions: 'Test GDB'
     - script: |
         set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
-        %CD:~0,2%\msys64\usr\bin\bash -lc "./build-portaudio.sh"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "bash build-portaudio.sh"
       workingDirectory: ./windows-setup
       env:
         MSYS2_ARCH: $(MSYS2_ARCH)
@@ -112,7 +109,7 @@ stages:
       displayName: 'Build Xournal++'
     - script: |
         set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
-        %CD:~0,2%\msys64\usr\bin\bash -lc "./build-setup.sh"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "bash build-setup.sh"
       workingDirectory: ./windows-setup
       env:
         MSYS2_ARCH: $(MSYS2_ARCH)
