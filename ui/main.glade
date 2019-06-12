@@ -13,6 +13,7 @@
     <property name="page_increment">10</property>
   </object>
   <object class="GtkRevealer" id="floatingToolbox">
+    <property name="name">floatingToolbox</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="transition_type">crossfade</property>
