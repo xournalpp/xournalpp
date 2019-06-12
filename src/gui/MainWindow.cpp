@@ -281,11 +281,10 @@ void MainWindow::setTouchscreenScrollingForDeviceMapping()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	for (InputDevice const& inputDevice: DeviceListHelper::getDeviceList())
+	for (InputDevice const& inputDevice: DeviceListHelper::getDeviceList(this->getControl()->getSettings()))
 	{
-		GdkDevice* device = inputDevice.getDevice();
-		InputDeviceClass deviceClass = InputEvents::translateDeviceType(device, this->getControl()->getSettings());
-		if (gdk_device_get_source(device) == GDK_SOURCE_TOUCHSCREEN && deviceClass != INPUT_DEVICE_TOUCHSCREEN)
+		InputDeviceClass deviceClass = InputEvents::translateDeviceType(inputDevice.getName(), inputDevice.getSource(), this->getControl()->getSettings());
+		if (inputDevice.getSource() == GDK_SOURCE_TOUCHSCREEN && deviceClass != INPUT_DEVICE_TOUCHSCREEN)
 		{
 			gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), false);
 			break;
@@ -944,4 +943,4 @@ void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssF
 											  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 	g_object_unref(provider);
 }
-	
+
