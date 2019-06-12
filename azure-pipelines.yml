@@ -12,8 +12,8 @@ pool:
 steps:
 # Linux
 - bash: |
-    apt-get update
-    apt-get install -y cmake libcppunit-dev libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev
+    sudo apt-get update
+    sudo apt-get install -y cmake libcppunit-dev libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev
   condition: eq( variables['Agent.OS'], 'Linux' )
   displayName: 'Install dependencies on Linux'
 # macOS
