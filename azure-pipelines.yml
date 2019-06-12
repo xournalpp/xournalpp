@@ -10,10 +10,67 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+# Linux
+- bash: |
+    apt-get update
+    apt-get install -y cmake libcppunit-dev libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev
+  condition: eq( variables['Agent.OS'], 'Linux' )
+  displayName: 'Install dependencies on Linux'
+# macOS
+- bash: |
+    echo !!!TODO!!!
+  condition: eq( variables['Agent.OS'], 'Darwin' )
+  displayName: 'Install dependencies on macOS'
+# Windows
+- bash: |
+    pacman -Syuu --noconfirm
+    pacman -S  --noconfirm mingw-w64-x86_64-cmake make mingw-w64-x86_64-toolchain
+    pacman -S  --noconfirm --needed base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
 
+    pacman -S  --noconfirm mingw-w64-x86_64-poppler mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+  displayName: 'Install dependencies on Windows'
+
+# Move to the build directory
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    mkdir build
+    cd build
+  displayName: 'Move to build directory'
+
+# Do the actual build
+# Linux
+- bash: |
+    cmake .. -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON
+    make -j `grep processor /proc/cpuinfo | tail -c 2`
+  condition: eq( variables['Agent.OS'], 'Linux' )
+  displayName: 'Build on Linux'
+# macOS
+- bash: |
+    echo !!!TODO!!!
+  condition: eq( variables['Agent.OS'], 'Darwin' )
+  displayName: 'Build on macOS'
+# Windows
+- bash: |
+    ../windows-setup/build-portaudio.sh
+    cmake ..
+    make
+    ../windows-setup/build-setup.sh
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+  displayName: 'Build on Windows'
+
+# Do some tests
+# Linux
+- bash: |
+    ctest
+  condition: eq( variables['Agent.OS'], 'Linux' )
+  displayName: 'Run tests on Linux'
+# macOS
+- bash: |
+    echo !!!TODO!!!
+  condition: eq( variables['Agent.OS'], 'Darwin' )
+  displayName: 'Run tests on macOS'
+# Windows
+- bash: |
+    echo !!!TODO!!!
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+  displayName: 'Run tests on Windows'
