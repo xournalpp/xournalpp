@@ -22,16 +22,19 @@ class BackgroundImage
 public:
 	BackgroundImage();
 	BackgroundImage(const BackgroundImage& img);
+	BackgroundImage(BackgroundImage&& img) noexcept;
 	virtual ~BackgroundImage();
+
+	BackgroundImage& operator=(const BackgroundImage& img) = default;
+	BackgroundImage& operator=(BackgroundImage&& img) = default;
 
 public:
 	string getFilename();
 	void loadFile(string filename, GError** error);
+
 	void loadFile(GInputStream* stream, string filename, GError** error);
 
 	void setAttach(bool attach);
-
-	void operator=(BackgroundImage& img);
 	bool operator==(const BackgroundImage& img);
 
 	void free();
@@ -49,6 +52,5 @@ public:
 
 private:
 	XOJ_TYPE_ATTRIB;
-
-	BackgroundImageContents* img = NULL;
+	std::shared_ptr<BackgroundImageContents> img;
 };
