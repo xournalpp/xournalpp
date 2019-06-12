@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-12 15:11+0200\n"
+"POT-Creation-Date: 2019-06-12 15:18+0200\n"
 "PO-Revision-Date: 2017-09-18 09:58+0200\n"
 "Last-Translator: Jan Hrdina <jan.hrdka@gmail.com>\n"
 "Language-Team: čeština <>\n"
@@ -1731,7 +1731,7 @@ msgstr "Pozadí _papíru"
 
 #: ../ui/about.glade:207
 msgid ""
-"Partial based on Xournal\n"
+"Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-12 15:11+0200\n"
+"POT-Creation-Date: 2019-06-12 15:18+0200\n"
 "PO-Revision-Date: 2018-11-14 20:04+0100\n"
 "Last-Translator: Andreas Butti <andreasbutti at gmail dot com>\n"
 "Language-Team: Xournal++ team\n"
@@ -1701,7 +1701,7 @@ msgstr "紙張背景(_a)"
 
 #: ../ui/about.glade:207
 msgid ""
-"Partial based on Xournal\n"
+"Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
 

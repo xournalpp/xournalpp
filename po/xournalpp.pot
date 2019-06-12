@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xournalpp 1.0.11\n"
+"Project-Id-Version: xournalpp 1.0.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-12 15:11+0200\n"
+"POT-Creation-Date: 2019-06-12 15:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2227,7 +2227,7 @@ msgstr ""
 
 #: ../ui/about.glade:207
 msgid ""
-"Partial based on Xournal\n"
+"Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
 
