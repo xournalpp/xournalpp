@@ -10,7 +10,12 @@ DeviceListHelper::DeviceListHelper(Settings* settings, bool ignoreTouchDevices)
  : ignoreTouchDevices(ignoreTouchDevices)
 {
 	deviceList = settings->getKnownInputDevices();
-	// TODO ignore touchscreens
+	if (ignoreTouchDevices)
+	{
+		deviceList.erase(std::remove_if(deviceList.begin(), deviceList.end(), [](InputDevice device) {
+			return device.getSource() == GDK_SOURCE_TOUCHSCREEN;
+		}), deviceList.end());
+	}
 
 #if (GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 20)
 	GdkDisplay* display = gdk_display_get_default();

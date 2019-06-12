@@ -94,7 +94,9 @@ bool InputContext::handle(GdkEvent* sourceEvent)
 	InputEvent* event = InputEvents::translateEvent(sourceEvent, this->getSettings());
 
 	// Add the device to the list of known devices if it is currently unknown
-	if (this->knownDevices.find(string(event->deviceName)) == this->knownDevices.end())
+	GdkDevice* sourceDevice = gdk_event_get_source_device(sourceEvent);
+	if (GDK_SOURCE_KEYBOARD != gdk_device_get_source(sourceDevice) && gdk_device_get_vendor_id(sourceDevice) != nullptr && gdk_device_get_product_id(sourceDevice) != nullptr
+		&& this->knownDevices.find(string(event->deviceName)) == this->knownDevices.end())
 	{
 		this->knownDevices.insert(string(event->deviceName));
 		this->getSettings()->transactionStart();
