@@ -31,11 +31,11 @@ steps:
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: 'Install dependencies on Windows'
 
-# Move to the build directory
-- script: |
+# Switch to the build directory
+- bash: |
     mkdir build
     cd build
-  displayName: 'Move to build directory'
+  displayName: 'Switch to build directory'
 
 # Do the actual build
 # Linux
