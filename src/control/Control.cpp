@@ -2232,7 +2232,7 @@ bool Control::newFile(string pageTemplate)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	if (!this->close())
+	if (!this->close(true))
 	{
 		return false;
 	}
@@ -2292,7 +2292,7 @@ bool Control::openFile(Path filename, int scrollToPage, bool forceOpen)
 		return false;
 	}
 
-	if (!this->close())
+	if (!this->close(false))
 	{
 		return false;
 	}
@@ -2315,6 +2315,8 @@ bool Control::openFile(Path filename, int scrollToPage, bool forceOpen)
 			return false;
 		}
 	}
+
+	this->closeDocument();
 
 	// Read template file
 	if (filename.hasExtension(".xopt"))
@@ -2535,7 +2537,7 @@ bool Control::annotatePdf(Path filename, bool attachPdf, bool attachToDocument)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	if (!this->close())
+	if (!this->close(false))
 	{
 		return false;
 	}
@@ -2549,6 +2551,8 @@ bool Control::annotatePdf(Path filename, bool attachPdf, bool attachToDocument)
 			return false;
 		}
 	}
+
+	this->closeDocument();
 
 	getCursor()->setCursorBusy(true);
 
@@ -2675,6 +2679,7 @@ bool Control::save(bool synchron)
 	{
 		result = job->save();
 		unblock();
+		this->resetSavedStatus();
 	}
 	else
 	{
@@ -2843,11 +2848,22 @@ bool Control::saveAs()
 	return save();
 }
 
+void Control::resetSavedStatus()
+{
+	this->doc->lock();
+	Path filename = this->doc->getFilename();
+	this->doc->unlock();
+
+	this->undoRedo->documentSaved();
+	this->recent->addRecentFileFilename(filename);
+	this->updateWindowTitle();
+}
+
 void Control::quit(bool allowCancel)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	if (!this->close(true, allowCancel))
+	if (!this->close(false, allowCancel))
 	{
 		if (!allowCancel)
 		{
@@ -2860,6 +2876,8 @@ void Control::quit(bool allowCancel)
 		return;
 	}
 
+	this->closeDocument();
+
 	this->scheduler->lock();
 
 	audioController->stopRecording();
@@ -2870,98 +2888,79 @@ void Control::quit(bool allowCancel)
 	gtk_main_quit();
 }
 
-bool Control::close(bool destroy, bool allowCancel)
+bool Control::close(const bool allowDestroy, const bool allowCancel)
 {
 	XOJ_CHECK_TYPE(Control);
 
 	clearSelectionEndText();
 	metadata->documentChanged();
 
+	bool discard = false;
+	const bool fileRemoved = !doc->getFilename().isEmpty() && !this->doc->getFilename().exists();
 	if (undoRedo->isChanged())
 	{
-		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
-		                                           GTK_DIALOG_MODAL,
-		                                           GTK_MESSAGE_WARNING,
-		                                           GTK_BUTTONS_NONE,
-		                                           "%s",
-		                                           _("This document is not saved yet."));
+		const auto message = fileRemoved ? _("Document file was removed.") : _("This document is not saved yet.");
+		const auto saveLabel = fileRemoved ? _("Save As...") : _("Save");
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING,
+		                                           GTK_BUTTONS_NONE, "%s", message);
 
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save"), 1);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), saveLabel, GTK_RESPONSE_ACCEPT);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), GTK_RESPONSE_REJECT);
 
 		if (allowCancel)
 		{
-			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), GTK_RESPONSE_CANCEL);
 		}
 
 		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
-		int resNotSaved = gtk_dialog_run(GTK_DIALOG(dialog));
+		const guint dialogResponse = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
-		// save
-		if (resNotSaved == 1)
+		switch (dialogResponse)
 		{
-			return this->save(true);
-		}
-
-		// cancel or closed
-		if (resNotSaved != 2)  // 2 = discard
-		{
-			return false;
-		}
-		else
-		{
-			destroy = true;
-		}
-	}
-
-	if (!doc->getFilename().isEmpty())
-	{
-		if (!this->doc->getFilename().exists())
-		{
-			GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
-			                                           GTK_DIALOG_MODAL,
-			                                           GTK_MESSAGE_WARNING,
-			                                           GTK_BUTTONS_NONE,
-			                                           "%s",
-			                                           _("Document file was removed."));
-
-			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save As..."), 1);
-			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
-			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
-			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
-			int resDocRemoved = gtk_dialog_run(GTK_DIALOG(dialog));
-			gtk_widget_destroy(dialog);
-
-			if (resDocRemoved == 1)
+		case GTK_RESPONSE_ACCEPT:
+			if (fileRemoved)
 			{
 				return this->saveAs();
 			}
-
-			// cancel or closed
-			if (resDocRemoved != 2)  // 2 = discard
-			{
-				return false;
-			}
 			else
 			{
-				destroy = true;
+				return this->save(true);
 			}
+			break;
+		case GTK_RESPONSE_REJECT:
+			discard = true;
+			break;
+		default:
+			return false;
+			break;
 		}
 	}
 
-	if (destroy)
+	if (allowDestroy && discard)
 	{
-		undoRedo->clearContents();
-
-		this->doc->lock();
-		this->doc->clearDocument(destroy);
-		this->doc->unlock();
-
-		// updateWindowTitle();
-		undoRedoChanged();
+		this->closeDocument();
 	}
 	return true;
+}
+
+bool Control::closeAndDestroy(bool allowCancel)
+{
+	// We don't want to "double close", so disallow it first.
+	auto retval = this->close(false, allowCancel);
+	this->closeDocument();
+	return retval;
+}
+
+void Control::closeDocument()
+{
+	this->undoRedo->clearContents();
+
+	this->doc->lock();
+	this->doc->clearDocument(true);
+	this->doc->unlock();
+
+	this->undoRedoChanged();
 }
 
 bool Control::checkExistingFile(Path& folder, Path& filename)
