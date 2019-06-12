@@ -95,7 +95,8 @@ bool InputContext::handle(GdkEvent* sourceEvent)
 
 	// Add the device to the list of known devices if it is currently unknown
 	GdkDevice* sourceDevice = gdk_event_get_source_device(sourceEvent);
-	if (GDK_SOURCE_KEYBOARD != gdk_device_get_source(sourceDevice) && gdk_device_get_vendor_id(sourceDevice) != nullptr && gdk_device_get_product_id(sourceDevice) != nullptr
+	if (GDK_SOURCE_KEYBOARD != gdk_device_get_source(sourceDevice) && gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER
+		&& gdk_device_get_vendor_id(sourceDevice) != nullptr && gdk_device_get_product_id(sourceDevice) != nullptr
 		&& this->knownDevices.find(string(event->deviceName)) == this->knownDevices.end())
 	{
 		this->knownDevices.insert(string(event->deviceName));

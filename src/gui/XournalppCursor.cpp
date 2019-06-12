@@ -460,7 +460,7 @@ void XournalppCursor::setStockCursor(GdkCursorType type)
 	
 	GdkCursor *currentcursor =gdk_window_get_cursor(window);
 	
-	if (type == gdk_cursor_get_cursor_type (currentcursor))
+	if (currentcursor != nullptr && type == gdk_cursor_get_cursor_type (currentcursor))
 	{
 		return;
 	}

@@ -52,7 +52,7 @@ void DeviceListHelper::addDevicesToList(GList* devList)
 			devList = devList->next;
 			continue;
 		}
-		if (gdk_device_get_vendor_id(dev) == nullptr && gdk_device_get_product_id(dev) == nullptr)
+		if (gdk_device_get_device_type(dev) == GDK_DEVICE_TYPE_MASTER || (gdk_device_get_vendor_id(dev) == nullptr && gdk_device_get_product_id(dev) == nullptr))
 		{
 			// Skip core pointer
 			devList = devList->next;
