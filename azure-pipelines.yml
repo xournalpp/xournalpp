@@ -65,15 +65,21 @@ stages:
         MSYS2_ARCH: x86_64
     displayName: 'Build for Windows'
     steps:
+#    - script: |
+#        choco install msys2 --params="/InstallDir:%CD:~0,2%\msys64 /NoUpdate /NoPath"
+#      displayName: 'Install MSYS2'
     - script: |
-        choco install msys2 --params="/InstallDir:%CD:~0,2%\msys64 /NoUpdate /NoPath"
+        git clone https://github.com/msys2/msys2-ci-base.git %CD:~0,2%\msys64
+        %CD:~0,2%\msys64\usr\bin\rm -rf %CD:~0,2%\msys64\.git
       displayName: 'Install MSYS2'
     - script: |
         set PATH=%CD:~0,2%\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
         %CD:~0,2%\msys64\usr\bin\pacman -Syuu --noconfirm
-        %CD:~0,2%\msys64\usr\bin\pacman -S  --noconfirm mingw-w64-x86_64-cmake make mingw-w64-x86_64-toolchain
-        %CD:~0,2%\msys64\usr\bin\pacman -S  --noconfirm --needed base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
-        %CD:~0,2%\msys64\usr\bin\pacman -S  --noconfirm mingw-w64-x86_64-poppler mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip
+        %CD:~0,2%\msys64\usr\bin\pacman -Syuu --noconfirm
+        %CD:~0,2%\msys64\usr\bin\pacman -S --noconfirm mingw-w64-x86_64-cmake make mingw-w64-x86_64-toolchain
+        %CD:~0,2%\msys64\usr\bin\pacman -S --noconfirm --needed base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
+        %CD:~0,2%\msys64\usr\bin\pacman -S --noconfirm mingw-w64-x86_64-poppler mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip
+        %CD:~0,2%\msys64\usr\bin\pacman -S --noconfirm mingw-w64-x86_64-gcc
       env:
         MSYS2_ARCH: $(MSYS2_ARCH)
         MSYSTEM: $(MSYSTEM)
