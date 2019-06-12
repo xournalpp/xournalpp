@@ -204,7 +204,7 @@ Justin Jones, 2019</property>
               <object class="GtkLabel" id="lbXournal">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Partial based on Xournal
+                <property name="label" translatable="yes">Partially based on Xournal
 by Denis Auroux</property>
                 <property name="use_markup">True</property>
                 <property name="justify">center</property>
