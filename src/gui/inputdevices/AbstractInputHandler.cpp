@@ -11,7 +11,6 @@ AbstractInputHandler::AbstractInputHandler(InputContext* inputContext)
 	XOJ_INIT_TYPE(AbstractInputHandler);
 
 	this->inputContext = inputContext;
-	this->pressureSensitivity = inputContext->getSettings()->isPresureSensitivity();
 }
 
 AbstractInputHandler::~AbstractInputHandler()
@@ -92,12 +91,12 @@ PositionInputData AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPag
 	//take scroll offset into account
 	this->inputContext->getScrollHandling()->translate(eventX, eventY);
 
-	PositionInputData pos;
+	PositionInputData pos = {};
 	pos.x = eventX - page->getX() - xournal->x;
 	pos.y = eventY - page->getY() - xournal->y;
 	pos.pressure = Point::NO_PRESSURE;
 
-	if (pressureSensitivity)
+	if (this->inputContext->getSettings()->isPressureSensitivity())
 	{
 		pos.pressure = event->pressure;
 	}
