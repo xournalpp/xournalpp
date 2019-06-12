@@ -87,7 +87,7 @@ stages:
       displayName: 'Install dependencies on Windows'
     - script: |
         set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
-        %CD:~0,2%\msys64\msys2_shell.cmd -mingw64 -lc "./build-portaudio.sh"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "export PATH=/%CD:~0,1%/msys64/mingw64/bin:$PATH; bash ./build-portaudio.sh"
       workingDirectory: ./windows-setup
       env:
         MSYS2_ARCH: $(MSYS2_ARCH)
@@ -96,12 +96,12 @@ stages:
       displayName: 'Build Portaudio'
     - script: |
         set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
-        %CD:~0,2%\msys64\msys2_shell.cmd -mingw64 -lc "mkdir build"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "mkdir build"
       displayName: 'Create build directory'
     - script: |
         set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
-        %CD:~0,2%\msys64\msys2_shell.cmd -mingw64 -lc "cmake ..""
-        %CD:~0,2%\msys64\msys2_shell.cmd -mingw64 -lc "make"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "cmake ..""
+        %CD:~0,2%\msys64\usr\bin\bash -lc "make"
       workingDirectory: ./build
       env:
         MSYS2_ARCH: $(MSYS2_ARCH)
@@ -110,7 +110,7 @@ stages:
       displayName: 'Build Xournal++'
     - script: |
         set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
-        %CD:~0,2%\msys64\msys2_shell.cmd -mingw64 -lc "bash ./build-setup.sh"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "bash ./build-setup.sh"
       workingDirectory: ./windows-setup
       env:
         MSYS2_ARCH: $(MSYS2_ARCH)
