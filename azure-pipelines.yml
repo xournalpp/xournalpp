@@ -73,7 +73,7 @@ stages:
         %CD:~0,2%\msys64\usr\bin\rm -rf %CD:~0,2%\msys64\.git
       displayName: 'Install MSYS2'
     - script: |
-        set PATH=%CD:~0,2%\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
         %CD:~0,2%\msys64\usr\bin\pacman -Syuu --noconfirm
         %CD:~0,2%\msys64\usr\bin\pacman -Syuu --noconfirm
         %CD:~0,2%\msys64\usr\bin\pacman -S --noconfirm mingw-w64-x86_64-cmake make mingw-w64-x86_64-toolchain
@@ -85,7 +85,7 @@ stages:
         CHERE_INVOKING: yes
       displayName: 'Install dependencies on Windows'
     - script: |
-        set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
         %CD:~0,2%\msys64\usr\bin\bash -lc "./build-portaudio.sh"
       workingDirectory: ./windows-setup
       env:
@@ -94,11 +94,11 @@ stages:
         CHERE_INVOKING: yes
       displayName: 'Build Portaudio'
     - script: |
-        set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
         %CD:~0,2%\msys64\usr\bin\bash -lc "mkdir build"
       displayName: 'Create build directory'
     - script: |
-        set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
         %CD:~0,2%\msys64\usr\bin\bash -lc "cmake ..""
         %CD:~0,2%\msys64\usr\bin\bash -lc "make"
       workingDirectory: ./build
@@ -108,7 +108,7 @@ stages:
         CHERE_INVOKING: yes
       displayName: 'Build Xournal++'
     - script: |
-        set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
         %CD:~0,2%\msys64\usr\bin\bash -lc "./build-setup.sh"
       workingDirectory: ./windows-setup
       env:
