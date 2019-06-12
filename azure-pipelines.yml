@@ -36,8 +36,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: '
-    ls -a
-    mkdir build
+    mkdir build;
       cd build'
   displayName: 'Switch to build directory'
 
