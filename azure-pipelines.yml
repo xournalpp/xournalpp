@@ -32,9 +32,11 @@ steps:
   displayName: 'Install dependencies on Windows'
 
 # Switch to the build directory
-- bash: |
-    mkdir build
-    cd build
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: 'mkdir build
+      cd build'
   displayName: 'Switch to build directory'
 
 # Do the actual build
