@@ -42,7 +42,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
 	this->toolbarSelectMenu = new MainWindowToolbarMenu(this);
 
-	
+	loadMainCSS(gladeSearchPath,"xournalpp.css");
 	
 	GtkOverlay *overlay = GTK_OVERLAY (get("mainOverlay"));
 	this->floatingToolbox = new FloatingToolbox (this, overlay);  
@@ -935,3 +935,15 @@ void MainWindow::setAudioPlaybackPaused(bool paused)
 	this->getToolMenuHandler()->setAudioPlaybackPaused(paused);
 }
 
+void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename)
+{
+	XOJ_CHECK_TYPE(MainWindow);
+
+	string filename = gladeSearchPath->findFile("", cssFilename);
+	GtkCssProvider *provider = gtk_css_provider_new ();
+	gtk_css_provider_load_from_path (provider, filename.c_str(), NULL);
+	gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider),
+											  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	g_object_unref(provider);
+}
+	
