@@ -15,11 +15,13 @@ struct BackgroundImageContents
 {
 	BackgroundImageContents(string filename, GError** error)
 			: filename(std::move(filename)), pixbuf(gdk_pixbuf_new_from_file(this->filename.c_str(), error))
-	{}
+	{
+	}
 
 	BackgroundImageContents(GInputStream* stream, string filename, GError** error)
 			: filename(std::move(filename)), pixbuf(gdk_pixbuf_new_from_stream(stream, nullptr, error))
-	{}
+	{
+	}
 
 	~BackgroundImageContents()
 	{
@@ -82,7 +84,7 @@ void BackgroundImage::loadFile(GInputStream* stream, string filename, GError** e
 int BackgroundImage::getCloneId()
 {
 	XOJ_CHECK_TYPE(BackgroundImage);
-	return this->img? this->img->pageId: -1;
+	return this->img ? this->img->pageId : -1;
 }
 
 void BackgroundImage::setCloneId(int id)
@@ -102,7 +104,7 @@ void BackgroundImage::clearSaveState()
 string BackgroundImage::getFilename()
 {
 	XOJ_CHECK_TYPE(BackgroundImage);
-	return this->img? this->img->filename: "";
+	return this->img ? this->img->filename : "";
 }
 
 void BackgroundImage::setFilename(string filename)
@@ -117,7 +119,7 @@ void BackgroundImage::setFilename(string filename)
 bool BackgroundImage::isAttached()
 {
 	XOJ_CHECK_TYPE(BackgroundImage);
-	return this->img? this->img->attach: false;
+	return this->img ? this->img->attach : false;
 }
 
 void BackgroundImage::setAttach(bool attach)
@@ -135,7 +137,7 @@ void BackgroundImage::setAttach(bool attach)
 GdkPixbuf* BackgroundImage::getPixbuf()
 {
 	XOJ_CHECK_TYPE(BackgroundImage);
-	return this->img? this->img->pixbuf: nullptr;
+	return this->img ? this->img->pixbuf : nullptr;
 }
 
 bool BackgroundImage::isEmpty()
