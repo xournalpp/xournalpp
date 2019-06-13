@@ -32,6 +32,7 @@ stages:
       displayName: 'Run tests'
 
 - stage: Release
+  condition: or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Build.Reason'], 'Manual'))
   jobs:
   - job: Linux
     pool:
