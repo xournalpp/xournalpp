@@ -103,7 +103,7 @@ stages:
     - script: |
         set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
         %CD:~0,2%\msys64\usr\bin\bash -lc "echo $PWD"
-        %CD:~0,2%\msys64\usr\bin\bash -lc "cmake ..""
+        %CD:~0,2%\msys64\usr\bin\bash -lc "cmake .."
         %CD:~0,2%\msys64\usr\bin\bash -lc "make"
       workingDirectory: ./build
       env:
