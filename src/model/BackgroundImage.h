@@ -17,8 +17,6 @@
 
 #include <memory>
 
-struct BackgroundImageContents;
-
 struct BackgroundImage
 {
 	BackgroundImage();
@@ -31,6 +29,8 @@ struct BackgroundImage
 
 
 	bool operator==(const BackgroundImage& img);
+
+	void free();
 
 	void loadFile(string filename, GError** error);
 	void loadFile(GInputStream* stream, string filename, GError** error);
@@ -49,9 +49,9 @@ struct BackgroundImage
 
 	bool isEmpty();
 
-	void free();
-
 private:
+	struct Content;
+
 	XOJ_TYPE_ATTRIB;
-	std::shared_ptr<BackgroundImageContents> img;
+	std::shared_ptr<Content> img;
 };

@@ -11,28 +11,28 @@
  * No xournal memory leak tests necessary, because we use smart ptrs to ensure memory correctness
  */
 
-struct BackgroundImageContents
+struct BackgroundImage::Content
 {
-	BackgroundImageContents(string filename, GError** error)
+	Content(string filename, GError** error)
 			: filename(std::move(filename)), pixbuf(gdk_pixbuf_new_from_file(this->filename.c_str(), error))
 	{
 	}
 
-	BackgroundImageContents(GInputStream* stream, string filename, GError** error)
+	Content(GInputStream* stream, string filename, GError** error)
 			: filename(std::move(filename)), pixbuf(gdk_pixbuf_new_from_stream(stream, nullptr, error))
 	{
 	}
 
-	~BackgroundImageContents()
+	~Content()
 	{
 		g_object_unref(this->pixbuf);
 		this->pixbuf = nullptr;
 	};
 
-	BackgroundImageContents(const BackgroundImageContents&) = delete;
-	BackgroundImageContents(BackgroundImageContents&&) = default;
-	BackgroundImageContents& operator=(const BackgroundImageContents&) = delete;
-	BackgroundImageContents& operator=(BackgroundImageContents&&) = default;
+	Content(const Content&) = delete;
+	Content(Content&&) = default;
+	Content& operator=(const Content&) = delete;
+	Content& operator=(Content&&) = default;
 
 	string filename;
 	GdkPixbuf* pixbuf = nullptr;
@@ -69,16 +69,22 @@ bool BackgroundImage::operator==(const BackgroundImage& img)
 	return this->img == img.img;
 }
 
+void BackgroundImage::free()
+{
+	XOJ_CHECK_TYPE(BackgroundImage);
+	this->img.reset();
+}
+
 void BackgroundImage::loadFile(string filename, GError** error)
 {
 	XOJ_CHECK_TYPE(BackgroundImage);
-	this->img = std::make_shared<BackgroundImageContents>(std::move(filename), error);
+	this->img = std::make_shared<Content>(std::move(filename), error);
 }
 
 void BackgroundImage::loadFile(GInputStream* stream, string filename, GError** error)
 {
 	XOJ_CHECK_TYPE(BackgroundImage);
-	this->img = std::make_shared<BackgroundImageContents>(stream, std::move(filename), error);
+	this->img = std::make_shared<Content>(stream, std::move(filename), error);
 }
 
 int BackgroundImage::getCloneId()
@@ -144,10 +150,4 @@ bool BackgroundImage::isEmpty()
 {
 	XOJ_CHECK_TYPE(BackgroundImage);
 	return !this->img;
-}
-
-void BackgroundImage::free()
-{
-	XOJ_CHECK_TYPE(BackgroundImage);
-	this->img.reset();
 }
