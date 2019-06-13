@@ -86,8 +86,8 @@ stages:
         CHERE_INVOKING: yes
       displayName: 'Install dependencies on Windows'
     - script: |
-        set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
-        %CD:~0,2%\msys64\usr\bin\bash -lc "export PATH=/%CD:~0,1%/msys64/mingw64/bin:$PATH; bash ./build-portaudio.sh"
+        set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "./build-portaudio.sh"
       workingDirectory: ./windows-setup
       env:
         MSYS2_ARCH: $(MSYS2_ARCH)
@@ -95,11 +95,11 @@ stages:
         CHERE_INVOKING: yes
       displayName: 'Build Portaudio'
     - script: |
-        set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
         %CD:~0,2%\msys64\usr\bin\bash -lc "mkdir build"
       displayName: 'Create build directory'
     - script: |
-        set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
         %CD:~0,2%\msys64\usr\bin\bash -lc "cmake ..""
         %CD:~0,2%\msys64\usr\bin\bash -lc "make"
       workingDirectory: ./build
@@ -109,8 +109,8 @@ stages:
         CHERE_INVOKING: yes
       displayName: 'Build Xournal++'
     - script: |
-        set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
-        %CD:~0,2%\msys64\usr\bin\bash -lc "bash ./build-setup.sh"
+        set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "./build-setup.sh"
       workingDirectory: ./windows-setup
       env:
         MSYS2_ARCH: $(MSYS2_ARCH)
