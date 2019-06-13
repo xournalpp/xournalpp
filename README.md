@@ -1,7 +1,7 @@
 # Xournal++
 
 [![Build Status](https://travis-ci.org/xournalpp/xournalpp.svg?branch=string_new)](https://travis-ci.org/xournalpp/xournalpp)
-[![Build Status](https://dev.azure.com/xournalpp/xournalpp/_apis/build/status/xournalpp.xournalpp?branchName=master)](https://dev.azure.com/xournalpp/xournalpp/_build/latest?definitionId=1&branchName=master)
+[![Build Status](https://dev.azure.com/xournalpp/xournalpp/_apis/build/status/xournalpp.xournalpp?branchName=master&stageName=Build_Test_Stage&jobName=Test%20Xournal%2B%2B%20on%20Linux)](https://dev.azure.com/xournalpp/xournalpp/_build/latest?definitionId=1&branchName=master)
 [![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Shout out
