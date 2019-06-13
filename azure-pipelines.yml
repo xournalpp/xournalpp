@@ -60,9 +60,6 @@ stages:
   - job: Windows
     pool:
       vmImage: 'vs2017-win2016'
-      x86_64:
-        MSYSTEM: MINGW64
-        MSYS2_ARCH: x86_64
     displayName: 'Build for Windows'
     steps:
 #    - script: |
@@ -81,8 +78,8 @@ stages:
         %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -S mingw-w64-x86_64-poppler mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip
         %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Scc
       env:
-        MSYS2_ARCH: $(MSYS2_ARCH)
-        MSYSTEM: $(MSYSTEM)
+        MSYS2_ARCH: x86_64
+        MSYSTEM: MINGW64
         CHERE_INVOKING: yes
       displayName: 'Install dependencies on Windows'
     - script: |
@@ -90,8 +87,8 @@ stages:
         %CD:~0,2%\msys64\usr\bin\bash -lc "./build-portaudio.sh"
       workingDirectory: ./windows-setup
       env:
-        MSYS2_ARCH: $(MSYS2_ARCH)
-        MSYSTEM: $(MSYSTEM)
+        MSYS2_ARCH: x86_64
+        MSYSTEM: MINGW64
         CHERE_INVOKING: yes
       displayName: 'Build Portaudio'
     - script: |
@@ -104,8 +101,8 @@ stages:
         %CD:~0,2%\msys64\usr\bin\bash -lc "make"
       workingDirectory: ./build
       env:
-        MSYS2_ARCH: $(MSYS2_ARCH)
-        MSYSTEM: $(MSYSTEM)
+        MSYS2_ARCH: x86_64
+        MSYSTEM: MINGW64
         CHERE_INVOKING: yes
       displayName: 'Build Xournal++'
     - script: |
@@ -113,8 +110,8 @@ stages:
         %CD:~0,2%\msys64\usr\bin\bash -lc "./build-setup.sh"
       workingDirectory: ./windows-setup
       env:
-        MSYS2_ARCH: $(MSYS2_ARCH)
-        MSYSTEM: $(MSYSTEM)
+        MSYS2_ARCH: x86_64
+        MSYSTEM: MINGW64
         CHERE_INVOKING: yes
       displayName: 'Create Setup'
     - task: PublishBuildArtifacts@1
