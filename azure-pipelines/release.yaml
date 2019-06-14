@@ -26,7 +26,7 @@ stages:
       displayName: 'Tar Source'
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: './source_packaged'
+        PathtoPublish: './source_packaged/*'
         ArtifactName: 'source_packaged'
         publishLocation: 'Container'
       displayName: 'Publish Packaged Source'
