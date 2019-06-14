@@ -5,10 +5,10 @@ pr: none
 stages:
 - stage: Release
   jobs:
-  - job: Linux
+  - job: Sources
     pool:
       vmImage: 'ubuntu-16.04'
-    displayName: 'Build for Linux'
+    displayName: 'Package Sources'
     steps:
     - bash: |
         mkdir ../xournalpp
@@ -91,7 +91,7 @@ stages:
       displayName: 'Create Setup'
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: './windows-setup'
+        PathtoPublish: './windows-setup/xournalpp-setup.exe'
         ArtifactName: 'release_windows'
         publishLocation: 'Container'
       displayName: 'Publish Windows Setup'
