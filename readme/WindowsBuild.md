@@ -53,12 +53,16 @@ pacman -S mingw-w64-x86_64-libsndfile \
 pacman -S mingw-w64-x86_64-libzip
 ```
 
-TODO: Lua 5.3 is missing for MSYS2?
-
-### sndfile / PortAudio
+### PortAudio
 Build/Install portaudio with
 ```bash
 windows-setup/build-portaudio.sh
+```
+
+### Lua
+Build/Install lua with
+```bash
+windows-setup/build-lua.sh
 ```
 
 ## Get sources and build
@@ -76,13 +80,9 @@ make
 ```
 
 ## Packaging and Setup
-go to the folder
+Create the installer with
 ```bash
-cd windows-setup
-```
-and execute
-```bash
-./build-setup.sh
+windows-setup/build-setup.sh
 ```
 
-
+The installer will be located at `windows-setup/xournalpp-setup.exe`
