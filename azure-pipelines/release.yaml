@@ -45,7 +45,7 @@ stages:
         %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syuu
         %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -S mingw-w64-x86_64-cmake make mingw-w64-x86_64-toolchain
         %CD:~0,2%\msys64\usr\bin\pacman --noconfirm --needed -S base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
-        %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -S mingw-w64-x86_64-poppler mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip
+        %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -S mingw-w64-x86_64-poppler mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip mingw-w64-lua
         %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Scc
       env:
         MSYS2_ARCH: x86_64
