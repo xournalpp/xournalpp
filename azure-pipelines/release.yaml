@@ -19,10 +19,10 @@ stages:
         mkdir source_packaged
       displayName: 'Move source into subdirectory'
     - bash: |
-        zip -r source_packaged/xournalpp-nightly-${DATE}.zip ./xournalpp
+        zip -r source_packaged/sources.zip ./xournalpp
       displayName: 'Zip Source'
     - bash: |
-        tar -zcvf source_packaged/xournalpp-nightly-${DATE}.tar.gz ./xournalpp
+        tar -zcvf source_packaged/sources.tar.gz ./xournalpp
       displayName: 'Tar Source'
     - task: PublishPipelineArtifact@0
       inputs:
