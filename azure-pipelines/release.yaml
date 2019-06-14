@@ -1,1 +1,107 @@
+trigger:
+- master
+pr: none
+
+stages:
+- stage: Release
+  jobs:
+  - job: Linux
+    pool:
+      vmImage: 'ubuntu-16.04'
+    displayName: 'Build for Linux'
+    steps:
+    - bash: |
+        mkdir ../xournalpp
+        mv * ../xournalpp/
+        mv ../xournalpp ./xournalpp
+      displayName: 'Move source into subdirectory'
+    - bash: |
+        mkdir source_packaged
+      displayName: 'Move source into subdirectory'
+    - bash: |
+        zip -r source_packaged/xournalpp-nightly-${DATE}.zip ./xournalpp
+      displayName: 'Zip Source'
+    - bash: |
+        tar -zcvf source_packaged/xournalpp-nightly-${DATE}.zip ./xournalpp
+      displayName: 'Tar Source'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: './source_packaged'
+        ArtifactName: 'source_packaged'
+        publishLocation: 'Container'
+      displayName: 'Publish Packaged Source'
+
+  - job: Windows
+    pool:
+      vmImage: 'vs2017-win2016'
+    displayName: 'Build for Windows'
+    steps:
+    - script: |
+        git clone https://github.com/msys2/msys2-ci-base.git %CD:~0,2%\msys64
+        %CD:~0,2%\msys64\usr\bin\rm -rf %CD:~0,2%\msys64\.git
+      displayName: 'Install MSYS2'
+    - script: |
+        set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syuu
+        %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syuu
+        %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -S mingw-w64-x86_64-cmake make mingw-w64-x86_64-toolchain
+        %CD:~0,2%\msys64\usr\bin\pacman --noconfirm --needed -S base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
+        %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -S mingw-w64-x86_64-poppler mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip
+        %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Scc
+      env:
+        MSYS2_ARCH: x86_64
+        MSYSTEM: MINGW64
+        CHERE_INVOKING: yes
+      displayName: 'Install dependencies on Windows'
+    - script: |
+        set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "./build-portaudio.sh"
+      workingDirectory: ./windows-setup
+      env:
+        MSYS2_ARCH: x86_64
+        MSYSTEM: MINGW64
+        CHERE_INVOKING: yes
+      displayName: 'Build Portaudio'
+    - script: |
+        set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "mkdir build"
+      env:
+        MSYS2_ARCH: x86_64
+        MSYSTEM: MINGW64
+        CHERE_INVOKING: yes
+      displayName: 'Create build directory'
+    - script: |
+        set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "cmake .."
+        %CD:~0,2%\msys64\usr\bin\bash -lc "make"
+      workingDirectory: ./build
+      env:
+        MSYS2_ARCH: x86_64
+        MSYSTEM: MINGW64
+        CHERE_INVOKING: yes
+      displayName: 'Build Xournal++'
+    - script: |
+        set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "./build-setup.sh"
+      workingDirectory: ./windows-setup
+      env:
+        MSYS2_ARCH: x86_64
+        MSYSTEM: MINGW64
+        CHERE_INVOKING: yes
+      displayName: 'Create Setup'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: './windows-setup'
+        ArtifactName: 'release_windows'
+        publishLocation: 'Container'
+      displayName: 'Publish Windows Setup'
+
+#  - job: macOS
+#    pool:
+#      vmImage: 'macOS-10.13'
+#    displayName: 'Build for macOS'
+#    steps:
+#    - bash: |
+#        echo !!!TODO!!!
+#      displayName: 'Install dependencies on macOS'
 
