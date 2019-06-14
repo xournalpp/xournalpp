@@ -47,8 +47,6 @@ private:
 	GdkCursor* createHighlighterOrPenCursor(int size, double alpha);
 	GdkCursor* createCustomDrawDirCursor(int size, bool shift, bool ctrl);
 	
-	void setDrawDirCursor(bool shift, bool ctrl);
-
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -69,4 +67,5 @@ private:
 	
 	//avoid re-assigning same cursor
 	uint currentCursor = 0;	// enum AVAILABLECURSORS
+	ulong currentCursorFlavour;	//for different flavours of a cursor (i.e. drawdir, pen and hilighter custom cursors)
 };

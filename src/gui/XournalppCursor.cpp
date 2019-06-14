@@ -8,22 +8,12 @@
 #include <cmath>
 
 
+//NOTE:  Every cursor change must result in the setting of this->currentCursor to the new cursor type even for custom cursors.
+// Custom cursors can also compare then set this->currentCursorFlavour to notice changes in colour or size etc. The flavour 
+// calculation is specific to each cursor type and is calculated differently within each type.
 
-/* Work In Progress:
- * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
- * 
- * NOTE     Please consult with JJones780 before making any changes to this file or its header. 
- * 
- * see 	https://developer.gnome.org/gtk3/stable/chap-css-overview.html
- *    	https://blog.gtk.org/2016/05/18/cursors-in-gtk/
- * old cursors: https://developer.gimp.org/api/2.0/gdk/gdk-Cursors.html
- * 
- * FIXME: fixes #1223
- * 
- * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
- */
 
-//  All the cursors we want to use. WARNING Make sure to set their css names below WARNING
+//  All the cursors we want to use. WARNING Make sure to set their css names in cssCursors[] below WARNING
 enum AVAILABLECURSORS
 {	
 	CRSR_NULL = 0,	// <--- Do Not Modify
@@ -46,12 +36,9 @@ enum AVAILABLECURSORS
 	CRSR_DEFAULT,
 	CRSR_HAND2,
 	CRSR_TCROSS,
-	CRSR_PEN,
-	CRSR_PEN_BRIGHT,
-	CRSR_HI,
-	CRSR_HI_BRIGHT,
+	CRSR_PENORHIGHLIGHTER,
 	CRSR_ERASER,
-	CRSR_DRAWDIRNONE, 			//drawdir* consecutive and in order: none,shift,ctrl,shiftctrl
+	CRSR_DRAWDIRNONE, 			//drawdir* keep these consecutive and in order: none,shift,ctrl,shiftctrl
 	CRSR_DRAWDIRSHIFT,			// "
 	CRSR_DRAWDIRCTRL,			// "
 	CRSR_DRAWDIRSHIFTCTRL,		// "
@@ -67,6 +54,7 @@ struct cursorStruct
 	const gchar* cssBackupName;
 };
 
+
 //  our enum mapped to css name and a place to store the cursor pointer.
 // Note: including enum as error check (for now?)
 cursorStruct cssCursors[CRSR_END_OF_CURSORS];
@@ -77,7 +65,7 @@ XournalppCursor::XournalppCursor(Control* control)
 {
 	XOJ_INIT_TYPE(XournalppCursor);
 	
-	// NOTE: Go ahead and use an esoteric cursor... but define a mundane backup cursor.
+	// NOTE: Go ahead and use a fancy css cursor... but specify a common backup cursor. 
 	
 	cssCursors[CRSR_NULL                ] = 	{"",""};
 	cssCursors[CRSR_BUSY                ] = 	{"wait", 		""					};
@@ -99,10 +87,7 @@ XournalppCursor::XournalppCursor(Control* control)
 	cssCursors[CRSR_DEFAULT             ] = 	{"default", 	""					};
 	cssCursors[CRSR_HAND2               ] = 	{"hand2", 		""					};
 	cssCursors[CRSR_TCROSS              ] = 	{"crosshair", 	""					};
-	cssCursors[CRSR_PEN                 ] = 	{"",""};			// custom cursor - enum used only for check
-	cssCursors[CRSR_PEN_BRIGHT          ] = 	{"",""};			// "
-	cssCursors[CRSR_HI                  ] = 	{"",""};			// "
-	cssCursors[CRSR_HI_BRIGHT           ] = 	{"",""};			// "
+	cssCursors[CRSR_PENORHIGHLIGHTER    ] = 	{"",""};			// custom cursors - enum used only for check
 	cssCursors[CRSR_ERASER              ] = 	{"",""};			// "
 	cssCursors[CRSR_DRAWDIRNONE         ] = 	{"",""};			// "
 	cssCursors[CRSR_DRAWDIRSHIFT        ] = 	{"",""};			// "
@@ -204,6 +189,7 @@ void XournalppCursor::setCursorBusy(bool busy)
 	updateCursor();
 }
 
+
 void XournalppCursor::setInsidePage(bool insidePage)
 {
 	XOJ_CHECK_TYPE(XournalppCursor);
@@ -217,6 +203,7 @@ void XournalppCursor::setInsidePage(bool insidePage)
 
 	updateCursor();
 }
+
 
 void XournalppCursor::setInvisible(bool invisible)
 {
@@ -232,6 +219,7 @@ void XournalppCursor::setInvisible(bool invisible)
 	updateCursor();
 }
 
+
 void XournalppCursor::updateCursor()
 {
 	XOJ_CHECK_TYPE(XournalppCursor);
@@ -241,8 +229,6 @@ void XournalppCursor::updateCursor()
 
 	XournalView* xournal = win->getXournal();
 	if (!xournal) return;
-
-	GdkWindow* window = gtk_widget_get_window(win->getWindow());
 
 	GdkCursor* cursor = NULL;
 	
@@ -379,13 +365,13 @@ void XournalppCursor::updateCursor()
 		}
 	}
 
-	if (gtk_widget_get_window(xournal->getWidget()))
+	GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
+	if (window)
 	{
 		if (cursor != NULL)
 		{
-			gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
+			gdk_window_set_cursor(window, cursor);
 		}
-		
 		gtk_widget_set_sensitive(xournal->getWidget(), !this->busy);
 	}
 
@@ -397,8 +383,14 @@ void XournalppCursor::updateCursor()
 	}
 }
 
+
 GdkCursor* XournalppCursor::getEraserCursor()
 {
+	
+	if (CRSR_ERASER == this->currentCursor)  return NULL;	// cursor already set
+	this->currentCursor = CRSR_ERASER;
+	
+	
 	// Eraser's size follow a quadratic increment, so the cursor will do the same
 	double cursorSize = control->getToolHandler()->getThickness() * 2 * control->getZoomControl()->getZoom();
 	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
@@ -427,13 +419,10 @@ GdkCursor* XournalppCursor::getHighlighterCursor()
 	
 	if (this->drawDirActive)
 	{
-		//setDrawDirCursor(this->drawDirShift, this->drawDirCtrl);		
 		return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
 	}
 	else
 	{
-		if (CRSR_HI == this->currentCursor) return NULL;	//not noticing changes to BigCursor or highlight settings here.
-		this->currentCursor = CRSR_HI;
 		return createHighlighterOrPenCursor(5, 120 / 255.0);
 	}
 }
@@ -445,17 +434,10 @@ GdkCursor* XournalppCursor::getPenCursor()
 
 	if (this->drawDirActive)
 	{
-		//setDrawDirCursor(this->drawDirShift, this->drawDirCtrl);
 		return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
 	}
 	else
 	{
-
-		if (CRSR_PEN == this->currentCursor) return NULL;	//not noticing changes to BigCursor or highlight settings here.
-		this->currentCursor = CRSR_PEN;
-	
-	
-		//setCursor(CRSR_PEN);
 		return createHighlighterOrPenCursor(3, 1.0);
 	}
 }
@@ -465,16 +447,31 @@ GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 {
 	XOJ_CHECK_TYPE(XournalppCursor);
 
+	
 	int rgb = control->getToolHandler()->getColor();
 	double r = ((rgb >> 16) & 0xff) / 255.0;
 	double g = ((rgb >> 8) & 0xff) / 255.0;
 	double b = (rgb & 0xff) / 255.0;
 	bool big = control->getSettings()->isShowBigCursor();
-	bool highlightPosition = control->getSettings()->isHighlightPosition();
+	bool bright = control->getSettings()->isHighlightPosition();
 	int height = size;
 	int width = size;
 	
-	if (big || highlightPosition)
+	//create a hash of variables so we notice if one changes despite being the same cursor type:
+	ulong flavour = (big?1:0) | (bright?2:0) | (ulong)(64*alpha)<<2 | (ulong)size<<9 | (ulong)rgb<<14;
+	
+	
+	if (flavour != this->currentCursorFlavour)
+	{
+		g_warning("Not the same Flavour!");
+	}
+		
+	if (CRSR_PENORHIGHLIGHTER == this->currentCursor && flavour == this->currentCursorFlavour) return NULL;
+	this->currentCursor = CRSR_PENORHIGHLIGHTER;
+	this->currentCursorFlavour = flavour;
+	
+	
+	if (big || bright)
 	{
 		height = width = 60;
 	}
@@ -516,7 +513,7 @@ GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 		cairo_fill_preserve(cr);
 	}
 
-	if (highlightPosition)
+	if (bright)
 	{
 		// A yellow transparent circle with no border
 		cairo_set_line_width(cr, 0);
@@ -580,28 +577,23 @@ void XournalppCursor::setCursor(int cursorID)
 }
 
 
-void XournalppCursor::setDrawDirCursor(bool shift, bool ctrl)
-{
-	XOJ_CHECK_TYPE(XournalppCursor);
-	int offset = (shift?1:0) + (ctrl?2:0); 
-	setCursor(CRSR_DRAWDIRNONE + offset);	
-}
-
-
 GdkCursor* XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
 {
 	XOJ_CHECK_TYPE(XournalppCursor);
-
-	int newCursorID  = CRSR_DRAWDIRNONE + (shift?1:0) + (ctrl?2:0); 
-	if (newCursorID == this->currentCursor) return NULL;		//not noticing changes to BigCursor or highlight settings here.
-	this->currentCursor = newCursorID;
-
 	bool big = control->getSettings()->isShowBigCursor();
-	bool highlightPosition = control->getSettings()->isHighlightPosition();
+	bool bright = control->getSettings()->isHighlightPosition();
+	
+	int newCursorID  = CRSR_DRAWDIRNONE + (shift?1:0) + (ctrl?2:0); 
+	ulong flavour = (big?1:0) | (bright?2:0) | (ulong)size<<2;	// hash of variables for comparison only
+
+	if (newCursorID == this->currentCursor && flavour == this->currentCursorFlavour) return NULL;
+	this->currentCursor = newCursorID;
+	this->currentCursorFlavour = flavour;
+
 	int height = size;
 	int width = size;
 	int fontSize = 8;
-	if (big || highlightPosition)
+	if (big || bright)
 	{
 		height = width = 60;
 		fontSize = 12;
