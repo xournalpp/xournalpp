@@ -24,11 +24,10 @@ stages:
     - bash: |
         tar -zcvf source_packaged/xournalpp-nightly-${DATE}.zip ./xournalpp
       displayName: 'Tar Source'
-    - task: PublishBuildArtifacts@1
+    - task: PublishPipelineArtifact@0
       inputs:
-        PathtoPublish: './source_packaged/*'
-        ArtifactName: 'source_packaged'
-        publishLocation: 'Container'
+        artifactName: 'source_packaged'
+        targetPath: './source_packaged'
       displayName: 'Publish Packaged Source'
 
   - job: Windows
@@ -89,11 +88,10 @@ stages:
         MSYSTEM: MINGW64
         CHERE_INVOKING: yes
       displayName: 'Create Setup'
-    - task: PublishBuildArtifacts@1
+    - task: PublishPipelineArtifact@0
       inputs:
-        PathtoPublish: './windows-setup/xournalpp-setup.exe'
-        ArtifactName: 'release_windows'
-        publishLocation: 'Container'
+        artifactName: 'windows'
+        targetPath: './windows-setup/xournalpp-setup.exe'
       displayName: 'Publish Windows Setup'
 
 #  - job: macOS
