@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 	for (int i = 1; i < argc; i++)
 	{
 	MessageBoxA(NULL, argv[i], "Debug IN", 0);
-	
+
 		command += " \"";
 		command += escapeString(argv[i]);
 		command += "\"";
@@ -100,7 +100,7 @@ int main(int argc, char* argv[])
 		CloseHandle(processInfo.hProcess);
 		CloseHandle(processInfo.hThread);
 	}
-	
+
 	delete cmd;
 #else
 	system(command.c_str());
@@ -109,4 +109,4 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-//Modify sth 4
+//Modify sth 5
