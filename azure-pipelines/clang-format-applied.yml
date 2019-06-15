@@ -45,5 +45,4 @@ stages:
             echo "The code was not formated using clang-format before being submitted."
             exit 1
         fi
-      workingDirectory: ./build
       displayName: 'Check for badly formatted modified files'
