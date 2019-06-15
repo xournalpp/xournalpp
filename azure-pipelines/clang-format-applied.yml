@@ -21,6 +21,8 @@ stages:
         sudo apt-get install -y clang-format
       displayName: 'Install clang-format'
     - bash: |
+        # Checkout the master branch as we require it to get the list of modified files
+        git checkout $(System.PullRequest.TargetBranch)
         git fetch origin +$(Build.SourceBranch)
 
         echo "List of modified files:"
@@ -28,10 +30,13 @@ stages:
 
         # Actually get the list in a parsable state
         LOMF=$(git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD $(System.PullRequest.TargetBranch)) | grep ".cpp$\|.hpp$\|.h$")
+        
+        # Checkout the PR again so we can check the modified files for correct format
+        git checkout FETCH_HEAD
         if [ -n "$VAR" ]; then
             # Apply clang-format to enforce proper format
             clang-format -i -style=file $LOMF
-            # All previously bady formatted files should now have been modified
+            # All previously badly formatted files should now be modified
         fi
       displayName: 'Apply clang-format on modified files'
     - bash: |
