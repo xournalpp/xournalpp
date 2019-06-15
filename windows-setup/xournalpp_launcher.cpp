@@ -17,26 +17,22 @@
 using std::string;
 
 #ifdef WIN32
-#include <Windows.h>
-#include <direct.h>
+#	include <Windows.h>
+#	include <direct.h>
 #else
-#include <unistd.h>
+#	include <unistd.h>
 #endif
 
 string escapeString(const char* str)
 {
 	string escaped;
 
-	while (*str)
-	{
+	while (*str) {
 		char c = *str;
 
-		if (c == '"')
-		{
+		if (c == '"') {
 			escaped += "\\\"";
-		}
-		else
-		{
+		} else {
 			escaped += c;
 		}
 
@@ -62,10 +58,8 @@ int main(int argc, char* argv[])
 
 	int slashPos = 0;
 
-	for(int i = exePath.size(); i > 0; i--)
-	{
-		if (exePath[i] == '/' || exePath[i] == '\\')
-		{
+	for (int i = exePath.size(); i > 0; i--) {
+		if (exePath[i] == '/' || exePath[i] == '\\') {
 			slashPos = i;
 			break;
 		}
@@ -77,9 +71,8 @@ int main(int argc, char* argv[])
 
 	string command = "xournalpp_bin.exe";
 
-	for (int i = 1; i < argc; i++)
-	{
-	MessageBoxA(NULL, argv[i], "Debug IN", 0);
+	for (int i = 1; i < argc; i++) {
+		MessageBoxA(NULL, argv[i], "Debug IN", 0);
 
 		command += " \"";
 		command += escapeString(argv[i]);
@@ -93,9 +86,8 @@ int main(int argc, char* argv[])
 	char* cmd = new char[command.size() + 1];
 	strncpy(cmd, command.c_str(), command.size());
 	cmd[command.size()] = 0;
-//	MessageBoxA(NULL, cmd, "Debug", 0);
-	if (CreateProcessA(NULL, cmd, NULL, NULL, TRUE, 0, NULL, folder.c_str(), &info, &processInfo))
-	{
+	//	MessageBoxA(NULL, cmd, "Debug", 0);
+	if (CreateProcessA(NULL, cmd, NULL, NULL, TRUE, 0, NULL, folder.c_str(), &info, &processInfo)) {
 		WaitForSingleObject(processInfo.hProcess, INFINITE);
 		CloseHandle(processInfo.hProcess);
 		CloseHandle(processInfo.hThread);
@@ -109,4 +101,4 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-//Modify sth 6
+// Modify sth 6
