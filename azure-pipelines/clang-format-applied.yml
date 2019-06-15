@@ -34,7 +34,7 @@ stages:
         git checkout FETCH_HEAD
         if [ -n "$LOMF" ]; then
             # Apply clang-format to enforce proper format
-            clang-format -i -style=file $LOMF
+            clang-format-8 -i -style=file $LOMF
             # All previously badly formatted files should now be modified
         fi
       displayName: 'Apply clang-format on modified files'
