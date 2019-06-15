@@ -22,8 +22,8 @@ stages:
         git checkout $(System.PullRequest.TargetBranch)
         git fetch origin +$(Build.SourceBranch)
 
-        echo "List of modified files:"
-        git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD $(System.PullRequest.TargetBranch)) | grep ".cpp$\|.hpp$\|.h$
+        echo "List of modified source files:"
+        git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD $(System.PullRequest.TargetBranch)) | grep ".cpp$\|.hpp$\|.h$"
 
         # Actually get the list in a parsable state
         LOMF=$(git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD $(System.PullRequest.TargetBranch)) | grep ".cpp$\|.hpp$\|.h$")
