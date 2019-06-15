@@ -67,34 +67,34 @@ Xournal++ features:
 <td>
 
 ## Linux
-<img src="readme/main.png" width=50% title="Xournal++ Screenshot on Linux"/>
+<img src="readme/main.png" width=100% title="Xournal++ Screenshot on Linux"/>
 
 </td><td>
 
 ## Windows 10
-<img src="readme/main-win.png" width=50% title="Xournal++ Screenshot on Win10"/>
+<img src="readme/main-win.png" width=100% title="Xournal++ Screenshot on Win10"/>
 
 </td></tr><tr><td>
 
 ## macOS High Sierra
-<img src="readme/main-mac.png" width=50% title="Xournal++ Screenshot on macOS"/>
+<img src="readme/main-mac.png" width=100% title="Xournal++ Screenshot on macOS"/>
 
 </td><td>
 
 ## Toolbar / Page Background / Layer
 Multiple page background, easy selectable on the toolbar
-<img src="readme/background.png" width=50% title="Xournal++ Screenshot"/>
+<img src="readme/background.png" width=100% title="Xournal++ Screenshot"/>
 
 </td></tr><tr><td>
 
 ## Layer sidebar and advance Layer selection.
-<img src="readme/layer.png" width=50% title="Xournal++ Screenshot"/>
+<img src="readme/layer.png" width=100% title="Xournal++ Screenshot"/>
 
 </td><td>
 
 ## Multiple predefined and fully customizeable Toolbar.
 
-<img src="readme/toolbar.png" width=50% title="Xournal++ Screenshot"/>
+<img src="readme/toolbar.png" width=100% title="Xournal++ Screenshot"/>
 
 </td></tr></table>
 
@@ -201,23 +201,7 @@ our Gitter channel via the badge on top.
 
 Also take a look at our [Coding Conventions](https://github.com/xournalpp/xournalpp/wiki/Coding-conventions)
 
-## FAQ
-### Q: Secondary stylus button only works when there is no contact
-This is due to a driver setting, which you can configure with `TPCButton` or `TabletPCButton` directive if using `Wacom` driver (but other drivers might have this setting too).
 
-Here's a `/usr/share/X11/xorg.conf.d/30-wacom.conf` example snippet:
-```
-Section "InputClass"
-	Identifier "Wacom tablets class"
-	MatchProduct "Wacom"
-	MatchDevicePath "/dev/input/event*"
-	MatchIsTablet "on"
-	Driver "wacom"
-	Option "TabletPCButton" "on"
-	Option "TPCButton" "on"
-EndSection
-```
-If you are using `libinput` as driver, take a look at [#940](https://github.com/xournalpp/xournalpp/issues/940) and the ticket over at libinput which adresses this issue (https://gitlab.freedesktop.org/libinput/libinput/issues/193)
 
 ## Code documentation
 
