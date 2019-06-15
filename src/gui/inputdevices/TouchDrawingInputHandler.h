@@ -26,9 +26,9 @@ public:
 	explicit TouchDrawingInputHandler(InputContext* inputContext);
 	~TouchDrawingInputHandler() override;
 
-	bool handleImpl(GdkEvent* event) override;
+	bool handleImpl(InputEvent* event) override;
 protected:
-	bool changeTool(GdkEvent* event) override;
+	bool changeTool(InputEvent* event) override;
 };
 
 

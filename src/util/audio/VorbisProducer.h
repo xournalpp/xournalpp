@@ -24,7 +24,7 @@
 class VorbisProducer
 {
 public:
-	explicit VorbisProducer(AudioQueue<int>* audioQueue);
+	explicit VorbisProducer(AudioQueue<float>* audioQueue);
 	~VorbisProducer();
 
 public:
@@ -33,6 +33,7 @@ public:
 	void stop();
 
 private:
+	const int sample_buffer_size = 16384;
 	XOJ_TYPE_ATTRIB;
 
 protected:
@@ -40,6 +41,6 @@ protected:
 	SF_INFO sfInfo;
 	SNDFILE_tag* sfFile = nullptr;
 
-	AudioQueue<int>* audioQueue = nullptr;
+	AudioQueue<float>* audioQueue = nullptr;
 	std::thread* producerThread = nullptr;
 };

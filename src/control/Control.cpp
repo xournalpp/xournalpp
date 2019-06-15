@@ -219,7 +219,7 @@ void Control::renameLastAutosaveFile()
 		renamed += filename.getFilename();
 	}
 
-	g_message(FS(_F("Autosave renamed from {1} to {2}") % this->lastAutosaveFilename.str() % renamed.str()).c_str());
+	g_message("%s", FS(_F("Autosave renamed from {1} to {2}") % this->lastAutosaveFilename.str() % renamed.str()).c_str());
 
 	if (!filename.exists())
 	{
@@ -667,7 +667,12 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 			selectTool(TOOL_HAND);
 		}
 		break;
-
+	case ACTION_TOOL_FLOATING_TOOLBOX:
+		if (enabled)
+		{
+			selectTool(TOOL_FLOATING_TOOLBOX);
+		}
+		break;
 	case ACTION_TOOL_DRAW_RECT:
 	case ACTION_TOOL_DRAW_CIRCLE:
 	case ACTION_TOOL_DRAW_ARROW:
@@ -2360,14 +2365,14 @@ bool Control::loadPdf(Path filename, int scrollToPage)
 	{
 		Path f = filename;
 		f.clearExtensions();
-		f += ".pdf.xopp";
+		f += ".xopp";
 		Document* tmp = loadHandler.loadDocument(f.str());
 
 		if (tmp == NULL)
 		{
 			f = filename;
 			f.clearExtensions();
-			f += ".pdf.xoj";
+			f += ".xoj";
 			tmp = loadHandler.loadDocument(f.str());
 		}
 

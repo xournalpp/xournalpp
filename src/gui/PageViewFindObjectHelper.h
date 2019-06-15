@@ -30,7 +30,7 @@ public:
 	}
 
 public:
-	virtual void at(double x, double y)
+	virtual bool at(double x, double y)
 	{
 		this->x = x;
 		this->y = y;
@@ -43,24 +43,26 @@ public:
 		{
 			if (view->page->isLayerVisible(l))
 			{
-				checkLayer(l);
+				return checkLayer(l);
 			}
 		}
+		return false;
 	}
 
 protected:
-	void checkLayer(Layer* l)
+	bool checkLayer(Layer* l)
 	{
 		for (Element* e : *l->getElements())
 		{
 			if (e->intersectsArea(&matchRect))
 			{
-				checkElement(e);
+				return checkElement(e);
 			}
 		}
+		return false;
 	}
 
-	virtual void checkElement(Element* e) = 0;
+	virtual bool checkElement(Element* e) = 0;
 
 protected:
 	GdkRectangle matchRect;
@@ -84,7 +86,7 @@ public:
 	{
 	}
 
-	void at(double x, double y)
+	bool at(double x, double y)
 	{
 		BaseSelectObject::at(x, y);
 
@@ -98,11 +100,15 @@ public:
 			view->xournal->setSelection(new EditSelection(view->xournal->getControl()->getUndoRedoHandler(), elementMatch, view, view->page));
 
 			view->repaintPage();
+			
+			return true;
 		}
+		
+		return false;
 	}
 
 protected:
-	virtual void checkElement(Element* e)
+	virtual bool checkElement(Element* e)
 	{
 		if (e->getType() == ELEMENT_STROKE)
 		{
@@ -112,12 +118,16 @@ protected:
 			{
 				gap = tmpGap;
 				strokeMatch = s;
+				return true;
 			}
 		}
 		else
 		{
 			elementMatch = e;
+			return true;
 		}
+		
+		return false;
 	}
 
 private:
@@ -139,17 +149,17 @@ public:
 	}
 
 public:
-	void at(double x, double y)
+	bool at(double x, double y)
 	{
-		BaseSelectObject::at(x, y);
+		return BaseSelectObject::at(x, y);
 	}
 
 protected:
-	virtual void checkElement(Element* e)
+	virtual bool checkElement(Element* e)
 	{
 		if (e->getType() != ELEMENT_STROKE && e->getType() != ELEMENT_TEXT)
 		{
-			return;
+			return false;
 		}
 
 		AudioElement* s = (AudioElement*) e;
@@ -170,8 +180,10 @@ protected:
 					fn = path.str();
 				}
 				view->getXournal()->getControl()->getAudioController()->startPlayback(fn, (unsigned int) ts);
+				return true;
 			}
 		}
+		return false;
 	}
 };
 

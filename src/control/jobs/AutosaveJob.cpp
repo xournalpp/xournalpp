@@ -57,7 +57,7 @@ void AutosaveJob::run()
 
 	control->renameLastAutosaveFile();
 
-	g_message(FS(_F("Autosaving to {1}") % filename.str()).c_str());
+	g_message("%s", FS(_F("Autosaving to {1}") % filename.str()).c_str());
 
 	handler.saveTo(filename);
 

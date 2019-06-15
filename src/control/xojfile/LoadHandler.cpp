@@ -58,6 +58,10 @@ LoadHandler::LoadHandler()
 LoadHandler::~LoadHandler()
 {
 	XOJ_RELEASE_TYPE(LoadHandler);
+	if (this->audioFiles)
+	{
+		g_hash_table_unref(this->audioFiles);
+	}
 }
 
 void LoadHandler::initAttributes()

@@ -6,6 +6,7 @@
 #include "model/Image.h"
 #include "model/Layer.h"
 #include "undo/InsertUndoAction.h"
+#include "gui/XournalView.h"
 
 #include <i18n.h>
 #include <XojMsgBox.h>
@@ -95,6 +96,8 @@ bool ImageHandler::insertImage(GFile* file, double x, double y)
 	control->getUndoRedoHandler()->addUndoAction(insertUndo);
 
 	view->rerenderElement(img);
+        EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
+        control->getWindow()->getXournal()->setSelection(selection);
 
 	return true;
 }

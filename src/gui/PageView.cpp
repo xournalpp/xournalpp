@@ -45,6 +45,7 @@
 #include <gdk/gdk.h>
 
 #include <stdlib.h>
+#include <algorithm>
 
 XojPageView::XojPageView(XournalView* xournal, PageRef page)
 {
@@ -329,13 +330,14 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
-
+	Control* control = xournal->getControl();
+	
 	if (!this->selected)
 	{
-		xournal->getControl()->firePageSelected(this->page);
+		control->firePageSelected(this->page);
 	}
 
-	ToolHandler* h = xournal->getControl()->getToolHandler();
+	ToolHandler* h = control->getToolHandler();
 
 	double x = pos.x;
 	double y = pos.y;
@@ -436,10 +438,106 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 	}
 	else if (h->getToolType() == TOOL_IMAGE)
 	{
-		ImageHandler imgHandler(xournal->getControl(), this);
+		ImageHandler imgHandler(control, this);
 		imgHandler.insertImage(x, y);
 	}
+	else if (h->getToolType() == TOOL_FLOATING_TOOLBOX)
+	{
+		gint wx, wy;
+		GtkWidget *widget = xournal->getWidget();
+		gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
 
+		wx += pos.x + this->getX();
+		wy += pos.y + this->getY();
+		
+		control->getWindow()->floatingToolbox->show( wx,wy);
+				
+				
+	}
+	return true;
+}
+
+bool XojPageView::onButtonDoublePressEvent(const PositionInputData& pos)
+{
+	// This method assumes that it is called after onButtonPressEvent but before
+	// onButtonReleaseEvent
+	double zoom = this->xournal->getZoom();
+	double x = pos.x / zoom;
+	double y = pos.y / zoom;
+	if (x < 0 || y < 0)
+	{
+		return false;
+	}
+
+	ToolHandler* toolHandler = this->xournal->getControl()->getToolHandler();
+	ToolType toolType = toolHandler->getToolType();
+	bool isSelectTool = toolType == TOOL_SELECT_OBJECT || TOOL_SELECT_RECT || TOOL_SELECT_REGION;
+
+	EditSelection* selection = xournal->getSelection();
+	bool hasNoModifiers = !pos.isShiftDown() && !pos.isControlDown();
+
+	if (hasNoModifiers && isSelectTool && selection != nullptr)
+	{
+		// Find a selected object under the cursor, if possible. The selection doesn't change the
+		// element coordinates until it is finalized, so we need to use position relative to the
+		// original coordinates of the selection.
+		double origx = x - (selection->getXOnView() - selection->getOriginalXOnView());
+		double origy = y - (selection->getYOnView() - selection->getOriginalYOnView());
+		std::vector<Element*>* elems = selection->getElements();
+		auto it = std::find_if(elems->begin(), elems->end(), [&](Element*& elem) {
+			return elem->intersectsArea(origx - 5, origy - 5, 5, 5);
+		});
+		if (it != elems->end())
+		{
+			// Enter editing mode on the selected object
+			Element* object = *it;
+			ElementType elemType = object->getType();
+			if (elemType == ELEMENT_TEXT)
+			{
+				this->xournal->clearSelection();
+				toolHandler->selectTool(TOOL_TEXT);
+				// Simulate a button press; there's too many things that we
+				// could forget to do if we manually call startText
+				this->onButtonPressEvent(pos);
+			}
+			else if (elemType == ELEMENT_TEXIMAGE)
+			{
+				Control* control = this->xournal->getControl();
+				this->xournal->clearSelection();
+				EditSelection* sel = new EditSelection(control->getUndoRedoHandler(), object, this, this->getPage());
+				this->xournal->setSelection(sel);
+				control->runLatex();
+			}
+		}
+	}
+	else if (toolType == TOOL_TEXT)
+	{
+		this->startText(x, y);
+		this->textEditor->selectAtCursor(TextEditor::SelectType::word);
+	}
+
+	return true;
+}
+
+bool XojPageView::onButtonTriplePressEvent(const PositionInputData& pos)
+{
+	// This method assumes that it is called after onButtonDoubleEvent but before
+	// onButtonReleaseEvent
+	double zoom = this->xournal->getZoom();
+	double x = pos.x / zoom;
+	double y = pos.y / zoom;
+	if (x < 0 || y < 0)
+	{
+		return false;
+	}
+
+	ToolHandler* toolHandler = this->xournal->getControl()->getToolHandler();
+
+	if (toolHandler->getToolType() == TOOL_TEXT)
+	{
+		this->startText(x, y);
+		this->textEditor->selectAtCursor(TextEditor::SelectType::paragraph);
+	}
 	return true;
 }
 
@@ -503,11 +601,31 @@ bool XojPageView::onButtonReleaseEvent(const PositionInputData& pos)
 	{
 		this->inputHandler->onButtonReleaseEvent(pos);
 		
-		if( control->getSettings()->getTrySelectOnStrokeFiltered() && this->inputHandler->userTapped){  //experimental feature
-			double zoom = xournal->getZoom();
-			SelectObject select(this);
-			select.at(pos.x/zoom, pos.y/zoom);
+		if( this->inputHandler->userTapped)
+		{ 
+			bool doAction = control->getSettings()->getDoActionOnStrokeFiltered();
+			if( control->getSettings()->getTrySelectOnStrokeFiltered() )
+			{
+				double zoom = xournal->getZoom();
+				SelectObject select(this);
+				if ( select.at(pos.x/zoom, pos.y/zoom))
+				{
+					doAction = false;	// selection made.. no action.
+				}
+			}
+			
+			if ( doAction)		// pop up a menu
+			{
+				gint wx, wy;
+				GtkWidget *widget = xournal->getWidget();
+				gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
+				wx += pos.x + this->getX();
+				wy += pos.y + this->getY();
+				control->getWindow()->floatingToolbox->show( wx,wy);
+			}
+			
 		}
+		
 		delete this->inputHandler;
 		this->inputHandler = NULL;
 	}
@@ -854,8 +972,10 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect)
 
 	if (this->search)
 	{
+		cairo_save(cr);
 		cairo_scale(cr, zoom, zoom);
 		this->search->paint(cr, rect, zoom, getSelectionColor());
+		cairo_restore(cr);
 	}
 
 	if (this->inputHandler)

@@ -153,8 +153,8 @@ private:
 
 public:
 	// Getter- / Setter
-	bool isPresureSensitivity();
-	void setPresureSensitivity(gboolean presureSensitivity);
+	bool isPressureSensitivity();
+	void setPressureSensitivity(gboolean presureSensitivity);
 
 	/**
 	 * Getter, enable/disable
@@ -371,6 +371,11 @@ public:
 	bool getInputSystemDrawOutsideWindowEnabled();
 	void setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnabled);
 
+	void loadDeviceClasses();
+	void saveDeviceClasses();
+	void setDeviceClassForDevice(GdkDevice* device, int deviceClass);
+	int getDeviceClassForDevice(GdkDevice* device);
+
 	/**
 	 * Get name, e.g. "cm"
 	 */
@@ -482,7 +487,7 @@ private:
 	/**
 	 *  Use pen pressure to control stroke width?
 	 */
-	bool presureSensitivity;
+	bool pressureSensitivity;
 
 	/**
 	 * If the touch zoom gestures are enabled
@@ -823,6 +828,8 @@ private:
 	bool inputSystemTPCButton;
 
 	bool inputSystemDrawOutsideWindow;
+
+	std::map<string, int> inputDeviceClasses = {};
 
 	/**
 	 * "Transaction" running, do not save until the end is reached

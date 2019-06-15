@@ -73,7 +73,7 @@ public:
 
 public:
 	/**
-	 * @return The widget which is drawed
+	 * @return The widget which is drawn
 	 */
 	GtkWidget* getWidget();
 
@@ -117,7 +117,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	/**
-	 * The widget which is drawed
+	 * The widget which is drawn
 	 */
 	GtkWidget* widget = NULL;
 

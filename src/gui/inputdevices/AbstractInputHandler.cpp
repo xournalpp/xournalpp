@@ -4,13 +4,13 @@
 
 #include "AbstractInputHandler.h"
 #include "InputContext.h"
+#include <gui/XournalppCursor.h>
 
 AbstractInputHandler::AbstractInputHandler(InputContext* inputContext)
 {
 	XOJ_INIT_TYPE(AbstractInputHandler);
 
 	this->inputContext = inputContext;
-	this->pressureSensitivity = inputContext->getSettings()->isPresureSensitivity();
 }
 
 AbstractInputHandler::~AbstractInputHandler()
@@ -35,12 +35,13 @@ bool AbstractInputHandler::isBlocked()
 	return this->blocked;
 }
 
-bool AbstractInputHandler::handle(GdkEvent* event)
+bool AbstractInputHandler::handle(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(AbstractInputHandler);
 
 	if (!this->blocked)
 	{
+		this->inputContext->getXournal()->view->getCursor()->setInputDeviceClass(event->deviceClass);
 		return this->handleImpl(event);
 	} else {
 		return true;
@@ -52,7 +53,7 @@ bool AbstractInputHandler::handle(GdkEvent* event)
  *
  * @return page or NULL if none
  */
-XojPageView* AbstractInputHandler::getPageAtCurrentPosition(GdkEvent* event)
+XojPageView* AbstractInputHandler::getPageAtCurrentPosition(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(AbstractInputHandler);
 
@@ -61,8 +62,8 @@ XojPageView* AbstractInputHandler::getPageAtCurrentPosition(GdkEvent* event)
 		return nullptr;
 	}
 
-	gdouble eventX, eventY;
-	gdk_event_get_coords(event, &eventX, &eventY);
+	gdouble eventX = event->relativeX;
+	gdouble eventY = event->relativeY;
 
 	//take scroll offset into account
 	this->inputContext->getScrollHandling()->translate(eventX, eventY);
@@ -78,30 +79,30 @@ XojPageView* AbstractInputHandler::getPageAtCurrentPosition(GdkEvent* event)
 /**
  * Get input data relative to current input page
  */
-PositionInputData AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, GdkEvent* event)
+PositionInputData AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent* event)
 {
 	XOJ_CHECK_TYPE(AbstractInputHandler);
 
 	GtkXournal* xournal = inputContext->getXournal();
 
-	gdouble eventX, eventY;
-	gdk_event_get_coords(event, &eventX, &eventY);
+	gdouble eventX = event->relativeX;
+	gdouble eventY = event->relativeY;
 
 	//take scroll offset into account
 	this->inputContext->getScrollHandling()->translate(eventX, eventY);
 
-	PositionInputData pos;
+	PositionInputData pos = {};
 	pos.x = eventX - page->getX() - xournal->x;
 	pos.y = eventY - page->getY() - xournal->y;
 	pos.pressure = Point::NO_PRESSURE;
 
-	if (pressureSensitivity)
+	if (this->inputContext->getSettings()->isPressureSensitivity())
 	{
-		gdk_event_get_axis(event, GDK_AXIS_PRESSURE, &pos.pressure);
+		pos.pressure = event->pressure;
 	}
 
 	pos.state = this->inputContext->getModifierState();
-	pos.timestamp = gdk_event_get_time(event);
+	pos.timestamp = event->timestamp;
 
 	return pos;
 }

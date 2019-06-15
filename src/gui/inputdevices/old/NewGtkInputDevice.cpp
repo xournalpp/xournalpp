@@ -320,6 +320,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 
 		XournalppCursor* cursor = view->getControl()->getWindow()->getXournal()->getCursor();
 		cursor->setInvisible(false);
+		cursor->updateCursor();
 
 		view->getHandRecognition()->event(sourceDevice);
 	}

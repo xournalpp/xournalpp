@@ -17,30 +17,28 @@ TouchInputHandler::~TouchInputHandler()
 	XOJ_RELEASE_TYPE(TouchInputHandler);
 }
 
-bool TouchInputHandler::handleImpl(GdkEvent* event)
+bool TouchInputHandler::handleImpl(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(TouchInputHandler);
 
-	GdkEventSequence* sequence = gdk_event_get_event_sequence(event);
-
 	// Disallow multitouch
-	if (this->currentSequence && this->currentSequence != sequence)
+	if (this->currentSequence && this->currentSequence != event->sequence)
 	{
 		return false;
 	}
 
-	if (event->type == GDK_TOUCH_BEGIN && this->currentSequence == nullptr)
+	if (event->type == BUTTON_PRESS_EVENT && this->currentSequence == nullptr)
 	{
-		this->currentSequence = sequence;
+		this->currentSequence = event->sequence;
 		actionStart(event);
 	}
 
-	if (event->type == GDK_TOUCH_UPDATE)
+	if (event->type == MOTION_EVENT)
 	{
 		actionMotion(event);
 	}
 
-	if (event->type == GDK_TOUCH_END || event->type == GDK_TOUCH_CANCEL)
+	if (event->type == BUTTON_RELEASE_EVENT)
 	{
 		actionEnd(event);
 		this->currentSequence = nullptr;
@@ -49,29 +47,28 @@ bool TouchInputHandler::handleImpl(GdkEvent* event)
 	return false;
 }
 
-void TouchInputHandler::actionStart(GdkEvent* event)
+void TouchInputHandler::actionStart(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(TouchInputHandler);
 
-	gdk_event_get_root_coords(event, &this->lastPosX, &this->lastPosY);
+	this->lastPosX = event->absoluteX;
+	this->lastPosY = event->absoluteY;
 
 }
 
-void TouchInputHandler::actionMotion(GdkEvent* event)
+void TouchInputHandler::actionMotion(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(TouchInputHandler);
 
 	// Manually scroll when gesture is active
 	if (this->inputContext->getView()->getZoomGestureHandler()->isGestureActive())
 	{
-		gdouble currentPosX, currentPosY;
-		gdk_event_get_root_coords(event, &currentPosX, &currentPosY);
 
-		double offsetX = currentPosX - this->lastPosX;
-		double offsetY = currentPosY - this->lastPosY;
+		double offsetX = event->absoluteX - this->lastPosX;
+		double offsetY = event->absoluteY - this->lastPosY;
 
-		this->lastPosX = currentPosX;
-		this->lastPosY = currentPosY;
+		this->lastPosX = event->absoluteX;
+		this->lastPosY = event->absoluteY;
 
 		ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
 		std::tuple<double, double> pos = zoomControl->getScrollPositionAfterZoom();
@@ -81,11 +78,31 @@ void TouchInputHandler::actionMotion(GdkEvent* event)
 
 		zoomControl->setScrollPositionAfterZoom(newX, newY);
 	}
+
+	//  Manually scroll if non-touchscreen device was mapped to a touchscreen (GTK wont handle this)
+	if (this->lastPosX >= 0.0 && this->lastPosY >= 0.0
+			&& event->deviceClass == INPUT_DEVICE_TOUCHSCREEN && gdk_device_get_source(gdk_event_get_source_device(event->sourceEvent)) != GDK_SOURCE_TOUCHSCREEN)
+	{
+
+		double offsetX = event->absoluteX - this->lastPosX;
+		double offsetY = event->absoluteY - this->lastPosY;
+
+		this->lastPosX = event->absoluteX;
+		this->lastPosY = event->absoluteY;
+
+		GtkAdjustment* h = this->inputContext->getView()->getScrollHandling()->getHorizontal();
+		gtk_adjustment_set_value(h, gtk_adjustment_get_value(h) - offsetX);
+		GtkAdjustment* v = this->inputContext->getView()->getScrollHandling()->getVertical();
+		gtk_adjustment_set_value(v, gtk_adjustment_get_value(v) - offsetY);
+	}
 }
 
-void TouchInputHandler::actionEnd(GdkEvent* event)
+void TouchInputHandler::actionEnd(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(TouchInputHandler);
+
+	this->lastPosX = -1.0;
+	this->lastPosY = -1.0;
 }
 
 

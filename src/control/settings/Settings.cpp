@@ -42,7 +42,7 @@ void Settings::loadDefault()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	this->presureSensitivity = true;
+	this->pressureSensitivity = true;
 	this->zoomGesturesEnabled = true;
 	this->maximized = false;
 	this->showPairedPages = false;
@@ -311,9 +311,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 		return;
 	}
 
+	// TODO: remove this typo fix in 2-3 release cycles
 	if (xmlStrcmp(name, (const xmlChar*) "presureSensitivity") == 0)
 	{
-		setPresureSensitivity(xmlStrcmp(value, (const xmlChar*) "true") ? false : true);
+		setPressureSensitivity(xmlStrcmp(value, (const xmlChar*) "true") ? false : true);
+	}
+	if (xmlStrcmp(name, (const xmlChar*) "pressureSensitivity") == 0)
+	{
+		setPressureSensitivity(xmlStrcmp(value, (const xmlChar*) "true") ? false : true);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "zoomGesturesEnabled") == 0)
 	{
@@ -611,6 +616,18 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	xmlFree(value);
 }
 
+void Settings::loadDeviceClasses()
+{
+	SElement& s = getCustomElement("deviceClasses");
+	for (auto device : s.children())
+	{
+		SElement& deviceNode = device.second;
+		int deviceClass;
+		deviceNode.getInt("deviceClass", deviceClass);
+		inputDeviceClasses.insert(std::pair<string, int>(device.first, deviceClass));
+	}
+}
+
 void Settings::loadButtonConfig()
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -664,6 +681,17 @@ void Settings::loadButtonConfig()
 				{
 					// If not specified: do not change
 					cfg->eraserMode = ERASER_TYPE_NONE;
+				}
+
+				string sSize;
+				if (e.getString("size", sSize))
+				{
+					cfg->size = toolSizeFromString(sSize);
+				}
+				else
+				{
+					// If not specified: do not change
+					cfg->size = TOOL_SIZE_NONE;
 				}
 			}
 
@@ -736,6 +764,7 @@ bool Settings::load()
 	xmlFreeDoc(doc);
 
 	loadButtonConfig();
+	loadDeviceClasses();
 
 	return true;
 }
@@ -773,6 +802,19 @@ xmlNodePtr Settings::saveProperty(const gchar* key, const gchar* value, xmlNodeP
 	return xmlNode;
 }
 
+void Settings::saveDeviceClasses()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	SElement& s = getCustomElement("deviceClasses");
+
+	for (const std::map<string, int>::value_type& device : inputDeviceClasses)
+	{
+		SElement& e = s.child(device.first);
+		e.setInt("deviceClass", device.second);
+	}
+}
+
 void Settings::saveButtonConfig()
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -802,6 +844,7 @@ void Settings::saveButtonConfig()
 		if (type == TOOL_ERASER)
 		{
 			e.setString("eraserMode", eraserTypeToString(cfg->eraserMode));
+			e.setString("size", toolSizeToString(cfg->size));
 		}
 
 		// Touch device
@@ -856,6 +899,7 @@ void Settings::save()
 	}
 
 	saveButtonConfig();
+	saveDeviceClasses();
 
 	/* Create metadata root */
 	root = xmlNewDocNode(doc, NULL, (const xmlChar*) "settings", NULL);
@@ -866,7 +910,7 @@ void Settings::save()
 								   "the others are commented in this file, but handle with care!");
 	xmlAddPrevSibling(root, com);
 
-	WRITE_BOOL_PROP(presureSensitivity);
+	WRITE_BOOL_PROP(pressureSensitivity);
 	WRITE_BOOL_PROP(zoomGesturesEnabled);
 
 	WRITE_STRING_PROP(selectedToolbar);
@@ -1092,11 +1136,11 @@ void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 }
 
 // Getter- / Setter
-bool Settings::isPresureSensitivity()
+bool Settings::isPressureSensitivity()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	return this->presureSensitivity;
+	return this->pressureSensitivity;
 }
 
 bool Settings::isZoomGesturesEnabled()
@@ -1651,15 +1695,15 @@ bool Settings::isPresentationMode()
 	return this->presentationMode;
 }
 
-void Settings::setPresureSensitivity(gboolean presureSensitivity)
+void Settings::setPressureSensitivity(gboolean presureSensitivity)
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	if (this->presureSensitivity == presureSensitivity)
+	if (this->pressureSensitivity == presureSensitivity)
 	{
 		return;
 	}
-	this->presureSensitivity = presureSensitivity;
+	this->pressureSensitivity = presureSensitivity;
 
 	save();
 }
@@ -2447,6 +2491,60 @@ bool Settings::getInputSystemDrawOutsideWindowEnabled()
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->inputSystemDrawOutsideWindow;
+}
+
+void Settings::setDeviceClassForDevice(GdkDevice* device, int deviceClass)
+{
+	string name = gdk_device_get_name(device);
+	auto it = inputDeviceClasses.find(name);
+	if (it != inputDeviceClasses.end())
+	{
+		it->second = deviceClass;
+	}
+	else
+	{
+		inputDeviceClasses.insert(std::pair<string, int>(name, deviceClass));
+	}
+}
+
+int Settings::getDeviceClassForDevice(GdkDevice* device)
+{
+	auto search = inputDeviceClasses.find(gdk_device_get_name(device));
+	if (search != inputDeviceClasses.end())
+	{
+		return search->second;
+	}
+	else
+	{
+		guint deviceType = 0;
+		switch(gdk_device_get_source(device))
+		{
+			case GDK_SOURCE_CURSOR:
+#if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
+			case GDK_SOURCE_TABLET_PAD:
+#endif
+			case GDK_SOURCE_KEYBOARD:
+				deviceType = 0;
+				break;
+			case GDK_SOURCE_MOUSE:
+			case GDK_SOURCE_TOUCHPAD:
+#if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
+			case GDK_SOURCE_TRACKPOINT:
+#endif
+				deviceType = 1;
+				break;
+			case GDK_SOURCE_PEN:
+				deviceType = 2;
+				break;
+			case GDK_SOURCE_ERASER:
+				deviceType = 3;
+				break;
+			case GDK_SOURCE_TOUCHSCREEN:
+				deviceType = 4;
+				break;
+		}
+		return deviceType;
+	}
 }
 
 //////////////////////////////////////////////////

@@ -292,6 +292,11 @@ ActionType ActionType_fromString(string value)
 		return ACTION_RULER;
 	}
 
+	if (value == "ACTION_TOOL_FLOATING_TOOLBOX")
+	{
+		return ACTION_TOOL_FLOATING_TOOLBOX;
+	}
+
 	if (value == "ACTION_TOOL_LINE_STYLE_PLAIN")
 	{
 		return ACTION_TOOL_LINE_STYLE_PLAIN;
@@ -968,6 +973,11 @@ string ActionType_toString(ActionType value)
 	if (value == ACTION_RULER)
 	{
 		return "ACTION_RULER";
+	}
+
+	if (value == ACTION_TOOL_FLOATING_TOOLBOX)
+	{
+		return "ACTION_TOOL_FLOATING_TOOLBOX";
 	}
 
 	if (value == ACTION_TOOL_LINE_STYLE_PLAIN)

@@ -51,7 +51,7 @@ void ButtonConfig::acceptActions(ToolHandler* toolHandler)
 
 	toolHandler->selectTool(this->action, false);
 
-	if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER)
+	if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_ERASER)
 	{
 
 		if (this->drawingType != DRAWING_TYPE_DONT_CHANGE)

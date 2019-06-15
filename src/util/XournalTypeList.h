@@ -294,3 +294,5 @@ XOJ_DECLARE_TYPE(StylusInputHandler, 284);
 XOJ_DECLARE_TYPE(TouchDrawingInputHandler, 285);
 XOJ_DECLARE_TYPE(TouchInputHandler, 286);
 XOJ_DECLARE_TYPE(TouchDisableGdk, 287);
+XOJ_DECLARE_TYPE(DeviceClassConfigGui, 288);
+XOJ_DECLARE_TYPE(FloatingToolbox, 289);

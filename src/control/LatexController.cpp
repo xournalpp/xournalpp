@@ -41,11 +41,12 @@ const char* LATEX_TEMPLATE_2 =
 
 LatexController::LatexController(Control* control)
 	: control(control),
+	  dlg(control->getGladeSearchPath()),
 	  doc(control->getDocument()),
-	  texTmp(Util::getTmpDirSubfolder("tex"))
+	  texTmpDir(Util::getTmpDirSubfolder("tex"))
 {
 	XOJ_INIT_TYPE(LatexController);
-	Util::ensureFolderExists(this->texTmp);
+	Util::ensureFolderExists(this->texTmpDir);
 }
 
 LatexController::~LatexController()
@@ -60,32 +61,52 @@ LatexController::~LatexController()
 /**
  * Find the tex executable, return false if not found
  */
-bool LatexController::findTexExecutable()
+LatexController::FindDependencyStatus LatexController::findTexDependencies()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
 	gchar* pdflatex = g_find_program_in_path("pdflatex");
 	if (!pdflatex)
 	{
-		return false;
+		string msg = _("Could not find pdflatex in PATH.\nPlease install pdflatex first and make sure it's in the PATH.");
+		return LatexController::FindDependencyStatus(false, msg);
 	}
-
-	binTex = pdflatex;
+	this->pdflatexPath = pdflatex;
 	g_free(pdflatex);
 
-	return true;
+	// Check for 'standalone' latex package
+	static gchar* kpsewhichArgs[] = { g_strdup("kpsewhich"), g_strdup("standalone") };
+	auto kpsewhichFlags = GSpawnFlags(G_SPAWN_DEFAULT | G_SPAWN_SEARCH_PATH | G_SPAWN_STDOUT_TO_DEV_NULL);
+	GError* kpsewhichErr = nullptr;
+	gint kpsewhichStatus;
+	g_spawn_sync(
+		nullptr, kpsewhichArgs, nullptr, kpsewhichFlags, nullptr, nullptr, nullptr,
+		nullptr, &kpsewhichStatus, &kpsewhichErr);
+	if (kpsewhichErr != nullptr)
+	{
+		g_error_free(kpsewhichErr);
+		string msg = _("Could not find kpsewhich in PATH; please install kpsewhich and put it on path.");
+		return LatexController::FindDependencyStatus(false, msg);
+	}
+	else if (kpsewhichStatus != 0)
+	{
+		string msg = FS(_F("Could not find the LaTeX package 'standalone'.\nPlease install standalone and make sure it's accessible by your LaTeX installation."));
+		return LatexController::FindDependencyStatus(false, msg);
+	}
+
+	return LatexController::FindDependencyStatus(true, "");
 }
 
-std::unique_ptr<GPid> LatexController::runCommandAsync()
+std::unique_ptr<GPid> LatexController::runCommandAsync(string texString)
 {
 	XOJ_CHECK_TYPE(LatexController);
 	g_assert(!this->isUpdating);
 
 	string texContents = LATEX_TEMPLATE_1;
-	texContents += this->currentTex;
+	texContents += texString;
 	texContents += LATEX_TEMPLATE_2;
 
-	Path texFile = texTmp / "tex.tex";
+	Path texFile = this->texTmpDir / "tex.tex";
 
 	GError* err = NULL;
 	if (!g_file_set_contents(texFile.c_str(), texContents.c_str(), texContents.length(), &err))
@@ -96,16 +117,18 @@ std::unique_ptr<GPid> LatexController::runCommandAsync()
 	}
 
 	char* texFileEscaped = g_strescape(texFile.c_str(), NULL);
-	char* cmd = g_strdup(binTex.c_str());
+	char* cmd = g_strdup(this->pdflatexPath.c_str());
 
 	static char* texFlag = g_strdup("-interaction=nonstopmode");
 	char* argv[] = { cmd, texFlag, texFileEscaped, NULL };
 
-	std::unique_ptr<GPid> pdflatex_pid(new GPid);
+	std::unique_ptr<GPid> pdflatexPid(new GPid);
 	GSpawnFlags flags = GSpawnFlags(G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL | G_SPAWN_DO_NOT_REAP_CHILD);
+
 	this->setUpdating(true);
-	this->lastPreviewedTex = this->currentTex;
-	bool success = g_spawn_async(texTmp.c_str(), argv, nullptr, flags, nullptr, nullptr, pdflatex_pid.get(), &err);
+	this->lastPreviewedTex = texString;
+
+	bool success = g_spawn_async(texTmpDir.c_str(), argv, nullptr, flags, nullptr, nullptr, pdflatexPid.get(), &err);
 	if (!success)
 	{
 		string message = FS(_F("Could not start pdflatex: {1} (exit code: {2})") % err->message % err->code);
@@ -114,13 +137,13 @@ std::unique_ptr<GPid> LatexController::runCommandAsync()
 
 		g_error_free(err);
 		this->setUpdating(false);
-		pdflatex_pid.reset();
+		pdflatexPid.reset();
 	}
 
 	g_free(texFileEscaped);
 	g_free(cmd);
 
-	return pdflatex_pid;
+	return pdflatexPid;
 }
 
 /**
@@ -174,49 +197,43 @@ void LatexController::findSelectedTexElement()
 		}
 	}
 	this->doc->unlock();
-	this->currentTex = this->initialTex;
-	if (this->initialTex.empty())
-	{
-		this->currentTex = "x^2";
-	}
 
 	// need to do this otherwise we can't remove the image for its replacement
 	this->control->clearSelectionEndText();
 }
 
-void LatexController::showTexEditDialog()
+string LatexController::showTexEditDialog()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
-	this->dlg.reset(new LatexDialog(control->getGladeSearchPath()));
-
-	// preselect default text so user can overwrite it easily
-	this->dlg->setTex(currentTex, this->initialTex.empty());
-
-	g_signal_connect(dlg->getTextBuffer(), "changed", G_CALLBACK(handleTexChanged), this);
+	// Attach the signal handler before setting the buffer text so that the
+	// callback is triggered
+	gulong signalHandler = g_signal_connect(dlg.getTextBuffer(), "changed", G_CALLBACK(handleTexChanged), this);
+	bool isNewFormula = this->initialTex.empty();
+	this->dlg.setFinalTex(isNewFormula ? "x^2" : this->initialTex);
 
 	if (this->temporaryRender != nullptr)
 	{
-		this->dlg->setTempRender(this->temporaryRender->getPdf());
+		this->dlg.setTempRender(this->temporaryRender->getPdf());
 	}
 
-	this->dlg->show(GTK_WINDOW(control->getWindow()->getWindow()));
+	this->dlg.show(GTK_WINDOW(control->getWindow()->getWindow()), isNewFormula);
+	g_signal_handler_disconnect(dlg.getTextBuffer(), signalHandler);
 
-	this->currentTex = this->dlg->getTex();
+	string result = this->dlg.getFinalTex();
 	// If the user cancelled, there is no change in the latex string.
-	this->currentTex = this->currentTex == "" ? initialTex : this->currentTex;
-
-	this->dlg.reset();
+	result = result == "" ? initialTex : result;
+	return result;
 }
 
-void LatexController::triggerImageUpdate()
+void LatexController::triggerImageUpdate(string texString)
 {
 	if (this->isUpdating)
 	{
 		return;
 	}
 
-	std::unique_ptr<GPid> pid = this->runCommandAsync();
+	std::unique_ptr<GPid> pid = this->runCommandAsync(texString);
 	if (pid != nullptr)
 	{
 		g_assert(this->isUpdating);
@@ -226,23 +243,16 @@ void LatexController::triggerImageUpdate()
 
 /**
  * Text-changed handler: when the Buffer in the dialog changes, this handler
- * updates currentTex, removes the previous existing render and creates a new
- * one. We need to do it through 'self' because signal handlers cannot directly
- * access non-static methods and non-static fields such as 'dlg' so we need to
- * wrap all the dlg method inside small methods in 'self'. To improve
- * performance, we render the text asynchronously.
+ * removes the previous existing render and creates a new one. We need to do it
+ * through 'self' because signal handlers cannot directly access non-static
+ * methods and non-static fields such as 'dlg' so we need to wrap all the dlg
+ * method inside small methods in 'self'. To improve performance, we render the
+ * text asynchronously.
  */
 void LatexController::handleTexChanged(GtkTextBuffer* buffer, LatexController* self)
 {
 	XOJ_CHECK_TYPE_OBJ(self, LatexController);
-
-	GtkTextIter start;
-	GtkTextIter end;
-	gtk_text_buffer_get_start_iter(buffer, &start);
-	gtk_text_buffer_get_end_iter(buffer, &end);
-	self->setCurrentTex(gtk_text_buffer_get_text(buffer, &start, &end, true));
-
-	self->triggerImageUpdate();
+	self->triggerImageUpdate(self->dlg.getBufferContents());
 }
 
 void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, LatexController* self)
@@ -252,7 +262,8 @@ void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, LatexContro
 	GError* err = nullptr;
 	g_spawn_check_exit_status(returnCode, &err);
 	g_spawn_close_pid(pid);
-	bool shouldUpdate = self->lastPreviewedTex != self->currentTex;
+	string currentTex = self->dlg.getBufferContents();
+	bool shouldUpdate = self->lastPreviewedTex != currentTex;
 	if (err != nullptr)
 	{
 		self->isValidTex = false;
@@ -263,7 +274,7 @@ void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, LatexContro
 			g_warning("%s", message.c_str());
 			XojMsgBox::showErrorToUser(self->control->getGtkWindow(), message);
 		}
-		Path pdfPath = self->texTmp / "tex.pdf";
+		Path pdfPath = self->texTmpDir / "tex.pdf";
 		if (pdfPath.exists())
 		{
 			// Delete the pdf to prevent more errors
@@ -274,24 +285,24 @@ void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, LatexContro
 	else
 	{
 		self->isValidTex = true;
-		self->temporaryRender = self->loadRendered();
+		self->temporaryRender = self->loadRendered(currentTex);
 		if (self->temporaryRender != nullptr)
 		{
-			self->setImageInDialog(self->temporaryRender->getPdf());
+			self->dlg.setTempRender(self->temporaryRender->getPdf());
 		}
 
 	}
 	self->setUpdating(false);
 	if (shouldUpdate)
 	{
-		self->triggerImageUpdate();
+		self->triggerImageUpdate(currentTex);
 	}
 }
 
 void LatexController::setUpdating(bool newValue)
 {
 	XOJ_CHECK_TYPE(LatexController);
-	GtkWidget* okButton = this->dlg->get("texokbutton");
+	GtkWidget* okButton = this->dlg.get("texokbutton");
 	bool buttonEnabled = true;
 	if ((!this->isUpdating && newValue) || (this->isUpdating && !newValue))
 	{
@@ -306,26 +317,14 @@ void LatexController::setUpdating(bool newValue)
 
 	// Invalid LaTeX will generate an invalid PDF, so disable the OK button if
 	// needed.
-	buttonEnabled = buttonEnabled ? this->isValidTex : buttonEnabled;
+	buttonEnabled = buttonEnabled && this->isValidTex;
 
 	gtk_widget_set_sensitive(okButton, buttonEnabled);
 
-	GtkLabel* errorLabel = GTK_LABEL(this->dlg->get("texErrorLabel"));
-	gtk_label_set_text(errorLabel, this->isValidTex ? "" : "The formula is empty when rendered or invalid.");
+	GtkLabel* errorLabel = GTK_LABEL(this->dlg.get("texErrorLabel"));
+	gtk_label_set_text(errorLabel, this->isValidTex ? "" : N_("The formula is empty when rendered or invalid."));
 
 	this->isUpdating = newValue;
-}
-
-void LatexController::setImageInDialog(PopplerDocument* pdf)
-{
-	XOJ_CHECK_TYPE(LatexController);
-	this->dlg->setTempRender(pdf);
-}
-
-void LatexController::setCurrentTex(string currentTex)
-{
-	XOJ_CHECK_TYPE(LatexController);
-	this->currentTex = currentTex;
 }
 
 void LatexController::deleteOldImage()
@@ -348,7 +347,7 @@ void LatexController::deleteOldImage()
 	}
 }
 
-std::unique_ptr<TexImage> LatexController::convertDocumentToImage(PopplerDocument* doc)
+std::unique_ptr<TexImage> LatexController::convertDocumentToImage(PopplerDocument* doc, string formula)
 {
 	XOJ_CHECK_TYPE(LatexController);
 
@@ -367,21 +366,14 @@ std::unique_ptr<TexImage> LatexController::convertDocumentToImage(PopplerDocumen
 	std::unique_ptr<TexImage> img(new TexImage());
 	img->setX(posx);
 	img->setY(posy);
-	img->setText(currentTex);
+	img->setText(formula);
 
 	if (imgheight)
 	{
 		double ratio = pageWidth / pageHeight;
 		if (ratio == 0)
 		{
-			if (imgwidth == 0)
-			{
-				img->setWidth(10);
-			}
-			else
-			{
-				img->setWidth(imgwidth);
-			}
+			img->setWidth(imgwidth == 0 ? 10 : imgwidth);
 		}
 		else
 		{
@@ -398,10 +390,7 @@ std::unique_ptr<TexImage> LatexController::convertDocumentToImage(PopplerDocumen
 	return img;
 }
 
-/**
- * Load PDF as TexImage
- */
-std::unique_ptr<TexImage> LatexController::loadRendered()
+std::unique_ptr<TexImage> LatexController::loadRendered(string renderedTex)
 {
 	XOJ_CHECK_TYPE(LatexController);
 
@@ -410,7 +399,7 @@ std::unique_ptr<TexImage> LatexController::loadRendered()
 		return nullptr;
 	}
 
-	Path pdfPath = texTmp / "tex.pdf";
+	Path pdfPath = texTmpDir / "tex.pdf";
 	GError* err = NULL;
 
 	gchar* fileContents = NULL;
@@ -427,7 +416,7 @@ std::unique_ptr<TexImage> LatexController::loadRendered()
 	if (err != NULL)
 	{
 		string message = FS(_F("Could not load LaTeX PDF file: {1}") % err->message);
-		g_message(message.c_str());
+		g_message("%s", message.c_str());
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), message);
 		g_error_free(err);
 		return NULL;
@@ -439,7 +428,7 @@ std::unique_ptr<TexImage> LatexController::loadRendered()
 		return NULL;
 	}
 
-	std::unique_ptr<TexImage> img = convertDocumentToImage(pdf);
+	std::unique_ptr<TexImage> img = convertDocumentToImage(pdf, renderedTex);
 	g_object_unref(pdf);
 
 	// Do not assign the PDF, theoretical it should work, but it gets a Poppler PDF error
@@ -455,8 +444,8 @@ void LatexController::insertTexImage()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
-	TexImage* img = this->loadRendered().release();
-	g_assert(img != nullptr);
+	g_assert(this->temporaryRender != nullptr);
+	TexImage* img = this->temporaryRender.release();
 
 	this->deleteOldImage();
 
@@ -476,17 +465,17 @@ void LatexController::run()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
-	if (!this->findTexExecutable())
+	auto depStatus = this->findTexDependencies();
+	if (!depStatus.success)
 	{
-		string msg = _("Could not find pdflatex in Path.\nPlease install pdflatex first and make sure it's in the PATH.");
-		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(control->getGtkWindow(), depStatus.errorMsg);
 		return;
 	}
 
 	this->findSelectedTexElement();
-	this->showTexEditDialog();
+	string newTex = this->showTexEditDialog();
 
-	if (this->initialTex != this->currentTex)
+	if (this->initialTex != newTex)
 	{
 		g_assert(this->isValidTex);
 		this->insertTexImage();
