@@ -23,14 +23,14 @@ stages:
         git fetch origin +$(Build.SourceBranch)
 
         echo "List of modified files:"
-        git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD $(System.PullRequest.TargetBranch))
+        git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD $(System.PullRequest.TargetBranch)) | grep ".cpp$\|.hpp$\|.h$
 
         # Actually get the list in a parsable state
         LOMF=$(git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD $(System.PullRequest.TargetBranch)) | grep ".cpp$\|.hpp$\|.h$")
         
         # Checkout the PR again so we can check the modified files for correct format
         git checkout FETCH_HEAD
-        if [ -n "$VAR" ]; then
+        if [ -n "$LOMF" ]; then
             # Apply clang-format to enforce proper format
             clang-format -i -style=file $LOMF
             # All previously badly formatted files should now be modified
