@@ -11,14 +11,57 @@
 #include "util/cpp14memory.h"
 
 SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
- : SidebarPreviewBase(control, gui, toolbar)
+	: SidebarPreviewBase(control, gui, toolbar), contextMenu(gui->get("sidebarPreviewContextMenu"))
 {
 	XOJ_INIT_TYPE(SidebarPreviewPages);
+
+	// Connect the context menu actions
+	const std::map<std::string, SidebarActions> ctxMenuActions = {
+		{"sidebarPreviewDuplicate", SIDEBAR_ACTION_COPY},
+		{"sidebarPreviewDelete", SIDEBAR_ACTION_DELETE},
+		{"sidebarPreviewMoveUp", SIDEBAR_ACTION_MOVE_UP},
+		{"sidebarPreviewMoveDown", SIDEBAR_ACTION_MOVE_DOWN},
+	};
+
+	for (auto& pair : ctxMenuActions)
+	{
+		GtkWidget* entry = gui->get(pair.first);
+		g_assert(entry != nullptr);
+
+		// Unfortunately, we need a fairly complicated mechanism to keep track
+		// of which action we want to execute.
+		typedef SidebarPreviewPages::ContextMenuData Data;
+		auto userdata = std::unique_ptr<Data>(new Data { this->toolbar, pair.second });
+
+		g_message("%p: Callback registered for %p", this, entry);
+		auto callback = G_CALLBACK(
+			+[](GtkMenuItem* item, Data* data)
+			{
+				// TODO: Why is activate called twice?
+				g_message("activate %p", item);
+				data->toolbar->runAction(data->actions);
+			});
+		gulong signalId = g_signal_connect(entry, "activate", callback, userdata.get());
+		g_object_ref(entry);
+		this->contextMenuSignals.push_back(std::make_tuple(entry, signalId, std::move(userdata)));
+	}
 }
 
 SidebarPreviewPages::~SidebarPreviewPages()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
+
+	for (auto& signalTuple : this->contextMenuSignals)
+	{
+		GtkWidget* widget = std::get<0>(signalTuple);
+		guint handlerId = std::get<1>(signalTuple);
+		if (g_signal_handler_is_connected(widget, handlerId))
+		{
+			g_signal_handler_disconnect(widget, handlerId);
+		}
+		g_object_unref(widget);
+	}
+
 	XOJ_RELEASE_TYPE(SidebarPreviewPages);
 }
 
@@ -74,7 +117,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 		control->getScrollHandler()->scrollToPage(page - 1);
 		break;
 	}
-	case SIDEBAR_ACTION_MODE_DOWN:
+	case SIDEBAR_ACTION_MOVE_DOWN:
 	{
 		Document* doc = control->getDocument();
 		PageRef swappedPage = control->getCurrentPage();
@@ -274,7 +317,7 @@ void SidebarPreviewPages::pageSelected(size_t page)
 
 		if (page != this->previews.size() - 1 && this->previews.size() != 0)
 		{
-			actions |= SIDEBAR_ACTION_MODE_DOWN;
+			actions |= SIDEBAR_ACTION_MOVE_DOWN;
 		}
 
 		if (this->previews.size() != 0)
@@ -290,5 +333,12 @@ void SidebarPreviewPages::pageSelected(size_t page)
 		this->toolbar->setHidden(false);
 		this->toolbar->setButtonEnabled((SidebarActions)actions);
 	}
+}
+
+void SidebarPreviewPages::openPreviewContextMenu()
+{
+	XOJ_CHECK_TYPE(SidebarPreviewPages);
+
+	gtk_menu_popup_at_pointer(GTK_MENU(this->contextMenu), nullptr);
 }
 

@@ -46,7 +46,7 @@ void SidebarPreviewLayers::actionPerformed(SidebarActions action)
 		control->getLayerController()->moveCurrentLayer(true);
 		break;
 	}
-	case SIDEBAR_ACTION_MODE_DOWN:
+	case SIDEBAR_ACTION_MOVE_DOWN:
 	{
 		control->getLayerController()->moveCurrentLayer(false);
 		break;
@@ -214,7 +214,7 @@ void SidebarPreviewLayers::updateSelectedLayer()
 	// Background and first layer cannot be moved down
 	if (this->selectedEntry < (this->previews.size() - 2))
 	{
-		actions |= SIDEBAR_ACTION_MODE_DOWN;
+		actions |= SIDEBAR_ACTION_MOVE_DOWN;
 	}
 
 	// Background cannot be copied
