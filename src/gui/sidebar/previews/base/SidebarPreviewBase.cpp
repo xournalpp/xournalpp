@@ -7,7 +7,7 @@
 
 
 SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
- : AbstractSidebarPage(control, toolbar)
+	: AbstractSidebarPage(control, toolbar), gui(gui)
 {
 	XOJ_INIT_TYPE(SidebarPreviewBase);
 
@@ -106,6 +106,15 @@ PdfCache* SidebarPreviewBase::getCache()
 	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
 	return this->cache;
+}
+
+
+void SidebarPreviewBase::openPreviewContextMenu(SidebarPreviewBaseEntry* entry)
+{
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
+
+	GtkMenu* menu = GTK_MENU(this->gui->get("sidebarPreviewContextMenu"));
+	gtk_menu_popup_at_pointer(menu, nullptr);
 }
 
 void SidebarPreviewBase::layout()

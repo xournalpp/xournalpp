@@ -62,6 +62,11 @@ public:
 	 */
 	PdfCache* getCache();
 
+	/**
+	 * Opens the page preview context menu for the given page.
+	 */
+	void openPreviewContextMenu(SidebarPreviewBaseEntry* entry);
+
 public:
 	// DocumentListener interface (only the part handled by SidebarPreviewBase)
 	virtual void documentChanged(DocumentChangeType type);
@@ -105,6 +110,8 @@ private:
 
 	// Members also used by subclasses
 protected:
+
+	GladeGui* const gui = nullptr;
 
 	/**
 	 * The currently selected entry in the sidebar, starting from 0

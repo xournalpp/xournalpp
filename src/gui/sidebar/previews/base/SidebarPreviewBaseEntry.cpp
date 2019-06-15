@@ -32,6 +32,22 @@ SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, Pa
 			self->mouseButtonPressCallback();
 			return true;
 		}), this);
+
+	// Note: button-press-event occurs after clicked.
+	g_signal_connect(this->widget, "button-press-event", G_CALLBACK(
+		+[](GtkWidget* widget, GdkEvent* event, SidebarPreviewBaseEntry* self)
+		{
+			// Open context menu on right mouse click
+			if (event->type == GDK_BUTTON_PRESS)
+			{
+				auto mouseEvent = reinterpret_cast<GdkEventButton*>(event);
+				if (mouseEvent->button == 3)
+				{
+					self->sidebar->openPreviewContextMenu(self);
+				}
+			}
+			return true;
+		}), this);
 }
 
 SidebarPreviewBaseEntry::~SidebarPreviewBaseEntry()
