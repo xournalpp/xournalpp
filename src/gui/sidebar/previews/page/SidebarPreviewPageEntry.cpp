@@ -18,10 +18,10 @@ SidebarPreviewPageEntry::SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, P
 			 if (mouseEvent->button == 3)
 			 {
 				 self->sidebar->openPreviewContextMenu();
-				 return false;
+				 return true;
 			 }
 		 }
-		 return true;
+		 return false;
 		}), this);
 }
 

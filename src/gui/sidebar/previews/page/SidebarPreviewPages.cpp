@@ -33,11 +33,9 @@ SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, Sideba
 		typedef SidebarPreviewPages::ContextMenuData Data;
 		auto userdata = std::unique_ptr<Data>(new Data { this->toolbar, pair.second });
 
-		g_message("%p: Callback registered for %p", this, entry);
 		auto callback = G_CALLBACK(
 			+[](GtkMenuItem* item, Data* data)
 			{
-				// TODO: Why is activate called twice?
 				g_message("activate %p", item);
 				data->toolbar->runAction(data->actions);
 			});
@@ -339,6 +337,6 @@ void SidebarPreviewPages::openPreviewContextMenu()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 
-	gtk_menu_popup_at_pointer(GTK_MENU(this->contextMenu), nullptr);
+	gtk_menu_popup(GTK_MENU(this->contextMenu), nullptr, nullptr, nullptr, nullptr, 3, gtk_get_current_event_time());
 }
 
