@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include <control/settings/Settings.h>
+#include "control/settings/Settings.h"
 
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
@@ -28,7 +28,7 @@ class InputDevice
 public:
 	explicit InputDevice(GdkDevice* device);
 	explicit InputDevice(string name, GdkInputSource source);
-	virtual ~InputDevice();
+	~InputDevice() = default;
 
 public:
 	string getType() const;
@@ -43,22 +43,8 @@ private:
 	GdkInputSource source;
 };
 
-
-class DeviceListHelper
+namespace DeviceListHelper
 {
-public:
-	explicit DeviceListHelper(Settings* settings, bool ignoreTouchDevices = false);
-	virtual ~DeviceListHelper();
+	vector<InputDevice> getDeviceList(Settings* settings, bool ignoreTouchDevices = false);
+}
 
-public:
-	vector<InputDevice>& getDeviceList();
-	void storeNewUnlistedDevice(GdkDevice* device);
-
-private:
-	void addDevicesToList(GList* devList);
-
-private:
-	bool ignoreTouchDevices;
-
-	vector<InputDevice> deviceList;
-};

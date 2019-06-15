@@ -42,12 +42,10 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
 	this->toolbarSelectMenu = new MainWindowToolbarMenu(this);
 
-	
-	
 	GtkOverlay *overlay = GTK_OVERLAY (get("mainOverlay"));
-	this->floatingToolbox = new FloatingToolbox (this, overlay);  
+	this->floatingToolbox = new FloatingToolbox (this, overlay);
 
-		
+
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++)
 	{
 		GtkWidget* w = get(TOOLBAR_DEFINITIONS[i].guiName);
@@ -56,7 +54,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	}
 
 	initXournalWidget();
-	
+
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
 
 	// Window handler
@@ -64,7 +62,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	g_signal_connect(this->window, "window_state_event", G_CALLBACK(windowStateEventCallback), this);
 
 	g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
-		
+
 
 	// "watch over" all events
 	g_signal_connect(this->window, "key-press-event", G_CALLBACK(onKeyPressCallback), this);
@@ -173,7 +171,7 @@ MainWindow::~MainWindow()
 
 	delete this->floatingToolbox;
 	this->floatingToolbox = NULL;
-	
+
 	delete this->xournal;
 	this->xournal = NULL;
 
@@ -281,9 +279,7 @@ void MainWindow::setTouchscreenScrollingForDeviceMapping()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	auto deviceListHelper = new DeviceListHelper(this->getControl()->getSettings(), false);
-	vector<InputDevice> deviceList = deviceListHelper->getDeviceList();
-	for(const InputDevice& inputDevice : deviceList)
+	for (InputDevice const& inputDevice : DeviceListHelper::getDeviceList())
 	{
 		InputDeviceClass deviceClass = InputEvents::translateDeviceType(inputDevice.getName(), inputDevice.getSource(), this->getControl()->getSettings());
 		if (inputDevice.getSource() == GDK_SOURCE_TOUCHSCREEN && deviceClass != INPUT_DEVICE_TOUCHSCREEN)
@@ -717,8 +713,8 @@ void MainWindow::loadToolbar(ToolbarData* d)
 	{
 		this->toolbar->load(d, this->toolbarWidgets[i], TOOLBAR_DEFINITIONS[i].propName, TOOLBAR_DEFINITIONS[i].horizontal);
 	}
-	
-	this->floatingToolbox->flagRecalculateSizeRequired();	
+
+	this->floatingToolbox->flagRecalculateSizeRequired();
 }
 
 ToolbarData* MainWindow::getSelectedToolbar()
