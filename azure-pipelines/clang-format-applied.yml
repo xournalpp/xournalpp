@@ -1,7 +1,4 @@
-trigger:
-  branches:
-    exclude:
-    - '*'
+trigger: none
 pr:
   branches:
     include:
