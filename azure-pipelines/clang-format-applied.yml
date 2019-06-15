@@ -1,1 +1,44 @@
+trigger:
+  branches:
+    include:
+    - '*'
+pr:
+  branches:
+    include:
+    - '*'
 
+
+stages:
+- stage: 'Build_Test_Stage'
+  jobs:
+  - job: 'Build_Test'
+    pool:
+      vmImage: 'ubuntu-16.04'
+    displayName: 'Test for correct Clang formatting'
+    steps:
+    - bash: |
+        sudo apt-get update
+        sudo apt-get install -y clang-format
+      displayName: 'Install clang-format'
+    - bash: |
+        git checkout $(System.PullRequest.TargetBranch)
+        git fetch origin +$(Build.SourceBranch)
+        git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH $(System.PullRequest.TargetBranch))
+      displayName: 'Get list of modified files'
+#    - bash: |
+#        cmake .. -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON
+#        make -j `grep processor /proc/cpuinfo | tail -c 2`
+#      workingDirectory: ./build
+#      displayName: 'Build Xournal++'
+#    - bash: |
+#        if [ -z "$(git status --porcelain)" ]; then 
+#            # Working directory clean
+#            echo "The code was properly formated using clang-format before being submitted."
+#            exit 0
+#        else 
+#            # Uncommitted changes
+#            echo "The code was not formated using clang-format before being submitted."
+#            exit 1
+#        fi
+#      workingDirectory: ./build
+#      displayName: 'Run tests'
