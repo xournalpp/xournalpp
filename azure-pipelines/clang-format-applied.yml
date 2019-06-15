@@ -21,24 +21,29 @@ stages:
         sudo apt-get install -y clang-format
       displayName: 'Install clang-format'
     - bash: |
-        git checkout $(System.PullRequest.TargetBranch)
         git fetch origin +$(Build.SourceBranch)
+
+        echo "List of modified files:"
         git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD $(System.PullRequest.TargetBranch))
-      displayName: 'Get list of modified files'
-#    - bash: |
-#        cmake .. -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON
-#        make -j `grep processor /proc/cpuinfo | tail -c 2`
-#      workingDirectory: ./build
-#      displayName: 'Build Xournal++'
-#    - bash: |
-#        if [ -z "$(git status --porcelain)" ]; then 
-#            # Working directory clean
-#            echo "The code was properly formated using clang-format before being submitted."
-#            exit 0
-#        else 
-#            # Uncommitted changes
-#            echo "The code was not formated using clang-format before being submitted."
-#            exit 1
-#        fi
-#      workingDirectory: ./build
-#      displayName: 'Run tests'
+
+        # Actually get the list in a parsable state
+        LOMF=$(git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD $(System.PullRequest.TargetBranch)) | grep ".cpp$\|.hpp$\|.h$")
+        if [ -n "$VAR" ]; then
+            # Apply clang-format to enforce proper format
+            clang-format -i -style=file $LOMF
+            # All previously bady formatted files should now have been modified
+        fi
+      displayName: 'Apply clang-format on modified files'
+    - bash: |
+        # Check for modified files
+        if [ -z "$(git status --porcelain)" ]; then 
+            # Working directory clean
+            echo "The code was properly formated using clang-format before being submitted."
+            exit 0
+        else 
+            # Uncommitted changes
+            echo "The code was not formated using clang-format before being submitted."
+            exit 1
+        fi
+      workingDirectory: ./build
+      displayName: 'Check for badly formatted modified files'
