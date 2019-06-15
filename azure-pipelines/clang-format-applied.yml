@@ -1,6 +1,6 @@
 trigger:
   branches:
-    include:
+    exclude:
     - '*'
 pr:
   branches:
