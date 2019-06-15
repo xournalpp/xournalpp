@@ -23,7 +23,7 @@ stages:
     - bash: |
         git checkout $(System.PullRequest.TargetBranch)
         git fetch origin +$(Build.SourceBranch)
-        git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH $(System.PullRequest.TargetBranch))
+        git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD $(System.PullRequest.TargetBranch))
       displayName: 'Get list of modified files'
 #    - bash: |
 #        cmake .. -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON
