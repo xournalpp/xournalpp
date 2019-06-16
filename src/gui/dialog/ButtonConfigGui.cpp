@@ -9,23 +9,22 @@
 #include <i18n.h>
 #include <Util.h>
 
-#define    ADD_TYPE_CB(icon, name, action) \
-    addToolToList(typeModel, icon, name, action)
+#define ADD_TYPE_CB(icon, name, action) addToolToList(typeModel, icon, name, action)
 
 void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, ToolType action)
 {
 	GtkTreeIter iter;
 
 	gtk_list_store_append(typeModel, &iter);
-	GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon, 24, (GtkIconLookupFlags) 0,
-	                                             nullptr);
+	GdkPixbuf* pixbuf =
+	        gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon, 24, (GtkIconLookupFlags) 0, nullptr);
 	gtk_list_store_set(typeModel, &iter, 0, pixbuf, -1);
 	gtk_list_store_set(typeModel, &iter, 1, name, 2, action, -1);
 }
 
 ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, int button,
-                                 bool withDevice)
-		: GladeGui(gladeSearchPath, "settingsButtonConfig.glade", "offscreenwindow")
+                                 bool withDevice):
+        GladeGui(gladeSearchPath, "settingsButtonConfig.glade", "offscreenwindow")
 {
 	XOJ_INIT_TYPE(ButtonConfigGui);
 
@@ -46,8 +45,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), _("No device"));
 
 		this->deviceList = DeviceListHelper::getDeviceList(this->settings, true);
-		for (InputDevice const& dev : this->deviceList)
-		{
+		for (InputDevice const& dev: this->deviceList) {
 			string txt = dev.getName() + " (" + dev.getType() + ")";
 			gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), txt.c_str());
 		}
@@ -59,7 +57,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 		gtk_widget_hide(this->cbDisableDrawing);
 	}
 
-	GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT); //NOLINT
+	GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);  // NOLINT
 
 	ADD_TYPE_CB("transparent", _("Tool - don't change"), TOOL_NONE);
 	ADD_TYPE_CB("tool_pencil", _("Pen"), TOOL_PEN);
@@ -160,20 +158,13 @@ void ButtonConfigGui::loadSettings()
 		g_value_unset(&value);
 	} while (gtk_tree_model_iter_next(model, &iter));
 
-	if (cfg->size == TOOL_SIZE_FINE)
-	{
+	if (cfg->size == TOOL_SIZE_FINE) {
 		gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 1);
-	}
-	else if (cfg->size == TOOL_SIZE_MEDIUM)
-	{
+	} else if (cfg->size == TOOL_SIZE_MEDIUM) {
 		gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 2);
-	}
-	else if (cfg->size == TOOL_SIZE_THICK)
-	{
+	} else if (cfg->size == TOOL_SIZE_THICK) {
 		gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 3);
-	}
-	else
-	{
+	} else {
 		gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 0);
 	}
 
@@ -206,10 +197,8 @@ void ButtonConfigGui::loadSettings()
 		gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), 0);
 
 		size_t count = 0;
-		for (InputDevice const& dev : this->deviceList)
-		{
-			if (cfg->device == dev.getName())
-			{
+		for (InputDevice const& dev: this->deviceList) {
+			if (cfg->device == dev.getName()) {
 				gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), count + 1);
 				break;
 			}
@@ -246,17 +235,11 @@ void ButtonConfigGui::saveSettings()
 	if (thickness == 1)
 	{
 		cfg->size = TOOL_SIZE_FINE;
-	}
-	else if (thickness == 2)
-	{
+	} else if (thickness == 2) {
 		cfg->size = TOOL_SIZE_MEDIUM;
-	}
-	else if (thickness == 3)
-	{
+	} else if (thickness == 3) {
 		cfg->size = TOOL_SIZE_THICK;
-	}
-	else
-	{
+	} else {
 		cfg->size = TOOL_SIZE_NONE;
 	}
 
@@ -313,8 +296,7 @@ void ButtonConfigGui::enableDisableTools()
 	gtk_tree_model_get_value(model, &iter, 2, &value);
 	auto action = (ToolType) g_value_get_int(&value);
 
-	switch (action)
-	{
+	switch (action) {
 	case TOOL_PEN:
 	case TOOL_HILIGHTER:
 		gtk_widget_set_visible(cbThickness, true);
@@ -339,8 +321,8 @@ void ButtonConfigGui::enableDisableTools()
 
 	case TOOL_NONE:
 	case TOOL_IMAGE:
-		//case TOOL_DRAW_RECT:
-		//case TOOL_DRAW_CIRCLE:
+		// case TOOL_DRAW_RECT:
+		// case TOOL_DRAW_CIRCLE:
 	case TOOL_SELECT_RECT:
 	case TOOL_SELECT_REGION:
 	case TOOL_VERTICAL_SPACE:

@@ -45,6 +45,5 @@ private:
 
 namespace DeviceListHelper
 {
-	vector<InputDevice> getDeviceList(Settings* settings, bool ignoreTouchDevices = false);
+vector<InputDevice> getDeviceList(Settings* settings, bool ignoreTouchDevices = false);
 }
-

@@ -459,13 +459,11 @@ void XournalppCursor::setStockCursor(GdkCursorType type)
 	if (!window) return;
 	
 	GdkCursor *currentcursor =gdk_window_get_cursor(window);
-	
-	if (currentcursor != nullptr && type == gdk_cursor_get_cursor_type (currentcursor))
-	{
+
+	if (currentcursor != nullptr && type == gdk_cursor_get_cursor_type(currentcursor)) {
 		return;
 	}
-	
-	
+
 	GdkCursor* cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), type);
 	gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
 	gdk_window_set_cursor(window, cursor);

@@ -11,11 +11,9 @@
 #include <StringUtils.h>
 #include <i18n.h>
 
-SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control)
-		: GladeGui(gladeSearchPath, "settings.glade", "settingsDialog"),
-		  settings(settings),
-		  control(control),
-		  callib(zoomcallib_new())
+SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control):
+        GladeGui(gladeSearchPath, "settings.glade", "settingsDialog"), settings(settings), control(control),
+        callib(zoomcallib_new())
 {
 	XOJ_INIT_TYPE(SettingsDialog);
 
@@ -25,34 +23,37 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 	GtkWidget* slider = get("zoomCallibSlider");
 	g_return_if_fail(slider != nullptr);
 
-	g_signal_connect(slider, "change-value", G_CALLBACK(
-			+[](GtkRange* range, GtkScrollType scroll, gdouble value, SettingsDialog* self)
-			{
-				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-				self->setDpi((int) value);
-			}), this);
+	g_signal_connect(slider,
+	                 "change-value",
+	                 G_CALLBACK(+[](GtkRange* range, GtkScrollType scroll, gdouble value, SettingsDialog* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
+		                 self->setDpi((int) value);
+	                 }),
+	                 this);
 
-	g_signal_connect(get("cbAutosave"), "toggled", G_CALLBACK(
-			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
-			{
-				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-				self->enableWithCheckbox("cbAutosave", "boxAutosave");
-			}), this);
+	g_signal_connect(get("cbAutosave"),
+	                 "toggled",
+	                 G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
+		                 self->enableWithCheckbox("cbAutosave", "boxAutosave");
+	                 }),
+	                 this);
 
+	g_signal_connect(get("btTestEnable"),
+	                 "clicked",
+	                 G_CALLBACK(+[](GtkButton* bt, SettingsDialog* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
+		                 system(gtk_entry_get_text(GTK_ENTRY(self->get("txtEnableTouchCommand"))));
+	                 }),
+	                 this);
 
-	g_signal_connect(get("btTestEnable"), "clicked", G_CALLBACK(
-			+[](GtkButton* bt, SettingsDialog* self)
-			{
-				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-				system(gtk_entry_get_text(GTK_ENTRY(self->get("txtEnableTouchCommand"))));
-			}), this);
-
-	g_signal_connect(get("btTestDisable"), "clicked", G_CALLBACK(
-			+[](GtkButton* bt, SettingsDialog* self)
-			{
-				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-				system(gtk_entry_get_text(GTK_ENTRY(self->get("txtDisableTouchCommand"))));
-			}), this);
+	g_signal_connect(get("btTestDisable"),
+	                 "clicked",
+	                 G_CALLBACK(+[](GtkButton* bt, SettingsDialog* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
+		                 system(gtk_entry_get_text(GTK_ENTRY(self->get("txtDisableTouchCommand"))));
+	                 }),
+	                 this);
 
 	g_signal_connect(get("cbAddVerticalSpace"), "toggled", G_CALLBACK(
 			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
@@ -75,16 +76,17 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 				self->enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
 			}), this);
 
-	g_signal_connect(get("cbStrokeFilterEnabled"), "toggled", G_CALLBACK(
-			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
-			{
-				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
-				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
-				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
-				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
-				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
-			}), this);
+	g_signal_connect(get("cbStrokeFilterEnabled"),
+	                 "toggled",
+	                 G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
+		                 self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
+		                 self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
+		                 self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
+		                 self->enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
+		                 self->enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
+	                 }),
+	                 this);
 
 	g_signal_connect(get("cbDisableTouchOnPenNear"), "toggled", G_CALLBACK(
 			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
@@ -107,13 +109,12 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 
 	vector<InputDevice> deviceList = DeviceListHelper::getDeviceList(this->settings);
 	GtkWidget* container = get("hboxInputDeviceClasses");
-	for (const InputDevice& inputDevice : deviceList)
-	{
+	for (const InputDevice& inputDevice: deviceList) {
 		// Only add real devices (core pointers have vendor and product id NULL)
-		this->deviceClassConfigs.push_back(new DeviceClassConfigGui(getGladeSearchPath(), container, settings, inputDevice));
+		this->deviceClassConfigs.push_back(
+		        new DeviceClassConfigGui(getGladeSearchPath(), container, settings, inputDevice));
 	}
-	if (deviceList.empty())
-	{
+	if (deviceList.empty()) {
 		GtkWidget* label = gtk_label_new("");
 		gtk_label_set_markup(GTK_LABEL(label),
 		                     _("<b>No devices were found. This seems wrong - maybe file a bug report?</b>"));
@@ -281,8 +282,7 @@ void SettingsDialog::load()
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spZoomStep), settings->getZoomStep());
 
 	GtkWidget* spZoomStepScroll = get("spZoomStepScroll");
-	gtk_spin_button_set_value(
-			GTK_SPIN_BUTTON(spZoomStepScroll), settings->getZoomStepScroll());
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spZoomStepScroll), settings->getZoomStepScroll());
 
 	GtkWidget* spAddHorizontalSpace = get("spAddHorizontalSpace");
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAddHorizontalSpace), settings->getAddHorizontalSpaceAmount());
@@ -328,8 +328,7 @@ void SettingsDialog::load()
 
 	string hidden = settings->getFullscreenHideElements();
 
-	for (const string& element : StringUtils::split(hidden, ','))
-	{
+	for (const string& element: StringUtils::split(hidden, ',')) {
 		if (element == "mainMenubar")
 		{
 			hideFullscreenMenubar = true;
@@ -341,14 +340,10 @@ void SettingsDialog::load()
 	}
 
 	hidden = settings->getPresentationHideElements();
-	for (const string& element : StringUtils::split(hidden, ','))
-	{
-		if (element == "mainMenubar")
-		{
+	for (const string& element: StringUtils::split(hidden, ',')) {
+		if (element == "mainMenubar") {
 			hidePresentationMenubar = true;
-		}
-		else if (element == "sidebarContents")
-		{
+		} else if (element == "sidebarContents") {
 			hidePresentationSidebar = true;
 		}
 	}
@@ -370,7 +365,6 @@ void SettingsDialog::load()
 	enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
 	enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
 	customHandRecognitionToggled();
-
 
 	SElement& touch = settings->getCustomElement("touch");
 	bool disablePen = false;
@@ -406,15 +400,12 @@ void SettingsDialog::load()
 	this->audioInputDevices = this->control->getAudioController()->getInputDevices();
 	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioInputDevice")), "", "System default");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioInputDevice")), 0);
-	for (auto& audioInputDevice : this->audioInputDevices)
-	{
-		gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioInputDevice")), "",
-		                          audioInputDevice.getDeviceName().c_str());
+	for (auto& audioInputDevice: this->audioInputDevices) {
+		gtk_combo_box_text_append(
+		        GTK_COMBO_BOX_TEXT(get("cbAudioInputDevice")), "", audioInputDevice.getDeviceName().c_str());
 	}
-	for (size_t i = 0; i < this->audioInputDevices.size(); i++)
-	{
-		if (this->audioInputDevices[i].getSelected())
-		{
+	for (size_t i = 0; i < this->audioInputDevices.size(); i++) {
+		if (this->audioInputDevices[i].getSelected()) {
 			gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioInputDevice")), i + 1);
 		}
 	}
@@ -422,31 +413,21 @@ void SettingsDialog::load()
 	this->audioOutputDevices = this->control->getAudioController()->getOutputDevices();
 	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "", "System default");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")), 0);
-	for (auto& audioOutputDevice : this->audioOutputDevices)
-	{
-		gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "",
-		                          audioOutputDevice.getDeviceName().c_str());
+	for (auto& audioOutputDevice: this->audioOutputDevices) {
+		gtk_combo_box_text_append(
+		        GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "", audioOutputDevice.getDeviceName().c_str());
 	}
-	for (size_t i = 0; i < this->audioOutputDevices.size(); i++)
-	{
-		if (this->audioOutputDevices[i].getSelected())
-		{
+	for (size_t i = 0; i < this->audioOutputDevices.size(); i++) {
+		if (this->audioOutputDevices[i].getSelected()) {
 			gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")), i + 1);
 		}
 	}
 
-	switch ((int) settings->getAudioSampleRate())
-	{
-	case 96100:
-		gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 1);
-		break;
-	case 192000:
-		gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 2);
-		break;
+	switch ((int) settings->getAudioSampleRate()) {
+	case 96100: gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 1); break;
+	case 192000: gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 2); break;
 	case 44100:
-	default:
-		gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 0);
-		break;
+	default: gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 0); break;
 	}
 
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spAudioGain")), settings->getAudioGain());
@@ -458,27 +439,17 @@ string SettingsDialog::updateHideString(const string& hidden, bool hideMenubar, 
 
 	string newHidden;
 
-	for (const string& element : StringUtils::split(hidden, ','))
-	{
-		if (element == "mainMenubar")
-		{
-			if (hideMenubar)
-			{
+	for (const string& element: StringUtils::split(hidden, ',')) {
+		if (element == "mainMenubar") {
+			if (hideMenubar) {
 				hideMenubar = false;
-			}
-			else
-			{
+			} else {
 				continue;
 			}
-		}
-		else if (element == "sidebarContents")
-		{
-			if (hideSidebar)
-			{
+		} else if (element == "sidebarContents") {
+			if (hideSidebar) {
 				hideSidebar = false;
-			}
-			else
-			{
+			} else {
 				continue;
 			}
 		}
@@ -566,16 +537,14 @@ void SettingsDialog::save()
 
 	bool hidePresentationMenubar = getCheckbox("cbHidePresentationMenubar");
 	bool hidePresentationSidebar = getCheckbox("cbHidePresentationSidebar");
-	settings->setPresentationHideElements(
-			updateHideString(settings->getPresentationHideElements(), hidePresentationMenubar,
-			                 hidePresentationSidebar));
+	settings->setPresentationHideElements(updateHideString(
+	        settings->getPresentationHideElements(), hidePresentationMenubar, hidePresentationSidebar));
 
 	settings->setMenubarVisible(getCheckbox("cbHideMenubarStartup"));
 
 	settings->setDefaultSaveName(gtk_entry_get_text(GTK_ENTRY(get("txtDefaultSaveName"))));
 	char* uri = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(get("fcAudioPath")));
-	if (uri != nullptr)
-	{
+	if (uri != nullptr) {
 		settings->setAudioFolder(uri);
 		g_free(uri);
 	}
@@ -589,15 +558,12 @@ void SettingsDialog::save()
 	settings->setPairsOffset(numPairsOffset);
 
 	GtkWidget* spZoomStep = get("spZoomStep");
-	double zoomStep = gtk_spin_button_get_value(
-			GTK_SPIN_BUTTON(spZoomStep));
+	double zoomStep = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spZoomStep));
 	settings->setZoomStep(zoomStep);
 
 	GtkWidget* spZoomStepScroll = get("spZoomStepScroll");
-	double zoomStepScroll = gtk_spin_button_get_value(
-			GTK_SPIN_BUTTON(spZoomStepScroll));
+	double zoomStepScroll = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spZoomStepScroll));
 	settings->setZoomStepScroll(zoomStepScroll);
-
 
 	GtkWidget* spAddHorizontalSpace = get("spAddHorizontalSpace");
 	int addHorizontalSpaceAmount = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAddHorizontalSpace));
@@ -619,12 +585,9 @@ void SettingsDialog::save()
 	int strokeSuccessiveTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime));
 	settings->setStrokeFilter(strokeIgnoreTime, strokeIgnoreLength, strokeSuccessiveTime);
 
-	
-
 	settings->setDisplayDpi(dpi);
 
-	for (ButtonConfigGui* bcg : this->buttonConfigs)
-	{
+	for (ButtonConfigGui* bcg: this->buttonConfigs) {
 		bcg->saveSettings();
 	}
 
@@ -632,14 +595,9 @@ void SettingsDialog::save()
 	touch.setBool("disableTouch", getCheckbox("cbDisableTouchOnPenNear"));
 	int touchMethod = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbTouchDisableMethod")));
 
-	switch (touchMethod)
-	{
-	case 1:
-		touch.setString("method", "X11");
-		break;
-	case 2:
-		touch.setString("method", "custom");
-		break;
+	switch (touchMethod) {
+	case 1: touch.setString("method", "X11"); break;
+	case 2: touch.setString("method", "custom"); break;
 	case 0:
 	default:
 		touch.setString("method", "auto");
@@ -650,33 +608,25 @@ void SettingsDialog::save()
 	touch.setInt("timeout", (int) (gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spTouchDisableTimeout"))) * 1000));
 
 	settings->setSnapRotationTolerance(
-			(double) gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapRotationTolerance"))));
+	        (double) gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapRotationTolerance"))));
 	settings->setSnapGridTolerance((double) gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridTolerance"))));
 
 	int selectedInputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioInputDevice"))) - 1;
-	if (selectedInputDeviceIndex >= 0 && selectedInputDeviceIndex < (int) this->audioInputDevices.size())
-	{
+	if (selectedInputDeviceIndex >= 0 && selectedInputDeviceIndex < (int) this->audioInputDevices.size()) {
 		settings->setAudioInputDevice((int) this->audioInputDevices[selectedInputDeviceIndex].getIndex());
 	}
 
 	int selectedOutputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioOutputDevice"))) - 1;
-	if (selectedOutputDeviceIndex >= 0 && selectedOutputDeviceIndex < (int) this->audioOutputDevices.size())
-	{
+	if (selectedOutputDeviceIndex >= 0 && selectedOutputDeviceIndex < (int) this->audioOutputDevices.size()) {
 		settings->setAudioOutputDevice((int) this->audioOutputDevices[selectedOutputDeviceIndex].getIndex());
 	}
 
 	switch (gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioSampleRate"))))
 	{
-	case 1:
-		settings->setAudioSampleRate(96100.0);
-		break;
-	case 2:
-		settings->setAudioSampleRate(192000.0);
-		break;
+	case 1: settings->setAudioSampleRate(96100.0); break;
+	case 2: settings->setAudioSampleRate(192000.0); break;
 	case 0:
-	default:
-		settings->setAudioSampleRate(44100.0);
-		break;
+	default: settings->setAudioSampleRate(44100.0); break;
 	}
 
 	settings->setAudioGain((double) gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spAudioGain"))));
