@@ -31,10 +31,11 @@ pacman -S git
 
 ## Install Build tools
 ```bash
-pacman -S mingw-w64-x86_64-cmake \
-pacman -S make \
-pacman -S mingw-w64-x86_64-toolchain \
-pacman -S --needed base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
+pacman -S mingw-w64-x86_64-cmake; \
+pacman -S make; \
+pacman -S mingw-w64-x86_64-toolchain; \
+pacman -S --needed base-devel mingw-w64-x86_64-toolchain \
+mingw-w64-x86_64-cmake
 ```
 (this is a duplicate of the lines above, probably only this line is needed.
 Can anybody confirm this?)
@@ -47,13 +48,20 @@ pacman -S mingw-w64-x86_64-gcc
 ## Install dependencies
 
 ```bash
-pacman -S mingw-w64-x86_64-poppler \
-pacman -S mingw-w64-x86_64-gtk3 \
-pacman -S mingw-w64-x86_64-libsndfile \
+pacman -S mingw-w64-x86_64-poppler; \
+pacman -S mingw-w64-x86_64-gtk3; \
+pacman -S mingw-w64-x86_64-libsndfile; \
 pacman -S mingw-w64-x86_64-libzip
 ```
 
-### PortAudio
+## Get sources
+
+```bash
+git clone https://github.com/xournalpp/xournalpp.git
+cd xournalpp/
+```
+
+## sndfile / PortAudio
 Build/Install portaudio with
 ```bash
 windows-setup/build-portaudio.sh
@@ -65,16 +73,10 @@ Build/Install lua with
 windows-setup/build-lua.sh
 ```
 
-## Get sources and build
-
+## Build
 ```bash
-git clone https://github.com/xournalpp/xournalpp.git
-cd xournalpp/
 mkdir build
 cd build/
-```
-
-```bash
 cmake ..
 make
 ```
