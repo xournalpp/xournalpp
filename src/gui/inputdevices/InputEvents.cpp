@@ -81,11 +81,10 @@ InputDeviceClass InputEvents::translateDeviceType(const string& name, GdkInputSo
 		case 0:
 		{
 			// Keyboards are not matched in their own class - do this here manually
-			if (source == GDK_SOURCE_KEYBOARD)
-			{
-				return INPUT_DEVICE_KEYBOARD;
-			}
-			return INPUT_DEVICE_IGNORE;
+		    if (source == GDK_SOURCE_KEYBOARD) {
+			    return INPUT_DEVICE_KEYBOARD;
+		    }
+		    return INPUT_DEVICE_IGNORE;
 		}
 		case 1:
 			return INPUT_DEVICE_MOUSE;

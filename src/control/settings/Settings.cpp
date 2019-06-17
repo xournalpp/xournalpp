@@ -3,9 +3,9 @@
 #include "ButtonConfig.h"
 #include "model/FormatDefinitions.h"
 
+#include <Util.h>
 #include <config.h>
 #include <i18n.h>
-#include <Util.h>
 #include <util/DeviceListHelper.h>
 
 #define DEFAULT_FONT "Sans"
@@ -627,7 +627,8 @@ void Settings::loadDeviceClasses()
 		int deviceSource;
 		deviceNode.getInt("deviceClass", deviceClass);
 		deviceNode.getInt("deviceSource", deviceSource);
-		inputDeviceClasses.insert(std::pair<string, std::pair<int, GdkInputSource>>(device.first, std::pair<int, GdkInputSource>(deviceClass, (GdkInputSource) deviceSource)));
+		inputDeviceClasses.insert(std::pair<string, std::pair<int, GdkInputSource>>(
+		        device.first, std::pair<int, GdkInputSource>(deviceClass, (GdkInputSource) deviceSource)));
 	}
 }
 
@@ -811,8 +812,7 @@ void Settings::saveDeviceClasses()
 
 	SElement& s = getCustomElement("deviceClasses");
 
-	for (const std::map<string, std::pair<int, GdkInputSource>>::value_type& device : inputDeviceClasses)
-	{
+	for (const std::map<string, std::pair<int, GdkInputSource>>::value_type& device: inputDeviceClasses) {
 		SElement& e = s.child(device.first);
 		e.setInt("deviceClass", device.second.first);
 		e.setInt("deviceSource", device.second.second);
@@ -2512,15 +2512,15 @@ void Settings::setDeviceClassForDevice(const string& deviceName, GdkInputSource 
 	}
 	else
 	{
-		inputDeviceClasses.insert(std::pair<string, std::pair<int, GdkInputSource>>(deviceName, std::pair<int, GdkInputSource>(deviceClass, deviceSource)));
+		inputDeviceClasses.insert(std::pair<string, std::pair<int, GdkInputSource>>(
+		        deviceName, std::pair<int, GdkInputSource>(deviceClass, deviceSource)));
 	}
 }
 
 std::vector<InputDevice> Settings::getKnownInputDevices()
 {
 	std::vector<InputDevice> inputDevices;
-	for (std::pair<string, std::pair<int, GdkInputSource>> device : inputDeviceClasses)
-	{
+	for (std::pair<string, std::pair<int, GdkInputSource>> device: inputDeviceClasses) {
 		inputDevices.emplace_back(device.first, device.second.second);
 	}
 	return inputDevices;
@@ -2541,9 +2541,8 @@ int Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource d
 	else
 	{
 		guint deviceType = 0;
-		switch(deviceSource)
-		{
-			case GDK_SOURCE_CURSOR:
+		switch (deviceSource) {
+		case GDK_SOURCE_CURSOR:
 #if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
 			case GDK_SOURCE_TABLET_PAD:
 #endif
@@ -2566,10 +2565,9 @@ int Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource d
 			case GDK_SOURCE_TOUCHSCREEN:
 				deviceType = 4;
 				break;
-			default:
-				deviceType = 0;
-		}
-		return deviceType;
+		    default: deviceType = 0;
+		    }
+		    return deviceType;
 	}
 }
 
