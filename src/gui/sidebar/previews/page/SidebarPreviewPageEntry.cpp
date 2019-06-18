@@ -16,13 +16,14 @@ SidebarPreviewPageEntry::SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, P
 				auto mouseEvent = reinterpret_cast<GdkEventButton*>(event);
 				if (mouseEvent->button == 3)
 				{
+					self->mouseButtonPressCallback();
 					self->sidebar->openPreviewContextMenu();
 					return true;
 				}
 			}
 			return false;
 		});
-	g_signal_connect(this->widget, "button-press-event", clickCallback, this);
+	g_signal_connect_after(this->widget, "button-press-event", clickCallback, this);
 }
 
 SidebarPreviewPageEntry::~SidebarPreviewPageEntry()
