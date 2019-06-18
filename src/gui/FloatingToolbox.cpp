@@ -22,7 +22,7 @@ FloatingToolbox::FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay)
 	gtk_widget_add_events(this->floatingToolbox, GDK_LEAVE_NOTIFY_MASK);
 	g_signal_connect(this->floatingToolbox, "leave-notify-event", G_CALLBACK(handleLeaveFloatingToolbox), this);
 	//position overlay widgets
-	g_signal_connect(theMainWindow->get("mainOverlay"), "get-child-position", G_CALLBACK(this->getOverlayPosition), this);
+	g_signal_connect(overlay, "get-child-position", G_CALLBACK(this->getOverlayPosition), this);
 }
 
 
@@ -72,23 +72,30 @@ bool FloatingToolbox::floatingToolboxActivated()
 	//check if user can show Floating Menu with tap.
 	if (settings->getDoActionOnStrokeFiltered() && settings->getStrokeFilterEnabled())
 	{
-		return true;													// return TRUE
+		return true;														// return TRUE
 	}
 
-	//check for tools in toolbox:
-	for (int index = 0; index < FLOATINGTOOLBOX_TOOLBARS_LEN; index++)
+	if (this->countWidgets() > 0) // FloatingToolbox contains something
 	{
-		const char* guiName = FLOATINGTOOLBOX_TOOLBARS[index].guiName;
-		GtkToolbar* toolbar1 = GTK_TOOLBAR(this->mainWindow->get(guiName));
-		int num = gtk_toolbar_get_n_items(toolbar1);
-
-		if (num > 0)
-		{
-			return true;													// return TRUE
-		}
+		return true;														// return TRUE
 	}
 
 	return false;
+}
+
+
+int FloatingToolbox::countWidgets()
+{
+	int count = 0;
+	
+	for (int index = TBFloatFirst; index <= TBFloatLast; index++)
+	{
+		const char* guiName = TOOLBAR_DEFINITIONS[index].guiName;
+		GtkToolbar* toolbar1 = GTK_TOOLBAR(this->mainWindow->get(guiName));
+		count += gtk_toolbar_get_n_items(toolbar1);
+	}
+	
+	return count;
 }
 
 
@@ -98,29 +105,32 @@ void FloatingToolbox::showForConfiguration()
 
 	if (this->floatingToolboxActivated())		// Do not show if not being used - at least while experimental.
 	{
-		GtkWidget* overlay = this->mainWindow->get("mainOverlay");
-		GtkWidget* label = this->mainWindow->get("labelFloatingToolbox");
 		GtkWidget* boxContents = this->mainWindow->get("boxContents");
 		gint wx, wy;
 		gtk_widget_translate_coordinates(boxContents, gtk_widget_get_toplevel(boxContents), 0, 0, &wx, &wy);
 		this->floatingToolboxX = wx + 40;	//when configuration state these are
 		this->floatingToolboxY = wy + 40;	// topleft coordinates( otherwise center).
 		this->floatingToolboxState = configuration;
-		this->show(true);
+		this->show();
 	}
 }
 
 
-void FloatingToolbox::show(bool showTitle)
+void FloatingToolbox::show()
 {
 	XOJ_CHECK_TYPE(FloatingToolbox);
 
 	gtk_widget_hide(this->floatingToolbox);		//force showing in new position
 	gtk_widget_show_all(this->floatingToolbox);
 
-	if (!showTitle)
+	if (this->floatingToolboxState != configuration)
 	{
 		gtk_widget_hide(this->mainWindow->get("labelFloatingToolbox"));
+	}
+	
+	if (this->floatingToolboxState == configuration || countWidgets() > 0)
+	{
+		gtk_widget_hide(this->mainWindow->get("showIfEmpty"));
 	}
 }
 
@@ -165,7 +175,7 @@ gboolean  FloatingToolbox::getOverlayPosition(GtkOverlay*   overlay,
 	{
 		gtk_widget_get_allocation(widget, allocation);	//get existing width and height
 
-		if (self->floatingToolboxState != noChange ||  allocation->height < 2)	//if recalcSize or configuration or  initiation.
+		if (self->floatingToolboxState != noChange || allocation->height < 2)	//if recalcSize or configuration or  initiation.
 		{
 			GtkRequisition natural;
 			gtk_widget_get_preferred_size(widget,  NULL,  &natural);
@@ -190,7 +200,7 @@ gboolean  FloatingToolbox::getOverlayPosition(GtkOverlay*   overlay,
 				allocation->height  = std::max(allocation->height, 50);
 				break;
 		}
-
+		
 		return true;
 	}
 

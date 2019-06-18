@@ -47,7 +47,8 @@ public:
 	void show(int x, int y); 
 	
 	/**
-	 * showForConfiguration(): Does not hide when pointer leaves so that user can drag and drop.
+	 * showForConfiguration
+	 * i.e. appear in fixed position in top left, extra space and do not hide automatically.
 	 */
 	void showForConfiguration();
 	
@@ -69,12 +70,22 @@ private:
 	 */
 	static void handleLeaveFloatingToolbox(GtkWidget * floatingToolbox, GdkEvent  *event,  FloatingToolbox* self);
 	
-	void show(bool showTitle = false);
+	/**
+	 * Show the Floating Toolbox 
+	 * ... but hide some labels depending on conditions.
+	 */
+	void show();
 	
 	/**
 	 * check if user has assigned a button to activate, or has put tools in the FloatingToolbox.
 	 */
 	bool floatingToolboxActivated();
+	
+	/**
+	 * Return number of widgets in toolbox. 
+	 * Note this includes non-tools such as spacers and separators.
+	 */
+	int countWidgets();
 
 	
 private:
@@ -89,5 +100,5 @@ private:
 	int floatingToolboxX = 0;
 	int floatingToolboxY = 0;
 	FloatingToolBoxState floatingToolboxState = recalcSize;
-	
+	int numWidgets = 0;
 };
