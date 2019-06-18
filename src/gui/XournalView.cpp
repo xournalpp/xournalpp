@@ -17,6 +17,7 @@
 
 #include "Rectangle.h"
 #include "Util.h"
+#include "util/cpp14memory.h"
 
 #include <gdk/gdk.h>
 
@@ -452,7 +453,7 @@ void XournalView::scrollTo(size_t pageNo, double yDocument)
 	control->firePageSelected(pageNo);
 }
 
-	
+
 void XournalView::pageRelativeXY(int offCol, int offRow)
 {
 	XOJ_CHECK_TYPE(XournalView);
@@ -774,9 +775,9 @@ void XournalView::deleteSelection(EditSelection* sel)
 
 	if (sel) {
 		XojPageView* view = sel->getView();
-		DeleteUndoAction* undo = new DeleteUndoAction(sel->getSourcePage(), false);
-		sel->fillUndoItem(undo);
-		control->getUndoRedoHandler()->addUndoAction(undo);
+		auto undo = mem::make_unique<DeleteUndoAction>(sel->getSourcePage(), false);
+		sel->fillUndoItem(undo.get());
+		control->getUndoRedoHandler()->addUndoAction(std::move(undo));
 
 		clearSelection();
 

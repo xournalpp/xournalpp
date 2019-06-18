@@ -8,6 +8,7 @@
 #include "undo/SwapUndoAction.h"
 
 #include "i18n.h"
+#include "util/cpp14memory.h"
 
 SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
  : SidebarPreviewBase(control, gui, toolbar)
@@ -64,7 +65,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 		doc->unlock();
 
 		UndoRedoHandler* undo = control->getUndoRedoHandler();
-		undo->addUndoAction(new SwapUndoAction(page - 1, true, swappedPage, otherPage));
+		undo->addUndoAction(mem::make_unique<SwapUndoAction>(page - 1, true, swappedPage, otherPage));
 
 		control->firePageDeleted(page);
 		control->firePageInserted(page - 1);
@@ -93,7 +94,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 		doc->unlock();
 
 		UndoRedoHandler* undo = control->getUndoRedoHandler();
-		undo->addUndoAction(new SwapUndoAction(page, false, swappedPage, otherPage));
+		undo->addUndoAction(mem::make_unique<SwapUndoAction>(page, false, swappedPage, otherPage));
 
 		control->firePageDeleted(page);
 		control->firePageInserted(page + 1);
@@ -120,7 +121,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 		doc->unlock();
 
 		UndoRedoHandler* undo = control->getUndoRedoHandler();
-		undo->addUndoAction(new CopyUndoAction(newPage, page + 1));
+		undo->addUndoAction(mem::make_unique<CopyUndoAction>(newPage, page + 1));
 
 		control->firePageInserted(page + 1);
 		control->firePageSelected(page + 1);

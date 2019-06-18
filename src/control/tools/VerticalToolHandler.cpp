@@ -1,4 +1,5 @@
 #include "VerticalToolHandler.h"
+#include <util/cpp14memory.h>
 
 #include "model/Layer.h"
 #include "undo/UndoRedoHandler.h"
@@ -104,13 +105,14 @@ vector<Element*>* VerticalToolHandler::getElements()
 	return &this->elements;
 }
 
-MoveUndoAction* VerticalToolHandler::finalize()
+std::unique_ptr<MoveUndoAction> VerticalToolHandler::finalize()
 {
 	XOJ_CHECK_TYPE(VerticalToolHandler);
 
 	double dY = this->endY - this->startY;
 
-	MoveUndoAction* undo = new MoveUndoAction(this->layer, this->page, &this->elements, 0, dY, this->layer, this->page);
+	auto undo =
+	        mem::make_unique<MoveUndoAction>(this->layer, this->page, &this->elements, 0, dY, this->layer, this->page);
 
 	for (Element* e: this->elements) {
 		e->move(0, dY);

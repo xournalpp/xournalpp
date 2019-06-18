@@ -58,12 +58,15 @@
 #include "i18n.h"
 #include "serializing/ObjectInputStream.h"
 
+#include "util/cpp14memory.h"
+
 #include <gio/gio.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
 
 #include <ctime>
 #include <fstream>
+#include <memory>
 #include <numeric>
 #include <sstream>
 
@@ -1144,10 +1147,9 @@ void Control::deletePage()
 	this->doc->unlock();
 
 	updateDeletePageButton();
-	this->undoRedo->addUndoAction(new InsertDeletePageUndoAction(page, pNr, false));
+	this->undoRedo->addUndoAction(mem::make_unique<InsertDeletePageUndoAction>(page, pNr, false));
 
-	if (pNr >= this->doc->getPageCount())
-	{
+	if (pNr >= this->doc->getPageCount()) {
 		pNr = this->doc->getPageCount() - 1;
 	}
 
@@ -1161,7 +1163,7 @@ void Control::insertNewPage(size_t position)
 	pageBackgroundChangeController->insertNewPage(position);
 }
 
-void Control::insertPage(PageRef page, size_t position)
+void Control::insertPage(const PageRef& page, size_t position)
 {
 	XOJ_CHECK_TYPE(Control);
 
@@ -1181,8 +1183,7 @@ void Control::insertPage(PageRef page, size_t position)
 	firePageSelected(position);
 
 	updateDeletePageButton();
-
-	undoRedo->addUndoAction(new InsertDeletePageUndoAction(page, position, true));
+	undoRedo->addUndoAction(mem::make_unique<InsertDeletePageUndoAction>(page, position, true));
 }
 
 void Control::gotoPage()
@@ -1762,22 +1763,20 @@ void Control::toolColorChanged(bool userSelection)
 	fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR);
 	getCursor()->updateCursor();
 
-	if (userSelection && this->win && toolHandler->getColor() != -1)
-	{
+	if (userSelection && this->win && toolHandler->getColor() != -1) {
 		EditSelection* sel = this->win->getXournal()->getSelection();
-		if (sel)
-		{
+		if (sel) {
 			UndoAction* undo = sel->setColor(toolHandler->getColor());
-			undoRedo->addUndoAction(undo);
+			// move into selection
+			undoRedo->addUndoAction(UndoActionPtr(undo));
 		}
 
 		TextEditor* edit = getTextEditor();
 
 
-		if (this->toolHandler->getToolType() == TOOL_TEXT && edit != NULL)
-		{
-			UndoAction* undo = edit->setColor(toolHandler->getColor());
-			undoRedo->addUndoAction(undo);
+		if (this->toolHandler->getToolType() == TOOL_TEXT && edit != nullptr) {
+			// Todo move into selection
+			undoRedo->addUndoAction(UndoActionPtr(edit->setColor(toolHandler->getColor())));
 		}
 	}
 }
@@ -1851,7 +1850,7 @@ bool Control::newFile(string pageTemplate)
 	*doc = newDoc;
 	this->doc->unlock();
 
-	addDefaultPage(pageTemplate);
+	addDefaultPage(std::move(pageTemplate));
 
 	fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
 
@@ -1987,7 +1986,7 @@ bool Control::openFile(Path filename, int scrollToPage, bool forceOpen)
 	return true;
 }
 
-bool Control::loadPdf(Path filename, int scrollToPage)
+bool Control::loadPdf(const Path& filename, int scrollToPage)
 {
 	XOJ_CHECK_TYPE(Control);
 
@@ -2102,8 +2101,8 @@ bool Control::loadMetadataCallback(MetadataCallbackData* data)
 
 void Control::loadMetadata(MetadataEntry md)
 {
-	MetadataCallbackData* data = new MetadataCallbackData();
-	data->md = md;
+	auto* data = new MetadataCallbackData();
+	data->md = std::move(md);
 	data->ctrl = this;
 
 	g_idle_add((GSourceFunc) loadMetadataCallback, data);
@@ -2633,8 +2632,7 @@ void Control::clipboardPaste(Element* e)
 
 	this->doc->unlock();
 
-	undoRedo->addUndoAction(new InsertUndoAction(page, layer, e));
-
+	undoRedo->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, e));
 	EditSelection* selection = new EditSelection(this->undoRedo, e, view, page);
 
 	win->getXournal()->setSelection(selection);
@@ -2660,13 +2658,11 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 		return;
 	}
 
-	EditSelection* selection = NULL;
-	Element* element = NULL;
-	try
-	{
+	EditSelection* selection = nullptr;
+	try {
+		std::unique_ptr<Element> element;
 		string version = in.readString();
-		if (version != PROJECT_STRING)
-		{
+		if (version != PROJECT_STRING) {
 			g_warning("Paste from Xournal Version %s to Xournal Version %s", version.c_str(), PROJECT_STRING);
 		}
 
@@ -2677,54 +2673,37 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 		this->doc->unlock();
 
 		int count = in.readInt();
-
-		AddUndoAction* pasteAddUndoAction = new AddUndoAction(page, false);
+		auto pasteAddUndoAction = mem::make_unique<AddUndoAction>(page, false);
 		// this will undo a group of elements that are inserted
 
 		for (int i = 0; i < count; i++) {
 			string name = in.getNextObjectName();
-			element = NULL;
+			element.reset();
 
-			if (name == "Stroke")
-			{
-				element = new Stroke();
-			}
-			else if (name == "Image")
-			{
-				element = new Image();
-			}
-			else if (name == "TexImage")
-			{
-				element = new TexImage();
-			}
-			else if (name == "Text")
-			{
-				element = new Text();
-			}
-			else
-			{
+			if (name == "Stroke") {
+				element = mem::make_unique<Stroke>();
+			} else if (name == "Image") {
+				element = mem::make_unique<Image>();
+			} else if (name == "TexImage") {
+				element = mem::make_unique<TexImage>();
+			} else if (name == "Text") {
+				element = mem::make_unique<Text>();
+			} else {
 				throw InputStreamException(FS(FORMAT_STR("Get unknown object {1}") % name), __FILE__, __LINE__);
 			}
 
 			element->readSerialized(in);
 
-			pasteAddUndoAction->addElement(layer, element, layer->indexOf(element));
-			selection->addElement(element);
-			element = NULL;
+			pasteAddUndoAction->addElement(layer, element.get(), layer->indexOf(element.get()));
+			// Todo: unique_ptr
+			selection->addElement(element.release());
 		}
-		undoRedo->addUndoAction(pasteAddUndoAction);
+		undoRedo->addUndoAction(std::move(pasteAddUndoAction));
 
 		win->getXournal()->setSelection(selection);
 	} catch (std::exception& e) {
 		g_warning("could not paste, Exception occurred: %s", e.what());
 		Stacktrace::printStracktrace();
-
-		// cleanup
-		if (element)
-		{
-			delete element;
-		}
-
 		if (selection) {
 			for (Element* e: *selection->getElements()) {
 				delete e;
@@ -2777,10 +2756,9 @@ void Control::setFill(bool fill)
 		sel = this->win->getXournal()->getSelection();
 	}
 
-	if (sel)
-	{
-		UndoAction* undo = sel->setFill(fill ? toolHandler->getPenFill() : -1, fill ? toolHandler->getHilighterFill() : -1);
-		undoRedo->addUndoAction(undo);
+	if (sel) {
+		undoRedo->addUndoAction(UndoActionPtr(
+		        sel->setFill(fill ? toolHandler->getPenFill() : -1, fill ? toolHandler->getHilighterFill() : -1)));
 	}
 
 	if (toolHandler->getToolType() == TOOL_PEN) {
@@ -2792,7 +2770,7 @@ void Control::setFill(bool fill)
 	}
 }
 
-void Control::setLineStyle(string style)
+void Control::setLineStyle(const string& style)
 {
 	XOJ_CHECK_TYPE(Control);
 
@@ -2823,12 +2801,11 @@ void Control::setToolSize(ToolSize size)
 		sel = this->win->getXournal()->getSelection();
 	}
 
-	if (sel)
-	{
-		UndoAction* undo = sel->setSize(size, toolHandler->getToolThickness(TOOL_PEN),
-										toolHandler->getToolThickness(TOOL_HILIGHTER),
-										toolHandler->getToolThickness(TOOL_ERASER));
-		undoRedo->addUndoAction(undo);
+	if (sel) {
+		undoRedo->addUndoAction(UndoActionPtr(sel->setSize(size,
+		                                                   toolHandler->getToolThickness(TOOL_PEN),
+		                                                   toolHandler->getToolThickness(TOOL_HILIGHTER),
+		                                                   toolHandler->getToolThickness(TOOL_ERASER))));
 	}
 	this->toolHandler->setSize(size);
 }
@@ -2844,10 +2821,8 @@ void Control::fontChanged()
 	if (this->win) {
 		sel = this->win->getXournal()->getSelection();
 	}
-	if (sel)
-	{
-		UndoAction* undo = sel->setFont(font);
-		undoRedo->addUndoAction(undo);
+	if (sel) {
+		undoRedo->addUndoAction(UndoActionPtr(sel->setFont(font)));
 	}
 
 	TextEditor* editor = getTextEditor();
@@ -3042,4 +3017,3 @@ LayerController* Control::getLayerController()
 
 	return this->layerController;
 }
-

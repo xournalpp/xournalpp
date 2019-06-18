@@ -29,7 +29,7 @@ public:
 	void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
 	void currentPos(double x, double y);
 
-	MoveUndoAction* finalize();
+	std::unique_ptr<MoveUndoAction> finalize();
 
 	vector<Element*>* getElements() override;
 

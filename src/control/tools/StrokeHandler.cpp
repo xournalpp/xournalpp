@@ -10,6 +10,7 @@
 #include "undo/RecognizerUndoAction.h"
 
 #include "config-features.h"
+#include "util/cpp14memory.h"
 
 #include <gdk/gdk.h>
 #include <cmath>
@@ -194,7 +195,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 
 	UndoRedoHandler* undo = control->getUndoRedoHandler();
 
-	undo->addUndoAction(new InsertUndoAction(page, layer, stroke));
+	undo->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, stroke));
 
 	ToolHandler* h = control->getToolHandler();
 
@@ -242,10 +243,11 @@ void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Laye
 	Stroke* recognized = result->getRecognized();
 	recognized->setWidth(stroke->hasPressure() ? stroke->getAvgPressure() : stroke->getWidth());
 
-	RecognizerUndoAction* recognizerUndo = new RecognizerUndoAction(page, layer, stroke, recognized);
+	auto recognizerUndo = mem::make_unique<RecognizerUndoAction>(page, layer, stroke, recognized);
+	auto& locRecUndo = *recognizerUndo;
 
 	UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
-	undo->addUndoAction(recognizerUndo);
+	undo->addUndoAction(std::move(recognizerUndo));
 	layer->addElement(result->getRecognized());
 
 	Range range(recognized->getX(), recognized->getY());
@@ -258,7 +260,7 @@ void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Laye
 	for (Stroke* s: *result->getSources()) {
 		layer->removeElement(s, false);
 
-		recognizerUndo->addSourceElement(s);
+		locRecUndo.addSourceElement(s);
 
 		range.addPoint(s->getX(), s->getY());
 		range.addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
@@ -303,7 +305,7 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 
 		createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y));
 	}
-	
+
 	this->startStrokeTime = pos.timestamp;
 }
 
@@ -328,4 +330,3 @@ void StrokeHandler::resetShapeRecognizer()
 		reco = nullptr;
 	}
 }
-

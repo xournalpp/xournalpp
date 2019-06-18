@@ -97,30 +97,25 @@ void UndoRedoHandler::undo()
 		return;
 	}
 
-	GList* e = g_list_last(this->undoList);
-	if (e == NULL)
-	{
-		g_warning("UndoRedoHandler::undo() e == NULL");
-		return;
-	}
+	g_assert_true(this->undoList.back());
 
-	UndoAction* undo = (UndoAction*) e->data;
+	auto& undoAction = *this->undoList.back();
+	this->redoList.emplace_back(std::move(this->undoList.back()));
+	this->undoList.pop_back();
 
 	Document* doc = control->getDocument();
 	doc->lock();
-	bool undoResult = undo->undo(this->control);
+	bool undoResult = undoAction.undo(this->control);
 	doc->unlock();
 
-	if (!undoResult)
-	{
-		string msg = FS(_F("Could not undo \"{1}\"\n" "Something went wrong… Please write a bug report…")
-							% undo->getText());
+	if (!undoResult) {
+		string msg = FS(_F("Could not undo \"{1}\"\n"
+		                   "Something went wrong… Please write a bug report…") %
+		                undoAction.getText());
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 	}
 
-	this->redoList = g_list_append(this->redoList, undo);
-	this->undoList = g_list_delete_link(this->undoList, e);
-	fireUpdateUndoRedoButtons(undo->getPages());
+	fireUpdateUndoRedoButtons(undoAction.getPages());
 
 	PRINTCONTENTS();
 }
@@ -133,30 +128,26 @@ void UndoRedoHandler::redo()
 		return;
 	}
 
-	GList* e = g_list_last(this->redoList);
-	if (e == NULL)
-	{
-		g_warning("UndoRedoHandler::redo() e == NULL");
-		return;
-	}
+	g_assert_true(this->redoList.back());
 
-	UndoAction* redo = (UndoAction*) e->data;
+	UndoAction& redoAction = *this->redoList.back();
+
+	this->undoList.emplace_back(std::move(this->redoList.back()));
+	this->redoList.pop_back();
 
 	Document* doc = control->getDocument();
 	doc->lock();
-	bool redoResult = redo->redo(this->control);
+	bool redoResult = redoAction.redo(this->control);
 	doc->unlock();
 
-	if (!redoResult)
-	{
-		string msg = FS(_F("Could not redo \"{1}\"\n" "Something went wrong… Please write a bug report…")
-							% redo->getText());
+	if (!redoResult) {
+		string msg = FS(_F("Could not redo \"{1}\"\n"
+		                   "Something went wrong… Please write a bug report…") %
+		                redoAction.getText());
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 	}
 
-	this->undoList = g_list_append(this->undoList, redo);
-	this->redoList = g_list_delete_link(this->redoList, e);
-	fireUpdateUndoRedoButtons(redo->getPages());
+	fireUpdateUndoRedoButtons(redoAction.getPages());
 
 	PRINTCONTENTS();
 }
@@ -164,49 +155,48 @@ void UndoRedoHandler::redo()
 bool UndoRedoHandler::canUndo()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
-
-	return this->undoList != NULL;
+	return !this->undoList.empty();
 }
 
 bool UndoRedoHandler::canRedo()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
-
-	return this->redoList != NULL;
+	return !this->redoList.empty();
 }
 
 /**
  * Adds an undo Action to the list, or if nullptr does nothing
  */
-void UndoRedoHandler::addUndoAction(UndoAction* action)
+void UndoRedoHandler::addUndoAction(UndoActionPtr action)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (action == NULL)
-	{
+	if (action == nullptr) {
 		return;
 	}
 
-	this->undoList = g_list_append(this->undoList, action);
+	this->undoList.emplace_back(std::move(action));
 	clearRedo();
-	fireUpdateUndoRedoButtons(action->getPages());
+	fireUpdateUndoRedoButtons(this->undoList.back()->getPages());
 
 	PRINTCONTENTS();
 }
 
-void UndoRedoHandler::addUndoActionBefore(UndoAction* action, UndoAction* before)
+void UndoRedoHandler::addUndoActionBefore(UndoActionPtr action, UndoAction* before)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	GList* data = g_list_find(this->undoList, before);
-	if (!data)
-	{
-		addUndoAction(action);
+	auto iter = std::find_if(begin(this->undoList), end(this->undoList), [before](UndoActionPtr const& smtr_ptr) {
+		return (smtr_ptr.get() == before);
+	});
+
+	if (iter == end(this->undoList)) {
+		addUndoAction(std::move(action));
 		return;
 	}
-	this->undoList = g_list_insert_before(this->undoList, data, action);
+	this->undoList.emplace(iter, std::move(action));
 	clearRedo();
-	fireUpdateUndoRedoButtons(action->getPages());
+	fireUpdateUndoRedoButtons(this->undoList.back()->getPages());
 
 	PRINTCONTENTS();
 }
@@ -215,13 +205,13 @@ bool UndoRedoHandler::removeUndoAction(UndoAction* action)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	GList* l = g_list_find(this->undoList, action);
-	if (l == NULL)
-	{
+	auto iter = std::find_if(begin(this->undoList), end(this->undoList), [action](UndoActionPtr const& smtr_ptr) {
+		return smtr_ptr.get() == action;
+	});
+	if (iter == end(this->undoList)) {
 		return false;
 	}
 
-	undoList = g_list_delete_link(undoList, l);
 	clearRedo();
 	fireUpdateUndoRedoButtons(action->getPages());
 	return true;
@@ -231,14 +221,11 @@ string UndoRedoHandler::undoDescription()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (this->undoList)
-	{
-		GList* l = g_list_last(this->undoList);
-		UndoAction* a = (UndoAction*) l->data;
-		if (!a->getText().empty())
-		{
+	if (!this->undoList.empty()) {
+		UndoAction& a = *this->undoList.back();
+		if (!a.getText().empty()) {
 			string txt = _("Undo: ");
-			txt += a->getText();
+			txt += a.getText();
 			return txt;
 		}
 	}
@@ -249,40 +236,32 @@ string UndoRedoHandler::redoDescription()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (this->redoList)
-	{
-		GList* l = g_list_last(this->redoList);
-		UndoAction* a = (UndoAction*) l->data;
-		if (!a->getText().empty())
-		{
+	if (!this->redoList.empty()) {
+		UndoAction& a = *this->redoList.back();
+		if (!a.getText().empty()) {
 			string txt = _("Redo: ");
-			txt += a->getText();
-
+			txt += a.getText();
 			return txt;
 		}
 	}
 	return _("Redo");
 }
 
-void UndoRedoHandler::fireUpdateUndoRedoButtons(vector<PageRef> pages)
+void UndoRedoHandler::fireUpdateUndoRedoButtons(const vector<PageRef>& pages)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	for (GList* l = this->listener; l != NULL; l = l->next)
-	{
-		((UndoRedoListener*) l->data)->undoRedoChanged();
+	for (auto&& undoRedoListener: this->listener) {
+		undoRedoListener->undoRedoChanged();
 	}
 
-	for (PageRef page : pages)
-	{
-		if (!page.isValid())
-		{
+	for (PageRef page: pages) {
+		if (!page.isValid()) {
 			continue;
 		}
 
-		for (GList* l = this->listener; l != NULL; l = l->next)
-		{
-			((UndoRedoListener*) l->data)->undoRedoPageChanged(page);
+		for (auto&& undoRedoListener: this->listener) {
+			undoRedoListener->undoRedoPageChanged(page);
 		}
 	}
 }
@@ -290,80 +269,54 @@ void UndoRedoHandler::fireUpdateUndoRedoButtons(vector<PageRef> pages)
 void UndoRedoHandler::addUndoRedoListener(UndoRedoListener* listener)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
-
-	this->listener = g_list_append(this->listener, listener);
+	this->listener.emplace_back(listener);
 }
 
 bool UndoRedoHandler::isChanged()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (!this->undoList)
-	{
+	if (this->undoList.empty()) {
 		return this->savedUndo;
 	}
 
-	return this->savedUndo != g_list_last(this->undoList)->data;
+	return this->savedUndo != this->undoList.back().get();
 }
 
 bool UndoRedoHandler::isChangedAutosave()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (!this->undoList)
-	{
+	if (this->undoList.empty()) {
 		return this->autosavedUndo;
 	}
-
-	return this->autosavedUndo != g_list_last(this->undoList)->data;
+	return this->autosavedUndo != this->undoList.back().get();
 }
 
 void UndoRedoHandler::documentAutosaved()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
-
-	if (this->undoList)
-	{
-		this->autosavedUndo = (UndoAction*) g_list_last(this->undoList)->data;
-	}
-	else
-	{
-		this->autosavedUndo = NULL;
-	}
+	this->autosavedUndo = this->undoList.empty() ? nullptr : this->undoList.back().get();
 }
 
 void UndoRedoHandler::documentSaved()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
-
-	if (this->undoList)
-	{
-		this->savedUndo = (UndoAction*) g_list_last(this->undoList)->data;
-	}
-	else
-	{
-		this->savedUndo = NULL;
-	}
+	this->savedUndo = this->undoList.empty() ? nullptr : this->undoList.back().get();
 }
 
 const char* UndoRedoHandler::getUndoStackTopTypeName()
 {
-	GList* e = g_list_last(this->undoList);
-	if (e == NULL)
-	{
-		return NULL;
+	if (this->undoList.empty()) {
+		return nullptr;
 	}
-
-	return ((UndoAction*) e->data)->getClassName();
+	return this->undoList.back()->getClassName();
 }
 
 const char* UndoRedoHandler::getRedoStackTopTypeName()
 {
-	GList* e = g_list_last(this->redoList);
-	if (e == NULL)
-	{
-		return NULL;
+	if (this->redoList.empty()) {
+		return nullptr;
 	}
-
-	return ((UndoAction*) e->data)->getClassName();
+	return this->redoList.back()->getClassName();
 }

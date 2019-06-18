@@ -5,6 +5,8 @@
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
 #include "undo/InsertUndoAction.h"
+#include "util/cpp14memory.h"
+
 #include <cmath>
 
 
@@ -244,7 +246,7 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 
 	UndoRedoHandler* undo = control->getUndoRedoHandler();
 
-	undo->addUndoAction(new InsertUndoAction(page, layer, stroke));
+	undo->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, stroke));
 
 	layer->addElement(stroke);
 	page->fireElementChanged(stroke);

@@ -12,6 +12,7 @@
 #include "XojMsgBox.h"
 #include "i18n.h"
 #include "pixbuf-utils.h"
+#include "util/cpp14memory.h"
 
 /**
  * First half of the LaTeX template used to generate preview PDFs. User-supplied
@@ -432,8 +433,7 @@ void LatexController::insertTexImage()
 	layer->addElement(img);
 	view->rerenderElement(img);
 	doc->unlock();
-
-	control->getUndoRedoHandler()->addUndoAction(new InsertUndoAction(page, layer, img));
+	control->getUndoRedoHandler()->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, img));
 
 	// Select element
 	EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);

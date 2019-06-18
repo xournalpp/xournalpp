@@ -10,6 +10,7 @@
 
 #include "XojMsgBox.h"
 #include "i18n.h"
+#include "util/cpp14memory.h"
 
 ImageHandler::ImageHandler(Control* control, XojPageView* view)
 {
@@ -85,8 +86,8 @@ bool ImageHandler::insertImage(GFile* file, double x, double y)
 
 	page->getSelectedLayer()->addElement(img);
 
-	InsertUndoAction* insertUndo = new InsertUndoAction(page, page->getSelectedLayer(), img);
-	control->getUndoRedoHandler()->addUndoAction(insertUndo);
+	control->getUndoRedoHandler()->addUndoAction(
+	        mem::make_unique<InsertUndoAction>(page, page->getSelectedLayer(), img));
 
 	view->rerenderElement(img);
 	EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);

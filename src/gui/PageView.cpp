@@ -42,6 +42,8 @@
 #include "i18n.h"
 #include "pixbuf-utils.h"
 
+#include "util/cpp14memory.h"
+
 #include <gdk/gdk.h>
 
 #include <stdlib.h>
@@ -192,15 +194,17 @@ void XojPageView::endText()
 	if (txt->getText().empty()) {
 		// old element
 		int pos = layer->indexOf(txt);
-			DeleteUndoAction* eraseDeleteUndoAction = new DeleteUndoAction(page, true);
+		if (pos != -1) {
+			auto eraseDeleteUndoAction = mem::make_unique<DeleteUndoAction>(page, true);
 			layer->removeElement(txt, false);
 			eraseDeleteUndoAction->addElement(layer, txt, pos);
-			undo->addUndoAction(eraseDeleteUndoAction);
+			undo->addUndoAction(std::move(eraseDeleteUndoAction));
 		}
 	} else {
 		// new element
 		if (layer->indexOf(txt) == -1) {
-			undo->addUndoActionBefore(new InsertUndoAction(page, layer, txt), this->textEditor->getFirstUndoAction());
+			undo->addUndoActionBefore(mem::make_unique<InsertUndoAction>(page, layer, txt),
+			                          this->textEditor->getFirstUndoAction());
 			layer->addElement(txt);
 			this->textEditor->textCopyed();
 		}
@@ -210,7 +214,7 @@ void XojPageView::endText()
 			// TextUndoAction does not work because the textEdit object is destroyed
 			// after endText() so we need to instead copy the information between an
 			// old and new element that we can push and pop to recover.
-			undo->addUndoAction(new TextBoxUndoAction(page, layer, txt, this->oldtext));
+			undo->addUndoAction(mem::make_unique<TextBoxUndoAction>(page, layer, txt, this->oldtext));
 		}
 	}
 
@@ -545,12 +549,10 @@ bool XojPageView::onButtonReleaseEvent(const PositionInputData& pos)
 		doc->unlock();
 	}
 
-	if (this->verticalSpace)
-	{
-		MoveUndoAction* undo = this->verticalSpace->finalize();
+	if (this->verticalSpace) {
+		control->getUndoRedoHandler()->addUndoAction(this->verticalSpace->finalize());
 		delete this->verticalSpace;
-		this->verticalSpace = NULL;
-		control->getUndoRedoHandler()->addUndoAction(undo);
+		this->verticalSpace = nullptr;
 	}
 
 	if (this->selection) {

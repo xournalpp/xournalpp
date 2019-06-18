@@ -11,6 +11,7 @@
 #include "view/TextView.h"
 
 #include <gtk/gtkimmulticontext.h>
+#include <util/cpp14memory.h>
 
 TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText):
         gui(gui), widget(widget), text(text), ownText(ownText)
@@ -60,15 +61,12 @@ TextEditor::~TextEditor()
 
 	if (this->ownText) {
 		UndoRedoHandler* handler = gui->getXournal()->getControl()->getUndoRedoHandler();
-			for (TextUndoAction* undo : this->undoActions)
-			{
-				handler->removeUndoAction(undo);
-				delete undo;
+		for (TextUndoAction& undo: this->undoActions) {
+			handler->removeUndoAction(&undo);
 		}
 	} else {
-			for (TextUndoAction* undo : this->undoActions)
-			{
-				undo->textEditFinished();
+		for (TextUndoAction& undo: this->undoActions) {
+			undo.textEditFinished();
 		}
 	}
 	this->undoActions.clear();
@@ -211,18 +209,14 @@ void TextEditor::iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te)
 	 */
 	gtk_im_context_get_preedit_string(context, &str, &attrs, &cursor_pos);
 
-	if (str && str[0] && !gtk_text_iter_can_insert(&iter, true))
-	{
+	if (str && str[0] && !gtk_text_iter_can_insert(&iter, true)) {
 		gtk_widget_error_bell(te->widget);
 		goto out;
 	}
 
-	if (str != NULL)
-	{
+	if (str != nullptr) {
 		te->preeditString = str;
-	}
-	else
-	{
+	} else {
 		te->preeditString = "";
 	}
 	te->repaintEditor();
@@ -323,10 +317,10 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 		obscure = true;
 		retval = true;
 	}
-		// Pass through Tab as literal tab, unless Control is held down
-	else if ((event->keyval == GDK_KEY_Tab || event->keyval == GDK_KEY_KP_Tab || event->keyval == GDK_KEY_ISO_Left_Tab)
-			 && !(event->state & GDK_CONTROL_MASK))
-	{
+	// Pass through Tab as literal tab, unless Control is held down
+	else if ((event->keyval == GDK_KEY_Tab || event->keyval == GDK_KEY_KP_Tab ||
+	          event->keyval == GDK_KEY_ISO_Left_Tab) &&
+	         !(event->state & GDK_CONTROL_MASK)) {
 		resetImContext();
 		iMCommitCallback(nullptr, "\t", this);
 		obscure = true;
@@ -610,17 +604,16 @@ void TextEditor::contentsChanged(bool forceCreateUndoAction)
 	string currentText = getText()->getText();
 
 	// I know it's a little bit bulky, but ABS on substracted size_t is a little bit unsafe
-	if (forceCreateUndoAction || ((lastText.length() >= currentText.length())
-										? (lastText.length() - currentText.length())
-										: (currentText.length() - lastText.length())) > 100)
-	{
-		if (!lastText.empty() && !this->undoActions.empty() && this->undoActions.front()->getUndoText() != currentText)
-		{
-			TextUndoAction* undo = new TextUndoAction(gui->getPage(), gui->getPage()->getSelectedLayer(),
-													  this->text, lastText, this);
+	if (forceCreateUndoAction ||
+	    ((lastText.length() >= currentText.length()) ? (lastText.length() - currentText.length()) :
+	                                                   (currentText.length() - lastText.length())) > 100) {
+		if (!lastText.empty() && !this->undoActions.empty() &&
+		    this->undoActions.front().get().getUndoText() != currentText) {
+			auto undo = mem::make_unique<TextUndoAction>(
+			        gui->getPage(), gui->getPage()->getSelectedLayer(), this->text, lastText, this);
 			UndoRedoHandler* handler = gui->getXournal()->getControl()->getUndoRedoHandler();
-			handler->addUndoAction(undo);
-			this->undoActions.push_back(undo);
+			this->undoActions.emplace_back(std::ref(*undo));
+			handler->addUndoAction(std::move(undo));
 		}
 		lastText = currentText;
 	}
@@ -631,7 +624,7 @@ UndoAction* TextEditor::getFirstUndoAction()
 	XOJ_CHECK_TYPE(TextEditor);
 
 	if (!this->undoActions.empty()) {
-		return this->undoActions.front();
+		return &this->undoActions.front().get();
 	}
 	return nullptr;
 }

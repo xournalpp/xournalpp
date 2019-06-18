@@ -102,7 +102,7 @@ private:
 	string preeditString;
 	string lastText;
 
-	std::vector<TextUndoAction*> undoActions;
+	std::vector<std::reference_wrapper<TextUndoAction>> undoActions;
 
 	double virtualCursor = 0;
 	double markPosX = 0;

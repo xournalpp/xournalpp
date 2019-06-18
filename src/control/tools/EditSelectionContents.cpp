@@ -24,6 +24,7 @@
 
 #include "serializing/ObjectInputStream.h"
 #include "serializing/ObjectOutputStream.h"
+#include "util/cpp14memory.h"
 
 #include <cmath>
 
@@ -427,21 +428,15 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
 	bool scale = (width != this->lastWidth || height != this->lastHeight);
 	bool rotate = (std::abs(this->rotation) > __DBL_EPSILON__);
 
-	if (type == CURSOR_SELECTION_MOVE)
-	{
-		MoveUndoAction* moveUndo = new MoveUndoAction(this->sourceLayer, this->sourcePage, &this->selected,
-													  mx, my, layer, targetPage);
+	if (type == CURSOR_SELECTION_MOVE) {
+		undo->addUndoAction(mem::make_unique<MoveUndoAction>(
+		        this->sourceLayer, this->sourcePage, &this->selected, mx, my, layer, targetPage));
 
-		undo->addUndoAction(moveUndo);
-
-	}
-	else if (type == CURSOR_SELECTION_ROTATE)
-	{
-		RotateUndoAction* rotateUndo = new RotateUndoAction(this->sourcePage, &this->selected, x,
-															y, width / 2, height / 2, rotation - this->lastRotation);
-		undo->addUndoAction(rotateUndo);
-		this->rotation = 0;	// reset rotation for next usage
-		this->lastRotation = rotation;		// undo one rotation at a time.
+	} else if (type == CURSOR_SELECTION_ROTATE) {
+		undo->addUndoAction(mem::make_unique<RotateUndoAction>(
+		        this->sourcePage, &this->selected, x, y, width / 2, height / 2, rotation - this->lastRotation));
+		this->rotation = 0;             // reset rotation for next usage
+		this->lastRotation = rotation;  // undo one rotation at a time.
 	}
 	if (scale) {
 		// The coordinates which are the center of the scaling

@@ -10,6 +10,7 @@
 
 #include <XojMsgBox.h>
 #include <i18n.h>
+#include <util/cpp14memory.h>
 
 
 PageBackgroundChangeController::PageBackgroundChangeController(Control* control):
@@ -52,7 +53,7 @@ void PageBackgroundChangeController::changeAllPagesBackground(PageType pt)
 
 	Document* doc = control->getDocument();
 
-	GroupUndoAction* groupUndoAction = new GroupUndoAction();
+	auto groupUndoAction = mem::make_unique<GroupUndoAction>();
 
 	for (size_t p = 0; p < doc->getPageCount(); p++) {
 		PageRef page = doc->getPage(p);
@@ -74,11 +75,12 @@ void PageBackgroundChangeController::changeAllPagesBackground(PageType pt)
 		control->firePageChanged(p);
 		control->updateBackgroundSizeButton();
 
-		UndoAction* undo = new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage, origW, origH);
+		UndoAction* undo =
+		        new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage, origW, origH);
 		groupUndoAction->addAction(undo);
 	}
 
-	control->getUndoRedoHandler()->addUndoAction(groupUndoAction);
+	control->getUndoRedoHandler()->addUndoAction(std::move(groupUndoAction));
 }
 
 void PageBackgroundChangeController::changeCurrentPageBackground(PageTypeInfo* info)
@@ -121,9 +123,8 @@ void PageBackgroundChangeController::changeCurrentPageBackground(PageType& pageT
 
 	control->firePageChanged(pageNr);
 	control->updateBackgroundSizeButton();
-
-	UndoAction* undo = new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage, origW, origH);
-	control->getUndoRedoHandler()->addUndoAction(undo);
+	control->getUndoRedoHandler()->addUndoAction(mem::make_unique<PageBackgroundChangedUndoAction>(
+	        page, origType, origPdfPage, origBackgroundImage, origW, origH));
 }
 
 /**
@@ -351,5 +352,3 @@ void PageBackgroundChangeController::applyCurrentPageBackground(bool allPages)
 		changeCurrentPageBackground(&info);
 	}
 }
-
-
