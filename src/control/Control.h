@@ -166,7 +166,7 @@ public:
 
 	void addDefaultPage(string pageTemplate);
 	void insertNewPage(size_t position);
-	void insertPage(PageRef page, size_t position);
+	void insertPage(const PageRef& page, size_t position);
 	void deletePage();
 
 	/**
@@ -185,7 +185,7 @@ public:
 
 	void setToolSize(ToolSize size);
 
-	void setLineStyle(string style);
+	void setLineStyle(const string& style);
 
 	void setFill(bool fill);
 
@@ -292,7 +292,7 @@ protected:
 	bool shouldFileOpen(string filename);
 
 	bool loadXoptTemplate(Path filename);
-	bool loadPdf(Path filename, int scrollToPage);
+	bool loadPdf(const Path& filename, int scrollToPage);
 
 private:
 	XOJ_TYPE_ATTRIB;
