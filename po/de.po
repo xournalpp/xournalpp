@@ -2841,7 +2841,7 @@ msgid "cursor"
 msgstr "XournalppCursor"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:298
-msgid "dash-/ doted"
+msgid "dash-/ dotted"
 msgstr "gepunkted / gestrichelt"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:295
