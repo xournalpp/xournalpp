@@ -6,8 +6,8 @@
 #include "config.h"
 #include "i18n.h"
 
-#include <cinttypes>
 #include <algorithm>
+#include <cinttypes>
 
 #ifdef UNDO_TRACE
 
