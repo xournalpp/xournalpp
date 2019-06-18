@@ -211,7 +211,7 @@ bool UndoRedoHandler::removeUndoAction(UndoAction* action)
 	if (iter == end(this->undoList)) {
 		return false;
 	}
-
+	this->undoList.erase(iter);
 	clearRedo();
 	fireUpdateUndoRedoButtons(action->getPages());
 	return true;
