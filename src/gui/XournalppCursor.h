@@ -63,9 +63,9 @@ private:
 	// One shot drawDir custom cursor -drawn instead of pen/stylus then cleared.
 	bool drawDirActive = false;
 	bool drawDirShift = false;
-	bool drawDirCtrl = false;	
-	
-	//avoid re-assigning same cursor
-	guint currentCursor = 0;	// enum AVAILABLECURSORS
-	gulong currentCursorFlavour;	//for different flavours of a cursor (i.e. drawdir, pen and hilighter custom cursors)
+	bool drawDirCtrl = false;
+
+	// avoid re-assigning same cursor
+	guint currentCursor = 0;      // enum AVAILABLECURSORS
+	gulong currentCursorFlavour;  // for different flavours of a cursor (i.e. drawdir, pen and hilighter custom cursors)
 };

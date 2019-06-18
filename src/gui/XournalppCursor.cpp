@@ -583,8 +583,8 @@ GdkCursor* XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool
 	XOJ_CHECK_TYPE(XournalppCursor);
 	bool big = control->getSettings()->isShowBigCursor();
 	bool bright = control->getSettings()->isHighlightPosition();
-	
-	int newCursorID  = CRSR_DRAWDIRNONE + (shift?1:0) + (ctrl?2:0);
+
+	int newCursorID = CRSR_DRAWDIRNONE + (shift ? 1 : 0) + (ctrl ? 2 : 0);
 	gulong flavour = (big ? 1 : 0) | (bright ? 2 : 0) | (gulong) size << 2;  // hash of variables for comparison only
 
 	if (newCursorID == this->currentCursor && flavour == this->currentCursorFlavour) return NULL;
