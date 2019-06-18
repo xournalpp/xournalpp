@@ -7,7 +7,7 @@
 #include "undo/CopyUndoAction.h"
 #include "undo/SwapUndoAction.h"
 
-#include <i18n.h>
+#include "i18n.h"
 
 SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
  : SidebarPreviewBase(control, gui, toolbar)
@@ -133,6 +133,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 		break;
 	default:
 		break;
+	case SIDEBAR_ACTION_NONE: break;
 	}
 }
 

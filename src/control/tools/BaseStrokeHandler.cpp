@@ -1,10 +1,10 @@
 #include "BaseStrokeHandler.h"
 
-#include "gui/XournalView.h"
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
-#include "undo/InsertUndoAction.h"
+#include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
+#include "undo/InsertUndoAction.h"
 #include <cmath>
 
 

@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include "UndoAction.h"
 #include <XournalType.h>
+#include "UndoAction.h"
 
 class Control;
 
@@ -22,13 +22,13 @@ public:
 	virtual void undoRedoChanged() = 0;
 	virtual void undoRedoPageChanged(PageRef page) = 0;
 
-	virtual ~UndoRedoListener();
+	virtual ~UndoRedoListener() = default;
 };
 
 class UndoRedoHandler
 {
 public:
-	UndoRedoHandler(Control* control);
+	explicit UndoRedoHandler(Control* control);
 	virtual ~UndoRedoHandler();
 
 	void undo();
@@ -66,10 +66,10 @@ private:
 	GList* undoList = NULL;
 	GList* redoList = NULL;
 
-	UndoAction* savedUndo = NULL;
-	UndoAction* autosavedUndo = NULL;
+	UndoAction* savedUndo = nullptr;
+	UndoAction* autosavedUndo = nullptr;
 
 	GList* listener = NULL;
 
-	Control* control = NULL;
+	Control* control = nullptr;
 };

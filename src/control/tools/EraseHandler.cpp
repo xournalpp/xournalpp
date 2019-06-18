@@ -26,8 +26,8 @@ EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page, T
 	this->view = view;
 	this->doc = doc;
 
-	this->eraseDeleteUndoAction = NULL;
-	this->eraseUndoAction = NULL;
+	this->eraseDeleteUndoAction = nullptr;
+	this->eraseUndoAction = nullptr;
 	this->undo = undo;
 
 	this->halfEraserSize = 0;
@@ -125,17 +125,14 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
 			this->undo->addUndoAction(eraseUndoAction);
 		}
 
-		EraseableStroke* eraseable = NULL;
-		if (s->getEraseable() == NULL)
-		{
+		EraseableStroke* eraseable = nullptr;
+		if (s->getEraseable() == nullptr) {
 			doc->lock();
 			eraseable = new EraseableStroke(s);
 			s->setEraseable(eraseable);
 			doc->unlock();
-			eraseUndoAction->addOriginal(l, s, pos);
-		}
-		else
-		{
+			this->eraseUndoAction->addOriginal(l, s, pos);
+		} else {
 			eraseable = s->getEraseable();
 		}
 
@@ -150,10 +147,10 @@ void EraseHandler::finalize()
 	if (this->eraseUndoAction)
 	{
 		this->eraseUndoAction->finalize();
-		this->eraseUndoAction = NULL;
+		this->eraseUndoAction = nullptr;
 	}
 	else if (this->eraseDeleteUndoAction)
 	{
-		this->eraseDeleteUndoAction = NULL;
+		this->eraseDeleteUndoAction = nullptr;
 	}
 }

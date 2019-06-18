@@ -71,8 +71,7 @@ private:
 
 	static void bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* clipboard, TextEditor* te);
 
-	static void iMCommitCallback(GtkIMContext* context, const gchar* str,
-								 TextEditor* te);
+	static void iMCommitCallback(GtkIMContext* context, const gchar* str, TextEditor* te);
 	static void iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te);
 	static bool iMRetrieveSurroundingCallback(GtkIMContext* context, TextEditor* te);
 	static bool imDeleteSurroundingCallback(GtkIMContext* context, gint offset, gint n_chars, TextEditor* te);
@@ -92,38 +91,32 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XojPageView* gui;
-	GtkWidget* widget;
+	XojPageView* gui = nullptr;
+	GtkWidget* widget = nullptr;
+	GtkWidget* textWidget = nullptr;
+	GtkIMContext* imContext = nullptr;
+	GtkTextBuffer* buffer = nullptr;
+	PangoLayout* layout = nullptr;
+	Text* text = nullptr;
 
-	Text* text;
-	bool ownText;
-
-	GtkWidget* textWidget;
-
-	GtkIMContext* imContext;
 	string preeditString;
-	bool needImReset = false;
-	GtkTextBuffer* buffer;
-	double virtualCursor = 0;
+	string lastText;
 
 	std::vector<TextUndoAction*> undoActions;
 
+	double virtualCursor = 0;
 	double markPosX = 0;
 	double markPosY = 0;
+
+	int cursorBlinkTime = 0;
+	int cursorBlinkTimeout = 0;
+	int blinkTimeout = 0;  // handler id
+
+	bool ownText = false;
 	bool markPosExtendSelection = false;
 	bool markPosQueue = false;
-
-	bool cursorOverwrite = false;
-
+	bool needImReset = false;
 	bool mouseDown = false;
-
-	string lastText;
-
-	PangoLayout* layout = NULL;
-
-	int cursorBlinkTime;
-	int cursorBlinkTimeout;
+	bool cursorOverwrite = false;
 	bool cursorVisible = false;
-
-	int blinkTimeout = 0; // handler id
 };

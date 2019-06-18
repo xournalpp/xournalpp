@@ -2,56 +2,49 @@
 
 #include "control/Control.h"
 
-#include <config.h>
-#include <i18n.h>
-#include <XojMsgBox.h>
+#include "XojMsgBox.h"
+#include "config.h"
+#include "i18n.h"
 
-#include <inttypes.h>
+#include <cinttypes>
+#include <algorithm>
 
 #ifdef UNDO_TRACE
 
 void printAction(UndoAction* action)
 {
-	if (action)
-	{
-		g_message("%" PRIu64 " / %s", (uint64_t)action, action->getClassName());
-	}
-	else
-	{
+	if (action) {
+		g_message("%" PRIu64 " / %s", (uint64_t) action, action->getClassName());
+	} else {
 		g_message("(null)");
 	}
 }
 
 void printUndoList(GList* list)
 {
-	for (GList* l = list; l != NULL; l = l->next)
-	{
+	for (GList* l = list; l != nullptr; l = l->next) {
 		UndoAction* action = (UndoAction*) l->data;
 		printAction(action);
 	}
 }
 
-#endif //UNDO_TRACE
+#endif  // UNDO_TRACE
 
 #ifdef UNDO_TRACE
-#define PRINTCONTENTS()						\
-	g_message("redoList");					\
-	printUndoList(this->redoList);			\
-	g_message("undoList");					\
-	printUndoList(this->undoList);			\
-	g_message("savedUndo");					\
-	if (this->savedUndo)					\
-	{										\
-		printAction(this->savedUndo);		\
-	}
+#	define PRINTCONTENTS()               \
+		g_message("redoList");            \
+		printUndoList(this->redoList);    \
+		g_message("undoList");            \
+		printUndoList(this->undoList);    \
+		g_message("savedUndo");           \
+		if (this->savedUndo) {            \
+			printAction(this->savedUndo); \
+		}
 #else
-#define PRINTCONTENTS()
-#endif //UNDO_TRACE
+#	define PRINTCONTENTS() (void) 0
+#endif  // UNDO_TRACE
 
-UndoRedoListener::~UndoRedoListener() { }
-
-UndoRedoHandler::UndoRedoHandler(Control* control)
- : control(control)
+UndoRedoHandler::UndoRedoHandler(Control* control): control(control)
 {
 	XOJ_INIT_TYPE(UndoRedoHandler);
 }
@@ -68,24 +61,18 @@ UndoRedoHandler::~UndoRedoHandler()
 void UndoRedoHandler::clearContents()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
-
-	for (GList* l = this->undoList; l != NULL; l = l->next)
-	{
-		UndoAction* action = (UndoAction*) l->data;
-
 #ifdef UNDO_TRACE
-		g_message("clearContents()::Delete UndoAction: %" PRIu64 " / %s", (uint64_t)action, action->getClassName());
-#endif //UNDO_TRACE
-
-		delete action;
+	for (auto const& undoAction: this->undoList) {
+		g_message("clearContents()::Delete UndoAction: %" PRIu64 " / %s",
+		          (size_t) *undoAction,
+		          undoAction.getClassName());
 	}
-	g_list_free(this->undoList);
-	this->undoList = NULL;
+#endif  // UNDO_TRACE
 
 	clearRedo();
 
-	this->savedUndo = NULL;
-	this->autosavedUndo = NULL;
+	this->savedUndo = nullptr;
+	this->autosavedUndo = nullptr;
 
 	PRINTCONTENTS();
 }
@@ -93,20 +80,12 @@ void UndoRedoHandler::clearContents()
 void UndoRedoHandler::clearRedo()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
-
-	for (GList* l = this->redoList; l != NULL; l = l->next)
-	{
-		UndoAction* action = (UndoAction*) l->data;
-
 #ifdef UNDO_TRACE
-		g_message("clearRedo()::Delete UndoAction: %" PRIu64 " / %s", (uint64_t)action, action->getClassName());
-#endif
-
-		delete action;
+	for (auto const& undoAction: this->redoList) {
+		g_message("clearRedo()::Delete UndoAction: %" PRIu64 " / %s", (size_t) &undoAction, undoAction.getClassName());
 	}
-	g_list_free(this->redoList);
-	this->redoList = NULL;
-
+#endif
+	redoList.clear();
 	PRINTCONTENTS();
 }
 
@@ -114,8 +93,7 @@ void UndoRedoHandler::undo()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (!this->undoList)
-	{
+	if (this->undoList.empty()) {
 		return;
 	}
 
@@ -151,8 +129,7 @@ void UndoRedoHandler::redo()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (!this->redoList)
-	{
+	if (this->redoList.empty()) {
 		return;
 	}
 
@@ -199,7 +176,7 @@ bool UndoRedoHandler::canRedo()
 }
 
 /**
- * Adds an undo Action to the list, or if NULL does nothing
+ * Adds an undo Action to the list, or if nullptr does nothing
  */
 void UndoRedoHandler::addUndoAction(UndoAction* action)
 {

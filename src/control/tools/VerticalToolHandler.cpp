@@ -5,27 +5,18 @@
 #include "util/GtkColorWrapper.h"
 #include "view/DocumentView.h"
 
-VerticalToolHandler::VerticalToolHandler(Redrawable* view, PageRef page, double y, double zoom)
+VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, double y, double zoom):
+        view(view), page(page), layer(this->page->getSelectedLayer()), startY(y), endY(y)
 {
 	XOJ_INIT_TYPE(VerticalToolHandler);
 
-	this->startY = y;
-	this->endY = y;
-	this->view = view;
-	this->page = page;
-	this->layer = this->page->getSelectedLayer();
-	this->jumpY = 0;
-
-	for (Element* e : *this->layer->getElements())
-	{
-		if (e->getY() >= y)
-		{
+	for (Element* e: *this->layer->getElements()) {
+		if (e->getY() >= y) {
 			this->elements.push_back(e);
 		}
 	}
 
-	for (Element* e : this->elements)
-	{
+	for (Element* e: this->elements) {
 		this->layer->removeElement(e, false);
 
 		this->jumpY = MAX(this->jumpY, e->getY() + e->getElementHeight());
@@ -33,8 +24,8 @@ VerticalToolHandler::VerticalToolHandler(Redrawable* view, PageRef page, double 
 
 	this->jumpY = this->page->getHeight() - this->jumpY;
 
-	this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-	                                            this->page->getWidth() * zoom, (this->page->getHeight() - y) * zoom);
+	this->crBuffer = cairo_image_surface_create(
+	        CAIRO_FORMAT_ARGB32, this->page->getWidth() * zoom, (this->page->getHeight() - y) * zoom);
 
 	cairo_t* cr = cairo_create(this->crBuffer);
 	cairo_scale(cr, zoom, zoom);
@@ -51,12 +42,11 @@ VerticalToolHandler::~VerticalToolHandler()
 {
 	XOJ_CHECK_TYPE(VerticalToolHandler);
 
-	this->view = NULL;
+	this->view = nullptr;
 
-	if (this->crBuffer)
-	{
+	if (this->crBuffer) {
 		cairo_surface_destroy(this->crBuffer);
-		this->crBuffer = NULL;
+		this->crBuffer = nullptr;
 	}
 
 	XOJ_RELEASE_TYPE(VerticalToolHandler);
@@ -75,13 +65,10 @@ void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 	double y;
 	double height;
 
-	if (this->startY < this->endY)
-	{
+	if (this->startY < this->endY) {
 		y = this->startY;
 		height = this->endY - this->startY;
-	}
-	else
-	{
+	} else {
 		y = this->endY;
 		height = this->startY - this->endY;
 	}
@@ -100,8 +87,7 @@ void VerticalToolHandler::currentPos(double x, double y)
 {
 	XOJ_CHECK_TYPE(VerticalToolHandler);
 
-	if (this->endY == y)
-	{
+	if (this->endY == y) {
 		return;
 	}
 	double y1 = MIN(this->endY, y);
@@ -126,8 +112,7 @@ MoveUndoAction* VerticalToolHandler::finalize()
 
 	MoveUndoAction* undo = new MoveUndoAction(this->layer, this->page, &this->elements, 0, dY, this->layer, this->page);
 
-	for (Element* e : this->elements)
-	{
+	for (Element* e: this->elements) {
 		e->move(0, dY);
 
 		this->layer->addElement(e);
