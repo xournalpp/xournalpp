@@ -10,9 +10,8 @@
 #include "i18n.h"
 #include "util/cpp14memory.h"
 
-SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
-	: SidebarPreviewBase(control, gui, toolbar), contextMenu(gui->get("sidebarPreviewContextMenu"))
-{
+SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar):
+	SidebarPreviewBase(control, gui, toolbar), contextMenu(gui->get("sidebarPreviewContextMenu")) {
 	XOJ_INIT_TYPE(SidebarPreviewPages);
 
 	// Connect the context menu actions
@@ -21,10 +20,11 @@ SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, Sideba
 		{"sidebarPreviewDelete", SIDEBAR_ACTION_DELETE},
 		{"sidebarPreviewMoveUp", SIDEBAR_ACTION_MOVE_UP},
 		{"sidebarPreviewMoveDown", SIDEBAR_ACTION_MOVE_DOWN},
+		{"sidebarPreviewNewBefore", SIDEBAR_ACTION_NEW_BEFORE},
+		{"sidebarPreviewNewAfter", SIDEBAR_ACTION_NEW_AFTER},
 	};
 
-	for (auto& pair : ctxMenuActions)
-	{
+	for (auto& pair : ctxMenuActions) {
 		GtkWidget* entry = gui->get(pair.first);
 		g_assert(entry != nullptr);
 
@@ -34,9 +34,7 @@ SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, Sideba
 		auto userdata = std::unique_ptr<Data>(new Data { this->toolbar, pair.second });
 
 		auto callback = G_CALLBACK(
-			+[](GtkMenuItem* item, Data* data)
-			{
-				g_message("activate %p", item);
+			+[](GtkMenuItem* item, Data* data) {
 				data->toolbar->runAction(data->actions);
 			});
 		gulong signalId = g_signal_connect(entry, "activate", callback, userdata.get());
@@ -49,12 +47,10 @@ SidebarPreviewPages::~SidebarPreviewPages()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 
-	for (auto& signalTuple : this->contextMenuSignals)
-	{
+	for (auto& signalTuple : this->contextMenuSignals) {
 		GtkWidget* widget = std::get<0>(signalTuple);
 		guint handlerId = std::get<1>(signalTuple);
-		if (g_signal_handler_is_connected(widget, handlerId))
-		{
+		if (g_signal_handler_is_connected(widget, handlerId)) {
 			g_signal_handler_disconnect(widget, handlerId);
 		}
 		g_object_unref(widget);
@@ -172,6 +168,12 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 	}
 	case SIDEBAR_ACTION_DELETE:
 		control->deletePage();
+		break;
+	case SIDEBAR_ACTION_NEW_BEFORE:
+		control->insertNewPage(control->getCurrentPageNo());
+		break;
+	case SIDEBAR_ACTION_NEW_AFTER:
+		control->insertNewPage(control->getCurrentPageNo() + 1);
 		break;
 	default:
 		break;

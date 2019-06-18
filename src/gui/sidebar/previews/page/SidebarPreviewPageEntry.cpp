@@ -8,21 +8,21 @@ SidebarPreviewPageEntry::SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, P
 {
 	XOJ_INIT_TYPE(SidebarPreviewPageEntry);
 
-	g_signal_connect(this->widget, "button-press-event", G_CALLBACK(
-		+[](GtkWidget* widget, GdkEvent* event, SidebarPreviewPageEntry* self)
-		{
-		 // Open context menu on right mouse click
-		 if (event->type == GDK_BUTTON_PRESS)
-		 {
-			 auto mouseEvent = reinterpret_cast<GdkEventButton*>(event);
-			 if (mouseEvent->button == 3)
-			 {
-				 self->sidebar->openPreviewContextMenu();
-				 return true;
-			 }
-		 }
-		 return false;
-		}), this);
+	const auto clickCallback = G_CALLBACK(
+		+[](GtkWidget* widget, GdkEvent* event, SidebarPreviewPageEntry* self) {
+			// Open context menu on right mouse click
+			if (event->type == GDK_BUTTON_PRESS)
+			{
+				auto mouseEvent = reinterpret_cast<GdkEventButton*>(event);
+				if (mouseEvent->button == 3)
+				{
+					self->sidebar->openPreviewContextMenu();
+					return true;
+				}
+			}
+			return false;
+		});
+	g_signal_connect(this->widget, "button-press-event", clickCallback, this);
 }
 
 SidebarPreviewPageEntry::~SidebarPreviewPageEntry()
