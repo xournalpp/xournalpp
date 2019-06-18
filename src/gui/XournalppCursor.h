@@ -66,6 +66,6 @@ private:
 	bool drawDirCtrl = false;	
 	
 	//avoid re-assigning same cursor
-	uint currentCursor = 0;	// enum AVAILABLECURSORS
-	ulong currentCursorFlavour;	//for different flavours of a cursor (i.e. drawdir, pen and hilighter custom cursors)
+	guint currentCursor = 0;	// enum AVAILABLECURSORS
+	gulong currentCursorFlavour;	//for different flavours of a cursor (i.e. drawdir, pen and hilighter custom cursors)
 };
