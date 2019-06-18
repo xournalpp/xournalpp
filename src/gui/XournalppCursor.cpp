@@ -65,6 +65,8 @@ XournalppCursor::XournalppCursor(Control* control)
 {
 	XOJ_INIT_TYPE(XournalppCursor);
 	
+
+	// clang-format off
 	// NOTE: Go ahead and use a fancy css cursor... but specify a common backup cursor. 
 	
 	cssCursors[CRSR_NULL                ] = 	{"",""};
@@ -94,7 +96,7 @@ XournalppCursor::XournalppCursor(Control* control)
 	cssCursors[CRSR_DRAWDIRCTRL         ] = 	{"",""};			// "
 	cssCursors[CRSR_DRAWDIRSHIFTCTRL    ] = 	{"",""};			// "
 };
-
+// clang-format on
 
 XournalppCursor::~XournalppCursor()
 {
