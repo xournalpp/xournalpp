@@ -22,7 +22,7 @@ Partial translations, which need to be updated:
 - Polish
 - Chinese
 
-Full translations for all languages not mentioned previously except:
+Full translations for all languages not mentioned previously **except**:
 - English
 - German
 - Italian
