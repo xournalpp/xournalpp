@@ -458,7 +458,7 @@ GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 	int width = size;
 	
 	//create a hash of variables so we notice if one changes despite being the same cursor type:
-	ulong flavour = (big?1:0) | (bright?2:0) | (ulong)(64*alpha)<<2 | (ulong)size<<9 | (ulong)rgb<<14;
+	gulong flavour = (big?1:0) | (bright?2:0) | (gulong)(64*alpha)<<2 | (gulong)size<<9 | (gulong)rgb<<14;
 	
 	
 	if (flavour != this->currentCursorFlavour)
@@ -584,7 +584,7 @@ GdkCursor* XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool
 	bool bright = control->getSettings()->isHighlightPosition();
 	
 	int newCursorID  = CRSR_DRAWDIRNONE + (shift?1:0) + (ctrl?2:0); 
-	ulong flavour = (big?1:0) | (bright?2:0) | (ulong)size<<2;	// hash of variables for comparison only
+	gulong flavour = (big?1:0) | (bright?2:0) | (gulong)size<<2;	// hash of variables for comparison only
 
 	if (newCursorID == this->currentCursor && flavour == this->currentCursorFlavour) return NULL;
 	this->currentCursor = newCursorID;
