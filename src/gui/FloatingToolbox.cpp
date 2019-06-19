@@ -72,12 +72,12 @@ bool FloatingToolbox::floatingToolboxActivated()
 	//check if user can show Floating Menu with tap.
 	if (settings->getDoActionOnStrokeFiltered() && settings->getStrokeFilterEnabled())
 	{
-		return true;														// return TRUE
+		return true;  // return TRUE
 	}
 
-	if (this->countWidgets() > 0) // FloatingToolbox contains something
+	if (this->countWidgets() > 0)  // FloatingToolbox contains something
 	{
-		return true;														// return TRUE
+		return true;  // return TRUE
 	}
 
 	return false;
@@ -87,14 +87,14 @@ bool FloatingToolbox::floatingToolboxActivated()
 int FloatingToolbox::countWidgets()
 {
 	int count = 0;
-	
+
 	for (int index = TBFloatFirst; index <= TBFloatLast; index++)
 	{
 		const char* guiName = TOOLBAR_DEFINITIONS[index].guiName;
 		GtkToolbar* toolbar1 = GTK_TOOLBAR(this->mainWindow->get(guiName));
 		count += gtk_toolbar_get_n_items(toolbar1);
 	}
-	
+
 	return count;
 }
 
@@ -127,7 +127,7 @@ void FloatingToolbox::show()
 	{
 		gtk_widget_hide(this->mainWindow->get("labelFloatingToolbox"));
 	}
-	
+
 	if (this->floatingToolboxState == configuration || countWidgets() > 0)
 	{
 		gtk_widget_hide(this->mainWindow->get("showIfEmpty"));
@@ -175,7 +175,8 @@ gboolean  FloatingToolbox::getOverlayPosition(GtkOverlay*   overlay,
 	{
 		gtk_widget_get_allocation(widget, allocation);	//get existing width and height
 
-		if (self->floatingToolboxState != noChange || allocation->height < 2)	//if recalcSize or configuration or  initiation.
+		if (self->floatingToolboxState != noChange
+						|| allocation->height < 2)  // if recalcSize or configuration or  initiation.
 		{
 			GtkRequisition natural;
 			gtk_widget_get_preferred_size(widget,  NULL,  &natural);
@@ -200,7 +201,7 @@ gboolean  FloatingToolbox::getOverlayPosition(GtkOverlay*   overlay,
 				allocation->height  = std::max(allocation->height, 50);
 				break;
 		}
-		
+
 		return true;
 	}
 
