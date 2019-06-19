@@ -4,18 +4,18 @@ AccessModifierOffset: -4
 AlignEscapedNewlinesLeft: true
 AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: false
-AllowShortBlocksOnASingleLine: false # not in 3.4
-AllowShortCaseLabelsOnASingleLine: false # not in 3.4, 3.5
-AllowShortFunctionsOnASingleLine: None # not in 3.4
+AllowShortBlocksOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: true
 AllowShortLoopsOnASingleLine: false
-AlwaysBreakAfterDefinitionReturnType: false # not in 3.4, 3.5
+AlwaysBreakAfterDefinitionReturnType: false
 AlwaysBreakBeforeMultilineStrings: true
 AlwaysBreakTemplateDeclarations: true
 
-BinPackArguments: false # not in 3.4, 3.5
+BinPackArguments: false
 BinPackParameters: true
-BreakBeforeBinaryOperators: NonAssignment # not in 3.4 # true in 3.5
+BreakBeforeBinaryOperators: NonAssignment
 BreakBeforeBraces: Allman
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializersBeforeComma: true
@@ -25,37 +25,37 @@ ConstructorInitializerAllOnOneLineOrOnePerLine: false
 ConstructorInitializerIndentWidth: 4
 ContinuationIndentWidth: 16
 
-DerivePointerAlignment: false # not in 3.4
+DerivePointerAlignment: false
 
 ExperimentalAutoDetectBinPacking: false
 
 IndentCaseLabels: false
 IndentWidth: 4
-IndentWrappedFunctionNames: false # not in 3.4
+IndentWrappedFunctionNames: false
 
-KeepEmptyLinesAtTheStartOfBlocks: true # not in 3.4
+KeepEmptyLinesAtTheStartOfBlocks: true
 
-Language: Cpp # not in 3.4
+Language: Cpp
 
 MaxEmptyLinesToKeep: 2
 
 NamespaceIndentation: None
 
 PenaltyReturnTypeOnItsOwnLine: 10000
-PointerAlignment: Left # not in 3.4
-# PointerBindsToType: true # 3.4
+PointerAlignment: Left
+# PointerBindsToType: true
 
 SortIncludes: false
-SpaceAfterCStyleCast: true # not in 3.4, 3.5
+SpaceAfterCStyleCast: true
 SpaceBeforeAssignmentOperators: true
-SpaceBeforeParens: ControlStatements # not in 3.4
+SpaceBeforeParens: ControlStatements
 SpaceInEmptyParentheses: false
 SpacesBeforeTrailingComments: 2
 SpacesInAngles: false
 SpacesInCStyleCastParentheses: false
 SpacesInParentheses: false
-SpacesInSquareBrackets: false # not in 3.4, 3.5
-Standard: Cpp03
+SpacesInSquareBrackets: false
+Standard: Cpp11
 
 TabWidth: 4
 
