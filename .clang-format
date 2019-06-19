@@ -59,4 +59,4 @@ Standard: Cpp03
 
 TabWidth: 4
 
-UseTab: Always
+UseTab: ForIndentation
