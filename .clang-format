@@ -1,6 +1,6 @@
 ﻿BasedOnStyle: WebKit
 
-AccessModifierOffset: -2
+AccessModifierOffset: -4
 AlignEscapedNewlinesLeft: true
 AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: false
