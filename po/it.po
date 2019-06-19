@@ -2821,7 +2821,7 @@ msgid "cursor"
 msgstr "cursore"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:298
-msgid "dash-/ doted"
+msgid "dash-/ dotted"
 msgstr "tratteggiato-/ puntinato"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:295

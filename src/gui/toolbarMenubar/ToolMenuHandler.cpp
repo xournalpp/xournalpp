@@ -295,7 +295,7 @@ void ToolMenuHandler::initPenToolItem()
 	registerMenupoint(tbPen->registerPopupMenuEntry(_("dashed"), "line-style-dash"),
 			ACTION_TOOL_LINE_STYLE_DASH, GROUP_LINE_STYLE);
 
-	registerMenupoint(tbPen->registerPopupMenuEntry(_("dash-/ doted"), "line-style-dash-dot"),
+	registerMenupoint(tbPen->registerPopupMenuEntry(_("dash-/ dotted"), "line-style-dash-dot"),
 			ACTION_TOOL_LINE_STYLE_DASH_DOT, GROUP_LINE_STYLE);
 
 	registerMenupoint(tbPen->registerPopupMenuEntry(_("dotted"), "line-style-dot"),
