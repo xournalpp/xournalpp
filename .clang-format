@@ -1,69 +1,62 @@
-﻿---
-BasedOnStyle: Google
-AccessModifierOffset: '-4'
-AlignAfterOpenBracket: Align
-AlignConsecutiveAssignments: 'false'
-AlignConsecutiveDeclarations: 'false'
-AlignEscapedNewlines: Left
-AlignOperands: 'true'
-AlignTrailingComments: 'true'
-AllowAllParametersOfDeclarationOnNextLine: 'true'
-AllowShortBlocksOnASingleLine: 'false'
-AllowShortCaseLabelsOnASingleLine: 'true'
-AllowShortFunctionsOnASingleLine: Inline
-AllowShortIfStatementsOnASingleLine: 'false'
-AllowShortLoopsOnASingleLine: 'false'
-AlwaysBreakAfterDefinitionReturnType: None
-AlwaysBreakAfterReturnType: None
-AlwaysBreakBeforeMultilineStrings: 'false'
-AlwaysBreakTemplateDeclarations: 'true'
-BinPackArguments: 'false'
-BinPackParameters: 'true'
-BreakBeforeBinaryOperators: None
-BreakBeforeBraces: Linux
-BreakBeforeTernaryOperators: 'false'
-BreakConstructorInitializers: AfterColon
-BreakInheritanceList: BeforeColon
-BreakStringLiterals: 'true'
-ColumnLimit: '120'
-CompactNamespaces: 'true'
-ConstructorInitializerAllOnOneLineOrOnePerLine: 'false'
-ConstructorInitializerIndentWidth: '8'
-ContinuationIndentWidth: '8'
-Cpp11BracedListStyle: 'true'
-DerivePointerAlignment: 'false'
-DisableFormat: 'false'
-ExperimentalAutoDetectBinPacking: 'true'
-FixNamespaceComments: 'true'
-IncludeBlocks: Preserve
-IndentCaseLabels: 'false'
-IndentPPDirectives: AfterHash
-IndentWidth: '4'
-IndentWrappedFunctionNames: 'true'
-KeepEmptyLinesAtTheStartOfBlocks: 'true'
-Language: Cpp
-MaxEmptyLinesToKeep: '2'
-NamespaceIndentation: None
-PointerAlignment: Left
-ReflowComments: 'true'
-SortIncludes: 'true'
-SortUsingDeclarations: 'true'
-SpaceAfterCStyleCast: 'true'
-SpaceAfterTemplateKeyword: 'true'
-SpaceBeforeAssignmentOperators: 'true'
-SpaceBeforeCpp11BracedList: 'false'
-SpaceBeforeCtorInitializerColon: 'false'
-SpaceBeforeInheritanceColon: 'false'
-SpaceBeforeParens: ControlStatements
-SpaceBeforeRangeBasedForLoopColon: 'false'
-SpaceInEmptyParentheses: 'false'
-SpacesInAngles: 'false'
-SpacesInCStyleCastParentheses: 'false'
-SpacesInContainerLiterals: 'false'
-SpacesInParentheses: 'false'
-SpacesInSquareBrackets: 'false'
-Standard: Auto
-TabWidth: '4'
-UseTab: ForIndentation
+﻿BasedOnStyle: WebKit
 
-...
+AccessModifierOffset: -2
+AlignEscapedNewlinesLeft: true
+AlignTrailingComments: true
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortBlocksOnASingleLine: false # not in 3.4
+AllowShortCaseLabelsOnASingleLine: false # not in 3.4, 3.5
+AllowShortFunctionsOnASingleLine: None # not in 3.4
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: false
+AlwaysBreakAfterDefinitionReturnType: false # not in 3.4, 3.5
+AlwaysBreakBeforeMultilineStrings: true
+AlwaysBreakTemplateDeclarations: true
+
+BinPackArguments: false # not in 3.4, 3.5
+BinPackParameters: true
+BreakBeforeBinaryOperators: NonAssignment # not in 3.4 # true in 3.5
+BreakBeforeBraces: Allman
+BreakBeforeTernaryOperators: true
+BreakConstructorInitializersBeforeComma: true
+
+ColumnLimit: 120
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+ConstructorInitializerIndentWidth: 4
+ContinuationIndentWidth: 16
+
+DerivePointerAlignment: false # not in 3.4
+
+ExperimentalAutoDetectBinPacking: false
+
+IndentCaseLabels: false
+IndentWidth: 4
+IndentWrappedFunctionNames: false # not in 3.4
+
+KeepEmptyLinesAtTheStartOfBlocks: true # not in 3.4
+
+Language: Cpp # not in 3.4
+
+MaxEmptyLinesToKeep: 2
+
+NamespaceIndentation: None
+
+PenaltyReturnTypeOnItsOwnLine: 10000
+PointerAlignment: Left # not in 3.4
+# PointerBindsToType: true # 3.4
+
+SortIncludes: false
+SpaceAfterCStyleCast: true # not in 3.4, 3.5
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeParens: ControlStatements # not in 3.4
+SpaceInEmptyParentheses: false
+SpacesBeforeTrailingComments: 2
+SpacesInAngles: false
+SpacesInCStyleCastParentheses: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false # not in 3.4, 3.5
+Standard: Cpp03
+
+TabWidth: 4
+
+UseTab: Always
