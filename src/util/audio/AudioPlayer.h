@@ -18,6 +18,7 @@
 #include "VorbisProducer.h"
 
 #include <control/settings/Settings.h>
+#include <control/Control.h>
 
 class AudioPlayer
 {
@@ -32,6 +33,8 @@ public:
 
 	vector<DeviceInfo> getOutputDevices();
 
+	Settings* getSettings();
+	void disableAudioPlaybackButtons();
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -39,7 +42,7 @@ protected:
 	Settings* settings = nullptr;
 	Control* control = nullptr;
 
-	AudioQueue<int>* audioQueue = nullptr;
+	AudioQueue<float>* audioQueue = nullptr;
 	PortAudioConsumer* portAudioConsumer = nullptr;
 	VorbisProducer* vorbisProducer = nullptr;
 	std::thread stopThread;

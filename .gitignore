@@ -35,8 +35,7 @@ nbproject/
 
 # CLion
 .idea
-cmake-build-debug
-cmake-build-release
+cmake-build-*
 
 # API Documentation
 doc/html

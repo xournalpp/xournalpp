@@ -13,6 +13,7 @@
     <property name="page_increment">10</property>
   </object>
   <object class="GtkRevealer" id="floatingToolbox">
+    <property name="name">floatingToolbox</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="transition_type">crossfade</property>
@@ -92,6 +93,25 @@
             <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="showIfEmpty">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="xpad">15</property>
+            <property name="ypad">6</property>
+            <property name="label" translatable="yes">&lt;b&gt;Empty Toolbox&lt;/b&gt;
+&lt;i&gt;Menu: View/Toolbars&lt;/i&gt;
+
+              </property>
+            <property name="use_markup">True</property>
+            <property name="justify">center</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">5</property>
           </packing>
         </child>
         <style>
@@ -1401,7 +1421,7 @@
                                   <object class="GtkCheckMenuItem" id="penStyleDashDotted">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="label" translatable="yes">dash-/ doted</property>
+                                    <property name="label" translatable="yes">dash-/ dotted</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_as_radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_LINE_STYLE_DASH_DOT:GROUP_LINE_STYLE" swapped="no"/>

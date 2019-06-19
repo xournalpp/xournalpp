@@ -1,0 +1,58 @@
+trigger: none
+pr:
+  branches:
+    include:
+    - '*'
+
+
+stages:
+- stage: 'Build_Test_Stage'
+  jobs:
+  - job: 'Build_Test'
+    pool:
+      vmImage: 'ubuntu-16.04'
+    displayName: 'Test for correct Clang formatting'
+    steps:
+    - bash: |
+        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+        sudo apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-8 main"
+        sudo apt-get update
+        sudo apt-get install -y clang-format-8
+      displayName: 'Install clang-format'
+    - bash: |
+        # Checkout the master branch as we require it to get the list of modified files
+        git checkout $(System.PullRequest.TargetBranch)
+        git fetch origin +$(Build.SourceBranch)
+
+        BASE_COMMIT=$(git merge-base FETCH_HEAD $(System.PullRequest.TargetBranch))
+        FILES=$(git --no-pager diff --name-only $BASE_COMMIT FETCH_HEAD -- '*.cpp' '*.hpp' '*.h')
+
+        echo "List of modified source files:"
+        for f in $FILES; do echo "$f"; done
+
+        # Checkout the PR so we can check the modified files for correct formatting
+        git checkout FETCH_HEAD
+
+        # Apply clang-format, modifying all badly formatted files
+        if [ ! -z "$FILES" ]; then
+            git --no-pager diff -U0 $BASE_COMMIT -- $FILES | perl azure-pipelines/format_diff_lines.pl
+        fi
+
+      displayName: 'Run clang-format on modified files'
+    - bash: |
+        # Check for modified files
+        if [ -z "$(git status --porcelain)" ]; then 
+            # Working directory clean
+            echo "The code was properly formatted using clang-format before being submitted."
+            exit 0
+        else 
+            # Uncommitted changes
+            echo "The code was not formatted using clang-format before being submitted."
+            echo "To format the code, try running the following command from the root of the repository:"
+            echo "    git --no-pager diff -U0 -- '*.cpp' '*.c' '*.h' '*.hpp' | perl azure-pipelines/format_diff_lines.pl"
+            echo
+            echo "The formatting changes required are shown below."
+            git --no-pager diff
+            exit 1
+        fi
+      displayName: 'Check for badly formatted modified files'

@@ -35,7 +35,6 @@ private:
 
 protected:
 	InputContext* inputContext;
-	bool pressureSensitivity;
 	bool inputRunning = false;
 
 protected:

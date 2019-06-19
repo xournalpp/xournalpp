@@ -7,7 +7,7 @@
     <property name="height_request">400</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Manage Toolbar</property>
+    <property name="title" translatable="yes">Customize Toolbars</property>
     <property name="icon">pixmaps/xournalpp.svg</property>
     <property name="type_hint">normal</property>
     <child internal-child="vbox">

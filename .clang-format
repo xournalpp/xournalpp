@@ -1,0 +1,62 @@
+﻿BasedOnStyle: WebKit
+
+AccessModifierOffset: -4
+AlignEscapedNewlinesLeft: true
+AlignTrailingComments: true
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortBlocksOnASingleLine: false # not in 3.4
+AllowShortCaseLabelsOnASingleLine: false # not in 3.4, 3.5
+AllowShortFunctionsOnASingleLine: None # not in 3.4
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: false
+AlwaysBreakAfterDefinitionReturnType: false # not in 3.4, 3.5
+AlwaysBreakBeforeMultilineStrings: true
+AlwaysBreakTemplateDeclarations: true
+
+BinPackArguments: false # not in 3.4, 3.5
+BinPackParameters: true
+BreakBeforeBinaryOperators: NonAssignment # not in 3.4 # true in 3.5
+BreakBeforeBraces: Allman
+BreakBeforeTernaryOperators: true
+BreakConstructorInitializersBeforeComma: true
+
+ColumnLimit: 120
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+ConstructorInitializerIndentWidth: 4
+ContinuationIndentWidth: 16
+
+DerivePointerAlignment: false # not in 3.4
+
+ExperimentalAutoDetectBinPacking: false
+
+IndentCaseLabels: false
+IndentWidth: 4
+IndentWrappedFunctionNames: false # not in 3.4
+
+KeepEmptyLinesAtTheStartOfBlocks: true # not in 3.4
+
+Language: Cpp # not in 3.4
+
+MaxEmptyLinesToKeep: 2
+
+NamespaceIndentation: None
+
+PenaltyReturnTypeOnItsOwnLine: 10000
+PointerAlignment: Left # not in 3.4
+# PointerBindsToType: true # 3.4
+
+SortIncludes: false
+SpaceAfterCStyleCast: true # not in 3.4, 3.5
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeParens: ControlStatements # not in 3.4
+SpaceInEmptyParentheses: false
+SpacesBeforeTrailingComments: 2
+SpacesInAngles: false
+SpacesInCStyleCastParentheses: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false # not in 3.4, 3.5
+Standard: Cpp03
+
+TabWidth: 4
+
+UseTab: Always
