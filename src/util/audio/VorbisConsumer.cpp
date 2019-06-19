@@ -1,7 +1,7 @@
 #include <cmath>
 #include "VorbisConsumer.h"
 
-VorbisConsumer::VorbisConsumer(Settings* settings, AudioQueue<int>* audioQueue)
+VorbisConsumer::VorbisConsumer(Settings* settings, AudioQueue<float>* audioQueue)
 		: settings(settings),
 		  audioQueue(audioQueue)
 {
@@ -46,7 +46,7 @@ bool VorbisConsumer::start(string filename)
 			{
 				std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
 
-				int buffer[64 * channels];
+				float buffer[64 * channels];
 				unsigned long bufferLength;
 				double audioGain = this->settings->getAudioGain();
 
@@ -63,25 +63,11 @@ bool VorbisConsumer::start(string filename)
 						{
 							for (unsigned int i = 0; i < 64 * channels; ++i)
 							{
-								// check for overflow
-								if (std::abs(buffer[i]) < std::floor(INT_MAX / audioGain))
-								{
-									buffer[i] = static_cast<int>(buffer[i] * audioGain);
-								} else
-								{
-									// clip audio
-									if (buffer[i] > 0)
-									{
-										buffer[i] = INT_MAX;
-									} else
-									{
-										buffer[i] = INT_MIN;
-									}
-								}
+								buffer[i] = buffer[i] * audioGain;
 							}
 						}
 
-						sf_writef_int(sfFile, buffer, 64);
+						sf_writef_float(sfFile, buffer, 64);
 					}
 				}
 

@@ -240,7 +240,7 @@ void SettingsDialog::load()
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	loadCheckbox("cbSettingPresureSensitivity", settings->isPresureSensitivity());
+	loadCheckbox("cbSettingPresureSensitivity", settings->isPressureSensitivity());
 	loadCheckbox("cbEnableZoomGestures", settings->isZoomGesturesEnabled());
 	loadCheckbox("cbShowSidebarRight", settings->isSidebarOnRight());
 	loadCheckbox("cbShowScrollbarLeft", settings->isScrollbarOnLeft());
@@ -519,7 +519,7 @@ void SettingsDialog::save()
 
 	settings->transactionStart();
 
-	settings->setPresureSensitivity(getCheckbox("cbSettingPresureSensitivity"));
+	settings->setPressureSensitivity(getCheckbox("cbSettingPresureSensitivity"));
 	settings->setZoomGesturesEnabled(getCheckbox("cbEnableZoomGestures"));
 	settings->setSidebarOnRight(getCheckbox("cbShowSidebarRight"));
 	settings->setScrollbarOnLeft(getCheckbox("cbShowScrollbarLeft"));

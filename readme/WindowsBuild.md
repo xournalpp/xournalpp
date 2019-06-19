@@ -31,10 +31,11 @@ pacman -S git
 
 ## Install Build tools
 ```bash
-pacman -S mingw-w64-x86_64-cmake \
-pacman -S make \
-pacman -S mingw-w64-x86_64-toolchain \
-pacman -S --needed base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
+pacman -S mingw-w64-x86_64-cmake; \
+pacman -S make; \
+pacman -S mingw-w64-x86_64-toolchain; \
+pacman -S --needed base-devel mingw-w64-x86_64-toolchain \
+mingw-w64-x86_64-cmake
 ```
 (this is a duplicate of the lines above, probably only this line is needed.
 Can anybody confirm this?)
@@ -47,42 +48,43 @@ pacman -S mingw-w64-x86_64-gcc
 ## Install dependencies
 
 ```bash
-pacman -S mingw-w64-x86_64-poppler \
-pacman -S mingw-w64-x86_64-gtk3 \
-pacman -S mingw-w64-x86_64-libsndfile \
+pacman -S mingw-w64-x86_64-poppler; \
+pacman -S mingw-w64-x86_64-gtk3; \
+pacman -S mingw-w64-x86_64-libsndfile; \
 pacman -S mingw-w64-x86_64-libzip
 ```
 
-TODO: Lua 5.3 is missing for MSYS2?
+## Get sources
 
-### sndfile / PortAudio
+```bash
+git clone https://github.com/xournalpp/xournalpp.git
+cd xournalpp/
+```
+
+## sndfile / PortAudio
 Build/Install portaudio with
 ```bash
 windows-setup/build-portaudio.sh
 ```
 
-## Get sources and build
-
+### Lua
+Build/Install lua with
 ```bash
-git clone https://github.com/xournalpp/xournalpp.git
-cd xournalpp/
-mkdir build
-cd build/
+windows-setup/build-lua.sh
 ```
 
+## Build
 ```bash
+mkdir build
+cd build/
 cmake ..
 make
 ```
 
 ## Packaging and Setup
-go to the folder
+Create the installer with
 ```bash
-cd windows-setup
-```
-and execute
-```bash
-./build-setup.sh
+windows-setup/build-setup.sh
 ```
 
-
+The installer will be located at `windows-setup/xournalpp-setup.exe`

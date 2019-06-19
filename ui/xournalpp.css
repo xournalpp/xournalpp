@@ -1,0 +1,43 @@
+/*  
+ * Backup before modifying
+ */
+
+
+
+/*Style the Floating Toolbox!*/
+
+#floatingToolbox>GtkBox 
+{
+	background-color: rgba(0,0,0,0.05);
+	border-radius:10%;
+}
+#floatingToolbox GtkBox GtkToolbar 
+{
+	background-color: rgba(255,255,255,0);
+}
+#floatingToolbox GtkButton 
+{
+	background-color: rgba(255,255,255,1);
+	border-radius: 50%;
+}
+
+
+
+/*Fix ugly Background drop down button
+ * 
+ * We need to select the button beside two labels or we will affect 
+ * the pen tool when in FloatingToolbox (and can't see activation highlight).
+ * 
+ * Ideally we will give name properties to all of the widgets created in 
+ * code as well as specifying names in glade files.
+ * 
+ * Note: in glade files, property with name="name". i.e. <property name="name">floatingToolbox</property>
+ */
+
+
+GtkToolItem>GtkBox>GtkLabel+GtkLabel+GtkButton 
+{
+	border-width:0;
+	box-shadow:none;
+	background-image:none
+}

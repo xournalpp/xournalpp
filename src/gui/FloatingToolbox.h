@@ -26,12 +26,8 @@ enum FloatingToolBoxState {
  * FloatingToolbox:
  *  Uses a GtkOverlay to show a widget containing toolbars.
  *  The getOverlayPosition callback is used to position the toolbox widget relative to the users input device.
- *  The ui/main.glade file defines the floatingToolbox as a GtkRevealer widget - attempts to use another widget 
+ *  The ui/main.glade file defines the floatingToolbox as a GtkRevealer widget - attempts to use another widget
  *  had issues with leave-notify-event.
- * 
- * 
- * 
- * 
  */
 
 class FloatingToolbox 
@@ -44,10 +40,11 @@ public:
 	/**
 	 *  show(x,y): Show Toolbox at centered at x,y relative to main window. 
 	 */
-	void show(int x, int y); 
-	
+	void show(int x, int y);
+
 	/**
-	 * showForConfiguration(): Does not hide when pointer leaves so that user can drag and drop.
+	 * showForConfiguration
+	 * i.e. appear in fixed position in top left, extra space and do not hide automatically.
 	 */
 	void showForConfiguration();
 	
@@ -68,15 +65,25 @@ private:
 	 * Callback to hide floating Toolbar when mouse leaves it
 	 */
 	static void handleLeaveFloatingToolbox(GtkWidget * floatingToolbox, GdkEvent  *event,  FloatingToolbox* self);
-	
-	void show(bool showTitle = false);
-	
+
+	/**
+	 * Show the Floating Toolbox
+	 * ... but hide some labels depending on conditions.
+	 */
+	void show();
+
 	/**
 	 * check if user has assigned a button to activate, or has put tools in the FloatingToolbox.
 	 */
 	bool floatingToolboxActivated();
 
-	
+	/**
+	 * Return number of widgets in toolbox.
+	 * Note this includes non-tools such as spacers and separators.
+	 */
+	int countWidgets();
+
+
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -89,5 +96,5 @@ private:
 	int floatingToolboxX = 0;
 	int floatingToolboxY = 0;
 	FloatingToolBoxState floatingToolboxState = recalcSize;
-	
+	int numWidgets = 0;
 };

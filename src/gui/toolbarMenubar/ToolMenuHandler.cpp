@@ -295,7 +295,7 @@ void ToolMenuHandler::initPenToolItem()
 	registerMenupoint(tbPen->registerPopupMenuEntry(_("dashed"), "line-style-dash"),
 			ACTION_TOOL_LINE_STYLE_DASH, GROUP_LINE_STYLE);
 
-	registerMenupoint(tbPen->registerPopupMenuEntry(_("dash-/ doted"), "line-style-dash-dot"),
+	registerMenupoint(tbPen->registerPopupMenuEntry(_("dash-/ dotted"), "line-style-dash-dot"),
 			ACTION_TOOL_LINE_STYLE_DASH_DOT, GROUP_LINE_STYLE);
 
 	registerMenupoint(tbPen->registerPopupMenuEntry(_("dotted"), "line-style-dot"),
@@ -419,6 +419,9 @@ void ToolMenuHandler::initToolItems()
 	ADD_CUSTOM_ITEM_TGL("PAIRED_PAGES", ACTION_VIEW_PAIRED_PAGES, GROUP_PAIRED_PAGES, false, "showpairedpages", _("Paired pages"));
 	ADD_CUSTOM_ITEM_TGL("PRESENTATION_MODE", ACTION_VIEW_PRESENTATION_MODE, GROUP_PRESENTATION_MODE, false, "presentation-mode", _("Presentation mode"));
 	ADD_CUSTOM_ITEM_TGL("FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, false, "fullscreen", _("Toggle fullscreen"));
+
+	ADD_STOCK_ITEM("MANAGE_TOOLBAR", ACTION_MANAGE_TOOLBAR, "manage_toolbars", _("Manage Toolbars"));
+	ADD_STOCK_ITEM("CUSTOMIZE_TOOLBAR", ACTION_CUSTOMIZE_TOOLBAR, "customize_toolbars", _("Customize Toolbars"));
 
 	ADD_STOCK_ITEM("ZOOM_OUT", ACTION_ZOOM_OUT, "zoom-out", _("Zoom out"));
 	ADD_STOCK_ITEM("ZOOM_IN", ACTION_ZOOM_IN, "zoom-in", _("Zoom in"));

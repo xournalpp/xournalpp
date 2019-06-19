@@ -25,7 +25,7 @@
 class PortAudioProducer
 {
 public:
-	explicit PortAudioProducer(Settings* settings, AudioQueue<int>* audioQueue);
+	explicit PortAudioProducer(Settings* settings, AudioQueue<float>* audioQueue);
 	~PortAudioProducer();
 
 	std::list<DeviceInfo> getInputDevices();
@@ -49,7 +49,7 @@ protected:
 	portaudio::AutoSystem autoSys;
 	portaudio::System& sys;
 	Settings* settings;
-	AudioQueue<int>* audioQueue;
+	AudioQueue<float>* audioQueue;
 
 	int inputChannels = 0;
 

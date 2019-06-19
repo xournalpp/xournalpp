@@ -21,7 +21,7 @@ InputSequence::InputSequence(NewGtkInputDevice* inputHandler)
 {
 	XOJ_INIT_TYPE(InputSequence);
 
-	this->presureSensitivity = inputHandler->getSettings()->isPresureSensitivity();
+	this->presureSensitivity = inputHandler->getSettings()->isPressureSensitivity();
 }
 
 InputSequence::~InputSequence()
