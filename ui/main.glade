@@ -95,6 +95,25 @@
             <property name="position">4</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkLabel" id="showIfEmpty">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="xpad">15</property>
+            <property name="ypad">6</property>
+            <property name="label" translatable="yes">&lt;b&gt;Empty Toolbox&lt;/b&gt;
+&lt;i&gt;Menu: View/Toolbars&lt;/i&gt;
+
+              </property>
+            <property name="use_markup">True</property>
+            <property name="justify">center</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">5</property>
+          </packing>
+        </child>
         <style>
           <class name="tbCss"/>
         </style>

@@ -64,7 +64,9 @@ XournalppCursor::XournalppCursor(Control* control)
  : control(control)
 {
 	XOJ_INIT_TYPE(XournalppCursor);
-	
+
+
+	// clang-format off
 	// NOTE: Go ahead and use a fancy css cursor... but specify a common backup cursor. 
 	
 	cssCursors[CRSR_NULL                ] = 	{"",""};
@@ -94,7 +96,7 @@ XournalppCursor::XournalppCursor(Control* control)
 	cssCursors[CRSR_DRAWDIRCTRL         ] = 	{"",""};			// "
 	cssCursors[CRSR_DRAWDIRSHIFTCTRL    ] = 	{"",""};			// "
 };
-
+// clang-format on
 
 XournalppCursor::~XournalppCursor()
 {
@@ -447,7 +449,6 @@ GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 {
 	XOJ_CHECK_TYPE(XournalppCursor);
 
-	
 	int rgb = control->getToolHandler()->getColor();
 	double r = ((rgb >> 16) & 0xff) / 255.0;
 	double g = ((rgb >> 8) & 0xff) / 255.0;
@@ -461,16 +462,9 @@ GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 	gulong flavour =
 	        (big ? 1 : 0) | (bright ? 2 : 0) | (gulong)(64 * alpha) << 2 | (gulong) size << 9 | (gulong) rgb << 14;
 
-
-	if (flavour != this->currentCursorFlavour)
-	{
-		g_warning("Not the same Flavour!");
-	}
-		
 	if (CRSR_PENORHIGHLIGHTER == this->currentCursor && flavour == this->currentCursorFlavour) return NULL;
 	this->currentCursor = CRSR_PENORHIGHLIGHTER;
 	this->currentCursorFlavour = flavour;
-	
 	
 	if (big || bright)
 	{
