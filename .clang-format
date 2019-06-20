@@ -1,58 +1,68 @@
-﻿BasedOnStyle: WebKit
+---
+BasedOnStyle: WebKit
 
 AccessModifierOffset: -4
-AlignEscapedNewlinesLeft: true
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignEscapedNewlines: Left
+AlignOperands: true
 AlignTrailingComments: true
-AllowAllParametersOfDeclarationOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: true
 AllowShortBlocksOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: None
-AllowShortIfStatementsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
-AlwaysBreakAfterDefinitionReturnType: false
-AlwaysBreakBeforeMultilineStrings: true
+AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakAfterReturnType: None
+AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: true
-
 BinPackArguments: false
 BinPackParameters: true
-BreakBeforeBinaryOperators: NonAssignment
+BreakBeforeBinaryOperators: None
 BreakBeforeBraces: Allman
-BreakBeforeTernaryOperators: true
-BreakConstructorInitializersBeforeComma: true
-
+BreakBeforeTernaryOperators: false
+BreakConstructorInitializers: AfterColon
+BreakInheritanceList: AfterColon
+BreakStringLiterals: true
 ColumnLimit: 120
+CompactNamespaces: true
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
-ConstructorInitializerIndentWidth: 4
-ContinuationIndentWidth: 16
-
+ConstructorInitializerIndentWidth: 8
+ContinuationIndentWidth: 8
+Cpp11BracedListStyle: true
 DerivePointerAlignment: false
-
-ExperimentalAutoDetectBinPacking: false
-
+DisableFormat: false
+ExperimentalAutoDetectBinPacking: true
+FixNamespaceComments: true
+IncludeBlocks: Preserve
 IndentCaseLabels: false
+IndentPPDirectives: AfterHash
 IndentWidth: 4
-IndentWrappedFunctionNames: false
-
+IndentWrappedFunctionNames: true
 KeepEmptyLinesAtTheStartOfBlocks: true
-
 Language: Cpp
-
 MaxEmptyLinesToKeep: 2
-
 NamespaceIndentation: None
-
 PenaltyReturnTypeOnItsOwnLine: 10000
 PointerAlignment: Left
-# PointerBindsToType: true
-
-SortIncludes: false
+ReflowComments: false #true
+SortIncludes: false #true
+SortUsingDeclarations: false #true
 SpaceAfterCStyleCast: true
+SpaceAfterTemplateKeyword: true
 SpaceBeforeAssignmentOperators: true
+SpaceBeforeCpp11BracedList: false
+SpaceBeforeCtorInitializerColon: false
+SpaceBeforeInheritanceColon: false
 SpaceBeforeParens: ControlStatements
+SpaceBeforeRangeBasedForLoopColon: false
 SpaceInEmptyParentheses: false
 SpacesBeforeTrailingComments: 2
 SpacesInAngles: false
 SpacesInCStyleCastParentheses: false
+SpacesInContainerLiterals: false
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
 Standard: Cpp11
@@ -60,3 +70,5 @@ Standard: Cpp11
 TabWidth: 4
 
 UseTab: ForIndentation
+
+...
