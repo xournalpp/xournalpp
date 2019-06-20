@@ -3,9 +3,11 @@
 <interface>
   <requires lib="gtk+" version="3.12"/>
   <object class="GtkOffscreenWindow" id="offscreenwindow">
+    <property name="name">offscreenwindow</property>
     <property name="can_focus">False</property>
     <child>
       <object class="GtkGrid" id="mainGrid">
+        <property name="name">mainGrid</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="hexpand">True</property>
@@ -16,6 +18,7 @@
             <property name="hexpand">True</property>
             <child>
               <object class="GtkLabel" id="lbDevice">
+                <property name="name">lbDevice</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
@@ -30,6 +33,7 @@
             </child>
             <child>
               <object class="GtkComboBoxText" id="labelDevice">
+                <property name="name">labelDevice</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
@@ -42,6 +46,7 @@
             </child>
             <child>
               <object class="GtkCheckButton" id="cbDisableDrawing">
+                <property name="name">cbDisableDrawing</property>
                 <property name="label" translatable="yes">Disable drawing for this device</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -68,6 +73,7 @@
             <property name="can_focus">False</property>
             <child>
               <object class="GtkComboBox" id="cbTool">
+                <property name="name">cbTool</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
@@ -79,6 +85,7 @@
             </child>
             <child>
               <object class="GtkComboBoxText" id="cbThickness">
+                <property name="name">cbThickness</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
@@ -90,6 +97,7 @@
             </child>
             <child>
               <object class="GtkColorButton" id="colorButton">
+                <property name="name">colorButton</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -101,6 +109,7 @@
             </child>
             <child>
               <object class="GtkComboBoxText" id="cbDrawingType">
+                <property name="name">cbDrawingType</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
@@ -112,6 +121,7 @@
             </child>
             <child>
               <object class="GtkComboBoxText" id="cbEraserType">
+                <property name="name">cbEraserType</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>

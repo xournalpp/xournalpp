@@ -3,17 +3,20 @@
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkOffscreenWindow" id="offscreenwindow">
+    <property name="name">offscreenwindow</property>
     <property name="can_focus">False</property>
     <child>
       <placeholder/>
     </child>
     <child>
       <object class="GtkBox" id="pluginMainBox">
+        <property name="name">pluginMainBox</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkLabel" id="pluginName">
+            <property name="name">pluginName</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">pluginName</property>
@@ -29,6 +32,7 @@
         </child>
         <child>
           <object class="GtkLabel" id="lbDescription">
+            <property name="name">lbDescription</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="margin_bottom">10</property>
@@ -60,6 +64,7 @@
             </child>
             <child>
               <object class="GtkLabel" id="lbAuthor">
+                <property name="name">lbAuthor</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Author</property>
@@ -96,6 +101,7 @@
             </child>
             <child>
               <object class="GtkLabel" id="lbVersion">
+                <property name="name">lbVersion</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">1.2.3</property>
@@ -120,6 +126,7 @@
             <property name="halign">center</property>
             <child>
               <object class="GtkCheckButton" id="cbEnabled">
+                <property name="name">cbEnabled</property>
                 <property name="label" translatable="yes">enabled,</property>
                 <property name="name">cbEnabled</property>
                 <property name="visible">True</property>
@@ -135,6 +142,7 @@
             </child>
             <child>
               <object class="GtkLabel" id="lbDefaultText">
+                <property name="name">lbDefaultText</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">default enabled / disabled</property>
