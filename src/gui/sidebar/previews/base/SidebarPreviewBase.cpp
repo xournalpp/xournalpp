@@ -7,7 +7,7 @@
 
 
 SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
-	: AbstractSidebarPage(control, toolbar)
+ : AbstractSidebarPage(control, toolbar)
 {
 	XOJ_INIT_TYPE(SidebarPreviewBase);
 

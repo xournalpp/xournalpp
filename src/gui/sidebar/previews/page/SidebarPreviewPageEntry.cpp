@@ -4,25 +4,25 @@
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
 
 SidebarPreviewPageEntry::SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, PageRef page)
-	: SidebarPreviewBaseEntry(sidebar, page), sidebar(sidebar)
+ : SidebarPreviewBaseEntry(sidebar, page)
+ , sidebar(sidebar)
 {
 	XOJ_INIT_TYPE(SidebarPreviewPageEntry);
 
-	const auto clickCallback = G_CALLBACK(
-		+[](GtkWidget* widget, GdkEvent* event, SidebarPreviewPageEntry* self) {
-			// Open context menu on right mouse click
-			if (event->type == GDK_BUTTON_PRESS)
+	const auto clickCallback = G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, SidebarPreviewPageEntry* self) {
+		// Open context menu on right mouse click
+		if (event->type == GDK_BUTTON_PRESS)
+		{
+			auto mouseEvent = reinterpret_cast<GdkEventButton*>(event);
+			if (mouseEvent->button == 3)
 			{
-				auto mouseEvent = reinterpret_cast<GdkEventButton*>(event);
-				if (mouseEvent->button == 3)
-				{
-					self->mouseButtonPressCallback();
-					self->sidebar->openPreviewContextMenu();
-					return true;
-				}
+				self->mouseButtonPressCallback();
+				self->sidebar->openPreviewContextMenu();
+				return true;
 			}
-			return false;
-		});
+		}
+		return false;
+	});
 	g_signal_connect_after(this->widget, "button-press-event", clickCallback, this);
 }
 

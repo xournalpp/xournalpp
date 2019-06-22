@@ -14,7 +14,6 @@
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
 
 #include <XournalType.h>
-#include <map>
 #include <memory>
 #include <utility>
 
@@ -74,7 +73,8 @@ private:
 	/**
 	 * The data passed to the menu item callbacks.
 	 */
-	struct ContextMenuData {
+	struct ContextMenuData
+	{
 		SidebarToolbar* toolbar;
 		SidebarActions actions;
 	};

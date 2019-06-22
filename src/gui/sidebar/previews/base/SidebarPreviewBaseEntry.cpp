@@ -14,7 +14,7 @@ SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, Pa
 	XOJ_INIT_TYPE(SidebarPreviewBaseEntry);
 
 	this->widget = gtk_button_new();	// re: issue 1072
-
+	
 	gtk_widget_show(this->widget);
 	g_object_ref(this->widget);
 

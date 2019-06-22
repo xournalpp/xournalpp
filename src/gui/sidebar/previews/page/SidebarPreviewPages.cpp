@@ -10,36 +10,37 @@
 #include "i18n.h"
 #include "util/cpp14memory.h"
 
-SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar):
-	SidebarPreviewBase(control, gui, toolbar), contextMenu(gui->get("sidebarPreviewContextMenu")) {
+SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
+ : SidebarPreviewBase(control, gui, toolbar)
+ , contextMenu(gui->get("sidebarPreviewContextMenu"))
+{
 	XOJ_INIT_TYPE(SidebarPreviewPages);
 
 	// Connect the context menu actions
 	const std::map<std::string, SidebarActions> ctxMenuActions = {
-		{"sidebarPreviewDuplicate", SIDEBAR_ACTION_COPY},
-		{"sidebarPreviewDelete", SIDEBAR_ACTION_DELETE},
-		{"sidebarPreviewMoveUp", SIDEBAR_ACTION_MOVE_UP},
-		{"sidebarPreviewMoveDown", SIDEBAR_ACTION_MOVE_DOWN},
-		{"sidebarPreviewNewBefore", SIDEBAR_ACTION_NEW_BEFORE},
-		{"sidebarPreviewNewAfter", SIDEBAR_ACTION_NEW_AFTER},
+	        {"sidebarPreviewDuplicate", SIDEBAR_ACTION_COPY},
+	        {"sidebarPreviewDelete", SIDEBAR_ACTION_DELETE},
+	        {"sidebarPreviewMoveUp", SIDEBAR_ACTION_MOVE_UP},
+	        {"sidebarPreviewMoveDown", SIDEBAR_ACTION_MOVE_DOWN},
+	        {"sidebarPreviewNewBefore", SIDEBAR_ACTION_NEW_BEFORE},
+	        {"sidebarPreviewNewAfter", SIDEBAR_ACTION_NEW_AFTER},
 	};
 
-	for (auto& pair : ctxMenuActions) {
-		GtkWidget* entry = gui->get(pair.first);
+	for (const auto& pair: ctxMenuActions)
+	{
+		GtkWidget* const entry = gui->get(pair.first);
 		g_assert(entry != nullptr);
 
 		// Unfortunately, we need a fairly complicated mechanism to keep track
 		// of which action we want to execute.
 		typedef SidebarPreviewPages::ContextMenuData Data;
-		auto userdata = std::unique_ptr<Data>(new Data { this->toolbar, pair.second });
+		auto userdata = mem::make_unique<Data>(Data{this->toolbar, pair.second});
 
-		auto callback = G_CALLBACK(
-			+[](GtkMenuItem* item, Data* data) {
-				data->toolbar->runAction(data->actions);
-			});
-		gulong signalId = g_signal_connect(entry, "activate", callback, userdata.get());
+		const auto callback =
+		        G_CALLBACK(+[](GtkMenuItem* item, Data* data) { data->toolbar->runAction(data->actions); });
+		const gulong signalId = g_signal_connect(entry, "activate", callback, userdata.get());
 		g_object_ref(entry);
-		this->contextMenuSignals.push_back(std::make_tuple(entry, signalId, std::move(userdata)));
+		this->contextMenuSignals.emplace_back(entry, signalId, std::move(userdata));
 	}
 }
 
@@ -47,10 +48,12 @@ SidebarPreviewPages::~SidebarPreviewPages()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 
-	for (auto& signalTuple : this->contextMenuSignals) {
-		GtkWidget* widget = std::get<0>(signalTuple);
-		guint handlerId = std::get<1>(signalTuple);
-		if (g_signal_handler_is_connected(widget, handlerId)) {
+	for (const auto& signalTuple: this->contextMenuSignals)
+	{
+		GtkWidget* const widget = std::get<0>(signalTuple);
+		const guint handlerId = std::get<1>(signalTuple);
+		if (g_signal_handler_is_connected(widget, handlerId))
+		{
 			g_signal_handler_disconnect(widget, handlerId);
 		}
 		g_object_unref(widget);
@@ -86,7 +89,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 	{
 		Document* doc = control->getDocument();
 		PageRef swappedPage = control->getCurrentPage();
-		if (!swappedPage.isValid())
+		if (!swappedPage.isValid() || doc->getPageCount() <= 1)
 		{
 			return;
 		}
@@ -115,7 +118,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 	{
 		Document* doc = control->getDocument();
 		PageRef swappedPage = control->getCurrentPage();
-		if (!swappedPage.isValid())
+		if (!swappedPage.isValid() || doc->getPageCount() <= 1)
 		{
 			return;
 		}
@@ -341,4 +344,3 @@ void SidebarPreviewPages::openPreviewContextMenu()
 
 	gtk_menu_popup(GTK_MENU(this->contextMenu), nullptr, nullptr, nullptr, nullptr, 3, gtk_get_current_event_time());
 }
-
