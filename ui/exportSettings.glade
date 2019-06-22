@@ -20,6 +20,7 @@
     <property name="page_increment">10</property>
   </object>
   <object class="GtkDialog" id="exportDialog">
+    <property name="name">exportDialog</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Export</property>
     <property name="window_position">center</property>
@@ -33,11 +34,13 @@
         <property name="spacing">4</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area2">
+            <property name="name">dialog-action_area2</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="btCancel">
+                <property name="name">btCancel</property>
                 <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -53,6 +56,7 @@
             </child>
             <child>
               <object class="GtkButton" id="btOk">
+                <property name="name">btOk</property>
                 <property name="label">gtk-ok</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -102,6 +106,7 @@ Select pages to export</property>
                 <property name="column_spacing">10</property>
                 <child>
                   <object class="GtkLabel" id="lbResolution">
+                    <property name="name">lbResolution</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Resolution</property>
@@ -133,6 +138,7 @@ Select pages to export</property>
                 </child>
                 <child>
                   <object class="GtkRadioButton" id="rdRangeAll">
+                    <property name="name">rdRangeAll</property>
                     <property name="label" translatable="yes">All pages</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -148,6 +154,7 @@ Select pages to export</property>
                 </child>
                 <child>
                   <object class="GtkRadioButton" id="rdRangeCurrent">
+                    <property name="name">rdRangeCurrent</property>
                     <property name="label" translatable="yes">Current page</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -164,6 +171,7 @@ Select pages to export</property>
                 </child>
                 <child>
                   <object class="GtkRadioButton" id="rdRangePages">
+                    <property name="name">rdRangePages</property>
                     <property name="label" translatable="yes">Pages:</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -180,6 +188,7 @@ Select pages to export</property>
                 </child>
                 <child>
                   <object class="GtkEntry" id="txtPages">
+                    <property name="name">txtPages</property>
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
@@ -208,6 +217,7 @@ Select pages to export</property>
                 </child>
                 <child>
                   <object class="GtkLabel" id="lbDpi">
+                    <property name="name">lbDpi</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">dpi</property>
@@ -221,6 +231,7 @@ Select pages to export</property>
                 </child>
                 <child>
                   <object class="GtkLabel" id="lbAllPagesInfo">
+                    <property name="name">lbAllPagesInfo</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label">PLACEHOLDER</property>
@@ -236,6 +247,7 @@ Select pages to export</property>
                 </child>
                 <child>
                   <object class="GtkLabel" id="lbCurrentPage">
+                    <property name="name">lbCurrentPage</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label">PLACEHOLDER</property>
@@ -251,6 +263,7 @@ Select pages to export</property>
                 </child>
                 <child>
                   <object class="GtkSpinButton" id="spDpi">
+                    <property name="name">spDpi</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">●</property>
@@ -299,6 +312,7 @@ Select pages to export</property>
     </action-widgets>
   </object>
   <object class="GtkEntryBuffer" id="entrybuffer1">
+    <property name="name">entrybuffer1</property>
     <property name="text">0</property>
   </object>
 </interface>

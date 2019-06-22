@@ -8,6 +8,7 @@
     <property name="page_increment">1</property>
   </object>
   <object class="GtkDialog" id="pluginDialog">
+    <property name="name">pluginDialog</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Plugin Manager</property>
@@ -25,6 +26,7 @@
         <property name="spacing">2</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area2">
+            <property name="name">dialog-action_area2</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
@@ -85,6 +87,7 @@
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkBox" id="pluginBox">
+                        <property name="name">pluginBox</property>
                         <property name="name">pluginBox</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
