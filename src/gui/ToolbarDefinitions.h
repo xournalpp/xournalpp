@@ -28,30 +28,22 @@ typedef struct
 } ToolbarEntryDefintion;
 
 const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {
-	{ "tbTop1",    "toolbarTop1",    true  },
-	{ "tbTop2",    "toolbarTop2",    true  },
-	{ "tbLeft1",   "toolbarLeft1",   false },
-	{ "tbLeft2",   "toolbarLeft2",   false },
-	{ "tbRight1",  "toolbarRight1",  false },
-	{ "tbRight2",  "toolbarRight2",  false },
-	{ "tbBottom1", "toolbarBottom1", true  },
-	{ "tbBottom2", "toolbarBottom2", true  },
-	{ "tbFloat1", "toolbarFloat1", true },
+	{ "tbTop1", "toolbarTop1", true },
+	{ "tbTop2", "toolbarTop2", true },
+	{ "tbLeft1", "toolbarLeft1", false },
+	{ "tbLeft2", "toolbarLeft2", false },
+	{ "tbRight1", "toolbarRight1", false },
+	{ "tbRight2", "toolbarRight2", false },
+	{ "tbBottom1", "toolbarBottom1", true },
+	{ "tbBottom2", "toolbarBottom2", true },
+	{ "tbFloat1", "toolbarFloat1", true },  // define this index below as TBFloatFirst
 	{ "tbFloat2", "toolbarFloat2", true },
 	{ "tbFloat3", "toolbarFloat3", true },
-	{ "tbFloat4", "toolbarFloat4", true }
+	{ "tbFloat4", "toolbarFloat4", true }  // define this index below as TBFloatLast
 };
 
 
 const static int TOOLBAR_DEFINITIONS_LEN = G_N_ELEMENTS(TOOLBAR_DEFINITIONS);
 
-
-//Used in FloatingToolbox.cpp to check if the Toolbox isempty.
-const static ToolbarEntryDefintion  FLOATINGTOOLBOX_TOOLBARS[] = {
-	{ "tbFloat1", "toolbarFloat1", true },
-	{ "tbFloat2", "toolbarFloat2", true },
-	{ "tbFloat3", "toolbarFloat3", true },
-	{ "tbFloat4", "toolbarFloat4", true }
-};
-
-const static int FLOATINGTOOLBOX_TOOLBARS_LEN = G_N_ELEMENTS(FLOATINGTOOLBOX_TOOLBARS);
+#define TBFloatFirst 8
+#define TBFloatLast 11

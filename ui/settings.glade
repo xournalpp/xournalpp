@@ -99,6 +99,7 @@
     <property name="page_increment">10</property>
   </object>
   <object class="GtkDialog" id="settingsDialog">
+    <property name="name">settingsDialog</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Xournal++ Preferences</property>
@@ -115,11 +116,13 @@
         <property name="spacing">2</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="btSettingsButton">
+            <property name="name">btSettingsButton</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="btSettingsCancel">
+                <property name="name">btSettingsCancel</property>
                 <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -134,6 +137,7 @@
             </child>
             <child>
               <object class="GtkButton" id="btSettingsOk">
+                <property name="name">btSettingsOk</property>
                 <property name="label">gtk-ok</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -156,12 +160,14 @@
         </child>
         <child>
           <object class="GtkNotebook" id="notebook1">
+            <property name="name">notebook1</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="tab_pos">left</property>
             <property name="show_border">False</property>
             <child>
               <object class="GtkBox" id="saveLoadTabBox">
+                <property name="name">saveLoadTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_left">5</property>
@@ -223,6 +229,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             <property name="can_focus">False</property>
                                             <child>
                                               <object class="GtkCheckButton" id="cbAutosave">
+                                                <property name="name">cbAutosave</property>
                                                 <property name="label" translatable="yes">Enable Autosaving</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
@@ -238,10 +245,12 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             </child>
                                             <child>
                                               <object class="GtkBox" id="boxAutosave">
+                                                <property name="name">boxAutosave</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <child>
                                                   <object class="GtkLabel" id="lbAutosaveTimeout1">
+                                                    <property name="name">lbAutosaveTimeout1</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <property name="label" translatable="yes">every</property>
@@ -254,6 +263,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                 </child>
                                                 <child>
                                                   <object class="GtkSpinButton" id="spAutosaveTimeout">
+                                                    <property name="name">spAutosaveTimeout</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">True</property>
                                                     <property name="adjustment">adjustmentTimeout</property>
@@ -267,6 +277,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                 </child>
                                                 <child>
                                                   <object class="GtkLabel" id="lbAutosaveTimeout2">
+                                                    <property name="name">lbAutosaveTimeout2</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <property name="label" translatable="yes">minutes</property>
@@ -344,6 +355,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                         </child>
                                         <child>
                                           <object class="GtkEntry" id="txtDefaultSaveName">
+                                            <property name="name">txtDefaultSaveName</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                           </object>
@@ -372,6 +384,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             </child>
                                             <child>
                                               <object class="GtkLabel" id="lbDefaultSavename">
+                                                <property name="name">lbDefaultSavename</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="label" translatable="yes">%F-Note-%H-%M</property>
@@ -391,6 +404,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                         </child>
                                         <child>
                                           <object class="GtkExpander" id="expander1">
+                                            <property name="name">expander1</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <child>
@@ -517,6 +531,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="cbAutoloadXoj">
+                                            <property name="name">cbAutoloadXoj</property>
                                             <property name="label" translatable="yes">Enable Autoloading of Journals</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -563,6 +578,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
             </child>
             <child type="tab">
               <object class="GtkLabel" id="saveLoadTabLabel">
+                <property name="name">saveLoadTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Load / Save</property>
@@ -573,6 +589,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
             </child>
             <child>
               <object class="GtkBox" id="inputTabBox">
+                <property name="name">inputTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_left">5</property>
@@ -613,6 +630,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                 <property name="can_focus">False</property>
                                 <child>
                                   <object class="GtkCheckButton" id="cbNewInputSystem">
+                                    <property name="name">cbNewInputSystem</property>
                                     <property name="label" translatable="yes">Enable new input system (Requires restart)</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
@@ -691,6 +709,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                             </child>
                             <child>
                               <object class="GtkBox" id="hboxInputDeviceClasses">
+                                <property name="name">hboxInputDeviceClasses</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="orientation">vertical</property>
@@ -754,6 +773,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="cbInputSystemDrawOutsideWindow">
+                                <property name="name">cbInputSystemDrawOutsideWindow</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
@@ -778,6 +798,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="cbInputSystemTPCButton">
+                                <property name="name">cbInputSystemTPCButton</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
@@ -832,6 +853,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
             </child>
             <child type="tab">
               <object class="GtkLabel" id="inputTabLabel">
+                <property name="name">inputTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Input System</property>
@@ -843,6 +865,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
             </child>
             <child>
               <object class="GtkBox" id="mouseTabBox">
+                <property name="name">mouseTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_left">5</property>
@@ -911,6 +934,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                 <property name="right_padding">12</property>
                                                 <child>
                                                   <object class="GtkBox" id="hboxMidleMouse">
+                                                    <property name="name">hboxMidleMouse</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
@@ -948,6 +972,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                 <property name="right_padding">12</property>
                                                 <child>
                                                   <object class="GtkBox" id="hboxRightMouse">
+                                                    <property name="name">hboxRightMouse</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
@@ -1007,6 +1032,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
             </child>
             <child type="tab">
               <object class="GtkLabel" id="mouseTabLabel">
+                <property name="name">mouseTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Mouse</property>
@@ -1018,6 +1044,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
             </child>
             <child>
               <object class="GtkBox" id="stylusTabBox">
+                <property name="name">stylusTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_left">5</property>
@@ -1074,6 +1101,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="cbSettingPresureSensitivity">
+                                            <property name="name">cbSettingPresureSensitivity</property>
                                             <property name="label" translatable="yes">Enable Pressure Sensitivity</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -1153,6 +1181,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                 <property name="right_padding">12</property>
                                                 <child>
                                                   <object class="GtkBox" id="hboxPenButton1">
+                                                    <property name="name">hboxPenButton1</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
@@ -1190,6 +1219,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                 <property name="right_padding">12</property>
                                                 <child>
                                                   <object class="GtkBox" id="hboxPenButton2">
+                                                    <property name="name">hboxPenButton2</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
@@ -1227,6 +1257,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                 <property name="right_padding">12</property>
                                                 <child>
                                                   <object class="GtkBox" id="hboxEraser">
+                                                    <property name="name">hboxEraser</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
@@ -1286,6 +1317,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
             </child>
             <child type="tab">
               <object class="GtkLabel" id="stylusTabLabel">
+                <property name="name">stylusTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Stylus</property>
@@ -1297,6 +1329,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
             </child>
             <child>
               <object class="GtkBox" id="touchTabBox">
+                <property name="name">touchTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_left">5</property>
@@ -1353,6 +1386,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         </child>
                                         <child>
                                           <object class="GtkBox" id="hboxTouch">
+                                            <property name="name">hboxTouch</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <child>
@@ -1419,6 +1453,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="cbDisableTouchOnPenNear">
+                                            <property name="name">cbDisableTouchOnPenNear</property>
                                             <property name="label" translatable="yes">Enable internal Hand Recognition</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -1434,6 +1469,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         </child>
                                         <child>
                                           <object class="GtkBox" id="boxInternalHandRecognition">
+                                            <property name="name">boxInternalHandRecognition</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="orientation">vertical</property>
@@ -1468,6 +1504,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                 </child>
                                                 <child>
                                                   <object class="GtkComboBoxText" id="cbTouchDisableMethod">
+                                                    <property name="name">cbTouchDisableMethod</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <property name="active">0</property>
@@ -1484,6 +1521,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                 </child>
                                                 <child>
                                                   <object class="GtkSpinButton" id="spTouchDisableTimeout">
+                                                    <property name="name">spTouchDisableTimeout</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">True</property>
                                                     <property name="adjustment">adjustmentTouchTImeout</property>
@@ -1521,6 +1559,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                             </child>
                                             <child>
                                               <object class="GtkFrame" id="boxCustomTouchDisableSettings">
+                                                <property name="name">boxCustomTouchDisableSettings</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="label_xalign">0.0099999997764825821</property>
@@ -1584,6 +1623,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                             </child>
                                                             <child>
                                                             <object class="GtkEntry" id="txtEnableTouchCommand">
+                                                              <property name="name">txtEnableTouchCommand</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
                                                             <property name="hexpand">True</property>
@@ -1595,6 +1635,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                             </child>
                                                             <child>
                                                             <object class="GtkEntry" id="txtDisableTouchCommand">
+                                                              <property name="name">txtDisableTouchCommand</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
                                                             <property name="hexpand">True</property>
@@ -1606,6 +1647,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                             </child>
                                                             <child>
                                                             <object class="GtkButton" id="btTestEnable">
+                                                              <property name="name">btTestEnable</property>
                                                             <property name="label" translatable="yes">Test</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
@@ -1618,6 +1660,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                             </child>
                                                             <child>
                                                             <object class="GtkButton" id="btTestDisable">
+                                                              <property name="name">btTestDisable</property>
                                                             <property name="label" translatable="yes">Test</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
@@ -1711,6 +1754,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="cbEnableZoomGestures">
+                                            <property name="name">cbEnableZoomGestures</property>
                                             <property name="label" translatable="yes">Enable zoom gestures (requires restart)</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -1779,6 +1823,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="cbTouchWorkaround">
+                                            <property name="name">cbTouchWorkaround</property>
                                             <property name="label" translatable="yes">Enable GTK Touch / Scrolling workaround  (requires restart)</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -1828,6 +1873,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
             </child>
             <child type="tab">
               <object class="GtkLabel" id="touchTabLabel">
+                <property name="name">touchTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Touchscreen</property>
@@ -1839,6 +1885,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
             </child>
             <child>
               <object class="GtkBox" id="viewTabBox">
+                <property name="name">viewTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_left">5</property>
@@ -1883,6 +1930,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             <property name="halign">start</property>
                                             <child>
                                               <object class="GtkCheckButton" id="cbHideMenubarStartup">
+                                                <property name="name">cbHideMenubarStartup</property>
                                                 <property name="label" translatable="yes">Show Menubar on Startup</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
@@ -1919,6 +1967,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkFrame" id="colorsFrame">
+                                            <property name="name">colorsFrame</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label_xalign">0.0099999997764825821</property>
@@ -1949,6 +1998,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                                     </child>
                                                     <child>
                                                       <object class="GtkColorButton" id="colorBorder">
+                                                        <property name="name">colorBorder</property>
                                                         <property name="visible">True</property>
                                                         <property name="can_focus">True</property>
                                                         <property name="receives_default">True</property>
@@ -1973,6 +2023,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                                     </child>
                                                     <child>
                                                       <object class="GtkColorButton" id="colorBackground">
+                                                        <property name="name">colorBackground</property>
                                                         <property name="visible">True</property>
                                                         <property name="can_focus">True</property>
                                                         <property name="receives_default">True</property>
@@ -1997,6 +2048,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                                     </child>
                                                     <child>
                                                       <object class="GtkColorButton" id="colorSelection">
+                                                        <property name="name">colorSelection</property>
                                                         <property name="visible">True</property>
                                                         <property name="can_focus">True</property>
                                                         <property name="receives_default">True</property>
@@ -2009,6 +2061,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                                     </child>
                                                     <child>
                                                       <object class="GtkCheckButton" id="cbDarkTheme">
+                                                        <property name="name">cbDarkTheme</property>
                                                         <property name="label" translatable="yes">Dark Theme (requires restart)</property>
                                                         <property name="visible">True</property>
                                                         <property name="can_focus">True</property>
@@ -2078,6 +2131,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <property name="orientation">vertical</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbHighlightPosition">
+                                            <property name="name">cbHighlightPosition</property>
                                             <property name="label" translatable="yes">Highlight cursor position</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -2093,6 +2147,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="cbBigCursor">
+                                            <property name="name">cbBigCursor</property>
                                             <property name="label" translatable="yes">Big cursor for pen</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -2143,6 +2198,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <property name="orientation">vertical</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbShowSidebarRight">
+                                            <property name="name">cbShowSidebarRight</property>
                                             <property name="label" translatable="yes">Show sidebar on the right side</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -2158,6 +2214,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="cbShowScrollbarLeft">
+                                            <property name="name">cbShowScrollbarLeft</property>
                                             <property name="label" translatable="yes">Show vertical scrollbar on the left side</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -2208,6 +2265,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <property name="orientation">vertical</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbHideHorizontalScrollbar">
+                                            <property name="name">cbHideHorizontalScrollbar</property>
                                             <property name="label" translatable="yes">Hide the horizontal scrollbar</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -2223,6 +2281,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="cbHideVerticalScrollbar">
+                                            <property name="name">cbHideVerticalScrollbar</property>
                                             <property name="label" translatable="yes">Hide the vertical scrollbar</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -2273,6 +2332,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <property name="orientation">vertical</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbHideFullscreenMenubar">
+                                            <property name="name">cbHideFullscreenMenubar</property>
                                             <property name="label" translatable="yes">Hide Menubar</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -2288,6 +2348,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="cbHideFullscreenSidebar">
+                                            <property name="name">cbHideFullscreenSidebar</property>
                                             <property name="label" translatable="yes">Hide Sidebar</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -2338,6 +2399,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <property name="orientation">vertical</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbHidePresentationMenubar">
+                                            <property name="name">cbHidePresentationMenubar</property>
                                             <property name="label" translatable="yes">Hide Menubar</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -2353,6 +2415,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="cbHidePresentationSidebar">
+                                            <property name="name">cbHidePresentationSidebar</property>
                                             <property name="label" translatable="yes">Hide Sidebar</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -2383,6 +2446,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             </child>
                                             <child>
                                               <object class="GtkComboBoxText" id="comboboxtext1">
+                                                <property name="name">comboboxtext1</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                               </object>
@@ -2435,6 +2499,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
             </child>
             <child type="tab">
               <object class="GtkLabel" id="viewTabLabel">
+                <property name="name">viewTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">View</property>
@@ -2446,6 +2511,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
             </child>
             <child>
               <object class="GtkBox" id="zoomTabBox">
+                <property name="name">zoomTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_left">5</property>
@@ -2485,6 +2551,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <property name="column_spacing">5</property>
                                         <child>
                                           <object class="GtkLabel" id="settingZoomCtrlScrollSpeedLabel">
+                                            <property name="name">settingZoomCtrlScrollSpeedLabel</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">Speed for Ctrl + Scroll</property>
@@ -2497,6 +2564,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spZoomStepScroll">
+                                            <property name="name">spZoomStepScroll</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="text" translatable="yes">2.0</property>
@@ -2512,6 +2580,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkLabel" id="settingZoomStepSpeedLabel">
+                                            <property name="name">settingZoomStepSpeedLabel</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">Speed for a Zoomstep</property>
@@ -2524,6 +2593,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spZoomStep">
+                                            <property name="name">spZoomStep</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="margin_top">5</property>
@@ -2635,6 +2705,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             </child>
                                             <child>
                                               <object class="GtkScale" id="zoomCallibSlider">
+                                                <property name="name">zoomCallibSlider</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="margin_top">10</property>
@@ -2651,6 +2722,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             </child>
                                             <child>
                                               <object class="GtkBox" id="zoomVBox">
+                                                <property name="name">zoomVBox</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="orientation">vertical</property>
@@ -2719,6 +2791,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
             </child>
             <child type="tab">
               <object class="GtkLabel" id="zoomTabLabel">
+                <property name="name">zoomTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Zoom</property>
@@ -2730,6 +2803,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
             </child>
             <child>
               <object class="GtkBox" id="drawingAreaTabBox">
+                <property name="name">drawingAreaTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_left">5</property>
@@ -2792,6 +2866,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             <property name="column_spacing">5</property>
                                             <child>
                                               <object class="GtkCheckButton" id="cbAddVerticalSpace">
+                                                <property name="name">cbAddVerticalSpace</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
@@ -2813,6 +2888,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             </child>
                                             <child>
                                               <object class="GtkCheckButton" id="cbAddHorizontalSpace">
+                                                <property name="name">cbAddHorizontalSpace</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
@@ -2835,6 +2911,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             </child>
                                             <child>
                                               <object class="GtkSpinButton" id="spAddVerticalSpace">
+                                                <property name="name">spAddVerticalSpace</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="adjustment">adjustmentVerticalSpace</property>
@@ -2846,6 +2923,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             </child>
                                             <child>
                                               <object class="GtkSpinButton" id="spAddHorizontalSpace">
+                                                <property name="name">spAddHorizontalSpace</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="adjustment">adjustmentHorizontalSpace</property>
@@ -2921,6 +2999,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <property name="column_spacing">5</property>
                                         <child>
                                           <object class="GtkLabel" id="label58a">
+                                            <property name="name">label58a</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="tooltip_markup" translatable="yes">Offset first page this many pages when &lt;b&gt;Pair Pages&lt;/b&gt; enabled</property>
@@ -2933,6 +3012,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spPairsOffset">
+                                            <property name="name">spPairsOffset</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="tooltip_text" translatable="yes">Usually 0 or 1</property>
@@ -2986,6 +3066,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <property name="column_spacing">5</property>
                                         <child>
                                           <object class="GtkLabel" id="lbSnapRotationTolerance">
+                                            <property name="name">lbSnapRotationTolerance</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">Rotation snapping tolerance</property>
@@ -2998,6 +3079,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkLabel" id="lbSnapGridTolerance">
+                                            <property name="name">lbSnapGridTolerance</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">Grid snapping tolerance</property>
@@ -3010,6 +3092,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spSnapRotationTolerance">
+                                            <property name="name">spSnapRotationTolerance</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="text" translatable="yes">0,20</property>
@@ -3025,6 +3108,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spSnapGridTolerance">
+                                            <property name="name">spSnapGridTolerance</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="text" translatable="yes">0,25</property>
@@ -3075,6 +3159,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <property name="column_spacing">5</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbDrawDirModsEnabled">
+                                            <property name="name">cbDrawDirModsEnabled</property>
                                             <property name="label" translatable="yes">Enable  with determination radius of </property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -3095,6 +3180,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spDrawDirModsRadius">
+                                            <property name="name">spDrawDirModsRadius</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="valign">start</property>
@@ -3161,6 +3247,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         <property name="column_spacing">5</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbStrokeFilterEnabled">
+                                            <property name="name">cbStrokeFilterEnabled</property>
                                             <property name="label" translatable="yes">Enable Tap action.</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -3188,6 +3275,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spStrokeIgnoreTime">
+                                            <property name="name">spStrokeIgnoreTime</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="tooltip_markup" translatable="yes">How short (time)  AND...
@@ -3208,6 +3296,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spStrokeIgnoreLength">
+                                            <property name="name">spStrokeIgnoreLength</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="tooltip_markup" translatable="yes">How short (screen mm)  of the stroke  AND...
@@ -3251,6 +3340,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spStrokeSuccessiveTime">
+                                            <property name="name">spStrokeSuccessiveTime</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="tooltip_markup" translatable="yes">... AND How much time must have passed since last stroke.
@@ -3271,6 +3361,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="cbTrySelectOnStrokeFiltered">
+                                            <property name="name">cbTrySelectOnStrokeFiltered</property>
                                             <property name="label" translatable="yes">Try to select object first.</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -3300,6 +3391,7 @@ It must be short in time and length and we can't have ignored another stroke rec
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="cbDoActionOnStrokeFiltered">
+                                            <property name="name">cbDoActionOnStrokeFiltered</property>
                                             <property name="label" translatable="yes">Show Floating Toolbox</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -3351,6 +3443,7 @@ It must be short in time and length and we can't have ignored another stroke rec
             </child>
             <child type="tab">
               <object class="GtkLabel" id="drawingAreaTabLabel">
+                <property name="name">drawingAreaTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Drawing Area</property>
@@ -3362,6 +3455,7 @@ It must be short in time and length and we can't have ignored another stroke rec
             </child>
             <child>
               <object class="GtkBox" id="defaultTabBox">
+                <property name="name">defaultTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_left">5</property>
@@ -3418,6 +3512,7 @@ It must be short in time and length and we can't have ignored another stroke rec
                                         </child>
                                         <child>
                                           <object class="GtkBox" id="hboxDefault">
+                                            <property name="name">hboxDefault</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <child>
@@ -3494,6 +3589,7 @@ It must be short in time and length and we can't have ignored another stroke rec
             </child>
             <child type="tab">
               <object class="GtkLabel" id="defaultTabLabel">
+                <property name="name">defaultTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Defaults</property>
@@ -3505,6 +3601,7 @@ It must be short in time and length and we can't have ignored another stroke rec
             </child>
             <child>
               <object class="GtkBox" id="audioRecordingTabBox">
+                <property name="name">audioRecordingTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_left">5</property>
@@ -3578,6 +3675,7 @@ It must be short in time and length and we can't have ignored another stroke rec
                                             </child>
                                             <child>
                                               <object class="GtkFileChooserButton" id="fcAudioPath">
+                                                <property name="name">fcAudioPath</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="hexpand">True</property>
@@ -3669,6 +3767,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                             </child>
                                             <child>
                                               <object class="GtkComboBoxText" id="cbAudioInputDevice">
+                                                <property name="name">cbAudioInputDevice</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                               </object>
@@ -3691,6 +3790,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                             </child>
                                             <child>
                                               <object class="GtkComboBoxText" id="cbAudioOutputDevice">
+                                                <property name="name">cbAudioOutputDevice</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                               </object>
@@ -3768,6 +3868,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                         </child>
                                         <child>
                                           <object class="GtkComboBoxText" id="cbAudioSampleRate">
+                                            <property name="name">cbAudioSampleRate</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="active">0</property>
@@ -3784,6 +3885,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spAudioGain">
+                                            <property name="name">spAudioGain</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="adjustment">adjustmentAudioGain</property>
@@ -3849,6 +3951,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
             </child>
             <child type="tab">
               <object class="GtkLabel" id="audioRecordingTabLabel">
+                <property name="name">audioRecordingTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Audio Recording</property>

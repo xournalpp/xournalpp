@@ -64,36 +64,36 @@ XournalppCursor::XournalppCursor(Control* control)
 {
 	XOJ_INIT_TYPE(XournalppCursor);
 
-	// NOTE: Go ahead and use a fancy css cursor... but specify a common backup cursor.
-
-	cssCursors[CRSR_NULL] = {"", ""};
-	cssCursors[CRSR_BUSY] = {"wait", ""};
-	cssCursors[CRSR_MOVE] = {"all-scroll", ""};
-	cssCursors[CRSR_MOVING] = {"grabbing", ""};
-	cssCursors[CRSR_GRAB] = {"grab", ""};
-	cssCursors[CRSR_GRABBING] = {"grabbing", ""};
-	cssCursors[CRSR_TOP_LEFT_CORNER] = {"nw-resize", ""};
-	cssCursors[CRSR_TOP_RIGHT_CORNER] = {"ne-resize", ""};
-	cssCursors[CRSR_BOTTOM_LEFT_CORNER] = {"sw-resize", ""};
-	cssCursors[CRSR_BOTTOM_RIGHT_CORNER] = {"se-resize", ""};
-	cssCursors[CRSR_SB_H_DOUBLE_ARROW] = {"ew-resize", ""};
-	cssCursors[CRSR_EXCHANGE] = {"exchange", "arrow"};
-	cssCursors[CRSR_PIRATE] = {"pirate", "arrow"};
-	cssCursors[CRSR_SB_V_DOUBLE_ARROW] = {"ns-resize", ""};
-	cssCursors[CRSR_ARROW] = {"default", ""};
-	cssCursors[CRSR_BLANK_CURSOR] = {"none", ""};
-	cssCursors[CRSR_XTERM] = {"text", ""};
-	cssCursors[CRSR_DEFAULT] = {"default", ""};
-	cssCursors[CRSR_HAND2] = {"hand2", ""};
-	cssCursors[CRSR_TCROSS] = {"crosshair", ""};
-	cssCursors[CRSR_PENORHIGHLIGHTER] = {"", ""};  // custom cursors - enum used only for check
-	cssCursors[CRSR_ERASER] = {"", ""};            // "
-	cssCursors[CRSR_DRAWDIRNONE] = {"", ""};       // "
-	cssCursors[CRSR_DRAWDIRSHIFT] = {"", ""};      // "
-	cssCursors[CRSR_DRAWDIRCTRL] = {"", ""};       // "
-	cssCursors[CRSR_DRAWDIRSHIFTCTRL] = {"", ""};  // "
+	// clang-format off
+	// NOTE: Go ahead and use a fancy css cursor... but specify a common backup cursor. 
+	cssCursors[CRSR_NULL                ] = 	{"",""};
+	cssCursors[CRSR_BUSY                ] = 	{"wait", 		""					};
+	cssCursors[CRSR_MOVE                ] = 	{"all-scroll", 	""					};
+	cssCursors[CRSR_MOVING              ] = 	{"grabbing", 	""					};
+	cssCursors[CRSR_GRAB                ] = 	{"grab", 		""					};
+	cssCursors[CRSR_GRABBING            ] = 	{"grabbing", 	""					};
+	cssCursors[CRSR_TOP_LEFT_CORNER     ] = 	{"nw-resize", 	""					};
+	cssCursors[CRSR_TOP_RIGHT_CORNER    ] = 	{"ne-resize", 	""					};
+	cssCursors[CRSR_BOTTOM_LEFT_CORNER  ] = 	{"sw-resize", 	""					};
+	cssCursors[CRSR_BOTTOM_RIGHT_CORNER ] = 	{"se-resize", 	""					};
+	cssCursors[CRSR_SB_H_DOUBLE_ARROW   ] = 	{"ew-resize", 	""					};
+	cssCursors[CRSR_EXCHANGE            ] = 	{"exchange", 	"arrow"				};
+	cssCursors[CRSR_PIRATE              ] = 	{"pirate", 		"arrow" 			};
+	cssCursors[CRSR_SB_V_DOUBLE_ARROW   ] = 	{"ns-resize", 	""					};
+	cssCursors[CRSR_ARROW               ] = 	{"default", 	""					};
+	cssCursors[CRSR_BLANK_CURSOR        ] = 	{"none", 		""					};
+	cssCursors[CRSR_XTERM               ] = 	{"text", 		""					};
+	cssCursors[CRSR_DEFAULT             ] = 	{"default", 	""					};
+	cssCursors[CRSR_HAND2               ] = 	{"hand2", 		""					};
+	cssCursors[CRSR_TCROSS              ] = 	{"crosshair", 	""					};
+	cssCursors[CRSR_PENORHIGHLIGHTER    ] = 	{"",""};			// custom cursors - enum used only for check
+	cssCursors[CRSR_ERASER              ] = 	{"",""};			// "
+	cssCursors[CRSR_DRAWDIRNONE         ] = 	{"",""};			// "
+	cssCursors[CRSR_DRAWDIRSHIFT        ] = 	{"",""};			// "
+	cssCursors[CRSR_DRAWDIRCTRL         ] = 	{"",""};			// "
+	cssCursors[CRSR_DRAWDIRSHIFTCTRL    ] = 	{"",""};			// "
 };
-
+// clang-format on
 
 XournalppCursor::~XournalppCursor()
 {
@@ -384,7 +384,6 @@ GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 {
 	XOJ_CHECK_TYPE(XournalppCursor);
 
-
 	int rgb = control->getToolHandler()->getColor();
 	double r = ((rgb >> 16) & 0xff) / 255.0;
 	double g = ((rgb >> 8) & 0xff) / 255.0;
@@ -398,17 +397,10 @@ GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 	gulong flavour =
 	        (big ? 1 : 0) | (bright ? 2 : 0) | (gulong)(64 * alpha) << 2 | (gulong) size << 9 | (gulong) rgb << 14;
 
-
-	if (flavour != this->currentCursorFlavour) {
-		g_warning("Not the same Flavour!");
-	}
-
-	if (CRSR_PENORHIGHLIGHTER == this->currentCursor && flavour == this->currentCursorFlavour)
-		return NULL;
+	if (CRSR_PENORHIGHLIGHTER == this->currentCursor && flavour == this->currentCursorFlavour) return NULL;
 	this->currentCursor = CRSR_PENORHIGHLIGHTER;
 	this->currentCursorFlavour = flavour;
-
-
+	
 	if (big || bright)
 	{
 		height = width = 60;

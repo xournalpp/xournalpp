@@ -13,6 +13,7 @@
     <property name="page_increment">10</property>
   </object>
   <object class="GtkDialog" id="templateDialog">
+    <property name="name">templateDialog</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Page Template</property>
     <property name="window_position">center</property>
@@ -26,11 +27,13 @@
         <property name="spacing">4</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area2">
+            <property name="name">dialog-action_area2</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="btSave">
+                <property name="name">btSave</property>
                 <property name="label" translatable="yes">save to file</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -44,6 +47,7 @@
             </child>
             <child>
               <object class="GtkButton" id="btLoad">
+                <property name="name">btLoad</property>
                 <property name="label" translatable="yes">load from file</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -57,6 +61,7 @@
             </child>
             <child>
               <object class="GtkButton" id="btCancel">
+                <property name="name">btCancel</property>
                 <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -72,6 +77,7 @@
             </child>
             <child>
               <object class="GtkButton" id="btOk">
+                <property name="name">btOk</property>
                 <property name="label">gtk-ok</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -135,6 +141,7 @@ This settings will be used if you create a new document</property>
                 </child>
                 <child>
                   <object class="GtkLabel" id="lbPageSize">
+                    <property name="name">lbPageSize</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label">10cm x 20cm</property>
@@ -147,6 +154,7 @@ This settings will be used if you create a new document</property>
                 </child>
                 <child>
                   <object class="GtkButton" id="btChangePaperSize">
+                    <property name="name">btChangePaperSize</property>
                     <property name="label" translatable="yes">change</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -159,6 +167,7 @@ This settings will be used if you create a new document</property>
                 </child>
                 <child>
                   <object class="GtkColorButton" id="cbBackgroundButton">
+                    <property name="name">cbBackgroundButton</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -172,6 +181,7 @@ This settings will be used if you create a new document</property>
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="cbCopyLastPage">
+                    <property name="name">cbCopyLastPage</property>
                     <property name="label" translatable="yes">Copy last page settings</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -191,6 +201,7 @@ This settings will be used if you create a new document</property>
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkLabel" id="lbBackgroundType">
+                        <property name="name">lbBackgroundType</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label">BACKGROUND_TYPE</property>
@@ -204,6 +215,7 @@ This settings will be used if you create a new document</property>
                     </child>
                     <child>
                       <object class="GtkButton" id="btBackgroundDropdown">
+                        <property name="name">btBackgroundDropdown</property>
                         <property name="label">⌄</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -280,6 +292,7 @@ for the fist Page</property>
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="cbCopyLastPageSize">
+                    <property name="name">cbCopyLastPageSize</property>
                     <property name="label" translatable="yes">Copy last page size</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>

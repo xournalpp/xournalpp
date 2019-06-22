@@ -3,18 +3,21 @@
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkOffscreenWindow" id="offscreenwindow">
+    <property name="name">offscreenwindow</property>
     <property name="can_focus">False</property>
     <child>
       <placeholder/>
     </child>
     <child>
       <object class="GtkBox" id="deviceClassGrid">
+        <property name="name">deviceClassGrid</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="valign">start</property>
         <property name="hexpand">True</property>
         <child>
           <object class="GtkLabel" id="labelDevice">
+            <property name="name">labelDevice</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="hexpand">True</property>
@@ -28,6 +31,7 @@
         </child>
         <child>
           <object class="GtkComboBoxText" id="cbDeviceClass">
+            <property name="name">cbDeviceClass</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">end</property>

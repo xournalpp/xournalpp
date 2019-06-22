@@ -13,6 +13,7 @@
     <property name="page_increment">10</property>
   </object>
   <object class="GtkDialog" id="pagesizeDialog">
+    <property name="name">pagesizeDialog</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Paper Format</property>
     <property name="window_position">center</property>
@@ -26,11 +27,13 @@
         <property name="spacing">4</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area2">
+            <property name="name">dialog-action_area2</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="btReset">
+                <property name="name">btReset</property>
                 <property name="label">gtk-revert-to-saved</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -45,6 +48,7 @@
             </child>
             <child>
               <object class="GtkButton" id="btCancel">
+                <property name="name">btCancel</property>
                 <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -60,6 +64,7 @@
             </child>
             <child>
               <object class="GtkButton" id="btOk">
+                <property name="name">btOk</property>
                 <property name="label">gtk-ok</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -104,6 +109,7 @@
                 </child>
                 <child>
                   <object class="GtkComboBox" id="cbTemplate">
+                    <property name="name">cbTemplate</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                   </object>
@@ -157,6 +163,7 @@
                 <property name="can_focus">False</property>
                 <child>
                   <object class="GtkFixed" id="fixed1">
+                    <property name="name">fixed1</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                   </object>
@@ -219,6 +226,7 @@
                     </child>
                     <child>
                       <object class="GtkSpinButton" id="spinWidth">
+                        <property name="name">spinWidth</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">●</property>
@@ -233,6 +241,7 @@
                     </child>
                     <child>
                       <object class="GtkSpinButton" id="spinHeight">
+                        <property name="name">spinHeight</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">●</property>
@@ -247,11 +256,13 @@
                     </child>
                     <child>
                       <object class="GtkToolbar" id="toolbar1">
+                        <property name="name">toolbar1</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="toolbar_style">icons</property>
                         <child>
                           <object class="GtkToggleToolButton" id="btPortrait">
+                            <property name="name">btPortrait</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="label">toolbutton1</property>
@@ -265,6 +276,7 @@
                         </child>
                         <child>
                           <object class="GtkToggleToolButton" id="btLandscape">
+                            <property name="name">btLandscape</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="label">toolbutton2</property>
@@ -285,6 +297,7 @@
                     </child>
                     <child>
                       <object class="GtkComboBoxText" id="cbUnit">
+                        <property name="name">cbUnit</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                       </object>
