@@ -10,8 +10,9 @@
 #include "view/DocumentView.h"
 #include "view/TextView.h"
 
+#include "util/cpp14memory.h"
+
 #include <gtk/gtkimmulticontext.h>
-#include <util/cpp14memory.h>
 
 TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText):
         gui(gui), widget(widget), text(text), ownText(ownText)

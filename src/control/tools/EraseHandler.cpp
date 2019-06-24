@@ -12,10 +12,10 @@
 #include "undo/DeleteUndoAction.h"
 #include "undo/UndoRedoHandler.h"
 
-#include <Range.h>
-#include <Rectangle.h>
+#include "Range.h"
+#include "Rectangle.h"
+#include "util/cpp14memory.h"
 
-#include <util/cpp14memory.h>
 #include <cmath>
 
 EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page, ToolHandler* handler, Redrawable* view)
