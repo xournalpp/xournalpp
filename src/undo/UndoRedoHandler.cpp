@@ -76,6 +76,7 @@ void UndoRedoHandler::clearContents()
 	}
 #endif  // UNDO_TRACE
 
+	undoList.clear();
 	clearRedo();
 
 	this->savedUndo = nullptr;
@@ -183,7 +184,7 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (action == nullptr)
+	if (!action)
 	{
 		return;
 	}
