@@ -14,13 +14,14 @@
 #include "xojfile/LoadHandler.h"
 
 
-#include <config.h>
-#include <config-dev.h>
-#include <config-paths.h>
-#include <i18n.h>
-#include <Stacktrace.h>
-#include <StringUtils.h>
-#include <XojMsgBox.h>
+#include "config.h"
+#include "config-dev.h"
+#include "config-paths.h"
+#include "i18n.h"
+#include "Stacktrace.h"
+#include "StringUtils.h"
+#include "XojMsgBox.h"
+#include "util/cpp14memory.h"
 
 #include <libintl.h>
 #include <gtk/gtk.h>
@@ -30,7 +31,7 @@
 #include <libgen.h>
 #endif
 
-#include <algorithm> // std::sort
+#include <algorithm>  // std::sort
 
 
 XournalMain::XournalMain()
@@ -200,7 +201,7 @@ void XournalMain::checkForEmergencySave(Control* control) {
 			control->getDocument()->setFilename("");
 
 			// Make sure the document is changed, there is a question to ask for save
-			control->getUndoRedoHandler()->addUndoAction(new EmergencySaveRestore());
+			control->getUndoRedoHandler()->addUndoAction(mem::make_unique<EmergencySaveRestore>());
 			control->updateWindowTitle();
 			g_unlink(filename.c_str());
 		}

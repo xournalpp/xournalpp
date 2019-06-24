@@ -23,31 +23,31 @@
 class VerticalToolHandler : public ElementContainer
 {
 public:
-	VerticalToolHandler(Redrawable* view, PageRef page, double y, double zoom);
-	virtual ~VerticalToolHandler();
+	VerticalToolHandler(Redrawable* view, const PageRef& page, double y, double zoom);
+	~VerticalToolHandler() override;
 
 	void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
 	void currentPos(double x, double y);
 
-	MoveUndoAction* finalize();
+	std::unique_ptr<MoveUndoAction> finalize();
 
-	vector<Element*>* getElements();
+	vector<Element*>* getElements() override;
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Redrawable* view;
+	Redrawable* view = nullptr;
 	PageRef page;
-	Layer* layer;
+	Layer* layer = nullptr;
 	vector<Element*> elements;
 
-	cairo_surface_t* crBuffer;
+	cairo_surface_t* crBuffer = nullptr;
 
-	double startY;
-	double endY;
+	double startY = 0;
+	double endY = 0;
 
 	/**
 	 * When we create a new page
 	 */
-	double jumpY;
+	double jumpY = 0;
 };

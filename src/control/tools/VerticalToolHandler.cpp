@@ -1,22 +1,21 @@
 #include "VerticalToolHandler.h"
+#include <util/cpp14memory.h>
 
 #include "model/Layer.h"
 #include "undo/UndoRedoHandler.h"
 #include "util/GtkColorWrapper.h"
 #include "view/DocumentView.h"
 
-VerticalToolHandler::VerticalToolHandler(Redrawable* view, PageRef page, double y, double zoom)
+VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, double y, double zoom)
+ : view(view)
+ , page(page)
+ , layer(this->page->getSelectedLayer())
+ , startY(y)
+ , endY(y)
 {
 	XOJ_INIT_TYPE(VerticalToolHandler);
 
-	this->startY = y;
-	this->endY = y;
-	this->view = view;
-	this->page = page;
-	this->layer = this->page->getSelectedLayer();
-	this->jumpY = 0;
-
-	for (Element* e : *this->layer->getElements())
+	for (Element* e: *this->layer->getElements())
 	{
 		if (e->getY() >= y)
 		{
@@ -24,7 +23,7 @@ VerticalToolHandler::VerticalToolHandler(Redrawable* view, PageRef page, double 
 		}
 	}
 
-	for (Element* e : this->elements)
+	for (Element* e: this->elements)
 	{
 		this->layer->removeElement(e, false);
 
@@ -33,8 +32,8 @@ VerticalToolHandler::VerticalToolHandler(Redrawable* view, PageRef page, double 
 
 	this->jumpY = this->page->getHeight() - this->jumpY;
 
-	this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-	                                            this->page->getWidth() * zoom, (this->page->getHeight() - y) * zoom);
+	this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->page->getWidth() * zoom,
+	                                            (this->page->getHeight() - y) * zoom);
 
 	cairo_t* cr = cairo_create(this->crBuffer);
 	cairo_scale(cr, zoom, zoom);
@@ -51,12 +50,12 @@ VerticalToolHandler::~VerticalToolHandler()
 {
 	XOJ_CHECK_TYPE(VerticalToolHandler);
 
-	this->view = NULL;
+	this->view = nullptr;
 
 	if (this->crBuffer)
 	{
 		cairo_surface_destroy(this->crBuffer);
-		this->crBuffer = NULL;
+		this->crBuffer = nullptr;
 	}
 
 	XOJ_RELEASE_TYPE(VerticalToolHandler);
@@ -118,15 +117,16 @@ vector<Element*>* VerticalToolHandler::getElements()
 	return &this->elements;
 }
 
-MoveUndoAction* VerticalToolHandler::finalize()
+std::unique_ptr<MoveUndoAction> VerticalToolHandler::finalize()
 {
 	XOJ_CHECK_TYPE(VerticalToolHandler);
 
 	double dY = this->endY - this->startY;
 
-	MoveUndoAction* undo = new MoveUndoAction(this->layer, this->page, &this->elements, 0, dY, this->layer, this->page);
+	auto undo =
+	        mem::make_unique<MoveUndoAction>(this->layer, this->page, &this->elements, 0, dY, this->layer, this->page);
 
-	for (Element* e : this->elements)
+	for (Element* e: this->elements)
 	{
 		e->move(0, dY);
 

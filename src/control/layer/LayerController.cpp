@@ -6,7 +6,8 @@
 #include "undo/InsertLayerUndoAction.h"
 #include "undo/MoveLayerUndoAction.h"
 
-#include <Util.h>
+#include "Util.h"
+#include "util/cpp14memory.h"
 
 LayerController::LayerController(Control* control)
  : control(control),
@@ -205,7 +206,7 @@ void LayerController::addNewLayer()
 	int layerPos = p->getSelectedLayerId();
 	p->insertLayer(l, layerPos);
 
-	control->getUndoRedoHandler()->addUndoAction(new InsertLayerUndoAction(this, p, l, layerPos));
+	control->getUndoRedoHandler()->addUndoAction(mem::make_unique<InsertLayerUndoAction>(this, p, l, layerPos));
 
 	fireRebuildLayerMenu();
 	// Repaint is not needed here - the new layer is empty
@@ -239,7 +240,7 @@ void LayerController::deleteCurrentLayer()
 		win->getXournal()->layerChanged(pId);
 	}
 
-	control->getUndoRedoHandler()->addUndoAction(new RemoveLayerUndoAction(this, p, l, lId - 1));
+	control->getUndoRedoHandler()->addUndoAction(mem::make_unique<RemoveLayerUndoAction>(this, p, l, lId - 1));
 	control->resetShapeRecognizer();
 
 	fireRebuildLayerMenu();
@@ -292,7 +293,8 @@ void LayerController::moveCurrentLayer(bool up)
 		win->getXournal()->layerChanged(pId);
 	}
 
-	control->getUndoRedoHandler()->addUndoAction(new MoveLayerUndoAction(this, p, currentLayer, lId - 1, newIndex));
+	control->getUndoRedoHandler()->addUndoAction(
+	        mem::make_unique<MoveLayerUndoAction>(this, p, currentLayer, lId - 1, newIndex));
 
 	fireRebuildLayerMenu();
 }
@@ -326,7 +328,7 @@ void LayerController::copyCurrentLayer()
 		win->getXournal()->layerChanged(pId);
 	}
 
-	control->getUndoRedoHandler()->addUndoAction(new InsertLayerUndoAction(this, p, cloned, lId));
+	control->getUndoRedoHandler()->addUndoAction(mem::make_unique<InsertLayerUndoAction>(this, p, cloned, lId));
 	control->resetShapeRecognizer();
 
 	fireRebuildLayerMenu();

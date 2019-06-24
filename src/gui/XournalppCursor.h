@@ -38,7 +38,7 @@ public:
 
 private:
 	void setCursor(int id);
-	
+
 	GdkCursor* getPenCursor();
 
 	GdkCursor* getEraserCursor();

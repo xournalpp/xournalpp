@@ -706,7 +706,7 @@ void EditSelection::copySelection()
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	undo->addUndoAction(contents->copySelection(this->view->getPage(), this->view, this->x, this->y));
+	undo->addUndoAction(UndoActionPtr(contents->copySelection(this->view->getPage(), this->view, this->x, this->y)));
 }
 
 /**

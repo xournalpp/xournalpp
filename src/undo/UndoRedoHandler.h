@@ -11,10 +11,16 @@
 
 #pragma once
 
-#include "UndoAction.h"
 #include <XournalType.h>
+#include "UndoAction.h"
+
+#include <deque>
+#include <stack>
+#include <vector>
 
 class Control;
+
+using UndoActionPtr = std::unique_ptr<UndoAction>;
 
 class UndoRedoListener
 {
@@ -22,13 +28,13 @@ public:
 	virtual void undoRedoChanged() = 0;
 	virtual void undoRedoPageChanged(PageRef page) = 0;
 
-	virtual ~UndoRedoListener();
+	virtual ~UndoRedoListener() = default;
 };
 
 class UndoRedoHandler
 {
 public:
-	UndoRedoHandler(Control* control);
+	explicit UndoRedoHandler(Control* control);
 	virtual ~UndoRedoHandler();
 
 	void undo();
@@ -37,8 +43,8 @@ public:
 	bool canUndo();
 	bool canRedo();
 
-	void addUndoAction(UndoAction* action);
-	void addUndoActionBefore(UndoAction* action, UndoAction* before);
+	void addUndoAction(UndoActionPtr action);
+	void addUndoActionBefore(UndoActionPtr action, UndoAction* before);
 	bool removeUndoAction(UndoAction* action);
 
 	string undoDescription();
@@ -46,7 +52,7 @@ public:
 
 	void clearContents();
 
-	void fireUpdateUndoRedoButtons(vector<PageRef> pages);
+	void fireUpdateUndoRedoButtons(const vector<PageRef>& pages);
 	void addUndoRedoListener(UndoRedoListener* listener);
 
 	bool isChanged();
@@ -62,14 +68,13 @@ private:
 
 private:
 	XOJ_TYPE_ATTRIB;
+	std::deque<UndoActionPtr> undoList;
+	std::deque<UndoActionPtr> redoList;
 
-	GList* undoList = NULL;
-	GList* redoList = NULL;
+	UndoAction* savedUndo = nullptr;
+	UndoAction* autosavedUndo = nullptr;
 
-	UndoAction* savedUndo = NULL;
-	UndoAction* autosavedUndo = NULL;
+	std::vector<UndoRedoListener*> listener;
 
-	GList* listener = NULL;
-
-	Control* control = NULL;
+	Control* control = nullptr;
 };

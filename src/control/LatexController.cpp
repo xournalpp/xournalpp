@@ -6,13 +6,13 @@
 #include "gui/dialog/LatexDialog.h"
 #include "undo/InsertUndoAction.h"
 
-#include <i18n.h>
-#include <Util.h>
-#include <Stacktrace.h>
-#include <XojMsgBox.h>
-#include <StringUtils.h>
-
+#include "Stacktrace.h"
+#include "StringUtils.h"
+#include "Util.h"
+#include "XojMsgBox.h"
+#include "i18n.h"
 #include "pixbuf-utils.h"
+#include "util/cpp14memory.h"
 
 /**
  * First half of the LaTeX template used to generate preview PDFs. User-supplied
@@ -22,28 +22,38 @@
  * the rendered formula is blank. Otherwise, a completely blank, sizeless PDF
  * will be generated, which Poppler will be unable to load.
  */
-const char* LATEX_TEMPLATE_1 =
-	R"(\documentclass[crop, border=5pt]{standalone})" "\n"
-	R"(\usepackage{amsmath})" "\n"
-	R"(\usepackage{amssymb})" "\n"
-	R"(\usepackage{ifthen})" "\n"
-	R"(\newlength{\pheight})" "\n"
-	R"(\def\preview{\(\displaystyle)" "\n";
+const char* LATEX_TEMPLATE_1 = R"(\documentclass[crop, border=5pt]{standalone})"
+                               "\n"
+                               R"(\usepackage{amsmath})"
+                               "\n"
+                               R"(\usepackage{amssymb})"
+                               "\n"
+                               R"(\usepackage{ifthen})"
+                               "\n"
+                               R"(\newlength{\pheight})"
+                               "\n"
+                               R"(\def\preview{\(\displaystyle)"
+                               "\n";
 
-const char* LATEX_TEMPLATE_2 =
-	"\n\\)}\n"
-	R"(\begin{document})" "\n"
-	R"(\settoheight{\pheight}{\preview} %)" "\n"
-	R"(\ifthenelse{\pheight=0})" "\n"
-	R"({\GenericError{}{xournalpp: blank formula}{}{}})" "\n"
-	R"(\preview)" "\n"
-	R"(\end{document})" "\n";
+const char* LATEX_TEMPLATE_2 = "\n\\)}\n"
+                               R"(\begin{document})"
+                               "\n"
+                               R"(\settoheight{\pheight}{\preview} %)"
+                               "\n"
+                               R"(\ifthenelse{\pheight=0})"
+                               "\n"
+                               R"({\GenericError{}{xournalpp: blank formula}{}{}})"
+                               "\n"
+                               R"(\preview)"
+                               "\n"
+                               R"(\end{document})"
+                               "\n";
 
 LatexController::LatexController(Control* control)
-	: control(control),
-	  dlg(control->getGladeSearchPath()),
-	  doc(control->getDocument()),
-	  texTmpDir(Util::getTmpDirSubfolder("tex"))
+ : control(control)
+ , dlg(control->getGladeSearchPath())
+ , doc(control->getDocument())
+ , texTmpDir(Util::getTmpDirSubfolder("tex"))
 {
 	XOJ_INIT_TYPE(LatexController);
 	Util::ensureFolderExists(this->texTmpDir);
@@ -53,7 +63,7 @@ LatexController::~LatexController()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
-	this->control = NULL;
+	this->control = nullptr;
 
 	XOJ_RELEASE_TYPE(LatexController);
 }
@@ -68,20 +78,28 @@ LatexController::FindDependencyStatus LatexController::findTexDependencies()
 	gchar* pdflatex = g_find_program_in_path("pdflatex");
 	if (!pdflatex)
 	{
-		string msg = _("Could not find pdflatex in PATH.\nPlease install pdflatex first and make sure it's in the PATH.");
+		string msg =
+		        _("Could not find pdflatex in PATH.\nPlease install pdflatex first and make sure it's in the PATH.");
 		return LatexController::FindDependencyStatus(false, msg);
 	}
 	this->pdflatexPath = pdflatex;
 	g_free(pdflatex);
 
 	// Check for 'standalone' latex package
-	static gchar* kpsewhichArgs[] = { g_strdup("kpsewhich"), g_strdup("standalone") };
+	static gchar* kpsewhichArgs[] = {g_strdup("kpsewhich"), g_strdup("standalone")};
 	auto kpsewhichFlags = GSpawnFlags(G_SPAWN_DEFAULT | G_SPAWN_SEARCH_PATH | G_SPAWN_STDOUT_TO_DEV_NULL);
 	GError* kpsewhichErr = nullptr;
 	gint kpsewhichStatus;
-	g_spawn_sync(
-		nullptr, kpsewhichArgs, nullptr, kpsewhichFlags, nullptr, nullptr, nullptr,
-		nullptr, &kpsewhichStatus, &kpsewhichErr);
+	g_spawn_sync(nullptr,
+	             kpsewhichArgs,
+	             nullptr,
+	             kpsewhichFlags,
+	             nullptr,
+	             nullptr,
+	             nullptr,
+	             nullptr,
+	             &kpsewhichStatus,
+	             &kpsewhichErr);
 	if (kpsewhichErr != nullptr)
 	{
 		g_error_free(kpsewhichErr);
@@ -90,7 +108,8 @@ LatexController::FindDependencyStatus LatexController::findTexDependencies()
 	}
 	else if (kpsewhichStatus != 0)
 	{
-		string msg = FS(_F("Could not find the LaTeX package 'standalone'.\nPlease install standalone and make sure it's accessible by your LaTeX installation."));
+		string msg = FS(_F("Could not find the LaTeX package 'standalone'.\nPlease install standalone and make sure "
+		                   "it's accessible by your LaTeX installation."));
 		return LatexController::FindDependencyStatus(false, msg);
 	}
 
@@ -108,7 +127,7 @@ std::unique_ptr<GPid> LatexController::runCommandAsync(string texString)
 
 	Path texFile = this->texTmpDir / "tex.tex";
 
-	GError* err = NULL;
+	GError* err = nullptr;
 	if (!g_file_set_contents(texFile.c_str(), texContents.c_str(), texContents.length(), &err))
 	{
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not save .tex file: {1}") % err->message));
@@ -116,14 +135,15 @@ std::unique_ptr<GPid> LatexController::runCommandAsync(string texString)
 		return nullptr;
 	}
 
-	char* texFileEscaped = g_strescape(texFile.c_str(), NULL);
+	char* texFileEscaped = g_strescape(texFile.c_str(), nullptr);
 	char* cmd = g_strdup(this->pdflatexPath.c_str());
 
 	static char* texFlag = g_strdup("-interaction=nonstopmode");
-	char* argv[] = { cmd, texFlag, texFileEscaped, NULL };
+	char* argv[] = {cmd, texFlag, texFileEscaped, nullptr};
 
 	std::unique_ptr<GPid> pdflatexPid(new GPid);
-	GSpawnFlags flags = GSpawnFlags(G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL | G_SPAWN_DO_NOT_REAP_CHILD);
+	GSpawnFlags flags =
+	        GSpawnFlags(G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL | G_SPAWN_DO_NOT_REAP_CHILD);
 
 	this->setUpdating(true);
 	this->lastPreviewedTex = texString;
@@ -161,7 +181,7 @@ void LatexController::findSelectedTexElement()
 		return;
 	}
 	this->view = this->control->getWindow()->getXournal()->getViewFor(pageNr);
-	if (view == NULL)
+	if (view == nullptr)
 	{
 		this->doc->unlock();
 		return;
@@ -314,7 +334,6 @@ void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, LatexContro
 		{
 			self->dlg.setTempRender(self->temporaryRender->getPdf());
 		}
-
 	}
 	self->setUpdating(false);
 	if (shouldUpdate)
@@ -377,7 +396,7 @@ std::unique_ptr<TexImage> LatexController::convertDocumentToImage(PopplerDocumen
 
 	if (poppler_document_get_n_pages(doc) < 1)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	PopplerPage* page = poppler_document_get_page(doc, 0);
@@ -424,32 +443,32 @@ std::unique_ptr<TexImage> LatexController::loadRendered(string renderedTex)
 	}
 
 	Path pdfPath = texTmpDir / "tex.pdf";
-	GError* err = NULL;
+	GError* err = nullptr;
 
-	gchar* fileContents = NULL;
+	gchar* fileContents = nullptr;
 	gsize fileLength = 0;
 	if (!g_file_get_contents(pdfPath.c_str(), &fileContents, &fileLength, &err))
 	{
 		XojMsgBox::showErrorToUser(control->getGtkWindow(),
-				FS(_F("Could not load LaTeX PDF file, File Error: {1}") % err->message));
+		                           FS(_F("Could not load LaTeX PDF file, File Error: {1}") % err->message));
 		g_error_free(err);
-		return NULL;
+		return nullptr;
 	}
 
-	PopplerDocument* pdf = poppler_document_new_from_data(fileContents, fileLength, NULL, &err);
-	if (err != NULL)
+	PopplerDocument* pdf = poppler_document_new_from_data(fileContents, fileLength, nullptr, &err);
+	if (err != nullptr)
 	{
 		string message = FS(_F("Could not load LaTeX PDF file: {1}") % err->message);
 		g_message("%s", message.c_str());
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), message);
 		g_error_free(err);
-		return NULL;
+		return nullptr;
 	}
 
-	if (pdf == NULL)
+	if (pdf == nullptr)
 	{
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not load LaTeX PDF file")));
-		return NULL;
+		return nullptr;
 	}
 
 	std::unique_ptr<TexImage> img = convertDocumentToImage(pdf, renderedTex);
@@ -477,8 +496,7 @@ void LatexController::insertTexImage()
 	layer->addElement(img);
 	view->rerenderElement(img);
 	doc->unlock();
-
-	control->getUndoRedoHandler()->addUndoAction(new InsertUndoAction(page, layer, img));
+	control->getUndoRedoHandler()->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, img));
 
 	// Select element
 	EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
