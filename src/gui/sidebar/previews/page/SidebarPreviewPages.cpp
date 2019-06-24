@@ -134,7 +134,8 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 		break;
 	default:
 		break;
-	case SIDEBAR_ACTION_NONE: break;
+	case SIDEBAR_ACTION_NONE:
+		break;
 	}
 }
 

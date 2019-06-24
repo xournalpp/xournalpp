@@ -56,7 +56,8 @@ EditSelectionContents::~EditSelectionContents()
 {
 	XOJ_CHECK_TYPE(EditSelectionContents);
 
-	if (this->rescaleId) {
+	if (this->rescaleId)
+	{
 		g_source_remove(this->rescaleId);
 		this->rescaleId = 0;
 	}
@@ -101,8 +102,10 @@ UndoAction* EditSelectionContents::setSize(ToolSize size,
 
 	bool found = false;
 
-	for (Element* e: this->selected) {
-		if (e->getType() == ELEMENT_STROKE) {
+	for (Element* e: this->selected)
+	{
+		if (e->getType() == ELEMENT_STROKE)
+		{
 			Stroke* s = (Stroke*) e;
 			StrokeTool tool = s->getToolType();
 
@@ -111,11 +114,16 @@ UndoAction* EditSelectionContents::setSize(ToolSize size,
 			int pointCount = s->getPointCount();
 			vector<double> originalPressure = SizeUndoAction::getPressure(s);
 
-			if (tool == STROKE_TOOL_PEN) {
+			if (tool == STROKE_TOOL_PEN)
+			{
 				s->setWidth(thicknessPen[size]);
-			} else if (tool == STROKE_TOOL_HIGHLIGHTER) {
+			}
+			else if (tool == STROKE_TOOL_HIGHLIGHTER)
+			{
 				s->setWidth(thicknessHilighter[size]);
-			} else if (tool == STROKE_TOOL_ERASER) {
+			}
+			else if (tool == STROKE_TOOL_ERASER)
+			{
 				s->setWidth(thicknessEraser[size]);
 			}
 
@@ -131,12 +139,15 @@ UndoAction* EditSelectionContents::setSize(ToolSize size,
 		}
 	}
 
-	if (found) {
+	if (found)
+	{
 		this->deleteViewBuffer();
 		this->sourceView->getXournal()->repaintSelection();
 
 		return undo;
-	} else {
+	}
+	else
+	{
 		delete undo;
 		return NULL;
 	}
@@ -154,21 +165,29 @@ UndoAction* EditSelectionContents::setFill(int alphaPen, int alphaHighligther)
 
 	bool found = false;
 
-	for (Element* e: this->selected) {
-		if (e->getType() == ELEMENT_STROKE) {
+	for (Element* e: this->selected)
+	{
+		if (e->getType() == ELEMENT_STROKE)
+		{
 			Stroke* s = (Stroke*) e;
 			StrokeTool tool = s->getToolType();
 			int newFill = 128;
 
-			if (tool == STROKE_TOOL_PEN) {
+			if (tool == STROKE_TOOL_PEN)
+			{
 				newFill = alphaPen;
-			} else if (tool == STROKE_TOOL_HIGHLIGHTER) {
+			}
+			else if (tool == STROKE_TOOL_HIGHLIGHTER)
+			{
 				newFill = alphaHighligther;
-			} else {
+			}
+			else
+			{
 				continue;
 			}
 
-			if (newFill == s->getFill()) {
+			if (newFill == s->getFill())
+			{
 				continue;
 			}
 
@@ -180,12 +199,15 @@ UndoAction* EditSelectionContents::setFill(int alphaPen, int alphaHighligther)
 		}
 	}
 
-	if (found) {
+	if (found)
+	{
 		this->deleteViewBuffer();
 		this->sourceView->getXournal()->repaintSelection();
 
 		return undo;
-	} else {
+	}
+	else
+	{
 		delete undo;
 		return NULL;
 	}
@@ -206,17 +228,22 @@ UndoAction* EditSelectionContents::setFont(XojFont& font)
 
 	FontUndoAction* undo = new FontUndoAction(this->sourcePage, this->sourceLayer);
 
-	for (Element* e: this->selected) {
-		if (e->getType() == ELEMENT_TEXT) {
+	for (Element* e: this->selected)
+	{
+		if (e->getType() == ELEMENT_TEXT)
+		{
 			Text* t = (Text*) e;
 			undo->addStroke(t, t->getFont(), font);
 
-			if (std::isnan(x1)) {
+			if (std::isnan(x1))
+			{
 				x1 = t->getX();
 				y1 = t->getY();
 				x2 = t->getX() + t->getElementWidth();
 				y2 = t->getY() + t->getElementHeight();
-			} else {
+			}
+			else
+			{
 				// size with old font
 				x1 = MIN(x1, t->getX());
 				y1 = MIN(y1, t->getY());
@@ -236,7 +263,8 @@ UndoAction* EditSelectionContents::setFont(XojFont& font)
 		}
 	}
 
-	if (!std::isnan(x1)) {
+	if (!std::isnan(x1))
+	{
 		this->deleteViewBuffer();
 		this->sourceView->getXournal()->repaintSelection();
 		return undo;
@@ -257,8 +285,10 @@ UndoAction* EditSelectionContents::setColor(int color)
 
 	bool found = false;
 
-	for (Element* e: this->selected) {
-		if (e->getType() == ELEMENT_TEXT || e->getType() == ELEMENT_STROKE) {
+	for (Element* e: this->selected)
+	{
+		if (e->getType() == ELEMENT_TEXT || e->getType() == ELEMENT_STROKE)
+		{
 			int lastColor = e->getColor();
 			e->setColor(color);
 			undo->addStroke(e, lastColor, e->getColor());
@@ -267,12 +297,15 @@ UndoAction* EditSelectionContents::setColor(int color)
 		}
 	}
 
-	if (found) {
+	if (found)
+	{
 		this->deleteViewBuffer();
 		this->sourceView->getXournal()->repaintSelection();
 
 		return undo;
-	} else {
+	}
+	else
+	{
 		delete undo;
 		return NULL;
 	}
@@ -295,7 +328,8 @@ void EditSelectionContents::fillUndoItem(DeleteUndoAction* undo)
 	// and owned by the selection, therefore the layer
 	// doesn't know the index anymore
 	int index = layer->getElements()->size();
-	for (Element* e: this->selected) {
+	for (Element* e: this->selected)
+	{
 		undo->addElement(layer, e, index);
 	}
 
@@ -325,7 +359,8 @@ void EditSelectionContents::deleteViewBuffer()
 {
 	XOJ_CHECK_TYPE(EditSelectionContents);
 
-	if (this->crBuffer) {
+	if (this->crBuffer)
+	{
 		cairo_surface_destroy(this->crBuffer);
 		this->crBuffer = NULL;
 	}
@@ -363,7 +398,8 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
 
-	if (aspectRatio) {
+	if (aspectRatio)
+	{
 		double f = (fx + fy) / 2;
 		fx = f;
 		fy = f;
@@ -376,14 +412,18 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 
 	bool move = mx != 0 || my != 0;
 
-	for (Element* e: this->selected) {
-		if (move) {
+	for (Element* e: this->selected)
+	{
+		if (move)
+		{
 			e->move(mx, my);
 		}
-		if (scale) {
+		if (scale)
+		{
 			e->scale(x, y, fx, fy);
 		}
-		if (rotate) {
+		if (rotate)
+		{
 			e->rotate(x, y, this->lastWidth / 2, this->lastHeight / 2, this->rotation);
 		}
 		layer->addElement(e);
@@ -419,7 +459,8 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
 	double fx = width / this->lastWidth;
 	double fy = height / this->lastHeight;
 
-	if (aspectRatio) {
+	if (aspectRatio)
+	{
 		double f = (fx + fy) / 2;
 		fx = f;
 		fy = f;
@@ -428,35 +469,46 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
 	bool scale = (width != this->lastWidth || height != this->lastHeight);
 	bool rotate = (std::abs(this->rotation) > __DBL_EPSILON__);
 
-	if (type == CURSOR_SELECTION_MOVE) {
-		undo->addUndoAction(mem::make_unique<MoveUndoAction>(
-		        this->sourceLayer, this->sourcePage, &this->selected, mx, my, layer, targetPage));
-
-	} else if (type == CURSOR_SELECTION_ROTATE) {
-		undo->addUndoAction(mem::make_unique<RotateUndoAction>(
-		        this->sourcePage, &this->selected, x, y, width / 2, height / 2, rotation - this->lastRotation));
+	if (type == CURSOR_SELECTION_MOVE)
+	{
+		undo->addUndoAction(mem::make_unique<MoveUndoAction>(this->sourceLayer, this->sourcePage, &this->selected, mx,
+		                                                     my, layer, targetPage));
+	}
+	else if (type == CURSOR_SELECTION_ROTATE)
+	{
+		undo->addUndoAction(mem::make_unique<RotateUndoAction>(this->sourcePage, &this->selected, x, y, width / 2,
+		                                                       height / 2, rotation - this->lastRotation));
 		this->rotation = 0;             // reset rotation for next usage
 		this->lastRotation = rotation;  // undo one rotation at a time.
 	}
-	if (scale) {
+	if (scale)
+	{
 		// The coordinates which are the center of the scaling
 		// operation. Their coordinates depend on the scaling
 		// operation performed
 		double px = this->lastX;
 		double py = this->lastY;
 
-		switch (type) {
+		switch (type)
+		{
 		case CURSOR_SELECTION_TOP_LEFT:
 		case CURSOR_SELECTION_BOTTOM_LEFT:
-		case CURSOR_SELECTION_LEFT: px = (this->lastWidth + this->lastX); break;
-		default: break;
+		case CURSOR_SELECTION_LEFT:
+			px = (this->lastWidth + this->lastX);
+			break;
+		default:
+			break;
 		}
 
-		switch (type) {
+		switch (type)
+		{
 		case CURSOR_SELECTION_TOP_LEFT:
 		case CURSOR_SELECTION_TOP_RIGHT:
-		case CURSOR_SELECTION_TOP: py = (this->lastHeight + this->lastY); break;
-		default: break;
+		case CURSOR_SELECTION_TOP:
+			py = (this->lastHeight + this->lastY);
+			break;
+		default:
+			break;
 		}
 
 		// Todo: this needs to be aware of the rotation...  this should all be rewritten to scale and rotate from
@@ -482,16 +534,19 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
 
-	if (this->relativeX == -9999999999) {
+	if (this->relativeX == -9999999999)
+	{
 		this->relativeX = x;
 		this->relativeY = y;
 	}
 
-	if (std::abs(rotation) > __DBL_EPSILON__) {
+	if (std::abs(rotation) > __DBL_EPSILON__)
+	{
 		this->rotation = rotation;
 	}
 
-	if (this->crBuffer == NULL) {
+	if (this->crBuffer == NULL)
+	{
 		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width * zoom, height * zoom);
 		cairo_t* cr2 = cairo_create(this->crBuffer);
 
@@ -518,8 +573,10 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
 	double sx = (double) wTarget / wImg;
 	double sy = (double) hTarget / hImg;
 
-	if (wTarget != wImg || hTarget != hImg || std::abs(rotation) > __DBL_EPSILON__) {
-		if (!this->rescaleId) {
+	if (wTarget != wImg || hTarget != hImg || std::abs(rotation) > __DBL_EPSILON__)
+	{
+		if (!this->rescaleId)
+		{
 			this->rescaleId = g_idle_add((GSourceFunc) repaintSelection, this);
 		}
 		cairo_scale(cr, sx, sy);
@@ -542,7 +599,8 @@ UndoAction* EditSelectionContents::copySelection(PageRef page, XojPageView* view
 
 	vector<Element*> new_elems;
 
-	for (Element* e: *getElements()) {
+	for (Element* e: *getElements())
+	{
 		Element* ec = e->clone();
 
 		ec->move(x - this->originalX, y - this->originalY);

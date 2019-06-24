@@ -19,8 +19,11 @@
 guint32 StrokeHandler::lastStrokeTime;  // persist for next stroke
 
 
-StrokeHandler::StrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page):
-        InputHandler(xournal, redrawable, page), surfMask(nullptr), crMask(nullptr), reco(nullptr)
+StrokeHandler::StrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
+ : InputHandler(xournal, redrawable, page)
+ , surfMask(nullptr)
+ , crMask(nullptr)
+ , reco(nullptr)
 {
 	XOJ_INIT_TYPE(StrokeHandler);
 }
@@ -40,7 +43,8 @@ void StrokeHandler::draw(cairo_t* cr)
 {
 	XOJ_CHECK_TYPE(StrokeHandler);
 
-	if (!stroke) {
+	if (!stroke)
+	{
 		return;
 	}
 
@@ -48,7 +52,9 @@ void StrokeHandler::draw(cairo_t* cr)
 
 	if (stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
 		cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
-	} else {
+	}
+	else
+	{
 		cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 	}
 
@@ -66,7 +72,8 @@ bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(StrokeHandler);
 
-	if (!stroke) {
+	if (!stroke)
+	{
 		return false;
 	}
 
@@ -77,20 +84,24 @@ bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 
 	Point currentPoint(x, y);
 
-	if (pointCount > 0) {
-		if (!validMotion(currentPoint, stroke->getPoint(pointCount - 1))) {
+	if (pointCount > 0)
+	{
+		if (!validMotion(currentPoint, stroke->getPoint(pointCount - 1)))
+		{
 			return true;
 		}
 	}
 
-	if (Point::NO_PRESSURE != pos.pressure && stroke->getToolType() == STROKE_TOOL_PEN) {
+	if (Point::NO_PRESSURE != pos.pressure && stroke->getToolType() == STROKE_TOOL_PEN)
+	{
 		stroke->setLastPressure(pos.pressure * stroke->getWidth());
 	}
 
 	stroke->addPoint(currentPoint);
 
 	if ((stroke->getFill() != -1 || stroke->getLineStyle().hasDashes()) &&
-	    !(stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER)) {
+	    !(stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER))
+	{
 		// Clear surface
 
 		// for debugging purposes
@@ -101,8 +112,11 @@ bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 		cairo_fill(crMask);
 
 		view.drawStroke(crMask, stroke, 0, 1, true, true);
-	} else {
-		if (pointCount > 0) {
+	}
+	else
+	{
+		if (pointCount > 0)
+		{
 			Point prevPoint(stroke->getPoint(pointCount - 1));
 
 			Stroke lastSegment;
@@ -132,7 +146,8 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(StrokeHandler);
 
-	if (!stroke) {
+	if (!stroke)
+	{
 		return;
 	}
 
@@ -154,8 +169,10 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 		                    pow(xournal->getZoom(), 2);
 
 		if (lengthSqrd < pow((strokeFilterIgnoreLength * dpmm), 2) &&
-		    pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) {
-			if (pos.timestamp - this->lastStrokeTime > strokeFilterSuccessiveTime) {
+		    pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime)
+		{
+			if (pos.timestamp - this->lastStrokeTime > strokeFilterSuccessiveTime)
+			{
 				// stroke not being added to layer... delete here but clear first!
 
 				this->redrawable->rerenderRect(stroke->getX(),
@@ -178,9 +195,11 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	// Backward compatibility and also easier to handle for me;-)
 	// I cannot draw a line with one point, to draw a visible line I need two points,
 	// twice the same Point is also OK
-	if (stroke->getPointCount() == 1) {
+	if (stroke->getPointCount() == 1)
+	{
 		ArrayIterator<Point> it = stroke->pointIterator();
-		if (it.hasNext()) {
+		if (it.hasNext())
+		{
 			stroke->addPoint(it.next());
 		}
 		// No pressure sensitivity
@@ -199,14 +218,17 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 
 	ToolHandler* h = control->getToolHandler();
 
-	if (h->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER) {
-		if (reco == nullptr) {
+	if (h->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER)
+	{
+		if (reco == nullptr)
+		{
 			reco = new ShapeRecognizer();
 		}
 
 		ShapeRecognizerResult* result = reco->recognizePatterns(stroke);
 
-		if (result) {
+		if (result)
+		{
 			strokeRecognizerDetected(result, layer);
 
 			// Full repaint is done anyway
@@ -217,7 +239,8 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 		}
 	}
 
-	if (stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+	if (stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER)
+	{
 		// The stroke is not filled on drawing time
 		// If the stroke has fill values, it needs to be re-rendered
 		// else the fill will not be visible.
@@ -229,7 +252,8 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	page->fireElementChanged(stroke);
 
 	// Manually force the rendering of the stroke, if no motion event occurred inbetween, that would rerender the page.
-	if (stroke->getPointCount() == 2) {
+	if (stroke->getPointCount() == 2)
+	{
 		this->redrawable->rerenderElement(stroke);
 	}
 
@@ -257,7 +281,8 @@ void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Laye
 	range.addPoint(stroke->getX(), stroke->getY());
 	range.addPoint(stroke->getX() + stroke->getElementWidth(), stroke->getY() + stroke->getElementHeight());
 
-	for (Stroke* s: *result->getSources()) {
+	for (Stroke* s: *result->getSources())
+	{
 		layer->removeElement(s, false);
 
 		locRecUndo.addSourceElement(s);
@@ -299,7 +324,8 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 
 	cairo_scale(crMask, zoom * dpiScaleFactor, zoom * dpiScaleFactor);
 
-	if (!stroke) {
+	if (!stroke)
+	{
 		this->buttonDownPoint.x = pos.x / zoom;
 		this->buttonDownPoint.y = pos.y / zoom;
 
@@ -313,7 +339,8 @@ void StrokeHandler::destroySurface()
 {
 	XOJ_CHECK_TYPE(StrokeHandler);
 
-	if (surfMask || crMask) {
+	if (surfMask || crMask)
+	{
 		cairo_destroy(crMask);
 		cairo_surface_destroy(surfMask);
 		surfMask = nullptr;
@@ -325,7 +352,8 @@ void StrokeHandler::resetShapeRecognizer()
 {
 	XOJ_CHECK_TYPE(StrokeHandler);
 
-	if (reco) {
+	if (reco)
+	{
 		delete reco;
 		reco = nullptr;
 	}

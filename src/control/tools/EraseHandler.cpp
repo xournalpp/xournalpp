@@ -121,7 +121,8 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
 			return;
 		}
 
-		if (this->eraseUndoAction == nullptr) {
+		if (this->eraseUndoAction == nullptr)
+		{
 			auto eraseUndo = mem::make_unique<EraseUndoAction>(this->page);
 			// Todo check dangerous: this->eraseDeleteUndoAction could be a dangling reference
 			this->eraseUndoAction = eraseUndo.get();
@@ -129,13 +130,16 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
 		}
 
 		EraseableStroke* eraseable = nullptr;
-		if (s->getEraseable() == nullptr) {
+		if (s->getEraseable() == nullptr)
+		{
 			doc->lock();
 			eraseable = new EraseableStroke(s);
 			s->setEraseable(eraseable);
 			doc->unlock();
 			this->eraseUndoAction->addOriginal(l, s, pos);
-		} else {
+		}
+		else
+		{
 			eraseable = s->getEraseable();
 		}
 

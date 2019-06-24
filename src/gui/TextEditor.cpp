@@ -14,8 +14,11 @@
 
 #include <gtk/gtkimmulticontext.h>
 
-TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText):
-        gui(gui), widget(widget), text(text), ownText(ownText)
+TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText)
+ : gui(gui)
+ , widget(widget)
+ , text(text)
+ , ownText(ownText)
 {
 	XOJ_INIT_TYPE(TextEditor);
 
@@ -60,19 +63,25 @@ TextEditor::~TextEditor()
 
 	this->contentsChanged(true);
 
-	if (this->ownText) {
+	if (this->ownText)
+	{
 		UndoRedoHandler* handler = gui->getXournal()->getControl()->getUndoRedoHandler();
-		for (TextUndoAction& undo: this->undoActions) {
+		for (TextUndoAction& undo: this->undoActions)
+		{
 			handler->removeUndoAction(&undo);
 		}
-	} else {
-		for (TextUndoAction& undo: this->undoActions) {
+	}
+	else
+	{
+		for (TextUndoAction& undo: this->undoActions)
+		{
 			undo.textEditFinished();
 		}
 	}
 	this->undoActions.clear();
 
-	if (this->ownText) {
+	if (this->ownText)
+	{
 		delete this->text;
 		this->text = nullptr;
 	}
@@ -80,7 +89,8 @@ TextEditor::~TextEditor()
 	g_object_unref(this->buffer);
 	gtk_widget_destroy(this->textWidget);
 
-	if (this->blinkTimeout) {
+	if (this->blinkTimeout)
+	{
 		g_source_remove(this->blinkTimeout);
 	}
 
@@ -88,7 +98,8 @@ TextEditor::~TextEditor()
 
 	this->text = nullptr;
 
-	if (this->layout) {
+	if (this->layout)
+	{
 		g_object_unref(this->layout);
 		this->layout = nullptr;
 	}
@@ -132,7 +143,8 @@ UndoAction* TextEditor::setColor(int color)
 	repaintEditor();
 
 	// This is a new text, so we don't need to create a undo action
-	if (this->ownText) {
+	if (this->ownText)
+	{
 		return nullptr;
 	}
 
@@ -167,23 +179,32 @@ void TextEditor::iMCommitCallback(GtkIMContext* context, const gchar* str, TextE
 
 	gtk_text_buffer_delete_selection(te->buffer, true, true);
 
-	if (!strcmp(str, "\n")) {
-		if (!gtk_text_buffer_insert_interactive_at_cursor(te->buffer, "\n", 1, true)) {
+	if (!strcmp(str, "\n"))
+	{
+		if (!gtk_text_buffer_insert_interactive_at_cursor(te->buffer, "\n", 1, true))
+		{
 			gtk_widget_error_bell(te->widget);
-		} else {
+		}
+		else
+		{
 			te->contentsChanged(true);
 		}
-	} else {
-		if (!had_selection && te->cursorOverwrite) {
+	}
+	else
+	{
+		if (!had_selection && te->cursorOverwrite)
+		{
 			GtkTextIter insert;
 
 			gtk_text_buffer_get_iter_at_mark(te->buffer, &insert, gtk_text_buffer_get_insert(te->buffer));
-			if (!gtk_text_iter_ends_line(&insert)) {
+			if (!gtk_text_iter_ends_line(&insert))
+			{
 				te->deleteFromCursor(GTK_DELETE_CHARS, 1);
 			}
 		}
 
-		if (!gtk_text_buffer_insert_interactive_at_cursor(te->buffer, str, -1, true)) {
+		if (!gtk_text_buffer_insert_interactive_at_cursor(te->buffer, str, -1, true))
+		{
 			gtk_widget_error_bell(te->widget);
 		}
 	}
@@ -210,14 +231,18 @@ void TextEditor::iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te)
 	 */
 	gtk_im_context_get_preedit_string(context, &str, &attrs, &cursor_pos);
 
-	if (str && str[0] && !gtk_text_iter_can_insert(&iter, true)) {
+	if (str && str[0] && !gtk_text_iter_can_insert(&iter, true))
+	{
 		gtk_widget_error_bell(te->widget);
 		goto out;
 	}
 
-	if (str != nullptr) {
+	if (str != nullptr)
+	{
 		te->preeditString = str;
-	} else {
+	}
+	else
+	{
 		te->preeditString = "";
 	}
 	te->repaintEditor();
@@ -277,7 +302,8 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	if (gtk_bindings_activate_event(G_OBJECT(this->textWidget), event)) {
+	if (gtk_bindings_activate_event(G_OBJECT(this->textWidget), event))
+	{
 		return true;
 	}
 
@@ -288,30 +314,38 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 	GtkTextMark* insert = gtk_text_buffer_get_insert(this->buffer);
 	gtk_text_buffer_get_iter_at_mark(this->buffer, &iter, insert);
 	bool canInsert = gtk_text_iter_can_insert(&iter, true);
-	if (gtk_im_context_filter_keypress(this->imContext, event)) {
+	if (gtk_im_context_filter_keypress(this->imContext, event))
+	{
 		this->needImReset = true;
-		if (!canInsert) {
+		if (!canInsert)
+		{
 			this->resetImContext();
 		}
 		obscure = canInsert;
 		retval = true;
-	} else if (event->state & GDK_CONTROL_MASK) {
-		if (event->keyval == GDK_KEY_b) {
+	}
+	else if (event->state & GDK_CONTROL_MASK)
+	{
+		if (event->keyval == GDK_KEY_b)
+		{
 			toggleBold();
 			return true;
 		}
 		// CTRL + Alt + Plus to increase text size
-		if (event->keyval == GDK_KEY_plus) {
+		if (event->keyval == GDK_KEY_plus)
+		{
 			incSize();
 			return true;
 		}
 		// Decrease text size
-		if (event->keyval == GDK_KEY_minus) {
+		if (event->keyval == GDK_KEY_minus)
+		{
 			decSize();
 			return true;
 		}
-	} else if (event->keyval == GDK_KEY_Return || event->keyval == GDK_KEY_ISO_Enter ||
-	           event->keyval == GDK_KEY_KP_Enter) {
+	}
+	else if (event->keyval == GDK_KEY_Return || event->keyval == GDK_KEY_ISO_Enter || event->keyval == GDK_KEY_KP_Enter)
+	{
 		this->resetImContext();
 		iMCommitCallback(nullptr, "\n", this);
 
@@ -321,16 +355,20 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 	// Pass through Tab as literal tab, unless Control is held down
 	else if ((event->keyval == GDK_KEY_Tab || event->keyval == GDK_KEY_KP_Tab ||
 	          event->keyval == GDK_KEY_ISO_Left_Tab) &&
-	         !(event->state & GDK_CONTROL_MASK)) {
+	         !(event->state & GDK_CONTROL_MASK))
+	{
 		resetImContext();
 		iMCommitCallback(nullptr, "\t", this);
 		obscure = true;
 		retval = true;
-	} else {
+	}
+	else
+	{
 		retval = false;
 	}
 
-	if (obscure) {
+	if (obscure)
+	{
 		XournalppCursor* cursor = gui->getXournal()->getCursor();
 		cursor->setInvisible(true);
 	}
@@ -346,7 +384,8 @@ bool TextEditor::onKeyReleaseEvent(GdkEventKey* event)
 
 	GtkTextMark* insert = gtk_text_buffer_get_insert(this->buffer);
 	gtk_text_buffer_get_iter_at_mark(this->buffer, &iter, insert);
-	if (gtk_text_iter_can_insert(&iter, true) && gtk_im_context_filter_keypress(this->imContext, event)) {
+	if (gtk_text_iter_can_insert(&iter, true) && gtk_im_context_filter_keypress(this->imContext, event))
+	{
 		this->needImReset = true;
 		return true;
 	}
@@ -392,9 +431,12 @@ void TextEditor::toggleBold()
 	std::size_t found = fontName.find("Bold");
 
 	// toggle bold
-	if (found == string::npos) {
+	if (found == string::npos)
+	{
 		fontName = fontName + " Bold";
-	} else {
+	}
+	else
+	{
 		fontName = fontName.substr(0, found - 1);
 	}
 
@@ -415,52 +457,64 @@ void TextEditor::selectAtCursor(TextEditor::SelectType ty)
 	gtk_text_buffer_get_selection_bounds(this->buffer, &startPos, &endPos);
 	const auto searchFlag = GTK_TEXT_SEARCH_TEXT_ONLY;  // To be used to find double newlines
 
-	switch (ty) {
+	switch (ty)
+	{
 	case TextEditor::SelectType::word:
 		// Do nothing if cursor is over whitespace
 		GtkTextIter currentPos;
 		gtk_text_buffer_get_iter_at_mark(this->buffer, &currentPos, mark);
-		if (!gtk_text_iter_inside_word(&currentPos)) {
+		if (!gtk_text_iter_inside_word(&currentPos))
+		{
 			return;
 		}
 
-		if (!gtk_text_iter_starts_word(&currentPos)) {
+		if (!gtk_text_iter_starts_word(&currentPos))
+		{
 			gtk_text_iter_backward_word_start(&startPos);
 		}
-		if (!gtk_text_iter_ends_word(&currentPos)) {
+		if (!gtk_text_iter_ends_word(&currentPos))
+		{
 			gtk_text_iter_forward_word_end(&endPos);
 		}
 		break;
 	case TextEditor::SelectType::paragraph:
 		// Note that a GTK "paragraph" is a line, so there's no nice one-liner.
 		// We define a paragraph as text separated by double newlines.
-		while (!gtk_text_iter_is_start(&startPos)) {
+		while (!gtk_text_iter_is_start(&startPos))
+		{
 			// There's no GTK function to go to line start, so do it manually.
-			while (!gtk_text_iter_starts_line(&startPos)) {
-				if (!gtk_text_iter_backward_word_start(&startPos)) {
+			while (!gtk_text_iter_starts_line(&startPos))
+			{
+				if (!gtk_text_iter_backward_word_start(&startPos))
+				{
 					break;
 				}
 			}
 			// Check for paragraph start
 			GtkTextIter searchPos = startPos;
 			gtk_text_iter_backward_chars(&searchPos, 2);
-			if (gtk_text_iter_backward_search(&startPos, "\n\n", searchFlag, nullptr, nullptr, &searchPos)) {
+			if (gtk_text_iter_backward_search(&startPos, "\n\n", searchFlag, nullptr, nullptr, &searchPos))
+			{
 				break;
 			}
 			gtk_text_iter_backward_line(&startPos);
 		}
-		while (!gtk_text_iter_ends_line(&endPos)) {
+		while (!gtk_text_iter_ends_line(&endPos))
+		{
 			gtk_text_iter_forward_to_line_end(&endPos);
 			// Check for paragraph end
 			GtkTextIter searchPos = endPos;
 			gtk_text_iter_forward_chars(&searchPos, 2);
-			if (gtk_text_iter_forward_search(&endPos, "\n\n", searchFlag, nullptr, nullptr, &searchPos)) {
+			if (gtk_text_iter_forward_search(&endPos, "\n\n", searchFlag, nullptr, nullptr, &searchPos))
+			{
 				break;
 			}
 			gtk_text_iter_forward_line(&endPos);
 		}
 		break;
-	case TextEditor::SelectType::all: gtk_text_buffer_get_bounds(this->buffer, &startPos, &endPos); break;
+	case TextEditor::SelectType::all:
+		gtk_text_buffer_get_bounds(this->buffer, &startPos, &endPos);
+		break;
 	}
 
 	gtk_text_buffer_select_range(this->buffer, &startPos, &endPos);
@@ -498,23 +552,31 @@ void TextEditor::moveCursor(GtkMovementStep step, int count, bool extendSelectio
 
 	bool updateVirtualCursor = true;
 
-	switch (step) {
+	switch (step)
+	{
 	case GTK_MOVEMENT_LOGICAL_POSITIONS:  // not used!?
 		gtk_text_iter_forward_visible_cursor_positions(&newplace, count);
 		break;
 	case GTK_MOVEMENT_VISUAL_POSITIONS:
-		if (count < 0) {
+		if (count < 0)
+		{
 			gtk_text_iter_backward_cursor_position(&newplace);
-		} else {
+		}
+		else
+		{
 			gtk_text_iter_forward_cursor_position(&newplace);
 		}
 		break;
 
 	case GTK_MOVEMENT_WORDS:
-		if (count < 0) {
+		if (count < 0)
+		{
 			gtk_text_iter_backward_visible_word_starts(&newplace, -count);
-		} else if (count > 0) {
-			if (!gtk_text_iter_forward_visible_word_ends(&newplace, count)) {
+		}
+		else if (count > 0)
+		{
+			if (!gtk_text_iter_forward_visible_word_ends(&newplace, count))
+			{
 				gtk_text_iter_forward_to_line_end(&newplace);
 			}
 		}
@@ -526,15 +588,20 @@ void TextEditor::moveCursor(GtkMovementStep step, int count, bool extendSelectio
 		break;
 
 	case GTK_MOVEMENT_PARAGRAPHS:
-		if (count > 0) {
-			if (!gtk_text_iter_ends_line(&newplace)) {
+		if (count > 0)
+		{
+			if (!gtk_text_iter_ends_line(&newplace))
+			{
 				gtk_text_iter_forward_to_line_end(&newplace);
 				--count;
 			}
 			gtk_text_iter_forward_visible_lines(&newplace, count);
 			gtk_text_iter_forward_to_line_end(&newplace);
-		} else if (count < 0) {
-			if (gtk_text_iter_get_line_offset(&newplace) > 0) {
+		}
+		else if (count < 0)
+		{
+			if (gtk_text_iter_get_line_offset(&newplace) > 0)
+			{
 				gtk_text_iter_set_line_offset(&newplace, 0);
 			}
 			gtk_text_iter_forward_visible_lines(&newplace, count);
@@ -544,39 +611,50 @@ void TextEditor::moveCursor(GtkMovementStep step, int count, bool extendSelectio
 
 	case GTK_MOVEMENT_DISPLAY_LINE_ENDS:
 	case GTK_MOVEMENT_PARAGRAPH_ENDS:
-		if (count > 0) {
-			if (!gtk_text_iter_ends_line(&newplace)) {
+		if (count > 0)
+		{
+			if (!gtk_text_iter_ends_line(&newplace))
+			{
 				gtk_text_iter_forward_to_line_end(&newplace);
 			}
-		} else if (count < 0) {
+		}
+		else if (count < 0)
+		{
 			gtk_text_iter_set_line_offset(&newplace, 0);
 		}
 		break;
 
 	case GTK_MOVEMENT_BUFFER_ENDS:
-		if (count > 0) {
+		if (count > 0)
+		{
 			gtk_text_buffer_get_end_iter(this->buffer, &newplace);
-		} else if (count < 0) {
+		}
+		else if (count < 0)
+		{
 			gtk_text_buffer_get_iter_at_offset(this->buffer, &newplace, 0);
 		}
 		break;
 
-	default: break;
+	default:
+		break;
 	}
 
 	// call moveCursor() even if the cursor hasn't moved, since it cancels the selection
 	moveCursor(&newplace, extendSelection);
 
-	if (updateVirtualCursor) {
+	if (updateVirtualCursor)
+	{
 		calcVirtualCursor();
 	}
 
-	if (gtk_text_iter_equal(&insert, &newplace)) {
+	if (gtk_text_iter_equal(&insert, &newplace))
+	{
 		gtk_widget_error_bell(this->widget);
 	}
 
 	this->cursorVisible = false;
-	if (this->blinkTimeout) {
+	if (this->blinkTimeout)
+	{
 		g_source_remove(this->blinkTimeout);
 	}
 	blinkCallback(this);
@@ -586,12 +664,14 @@ void TextEditor::findPos(GtkTextIter* iter, double xPos, double yPos)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	if (!this->layout) {
+	if (!this->layout)
+	{
 		return;
 	}
 
 	int index = 0;
-	if (!pango_layout_xy_to_index(this->layout, xPos * PANGO_SCALE, yPos * PANGO_SCALE, &index, nullptr)) {
+	if (!pango_layout_xy_to_index(this->layout, xPos * PANGO_SCALE, yPos * PANGO_SCALE, &index, nullptr))
+	{
 		index++;
 	}
 
@@ -607,9 +687,11 @@ void TextEditor::contentsChanged(bool forceCreateUndoAction)
 	// I know it's a little bit bulky, but ABS on substracted size_t is a little bit unsafe
 	if (forceCreateUndoAction ||
 	    ((lastText.length() >= currentText.length()) ? (lastText.length() - currentText.length()) :
-	                                                   (currentText.length() - lastText.length())) > 100) {
+	                                                   (currentText.length() - lastText.length())) > 100)
+	{
 		if (!lastText.empty() && !this->undoActions.empty() &&
-		    this->undoActions.front().get().getUndoText() != currentText) {
+		    this->undoActions.front().get().getUndoText() != currentText)
+		{
 			auto undo = mem::make_unique<TextUndoAction>(
 			        gui->getPage(), gui->getPage()->getSelectedLayer(), this->text, lastText, this);
 			UndoRedoHandler* handler = gui->getXournal()->getControl()->getUndoRedoHandler();
@@ -624,7 +706,8 @@ UndoAction* TextEditor::getFirstUndoAction()
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	if (!this->undoActions.empty()) {
+	if (!this->undoActions.empty())
+	{
 		return &this->undoActions.front().get();
 	}
 	return nullptr;
@@ -634,7 +717,8 @@ void TextEditor::markPos(double x, double y, bool extendSelection)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	if (this->layout == nullptr) {
+	if (this->layout == nullptr)
+	{
 		this->markPosX = x;
 		this->markPosY = y;
 		this->markPosExtendSelection = extendSelection;
@@ -649,7 +733,8 @@ void TextEditor::markPos(double x, double y, bool extendSelection)
 	findPos(&newplace, x, y);
 
 	// Noting changed
-	if (gtk_text_iter_equal(&newplace, &iter)) {
+	if (gtk_text_iter_equal(&newplace, &iter))
+	{
 		return;
 	}
 	moveCursor(&newplace, extendSelection);
@@ -669,7 +754,8 @@ void TextEditor::mouseMoved(double x, double y)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	if (this->mouseDown) {
+	if (this->mouseDown)
+	{
 		markPos(x, y, true);
 	}
 }
@@ -687,12 +773,14 @@ void TextEditor::jumpALine(GtkTextIter* textIter, int count)
 
 	int cursorLine = gtk_text_iter_get_line(textIter);
 
-	if (cursorLine + count < 0) {
+	if (cursorLine + count < 0)
+	{
 		return;
 	}
 
 	PangoLayoutLine* line = pango_layout_get_line(this->layout, cursorLine + count);
-	if (line == nullptr) {
+	if (line == nullptr)
+	{
 		return;
 	}
 
@@ -726,10 +814,13 @@ void TextEditor::moveCursor(const GtkTextIter* newLocation, gboolean extendSelec
 
 	Control* control = gui->getXournal()->getControl();
 
-	if (extendSelection) {
+	if (extendSelection)
+	{
 		gtk_text_buffer_move_mark_by_name(this->buffer, "insert", newLocation);
 		control->setCopyPasteEnabled(true);
-	} else {
+	}
+	else
+	{
 		gtk_text_buffer_place_cursor(this->buffer, newLocation);
 		control->setCopyPasteEnabled(false);
 	}
@@ -769,9 +860,11 @@ void TextEditor::deleteFromCursor(GtkDeleteType type, int count)
 
 	this->resetImContext();
 
-	if (type == GTK_DELETE_CHARS) {
+	if (type == GTK_DELETE_CHARS)
+	{
 		// Char delete deletes the selection, if one exists
-		if (gtk_text_buffer_delete_selection(this->buffer, true, true)) {
+		if (gtk_text_buffer_delete_selection(this->buffer, true, true))
+		{
 			this->contentsChanged(true);
 			this->repaintEditor();
 			return;
@@ -783,48 +876,67 @@ void TextEditor::deleteFromCursor(GtkDeleteType type, int count)
 	GtkTextIter start = insert;
 	GtkTextIter end = insert;
 
-	switch (type) {
-	case GTK_DELETE_CHARS: gtk_text_iter_forward_cursor_positions(&end, count); break;
+	switch (type)
+	{
+	case GTK_DELETE_CHARS:
+		gtk_text_iter_forward_cursor_positions(&end, count);
+		break;
 
 	case GTK_DELETE_WORD_ENDS:
-		if (count > 0) {
+		if (count > 0)
+		{
 			gtk_text_iter_forward_word_ends(&end, count);
-		} else if (count < 0) {
+		}
+		else if (count < 0)
+		{
 			gtk_text_iter_backward_word_starts(&start, 0 - count);
 		}
 		break;
 
-	case GTK_DELETE_WORDS: break;
+	case GTK_DELETE_WORDS:
+		break;
 
-	case GTK_DELETE_DISPLAY_LINE_ENDS: break;
+	case GTK_DELETE_DISPLAY_LINE_ENDS:
+		break;
 
-	case GTK_DELETE_DISPLAY_LINES: break;
+	case GTK_DELETE_DISPLAY_LINES:
+		break;
 
 	case GTK_DELETE_PARAGRAPH_ENDS:
-		if (count > 0) {
+		if (count > 0)
+		{
 			/* If we're already at a newline, we need to
 			 * simply delete that newline, instead of
 			 * moving to the next one.
 			 */
-			if (gtk_text_iter_ends_line(&end)) {
+			if (gtk_text_iter_ends_line(&end))
+			{
 				gtk_text_iter_forward_line(&end);
 				--count;
 			}
 
-			while (count > 0) {
-				if (!gtk_text_iter_forward_to_line_end(&end)) {
+			while (count > 0)
+			{
+				if (!gtk_text_iter_forward_to_line_end(&end))
+				{
 					break;
 				}
 
 				--count;
 			}
-		} else if (count < 0) {
-			if (gtk_text_iter_starts_line(&start)) {
+		}
+		else if (count < 0)
+		{
+			if (gtk_text_iter_starts_line(&start))
+			{
 				gtk_text_iter_backward_line(&start);
-				if (!gtk_text_iter_ends_line(&end)) {
+				if (!gtk_text_iter_ends_line(&end))
+				{
 					gtk_text_iter_forward_to_line_end(&start);
 				}
-			} else {
+			}
+			else
+			{
 				gtk_text_iter_set_line_offset(&start, 0);
 			}
 			++count;
@@ -834,12 +946,14 @@ void TextEditor::deleteFromCursor(GtkDeleteType type, int count)
 		break;
 
 	case GTK_DELETE_PARAGRAPHS:
-		if (count > 0) {
+		if (count > 0)
+		{
 			gtk_text_iter_set_line_offset(&start, 0);
 			gtk_text_iter_forward_to_line_end(&end);
 
 			/* Do the lines beyond the first. */
-			while (count > 1) {
+			while (count > 1)
+			{
 				gtk_text_iter_forward_to_line_end(&end);
 				--count;
 			}
@@ -847,27 +961,36 @@ void TextEditor::deleteFromCursor(GtkDeleteType type, int count)
 
 		break;
 
-	case GTK_DELETE_WHITESPACE: {
+	case GTK_DELETE_WHITESPACE:
+	{
 		find_whitepace_region(&insert, &start, &end);
-	} break;
+	}
+	break;
 
-	default: break;
+	default:
+		break;
 	}
 
-	if (!gtk_text_iter_equal(&start, &end)) {
+	if (!gtk_text_iter_equal(&start, &end))
+	{
 		gtk_text_buffer_begin_user_action(this->buffer);
 
-		if (gtk_text_buffer_delete_interactive(this->buffer, &start, &end, true)) {
+		if (gtk_text_buffer_delete_interactive(this->buffer, &start, &end, true))
+		{
 			/*if (leave_one) // leave_one is statically false
 			{
 			    gtk_text_buffer_insert_interactive_at_cursor(this->buffer, " ", 1, true);
 			}*/
-		} else {
+		}
+		else
+		{
 			gtk_widget_error_bell(this->widget);
 		}
 
 		gtk_text_buffer_end_user_action(this->buffer);
-	} else {
+	}
+	else
+	{
 		gtk_widget_error_bell(this->widget);
 	}
 
@@ -884,7 +1007,8 @@ void TextEditor::backspace()
 	resetImContext();
 
 	// Backspace deletes the selection, if one exists
-	if (gtk_text_buffer_delete_selection(this->buffer, true, true)) {
+	if (gtk_text_buffer_delete_selection(this->buffer, true, true))
+	{
 		this->repaintEditor();
 		this->contentsChanged();
 		return;
@@ -892,10 +1016,13 @@ void TextEditor::backspace()
 
 	gtk_text_buffer_get_iter_at_mark(this->buffer, &insert, gtk_text_buffer_get_insert(this->buffer));
 
-	if (gtk_text_buffer_backspace(this->buffer, &insert, true, true)) {
+	if (gtk_text_buffer_backspace(this->buffer, &insert, true, true))
+	{
 		this->repaintEditor();
 		this->contentsChanged();
-	} else {
+	}
+	else
+	{
 		gtk_widget_error_bell(this->widget);
 	}
 }
@@ -908,7 +1035,8 @@ string TextEditor::getSelection()
 	char* text;
 	string s;
 
-	if (gtk_text_buffer_get_selection_bounds(buffer, &start, &end)) {
+	if (gtk_text_buffer_get_selection_bounds(buffer, &start, &end))
+	{
 		text = gtk_text_iter_get_text(&start, &end);
 		s = text;
 		g_free(text);
@@ -953,7 +1081,8 @@ void TextEditor::resetImContext()
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	if (this->needImReset) {
+	if (this->needImReset)
+	{
 		this->needImReset = false;
 		gtk_im_context_reset(this->imContext);
 	}
@@ -978,10 +1107,13 @@ gint TextEditor::blinkCallback(TextEditor* te)
 {
 	XOJ_CHECK_TYPE_OBJ(te, TextEditor);
 
-	if (te->cursorVisible) {
+	if (te->cursorVisible)
+	{
 		te->blinkTimeout = gdk_threads_add_timeout(
 		        te->cursorBlinkTime * CURSOR_OFF_MULTIPLIER / CURSOR_DIVIDER, (GSourceFunc) blinkCallback, te);
-	} else {
+	}
+	else
+	{
 		te->blinkTimeout = gdk_threads_add_timeout(
 		        te->cursorBlinkTime * CURSOR_ON_MULTIPLIER / CURSOR_DIVIDER, (GSourceFunc) blinkCallback, te);
 	}
@@ -1026,14 +1158,17 @@ void TextEditor::drawCursor(cairo_t* cr, double x, double y, double height, doub
 
 	double cw = 2 / zoom;
 	double dX = 0;
-	if (this->cursorOverwrite) {
+	if (this->cursorOverwrite)
+	{
 		dX = -cw / 2;
 		cw *= 2;
 	}
 
 	// Not draw cursor if a move is pending
-	if (!this->markPosQueue) {
-		if (this->cursorVisible) {
+	if (!this->markPosQueue)
+	{
+		if (this->cursorVisible)
+		{
 			cairo_save(cr);
 
 			cairo_set_operator(cr, CAIRO_OPERATOR_DIFFERENCE);
@@ -1065,11 +1200,13 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 	double y0 = this->text->getY();
 	cairo_translate(cr, x0, y0);
 
-	if (this->layout == nullptr) {
+	if (this->layout == nullptr)
+	{
 		this->layout = TextView::initPango(cr, this->text);
 	}
 
-	if (!this->preeditString.empty()) {
+	if (!this->preeditString.empty())
+	{
 		string text = this->text->getText();
 		int pos = gtk_text_iter_get_offset(&cursorIter);
 		string txt = text.substr(0, pos) + preeditString + text.substr(pos);
@@ -1080,14 +1217,17 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 		attrib->start_index = pos;
 		attrib->end_index = pos + preeditString.length();
 
-		if (list == nullptr) {
+		if (list == nullptr)
+		{
 			list = pango_attr_list_new();
 			pango_layout_set_attributes(this->layout, list);
 		}
 		pango_attr_list_insert(list, attrib);
 
 		pango_layout_set_text(this->layout, txt.c_str(), txt.length());
-	} else {
+	}
+	else
+	{
 		string txt = this->text->getText();
 		pango_layout_set_text(this->layout, txt.c_str(), txt.length());
 	}
@@ -1096,7 +1236,8 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 	GtkTextIter end;
 	bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer, &start, &end);
 
-	if (hasSelection) {
+	if (hasSelection)
+	{
 		PangoAttribute* attrib =
 		        pango_attr_background_new(selectionColor.red, selectionColor.green, selectionColor.blue);
 		PangoAttrList* list = pango_layout_get_attributes(this->layout);
@@ -1104,12 +1245,15 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 		attrib->start_index = getByteOffset(gtk_text_iter_get_offset(&start));
 		attrib->end_index = getByteOffset(gtk_text_iter_get_offset(&end));
 
-		if (list == nullptr) {
+		if (list == nullptr)
+		{
 			list = pango_attr_list_new();
 			pango_layout_set_attributes(this->layout, list);
 		}
 		pango_attr_list_insert(list, attrib);
-	} else {
+	}
+	else
+	{
 		// remove all attributes
 		PangoAttrList* list = pango_attr_list_new();
 		pango_layout_set_attributes(this->layout, list);
@@ -1145,7 +1289,8 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 	this->text->setWidth(width);
 	this->text->setHeight(height);
 
-	if (this->markPosQueue) {
+	if (this->markPosQueue)
+	{
 		this->markPosQueue = false;
 		markPos(this->markPosX, this->markPosY, this->markPosExtendSelection);
 	}

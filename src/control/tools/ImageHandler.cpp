@@ -30,7 +30,8 @@ bool ImageHandler::insertImage(double x, double y)
 	XOJ_CHECK_TYPE(ImageHandler);
 
 	GFile* file = ImageOpenDlg::show(control->getGtkWindow(), control->getSettings());
-	if (file == nullptr) {
+	if (file == nullptr)
+	{
 		return false;
 	}
 	return insertImage(file, x, y);
@@ -47,10 +48,13 @@ bool ImageHandler::insertImage(GFile* file, double x, double y)
 
 	GdkPixbuf* pixbuf = nullptr;
 
-	if (!err) {
+	if (!err)
+	{
 		pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), nullptr, &err);
 		g_input_stream_close(G_INPUT_STREAM(in), nullptr, nullptr);
-	} else {
+	}
+	else
+	{
 		XojMsgBox::showErrorToUser(control->getGtkWindow(),
 		                           FS(_F("This image could not be loaded. Error message: {1}") % err->message));
 		g_error_free(err);
@@ -70,13 +74,17 @@ bool ImageHandler::insertImage(GFile* file, double x, double y)
 
 	PageRef page = view->getPage();
 
-	if (x + width > page->getWidth() || y + height > page->getHeight()) {
+	if (x + width > page->getWidth() || y + height > page->getHeight())
+	{
 		double maxZoomX = (page->getWidth() - x) / width;
 		double maxZoomY = (page->getHeight() - y) / height;
 
-		if (maxZoomX < maxZoomY) {
+		if (maxZoomX < maxZoomY)
+		{
 			zoom = maxZoomX;
-		} else {
+		}
+		else
+		{
 			zoom = maxZoomY;
 		}
 	}

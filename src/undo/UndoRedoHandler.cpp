@@ -13,16 +13,20 @@
 
 void printAction(UndoAction* action)
 {
-	if (action) {
+	if (action)
+	{
 		g_message("%" PRIu64 " / %s", (uint64_t) action, action->getClassName());
-	} else {
+	}
+	else
+	{
 		g_message("(null)");
 	}
 }
 
 void printUndoList(GList* list)
 {
-	for (GList* l = list; l != nullptr; l = l->next) {
+	for (GList* l = list; l != nullptr; l = l->next)
+	{
 		UndoAction* action = (UndoAction*) l->data;
 		printAction(action);
 	}
@@ -37,14 +41,16 @@ void printUndoList(GList* list)
 		g_message("undoList");            \
 		printUndoList(this->undoList);    \
 		g_message("savedUndo");           \
-		if (this->savedUndo) {            \
+		if (this->savedUndo)              \
+		{                                 \
 			printAction(this->savedUndo); \
 		}
 #else
 #	define PRINTCONTENTS() (void) 0
 #endif  // UNDO_TRACE
 
-UndoRedoHandler::UndoRedoHandler(Control* control): control(control)
+UndoRedoHandler::UndoRedoHandler(Control* control)
+ : control(control)
 {
 	XOJ_INIT_TYPE(UndoRedoHandler);
 }
@@ -62,7 +68,8 @@ void UndoRedoHandler::clearContents()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 #ifdef UNDO_TRACE
-	for (auto const& undoAction: this->undoList) {
+	for (auto const& undoAction: this->undoList)
+	{
 		g_message("clearContents()::Delete UndoAction: %" PRIu64 " / %s",
 		          (size_t) *undoAction,
 		          undoAction.getClassName());
@@ -81,7 +88,8 @@ void UndoRedoHandler::clearRedo()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 #ifdef UNDO_TRACE
-	for (auto const& undoAction: this->redoList) {
+	for (auto const& undoAction: this->redoList)
+	{
 		g_message("clearRedo()::Delete UndoAction: %" PRIu64 " / %s", (size_t) &undoAction, undoAction.getClassName());
 	}
 #endif
@@ -93,7 +101,8 @@ void UndoRedoHandler::undo()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (this->undoList.empty()) {
+	if (this->undoList.empty())
+	{
 		return;
 	}
 
@@ -108,7 +117,8 @@ void UndoRedoHandler::undo()
 	bool undoResult = undoAction.undo(this->control);
 	doc->unlock();
 
-	if (!undoResult) {
+	if (!undoResult)
+	{
 		string msg = FS(_F("Could not undo \"{1}\"\n"
 		                   "Something went wrong… Please write a bug report…") %
 		                undoAction.getText());
@@ -124,7 +134,8 @@ void UndoRedoHandler::redo()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (this->redoList.empty()) {
+	if (this->redoList.empty())
+	{
 		return;
 	}
 
@@ -140,7 +151,8 @@ void UndoRedoHandler::redo()
 	bool redoResult = redoAction.redo(this->control);
 	doc->unlock();
 
-	if (!redoResult) {
+	if (!redoResult)
+	{
 		string msg = FS(_F("Could not redo \"{1}\"\n"
 		                   "Something went wrong… Please write a bug report…") %
 		                redoAction.getText());
@@ -171,7 +183,8 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (action == nullptr) {
+	if (action == nullptr)
+	{
 		return;
 	}
 
@@ -190,7 +203,8 @@ void UndoRedoHandler::addUndoActionBefore(UndoActionPtr action, UndoAction* befo
 		return (smtr_ptr.get() == before);
 	});
 
-	if (iter == end(this->undoList)) {
+	if (iter == end(this->undoList))
+	{
 		addUndoAction(std::move(action));
 		return;
 	}
@@ -208,7 +222,8 @@ bool UndoRedoHandler::removeUndoAction(UndoAction* action)
 	auto iter = std::find_if(begin(this->undoList), end(this->undoList), [action](UndoActionPtr const& smtr_ptr) {
 		return smtr_ptr.get() == action;
 	});
-	if (iter == end(this->undoList)) {
+	if (iter == end(this->undoList))
+	{
 		return false;
 	}
 	this->undoList.erase(iter);
@@ -221,9 +236,11 @@ string UndoRedoHandler::undoDescription()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (!this->undoList.empty()) {
+	if (!this->undoList.empty())
+	{
 		UndoAction& a = *this->undoList.back();
-		if (!a.getText().empty()) {
+		if (!a.getText().empty())
+		{
 			string txt = _("Undo: ");
 			txt += a.getText();
 			return txt;
@@ -236,9 +253,11 @@ string UndoRedoHandler::redoDescription()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (!this->redoList.empty()) {
+	if (!this->redoList.empty())
+	{
 		UndoAction& a = *this->redoList.back();
-		if (!a.getText().empty()) {
+		if (!a.getText().empty())
+		{
 			string txt = _("Redo: ");
 			txt += a.getText();
 			return txt;
@@ -251,16 +270,20 @@ void UndoRedoHandler::fireUpdateUndoRedoButtons(const vector<PageRef>& pages)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	for (auto&& undoRedoListener: this->listener) {
+	for (auto&& undoRedoListener: this->listener)
+	{
 		undoRedoListener->undoRedoChanged();
 	}
 
-	for (PageRef page: pages) {
-		if (!page.isValid()) {
+	for (PageRef page: pages)
+	{
+		if (!page.isValid())
+		{
 			continue;
 		}
 
-		for (auto&& undoRedoListener: this->listener) {
+		for (auto&& undoRedoListener: this->listener)
+		{
 			undoRedoListener->undoRedoPageChanged(page);
 		}
 	}
@@ -276,7 +299,8 @@ bool UndoRedoHandler::isChanged()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (this->undoList.empty()) {
+	if (this->undoList.empty())
+	{
 		return this->savedUndo;
 	}
 
@@ -287,7 +311,8 @@ bool UndoRedoHandler::isChangedAutosave()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (this->undoList.empty()) {
+	if (this->undoList.empty())
+	{
 		return this->autosavedUndo;
 	}
 	return this->autosavedUndo != this->undoList.back().get();
@@ -307,7 +332,8 @@ void UndoRedoHandler::documentSaved()
 
 const char* UndoRedoHandler::getUndoStackTopTypeName()
 {
-	if (this->undoList.empty()) {
+	if (this->undoList.empty())
+	{
 		return nullptr;
 	}
 	return this->undoList.back()->getClassName();
@@ -315,7 +341,8 @@ const char* UndoRedoHandler::getUndoStackTopTypeName()
 
 const char* UndoRedoHandler::getRedoStackTopTypeName()
 {
-	if (this->redoList.empty()) {
+	if (this->redoList.empty())
+	{
 		return nullptr;
 	}
 	return this->redoList.back()->getClassName();

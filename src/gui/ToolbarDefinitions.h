@@ -28,18 +28,13 @@ typedef struct
 } ToolbarEntryDefintion;
 
 const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {
-	{ "tbTop1", "toolbarTop1", true },
-	{ "tbTop2", "toolbarTop2", true },
-	{ "tbLeft1", "toolbarLeft1", false },
-	{ "tbLeft2", "toolbarLeft2", false },
-	{ "tbRight1", "toolbarRight1", false },
-	{ "tbRight2", "toolbarRight2", false },
-	{ "tbBottom1", "toolbarBottom1", true },
-	{ "tbBottom2", "toolbarBottom2", true },
-	{ "tbFloat1", "toolbarFloat1", true },  // define this index below as TBFloatFirst
-	{ "tbFloat2", "toolbarFloat2", true },
-	{ "tbFloat3", "toolbarFloat3", true },
-	{ "tbFloat4", "toolbarFloat4", true }  // define this index below as TBFloatLast
+        {"tbTop1", "toolbarTop1", true},       {"tbTop2", "toolbarTop2", true},
+        {"tbLeft1", "toolbarLeft1", false},    {"tbLeft2", "toolbarLeft2", false},
+        {"tbRight1", "toolbarRight1", false},  {"tbRight2", "toolbarRight2", false},
+        {"tbBottom1", "toolbarBottom1", true}, {"tbBottom2", "toolbarBottom2", true},
+        {"tbFloat1", "toolbarFloat1", true},  // define this index below as TBFloatFirst
+        {"tbFloat2", "toolbarFloat2", true},   {"tbFloat3", "toolbarFloat3", true},
+        {"tbFloat4", "toolbarFloat4", true}  // define this index below as TBFloatLast
 };
 
 
