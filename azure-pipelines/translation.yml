@@ -12,21 +12,24 @@ stages:
       vmImage: 'ubuntu-16.04'
     displayName: 'Update translation template'
     steps:
+    - checkout: self
+      persistCredentials: "true"
     - bash: |
         sudo apt-get update
         sudo apt-get install -y cmake libcppunit-dev libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev
       displayName: 'Install dependencies'
     - bash: |
+        git checkout master
         mkdir build
       displayName: 'Create build directory'
     - bash: |
-        cmake .. -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON
+        cmake ..
         make pot
       workingDirectory: ./build
       displayName: 'Build Xournal++ translation template'
     - bash: |
         if [ -n "$(git status --porcelain)" ]; then 
-          git commit -m "Update translation template"
+          git commit -m "Update translation template [skip ci]"
           git push
         fi
       workingDirectory: ./build
