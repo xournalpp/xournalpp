@@ -21,6 +21,7 @@ finish-args:
   - "--filesystem=~/.config/dconf:ro"
   - "--talk-name=ca.desrt.dconf"
   - "--env=DCONF_USER_CONFIG_DIR=.config/dconf"
+  - "--persist=.xournalpp"
 build-options:
 cleanup:
   - "/include"
