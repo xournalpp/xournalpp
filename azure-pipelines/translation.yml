@@ -1,0 +1,25 @@
+trigger:
+  branches:
+    include:
+    - master
+  
+stages:
+- stage: 'translations'
+  jobs:
+  - job: 'Linux'
+    pool:
+      vmImage: 'ubuntu-16.04'
+    displayName: 'Update translation template'
+    steps:
+    - bash: |
+        sudo apt-get update
+        sudo apt-get install -y cmake libcppunit-dev libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev
+      displayName: 'Install dependencies'
+    - bash: |
+        mkdir build
+      displayName: 'Create build directory'
+    - bash: |
+        cmake .. -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON
+        make pot
+      workingDirectory: ./build
+      displayName: 'Build Xournal++ translation template'
