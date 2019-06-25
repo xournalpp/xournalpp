@@ -19,7 +19,7 @@
             <property name="name">pluginName</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">pluginName</property>
+            <property name="label">pluginName</property>
             <attributes>
               <attribute name="weight" value="bold"/>
             </attributes>
@@ -36,7 +36,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="margin_bottom">10</property>
-            <property name="label" translatable="yes">Description</property>
+            <property name="label">Description</property>
             <property name="selectable">True</property>
           </object>
           <packing>
@@ -67,7 +67,7 @@
                 <property name="name">lbAuthor</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Author</property>
+                <property name="label">Author</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -104,7 +104,7 @@
                 <property name="name">lbVersion</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">1.2.3</property>
+                <property name="label">1.2.3</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -145,7 +145,7 @@
                 <property name="name">lbDefaultText</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">default enabled / disabled</property>
+                <property name="label">default enabled / disabled</property>
               </object>
               <packing>
                 <property name="expand">False</property>
