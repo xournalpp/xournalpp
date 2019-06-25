@@ -5,31 +5,6 @@ pr: none
 stages:
 - stage: Release
   jobs:
-  - job: Sources
-    pool:
-      vmImage: 'ubuntu-16.04'
-    displayName: 'Package Sources'
-    steps:
-    - bash: |
-        mkdir ../xournalpp
-        mv * ../xournalpp/
-        mv ../xournalpp ./xournalpp
-      displayName: 'Move source into subdirectory'
-    - bash: |
-        mkdir source_packaged
-      displayName: 'Move source into subdirectory'
-    - bash: |
-        zip -r source_packaged/sources.zip ./xournalpp
-      displayName: 'Zip Source'
-    - bash: |
-        tar -zcvf source_packaged/sources.tar.gz ./xournalpp
-      displayName: 'Tar Source'
-    - task: PublishPipelineArtifact@0
-      inputs:
-        artifactName: 'source_packaged'
-        targetPath: './source_packaged'
-      displayName: 'Publish Packaged Source'
-
   - job: Windows
     pool:
       vmImage: 'vs2017-win2016'
