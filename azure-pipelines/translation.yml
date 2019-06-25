@@ -23,3 +23,10 @@ stages:
         make pot
       workingDirectory: ./build
       displayName: 'Build Xournal++ translation template'
+    - bash: |
+        if [ -n "$(git status --porcelain)" ]; then 
+          git commit -m "Update translation template"
+          git push
+        fi
+      workingDirectory: ./build
+      displayName: 'Push new translation template'
