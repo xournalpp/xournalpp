@@ -33,15 +33,14 @@ stages:
         secureFile: deploy_key
       displayName: 'Get the deploy key'
     - bash: |
-        if [ -n "$(git status --porcelain)" ]; then
-          git commit -am "Update translation template [skip ci]"
+        git commit -am "Update translation template [skip ci]"
 
-          mkdir ~/.ssh && mv $DOWNLOADSECUREFILE_SECUREFILEPATH ~/.ssh/id_rsa
-          chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-          git remote set-url --push origin git@github.com:xournalpp/xournalpp.git
-          git push origin HEAD:master
-        fi
+        mkdir ~/.ssh && mv $DOWNLOADSECUREFILE_SECUREFILEPATH ~/.ssh/id_rsa
+        chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+        
+        git remote set-url --push origin git@github.com:xournalpp/xournalpp.git
+        git push origin HEAD:master
       workingDirectory: ./build
       displayName: 'Push new translation template'
       condition: |
