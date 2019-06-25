@@ -2,7 +2,6 @@ trigger:
   branches:
     include:
     - master
-    - testing
   
 stages:
 - stage: 'translations'
@@ -12,8 +11,10 @@ stages:
       vmImage: 'ubuntu-16.04'
     displayName: 'Update translation template'
     steps:
-    - checkout: self
-      persistCredentials: "true"
+    - bash: |
+        git config --local user.name "Azure Pipelines"
+        git config --local user.email "azuredevops@microsoft.com"
+      displayName: 'Setup git'
     - bash: |
         sudo apt-get update
         sudo apt-get install -y cmake libcppunit-dev libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev
@@ -27,10 +28,21 @@ stages:
         make pot
       workingDirectory: ./build
       displayName: 'Build Xournal++ translation template'
+    - task: DownloadSecureFile@1
+      inputs:
+        secureFile: deploy_key
+      displayName: 'Get the deploy key'
     - bash: |
         if [ -n "$(git status --porcelain)" ]; then 
           git commit -m "Update translation template [skip ci]"
-          git push
+
+          mkdir ~/.ssh && mv $DOWNLOADSECUREFILE_SECUREFILEPATH ~/.ssh/id_rsa
+          chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+          git remote set-url --push origin git@github.com:xournalpp/xournalpp.git
+          git push origin HEAD:master
         fi
       workingDirectory: ./build
       displayName: 'Push new translation template'
+      condition: |
+        and(not(eq(variables['Build.Reason'], 'PullRequest')), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
