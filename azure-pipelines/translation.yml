@@ -33,8 +33,8 @@ stages:
         secureFile: deploy_key
       displayName: 'Get the deploy key'
     - bash: |
-        if [ -n "$(git status --porcelain)" ]; then 
-          git commit -m "Update translation template [skip ci]"
+        if [ -n "$(git status --porcelain)" ]; then
+          git commit -am "Update translation template [skip ci]"
 
           mkdir ~/.ssh && mv $DOWNLOADSECUREFILE_SECUREFILEPATH ~/.ssh/id_rsa
           chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa
