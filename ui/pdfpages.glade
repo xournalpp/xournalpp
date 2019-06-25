@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkDialog" id="pdfPagesDialog">
@@ -11,6 +11,9 @@
     <property name="icon">pixmaps/xournalpp.svg</property>
     <property name="type_hint">dialog</property>
     <property name="urgency_hint">True</property>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox2">
         <property name="visible">True</property>
@@ -70,7 +73,7 @@
             <child>
               <object class="GtkCheckButton" id="cbOnlyNotUsed">
                 <property name="name">cbOnlyNotUsed</property>
-                <property name="label" translatable="yes">Show only not used pages
+                <property name="label">Show only not used pages
 THIS TEXT IS A PLACEHOLDER!</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkAdjustment" id="adjustmentAudioGain">
@@ -108,6 +108,9 @@
     <property name="type_hint">normal</property>
     <property name="gravity">center</property>
     <signal name="close" handler="gtk_widget_hide" swapped="no"/>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox3">
         <property name="visible">True</property>
@@ -1510,7 +1513,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                     <property name="active">0</property>
                                                     <items>
                                                       <item translatable="yes">Autodetect</item>
-                                                      <item translatable="yes">X11</item>
+                                                      <item>X11</item>
                                                       <item translatable="yes">Custom</item>
                                                     </items>
                                                   </object>
@@ -2567,7 +2570,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             <property name="name">spZoomStepScroll</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <property name="text" translatable="yes">2.0</property>
                                             <property name="adjustment">adjustmentZoomStepScroll</property>
                                             <property name="digits">1</property>
                                             <property name="numeric">True</property>
@@ -2597,7 +2599,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="margin_top">5</property>
-                                            <property name="text" translatable="yes">10.0</property>
                                             <property name="adjustment">adjustmentZoomStep</property>
                                             <property name="digits">1</property>
                                             <property name="numeric">True</property>
@@ -3018,7 +3019,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             <property name="tooltip_text" translatable="yes">Usually 0 or 1</property>
                                             <property name="valign">start</property>
                                             <property name="max_width_chars">0</property>
-                                            <property name="text" translatable="yes">0</property>
                                             <property name="adjustment">adjustmentPairsOffset</property>
                                             <property name="numeric">True</property>
                                             <property name="update_policy">if-valid</property>
@@ -3095,7 +3095,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             <property name="name">spSnapRotationTolerance</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <property name="text" translatable="yes">0,20</property>
                                             <property name="adjustment">adjustmentSnapRotationTolerance</property>
                                             <property name="climb_rate">0.050000000000000003</property>
                                             <property name="digits">2</property>
@@ -3111,7 +3110,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             <property name="name">spSnapGridTolerance</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <property name="text" translatable="yes">0,25</property>
                                             <property name="adjustment">adjustmentSnapGridTolerance</property>
                                             <property name="climb_rate">0.050000000000000003</property>
                                             <property name="digits">2</property>
@@ -3185,7 +3183,6 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                             <property name="can_focus">True</property>
                                             <property name="valign">start</property>
                                             <property name="max_width_chars">0</property>
-                                            <property name="text" translatable="yes">0</property>
                                             <property name="adjustment">adjustmentDrawDirModRadius</property>
                                             <property name="numeric">True</property>
                                             <property name="update_policy">if-valid</property>
@@ -3248,7 +3245,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         <child>
                                           <object class="GtkCheckButton" id="cbStrokeFilterEnabled">
                                             <property name="name">cbStrokeFilterEnabled</property>
-                                            <property name="label" translatable="yes">Enable Tap action.</property>
+                                            <property name="label" translatable="yes">Enable Tap action</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -3283,7 +3280,6 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
 &lt;i&gt;Recommended: 150ms&lt;/i&gt;</property>
                                             <property name="valign">start</property>
                                             <property name="max_width_chars">0</property>
-                                            <property name="text" translatable="yes">8</property>
                                             <property name="adjustment">adjustmentStrokeIgnoreTime</property>
                                             <property name="numeric">True</property>
                                             <property name="update_policy">if-valid</property>
@@ -3304,7 +3300,6 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
 &lt;i&gt;Recommended: 1 mm&lt;/i&gt;</property>
                                             <property name="valign">start</property>
                                             <property name="max_width_chars">0</property>
-                                            <property name="text" translatable="yes">8</property>
                                             <property name="adjustment">adjustmentStrokeIgnoreLength</property>
                                             <property name="digits">2</property>
                                             <property name="numeric">True</property>
@@ -3348,7 +3343,6 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
 &lt;i&gt;Recommended: 500ms&lt;/i&gt;</property>
                                             <property name="valign">start</property>
                                             <property name="max_width_chars">0</property>
-                                            <property name="text" translatable="yes">8</property>
                                             <property name="adjustment">adjustmentStrokeSuccessiveTime</property>
                                             <property name="numeric">True</property>
                                             <property name="update_policy">if-valid</property>
