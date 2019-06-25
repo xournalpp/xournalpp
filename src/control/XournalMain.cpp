@@ -179,7 +179,7 @@ void XournalMain::checkForEmergencySave(Control* control) {
 		return;
 	}
 
-	string msg = _("Xournal++ crashed last time. Would you restore it?");
+	string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
 
 	GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
 		GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
