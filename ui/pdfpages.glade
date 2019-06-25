@@ -11,6 +11,9 @@
     <property name="icon">pixmaps/xournalpp.svg</property>
     <property name="type_hint">dialog</property>
     <property name="urgency_hint">True</property>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox2">
         <property name="visible">True</property>
