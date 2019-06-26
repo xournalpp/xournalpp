@@ -1,0 +1,3 @@
+files:
+  - source: /po/*.pot
+    translation: /po/%locale_with_underscore%.po
