@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-26 13:22+0000\n"
-"PO-Revision-Date: 2019-06-26 13:37\n"
+"PO-Revision-Date: 2019-06-26 13:59\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -28,11 +28,11 @@ msgstr ""
 
 #: ../src/undo/AddUndoAction.cpp:119 ../src/undo/DeleteUndoAction.cpp:113
 msgid " elements"
-msgstr " prvky"
+msgstr ""
 
 #: ../src/undo/AddUndoAction.cpp:134 ../src/undo/DeleteUndoAction.cpp:128
 msgid " image"
-msgstr " obrázek"
+msgstr ""
 
 #: ../src/undo/AddUndoAction.cpp:138 ../src/undo/DeleteUndoAction.cpp:132
 msgid " latex"
@@ -41,11 +41,11 @@ msgstr ""
 #: ../src/gui/MainWindow.cpp:839
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
-msgstr " z {1}{2}"
+msgstr ""
 
 #: ../src/undo/AddUndoAction.cpp:126 ../src/undo/DeleteUndoAction.cpp:120
 msgid " stroke"
-msgstr " čáru"
+msgstr ""
 
 #: ../src/undo/AddUndoAction.cpp:130 ../src/undo/DeleteUndoAction.cpp:124
 msgid " text"
@@ -74,11 +74,11 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:466
 msgid "Add/Edit Tex"
-msgstr "Přidat/Upravit TeX"
+msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:53
 msgid "All files"
-msgstr "Všechny soubory"
+msgstr ""
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:257
 msgid "Apply to all pages"
@@ -91,24 +91,24 @@ msgstr ""
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:30
 #: ../src/control/stockdlg/XojOpenDlg.cpp:154
 msgid "Attach file to the journal"
-msgstr "Přiložit soubor k zápisníku"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:140
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr "Atribut „{1}“ nemohl být načten jako double, hodnota je „{2}“"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:132
 msgid "Attribute \"{1}\" could not be parsed as double, the value is NULL"
-msgstr "Atribut „{1}“ nemohl být načten jako double, hodnota je NULL"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:160
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:183
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr "Atribut „{1}“ nemohl být načten jako int, hodnota je „{2}“"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:152
 msgid "Attribute \"{1}\" could not be parsed as int, the value is NULL"
-msgstr "Atribut „{1}“ nemohl být načten jako int, hodnota je NULL"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:205
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:228
@@ -121,7 +121,7 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:70
 msgid "Attribute color not set!"
-msgstr "Atribut color není nastaven!"
+msgstr ""
 
 #: ../src/control/AudioController.cpp:152
 msgid "Audio folder not set! Recording won't work!\n"
@@ -142,36 +142,36 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Back"
-msgstr "Zpět"
+msgstr ""
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:22
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:270
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:322
 msgid "Background"
-msgstr "Pozadí"
+msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:136
 msgid "Black"
-msgstr "Černá"
+msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:14
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:140
 msgid "Blue"
-msgstr "Modrá"
+msgstr ""
 
 #: ../src/control/Control.cpp:2349 ../src/control/Control.cpp:2894
 #: ../src/control/Control.cpp:2931 ../src/control/XournalMain.cpp:139
 msgid "Cancel"
-msgstr "Zrušit"
+msgstr ""
 
 #: ../src/undo/ColorUndoAction.cpp:119
 msgid "Change color"
-msgstr "Změnit barvu"
+msgstr ""
 
 #: ../src/undo/FontUndoAction.cpp:134
 msgid "Change font"
-msgstr "Změnit písmo"
+msgstr ""
 
 #: ../src/undo/FillUndoAction.cpp:117
 msgid "Change stroke fill"
@@ -179,33 +179,33 @@ msgstr ""
 
 #: ../src/undo/SizeUndoAction.cpp:139
 msgid "Change stroke width"
-msgstr "Změnit tloušťku čáry"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:98
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr "Neznámá barva „{1}“ (nedefinovaná ve výchozím seznamu barev)!"
+msgstr ""
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:276
 msgid "Contents"
-msgstr "Obsah"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:114
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:122
 msgid "Copy"
-msgstr "Kopírovat"
+msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:30
 msgid "Copy current"
-msgstr "Kopírovat aktuální"
+msgstr ""
 
 #: ../src/undo/CopyUndoAction.cpp:81
 msgid "Copy page"
-msgstr "Kopírovat stránku"
+msgstr ""
 
 #: ../src/control/jobs/SaveJob.cpp:137
 msgid "Could not create backup! (The file was created from an older Xournal version)"
-msgstr "Nelze vytvořit zálohu! (Soubor byl vytvořen ve starší verzi Xournalu)"
+msgstr ""
 
 #: ../src/util/Util.cpp:112
 msgid "Could not create folder: {1}"
@@ -264,30 +264,27 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:197
 msgid "Could not open file: \"{1}\""
-msgstr "Nelze otevřít soubor: „{1}“"
+msgstr ""
 
 #: ../src/gui/MainWindow.cpp:91
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr "Nelze načíst vlastní soubor toolbar.ini: {1}\n"
-"Nástrojové lišty nebudou k dispozici"
+msgstr ""
 
 #: ../src/gui/MainWindow.cpp:81
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr "Nelze načíst obecný soubor toolbar.ini: {1}\n"
-"Žádné nástrojové lišty nebudou k dispozici"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:441
 #: ../src/control/xojfile/LoadHandler.cpp:469
 msgid "Could not read image: {1}. Error message: {2}"
-msgstr "Nelze načíst obrázek: {1}. Chybová zpráva: {2}"
+msgstr ""
 
 #: ../src/undo/UndoRedoHandler.cpp:157
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr "Nelze znovuprovést „{1}“\n"
-"Něco je špatně… Napište prosím hlášení o chybě…"
+msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:210
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
@@ -312,16 +309,15 @@ msgstr ""
 #: ../src/undo/UndoRedoHandler.cpp:123
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr "Nelze vrátit zpět „{1}“\n"
-"Něco je špatně… Napište prosím hlášení o chybě…"
+msgstr ""
 
 #: ../src/control/xojfile/SaveHandler.cpp:290
 msgid "Could not write background \"{1}\", {2}"
-msgstr "Nelze zapsat pozadí „{1}“, {2}"
+msgstr ""
 
 #: ../src/control/xojfile/SaveHandler.cpp:410
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr "Nelze zapsat pozadí „{1}“. Přesto pokračujeme."
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:109
 msgid "Create new layer"
@@ -329,7 +325,7 @@ msgstr ""
 
 #: ../src/gui/dialog/FormatDialog.cpp:72
 msgid "Custom"
-msgstr "Vlastní"
+msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:18
 msgid "Custom Export"
@@ -341,28 +337,28 @@ msgstr ""
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:38
 msgid "Customized"
-msgstr "Přizpůsobený"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Cut"
-msgstr "Vyjmout"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Default Tool"
-msgstr "Výchozí nástroj"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 #: ../src/undo/DeleteUndoAction.cpp:102
 msgid "Delete"
-msgstr "Smazat"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:138
 msgid "Delete Logfile"
-msgstr "Smazat soubor protokolu"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:453
 msgid "Delete current page"
-msgstr "Smazat aktuální stránku"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:188
 msgid "Delete file"
@@ -370,11 +366,11 @@ msgstr ""
 
 #: ../src/undo/RemoveLayerUndoAction.cpp:41
 msgid "Delete layer"
-msgstr "Smazat vrstvu"
+msgstr ""
 
 #: ../src/control/Control.cpp:2890 ../src/control/Control.cpp:2930
 msgid "Discard"
-msgstr "Zahodit"
+msgstr ""
 
 #: ../src/control/Control.cpp:2275
 msgid "Do not open Autosave files. They may will be overwritten!\n"
@@ -388,15 +384,15 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2927
 msgid "Document file was removed."
-msgstr "Soubor s dokumentem byl odstraněn."
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:297
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr "Dokument není kompletní (jeho konec je nejspíš uřízlý)"
+msgstr ""
 
 #: ../src/model/Document.cpp:389 ../src/model/Document.cpp:399
 msgid "Document not loaded! ({1}), {2}"
-msgstr "Dokument není načten! ({1}), {2}"
+msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Dotted"
@@ -406,18 +402,18 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:32
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:472
 msgid "Draw Arrow"
-msgstr "Kreslit šipku"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:105
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:471
 msgid "Draw Circle"
-msgstr "Kreslit kruh"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:101
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
 msgid "Draw Line"
-msgstr "Kreslit čáru"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:103
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:23
@@ -426,7 +422,7 @@ msgstr "Kreslit čáru"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:115
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:470
 msgid "Draw Rectangle"
-msgstr "Kreslit obdélník"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:109
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
@@ -436,7 +432,7 @@ msgstr ""
 
 #: ../src/undo/InsertUndoAction.cpp:40
 msgid "Draw stroke"
-msgstr "Kreslit od ruky"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:97
 msgid "Drawing Type - don't change"
@@ -444,7 +440,7 @@ msgstr ""
 
 #: ../src/undo/TextBoxUndoAction.cpp:52
 msgid "Edit text"
-msgstr "Upravit text"
+msgstr ""
 
 #: ../src/undo/EmergencySaveRestore.cpp:36
 msgid "Emergency saved document"
@@ -453,39 +449,38 @@ msgstr ""
 #: ../src/undo/AddUndoAction.cpp:104 ../src/undo/DeleteUndoAction.cpp:99
 #: ../src/undo/EraseUndoAction.cpp:129
 msgid "Erase stroke"
-msgstr "Vymazat čáru"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:64
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:311
 msgid "Eraser"
-msgstr "Guma"
+msgstr ""
 
 #: ../src/control/Control.cpp:2574
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
-msgstr "Chyba anotování PDF souboru „{1}“\n"
-"{2}"
+msgstr ""
 
 #: ../src/gui/GladeGui.cpp:24
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr "Chyba načítání glade souboru „{1}“ (zkuste načíst „{2}“)"
+msgstr ""
 
 #: ../src/control/Control.cpp:2374
 msgid "Error opening file \"{1}\""
-msgstr "Chyba otevírání souboru „{1}“"
+msgstr ""
 
 #: ../src/util/OutputStream.cpp:35
 msgid "Error opening file: \"{1}\""
-msgstr "Chyba otevírání souboru: „{1}“"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:564
 #: ../src/control/xojfile/LoadHandler.cpp:591
 msgid "Error reading PDF: {1}"
-msgstr "Chyba čtení PDF: {1}"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:662
 msgid "Error reading width of a stroke: {1}"
-msgstr "Chyba čtení šířky čáry: {1}"
+msgstr ""
 
 #: ../src/control/jobs/ImageExport.cpp:143
 msgid "Error save image #1"
@@ -501,13 +496,12 @@ msgstr ""
 
 #: ../src/util/CrashHandler.cpp:47
 msgid "Error: {1}"
-msgstr "Chyba: {1}"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:162
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
-msgstr "Nelze smazat chybový protokol. Udělejte to prosím ručně.\n"
-"Soubor protokolu: {1}"
+msgstr ""
 
 #: ../src/control/jobs/BaseExportJob.cpp:24
 msgid "Export PDF"
@@ -516,12 +510,11 @@ msgstr ""
 #: ../src/util/Util.cpp:133 ../src/util/Util.cpp:153
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr "Soubor se nepodařilo otevřít. Udělejte to prosím ručně:\n"
-"URL: {1}"
+msgstr ""
 
 #: ../src/control/Control.cpp:2306
 msgid "Filename: {1}"
-msgstr "Název souboru: {1}"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:511
 msgid "Fill"
@@ -533,15 +526,15 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:71
 msgid "Font"
-msgstr "Písmo"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Go to first page"
-msgstr "Přejít na první stránku"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Go to last page"
-msgstr "Přejít na poslední stránku"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Go to next layer"
@@ -549,7 +542,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Go to page"
-msgstr "Přejít na stránku"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Go to previous layer"
@@ -561,17 +554,17 @@ msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Graph"
-msgstr "Čtverečkovaný"
+msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:141
 msgid "Gray"
-msgstr "Šedá"
+msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:11
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:137
 msgid "Green"
-msgstr "Zelená"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Grid Snapping"
@@ -580,7 +573,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:71
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:481
 msgid "Hand"
-msgstr "Ruka"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:99
 msgid "Hide all"
@@ -589,12 +582,12 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:65
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:463
 msgid "Highlighter"
-msgstr "Zvýrazňovač"
+msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Image"
-msgstr "Obrázek"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:260
 msgid "Image file successfully created"
@@ -606,69 +599,69 @@ msgstr ""
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:18
 msgid "Images"
-msgstr "Obrázky"
+msgstr ""
 
 #: ../src/undo/InsertUndoAction.cpp:116
 msgid "Insert elements"
-msgstr "Vložit prvky"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:67 ../src/undo/InsertUndoAction.cpp:48
 msgid "Insert image"
-msgstr "Vložit obrázek"
+msgstr ""
 
 #: ../src/undo/InsertUndoAction.cpp:52
 msgid "Insert latex"
-msgstr "Vložit LaTeX"
+msgstr ""
 
 #: ../src/undo/InsertLayerUndoAction.cpp:40
 msgid "Insert layer"
-msgstr "Vložit vrstvu"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Insert page"
-msgstr "Vložit stránku"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:316
 msgid "Jump to Page (first Page: 1)"
-msgstr "Přejít na stránku (první stránka: 1)"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:348
 msgid "Layer"
-msgstr "Vrstva"
+msgstr ""
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:79
 msgid "Layer Preview"
-msgstr "Náhled vrstvy"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:331
 msgid "Layer selection"
-msgstr "Výběr vrstvy"
+msgstr ""
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:26
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:260
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:318
 msgid "Layer {1}"
-msgstr "Vrstva {1}"
+msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:138
 msgid "Light Blue"
-msgstr "Světle modrá"
+msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:13
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:139
 msgid "Light Green"
-msgstr "Světle zelená"
+msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Lined"
-msgstr "Linkovaný s okrajem"
+msgstr ""
 
 #: ../src/gui/PageView.cpp:863
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:103
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:18
 msgid "Loading..."
-msgstr "Načítání..."
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Manage Toolbars"
@@ -677,12 +670,12 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:143
 msgid "Mangenta"
-msgstr "Purpurová"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:525
 msgid "Medium"
-msgstr "Střední"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:556
 msgid "Missing the needed UI file:\n"
@@ -693,7 +686,7 @@ msgstr ""
 
 #: ../src/undo/MoveUndoAction.cpp:20
 msgid "Move"
-msgstr "Přesunout"
+msgstr ""
 
 #: ../src/undo/MoveLayerUndoAction.cpp:38
 msgid "Move layer"
@@ -701,31 +694,31 @@ msgstr ""
 
 #: ../src/undo/SwapUndoAction.cpp:88
 msgid "Move page downwards"
-msgstr "Přesunout stránku dolů"
+msgstr ""
 
 #: ../src/undo/SwapUndoAction.cpp:88
 msgid "Move page upwards"
-msgstr "Přesunout stránku nahoru"
+msgstr ""
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:90
 msgid "New"
-msgstr "Nový"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "New Xournal"
-msgstr "Nový Xournal"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 msgid "Next"
-msgstr "Další"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Next annotated page"
-msgstr "Další anotovaná stránka"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:44
 msgid "No device"
-msgstr "Žádné zařízení"
+msgstr ""
 
 #: ../src/pdf/base/XojCairoPdfExport.cpp:93
 #: ../src/pdf/base/XojCairoPdfExport.cpp:142
@@ -747,30 +740,30 @@ msgstr ""
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:11
 msgid "Open Image"
-msgstr "Otevřít obrázek"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:136
 msgid "Open Logfile"
-msgstr "Otevřít soubor protokolu"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:137
 msgid "Open Logfile directory"
-msgstr "Otevřít složku s protokoly"
+msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:16
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "Open file"
-msgstr "Otevřít soubor"
+msgstr ""
 
 #: ../src/control/RecentManager.cpp:249
 msgctxt "{1} is a URI"
 msgid "Open {1}"
-msgstr "Otevřít {1}"
+msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:18
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:144
 msgid "Orange"
-msgstr "Oranžová"
+msgstr ""
 
 #: ../src/control/jobs/PdfExportJob.cpp:9
 msgid "PDF Export"
@@ -778,25 +771,25 @@ msgstr ""
 
 #: ../src/gui/MainWindow.cpp:837
 msgid "PDF Page {1}"
-msgstr "PDF stránka {1}"
+msgstr ""
 
 #: ../src/view/PdfView.cpp:40
 msgid "PDF background missing"
-msgstr "PDF pozadí chybí"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:295
 msgid "PDF file successfully created"
-msgstr "PDF soubor úspěšně vytvořen"
+msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:23
 #: ../src/control/jobs/PdfExportJob.cpp:23
 #: ../src/control/stockdlg/XojOpenDlg.cpp:63
 msgid "PDF files"
-msgstr "PDF soubory"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:314
 msgid "PDF output filename"
-msgstr "Název výstupního PDF"
+msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:24
 msgid "PDF with plain background"
@@ -812,27 +805,27 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:67
 msgid "Page"
-msgstr "Stránka"
+msgstr ""
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:29
 msgid "Page Preview"
-msgstr "Náhledy stránek"
+msgstr ""
 
 #: ../src/undo/PageBackgroundChangedUndoAction.cpp:106
 msgid "Page background changed"
-msgstr "Pozadí stránky změněno"
+msgstr ""
 
 #: ../src/undo/InsertDeletePageUndoAction.cpp:129
 msgid "Page deleted"
-msgstr "Stránka smazána"
+msgstr ""
 
 #: ../src/undo/InsertDeletePageUndoAction.cpp:125
 msgid "Page inserted"
-msgstr "Stránka vložena"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:49
 msgid "Page number"
-msgstr "Číslo stránky"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Paired pages"
@@ -841,7 +834,7 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 #: ../src/undo/AddUndoAction.cpp:108
 msgid "Paste"
-msgstr "Vložit"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Pause / Play"
@@ -850,11 +843,11 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:290
 msgid "Pen"
-msgstr "Pero"
+msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:22
 msgid "Plain"
-msgstr "Čistá"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
@@ -864,11 +857,11 @@ msgstr ""
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:23
 msgid "Predefined"
-msgstr "Předdefinované"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Presentation mode"
-msgstr "Prezentace"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Record Audio / Stop Recording"
@@ -881,20 +874,20 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:142
 msgid "Red"
-msgstr "Červená"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 #: ../src/undo/UndoRedoHandler.cpp:267
 msgid "Redo"
-msgstr "Znovu"
+msgstr ""
 
 #: ../src/undo/UndoRedoHandler.cpp:262
 msgid "Redo: "
-msgstr "Znovu: "
+msgstr ""
 
 #: ../src/control/Control.cpp:2348
 msgid "Remove PDF Background"
-msgstr "Odstranit PDF pozadí"
+msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:198
 msgid "Removed tool item from Toolbar {1} ID {2}"
@@ -926,11 +919,11 @@ msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:24
 msgid "Ruled"
-msgstr "Linkovaný"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 msgid "Ruler"
-msgstr "Pravítko"
+msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:27
 msgid "SVG graphics"
@@ -943,7 +936,7 @@ msgstr ""
 #: ../src/control/Control.cpp:2889 ../src/control/jobs/SaveJob.cpp:13
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Save"
-msgstr "Uložit"
+msgstr ""
 
 #: ../src/control/Control.cpp:2929
 msgid "Save As..."
@@ -951,7 +944,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2692 ../src/gui/dialog/PageTemplateDialog.cpp:111
 msgid "Save File"
-msgstr "Uložit soubor"
+msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:162
 #: ../src/control/jobs/SaveJob.cpp:151
@@ -960,21 +953,21 @@ msgstr ""
 
 #: ../src/undo/ScaleUndoAction.cpp:73
 msgid "Scale"
-msgstr "Škálovat"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Search"
-msgstr "Hledat"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Select Font"
-msgstr "Výběr písma"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:82
 msgid "Select Object"
-msgstr "Výběr objektu"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:10
@@ -982,17 +975,17 @@ msgstr "Výběr objektu"
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:68
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:108
 msgid "Select Rectangle"
-msgstr "Obdélníkový výběr"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:476
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:75
 msgid "Select Region"
-msgstr "Výběr oblasti"
+msgstr ""
 
 #: ../src/control/Control.cpp:2347
 msgid "Select another PDF"
-msgstr "Vybrat jiné PDF"
+msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:76
 msgid "Select another name"
@@ -1005,27 +998,27 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:59
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:175
 msgid "Select color"
-msgstr "Vybrat barvu"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:70
 msgid "Select rectangle"
-msgstr "Obdélníkový výběr"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:69
 msgid "Select region"
-msgstr "Výběr oblasti"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:135
 msgid "Send Bugreport"
-msgstr "Zaslat hlášení o chybě"
+msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:53
 msgid "Separator"
-msgstr "Oddělovač"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Shape Recognizer"
-msgstr "Rozpoznávání tvarů"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:90
 msgid "Show all"
@@ -1033,11 +1026,11 @@ msgstr ""
 
 #: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:134
 msgid "Show only not used pages (one unused page)"
-msgstr "Zobrazit pouze nevyužité stránky (jedna nevyužitá stránka)"
+msgstr ""
 
 #: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:135
 msgid "Show only not used pages ({1} unused pages)"
-msgstr "Zobrazit pouze nevyužité stránky ({1} nevyužitých stránek)"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:390
 msgid "Sorry, Xournal++ can only open one file at once.\n"
@@ -1057,15 +1050,15 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
 #: ../src/undo/RecognizerUndoAction.cpp:101
 msgid "Stroke recognizer"
-msgstr "Rozpoznání čáry"
+msgstr ""
 
 #: ../src/util/CrashHandler.cpp:51
 msgid "Successfully saved document to \"{1}\""
-msgstr "Dokument úspěšně uložen do \"\""
+msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:134
 msgid "Supported files"
-msgstr "Podporované soubory"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:66
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:465
@@ -1075,43 +1068,43 @@ msgstr ""
 #: ../src/gui/SearchBar.cpp:70
 #, c-format
 msgid "Text %i times found on this page"
-msgstr "Text %ikrát nalezen na této stránce"
+msgstr ""
 
 #: ../src/undo/TextUndoAction.cpp:47
 msgid "Text changes"
-msgstr "Úpravy textu"
+msgstr ""
 
 #: ../src/gui/SearchBar.cpp:66
 msgid "Text found on this page"
-msgstr "Text nalezen na této stránce"
+msgstr ""
 
 #: ../src/gui/SearchBar.cpp:150 ../src/gui/SearchBar.cpp:206
 msgid "Text found once on page {1}"
-msgstr "Text nalezen jednou na stránce {1}"
+msgstr ""
 
 #: ../src/gui/SearchBar.cpp:151 ../src/gui/SearchBar.cpp:207
 msgid "Text found {1} times on page {2}"
-msgstr "Text nalezen {1}krát na stránce {2}"
+msgstr ""
 
 #: ../src/gui/SearchBar.cpp:77
 msgid "Text not found"
-msgstr "Text nenalezen"
+msgstr ""
 
 #: ../src/gui/SearchBar.cpp:164 ../src/gui/SearchBar.cpp:220
 msgid "Text not found, searched on all pages"
-msgstr "Text nenalezen, prohledány byly všechny stránky"
+msgstr ""
 
 #: ../src/control/Control.cpp:1182
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr "Konfigurace nástrojové lišty „{1}“ je předdefinována. Přejete si vytvořit kopii pro úpravy?"
+msgstr ""
 
 #: ../src/control/Control.cpp:2344
 msgid "The attached background PDF could not be found."
-msgstr "Přiložené PDF pozadí nebylo nalezeno."
+msgstr ""
 
 #: ../src/control/Control.cpp:2345
 msgid "The background PDF could not be found."
-msgstr "PDF pozadí nebylo nalezeno."
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:154
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1135,24 +1128,24 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:130
 msgid "The most recent log file name: {1}"
-msgstr "Název nejnovějšího souboru protokolu: {1}"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:123
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr "Xournal++ vytvořil soubory se záznamy o chybách. Zašlete prosím hlášení o chybě, abychom ji mohli opravit."
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:122
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr "Xournal++ vytvořil soubor se záznamy o chybách. Zašlete prosím hlášení o chybě, abychom ji mohli opravit."
+msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:92
 msgid "There was an error displaying help: {1}"
-msgstr "Při zobrazování nápovědy došlo k chybě: {1}"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:90
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:526
 msgid "Thick"
-msgstr "Tlustá"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Thickness - don't change"
@@ -1161,20 +1154,20 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:524
 msgid "Thin"
-msgstr "Tenká"
+msgstr ""
 
 #: ../src/control/Control.cpp:2887
 msgid "This document is not saved yet."
-msgstr "Tento dokument ještě nebyl uložen."
+msgstr ""
 
 #: ../src/control/PageBackgroundChangeController.cpp:185
 #: ../src/control/tools/ImageHandler.cpp:59
 msgid "This image could not be loaded. Error message: {1}"
-msgstr "Obrázek se nepodařilo načíst. Chybová zpráva: {1}"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Toggle fullscreen"
-msgstr "Přepnout režim celé obrazovky"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:62
 msgid "Tool - don't change"
@@ -1182,93 +1175,93 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:166
 msgid "Toolbar found: {1}"
-msgstr "Nástrojová lišta nalezena: {1}"
+msgstr ""
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:55
 msgid "Toolbars"
-msgstr "Nástrojové lišty"
+msgstr ""
 
 #: ../src/util/CrashHandler.cpp:37
 msgid "Trying to emergency save the current open document…"
-msgstr "Pokus o nouzové uložení aktuálně otevřeného dokumentu…"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:399
 #: ../src/undo/UndoRedoHandler.cpp:250
 msgid "Undo"
-msgstr "Zpět"
+msgstr ""
 
 #: ../src/undo/UndoRedoHandler.cpp:245
 msgid "Undo: "
-msgstr "Zpět: "
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:354
 msgid "Unexpected root tag: {1}"
-msgstr "Neočekávaný kořenový tag: {1}"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:387
 msgid "Unexpected tag in document: \"{1}\""
-msgstr "Neočekávaný tag v dokumentu: „{1}“"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:638
 msgid "Unknown background type: {1}"
-msgstr "Neznámý typ pozadí: {1}"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Unknown color value \"{1}\""
-msgstr "Neznámá hodnota barvy „{1}“"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:573
 msgid "Unknown domain type: {1}"
-msgstr "Neznámý typ domény: {1}"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:288
 msgid "Unknown parser error"
-msgstr "Neznámá chyba načítání XML"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:486
 msgid "Unknown pixmap::domain type: {1}"
-msgstr "Neznámý typ pixmap::domain: {1}"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:757
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr "Neznámý typ čáry: „{1}“, bereme jej jako pero"
+msgstr ""
 
 #: ../src/control/Control.cpp:2770
 msgid "Unsaved Document"
-msgstr "Neuložený dokument"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 msgid "Vertical Space"
-msgstr "Vertikální mezera"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:68
 msgid "Vertical space"
-msgstr "Vertikální mezera"
+msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:146
 msgid "White"
-msgstr "Bílá"
+msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:31
 msgid "With PDF background"
-msgstr "S PDF pozadím"
+msgstr ""
 
 #: ../src/undo/InsertUndoAction.cpp:44
 msgid "Write text"
-msgstr "Psát text"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:1157
 msgid "Wrong count of points ({1})"
-msgstr "Špatný počet bodů ({1})"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:1171
 msgid "Wrong number of points, got {1}, expected {2}"
-msgstr "Špatný počet bodů, obdrženo {1}, očekáváno {2}"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:283
 msgid "XML Parser error: {1}"
-msgstr "Chyba načítání XML: {1}"
+msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
@@ -1276,7 +1269,7 @@ msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:74
 msgid "Xournal files"
-msgstr "Soubory Xournalu"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:183
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
@@ -1294,7 +1287,7 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:145
 msgid "Yellow"
-msgstr "Žlutá"
+msgstr ""
 
 #: ../src/control/PageBackgroundChangeController.cpp:227
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
@@ -1303,35 +1296,33 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:126
 msgid "You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr "Používáte větev {1}/{2}. Send Bugreport will direct you to this repo's issue tracker."
+msgstr ""
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:93
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr "Aktuální dokument neobsahuje žádnou stránku {1}\n"
-"Přejete si tuto stránku vložit?\n\n"
-"Tip: Můžete vybrat Zápisník → Pozadí papíru → PDF pozadí pro vložení stránky z PDF."
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Zoom fit to screen"
-msgstr "Přizpůsobit přiblížení obrazovce"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Zoom in"
-msgstr "Přiblížit"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Zoom out"
-msgstr "Oddálit"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:106
 msgid "Zoom slider"
-msgstr "Nastavení přiblížení"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Zoom to 100%"
-msgstr "Přiblížit na 100%"
+msgstr ""
 
 #: ../src/control/Control.cpp:2695 ../src/control/jobs/BaseExportJob.cpp:25
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
@@ -1352,7 +1343,7 @@ msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:98
 msgid "cursor"
-msgstr "kurzor"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:298
 msgid "dash-/ dotted"
@@ -1372,7 +1363,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:315
 msgid "delete stroke"
-msgstr "odstranit čáru"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:301
 msgid "dotted"
@@ -1380,7 +1371,7 @@ msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:94
 msgid "eraser"
-msgstr "guma"
+msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:103
 msgid "keyboard"
@@ -1388,7 +1379,7 @@ msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:86
 msgid "mouse"
-msgstr "myš"
+msgstr ""
 
 #: ../src/control/LatexController.cpp:317
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
@@ -1396,7 +1387,7 @@ msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:90
 msgid "pen"
-msgstr "pero"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:222
 msgid "show"
@@ -1405,7 +1396,7 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:292
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:313
 msgid "standard"
-msgstr "standardní"
+msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:111
 msgid "touchpad"
@@ -1421,39 +1412,39 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:314
 msgid "whiteout"
-msgstr "bělení"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:1170
 msgid "xoj-File: {1}"
-msgstr "xoj-soubor: {1}"
+msgstr ""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:75
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
-msgstr "xoj-preview-extractor: spoušťejte s VSTUP.xoj VÝSTUP.png"
+msgstr ""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:97
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr "xoj-preview-extractor: soubor „{1}“ neobsahuje žádný náhled"
+msgstr ""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:89
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr "xoj-preview-extractor: soubor „{1}“ není .xoj soubor"
+msgstr ""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:102
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr "xoj-preview-extractor: nenalezen žádný náhled ani stránka, není soubor poškozen?"
+msgstr ""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:93
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr "xoj-preview-extractor: otevírání vstupního souboru „{1}“ selhalo"
+msgstr ""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:109
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr "xoj-preview-extractor: otevírání výstupního souboru „{1}“ selhalo"
+msgstr ""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:118
 msgid "xoj-preview-extractor: successfully extracted"
-msgstr "xoj-preview-extractor: úspěšně extrahováno"
+msgstr ""
 
 #: ../src/util/Util.cpp:102
 msgid "xournalpp-{1}"
@@ -1500,7 +1491,7 @@ msgstr ""
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
-msgstr "<b>… nebo vyberte již použitý obrázek:</b>"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:256
 msgid "<b>Background Color</b>"
@@ -1512,7 +1503,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
-msgstr "<b>Barva</b>"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:110
 msgid "<b>Configure Xournal++ Template Page</b>\n"
@@ -1527,11 +1518,11 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
-msgstr "<b>Výchozí nástroje</b>"
+msgstr ""
 
 #: ../ui/settings.glade:3549
 msgid "<b>Default</b>"
-msgstr "<b>Výchozí</b>"
+msgstr ""
 
 #: ../ui/exportSettings.glade:90
 msgid "<b>Document export settings</b>\n"
@@ -1554,11 +1545,11 @@ msgstr ""
 
 #: ../ui/pagesize.glade:142
 msgid "<b>Pagesize</b>"
-msgstr "<b>Velikost stránky</b>"
+msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separator</b>"
-msgstr "<b>Oddělovač</b>"
+msgstr ""
 
 #: ../ui/settings.glade:701
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -1578,7 +1569,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:209
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
-msgstr "<i>Příklad:</i> 1-3 nebo 1,3,5-7 atd."
+msgstr ""
 
 #: ../ui/settings.glade:1813
 msgid "<i>For some specific hardware the scroll / touch behaviour of the system is not as expected. For these cases Xournal++ has a workaround.\n"
@@ -1650,12 +1641,11 @@ msgstr ""
 #: ../ui/about.glade:73
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
-msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
-"<i>Další generace</i>"
+msgstr ""
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
-msgstr "O aplikaci Xournal++"
+msgstr ""
 
 #: ../ui/settings.glade:3411
 msgid "Action on Tool Tap"
@@ -1671,7 +1661,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:142
 msgid "All pages"
-msgstr "Všechny stránky"
+msgstr ""
 
 #: ../ui/settings.glade:3377
 msgid "All three conditions must be met before stroke is ignored.\n"
@@ -1716,11 +1706,11 @@ msgstr ""
 
 #: ../ui/settings.glade:2153
 msgid "Big cursor for pen"
-msgstr "Velký kurzor pro pero"
+msgstr ""
 
 #: ../ui/settings.glade:2008
 msgid "Border color"
-msgstr "Barva okraje"
+msgstr ""
 
 #: ../ui/settings.glade:1993
 msgid "Border color for current page and other selections"
@@ -1756,7 +1746,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:158
 msgid "Current page"
-msgstr "Aktuální stránka"
+msgstr ""
 
 #: ../ui/settings.glade:2175
 msgid "Cursor"
@@ -1780,15 +1770,15 @@ msgstr ""
 
 #: ../ui/settings.glade:3589
 msgid "Defaults"
-msgstr "Výchozí"
+msgstr ""
 
 #: ../ui/main.glade:1172
 msgid "Delete Layer"
-msgstr "Smazat vrstvu"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
-msgstr "Odstranit čáru"
+msgstr ""
 
 #: ../ui/main.glade:2062
 msgid "Delete this page"
@@ -1796,7 +1786,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
-msgstr "Zařízení"
+msgstr ""
 
 #: ../ui/settings.glade:1620
 msgid "Disable"
@@ -1804,7 +1794,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
-msgstr "Zakázat kreslení tímto zařízením"
+msgstr ""
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
@@ -1831,7 +1821,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr "Přetáhněte komponenty odsud do nástrojové lišty a zpět."
+msgstr ""
 
 #: ../ui/main.glade:1364
 msgid "Draw _Line"
@@ -1895,7 +1885,7 @@ msgstr ""
 
 #: ../ui/main.glade:1605
 msgid "Eraser Optio_ns"
-msgstr "_Nastavení gumy"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -1911,7 +1901,7 @@ msgstr ""
 
 #: ../ui/main.glade:250
 msgid "Export as..."
-msgstr "Exportovat jako..."
+msgstr ""
 
 #: ../ui/main.glade:1581 ../ui/main.glade:1742
 msgid "Fi_ll"
@@ -1935,7 +1925,7 @@ msgstr ""
 
 #: ../ui/main.glade:485 ../ui/settings.glade:2376
 msgid "Fullscreen"
-msgstr "Celá obrazovka"
+msgstr ""
 
 #: ../ui/about.glade:251
 msgid "GNU GPLv2 or later"
@@ -1959,7 +1949,7 @@ msgstr ""
 
 #: ../ui/main.glade:1441
 msgid "H_and Tool"
-msgstr "_Nástroj prohlížení"
+msgstr ""
 
 #: ../ui/settings.glade:1717
 msgid "Hand Recognition"
@@ -1967,15 +1957,15 @@ msgstr ""
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
-msgstr "Výška:"
+msgstr ""
 
 #: ../ui/main.glade:888 ../ui/settings.glade:2338 ../ui/settings.glade:2405
 msgid "Hide Menubar"
-msgstr "Skrýt lištu menu"
+msgstr ""
 
 #: ../ui/settings.glade:2354 ../ui/settings.glade:2421
 msgid "Hide Sidebar"
-msgstr "Skrýt postranní panel"
+msgstr ""
 
 #: ../ui/settings.glade:2271
 msgid "Hide the horizontal scrollbar"
@@ -2009,7 +1999,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3754
 msgid "Input Device"
-msgstr "Vstupní zařízení"
+msgstr ""
 
 #: ../ui/settings.glade:737
 msgid "Input Devices"
@@ -2021,7 +2011,7 @@ msgstr ""
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
-msgstr "Vložit LaTeX"
+msgstr ""
 
 #: ../ui/main.glade:2041
 msgid "Insert a copy of the current page below"
@@ -2041,15 +2031,15 @@ msgstr ""
 
 #: ../ui/settings.glade:587
 msgid "Load / Save"
-msgstr "Načítání / ukládání"
+msgstr ""
 
 #: ../ui/images.glade:73
 msgid "Load file"
-msgstr "Načíst soubor"
+msgstr ""
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
-msgstr "Spravovat nástrojovou lištu"
+msgstr ""
 
 #: ../ui/settings.glade:3318
 msgid "Max Length (mm)"
@@ -2074,23 +2064,23 @@ msgstr ""
 
 #: ../ui/main.glade:1066
 msgid "N_ext annotated page"
-msgstr "_Další anotovaná stránka"
+msgstr ""
 
 #: ../ui/main.glade:1113
 msgid "New Page _After"
-msgstr "Nová stránka _před"
+msgstr ""
 
 #: ../ui/main.glade:1103
 msgid "New Page _Before"
-msgstr "Nová stránka _za"
+msgstr ""
 
 #: ../ui/main.glade:1124
 msgid "New Page at _End"
-msgstr "Nová stránka na _konec"
+msgstr ""
 
 #: ../ui/main.glade:1161
 msgid "New _Layer"
-msgstr "_Nová vrstva"
+msgstr ""
 
 #: ../ui/settings.glade:3006
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2098,7 +2088,7 @@ msgstr ""
 
 #: ../ui/settings.glade:842
 msgid "Options"
-msgstr "Volby"
+msgstr ""
 
 #: ../ui/settings.glade:3777
 msgid "Output Device"
@@ -2114,7 +2104,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:175
 msgid "Pages:"
-msgstr "Stránky:"
+msgstr ""
 
 #: ../ui/settings.glade:3039
 msgid "Paired Pages"
@@ -2122,19 +2112,19 @@ msgstr ""
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
-msgstr "Formát papíru"
+msgstr ""
 
 #: ../ui/main.glade:1199
 msgid "Paper _Color"
-msgstr "_Barva papíru"
+msgstr ""
 
 #: ../ui/main.glade:1189
 msgid "Paper _Format"
-msgstr "_Formát papíru"
+msgstr ""
 
 #: ../ui/main.glade:1209
 msgid "Paper b_ackground"
-msgstr "Pozadí _papíru"
+msgstr ""
 
 #: ../ui/about.glade:217
 msgid "Partially based on Xournal\n"
@@ -2147,7 +2137,7 @@ msgstr ""
 
 #: ../ui/main.glade:1459
 msgid "Pen _Options"
-msgstr "N_astavení pera"
+msgstr ""
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
@@ -2163,7 +2153,7 @@ msgstr ""
 
 #: ../ui/main.glade:440
 msgid "Preferences"
-msgstr "Nastavení"
+msgstr ""
 
 #: ../ui/settings.glade:2477
 msgid "Presentation Mode"
@@ -2175,11 +2165,11 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:127
 msgid "Range"
-msgstr "Rozsah"
+msgstr ""
 
 #: ../ui/main.glade:190
 msgid "Recent _Documents"
-msgstr "Nedávné _dokumenty"
+msgstr ""
 
 #: ../ui/main.glade:1778
 msgid "Record / Stop"
@@ -2223,15 +2213,15 @@ msgstr ""
 
 #: ../ui/images.glade:8
 msgid "Select Image"
-msgstr "Výběr obrázku"
+msgstr ""
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr "Výběr PDF stránky"
+msgstr ""
 
 #: ../ui/settings.glade:2442
 msgid "Select toolbar:"
-msgstr "Vyberte nástrojovou lištu:"
+msgstr ""
 
 #: ../ui/settings.glade:2044
 msgid "Selection Color (Text, Stroke Selection etc.)"
@@ -2259,15 +2249,15 @@ msgstr ""
 
 #: ../ui/main.glade:496
 msgid "Show sidebar"
-msgstr "Zobrazit postranní panel"
+msgstr ""
 
 #: ../ui/settings.glade:2204
 msgid "Show sidebar on the right side"
-msgstr "Zobrazit postranní panel na pravé straně"
+msgstr ""
 
 #: ../ui/settings.glade:2220
 msgid "Show vertical scrollbar on the left side"
-msgstr "Zobrazit vertikální posuvník na levé straně"
+msgstr ""
 
 #: ../ui/settings.glade:3131
 msgid "Snapping"
@@ -2283,7 +2273,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
-msgstr "Standardní"
+msgstr ""
 
 #: ../ui/settings.glade:3662 ../ui/settings.glade:3699
 msgid "Storage Folder"
@@ -2311,11 +2301,11 @@ msgstr ""
 
 #: ../ui/main.glade:840
 msgid "T_oolbars"
-msgstr "Ná_strojové lišty"
+msgstr ""
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
-msgstr "Šablona:"
+msgstr ""
 
 #: ../ui/settings.glade:1653 ../ui/settings.glade:1666
 msgid "Test"
@@ -2323,11 +2313,11 @@ msgstr ""
 
 #: ../ui/main.glade:1766
 msgid "Text Font..."
-msgstr "Písmo textu..."
+msgstr ""
 
 #: ../ui/settings.glade:2744
 msgid "The unit of the ruler is cm"
-msgstr "Jednotkou pravítka jsou cm"
+msgstr ""
 
 #: ../ui/settings.glade:768
 msgid "These settings take only effect if the experimental input system is activated"
@@ -2372,15 +2362,15 @@ msgstr ""
 
 #: ../ui/settings.glade:2508
 msgid "View"
-msgstr "Zobrazení"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
-msgstr "Bělení"
+msgstr ""
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
-msgstr "Šířka:"
+msgstr ""
 
 #: ../ui/about.glade:202
 msgid "With help from the community"
@@ -2392,11 +2382,11 @@ msgstr ""
 
 #: ../ui/settings.glade:105
 msgid "Xournal++ Preferences"
-msgstr "Nastavení Xournal++"
+msgstr ""
 
 #: ../ui/settings.glade:2798
 msgid "Zoom"
-msgstr "Zvětšení"
+msgstr ""
 
 #: ../ui/settings.glade:1782
 msgid "Zoom Gestures"
@@ -2472,7 +2462,7 @@ msgstr ""
 
 #: ../ui/main.glade:199
 msgid "_Annotate PDF"
-msgstr "_Anotovat PDF"
+msgstr ""
 
 #: ../ui/main.glade:593
 msgid "_Bottom to Top"
@@ -2484,7 +2474,7 @@ msgstr ""
 
 #: ../ui/main.glade:868
 msgid "_Customize"
-msgstr "_Přizpůsobit"
+msgstr ""
 
 #: ../ui/main.glade:1293
 msgid "_Default Tools"
@@ -2492,27 +2482,27 @@ msgstr ""
 
 #: ../ui/main.glade:1144
 msgid "_Delete Page"
-msgstr "_Smazat stránku"
+msgstr ""
 
 #: ../ui/main.glade:295
 msgid "_Edit"
-msgstr "Ú_pravy"
+msgstr ""
 
 #: ../ui/main.glade:1245
 msgid "_Eraser"
-msgstr "_Guma"
+msgstr ""
 
 #: ../ui/main.glade:240
 msgid "_Export as PDF"
-msgstr "_Exportovat jako PDF"
+msgstr ""
 
 #: ../ui/main.glade:155
 msgid "_File"
-msgstr "_Soubor"
+msgstr ""
 
 #: ../ui/main.glade:967
 msgid "_First Page"
-msgstr "_První stránka"
+msgstr ""
 
 #: ../ui/main.glade:989
 msgid "_Goto Page"
@@ -2520,11 +2510,11 @@ msgstr ""
 
 #: ../ui/main.glade:1847
 msgid "_Help"
-msgstr "_Nápověda"
+msgstr ""
 
 #: ../ui/main.glade:1257
 msgid "_Highlighter"
-msgstr "_Zvýrazňovač"
+msgstr ""
 
 #: ../ui/main.glade:524
 msgid "_Horizontal"
@@ -2532,15 +2522,15 @@ msgstr ""
 
 #: ../ui/main.glade:1281
 msgid "_Image"
-msgstr "_Obrázek"
+msgstr ""
 
 #: ../ui/main.glade:1092
 msgid "_Journal"
-msgstr "_Zápisník"
+msgstr ""
 
 #: ../ui/main.glade:1011
 msgid "_Last Page"
-msgstr "Po_slední stránka"
+msgstr ""
 
 #: ../ui/main.glade:553
 msgid "_Left To Right"
@@ -2548,11 +2538,11 @@ msgstr ""
 
 #: ../ui/main.glade:858
 msgid "_Manage"
-msgstr "_Spravovat"
+msgstr ""
 
 #: ../ui/main.glade:956
 msgid "_Navigation"
-msgstr "_Navigace"
+msgstr ""
 
 #: ../ui/main.glade:1039
 msgid "_Next Layer"
@@ -2560,7 +2550,7 @@ msgstr ""
 
 #: ../ui/main.glade:1000
 msgid "_Next Page"
-msgstr "_Další stránka"
+msgstr ""
 
 #: ../ui/main.glade:465
 msgid "_Pair Pages"
@@ -2568,7 +2558,7 @@ msgstr ""
 
 #: ../ui/main.glade:1233
 msgid "_Pen"
-msgstr "_Pero"
+msgstr ""
 
 #: ../ui/main.glade:1822
 msgid "_Plugin"
@@ -2576,7 +2566,7 @@ msgstr ""
 
 #: ../ui/main.glade:475
 msgid "_Presentation Mode"
-msgstr "_Prezentace"
+msgstr ""
 
 #: ../ui/main.glade:1028
 msgid "_Previous Layer"
@@ -2584,7 +2574,7 @@ msgstr ""
 
 #: ../ui/main.glade:978
 msgid "_Previous Page"
-msgstr "_Předchozí stránka"
+msgstr ""
 
 #: ../ui/main.glade:564
 msgid "_Right To Left"
@@ -2592,7 +2582,7 @@ msgstr ""
 
 #: ../ui/main.glade:1309
 msgid "_Shape Recognizer"
-msgstr "_Rozpoznávání tvarů"
+msgstr ""
 
 #: ../ui/main.glade:1269
 msgid "_Text"
@@ -2600,7 +2590,7 @@ msgstr ""
 
 #: ../ui/main.glade:1222
 msgid "_Tools"
-msgstr "_Nástroje"
+msgstr ""
 
 #: ../ui/main.glade:1050
 msgid "_Top Layer"
@@ -2616,39 +2606,39 @@ msgstr ""
 
 #: ../ui/main.glade:1417
 msgid "_Vertical Space"
-msgstr "_Vertikální místo"
+msgstr ""
 
 #: ../ui/main.glade:454
 msgid "_View"
-msgstr "_Zobrazení"
+msgstr ""
 
 #: ../ui/main.glade:1677
 msgid "_delete strokes"
-msgstr "_smazat čáry"
+msgstr ""
 
 #: ../ui/main.glade:1481 ../ui/main.glade:1616 ../ui/main.glade:1703
 msgid "_fine"
-msgstr "_tenká"
+msgstr ""
 
 #: ../ui/main.glade:1492 ../ui/main.glade:1627 ../ui/main.glade:1714
 msgid "_medium"
-msgstr "_střední"
+msgstr ""
 
 #: ../ui/main.glade:1655
 msgid "_standard"
-msgstr "_výchozí"
+msgstr ""
 
 #: ../ui/main.glade:1503 ../ui/main.glade:1638 ../ui/main.glade:1725
 msgid "_thick"
-msgstr "_tlustá"
+msgstr ""
 
 #: ../ui/main.glade:1470
 msgid "_very fine"
-msgstr "_velmi tenká"
+msgstr ""
 
 #: ../ui/main.glade:1666
 msgid "_whiteout"
-msgstr "_bělení"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:158
 msgid "change"
@@ -2689,5 +2679,5 @@ msgstr ""
 
 #: ../ui/main.glade:1514
 msgid "ver_y thick"
-msgstr "vel_mi tlustá"
+msgstr ""
 
