@@ -33,7 +33,7 @@ stages:
         secureFile: deploy_key
       displayName: 'Get the deploy key'
     - bash: |
-        if [[ $(git diff --word-diff=porcelain --no-color -U0 | wc -l) -gt 9 ]]
+        if [[ $(git diff --word-diff=porcelain --no-color -U0 | wc -l) -gt 9 ]]; then
           git commit -am "Update translation template [skip ci]"
 
           mkdir ~/.ssh && mv $DOWNLOADSECUREFILE_SECUREFILEPATH ~/.ssh/id_rsa
