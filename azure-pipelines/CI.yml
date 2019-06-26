@@ -4,6 +4,10 @@ trigger:
     - '*'
     exclude:
     - stable
+  paths:
+    exclude:
+    - po/xournalpp.pot
+    - po/*.po
   
 
 stages:
