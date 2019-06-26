@@ -15,8 +15,8 @@
 #include "gui/GladeGui.h"
 
 #include <gdk/gdk.h>
+#include <util/DeviceListHelper.h>
 
-class DeviceListHelper;
 class Settings;
 class SettingsDialog;
 
@@ -41,10 +41,6 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	Settings* settings;
-	int button;
-	bool withDevice;
-
-	DeviceListHelper* deviceList = NULL;
 
 	GtkWidget* cbDevice;
 	GtkWidget* cbDisableDrawing;
@@ -54,4 +50,9 @@ private:
 	GtkWidget* colorButton;
 	GtkWidget* cbEraserType;
 	GtkWidget* cbDrawingType;
+
+	std::vector<InputDevice> deviceList;
+
+	int button = 0;
+	bool withDevice = false;
 };

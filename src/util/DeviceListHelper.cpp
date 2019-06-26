@@ -2,69 +2,60 @@
 
 #include <i18n.h>
 
+#include <vector>
 
-DeviceListHelper::DeviceListHelper(bool ignoreTouchDevices)
- : ignoreTouchDevices(ignoreTouchDevices)
+std::vector<InputDevice> addDevicesToList(GList* const devList, bool ignoreTouchDevices)
 {
-#if (GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 20)
-	GdkDisplay* display = gdk_display_get_default();
-	GdkSeat* defaultSeat = gdk_display_get_default_seat(display);
-	GdkDevice* pointer = gdk_seat_get_pointer(defaultSeat);
-	GdkSeat* pointerSeat = gdk_device_get_seat(pointer);
-	GList* pointerSlaves = gdk_seat_get_slaves(pointerSeat, GDK_SEAT_CAPABILITY_ALL_POINTING);
-	addDevicesToList(pointerSlaves);
-#else
-	GdkDeviceManager* deviceManager = gdk_display_get_device_manager(gdk_display_get_default());
-
-	addDevicesToList(gdk_device_manager_list_devices(deviceManager, GDK_DEVICE_TYPE_SLAVE));
-#endif
-
-	if (deviceList.size() == 0)
+	std::vector<InputDevice> v;
+	for (auto iter = devList; iter != nullptr; iter = iter->next)
 	{
-		g_warning("No device found. Is Xournal++ running in debugger / Eclipse...?\nProbably this is the reason for not finding devices!\n");
-	}
-}
-
-DeviceListHelper::~DeviceListHelper()
-{
-}
-
-void DeviceListHelper::addDevicesToList(GList* devList)
-{
-	while (devList != NULL)
-	{
-		GdkDevice* dev = (GdkDevice*) devList->data;
+		auto* dev = (GdkDevice*) iter->data;
 		if (GDK_SOURCE_KEYBOARD == gdk_device_get_source(dev))
 		{
-			// Skip keyboard
-			devList = devList->next;
 			continue;
 		}
 		if (ignoreTouchDevices && GDK_SOURCE_TOUCHSCREEN == gdk_device_get_source(dev))
 		{
-			devList = devList->next;
 			continue;
 		}
 
-		deviceList.push_back(InputDevice(dev));
-		devList = devList->next;
+		v.emplace_back(dev);
 	}
 
 	g_list_free(devList);
+	return v;
 }
 
-std::vector<InputDevice>& DeviceListHelper::getDeviceList()
+
+vector<InputDevice> DeviceListHelper::getDeviceList(bool ignoreTouchDevices)
 {
-	return deviceList;
+	vector<InputDevice> devices;
+
+	GList* pointerSlaves;
+	// TODO remove after completely switching to gtk 3.20 or use c++17 if constexpr (predicate){...} else{...} ...
+#if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
+	GdkDisplay* display = gdk_display_get_default();
+	GdkSeat* defaultSeat = gdk_display_get_default_seat(display);
+	GdkDevice* pointer = gdk_seat_get_pointer(defaultSeat);
+	GdkSeat* pointerSeat = gdk_device_get_seat(pointer);
+	pointerSlaves = gdk_seat_get_slaves(pointerSeat, GDK_SEAT_CAPABILITY_ALL_POINTING);
+#else
+	GdkDeviceManager* deviceManager = gdk_display_get_device_manager(gdk_display_get_default());
+	pointerSlaves = gdk_device_manager_list_devices(deviceManager, GDK_DEVICE_TYPE_SLAVE);
+#endif
+	devices = addDevicesToList(pointerSlaves, ignoreTouchDevices);
+
+	if (devices.empty())
+	{
+		g_warning("No device found. Is Xournal++ running in debugger / Eclipse...?\n"
+		          "Probably this is the reason for not finding devices!\n");
+	}
+	return devices;
 }
 
+InputDevice::InputDevice(GdkDevice* device)
+ : device(device)
 {
-
-}
-
-InputDevice::InputDevice(GdkDevice* device) : device(device)
-{
-
 }
 
 GdkDevice* InputDevice::getDevice() const

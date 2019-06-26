@@ -105,10 +105,9 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 
 	initMouseButtonEvents();
 
-	auto deviceListHelper = new DeviceListHelper(false);
-	vector<InputDevice> deviceList = deviceListHelper->getDeviceList();
+	vector<InputDevice> deviceList = DeviceListHelper::getDeviceList();
 	GtkWidget* container = get("hboxInputDeviceClasses");
-	for (InputDevice const& inputDevice : deviceList)
+	for (InputDevice const& inputDevice: deviceList)
 	{
 		// Only add real devices (core pointers have vendor and product id NULL) and ignore keyboards
 		GdkDevice* device = inputDevice.getDevice();
@@ -332,7 +331,7 @@ void SettingsDialog::load()
 
 	string hidden = settings->getFullscreenHideElements();
 
-	for (const string& element : StringUtils::split(hidden, ','))
+	for (const string& element: StringUtils::split(hidden, ','))
 	{
 		if (element == "mainMenubar")
 		{
@@ -345,7 +344,7 @@ void SettingsDialog::load()
 	}
 
 	hidden = settings->getPresentationHideElements();
-	for (const string& element : StringUtils::split(hidden, ','))
+	for (const string& element: StringUtils::split(hidden, ','))
 	{
 		if (element == "mainMenubar")
 		{
@@ -460,7 +459,7 @@ string SettingsDialog::updateHideString(const string& hidden, bool hideMenubar, 
 
 	string newHidden;
 
-	for (const string& element : StringUtils::split(hidden, ','))
+	for (const string& element: StringUtils::split(hidden, ','))
 	{
 		if (element == "mainMenubar")
 		{
@@ -539,7 +538,7 @@ void SettingsDialog::save()
 	settings->setInputSystemTPCButtonEnabled(getCheckbox("cbInputSystemTPCButton"));
 	settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
 
-	uint scrollbarHideType = SCROLLBAR_HIDE_NONE;
+	unsigned scrollbarHideType = SCROLLBAR_HIDE_NONE;
 	if (getCheckbox("cbHideHorizontalScrollbar"))
 	{
 		scrollbarHideType |= SCROLLBAR_HIDE_HORIZONTAL;

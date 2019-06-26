@@ -43,8 +43,8 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 	{
 		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), _("No device"));
 
-		this->deviceList = new DeviceListHelper(true);
-		for (InputDevice const& dev : this->deviceList->getDeviceList())
+		this->deviceList = DeviceListHelper::getDeviceList(true);
+		for (InputDevice const& dev: this->deviceList)
 		{
 			string txt = dev.getName()  + " (" + dev.getType() + ")";
 			gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), txt.c_str());
@@ -57,7 +57,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 		gtk_widget_hide(this->cbDisableDrawing);
 	}
 
-	GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT); //NOLINT
+	GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);  //NOLINT
 
 	ADD_TYPE_CB("transparent",		_("Tool - don't change"),	TOOL_NONE);
 	ADD_TYPE_CB("tool_pencil",		_("Pen"),					TOOL_PEN);
@@ -120,10 +120,6 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 ButtonConfigGui::~ButtonConfigGui()
 {
 	XOJ_CHECK_TYPE(ButtonConfigGui);
-
-	delete this->deviceList;
-	this->deviceList = NULL;
-
 	XOJ_RELEASE_TYPE(ButtonConfigGui);
 }
 
@@ -209,7 +205,7 @@ void ButtonConfigGui::loadSettings()
 		gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), 0);
 
 		int i = 1;
-		for (InputDevice const& dev : this->deviceList->getDeviceList())
+		for (InputDevice const& dev: this->deviceList)
 		{
 			if (cfg->device == dev.getName())
 			{
@@ -290,18 +286,8 @@ void ButtonConfigGui::saveSettings()
 
 	if (this->withDevice)
 	{
-		std::vector<InputDevice>& devices = this->deviceList->getDeviceList();
 		int dev = gtk_combo_box_get_active(GTK_COMBO_BOX(cbDevice)) - 1;
-
-		if (dev < 0 || (int)devices.size() <= dev)
-		{
-			cfg->device = "";
-		}
-		else
-		{
-			cfg->device = devices[dev].getName();
-		}
-
+		cfg->device = (dev < 0 || this->deviceList.size() <= dev) ? "" : this->deviceList[dev].getName();
 		cfg->disableDrawing = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbDisableDrawing));
 	}
 

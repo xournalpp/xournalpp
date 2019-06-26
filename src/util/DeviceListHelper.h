@@ -9,7 +9,6 @@
  * @license GNU GPLv2 or later
  */
 
-
 #pragma once
 
 #include <gdk/gdk.h>
@@ -36,21 +35,7 @@ private:
 	GdkDevice* device;
 };
 
-
-class DeviceListHelper
+namespace DeviceListHelper
 {
-public:
-	DeviceListHelper(bool ignoreTouchDevices = false);
-	virtual ~DeviceListHelper();
-
-public:
-	vector<InputDevice>& getDeviceList();
-
-private:
-	void addDevicesToList(GList* devList);
-
-private:
-	bool ignoreTouchDevices;
-
-	vector<InputDevice> deviceList;
-};
+vector<InputDevice> getDeviceList(bool ignoreTouchDevices = false);
+}
