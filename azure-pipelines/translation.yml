@@ -2,6 +2,7 @@ trigger:
   branches:
     include:
     - master
+pr: none
   
 stages:
 - stage: 'translations'
