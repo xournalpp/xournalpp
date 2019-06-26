@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-25 21:32+0000\n"
-"PO-Revision-Date: 2019-06-26 13:06\n"
+"PO-Revision-Date: 2019-06-26 13:19\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -183,7 +183,7 @@ msgstr "Schriftart ändern"
 
 #: ../src/undo/FillUndoAction.cpp:117
 msgid "Change stroke fill"
-msgstr "Figurenfüllung ändern"
+msgstr "Füllung ändern"
 
 #: ../src/undo/SizeUndoAction.cpp:139
 msgid "Change stroke width"
@@ -1448,31 +1448,31 @@ msgstr "xoj-Datei: {1}"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:75
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
-msgstr "xoj-Vorschau-Extraktor: rufe auf mit INPUT.xoj OUTPUT.png"
+msgstr "xoj-preview-extractor: rufe auf mit INPUT.xoj OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:97
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr "xoj-Vorschau-Extraktor: Datei \"{1}\" enthält keine Vorschau"
+msgstr "xoj-preview-extractor: Datei \"{1}\" enthält keine Vorschau"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:89
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr "xoj-Vorschau-Extraktor: Datei \"{1}\" ist keine xoj-Datei"
+msgstr "xoj-preview-extractor: Datei \"{1}\" ist keine xoj-Datei"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:102
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr "xoj-Vorschau-Extraktor: keine Vorschau und keine Seite gefunden: ungültige Datei?"
+msgstr "xoj-preview-extractor: keine Vorschau und keine Seite gefunden: ungültige Datei?"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:93
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr "xoj-Vorschau-Extraktor: Öffnen der Datei \"{1}\" fehlgeschlagen"
+msgstr "xoj-preview-extractor: Öffnen der Datei \"{1}\" fehlgeschlagen"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:109
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr "xoj-Vorschau-Extraktor: Öffnen der Ausgabedatei \"{1}\" fehlgeschlagen"
+msgstr "xoj-preview-extractor: Öffnen der Ausgabedatei \"{1}\" fehlgeschlagen"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:118
 msgid "xoj-preview-extractor: successfully extracted"
-msgstr "xoj-Vorschau-Extraktor: erfolgreich extrahiert"
+msgstr "xoj-preview-extractor: erfolgreich extrahiert"
 
 #: ../src/util/Util.cpp:102
 msgid "xournalpp-{1}"
@@ -1924,7 +1924,7 @@ msgstr "Automatisches Speichern aktivieren"
 
 #: ../ui/settings.glade:1830
 msgid "Enable GTK Touch / Scrolling workaround  (requires restart)"
-msgstr "Abhilfe für GTK Touch-/Scrollhandling aktivieren (erfordert Neustart)"
+msgstr "Abhilfe für GTK Touch-/Scrollverhalten aktivieren (erfordert Neustart)"
 
 #: ../ui/settings.glade:1108
 msgid "Enable Pressure Sensitivity"
@@ -2063,7 +2063,7 @@ msgstr "Wie kurz (Länge in mm)  eines Striches  UND...\n\n"
 #: ../ui/settings.glade:3278
 msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr "Wie kurz (zeitlich  UND...\n\n"
+msgstr "Wie kurz (zeitlich)  UND...\n\n"
 "<i>Empfohlen: 150ms</i>"
 
 #: ../ui/settings.glade:3265
@@ -2122,7 +2122,7 @@ msgstr "Maximale Länge (mm)"
 msgid "Merge button events with stylus tip events\n"
 "<i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
 msgstr "Füge Tastenereignisse mit Spitzenereignissen des Stifts zusammen\n"
-"<i>(Wähle diese Option wenn </i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>als Rückgabe</i> \"<tt>on</tt>zeigt)</i>"
+"<i>(Wähle diese Option wenn</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>als Rückgabe</i> \"<tt>on</tt> <i>zeigt)</i>"
 
 #: ../ui/settings.glade:954
 msgid "Middle Mouse Button"
@@ -2203,7 +2203,7 @@ msgstr "Seitenhintergrund"
 #: ../ui/about.glade:217
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr "Teilweise basierend auf Xounal\n"
+msgstr "Teilweise basierend auf Xournal\n"
 "von Denis Auroux"
 
 #: ../ui/main.glade:1792
