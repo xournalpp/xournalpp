@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-25 21:32+0000\n"
-"PO-Revision-Date: 2019-06-26 12:39\n"
+"PO-Revision-Date: 2019-06-26 12:47\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -592,7 +592,7 @@ msgstr "Am Raster ausrichten"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:71
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:481
 msgid "Hand"
-msgstr ""
+msgstr "Hand"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:99
 msgid "Hide all"
@@ -753,7 +753,7 @@ msgstr "Normal zeichnen"
 
 #: ../src/plugin/Plugin.cpp:417 ../src/plugin/Plugin.cpp:438
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../src/control/jobs/BaseExportJob.cpp:113
 msgid "Only local files are supported\n"
@@ -786,7 +786,7 @@ msgstr "Öffne {1}"
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:18
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:144
 msgid "Orange"
-msgstr ""
+msgstr "Orange"
 
 #: ../src/control/jobs/PdfExportJob.cpp:9
 msgid "PDF Export"
@@ -1088,7 +1088,7 @@ msgstr "Unterstützte Dateiformate"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:66
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:465
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: ../src/gui/SearchBar.cpp:70
 #, c-format
@@ -1476,7 +1476,7 @@ msgstr "xoj-Vorschau-Extraktor: erfolgreich extrahiert"
 
 #: ../src/util/Util.cpp:102
 msgid "xournalpp-{1}"
-msgstr ""
+msgstr "xournalpp-{1}"
 
 #: ../ui/settings.glade:3379
 msgid "         Settings:     "
@@ -1488,7 +1488,7 @@ msgstr " = Schwebende Werkzeugbox (experimentell) ="
 
 #: ../ui/settings.glade:2616 ../ui/settings.glade:2627
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../ui/settings.glade:418
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -2004,11 +2004,11 @@ msgstr "GNU GPLv2 oder neuer"
 
 #: ../ui/settings.glade:3855
 msgid "Gain"
-msgstr ""
+msgstr "Gain"
 
 #: ../ui/settings.glade:2107
 msgid "Global"
-msgstr ""
+msgstr "Global"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
@@ -2092,7 +2092,7 @@ msgstr "Eine Kopie der aktuellen Seite unten einfügen"
 
 #: ../ui/main.glade:516
 msgid "Layout"
-msgstr ""
+msgstr "Layout"
 
 #: ../ui/settings.glade:2242
 msgid "Left / Right-Handed"
@@ -2208,7 +2208,7 @@ msgstr "Teilweise basierend auf Xounal\n"
 
 #: ../ui/main.glade:1792
 msgid "Pause"
-msgstr ""
+msgstr "Pausieren"
 
 #: ../ui/main.glade:1463
 msgid "Pen _Options"
@@ -2344,7 +2344,7 @@ msgstr "Geschwindigkeit für Zoomstufe"
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #: ../ui/settings.glade:3662 ../ui/settings.glade:3699
 msgid "Storage Folder"
@@ -2380,7 +2380,7 @@ msgstr "Vorlage:"
 
 #: ../ui/settings.glade:1654 ../ui/settings.glade:1667
 msgid "Test"
-msgstr ""
+msgstr "Testen"
 
 #: ../ui/main.glade:1770
 msgid "Text Font..."
@@ -2405,7 +2405,7 @@ msgstr "Wartezeit"
 #: ../ui/settings.glade:1413 ../ui/settings.glade:1882
 #: ../ui/settingsDeviceClassConfig.glade:45
 msgid "Touchscreen"
-msgstr ""
+msgstr "Touchscreen"
 
 #: ../ui/fillTransparency.glade:14
 msgid "Transparency settings"
@@ -2425,11 +2425,11 @@ msgstr "Normalerweise 0 oder 1"
 
 #: ../ui/about.glade:100
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Version: "
-msgstr ""
+msgstr "Version: "
 
 #: ../ui/settings.glade:2508
 msgid "View"
@@ -2457,7 +2457,7 @@ msgstr "Xournal++ Einstellungen"
 
 #: ../ui/settings.glade:2798
 msgid "Zoom"
-msgstr ""
+msgstr "Zoom"
 
 #: ../ui/settings.glade:1782
 msgid "Zoom Gestures"
@@ -2589,7 +2589,7 @@ msgstr "_Textmarker"
 
 #: ../ui/main.glade:528
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Horizontal"
 
 #: ../ui/main.glade:1285
 msgid "_Image"
@@ -2597,7 +2597,7 @@ msgstr "_Bild"
 
 #: ../ui/main.glade:1096
 msgid "_Journal"
-msgstr ""
+msgstr "_Journal"
 
 #: ../ui/main.glade:1015
 msgid "_Last Page"
@@ -2613,7 +2613,7 @@ msgstr "_Werkzeugleisten verwalten"
 
 #: ../ui/main.glade:960
 msgid "_Navigation"
-msgstr ""
+msgstr "_Navigation"
 
 #: ../ui/main.glade:1043
 msgid "_Next Layer"
@@ -2633,7 +2633,7 @@ msgstr "_Stift"
 
 #: ../ui/main.glade:1826
 msgid "_Plugin"
-msgstr ""
+msgstr "_Plugin"
 
 #: ../ui/main.glade:479
 msgid "_Presentation Mode"
@@ -2657,7 +2657,7 @@ msgstr "_Figurenerkennung"
 
 #: ../ui/main.glade:1273
 msgid "_Text"
-msgstr ""
+msgstr "_Text"
 
 #: ../ui/main.glade:1226
 msgid "_Tools"
@@ -2697,7 +2697,7 @@ msgstr "_mittel"
 
 #: ../ui/main.glade:1659
 msgid "_standard"
-msgstr ""
+msgstr "_Standard"
 
 #: ../ui/main.glade:1507 ../ui/main.glade:1642 ../ui/main.glade:1729
 msgid "_thick"
@@ -2717,7 +2717,7 @@ msgstr "ändern"
 
 #: ../ui/exportSettings.glade:223
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
