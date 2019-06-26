@@ -108,7 +108,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 	auto deviceListHelper = new DeviceListHelper(false);
 	vector<InputDevice> deviceList = deviceListHelper->getDeviceList();
 	GtkWidget* container = get("hboxInputDeviceClasses");
-	for(InputDevice inputDevice : deviceList)
+	for (InputDevice const& inputDevice : deviceList)
 	{
 		// Only add real devices (core pointers have vendor and product id NULL) and ignore keyboards
 		GdkDevice* device = inputDevice.getDevice();
@@ -332,7 +332,7 @@ void SettingsDialog::load()
 
 	string hidden = settings->getFullscreenHideElements();
 
-	for (string element : StringUtils::split(hidden, ','))
+	for (const string& element : StringUtils::split(hidden, ','))
 	{
 		if (element == "mainMenubar")
 		{
@@ -345,7 +345,7 @@ void SettingsDialog::load()
 	}
 
 	hidden = settings->getPresentationHideElements();
-	for (string element : StringUtils::split(hidden, ','))
+	for (const string& element : StringUtils::split(hidden, ','))
 	{
 		if (element == "mainMenubar")
 		{
@@ -454,13 +454,13 @@ void SettingsDialog::load()
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spAudioGain")), settings->getAudioGain());
 }
 
-string SettingsDialog::updateHideString(string hidden, bool hideMenubar, bool hideSidebar)
+string SettingsDialog::updateHideString(const string& hidden, bool hideMenubar, bool hideSidebar)
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	string newHidden = "";
+	string newHidden;
 
-	for (string element : StringUtils::split(hidden, ','))
+	for (const string& element : StringUtils::split(hidden, ','))
 	{
 		if (element == "mainMenubar")
 		{
@@ -539,7 +539,7 @@ void SettingsDialog::save()
 	settings->setInputSystemTPCButtonEnabled(getCheckbox("cbInputSystemTPCButton"));
 	settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
 
-	int scrollbarHideType = SCROLLBAR_HIDE_NONE;
+	uint scrollbarHideType = SCROLLBAR_HIDE_NONE;
 	if (getCheckbox("cbHideHorizontalScrollbar"))
 	{
 		scrollbarHideType |= SCROLLBAR_HIDE_HORIZONTAL;

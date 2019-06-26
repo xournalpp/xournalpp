@@ -58,27 +58,26 @@ std::vector<InputDevice>& DeviceListHelper::getDeviceList()
 	return deviceList;
 }
 
-InputDevice::InputDevice(GdkDevice* device)
- : device(device)
 {
 
 }
 
-InputDevice::~InputDevice()
+InputDevice::InputDevice(GdkDevice* device) : device(device)
 {
+
 }
 
-GdkDevice* InputDevice::getDevice()
+GdkDevice* InputDevice::getDevice() const
 {
 	return device;
 }
 
-string InputDevice::getName()
+string InputDevice::getName() const
 {
 	return gdk_device_get_name(device);
 }
 
-string InputDevice::getType()
+string InputDevice::getType() const
 {
 	GdkInputSource source = gdk_device_get_source(device);
 	if (source == GDK_SOURCE_MOUSE)

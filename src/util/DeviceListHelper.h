@@ -24,13 +24,13 @@ using std::vector;
 class InputDevice
 {
 public:
-	InputDevice(GdkDevice* device);
-	virtual ~InputDevice();
+	explicit InputDevice(GdkDevice* device);
+	~InputDevice() = default;
 
 public:
-	GdkDevice* getDevice();
-	string getType();
-	string getName();
+	GdkDevice* getDevice() const;
+	string getType() const;
+	string getName() const;
 
 private:
 	GdkDevice* device;

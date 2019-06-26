@@ -24,14 +24,14 @@ class ButtonConfigGui : public GladeGui
 {
 public:
 	ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, int button, bool withDevice);
-	virtual ~ButtonConfigGui();
+	~ButtonConfigGui() override;
 
 public:
 	void loadSettings();
 	void saveSettings();
 
 	// Not implemented! This is not a dialog!
-	virtual void show(GtkWindow* parent);
+	void show(GtkWindow* parent) override;
 
 private:
 	static void cbSelectCallback(GtkComboBox* widget, ButtonConfigGui* gui);

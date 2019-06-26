@@ -44,7 +44,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), _("No device"));
 
 		this->deviceList = new DeviceListHelper(true);
-		for (InputDevice& dev : this->deviceList->getDeviceList())
+		for (InputDevice const& dev : this->deviceList->getDeviceList())
 		{
 			string txt = dev.getName()  + " (" + dev.getType() + ")";
 			gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), txt.c_str());
@@ -57,7 +57,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 		gtk_widget_hide(this->cbDisableDrawing);
 	}
 
-	GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
+	GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT); //NOLINT
 
 	ADD_TYPE_CB("transparent",		_("Tool - don't change"),	TOOL_NONE);
 	ADD_TYPE_CB("tool_pencil",		_("Pen"),					TOOL_PEN);
@@ -208,23 +208,23 @@ void ButtonConfigGui::loadSettings()
 	{
 		gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), 0);
 
-		int i = 0;
-		for (InputDevice& dev : this->deviceList->getDeviceList())
+		int i = 1;
+		for (InputDevice const& dev : this->deviceList->getDeviceList())
 		{
 			if (cfg->device == dev.getName())
 			{
-				gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), i + 1);
+				gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), i);
 				break;
 			}
 
-			i++;
+			++i;
 		}
 
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cbDisableDrawing), cfg->disableDrawing);
 	}
 }
 
-void ButtonConfigGui::show(GtkWindow* parent)
+void ButtonConfigGui::show(GtkWindow*)
 {
 	// Not implemented! This is not a dialog!
 }
@@ -233,18 +233,15 @@ void ButtonConfigGui::saveSettings()
 {
 	XOJ_CHECK_TYPE(ButtonConfigGui);
 
-	ButtonConfig* cfg = settings->getButtonConfig(button);
-	ToolType action = TOOL_NONE;
 	GtkTreeIter iter;
-
 	gtk_combo_box_get_active_iter(GTK_COMBO_BOX(cbTool), &iter);
 
 	GValue value = {0};
 	GtkTreeModel* model = gtk_combo_box_get_model(GTK_COMBO_BOX(cbTool));
-
 	gtk_tree_model_get_value(model, &iter, 2, &value);
-	action = (ToolType) g_value_get_int(&value);
 
+	auto action = (ToolType) g_value_get_int(&value);
+	ButtonConfig* cfg = settings->getButtonConfig(button);
 	cfg->action = action;
 
 	int thickness = gtk_combo_box_get_active(GTK_COMBO_BOX(cbThickness));
@@ -311,7 +308,7 @@ void ButtonConfigGui::saveSettings()
 	settings->customSettingsChanged();
 }
 
-void ButtonConfigGui::cbSelectCallback(GtkComboBox* widget, ButtonConfigGui* gui)
+void ButtonConfigGui::cbSelectCallback(GtkComboBox*, ButtonConfigGui* gui)
 {
 	XOJ_CHECK_TYPE_OBJ(gui, ButtonConfigGui);
 	gui->enableDisableTools();
@@ -321,16 +318,13 @@ void ButtonConfigGui::enableDisableTools()
 {
 	XOJ_CHECK_TYPE(ButtonConfigGui);
 
-	ToolType action = TOOL_NONE;
 	GtkTreeIter iter;
-
 	gtk_combo_box_get_active_iter(GTK_COMBO_BOX(cbTool), &iter);
-
-	GValue value = {0};
 	GtkTreeModel* model = gtk_combo_box_get_model(GTK_COMBO_BOX(cbTool));
 
+	GValue value = {0};
 	gtk_tree_model_get_value(model, &iter, 2, &value);
-	action = (ToolType) g_value_get_int(&value);
+	auto action = (ToolType) g_value_get_int(&value);
 
 	switch (action)
 	{
