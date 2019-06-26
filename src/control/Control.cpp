@@ -2926,7 +2926,7 @@ bool Control::close(bool destroy, bool allowCancel)
 			                                           "%s",
 			                                           _("Document file was removed."));
 
-			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save As"), 1);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save As..."), 1);
 			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
 			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
 			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
