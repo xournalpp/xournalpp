@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-25 21:32+0000\n"
-"PO-Revision-Date: 2019-06-26 12:47\n"
+"PO-Revision-Date: 2019-06-26 13:06\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -30,7 +30,7 @@ msgstr "\n"
 
 #: ../src/undo/AddUndoAction.cpp:119 ../src/undo/DeleteUndoAction.cpp:113
 msgid " elements"
-msgstr "Elemente"
+msgstr " Elemente"
 
 #: ../src/undo/AddUndoAction.cpp:134 ../src/undo/DeleteUndoAction.cpp:128
 msgid " image"
@@ -81,7 +81,7 @@ msgstr "Absoluter Pfad für die Audiodateien"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:466
 msgid "Add/Edit Tex"
-msgstr "LaTeX  editieren/hinzufügen"
+msgstr "LaTeX editieren/hinzufügen"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:53
 msgid "All files"
@@ -111,7 +111,7 @@ msgstr "Attribut \"{1}\" konnte nicht als Fließkommazahl ausgelesen werden, der
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:160
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:183
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr "Attribut \"{1}\" konnte nicht als Ganzzahl ausgelesen werden, der Wert ist \"{1}\""
+msgstr "Attribut \"{1}\" konnte nicht als Ganzzahl ausgelesen werden, der Wert ist \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:152
 msgid "Attribute \"{1}\" could not be parsed as int, the value is NULL"
@@ -313,7 +313,7 @@ msgstr "Konnte Autospeicherung \"{1}\" nicht umbenennen zu \"{2}\": {3}"
 
 #: ../src/control/LatexController.cpp:133
 msgid "Could not save .tex file: {1}"
-msgstr "Konnte .tex Datei \"{1}\" nicht speichern:"
+msgstr "Konnte .tex Datei \"{1}\" nicht speichern"
 
 #: ../src/control/LatexController.cpp:154
 msgid "Could not start pdflatex: {1} (exit code: {2})"
@@ -918,7 +918,7 @@ msgstr "Werkzeug von der Werkzeugleiste {1} ID {2} entfernt"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:194
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr "Werkzeug {1} von der Werkzeugleiste {2} ID {3}entfernt"
+msgstr "Werkzeug {1} von der Werkzeugleiste {2} ID {3} entfernt"
 
 #: ../src/util/XojMsgBox.cpp:77
 msgid "Replace"
@@ -1149,7 +1149,7 @@ msgstr "Die Datei ist keine gültige .xopp-Datei (Versionsdaten ungültig): \"{1
 
 #: ../src/control/LatexController.cpp:368
 msgid "The formula is empty when rendered or invalid."
-msgstr "Die Formel ist  ungültig oder leer nachdem sie gerendert wurde."
+msgstr "Die Formel ist ungültig oder leer nachdem sie gerendert wurde."
 
 #: ../src/control/XournalMain.cpp:130
 msgid "The most recent log file name: {1}"
@@ -1346,7 +1346,7 @@ msgstr "Herauszoomen"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:106
 msgid "Zoom slider"
-msgstr "Zoomregler"
+msgstr "Zoom-Regler"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Zoom to 100%"
@@ -1523,7 +1523,7 @@ msgstr "%a\t\tAbgekürzter Wochentag \t(z.B. Mit)\n"
 "%F\t\tDatum (z.B. 2011-02-16)\n"
 "%H\t\tStunde in 24h Format (00-23)\n"
 "%I\t\tStunde in 12h Format (01-12)\n"
-"%j\t\tTag des Jares (001-366)\n"
+"%j\t\tTag des Jahres (001-366)\n"
 "%m\tMonat als Zahl (01-12)\n"
 "%M\tMinute (00-59)\n"
 "%p\t\tAM oder PM (z.B. PM)\n"
