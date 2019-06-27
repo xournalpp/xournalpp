@@ -538,7 +538,8 @@ void SettingsDialog::save()
 	settings->setInputSystemTPCButtonEnabled(getCheckbox("cbInputSystemTPCButton"));
 	settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
 
-	unsigned scrollbarHideType = SCROLLBAR_HIDE_NONE;
+	auto scrollbarHideType =
+	        static_cast<std::make_unsigned<std::underlying_type<ScrollbarHideType>::type>::type>(SCROLLBAR_HIDE_NONE);
 	if (getCheckbox("cbHideHorizontalScrollbar"))
 	{
 		scrollbarHideType |= SCROLLBAR_HIDE_HORIZONTAL;
@@ -547,7 +548,7 @@ void SettingsDialog::save()
 	{
 		scrollbarHideType |= SCROLLBAR_HIDE_VERTICAL;
 	}
-	settings->setScrollbarHideType((ScrollbarHideType)scrollbarHideType);
+	settings->setScrollbarHideType(static_cast<ScrollbarHideType>(scrollbarHideType));
 
 	GdkRGBA color;
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorBorder")), &color);
