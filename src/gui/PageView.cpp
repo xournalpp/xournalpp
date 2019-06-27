@@ -62,16 +62,6 @@ XojPageView::XojPageView(XournalView* xournal, PageRef page)
 	g_mutex_init(&this->drawingMutex);
 
 	g_mutex_init(&this->repaintRectMutex);
-
-	// this does not have to be deleted afterwards:
-	// (we need it for undo commands)
-	this->oldtext = nullptr;
-
-	this->eraser = new EraseHandler(xournal->getControl()->getUndoRedoHandler(),
-	                                xournal->getControl()->getDocument(),
-	                                this->page,
-	                                xournal->getControl()->getToolHandler(),
-	                                this);
 }
 
 XojPageView::~XojPageView()

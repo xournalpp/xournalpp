@@ -25,14 +25,14 @@ int ScrollHandlingGtk::getPreferredWidth()
 {
 	XOJ_CHECK_TYPE(ScrollHandlingGtk);
 
-	return layout->getLayoutWidth();;
+	return layout->getMinimalWidth();
 }
 
 int ScrollHandlingGtk::getPreferredHeight()
 {
 	XOJ_CHECK_TYPE(ScrollHandlingGtk);
 
-	return layout->getLayoutHeight();
+	return layout->getMinimalHeight();
 }
 
 void ScrollHandlingGtk::translate(cairo_t* cr, double& x1, double& x2, double& y1, double& y2)
