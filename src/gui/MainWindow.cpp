@@ -275,6 +275,7 @@ void MainWindow::initXournalWidget()
 
 	Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
 	scrollHandling->init(this->xournal->getWidget(), layout);
+	control->getZoomControl()->initZoomHandler(winXournal, xournal, control);
 }
 
 void MainWindow::setTouchscreenScrollingForDeviceMapping()
