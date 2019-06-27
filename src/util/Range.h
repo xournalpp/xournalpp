@@ -21,13 +21,13 @@ public:
 
 	void addPoint(double x, double y);
 
-	double getX();
-	double getY();
-	double getWidth();
-	double getHeight();
+	double getX() const;
+	double getY() const;
+	double getWidth() const;
+	double getHeight() const;
 
-	double getX2();
-	double getY2();
+	double getX2() const;
+	double getY2() const;
 
 private:
 	XOJ_TYPE_ATTRIB;
