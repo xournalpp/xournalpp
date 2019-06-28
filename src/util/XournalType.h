@@ -38,11 +38,9 @@ void xoj_momoryleak_printRemainingObjects();
 #endif
 
 #ifdef DEV_CALL_LOG
-#define CALL_LOG(type, clazz, obj) { \
-		Log::trace(type, clazz, __FUNCTION__, (long)obj); \
-	}
+#define CALL_LOG(type, clazz, obj) Log::trace(type, clazz, __FUNCTION__, (long) obj)
 #else
-#define CALL_LOG(type, clazz, obj)
+#define CALL_LOG(type, clazz, obj) (void(0))
 #endif
 
 #define XOJ_DECLARE_TYPE(type, id) \
@@ -79,12 +77,15 @@ const char* xoj_type_getName(int id);
  * Release the Xournal type info, this should be called in the destructor
  */
 #ifdef DEV_MEMORY_LEAK_CHECKING
-#define XOJ_RELEASE_TYPE(type) do { \
-		XOJ_CHECK_TYPE(type) \
-		this->z__xoj_type = -(__XOJ_TYPE_ ## type); \
-		this->z__xoj_typeCheckvalue = 0xFFAA00AA; \
-		CALL_LOG("release", #type, this); \
-		xoj_memoryleak_releaseType(__XOJ_TYPE_ ## type); } while(false)
+#define XOJ_RELEASE_TYPE(type)                         \
+	do                                                 \
+	{                                                  \
+		XOJ_CHECK_TYPE(type);                          \
+		this->z__xoj_type = -(__XOJ_TYPE_##type);      \
+		this->z__xoj_typeCheckvalue = 0xFFAA00AA;      \
+		CALL_LOG("release", #type, this);              \
+		xoj_memoryleak_releaseType(__XOJ_TYPE_##type); \
+	} while (false)
 #else
 #define XOJ_RELEASE_TYPE(type) do { \
 		XOJ_CHECK_TYPE(type) \
@@ -129,11 +130,11 @@ const char* xoj_type_getName(int id);
 
 #else //DEV_MEMORY_CHECKING
 
-#define XOJ_DECLARE_TYPE(name, id)
+#define XOJ_DECLARE_TYPE(name, id) ((void) 0)
 #define XOJ_TYPE_ATTRIB
-#define XOJ_INIT_TYPE(name)
-#define XOJ_RELEASE_TYPE(name)
-#define XOJ_CHECK_TYPE_OBJ(obj, name)
-#define XOJ_CHECK_TYPE(name)
+#define XOJ_INIT_TYPE(name) ((void) 0)
+#define XOJ_RELEASE_TYPE(name) ((void) 0)
+#define XOJ_CHECK_TYPE_OBJ(obj, name) ((void) 0)
+#define XOJ_CHECK_TYPE(name) ((void) 0)
 
 #endif //DEV_MEMORY_CHECKING
