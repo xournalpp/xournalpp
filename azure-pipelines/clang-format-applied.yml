@@ -3,6 +3,13 @@ pr:
   branches:
     include:
     - '*'
+  paths:
+    include:
+      - '*'
+    exclude:
+      - po/xournalpp.pot
+      - po/*.po
+
 
 
 stages:
