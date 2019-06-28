@@ -830,7 +830,7 @@ void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage
 	spinPageNo->setPage(page);
 
 	string pdfText;
-	if (pdfpage != size_t_npos)
+	if (pdfpage != npos)
 	{
 		pdfText = string(", ") + FS(_F("PDF Page {1}") % (pdfpage + 1));
 	}

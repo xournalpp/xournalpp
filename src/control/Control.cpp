@@ -342,7 +342,7 @@ void Control::initWindow(MainWindow* win)
 
 	XojMsgBox::setDefaultWindow(getGtkWindow());
 
-	updatePageNumbers(0, size_t_npos);
+	updatePageNumbers(0, npos);
 
 	toolHandler->eraserTypeChanged();
 
@@ -1137,9 +1137,9 @@ size_t Control::firePageSelected(PageRef page)
 	this->doc->lock();
 	size_t pageId = this->doc->indexOf(page);
 	this->doc->unlock();
-	if (pageId == size_t_npos)
+	if (pageId == npos)
 	{
-		return size_t_npos;
+		return npos;
 	}
 
 	DocumentHandler::firePageSelected(pageId);
@@ -1370,7 +1370,7 @@ void Control::deletePage()
 	}
 
 	size_t pNr = getCurrentPageNo();
-	if (pNr == size_t_npos || pNr > this->doc->getPageCount())
+	if (pNr == npos || pNr > this->doc->getPageCount())
 	{
 		// something went wrong...
 		return;
@@ -1509,7 +1509,7 @@ void Control::paperFormat()
 	}
 
 	size_t pageNo = doc->indexOf(page);
-	if (pageNo != size_t_npos && pageNo < doc->getPageCount())
+	if (pageNo != npos && pageNo < doc->getPageCount())
 	{
 		this->firePageSizeChanged(pageNo);
 	}

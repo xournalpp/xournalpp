@@ -160,7 +160,7 @@ bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 		return false;
 	}
 
-	if (sidebar->selectedEntry != size_t_npos && sidebar->selectedEntry < sidebar->previews.size())
+	if (sidebar->selectedEntry != npos && sidebar->selectedEntry < sidebar->previews.size())
 	{
 		SidebarPreviewBaseEntry* p = sidebar->previews[sidebar->selectedEntry];
 

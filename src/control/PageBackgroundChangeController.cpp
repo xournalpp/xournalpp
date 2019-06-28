@@ -111,7 +111,7 @@ void PageBackgroundChangeController::changeCurrentPageBackground(PageType& pageT
 
 	Document* doc = control->getDocument();
 	size_t pageNr = doc->indexOf(page);
-	if (pageNr == size_t_npos)
+	if (pageNr == npos)
 	{
 		return;  // should not happen...
 	}
@@ -200,7 +200,7 @@ bool PageBackgroundChangeController::applyImageBackground(PageRef page)
 		page->setSize(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
 
 		size_t pageNr = doc->indexOf(page);
-		if (pageNr != size_t_npos)
+		if (pageNr != npos)
 		{
 			// Only if the page is already inserted into the document
 			control->firePageSizeChanged(pageNr);

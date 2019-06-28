@@ -168,7 +168,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	XOJ_CHECK_TYPE(XournalView);
 
 	size_t p = getCurrentPage();
-	if (p != size_t_npos && p < this->viewPagesLen)
+	if (p != npos && p < this->viewPagesLen)
 	{
 		XojPageView* v = this->viewPages[p];
 		if (v->onKeyPressEvent(event))
@@ -399,7 +399,7 @@ bool XournalView::onKeyReleaseEvent(GdkEventKey* event)
 	XOJ_CHECK_TYPE(XournalView);
 
 	size_t p = getCurrentPage();
-	if (p != size_t_npos && p < this->viewPagesLen)
+	if (p != npos && p < this->viewPagesLen)
 	{
 		XojPageView* v = this->viewPages[p];
 		if (v->onKeyReleaseEvent(event))
@@ -438,7 +438,7 @@ bool XournalView::searchTextOnPage(string text, size_t p, int* occures, double* 
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	if (p == size_t_npos || p >= this->viewPagesLen)
+	if (p == npos || p >= this->viewPagesLen)
 	{
 		return false;
 	}
@@ -452,7 +452,7 @@ void XournalView::forceUpdatePagenumbers()
 	XOJ_CHECK_TYPE(XournalView);
 
 	size_t p = this->currentPage;
-	this->currentPage = size_t_npos;
+	this->currentPage = npos;
 
 	control->firePageSelected(p);
 }
@@ -461,7 +461,7 @@ XojPageView* XournalView::getViewFor(size_t pageNr)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	if (pageNr == size_t_npos || pageNr >= this->viewPagesLen)
+	if (pageNr == npos || pageNr >= this->viewPagesLen)
 	{
 		return nullptr;
 	}
@@ -484,16 +484,16 @@ void XournalView::pageSelected(size_t page)
 
 	control->getMetadataManager()->storeMetadata(file.str(), page, getZoom());
 
-	if (this->lastSelectedPage != size_t_npos && this->lastSelectedPage < this->viewPagesLen)
+	if (this->lastSelectedPage != npos && this->lastSelectedPage < this->viewPagesLen)
 	{
 		this->viewPages[this->lastSelectedPage]->setSelected(false);
 	}
 
 	this->currentPage = page;
 
-	size_t pdfPage = size_t_npos;
+	size_t pdfPage = npos;
 
-	if (page != size_t_npos && page < viewPagesLen)
+	if (page != npos && page < viewPagesLen)
 	{
 		XojPageView* vp = viewPages[page];
 		vp->setSelected(true);
@@ -576,7 +576,7 @@ void XournalView::layerChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	if (page != size_t_npos && page < this->viewPagesLen)
+	if (page != npos && page < this->viewPagesLen)
 	{
 		this->viewPages[page]->rerenderPage();
 	}
@@ -587,7 +587,7 @@ void XournalView::getPasteTarget(double& x, double& y)
 	XOJ_CHECK_TYPE(XournalView);
 
 	size_t pageNo = getCurrentPage();
-	if (pageNo == size_t_npos)
+	if (pageNo == npos)
 	{
 		return;
 	}
@@ -611,7 +611,7 @@ Rectangle* XournalView::getVisibleRect(size_t page)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	if (page == size_t_npos || page >= this->viewPagesLen)
+	if (page == npos || page >= this->viewPagesLen)
 	{
 		return nullptr;
 	}
@@ -736,7 +736,7 @@ void XournalView::pageChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	if (page != size_t_npos && page < this->viewPagesLen)
+	if (page != npos && page < this->viewPagesLen)
 	{
 		this->viewPages[page]->rerenderPage();
 	}
@@ -1049,7 +1049,7 @@ bool XournalView::cut()
 	XOJ_CHECK_TYPE(XournalView);
 
 	size_t p = getCurrentPage();
-	if (p == size_t_npos || p >= viewPagesLen)
+	if (p == npos || p >= viewPagesLen)
 	{
 		return false;
 	}
@@ -1063,7 +1063,7 @@ bool XournalView::copy()
 	XOJ_CHECK_TYPE(XournalView);
 
 	size_t p = getCurrentPage();
-	if (p == size_t_npos || p >= viewPagesLen)
+	if (p == npos || p >= viewPagesLen)
 	{
 		return false;
 	}
@@ -1077,7 +1077,7 @@ bool XournalView::paste()
 	XOJ_CHECK_TYPE(XournalView);
 
 	size_t p = getCurrentPage();
-	if (p == size_t_npos || p >= viewPagesLen)
+	if (p == npos || p >= viewPagesLen)
 	{
 		return false;
 	}
@@ -1091,7 +1091,7 @@ bool XournalView::actionDelete()
 	XOJ_CHECK_TYPE(XournalView);
 
 	size_t p = getCurrentPage();
-	if (p == size_t_npos || p >= viewPagesLen)
+	if (p == npos || p >= viewPagesLen)
 	{
 		return false;
 	}

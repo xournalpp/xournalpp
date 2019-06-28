@@ -1,21 +1,21 @@
 #include "Util.h"
 
-#include <config.h>
-#include <config-dev.h>
-#include <i18n.h>
-#include <StringUtils.h>
-#include <XojMsgBox.h>
+#include "config.h"
+#include "config-dev.h"
+#include "i18n.h"
+#include "StringUtils.h"
+#include "XojMsgBox.h"
 
-#include <sys/types.h>
 #include <unistd.h>
-
+#include <utility>
 
 class CallbackUiData {
 public:
-	CallbackUiData(std::function<void()> callback)
-	 : callback(callback)
+	explicit CallbackUiData(std::function<void()> callback)
+	 : callback(std::move(callback))
 	{
 	}
+
 	std::function<void()> callback;
 };
 
@@ -37,16 +37,18 @@ static bool execInUiThreadCallback(CallbackUiData* cb)
  *
  * Make sure the container class is not deleted before the UI stuff is finished!
  */
-void Util::execInUiThread(std::function<void()> callback)
+void Util::execInUiThread(std::function<void()>&& callback)
 {
-	gdk_threads_add_idle((GSourceFunc) execInUiThreadCallback, new CallbackUiData(callback));
+	gdk_threads_add_idle((GSourceFunc) execInUiThreadCallback, new CallbackUiData(std::move(callback)));
 }
 
-void Util::cairo_set_source_rgbi(cairo_t* cr, int c)
+void Util::cairo_set_source_rgbi(cairo_t* cr, int color)
 {
-	double r = ((c >> 16) & 0xff) / 255.0;
-	double g = ((c >> 8) & 0xff) / 255.0;
-	double b = (c & 0xff) / 255.0;
+	auto tmp = static_cast<unsigned>(color);
+
+	double r = ((tmp >> 16u) & 0xffu) / 255.0;
+	double g = ((tmp >> 8u) & 0xffu) / 255.0;
+	double b = (tmp & 0xffu) / 255.0;
 
 	cairo_set_source_rgb(cr, r, g, b);
 }
@@ -54,17 +56,18 @@ void Util::cairo_set_source_rgbi(cairo_t* cr, int c)
 
 void Util::apply_rgb_togdkrgba(GdkRGBA& col, int color)
 {
-	col.red = ((color >> 16) & 0xFF) / 255.0;
-	col.green = ((color >> 8) & 0xFF) / 255.0;
-	col.blue = (color & 0xFF) / 255.0;
+	auto tmp = static_cast<unsigned>(color);
+	col.red = ((tmp >> 16u) & 0xFFu) / 255.0;
+	col.green = ((tmp >> 8u) & 0xFFu) / 255.0;
+	col.blue = (tmp & 0xFFu) / 255.0;
 	col.alpha = 1.0;
 }
 
 int Util::gdkrgba_to_hex(GdkRGBA& color)
 {
-	return (((int)(color.red * 255)) & 0xff) << 16 |
-			(((int)(color.green * 255)) & 0xff) << 8 |
-			(((int)(color.blue * 255)) & 0xff);
+	return ((static_cast<unsigned>(color.red * 255)) & 0xffu) << 16u |
+	       ((static_cast<unsigned>(color.green * 255)) & 0xffu) << 8u |
+	       ((static_cast<unsigned>(color.blue * 255)) & 0xffu);
 }
 
 int Util::getPid()
@@ -80,7 +83,7 @@ Path Util::getAutosaveFilename()
 	return p;
 }
 
-Path Util::getConfigSubfolder(Path subfolder)
+Path Util::getConfigSubfolder(const Path& subfolder)
 {
 	Path p(g_get_home_dir());
 	p /= CONFIG_DIR;
@@ -89,14 +92,14 @@ Path Util::getConfigSubfolder(Path subfolder)
 	return Util::ensureFolderExists(p);
 }
 
-Path Util::getConfigFile(Path relativeFileName)
+Path Util::getConfigFile(const Path& relativeFileName)
 {
 	Path p = getConfigSubfolder(relativeFileName.getParentPath());
 	p /= relativeFileName.getFilename();
 	return p;
 }
 
-Path Util::getTmpDirSubfolder(Path subfolder)
+Path Util::getTmpDirSubfolder(const Path& subfolder)
 {
 	Path p(g_get_tmp_dir());
 	p /= FS(_F("xournalpp-{1}") % Util::getPid());
@@ -104,7 +107,7 @@ Path Util::getTmpDirSubfolder(Path subfolder)
 	return Util::ensureFolderExists(p);
 }
 
-Path Util::ensureFolderExists(Path p)
+Path Util::ensureFolderExists(const Path& p)
 {
 	if (g_mkdir_with_parents(p.c_str(), 0700) == -1)
 	{
@@ -155,7 +158,7 @@ void Util::openFileWithFilebrowser(Path filename)
 	}
 }
 
-gboolean Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void* unused)
+gboolean Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void*)
 {
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(widget, &alloc);

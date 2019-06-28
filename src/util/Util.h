@@ -16,47 +16,42 @@
 #include <gtk/gtk.h>
 
 #include <string>
+#include <functional>
+#include <limits>
+
 using std::string;
 
-#include <functional>
-
-
-class Util
+namespace Util
 {
-private:
-	Util();
-	virtual ~Util();
 
-public:
-	static void cairo_set_source_rgbi(cairo_t* cr, int color);
+void cairo_set_source_rgbi(cairo_t* cr, int color);
 
-	static void apply_rgb_togdkrgba(GdkRGBA& col, int color);
-	static int gdkrgba_to_hex(GdkRGBA& color);
+void apply_rgb_togdkrgba(GdkRGBA& col, int color);
+int gdkrgba_to_hex(GdkRGBA& color);
 
-	static Path getAutosaveFilename();
+Path getAutosaveFilename();
 
-	static int getPid();
+int getPid();
 
-	static void openFileWithDefaultApplicaion(Path filename);
-	static void openFileWithFilebrowser(Path filename);
+void openFileWithDefaultApplicaion(Path filename);
+void openFileWithFilebrowser(Path filename);
 
-	static Path getConfigSubfolder(Path subfolder = "");
-	static Path getConfigFile(Path relativeFileName = "");
+Path getConfigSubfolder(const Path& subfolder = "");
+Path getConfigFile(const Path& relativeFileName = "");
 
-	static Path getTmpDirSubfolder(Path subfolder = "");
+Path getTmpDirSubfolder(const Path& subfolder = "");
 
-	static Path ensureFolderExists(Path p);
+Path ensureFolderExists(const Path& p);
 
-	/**
+/**
 	 * Execute the callback in the UI Thread.
 	 *
 	 * Make sure the container class is not deleted before the UI stuff is finished!
 	 */
-	static void execInUiThread(std::function<void()> callback);
+void execInUiThread(std::function<void()>&& callback);
 
-	static gboolean paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void* unused);
+gboolean paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void* unused);
 
-};
+}  // namespace Util
 
-static const size_t size_t_npos = static_cast<size_t>(-1);
-// for 64b systems it's 18446744073709551615 and for 32b – 4294967295
+static const size_t npos = std::numeric_limits<size_t>::max();

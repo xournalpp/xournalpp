@@ -129,7 +129,7 @@ void SidebarPreviewLayers::updatePreviews()
 		delete p;
 	}
 	this->previews.clear();
-	this->selectedEntry = size_t_npos;
+	this->selectedEntry = npos;
 
 	PageRef page = lc->getCurrentPage();
 	if (!page.isValid())
@@ -191,13 +191,13 @@ void SidebarPreviewLayers::updateSelectedLayer()
 		return;
 	}
 
-	if (this->selectedEntry != size_t_npos && this->selectedEntry < this->previews.size())
+	if (this->selectedEntry != npos && this->selectedEntry < this->previews.size())
 	{
 		this->previews[this->selectedEntry]->setSelected(false);
 	}
 
 	this->selectedEntry = layerIndex;
-	if (this->selectedEntry != size_t_npos && this->selectedEntry < this->previews.size())
+	if (this->selectedEntry != npos && this->selectedEntry < this->previews.size())
 	{
 		SidebarPreviewBaseEntry* p = this->previews[this->selectedEntry];
 		p->setSelected(true);
