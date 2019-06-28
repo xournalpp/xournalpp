@@ -126,16 +126,16 @@ string AddUndoAction::getText()
 			switch (type)
 			{
 			case ELEMENT_STROKE:
-				text += _(" stroke");
+				text += _("stroke");
 				break;
 			case ELEMENT_IMAGE:
-				text += _(" image");
+				text += _("image");
 				break;
 			case ELEMENT_TEXIMAGE:
-				text += _(" latex");
+				text += _("latex");
 				break;
 			case ELEMENT_TEXT:
-				text += _(" text");
+				text += _("text");
 				break;
 			}
 		}
