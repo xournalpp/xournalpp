@@ -281,9 +281,7 @@ void MainWindow::setTouchscreenScrollingForDeviceMapping()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	auto deviceListHelper = new DeviceListHelper(false);
-	vector<InputDevice> deviceList = deviceListHelper->getDeviceList();
-	for(InputDevice inputDevice : deviceList)
+	for (InputDevice const& inputDevice: DeviceListHelper::getDeviceList())
 	{
 		GdkDevice* device = inputDevice.getDevice();
 		InputDeviceClass deviceClass = InputEvents::translateDeviceType(device, this->getControl()->getSettings());

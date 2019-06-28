@@ -23,10 +23,10 @@ class SettingsDialog : public GladeGui
 {
 public:
 	SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control);
-	virtual ~SettingsDialog();
+	~SettingsDialog() override;
 
 public:
-	virtual void show(GtkWindow* parent);
+	void show(GtkWindow* parent) override;
 
 	void save();
 
@@ -43,7 +43,7 @@ private:
 	void loadCheckbox(const char* name, gboolean value);
 	bool getCheckbox(const char* name);
 
-	string updateHideString(string hidden, bool hideMenubar, bool hideSidebar);
+	string updateHideString(const string& hidden, bool hideMenubar, bool hideSidebar);
 
 	void initMouseButtonEvents();
 	void initMouseButtonEvents(const char* hbox, int button, bool withDevice = false);

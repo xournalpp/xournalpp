@@ -9,7 +9,6 @@
  * @license GNU GPLv2 or later
  */
 
-
 #pragma once
 
 #include <gdk/gdk.h>
@@ -24,33 +23,19 @@ using std::vector;
 class InputDevice
 {
 public:
-	InputDevice(GdkDevice* device);
-	virtual ~InputDevice();
+	explicit InputDevice(GdkDevice* device);
+	~InputDevice() = default;
 
 public:
-	GdkDevice* getDevice();
-	string getType();
-	string getName();
+	GdkDevice* getDevice() const;
+	string getType() const;
+	string getName() const;
 
 private:
 	GdkDevice* device;
 };
 
-
-class DeviceListHelper
+namespace DeviceListHelper
 {
-public:
-	DeviceListHelper(bool ignoreTouchDevices = false);
-	virtual ~DeviceListHelper();
-
-public:
-	vector<InputDevice>& getDeviceList();
-
-private:
-	void addDevicesToList(GList* devList);
-
-private:
-	bool ignoreTouchDevices;
-
-	vector<InputDevice> deviceList;
-};
+vector<InputDevice> getDeviceList(bool ignoreTouchDevices = false);
+}
