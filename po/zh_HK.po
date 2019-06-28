@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-28 09:06+0000\n"
-"PO-Revision-Date: 2019-06-28 09:11\n"
+"PO-Revision-Date: 2019-06-28 09:16\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Traditional, Hong Kong\n"
 "Language: zh_HK\n"
@@ -2582,7 +2582,7 @@ msgstr ""
 
 #: ../ui/main.glade:1000
 msgid "_Next Page"
-msgstr ""
+msgstr "下一頁(_N)"
 
 #: ../ui/main.glade:465
 msgid "_Pair Pages"
@@ -2590,7 +2590,7 @@ msgstr ""
 
 #: ../ui/main.glade:1233
 msgid "_Pen"
-msgstr ""
+msgstr "畫筆(_P)"
 
 #: ../ui/main.glade:1822
 msgid "_Plugin"
@@ -2598,7 +2598,7 @@ msgstr ""
 
 #: ../ui/main.glade:475
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "演講模式(_P)"
 
 #: ../ui/main.glade:1028
 msgid "_Previous Layer"
@@ -2606,7 +2606,7 @@ msgstr ""
 
 #: ../ui/main.glade:978
 msgid "_Previous Page"
-msgstr ""
+msgstr "前一頁(_P)"
 
 #: ../ui/main.glade:564
 msgid "_Right To Left"
@@ -2614,15 +2614,15 @@ msgstr ""
 
 #: ../ui/main.glade:1309
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "形狀識別(_S)"
 
 #: ../ui/main.glade:1269
 msgid "_Text"
-msgstr ""
+msgstr "文本(_T)"
 
 #: ../ui/main.glade:1222
 msgid "_Tools"
-msgstr ""
+msgstr "工具(_T)"
 
 #: ../ui/main.glade:1050
 msgid "_Top Layer"
@@ -2638,39 +2638,39 @@ msgstr ""
 
 #: ../ui/main.glade:1417
 msgid "_Vertical Space"
-msgstr ""
+msgstr "垂直間距(_V)"
 
 #: ../ui/main.glade:454
 msgid "_View"
-msgstr ""
+msgstr "視圖(_V)"
 
 #: ../ui/main.glade:1677
 msgid "_delete strokes"
-msgstr ""
+msgstr "刪除筆劃(_d)"
 
 #: ../ui/main.glade:1481 ../ui/main.glade:1616 ../ui/main.glade:1703
 msgid "_fine"
-msgstr ""
+msgstr "細(_f)"
 
 #: ../ui/main.glade:1492 ../ui/main.glade:1627 ../ui/main.glade:1714
 msgid "_medium"
-msgstr ""
+msgstr "中(_m)"
 
 #: ../ui/main.glade:1655
 msgid "_standard"
-msgstr ""
+msgstr "標準(_s)"
 
 #: ../ui/main.glade:1503 ../ui/main.glade:1638 ../ui/main.glade:1725
 msgid "_thick"
-msgstr ""
+msgstr "粗(_t)"
 
 #: ../ui/main.glade:1470
 msgid "_very fine"
-msgstr ""
+msgstr "極細(_v)"
 
 #: ../ui/main.glade:1666
 msgid "_whiteout"
-msgstr ""
+msgstr "涂白(_w)"
 
 #: ../ui/pageTemplate.glade:158
 msgid "change"
@@ -2711,5 +2711,5 @@ msgstr ""
 
 #: ../ui/main.glade:1514
 msgid "ver_y thick"
-msgstr ""
+msgstr "極粗(_y)"
 
