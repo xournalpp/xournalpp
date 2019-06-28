@@ -4,17 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Ulrich Huber <ulrich@huberulrich.de>, 2019
 # Jasper Michalke <jasper.michalke@jasmich.de>, 2019
+# Ulrich Huber <ulrich@huberulrich.de>, 2019
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-26 13:22+0000\n"
+"POT-Creation-Date: 2019-06-28 07:17+0000\n"
 "PO-Revision-Date: 2019-06-25 16:54+0000\n"
-"Last-Translator: Jasper Michalke <jasper.michalke@jasmich.de>, 2019\n"
+"Last-Translator: Ulrich Huber <ulrich@huberulrich.de>, 2019\n"
 "Language-Team: German (https://www.transifex.com/xournalpp/teams/100532/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -52,7 +52,7 @@ msgstr " Bilddateien"
 msgid " latex"
 msgstr " LaTeX"
 
-#: ../src/gui/MainWindow.cpp:839
+#: ../src/gui/MainWindow.cpp:837
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr " von {1}{2}"
@@ -69,7 +69,7 @@ msgstr " Text"
 msgid "%F-Note-%H-%M"
 msgstr "%F-Notiz-%H-%M"
 
-#: ../src/gui/dialog/SettingsDialog.cpp:123
+#: ../src/gui/dialog/SettingsDialog.cpp:122
 msgid ""
 "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr ""
@@ -199,8 +199,8 @@ msgstr "Schwarz"
 msgid "Blue"
 msgstr "Blau"
 
-#: ../src/control/Control.cpp:2349 ../src/control/Control.cpp:2894
-#: ../src/control/Control.cpp:2931 ../src/control/XournalMain.cpp:139
+#: ../src/control/Control.cpp:2351 ../src/control/Control.cpp:2912
+#: ../src/control/XournalMain.cpp:139
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -242,7 +242,7 @@ msgstr "Aktuellen Hintergrund kopieren"
 msgid "Copy page"
 msgstr "Kopiere Seite"
 
-#: ../src/control/jobs/SaveJob.cpp:137
+#: ../src/control/jobs/SaveJob.cpp:129
 msgid ""
 "Could not create backup! (The file was created from an older Xournal "
 "version)"
@@ -443,7 +443,7 @@ msgstr "Datei löschen"
 msgid "Delete layer"
 msgstr "Ebene löschen"
 
-#: ../src/control/Control.cpp:2890 ../src/control/Control.cpp:2930
+#: ../src/control/Control.cpp:2908
 msgid "Discard"
 msgstr "Verwerfen"
 
@@ -462,7 +462,7 @@ msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 "Das Hintergrund PDF darf nicht überschrieben werden! Dies verursacht Fehler!"
 
-#: ../src/control/Control.cpp:2927
+#: ../src/control/Control.cpp:2902
 msgid "Document file was removed."
 msgstr "Datei des Dokuments wurde entfernt."
 
@@ -536,7 +536,7 @@ msgstr "Linie löschen"
 msgid "Eraser"
 msgstr "Radierer"
 
-#: ../src/control/Control.cpp:2574
+#: ../src/control/Control.cpp:2578
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
@@ -548,7 +548,7 @@ msgstr ""
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Fehler beim Laden der Glade-Datei \"{1}\" (Datei \"{2}\")"
 
-#: ../src/control/Control.cpp:2374
+#: ../src/control/Control.cpp:2376
 msgid "Error opening file \"{1}\""
 msgstr "Fehler beim Öffnen der Datei \"{1}\""
 
@@ -867,7 +867,7 @@ msgstr "Orange"
 msgid "PDF Export"
 msgstr "PDF Exportieren"
 
-#: ../src/gui/MainWindow.cpp:837
+#: ../src/gui/MainWindow.cpp:835
 msgid "PDF Page {1}"
 msgstr "PDF-Seite {1}"
 
@@ -905,7 +905,7 @@ msgstr "PNG mit transparentem Hintergrund"
 msgid "Page"
 msgstr "Seite"
 
-#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:29
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Page Preview"
 msgstr "Seitenvorschau"
 
@@ -983,7 +983,7 @@ msgstr "Wiederherstellen"
 msgid "Redo: "
 msgstr "Wiederherstellen: "
 
-#: ../src/control/Control.cpp:2348
+#: ../src/control/Control.cpp:2350
 msgid "Remove PDF Background"
 msgstr "PDF-Hintergrund entfernen"
 
@@ -1031,22 +1031,22 @@ msgstr "SVG Bild"
 msgid "SVG with transparent background"
 msgstr "SVG mit transparentem Hintergrund"
 
-#: ../src/control/Control.cpp:2889 ../src/control/jobs/SaveJob.cpp:13
+#: ../src/control/Control.cpp:2903 ../src/control/jobs/SaveJob.cpp:13
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Save"
 msgstr "Speichern"
 
-#: ../src/control/Control.cpp:2929
+#: ../src/control/Control.cpp:2903
 msgid "Save As..."
 msgstr "Speichern unter..."
 
-#: ../src/control/Control.cpp:2692
+#: ../src/control/Control.cpp:2697
 #: ../src/gui/dialog/PageTemplateDialog.cpp:111
 msgid "Save File"
 msgstr "Speichere Datei"
 
 #: ../src/control/jobs/CustomExportJob.cpp:162
-#: ../src/control/jobs/SaveJob.cpp:151
+#: ../src/control/jobs/SaveJob.cpp:143
 msgid "Save file error: {1}"
 msgstr "Fehler beim Speichern der Datei: {1}"
 
@@ -1082,7 +1082,7 @@ msgstr "Rechteck auswählen"
 msgid "Select Region"
 msgstr "Bereich auswählen"
 
-#: ../src/control/Control.cpp:2347
+#: ../src/control/Control.cpp:2349
 msgid "Select another PDF"
 msgstr "Andere PDF-Datei auswählen"
 
@@ -1207,11 +1207,11 @@ msgstr ""
 "Die Werkzeugleistenkonfiguration \"{1}\" ist vordefiniert, möchten Sie eine "
 "Kopie erstellen?"
 
-#: ../src/control/Control.cpp:2344
+#: ../src/control/Control.cpp:2346
 msgid "The attached background PDF could not be found."
 msgstr "Der angehängte PDF-Hintergrund konnte nicht gefunden werden."
 
-#: ../src/control/Control.cpp:2345
+#: ../src/control/Control.cpp:2347
 msgid "The background PDF could not be found."
 msgstr "Der PDF-Hintergrund konnte nicht gefunden werden."
 
@@ -1274,7 +1274,7 @@ msgstr "Dicke - nicht ändern"
 msgid "Thin"
 msgstr "Dünn"
 
-#: ../src/control/Control.cpp:2887
+#: ../src/control/Control.cpp:2902
 msgid "This document is not saved yet."
 msgstr "Dieses Dokument wurde noch nicht gespeichert."
 
@@ -1344,7 +1344,7 @@ msgstr "Unbekannter pixmap::domain Typ: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Unbekannter Linientyp: \"{1}\", verwende Stift"
 
-#: ../src/control/Control.cpp:2770
+#: ../src/control/Control.cpp:2775
 msgid "Unsaved Document"
 msgstr "Ungespeichertes Dokument"
 
@@ -1396,7 +1396,7 @@ msgstr ""
 "Xournal++ ist das letzte mal abgestürzt. Soll die Datei wiederhergestellt "
 "werden?"
 
-#: ../src/control/Control.cpp:2704 ../src/control/stockdlg/XojOpenDlg.cpp:84
+#: ../src/control/Control.cpp:2709 ../src/control/stockdlg/XojOpenDlg.cpp:84
 msgid "Xournal++ files"
 msgstr "Xournal++ Dateien"
 
@@ -1458,7 +1458,7 @@ msgstr "Zoomregler"
 msgid "Zoom to 100%"
 msgstr "Zoom auf 100%"
 
-#: ../src/control/Control.cpp:2695 ../src/control/jobs/BaseExportJob.cpp:25
+#: ../src/control/Control.cpp:2700 ../src/control/jobs/BaseExportJob.cpp:25
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:112
@@ -1470,12 +1470,12 @@ msgstr "_Abbrechen"
 msgid "_Open"
 msgstr "Ö_ffnen"
 
-#: ../src/control/Control.cpp:2697 ../src/control/jobs/BaseExportJob.cpp:26
+#: ../src/control/Control.cpp:2702 ../src/control/jobs/BaseExportJob.cpp:26
 #: ../src/gui/dialog/PageTemplateDialog.cpp:113
 msgid "_Save"
 msgstr "_Speichern"
 
-#: ../src/util/DeviceListHelper.cpp:98
+#: ../src/util/DeviceListHelper.cpp:88
 msgid "cursor"
 msgstr "Mauszeiger"
 
@@ -1503,15 +1503,15 @@ msgstr "Linie löschen"
 msgid "dotted"
 msgstr "Gepunktet"
 
-#: ../src/util/DeviceListHelper.cpp:94
+#: ../src/util/DeviceListHelper.cpp:84
 msgid "eraser"
 msgstr "Radierer"
 
-#: ../src/util/DeviceListHelper.cpp:103
+#: ../src/util/DeviceListHelper.cpp:93
 msgid "keyboard"
 msgstr "Tastatur"
 
-#: ../src/util/DeviceListHelper.cpp:86
+#: ../src/util/DeviceListHelper.cpp:76
 msgid "mouse"
 msgstr "Maus"
 
@@ -1519,7 +1519,7 @@ msgstr "Maus"
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
 msgstr "In pdflatex trat ein Fehler auf: {1} (exit code: {2})"
 
-#: ../src/util/DeviceListHelper.cpp:90
+#: ../src/util/DeviceListHelper.cpp:80
 msgid "pen"
 msgstr "Stift"
 
@@ -1532,15 +1532,15 @@ msgstr "Anzeigen"
 msgid "standard"
 msgstr "Standard"
 
-#: ../src/util/DeviceListHelper.cpp:111
+#: ../src/util/DeviceListHelper.cpp:101
 msgid "touchpad"
 msgstr "Touchpad"
 
-#: ../src/util/DeviceListHelper.cpp:107
+#: ../src/util/DeviceListHelper.cpp:97
 msgid "touchscreen"
 msgstr "Touchscreen"
 
-#: ../src/util/DeviceListHelper.cpp:116
+#: ../src/util/DeviceListHelper.cpp:106
 msgid "trackpoint"
 msgstr "Trackpoint"
 
@@ -1711,7 +1711,9 @@ msgid ""
 "<i>Menu: View/Toolbars</i>"
 msgstr ""
 "<b>Leerer Werkzeugkasten</b>\n"
-"<i>Menü: Ansicht/Werkzeugleisten</i>"
+"<i>Menü: Ansicht → Werkzeugleisten</i>\n"
+"\n"
+"        "
 
 #: ../ui/fillTransparency.glade:79
 msgid ""
@@ -2110,6 +2112,14 @@ msgstr "Zeichenbereich"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Zeichenwerkzeuge - Setze Optionen via Zeichenrichtung (experimentell)"
 
+#: ../ui/main.glade:2466
+msgid "Duplicate"
+msgstr "Duplizieren"
+
+#: ../ui/main.glade:2503
+msgid "Edit (not implemented yet)"
+msgstr "Bearbeiten (noch nicht implementiert)"
+
 #: ../ui/settings.glade:1608
 msgid "Enable"
 msgstr "Aktivieren"
@@ -2302,6 +2312,14 @@ msgstr "Eingabesystem"
 msgid "Insert Latex"
 msgstr "LaTeX einfügen"
 
+#: ../ui/main.glade:2458
+msgid "Insert Page After"
+msgstr "Seite danach einfügen"
+
+#: ../ui/main.glade:2450
+msgid "Insert Page Before"
+msgstr "Seite davor einfügen"
+
 #: ../ui/main.glade:2041
 msgid "Insert a copy of the current page below"
 msgstr "Eine Kopie der aktuellen Seite unten einfügen"
@@ -2353,6 +2371,14 @@ msgstr "Maus"
 #: ../ui/settings.glade:1010
 msgid "Mouse Buttons"
 msgstr "Maustasten"
+
+#: ../ui/main.glade:2488
+msgid "Move Down"
+msgstr "Nach hinten verschieben"
+
+#: ../ui/main.glade:2480
+msgid "Move Up"
+msgstr "Nach vorne verschieben"
 
 #: ../ui/main.glade:1066
 msgid "N_ext annotated page"
@@ -2536,7 +2562,7 @@ msgstr "Zeilen setzen"
 
 #: ../ui/settings.glade:3379
 msgid "Settings:"
-msgstr "Einstelungen:"
+msgstr "Einstellungen:"
 
 #: ../ui/settings.glade:3388
 msgid "Show Floating Toolbox"
@@ -2628,7 +2654,7 @@ msgstr ""
 
 #: ../ui/settings.glade:621
 msgid "This is an experimental feature! Use it with care."
-msgstr "Dies ist eine experimentelle Funktuon! Vorsichtig verwenden."
+msgstr "Dies ist eine experimentelle Funktion! Vorsichtig verwenden."
 
 #: ../ui/settings.glade:1500
 msgid "Timeout"
