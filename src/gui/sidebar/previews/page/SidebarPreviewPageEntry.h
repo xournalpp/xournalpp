@@ -14,12 +14,15 @@
 #include "../base/SidebarPreviewBaseEntry.h"
 #include "model/PageRef.h"
 
+#include "SidebarPreviewPages.h"
+
 class SidebarPreviewBase;
+class SidebarPreviewPages;
 
 class SidebarPreviewPageEntry : public SidebarPreviewBaseEntry
 {
 public:
-	SidebarPreviewPageEntry(SidebarPreviewBase* sidebar, PageRef page);
+	SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, PageRef page);
 	virtual ~SidebarPreviewPageEntry();
 
 public:
@@ -30,6 +33,7 @@ public:
 	virtual PreviewRenderType getRenderType();
 
 protected:
+	SidebarPreviewPages* sidebar;
 	virtual void mouseButtonPressCallback();
 
 private:

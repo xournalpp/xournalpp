@@ -19,11 +19,13 @@
 
 enum SidebarActions
 {
-	SIDEBAR_ACTION_NONE      = 0,
-	SIDEBAR_ACTION_MOVE_UP   = 1 << 0,
-	SIDEBAR_ACTION_MODE_DOWN = 1 << 1,
-	SIDEBAR_ACTION_COPY      = 1 << 2,
-	SIDEBAR_ACTION_DELETE    = 1 << 3
+	SIDEBAR_ACTION_NONE = 0,
+	SIDEBAR_ACTION_MOVE_UP = 1 << 0,
+	SIDEBAR_ACTION_MOVE_DOWN = 1 << 1,
+	SIDEBAR_ACTION_COPY = 1 << 2,
+	SIDEBAR_ACTION_DELETE = 1 << 3,
+	SIDEBAR_ACTION_NEW_BEFORE = 1 << 4,
+	SIDEBAR_ACTION_NEW_AFTER = 1 << 5
 };
 
 class SidebarToolbarActionListener
@@ -50,6 +52,11 @@ public:
 	void setButtonEnabled(SidebarActions enabledActions);
 
 	void setHidden(bool hidden);
+
+	/**
+	 * Runs the actions directly.
+	 */
+	void runAction(SidebarActions actions);
 
 private:
 	XOJ_TYPE_ATTRIB;

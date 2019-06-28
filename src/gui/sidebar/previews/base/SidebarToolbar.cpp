@@ -22,32 +22,37 @@ SidebarToolbar::~SidebarToolbar()
 	XOJ_RELEASE_TYPE(SidebarToolbar);
 }
 
+void SidebarToolbar::runAction(SidebarActions actions)
+{
+	this->listener->actionPerformed(actions);
+}
+
 void SidebarToolbar::btUpClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar)
 {
 	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
 
-	toolbar->listener->actionPerformed(SIDEBAR_ACTION_MOVE_UP);
+	toolbar->runAction(SIDEBAR_ACTION_MOVE_UP);
 }
 
 void SidebarToolbar::btDownClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar)
 {
 	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
 
-	toolbar->listener->actionPerformed(SIDEBAR_ACTION_MODE_DOWN);
+	toolbar->runAction(SIDEBAR_ACTION_MOVE_DOWN);
 }
 
 void SidebarToolbar::btCopyClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar)
 {
 	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
 
-	toolbar->listener->actionPerformed(SIDEBAR_ACTION_COPY);
+	toolbar->runAction(SIDEBAR_ACTION_COPY);
 }
 
 void SidebarToolbar::btDeleteClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar)
 {
 	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
 
-	toolbar->listener->actionPerformed(SIDEBAR_ACTION_DELETE);
+	toolbar->runAction(SIDEBAR_ACTION_DELETE);
 }
 
 void SidebarToolbar::setHidden(bool hidden)
@@ -65,7 +70,7 @@ void SidebarToolbar::setButtonEnabled(SidebarActions enabledActions)
 	XOJ_CHECK_TYPE(SidebarToolbar);
 
 	gtk_widget_set_sensitive(GTK_WIDGET(this->btUp), enabledActions & SIDEBAR_ACTION_MOVE_UP);
-	gtk_widget_set_sensitive(GTK_WIDGET(this->btDown), enabledActions & SIDEBAR_ACTION_MODE_DOWN);
+	gtk_widget_set_sensitive(GTK_WIDGET(this->btDown), enabledActions & SIDEBAR_ACTION_MOVE_DOWN);
 	gtk_widget_set_sensitive(GTK_WIDGET(this->btCopy), enabledActions & SIDEBAR_ACTION_COPY);
 	gtk_widget_set_sensitive(GTK_WIDGET(this->btDelete), enabledActions & SIDEBAR_ACTION_DELETE);
 }
