@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-28 08:48+0000\n"
+"POT-Creation-Date: 2019-06-28 09:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,29 +30,9 @@ msgid ""
 "Will now attempt to run without this file."
 msgstr ""
 
-#: ../src/undo/DeleteUndoAction.cpp:113
-msgid " elements"
-msgstr ""
-
-#: ../src/undo/DeleteUndoAction.cpp:128
-msgid " image"
-msgstr ""
-
-#: ../src/undo/DeleteUndoAction.cpp:132
-msgid " latex"
-msgstr ""
-
 #: ../src/gui/MainWindow.cpp:837
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
-msgstr ""
-
-#: ../src/undo/DeleteUndoAction.cpp:120
-msgid " stroke"
-msgstr ""
-
-#: ../src/undo/DeleteUndoAction.cpp:124
-msgid " text"
 msgstr ""
 
 #: ../src/control/settings/Settings.cpp:108
@@ -1409,7 +1389,7 @@ msgstr ""
 msgid "dotted"
 msgstr ""
 
-#: ../src/undo/AddUndoAction.cpp:120
+#: ../src/undo/AddUndoAction.cpp:120 ../src/undo/DeleteUndoAction.cpp:114
 msgid "elements"
 msgstr ""
 
@@ -1417,7 +1397,7 @@ msgstr ""
 msgid "eraser"
 msgstr ""
 
-#: ../src/undo/AddUndoAction.cpp:132
+#: ../src/undo/AddUndoAction.cpp:132 ../src/undo/DeleteUndoAction.cpp:126
 msgid "image"
 msgstr ""
 
@@ -1425,7 +1405,7 @@ msgstr ""
 msgid "keyboard"
 msgstr ""
 
-#: ../src/undo/AddUndoAction.cpp:135
+#: ../src/undo/AddUndoAction.cpp:135 ../src/undo/DeleteUndoAction.cpp:129
 msgid "latex"
 msgstr ""
 
@@ -1450,11 +1430,11 @@ msgstr ""
 msgid "standard"
 msgstr ""
 
-#: ../src/undo/AddUndoAction.cpp:129
+#: ../src/undo/AddUndoAction.cpp:129 ../src/undo/DeleteUndoAction.cpp:123
 msgid "stroke"
 msgstr ""
 
-#: ../src/undo/AddUndoAction.cpp:138
+#: ../src/undo/AddUndoAction.cpp:138 ../src/undo/DeleteUndoAction.cpp:132
 msgid "text"
 msgstr ""
 
