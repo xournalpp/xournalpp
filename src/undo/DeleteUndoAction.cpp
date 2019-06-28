@@ -8,7 +8,7 @@
 
 #include <i18n.h>
 
-DeleteUndoAction::DeleteUndoAction(PageRef page, bool eraser)
+DeleteUndoAction::DeleteUndoAction(const PageRef& page, bool eraser)
  : UndoAction("DeleteUndoAction")
 {
 	XOJ_INIT_TYPE(DeleteUndoAction);
@@ -21,9 +21,9 @@ DeleteUndoAction::~DeleteUndoAction()
 {
 	XOJ_CHECK_TYPE(DeleteUndoAction);
 
-	for (GList* l = this->elements; l != NULL; l = l->next)
+	for (GList* l = this->elements; l != nullptr; l = l->next)
 	{
-		PageLayerPosEntry<Element>* e = (PageLayerPosEntry<Element>*) l->data;
+		auto e = (PageLayerPosEntry<Element>*) l->data;
 		if (!undone)
 		{
 			delete e->element;
@@ -43,11 +43,11 @@ void DeleteUndoAction::addElement(Layer* layer, Element* e, int pos)
 										  (GCompareFunc) PageLayerPosEntry<Element>::cmp);
 }
 
-bool DeleteUndoAction::undo(Control* control)
+bool DeleteUndoAction::undo(Control*)
 {
 	XOJ_CHECK_TYPE(DeleteUndoAction);
 
-	if (this->elements == NULL)
+	if (this->elements == nullptr)
 	{
 		g_warning("Could not undo DeleteUndoAction, there is nothing to undo");
 
@@ -55,9 +55,9 @@ bool DeleteUndoAction::undo(Control* control)
 		return false;
 	}
 
-	for (GList* l = this->elements; l != NULL; l = l->next)
+	for (GList* l = this->elements; l != nullptr; l = l->next)
 	{
-		PageLayerPosEntry<Element>* e = (PageLayerPosEntry<Element>*) l->data;
+		auto e = (PageLayerPosEntry<Element>*) l->data;
 		e->layer->insertElement(e->element, e->pos);
 		this->page->fireElementChanged(e->element);
 	}
@@ -66,11 +66,11 @@ bool DeleteUndoAction::undo(Control* control)
 	return true;
 }
 
-bool DeleteUndoAction::redo(Control* control)
+bool DeleteUndoAction::redo(Control*)
 {
 	XOJ_CHECK_TYPE(DeleteUndoAction);
 
-	if (this->elements == NULL)
+	if (this->elements == nullptr)
 	{
 		g_warning("Could not redo DeleteUndoAction, there is nothing to redo");
 
@@ -78,9 +78,9 @@ bool DeleteUndoAction::redo(Control* control)
 		return false;
 	}
 
-	for (GList* l = this->elements; l != NULL; l = l->next)
+	for (GList* l = this->elements; l != nullptr; l = l->next)
 	{
-		PageLayerPosEntry<Element>* e = (PageLayerPosEntry<Element>*) l->data;
+		auto e = (PageLayerPosEntry<Element>*) l->data;
 		e->layer->removeElement(e->element, false);
 		this->page->fireElementChanged(e->element);
 	}
@@ -101,13 +101,13 @@ string DeleteUndoAction::getText()
 
 	string text = _("Delete");
 
-	if (this->elements != NULL)
+	if (this->elements != nullptr)
 	{
 		ElementType type = ((PageLayerPosEntry<Element>*) this->elements->data)->element->getType();
 
-		for (GList* l = this->elements->next; l != NULL; l = l->next)
+		for (GList* l = this->elements->next; l != nullptr; l = l->next)
 		{
-			PageLayerPosEntry<Element>* e = (PageLayerPosEntry<Element>*) l->data;
+			auto e = (PageLayerPosEntry<Element>*) l->data;
 			if (type != e->element->getType())
 			{
 				text += " ";
