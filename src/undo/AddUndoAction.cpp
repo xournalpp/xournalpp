@@ -123,20 +123,20 @@ string AddUndoAction::getText()
 			}
 
 			text += " ";
-			switch(type)
+			switch (type)
 			{
-				case ELEMENT_STROKE:
-					text += _(" stroke");
-					break;
-				case ELEMENT_IMAGE:
-					text += _(" image");
-					break;
-				case ELEMENT_TEXIMAGE:
-					text += _(" latex");
-					break;
-				case ELEMENT_TEXT:
-					text += _(" text");
-					break;
+			case ELEMENT_STROKE:
+				text += _(" stroke");
+				break;
+			case ELEMENT_IMAGE:
+				text += _(" image");
+				break;
+			case ELEMENT_TEXIMAGE:
+				text += _(" latex");
+				break;
+			case ELEMENT_TEXT:
+				text += _(" text");
+				break;
 			}
 		}
 	}
