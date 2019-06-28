@@ -4,6 +4,7 @@ trigger:
     - '*'
     exclude:
     - stable
+    - l10n_master
   paths:
     exclude:
     - po/xournalpp.pot
