@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-28 07:17+0000\n"
-"PO-Revision-Date: 2019-06-28 07:24\n"
+"PO-Revision-Date: 2019-06-28 07:43\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -25,7 +25,8 @@ msgstr "\n\n"
 #: ../src/control/XournalMain.cpp:560
 msgid "\n"
 "Will now attempt to run without this file."
-msgstr ""
+msgstr "\n"
+"Versuche nun ohne der Datei zu starten."
 
 #: ../src/undo/AddUndoAction.cpp:119 ../src/undo/DeleteUndoAction.cpp:113
 msgid " elements"
@@ -33,32 +34,32 @@ msgstr " Elemente"
 
 #: ../src/undo/AddUndoAction.cpp:134 ../src/undo/DeleteUndoAction.cpp:128
 msgid " image"
-msgstr ""
+msgstr " Bild"
 
 #: ../src/undo/AddUndoAction.cpp:138 ../src/undo/DeleteUndoAction.cpp:132
 msgid " latex"
-msgstr ""
+msgstr " LaTeX"
 
 #: ../src/gui/MainWindow.cpp:837
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
-msgstr ""
+msgstr " von {1}{2}"
 
 #: ../src/undo/AddUndoAction.cpp:126 ../src/undo/DeleteUndoAction.cpp:120
 msgid " stroke"
-msgstr ""
+msgstr " Linie"
 
 #: ../src/undo/AddUndoAction.cpp:130 ../src/undo/DeleteUndoAction.cpp:124
 msgid " text"
-msgstr ""
+msgstr " Text"
 
 #: ../src/control/settings/Settings.cpp:108
 msgid "%F-Note-%H-%M"
-msgstr ""
+msgstr "%F-Notiz-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:122
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr ""
+msgstr "<b>Es wurden keine Geräte gefunden. Dies scheint ein Fehler zu sein - vielleicht könnten Sie einen Fehlerbericht erstellen?</b>"
 
 #: ../src/control/XournalMain.cpp:576
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -67,7 +68,12 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr ""
+msgstr "<span foreground='red' size='x-large'>Benötigte UI-Datei fehlt:\n"
+"<b>{1}</b></span>\n"
+"Konnte sie an keiner der folgenden Orte finden:\n"
+" Nicht relativ\n"
+" Nicht im Arbeitsverzeichnis\n"
+" Nicht in {2}"
 
 #: ../src/control/XournalMain.cpp:317
 msgid "Absolute path for the audio files playback"
