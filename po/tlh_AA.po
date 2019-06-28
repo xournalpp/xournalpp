@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-28 06:32+0000\n"
-"PO-Revision-Date: 2019-06-28 06:35\n"
+"POT-Creation-Date: 2019-06-28 07:17+0000\n"
+"PO-Revision-Date: 2019-06-28 07:24\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Klingon\n"
 "Language: tlh_AA\n"
@@ -38,7 +38,7 @@ msgstr ""
 msgid " latex"
 msgstr ""
 
-#: ../src/gui/MainWindow.cpp:839
+#: ../src/gui/MainWindow.cpp:837
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr ""
@@ -55,7 +55,7 @@ msgstr ""
 msgid "%F-Note-%H-%M"
 msgstr ""
 
-#: ../src/gui/dialog/SettingsDialog.cpp:123
+#: ../src/gui/dialog/SettingsDialog.cpp:122
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr ""
 
@@ -769,7 +769,7 @@ msgstr ""
 msgid "PDF Export"
 msgstr ""
 
-#: ../src/gui/MainWindow.cpp:837
+#: ../src/gui/MainWindow.cpp:835
 msgid "PDF Page {1}"
 msgstr ""
 
@@ -1341,7 +1341,7 @@ msgstr ""
 msgid "_Save"
 msgstr ""
 
-#: ../src/util/DeviceListHelper.cpp:98
+#: ../src/util/DeviceListHelper.cpp:88
 msgid "cursor"
 msgstr ""
 
@@ -1369,15 +1369,15 @@ msgstr ""
 msgid "dotted"
 msgstr ""
 
-#: ../src/util/DeviceListHelper.cpp:94
+#: ../src/util/DeviceListHelper.cpp:84
 msgid "eraser"
 msgstr ""
 
-#: ../src/util/DeviceListHelper.cpp:103
+#: ../src/util/DeviceListHelper.cpp:93
 msgid "keyboard"
 msgstr ""
 
-#: ../src/util/DeviceListHelper.cpp:86
+#: ../src/util/DeviceListHelper.cpp:76
 msgid "mouse"
 msgstr ""
 
@@ -1385,7 +1385,7 @@ msgstr ""
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
 msgstr ""
 
-#: ../src/util/DeviceListHelper.cpp:90
+#: ../src/util/DeviceListHelper.cpp:80
 msgid "pen"
 msgstr ""
 
@@ -1398,15 +1398,15 @@ msgstr ""
 msgid "standard"
 msgstr ""
 
-#: ../src/util/DeviceListHelper.cpp:111
+#: ../src/util/DeviceListHelper.cpp:101
 msgid "touchpad"
 msgstr ""
 
-#: ../src/util/DeviceListHelper.cpp:107
+#: ../src/util/DeviceListHelper.cpp:97
 msgid "touchscreen"
 msgstr ""
 
-#: ../src/util/DeviceListHelper.cpp:116
+#: ../src/util/DeviceListHelper.cpp:106
 msgid "trackpoint"
 msgstr ""
 
