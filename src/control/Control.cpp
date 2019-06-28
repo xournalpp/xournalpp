@@ -1571,7 +1571,7 @@ void Control::setViewPresentationMode(bool enabled)
 		bool success = zoom->updateZoomPresentationValue();
 		if (!success)
 		{
-			// TODO: Errormessage if the zoom could not be calculated
+			g_warning("Error calculating zoom value");
 			fireActionSelected(GROUP_PRESENTATION_MODE, ACTION_NOT_SELECTED);
 			return;
 		}
