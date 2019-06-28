@@ -1,9 +1,9 @@
 #include "NewGtkInputDevice.h"
 #include "InputSequence.h"
-#include "TouchHelper.h"
+#include "gui/inputdevices/HandRecognition.h"
 
 #include "control/Control.h"
-#include "gui/Cursor.h"
+#include "gui/XournalppCursor.h"
 #include "gui/PageView.h"
 #include "gui/scroll/ScrollHandling.h"
 #include "gui/XournalView.h"
@@ -236,6 +236,8 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		sourceDevice = device;
 	}
 
+	this->getView()->getHandRecognition()->event(sourceDevice);
+
 	if (ignoreTouch && GDK_SOURCE_TOUCHSCREEN == gdk_device_get_source(sourceDevice))
 	{
 		return false;
@@ -247,7 +249,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 
 		if (input != NULL)
 		{
-			input->actionEnd();
+			input->actionEnd(((GdkEventTouch *)event)->time);
 		}
 
 		g_hash_table_remove(touchInputList, sequence);
@@ -301,7 +303,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	guint button = 0;
 	if (gdk_event_get_button(event, &button))
 	{
-		input->setButton(button);
+		input->setButton(button, gdk_event_get_time(event) );
 	}
 
 	GdkModifierType state = (GdkModifierType)0;
@@ -313,22 +315,25 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	if (event->type == GDK_MOTION_NOTIFY || event->type == GDK_TOUCH_UPDATE)
 	{
 		input->copyAxes(event);
-		input->actionMoved();
+		guint32 time = event->type == GDK_MOTION_NOTIFY ? ((GdkEventMotion *)event)->time : ((GdkEventTouch *)event)->time;	// or call gdk_event_get_time(event)
+		input->actionMoved(time);
 
-		Cursor* cursor = view->getControl()->getWindow()->getXournal()->getCursor();
+		XournalppCursor* cursor = view->getControl()->getWindow()->getXournal()->getCursor();
 		cursor->setInvisible(false);
+		cursor->updateCursor();
 
-		view->getTouchHelper()->event(sourceDevice);
+		view->getHandRecognition()->event(sourceDevice);
 	}
 	else if (event->type == GDK_BUTTON_PRESS || event->type == GDK_TOUCH_BEGIN)
 	{
 		input->copyAxes(event);
-		input->actionStart();
+		guint32 time = event->type == GDK_BUTTON_PRESS ? ((GdkEventButton *)event)->time : ((GdkEventTouch *)event)->time;  //or call gdk_event_get_time()
+		input->actionStart(time);
 	}
 	else if (event->type == GDK_BUTTON_RELEASE)
 	{
 		input->copyAxes(event);
-		input->actionEnd();
+		input->actionEnd( ((GdkEventButton *)event)->time );
 	}
 
 	return true;

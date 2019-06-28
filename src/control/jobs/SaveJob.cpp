@@ -42,15 +42,7 @@ void SaveJob::afterRun()
 	}
 	else
 	{
-		Document* doc = this->control->getDocument();
-
-		doc->lock();
-		Path filename = doc->getFilename();
-		doc->unlock();
-
-		control->getUndoRedoHandler()->documentSaved();
-		control->getRecentManager()->addRecentFileFilename(filename);
-		control->updateWindowTitle();
+		this->control->resetSavedStatus();
 	}
 }
 

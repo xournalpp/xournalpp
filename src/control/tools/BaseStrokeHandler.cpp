@@ -1,11 +1,17 @@
 #include "BaseStrokeHandler.h"
 
-#include "gui/XournalView.h"
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
+#include "gui/XournalView.h"
+#include "gui/XournalppCursor.h"
 #include "undo/InsertUndoAction.h"
-#include "gui/Cursor.h"
+#include "util/cpp14memory.h"
+
 #include <cmath>
+
+
+guint32 BaseStrokeHandler::lastStrokeTime;		//persist for next stroke
+
 
 
 BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift, bool flipControl)
@@ -178,16 +184,54 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 
+	xournal->getCursor()->activateDrawDirCursor(false);	//in case released within  fixate_Dir_Mods_Dist
+	
 	if (stroke == NULL)
 	{
 		return;
 	}
+	
+	
+	Control* control = xournal->getControl();
+	Settings* settings = control->getSettings();
+	
+	if ( settings->getStrokeFilterEnabled() )		// Note: For simple strokes see StrokeHandler which has a slightly different version of this filter.  See //!
+	{	
+		int strokeFilterIgnoreTime,strokeFilterSuccessiveTime;
+		double strokeFilterIgnoreLength;
+		
+		settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnoreLength, &strokeFilterSuccessiveTime  );
+		double dpmm = settings->getDisplayDpi()/25.4;
+		
+		double zoom = xournal->getZoom();
+		double lengthSqrd =  ( pow(   ((pos.x / zoom) - (this->buttonDownPoint.x))  ,2) 
+					+ pow(   ((pos.y / zoom) - (this->buttonDownPoint.y))  ,2) ) * pow(xournal->getZoom(),2);
+								    
+		if (   lengthSqrd < pow((strokeFilterIgnoreLength*dpmm),2) && pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) 
+		{
+			if ( pos.timestamp - this->lastStrokeTime  > strokeFilterSuccessiveTime )
+			{
+				//stroke not being added to layer... delete here.
+				delete stroke;
+				stroke = NULL;
+				this->userTapped = true;
+				
+				this->lastStrokeTime = pos.timestamp;
+				
+				xournal->getCursor()->updateCursor();
+				
+				return;
+			}
 
+		}
+		this->lastStrokeTime = pos.timestamp;
+	}
+	
+	
 	// This is not a valid stroke
 	if (stroke->getPointCount() < 2)
 	{
 		g_warning("Stroke incomplete!");
-
 		delete stroke;
 		stroke = NULL;
 		return;
@@ -196,14 +240,13 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	stroke->freeUnusedPointItems();
 
 
-	Control* control = xournal->getControl();
 	control->getLayerController()->ensureLayerExists(page);
 
 	Layer* layer = page->getSelectedLayer();
 
 	UndoRedoHandler* undo = control->getUndoRedoHandler();
 
-	undo->addUndoAction(new InsertUndoAction(page, layer, stroke));
+	undo->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, stroke));
 
 	layer->addElement(stroke);
 	page->fireElementChanged(stroke);
@@ -220,13 +263,15 @@ void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 	
 	double zoom = xournal->getZoom();
-	double x = pos.x / zoom;
-	double y = pos.y / zoom;
+	this->buttonDownPoint.x = pos.x / zoom;
+	this->buttonDownPoint.y =  pos.y / zoom;
 
 	if (!stroke)
 	{
-		createStroke(Point(x, y));
+		createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y));
 	}
+	
+	this->startStrokeTime = pos.timestamp;
 }
 
 
@@ -252,23 +297,17 @@ void BaseStrokeHandler::modifyModifiersByDrawDir(double width, double height,  b
 			this->drawModifierFixed = (DIRSET_MODIFIERS)(SET |
 				(gestureShift? SHIFT:NONE) |
 				(gestureControl? CONTROL:NONE) );
-			if(changeCursor)
-			{
-				xournal->getCursor()->updateCursor();
-			}
+ 			if(changeCursor)
+ 			{
+				xournal->getCursor()->activateDrawDirCursor(false);
+ 			}
 		}
 		else
 		{
-			if (changeCursor)
-			{
-				int corner = ( this->modShift?0:1 ) + ( this->modControl?2:0);
-				
-				if( corner != this-> lastCursor)
-				{
-					xournal->getCursor()->setTempDrawDirCursor(  this->modShift, this->modControl);
-					this->lastCursor = corner;
-				}
-			}
+ 			if (changeCursor)
+ 			{
+				xournal->getCursor()->activateDrawDirCursor( true,  this->modShift, this->modControl);
+ 			}
 		}
 	}
 	else

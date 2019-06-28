@@ -2,7 +2,7 @@
 
 #include "control/Control.h"
 #include "control/settings/ButtonConfig.h"
-#include "gui/Cursor.h"
+#include "gui/XournalppCursor.h"
 #include "gui/Layout.h"
 #include "gui/widgets/XournalWidget.h"
 #include "gui/XournalView.h"

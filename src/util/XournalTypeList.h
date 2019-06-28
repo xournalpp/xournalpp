@@ -36,7 +36,7 @@ XOJ_DECLARE_TYPE(AbstractItem, 24);
 XOJ_DECLARE_TYPE(AbstractToolItem, 25);
 XOJ_DECLARE_TYPE(ColorToolItem, 26);
 XOJ_DECLARE_TYPE(FontButton, 27);
-XOJ_DECLARE_TYPE(Cursor, 28);
+XOJ_DECLARE_TYPE(XournalppCursor, 28);
 XOJ_DECLARE_TYPE(GladeGui, 29);
 XOJ_DECLARE_TYPE(GladeSearchpath, 30);
 XOJ_DECLARE_TYPE(EraseableStroke, 31);
@@ -253,7 +253,7 @@ XOJ_DECLARE_TYPE(LayerController, 243);
 XOJ_DECLARE_TYPE(PopupMenuButton, 244);
 XOJ_DECLARE_TYPE(LayerCtrlListener, 245);
 XOJ_DECLARE_TYPE(CoordinateSystemHandler, 246);
-XOJ_DECLARE_TYPE(TouchHelper, 247);
+XOJ_DECLARE_TYPE(HandRecognition, 247);
 XOJ_DECLARE_TYPE(TouchDisableInterface, 248);
 XOJ_DECLARE_TYPE(TouchDisableCustom, 249);
 XOJ_DECLARE_TYPE(TouchDisableX11, 250);
@@ -285,7 +285,14 @@ XOJ_DECLARE_TYPE(Plugin, 275);
 XOJ_DECLARE_TYPE(MenuEntry, 276);
 XOJ_DECLARE_TYPE(PluginDialog, 277);
 XOJ_DECLARE_TYPE(PluginDialogEntry, 278);
-
-
-
-
+XOJ_DECLARE_TYPE(InputContext, 279);
+XOJ_DECLARE_TYPE(AbstractInputHandler, 280);
+XOJ_DECLARE_TYPE(KeyboardInputHandler, 281);
+XOJ_DECLARE_TYPE(MouseInputHandler, 282);
+XOJ_DECLARE_TYPE(PenInputHandler, 283);
+XOJ_DECLARE_TYPE(StylusInputHandler, 284);
+XOJ_DECLARE_TYPE(TouchDrawingInputHandler, 285);
+XOJ_DECLARE_TYPE(TouchInputHandler, 286);
+XOJ_DECLARE_TYPE(TouchDisableGdk, 287);
+XOJ_DECLARE_TYPE(DeviceClassConfigGui, 288);
+XOJ_DECLARE_TYPE(FloatingToolbox, 289);

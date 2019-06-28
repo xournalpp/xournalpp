@@ -21,20 +21,20 @@ class Redrawable;
 class AddUndoAction : public UndoAction
 {
 public:
-	AddUndoAction(PageRef page, bool eraser);
-	virtual ~AddUndoAction();
+	AddUndoAction(const PageRef& page, bool eraser);
+	~AddUndoAction() override;
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
+	bool undo(Control*) override;
+	bool redo(Control*) override;
 
 	void addElement(Layer* layer, Element* e, int pos);
 
-	virtual string getText();
+	string getText() override;
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList* elements = NULL;
+	GList* elements = nullptr;
 	bool eraser = false;
 };

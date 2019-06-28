@@ -6,6 +6,7 @@
 
 #include <gtk/gtk.h>
 #include <stdio.h>
+#include <config-debug.h>
 
 ToolListener::~ToolListener() { }
 
@@ -102,6 +103,10 @@ void ToolHandler::initTools()
 
 	t = new Tool("drawCoordinateSystem", TOOL_DRAW_COORDINATE_SYSTEM, 0x000000, TOOL_CAP_NONE, NULL);
 	tools[TOOL_DRAW_COORDINATE_SYSTEM - TOOL_PEN] = t;
+	
+	t = new Tool("showFloatingToolbox", TOOL_FLOATING_TOOLBOX, 0x000000, TOOL_CAP_NONE, NULL);
+	tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] = t;
+	
 
 	selectTool(TOOL_PEN);
 }
@@ -680,4 +685,17 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
 		this->listener->toolFillChanged();
 		this->fireToolChanged();
 	}
+}
+
+bool ToolHandler::isSinglePageTool()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	ToolType toolType = this->getToolType();
+	DrawingType drawingType = this->getDrawingType();
+
+	return toolType == (TOOL_PEN && (drawingType == DRAWING_TYPE_ARROW || drawingType == DRAWING_TYPE_CIRCLE || drawingType == DRAWING_TYPE_COORDINATE_SYSTEM
+		|| drawingType == DRAWING_TYPE_LINE || drawingType == DRAWING_TYPE_RECTANGLE))
+		|| toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_OBJECT || toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_CIRCLE
+		|| toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW|| toolType==TOOL_FLOATING_TOOLBOX;
 }

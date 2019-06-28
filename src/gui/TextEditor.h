@@ -26,13 +26,16 @@ public:
 	TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText);
 	virtual ~TextEditor();
 
+	/** Represents the different kinds of text selection */
+	enum class SelectType { word, paragraph, all };
+
 	void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
 
 	bool onKeyPressEvent(GdkEventKey* event);
 	bool onKeyReleaseEvent(GdkEventKey* event);
 
 	void toggleOverwrite();
-	void selectAll();
+	void selectAtCursor(TextEditor::SelectType ty);
 	void toggleBold();
 	void incSize();
 	void decSize();
@@ -66,8 +69,9 @@ private:
 	int getByteOffset(int charOffset);
 	int getCharOffset(int byteOffset);
 
-	static void iMCommitCallback(GtkIMContext* context, const gchar* str,
-								 TextEditor* te);
+	static void bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* clipboard, TextEditor* te);
+
+	static void iMCommitCallback(GtkIMContext* context, const gchar* str, TextEditor* te);
 	static void iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te);
 	static bool iMRetrieveSurroundingCallback(GtkIMContext* context, TextEditor* te);
 	static bool imDeleteSurroundingCallback(GtkIMContext* context, gint offset, gint n_chars, TextEditor* te);
@@ -87,38 +91,32 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XojPageView* gui;
-	GtkWidget* widget;
+	XojPageView* gui = nullptr;
+	GtkWidget* widget = nullptr;
+	GtkWidget* textWidget = nullptr;
+	GtkIMContext* imContext = nullptr;
+	GtkTextBuffer* buffer = nullptr;
+	PangoLayout* layout = nullptr;
+	Text* text = nullptr;
 
-	Text* text;
-	bool ownText;
-
-	GtkWidget* textWidget;
-
-	GtkIMContext* imContext;
 	string preeditString;
-	bool needImReset = false;
-	GtkTextBuffer* buffer;
-	double virtualCursor = 0;
-
-	std::vector<TextUndoAction*> undoActions;
-
-	double markPosX = 0;
-	double markPosY = 0;
-	bool markPosExtendSelection = false;
-	bool markPosQueue = false;
-
-	bool cursorOverwrite = false;
-
-	bool mouseDown = false;
-
 	string lastText;
 
-	PangoLayout* layout = NULL;
+	std::vector<std::reference_wrapper<TextUndoAction>> undoActions;
 
-	int cursorBlinkTime;
-	int cursorBlinkTimeout;
+	double virtualCursor = 0;
+	double markPosX = 0;
+	double markPosY = 0;
+
+	int cursorBlinkTime = 0;
+	int cursorBlinkTimeout = 0;
+	int blinkTimeout = 0;  // handler id
+
+	bool ownText = false;
+	bool markPosExtendSelection = false;
+	bool markPosQueue = false;
+	bool needImReset = false;
+	bool mouseDown = false;
+	bool cursorOverwrite = false;
 	bool cursorVisible = false;
-
-	int blinkTimeout = 0; // handler id
 };

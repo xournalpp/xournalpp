@@ -4,10 +4,12 @@
 
 #include "ButtonConfigGui.h"
 #include "gui/widgets/ZoomCallib.h"
+#include <DeviceListHelper.h>
 
 #include <config.h>
 #include <Util.h>
 #include <StringUtils.h>
+#include <i18n.h>
 
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control)
  : GladeGui(gladeSearchPath, "settings.glade", "settingsDialog"),
@@ -72,7 +74,17 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
 				self->enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
 			}), this);
-	
+
+	g_signal_connect(get("cbStrokeFilterEnabled"), "toggled", G_CALLBACK(
+			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
+			{
+				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
+				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
+				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
+				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
+				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
+				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
+			}), this);	
 	
 	g_signal_connect(get("cbDisableTouchOnPenNear"), "toggled", G_CALLBACK(
 			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
@@ -92,6 +104,25 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 	gtk_widget_show(callib);
 
 	initMouseButtonEvents();
+
+	vector<InputDevice> deviceList = DeviceListHelper::getDeviceList();
+	GtkWidget* container = get("hboxInputDeviceClasses");
+	for (InputDevice const& inputDevice: deviceList)
+	{
+		// Only add real devices (core pointers have vendor and product id NULL) and ignore keyboards
+		GdkDevice* device = inputDevice.getDevice();
+		if (gdk_device_get_vendor_id(device) != nullptr && gdk_device_get_product_id(device) != nullptr && gdk_device_get_source(device) != GDK_SOURCE_KEYBOARD)
+		{
+			this->deviceClassConfigs.push_back(new DeviceClassConfigGui(getGladeSearchPath(), container, settings, inputDevice));
+		}
+	}
+	if (deviceList.empty())
+	{
+		GtkWidget* label = gtk_label_new("");
+		gtk_label_set_markup(GTK_LABEL(label), _("<b>No devices were found. This seems wrong - maybe file a bug report?</b>"));
+		gtk_box_pack_end(GTK_BOX(container), label, true, true, 0);
+		gtk_widget_show(label);
+	}
 }
 
 SettingsDialog::~SettingsDialog()
@@ -103,6 +134,12 @@ SettingsDialog::~SettingsDialog()
 		delete bcg;
 	}
 	this->buttonConfigs.clear();
+
+	for (DeviceClassConfigGui* dev : this->deviceClassConfigs)
+	{
+		delete dev;
+	}
+	this->deviceClassConfigs.clear();
 
 	// DO NOT delete settings!
 	this->settings = NULL;
@@ -202,7 +239,7 @@ void SettingsDialog::load()
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	loadCheckbox("cbSettingPresureSensitivity", settings->isPresureSensitivity());
+	loadCheckbox("cbSettingPresureSensitivity", settings->isPressureSensitivity());
 	loadCheckbox("cbEnableZoomGestures", settings->isZoomGesturesEnabled());
 	loadCheckbox("cbShowSidebarRight", settings->isSidebarOnRight());
 	loadCheckbox("cbShowScrollbarLeft", settings->isScrollbarOnLeft());
@@ -211,12 +248,19 @@ void SettingsDialog::load()
 	loadCheckbox("cbAddVerticalSpace", settings->getAddVerticalSpace());
 	loadCheckbox("cbAddHorizontalSpace", settings->getAddHorizontalSpace());
 	loadCheckbox("cbDrawDirModsEnabled", settings->getDrawDirModsEnabled());
+	loadCheckbox("cbStrokeFilterEnabled", settings->getStrokeFilterEnabled());
+	loadCheckbox("cbDoActionOnStrokeFiltered", settings->getDoActionOnStrokeFiltered());	
+	loadCheckbox("cbTrySelectOnStrokeFiltered", settings->getTrySelectOnStrokeFiltered());	
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
 	loadCheckbox("cbHighlightPosition", settings->isHighlightPosition());
 	loadCheckbox("cbDarkTheme", settings->isDarkTheme());
 	loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
 	loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
 	loadCheckbox("cbTouchWorkaround", settings->isTouchWorkaround());
+	loadCheckbox("cbNewInputSystem", settings->getExperimentalInputSystemEnabled());
+	loadCheckbox("cbInputSystemTPCButton", settings->getInputSystemTPCButtonEnabled());
+	loadCheckbox("cbInputSystemDrawOutsideWindow", settings->getInputSystemDrawOutsideWindowEnabled());
+
 
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
 	string txt = settings->getDefaultSaveName();
@@ -252,6 +296,20 @@ void SettingsDialog::load()
 	GtkWidget* spDrawDirModsRadius = get("spDrawDirModsRadius");
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spDrawDirModsRadius), settings->getDrawDirModsRadius());
 
+	{
+		int time = 0;
+		double length = 0;
+		int successive = 0;
+		settings->getStrokeFilter( &time, &length, &successive);
+		
+		GtkWidget* spStrokeIgnoreTime = get("spStrokeIgnoreTime");
+		gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeIgnoreTime), time);
+		GtkWidget* spStrokeIgnoreLength = get("spStrokeIgnoreLength");
+		gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeIgnoreLength), length);
+		GtkWidget* spStrokeSuccessiveTime = get("spStrokeSuccessiveTime");
+		gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime), successive);
+	}
+	
 	GtkWidget* slider = get("zoomCallibSlider");
 
 	this->setDpi(settings->getDisplayDpi());
@@ -273,7 +331,7 @@ void SettingsDialog::load()
 
 	string hidden = settings->getFullscreenHideElements();
 
-	for (string element : StringUtils::split(hidden, ','))
+	for (const string& element: StringUtils::split(hidden, ','))
 	{
 		if (element == "mainMenubar")
 		{
@@ -286,7 +344,7 @@ void SettingsDialog::load()
 	}
 
 	hidden = settings->getPresentationHideElements();
-	for (string element : StringUtils::split(hidden, ','))
+	for (const string& element: StringUtils::split(hidden, ','))
 	{
 		if (element == "mainMenubar")
 		{
@@ -308,10 +366,15 @@ void SettingsDialog::load()
 	enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpace");
 	enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpace");
 	enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
+	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
+	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
+	enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
+	enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
+	enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
 	enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
 	customHandRecognitionToggled();
 
-
+	
 	SElement& touch = settings->getCustomElement("touch");
 	bool disablePen = false;
 	touch.getBool("disableTouch", disablePen);
@@ -390,13 +453,13 @@ void SettingsDialog::load()
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spAudioGain")), settings->getAudioGain());
 }
 
-string SettingsDialog::updateHideString(string hidden, bool hideMenubar, bool hideSidebar)
+string SettingsDialog::updateHideString(const string& hidden, bool hideMenubar, bool hideSidebar)
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	string newHidden = "";
+	string newHidden;
 
-	for (string element : StringUtils::split(hidden, ','))
+	for (const string& element: StringUtils::split(hidden, ','))
 	{
 		if (element == "mainMenubar")
 		{
@@ -455,7 +518,7 @@ void SettingsDialog::save()
 
 	settings->transactionStart();
 
-	settings->setPresureSensitivity(getCheckbox("cbSettingPresureSensitivity"));
+	settings->setPressureSensitivity(getCheckbox("cbSettingPresureSensitivity"));
 	settings->setZoomGesturesEnabled(getCheckbox("cbEnableZoomGestures"));
 	settings->setSidebarOnRight(getCheckbox("cbShowSidebarRight"));
 	settings->setScrollbarOnLeft(getCheckbox("cbShowScrollbarLeft"));
@@ -464,12 +527,19 @@ void SettingsDialog::save()
 	settings->setAddVerticalSpace(getCheckbox("cbAddVerticalSpace"));
 	settings->setAddHorizontalSpace(getCheckbox("cbAddHorizontalSpace"));
 	settings->setDrawDirModsEnabled(getCheckbox("cbDrawDirModsEnabled"));
+	settings->setStrokeFilterEnabled(getCheckbox("cbStrokeFilterEnabled"));
+	settings->setDoActionOnStrokeFiltered(getCheckbox("cbDoActionOnStrokeFiltered"));
+	settings->setTrySelectOnStrokeFiltered(getCheckbox("cbTrySelectOnStrokeFiltered"));
 	settings->setShowBigCursor(getCheckbox("cbBigCursor"));
 	settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
 	settings->setDarkTheme(getCheckbox("cbDarkTheme"));
 	settings->setTouchWorkaround(getCheckbox("cbTouchWorkaround"));
+	settings->setExperimentalInputSystemEnabled(getCheckbox("cbNewInputSystem"));
+	settings->setInputSystemTPCButtonEnabled(getCheckbox("cbInputSystemTPCButton"));
+	settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
 
-	int scrollbarHideType = SCROLLBAR_HIDE_NONE;
+	auto scrollbarHideType =
+	        static_cast<std::make_unsigned<std::underlying_type<ScrollbarHideType>::type>::type>(SCROLLBAR_HIDE_NONE);
 	if (getCheckbox("cbHideHorizontalScrollbar"))
 	{
 		scrollbarHideType |= SCROLLBAR_HIDE_HORIZONTAL;
@@ -478,7 +548,7 @@ void SettingsDialog::save()
 	{
 		scrollbarHideType |= SCROLLBAR_HIDE_VERTICAL;
 	}
-	settings->setScrollbarHideType((ScrollbarHideType)scrollbarHideType);
+	settings->setScrollbarHideType(static_cast<ScrollbarHideType>(scrollbarHideType));
 
 	GdkRGBA color;
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorBorder")), &color);
@@ -543,6 +613,15 @@ void SettingsDialog::save()
 	int drawDirModsRadius = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spDrawDirModsRadius));
 	settings->setDrawDirModsRadius(drawDirModsRadius);
 
+	GtkWidget* spStrokeIgnoreTime = get("spStrokeIgnoreTime");
+	int strokeIgnoreTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreTime));
+	GtkWidget* spStrokeIgnoreLength = get("spStrokeIgnoreLength");
+	double strokeIgnoreLength = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreLength));
+	GtkWidget* spStrokeSuccessiveTime = get("spStrokeSuccessiveTime");
+	int strokeSuccessiveTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime));
+	settings->setStrokeFilter( strokeIgnoreTime, strokeIgnoreLength, strokeSuccessiveTime);
+
+	
 
 	settings->setDisplayDpi(dpi);
 
@@ -603,5 +682,12 @@ void SettingsDialog::save()
 
 	settings->setAudioGain((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spAudioGain"))));
 
+	for (DeviceClassConfigGui* deviceClassConfigGui : this->deviceClassConfigs)
+	{
+		deviceClassConfigGui->saveSettings();
+	}
+
 	settings->transactionEnd();
+
+	this->control->getWindow()->setTouchscreenScrollingForDeviceMapping();
 }

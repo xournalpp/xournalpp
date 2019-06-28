@@ -148,9 +148,14 @@ public:
 	void endZoomSequence();
 
 	/**
+	 * Update the scroll position manually
+	 */
+	void setScrollPositionAfterZoom(double x, double y);
+
+	/**
 	 * Zoom to correct position on zooming
 	 */
-	std::tuple<double, double> getScrollPositionAfterZoom(XojPageView* view);
+	std::tuple<double, double> getScrollPositionAfterZoom();
 
 	/**
 	 * Get visible rect on xournal view, for Zoom Gesture

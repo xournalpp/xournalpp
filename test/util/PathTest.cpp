@@ -103,19 +103,40 @@ public:
 
 		b = Path("/test/asdf.PDF");
 		b.clearExtensions();
-		CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+		CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.str());
 
 		b = Path("/test/asdf.PDF.xoj");
 		b.clearExtensions();
-		CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+		CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.str());
+        
+        	b = Path("/test/asdf.PDF.xopp");
+		b.clearExtensions();
+		CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.str());
 
 		b = Path("/test/asdf.xoj");
+		b.clearExtensions();
+		CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+        
+        	b = Path("/test/asdf.xopp");
 		b.clearExtensions();
 		CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
 
 		b = Path("/test/asdf.pdf");
 		b.clearExtensions();
-		CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+		CPPUNIT_ASSERT_EQUAL(string("/test/asdf.pdf"), b.str());
+	}
+
+	void testOperators()
+	{
+		Path a = Path("/test/a");
+		Path b = a / "foo.pdf";
+		CPPUNIT_ASSERT_EQUAL(string("/test/a"), a.str());
+		CPPUNIT_ASSERT_EQUAL(string("/test/foo.pdf"), b.str());
+
+		a /= "bar.pdf";
+		CPPUNIT_ASSERT_EQUAL(string("/test/a/bar.pdf"), a.str());
+		// b should not be affected by a
+		CPPUNIT_ASSERT_EQUAL(string("/test/foo.pdf"), b.str());
 	}
 };
 

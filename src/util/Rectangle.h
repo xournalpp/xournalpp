@@ -19,7 +19,7 @@ class Rectangle
 {
 public:
 	Rectangle();
-	Rectangle(Range& rect);
+	explicit Rectangle(const Range& rect);
 	Rectangle(double x, double y, double width, double height);
 	virtual ~Rectangle();
 

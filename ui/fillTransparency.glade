@@ -9,6 +9,7 @@
     <property name="page_increment">10</property>
   </object>
   <object class="GtkDialog" id="fillTransparencyDialog">
+    <property name="name">fillTransparencyDialog</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Transparency settings</property>
     <property name="window_position">center</property>
@@ -22,11 +23,13 @@
         <property name="spacing">4</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area2">
+            <property name="name">dialog-action_area2</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="btCancel">
+                <property name="name">btCancel</property>
                 <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -42,6 +45,7 @@
             </child>
             <child>
               <object class="GtkButton" id="btOk">
+                <property name="name">btOk</property>
                 <property name="label">gtk-ok</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -90,6 +94,7 @@ Select transparency for fill color</property>
                 <property name="spacing">10</property>
                 <child>
                   <object class="GtkImage" id="imgPreview">
+                    <property name="name">imgPreview</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="stock">gtk-missing-image</property>
@@ -102,6 +107,7 @@ Select transparency for fill color</property>
                 </child>
                 <child>
                   <object class="GtkScale" id="scaleAlpha">
+                    <property name="name">scaleAlpha</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="adjustment">adjustment1</property>

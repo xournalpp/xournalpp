@@ -65,12 +65,12 @@ static void gtk_menu_tool_toggle_button_construct_contents(
 	if (orientation == GTK_ORIENTATION_HORIZONTAL)
 	{
 		box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-		gtk_arrow_set(GTK_ARROW(priv->arrow), GTK_ARROW_DOWN, GTK_SHADOW_NONE);
+		gtk_image_set_from_icon_name(GTK_IMAGE(priv->arrow), "pan-down-symbolic", GTK_ICON_SIZE_SMALL_TOOLBAR);
 	}
 	else
 	{
 		box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-		gtk_arrow_set(GTK_ARROW(priv->arrow), GTK_ARROW_RIGHT, GTK_SHADOW_NONE);
+		gtk_image_set_from_icon_name(GTK_IMAGE(priv->arrow), "pan-end-symbolic", GTK_ICON_SIZE_SMALL_TOOLBAR);
 	}
 
 	if (priv->button && gtk_widget_get_parent(priv->button))
@@ -371,7 +371,7 @@ static void gtk_menu_tool_toggle_button_init(GtkMenuToolToggleButton* button)
 	g_object_unref(real_button);
 
 	GtkWidget* arrow_button = gtk_toggle_button_new();
-	GtkWidget* arrow = gtk_arrow_new(GTK_ARROW_DOWN, GTK_SHADOW_NONE);
+	GtkWidget* arrow = gtk_image_new_from_icon_name("pan-down-symbolic", GTK_ICON_SIZE_SMALL_TOOLBAR);
 	gtk_container_add(GTK_CONTAINER(arrow_button), arrow);
 	gtk_box_pack_end(GTK_BOX(box), arrow_button, FALSE, FALSE, 0);
 

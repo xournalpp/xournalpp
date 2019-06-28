@@ -12,8 +12,9 @@
 #include "undo/DeleteUndoAction.h"
 #include "undo/UndoRedoHandler.h"
 
-#include <Range.h>
-#include <Rectangle.h>
+#include "Range.h"
+#include "Rectangle.h"
+#include "util/cpp14memory.h"
 
 #include <cmath>
 
@@ -26,8 +27,8 @@ EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page, T
 	this->view = view;
 	this->doc = doc;
 
-	this->eraseDeleteUndoAction = NULL;
-	this->eraseUndoAction = NULL;
+	this->eraseDeleteUndoAction = nullptr;
+	this->eraseUndoAction = nullptr;
 	this->undo = undo;
 
 	this->halfEraserSize = 0;
@@ -104,9 +105,10 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
 		//stroke erase operation, but it also prevents the crashing and layer issues!
 		if (!this->eraseDeleteUndoAction)
 		{
-			this->eraseDeleteUndoAction = new DeleteUndoAction(this->page, true);
-
-			this->undo->addUndoAction(this->eraseDeleteUndoAction);
+			auto eraseDel = mem::make_unique<DeleteUndoAction>(this->page, true);
+			// Todo check dangerous: this->eraseDeleteUndoAction could be a dangling reference
+			this->eraseDeleteUndoAction = eraseDel.get();
+			this->undo->addUndoAction(std::move(eraseDel));
 		}
 
 		this->eraseDeleteUndoAction->addElement(l, s, pos);
@@ -119,20 +121,22 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
 			return;
 		}
 
-		if (eraseUndoAction == NULL)
+		if (this->eraseUndoAction == nullptr)
 		{
-			eraseUndoAction = new EraseUndoAction(this->page);
-			this->undo->addUndoAction(eraseUndoAction);
+			auto eraseUndo = mem::make_unique<EraseUndoAction>(this->page);
+			// Todo check dangerous: this->eraseDeleteUndoAction could be a dangling reference
+			this->eraseUndoAction = eraseUndo.get();
+			this->undo->addUndoAction(std::move(eraseUndo));
 		}
 
-		EraseableStroke* eraseable = NULL;
-		if (s->getEraseable() == NULL)
+		EraseableStroke* eraseable = nullptr;
+		if (s->getEraseable() == nullptr)
 		{
 			doc->lock();
 			eraseable = new EraseableStroke(s);
 			s->setEraseable(eraseable);
 			doc->unlock();
-			eraseUndoAction->addOriginal(l, s, pos);
+			this->eraseUndoAction->addOriginal(l, s, pos);
 		}
 		else
 		{
@@ -150,10 +154,10 @@ void EraseHandler::finalize()
 	if (this->eraseUndoAction)
 	{
 		this->eraseUndoAction->finalize();
-		this->eraseUndoAction = NULL;
+		this->eraseUndoAction = nullptr;
 	}
 	else if (this->eraseDeleteUndoAction)
 	{
-		this->eraseDeleteUndoAction = NULL;
+		this->eraseDeleteUndoAction = nullptr;
 	}
 }

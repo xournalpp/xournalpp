@@ -3,6 +3,7 @@
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkDialog" id="DialogManageToolbar">
+    <property name="name">DialogManageToolbar</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Manage Toolbar</property>
@@ -16,6 +17,7 @@
         <property name="spacing">2</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area1">
+            <property name="name">dialog-action_area1</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
@@ -52,10 +54,12 @@
                 <property name="can_focus">False</property>
                 <child>
                   <object class="GtkTreeView" id="toolbarList">
+                    <property name="name">toolbarList</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <child internal-child="selection">
                       <object class="GtkTreeSelection" id="treeview-selection"/>
+                        <property name="name">treeview-selection</property>
                     </child>
                   </object>
                   <packing>
@@ -71,6 +75,7 @@
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkButton" id="btCopy">
+                        <property name="name">btCopy</property>
                         <property name="label">gtk-copy</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -86,6 +91,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="btDelete">
+                        <property name="name">btDelete</property>
                         <property name="label">gtk-delete</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -101,6 +107,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="btNew">
+                        <property name="name">btNew</property>
                         <property name="label">gtk-new</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>

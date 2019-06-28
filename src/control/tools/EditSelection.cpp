@@ -23,6 +23,9 @@
 
 #include <cmath>
 
+
+#define MINPIXSIZE 5	// smallest can scale down to, in pixels.
+
 EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page, XojPageView* view)
 {
 	XOJ_INIT_TYPE(EditSelection);
@@ -132,9 +135,15 @@ void EditSelection::contstruct(UndoRedoHandler* undo, XojPageView* view, PageRef
 	this->relMousePosX = 0;
 	this->relMousePosY = 0;
 	this->mouseDownType = CURSOR_SELECTION_NONE;
+	
+	int dpi = this->view->getXournal()->getControl()->getSettings()->getDisplayDpi();
+	this->btnWidth = MAX(10,dpi/8);
 
 	this->contents = new EditSelectionContents(this->x, this->y, this->width, this->height,
 											   this->sourcePage, this->sourceLayer, this->view);
+	
+	cairo_matrix_init_identity(&this->cmatrix);
+	
 }
 
 EditSelection::~EditSelection()
@@ -179,7 +188,13 @@ void EditSelection::finalizeSelection()
 	this->contents->finalizeSelection(this->x, this->y, this->width, this->height,
 										this->aspectRatio, layer, page, this->view, this->undo);
 
-	this->view->rerenderRect(this->x, this->y, this->width, this->height);
+	
+	//Calculate new clip region delta due to rotation:
+    double addW =std::abs(this->width * cos(this->rotation)) + std::abs(this->height * sin(this->rotation)) - this->width ;
+	double addH = std::abs(this->width * sin(this->rotation)) + std::abs(this->height * cos(this->rotation)) - this->height;
+
+
+	this->view->rerenderRect(this->x - addW/2.0, this->y-addH/2.0, this->width+addW, this->height+addH);
 
 	// This is needed if the selection not was 100% on a page
 	this->view->getXournal()->repaintSelection(true);
@@ -206,6 +221,18 @@ double EditSelection::getYOnView()
 	XOJ_CHECK_TYPE(EditSelection);
 
 	return this->y;
+}
+
+double EditSelection::getOriginalXOnView()
+{
+	XOJ_CHECK_TYPE(EditSelection);
+	return this->contents->getOriginalX();
+}
+
+double EditSelection::getOriginalYOnView()
+{
+	XOJ_CHECK_TYPE(EditSelection);
+	return this->contents->getOriginalY();
 }
 
 /**
@@ -389,15 +416,40 @@ void EditSelection::mouseUp()
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	PageRef page = this->view->getPage();
-	Layer* layer = page->getSelectedLayer();
+	
+	if (this->mouseDownType == CURSOR_SELECTION_DELETE )
+	{
+		this->view->getXournal()->deleteSelection();
+		return;
+		
+	}
+	else
+	{
+		PageRef page = this->view->getPage();
+		Layer* layer = page->getSelectedLayer();
 
-	snapRotation();
+		snapRotation();
 
-	this->contents->updateContent(this->x, this->y, this->rotation, this->width, this->height, this->aspectRatio,
-								  layer, page, this->view, this->undo, this->mouseDownType);
-
+		this->contents->updateContent(this->x, this->y, this->rotation, this->width, this->height, this->aspectRatio,
+									layer, page, this->view, this->undo, this->mouseDownType);
+	}
 	this->mouseDownType = CURSOR_SELECTION_NONE;
+
+	double zoom = this->view->getXournal()->getZoom();
+	//store translation matrix for pointer use
+	double rx = (this->x + this->width/2) * zoom;
+	double ry = (this->y + this->height/2) * zoom;
+
+	cairo_matrix_init_identity(&this->cmatrix);
+	cairo_matrix_translate(&this->cmatrix, rx, ry);
+	cairo_matrix_rotate(&this->cmatrix, -this->rotation);
+	cairo_matrix_translate(&this->cmatrix, -rx, -ry);
+	
+//	cairo_matrix_transform_point( &this->cmatrix, &x, &y);
+	
+	
+	
+	
 }
 
 /**
@@ -408,9 +460,15 @@ void EditSelection::mouseDown(CursorSelectionType type, double x, double y)
 	XOJ_CHECK_TYPE(EditSelection);
 
 	double zoom = this->view->getXournal()->getZoom();
+
+
+	if ( type != CURSOR_SELECTION_ROTATE && type != CURSOR_SELECTION_MOVE )	//NOT rotate nor move
+	{
+		cairo_matrix_transform_point( &this->cmatrix, &x, &y);
+	}	
 	x /= zoom;
 	y /= zoom;
-
+	
 	this->mouseDownType = type;
 	this->relMousePosX = x - this->x;
 	this->relMousePosY = y - this->y;
@@ -418,132 +476,169 @@ void EditSelection::mouseDown(CursorSelectionType type, double x, double y)
 
 /**
  * Handles mouse input for moving and resizing, coordinates are relative to "view"
+ * 
+ * For Move and Rotate the mouse position is not modified by the transformation matrix.
+ * For Scale width and height it is... but the dx and dy moved to drag only one side has to be translated back out of the rotated coordinates.
+ * 
  */
-void EditSelection::mouseMove(double x, double y)
+void EditSelection::mouseMove(double mouseX, double mouseY)
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
 	double zoom = this->view->getXournal()->getZoom();
-	x /= zoom;
-	y /= zoom;
-
+		
 	if (this->mouseDownType == CURSOR_SELECTION_MOVE)
 	{
-		this->x = x - this->relMousePosX;
-		this->y = y - this->relMousePosY;
-	}
-	else if (this->mouseDownType == CURSOR_SELECTION_TOP_LEFT)
-	{
-		double dx = x - this->x;
-		double dy = y - this->y;
-		double f;
-		if (ABS(dy) < ABS(dx))
-		{
-			f = (this->height + dy) / this->height;
-		}
-		else
-		{
-			f = (this->width + dx) / this->width;
-		}
-
-		double oldW = this->width;
-		double oldH = this->height;
-		this->width /= f;
-		this->height /= f;
-
-		this->x += oldW - this->width;
-		this->y += oldH - this->height;
-	}
-	else if (this->mouseDownType == CURSOR_SELECTION_TOP_RIGHT)
-	{
-		double dx = x - this->x - this->width;
-		double dy = y - this->y;
-
-		double f;
-		if (ABS(dy) < ABS(dx))
-		{
-			f = this->height / (this->height + dy);
-		}
-		else
-		{
-			f = (this->width + dx) / this->width;
-		}
-		
-		double oldH = this->height;
-		this->width *= f;
-		this->height *= f;
-		
-		this->y += oldH - this->height;
-	}
-	else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_LEFT)
-	{
-		double dx = x - this->x;
-		double dy = y - this->y - this->height;
-		double f;
-		if (ABS(dy) < ABS(dx))
-		{
-			f = (this->height + dy) / this->height;
-		}
-		else
-		{
-			f = this->width / (this->width + dx);
-		}
-
-		double oldW = this->width;
-		this->width *= f;
-		this->height *= f;
-
-		this->x += oldW - this->width;
-	}
-	else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_RIGHT)
-	{
-		double dx = x - this->x - this->width;
-		double dy = y - this->y - this->height;
-		double f;
-		if (ABS(dy) < ABS(dx))
-		{
-			f = (this->height + dy) / this->height;
-		}
-		else
-		{
-			f = (this->width + dx) / this->width;
-		}
-
-		this->width *= f;
-		this->height *= f;
-	}
-	else if (this->mouseDownType == CURSOR_SELECTION_TOP)
-	{
-		double dy = y - this->y;
-		this->height -= dy;
-		this->y += dy;
-	}
-	else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM)
-	{
-		double dy = y - this->y - this->height;
-		this->height += dy;
-	}
-	else if (this->mouseDownType == CURSOR_SELECTION_LEFT)
-	{
-		double dx = x - this->x;
-		this->width -= dx;
-		this->x += dx;
-	}
-	else if (this->mouseDownType == CURSOR_SELECTION_RIGHT)	
-	{
-		double dx = x - this->x - this->width;
-		this->width += dx;
-		
+		this->x = mouseX/zoom - this->relMousePosX;
+		this->y = mouseY/zoom - this->relMousePosY;
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_ROTATE && supportRotation) // catch rotation here
 	{
-		double dx = x - this->x - this->width / 2;
-		double dy = y - this->y - this->height / 2;
+		double rdx = mouseX/zoom- this->x - this->width / 2;
+		double rdy = mouseY/zoom - this->y - this->height / 2;
 
-		double angle = atan2(dy, dx);
+		double angle = atan2(rdy, rdx);
 		this->rotation = angle;
 	}
+	else
+	{
+		//Translate mouse position into rotated coordinate system:
+		double rx = mouseX;
+		double ry = mouseY;
+		cairo_matrix_transform_point( &this->cmatrix, &rx, &ry);
+		rx /= zoom;
+		ry /= zoom;
+		
+		double minSize = MINPIXSIZE/zoom;
+		double dx = 0;
+		double dy = 0;
+		
+		
+		if (this->mouseDownType == CURSOR_SELECTION_TOP_LEFT)
+		{
+			dx = rx - this->x;
+			dy = ry - this->y;
+			double f;
+			if (ABS(dy) < ABS(dx))
+			{
+				f = (this->height + dy) / this->height;
+			}
+			else
+			{
+				f = (this->width + dx) / this->width;
+			}
 
+			double oldW = this->width;
+			double oldH = this->height;
+			this->width /= f;
+			this->height /= f;
+
+			this->x = MIN( this->x + oldW - minSize, this->x + oldW - this->width);
+			this->y = MIN( this->y + oldH - minSize, this->y + oldH - this->height);
+		}
+		else if (this->mouseDownType == CURSOR_SELECTION_TOP_RIGHT)
+		{
+			dx = rx - this->x - this->width;
+			dy = ry - this->y;
+
+			double f;
+			if (ABS(dy) < ABS(dx))
+			{
+				f = this->height / (this->height + dy);
+			}
+			else
+			{
+				f = (this->width + dx) / this->width;
+			}
+			
+			double oldH = this->height;
+			this->width *= f;
+			this->height *= f;
+
+			this->y = MIN( this->y + oldH - minSize, this->y + oldH - this->height);
+		}
+		else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_LEFT)
+		{
+			dx = rx - this->x;
+			dy = ry - this->y - this->height;
+			double f;
+			if (ABS(dy) < ABS(dx))
+			{
+				f = (this->height + dy) / this->height;
+			}
+			else
+			{
+				f = this->width / (this->width + dx);
+			}
+
+			double oldW = this->width;
+			this->width *= f;
+			this->height *= f;
+
+			this->x = MIN( this->x + oldW - minSize, this->x + oldW - this->width);
+		}
+		else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_RIGHT)
+		{
+			dx = rx - this->x - this->width;
+			dy = ry - this->y - this->height;
+			double f;
+			if (ABS(dy) < ABS(dx))
+			{
+				f = (this->height + dy) / this->height;
+			}
+			else
+			{
+				f = (this->width + dx) / this->width;
+			}
+
+			this->width *= f;
+			this->height *= f;
+		}
+		else if (this->mouseDownType == CURSOR_SELECTION_TOP)
+		{
+			dy = ry - this->y;
+
+			this->y = MIN( this->y+height-minSize, this->y +dy);
+			this->height -= dy;
+
+		}
+		else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM)
+		{
+			dy = ry - this->y - this->height;
+			this->height += dy;
+		}
+		else if (this->mouseDownType == CURSOR_SELECTION_LEFT)
+		{
+			dx = rx - this->x;
+			this->x = MIN( this->x+width-minSize, this->x +dx);
+			this->width -= dx;
+		}
+		else if (this->mouseDownType == CURSOR_SELECTION_RIGHT)	
+		{
+			dx = rx - this->x - this->width;
+			this->width += dx;
+			
+		}
+
+
+	//	this->width = MAX( this->width , minSize);
+	//	this->height = MAX( this->height, minSize);
+		
+		if( this->width < minSize)
+		{
+				dx += minSize - this->width;
+				this->width =  minSize;
+		}
+		if( this->height < minSize)
+		{
+				dy += minSize - this->height;
+				this->height =  minSize;
+		}
+		
+		// idea was to use dx and dy to accommodate scaling issues when rotated ( a bit of a hack) but we've got problems with undoScaling and everything would be better served if we re-wrote parts EditSelection and EditSelectionContents  so that scaling and rotation were all based off of center coordinates instead of topLeft.  Leaving for now to finish other checkins.
+	
+	}
+	
 	this->view->getXournal()->repaintSelection();
 
 	XojPageView* v = getPageViewUnderCursor();
@@ -611,7 +706,7 @@ void EditSelection::copySelection()
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	undo->addUndoAction(contents->copySelection(this->view->getPage(), this->view, this->x, this->y));
+	undo->addUndoAction(UndoActionPtr(contents->copySelection(this->view->getPage(), this->view, this->x, this->y)));
 }
 
 /**
@@ -667,8 +762,12 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 	double y1 = getYOnView() * zoom;
 	double y2 = y1 + (this->height * zoom);
 
-	const int EDGE_PADDING = 5;
-	const int BORDER_PADDING = 3;
+
+	cairo_matrix_transform_point( &this->cmatrix, &x, &y);
+
+	
+	const int EDGE_PADDING = (this->btnWidth/2) + 2;
+	const int BORDER_PADDING = (this->btnWidth/2);
 
 	if (x1 - EDGE_PADDING <= x && x <= x1 + EDGE_PADDING && y1 - EDGE_PADDING <= y && y <= y1 + EDGE_PADDING)
 	{
@@ -690,7 +789,13 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 		return CURSOR_SELECTION_BOTTOM_RIGHT;
 	}
 
-	if (supportRotation && x2 + BORDER_PADDING + 4 <= x && x <= x2 + BORDER_PADDING + 16 && (y2 + y1) / 2 - 4 <= y	&& (y2 + y1) / 2 + 4 >= y)
+	if ( x1 - (20+this->btnWidth) - BORDER_PADDING <=x &&  x1 - (20+this->btnWidth) + BORDER_PADDING >=x  &&  y1- BORDER_PADDING <= y	&&  y1 + BORDER_PADDING >= y)
+	{
+		return CURSOR_SELECTION_DELETE;
+	}
+	
+	
+	if (supportRotation && x2 - BORDER_PADDING + 8 + this->btnWidth <= x && x <= x2 + BORDER_PADDING + 8 + this->btnWidth  && (y2 + y1) / 2 - 4 - BORDER_PADDING <= y	&& (y2 + y1) / 2 + 4 + BORDER_PADDING>= y)
 	{
 		return CURSOR_SELECTION_ROTATE;
 	}
@@ -758,7 +863,7 @@ void EditSelection::snapRotation()
 
 /**
  * Paints the selection to cr, with the given zoom factor. The coordinates of cr
- * should be relative to the provideded view by getView() (use translateEvent())
+ * should be relative to the provided view by getView() (use translateEvent())
  */
 void EditSelection::paint(cairo_t* cr, double zoom)
 {
@@ -820,7 +925,7 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 		if (supportRotation)
 		{
 			// rotation handle
-			drawAnchorRotation(cr, x + width + 12/zoom, y + height / 2, zoom);
+			drawAnchorRotation(cr, x + width + (8 + this->btnWidth)/zoom, y + height / 2, zoom);
 		}
 	}
 
@@ -832,6 +937,9 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 	drawAnchorRect(cr, x, y + height, zoom);
 	// bottom right
 	drawAnchorRect(cr, x + width, y + height, zoom);
+	
+	
+	drawDeleteRect(cr, x - (20+this->btnWidth)/zoom, y  , zoom);
 }
 
 void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double zoom)
@@ -840,7 +948,7 @@ void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double z
 
 	GtkColorWrapper selectionColor = view->getSelectionColor();
 	selectionColor.apply(cr);
-	cairo_rectangle(cr, x * zoom - 4, y * zoom - 4, 8, 8);
+	cairo_rectangle(cr, x * zoom - (this->btnWidth/2), y * zoom - (this->btnWidth/2), this->btnWidth, this->btnWidth);
 	cairo_stroke_preserve(cr);
 	cairo_set_source_rgb(cr, 1, 0, 0);
 	cairo_fill(cr);	
@@ -855,11 +963,33 @@ void EditSelection::drawAnchorRect(cairo_t* cr, double x, double y, double zoom)
 
 	GtkColorWrapper selectionColor = view->getSelectionColor();
 	selectionColor.apply(cr);
-	cairo_rectangle(cr, x * zoom - 4, y * zoom - 4, 8, 8);
+	cairo_rectangle(cr, x * zoom - (this->btnWidth/2), y * zoom - (this->btnWidth/2), this->btnWidth, this->btnWidth);
 	cairo_stroke_preserve(cr);
 	cairo_set_source_rgb(cr, 1, 1, 1);
 	cairo_fill(cr);
 }
+
+
+/**
+ * draws an idicator where you can delete the selection
+ */
+void EditSelection::drawDeleteRect(cairo_t* cr, double x, double y, double zoom)
+{
+	XOJ_CHECK_TYPE(EditSelection);
+
+	cairo_set_source_rgb(cr, 0, 0, 0);
+	cairo_rectangle(cr, x * zoom - (this->btnWidth/2), y * zoom - (this->btnWidth/2), this->btnWidth, this->btnWidth);
+	cairo_stroke(cr);
+	cairo_set_source_rgb(cr, 1, 0, 0);
+	cairo_move_to(cr, x * zoom - (this->btnWidth/2), y * zoom - (this->btnWidth/2));
+	cairo_rel_move_to(cr, this->btnWidth,0);
+	cairo_rel_line_to(cr, -this->btnWidth,this->btnWidth);
+	cairo_rel_move_to(cr, this->btnWidth,0);
+	cairo_rel_line_to(cr, -this->btnWidth,-this->btnWidth);
+	cairo_stroke(cr);
+}
+
+
 
 XojPageView* EditSelection::getView()
 {

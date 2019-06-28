@@ -1,12 +1,20 @@
 # Xournal++
 
 [![Build Status](https://travis-ci.org/xournalpp/xournalpp.svg?branch=string_new)](https://travis-ci.org/xournalpp/xournalpp)
+[![Build Status](https://dev.azure.com/xournalpp/xournalpp/_apis/build/status/xournalpp.xournalpp?branchName=master&stageName=Build_Test_Stage&jobName=Test%20Xournal%2B%2B%20on%20Linux)](https://dev.azure.com/xournalpp/xournalpp/_build/latest?definitionId=1&branchName=master)
 [![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Shout out
-Recently we revisited the settings dialog to improve the feeling and usability. 
-While doing that we also added better descriptions, for which we require 
-new translations. If you would like to help us, please contact us by creating an issue 
+<table border="0px" ><tr><td width = 600px>
+
+<img src="readme/main.png" width=550px% title="Xournal++ Screenshot on Linux"/>
+
+</td><td>
+
+## Shout out - Translators Needed!  
+
+Recently we revisited the settings dialog to improve the feeling and usability.
+While doing that we also added better descriptions, for which we require
+new translations. If you would like to help us, please contact us by creating an issue
 or write us on [Gitter](https://gitter.im/xournalpp/xournalpp)!
 
 Partial translations, which need to be updated:
@@ -14,7 +22,7 @@ Partial translations, which need to be updated:
 - Polish
 - Chinese
 
-Full translations for all languages not mentioned previously except:
+Full translations for all languages not mentioned previously **except**:
 - English
 - German
 - Italian
@@ -23,6 +31,8 @@ Previous knowledge in creating translations using `gettext` would be nice but is
 We are happy to help you set everything up for translating.
 
 **Thanks in advance!**
+
+</td></tr></table>
 
 ## Features
 
@@ -47,28 +57,72 @@ Xournal++ features:
 * Shape drawing (line, arrow, circle, rect)
 * Shape resizing and rotation
 * Rotation snapping every 45 degrees
-* Rect snapping to grid 
+* Rect snapping to grid
 * Audio recording and playback alongside with handwritten notes
 * Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...
 * Plugins using LUA Scripting
 
-![Screenshot](readme/main.png?raw=true "Xournal++ Screenshot")
+<table>
+<tr>
+<td>
+
+## Linux
+<img src="readme/main.png" width=100% title="Xournal++ Screenshot on Linux"/>
+
+</td><td>
 
 ## Windows 10
-![Screenshot](readme/main-win.png?raw=true "Xournal++ Screenshot on Win10")
+<img src="readme/main-win.png" width=100% title="Xournal++ Screenshot on Win10"/>
+
+</td></tr><tr><td>
 
 ## macOS High Sierra
-![Screenshot](readme/main-mac.png?raw=true "Xournal++ Screenshot on macOS")
+<img src="readme/main-mac.png" width=100% title="Xournal++ Screenshot on macOS"/>
+
+</td><td>
 
 ## Toolbar / Page Background / Layer
 Multiple page background, easy selectable on the toolbar
-![Screenshot](readme/background.png?raw=true "Xournal++ Screenshot")
+<img src="readme/background.png" width=100% title="Xournal++ Screenshot"/>
 
-Layer sidebar and advance Layer selection.
-![Screenshot](readme/layer.png?raw=true "Xournal++ Screenshot")
+</td></tr><tr><td>
 
-Multiple predefined and fully customizeable Toolbar.
-![Screenshot](readme/toolbar.png?raw=true "Xournal++ Screenshot")
+## Layer sidebar and advance Layer selection.
+<img src="readme/layer.png" width=100% title="Xournal++ Screenshot"/>
+
+</td><td>
+
+## Multiple predefined and fully customizeable Toolbar.
+
+<img src="readme/toolbar.png" width=100% title="Xournal++ Screenshot"/>
+
+</td></tr></table>
+
+## Experimental Features:
+Sometimes a feature is added that might not be rock solid, or the developers aren't sure it is useful. 
+Try these out and give us some feedback.
+
+Here are a few under development that you can play with now.
+
+
+* <img src="readme/floatingtoolboxmbmenu.png"  title="Xournal++ Screenshot"/> Assign a mouse button or stylus button to bring up a toolbox of toolbars right under the cursor.  You can also modify what is in the toolbox through the usual View->Toolbars->Customize although **it won't appear unless you've assigned a button in preferences: mouse or stylus** ( or selected a toolbar configuration that uses it).
+  - This is an experimental feature because not everything you can put in the toolbox behaves. So be aware.
+  
+    <img src="readme/floatingtoolbox.png" width=25% />
+
+
+
+
+ -  Keep your eyes out for other experimental features in preferences as seen here:
+ 
+     DrawingTools: When drawing a box, circle etc simulate ctrl or shift modifiers by the initial direction you move the mouse.
+   
+     Action on Tool Tap: Allow a brief tap on the screen to bring up the floating toolbox and/or select an object. May work with pen and highlighter only.
+  
+     <img src="readme/moreexperimentals.png" width=50% />
+
+
+
 
 
 ## How to use audio record and playback feature:
@@ -115,7 +169,7 @@ Then Pen input will be working, until you restart Windows. [#659](https://github
 https://github.com/xournalpp/xournalpp/releases
 
 ### Mac OS X
-Pressure sensitivity is not working on Mac [#569](https://github.com/xournalpp/xournalpp/issues/569). (GTK-Issue)
+Xournal++ will be deliverd with a patched GTK. Else pressure sensitivity is not working on Mac [#569](https://github.com/xournalpp/xournalpp/issues/569). (GTK-Issue)
 
 https://github.com/xournalpp/xournalpp/releases
 
@@ -145,25 +199,9 @@ merged, even if they are not 100% finished.
 See [GitHub:xournalpp](http://github.com/xournalpp/xournalpp) for current development. You can also join
 our Gitter channel via the badge on top.
 
-Also take a look at our [Coding Conventions](https://github.com/xournalpp/xournalpp/wiki/Coding-conventions) 
+Also take a look at our [Coding Conventions](https://github.com/xournalpp/xournalpp/wiki/Coding-conventions)
 
-## FAQ
-### Q: Secondary stylus button only works when there is no contact
-This is due to a driver setting, which you can configure with `TPCButton` or `TabletPCButton` directive if using `Wacom` driver (but other drivers might have this setting too). 
 
-Here's a `/usr/share/X11/xorg.conf.d/30-wacom.conf` example snippet:
-```
-Section "InputClass"
-	Identifier "Wacom tablets class"
-	MatchProduct "Wacom"
-	MatchDevicePath "/dev/input/event*"
-	MatchIsTablet "on"
-	Driver "wacom"
-	Option "TabletPCButton" "on"
-	Option "TPCButton" "on"
-EndSection
-```
-If you are using `libinput` as driver, take a look at [#940](https://github.com/xournalpp/xournalpp/issues/940) and the ticket over at libinput which adresses this issue (https://gitlab.freedesktop.org/libinput/libinput/issues/193)
 
 ## Code documentation
 
@@ -180,4 +218,3 @@ on Debian or Ubuntu. Finally, type in `doxygen` in the root directory of the rep
 The documentation can be found in `doc/html` and `doc/latex`. Conveniently display the
 documentation with `python3 -m http.server 8000` and visit the shown URL to view the
 documentation.
-

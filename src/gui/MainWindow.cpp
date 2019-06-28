@@ -29,6 +29,8 @@
 #endif
 
 #include <gdk/gdk.h>
+#include <util/DeviceListHelper.h>
+#include <gui/inputdevices/InputEvents.h>
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
  : GladeGui(gladeSearchPath, "main.glade", "mainWindow"),
@@ -40,6 +42,12 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
 	this->toolbarSelectMenu = new MainWindowToolbarMenu(this);
 
+	loadMainCSS(gladeSearchPath,"xournalpp.css");
+	
+	GtkOverlay *overlay = GTK_OVERLAY (get("mainOverlay"));
+	this->floatingToolbox = new FloatingToolbox (this, overlay);  
+
+		
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++)
 	{
 		GtkWidget* w = get(TOOLBAR_DEFINITIONS[i].guiName);
@@ -56,6 +64,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	g_signal_connect(this->window, "window_state_event", G_CALLBACK(windowStateEventCallback), this);
 
 	g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
+		
 
 	// "watch over" all events
 	g_signal_connect(this->window, "key-press-event", G_CALLBACK(onKeyPressCallback), this);
@@ -162,6 +171,9 @@ MainWindow::~MainWindow()
 	delete this->toolbarSelectMenu;
 	this->toolbarSelectMenu = NULL;
 
+	delete this->floatingToolbox;
+	this->floatingToolbox = NULL;
+	
 	delete this->xournal;
 	this->xournal = NULL;
 
@@ -221,11 +233,13 @@ void MainWindow::initXournalWidget()
 
 		scrollHandling = new ScrollHandlingXournalpp();
 
-		this->xournal = new XournalView(box2, control, scrollHandling);
+		this->zoomGesture = new ZoomGesture(control->getZoomControl());
+
+		this->xournal = new XournalView(box2, control, scrollHandling, zoomGesture);
 
 		if (control->getSettings()->isZoomGesturesEnabled())
 		{
-			this->zoomGesture = new ZoomGesture(this->xournal->getWidget(), control->getZoomControl());
+			this->zoomGesture->connect(this->xournal->getWidget());
 		}
 
 		gtk_container_add(GTK_CONTAINER(box2), gtk_scrollbar_new(GTK_ORIENTATION_VERTICAL, scrollHandling->getVertical()));
@@ -237,6 +251,8 @@ void MainWindow::initXournalWidget()
 	{
 		winXournal = gtk_scrolled_window_new(NULL, NULL);
 
+		setTouchscreenScrollingForDeviceMapping();
+
 		gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
 
 		GtkWidget* vpXournal = gtk_viewport_new(NULL, NULL);
@@ -245,11 +261,13 @@ void MainWindow::initXournalWidget()
 
 		scrollHandling = new ScrollHandlingGtk(GTK_SCROLLABLE(vpXournal));
 
-		this->xournal = new XournalView(vpXournal, control, scrollHandling);
+		this->zoomGesture = new ZoomGesture(control->getZoomControl());
+
+		this->xournal = new XournalView(vpXournal, control, scrollHandling, zoomGesture);
 
 		if (control->getSettings()->isZoomGesturesEnabled())
 		{
-			this->zoomGesture = new ZoomGesture(winXournal, control->getZoomControl());
+			this->zoomGesture->connect(winXournal);
 		}
 
 		gtk_widget_show_all(winXournal);
@@ -257,6 +275,22 @@ void MainWindow::initXournalWidget()
 
 	Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
 	scrollHandling->init(this->xournal->getWidget(), layout);
+}
+
+void MainWindow::setTouchscreenScrollingForDeviceMapping()
+{
+	XOJ_CHECK_TYPE(MainWindow);
+
+	for (InputDevice const& inputDevice: DeviceListHelper::getDeviceList())
+	{
+		GdkDevice* device = inputDevice.getDevice();
+		InputDeviceClass deviceClass = InputEvents::translateDeviceType(device, this->getControl()->getSettings());
+		if (gdk_device_get_source(device) == GDK_SOURCE_TOUCHSCREEN && deviceClass != INPUT_DEVICE_TOUCHSCREEN)
+		{
+			gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), false);
+			break;
+		}
+	}
 }
 
 /**
@@ -340,6 +374,7 @@ bool cancellable_cancel(GCancellable* cancel)
 void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y,
 								 GtkSelectionData* data, guint info, guint time, MainWindow* win)
 {
+	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
 
 	GtkWidget* source = gtk_drag_get_source_widget(dragContext);
 	if (source && widget == gtk_widget_get_toplevel(source))
@@ -681,6 +716,8 @@ void MainWindow::loadToolbar(ToolbarData* d)
 	{
 		this->toolbar->load(d, this->toolbarWidgets[i], TOOLBAR_DEFINITIONS[i].propName, TOOLBAR_DEFINITIONS[i].horizontal);
 	}
+	
+	this->floatingToolbox->flagRecalculateSizeRequired();	
 }
 
 ToolbarData* MainWindow::getSelectedToolbar()
@@ -895,3 +932,16 @@ void MainWindow::setAudioPlaybackPaused(bool paused)
 
 	this->getToolMenuHandler()->setAudioPlaybackPaused(paused);
 }
+
+void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename)
+{
+	XOJ_CHECK_TYPE(MainWindow);
+
+	string filename = gladeSearchPath->findFile("", cssFilename);
+	GtkCssProvider *provider = gtk_css_provider_new ();
+	gtk_css_provider_load_from_path (provider, filename.c_str(), NULL);
+	gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider),
+											  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	g_object_unref(provider);
+}
+	

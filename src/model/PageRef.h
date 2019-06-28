@@ -21,6 +21,7 @@ class BackgroundImage;
 class PageRef
 {
 public:
+	// Todo move constructor
 	PageRef();
 	PageRef(const PageRef& ref);
 	PageRef(XojPage* page);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkAdjustment" id="adjustmentAudioGain">
@@ -37,6 +37,25 @@
     <property name="upper">0.5</property>
     <property name="value">0.20000000000000001</property>
     <property name="step_increment">0.05000000000000001</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentStrokeIgnoreLength">
+    <property name="lower">0.010000000000000011</property>
+    <property name="upper">100</property>
+    <property name="value">1</property>
+    <property name="step_increment">0.10000000000000001</property>
+    <property name="page_increment">2</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentStrokeIgnoreTime">
+    <property name="upper">1000</property>
+    <property name="value">150</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentStrokeSuccessiveTime">
+    <property name="upper">1000</property>
+    <property name="value">500</property>
+    <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustmentTimeout">
@@ -80,6 +99,7 @@
     <property name="page_increment">10</property>
   </object>
   <object class="GtkDialog" id="settingsDialog">
+    <property name="name">settingsDialog</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Xournal++ Preferences</property>
@@ -88,6 +108,9 @@
     <property name="type_hint">normal</property>
     <property name="gravity">center</property>
     <signal name="close" handler="gtk_widget_hide" swapped="no"/>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox3">
         <property name="visible">True</property>
@@ -96,12 +119,14 @@
         <property name="spacing">2</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="btSettingsButton">
+            <property name="name">btSettingsButton</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="btSettingsCancel">
                 <property name="label">gtk-cancel</property>
+                <property name="name">btSettingsCancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -116,6 +141,7 @@
             <child>
               <object class="GtkButton" id="btSettingsOk">
                 <property name="label">gtk-ok</property>
+                <property name="name">btSettingsOk</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -137,13 +163,17 @@
         </child>
         <child>
           <object class="GtkNotebook" id="notebook1">
+            <property name="name">notebook1</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="tab_pos">left</property>
             <property name="show_border">False</property>
             <child>
               <object class="GtkBox" id="saveLoadTabBox">
+                <property name="name">saveLoadTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="sid01">
@@ -165,7 +195,6 @@
                               <object class="GtkFrame" id="sid04">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
                                   <object class="GtkAlignment" id="sid05">
@@ -204,6 +233,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             <child>
                                               <object class="GtkCheckButton" id="cbAutosave">
                                                 <property name="label" translatable="yes">Enable Autosaving</property>
+                                                <property name="name">cbAutosave</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
@@ -218,10 +248,12 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             </child>
                                             <child>
                                               <object class="GtkBox" id="boxAutosave">
+                                                <property name="name">boxAutosave</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <child>
                                                   <object class="GtkLabel" id="lbAutosaveTimeout1">
+                                                    <property name="name">lbAutosaveTimeout1</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <property name="label" translatable="yes">every</property>
@@ -234,6 +266,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                 </child>
                                                 <child>
                                                   <object class="GtkSpinButton" id="spAutosaveTimeout">
+                                                    <property name="name">spAutosaveTimeout</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">True</property>
                                                     <property name="adjustment">adjustmentTimeout</property>
@@ -247,6 +280,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                 </child>
                                                 <child>
                                                   <object class="GtkLabel" id="lbAutosaveTimeout2">
+                                                    <property name="name">lbAutosaveTimeout2</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <property name="label" translatable="yes">minutes</property>
@@ -324,6 +358,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                         </child>
                                         <child>
                                           <object class="GtkEntry" id="txtDefaultSaveName">
+                                            <property name="name">txtDefaultSaveName</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                           </object>
@@ -352,6 +387,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             </child>
                                             <child>
                                               <object class="GtkLabel" id="lbDefaultSavename">
+                                                <property name="name">lbDefaultSavename</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="label" translatable="yes">%F-Note-%H-%M</property>
@@ -371,6 +407,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                         </child>
                                         <child>
                                           <object class="GtkExpander" id="expander1">
+                                            <property name="name">expander1</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <child>
@@ -498,6 +535,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                         <child>
                                           <object class="GtkCheckButton" id="cbAutoloadXoj">
                                             <property name="label" translatable="yes">Enable Autoloading of Journals</property>
+                                            <property name="name">cbAutoloadXoj</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -543,6 +581,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
             </child>
             <child type="tab">
               <object class="GtkLabel" id="saveLoadTabLabel">
+                <property name="name">saveLoadTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Load / Save</property>
@@ -552,9 +591,287 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="mouseTabBox">
+              <object class="GtkBox" id="inputTabBox">
+                <property name="name">inputTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkFrame" id="sid79">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label_xalign">0.0099999997764825821</property>
+                    <child>
+                      <object class="GtkAlignment" id="sid80">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="bottom_padding">8</property>
+                        <property name="left_padding">12</property>
+                        <property name="right_padding">12</property>
+                        <child>
+                          <object class="GtkBox" id="sid81">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkLabel" id="sid82">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">This is an experimental feature! Use it with care.</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkGrid" id="grid7">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <object class="GtkCheckButton" id="cbNewInputSystem">
+                                    <property name="label" translatable="yes">Enable new input system (Requires restart)</property>
+                                    <property name="name">cbNewInputSystem</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="tooltip_markup" translatable="yes">Drag LEFT from start point acts like shift key is being held.
+Drag UP acts as if Control key is being held.
+
+Determination Radius: Radius at which modifiers will lock in until finished drawing.
+
+&lt;i&gt;Useful for operating without keyboard.&lt;/i&gt;</property>
+                                    <property name="xalign">0</property>
+                                    <property name="draw_indicator">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">0</property>
+                                    <property name="top_attach">0</property>
+                                  </packing>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child type="label">
+                      <object class="GtkLabel" id="sid83">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Experimental Input System</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="sid84">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label_xalign">0.0099999997764825821</property>
+                    <child>
+                      <object class="GtkAlignment" id="sid85">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="bottom_padding">8</property>
+                        <property name="left_padding">12</property>
+                        <property name="right_padding">12</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">&lt;i&gt;Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)&lt;/i&gt;</property>
+                                <property name="use_markup">True</property>
+                                <property name="wrap">True</property>
+                                <property name="max_width_chars">85</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkBox" id="hboxInputDeviceClasses">
+                                <property name="name">hboxInputDeviceClasses</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child type="label">
+                      <object class="GtkLabel" id="sid87">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Input Devices</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="sid88">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label_xalign">0.0099999997764825821</property>
+                    <child>
+                      <object class="GtkAlignment" id="sid89">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="bottom_padding">8</property>
+                        <property name="left_padding">12</property>
+                        <property name="right_padding">12</property>
+                        <child>
+                          <object class="GtkBox" id="sid90">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkLabel" id="sid91">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">These settings take only effect if the experimental input system is activated</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="cbInputSystemDrawOutsideWindow">
+                                <property name="name">cbInputSystemDrawOutsideWindow</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="xalign">0.5</property>
+                                <property name="draw_indicator">True</property>
+                                <child>
+                                  <object class="GtkLabel" id="sid92">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">Enable drawing outside of window &lt;i&gt;(Drawing will not stop at the border of the window)&lt;/i&gt;</property>
+                                    <property name="use_markup">True</property>
+                                    <property name="wrap">True</property>
+                                    <property name="xalign">0</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="cbInputSystemTPCButton">
+                                <property name="name">cbInputSystemTPCButton</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="tooltip_markup" translatable="yes">Drag LEFT from start point acts like shift key is being held.
+Drag UP acts as if Control key is being held.
+
+Determination Radius: Radius at which modifiers will lock in until finished drawing.
+
+&lt;i&gt;Useful for operating without keyboard.&lt;/i&gt;</property>
+                                <property name="xalign">0</property>
+                                <property name="draw_indicator">True</property>
+                                <child>
+                                  <object class="GtkLabel" id="sid93">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">Merge button events with stylus tip events
+&lt;i&gt;(Check this if&lt;/i&gt; "&lt;tt&gt;xsetwacom get *deviceId* TabletPCButton&lt;/tt&gt;" &lt;i&gt;returns&lt;/i&gt; "&lt;tt&gt;on&lt;/tt&gt;"&lt;i&gt;)&lt;/i&gt;</property>
+                                    <property name="use_markup">True</property>
+                                    <property name="wrap">True</property>
+                                    <property name="xalign">0</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child type="label">
+                      <object class="GtkLabel" id="sid94">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Options</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="inputTabLabel">
+                <property name="name">inputTabLabel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Input System</property>
+              </object>
+              <packing>
+                <property name="position">1</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="mouseTabBox">
+                <property name="name">mouseTabBox</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="sid17">
@@ -620,6 +937,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                 <property name="right_padding">12</property>
                                                 <child>
                                                   <object class="GtkBox" id="hboxMidleMouse">
+                                                    <property name="name">hboxMidleMouse</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
@@ -657,6 +975,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                 <property name="right_padding">12</property>
                                                 <child>
                                                   <object class="GtkBox" id="hboxRightMouse">
+                                                    <property name="name">hboxRightMouse</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
@@ -711,24 +1030,27 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                 </child>
               </object>
               <packing>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
             <child type="tab">
               <object class="GtkLabel" id="mouseTabLabel">
+                <property name="name">mouseTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Mouse</property>
               </object>
               <packing>
-                <property name="position">1</property>
+                <property name="position">2</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="stylusTabBox">
+                <property name="name">stylusTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="sid30">
@@ -750,7 +1072,6 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                               <object class="GtkFrame" id="sid33">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
                                   <object class="GtkAlignment" id="sid34">
@@ -784,6 +1105,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                         <child>
                                           <object class="GtkCheckButton" id="cbSettingPresureSensitivity">
                                             <property name="label" translatable="yes">Enable Pressure Sensitivity</property>
+                                            <property name="name">cbSettingPresureSensitivity</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -862,6 +1184,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                 <property name="right_padding">12</property>
                                                 <child>
                                                   <object class="GtkBox" id="hboxPenButton1">
+                                                    <property name="name">hboxPenButton1</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
@@ -899,6 +1222,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                 <property name="right_padding">12</property>
                                                 <child>
                                                   <object class="GtkBox" id="hboxPenButton2">
+                                                    <property name="name">hboxPenButton2</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
@@ -936,6 +1260,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                 <property name="right_padding">12</property>
                                                 <child>
                                                   <object class="GtkBox" id="hboxEraser">
+                                                    <property name="name">hboxEraser</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
@@ -990,24 +1315,27 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                 </child>
               </object>
               <packing>
-                <property name="position">2</property>
+                <property name="position">3</property>
               </packing>
             </child>
             <child type="tab">
               <object class="GtkLabel" id="stylusTabLabel">
+                <property name="name">stylusTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Stylus</property>
               </object>
               <packing>
-                <property name="position">2</property>
+                <property name="position">3</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="touchTabBox">
+                <property name="name">touchTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="sid52">
@@ -1029,7 +1357,6 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                               <object class="GtkFrame" id="sid55">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
                                   <object class="GtkAlignment" id="sid56">
@@ -1062,6 +1389,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                         </child>
                                         <child>
                                           <object class="GtkBox" id="hboxTouch">
+                                            <property name="name">hboxTouch</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <child>
@@ -1129,6 +1457,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                         <child>
                                           <object class="GtkCheckButton" id="cbDisableTouchOnPenNear">
                                             <property name="label" translatable="yes">Enable internal Hand Recognition</property>
+                                            <property name="name">cbDisableTouchOnPenNear</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -1143,6 +1472,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                         </child>
                                         <child>
                                           <object class="GtkBox" id="boxInternalHandRecognition">
+                                            <property name="name">boxInternalHandRecognition</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="orientation">vertical</property>
@@ -1177,12 +1507,13 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                 </child>
                                                 <child>
                                                   <object class="GtkComboBoxText" id="cbTouchDisableMethod">
+                                                    <property name="name">cbTouchDisableMethod</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <property name="active">0</property>
                                                     <items>
                                                       <item translatable="yes">Autodetect</item>
-                                                      <item translatable="yes">X11</item>
+                                                      <item>X11</item>
                                                       <item translatable="yes">Custom</item>
                                                     </items>
                                                   </object>
@@ -1193,6 +1524,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                 </child>
                                                 <child>
                                                   <object class="GtkSpinButton" id="spTouchDisableTimeout">
+                                                    <property name="name">spTouchDisableTimeout</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">True</property>
                                                     <property name="adjustment">adjustmentTouchTImeout</property>
@@ -1230,6 +1562,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             </child>
                                             <child>
                                               <object class="GtkFrame" id="boxCustomTouchDisableSettings">
+                                                <property name="name">boxCustomTouchDisableSettings</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="label_xalign">0.0099999997764825821</property>
@@ -1293,6 +1626,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                             </child>
                                                             <child>
                                                             <object class="GtkEntry" id="txtEnableTouchCommand">
+                                                            <property name="name">txtEnableTouchCommand</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
                                                             <property name="hexpand">True</property>
@@ -1304,6 +1638,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                             </child>
                                                             <child>
                                                             <object class="GtkEntry" id="txtDisableTouchCommand">
+                                                            <property name="name">txtDisableTouchCommand</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
                                                             <property name="hexpand">True</property>
@@ -1316,6 +1651,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                             <child>
                                                             <object class="GtkButton" id="btTestEnable">
                                                             <property name="label" translatable="yes">Test</property>
+                                                            <property name="name">btTestEnable</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
                                                             <property name="receives_default">True</property>
@@ -1328,6 +1664,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                             <child>
                                                             <object class="GtkButton" id="btTestDisable">
                                                             <property name="label" translatable="yes">Test</property>
+                                                            <property name="name">btTestDisable</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
                                                             <property name="receives_default">True</property>
@@ -1421,6 +1758,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                         <child>
                                           <object class="GtkCheckButton" id="cbEnableZoomGestures">
                                             <property name="label" translatable="yes">Enable zoom gestures (requires restart)</property>
+                                            <property name="name">cbEnableZoomGestures</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -1489,6 +1827,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbTouchWorkaround">
                                             <property name="label" translatable="yes">Enable GTK Touch / Scrolling workaround  (requires restart)</property>
+                                            <property name="name">cbTouchWorkaround</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -1532,56 +1871,58 @@ This also enables touch drawing.&lt;/i&gt;</property>
                 </child>
               </object>
               <packing>
-                <property name="position">3</property>
+                <property name="position">4</property>
               </packing>
             </child>
             <child type="tab">
               <object class="GtkLabel" id="touchTabLabel">
+                <property name="name">touchTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Touchscreen</property>
               </object>
               <packing>
-                <property name="position">3</property>
+                <property name="position">4</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="viewTabBox">
+                <property name="name">viewTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkScrolledWindow" id="sid79">
+                  <object class="GtkScrolledWindow" id="sid95">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
                     <child>
-                      <object class="GtkViewport" id="sid80">
+                      <object class="GtkViewport" id="sid96">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="shadow_type">none</property>
                         <child>
-                          <object class="GtkBox" id="sid81">
+                          <object class="GtkBox" id="sid97">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkFrame" id="sid82">
+                              <object class="GtkFrame" id="sid98">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid83">
+                                  <object class="GtkAlignment" id="sid99">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">12</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox" id="sid84">
+                                      <object class="GtkBox" id="sid100">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
@@ -1593,6 +1934,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             <child>
                                               <object class="GtkCheckButton" id="cbHideMenubarStartup">
                                                 <property name="label" translatable="yes">Show Menubar on Startup</property>
+                                                <property name="name">cbHideMenubarStartup</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
@@ -1606,7 +1948,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkLabel" id="sid85">
+                                              <object class="GtkLabel" id="sid101">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="margin_left">5</property>
@@ -1628,11 +1970,12 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkFrame" id="colorsFrame">
+                                            <property name="name">colorsFrame</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label_xalign">0.0099999997764825821</property>
                                             <child>
-                                              <object class="GtkAlignment" id="sid86">
+                                              <object class="GtkAlignment" id="sid102">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="bottom_padding">8</property>
@@ -1658,6 +2001,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                                     </child>
                                                     <child>
                                                       <object class="GtkColorButton" id="colorBorder">
+                                                        <property name="name">colorBorder</property>
                                                         <property name="visible">True</property>
                                                         <property name="can_focus">True</property>
                                                         <property name="receives_default">True</property>
@@ -1682,6 +2026,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                                     </child>
                                                     <child>
                                                       <object class="GtkColorButton" id="colorBackground">
+                                                        <property name="name">colorBackground</property>
                                                         <property name="visible">True</property>
                                                         <property name="can_focus">True</property>
                                                         <property name="receives_default">True</property>
@@ -1706,6 +2051,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                                     </child>
                                                     <child>
                                                       <object class="GtkColorButton" id="colorSelection">
+                                                        <property name="name">colorSelection</property>
                                                         <property name="visible">True</property>
                                                         <property name="can_focus">True</property>
                                                         <property name="receives_default">True</property>
@@ -1719,6 +2065,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                                     <child>
                                                       <object class="GtkCheckButton" id="cbDarkTheme">
                                                         <property name="label" translatable="yes">Dark Theme (requires restart)</property>
+                                                        <property name="name">cbDarkTheme</property>
                                                         <property name="visible">True</property>
                                                         <property name="can_focus">True</property>
                                                         <property name="receives_default">False</property>
@@ -1736,7 +2083,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                               </object>
                                             </child>
                                             <child type="label">
-                                              <object class="GtkLabel" id="sid87">
+                                              <object class="GtkLabel" id="sid103">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="label" translatable="yes">Colors</property>
@@ -1754,7 +2101,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel" id="sid88">
+                                  <object class="GtkLabel" id="sid104">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Global</property>
@@ -1769,12 +2116,12 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame" id="sid89">
+                              <object class="GtkFrame" id="sid105">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid90">
+                                  <object class="GtkAlignment" id="sid106">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
@@ -1788,6 +2135,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbHighlightPosition">
                                             <property name="label" translatable="yes">Highlight cursor position</property>
+                                            <property name="name">cbHighlightPosition</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -1803,6 +2151,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbBigCursor">
                                             <property name="label" translatable="yes">Big cursor for pen</property>
+                                            <property name="name">cbBigCursor</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -1820,7 +2169,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel" id="sid91">
+                                  <object class="GtkLabel" id="sid107">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Cursor</property>
@@ -1834,12 +2183,12 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame" id="sid92">
+                              <object class="GtkFrame" id="sid108">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid93">
+                                  <object class="GtkAlignment" id="sid109">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
@@ -1853,6 +2202,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbShowSidebarRight">
                                             <property name="label" translatable="yes">Show sidebar on the right side</property>
+                                            <property name="name">cbShowSidebarRight</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -1868,6 +2218,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbShowScrollbarLeft">
                                             <property name="label" translatable="yes">Show vertical scrollbar on the left side</property>
+                                            <property name="name">cbShowScrollbarLeft</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -1885,7 +2236,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel" id="sid94">
+                                  <object class="GtkLabel" id="sid110">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Left / Right-Handed</property>
@@ -1899,12 +2250,12 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame" id="sid95">
+                              <object class="GtkFrame" id="sid111">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid96">
+                                  <object class="GtkAlignment" id="sid112">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
@@ -1918,6 +2269,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbHideHorizontalScrollbar">
                                             <property name="label" translatable="yes">Hide the horizontal scrollbar</property>
+                                            <property name="name">cbHideHorizontalScrollbar</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -1933,6 +2285,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbHideVerticalScrollbar">
                                             <property name="label" translatable="yes">Hide the vertical scrollbar</property>
+                                            <property name="name">cbHideVerticalScrollbar</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -1950,7 +2303,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel" id="sid97">
+                                  <object class="GtkLabel" id="sid113">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Scrollbars</property>
@@ -1964,12 +2317,12 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame" id="sid98">
+                              <object class="GtkFrame" id="sid114">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid99">
+                                  <object class="GtkAlignment" id="sid115">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
@@ -1983,6 +2336,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbHideFullscreenMenubar">
                                             <property name="label" translatable="yes">Hide Menubar</property>
+                                            <property name="name">cbHideFullscreenMenubar</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -1998,6 +2352,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbHideFullscreenSidebar">
                                             <property name="label" translatable="yes">Hide Sidebar</property>
+                                            <property name="name">cbHideFullscreenSidebar</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -2015,7 +2370,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel" id="sid100">
+                                  <object class="GtkLabel" id="sid116">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Fullscreen</property>
@@ -2029,12 +2384,12 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame" id="sid101">
+                              <object class="GtkFrame" id="sid117">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid102">
+                                  <object class="GtkAlignment" id="sid118">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
@@ -2048,6 +2403,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbHidePresentationMenubar">
                                             <property name="label" translatable="yes">Hide Menubar</property>
+                                            <property name="name">cbHidePresentationMenubar</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -2063,6 +2419,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbHidePresentationSidebar">
                                             <property name="label" translatable="yes">Hide Sidebar</property>
+                                            <property name="name">cbHidePresentationSidebar</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -2092,6 +2449,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             </child>
                                             <child>
                                               <object class="GtkComboBoxText" id="comboboxtext1">
+                                                <property name="name">comboboxtext1</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                               </object>
@@ -2113,7 +2471,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel" id="sid103">
+                                  <object class="GtkLabel" id="sid119">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Presentation Mode</property>
@@ -2139,61 +2497,64 @@ This also enables touch drawing.&lt;/i&gt;</property>
                 </child>
               </object>
               <packing>
-                <property name="position">4</property>
+                <property name="position">5</property>
               </packing>
             </child>
             <child type="tab">
               <object class="GtkLabel" id="viewTabLabel">
+                <property name="name">viewTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">View</property>
               </object>
               <packing>
-                <property name="position">4</property>
+                <property name="position">5</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="zoomTabBox">
+                <property name="name">zoomTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkScrolledWindow" id="sid104">
+                  <object class="GtkScrolledWindow" id="sid120">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
                     <child>
-                      <object class="GtkViewport" id="sid105">
+                      <object class="GtkViewport" id="sid121">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="shadow_type">none</property>
                         <child>
-                          <object class="GtkBox" id="sid106">
+                          <object class="GtkBox" id="sid122">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkFrame" id="sid107">
+                              <object class="GtkFrame" id="sid123">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid108">
+                                  <object class="GtkAlignment" id="sid124">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkGrid" id="sid109">
+                                      <object class="GtkGrid" id="sid125">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="column_spacing">5</property>
                                         <child>
                                           <object class="GtkLabel" id="settingZoomCtrlScrollSpeedLabel">
+                                            <property name="name">settingZoomCtrlScrollSpeedLabel</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">Speed for Ctrl + Scroll</property>
@@ -2206,9 +2567,9 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spZoomStepScroll">
+                                            <property name="name">spZoomStepScroll</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <property name="text" translatable="yes">2.0</property>
                                             <property name="adjustment">adjustmentZoomStepScroll</property>
                                             <property name="digits">1</property>
                                             <property name="numeric">True</property>
@@ -2221,6 +2582,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkLabel" id="settingZoomStepSpeedLabel">
+                                            <property name="name">settingZoomStepSpeedLabel</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">Speed for a Zoomstep</property>
@@ -2233,10 +2595,10 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spZoomStep">
+                                            <property name="name">spZoomStep</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="margin_top">5</property>
-                                            <property name="text" translatable="yes">10.0</property>
                                             <property name="adjustment">adjustmentZoomStep</property>
                                             <property name="digits">1</property>
                                             <property name="numeric">True</property>
@@ -2248,7 +2610,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLabel" id="sid110">
+                                          <object class="GtkLabel" id="sid126">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">%</property>
@@ -2259,7 +2621,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLabel" id="sid111">
+                                          <object class="GtkLabel" id="sid127">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">%</property>
@@ -2274,7 +2636,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel" id="sid112">
+                                  <object class="GtkLabel" id="sid128">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Zoom Speed</property>
@@ -2288,24 +2650,24 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame" id="sid113">
+                              <object class="GtkFrame" id="sid129">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid114">
+                                  <object class="GtkAlignment" id="sid130">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox" id="sid115">
+                                      <object class="GtkBox" id="sid131">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkLabel" id="sid116">
+                                          <object class="GtkLabel" id="sid132">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">&lt;i&gt;To make sure on 100% zoom the size of elements is natural. (requires restart)&lt;/i&gt;</property>
@@ -2344,6 +2706,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             </child>
                                             <child>
                                               <object class="GtkScale" id="zoomCallibSlider">
+                                                <property name="name">zoomCallibSlider</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="margin_top">10</property>
@@ -2360,6 +2723,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             </child>
                                             <child>
                                               <object class="GtkBox" id="zoomVBox">
+                                                <property name="name">zoomVBox</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="orientation">vertical</property>
@@ -2397,7 +2761,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel" id="sid117">
+                                  <object class="GtkLabel" id="sid133">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Display DPI Calibration</property>
@@ -2423,49 +2787,51 @@ This also enables touch drawing.&lt;/i&gt;</property>
                 </child>
               </object>
               <packing>
-                <property name="position">5</property>
+                <property name="position">6</property>
               </packing>
             </child>
             <child type="tab">
               <object class="GtkLabel" id="zoomTabLabel">
+                <property name="name">zoomTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Zoom</property>
               </object>
               <packing>
-                <property name="position">5</property>
+                <property name="position">6</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="drawingAreaTabBox">
+                <property name="name">drawingAreaTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkScrolledWindow" id="sid118">
+                  <object class="GtkScrolledWindow" id="sid134">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
                     <child>
-                      <object class="GtkViewport" id="sid119">
+                      <object class="GtkViewport" id="sid135">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="shadow_type">none</property>
                         <child>
-                          <object class="GtkBox" id="sid120">
+                          <object class="GtkBox" id="sid136">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkFrame" id="sid121">
+                              <object class="GtkFrame" id="sid137">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid122">
+                                  <object class="GtkAlignment" id="sid138">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
@@ -2494,13 +2860,14 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkGrid" id="sid123">
+                                          <object class="GtkGrid" id="sid139">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="row_spacing">5</property>
                                             <property name="column_spacing">5</property>
                                             <child>
                                               <object class="GtkCheckButton" id="cbAddVerticalSpace">
+                                                <property name="name">cbAddVerticalSpace</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
@@ -2522,6 +2889,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             </child>
                                             <child>
                                               <object class="GtkCheckButton" id="cbAddHorizontalSpace">
+                                                <property name="name">cbAddHorizontalSpace</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
@@ -2544,6 +2912,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             </child>
                                             <child>
                                               <object class="GtkSpinButton" id="spAddVerticalSpace">
+                                                <property name="name">spAddVerticalSpace</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="adjustment">adjustmentVerticalSpace</property>
@@ -2555,6 +2924,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             </child>
                                             <child>
                                               <object class="GtkSpinButton" id="spAddHorizontalSpace">
+                                                <property name="name">spAddHorizontalSpace</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="adjustment">adjustmentHorizontalSpace</property>
@@ -2565,7 +2935,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkLabel" id="sid124">
+                                              <object class="GtkLabel" id="sid140">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="label" translatable="yes">pixels</property>
@@ -2576,7 +2946,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkLabel" id="sid125">
+                                              <object class="GtkLabel" id="sid141">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="label" translatable="yes">pixels</property>
@@ -2598,7 +2968,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel" id="sid126">
+                                  <object class="GtkLabel" id="sid142">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Scrolling outside the page</property>
@@ -2612,18 +2982,12 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <placeholder/>
-                            </child>
-                            <child>
-                              <placeholder/>
-                            </child>
-                            <child>
-                              <object class="GtkFrame" id="sid127">
+                              <object class="GtkFrame" id="sid143">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid128">
+                                  <object class="GtkAlignment" id="sid144">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
@@ -2636,6 +3000,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <property name="column_spacing">5</property>
                                         <child>
                                           <object class="GtkLabel" id="label58a">
+                                            <property name="name">label58a</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="tooltip_markup" translatable="yes">Offset first page this many pages when &lt;b&gt;Pair Pages&lt;/b&gt; enabled</property>
@@ -2648,12 +3013,12 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spPairsOffset">
+                                            <property name="name">spPairsOffset</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="tooltip_text" translatable="yes">Usually 0 or 1</property>
                                             <property name="valign">start</property>
                                             <property name="max_width_chars">0</property>
-                                            <property name="text" translatable="yes">0</property>
                                             <property name="adjustment">adjustmentPairsOffset</property>
                                             <property name="numeric">True</property>
                                             <property name="update_policy">if-valid</property>
@@ -2668,7 +3033,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel" id="sid129">
+                                  <object class="GtkLabel" id="sid145">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Paired Pages</property>
@@ -2678,29 +3043,30 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">3</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame" id="sid130">
+                              <object class="GtkFrame" id="sid146">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid131">
+                                  <object class="GtkAlignment" id="sid147">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkGrid" id="sid132">
+                                      <object class="GtkGrid" id="sid148">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="row_spacing">5</property>
                                         <property name="column_spacing">5</property>
                                         <child>
                                           <object class="GtkLabel" id="lbSnapRotationTolerance">
+                                            <property name="name">lbSnapRotationTolerance</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">Rotation snapping tolerance</property>
@@ -2713,6 +3079,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkLabel" id="lbSnapGridTolerance">
+                                            <property name="name">lbSnapGridTolerance</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">Grid snapping tolerance</property>
@@ -2725,9 +3092,9 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spSnapRotationTolerance">
+                                            <property name="name">spSnapRotationTolerance</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <property name="text" translatable="yes">0,20</property>
                                             <property name="adjustment">adjustmentSnapRotationTolerance</property>
                                             <property name="climb_rate">0.050000000000000003</property>
                                             <property name="digits">2</property>
@@ -2740,9 +3107,9 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spSnapGridTolerance">
+                                            <property name="name">spSnapGridTolerance</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <property name="text" translatable="yes">0,25</property>
                                             <property name="adjustment">adjustmentSnapGridTolerance</property>
                                             <property name="climb_rate">0.050000000000000003</property>
                                             <property name="digits">2</property>
@@ -2758,7 +3125,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel" id="sid133">
+                                  <object class="GtkLabel" id="sid149">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Snapping</property>
@@ -2768,16 +3135,16 @@ This also enables touch drawing.&lt;/i&gt;</property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">4</property>
+                                <property name="position">3</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame" id="sid1">
+                              <object class="GtkFrame" id="sid150">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid2">
+                                  <object class="GtkAlignment" id="sid151">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
@@ -2791,6 +3158,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbDrawDirModsEnabled">
                                             <property name="label" translatable="yes">Enable  with determination radius of </property>
+                                            <property name="name">cbDrawDirModsEnabled</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -2810,11 +3178,11 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spDrawDirModsRadius">
+                                            <property name="name">spDrawDirModsRadius</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="valign">start</property>
                                             <property name="max_width_chars">0</property>
-                                            <property name="text" translatable="yes">0</property>
                                             <property name="adjustment">adjustmentDrawDirModRadius</property>
                                             <property name="numeric">True</property>
                                             <property name="update_policy">if-valid</property>
@@ -2826,7 +3194,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLabel" id="sid4">
+                                          <object class="GtkLabel" id="sid152">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">pixels</property>
@@ -2841,17 +3209,214 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel" id="sid3">
+                                  <object class="GtkLabel" id="sid153">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="label" translatable="yes">Drawing Tools - Set Modifiers by Draw Direction ( Experimental)</property>
+                                    <property name="label" translatable="yes">Drawing Tools - Set Modifiers by Draw Direction (Experimental)</property>
                                   </object>
                                 </child>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">5</property>
+                                <property name="position">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <object class="GtkFrame" id="sid154">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label_xalign">0.0099999997764825821</property>
+                                <child>
+                                  <object class="GtkAlignment" id="sid155">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="bottom_padding">8</property>
+                                    <property name="left_padding">12</property>
+                                    <property name="right_padding">12</property>
+                                    <child>
+                                      <object class="GtkGrid" id="grid1">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="column_spacing">5</property>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbStrokeFilterEnabled">
+                                            <property name="label" translatable="yes">Enable Tap action</property>
+                                            <property name="name">cbStrokeFilterEnabled</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_markup" translatable="yes">Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox.</property>
+                                            <property name="xalign">0</property>
+                                            <property name="draw_indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">0</property>
+                                            <property name="top_attach">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="sid156">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="label" translatable="yes">Ignore Time (ms)</property>
+                                            <property name="angle">0.029999999999999999</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">2</property>
+                                            <property name="top_attach">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSpinButton" id="spStrokeIgnoreTime">
+                                            <property name="name">spStrokeIgnoreTime</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="tooltip_markup" translatable="yes">How short (time)  AND...
+
+&lt;i&gt;Recommended: 150ms&lt;/i&gt;</property>
+                                            <property name="valign">start</property>
+                                            <property name="max_width_chars">0</property>
+                                            <property name="adjustment">adjustmentStrokeIgnoreTime</property>
+                                            <property name="numeric">True</property>
+                                            <property name="update_policy">if-valid</property>
+                                            <property name="value">150</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">2</property>
+                                            <property name="top_attach">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSpinButton" id="spStrokeIgnoreLength">
+                                            <property name="name">spStrokeIgnoreLength</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="tooltip_markup" translatable="yes">How short (screen mm)  of the stroke  AND...
+
+&lt;i&gt;Recommended: 1 mm&lt;/i&gt;</property>
+                                            <property name="valign">start</property>
+                                            <property name="max_width_chars">0</property>
+                                            <property name="adjustment">adjustmentStrokeIgnoreLength</property>
+                                            <property name="digits">2</property>
+                                            <property name="numeric">True</property>
+                                            <property name="update_policy">if-valid</property>
+                                            <property name="value">1</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">3</property>
+                                            <property name="top_attach">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="sid157">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="label" translatable="yes">Max Length (mm)</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">3</property>
+                                            <property name="top_attach">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="sid158">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="label" translatable="yes">Successive (ms)</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">4</property>
+                                            <property name="top_attach">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSpinButton" id="spStrokeSuccessiveTime">
+                                            <property name="name">spStrokeSuccessiveTime</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="tooltip_markup" translatable="yes">... AND How much time must have passed since last stroke.
+
+&lt;i&gt;Recommended: 500ms&lt;/i&gt;</property>
+                                            <property name="valign">start</property>
+                                            <property name="max_width_chars">0</property>
+                                            <property name="adjustment">adjustmentStrokeSuccessiveTime</property>
+                                            <property name="numeric">True</property>
+                                            <property name="update_policy">if-valid</property>
+                                            <property name="value">500</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">4</property>
+                                            <property name="top_attach">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbTrySelectOnStrokeFiltered">
+                                            <property name="label" translatable="yes">Try to select object first.</property>
+                                            <property name="name">cbTrySelectOnStrokeFiltered</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_markup" translatable="yes">Try to select object first; if nothing selected then show floating toolbox if enabled.</property>
+                                            <property name="xalign">0</property>
+                                            <property name="yalign">0.43999999761581421</property>
+                                            <property name="draw_indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">0</property>
+                                            <property name="top_attach">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="label1">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="tooltip_text" translatable="yes">All three conditions must be met before stroke is ignored.
+It must be short in time and length and we can't have ignored another stroke recently.</property>
+                                            <property name="label" translatable="yes">Settings:</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">1</property>
+                                            <property name="top_attach">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbDoActionOnStrokeFiltered">
+                                            <property name="label" translatable="yes">Show Floating Toolbox</property>
+                                            <property name="name">cbDoActionOnStrokeFiltered</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_markup" translatable="yes">Try to select object first; if nothing selected then show floating toolbox if enabled.</property>
+                                            <property name="xalign">0</property>
+                                            <property name="yalign">0.43000000715255737</property>
+                                            <property name="draw_indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">1</property>
+                                            <property name="top_attach">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel" id="sid159">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">Action on Tool Tap</property>
+                                    <property name="angle">0.040000000000000001</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">6</property>
                               </packing>
                             </child>
                           </object>
@@ -2867,56 +3432,58 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                 </child>
               </object>
               <packing>
-                <property name="position">6</property>
+                <property name="position">7</property>
               </packing>
             </child>
             <child type="tab">
               <object class="GtkLabel" id="drawingAreaTabLabel">
+                <property name="name">drawingAreaTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Drawing Area</property>
               </object>
               <packing>
-                <property name="position">6</property>
+                <property name="position">7</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="defaultTabBox">
+                <property name="name">defaultTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkScrolledWindow" id="sid134">
+                  <object class="GtkScrolledWindow" id="sid160">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
                     <child>
-                      <object class="GtkViewport" id="sid135">
+                      <object class="GtkViewport" id="sid161">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="shadow_type">none</property>
                         <child>
-                          <object class="GtkBox" id="sid136">
+                          <object class="GtkBox" id="sid162">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkFrame" id="sid137">
+                              <object class="GtkFrame" id="sid163">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid138">
+                                  <object class="GtkAlignment" id="sid164">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox" id="sid139">
+                                      <object class="GtkBox" id="sid165">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
@@ -2939,6 +3506,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         </child>
                                         <child>
                                           <object class="GtkBox" id="hboxDefaultTool">
+                                            <property name="name">hboxDefaultTool</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <child>
@@ -3010,56 +3578,58 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                 </child>
               </object>
               <packing>
-                <property name="position">7</property>
+                <property name="position">8</property>
               </packing>
             </child>
             <child type="tab">
               <object class="GtkLabel" id="defaultTabLabel">
+                <property name="name">defaultTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Defaults</property>
               </object>
               <packing>
-                <property name="position">7</property>
+                <property name="position">8</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="audioRecordingTabBox">
+                <property name="name">audioRecordingTabBox</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkScrolledWindow" id="sid140">
+                  <object class="GtkScrolledWindow" id="sid166">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="min_content_height">500</property>
                     <child>
-                      <object class="GtkViewport" id="sid141">
+                      <object class="GtkViewport" id="sid167">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="shadow_type">none</property>
                         <child>
-                          <object class="GtkBox" id="sid142">
+                          <object class="GtkBox" id="sid168">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkFrame" id="sid143">
+                              <object class="GtkFrame" id="sid169">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">5</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid144">
+                                  <object class="GtkAlignment" id="sid170">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox" id="sid145">
+                                      <object class="GtkBox" id="sid171">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
@@ -3080,7 +3650,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkGrid" id="grid1">
+                                          <object class="GtkGrid" id="grid5">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="row_spacing">10</property>
@@ -3099,6 +3669,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                             </child>
                                             <child>
                                               <object class="GtkFileChooserButton" id="fcAudioPath">
+                                                <property name="name">fcAudioPath</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="hexpand">True</property>
@@ -3122,7 +3693,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel" id="sid146">
+                                  <object class="GtkLabel" id="sid172">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Storage Folder</property>
@@ -3136,24 +3707,24 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame" id="sid147">
+                              <object class="GtkFrame" id="sid173">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid148">
+                                  <object class="GtkAlignment" id="sid174">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkBox" id="sid149">
+                                      <object class="GtkBox" id="sid175">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkLabel" id="sid150">
+                                          <object class="GtkLabel" id="sid176">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="label" translatable="yes">&lt;i&gt;Specify the audio devices used for recording and playback of audio attachments. 
@@ -3171,7 +3742,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkGrid" id="grid5">
+                                          <object class="GtkGrid" id="grid8">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="row_spacing">10</property>
@@ -3190,6 +3761,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                             </child>
                                             <child>
                                               <object class="GtkComboBoxText" id="cbAudioInputDevice">
+                                                <property name="name">cbAudioInputDevice</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                               </object>
@@ -3212,6 +3784,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                             </child>
                                             <child>
                                               <object class="GtkComboBoxText" id="cbAudioOutputDevice">
+                                                <property name="name">cbAudioOutputDevice</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                               </object>
@@ -3232,7 +3805,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel" id="sid151">
+                                  <object class="GtkLabel" id="sid177">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Audio Devices</property>
@@ -3246,19 +3819,19 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame" id="sid152">
+                              <object class="GtkFrame" id="sid178">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid153">
+                                  <object class="GtkAlignment" id="sid179">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="bottom_padding">8</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkGrid" id="sid154">
+                                      <object class="GtkGrid" id="sid180">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="row_spacing">10</property>
@@ -3289,6 +3862,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                         </child>
                                         <child>
                                           <object class="GtkComboBoxText" id="cbAudioSampleRate">
+                                            <property name="name">cbAudioSampleRate</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="active">0</property>
@@ -3305,6 +3879,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                         </child>
                                         <child>
                                           <object class="GtkSpinButton" id="spAudioGain">
+                                            <property name="name">spAudioGain</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="adjustment">adjustmentAudioGain</property>
@@ -3323,7 +3898,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel" id="sid155">
+                                  <object class="GtkLabel" id="sid181">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Recording Quality</property>
@@ -3337,7 +3912,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkLabel" id="sid156">
+                              <object class="GtkLabel" id="sid182">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">&lt;i&gt;Changes take only effect on new recordings and playbacks.&lt;/i&gt;</property>
@@ -3365,17 +3940,18 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                 </child>
               </object>
               <packing>
-                <property name="position">8</property>
+                <property name="position">9</property>
               </packing>
             </child>
             <child type="tab">
               <object class="GtkLabel" id="audioRecordingTabLabel">
+                <property name="name">audioRecordingTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Audio Recording</property>
               </object>
               <packing>
-                <property name="position">8</property>
+                <property name="position">9</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>

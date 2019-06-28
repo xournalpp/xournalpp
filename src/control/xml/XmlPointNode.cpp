@@ -47,9 +47,15 @@ void XmlPointNode::writeOut(OutputStream* out)
 		{
 			out->write(" ");
 		}
-		char* tmp = g_strdup_printf("%0.2lf %0.2lf", p->x, p->y);
+		char tmpX[G_ASCII_DTOSTR_BUF_SIZE];
+		g_ascii_dtostr( tmpX, G_ASCII_DTOSTR_BUF_SIZE, p->x);
+		char tmpY[G_ASCII_DTOSTR_BUF_SIZE];
+		g_ascii_dtostr( tmpY, G_ASCII_DTOSTR_BUF_SIZE, p->y);
+
+		char* tmp = g_strdup_printf("%s %s", tmpX, tmpY);
 		out->write(tmp);
 		g_free(tmp);
+		
 	}
 
 	out->write("</");

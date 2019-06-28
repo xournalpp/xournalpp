@@ -1,16 +1,18 @@
-#include "TouchHelper.h"
-#include "touchdisable/TouchDisableCustom.h"
-#include "touchdisable/TouchDisableX11.h"
+#include <gui/inputdevices/touchdisable/TouchDisableGdk.h>
+#include "HandRecognition.h"
+#include "gui/inputdevices/touchdisable/TouchDisableCustom.h"
+#include "gui/inputdevices/touchdisable/TouchDisableX11.h"
 
 #include "control/settings/Settings.h"
 
+#include "gtk/gtk.h"
+#include "InputContext.h"
 
-TouchHelper::TouchHelper(Settings* settings)
- : settings(settings)
+
+HandRecognition::HandRecognition(GtkWidget* widget, InputContext* inputContext, Settings* settings)
+ : widget(widget), inputContext(inputContext), settings(settings)
 {
-	XOJ_INIT_TYPE(TouchHelper);
-
-	reload();
+	XOJ_INIT_TYPE(HandRecognition);
 
 #ifdef X11_ENABLED
 	const char* sessionType = g_getenv("XDG_SESSION_TYPE");
@@ -19,11 +21,13 @@ TouchHelper::TouchHelper(Settings* settings)
 		x11Session = true;
 	}
 #endif
+
+	reload();
 }
 
-TouchHelper::~TouchHelper()
+HandRecognition::~HandRecognition()
 {
-	XOJ_CHECK_TYPE(TouchHelper);
+	XOJ_CHECK_TYPE(HandRecognition);
 
 	// Enable touchscreen on quit application
 	if (!touchState)
@@ -34,15 +38,15 @@ TouchHelper::~TouchHelper()
 	delete touchImpl;
 	touchImpl = NULL;
 
-	XOJ_RELEASE_TYPE(TouchHelper);
+	XOJ_RELEASE_TYPE(HandRecognition);
 }
 
 /**
  * Reload settings
  */
-void TouchHelper::reload()
+void HandRecognition::reload()
 {
-	XOJ_CHECK_TYPE(TouchHelper);
+	XOJ_CHECK_TYPE(HandRecognition);
 
 	SElement& touch = settings->getCustomElement("touch");
 
@@ -91,6 +95,7 @@ void TouchHelper::reload()
 	}
 	else // Auto detect
 	{
+		//touchImpl = new TouchDisableGdk(this->widget);
 #ifdef X11_ENABLED
 		if (x11Session)
 		{
@@ -110,15 +115,15 @@ void TouchHelper::reload()
  *
  * @return true to call again
  */
-bool TouchHelper::enableTimeout(TouchHelper* self)
+bool HandRecognition::enableTimeout(HandRecognition* self)
 {
-	XOJ_CHECK_TYPE_OBJ(self, TouchHelper);
+	XOJ_CHECK_TYPE_OBJ(self, HandRecognition);
 
 	gint64 now = g_get_monotonic_time() / 1000;
 	gint64 lastPenActionTime = now - self->lastPenAction;
-	if (lastPenActionTime < 100)
+	if (lastPenActionTime < 20)
 	{
-		// Pen action within the last 100ms, so simple restart timeout
+		// Pen action within the last 20ms, so simple restart timeout
 		return true;
 	}
 
@@ -143,9 +148,9 @@ bool TouchHelper::enableTimeout(TouchHelper* self)
 /**
  * There was a pen event, restart the timer
  */
-void TouchHelper::penEvent()
+void HandRecognition::penEvent()
 {
-	XOJ_CHECK_TYPE(TouchHelper);
+	XOJ_CHECK_TYPE(HandRecognition);
 	lastPenAction = g_get_monotonic_time() / 1000;
 
 	if (touchState)
@@ -159,8 +164,14 @@ void TouchHelper::penEvent()
 /**
  * Enable touchscreen
  */
-void TouchHelper::enableTouch()
+void HandRecognition::enableTouch()
 {
+	XOJ_CHECK_TYPE(HandRecognition);
+
+	if (inputContext)
+	{
+		inputContext->unblockDevice(InputContext::TOUCHSCREEN);
+	}
 	if (touchImpl)
 	{
 		touchImpl->enableTouch();
@@ -170,8 +181,14 @@ void TouchHelper::enableTouch()
 /**
  * Disable touchscreen
  */
-void TouchHelper::disableTouch()
+void HandRecognition::disableTouch()
 {
+	XOJ_CHECK_TYPE(HandRecognition);
+
+	if (inputContext)
+	{
+		inputContext->blockDevice(InputContext::TOUCHSCREEN);
+	}
 	if (touchImpl)
 	{
 		touchImpl->disableTouch();
@@ -181,9 +198,9 @@ void TouchHelper::disableTouch()
 /**
  * An event from a device occurred
  */
-void TouchHelper::event(GdkDevice* device)
+void HandRecognition::event(GdkDevice* device)
 {
-	XOJ_CHECK_TYPE(TouchHelper);
+	XOJ_CHECK_TYPE(HandRecognition);
 
 	if (!enabled)
 	{
@@ -196,6 +213,32 @@ void TouchHelper::event(GdkDevice* device)
 	{
 		penEvent();
 	}
+}
+
+/**
+ * An event from a device occurred
+ */
+void HandRecognition::event(InputDeviceClass device)
+{
+	XOJ_CHECK_TYPE(HandRecognition);
+
+	if (!enabled)
+	{
+		return;
+	}
+
+	if (device == INPUT_DEVICE_PEN || device == INPUT_DEVICE_ERASER)
+	{
+		penEvent();
+	}
+}
+
+void HandRecognition::unblock()
+{
+	XOJ_CHECK_TYPE(HandRecognition);
+
+	this->enableTouch();
+	this->touchState = true;
 }
 
 

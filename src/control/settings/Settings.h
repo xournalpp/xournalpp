@@ -153,8 +153,8 @@ private:
 
 public:
 	// Getter- / Setter
-	bool isPresureSensitivity();
-	void setPresureSensitivity(gboolean presureSensitivity);
+	bool isPressureSensitivity();
+	void setPressureSensitivity(gboolean presureSensitivity);
 
 	/**
 	 * Getter, enable/disable
@@ -204,6 +204,12 @@ public:
 	void setLastSavePath(Path p);
 	Path getLastSavePath();
 
+	/**
+	 * The last open path
+	 */
+	void setLastOpenPath(Path p);
+	Path getLastOpenPath();
+
 	void setLastImagePath(Path p);
 	Path getLastImagePath();
 
@@ -236,26 +242,26 @@ public:
 
 	void setPairsOffset(int numPairsOffset);
 	int getPairsOffset();
-	
+
 	void setViewColumns(int numColumns);
 	int getViewColumns();
 
 	void setViewRows(int numRows);
 	int getViewRows();
-	
+
 	void setViewFixedRows(bool viewFixedRows);
 	bool isViewFixedRows();
-	
+
 	void setViewLayoutVert(bool vert);
 	bool getViewLayoutVert();
-	
+
 	void setViewLayoutR2L(bool r2l);
 	bool getViewLayoutR2L();
 
 	void setViewLayoutB2T(bool b2t);
 	bool getViewLayoutB2T();
-	
-	
+
+
 	bool isAutloadPdfXoj();
 	void setAutoloadPdfXoj(bool load);
 
@@ -278,7 +284,7 @@ public:
 	void setDrawDirModsEnabled(bool enable);
 	int  getDrawDirModsRadius();
 	void setDrawDirModsRadius(int pixels);
-		
+
 	bool isTouchWorkaround();
 	void setTouchWorkaround(bool b);
 
@@ -356,6 +362,20 @@ public:
 	string getPluginDisabled();
 	void setPluginDisabled(string pluginEnabled);
 
+	bool getExperimentalInputSystemEnabled();
+	void setExperimentalInputSystemEnabled(bool systemEnabled);
+
+	bool getInputSystemTPCButtonEnabled();
+	void setInputSystemTPCButtonEnabled(bool tpcButtonEnabled);
+
+	bool getInputSystemDrawOutsideWindowEnabled();
+	void setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnabled);
+
+	void loadDeviceClasses();
+	void saveDeviceClasses();
+	void setDeviceClassForDevice(GdkDevice* device, int deviceClass);
+	int getDeviceClassForDevice(GdkDevice* device);
+
 	/**
 	 * Get name, e.g. "cm"
 	 */
@@ -376,6 +396,47 @@ public:
 	 */
 	void setSizeUnitIndex(int sizeUnitId);
 
+	/**
+	 * Set StrokeFilter enabled
+	 */
+	void setStrokeFilterEnabled(bool enabled);
+
+	/**
+	 * Get StrokeFilter enabled
+	 */
+	bool getStrokeFilterEnabled();
+
+
+	/**
+	 * get strokeFilter settings
+	 */
+	void getStrokeFilter( int* strokeFilterIgnoreTime, double* strokeFilterIgnoreLength, int* strokeFilterSuccessiveTime);
+
+	/**
+	 * configure stroke filter
+	 */
+	void setStrokeFilter( int strokeFilterIgnoreTime, double strokeFilterIgnoreLength, int strokeFilterSuccessiveTime);
+
+	/**
+	 * Set DoActionOnStrokeFilter enabled
+	 */
+	void setDoActionOnStrokeFiltered(bool enabled);
+
+	/**
+	 * Get DoActionOnStrokeFilter enabled
+	 */
+	bool getDoActionOnStrokeFiltered();
+
+		/**
+	 * Set TrySelectOnStrokeFilter enabled
+	 */
+	void setTrySelectOnStrokeFiltered(bool enabled);
+
+	/**
+	 * Get TrySelectOnStrokeFilter enabled
+	 */
+	bool getTrySelectOnStrokeFiltered();
+	
 public:
 	// Custom settings
 	SElement& getCustomElement(string name);
@@ -426,7 +487,7 @@ private:
 	/**
 	 *  Use pen pressure to control stroke width?
 	 */
-	bool presureSensitivity;
+	bool pressureSensitivity;
 
 	/**
 	 * If the touch zoom gestures are enabled
@@ -459,7 +520,7 @@ private:
 	bool highlightPosition;
 
 	/**
-	 * If the user uses a dark-themed DE, he should enable this 
+	 * If the user uses a dark-themed DE, he should enable this
 	 * (white icons)
 	 */
 	bool darkTheme;
@@ -483,6 +544,11 @@ private:
 	 *  The last saved folder
 	 */
 	Path lastSavePath;
+
+	/**
+	 *  The last opened folder
+	 */
+	Path lastOpenPath;
 
 	/**
 	 *  The last "insert image" folder
@@ -542,41 +608,41 @@ private:
 	/**
 	 *  Offsets first page ( to align pairing )
 	 */
-	int numPairsOffset;	
-	
+	int numPairsOffset;
+
 	/**
 	 *  Use when fixed number of columns
 	 */
-	int numColumns;	
+	int numColumns;
 
 	/**
 	 *  Use when fixed number of rows
 	 */
-	int numRows;	
+	int numRows;
 
 	/**
 	 *  USE  fixed rows, otherwise fixed columns
 	 */
-	bool viewFixedRows;	
-	
+	bool viewFixedRows;
+
 	/**
-	 *  Layout Vertical then Horizontal 
+	 *  Layout Vertical then Horizontal
 	 */
-	bool layoutVertical;	
-	
+	bool layoutVertical;
+
 	/**
 	 *  Layout pages right to left
 	 */
-	bool layoutRightToLeft;	
-	
+	bool layoutRightToLeft;
+
 	/**
 	 *  Layout Bottom to Top
 	 */
-	bool layoutBottomToTop;	
-	
-	
-	
-	
+	bool layoutBottomToTop;
+
+
+
+
 	/**
 	 * Automatically load filename.pdf.xoj / .pdf.xopp instead of filename.pdf (true/false)
 	 */
@@ -618,9 +684,9 @@ private:
 
 	/**
 	 * Radius at which emulated modifiers are locked on for the rest of drawing operation
-	 */	
+	 */
 	int drawDirModsRadius;
-	
+
 	/**
 	 * Rotation snapping enabled by default
 	 */
@@ -737,8 +803,38 @@ private:
 	 */
 	string pluginDisabled;
 
+
+	/**
+	 * Used to filter strokes of short time and length unless successive in order to do something else ( i.e. select object, float Toolbox menu ).
+	 * strokeFilterIgnoreLength			this many mm ( double )
+	 * strokeFilterIgnoreTime 			within this time (ms)  will be ignored..
+	 * strokeFilterSuccessiveTime		...unless successive within this time.
+	 */
+	int strokeFilterIgnoreTime;
+	double strokeFilterIgnoreLength;
+	int strokeFilterSuccessiveTime;
+	bool strokeFilterEnabled;
+	bool doActionOnStrokeFiltered;
+	bool trySelectOnStrokeFiltered;
+
+	/**
+	 * Whether the new experimental input system is activated
+	 */
+	bool experimentalInputSystemEnabled;
+
+	/**
+	 * Whether Wacom parameter TabletPCButton is enabled
+	 */
+	bool inputSystemTPCButton;
+
+	bool inputSystemDrawOutsideWindow;
+
+	std::map<string, int> inputDeviceClasses = {};
+
 	/**
 	 * "Transaction" running, do not save until the end is reached
 	 */
 	bool inTransaction;
+
+
 };

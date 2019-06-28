@@ -14,13 +14,14 @@
 #include "xojfile/LoadHandler.h"
 
 
-#include <config.h>
-#include <config-dev.h>
-#include <config-paths.h>
-#include <i18n.h>
-#include <Stacktrace.h>
-#include <StringUtils.h>
-#include <XojMsgBox.h>
+#include "config.h"
+#include "config-dev.h"
+#include "config-paths.h"
+#include "i18n.h"
+#include "Stacktrace.h"
+#include "StringUtils.h"
+#include "XojMsgBox.h"
+#include "util/cpp14memory.h"
 
 #include <libintl.h>
 #include <gtk/gtk.h>
@@ -30,7 +31,7 @@
 #include <libgen.h>
 #endif
 
-#include <algorithm> // std::sort
+#include <algorithm>  // std::sort
 
 
 XournalMain::XournalMain()
@@ -179,7 +180,7 @@ void XournalMain::checkForEmergencySave(Control* control) {
 		return;
 	}
 
-	string msg = _("Xournal++ crashed last time. Would you restore it?");
+	string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
 
 	GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
 		GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
@@ -200,7 +201,7 @@ void XournalMain::checkForEmergencySave(Control* control) {
 			control->getDocument()->setFilename("");
 
 			// Make sure the document is changed, there is a question to ask for save
-			control->getUndoRedoHandler()->addUndoAction(new EmergencySaveRestore());
+			control->getUndoRedoHandler()->addUndoAction(mem::make_unique<EmergencySaveRestore>());
 			control->updateWindowTitle();
 			g_unlink(filename.c_str());
 		}
@@ -358,7 +359,8 @@ int XournalMain::run(int argc, char* argv[])
 	gtk_init(&argc, &argv);
 
 	GladeSearchpath* gladePath = new GladeSearchpath();
-	initResourcePath(gladePath);
+	initResourcePath(gladePath, "ui/about.glade");
+	initResourcePath(gladePath, "ui/xournalpp.css",  false); 	//will notify user if file not present. Path ui/ already added above.
 
 	// init singleton
 	string colorNameFile = Util::getConfigFile("colornames.ini").str();
@@ -509,15 +511,28 @@ string XournalMain::findResourcePath(string searchFile)
 		return relative5.getParentPath().str();
 	}
 
+	// -----------------------------------------------------------------------
+
+	// Check for .../share resources directory relative to binary to support
+	// relocatable installations (such as e.g., AppImages)
+	Path relative6 = executableDir;
+	relative6 /= "../share/xournalpp/";
+	relative6 /= searchFile;
+
+	if (relative6.exists())
+	{
+		return relative6.getParentPath().str();
+	}
+
 	// Not found
 	return "";
 }
 
-void XournalMain::initResourcePath(GladeSearchpath* gladePath)
+void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound)
 {
 	XOJ_CHECK_TYPE(XournalMain);
 
-	string uiPath = findResourcePath("ui/about.glade");
+	string uiPath = findResourcePath(relativePathAndFile);	//i.e.  relativePathAndFile = "ui/about.glade"
 
 	if (uiPath != "")
 	{
@@ -529,7 +544,8 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath)
 
 #ifdef __APPLE__
 	Path p = Stacktrace::getExePath();
-	p /= "../Resources/ui/about.glade";
+	p /= "../Resources";
+	p /= relativePathAndFile;
 
 	if (p.exists())
 	{
@@ -537,13 +553,18 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath)
 		return;
 	}
 
-	string msg = FS(_F("Missing the needed UI file! .app corrupted?\nPath: {1}") % p.str());
+	string msg = FS(_F("Missing the needed UI file:\n{1}\n .app corrupted?\nPath: {2}") % relativePathAndFile % p.str());
+	
+	if (!failIfNotFound)
+	{
+		msg += _("\nWill now attempt to run without this file.");
+	}
 	XojMsgBox::showErrorToUser(NULL, msg);
 #else
 	// Check at the target installation directory
 	Path absolute = PACKAGE_DATA_DIR;
 	absolute /= PROJECT_PACKAGE;
-	absolute /= "ui/about.glade";
+	absolute /= relativePathAndFile;
 
 	if (absolute.exists())
 	{
@@ -551,9 +572,18 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath)
 		return;
 	}
 
-	string msg = FS(_F("Missing the needed UI file, could not find them at any location.\nNot relative\nNot in the Working Path\nNot in {1}") % PACKAGE_DATA_DIR);
+	
+	string msg = FS(_F("<span foreground='red' size='x-large'>Missing the needed UI file:\n<b>{1}</b></span>\nCould not find them at any location.\n  Not relative\n  Not in the Working Path\n  Not in {2}") % relativePathAndFile % PACKAGE_DATA_DIR);
+	
+	if (!failIfNotFound)
+	{
+		msg += _("\n\nWill now attempt to run without this file.");
+	}
 	XojMsgBox::showErrorToUser(NULL, msg);
 #endif
 
-	exit(12);
+	if (failIfNotFound)
+	{
+		exit(12);
+	}
 }

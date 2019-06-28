@@ -1,0 +1,53 @@
+trigger:
+  branches:
+    include:
+    - master
+pr: none
+  
+stages:
+- stage: 'translations'
+  jobs:
+  - job: 'Linux'
+    pool:
+      vmImage: 'ubuntu-16.04'
+    displayName: 'Update translation template'
+    steps:
+    - bash: |
+        git config --local user.name "Azure Pipelines"
+        git config --local user.email "azuredevops@microsoft.com"
+      displayName: 'Setup git'
+    - bash: |
+        sudo apt-get update
+        sudo apt-get install -y cmake libcppunit-dev libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev
+      displayName: 'Install dependencies'
+    - bash: |
+        git checkout master
+        mkdir build
+      displayName: 'Create build directory'
+    - bash: |
+        cmake ..
+        make pot
+      workingDirectory: ./build
+      displayName: 'Build Xournal++ translation template'
+    - task: DownloadSecureFile@1
+      inputs:
+        secureFile: deploy_key
+      displayName: 'Get the deploy key'
+    - bash: |
+        if [[ $(git diff --word-diff=porcelain --no-color -U0 | wc -l) -gt 9 ]]; then
+          git commit -am "Update translation template [skip ci]"
+
+          mkdir ~/.ssh && mv $DOWNLOADSECUREFILE_SECUREFILEPATH ~/.ssh/id_rsa
+          chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+        
+          git remote set-url --push origin git@github.com:xournalpp/xournalpp.git
+          git push origin HEAD:master
+          echo "Translation template  successfully updated."
+        else
+          echo "Translation template is already up to date."
+        fi
+      workingDirectory: ./build
+      displayName: 'Push new translation template'
+      condition: |
+        and(not(eq(variables['Build.Reason'], 'PullRequest')), eq(variables['Build.SourceBranch'], 'refs/heads/master'))

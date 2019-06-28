@@ -41,7 +41,7 @@ class XojPageView;
 class SaveHandler;
 class GladeSearchpath;
 class MetadataManager;
-class Cursor;
+class XournalppCursor;
 class ToolbarDragDropHandler;
 class MetadataEntry;
 class MetadataCallbackData;
@@ -75,10 +75,35 @@ public:
 	void exportAsPdf();
 	void exportAs();
 	void exportBase(BaseExportJob* job);
+	void quit(bool allowCancel = true);
+
+	/**
+	 * Save the current document.
+	 *
+	 * @param synchron Whether the save should be run synchronously or asynchronously.
+	 */
 	bool save(bool synchron = false);
 	bool saveAs();
-	void quit(bool allowCancel = true);
-	bool close(bool destroy = false, bool allowCancel = true);
+
+	/**
+	 * Marks the current document as saved if it is currently marked as unsaved.
+	 */
+	void resetSavedStatus();
+
+	/**
+	 * Close the current document, prompting to save unsaved changes.
+	 *
+	 * @param allowDestroy Whether clicking "Discard" should destroy the current document.
+	 * @param allowCancel Whether the user should be able to cancel closing the document.
+	 * @return true if the user closed the document, otherwise false.
+	 */
+	bool close(bool allowDestroy = false, bool allowCancel = true);
+
+	/**
+	 * Calls close, always forcing the document to be destroyed.
+	 * @return The value returned by close
+	 */
+	bool closeAndDestroy(bool allowCancel = false);
 
 	// Asks user to replace an existing file when saving / exporting, since we add the extension
 	// after the OK, we need to check manually
@@ -166,7 +191,7 @@ public:
 
 	void addDefaultPage(string pageTemplate);
 	void insertNewPage(size_t position);
-	void insertPage(PageRef page, size_t position);
+	void insertPage(const PageRef& page, size_t position);
 	void deletePage();
 
 	/**
@@ -185,7 +210,7 @@ public:
 
 	void setToolSize(ToolSize size);
 
-	void setLineStyle(string style);
+	void setLineStyle(const string& style);
 
 	void setFill(bool fill);
 
@@ -217,7 +242,7 @@ public:
 	ScrollHandler* getScrollHandler();
 	PageRef getCurrentPage();
 	size_t getCurrentPageNo();
-	Cursor* getCursor();
+	XournalppCursor* getCursor();
 	Sidebar* getSidebar();
 	SearchBar* getSearchBar();
 	AudioController* getAudioController();
@@ -292,10 +317,15 @@ protected:
 	bool shouldFileOpen(string filename);
 
 	bool loadXoptTemplate(Path filename);
-	bool loadPdf(Path filename, int scrollToPage);
+	bool loadPdf(const Path& filename, int scrollToPage);
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	/**
+	 * "Closes" the document, preparing the editor for a new document.
+	 */
+	void closeDocument();
 
 	RecentManager* recent;
 	UndoRedoHandler* undoRedo;
@@ -324,7 +354,7 @@ private:
 	/**
 	 * The cursor handler
 	 */
-	Cursor* cursor;
+	XournalppCursor* cursor;
 
 	/**
 	 * Timeout id: the timeout watches the changes and actualizes the previews from time to time

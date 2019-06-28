@@ -95,7 +95,7 @@ public:
 	/**
 	 * @brief Private storage for pressure.
 	 */
-	double z = NO_PRESURE;
+	double z = NO_PRESSURE;
 
-	static constexpr double NO_PRESURE = -1;
+	static constexpr double NO_PRESSURE = -1;
 };

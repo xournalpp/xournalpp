@@ -1,0 +1,96 @@
+trigger:
+  branches:
+    include:
+    - '*'
+    exclude:
+    - stable
+    - l10n_master
+  paths:
+    exclude:
+    - po/xournalpp.pot
+    - po/*.po
+  
+
+stages:
+- stage: 'Build_Test_Stage'
+  jobs:
+  - job: 'Linux'
+    pool:
+      vmImage: 'ubuntu-16.04'
+    displayName: 'Test Xournal++ on Linux'
+    steps:
+    - bash: |
+        sudo apt-get update
+        sudo apt-get install -y cmake libcppunit-dev libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev
+      displayName: 'Install dependencies'
+    - bash: |
+        mkdir build
+      displayName: 'Create build directory'
+    - bash: |
+        cmake .. -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON
+        make -j `grep processor /proc/cpuinfo | tail -c 2`
+      workingDirectory: ./build
+      displayName: 'Build Xournal++'
+    - bash: |
+        ctest
+      workingDirectory: ./build
+      displayName: 'Run tests'
+
+  - job: Windows
+    pool:
+      vmImage: 'vs2017-win2016'
+    displayName: 'Build for Windows'
+    steps:
+    - script: |
+        git clone https://github.com/msys2/msys2-ci-base.git %CD:~0,2%\msys64
+        %CD:~0,2%\msys64\usr\bin\rm -rf %CD:~0,2%\msys64\.git
+      displayName: 'Install MSYS2'
+    - script: |
+        set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syuu
+        %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syuu
+        %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -S mingw-w64-x86_64-cmake make mingw-w64-x86_64-toolchain
+        %CD:~0,2%\msys64\usr\bin\pacman --noconfirm --needed -S base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
+        %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -S mingw-w64-x86_64-poppler mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip
+        %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Scc
+      env:
+        MSYS2_ARCH: x86_64
+        MSYSTEM: MINGW64
+        CHERE_INVOKING: yes
+      displayName: 'Install dependencies on Windows'
+    - script: |
+        set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "./build-portaudio.sh"
+      workingDirectory: ./windows-setup
+      env:
+        MSYS2_ARCH: x86_64
+        MSYSTEM: MINGW64
+        CHERE_INVOKING: yes
+      displayName: 'Build Portaudio'
+    - script: |
+        set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "./build-lua.sh"
+      workingDirectory: ./windows-setup
+      env:
+        MSYS2_ARCH: x86_64
+        MSYSTEM: MINGW64
+        CHERE_INVOKING: yes
+      displayName: 'Build Lua'
+    - script: |
+        set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "mkdir build"
+      env:
+        MSYS2_ARCH: x86_64
+        MSYSTEM: MINGW64
+        CHERE_INVOKING: yes
+      displayName: 'Create build directory'
+    - script: |
+        set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
+        %CD:~0,2%\msys64\usr\bin\bash -lc "cmake .."
+        %CD:~0,2%\msys64\usr\bin\bash -lc "make"
+      workingDirectory: ./build
+      env:
+        MSYS2_ARCH: x86_64
+        MSYSTEM: MINGW64
+        CHERE_INVOKING: yes
+      displayName: 'Build Xournal++'

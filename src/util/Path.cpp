@@ -137,12 +137,9 @@ bool Path::hasExtension(string ext)
 void Path::clearExtensions()
 {
 	string plower = StringUtils::toLowerCase(path);
-
-	REMOVE_EXTENSION(".pdf.xoj");
-	REMOVE_EXTENSION(".pdf.xopp");
+	
 	REMOVE_EXTENSION(".xoj");
 	REMOVE_EXTENSION(".xopp");
-	REMOVE_EXTENSION(".pdf");
 }
 
 /**
@@ -196,6 +193,23 @@ void Path::operator /=(string p)
 void Path::operator /=(const char* p)
 {
 	*this /= string(p);
+}
+
+Path Path::operator /(Path p)
+{
+	return *this / p.c_str();
+}
+
+Path Path::operator /(string p)
+{
+	return *this / p.c_str();
+}
+
+Path Path::operator /(const char* p)
+{
+	Path ret(*this);
+	ret /= p;
+	return ret;
 }
 
 void Path::operator +=(Path p)

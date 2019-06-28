@@ -3,12 +3,14 @@
 #include "control/Control.h"
 #include "control/stockdlg/ImageOpenDlg.h"
 #include "gui/PageView.h"
+#include "gui/XournalView.h"
 #include "model/Image.h"
 #include "model/Layer.h"
 #include "undo/InsertUndoAction.h"
 
-#include <i18n.h>
-#include <XojMsgBox.h>
+#include "XojMsgBox.h"
+#include "i18n.h"
+#include "util/cpp14memory.h"
 
 ImageHandler::ImageHandler(Control* control, XojPageView* view)
 {
@@ -28,7 +30,7 @@ bool ImageHandler::insertImage(double x, double y)
 	XOJ_CHECK_TYPE(ImageHandler);
 
 	GFile* file = ImageOpenDlg::show(control->getGtkWindow(), control->getSettings());
-	if (file == NULL)
+	if (file == nullptr)
 	{
 		return false;
 	}
@@ -39,21 +41,22 @@ bool ImageHandler::insertImage(GFile* file, double x, double y)
 {
 	XOJ_CHECK_TYPE(ImageHandler);
 
-	GError* err = NULL;
-	GFileInputStream* in = g_file_read(file, NULL, &err);
+	GError* err = nullptr;
+	GFileInputStream* in = g_file_read(file, nullptr, &err);
 
 	g_object_unref(file);
 
-	GdkPixbuf* pixbuf = NULL;
+	GdkPixbuf* pixbuf = nullptr;
 
 	if (!err)
 	{
-		pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), NULL, &err);
-		g_input_stream_close(G_INPUT_STREAM(in), NULL, NULL);
+		pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), nullptr, &err);
+		g_input_stream_close(G_INPUT_STREAM(in), nullptr, nullptr);
 	}
 	else
 	{
-		XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("This image could not be loaded. Error message: {1}") % err->message));
+		XojMsgBox::showErrorToUser(control->getGtkWindow(),
+		                           FS(_F("This image could not be loaded. Error message: {1}") % err->message));
 		g_error_free(err);
 		return false;
 	}
@@ -91,10 +94,12 @@ bool ImageHandler::insertImage(GFile* file, double x, double y)
 
 	page->getSelectedLayer()->addElement(img);
 
-	InsertUndoAction* insertUndo = new InsertUndoAction(page, page->getSelectedLayer(), img);
-	control->getUndoRedoHandler()->addUndoAction(insertUndo);
+	control->getUndoRedoHandler()->addUndoAction(
+	        mem::make_unique<InsertUndoAction>(page, page->getSelectedLayer(), img));
 
 	view->rerenderElement(img);
+	EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
+	control->getWindow()->getXournal()->setSelection(selection);
 
 	return true;
 }

@@ -8,23 +8,21 @@ Rectangle::Rectangle()
 }
 
 Rectangle::Rectangle(double x, double y, double width, double height)
+ : x(x)
+ , y(y)
+ , width(width)
+ , height(height)
 {
 	XOJ_INIT_TYPE(Rectangle);
-
-	this->x = x;
-	this->y = y;
-	this->width = width;
-	this->height = height;
 }
 
-Rectangle::Rectangle(Range& rect)
+Rectangle::Rectangle(const Range& rect)
+ : x(rect.getX())
+ , y(rect.getY())
+ , width(rect.getWidth())
+ , height(rect.getHeight())
 {
 	XOJ_INIT_TYPE(Rectangle);
-
-	this->x = rect.getX();
-	this->y = rect.getY();
-	this->width = rect.getWidth();
-	this->height = rect.getHeight();
 }
 
 Rectangle::~Rectangle()

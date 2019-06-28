@@ -24,15 +24,16 @@ void DoubleArrayAttribute::writeOut(OutputStream* out)
 
 	if (this->count > 0)
 	{
-		char* str = g_strdup_printf("%0.2lf", this->values[0]);
+		char str[G_ASCII_DTOSTR_BUF_SIZE];
+		g_ascii_dtostr( str, G_ASCII_DTOSTR_BUF_SIZE, this->values[0]);	//  g_ascii_ version uses C locale always.
 		out->write(str);
-		g_free(str);
 	}
 
 	for (int i = 1; i < this->count; i++)
 	{
-		char* str = g_strdup_printf(" %0.2lf", this->values[i]);
+		char str[G_ASCII_DTOSTR_BUF_SIZE];
+		g_ascii_dtostr( str, G_ASCII_DTOSTR_BUF_SIZE, this->values[i]);
+		out->write(" ");
 		out->write(str);
-		g_free(str);
 	}
 }

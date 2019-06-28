@@ -11,44 +11,47 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include "XournalType.h"
 
 #include <gtk/gtk.h>
 
-class BackgroundImageContents;
+#include <memory>
 
-class BackgroundImage
+struct BackgroundImage
 {
-public:
 	BackgroundImage();
 	BackgroundImage(const BackgroundImage& img);
-	virtual ~BackgroundImage();
+	BackgroundImage(BackgroundImage&& img) noexcept;
+	~BackgroundImage();
 
-public:
-	string getFilename();
-	void loadFile(string filename, GError** error);
-	void loadFile(GInputStream* stream, string filename, GError** error);
+	BackgroundImage& operator=(const BackgroundImage& img) = default;
+	BackgroundImage& operator=(BackgroundImage&& img) = default;
 
-	void setAttach(bool attach);
 
-	void operator=(BackgroundImage& img);
 	bool operator==(const BackgroundImage& img);
 
 	void free();
 
-	void clearSaveState();
+	void loadFile(string filename, GError** error);
+	void loadFile(GInputStream* stream, string filename, GError** error);
+
 	int getCloneId();
 	void setCloneId(int id);
+	void clearSaveState();
 
+	string getFilename();
 	void setFilename(string filename);
 
 	bool isAttached();
-	bool isEmpty();
+	void setAttach(bool attach);
 
 	GdkPixbuf* getPixbuf();
 
-private:
-	XOJ_TYPE_ATTRIB;
+	bool isEmpty();
 
-	BackgroundImageContents* img = NULL;
+private:
+	struct Content;
+
+	XOJ_TYPE_ATTRIB;
+	std::shared_ptr<Content> img;
 };

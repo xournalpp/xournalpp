@@ -6,7 +6,7 @@
 #include "control/settings/Settings.h"
 #include "control/tools/EditSelection.h"
 #include "control/ToolHandler.h"
-#include "gui/Cursor.h"
+#include "gui/XournalppCursor.h"
 #include "gui/PageView.h"
 #include "gui/Layout.h"
 #include "gui/XournalView.h"
@@ -21,7 +21,7 @@ InputSequence::InputSequence(NewGtkInputDevice* inputHandler)
 {
 	XOJ_INIT_TYPE(InputSequence);
 
-	this->presureSensitivity = inputHandler->getSettings()->isPresureSensitivity();
+	this->presureSensitivity = inputHandler->getSettings()->isPressureSensitivity();
 }
 
 InputSequence::~InputSequence()
@@ -30,7 +30,7 @@ InputSequence::~InputSequence()
 
 	if (inputRunning)
 	{
-		actionEnd();
+		actionEnd(__UINT32_MAX__);
 	}
 	clearAxes();
 
@@ -109,11 +109,12 @@ void InputSequence::setCurrentRootPosition(double x, double y)
 /**
  * Set (mouse)button
  */
-void InputSequence::setButton(guint button)
+void InputSequence::setButton(guint button, guint time)
 {
 	XOJ_CHECK_TYPE(InputSequence);
 
 	this->button = button;
+	this->eventTime = time;
 }
 
 /**
@@ -167,7 +168,7 @@ void InputSequence::handleScrollEvent()
 		scrollOffsetY = lastMousePositionY - rootY;
 
 		Util::execInUiThread([=]() {
-			inputHandler->getXournal()->layout->scrollRelativ(scrollOffsetX, scrollOffsetY);
+			inputHandler->getXournal()->layout->scrollRelative(scrollOffsetX, scrollOffsetY);
 
 			// Scrolling done, so reset our counters
 			scrollOffsetX = 0;
@@ -182,19 +183,16 @@ void InputSequence::handleScrollEvent()
 /**
  * Mouse / Pen / Touch move
  */
-bool InputSequence::actionMoved()
+bool InputSequence::actionMoved(guint32 time)
 {
 	XOJ_CHECK_TYPE(InputSequence);
 
 	GtkXournal* xournal = inputHandler->getXournal();
 	ToolHandler* h = inputHandler->getToolHandler();
 
-	changeTool();
+	this->eventTime = time;
 
-	if (penDevice)
-	{
-		inputHandler->getView()->penActionDetected();
-	}
+	changeTool();
 
 	if (xournal->view->getControl()->getWindow()->isGestureActive())
 	{
@@ -258,9 +256,11 @@ bool InputSequence::actionMoved()
 /**
  * Mouse / Pen down / touch start
  */
-bool InputSequence::actionStart()
+bool InputSequence::actionStart(guint32 time)
 {
 	XOJ_CHECK_TYPE(InputSequence);
+
+	this->eventTime = time;
 
 	inputHandler->focusWidget();
 
@@ -292,7 +292,7 @@ bool InputSequence::actionStart()
 	ToolHandler* h = inputHandler->getToolHandler();
 	if (h->getToolType() == TOOL_HAND)
 	{
-		Cursor* cursor = xournal->view->getCursor();
+		XournalppCursor* cursor = xournal->view->getCursor();
 		cursor->setMouseDown(true);
 		inScrolling = true;
 		// set reference
@@ -379,7 +379,7 @@ bool InputSequence::checkStillRunning()
 
 	// Button is not down, stop input now!
 	// So the new input can start
-	actionEnd();
+	actionEnd(__UINT32_MAX__);
 
 	return true;
 }
@@ -387,7 +387,7 @@ bool InputSequence::checkStillRunning()
 /**
  * Mouse / Pen up / touch end
  */
-void InputSequence::actionEnd()
+void InputSequence::actionEnd(guint32 time)
 {
 	XOJ_CHECK_TYPE(InputSequence);
 
@@ -396,13 +396,15 @@ void InputSequence::actionEnd()
 		return;
 	}
 
+	this->eventTime = time;
+
 	// Mouse button not pressed anymore
 	this->button = 0;
 
 	current_view = NULL;
 
 	GtkXournal* xournal = inputHandler->getXournal();
-	Cursor* cursor = xournal->view->getCursor();
+	XournalppCursor* cursor = xournal->view->getCursor();
 	ToolHandler* h = inputHandler->getToolHandler();
 
 	if (xournal->view->getControl()->getWindow()->isGestureActive())
@@ -454,7 +456,8 @@ PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* 
 	PositionInputData pos;
 	pos.x = x - page->getX() - xournal->x;
 	pos.y = y - page->getY() - xournal->y;
-	pos.pressure = Point::NO_PRESURE;
+	pos.pressure = Point::NO_PRESSURE;
+	pos.timestamp = this->eventTime;
 
 	if (presureSensitivity)
 	{

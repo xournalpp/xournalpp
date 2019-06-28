@@ -114,6 +114,12 @@ public:
 
 	const double* getToolThickness(ToolType type);
 
+	/**
+	 * Returns whether the current tool will create an element that may only reside on a single page even when the pointer moves to another
+	 * @return
+	 */
+	bool isSinglePageTool();
+
 protected:
 	void initTools();
 

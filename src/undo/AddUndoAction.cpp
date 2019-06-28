@@ -9,7 +9,7 @@
 
 #include <i18n.h>
 
-AddUndoAction::AddUndoAction(PageRef page, bool eraser)
+AddUndoAction::AddUndoAction(const PageRef& page, bool eraser)
  : UndoAction("AddUndoAction")
 {
 	XOJ_INIT_TYPE(AddUndoAction);
@@ -22,9 +22,9 @@ AddUndoAction::~AddUndoAction()
 {
 	XOJ_CHECK_TYPE(AddUndoAction);
 
-	for (GList* l = this->elements; l != NULL; l = l->next)
+	for (GList* l = this->elements; l != nullptr; l = l->next)
 	{
-		PageLayerPosEntry<Element>* e = (PageLayerPosEntry<Element>*) l->data;
+		auto e = (PageLayerPosEntry<Element>*) l->data;
 		if (!undone)
 		{
 			//The element will be deleted when the layer is removed.
@@ -46,11 +46,11 @@ void AddUndoAction::addElement(Layer* layer, Element* e, int pos)
 										  (GCompareFunc) PageLayerPosEntry<Element>::cmp);
 }
 
-bool AddUndoAction::redo(Control* control)
+bool AddUndoAction::redo(Control*)
 {
 	XOJ_CHECK_TYPE(AddUndoAction);
 
-	if (this->elements == NULL)
+	if (this->elements == nullptr)
 	{
 		g_warning("Could not undo AddUndoAction, there is nothing to undo");
 
@@ -58,9 +58,9 @@ bool AddUndoAction::redo(Control* control)
 		return false;
 	}
 
-	for (GList* l = this->elements; l != NULL; l = l->next)
+	for (GList* l = this->elements; l != nullptr; l = l->next)
 	{
-		PageLayerPosEntry<Element>* e = (PageLayerPosEntry<Element>*) l->data;
+		auto e = (PageLayerPosEntry<Element>*) l->data;
 		e->layer->insertElement(e->element, e->pos);
 		this->page->fireElementChanged(e->element);
 	}
@@ -69,11 +69,11 @@ bool AddUndoAction::redo(Control* control)
 	return true;
 }
 
-bool AddUndoAction::undo(Control* control)
+bool AddUndoAction::undo(Control*)
 {
 	XOJ_CHECK_TYPE(AddUndoAction);
 
-	if (this->elements == NULL)
+	if (this->elements == nullptr)
 	{
 		g_warning("Could not redo AddUndoAction, there is nothing to redo");
 
@@ -81,9 +81,9 @@ bool AddUndoAction::undo(Control* control)
 		return false;
 	}
 
-	for (GList* l = this->elements; l != NULL; l = l->next)
+	for (GList* l = this->elements; l != nullptr; l = l->next)
 	{
-		PageLayerPosEntry<Element>* e = (PageLayerPosEntry<Element>*) l->data;
+		auto e = (PageLayerPosEntry<Element>*) l->data;
 		e->layer->removeElement(e->element, false);
 		this->page->fireElementChanged(e->element);
 	}
@@ -107,35 +107,36 @@ string AddUndoAction::getText()
 	{
 		text = _("Paste");
 
-		if (this->elements != NULL)
+		if (this->elements != nullptr)
 		{
 			ElementType type = ((PageLayerPosEntry<Element>*) this->elements->data)->element->getType();
 
-			for (GList* l = this->elements->next; l != NULL; l = l->next)
+			for (GList* l = this->elements->next; l != nullptr; l = l->next)
 			{
-				PageLayerPosEntry<Element>* e = (PageLayerPosEntry<Element>*) l->data;
+				auto e = (PageLayerPosEntry<Element>*) l->data;
 				if (type != e->element->getType())
 				{
-					text += _(" elements");
+					text += " ";
+					text += _("elements");
 					return text;
 				}
 			}
 
-			if (type == ELEMENT_STROKE)
+			text += " ";
+			switch (type)
 			{
-				text += _(" stroke");
-			}
-			else if (type == ELEMENT_TEXT)
-			{
-				text += _(" text");
-			}
-			else if (type == ELEMENT_IMAGE)
-			{
-				text += _(" image");
-			}
-			else if (type == ELEMENT_TEXIMAGE)
-			{
-				text += _(" latex");
+			case ELEMENT_STROKE:
+				text += _("stroke");
+				break;
+			case ELEMENT_IMAGE:
+				text += _("image");
+				break;
+			case ELEMENT_TEXIMAGE:
+				text += _("latex");
+				break;
+			case ELEMENT_TEXT:
+				text += _("text");
+				break;
 			}
 		}
 	}

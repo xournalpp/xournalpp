@@ -20,7 +20,7 @@
 
 #include <Range.h>
 
-#include "inputdevices/PositionInputData.h"
+#include "gui/inputdevices/PositionInputData.h"
 
 class EditSelection;
 class EraseHandler;
@@ -149,6 +149,8 @@ public:
 public: // event handler
 	bool onButtonPressEvent(const PositionInputData& pos);
 	bool onButtonReleaseEvent(const PositionInputData& pos);
+	bool onButtonDoublePressEvent(const PositionInputData& pos);
+	bool onButtonTriplePressEvent(const PositionInputData& pos);
 	bool onMotionNotifyEvent(const PositionInputData& pos);
 
 	/**

@@ -22,7 +22,8 @@ void AutosaveJob::afterRun()
 {
 	XOJ_CHECK_TYPE(AutosaveJob);
 
-	string msg = FS(_F("Autosave: {1}") % this->error);
+	string msg = FS(_F("Error while autosaving: {1}") % this->error);
+	g_warning("%s", msg.c_str());
 	XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 }
 
@@ -50,11 +51,13 @@ void AutosaveJob::run()
 		string file = filename.getFilename();
 		filename = filename.getParentPath();
 		filename /= string(".") + file;
-		filename.clearExtensions();
-		filename += ".autosave.xopp";
 	}
+	filename.clearExtensions();
+	filename += ".autosave.xopp";
 
 	control->renameLastAutosaveFile();
+
+	g_message("%s", FS(_F("Autosaving to {1}") % filename.str()).c_str());
 
 	handler.saveTo(filename);
 

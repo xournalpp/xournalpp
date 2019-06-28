@@ -42,7 +42,7 @@ void Settings::loadDefault()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	this->presureSensitivity = true;
+	this->pressureSensitivity = true;
 	this->zoomGesturesEnabled = true;
 	this->maximized = false;
 	this->showPairedPages = false;
@@ -141,9 +141,33 @@ void Settings::loadDefault()
 
 	this->pluginEnabled = "";
 	this->pluginDisabled = "";
-	
-	inTransaction = false;
+
+	this->experimentalInputSystemEnabled = false;
+	this->inputSystemTPCButton = false;
+	this->inputSystemDrawOutsideWindow = true;
+
+	this->strokeFilterIgnoreTime = 150;
+	this->strokeFilterIgnoreLength = 1;
+	this->strokeFilterSuccessiveTime = 500;
+	this->strokeFilterEnabled = false;
+	this->doActionOnStrokeFiltered = false;
+	this->trySelectOnStrokeFiltered = false;
+
+	this->inTransaction = false;
+
 }
+
+/**
+ * tempg_ascii_strtod
+* 	Transition to using g_ascii_strtod to minimize disruption. May, 2019. 
+*  Delete this and replace calls to this function with calls to g_ascii_strtod() in 2020.
+* 	See: https://developer.gnome.org/glib/stable/glib-String-Utility-Functions.html#g-strtod
+*/
+double tempg_ascii_strtod( const gchar* txt, gchar ** endptr )
+{
+	return g_strtod ( txt, endptr  );		//  makes best guess between locale formatted and C formatted numbers. See link above.
+}
+
 
 void Settings::parseData(xmlNodePtr cur, SElement& elem)
 {
@@ -172,7 +196,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem)
 			}
 			else if (sType == "double")
 			{
-				double d = atof((const char*) value);
+				double d = tempg_ascii_strtod((const char*) value, NULL);	//g_ascii_strtod ignores locale setting.
 				elem.setDouble((const char*) name, d);
 			}
 			else if (sType == "hex")
@@ -287,9 +311,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 		return;
 	}
 
+	// TODO: remove this typo fix in 2-3 release cycles
 	if (xmlStrcmp(name, (const xmlChar*) "presureSensitivity") == 0)
 	{
-		setPresureSensitivity(xmlStrcmp(value, (const xmlChar*) "true") ? false : true);
+		setPressureSensitivity(xmlStrcmp(value, (const xmlChar*) "true") ? false : true);
+	}
+	if (xmlStrcmp(name, (const xmlChar*) "pressureSensitivity") == 0)
+	{
+		setPressureSensitivity(xmlStrcmp(value, (const xmlChar*) "true") ? false : true);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "zoomGesturesEnabled") == 0)
 	{
@@ -303,17 +332,21 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->lastSavePath = (const char*) value;
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "lastOpenPath") == 0)
+	{
+		this->lastOpenPath = (const char*) value;
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "lastImagePath") == 0)
 	{
 		this->lastImagePath = (const char*) value;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "zoomStep") == 0)
 	{
-		this->zoomStep = g_strtod((const char*) value, NULL);
+		this->zoomStep = tempg_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "zoomStepScroll") == 0)
 	{
-		this->zoomStepScroll = g_strtod((const char*) value, NULL);
+		this->zoomStepScroll = tempg_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "displayDpi") == 0)
 	{
@@ -489,7 +522,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "snapRotationTolerance") == 0)
 	{
-		this->snapRotationTolerance = g_strtod((const char*) value, NULL);
+		this->snapRotationTolerance = tempg_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "snapGrid") == 0)
 	{
@@ -501,7 +534,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "snapGridTolerance") == 0)
 	{
-		this->snapGridTolerance = g_strtod((const char*) value, NULL);
+		this->snapGridTolerance = tempg_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "touchWorkaround") == 0)
 	{
@@ -528,11 +561,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioSampleRate") == 0)
 	{
-		this->audioSampleRate = g_ascii_strtod((const char *) value, NULL);
+		this->audioSampleRate = tempg_ascii_strtod((const char *) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioGain") == 0)
 	{
-		this->audioGain = g_strtod((const char *) value, NULL);
+		this->audioGain = tempg_ascii_strtod((const char *) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioInputDevice") == 0)
 	{
@@ -542,9 +575,57 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->audioOutputDevice = g_ascii_strtoll((const char *) value, NULL, 10);
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "experimentalInputSystemEnabled") == 0)
+	{
+		this->experimentalInputSystemEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "inputSystemTPCButton") == 0)
+	{
+		this->inputSystemTPCButton = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "inputSystemDrawOutsideWindow") == 0)
+	{
+		this->inputSystemDrawOutsideWindow = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterIgnoreTime") == 0)
+	{
+		this->strokeFilterIgnoreTime = g_ascii_strtoll((const char*) value, NULL, 10);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterIgnoreLength") == 0)
+	{
+		this->strokeFilterIgnoreLength = tempg_ascii_strtod((const char*) value, NULL);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterSuccessiveTime") == 0)
+	{
+		this->strokeFilterSuccessiveTime = g_ascii_strtoll((const char*) value, NULL, 10);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterEnabled") == 0)
+	{
+		this->strokeFilterEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "doActionOnStrokeFiltered") == 0)
+	{
+		this->doActionOnStrokeFiltered = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "trySelectOnStrokeFiltered") == 0)
+	{
+		this->trySelectOnStrokeFiltered = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
 
 	xmlFree(name);
 	xmlFree(value);
+}
+
+void Settings::loadDeviceClasses()
+{
+	SElement& s = getCustomElement("deviceClasses");
+	for (auto device : s.children())
+	{
+		SElement& deviceNode = device.second;
+		int deviceClass;
+		deviceNode.getInt("deviceClass", deviceClass);
+		inputDeviceClasses.insert(std::pair<string, int>(device.first, deviceClass));
+	}
 }
 
 void Settings::loadButtonConfig()
@@ -601,6 +682,17 @@ void Settings::loadButtonConfig()
 					// If not specified: do not change
 					cfg->eraserMode = ERASER_TYPE_NONE;
 				}
+
+				string sSize;
+				if (e.getString("size", sSize))
+				{
+					cfg->size = toolSizeFromString(sSize);
+				}
+				else
+				{
+					// If not specified: do not change
+					cfg->size = TOOL_SIZE_NONE;
+				}
 			}
 
 			// Touch device
@@ -623,6 +715,7 @@ void Settings::loadButtonConfig()
 
 bool Settings::load()
 {
+	
 	XOJ_CHECK_TYPE(Settings);
 
 	xmlKeepBlanksDefault(0);
@@ -671,6 +764,7 @@ bool Settings::load()
 	xmlFreeDoc(doc);
 
 	loadButtonConfig();
+	loadDeviceClasses();
 
 	return true;
 }
@@ -679,9 +773,9 @@ xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value, xmlNodeP
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	char* text = g_strdup_printf("%0.3lf", value);
+	char text[G_ASCII_DTOSTR_BUF_SIZE];
+	g_ascii_dtostr( text, G_ASCII_DTOSTR_BUF_SIZE, value);	//  g_ascii_ version uses C locale always.
 	xmlNodePtr xmlNode = saveProperty(key, text, parent);
-	g_free(text);
 	return xmlNode;
 }
 
@@ -706,6 +800,19 @@ xmlNodePtr Settings::saveProperty(const gchar* key, const gchar* value, xmlNodeP
 	xmlSetProp(xmlNode, (const xmlChar*) "value", (const xmlChar*) value);
 
 	return xmlNode;
+}
+
+void Settings::saveDeviceClasses()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	SElement& s = getCustomElement("deviceClasses");
+
+	for (const std::map<string, int>::value_type& device : inputDeviceClasses)
+	{
+		SElement& e = s.child(device.first);
+		e.setInt("deviceClass", device.second);
+	}
 }
 
 void Settings::saveButtonConfig()
@@ -737,6 +844,7 @@ void Settings::saveButtonConfig()
 		if (type == TOOL_ERASER)
 		{
 			e.setString("eraserMode", eraserTypeToString(cfg->eraserMode));
+			e.setString("size", toolSizeToString(cfg->size));
 		}
 
 		// Touch device
@@ -791,6 +899,7 @@ void Settings::save()
 	}
 
 	saveButtonConfig();
+	saveDeviceClasses();
 
 	/* Create metadata root */
 	root = xmlNewDocNode(doc, NULL, (const xmlChar*) "settings", NULL);
@@ -801,12 +910,17 @@ void Settings::save()
 								   "the others are commented in this file, but handle with care!");
 	xmlAddPrevSibling(root, com);
 
-	WRITE_BOOL_PROP(presureSensitivity);
+	WRITE_BOOL_PROP(pressureSensitivity);
 	WRITE_BOOL_PROP(zoomGesturesEnabled);
 
 	WRITE_STRING_PROP(selectedToolbar);
-	WRITE_STRING_PROP(lastSavePath.str());
-	WRITE_STRING_PROP(lastImagePath.str());
+
+	auto lastSavePath = this->lastSavePath.str();
+	auto lastOpenPath = this->lastOpenPath.str();
+	auto lastImagePath = this->lastImagePath.str();
+	WRITE_STRING_PROP(lastSavePath);
+	WRITE_STRING_PROP(lastOpenPath);
+	WRITE_STRING_PROP(lastImagePath);
 
 	WRITE_DOUBLE_PROP(zoomStep);
 	WRITE_DOUBLE_PROP(zoomStepScroll);
@@ -904,13 +1018,27 @@ void Settings::save()
 	WRITE_STRING_PROP(pluginEnabled);
 	WRITE_STRING_PROP(pluginDisabled);
 
+	WRITE_INT_PROP(strokeFilterIgnoreTime);
+	WRITE_DOUBLE_PROP(strokeFilterIgnoreLength);
+	WRITE_INT_PROP(strokeFilterSuccessiveTime);
+
+	WRITE_BOOL_PROP(strokeFilterEnabled);
+	WRITE_BOOL_PROP(doActionOnStrokeFiltered);
+	WRITE_BOOL_PROP(trySelectOnStrokeFiltered);
+
+	WRITE_BOOL_PROP(experimentalInputSystemEnabled);
+	WRITE_BOOL_PROP(inputSystemTPCButton);
+	WRITE_BOOL_PROP(inputSystemDrawOutsideWindow);
+
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
 	xmlSetProp(xmlFont, (const xmlChar*) "name", (const xmlChar*) "font");
 	xmlSetProp(xmlFont, (const xmlChar*) "font", (const xmlChar*) this->font.getName().c_str());
-	gchar* sSize = g_strdup_printf("%0.1lf", this->font.getSize());
+
+	char sSize[G_ASCII_DTOSTR_BUF_SIZE];
+	g_ascii_dtostr( sSize, G_ASCII_DTOSTR_BUF_SIZE, this->font.getSize());	//no locale
 	xmlSetProp(xmlFont, (const xmlChar*) "size", (const xmlChar*) sSize);
-	g_free(sSize);
+
 
 	for (std::map<string, SElement>::value_type p: data)
 	{
@@ -964,9 +1092,9 @@ void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 		{
 			type = "double";
 
-			char* tmp = g_strdup_printf("%lf", attrib.dValue);
+			char tmp[G_ASCII_DTOSTR_BUF_SIZE];
+			g_ascii_dtostr( tmp, G_ASCII_DTOSTR_BUF_SIZE, attrib.dValue);
 			value = tmp;
-			g_free(tmp);
 		}
 		else if (attrib.type == ATTRIBUTE_TYPE_INT_HEX)
 		{
@@ -1008,11 +1136,11 @@ void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 }
 
 // Getter- / Setter
-bool Settings::isPresureSensitivity()
+bool Settings::isPressureSensitivity()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	return this->presureSensitivity;
+	return this->pressureSensitivity;
 }
 
 bool Settings::isZoomGesturesEnabled()
@@ -1567,15 +1695,15 @@ bool Settings::isPresentationMode()
 	return this->presentationMode;
 }
 
-void Settings::setPresureSensitivity(gboolean presureSensitivity)
+void Settings::setPressureSensitivity(gboolean presureSensitivity)
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	if (this->presureSensitivity == presureSensitivity)
+	if (this->pressureSensitivity == presureSensitivity)
 	{
 		return;
 	}
-	this->presureSensitivity = presureSensitivity;
+	this->pressureSensitivity = presureSensitivity;
 
 	save();
 }
@@ -1734,6 +1862,21 @@ Path Settings::getLastSavePath()
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->lastSavePath;
+}
+
+void Settings::setLastOpenPath(Path p)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	this->lastOpenPath = p;
+	save();
+}
+
+Path Settings::getLastOpenPath()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->lastOpenPath;
 }
 
 void Settings::setLastImagePath(Path path)
@@ -2234,6 +2377,174 @@ void Settings::setPluginDisabled(string pluginEnabled)
 	}
 	this->pluginDisabled = pluginDisabled;
 	save();
+}
+
+
+void Settings::getStrokeFilter( int* ignoreTime, double* ignoreLength, int* successiveTime)
+{
+	XOJ_CHECK_TYPE(Settings);
+	*ignoreTime = this->strokeFilterIgnoreTime;
+	*ignoreLength = this->strokeFilterIgnoreLength;
+	*successiveTime = this->strokeFilterSuccessiveTime;
+
+}
+
+void Settings::setStrokeFilter( int ignoreTime, double ignoreLength, int successiveTime)
+{
+	XOJ_CHECK_TYPE(Settings);
+	this->strokeFilterIgnoreTime = ignoreTime;
+	this->strokeFilterIgnoreLength = ignoreLength;
+	this->strokeFilterSuccessiveTime = successiveTime;
+
+}
+
+void Settings::setStrokeFilterEnabled(bool enabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+	this->strokeFilterEnabled = enabled;
+}
+
+bool Settings::getStrokeFilterEnabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->strokeFilterEnabled;
+}
+
+void Settings::setDoActionOnStrokeFiltered(bool enabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+	this->doActionOnStrokeFiltered = enabled;
+}
+
+bool Settings::getDoActionOnStrokeFiltered()
+{
+	XOJ_CHECK_TYPE(Settings);
+	return this->doActionOnStrokeFiltered;
+}
+
+void Settings::setTrySelectOnStrokeFiltered(bool enabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+	this->trySelectOnStrokeFiltered = enabled;
+}
+
+bool Settings::getTrySelectOnStrokeFiltered()
+{
+	XOJ_CHECK_TYPE(Settings);
+	return this->trySelectOnStrokeFiltered;
+}
+
+
+void Settings::setExperimentalInputSystemEnabled(bool systemEnabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->experimentalInputSystemEnabled == systemEnabled)
+	{
+		return;
+	}
+	this->experimentalInputSystemEnabled = systemEnabled;
+	save();
+}
+
+bool Settings::getExperimentalInputSystemEnabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->experimentalInputSystemEnabled;
+}
+
+void Settings::setInputSystemTPCButtonEnabled(bool tpcButtonEnabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->inputSystemTPCButton == tpcButtonEnabled)
+	{
+		return;
+	}
+	this->inputSystemTPCButton = tpcButtonEnabled;
+	save();
+}
+
+bool Settings::getInputSystemTPCButtonEnabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->inputSystemTPCButton;
+}
+
+void Settings::setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->inputSystemDrawOutsideWindow == drawOutsideWindowEnabled)
+	{
+		return;
+	}
+	this->inputSystemDrawOutsideWindow = drawOutsideWindowEnabled;
+	save();
+}
+
+bool Settings::getInputSystemDrawOutsideWindowEnabled()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->inputSystemDrawOutsideWindow;
+}
+
+void Settings::setDeviceClassForDevice(GdkDevice* device, int deviceClass)
+{
+	string name = gdk_device_get_name(device);
+	auto it = inputDeviceClasses.find(name);
+	if (it != inputDeviceClasses.end())
+	{
+		it->second = deviceClass;
+	}
+	else
+	{
+		inputDeviceClasses.insert(std::pair<string, int>(name, deviceClass));
+	}
+}
+
+int Settings::getDeviceClassForDevice(GdkDevice* device)
+{
+	auto search = inputDeviceClasses.find(gdk_device_get_name(device));
+	if (search != inputDeviceClasses.end())
+	{
+		return search->second;
+	}
+	else
+	{
+		guint deviceType = 0;
+		switch(gdk_device_get_source(device))
+		{
+			case GDK_SOURCE_CURSOR:
+#if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
+			case GDK_SOURCE_TABLET_PAD:
+#endif
+			case GDK_SOURCE_KEYBOARD:
+				deviceType = 0;
+				break;
+			case GDK_SOURCE_MOUSE:
+			case GDK_SOURCE_TOUCHPAD:
+#if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
+			case GDK_SOURCE_TRACKPOINT:
+#endif
+				deviceType = 1;
+				break;
+			case GDK_SOURCE_PEN:
+				deviceType = 2;
+				break;
+			case GDK_SOURCE_ERASER:
+				deviceType = 3;
+				break;
+			case GDK_SOURCE_TOUCHSCREEN:
+				deviceType = 4;
+				break;
+		}
+		return deviceType;
+	}
 }
 
 //////////////////////////////////////////////////

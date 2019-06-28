@@ -14,6 +14,7 @@
 #include "GladeGui.h"
 #include "model/Font.h"
 #include "control/layer/LayerCtrlListener.h"
+#include "gui/FloatingToolbox.h"
 
 class Control;
 class Layout;
@@ -27,6 +28,7 @@ class XournalView;
 class MainWindowToolbarMenu;
 class ZoomGesture;
 
+
 class MainWindow : public GladeGui, public LayerCtrlListener
 {
 public:
@@ -37,6 +39,8 @@ public:
 public:
 	virtual void rebuildLayerMenu();
 	virtual void layerVisibilityChanged();
+
+	FloatingToolbox*  floatingToolbox;
 
 public:
 	virtual void show(GtkWindow* parent);
@@ -92,6 +96,13 @@ public:
 	Layout* getLayout();
 
 	bool isGestureActive();
+	
+
+	/**
+	 * Disable kinetic scrolling if there is a touchscreen device that was manually mapped to another enabled input device class.
+	 * This is required so the GtkScrolledWindow does not swallow all the events.
+	 */
+	void setTouchscreenScrollingForDeviceMapping();
 
 private:
 	void initXournalWidget();
@@ -103,6 +114,7 @@ private:
 	static void toggleMenuBar(MainWindow* win);
 
 	void createToolbarAndMenu();
+	
 
 	static void buttonCloseSidebarClicked(GtkButton* button, MainWindow* win);
 
@@ -132,6 +144,11 @@ private:
 	static void dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y,
 								GtkSelectionData* data, guint info, guint time, MainWindow* win);
 
+	/**
+	 * Load Overall CSS file with custom icons, other styling and potentially, user changes
+	 */
+	void loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename);
+	
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -151,11 +168,12 @@ private:
 	bool maximized = false;
 
 	GtkWidget** toolbarWidgets;
-
+	
 	MainWindowToolbarMenu* toolbarSelectMenu;
 
 	/**
 	 * Workaround for double hide menubar event
 	 */
 	bool ignoreNextHideEvent;
+	
 };

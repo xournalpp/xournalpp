@@ -26,7 +26,7 @@
 class VorbisConsumer
 {
 public:
-	explicit VorbisConsumer(Settings* settings, AudioQueue<int>* audioQueue);
+	explicit VorbisConsumer(Settings* settings, AudioQueue<float>* audioQueue);
 	~VorbisConsumer();
 
 public:
@@ -41,6 +41,6 @@ protected:
 	bool stopConsumer = false;
 
 	Settings* settings = nullptr;
-	AudioQueue<int>* audioQueue = nullptr;
+	AudioQueue<float>* audioQueue = nullptr;
 	std::thread* consumerThread = nullptr;
 };
