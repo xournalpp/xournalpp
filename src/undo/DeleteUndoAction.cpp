@@ -110,26 +110,27 @@ string DeleteUndoAction::getText()
 			PageLayerPosEntry<Element>* e = (PageLayerPosEntry<Element>*) l->data;
 			if (type != e->element->getType())
 			{
-				text += _(" elements");
+				text += " ";
+				text += _("elements");
 				return text;
 			}
 		}
 
-		if (type == ELEMENT_STROKE)
+		text += " ";
+		switch (type)
 		{
-			text += _(" stroke");
-		}
-		else if (type == ELEMENT_TEXT)
-		{
-			text += _(" text");
-		}
-		else if (type == ELEMENT_IMAGE)
-		{
-			text += _(" image");
-		}
-		else if (type == ELEMENT_TEXIMAGE)
-		{
-			text += _(" latex");
+			case ELEMENT_STROKE:
+				text += _("stroke");
+				break;
+			case ELEMENT_IMAGE:
+				text += _("image");
+				break;
+			case ELEMENT_TEXIMAGE:
+				text += _("latex");
+				break;
+			case ELEMENT_TEXT:
+				text += _("text");
+				break;
 		}
 	}
 
