@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-28 06:23+0000\n"
-"PO-Revision-Date: 2019-06-28 06:25\n"
+"POT-Creation-Date: 2019-06-28 06:32+0000\n"
+"PO-Revision-Date: 2019-06-28 06:36\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -807,7 +807,7 @@ msgstr ""
 msgid "Page"
 msgstr ""
 
-#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:29
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Page Preview"
 msgstr ""
 
@@ -1835,6 +1835,14 @@ msgstr ""
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr ""
 
+#: ../ui/main.glade:2466
+msgid "Duplicate"
+msgstr ""
+
+#: ../ui/main.glade:2503
+msgid "Edit (not implemented yet)"
+msgstr ""
+
 #: ../ui/settings.glade:1608
 msgid "Enable"
 msgstr ""
@@ -2013,6 +2021,14 @@ msgstr ""
 msgid "Insert Latex"
 msgstr ""
 
+#: ../ui/main.glade:2458
+msgid "Insert Page After"
+msgstr ""
+
+#: ../ui/main.glade:2450
+msgid "Insert Page Before"
+msgstr ""
+
 #: ../ui/main.glade:2041
 msgid "Insert a copy of the current page below"
 msgstr ""
@@ -2060,6 +2076,14 @@ msgstr ""
 
 #: ../ui/settings.glade:1010
 msgid "Mouse Buttons"
+msgstr ""
+
+#: ../ui/main.glade:2488
+msgid "Move Down"
+msgstr ""
+
+#: ../ui/main.glade:2480
+msgid "Move Up"
 msgstr ""
 
 #: ../ui/main.glade:1066
