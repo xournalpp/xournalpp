@@ -16,6 +16,7 @@
 
 #include <config.h>
 #include <i18n.h>
+#include <control/pagetype/PageTypeHandler.h>
 
 XojExportHandler::XojExportHandler()
 {
@@ -55,11 +56,20 @@ void XojExportHandler::writeSolidBackground(XmlNode* background, PageRef p)
 	background->setAttrib("type", "solid");
 	background->setAttrib("color", getColorStr(p->getBackgroundColor()));
 
-	string format = p->getBackgroundType().format;
+	PageTypeFormat bgFormat = p->getBackgroundType().format;
+	string format;
 
-	if (format != "plain" && format != "lined" && format != "staves" && format != "graph")
+	if (bgFormat == PageTypeFormat::LINED_VLINE)
 	{
-		format = "plain";
+		format = "ruled";
+	}
+	else
+	{
+		format = PageTypeHandler::getStringForPageTypeFormat(bgFormat);
+		if (bgFormat != PageTypeFormat::PLAIN && bgFormat != PageTypeFormat::LINED && bgFormat != PageTypeFormat::GRAPH)
+		{
+			format = "plain";
+		}
 	}
 
 	background->setAttrib("style", format);

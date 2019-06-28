@@ -31,10 +31,12 @@ public:
 
 public:
 	vector<PageTypeInfo*>& getPageTypes();
+	static PageTypeFormat getPageTypeFormatForString(const string& format);
+	static string getStringForPageTypeFormat(const PageTypeFormat& format);
 
 private:
-	void addPageTypeInfo(string name, string format, string config);
-	bool parseIni(string filename);
+	void addPageTypeInfo(string name, PageTypeFormat format, string config);
+	bool parseIni(const string& filename);
 	void loadFormat(GKeyFile* config, const char* group);
 
 private:

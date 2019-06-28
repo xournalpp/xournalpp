@@ -3,6 +3,7 @@
 #include "control/xojfile/SaveHandler.h"
 
 #include <sstream>
+#include <control/pagetype/PageTypeHandler.h>
 
 using std::stringstream;
 
@@ -15,7 +16,7 @@ PageTemplateSettings::PageTemplateSettings()
 {
 	XOJ_INIT_TYPE(PageTemplateSettings);
 
-	backgroundType.format = "lined_vline";
+	backgroundType.format = PageTypeFormat::LINED_VLINE;
 }
 
 PageTemplateSettings::~PageTemplateSettings()
@@ -106,7 +107,7 @@ PageType PageTemplateSettings::getPageInsertType()
 
 	if (copyLastPageSettings)
 	{
-		return PageType(":copy");
+		return PageType(PageTypeFormat::COPY);
 	}
 
 	return backgroundType;
@@ -172,7 +173,7 @@ bool PageTemplateSettings::parse(string tpl)
 		}
 		else if (key == "backgroundType")
 		{
-			this->backgroundType.format = value;
+			this->backgroundType.format = PageTypeHandler::getPageTypeFormatForString(value);
 		}
 		else if (key == "backgroundTypeConfig")
 		{
@@ -195,9 +196,9 @@ string PageTemplateSettings::toString()
 	str += string("copyLastPageSize=") + (copyLastPageSize ? "true" : "false") + "\n";
 	str += string("copyLastPageSettings=") + (copyLastPageSettings ? "true" : "false") + "\n";
 	str += string("size=") + std::to_string(pageWidth) + "x" + std::to_string(pageHeight) + "\n";
-	str += string("backgroundType=") + backgroundType.format + "\n";
+	str += string("backgroundType=") + PageTypeHandler::getStringForPageTypeFormat(backgroundType.format) + "\n";
 
-	if (backgroundType.config != "")
+	if (!backgroundType.config.empty())
 	{
 		str += string("backgroundTypeConfig=") + backgroundType.config + "\n";
 	}

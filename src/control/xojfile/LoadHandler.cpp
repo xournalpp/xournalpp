@@ -13,6 +13,7 @@
 #include <gtk/gtk.h>
 
 #include <stdlib.h>
+#include <control/pagetype/PageTypeHandler.h>
 
 #define error2(var, ...)																	\
 	if (var == NULL)																		\
@@ -396,7 +397,7 @@ void LoadHandler::parseBgSolid()
 	const char* style = LoadHandlerHelper::getAttrib("style", false, this);
 	if (style != NULL)
 	{
-		bg.format = style;
+		bg.format = PageTypeHandler::getPageTypeFormatForString(style);
 	}
 
 	const char* config = LoadHandlerHelper::getAttrib("config", true, this);
@@ -486,7 +487,7 @@ void LoadHandler::parseBgPixmap()
 		error("%s", FC(_F("Unknown pixmap::domain type: {1}") % domain));
 	}
 
-	this->page->setBackgroundType(PageType(":image"));
+	this->page->setBackgroundType(PageType(PageTypeFormat::IMAGE));
 }
 
 void LoadHandler::parseBgPdf()
@@ -625,7 +626,7 @@ void LoadHandler::parsePage()
 		{
 			if (this->removePdfBackgroundFlag)
 			{
-				this->page->setBackgroundType(PageType("plain"));
+				this->page->setBackgroundType(PageType(PageTypeFormat::PLAIN));
 				this->page->setBackgroundColor(0xffffff);
 			}
 			else
@@ -693,7 +694,7 @@ void LoadHandler::parseStroke()
 
 	/** read stroke timestamps (xopp fileformat) */
 	const char* fn = LoadHandlerHelper::getAttrib("fn", true, this);
-	if (fn != NULL)
+	if (fn != NULL && strcmp(fn, "") != 0)
 	{
 		if (this->isGzFile)
 		{
@@ -795,7 +796,7 @@ void LoadHandler::parseText()
 	text->setColor(color);
 
 	const char* fn = LoadHandlerHelper::getAttrib("fn", true, this);
-	if (fn != NULL)
+	if (fn != NULL && strcmp(fn, "") != 0)
 	{
 		if (this->isGzFile)
 		{

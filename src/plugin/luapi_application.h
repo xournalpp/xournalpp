@@ -14,6 +14,7 @@
 
 #include "control/Control.h"
 #include "control/PageBackgroundChangeController.h"
+#include "control/pagetype/PageTypeHandler.h"
 
 #include <map>
 using std::map;
@@ -197,7 +198,7 @@ static int applib_uiActionSelected(lua_State* L)
 static int applib_changeCurrentPageBackground(lua_State* L)
 {
 	PageType pt;
-	pt.format = luaL_checkstring(L, 1);
+	pt.format = PageTypeHandler::getPageTypeFormatForString(luaL_checkstring(L, 1));
 	pt.config = luaL_optstring(L, 2, "");
 
 	Plugin* plugin = Plugin::getPluginFromLua(L);

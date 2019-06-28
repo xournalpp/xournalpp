@@ -218,7 +218,7 @@ void PageTypeMenu::hideCopyPage()
 
 	for (MenuCallbackInfo& info : menuInfos)
 	{
-		if (info.info->page.format == ":copy")
+		if (info.info->page.format == PageTypeFormat::COPY)
 		{
 			gtk_widget_hide(info.entry);
 			break;

@@ -13,12 +13,12 @@ MainBackgroundPainter::MainBackgroundPainter()
 
 	defaultPainter = new BaseBackgroundPainter();
 
-	painter["lined"] = new LineBackgroundPainter(LINE_BACKGROUND_LINED, false);
-	painter["lined_vline"] = new LineBackgroundPainter(LINE_BACKGROUND_LINED, true);
-	painter["staves"] = new LineBackgroundPainter(LINE_BACKGROUND_STAVES, false);
-	painter["staves_vline"] = new LineBackgroundPainter(LINE_BACKGROUND_STAVES, true);
-	painter["graph"] = new GraphBackgroundPainter();
-	painter["dotted"] = new DottedBackgroundPainter();
+	painter[PageTypeFormat::LINED] = new LineBackgroundPainter(LINE_BACKGROUND_LINED, false);
+	painter[PageTypeFormat::LINED_VLINE] = new LineBackgroundPainter(LINE_BACKGROUND_LINED, true);
+	painter[PageTypeFormat::STAVES] = new LineBackgroundPainter(LINE_BACKGROUND_STAVES, false);
+	painter[PageTypeFormat::STAVES_VLINE] = new LineBackgroundPainter(LINE_BACKGROUND_STAVES, true);
+	painter[PageTypeFormat::GRAPH] = new GraphBackgroundPainter();
+	painter[PageTypeFormat::DOTTED] = new DottedBackgroundPainter();
 }
 
 MainBackgroundPainter::~MainBackgroundPainter()
