@@ -3,9 +3,9 @@
 
 #include <Util.h>
 
-LineBackgroundPainter::LineBackgroundPainter(LineBackgroundType lineType, bool verticalLine) :
-	lineType(lineType),
-	verticalLine(verticalLine)
+LineBackgroundPainter::LineBackgroundPainter(LineBackgroundType lineType, bool verticalLine)
+ : lineType(lineType)
+ , verticalLine(verticalLine)
 {
 	XOJ_INIT_TYPE(LineBackgroundPainter);
 }
@@ -32,16 +32,16 @@ void LineBackgroundPainter::paint()
 
 	paintBackgroundColor();
 
-	switch(lineType)
+	switch (lineType)
 	{
-		case LINE_BACKGROUND_STAVES:
-			paintBackgroundStaves();
-			break;
-		case LINE_BACKGROUND_LINED:
-			paintBackgroundLined();
-			break;
+	case LINE_BACKGROUND_STAVES:
+		paintBackgroundStaves();
+		break;
+	case LINE_BACKGROUND_LINED:
+		paintBackgroundLined();
+		break;
 	}
-	if(verticalLine)
+	if (verticalLine)
 	{
 		paintBackgroundVerticalLine();
 	}
@@ -79,9 +79,9 @@ void LineBackgroundPainter::paintBackgroundStaves()
 	cairo_set_line_width(cr, lineWidth * lineWidthFactor);
 
 	double start_y;
-	for (double y = headerSize; y < (height - footerSize - (5*staveLineDistance)); y += roulingSizeStave)
+	for (double y = headerSize; y < (height - footerSize - (5 * staveLineDistance)); y += roulingSizeStave)
 	{
-		for(int i = 0; i < 5; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			start_y = y + (staveLineDistance * i);
 			cairo_move_to(cr, 0, start_y);
