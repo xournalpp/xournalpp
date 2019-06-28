@@ -4,6 +4,9 @@ project ("Xournal++" CXX C)
 
 ## Also update changelog in debian folder!
 set (PROJECT_VERSION "1.0.13")
+set (CPACK_PACKAGE_VERSION_MAJOR "1")
+set (CPACK_PACKAGE_VERSION_MINOR "0")
+set (CPACK_PACKAGE_VERSION_PATCH "13")
 set (PROJECT_PACKAGE "xournalpp")
 set (PROJECT_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
 set (PROJECT_URL "https://github.com/xournalpp/xournalpp")
@@ -225,8 +228,6 @@ install (DIRECTORY plugins
 # Install desktop shortcuts for Linux
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	message ("Installing desktop files")
-	# Install desktop entry
-	#install(FILES data/albert.desktop DESTINATION /share/applications )
 
 	# Install icons
 	install(FILES ui/pixmaps/xournalpp.svg
@@ -259,7 +260,10 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	install(FILES desktop/xournalpp.thumbnailer
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/thumbnailers)
 
-	install(CODE "execute_process(COMMAND ${CMAKE_CURRENT_BINARY_DIR}/cmake/postinst configure)")
+	# TODO: Only package post install scripts with distro-specific packages
+	# Also update manual install instructions
+
+	# install(CODE "execute_process(COMMAND ${CMAKE_CURRENT_BINARY_DIR}/cmake/postinst configure)")
 
 endif ()
 
@@ -288,3 +292,12 @@ if (CMAKE_DEBUG_INCLUDES_LDFLAGS)
     message ("Include directories: ${xournalpp_INCLUDE_DIRS}")
     message ("LDFLAGS/LIBRARIES: ${xournalpp_LDFLAGS}")
 endif (CMAKE_DEBUG_INCLUDES_LDFLAGS)
+
+
+# Packaging options
+set (CPACK_OUTPUT_FILE_PREFIX packages)
+set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Xournal++ - Open source hand note-taking program")
+set (CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
+set (CPACK_GENERATOR "TGZ")
+set (CPACK_PACKAGE_INSTALL_DIRECTORY "Xournal++")
+include (CPack)

@@ -5,10 +5,30 @@ pr: none
 stages:
   - stage: Release
     jobs:
+      - job: 'Linux'
+        pool:
+          vmImage: 'ubuntu-16.04'
+        displayName: 'Build for Linux'
+        condition: always()
+        steps:
+          - template: steps/build_linux.yml
+            parameters:
+              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
+          - bash: |
+              cmake .. -DCMAKE_INSTALL_PREFIX=$PWD/staging
+              cmake --build . --target package
+            workingDirectory: ./build
+            displayName: 'Generate packages'
+          - task: PublishPipelineArtifact@1
+            inputs:
+              artifactName: 'linux-packages'
+              targetPath: '$(System.DefaultWorkingDirectory)/build/packages'
+            displayName: 'Publish packages'
       - job: Windows
         pool:
           vmImage: 'vs2017-win2016'
         displayName: 'Build Release for Windows'
+        condition: always()
         steps:
           - template: steps/build_windows.yml
             parameters:
