@@ -5,6 +5,15 @@ pr: none
 stages:
 - stage: Release
   jobs:
+  - job: 'Linux'
+    pool:
+      vmImage: 'ubuntu-16.04'
+    displayName: 'Build for Linux'
+    steps:
+    - template: steps/build_linux.yml
+      parameters:
+        cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
+        run_tests: false
   - job: Windows
     pool:
       vmImage: 'vs2017-win2016'
