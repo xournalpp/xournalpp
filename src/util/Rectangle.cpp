@@ -8,13 +8,19 @@ Rectangle::Rectangle()
 }
 
 Rectangle::Rectangle(double x, double y, double width, double height)
- : x(x), y(y), width(width), height(height)
+ : x(x)
+ , y(y)
+ , width(width)
+ , height(height)
 {
 	XOJ_INIT_TYPE(Rectangle);
 }
 
 Rectangle::Rectangle(const Range& rect)
- : x(rect.getX()), y(rect.getY()), width(rect.getWidth()), height(rect.getHeight())
+ : x(rect.getX())
+ , y(rect.getY())
+ , width(rect.getWidth())
+ , height(rect.getHeight())
 {
 	XOJ_INIT_TYPE(Rectangle);
 }
