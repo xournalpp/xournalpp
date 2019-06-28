@@ -15,7 +15,7 @@ PageTemplateSettings::PageTemplateSettings()
 {
 	XOJ_INIT_TYPE(PageTemplateSettings);
 
-	backgroundType.format = "lined";
+	backgroundType.format = "lined_vline";
 }
 
 PageTemplateSettings::~PageTemplateSettings()

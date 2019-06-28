@@ -132,7 +132,7 @@ void Settings::loadDefault()
 
 	this->backgroundColor = 0xDCDAD5;
 
-	this->pageTemplate = "xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
+	this->pageTemplate = "xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined_vline\nbackgroundColor=#ffffff\n";
 
 	this->audioSampleRate = 44100.0;
 	this->audioInputDevice = -1;

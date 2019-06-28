@@ -3505,8 +3505,8 @@ It must be short in time and length and we can't have ignored another stroke rec
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkBox" id="hboxDefault">
-                                            <property name="name">hboxDefault</property>
+                                          <object class="GtkBox" id="hboxDefaultTool">
+                                            <property name="name">hboxDefaultTool</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <child>

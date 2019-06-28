@@ -21,7 +21,9 @@ PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath)
 		// On failure load the hardcoded and predefined values
 		addPageTypeInfo(_("Plain"), "plain", "");
 		addPageTypeInfo(_("Lined"), "lined", "");
-		addPageTypeInfo(_("Ruled"), "ruled", "");
+		addPageTypeInfo(_("Lined with vertical line"), "lined_vline", "");
+		addPageTypeInfo(_("Staves"), "staves", "");
+		addPageTypeInfo(_("Staves with vertical line"), "staves_vline", "");
 		addPageTypeInfo(_("Graph"), "graph", "");
 		addPageTypeInfo(_("Dotted"), "dotted", "");
 	}

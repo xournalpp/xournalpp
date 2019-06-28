@@ -15,21 +15,33 @@
 </layer>
 </page>
 <page width="595.28" height="841.89">
-<background type="solid" color="#ffffffff" style="ruled"/>
+<background type="solid" color="#ffffffff" style="lined_vline"/>
 <layer>
 <text font="Liberation Sans" size="12.00" x="94.70" y="98.53" color="#008000ff">p3</text>
 </layer>
 </page>
 <page width="595.28" height="841.89">
+<background type="solid" color="#ffffffff" style="staves"/>
+<layer>
+<text font="Liberation Sans" size="12.00" x="74.99" y="92.51" color="#008000ff">p4</text>
+</layer>
+</page>
+<page width="595.28" height="841.89">
+<background type="solid" color="#ffffffff" style="staves_vline"/>
+<layer>
+<text font="Liberation Sans" size="12.00" x="94.70" y="98.53" color="#008000ff">p5</text>
+</layer>
+</page>
+<page width="595.28" height="841.89">
 <background type="solid" color="#ffffffff" style="graph"/>
 <layer>
-<text font="Liberation Sans" size="12.00" x="68.97" y="151.63" color="#008000ff">p4</text>
+<text font="Liberation Sans" size="12.00" x="68.97" y="151.63" color="#008000ff">p6</text>
 </layer>
 </page>
 <page width="50.00" height="50.00">
 <background type="pixmap" domain="attach" filename="bg_1.png"/>
 <layer>
-<text font="Liberation Sans" size="12.00" x="12.04" y="14.78" color="#008000ff">p5</text>
+<text font="Liberation Sans" size="12.00" x="12.04" y="14.78" color="#008000ff">p7</text>
 </layer>
 </page>
 </xournal>

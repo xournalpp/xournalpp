@@ -57,7 +57,10 @@ void XojExportHandler::writeSolidBackground(XmlNode* background, PageRef p)
 
 	string format = p->getBackgroundType().format;
 
-	if (format != "plain" && format != "lined" && format != "ruled" && format != "graph")
+	if (format != "plain" &&
+		format != "lined" &&
+		format != "staves" &&
+		format != "graph")
 	{
 		format = "plain";
 	}
