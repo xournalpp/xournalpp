@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-28 07:17+0000\n"
-"PO-Revision-Date: 2019-06-28 07:53\n"
+"POT-Creation-Date: 2019-06-28 08:48+0000\n"
+"PO-Revision-Date: 2019-06-28 08:50\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -26,15 +26,15 @@ msgid "\n"
 "Will now attempt to run without this file."
 msgstr ""
 
-#: ../src/undo/AddUndoAction.cpp:119 ../src/undo/DeleteUndoAction.cpp:113
+#: ../src/undo/DeleteUndoAction.cpp:113
 msgid " elements"
 msgstr ""
 
-#: ../src/undo/AddUndoAction.cpp:134 ../src/undo/DeleteUndoAction.cpp:128
+#: ../src/undo/DeleteUndoAction.cpp:128
 msgid " image"
 msgstr ""
 
-#: ../src/undo/AddUndoAction.cpp:138 ../src/undo/DeleteUndoAction.cpp:132
+#: ../src/undo/DeleteUndoAction.cpp:132
 msgid " latex"
 msgstr ""
 
@@ -43,11 +43,11 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr ""
 
-#: ../src/undo/AddUndoAction.cpp:126 ../src/undo/DeleteUndoAction.cpp:120
+#: ../src/undo/DeleteUndoAction.cpp:120
 msgid " stroke"
 msgstr ""
 
-#: ../src/undo/AddUndoAction.cpp:130 ../src/undo/DeleteUndoAction.cpp:124
+#: ../src/undo/DeleteUndoAction.cpp:124
 msgid " text"
 msgstr ""
 
@@ -1369,12 +1369,24 @@ msgstr ""
 msgid "dotted"
 msgstr ""
 
+#: ../src/undo/AddUndoAction.cpp:120
+msgid "elements"
+msgstr ""
+
 #: ../src/util/DeviceListHelper.cpp:84
 msgid "eraser"
 msgstr ""
 
+#: ../src/undo/AddUndoAction.cpp:132
+msgid "image"
+msgstr ""
+
 #: ../src/util/DeviceListHelper.cpp:93
 msgid "keyboard"
+msgstr ""
+
+#: ../src/undo/AddUndoAction.cpp:135
+msgid "latex"
 msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:76
@@ -1396,6 +1408,14 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:292
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:313
 msgid "standard"
+msgstr ""
+
+#: ../src/undo/AddUndoAction.cpp:129
+msgid "stroke"
+msgstr ""
+
+#: ../src/undo/AddUndoAction.cpp:138
+msgid "text"
 msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:101
