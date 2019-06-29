@@ -14,6 +14,16 @@ stages:
       parameters:
         cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
         run_tests: false
+    - bash: |
+        cmake .. -DCMAKE_INSTALL_PREFIX=$PWD/dist
+        cmake --build . --target package
+      workingDirectory: ./build
+      displayName: 'Generate packages'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        artifactName: 'linux-packages'
+        targetPath: '$(System.DefaultWorkingDirectory)/build/packages'
+      displayName: 'Publish packages'
   - job: Windows
     pool:
       vmImage: 'vs2017-win2016'
