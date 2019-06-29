@@ -6,14 +6,14 @@ parameters:
 steps:
 - bash: |
     sudo apt-get update
-    sudo apt-get install -y cmake libcppunit-dev libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev
+    sudo apt-get install -y cmake libcppunit-dev libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev ninja-build
   displayName: 'Install dependencies'
 - bash: |
     mkdir build
   displayName: 'Create build directory'
 - bash: |
-    cmake .. ${{ parameters.cmake_flags }}
-    make -j `grep processor /proc/cpuinfo | tail -c 2`
+    cmake -GNinja .. ${{ parameters.cmake_flags }}
+    cmake --build .
   workingDirectory: ./build
   displayName: 'Build Xournal++'
 - ${{ if eq(parameters.run_tests,  'true') }}:
