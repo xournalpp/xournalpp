@@ -31,19 +31,12 @@ pacman -S git
 
 ## Install Build tools
 ```bash
+pacman -S mingw-w64-x86_64-gcc; \
 pacman -S mingw-w64-x86_64-cmake; \
 pacman -S make; \
-pacman -S mingw-w64-x86_64-toolchain; \
-pacman -S --needed base-devel mingw-w64-x86_64-toolchain \
-mingw-w64-x86_64-cmake
+pacman -S patch
 ```
-(this is a duplicate of the lines above, probably only this line is needed.
-Can anybody confirm this?)
 -> press enter multiple times / confirm all default values
-
-```bash
-pacman -S mingw-w64-x86_64-gcc
-```
 
 ## Install dependencies
 
@@ -79,7 +72,15 @@ mkdir build
 cd build/
 cmake ..
 make
+cd ..
 ```
+
+You can now run Xournal++ with
+```bash
+./build/src/xournalpp.exe
+```
+
+or create a setup package (see below).
 
 ## Packaging and Setup
 Create the installer with
