@@ -9,13 +9,14 @@ stages:
     pool:
       vmImage: 'ubuntu-16.04'
     displayName: 'Build for Linux'
+    condition: always()
     steps:
     - template: steps/build_linux.yml
       parameters:
         cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
         run_tests: false
     - bash: |
-        cmake .. -DCMAKE_INSTALL_PREFIX=$PWD/dist
+        cmake .. -DCMAKE_INSTALL_PREFIX=$PWD/staging
         cmake --build . --target package
       workingDirectory: ./build
       displayName: 'Generate packages'
@@ -28,6 +29,7 @@ stages:
     pool:
       vmImage: 'vs2017-win2016'
     displayName: 'Build for Windows'
+    condition: always()
     steps:
     - script: |
         git clone https://github.com/msys2/msys2-ci-base.git %CD:~0,2%\msys64
