@@ -33,7 +33,7 @@ pacman -S git
 ```bash
 pacman -S mingw-w64-x86_64-gcc; \
 pacman -S mingw-w64-x86_64-cmake; \
-pacman -S make; \
+pacman -S mingw-w64-x86_64-make; \
 pacman -S patch
 ```
 -> press enter multiple times / confirm all default values
