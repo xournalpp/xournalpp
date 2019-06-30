@@ -1,3 +1,6 @@
+# Template for setting up the Ubuntu build environment and building Xournal++ on
+# Ubuntu
+
 parameters:
   build_type: ''
   cmake_flags: ''
