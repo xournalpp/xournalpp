@@ -14,8 +14,7 @@
 
 Recently we revisited the settings dialog to improve the feeling and usability.
 While doing that we also added better descriptions, for which we require
-new translations. If you would like to help us, please contact us by creating an issue
-or write us on [Gitter](https://gitter.im/xournalpp/xournalpp)!
+new translations.
 
 Partial translations, which need to be updated:
 - Czech
@@ -27,8 +26,7 @@ Full translations for all languages not mentioned previously **except**:
 - German
 - Italian
 
-Previous knowledge in creating translations using `gettext` would be nice but is not necessary.
-We are happy to help you set everything up for translating.
+If you would like to help us imporve the localization of Xournal++ take a look at [our Crowdin project](https://crowdin.com/project/xournalpp). If you are interested in translating a new language, contact us on [Gitter](https://gitter.im/xournalpp/xournalpp) or create a new issue and we will unlock the language on Crowdin.
 
 **Thanks in advance!**
 
