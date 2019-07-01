@@ -1,39 +1,31 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the xournalpp package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: xournalpp 1.0.11\n"
+"Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-28 09:06+0000\n"
-"PO-Revision-Date: 2019-06-29 21:56+0200\n"
-"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
-"Language-Team: Dutch <vistausss@outlook.com>\n"
+"PO-Revision-Date: 2019-07-01 12:11\n"
+"Last-Translator: Ulrich Huber (LittleHuba)\n"
+"Language-Team: Dutch\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: xournalpp\n"
+"X-Crowdin-Language: nl\n"
+"X-Crowdin-File: /master/po/xournalpp.pot\n"
 
 #: ../src/control/XournalMain.cpp:580
-msgid ""
-"\n"
-"\n"
+msgid "\n\n"
 "Will now attempt to run without this file."
-msgstr ""
-"\n"
-"\n"
+msgstr "\n\n"
 "Er wordt nu geprobeerd op te starten zonder dit bestand."
 
 #: ../src/control/XournalMain.cpp:560
-msgid ""
-"\n"
+msgid "\n"
 "Will now attempt to run without this file."
-msgstr ""
-"\n"
+msgstr "\n"
 "Er wordt nu geprobeerd op te starten zonder dit bestand."
 
 #: ../src/gui/MainWindow.cpp:837
@@ -43,25 +35,20 @@ msgstr " van {1}{2}"
 
 #: ../src/control/settings/Settings.cpp:108
 msgid "%F-Note-%H-%M"
-msgstr "%F-Note-%H-%M"
+msgstr ""
 
 #: ../src/gui/dialog/SettingsDialog.cpp:122
-msgid ""
-"<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr ""
-"<b>Geen apparaten aangetroffen. Dit lijkt niet de bedoeling - wil je een "
-"bugmelding opmaken?</b>"
+msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
+msgstr "<b>Geen apparaten aangetroffen. Dit lijkt niet de bedoeling - wil je een bugmelding opmaken?</b>"
 
 #: ../src/control/XournalMain.cpp:576
-msgid ""
-"<span foreground='red' size='x-large'>Missing the needed UI file:\n"
+msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr ""
-"<span foreground='red' size='x-large'>Het benodigde UI-bestand ontbreekt:\n"
+msgstr "<span foreground='red' size='x-large'>Het benodigde UI-bestand ontbreekt:\n"
 "<b>{1}</b></span>\n"
 "Het is niet aangetroffen op je computer:\n"
 "-Niet relatief\n"
@@ -95,8 +82,7 @@ msgstr "Bestand toevoegen"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:140
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr ""
-"Het attribuut '{1}' kan niet dubbel worden verwerkt; de waarde is '{2}'"
+msgstr "Het attribuut '{1}' kan niet dubbel worden verwerkt; de waarde is '{2}'"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:132
 msgid "Attribute \"{1}\" could not be parsed as double, the value is NULL"
@@ -105,35 +91,29 @@ msgstr "Het attribuut '{1}' kan niet dubbel worden verwerkt; de waarde is NULL"
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:160
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:183
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr ""
-"Het attribuut '{1}' kan niet worden verwerkt als int; de waarde is '{2}'"
+msgstr "Het attribuut '{1}' kan niet worden verwerkt als int; de waarde is '{2}'"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:152
 msgid "Attribute \"{1}\" could not be parsed as int, the value is NULL"
-msgstr ""
-"Het attribuut '{1}' kan niet worden verwerkt als int; de waarde is NULL"
+msgstr "Het attribuut '{1}' kan niet worden verwerkt als int; de waarde is NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:205
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:228
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr ""
-"Het attribuut '{1}' kan niet worden verwerkt als size_t; de waarde is '{2}'"
+msgstr "Het attribuut '{1}' kan niet worden verwerkt als size_t; de waarde is '{2}'"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:197
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is NULL"
-msgstr ""
-"Het attribuut '{1}' kan niet worden verwerkt als size_t; de waarde is NULL"
+msgstr "Het attribuut '{1}' kan niet worden verwerkt als size_t; de waarde is NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:70
 msgid "Attribute color not set!"
 msgstr "Geen attribuutkleur ingesteld!"
 
 #: ../src/control/AudioController.cpp:152
-msgid ""
-"Audio folder not set! Recording won't work!\n"
+msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
-"Geen audiomap ingesteld; opname is niet mogelijk!\n"
+msgstr "Geen audiomap ingesteld; opname is niet mogelijk!\n"
 "Stel de opnamemap in via 'Voorkeuren > Audio-opname'"
 
 #: ../src/control/Control.cpp:264
@@ -191,8 +171,7 @@ msgstr "Penseelbreedte aanpassen"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:98
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr ""
-"De kleur '{1}' is onbekend (niet opgegeven op de standaard kleurenlijst)!"
+msgstr "De kleur '{1}' is onbekend (niet opgegeven op de standaard kleurenlijst)!"
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:276
 msgid "Contents"
@@ -213,39 +192,27 @@ msgid "Copy page"
 msgstr "Pagina kopiëren"
 
 #: ../src/control/jobs/SaveJob.cpp:129
-msgid ""
-"Could not create backup! (The file was created from an older Xournal version)"
-msgstr ""
-"Kan geen back-up creëren! (het bestand is gecreëerd in een oude versie van "
-"Xournal)"
+msgid "Could not create backup! (The file was created from an older Xournal version)"
+msgstr "Kan geen back-up creëren! (het bestand is gecreëerd in een oude versie van Xournal)"
 
 #: ../src/util/Util.cpp:112
 msgid "Could not create folder: {1}"
 msgstr "Kan map niet creëren: {1}"
 
 #: ../src/control/LatexController.cpp:106
-msgid ""
-"Could not find kpsewhich in PATH; please install kpsewhich and put it on "
-"path."
-msgstr ""
-"Kan kpsewhich niet vinden in PATH. Installeer dit pakket en voeg het toe aan "
-"PATH."
+msgid "Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
+msgstr "Kan kpsewhich niet vinden in PATH. Installeer dit pakket en voeg het toe aan PATH."
 
 #: ../src/control/LatexController.cpp:82
-msgid ""
-"Could not find pdflatex in PATH.\n"
+msgid "Could not find pdflatex in PATH.\n"
 "Please install pdflatex first and make sure it's in the PATH."
-msgstr ""
-"Kan pdflatex niet vinden in PATH.\n"
+msgstr "Kan pdflatex niet vinden in PATH.\n"
 "Installeer dit pakket en voeg het toe aan PATH."
 
 #: ../src/control/LatexController.cpp:111
-msgid ""
-"Could not find the LaTeX package 'standalone'.\n"
-"Please install standalone and make sure it's accessible by your LaTeX "
-"installation."
-msgstr ""
-"Kan het LaTeX-pakket 'standalone' niet vinden.\n"
+msgid "Could not find the LaTeX package 'standalone'.\n"
+"Please install standalone and make sure it's accessible by your LaTeX installation."
+msgstr "Kan het LaTeX-pakket 'standalone' niet vinden.\n"
 "Installeer dit pakket en zorg ervoor dat het toegankelijk is voor LaTeX."
 
 #: ../src/control/LatexController.cpp:470
@@ -270,16 +237,13 @@ msgstr "Kan bijlage niet openen: {1}. Foutmelding: kan bestand niet uitlezen"
 
 #: ../src/control/xojfile/LoadHandler.cpp:997
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr ""
-"Kan bijlage niet openen: {1}. Foutmelding: kan bestand niet wegschrijven"
+msgstr "Kan bijlage niet openen: {1}. Foutmelding: kan bestand niet wegschrijven"
 
 #: ../src/control/xojfile/LoadHandler.cpp:967
 #: ../src/control/xojfile/LoadHandler.cpp:1295
 #: ../src/control/xojfile/LoadHandler.cpp:1315
-msgid ""
-"Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr ""
-"Kan bijlage niet openen: {1}. Foutmelding: geen geldige grootte opgegeven"
+msgid "Could not open attachment: {1}. Error message: No valid file size provided"
+msgstr "Kan bijlage niet openen: {1}. Foutmelding: geen geldige grootte opgegeven"
 
 #: ../src/control/xojfile/LoadHandler.cpp:957
 #: ../src/control/xojfile/LoadHandler.cpp:975
@@ -293,19 +257,15 @@ msgid "Could not open file: \"{1}\""
 msgstr "Kan bestand niet openen: '{1}'"
 
 #: ../src/gui/MainWindow.cpp:91
-msgid ""
-"Could not parse custom toolbar.ini file: {1}\n"
+msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr ""
-"Kan aangepast toolbar.ini-bestand niet verwerken: {1}\n"
+msgstr "Kan aangepast toolbar.ini-bestand niet verwerken: {1}\n"
 "Werkbalken zijn niet beschikbaar"
 
 #: ../src/gui/MainWindow.cpp:81
-msgid ""
-"Could not parse general toolbar.ini file: {1}\n"
+msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr ""
-"Kan algemeen toolbar.ini-bestand niet verwerken: {1}\n"
+msgstr "Kan algemeen toolbar.ini-bestand niet verwerken: {1}\n"
 "Werkbalken zijn niet beschikbaar"
 
 #: ../src/control/xojfile/LoadHandler.cpp:441
@@ -314,11 +274,9 @@ msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Kan afbeelding niet uitlezen: {1}. Foutmelding: {2}"
 
 #: ../src/undo/UndoRedoHandler.cpp:157
-msgid ""
-"Could not redo \"{1}\"\n"
+msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
-"Kan '{1}' niet opnieuw uitvoeren\n"
+msgstr "Kan '{1}' niet opnieuw uitvoeren\n"
 "Er is iets misgegaan; stel een bugmelding op."
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:210
@@ -342,11 +300,9 @@ msgid "Could not start pdflatex: {1} (exit code: {2})"
 msgstr "Kan pdflatex niet starten: {1} (afsluitcode: {2})"
 
 #: ../src/undo/UndoRedoHandler.cpp:123
-msgid ""
-"Could not undo \"{1}\"\n"
+msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
-"Kan '{1}' niet ongedaan maken\n"
+msgstr "Kan '{1}' niet ongedaan maken\n"
 "Er is iets misgegaan; stel een bugmelding op."
 
 #: ../src/control/xojfile/SaveHandler.cpp:290
@@ -411,12 +367,10 @@ msgid "Discard"
 msgstr "Verwerpen"
 
 #: ../src/control/Control.cpp:2275
-msgid ""
-"Do not open Autosave files. They may will be overwritten!\n"
+msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr ""
-"Open geen automatisch opgeslagen bestanden; deze worden overschreven!\n"
+msgstr "Open geen automatisch opgeslagen bestanden; deze worden overschreven!\n"
 "Kopieer de bestanden naar een andere map.\n"
 "Bestanden uit de map '{1}' kunnen niet worden geopend."
 
@@ -499,11 +453,9 @@ msgid "Eraser"
 msgstr "Gum"
 
 #: ../src/control/Control.cpp:2578
-msgid ""
-"Error annotate PDF file \"{1}\"\n"
+msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
-"Kan PDF-bestand niet '{1}' voorzien van aantekeningen\n"
+msgstr "Kan PDF-bestand niet '{1}' voorzien van aantekeningen\n"
 "{2}"
 
 #: ../src/gui/GladeGui.cpp:24
@@ -544,11 +496,9 @@ msgid "Error: {1}"
 msgstr "Fout: {1}"
 
 #: ../src/control/XournalMain.cpp:162
-msgid ""
-"Errorlog cannot be deleted. You have to do it manually.\n"
+msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
-msgstr ""
-"Het foutlog kan niet worden verwijderd; doe dit handmatig.\n"
+msgstr "Het foutlog kan niet worden verwijderd; doe dit handmatig.\n"
 "Logbestand: {1}"
 
 #: ../src/control/jobs/BaseExportJob.cpp:24
@@ -556,11 +506,9 @@ msgid "Export PDF"
 msgstr "PDF-bestand exporteren"
 
 #: ../src/util/Util.cpp:133 ../src/util/Util.cpp:153
-msgid ""
-"File couldn't be opened. You have to do it manually:\n"
+msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr ""
-"Het bestand kan niet worden geopend; doe dit handmatig.\n"
+msgstr "Het bestand kan niet worden geopend; doe dit handmatig.\n"
 "URL: {1}"
 
 #: ../src/control/Control.cpp:2306
@@ -624,7 +572,7 @@ msgstr "Vastklikken aan raster"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:71
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:481
 msgid "Hand"
-msgstr "Hand"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:99
 msgid "Hide all"
@@ -729,13 +677,11 @@ msgid "Medium"
 msgstr "Normaal"
 
 #: ../src/control/XournalMain.cpp:556
-msgid ""
-"Missing the needed UI file:\n"
+msgid "Missing the needed UI file:\n"
 "{1}\n"
 " .app corrupted?\n"
 "Path: {2}"
-msgstr ""
-"Het benodigde UI-bestand ontbreekt:\n"
+msgstr "Het benodigde UI-bestand ontbreekt:\n"
 "{1}\n"
 "Is .app beschadigd?\n"
 "Pad: {2}"
@@ -790,11 +736,9 @@ msgid "OK"
 msgstr "Oké"
 
 #: ../src/control/jobs/BaseExportJob.cpp:113
-msgid ""
-"Only local files are supported\n"
+msgid "Only local files are supported\n"
 "Path: {1}"
-msgstr ""
-"Er is alleen ondersteuning voor lokale bestanden!\n"
+msgstr "Er is alleen ondersteuning voor lokale bestanden!\n"
 "Pad: {1}"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:11
@@ -902,7 +846,7 @@ msgstr "Pauzeren/Afspelen"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:290
 msgid "Pen"
-msgstr "Pen"
+msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:22
 msgid "Plain"
@@ -962,8 +906,7 @@ msgstr "Vervangen"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1335
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr ""
-"Het opgevraagde tijdelijke bestand van bijlage {1} is niet aangetroffen"
+msgstr "Het opgevraagde tijdelijke bestand van bijlage {1} is niet aangetroffen"
 
 #: ../src/control/XournalMain.cpp:189
 msgid "Restore file"
@@ -1093,19 +1036,15 @@ msgid "Show only not used pages ({1} unused pages)"
 msgstr "Alleen ongebruikte pagina's tonen ({1} ongebruikte pagina's)"
 
 #: ../src/control/XournalMain.cpp:390
-msgid ""
-"Sorry, Xournal++ can only open one file at once.\n"
+msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr ""
-"Xournal++ kan slechts één bestand tegelijk openen.\n"
+msgstr "Xournal++ kan slechts één bestand tegelijk openen.\n"
 "Andere bestanden worden genegeerd."
 
 #: ../src/control/XournalMain.cpp:405
-msgid ""
-"Sorry, Xournal++ cannot open remote files at the moment.\n"
+msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
-msgstr ""
-"Momenteel kan Xournal++ geen bestanden op afstand openen.\n"
+msgstr "Momenteel kan Xournal++ geen bestanden op afstand openen.\n"
 "Kopieer het bestand naar een lokale map."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
@@ -1161,12 +1100,8 @@ msgid "Text not found, searched on all pages"
 msgstr "Tekst komt niet voor; alle pagina's zijn doorzocht"
 
 #: ../src/control/Control.cpp:1182
-msgid ""
-"The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to "
-"edit?"
-msgstr ""
-"De werkbalkconfiguratie '{1}' is vooringesteld. Wil je een kopie maken die "
-"kunt aanpassen?"
+msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
+msgstr "De werkbalkconfiguratie '{1}' is vooringesteld. Wil je een kopie maken die kunt aanpassen?"
 
 #: ../src/control/Control.cpp:2346
 msgid "The attached background PDF could not be found."
@@ -1201,18 +1136,12 @@ msgid "The most recent log file name: {1}"
 msgstr "Meest recente logbestand: {1}"
 
 #: ../src/control/XournalMain.cpp:123
-msgid ""
-"There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug "
-"may be fixed."
-msgstr ""
-"Er zijn logbestanden van Xournal++. Maak een bugmelding op en verstuur deze."
+msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
+msgstr "Er zijn logbestanden van Xournal++. Maak een bugmelding op en verstuur deze."
 
 #: ../src/control/XournalMain.cpp:122
-msgid ""
-"There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug "
-"may be fixed."
-msgstr ""
-"Er is een logbestand van Xournal++. Maak een bugmelding op en verstuur deze."
+msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
+msgstr "Er is een logbestand van Xournal++. Maak een bugmelding op en verstuur deze."
 
 #: ../src/util/XojMsgBox.cpp:92
 msgid "There was an error displaying help: {1}"
@@ -1348,11 +1277,8 @@ msgid "Xournal files"
 msgstr "Xournal-bestanden"
 
 #: ../src/control/XournalMain.cpp:183
-msgid ""
-"Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
-"Xournal++ is de vorige keer gecrasht. Wil je het laatstgebruikte bestand "
-"herstellen?"
+msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
+msgstr "Xournal++ is de vorige keer gecrasht. Wil je het laatstgebruikte bestand herstellen?"
 
 #: ../src/control/Control.cpp:2709 ../src/control/stockdlg/XojOpenDlg.cpp:84
 msgid "Xournal++ files"
@@ -1369,35 +1295,22 @@ msgid "Yellow"
 msgstr "Geel"
 
 #: ../src/control/PageBackgroundChangeController.cpp:227
-msgid ""
-"You don't have any PDF pages to select from. Cancel operation.\n"
-"Please select another background type: Menu \"Journal\" → \"Configure Page "
-"Template\"."
-msgstr ""
-"De actie is afgebroken: je hebt geen PDF-pagina's om uit te kiezen.\n"
+msgid "You don't have any PDF pages to select from. Cancel operation.\n"
+"Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
+msgstr "De actie is afgebroken: je hebt geen PDF-pagina's om uit te kiezen.\n"
 "Kies een ander soort achtergrond via 'Document' →'Paginasjabloon instellen'."
 
 #: ../src/control/XournalMain.cpp:126
-msgid ""
-"You're using {1}/{2} branch. Send Bugreport will direct you to this repo's "
-"issue tracker."
-msgstr ""
-"Je gebruikt een versie uit {1}/{2}. Voor bugmeldingen wordt je doorgestuurd "
-"naar de probleemtracker van de repo."
+msgid "You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker."
+msgstr "Je gebruikt een versie uit {1}/{2}. Voor bugmeldingen wordt je doorgestuurd naar de probleemtracker van de repo."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:93
-msgid ""
-"Your current document does not contain PDF Page no {1}\n"
-"Would you like to insert this page?\n"
-"\n"
-"Tip: You can select Journal → Paper Background → PDF Background to insert a "
-"PDF page."
-msgstr ""
-"In je huidige document ontbreekt PDF-pagina #{1}.\n"
-"Wil je deze pagina invoegen?\n"
-"\n"
-"Tip: je kunt pagina's invoegen via Document → Documentachtergrond → PDF-"
-"achtergrond"
+msgid "Your current document does not contain PDF Page no {1}\n"
+"Would you like to insert this page?\n\n"
+"Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
+msgstr "In je huidige document ontbreekt PDF-pagina #{1}.\n"
+"Wil je deze pagina invoegen?\n\n"
+"Tip: je kunt pagina's invoegen via Document → Documentachtergrond → PDF-achtergrond"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Zoom fit to screen"
@@ -1438,7 +1351,7 @@ msgstr "Op_slaan"
 
 #: ../src/util/DeviceListHelper.cpp:88
 msgid "cursor"
-msgstr "cursor"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:298
 msgid "dash-/ dotted"
@@ -1482,7 +1395,7 @@ msgstr "toetsenbord"
 
 #: ../src/undo/AddUndoAction.cpp:135 ../src/undo/DeleteUndoAction.cpp:129
 msgid "latex"
-msgstr "latex"
+msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:76
 msgid "mouse"
@@ -1494,7 +1407,7 @@ msgstr "Er is een fout opgetreden in pdflatex: {1} (afsluitcode: {2})"
 
 #: ../src/util/DeviceListHelper.cpp:80
 msgid "pen"
-msgstr "pen"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:222
 msgid "show"
@@ -1515,15 +1428,15 @@ msgstr "tekst"
 
 #: ../src/util/DeviceListHelper.cpp:101
 msgid "touchpad"
-msgstr "touchpad"
+msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:97
 msgid "touchscreen"
-msgstr "touchscreen"
+msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:106
 msgid "trackpoint"
-msgstr "trackpoint"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:314
 msgid "whiteout"
@@ -1546,11 +1459,8 @@ msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
 msgstr "xoj-preview-extractor: het bestand '{1}' is geen .xoj-bestand"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:102
-msgid ""
-"xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr ""
-"xoj-preview-extractor: geen voorbeeld en pagina aangetroffen - onjuist "
-"bestand?"
+msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
+msgstr "xoj-preview-extractor: geen voorbeeld en pagina aangetroffen - onjuist bestand?"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:93
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
@@ -1566,7 +1476,7 @@ msgstr "xoj-preview-extractor: uitpakken voltooid"
 
 #: ../src/util/Util.cpp:102
 msgid "xournalpp-{1}"
-msgstr "xournalpp-{1}"
+msgstr ""
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
@@ -1574,11 +1484,10 @@ msgstr " = Zwevende gereedschapsbalk (experimenteel) ="
 
 #: ../ui/settings.glade:2616 ../ui/settings.glade:2627
 msgid "%"
-msgstr "%"
+msgstr ""
 
 #: ../ui/settings.glade:418
-msgid ""
-"%a\t\tAbbreviated weekday name (e.g. Thu)\n"
+msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%A\t\tFull weekday name (e.g. Thursday)\n"
 "%b\t\tAbbreviated month name (e.g. Aug)\n"
 "%B\t\tFull month name (e.g. August)\n"
@@ -1592,8 +1501,7 @@ msgid ""
 "%M\tMinute (00-59)\n"
 "%p\t\tAM or PM designation (e.g. PM)\n"
 "%S\t\tSecond (00-61)\n"
-"%U\t\tWeek number with the first Sunday as the first day of week one "
-"(00-53)\n"
+"%U\t\tWeek number with the first Sunday as the first day of week one (00-53)\n"
 "%w\t\tWeekday as a decimal number with Sunday as 0 (0-6)\n"
 "%W\tWeek number with the first Monday as the first day of week one (00-53)\n"
 "%x\t\tDate representation (e.g. 08/23/01)\n"
@@ -1602,8 +1510,7 @@ msgid ""
 "%Y\t\tYear (e.g. 2001)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\tA % sign"
-msgstr ""
-"%a\t\tIngekorte naam van dag (bijv. do)\n"
+msgstr "%a\t\tIngekorte naam van dag (bijv. do)\n"
 "%A\t\tVolledige naam van dag (bijv. donderdag)\n"
 "%b\t\tIngekorte naam van maand (bijv. aug)\n"
 "%B\t\tVolledige naam van maand (bijv. augustus)\n"
@@ -1628,13 +1535,9 @@ msgstr ""
 "%%\tA %-teken"
 
 #: ../ui/settings.glade:3341
-msgid ""
-"... AND How much time must have passed since last stroke.\n"
-"\n"
+msgid "... AND How much time must have passed since last stroke.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr ""
-"... EN hoeveel tijd er verstreken moet zijn sinds de laatste streek.\n"
-"\n"
+msgstr "... EN hoeveel tijd er verstreken moet zijn sinds de laatste streek.\n\n"
 "<i>Aanbevolen: 500 ms</i>"
 
 #: ../ui/images.glade:88
@@ -1654,20 +1557,16 @@ msgid "<b>Color</b>"
 msgstr "<b>Kleur</b>"
 
 #: ../ui/pageTemplate.glade:110
-msgid ""
-"<b>Configure Xournal++ Template Page</b>\n"
+msgid "<b>Configure Xournal++ Template Page</b>\n"
 "This settings will be used if you create a new document"
-msgstr ""
-"<b>Xournal++-sjabloonpagina instellen</b>\n"
+msgstr "<b>Xournal++-sjabloonpagina instellen</b>\n"
 "Deze instellingen worden toegepast op nieuwe documenten"
 
 #: ../ui/pageTemplate.glade:241 ../ui/pageTemplate.glade:282
-msgid ""
-"<b>Copy last page</b>\n"
+msgid "<b>Copy last page</b>\n"
 "Use the settings above\n"
 "for the fist Page"
-msgstr ""
-"<b>Laatste pagina kopiëren</b>\n"
+msgstr "<b>Laatste pagina kopiëren</b>\n"
 "Gebruik bovenstaande instellingen\n"
 "voor de eerste pagina"
 
@@ -1680,27 +1579,21 @@ msgid "<b>Default</b>"
 msgstr "<b>Standaard</b>"
 
 #: ../ui/exportSettings.glade:90
-msgid ""
-"<b>Document export settings</b>\n"
+msgid "<b>Document export settings</b>\n"
 "Select pages to export"
-msgstr ""
-"<b>Exportinstellingen</b>\n"
+msgstr "<b>Exportinstellingen</b>\n"
 "Kies de te exporteren pagina's"
 
 #: ../ui/main.glade:110
-msgid ""
-"<b>Empty Toolbox</b>\n"
+msgid "<b>Empty Toolbox</b>\n"
 "<i>Menu: View/Toolbars</i>"
-msgstr ""
-"<b>Lege gereedschapsbalk</b>\n"
+msgstr "<b>Lege gereedschapsbalk</b>\n"
 "<i>Menu: Weergave/Werkbalken</i>"
 
 #: ../ui/fillTransparency.glade:79
-msgid ""
-"<b>Fill transparency settings</b>\n"
+msgid "<b>Fill transparency settings</b>\n"
 "Select transparency for fill color"
-msgstr ""
-"<b>Doorzichtigheidsopties voor vullen</b>\n"
+msgstr "<b>Doorzichtigheidsopties voor vullen</b>\n"
 "Kies de doorzichtigheid van de opvulkleur"
 
 #: ../ui/pageTemplate.glade:132
@@ -1716,155 +1609,82 @@ msgid "<b>Separator</b>"
 msgstr "<b>Scheidingsteken</b>"
 
 #: ../ui/settings.glade:701
-msgid ""
-"<i>Assign device classes to each input device of your system. Only change "
-"these values if your devices are not correctly matched. (e.g. your pen shows "
-"up as touchscreen)</i>"
-msgstr ""
-"<i>Wijs apparaatklassen toe aan elk invoerapparaat dat aanwezig is op je "
-"systeem. Pas deze waarden alleen aan als de apparaten niet goed overeenkomen "
-"(bijv. als je stylus wordt herkend als touchscreen).</i>"
+msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
+msgstr "<i>Wijs apparaatklassen toe aan elk invoerapparaat dat aanwezig is op je systeem. Pas deze waarden alleen aan als de apparaten niet goed overeenkomen (bijv. als je stylus wordt herkend als touchscreen).</i>"
 
 #: ../ui/settings.glade:3640
-msgid ""
-"<i>Audio recordings are currently stored in a separate folder and referenced "
-"from the journal.</i>"
-msgstr ""
-"<i>Audio-opnames worden momenteel opgeslagen in een aparte map; documenten "
-"verwijzen hiernaar.</i>"
+msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
+msgstr "<i>Audio-opnames worden momenteel opgeslagen in een aparte map; documenten verwijzen hiernaar.</i>"
 
 #: ../ui/settings.glade:3918
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
-msgstr ""
-"<i>De wijzigingen worden alleen toegepast op nieuwe opnames en "
-"afspeelmomenten.</i>"
+msgstr "<i>De wijzigingen worden alleen toegepast op nieuwe opnames en afspeelmomenten.</i>"
 
 #: ../ui/settings.glade:913
-msgid ""
-"<i>Define which tools will be selected if you press a mouse button. After "
-"you release the button the previously selected tool will be selected.</i>"
-msgstr ""
-"<i>Geef op welk gereedschap moet worden gekozen als je een muisknop indrukt. "
-"Na het loslaten van de knop wordt het daarvoor gebruikte gereedschap gekozen."
-"</i>"
+msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
+msgstr "<i>Geef op welk gereedschap moet worden gekozen als je een muisknop indrukt. Na het loslaten van de knop wordt het daarvoor gebruikte gereedschap gekozen.</i>"
 
 #: ../ui/exportSettings.glade:209
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
 msgstr "<i>Voorbeeld:</i> 1-3 of 1,3,5,7, etc."
 
 #: ../ui/settings.glade:1813
-msgid ""
-"<i>For some specific hardware the scroll / touch behaviour of the system is "
-"not as expected. For these cases Xournal++ has a workaround.\n"
+msgid "<i>For some specific hardware the scroll / touch behaviour of the system is not as expected. For these cases Xournal++ has a workaround.\n"
 "This also enables touch drawing.</i>"
-msgstr ""
-"<i>Op sommige hardware is het scroll- of aanraakgedrag van het systeem "
-"anders dan verwacht. In dat geval heeft Xournal++ een tussenoplossing.\n"
+msgstr "<i>Op sommige hardware is het scroll- of aanraakgedrag van het systeem anders dan verwacht. In dat geval heeft Xournal++ een tussenoplossing.\n"
 "Dit schakelt tevens tekenen via het touchscreen in.</i>"
 
 #: ../ui/settings.glade:215
-msgid ""
-"<i>If the document already was saved you can find it in the same folder with "
-"the extension .autosave.xoj\n"
-"If the file was not yet saved you can find it in your home directory, in ~/."
-"xournalpp/autosave</i>"
-msgstr ""
-"<i>Als het document al is opgeslagen, dan vind je het terug in dezelfde map, "
-"voorzien van de extensie .autosave.xoj\n"
-"Als het nog niet wal opgeslagen, dan vind je het terug in je persoonlijke "
-"map onder ~/.xournalpp/autosave</i>"
+msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
+"If the file was not yet saved you can find it in your home directory, in ~/.xournalpp/autosave</i>"
+msgstr "<i>Als het document al is opgeslagen, dan vind je het terug in dezelfde map, voorzien van de extensie .autosave.xoj\n"
+"Als het nog niet wal opgeslagen, dan vind je het terug in je persoonlijke map onder ~/.xournalpp/autosave</i>"
 
 #: ../ui/settings.glade:2849
-msgid ""
-"<i>If you add additional space beside the pages you can choose the area of "
-"the screen you would like to work on.</i>"
-msgstr ""
-"<i>Als je extra ruimte nodig hebt naast de pagina's, dan kun je het "
-"schermgebied kiezen waarop je wilt werken.</i>"
+msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
+msgstr "<i>Als je extra ruimte nodig hebt naast de pagina's, dan kun je het schermgebied kiezen waarop je wilt werken.</i>"
 
 #: ../ui/settings.glade:522
-msgid ""
-"<i>If you open a PDF and there is a Xournal file with the same name it will "
-"open the xoj file.</i>"
-msgstr ""
-"<i>Als je een PDF-bestand opent terwijl er een Xournal-bestand met dezelfde "
-"naam is, dan wordt het .xoj-bestand geopend.</i>"
+msgid "<i>If you open a PDF and there is a Xournal file with the same name it will open the xoj file.</i>"
+msgstr "<i>Als je een PDF-bestand opent terwijl er een Xournal-bestand met dezelfde naam is, dan wordt het .xoj-bestand geopend.</i>"
 
 #: ../ui/settings.glade:1444
-msgid ""
-"<i>If your hardware does not support hand recognition, Xournal++ can disable "
-"your touchscreen when your pen is near the screen.</i>"
-msgstr ""
-"<i>Als je hardware geen ondersteuning biedt voor handpalmherkenning, dan kan "
-"Xournal++ je touchscreen uitschakelen zodra je pen nabij het scherm is.</i>"
+msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
+msgstr "<i>Als je hardware geen ondersteuning biedt voor handpalmherkenning, dan kan Xournal++ je touchscreen uitschakelen zodra je pen nabij het scherm is.</i>"
 
 #: ../ui/settings.glade:1092
-msgid ""
-"<i>Pressure Sensitivity allows you to draw lines with different widths, "
-"depending on how much pressure you apply to the pen. If your tablet does not "
-"support this feature this setting has no effect.</i>"
-msgstr ""
-"<i>Drukgevoeligheid stelt je in staat lijnen te tekenen met verschillende "
-"afmetingen, afhankelijk van hoeveel druk je toepast op de pen. Als je tablet "
-"dit niet ondersteunt, dan wordt deze instelling genegeerd.</i>"
+msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
+msgstr "<i>Drukgevoeligheid stelt je in staat lijnen te tekenen met verschillende afmetingen, afhankelijk van hoeveel druk je toepast op de pen. Als je tablet dit niet ondersteunt, dan wordt deze instelling genegeerd.</i>"
 
 #: ../ui/settings.glade:2695
-msgid ""
-"<i>Put a ruler on your screen and move the slider until both rulers match.</"
-"i>"
-msgstr ""
-"<i>Plaats een liniaal op je scherm en verplaats de schuifknop totdat beide "
-"linialen gelijkliggen.</i>"
+msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
+msgstr "<i>Plaats een liniaal op je scherm en verplaats de schuifknop totdat beide linialen gelijkliggen.</i>"
 
 #: ../ui/settings.glade:3494
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
-msgstr ""
-"<i>Kiest het gereedschap en bijbehorende instellingen als je op de "
-"standaardknop drukt.</i>"
+msgstr "<i>Kiest het gereedschap en bijbehorende instellingen als je op de standaardknop drukt.</i>"
 
 #: ../ui/settings.glade:1585
-msgid ""
-"<i>Specify commands that are called once Hand Recognition triggers. The "
-"commands will be executed in the UI Thread, make sure they are not blocking!"
-"</i>"
-msgstr ""
-"<i>Geef opdrachten op die moeten worden uitgevoerd als handpalmherkenning "
-"wordt gestart. Deze worden uitgevoerd in het toepassingsproces, dus zorg "
-"ervoor dat ze niks in de weg zitten!</i>"
+msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
+msgstr "<i>Geef opdrachten op die moeten worden uitgevoerd als handpalmherkenning wordt gestart. Deze worden uitgevoerd in het toepassingsproces, dus zorg ervoor dat ze niks in de weg zitten!</i>"
 
 #: ../ui/settings.glade:3730
-msgid ""
-"<i>Specify the audio devices used for recording and playback of audio "
-"attachments. \n"
-"If available select <small><tt>pulse</tt></small> as input / output device.</"
-"i>"
-msgstr ""
-"<i>Geef op welke audio-apparaten moeten worden gebruikt voor het opnemen en "
-"afspelen van audiobijlagen.\n"
+msgid "<i>Specify the audio devices used for recording and playback of audio attachments. \n"
+"If available select <small><tt>pulse</tt></small> as input / output device.</i>"
+msgstr "<i>Geef op welke audio-apparaten moeten worden gebruikt voor het opnemen en afspelen van audiobijlagen.\n"
 "Kies, indien beschikbaar, voor <small><tt>pulse</tt></small>.</i>"
 
 #: ../ui/settings.glade:1160
-msgid ""
-"<i>Specify the tools that will be selected if a button of the stylus is "
-"pressed or the eraser is used. After releasing the button, the previous tool "
-"will be selected.</i>"
-msgstr ""
-"<i>Stel in welke gereedschap moet worden gekozen als je een knop op een pen "
-"(stylus) indrukt of als je begint met gummen. Als je de knop loslaat, wordt "
-"het vorige gereedschap hersteld.</i>"
+msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
+msgstr "<i>Stel in welke gereedschap moet worden gekozen als je een knop op een pen (stylus) indrukt of als je begint met gummen. Als je de knop loslaat, wordt het vorige gereedschap hersteld.</i>"
 
 #: ../ui/settings.glade:346
 msgid "<i>This name will be proposed if you save a new document.</i>"
-msgstr ""
-"<i>De naam die wordt voorgesteld als je een nieuw document opslaat.</i>"
+msgstr "<i>De naam die wordt voorgesteld als je een nieuw document opslaat.</i>"
 
 #: ../ui/settings.glade:2673
-msgid ""
-"<i>To make sure on 100% zoom the size of elements is natural. (requires "
-"restart)</i>"
-msgstr ""
-"<i>Dit zorgt ervoor dat de elementgrootte correct is bij 100% zoom. "
-"(herstart vereist)</i>"
+msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
+msgstr "<i>Dit zorgt ervoor dat de elementgrootte correct is bij 100% zoom. (herstart vereist)</i>"
 
 #: ../ui/settings.glade:1955
 msgid "<i>Toggle visibility of menubar with F10</i>"
@@ -1872,23 +1692,16 @@ msgstr "<i>Toon/Verberg de menubalk door op F10 te drukken</i>"
 
 #: ../ui/settings.glade:1748
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
-msgstr ""
-"<i>Gebruik knijpgebaren om in en uit te zoomen op documentpagina's.</i>"
+msgstr "<i>Gebruik knijpgebaren om in en uit te zoomen op documentpagina's.</i>"
 
 #: ../ui/settings.glade:1377
-msgid ""
-"<i>You can configure devices, not identified by GTK as touchscreen, to "
-"behave as if they were one.</i>"
-msgstr ""
-"<i>Je kunt apparaten instellen als touchscreen die niet als zodanig door GTK"
-"+ worden herkend.</i>"
+msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
+msgstr "<i>Je kunt apparaten instellen als touchscreen die niet als zodanig door GTK+ worden herkend.</i>"
 
 #: ../ui/about.glade:73
-msgid ""
-"<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
-msgstr ""
-"<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>De volgende generatie</i>"
 
 #: ../ui/about.glade:9
@@ -1912,15 +1725,10 @@ msgid "All pages"
 msgstr "Alle pagina's"
 
 #: ../ui/settings.glade:3377
-msgid ""
-"All three conditions must be met before stroke is ignored.\n"
-"It must be short in time and length and we can't have ignored another stroke "
-"recently."
-msgstr ""
-"Er moet aan alle drie de voorwaarden worden voldaan voordat de streek "
-"genegeerd wordt.\n"
-"Het moet van korte duur en afstand zijn en er moet niet recentelijk al een "
-"streek zijn genegeerd."
+msgid "All three conditions must be met before stroke is ignored.\n"
+"It must be short in time and length and we can't have ignored another stroke recently."
+msgstr "Er moet aan alle drie de voorwaarden worden voldaan voordat de streek genegeerd wordt.\n"
+"Het moet van korte duur en afstand zijn en er moet niet recentelijk al een streek zijn genegeerd."
 
 #: ../ui/settings.glade:3811
 msgid "Audio Devices"
@@ -2004,7 +1812,7 @@ msgstr "Huidige pagina"
 
 #: ../ui/settings.glade:2175
 msgid "Cursor"
-msgstr "Cursor"
+msgstr ""
 
 #: ../ui/settings.glade:1692
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2063,30 +1871,17 @@ msgid "Display DPI Calibration"
 msgstr "DPI-calibratie"
 
 #: ../ui/settings.glade:3252
-msgid ""
-"Do not draw for inputs of short time and length unless it comes in short "
-"succession. Instead, show floating toolbox."
-msgstr ""
-"Teken invoer op als deze van korte duur en afstand is. Toon, in plaats "
-"daarvan, de zwevende gereedschapsbalk."
+msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
+msgstr "Teken invoer op als deze van korte duur en afstand is. Toon, in plaats daarvan, de zwevende gereedschapsbalk."
 
 #: ../ui/settings.glade:641 ../ui/settings.glade:808 ../ui/settings.glade:3165
-msgid ""
-"Drag LEFT from start point acts like shift key is being held.\n"
-"Drag UP acts as if Control key is being held.\n"
-"\n"
-"Determination Radius: Radius at which modifiers will lock in until finished "
-"drawing.\n"
-"\n"
+msgid "Drag LEFT from start point acts like shift key is being held.\n"
+"Drag UP acts as if Control key is being held.\n\n"
+"Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "<i>Useful for operating without keyboard.</i>"
-msgstr ""
-"Naar links verslepen vanaf het startpunt is gelijk aan het ingedrukt houden "
-"van de shift-toets.\n"
-"Omhoog verslepen is gelijk aan het ingedrukt houden van de Ctrl-toets.\n"
-"\n"
-"Straalbepaling: de straal waarin samensteltoetsen vergrendeld worden tot het "
-"tekenen is afgerond.\n"
-"\n"
+msgstr "Naar links verslepen vanaf het startpunt is gelijk aan het ingedrukt houden van de shift-toets.\n"
+"Omhoog verslepen is gelijk aan het ingedrukt houden van de Ctrl-toets.\n\n"
+"Straalbepaling: de straal waarin samensteltoetsen vergrendeld worden tot het tekenen is afgerond.\n\n"
 "<i>Dit is handig als je zonder toetsenbord werkt.</i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
@@ -2103,8 +1898,7 @@ msgstr "Tekengebied"
 
 #: ../ui/settings.glade:3215
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
-msgstr ""
-"Tekengereedschap - samensteltoetsen instellen per richting (experimenteel)"
+msgstr "Tekengereedschap - samensteltoetsen instellen per richting (experimenteel)"
 
 #: ../ui/main.glade:2466
 msgid "Duplicate"
@@ -2143,12 +1937,8 @@ msgid "Enable Tap action"
 msgstr "Drukactie inschakelen"
 
 #: ../ui/settings.glade:789
-msgid ""
-"Enable drawing outside of window <i>(Drawing will not stop at the border of "
-"the window)</i>"
-msgstr ""
-"Tekenen buiten venster toestaan <i>(niet stoppen met tekenen als de "
-"vensterrand geraakt wordt)</i>"
+msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
+msgstr "Tekenen buiten venster toestaan <i>(niet stoppen met tekenen als de vensterrand geraakt wordt)</i>"
 
 #: ../ui/settings.glade:1459
 msgid "Enable internal Hand Recognition"
@@ -2267,23 +2057,15 @@ msgid "Highlighter Opti_ons"
 msgstr "Markeer_opties"
 
 #: ../ui/settings.glade:3298
-msgid ""
-"How short (screen mm)  of the stroke  AND...\n"
-"\n"
+msgid "How short (screen mm)  of the stroke  AND...\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
-"Hoe kort (scherm mm) de penseelstreek is EN...\n"
-"\n"
+msgstr "Hoe kort (scherm mm) de penseelstreek is EN...\n\n"
 "<i>Aanbevolen: 1 mm)</i>"
 
 #: ../ui/settings.glade:3278
-msgid ""
-"How short (time)  AND...\n"
-"\n"
+msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
-"Hoe kort (tijd) EN...\n"
-"\n"
+msgstr "Hoe kort (tijd) EN...\n\n"
 "<i>Aanbevolen: 150ms)</i>"
 
 #: ../ui/settings.glade:3265
@@ -2347,14 +2129,10 @@ msgid "Max Length (mm)"
 msgstr "Max. lengte (mm)"
 
 #: ../ui/settings.glade:820
-msgid ""
-"Merge button events with stylus tip events\n"
-"<i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" "
-"<i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
-"Knopacties koppelen aan stylusacties\n"
-"<i>(vink dit aan als</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>"
-"\" <i> \"<tt>on</tt>\"<i>) terugkoppelt</i>"
+msgid "Merge button events with stylus tip events\n"
+"<i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
+msgstr "Knopacties koppelen aan stylusacties\n"
+"<i>(vink dit aan als</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i> \"<tt>on</tt>\"<i>) terugkoppelt</i>"
 
 #: ../ui/settings.glade:954
 msgid "Middle Mouse Button"
@@ -2398,9 +2176,7 @@ msgstr "Nieuwe _laag"
 
 #: ../ui/settings.glade:3006
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
-msgstr ""
-"Compensatie voor eerste pagina voor zoveel pagina's als <b>Pagina's "
-"koppelen</b> ingeschakeld is"
+msgstr "Compensatie voor eerste pagina voor zoveel pagina's als <b>Pagina's koppelen</b> ingeschakeld is"
 
 #: ../ui/settings.glade:842
 msgid "Options"
@@ -2443,11 +2219,9 @@ msgid "Paper b_ackground"
 msgstr "Papier_achtergrond"
 
 #: ../ui/about.glade:217
-msgid ""
-"Partially based on Xournal\n"
+msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr ""
-"Deels gebaseerd op Xournal\n"
+msgstr "Deels gebaseerd op Xournal\n"
 "van Denis Aurox"
 
 #: ../ui/main.glade:1788
@@ -2600,7 +2374,7 @@ msgstr "Opslagmap"
 
 #: ../ui/settings.glade:1326
 msgid "Stylus"
-msgstr "Stylus"
+msgstr ""
 
 #: ../ui/settings.glade:1295
 msgid "Stylus Buttons"
@@ -2639,11 +2413,8 @@ msgid "The unit of the ruler is cm"
 msgstr "De eenheid van de liniaal is cm"
 
 #: ../ui/settings.glade:768
-msgid ""
-"These settings take only effect if the experimental input system is activated"
-msgstr ""
-"Deze instellingen orden alleen toegepast als de experimentele invoermethode "
-"ingeschakeld is"
+msgid "These settings take only effect if the experimental input system is activated"
+msgstr "Deze instellingen orden alleen toegepast als de experimentele invoermethode ingeschakeld is"
 
 #: ../ui/settings.glade:621
 msgid "This is an experimental feature! Use it with care."
@@ -2656,7 +2427,7 @@ msgstr "Time-out"
 #: ../ui/settings.glade:1413 ../ui/settings.glade:1882
 #: ../ui/settingsDeviceClassConfig.glade:45
 msgid "Touchscreen"
-msgstr "Touchscreen"
+msgstr ""
 
 #: ../ui/fillTransparency.glade:14
 msgid "Transparency settings"
@@ -2667,12 +2438,8 @@ msgid "Try to select object first."
 msgstr "Kies eerst een object."
 
 #: ../ui/settings.glade:3363 ../ui/settings.glade:3393
-msgid ""
-"Try to select object first; if nothing selected then show floating toolbox "
-"if enabled."
-msgstr ""
-"Kies eerst een object. Als je niks kiest, dan wordt de zwevende "
-"gereedschapsbalk getoond."
+msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
+msgstr "Kies eerst een object. Als je niks kiest, dan wordt de zwevende gereedschapsbalk getoond."
 
 #: ../ui/settings.glade:3019
 msgid "Usually 0 or 1"
@@ -2972,7 +2739,7 @@ msgstr "wijzigen"
 
 #: ../ui/exportSettings.glade:223
 msgid "dpi"
-msgstr "dpi"
+msgstr ""
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
@@ -2993,7 +2760,7 @@ msgstr "minuten"
 #: ../ui/settings.glade:2941 ../ui/settings.glade:2952
 #: ../ui/settings.glade:3200
 msgid "pixels"
-msgstr "pixels"
+msgstr ""
 
 #: ../ui/settings.glade:1544
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
@@ -3007,75 +2774,3 @@ msgstr "opslaan naar bestand"
 msgid "ver_y thick"
 msgstr "erg d_ik"
 
-#~ msgid "         Settings:     "
-#~ msgstr "         Instellingen:     "
-
-#~ msgid "0"
-#~ msgstr "0"
-
-#~ msgid "0,20"
-#~ msgstr "0,20"
-
-#~ msgid "0,25"
-#~ msgstr "0,25"
-
-#~ msgid "1.2.3"
-#~ msgstr "1.2.3."
-
-#~ msgid "10.0"
-#~ msgstr "10.0"
-
-#~ msgid "2.0"
-#~ msgstr "2.0"
-
-#~ msgid "6"
-#~ msgstr "6"
-
-#~ msgid "7"
-#~ msgstr "7"
-
-#~ msgid "8"
-#~ msgstr "8"
-
-#~ msgid "Author"
-#~ msgstr "Auteur"
-
-#~ msgid "Description"
-#~ msgstr "Omschrijving"
-
-#~ msgid "Hide Menu"
-#~ msgstr "Menu verbergen"
-
-#~ msgid ""
-#~ "Show only not used pages\n"
-#~ "THIS TEXT IS A PLACEHOLDER!"
-#~ msgstr ""
-#~ "Alleen ongebruikte pagina's tonen\n"
-#~ "DEZE TEKST IS EEN PLAATSHOUDER"
-
-#~ msgid "State PLACEHOLDER"
-#~ msgstr "Status (PLAATSHOUDER)"
-
-#~ msgid "X11"
-#~ msgstr "X11"
-
-#~ msgid "_1"
-#~ msgstr "_1"
-
-#~ msgid "_2"
-#~ msgstr "_2"
-
-#~ msgid "_3"
-#~ msgstr "_3"
-
-#~ msgid "_4"
-#~ msgstr "_4"
-
-#~ msgid "_5"
-#~ msgstr "_5"
-
-#~ msgid "default enabled / disabled"
-#~ msgstr "standaard in-/uitgeschakeld"
-
-#~ msgid "pluginName"
-#~ msgstr "naam van plug-in"
