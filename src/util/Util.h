@@ -33,8 +33,8 @@ Path getAutosaveFilename();
 
 pid_t getPid();
 
-void openFileWithDefaultApplicaion(Path filename);
-void openFileWithFilebrowser(Path filename);
+void openFileWithDefaultApplicaion(const Path& filename);
+void openFileWithFilebrowser(const Path& filename);
 
 Path getConfigSubfolder(const Path& subfolder = "");
 Path getConfigFile(const Path& relativeFileName = "");

@@ -118,7 +118,7 @@ Path Util::ensureFolderExists(const Path& p)
 	return p;
 }
 
-void Util::openFileWithDefaultApplicaion(Path filename)
+void Util::openFileWithDefaultApplicaion(const Path& filename)
 {
 #ifdef __APPLE__
 	constexpr auto const OPEN_PATTERN = "open \"{1}\"";
@@ -136,7 +136,7 @@ void Util::openFileWithDefaultApplicaion(Path filename)
 	}
 }
 
-void Util::openFileWithFilebrowser(Path filename)
+void Util::openFileWithFilebrowser(const Path& filename)
 {
 #ifdef __APPLE__
 	constexpr auto const OPEN_PATTERN = "open \"{1}\"";
