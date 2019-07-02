@@ -31,7 +31,7 @@ int gdkrgba_to_hex(GdkRGBA& color);
 
 Path getAutosaveFilename();
 
-int getPid();
+pid_t getPid();
 
 void openFileWithDefaultApplicaion(Path filename);
 void openFileWithFilebrowser(Path filename);

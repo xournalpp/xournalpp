@@ -9,14 +9,14 @@
 #include <unistd.h>
 #include <utility>
 
-class CallbackUiData {
-public:
+struct CallbackUiData
+{
 	explicit CallbackUiData(std::function<void()> callback)
 	 : callback(std::move(callback))
 	{
 	}
 
-	std::function<void()> callback;
+	std::function<void()> callback;  //NOLINT
 };
 
 /**
@@ -27,7 +27,6 @@ static bool execInUiThreadCallback(CallbackUiData* cb)
 	cb->callback();
 
 	delete cb;
-
 	// Do not call again
 	return false;
 }
@@ -70,10 +69,9 @@ int Util::gdkrgba_to_hex(GdkRGBA& color)
 	       ((static_cast<unsigned>(color.blue * 255)) & 0xffu);
 }
 
-int Util::getPid()
+pid_t Util::getPid()
 {
-	pid_t pid = ::getpid();
-	return (int) pid;
+	return ::getpid();
 }
 
 Path Util::getAutosaveFilename()
