@@ -18,6 +18,7 @@
 #include <string>
 #include <functional>
 #include <limits>
+#include <cstdint>
 
 using std::string;
 
@@ -26,8 +27,8 @@ namespace Util
 
 void cairo_set_source_rgbi(cairo_t* cr, int color);
 
-void apply_rgb_togdkrgba(GdkRGBA& col, int color);
-int gdkrgba_to_hex(GdkRGBA& color);
+GdkRGBA rgb_to_GdkRGBA(uint32_t color);
+uint32_t gdkrgba_to_hex(const GdkRGBA& color);
 
 Path getAutosaveFilename();
 

@@ -41,32 +41,39 @@ void Util::execInUiThread(std::function<void()>&& callback)
 	gdk_threads_add_idle((GSourceFunc) execInUiThreadCallback, new CallbackUiData(std::move(callback)));
 }
 
+GdkRGBA Util::rgb_to_GdkRGBA(const uint32_t color)
+{  // clang-format off
+	return {((color >> 16U) & 0xFFU) / 255.0,
+	        ((color >> 8U) & 0xFFU) / 255.0,
+	        (color & 0xFFU) / 255.0,
+	        1.0};
+	// clang-format on
+}
+
 void Util::cairo_set_source_rgbi(cairo_t* cr, int color)
 {
-	auto tmp = static_cast<unsigned>(color);
-
-	double r = ((tmp >> 16u) & 0xffu) / 255.0;
-	double g = ((tmp >> 8u) & 0xffu) / 255.0;
-	double b = (tmp & 0xffu) / 255.0;
-
-	cairo_set_source_rgb(cr, r, g, b);
+	auto rgba = rgb_to_GdkRGBA(color);
+	cairo_set_source_rgb(cr, rgba.red, rgba.green, rgba.blue);
 }
 
+// Splits the double into a equal sized distribution between [0,256[ and rounding down
+// inspired by, which isn't completely correct:
+// https://stackoverflow.com/questions/1914115/converting-color-value-from-float-0-1-to-byte-0-255
+constexpr double MAXCOLOR = 256.0 - std::numeric_limits<double>::epsilon() * 128;
 
-void Util::apply_rgb_togdkrgba(GdkRGBA& col, int color)
+inline uint32_t float_to_int_color(const double color)
 {
-	auto tmp = static_cast<unsigned>(color);
-	col.red = ((tmp >> 16u) & 0xFFu) / 255.0;
-	col.green = ((tmp >> 8u) & 0xFFu) / 255.0;
-	col.blue = (tmp & 0xFFu) / 255.0;
-	col.alpha = 1.0;
+	static_assert(MAXCOLOR < 256.0, "MAXCOLOR isn't smaler than 256");
+	return static_cast<uint32_t>(color * MAXCOLOR);
 }
 
-int Util::gdkrgba_to_hex(GdkRGBA& color)
-{
-	return ((static_cast<unsigned>(color.red * 255)) & 0xffu) << 16u |
-	       ((static_cast<unsigned>(color.green * 255)) & 0xffu) << 8u |
-	       ((static_cast<unsigned>(color.blue * 255)) & 0xffu);
+uint32_t Util::gdkrgba_to_hex(const GdkRGBA& color)
+{   // clang-format off
+	return float_to_int_color(color.alpha) << 24U |
+	       float_to_int_color(color.red)  << 16U |
+	       float_to_int_color(color.green) << 8U |
+	       float_to_int_color(color.blue);
+	// clang-format on
 }
 
 pid_t Util::getPid()
