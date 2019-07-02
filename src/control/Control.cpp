@@ -2913,7 +2913,7 @@ bool Control::close(const bool allowDestroy, const bool allowCancel)
 		}
 
 		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
-		const guint dialogResponse = gtk_dialog_run(GTK_DIALOG(dialog));
+		const auto dialogResponse = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
 		switch (dialogResponse)
