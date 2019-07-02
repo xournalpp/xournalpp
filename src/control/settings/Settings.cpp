@@ -812,7 +812,7 @@ void Settings::saveDeviceClasses()
 
 	SElement& s = getCustomElement("deviceClasses");
 
-	for (const std::map<string, std::pair<int, GdkInputSource>>::value_type& device : inputDeviceClasses)
+	for (const std::map<string, std::pair<int, GdkInputSource>>::value_type& device: inputDeviceClasses)
 	{
 		SElement& e = s.child(device.first);
 		e.setInt("deviceClass", device.second.first);

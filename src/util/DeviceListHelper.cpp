@@ -88,7 +88,6 @@ InputDevice::InputDevice(GdkDevice* device)
  : name(gdk_device_get_name(device))
  , source(gdk_device_get_source(device))
 {
-
 }
 
 InputDevice::InputDevice(string name, GdkInputSource source)
