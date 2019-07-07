@@ -73,19 +73,19 @@ InputEventType InputEvents::translateEventType(GdkEventType type)
 	}
 }
 
-InputDeviceClass InputEvents::translateDeviceType(GdkDevice* device, Settings* settings)
+InputDeviceClass InputEvents::translateDeviceType(const string& name, GdkInputSource source, Settings* settings)
 {
-	int deviceType = settings->getDeviceClassForDevice(device);
+	int deviceType = settings->getDeviceClassForDevice(name, source);
 	switch (deviceType)
 	{
 		case 0:
 		{
 			// Keyboards are not matched in their own class - do this here manually
-			if (gdk_device_get_source(device) == GDK_SOURCE_KEYBOARD)
-			{
+		    if (source == GDK_SOURCE_KEYBOARD)
+		    {
 				return INPUT_DEVICE_KEYBOARD;
-			}
-			return INPUT_DEVICE_IGNORE;
+		    }
+		    return INPUT_DEVICE_IGNORE;
 		}
 		case 1:
 			return INPUT_DEVICE_MOUSE;
@@ -98,6 +98,11 @@ InputDeviceClass InputEvents::translateDeviceType(GdkDevice* device, Settings* s
 		default:
 			return INPUT_DEVICE_IGNORE;
 	}
+}
+
+InputDeviceClass InputEvents::translateDeviceType(GdkDevice* device, Settings* settings)
+{
+	return translateDeviceType(gdk_device_get_name(device), gdk_device_get_source(device), settings);
 }
 
 InputEvent* InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings)
