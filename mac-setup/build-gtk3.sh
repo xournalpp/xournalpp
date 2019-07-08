@@ -1,4 +1,4 @@
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.new_local/bin:$PATH"
 
 # missing six python lib:
 # after first failure download, unpack and install with
