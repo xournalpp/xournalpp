@@ -50,7 +50,7 @@ public:
 	{
 		Path b = Path::fromUri("file:///tmp/test.txt");
 		CPPUNIT_ASSERT_EQUAL(false, b.isEmpty());
-		CPPUNIT_ASSERT_EQUAL(string("/tmp/test.txt"), b.str());
+		CPPUNIT_ASSERT_EQUAL(G_DIR_SEPARATOR_S + string("tmp") + G_DIR_SEPARATOR_S + string("test.txt"), b.str());
 	}
 
 	void testParentPath()
