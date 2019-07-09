@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-07 09:58+0000\n"
-"PO-Revision-Date: 2019-07-08 14:39\n"
+"PO-Revision-Date: 2019-07-09 19:23\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Croatian\n"
 "Language: hr_HR\n"
@@ -118,7 +118,7 @@ msgstr ""
 
 #: ../src/control/jobs/AutosaveJob.cpp:60
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "Automatsko spremanje u {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Back"
