@@ -20,4 +20,4 @@ Terminal=false
 StartupNotify=true
 MimeType=application/x-xoj;application/x-xojpp;application/x-xopp;application/x-xopt;application/pdf;
 Icon=xournalpp
-Categories=GNOME;GTK;Utility;TextEditor;
+Categories=Office;GNOME;GTK;
