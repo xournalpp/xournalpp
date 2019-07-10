@@ -13,7 +13,8 @@
 
 #include <XournalType.h>
 
-enum class PageTypeFormat {
+enum class PageTypeFormat
+{
 	Plain,
 	Ruled,
 	Lined,

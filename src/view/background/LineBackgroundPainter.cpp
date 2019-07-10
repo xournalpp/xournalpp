@@ -50,7 +50,7 @@ void LineBackgroundPainter::paintBackgroundRuled()
 	Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
 	cairo_set_line_width(cr, lineWidth * lineWidthFactor);
 
-	int numLines = (int)((height - headerSize - footerSize) / (roulingSize + lineWidth * lineWidthFactor));
+	int numLines = (int) ((height - headerSize - footerSize) / (roulingSize + lineWidth * lineWidthFactor));
 
 	double offset = headerSize;
 

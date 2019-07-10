@@ -15,7 +15,7 @@
 
 #include <XournalType.h>
 
-class StavesBackgroundPainter : public BaseBackgroundPainter
+class StavesBackgroundPainter: public BaseBackgroundPainter
 {
 public:
 	StavesBackgroundPainter();

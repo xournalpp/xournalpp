@@ -1,13 +1,13 @@
 #include "PageType.h"
 
 PageType::PageType()
-		: format(PageTypeFormat::Lined)
+ : format(PageTypeFormat::Lined)
 {
 	XOJ_INIT_TYPE(PageType);
 }
 
 PageType::PageType(PageTypeFormat format)
-		: format(format)
+ : format(format)
 {
 	XOJ_INIT_TYPE(PageType);
 }
@@ -59,6 +59,7 @@ bool PageType::isSpecial()
 {
 	XOJ_CHECK_TYPE(PageType);
 
-	return this->format == PageTypeFormat::Pdf || this->format == PageTypeFormat::Image || this->format == PageTypeFormat::Copy;
+	return this->format == PageTypeFormat::Pdf || this->format == PageTypeFormat::Image ||
+	       this->format == PageTypeFormat::Copy;
 }
 
