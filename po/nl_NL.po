@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-07 09:58+0000\n"
-"PO-Revision-Date: 2019-07-10 07:57\n"
+"PO-Revision-Date: 2019-07-10 10:12\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -155,7 +155,7 @@ msgstr "Annuleren"
 
 #: ../src/undo/ColorUndoAction.cpp:119
 msgid "Change color"
-msgstr "Kleur aanpassen"
+msgstr "Kleur wijzigen"
 
 #: ../src/undo/FontUndoAction.cpp:134
 msgid "Change font"
