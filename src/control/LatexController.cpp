@@ -86,7 +86,7 @@ LatexController::FindDependencyStatus LatexController::findTexDependencies()
 	g_free(pdflatex);
 
 	// Check for 'standalone' latex package
-	static gchar* kpsewhichArgs[] = {g_strdup("kpsewhich"), g_strdup("standalone")};
+	static gchar* kpsewhichArgs[] = {g_strdup("kpsewhich"), g_strdup("standalone"), nullptr};
 	auto kpsewhichFlags = GSpawnFlags(G_SPAWN_DEFAULT | G_SPAWN_SEARCH_PATH | G_SPAWN_STDOUT_TO_DEV_NULL);
 	GError* kpsewhichErr = nullptr;
 	gint kpsewhichStatus;
