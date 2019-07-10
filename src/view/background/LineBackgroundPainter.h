@@ -30,7 +30,7 @@ public:
 	virtual void resetConfig();
 
 
-	void paintBackgroundLined();
+	void paintBackgroundRuled();
 	void paintBackgroundVerticalLine();
 
 private:

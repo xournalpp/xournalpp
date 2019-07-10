@@ -30,7 +30,7 @@ void LineBackgroundPainter::paint()
 
 	paintBackgroundColor();
 
-	paintBackgroundLined();
+	paintBackgroundRuled();
 
 	if (verticalLine)
 	{
@@ -43,17 +43,22 @@ const double footerSize = 20;
 
 const double roulingSize = 24;
 
-void LineBackgroundPainter::paintBackgroundLined()
+void LineBackgroundPainter::paintBackgroundRuled()
 {
 	XOJ_CHECK_TYPE(LineBackgroundPainter);
 
 	Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
 	cairo_set_line_width(cr, lineWidth * lineWidthFactor);
 
-	for (double y = headerSize; y < (height - footerSize); y += roulingSize)
+	int numLines = (int)((height - headerSize - footerSize) / (roulingSize + lineWidth * lineWidthFactor));
+
+	double offset = headerSize;
+
+	for (int i = 0; i < numLines; i++)
 	{
-		cairo_move_to(cr, 0, y);
-		cairo_line_to(cr, width, y);
+		cairo_move_to(cr, 0, offset);
+		cairo_line_to(cr, width, offset);
+		offset += roulingSize;
 	}
 
 	cairo_stroke(cr);
