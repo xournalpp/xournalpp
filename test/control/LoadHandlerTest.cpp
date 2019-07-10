@@ -140,7 +140,7 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("load/pages.xoj"));
 
-		CPPUNIT_ASSERT_EQUAL((size_t) 7, doc->getPageCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 6, doc->getPageCount());
 	}
 
 	void testPagesZipped()
@@ -148,7 +148,7 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/pages.xopp"));
 
-		CPPUNIT_ASSERT_EQUAL((size_t) 7, doc->getPageCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 6, doc->getPageCount());
 	}
 
 	void checkPageType(Document* doc, int pageIndex, string expectedText, PageType expectedBgType)
@@ -173,14 +173,13 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("load/pages.xoj"));
 
-		CPPUNIT_ASSERT_EQUAL((size_t) 7, doc->getPageCount());
-		checkPageType(doc, 0, "p1", PageType(PageTypeFormat::PLAIN));
-		checkPageType(doc, 1, "p2", PageType(PageTypeFormat::LINED));
-		checkPageType(doc, 2, "p3", PageType(PageTypeFormat::LINED_VLINE));
-		checkPageType(doc, 3, "p4", PageType(PageTypeFormat::STAVES));
-		checkPageType(doc, 4, "p5", PageType(PageTypeFormat::STAVES_VLINE));
-		checkPageType(doc, 5, "p6", PageType(PageTypeFormat::GRAPH));
-		checkPageType(doc, 6, "p7", PageType(PageTypeFormat::IMAGE));
+		CPPUNIT_ASSERT_EQUAL((size_t) 6, doc->getPageCount());
+		checkPageType(doc, 0, "p1", PageType(PageTypeFormat::Plain));
+		checkPageType(doc, 1, "p2", PageType(PageTypeFormat::Ruled));
+		checkPageType(doc, 2, "p3", PageType(PageTypeFormat::Lined));
+		checkPageType(doc, 3, "p4", PageType(PageTypeFormat::Staves));
+		checkPageType(doc, 4, "p5", PageType(PageTypeFormat::Graph));
+		checkPageType(doc, 5, "p6", PageType(PageTypeFormat::Image));
 	}
 
 	void testPageTypeZipped()
@@ -188,14 +187,13 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/pages.xopp"));
 
-		CPPUNIT_ASSERT_EQUAL((size_t) 7, doc->getPageCount());
-		checkPageType(doc, 0, "p1", PageType(PageTypeFormat::PLAIN));
-		checkPageType(doc, 1, "p2", PageType(PageTypeFormat::LINED));
-		checkPageType(doc, 2, "p3", PageType(PageTypeFormat::LINED_VLINE));
-		checkPageType(doc, 3, "p4", PageType(PageTypeFormat::STAVES));
-		checkPageType(doc, 4, "p5", PageType(PageTypeFormat::STAVES_VLINE));
-		checkPageType(doc, 5, "p6", PageType(PageTypeFormat::GRAPH));
-		checkPageType(doc, 6, "p7", PageType(PageTypeFormat::IMAGE));
+		CPPUNIT_ASSERT_EQUAL((size_t) 6, doc->getPageCount());
+		checkPageType(doc, 0, "p1", PageType(PageTypeFormat::Plain));
+		checkPageType(doc, 1, "p2", PageType(PageTypeFormat::Ruled));
+		checkPageType(doc, 2, "p3", PageType(PageTypeFormat::Lined));
+		checkPageType(doc, 3, "p4", PageType(PageTypeFormat::Staves));
+		checkPageType(doc, 4, "p5", PageType(PageTypeFormat::Graph));
+		checkPageType(doc, 5, "p6", PageType(PageTypeFormat::Image));
 	}
 
 	void checkLayer(PageRef page, int layerIndex, string expectedText)

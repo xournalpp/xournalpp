@@ -7,7 +7,7 @@ XojPage::XojPage(double width, double height)
 {
 	XOJ_INIT_TYPE(XojPage);
 
-	this->bgType.format = PageTypeFormat::LINED_VLINE;
+	this->bgType.format = PageTypeFormat::Lined;
 
 	this->width = width;
 	this->height = height;
@@ -192,7 +192,7 @@ void XojPage::setBackgroundPdfPageNr(size_t page)
 	XOJ_CHECK_TYPE(XojPage);
 
 	this->pdfBackgroundPage = page;
-	this->bgType.format = PageTypeFormat::PDF;
+	this->bgType.format = PageTypeFormat::Pdf;
 	this->bgType.config = "";
 }
 

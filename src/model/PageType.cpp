@@ -1,7 +1,7 @@
 #include "PageType.h"
 
 PageType::PageType()
-		: format(PageTypeFormat::LINED_VLINE)
+		: format(PageTypeFormat::Lined)
 {
 	XOJ_INIT_TYPE(PageType);
 }
@@ -39,7 +39,7 @@ bool PageType::isPdfPage()
 {
 	XOJ_CHECK_TYPE(PageType);
 
-	return this->format == PageTypeFormat::PDF;
+	return this->format == PageTypeFormat::Pdf;
 }
 
 /**
@@ -49,7 +49,7 @@ bool PageType::isImagePage()
 {
 	XOJ_CHECK_TYPE(PageType);
 
-	return this->format == PageTypeFormat::IMAGE;
+	return this->format == PageTypeFormat::Image;
 }
 
 /**
@@ -59,6 +59,6 @@ bool PageType::isSpecial()
 {
 	XOJ_CHECK_TYPE(PageType);
 
-	return this->format == PageTypeFormat::PDF || this->format == PageTypeFormat::IMAGE || this->format == PageTypeFormat::COPY;
+	return this->format == PageTypeFormat::Pdf || this->format == PageTypeFormat::Image || this->format == PageTypeFormat::Copy;
 }
 

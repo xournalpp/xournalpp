@@ -15,6 +15,8 @@
 
 #include <XournalType.h>
 
+#include <map>
+
 class PageTypeInfo {
 public:
 	PageType page;

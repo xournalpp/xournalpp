@@ -7,7 +7,6 @@
 #include <i18n.h>
 #include <XojMsgBox.h>
 
-
 PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath)
 {
 	XOJ_INIT_TYPE(PageTypeHandler);
@@ -21,19 +20,18 @@ PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath)
 		XojMsgBox::showErrorToUser(nullptr, msg);
 
 		// On failure load the hardcoded and predefined values
-		addPageTypeInfo(_("Plain"), PageTypeFormat::PLAIN, "");
-		addPageTypeInfo(_("Lined"), PageTypeFormat::LINED, "");
-		addPageTypeInfo(_("Lined with vertical line"), PageTypeFormat::LINED_VLINE, "");
-		addPageTypeInfo(_("Staves"), PageTypeFormat::STAVES, "");
-		addPageTypeInfo(_("Staves with vertical line"), PageTypeFormat::STAVES_VLINE, "");
-		addPageTypeInfo(_("Graph"), PageTypeFormat::GRAPH, "");
-		addPageTypeInfo(_("Dotted"), PageTypeFormat::DOTTED, "");
+		addPageTypeInfo(_("Plain"), PageTypeFormat::Plain, "");
+		addPageTypeInfo(_("Ruled"), PageTypeFormat::Ruled, "");
+		addPageTypeInfo(_("Ruled with vertical line"), PageTypeFormat::Lined, "");
+		addPageTypeInfo(_("Staves"), PageTypeFormat::Staves, "");
+		addPageTypeInfo(_("Graph"), PageTypeFormat::Graph, "");
+		addPageTypeInfo(_("Dotted"), PageTypeFormat::Dotted, "");
 	}
 
 	// Special types
-	addPageTypeInfo(_("Copy current"), PageTypeFormat::COPY, "");
-	addPageTypeInfo(_("With PDF background"), PageTypeFormat::PDF, "");
-	addPageTypeInfo(_("Image"), PageTypeFormat::IMAGE, "");
+	addPageTypeInfo(_("Copy current"), PageTypeFormat::Copy, "");
+	addPageTypeInfo(_("With PDF background"), PageTypeFormat::Pdf, "");
+	addPageTypeInfo(_("Image"), PageTypeFormat::Image, "");
 }
 
 PageTypeHandler::~PageTypeHandler()
@@ -126,76 +124,65 @@ PageTypeFormat PageTypeHandler::getPageTypeFormatForString(const string& format)
 {
 	if (format == "plain")
 	{
-		return PageTypeFormat::PLAIN;
+		return PageTypeFormat::Plain;
+	}
+	else if (format == "ruled")
+	{
+		return PageTypeFormat::Ruled;
 	}
 	else if (format == "lined")
 	{
-		return PageTypeFormat::LINED;
-	}
-	else if (format == "lined_vline")
-	{
-		return PageTypeFormat::LINED_VLINE;
+		return PageTypeFormat::Lined;
 	}
 	else if (format == "staves")
 	{
-		return PageTypeFormat::STAVES;
-	}
-	else if (format == "staves_vline")
-	{
-		return PageTypeFormat::STAVES_VLINE;
+		return PageTypeFormat::Staves;
 	}
 	else if (format == "graph")
 	{
-		return PageTypeFormat::GRAPH;
+		return PageTypeFormat::Graph;
 	}
 	else if (format == "dotted")
 	{
-		return PageTypeFormat::DOTTED;
+		return PageTypeFormat::Dotted;
 	}
 	else if (format == ":pdf")
 	{
-		return PageTypeFormat::PDF;
+		return PageTypeFormat::Pdf;
 	}
 	else if (format == ":image")
 	{
-		return PageTypeFormat::IMAGE;
+		return PageTypeFormat::Image;
 	}
 	else if (format == ":copy")
 	{
-		return PageTypeFormat::COPY;
-	}
-		// Add for compatibility sake
-	else if (format == "ruled")
-	{
-		return PageTypeFormat::LINED_VLINE;
+		return PageTypeFormat::Copy;
 	}
 
-	return PageTypeFormat::LINED_VLINE;
+	return PageTypeFormat::Ruled;
 }
 
 string PageTypeHandler::getStringForPageTypeFormat(const PageTypeFormat& format)
 {
 	switch (format)
 	{
-	case PageTypeFormat::PLAIN:
+	case PageTypeFormat::Plain:
 		return "plain";
-	case PageTypeFormat::LINED:
+	case PageTypeFormat::Ruled:
+		return "ruled";
+	case PageTypeFormat::Lined:
 		return "lined";
-	case PageTypeFormat::LINED_VLINE:
-		return "lined_vline";
-	case PageTypeFormat::STAVES:
+	case PageTypeFormat::Staves:
 		return "staves";
-	case PageTypeFormat::STAVES_VLINE:
-		return "staves_vline";
-	case PageTypeFormat::GRAPH:
+	case PageTypeFormat::Graph:
 		return "graph";
-	case PageTypeFormat::DOTTED:
+	case PageTypeFormat::Dotted:
 		return "dotted";
-	case PageTypeFormat::PDF:
+	case PageTypeFormat::Pdf:
 		return ":pdf";
-	case PageTypeFormat::IMAGE:
+	case PageTypeFormat::Image:
 		return ":image";
-	case PageTypeFormat::COPY:
+	case PageTypeFormat::Copy:
 		return ":copy";
 	}
 	return "lined_vline";

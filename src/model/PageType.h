@@ -14,16 +14,15 @@
 #include <XournalType.h>
 
 enum class PageTypeFormat {
-	PLAIN,
-	LINED,
-	LINED_VLINE,
-	STAVES,
-	STAVES_VLINE,
-	GRAPH,
-	DOTTED,
-	PDF,
-	IMAGE,
-	COPY
+	Plain,
+	Ruled,
+	Lined,
+	Staves,
+	Graph,
+	Dotted,
+	Pdf,
+	Image,
+	Copy
 };
 
 class PageType

@@ -296,3 +296,4 @@ XOJ_DECLARE_TYPE(TouchInputHandler, 286);
 XOJ_DECLARE_TYPE(TouchDisableGdk, 287);
 XOJ_DECLARE_TYPE(DeviceClassConfigGui, 288);
 XOJ_DECLARE_TYPE(FloatingToolbox, 289);
+XOJ_DECLARE_TYPE(StavesBackgroundPainter, 290);

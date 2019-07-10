@@ -1,9 +1,9 @@
 #include "PageTemplateSettings.h"
 
 #include "control/xojfile/SaveHandler.h"
+#include "control/pagetype/PageTypeHandler.h"
 
 #include <sstream>
-#include <control/pagetype/PageTypeHandler.h>
 
 using std::stringstream;
 
@@ -16,7 +16,7 @@ PageTemplateSettings::PageTemplateSettings()
 {
 	XOJ_INIT_TYPE(PageTemplateSettings);
 
-	backgroundType.format = PageTypeFormat::LINED_VLINE;
+	backgroundType.format = PageTypeFormat::Lined;
 }
 
 PageTemplateSettings::~PageTemplateSettings()
@@ -107,7 +107,7 @@ PageType PageTemplateSettings::getPageInsertType()
 
 	if (copyLastPageSettings)
 	{
-		return PageType(PageTypeFormat::COPY);
+		return PageType(PageTypeFormat::Copy);
 	}
 
 	return backgroundType;

@@ -13,13 +13,12 @@
 
 #include "BaseBackgroundPainter.h"
 
-#include "LineBackgroundType.h"
 #include <XournalType.h>
 
 class LineBackgroundPainter : public BaseBackgroundPainter
 {
 public:
-	LineBackgroundPainter(LineBackgroundType lineType, bool verticalLine);
+	LineBackgroundPainter(bool verticalLine);
 	virtual ~LineBackgroundPainter();
 
 public:
@@ -32,12 +31,10 @@ public:
 
 
 	void paintBackgroundLined();
-	void paintBackgroundStaves();
 	void paintBackgroundVerticalLine();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	LineBackgroundType lineType;
 	bool verticalLine;
 };

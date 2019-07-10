@@ -1,6 +1,7 @@
 #include "SaveHandler.h"
 
 #include "control/jobs/ProgressListener.h"
+#include "control/pagetype/PageTypeHandler.h"
 #include "control/xml/XmlNode.h"
 #include "control/xml/XmlTextNode.h"
 #include "control/xml/XmlImageNode.h"
@@ -17,7 +18,6 @@
 
 #include <config.h>
 #include <i18n.h>
-#include <control/pagetype/PageTypeHandler.h>
 
 SaveHandler::SaveHandler()
 {
