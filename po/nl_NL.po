@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-07 09:58+0000\n"
-"PO-Revision-Date: 2019-07-07 10:02\n"
+"PO-Revision-Date: 2019-07-10 10:12\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -35,7 +35,7 @@ msgstr " van {1}{2}"
 
 #: ../src/control/settings/Settings.cpp:109
 msgid "%F-Note-%H-%M"
-msgstr ""
+msgstr "%F-Notitie-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:119
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -155,7 +155,7 @@ msgstr "Annuleren"
 
 #: ../src/undo/ColorUndoAction.cpp:119
 msgid "Change color"
-msgstr "Kleur aanpassen"
+msgstr "Kleur wijzigen"
 
 #: ../src/undo/FontUndoAction.cpp:134
 msgid "Change font"
@@ -572,7 +572,7 @@ msgstr "Vastklikken aan raster"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:71
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:481
 msgid "Hand"
-msgstr ""
+msgstr "Hand"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:99
 msgid "Hide all"
@@ -846,7 +846,7 @@ msgstr "Pauzeren/Afspelen"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:290
 msgid "Pen"
-msgstr ""
+msgstr "Pen"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:22
 msgid "Plain"
@@ -1351,7 +1351,7 @@ msgstr "Op_slaan"
 
 #: ../src/util/DeviceListHelper.cpp:130
 msgid "cursor"
-msgstr ""
+msgstr "cursor"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:298
 msgid "dash-/ dotted"
@@ -1395,7 +1395,7 @@ msgstr "toetsenbord"
 
 #: ../src/undo/AddUndoAction.cpp:135 ../src/undo/DeleteUndoAction.cpp:129
 msgid "latex"
-msgstr ""
+msgstr "latex"
 
 #: ../src/util/DeviceListHelper.cpp:118
 msgid "mouse"
@@ -1407,7 +1407,7 @@ msgstr "Er is een fout opgetreden in pdflatex: {1} (afsluitcode: {2})"
 
 #: ../src/util/DeviceListHelper.cpp:122
 msgid "pen"
-msgstr ""
+msgstr "pen"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:222
 msgid "show"
@@ -1428,15 +1428,15 @@ msgstr "tekst"
 
 #: ../src/util/DeviceListHelper.cpp:143
 msgid "touchpad"
-msgstr ""
+msgstr "touchpad"
 
 #: ../src/util/DeviceListHelper.cpp:139
 msgid "touchscreen"
-msgstr ""
+msgstr "aanraakscherm"
 
 #: ../src/util/DeviceListHelper.cpp:148
 msgid "trackpoint"
-msgstr ""
+msgstr "spoorpunt"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:314
 msgid "whiteout"
@@ -1476,7 +1476,7 @@ msgstr "xoj-preview-extractor: uitpakken voltooid"
 
 #: ../src/util/Util.cpp:102
 msgid "xournalpp-{1}"
-msgstr ""
+msgstr "xournalpp-{1}"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
@@ -1484,7 +1484,7 @@ msgstr " = Zwevende gereedschapsbalk (experimenteel) ="
 
 #: ../ui/settings.glade:2616 ../ui/settings.glade:2627
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../ui/settings.glade:418
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1812,7 +1812,7 @@ msgstr "Huidige pagina"
 
 #: ../ui/settings.glade:2175
 msgid "Cursor"
-msgstr ""
+msgstr "Cursor"
 
 #: ../ui/settings.glade:1692
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2374,7 +2374,7 @@ msgstr "Opslagmap"
 
 #: ../ui/settings.glade:1326
 msgid "Stylus"
-msgstr ""
+msgstr "Stylus"
 
 #: ../ui/settings.glade:1295
 msgid "Stylus Buttons"
@@ -2427,7 +2427,7 @@ msgstr "Time-out"
 #: ../ui/settings.glade:1413 ../ui/settings.glade:1882
 #: ../ui/settingsDeviceClassConfig.glade:45
 msgid "Touchscreen"
-msgstr ""
+msgstr "Aanraakscherm"
 
 #: ../ui/fillTransparency.glade:14
 msgid "Transparency settings"
@@ -2739,7 +2739,7 @@ msgstr "wijzigen"
 
 #: ../ui/exportSettings.glade:223
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
@@ -2760,7 +2760,7 @@ msgstr "minuten"
 #: ../ui/settings.glade:2941 ../ui/settings.glade:2952
 #: ../ui/settings.glade:3200
 msgid "pixels"
-msgstr ""
+msgstr "pixels"
 
 #: ../ui/settings.glade:1544
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
