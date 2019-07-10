@@ -83,10 +83,10 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("test1.xoj"));
 
-		CPPUNIT_ASSERT_EQUAL(1UL, doc->getPageCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 1, doc->getPageCount());
 		PageRef page = doc->getPage(0);
 
-		CPPUNIT_ASSERT_EQUAL(1UL, (*page).getLayerCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 1, (*page).getLayerCount());
 		Layer* layer = (*(*page).getLayers())[0];
 
 		Element* element = (*layer->getElements())[0];
@@ -102,10 +102,10 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/test.xopp"));
 
-		CPPUNIT_ASSERT_EQUAL(1UL, doc->getPageCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 1, doc->getPageCount());
 		PageRef page = doc->getPage(0);
 
-		CPPUNIT_ASSERT_EQUAL(1UL, (*page).getLayerCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 1, (*page).getLayerCount());
 		Layer* layer = (*(*page).getLayers())[0];
 
 		Element* element = (*layer->getElements())[0];
@@ -121,10 +121,10 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("test1.unzipped.xoj"));
 
-		CPPUNIT_ASSERT_EQUAL(1UL, doc->getPageCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 1, doc->getPageCount());
 		PageRef page = doc->getPage(0);
 
-		CPPUNIT_ASSERT_EQUAL(1UL, (*page).getLayerCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 1, (*page).getLayerCount());
 		Layer* layer = (*(*page).getLayers())[0];
 
 		Element* element = (*layer->getElements())[0];
@@ -140,7 +140,7 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("load/pages.xoj"));
 
-		CPPUNIT_ASSERT_EQUAL(7UL, doc->getPageCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 7, doc->getPageCount());
 	}
 
 	void testPagesZipped()
@@ -148,7 +148,7 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/pages.xopp"));
 
-		CPPUNIT_ASSERT_EQUAL(7UL, doc->getPageCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 7, doc->getPageCount());
 	}
 
 	void checkPageType(Document* doc, int pageIndex, string expectedText, PageType expectedBgType)
@@ -158,7 +158,7 @@ public:
 		PageType bgType = page->getBackgroundType();
 		CPPUNIT_ASSERT(expectedBgType == bgType);
 
-		CPPUNIT_ASSERT_EQUAL(1UL, (*page).getLayerCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 1, (*page).getLayerCount());
 		Layer* layer = (*(*page).getLayers())[0];
 
 		Element* element = (*layer->getElements())[0];
@@ -173,7 +173,7 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("load/pages.xoj"));
 
-		CPPUNIT_ASSERT_EQUAL(7UL, doc->getPageCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 7, doc->getPageCount());
 		checkPageType(doc, 0, "p1", PageType(PageTypeFormat::PLAIN));
 		checkPageType(doc, 1, "p2", PageType(PageTypeFormat::LINED));
 		checkPageType(doc, 2, "p3", PageType(PageTypeFormat::LINED_VLINE));
@@ -188,7 +188,7 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/pages.xopp"));
 
-		CPPUNIT_ASSERT_EQUAL(7UL, doc->getPageCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 7, doc->getPageCount());
 		checkPageType(doc, 0, "p1", PageType(PageTypeFormat::PLAIN));
 		checkPageType(doc, 1, "p2", PageType(PageTypeFormat::LINED));
 		checkPageType(doc, 2, "p3", PageType(PageTypeFormat::LINED_VLINE));
@@ -214,10 +214,10 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("load/layer.xoj"));
 
-		CPPUNIT_ASSERT_EQUAL(1UL, doc->getPageCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 1, doc->getPageCount());
 		PageRef page = doc->getPage(0);
 
-		CPPUNIT_ASSERT_EQUAL(3UL, (*page).getLayerCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 3, (*page).getLayerCount());
 		checkLayer(page, 0, "l1");
 		checkLayer(page, 1, "l2");
 		checkLayer(page, 2, "l3");
@@ -228,10 +228,10 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/layer.xopp"));
 
-		CPPUNIT_ASSERT_EQUAL(1UL, doc->getPageCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 1, doc->getPageCount());
 		PageRef page = doc->getPage(0);
 
-		CPPUNIT_ASSERT_EQUAL(3UL, (*page).getLayerCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 3, (*page).getLayerCount());
 		checkLayer(page, 0, "l1");
 		checkLayer(page, 1, "l2");
 		checkLayer(page, 2, "l3");
@@ -242,10 +242,10 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("load/text.xml"));
 
-		CPPUNIT_ASSERT_EQUAL(1UL, doc->getPageCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 1, doc->getPageCount());
 		PageRef page = doc->getPage(0);
 
-		CPPUNIT_ASSERT_EQUAL(1UL, (*page).getLayerCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 1, (*page).getLayerCount());
 		Layer* layer = (*(*page).getLayers())[0];
 
 		Text* t1 = (Text*)(*layer->getElements())[0];
@@ -271,10 +271,10 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/text.xopp"));
 
-		CPPUNIT_ASSERT_EQUAL(1UL, doc->getPageCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 1, doc->getPageCount());
 		PageRef page = doc->getPage(0);
 
-		CPPUNIT_ASSERT_EQUAL(1UL, (*page).getLayerCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 1, (*page).getLayerCount());
 		Layer* layer = (*(*page).getLayers())[0];
 
 		Text* t1 = (Text*)(*layer->getElements())[0];

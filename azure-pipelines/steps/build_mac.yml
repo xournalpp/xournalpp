@@ -1,0 +1,20 @@
+parameters:
+  build_type: ''
+  cmake_flags: ''
+
+steps:
+  - bash: |
+      brew update
+      brew upgrade
+      brew install cmake ninja pkg-config gtk+3 poppler librsvg adwaita-icon-theme portaudio libsndfile lua libzip cppunit gettext
+    displayName: 'Install dependencies'
+  - bash: |
+      mkdir build
+    displayName: 'Create build directory'
+  - bash: |
+      export PKG_CONFIG_PATH="/usr/local/opt/libffi/lib/pkgconfig:$PKG_CONFIG_PATH"
+      export LDFLAGS="-L/usr/local/opt/libffi/lib $LDFLAGS"
+      cmake -GNinja .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type}} ${{ parameters.cmake_flags }}
+      cmake --build .
+    workingDirectory: ./build
+    displayName: 'Build Xournal++'

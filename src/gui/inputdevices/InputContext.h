@@ -32,6 +32,8 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
+#include <set>
+
 class InputContext
 {
 
@@ -51,6 +53,8 @@ private:
 	GdkModifierType modifierState = (GdkModifierType)0;
 
 	bool touchWorkaroundEnabled = false;
+
+	std::set<string> knownDevices;
 
 public:
 	enum DeviceType {

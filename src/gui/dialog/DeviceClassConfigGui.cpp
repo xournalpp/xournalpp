@@ -37,7 +37,8 @@ void DeviceClassConfigGui::loadSettings()
 {
 	XOJ_CHECK_TYPE(DeviceClassConfigGui);
 
-	int deviceType = this->settings->getDeviceClassForDevice(this->device.getDevice());
+	// Get device class of device if available or
+	int deviceType = this->settings->getDeviceClassForDevice(this->device.getName(), this->device.getSource());
 	gtk_combo_box_set_active(GTK_COMBO_BOX(this->cbDeviceClass), deviceType);
 }
 
@@ -51,5 +52,5 @@ void DeviceClassConfigGui::saveSettings()
 	XOJ_CHECK_TYPE(DeviceClassConfigGui);
 
 	int deviceClass = gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbDeviceClass));
-	this->settings->setDeviceClassForDevice(this->device.getDevice(), deviceClass);
+	this->settings->setDeviceClassForDevice(this->device.getName(), this->device.getSource(), deviceClass);
 }

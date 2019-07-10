@@ -1,0 +1,57 @@
+parameters:
+  build_type: ''
+  cmake_flags: ''
+
+steps:
+  - script: |
+      git clone https://github.com/msys2/msys2-ci-base.git %CD:~0,2%\msys64
+      %CD:~0,2%\msys64\usr\bin\rm -rf %CD:~0,2%\msys64\.git
+    displayName: 'Install MSYS2'
+  - script: |
+      set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+      %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syuu
+      %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syuu
+      %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake mingw-w64-x86_64-make mingw-w64-x86_64-ninja patch mingw-w64-x86_64-cppunit
+      %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -S mingw-w64-x86_64-poppler mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip
+      %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Scc
+    env:
+      MSYS2_ARCH: x86_64
+      MSYSTEM: MINGW64
+      CHERE_INVOKING: yes
+    displayName: 'Install dependencies on Windows'
+  - script: |
+      set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
+      %CD:~0,2%\msys64\usr\bin\bash -lc "./build-portaudio.sh"
+    workingDirectory: ./windows-setup
+    env:
+      MSYS2_ARCH: x86_64
+      MSYSTEM: MINGW64
+      CHERE_INVOKING: yes
+    displayName: 'Build Portaudio'
+  - script: |
+      set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
+      %CD:~0,2%\msys64\usr\bin\bash -lc "./build-lua.sh"
+    workingDirectory: ./windows-setup
+    env:
+      MSYS2_ARCH: x86_64
+      MSYSTEM: MINGW64
+      CHERE_INVOKING: yes
+    displayName: 'Build Lua'
+  - script: |
+      set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
+      %CD:~0,2%\msys64\usr\bin\bash -lc "mkdir build"
+    env:
+      MSYS2_ARCH: x86_64
+      MSYSTEM: MINGW64
+      CHERE_INVOKING: yes
+    displayName: 'Create build directory'
+  - script: |
+      set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
+      %CD:~0,2%\msys64\usr\bin\bash -lc "cmake .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type}} ${{ parameters.cmake_flags }}"
+      %CD:~0,2%\msys64\usr\bin\bash -lc "cmake --build ."
+    workingDirectory: ./build
+    env:
+      MSYS2_ARCH: x86_64
+      MSYSTEM: MINGW64
+      CHERE_INVOKING: yes
+    displayName: 'Build Xournal++'

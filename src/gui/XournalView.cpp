@@ -318,7 +318,14 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		}
 		else
 		{
-			layout->scrollRelative(-scrollKeySize, 0);
+			if (control->getSettings()->isPresentationMode())
+			{
+				control->getScrollHandler()->goToPreviousPage();
+			}
+			else
+			{
+				layout->scrollRelative(-scrollKeySize, 0);
+			}
 		}
 		return true;
 	}
@@ -331,7 +338,14 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		}
 		else
 		{
-			layout->scrollRelative(scrollKeySize, 0);
+			if (control->getSettings()->isPresentationMode())
+			{
+				control->getScrollHandler()->goToNextPage();
+			}
+			else
+			{
+				layout->scrollRelative(scrollKeySize, 0);
+			}
 		}
 		return true;
 	}

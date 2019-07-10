@@ -42,7 +42,7 @@ stages:
 
         # Apply clang-format, modifying all badly formatted files
         if [ ! -z "$FILES" ]; then
-            git --no-pager diff -U0 $BASE_COMMIT -- $FILES | perl azure-pipelines/format_diff_lines.pl
+            git --no-pager diff -U0 $BASE_COMMIT -- $FILES | perl azure-pipelines/util/format_diff_lines.pl
         fi
 
       displayName: 'Run clang-format on modified files'
@@ -56,7 +56,7 @@ stages:
             # Uncommitted changes
             echo "The code was not formatted using clang-format before being submitted."
             echo "To format the code, try running the following command from the root of the repository:"
-            echo "    git --no-pager diff -U0 -- '*.cpp' '*.c' '*.h' '*.hpp' | perl azure-pipelines/format_diff_lines.pl"
+            echo "    git --no-pager diff -U0 -- '*.cpp' '*.c' '*.h' '*.hpp' | perl azure-pipelines/util/format_diff_lines.pl"
             echo
             echo "The formatting changes required are shown below."
             git --no-pager diff

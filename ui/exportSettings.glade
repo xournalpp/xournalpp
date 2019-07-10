@@ -312,7 +312,6 @@ Select pages to export</property>
     </action-widgets>
   </object>
   <object class="GtkEntryBuffer" id="entrybuffer1">
-    <property name="name">entrybuffer1</property>
     <property name="text">0</property>
   </object>
 </interface>
