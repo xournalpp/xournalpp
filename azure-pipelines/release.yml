@@ -24,6 +24,11 @@ stages:
               artifactName: 'linux-packages'
               targetPath: '$(System.DefaultWorkingDirectory)/build/packages'
             displayName: 'Publish packages'
+          - task: PublishPipelineArtifact@1
+            inputs:
+              artifactName: 'VERSION'
+              targetPath: '$(System.DefaultWorkingDirectory)/build/VERSION'
+            displayName: 'Upload project version file'
       - job: Windows
         pool:
           vmImage: 'vs2017-win2016'
