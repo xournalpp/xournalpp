@@ -18,7 +18,7 @@ PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page, P
 	this->origBackgroundImage = origBackgroundImage;
 	this->origW = origW;
 	this->origH = origH;
-	this->newType.format = "plain";
+	this->newType.format = PageTypeFormat::Plain;
 }
 
 PageBackgroundChangedUndoAction::~PageBackgroundChangedUndoAction()

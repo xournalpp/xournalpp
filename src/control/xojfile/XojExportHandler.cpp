@@ -1,6 +1,7 @@
 #include "XojExportHandler.h"
 
 #include "control/jobs/ProgressListener.h"
+#include "control/pagetype/PageTypeHandler.h"
 #include "control/xml/XmlNode.h"
 #include "control/xml/XmlTextNode.h"
 #include "control/xml/XmlImageNode.h"
@@ -55,9 +56,12 @@ void XojExportHandler::writeSolidBackground(XmlNode* background, PageRef p)
 	background->setAttrib("type", "solid");
 	background->setAttrib("color", getColorStr(p->getBackgroundColor()));
 
-	string format = p->getBackgroundType().format;
+	PageTypeFormat bgFormat = p->getBackgroundType().format;
+	string format;
 
-	if (format != "plain" && format != "lined" && format != "ruled" && format != "graph")
+	format = PageTypeHandler::getStringForPageTypeFormat(bgFormat);
+	if (bgFormat != PageTypeFormat::Plain && bgFormat != PageTypeFormat::Ruled && bgFormat != PageTypeFormat::Lined &&
+	    bgFormat != PageTypeFormat::Graph)
 	{
 		format = "plain";
 	}
@@ -67,6 +71,6 @@ void XojExportHandler::writeSolidBackground(XmlNode* background, PageRef p)
 
 void XojExportHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode)
 {
-	XOJ_CHECK_TYPE(XojExportHandler);	
+	XOJ_CHECK_TYPE(XojExportHandler);
 	// Do nothing since timestamp are not supported by Xournal
 }

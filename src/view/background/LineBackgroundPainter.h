@@ -18,7 +18,7 @@
 class LineBackgroundPainter : public BaseBackgroundPainter
 {
 public:
-	LineBackgroundPainter(bool ruled);
+	LineBackgroundPainter(bool verticalLine);
 	virtual ~LineBackgroundPainter();
 
 public:
@@ -31,10 +31,10 @@ public:
 
 
 	void paintBackgroundRuled();
-	void paintBackgroundLined();
+	void paintBackgroundVerticalLine();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	bool ruled;
+	bool verticalLine;
 };

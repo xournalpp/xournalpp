@@ -5,6 +5,7 @@
 #include "DottedBackgroundPainter.h"
 #include "GraphBackgroundPainter.h"
 #include "LineBackgroundPainter.h"
+#include "StavesBackgroundPainter.h"
 
 MainBackgroundPainter::MainBackgroundPainter()
 {
@@ -12,10 +13,11 @@ MainBackgroundPainter::MainBackgroundPainter()
 
 	defaultPainter = new BaseBackgroundPainter();
 
-	painter["lined"] = new LineBackgroundPainter(false);
-	painter["ruled"] = new LineBackgroundPainter(true);
-	painter["graph"] = new GraphBackgroundPainter();
-	painter["dotted"] = new DottedBackgroundPainter();
+	painter[PageTypeFormat::Ruled] = new LineBackgroundPainter(false);
+	painter[PageTypeFormat::Lined] = new LineBackgroundPainter(true);
+	painter[PageTypeFormat::Staves] = new StavesBackgroundPainter();
+	painter[PageTypeFormat::Graph] = new GraphBackgroundPainter();
+	painter[PageTypeFormat::Dotted] = new DottedBackgroundPainter();
 }
 
 MainBackgroundPainter::~MainBackgroundPainter()

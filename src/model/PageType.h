@@ -13,11 +13,24 @@
 
 #include <XournalType.h>
 
+enum class PageTypeFormat
+{
+	Plain,
+	Ruled,
+	Lined,
+	Staves,
+	Graph,
+	Dotted,
+	Pdf,
+	Image,
+	Copy
+};
+
 class PageType
 {
 public:
 	PageType();
-	PageType(string format);
+	explicit PageType(PageTypeFormat format);
 	PageType(const PageType& other);
 	~PageType();
 
@@ -49,7 +62,7 @@ public:
 	/**
 	 * Base format
 	 */
-	string format;
+	PageTypeFormat format;
 
 	/**
 	 * Arguments for the format

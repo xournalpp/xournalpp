@@ -162,7 +162,7 @@ void SettingsDialog::initMouseButtonEvents()
 	initMouseButtonEvents("hboxPenButton1", 5);
 	initMouseButtonEvents("hboxPenButton2", 6);
 
-	initMouseButtonEvents("hboxDefault", 4);
+	initMouseButtonEvents("hboxDefaultTool", 4);
 }
 
 void SettingsDialog::setDpi(int dpi)

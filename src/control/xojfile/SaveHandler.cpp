@@ -1,6 +1,7 @@
 #include "SaveHandler.h"
 
 #include "control/jobs/ProgressListener.h"
+#include "control/pagetype/PageTypeHandler.h"
 #include "control/xml/XmlNode.h"
 #include "control/xml/XmlTextNode.h"
 #include "control/xml/XmlImageNode.h"
@@ -356,11 +357,11 @@ void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p)
 	background->setAttrib("type", "solid");
 	background->setAttrib("color", getColorStr(p->getBackgroundColor()));
 
-	background->setAttrib("style", p->getBackgroundType().format);
+	background->setAttrib("style", PageTypeHandler::getStringForPageTypeFormat(p->getBackgroundType().format));
 
 	// Not compatible with Xournal, so the background needs
 	// to be changed to a basic one!
-	if (p->getBackgroundType().config != "")
+	if (!p->getBackgroundType().config.empty())
 	{
 		background->setAttrib("config", p->getBackgroundType().config);
 	}

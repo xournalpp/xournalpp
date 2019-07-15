@@ -28,13 +28,18 @@ class LoadHandlerTest : public CppUnit::TestFixture
 	CPPUNIT_TEST(testSpeed);
 #endif
 
-	CPPUNIT_TEST(testLoad1);
-	CPPUNIT_TEST(testLoad1Unzipped);
+	CPPUNIT_TEST(testLoad);
+	CPPUNIT_TEST(testLoadZipped);
+	CPPUNIT_TEST(testLoadUnzipped);
 
 	CPPUNIT_TEST(testPages);
+	CPPUNIT_TEST(testPagesZipped);
 	CPPUNIT_TEST(testPageType);
+	CPPUNIT_TEST(testPageTypeZipped);
 	CPPUNIT_TEST(testLayer);
+	CPPUNIT_TEST(testLayerZipped);
 	CPPUNIT_TEST(testText);
+	CPPUNIT_TEST(testTextZipped);
 	CPPUNIT_TEST(testStroke);
 	CPPUNIT_TEST(loadImage);
 
@@ -73,7 +78,7 @@ public:
 	}
 #endif
 
-	void testLoad1()
+	void testLoad()
 	{
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("test1.xoj"));
@@ -111,7 +116,7 @@ public:
 		CPPUNIT_ASSERT_EQUAL(string("12345"), text->getText());
 	}
 
-	void testLoad1Unzipped()
+	void testLoadUnzipped()
 	{
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("test1.unzipped.xoj"));
@@ -135,7 +140,7 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("load/pages.xoj"));
 
-		CPPUNIT_ASSERT_EQUAL((size_t) 5, doc->getPageCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 6, doc->getPageCount());
 	}
 
 	void testPagesZipped()
@@ -143,7 +148,7 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/pages.xopp"));
 
-		CPPUNIT_ASSERT_EQUAL((size_t) 5, doc->getPageCount());
+		CPPUNIT_ASSERT_EQUAL((size_t) 6, doc->getPageCount());
 	}
 
 	void checkPageType(Document* doc, int pageIndex, string expectedText, PageType expectedBgType)
@@ -168,12 +173,13 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("load/pages.xoj"));
 
-		CPPUNIT_ASSERT_EQUAL((size_t) 5, doc->getPageCount());
-		checkPageType(doc, 0, "p1", PageType("plain"));
-		checkPageType(doc, 1, "p2", PageType("lined"));
-		checkPageType(doc, 2, "p3", PageType("ruled"));
-		checkPageType(doc, 3, "p4", PageType("graph"));
-		checkPageType(doc, 4, "p5", PageType(":image"));
+		CPPUNIT_ASSERT_EQUAL((size_t) 6, doc->getPageCount());
+		checkPageType(doc, 0, "p1", PageType(PageTypeFormat::Plain));
+		checkPageType(doc, 1, "p2", PageType(PageTypeFormat::Ruled));
+		checkPageType(doc, 2, "p3", PageType(PageTypeFormat::Lined));
+		checkPageType(doc, 3, "p4", PageType(PageTypeFormat::Staves));
+		checkPageType(doc, 4, "p5", PageType(PageTypeFormat::Graph));
+		checkPageType(doc, 5, "p6", PageType(PageTypeFormat::Image));
 	}
 
 	void testPageTypeZipped()
@@ -181,12 +187,13 @@ public:
 		LoadHandler handler;
 		Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/pages.xopp"));
 
-		CPPUNIT_ASSERT_EQUAL((size_t) 5, doc->getPageCount());
-		checkPageType(doc, 0, "p1", PageType("plain"));
-		checkPageType(doc, 1, "p2", PageType("lined"));
-		checkPageType(doc, 2, "p3", PageType("ruled"));
-		checkPageType(doc, 3, "p4", PageType("graph"));
-		checkPageType(doc, 4, "p5", PageType(":image"));
+		CPPUNIT_ASSERT_EQUAL((size_t) 6, doc->getPageCount());
+		checkPageType(doc, 0, "p1", PageType(PageTypeFormat::Plain));
+		checkPageType(doc, 1, "p2", PageType(PageTypeFormat::Ruled));
+		checkPageType(doc, 2, "p3", PageType(PageTypeFormat::Lined));
+		checkPageType(doc, 3, "p4", PageType(PageTypeFormat::Staves));
+		checkPageType(doc, 4, "p5", PageType(PageTypeFormat::Graph));
+		checkPageType(doc, 5, "p6", PageType(PageTypeFormat::Image));
 	}
 
 	void checkLayer(PageRef page, int layerIndex, string expectedText)

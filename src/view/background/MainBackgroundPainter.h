@@ -39,6 +39,6 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	map<string, BaseBackgroundPainter*> painter;
+	map<PageTypeFormat, BaseBackgroundPainter*> painter;
 	BaseBackgroundPainter* defaultPainter;
 };
