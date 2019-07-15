@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-07 09:58+0000\n"
-"PO-Revision-Date: 2019-07-10 10:12\n"
+"POT-Creation-Date: 2019-07-15 15:08+0000\n"
+"PO-Revision-Date: 2019-07-15 15:24\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -183,7 +183,7 @@ msgstr "Inhoud"
 msgid "Copy"
 msgstr "Kopiëren"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:30
+#: ../src/control/pagetype/PageTypeHandler.cpp:32
 msgid "Copy current"
 msgstr "Huidige kopiëren"
 
@@ -227,32 +227,32 @@ msgstr "Kan LaTeX PDF-bestand niet openen; bestandsfout: {1}"
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Kan LaTeX PDF-bestand niet openen: {1}"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:18
+#: ../src/control/pagetype/PageTypeHandler.cpp:19
 msgid "Could not load pagetemplates.ini file"
 msgstr "Kan pagetemplates.ini niet openen"
 
-#: ../src/control/xojfile/LoadHandler.cpp:988
+#: ../src/control/xojfile/LoadHandler.cpp:989
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Kan bijlage niet openen: {1}. Foutmelding: kan bestand niet uitlezen"
 
-#: ../src/control/xojfile/LoadHandler.cpp:997
+#: ../src/control/xojfile/LoadHandler.cpp:998
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Kan bijlage niet openen: {1}. Foutmelding: kan bestand niet wegschrijven"
 
-#: ../src/control/xojfile/LoadHandler.cpp:967
-#: ../src/control/xojfile/LoadHandler.cpp:1295
-#: ../src/control/xojfile/LoadHandler.cpp:1315
+#: ../src/control/xojfile/LoadHandler.cpp:968
+#: ../src/control/xojfile/LoadHandler.cpp:1296
+#: ../src/control/xojfile/LoadHandler.cpp:1316
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Kan bijlage niet openen: {1}. Foutmelding: geen geldige grootte opgegeven"
 
-#: ../src/control/xojfile/LoadHandler.cpp:957
-#: ../src/control/xojfile/LoadHandler.cpp:975
-#: ../src/control/xojfile/LoadHandler.cpp:1286
-#: ../src/control/xojfile/LoadHandler.cpp:1303
+#: ../src/control/xojfile/LoadHandler.cpp:958
+#: ../src/control/xojfile/LoadHandler.cpp:976
+#: ../src/control/xojfile/LoadHandler.cpp:1287
+#: ../src/control/xojfile/LoadHandler.cpp:1304
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Kan bijlage niet openen: {1}. Foutmelding: {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:197
+#: ../src/control/xojfile/LoadHandler.cpp:198
 msgid "Could not open file: \"{1}\""
 msgstr "Kan bestand niet openen: '{1}'"
 
@@ -268,8 +268,8 @@ msgid "Could not parse general toolbar.ini file: {1}\n"
 msgstr "Kan algemeen toolbar.ini-bestand niet verwerken: {1}\n"
 "Werkbalken zijn niet beschikbaar"
 
-#: ../src/control/xojfile/LoadHandler.cpp:441
-#: ../src/control/xojfile/LoadHandler.cpp:469
+#: ../src/control/xojfile/LoadHandler.cpp:442
+#: ../src/control/xojfile/LoadHandler.cpp:470
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Kan afbeelding niet uitlezen: {1}. Foutmelding: {2}"
 
@@ -305,11 +305,11 @@ msgid "Could not undo \"{1}\"\n"
 msgstr "Kan '{1}' niet ongedaan maken\n"
 "Er is iets misgegaan; stel een bugmelding op."
 
-#: ../src/control/xojfile/SaveHandler.cpp:290
+#: ../src/control/xojfile/SaveHandler.cpp:291
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Kan achtergrond '{1}' niet wegschrijven; {2}"
 
-#: ../src/control/xojfile/SaveHandler.cpp:410
+#: ../src/control/xojfile/SaveHandler.cpp:411
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Kan achtergrond '{1}' niet wegschrijven. Er wordt tóch doorgegaan."
 
@@ -382,7 +382,7 @@ msgstr "Overschrijf de achtergrond-pdf niet: dit veroorzaakt fouten!"
 msgid "Document file was removed."
 msgstr "Het documentbestand is verwijderd."
 
-#: ../src/control/xojfile/LoadHandler.cpp:297
+#: ../src/control/xojfile/LoadHandler.cpp:298
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Het document is onvolledig (is het einde afgesneden?)"
 
@@ -390,7 +390,7 @@ msgstr "Het document is onvolledig (is het einde afgesneden?)"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Het document is niet geladen! ({1}); {2}"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:26
+#: ../src/control/pagetype/PageTypeHandler.cpp:28
 msgid "Dotted"
 msgstr "Gestippeld"
 
@@ -470,12 +470,12 @@ msgstr "Kan bestand '{1}' niet openen"
 msgid "Error opening file: \"{1}\""
 msgstr "Kan bestand niet openen: '{1}'"
 
-#: ../src/control/xojfile/LoadHandler.cpp:564
-#: ../src/control/xojfile/LoadHandler.cpp:591
+#: ../src/control/xojfile/LoadHandler.cpp:565
+#: ../src/control/xojfile/LoadHandler.cpp:592
 msgid "Error reading PDF: {1}"
 msgstr "Kan PDF niet uitlezen: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:662
+#: ../src/control/xojfile/LoadHandler.cpp:663
 msgid "Error reading width of a stroke: {1}"
 msgstr "Kan breedte van penseelstreek niet uitlezen: {1}"
 
@@ -551,7 +551,7 @@ msgstr "Ga naar vorige laag"
 msgid "Go to top layer"
 msgstr "Ga naar bovenste laag"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:25
+#: ../src/control/pagetype/PageTypeHandler.cpp:27
 msgid "Graph"
 msgstr "Grafiek"
 
@@ -583,7 +583,7 @@ msgstr "Alles verbergen"
 msgid "Highlighter"
 msgstr "Markeerstift"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/control/pagetype/PageTypeHandler.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Image"
 msgstr "Afbeelding"
@@ -651,10 +651,6 @@ msgstr "Lichtblauw"
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:139
 msgid "Light Green"
 msgstr "Lichtgroen"
-
-#: ../src/control/pagetype/PageTypeHandler.cpp:23
-msgid "Lined"
-msgstr "Belijnd"
 
 #: ../src/gui/PageView.cpp:863
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:103
@@ -848,7 +844,7 @@ msgstr "Pauzeren/Afspelen"
 msgid "Pen"
 msgstr "Pen"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:22
+#: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Plain"
 msgstr "Kaal"
 
@@ -904,7 +900,7 @@ msgstr "Item {1} is verwijderd van werkbalk {2} (ID {2})"
 msgid "Replace"
 msgstr "Vervangen"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1335
+#: ../src/control/xojfile/LoadHandler.cpp:1336
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Het opgevraagde tijdelijke bestand van bijlage {1} is niet aangetroffen"
 
@@ -923,6 +919,10 @@ msgstr "Draaien vastklikken"
 #: ../src/control/pagetype/PageTypeHandler.cpp:24
 msgid "Ruled"
 msgstr "Met gemeten afstand"
+
+#: ../src/control/pagetype/PageTypeHandler.cpp:25
+msgid "Ruled with vertical line"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 msgid "Ruler"
@@ -1047,6 +1047,10 @@ msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 msgstr "Momenteel kan Xournal++ geen bestanden op afstand openen.\n"
 "Kopieer het bestand naar een lokale map."
 
+#: ../src/control/pagetype/PageTypeHandler.cpp:26
+msgid "Staves"
+msgstr ""
+
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Stop"
 msgstr "Stoppen"
@@ -1111,19 +1115,19 @@ msgstr "De bijgevoegde PDF-achtergrond is niet aangetroffen."
 msgid "The background PDF could not be found."
 msgstr "De PDF-achtergrond is niet aangetroffen."
 
-#: ../src/control/xojfile/LoadHandler.cpp:154
+#: ../src/control/xojfile/LoadHandler.cpp:155
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr "Het bestand is geen geldig .xopp-bestand (mimetype ontbreekt): '{1}'"
 
-#: ../src/control/xojfile/LoadHandler.cpp:162
+#: ../src/control/xojfile/LoadHandler.cpp:163
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr "Het bestand is geen geldig .xopp-bestand (onjuist mimetype): '{1}'"
 
-#: ../src/control/xojfile/LoadHandler.cpp:171
+#: ../src/control/xojfile/LoadHandler.cpp:172
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr "Het bestand is geen geldig .xopp-bestand (versie ontbreekt): '{1}'"
 
-#: ../src/control/xojfile/LoadHandler.cpp:185
+#: ../src/control/xojfile/LoadHandler.cpp:186
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Het bestand is geen geldig .xopp-bestand (versie is beschadigd): '{1}'"
 
@@ -1199,15 +1203,15 @@ msgstr "Ongedaan maken"
 msgid "Undo: "
 msgstr "Ongedaan maken: "
 
-#: ../src/control/xojfile/LoadHandler.cpp:354
+#: ../src/control/xojfile/LoadHandler.cpp:355
 msgid "Unexpected root tag: {1}"
 msgstr "Onverwacht rootlabel: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:387
+#: ../src/control/xojfile/LoadHandler.cpp:388
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Onverwacht label in document: '{1}'"
 
-#: ../src/control/xojfile/LoadHandler.cpp:638
+#: ../src/control/xojfile/LoadHandler.cpp:639
 msgid "Unknown background type: {1}"
 msgstr "Onbekende achtergrond: {1}"
 
@@ -1215,19 +1219,19 @@ msgstr "Onbekende achtergrond: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Onbekende kleurwaarde: '{1}'"
 
-#: ../src/control/xojfile/LoadHandler.cpp:573
+#: ../src/control/xojfile/LoadHandler.cpp:574
 msgid "Unknown domain type: {1}"
 msgstr "Onbekend domein: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:288
+#: ../src/control/xojfile/LoadHandler.cpp:289
 msgid "Unknown parser error"
 msgstr "Onbekende verwerkfout"
 
-#: ../src/control/xojfile/LoadHandler.cpp:486
+#: ../src/control/xojfile/LoadHandler.cpp:487
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Onbekend pixmap::domein: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:757
+#: ../src/control/xojfile/LoadHandler.cpp:758
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Onbekende penseelsoort: '{1}' - aangenomen wordt dat het een pen is"
 
@@ -1248,7 +1252,7 @@ msgstr "Verticale ruimte"
 msgid "White"
 msgstr "Wit"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:31
+#: ../src/control/pagetype/PageTypeHandler.cpp:33
 msgid "With PDF background"
 msgstr "Witte PDF-achtergrond"
 
@@ -1256,15 +1260,15 @@ msgstr "Witte PDF-achtergrond"
 msgid "Write text"
 msgstr "Tekst opstellen"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1157
+#: ../src/control/xojfile/LoadHandler.cpp:1158
 msgid "Wrong count of points ({1})"
 msgstr "Onjuiste puntentelling ({1})"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1171
+#: ../src/control/xojfile/LoadHandler.cpp:1172
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Onjuist aantal punten - verkregen: {1}, verwacht: {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:283
+#: ../src/control/xojfile/LoadHandler.cpp:284
 msgid "XML Parser error: {1}"
 msgstr "XML-verwerkfout: {1}"
 
@@ -1442,7 +1446,7 @@ msgstr "spoorpunt"
 msgid "whiteout"
 msgstr "correctievloeistof"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1170
+#: ../src/control/xojfile/LoadHandler.cpp:1171
 msgid "xoj-File: {1}"
 msgstr "xoj-bestand: {1}"
 
