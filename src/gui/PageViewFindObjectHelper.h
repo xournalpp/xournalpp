@@ -56,7 +56,10 @@ protected:
 		{
 			if (e->intersectsArea(&matchRect))
 			{
-				return checkElement(e);
+				if (this->checkElement(e))
+				{
+					return true;
+				}
 			}
 		}
 		return false;
