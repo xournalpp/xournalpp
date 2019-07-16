@@ -47,17 +47,16 @@ stages:
               CHERE_INVOKING: yes
             displayName: 'Run tests'
 
-#      - job: macOS
-#        pool:
-#          vmImage: 'macOS-10.13'
-#        displayName: 'Test Xournal++ on MacOS'
-#        steps:
-#          - template: steps/build_mac.yml
-#            parameters:
-#              build_type: 'Debug'
-#              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
-#          - bash: |
-#              ctest --verbose
-#            workingDirectory: ./build
-#            displayName: 'Run tests'
-#
+      - job: macOS
+        pool:
+          vmImage: 'macOS-10.13'
+        displayName: 'Test Xournal++ on MacOS'
+        steps:
+          - template: steps/build_mac.yml
+            parameters:
+              build_type: 'Debug'
+              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
+          - bash: |
+              ctest --verbose
+            workingDirectory: ./build
+            displayName: 'Run tests'
