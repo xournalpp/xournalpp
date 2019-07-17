@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-15 15:08+0000\n"
-"PO-Revision-Date: 2019-07-17 14:00\n"
+"PO-Revision-Date: 2019-07-17 14:07\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -113,19 +113,20 @@ msgstr "颜色未设置"
 #: ../src/control/AudioController.cpp:152
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "未设置音频文件夹！录音功能将无法使用！\n"
+"请在“偏好设置 > 音频录制”选项中设置音频文件夹路径。"
 
 #: ../src/control/Control.cpp:264
 msgid "Autosave failed with an error: {1}"
-msgstr ""
+msgstr "自动保存失败，错误信息为：{1}"
 
 #: ../src/control/Control.cpp:226
 msgid "Autosave renamed from {1} to {2}"
-msgstr ""
+msgstr "自动保存时已由 {1} 重命名为 {2}"
 
 #: ../src/control/jobs/AutosaveJob.cpp:60
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "正在自动保存为 {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Back"
@@ -162,7 +163,7 @@ msgstr "改变字体"
 
 #: ../src/undo/FillUndoAction.cpp:117
 msgid "Change stroke fill"
-msgstr ""
+msgstr "更改笔划填充"
 
 #: ../src/undo/SizeUndoAction.cpp:139
 msgid "Change stroke width"
@@ -196,11 +197,11 @@ msgstr "未能产生备份文件！(此文件应为老版本Xournal所建)"
 
 #: ../src/util/Util.cpp:112
 msgid "Could not create folder: {1}"
-msgstr ""
+msgstr "无法创建文件夹：{1}"
 
 #: ../src/control/LatexController.cpp:106
 msgid "Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
-msgstr ""
+msgstr "无法在系统 PATH 路径下找到 kpsewhich; 请安装 kpsewhich 并将其加入到 PATH路径中。"
 
 #: ../src/control/LatexController.cpp:82
 msgid "Could not find pdflatex in PATH.\n"
