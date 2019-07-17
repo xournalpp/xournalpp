@@ -97,8 +97,7 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: git
-        path: .
-        #url: https://github.com/xournalpp/xournalpp
+        url: https://github.com/xournalpp/xournalpp
         commit: 14e9012b94e005112387dbb7d2ed59274d542885
         tag: 1.0.10
 
