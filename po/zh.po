@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-15 15:08+0000\n"
-"PO-Revision-Date: 2019-07-17 14:07\n"
+"PO-Revision-Date: 2019-07-17 14:22\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -206,7 +206,8 @@ msgstr "无法在系统 PATH 路径下找到 kpsewhich; 请安装 kpsewhich 并�
 #: ../src/control/LatexController.cpp:82
 msgid "Could not find pdflatex in PATH.\n"
 "Please install pdflatex first and make sure it's in the PATH."
-msgstr ""
+msgstr "无法在系统 PATH 路径下找到 pdflatex.\n"
+"请先安装 dflatex 并确保其位于 PATH 路径中。"
 
 #: ../src/control/LatexController.cpp:111
 msgid "Could not find the LaTeX package 'standalone'.\n"
@@ -313,7 +314,7 @@ msgstr "未能写上背景\"{1}\"，不管啦继续哦..."
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:109
 msgid "Create new layer"
-msgstr ""
+msgstr "创建新层"
 
 #: ../src/gui/dialog/FormatDialog.cpp:72
 msgid "Custom"
@@ -321,11 +322,11 @@ msgstr "设置"
 
 #: ../src/control/jobs/CustomExportJob.cpp:18
 msgid "Custom Export"
-msgstr ""
+msgstr "自定义导出"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "自定义工具栏"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:38
 msgid "Customized"
@@ -354,7 +355,7 @@ msgstr "删除当前页"
 
 #: ../src/control/XournalMain.cpp:188
 msgid "Delete file"
-msgstr ""
+msgstr "删除文件"
 
 #: ../src/undo/RemoveLayerUndoAction.cpp:41
 msgid "Delete layer"
