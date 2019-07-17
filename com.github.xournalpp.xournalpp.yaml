@@ -1,4 +1,3 @@
----
 app-id: com.github.xournalpp.xournalpp
 runtime: org.gnome.Platform
 runtime-version: '3.32'
@@ -14,6 +13,7 @@ finish-args:
   # Wayland access
   - "--socket=wayland"
   # Needs to save files locally
+  # Why are portals not used? Does the app re-implement the open dialogue?
   - "--filesystem=xdg-documents"
   - "--socket=pulseaudio"
   # Allow dconf
@@ -22,7 +22,7 @@ finish-args:
   - "--talk-name=ca.desrt.dconf"
   - "--env=DCONF_USER_CONFIG_DIR=.config/dconf"
   - "--persist=.xournalpp"
-build-options:
+
 cleanup:
   - "/include"
   - "/lib/pkgconfig"
@@ -57,10 +57,14 @@ modules:
       - type: archive
         url: https://libzip.org/download/libzip-1.5.2.tar.xz
         sha256: b3de4d4bd49a01e0cab3507fc163f88e1651695b6b9cb25ad174dbe319d4a3b4
+
   - name: libportaudiocpp
     buildsystem: autotools
     config-opts:
       - "--enable-cxx" # compile with c++ headers!!!
+    make-args:
+        # seem parallel build is broken. At least it breaks for me, locally
+        - -j1
     sources:
       - type: git
         url: https://git.assembla.com/portaudio.git
@@ -76,6 +80,7 @@ modules:
       - "/share/gtk-doc"
       - "/share/man"
       - "/share/pkgconfig"
+
   - name: libsndfile
     buildsystem: autotools
     sources:
@@ -90,7 +95,6 @@ modules:
 
   - name: xournallpp
     buildsystem: cmake-ninja
-    config-opts: []
     sources:
       - type: git
         path: .
