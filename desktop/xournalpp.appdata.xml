@@ -65,4 +65,14 @@
   <launchable type="desktop-id">@app-id@.desktop</launchable>
   <update_contact>webmaster_AT_huberulrich.de</update_contact>
   <content_rating type="oars-1.0"/>
+  <releases>
+    <!-- Could be automated more:
+	 `git tag --list | grep "^[0-9]*\.[0-9]*\.[0-9]*$`"
+    -->
+    <release date="2019-05-26" version="1.0.12"/>
+    <release date="2019-04-01" version="1.0.10"/>
+    <release date="2019-02-16" version="1.0.8"/>
+    <release date="2019-01-19" version="1.0.7"/>
+    <release date="2018-12-30" version="1.0.5"/>
+  </releases>
 </component>
