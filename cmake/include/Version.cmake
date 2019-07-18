@@ -1,13 +1,17 @@
 # Adopted from https://github.com/xbmc/xbmc
 
-# distro codename
+# Distro name and codename
 if(NOT DISTRO_CODENAME)
+  find_program(LSB_RELEASE_CMD lsb_release)
   if(NOT LSB_RELEASE_CMD)
-    message(WARNING "DEB Generator: Can't find lsb_release in your path. Setting DISTRO_CODENAME to unknown.")
+    message(WARNING "include/Version.cmake: Can't find lsb_release in your path. Setting DISTRO_CODENAME to unknown.")
     set(DISTRO_CODENAME unknown)
   else()
     execute_process(COMMAND ${LSB_RELEASE_CMD} -cs
                     OUTPUT_VARIABLE DISTRO_CODENAME
+                    OUTPUT_STRIP_TRAILING_WHITESPACE)
+    execute_process(COMMAND ${LSB_RELEASE_CMD} -is
+                    OUTPUT_VARIABLE DISTRO_NAME
                     OUTPUT_STRIP_TRAILING_WHITESPACE)
   endif()
 endif()

@@ -302,4 +302,9 @@ set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Xournal++ - Open source hand note-taking
 set (CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 set (CPACK_GENERATOR "TGZ")
 set (CPACK_PACKAGE_INSTALL_DIRECTORY "Xournal++")
+
+include(TargetArch)
+target_architecture(PACKAGE_ARCH)
+set (CPACK_PACKAGE_FILE_NAME "xournalpp-${PROJECT_VERSION}-${DISTRO_NAME}-${DISTRO_CODENAME}-${PACKAGE_ARCH}")
+
 include (CPack)
