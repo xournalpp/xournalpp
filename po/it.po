@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-15 15:08+0000\n"
-"PO-Revision-Date: 2019-07-15 15:24\n"
+"POT-Creation-Date: 2019-07-20 07:32+0000\n"
+"PO-Revision-Date: 2019-07-20 07:35\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -884,7 +884,7 @@ msgstr "Rimosso lo strumento dalla Barra degli Strumenti {1} ID {2}"
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr "Rimosso lo strumento {1} dalla Barra degli Strumenti {2} ID {3}"
 
-#: ../src/util/XojMsgBox.cpp:77
+#: ../src/util/XojMsgBox.cpp:82
 msgid "Replace"
 msgstr "Sostituisci"
 
@@ -978,7 +978,7 @@ msgstr "Seleziona Regione"
 msgid "Select another PDF"
 msgstr "Seleziona un altro PDF"
 
-#: ../src/util/XojMsgBox.cpp:76
+#: ../src/util/XojMsgBox.cpp:81
 msgid "Select another name"
 msgstr "Seleziona un altro nome"
 
@@ -1135,7 +1135,7 @@ msgstr "Sono presenti files di errore generati da Xournal++. Per favore invia un
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "È presente un file di errore generato da Xournal++. Per favore invia un report, così che l'eventuale bug possa essere risolto."
 
-#: ../src/util/XojMsgBox.cpp:92
+#: ../src/util/XojMsgBox.cpp:102
 msgid "There was an error displaying help: {1}"
 msgstr "Si è verificato un errore nella schermata di aiuto: {1}"
 
