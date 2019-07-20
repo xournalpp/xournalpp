@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-15 15:08+0000\n"
-"PO-Revision-Date: 2019-07-15 15:24\n"
+"POT-Creation-Date: 2019-07-20 07:32+0000\n"
+"PO-Revision-Date: 2019-07-20 07:35\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Traditional, Hong Kong\n"
 "Language: zh_HK\n"
@@ -880,7 +880,7 @@ msgstr ""
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr ""
 
-#: ../src/util/XojMsgBox.cpp:77
+#: ../src/util/XojMsgBox.cpp:82
 msgid "Replace"
 msgstr ""
 
@@ -974,7 +974,7 @@ msgstr "選擇區域"
 msgid "Select another PDF"
 msgstr "選擇其他PDF"
 
-#: ../src/util/XojMsgBox.cpp:76
+#: ../src/util/XojMsgBox.cpp:81
 msgid "Select another name"
 msgstr ""
 
@@ -1129,7 +1129,7 @@ msgstr "發現Xournal++的錯誤日誌檔案，請發送一個錯誤報告，將
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "發現Xournal++的錯誤日誌檔案，請發送一個錯誤報告，將會被修正。"
 
-#: ../src/util/XojMsgBox.cpp:92
+#: ../src/util/XojMsgBox.cpp:102
 msgid "There was an error displaying help: {1}"
 msgstr ""
 
