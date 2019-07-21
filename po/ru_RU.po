@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-21 22:46\n"
+"PO-Revision-Date: 2019-07-21 22:55\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1060,11 +1060,11 @@ msgstr ""
 
 #: ../src/gui/SearchBar.cpp:66
 msgid "Text found on this page"
-msgstr ""
+msgstr "Текст найден на этой странице"
 
 #: ../src/gui/SearchBar.cpp:150 ../src/gui/SearchBar.cpp:206
 msgid "Text found once on page {1}"
-msgstr ""
+msgstr "Текст найден один раз на странице {1}"
 
 #: ../src/gui/SearchBar.cpp:151 ../src/gui/SearchBar.cpp:207
 msgid "Text found {1} times on page {2}"
@@ -1212,7 +1212,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2775
 msgid "Unsaved Document"
-msgstr ""
+msgstr "Несохранённый документ"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 msgid "Vertical Space"
