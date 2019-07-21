@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-21 21:35\n"
+"PO-Revision-Date: 2019-07-21 21:44\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -159,7 +159,7 @@ msgstr ""
 
 #: ../src/undo/SizeUndoAction.cpp:139
 msgid "Change stroke width"
-msgstr ""
+msgstr "Изменить ширину штриха"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:98
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
@@ -382,18 +382,18 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:32
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:472
 msgid "Draw Arrow"
-msgstr ""
+msgstr "Нарисовать стрелу"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:105
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:471
 msgid "Draw Circle"
-msgstr ""
+msgstr "Нарисовать круг"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:101
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
 msgid "Draw Line"
-msgstr ""
+msgstr "Нарисовать линию"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:103
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:23
@@ -402,7 +402,7 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:115
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:470
 msgid "Draw Rectangle"
-msgstr ""
+msgstr "Нарисовать прямоугольник"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:109
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
@@ -583,7 +583,7 @@ msgstr "Изображения"
 
 #: ../src/undo/InsertUndoAction.cpp:116
 msgid "Insert elements"
-msgstr ""
+msgstr "Вставить элементы"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:67 ../src/undo/InsertUndoAction.cpp:48
 msgid "Insert image"
@@ -591,7 +591,7 @@ msgstr "Вставить изображение"
 
 #: ../src/undo/InsertUndoAction.cpp:52
 msgid "Insert latex"
-msgstr ""
+msgstr "Вставить latex"
 
 #: ../src/undo/InsertLayerUndoAction.cpp:40
 msgid "Insert layer"
@@ -947,7 +947,7 @@ msgstr "Выбрать шрифт"
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:82
 msgid "Select Object"
-msgstr ""
+msgstr "Выбрать объект"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:10
@@ -955,13 +955,13 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:68
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:108
 msgid "Select Rectangle"
-msgstr ""
+msgstr "Выбрать прямоугольник"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:476
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:75
 msgid "Select Region"
-msgstr ""
+msgstr "Выбрать регион"
 
 #: ../src/control/Control.cpp:2349
 msgid "Select another PDF"
@@ -973,7 +973,7 @@ msgstr ""
 
 #: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:143
 msgid "Select background color"
-msgstr ""
+msgstr "Выбрать цвет фона"
 
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:59
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:175
@@ -2023,7 +2023,7 @@ msgstr ""
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
-msgstr ""
+msgstr "Вставить Latex"
 
 #: ../ui/main.glade:2458
 msgid "Insert Page After"
@@ -2241,7 +2241,7 @@ msgstr ""
 
 #: ../ui/images.glade:8
 msgid "Select Image"
-msgstr ""
+msgstr "Выбрать изображение"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
