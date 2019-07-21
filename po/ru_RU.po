@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-21 21:54\n"
+"PO-Revision-Date: 2019-07-21 22:04\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -666,7 +666,7 @@ msgstr ""
 
 #: ../src/undo/MoveLayerUndoAction.cpp:38
 msgid "Move layer"
-msgstr ""
+msgstr "Переместить слой"
 
 #: ../src/undo/SwapUndoAction.cpp:88
 msgid "Move page downwards"
@@ -761,7 +761,7 @@ msgstr ""
 #: ../src/control/jobs/PdfExportJob.cpp:23
 #: ../src/control/stockdlg/XojOpenDlg.cpp:63
 msgid "PDF files"
-msgstr ""
+msgstr "PDF файлы"
 
 #: ../src/control/XournalMain.cpp:314
 msgid "PDF output filename"
@@ -883,11 +883,11 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:189
 msgid "Restore file"
-msgstr ""
+msgstr "Восстановить файл"
 
 #: ../src/undo/RotateUndoAction.cpp:74
 msgid "Rotation"
-msgstr ""
+msgstr "Поворот"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Rotation Snapping"
@@ -937,7 +937,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Search"
-msgstr ""
+msgstr "Поиск"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Select Font"
@@ -990,7 +990,7 @@ msgstr "Выбрать регион"
 
 #: ../src/control/XournalMain.cpp:135
 msgid "Send Bugreport"
-msgstr ""
+msgstr "Отправить отчёт об ошибке"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:53
 msgid "Separator"
@@ -1188,11 +1188,11 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:639
 msgid "Unknown background type: {1}"
-msgstr ""
+msgstr "Неизвестный тип фона: {1}"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "Неизвестное значение цвета \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:574
 msgid "Unknown domain type: {1}"
@@ -1200,7 +1200,7 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:289
 msgid "Unknown parser error"
-msgstr ""
+msgstr "Неизвестная ошибка парсера"
 
 #: ../src/control/xojfile/LoadHandler.cpp:487
 msgid "Unknown pixmap::domain type: {1}"
