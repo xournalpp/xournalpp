@@ -3028,8 +3028,8 @@ void Control::clipboardPasteImage(GdkPixbuf* img)
 	auto image = new Image();
 	image->setImage(img);
 
-	int width = gdk_pixbuf_get_width(img);
-	int height = gdk_pixbuf_get_height(img);
+	auto width = static_cast<double>(gdk_pixbuf_get_width(img)) / settings->getDisplayDpi() * 72.0;
+	auto height = static_cast<double>(gdk_pixbuf_get_height(img)) / settings->getDisplayDpi() * 72.0;
 
 	int pageNr = getCurrentPageNo();
 	if (pageNr == -1)
@@ -3039,16 +3039,16 @@ void Control::clipboardPasteImage(GdkPixbuf* img)
 
 	this->doc->lock();
 	PageRef page = this->doc->getPage(pageNr);
-	int pageWidth = page->getWidth();
-	int pageHeight = page->getHeight();
+	auto pageWidth = page->getWidth();
+	auto pageHeight = page->getHeight();
 	this->doc->unlock();
 
 	// Size: 3/4 of the page size
-	pageWidth = pageWidth * 3 / 4;
-	pageHeight = pageHeight * 3 / 4;
+	pageWidth = pageWidth * 3.0 / 4.0;
+	pageHeight = pageHeight * 3.0 / 4.0;
 
-	int scaledWidth = width;
-	int scaledHeight = height;
+	auto scaledWidth = width;
+	auto scaledHeight = height;
 
 	if (width > pageWidth)
 	{
