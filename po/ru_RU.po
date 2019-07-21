@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-21 21:25\n"
+"PO-Revision-Date: 2019-07-21 21:35\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -143,7 +143,7 @@ msgstr "Синий"
 #: ../src/control/Control.cpp:2351 ../src/control/Control.cpp:2912
 #: ../src/control/XournalMain.cpp:139
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #: ../src/undo/ColorUndoAction.cpp:119
 msgid "Change color"
@@ -1129,7 +1129,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:90
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:526
 msgid "Thick"
-msgstr ""
+msgstr "Жирный"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Thickness - don't change"
