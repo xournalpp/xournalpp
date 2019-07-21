@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-21 20:15\n"
+"PO-Revision-Date: 2019-07-21 20:24\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -66,7 +66,7 @@ msgstr ""
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:246
 msgid "Apply to current page"
-msgstr ""
+msgstr "Применить к текущей странице"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:30
 #: ../src/control/stockdlg/XojOpenDlg.cpp:154
@@ -1499,7 +1499,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:256
 msgid "<b>Background Color</b>"
-msgstr ""
+msgstr "<b>Цвет фона</b>"
 
 #: ../ui/pageTemplate.glade:269
 msgid "<b>Background</b>"
@@ -1545,7 +1545,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:132
 msgid "<b>Page size</b>"
-msgstr ""
+msgstr "<b>Размер страницы</b>"
 
 #: ../ui/pagesize.glade:142
 msgid "<b>Pagesize</b>"
@@ -1665,7 +1665,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:142
 msgid "All pages"
-msgstr ""
+msgstr "Все страницы"
 
 #: ../ui/settings.glade:3377
 msgid "All three conditions must be met before stroke is ignored.\n"
@@ -1682,11 +1682,11 @@ msgstr ""
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
-msgstr ""
+msgstr "Автор: "
 
 #: ../ui/about.glade:161
 msgid "Authors:"
-msgstr ""
+msgstr "Авторы:"
 
 #: ../ui/settings.glade:1515
 msgid "Autodetect"
@@ -1698,7 +1698,7 @@ msgstr ""
 
 #: ../ui/settings.glade:316
 msgid "Autosaving"
-msgstr ""
+msgstr "Автосохранение"
 
 #: ../ui/settings.glade:465
 msgid "Available Placeholders"
@@ -1726,11 +1726,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1201
 msgid "Button 1"
-msgstr ""
+msgstr "Кнопка 1"
 
 #: ../ui/settings.glade:1239
 msgid "Button 2"
-msgstr ""
+msgstr "Кнопка 2"
 
 #: ../ui/settings.glade:2089
 msgid "Colors"
@@ -1750,7 +1750,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:158
 msgid "Current page"
-msgstr ""
+msgstr "Текущая страница"
 
 #: ../ui/settings.glade:2175
 msgid "Cursor"
@@ -1762,7 +1762,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2067
 msgid "Dark Theme (requires restart)"
-msgstr ""
+msgstr "Тёмная тема (требуется перезапуск)"
 
 #: ../ui/settings.glade:491
 msgid "Default Save Name"
@@ -1909,11 +1909,11 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:25
 msgid "Export"
-msgstr ""
+msgstr "Экспортировать"
 
 #: ../ui/main.glade:250
 msgid "Export as..."
-msgstr ""
+msgstr "Экспортировать как..."
 
 #: ../ui/main.glade:1581 ../ui/main.glade:1742
 msgid "Fi_ll"
@@ -1937,7 +1937,7 @@ msgstr ""
 
 #: ../ui/main.glade:485 ../ui/settings.glade:2376
 msgid "Fullscreen"
-msgstr ""
+msgstr "Во весь экран"
 
 #: ../ui/about.glade:251
 msgid "GNU GPLv2 or later"
@@ -1977,7 +1977,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2354 ../ui/settings.glade:2421
 msgid "Hide Sidebar"
-msgstr ""
+msgstr "Скрыть боковую панель"
 
 #: ../ui/settings.glade:2271
 msgid "Hide the horizontal scrollbar"
@@ -2120,7 +2120,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3777
 msgid "Output Device"
-msgstr ""
+msgstr "Устройство вывода"
 
 #: ../ui/main.glade:1077
 msgid "P_revious annotated Page"
@@ -2132,7 +2132,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:175
 msgid "Pages:"
-msgstr ""
+msgstr "Страницы:"
 
 #: ../ui/settings.glade:3039
 msgid "Paired Pages"
@@ -2140,7 +2140,7 @@ msgstr ""
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
-msgstr ""
+msgstr "Формат бумаги"
 
 #: ../ui/main.glade:1199
 msgid "Paper _Color"
@@ -2181,7 +2181,7 @@ msgstr ""
 
 #: ../ui/main.glade:440
 msgid "Preferences"
-msgstr ""
+msgstr "Настройки"
 
 #: ../ui/settings.glade:2477
 msgid "Presentation Mode"
@@ -2193,7 +2193,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:127
 msgid "Range"
-msgstr ""
+msgstr "Диапазон"
 
 #: ../ui/main.glade:190
 msgid "Recent _Documents"
@@ -2209,7 +2209,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:112
 msgid "Resolution"
-msgstr ""
+msgstr "Разрешение"
 
 #: ../ui/settings.glade:992
 msgid "Right Mouse Button"
@@ -2333,7 +2333,7 @@ msgstr ""
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
-msgstr ""
+msgstr "Шаблон:"
 
 #: ../ui/settings.glade:1653 ../ui/settings.glade:1666
 msgid "Test"
@@ -2341,7 +2341,7 @@ msgstr ""
 
 #: ../ui/main.glade:1766
 msgid "Text Font..."
-msgstr ""
+msgstr "Шрифт текста..."
 
 #: ../ui/settings.glade:2744
 msgid "The unit of the ruler is cm"
@@ -2378,7 +2378,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3019
 msgid "Usually 0 or 1"
-msgstr ""
+msgstr "Обычно 0 или 1"
 
 #: ../ui/about.glade:100
 msgid "Version"
@@ -2410,7 +2410,7 @@ msgstr ""
 
 #: ../ui/settings.glade:105
 msgid "Xournal++ Preferences"
-msgstr ""
+msgstr "Настройки Xournal++"
 
 #: ../ui/settings.glade:2798
 msgid "Zoom"
@@ -2703,7 +2703,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:37
 msgid "save to file"
-msgstr ""
+msgstr "сохранить в файл"
 
 #: ../ui/main.glade:1514
 msgid "ver_y thick"
