@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-21 22:15\n"
+"PO-Revision-Date: 2019-07-21 22:25\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -682,7 +682,7 @@ msgstr "Новый"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "New Xournal"
-msgstr ""
+msgstr "Новый Xournal"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 msgid "Next"
@@ -694,7 +694,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:44
 msgid "No device"
-msgstr ""
+msgstr "Нет устройства"
 
 #: ../src/pdf/base/XojCairoPdfExport.cpp:93
 #: ../src/pdf/base/XojCairoPdfExport.cpp:142
@@ -875,7 +875,7 @@ msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:82
 msgid "Replace"
-msgstr ""
+msgstr "Заменить"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1336
 msgid "Requested temporary file was not found for attachment {1}"
@@ -929,7 +929,7 @@ msgstr "Сохранить файл"
 #: ../src/control/jobs/CustomExportJob.cpp:162
 #: ../src/control/jobs/SaveJob.cpp:143
 msgid "Save file error: {1}"
-msgstr ""
+msgstr "Ошибка сохранения файла: {1}"
 
 #: ../src/undo/ScaleUndoAction.cpp:73
 msgid "Scale"
@@ -1151,7 +1151,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Toggle fullscreen"
-msgstr ""
+msgstr "Полноэкранный режим"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:62
 msgid "Tool - don't change"
@@ -1249,7 +1249,7 @@ msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "Xournal (совместимость)"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:74
 msgid "Xournal files"
@@ -1266,7 +1266,7 @@ msgstr "Xournal++ файлы"
 #: ../src/control/stockdlg/XojOpenDlg.cpp:94
 #: ../src/gui/dialog/PageTemplateDialog.cpp:118
 msgid "Xournal++ template"
-msgstr ""
+msgstr "Шаблон Xournal++"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:145
@@ -1294,11 +1294,11 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Zoom in"
-msgstr ""
+msgstr "Увеличить"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Zoom out"
-msgstr ""
+msgstr "Уменьшить"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:106
 msgid "Zoom slider"
@@ -1313,7 +1313,7 @@ msgstr ""
 #: ../src/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Cancel"
-msgstr ""
+msgstr "_Отмена"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:18
@@ -1549,7 +1549,7 @@ msgstr "<b>Размер страницы</b>"
 
 #: ../ui/pagesize.glade:142
 msgid "<b>Pagesize</b>"
-msgstr ""
+msgstr "<b>Размер страницы</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separator</b>"
@@ -1674,7 +1674,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3811
 msgid "Audio Devices"
-msgstr ""
+msgstr "Аудио устройства"
 
 #: ../ui/settings.glade:3951
 msgid "Audio Recording"
@@ -1770,7 +1770,7 @@ msgstr ""
 
 #: ../ui/settings.glade:379
 msgid "Default name: "
-msgstr ""
+msgstr "Имя по умолчанию: "
 
 #: ../ui/settings.glade:3589
 msgid "Defaults"
@@ -1782,7 +1782,7 @@ msgstr "Удалить слой"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
-msgstr ""
+msgstr "Удалить штрих"
 
 #: ../ui/main.glade:2062
 msgid "Delete this page"
@@ -2080,7 +2080,7 @@ msgstr "Мышь"
 
 #: ../ui/settings.glade:1010
 msgid "Mouse Buttons"
-msgstr ""
+msgstr "Кнопки мыши"
 
 #: ../ui/main.glade:2488
 msgid "Move Down"
@@ -2144,7 +2144,7 @@ msgstr "Формат бумаги"
 
 #: ../ui/main.glade:1199
 msgid "Paper _Color"
-msgstr ""
+msgstr "Цвет _бумаги"
 
 #: ../ui/main.glade:1189
 msgid "Paper _Format"
@@ -2426,19 +2426,19 @@ msgstr ""
 
 #: ../ui/main.glade:633
 msgid "_1 Column"
-msgstr ""
+msgstr "_1 столбец"
 
 #: ../ui/main.glade:738
 msgid "_1 Row"
-msgstr ""
+msgstr "_1 строка"
 
 #: ../ui/main.glade:644
 msgid "_2 Columns"
-msgstr ""
+msgstr "_2 колонки"
 
 #: ../ui/main.glade:749
 msgid "_2 Rows"
-msgstr ""
+msgstr "_2 строки"
 
 #: ../ui/main.glade:655
 msgid "_3 Columns"
@@ -2446,7 +2446,7 @@ msgstr ""
 
 #: ../ui/main.glade:760
 msgid "_3 Rows"
-msgstr ""
+msgstr "_3 строки"
 
 #: ../ui/main.glade:666
 msgid "_4 Columns"
@@ -2454,11 +2454,11 @@ msgstr ""
 
 #: ../ui/main.glade:771
 msgid "_4 Rows"
-msgstr ""
+msgstr "_4 строки"
 
 #: ../ui/main.glade:677
 msgid "_5 Columns"
-msgstr ""
+msgstr "_5 столбцов"
 
 #: ../ui/main.glade:782
 msgid "_5 Rows"
