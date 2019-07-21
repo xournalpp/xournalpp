@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-21 22:25\n"
+"PO-Revision-Date: 2019-07-21 22:35\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -434,7 +434,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:64
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:311
 msgid "Eraser"
-msgstr ""
+msgstr "Ластик"
 
 #: ../src/control/Control.cpp:2578
 msgid "Error annotate PDF file \"{1}\"\n"
@@ -1038,7 +1038,7 @@ msgstr ""
 
 #: ../src/util/CrashHandler.cpp:51
 msgid "Successfully saved document to \"{1}\""
-msgstr ""
+msgstr "Документ успешно сохранен в \"{1}\""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:134
 msgid "Supported files"
@@ -2277,11 +2277,11 @@ msgstr ""
 
 #: ../ui/main.glade:496
 msgid "Show sidebar"
-msgstr ""
+msgstr "Показать боковую панель"
 
 #: ../ui/settings.glade:2204
 msgid "Show sidebar on the right side"
-msgstr ""
+msgstr "Показывать боковую панель справа"
 
 #: ../ui/settings.glade:2220
 msgid "Show vertical scrollbar on the left side"
@@ -2462,31 +2462,31 @@ msgstr "_5 столбцов"
 
 #: ../ui/main.glade:782
 msgid "_5 Rows"
-msgstr ""
+msgstr "_5 строк"
 
 #: ../ui/main.glade:688
 msgid "_6 Columns"
-msgstr ""
+msgstr "_6 столбцов"
 
 #: ../ui/main.glade:793
 msgid "_6 Rows"
-msgstr ""
+msgstr "_6 строк"
 
 #: ../ui/main.glade:699
 msgid "_7 Columns"
-msgstr ""
+msgstr "_7 столбцов"
 
 #: ../ui/main.glade:804
 msgid "_7 Rows"
-msgstr ""
+msgstr "_7 строк"
 
 #: ../ui/main.glade:710
 msgid "_8 Columns"
-msgstr ""
+msgstr "_8 столбцов"
 
 #: ../ui/main.glade:815
 msgid "_8 Rows"
-msgstr ""
+msgstr "_8 строк"
 
 #: ../ui/main.glade:199
 msgid "_Annotate PDF"
@@ -2602,11 +2602,11 @@ msgstr "_Предыдущий слой"
 
 #: ../ui/main.glade:978
 msgid "_Previous Page"
-msgstr ""
+msgstr "_Предыдущая страница"
 
 #: ../ui/main.glade:564
 msgid "_Right To Left"
-msgstr ""
+msgstr "_Справа налево"
 
 #: ../ui/main.glade:1309
 msgid "_Shape Recognizer"
