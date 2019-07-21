@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-21 22:35\n"
+"PO-Revision-Date: 2019-07-21 22:46\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -498,7 +498,7 @@ msgstr "Имя файла: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:511
 msgid "Fill"
-msgstr ""
+msgstr "Заливка"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:72
 msgid "Floating Toolbox (experimental)"
@@ -522,7 +522,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Go to page"
-msgstr ""
+msgstr "Перейти на страницу"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Go to previous layer"
@@ -747,7 +747,7 @@ msgstr ""
 
 #: ../src/gui/MainWindow.cpp:835
 msgid "PDF Page {1}"
-msgstr ""
+msgstr "PDF страница {1}"
 
 #: ../src/view/PdfView.cpp:40
 msgid "PDF background missing"
@@ -1327,7 +1327,7 @@ msgstr "_Сохранить"
 
 #: ../src/util/DeviceListHelper.cpp:130
 msgid "cursor"
-msgstr ""
+msgstr "курсор"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:298
 msgid "dash-/ dotted"
@@ -1645,7 +1645,8 @@ msgstr ""
 #: ../ui/about.glade:73
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
-msgstr ""
+msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+"<i>Следующее поколение</i>"
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
@@ -1921,7 +1922,7 @@ msgstr ""
 
 #: ../ui/main.glade:1591 ../ui/main.glade:1752
 msgid "Fill transparency"
-msgstr ""
+msgstr "Прозрачность заливки"
 
 #: ../ui/main.glade:2260
 msgid "Find next occurrence of the search string"
@@ -2233,7 +2234,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:174
 msgid "Select Background Color"
-msgstr ""
+msgstr "Выбрать цвет фона"
 
 #: ../ui/settings.glade:3677
 msgid "Select Folder"
@@ -2506,7 +2507,7 @@ msgstr ""
 
 #: ../ui/main.glade:1293
 msgid "_Default Tools"
-msgstr ""
+msgstr "_Инструменты по умолчанию"
 
 #: ../ui/main.glade:1144
 msgid "_Delete Page"
@@ -2558,11 +2559,11 @@ msgstr "_Журнал"
 
 #: ../ui/main.glade:1011
 msgid "_Last Page"
-msgstr ""
+msgstr "_Последняя страница"
 
 #: ../ui/main.glade:553
 msgid "_Left To Right"
-msgstr ""
+msgstr "_Слева направо"
 
 #: ../ui/main.glade:858
 msgid "_Manage"
@@ -2614,7 +2615,7 @@ msgstr ""
 
 #: ../ui/main.glade:1269
 msgid "_Text"
-msgstr ""
+msgstr "_Текст"
 
 #: ../ui/main.glade:1222
 msgid "_Tools"
