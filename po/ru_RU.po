@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-21 23:05\n"
+"PO-Revision-Date: 2019-07-21 23:15\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1858,7 +1858,7 @@ msgstr ""
 
 #: ../ui/settings.glade:537
 msgid "Enable Autoloading of Journals"
-msgstr ""
+msgstr "Включить автозагрузку журналов"
 
 #: ../ui/settings.glade:235
 msgid "Enable Autosaving"
@@ -1982,11 +1982,11 @@ msgstr "Скрыть боковую панель"
 
 #: ../ui/settings.glade:2271
 msgid "Hide the horizontal scrollbar"
-msgstr ""
+msgstr "Скрыть горизонтальную прокрутку"
 
 #: ../ui/settings.glade:2287
 msgid "Hide the vertical scrollbar"
-msgstr ""
+msgstr "Скрыть вертикальную прокрутку"
 
 #: ../ui/settings.glade:2137
 msgid "Highlight cursor position"
@@ -2073,7 +2073,7 @@ msgstr ""
 
 #: ../ui/settings.glade:954
 msgid "Middle Mouse Button"
-msgstr ""
+msgstr "Средняя кнопка мыши"
 
 #: ../ui/settings.glade:1041 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
@@ -2371,7 +2371,7 @@ msgstr "Настройки прозрачности"
 
 #: ../ui/settings.glade:3358
 msgid "Try to select object first."
-msgstr ""
+msgstr "Сначала попробуйте выбрать объект."
 
 #: ../ui/settings.glade:3363 ../ui/settings.glade:3393
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
@@ -2519,7 +2519,7 @@ msgstr "_Правка"
 
 #: ../ui/main.glade:1245
 msgid "_Eraser"
-msgstr ""
+msgstr "_Ластик"
 
 #: ../ui/main.glade:240
 msgid "_Export as PDF"
@@ -2531,7 +2531,7 @@ msgstr "_Файл"
 
 #: ../ui/main.glade:967
 msgid "_First Page"
-msgstr ""
+msgstr "_Первая страница"
 
 #: ../ui/main.glade:989
 msgid "_Goto Page"
@@ -2675,7 +2675,7 @@ msgstr "изменить"
 
 #: ../ui/exportSettings.glade:223
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
