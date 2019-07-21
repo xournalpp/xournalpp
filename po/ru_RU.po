@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-21 20:55\n"
+"PO-Revision-Date: 2019-07-21 21:05\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -62,7 +62,7 @@ msgstr "Все файлы"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:257
 msgid "Apply to all pages"
-msgstr ""
+msgstr "Применить ко всем страницам"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:246
 msgid "Apply to current page"
@@ -557,7 +557,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:99
 msgid "Hide all"
-msgstr ""
+msgstr "Скрыть все"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:65
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:463
@@ -637,7 +637,7 @@ msgstr ""
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:103
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:18
 msgid "Loading..."
-msgstr ""
+msgstr "Загрузка..."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Manage Toolbars"
@@ -670,11 +670,11 @@ msgstr ""
 
 #: ../src/undo/SwapUndoAction.cpp:88
 msgid "Move page downwards"
-msgstr ""
+msgstr "Переместить страницу вниз"
 
 #: ../src/undo/SwapUndoAction.cpp:88
 msgid "Move page upwards"
-msgstr ""
+msgstr "Переместить страницу вверх"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:90
 msgid "New"
@@ -793,11 +793,11 @@ msgstr ""
 
 #: ../src/undo/InsertDeletePageUndoAction.cpp:129
 msgid "Page deleted"
-msgstr ""
+msgstr "Страница удалена"
 
 #: ../src/undo/InsertDeletePageUndoAction.cpp:125
 msgid "Page inserted"
-msgstr ""
+msgstr "Страница вставлена"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:49
 msgid "Page number"
@@ -1002,7 +1002,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:90
 msgid "Show all"
-msgstr ""
+msgstr "Показать все"
 
 #: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:134
 msgid "Show only not used pages (one unused page)"
@@ -1387,7 +1387,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:222
 msgid "show"
-msgstr ""
+msgstr "показать"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:292
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:313
@@ -1649,7 +1649,7 @@ msgstr ""
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
-msgstr ""
+msgstr "О программе Xournal++"
 
 #: ../ui/settings.glade:3411
 msgid "Action on Tool Tap"
@@ -1778,7 +1778,7 @@ msgstr ""
 
 #: ../ui/main.glade:1172
 msgid "Delete Layer"
-msgstr ""
+msgstr "Удалить слой"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -1786,7 +1786,7 @@ msgstr ""
 
 #: ../ui/main.glade:2062
 msgid "Delete this page"
-msgstr ""
+msgstr "Удалить эту страницу"
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
@@ -2128,7 +2128,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:18
 msgid "Page Template"
-msgstr ""
+msgstr "Шаблон страницы"
 
 #: ../ui/exportSettings.glade:175
 msgid "Pages:"
@@ -2554,7 +2554,7 @@ msgstr ""
 
 #: ../ui/main.glade:1092
 msgid "_Journal"
-msgstr ""
+msgstr "_Журнал"
 
 #: ../ui/main.glade:1011
 msgid "_Last Page"
@@ -2570,11 +2570,11 @@ msgstr ""
 
 #: ../ui/main.glade:956
 msgid "_Navigation"
-msgstr ""
+msgstr "_Навигация"
 
 #: ../ui/main.glade:1039
 msgid "_Next Layer"
-msgstr ""
+msgstr "_Следующий слой"
 
 #: ../ui/main.glade:1000
 msgid "_Next Page"
@@ -2618,7 +2618,7 @@ msgstr ""
 
 #: ../ui/main.glade:1222
 msgid "_Tools"
-msgstr ""
+msgstr "_Инструменты"
 
 #: ../ui/main.glade:1050
 msgid "_Top Layer"
