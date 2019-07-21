@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-21 22:04\n"
+"PO-Revision-Date: 2019-07-21 22:15\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -118,7 +118,7 @@ msgstr ""
 
 #: ../src/control/jobs/AutosaveJob.cpp:60
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "Автосохранение в {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Back"
@@ -259,7 +259,7 @@ msgstr ""
 #: ../src/control/xojfile/LoadHandler.cpp:442
 #: ../src/control/xojfile/LoadHandler.cpp:470
 msgid "Could not read image: {1}. Error message: {2}"
-msgstr ""
+msgstr "Не удалось прочитать изображение: {1}. Сообщение об ошибке: {2}"
 
 #: ../src/undo/UndoRedoHandler.cpp:157
 msgid "Could not redo \"{1}\"\n"
@@ -1216,11 +1216,11 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 msgid "Vertical Space"
-msgstr ""
+msgstr "Вертикальный отступ"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:68
 msgid "Vertical space"
-msgstr ""
+msgstr "Вертикальный отступ"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:146
@@ -1253,7 +1253,7 @@ msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:74
 msgid "Xournal files"
-msgstr ""
+msgstr "Xournal файлы"
 
 #: ../src/control/XournalMain.cpp:183
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
@@ -1261,7 +1261,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2709 ../src/control/stockdlg/XojOpenDlg.cpp:84
 msgid "Xournal++ files"
-msgstr ""
+msgstr "Xournal++ файлы"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:94
 #: ../src/gui/dialog/PageTemplateDialog.cpp:118
@@ -1375,7 +1375,7 @@ msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:118
 msgid "mouse"
-msgstr ""
+msgstr "мышь"
 
 #: ../src/control/LatexController.cpp:317
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
@@ -1553,7 +1553,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separator</b>"
-msgstr ""
+msgstr "<b>Разделитель</b>"
 
 #: ../ui/settings.glade:701
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -1573,7 +1573,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:209
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
-msgstr ""
+msgstr "<i>Пример:</i> 1-3 или 1,3,5-7 и т. д."
 
 #: ../ui/settings.glade:1813
 msgid "<i>For some specific hardware the scroll / touch behaviour of the system is not as expected. For these cases Xournal++ has a workaround.\n"
@@ -1790,7 +1790,7 @@ msgstr "Удалить эту страницу"
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
-msgstr ""
+msgstr "Устройство"
 
 #: ../ui/settings.glade:1620
 msgid "Disable"
@@ -2011,11 +2011,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3754
 msgid "Input Device"
-msgstr ""
+msgstr "Устройство ввода"
 
 #: ../ui/settings.glade:737
 msgid "Input Devices"
-msgstr ""
+msgstr "Устройства ввода"
 
 #: ../ui/settings.glade:862
 msgid "Input System"
@@ -2063,7 +2063,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3318
 msgid "Max Length (mm)"
-msgstr ""
+msgstr "Макс. длина (мм)"
 
 #: ../ui/settings.glade:820
 msgid "Merge button events with stylus tip events\n"
@@ -2116,7 +2116,7 @@ msgstr ""
 
 #: ../ui/settings.glade:842
 msgid "Options"
-msgstr ""
+msgstr "Параметры"
 
 #: ../ui/settings.glade:3777
 msgid "Output Device"
@@ -2362,11 +2362,11 @@ msgstr ""
 #: ../ui/settings.glade:1413 ../ui/settings.glade:1882
 #: ../ui/settingsDeviceClassConfig.glade:45
 msgid "Touchscreen"
-msgstr ""
+msgstr "Сенсорный экран"
 
 #: ../ui/fillTransparency.glade:14
 msgid "Transparency settings"
-msgstr ""
+msgstr "Настройки прозрачности"
 
 #: ../ui/settings.glade:3358
 msgid "Try to select object first."
@@ -2510,7 +2510,7 @@ msgstr ""
 
 #: ../ui/main.glade:1144
 msgid "_Delete Page"
-msgstr ""
+msgstr "_Удалить страницу"
 
 #: ../ui/main.glade:295
 msgid "_Edit"
@@ -2538,7 +2538,7 @@ msgstr ""
 
 #: ../ui/main.glade:1847
 msgid "_Help"
-msgstr ""
+msgstr "_Справка"
 
 #: ../ui/main.glade:1257
 msgid "_Highlighter"
@@ -2550,7 +2550,7 @@ msgstr ""
 
 #: ../ui/main.glade:1281
 msgid "_Image"
-msgstr ""
+msgstr "_Изображение"
 
 #: ../ui/main.glade:1092
 msgid "_Journal"
@@ -2578,7 +2578,7 @@ msgstr "_Следующий слой"
 
 #: ../ui/main.glade:1000
 msgid "_Next Page"
-msgstr ""
+msgstr "_Следующая страница"
 
 #: ../ui/main.glade:465
 msgid "_Pair Pages"
@@ -2598,7 +2598,7 @@ msgstr ""
 
 #: ../ui/main.glade:1028
 msgid "_Previous Layer"
-msgstr ""
+msgstr "_Предыдущий слой"
 
 #: ../ui/main.glade:978
 msgid "_Previous Page"
@@ -2634,7 +2634,7 @@ msgstr ""
 
 #: ../ui/main.glade:1417
 msgid "_Vertical Space"
-msgstr ""
+msgstr "_Вертикальный отступ"
 
 #: ../ui/main.glade:454
 msgid "_View"
