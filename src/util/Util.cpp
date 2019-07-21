@@ -121,11 +121,11 @@ Path Util::ensureFolderExists(const Path& p)
 void Util::openFileWithDefaultApplicaion(Path filename)
 {
 #ifdef __APPLE__
-#define OPEN_PATTERN "open \"{1}\""
+	constexpr auto const OPEN_PATTERN = "open \"{1}\"";
 #elif _WIN32 // note the underscore: without it, it's not msdn official!
-#define OPEN_PATTERN "start \"{1}\""
+	constexpr auto const OPEN_PATTERN = "start \"{1}\"";
 #else // linux, unix, ...
-#define OPEN_PATTERN "xdg-open \"{1}\""
+	constexpr auto const OPEN_PATTERN = "xdg-open \"{1}\"";
 #endif
 
 	string command = FS(FORMAT_STR(OPEN_PATTERN) % filename.getEscapedPath());
@@ -138,16 +138,13 @@ void Util::openFileWithDefaultApplicaion(Path filename)
 
 void Util::openFileWithFilebrowser(Path filename)
 {
-#undef OPEN_PATTERN
-
 #ifdef __APPLE__
-#define OPEN_PATTERN "open \"{1}\""
+	constexpr auto const OPEN_PATTERN = "open \"{1}\"";
 #elif WIN32
-#define OPEN_PATTERN "explorer.exe /n,/e,\"{1}\""
+	constexpr auto const OPEN_PATTERN = "explorer.exe /n,/e,\"{1}\"";
 #else // linux, unix, ...
-#define OPEN_PATTERN "nautilus \"file://{1}\" || dolphin \"file://{1}\" || konqueror \"file://{1}\" &"
+	constexpr auto const OPEN_PATTERN = R"(nautilus "file://{1}" || dolphin "file://{1}" || konqueror "file://{1}" &)";
 #endif
-
 	string command = FS(FORMAT_STR(OPEN_PATTERN) % filename.getEscapedPath());
 	if (system(command.c_str()) != 0)
 	{
