@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-21 20:06\n"
+"PO-Revision-Date: 2019-07-21 20:15\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -133,12 +133,12 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:136
 msgid "Black"
-msgstr ""
+msgstr "Черный"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:14
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:140
 msgid "Blue"
-msgstr ""
+msgstr "Синий"
 
 #: ../src/control/Control.cpp:2351 ../src/control/Control.cpp:2912
 #: ../src/control/XournalMain.cpp:139
@@ -151,7 +151,7 @@ msgstr ""
 
 #: ../src/undo/FontUndoAction.cpp:134
 msgid "Change font"
-msgstr ""
+msgstr "Изменить шрифт"
 
 #: ../src/undo/FillUndoAction.cpp:117
 msgid "Change stroke fill"
@@ -173,7 +173,7 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:114
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:122
 msgid "Copy"
-msgstr ""
+msgstr "Копировать"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
 msgid "Copy current"
@@ -181,7 +181,7 @@ msgstr ""
 
 #: ../src/undo/CopyUndoAction.cpp:81
 msgid "Copy page"
-msgstr ""
+msgstr "Копировать страницу"
 
 #: ../src/control/jobs/SaveJob.cpp:129
 msgid "Could not create backup! (The file was created from an older Xournal version)"
@@ -244,7 +244,7 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:198
 msgid "Could not open file: \"{1}\""
-msgstr ""
+msgstr "Не удалось открыть файл: \"{1}\""
 
 #: ../src/gui/MainWindow.cpp:91
 msgid "Could not parse custom toolbar.ini file: {1}\n"
@@ -321,7 +321,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Cut"
-msgstr ""
+msgstr "Вырезать"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Default Tool"
@@ -330,7 +330,7 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 #: ../src/undo/DeleteUndoAction.cpp:102
 msgid "Delete"
-msgstr ""
+msgstr "Удалить"
 
 #: ../src/control/XournalMain.cpp:138
 msgid "Delete Logfile"
@@ -342,11 +342,11 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:188
 msgid "Delete file"
-msgstr ""
+msgstr "Удалить файл"
 
 #: ../src/undo/RemoveLayerUndoAction.cpp:41
 msgid "Delete layer"
-msgstr ""
+msgstr "Удалить слой"
 
 #: ../src/control/Control.cpp:2908
 msgid "Discard"
@@ -420,7 +420,7 @@ msgstr ""
 
 #: ../src/undo/TextBoxUndoAction.cpp:52
 msgid "Edit text"
-msgstr ""
+msgstr "Редактировать текст"
 
 #: ../src/undo/EmergencySaveRestore.cpp:36
 msgid "Emergency saved document"
@@ -567,7 +567,7 @@ msgstr ""
 #: ../src/control/pagetype/PageTypeHandler.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Image"
-msgstr ""
+msgstr "Изображение"
 
 #: ../src/control/XournalMain.cpp:260
 msgid "Image file successfully created"
@@ -587,7 +587,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:67 ../src/undo/InsertUndoAction.cpp:48
 msgid "Insert image"
-msgstr ""
+msgstr "Вставить изображение"
 
 #: ../src/undo/InsertUndoAction.cpp:52
 msgid "Insert latex"
@@ -595,11 +595,11 @@ msgstr ""
 
 #: ../src/undo/InsertLayerUndoAction.cpp:40
 msgid "Insert layer"
-msgstr ""
+msgstr "Вставить слой"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Insert page"
-msgstr ""
+msgstr "Вставить страницу"
 
 #: ../src/control/XournalMain.cpp:316
 msgid "Jump to Page (first Page: 1)"
@@ -716,7 +716,7 @@ msgstr ""
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:11
 msgid "Open Image"
-msgstr ""
+msgstr "Открыть изображение"
 
 #: ../src/control/XournalMain.cpp:136
 msgid "Open Logfile"
@@ -978,7 +978,7 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:59
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:175
 msgid "Select color"
-msgstr ""
+msgstr "Выбрать цвет"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:70
 msgid "Select rectangle"
@@ -986,7 +986,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:69
 msgid "Select region"
-msgstr ""
+msgstr "Выбрать регион"
 
 #: ../src/control/XournalMain.cpp:135
 msgid "Send Bugreport"
@@ -994,7 +994,7 @@ msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:53
 msgid "Separator"
-msgstr ""
+msgstr "Разделитель"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Shape Recognizer"
@@ -1042,7 +1042,7 @@ msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:134
 msgid "Supported files"
-msgstr ""
+msgstr "Поддерживаемые файлы"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:66
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:465
@@ -1163,7 +1163,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:55
 msgid "Toolbars"
-msgstr ""
+msgstr "Панели инструментов"
 
 #: ../src/util/CrashHandler.cpp:37
 msgid "Trying to emergency save the current open document…"
@@ -2047,7 +2047,7 @@ msgstr ""
 
 #: ../ui/about.glade:235
 msgid "License"
-msgstr ""
+msgstr "Лицензия"
 
 #: ../ui/settings.glade:587
 msgid "Load / Save"
@@ -2055,7 +2055,7 @@ msgstr ""
 
 #: ../ui/images.glade:73
 msgid "Load file"
-msgstr ""
+msgstr "Загрузить файл"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2076,7 +2076,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1041 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
-msgstr ""
+msgstr "Мышь"
 
 #: ../ui/settings.glade:1010
 msgid "Mouse Buttons"
@@ -2265,7 +2265,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3379
 msgid "Settings:"
-msgstr ""
+msgstr "Настройки:"
 
 #: ../ui/settings.glade:3388
 msgid "Show Floating Toolbox"
@@ -2382,11 +2382,11 @@ msgstr ""
 
 #: ../ui/about.glade:100
 msgid "Version"
-msgstr ""
+msgstr "Версия"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Version: "
-msgstr ""
+msgstr "Версия: "
 
 #: ../ui/settings.glade:2508
 msgid "View"
@@ -2398,7 +2398,7 @@ msgstr ""
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
-msgstr ""
+msgstr "Ширина:"
 
 #: ../ui/about.glade:202
 msgid "With help from the community"
