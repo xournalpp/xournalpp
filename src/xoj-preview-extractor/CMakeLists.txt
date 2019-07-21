@@ -16,10 +16,19 @@ add_executable (xournal-thumbnailer
   "${PROJECT_SOURCE_DIR}/src/util/XojPreviewExtractor.cpp"
 )
 
+# MacOS workaround: "-framework ____" flags need to be passed as one string.
+# See https://sourceforge.net/p/plplot/mailman/message/19574644/ for more details
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+  string(REPLACE "-framework;" "-framework " thumbnailer_GTK_LDFLAGS "${GTK_LDFLAGS}")
+else()
+  set(thumbnailer_GTK_LDFLAGS "${GTK_LDFLAGS}")
+endif()
+
 target_link_libraries (xournal-thumbnailer
   ${ZLIB_LIBRARIES}
   ${Glib_LDFLAGS}
   ${ZIP_LDFLAGS}
+  ${thumbnailer_GTK_LDFLAGS}
 )
 
 set (THUMBNAILER_BIN "xournal-thumbnailer")
