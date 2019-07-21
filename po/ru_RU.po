@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-21 22:55\n"
+"PO-Revision-Date: 2019-07-21 23:05\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -571,7 +571,7 @@ msgstr "Изображение"
 
 #: ../src/control/XournalMain.cpp:260
 msgid "Image file successfully created"
-msgstr ""
+msgstr "Файл изображения успешно создан"
 
 #: ../src/control/XournalMain.cpp:315
 msgid "Image output filename (.png / .svg)"
@@ -699,7 +699,7 @@ msgstr "Нет устройства"
 #: ../src/pdf/base/XojCairoPdfExport.cpp:93
 #: ../src/pdf/base/XojCairoPdfExport.cpp:142
 msgid "No pages to export!"
-msgstr ""
+msgstr "Нет страниц для экспорта!"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:99
 msgid "Normal drawing"
@@ -965,7 +965,7 @@ msgstr "Выбрать регион"
 
 #: ../src/control/Control.cpp:2349
 msgid "Select another PDF"
-msgstr ""
+msgstr "Выбрать другой PDF"
 
 #: ../src/util/XojMsgBox.cpp:81
 msgid "Select another name"
@@ -1056,7 +1056,7 @@ msgstr ""
 
 #: ../src/undo/TextUndoAction.cpp:47
 msgid "Text changes"
-msgstr ""
+msgstr "Изменения текста"
 
 #: ../src/gui/SearchBar.cpp:66
 msgid "Text found on this page"
@@ -1834,7 +1834,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3443
 msgid "Drawing Area"
-msgstr ""
+msgstr "Область рисования"
 
 #: ../ui/settings.glade:3215
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
@@ -1862,7 +1862,7 @@ msgstr ""
 
 #: ../ui/settings.glade:235
 msgid "Enable Autosaving"
-msgstr ""
+msgstr "Включить автосохранение"
 
 #: ../ui/settings.glade:1829
 msgid "Enable GTK Touch / Scrolling workaround  (requires restart)"
