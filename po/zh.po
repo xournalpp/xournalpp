@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-20 07:35\n"
+"PO-Revision-Date: 2019-07-21 18:05\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -830,7 +830,7 @@ msgstr "粘贴"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Pause / Play"
-msgstr ""
+msgstr "暂停/播放"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:290
