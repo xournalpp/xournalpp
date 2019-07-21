@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-21 20:35\n"
+"PO-Revision-Date: 2019-07-21 20:55\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -301,7 +301,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:109
 msgid "Create new layer"
-msgstr ""
+msgstr "Создать новый слой"
 
 #: ../src/gui/dialog/FormatDialog.cpp:72
 msgid "Custom"
@@ -678,7 +678,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:90
 msgid "New"
-msgstr ""
+msgstr "Новый"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "New Xournal"
@@ -1318,12 +1318,12 @@ msgstr ""
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:18
 msgid "_Open"
-msgstr ""
+msgstr "_Открыть"
 
 #: ../src/control/Control.cpp:2702 ../src/control/jobs/BaseExportJob.cpp:26
 #: ../src/gui/dialog/PageTemplateDialog.cpp:113
 msgid "_Save"
-msgstr ""
+msgstr "_Сохранить"
 
 #: ../src/util/DeviceListHelper.cpp:130
 msgid "cursor"
@@ -2108,7 +2108,7 @@ msgstr ""
 
 #: ../ui/main.glade:1161
 msgid "New _Layer"
-msgstr ""
+msgstr "Новый _слой"
 
 #: ../ui/settings.glade:3006
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2197,7 +2197,7 @@ msgstr "Диапазон"
 
 #: ../ui/main.glade:190
 msgid "Recent _Documents"
-msgstr ""
+msgstr "Недавние _документы"
 
 #: ../ui/main.glade:1778
 msgid "Record / Stop"
@@ -2514,7 +2514,7 @@ msgstr ""
 
 #: ../ui/main.glade:295
 msgid "_Edit"
-msgstr ""
+msgstr "_Правка"
 
 #: ../ui/main.glade:1245
 msgid "_Eraser"
@@ -2526,7 +2526,7 @@ msgstr ""
 
 #: ../ui/main.glade:155
 msgid "_File"
-msgstr ""
+msgstr "_Файл"
 
 #: ../ui/main.glade:967
 msgid "_First Page"
@@ -2638,7 +2638,7 @@ msgstr ""
 
 #: ../ui/main.glade:454
 msgid "_View"
-msgstr ""
+msgstr "_Вид"
 
 #: ../ui/main.glade:1677
 msgid "_delete strokes"
