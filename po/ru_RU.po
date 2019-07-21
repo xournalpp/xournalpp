@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-21 20:24\n"
+"PO-Revision-Date: 2019-07-21 20:35\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -147,7 +147,7 @@ msgstr ""
 
 #: ../src/undo/ColorUndoAction.cpp:119
 msgid "Change color"
-msgstr ""
+msgstr "Изменить цвет"
 
 #: ../src/undo/FontUndoAction.cpp:134
 msgid "Change font"
@@ -447,11 +447,11 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2376
 msgid "Error opening file \"{1}\""
-msgstr ""
+msgstr "Ошибка при открытии файла \"{1}\""
 
 #: ../src/util/OutputStream.cpp:35
 msgid "Error opening file: \"{1}\""
-msgstr ""
+msgstr "Ошибка при открытии файла: \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:565
 #: ../src/control/xojfile/LoadHandler.cpp:592
@@ -510,11 +510,11 @@ msgstr "Шрифт"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Go to first page"
-msgstr ""
+msgstr "Перейти на первую страницу"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Go to last page"
-msgstr ""
+msgstr "Перейти на последнюю страницу"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Go to next layer"
@@ -615,7 +615,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:331
 msgid "Layer selection"
-msgstr ""
+msgstr "Выбор слоя"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:26
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:260
@@ -801,7 +801,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:49
 msgid "Page number"
-msgstr ""
+msgstr "Номер страницы"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Paired pages"
@@ -941,7 +941,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Select Font"
-msgstr ""
+msgstr "Выбрать шрифт"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -1072,7 +1072,7 @@ msgstr ""
 
 #: ../src/gui/SearchBar.cpp:77
 msgid "Text not found"
-msgstr ""
+msgstr "Текст не найден"
 
 #: ../src/gui/SearchBar.cpp:164 ../src/gui/SearchBar.cpp:220
 msgid "Text not found, searched on all pages"
