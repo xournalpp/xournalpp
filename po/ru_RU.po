@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-22 10:20\n"
+"PO-Revision-Date: 2019-07-22 10:32\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -185,7 +185,7 @@ msgstr "Копировать страницу"
 
 #: ../src/control/jobs/SaveJob.cpp:129
 msgid "Could not create backup! (The file was created from an older Xournal version)"
-msgstr ""
+msgstr "Не удалось создать резервную копию! (Файл был создан в старой версии Xournal)"
 
 #: ../src/util/Util.cpp:112
 msgid "Could not create folder: {1}"
@@ -198,7 +198,8 @@ msgstr ""
 #: ../src/control/LatexController.cpp:82
 msgid "Could not find pdflatex in PATH.\n"
 "Please install pdflatex first and make sure it's in the PATH."
-msgstr ""
+msgstr "Не удалось найти pdflatex в PATH.\n"
+"Пожалуйста, сначала установите pdflatex и убедитесь, что он находится в PATH."
 
 #: ../src/control/LatexController.cpp:111
 msgid "Could not find the LaTeX package 'standalone'.\n"
@@ -223,11 +224,11 @@ msgstr "Не удалось загрузить файл pagetemplates.ini"
 
 #: ../src/control/xojfile/LoadHandler.cpp:989
 msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr ""
+msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: Не удалось прочитать файл"
 
 #: ../src/control/xojfile/LoadHandler.cpp:998
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr ""
+msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: Не удалось записать файл"
 
 #: ../src/control/xojfile/LoadHandler.cpp:968
 #: ../src/control/xojfile/LoadHandler.cpp:1296
@@ -240,7 +241,7 @@ msgstr ""
 #: ../src/control/xojfile/LoadHandler.cpp:1287
 #: ../src/control/xojfile/LoadHandler.cpp:1304
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr ""
+msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:198
 msgid "Could not open file: \"{1}\""
@@ -276,7 +277,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:254
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr ""
+msgstr "Не удалось переименовать файл автосохранения из \"{1}\" в \"{2}\": {3}"
 
 #: ../src/control/LatexController.cpp:133
 msgid "Could not save .tex file: {1}"
@@ -284,7 +285,7 @@ msgstr "Не удалось сохранить .tex файл: {1}"
 
 #: ../src/control/LatexController.cpp:154
 msgid "Could not start pdflatex: {1} (exit code: {2})"
-msgstr ""
+msgstr "Не удалось запустить pdflatex: {1} (код выхода: {2})"
 
 #: ../src/undo/UndoRedoHandler.cpp:123
 msgid "Could not undo \"{1}\"\n"
@@ -293,7 +294,7 @@ msgstr ""
 
 #: ../src/control/xojfile/SaveHandler.cpp:291
 msgid "Could not write background \"{1}\", {2}"
-msgstr ""
+msgstr "Не удалось записать фон \"{1}\", {2}"
 
 #: ../src/control/xojfile/SaveHandler.cpp:411
 msgid "Could not write background \"{1}\". Continuing anyway."
@@ -553,7 +554,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:71
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:481
 msgid "Hand"
-msgstr ""
+msgstr "Рука"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:99
 msgid "Hide all"
@@ -1991,7 +1992,7 @@ msgstr "Скрыть вертикальную прокрутку"
 
 #: ../ui/settings.glade:2137
 msgid "Highlight cursor position"
-msgstr ""
+msgstr "Положение курсора маркера"
 
 #: ../ui/main.glade:1692
 msgid "Highlighter Opti_ons"
