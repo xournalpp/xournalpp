@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-22 07:13\n"
+"PO-Revision-Date: 2019-07-22 07:55\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -819,7 +819,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:290
 msgid "Pen"
-msgstr ""
+msgstr "Перо"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Plain"
@@ -1015,7 +1015,8 @@ msgstr ""
 #: ../src/control/XournalMain.cpp:390
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr ""
+msgstr "К сожалению, Xournal++ может открывать только один файл одновременно.\n"
+"Остальные игнорируются."
 
 #: ../src/control/XournalMain.cpp:405
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
@@ -1167,7 +1168,7 @@ msgstr "Панели инструментов"
 
 #: ../src/util/CrashHandler.cpp:37
 msgid "Trying to emergency save the current open document…"
-msgstr ""
+msgstr "Попытка аварийного сохранения текущего открытого документа…"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:399
 #: ../src/undo/UndoRedoHandler.cpp:250
@@ -1383,7 +1384,7 @@ msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:122
 msgid "pen"
-msgstr ""
+msgstr "перо"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:222
 msgid "show"
@@ -2166,7 +2167,7 @@ msgstr ""
 
 #: ../ui/main.glade:1459
 msgid "Pen _Options"
-msgstr ""
+msgstr "Параметры _пера"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
@@ -2587,7 +2588,7 @@ msgstr ""
 
 #: ../ui/main.glade:1233
 msgid "_Pen"
-msgstr ""
+msgstr "_Перо"
 
 #: ../ui/main.glade:1822
 msgid "_Plugin"
