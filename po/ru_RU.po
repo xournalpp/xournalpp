@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-22 23:06\n"
+"PO-Revision-Date: 2019-07-22 23:15\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -177,7 +177,7 @@ msgstr "Копировать"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
 msgid "Copy current"
-msgstr ""
+msgstr "Копировать текущую"
 
 #: ../src/undo/CopyUndoAction.cpp:81
 msgid "Copy page"
@@ -1805,7 +1805,7 @@ msgstr ""
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
-msgstr ""
+msgstr "Отключено"
 
 #: ../ui/settings.glade:1489
 msgid "Disabling Method"
@@ -1888,7 +1888,7 @@ msgstr ""
 
 #: ../ui/settings.glade:636
 msgid "Enable new input system (Requires restart)"
-msgstr ""
+msgstr "Включить новую систему ввода (требуется перезапуск)"
 
 #: ../ui/settings.glade:1760
 msgid "Enable zoom gestures (requires restart)"
@@ -2042,7 +2042,7 @@ msgstr ""
 
 #: ../ui/main.glade:512
 msgid "Layout"
-msgstr ""
+msgstr "Расположение"
 
 #: ../ui/settings.glade:2242
 msgid "Left / Right-Handed"
@@ -2209,7 +2209,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3904
 msgid "Recording Quality"
-msgstr ""
+msgstr "Качество записи"
 
 #: ../ui/exportSettings.glade:112
 msgid "Resolution"
@@ -2498,7 +2498,7 @@ msgstr ""
 
 #: ../ui/main.glade:593
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "_Снизу вверх"
 
 #: ../ui/main.glade:608
 msgid "_Cols/Rows"
@@ -2630,7 +2630,7 @@ msgstr "_Верхний слой"
 
 #: ../ui/main.glade:582
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "_Сверху вниз"
 
 #: ../ui/main.glade:535
 msgid "_Vertical"
