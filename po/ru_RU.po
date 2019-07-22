@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-22 06:44\n"
+"PO-Revision-Date: 2019-07-22 06:54\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -33,7 +33,7 @@ msgstr ""
 
 #: ../src/control/settings/Settings.cpp:109
 msgid "%F-Note-%H-%M"
-msgstr ""
+msgstr "%F-Заметка-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:119
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -1569,7 +1569,7 @@ msgstr ""
 
 #: ../ui/settings.glade:913
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
-msgstr ""
+msgstr "<i>Определяет, какие инструменты будут выбраны, если вы нажмёте кнопку мыши. После того, как вы отпустите кнопку, будет выбран ранее выбранный инструмент.</i>"
 
 #: ../ui/exportSettings.glade:209
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
@@ -1950,7 +1950,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2107
 msgid "Global"
-msgstr ""
+msgstr "Общие"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
@@ -2214,7 +2214,7 @@ msgstr "Разрешение"
 
 #: ../ui/settings.glade:992
 msgid "Right Mouse Button"
-msgstr ""
+msgstr "Правая кнопка мыши"
 
 #: ../ui/settings.glade:3072
 msgid "Rotation snapping tolerance"
@@ -2226,7 +2226,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2309
 msgid "Scrollbars"
-msgstr ""
+msgstr "Панели прокрутки"
 
 #: ../ui/settings.glade:2974
 msgid "Scrolling outside the page"
@@ -2286,7 +2286,7 @@ msgstr "Показывать боковую панель справа"
 
 #: ../ui/settings.glade:2220
 msgid "Show vertical scrollbar on the left side"
-msgstr ""
+msgstr "Показывать вертикальную прокрутку слева"
 
 #: ../ui/settings.glade:3131
 msgid "Snapping"
@@ -2310,11 +2310,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1326
 msgid "Stylus"
-msgstr ""
+msgstr "Стилус"
 
 #: ../ui/settings.glade:1295
 msgid "Stylus Buttons"
-msgstr ""
+msgstr "Кнопки стилуса"
 
 #: ../ui/settings.glade:3329
 msgid "Successive (ms)"
@@ -2683,7 +2683,7 @@ msgstr ""
 
 #: ../ui/settings.glade:259
 msgid "every"
-msgstr ""
+msgstr "каждые"
 
 #: ../ui/pageTemplate.glade:51
 msgid "load from file"
@@ -2691,7 +2691,7 @@ msgstr "загрузить из файла"
 
 #: ../ui/settings.glade:286
 msgid "minutes"
-msgstr ""
+msgstr "минут(ы)"
 
 #: ../ui/settings.glade:2941 ../ui/settings.glade:2952
 #: ../ui/settings.glade:3200
