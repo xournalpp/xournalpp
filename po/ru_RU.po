@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-22 07:55\n"
+"PO-Revision-Date: 2019-07-22 08:05\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -646,7 +646,7 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:143
 msgid "Mangenta"
-msgstr ""
+msgstr "Маджента"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:525
@@ -743,7 +743,7 @@ msgstr "Оранжевый"
 
 #: ../src/control/jobs/PdfExportJob.cpp:9
 msgid "PDF Export"
-msgstr ""
+msgstr "Экспорт в PDF"
 
 #: ../src/gui/MainWindow.cpp:835
 msgid "PDF Page {1}"
@@ -863,7 +863,7 @@ msgstr "Вернуть: "
 
 #: ../src/control/Control.cpp:2350
 msgid "Remove PDF Background"
-msgstr ""
+msgstr "Удалить PDF фон"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:198
 msgid "Removed tool item from Toolbar {1} ID {2}"
@@ -1230,7 +1230,7 @@ msgstr "Белый"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:33
 msgid "With PDF background"
-msgstr ""
+msgstr "С PDF фоном"
 
 #: ../src/undo/InsertUndoAction.cpp:44
 msgid "Write text"
