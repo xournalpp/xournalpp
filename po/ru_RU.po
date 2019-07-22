@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-22 06:54\n"
+"PO-Revision-Date: 2019-07-22 07:13\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -110,7 +110,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:264
 msgid "Autosave failed with an error: {1}"
-msgstr ""
+msgstr "Ошибка автосохранения: {1}"
 
 #: ../src/control/Control.cpp:226
 msgid "Autosave renamed from {1} to {2}"
@@ -189,7 +189,7 @@ msgstr ""
 
 #: ../src/util/Util.cpp:112
 msgid "Could not create folder: {1}"
-msgstr ""
+msgstr "Не удалось создать папку: {1}"
 
 #: ../src/control/LatexController.cpp:106
 msgid "Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
@@ -280,7 +280,7 @@ msgstr ""
 
 #: ../src/control/LatexController.cpp:133
 msgid "Could not save .tex file: {1}"
-msgstr ""
+msgstr "Не удалось сохранить .tex файл: {1}"
 
 #: ../src/control/LatexController.cpp:154
 msgid "Could not start pdflatex: {1} (exit code: {2})"
@@ -325,7 +325,7 @@ msgstr "Вырезать"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Default Tool"
-msgstr ""
+msgstr "Инструмент по умолчанию"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 #: ../src/undo/DeleteUndoAction.cpp:102
@@ -338,7 +338,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:453
 msgid "Delete current page"
-msgstr ""
+msgstr "Удалить текущую страницу"
 
 #: ../src/control/XournalMain.cpp:188
 msgid "Delete file"
@@ -1569,7 +1569,7 @@ msgstr ""
 
 #: ../ui/settings.glade:913
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
-msgstr "<i>Определяет, какие инструменты будут выбраны, если вы нажмёте кнопку мыши. После того, как вы отпустите кнопку, будет выбран ранее выбранный инструмент.</i>"
+msgstr "<i>Задайте, какие инструменты будут выбраны, когда вы нажимаете кнопку мыши. После того, как вы отпустите кнопку, будет выбран ранее выбранный инструмент.</i>"
 
 #: ../ui/exportSettings.glade:209
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
@@ -1679,7 +1679,7 @@ msgstr "Аудио устройства"
 
 #: ../ui/settings.glade:3951
 msgid "Audio Recording"
-msgstr ""
+msgstr "Аудиозапись"
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
@@ -1715,7 +1715,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2008
 msgid "Border color"
-msgstr ""
+msgstr "Цвет рамки"
 
 #: ../ui/settings.glade:1993
 msgid "Border color for current page and other selections"
@@ -1747,7 +1747,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:296
 msgid "Copy last page size"
-msgstr ""
+msgstr "Копировать размер последней страницы"
 
 #: ../ui/exportSettings.glade:158
 msgid "Current page"
@@ -1755,7 +1755,7 @@ msgstr "Текущая страница"
 
 #: ../ui/settings.glade:2175
 msgid "Cursor"
-msgstr ""
+msgstr "Курсор"
 
 #: ../ui/settings.glade:1692
 msgid "Custom Commands (for Method \"Custom\")"
@@ -1842,11 +1842,11 @@ msgstr ""
 
 #: ../ui/main.glade:2466
 msgid "Duplicate"
-msgstr ""
+msgstr "Дублировать"
 
 #: ../ui/main.glade:2503
 msgid "Edit (not implemented yet)"
-msgstr ""
+msgstr "Редактировать (пока не реализовано)"
 
 #: ../ui/settings.glade:1608
 msgid "Enable"
@@ -1966,7 +1966,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1717
 msgid "Hand Recognition"
-msgstr ""
+msgstr "Распознавание руки"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
@@ -2020,7 +2020,7 @@ msgstr "Устройства ввода"
 
 #: ../ui/settings.glade:862
 msgid "Input System"
-msgstr ""
+msgstr "Система ввода"
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
@@ -2028,11 +2028,11 @@ msgstr "Вставить Latex"
 
 #: ../ui/main.glade:2458
 msgid "Insert Page After"
-msgstr ""
+msgstr "Вставить страницу после"
 
 #: ../ui/main.glade:2450
 msgid "Insert Page Before"
-msgstr ""
+msgstr "Вставить страницу перед"
 
 #: ../ui/main.glade:2041
 msgid "Insert a copy of the current page below"
@@ -2391,7 +2391,7 @@ msgstr "Версия: "
 
 #: ../ui/settings.glade:2508
 msgid "View"
-msgstr ""
+msgstr "Вид"
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
