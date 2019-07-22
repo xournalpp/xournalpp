@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-22 10:59\n"
+"PO-Revision-Date: 2019-07-22 11:12\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1070,7 +1070,7 @@ msgstr "Текст найден один раз на странице {1}"
 
 #: ../src/gui/SearchBar.cpp:151 ../src/gui/SearchBar.cpp:207
 msgid "Text found {1} times on page {2}"
-msgstr ""
+msgstr "Текст найден {1} раз(а) на странице {2}"
 
 #: ../src/gui/SearchBar.cpp:77
 msgid "Text not found"
@@ -1090,7 +1090,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2347
 msgid "The background PDF could not be found."
-msgstr ""
+msgstr "Фоновый PDF не найден."
 
 #: ../src/control/xojfile/LoadHandler.cpp:155
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1102,7 +1102,7 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:172
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr ""
+msgstr "Файл не является допустимым .xopp-файлом (версия отсутствует): \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:186
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
@@ -1373,7 +1373,7 @@ msgstr ""
 
 #: ../src/undo/AddUndoAction.cpp:135 ../src/undo/DeleteUndoAction.cpp:129
 msgid "latex"
-msgstr ""
+msgstr "latex"
 
 #: ../src/util/DeviceListHelper.cpp:118
 msgid "mouse"
@@ -1832,7 +1832,7 @@ msgstr ""
 
 #: ../ui/main.glade:1364
 msgid "Draw _Line"
-msgstr ""
+msgstr "Нарисовать _линию"
 
 #: ../ui/settings.glade:3443
 msgid "Drawing Area"
@@ -1900,7 +1900,7 @@ msgstr ""
 
 #: ../ui/main.glade:1605
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "Параметры _ластика"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2054,7 +2054,7 @@ msgstr "Лицензия"
 
 #: ../ui/settings.glade:587
 msgid "Load / Save"
-msgstr ""
+msgstr "Загрузить / сохранить"
 
 #: ../ui/images.glade:73
 msgid "Load file"
@@ -2525,7 +2525,7 @@ msgstr "_Ластик"
 
 #: ../ui/main.glade:240
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_Экспорт в PDF"
 
 #: ../ui/main.glade:155
 msgid "_File"
