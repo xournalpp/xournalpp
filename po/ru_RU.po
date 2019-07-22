@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-22 10:32\n"
+"PO-Revision-Date: 2019-07-22 10:59\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -351,7 +351,7 @@ msgstr "Удалить слой"
 
 #: ../src/control/Control.cpp:2908
 msgid "Discard"
-msgstr ""
+msgstr "Не сохранять"
 
 #: ../src/control/Control.cpp:2275
 msgid "Do not open Autosave files. They may will be overwritten!\n"
