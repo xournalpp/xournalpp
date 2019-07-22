@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-22 06:34\n"
+"PO-Revision-Date: 2019-07-22 06:44\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -855,11 +855,11 @@ msgstr "Красный"
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 #: ../src/undo/UndoRedoHandler.cpp:267
 msgid "Redo"
-msgstr ""
+msgstr "Вернуть"
 
 #: ../src/undo/UndoRedoHandler.cpp:262
 msgid "Redo: "
-msgstr ""
+msgstr "Вернуть: "
 
 #: ../src/control/Control.cpp:2350
 msgid "Remove PDF Background"
@@ -903,7 +903,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 msgid "Ruler"
-msgstr ""
+msgstr "Линейка"
 
 #: ../src/control/jobs/CustomExportJob.cpp:27
 msgid "SVG graphics"
@@ -1172,11 +1172,11 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:399
 #: ../src/undo/UndoRedoHandler.cpp:250
 msgid "Undo"
-msgstr ""
+msgstr "Отменить"
 
 #: ../src/undo/UndoRedoHandler.cpp:245
 msgid "Undo: "
-msgstr ""
+msgstr "Отменить: "
 
 #: ../src/control/xojfile/LoadHandler.cpp:355
 msgid "Unexpected root tag: {1}"
@@ -1355,11 +1355,11 @@ msgstr ""
 
 #: ../src/undo/AddUndoAction.cpp:120 ../src/undo/DeleteUndoAction.cpp:114
 msgid "elements"
-msgstr ""
+msgstr "элементы"
 
 #: ../src/util/DeviceListHelper.cpp:126
 msgid "eraser"
-msgstr ""
+msgstr "ластик"
 
 #: ../src/undo/AddUndoAction.cpp:132 ../src/undo/DeleteUndoAction.cpp:126
 msgid "image"
@@ -1522,7 +1522,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
-msgstr ""
+msgstr "<b>Инструменты по умолчанию</b>"
 
 #: ../ui/settings.glade:3549
 msgid "<b>Default</b>"
@@ -1942,7 +1942,7 @@ msgstr "Во весь экран"
 
 #: ../ui/about.glade:251
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "GNU GPLv2 или более поздняя версия"
 
 #: ../ui/settings.glade:3855
 msgid "Gain"
