@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-22 08:05\n"
+"PO-Revision-Date: 2019-07-22 10:20\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -562,7 +562,7 @@ msgstr "Скрыть все"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:65
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:463
 msgid "Highlighter"
-msgstr ""
+msgstr "Маркер"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:467
@@ -1995,7 +1995,7 @@ msgstr ""
 
 #: ../ui/main.glade:1692
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "Параметры _маркера"
 
 #: ../ui/settings.glade:3298
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -2544,7 +2544,7 @@ msgstr "_Справка"
 
 #: ../ui/main.glade:1257
 msgid "_Highlighter"
-msgstr ""
+msgstr "_Маркер"
 
 #: ../ui/main.glade:524
 msgid "_Horizontal"
