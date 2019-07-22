@@ -3185,6 +3185,23 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 		}
 		undoRedo->addUndoAction(std::move(pasteAddUndoAction));
 
+		double x = 0;
+		double y = 0;
+		//calculate x/y of paste target, see clipboardPaste(Element* e)
+		win->getXournal()->getPasteTarget(x, y);
+
+		x = std::max(0.0, x - selection->getWidth() / 2);
+		y = std::max(0.0, y - selection->getHeight() / 2);
+
+		//calculate difference between current selection position and destination
+		auto dx = selection->getXOnView() - x;
+		auto dy = selection->getYOnView() - y;
+
+		//for some reason selection moving is inverted (x -= dx,...), intended?
+		selection->moveSelection(dx, dy);
+		//update all Elements (same procedure as moving a element selection by hand and releasing the mouse button)
+		selection->mouseUp();
+
 		win->getXournal()->setSelection(selection);
 	}
 	catch (std::exception& e)
