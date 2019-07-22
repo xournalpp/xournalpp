@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-22 11:12\n"
+"PO-Revision-Date: 2019-07-22 22:43\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -588,7 +588,7 @@ msgstr "Вставить элементы"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:67 ../src/undo/InsertUndoAction.cpp:48
 msgid "Insert image"
-msgstr "Вставить изображение"
+msgstr "Вставка изображения"
 
 #: ../src/undo/InsertUndoAction.cpp:52
 msgid "Insert latex"
@@ -744,7 +744,7 @@ msgstr "Оранжевый"
 
 #: ../src/control/jobs/PdfExportJob.cpp:9
 msgid "PDF Export"
-msgstr "Экспорт в PDF"
+msgstr "Экспортировать в PDF"
 
 #: ../src/gui/MainWindow.cpp:835
 msgid "PDF Page {1}"
@@ -912,7 +912,7 @@ msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:28
 msgid "SVG with transparent background"
-msgstr ""
+msgstr "SVG с прозрачным фоном"
 
 #: ../src/control/Control.cpp:2903 ../src/control/jobs/SaveJob.cpp:13
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:393
@@ -983,11 +983,11 @@ msgstr "Выбрать цвет"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:70
 msgid "Select rectangle"
-msgstr ""
+msgstr "Выбор прямоугольника"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:69
 msgid "Select region"
-msgstr "Выбрать регион"
+msgstr "Выбор региона"
 
 #: ../src/control/XournalMain.cpp:135
 msgid "Send Bugreport"
@@ -1268,7 +1268,7 @@ msgstr "Xournal++ файлы"
 #: ../src/control/stockdlg/XojOpenDlg.cpp:94
 #: ../src/gui/dialog/PageTemplateDialog.cpp:118
 msgid "Xournal++ template"
-msgstr "Шаблон Xournal++"
+msgstr "Xournal++ шаблон"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:145
@@ -1725,7 +1725,7 @@ msgstr ""
 
 #: ../ui/about.glade:128
 msgid "Built on:"
-msgstr ""
+msgstr "Сборка от:"
 
 #: ../ui/settings.glade:1201
 msgid "Button 1"
@@ -2054,7 +2054,7 @@ msgstr "Лицензия"
 
 #: ../ui/settings.glade:587
 msgid "Load / Save"
-msgstr "Загрузить / сохранить"
+msgstr "Загрузка / сохранение"
 
 #: ../ui/images.glade:73
 msgid "Load file"
@@ -2625,7 +2625,7 @@ msgstr "_Инструменты"
 
 #: ../ui/main.glade:1050
 msgid "_Top Layer"
-msgstr ""
+msgstr "_Верхний слой"
 
 #: ../ui/main.glade:582
 msgid "_Top to Bottom"
