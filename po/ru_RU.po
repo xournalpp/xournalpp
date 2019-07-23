@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-22 23:29\n"
+"PO-Revision-Date: 2019-07-23 08:01\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -54,7 +54,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:466
 msgid "Add/Edit Tex"
-msgstr ""
+msgstr "Добавить/редактировать Tex"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:53
 msgid "All files"
@@ -627,12 +627,12 @@ msgstr "Слой {1}"
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:138
 msgid "Light Blue"
-msgstr ""
+msgstr "Светло-синий"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:13
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:139
 msgid "Light Green"
-msgstr ""
+msgstr "Светло-зелёный"
 
 #: ../src/gui/PageView.cpp:863
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:103
@@ -691,7 +691,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Next annotated page"
-msgstr ""
+msgstr "Следующая аннотированная страница"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:44
 msgid "No device"
@@ -838,7 +838,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Presentation mode"
-msgstr ""
+msgstr "Режим презентации"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Record Audio / Stop Recording"
@@ -2189,7 +2189,7 @@ msgstr "Настройки"
 
 #: ../ui/settings.glade:2477
 msgid "Presentation Mode"
-msgstr ""
+msgstr "Режим презентации"
 
 #: ../ui/settings.glade:1129
 msgid "Pressure Sensitivity"
@@ -2494,7 +2494,7 @@ msgstr "_8 строк"
 
 #: ../ui/main.glade:199
 msgid "_Annotate PDF"
-msgstr ""
+msgstr "_Аннотировать PDF"
 
 #: ../ui/main.glade:593
 msgid "_Bottom to Top"
@@ -2598,7 +2598,7 @@ msgstr "_Плагины"
 
 #: ../ui/main.glade:475
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "_Режим презентации"
 
 #: ../ui/main.glade:1028
 msgid "_Previous Layer"
