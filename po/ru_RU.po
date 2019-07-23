@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-23 08:01\n"
+"PO-Revision-Date: 2019-07-23 08:07\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -2151,11 +2151,11 @@ msgstr "Цвет _бумаги"
 
 #: ../ui/main.glade:1189
 msgid "Paper _Format"
-msgstr ""
+msgstr "_Формат бумаги"
 
 #: ../ui/main.glade:1209
 msgid "Paper b_ackground"
-msgstr ""
+msgstr "Фон _бумаги"
 
 #: ../ui/about.glade:217
 msgid "Partially based on Xournal\n"
@@ -2438,7 +2438,7 @@ msgstr "_1 строка"
 
 #: ../ui/main.glade:644
 msgid "_2 Columns"
-msgstr "_2 колонки"
+msgstr "_2 столбца"
 
 #: ../ui/main.glade:749
 msgid "_2 Rows"
@@ -2446,7 +2446,7 @@ msgstr "_2 строки"
 
 #: ../ui/main.glade:655
 msgid "_3 Columns"
-msgstr ""
+msgstr "_3 столбца"
 
 #: ../ui/main.glade:760
 msgid "_3 Rows"
@@ -2454,7 +2454,7 @@ msgstr "_3 строки"
 
 #: ../ui/main.glade:666
 msgid "_4 Columns"
-msgstr ""
+msgstr "_4 столбца"
 
 #: ../ui/main.glade:771
 msgid "_4 Rows"
