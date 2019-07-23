@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-23 09:48\n"
+"PO-Revision-Date: 2019-07-23 11:38\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1030,7 +1030,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Stop"
-msgstr ""
+msgstr "Остановить"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:111
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
@@ -1054,7 +1054,7 @@ msgstr "Текст"
 #: ../src/gui/SearchBar.cpp:70
 #, c-format
 msgid "Text %i times found on this page"
-msgstr ""
+msgstr "Текст найден %i раз(а) на этой странице"
 
 #: ../src/undo/TextUndoAction.cpp:47
 msgid "Text changes"
@@ -1086,7 +1086,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2346
 msgid "The attached background PDF could not be found."
-msgstr ""
+msgstr "Присоединённый фоновый PDF не найден."
 
 #: ../src/control/Control.cpp:2347
 msgid "The background PDF could not be found."
@@ -1239,11 +1239,11 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:1158
 msgid "Wrong count of points ({1})"
-msgstr ""
+msgstr "Неправильное количество точек ({1})"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1172
 msgid "Wrong number of points, got {1}, expected {2}"
-msgstr ""
+msgstr "Неправильное количество точек, получено {1}, ожидается {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:284
 msgid "XML Parser error: {1}"
@@ -1369,7 +1369,7 @@ msgstr "изображение"
 
 #: ../src/util/DeviceListHelper.cpp:135
 msgid "keyboard"
-msgstr ""
+msgstr "клавиатура"
 
 #: ../src/undo/AddUndoAction.cpp:135 ../src/undo/DeleteUndoAction.cpp:129
 msgid "latex"
@@ -1410,7 +1410,7 @@ msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:139
 msgid "touchscreen"
-msgstr ""
+msgstr "сенсорный экран"
 
 #: ../src/util/DeviceListHelper.cpp:148
 msgid "trackpoint"
