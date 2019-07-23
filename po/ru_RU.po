@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-23 08:45\n"
+"PO-Revision-Date: 2019-07-23 08:56\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -549,7 +549,7 @@ msgstr "Зеленый"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Grid Snapping"
-msgstr ""
+msgstr "Привязка к сетке"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:71
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:481
@@ -604,7 +604,7 @@ msgstr "Вставить страницу"
 
 #: ../src/control/XournalMain.cpp:316
 msgid "Jump to Page (first Page: 1)"
-msgstr ""
+msgstr "Перейти на страницу (первая страница: 1)"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:348
 msgid "Layer"
@@ -708,7 +708,7 @@ msgstr ""
 
 #: ../src/plugin/Plugin.cpp:417 ../src/plugin/Plugin.cpp:438
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../src/control/jobs/BaseExportJob.cpp:113
 msgid "Only local files are supported\n"
@@ -774,11 +774,11 @@ msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:25
 msgid "PNG graphics"
-msgstr ""
+msgstr "PNG графика"
 
 #: ../src/control/jobs/CustomExportJob.cpp:26
 msgid "PNG with transparent background"
-msgstr ""
+msgstr "PNG с прозрачным фоном"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:67
 msgid "Page"
@@ -908,7 +908,7 @@ msgstr "Линейка"
 
 #: ../src/control/jobs/CustomExportJob.cpp:27
 msgid "SVG graphics"
-msgstr ""
+msgstr "SVG графика"
 
 #: ../src/control/jobs/CustomExportJob.cpp:28
 msgid "SVG with transparent background"
