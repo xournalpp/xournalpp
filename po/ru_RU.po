@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-23 18:40+0000\n"
-"PO-Revision-Date: 2019-07-23 20:48\n"
+"PO-Revision-Date: 2019-07-23 20:57\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1773,7 +1773,7 @@ msgstr "Тёмная тема (требуется перезапуск)"
 
 #: ../ui/settings.glade:491
 msgid "Default Save Name"
-msgstr ""
+msgstr "Имя по умолчанию"
 
 #: ../ui/settings.glade:379
 msgid "Default name: "
@@ -1924,7 +1924,7 @@ msgstr "Экспортировать как..."
 
 #: ../ui/main.glade:1581 ../ui/main.glade:1742
 msgid "Fi_ll"
-msgstr ""
+msgstr "_Заливка"
 
 #: ../ui/main.glade:1591 ../ui/main.glade:1752
 msgid "Fill transparency"
@@ -2703,7 +2703,7 @@ msgstr "минут(ы)"
 #: ../ui/settings.glade:2941 ../ui/settings.glade:2952
 #: ../ui/settings.glade:3200
 msgid "pixels"
-msgstr ""
+msgstr "пикс."
 
 #: ../ui/settings.glade:1544
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
