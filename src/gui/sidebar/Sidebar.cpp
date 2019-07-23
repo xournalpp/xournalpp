@@ -163,13 +163,13 @@ void Sidebar::updateEnableDisableButtons()
 	XOJ_CHECK_TYPE(Sidebar);
 
 	size_t i = 0;
-	size_t selected = size_t_npos;
+	size_t selected = npos;
 
 	for (AbstractSidebarPage* p : this->pages)
 	{
 		gtk_widget_set_sensitive(GTK_WIDGET(p->tabButton), p->hasData());
 
-		if (p->hasData() && selected == size_t_npos)
+		if (p->hasData() && selected == npos)
 		{
 			selected = i;
 		}

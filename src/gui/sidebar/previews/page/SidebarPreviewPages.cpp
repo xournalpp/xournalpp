@@ -97,7 +97,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 		doc->lock();
 		size_t page = doc->indexOf(swappedPage);
 		PageRef otherPage = doc->getPage(page - 1);
-		if (page != size_t_npos)
+		if (page != npos)
 		{
 			doc->deletePage(page);
 			doc->insertPage(swappedPage, page - 1);
@@ -126,7 +126,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 		doc->lock();
 		size_t page = doc->indexOf(swappedPage);
 		PageRef otherPage = doc->getPage(page + 1);
-		if (page != size_t_npos)
+		if (page != npos)
 		{
 			doc->deletePage(page);
 			doc->insertPage(swappedPage, page + 1);
@@ -220,7 +220,7 @@ void SidebarPreviewPages::pageSizeChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 
-	if (page == size_t_npos || page >= this->previews.size())
+	if (page == npos || page >= this->previews.size())
 	{
 		return;
 	}
@@ -235,7 +235,7 @@ void SidebarPreviewPages::pageChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 
-	if (page == size_t_npos || page >= this->previews.size())
+	if (page == npos || page >= this->previews.size())
 	{
 		return;
 	}
@@ -300,13 +300,13 @@ void SidebarPreviewPages::pageSelected(size_t page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 
-	if (this->selectedEntry != size_t_npos && this->selectedEntry < this->previews.size())
+	if (this->selectedEntry != npos && this->selectedEntry < this->previews.size())
 	{
 		this->previews[this->selectedEntry]->setSelected(false);
 	}
 	this->selectedEntry = page;
 
-	if (this->selectedEntry != size_t_npos && this->selectedEntry < this->previews.size())
+	if (this->selectedEntry != npos && this->selectedEntry < this->previews.size())
 	{
 		SidebarPreviewBaseEntry* p = this->previews[this->selectedEntry];
 		p->setSelected(true);

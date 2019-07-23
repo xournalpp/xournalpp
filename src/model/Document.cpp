@@ -504,7 +504,7 @@ size_t Document::indexOf(PageRef page)
 		}
 	}
 
-	return size_t_npos;
+	return npos;
 }
 
 PageRef Document::getPage(size_t page)
@@ -515,7 +515,7 @@ PageRef Document::getPage(size_t page)
 	{
 		return NULL;
 	}
-	if (page == size_t_npos)
+	if (page == npos)
 	{
 		return NULL;
 	}

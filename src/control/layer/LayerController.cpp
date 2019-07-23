@@ -10,8 +10,8 @@
 #include "util/cpp14memory.h"
 
 LayerController::LayerController(Control* control)
- : control(control),
-   selectedPage(size_t_npos)
+ : control(control)
+ , selectedPage(npos)
 {
 	XOJ_INIT_TYPE(LayerController);
 }
