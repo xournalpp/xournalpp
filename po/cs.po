@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-20 07:35\n"
+"POT-Creation-Date: 2019-07-23 18:40+0000\n"
+"PO-Revision-Date: 2019-07-23 18:45\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -187,7 +187,7 @@ msgstr "Kopírovat stránku"
 msgid "Could not create backup! (The file was created from an older Xournal version)"
 msgstr "Nelze vytvořit zálohu! (Soubor byl vytvořen ve starší verzi Xournalu)"
 
-#: ../src/util/Util.cpp:112
+#: ../src/util/Util.cpp:120
 msgid "Could not create folder: {1}"
 msgstr ""
 
@@ -493,7 +493,7 @@ msgstr "Nelze smazat chybový protokol. Udělejte to prosím ručně.\n"
 msgid "Export PDF"
 msgstr ""
 
-#: ../src/util/Util.cpp:133 ../src/util/Util.cpp:153
+#: ../src/util/Util.cpp:141 ../src/util/Util.cpp:158
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Soubor se nepodařilo otevřít. Udělejte to prosím ručně:\n"
@@ -929,7 +929,7 @@ msgstr "Uložit"
 msgid "Save As..."
 msgstr ""
 
-#: ../src/control/Control.cpp:2697 ../src/gui/dialog/PageTemplateDialog.cpp:111
+#: ../src/control/Control.cpp:2697 ../src/gui/dialog/PageTemplateDialog.cpp:110
 msgid "Save File"
 msgstr "Uložit soubor"
 
@@ -978,7 +978,7 @@ msgstr "Vybrat jiné PDF"
 msgid "Select another name"
 msgstr ""
 
-#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:143
+#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:140
 msgid "Select background color"
 msgstr ""
 
@@ -1271,7 +1271,7 @@ msgid "Xournal++ files"
 msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:94
-#: ../src/gui/dialog/PageTemplateDialog.cpp:118
+#: ../src/gui/dialog/PageTemplateDialog.cpp:117
 msgid "Xournal++ template"
 msgstr ""
 
@@ -1320,7 +1320,7 @@ msgstr "Přiblížit na 100%"
 #: ../src/control/Control.cpp:2700 ../src/control/jobs/BaseExportJob.cpp:25
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:17
-#: ../src/gui/dialog/PageTemplateDialog.cpp:112
+#: ../src/gui/dialog/PageTemplateDialog.cpp:111
 msgid "_Cancel"
 msgstr ""
 
@@ -1330,7 +1330,7 @@ msgid "_Open"
 msgstr ""
 
 #: ../src/control/Control.cpp:2702 ../src/control/jobs/BaseExportJob.cpp:26
-#: ../src/gui/dialog/PageTemplateDialog.cpp:113
+#: ../src/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr ""
 
@@ -1459,7 +1459,7 @@ msgstr "xoj-preview-extractor: otevírání výstupního souboru „{1}“ selha
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: úspěšně extrahováno"
 
-#: ../src/util/Util.cpp:102
+#: ../src/util/Util.cpp:110
 msgid "xournalpp-{1}"
 msgstr ""
 
