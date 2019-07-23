@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-23 08:28\n"
+"PO-Revision-Date: 2019-07-23 08:36\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -212,7 +212,7 @@ msgstr "Не удалось загрузить LaTeX PDF файл"
 
 #: ../src/control/LatexController.cpp:453
 msgid "Could not load LaTeX PDF file, File Error: {1}"
-msgstr ""
+msgstr "Не удалось загрузить LaTeX PDF файл, ошибка файла: {1}"
 
 #: ../src/control/LatexController.cpp:461
 msgid "Could not load LaTeX PDF file: {1}"
@@ -1333,11 +1333,11 @@ msgstr "курсор"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:298
 msgid "dash-/ dotted"
-msgstr ""
+msgstr "штрихпунктир"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:295
 msgid "dashed"
-msgstr ""
+msgstr "штриховой пунктир"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:38
 msgid "default disabled"
@@ -1353,7 +1353,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:301
 msgid "dotted"
-msgstr ""
+msgstr "точечный пунктир"
 
 #: ../src/undo/AddUndoAction.cpp:120 ../src/undo/DeleteUndoAction.cpp:114
 msgid "elements"
