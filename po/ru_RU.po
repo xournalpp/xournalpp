@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-23 15:09\n"
+"POT-Creation-Date: 2019-07-23 18:40+0000\n"
+"PO-Revision-Date: 2019-07-23 18:46\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -187,7 +187,7 @@ msgstr "Копировать страницу"
 msgid "Could not create backup! (The file was created from an older Xournal version)"
 msgstr "Не удалось создать резервную копию! (Файл был создан в старой версии Xournal)"
 
-#: ../src/util/Util.cpp:112
+#: ../src/util/Util.cpp:120
 msgid "Could not create folder: {1}"
 msgstr "Не удалось создать папку: {1}"
 
@@ -488,7 +488,7 @@ msgstr ""
 msgid "Export PDF"
 msgstr "Экспорт PDF"
 
-#: ../src/util/Util.cpp:133 ../src/util/Util.cpp:153
+#: ../src/util/Util.cpp:141 ../src/util/Util.cpp:158
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr ""
@@ -923,7 +923,7 @@ msgstr "Сохранить"
 msgid "Save As..."
 msgstr "Сохранить как..."
 
-#: ../src/control/Control.cpp:2697 ../src/gui/dialog/PageTemplateDialog.cpp:111
+#: ../src/control/Control.cpp:2697 ../src/gui/dialog/PageTemplateDialog.cpp:110
 msgid "Save File"
 msgstr "Сохранить файл"
 
@@ -972,7 +972,7 @@ msgstr "Выбрать другой PDF"
 msgid "Select another name"
 msgstr "Выбрать другое имя"
 
-#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:143
+#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:140
 msgid "Select background color"
 msgstr "Выбрать цвет фона"
 
@@ -1266,7 +1266,7 @@ msgid "Xournal++ files"
 msgstr "Xournal++ файлы"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:94
-#: ../src/gui/dialog/PageTemplateDialog.cpp:118
+#: ../src/gui/dialog/PageTemplateDialog.cpp:117
 msgid "Xournal++ template"
 msgstr "Xournal++ шаблон"
 
@@ -1313,7 +1313,7 @@ msgstr ""
 #: ../src/control/Control.cpp:2700 ../src/control/jobs/BaseExportJob.cpp:25
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:17
-#: ../src/gui/dialog/PageTemplateDialog.cpp:112
+#: ../src/gui/dialog/PageTemplateDialog.cpp:111
 msgid "_Cancel"
 msgstr "_Отмена"
 
@@ -1323,7 +1323,7 @@ msgid "_Open"
 msgstr "_Открыть"
 
 #: ../src/control/Control.cpp:2702 ../src/control/jobs/BaseExportJob.cpp:26
-#: ../src/gui/dialog/PageTemplateDialog.cpp:113
+#: ../src/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr "_Сохранить"
 
@@ -1452,7 +1452,7 @@ msgstr ""
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
 
-#: ../src/util/Util.cpp:102
+#: ../src/util/Util.cpp:110
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
