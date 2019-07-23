@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-23 08:56\n"
+"PO-Revision-Date: 2019-07-23 09:29\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -663,7 +663,7 @@ msgstr ""
 
 #: ../src/undo/MoveUndoAction.cpp:20
 msgid "Move"
-msgstr ""
+msgstr "Переместить"
 
 #: ../src/undo/MoveLayerUndoAction.cpp:38
 msgid "Move layer"
@@ -744,7 +744,7 @@ msgstr "Оранжевый"
 
 #: ../src/control/jobs/PdfExportJob.cpp:9
 msgid "PDF Export"
-msgstr "Экспортировать в PDF"
+msgstr "Экспорт в PDF"
 
 #: ../src/gui/MainWindow.cpp:835
 msgid "PDF Page {1}"
@@ -770,7 +770,7 @@ msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:24
 msgid "PDF with plain background"
-msgstr ""
+msgstr "PDF с обычным фоном"
 
 #: ../src/control/jobs/CustomExportJob.cpp:25
 msgid "PNG graphics"
@@ -970,7 +970,7 @@ msgstr "Выбрать другой PDF"
 
 #: ../src/util/XojMsgBox.cpp:81
 msgid "Select another name"
-msgstr ""
+msgstr "Выбрать другое имя"
 
 #: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:143
 msgid "Select background color"
@@ -1247,7 +1247,7 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:284
 msgid "XML Parser error: {1}"
-msgstr ""
+msgstr "Ошибка XML парсера: {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
@@ -1533,7 +1533,8 @@ msgstr ""
 #: ../ui/exportSettings.glade:90
 msgid "<b>Document export settings</b>\n"
 "Select pages to export"
-msgstr ""
+msgstr "<b>Настройки экспорта документа</b>\n"
+"Выберите страницы для экспорта"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
@@ -1697,7 +1698,7 @@ msgstr ""
 
 #: ../ui/settings.glade:559
 msgid "Autoloading Journals"
-msgstr ""
+msgstr "Автозагрузка журналов"
 
 #: ../ui/settings.glade:316
 msgid "Autosaving"
@@ -1705,7 +1706,7 @@ msgstr "Автосохранение"
 
 #: ../ui/settings.glade:465
 msgid "Available Placeholders"
-msgstr ""
+msgstr "Доступные подстановки"
 
 #: ../ui/settings.glade:2019
 msgid "Background color for window Background"
@@ -2526,7 +2527,7 @@ msgstr "_Ластик"
 
 #: ../ui/main.glade:240
 msgid "_Export as PDF"
-msgstr "_Экспорт в PDF"
+msgstr "_Экспортировать в PDF"
 
 #: ../ui/main.glade:155
 msgid "_File"
