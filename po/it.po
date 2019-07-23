@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-20 07:35\n"
+"POT-Creation-Date: 2019-07-23 18:40+0000\n"
+"PO-Revision-Date: 2019-07-23 18:46\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -188,7 +188,7 @@ msgstr "Copia pagina"
 msgid "Could not create backup! (The file was created from an older Xournal version)"
 msgstr "Impossbile creare un backup! (Il file è stato creato da una versione di Xournal più vecchia)"
 
-#: ../src/util/Util.cpp:112
+#: ../src/util/Util.cpp:120
 msgid "Could not create folder: {1}"
 msgstr "Impossibile creare la cartella: {1}"
 
@@ -496,7 +496,7 @@ msgstr "Il Log di errore non può essere eliminato. Devi farlo manualmente.\n"
 msgid "Export PDF"
 msgstr "Esporta PDF"
 
-#: ../src/util/Util.cpp:133 ../src/util/Util.cpp:153
+#: ../src/util/Util.cpp:141 ../src/util/Util.cpp:158
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Impossibile aprire il file, Devi farlo manualmente:\n"
@@ -933,7 +933,7 @@ msgstr "Salva"
 msgid "Save As..."
 msgstr ""
 
-#: ../src/control/Control.cpp:2697 ../src/gui/dialog/PageTemplateDialog.cpp:111
+#: ../src/control/Control.cpp:2697 ../src/gui/dialog/PageTemplateDialog.cpp:110
 msgid "Save File"
 msgstr "Salva File"
 
@@ -982,7 +982,7 @@ msgstr "Seleziona un altro PDF"
 msgid "Select another name"
 msgstr "Seleziona un altro nome"
 
-#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:143
+#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:140
 msgid "Select background color"
 msgstr "Seleziona colore di sfondo"
 
@@ -1277,7 +1277,7 @@ msgid "Xournal++ files"
 msgstr "File Xournal++"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:94
-#: ../src/gui/dialog/PageTemplateDialog.cpp:118
+#: ../src/gui/dialog/PageTemplateDialog.cpp:117
 msgid "Xournal++ template"
 msgstr "Template Xournal++"
 
@@ -1327,7 +1327,7 @@ msgstr "Zoom 100%"
 #: ../src/control/Control.cpp:2700 ../src/control/jobs/BaseExportJob.cpp:25
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:17
-#: ../src/gui/dialog/PageTemplateDialog.cpp:112
+#: ../src/gui/dialog/PageTemplateDialog.cpp:111
 msgid "_Cancel"
 msgstr "_Annulla"
 
@@ -1337,7 +1337,7 @@ msgid "_Open"
 msgstr "_Apri"
 
 #: ../src/control/Control.cpp:2702 ../src/control/jobs/BaseExportJob.cpp:26
-#: ../src/gui/dialog/PageTemplateDialog.cpp:113
+#: ../src/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr "_Salva"
 
@@ -1466,7 +1466,7 @@ msgstr "xoj-preview-extractor: Apertura del file di output \"{1}\" fallita"
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: Estratto con successo"
 
-#: ../src/util/Util.cpp:102
+#: ../src/util/Util.cpp:110
 msgid "xournalpp-{1}"
 msgstr ""
 
