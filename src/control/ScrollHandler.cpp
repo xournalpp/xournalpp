@@ -56,7 +56,7 @@ void ScrollHandler::goToFirstPage()
 	}
 }
 
-void ScrollHandler::scrollToPage(PageRef page, double top)
+void ScrollHandler::scrollToPage(const PageRef& page, double top)
 {
 	XOJ_CHECK_TYPE(ScrollHandler);
 

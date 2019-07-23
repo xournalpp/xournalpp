@@ -473,7 +473,7 @@ void Document::deletePage(size_t pNr)
 	updateIndexPageNumbers();
 }
 
-void Document::insertPage(PageRef p, size_t position)
+void Document::insertPage(const PageRef& p, size_t position)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -482,7 +482,7 @@ void Document::insertPage(PageRef p, size_t position)
 	updateIndexPageNumbers();
 }
 
-void Document::addPage(PageRef p)
+void Document::addPage(const PageRef& p)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -491,7 +491,7 @@ void Document::addPage(PageRef p)
 	updateIndexPageNumbers();
 }
 
-size_t Document::indexOf(PageRef page)
+size_t Document::indexOf(const PageRef& page)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -551,9 +551,8 @@ void Document::operator=(Document& doc)
 	this->pdfFilename = doc.pdfFilename;
 	this->filename = doc.filename;
 
-	for (unsigned int i = 0; i < doc.pages.size(); i++)
+	for (const PageRef& p: doc.pages)
 	{
-		PageRef p = doc.pages[i];
 		addPage(p);
 	}
 

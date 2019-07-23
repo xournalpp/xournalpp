@@ -34,7 +34,7 @@ public:
 	void goToLastPage();
 	void goToFirstPage();
 
-	void scrollToPage(PageRef page, double top = 0);
+	void scrollToPage(const PageRef& page, double top = 0);
 	void scrollToPage(size_t page, double top = 0);
 
 	void scrollToAnnotatedPage(bool next);
