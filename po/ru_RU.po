@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-23 08:07\n"
+"PO-Revision-Date: 2019-07-23 08:17\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -2261,11 +2261,11 @@ msgstr ""
 
 #: ../ui/main.glade:621
 msgid "Set Columns"
-msgstr ""
+msgstr "Установить столбцы"
 
 #: ../ui/main.glade:726
 msgid "Set Rows"
-msgstr ""
+msgstr "Установить строки"
 
 #: ../ui/settings.glade:3379
 msgid "Settings:"
@@ -2502,7 +2502,7 @@ msgstr "_Снизу вверх"
 
 #: ../ui/main.glade:608
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "_Столбцы/строки"
 
 #: ../ui/main.glade:868
 msgid "_Customize"
