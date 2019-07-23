@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-23 18:40+0000\n"
-"PO-Revision-Date: 2019-07-23 22:27\n"
+"PO-Revision-Date: 2019-07-23 22:38\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -256,7 +256,8 @@ msgstr ""
 #: ../src/gui/MainWindow.cpp:81
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr ""
+msgstr "Не удалось разобрать файл toolbar.ini: {1}\n"
+"Панели инструментов не будут доступны"
 
 #: ../src/control/xojfile/LoadHandler.cpp:442
 #: ../src/control/xojfile/LoadHandler.cpp:470
@@ -271,11 +272,11 @@ msgstr "Не удалось вернуть \"{1}\"\n"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:210
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr ""
+msgstr "Не удалось удалить элемент инструмента из панели инструментов {1} на позиции {2}"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:205
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr ""
+msgstr "Не удалось удалить элемент инструмента {1} из панели инструментов {2} на позиции {3}"
 
 #: ../src/control/Control.cpp:254
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
@@ -428,7 +429,7 @@ msgstr "Редактировать текст"
 
 #: ../src/undo/EmergencySaveRestore.cpp:36
 msgid "Emergency saved document"
-msgstr ""
+msgstr "Экстренно сохраненный документ"
 
 #: ../src/undo/AddUndoAction.cpp:104 ../src/undo/DeleteUndoAction.cpp:99
 #: ../src/undo/EraseUndoAction.cpp:129
@@ -443,7 +444,8 @@ msgstr "Ластик"
 #: ../src/control/Control.cpp:2578
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "Ошибка аннотации PDF файла \"{1}\"\n"
+"{2}"
 
 #: ../src/gui/GladeGui.cpp:24
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
@@ -716,7 +718,8 @@ msgstr "OK"
 #: ../src/control/jobs/BaseExportJob.cpp:113
 msgid "Only local files are supported\n"
 "Path: {1}"
-msgstr ""
+msgstr "Поддерживаются только локальные файлы\n"
+"Путь: {1}"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:11
 msgid "Open Image"
@@ -755,7 +758,7 @@ msgstr "PDF страница {1}"
 
 #: ../src/view/PdfView.cpp:40
 msgid "PDF background missing"
-msgstr ""
+msgstr "Отсутствует PDF фон"
 
 #: ../src/control/XournalMain.cpp:295
 msgid "PDF file successfully created"
