@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-23 14:37\n"
+"PO-Revision-Date: 2019-07-23 14:59\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -2358,7 +2358,7 @@ msgstr ""
 
 #: ../ui/settings.glade:621
 msgid "This is an experimental feature! Use it with care."
-msgstr ""
+msgstr "Это экспериментальная функция! Используйте ее с осторожностью."
 
 #: ../ui/settings.glade:1500
 msgid "Timeout"
