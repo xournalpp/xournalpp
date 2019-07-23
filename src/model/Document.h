@@ -64,7 +64,7 @@ public:
 	bool isPdfDocumentLoaded();
 	size_t findPdfPage(size_t pdfPage);
 
-	void operator=(Document& doc);
+	Document& operator=(const Document& doc);
 
 	void setFilename(Path filename);
 	Path getFilename();

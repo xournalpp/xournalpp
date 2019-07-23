@@ -537,7 +537,7 @@ XojPdfDocument& Document::getPdfDocument()
 	return this->pdfDocument;
 }
 
-void Document::operator=(Document& doc)
+Document& Document::operator=(const Document& doc)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -566,6 +566,7 @@ void Document::operator=(Document& doc)
 	{
 		lock();
 	}
+	return *this;
 }
 
 void Document::setCreateBackupOnSave(bool backup)
