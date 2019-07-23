@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-23 08:36\n"
+"PO-Revision-Date: 2019-07-23 08:45\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -486,7 +486,7 @@ msgstr ""
 
 #: ../src/control/jobs/BaseExportJob.cpp:24
 msgid "Export PDF"
-msgstr ""
+msgstr "Экспорт PDF"
 
 #: ../src/util/Util.cpp:133 ../src/util/Util.cpp:153
 msgid "File couldn't be opened. You have to do it manually:\n"
