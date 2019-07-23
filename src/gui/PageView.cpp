@@ -452,8 +452,8 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 		GtkWidget* widget = xournal->getWidget();
 		gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
 
-		wx += pos.x + this->getX();
-		wy += pos.y + this->getY();
+		wx += std::lround(pos.x) + this->getX();
+		wy += std::lround(pos.y) + this->getY();
 
 		control->getWindow()->floatingToolbox->show(wx, wy);
 	}
@@ -564,7 +564,8 @@ bool XojPageView::onMotionNotifyEvent(const PositionInputData& pos)
 
 	ToolHandler* h = xournal->getControl()->getToolHandler();
 
-	if (containsPoint(x, y, true) && this->inputHandler && this->inputHandler->onMotionNotifyEvent(pos))
+	if (containsPoint(std::lround(x), std::lround(y), true) && this->inputHandler &&
+	    this->inputHandler->onMotionNotifyEvent(pos))
 	{
 		// input handler used this event
 	}
@@ -745,17 +746,18 @@ void XojPageView::repaintArea(double x1, double y1, double x2, double y2)
 	XOJ_CHECK_TYPE(XojPageView);
 
 	double zoom = xournal->getZoom();
-	xournal->getRepaintHandler()->repaintPageArea(this, x1 * zoom - 10, y1 * zoom - 10, x2 * zoom + 20, y2 * zoom + 20);
+	xournal->getRepaintHandler()->repaintPageArea(this, std::lround(x1 * zoom) - 10, std::lround(y1 * zoom) - 10,
+	                                              std::lround(x2 * zoom) + 20, std::lround(y2 * zoom) + 20);
 }
 
 void XojPageView::rerenderRect(double x, double y, double width, double height)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
-	int rx = (int) MAX(x - 10, 0);
-	int ry = (int) MAX(y - 10, 0);
-	int rwidth = (int) (width + 20);
-	int rheight = (int) (height + 20);
+	int rx = std::lround(std::max(x - 10, 0.0));
+	int ry = std::lround(std::max(y - 10, 0.0));
+	int rwidth = std::lround(width + 20);
+	int rheight = std::lround(height + 20);
 
 	addRerenderRect(rx, ry, rwidth, rheight);
 }
@@ -1123,14 +1125,14 @@ int XojPageView::getDisplayWidth() const
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
-	return this->page->getWidth() * this->xournal->getZoom();
+	return std::lround(this->page->getWidth() * this->xournal->getZoom());
 }
 
 int XojPageView::getDisplayHeight() const
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
-	return this->page->getHeight() * this->xournal->getZoom();
+	return std::lround(this->page->getHeight() * this->xournal->getZoom());
 }
 
 TexImage* XojPageView::getSelectedTex()
