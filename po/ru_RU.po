@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-23 18:40+0000\n"
-"PO-Revision-Date: 2019-07-23 18:46\n"
+"PO-Revision-Date: 2019-07-23 20:39\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -265,7 +265,8 @@ msgstr "Не удалось прочитать изображение: {1}. Со
 #: ../src/undo/UndoRedoHandler.cpp:157
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "Не удалось вернуть \"{1}\"\n"
+"Что-то пошло не так… Пожалуйста, напишите отчет об ошибке…"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:210
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
@@ -290,7 +291,8 @@ msgstr "Не удалось запустить pdflatex: {1} (код выход�
 #: ../src/undo/UndoRedoHandler.cpp:123
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "Не удалось отменить \"{1}\"\n"
+"Что-то пошло не так… Пожалуйста, напишите отчет об ошибке…"
 
 #: ../src/control/xojfile/SaveHandler.cpp:291
 msgid "Could not write background \"{1}\", {2}"
@@ -756,7 +758,7 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:295
 msgid "PDF file successfully created"
-msgstr ""
+msgstr "PDF файл успешно создан"
 
 #: ../src/control/jobs/CustomExportJob.cpp:23
 #: ../src/control/jobs/PdfExportJob.cpp:23
@@ -790,7 +792,7 @@ msgstr ""
 
 #: ../src/undo/PageBackgroundChangedUndoAction.cpp:106
 msgid "Page background changed"
-msgstr ""
+msgstr "Фон страницы изменен"
 
 #: ../src/undo/InsertDeletePageUndoAction.cpp:129
 msgid "Page deleted"
@@ -1161,7 +1163,7 @@ msgstr "Инструмент - не изменять"
 
 #: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:166
 msgid "Toolbar found: {1}"
-msgstr ""
+msgstr "Найдена панель инструментов: {1}"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:55
 msgid "Toolbars"
@@ -1235,7 +1237,7 @@ msgstr "С PDF фоном"
 
 #: ../src/undo/InsertUndoAction.cpp:44
 msgid "Write text"
-msgstr ""
+msgstr "Написать текст"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1158
 msgid "Wrong count of points ({1})"
@@ -1544,7 +1546,8 @@ msgstr ""
 #: ../ui/fillTransparency.glade:79
 msgid "<b>Fill transparency settings</b>\n"
 "Select transparency for fill color"
-msgstr ""
+msgstr "<b>Настройки прозрачности заливки</b>\n"
+"Выберите прозрачность для цвета заливки"
 
 #: ../ui/pageTemplate.glade:132
 msgid "<b>Page size</b>"
