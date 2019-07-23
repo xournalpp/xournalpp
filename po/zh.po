@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-21 18:26\n"
+"PO-Revision-Date: 2019-07-23 14:48\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -924,7 +924,7 @@ msgstr "标尺"
 
 #: ../src/control/jobs/CustomExportJob.cpp:27
 msgid "SVG graphics"
-msgstr ""
+msgstr "SVG图形"
 
 #: ../src/control/jobs/CustomExportJob.cpp:28
 msgid "SVG with transparent background"
@@ -1477,7 +1477,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2616 ../ui/settings.glade:2627
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../ui/settings.glade:418
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1752,7 +1752,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2089
 msgid "Colors"
-msgstr ""
+msgstr "颜色"
 
 #: ../ui/main.glade:1134
 msgid "Configure Page Template"
@@ -2283,7 +2283,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3379
 msgid "Settings:"
-msgstr ""
+msgstr "设置："
 
 #: ../ui/settings.glade:3388
 msgid "Show Floating Toolbox"
@@ -2708,7 +2708,7 @@ msgstr ""
 
 #: ../ui/settings.glade:286
 msgid "minutes"
-msgstr ""
+msgstr "分钟"
 
 #: ../ui/settings.glade:2941 ../ui/settings.glade:2952
 #: ../ui/settings.glade:3200
