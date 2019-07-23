@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-23 14:32\n"
+"PO-Revision-Date: 2019-07-23 14:37\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1710,7 +1710,7 @@ msgstr "Доступные подстановки"
 
 #: ../ui/settings.glade:2019
 msgid "Background color for window Background"
-msgstr ""
+msgstr "Цвет фона окна"
 
 #: ../ui/settings.glade:2153
 msgid "Big cursor for pen"
@@ -2278,7 +2278,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1936
 msgid "Show Menubar on Startup"
-msgstr ""
+msgstr "Показывать панель меню при старте"
 
 #: ../ui/main.glade:496
 msgid "Show sidebar"
