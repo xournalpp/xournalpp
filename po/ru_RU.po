@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-23 18:40+0000\n"
-"PO-Revision-Date: 2019-07-23 21:45\n"
+"PO-Revision-Date: 2019-07-23 22:15\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -75,29 +75,29 @@ msgstr "Прикрепить файл к журналу"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:140
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr ""
+msgstr "Атрибут \"{1}\" не может быть обработан как double, значение \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:132
 msgid "Attribute \"{1}\" could not be parsed as double, the value is NULL"
-msgstr ""
+msgstr "Атрибут \"{1}\" не может быть обработан как double, значение NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:160
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:183
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr ""
+msgstr "Атрибут \"{1}\" не может быть обработан как int, значение \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:152
 msgid "Attribute \"{1}\" could not be parsed as int, the value is NULL"
-msgstr ""
+msgstr "Атрибут \"{1}\" не может быть обработан как int, значение NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:205
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:228
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr ""
+msgstr "Атрибут \"{1}\" не может быть обработан как size_t, значение \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:197
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is NULL"
-msgstr ""
+msgstr "Атрибут \"{1}\" не может быть обработан как size_t, значение NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:70
 msgid "Attribute color not set!"
@@ -193,7 +193,7 @@ msgstr "Не удалось создать папку: {1}"
 
 #: ../src/control/LatexController.cpp:106
 msgid "Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
-msgstr ""
+msgstr "Не удалось найти kpsewhich в PATH; установите kpsewhich и сделайте его доступным через PATH."
 
 #: ../src/control/LatexController.cpp:82
 msgid "Could not find pdflatex in PATH.\n"
@@ -204,7 +204,8 @@ msgstr "Не удалось найти pdflatex в PATH.\n"
 #: ../src/control/LatexController.cpp:111
 msgid "Could not find the LaTeX package 'standalone'.\n"
 "Please install standalone and make sure it's accessible by your LaTeX installation."
-msgstr ""
+msgstr "Не удалось найти LaTeX пакет 'standalone'.\n"
+"Пожалуйста, установите 'standalone' и убедитесь, что он доступен в вашей установке LaTeX."
 
 #: ../src/control/LatexController.cpp:470
 msgid "Could not load LaTeX PDF file"
@@ -234,7 +235,7 @@ msgstr "Не удалось открыть вложение: {1}. Сообщен
 #: ../src/control/xojfile/LoadHandler.cpp:1296
 #: ../src/control/xojfile/LoadHandler.cpp:1316
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr ""
+msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: недопустимый размер файла"
 
 #: ../src/control/xojfile/LoadHandler.cpp:958
 #: ../src/control/xojfile/LoadHandler.cpp:976
@@ -848,7 +849,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:984
 msgid "Recorder could not be started."
-msgstr ""
+msgstr "Запись не может быть запущена."
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:142
@@ -1001,7 +1002,7 @@ msgstr "Разделитель"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Shape Recognizer"
-msgstr ""
+msgstr "Распознавание форм"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:90
 msgid "Show all"
@@ -1096,11 +1097,11 @@ msgstr "Фоновый PDF не найден."
 
 #: ../src/control/xojfile/LoadHandler.cpp:155
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "Файл не является допустимым .xopp-файлом (отсутствует mimetype): \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:163
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "Файл не является допустимым .xopp-файлом (неверный mimetype): \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:172
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
@@ -1108,7 +1109,7 @@ msgstr "Файл не является допустимым .xopp-файлом (
 
 #: ../src/control/xojfile/LoadHandler.cpp:186
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr ""
+msgstr "Файл не является допустимым .xopp-файлом (строка версии недействительна): \"{1}\""
 
 #: ../src/control/LatexController.cpp:368
 msgid "The formula is empty when rendered or invalid."
@@ -1424,7 +1425,7 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:1171
 msgid "xoj-File: {1}"
-msgstr ""
+msgstr "Файл xoj: {1}"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:75
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
@@ -1436,7 +1437,7 @@ msgstr ""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:89
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr ""
+msgstr "xoj-preview-extractor: файл \"{1}\" не является .xoj-файлом"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:102
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
@@ -1499,7 +1500,7 @@ msgstr ""
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
-msgstr ""
+msgstr "<b>... или выберите уже использованное изображение:</b>"
 
 #: ../ui/pageTemplate.glade:256
 msgid "<b>Background Color</b>"
@@ -2618,7 +2619,7 @@ msgstr "_Справа налево"
 
 #: ../ui/main.glade:1309
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "_Распознавание форм"
 
 #: ../ui/main.glade:1269
 msgid "_Text"
