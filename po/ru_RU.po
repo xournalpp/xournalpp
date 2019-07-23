@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-23 11:38\n"
+"PO-Revision-Date: 2019-07-23 14:32\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1714,7 +1714,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2153
 msgid "Big cursor for pen"
-msgstr ""
+msgstr "Большой курсор для пера"
 
 #: ../ui/settings.glade:2008
 msgid "Border color"
@@ -1873,7 +1873,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1107
 msgid "Enable Pressure Sensitivity"
-msgstr ""
+msgstr "Включить чувствительность к нажатию"
 
 #: ../ui/settings.glade:3247
 msgid "Enable Tap action"
@@ -2194,7 +2194,7 @@ msgstr "Режим презентации"
 
 #: ../ui/settings.glade:1129
 msgid "Pressure Sensitivity"
-msgstr ""
+msgstr "Чувствительность к нажатию"
 
 #: ../ui/exportSettings.glade:127
 msgid "Range"
