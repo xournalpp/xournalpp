@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-23 18:40+0000\n"
-"PO-Revision-Date: 2019-07-23 20:39\n"
+"PO-Revision-Date: 2019-07-23 20:48\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1151,7 +1151,7 @@ msgstr "Этот документ еще не сохранен."
 #: ../src/control/PageBackgroundChangeController.cpp:185
 #: ../src/control/tools/ImageHandler.cpp:59
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "Это изображение не может быть загружено. Сообщение об ошибке: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Toggle fullscreen"
@@ -2297,7 +2297,7 @@ msgstr "Показывать вертикальную прокрутку сле�
 
 #: ../ui/settings.glade:3131
 msgid "Snapping"
-msgstr ""
+msgstr "Привязка"
 
 #: ../ui/settings.glade:2560
 msgid "Speed for Ctrl + Scroll"
