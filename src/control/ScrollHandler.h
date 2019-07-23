@@ -45,7 +45,7 @@ public:
 	virtual void pageChanged(size_t page);
 
 private:
-	void scrollToSpinPange();
+	void scrollToSpinPage();
 
 private:
 	XOJ_TYPE_ATTRIB;

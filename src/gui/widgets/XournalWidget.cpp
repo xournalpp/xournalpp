@@ -177,13 +177,13 @@ static void gtk_xournal_init(GtkXournal* xournal)
 static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width)
 {
 	GtkXournal* xournal = GTK_XOURNAL(widget);
-	*minimal_width = *natural_width = xournal->scrollHandling->getPrefferedWidth();
+	*minimal_width = *natural_width = xournal->scrollHandling->getPreferredWidth();
 }
 
 static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height)
 {
 	GtkXournal* xournal = GTK_XOURNAL(widget);
-	*minimal_height = *natural_height = xournal->scrollHandling->getPrefferedHeight();
+	*minimal_height = *natural_height = xournal->scrollHandling->getPreferredHeight();
 }
 
 static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocation)

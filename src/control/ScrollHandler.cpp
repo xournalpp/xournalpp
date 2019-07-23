@@ -86,7 +86,7 @@ void ScrollHandler::scrollToPage(size_t page, double top)
 	win->getXournal()->scrollTo(page, top);
 }
 
-void ScrollHandler::scrollToSpinPange()
+void ScrollHandler::scrollToSpinPage()
 {
 	XOJ_CHECK_TYPE(ScrollHandler);
 
@@ -147,5 +147,5 @@ void ScrollHandler::pageChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(ScrollHandler);
 
-	scrollToSpinPange();
+	scrollToSpinPage();
 }
