@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-20 07:32+0000\n"
-"PO-Revision-Date: 2019-07-23 09:29\n"
+"PO-Revision-Date: 2019-07-23 09:48\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1909,7 +1909,7 @@ msgstr ""
 
 #: ../ui/settings.glade:670
 msgid "Experimental Input System"
-msgstr ""
+msgstr "Экспериментальная система ввода"
 
 #: ../ui/exportSettings.glade:25
 msgid "Export"
@@ -1977,7 +1977,7 @@ msgstr "Высота:"
 
 #: ../ui/main.glade:888 ../ui/settings.glade:2338 ../ui/settings.glade:2405
 msgid "Hide Menubar"
-msgstr ""
+msgstr "Скрыть меню"
 
 #: ../ui/settings.glade:2354 ../ui/settings.glade:2421
 msgid "Hide Sidebar"
@@ -2298,7 +2298,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2560
 msgid "Speed for Ctrl + Scroll"
-msgstr ""
+msgstr "Скорость для Ctrl + Scroll"
 
 #: ../ui/settings.glade:2588
 msgid "Speed for a Zoomstep"
