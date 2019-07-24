@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-23 18:40+0000\n"
-"PO-Revision-Date: 2019-07-24 23:34\n"
+"PO-Revision-Date: 2019-07-24 23:45\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -812,7 +812,7 @@ msgstr "Номер страницы"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Paired pages"
-msgstr ""
+msgstr "Парные страницы"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 #: ../src/undo/AddUndoAction.cpp:108
@@ -2078,7 +2078,7 @@ msgstr "Расположение"
 
 #: ../ui/settings.glade:2242
 msgid "Left / Right-Handed"
-msgstr ""
+msgstr "Левша / правша"
 
 #: ../ui/about.glade:235
 msgid "License"
@@ -2171,7 +2171,7 @@ msgstr "Страницы:"
 
 #: ../ui/settings.glade:3039
 msgid "Paired Pages"
-msgstr ""
+msgstr "Парные страницы"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2373,7 +2373,7 @@ msgstr "Шаблон:"
 
 #: ../ui/settings.glade:1653 ../ui/settings.glade:1666
 msgid "Test"
-msgstr ""
+msgstr "Проверить"
 
 #: ../ui/main.glade:1766
 msgid "Text Font..."
@@ -2381,7 +2381,7 @@ msgstr "Шрифт текста..."
 
 #: ../ui/settings.glade:2744
 msgid "The unit of the ruler is cm"
-msgstr ""
+msgstr "Единицы измерения линейки - см"
 
 #: ../ui/settings.glade:768
 msgid "These settings take only effect if the experimental input system is activated"
@@ -2393,7 +2393,7 @@ msgstr "Это экспериментальная функция! Использ
 
 #: ../ui/settings.glade:1500
 msgid "Timeout"
-msgstr ""
+msgstr "Время ожидания"
 
 #: ../ui/settings.glade:1413 ../ui/settings.glade:1882
 #: ../ui/settingsDeviceClassConfig.glade:45
