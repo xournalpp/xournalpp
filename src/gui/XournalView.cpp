@@ -555,7 +555,6 @@ void XournalView::pageRelativeXY(int offCol, int offRow)
 	{
 		this->scrollTo(*optionalPageIndex, 0);
 	}
-
 }
 
 
