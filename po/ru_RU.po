@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-23 18:40+0000\n"
-"PO-Revision-Date: 2019-07-24 09:47\n"
+"PO-Revision-Date: 2019-07-24 10:08\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1303,11 +1303,11 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Zoom in"
-msgstr "Увеличить"
+msgstr "Приблизить"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Zoom out"
-msgstr "Уменьшить"
+msgstr "Отдалить"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:106
 msgid "Zoom slider"
@@ -1669,11 +1669,11 @@ msgstr ""
 
 #: ../ui/settings.glade:2902
 msgid "Add additional horizontal space of"
-msgstr "Добавить дополнительное горизонтальное пространство"
+msgstr "Добавить дополнительный горизонтальный отступ в"
 
 #: ../ui/settings.glade:2880
 msgid "Add additional vertical space of"
-msgstr ""
+msgstr "Добавить дополнительный вертикальный отступ в"
 
 #: ../ui/exportSettings.glade:142
 msgid "All pages"
@@ -1861,7 +1861,7 @@ msgstr "Редактировать (пока не реализовано)"
 
 #: ../ui/settings.glade:1608
 msgid "Enable"
-msgstr ""
+msgstr "Включить"
 
 #: ../ui/settings.glade:3160
 msgid "Enable  with determination radius of "
@@ -2427,7 +2427,7 @@ msgstr "Настройки Xournal++"
 
 #: ../ui/settings.glade:2798
 msgid "Zoom"
-msgstr ""
+msgstr "Приближение"
 
 #: ../ui/settings.glade:1782
 msgid "Zoom Gestures"
@@ -2435,7 +2435,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2642
 msgid "Zoom Speed"
-msgstr ""
+msgstr "Скорость приближения"
 
 #: ../ui/main.glade:633
 msgid "_1 Column"
