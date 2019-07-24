@@ -47,7 +47,6 @@ class LayoutMapper
 	};
 
 public:
-
 	/**
 	 * This is an implementation for boost::optional or std::optional (c++17)
 	 * all its functions behave like the equivalent of boost/std::optional
@@ -59,7 +58,9 @@ public:
 	{
 		optional_size_t() = default;
 
-		optional_size_t(size_t index) : valid(true), index(index)
+		optional_size_t(size_t index)
+		 : valid(true)
+		 , index(index)
 		{
 		}
 

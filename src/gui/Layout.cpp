@@ -87,22 +87,21 @@ void Layout::updateVisibility()
 		{
 			int x2 = this->widthCols[col];
 			auto optionalPage = this->mapper.map(col, row);
-			if (optionalPage)    // a page exists at this grid location
+			if (optionalPage)  // a page exists at this grid location
 			{
 				XojPageView* pageView = this->view->viewPages[*optionalPage];
 
 
 				//check if grid location is visible as an aprox for page visiblity:
-				if (!(visRect.x > x2 || visRect.x + visRect.width < x1) // visrect not outside current row/col
+				if (!(visRect.x > x2 || visRect.x + visRect.width < x1)  // visrect not outside current row/col
 				    && !(visRect.y > y2 || visRect.y + visRect.height < y1))
 				{
 					// now use exact check of page itself:
 					// visrect not outside current page dimensions:
 					Rectangle pageRect = pageView->getRect();
-					pageView->setIsVisible(!(visRect.x > pageRect.x + pageRect.width ||
-					                         visRect.x + visRect.width < pageRect.x)
-					                       && !(visRect.y > pageRect.y + pageRect.height ||
-					                            visRect.y + visRect.height < pageRect.y));
+					pageView->setIsVisible(
+					        !(visRect.x > pageRect.x + pageRect.width || visRect.x + visRect.width < pageRect.x) &&
+					        !(visRect.y > pageRect.y + pageRect.height || visRect.y + visRect.height < pageRect.y));
 				}
 				else
 				{
@@ -202,7 +201,7 @@ void Layout::layoutPages(int width, int height)
 	auto rows = this->heightRows.size();
 	auto columns = this->widthCols.size();
 
-	this->lastGetViewAtRow = rows / 2;        //reset to middle
+	this->lastGetViewAtRow = rows / 2;  //reset to middle
 	this->lastGetViewAtCol = columns / 2;
 
 	//add space around the entire page area to accomodate older Wacom tablets with limited sense area.
@@ -215,15 +214,14 @@ void Layout::layoutPages(int width, int height)
 	{
 		minRequiredWidth += c;
 	}
-	int centeringXBorder = (width - minRequiredWidth) / 2;    // this will center if all pages fit on screen.
+	int centeringXBorder = (width - minRequiredWidth) / 2;  // this will center if all pages fit on screen.
 
 	int minRequiredHeight = XOURNAL_PADDING_BETWEEN * (rows - 1);
 	for (int const r: this->heightRows)
 	{
 		minRequiredHeight += r;
 	}
-	int centeringYBorder =
-			(height - minRequiredHeight) / 2;    // this will center if all pages fit on screen vertically.
+	int centeringYBorder = (height - minRequiredHeight) / 2;  // this will center if all pages fit on screen vertically.
 
 	int borderX = std::max(h_padding, centeringXBorder);
 	int borderY = std::max(v_padding, centeringYBorder);
@@ -246,7 +244,7 @@ void Layout::layoutPages(int width, int height)
 			{
 
 				XojPageView* v = this->view->viewPages[*optionalPage];
-				v->setMappedRowCol(r, c);                    //store row and column for e.g. proper arrow key navigation
+				v->setMappedRowCol(r, c);  //store row and column for e.g. proper arrow key navigation
 				int vDisplayWidth = v->getDisplayWidth();
 				{
 					int paddingLeft;
@@ -290,14 +288,14 @@ void Layout::layoutPages(int width, int height)
 		}
 		x = borderX;
 		y += this->heightRows[r] + XOURNAL_PADDING_BETWEEN;
-
 	}
 
 	int totalWidth = borderX;
 	for (int c = 0; c < columns; c++)
 	{
 		totalWidth += this->widthCols[c] + XOURNAL_PADDING_BETWEEN;
-		this->widthCols[c] = totalWidth;    //accumulated - absolute pixel location for use by getViewAt() and updateVisibility()
+		this->widthCols[c] =
+		        totalWidth;  //accumulated - absolute pixel location for use by getViewAt() and updateVisibility()
 	}
 
 	int totalHeight = borderY;
@@ -373,7 +371,7 @@ XojPageView* Layout::getViewAt(int x, int y)
 	/* Linear Up or Down Search from last position: */
 	// Rows:
 	int testRow = std::max(0, this->lastGetViewAtRow - 1);
-	if (testRow > 0 && y <= this->heightRows[testRow]) //search lower
+	if (testRow > 0 && y <= this->heightRows[testRow])  //search lower
 	{
 		for (testRow--; testRow >= 0; testRow--)
 		{
@@ -399,7 +397,7 @@ XojPageView* Layout::getViewAt(int x, int y)
 	
 	//Now for columns:
 	int testCol = std::max(0, this->lastGetViewAtCol - 1);
-	if (testCol > 0 && x <= this->widthCols[testCol]) //search lower
+	if (testCol > 0 && x <= this->widthCols[testCol])  //search lower
 	{
 		for (testCol--; testCol>=0; testCol--)
 		{
@@ -444,7 +442,7 @@ XojPageView* Layout::getViewAt(int x, int y)
 //                  or std::optional<size_t> Layout::getIndexAtGridMap(size_t row, size_t col)
 LayoutMapper::optional_size_t Layout::getIndexAtGridMap(size_t row, size_t col)
 {
-	return this->mapper.map(col, row); //watch out.. x,y --> c,r
+	return this->mapper.map(col, row);  //watch out.. x,y --> c,r
 }
 
 int Layout::getMinimalHeight()

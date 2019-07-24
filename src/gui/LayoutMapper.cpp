@@ -138,7 +138,7 @@ LayoutMapper::optional_size_t LayoutMapper::map(size_t x, size_t y)
 			res = y + this->rows * x;
 		}
 	}
-	else //Horizontal
+	else  //Horizontal
 	{
 		res = x + this->cols * y;
 	}
