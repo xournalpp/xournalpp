@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-23 18:40+0000\n"
-"PO-Revision-Date: 2019-07-23 23:15\n"
+"PO-Revision-Date: 2019-07-24 09:37\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1028,7 +1028,8 @@ msgstr "К сожалению, Xournal++ может открывать толь�
 #: ../src/control/XournalMain.cpp:405
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
-msgstr ""
+msgstr "Xournal++ в данный момент не может открывать удалённые файлы.\n"
+"Вам нужно скопировать файл в локальную директорию."
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Staves"
@@ -1132,7 +1133,7 @@ msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:102
 msgid "There was an error displaying help: {1}"
-msgstr ""
+msgstr "Произошла ошибка при отображении справки: {1}"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:90
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:526
