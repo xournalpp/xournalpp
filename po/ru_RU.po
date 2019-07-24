@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-23 18:40+0000\n"
-"PO-Revision-Date: 2019-07-24 22:11\n"
+"PO-Revision-Date: 2019-07-24 22:25\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1258,7 +1258,7 @@ msgstr "Ошибка XML парсера: {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
-msgstr "Xournal (совместимость)"
+msgstr "Xournal (совместимый формат)"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:74
 msgid "Xournal files"
@@ -1624,7 +1624,7 @@ msgstr ""
 
 #: ../ui/settings.glade:522
 msgid "<i>If you open a PDF and there is a Xournal file with the same name it will open the xoj file.</i>"
-msgstr ""
+msgstr "<i>Если вы откроете PDF и рядом с ним есть Xournal файл с таким же именем, этот xoj файл будет тоже открыт.</i>"
 
 #: ../ui/settings.glade:1444
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
@@ -1649,7 +1649,8 @@ msgstr ""
 #: ../ui/settings.glade:3730
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments. \n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
-msgstr ""
+msgstr "<i>Укажите аудио устройства, используемые для записи и воспроизведения аудио вложений. \n"
+"Если доступно, выберите <small><tt>pulse</tt></small> как входное / выходное устройство.</i>"
 
 #: ../ui/settings.glade:1160
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
@@ -1756,7 +1757,7 @@ msgstr ""
 
 #: ../ui/about.glade:128
 msgid "Built on:"
-msgstr "Сборка от:"
+msgstr "Сборка:"
 
 #: ../ui/settings.glade:1201
 msgid "Button 1"
@@ -2118,11 +2119,11 @@ msgstr "Кнопки мыши"
 
 #: ../ui/main.glade:2488
 msgid "Move Down"
-msgstr ""
+msgstr "Переместить вниз"
 
 #: ../ui/main.glade:2480
 msgid "Move Up"
-msgstr ""
+msgstr "Переместить вверх"
 
 #: ../ui/main.glade:1066
 msgid "N_ext annotated page"
