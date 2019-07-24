@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-23 18:40+0000\n"
-"PO-Revision-Date: 2019-07-24 22:25\n"
+"PO-Revision-Date: 2019-07-24 22:35\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -50,7 +50,7 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:317
 msgid "Absolute path for the audio files playback"
-msgstr ""
+msgstr "Абсолютный путь до проигрывателя аудио файлов"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:466
 msgid "Add/Edit Tex"
@@ -1912,7 +1912,7 @@ msgstr ""
 
 #: ../ui/settings.glade:789
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
-msgstr ""
+msgstr "Включить рисование вне окна <i>(рисование не остановится на границе окна)</i>"
 
 #: ../ui/settings.glade:1459
 msgid "Enable internal Hand Recognition"
@@ -2237,7 +2237,7 @@ msgstr "Недавние _документы"
 
 #: ../ui/main.glade:1778
 msgid "Record / Stop"
-msgstr ""
+msgstr "Запись / Стоп"
 
 #: ../ui/settings.glade:3904
 msgid "Recording Quality"
@@ -2538,7 +2538,7 @@ msgstr "_Столбцы/строки"
 
 #: ../ui/main.glade:868
 msgid "_Customize"
-msgstr ""
+msgstr "_Настроить"
 
 #: ../ui/main.glade:1293
 msgid "_Default Tools"
