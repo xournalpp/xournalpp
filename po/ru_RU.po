@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-23 18:40+0000\n"
-"PO-Revision-Date: 2019-07-24 23:26\n"
+"PO-Revision-Date: 2019-07-24 23:34\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1593,7 +1593,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3640
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
-msgstr ""
+msgstr "<i>Аудиозаписи хранятся в отдельной папке, ссылки на них содержатся в журнале.</i>"
 
 #: ../ui/settings.glade:3918
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
@@ -2265,7 +2265,7 @@ msgstr "Панели прокрутки"
 
 #: ../ui/settings.glade:2974
 msgid "Scrolling outside the page"
-msgstr ""
+msgstr "Прокрутка за пределами страницы"
 
 #: ../ui/pageTemplate.glade:174
 msgid "Select Background Color"
