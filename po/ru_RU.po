@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-23 18:40+0000\n"
-"PO-Revision-Date: 2019-07-24 22:45\n"
+"PO-Revision-Date: 2019-07-24 23:26\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1597,7 +1597,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3918
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
-msgstr ""
+msgstr "<i>Изменения вступят в силу только для новой записи и воспроизведения.</i>"
 
 #: ../ui/settings.glade:913
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
@@ -2341,7 +2341,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3662 ../ui/settings.glade:3699
 msgid "Storage Folder"
-msgstr ""
+msgstr "Место хранения"
 
 #: ../ui/settings.glade:1326
 msgid "Stylus"
@@ -2626,7 +2626,7 @@ msgstr "_Перо"
 
 #: ../ui/main.glade:1822
 msgid "_Plugin"
-msgstr "_Плагины"
+msgstr "П_лагины"
 
 #: ../ui/main.glade:475
 msgid "_Presentation Mode"
