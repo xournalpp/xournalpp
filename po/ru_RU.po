@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-23 18:40+0000\n"
-"PO-Revision-Date: 2019-07-24 22:35\n"
+"PO-Revision-Date: 2019-07-24 22:45\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -314,7 +314,7 @@ msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:18
 msgid "Custom Export"
-msgstr ""
+msgstr "Пользовательский экспорт"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Customize Toolbars"
@@ -322,7 +322,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:38
 msgid "Customized"
-msgstr ""
+msgstr "Модифицированный"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Cut"
@@ -1773,7 +1773,7 @@ msgstr "Цвета"
 
 #: ../ui/main.glade:1134
 msgid "Configure Page Template"
-msgstr ""
+msgstr "Настройка шаблона страницы"
 
 #: ../ui/pageTemplate.glade:185
 msgid "Copy last page settings"
@@ -1829,7 +1829,7 @@ msgstr "Устройство"
 
 #: ../ui/settings.glade:1620
 msgid "Disable"
-msgstr ""
+msgstr "Выключить"
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
@@ -1968,7 +1968,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3007
 msgid "First Page Offset "
-msgstr ""
+msgstr "Отступ первой страницы "
 
 #: ../ui/main.glade:485 ../ui/settings.glade:2376
 msgid "Fullscreen"
@@ -1996,7 +1996,7 @@ msgstr ""
 
 #: ../ui/main.glade:1441
 msgid "H_and Tool"
-msgstr ""
+msgstr "_Инструмент рука"
 
 #: ../ui/settings.glade:1717
 msgid "Hand Recognition"
@@ -2538,7 +2538,7 @@ msgstr "_Столбцы/строки"
 
 #: ../ui/main.glade:868
 msgid "_Customize"
-msgstr "_Настроить"
+msgstr "_Модифицировать"
 
 #: ../ui/main.glade:1293
 msgid "_Default Tools"
@@ -2735,7 +2735,7 @@ msgstr "пикс."
 
 #: ../ui/settings.glade:1544
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
-msgstr ""
+msgstr "с <i>(после чего сенсорный экран будет снова активирован)</i>"
 
 #: ../ui/pageTemplate.glade:37
 msgid "save to file"
