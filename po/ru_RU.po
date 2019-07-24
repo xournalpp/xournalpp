@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-23 18:40+0000\n"
-"PO-Revision-Date: 2019-07-24 09:37\n"
+"PO-Revision-Date: 2019-07-24 09:47\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1643,7 +1643,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1955
 msgid "<i>Toggle visibility of menubar with F10</i>"
-msgstr ""
+msgstr "<i>Можете переключать видимость панели меню с помощью F10</i>"
 
 #: ../ui/settings.glade:1748
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
@@ -1669,7 +1669,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2902
 msgid "Add additional horizontal space of"
-msgstr ""
+msgstr "Добавить дополнительное горизонтальное пространство"
 
 #: ../ui/settings.glade:2880
 msgid "Add additional vertical space of"
