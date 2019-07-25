@@ -2374,7 +2374,7 @@ string Settings::getPluginDisabled()
 	return this->pluginDisabled;
 }
 
-void Settings::setPluginDisabled(string pluginEnabled)
+void Settings::setPluginDisabled(string pluginDisabled)
 {
 	XOJ_CHECK_TYPE(Settings);
 
