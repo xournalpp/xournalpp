@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 01:51+0000\n"
-"PO-Revision-Date: 2019-07-25 01:56\n"
+"PO-Revision-Date: 2019-07-25 10:58\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -922,7 +922,7 @@ msgstr "Liniert"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Ruled with vertical line"
-msgstr ""
+msgstr "Liniert mit vertikaler Linie"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 msgid "Ruler"
@@ -1049,7 +1049,7 @@ msgstr "Entschuldigung, Xournal++ kann derzeit keine entfernten Dateien öffnen.
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Staves"
-msgstr ""
+msgstr "Notenlinien"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Stop"
