@@ -361,7 +361,7 @@ public:
 	void setPluginEnabled(string pluginEnabled);
 
 	string getPluginDisabled();
-	void setPluginDisabled(string pluginEnabled);
+	void setPluginDisabled(string pluginDisabled);
 
 	bool getExperimentalInputSystemEnabled();
 	void setExperimentalInputSystemEnabled(bool systemEnabled);
