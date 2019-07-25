@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 01:51+0000\n"
-"PO-Revision-Date: 2019-07-25 05:34\n"
+"PO-Revision-Date: 2019-07-25 05:45\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -617,7 +617,7 @@ msgstr "Слой"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:79
 msgid "Layer Preview"
-msgstr ""
+msgstr "Предпросмотр слоя"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:331
 msgid "Layer selection"
@@ -1433,7 +1433,7 @@ msgstr "Файл xoj: {1}"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:75
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
-msgstr ""
+msgstr "xoj-preview-extractor: вызов с INPUT.xoj OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:97
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
@@ -2070,7 +2070,7 @@ msgstr "Вставить страницу перед"
 
 #: ../ui/main.glade:2041
 msgid "Insert a copy of the current page below"
-msgstr ""
+msgstr "Вставить копию текущей страницы ниже"
 
 #: ../ui/main.glade:512
 msgid "Layout"
@@ -2357,11 +2357,11 @@ msgstr ""
 
 #: ../ui/main.glade:1998
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "Поменять текущую страницу с находящейся выше"
 
 #: ../ui/main.glade:2020
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "Поменять текущую страницу с находящейся ниже"
 
 #: ../ui/main.glade:840
 msgid "T_oolbars"
