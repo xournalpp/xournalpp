@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-23 18:40+0000\n"
-"PO-Revision-Date: 2019-07-23 18:45\n"
+"POT-Creation-Date: 2019-07-25 01:51+0000\n"
+"PO-Revision-Date: 2019-07-25 01:56\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Traditional, Hong Kong\n"
 "Language: zh_HK\n"
@@ -1056,7 +1056,7 @@ msgstr "支撐檔案"
 msgid "Text"
 msgstr "文本"
 
-#: ../src/gui/SearchBar.cpp:70
+#: ../src/gui/SearchBar.cpp:96
 #, c-format
 msgid "Text %i times found on this page"
 msgstr "文本在本頁面出現%i次"
@@ -1065,23 +1065,23 @@ msgstr "文本在本頁面出現%i次"
 msgid "Text changes"
 msgstr "文本改變"
 
-#: ../src/gui/SearchBar.cpp:66
+#: ../src/gui/SearchBar.cpp:92
 msgid "Text found on this page"
 msgstr "本頁面上找到文本"
 
-#: ../src/gui/SearchBar.cpp:150 ../src/gui/SearchBar.cpp:206
+#: ../src/gui/SearchBar.cpp:176 ../src/gui/SearchBar.cpp:232
 msgid "Text found once on page {1}"
 msgstr "文本在第{1}頁上找到"
 
-#: ../src/gui/SearchBar.cpp:151 ../src/gui/SearchBar.cpp:207
+#: ../src/gui/SearchBar.cpp:177 ../src/gui/SearchBar.cpp:233
 msgid "Text found {1} times on page {2}"
 msgstr "文本在第{2}頁上找到{1}次"
 
-#: ../src/gui/SearchBar.cpp:77
+#: ../src/gui/SearchBar.cpp:103
 msgid "Text not found"
 msgstr "文本未找到"
 
-#: ../src/gui/SearchBar.cpp:164 ../src/gui/SearchBar.cpp:220
+#: ../src/gui/SearchBar.cpp:190 ../src/gui/SearchBar.cpp:246
 msgid "Text not found, searched on all pages"
 msgstr "找遍所有頁面未找到文本"
 
