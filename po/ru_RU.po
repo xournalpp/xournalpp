@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 01:51+0000\n"
-"PO-Revision-Date: 2019-07-25 21:45\n"
+"PO-Revision-Date: 2019-07-25 22:13\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1965,7 +1965,7 @@ msgstr ""
 
 #: ../ui/main.glade:2238
 msgid "Find previous occurrence of the search string"
-msgstr ""
+msgstr "Найти предыдущее вхождение искомой строки"
 
 #: ../ui/settings.glade:3007
 msgid "First Page Offset "
