@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 01:51+0000\n"
-"PO-Revision-Date: 2019-07-25 01:56\n"
+"PO-Revision-Date: 2019-07-25 05:34\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -632,12 +632,12 @@ msgstr "Слой {1}"
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:138
 msgid "Light Blue"
-msgstr "Светло-синий"
+msgstr "Голубой"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:13
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:139
 msgid "Light Green"
-msgstr "Светло-зелёный"
+msgstr "Салатный"
 
 #: ../src/gui/PageView.cpp:863
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:103
@@ -652,7 +652,7 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:143
 msgid "Mangenta"
-msgstr "Маджента"
+msgstr "Пурпурный"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:525
