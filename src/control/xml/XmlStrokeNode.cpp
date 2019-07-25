@@ -1,3 +1,4 @@
+#include "Util.h"
 #include "XmlStrokeNode.h"
 
 XmlStrokeNode::XmlStrokeNode(const char* tag) : XmlNode(tag)
@@ -65,17 +66,17 @@ void XmlStrokeNode::writeOut(OutputStream* out)
 	writeAttributes(out);
 
 	out->write(" width=\"");
-	
-	char tmp[G_ASCII_DTOSTR_BUF_SIZE];
-	g_ascii_dtostr( tmp, G_ASCII_DTOSTR_BUF_SIZE,width);	//  g_ascii_ version uses C locale always.
-	out->write(tmp);
+
+	char widthStr[G_ASCII_DTOSTR_BUF_SIZE];
+	// g_ascii_ version uses C locale always.
+	g_ascii_formatd(widthStr, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, width);
+	out->write(widthStr);
 
 	for (int i = 0; i < widthsLength; i++)
 	{
-		char tmp[G_ASCII_DTOSTR_BUF_SIZE];
-		g_ascii_dtostr( tmp, G_ASCII_DTOSTR_BUF_SIZE,widths[i]);
+		g_ascii_formatd(widthStr, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, widths[i]);
 		out->write(" ");
-		out->write(tmp);
+		out->write(widthStr);
 	}
 
 	out->write("\"");
@@ -88,26 +89,15 @@ void XmlStrokeNode::writeOut(OutputStream* out)
 	{
 		out->write(">");
 
-		char tmpX[G_ASCII_DTOSTR_BUF_SIZE];
-		g_ascii_dtostr( tmpX, G_ASCII_DTOSTR_BUF_SIZE, points[0].x);
-		char tmpY[G_ASCII_DTOSTR_BUF_SIZE];
-		g_ascii_dtostr( tmpY, G_ASCII_DTOSTR_BUF_SIZE, points[0].y);
-
-		char* tmp = g_strdup_printf("%s %s", tmpX, tmpY);
-		out->write(tmp);
-		g_free(tmp);
+		gchar coordinateStr[Util::PRECISION_FORMAT_BUFF_LEN];
+		Util::getCoordinateString(coordinateStr, Util::PRECISION_FORMAT_BUFF_LEN, points[0].x, points[0].y);
+		out->write(coordinateStr);
 
 		for (int i = 1; i < this->pointsLength; i++)
 		{
-			char tmpX[G_ASCII_DTOSTR_BUF_SIZE];
-			g_ascii_dtostr( tmpX, G_ASCII_DTOSTR_BUF_SIZE, points[i].x);
-			char tmpY[G_ASCII_DTOSTR_BUF_SIZE];
-			g_ascii_dtostr( tmpY, G_ASCII_DTOSTR_BUF_SIZE, points[i].y);
-
-			char* tmp = g_strdup_printf("%s %s", tmpX, tmpY);
+			Util::getCoordinateString(coordinateStr, Util::PRECISION_FORMAT_BUFF_LEN, points[i].x, points[i].y);
 			out->write(" ");
-			out->write(tmp);
-			g_free(tmp);
+			out->write(coordinateStr);
 		}
 
 		out->write("</");
