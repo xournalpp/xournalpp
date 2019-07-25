@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 01:51+0000\n"
-"PO-Revision-Date: 2019-07-25 05:45\n"
+"PO-Revision-Date: 2019-07-25 05:55\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -993,7 +993,7 @@ msgstr "Выбор прямоугольника"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:69
 msgid "Select region"
-msgstr "Выбор региона"
+msgstr "Выделение лассо"
 
 #: ../src/control/XournalMain.cpp:135
 msgid "Send Bugreport"
@@ -1425,7 +1425,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:314
 msgid "whiteout"
-msgstr ""
+msgstr "забеливание"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1171
 msgid "xoj-File: {1}"
@@ -1556,7 +1556,7 @@ msgstr "<b>Инструменты по умолчанию</b>"
 
 #: ../ui/settings.glade:3549
 msgid "<b>Default</b>"
-msgstr ""
+msgstr "<b>По умолчанию</b>"
 
 #: ../ui/exportSettings.glade:90
 msgid "<b>Document export settings</b>\n"
@@ -2430,7 +2430,7 @@ msgstr "Вид"
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
-msgstr ""
+msgstr "Забеливание"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
@@ -2702,7 +2702,7 @@ msgstr "_очень тонкий"
 
 #: ../ui/main.glade:1666
 msgid "_whiteout"
-msgstr ""
+msgstr "_забеливание"
 
 #: ../ui/pageTemplate.glade:158
 msgid "change"
