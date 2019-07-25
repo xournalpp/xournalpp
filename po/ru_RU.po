@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 01:51+0000\n"
-"PO-Revision-Date: 2019-07-25 21:17\n"
+"PO-Revision-Date: 2019-07-25 21:45\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1810,7 +1810,7 @@ msgstr "Имя по умолчанию: "
 
 #: ../ui/settings.glade:3589
 msgid "Defaults"
-msgstr ""
+msgstr "По умолчанию"
 
 #: ../ui/main.glade:1172
 msgid "Delete Layer"
@@ -1846,7 +1846,7 @@ msgstr "Метод деактивации"
 
 #: ../ui/settings.glade:2767
 msgid "Display DPI Calibration"
-msgstr ""
+msgstr "Калибровка DPI дисплея"
 
 #: ../ui/settings.glade:3252
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
