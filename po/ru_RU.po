@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 01:51+0000\n"
-"PO-Revision-Date: 2019-07-25 05:55\n"
+"PO-Revision-Date: 2019-07-25 06:06\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -962,13 +962,13 @@ msgstr "Выбрать объект"
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:68
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:108
 msgid "Select Rectangle"
-msgstr "Выбрать прямоугольник"
+msgstr "Прямоугольное выделение"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:476
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:75
 msgid "Select Region"
-msgstr "Выбрать регион"
+msgstr "Выделение лассо"
 
 #: ../src/control/Control.cpp:2349
 msgid "Select another PDF"
@@ -989,7 +989,7 @@ msgstr "Выбрать цвет"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:70
 msgid "Select rectangle"
-msgstr "Выбор прямоугольника"
+msgstr "Прямоугольное выделение"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:69
 msgid "Select region"
