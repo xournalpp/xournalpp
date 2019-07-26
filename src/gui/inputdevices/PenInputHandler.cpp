@@ -13,8 +13,6 @@
 #include "gui/XournalView.h"
 #include <control/settings/ButtonConfig.h>
 
-#include <cmath>
-
 #define WIDGET_SCROLL_BORDER 25
 
 PenInputHandler::PenInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)

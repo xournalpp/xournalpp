@@ -5,6 +5,7 @@
 #include "AbstractInputHandler.h"
 #include "InputContext.h"
 #include <gui/XournalppCursor.h>
+#include <cmath>
 
 AbstractInputHandler::AbstractInputHandler(InputContext* inputContext)
 {
