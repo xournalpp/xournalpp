@@ -62,39 +62,6 @@ void PenInputHandler::updateLastEvent(InputEvent* event)
 	}
 }
 
-void PenInputHandler::handleScrollEvent(InputEvent* event)
-{
-	XOJ_CHECK_TYPE(PenInputHandler);
-
-	// use root coordinates as reference point because
-	// scrolling changes window relative coordinates
-	// see github Gnome/evince@1adce5486b10e763bed869
-
-	// GTK handles event compression/filtering differently between versions - this may be needed on certain hardware/GTK combinations.
-	if (std::abs((double)(this->scrollStartX - event->absoluteX)) < 0.1 && std::abs((double)(this->scrollStartY - event->absoluteY)) < 0.1 )
-	{
-		return;
-	}
-
-	if (this->scrollOffsetX == 0 && this->scrollOffsetY == 0)
-	{
-		this->scrollOffsetX = this->scrollStartX - event->absoluteX;
-		this->scrollOffsetY = this->scrollStartY - event->absoluteY;
-
-		Util::execInUiThread([&]() {
-			this->inputContext->getXournal()->layout->scrollRelative(this->scrollOffsetX, this->scrollOffsetY);
-
-			// Scrolling done, so reset our counters
-			this->scrollOffsetX = 0;
-			this->scrollOffsetY = 0;
-		});
-
-		// Update the reference for the scroll-offset
-		this->scrollStartX = event->absoluteX;
-		this->scrollStartY = event->absoluteY;
-	}
-}
-
 bool PenInputHandler::actionStart(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(PenInputHandler);

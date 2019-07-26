@@ -45,22 +45,6 @@ protected:
 	InputEvent* lastHitEvent = nullptr;
 
 	/**
-	 * Start position to reference scroll offset
-	 */
-	double scrollStartX = 0;
-	double scrollStartY = 0;
-
-	/**
-	 * The offset to scroll in x-direction
-	 */
-	double scrollOffsetX = 0;
-
-	/**
-	 * The offset to scroll in y-direction
-	 */
-	double scrollOffsetY = 0;
-
-	/**
 	 * Flag whether pen is within the widget
 	 */
 	bool penInWidget = false;
@@ -102,11 +86,6 @@ protected:
 	bool actionEnd(InputEvent* event);
 
 	virtual bool changeTool(InputEvent* event) = 0;
-
-	/**
-	 * Do the scrolling with the hand tool
-	 */
-	void handleScrollEvent(InputEvent* event);
 
 	/**
 	 * Stores references to the provided event in lastEvent and lastHitEvent
