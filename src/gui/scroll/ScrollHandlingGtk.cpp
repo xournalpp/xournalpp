@@ -21,14 +21,14 @@ void ScrollHandlingGtk::setLayoutSize(int width, int height)
 	gtk_widget_queue_resize(xournal);
 }
 
-int ScrollHandlingGtk::getPrefferedWidth()
+int ScrollHandlingGtk::getPreferredWidth()
 {
 	XOJ_CHECK_TYPE(ScrollHandlingGtk);
 
 	return layout->getLayoutWidth();;
 }
 
-int ScrollHandlingGtk::getPrefferedHeight()
+int ScrollHandlingGtk::getPreferredHeight()
 {
 	XOJ_CHECK_TYPE(ScrollHandlingGtk);
 

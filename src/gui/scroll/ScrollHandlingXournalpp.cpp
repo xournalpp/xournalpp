@@ -23,14 +23,14 @@ void ScrollHandlingXournalpp::setLayoutSize(int width, int height)
 	gtk_adjustment_set_upper(adjVertical, height);
 }
 
-int ScrollHandlingXournalpp::getPrefferedWidth()
+int ScrollHandlingXournalpp::getPreferredWidth()
 {
 	XOJ_CHECK_TYPE(ScrollHandlingXournalpp);
 
 	return 400;
 }
 
-int ScrollHandlingXournalpp::getPrefferedHeight()
+int ScrollHandlingXournalpp::getPreferredHeight()
 {
 	XOJ_CHECK_TYPE(ScrollHandlingXournalpp);
 
