@@ -1,5 +1,7 @@
 #include "gui/LayoutMapper.h"
 
+#include <algorithm>
+
 
 LayoutMapper::LayoutMapper(){
 	
