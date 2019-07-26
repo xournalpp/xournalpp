@@ -37,30 +37,30 @@ protected:
 	InputContext* inputContext;
 	bool inputRunning = false;
 
-    /**
+	/**
      * Start position to reference scroll offset
      */
-    double scrollStartX = 0;
-    double scrollStartY = 0;
+	double scrollStartX = 0;
+	double scrollStartY = 0;
 
-    /**
+	/**
      * The offset to scroll in x-direction
      */
-    double scrollOffsetX = 0;
+	double scrollOffsetX = 0;
 
-    /**
+	/**
      * The offset to scroll in y-direction
      */
-    double scrollOffsetY = 0;
+	double scrollOffsetY = 0;
 
 protected:
 	XojPageView* getPageAtCurrentPosition(InputEvent* event);
 	PositionInputData getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent* event);
 
-    /**
+	/**
      * Do the scrolling with the hand tool
      */
-    void handleScrollEvent(InputEvent* event);
+	void handleScrollEvent(InputEvent* event);
 
 public:
 	explicit AbstractInputHandler(InputContext* inputContext);
