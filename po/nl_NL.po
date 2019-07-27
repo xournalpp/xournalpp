@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-25 01:51+0000\n"
-"PO-Revision-Date: 2019-07-25 01:56\n"
+"POT-Creation-Date: 2019-07-26 23:55+0000\n"
+"PO-Revision-Date: 2019-07-27 00:00\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -652,7 +652,7 @@ msgstr "Lichtblauw"
 msgid "Light Green"
 msgstr "Lichtgroen"
 
-#: ../src/gui/PageView.cpp:863
+#: ../src/gui/PageView.cpp:865
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:103
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:18
 msgid "Loading..."
