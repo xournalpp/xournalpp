@@ -39,10 +39,10 @@ void LayoutMapper::configure(size_t numRows, size_t numCols, bool useRows, int f
 
 	if (useRows)
 	{
-		this->rows = std::max(1ul, numRows);
+		this->rows = std::max<size_t>(1ul, numRows);
 
 		// using  + ( rows-1) to round up (int)pages/rows
-		this->cols = std::max(1ul, (this->actualPages + firstPageOffset + (this->rows - 1)) / this->rows);
+		this->cols = std::max<size_t>(1ul, (this->actualPages + firstPageOffset + (this->rows - 1)) / this->rows);
 		if (showPairedPages)
 		{
 			this->cols += this->cols % 2;	//make even
@@ -51,12 +51,12 @@ void LayoutMapper::configure(size_t numRows, size_t numCols, bool useRows, int f
 	}
 	else
 	{
-		this->cols = std::max(1ul, numCols);
+		this->cols = std::max<size_t>(1ul, numCols);
 		if (showPairedPages)
 		{
 			this->cols += this->cols % 2;	//make even
 		}
-		this->rows = std::max(1ul, (this->actualPages + firstPageOffset + (this->cols - 1)) / this->cols);
+		this->rows = std::max<size_t>(1ul, (this->actualPages + firstPageOffset + (this->cols - 1)) / this->cols);
 	}
 
 
