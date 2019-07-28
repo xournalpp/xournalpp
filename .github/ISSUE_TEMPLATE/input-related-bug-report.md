@@ -2,7 +2,7 @@
 name: Input related bug report
 about: Create a report to help us improve
 title: ''
-labels: Input, Bug
+labels: Input, bug
 assignees: ''
 
 ---
