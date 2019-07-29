@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-29 21:46\n"
+"PO-Revision-Date: 2019-07-29 22:06\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -2062,7 +2062,7 @@ msgstr "Как коротко (по времени) И...\n\n"
 
 #: ../ui/settings.glade:3265
 msgid "Ignore Time (ms)"
-msgstr ""
+msgstr "Время игнорирования (мс)"
 
 #: ../ui/settings.glade:3754
 msgid "Input Device"
