@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-29 16:38\n"
+"PO-Revision-Date: 2019-07-29 17:38\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -80,29 +80,29 @@ msgstr "Прикрепить файл к журналу"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:140
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr "Атрибут \"{1}\" не может быть обработан как double, значение \"{2}\""
+msgstr "Атрибут «{1}» не может быть обработан как double, значение «{2}»"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:132
 msgid "Attribute \"{1}\" could not be parsed as double, the value is NULL"
-msgstr "Атрибут \"{1}\" не может быть обработан как double, значение NULL"
+msgstr "Атрибут «{1}» не может быть обработан как double, значение NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:160
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:183
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr "Атрибут \"{1}\" не может быть обработан как int, значение \"{2}\""
+msgstr "Атрибут «{1}» не может быть обработан как int, значение «{2}»"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:152
 msgid "Attribute \"{1}\" could not be parsed as int, the value is NULL"
-msgstr "Атрибут \"{1}\" не может быть обработан как int, значение NULL"
+msgstr "Атрибут «{1}» не может быть обработан как int, значение NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:205
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:228
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr "Атрибут \"{1}\" не может быть обработан как size_t, значение \"{2}\""
+msgstr "Атрибут «{1}» не может быть обработан как size_t, значение «{2}»"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:197
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is NULL"
-msgstr "Атрибут \"{1}\" не может быть обработан как size_t, значение NULL"
+msgstr "Атрибут «{1}» не может быть обработан как size_t, значение NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:70
 msgid "Attribute color not set!"
@@ -309,7 +309,7 @@ msgstr "Не удалось записать фон \"{1}\", {2}"
 
 #: ../src/control/xojfile/SaveHandler.cpp:411
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr ""
+msgstr "Не удалось записать фон «{1}». Тем не менее, продолжаем."
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:109
 msgid "Create new layer"
@@ -428,7 +428,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:97
 msgid "Drawing Type - don't change"
-msgstr ""
+msgstr "Тип рисунка - не изменять"
 
 #: ../src/undo/TextBoxUndoAction.cpp:52
 msgid "Edit text"
