@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-29 17:56\n"
+"PO-Revision-Date: 2019-07-29 18:15\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -346,7 +346,7 @@ msgstr "Удалить"
 
 #: ../src/control/XournalMain.cpp:138
 msgid "Delete Logfile"
-msgstr "Удалить файл лога"
+msgstr "Удалить лог-файл"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:453
 msgid "Delete current page"
@@ -372,7 +372,7 @@ msgstr ""
 
 #: ../src/control/jobs/BaseExportJob.cpp:46
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr ""
+msgstr "Не перезаписывайте фоновый PDF! Это приведёт к ошибкам!"
 
 #: ../src/control/Control.cpp:2902
 msgid "Document file was removed."
@@ -380,7 +380,7 @@ msgstr "Файл документа был удален."
 
 #: ../src/control/xojfile/LoadHandler.cpp:298
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr ""
+msgstr "Документ не завершён (его конец, вероятно, обрезан)"
 
 #: ../src/model/Document.cpp:389 ../src/model/Document.cpp:399
 msgid "Document not loaded! ({1}), {2}"
@@ -494,8 +494,8 @@ msgstr "Ошибка: {1}"
 #: ../src/control/XournalMain.cpp:162
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
-msgstr "Файл лога ошибок не может быть удалён. Вы должны сделать это вручную.\n"
-"Файл лога: {1}"
+msgstr "Лог-файл ошибок не может быть удалён. Вы должны сделать это вручную.\n"
+"Лог-файл: {1}"
 
 #: ../src/control/jobs/BaseExportJob.cpp:24
 msgid "Export PDF"
@@ -739,11 +739,11 @@ msgstr "Открыть изображение"
 
 #: ../src/control/XournalMain.cpp:136
 msgid "Open Logfile"
-msgstr "Открыть файл лога"
+msgstr "Открыть лог-файл"
 
 #: ../src/control/XournalMain.cpp:137
 msgid "Open Logfile directory"
-msgstr "Открыть папку с файлами логов"
+msgstr "Открыть папку с лог-файлами"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:16
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:392
@@ -852,7 +852,7 @@ msgstr "Воспроизвести объект"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:23
 msgid "Predefined"
-msgstr ""
+msgstr "Предопределённый"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Presentation mode"
@@ -1055,7 +1055,7 @@ msgstr "Остановить"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
 #: ../src/undo/RecognizerUndoAction.cpp:101
 msgid "Stroke recognizer"
-msgstr ""
+msgstr "Распознавание линий"
 
 #: ../src/util/CrashHandler.cpp:51
 msgid "Successfully saved document to \"{1}\""
@@ -1113,7 +1113,7 @@ msgstr "Фоновый PDF не найден."
 
 #: ../src/control/xojfile/LoadHandler.cpp:155
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr "Файл не является допустимым .xopp-файлом (отсутствует mimetype): \"{1}\""
+msgstr "Файл не является допустимым .xopp-файлом (отсутствует mimetype): «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:163
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
@@ -1137,11 +1137,11 @@ msgstr "Последнее имя файла лога: {1}"
 
 #: ../src/control/XournalMain.cpp:123
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Xournal++ создал лог-файлы ошибок. Пожалуйста, отправьте сообщение об ошибке, чтобы мы могли это исправить."
 
 #: ../src/control/XournalMain.cpp:122
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Xournal++ создал лог-файл ошибок. Пожалуйста, отправьте сообщение об ошибке, чтобы мы могли это исправить."
 
 #: ../src/util/XojMsgBox.cpp:102
 msgid "There was an error displaying help: {1}"
