@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-29 13:49\n"
+"PO-Revision-Date: 2019-07-29 16:38\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -952,7 +952,7 @@ msgstr "Ошибка сохранения файла: {1}"
 
 #: ../src/undo/ScaleUndoAction.cpp:73
 msgid "Scale"
-msgstr ""
+msgstr "Маштабирование"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Search"
@@ -1428,7 +1428,7 @@ msgstr "текст"
 
 #: ../src/util/DeviceListHelper.cpp:143
 msgid "touchpad"
-msgstr ""
+msgstr "touchpad"
 
 #: ../src/util/DeviceListHelper.cpp:139
 msgid "touchscreen"
@@ -1436,7 +1436,7 @@ msgstr "сенсорный экран"
 
 #: ../src/util/DeviceListHelper.cpp:148
 msgid "trackpoint"
-msgstr ""
+msgstr "trackpoint"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:314
 msgid "whiteout"
