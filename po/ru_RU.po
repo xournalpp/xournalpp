@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-29 18:15\n"
+"PO-Revision-Date: 2019-07-29 18:37\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -918,7 +918,7 @@ msgstr "В линейку"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Ruled with vertical line"
-msgstr ""
+msgstr "В линейку с полями"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 msgid "Ruler"
@@ -1045,7 +1045,7 @@ msgstr "Xournal++ в данный момент не может открыват�
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Staves"
-msgstr ""
+msgstr "Нотный стан"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Stop"
@@ -1460,7 +1460,7 @@ msgstr "xoj-preview-extractor: файл «{1}» не является .xoj-фа�
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:102
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr ""
+msgstr "xoj-preview-extractor: предпросмотр и страница не найдены, может быть неверный файл?"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:93
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
@@ -1536,7 +1536,8 @@ msgstr "%a\t\tСокращенное название дня недели (на�
 #: ../ui/settings.glade:3341
 msgid "... AND How much time must have passed since last stroke.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr ""
+msgstr "... И сколько времени должно пройти с момента последнего штриха.\n\n"
+"<i>Рекомендуется: 500 мс</i>"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1644,7 +1645,7 @@ msgstr "<i>Если вы откроете PDF и рядом с ним есть X
 
 #: ../ui/settings.glade:1444
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
-msgstr ""
+msgstr "<i>Если ваше оборудование не поддерживает распознавание руки, Xournal++ может отключить сенсорный экран, когда перо находится рядом с экраном.</i>"
 
 #: ../ui/settings.glade:1092
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
@@ -1652,7 +1653,7 @@ msgstr "<i>Чувствительность к нажатию позволяет
 
 #: ../ui/settings.glade:2695
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
-msgstr ""
+msgstr "<i>Разместите линейку на экране и перемещайте ползунок до тех пор, пока обе линейки не совпадут.</i>"
 
 #: ../ui/settings.glade:3494
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
@@ -2049,7 +2050,8 @@ msgstr "Параметры _маркера"
 #: ../ui/settings.glade:3298
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "Насколько короткий (длина в мм) штрих И...\n\n"
+"<i>Рекомендуется: 1 мм</i>"
 
 #: ../ui/settings.glade:3278
 msgid "How short (time)  AND...\n\n"
