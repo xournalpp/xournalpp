@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-29 18:37\n"
+"PO-Revision-Date: 2019-07-29 18:47\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1877,7 +1877,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr ""
+msgstr "Перетащите компоненты отсюда на панель инструментов и обратно."
 
 #: ../ui/main.glade:1364
 msgid "Draw _Line"
@@ -2636,7 +2636,7 @@ msgstr "_Следующая страница"
 
 #: ../ui/main.glade:465
 msgid "_Pair Pages"
-msgstr ""
+msgstr "_Парные страницы"
 
 #: ../ui/main.glade:1233
 msgid "_Pen"
