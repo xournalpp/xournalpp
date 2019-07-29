@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-29 21:21\n"
+"PO-Revision-Date: 2019-07-29 21:46\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1101,7 +1101,7 @@ msgstr "Текст не найден, поиск на всех страница�
 
 #: ../src/control/Control.cpp:1182
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr ""
+msgstr "Конфигурация панели инструментов \"{1}\" предопределена. Создать копию для редактирования?"
 
 #: ../src/control/Control.cpp:2346
 msgid "The attached background PDF could not be found."
