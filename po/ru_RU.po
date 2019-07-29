@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-29 12:32\n"
+"PO-Revision-Date: 2019-07-29 12:39\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -339,7 +339,7 @@ msgstr "Удалить"
 
 #: ../src/control/XournalMain.cpp:138
 msgid "Delete Logfile"
-msgstr ""
+msgstr "Удалить файл лога"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:453
 msgid "Delete current page"
@@ -727,11 +727,11 @@ msgstr "Открыть изображение"
 
 #: ../src/control/XournalMain.cpp:136
 msgid "Open Logfile"
-msgstr ""
+msgstr "Открыть файл лога"
 
 #: ../src/control/XournalMain.cpp:137
 msgid "Open Logfile directory"
-msgstr ""
+msgstr "Открыть папку с файлами логов"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:16
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:392
@@ -1624,7 +1624,7 @@ msgstr "<i>Если документ уже сохранен, вы можете 
 
 #: ../ui/settings.glade:2849
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
-msgstr ""
+msgstr "<i>Если вы добавите дополнительное пространство рядом со страницами, вы сможете выбрать область экрана, на которой хотите работать.</i>"
 
 #: ../ui/settings.glade:522
 msgid "<i>If you open a PDF and there is a Xournal file with the same name it will open the xoj file.</i>"
@@ -1964,7 +1964,7 @@ msgstr "Прозрачность заливки"
 
 #: ../ui/main.glade:2260
 msgid "Find next occurrence of the search string"
-msgstr ""
+msgstr "Найти следующее вхождение искомой строки"
 
 #: ../ui/main.glade:2238
 msgid "Find previous occurrence of the search string"
