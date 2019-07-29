@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-29 18:47\n"
+"PO-Revision-Date: 2019-07-29 18:56\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -473,7 +473,7 @@ msgstr "Ошибка при чтении PDF: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:663
 msgid "Error reading width of a stroke: {1}"
-msgstr ""
+msgstr "Ошибка чтения ширины штриха: {1}"
 
 #: ../src/control/jobs/ImageExport.cpp:143
 msgid "Error save image #1"
@@ -886,11 +886,11 @@ msgstr "Удалить PDF фон"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:198
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr ""
+msgstr "Инструмент удален с панели инструментов {1} ID {2}"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:194
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr ""
+msgstr "Инструмент {1} удалён с панели инструментов {2} ID {3}"
 
 #: ../src/util/XojMsgBox.cpp:82
 msgid "Replace"
@@ -2056,7 +2056,8 @@ msgstr "Насколько короткий (длина в мм) штрих И..
 #: ../ui/settings.glade:3278
 msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "Как коротко (по времени) И...\n\n"
+"<i>Рекомендуется: 150 мс</i>"
 
 #: ../ui/settings.glade:3265
 msgid "Ignore Time (ms)"
