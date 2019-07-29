@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-29 17:46\n"
+"PO-Revision-Date: 2019-07-29 17:56\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1117,15 +1117,15 @@ msgstr "Файл не является допустимым .xopp-файлом (
 
 #: ../src/control/xojfile/LoadHandler.cpp:163
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr "Файл не является допустимым .xopp-файлом (неверный mimetype): \"{1}\""
+msgstr "Файл не является допустимым .xopp-файлом (неверный mimetype): «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:172
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr "Файл не является допустимым .xopp-файлом (версия отсутствует): \"{1}\""
+msgstr "Файл не является допустимым .xopp-файлом (версия отсутствует): «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:186
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr "Файл не является допустимым .xopp-файлом (строка версии недействительна): \"{1}\""
+msgstr "Файл не является допустимым .xopp-файлом (строка версии недействительна): «{1}»"
 
 #: ../src/control/LatexController.cpp:368
 msgid "The formula is empty when rendered or invalid."
@@ -1452,11 +1452,11 @@ msgstr "xoj-preview-extractor: вызов с INPUT.xoj OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:97
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr "xoj-preview-extractor: файл \"{1}\" не содержит предпросмотра"
+msgstr "xoj-preview-extractor: файл «{1}» не содержит предпросмотра"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:89
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr "xoj-preview-extractor: файл \"{1}\" не является .xoj-файлом"
+msgstr "xoj-preview-extractor: файл «{1}» не является .xoj-файлом"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:102
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
@@ -1464,11 +1464,11 @@ msgstr ""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:93
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr "xoj-preview-extractor: не удалось открыть файл ввода \"{1}\""
+msgstr "xoj-preview-extractor: не удалось открыть файл ввода «{1}»"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:109
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr "xoj-preview-extractor: не удалось открыть файл вывода \"{1}\""
+msgstr "xoj-preview-extractor: не удалось открыть файл вывода «{1}»"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:118
 msgid "xoj-preview-extractor: successfully extracted"
