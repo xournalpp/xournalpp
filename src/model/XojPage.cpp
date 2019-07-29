@@ -67,7 +67,7 @@ void XojPage::addLayer(Layer* layer)
 	XOJ_CHECK_TYPE(XojPage);
 
 	this->layer.push_back(layer);
-	this->currentLayer = size_t_npos;
+	this->currentLayer = npos;
 }
 
 void XojPage::insertLayer(Layer* layer, int index)
@@ -96,7 +96,7 @@ void XojPage::removeLayer(Layer* layer)
 			break;
 		}
 	}
-	this->currentLayer = size_t_npos;
+	this->currentLayer = npos;
 }
 
 void XojPage::setSelectedLayerId(int id)
@@ -125,7 +125,7 @@ int XojPage::getSelectedLayerId()
 {
 	XOJ_CHECK_TYPE(XojPage);
 
-	if (this->currentLayer == size_t_npos)
+	if (this->currentLayer == npos)
 	{
 		this->currentLayer = this->layer.size();
 	}
@@ -261,7 +261,7 @@ void XojPage::setBackgroundType(PageType bgType)
 
 	if (!bgType.isPdfPage())
 	{
-		this->pdfBackgroundPage = size_t_npos;
+		this->pdfBackgroundPage = npos;
 	}
 	if (!bgType.isImagePage())
 	{

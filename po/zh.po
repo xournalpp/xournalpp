@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-07 09:58+0000\n"
-"PO-Revision-Date: 2019-07-07 10:02\n"
+"POT-Creation-Date: 2019-07-25 01:51+0000\n"
+"PO-Revision-Date: 2019-07-25 01:56\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -19,12 +19,14 @@ msgstr ""
 #: ../src/control/XournalMain.cpp:580
 msgid "\n\n"
 "Will now attempt to run without this file."
-msgstr ""
+msgstr "\n\n"
+"将尝试在不使用此文件的情况下运行。"
 
 #: ../src/control/XournalMain.cpp:560
 msgid "\n"
 "Will now attempt to run without this file."
-msgstr ""
+msgstr "\n"
+"将尝试在不使用此文件的情况下运行。"
 
 #: ../src/gui/MainWindow.cpp:837
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -33,11 +35,11 @@ msgstr "页，共{1}页"
 
 #: ../src/control/settings/Settings.cpp:109
 msgid "%F-Note-%H-%M"
-msgstr ""
+msgstr "%F-Note-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:119
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr ""
+msgstr "<b>没有找到设备。可能出错了，要提交 bug 报告吗？</b>"
 
 #: ../src/control/XournalMain.cpp:576
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -46,11 +48,16 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr ""
+msgstr "<span foreground='red' size='x-large'>缺失必要的用户界面文件：\n"
+"<b>{1}</b></span>\n"
+"无法在任何位置找到。\n"
+"  不在相对路径下\n"
+"  不在工作目录下\n"
+"  不在 {2}"
 
 #: ../src/control/XournalMain.cpp:317
 msgid "Absolute path for the audio files playback"
-msgstr ""
+msgstr "音频文件的绝对路径"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:466
 msgid "Add/Edit Tex"
@@ -62,11 +69,11 @@ msgstr "所有文件"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:257
 msgid "Apply to all pages"
-msgstr ""
+msgstr "应用到所有页面"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:246
 msgid "Apply to current page"
-msgstr ""
+msgstr "应用到当前页面"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:30
 #: ../src/control/stockdlg/XojOpenDlg.cpp:154
@@ -93,11 +100,11 @@ msgstr "变量\"{1\"}不能为整数，其值为NULL"
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:205
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:228
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr ""
+msgstr "属性 \"{1}\" 无法被解析为 size_t, 其值为 \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:197
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is NULL"
-msgstr ""
+msgstr "属性 \"{1}\" 无法被解析为 size_t, 其值为 NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:70
 msgid "Attribute color not set!"
@@ -106,19 +113,20 @@ msgstr "颜色未设置"
 #: ../src/control/AudioController.cpp:152
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "未设置音频文件夹！录音功能将无法使用！\n"
+"请在“偏好设置 > 音频录制”选项中设置音频文件夹路径。"
 
 #: ../src/control/Control.cpp:264
 msgid "Autosave failed with an error: {1}"
-msgstr ""
+msgstr "自动保存失败，错误信息为：{1}"
 
 #: ../src/control/Control.cpp:226
 msgid "Autosave renamed from {1} to {2}"
-msgstr ""
+msgstr "自动保存时已由 {1} 重命名为 {2}"
 
 #: ../src/control/jobs/AutosaveJob.cpp:60
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "正在自动保存为 {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Back"
@@ -155,7 +163,7 @@ msgstr "改变字体"
 
 #: ../src/undo/FillUndoAction.cpp:117
 msgid "Change stroke fill"
-msgstr ""
+msgstr "更改笔划填充"
 
 #: ../src/undo/SizeUndoAction.cpp:139
 msgid "Change stroke width"
@@ -175,7 +183,7 @@ msgstr "内容"
 msgid "Copy"
 msgstr "拷贝"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:30
+#: ../src/control/pagetype/PageTypeHandler.cpp:32
 msgid "Copy current"
 msgstr "拷贝选中内容"
 
@@ -187,62 +195,64 @@ msgstr "拷贝一页"
 msgid "Could not create backup! (The file was created from an older Xournal version)"
 msgstr "未能产生备份文件！(此文件应为老版本Xournal所建)"
 
-#: ../src/util/Util.cpp:112
+#: ../src/util/Util.cpp:120
 msgid "Could not create folder: {1}"
-msgstr ""
+msgstr "无法创建文件夹：{1}"
 
 #: ../src/control/LatexController.cpp:106
 msgid "Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
-msgstr ""
+msgstr "无法在系统 PATH 路径下找到 kpsewhich; 请安装 kpsewhich 并将其加入到 PATH路径中。"
 
 #: ../src/control/LatexController.cpp:82
 msgid "Could not find pdflatex in PATH.\n"
 "Please install pdflatex first and make sure it's in the PATH."
-msgstr ""
+msgstr "无法在系统 PATH 路径下找到 pdflatex.\n"
+"请先安装 dflatex 并确保其位于 PATH 路径中。"
 
 #: ../src/control/LatexController.cpp:111
 msgid "Could not find the LaTeX package 'standalone'.\n"
 "Please install standalone and make sure it's accessible by your LaTeX installation."
-msgstr ""
+msgstr "找不到 LaTeX 包 “standalone”。\n"
+"请安装 standalone，并确保你的 LaTeX 可以用到这个包。"
 
 #: ../src/control/LatexController.cpp:470
 msgid "Could not load LaTeX PDF file"
-msgstr ""
+msgstr "无法加载 LaTeX PDF 文件"
 
 #: ../src/control/LatexController.cpp:453
 msgid "Could not load LaTeX PDF file, File Error: {1}"
-msgstr ""
+msgstr "无法加载 LaTeX PDF 文件，文件错误： {1}"
 
 #: ../src/control/LatexController.cpp:461
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr ""
+msgstr "无法加载 LaTeX PDF 文件: {1}"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:18
+#: ../src/control/pagetype/PageTypeHandler.cpp:19
 msgid "Could not load pagetemplates.ini file"
-msgstr ""
+msgstr "无法加载 pagempempui.ini 文件"
 
-#: ../src/control/xojfile/LoadHandler.cpp:988
+#: ../src/control/xojfile/LoadHandler.cpp:989
 msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr ""
+msgstr "无法打开附件: {1}. 错误消息: 无法读取文件"
 
-#: ../src/control/xojfile/LoadHandler.cpp:997
+#: ../src/control/xojfile/LoadHandler.cpp:998
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr ""
+msgstr "无法打开附件: {1}. 错误消息: 无法写入文件"
 
-#: ../src/control/xojfile/LoadHandler.cpp:967
-#: ../src/control/xojfile/LoadHandler.cpp:1295
-#: ../src/control/xojfile/LoadHandler.cpp:1315
+#: ../src/control/xojfile/LoadHandler.cpp:968
+#: ../src/control/xojfile/LoadHandler.cpp:1296
+#: ../src/control/xojfile/LoadHandler.cpp:1316
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr ""
+msgstr "无法打开附件: {1}. 错误消息: 没有提供有效的文件大小"
 
-#: ../src/control/xojfile/LoadHandler.cpp:957
-#: ../src/control/xojfile/LoadHandler.cpp:975
-#: ../src/control/xojfile/LoadHandler.cpp:1286
-#: ../src/control/xojfile/LoadHandler.cpp:1303
+#: ../src/control/xojfile/LoadHandler.cpp:958
+#: ../src/control/xojfile/LoadHandler.cpp:976
+#: ../src/control/xojfile/LoadHandler.cpp:1287
+#: ../src/control/xojfile/LoadHandler.cpp:1304
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr ""
+msgstr "无法打开附件: {1}. 错误消息: {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:197
+#: ../src/control/xojfile/LoadHandler.cpp:198
 msgid "Could not open file: \"{1}\""
 msgstr "不能打开文件\"{1}\""
 
@@ -258,8 +268,8 @@ msgid "Could not parse general toolbar.ini file: {1}\n"
 msgstr "未能解析一般文件toolbar.ini: {1}\n"
 "工具条将不可用"
 
-#: ../src/control/xojfile/LoadHandler.cpp:441
-#: ../src/control/xojfile/LoadHandler.cpp:469
+#: ../src/control/xojfile/LoadHandler.cpp:442
+#: ../src/control/xojfile/LoadHandler.cpp:470
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "未能读入图像：{1}。错误提示为：{2}"
 
@@ -271,7 +281,7 @@ msgstr "未能重复操作\"{1}\"\n"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:210
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr ""
+msgstr "无法从工具栏 {1} 位置 {2} 移除工具项"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:205
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
@@ -295,17 +305,17 @@ msgid "Could not undo \"{1}\"\n"
 msgstr "未能撤销操作\"{1}\"\n"
 "有错误发生***请提交一个错误报告***"
 
-#: ../src/control/xojfile/SaveHandler.cpp:290
+#: ../src/control/xojfile/SaveHandler.cpp:291
 msgid "Could not write background \"{1}\", {2}"
 msgstr "未能写上背景\"{1}\", {2}"
 
-#: ../src/control/xojfile/SaveHandler.cpp:410
+#: ../src/control/xojfile/SaveHandler.cpp:411
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "未能写上背景\"{1}\"，不管啦继续哦..."
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:109
 msgid "Create new layer"
-msgstr ""
+msgstr "创建新层"
 
 #: ../src/gui/dialog/FormatDialog.cpp:72
 msgid "Custom"
@@ -313,11 +323,11 @@ msgstr "设置"
 
 #: ../src/control/jobs/CustomExportJob.cpp:18
 msgid "Custom Export"
-msgstr ""
+msgstr "自定义导出"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "自定义工具栏"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:38
 msgid "Customized"
@@ -346,7 +356,7 @@ msgstr "删除当前页"
 
 #: ../src/control/XournalMain.cpp:188
 msgid "Delete file"
-msgstr ""
+msgstr "删除文件"
 
 #: ../src/undo/RemoveLayerUndoAction.cpp:41
 msgid "Delete layer"
@@ -370,7 +380,7 @@ msgstr ""
 msgid "Document file was removed."
 msgstr "文档已删除。"
 
-#: ../src/control/xojfile/LoadHandler.cpp:297
+#: ../src/control/xojfile/LoadHandler.cpp:298
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "文档文件不完整"
 
@@ -378,7 +388,7 @@ msgstr "文档文件不完整"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "文档未加载！({1}), {2}"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:26
+#: ../src/control/pagetype/PageTypeHandler.cpp:28
 msgid "Dotted"
 msgstr ""
 
@@ -458,12 +468,12 @@ msgstr "打开文件\"{1}\"出错"
 msgid "Error opening file: \"{1}\""
 msgstr "打开文件\"{1}\"出错"
 
-#: ../src/control/xojfile/LoadHandler.cpp:564
-#: ../src/control/xojfile/LoadHandler.cpp:591
+#: ../src/control/xojfile/LoadHandler.cpp:565
+#: ../src/control/xojfile/LoadHandler.cpp:592
 msgid "Error reading PDF: {1}"
 msgstr "读入PDF出错：{1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:662
+#: ../src/control/xojfile/LoadHandler.cpp:663
 msgid "Error reading width of a stroke: {1}"
 msgstr "读入笔划粗细出错：{1}"
 
@@ -493,7 +503,7 @@ msgstr "错误日志未能删除，请手工处理。\n"
 msgid "Export PDF"
 msgstr "输出为PDF"
 
-#: ../src/util/Util.cpp:133 ../src/util/Util.cpp:153
+#: ../src/util/Util.cpp:141 ../src/util/Util.cpp:158
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "未能打开文件，请手动操作：\n"
@@ -539,7 +549,7 @@ msgstr ""
 msgid "Go to top layer"
 msgstr ""
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:25
+#: ../src/control/pagetype/PageTypeHandler.cpp:27
 msgid "Graph"
 msgstr "图形"
 
@@ -571,7 +581,7 @@ msgstr ""
 msgid "Highlighter"
 msgstr "高亮"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/control/pagetype/PageTypeHandler.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Image"
 msgstr "图片"
@@ -639,10 +649,6 @@ msgstr "浅蓝"
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:139
 msgid "Light Green"
 msgstr "浅绿"
-
-#: ../src/control/pagetype/PageTypeHandler.cpp:23
-msgid "Lined"
-msgstr "画线的"
 
 #: ../src/gui/PageView.cpp:863
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:103
@@ -784,11 +790,11 @@ msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:25
 msgid "PNG graphics"
-msgstr ""
+msgstr "PNG 图形"
 
 #: ../src/control/jobs/CustomExportJob.cpp:26
 msgid "PNG with transparent background"
-msgstr ""
+msgstr "具有透明背景的 PNG"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:67
 msgid "Page"
@@ -816,7 +822,7 @@ msgstr "页码"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Paired pages"
-msgstr ""
+msgstr "双页配对"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 #: ../src/undo/AddUndoAction.cpp:108
@@ -825,14 +831,14 @@ msgstr "粘贴"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Pause / Play"
-msgstr ""
+msgstr "暂停/播放"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:290
 msgid "Pen"
 msgstr "画笔"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:22
+#: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Plain"
 msgstr "空白"
 
@@ -840,7 +846,7 @@ msgstr "空白"
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:89
 msgid "Play Object"
-msgstr ""
+msgstr "播放对象"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:23
 msgid "Predefined"
@@ -852,11 +858,11 @@ msgstr "演讲模式"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Record Audio / Stop Recording"
-msgstr ""
+msgstr "录制音频/停止录制"
 
 #: ../src/control/Control.cpp:984
 msgid "Recorder could not be started."
-msgstr ""
+msgstr "无法启动录音器。"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:142
@@ -884,11 +890,11 @@ msgstr ""
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr ""
 
-#: ../src/util/XojMsgBox.cpp:77
+#: ../src/util/XojMsgBox.cpp:82
 msgid "Replace"
-msgstr ""
+msgstr "替换"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1335
+#: ../src/control/xojfile/LoadHandler.cpp:1336
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
@@ -908,13 +914,17 @@ msgstr ""
 msgid "Ruled"
 msgstr "定标"
 
+#: ../src/control/pagetype/PageTypeHandler.cpp:25
+msgid "Ruled with vertical line"
+msgstr ""
+
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 msgid "Ruler"
 msgstr "标尺"
 
 #: ../src/control/jobs/CustomExportJob.cpp:27
 msgid "SVG graphics"
-msgstr ""
+msgstr "SVG图形"
 
 #: ../src/control/jobs/CustomExportJob.cpp:28
 msgid "SVG with transparent background"
@@ -929,7 +939,7 @@ msgstr "保存"
 msgid "Save As..."
 msgstr ""
 
-#: ../src/control/Control.cpp:2697 ../src/gui/dialog/PageTemplateDialog.cpp:111
+#: ../src/control/Control.cpp:2697 ../src/gui/dialog/PageTemplateDialog.cpp:110
 msgid "Save File"
 msgstr "保存文件"
 
@@ -974,11 +984,11 @@ msgstr "选择区域"
 msgid "Select another PDF"
 msgstr "选择其他PDF"
 
-#: ../src/util/XojMsgBox.cpp:76
+#: ../src/util/XojMsgBox.cpp:81
 msgid "Select another name"
 msgstr ""
 
-#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:143
+#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:140
 msgid "Select background color"
 msgstr ""
 
@@ -1029,6 +1039,10 @@ msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
 msgstr ""
 
+#: ../src/control/pagetype/PageTypeHandler.cpp:26
+msgid "Staves"
+msgstr ""
+
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Stop"
 msgstr ""
@@ -1052,7 +1066,7 @@ msgstr "支撑文件"
 msgid "Text"
 msgstr "文本"
 
-#: ../src/gui/SearchBar.cpp:70
+#: ../src/gui/SearchBar.cpp:96
 #, c-format
 msgid "Text %i times found on this page"
 msgstr "文本在本页面出现%i次"
@@ -1061,23 +1075,23 @@ msgstr "文本在本页面出现%i次"
 msgid "Text changes"
 msgstr "文本改变"
 
-#: ../src/gui/SearchBar.cpp:66
+#: ../src/gui/SearchBar.cpp:92
 msgid "Text found on this page"
 msgstr "本页面上找到文本"
 
-#: ../src/gui/SearchBar.cpp:150 ../src/gui/SearchBar.cpp:206
+#: ../src/gui/SearchBar.cpp:176 ../src/gui/SearchBar.cpp:232
 msgid "Text found once on page {1}"
 msgstr "文本在第{1}页上找到"
 
-#: ../src/gui/SearchBar.cpp:151 ../src/gui/SearchBar.cpp:207
+#: ../src/gui/SearchBar.cpp:177 ../src/gui/SearchBar.cpp:233
 msgid "Text found {1} times on page {2}"
 msgstr "文本在第{2}页上找到{1}次"
 
-#: ../src/gui/SearchBar.cpp:77
+#: ../src/gui/SearchBar.cpp:103
 msgid "Text not found"
 msgstr "文本未找到"
 
-#: ../src/gui/SearchBar.cpp:164 ../src/gui/SearchBar.cpp:220
+#: ../src/gui/SearchBar.cpp:190 ../src/gui/SearchBar.cpp:246
 msgid "Text not found, searched on all pages"
 msgstr "找遍所有页面未找到文本"
 
@@ -1093,25 +1107,25 @@ msgstr "附加的背景PDF未找到。"
 msgid "The background PDF could not be found."
 msgstr "背景PDF未找到。"
 
-#: ../src/control/xojfile/LoadHandler.cpp:154
+#: ../src/control/xojfile/LoadHandler.cpp:155
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:162
+#: ../src/control/xojfile/LoadHandler.cpp:163
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:171
+#: ../src/control/xojfile/LoadHandler.cpp:172
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr ""
+msgstr "文件不是有效的 .xopp 文件 (版本缺失): \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:185
+#: ../src/control/xojfile/LoadHandler.cpp:186
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr ""
+msgstr "文件不是有效的 .xopp 文件 (版本字符串损坏): \"{1}\""
 
 #: ../src/control/LatexController.cpp:368
 msgid "The formula is empty when rendered or invalid."
-msgstr ""
+msgstr "公式渲染后为空或无效"
 
 #: ../src/control/XournalMain.cpp:130
 msgid "The most recent log file name: {1}"
@@ -1125,9 +1139,9 @@ msgstr "发现Xournal++的错误日志文件，请发送一个错误报告，将
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "发现Xournal++的错误日志文件，请发送一个错误报告，将会被修正。"
 
-#: ../src/util/XojMsgBox.cpp:92
+#: ../src/util/XojMsgBox.cpp:102
 msgid "There was an error displaying help: {1}"
-msgstr ""
+msgstr "显示帮助时出错: {1}"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:90
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:526
@@ -1136,7 +1150,7 @@ msgstr "粗"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Thickness - don't change"
-msgstr ""
+msgstr "厚度 - 不改变"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:524
@@ -1145,12 +1159,12 @@ msgstr "细"
 
 #: ../src/control/Control.cpp:2902
 msgid "This document is not saved yet."
-msgstr ""
+msgstr "此文档尚未保存。"
 
 #: ../src/control/PageBackgroundChangeController.cpp:185
 #: ../src/control/tools/ImageHandler.cpp:59
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "无法加载此图像。错误消息: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Toggle fullscreen"
@@ -1158,7 +1172,7 @@ msgstr "全屏"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:62
 msgid "Tool - don't change"
-msgstr ""
+msgstr "工具 - 不更改"
 
 #: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:166
 msgid "Toolbar found: {1}"
@@ -1170,7 +1184,7 @@ msgstr "工具条"
 
 #: ../src/util/CrashHandler.cpp:37
 msgid "Trying to emergency save the current open document…"
-msgstr ""
+msgstr "尝试紧急保存当前打开的文档…"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:399
 #: ../src/undo/UndoRedoHandler.cpp:250
@@ -1181,37 +1195,37 @@ msgstr "撤销"
 msgid "Undo: "
 msgstr "撤销："
 
-#: ../src/control/xojfile/LoadHandler.cpp:354
+#: ../src/control/xojfile/LoadHandler.cpp:355
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "意外的根标签: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:387
+#: ../src/control/xojfile/LoadHandler.cpp:388
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "文档中意外的标签: \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:638
+#: ../src/control/xojfile/LoadHandler.cpp:639
 msgid "Unknown background type: {1}"
-msgstr ""
+msgstr "未知背景类型: {1}"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "未知颜色值 “{1}”"
 
-#: ../src/control/xojfile/LoadHandler.cpp:573
+#: ../src/control/xojfile/LoadHandler.cpp:574
 msgid "Unknown domain type: {1}"
-msgstr ""
+msgstr "未知的域类型: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:288
+#: ../src/control/xojfile/LoadHandler.cpp:289
 msgid "Unknown parser error"
-msgstr ""
+msgstr "未知的解析器错误"
 
-#: ../src/control/xojfile/LoadHandler.cpp:486
+#: ../src/control/xojfile/LoadHandler.cpp:487
 msgid "Unknown pixmap::domain type: {1}"
-msgstr ""
+msgstr "未知的 pixmap::domain 类型: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:757
+#: ../src/control/xojfile/LoadHandler.cpp:758
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr ""
+msgstr "未知笔划类型: \"{1}\"，将假设为笔"
 
 #: ../src/control/Control.cpp:2775
 msgid "Unsaved Document"
@@ -1230,7 +1244,7 @@ msgstr "垂直间距"
 msgid "White"
 msgstr "白色"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:31
+#: ../src/control/pagetype/PageTypeHandler.cpp:33
 msgid "With PDF background"
 msgstr "使用PDF背景"
 
@@ -1238,21 +1252,21 @@ msgstr "使用PDF背景"
 msgid "Write text"
 msgstr "写文本"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1157
+#: ../src/control/xojfile/LoadHandler.cpp:1158
 msgid "Wrong count of points ({1})"
-msgstr ""
+msgstr "点数 ({1}) 错误"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1171
+#: ../src/control/xojfile/LoadHandler.cpp:1172
 msgid "Wrong number of points, got {1}, expected {2}"
-msgstr ""
+msgstr "点数错误，读到 {1}，预期 {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:283
+#: ../src/control/xojfile/LoadHandler.cpp:284
 msgid "XML Parser error: {1}"
-msgstr ""
+msgstr "XML 解析器错误: {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "Xournal (兼容)"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:74
 msgid "Xournal files"
@@ -1260,16 +1274,16 @@ msgstr "Xournal文件"
 
 #: ../src/control/XournalMain.cpp:183
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "Xournal++ 上次崩溃了。您想恢复最后一个编辑的文件？"
 
 #: ../src/control/Control.cpp:2709 ../src/control/stockdlg/XojOpenDlg.cpp:84
 msgid "Xournal++ files"
-msgstr ""
+msgstr "Xournal++ 文件"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:94
-#: ../src/gui/dialog/PageTemplateDialog.cpp:118
+#: ../src/gui/dialog/PageTemplateDialog.cpp:117
 msgid "Xournal++ template"
-msgstr ""
+msgstr "Xournal++ 模板"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:145
@@ -1314,7 +1328,7 @@ msgstr "原始尺寸"
 #: ../src/control/Control.cpp:2700 ../src/control/jobs/BaseExportJob.cpp:25
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:17
-#: ../src/gui/dialog/PageTemplateDialog.cpp:112
+#: ../src/gui/dialog/PageTemplateDialog.cpp:111
 msgid "_Cancel"
 msgstr ""
 
@@ -1324,7 +1338,7 @@ msgid "_Open"
 msgstr ""
 
 #: ../src/control/Control.cpp:2702 ../src/control/jobs/BaseExportJob.cpp:26
-#: ../src/gui/dialog/PageTemplateDialog.cpp:113
+#: ../src/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr ""
 
@@ -1421,7 +1435,7 @@ msgstr ""
 msgid "whiteout"
 msgstr "涂白"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1170
+#: ../src/control/xojfile/LoadHandler.cpp:1171
 msgid "xoj-File: {1}"
 msgstr ""
 
@@ -1453,7 +1467,7 @@ msgstr ""
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
 
-#: ../src/util/Util.cpp:102
+#: ../src/util/Util.cpp:110
 msgid "xournalpp-{1}"
 msgstr ""
 
@@ -1463,7 +1477,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2616 ../ui/settings.glade:2627
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../ui/settings.glade:418
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1738,7 +1752,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2089
 msgid "Colors"
-msgstr ""
+msgstr "颜色"
 
 #: ../ui/main.glade:1134
 msgid "Configure Page Template"
@@ -2269,7 +2283,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3379
 msgid "Settings:"
-msgstr ""
+msgstr "设置："
 
 #: ../ui/settings.glade:3388
 msgid "Show Floating Toolbox"
@@ -2694,7 +2708,7 @@ msgstr ""
 
 #: ../ui/settings.glade:286
 msgid "minutes"
-msgstr ""
+msgstr "分钟"
 
 #: ../ui/settings.glade:2941 ../ui/settings.glade:2952
 #: ../ui/settings.glade:3200

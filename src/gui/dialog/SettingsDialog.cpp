@@ -312,12 +312,11 @@ void SettingsDialog::load()
 	this->setDpi(settings->getDisplayDpi());
 	gtk_range_set_value(GTK_RANGE(slider), dpi);
 
-	GdkRGBA color;
-	Util::apply_rgb_togdkrgba(color, settings->getBorderColor());
+	GdkRGBA color = Util::rgb_to_GdkRGBA(settings->getBorderColor());
 	gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorBorder")), &color);
-	Util::apply_rgb_togdkrgba(color, settings->getBackgroundColor());
+	color = Util::rgb_to_GdkRGBA(settings->getBackgroundColor());
 	gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorBackground")), &color);
-	Util::apply_rgb_togdkrgba(color, settings->getSelectionColor());
+	color = Util::rgb_to_GdkRGBA(settings->getSelectionColor());
 	gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorSelection")), &color);
 
 

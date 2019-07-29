@@ -50,7 +50,7 @@ LinkDestination::LinkDestination()
 {
 	XOJ_INIT_TYPE(LinkDestination);
 
-	this->page = size_t_npos;
+	this->page = npos;
 	this->changeLeft = false;
 	this->changeZoom = false;
 	this->changeTop = false;

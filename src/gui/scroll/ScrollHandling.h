@@ -31,8 +31,8 @@ public:
 
 	virtual void setLayoutSize(int width, int height) = 0;
 
-	virtual int getPrefferedWidth() = 0;
-	virtual int getPrefferedHeight() = 0;
+	virtual int getPreferredWidth() = 0;
+	virtual int getPreferredHeight() = 0;
 
 	virtual void translate(cairo_t* cr, double& x1, double& x2, double& y1, double& y2) = 0;
 	virtual void translate(double& x, double& y) = 0;

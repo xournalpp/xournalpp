@@ -56,7 +56,7 @@ void ScrollHandler::goToFirstPage()
 	}
 }
 
-void ScrollHandler::scrollToPage(PageRef page, double top)
+void ScrollHandler::scrollToPage(const PageRef& page, double top)
 {
 	XOJ_CHECK_TYPE(ScrollHandler);
 
@@ -86,7 +86,7 @@ void ScrollHandler::scrollToPage(size_t page, double top)
 	win->getXournal()->scrollTo(page, top);
 }
 
-void ScrollHandler::scrollToSpinPange()
+void ScrollHandler::scrollToSpinPage()
 {
 	XOJ_CHECK_TYPE(ScrollHandler);
 
@@ -116,8 +116,8 @@ void ScrollHandler::scrollToAnnotatedPage(bool next)
 
 	Document* doc = this->control->getDocument();
 
-	for (size_t i = this->control->getCurrentPageNo() + step; i != size_t_npos && i < doc->getPageCount();
-		 i = ((i == 0 && step == -1) ? size_t_npos : i + step))
+	for (size_t i = this->control->getCurrentPageNo() + step; i != npos && i < doc->getPageCount();
+	     i = ((i == 0 && step == -1) ? npos : i + step))
 	{
 		if (doc->getPage(i)->isAnnotated())
 		{
@@ -147,5 +147,5 @@ void ScrollHandler::pageChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(ScrollHandler);
 
-	scrollToSpinPange();
+	scrollToSpinPage();
 }

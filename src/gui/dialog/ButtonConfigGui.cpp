@@ -177,8 +177,7 @@ void ButtonConfigGui::loadSettings()
 	}
 
 
-	GdkRGBA color;
-	Util::apply_rgb_togdkrgba(color, cfg->color);
+	GdkRGBA color = Util::rgb_to_GdkRGBA(cfg->color);
 	gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(colorButton), &color);
 
 	gtk_combo_box_set_active(GTK_COMBO_BOX(this->cbDrawingType), cfg->drawingType);
