@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-29 19:07\n"
+"PO-Revision-Date: 2019-07-29 21:06\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -2357,7 +2357,7 @@ msgstr "Скорость для шага масштабирования"
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
-msgstr ""
+msgstr "Стандартный"
 
 #: ../ui/settings.glade:3662 ../ui/settings.glade:3699
 msgid "Storage Folder"
@@ -2622,7 +2622,7 @@ msgstr "_Слева направо"
 
 #: ../ui/main.glade:858
 msgid "_Manage"
-msgstr ""
+msgstr "_Управление панелями инструментов"
 
 #: ../ui/main.glade:956
 msgid "_Navigation"
