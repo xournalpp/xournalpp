@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-27 00:01\n"
+"PO-Revision-Date: 2019-07-29 11:59\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -310,7 +310,7 @@ msgstr "Создать новый слой"
 
 #: ../src/gui/dialog/FormatDialog.cpp:72
 msgid "Custom"
-msgstr ""
+msgstr "Пользовательский"
 
 #: ../src/control/jobs/CustomExportJob.cpp:18
 msgid "Custom Export"
