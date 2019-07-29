@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-29 12:19\n"
+"PO-Revision-Date: 2019-07-29 12:32\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -288,7 +288,7 @@ msgstr "Не удалось сохранить .tex файл: {1}"
 
 #: ../src/control/LatexController.cpp:154
 msgid "Could not start pdflatex: {1} (exit code: {2})"
-msgstr "Не удалось запустить pdflatex: {1} (код выхода: {2})"
+msgstr "Не удалось запустить pdflatex: {1} (код возврата: {2})"
 
 #: ../src/undo/UndoRedoHandler.cpp:123
 msgid "Could not undo \"{1}\"\n"
@@ -1391,7 +1391,7 @@ msgstr "мышь"
 
 #: ../src/control/LatexController.cpp:317
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "В pdflatex неожиданно произошла ошибка: {1} (код возврата: {2})"
 
 #: ../src/util/DeviceListHelper.cpp:122
 msgid "pen"
@@ -1440,7 +1440,7 @@ msgstr "xoj-preview-extractor: вызов с INPUT.xoj OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:97
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr ""
+msgstr "xoj-preview-extractor: файл \"{1}\" не содержит предпросмотра"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:89
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
