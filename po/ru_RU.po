@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-29 17:38\n"
+"PO-Revision-Date: 2019-07-29 17:46\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -169,7 +169,7 @@ msgstr "Изменить ширину штриха"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:98
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr "Неизвестный цвет \"{1}\" (не определен в списке цветов по умолчанию)!"
+msgstr "Неизвестный цвет «{1}» (не определен в списке цветов по умолчанию)!"
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:276
 msgid "Contents"
@@ -252,7 +252,7 @@ msgstr "Не удалось открыть вложение: {1}. Сообщен
 
 #: ../src/control/xojfile/LoadHandler.cpp:198
 msgid "Could not open file: \"{1}\""
-msgstr "Не удалось открыть файл: \"{1}\""
+msgstr "Не удалось открыть файл: «{1}»"
 
 #: ../src/gui/MainWindow.cpp:91
 msgid "Could not parse custom toolbar.ini file: {1}\n"
@@ -274,8 +274,8 @@ msgstr "Не удалось прочитать изображение: {1}. Со
 #: ../src/undo/UndoRedoHandler.cpp:157
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr "Не удалось вернуть \"{1}\"\n"
-"Что-то пошло не так… Пожалуйста, напишите отчет об ошибке…"
+msgstr "Не удалось вернуть «{1}»\n"
+"Что-то пошло не так… Пожалуйста, напишите отчет об ошибке……"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:210
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
@@ -287,7 +287,7 @@ msgstr "Не удалось удалить элемент инструмента
 
 #: ../src/control/Control.cpp:254
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr "Не удалось переименовать файл автосохранения из \"{1}\" в \"{2}\": {3}"
+msgstr "Не удалось переименовать файл автосохранения из «{1}» в «{2}»: {3}"
 
 #: ../src/control/LatexController.cpp:133
 msgid "Could not save .tex file: {1}"
@@ -300,12 +300,12 @@ msgstr "Не удалось запустить pdflatex: {1} (код возвр�
 #: ../src/undo/UndoRedoHandler.cpp:123
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr "Не удалось отменить \"{1}\"\n"
+msgstr "Не удалось отменить «{1}»\n"
 "Что-то пошло не так… Пожалуйста, напишите отчет об ошибке…"
 
 #: ../src/control/xojfile/SaveHandler.cpp:291
 msgid "Could not write background \"{1}\", {2}"
-msgstr "Не удалось записать фон \"{1}\", {2}"
+msgstr "Не удалось записать фон «{1}», {2}"
 
 #: ../src/control/xojfile/SaveHandler.cpp:411
 msgid "Could not write background \"{1}\". Continuing anyway."
@@ -451,20 +451,20 @@ msgstr "Ластик"
 #: ../src/control/Control.cpp:2578
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
-msgstr "Ошибка аннотации PDF файла \"{1}\"\n"
+msgstr "Ошибка аннотации PDF файла «{1}»\n"
 "{2}"
 
 #: ../src/gui/GladeGui.cpp:24
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr "Ошибка загрузки glade файла \"{1}\" (попробуйте загрузить \"{2}\")"
+msgstr "Ошибка загрузки glade файла «{1}» (попробуйте загрузить «{2}»)"
 
 #: ../src/control/Control.cpp:2376
 msgid "Error opening file \"{1}\""
-msgstr "Ошибка при открытии файла \"{1}\""
+msgstr "Ошибка при открытии файла «{1}»"
 
 #: ../src/util/OutputStream.cpp:35
 msgid "Error opening file: \"{1}\""
-msgstr "Ошибка при открытии файла: \"{1}\""
+msgstr "Ошибка при открытии файла: «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:565
 #: ../src/control/xojfile/LoadHandler.cpp:592
@@ -1059,7 +1059,7 @@ msgstr ""
 
 #: ../src/util/CrashHandler.cpp:51
 msgid "Successfully saved document to \"{1}\""
-msgstr "Документ успешно сохранен в \"{1}\""
+msgstr "Документ успешно сохранен в «{1}»"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:134
 msgid "Supported files"
@@ -1205,7 +1205,7 @@ msgstr "Неожиданный корневой тег: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:388
 msgid "Unexpected tag in document: \"{1}\""
-msgstr "Неожиданный тег в документе: \"{1}\""
+msgstr "Неожиданный тег в документе: «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:639
 msgid "Unknown background type: {1}"
@@ -1213,7 +1213,7 @@ msgstr "Неизвестный тип фона: {1}"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Unknown color value \"{1}\""
-msgstr "Неизвестное значение цвета \"{1}\""
+msgstr "Неизвестное значение цвета «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:574
 msgid "Unknown domain type: {1}"
