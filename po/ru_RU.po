@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-29 13:09\n"
+"PO-Revision-Date: 2019-07-29 13:34\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -46,7 +46,12 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr ""
+msgstr "<span foreground='red' size='x-large'>Отсутствует необходимый UI файл:\n"
+"<b>{1}</b></span>\n"
+"Не удалось найти его нигде.\n"
+"  Не относительный\n"
+"  Не в рабочей директории\n"
+"  Не в {2}"
 
 #: ../src/control/XournalMain.cpp:317
 msgid "Absolute path for the audio files playback"
@@ -106,7 +111,8 @@ msgstr "Цвет атрибута не установлен!"
 #: ../src/control/AudioController.cpp:152
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Папка для аудио не установлена! Запись не будет работать!\n"
+"Пожалуйста, задайте папку для аудиозаписей в разделе «Настройки > Запись аудио»"
 
 #: ../src/control/Control.cpp:264
 msgid "Autosave failed with an error: {1}"
@@ -450,7 +456,7 @@ msgstr "Ошибка аннотации PDF файла \"{1}\"\n"
 
 #: ../src/gui/GladeGui.cpp:24
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr ""
+msgstr "Ошибка загрузки glade файла \"{1}\" (попробуйте загрузить \"{2}\")"
 
 #: ../src/control/Control.cpp:2376
 msgid "Error opening file \"{1}\""
@@ -488,7 +494,8 @@ msgstr "Ошибка: {1}"
 #: ../src/control/XournalMain.cpp:162
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
-msgstr ""
+msgstr "Файл лога ошибок не может быть удалён. Вы должны сделать это вручную.\n"
+"Файл лога: {1}"
 
 #: ../src/control/jobs/BaseExportJob.cpp:24
 msgid "Export PDF"
@@ -497,7 +504,8 @@ msgstr "Экспорт PDF"
 #: ../src/util/Util.cpp:141 ../src/util/Util.cpp:158
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr ""
+msgstr "Файл не может быть открыт. Вы должны сделать это вручную:\n"
+"URL: {1}"
 
 #: ../src/control/Control.cpp:2306
 msgid "Filename: {1}"
@@ -665,7 +673,10 @@ msgid "Missing the needed UI file:\n"
 "{1}\n"
 " .app corrupted?\n"
 "Path: {2}"
-msgstr ""
+msgstr "Отсутствует необходимый UI файл:\n"
+"{1}\n"
+" .app поврежден?\n"
+"Путь: {2}"
 
 #: ../src/undo/MoveUndoAction.cpp:20
 msgid "Move"
@@ -1315,7 +1326,7 @@ msgstr "Отдалить"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:106
 msgid "Zoom slider"
-msgstr ""
+msgstr "Ползунок масштабирования"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Zoom to 100%"
@@ -1675,7 +1686,7 @@ msgstr "<i>Можете переключать видимость панели �
 
 #: ../ui/settings.glade:1748
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
-msgstr ""
+msgstr "<i>Используйте пинч жесты для масштабирования страниц журнала.</i>"
 
 #: ../ui/settings.glade:1377
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
@@ -1838,7 +1849,7 @@ msgstr "Выключить"
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
-msgstr ""
+msgstr "Отключить рисование для этого устройства"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
@@ -1929,11 +1940,11 @@ msgstr "Включить новую систему ввода (требуетс�
 
 #: ../ui/settings.glade:1760
 msgid "Enable zoom gestures (requires restart)"
-msgstr ""
+msgstr "Включить масштабирование жестами (требуется перезапуск)"
 
 #: ../ui/texdialog.glade:72
 msgid "Enter / edit LaTeX Text"
-msgstr "Введите / изменить текст LaTeX"
+msgstr "Введите / отредактируйте текст LaTeX"
 
 #: ../ui/main.glade:1605
 msgid "Eraser Optio_ns"
@@ -2286,7 +2297,7 @@ msgstr "Выбрать изображение"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr ""
+msgstr "Выбрать PDF страницу"
 
 #: ../ui/settings.glade:2442
 msgid "Select toolbar:"
@@ -2459,7 +2470,7 @@ msgstr "Приближение"
 
 #: ../ui/settings.glade:1782
 msgid "Zoom Gestures"
-msgstr ""
+msgstr "Масштабирование жестами"
 
 #: ../ui/settings.glade:2642
 msgid "Zoom Speed"
