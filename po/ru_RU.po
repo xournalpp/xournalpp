@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-29 12:58\n"
+"PO-Revision-Date: 2019-07-29 13:09\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1693,7 +1693,7 @@ msgstr "О программе Xournal++"
 
 #: ../ui/settings.glade:3411
 msgid "Action on Tool Tap"
-msgstr ""
+msgstr "Действие по нажатию на инструмент"
 
 #: ../ui/settings.glade:2902
 msgid "Add additional horizontal space of"
@@ -1913,7 +1913,7 @@ msgstr "Включить чувствительность к нажатию"
 
 #: ../ui/settings.glade:3247
 msgid "Enable Tap action"
-msgstr ""
+msgstr "Включить действие по нажатию"
 
 #: ../ui/settings.glade:789
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
@@ -1921,7 +1921,7 @@ msgstr "Включить рисование вне окна <i>(рисовани
 
 #: ../ui/settings.glade:1459
 msgid "Enable internal Hand Recognition"
-msgstr ""
+msgstr "Включить внутреннее распознавание руки"
 
 #: ../ui/settings.glade:636
 msgid "Enable new input system (Requires restart)"
@@ -1933,7 +1933,7 @@ msgstr ""
 
 #: ../ui/texdialog.glade:72
 msgid "Enter / edit LaTeX Text"
-msgstr ""
+msgstr "Введите / изменить текст LaTeX"
 
 #: ../ui/main.glade:1605
 msgid "Eraser Optio_ns"
