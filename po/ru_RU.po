@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-26 23:55+0000\n"
-"PO-Revision-Date: 2019-07-29 12:39\n"
+"PO-Revision-Date: 2019-07-29 12:58\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -37,7 +37,7 @@ msgstr "%F-Заметка-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:119
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr ""
+msgstr "<b>Устройства не найдены. Должно быть что-то не так - может отправить отчёт об ошибке?</b>"
 
 #: ../src/control/XournalMain.cpp:576
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -114,7 +114,7 @@ msgstr "Ошибка автосохранения: {1}"
 
 #: ../src/control/Control.cpp:226
 msgid "Autosave renamed from {1} to {2}"
-msgstr ""
+msgstr "Автосохранение переименовано из {1} в {2}"
 
 #: ../src/control/jobs/AutosaveJob.cpp:60
 msgid "Autosaving to {1}"
@@ -251,7 +251,8 @@ msgstr "Не удалось открыть файл: \"{1}\""
 #: ../src/gui/MainWindow.cpp:91
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr ""
+msgstr "Не удалось разобрать пользовательский файл toolbar.ini: {1}\n"
+"Панели инструментов не будут доступны"
 
 #: ../src/gui/MainWindow.cpp:81
 msgid "Could not parse general toolbar.ini file: {1}\n"
@@ -886,7 +887,7 @@ msgstr "Заменить"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1336
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr ""
+msgstr "Запрошенный временный файл не найден для вложения {1}"
 
 #: ../src/control/XournalMain.cpp:189
 msgid "Restore file"
@@ -1121,7 +1122,7 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:130
 msgid "The most recent log file name: {1}"
-msgstr ""
+msgstr "Последнее имя файла лога: {1}"
 
 #: ../src/control/XournalMain.cpp:123
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
@@ -1266,7 +1267,7 @@ msgstr "Xournal файлы"
 
 #: ../src/control/XournalMain.cpp:183
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "В последний раз программа Xournal++ аварийно завершилась. Хотите восстановить последний редактируемый файл?"
 
 #: ../src/control/Control.cpp:2709 ../src/control/stockdlg/XojOpenDlg.cpp:84
 msgid "Xournal++ files"
@@ -1729,7 +1730,7 @@ msgstr "Авторы:"
 
 #: ../ui/settings.glade:1515
 msgid "Autodetect"
-msgstr ""
+msgstr "Автоопределение"
 
 #: ../ui/settings.glade:559
 msgid "Autoloading Journals"
@@ -1757,7 +1758,7 @@ msgstr "Цвет рамки"
 
 #: ../ui/settings.glade:1993
 msgid "Border color for current page and other selections"
-msgstr ""
+msgstr "Цвет рамки для текущей страницы и других выделений"
 
 #: ../ui/about.glade:128
 msgid "Built on:"
@@ -1892,7 +1893,7 @@ msgstr "Включить"
 
 #: ../ui/settings.glade:3160
 msgid "Enable  with determination radius of "
-msgstr ""
+msgstr "Включить с радиусом определения "
 
 #: ../ui/settings.glade:537
 msgid "Enable Autoloading of Journals"
