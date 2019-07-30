@@ -72,7 +72,7 @@ void XournalMain::initLocalisation() {
 }
 
 void XournalMain::checkForErrorlog() {
-    Path errorDir = Util::getConfigSubfolder(ERRORLOG_DIR);
+    Path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
     GDir* home = g_dir_open(errorDir.c_str(), 0, nullptr);
 
     if (home == nullptr) {
@@ -120,7 +120,7 @@ void XournalMain::checkForErrorlog() {
 
     int res = gtk_dialog_run(GTK_DIALOG(dialog));
 
-    Path errorlogPath = Util::getConfigSubfolder(ERRORLOG_DIR);
+    Path errorlogPath = Util::getCacheSubfolder(ERRORLOG_DIR);
     errorlogPath /= errorList[0];
     if (res == 1)  // Send Bugreport
     {

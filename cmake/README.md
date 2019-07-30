@@ -30,7 +30,6 @@ Here you can find complete list of Xournal++ CMake flags (sorted by categories).
 | ------------------------------ | ---------------- | -----------
 | `DEV_CALL_LOG`                 | OFF              | Call log (can take loooot of disk space and IO!)
 | `DEV_CHECK_GTK3_COMPAT` *[A]*  | OFF              | Adds a few compiler flags to check basic GTK3 upgradeability support (still compiles for GTK2!)
-| `DEV_CONFIG_DIR` *[A]*         | .xournalpp       | Xournal++ config dir, relative to user's home dir
 | `DEV_ENABLE_GCOV` *[A]*        | OFF              | Build with gcov support
 | `DEV_MEMORY_CHECKING`          | ON               | Memory checking
 | `DEV_MEMORY_LEAK_CHECKING`     | ON               | Memory leak checking
@@ -39,7 +38,7 @@ Here you can find complete list of Xournal++ CMake flags (sorted by categories).
 | `DEV_PRINT_CONFIG_FILE` *[A]*  | print-config.ini | Print config file name
 | `DEV_SETTINGS_XML_FILE` *[A]*  | settings.xml     | Settings file name
 | `DEV_TOOLBAR_CONFIG` *[A]*     | toolbar.ini      | Toolbar config file name
-| `DEV_ERRORLOG_DIR` *[A]*       | ""               | Directory where errorlogfiles will be placed
+| `DEV_ERRORLOG_DIR` *[A]*       | errorlogs        | Directory where errorlogfiles will be placed
 
 
 ## `EXT` – add dependency basing on precompiled deb packages (UNIX only)
