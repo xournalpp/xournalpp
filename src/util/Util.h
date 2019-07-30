@@ -39,7 +39,11 @@ void openFileWithDefaultApplicaion(const Path& filename);
 void openFileWithFilebrowser(const Path& filename);
 
 Path getConfigSubfolder(const Path& subfolder = "");
+Path getCacheSubfolder(const Path& subfolder = "");
+Path getDataSubfolder(const Path& subfolder = "");
+
 Path getConfigFile(const Path& relativeFileName = "");
+Path getCacheFile(const Path& relativeFileName = "");
 
 Path getTmpDirSubfolder(const Path& subfolder = "");
 

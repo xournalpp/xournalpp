@@ -84,9 +84,7 @@ Control::Control(GladeSearchpath* gladeSearchPath) {
     this->lastGroup = GROUP_NOGROUP;
     this->lastEnabled = false;
 
-    Path name = Path(g_get_home_dir());
-    name /= CONFIG_DIR;
-    name /= SETTINGS_XML_FILE;
+    Path name = Util::getConfigFile(SETTINGS_XML_FILE);
     this->settings = new Settings(name);
     this->settings->load();
 

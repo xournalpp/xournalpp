@@ -81,8 +81,24 @@ auto Util::getAutosaveFilename() -> Path {
 }
 
 auto Util::getConfigSubfolder(const Path& subfolder) -> Path {
-    Path p(g_get_home_dir());
-    p /= CONFIG_DIR;
+    Path p(g_get_user_config_dir());
+    p /= g_get_prgname();
+    p /= subfolder;
+
+    return Util::ensureFolderExists(p);
+}
+
+auto Util::getCacheSubfolder(const Path& subfolder) -> Path {
+    Path p(g_get_user_cache_dir());
+    p /= g_get_prgname();
+    p /= subfolder;
+
+    return Util::ensureFolderExists(p);
+}
+
+auto Util::getDataSubfolder(const Path& subfolder) -> Path {
+    Path p(g_get_user_data_dir());
+    p /= g_get_prgname();
     p /= subfolder;
 
     return Util::ensureFolderExists(p);
@@ -90,6 +106,12 @@ auto Util::getConfigSubfolder(const Path& subfolder) -> Path {
 
 auto Util::getConfigFile(const Path& relativeFileName) -> Path {
     Path p = getConfigSubfolder(relativeFileName.getParentPath());
+    p /= relativeFileName.getFilename();
+    return p;
+}
+
+auto Util::getCacheFile(const Path& relativeFileName) -> Path {
+    Path p = getCacheSubfolder(relativeFileName.getParentPath());
     p /= relativeFileName.getFilename();
     return p;
 }

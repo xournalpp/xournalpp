@@ -12,11 +12,6 @@
 #pragma once
 
 /**
- * Xournal++ config dir, relative to user's home dir
- */
-#define CONFIG_DIR "@DEV_CONFIG_DIR@"
-
-/**
  * Toolbar config file name
  */
 #define TOOLBAR_CONFIG "@DEV_TOOLBAR_CONFIG@"
