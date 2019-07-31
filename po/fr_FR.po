@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-07-31 20:16\n"
+"PO-Revision-Date: 2019-07-31 20:25\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1696,41 +1696,43 @@ msgstr "<i>Basculer la visibilité de la barre de menus avec F10</i>"
 
 #: ../ui/settings.glade:1748
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
-msgstr ""
+msgstr "<i>Utilisez le geste pincer pour zoomer les pages de journal.</i>"
 
 #: ../ui/settings.glade:1377
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
-msgstr ""
+msgstr "<i>Vous pouvez configurer des périphériques, non identifiés par GTK comme écran tactile, pour vous comporter comme s'ils étaient un.</i>"
 
 #: ../ui/about.glade:73
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
-msgstr ""
+msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+"<i>La prochaine génération</i>"
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
-msgstr ""
+msgstr "À propos de Xournal++"
 
 #: ../ui/settings.glade:3411
 msgid "Action on Tool Tap"
-msgstr ""
+msgstr "Action en cliquant sur l'outil"
 
 #: ../ui/settings.glade:2902
 msgid "Add additional horizontal space of"
-msgstr ""
+msgstr "Ajouter un espace horizontal supplémentaire de"
 
 #: ../ui/settings.glade:2880
 msgid "Add additional vertical space of"
-msgstr ""
+msgstr "Ajouter un espace vertical supplémentaire de"
 
 #: ../ui/exportSettings.glade:142
 msgid "All pages"
-msgstr ""
+msgstr "Toutes les pages"
 
 #: ../ui/settings.glade:3377
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
-msgstr ""
+msgstr "Toutes les trois conditions doivent être remplies avant que le trait ne soit ignoré.\n"
+"Il doit être court en temps et en longueur et nous ne pouvons pas avoir ignoré un autre trait récemment."
 
 #: ../ui/settings.glade:3811
 msgid "Audio Devices"
@@ -1937,67 +1939,67 @@ msgstr ""
 
 #: ../ui/settings.glade:789
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
-msgstr ""
+msgstr "Activer le dessin extérieur de la fenêtre <i>(Le dessin ne s'arrêtera pas à la bordure de la fenêtre)</i>"
 
 #: ../ui/settings.glade:1459
 msgid "Enable internal Hand Recognition"
-msgstr ""
+msgstr "Activer la reconnaissance interne de la main"
 
 #: ../ui/settings.glade:636
 msgid "Enable new input system (Requires restart)"
-msgstr ""
+msgstr "Activer le nouveau système d'entrée (nécessite le redémarrage)"
 
 #: ../ui/settings.glade:1760
 msgid "Enable zoom gestures (requires restart)"
-msgstr ""
+msgstr "Activer les gestes de zoom (nécessite le redémarrage)"
 
 #: ../ui/texdialog.glade:72
 msgid "Enter / edit LaTeX Text"
-msgstr ""
+msgstr "Entrer / éditer le texte LaTeX"
 
 #: ../ui/main.glade:1605
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "Effacer Optio_ns"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
-msgstr ""
+msgstr "Type d’effaceur - ne pas changer"
 
 #: ../ui/settings.glade:670
 msgid "Experimental Input System"
-msgstr ""
+msgstr "Système d'entrée expérimental"
 
 #: ../ui/exportSettings.glade:25
 msgid "Export"
-msgstr ""
+msgstr "Exporter"
 
 #: ../ui/main.glade:250
 msgid "Export as..."
-msgstr ""
+msgstr "Exporter en tant que..."
 
 #: ../ui/main.glade:1581 ../ui/main.glade:1742
 msgid "Fi_ll"
-msgstr ""
+msgstr "Remp_lir"
 
 #: ../ui/main.glade:1591 ../ui/main.glade:1752
 msgid "Fill transparency"
-msgstr ""
+msgstr "Remplir la transparence"
 
 #: ../ui/main.glade:2260
 msgid "Find next occurrence of the search string"
-msgstr ""
+msgstr "Trouver l'occurrence suivante de la chaîne de recherche"
 
 #: ../ui/main.glade:2238
 msgid "Find previous occurrence of the search string"
-msgstr ""
+msgstr "Trouver l'occurrence précédente de la chaîne de recherche"
 
 #: ../ui/settings.glade:3007
 msgid "First Page Offset "
-msgstr ""
+msgstr "Décalage de la première page "
 
 #: ../ui/main.glade:485 ../ui/settings.glade:2376
 msgid "Fullscreen"
-msgstr ""
+msgstr "Plein écran"
 
 #: ../ui/about.glade:251
 msgid "GNU GPLv2 or later"
@@ -2195,7 +2197,7 @@ msgstr "Modèles de Page"
 
 #: ../ui/exportSettings.glade:175
 msgid "Pages:"
-msgstr ""
+msgstr "Pages :"
 
 #: ../ui/settings.glade:3039
 msgid "Paired Pages"
