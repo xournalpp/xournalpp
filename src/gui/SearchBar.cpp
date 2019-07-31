@@ -30,23 +30,22 @@ SearchBar::SearchBar(Control* control)
 
 	// TODO: When keybindings are implemented, handle previous search keybinding properly
 	GtkWidget* searchTextField = win->get("searchTextField");
-	g_signal_connect(searchTextField, "changed", G_CALLBACK(searchTextChangedCallback), this);
+	g_signal_connect(searchTextField, "search-changed", G_CALLBACK(searchTextChangedCallback), this);
 	// Enable next/previous search when pressing Enter / Shift+Enter
-	g_signal_connect(searchTextField, "activate", G_CALLBACK(+[](GtkWidget* entry, SearchBar* self) {
-		                 XOJ_CHECK_TYPE_OBJ(self, SearchBar);
-		                 self->searchNext();
-		                 gtk_widget_grab_focus(entry);
-	                 }),
-	                 this);
 	g_signal_connect(searchTextField, "key-press-event",
 	                 G_CALLBACK(+[](GtkWidget* entry, GdkEventKey* event, SearchBar* self) {
 		                 XOJ_CHECK_TYPE_OBJ(self, SearchBar);
-		                 if (event->keyval == GDK_KEY_Return && (event->state & GDK_SHIFT_MASK))
+		                 if (event->keyval == GDK_KEY_Return)
 		                 {
-			                 self->searchPrevious();
+			                 if (event->state & GDK_SHIFT_MASK)
+				                 self->searchPrevious();
+			                 else
+				                 self->searchNext();
 			                 // Grab focus again since searching will take away focus
 			                 gtk_widget_grab_focus(entry);
+			                 return true;
 		                 }
+		                 return false;
 	                 }),
 	                 this);
 
