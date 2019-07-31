@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-07-31 20:35\n"
+"PO-Revision-Date: 2019-07-31 20:50\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -824,93 +824,93 @@ msgstr "Page insérée"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:49
 msgid "Page number"
-msgstr ""
+msgstr "Numéro de page"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Paired pages"
-msgstr ""
+msgstr "Pages liées"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 #: ../src/undo/AddUndoAction.cpp:108
 msgid "Paste"
-msgstr ""
+msgstr "Coller"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Pause / Play"
-msgstr ""
+msgstr "Pause / Jouer"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:290
 msgid "Pen"
-msgstr ""
+msgstr "Stylo"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Plain"
-msgstr ""
+msgstr "Plein"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:89
 msgid "Play Object"
-msgstr ""
+msgstr "Jouer l'objet"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:23
 msgid "Predefined"
-msgstr ""
+msgstr "Prédéfini"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Presentation mode"
-msgstr ""
+msgstr "Mode présentation"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Record Audio / Stop Recording"
-msgstr ""
+msgstr "Enregistrer audio / Arrêter l'enregistrement"
 
 #: ../src/control/Control.cpp:984
 msgid "Recorder could not be started."
-msgstr ""
+msgstr "L'enregistrement n'a pas pu être démarré."
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:142
 msgid "Red"
-msgstr ""
+msgstr "Rouge"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 #: ../src/undo/UndoRedoHandler.cpp:267
 msgid "Redo"
-msgstr ""
+msgstr "Refaire"
 
 #: ../src/undo/UndoRedoHandler.cpp:262
 msgid "Redo: "
-msgstr ""
+msgstr "Refaire : "
 
 #: ../src/control/Control.cpp:2350
 msgid "Remove PDF Background"
-msgstr ""
+msgstr "Supprimer l'arrière-plan du PDF"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:198
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr ""
+msgstr "Élément d'outil supprimé de la barre d'outils {1} ID {2}"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:194
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr ""
+msgstr "Objet d'outil supprimé {1} de la barre d'outils {2} ID {3}"
 
 #: ../src/util/XojMsgBox.cpp:82
 msgid "Replace"
-msgstr ""
+msgstr "Remplacer"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1336
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr ""
+msgstr "Le fichier temporaire demandé n'a pas été trouvé pour la pièce jointe {1}"
 
 #: ../src/control/XournalMain.cpp:189
 msgid "Restore file"
-msgstr ""
+msgstr "Restaurer le fichier"
 
 #: ../src/undo/RotateUndoAction.cpp:74
 msgid "Rotation"
-msgstr ""
+msgstr "Rotation"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Rotation Snapping"
@@ -2201,7 +2201,7 @@ msgstr "Pages :"
 
 #: ../ui/settings.glade:3039
 msgid "Paired Pages"
-msgstr "Pages paires"
+msgstr "Pages liées"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2596,143 +2596,143 @@ msgstr "_Fichier"
 
 #: ../ui/main.glade:967
 msgid "_First Page"
-msgstr ""
+msgstr "_Première page"
 
 #: ../ui/main.glade:989
 msgid "_Goto Page"
-msgstr ""
+msgstr "_Aller à la page"
 
 #: ../ui/main.glade:1847
 msgid "_Help"
-msgstr ""
+msgstr "_Aide"
 
 #: ../ui/main.glade:1257
 msgid "_Highlighter"
-msgstr ""
+msgstr "_Surligneur"
 
 #: ../ui/main.glade:524
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Horizontal"
 
 #: ../ui/main.glade:1281
 msgid "_Image"
-msgstr ""
+msgstr "_Image"
 
 #: ../ui/main.glade:1092
 msgid "_Journal"
-msgstr ""
+msgstr "_Journal"
 
 #: ../ui/main.glade:1011
 msgid "_Last Page"
-msgstr ""
+msgstr "_Dernière page"
 
 #: ../ui/main.glade:553
 msgid "_Left To Right"
-msgstr ""
+msgstr "_Gauche à droite"
 
 #: ../ui/main.glade:858
 msgid "_Manage"
-msgstr ""
+msgstr "_Gérer"
 
 #: ../ui/main.glade:956
 msgid "_Navigation"
-msgstr ""
+msgstr "_Navigation"
 
 #: ../ui/main.glade:1039
 msgid "_Next Layer"
-msgstr ""
+msgstr "_Couche suivante"
 
 #: ../ui/main.glade:1000
 msgid "_Next Page"
-msgstr ""
+msgstr "_Page suivante"
 
 #: ../ui/main.glade:465
 msgid "_Pair Pages"
-msgstr ""
+msgstr "_Pages liées"
 
 #: ../ui/main.glade:1233
 msgid "_Pen"
-msgstr ""
+msgstr "_Stylo"
 
 #: ../ui/main.glade:1822
 msgid "_Plugin"
-msgstr ""
+msgstr "_Plugin"
 
 #: ../ui/main.glade:475
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "Mode de _présentation"
 
 #: ../ui/main.glade:1028
 msgid "_Previous Layer"
-msgstr ""
+msgstr "Calque _précédente"
 
 #: ../ui/main.glade:978
 msgid "_Previous Page"
-msgstr ""
+msgstr "Page _précédente"
 
 #: ../ui/main.glade:564
 msgid "_Right To Left"
-msgstr ""
+msgstr "_Droite à gauche"
 
 #: ../ui/main.glade:1309
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "_Identificateur de forme"
 
 #: ../ui/main.glade:1269
 msgid "_Text"
-msgstr ""
+msgstr "_Texte"
 
 #: ../ui/main.glade:1222
 msgid "_Tools"
-msgstr ""
+msgstr "_Outils"
 
 #: ../ui/main.glade:1050
 msgid "_Top Layer"
-msgstr ""
+msgstr "Calque du _haut"
 
 #: ../ui/main.glade:582
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "_Haut au bas"
 
 #: ../ui/main.glade:535
 msgid "_Vertical"
-msgstr ""
+msgstr "_Vertical"
 
 #: ../ui/main.glade:1417
 msgid "_Vertical Space"
-msgstr ""
+msgstr "Espace _vertical"
 
 #: ../ui/main.glade:454
 msgid "_View"
-msgstr ""
+msgstr "_Vue"
 
 #: ../ui/main.glade:1677
 msgid "_delete strokes"
-msgstr ""
+msgstr "_supprimer les traits"
 
 #: ../ui/main.glade:1481 ../ui/main.glade:1616 ../ui/main.glade:1703
 msgid "_fine"
-msgstr ""
+msgstr "_mince"
 
 #: ../ui/main.glade:1492 ../ui/main.glade:1627 ../ui/main.glade:1714
 msgid "_medium"
-msgstr ""
+msgstr "_moyen"
 
 #: ../ui/main.glade:1655
 msgid "_standard"
-msgstr ""
+msgstr "_standard"
 
 #: ../ui/main.glade:1503 ../ui/main.glade:1638 ../ui/main.glade:1725
 msgid "_thick"
-msgstr ""
+msgstr "_épais"
 
 #: ../ui/main.glade:1470
 msgid "_very fine"
-msgstr ""
+msgstr "_très fin"
 
 #: ../ui/main.glade:1666
 msgid "_whiteout"
-msgstr ""
+msgstr "_blanc"
 
 #: ../ui/pageTemplate.glade:158
 msgid "change"
