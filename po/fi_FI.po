@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-07-31 23:15\n"
+"PO-Revision-Date: 2019-07-31 23:57\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -122,7 +122,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Back"
-msgstr ""
+msgstr "Takaisin"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:22
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:270
@@ -350,7 +350,7 @@ msgstr "Poista taso"
 
 #: ../src/control/Control.cpp:2908
 msgid "Discard"
-msgstr ""
+msgstr "Hylkää"
 
 #: ../src/control/Control.cpp:2275
 msgid "Do not open Autosave files. They may will be overwritten!\n"
@@ -456,7 +456,7 @@ msgstr "Virhe tiedoston avaamisessa: \"{1}\""
 #: ../src/control/xojfile/LoadHandler.cpp:565
 #: ../src/control/xojfile/LoadHandler.cpp:592
 msgid "Error reading PDF: {1}"
-msgstr ""
+msgstr "Virhe luettaessa PDF:tä: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:663
 msgid "Error reading width of a stroke: {1}"
@@ -522,7 +522,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Go to page"
-msgstr ""
+msgstr "Siirry sivulle"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Go to previous layer"
@@ -562,7 +562,7 @@ msgstr "Piilota kaikki"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:65
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:463
 msgid "Highlighter"
-msgstr ""
+msgstr "Tussikynä"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:467
@@ -801,7 +801,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:49
 msgid "Page number"
-msgstr ""
+msgstr "Sivunumero"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Paired pages"
@@ -837,7 +837,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Presentation mode"
-msgstr ""
+msgstr "Esitystila"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Record Audio / Stop Recording"
@@ -883,7 +883,7 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:189
 msgid "Restore file"
-msgstr ""
+msgstr "Palauta tiedosto"
 
 #: ../src/undo/RotateUndoAction.cpp:74
 msgid "Rotation"
@@ -990,7 +990,7 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:135
 msgid "Send Bugreport"
-msgstr ""
+msgstr "Lähetä virheraportti"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:53
 msgid "Separator"
@@ -1763,7 +1763,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2067
 msgid "Dark Theme (requires restart)"
-msgstr ""
+msgstr "Tumma teema (vaatii uudelleenkäynnistyksen)"
 
 #: ../ui/settings.glade:491
 msgid "Default Save Name"
@@ -1954,7 +1954,7 @@ msgstr ""
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
-msgstr ""
+msgstr "Siirry sivulle"
 
 #: ../ui/settings.glade:3085
 msgid "Grid snapping tolerance"
@@ -2064,7 +2064,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3318
 msgid "Max Length (mm)"
-msgstr ""
+msgstr "Maksimi pituus (mm)"
 
 #: ../ui/settings.glade:820
 msgid "Merge button events with stylus tip events\n"
@@ -2222,7 +2222,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3843
 msgid "Sample Rate"
-msgstr ""
+msgstr "Näytteenottotaajuus"
 
 #: ../ui/settings.glade:2309
 msgid "Scrollbars"
@@ -2543,7 +2543,7 @@ msgstr "_Ohje"
 
 #: ../ui/main.glade:1257
 msgid "_Highlighter"
-msgstr ""
+msgstr "_Tussikynä"
 
 #: ../ui/main.glade:524
 msgid "_Horizontal"
