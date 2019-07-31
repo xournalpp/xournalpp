@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-07-31 23:09\n"
+"PO-Revision-Date: 2019-07-31 23:15\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -2141,7 +2141,7 @@ msgstr ""
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
-msgstr ""
+msgstr "Paperimuoto"
 
 #: ../ui/main.glade:1199
 msgid "Paper _Color"
@@ -2683,7 +2683,7 @@ msgstr ""
 
 #: ../ui/settings.glade:259
 msgid "every"
-msgstr ""
+msgstr "joka"
 
 #: ../ui/pageTemplate.glade:51
 msgid "load from file"
@@ -2696,7 +2696,7 @@ msgstr "minuuttia"
 #: ../ui/settings.glade:2941 ../ui/settings.glade:2952
 #: ../ui/settings.glade:3200
 msgid "pixels"
-msgstr ""
+msgstr "pikseliä"
 
 #: ../ui/settings.glade:1544
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
