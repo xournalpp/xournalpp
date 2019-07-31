@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-07-31 19:26\n"
+"PO-Revision-Date: 2019-07-31 19:43\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -254,97 +254,101 @@ msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:198
 msgid "Could not open file: \"{1}\""
-msgstr ""
+msgstr "Impossible d'ouvrir le fichier: \"{1}\""
 
 #: ../src/gui/MainWindow.cpp:91
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr ""
+msgstr "Impossible d'analyser le fichier toolbar.ini personnalisé : {1}\n"
+"Les barres d'outils ne seront pas disponibles"
 
 #: ../src/gui/MainWindow.cpp:81
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr ""
+msgstr "Impossible d'analyser le fichier général toolbar.ini : {1}\n"
+"Aucune barre d'outils ne sera disponible"
 
 #: ../src/control/xojfile/LoadHandler.cpp:442
 #: ../src/control/xojfile/LoadHandler.cpp:470
 msgid "Could not read image: {1}. Error message: {2}"
-msgstr ""
+msgstr "Impossible de lire l'image : {1}. Message d'erreur : {2}"
 
 #: ../src/undo/UndoRedoHandler.cpp:157
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "Impossible de refaire \"{1}\"\n"
+"Quelque chose s'est mal passé… Veuillez écrire un rapport de bogue…"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:210
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr ""
+msgstr "Impossible de supprimer l'élément de l'outil de la barre d'outils {1} sur la position {2}"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:205
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr ""
+msgstr "Impossible de supprimer l'élément d'outil {1} de la barre d'outils {2} sur la position {3}"
 
 #: ../src/control/Control.cpp:254
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr ""
+msgstr "Impossible de renommer le fichier d'auto-sauvegarde de \"{1}\" à \"{2}\" : {3}"
 
 #: ../src/control/LatexController.cpp:133
 msgid "Could not save .tex file: {1}"
-msgstr ""
+msgstr "Impossible d'enregistrer le fichier .tex : {1}"
 
 #: ../src/control/LatexController.cpp:154
 msgid "Could not start pdflatex: {1} (exit code: {2})"
-msgstr ""
+msgstr "Impossible de démarrer pdflatex : {1} (code de sortie : {2})"
 
 #: ../src/undo/UndoRedoHandler.cpp:123
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "Impossible d'annuler \"{1}\"\n"
+"Quelque chose s'est mal passé… Veuillez écrire un rapport de bogue…"
 
 #: ../src/control/xojfile/SaveHandler.cpp:291
 msgid "Could not write background \"{1}\", {2}"
-msgstr ""
+msgstr "Impossible d'écrire l'arrière-plan \"{1}\", {2}"
 
 #: ../src/control/xojfile/SaveHandler.cpp:411
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr ""
+msgstr "Impossible d'écrire l'arrière-plan \"{1}\". Poursuite."
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:109
 msgid "Create new layer"
-msgstr ""
+msgstr "Création d'un nouveau calque"
 
 #: ../src/gui/dialog/FormatDialog.cpp:72
 msgid "Custom"
-msgstr ""
+msgstr "Personnalisé"
 
 #: ../src/control/jobs/CustomExportJob.cpp:18
 msgid "Custom Export"
-msgstr ""
+msgstr "Export personnalisé"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "Personnaliser les barres d'outils"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:38
 msgid "Customized"
-msgstr ""
+msgstr "Personnalisé"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Cut"
-msgstr ""
+msgstr "Couper"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Default Tool"
-msgstr ""
+msgstr "Outil par défaut"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 #: ../src/undo/DeleteUndoAction.cpp:102
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: ../src/control/XournalMain.cpp:138
 msgid "Delete Logfile"
-msgstr ""
+msgstr "Supprimer le fichier journal"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:453
 msgid "Delete current page"
@@ -1109,27 +1113,27 @@ msgstr "Le PDF d'arrière-plan n'a pas pu être trouvé."
 
 #: ../src/control/xojfile/LoadHandler.cpp:155
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "Le fichier n'est pas un fichier .xopp valide (Mimetype manquant): \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:163
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "Le fichier n'est pas un fichier .xopp valide (Mimetype incorrect): \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:172
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr ""
+msgstr "Le fichier n'est pas un fichier .xopp valide (Version manquante): \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:186
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr ""
+msgstr "Le fichier n'est pas un fichier .xopp valide (Version de chaîne de caractères corrompue): \"{1}\""
 
 #: ../src/control/LatexController.cpp:368
 msgid "The formula is empty when rendered or invalid."
-msgstr ""
+msgstr "La formule est vide lorsque elle est rendue ou invalide."
 
 #: ../src/control/XournalMain.cpp:130
 msgid "The most recent log file name: {1}"
-msgstr ""
+msgstr "Le nom de fichier journal le plus récent : {1}"
 
 #: ../src/control/XournalMain.cpp:123
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
@@ -1348,136 +1352,136 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:298
 msgid "dash-/ dotted"
-msgstr ""
+msgstr "tiret-/ pointillé"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:295
 msgid "dashed"
-msgstr ""
+msgstr "tiret"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:38
 msgid "default disabled"
-msgstr ""
+msgstr "désactivé par défaut"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:38
 msgid "default enabled"
-msgstr ""
+msgstr "activé par défaut"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:315
 msgid "delete stroke"
-msgstr ""
+msgstr "supprimer le trait"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:301
 msgid "dotted"
-msgstr ""
+msgstr "pointillé"
 
 #: ../src/undo/AddUndoAction.cpp:120 ../src/undo/DeleteUndoAction.cpp:114
 msgid "elements"
-msgstr ""
+msgstr "éléments"
 
 #: ../src/util/DeviceListHelper.cpp:126
 msgid "eraser"
-msgstr ""
+msgstr "gomme"
 
 #: ../src/undo/AddUndoAction.cpp:132 ../src/undo/DeleteUndoAction.cpp:126
 msgid "image"
-msgstr ""
+msgstr "image"
 
 #: ../src/util/DeviceListHelper.cpp:135
 msgid "keyboard"
-msgstr ""
+msgstr "clavier"
 
 #: ../src/undo/AddUndoAction.cpp:135 ../src/undo/DeleteUndoAction.cpp:129
 msgid "latex"
-msgstr ""
+msgstr "latex"
 
 #: ../src/util/DeviceListHelper.cpp:118
 msgid "mouse"
-msgstr ""
+msgstr "souris"
 
 #: ../src/control/LatexController.cpp:317
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "pdflatex a rencontré une erreur : {1} (code de sortie : {2})"
 
 #: ../src/util/DeviceListHelper.cpp:122
 msgid "pen"
-msgstr ""
+msgstr "stylo"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:222
 msgid "show"
-msgstr ""
+msgstr "afficher"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:292
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:313
 msgid "standard"
-msgstr ""
+msgstr "standard"
 
 #: ../src/undo/AddUndoAction.cpp:129 ../src/undo/DeleteUndoAction.cpp:123
 msgid "stroke"
-msgstr ""
+msgstr "trait"
 
 #: ../src/undo/AddUndoAction.cpp:138 ../src/undo/DeleteUndoAction.cpp:132
 msgid "text"
-msgstr ""
+msgstr "texte"
 
 #: ../src/util/DeviceListHelper.cpp:143
 msgid "touchpad"
-msgstr ""
+msgstr "touchpad"
 
 #: ../src/util/DeviceListHelper.cpp:139
 msgid "touchscreen"
-msgstr ""
+msgstr "écran tactile"
 
 #: ../src/util/DeviceListHelper.cpp:148
 msgid "trackpoint"
-msgstr ""
+msgstr "trackpoint"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:314
 msgid "whiteout"
-msgstr ""
+msgstr "blanc"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1171
 msgid "xoj-File: {1}"
-msgstr ""
+msgstr "xoj-Fichier : {1}"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:75
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
-msgstr ""
+msgstr "xoj-preview-extractor: appeller avec INPUT.xoj OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:97
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr ""
+msgstr "xoj-preview-extractor: le fichier \"{1}\" ne contient aucun aperçu"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:89
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr ""
+msgstr "xoj-preview-extractor: le fichier \"{1}\" n'est pas un fichier .xoj"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:102
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr ""
+msgstr "xoj-preview-extractor: pas de prévisualisation et ni de page trouvée, peut-être un fichier invalide?"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:93
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor : l'ouverture du fichier d'entrée \"{1}\" a échoué"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:109
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor : l'ouverture du fichier de sortie \"{1}\" a échoué"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:118
 msgid "xoj-preview-extractor: successfully extracted"
-msgstr ""
+msgstr "extracteur-xoj-preview : extrait avec succès"
 
 #: ../src/util/Util.cpp:110
 msgid "xournalpp-{1}"
-msgstr ""
+msgstr "xournalpp-{1}"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
-msgstr ""
+msgstr " = Boîte à outils flottante (expérimental) ="
 
 #: ../ui/settings.glade:2616 ../ui/settings.glade:2627
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../ui/settings.glade:418
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
