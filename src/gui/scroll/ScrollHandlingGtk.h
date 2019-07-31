@@ -22,8 +22,8 @@ public:
 public:
 	virtual void setLayoutSize(int width, int height);
 
-	virtual int getPrefferedWidth();
-	virtual int getPrefferedHeight();
+	int getPreferredWidth() override;
+	int getPreferredHeight() override;
 
 	virtual void translate(cairo_t* cr, double& x1, double& x2, double& y1, double& y2);
 	virtual void translate(double& x, double& y);

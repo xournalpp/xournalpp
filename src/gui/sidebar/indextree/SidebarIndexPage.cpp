@@ -161,14 +161,14 @@ bool SidebarIndexPage::treeBookmarkSelected(GtkWidget* treeview, SidebarIndexPag
 
 				size_t pdfPage = dest->getPdfPage();
 
-				if (pdfPage != size_t_npos)
+				if (pdfPage != npos)
 				{
 					Document* doc = sidebar->control->getDocument();
 					doc->lock();
 					size_t page = doc->findPdfPage(pdfPage);
 					doc->unlock();
 
-					if (page == size_t_npos)
+					if (page == npos)
 					{
 						sidebar->askInsertPdfPage(pdfPage);
 					}

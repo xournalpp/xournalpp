@@ -342,7 +342,7 @@ void Control::initWindow(MainWindow* win)
 
 	XojMsgBox::setDefaultWindow(getGtkWindow());
 
-	updatePageNumbers(0, size_t_npos);
+	updatePageNumbers(0, npos);
 
 	toolHandler->eraserTypeChanged();
 
@@ -1137,9 +1137,9 @@ size_t Control::firePageSelected(PageRef page)
 	this->doc->lock();
 	size_t pageId = this->doc->indexOf(page);
 	this->doc->unlock();
-	if (pageId == size_t_npos)
+	if (pageId == npos)
 	{
-		return size_t_npos;
+		return npos;
 	}
 
 	DocumentHandler::firePageSelected(pageId);
@@ -1370,7 +1370,7 @@ void Control::deletePage()
 	}
 
 	size_t pNr = getCurrentPageNo();
-	if (pNr == size_t_npos || pNr > this->doc->getPageCount())
+	if (pNr == npos || pNr > this->doc->getPageCount())
 	{
 		// something went wrong...
 		return;
@@ -1509,7 +1509,7 @@ void Control::paperFormat()
 	}
 
 	size_t pageNo = doc->indexOf(page);
-	if (pageNo != size_t_npos && pageNo < doc->getPageCount())
+	if (pageNo != npos && pageNo < doc->getPageCount())
 	{
 		this->firePageSizeChanged(pageNo);
 	}
@@ -1571,7 +1571,7 @@ void Control::setViewPresentationMode(bool enabled)
 		bool success = zoom->updateZoomPresentationValue();
 		if (!success)
 		{
-			// TODO: Errormessage if the zoom could not be calculated
+			g_warning("Error calculating zoom value");
 			fireActionSelected(GROUP_PRESENTATION_MODE, ACTION_NOT_SELECTED);
 			return;
 		}
@@ -3028,8 +3028,8 @@ void Control::clipboardPasteImage(GdkPixbuf* img)
 	auto image = new Image();
 	image->setImage(img);
 
-	int width = gdk_pixbuf_get_width(img);
-	int height = gdk_pixbuf_get_height(img);
+	auto width = static_cast<double>(gdk_pixbuf_get_width(img)) / settings->getDisplayDpi() * 72.0;
+	auto height = static_cast<double>(gdk_pixbuf_get_height(img)) / settings->getDisplayDpi() * 72.0;
 
 	int pageNr = getCurrentPageNo();
 	if (pageNr == -1)
@@ -3039,16 +3039,16 @@ void Control::clipboardPasteImage(GdkPixbuf* img)
 
 	this->doc->lock();
 	PageRef page = this->doc->getPage(pageNr);
-	int pageWidth = page->getWidth();
-	int pageHeight = page->getHeight();
+	auto pageWidth = page->getWidth();
+	auto pageHeight = page->getHeight();
 	this->doc->unlock();
 
 	// Size: 3/4 of the page size
-	pageWidth = pageWidth * 3 / 4;
-	pageHeight = pageHeight * 3 / 4;
+	pageWidth = pageWidth * 3.0 / 4.0;
+	pageHeight = pageHeight * 3.0 / 4.0;
 
-	int scaledWidth = width;
-	int scaledHeight = height;
+	auto scaledWidth = width;
+	auto scaledHeight = height;
 
 	if (width > pageWidth)
 	{
@@ -3184,6 +3184,23 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 			selection->addElement(element.release());
 		}
 		undoRedo->addUndoAction(std::move(pasteAddUndoAction));
+
+		double x = 0;
+		double y = 0;
+		//calculate x/y of paste target, see clipboardPaste(Element* e)
+		win->getXournal()->getPasteTarget(x, y);
+
+		x = std::max(0.0, x - selection->getWidth() / 2);
+		y = std::max(0.0, y - selection->getHeight() / 2);
+
+		//calculate difference between current selection position and destination
+		auto dx = selection->getXOnView() - x;
+		auto dy = selection->getYOnView() - y;
+
+		//for some reason selection moving is inverted (x -= dx,...), intended?
+		selection->moveSelection(dx, dy);
+		//update all Elements (same procedure as moving a element selection by hand and releasing the mouse button)
+		selection->mouseUp();
 
 		win->getXournal()->setSelection(selection);
 	}

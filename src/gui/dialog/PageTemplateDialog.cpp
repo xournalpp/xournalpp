@@ -69,8 +69,7 @@ void PageTemplateDialog::updateDataFromModel()
 {
 	XOJ_CHECK_TYPE(PageTemplateDialog);
 
-	GdkRGBA color;
-	Util::apply_rgb_togdkrgba(color, model.getBackgroundColor());
+	GdkRGBA color = Util::rgb_to_GdkRGBA(model.getBackgroundColor());
 	gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("cbBackgroundButton")), &color);
 
 	updatePageSize();

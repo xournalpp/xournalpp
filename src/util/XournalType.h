@@ -131,7 +131,7 @@ const char* xoj_type_getName(int id);
 #else //DEV_MEMORY_CHECKING
 
 #define XOJ_DECLARE_TYPE(name, id) ((void) 0)
-#define XOJ_TYPE_ATTRIB
+#define XOJ_TYPE_ATTRIB int z__xoj_type[0]
 #define XOJ_INIT_TYPE(name) ((void) 0)
 #define XOJ_RELEASE_TYPE(name) ((void) 0)
 #define XOJ_CHECK_TYPE_OBJ(obj, name) ((void) 0)

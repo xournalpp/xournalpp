@@ -2,6 +2,11 @@
 
 #include <i18n.h>
 
+#ifdef _WIN32
+// Needed for help dialog workaround on Windows; see XojMsgBox::showHelp
+#include <shlwapi.h>
+#endif
+
 GtkWindow* defaultWindow = NULL;
 
 /**
@@ -84,7 +89,12 @@ int XojMsgBox::replaceFileQuestion(GtkWindow* win, string msg)
 
 void XojMsgBox::showHelp(GtkWindow* win)
 {
-	GError* error = NULL;
+#ifdef _WIN32
+	// gvfs is not in MSYS repositories, so we can't use gtk_show_uri.
+	// Instead, we use the native API instead.
+	ShellExecute(nullptr, "open", XOJ_HELP, nullptr, nullptr, SW_SHOW);
+#else
+	GError* error = nullptr;
 	gtk_show_uri(gtk_window_get_screen(win), XOJ_HELP, gtk_get_current_event_time(), &error);
 
 	if (error)
@@ -94,5 +104,6 @@ void XojMsgBox::showHelp(GtkWindow* win)
 
 		g_error_free(error);
 	}
+#endif
 }
 

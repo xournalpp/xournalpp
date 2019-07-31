@@ -16,13 +16,38 @@ SearchBar::SearchBar(Control* control)
 	g_signal_connect(close, "clicked", G_CALLBACK(buttonCloseSearchClicked), this);
 
 	GtkWidget* next = win->get("btSearchForward");
-	g_signal_connect(next, "clicked", G_CALLBACK(buttonNextSearchClicked), this);
-
 	GtkWidget* previous = win->get("btSearchBack");
-	g_signal_connect(previous, "clicked", G_CALLBACK(buttonPreviousSearchClicked), this);
+	g_signal_connect(next, "clicked", G_CALLBACK(+[](GtkButton* button, SearchBar* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, SearchBar);
+		                 self->searchNext();
+	                 }),
+	                 this);
+	g_signal_connect(previous, "clicked", G_CALLBACK(+[](GtkButton* button, SearchBar* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, SearchBar);
+		                 self->searchPrevious();
+	                 }),
+	                 this);
 
+	// TODO: When keybindings are implemented, handle previous search keybinding properly
 	GtkWidget* searchTextField = win->get("searchTextField");
-	g_signal_connect(searchTextField, "changed", G_CALLBACK(searchTextChangedCallback), this);
+	g_signal_connect(searchTextField, "search-changed", G_CALLBACK(searchTextChangedCallback), this);
+	// Enable next/previous search when pressing Enter / Shift+Enter
+	g_signal_connect(searchTextField, "key-press-event",
+	                 G_CALLBACK(+[](GtkWidget* entry, GdkEventKey* event, SearchBar* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, SearchBar);
+		                 if (event->keyval == GDK_KEY_Return)
+		                 {
+			                 if (event->state & GDK_SHIFT_MASK)
+				                 self->searchPrevious();
+			                 else
+				                 self->searchNext();
+			                 // Grab focus again since searching will take away focus
+			                 gtk_widget_grab_focus(entry);
+			                 return true;
+		                 }
+		                 return false;
+	                 }),
+	                 this);
 
 	cssTextFild = gtk_css_provider_new();
 	gtk_style_context_add_provider(gtk_widget_get_style_context(win->get("searchTextField")), GTK_STYLE_PROVIDER(cssTextFild), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -218,20 +243,6 @@ void SearchBar::searchPrevious()
 	}
 
 	gtk_label_set_text(GTK_LABEL(lbSearchState), _("Text not found, searched on all pages"));
-}
-
-void SearchBar::buttonNextSearchClicked(GtkButton* button, SearchBar* searchBar)
-{
-	XOJ_CHECK_TYPE_OBJ(searchBar, SearchBar);
-
-	searchBar->searchNext();
-}
-
-void SearchBar::buttonPreviousSearchClicked(GtkButton* button, SearchBar* searchBar)
-{
-	XOJ_CHECK_TYPE_OBJ(searchBar, SearchBar);
-
-	searchBar->searchPrevious();
 }
 
 void SearchBar::showSearchBar(bool show)

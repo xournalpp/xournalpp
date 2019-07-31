@@ -26,11 +26,12 @@ XojPdfDocument::~XojPdfDocument()
 	XOJ_RELEASE_TYPE(XojPdfDocument);
 }
 
-void XojPdfDocument::operator=(XojPdfDocument& doc)
+XojPdfDocument& XojPdfDocument::operator=(const XojPdfDocument& doc)
 {
 	XOJ_CHECK_TYPE(XojPdfDocument);
 
 	this->doc->assign(doc.doc);
+	return *this;
 }
 
 bool XojPdfDocument::operator==(XojPdfDocument& doc)
