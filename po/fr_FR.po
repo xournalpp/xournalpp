@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-07-31 19:06\n"
+"PO-Revision-Date: 2019-07-31 19:15\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -48,201 +48,209 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr ""
+msgstr "<span foreground='red' size='x-large'>Le fichier UI requis manque :\n"
+"<b>{1}</b></span>\n"
+"Impossible de les trouver à n'importe quel endroit.\n"
+"  Pas dans le chemin relatif\n"
+"  Pas dans le chemin de travail\n"
+"  Pas dans {2}"
 
 #: ../src/control/XournalMain.cpp:317
 msgid "Absolute path for the audio files playback"
-msgstr ""
+msgstr "Chemin absolu pour la lecture des fichiers audio"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:466
 msgid "Add/Edit Tex"
-msgstr ""
+msgstr "Ajout/Edition d'un formulaire Tex"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:53
 msgid "All files"
-msgstr ""
+msgstr "Tous les fichiers"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:257
 msgid "Apply to all pages"
-msgstr ""
+msgstr "Appliquer à toutes les pages"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:246
 msgid "Apply to current page"
-msgstr ""
+msgstr "Appliquer à la page actuelle"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:30
 #: ../src/control/stockdlg/XojOpenDlg.cpp:154
 msgid "Attach file to the journal"
-msgstr ""
+msgstr "Attacher le fichier au journal"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:140
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr ""
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme double, la valeur est \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:132
 msgid "Attribute \"{1}\" could not be parsed as double, the value is NULL"
-msgstr ""
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme double, la valeur est NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:160
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:183
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr ""
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme int, la valeur est \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:152
 msgid "Attribute \"{1}\" could not be parsed as int, the value is NULL"
-msgstr ""
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme int, la valeur est NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:205
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:228
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr ""
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme taille_t, la valeur est \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:197
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is NULL"
-msgstr ""
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme taille_t, la valeur est NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:70
 msgid "Attribute color not set!"
-msgstr ""
+msgstr "Attribut de couleur non défini !"
 
 #: ../src/control/AudioController.cpp:152
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Dossier audio non défini ! L'enregistrement ne fonctionnera pas !\n"
+"Veuillez définir le dossier d'enregistrement sous \"Préférences > Enregistrement audio\""
 
 #: ../src/control/Control.cpp:264
 msgid "Autosave failed with an error: {1}"
-msgstr ""
+msgstr "Échec de l'auto-sauvegarde avec une erreur : {1}"
 
 #: ../src/control/Control.cpp:226
 msgid "Autosave renamed from {1} to {2}"
-msgstr ""
+msgstr "Sauvegarde automatique renommée de {1} à {2}"
 
 #: ../src/control/jobs/AutosaveJob.cpp:60
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "Auto-sauvegarde vers {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Back"
-msgstr ""
+msgstr "Retour"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:22
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:270
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:322
 msgid "Background"
-msgstr ""
+msgstr "Arrière-plan"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:136
 msgid "Black"
-msgstr ""
+msgstr "Noir"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:14
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:140
 msgid "Blue"
-msgstr ""
+msgstr "Bleu"
 
 #: ../src/control/Control.cpp:2351 ../src/control/Control.cpp:2912
 #: ../src/control/XournalMain.cpp:139
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: ../src/undo/ColorUndoAction.cpp:119
 msgid "Change color"
-msgstr ""
+msgstr "Modifier la couleur"
 
 #: ../src/undo/FontUndoAction.cpp:134
 msgid "Change font"
-msgstr ""
+msgstr "Changer la police"
 
 #: ../src/undo/FillUndoAction.cpp:117
 msgid "Change stroke fill"
-msgstr ""
+msgstr "Changer le remplissage"
 
 #: ../src/undo/SizeUndoAction.cpp:139
 msgid "Change stroke width"
-msgstr ""
+msgstr "Changer la largeur du trait"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:98
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr ""
+msgstr "Couleur \"{1}\" inconnue (non définie dans la liste de couleurs par défaut) !"
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:276
 msgid "Contents"
-msgstr ""
+msgstr "Contenus"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:114
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:122
 msgid "Copy"
-msgstr ""
+msgstr "Copier"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
 msgid "Copy current"
-msgstr ""
+msgstr "Copier l'élement courant"
 
 #: ../src/undo/CopyUndoAction.cpp:81
 msgid "Copy page"
-msgstr ""
+msgstr "Copier la page"
 
 #: ../src/control/jobs/SaveJob.cpp:129
 msgid "Could not create backup! (The file was created from an older Xournal version)"
-msgstr ""
+msgstr "Impossible de créer la sauvegarde ! (Le fichier a été créé à partir d'une ancienne version Xournal)"
 
 #: ../src/util/Util.cpp:120
 msgid "Could not create folder: {1}"
-msgstr ""
+msgstr "Impossible de créer le dossier : {1}"
 
 #: ../src/control/LatexController.cpp:106
 msgid "Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
-msgstr ""
+msgstr "Impossible de trouver kpsewhich dans PATH; veuillez installer kpsewhich et le mettre dans le chemin."
 
 #: ../src/control/LatexController.cpp:82
 msgid "Could not find pdflatex in PATH.\n"
 "Please install pdflatex first and make sure it's in the PATH."
-msgstr ""
+msgstr "Impossible de trouver pdflatex dans PATH.\n"
+"Veuillez installer d'abord pdflatex et assurez-vous que c'est dans le PATH."
 
 #: ../src/control/LatexController.cpp:111
 msgid "Could not find the LaTeX package 'standalone'.\n"
 "Please install standalone and make sure it's accessible by your LaTeX installation."
-msgstr ""
+msgstr "Impossible de trouver le paquet LaTeX 'standalone'.\n"
+"Veuillez installer standalone et assurez-vous qu'il est accessible par votre installation LaTeX."
 
 #: ../src/control/LatexController.cpp:470
 msgid "Could not load LaTeX PDF file"
-msgstr ""
+msgstr "Impossible de charger le fichier PDF LaTeX"
 
 #: ../src/control/LatexController.cpp:453
 msgid "Could not load LaTeX PDF file, File Error: {1}"
-msgstr ""
+msgstr "Impossible de charger le fichier PDF LaTeX, Erreur de fichier : {1}"
 
 #: ../src/control/LatexController.cpp:461
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr ""
+msgstr "Impossible de charger le fichier PDF LaTeX : {1}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:19
 msgid "Could not load pagetemplates.ini file"
-msgstr ""
+msgstr "Impossible de charger le fichier pagetemplates.ini"
 
 #: ../src/control/xojfile/LoadHandler.cpp:989
 msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr ""
+msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : impossible de lire le fichier"
 
 #: ../src/control/xojfile/LoadHandler.cpp:998
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr ""
+msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : Impossible d'écrire le fichier"
 
 #: ../src/control/xojfile/LoadHandler.cpp:968
 #: ../src/control/xojfile/LoadHandler.cpp:1296
 #: ../src/control/xojfile/LoadHandler.cpp:1316
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr ""
+msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : aucune taille de fichier valide fournie"
 
 #: ../src/control/xojfile/LoadHandler.cpp:958
 #: ../src/control/xojfile/LoadHandler.cpp:976
 #: ../src/control/xojfile/LoadHandler.cpp:1287
 #: ../src/control/xojfile/LoadHandler.cpp:1304
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr ""
+msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:198
 msgid "Could not open file: \"{1}\""
@@ -470,73 +478,75 @@ msgstr ""
 
 #: ../src/control/jobs/ImageExport.cpp:160
 msgid "Error save image #2"
-msgstr ""
+msgstr "Erreur d'enregistrement de l'image #2"
 
 #: ../src/control/jobs/AutosaveJob.cpp:25
 msgid "Error while autosaving: {1}"
-msgstr ""
+msgstr "Erreur lors de l'auto-sauvegarde : {1}"
 
 #: ../src/util/CrashHandler.cpp:47
 msgid "Error: {1}"
-msgstr ""
+msgstr "Erreur: {1}"
 
 #: ../src/control/XournalMain.cpp:162
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
-msgstr ""
+msgstr "Impossible de supprimer le fichier d'erreurs. Vous devez le faire manuellement.\n"
+"Fichier Log : {1}"
 
 #: ../src/control/jobs/BaseExportJob.cpp:24
 msgid "Export PDF"
-msgstr ""
+msgstr "Exporter en PDF"
 
 #: ../src/util/Util.cpp:141 ../src/util/Util.cpp:158
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr ""
+msgstr "Le fichier n'a pas pu être ouvert. Vous devez le faire manuellement :\n"
+"URL : {1}"
 
 #: ../src/control/Control.cpp:2306
 msgid "Filename: {1}"
-msgstr ""
+msgstr "Nom du fichier : {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:511
 msgid "Fill"
-msgstr ""
+msgstr "Remplir"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:72
 msgid "Floating Toolbox (experimental)"
-msgstr ""
+msgstr "Boîte à outils flottante (expérimental)"
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:71
 msgid "Font"
-msgstr ""
+msgstr "Police"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Go to first page"
-msgstr ""
+msgstr "Aller à la première page"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Go to last page"
-msgstr ""
+msgstr "Aller à la dernière page"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Go to next layer"
-msgstr ""
+msgstr "Aller à la couche suivante"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Go to page"
-msgstr ""
+msgstr "Aller à la page"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Go to previous layer"
-msgstr ""
+msgstr "Aller à la couche précédente"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Go to top layer"
-msgstr ""
+msgstr "Aller à la couche la plus haute"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:27
 msgid "Graph"
-msgstr ""
+msgstr "Graphe"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:141
