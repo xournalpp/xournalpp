@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-07-31 20:50\n"
+"PO-Revision-Date: 2019-07-31 20:59\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -914,11 +914,11 @@ msgstr "Rotation"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Rotation Snapping"
-msgstr ""
+msgstr "Rotation forcée"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:24
 msgid "Ruled"
-msgstr ""
+msgstr "Tracé"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Ruled with vertical line"
@@ -1141,54 +1141,54 @@ msgstr "Le nom de fichier journal le plus récent : {1}"
 
 #: ../src/control/XournalMain.cpp:123
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Il y a des fichiers journaux d'erreurs de Xournal++. Veuillez envoyer un rapport de bogue, pour que le bogue puisse être corrigé."
 
 #: ../src/control/XournalMain.cpp:122
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Il y a un fichier journal d'erreurs de Xournal++. Veuillez envoyer un rapport de bogue, pour que le bogue puisse être corrigé."
 
 #: ../src/util/XojMsgBox.cpp:102
 msgid "There was an error displaying help: {1}"
-msgstr ""
+msgstr "Une erreur s'est produite lors de l'affichage de l'aide : {1}"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:90
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:526
 msgid "Thick"
-msgstr ""
+msgstr "Gras"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Thickness - don't change"
-msgstr ""
+msgstr "Épaisseur - ne pas changer"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:524
 msgid "Thin"
-msgstr ""
+msgstr "Fin"
 
 #: ../src/control/Control.cpp:2902
 msgid "This document is not saved yet."
-msgstr ""
+msgstr "Ce document n'est pas encore enregistré."
 
 #: ../src/control/PageBackgroundChangeController.cpp:185
 #: ../src/control/tools/ImageHandler.cpp:59
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "Cette image n'a pas pu être chargée. Message d'erreur : {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Toggle fullscreen"
-msgstr ""
+msgstr "Basculer sur plein écran"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:62
 msgid "Tool - don't change"
-msgstr ""
+msgstr "Outil - ne pas changer"
 
 #: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:166
 msgid "Toolbar found: {1}"
-msgstr ""
+msgstr "Barre d'outils trouvée : {1}"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:55
 msgid "Toolbars"
-msgstr ""
+msgstr "Barres d'outils"
 
 #: ../src/util/CrashHandler.cpp:37
 msgid "Trying to emergency save the current open document…"
