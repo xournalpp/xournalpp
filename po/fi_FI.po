@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-07-31 22:56\n"
+"PO-Revision-Date: 2019-07-31 23:09\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -994,7 +994,7 @@ msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:53
 msgid "Separator"
-msgstr ""
+msgstr "Erotin"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Shape Recognizer"
@@ -1042,7 +1042,7 @@ msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:134
 msgid "Supported files"
-msgstr ""
+msgstr "Tuetut tiedostot"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:66
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:465
@@ -1553,7 +1553,7 @@ msgstr "<b>Sivun koko</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separator</b>"
-msgstr ""
+msgstr "<b>Erotin</b>"
 
 #: ../ui/settings.glade:701
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -1573,7 +1573,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:209
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
-msgstr ""
+msgstr "<i>Esimerkki:</i> 1-3 tai 1,3,5-7 jne."
 
 #: ../ui/settings.glade:1813
 msgid "<i>For some specific hardware the scroll / touch behaviour of the system is not as expected. For these cases Xournal++ has a workaround.\n"
@@ -1645,7 +1645,8 @@ msgstr ""
 #: ../ui/about.glade:73
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
-msgstr ""
+msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+"<i>Seuraava sukupolvi</i>"
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
@@ -1674,7 +1675,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3811
 msgid "Audio Devices"
-msgstr ""
+msgstr "Äänilaiteet"
 
 #: ../ui/settings.glade:3951
 msgid "Audio Recording"
@@ -1686,7 +1687,7 @@ msgstr "Tekijä: "
 
 #: ../ui/about.glade:161
 msgid "Authors:"
-msgstr ""
+msgstr "Tekijät:"
 
 #: ../ui/settings.glade:1515
 msgid "Autodetect"
@@ -1750,7 +1751,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:158
 msgid "Current page"
-msgstr ""
+msgstr "Nykyinen sivu"
 
 #: ../ui/settings.glade:2175
 msgid "Cursor"
@@ -1770,7 +1771,7 @@ msgstr ""
 
 #: ../ui/settings.glade:379
 msgid "Default name: "
-msgstr ""
+msgstr "Oletusnimi: "
 
 #: ../ui/settings.glade:3589
 msgid "Defaults"
@@ -2132,7 +2133,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:175
 msgid "Pages:"
-msgstr ""
+msgstr "Sivut:"
 
 #: ../ui/settings.glade:3039
 msgid "Paired Pages"
