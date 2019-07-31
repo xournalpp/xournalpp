@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-07-31 22:36\n"
+"PO-Revision-Date: 2019-07-31 22:49\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -167,7 +167,7 @@ msgstr ""
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:276
 msgid "Contents"
-msgstr ""
+msgstr "Sisältö"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:114
@@ -181,7 +181,7 @@ msgstr ""
 
 #: ../src/undo/CopyUndoAction.cpp:81
 msgid "Copy page"
-msgstr ""
+msgstr "Kopioi sivu"
 
 #: ../src/control/jobs/SaveJob.cpp:129
 msgid "Could not create backup! (The file was created from an older Xournal version)"
@@ -321,7 +321,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Cut"
-msgstr ""
+msgstr "Leikkaa"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Default Tool"
@@ -342,7 +342,7 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:188
 msgid "Delete file"
-msgstr ""
+msgstr "Poista tiedosto"
 
 #: ../src/undo/RemoveLayerUndoAction.cpp:41
 msgid "Delete layer"
@@ -2390,7 +2390,7 @@ msgstr "Versio: "
 
 #: ../ui/settings.glade:2508
 msgid "View"
-msgstr ""
+msgstr "Näytä"
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
@@ -2510,11 +2510,11 @@ msgstr ""
 
 #: ../ui/main.glade:1144
 msgid "_Delete Page"
-msgstr ""
+msgstr "_Poista sivu"
 
 #: ../ui/main.glade:295
 msgid "_Edit"
-msgstr ""
+msgstr "_Muokkaa"
 
 #: ../ui/main.glade:1245
 msgid "_Eraser"
@@ -2522,7 +2522,7 @@ msgstr "_Pyyhekumi"
 
 #: ../ui/main.glade:240
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_Vie PDF:nä"
 
 #: ../ui/main.glade:155
 msgid "_File"
@@ -2530,7 +2530,7 @@ msgstr "_Tiedosto"
 
 #: ../ui/main.glade:967
 msgid "_First Page"
-msgstr ""
+msgstr "_Ensimmäinen sivu"
 
 #: ../ui/main.glade:989
 msgid "_Goto Page"
@@ -2558,7 +2558,7 @@ msgstr ""
 
 #: ../ui/main.glade:1011
 msgid "_Last Page"
-msgstr ""
+msgstr "_Viimeinen sivu"
 
 #: ../ui/main.glade:553
 msgid "_Left To Right"
@@ -2578,7 +2578,7 @@ msgstr ""
 
 #: ../ui/main.glade:1000
 msgid "_Next Page"
-msgstr ""
+msgstr "_Seuraava sivu"
 
 #: ../ui/main.glade:465
 msgid "_Pair Pages"
@@ -2602,7 +2602,7 @@ msgstr ""
 
 #: ../ui/main.glade:978
 msgid "_Previous Page"
-msgstr ""
+msgstr "_Edellinen sivu"
 
 #: ../ui/main.glade:564
 msgid "_Right To Left"
@@ -2638,7 +2638,7 @@ msgstr ""
 
 #: ../ui/main.glade:454
 msgid "_View"
-msgstr ""
+msgstr "_Näytä"
 
 #: ../ui/main.glade:1677
 msgid "_delete strokes"
@@ -2690,7 +2690,7 @@ msgstr ""
 
 #: ../ui/settings.glade:286
 msgid "minutes"
-msgstr ""
+msgstr "minuuttia"
 
 #: ../ui/settings.glade:2941 ../ui/settings.glade:2952
 #: ../ui/settings.glade:3200
