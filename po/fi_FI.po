@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-07-31 22:23\n"
+"PO-Revision-Date: 2019-07-31 22:36\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -1294,11 +1294,11 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Zoom in"
-msgstr ""
+msgstr "Lähennä"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Zoom out"
-msgstr ""
+msgstr "Loitonna"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:106
 msgid "Zoom slider"
@@ -1367,7 +1367,7 @@ msgstr "kuva"
 
 #: ../src/util/DeviceListHelper.cpp:135
 msgid "keyboard"
-msgstr ""
+msgstr "näppäimistö"
 
 #: ../src/undo/AddUndoAction.cpp:135 ../src/undo/DeleteUndoAction.cpp:129
 msgid "latex"
@@ -1375,7 +1375,7 @@ msgstr "latex"
 
 #: ../src/util/DeviceListHelper.cpp:118
 msgid "mouse"
-msgstr ""
+msgstr "hiiri"
 
 #: ../src/control/LatexController.cpp:317
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
@@ -1404,7 +1404,7 @@ msgstr "teksti"
 
 #: ../src/util/DeviceListHelper.cpp:143
 msgid "touchpad"
-msgstr ""
+msgstr "touchpad"
 
 #: ../src/util/DeviceListHelper.cpp:139
 msgid "touchscreen"
@@ -1412,7 +1412,7 @@ msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:148
 msgid "trackpoint"
-msgstr ""
+msgstr "trackpoint"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:314
 msgid "whiteout"
@@ -1499,7 +1499,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:256
 msgid "<b>Background Color</b>"
-msgstr ""
+msgstr "<b>Taustaväri</b>"
 
 #: ../ui/pageTemplate.glade:269
 msgid "<b>Background</b>"
@@ -1545,11 +1545,11 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:132
 msgid "<b>Page size</b>"
-msgstr ""
+msgstr "<b>Sivun koko</b>"
 
 #: ../ui/pagesize.glade:142
 msgid "<b>Pagesize</b>"
-msgstr ""
+msgstr "<b>Sivun koko</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separator</b>"
@@ -1665,7 +1665,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:142
 msgid "All pages"
-msgstr ""
+msgstr "Kaikki sivut"
 
 #: ../ui/settings.glade:3377
 msgid "All three conditions must be met before stroke is ignored.\n"
@@ -1726,11 +1726,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1201
 msgid "Button 1"
-msgstr ""
+msgstr "Painike 1"
 
 #: ../ui/settings.glade:1239
 msgid "Button 2"
-msgstr ""
+msgstr "Painike 2"
 
 #: ../ui/settings.glade:2089
 msgid "Colors"
@@ -1913,7 +1913,7 @@ msgstr ""
 
 #: ../ui/main.glade:250
 msgid "Export as..."
-msgstr ""
+msgstr "Vie tiedostona..."
 
 #: ../ui/main.glade:1581 ../ui/main.glade:1742
 msgid "Fi_ll"
@@ -1969,7 +1969,7 @@ msgstr ""
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
-msgstr ""
+msgstr "Korkeus:"
 
 #: ../ui/main.glade:888 ../ui/settings.glade:2338 ../ui/settings.glade:2405
 msgid "Hide Menubar"
@@ -2055,7 +2055,7 @@ msgstr ""
 
 #: ../ui/images.glade:73
 msgid "Load file"
-msgstr ""
+msgstr "Lataa tiedosto"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2076,7 +2076,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1041 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
-msgstr ""
+msgstr "Hiiri"
 
 #: ../ui/settings.glade:1010
 msgid "Mouse Buttons"
@@ -2209,7 +2209,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:112
 msgid "Resolution"
-msgstr ""
+msgstr "Erotuskyky"
 
 #: ../ui/settings.glade:992
 msgid "Right Mouse Button"
@@ -2398,7 +2398,7 @@ msgstr ""
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
-msgstr ""
+msgstr "Leveys:"
 
 #: ../ui/about.glade:202
 msgid "With help from the community"
