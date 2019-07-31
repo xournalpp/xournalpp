@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-26 23:55+0000\n"
+"POT-Creation-Date: 2019-07-31 18:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1075,7 +1075,7 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: ../src/gui/SearchBar.cpp:96
+#: ../src/gui/SearchBar.cpp:95
 #, c-format
 msgid "Text %i times found on this page"
 msgstr ""
@@ -1084,23 +1084,23 @@ msgstr ""
 msgid "Text changes"
 msgstr ""
 
-#: ../src/gui/SearchBar.cpp:92
+#: ../src/gui/SearchBar.cpp:91
 msgid "Text found on this page"
 msgstr ""
 
-#: ../src/gui/SearchBar.cpp:176 ../src/gui/SearchBar.cpp:232
+#: ../src/gui/SearchBar.cpp:175 ../src/gui/SearchBar.cpp:231
 msgid "Text found once on page {1}"
 msgstr ""
 
-#: ../src/gui/SearchBar.cpp:177 ../src/gui/SearchBar.cpp:233
+#: ../src/gui/SearchBar.cpp:176 ../src/gui/SearchBar.cpp:232
 msgid "Text found {1} times on page {2}"
 msgstr ""
 
-#: ../src/gui/SearchBar.cpp:103
+#: ../src/gui/SearchBar.cpp:102
 msgid "Text not found"
 msgstr ""
 
-#: ../src/gui/SearchBar.cpp:190 ../src/gui/SearchBar.cpp:246
+#: ../src/gui/SearchBar.cpp:189 ../src/gui/SearchBar.cpp:245
 msgid "Text not found, searched on all pages"
 msgstr ""
 
