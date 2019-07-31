@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-07-31 21:47\n"
+"PO-Revision-Date: 2019-07-31 21:58\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -494,7 +494,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2306
 msgid "Filename: {1}"
-msgstr ""
+msgstr "Tiedostonimi: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:511
 msgid "Fill"
@@ -506,7 +506,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:71
 msgid "Font"
-msgstr ""
+msgstr "Fontti"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Go to first page"
@@ -539,12 +539,12 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:141
 msgid "Gray"
-msgstr ""
+msgstr "Harmaa"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:11
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:137
 msgid "Green"
-msgstr ""
+msgstr "Vihreä"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Grid Snapping"
@@ -567,7 +567,7 @@ msgstr ""
 #: ../src/control/pagetype/PageTypeHandler.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Image"
-msgstr ""
+msgstr "Kuva"
 
 #: ../src/control/XournalMain.cpp:260
 msgid "Image file successfully created"
@@ -579,7 +579,7 @@ msgstr ""
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:18
 msgid "Images"
-msgstr ""
+msgstr "Kuvat"
 
 #: ../src/undo/InsertUndoAction.cpp:116
 msgid "Insert elements"
@@ -646,7 +646,7 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:143
 msgid "Mangenta"
-msgstr ""
+msgstr "Purppura"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:525
@@ -678,7 +678,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:90
 msgid "New"
-msgstr ""
+msgstr "Uusi"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "New Xournal"
@@ -686,7 +686,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 msgid "Next"
-msgstr ""
+msgstr "Seuraava"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Next annotated page"
@@ -781,7 +781,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:67
 msgid "Page"
-msgstr ""
+msgstr "Sivu"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Page Preview"
@@ -850,7 +850,7 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:142
 msgid "Red"
-msgstr ""
+msgstr "Punainen"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 #: ../src/undo/UndoRedoHandler.cpp:267
@@ -916,15 +916,15 @@ msgstr ""
 #: ../src/control/Control.cpp:2903 ../src/control/jobs/SaveJob.cpp:13
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Save"
-msgstr ""
+msgstr "Tallenna"
 
 #: ../src/control/Control.cpp:2903
 msgid "Save As..."
-msgstr ""
+msgstr "Tallenna nimellä..."
 
 #: ../src/control/Control.cpp:2697 ../src/gui/dialog/PageTemplateDialog.cpp:110
 msgid "Save File"
-msgstr ""
+msgstr "Tallenna tiedosto"
 
 #: ../src/control/jobs/CustomExportJob.cpp:162
 #: ../src/control/jobs/SaveJob.cpp:143
@@ -1047,7 +1047,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:66
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:465
 msgid "Text"
-msgstr ""
+msgstr "Teksti"
 
 #: ../src/gui/SearchBar.cpp:95
 #, c-format
@@ -1253,7 +1253,7 @@ msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:74
 msgid "Xournal files"
-msgstr ""
+msgstr "Xournal-tiedostot"
 
 #: ../src/control/XournalMain.cpp:183
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
@@ -1261,7 +1261,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2709 ../src/control/stockdlg/XojOpenDlg.cpp:84
 msgid "Xournal++ files"
-msgstr ""
+msgstr "Xournal++-tiedostot"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:94
 #: ../src/gui/dialog/PageTemplateDialog.cpp:117
@@ -1318,7 +1318,7 @@ msgstr ""
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:18
 msgid "_Open"
-msgstr ""
+msgstr "_Avaa"
 
 #: ../src/control/Control.cpp:2702 ../src/control/jobs/BaseExportJob.cpp:26
 #: ../src/gui/dialog/PageTemplateDialog.cpp:112
@@ -1452,7 +1452,7 @@ msgstr ""
 
 #: ../src/util/Util.cpp:110
 msgid "xournalpp-{1}"
-msgstr ""
+msgstr "xournalpp-{1}"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
@@ -1460,7 +1460,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2616 ../ui/settings.glade:2627
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../ui/settings.glade:418
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1507,7 +1507,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
-msgstr ""
+msgstr "<b>Väri</b>"
 
 #: ../ui/pageTemplate.glade:110
 msgid "<b>Configure Xournal++ Template Page</b>\n"
@@ -1649,7 +1649,7 @@ msgstr ""
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
-msgstr ""
+msgstr "Tietoja Xournal++:stä"
 
 #: ../ui/settings.glade:3411
 msgid "Action on Tool Tap"
@@ -1682,7 +1682,7 @@ msgstr ""
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
-msgstr ""
+msgstr "Tekijä: "
 
 #: ../ui/about.glade:161
 msgid "Authors:"
@@ -1734,7 +1734,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2089
 msgid "Colors"
-msgstr ""
+msgstr "Värit"
 
 #: ../ui/main.glade:1134
 msgid "Configure Page Template"
@@ -1790,7 +1790,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
-msgstr ""
+msgstr "Laite"
 
 #: ../ui/settings.glade:1620
 msgid "Disable"
@@ -1937,7 +1937,7 @@ msgstr ""
 
 #: ../ui/main.glade:485 ../ui/settings.glade:2376
 msgid "Fullscreen"
-msgstr ""
+msgstr "Kokoruututila"
 
 #: ../ui/about.glade:251
 msgid "GNU GPLv2 or later"
