@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-07-31 22:49\n"
+"PO-Revision-Date: 2019-07-31 22:56\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -346,7 +346,7 @@ msgstr "Poista tiedosto"
 
 #: ../src/undo/RemoveLayerUndoAction.cpp:41
 msgid "Delete layer"
-msgstr ""
+msgstr "Poista taso"
 
 #: ../src/control/Control.cpp:2908
 msgid "Discard"
@@ -447,11 +447,11 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2376
 msgid "Error opening file \"{1}\""
-msgstr ""
+msgstr "Virhe tiedoston avaamisessa \"{1}\""
 
 #: ../src/util/OutputStream.cpp:35
 msgid "Error opening file: \"{1}\""
-msgstr ""
+msgstr "Virhe tiedoston avaamisessa: \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:565
 #: ../src/control/xojfile/LoadHandler.cpp:592
@@ -557,7 +557,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:99
 msgid "Hide all"
-msgstr ""
+msgstr "Piilota kaikki"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:65
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:463
@@ -607,7 +607,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:348
 msgid "Layer"
-msgstr ""
+msgstr "Taso"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:79
 msgid "Layer Preview"
@@ -621,7 +621,7 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:260
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:318
 msgid "Layer {1}"
-msgstr ""
+msgstr "Taso {1}"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:138
@@ -637,7 +637,7 @@ msgstr ""
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:103
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:18
 msgid "Loading..."
-msgstr ""
+msgstr "Ladataan..."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Manage Toolbars"
@@ -682,7 +682,7 @@ msgstr "Uusi"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "New Xournal"
-msgstr ""
+msgstr "Uusi Xournal"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 msgid "Next"
@@ -694,7 +694,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:44
 msgid "No device"
-msgstr ""
+msgstr "Ei laitteita"
 
 #: ../src/pdf/base/XojCairoPdfExport.cpp:93
 #: ../src/pdf/base/XojCairoPdfExport.cpp:142
@@ -747,7 +747,7 @@ msgstr ""
 
 #: ../src/gui/MainWindow.cpp:835
 msgid "PDF Page {1}"
-msgstr ""
+msgstr "PDF-sivu {1}"
 
 #: ../src/view/PdfView.cpp:40
 msgid "PDF background missing"
@@ -1778,7 +1778,7 @@ msgstr ""
 
 #: ../ui/main.glade:1172
 msgid "Delete Layer"
-msgstr ""
+msgstr "Poista taso"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2108,7 +2108,7 @@ msgstr ""
 
 #: ../ui/main.glade:1161
 msgid "New _Layer"
-msgstr ""
+msgstr "Uusi _taso"
 
 #: ../ui/settings.glade:3006
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2574,7 +2574,7 @@ msgstr ""
 
 #: ../ui/main.glade:1039
 msgid "_Next Layer"
-msgstr ""
+msgstr "_Seuraava taso"
 
 #: ../ui/main.glade:1000
 msgid "_Next Page"
@@ -2598,7 +2598,7 @@ msgstr ""
 
 #: ../ui/main.glade:1028
 msgid "_Previous Layer"
-msgstr ""
+msgstr "_Edellinen taso"
 
 #: ../ui/main.glade:978
 msgid "_Previous Page"
