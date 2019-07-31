@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-07-31 21:58\n"
+"PO-Revision-Date: 2019-07-31 22:11\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -143,7 +143,7 @@ msgstr "Sininen"
 #: ../src/control/Control.cpp:2351 ../src/control/Control.cpp:2912
 #: ../src/control/XournalMain.cpp:139
 msgid "Cancel"
-msgstr ""
+msgstr "Peruuta"
 
 #: ../src/undo/ColorUndoAction.cpp:119
 msgid "Change color"
@@ -173,7 +173,7 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:114
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:122
 msgid "Copy"
-msgstr ""
+msgstr "Kopioi"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
 msgid "Copy current"
@@ -330,7 +330,7 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 #: ../src/undo/DeleteUndoAction.cpp:102
 msgid "Delete"
-msgstr ""
+msgstr "Poista"
 
 #: ../src/control/XournalMain.cpp:138
 msgid "Delete Logfile"
@@ -434,7 +434,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:64
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:311
 msgid "Eraser"
-msgstr ""
+msgstr "Pyyhekumi"
 
 #: ../src/control/Control.cpp:2578
 msgid "Error annotate PDF file \"{1}\"\n"
@@ -716,7 +716,7 @@ msgstr ""
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:11
 msgid "Open Image"
-msgstr ""
+msgstr "Avaa kuva"
 
 #: ../src/control/XournalMain.cpp:136
 msgid "Open Logfile"
@@ -729,12 +729,12 @@ msgstr ""
 #: ../src/control/stockdlg/XojOpenDlg.cpp:16
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "Open file"
-msgstr ""
+msgstr "Avaa tiedosto"
 
 #: ../src/control/RecentManager.cpp:249
 msgctxt "{1} is a URI"
 msgid "Open {1}"
-msgstr ""
+msgstr "Avaa {1}"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:18
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:144
@@ -761,7 +761,7 @@ msgstr ""
 #: ../src/control/jobs/PdfExportJob.cpp:23
 #: ../src/control/stockdlg/XojOpenDlg.cpp:63
 msgid "PDF files"
-msgstr ""
+msgstr "PDF-tiedostot"
 
 #: ../src/control/XournalMain.cpp:314
 msgid "PDF output filename"
@@ -1359,7 +1359,7 @@ msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:126
 msgid "eraser"
-msgstr ""
+msgstr "pyyhekumi"
 
 #: ../src/undo/AddUndoAction.cpp:132 ../src/undo/DeleteUndoAction.cpp:126
 msgid "image"
@@ -2047,7 +2047,7 @@ msgstr ""
 
 #: ../ui/about.glade:235
 msgid "License"
-msgstr ""
+msgstr "Lisenssi"
 
 #: ../ui/settings.glade:587
 msgid "Load / Save"
@@ -2265,7 +2265,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3379
 msgid "Settings:"
-msgstr ""
+msgstr "Asetukset:"
 
 #: ../ui/settings.glade:3388
 msgid "Show Floating Toolbox"
@@ -2382,11 +2382,11 @@ msgstr ""
 
 #: ../ui/about.glade:100
 msgid "Version"
-msgstr ""
+msgstr "Versio"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Version: "
-msgstr ""
+msgstr "Versio: "
 
 #: ../ui/settings.glade:2508
 msgid "View"
@@ -2518,7 +2518,7 @@ msgstr ""
 
 #: ../ui/main.glade:1245
 msgid "_Eraser"
-msgstr ""
+msgstr "_Pyyhekumi"
 
 #: ../ui/main.glade:240
 msgid "_Export as PDF"
@@ -2526,7 +2526,7 @@ msgstr ""
 
 #: ../ui/main.glade:155
 msgid "_File"
-msgstr ""
+msgstr "_Tiedosto"
 
 #: ../ui/main.glade:967
 msgid "_First Page"
@@ -2538,7 +2538,7 @@ msgstr ""
 
 #: ../ui/main.glade:1847
 msgid "_Help"
-msgstr ""
+msgstr "_Ohje"
 
 #: ../ui/main.glade:1257
 msgid "_Highlighter"
@@ -2550,7 +2550,7 @@ msgstr ""
 
 #: ../ui/main.glade:1281
 msgid "_Image"
-msgstr ""
+msgstr "_Kuva"
 
 #: ../ui/main.glade:1092
 msgid "_Journal"
@@ -2614,7 +2614,7 @@ msgstr ""
 
 #: ../ui/main.glade:1269
 msgid "_Text"
-msgstr ""
+msgstr "_Teksti"
 
 #: ../ui/main.glade:1222
 msgid "_Tools"
@@ -2674,7 +2674,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:223
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
