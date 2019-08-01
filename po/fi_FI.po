@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 06:55\n"
+"PO-Revision-Date: 2019-08-01 07:05\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -207,7 +207,7 @@ msgstr ""
 
 #: ../src/control/LatexController.cpp:470
 msgid "Could not load LaTeX PDF file"
-msgstr ""
+msgstr "LaTeX PDF -tiedostoa ei voitu ladata"
 
 #: ../src/control/LatexController.cpp:453
 msgid "Could not load LaTeX PDF file, File Error: {1}"
@@ -1212,7 +1212,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2775
 msgid "Unsaved Document"
-msgstr "Tallentamaton dokumentti"
+msgstr "Tallentamaton asiakirja"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 msgid "Vertical Space"
