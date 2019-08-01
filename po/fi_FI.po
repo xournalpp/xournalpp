@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 07:05\n"
+"PO-Revision-Date: 2019-08-01 10:24\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -33,7 +33,7 @@ msgstr ""
 
 #: ../src/control/settings/Settings.cpp:109
 msgid "%F-Note-%H-%M"
-msgstr ""
+msgstr "%F-Muistiinpano-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:119
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -147,11 +147,11 @@ msgstr "Peruuta"
 
 #: ../src/undo/ColorUndoAction.cpp:119
 msgid "Change color"
-msgstr ""
+msgstr "Vaihda väri"
 
 #: ../src/undo/FontUndoAction.cpp:134
 msgid "Change font"
-msgstr ""
+msgstr "Vaihda fontti"
 
 #: ../src/undo/FillUndoAction.cpp:117
 msgid "Change stroke fill"
@@ -498,7 +498,7 @@ msgstr "Tiedostonimi: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:511
 msgid "Fill"
-msgstr ""
+msgstr "Täyttö"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:72
 msgid "Floating Toolbox (experimental)"
@@ -785,7 +785,7 @@ msgstr "Sivu"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Page Preview"
-msgstr ""
+msgstr "Sivun esikatselu"
 
 #: ../src/undo/PageBackgroundChangedUndoAction.cpp:106
 msgid "Page background changed"
@@ -965,11 +965,11 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2349
 msgid "Select another PDF"
-msgstr ""
+msgstr "Valitse toinen PDF"
 
 #: ../src/util/XojMsgBox.cpp:81
 msgid "Select another name"
-msgstr ""
+msgstr "Valitse toinen nimi"
 
 #: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:140
 msgid "Select background color"
