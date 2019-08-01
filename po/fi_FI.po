@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 06:47\n"
+"PO-Revision-Date: 2019-08-01 06:55\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -2162,7 +2162,7 @@ msgstr ""
 
 #: ../ui/main.glade:1788
 msgid "Pause"
-msgstr ""
+msgstr "Keskeytä"
 
 #: ../ui/main.glade:1459
 msgid "Pen _Options"
@@ -2186,7 +2186,7 @@ msgstr "Asetukset"
 
 #: ../ui/settings.glade:2477
 msgid "Presentation Mode"
-msgstr ""
+msgstr "Esitystila"
 
 #: ../ui/settings.glade:1129
 msgid "Pressure Sensitivity"
@@ -2342,7 +2342,7 @@ msgstr ""
 
 #: ../ui/main.glade:1766
 msgid "Text Font..."
-msgstr ""
+msgstr "Tekstin fontti..."
 
 #: ../ui/settings.glade:2744
 msgid "The unit of the ruler is cm"
@@ -2499,7 +2499,7 @@ msgstr ""
 
 #: ../ui/main.glade:608
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "_Sarakkeet/rivit"
 
 #: ../ui/main.glade:868
 msgid "_Customize"
@@ -2547,7 +2547,7 @@ msgstr "_Tussikynä"
 
 #: ../ui/main.glade:524
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Vaakasuora"
 
 #: ../ui/main.glade:1281
 msgid "_Image"
@@ -2631,7 +2631,7 @@ msgstr ""
 
 #: ../ui/main.glade:535
 msgid "_Vertical"
-msgstr ""
+msgstr "_Pystysuora"
 
 #: ../ui/main.glade:1417
 msgid "_Vertical Space"
