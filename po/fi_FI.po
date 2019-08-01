@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 00:15\n"
+"PO-Revision-Date: 2019-08-01 00:25\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -1129,7 +1129,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:90
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:526
 msgid "Thick"
-msgstr ""
+msgstr "Paksu"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Thickness - don't change"
@@ -1138,7 +1138,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:524
 msgid "Thin"
-msgstr ""
+msgstr "Ohut"
 
 #: ../src/control/Control.cpp:2902
 msgid "This document is not saved yet."
@@ -1942,7 +1942,7 @@ msgstr "Kokoruututila"
 
 #: ../ui/about.glade:251
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "GNU GPLv2 tai uudempi"
 
 #: ../ui/settings.glade:3855
 msgid "Gain"
@@ -2052,7 +2052,7 @@ msgstr "Lisenssi"
 
 #: ../ui/settings.glade:587
 msgid "Load / Save"
-msgstr ""
+msgstr "Lataa / tallenna"
 
 #: ../ui/images.glade:73
 msgid "Load file"
@@ -2659,7 +2659,7 @@ msgstr ""
 
 #: ../ui/main.glade:1503 ../ui/main.glade:1638 ../ui/main.glade:1725
 msgid "_thick"
-msgstr ""
+msgstr "_paksu"
 
 #: ../ui/main.glade:1470
 msgid "_very fine"
