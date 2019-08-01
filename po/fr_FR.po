@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-07-31 20:59\n"
+"PO-Revision-Date: 2019-08-01 02:39\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1192,16 +1192,16 @@ msgstr "Barres d'outils"
 
 #: ../src/util/CrashHandler.cpp:37
 msgid "Trying to emergency save the current open document…"
-msgstr ""
+msgstr "Essai de sauvegarde d'urgence du document actuellement ouvert…"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:399
 #: ../src/undo/UndoRedoHandler.cpp:250
 msgid "Undo"
-msgstr ""
+msgstr "Annuler"
 
 #: ../src/undo/UndoRedoHandler.cpp:245
 msgid "Undo: "
-msgstr ""
+msgstr "Annuler: "
 
 #: ../src/control/xojfile/LoadHandler.cpp:355
 msgid "Unexpected root tag: {1}"
