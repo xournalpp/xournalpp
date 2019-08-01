@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 07:53\n"
+"PO-Revision-Date: 2019-08-01 08:05\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -327,7 +327,7 @@ msgstr "Пользовательский экспорт"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "Настроить панели инструментов"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:38
 msgid "Customized"
@@ -725,7 +725,7 @@ msgstr "Нет страниц для экспорта!"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:99
 msgid "Normal drawing"
-msgstr ""
+msgstr "Обычный рисунок"
 
 #: ../src/plugin/Plugin.cpp:417 ../src/plugin/Plugin.cpp:438
 msgid "OK"
@@ -1663,7 +1663,7 @@ msgstr "<i>Разместите линейку на экране и переме
 
 #: ../ui/settings.glade:3494
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
-msgstr ""
+msgstr "<i>Выберите инструмент и настройки, которые вы хотите установить по умолчанию.</i>"
 
 #: ../ui/settings.glade:1585
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
@@ -2278,7 +2278,7 @@ msgstr "Правая кнопка мыши"
 
 #: ../ui/settings.glade:3072
 msgid "Rotation snapping tolerance"
-msgstr ""
+msgstr "Допуск при фиксации поворота"
 
 #: ../ui/settings.glade:3843
 msgid "Sample Rate"
@@ -2378,7 +2378,7 @@ msgstr "Кнопки стилуса"
 
 #: ../ui/settings.glade:3329
 msgid "Successive (ms)"
-msgstr ""
+msgstr "Последовательно (мс)"
 
 #: ../ui/main.glade:1998
 msgid "Swap the current page with the one above"
@@ -2715,7 +2715,7 @@ msgstr "_средний"
 
 #: ../ui/main.glade:1655
 msgid "_standard"
-msgstr ""
+msgstr "_стандартный"
 
 #: ../ui/main.glade:1503 ../ui/main.glade:1638 ../ui/main.glade:1725
 msgid "_thick"
