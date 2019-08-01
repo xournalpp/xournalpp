@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 06:24\n"
+"PO-Revision-Date: 2019-08-01 07:05\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -19,12 +19,14 @@ msgstr ""
 #: ../src/control/XournalMain.cpp:580
 msgid "\n\n"
 "Will now attempt to run without this file."
-msgstr ""
+msgstr "\n\n"
+"Попытаемся запустить без этого файла."
 
 #: ../src/control/XournalMain.cpp:560
 msgid "\n"
 "Will now attempt to run without this file."
-msgstr ""
+msgstr "\n"
+"Попытаемся запустить без этого файла."
 
 #: ../src/gui/MainWindow.cpp:837
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -860,7 +862,7 @@ msgstr "Режим презентации"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Record Audio / Stop Recording"
-msgstr ""
+msgstr "Запись аудио / Остановить запись"
 
 #: ../src/control/Control.cpp:984
 msgid "Recorder could not be started."
