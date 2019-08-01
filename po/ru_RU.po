@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 07:20\n"
+"PO-Revision-Date: 2019-08-01 07:36\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1632,7 +1632,8 @@ msgstr "<i>Пример:</i> 1-3 или 1,3,5-7 и т. д."
 #: ../ui/settings.glade:1813
 msgid "<i>For some specific hardware the scroll / touch behaviour of the system is not as expected. For these cases Xournal++ has a workaround.\n"
 "This also enables touch drawing.</i>"
-msgstr ""
+msgstr "<i>Для некоторых устройств поведение прокрутки / касания отличается от ожидаемого. Для этих случаев Xournal ++ предлагает обходное решение.\n"
+"Этот режим также активирует рисование пальцем.</i>"
 
 #: ../ui/settings.glade:215
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
@@ -1922,7 +1923,7 @@ msgstr "Включить автосохранение"
 
 #: ../ui/settings.glade:1829
 msgid "Enable GTK Touch / Scrolling workaround  (requires restart)"
-msgstr ""
+msgstr "Включить обходноe решение для GTK Touch / прокрутки (требуется перезапуск)"
 
 #: ../ui/settings.glade:1107
 msgid "Enable Pressure Sensitivity"
@@ -2466,7 +2467,7 @@ msgstr "С помощью сообщества"
 
 #: ../ui/settings.glade:1851
 msgid "Workaround"
-msgstr ""
+msgstr "Обходное решение"
 
 #: ../ui/settings.glade:105
 msgid "Xournal++ Preferences"
