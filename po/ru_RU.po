@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 08:16\n"
+"PO-Revision-Date: 2019-08-01 09:37\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1842,7 +1842,7 @@ msgstr "Удалить слой"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
-msgstr "Удалить штрих"
+msgstr "Удалить черту"
 
 #: ../ui/main.glade:2062
 msgid "Delete this page"
