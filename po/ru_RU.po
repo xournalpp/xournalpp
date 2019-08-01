@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 10:00\n"
+"PO-Revision-Date: 2019-08-01 10:24\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1881,7 +1881,10 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "<i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "Перетаскивание ВЛЕВО из начальной точки действует так, как будто удерживается клавиша Shift.\n"
+"Перетаскивание ВВЕРХ действует так, как будто удерживается клавиша Control.\n\n"
+"Радиус определения: радиус, при котором модификаторы будут блокироваться до завершения рисования.\n\n"
+"<i>Полезно для работы без клавиатуры.</i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
@@ -2175,7 +2178,7 @@ msgstr "Новый _слой"
 
 #: ../ui/settings.glade:3006
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
-msgstr ""
+msgstr "Переместить первую страницу на столько страниц, если включено <b>Парные страницы</b>"
 
 #: ../ui/settings.glade:842
 msgid "Options"
