@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-07-31 23:57\n"
+"PO-Revision-Date: 2019-08-01 00:15\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -244,7 +244,7 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:198
 msgid "Could not open file: \"{1}\""
-msgstr ""
+msgstr "Ei voitu avata tiedostoa: \"{1}\""
 
 #: ../src/gui/MainWindow.cpp:91
 msgid "Could not parse custom toolbar.ini file: {1}\n"
@@ -259,7 +259,7 @@ msgstr ""
 #: ../src/control/xojfile/LoadHandler.cpp:442
 #: ../src/control/xojfile/LoadHandler.cpp:470
 msgid "Could not read image: {1}. Error message: {2}"
-msgstr ""
+msgstr "Ei voitu lukea kuvaa: {1}. Virheviesti: {2}"
 
 #: ../src/undo/UndoRedoHandler.cpp:157
 msgid "Could not redo \"{1}\"\n"
@@ -587,19 +587,19 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:67 ../src/undo/InsertUndoAction.cpp:48
 msgid "Insert image"
-msgstr ""
+msgstr "Lisää kuva"
 
 #: ../src/undo/InsertUndoAction.cpp:52
 msgid "Insert latex"
-msgstr ""
+msgstr "Lisää latex"
 
 #: ../src/undo/InsertLayerUndoAction.cpp:40
 msgid "Insert layer"
-msgstr ""
+msgstr "Lisää taso"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Insert page"
-msgstr ""
+msgstr "Lisää sivu"
 
 #: ../src/control/XournalMain.cpp:316
 msgid "Jump to Page (first Page: 1)"
@@ -819,7 +819,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:290
 msgid "Pen"
-msgstr ""
+msgstr "Kynä"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Plain"
@@ -887,7 +887,7 @@ msgstr "Palauta tiedosto"
 
 #: ../src/undo/RotateUndoAction.cpp:74
 msgid "Rotation"
-msgstr ""
+msgstr "Kierto"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Rotation Snapping"
@@ -1024,7 +1024,7 @@ msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Staves"
-msgstr ""
+msgstr "Nuottiviivasto"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Stop"
@@ -1383,7 +1383,7 @@ msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:122
 msgid "pen"
-msgstr ""
+msgstr "kynä"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:222
 msgid "show"
@@ -2024,7 +2024,7 @@ msgstr ""
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
-msgstr ""
+msgstr "Lisää Latex"
 
 #: ../ui/main.glade:2458
 msgid "Insert Page After"
@@ -2587,7 +2587,7 @@ msgstr ""
 
 #: ../ui/main.glade:1233
 msgid "_Pen"
-msgstr ""
+msgstr "_Kynä"
 
 #: ../ui/main.glade:1822
 msgid "_Plugin"
