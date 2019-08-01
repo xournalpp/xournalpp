@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 06:15\n"
+"PO-Revision-Date: 2019-08-01 06:24\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -626,12 +626,12 @@ msgstr "Taso {1}"
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:138
 msgid "Light Blue"
-msgstr ""
+msgstr "Vaaleansininen"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:13
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:139
 msgid "Light Green"
-msgstr ""
+msgstr "Vaaleanvihreä"
 
 #: ../src/gui/PageView.cpp:865
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:103
@@ -1327,7 +1327,7 @@ msgstr "_Tallenna"
 
 #: ../src/util/DeviceListHelper.cpp:130
 msgid "cursor"
-msgstr ""
+msgstr "kursori"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:298
 msgid "dash-/ dotted"
@@ -1387,7 +1387,7 @@ msgstr "kynä"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:222
 msgid "show"
-msgstr ""
+msgstr "näytä"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:292
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:313
@@ -1755,7 +1755,7 @@ msgstr "Nykyinen sivu"
 
 #: ../ui/settings.glade:2175
 msgid "Cursor"
-msgstr ""
+msgstr "Kursori"
 
 #: ../ui/settings.glade:1692
 msgid "Custom Commands (for Method \"Custom\")"
@@ -1850,7 +1850,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1608
 msgid "Enable"
-msgstr ""
+msgstr "Ota käyttöön"
 
 #: ../ui/settings.glade:3160
 msgid "Enable  with determination radius of "
@@ -1910,7 +1910,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:25
 msgid "Export"
-msgstr ""
+msgstr "Vienti"
 
 #: ../ui/main.glade:250
 msgid "Export as..."
