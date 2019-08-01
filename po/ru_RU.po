@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 09:37\n"
+"PO-Revision-Date: 2019-08-01 09:53\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -163,11 +163,11 @@ msgstr "Изменить шрифт"
 
 #: ../src/undo/FillUndoAction.cpp:117
 msgid "Change stroke fill"
-msgstr ""
+msgstr "Изменить заполнение черты"
 
 #: ../src/undo/SizeUndoAction.cpp:139
 msgid "Change stroke width"
-msgstr "Изменить ширину штриха"
+msgstr "Изменить ширину черты"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:98
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
@@ -428,7 +428,7 @@ msgstr "Нарисовать систему координат"
 
 #: ../src/undo/InsertUndoAction.cpp:40
 msgid "Draw stroke"
-msgstr ""
+msgstr "Рисовать черту"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:97
 msgid "Drawing Type - don't change"
@@ -445,7 +445,7 @@ msgstr "Экстренно сохраненный документ"
 #: ../src/undo/AddUndoAction.cpp:104 ../src/undo/DeleteUndoAction.cpp:99
 #: ../src/undo/EraseUndoAction.cpp:129
 msgid "Erase stroke"
-msgstr ""
+msgstr "Удалить черту"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:64
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:311
@@ -477,7 +477,7 @@ msgstr "Ошибка при чтении PDF: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:663
 msgid "Error reading width of a stroke: {1}"
-msgstr "Ошибка чтения ширины штриха: {1}"
+msgstr "Ошибка чтения ширины черты: {1}"
 
 #: ../src/control/jobs/ImageExport.cpp:143
 msgid "Error save image #1"
@@ -1233,7 +1233,7 @@ msgstr "Неизвестный тип pixmap::domain: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:758
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr ""
+msgstr "Неизвестный тип черты: \"{1}\", предполагается, что это перо"
 
 #: ../src/control/Control.cpp:2775
 msgid "Unsaved Document"
@@ -1375,7 +1375,7 @@ msgstr "по умолчанию включен"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:315
 msgid "delete stroke"
-msgstr ""
+msgstr "удалить черту"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:301
 msgid "dotted"
@@ -1424,7 +1424,7 @@ msgstr "стандартный"
 
 #: ../src/undo/AddUndoAction.cpp:129 ../src/undo/DeleteUndoAction.cpp:123
 msgid "stroke"
-msgstr ""
+msgstr "черта"
 
 #: ../src/undo/AddUndoAction.cpp:138 ../src/undo/DeleteUndoAction.cpp:132
 msgid "text"
@@ -2121,7 +2121,7 @@ msgstr "Загрузить файл"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
-msgstr ""
+msgstr "Управление панелями инструментов"
 
 #: ../ui/settings.glade:3318
 msgid "Max Length (mm)"
@@ -2313,11 +2313,11 @@ msgstr "Выбрать PDF страницу"
 
 #: ../ui/settings.glade:2442
 msgid "Select toolbar:"
-msgstr ""
+msgstr "Выберите панель инструментов:"
 
 #: ../ui/settings.glade:2044
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr ""
+msgstr "Цвет выделения (текст, выделение линий и т. д.)"
 
 #: ../ui/main.glade:621
 msgid "Set Columns"
@@ -2706,7 +2706,7 @@ msgstr "_Вид"
 
 #: ../ui/main.glade:1677
 msgid "_delete strokes"
-msgstr ""
+msgstr "_удалить черту"
 
 #: ../ui/main.glade:1481 ../ui/main.glade:1616 ../ui/main.glade:1703
 msgid "_fine"
