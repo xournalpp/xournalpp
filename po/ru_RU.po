@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 07:36\n"
+"PO-Revision-Date: 2019-08-01 07:53\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1895,7 +1895,7 @@ msgstr "Область рисования"
 
 #: ../ui/settings.glade:3215
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
-msgstr ""
+msgstr "Инструменты рисования - настройка параметров с помощью направления рисования (экспериментально)"
 
 #: ../ui/main.glade:2466
 msgid "Duplicate"
@@ -2015,7 +2015,7 @@ msgstr "Перейти на страницу"
 
 #: ../ui/settings.glade:3085
 msgid "Grid snapping tolerance"
-msgstr ""
+msgstr "Допуск при привязке к сетке"
 
 #: ../ui/main.glade:1441
 msgid "H_and Tool"
