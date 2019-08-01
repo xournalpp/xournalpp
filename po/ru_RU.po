@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 07:05\n"
+"PO-Revision-Date: 2019-08-01 07:20\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -370,7 +370,9 @@ msgstr "Не сохранять"
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr ""
+msgstr "Не открывайте автоматически сохранённые файлы. В противном случае они могут быть перезаписаны!\n"
+"Скопируйте эти файлы в другое место.\n"
+"Файлы из папки {1} не могут быть открыты."
 
 #: ../src/control/jobs/BaseExportJob.cpp:46
 msgid "Do not overwrite the background PDF! This will cause errors!"
@@ -912,7 +914,7 @@ msgstr "Поворот"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Rotation Snapping"
-msgstr ""
+msgstr "Фиксация повотора"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:24
 msgid "Ruled"
@@ -2327,7 +2329,7 @@ msgstr "Настройки:"
 
 #: ../ui/settings.glade:3388
 msgid "Show Floating Toolbox"
-msgstr ""
+msgstr "Показать плавающую панель инструментов"
 
 #: ../ui/settings.glade:1936
 msgid "Show Menubar on Startup"
