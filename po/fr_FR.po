@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 02:39\n"
+"PO-Revision-Date: 2019-08-01 02:55\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -26,7 +26,7 @@ msgstr "\n\n"
 msgid "\n"
 "Will now attempt to run without this file."
 msgstr "\n"
-"Essai de démarrage sans fichier."
+"Essai de démarrage sans ce fichier."
 
 #: ../src/gui/MainWindow.cpp:837
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -1205,52 +1205,52 @@ msgstr "Annuler: "
 
 #: ../src/control/xojfile/LoadHandler.cpp:355
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "Balise racine inattendue : {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:388
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "Balise inattendue dans le document: \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:639
 msgid "Unknown background type: {1}"
-msgstr ""
+msgstr "Type de fond inconnu : {1}"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "Valeur de couleur inconnue \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:574
 msgid "Unknown domain type: {1}"
-msgstr ""
+msgstr "Type de domaine inconnu : {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:289
 msgid "Unknown parser error"
-msgstr ""
+msgstr "Erreur d'analyseur inconnue"
 
 #: ../src/control/xojfile/LoadHandler.cpp:487
 msgid "Unknown pixmap::domain type: {1}"
-msgstr ""
+msgstr "Type de domaine inconnu : {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:758
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr ""
+msgstr "Type de trait inconnu : \"{1}\", en supposant le stylo"
 
 #: ../src/control/Control.cpp:2775
 msgid "Unsaved Document"
-msgstr ""
+msgstr "Document non enregistré"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 msgid "Vertical Space"
-msgstr ""
+msgstr "Espace vertical"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:68
 msgid "Vertical space"
-msgstr ""
+msgstr "Espace vertical"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:146
 msgid "White"
-msgstr ""
+msgstr "Blanc"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:33
 msgid "With PDF background"
@@ -1736,206 +1736,209 @@ msgstr "Toutes les trois conditions doivent être remplies avant que le trait ne
 
 #: ../ui/settings.glade:3811
 msgid "Audio Devices"
-msgstr ""
+msgstr "Périphérique audio"
 
 #: ../ui/settings.glade:3951
 msgid "Audio Recording"
-msgstr ""
+msgstr "Enregistrement audio"
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
-msgstr ""
+msgstr "Auteur : "
 
 #: ../ui/about.glade:161
 msgid "Authors:"
-msgstr ""
+msgstr "Auteurs:"
 
 #: ../ui/settings.glade:1515
 msgid "Autodetect"
-msgstr ""
+msgstr "Détection automatique"
 
 #: ../ui/settings.glade:559
 msgid "Autoloading Journals"
-msgstr ""
+msgstr "Auto-chargement des journaux"
 
 #: ../ui/settings.glade:316
 msgid "Autosaving"
-msgstr ""
+msgstr "Enregistrement automatique"
 
 #: ../ui/settings.glade:465
 msgid "Available Placeholders"
-msgstr ""
+msgstr "Espaces réservés disponibles"
 
 #: ../ui/settings.glade:2019
 msgid "Background color for window Background"
-msgstr ""
+msgstr "Couleur d'arrière-plan pour l'arrière-plan de la fenêtre"
 
 #: ../ui/settings.glade:2153
 msgid "Big cursor for pen"
-msgstr ""
+msgstr "Grand curseur pour stylet"
 
 #: ../ui/settings.glade:2008
 msgid "Border color"
-msgstr ""
+msgstr "Couleur de la bordure"
 
 #: ../ui/settings.glade:1993
 msgid "Border color for current page and other selections"
-msgstr ""
+msgstr "Couleur de bordure pour la page courante et d'autres sélections"
 
 #: ../ui/about.glade:128
 msgid "Built on:"
-msgstr ""
+msgstr "Basé sur:"
 
 #: ../ui/settings.glade:1201
 msgid "Button 1"
-msgstr ""
+msgstr "Bouton 1"
 
 #: ../ui/settings.glade:1239
 msgid "Button 2"
-msgstr ""
+msgstr "Bouton 2"
 
 #: ../ui/settings.glade:2089
 msgid "Colors"
-msgstr ""
+msgstr "Couleurs"
 
 #: ../ui/main.glade:1134
 msgid "Configure Page Template"
-msgstr ""
+msgstr "Configurer le modèle de page"
 
 #: ../ui/pageTemplate.glade:185
 msgid "Copy last page settings"
-msgstr ""
+msgstr "Copier les paramètres de la dernière page"
 
 #: ../ui/pageTemplate.glade:296
 msgid "Copy last page size"
-msgstr ""
+msgstr "Copier la taille de la dernière page"
 
 #: ../ui/exportSettings.glade:158
 msgid "Current page"
-msgstr ""
+msgstr "Page en cours"
 
 #: ../ui/settings.glade:2175
 msgid "Cursor"
-msgstr ""
+msgstr "Curseur"
 
 #: ../ui/settings.glade:1692
 msgid "Custom Commands (for Method \"Custom\")"
-msgstr ""
+msgstr "Commandes personnalisées (pour la méthode \"Personnaliser\")"
 
 #: ../ui/settings.glade:2067
 msgid "Dark Theme (requires restart)"
-msgstr ""
+msgstr "Thème foncé (nécessite un redémarrage)"
 
 #: ../ui/settings.glade:491
 msgid "Default Save Name"
-msgstr ""
+msgstr "Nom du fichier par défaut"
 
 #: ../ui/settings.glade:379
 msgid "Default name: "
-msgstr ""
+msgstr "Nom par défaut: "
 
 #: ../ui/settings.glade:3589
 msgid "Defaults"
-msgstr ""
+msgstr "Par défaut"
 
 #: ../ui/main.glade:1172
 msgid "Delete Layer"
-msgstr ""
+msgstr "Supprimer le calque"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
-msgstr ""
+msgstr "Supprimer le trait"
 
 #: ../ui/main.glade:2062
 msgid "Delete this page"
-msgstr ""
+msgstr "Supprimer cette page"
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
-msgstr ""
+msgstr "Périphérique"
 
 #: ../ui/settings.glade:1620
 msgid "Disable"
-msgstr ""
+msgstr "Désactiver"
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
-msgstr ""
+msgstr "Désactiver le dessin pour ce périphérique"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
-msgstr ""
+msgstr "Désactivé"
 
 #: ../ui/settings.glade:1489
 msgid "Disabling Method"
-msgstr ""
+msgstr "Désactiver la méthode"
 
 #: ../ui/settings.glade:2767
 msgid "Display DPI Calibration"
-msgstr ""
+msgstr "Afficher l'étalonnage DPI"
 
 #: ../ui/settings.glade:3252
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
-msgstr ""
+msgstr "Ne pas dessiner pour les entrées de courte durée et de longue durée sauf si elles sont en succession courte. Au lieu de cela, afficher la boîte à outils flottante."
 
 #: ../ui/settings.glade:641 ../ui/settings.glade:808 ../ui/settings.glade:3165
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "<i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "Glissez À GAUCHE à partir du point de départ agit comme lorsque la touche SHIFT est maintenue.\n"
+"Glissez HAUT agit comme si la touche CONTRÔLE est maintenue.\n\n"
+"Rayon de détermination : rayon auquel les modificateurs se verrouilleront jusqu'à la fin du dessin.\n\n"
+"<i>Utile pour fonctionner sans clavier.</i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr ""
+msgstr "Glissez et déposez des composants d'ici vers les barres barres d'outils et vice-versa."
 
 #: ../ui/main.glade:1364
 msgid "Draw _Line"
-msgstr ""
+msgstr "Tracer une _ligne"
 
 #: ../ui/settings.glade:3443
 msgid "Drawing Area"
-msgstr ""
+msgstr "Zone de Dessin"
 
 #: ../ui/settings.glade:3215
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
-msgstr ""
+msgstr "Outils de dessin - Définir les modificateurs par la direction de dessin (Expérimental)"
 
 #: ../ui/main.glade:2466
 msgid "Duplicate"
-msgstr ""
+msgstr "Dupliquer"
 
 #: ../ui/main.glade:2503
 msgid "Edit (not implemented yet)"
-msgstr ""
+msgstr "Modifier (pas encore implémenté)"
 
 #: ../ui/settings.glade:1608
 msgid "Enable"
-msgstr ""
+msgstr "Activer"
 
 #: ../ui/settings.glade:3160
 msgid "Enable  with determination radius of "
-msgstr ""
+msgstr "Activer avec un rayon de détermination de "
 
 #: ../ui/settings.glade:537
 msgid "Enable Autoloading of Journals"
-msgstr ""
+msgstr "Activer le chargement automatique des journaux"
 
 #: ../ui/settings.glade:235
 msgid "Enable Autosaving"
-msgstr ""
+msgstr "Activer la sauvegarde automatique"
 
 #: ../ui/settings.glade:1829
 msgid "Enable GTK Touch / Scrolling workaround  (requires restart)"
-msgstr ""
+msgstr "Activer le touché GTK / contournement de défilement (nécessite un redémarrage)"
 
 #: ../ui/settings.glade:1107
 msgid "Enable Pressure Sensitivity"
-msgstr ""
+msgstr "Activer la sensibilité à la pression"
 
 #: ../ui/settings.glade:3247
 msgid "Enable Tap action"
-msgstr ""
+msgstr "Activer l'action du bouton"
 
 #: ../ui/settings.glade:789
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
@@ -2335,27 +2338,27 @@ msgstr "Réglages:"
 
 #: ../ui/settings.glade:3388
 msgid "Show Floating Toolbox"
-msgstr ""
+msgstr "Afficher la boîte à outils flottante"
 
 #: ../ui/settings.glade:1936
 msgid "Show Menubar on Startup"
-msgstr ""
+msgstr "Afficher la barre de menu au démarrage"
 
 #: ../ui/main.glade:496
 msgid "Show sidebar"
-msgstr ""
+msgstr "Afficher la barre latérale"
 
 #: ../ui/settings.glade:2204
 msgid "Show sidebar on the right side"
-msgstr ""
+msgstr "Afficher la barre latérale sur le côté droit"
 
 #: ../ui/settings.glade:2220
 msgid "Show vertical scrollbar on the left side"
-msgstr ""
+msgstr "Afficher la barre de défilement verticale sur le côté gauche"
 
 #: ../ui/settings.glade:3131
 msgid "Snapping"
-msgstr ""
+msgstr "Snapping"
 
 #: ../ui/settings.glade:2560
 msgid "Speed for Ctrl + Scroll"
@@ -2761,17 +2764,17 @@ msgstr ""
 #: ../ui/settings.glade:2941 ../ui/settings.glade:2952
 #: ../ui/settings.glade:3200
 msgid "pixels"
-msgstr ""
+msgstr "pixels"
 
 #: ../ui/settings.glade:1544
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
-msgstr ""
+msgstr "s <i>(après quoi l'écran tactile sera réactivé)</i>"
 
 #: ../ui/pageTemplate.glade:37
 msgid "save to file"
-msgstr ""
+msgstr "enregistrer dans un fichier"
 
 #: ../ui/main.glade:1514
 msgid "ver_y thick"
-msgstr ""
+msgstr "trè_s épais"
 
