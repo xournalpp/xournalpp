@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 02:55\n"
+"PO-Revision-Date: 2019-08-01 07:20\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2362,180 +2362,180 @@ msgstr "Snapping"
 
 #: ../ui/settings.glade:2560
 msgid "Speed for Ctrl + Scroll"
-msgstr ""
+msgstr "Vitesse pour défilement Ctrl +"
 
 #: ../ui/settings.glade:2588
 msgid "Speed for a Zoomstep"
-msgstr ""
+msgstr "Vitesse pour une étape de zoom"
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #: ../ui/settings.glade:3662 ../ui/settings.glade:3699
 msgid "Storage Folder"
-msgstr ""
+msgstr "Dossier de stockage"
 
 #: ../ui/settings.glade:1326
 msgid "Stylus"
-msgstr ""
+msgstr "Stylet"
 
 #: ../ui/settings.glade:1295
 msgid "Stylus Buttons"
-msgstr ""
+msgstr "Boutons du stylet"
 
 #: ../ui/settings.glade:3329
 msgid "Successive (ms)"
-msgstr ""
+msgstr "Succession (ms)"
 
 #: ../ui/main.glade:1998
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "Échanger la page courante avec celle ci-dessus"
 
 #: ../ui/main.glade:2020
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "Échanger la page courante avec celle ci-dessous"
 
 #: ../ui/main.glade:840
 msgid "T_oolbars"
-msgstr ""
+msgstr "Barre d'_outils"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
-msgstr ""
+msgstr "Modèle:"
 
 #: ../ui/settings.glade:1653 ../ui/settings.glade:1666
 msgid "Test"
-msgstr ""
+msgstr "Test"
 
 #: ../ui/main.glade:1766
 msgid "Text Font..."
-msgstr ""
+msgstr "Police du texte..."
 
 #: ../ui/settings.glade:2744
 msgid "The unit of the ruler is cm"
-msgstr ""
+msgstr "L'unité de la règle est en cm"
 
 #: ../ui/settings.glade:768
 msgid "These settings take only effect if the experimental input system is activated"
-msgstr ""
+msgstr "Ces paramètres ne prennent effet que si le système d'entrée expérimental est activé"
 
 #: ../ui/settings.glade:621
 msgid "This is an experimental feature! Use it with care."
-msgstr ""
+msgstr "C'est une fonctionnalité expérimentale ! Utilisez-la avec soin."
 
 #: ../ui/settings.glade:1500
 msgid "Timeout"
-msgstr ""
+msgstr "Expiré"
 
 #: ../ui/settings.glade:1413 ../ui/settings.glade:1882
 #: ../ui/settingsDeviceClassConfig.glade:45
 msgid "Touchscreen"
-msgstr ""
+msgstr "Écran tactile"
 
 #: ../ui/fillTransparency.glade:14
 msgid "Transparency settings"
-msgstr ""
+msgstr "Paramètres de transparence"
 
 #: ../ui/settings.glade:3358
 msgid "Try to select object first."
-msgstr ""
+msgstr "Essayez d'abord de sélectionner l'objet."
 
 #: ../ui/settings.glade:3363 ../ui/settings.glade:3393
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
-msgstr ""
+msgstr "Essayez d'abord de sélectionner l'objet ; si rien n'est sélectionné, alors affichez la boîte à outils flottante si activé."
 
 #: ../ui/settings.glade:3019
 msgid "Usually 0 or 1"
-msgstr ""
+msgstr "Généralement 0 ou 1"
 
 #: ../ui/about.glade:100
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Version: "
-msgstr ""
+msgstr "Version: "
 
 #: ../ui/settings.glade:2508
 msgid "View"
-msgstr ""
+msgstr "Vue"
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
-msgstr ""
+msgstr "Blanc"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
-msgstr ""
+msgstr "Largeur :"
 
 #: ../ui/about.glade:202
 msgid "With help from the community"
-msgstr ""
+msgstr "Avec l'aide de la communauté"
 
 #: ../ui/settings.glade:1851
 msgid "Workaround"
-msgstr ""
+msgstr "Solution de secours"
 
 #: ../ui/settings.glade:105
 msgid "Xournal++ Preferences"
-msgstr ""
+msgstr "Préférences Xournal++"
 
 #: ../ui/settings.glade:2798
 msgid "Zoom"
-msgstr ""
+msgstr "Zoom"
 
 #: ../ui/settings.glade:1782
 msgid "Zoom Gestures"
-msgstr ""
+msgstr "Gestes de zoom"
 
 #: ../ui/settings.glade:2642
 msgid "Zoom Speed"
-msgstr ""
+msgstr "Vitesse de zoom"
 
 #: ../ui/main.glade:633
 msgid "_1 Column"
-msgstr ""
+msgstr "_1 colonne"
 
 #: ../ui/main.glade:738
 msgid "_1 Row"
-msgstr ""
+msgstr "_1 ligne"
 
 #: ../ui/main.glade:644
 msgid "_2 Columns"
-msgstr ""
+msgstr "_2 colonnes"
 
 #: ../ui/main.glade:749
 msgid "_2 Rows"
-msgstr ""
+msgstr "_2 lignes"
 
 #: ../ui/main.glade:655
 msgid "_3 Columns"
-msgstr ""
+msgstr "_3 colonnes"
 
 #: ../ui/main.glade:760
 msgid "_3 Rows"
-msgstr ""
+msgstr "_3 lignes"
 
 #: ../ui/main.glade:666
 msgid "_4 Columns"
-msgstr ""
+msgstr "_4 colonnes"
 
 #: ../ui/main.glade:771
 msgid "_4 Rows"
-msgstr ""
+msgstr "_4 lignes"
 
 #: ../ui/main.glade:677
 msgid "_5 Columns"
-msgstr ""
+msgstr "_5 colonnes"
 
 #: ../ui/main.glade:782
 msgid "_5 Rows"
-msgstr ""
+msgstr "_5 lignes"
 
 #: ../ui/main.glade:688
 msgid "_6 Columns"
-msgstr ""
+msgstr "_6 colonnes"
 
 #: ../ui/main.glade:793
 msgid "_6 Rows"
@@ -2739,27 +2739,27 @@ msgstr "_blanc"
 
 #: ../ui/pageTemplate.glade:158
 msgid "change"
-msgstr ""
+msgstr "modifier"
 
 #: ../ui/exportSettings.glade:223
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
-msgstr ""
+msgstr "activé,"
 
 #: ../ui/settings.glade:259
 msgid "every"
-msgstr ""
+msgstr "tous"
 
 #: ../ui/pageTemplate.glade:51
 msgid "load from file"
-msgstr ""
+msgstr "charger depuis le fichier"
 
 #: ../ui/settings.glade:286
 msgid "minutes"
-msgstr ""
+msgstr "minutes"
 
 #: ../ui/settings.glade:2941 ../ui/settings.glade:2952
 #: ../ui/settings.glade:3200
