@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 09:53\n"
+"PO-Revision-Date: 2019-08-01 10:00\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1818,7 +1818,7 @@ msgstr "Курсор"
 
 #: ../ui/settings.glade:1692
 msgid "Custom Commands (for Method \"Custom\")"
-msgstr ""
+msgstr "Пользовательские команды (для метода «Пользовательский»)"
 
 #: ../ui/settings.glade:2067
 msgid "Dark Theme (requires restart)"
@@ -2438,7 +2438,7 @@ msgstr "Сначала попробуйте выбрать объект."
 
 #: ../ui/settings.glade:3363 ../ui/settings.glade:3393
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
-msgstr ""
+msgstr "Сначала попробуйте выбрать объект; если ничего не выбрано, то будет показан плавающий набор инструментов, если включено."
 
 #: ../ui/settings.glade:3019
 msgid "Usually 0 or 1"
