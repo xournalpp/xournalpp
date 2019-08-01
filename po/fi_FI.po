@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 06:24\n"
+"PO-Revision-Date: 2019-08-01 06:47\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -1028,7 +1028,7 @@ msgstr "Nuottiviivasto"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Stop"
-msgstr ""
+msgstr "Pysäytä"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:111
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
@@ -1200,7 +1200,7 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:289
 msgid "Unknown parser error"
-msgstr ""
+msgstr "Tuntematon jäsennysvirhe"
 
 #: ../src/control/xojfile/LoadHandler.cpp:487
 msgid "Unknown pixmap::domain type: {1}"
@@ -1212,7 +1212,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2775
 msgid "Unsaved Document"
-msgstr ""
+msgstr "Tallentamaton dokumentti"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 msgid "Vertical Space"
@@ -1245,11 +1245,11 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:284
 msgid "XML Parser error: {1}"
-msgstr ""
+msgstr "XML-jäsennysvirhe: {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "Xournal (yhteensopiva muoto)"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:74
 msgid "Xournal files"
@@ -1715,7 +1715,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2008
 msgid "Border color"
-msgstr ""
+msgstr "Reunuksen väri"
 
 #: ../ui/settings.glade:1993
 msgid "Border color for current page and other selections"
@@ -1974,19 +1974,19 @@ msgstr "Korkeus:"
 
 #: ../ui/main.glade:888 ../ui/settings.glade:2338 ../ui/settings.glade:2405
 msgid "Hide Menubar"
-msgstr ""
+msgstr "Piilota valikkopalkki"
 
 #: ../ui/settings.glade:2354 ../ui/settings.glade:2421
 msgid "Hide Sidebar"
-msgstr ""
+msgstr "Piilota sivupalkki"
 
 #: ../ui/settings.glade:2271
 msgid "Hide the horizontal scrollbar"
-msgstr ""
+msgstr "Piilota vaakavierityspalkki"
 
 #: ../ui/settings.glade:2287
 msgid "Hide the vertical scrollbar"
-msgstr ""
+msgstr "Piilota pystyvierityspalkki"
 
 #: ../ui/settings.glade:2137
 msgid "Highlight cursor position"
@@ -2073,7 +2073,7 @@ msgstr ""
 
 #: ../ui/settings.glade:954
 msgid "Middle Mouse Button"
-msgstr ""
+msgstr "Hiiren keskipainike"
 
 #: ../ui/settings.glade:1041 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
@@ -2081,15 +2081,15 @@ msgstr "Hiiri"
 
 #: ../ui/settings.glade:1010
 msgid "Mouse Buttons"
-msgstr ""
+msgstr "Hiiren painikkeet"
 
 #: ../ui/main.glade:2488
 msgid "Move Down"
-msgstr ""
+msgstr "Siirry alas"
 
 #: ../ui/main.glade:2480
 msgid "Move Up"
-msgstr ""
+msgstr "Siirrä ylös"
 
 #: ../ui/main.glade:1066
 msgid "N_ext annotated page"
@@ -2129,7 +2129,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:18
 msgid "Page Template"
-msgstr ""
+msgstr "Sivumalli"
 
 #: ../ui/exportSettings.glade:175
 msgid "Pages:"
@@ -2182,7 +2182,7 @@ msgstr ""
 
 #: ../ui/main.glade:440
 msgid "Preferences"
-msgstr ""
+msgstr "Asetukset"
 
 #: ../ui/settings.glade:2477
 msgid "Presentation Mode"
