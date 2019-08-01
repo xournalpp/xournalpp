@@ -71,7 +71,7 @@ bool CustomExportJob::isUriValid(string& uri)
 	this->chosenFilterName = BaseExportJob::getFilterName();
 	
 	// Remove any pre-existing extension and adds the chosen one
-	filename.clearExtensions();
+	filename.clearExtensions(filters[this->chosenFilterName]->extension);
 	filename += filters[this->chosenFilterName]->extension;
 
 	return checkOverwriteBackgroundPDF(filename);
