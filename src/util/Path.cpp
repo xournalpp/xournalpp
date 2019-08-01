@@ -136,17 +136,28 @@ bool Path::hasExtension(const string& ext) const
 	return StringUtils::toLowerCase(pathExt) == StringUtils::toLowerCase(ext);
 }
 
-void Path::clearExtensions()
+void Path::clearExtensions(const string& ext)
 {
 	string plower = StringUtils::toLowerCase(path);
 	auto rm_ext = [&](string const& ext) {
 		if (StringUtils::endsWith(plower, ext))
 		{
-			this->path = path.substr(0, path.length() - ext.size());
+			auto newLen = plower.length() - ext.size();
+			if (newLen < path.length())
+			{
+				this->path = path.substr(0, newLen);
+			}
 		}
 	};
 	rm_ext(".xoj");
 	rm_ext(".xopp");
+	if (!ext.empty())
+	{
+		string extLower = StringUtils::toLowerCase(ext);
+		rm_ext(extLower);
+		rm_ext(extLower + ".xoj");
+		rm_ext(extLower + ".xopp");
+	}
 }
 
 const string& Path::str() const

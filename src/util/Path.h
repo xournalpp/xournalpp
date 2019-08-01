@@ -65,9 +65,12 @@ public:
 	bool hasExtension(const string& ext) const;
 
 	/**
-	 * Clear the the last known extension (last .pdf, .pdf.xoj, .pdf.xopp etc.)
+	 * Clear the the last known xournal extension (last .xoj, .xopp etc.)
+	 *
+	 * @param ext An extension to clear additionally, eg .pdf (would also clear
+	 *  .pdf.xopp etc.)
 	 */
-	void clearExtensions();
+	void clearExtensions(const string& ext = "");
 
 	/**
 	 * @return true if this file has .xopp or .xoj extension
