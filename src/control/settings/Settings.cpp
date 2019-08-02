@@ -780,7 +780,8 @@ xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value, xmlNodeP
 	XOJ_CHECK_TYPE(Settings);
 
 	char text[G_ASCII_DTOSTR_BUF_SIZE];
-	g_ascii_dtostr( text, G_ASCII_DTOSTR_BUF_SIZE, value);	//  g_ascii_ version uses C locale always.
+	//  g_ascii_ version uses C locale always.
+	g_ascii_formatd(text, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, value);
 	xmlNodePtr xmlNode = saveProperty(key, text, parent);
 	return xmlNode;
 }
@@ -1043,7 +1044,8 @@ void Settings::save()
 	xmlSetProp(xmlFont, (const xmlChar*) "font", (const xmlChar*) this->font.getName().c_str());
 
 	char sSize[G_ASCII_DTOSTR_BUF_SIZE];
-	g_ascii_dtostr( sSize, G_ASCII_DTOSTR_BUF_SIZE, this->font.getSize());	//no locale
+
+	g_ascii_formatd(sSize, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, this->font.getSize());  // no locale
 	xmlSetProp(xmlFont, (const xmlChar*) "size", (const xmlChar*) sSize);
 
 
@@ -1100,7 +1102,7 @@ void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 			type = "double";
 
 			char tmp[G_ASCII_DTOSTR_BUF_SIZE];
-			g_ascii_dtostr( tmp, G_ASCII_DTOSTR_BUF_SIZE, attrib.dValue);
+			g_ascii_formatd(tmp, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, attrib.dValue);
 			value = tmp;
 		}
 		else if (attrib.type == ATTRIBUTE_TYPE_INT_HEX)

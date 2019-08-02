@@ -53,6 +53,19 @@ void execInUiThread(std::function<void()>&& callback);
 
 gboolean paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void* unused);
 
+/**
+ * Format coordinates to use 8 digits of precision https://m.xkcd.com/2170/
+ * This function works like g_ascii_formatd in that it stores the result in buff, and
+ * also returns the result.
+ */
+extern gchar* getCoordinateString(gchar* buff, gulong buffLen, double xVal, double yVal);
+
+constexpr const gchar* PRECISION_FORMAT_STRING = "%.8f";
+
+constexpr const gchar* PRECISION_FORMAT_STRING_XY = "%.8f %.8f";  // note the space delimiter
+
+constexpr const int PRECISION_FORMAT_BUFF_LEN = G_ASCII_DTOSTR_BUF_SIZE * 2 + 1;
+
 }  // namespace Util
 
 static const size_t npos = std::numeric_limits<size_t>::max();

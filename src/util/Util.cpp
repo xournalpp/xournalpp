@@ -170,3 +170,8 @@ gboolean Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void*)
 	return false;
 }
 
+gchar* Util::getCoordinateString(gchar* buff, gulong buffLen, double xVal, double yVal)
+{
+	g_snprintf(buff, buffLen, Util::PRECISION_FORMAT_STRING_XY, xVal, yVal);
+	return buff;
+}
