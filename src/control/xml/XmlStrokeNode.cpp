@@ -89,15 +89,12 @@ void XmlStrokeNode::writeOut(OutputStream* out)
 	{
 		out->write(">");
 
-		gchar coordinateStr[Util::PRECISION_FORMAT_BUFF_LEN];
-		Util::getCoordinateString(coordinateStr, Util::PRECISION_FORMAT_BUFF_LEN, points[0].x, points[0].y);
-		out->write(coordinateStr);
+		Util::writeCoordinateString(out, points[0].x, points[0].y);
 
 		for (int i = 1; i < this->pointsLength; i++)
 		{
-			Util::getCoordinateString(coordinateStr, Util::PRECISION_FORMAT_BUFF_LEN, points[i].x, points[i].y);
 			out->write(" ");
-			out->write(coordinateStr);
+			Util::writeCoordinateString(out, points[i].x, points[i].y);
 		}
 
 		out->write("</");
