@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-06 21:36\n"
+"PO-Revision-Date: 2019-08-06 21:52\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -128,7 +128,7 @@ msgstr "Takaisin"
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:270
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:322
 msgid "Background"
-msgstr ""
+msgstr "Tausta"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:136
@@ -973,7 +973,7 @@ msgstr "Valitse toinen nimi"
 
 #: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:140
 msgid "Select background color"
-msgstr ""
+msgstr "Valitse taustaväri"
 
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:59
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:175
@@ -1503,7 +1503,7 @@ msgstr "<b>Taustaväri</b>"
 
 #: ../ui/pageTemplate.glade:269
 msgid "<b>Background</b>"
-msgstr ""
+msgstr "<b>Tausta</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
@@ -2234,7 +2234,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:174
 msgid "Select Background Color"
-msgstr ""
+msgstr "Valitse taustaväri"
 
 #: ../ui/settings.glade:3677
 msgid "Select Folder"
@@ -2607,7 +2607,7 @@ msgstr "_Edellinen sivu"
 
 #: ../ui/main.glade:564
 msgid "_Right To Left"
-msgstr ""
+msgstr "_Oikealta vasemmalle"
 
 #: ../ui/main.glade:1309
 msgid "_Shape Recognizer"
@@ -2619,7 +2619,7 @@ msgstr "_Teksti"
 
 #: ../ui/main.glade:1222
 msgid "_Tools"
-msgstr ""
+msgstr "_Työkalut"
 
 #: ../ui/main.glade:1050
 msgid "_Top Layer"
@@ -2627,7 +2627,7 @@ msgstr ""
 
 #: ../ui/main.glade:582
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "_Ylhäältä alas"
 
 #: ../ui/main.glade:535
 msgid "_Vertical"
