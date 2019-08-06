@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-06 09:48\n"
+"PO-Revision-Date: 2019-08-06 10:07\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -185,7 +185,7 @@ msgstr "Copier"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
 msgid "Copy current"
-msgstr "Copier l'élement courant"
+msgstr "Copier l'élément courant"
 
 #: ../src/undo/CopyUndoAction.cpp:81
 msgid "Copy page"
@@ -315,7 +315,7 @@ msgstr "Impossible d'écrire l'arrière-plan \"{1}\". Poursuite."
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:109
 msgid "Create new layer"
-msgstr "Création d'un nouveau calque"
+msgstr "Créer un nouveau calque"
 
 #: ../src/gui/dialog/FormatDialog.cpp:72
 msgid "Custom"
@@ -388,7 +388,7 @@ msgstr "Le document n'est pas terminé (peut-être la fin est coupée ?)"
 
 #: ../src/model/Document.cpp:389 ../src/model/Document.cpp:399
 msgid "Document not loaded! ({1}), {2}"
-msgstr "Document non chargé! ({1}), {2}"
+msgstr "Document non chargé ! ({1}), {2}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:28
 msgid "Dotted"
@@ -404,7 +404,7 @@ msgstr "Dessiner une flèche"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:471
 msgid "Draw Circle"
-msgstr "Tracer Cercle"
+msgstr "Tracer un cercle"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:101
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
@@ -436,7 +436,7 @@ msgstr "Type de dessin - ne pas changer"
 
 #: ../src/undo/TextBoxUndoAction.cpp:52
 msgid "Edit text"
-msgstr "Modifier texte"
+msgstr "Modifier le texte"
 
 #: ../src/undo/EmergencySaveRestore.cpp:36
 msgid "Emergency saved document"
@@ -450,7 +450,7 @@ msgstr "Effacer le trait"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:64
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:311
 msgid "Eraser"
-msgstr "Effacer"
+msgstr "Gomme"
 
 #: ../src/control/Control.cpp:2578
 msgid "Error annotate PDF file \"{1}\"\n"
@@ -489,11 +489,11 @@ msgstr "Erreur d'enregistrement de l'image #2"
 
 #: ../src/control/jobs/AutosaveJob.cpp:25
 msgid "Error while autosaving: {1}"
-msgstr "Erreur lors de l'auto-sauvegarde : {1}"
+msgstr "Erreur lors de la sauvegarde automatique : {1}"
 
 #: ../src/util/CrashHandler.cpp:47
 msgid "Error: {1}"
-msgstr "Erreur: {1}"
+msgstr "Erreur : {1}"
 
 #: ../src/control/XournalMain.cpp:162
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -537,7 +537,7 @@ msgstr "Aller à la dernière page"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Go to next layer"
-msgstr "Aller à la couche suivante"
+msgstr "Aller au calque suivant"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Go to page"
@@ -545,11 +545,11 @@ msgstr "Aller à la page"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Go to previous layer"
-msgstr "Aller à la couche précédente"
+msgstr "Aller au calque précédent"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Go to top layer"
-msgstr "Aller à la couche la plus haute"
+msgstr "Aller au calque le plus haut"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:27
 msgid "Graph"
@@ -594,7 +594,7 @@ msgstr "Fichier image créé avec succès"
 
 #: ../src/control/XournalMain.cpp:315
 msgid "Image output filename (.png / .svg)"
-msgstr "Nom de fichier de sortie d'image (.png / .svg)"
+msgstr "Nom du fichier d'export d'image (.png / .svg)"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:18
 msgid "Images"
@@ -606,7 +606,7 @@ msgstr "Insérer des éléments"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:67 ../src/undo/InsertUndoAction.cpp:48
 msgid "Insert image"
-msgstr "Inserer une image"
+msgstr "Insérer une image"
 
 #: ../src/undo/InsertUndoAction.cpp:52
 msgid "Insert latex"
@@ -614,7 +614,7 @@ msgstr "Insérer latex"
 
 #: ../src/undo/InsertLayerUndoAction.cpp:40
 msgid "Insert layer"
-msgstr "Insérer une couche"
+msgstr "Insérer un calque"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Insert page"
@@ -622,11 +622,11 @@ msgstr "Insérer une page"
 
 #: ../src/control/XournalMain.cpp:316
 msgid "Jump to Page (first Page: 1)"
-msgstr "Aller à la page (première page: 1)"
+msgstr "Aller à la page (première page : 1)"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:348
 msgid "Layer"
-msgstr "Couche"
+msgstr "Calque"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:79
 msgid "Layer Preview"
