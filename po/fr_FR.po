@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-06 09:39\n"
+"PO-Revision-Date: 2019-08-06 09:48\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -48,9 +48,9 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr "<span foreground='red' size='x-large'>Le fichier UI requis manque :\n"
+msgstr "<span foreground='red' size='x-large'>Le fichier UI requis est manquant :\n"
 "<b>{1}</b></span>\n"
-"Impossible de les trouver à n'importe quel endroit.\n"
+"Impossible de le trouver à n'importe quel endroit.\n"
 "  Pas dans le chemin relatif\n"
 "  Pas dans le chemin de travail\n"
 "  Pas dans {2}"
@@ -118,7 +118,7 @@ msgstr "Dossier audio non défini ! L'enregistrement ne fonctionnera pas !\n"
 
 #: ../src/control/Control.cpp:264
 msgid "Autosave failed with an error: {1}"
-msgstr "Échec de l'auto-sauvegarde avec une erreur : {1}"
+msgstr "Échec de la sauvegarde automatique avec une erreur : {1}"
 
 #: ../src/control/Control.cpp:226
 msgid "Autosave renamed from {1} to {2}"
@@ -126,7 +126,7 @@ msgstr "Sauvegarde automatique renommée de {1} à {2}"
 
 #: ../src/control/jobs/AutosaveJob.cpp:60
 msgid "Autosaving to {1}"
-msgstr "Auto-sauvegarde vers {1}"
+msgstr "Sauvegarde automatique vers {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Back"
