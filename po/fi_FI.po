@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-06 21:12\n"
+"PO-Revision-Date: 2019-08-06 21:36\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -305,7 +305,7 @@ msgstr ""
 
 #: ../src/gui/dialog/FormatDialog.cpp:72
 msgid "Custom"
-msgstr ""
+msgstr "Muokattu"
 
 #: ../src/control/jobs/CustomExportJob.cpp:18
 msgid "Custom Export"
@@ -765,7 +765,7 @@ msgstr "PDF-tiedostot"
 
 #: ../src/control/XournalMain.cpp:314
 msgid "PDF output filename"
-msgstr ""
+msgstr "PDF-tulostetiedostonimi"
 
 #: ../src/control/jobs/CustomExportJob.cpp:24
 msgid "PDF with plain background"
@@ -929,7 +929,7 @@ msgstr "Tallenna tiedosto"
 #: ../src/control/jobs/CustomExportJob.cpp:162
 #: ../src/control/jobs/SaveJob.cpp:143
 msgid "Save file error: {1}"
-msgstr ""
+msgstr "Virhe tallennettaessa tiedostoa: {1}"
 
 #: ../src/undo/ScaleUndoAction.cpp:73
 msgid "Scale"
@@ -1072,7 +1072,7 @@ msgstr ""
 
 #: ../src/gui/SearchBar.cpp:102
 msgid "Text not found"
-msgstr ""
+msgstr "Tekstiä ei löydy"
 
 #: ../src/gui/SearchBar.cpp:189 ../src/gui/SearchBar.cpp:245
 msgid "Text not found, searched on all pages"
@@ -1432,7 +1432,7 @@ msgstr ""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:89
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr ""
+msgstr "xoj-preview-extractor: \"{1}\"-tiedosto ei ole .xoj-tiedosto"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:102
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
@@ -2226,7 +2226,7 @@ msgstr "Näytteenottotaajuus"
 
 #: ../ui/settings.glade:2309
 msgid "Scrollbars"
-msgstr ""
+msgstr "Vierityspalkit"
 
 #: ../ui/settings.glade:2974
 msgid "Scrolling outside the page"
