@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-01 10:24\n"
+"PO-Revision-Date: 2019-08-06 20:44\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1679,7 +1679,7 @@ msgstr "<i>Укажите аудио устройства, используем�
 
 #: ../ui/settings.glade:1160
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
-msgstr ""
+msgstr "<i>Задайте инструменты, которые будут выбраны по нажатию кнопки стилуса или при использовании ластика. После отпускания кнопки будет выбран предыдущий инструмент.</i>"
 
 #: ../ui/settings.glade:346
 msgid "<i>This name will be proposed if you save a new document.</i>"
@@ -1730,7 +1730,8 @@ msgstr "Все страницы"
 #: ../ui/settings.glade:3377
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
-msgstr ""
+msgstr "Все три условия должны быть выполнены прежде чем штрих будет проигнорирован.\n"
+"Штрих должен быть коротким по времени и по длине, и не должно быть недавно проигнорированных штрихов."
 
 #: ../ui/settings.glade:3811
 msgid "Audio Devices"
