@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-06 10:07\n"
+"PO-Revision-Date: 2019-08-06 10:12\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -788,7 +788,7 @@ msgstr "Fichiers PDF"
 
 #: ../src/control/XournalMain.cpp:314
 msgid "PDF output filename"
-msgstr "Nom du fichier de sortie PDF"
+msgstr "Nom du fichier d'export PDF"
 
 #: ../src/control/jobs/CustomExportJob.cpp:24
 msgid "PDF with plain background"
@@ -890,11 +890,11 @@ msgstr "Supprimer l'arrière-plan du PDF"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:198
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr "Élément d'outil supprimé de la barre d'outils {1} ID {2}"
+msgstr "Outil supprimé de la barre d'outils {1} ID {2}"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:194
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr "Objet d'outil supprimé {1} de la barre d'outils {2} ID {3}"
+msgstr "Outil supprimé {1} de la barre d'outils {2} ID {3}"
 
 #: ../src/util/XojMsgBox.cpp:82
 msgid "Replace"
