@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-06 09:24\n"
+"PO-Revision-Date: 2019-08-06 09:39\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -289,7 +289,7 @@ msgstr "Impossible de supprimer l'élément d'outil {1} de la barre d'outils {2}
 
 #: ../src/control/Control.cpp:254
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr "Impossible de renommer le fichier d'auto-sauvegarde de \"{1}\" à \"{2}\" : {3}"
+msgstr "Impossible de renommer le fichier de sauvegarde automatique de \"{1}\" à \"{2}\" : {3}"
 
 #: ../src/control/LatexController.cpp:133
 msgid "Could not save .tex file: {1}"
