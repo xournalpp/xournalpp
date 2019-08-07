@@ -119,8 +119,8 @@ private:
 	XournalView* view = nullptr;
 	ScrollHandling* scrollHandling = nullptr;
 
-	std::vector<int> widthCols;
-	std::vector<int> heightRows;
+	std::vector<unsigned> widthCols;
+	std::vector<unsigned> heightRows;
 
 	double lastScrollHorizontal = -1;
 	double lastScrollVertical = -1;
@@ -134,14 +134,14 @@ private:
 	/**
 	 * The width and height of all our pages
 	 */
-	int minWidth = 0;
-	int minHeight = 0;
+	size_t minWidth = 0;
+	size_t minHeight = 0;
 
 	/**
 	 * cache the last GetViewAt() row and column.
 	 */
-	int lastGetViewAtRow = 0;
-	int lastGetViewAtCol = 0;
+	size_t lastGetViewAtRow = 0;
+	size_t lastGetViewAtCol = 0;
 
 	/**
 	 * layoutPages invalidates the precalculation of recalculate
