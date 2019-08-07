@@ -14,6 +14,26 @@
 #include "XournalType.h"
 #include "control/settings/Settings.h"
 
+#include "util/hashcombine.h"
+
+#include <unordered_map>
+
+namespace std
+{
+template <>
+class hash<std::pair<size_t, size_t>>
+{
+public:
+	size_t operator()(std::pair<size_t, size_t> const& data) const
+	{
+		size_t seed = 0;
+		boost_c::hash_combine(seed, data.first);
+		boost_c::hash_combine(seed, data.second);
+		return seed;
+	}
+};
+}  // namespace std
+
 /** 
  * @brief Layout asks this mapper what page ( if any ) should be at a given column,row.
  */
@@ -90,43 +110,34 @@ public:
 		size_t index = 0;
 	};
 
-	/**
-	 * LayoutMapper
-	 * 
-	 * Create a bare mapper to be configured before use.
-	 */
-	LayoutMapper();
-
+	LayoutMapper() = default;
+	~LayoutMapper() = default;
 
 	/**
 	 * configureFromSettings
 	 * Obtain user settings to determine arguments to configure().
-	 * 
+	 *
 	 * @param  pages  The number of pages in the document
 	 * @param  settings  The Settings from which users settings are obtained
 	 */
 
-
 	void configureFromSettings(size_t numPages, Settings* settings);
 
-	virtual ~LayoutMapper();
+	std::pair<size_t, size_t> at(size_t) const;
+	optional_size_t at(std::pair<size_t, size_t>) const;
+
+	size_t getColumns() const;
+	size_t getRows() const;
+	int getFirstPageOffset() const;
+
+	bool isPairedPages() const;
+	bool isRightToLeft() const;
+	bool isBottomToTop() const;
+	bool isVertical() const;
 
 private:
-	/**
-	 * configure
-	 * 
-	 * Set mapper to LayoutType with number of pages and of fixed rows or columns
-	 * @param  pages  The number of pages in the document
-	 * @param  numRows Number of rows ( used if useRows )
-	 * @param  numCols  Number of columns ( used if !useRows )
-	 * @param  useRows  use pages/rows to recalculate cols else recalculate rows
-	 * @param  type Specify LayoutType desired.  Options include: Horizontal, Vertical, 
-	 * @param  isPaired Display pages in pairs including offset 
-	 * @param  firstPageOffset  Pages to offset - usually one or zero in order to pair up properly
-	 */
-	void configure(size_t numRows, size_t numCols, bool useRows, int firstPageOffset);
+	void precalculateMappers();
 
-public:
 	// Todo: replace with
 	//       boost::optional<size_t> LayoutMapper::map(size_t x, size_t y) or
 	//       std::optional<size_t> LayoutMapper::map(size_t x, size_t y)
@@ -141,50 +152,33 @@ public:
 	 */
 	optional_size_t map(size_t x, size_t y);
 
-	/**
-	 * Get number of columns
-	 * 
-	 * @return number of columns
-	 */
-	size_t getColumns();
-
-	/**
-	 * Get number of rows
-	 * 
-	 * @return number of rows
-	 */
-	size_t getRows();
-
-	/**
-	 * Get offset
-	 * 
-	 * @return first page offset
-	 */
-	int getFirstPageOffset();
-
-	/**
-	 * Get PairedPages
-	 * 
-	 * @return isPairedPages
-	 */
-	bool getPairedPages();
-
-	bool isRightToLeft() const;
-	bool isBottomToTop() const;
-	bool isVertical() const;
-
 private:
-	XOJ_TYPE_ATTRIB;
+	struct internal_data
+	{
+		size_t cols = 0;
+		size_t rows = 0;
+		size_t actualPages = 0;
 
-	size_t cols = 0;
-	size_t rows = 0;
-	size_t actualPages = 0;
+		int offset = 0;
 
-	int offset = 0;
+		bool showPairedPages = false;
+		Orientation orientation = Vertical;
+		HorizontalDirection horizontalDir = LeftToRight;
+		VerticalDirection verticalDir = TopToBottom;
 
-	bool showPairedPages = false;
-	Orientation orientation = Vertical;
-	HorizontalDirection horizontalDir = LeftToRight;
-	VerticalDirection verticalDir = TopToBottom;
+		bool operator==(internal_data const& other)
+		{
+			return std::tie(this->cols, this->rows, this->actualPages, this->offset, this->showPairedPages,
+			                this->orientation, this->horizontalDir, this->verticalDir) ==
+			       std::tie(other.cols, other.rows, other.actualPages, other.offset, other.showPairedPages,
+			                other.orientation, other.horizontalDir, other.verticalDir);
+		}
+	} data_;
+
+	std::vector<std::pair<size_t, size_t>> pageToRaster;
+	std::unordered_map<std::pair<size_t, size_t>, size_t> rasterToPage;
+
+	friend void calculate(LayoutMapper::internal_data& data, size_t numRows, size_t numCols, bool useRows,
+	                      int firstPageOffset);
+	friend class std::hash<LayoutMapper::internal_data>;
 };
-

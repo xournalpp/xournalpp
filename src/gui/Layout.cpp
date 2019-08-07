@@ -86,7 +86,7 @@ void Layout::updateVisibility()
 		for (int col = 0; col < this->widthCols.size(); ++col)
 		{
 			int x2 = this->widthCols[col];
-			auto optionalPage = this->mapper.map(col, row);
+			auto optionalPage = this->mapper.at({col, row});
 			if (optionalPage)  // a page exists at this grid location
 			{
 				XojPageView* pageView = this->view->viewPages[*optionalPage];
@@ -153,19 +153,14 @@ void Layout::recalculate()
 	widthCols.assign(colCount, 0);
 	heightRows.assign(rowCount, 0);
 
-	//Todo: Mapper invert function  (index -> x,y) it is possible and faster!
-	for (auto r = 0; r < rowCount; r++)
+	for (size_t pageIdx{}; pageIdx < len; ++pageIdx)
 	{
-		for (auto c = 0; c < colCount; c++)
-		{
-			auto optionalPage = mapper.map(c, r);
-			if (optionalPage)
-			{
-				XojPageView* v = view->viewPages[*optionalPage];
-				widthCols[c] = std::max(widthCols[c], v->getDisplayWidth());
-				heightRows[r] = std::max(heightRows[r], v->getDisplayHeight());
-			}
-		}
+		auto const& raster_p = mapper.at(pageIdx);  //auto [c, r] raster = mapper.at();
+		auto const& c = raster_p.first;
+		auto const& r = raster_p.second;
+		XojPageView* v = view->viewPages[pageIdx];
+		widthCols[c] = std::max<unsigned>(widthCols[c], v->getDisplayWidth());
+		heightRows[r] = std::max<unsigned>(heightRows[r], v->getDisplayHeight());
 	}
 
 	//add space around the entire page area to accomodate older Wacom tablets with limited sense area.
@@ -196,7 +191,7 @@ void Layout::layoutPages(int width, int height)
 	Settings* settings = this->view->getControl()->getSettings();
 
 	// get from mapper (some may have changed to accomodate paired setting etc.)
-	bool isPairedPages = this->mapper.getPairedPages();
+	bool isPairedPages = this->mapper.isPairedPages();
 
 	auto rows = this->heightRows.size();
 	auto columns = this->widthCols.size();
@@ -238,7 +233,7 @@ void Layout::layoutPages(int width, int height)
 	{
 		for (int c = 0; c < columns; c++)
 		{
-			auto optionalPage = this->mapper.map(c, r);
+			auto optionalPage = this->mapper.at({c, r});
 
 			if (optionalPage)
 			{
@@ -423,7 +418,7 @@ XojPageView* Layout::getViewAt(int x, int y)
 	
 	if (testCol < numCols && testRow < numRows) 
 	{
-		auto optionalPage = this->mapper.map(testCol, testRow);
+		auto optionalPage = this->mapper.at({testCol, testRow});
 		this->lastGetViewAtRow = testRow;
 		this->lastGetViewAtCol = testCol;
 
@@ -442,7 +437,7 @@ XojPageView* Layout::getViewAt(int x, int y)
 //                  or std::optional<size_t> Layout::getIndexAtGridMap(size_t row, size_t col)
 LayoutMapper::optional_size_t Layout::getIndexAtGridMap(size_t row, size_t col)
 {
-	return this->mapper.map(col, row);  //watch out.. x,y --> c,r
+	return this->mapper.at({col, row});  //watch out.. x,y --> c,r
 }
 
 int Layout::getMinimalHeight()
