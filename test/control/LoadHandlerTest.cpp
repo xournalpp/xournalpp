@@ -20,6 +20,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <iostream>
 #include <stdlib.h>
 
 class LoadHandlerTest : public CppUnit::TestFixture
@@ -45,6 +46,10 @@ class LoadHandlerTest : public CppUnit::TestFixture
 	CPPUNIT_TEST(testStroke);
 	CPPUNIT_TEST(loadImage);
 	CPPUNIT_TEST(testLoadStoreLoad);
+
+#ifdef __linux__
+	CPPUNIT_TEST(testLoadStoreLoadGerman);
+#endif
 
 	CPPUNIT_TEST_SUITE_END();
 
@@ -406,6 +411,32 @@ public:
 			}
 		}
 	}
+
+#ifdef __linux__
+	void testLoadStoreLoadGerman()
+	{
+		constexpr auto testLocale = "de_DE.UTF-8";
+		char* currentLocale = setlocale(LC_ALL, testLocale);
+		if (currentLocale == nullptr)
+		{
+			auto environ = g_get_environ();
+			bool isCI = g_environ_getenv(environ, "CI");
+			g_strfreev(environ);
+			if (isCI)
+			{
+				CPPUNIT_ASSERT(false);
+			}
+			else
+			{
+				std::cout << "Skipping testLoadStoreLoadGerman! Consider generating the 'de_DE.UTF-8' locale on your "
+				             "system."
+				          << std::endl;
+			}
+		}
+		testLoadStoreLoad();
+		setlocale(LC_ALL, "C");
+	}
+#endif
 };
 
 // Registers the fixture into the 'registry'
