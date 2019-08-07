@@ -193,7 +193,7 @@ private:
 	PageRef page;
 	XournalView* xournal;
 	Settings* settings;
-	EraseHandler* eraser;
+	EraseHandler* eraser = nullptr;
 	InputHandler* inputHandler = nullptr;
 
 	/**
