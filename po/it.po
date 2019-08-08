@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-31 18:31+0000\n"
-"PO-Revision-Date: 2019-08-08 14:42\n"
+"PO-Revision-Date: 2019-08-08 14:48\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -1133,7 +1133,7 @@ msgstr "Il file non è un file .xopp valido (stringa di versione corrotta): \"{1
 
 #: ../src/control/LatexController.cpp:368
 msgid "The formula is empty when rendered or invalid."
-msgstr ""
+msgstr "La formula è invalida o vuota quando rappresentata."
 
 #: ../src/control/XournalMain.cpp:130
 msgid "The most recent log file name: {1}"
@@ -1282,7 +1282,7 @@ msgstr "File Xournal"
 
 #: ../src/control/XournalMain.cpp:183
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "Xournal++ si è bloccato l'ultima volta. Vuoi ripristinare l'ultimo file modificato?"
 
 #: ../src/control/Control.cpp:2709 ../src/control/stockdlg/XojOpenDlg.cpp:84
 msgid "Xournal++ files"
@@ -1330,7 +1330,7 @@ msgstr "Diminuisci Zoom"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:106
 msgid "Zoom slider"
-msgstr ""
+msgstr "Cursore zoom"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Zoom to 100%"
@@ -1367,11 +1367,11 @@ msgstr "tratteggiato"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:38
 msgid "default disabled"
-msgstr ""
+msgstr "predefinito disattivato"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:38
 msgid "default enabled"
-msgstr ""
+msgstr "predefinito attivato"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:315
 msgid "delete stroke"
@@ -1383,7 +1383,7 @@ msgstr "puntinato"
 
 #: ../src/undo/AddUndoAction.cpp:120 ../src/undo/DeleteUndoAction.cpp:114
 msgid "elements"
-msgstr ""
+msgstr "elementi"
 
 #: ../src/util/DeviceListHelper.cpp:126
 msgid "eraser"
@@ -1391,7 +1391,7 @@ msgstr "gomma"
 
 #: ../src/undo/AddUndoAction.cpp:132 ../src/undo/DeleteUndoAction.cpp:126
 msgid "image"
-msgstr ""
+msgstr "immagine"
 
 #: ../src/util/DeviceListHelper.cpp:135
 msgid "keyboard"
@@ -1399,15 +1399,15 @@ msgstr "tastiera"
 
 #: ../src/undo/AddUndoAction.cpp:135 ../src/undo/DeleteUndoAction.cpp:129
 msgid "latex"
-msgstr ""
+msgstr "latex"
 
 #: ../src/util/DeviceListHelper.cpp:118
 msgid "mouse"
-msgstr ""
+msgstr "mouse"
 
 #: ../src/control/LatexController.cpp:317
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "pdflatex ha riscontrato un errore: {1} (codice di uscita: {2})"
 
 #: ../src/util/DeviceListHelper.cpp:122
 msgid "pen"
@@ -1420,27 +1420,27 @@ msgstr "mostra"
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:292
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:313
 msgid "standard"
-msgstr ""
+msgstr "standard"
 
 #: ../src/undo/AddUndoAction.cpp:129 ../src/undo/DeleteUndoAction.cpp:123
 msgid "stroke"
-msgstr ""
+msgstr "tratto"
 
 #: ../src/undo/AddUndoAction.cpp:138 ../src/undo/DeleteUndoAction.cpp:132
 msgid "text"
-msgstr ""
+msgstr "testo"
 
 #: ../src/util/DeviceListHelper.cpp:143
 msgid "touchpad"
-msgstr ""
+msgstr "touchpad"
 
 #: ../src/util/DeviceListHelper.cpp:139
 msgid "touchscreen"
-msgstr ""
+msgstr "touchscreen"
 
 #: ../src/util/DeviceListHelper.cpp:148
 msgid "trackpoint"
-msgstr ""
+msgstr "trackpoint"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:314
 msgid "whiteout"
@@ -1448,7 +1448,7 @@ msgstr "sbianca"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1171
 msgid "xoj-File: {1}"
-msgstr ""
+msgstr "xoj-File: {1}"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:75
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
@@ -1480,15 +1480,15 @@ msgstr "xoj-preview-extractor: Estratto con successo"
 
 #: ../src/util/Util.cpp:110
 msgid "xournalpp-{1}"
-msgstr ""
+msgstr "xournalpp-{1}"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
-msgstr ""
+msgstr " = Strumenti fluttuanti (sperimentale) ="
 
 #: ../ui/settings.glade:2616 ../ui/settings.glade:2627
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../ui/settings.glade:418
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1540,7 +1540,8 @@ msgstr "%a\tGiorno della settimana abbreviato. \t(es. Gio)\n"
 #: ../ui/settings.glade:3341
 msgid "... AND How much time must have passed since last stroke.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr ""
+msgstr "... E quanto tempo deve essere passato dall'ultimo tratto.\n\n"
+"<i>Raccomandato: 500ms</i>"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
