@@ -2316,8 +2316,6 @@ bool Control::openFile(Path filename, int scrollToPage, bool forceOpen)
 		}
 	}
 
-	this->closeDocument();
-
 	// Read template file
 	if (filename.hasExtension(".xopt"))
 	{
@@ -2381,6 +2379,8 @@ bool Control::openFile(Path filename, int scrollToPage, bool forceOpen)
 	}
 	else
 	{
+		this->closeDocument();
+
 		this->doc->lock();
 		this->doc->clearDocument();
 		*this->doc = *loadedDocument;

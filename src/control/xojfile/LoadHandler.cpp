@@ -298,6 +298,11 @@ bool LoadHandler::parseXml()
 		lastError = _("Document is not complete (maybe the end is cut off?)");
 		return false;
 	}
+	else if (this->pos == PASER_POS_FINISHED && this->doc.getPageCount() == 0)
+	{
+		lastError = _("Document is corrupted (no pages found in file)");
+		return false;
+	}
 
 	doc.setCreateBackupOnSave(this->fileVersion >= 3);
 
