@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-09 06:01+0000\n"
-"PO-Revision-Date: 2019-08-09 06:06\n"
+"PO-Revision-Date: 2019-08-09 07:58\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -285,7 +285,7 @@ msgstr "无法从工具栏 {1} 位置 {2} 移除工具项"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:205
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr ""
+msgstr "无法移除工具栏 {2} 位置 {3} 上的工具项 {1}"
 
 #: ../src/control/Control.cpp:254
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
