@@ -308,6 +308,9 @@ public:
 	ScrollbarHideType getScrollbarHideType();
 	void setScrollbarHideType(ScrollbarHideType type);
 
+	bool isScrollbarFadeoutDisabled();
+	void setScrollbarFadeoutDisabled(bool disable);
+
 	string getDefaultSaveName();
 	void setDefaultSaveName(string name);
 
@@ -538,6 +541,11 @@ private:
 	 *  Hide the scrollbar
 	 */
 	ScrollbarHideType scrollbarHideType;
+
+	/**
+	 * Disable scrollbar fade out (overlay scrolling)
+	 */
+	bool disableScrollbarFadeout;
 
 	/**
 	 *  The selected Toolbar name

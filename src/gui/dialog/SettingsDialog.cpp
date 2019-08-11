@@ -253,6 +253,7 @@ void SettingsDialog::load()
 	loadCheckbox("cbDarkTheme", settings->isDarkTheme());
 	loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
 	loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
+	loadCheckbox("cbDisableScrollbarFadeout", settings->isScrollbarFadeoutDisabled());
 	loadCheckbox("cbTouchWorkaround", settings->isTouchWorkaround());
 	loadCheckbox("cbNewInputSystem", settings->getExperimentalInputSystemEnabled());
 	loadCheckbox("cbInputSystemTPCButton", settings->getInputSystemTPCButtonEnabled());
@@ -533,6 +534,7 @@ void SettingsDialog::save()
 	settings->setExperimentalInputSystemEnabled(getCheckbox("cbNewInputSystem"));
 	settings->setInputSystemTPCButtonEnabled(getCheckbox("cbInputSystemTPCButton"));
 	settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
+	settings->setScrollbarFadeoutDisabled(getCheckbox("cbDisableScrollbarFadeout"));
 
 	auto scrollbarHideType =
 	        static_cast<std::make_unsigned<std::underlying_type<ScrollbarHideType>::type>::type>(SCROLLBAR_HIDE_NONE);
