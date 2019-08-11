@@ -103,6 +103,8 @@ void DocumentView::drawText(cairo_t* cr, Text* t)
 	{
 		return;
 	}
+
+	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 	applyColor(cr, t);
 
 	TextView::drawText(cr, t);
