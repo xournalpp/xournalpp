@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-09 06:01+0000\n"
-"PO-Revision-Date: 2019-08-09 06:06\n"
+"PO-Revision-Date: 2019-08-12 06:55\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -384,7 +384,7 @@ msgstr "Il file del documento è stato rimosso."
 
 #: ../src/control/xojfile/LoadHandler.cpp:303
 msgid "Document is corrupted (no pages found in file)"
-msgstr ""
+msgstr "Il documento è danneggiato (nessuna pagina trovata nel file)"
 
 #: ../src/control/xojfile/LoadHandler.cpp:298
 msgid "Document is not complete (maybe the end is cut off?)"
@@ -1725,7 +1725,7 @@ msgstr "Informazioni su Xournal++"
 
 #: ../ui/settings.glade:3411
 msgid "Action on Tool Tap"
-msgstr ""
+msgstr "Azione al tap (pressione breve) dello strumento"
 
 #: ../ui/settings.glade:2902
 msgid "Add additional horizontal space of"
@@ -1742,7 +1742,8 @@ msgstr "Tutte le pagine"
 #: ../ui/settings.glade:3377
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
-msgstr ""
+msgstr "Tutte e tre le condizioni devono essere soddisfatte prima che il tratto venga ignorato.\n"
+"Deve essere di durata e lunghezza brevi e non deve essere stato ignorato un altro tratto di recente."
 
 #: ../ui/settings.glade:3811
 msgid "Audio Devices"
@@ -1754,7 +1755,7 @@ msgstr "Registrazione Audio"
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
-msgstr ""
+msgstr "Autore: "
 
 #: ../ui/about.glade:161
 msgid "Authors:"
@@ -1826,7 +1827,7 @@ msgstr "Pagina corrente"
 
 #: ../ui/settings.glade:2175
 msgid "Cursor"
-msgstr ""
+msgstr "Cursore"
 
 #: ../ui/settings.glade:1692
 msgid "Custom Commands (for Method \"Custom\")"
@@ -1874,7 +1875,7 @@ msgstr "Disabilita i disegni per questo dispositivo"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
-msgstr ""
+msgstr "Disabilitato"
 
 #: ../ui/settings.glade:1489
 msgid "Disabling Method"
@@ -1886,14 +1887,17 @@ msgstr "Calibrazione del display (DPI)"
 
 #: ../ui/settings.glade:3252
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
-msgstr ""
+msgstr "Non disegnare per input di breve durata e lunghezza a meno che non siano in rapida successione. Invece, mostra gli strumenti galleggianti."
 
 #: ../ui/settings.glade:641 ../ui/settings.glade:808 ../ui/settings.glade:3165
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "<i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "Trascinare a SINISTRA dal punto iniziale è equivalente a tenere premuto SHIFT.\n"
+"Trascinare verso l'ALTO è equivalente a tenere premuto CTRL.\n\n"
+"Raggio di determinazione: raggio a cui i modificatori si bloccano fino a quando si è finito di disegnare. \n\n"
+"<i>Utile per operare senza tastiera.</i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
@@ -1909,15 +1913,15 @@ msgstr "Area di disegno"
 
 #: ../ui/settings.glade:3215
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
-msgstr ""
+msgstr "Strumenti di disegno - Imposta modificatori tramite la direzione di disegno (Sperimentale)"
 
 #: ../ui/main.glade:2466
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplicato"
 
 #: ../ui/main.glade:2503
 msgid "Edit (not implemented yet)"
-msgstr ""
+msgstr "Modifica (non ancora implementato)"
 
 #: ../ui/settings.glade:1608
 msgid "Enable"
@@ -1925,7 +1929,7 @@ msgstr "Attiva"
 
 #: ../ui/settings.glade:3160
 msgid "Enable  with determination radius of "
-msgstr ""
+msgstr "Abilita con raggio di determinazione di "
 
 #: ../ui/settings.glade:537
 msgid "Enable Autoloading of Journals"
@@ -1949,7 +1953,7 @@ msgstr ""
 
 #: ../ui/settings.glade:789
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
-msgstr ""
+msgstr "Abilita il disegno fuori dalla finestra <i>(Il disegno non si fermerà al bordo della finestra)</i>"
 
 #: ../ui/settings.glade:1459
 msgid "Enable internal Hand Recognition"
@@ -1957,7 +1961,7 @@ msgstr "Abilita il riconoscimento del palmo"
 
 #: ../ui/settings.glade:636
 msgid "Enable new input system (Requires restart)"
-msgstr ""
+msgstr "Abilita il nuovo sistema di input (richiede riavvio)"
 
 #: ../ui/settings.glade:1760
 msgid "Enable zoom gestures (requires restart)"
@@ -1977,7 +1981,7 @@ msgstr "Tipo di Gomma - non cambiare"
 
 #: ../ui/settings.glade:670
 msgid "Experimental Input System"
-msgstr ""
+msgstr "Sistema di input sperimentale"
 
 #: ../ui/exportSettings.glade:25
 msgid "Export"
@@ -2005,7 +2009,7 @@ msgstr "Trova l'occorrenza precedente della stringa di ricerca"
 
 #: ../ui/settings.glade:3007
 msgid "First Page Offset "
-msgstr ""
+msgstr "Offset prima pagina "
 
 #: ../ui/main.glade:485 ../ui/settings.glade:2376
 msgid "Fullscreen"
@@ -2025,7 +2029,7 @@ msgstr ""
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
-msgstr ""
+msgstr "Vai alla pagina"
 
 #: ../ui/settings.glade:3085
 msgid "Grid snapping tolerance"
@@ -2091,7 +2095,7 @@ msgstr ""
 
 #: ../ui/settings.glade:862
 msgid "Input System"
-msgstr ""
+msgstr "Sistema di input"
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
@@ -2099,11 +2103,11 @@ msgstr "Inserisci LaTeX"
 
 #: ../ui/main.glade:2458
 msgid "Insert Page After"
-msgstr ""
+msgstr "Inserisci pagina dopo"
 
 #: ../ui/main.glade:2450
 msgid "Insert Page Before"
-msgstr ""
+msgstr "Inserisci pagina prima"
 
 #: ../ui/main.glade:2041
 msgid "Insert a copy of the current page below"
@@ -2111,7 +2115,7 @@ msgstr "Inserisci una copia della pagina corrente sotto"
 
 #: ../ui/main.glade:512
 msgid "Layout"
-msgstr ""
+msgstr "Layout"
 
 #: ../ui/settings.glade:2242
 msgid "Left / Right-Handed"
@@ -2135,7 +2139,7 @@ msgstr "Gestisci Barra degli Strumenti"
 
 #: ../ui/settings.glade:3318
 msgid "Max Length (mm)"
-msgstr ""
+msgstr "Lunghezza massima (mm)"
 
 #: ../ui/settings.glade:820
 msgid "Merge button events with stylus tip events\n"
@@ -2233,7 +2237,7 @@ msgstr ""
 
 #: ../ui/main.glade:1788
 msgid "Pause"
-msgstr ""
+msgstr "Pausa"
 
 #: ../ui/main.glade:1459
 msgid "Pen _Options"
@@ -2249,7 +2253,7 @@ msgstr "_Gestisci plugin"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ was restarted"
-msgstr ""
+msgstr "Le modifiche dei plugin sono applicate solo dopo il riavvio di Xournal++"
 
 #: ../ui/main.glade:440
 msgid "Preferences"
@@ -2257,7 +2261,7 @@ msgstr "Preferenze"
 
 #: ../ui/settings.glade:2477
 msgid "Presentation Mode"
-msgstr ""
+msgstr "Modalità Presentazione"
 
 #: ../ui/settings.glade:1129
 msgid "Pressure Sensitivity"
@@ -2273,7 +2277,7 @@ msgstr "_Documenti Recenti"
 
 #: ../ui/main.glade:1778
 msgid "Record / Stop"
-msgstr ""
+msgstr "Registra / Stop"
 
 #: ../ui/settings.glade:3904
 msgid "Recording Quality"
@@ -2285,7 +2289,7 @@ msgstr "Risoluzione"
 
 #: ../ui/settings.glade:992
 msgid "Right Mouse Button"
-msgstr ""
+msgstr "Tasto destro del mouse"
 
 #: ../ui/settings.glade:3072
 msgid "Rotation snapping tolerance"
@@ -2293,7 +2297,7 @@ msgstr "Tolleranza rotazione forzata: "
 
 #: ../ui/settings.glade:3843
 msgid "Sample Rate"
-msgstr ""
+msgstr "Frequenza di Campionamento"
 
 #: ../ui/settings.glade:2309
 msgid "Scrollbars"
@@ -2337,7 +2341,7 @@ msgstr "Imposta righe"
 
 #: ../ui/settings.glade:3379
 msgid "Settings:"
-msgstr ""
+msgstr "Impostazioni:"
 
 #: ../ui/settings.glade:3388
 msgid "Show Floating Toolbox"
