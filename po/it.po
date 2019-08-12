@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-09 06:01+0000\n"
-"PO-Revision-Date: 2019-08-12 07:04\n"
+"PO-Revision-Date: 2019-08-12 12:51\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -2152,7 +2152,7 @@ msgstr "<b>Pulsante centrale del mouse</b> "
 
 #: ../ui/settings.glade:1041 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
-msgstr ""
+msgstr "Mouse"
 
 #: ../ui/settings.glade:1010
 msgid "Mouse Buttons"
@@ -2188,11 +2188,11 @@ msgstr "Nuovo _Livello"
 
 #: ../ui/settings.glade:3006
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
-msgstr ""
+msgstr "Numero di pagine da saltare di quando <b>Pagine Accoppiate</b> è abilitato"
 
 #: ../ui/settings.glade:842
 msgid "Options"
-msgstr ""
+msgstr "Opzioni"
 
 #: ../ui/settings.glade:3777
 msgid "Output Device"
@@ -2212,7 +2212,7 @@ msgstr "Pagine:"
 
 #: ../ui/settings.glade:3039
 msgid "Paired Pages"
-msgstr ""
+msgstr "Pagine Accoppiate"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2233,7 +2233,8 @@ msgstr "_Sfondo Carta"
 #: ../ui/about.glade:217
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr ""
+msgstr "Parzialmente basato su Xournal\n"
+"di Denis Auroux"
 
 #: ../ui/main.glade:1788
 msgid "Pause"
@@ -2345,7 +2346,7 @@ msgstr "Impostazioni:"
 
 #: ../ui/settings.glade:3388
 msgid "Show Floating Toolbox"
-msgstr ""
+msgstr "Mostra Strumenti Galleggianti"
 
 #: ../ui/settings.glade:1936
 msgid "Show Menubar on Startup"
@@ -2369,15 +2370,15 @@ msgstr "Forza alla Griglia"
 
 #: ../ui/settings.glade:2560
 msgid "Speed for Ctrl + Scroll"
-msgstr ""
+msgstr "Velocità per Ctrl + Scorrimento"
 
 #: ../ui/settings.glade:2588
 msgid "Speed for a Zoomstep"
-msgstr ""
+msgstr "Velocità per un passo di zoom"
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #: ../ui/settings.glade:3662 ../ui/settings.glade:3699
 msgid "Storage Folder"
@@ -2393,7 +2394,7 @@ msgstr "Pulsante del Mouse"
 
 #: ../ui/settings.glade:3329
 msgid "Successive (ms)"
-msgstr ""
+msgstr "Successivo (ms)"
 
 #: ../ui/main.glade:1998
 msgid "Swap the current page with the one above"
@@ -2413,7 +2414,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1653 ../ui/settings.glade:1666
 msgid "Test"
-msgstr ""
+msgstr "Test"
 
 #: ../ui/main.glade:1766
 msgid "Text Font..."
@@ -2425,7 +2426,7 @@ msgstr "L'unità del righello è cm"
 
 #: ../ui/settings.glade:768
 msgid "These settings take only effect if the experimental input system is activated"
-msgstr ""
+msgstr "Queste impostazioni hanno effetto solo se il sistema di input sperimentale è attivo"
 
 #: ../ui/settings.glade:621
 msgid "This is an experimental feature! Use it with care."
@@ -2433,7 +2434,7 @@ msgstr "Questa è una funzionalità sperimentale! Usare con prudenza."
 
 #: ../ui/settings.glade:1500
 msgid "Timeout"
-msgstr ""
+msgstr "Timeout"
 
 #: ../ui/settings.glade:1413 ../ui/settings.glade:1882
 #: ../ui/settingsDeviceClassConfig.glade:45
@@ -2514,55 +2515,55 @@ msgstr "_2 Colonne"
 
 #: ../ui/main.glade:749
 msgid "_2 Rows"
-msgstr ""
+msgstr "_2 Righe"
 
 #: ../ui/main.glade:655
 msgid "_3 Columns"
-msgstr ""
+msgstr "_3 Colonne"
 
 #: ../ui/main.glade:760
 msgid "_3 Rows"
-msgstr ""
+msgstr "_3 Righe"
 
 #: ../ui/main.glade:666
 msgid "_4 Columns"
-msgstr ""
+msgstr "_4 Colonne"
 
 #: ../ui/main.glade:771
 msgid "_4 Rows"
-msgstr ""
+msgstr "_4 Righe"
 
 #: ../ui/main.glade:677
 msgid "_5 Columns"
-msgstr ""
+msgstr "_5 Colonne"
 
 #: ../ui/main.glade:782
 msgid "_5 Rows"
-msgstr ""
+msgstr "_5 Righe"
 
 #: ../ui/main.glade:688
 msgid "_6 Columns"
-msgstr ""
+msgstr "_6 Colonne"
 
 #: ../ui/main.glade:793
 msgid "_6 Rows"
-msgstr ""
+msgstr "_6 Righe"
 
 #: ../ui/main.glade:699
 msgid "_7 Columns"
-msgstr ""
+msgstr "_7 Colonne"
 
 #: ../ui/main.glade:804
 msgid "_7 Rows"
-msgstr ""
+msgstr "_7 Righe"
 
 #: ../ui/main.glade:710
 msgid "_8 Columns"
-msgstr ""
+msgstr "_8 Colonne"
 
 #: ../ui/main.glade:815
 msgid "_8 Rows"
-msgstr ""
+msgstr "_8 Righe"
 
 #: ../ui/main.glade:199
 msgid "_Annotate PDF"
@@ -2570,11 +2571,11 @@ msgstr "_Annota PDF"
 
 #: ../ui/main.glade:593
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "_Dal basso in alto"
 
 #: ../ui/main.glade:608
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "_Colonne/Righe"
 
 #: ../ui/main.glade:868
 msgid "_Customize"
@@ -2602,7 +2603,7 @@ msgstr "_Esporta come PDF"
 
 #: ../ui/main.glade:155
 msgid "_File"
-msgstr ""
+msgstr "_File"
 
 #: ../ui/main.glade:967
 msgid "_First Page"
@@ -2622,7 +2623,7 @@ msgstr "_Evidenziatore"
 
 #: ../ui/main.glade:524
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Orizzontale"
 
 #: ../ui/main.glade:1281
 msgid "_Image"
@@ -2638,7 +2639,7 @@ msgstr "_Ultima Pagina"
 
 #: ../ui/main.glade:553
 msgid "_Left To Right"
-msgstr ""
+msgstr "_Da sinistra a destra"
 
 #: ../ui/main.glade:858
 msgid "_Manage"
@@ -2658,7 +2659,7 @@ msgstr "_Pagina Sucessiva"
 
 #: ../ui/main.glade:465
 msgid "_Pair Pages"
-msgstr ""
+msgstr "_Pagine Accoppiate"
 
 #: ../ui/main.glade:1233
 msgid "_Pen"
