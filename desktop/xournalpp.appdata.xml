@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>xournalpp.desktop</id>
+  <translation type="gettext">xournalpp</translation>
+  <name>Xournal++</name>
+  <summary>Take handwritten notes</summary>
+  <summary xml:lang="ca">Preneu notes a mà</summary>
+  <summary xml:lang="cs">Dělejte si rukou psané poznámky</summary>
+  <summary xml:lang="de">Handnotizen erstellen</summary>
+  <summary xml:lang="fr">Prise de notes manuscrites</summary>
+  <summary xml:lang="pl">Notatki odręczne</summary>
+  <developer_name>Xournalpp Developers</developer_name>
+  <description>
+   <p>
+    Xournal++ is a hand note taking software written in C++ with the target of
+    flexibility, functionality and speed. Stroke recognizer and other parts are
+    based on Xournal Code, which you can find at sourceforge. It supports Linux
+    (e.g. Ubuntu, Debian, Arch, Suse), macOS and Windows 10. Supports pen input
+    from devices such as Wacom Tablets. 
+   </p>
+   <p>Xournal++ features:</p>
+   <ul>
+     <li>Support for Pen preassure, e.g. Wacom Tablet</li>
+     <li>Support for annotating PDFs</li>
+     <li>Fill shape functionality</li>
+     <li>PDF Export (with and without paper style)</li>
+     <li>PNG Export (with and without transparent background)</li>
+     <li>Allow to map different tools / colors etc. to stylus buttons / mouse buttons</li>
+     <li>Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers</li>
+     <li>Enhanced support for image insertion</li>
+     <li>Eraser with multiple configurations</li>
+     <li>Significantly reduced memory usage and code to detect memory leaks compared to Xournal</li>
+     <li>LaTeX support (requires a working LaTeX install)</li>
+     <li>Bug reporting, autosave, and auto backup tools</li>
+     <li>Customizeable toolbar, with multiple configurations, e.g. to optimize toolbar for portrait/landscape</li>
+     <li>Page Template definitions</li>
+     <li>Shape drawing (line, arrow, circle, rect)</li>
+     <li>Shape resizing and rotation</li>
+     <li>Rotation snapping every 45 degrees</li>
+     <li>Rect snapping to grid</li>
+     <li>Audio recording and playback alongside with handwritten notes</li>
+     <li>Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...</li>
+     <li>Plugins using LUA Scripting</li>
+   </ul>
+  </description>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0</project_license>
+  <url type="bugtracker">https://github.com/xournalpp/xournalpp/issues</url>
+  <url type="help">https://github.com/xournalpp/xournalpp/wiki/User-Manual</url>
+  <url type="homepage">https://github.com/xournalpp/xournalpp</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://i.imgur.com/Muc4nmw.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/xournalpp/xournalpp/master/readme/background.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://i.imgur.com/awHSGG9.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://i.imgur.com/3uxu40d.png</image>
+    </screenshot>
+  </screenshots>
+  <launchable type="desktop-id">@app-id@.desktop</launchable>
+  <update_contact>webmaster_AT_huberulrich.de</update_contact>
+  <content_rating type="oars-1.0"/>
+  <releases>
+    <!-- Could be automated more:
+	 `git tag --list | grep "^[0-9]*\.[0-9]*\.[0-9]*$`"
+    -->
+    <release date="2019-05-26" version="1.0.12"/>
+    <release date="2019-04-01" version="1.0.10"/>
+    <release date="2019-02-16" version="1.0.8"/>
+    <release date="2019-01-19" version="1.0.7"/>
+    <release date="2018-12-30" version="1.0.5"/>
+  </releases>
+</component>

@@ -262,6 +262,9 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	install(FILES desktop/xournalpp.thumbnailer
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/thumbnailers)
 
+	install(FILES desktop/xournalpp.appdata.xml
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/metainfo)
+
 	# TODO: Only package post install scripts with distro-specific packages
 	# Also update manual install instructions
 
