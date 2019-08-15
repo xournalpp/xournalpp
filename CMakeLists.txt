@@ -232,7 +232,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	message ("Installing desktop files")
 
 	# Install icons
-	install(FILES ui/pixmaps/xournalpp.svg
+	install(FILES ui/pixmaps/com.github.xournalpp.xournalpp.svg
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps)
 
 	# Symlink are not easy to use with CMake, therefor simple install a copy...
@@ -248,9 +248,9 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	install(FILES ui/pixmaps/gnome-mime-application-x-xopt.svg
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
 
-	install(FILES desktop/xournalpp.xml
+	install(FILES desktop/com.github.xournalpp.xournalpp.xml
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mime/packages)
-	install(FILES desktop/xournalpp.desktop
+	install(FILES desktop/com.github.xournalpp.xournalpp.desktop
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
 	install(FILES desktop/x-xojpp.desktop
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
@@ -259,10 +259,10 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	install(FILES desktop/x-xopt.desktop
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
 
-	install(FILES desktop/xournalpp.thumbnailer
+	install(FILES desktop/com.github.xournalpp.xournalpp.thumbnailer
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/thumbnailers)
 
-	install(FILES desktop/xournalpp.appdata.xml
+	install(FILES desktop/com.github.xournalpp.xournalpp.appdata.xml
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/metainfo)
 
 	# TODO: Only package post install scripts with distro-specific packages

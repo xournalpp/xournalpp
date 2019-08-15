@@ -23,5 +23,5 @@ Exec=xournalpp %f
 Terminal=false
 StartupNotify=true
 MimeType=application/x-xoj;application/x-xojpp;application/x-xopp;application/x-xopt;application/pdf;
-Icon=xournalpp
+Icon=com.github.xournalpp.xournalpp
 Categories=Office;GNOME;GTK;

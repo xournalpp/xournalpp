@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2019 Tobias Mueller <tobiasmue@gnome.org>  -->
 <component type="desktop">
-  <id>xournalpp.desktop</id>
+  <id>com.github.xournalpp.xournalpp</id>
   <translation type="gettext">xournalpp</translation>
   <name>Xournal++</name>
   <summary>Take handwritten notes</summary>
@@ -62,7 +63,10 @@
       <image>https://i.imgur.com/3uxu40d.png</image>
     </screenshot>
   </screenshots>
-  <launchable type="desktop-id">@app-id@.desktop</launchable>
+  <launchable type="desktop-id">com.github.xournalpp.xournalpp.desktop</launchable>
+  <provides>
+    <id>xournalpp.desktop</id>
+  </provides>
   <update_contact>webmaster_AT_huberulrich.de</update_contact>
   <content_rating type="oars-1.0"/>
   <releases>
