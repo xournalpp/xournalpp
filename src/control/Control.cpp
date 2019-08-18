@@ -1996,12 +1996,14 @@ void Control::eraserSizeChanged()
 
 	switch (toolHandler->getEraserSize())
 	{
+	case TOOL_SIZE_VERY_FINE:	//fall through - we don't have a very fine menu item for the eraser (yet? - now has a toolbutton)
 	case TOOL_SIZE_FINE:
 		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_FINE);
 		break;
 	case TOOL_SIZE_MEDIUM:
 		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_MEDIUM);
 		break;
+	case TOOL_SIZE_VERY_THICK:	//fall through
 	case TOOL_SIZE_THICK:
 		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_THICK);
 		break;
@@ -2042,12 +2044,14 @@ void Control::hilighterSizeChanged()
 
 	switch (toolHandler->getHilighterSize())
 	{
+	case TOOL_SIZE_VERY_FINE:	//fall through - we don't have a very fine for the hilighter (yet? - now has a toolbutton)
 	case TOOL_SIZE_FINE:
 		fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_FINE);
 		break;
 	case TOOL_SIZE_MEDIUM:
 		fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_MEDIUM);
 		break;
+	case TOOL_SIZE_VERY_THICK:	//fall through
 	case TOOL_SIZE_THICK:
 		fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_THICK);
 		break;
@@ -2079,7 +2083,7 @@ void Control::toolSizeChanged()
 		fireActionSelected(GROUP_SIZE, ACTION_NONE);
 		break;
 	case TOOL_SIZE_VERY_FINE:
-		fireActionSelected(GROUP_SIZE, ACTION_SIZE_VERY_THICK);
+		fireActionSelected(GROUP_SIZE, ACTION_SIZE_VERY_THIN);
 		break;
 	case TOOL_SIZE_FINE:
 		fireActionSelected(GROUP_SIZE, ACTION_SIZE_FINE);
@@ -2091,7 +2095,7 @@ void Control::toolSizeChanged()
 		fireActionSelected(GROUP_SIZE, ACTION_SIZE_THICK);
 		break;
 	case TOOL_SIZE_VERY_THICK:
-		fireActionSelected(GROUP_SIZE, ACTION_SIZE_VERY_THIN);
+		fireActionSelected(GROUP_SIZE, ACTION_SIZE_VERY_THICK);
 		break;
 	}
 
