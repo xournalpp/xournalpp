@@ -14,12 +14,12 @@ Execute in this folder.
 ./build-gtk3.sh
 ````
 
-The build will fail on expat:
+The build might fail on expat:
 ````
 configure: error: C compiler cannot create executables
 ````
 * Press 4 to start a shell
-* Copy the command from above: ./configure --prefix /Users/..../gtk/inst
+* Copy the command from above: ./configure --prefix $HOME/gtk/inst
 * Execute configure, it will work now
 * Execute make install
 * exit
@@ -44,19 +44,13 @@ Execute in this folder.
 ./build-poppler.sh
 ````
 
-#### 3. Build Mac integration
-Execute in this folder.
-````bash
-./build-mac-integration.sh
-````
-
-#### 4. PortAudio
+#### 3. PortAudio
 
 ````bash
 ./build-portaudio.sh
 ````
 
-#### 5. LibZip
+#### 4. LibZip
 
 ````bash
 ./build-libzip.sh
