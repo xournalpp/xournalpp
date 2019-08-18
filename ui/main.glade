@@ -127,7 +127,7 @@
   <object class="GtkWindow" id="mainWindow">
     <property name="name">mainWindow</property>
     <property name="can_focus">False</property>
-    <property name="icon">pixmaps/xournalpp.svg</property>
+    <property name="icon">pixmaps/com.github.xournalpp.xournalpp.svg</property>
     <child>
       <placeholder/>
     </child>
