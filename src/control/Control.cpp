@@ -735,6 +735,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		setLineStyle("dot");
 		break;
 
+    case ACTION_TOOL_ERASER_SIZE_VERY_FINE:
+		if (enabled)
+		{
+			this->toolHandler->setEraserSize(TOOL_SIZE_VERY_FINE);
+			eraserSizeChanged();
+		}
+		break;
 	case ACTION_TOOL_ERASER_SIZE_FINE:
 		if (enabled)
 		{
@@ -753,6 +760,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		if (enabled)
 		{
 			this->toolHandler->setEraserSize(TOOL_SIZE_THICK);
+			eraserSizeChanged();
+		}
+		break;
+    case ACTION_TOOL_ERASER_SIZE_VERY_THICK:
+		if (enabled)
+		{
+			this->toolHandler->setEraserSize(TOOL_SIZE_VERY_THICK);
 			eraserSizeChanged();
 		}
 		break;
@@ -799,7 +813,14 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 
 
-	case ACTION_TOOL_HILIGHTER_SIZE_FINE:
+	case ACTION_TOOL_HILIGHTER_SIZE_VERY_FINE:
+		if (enabled)
+		{
+			this->toolHandler->setHilighterSize(TOOL_SIZE_VERY_FINE);
+			hilighterSizeChanged();
+		}
+		break;
+    case ACTION_TOOL_HILIGHTER_SIZE_FINE:
 		if (enabled)
 		{
 			this->toolHandler->setHilighterSize(TOOL_SIZE_FINE);
@@ -817,6 +838,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		if (enabled)
 		{
 			this->toolHandler->setHilighterSize(TOOL_SIZE_THICK);
+			hilighterSizeChanged();
+		}
+		break;
+    case ACTION_TOOL_HILIGHTER_SIZE_VERY_THICK:
+		if (enabled)
+		{
+			this->toolHandler->setHilighterSize(TOOL_SIZE_VERY_THICK);
 			hilighterSizeChanged();
 		}
 		break;
@@ -1996,16 +2024,20 @@ void Control::eraserSizeChanged()
 
 	switch (toolHandler->getEraserSize())
 	{
-	case TOOL_SIZE_VERY_FINE:	//fall through - we don't have a very fine menu item for the eraser (yet? - now has a toolbutton)
+	case TOOL_SIZE_VERY_FINE:
+		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_VERY_FINE);
+		break;        
 	case TOOL_SIZE_FINE:
 		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_FINE);
 		break;
 	case TOOL_SIZE_MEDIUM:
 		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_MEDIUM);
 		break;
-	case TOOL_SIZE_VERY_THICK:	//fall through
 	case TOOL_SIZE_THICK:
 		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_THICK);
+		break;
+	case TOOL_SIZE_VERY_THICK:
+		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_VERY_THICK);
 		break;
 	default:
 		break;
@@ -2044,16 +2076,20 @@ void Control::hilighterSizeChanged()
 
 	switch (toolHandler->getHilighterSize())
 	{
-	case TOOL_SIZE_VERY_FINE:	//fall through - we don't have a very fine for the hilighter (yet? - now has a toolbutton)
+	case TOOL_SIZE_VERY_FINE:
+		fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_VERY_FINE);
+		break;
 	case TOOL_SIZE_FINE:
 		fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_FINE);
 		break;
 	case TOOL_SIZE_MEDIUM:
 		fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_MEDIUM);
 		break;
-	case TOOL_SIZE_VERY_THICK:	//fall through
 	case TOOL_SIZE_THICK:
 		fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_THICK);
+		break;
+	case TOOL_SIZE_VERY_THICK:
+		fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_VERY_THICK);
 		break;
 	default:
 		break;
