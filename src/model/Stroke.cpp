@@ -565,35 +565,44 @@ void Stroke::calcSize()
 		Element::height = 0;
 	}
 
-	double minX = points[0].x;
-	double maxX = points[0].x;
-	double minY = points[0].y;
-	double maxY = points[0].y;
+	double minX = DBL_MAX;
+	double maxX = DBL_MIN;
+	double minY = DBL_MAX;
+	double maxY = DBL_MIN;
 
-	for (int i = 1; i < this->pointCount; i++)
+	bool hasPressure = points[0].z != Point::NO_PRESSURE;
+	double halfThick = this->width / 2.0;  //  accommodate for pen width
+
+	for (int i = 0; i < this->pointCount; i++)
 	{
-		if (minX > points[i].x)
+		if (hasPressure) halfThick = points[i].z / 2.0;
+
+		double edge = points[i].x - halfThick;
+		if (minX > edge)
 		{
-			minX = points[i].x;
+			minX = edge;
 		}
-		if (maxX < points[i].x)
+		edge = points[i].x + halfThick;
+		if (maxX < edge)
 		{
-			maxX = points[i].x;
+			maxX = edge;
 		}
-		if (minY > points[i].y)
+		edge = points[i].y - halfThick;
+		if (minY > edge)
 		{
-			minY = points[i].y;
+			minY = edge;
 		}
-		if (maxY < points[i].y)
+		edge = points[i].y + halfThick;
+		if (maxY < edge)
 		{
-			maxY = points[i].y;
+			maxY = edge;
 		}
 	}
 
 	Element::x = minX - 2;
 	Element::y = minY - 2;
-	Element::width = maxX - minX + 4 + width;
-	Element::height = maxY - minY + 4 + width;
+	Element::width = maxX - minX + 4;
+	Element::height = maxY - minY + 4;
 }
 
 EraseableStroke* Stroke::getEraseable()
