@@ -55,7 +55,6 @@ void FloatingToolbox::show(int x, int y)
 bool FloatingToolbox::floatingToolboxActivated()
 {
 	Settings* settings = this->mainWindow->getControl()->getSettings();
-	bool show = false;
 	ButtonConfig* cfg = nullptr;
 
 	//check if any buttons assigned to bring up toolbox

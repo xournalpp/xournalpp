@@ -467,7 +467,6 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
 	}
 
 	bool scale = (width != this->lastWidth || height != this->lastHeight);
-	bool rotate = (std::abs(this->rotation) > __DBL_EPSILON__);
 
 	if (type == CURSOR_SELECTION_MOVE)
 	{
