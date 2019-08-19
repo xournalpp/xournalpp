@@ -1470,7 +1470,7 @@
                                     <property name="label" translatable="yes">_very fine</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_as_radio">True</property>
-                                    <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_VERY_THIN:GROUP_PEN_SIZE" swapped="no"/>
+                                    <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_VERY_FINE:GROUP_PEN_SIZE" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>

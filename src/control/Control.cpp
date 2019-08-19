@@ -691,7 +691,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		setFill(enabled);
 		break;
 
-	case ACTION_SIZE_VERY_THIN:
+	case ACTION_SIZE_VERY_FINE:
 		if (enabled)
 		{
 			setToolSize(TOOL_SIZE_VERY_FINE);
@@ -770,7 +770,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 			eraserSizeChanged();
 		}
 		break;
-	case ACTION_TOOL_PEN_SIZE_VERY_THIN:
+	case ACTION_TOOL_PEN_SIZE_VERY_FINE:
 		if (enabled)
 		{
 			this->toolHandler->setPenSize(TOOL_SIZE_VERY_FINE);
@@ -1961,7 +1961,7 @@ void Control::toolChanged()
 	fireEnableAction(ACTION_SIZE_THICK, enableSize);
 	fireEnableAction(ACTION_SIZE_FINE, enableSize);
 	fireEnableAction(ACTION_SIZE_VERY_THICK, enableSize);
-	fireEnableAction(ACTION_SIZE_VERY_THIN, enableSize);
+	fireEnableAction(ACTION_SIZE_VERY_FINE, enableSize);
 
 	bool enableFill = toolHandler->hasCapability(TOOL_CAP_FILL);
 
@@ -2051,7 +2051,7 @@ void Control::penSizeChanged()
 	switch (toolHandler->getPenSize())
 	{
 	case TOOL_SIZE_VERY_FINE:
-		fireActionSelected(GROUP_PEN_SIZE, ACTION_TOOL_PEN_SIZE_VERY_THIN);
+		fireActionSelected(GROUP_PEN_SIZE, ACTION_TOOL_PEN_SIZE_VERY_FINE);
 		break;
 	case TOOL_SIZE_FINE:
 		fireActionSelected(GROUP_PEN_SIZE, ACTION_TOOL_PEN_SIZE_FINE);
@@ -2119,7 +2119,7 @@ void Control::toolSizeChanged()
 		fireActionSelected(GROUP_SIZE, ACTION_NONE);
 		break;
 	case TOOL_SIZE_VERY_FINE:
-		fireActionSelected(GROUP_SIZE, ACTION_SIZE_VERY_THIN);
+		fireActionSelected(GROUP_SIZE, ACTION_SIZE_VERY_FINE);
 		break;
 	case TOOL_SIZE_FINE:
 		fireActionSelected(GROUP_SIZE, ACTION_SIZE_FINE);

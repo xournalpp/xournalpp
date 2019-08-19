@@ -317,9 +317,9 @@ ActionType ActionType_fromString(string value)
 		return ACTION_TOOL_LINE_STYLE_DOT;
 	}
 
-	if (value == "ACTION_SIZE_VERY_THIN")
+	if (value == "ACTION_SIZE_VERY_FINE")
 	{
-		return ACTION_SIZE_VERY_THIN;
+		return ACTION_SIZE_VERY_FINE;
 	}
 
 	if (value == "ACTION_SIZE_FINE")
@@ -382,9 +382,9 @@ ActionType ActionType_fromString(string value)
 		return ACTION_TOOL_ERASER_SIZE_VERY_THICK;
 	}
 
-	if (value == "ACTION_TOOL_PEN_SIZE_VERY_THIN")
+	if (value == "ACTION_TOOL_PEN_SIZE_VERY_FINE")
 	{
-		return ACTION_TOOL_PEN_SIZE_VERY_THIN;
+		return ACTION_TOOL_PEN_SIZE_VERY_FINE;
 	}
 
 	if (value == "ACTION_TOOL_PEN_SIZE_FINE")
@@ -1020,9 +1020,9 @@ string ActionType_toString(ActionType value)
 		return "ACTION_TOOL_LINE_STYLE_DOT";
 	}
 
-	if (value == ACTION_SIZE_VERY_THIN)
+	if (value == ACTION_SIZE_VERY_FINE)
 	{
-		return "ACTION_SIZE_VERY_THIN";
+		return "ACTION_SIZE_VERY_FINE";
 	}
 
 	if (value == ACTION_SIZE_FINE)
@@ -1085,9 +1085,9 @@ string ActionType_toString(ActionType value)
 		return "ACTION_TOOL_ERASER_SIZE_VERY_THICK";
 	}
 
-	if (value == ACTION_TOOL_PEN_SIZE_VERY_THIN)
+	if (value == ACTION_TOOL_PEN_SIZE_VERY_FINE)
 	{
-		return "ACTION_TOOL_PEN_SIZE_VERY_THIN";
+		return "ACTION_TOOL_PEN_SIZE_VERY_FINE";
 	}
 
 	if (value == ACTION_TOOL_PEN_SIZE_FINE)
