@@ -595,7 +595,8 @@ void ToolHandler::loadSettings()
 			string value;
 			if (t->hasCapability(TOOL_CAP_SIZE) && st.getString("size", value))
 			{
-				if (value == "VERY_FINE")	  t->setSize(TOOL_SIZE_VERY_FINE);
+				if (value == "VERY_FINE")
+					t->setSize(TOOL_SIZE_VERY_FINE);
 				else if (value == "THIN")	  t->setSize(TOOL_SIZE_FINE);
 				else if (value == "MEDIUM")	  t->setSize(TOOL_SIZE_MEDIUM);
 				else if (value == "BIG")	  t->setSize(TOOL_SIZE_THICK);

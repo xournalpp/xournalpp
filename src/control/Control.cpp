@@ -735,7 +735,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		setLineStyle("dot");
 		break;
 
-    case ACTION_TOOL_ERASER_SIZE_VERY_FINE:
+	case ACTION_TOOL_ERASER_SIZE_VERY_FINE:
 		if (enabled)
 		{
 			this->toolHandler->setEraserSize(TOOL_SIZE_VERY_FINE);
@@ -763,7 +763,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 			eraserSizeChanged();
 		}
 		break;
-    case ACTION_TOOL_ERASER_SIZE_VERY_THICK:
+	case ACTION_TOOL_ERASER_SIZE_VERY_THICK:
 		if (enabled)
 		{
 			this->toolHandler->setEraserSize(TOOL_SIZE_VERY_THICK);
@@ -820,7 +820,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 			hilighterSizeChanged();
 		}
 		break;
-    case ACTION_TOOL_HILIGHTER_SIZE_FINE:
+	case ACTION_TOOL_HILIGHTER_SIZE_FINE:
 		if (enabled)
 		{
 			this->toolHandler->setHilighterSize(TOOL_SIZE_FINE);
@@ -841,7 +841,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 			hilighterSizeChanged();
 		}
 		break;
-    case ACTION_TOOL_HILIGHTER_SIZE_VERY_THICK:
+	case ACTION_TOOL_HILIGHTER_SIZE_VERY_THICK:
 		if (enabled)
 		{
 			this->toolHandler->setHilighterSize(TOOL_SIZE_VERY_THICK);
@@ -2026,7 +2026,7 @@ void Control::eraserSizeChanged()
 	{
 	case TOOL_SIZE_VERY_FINE:
 		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_VERY_FINE);
-		break;        
+		break;
 	case TOOL_SIZE_FINE:
 		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_FINE);
 		break;
