@@ -1,60 +1,68 @@
-## Build Xournal++ .app
+# Build Xournal++ .app
 Do not install macports or homebrew. If you have installed it, you need to
 create a new user, and use this for the whole process. jhbuild does not work,
 if there is such an environment installed.
 
-### Make sure the Development environment is installed
-Open a Terminal, and type in **git**, confirm popup from Appstore with "Install" to install development tools.
+One possible way to use jhbuild alongside brew is to unlink all brew modules before running jhbuild. After finishing the build they can be relinked. This is untested though and might fail.
 
-### Build Libraries, needs to be once
+## Make sure the Development environment is installed
+Open a Terminal, and type in `git`, confirm popup from Appstore with "Install" to install development tools.
 
-#### 1. Build GTK
-Execute in this folder.
+## Build Libraries (needs to be done once)
+Please take the OS version dependent problems for each step into account. The errors will vary with different versions of the libraries. If you encounter a yet unknown error, feel free to add it to this set of instructions.
+
+### 1. Build GTK
 ````bash
 ./build-gtk3.sh
 ````
+#### Potential Errors
+##### itstool (version 2.0.6 on macOS High Sierra 10.13)
+itstool might fail in configure step searching for libxml2 python bindings.
 
+Follow these steps to resolve the issue:
+- Open a shell with option 4
+- Change Python to version 2.7 with `export PYTHON=/usr/bin/python2.7`
+- Run the configure step manually with `./configure --prefix $HOME/gtk/inst`
+- Exit the shell with `exit`
+- Continue the build with option 2
+
+##### expat (macOS Mojave 10.14)
 The build might fail on expat:
-````
+````bash
 configure: error: C compiler cannot create executables
 ````
-* Press 4 to start a shell
-* Copy the command from above: ./configure --prefix $HOME/gtk/inst
-* Execute configure, it will work now
-* Execute make install
-* exit
 
-Press 2 to ignore the error, as the build was manually successfully executed
+Follow these steps to resolve the issue:
+- Open a shell with option 4
+- Run the configure step manually with `./configure --prefix $HOME/gtk/inst`
+- Exit the shell with `exit`
+- Continue the build with option 2
 
-The build will fail again. (missing python module six)
-Download from here: https://pypi.org/project/six/
-Execute
+### 2. Start a jhbuild shell
 ````bash
-$HOME/gtk/inst/bin/python setup.py install
+$HOME/.new_local/bin/jhbuild shell
 ````
 
-Build again. It should now build
-````bash
-./build-gtk3.sh
-````
-
-#### 2. Build Poppler
+### 3. Build Poppler
 Execute in this folder.
 ````bash
 ./build-poppler.sh
 ````
 
-#### 3. PortAudio
+### 4. Build PortAudio
 
 ````bash
 ./build-portaudio.sh
 ````
 
-#### 4. LibZip
+### 5. Build LibZip
 
 ````bash
 ./build-libzip.sh
 ````
+#### Potential Errors
+##### Unknown module (macOS Mojave 10.14)
+**TODO this needs to be improved to meet the standard of this tutorial**
 
 If there is an error like:
 xcode-select: error: tool 'xcodebuild' requires Xcode, but active developer directory '/Library/Developer/CommandLineTools' is a command line tools instance
@@ -81,21 +89,21 @@ export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
 autoreconf -if && ./configure --enable-cxx --prefix=$HOME/gtk/inst
 ````
 
-#### 5. sndfile
-
+### 6. Build sndfile
+**TODO There is currently no support for Opus files so recording and playback might fail.**
 ````bash
 ./build-sndfile.sh
 ````
 
 
-### Build Xournal++ and .app
+## Build Xournal++ and package it as .app
 ````bash
 complete-build.sh
 ````
 
 Technical it does:
 
-#### Build Xournal++
+### Build Xournal++
 ````bash
 export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
 
@@ -104,7 +112,7 @@ make -j 4
 make install
 ````
 
-#### Build App
+### Build App
 ````bash
 ./build-app.sh
 ````
