@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 10:43+0000\n"
-"PO-Revision-Date: 2019-08-20 10:46\n"
+"PO-Revision-Date: 2019-08-20 11:07\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -664,7 +664,7 @@ msgstr "Bezig met laden..."
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:143
 msgid "Magenta"
-msgstr ""
+msgstr "Magenta"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Manage Toolbars"
