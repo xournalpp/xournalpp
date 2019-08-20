@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 10:43+0000\n"
-"PO-Revision-Date: 2019-08-20 10:55\n"
+"PO-Revision-Date: 2019-08-20 11:08\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -464,7 +464,7 @@ msgstr "Error al anotar el archivo PDF «{1}»\n"
 
 #: ../src/gui/GladeGui.cpp:24
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr ""
+msgstr "Error al cargar el archivo de Glade «{1}» (se intentará cargar «{2}»)"
 
 #: ../src/control/Control.cpp:2374
 msgid "Error opening file \"{1}\""
@@ -481,7 +481,7 @@ msgstr "Error al leer el PDF: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:668
 msgid "Error reading width of a stroke: {1}"
-msgstr ""
+msgstr "Error al consultar la anchura de un trazo: {1}"
 
 #: ../src/control/jobs/ImageExport.cpp:143
 msgid "Error save image #1"
@@ -894,7 +894,7 @@ msgstr "Quitar fondo PDF"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:198
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr ""
+msgstr "Se quitó el elemento de la barra de herramientas {1} con id. {2}"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:194
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
@@ -1171,12 +1171,12 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2902
 msgid "This document is not saved yet."
-msgstr ""
+msgstr "Aún no se ha guardado este documento."
 
 #: ../src/control/PageBackgroundChangeController.cpp:185
 #: ../src/control/tools/ImageHandler.cpp:59
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "No se pudo cargar esta imagen. Mensaje de error: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Toggle fullscreen"
@@ -1363,11 +1363,11 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:298
 msgid "dash-/ dotted"
-msgstr ""
+msgstr "discontinua/punteada"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:295
 msgid "dashed"
-msgstr ""
+msgstr "discontinua"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:38
 msgid "default disabled"
@@ -1605,7 +1605,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:209
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
-msgstr ""
+msgstr "<i>Ejemplo:</i> 1-3 o 1,3,5-7 etc."
 
 #: ../ui/settings.glade:1813
 msgid "<i>For some specific hardware the scroll / touch behaviour of the system is not as expected. For these cases Xournal++ has a workaround.\n"
@@ -1677,7 +1677,8 @@ msgstr ""
 #: ../ui/about.glade:73
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
-msgstr ""
+msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+"<i>La siguiente generación</i>"
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
@@ -1754,7 +1755,7 @@ msgstr "Color de borde de la página actual y otras selecciones"
 
 #: ../ui/about.glade:128
 msgid "Built on:"
-msgstr ""
+msgstr "Compilado el:"
 
 #: ../ui/settings.glade:1201
 msgid "Button 1"
@@ -1861,7 +1862,7 @@ msgstr ""
 
 #: ../ui/main.glade:1364
 msgid "Draw _Line"
-msgstr ""
+msgstr "Dibujar _línea"
 
 #: ../ui/settings.glade:3443
 msgid "Drawing Area"
@@ -1933,7 +1934,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
-msgstr ""
+msgstr "Tipo de borrador – no cambiar"
 
 #: ../ui/settings.glade:670
 msgid "Experimental Input System"
@@ -1949,7 +1950,7 @@ msgstr "Exportar como…"
 
 #: ../ui/main.glade:1581 ../ui/main.glade:1742
 msgid "Fi_ll"
-msgstr ""
+msgstr "Re_llenar"
 
 #: ../ui/main.glade:1591 ../ui/main.glade:1752
 msgid "Fill transparency"
@@ -2306,19 +2307,19 @@ msgstr ""
 
 #: ../ui/settings.glade:1936
 msgid "Show Menubar on Startup"
-msgstr ""
+msgstr "Mostrar barra de menús al iniciar"
 
 #: ../ui/main.glade:496
 msgid "Show sidebar"
-msgstr ""
+msgstr "Mostrar barra lateral"
 
 #: ../ui/settings.glade:2204
 msgid "Show sidebar on the right side"
-msgstr ""
+msgstr "Mostrar barra lateral en el costado derecho"
 
 #: ../ui/settings.glade:2220
 msgid "Show vertical scrollbar on the left side"
-msgstr ""
+msgstr "Mostrar barra de desplazamiento vertical en el costado izquierdo"
 
 #: ../ui/settings.glade:3131
 msgid "Snapping"
@@ -2386,7 +2387,7 @@ msgstr ""
 
 #: ../ui/settings.glade:621
 msgid "This is an experimental feature! Use it with care."
-msgstr ""
+msgstr "Esta es una funcionalidad experimental. Utilícela con cuidado."
 
 #: ../ui/settings.glade:1500
 msgid "Timeout"
