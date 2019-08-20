@@ -14,9 +14,6 @@ steps:
 #      tar -xzf gtk-bin.tar.gz
 #      export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
 #    displayName: 'Unpack GTK'
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.x'
   - bash: |
       ./build-gtk3.sh
     workingDirectory: ./mac-setup
