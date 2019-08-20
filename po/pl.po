@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-09 06:01+0000\n"
-"PO-Revision-Date: 2019-08-09 06:06\n"
+"POT-Creation-Date: 2019-08-20 07:58+0000\n"
+"PO-Revision-Date: 2019-08-20 08:07\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -202,7 +202,7 @@ msgstr ""
 
 #: ../src/control/LatexController.cpp:111
 msgid "Could not find the LaTeX package 'standalone'.\n"
-"Please install standalone and make sure it's accessible by your LaTeX installation."
+"Please install standalone (found in texlive-latex-extra) and make sure it's accessible by your LaTeX installation."
 msgstr ""
 
 #: ../src/control/LatexController.cpp:470
