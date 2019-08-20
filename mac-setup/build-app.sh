@@ -11,7 +11,7 @@ cd "${0%/*}"
 # delete old app, if there
 echo "clean old app"
 
-export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
+export PATH="$HOME/.new_local/bin:$HOME/gtk/inst/bin:$PATH"
 
 rm -rf ./Xournal++.app
 rm ./Xournal++.zip
