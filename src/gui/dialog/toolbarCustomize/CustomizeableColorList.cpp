@@ -14,7 +14,7 @@ CustomizeableColorList::CustomizeableColorList()
 	this->addPredefinedColor(0x3333cc, _("Blue"));
 	this->addPredefinedColor(0x808080, _("Gray"));
 	this->addPredefinedColor(0xff0000, _("Red"));
-	this->addPredefinedColor(0xff00ff, _("Mangenta"));
+	this->addPredefinedColor(0xff00ff, _("Magenta"));
 	this->addPredefinedColor(0xff8000, _("Orange"));
 	this->addPredefinedColor(0xffff00, _("Yellow"));
 	this->addPredefinedColor(0xffffff, _("White"));
