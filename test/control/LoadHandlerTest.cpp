@@ -21,7 +21,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <iostream>
-#include <stdlib.h>
+#include <cmath>
 
 class LoadHandlerTest : public CppUnit::TestFixture
 {
@@ -366,7 +366,7 @@ public:
 		// Check that the coordinates from both files don't differ more than the precision they were saved with
 		auto coordEq = [](double a, double b) { return std::abs(a - b) <= 1e-8; };
 
-		for (int i = 0; i < elements1->size(); i++)
+		for (unsigned long i = 0; i < elements1->size(); i++)
 		{
 			Element* a = elements1->at(i);
 			Element* b = elements2->at(i);
@@ -380,16 +380,16 @@ public:
 			{
 			case ELEMENT_STROKE:
 			{
-				Stroke* sA = dynamic_cast<Stroke*>(a);
-				Stroke* sB = dynamic_cast<Stroke*>(b);
+				auto sA = dynamic_cast<Stroke*>(a);
+				auto sB = dynamic_cast<Stroke*>(b);
 				CPPUNIT_ASSERT_EQUAL(sA->getPointCount(), sB->getPointCount());
 				CPPUNIT_ASSERT_EQUAL(sA->getToolType(), sB->getToolType());
 				CPPUNIT_ASSERT_EQUAL(sA->getLineStyle().hasDashes(), sB->getLineStyle().hasDashes());
 				CPPUNIT_ASSERT(coordEq(sA->getAvgPressure(), sB->getAvgPressure()));
-				for (int i = 0; i < sA->getPointCount(); i++)
+				for (int j = 0; j < sA->getPointCount(); j++)
 				{
-					Point pA = sA->getPoint(i);
-					Point pB = sB->getPoint(i);
+					Point pA = sA->getPoint(j);
+					Point pB = sB->getPoint(j);
 					CPPUNIT_ASSERT(coordEq(pA.x, pB.x));
 					CPPUNIT_ASSERT(coordEq(pA.y, pB.y));
 					CPPUNIT_ASSERT(coordEq(pA.z, pB.z));
@@ -398,8 +398,8 @@ public:
 			}
 			case ELEMENT_TEXT:
 			{
-				Text* tA = dynamic_cast<Text*>(a);
-				Text* tB = dynamic_cast<Text*>(b);
+				auto tA = dynamic_cast<Text*>(a);
+				auto tB = dynamic_cast<Text*>(b);
 				CPPUNIT_ASSERT_EQUAL(tA->getText(), tB->getText());
 				CPPUNIT_ASSERT_EQUAL(tA->getFont().getSize(), tB->getFont().getSize());
 				break;
