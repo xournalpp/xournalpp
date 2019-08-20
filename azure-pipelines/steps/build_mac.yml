@@ -15,7 +15,7 @@ steps:
   - bash: |
       export PKG_CONFIG_PATH="/usr/local/opt/libffi/lib/pkgconfig:$PKG_CONFIG_PATH"
       export LDFLAGS="-L/usr/local/opt/libffi/lib $LDFLAGS"
-      cmake -GNinja .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type}} -DCMAKE_EXE_LINKER_FLAGS=-Wl,-framework,Cocoa ${{ parameters.cmake_flags }}
+      cmake -GNinja .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type}} ${{ parameters.cmake_flags }}
       cmake --build .
     workingDirectory: ./build
     displayName: 'Build Xournal++'
