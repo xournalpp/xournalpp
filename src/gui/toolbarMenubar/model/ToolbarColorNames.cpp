@@ -140,7 +140,7 @@ void ToolbarColorNames::initPredefinedColors()
 	addColor(0x3333cc, _("Blue"),		 true);
 	addColor(0x808080, _("Gray"),		 true);
 	addColor(0xff0000, _("Red"),		 true);
-	addColor(0xff00ff, _("Mangenta"),	 true);
+	addColor(0xff00ff, _("Magenta"),	 true);
 	addColor(0xff8000, _("Orange"),		 true);
 	addColor(0xffff00, _("Yellow"),		 true);
 	addColor(0xffffff, _("White"),		 true);
