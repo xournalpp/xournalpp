@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 07:58+0000\n"
-"PO-Revision-Date: 2019-08-20 09:46\n"
+"PO-Revision-Date: 2019-08-20 09:47\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -835,11 +835,11 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 #: ../src/undo/AddUndoAction.cpp:108
 msgid "Paste"
-msgstr ""
+msgstr "Pegar"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Pause / Play"
-msgstr ""
+msgstr "Pausar/reproducir"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:290
@@ -862,33 +862,33 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Presentation mode"
-msgstr ""
+msgstr "Modo de presentación"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Record Audio / Stop Recording"
-msgstr ""
+msgstr "Grabar audio/dejar de grabar"
 
 #: ../src/control/Control.cpp:984
 msgid "Recorder could not be started."
-msgstr ""
+msgstr "No se pudo iniciar la grabadora."
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:142
 msgid "Red"
-msgstr ""
+msgstr "Rojo"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 #: ../src/undo/UndoRedoHandler.cpp:267
 msgid "Redo"
-msgstr ""
+msgstr "Rehacer"
 
 #: ../src/undo/UndoRedoHandler.cpp:262
 msgid "Redo: "
-msgstr ""
+msgstr "Rehacer: "
 
 #: ../src/control/Control.cpp:2348
 msgid "Remove PDF Background"
-msgstr ""
+msgstr "Quitar fondo PDF"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:198
 msgid "Removed tool item from Toolbar {1} ID {2}"
