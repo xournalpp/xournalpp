@@ -6,7 +6,8 @@ steps:
   - bash: |
       brew update
       brew upgrade
-      brew install cmake ninja pkg-config gtk+3 poppler librsvg adwaita-icon-theme portaudio libsndfile lua libzip cppunit gettext
+      brew install cmake ninja pkg-config gtk+3 gtk-mac-integration poppler librsvg adwaita-icon-theme portaudio libsndfile lua libzip cppunit gettext
+      brew link --force gettext
     displayName: 'Install dependencies'
   - bash: |
       mkdir build
