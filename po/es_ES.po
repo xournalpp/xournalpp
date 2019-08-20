@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 07:58+0000\n"
-"PO-Revision-Date: 2019-08-20 08:19\n"
+"PO-Revision-Date: 2019-08-20 08:29\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -35,11 +35,11 @@ msgstr " de {1}{2}"
 
 #: ../src/control/settings/Settings.cpp:109
 msgid "%F-Note-%H-%M"
-msgstr ""
+msgstr "%F-Nota-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:119
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr ""
+msgstr "<b>No se encontró ningún dispositivo. Esto es inusual; recomendamos que envíe un informe de error.</b>"
 
 #: ../src/control/XournalMain.cpp:576
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -48,62 +48,67 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr ""
+msgstr "<span foreground='red' size='x-large'>Falta el archivo de IU necesario:\n"
+"<b>{1}</b></span>\n"
+"No se pudo encontrar en ninguna ubicación.\n"
+"  No es relativo\n"
+"  No está en la ruta de trabajo\n"
+"  No está en {2}"
 
 #: ../src/control/XournalMain.cpp:317
 msgid "Absolute path for the audio files playback"
-msgstr ""
+msgstr "Ruta absoluta de reproducción de archivos de audio"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:466
 msgid "Add/Edit Tex"
-msgstr ""
+msgstr "Añadir/editar Tex"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:53
 msgid "All files"
-msgstr ""
+msgstr "Todos los archivos"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:257
 msgid "Apply to all pages"
-msgstr ""
+msgstr "Aplicar a todas las páginas"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:246
 msgid "Apply to current page"
-msgstr ""
+msgstr "Aplicar a la página actual"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:30
 #: ../src/control/stockdlg/XojOpenDlg.cpp:154
 msgid "Attach file to the journal"
-msgstr ""
+msgstr "Adjuntar archivo al cuaderno"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:140
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr ""
+msgstr "No se pudo procesar el atributo «{1}» como «double»; el valor es «{2}»"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:132
 msgid "Attribute \"{1}\" could not be parsed as double, the value is NULL"
-msgstr ""
+msgstr "No se pudo procesar el atributo «{1}» como «double»; el valor es NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:160
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:183
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr ""
+msgstr "No se pudo procesar el atributo «{1}» como «int»; el valor es «{2}»"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:152
 msgid "Attribute \"{1}\" could not be parsed as int, the value is NULL"
-msgstr ""
+msgstr "No se pudo procesar el atributo «{1}» como «int»; el valor es NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:205
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:228
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr ""
+msgstr "No se pudo procesar el atributo «{1}» como «size_t»; el valor es «{2}»"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:197
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is NULL"
-msgstr ""
+msgstr "No se pudo procesar el atributo «{1}» como «size_t»; el valor es NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:70
 msgid "Attribute color not set!"
-msgstr ""
+msgstr "No se definió el color del atributo."
 
 #: ../src/control/AudioController.cpp:152
 msgid "Audio folder not set! Recording won't work!\n"
