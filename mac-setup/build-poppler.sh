@@ -1,4 +1,4 @@
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.new_local/bin:$PATH"
 
 curl -L https://github.com/uclouvain/openjpeg/archive/v2.3.0.tar.gz -o openjpeg.tar.gz
 tar xf openjpeg.tar.gz
