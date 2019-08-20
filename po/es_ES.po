@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 10:43+0000\n"
-"PO-Revision-Date: 2019-08-20 11:27\n"
+"PO-Revision-Date: 2019-08-20 11:37\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -571,7 +571,7 @@ msgstr "Verde"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Grid Snapping"
-msgstr ""
+msgstr "Acople de retícula"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:71
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:481
@@ -860,7 +860,7 @@ msgstr "Reproducir objeto"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:23
 msgid "Predefined"
-msgstr ""
+msgstr "Predefinido"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Presentation mode"
@@ -918,7 +918,7 @@ msgstr "Giro"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Rotation Snapping"
-msgstr ""
+msgstr "Acople de giro"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:24
 msgid "Ruled"
@@ -1209,23 +1209,23 @@ msgstr "Deshacer: "
 
 #: ../src/control/xojfile/LoadHandler.cpp:360
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "Etiqueta «root» inesperada: «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:393
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "Etiqueta inesperada en el documento: «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:644
 msgid "Unknown background type: {1}"
-msgstr ""
+msgstr "Tipo de fondo desconocido: {1}"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "Se desconoce el valor de color «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:579
 msgid "Unknown domain type: {1}"
-msgstr ""
+msgstr "Tipo de dominio desconocido: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:289
 msgid "Unknown parser error"
@@ -1595,7 +1595,8 @@ msgstr ""
 #: ../ui/fillTransparency.glade:79
 msgid "<b>Fill transparency settings</b>\n"
 "Select transparency for fill color"
-msgstr ""
+msgstr "<b>Configuración de transparencia de relleno</b>\n"
+"Seleccione la transparencia del color de relleno"
 
 #: ../ui/pageTemplate.glade:132
 msgid "<b>Page size</b>"
@@ -2012,7 +2013,7 @@ msgstr "Ir a la página"
 
 #: ../ui/settings.glade:3085
 msgid "Grid snapping tolerance"
-msgstr ""
+msgstr "Tolerancia de acople de retícula"
 
 #: ../ui/main.glade:1441
 msgid "H_and Tool"
@@ -2273,7 +2274,7 @@ msgstr "Botón secundario del ratón"
 
 #: ../ui/settings.glade:3072
 msgid "Rotation snapping tolerance"
-msgstr ""
+msgstr "Tolerancia de acople de giro"
 
 #: ../ui/settings.glade:3843
 msgid "Sample Rate"
@@ -2345,7 +2346,7 @@ msgstr "Mostrar barra de desplazamiento vertical en el costado izquierdo"
 
 #: ../ui/settings.glade:3131
 msgid "Snapping"
-msgstr ""
+msgstr "Acople"
 
 #: ../ui/settings.glade:2560
 msgid "Speed for Ctrl + Scroll"
