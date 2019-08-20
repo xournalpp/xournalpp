@@ -15,6 +15,7 @@ steps:
 #      export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
 #    displayName: 'Unpack GTK'
   - bash: |
+      ps -ww -o pid= -o ppid= -o args=
       ./build-gtk3.sh
     workingDirectory: ./mac-setup
     displayName: 'Build dependencies (GTK)'
