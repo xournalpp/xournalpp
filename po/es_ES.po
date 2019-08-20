@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 07:58+0000\n"
-"PO-Revision-Date: 2019-08-20 09:40\n"
+"PO-Revision-Date: 2019-08-20 09:46\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -2409,19 +2409,19 @@ msgstr ""
 
 #: ../ui/settings.glade:3019
 msgid "Usually 0 or 1"
-msgstr ""
+msgstr "Habitualmente 0 o 1"
 
 #: ../ui/about.glade:100
 msgid "Version"
-msgstr ""
+msgstr "Versión"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Version: "
-msgstr ""
+msgstr "Versión: "
 
 #: ../ui/settings.glade:2508
 msgid "View"
-msgstr ""
+msgstr "Ver"
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
@@ -2429,11 +2429,11 @@ msgstr ""
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
-msgstr ""
+msgstr "Anchura:"
 
 #: ../ui/about.glade:202
 msgid "With help from the community"
-msgstr ""
+msgstr "Con ayuda de la comunidad"
 
 #: ../ui/settings.glade:1851
 msgid "Workaround"
@@ -2441,83 +2441,83 @@ msgstr ""
 
 #: ../ui/settings.glade:105
 msgid "Xournal++ Preferences"
-msgstr ""
+msgstr "Preferencias de Xournal++"
 
 #: ../ui/settings.glade:2798
 msgid "Zoom"
-msgstr ""
+msgstr "Escala"
 
 #: ../ui/settings.glade:1782
 msgid "Zoom Gestures"
-msgstr ""
+msgstr "Gestos de escala"
 
 #: ../ui/settings.glade:2642
 msgid "Zoom Speed"
-msgstr ""
+msgstr "Velocidad de escala"
 
 #: ../ui/main.glade:633
 msgid "_1 Column"
-msgstr ""
+msgstr "_1 columna"
 
 #: ../ui/main.glade:738
 msgid "_1 Row"
-msgstr ""
+msgstr "_1 fila"
 
 #: ../ui/main.glade:644
 msgid "_2 Columns"
-msgstr ""
+msgstr "_2 columnas"
 
 #: ../ui/main.glade:749
 msgid "_2 Rows"
-msgstr ""
+msgstr "_2 filas"
 
 #: ../ui/main.glade:655
 msgid "_3 Columns"
-msgstr ""
+msgstr "_3 columnas"
 
 #: ../ui/main.glade:760
 msgid "_3 Rows"
-msgstr ""
+msgstr "_3 filas"
 
 #: ../ui/main.glade:666
 msgid "_4 Columns"
-msgstr ""
+msgstr "_4 columnas"
 
 #: ../ui/main.glade:771
 msgid "_4 Rows"
-msgstr ""
+msgstr "_4 filas"
 
 #: ../ui/main.glade:677
 msgid "_5 Columns"
-msgstr ""
+msgstr "_5 columnas"
 
 #: ../ui/main.glade:782
 msgid "_5 Rows"
-msgstr ""
+msgstr "_5 filas"
 
 #: ../ui/main.glade:688
 msgid "_6 Columns"
-msgstr ""
+msgstr "_6 columnas"
 
 #: ../ui/main.glade:793
 msgid "_6 Rows"
-msgstr ""
+msgstr "_6 filas"
 
 #: ../ui/main.glade:699
 msgid "_7 Columns"
-msgstr ""
+msgstr "_7 columnas"
 
 #: ../ui/main.glade:804
 msgid "_7 Rows"
-msgstr ""
+msgstr "_7 filas"
 
 #: ../ui/main.glade:710
 msgid "_8 Columns"
-msgstr ""
+msgstr "_8 columnas"
 
 #: ../ui/main.glade:815
 msgid "_8 Rows"
-msgstr ""
+msgstr "_8 filas"
 
 #: ../ui/main.glade:199
 msgid "_Annotate PDF"
@@ -2645,11 +2645,11 @@ msgstr ""
 
 #: ../ui/main.glade:1269
 msgid "_Text"
-msgstr ""
+msgstr "_Texto"
 
 #: ../ui/main.glade:1222
 msgid "_Tools"
-msgstr ""
+msgstr "_Herramientas"
 
 #: ../ui/main.glade:1050
 msgid "_Top Layer"
@@ -2661,39 +2661,39 @@ msgstr ""
 
 #: ../ui/main.glade:535
 msgid "_Vertical"
-msgstr ""
+msgstr "_Vertical"
 
 #: ../ui/main.glade:1417
 msgid "_Vertical Space"
-msgstr ""
+msgstr "Espacio _vertical"
 
 #: ../ui/main.glade:454
 msgid "_View"
-msgstr ""
+msgstr "_Ver"
 
 #: ../ui/main.glade:1677
 msgid "_delete strokes"
-msgstr ""
+msgstr "_eliminar trazos"
 
 #: ../ui/main.glade:1481 ../ui/main.glade:1616 ../ui/main.glade:1703
 msgid "_fine"
-msgstr ""
+msgstr "_fino"
 
 #: ../ui/main.glade:1492 ../ui/main.glade:1627 ../ui/main.glade:1714
 msgid "_medium"
-msgstr ""
+msgstr "_medio"
 
 #: ../ui/main.glade:1655
 msgid "_standard"
-msgstr ""
+msgstr "_estándar"
 
 #: ../ui/main.glade:1503 ../ui/main.glade:1638 ../ui/main.glade:1725
 msgid "_thick"
-msgstr ""
+msgstr "_grueso"
 
 #: ../ui/main.glade:1470
 msgid "_very fine"
-msgstr ""
+msgstr "_muy fino"
 
 #: ../ui/main.glade:1666
 msgid "_whiteout"
@@ -2701,42 +2701,42 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:158
 msgid "change"
-msgstr ""
+msgstr "cambiar"
 
 #: ../ui/exportSettings.glade:223
 msgid "dpi"
-msgstr ""
+msgstr "ppp"
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
-msgstr ""
+msgstr "activado"
 
 #: ../ui/settings.glade:259
 msgid "every"
-msgstr ""
+msgstr "cada"
 
 #: ../ui/pageTemplate.glade:51
 msgid "load from file"
-msgstr ""
+msgstr "cargar a partir de archivo"
 
 #: ../ui/settings.glade:286
 msgid "minutes"
-msgstr ""
+msgstr "minutos"
 
 #: ../ui/settings.glade:2941 ../ui/settings.glade:2952
 #: ../ui/settings.glade:3200
 msgid "pixels"
-msgstr ""
+msgstr "píxeles"
 
 #: ../ui/settings.glade:1544
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
-msgstr ""
+msgstr "s <i>(tras lo cual se reactivará la pantalla táctil)</i>"
 
 #: ../ui/pageTemplate.glade:37
 msgid "save to file"
-msgstr ""
+msgstr "guardar en archivo"
 
 #: ../ui/main.glade:1514
 msgid "ver_y thick"
-msgstr ""
+msgstr "mu_y grueso"
 
