@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 07:58+0000\n"
-"PO-Revision-Date: 2019-08-20 08:56\n"
+"PO-Revision-Date: 2019-08-20 09:08\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -681,15 +681,15 @@ msgstr "Falta el archivo de IU necesario:\n"
 
 #: ../src/undo/MoveUndoAction.cpp:20
 msgid "Move"
-msgstr ""
+msgstr "Mover"
 
 #: ../src/undo/MoveLayerUndoAction.cpp:38
 msgid "Move layer"
-msgstr ""
+msgstr "Mover capa"
 
 #: ../src/undo/SwapUndoAction.cpp:88
 msgid "Move page downwards"
-msgstr ""
+msgstr "Mover página hacia abajo"
 
 #: ../src/undo/SwapUndoAction.cpp:88
 msgid "Move page upwards"
@@ -890,23 +890,23 @@ msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:194
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr ""
+msgstr "Se quitó el elemento {1} de la barra de herramientas {2} con id. {3}"
 
 #: ../src/util/XojMsgBox.cpp:82
 msgid "Replace"
-msgstr ""
+msgstr "Reemplazar"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1341
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr ""
+msgstr "No se encontró el archivo temporal solicitado para el adjunto {1}"
 
 #: ../src/control/XournalMain.cpp:189
 msgid "Restore file"
-msgstr ""
+msgstr "Restaurar archivo"
 
 #: ../src/undo/RotateUndoAction.cpp:74
 msgid "Rotation"
-msgstr ""
+msgstr "Giro"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Rotation Snapping"
@@ -930,43 +930,43 @@ msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:28
 msgid "SVG with transparent background"
-msgstr ""
+msgstr "SVG con fondo transparente"
 
 #: ../src/control/Control.cpp:2903 ../src/control/jobs/SaveJob.cpp:13
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: ../src/control/Control.cpp:2903
 msgid "Save As..."
-msgstr ""
+msgstr "Guardar como…"
 
 #: ../src/control/Control.cpp:2697 ../src/gui/dialog/PageTemplateDialog.cpp:110
 msgid "Save File"
-msgstr ""
+msgstr "Guardar archivo"
 
 #: ../src/control/jobs/CustomExportJob.cpp:162
 #: ../src/control/jobs/SaveJob.cpp:143
 msgid "Save file error: {1}"
-msgstr ""
+msgstr "Error al guardar el archivo: {1}"
 
 #: ../src/undo/ScaleUndoAction.cpp:73
 msgid "Scale"
-msgstr ""
+msgstr "Escala"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Select Font"
-msgstr ""
+msgstr "Seleccionar tipo de letra"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:82
 msgid "Select Object"
-msgstr ""
+msgstr "Seleccionar objeto"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:10
@@ -974,136 +974,138 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:68
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:108
 msgid "Select Rectangle"
-msgstr ""
+msgstr "Seleccionar rectángulo"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:476
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:75
 msgid "Select Region"
-msgstr ""
+msgstr "Seleccionar región"
 
 #: ../src/control/Control.cpp:2347
 msgid "Select another PDF"
-msgstr ""
+msgstr "Seleccionar otro PDF"
 
 #: ../src/util/XojMsgBox.cpp:81
 msgid "Select another name"
-msgstr ""
+msgstr "Seleccionar otro nombre"
 
 #: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:140
 msgid "Select background color"
-msgstr ""
+msgstr "Seleccionar color de fondo"
 
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:59
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:175
 msgid "Select color"
-msgstr ""
+msgstr "Seleccionar color"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:70
 msgid "Select rectangle"
-msgstr ""
+msgstr "Seleccionar rectángulo"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:69
 msgid "Select region"
-msgstr ""
+msgstr "Seleccionar región"
 
 #: ../src/control/XournalMain.cpp:135
 msgid "Send Bugreport"
-msgstr ""
+msgstr "Enviar informe de error"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:53
 msgid "Separator"
-msgstr ""
+msgstr "Separador"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Shape Recognizer"
-msgstr ""
+msgstr "Reconocedor de formas"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:90
 msgid "Show all"
-msgstr ""
+msgstr "Mostrar todo"
 
 #: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:134
 msgid "Show only not used pages (one unused page)"
-msgstr ""
+msgstr "Mostrar solo páginas no utilizadas (una página no utilizada)"
 
 #: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:135
 msgid "Show only not used pages ({1} unused pages)"
-msgstr ""
+msgstr "Mostrar solo páginas no utilizadas ({1} páginas no utilizadas)"
 
 #: ../src/control/XournalMain.cpp:390
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr ""
+msgstr "Xournal++ solo puede abrir un archivo a la vez.\n"
+"El resto se ignora."
 
 #: ../src/control/XournalMain.cpp:405
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
-msgstr ""
+msgstr "Por el momento Xournal++ no puede abrir archivos remotos.\n"
+"Debe copiar el archivo en un directorio local."
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Staves"
-msgstr ""
+msgstr "Pentagramas"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Stop"
-msgstr ""
+msgstr "Detener"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:111
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
 #: ../src/undo/RecognizerUndoAction.cpp:101
 msgid "Stroke recognizer"
-msgstr ""
+msgstr "Reconocedor de trazos"
 
 #: ../src/util/CrashHandler.cpp:51
 msgid "Successfully saved document to \"{1}\""
-msgstr ""
+msgstr "Se guardó correctamente el documento en «{1}»"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:134
 msgid "Supported files"
-msgstr ""
+msgstr "Archivos admitidos"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:66
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:465
 msgid "Text"
-msgstr ""
+msgstr "Texto"
 
 #: ../src/gui/SearchBar.cpp:95
 #, c-format
 msgid "Text %i times found on this page"
-msgstr ""
+msgstr "Se encontró el texto %i veces en esta página"
 
 #: ../src/undo/TextUndoAction.cpp:47
 msgid "Text changes"
-msgstr ""
+msgstr "Cambios de texto"
 
 #: ../src/gui/SearchBar.cpp:91
 msgid "Text found on this page"
-msgstr ""
+msgstr "Texto encontrado en esta página"
 
 #: ../src/gui/SearchBar.cpp:175 ../src/gui/SearchBar.cpp:231
 msgid "Text found once on page {1}"
-msgstr ""
+msgstr "Se encontró el texto 1 vez en la página {1}"
 
 #: ../src/gui/SearchBar.cpp:176 ../src/gui/SearchBar.cpp:232
 msgid "Text found {1} times on page {2}"
-msgstr ""
+msgstr "Se encontró el texto {1} veces en la página {2}"
 
 #: ../src/gui/SearchBar.cpp:102
 msgid "Text not found"
-msgstr ""
+msgstr "No se encontró el texto"
 
 #: ../src/gui/SearchBar.cpp:189 ../src/gui/SearchBar.cpp:245
 msgid "Text not found, searched on all pages"
-msgstr ""
+msgstr "No se encontró el texto; se buscó en todas las páginas"
 
 #: ../src/control/Control.cpp:1182
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr ""
+msgstr "La configuración de barras de herramientas «{1}» es la predefinida. ¿Quiere crear una copia para editarla?"
 
 #: ../src/control/Control.cpp:2344
 msgid "The attached background PDF could not be found."
-msgstr ""
+msgstr "No se pudo encontrar el PDF de fondo adjunto."
 
 #: ../src/control/Control.cpp:2345
 msgid "The background PDF could not be found."
