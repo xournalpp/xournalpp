@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-09 06:01+0000\n"
-"PO-Revision-Date: 2019-08-09 06:06\n"
+"PO-Revision-Date: 2019-08-18 20:07\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -110,15 +110,15 @@ msgstr ""
 
 #: ../src/control/Control.cpp:264
 msgid "Autosave failed with an error: {1}"
-msgstr ""
+msgstr "Automatické uložení selhalo s chybou: {1}"
 
 #: ../src/control/Control.cpp:226
 msgid "Autosave renamed from {1} to {2}"
-msgstr ""
+msgstr "Automatické uložení přejmenováno z {1} na {2}"
 
 #: ../src/control/jobs/AutosaveJob.cpp:60
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "Automaticky ukládám do {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Back"
