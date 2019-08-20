@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 07:58+0000\n"
-"PO-Revision-Date: 2019-08-20 08:45\n"
+"PO-Revision-Date: 2019-08-20 08:56\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -478,11 +478,11 @@ msgstr ""
 
 #: ../src/control/jobs/ImageExport.cpp:143
 msgid "Error save image #1"
-msgstr ""
+msgstr "Error al guardar la imagen n.º 1"
 
 #: ../src/control/jobs/ImageExport.cpp:160
 msgid "Error save image #2"
-msgstr ""
+msgstr "Error al guardar la imagen n.º 2"
 
 #: ../src/control/jobs/AutosaveJob.cpp:25
 msgid "Error while autosaving: {1}"
@@ -510,11 +510,11 @@ msgstr "No se pudo abrir el archivo. Debe hacerlo manualmente:\n"
 
 #: ../src/control/Control.cpp:2306
 msgid "Filename: {1}"
-msgstr ""
+msgstr "Nombre de archivo: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:511
 msgid "Fill"
-msgstr ""
+msgstr "Rellenar"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:72
 msgid "Floating Toolbox (experimental)"
@@ -522,31 +522,31 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:71
 msgid "Font"
-msgstr ""
+msgstr "Tipo de letra"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Go to first page"
-msgstr ""
+msgstr "Ir a la primera página"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Go to last page"
-msgstr ""
+msgstr "Ir a la última página"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Go to next layer"
-msgstr ""
+msgstr "Ir a la capa siguiente"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Go to page"
-msgstr ""
+msgstr "Ir a la página"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Go to previous layer"
-msgstr ""
+msgstr "Ir a la capa anterior"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Go to top layer"
-msgstr ""
+msgstr "Ir a la capa superior"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:27
 msgid "Graph"
@@ -555,12 +555,12 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:141
 msgid "Gray"
-msgstr ""
+msgstr "Gris"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:11
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:137
 msgid "Green"
-msgstr ""
+msgstr "Verde"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Grid Snapping"
@@ -569,112 +569,115 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:71
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:481
 msgid "Hand"
-msgstr ""
+msgstr "Mano"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:99
 msgid "Hide all"
-msgstr ""
+msgstr "Ocultar todo"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:65
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:463
 msgid "Highlighter"
-msgstr ""
+msgstr "Resaltador"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Image"
-msgstr ""
+msgstr "Imagen"
 
 #: ../src/control/XournalMain.cpp:260
 msgid "Image file successfully created"
-msgstr ""
+msgstr "Se creó correctamente el archivo de imagen"
 
 #: ../src/control/XournalMain.cpp:315
 msgid "Image output filename (.png / .svg)"
-msgstr ""
+msgstr "Nombre de archivo de salida de imagen (.png/.svg)"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:18
 msgid "Images"
-msgstr ""
+msgstr "Imágenes"
 
 #: ../src/undo/InsertUndoAction.cpp:116
 msgid "Insert elements"
-msgstr ""
+msgstr "Insertar elementos"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:67 ../src/undo/InsertUndoAction.cpp:48
 msgid "Insert image"
-msgstr ""
+msgstr "Insertar imagen"
 
 #: ../src/undo/InsertUndoAction.cpp:52
 msgid "Insert latex"
-msgstr ""
+msgstr "Insertar LaTeX"
 
 #: ../src/undo/InsertLayerUndoAction.cpp:40
 msgid "Insert layer"
-msgstr ""
+msgstr "Insertar capa"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Insert page"
-msgstr ""
+msgstr "Insertar página"
 
 #: ../src/control/XournalMain.cpp:316
 msgid "Jump to Page (first Page: 1)"
-msgstr ""
+msgstr "Ir a la página (primera página: 1)"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:348
 msgid "Layer"
-msgstr ""
+msgstr "Capa"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:79
 msgid "Layer Preview"
-msgstr ""
+msgstr "Previsualización de capa"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:331
 msgid "Layer selection"
-msgstr ""
+msgstr "Selección de capa"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:26
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:260
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:318
 msgid "Layer {1}"
-msgstr ""
+msgstr "Capa {1}"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:138
 msgid "Light Blue"
-msgstr ""
+msgstr "Azul claro"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:13
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:139
 msgid "Light Green"
-msgstr ""
+msgstr "Verde claro"
 
 #: ../src/gui/PageView.cpp:865
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:103
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:18
 msgid "Loading..."
-msgstr ""
+msgstr "Cargando…"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Manage Toolbars"
-msgstr ""
+msgstr "Gestionar barras de herramientas"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:143
 msgid "Mangenta"
-msgstr ""
+msgstr "Magenta"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:525
 msgid "Medium"
-msgstr ""
+msgstr "Medio"
 
 #: ../src/control/XournalMain.cpp:556
 msgid "Missing the needed UI file:\n"
 "{1}\n"
 " .app corrupted?\n"
 "Path: {2}"
-msgstr ""
+msgstr "Falta el archivo de IU necesario:\n"
+"{1}\n"
+"Es posible que el .app esté dañado.\n"
+"Ruta: {2}"
 
 #: ../src/undo/MoveUndoAction.cpp:20
 msgid "Move"
