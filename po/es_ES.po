@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 07:58+0000\n"
-"PO-Revision-Date: 2019-08-20 09:47\n"
+"PO-Revision-Date: 2019-08-20 10:13\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -694,11 +694,11 @@ msgstr "Mover capa"
 
 #: ../src/undo/SwapUndoAction.cpp:88
 msgid "Move page downwards"
-msgstr "Mover página hacia abajo"
+msgstr "Bajar página"
 
 #: ../src/undo/SwapUndoAction.cpp:88
 msgid "Move page upwards"
-msgstr "Mover página hacia arriba"
+msgstr "Subir página"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:90
 msgid "New"
@@ -854,7 +854,7 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:89
 msgid "Play Object"
-msgstr ""
+msgstr "Reproducir objeto"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:23
 msgid "Predefined"
@@ -928,11 +928,11 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 msgid "Ruler"
-msgstr ""
+msgstr "Regla"
 
 #: ../src/control/jobs/CustomExportJob.cpp:27
 msgid "SVG graphics"
-msgstr ""
+msgstr "Imágenes SVG"
 
 #: ../src/control/jobs/CustomExportJob.cpp:28
 msgid "SVG with transparent background"
@@ -1115,7 +1115,7 @@ msgstr "No se pudo encontrar el PDF de fondo adjunto."
 
 #: ../src/control/Control.cpp:2345
 msgid "The background PDF could not be found."
-msgstr ""
+msgstr "No se encontró el PDF de fondo."
 
 #: ../src/control/xojfile/LoadHandler.cpp:155
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1417,28 +1417,28 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:222
 msgid "show"
-msgstr ""
+msgstr "mostrar"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:292
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:313
 msgid "standard"
-msgstr ""
+msgstr "estándar"
 
 #: ../src/undo/AddUndoAction.cpp:129 ../src/undo/DeleteUndoAction.cpp:123
 msgid "stroke"
-msgstr ""
+msgstr "trazo"
 
 #: ../src/undo/AddUndoAction.cpp:138 ../src/undo/DeleteUndoAction.cpp:132
 msgid "text"
-msgstr ""
+msgstr "texto"
 
 #: ../src/util/DeviceListHelper.cpp:143
 msgid "touchpad"
-msgstr ""
+msgstr "panel táctil"
 
 #: ../src/util/DeviceListHelper.cpp:139
 msgid "touchscreen"
-msgstr ""
+msgstr "pantalla táctil"
 
 #: ../src/util/DeviceListHelper.cpp:148
 msgid "trackpoint"
@@ -1529,11 +1529,11 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:256
 msgid "<b>Background Color</b>"
-msgstr ""
+msgstr "<b>Color de fondo</b>"
 
 #: ../ui/pageTemplate.glade:269
 msgid "<b>Background</b>"
-msgstr ""
+msgstr "<b>Fondo</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
@@ -1575,15 +1575,15 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:132
 msgid "<b>Page size</b>"
-msgstr ""
+msgstr "<b>Tamaño de página</b>"
 
 #: ../ui/pagesize.glade:142
 msgid "<b>Pagesize</b>"
-msgstr ""
+msgstr "<b>Tamaño de página</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separator</b>"
-msgstr ""
+msgstr "<b>Separador</b>"
 
 #: ../ui/settings.glade:701
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -1708,15 +1708,15 @@ msgstr "Dispositivos de audio"
 
 #: ../ui/settings.glade:3951
 msgid "Audio Recording"
-msgstr ""
+msgstr "Grabación de audio"
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
-msgstr ""
+msgstr "Autor: "
 
 #: ../ui/about.glade:161
 msgid "Authors:"
-msgstr ""
+msgstr "Autores:"
 
 #: ../ui/settings.glade:1515
 msgid "Autodetect"
@@ -1744,11 +1744,11 @@ msgstr ""
 
 #: ../ui/settings.glade:2008
 msgid "Border color"
-msgstr ""
+msgstr "Color de borde"
 
 #: ../ui/settings.glade:1993
 msgid "Border color for current page and other selections"
-msgstr ""
+msgstr "Color de borde de la página actual y otras selecciones"
 
 #: ../ui/about.glade:128
 msgid "Built on:"
@@ -1879,7 +1879,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1608
 msgid "Enable"
-msgstr ""
+msgstr "Activar"
 
 #: ../ui/settings.glade:3160
 msgid "Enable  with determination radius of "
@@ -1887,11 +1887,11 @@ msgstr ""
 
 #: ../ui/settings.glade:537
 msgid "Enable Autoloading of Journals"
-msgstr ""
+msgstr "Activar carga automática de cuadernos"
 
 #: ../ui/settings.glade:235
 msgid "Enable Autosaving"
-msgstr ""
+msgstr "Activar guardado automático"
 
 #: ../ui/settings.glade:1829
 msgid "Enable GTK Touch / Scrolling workaround  (requires restart)"
@@ -1939,11 +1939,11 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:25
 msgid "Export"
-msgstr ""
+msgstr "Exportar"
 
 #: ../ui/main.glade:250
 msgid "Export as..."
-msgstr ""
+msgstr "Exportar como…"
 
 #: ../ui/main.glade:1581 ../ui/main.glade:1742
 msgid "Fi_ll"
@@ -1967,23 +1967,23 @@ msgstr ""
 
 #: ../ui/main.glade:485 ../ui/settings.glade:2376
 msgid "Fullscreen"
-msgstr ""
+msgstr "Pantalla completa"
 
 #: ../ui/about.glade:251
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "GNU GPLv2 o posterior"
 
 #: ../ui/settings.glade:3855
 msgid "Gain"
-msgstr ""
+msgstr "Ganancia"
 
 #: ../ui/settings.glade:2107
 msgid "Global"
-msgstr ""
+msgstr "Global"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
-msgstr ""
+msgstr "Ir a la página"
 
 #: ../ui/settings.glade:3085
 msgid "Grid snapping tolerance"
@@ -1995,27 +1995,27 @@ msgstr ""
 
 #: ../ui/settings.glade:1717
 msgid "Hand Recognition"
-msgstr ""
+msgstr "Reconocimiento de mano"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
-msgstr ""
+msgstr "Altura:"
 
 #: ../ui/main.glade:888 ../ui/settings.glade:2338 ../ui/settings.glade:2405
 msgid "Hide Menubar"
-msgstr ""
+msgstr "Ocultar barra de menús"
 
 #: ../ui/settings.glade:2354 ../ui/settings.glade:2421
 msgid "Hide Sidebar"
-msgstr ""
+msgstr "Ocultar barra lateral"
 
 #: ../ui/settings.glade:2271
 msgid "Hide the horizontal scrollbar"
-msgstr ""
+msgstr "Ocultar barra de desplazamiento horizontal"
 
 #: ../ui/settings.glade:2287
 msgid "Hide the vertical scrollbar"
-msgstr ""
+msgstr "Ocultar barra de desplazamiento vertical"
 
 #: ../ui/settings.glade:2137
 msgid "Highlight cursor position"
@@ -2041,59 +2041,59 @@ msgstr ""
 
 #: ../ui/settings.glade:3754
 msgid "Input Device"
-msgstr ""
+msgstr "Dispositivo de entrada"
 
 #: ../ui/settings.glade:737
 msgid "Input Devices"
-msgstr ""
+msgstr "Dispositivos de entrada"
 
 #: ../ui/settings.glade:862
 msgid "Input System"
-msgstr ""
+msgstr "Sistema de entrada"
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
-msgstr ""
+msgstr "Insertar LaTeX"
 
 #: ../ui/main.glade:2458
 msgid "Insert Page After"
-msgstr ""
+msgstr "Insertar página después"
 
 #: ../ui/main.glade:2450
 msgid "Insert Page Before"
-msgstr ""
+msgstr "Insertar página antes"
 
 #: ../ui/main.glade:2041
 msgid "Insert a copy of the current page below"
-msgstr ""
+msgstr "Insertar una copia de la página actual más abajo"
 
 #: ../ui/main.glade:512
 msgid "Layout"
-msgstr ""
+msgstr "Disposición"
 
 #: ../ui/settings.glade:2242
 msgid "Left / Right-Handed"
-msgstr ""
+msgstr "Zurdo o diestro"
 
 #: ../ui/about.glade:235
 msgid "License"
-msgstr ""
+msgstr "Licencia"
 
 #: ../ui/settings.glade:587
 msgid "Load / Save"
-msgstr ""
+msgstr "Cargar/guardar"
 
 #: ../ui/images.glade:73
 msgid "Load file"
-msgstr ""
+msgstr "Cargar archivo"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
-msgstr ""
+msgstr "Gestionar barra de herramientas"
 
 #: ../ui/settings.glade:3318
 msgid "Max Length (mm)"
-msgstr ""
+msgstr "Longitud máxima (mm)"
 
 #: ../ui/settings.glade:820
 msgid "Merge button events with stylus tip events\n"
@@ -2102,23 +2102,23 @@ msgstr ""
 
 #: ../ui/settings.glade:954
 msgid "Middle Mouse Button"
-msgstr ""
+msgstr "Botón central del ratón"
 
 #: ../ui/settings.glade:1041 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
-msgstr ""
+msgstr "Ratón"
 
 #: ../ui/settings.glade:1010
 msgid "Mouse Buttons"
-msgstr ""
+msgstr "Botones del ratón"
 
 #: ../ui/main.glade:2488
 msgid "Move Down"
-msgstr ""
+msgstr "Bajar"
 
 #: ../ui/main.glade:2480
 msgid "Move Up"
-msgstr ""
+msgstr "Subir"
 
 #: ../ui/main.glade:1066
 msgid "N_ext annotated page"
@@ -2126,19 +2126,19 @@ msgstr ""
 
 #: ../ui/main.glade:1113
 msgid "New Page _After"
-msgstr ""
+msgstr "Página nueva _después"
 
 #: ../ui/main.glade:1103
 msgid "New Page _Before"
-msgstr ""
+msgstr "Página nueva _antes"
 
 #: ../ui/main.glade:1124
 msgid "New Page at _End"
-msgstr ""
+msgstr "Página nueva al _final"
 
 #: ../ui/main.glade:1161
 msgid "New _Layer"
-msgstr ""
+msgstr "_Capa nueva"
 
 #: ../ui/settings.glade:3006
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2228,23 +2228,23 @@ msgstr "Intervalo"
 
 #: ../ui/main.glade:190
 msgid "Recent _Documents"
-msgstr ""
+msgstr "_Documentos recientes"
 
 #: ../ui/main.glade:1778
 msgid "Record / Stop"
-msgstr ""
+msgstr "Grabar/detener"
 
 #: ../ui/settings.glade:3904
 msgid "Recording Quality"
-msgstr ""
+msgstr "Calidad de grabación"
 
 #: ../ui/exportSettings.glade:112
 msgid "Resolution"
-msgstr ""
+msgstr "Resolución"
 
 #: ../ui/settings.glade:992
 msgid "Right Mouse Button"
-msgstr ""
+msgstr "Botón secundario del ratón"
 
 #: ../ui/settings.glade:3072
 msgid "Rotation snapping tolerance"
@@ -2288,15 +2288,15 @@ msgstr "Color de selección (texto, selección de trazo, etc.)"
 
 #: ../ui/main.glade:621
 msgid "Set Columns"
-msgstr ""
+msgstr "Establecer columnas"
 
 #: ../ui/main.glade:726
 msgid "Set Rows"
-msgstr ""
+msgstr "Establecer filas"
 
 #: ../ui/settings.glade:3379
 msgid "Settings:"
-msgstr ""
+msgstr "Configuración:"
 
 #: ../ui/settings.glade:3388
 msgid "Show Floating Toolbox"
@@ -2332,7 +2332,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
-msgstr ""
+msgstr "Estándar"
 
 #: ../ui/settings.glade:3662 ../ui/settings.glade:3699
 msgid "Storage Folder"
@@ -2541,75 +2541,75 @@ msgstr ""
 
 #: ../ui/main.glade:1144
 msgid "_Delete Page"
-msgstr ""
+msgstr "_Eliminar página"
 
 #: ../ui/main.glade:295
 msgid "_Edit"
-msgstr ""
+msgstr "_Editar"
 
 #: ../ui/main.glade:1245
 msgid "_Eraser"
-msgstr ""
+msgstr "_Borrador"
 
 #: ../ui/main.glade:240
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_Exportar a PDF"
 
 #: ../ui/main.glade:155
 msgid "_File"
-msgstr ""
+msgstr "_Archivo"
 
 #: ../ui/main.glade:967
 msgid "_First Page"
-msgstr ""
+msgstr "_Primera página"
 
 #: ../ui/main.glade:989
 msgid "_Goto Page"
-msgstr ""
+msgstr "_Ir a la página"
 
 #: ../ui/main.glade:1847
 msgid "_Help"
-msgstr ""
+msgstr "Ay_uda"
 
 #: ../ui/main.glade:1257
 msgid "_Highlighter"
-msgstr ""
+msgstr "_Resaltador"
 
 #: ../ui/main.glade:524
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Horizontal"
 
 #: ../ui/main.glade:1281
 msgid "_Image"
-msgstr ""
+msgstr "_Imagen"
 
 #: ../ui/main.glade:1092
 msgid "_Journal"
-msgstr ""
+msgstr "_Cuaderno"
 
 #: ../ui/main.glade:1011
 msgid "_Last Page"
-msgstr ""
+msgstr "Ú_ltima página"
 
 #: ../ui/main.glade:553
 msgid "_Left To Right"
-msgstr ""
+msgstr "De _izquierda a derecha"
 
 #: ../ui/main.glade:858
 msgid "_Manage"
-msgstr ""
+msgstr "_Gestionar"
 
 #: ../ui/main.glade:956
 msgid "_Navigation"
-msgstr ""
+msgstr "_Navegación"
 
 #: ../ui/main.glade:1039
 msgid "_Next Layer"
-msgstr ""
+msgstr "Capa _siguiente"
 
 #: ../ui/main.glade:1000
 msgid "_Next Page"
-msgstr ""
+msgstr "Página _siguiente"
 
 #: ../ui/main.glade:465
 msgid "_Pair Pages"
@@ -2629,19 +2629,19 @@ msgstr ""
 
 #: ../ui/main.glade:1028
 msgid "_Previous Layer"
-msgstr ""
+msgstr "Capa _anterior"
 
 #: ../ui/main.glade:978
 msgid "_Previous Page"
-msgstr ""
+msgstr "Página _anterior"
 
 #: ../ui/main.glade:564
 msgid "_Right To Left"
-msgstr ""
+msgstr "De _derecha a izquierda"
 
 #: ../ui/main.glade:1309
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "Reconocedor de _formas"
 
 #: ../ui/main.glade:1269
 msgid "_Text"
