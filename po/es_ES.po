@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 07:58+0000\n"
-"PO-Revision-Date: 2019-08-20 08:29\n"
+"PO-Revision-Date: 2019-08-20 08:45\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -113,52 +113,53 @@ msgstr "No se definió el color del atributo."
 #: ../src/control/AudioController.cpp:152
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "No se definió la carpeta de audio. No funcionará la grabación.\n"
+"Establezca la carpeta de grabaciones en Preferencias ▸ Grabación de audio."
 
 #: ../src/control/Control.cpp:264
 msgid "Autosave failed with an error: {1}"
-msgstr ""
+msgstr "Falló el guardado automático debido a un error: {1}"
 
 #: ../src/control/Control.cpp:226
 msgid "Autosave renamed from {1} to {2}"
-msgstr ""
+msgstr "Se cambió el nombre del guardado automático de {1} a {2}"
 
 #: ../src/control/jobs/AutosaveJob.cpp:60
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "Guardado automático en {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Back"
-msgstr ""
+msgstr "Atrás"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:22
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:270
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:322
 msgid "Background"
-msgstr ""
+msgstr "Fondo"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:136
 msgid "Black"
-msgstr ""
+msgstr "Negro"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:14
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:140
 msgid "Blue"
-msgstr ""
+msgstr "Azul"
 
 #: ../src/control/Control.cpp:2349 ../src/control/Control.cpp:2912
 #: ../src/control/XournalMain.cpp:139
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: ../src/undo/ColorUndoAction.cpp:119
 msgid "Change color"
-msgstr ""
+msgstr "Cambiar color"
 
 #: ../src/undo/FontUndoAction.cpp:134
 msgid "Change font"
-msgstr ""
+msgstr "Cambiar tipo de letra"
 
 #: ../src/undo/FillUndoAction.cpp:117
 msgid "Change stroke fill"
@@ -170,84 +171,86 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:98
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr ""
+msgstr "Se desconoce el color «{1}» (no está definido en la lista de colores predeterminada)."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:276
 msgid "Contents"
-msgstr ""
+msgstr "Sumario"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:114
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:122
 msgid "Copy"
-msgstr ""
+msgstr "Copiar"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
 msgid "Copy current"
-msgstr ""
+msgstr "Copiar actual"
 
 #: ../src/undo/CopyUndoAction.cpp:81
 msgid "Copy page"
-msgstr ""
+msgstr "Copiar página"
 
 #: ../src/control/jobs/SaveJob.cpp:129
 msgid "Could not create backup! (The file was created from an older Xournal version)"
-msgstr ""
+msgstr "No se pudo crear la copia de seguridad. (El archivo se creó en una versión anterior de Xournal)"
 
 #: ../src/util/Util.cpp:120
 msgid "Could not create folder: {1}"
-msgstr ""
+msgstr "No se pudo crear la carpeta: {1}"
 
 #: ../src/control/LatexController.cpp:106
 msgid "Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
-msgstr ""
+msgstr "No se pudo encontrar el programa «kpsewhich» en PATH; instálelo y añádalo a PATH."
 
 #: ../src/control/LatexController.cpp:82
 msgid "Could not find pdflatex in PATH.\n"
 "Please install pdflatex first and make sure it's in the PATH."
-msgstr ""
+msgstr "No se pudo encontrar el programa «pdflatex» en PATH.\n"
+"Instálelo de antemano y cerciórese de que esté en PATH."
 
 #: ../src/control/LatexController.cpp:111
 msgid "Could not find the LaTeX package 'standalone'.\n"
 "Please install standalone (found in texlive-latex-extra) and make sure it's accessible by your LaTeX installation."
-msgstr ""
+msgstr "No se pudo encontrar el paquete «standalone» de LaTeX.\n"
+"Instálelo (se encuentra en texlive-latex-extra) y cerciórese de que su instalación de LaTeX pueda utilizarlo."
 
 #: ../src/control/LatexController.cpp:470
 msgid "Could not load LaTeX PDF file"
-msgstr ""
+msgstr "No se pudo cargar el archivo PDF de LaTeX"
 
 #: ../src/control/LatexController.cpp:453
 msgid "Could not load LaTeX PDF file, File Error: {1}"
-msgstr ""
+msgstr "No se pudo cargar el archivo PDF de LaTeX. Error de archivo: {1}"
 
 #: ../src/control/LatexController.cpp:461
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr ""
+msgstr "No se pudo cargar el archivo PDF de LaTeX: {1}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:19
 msgid "Could not load pagetemplates.ini file"
-msgstr ""
+msgstr "No se pudo cargar el archivo «pagetemplates.ini»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:994
 msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr ""
+msgstr "No se pudo abrir el archivo adjunto: {1}. Mensaje de error: no se pudo leer el archivo"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1003
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr ""
+msgstr "No se pudo abrir el archivo adjunto: {1}. Mensaje de error: no se pudo escribir en el archivo"
 
 #: ../src/control/xojfile/LoadHandler.cpp:973
 #: ../src/control/xojfile/LoadHandler.cpp:1301
 #: ../src/control/xojfile/LoadHandler.cpp:1321
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr ""
+msgstr "No se pudo abrir el archivo adjunto: {1}. Mensaje de error: no se proporcionó un tamaño de archivo válido"
 
 #: ../src/control/xojfile/LoadHandler.cpp:963
 #: ../src/control/xojfile/LoadHandler.cpp:981
 #: ../src/control/xojfile/LoadHandler.cpp:1292
 #: ../src/control/xojfile/LoadHandler.cpp:1309
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr ""
+msgstr "No se pudo abrir el archivo adjunto: {1}. Mensaje de error: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:198
 msgid "Could not open file: \"{1}\""
@@ -467,7 +470,7 @@ msgstr ""
 #: ../src/control/xojfile/LoadHandler.cpp:570
 #: ../src/control/xojfile/LoadHandler.cpp:597
 msgid "Error reading PDF: {1}"
-msgstr ""
+msgstr "Error al leer el PDF: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:668
 msgid "Error reading width of a stroke: {1}"
@@ -483,25 +486,27 @@ msgstr ""
 
 #: ../src/control/jobs/AutosaveJob.cpp:25
 msgid "Error while autosaving: {1}"
-msgstr ""
+msgstr "Error al guardar automáticamente: {1}"
 
 #: ../src/util/CrashHandler.cpp:47
 msgid "Error: {1}"
-msgstr ""
+msgstr "Error: {1}"
 
 #: ../src/control/XournalMain.cpp:162
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
-msgstr ""
+msgstr "No se puede eliminar el registro de errores. Debe hacerlo manualmente.\n"
+"Archivo del registro: {1}"
 
 #: ../src/control/jobs/BaseExportJob.cpp:24
 msgid "Export PDF"
-msgstr ""
+msgstr "Exportar PDF"
 
 #: ../src/util/Util.cpp:141 ../src/util/Util.cpp:158
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr ""
+msgstr "No se pudo abrir el archivo. Debe hacerlo manualmente:\n"
+"URL: {1}"
 
 #: ../src/control/Control.cpp:2306
 msgid "Filename: {1}"
