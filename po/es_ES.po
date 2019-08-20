@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 10:43+0000\n"
-"PO-Revision-Date: 2019-08-20 11:08\n"
+"PO-Revision-Date: 2019-08-20 11:17\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1229,7 +1229,7 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:289
 msgid "Unknown parser error"
-msgstr ""
+msgstr "Error desconocido del procesador"
 
 #: ../src/control/xojfile/LoadHandler.cpp:492
 msgid "Unknown pixmap::domain type: {1}"
@@ -1492,7 +1492,7 @@ msgstr " = Cuadro de herramientas flotante (experimental) ="
 
 #: ../ui/settings.glade:2616 ../ui/settings.glade:2627
 msgid "%"
-msgstr ""
+msgstr " %"
 
 #: ../ui/settings.glade:418
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -2026,7 +2026,7 @@ msgstr ""
 
 #: ../ui/main.glade:1692
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "_Opciones del resaltador"
 
 #: ../ui/settings.glade:3298
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -2185,7 +2185,7 @@ msgstr "_Formato de papel"
 
 #: ../ui/main.glade:1209
 msgid "Paper b_ackground"
-msgstr ""
+msgstr "_Fondo de papel"
 
 #: ../ui/about.glade:217
 msgid "Partially based on Xournal\n"
@@ -2255,7 +2255,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3843
 msgid "Sample Rate"
-msgstr ""
+msgstr "Tasa de muestreo"
 
 #: ../ui/settings.glade:2309
 msgid "Scrollbars"
@@ -2303,7 +2303,7 @@ msgstr "Configuración:"
 
 #: ../ui/settings.glade:3388
 msgid "Show Floating Toolbox"
-msgstr ""
+msgstr "Mostrar cuadro de herramientas flotante"
 
 #: ../ui/settings.glade:1936
 msgid "Show Menubar on Startup"
@@ -2387,7 +2387,7 @@ msgstr ""
 
 #: ../ui/settings.glade:621
 msgid "This is an experimental feature! Use it with care."
-msgstr "Esta es una funcionalidad experimental. Utilícela con cuidado."
+msgstr "Esta es una funcionalidad experimental. Utilícela prudentemente."
 
 #: ../ui/settings.glade:1500
 msgid "Timeout"
