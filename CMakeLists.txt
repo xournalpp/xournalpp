@@ -57,8 +57,8 @@ endif ()
 ## Libraries ##
 
 macro (add_includes_ldflags LDFLAGS INCLUDES)
-    set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} ${LDFLAGS})
-    set (xournalpp_INCLUDE_DIRS ${xournalpp_INCLUDE_DIRS} ${INCLUDES})
+    set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "${LDFLAGS}")
+    set (xournalpp_INCLUDE_DIRS ${xournalpp_INCLUDE_DIRS} "${INCLUDES}")
 endmacro (add_includes_ldflags LDFLAGS INCLUDES)
 
 # GLIB
@@ -104,7 +104,6 @@ add_includes_ldflags ("${PORTAUDIOCPP_LDFLAGS}" "${PORTAUDIOCPP_INCLUDE_DIRS}")
 pkg_check_modules(SNDFILE REQUIRED "sndfile >= 1.0.25")
 add_includes_ldflags ("${SNDFILE_LDFLAGS}" "${SNDFILE_INCLUDE_DIRS}")
 
-
 ## Additional features ##
 
 # CppUnit
@@ -133,6 +132,14 @@ if (Lua_FOUND)
 	add_includes_ldflags ("${Lua_LDFLAGS}" "${Lua_INCLUDE_DIRS}")
 	set (ENABLE_PLUGINS "true")
 endif ()
+
+#
+# DO NOT INCLUDE LIBRARIES WITH pkg_check_modules AFTER THIS LINE!!!
+#
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    # Fix linker flag handling for MacOS builds where frameworks are separated from their flag
+    string(REPLACE "-framework;" "-framework " xournalpp_LDFLAGS "${xournalpp_LDFLAGS}")
+endif()
 
 configure_file (
   src/config-features.h.in
