@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-20 07:58+0000\n"
+"POT-Creation-Date: 2019-08-20 10:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -665,13 +665,13 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
-msgid "Manage Toolbars"
-msgstr ""
-
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:143
-msgid "Mangenta"
+msgid "Magenta"
+msgstr ""
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
+msgid "Manage Toolbars"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
