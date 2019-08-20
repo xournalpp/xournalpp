@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 07:58+0000\n"
-"PO-Revision-Date: 2019-08-20 09:08\n"
+"PO-Revision-Date: 2019-08-20 09:25\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -254,27 +254,30 @@ msgstr "No se pudo abrir el archivo adjunto: {1}. Mensaje de error: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:198
 msgid "Could not open file: \"{1}\""
-msgstr ""
+msgstr "No se pudo abrir el archivo: «{1}»"
 
 #: ../src/gui/MainWindow.cpp:91
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr ""
+msgstr "No se pudo procesar el archivo personalizado «toolbar.ini»: {1}\n"
+"No estarán disponibles las barras de herramientas"
 
 #: ../src/gui/MainWindow.cpp:81
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr ""
+msgstr "No se pudo procesar el archivo general «toolbar.ini»: {1}\n"
+"No estará disponible ninguna barra de herramientas"
 
 #: ../src/control/xojfile/LoadHandler.cpp:447
 #: ../src/control/xojfile/LoadHandler.cpp:475
 msgid "Could not read image: {1}. Error message: {2}"
-msgstr ""
+msgstr "No se pudo leer la imagen: {1}. Mensaje de error: {2}"
 
 #: ../src/undo/UndoRedoHandler.cpp:157
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "No se pudo rehacer «{1}».\n"
+"Se produjo un problema… Envíenos un informe de error."
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:210
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
@@ -319,11 +322,11 @@ msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:18
 msgid "Custom Export"
-msgstr ""
+msgstr "Exportación personalizada"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "Personalizar barras de herramientas"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:38
 msgid "Customized"
@@ -331,36 +334,36 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Cut"
-msgstr ""
+msgstr "Cortar"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Default Tool"
-msgstr ""
+msgstr "Herramienta predeterminada"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 #: ../src/undo/DeleteUndoAction.cpp:102
 msgid "Delete"
-msgstr ""
+msgstr "Eliminar"
 
 #: ../src/control/XournalMain.cpp:138
 msgid "Delete Logfile"
-msgstr ""
+msgstr "Eliminar archivo de registro"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:453
 msgid "Delete current page"
-msgstr ""
+msgstr "Eliminar página actual"
 
 #: ../src/control/XournalMain.cpp:188
 msgid "Delete file"
-msgstr ""
+msgstr "Eliminar archivo"
 
 #: ../src/undo/RemoveLayerUndoAction.cpp:41
 msgid "Delete layer"
-msgstr ""
+msgstr "Eliminar capa"
 
 #: ../src/control/Control.cpp:2908
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #: ../src/control/Control.cpp:2275
 msgid "Do not open Autosave files. They may will be overwritten!\n"
@@ -374,7 +377,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2902
 msgid "Document file was removed."
-msgstr ""
+msgstr "Se eliminó el archivo del documento."
 
 #: ../src/control/xojfile/LoadHandler.cpp:303
 msgid "Document is corrupted (no pages found in file)"
@@ -443,12 +446,12 @@ msgstr ""
 #: ../src/undo/AddUndoAction.cpp:104 ../src/undo/DeleteUndoAction.cpp:99
 #: ../src/undo/EraseUndoAction.cpp:129
 msgid "Erase stroke"
-msgstr ""
+msgstr "Borrar trazo"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:64
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:311
 msgid "Eraser"
-msgstr ""
+msgstr "Borrador"
 
 #: ../src/control/Control.cpp:2578
 msgid "Error annotate PDF file \"{1}\"\n"
@@ -461,11 +464,11 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2374
 msgid "Error opening file \"{1}\""
-msgstr ""
+msgstr "Error al abrir el archivo «{1}»"
 
 #: ../src/util/OutputStream.cpp:35
 msgid "Error opening file: \"{1}\""
-msgstr ""
+msgstr "Error al abrir el archivo: «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:570
 #: ../src/control/xojfile/LoadHandler.cpp:597
@@ -693,118 +696,119 @@ msgstr "Mover página hacia abajo"
 
 #: ../src/undo/SwapUndoAction.cpp:88
 msgid "Move page upwards"
-msgstr ""
+msgstr "Mover página hacia arriba"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:90
 msgid "New"
-msgstr ""
+msgstr "Nuevo"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "New Xournal"
-msgstr ""
+msgstr "Xournal nuevo"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 msgid "Next"
-msgstr ""
+msgstr "Siguiente"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Next annotated page"
-msgstr ""
+msgstr "Página anotada siguiente"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:44
 msgid "No device"
-msgstr ""
+msgstr "No hay ningún dispositivo"
 
 #: ../src/pdf/base/XojCairoPdfExport.cpp:93
 #: ../src/pdf/base/XojCairoPdfExport.cpp:142
 msgid "No pages to export!"
-msgstr ""
+msgstr "No hay ninguna página que exportar."
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:99
 msgid "Normal drawing"
-msgstr ""
+msgstr "Dibujo normal"
 
 #: ../src/plugin/Plugin.cpp:417 ../src/plugin/Plugin.cpp:438
 msgid "OK"
-msgstr ""
+msgstr "Aceptar"
 
 #: ../src/control/jobs/BaseExportJob.cpp:113
 msgid "Only local files are supported\n"
 "Path: {1}"
-msgstr ""
+msgstr "Solo se admiten archivos locales\n"
+"Ruta: {1}"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:11
 msgid "Open Image"
-msgstr ""
+msgstr "Abrir imagen"
 
 #: ../src/control/XournalMain.cpp:136
 msgid "Open Logfile"
-msgstr ""
+msgstr "Abrir archivo de registro"
 
 #: ../src/control/XournalMain.cpp:137
 msgid "Open Logfile directory"
-msgstr ""
+msgstr "Abrir directorio de archivos de registro"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:16
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "Open file"
-msgstr ""
+msgstr "Abrir archivo"
 
 #: ../src/control/RecentManager.cpp:249
 msgctxt "{1} is a URI"
 msgid "Open {1}"
-msgstr ""
+msgstr "Abrir {1}"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:18
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:144
 msgid "Orange"
-msgstr ""
+msgstr "Naranja"
 
 #: ../src/control/jobs/PdfExportJob.cpp:9
 msgid "PDF Export"
-msgstr ""
+msgstr "Exportación a PDF"
 
 #: ../src/gui/MainWindow.cpp:835
 msgid "PDF Page {1}"
-msgstr ""
+msgstr "Página de PDF {1}"
 
 #: ../src/view/PdfView.cpp:40
 msgid "PDF background missing"
-msgstr ""
+msgstr "Falta el fondo de PDF"
 
 #: ../src/control/XournalMain.cpp:295
 msgid "PDF file successfully created"
-msgstr ""
+msgstr "Se creó correctamente el archivo PDF"
 
 #: ../src/control/jobs/CustomExportJob.cpp:23
 #: ../src/control/jobs/PdfExportJob.cpp:23
 #: ../src/control/stockdlg/XojOpenDlg.cpp:63
 msgid "PDF files"
-msgstr ""
+msgstr "Archivos PDF"
 
 #: ../src/control/XournalMain.cpp:314
 msgid "PDF output filename"
-msgstr ""
+msgstr "Nombre de archivo PDF de salida"
 
 #: ../src/control/jobs/CustomExportJob.cpp:24
 msgid "PDF with plain background"
-msgstr ""
+msgstr "PDF con fondo sencillo"
 
 #: ../src/control/jobs/CustomExportJob.cpp:25
 msgid "PNG graphics"
-msgstr ""
+msgstr "Imágenes PNG"
 
 #: ../src/control/jobs/CustomExportJob.cpp:26
 msgid "PNG with transparent background"
-msgstr ""
+msgstr "PNG con fondo transparente"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:67
 msgid "Page"
-msgstr ""
+msgstr "Página"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Page Preview"
-msgstr ""
+msgstr "Previsualización de página"
 
 #: ../src/undo/PageBackgroundChangedUndoAction.cpp:106
 msgid "Page background changed"
@@ -1297,54 +1301,57 @@ msgstr ""
 #: ../src/control/PageBackgroundChangeController.cpp:227
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr ""
+msgstr "No hay ninguna página seleccionable de PDF. Se cancela la operación.\n"
+"Seleccione otro tipo de fondo: diríjase al menú Cuaderno ▸ Configurar plantilla de página."
 
 #: ../src/control/XournalMain.cpp:126
 msgid "You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "Está utilizando la rama {1}/{2}. «Enviar informe de error» lo dirigirá al gestor de incidencias de este repositorio."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:93
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr ""
+msgstr "El documento actual no contiene la página n.º {1} del PDF.\n"
+"¿Quiere insertar esta página?\n\n"
+"Consejo: puede seleccionar Cuaderno ▸ Fondo de papel ▸ Fondo de PDF para insertar una página de un PDF."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Zoom fit to screen"
-msgstr ""
+msgstr "Ajutar a la pantalla"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Zoom in"
-msgstr ""
+msgstr "Ampliar"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Zoom out"
-msgstr ""
+msgstr "Reducir"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:106
 msgid "Zoom slider"
-msgstr ""
+msgstr "Control deslizante de escala"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Zoom to 100%"
-msgstr ""
+msgstr "Escala al 100 %"
 
 #: ../src/control/Control.cpp:2700 ../src/control/jobs/BaseExportJob.cpp:25
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:111
 msgid "_Cancel"
-msgstr ""
+msgstr "_Cancelar"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:18
 msgid "_Open"
-msgstr ""
+msgstr "_Abrir"
 
 #: ../src/control/Control.cpp:2702 ../src/control/jobs/BaseExportJob.cpp:26
 #: ../src/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
-msgstr ""
+msgstr "_Guardar"
 
 #: ../src/util/DeviceListHelper.cpp:130
 msgid "cursor"
@@ -1376,27 +1383,27 @@ msgstr ""
 
 #: ../src/undo/AddUndoAction.cpp:120 ../src/undo/DeleteUndoAction.cpp:114
 msgid "elements"
-msgstr ""
+msgstr "elementos"
 
 #: ../src/util/DeviceListHelper.cpp:126
 msgid "eraser"
-msgstr ""
+msgstr "borrador"
 
 #: ../src/undo/AddUndoAction.cpp:132 ../src/undo/DeleteUndoAction.cpp:126
 msgid "image"
-msgstr ""
+msgstr "imagen"
 
 #: ../src/util/DeviceListHelper.cpp:135
 msgid "keyboard"
-msgstr ""
+msgstr "teclado"
 
 #: ../src/undo/AddUndoAction.cpp:135 ../src/undo/DeleteUndoAction.cpp:129
 msgid "latex"
-msgstr ""
+msgstr "latex"
 
 #: ../src/util/DeviceListHelper.cpp:118
 msgid "mouse"
-msgstr ""
+msgstr "ratón"
 
 #: ../src/control/LatexController.cpp:317
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
