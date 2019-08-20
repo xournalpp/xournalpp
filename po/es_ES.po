@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 07:58+0000\n"
-"PO-Revision-Date: 2019-08-20 09:25\n"
+"PO-Revision-Date: 2019-08-20 09:40\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -314,7 +314,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:109
 msgid "Create new layer"
-msgstr ""
+msgstr "Crear capa nueva"
 
 #: ../src/gui/dialog/FormatDialog.cpp:72
 msgid "Custom"
@@ -369,11 +369,13 @@ msgstr "Descartar"
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr ""
+msgstr "No abra los archivos de guardado automático; se sobrescribirán.\n"
+"Copie los archivos en otra carpeta.\n"
+"No se pueden abrir los archivos de la carpeta {1}."
 
 #: ../src/control/jobs/BaseExportJob.cpp:46
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr ""
+msgstr "No sobrescriba el PDF de fondo; ello provocará problemas."
 
 #: ../src/control/Control.cpp:2902
 msgid "Document file was removed."
@@ -381,15 +383,15 @@ msgstr "Se eliminó el archivo del documento."
 
 #: ../src/control/xojfile/LoadHandler.cpp:303
 msgid "Document is corrupted (no pages found in file)"
-msgstr ""
+msgstr "El documento está dañado (no se encontró ninguna página en el archivo)"
 
 #: ../src/control/xojfile/LoadHandler.cpp:298
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr ""
+msgstr "El documento está incompleto (quizá la parte final está truncada)"
 
 #: ../src/model/Document.cpp:389 ../src/model/Document.cpp:399
 msgid "Document not loaded! ({1}), {2}"
-msgstr ""
+msgstr "No se cargó el documento ({1}), {2}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:28
 msgid "Dotted"
@@ -437,11 +439,11 @@ msgstr ""
 
 #: ../src/undo/TextBoxUndoAction.cpp:52
 msgid "Edit text"
-msgstr ""
+msgstr "Editar texto"
 
 #: ../src/undo/EmergencySaveRestore.cpp:36
 msgid "Emergency saved document"
-msgstr ""
+msgstr "Documento guardado de emergencia"
 
 #: ../src/undo/AddUndoAction.cpp:104 ../src/undo/DeleteUndoAction.cpp:99
 #: ../src/undo/EraseUndoAction.cpp:129
@@ -1184,24 +1186,24 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:166
 msgid "Toolbar found: {1}"
-msgstr ""
+msgstr "Se encontró una barra de herramientas: {1}"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:55
 msgid "Toolbars"
-msgstr ""
+msgstr "Barras de herramientas"
 
 #: ../src/util/CrashHandler.cpp:37
 msgid "Trying to emergency save the current open document…"
-msgstr ""
+msgstr "Intentando guardar de emergencia el documento abierto actualmente…"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:399
 #: ../src/undo/UndoRedoHandler.cpp:250
 msgid "Undo"
-msgstr ""
+msgstr "Deshacer"
 
 #: ../src/undo/UndoRedoHandler.cpp:245
 msgid "Undo: "
-msgstr ""
+msgstr "Deshacer: "
 
 #: ../src/control/xojfile/LoadHandler.cpp:360
 msgid "Unexpected root tag: {1}"
@@ -1237,28 +1239,28 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2775
 msgid "Unsaved Document"
-msgstr ""
+msgstr "Documento no guardado"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 msgid "Vertical Space"
-msgstr ""
+msgstr "Espacio vertical"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:68
 msgid "Vertical space"
-msgstr ""
+msgstr "Espacio vertical"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:146
 msgid "White"
-msgstr ""
+msgstr "Blanco"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:33
 msgid "With PDF background"
-msgstr ""
+msgstr "Con fondo PDF"
 
 #: ../src/undo/InsertUndoAction.cpp:44
 msgid "Write text"
-msgstr ""
+msgstr "Escribir texto"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1163
 msgid "Wrong count of points ({1})"
@@ -1270,33 +1272,33 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:284
 msgid "XML Parser error: {1}"
-msgstr ""
+msgstr "Error del procesador de PDF: {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "Xournal (compatibilidad)"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:74
 msgid "Xournal files"
-msgstr ""
+msgstr "Archivos de Xournal"
 
 #: ../src/control/XournalMain.cpp:183
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "Xournal++ se cerró inesperadamente durante el último uso. ¿Quiere restaurar el último archivo editado?"
 
 #: ../src/control/Control.cpp:2709 ../src/control/stockdlg/XojOpenDlg.cpp:84
 msgid "Xournal++ files"
-msgstr ""
+msgstr "Archivos de Xournal++"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:94
 #: ../src/gui/dialog/PageTemplateDialog.cpp:117
 msgid "Xournal++ template"
-msgstr ""
+msgstr "Plantilla de Xournal++"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:145
 msgid "Yellow"
-msgstr ""
+msgstr "Amarillo"
 
 #: ../src/control/PageBackgroundChangeController.cpp:227
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
@@ -1677,7 +1679,7 @@ msgstr ""
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
-msgstr ""
+msgstr "Acerca de Xournal++"
 
 #: ../ui/settings.glade:3411
 msgid "Action on Tool Tap"
@@ -1693,7 +1695,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:142
 msgid "All pages"
-msgstr ""
+msgstr "Todas las páginas"
 
 #: ../ui/settings.glade:3377
 msgid "All three conditions must be met before stroke is ignored.\n"
@@ -1702,7 +1704,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3811
 msgid "Audio Devices"
-msgstr ""
+msgstr "Dispositivos de audio"
 
 #: ../ui/settings.glade:3951
 msgid "Audio Recording"
@@ -1718,15 +1720,15 @@ msgstr ""
 
 #: ../ui/settings.glade:1515
 msgid "Autodetect"
-msgstr ""
+msgstr "Detectar automáticamente"
 
 #: ../ui/settings.glade:559
 msgid "Autoloading Journals"
-msgstr ""
+msgstr "Carga automática de cuadernos"
 
 #: ../ui/settings.glade:316
 msgid "Autosaving"
-msgstr ""
+msgstr "Guardado automático"
 
 #: ../ui/settings.glade:465
 msgid "Available Placeholders"
@@ -1754,31 +1756,31 @@ msgstr ""
 
 #: ../ui/settings.glade:1201
 msgid "Button 1"
-msgstr ""
+msgstr "Botón 1"
 
 #: ../ui/settings.glade:1239
 msgid "Button 2"
-msgstr ""
+msgstr "Botón 2"
 
 #: ../ui/settings.glade:2089
 msgid "Colors"
-msgstr ""
+msgstr "Colores"
 
 #: ../ui/main.glade:1134
 msgid "Configure Page Template"
-msgstr ""
+msgstr "Configurar plantilla de página"
 
 #: ../ui/pageTemplate.glade:185
 msgid "Copy last page settings"
-msgstr ""
+msgstr "Copiar configuración de última página"
 
 #: ../ui/pageTemplate.glade:296
 msgid "Copy last page size"
-msgstr ""
+msgstr "Copiar tamaño de última página"
 
 #: ../ui/exportSettings.glade:158
 msgid "Current page"
-msgstr ""
+msgstr "Página actual"
 
 #: ../ui/settings.glade:2175
 msgid "Cursor"
@@ -1786,59 +1788,59 @@ msgstr ""
 
 #: ../ui/settings.glade:1692
 msgid "Custom Commands (for Method \"Custom\")"
-msgstr ""
+msgstr "Órdenes personalizadas (para el método «Personalizado»)"
 
 #: ../ui/settings.glade:2067
 msgid "Dark Theme (requires restart)"
-msgstr ""
+msgstr "Tema oscuro (es necesario reiniciar)"
 
 #: ../ui/settings.glade:491
 msgid "Default Save Name"
-msgstr ""
+msgstr "Nombre predeterminado para guardar"
 
 #: ../ui/settings.glade:379
 msgid "Default name: "
-msgstr ""
+msgstr "Nombre predeterminado: "
 
 #: ../ui/settings.glade:3589
 msgid "Defaults"
-msgstr ""
+msgstr "Valores predeterminados"
 
 #: ../ui/main.glade:1172
 msgid "Delete Layer"
-msgstr ""
+msgstr "Eliminar capa"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
-msgstr ""
+msgstr "Eliminar trazo"
 
 #: ../ui/main.glade:2062
 msgid "Delete this page"
-msgstr ""
+msgstr "Eliminar esta página"
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
-msgstr ""
+msgstr "Dispositivo"
 
 #: ../ui/settings.glade:1620
 msgid "Disable"
-msgstr ""
+msgstr "Desactivar"
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
-msgstr ""
+msgstr "Desactivar dibujo en este dispositivo"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
-msgstr ""
+msgstr "Desactivado"
 
 #: ../ui/settings.glade:1489
 msgid "Disabling Method"
-msgstr ""
+msgstr "Método de desactivación"
 
 #: ../ui/settings.glade:2767
 msgid "Display DPI Calibration"
-msgstr ""
+msgstr "Calibración de PPP de la pantalla"
 
 #: ../ui/settings.glade:3252
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
@@ -1861,7 +1863,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3443
 msgid "Drawing Area"
-msgstr ""
+msgstr "Área de dibujo"
 
 #: ../ui/settings.glade:3215
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
@@ -2144,11 +2146,11 @@ msgstr ""
 
 #: ../ui/settings.glade:842
 msgid "Options"
-msgstr ""
+msgstr "Opciones"
 
 #: ../ui/settings.glade:3777
 msgid "Output Device"
-msgstr ""
+msgstr "Dispositivo de salida"
 
 #: ../ui/main.glade:1077
 msgid "P_revious annotated Page"
@@ -2156,11 +2158,11 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:18
 msgid "Page Template"
-msgstr ""
+msgstr "Plantilla de página"
 
 #: ../ui/exportSettings.glade:175
 msgid "Pages:"
-msgstr ""
+msgstr "Páginas:"
 
 #: ../ui/settings.glade:3039
 msgid "Paired Pages"
@@ -2168,15 +2170,15 @@ msgstr ""
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
-msgstr ""
+msgstr "Formato de papel"
 
 #: ../ui/main.glade:1199
 msgid "Paper _Color"
-msgstr ""
+msgstr "_Color de papel"
 
 #: ../ui/main.glade:1189
 msgid "Paper _Format"
-msgstr ""
+msgstr "_Formato de papel"
 
 #: ../ui/main.glade:1209
 msgid "Paper b_ackground"
@@ -2185,11 +2187,12 @@ msgstr ""
 #: ../ui/about.glade:217
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr ""
+msgstr "Basado parcialmente en Xournal\n"
+"de Denis Auroux"
 
 #: ../ui/main.glade:1788
 msgid "Pause"
-msgstr ""
+msgstr "Pausar"
 
 #: ../ui/main.glade:1459
 msgid "Pen _Options"
@@ -2197,23 +2200,23 @@ msgstr ""
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr ""
+msgstr "Gestor de complementos"
 
 #: ../ui/main.glade:1833
 msgid "Plugin _Manager"
-msgstr ""
+msgstr "_Gestor de complementos"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ was restarted"
-msgstr ""
+msgstr "Los cambios en los complementos surtirán efecto tras reiniciar Xournal++"
 
 #: ../ui/main.glade:440
 msgid "Preferences"
-msgstr ""
+msgstr "Preferencias"
 
 #: ../ui/settings.glade:2477
 msgid "Presentation Mode"
-msgstr ""
+msgstr "Modo de presentación"
 
 #: ../ui/settings.glade:1129
 msgid "Pressure Sensitivity"
@@ -2221,7 +2224,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:127
 msgid "Range"
-msgstr ""
+msgstr "Intervalo"
 
 #: ../ui/main.glade:190
 msgid "Recent _Documents"
@@ -2253,35 +2256,35 @@ msgstr ""
 
 #: ../ui/settings.glade:2309
 msgid "Scrollbars"
-msgstr ""
+msgstr "Barras de desplazamiento"
 
 #: ../ui/settings.glade:2974
 msgid "Scrolling outside the page"
-msgstr ""
+msgstr "Desplazamiento fuera de la página"
 
 #: ../ui/pageTemplate.glade:174
 msgid "Select Background Color"
-msgstr ""
+msgstr "Seleccionar color de fondo"
 
 #: ../ui/settings.glade:3677
 msgid "Select Folder"
-msgstr ""
+msgstr "Seleccionar carpeta"
 
 #: ../ui/images.glade:8
 msgid "Select Image"
-msgstr ""
+msgstr "Seleccionar imagen"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr ""
+msgstr "Seleccionar página de PDF"
 
 #: ../ui/settings.glade:2442
 msgid "Select toolbar:"
-msgstr ""
+msgstr "Seleccionar barra de herramientas:"
 
 #: ../ui/settings.glade:2044
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr ""
+msgstr "Color de selección (texto, selección de trazo, etc.)"
 
 #: ../ui/main.glade:621
 msgid "Set Columns"
@@ -2333,7 +2336,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3662 ../ui/settings.glade:3699
 msgid "Storage Folder"
-msgstr ""
+msgstr "Carpeta de almacenamiento"
 
 #: ../ui/settings.glade:1326
 msgid "Stylus"
@@ -2361,19 +2364,19 @@ msgstr ""
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
-msgstr ""
+msgstr "Plantilla:"
 
 #: ../ui/settings.glade:1653 ../ui/settings.glade:1666
 msgid "Test"
-msgstr ""
+msgstr "Probar"
 
 #: ../ui/main.glade:1766
 msgid "Text Font..."
-msgstr ""
+msgstr "Tipo de letra del texto…"
 
 #: ../ui/settings.glade:2744
 msgid "The unit of the ruler is cm"
-msgstr ""
+msgstr "La unidad de la regla es el cm"
 
 #: ../ui/settings.glade:768
 msgid "These settings take only effect if the experimental input system is activated"
