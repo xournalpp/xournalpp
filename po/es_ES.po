@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 07:58+0000\n"
-"PO-Revision-Date: 2019-08-20 10:13\n"
+"PO-Revision-Date: 2019-08-20 10:26\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1119,19 +1119,19 @@ msgstr "No se encontró el PDF de fondo."
 
 #: ../src/control/xojfile/LoadHandler.cpp:155
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "Este no es un archivo .xopp válido (falta el tipo MIME): «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:163
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "Este no es un archivo .xopp válido (falta el tipo MIME): «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:172
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr ""
+msgstr "Este no es un archivo .xopp válido (falta la versión): «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:186
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr ""
+msgstr "Este no es un archivo .xopp válido (cadena de versión dañada): «{1}»"
 
 #: ../src/control/LatexController.cpp:368
 msgid "The formula is empty when rendered or invalid."
@@ -1160,7 +1160,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Thickness - don't change"
-msgstr ""
+msgstr "Grosor – no cambiar"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:524
@@ -1182,7 +1182,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:62
 msgid "Tool - don't change"
-msgstr ""
+msgstr "Herramienta – no cambiar"
 
 #: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:166
 msgid "Toolbar found: {1}"
@@ -1482,11 +1482,11 @@ msgstr ""
 
 #: ../src/util/Util.cpp:110
 msgid "xournalpp-{1}"
-msgstr ""
+msgstr "xournalpp-{1}"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
-msgstr ""
+msgstr " = Cuadro de herramientas flotante (experimental) ="
 
 #: ../ui/settings.glade:2616 ../ui/settings.glade:2627
 msgid "%"
@@ -1537,7 +1537,7 @@ msgstr "<b>Fondo</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
-msgstr ""
+msgstr "<b>Color</b>"
 
 #: ../ui/pageTemplate.glade:110
 msgid "<b>Configure Xournal++ Template Page</b>\n"
@@ -1552,7 +1552,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
-msgstr ""
+msgstr "<b>Herramientas predeterminadas</b>"
 
 #: ../ui/settings.glade:3549
 msgid "<b>Default</b>"
@@ -1935,7 +1935,7 @@ msgstr ""
 
 #: ../ui/settings.glade:670
 msgid "Experimental Input System"
-msgstr ""
+msgstr "Sistema de entrada experimental"
 
 #: ../ui/exportSettings.glade:25
 msgid "Export"
@@ -2393,19 +2393,19 @@ msgstr ""
 #: ../ui/settings.glade:1413 ../ui/settings.glade:1882
 #: ../ui/settingsDeviceClassConfig.glade:45
 msgid "Touchscreen"
-msgstr ""
+msgstr "Pantalla táctil"
 
 #: ../ui/fillTransparency.glade:14
 msgid "Transparency settings"
-msgstr ""
+msgstr "Configuración de transparencia"
 
 #: ../ui/settings.glade:3358
 msgid "Try to select object first."
-msgstr ""
+msgstr "Intente seleccionar un archivo primero."
 
 #: ../ui/settings.glade:3363 ../ui/settings.glade:3393
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
-msgstr ""
+msgstr "Intentar seleccionar un archivo primero; si no se selecciona nada, mostrar el cuadro de herramientas flotante si se ha activado."
 
 #: ../ui/settings.glade:3019
 msgid "Usually 0 or 1"
@@ -2521,7 +2521,7 @@ msgstr "_8 filas"
 
 #: ../ui/main.glade:199
 msgid "_Annotate PDF"
-msgstr ""
+msgstr "_Anotar PDF"
 
 #: ../ui/main.glade:593
 msgid "_Bottom to Top"
@@ -2529,15 +2529,15 @@ msgstr ""
 
 #: ../ui/main.glade:608
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "_Filas/columnas"
 
 #: ../ui/main.glade:868
 msgid "_Customize"
-msgstr ""
+msgstr "_Personalizar"
 
 #: ../ui/main.glade:1293
 msgid "_Default Tools"
-msgstr ""
+msgstr "Herramientas p_redeterminadas"
 
 #: ../ui/main.glade:1144
 msgid "_Delete Page"
@@ -2621,11 +2621,11 @@ msgstr ""
 
 #: ../ui/main.glade:1822
 msgid "_Plugin"
-msgstr ""
+msgstr "C_omplemento"
 
 #: ../ui/main.glade:475
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "Modo de _presentación"
 
 #: ../ui/main.glade:1028
 msgid "_Previous Layer"
@@ -2653,7 +2653,7 @@ msgstr "_Herramientas"
 
 #: ../ui/main.glade:1050
 msgid "_Top Layer"
-msgstr ""
+msgstr "Capa _superior"
 
 #: ../ui/main.glade:582
 msgid "_Top to Bottom"
