@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 07:58+0000\n"
-"PO-Revision-Date: 2019-08-20 08:07\n"
+"PO-Revision-Date: 2019-08-20 08:19\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -19,17 +19,19 @@ msgstr ""
 #: ../src/control/XournalMain.cpp:580
 msgid "\n\n"
 "Will now attempt to run without this file."
-msgstr ""
+msgstr "\n\n"
+"Se intentará ahora ejecutar sin este archivo."
 
 #: ../src/control/XournalMain.cpp:560
 msgid "\n"
 "Will now attempt to run without this file."
-msgstr ""
+msgstr "\n"
+"Se intentará ahora ejecutar sin este archivo."
 
 #: ../src/gui/MainWindow.cpp:837
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
-msgstr ""
+msgstr " de {1}{2}"
 
 #: ../src/control/settings/Settings.cpp:109
 msgid "%F-Note-%H-%M"
