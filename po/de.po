@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 10:43+0000\n"
-"PO-Revision-Date: 2019-08-20 11:17\n"
+"PO-Revision-Date: 2019-08-21 12:32\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -212,7 +212,8 @@ msgstr "Konnte pdflatex nicht in der Umgebungsvariable PATH finden.\n"
 #: ../src/control/LatexController.cpp:111
 msgid "Could not find the LaTeX package 'standalone'.\n"
 "Please install standalone (found in texlive-latex-extra) and make sure it's accessible by your LaTeX installation."
-msgstr ""
+msgstr "Konnte das LaTeX Paket 'standalone' nicht finden.\n"
+"Bitte installieren Sie das Paket 'standalone' (zu finden in texlive-latex-extra) und stellen Sie sicher, dass die LaTeX Installation darauf zugreifen kann."
 
 #: ../src/control/LatexController.cpp:470
 msgid "Could not load LaTeX PDF file"
