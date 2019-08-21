@@ -549,7 +549,8 @@ bool Stroke::intersects(double x, double y, double halfEraserSize, double* gap)
 /**
  * Updates the size
  * The size is needed to only redraw the requested part instead of redrawing
- * the whole page (performance reason)
+ * the whole page (performance reason).
+ * Also used for Selected Bounding box.
  */
 void Stroke::calcSize()
 {
@@ -577,26 +578,11 @@ void Stroke::calcSize()
 	{
 		if (hasPressure) halfThick = points[i].z / 2.0;
 
-		double edge = points[i].x - halfThick;
-		if (minX > edge)
-		{
-			minX = edge;
-		}
-		edge = points[i].x + halfThick;
-		if (maxX < edge)
-		{
-			maxX = edge;
-		}
-		edge = points[i].y - halfThick;
-		if (minY > edge)
-		{
-			minY = edge;
-		}
-		edge = points[i].y + halfThick;
-		if (maxY < edge)
-		{
-			maxY = edge;
-		}
+		minX = std::min(minX, points[i].x - halfThick);
+		minY = std::min(minY, points[i].y - halfThick);
+
+		maxX = std::max(maxX, points[i].x + halfThick);
+		maxY = std::max(maxY, points[i].y + halfThick);
 	}
 
 	Element::x = minX - 2;
