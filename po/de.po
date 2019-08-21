@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 10:43+0000\n"
-"PO-Revision-Date: 2019-08-21 12:32\n"
+"PO-Revision-Date: 2019-08-21 12:57\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -384,7 +384,7 @@ msgstr "Datei des Dokuments wurde entfernt."
 
 #: ../src/control/xojfile/LoadHandler.cpp:303
 msgid "Document is corrupted (no pages found in file)"
-msgstr ""
+msgstr "Dokument ist beschädigt (keine Seiten in Datei gefunden)"
 
 #: ../src/control/xojfile/LoadHandler.cpp:298
 msgid "Document is not complete (maybe the end is cut off?)"
