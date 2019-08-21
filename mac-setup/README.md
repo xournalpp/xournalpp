@@ -95,10 +95,14 @@ autoreconf -if && ./configure --enable-cxx --prefix=$HOME/gtk/inst
 ./build-sndfile.sh
 ````
 
+### 7. Build adwaita icon theme
+````bash
+jhbuild build adwaita-icon-theme
+````
 
 ## Build Xournal++ and package it as .app
 ````bash
-complete-build.sh
+./complete-build.sh
 ````
 
 Technical it does:
