@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 10:43+0000\n"
-"PO-Revision-Date: 2019-08-22 08:28\n"
+"PO-Revision-Date: 2019-08-22 08:40\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -846,7 +846,7 @@ msgstr "Pausar/reproducir"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:290
 msgid "Pen"
-msgstr ""
+msgstr "Lápiz"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Plain"
@@ -1237,7 +1237,7 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:763
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr ""
+msgstr "Se desconoce el tipo de trazo: «{1}»; se asume de lápiz"
 
 #: ../src/control/Control.cpp:2775
 msgid "Unsaved Document"
@@ -1415,7 +1415,7 @@ msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:122
 msgid "pen"
-msgstr ""
+msgstr "lápiz"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:222
 msgid "show"
@@ -1472,11 +1472,11 @@ msgstr ""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:93
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: falló la apertura del archivo de entrada «{1}»"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:109
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: falló la apertura del archivo de salida «{1}»"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:118
 msgid "xoj-preview-extractor: successfully extracted"
@@ -2124,7 +2124,8 @@ msgstr "Longitud máxima (mm)"
 #: ../ui/settings.glade:820
 msgid "Merge button events with stylus tip events\n"
 "<i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
+msgstr "Combinar sucesos de botones con sucesos de punta de lápiz\n"
+"<i>(Active esta opción si</i> «<tt>xsetwacom get *deviceId* TabletPCButton</tt>» <i>devuelve</i> «<tt>on</tt>»<i>)</i>"
 
 #: ../ui/settings.glade:954
 msgid "Middle Mouse Button"
@@ -2222,7 +2223,7 @@ msgstr "Pausar"
 
 #: ../ui/main.glade:1459
 msgid "Pen _Options"
-msgstr ""
+msgstr "_Opciones de lápiz"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
@@ -2643,7 +2644,7 @@ msgstr ""
 
 #: ../ui/main.glade:1233
 msgid "_Pen"
-msgstr ""
+msgstr "_Lápiz"
 
 #: ../ui/main.glade:1822
 msgid "_Plugin"
