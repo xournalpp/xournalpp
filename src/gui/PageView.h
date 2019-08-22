@@ -193,7 +193,7 @@ private:
 	PageRef page;
 	XournalView* xournal;
 	Settings* settings;
-	EraseHandler* eraser;
+	EraseHandler* eraser = nullptr;
 	InputHandler* inputHandler = nullptr;
 
 	/**
@@ -251,5 +251,6 @@ private:
 	friend class BaseSelectObject;
 	friend class SelectObject;
 	friend class PlayObject;
-	friend void Layout::layoutPages();	//only function allowed to setX(), setY(), setMappedRowCol()
+	//only function allowed to setX(), setY(), setMappedRowCol():
+	friend void Layout::layoutPages(int width, int height);
 };

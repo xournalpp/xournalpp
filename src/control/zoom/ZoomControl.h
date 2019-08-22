@@ -113,6 +113,7 @@ public:
 	 * @param zoom zoom value depending zoom100Value
 	 */
 	bool updateZoomFitValue(size_t pageNo = 0);
+	bool updateZoomFitValue(const Rectangle& allocation, size_t pageNo = 0);
 
 	/**
 	 * @return zoom value for zoom fit depending zoom100Value
