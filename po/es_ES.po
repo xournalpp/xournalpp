@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 10:43+0000\n"
-"PO-Revision-Date: 2019-08-22 08:40\n"
+"PO-Revision-Date: 2019-08-22 10:59\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1266,11 +1266,11 @@ msgstr "Escribir texto"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1163
 msgid "Wrong count of points ({1})"
-msgstr ""
+msgstr "El recuento de puntos es incorrecto ({1})"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1177
 msgid "Wrong number of points, got {1}, expected {2}"
-msgstr ""
+msgstr "El recuento de puntos es incorrecto; se obtuvo {1} pero se esperaba {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:284
 msgid "XML Parser error: {1}"
@@ -1444,7 +1444,7 @@ msgstr "pantalla táctil"
 
 #: ../src/util/DeviceListHelper.cpp:148
 msgid "trackpoint"
-msgstr ""
+msgstr "varita apuntadora"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:314
 msgid "whiteout"
@@ -1452,23 +1452,23 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:1176
 msgid "xoj-File: {1}"
-msgstr ""
+msgstr "Archivo .xoj: {1}"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:75
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
-msgstr ""
+msgstr "xoj-preview-extractor: invóquelo con ENTRADA.xoj SALIDA.png"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:97
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr ""
+msgstr "xoj-preview-extractor: el archivo «{1}» no incluye previsualización"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:89
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr ""
+msgstr "xoj-preview-extractor: el archivo «{1}» no es .xoj"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:102
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr ""
+msgstr "xoj-preview-extractor: no se encontraron ni la previsualización ni las páginas. Quizá el archivo no es válido."
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:93
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
@@ -1480,7 +1480,7 @@ msgstr "xoj-preview-extractor: falló la apertura del archivo de salida «{1}»"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:118
 msgid "xoj-preview-extractor: successfully extracted"
-msgstr ""
+msgstr "xoj-preview-extractor: extracción correcta"
 
 #: ../src/util/Util.cpp:110
 msgid "xournalpp-{1}"
