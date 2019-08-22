@@ -102,7 +102,7 @@ jhbuild build adwaita-icon-theme
 
 ## Build Xournal++ and package it as .app
 ````bash
-./complete-build.sh
+./complete-build.sh $HOME/gtk
 ````
 
 Technical it does:
@@ -118,5 +118,5 @@ make install
 
 ### Build App
 ````bash
-./build-app.sh
+./build-app.sh $HOME/gtk
 ````
