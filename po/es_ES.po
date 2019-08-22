@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 10:43+0000\n"
-"PO-Revision-Date: 2019-08-22 11:53\n"
+"PO-Revision-Date: 2019-08-22 13:41\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1585,7 +1585,8 @@ msgstr "<b>Predeterminado</b>"
 #: ../ui/exportSettings.glade:90
 msgid "<b>Document export settings</b>\n"
 "Select pages to export"
-msgstr ""
+msgstr "<b>Configuración de exportación de documento</b>\n"
+"Seleccione las pginas que se exportarán"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
@@ -1616,11 +1617,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3640
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
-msgstr ""
+msgstr "<i>Las grabaciones de audio se almacenan actualmente en una carpeta separada y se hace referencia a estas desde el cuaderno.</i>"
 
 #: ../ui/settings.glade:3918
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
-msgstr ""
+msgstr "<i>Los cambios surtirán efecto solo en las grabaciones y reproducciones realizadas en adelante.</i>"
 
 #: ../ui/settings.glade:913
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
@@ -1897,11 +1898,11 @@ msgstr ""
 
 #: ../ui/main.glade:2466
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplicar"
 
 #: ../ui/main.glade:2503
 msgid "Edit (not implemented yet)"
-msgstr ""
+msgstr "Editar (aún no implementado)"
 
 #: ../ui/settings.glade:1608
 msgid "Enable"
@@ -1925,7 +1926,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1107
 msgid "Enable Pressure Sensitivity"
-msgstr ""
+msgstr "Activar sensibilidad de presión"
 
 #: ../ui/settings.glade:3247
 msgid "Enable Tap action"
