@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 10:43+0000\n"
-"PO-Revision-Date: 2019-08-22 08:18\n"
+"PO-Revision-Date: 2019-08-22 08:28\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1675,7 +1675,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1160
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
-msgstr ""
+msgstr "<i>Especifique las herramientas que se seleccionarán al presionar un botón del lápiz o utilizar el borrador. Tras soltar el botón, se seleccionará la herramienta anterior.</i>"
 
 #: ../ui/settings.glade:346
 msgid "<i>This name will be proposed if you save a new document.</i>"
@@ -2366,11 +2366,11 @@ msgstr "Carpeta de almacenamiento"
 
 #: ../ui/settings.glade:1326
 msgid "Stylus"
-msgstr "Lápiz óptico"
+msgstr "Lápiz"
 
 #: ../ui/settings.glade:1295
 msgid "Stylus Buttons"
-msgstr "Botones del lápiz óptico"
+msgstr "Botones del lápiz"
 
 #: ../ui/settings.glade:3329
 msgid "Successive (ms)"
