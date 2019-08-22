@@ -549,7 +549,8 @@ bool Stroke::intersects(double x, double y, double halfEraserSize, double* gap)
 /**
  * Updates the size
  * The size is needed to only redraw the requested part instead of redrawing
- * the whole page (performance reason)
+ * the whole page (performance reason).
+ * Also used for Selected Bounding box.
  */
 void Stroke::calcSize()
 {
@@ -565,35 +566,29 @@ void Stroke::calcSize()
 		Element::height = 0;
 	}
 
-	double minX = points[0].x;
-	double maxX = points[0].x;
-	double minY = points[0].y;
-	double maxY = points[0].y;
+	double minX = DBL_MAX;
+	double maxX = DBL_MIN;
+	double minY = DBL_MAX;
+	double maxY = DBL_MIN;
 
-	for (int i = 1; i < this->pointCount; i++)
+	bool hasPressure = points[0].z != Point::NO_PRESSURE;
+	double halfThick = this->width / 2.0;  //  accommodate for pen width
+
+	for (int i = 0; i < this->pointCount; i++)
 	{
-		if (minX > points[i].x)
-		{
-			minX = points[i].x;
-		}
-		if (maxX < points[i].x)
-		{
-			maxX = points[i].x;
-		}
-		if (minY > points[i].y)
-		{
-			minY = points[i].y;
-		}
-		if (maxY < points[i].y)
-		{
-			maxY = points[i].y;
-		}
+		if (hasPressure) halfThick = points[i].z / 2.0;
+
+		minX = std::min(minX, points[i].x - halfThick);
+		minY = std::min(minY, points[i].y - halfThick);
+
+		maxX = std::max(maxX, points[i].x + halfThick);
+		maxY = std::max(maxY, points[i].y + halfThick);
 	}
 
 	Element::x = minX - 2;
 	Element::y = minY - 2;
-	Element::width = maxX - minX + 4 + width;
-	Element::height = maxY - minY + 4 + width;
+	Element::width = maxX - minX + 4;
+	Element::height = maxY - minY + 4;
 }
 
 EraseableStroke* Stroke::getEraseable()

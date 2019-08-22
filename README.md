@@ -1,8 +1,10 @@
 # Xournal++
 
-[![Build Status](https://travis-ci.org/xournalpp/xournalpp.svg?branch=string_new)](https://travis-ci.org/xournalpp/xournalpp)
-[![Build Status](https://dev.azure.com/xournalpp/xournalpp/_apis/build/status/xournalpp.xournalpp?branchName=master&stageName=Build_Test_Stage&jobName=Test%20Xournal%2B%2B%20on%20Linux)](https://dev.azure.com/xournalpp/xournalpp/_build/latest?definitionId=1&branchName=master)
+[![Build Status](https://dev.azure.com/xournalpp/xournalpp/_apis/build/status/CI?branchName=master)](https://dev.azure.com/xournalpp/xournalpp/_build/latest?definitionId=1&branchName=master)
 [![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+## Important Notice
+For some required changes to our code base we can currently not admit any pull requests. We are very thankful to anybody that is willing to work on Xournal++ and hope that this inconvenience will not deter you from helping us out. The last PR that will be merged before we do the extensive changes to the code base is #1430, which will then be followed by one last release before our PR freeze. Afterwards we will do the necessary work to ensure a continued solid development of Xournal++. Once we are finished we will remove this note and welcome all your PRs with open hands! Thanks for your support!
 
 <table border="0px" ><tr><td width = 600px>
 
