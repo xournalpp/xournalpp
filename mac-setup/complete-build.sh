@@ -4,6 +4,7 @@
 
 export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
 
+mkdir -p ../build
 cd ../build/
 cmake -DCMAKE_INSTALL_PREFIX:PATH=$HOME/gtk/inst ..
 make -j 4
