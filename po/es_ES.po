@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 10:43+0000\n"
-"PO-Revision-Date: 2019-08-22 10:59\n"
+"PO-Revision-Date: 2019-08-22 11:53\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1549,7 +1549,7 @@ msgstr ""
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
-msgstr ""
+msgstr "<b>… o bien, seleccione una imagen ya utilizada:</b>"
 
 #: ../ui/pageTemplate.glade:256
 msgid "<b>Background Color</b>"
@@ -1683,7 +1683,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2673
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
-msgstr ""
+msgstr "<i>Para cerciorarse de que el tamaño de los elementos a escala 100 % sea natural. (Es necesario reiniciar)</i>"
 
 #: ../ui/settings.glade:1955
 msgid "<i>Toggle visibility of menubar with F10</i>"
@@ -1713,11 +1713,11 @@ msgstr ""
 
 #: ../ui/settings.glade:2902
 msgid "Add additional horizontal space of"
-msgstr ""
+msgstr "Añadir espacio horizontal adicional de"
 
 #: ../ui/settings.glade:2880
 msgid "Add additional vertical space of"
-msgstr ""
+msgstr "Añadir espacio vertical adicional de"
 
 #: ../ui/exportSettings.glade:142
 msgid "All pages"
@@ -1941,19 +1941,19 @@ msgstr ""
 
 #: ../ui/settings.glade:636
 msgid "Enable new input system (Requires restart)"
-msgstr ""
+msgstr "Activar sistema de entrada nuevo (es necesario reiniciar)"
 
 #: ../ui/settings.glade:1760
 msgid "Enable zoom gestures (requires restart)"
-msgstr ""
+msgstr "Activar gestos de escala (es necesario reiniciar)"
 
 #: ../ui/texdialog.glade:72
 msgid "Enter / edit LaTeX Text"
-msgstr ""
+msgstr "Introducir/editar texto LaTeX"
 
 #: ../ui/main.glade:1605
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "Opcio_nes de borrador"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2247,7 +2247,7 @@ msgstr "Modo de presentación"
 
 #: ../ui/settings.glade:1129
 msgid "Pressure Sensitivity"
-msgstr ""
+msgstr "Sensibilidad de presión"
 
 #: ../ui/exportSettings.glade:127
 msgid "Range"
@@ -2387,7 +2387,7 @@ msgstr ""
 
 #: ../ui/main.glade:840
 msgid "T_oolbars"
-msgstr ""
+msgstr "_Barras de herramientas"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
