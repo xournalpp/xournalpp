@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-20 10:43+0000\n"
-"PO-Revision-Date: 2019-08-20 11:07\n"
+"POT-Creation-Date: 2019-08-22 17:38+0000\n"
+"PO-Revision-Date: 2019-08-22 17:47\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -26,7 +26,7 @@ msgid "\n"
 "Will now attempt to run without this file."
 msgstr ""
 
-#: ../src/gui/MainWindow.cpp:837
+#: ../src/gui/MainWindow.cpp:840
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr " z {1}{2}"
@@ -140,7 +140,7 @@ msgstr "Černá"
 msgid "Blue"
 msgstr "Modrá"
 
-#: ../src/control/Control.cpp:2349 ../src/control/Control.cpp:2912
+#: ../src/control/Control.cpp:2348 ../src/control/Control.cpp:2911
 #: ../src/control/XournalMain.cpp:139
 msgid "Cancel"
 msgstr "Zrušit"
@@ -352,11 +352,11 @@ msgstr ""
 msgid "Delete layer"
 msgstr "Smazat vrstvu"
 
-#: ../src/control/Control.cpp:2908
+#: ../src/control/Control.cpp:2907
 msgid "Discard"
 msgstr "Zahodit"
 
-#: ../src/control/Control.cpp:2275
+#: ../src/control/Control.cpp:2274
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -366,7 +366,7 @@ msgstr ""
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/control/Control.cpp:2902
+#: ../src/control/Control.cpp:2901
 msgid "Document file was removed."
 msgstr "Soubor s dokumentem byl odstraněn."
 
@@ -444,7 +444,7 @@ msgstr "Vymazat čáru"
 msgid "Eraser"
 msgstr "Guma"
 
-#: ../src/control/Control.cpp:2578
+#: ../src/control/Control.cpp:2577
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Chyba anotování PDF souboru „{1}“\n"
@@ -454,7 +454,7 @@ msgstr "Chyba anotování PDF souboru „{1}“\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Chyba načítání glade souboru „{1}“ (zkuste načíst „{2}“)"
 
-#: ../src/control/Control.cpp:2374
+#: ../src/control/Control.cpp:2373
 msgid "Error opening file \"{1}\""
 msgstr "Chyba otevírání souboru „{1}“"
 
@@ -503,7 +503,7 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "Soubor se nepodařilo otevřít. Udělejte to prosím ručně:\n"
 "URL: {1}"
 
-#: ../src/control/Control.cpp:2306
+#: ../src/control/Control.cpp:2305
 msgid "Filename: {1}"
 msgstr "Název souboru: {1}"
 
@@ -756,7 +756,7 @@ msgstr "Oranžová"
 msgid "PDF Export"
 msgstr ""
 
-#: ../src/gui/MainWindow.cpp:835
+#: ../src/gui/MainWindow.cpp:838
 msgid "PDF Page {1}"
 msgstr "PDF stránka {1}"
 
@@ -854,7 +854,7 @@ msgstr "Prezentace"
 msgid "Record Audio / Stop Recording"
 msgstr ""
 
-#: ../src/control/Control.cpp:984
+#: ../src/control/Control.cpp:983
 msgid "Recorder could not be started."
 msgstr ""
 
@@ -872,7 +872,7 @@ msgstr "Znovu"
 msgid "Redo: "
 msgstr "Znovu: "
 
-#: ../src/control/Control.cpp:2348
+#: ../src/control/Control.cpp:2347
 msgid "Remove PDF Background"
 msgstr "Odstranit PDF pozadí"
 
@@ -924,16 +924,16 @@ msgstr ""
 msgid "SVG with transparent background"
 msgstr ""
 
-#: ../src/control/Control.cpp:2903 ../src/control/jobs/SaveJob.cpp:13
+#: ../src/control/Control.cpp:2902 ../src/control/jobs/SaveJob.cpp:13
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Save"
 msgstr "Uložit"
 
-#: ../src/control/Control.cpp:2903
+#: ../src/control/Control.cpp:2902
 msgid "Save As..."
 msgstr ""
 
-#: ../src/control/Control.cpp:2697 ../src/gui/dialog/PageTemplateDialog.cpp:110
+#: ../src/control/Control.cpp:2696 ../src/gui/dialog/PageTemplateDialog.cpp:110
 msgid "Save File"
 msgstr "Uložit soubor"
 
@@ -974,7 +974,7 @@ msgstr "Obdélníkový výběr"
 msgid "Select Region"
 msgstr "Výběr oblasti"
 
-#: ../src/control/Control.cpp:2347
+#: ../src/control/Control.cpp:2346
 msgid "Select another PDF"
 msgstr "Vybrat jiné PDF"
 
@@ -1089,15 +1089,15 @@ msgstr "Text nenalezen"
 msgid "Text not found, searched on all pages"
 msgstr "Text nenalezen, prohledány byly všechny stránky"
 
-#: ../src/control/Control.cpp:1182
+#: ../src/control/Control.cpp:1181
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Konfigurace nástrojové lišty „{1}“ je předdefinována. Přejete si vytvořit kopii pro úpravy?"
 
-#: ../src/control/Control.cpp:2344
+#: ../src/control/Control.cpp:2343
 msgid "The attached background PDF could not be found."
 msgstr "Přiložené PDF pozadí nebylo nalezeno."
 
-#: ../src/control/Control.cpp:2345
+#: ../src/control/Control.cpp:2344
 msgid "The background PDF could not be found."
 msgstr "PDF pozadí nebylo nalezeno."
 
@@ -1151,7 +1151,7 @@ msgstr ""
 msgid "Thin"
 msgstr "Tenká"
 
-#: ../src/control/Control.cpp:2902
+#: ../src/control/Control.cpp:2901
 msgid "This document is not saved yet."
 msgstr "Tento dokument ještě nebyl uložen."
 
@@ -1221,7 +1221,7 @@ msgstr "Neznámý typ pixmap::domain: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Neznámý typ čáry: „{1}“, bereme jej jako pero"
 
-#: ../src/control/Control.cpp:2775
+#: ../src/control/Control.cpp:2774
 msgid "Unsaved Document"
 msgstr "Neuložený dokument"
 
@@ -1270,7 +1270,7 @@ msgstr "Soubory Xournalu"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/control/Control.cpp:2709 ../src/control/stockdlg/XojOpenDlg.cpp:84
+#: ../src/control/Control.cpp:2708 ../src/control/stockdlg/XojOpenDlg.cpp:84
 msgid "Xournal++ files"
 msgstr ""
 
@@ -1321,7 +1321,7 @@ msgstr "Nastavení přiblížení"
 msgid "Zoom to 100%"
 msgstr "Přiblížit na 100%"
 
-#: ../src/control/Control.cpp:2700 ../src/control/jobs/BaseExportJob.cpp:25
+#: ../src/control/Control.cpp:2699 ../src/control/jobs/BaseExportJob.cpp:25
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:111
@@ -1333,7 +1333,7 @@ msgstr ""
 msgid "_Open"
 msgstr ""
 
-#: ../src/control/Control.cpp:2702 ../src/control/jobs/BaseExportJob.cpp:26
+#: ../src/control/Control.cpp:2701 ../src/control/jobs/BaseExportJob.cpp:26
 #: ../src/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr ""
