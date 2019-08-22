@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-20 10:43+0000\n"
-"PO-Revision-Date: 2019-08-20 11:07\n"
+"POT-Creation-Date: 2019-08-22 17:38+0000\n"
+"PO-Revision-Date: 2019-08-22 17:47\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -26,7 +26,7 @@ msgid "\n"
 "Will now attempt to run without this file."
 msgstr ""
 
-#: ../src/gui/MainWindow.cpp:837
+#: ../src/gui/MainWindow.cpp:840
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr "頁，共{1}頁"
@@ -140,7 +140,7 @@ msgstr "黑色"
 msgid "Blue"
 msgstr "藍色"
 
-#: ../src/control/Control.cpp:2349 ../src/control/Control.cpp:2912
+#: ../src/control/Control.cpp:2348 ../src/control/Control.cpp:2911
 #: ../src/control/XournalMain.cpp:139
 msgid "Cancel"
 msgstr "取消"
@@ -352,11 +352,11 @@ msgstr ""
 msgid "Delete layer"
 msgstr "刪除層"
 
-#: ../src/control/Control.cpp:2908
+#: ../src/control/Control.cpp:2907
 msgid "Discard"
 msgstr "丟棄"
 
-#: ../src/control/Control.cpp:2275
+#: ../src/control/Control.cpp:2274
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -366,7 +366,7 @@ msgstr ""
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/control/Control.cpp:2902
+#: ../src/control/Control.cpp:2901
 msgid "Document file was removed."
 msgstr "文檔已刪除。"
 
@@ -444,7 +444,7 @@ msgstr "擦除筆劃"
 msgid "Eraser"
 msgstr "橡皮"
 
-#: ../src/control/Control.cpp:2578
+#: ../src/control/Control.cpp:2577
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "PDF檔案\"{1}\"標註出錯\n"
@@ -454,7 +454,7 @@ msgstr "PDF檔案\"{1}\"標註出錯\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "加載glade檔案\"{1}\"出錯(嘗試加載\"{2}\")"
 
-#: ../src/control/Control.cpp:2374
+#: ../src/control/Control.cpp:2373
 msgid "Error opening file \"{1}\""
 msgstr "打開檔案\"{1}\"出錯"
 
@@ -503,7 +503,7 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "未能打開檔案，請手動操作：\n"
 "URL: {1}"
 
-#: ../src/control/Control.cpp:2306
+#: ../src/control/Control.cpp:2305
 msgid "Filename: {1}"
 msgstr "檔案名：{1}"
 
@@ -756,7 +756,7 @@ msgstr "橙色"
 msgid "PDF Export"
 msgstr "輸出為PDF"
 
-#: ../src/gui/MainWindow.cpp:835
+#: ../src/gui/MainWindow.cpp:838
 msgid "PDF Page {1}"
 msgstr "PDF頁碼{1}"
 
@@ -854,7 +854,7 @@ msgstr "演講模式"
 msgid "Record Audio / Stop Recording"
 msgstr ""
 
-#: ../src/control/Control.cpp:984
+#: ../src/control/Control.cpp:983
 msgid "Recorder could not be started."
 msgstr ""
 
@@ -872,7 +872,7 @@ msgstr "重複"
 msgid "Redo: "
 msgstr "重複："
 
-#: ../src/control/Control.cpp:2348
+#: ../src/control/Control.cpp:2347
 msgid "Remove PDF Background"
 msgstr "去掉PDF背景"
 
@@ -924,16 +924,16 @@ msgstr ""
 msgid "SVG with transparent background"
 msgstr ""
 
-#: ../src/control/Control.cpp:2903 ../src/control/jobs/SaveJob.cpp:13
+#: ../src/control/Control.cpp:2902 ../src/control/jobs/SaveJob.cpp:13
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Save"
 msgstr "保存"
 
-#: ../src/control/Control.cpp:2903
+#: ../src/control/Control.cpp:2902
 msgid "Save As..."
 msgstr ""
 
-#: ../src/control/Control.cpp:2697 ../src/gui/dialog/PageTemplateDialog.cpp:110
+#: ../src/control/Control.cpp:2696 ../src/gui/dialog/PageTemplateDialog.cpp:110
 msgid "Save File"
 msgstr "保存檔案"
 
@@ -974,7 +974,7 @@ msgstr "選擇矩形"
 msgid "Select Region"
 msgstr "選擇區域"
 
-#: ../src/control/Control.cpp:2347
+#: ../src/control/Control.cpp:2346
 msgid "Select another PDF"
 msgstr "選擇其他PDF"
 
@@ -1089,15 +1089,15 @@ msgstr "文本未找到"
 msgid "Text not found, searched on all pages"
 msgstr "找遍所有頁面未找到文本"
 
-#: ../src/control/Control.cpp:1182
+#: ../src/control/Control.cpp:1181
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "工具條配置\"{1}\"是預置的，要產生一個拷貝到編輯?"
 
-#: ../src/control/Control.cpp:2344
+#: ../src/control/Control.cpp:2343
 msgid "The attached background PDF could not be found."
 msgstr "附加的背景PDF未找到。"
 
-#: ../src/control/Control.cpp:2345
+#: ../src/control/Control.cpp:2344
 msgid "The background PDF could not be found."
 msgstr "背景PDF未找到。"
 
@@ -1151,7 +1151,7 @@ msgstr ""
 msgid "Thin"
 msgstr "細"
 
-#: ../src/control/Control.cpp:2902
+#: ../src/control/Control.cpp:2901
 msgid "This document is not saved yet."
 msgstr ""
 
@@ -1221,7 +1221,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2775
+#: ../src/control/Control.cpp:2774
 msgid "Unsaved Document"
 msgstr "未保存文檔"
 
@@ -1270,7 +1270,7 @@ msgstr "Xournal檔案"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/control/Control.cpp:2709 ../src/control/stockdlg/XojOpenDlg.cpp:84
+#: ../src/control/Control.cpp:2708 ../src/control/stockdlg/XojOpenDlg.cpp:84
 msgid "Xournal++ files"
 msgstr ""
 
@@ -1319,7 +1319,7 @@ msgstr "縮放游標"
 msgid "Zoom to 100%"
 msgstr "原始尺寸"
 
-#: ../src/control/Control.cpp:2700 ../src/control/jobs/BaseExportJob.cpp:25
+#: ../src/control/Control.cpp:2699 ../src/control/jobs/BaseExportJob.cpp:25
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:111
@@ -1331,7 +1331,7 @@ msgstr ""
 msgid "_Open"
 msgstr ""
 
-#: ../src/control/Control.cpp:2702 ../src/control/jobs/BaseExportJob.cpp:26
+#: ../src/control/Control.cpp:2701 ../src/control/jobs/BaseExportJob.cpp:26
 #: ../src/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr ""
