@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-22 17:38+0000\n"
-"PO-Revision-Date: 2019-08-22 17:48\n"
+"PO-Revision-Date: 2019-08-22 18:03\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1137,11 +1137,11 @@ msgstr "Este no es un archivo .xopp válido (cadena de versión dañada): «{1}�
 
 #: ../src/control/LatexController.cpp:368
 msgid "The formula is empty when rendered or invalid."
-msgstr ""
+msgstr "La fórmula queda vacía al momento de representarse o no es válida."
 
 #: ../src/control/XournalMain.cpp:130
 msgid "The most recent log file name: {1}"
-msgstr ""
+msgstr "Nombre del archivo de registro más reciente: {1}"
 
 #: ../src/control/XournalMain.cpp:123
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
@@ -1233,7 +1233,7 @@ msgstr "Error desconocido del procesador"
 
 #: ../src/control/xojfile/LoadHandler.cpp:492
 msgid "Unknown pixmap::domain type: {1}"
-msgstr ""
+msgstr "Se desconoce el tipo de «pixmap::domain»: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:763
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -1411,7 +1411,7 @@ msgstr "ratón"
 
 #: ../src/control/LatexController.cpp:317
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "«pdflatex» encontró un error: {1} (código de salida: {2})"
 
 #: ../src/util/DeviceListHelper.cpp:122
 msgid "pen"
@@ -1586,7 +1586,7 @@ msgstr "<b>Predeterminado</b>"
 msgid "<b>Document export settings</b>\n"
 "Select pages to export"
 msgstr "<b>Configuración de exportación de documento</b>\n"
-"Seleccione las pginas que se exportarán"
+"Seleccione las páginas que se exportarán"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
@@ -1727,7 +1727,8 @@ msgstr "Todas las páginas"
 #: ../ui/settings.glade:3377
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
-msgstr ""
+msgstr "Las tres condiciones deben cumplirse para que se ignore el trazo.\n"
+"Debe ser breve en tiempo y longitud y no debe haberse ignorado otro trazo recientemente."
 
 #: ../ui/settings.glade:3811
 msgid "Audio Devices"
