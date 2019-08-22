@@ -21,6 +21,9 @@ steps:
       
     displayName: 'Unpack libxml'
   - bash: |
-      ./complete-build.sh /Users/git-bin/gtk
+      export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
+      cmake -DCMAKE_INSTALL_PREFIX:PATH=/Users/git-bin/gtk/inst .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type}} ${{ parameters.cmake_flags }}
+      make -j 4
+      make install
     workingDirectory: ./mac-setup
     displayName: 'Build Xournal++'
