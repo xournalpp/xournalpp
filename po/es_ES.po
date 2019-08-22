@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-20 10:43+0000\n"
-"PO-Revision-Date: 2019-08-20 11:37\n"
+"PO-Revision-Date: 2019-08-22 06:59\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1145,15 +1145,15 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:123
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Xournal++ ha generado registros de errores. Envíe un informe de error para que puedan solucionarse."
 
 #: ../src/control/XournalMain.cpp:122
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Xournal++ ha generado un registro de errores. Envíe un informe de error para que pueda solucionarse."
 
 #: ../src/util/XojMsgBox.cpp:102
 msgid "There was an error displaying help: {1}"
-msgstr ""
+msgstr "Se produjo un error al mostrar la ayuda: {1}"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:90
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:526
@@ -1646,7 +1646,7 @@ msgstr ""
 
 #: ../ui/settings.glade:522
 msgid "<i>If you open a PDF and there is a Xournal file with the same name it will open the xoj file.</i>"
-msgstr ""
+msgstr "<i>Si abre un PDF y existe un archivo de Xournal con el mismo nombre, se abrirá el archivo .xoj.</i>"
 
 #: ../ui/settings.glade:1444
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
