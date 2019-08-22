@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-20 10:43+0000\n"
-"PO-Revision-Date: 2019-08-20 11:07\n"
+"POT-Creation-Date: 2019-08-22 17:38+0000\n"
+"PO-Revision-Date: 2019-08-22 17:47\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -28,7 +28,7 @@ msgid "\n"
 msgstr "\n"
 "Попытаемся запустить без этого файла."
 
-#: ../src/gui/MainWindow.cpp:837
+#: ../src/gui/MainWindow.cpp:840
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr " из {1}{2}"
@@ -148,7 +148,7 @@ msgstr "Черный"
 msgid "Blue"
 msgstr "Синий"
 
-#: ../src/control/Control.cpp:2349 ../src/control/Control.cpp:2912
+#: ../src/control/Control.cpp:2348 ../src/control/Control.cpp:2911
 #: ../src/control/XournalMain.cpp:139
 msgid "Cancel"
 msgstr "Отмена"
@@ -361,11 +361,11 @@ msgstr "Удалить файл"
 msgid "Delete layer"
 msgstr "Удалить слой"
 
-#: ../src/control/Control.cpp:2908
+#: ../src/control/Control.cpp:2907
 msgid "Discard"
 msgstr "Не сохранять"
 
-#: ../src/control/Control.cpp:2275
+#: ../src/control/Control.cpp:2274
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -377,7 +377,7 @@ msgstr "Не открывайте автоматически сохранённ�
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Не перезаписывайте фоновый PDF! Это приведёт к ошибкам!"
 
-#: ../src/control/Control.cpp:2902
+#: ../src/control/Control.cpp:2901
 msgid "Document file was removed."
 msgstr "Файл документа был удален."
 
@@ -455,7 +455,7 @@ msgstr "Удалить черту"
 msgid "Eraser"
 msgstr "Ластик"
 
-#: ../src/control/Control.cpp:2578
+#: ../src/control/Control.cpp:2577
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Ошибка аннотации PDF файла «{1}»\n"
@@ -465,7 +465,7 @@ msgstr "Ошибка аннотации PDF файла «{1}»\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Ошибка загрузки glade файла «{1}» (попробуйте загрузить «{2}»)"
 
-#: ../src/control/Control.cpp:2374
+#: ../src/control/Control.cpp:2373
 msgid "Error opening file \"{1}\""
 msgstr "Ошибка при открытии файла «{1}»"
 
@@ -514,7 +514,7 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "Файл не может быть открыт. Вы должны сделать это вручную:\n"
 "URL: {1}"
 
-#: ../src/control/Control.cpp:2306
+#: ../src/control/Control.cpp:2305
 msgid "Filename: {1}"
 msgstr "Имя файла: {1}"
 
@@ -771,7 +771,7 @@ msgstr "Оранжевый"
 msgid "PDF Export"
 msgstr "Экспорт в PDF"
 
-#: ../src/gui/MainWindow.cpp:835
+#: ../src/gui/MainWindow.cpp:838
 msgid "PDF Page {1}"
 msgstr "PDF страница {1}"
 
@@ -869,7 +869,7 @@ msgstr "Режим презентации"
 msgid "Record Audio / Stop Recording"
 msgstr "Запись аудио / Остановить запись"
 
-#: ../src/control/Control.cpp:984
+#: ../src/control/Control.cpp:983
 msgid "Recorder could not be started."
 msgstr "Запись не может быть запущена."
 
@@ -887,7 +887,7 @@ msgstr "Вернуть"
 msgid "Redo: "
 msgstr "Вернуть: "
 
-#: ../src/control/Control.cpp:2348
+#: ../src/control/Control.cpp:2347
 msgid "Remove PDF Background"
 msgstr "Удалить PDF фон"
 
@@ -939,16 +939,16 @@ msgstr "SVG графика"
 msgid "SVG with transparent background"
 msgstr "SVG с прозрачным фоном"
 
-#: ../src/control/Control.cpp:2903 ../src/control/jobs/SaveJob.cpp:13
+#: ../src/control/Control.cpp:2902 ../src/control/jobs/SaveJob.cpp:13
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Save"
 msgstr "Сохранить"
 
-#: ../src/control/Control.cpp:2903
+#: ../src/control/Control.cpp:2902
 msgid "Save As..."
 msgstr "Сохранить как..."
 
-#: ../src/control/Control.cpp:2697 ../src/gui/dialog/PageTemplateDialog.cpp:110
+#: ../src/control/Control.cpp:2696 ../src/gui/dialog/PageTemplateDialog.cpp:110
 msgid "Save File"
 msgstr "Сохранить файл"
 
@@ -989,7 +989,7 @@ msgstr "Прямоугольное выделение"
 msgid "Select Region"
 msgstr "Выделение лассо"
 
-#: ../src/control/Control.cpp:2347
+#: ../src/control/Control.cpp:2346
 msgid "Select another PDF"
 msgstr "Выбрать другой PDF"
 
@@ -1106,15 +1106,15 @@ msgstr "Текст не найден"
 msgid "Text not found, searched on all pages"
 msgstr "Текст не найден, поиск на всех страницах"
 
-#: ../src/control/Control.cpp:1182
+#: ../src/control/Control.cpp:1181
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Конфигурация панели инструментов \"{1}\" предопределена. Создать копию для редактирования?"
 
-#: ../src/control/Control.cpp:2344
+#: ../src/control/Control.cpp:2343
 msgid "The attached background PDF could not be found."
 msgstr "Присоединённый фоновый PDF не найден."
 
-#: ../src/control/Control.cpp:2345
+#: ../src/control/Control.cpp:2344
 msgid "The background PDF could not be found."
 msgstr "Фоновый PDF не найден."
 
@@ -1168,7 +1168,7 @@ msgstr "Толщина - не изменять"
 msgid "Thin"
 msgstr "Тонкий"
 
-#: ../src/control/Control.cpp:2902
+#: ../src/control/Control.cpp:2901
 msgid "This document is not saved yet."
 msgstr "Этот документ еще не сохранен."
 
@@ -1238,7 +1238,7 @@ msgstr "Неизвестный тип pixmap::domain: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Неизвестный тип черты: \"{1}\", предполагается, что это перо"
 
-#: ../src/control/Control.cpp:2775
+#: ../src/control/Control.cpp:2774
 msgid "Unsaved Document"
 msgstr "Несохранённый документ"
 
@@ -1287,7 +1287,7 @@ msgstr "Xournal файлы"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "В последний раз программа Xournal++ аварийно завершилась. Хотите восстановить последний редактируемый файл?"
 
-#: ../src/control/Control.cpp:2709 ../src/control/stockdlg/XojOpenDlg.cpp:84
+#: ../src/control/Control.cpp:2708 ../src/control/stockdlg/XojOpenDlg.cpp:84
 msgid "Xournal++ files"
 msgstr "Xournal++ файлы"
 
@@ -1339,7 +1339,7 @@ msgstr "Ползунок масштабирования"
 msgid "Zoom to 100%"
 msgstr "Увеличить до 100%"
 
-#: ../src/control/Control.cpp:2700 ../src/control/jobs/BaseExportJob.cpp:25
+#: ../src/control/Control.cpp:2699 ../src/control/jobs/BaseExportJob.cpp:25
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:111
@@ -1351,7 +1351,7 @@ msgstr "_Отмена"
 msgid "_Open"
 msgstr "_Открыть"
 
-#: ../src/control/Control.cpp:2702 ../src/control/jobs/BaseExportJob.cpp:26
+#: ../src/control/Control.cpp:2701 ../src/control/jobs/BaseExportJob.cpp:26
 #: ../src/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr "_Сохранить"
