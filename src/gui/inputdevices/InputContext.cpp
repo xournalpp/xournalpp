@@ -7,20 +7,16 @@
 
 #include <util/DeviceListHelper.h>
 
-InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling)
+InputContext::InputContext(XournalView* view)
 {
 	XOJ_INIT_TYPE(InputContext);
 
 	this->view = view;
-	this->scrollHandling = scrollHandling;
 
 	this->stylusHandler = new StylusInputHandler(this);
 	this->touchHandler = new TouchInputHandler(this);
-	this->touchDrawingHandler = new TouchDrawingInputHandler(this);
 	this->mouseHandler = new MouseInputHandler(this);
 	this->keyboardHandler = new KeyboardInputHandler(this);
-
-	this->touchWorkaroundEnabled = this->getSettings()->isTouchWorkaround();
 
 	for (const InputDevice& savedDevices: this->view->getControl()->getSettings()->getKnownInputDevices())
 	{
@@ -37,9 +33,6 @@ InputContext::~InputContext()
 
 	delete this->touchHandler;
 	this->touchHandler = nullptr;
-
-	delete this->touchDrawingHandler;
-	this->touchDrawingHandler = nullptr;
 
 	delete this->mouseHandler;
 	this->mouseHandler = nullptr;
@@ -134,14 +127,7 @@ bool InputContext::handle(GdkEvent* sourceEvent)
 	// handle touchscreens
 	if (event->deviceClass == INPUT_DEVICE_TOUCHSCREEN)
 	{
-		// trigger touch drawing depending on the setting
-		if (this->touchWorkaroundEnabled)
-		{
-			return this->touchDrawingHandler->handle(event);
-		} else
-		{
-			return this->touchHandler->handle(event);
-		}
+		return this->touchHandler->handle(event);
 	}
 
 	// handle keyboard
@@ -189,13 +175,6 @@ ToolHandler* InputContext::getToolHandler()
 	return view->getControl()->getToolHandler();
 }
 
-ScrollHandling* InputContext::getScrollHandling()
-{
-	XOJ_CHECK_TYPE(InputContext);
-
-	return this->scrollHandling;
-}
-
 GdkModifierType InputContext::getModifierState()
 {
 	XOJ_CHECK_TYPE(InputContext);
@@ -229,7 +208,6 @@ void InputContext::blockDevice(InputContext::DeviceType deviceType)
 			this->stylusHandler->block(true);
 			break;
 		case TOUCHSCREEN:
-			this->touchDrawingHandler->block(true);
 			this->touchHandler->block(true);
 			this->getView()->getZoomGestureHandler()->disable();
 			break;
@@ -249,7 +227,6 @@ void InputContext::unblockDevice(InputContext::DeviceType deviceType)
 			this->stylusHandler->block(false);
 			break;
 		case TOUCHSCREEN:
-			this->touchDrawingHandler->block(false);
 			this->touchHandler->block(false);
 			this->getView()->getZoomGestureHandler()->enable();
 			break;
@@ -267,9 +244,9 @@ bool InputContext::isBlocked(InputContext::DeviceType deviceType)
 		case STYLUS:
 			return this->stylusHandler->isBlocked();
 		case TOUCHSCREEN:
-			return this->touchDrawingHandler->isBlocked();
-	}
-	return false;
+		    return this->touchHandler->isBlocked();
+	    }
+	    return false;
 }
 
 void InputContext::printDebug(GdkEvent* event)

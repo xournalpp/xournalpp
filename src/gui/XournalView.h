@@ -31,14 +31,13 @@ class XojPageView;
 class PdfCache;
 class Rectangle;
 class RepaintHandler;
-class ScrollHandling;
 class TextEditor;
 class HandRecognition;
 
 class XournalView : public DocumentListener, public ZoomListener
 {
 public:
-	XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling, ZoomGesture* zoomGesture);
+	XournalView(GtkScrolledWindow* parent, Control* control, ZoomGesture* zoomGesture);
 	virtual ~XournalView();
 
 public:
@@ -120,15 +119,15 @@ public:
 	HandRecognition* getHandRecognition();
 
 	/**
-	 * @returnScrollbars
-	 */
-	ScrollHandling* getScrollHandling();
-
-	/**
 	 * Get the handler for the zoom gesture
 	 * @return The handler
 	 */
 	ZoomGesture* getZoomGestureHandler();
+
+	GtkAdjustment* getHorizontalAdjustment();
+	GtkAdjustment* getVerticalAdjustment();
+
+	void queueResize();
 
 public:
 	// ZoomListener interface
@@ -166,11 +165,14 @@ private:
 	/**
 	 * Scrollbars
 	 */
-	ScrollHandling* scrollHandling = NULL;
 
 	ZoomGesture* zoomGesture;
 
 	GtkWidget* widget = NULL;
+
+	GtkAdjustment* horizontal = nullptr;
+	GtkAdjustment* vertical = nullptr;
+
 	double margin = 75;
 
 	XojPageView** viewPages = NULL;

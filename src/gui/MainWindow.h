@@ -20,7 +20,6 @@ class Control;
 class Layout;
 class MainWindow;
 class SpinPageAdapter;
-class ScrollHandling;
 class ToolMenuHandler;
 class ToolbarData;
 class ToolbarModel;
@@ -156,7 +155,6 @@ private:
 
 	XournalView* xournal = NULL;
 	GtkWidget* winXournal = NULL;
-	ScrollHandling* scrollHandling = NULL;
 
 	ZoomGesture* zoomGesture = NULL;
 

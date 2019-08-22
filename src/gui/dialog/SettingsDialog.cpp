@@ -254,8 +254,6 @@ void SettingsDialog::load()
 	loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
 	loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
 	loadCheckbox("cbDisableScrollbarFadeout", settings->isScrollbarFadeoutDisabled());
-	loadCheckbox("cbTouchWorkaround", settings->isTouchWorkaround());
-	loadCheckbox("cbNewInputSystem", settings->getExperimentalInputSystemEnabled());
 	loadCheckbox("cbInputSystemTPCButton", settings->getInputSystemTPCButtonEnabled());
 	loadCheckbox("cbInputSystemDrawOutsideWindow", settings->getInputSystemDrawOutsideWindowEnabled());
 
@@ -530,8 +528,6 @@ void SettingsDialog::save()
 	settings->setShowBigCursor(getCheckbox("cbBigCursor"));
 	settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
 	settings->setDarkTheme(getCheckbox("cbDarkTheme"));
-	settings->setTouchWorkaround(getCheckbox("cbTouchWorkaround"));
-	settings->setExperimentalInputSystemEnabled(getCheckbox("cbNewInputSystem"));
 	settings->setInputSystemTPCButtonEnabled(getCheckbox("cbInputSystemTPCButton"));
 	settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
 	settings->setScrollbarFadeoutDisabled(getCheckbox("cbDisableScrollbarFadeout"));

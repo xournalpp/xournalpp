@@ -18,7 +18,6 @@
 #include "AbstractInputHandler.h"
 #include "MouseInputHandler.h"
 #include "StylusInputHandler.h"
-#include "TouchDrawingInputHandler.h"
 #include "TouchInputHandler.h"
 #include "KeyboardInputHandler.h"
 #include "HandRecognition.h"
@@ -27,7 +26,6 @@
 #include <control/ToolHandler.h>
 #include <gui/XournalView.h>
 #include <control/Control.h>
-#include <gui/scroll/ScrollHandling.h>
 
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
@@ -43,16 +41,12 @@ private:
 	StylusInputHandler* stylusHandler;
 	TouchInputHandler* touchHandler;
 	MouseInputHandler* mouseHandler;
-	TouchDrawingInputHandler* touchDrawingHandler;
 	KeyboardInputHandler* keyboardHandler;
 
 	GtkWidget* widget = nullptr;
 	XournalView* view;
-	ScrollHandling* scrollHandling;
 
 	GdkModifierType modifierState = (GdkModifierType)0;
-
-	bool touchWorkaroundEnabled = false;
 
 	std::set<string> knownDevices;
 
@@ -64,7 +58,7 @@ public:
 	};
 
 public:
-	InputContext(XournalView* view, ScrollHandling* scrollHandling);
+	InputContext(XournalView* view);
 	~InputContext();
 
 private:
@@ -99,7 +93,6 @@ public:
 	XournalView* getView();
 	ToolHandler* getToolHandler();
 	Settings* getSettings();
-	ScrollHandling* getScrollHandling();
 
 	GdkModifierType getModifierState();
 	void focusWidget();

@@ -4,8 +4,6 @@
 #include "control/tools/EditSelection.h"
 #include "control/settings/Settings.h"
 #include "gui/Layout.h"
-#include "gui/inputdevices/old/NewGtkInputDevice.h"
-#include "gui/scroll/ScrollHandling.h"
 #include "gui/Shadow.h"
 #include "gui/XournalView.h"
 
@@ -69,32 +67,14 @@ GtkWidget* gtk_xournal_new(XournalView* view, InputContext* inputContext)
 {
 	GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), NULL));
 	xoj->view = view;
-	xoj->scrollHandling = inputContext->getScrollHandling();
 	xoj->x = 0;
 	xoj->y = 0;
-	xoj->layout = new Layout(view, inputContext->getScrollHandling());
+	xoj->layout = new Layout(view);
 	xoj->selection = NULL;
 
 	xoj->input = inputContext;
 
 	xoj->input->connect(GTK_WIDGET(xoj));
-
-	return GTK_WIDGET(xoj);
-}
-
-GtkWidget* gtk_xournal_new_deprecated(XournalView* view, ScrollHandling* scrollHandling)
-{
-	GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), NULL));
-	xoj->view = view;
-	xoj->scrollHandling = scrollHandling;
-	xoj->x = 0;
-	xoj->y = 0;
-	xoj->layout = new Layout(view, scrollHandling);
-	xoj->selection = NULL;
-
-	xoj->depInput = new NewGtkInputDevice(GTK_WIDGET(xoj), view, scrollHandling);
-
-	xoj->depInput->initWidget();
 
 	return GTK_WIDGET(xoj);
 }
@@ -122,8 +102,8 @@ Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p)
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
-	GtkAdjustment* vadj = xournal->scrollHandling->getVertical();
-	GtkAdjustment* hadj = xournal->scrollHandling->getHorizontal();
+	GtkAdjustment* vadj = xournal->view->getVerticalAdjustment();
+	GtkAdjustment* hadj = xournal->view->getHorizontalAdjustment();
 
 	GdkRectangle r2;
 	r2.x = (int)gtk_adjustment_get_value(hadj);
@@ -177,13 +157,13 @@ static void gtk_xournal_init(GtkXournal* xournal)
 static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width)
 {
 	GtkXournal* xournal = GTK_XOURNAL(widget);
-	*minimal_width = *natural_width = xournal->scrollHandling->getPreferredWidth();
+	*minimal_width = *natural_width = xournal->layout->getMinimalWidth();
 }
 
 static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height)
 {
 	GtkXournal* xournal = GTK_XOURNAL(widget);
-	*minimal_height = *natural_height = xournal->scrollHandling->getPreferredHeight();
+	*minimal_height = *natural_height = xournal->layout->getMinimalHeight();
 }
 
 static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocation)
@@ -310,8 +290,6 @@ static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
 	cairo_rectangle(cr, x1, y1, x2 - x1, y2 - y1);
 	cairo_fill(cr);
 
-	xournal->scrollHandling->translate(cr, x1, x2, y1, y2);
-
 	Rectangle clippingRect(x1 - 10, y1 - 10, x2 - x1 + 20, y2 - y1 + 20);
 
 	while (it.hasNext())
@@ -365,8 +343,5 @@ static void gtk_xournal_destroy(GtkWidget* object)
 
 	delete xournal->input;
 	xournal->input = NULL;
-
-	delete xournal->depInput;
-	xournal->depInput = nullptr;
 }
 

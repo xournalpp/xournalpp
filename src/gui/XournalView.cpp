@@ -24,9 +24,8 @@
 #include <cmath>
 #include <tuple>
 
-XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling, ZoomGesture* zoomGesture)
- : scrollHandling(scrollHandling)
- , control(control)
+XournalView::XournalView(GtkScrolledWindow* parent, Control* control, ZoomGesture* zoomGesture)
+ : control(control)
  , zoomGesture(zoomGesture)
 {
 	XOJ_INIT_TYPE(XournalView);
@@ -34,16 +33,12 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
 
-	InputContext* inputContext = nullptr;
-	if (this->control->getSettings()->getExperimentalInputSystemEnabled())
-	{
-		inputContext = new InputContext(this, scrollHandling);
-		this->widget = gtk_xournal_new(this, inputContext);
-	}
-	else
-	{
-		this->widget = gtk_xournal_new_deprecated(this, scrollHandling);
-	}
+	this->horizontal = gtk_scrolled_window_get_hadjustment(parent);
+	this->vertical = gtk_scrolled_window_get_vadjustment(parent);
+
+	auto inputContext = new InputContext(this);
+	this->widget = gtk_xournal_new(this, inputContext);
+
 	// we need to refer widget here, because we unref it somewhere twice!?
 	g_object_ref(this->widget);
 
@@ -637,16 +632,6 @@ HandRecognition* XournalView::getHandRecognition()
 	return handRecognition;
 }
 
-/**
- * @returnScrollbars
- */
-ScrollHandling* XournalView::getScrollHandling()
-{
-	XOJ_CHECK_TYPE(XournalView);
-
-	return scrollHandling;
-}
-
 ZoomGesture* XournalView::getZoomGestureHandler()
 {
 	XOJ_CHECK_TYPE(XournalView);
@@ -1130,4 +1115,19 @@ EditSelection* XournalView::getSelection()
 	g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), nullptr);
 
 	return GTK_XOURNAL(this->widget)->selection;
+}
+
+GtkAdjustment* XournalView::getHorizontalAdjustment()
+{
+	return this->horizontal;
+}
+
+GtkAdjustment* XournalView::getVerticalAdjustment()
+{
+	return this->vertical;
+}
+
+void XournalView::queueResize()
+{
+	gtk_widget_queue_resize(this->widget);
 }

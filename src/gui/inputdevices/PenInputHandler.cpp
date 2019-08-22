@@ -196,8 +196,8 @@ bool PenInputHandler::actionMotion(InputEvent* event)
 	 */
 	gdouble eventX = event->relativeX;
 	gdouble eventY = event->relativeY;
-	GtkAdjustment* adjHorizontal = this->inputContext->getScrollHandling()->getHorizontal();
-	GtkAdjustment* adjVertical = this->inputContext->getScrollHandling()->getVertical();
+	GtkAdjustment* adjHorizontal = inputContext->getView()->getHorizontalAdjustment();
+	GtkAdjustment* adjVertical = inputContext->getView()->getVerticalAdjustment();
 	double h = gtk_adjustment_get_value(adjHorizontal);
 	double v = gtk_adjustment_get_value(adjVertical);
 	eventX -= h;
@@ -433,8 +433,8 @@ void PenInputHandler::actionLeaveWindow(InputEvent* event)
 		gdouble eventX = event->relativeX;
 		gdouble eventY = event->relativeY;
 
-		GtkAdjustment* adjHorizontal = this->inputContext->getScrollHandling()->getHorizontal();
-		GtkAdjustment* adjVertical = this->inputContext->getScrollHandling()->getVertical();
+		GtkAdjustment* adjHorizontal = this->inputContext->getView()->getHorizontalAdjustment();
+		GtkAdjustment* adjVertical = this->inputContext->getView()->getVerticalAdjustment();
 		double h = gtk_adjustment_get_value(adjHorizontal);
 		double v = gtk_adjustment_get_value(adjVertical);
 		eventX -= h;

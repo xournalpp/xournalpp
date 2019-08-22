@@ -24,11 +24,8 @@ class EditSelection;
 class Layout;
 class XojPageView;
 class Rectangle;
-class ScrollHandling;
 class XournalView;
 class InputContext;
-class NewGtkInputDevice;
-
 
 typedef struct _GtkXournal GtkXournal;
 typedef struct _GtkXournalClass GtkXournalClass;
@@ -41,11 +38,6 @@ struct _GtkXournal
 	 * The view class
 	 */
 	XournalView* view;
-
-	/**
-	 * Scrollbars
-	 */
-	ScrollHandling* scrollHandling;
 
 	/**
 	 * Visible area
@@ -65,11 +57,6 @@ struct _GtkXournal
 	 * Input handling
 	 */
 	InputContext* input = nullptr;
-
-	/**
-	 * Deprecated input handling
-	 */
-	 NewGtkInputDevice* depInput = nullptr;
 };
 
 struct _GtkXournalClass
@@ -80,7 +67,6 @@ struct _GtkXournalClass
 GType gtk_xournal_get_type();
 
 GtkWidget* gtk_xournal_new(XournalView* view, InputContext* inputContext);
-GtkWidget* gtk_xournal_new_deprecated(XournalView* view, ScrollHandling* scrollHandling);
 
 Layout* gtk_xournal_get_layout(GtkWidget* widget);
 

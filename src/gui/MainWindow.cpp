@@ -9,8 +9,6 @@
 #include "control/layer/LayerController.h"
 #include "control/zoom/ZoomGesture.h"
 #include "gui/GladeSearchpath.h"
-#include "gui/scroll/ScrollHandlingGtk.h"
-#include "gui/scroll/ScrollHandlingXournalpp.h"
 #include "ToolbarDefinitions.h"
 #include "toolbarMenubar/model/ToolbarData.h"
 #include "toolbarMenubar/model/ToolbarModel.h"
@@ -183,9 +181,6 @@ MainWindow::~MainWindow()
 	delete this->zoomGesture;
 	this->zoomGesture = NULL;
 
-	delete scrollHandling;
-	scrollHandling = NULL;
-
 	XOJ_RELEASE_TYPE(MainWindow);
 }
 
@@ -223,61 +218,23 @@ void MainWindow::initXournalWidget()
 
 	GtkWidget* boxContents = get("boxContents");
 
-	if (control->getSettings()->isTouchWorkaround())
+	winXournal = gtk_scrolled_window_new(NULL, NULL);
+
+	setTouchscreenScrollingForDeviceMapping();
+
+	gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
+
+	this->zoomGesture = new ZoomGesture(control->getZoomControl());
+
+	this->xournal = new XournalView(GTK_SCROLLED_WINDOW(winXournal), control, zoomGesture);
+
+	if (control->getSettings()->isZoomGesturesEnabled())
 	{
-		GtkWidget* box1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-		gtk_container_add(GTK_CONTAINER(boxContents), box1);
-
-		GtkWidget* box2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-		gtk_container_add(GTK_CONTAINER(box1), box2);
-
-		scrollHandling = new ScrollHandlingXournalpp();
-
-		this->zoomGesture = new ZoomGesture(control->getZoomControl());
-
-		this->xournal = new XournalView(box2, control, scrollHandling, zoomGesture);
-
-		if (control->getSettings()->isZoomGesturesEnabled())
-		{
-			this->zoomGesture->connect(this->xournal->getWidget());
-		}
-
-		gtk_container_add(GTK_CONTAINER(box2), gtk_scrollbar_new(GTK_ORIENTATION_VERTICAL, scrollHandling->getVertical()));
-		gtk_container_add(GTK_CONTAINER(box1), gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, scrollHandling->getHorizontal()));
-
-		control->getZoomControl()->initZoomHandler(box2, xournal, control);
-		gtk_widget_show_all(box1);
+		this->zoomGesture->connect(winXournal);
 	}
-	else
-	{
-		winXournal = gtk_scrolled_window_new(NULL, NULL);
 
-		setTouchscreenScrollingForDeviceMapping();
-
-		gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
-
-		GtkWidget* vpXournal = gtk_viewport_new(NULL, NULL);
-
-		gtk_container_add(GTK_CONTAINER(winXournal), vpXournal);
-
-		scrollHandling = new ScrollHandlingGtk(GTK_SCROLLABLE(vpXournal));
-
-		this->zoomGesture = new ZoomGesture(control->getZoomControl());
-
-		this->xournal = new XournalView(vpXournal, control, scrollHandling, zoomGesture);
-
-		if (control->getSettings()->isZoomGesturesEnabled())
-		{
-			this->zoomGesture->connect(winXournal);
-		}
-
-		control->getZoomControl()->initZoomHandler(winXournal, xournal, control);
-		gtk_widget_show_all(winXournal);
-	}
-	//Todo configure-event
-
-	Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
-	scrollHandling->init(this->xournal->getWidget(), layout);
+	control->getZoomControl()->initZoomHandler(winXournal, xournal, control);
+	gtk_widget_show_all(winXournal);
 }
 
 void MainWindow::setTouchscreenScrollingForDeviceMapping()
@@ -490,28 +447,24 @@ void MainWindow::updateScrollbarSidebarPosition()
 
 	GtkWidget* panelMainContents = get("panelMainContents");
 
-	if (winXournal != NULL)
+	GtkScrolledWindow* scrolledWindow = GTK_SCROLLED_WINDOW(winXournal);
+
+	ScrollbarHideType type = this->getControl()->getSettings()->getScrollbarHideType();
+
+	bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
+	if (scrollbarOnLeft)
 	{
-		GtkScrolledWindow* scrolledWindow = GTK_SCROLLED_WINDOW(winXournal);
-
-		ScrollbarHideType type = this->getControl()->getSettings()->getScrollbarHideType();
-
-		bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
-		if (scrollbarOnLeft)
-		{
-			gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_RIGHT);
-		}
-		else
-		{
-			gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_LEFT);
-		}
-
-		gtk_widget_set_visible(gtk_scrolled_window_get_hscrollbar(scrolledWindow), !(type & SCROLLBAR_HIDE_HORIZONTAL));
-		gtk_widget_set_visible(gtk_scrolled_window_get_vscrollbar(scrolledWindow), !(type & SCROLLBAR_HIDE_VERTICAL));
-
-		gtk_scrolled_window_set_overlay_scrolling(scrolledWindow,
-		                                          !control->getSettings()->isScrollbarFadeoutDisabled());
+		gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_RIGHT);
 	}
+	else
+	{
+		gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_LEFT);
+	}
+
+	gtk_widget_set_visible(gtk_scrolled_window_get_hscrollbar(scrolledWindow), !(type & SCROLLBAR_HIDE_HORIZONTAL));
+	gtk_widget_set_visible(gtk_scrolled_window_get_vscrollbar(scrolledWindow), !(type & SCROLLBAR_HIDE_VERTICAL));
+
+	gtk_scrolled_window_set_overlay_scrolling(scrolledWindow, !control->getSettings()->isScrollbarFadeoutDisabled());
 
 	GtkWidget* sidebar = get("sidebar");
 	GtkWidget* boxContents = get("boxContents");

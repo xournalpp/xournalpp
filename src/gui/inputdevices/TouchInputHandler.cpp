@@ -90,9 +90,9 @@ void TouchInputHandler::actionMotion(InputEvent* event)
 		this->lastPosX = event->absoluteX;
 		this->lastPosY = event->absoluteY;
 
-		GtkAdjustment* h = this->inputContext->getView()->getScrollHandling()->getHorizontal();
+		GtkAdjustment* h = this->inputContext->getView()->getHorizontalAdjustment();
 		gtk_adjustment_set_value(h, gtk_adjustment_get_value(h) - offsetX);
-		GtkAdjustment* v = this->inputContext->getView()->getScrollHandling()->getVertical();
+		GtkAdjustment* v = this->inputContext->getView()->getVerticalAdjustment();
 		gtk_adjustment_set_value(v, gtk_adjustment_get_value(v) - offsetY);
 	}
 }

@@ -598,86 +598,6 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                 <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkFrame" id="sid79">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label_xalign">0.0099999997764825821</property>
-                    <child>
-                      <object class="GtkAlignment" id="sid80">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="bottom_padding">8</property>
-                        <property name="left_padding">12</property>
-                        <property name="right_padding">12</property>
-                        <child>
-                          <object class="GtkBox" id="sid81">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="orientation">vertical</property>
-                            <child>
-                              <object class="GtkLabel" id="sid82">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">This is an experimental feature! Use it with care.</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkGrid" id="grid7">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <child>
-                                  <object class="GtkCheckButton" id="cbNewInputSystem">
-                                    <property name="label" translatable="yes">Enable new input system (Requires restart)</property>
-                                    <property name="name">cbNewInputSystem</property>
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">False</property>
-                                    <property name="tooltip_markup" translatable="yes">Drag LEFT from start point acts like shift key is being held.
-Drag UP acts as if Control key is being held.
-
-Determination Radius: Radius at which modifiers will lock in until finished drawing.
-
-&lt;i&gt;Useful for operating without keyboard.&lt;/i&gt;</property>
-                                    <property name="xalign">0</property>
-                                    <property name="draw_indicator">True</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">0</property>
-                                    <property name="top_attach">0</property>
-                                  </packing>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child type="label">
-                      <object class="GtkLabel" id="sid83">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Experimental Input System</property>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkFrame" id="sid84">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
@@ -741,7 +661,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="position">0</property>
                   </packing>
                 </child>
                 <child>
@@ -761,19 +681,6 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
-                            <child>
-                              <object class="GtkLabel" id="sid91">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">These settings take only effect if the experimental input system is activated</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
-                            </child>
                             <child>
                               <object class="GtkCheckButton" id="cbInputSystemDrawOutsideWindow">
                                 <property name="name">cbInputSystemDrawOutsideWindow</property>
@@ -796,7 +703,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">1</property>
+                                <property name="position">0</property>
                               </packing>
                             </child>
                             <child>
@@ -828,7 +735,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">2</property>
+                                <property name="position">1</property>
                               </packing>
                             </child>
                           </object>
@@ -846,7 +753,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">2</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
               </object>
@@ -1790,73 +1697,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame" id="sid74">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label_xalign">0.0099999997764825821</property>
-                                <child>
-                                  <object class="GtkAlignment" id="sid75">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="bottom_padding">8</property>
-                                    <property name="left_padding">12</property>
-                                    <property name="right_padding">12</property>
-                                    <child>
-                                      <object class="GtkBox" id="sid76">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="orientation">vertical</property>
-                                        <child>
-                                          <object class="GtkLabel" id="sid77">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">&lt;i&gt;For some specific hardware the scroll / touch behaviour of the system is not as expected. For these cases Xournal++ has a workaround.
-This also enables touch drawing.&lt;/i&gt;</property>
-                                            <property name="use_markup">True</property>
-                                            <property name="wrap">True</property>
-                                            <property name="width_chars">85</property>
-                                            <property name="max_width_chars">85</property>
-                                            <property name="xalign">0</property>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">0</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkCheckButton" id="cbTouchWorkaround">
-                                            <property name="label" translatable="yes">Enable GTK Touch / Scrolling workaround  (requires restart)</property>
-                                            <property name="name">cbTouchWorkaround</property>
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="receives_default">False</property>
-                                            <property name="xalign">0</property>
-                                            <property name="draw_indicator">True</property>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
-                                      </object>
-                                    </child>
-                                  </object>
-                                </child>
-                                <child type="label">
-                                  <object class="GtkLabel" id="sid78">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="label" translatable="yes">Workaround</property>
-                                  </object>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">3</property>
-                              </packing>
+                              <placeholder/>
                             </child>
                           </object>
                         </child>
