@@ -84,7 +84,7 @@ void Settings::loadDefault()
 	this->highlightPosition = false;
 	this->darkTheme = false;
 	this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
-	this->disableScrollbarFadeout = true;
+	this->disableScrollbarFadeout = false;
 
 	//Set this for autosave frequency in minutes.
 	this->autosaveTimeout = 3;
