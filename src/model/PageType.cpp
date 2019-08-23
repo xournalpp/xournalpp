@@ -27,7 +27,7 @@ PageType::~PageType()
 /**
  * Compare Operator
  */
-bool PageType::operator ==(const PageType& other) const
+bool PageType::operator==(const PageType& other) const
 {
 	return this->config == other.config && this->format == other.format;
 }
@@ -62,4 +62,3 @@ bool PageType::isSpecial()
 	return this->format == PageTypeFormat::Pdf || this->format == PageTypeFormat::Image ||
 	       this->format == PageTypeFormat::Copy;
 }
-

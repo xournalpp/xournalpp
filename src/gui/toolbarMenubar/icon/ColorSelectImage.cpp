@@ -5,20 +5,21 @@
 #include <cmath>
 
 ColorSelectImage::ColorSelectImage(int color, bool circle)
- : color(color),
-   circle(circle)
+ : color(color)
+ , circle(circle)
 {
 	XOJ_INIT_TYPE(ColorSelectImage);
 
 	widget = gtk_drawing_area_new();
 	gtk_widget_set_size_request(widget, 16, 16);
 
-	g_signal_connect(widget, "draw", G_CALLBACK(
-		+[](GtkWidget *widget, cairo_t* cr, ColorSelectImage* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, ColorSelectImage);
-			self->drawWidget(cr);
-		}), this);
+	g_signal_connect(widget,
+	                 "draw",
+	                 G_CALLBACK(+[](GtkWidget* widget, cairo_t* cr, ColorSelectImage* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, ColorSelectImage);
+		                 self->drawWidget(cr);
+	                 }),
+	                 this);
 }
 
 ColorSelectImage::~ColorSelectImage()
@@ -189,10 +190,9 @@ cairo_surface_t* ColorSelectImage::newColorIconSurface(int color, int size, bool
 GdkPixbuf* ColorSelectImage::newColorIconPixbuf(int color, int size, bool circle)
 {
 	cairo_surface_t* surface = newColorIconSurface(color, size, circle);
-	GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(surface, 0, 0, cairo_image_surface_get_width(surface), cairo_image_surface_get_height(surface));
+	GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(
+	        surface, 0, 0, cairo_image_surface_get_width(surface), cairo_image_surface_get_height(surface));
 	cairo_surface_destroy(surface);
 
 	return pixbuf;
 }
-
-

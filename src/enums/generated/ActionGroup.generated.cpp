@@ -2,7 +2,6 @@
 // ** use generateConvert.php to update this file **
 
 
-
 #include "../ActionGroup.enum.h"
 
 #include <string>
@@ -145,7 +144,6 @@ ActionGroup ActionGroup_fromString(string value)
 	g_error("Invalid enum value for ActionGroup: «%s»", value.c_str());
 	return GROUP_NOGROUP;
 }
-
 
 
 string ActionGroup_toString(ActionGroup value)

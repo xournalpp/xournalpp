@@ -22,7 +22,7 @@ class SidebarLayout;
 class SidebarPreviewBaseEntry;
 class SidebarToolbar;
 
-class SidebarPreviewBase : public AbstractSidebarPage
+class SidebarPreviewBase: public AbstractSidebarPage
 {
 public:
 	SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar);
@@ -105,7 +105,6 @@ private:
 
 	// Members also used by subclasses
 protected:
-
 	/**
 	 * The currently selected entry in the sidebar, starting from 0
 	 * -1 means no valid selection

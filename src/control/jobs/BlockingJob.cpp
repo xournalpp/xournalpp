@@ -33,9 +33,7 @@ bool BlockingJob::finished(Control* control)
 {
 	// "this" is not needed, "control" is in
 	// the closure, therefore no sync needed
-	Util::execInUiThread([=]() {
-		control->unblock();
-	});
+	Util::execInUiThread([=]() { control->unblock(); });
 
 	// do not call again
 	return false;

@@ -9,8 +9,7 @@
 #include <i18n.h>
 #include <Util.h>
 
-#define	ADD_TYPE_CB(icon, name, action) \
-	addToolToList(typeModel, icon, name, action)
+#define ADD_TYPE_CB(icon, name, action) addToolToList(typeModel, icon, name, action)
 
 void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, ToolType action)
 {
@@ -22,7 +21,8 @@ void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, 
 	gtk_list_store_set(typeModel, &iter, 1, name, 2, action, -1);
 }
 
-ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, int button, bool withDevice)
+ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, int button,
+                                 bool withDevice)
  : GladeGui(gladeSearchPath, "settingsButtonConfig.glade", "offscreenwindow")
 {
 	XOJ_INIT_TYPE(ButtonConfigGui);
@@ -46,7 +46,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 		this->deviceList = DeviceListHelper::getDeviceList(this->settings, true);
 		for (InputDevice const& dev: this->deviceList)
 		{
-			string txt = dev.getName()  + " (" + dev.getType() + ")";
+			string txt = dev.getName() + " (" + dev.getType() + ")";
 			gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), txt.c_str());
 		}
 	}
@@ -59,17 +59,17 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 
 	GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);  //NOLINT
 
-	ADD_TYPE_CB("transparent",		_("Tool - don't change"),	TOOL_NONE);
-	ADD_TYPE_CB("tool_pencil",		_("Pen"),					TOOL_PEN);
-	ADD_TYPE_CB("tool_eraser",		_("Eraser"),				TOOL_ERASER);
-	ADD_TYPE_CB("tool_highlighter",	_("Highlighter"),			TOOL_HILIGHTER);
-	ADD_TYPE_CB("tool_text",		_("Text"),					TOOL_TEXT);
-	ADD_TYPE_CB("tool_image",		_("Insert image"),			TOOL_IMAGE);
-	ADD_TYPE_CB("stretch",			_("Vertical space"),		TOOL_VERTICAL_SPACE);
-	ADD_TYPE_CB("lasso",			_("Select region"),			TOOL_SELECT_REGION);
-	ADD_TYPE_CB("rect-select",		_("Select rectangle"),		TOOL_SELECT_RECT);
-	ADD_TYPE_CB("hand",				_("Hand"),					TOOL_HAND);
-	ADD_TYPE_CB("floating_toolbox",	_("Floating Toolbox (experimental)"),		TOOL_FLOATING_TOOLBOX);
+	ADD_TYPE_CB("transparent", _("Tool - don't change"), TOOL_NONE);
+	ADD_TYPE_CB("tool_pencil", _("Pen"), TOOL_PEN);
+	ADD_TYPE_CB("tool_eraser", _("Eraser"), TOOL_ERASER);
+	ADD_TYPE_CB("tool_highlighter", _("Highlighter"), TOOL_HILIGHTER);
+	ADD_TYPE_CB("tool_text", _("Text"), TOOL_TEXT);
+	ADD_TYPE_CB("tool_image", _("Insert image"), TOOL_IMAGE);
+	ADD_TYPE_CB("stretch", _("Vertical space"), TOOL_VERTICAL_SPACE);
+	ADD_TYPE_CB("lasso", _("Select region"), TOOL_SELECT_REGION);
+	ADD_TYPE_CB("rect-select", _("Select rectangle"), TOOL_SELECT_RECT);
+	ADD_TYPE_CB("hand", _("Hand"), TOOL_HAND);
+	ADD_TYPE_CB("floating_toolbox", _("Floating Toolbox (experimental)"), TOOL_FLOATING_TOOLBOX);
 
 	this->cbTool = get("cbTool");
 	gtk_combo_box_set_model(GTK_COMBO_BOX(this->cbTool), GTK_TREE_MODEL(typeModel));
@@ -156,8 +156,7 @@ void ButtonConfigGui::loadSettings()
 
 		i++;
 		g_value_unset(&value);
-	}
-	while (gtk_tree_model_iter_next(model, &iter));
+	} while (gtk_tree_model_iter_next(model, &iter));
 
 	if (cfg->size == TOOL_SIZE_FINE)
 	{
@@ -320,21 +319,21 @@ void ButtonConfigGui::enableDisableTools()
 		gtk_widget_set_visible(cbDrawingType, true);
 		gtk_widget_set_visible(cbEraserType, false);
 		break;
-		
+
 	case TOOL_ERASER:
 		gtk_widget_set_visible(cbThickness, true);
 		gtk_widget_set_visible(colorButton, false);
 		gtk_widget_set_visible(cbDrawingType, false);
 		gtk_widget_set_visible(cbEraserType, true);
 		break;
-		
+
 	case TOOL_TEXT:
 		gtk_widget_set_visible(cbThickness, false);
 		gtk_widget_set_visible(colorButton, true);
 		gtk_widget_set_visible(cbDrawingType, false);
 		gtk_widget_set_visible(cbEraserType, false);
 		break;
-		
+
 	case TOOL_NONE:
 	case TOOL_IMAGE:
 		//case TOOL_DRAW_RECT:

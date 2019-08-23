@@ -11,7 +11,7 @@ Layer::~Layer()
 {
 	XOJ_CHECK_TYPE(Layer);
 
-	for (Element* e : this->elements)
+	for (Element* e: this->elements)
 	{
 		delete e;
 	}
@@ -26,7 +26,7 @@ Layer* Layer::clone()
 
 	Layer* layer = new Layer();
 
-	for (Element* e : this->elements)
+	for (Element* e: this->elements)
 	{
 		layer->addElement(e->clone());
 	}
@@ -45,7 +45,7 @@ void Layer::addElement(Element* e)
 		return;
 	}
 
-	for (Element* elem2 : this->elements)
+	for (Element* elem2: this->elements)
 	{
 		if (e == elem2)
 		{
@@ -68,7 +68,7 @@ void Layer::insertElement(Element* e, int pos)
 		return;
 	}
 
-	for (Element* elem2 : this->elements)
+	for (Element* elem2: this->elements)
 	{
 		if (e == elem2)
 		{
@@ -86,7 +86,7 @@ void Layer::insertElement(Element* e, int pos)
 	}
 
 	// If the element should be inserted at the top
-	if (pos >= (int)this->elements.size())
+	if (pos >= (int) this->elements.size())
 	{
 		this->elements.push_back(e);
 	}
@@ -99,7 +99,7 @@ void Layer::insertElement(Element* e, int pos)
 int Layer::indexOf(Element* e)
 {
 	XOJ_CHECK_TYPE(Layer);
-	
+
 	for (unsigned int i = 0; i < this->elements.size(); i++)
 	{
 		if (this->elements[i] == e)
@@ -107,7 +107,7 @@ int Layer::indexOf(Element* e)
 			return i;
 		}
 	}
-	
+
 	return -1;
 }
 
@@ -120,7 +120,7 @@ int Layer::removeElement(Element* e, bool free)
 		if (e == this->elements[i])
 		{
 			this->elements.erase(this->elements.begin() + i);
-			
+
 			if (free)
 			{
 				delete e;
@@ -128,7 +128,7 @@ int Layer::removeElement(Element* e, bool free)
 			return i;
 		}
 	}
-	
+
 	g_warning("Could not remove element from layer, it's not on the layer!");
 	Stacktrace::printStracktrace();
 	return -1;

@@ -20,26 +20,26 @@ CustomExportJob::CustomExportJob(Control* control)
 	XOJ_INIT_TYPE(CustomExportJob);
 
 	// Supported filters
-	filters[_("PDF files")] = new ExportType(".pdf", false); 
+	filters[_("PDF files")] = new ExportType(".pdf", false);
 	filters[_("PDF with plain background")] = new ExportType(".pdf", true);
 	filters[_("PNG graphics")] = new ExportType(".png", false);
 	filters[_("PNG with transparent background")] = new ExportType(".png", true);
 	filters[_("SVG graphics")] = new ExportType(".svg", false);
 	filters[_("SVG with transparent background")] = new ExportType(".svg", true);
-	filters[_("Xournal (Compatibility)")] =  new ExportType(".xoj", false);
+	filters[_("Xournal (Compatibility)")] = new ExportType(".xoj", false);
 }
 
 CustomExportJob::~CustomExportJob()
 {
 	XOJ_CHECK_TYPE(CustomExportJob);
 
-	for (PageRangeEntry* e : exportRange)
+	for (PageRangeEntry* e: exportRange)
 	{
 		delete e;
 	}
 	exportRange.clear();
 
-	for(auto& filter : filters)
+	for (auto& filter: filters)
 	{
 		delete filter.second;
 	}
@@ -52,9 +52,9 @@ void CustomExportJob::addFilterToDialog()
 	XOJ_CHECK_TYPE(CustomExportJob);
 
 	// Runs on every filter inside the filters map
-	for (auto& filter : filters)
+	for (auto& filter: filters)
 	{
-  		addFileFilterToDialog(filter.first, "*" + filter.second->extension); // Adds * for the pattern
+		addFileFilterToDialog(filter.first, "*" + filter.second->extension);  // Adds * for the pattern
 	}
 }
 
@@ -67,9 +67,9 @@ bool CustomExportJob::isUriValid(string& uri)
 		return false;
 	}
 
-	// Extract the file filter selected	
+	// Extract the file filter selected
 	this->chosenFilterName = BaseExportJob::getFilterName();
-	
+
 	// Remove any pre-existing extension and adds the chosen one
 	filename.clearExtensions(filters[this->chosenFilterName]->extension);
 	filename += filters[this->chosenFilterName]->extension;
@@ -173,7 +173,7 @@ void CustomExportJob::run()
 		XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
 
 		pdfe->setNoBackgroundExport(filters[this->chosenFilterName]->withoutBackground);
-		
+
 		if (!pdfe->createPdf(this->filename, exportRange))
 		{
 			this->errorMsg = pdfe->getLastError();
@@ -196,4 +196,3 @@ void CustomExportJob::afterRun()
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), this->lastError);
 	}
 }
-

@@ -32,9 +32,9 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
 		if (p->getBackgroundType().isPdfPage())
 		{
 			int pdfPage = p->getPdfPageNr();
-			if (pdfPage >= 0 && pdfPage < (int)elements.size())
+			if (pdfPage >= 0 && pdfPage < (int) elements.size())
 			{
-				((PdfElementView*)elements[p->getPdfPageNr()])->setUsed(true);
+				((PdfElementView*) elements[p->getPdfPageNr()])->setUsed(true);
 			}
 		}
 	}
@@ -57,7 +57,7 @@ void PdfPagesDialog::updateOkButton()
 	XOJ_CHECK_TYPE(PdfPagesDialog);
 
 	bool valid = false;
-	if (selected >= 0 && selected < (int)elements.size())
+	if (selected >= 0 && selected < (int) elements.size())
 	{
 		BaseElementView* p = this->elements[this->selected];
 		valid = gtk_widget_get_visible(p->getWidget());
@@ -79,9 +79,9 @@ void PdfPagesDialog::onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dl
 
 	if (gtk_toggle_button_get_active(tb))
 	{
-		for (BaseElementView* p : dlg->elements)
+		for (BaseElementView* p: dlg->elements)
 		{
-			PdfElementView* pv = (PdfElementView*)p;
+			PdfElementView* pv = (PdfElementView*) p;
 			pv->setHideUnused();
 		}
 	}
@@ -120,9 +120,9 @@ void PdfPagesDialog::show(GtkWindow* parent)
 	GtkWidget* w = get("cbOnlyNotUsed");
 
 	int unused = 0;
-	for (BaseElementView* p : elements)
+	for (BaseElementView* p: elements)
 	{
-		PdfElementView* pv = (PdfElementView*)p;
+		PdfElementView* pv = (PdfElementView*) p;
 		if (!pv->isUsed())
 		{
 			unused++;
@@ -130,9 +130,8 @@ void PdfPagesDialog::show(GtkWindow* parent)
 	}
 
 	gtk_button_set_label(GTK_BUTTON(w),
-		(unused == 1
-			? _("Show only not used pages (one unused page)")
-			: FC(_F("Show only not used pages ({1} unused pages)") % unused)));
+	                     (unused == 1 ? _("Show only not used pages (one unused page)") :
+	                                    FC(_F("Show only not used pages ({1} unused pages)") % unused)));
 
 	BackgroundSelectDialogBase::show(parent);
 }

@@ -17,9 +17,9 @@
 using std::ofstream;
 
 PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types)
- : GladeGui(gladeSearchPath, "pageTemplate.glade", "templateDialog"),
-   settings(settings),
-   pageMenu(new PageTypeMenu(types, settings, true, false))
+ : GladeGui(gladeSearchPath, "pageTemplate.glade", "templateDialog")
+ , settings(settings)
+ , pageMenu(new PageTypeMenu(types, settings, true, false))
 {
 	XOJ_INIT_TYPE(PageTemplateDialog);
 
@@ -27,26 +27,24 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
 
 	pageMenu->setListener(this);
 
-	g_signal_connect(get("btChangePaperSize"), "clicked", G_CALLBACK(
-		+[](GtkToggleButton* togglebutton, PageTemplateDialog* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, PageTemplateDialog);
-			self->showPageSizeDialog();
-		}), this);
+	g_signal_connect(get("btChangePaperSize"), "clicked",
+	                 G_CALLBACK(+[](GtkToggleButton* togglebutton, PageTemplateDialog* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, PageTemplateDialog);
+		                 self->showPageSizeDialog();
+	                 }),
+	                 this);
 
-	g_signal_connect(get("btLoad"), "clicked", G_CALLBACK(
-		+[](GtkToggleButton* togglebutton, PageTemplateDialog* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, PageTemplateDialog);
-			self->loadFromFile();
-		}), this);
+	g_signal_connect(get("btLoad"), "clicked", G_CALLBACK(+[](GtkToggleButton* togglebutton, PageTemplateDialog* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, PageTemplateDialog);
+		                 self->loadFromFile();
+	                 }),
+	                 this);
 
-	g_signal_connect(get("btSave"), "clicked", G_CALLBACK(
-		+[](GtkToggleButton* togglebutton, PageTemplateDialog* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, PageTemplateDialog);
-			self->saveToFile();
-		}), this);
+	g_signal_connect(get("btSave"), "clicked", G_CALLBACK(+[](GtkToggleButton* togglebutton, PageTemplateDialog* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, PageTemplateDialog);
+		                 self->saveToFile();
+	                 }),
+	                 this);
 
 	popupMenuButton = new PopupMenuButton(get("btBackgroundDropdown"), pageMenu->getMenu());
 
@@ -107,9 +105,9 @@ void PageTemplateDialog::saveToFile()
 
 	saveToModel();
 
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Save File"), GTK_WINDOW(this->getWindow()),
-													GTK_FILE_CHOOSER_ACTION_SAVE, _("_Cancel"), GTK_RESPONSE_CANCEL,
-													_("_Save"), GTK_RESPONSE_OK, NULL);
+	GtkWidget* dialog =
+	        gtk_file_chooser_dialog_new(_("Save File"), GTK_WINDOW(this->getWindow()), GTK_FILE_CHOOSER_ACTION_SAVE,
+	                                    _("_Cancel"), GTK_RESPONSE_CANCEL, _("_Save"), GTK_RESPONSE_OK, NULL);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
@@ -230,7 +228,7 @@ void PageTemplateDialog::show(GtkWindow* parent)
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 	int ret = gtk_dialog_run(GTK_DIALOG(this->window));
 
-	if (ret == 1) // OK
+	if (ret == 1)  // OK
 	{
 		saveToModel();
 		settings->setPageTemplate(model.toString());

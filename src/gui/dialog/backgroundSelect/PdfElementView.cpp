@@ -6,8 +6,8 @@
 
 
 PdfElementView::PdfElementView(int id, XojPdfPageSPtr page, PdfPagesDialog* dlg)
- : BaseElementView(id, dlg),
-   page(page)
+ : BaseElementView(id, dlg)
+ , page(page)
 {
 	XOJ_INIT_TYPE(PdfElementView);
 }
@@ -44,7 +44,7 @@ void PdfElementView::paintContents(cairo_t* cr)
 {
 	XOJ_CHECK_TYPE(PdfElementView);
 
-	double zoom = ((PdfPagesDialog*)dlg)->getZoom();
+	double zoom = ((PdfPagesDialog*) dlg)->getZoom();
 	cairo_scale(cr, zoom, zoom);
 	page->render(cr);
 }
@@ -53,13 +53,12 @@ int PdfElementView::getContentWidth()
 {
 	XOJ_CHECK_TYPE(PdfElementView);
 
-	return page->getWidth() * ((PdfPagesDialog*)dlg)->getZoom();
+	return page->getWidth() * ((PdfPagesDialog*) dlg)->getZoom();
 }
 
 int PdfElementView::getContentHeight()
 {
 	XOJ_CHECK_TYPE(PdfElementView);
 
-	return page->getHeight() * ((PdfPagesDialog*)dlg)->getZoom();
+	return page->getHeight() * ((PdfPagesDialog*) dlg)->getZoom();
 }
-

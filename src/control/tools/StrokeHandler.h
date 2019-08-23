@@ -26,7 +26,7 @@ class ShapeRecognizer;
  * surface. The surface is used to mask the stroke
  * when drawing it to the XojPageView
  */
-class StrokeHandler : public InputHandler
+class StrokeHandler: public InputHandler
 {
 public:
 	StrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page);
@@ -37,7 +37,7 @@ public:
 	bool onMotionNotifyEvent(const PositionInputData& pos);
 	void onButtonReleaseEvent(const PositionInputData& pos);
 	void onButtonPressEvent(const PositionInputData& pos);
-	bool onKeyEvent(GdkEventKey* event );
+	bool onKeyEvent(GdkEventKey* event);
 	/**
 	 * Reset the shape recognizer, only implemented by drawing instances,
 	 * but needs to be in the base interface.
@@ -49,7 +49,7 @@ protected:
 	void destroySurface();
 
 protected:
-		Point buttonDownPoint;	// used for tapSelect and filtering - never snapped to grid.
+	Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid.
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -67,11 +67,8 @@ private:
 
 	ShapeRecognizer* reco;
 
-	
+
 	// to filter out short strokes (usually the user tapping on the page to select it)
 	guint32 startStrokeTime;
-	static guint32 lastStrokeTime;	//persist across strokes - allow us to not ignore persistent dotting.
-	
-
+	static guint32 lastStrokeTime;  //persist across strokes - allow us to not ignore persistent dotting.
 };
-

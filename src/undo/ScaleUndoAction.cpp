@@ -54,7 +54,7 @@ void ScaleUndoAction::applyScale(double fx, double fy)
 
 	Range r(elements.front()->getX(), elements.front()->getY());
 
-	for (Element* e : this->elements)
+	for (Element* e: this->elements)
 	{
 		r.addPoint(e->getX(), e->getY());
 		r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());

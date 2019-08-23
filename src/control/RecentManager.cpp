@@ -13,7 +13,9 @@
 #define MIME_PDF "application/x-pdf"
 #define GROUP "xournal++"
 
-RecentManagerListener::~RecentManagerListener() { }
+RecentManagerListener::~RecentManagerListener()
+{
+}
 
 RecentManager::RecentManager()
 {
@@ -62,7 +64,7 @@ void RecentManager::addRecentFileFilename(Path filename)
 	GtkRecentManager* recentManager;
 	GtkRecentData* recentData;
 
-	static gchar* groups[2] = { g_strdup(GROUP), NULL};
+	static gchar* groups[2] = {g_strdup(GROUP), NULL};
 
 	recentManager = gtk_recent_manager_get_default();
 
@@ -132,7 +134,7 @@ void RecentManager::openRecent(Path p)
 		return;
 	}
 
-	for (RecentManagerListener* l : this->listener)
+	for (RecentManagerListener* l: this->listener)
 	{
 		l->fileOpened(p.c_str());
 	}
@@ -149,7 +151,7 @@ void RecentManager::freeOldMenus()
 {
 	XOJ_CHECK_TYPE(RecentManager);
 
-	for (GtkWidget* w : menuItemList)
+	for (GtkWidget* w: menuItemList)
 	{
 		gtk_widget_destroy(w);
 	}
@@ -172,13 +174,13 @@ GList* RecentManager::filterRecent(GList* items, bool xoj)
 	for (GList* l = items; l != NULL; l = l->next)
 	{
 		GtkRecentInfo* info = (GtkRecentInfo*) l->data;
-		
-		const gchar * uri = gtk_recent_info_get_uri(info);
-		if( !uri )	// issue #1071
+
+		const gchar* uri = gtk_recent_info_get_uri(info);
+		if (!uri)  // issue #1071
 		{
 			continue;
 		}
-		
+
 		Path p = Path::fromUri(uri);
 
 		// Skip remote files
@@ -224,13 +226,10 @@ void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
 	string display_name = gtk_recent_info_get_display_name(info);
 
 	// escape underscore
-	StringUtils::replaceAllChars(display_name, {
-		replace_pair('_', "__")
-	});
-	
-	string label = (i >= 10
-			? FS(FORMAT_STR("{1}. {2}") % i % display_name)
-			: FS(FORMAT_STR("_{1}. {2}") % i % display_name));
+	StringUtils::replaceAllChars(display_name, {replace_pair('_', "__")});
+
+	string label =
+	        (i >= 10 ? FS(FORMAT_STR("{1}. {2}") % i % display_name) : FS(FORMAT_STR("_{1}. {2}") % i % display_name));
 
 	/* gtk_recent_info_get_uri_display (info) is buggy and
 	 * works only for local files */
@@ -243,18 +242,18 @@ void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
 
 	if (StringUtils::startsWith(ruri, "~/"))
 	{
-		ruri = string(g_get_home_dir()) +  ruri.substr(1);
+		ruri = string(g_get_home_dir()) + ruri.substr(1);
 	}
 
 	string tip = FS(C_F("{1} is a URI", "Open {1}") % ruri);
 
-	
+
 	GtkWidget* item = gtk_menu_item_new_with_mnemonic(label.c_str());
 
 	gtk_widget_set_tooltip_text(item, tip.c_str());
 
 	g_object_set_data_full(G_OBJECT(item), "gtk-recent-info", gtk_recent_info_ref(info),
-						   (GDestroyNotify) gtk_recent_info_unref);
+	                       (GDestroyNotify) gtk_recent_info_unref);
 
 	g_signal_connect(item, "activate", G_CALLBACK(recentsMenuActivateCallback), this);
 

@@ -5,10 +5,11 @@
 #include <Util.h>
 
 
-BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings, string glade, string mainWnd)
- : GladeGui(gladeSearchPath, glade, mainWnd),
-   settings(settings),
-   doc(doc)
+BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc,
+                                                       Settings* settings, string glade, string mainWnd)
+ : GladeGui(gladeSearchPath, glade, mainWnd)
+ , settings(settings)
+ , doc(doc)
 {
 	XOJ_INIT_TYPE(BackgroundSelectDialogBase);
 
@@ -28,7 +29,7 @@ BackgroundSelectDialogBase::~BackgroundSelectDialogBase()
 {
 	XOJ_CHECK_TYPE(BackgroundSelectDialogBase);
 
-	for (BaseElementView* e : elements)
+	for (BaseElementView* e: elements)
 	{
 		delete e;
 	}
@@ -37,11 +38,12 @@ BackgroundSelectDialogBase::~BackgroundSelectDialogBase()
 	XOJ_RELEASE_TYPE(BackgroundSelectDialogBase);
 }
 
-void BackgroundSelectDialogBase::sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, BackgroundSelectDialogBase* dlg)
+void BackgroundSelectDialogBase::sizeAllocate(GtkWidget* widget, GtkRequisition* requisition,
+                                              BackgroundSelectDialogBase* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, BackgroundSelectDialogBase);
 
-	GtkAllocation alloc = { 0 };
+	GtkAllocation alloc = {0};
 	gtk_widget_get_allocation(dlg->scrollPreview, &alloc);
 	if (dlg->lastWidth == alloc.width)
 	{
@@ -67,10 +69,10 @@ void BackgroundSelectDialogBase::layout()
 	double height = 0;
 	double width = 0;
 
-	GtkAllocation alloc = { 0 };
+	GtkAllocation alloc = {0};
 	gtk_widget_get_allocation(this->scrollPreview, &alloc);
 
-	for (BaseElementView* p : this->elements)
+	for (BaseElementView* p: this->elements)
 	{
 		if (!gtk_widget_get_visible(p->getWidget()))
 		{
@@ -99,7 +101,7 @@ void BackgroundSelectDialogBase::show(GtkWindow* parent)
 {
 	XOJ_CHECK_TYPE(BackgroundSelectDialogBase);
 
-	for (BaseElementView* e : elements)
+	for (BaseElementView* e: elements)
 	{
 		gtk_layout_put(GTK_LAYOUT(this->layoutContainer), e->getWidget(), 0, 0);
 	}
@@ -126,16 +128,14 @@ void BackgroundSelectDialogBase::setSelected(int selected)
 	}
 
 	int lastSelected = this->selected;
-	if (lastSelected >= 0 && lastSelected < (int)elements.size())
+	if (lastSelected >= 0 && lastSelected < (int) elements.size())
 	{
 		elements[lastSelected]->setSelected(false);
 	}
 
-	if (selected >= 0 && selected < (int)elements.size())
+	if (selected >= 0 && selected < (int) elements.size())
 	{
 		elements[selected]->setSelected(true);
 		this->selected = selected;
 	}
 }
-
-

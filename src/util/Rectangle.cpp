@@ -85,7 +85,7 @@ void Rectangle::add(double x, double y, double width, double height)
 	this->height = y2 - y1;
 }
 
-void Rectangle::add(const Rectangle &other)
+void Rectangle::add(const Rectangle& other)
 {
 	add(other.x, other.y, other.width, other.height);
 }
@@ -95,7 +95,7 @@ Rectangle Rectangle::translated(double dx, double dy)
 	return Rectangle(this->x + dx, this->y + dy, this->width, this->height);
 }
 
-Rectangle Rectangle::intersect(const Rectangle &other)
+Rectangle Rectangle::intersect(const Rectangle& other)
 {
 	double x1 = MAX(this->x, other.x);
 	double y1 = MAX(this->y, other.y);

@@ -13,7 +13,7 @@
 
 #include "ScrollHandling.h"
 
-class ScrollHandlingXournalpp : public ScrollHandling
+class ScrollHandlingXournalpp: public ScrollHandling
 {
 public:
 	ScrollHandlingXournalpp();

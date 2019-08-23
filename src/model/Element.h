@@ -30,10 +30,12 @@ class ShapeContainer
 public:
 	virtual bool contains(double x, double y) = 0;
 
-	virtual ~ShapeContainer() { }
+	virtual ~ShapeContainer()
+	{
+	}
 };
 
-class Element : public Serializeable
+class Element: public Serializeable
 {
 protected:
 	Element(ElementType type);
@@ -104,4 +106,3 @@ private:
 	 */
 	int color = 0;
 };
-

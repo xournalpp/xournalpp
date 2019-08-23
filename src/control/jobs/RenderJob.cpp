@@ -80,7 +80,7 @@ void RenderJob::rerenderRectangle(Rectangle* rect)
 
 	g_mutex_lock(&view->drawingMutex);
 
-	cairo_t * crPageBuffer = cairo_create(view->crBuffer);
+	cairo_t* crPageBuffer = cairo_create(view->crBuffer);
 
 	cairo_set_operator(crPageBuffer, CAIRO_OPERATOR_SOURCE);
 	cairo_set_source_surface(crPageBuffer, rectBuffer, x, y);
@@ -165,7 +165,7 @@ void RenderJob::run()
 	}
 	else
 	{
-		for (Rectangle* rect : rerenderRects)
+		for (Rectangle* rect: rerenderRects)
 		{
 			rerenderRectangle(rect);
 		}
@@ -175,7 +175,7 @@ void RenderJob::run()
 	repaintWidget(this->view->getXournal()->getWidget());
 
 	// delete all rectangles
-	for (Rectangle* rect : rerenderRects)
+	for (Rectangle* rect: rerenderRects)
 	{
 		delete rect;
 	}
@@ -190,9 +190,7 @@ void RenderJob::repaintWidget(GtkWidget* widget)
 	// "this" is not needed, "widget" is in
 	// the closure, therefore no sync needed
 	// Because of this the argument "widget" is needed
-	Util::execInUiThread([=]() {
-		gtk_widget_queue_draw(widget);
-	});
+	Util::execInUiThread([=]() { gtk_widget_queue_draw(widget); });
 }
 
 JobType RenderJob::getType()

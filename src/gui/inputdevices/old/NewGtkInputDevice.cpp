@@ -12,8 +12,8 @@
 
 
 NewGtkInputDevice::NewGtkInputDevice(GtkWidget* widget, XournalView* view, ScrollHandling* scrollHandling)
- : AbstractInputDevice(widget, view),
-   scrollHandling(scrollHandling)
+ : AbstractInputDevice(widget, view)
+ , scrollHandling(scrollHandling)
 {
 	XOJ_INIT_TYPE(NewGtkInputDevice);
 
@@ -130,24 +130,19 @@ void NewGtkInputDevice::initWidget()
 	gtk_widget_set_support_multidevice(widget, true);
 
 	int mask =
-			// Key handling
-			GDK_KEY_PRESS_MASK |
+	        // Key handling
+	        GDK_KEY_PRESS_MASK |
 
-			// Allow scrolling
-			GDK_SCROLL_MASK |
+	        // Allow scrolling
+	        GDK_SCROLL_MASK |
 
-			// Touch / Pen / Mouse
-			GDK_TOUCH_MASK          |
-			GDK_POINTER_MOTION_MASK |
-			GDK_BUTTON_PRESS_MASK   |
-			GDK_BUTTON_RELEASE_MASK |
-			GDK_SMOOTH_SCROLL_MASK  |
-			GDK_ENTER_NOTIFY_MASK   |
-			GDK_LEAVE_NOTIFY_MASK;
+	        // Touch / Pen / Mouse
+	        GDK_TOUCH_MASK | GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
+	        GDK_SMOOTH_SCROLL_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK;
 
 	gtk_widget_add_events(widget, mask);
 
-    g_signal_connect(widget, "event", G_CALLBACK(eventCallback), this);
+	g_signal_connect(widget, "event", G_CALLBACK(eventCallback), this);
 }
 
 bool NewGtkInputDevice::eventCallback(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self)
@@ -249,7 +244,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 
 		if (input != NULL)
 		{
-			input->actionEnd(((GdkEventTouch *)event)->time);
+			input->actionEnd(((GdkEventTouch*) event)->time);
 		}
 
 		g_hash_table_remove(touchInputList, sequence);
@@ -303,10 +298,10 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	guint button = 0;
 	if (gdk_event_get_button(event, &button))
 	{
-		input->setButton(button, gdk_event_get_time(event) );
+		input->setButton(button, gdk_event_get_time(event));
 	}
 
-	GdkModifierType state = (GdkModifierType)0;
+	GdkModifierType state = (GdkModifierType) 0;
 	if (gdk_event_get_state(event, &state))
 	{
 		input->setState(state);
@@ -315,7 +310,9 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	if (event->type == GDK_MOTION_NOTIFY || event->type == GDK_TOUCH_UPDATE)
 	{
 		input->copyAxes(event);
-		guint32 time = event->type == GDK_MOTION_NOTIFY ? ((GdkEventMotion *)event)->time : ((GdkEventTouch *)event)->time;	// or call gdk_event_get_time(event)
+		guint32 time = event->type == GDK_MOTION_NOTIFY ?
+		                       ((GdkEventMotion*) event)->time :
+		                       ((GdkEventTouch*) event)->time;  // or call gdk_event_get_time(event)
 		input->actionMoved(time);
 
 		XournalppCursor* cursor = view->getControl()->getWindow()->getXournal()->getCursor();
@@ -327,16 +324,15 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	else if (event->type == GDK_BUTTON_PRESS || event->type == GDK_TOUCH_BEGIN)
 	{
 		input->copyAxes(event);
-		guint32 time = event->type == GDK_BUTTON_PRESS ? ((GdkEventButton *)event)->time : ((GdkEventTouch *)event)->time;  //or call gdk_event_get_time()
+		guint32 time = event->type == GDK_BUTTON_PRESS ? ((GdkEventButton*) event)->time :
+		                                                 ((GdkEventTouch*) event)->time;  //or call gdk_event_get_time()
 		input->actionStart(time);
 	}
 	else if (event->type == GDK_BUTTON_RELEASE)
 	{
 		input->copyAxes(event);
-		input->actionEnd( ((GdkEventButton *)event)->time );
+		input->actionEnd(((GdkEventButton*) event)->time);
 	}
 
 	return true;
 }
-
-

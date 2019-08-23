@@ -50,17 +50,18 @@ private:
 	XournalView* view;
 	ScrollHandling* scrollHandling;
 
-	GdkModifierType modifierState = (GdkModifierType)0;
+	GdkModifierType modifierState = (GdkModifierType) 0;
 
 	bool touchWorkaroundEnabled = false;
 
 	std::set<string> knownDevices;
 
 public:
-	enum DeviceType {
-			MOUSE,
-			STYLUS,
-			TOUCHSCREEN,
+	enum DeviceType
+	{
+		MOUSE,
+		STYLUS,
+		TOUCHSCREEN,
 	};
 
 public:
@@ -107,5 +108,3 @@ public:
 	void unblockDevice(DeviceType deviceType);
 	bool isBlocked(DeviceType deviceType);
 };
-
-

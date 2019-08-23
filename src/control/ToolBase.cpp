@@ -145,4 +145,3 @@ void ToolBase::setLineStyle(const LineStyle& style)
 
 	this->lineStyle = style;
 }
-

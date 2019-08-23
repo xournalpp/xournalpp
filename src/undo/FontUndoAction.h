@@ -20,7 +20,7 @@ class Redrawable;
 class Text;
 class XojFont;
 
-class FontUndoAction : public UndoAction
+class FontUndoAction: public UndoAction
 {
 public:
 	FontUndoAction(PageRef page, Layer* layer);

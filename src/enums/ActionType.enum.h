@@ -96,7 +96,7 @@ enum ActionType
 	ACTION_TOOL_DRAW_ARROW,
 	ACTION_TOOL_DRAW_COORDINATE_SYSTEM,
 	ACTION_RULER,
-	
+
 	ACTION_TOOL_FLOATING_TOOLBOX,
 
 	ACTION_TOOL_LINE_STYLE_PLAIN,
@@ -185,10 +185,10 @@ enum ActionType
 	ACTION_SET_LAYOUT_R2L,
 	ACTION_SET_LAYOUT_T2B,
 	ACTION_SET_LAYOUT_B2T,
-	
+
 	// Plugin Menu
 	ACTION_PLUGIN_MANAGER = 700,
-	
+
 	// Menu Help
 	ACTION_ABOUT = 800,
 	ACTION_HELP,
@@ -204,4 +204,3 @@ enum ActionType
 
 ActionType ActionType_fromString(string value);
 string ActionType_toString(ActionType value);
-

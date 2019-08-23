@@ -20,12 +20,14 @@
 
 enum StrokeTool
 {
-	STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER
+	STROKE_TOOL_PEN,
+	STROKE_TOOL_ERASER,
+	STROKE_TOOL_HIGHLIGHTER
 };
 
 class EraseableStroke;
 
-class Stroke : public AudioElement
+class Stroke: public AudioElement
 {
 public:
 	Stroke();
@@ -87,7 +89,7 @@ public:
 	void setLastPressure(double pressure);
 	void clearPressure();
 	void scalePressure(double factor);
-	
+
 	bool hasPressure() const;
 	double getAvgPressure() const;
 

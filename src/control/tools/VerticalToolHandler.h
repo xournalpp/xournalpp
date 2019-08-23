@@ -20,7 +20,7 @@
 
 #include <cairo.h>
 
-class VerticalToolHandler : public ElementContainer
+class VerticalToolHandler: public ElementContainer
 {
 public:
 	VerticalToolHandler(Redrawable* view, const PageRef& page, double y, double zoom);

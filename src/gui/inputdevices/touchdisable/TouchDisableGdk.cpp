@@ -6,7 +6,9 @@
 #include <gui/XournalView.h>
 #include "TouchDisableGdk.h"
 
-TouchDisableGdk::TouchDisableGdk(GtkWidget* widget) : TouchDisableInterface(), widget(widget)
+TouchDisableGdk::TouchDisableGdk(GtkWidget* widget)
+ : TouchDisableInterface()
+ , widget(widget)
 {
 	XOJ_INIT_TYPE(TouchDisableGdk);
 }
@@ -51,4 +53,3 @@ void TouchDisableGdk::disableTouch()
 	gdk_pointer_grab(window, false, GDK_TOUCH_MASK, nullptr, nullptr, GDK_CURRENT_TIME);
 	gtk_grab_add(this->widget);
 }
-

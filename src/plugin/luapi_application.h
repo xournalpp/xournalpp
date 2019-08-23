@@ -113,7 +113,7 @@ static int applib_registerUi(lua_State* L)
 
 	lua_pushstring(L, "menuId");
 	lua_pushinteger(L, menuId);
-	lua_settable(L, -3);  /* 3rd element from the stack top */
+	lua_settable(L, -3); /* 3rd element from the stack top */
 
 	lua_pushstring(L, "toolbarId");
 	lua_pushinteger(L, toolbarId);
@@ -210,18 +210,16 @@ static int applib_changeCurrentPageBackground(lua_State* L)
 }
 
 
-static const luaL_Reg applib[] = {
-	{ "msgbox", applib_msgbox },
-	{ "registerUi", applib_registerUi },
-	{ "uiAction", applib_uiAction },
-	{ "uiActionSelected", applib_uiActionSelected },
-	{ "changeCurrentPageBackground", applib_changeCurrentPageBackground },
+static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
+                                  {"registerUi", applib_registerUi},
+                                  {"uiAction", applib_uiAction},
+                                  {"uiActionSelected", applib_uiActionSelected},
+                                  {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
 
-	// Placeholder
-//	{"MSG_BT_OK", NULL},
+                                  // Placeholder
+                                  //	{"MSG_BT_OK", NULL},
 
-	{NULL, NULL}
-};
+                                  {NULL, NULL}};
 
 /**
  * Open application Library
@@ -229,8 +227,7 @@ static const luaL_Reg applib[] = {
 LUAMOD_API int luaopen_app(lua_State* L)
 {
 	luaL_newlib(L, applib);
-//	lua_pushnumber(L, MSG_BT_OK);
-//	lua_setfield(L, -2, "MSG_BT_OK");
+	//	lua_pushnumber(L, MSG_BT_OK);
+	//	lua_setfield(L, -2, "MSG_BT_OK");
 	return 1;
 }
-

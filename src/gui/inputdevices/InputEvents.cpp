@@ -37,39 +37,39 @@ InputEventType InputEvents::translateEventType(GdkEventType type)
 {
 	switch (type)
 	{
-		case GDK_MOTION_NOTIFY:
-		case GDK_TOUCH_UPDATE:
-			return MOTION_EVENT;
-		case GDK_BUTTON_PRESS:
-		case GDK_TOUCH_BEGIN:
-			return BUTTON_PRESS_EVENT;
-		case GDK_2BUTTON_PRESS:
-			return BUTTON_2_PRESS_EVENT;
-		case GDK_3BUTTON_PRESS:
-			return BUTTON_3_PRESS_EVENT;
-		case GDK_BUTTON_RELEASE:
-		case GDK_TOUCH_END:
-		case GDK_TOUCH_CANCEL:
-			return BUTTON_RELEASE_EVENT;
-		case GDK_ENTER_NOTIFY:
-			return ENTER_EVENT;
-		case GDK_LEAVE_NOTIFY:
-			return LEAVE_EVENT;
-		case GDK_PROXIMITY_IN:
-			return PROXIMITY_IN_EVENT;
-		case GDK_PROXIMITY_OUT:
-			return PROXIMITY_OUT_EVENT;
-		case GDK_SCROLL:
-			return SCROLL_EVENT;
-		case GDK_GRAB_BROKEN:
-			return GRAB_BROKEN_EVENT;
-		case GDK_KEY_PRESS:
-			return KEY_PRESS_EVENT;
-		case GDK_KEY_RELEASE:
-			return KEY_RELEASE_EVENT;
-		default:
-			// Events we do not care about
-			return UNKNOWN;
+	case GDK_MOTION_NOTIFY:
+	case GDK_TOUCH_UPDATE:
+		return MOTION_EVENT;
+	case GDK_BUTTON_PRESS:
+	case GDK_TOUCH_BEGIN:
+		return BUTTON_PRESS_EVENT;
+	case GDK_2BUTTON_PRESS:
+		return BUTTON_2_PRESS_EVENT;
+	case GDK_3BUTTON_PRESS:
+		return BUTTON_3_PRESS_EVENT;
+	case GDK_BUTTON_RELEASE:
+	case GDK_TOUCH_END:
+	case GDK_TOUCH_CANCEL:
+		return BUTTON_RELEASE_EVENT;
+	case GDK_ENTER_NOTIFY:
+		return ENTER_EVENT;
+	case GDK_LEAVE_NOTIFY:
+		return LEAVE_EVENT;
+	case GDK_PROXIMITY_IN:
+		return PROXIMITY_IN_EVENT;
+	case GDK_PROXIMITY_OUT:
+		return PROXIMITY_OUT_EVENT;
+	case GDK_SCROLL:
+		return SCROLL_EVENT;
+	case GDK_GRAB_BROKEN:
+		return GRAB_BROKEN_EVENT;
+	case GDK_KEY_PRESS:
+		return KEY_PRESS_EVENT;
+	case GDK_KEY_RELEASE:
+		return KEY_RELEASE_EVENT;
+	default:
+		// Events we do not care about
+		return UNKNOWN;
 	}
 }
 
@@ -78,25 +78,25 @@ InputDeviceClass InputEvents::translateDeviceType(const string& name, GdkInputSo
 	int deviceType = settings->getDeviceClassForDevice(name, source);
 	switch (deviceType)
 	{
-		case 0:
+	case 0:
+	{
+		// Keyboards are not matched in their own class - do this here manually
+		if (source == GDK_SOURCE_KEYBOARD)
 		{
-			// Keyboards are not matched in their own class - do this here manually
-		    if (source == GDK_SOURCE_KEYBOARD)
-		    {
-				return INPUT_DEVICE_KEYBOARD;
-		    }
-		    return INPUT_DEVICE_IGNORE;
+			return INPUT_DEVICE_KEYBOARD;
 		}
-		case 1:
-			return INPUT_DEVICE_MOUSE;
-		case 2:
-			return INPUT_DEVICE_PEN;
-		case 3:
-			return INPUT_DEVICE_ERASER;
-		case 4:
-			return INPUT_DEVICE_TOUCHSCREEN;
-		default:
-			return INPUT_DEVICE_IGNORE;
+		return INPUT_DEVICE_IGNORE;
+	}
+	case 1:
+		return INPUT_DEVICE_MOUSE;
+	case 2:
+		return INPUT_DEVICE_PEN;
+	case 3:
+		return INPUT_DEVICE_ERASER;
+	case 4:
+		return INPUT_DEVICE_TOUCHSCREEN;
+	default:
+		return INPUT_DEVICE_IGNORE;
 	}
 }
 
@@ -141,7 +141,8 @@ InputEvent* InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* setting
 	}
 
 	// Copy the event sequence if there is any
-	if (sourceEventType == GDK_TOUCH_BEGIN || sourceEventType == GDK_TOUCH_UPDATE || sourceEventType == GDK_TOUCH_END || sourceEventType == GDK_TOUCH_CANCEL)
+	if (sourceEventType == GDK_TOUCH_BEGIN || sourceEventType == GDK_TOUCH_UPDATE || sourceEventType == GDK_TOUCH_END ||
+	    sourceEventType == GDK_TOUCH_CANCEL)
 	{
 		targetEvent->sequence = gdk_event_get_event_sequence(sourceEvent);
 	}

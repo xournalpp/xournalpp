@@ -8,30 +8,29 @@
 #include <i18n.h>
 
 SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, PageRef page)
- : sidebar(sidebar),
-   page(page)
+ : sidebar(sidebar)
+ , page(page)
 {
 	XOJ_INIT_TYPE(SidebarPreviewBaseEntry);
 
-	this->widget = gtk_button_new();	// re: issue 1072
-	
+	this->widget = gtk_button_new();  // re: issue 1072
+
 	gtk_widget_show(this->widget);
 	g_object_ref(this->widget);
 
 	g_mutex_init(&this->drawingMutex);
 
 	updateSize();
-	gtk_widget_set_events(widget, GDK_EXPOSURE_MASK ); 
+	gtk_widget_set_events(widget, GDK_EXPOSURE_MASK);
 
 	g_signal_connect(this->widget, "draw", G_CALLBACK(drawCallback), this);
 
-	g_signal_connect(this->widget, "clicked", G_CALLBACK(
-		+[](GtkWidget* widget, SidebarPreviewBaseEntry* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, SidebarPreviewBaseEntry);
-			self->mouseButtonPressCallback();
-			return true;
-		}), this);
+	g_signal_connect(this->widget, "clicked", G_CALLBACK(+[](GtkWidget* widget, SidebarPreviewBaseEntry* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, SidebarPreviewBaseEntry);
+		                 self->mouseButtonPressCallback();
+		                 return true;
+	                 }),
+	                 this);
 }
 
 SidebarPreviewBaseEntry::~SidebarPreviewBaseEntry()
@@ -93,7 +92,7 @@ void SidebarPreviewBaseEntry::drawLoadingPage()
 	double zoom = sidebar->getZoom();
 
 	cairo_t* cr2 = cairo_create(this->crBuffer);
-	cairo_matrix_t defaultMatrix = { 0 };
+	cairo_matrix_t defaultMatrix = {0};
 	cairo_get_matrix(cr2, &defaultMatrix);
 
 	cairo_translate(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2);
@@ -142,20 +141,18 @@ void SidebarPreviewBaseEntry::paint(cairo_t* cr)
 		cairo_set_line_cap(cr, CAIRO_LINE_CAP_BUTT);
 		cairo_set_line_join(cr, CAIRO_LINE_JOIN_BEVEL);
 
-		cairo_rectangle(cr, Shadow::getShadowTopLeftSize() + 0.5,
-		                Shadow::getShadowTopLeftSize() + 0.5, width + 3, height + 3);
+		cairo_rectangle(cr, Shadow::getShadowTopLeftSize() + 0.5, Shadow::getShadowTopLeftSize() + 0.5, width + 3,
+		                height + 3);
 
 		cairo_stroke(cr);
 
 		cairo_set_operator(cr, CAIRO_OPERATOR_ATOP);
-		Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize(),
-		                   Shadow::getShadowTopLeftSize(), width + 4, height + 4);
+		Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 4, height + 4);
 	}
 	else
 	{
 		cairo_set_operator(cr, CAIRO_OPERATOR_ATOP);
-		Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize() + 2,
-		                   Shadow::getShadowTopLeftSize() + 2, width, height);
+		Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width, height);
 	}
 
 	g_mutex_unlock(&this->drawingMutex);
@@ -177,16 +174,16 @@ int SidebarPreviewBaseEntry::getWidgetWidth()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewBaseEntry);
 
-	return page->getWidth() * sidebar->getZoom()
-			+ Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
+	return page->getWidth() * sidebar->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() +
+	       4;
 }
 
 int SidebarPreviewBaseEntry::getWidgetHeight()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewBaseEntry);
 
-	return page->getHeight() * sidebar->getZoom()
-			+ Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
+	return page->getHeight() * sidebar->getZoom() + Shadow::getShadowBottomRightSize() +
+	       Shadow::getShadowTopLeftSize() + 4;
 }
 
 int SidebarPreviewBaseEntry::getWidth()

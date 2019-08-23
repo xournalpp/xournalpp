@@ -8,10 +8,10 @@
 #include <i18n.h>
 
 ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, string id, ActionType type)
- : AbstractToolItem(id, handler, type, NULL),
-   lc(lc),
-   gui(gui),
-   menu(gtk_menu_new())
+ : AbstractToolItem(id, handler, type, NULL)
+ , lc(lc)
+ , gui(gui)
+ , menu(gtk_menu_new())
 {
 	XOJ_INIT_TYPE(ToolPageLayer);
 
@@ -88,31 +88,34 @@ void ToolPageLayer::addSpecialButtonTop()
 	XOJ_CHECK_TYPE(ToolPageLayer);
 
 	GtkWidget* itShowAll = createSpecialMenuEntry(_("Show all"));
-	g_signal_connect(itShowAll, "activate", G_CALLBACK(
-		+[](GtkWidget* menu, ToolPageLayer* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
-			self->lc->showAllLayer();
-		}), this);
+	g_signal_connect(itShowAll,
+	                 "activate",
+	                 G_CALLBACK(+[](GtkWidget* menu, ToolPageLayer* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
+		                 self->lc->showAllLayer();
+	                 }),
+	                 this);
 
 
 	GtkWidget* itHideAll = createSpecialMenuEntry(_("Hide all"));
-	g_signal_connect(itHideAll, "activate", G_CALLBACK(
-		+[](GtkWidget* menu, ToolPageLayer* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
-			self->lc->hideAllLayer();
-		}), this);
+	g_signal_connect(itHideAll,
+	                 "activate",
+	                 G_CALLBACK(+[](GtkWidget* menu, ToolPageLayer* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
+		                 self->lc->hideAllLayer();
+	                 }),
+	                 this);
 
 	createSeparator();
 
 	GtkWidget* itNewLayer = createSpecialMenuEntry(_("Create new layer"));
-	g_signal_connect(itNewLayer, "activate", G_CALLBACK(
-		+[](GtkWidget* menu, ToolPageLayer* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
-			self->lc->addNewLayer();
-		}), this);
+	g_signal_connect(itNewLayer,
+	                 "activate",
+	                 G_CALLBACK(+[](GtkWidget* menu, ToolPageLayer* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
+		                 self->lc->addNewLayer();
+	                 }),
+	                 this);
 
 	createSeparator();
 }
@@ -135,7 +138,7 @@ void ToolPageLayer::layerMenuClicked(GtkWidget* menu)
 
 	int layerId = -1;
 
-	for (auto& kv : layerItems)
+	for (auto& kv: layerItems)
 	{
 		if (kv.second == menu)
 		{
@@ -153,7 +156,7 @@ void ToolPageLayer::layerMenuClicked(GtkWidget* menu)
 
 	if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(menu)))
 	{
-		if (layerId == (int)lc->getCurrentLayerId())
+		if (layerId == (int) lc->getCurrentLayerId())
 		{
 			// This is the current layer, don't allow to deselect it
 			inMenuUpdate = true;
@@ -176,7 +179,7 @@ void ToolPageLayer::layerMenuShowClicked(GtkWidget* menu)
 
 	int layerId = -1;
 
-	for (auto& kv : showLayerItems)
+	for (auto& kv: showLayerItems)
 	{
 		if (kv.second == menu)
 		{
@@ -204,13 +207,14 @@ void ToolPageLayer::createLayerMenuItem(string text, int layerId)
 	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(itLayer), true);
 	gtk_menu_attach(GTK_MENU(menu), itLayer, 0, 2, menuY, menuY + 1);
 
-	g_signal_connect(itLayer, "activate", G_CALLBACK(
-		+[](GtkWidget* menu, ToolPageLayer* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
+	g_signal_connect(itLayer,
+	                 "activate",
+	                 G_CALLBACK(+[](GtkWidget* menu, ToolPageLayer* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
 
-			self->layerMenuClicked(menu);
-		}), this);
+		                 self->layerMenuClicked(menu);
+	                 }),
+	                 this);
 
 	layerItems[layerId] = itLayer;
 }
@@ -223,13 +227,14 @@ void ToolPageLayer::createLayerMenuItemShow(int layerId)
 	gtk_menu_attach(GTK_MENU(menu), itShow, 2, 3, menuY, menuY + 1);
 	gtk_widget_set_hexpand(itShow, false);
 
-	g_signal_connect(itShow, "activate", G_CALLBACK(
-		+[](GtkWidget* menu, ToolPageLayer* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
+	g_signal_connect(itShow,
+	                 "activate",
+	                 G_CALLBACK(+[](GtkWidget* menu, ToolPageLayer* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, ToolPageLayer);
 
-			self->layerMenuShowClicked(menu);
-		}), this);
+		                 self->layerMenuShowClicked(menu);
+	                 }),
+	                 this);
 
 	showLayerItems[layerId] = itShow;
 }
@@ -288,7 +293,7 @@ void ToolPageLayer::updateLayerData()
 
 	inMenuUpdate = true;
 
-	for (auto& kv : layerItems)
+	for (auto& kv: layerItems)
 	{
 		if (kv.first == layerId)
 		{
@@ -304,7 +309,7 @@ void ToolPageLayer::updateLayerData()
 
 	if (page.isValid())
 	{
-		for (auto& kv : showLayerItems)
+		for (auto& kv: showLayerItems)
 		{
 			gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(kv.second), page->isLayerVisible(kv.first));
 		}

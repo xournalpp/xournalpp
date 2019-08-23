@@ -18,14 +18,16 @@
 #include <config-features.h>
 
 #ifdef ENABLE_PLUGINS
-extern "C" {
+extern "C"
+{
 #include <lua.h>
 }
 
 class Plugin;
 class Control;
 
-class MenuEntry {
+class MenuEntry
+{
 public:
 	MenuEntry(Plugin* plugin)
 	 : plugin(plugin)
@@ -251,4 +253,3 @@ private:
 };
 
 #endif
-

@@ -35,7 +35,7 @@ class ScrollHandling;
 class TextEditor;
 class HandRecognition;
 
-class XournalView : public DocumentListener, public ZoomListener
+class XournalView: public DocumentListener, public ZoomListener
 {
 public:
 	XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling, ZoomGesture* zoomGesture);
@@ -52,9 +52,9 @@ public:
 	void layoutPages();
 
 	void scrollTo(size_t pageNo, double y = 0);
-	
+
 	//Relative navigation in current layout:
-	void pageRelativeXY(int offCol, int offRow );
+	void pageRelativeXY(int offCol, int offRow);
 
 	size_t getCurrentPage();
 
@@ -158,7 +158,7 @@ private:
 
 	static gboolean clearMemoryTimer(XournalView* widget);
 
-	static void staticLayoutPages(GtkWidget *widget, GtkAllocation* allocation, void* data);
+	static void staticLayoutPages(GtkWidget* widget, GtkAllocation* allocation, void* data);
 
 private:
 	XOJ_TYPE_ATTRIB;

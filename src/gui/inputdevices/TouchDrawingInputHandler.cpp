@@ -8,7 +8,8 @@
 #include <gui/widgets/XournalWidget.h>
 #include <gui/XournalppCursor.h>
 
-TouchDrawingInputHandler::TouchDrawingInputHandler(InputContext* inputContext) : PenInputHandler(inputContext)
+TouchDrawingInputHandler::TouchDrawingInputHandler(InputContext* inputContext)
+ : PenInputHandler(inputContext)
 {
 	XOJ_INIT_TYPE(TouchDrawingInputHandler);
 }

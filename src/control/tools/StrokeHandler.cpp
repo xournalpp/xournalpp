@@ -50,7 +50,8 @@ void StrokeHandler::draw(cairo_t* cr)
 
 	view.applyColor(cr, stroke);
 
-	if (stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+	if (stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER)
+	{
 		cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
 	}
 	else

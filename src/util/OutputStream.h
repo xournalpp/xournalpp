@@ -30,7 +30,7 @@ public:
 	virtual void close() = 0;
 };
 
-class GzOutputStream : public OutputStream
+class GzOutputStream: public OutputStream
 {
 public:
 	GzOutputStream(Path filename);

@@ -17,7 +17,7 @@ XojPage::~XojPage()
 {
 	XOJ_CHECK_TYPE(XojPage);
 
-	for (Layer* l : this->layer)
+	for (Layer* l: this->layer)
 	{
 		delete l;
 	}
@@ -49,7 +49,7 @@ XojPage* XojPage::clone()
 	XojPage* page = new XojPage(this->width, this->height);
 
 	page->backgroundImage = this->backgroundImage;
-	for (Layer* l : this->layer)
+	for (Layer* l: this->layer)
 	{
 		page->addLayer(l->clone());
 	}
@@ -74,7 +74,7 @@ void XojPage::insertLayer(Layer* layer, int index)
 {
 	XOJ_CHECK_TYPE(XojPage);
 
-	if (index >= (int)this->layer.size())
+	if (index >= (int) this->layer.size())
 	{
 		addLayer(layer);
 		return;
@@ -149,7 +149,7 @@ void XojPage::setLayerVisible(int layerId, bool visible)
 	}
 
 	layerId--;
-	if (layerId >= (int)this->layer.size())
+	if (layerId >= (int) this->layer.size())
 	{
 		return;
 	}
@@ -172,7 +172,7 @@ bool XojPage::isLayerVisible(int layerId)
 	}
 
 	layerId--;
-	if (layerId >= (int)this->layer.size())
+	if (layerId >= (int) this->layer.size())
 	{
 		return false;
 	}
@@ -243,7 +243,7 @@ bool XojPage::isAnnotated()
 {
 	XOJ_CHECK_TYPE(XojPage);
 
-	for (Layer* l : this->layer)
+	for (Layer* l: this->layer)
 	{
 		if (l->isAnnotated())
 		{

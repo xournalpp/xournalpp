@@ -22,7 +22,8 @@
 class Document;
 class ProgressListener;
 
-enum ExportGraphicsFormat {
+enum ExportGraphicsFormat
+{
 	EXPORT_GRAPHICS_UNDEFINED,
 	EXPORT_GRAPHICS_PDF,
 	EXPORT_GRAPHICS_PNG,
@@ -32,7 +33,8 @@ enum ExportGraphicsFormat {
 class ImageExport
 {
 public:
-	ImageExport(Document* doc, Path filename, ExportGraphicsFormat format, bool hideBackground, PageRangeVector& exportRange);
+	ImageExport(Document* doc, Path filename, ExportGraphicsFormat format, bool hideBackground,
+	            PageRangeVector& exportRange);
 	virtual ~ImageExport();
 
 public:

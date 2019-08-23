@@ -82,14 +82,15 @@ Stroke* ShapeRecognizer::tryRectangle()
 		}
 
 		// test if r1 points away from r2 rather than towards it
-		r1->reversed = ((r1->x2 - r1->x1) * (r2->xcenter - r1->xcenter) + (r1->y2 - r1->y1) * (r2->ycenter - r1->ycenter)) < 0;
+		r1->reversed =
+		        ((r1->x2 - r1->x1) * (r2->xcenter - r1->xcenter) + (r1->y2 - r1->y1) * (r2->ycenter - r1->ycenter)) < 0;
 	}
 	for (int i = 0; i <= 3; i++)
 	{
 		RecoSegment* r1 = &rs[i];
 		RecoSegment* r2 = &rs[(i + 1) % 4];
 		double dist = hypot((r1->reversed ? r1->x1 : r1->x2) - (r2->reversed ? r2->x2 : r2->x1),
-							(r1->reversed ? r1->y1 : r1->y2) - (r2->reversed ? r2->y2 : r2->y1));
+		                    (r1->reversed ? r1->y1 : r1->y2) - (r2->reversed ? r2->y2 : r2->y1));
 		if (dist > RECTANGLE_LINEAR_TOLERANCE * (r1->radius + r2->radius))
 		{
 			return NULL;
@@ -153,7 +154,8 @@ Stroke* ShapeRecognizer::tryArrow()
 			return NULL;
 		}
 
-		rev[i] = hypot(rs[i].xcenter - rs->x1, rs[i].ycenter - rs->y1) < hypot(rs[i].xcenter - rs->x2, rs[i].ycenter - rs->y2);
+		rev[i] = hypot(rs[i].xcenter - rs->x1, rs[i].ycenter - rs->y1) <
+		         hypot(rs[i].xcenter - rs->x2, rs[i].ycenter - rs->y2);
 	}
 
 	if (rev[1] != rev[2])
@@ -227,8 +229,8 @@ Stroke* ShapeRecognizer::tryArrow()
 	Point pt = rs[1].calcEdgeIsect(&rs[2]);
 	for (int j = 1; j <= 2; j++)
 	{
-		double dist = hypot(pt.x - (rs[j].reversed ? rs[j].x1 : rs[j].x2),
-							pt.y - (rs[j].reversed ? rs[j].y1 : rs[j].y2));
+		double dist =
+		        hypot(pt.x - (rs[j].reversed ? rs[j].x1 : rs[j].x2), pt.y - (rs[j].reversed ? rs[j].y1 : rs[j].y2));
 		RDEBUG("linear tolerance: tip[%d] = %.2f", j, (dist / rs[j].radius));
 		if (dist > ARROW_TIP_LINEAR_TOLERANCE * rs[j].radius)
 		{
@@ -257,19 +259,19 @@ Stroke* ShapeRecognizer::tryArrow()
 	}
 
 	// make an arrow of the correct size and slope
-	if (fabs(rs->angle) < SLANT_TOLERANCE) // nearly horizontal
+	if (fabs(rs->angle) < SLANT_TOLERANCE)  // nearly horizontal
 	{
 		angle = angle - rs->angle;
 		y1 = y2 = rs->ycenter;
 	}
 
-	if (rs->angle > M_PI / 2 - SLANT_TOLERANCE) // nearly vertical
+	if (rs->angle > M_PI / 2 - SLANT_TOLERANCE)  // nearly vertical
 	{
 		angle = angle - (rs->angle - M_PI / 2);
 		x1 = x2 = rs->xcenter;
 	}
 
-	if (rs->angle < -M_PI / 2 + SLANT_TOLERANCE) // nearly vertical
+	if (rs->angle < -M_PI / 2 + SLANT_TOLERANCE)  // nearly vertical
 	{
 		angle = angle - (rs->angle + M_PI / 2);
 		x1 = x2 = rs->xcenter;
@@ -304,7 +306,7 @@ int ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsid
 
 	if (end == start)
 	{
-		return 0; // no way
+		return 0;  // no way
 	}
 
 	if (nsides <= 0)
@@ -314,7 +316,7 @@ int ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsid
 
 	if (end - start < 5)
 	{
-		nsides = 1; // too small for a polygon
+		nsides = 1;  // too small for a polygon
 	}
 
 	// look for a linear piece that's big enough
@@ -331,7 +333,7 @@ int ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsid
 	}
 	if (k == nsides)
 	{
-		return 0; // failed!
+		return 0;  // failed!
 	}
 
 	double det1;
@@ -385,7 +387,7 @@ int ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsid
 		n1 = findPolygonal(pt, start, i1, (i2 == end) ? (nsides - 1) : (nsides - 2), breaks, ss);
 		if (n1 == 0)
 		{
-			return 0; // it doesn't work
+			return 0;  // it doesn't work
 		}
 	}
 	else
@@ -480,7 +482,7 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 	//to eliminate bug #52, remove this until it's perfected
 	return NULL;
 
-/*
+	/*
 	RecoSegment* r1 = NULL;
 	RecoSegment* r2 = NULL;
 
@@ -602,41 +604,41 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			return result;
 		}
 
-//		if ((tmp = tryArrow()) != NULL)
-//		{
-//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-//			resetRecognizer();
-//			RDEBUG("return tryArrow()");
-//			return result;
-//		}
-//
-//		if ((tmp = tryClosedPolygon(3)) != NULL)
-//		{
-//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-//			RDEBUG("return tryClosedPolygon(3)");
-//			resetRecognizer();
-//			return result;
-//		}
-//
-//		if ((tmp = tryClosedPolygon(4)) != NULL)
-//		{
-//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-//			RDEBUG("return tryClosedPolygon(4)");
-//			resetRecognizer();
-//			return result;
-//		}
+		//		if ((tmp = tryArrow()) != NULL)
+		//		{
+		//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
+		//			resetRecognizer();
+		//			RDEBUG("return tryArrow()");
+		//			return result;
+		//		}
+		//
+		//		if ((tmp = tryClosedPolygon(3)) != NULL)
+		//		{
+		//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
+		//			RDEBUG("return tryClosedPolygon(3)");
+		//			resetRecognizer();
+		//			return result;
+		//		}
+		//
+		//		if ((tmp = tryClosedPolygon(4)) != NULL)
+		//		{
+		//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
+		//			RDEBUG("return tryClosedPolygon(4)");
+		//			resetRecognizer();
+		//			return result;
+		//		}
 
 
 		// Removed complicated recognition
 
-		if (n == 1) // current stroke is a line
+		if (n == 1)  // current stroke is a line
 		{
-			if (fabs(rs->angle) < SLANT_TOLERANCE) // nearly horizontal
+			if (fabs(rs->angle) < SLANT_TOLERANCE)  // nearly horizontal
 			{
 				rs->angle = 0.0;
 				rs->y1 = rs->y2 = rs->ycenter;
 			}
-			if (fabs(rs->angle) > M_PI / 2 - SLANT_TOLERANCE) // nearly vertical
+			if (fabs(rs->angle) > M_PI / 2 - SLANT_TOLERANCE)  // nearly vertical
 			{
 				rs->angle = (rs->angle > 0) ? (M_PI / 2) : (-M_PI / 2);
 				rs->x1 = rs->x2 = rs->xcenter;

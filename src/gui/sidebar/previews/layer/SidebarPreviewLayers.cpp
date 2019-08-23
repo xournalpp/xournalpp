@@ -8,8 +8,8 @@
 #include <i18n.h>
 
 SidebarPreviewLayers::SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
- : SidebarPreviewBase(control, gui, toolbar),
-   lc(control->getLayerController())
+ : SidebarPreviewBase(control, gui, toolbar)
+ , lc(control->getLayerController())
 {
 	XOJ_INIT_TYPE(SidebarPreviewLayers);
 
@@ -23,7 +23,7 @@ SidebarPreviewLayers::~SidebarPreviewLayers()
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
 
 	// clear old previews
-	for (SidebarPreviewBaseEntry* p : this->previews)
+	for (SidebarPreviewBaseEntry* p: this->previews)
 	{
 		delete p;
 	}
@@ -108,7 +108,7 @@ void SidebarPreviewLayers::pageChanged(size_t page)
 	}
 
 	// Repaint all layer
-	for (SidebarPreviewBaseEntry* p : this->previews)
+	for (SidebarPreviewBaseEntry* p: this->previews)
 	{
 		p->repaint();
 	}
@@ -124,7 +124,7 @@ void SidebarPreviewLayers::updatePreviews()
 	}
 
 	// clear old previews
-	for (SidebarPreviewBaseEntry* p : this->previews)
+	for (SidebarPreviewBaseEntry* p: this->previews)
 	{
 		delete p;
 	}
@@ -174,9 +174,9 @@ void SidebarPreviewLayers::layerVisibilityChanged()
 		return;
 	}
 
-	for (int i = 0; i < (int)this->previews.size(); i++)
+	for (int i = 0; i < (int) this->previews.size(); i++)
 	{
-		SidebarPreviewLayerEntry* sp = (SidebarPreviewLayerEntry*)this->previews[this->previews.size() - i - 1];
+		SidebarPreviewLayerEntry* sp = (SidebarPreviewLayerEntry*) this->previews[this->previews.size() - i - 1];
 		sp->setVisibleCheckbox(p->isLayerVisible(i));
 	}
 }
@@ -230,7 +230,7 @@ void SidebarPreviewLayers::updateSelectedLayer()
 	}
 
 	this->toolbar->setHidden(false);
-	this->toolbar->setButtonEnabled((SidebarActions)actions);
+	this->toolbar->setButtonEnabled((SidebarActions) actions);
 }
 
 void SidebarPreviewLayers::layerSelected(size_t layerIndex)
@@ -249,5 +249,3 @@ void SidebarPreviewLayers::layerVisibilityChanged(int layerIndex, bool enabled)
 {
 	lc->setLayerVisible(layerIndex, enabled);
 }
-
-

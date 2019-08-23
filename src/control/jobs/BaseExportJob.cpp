@@ -22,8 +22,7 @@ BaseExportJob::~BaseExportJob()
 void BaseExportJob::initDialog()
 {
 	dialog = gtk_file_chooser_dialog_new(_("Export PDF"), control->getGtkWindow(), GTK_FILE_CHOOSER_ACTION_SAVE,
-													_("_Cancel"), GTK_RESPONSE_CANCEL,
-													_("_Save"), GTK_RESPONSE_OK, NULL);
+	                                     _("_Cancel"), GTK_RESPONSE_CANCEL, _("_Save"), GTK_RESPONSE_OK, NULL);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 }
@@ -39,7 +38,7 @@ void BaseExportJob::addFileFilterToDialog(string name, string pattern)
 bool BaseExportJob::checkOverwriteBackgroundPDF(Path& filename)
 {
 	XOJ_CHECK_TYPE(BaseExportJob);
-	
+
 	// If the new file name (with the selected extension) is the previously selected pdf, warn the user
 	if (StringUtils::iequals(filename.str(), control->getDocument()->getPdfFilename().str()))
 	{
@@ -53,7 +52,7 @@ bool BaseExportJob::checkOverwriteBackgroundPDF(Path& filename)
 string BaseExportJob::getFilterName()
 {
 	XOJ_CHECK_TYPE(BaseExportJob);
-	
+
 	GtkFileFilter* filter = gtk_file_chooser_get_filter(GTK_FILE_CHOOSER(dialog));
 	return gtk_file_filter_get_name(filter);
 }
@@ -74,7 +73,7 @@ bool BaseExportJob::showFilechooser()
 
 	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), folder.c_str());
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), name.c_str());
-	
+
 	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
 
 	while (true)
@@ -127,4 +126,3 @@ void BaseExportJob::afterRun()
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), this->errorMsg);
 	}
 }
-

@@ -171,7 +171,8 @@ void TexImage::loadBinaryData()
 	}
 	else if (type[1] == 'P' && type[2] == 'D' && type[3] == 'F')
 	{
-		this->pdf = poppler_document_new_from_data((char*)this->binaryData.c_str(), this->binaryData.length(), NULL, NULL);
+		this->pdf =
+		        poppler_document_new_from_data((char*) this->binaryData.c_str(), this->binaryData.length(), NULL, NULL);
 	}
 	else
 	{
@@ -276,7 +277,7 @@ void TexImage::readSerialized(ObjectInputStream& in)
 
 	char* data = NULL;
 	int len = 0;
-	in.readData((void**)&data, &len);
+	in.readData((void**) &data, &len);
 
 	this->binaryData = string(data, len);
 

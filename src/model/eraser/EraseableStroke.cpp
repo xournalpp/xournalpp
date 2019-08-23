@@ -43,7 +43,7 @@ void EraseableStroke::draw(cairo_t* cr)
 	Point lastPoint;
 
 	g_mutex_lock(&this->partLock);
-	PartList * tmpCopy = this->parts->clone();
+	PartList* tmpCopy = this->parts->clone();
 	g_mutex_unlock(&this->partLock);
 
 	double w = this->stroke->getWidth();
@@ -238,8 +238,8 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize, Eraseable
 	}
 }
 
-bool EraseableStroke::erasePart(double x, double y, double halfEraserSize, EraseableStrokePart* part,
-								PartList* list, bool* deleteStrokeAfter)
+bool EraseableStroke::erasePart(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list,
+                                bool* deleteStrokeAfter)
 {
 	XOJ_CHECK_TYPE(EraseableStroke);
 
@@ -334,7 +334,7 @@ bool EraseableStroke::erasePart(double x, double y, double halfEraserSize, Erase
 		lists = g_list_delete_link(lists, lists);
 
 		int pos = g_list_index(list->data, part) + 1;
-		
+
 		// create data structure for all new (splitted) parts
 		for (GList* l = lists; l != NULL; l = l->next)
 		{

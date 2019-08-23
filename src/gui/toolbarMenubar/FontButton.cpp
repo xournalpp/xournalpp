@@ -4,7 +4,8 @@
 #include <i18n.h>
 
 FontButton::FontButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, string description,
-					   GtkWidget* menuitem) : AbstractToolItem(id, handler, type, menuitem)
+                       GtkWidget* menuitem)
+ : AbstractToolItem(id, handler, type, menuitem)
 {
 	XOJ_INIT_TYPE(FontButton);
 
@@ -75,7 +76,7 @@ GtkWidget* FontButton::getNewToolIcon()
 {
 	XOJ_CHECK_TYPE(FontButton);
 
-	return gtk_image_new_from_icon_name("font-x-generic" , GTK_ICON_SIZE_SMALL_TOOLBAR);
+	return gtk_image_new_from_icon_name("font-x-generic", GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
 GtkToolItem* FontButton::createItem(bool horizontal)

@@ -24,7 +24,7 @@ ShapeRecognizerResult::ShapeRecognizerResult(Stroke* result, ShapeRecognizer* re
 		}
 	}
 
-	RDEBUG("source list length: %i", (int)this->source.size());
+	RDEBUG("source list length: %i", (int) this->source.size());
 }
 
 ShapeRecognizerResult::~ShapeRecognizerResult()
@@ -40,7 +40,7 @@ void ShapeRecognizerResult::addSourceStroke(Stroke* s)
 {
 	XOJ_CHECK_TYPE(ShapeRecognizerResult);
 
-	for (Stroke* elem : this->source)
+	for (Stroke* elem: this->source)
 	{
 		if (s == elem)
 		{

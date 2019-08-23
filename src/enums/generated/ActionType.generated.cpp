@@ -2,7 +2,6 @@
 // ** use generateConvert.php to update this file **
 
 
-
 #include "../ActionType.enum.h"
 
 #include <string>
@@ -695,7 +694,6 @@ ActionType ActionType_fromString(string value)
 	g_error("Invalid enum value for ActionType: «%s»", value.c_str());
 	return ACTION_NONE;
 }
-
 
 
 string ActionType_toString(ActionType value)

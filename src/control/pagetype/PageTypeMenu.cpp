@@ -8,24 +8,28 @@
 
 #include <i18n.h>
 
-PageTypeMenuChangeListener::~PageTypeMenuChangeListener() {}
-PageTypeApplyListener::~PageTypeApplyListener() {}
+PageTypeMenuChangeListener::~PageTypeMenuChangeListener()
+{
+}
+PageTypeApplyListener::~PageTypeApplyListener()
+{
+}
 
 #define PREVIEW_COLUMNS 3
 
 
 PageTypeMenu::PageTypeMenu(PageTypeHandler* types, Settings* settings, bool showPreview, bool showSpecial)
- : showSpecial(showSpecial),
-   menu(gtk_menu_new()),
-   types(types),
-   settings(settings),
-   ignoreEvents(false),
-   listener(NULL),
-   menuX(0),
-   menuY(0),
-   backgroundPainter(NULL),
-   showPreview(showPreview),
-   pageTypeApplyListener(NULL)
+ : showSpecial(showSpecial)
+ , menu(gtk_menu_new())
+ , types(types)
+ , settings(settings)
+ , ignoreEvents(false)
+ , listener(NULL)
+ , menuX(0)
+ , menuY(0)
+ , backgroundPainter(NULL)
+ , showPreview(showPreview)
+ , pageTypeApplyListener(NULL)
 {
 	XOJ_INIT_TYPE(PageTypeMenu);
 
@@ -151,32 +155,32 @@ void PageTypeMenu::addMenuEntry(PageTypeInfo* t)
 	info.info = t;
 	menuInfos.push_back(info);
 
-	g_signal_connect(entry, "toggled", G_CALLBACK(
-		+[](GtkWidget* togglebutton, PageTypeMenu* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, PageTypeMenu);
+	g_signal_connect(entry,
+	                 "toggled",
+	                 G_CALLBACK(+[](GtkWidget* togglebutton, PageTypeMenu* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, PageTypeMenu);
 
-			if (self->ignoreEvents)
-			{
-				return;
-			}
+		                 if (self->ignoreEvents)
+		                 {
+			                 return;
+		                 }
 
-			for (MenuCallbackInfo& info : self->menuInfos)
-			{
-				if (info.entry == togglebutton)
-				{
-					self->entrySelected(info.info);
-					break;
-				}
-			}
-
-		}), this);
+		                 for (MenuCallbackInfo& info: self->menuInfos)
+		                 {
+			                 if (info.entry == togglebutton)
+			                 {
+				                 self->entrySelected(info.info);
+				                 break;
+			                 }
+		                 }
+	                 }),
+	                 this);
 }
 
 void PageTypeMenu::entrySelected(PageTypeInfo* t)
 {
 	ignoreEvents = true;
-	for (MenuCallbackInfo& info : menuInfos)
+	for (MenuCallbackInfo& info: menuInfos)
 	{
 		bool enabled = info.info == t;
 		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(info.entry), enabled);
@@ -195,7 +199,7 @@ void PageTypeMenu::setSelected(PageType selected)
 {
 	XOJ_CHECK_TYPE(PageTypeMenu);
 
-	for (MenuCallbackInfo& info : menuInfos)
+	for (MenuCallbackInfo& info: menuInfos)
 	{
 		if (info.info->page == selected)
 		{
@@ -216,7 +220,7 @@ void PageTypeMenu::hideCopyPage()
 {
 	XOJ_CHECK_TYPE(PageTypeMenu);
 
-	for (MenuCallbackInfo& info : menuInfos)
+	for (MenuCallbackInfo& info: menuInfos)
 	{
 		if (info.info->page.format == PageTypeFormat::Copy)
 		{
@@ -246,23 +250,25 @@ void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApply
 		GtkWidget* menuEntryApply = createApplyMenuItem(_("Apply to current page"));
 		gtk_menu_attach(GTK_MENU(menu), menuEntryApply, 0, PREVIEW_COLUMNS, menuY, menuY + 1);
 		menuY++;
-		g_signal_connect(menuEntryApply, "activate", G_CALLBACK(
-			+[](GtkWidget* menu, PageTypeMenu* self)
-			{
-				XOJ_CHECK_TYPE_OBJ(self, PageTypeMenu);
-				self->pageTypeApplyListener->applyCurrentPageBackground(false);
-			}), this);
+		g_signal_connect(menuEntryApply,
+		                 "activate",
+		                 G_CALLBACK(+[](GtkWidget* menu, PageTypeMenu* self) {
+			                 XOJ_CHECK_TYPE_OBJ(self, PageTypeMenu);
+			                 self->pageTypeApplyListener->applyCurrentPageBackground(false);
+		                 }),
+		                 this);
 	}
 
 	GtkWidget* menuEntryApplyAll = createApplyMenuItem(_("Apply to all pages"));
 	gtk_menu_attach(GTK_MENU(menu), menuEntryApplyAll, 0, PREVIEW_COLUMNS, menuY, menuY + 1);
 	menuY++;
-	g_signal_connect(menuEntryApplyAll, "activate", G_CALLBACK(
-		+[](GtkWidget* menu, PageTypeMenu* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, PageTypeMenu);
-			self->pageTypeApplyListener->applyCurrentPageBackground(true);
-		}), this);
+	g_signal_connect(menuEntryApplyAll,
+	                 "activate",
+	                 G_CALLBACK(+[](GtkWidget* menu, PageTypeMenu* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, PageTypeMenu);
+		                 self->pageTypeApplyListener->applyCurrentPageBackground(true);
+	                 }),
+	                 this);
 }
 
 GtkWidget* PageTypeMenu::createApplyMenuItem(const char* text)
@@ -290,7 +296,7 @@ void PageTypeMenu::initDefaultMenu()
 	this->backgroundPainter->setLineWidthFactor(2);
 
 	bool special = false;
-	for (PageTypeInfo* t : this->types->getPageTypes())
+	for (PageTypeInfo* t: this->types->getPageTypes())
 	{
 		if (!showSpecial && t->page.isSpecial())
 		{

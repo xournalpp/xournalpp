@@ -5,7 +5,8 @@
 #include "TouchInputHandler.h"
 #include "InputContext.h"
 
-TouchInputHandler::TouchInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)
+TouchInputHandler::TouchInputHandler(InputContext* inputContext)
+ : AbstractInputHandler(inputContext)
 {
 	XOJ_INIT_TYPE(TouchInputHandler);
 }
@@ -53,7 +54,6 @@ void TouchInputHandler::actionStart(InputEvent* event)
 
 	this->lastPosX = event->absoluteX;
 	this->lastPosY = event->absoluteY;
-
 }
 
 void TouchInputHandler::actionMotion(InputEvent* event)
@@ -80,8 +80,8 @@ void TouchInputHandler::actionMotion(InputEvent* event)
 	}
 
 	//  Manually scroll if non-touchscreen device was mapped to a touchscreen (GTK wont handle this)
-	if (this->lastPosX >= 0.0 && this->lastPosY >= 0.0
-			&& event->deviceClass == INPUT_DEVICE_TOUCHSCREEN && gdk_device_get_source(gdk_event_get_source_device(event->sourceEvent)) != GDK_SOURCE_TOUCHSCREEN)
+	if (this->lastPosX >= 0.0 && this->lastPosY >= 0.0 && event->deviceClass == INPUT_DEVICE_TOUCHSCREEN &&
+	    gdk_device_get_source(gdk_event_get_source_device(event->sourceEvent)) != GDK_SOURCE_TOUCHSCREEN)
 	{
 
 		double offsetX = event->absoluteX - this->lastPosX;
@@ -104,5 +104,3 @@ void TouchInputHandler::actionEnd(InputEvent* event)
 	this->lastPosX = -1.0;
 	this->lastPosY = -1.0;
 }
-
-

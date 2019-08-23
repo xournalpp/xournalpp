@@ -27,7 +27,8 @@ struct _ToolItemDragData
 	GtkWidget* ebox;
 };
 
-ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath, MainWindow* win, ToolbarDragDropHandler* handler)
+ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath, MainWindow* win,
+                                               ToolbarDragDropHandler* handler)
  : GladeGui(gladeSearchPath, "toolbarCustomizeDialog.glade", "DialogCustomizeToolbar")
 {
 	XOJ_INIT_TYPE(ToolbarCustomizeDialog);
@@ -74,7 +75,7 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
 
 	// init separator
 	GtkWidget* tbSeparator = get("tbSeparator");
-	gtk_grid_attach (GTK_GRID(tbSeparator), ebox,0, 0, 1, 1);
+	gtk_grid_attach(GTK_GRID(tbSeparator), ebox, 0, 0, 1, 1);
 }
 
 ToolbarCustomizeDialog::~ToolbarCustomizeDialog()
@@ -86,7 +87,7 @@ ToolbarCustomizeDialog::~ToolbarCustomizeDialog()
 
 	// We can only delete this list at the end, it would be better to delete this list
 	// after a refresh and after drag_end is called...
-	for (ToolItemDragData* data : this->itemDatalist)
+	for (ToolItemDragData* data: this->itemDatalist)
 	{
 		g_object_unref(data->icon);
 		g_free(data);
@@ -113,15 +114,15 @@ void ToolbarCustomizeDialog::toolitemDragEndSeparator(GtkWidget* widget, GdkDrag
 }
 
 void ToolbarCustomizeDialog::toolitemDragDataGetSeparator(GtkWidget* widget, GdkDragContext* context,
-														  GtkSelectionData* selection_data, guint info,
-														  guint time, void* unused)
+                                                          GtkSelectionData* selection_data, guint info, guint time,
+                                                          void* unused)
 {
 
 	ToolItemDragDropData* it = ToolitemDragDrop::ToolItemDragDropData_new(NULL);
 	it->type = TOOL_ITEM_SEPARATOR;
 
-	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
-						   (const guchar*) it, sizeof(ToolItemDragDropData));
+	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, (const guchar*) it,
+	                       sizeof(ToolItemDragDropData));
 
 	g_free(it);
 }
@@ -150,8 +151,8 @@ void ToolbarCustomizeDialog::toolitemDragEnd(GtkWidget* widget, GdkDragContext* 
 }
 
 void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget* widget, GdkDragContext* context,
-												 GtkSelectionData* selection_data, guint info, guint time,
-												 ToolItemDragData* data)
+                                                 GtkSelectionData* selection_data, guint info, guint time,
+                                                 ToolItemDragData* data)
 {
 	g_return_if_fail(data != NULL);
 	g_return_if_fail(data->item != NULL);
@@ -161,8 +162,8 @@ void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget* widget, GdkDragConte
 
 	ToolItemDragDropData* it = ToolitemDragDrop::ToolItemDragDropData_new(data->item);
 
-	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
-						   (const guchar*) it, sizeof(ToolItemDragDropData));
+	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, (const guchar*) it,
+	                       sizeof(ToolItemDragDropData));
 
 	g_free(it);
 }
@@ -186,7 +187,8 @@ void ToolbarCustomizeDialog::toolitemColorDragBegin(GtkWidget* widget, GdkDragCo
 /**
  * Drag a Toolitem from dialog STOPPED
  */
-void ToolbarCustomizeDialog::toolitemColorDragEnd(GtkWidget* widget, GdkDragContext* context, ToolbarCustomizeDialog* dlg)
+void ToolbarCustomizeDialog::toolitemColorDragEnd(GtkWidget* widget, GdkDragContext* context,
+                                                  ToolbarCustomizeDialog* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarCustomizeDialog);
 
@@ -197,8 +199,8 @@ void ToolbarCustomizeDialog::toolitemColorDragEnd(GtkWidget* widget, GdkDragCont
 }
 
 void ToolbarCustomizeDialog::toolitemColorDragDataGet(GtkWidget* widget, GdkDragContext* context,
-													  GtkSelectionData* selection_data, guint info,
-													  guint time, void* data)
+                                                      GtkSelectionData* selection_data, guint info, guint time,
+                                                      void* data)
 {
 
 	int color = GPOINTER_TO_INT(data);
@@ -207,8 +209,8 @@ void ToolbarCustomizeDialog::toolitemColorDragDataGet(GtkWidget* widget, GdkDrag
 	it->color = color;
 	it->type = TOOL_ITEM_COLOR;
 
-	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
-						   (const guchar*) it, sizeof(ToolItemDragDropData));
+	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, (const guchar*) it,
+	                       sizeof(ToolItemDragDropData));
 
 	g_free(it);
 }
@@ -217,7 +219,8 @@ void ToolbarCustomizeDialog::toolitemColorDragDataGet(GtkWidget* widget, GdkDrag
  * A tool item was dragged to the dialog
  */
 void ToolbarCustomizeDialog::dragDataReceived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y,
-											  GtkSelectionData* data, guint info, guint time, ToolbarCustomizeDialog* dlg)
+                                              GtkSelectionData* data, guint info, guint time,
+                                              ToolbarCustomizeDialog* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarCustomizeDialog);
 
@@ -283,7 +286,7 @@ void ToolbarCustomizeDialog::rebuildIconview()
 	GtkGrid* table = GTK_GRID(get("tbDefaultTools"));
 
 	int i = 0;
-	for (AbstractToolItem* item : *this->win->getToolMenuHandler()->getToolItems())
+	for (AbstractToolItem* item: *this->win->getToolMenuHandler()->getToolItems())
 	{
 		if (item->isUsed())
 		{
@@ -365,7 +368,7 @@ void ToolbarCustomizeDialog::rebuildColorIcons()
 	ToolMenuHandler* tmh = this->win->getToolMenuHandler();
 
 	int i = 0;
-	for (XojColor* color : *this->colorList->getPredefinedColors())
+	for (XojColor* color: *this->colorList->getPredefinedColors())
 	{
 		if (tmh->isColorInUse(color->getColor()))
 		{
@@ -395,7 +398,8 @@ void ToolbarCustomizeDialog::rebuildColorIcons()
 
 		g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemColorDragBegin), GINT_TO_POINTER(color->getColor()));
 		g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemColorDragEnd), this);
-		g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemColorDragDataGet), GINT_TO_POINTER(color->getColor()));
+		g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemColorDragDataGet),
+		                 GINT_TO_POINTER(color->getColor()));
 
 		int x = i % 5;
 		int y = i / 5;

@@ -1,7 +1,10 @@
 #include "PortAudioConsumer.h"
 #include "AudioPlayer.h"
 
-PortAudioConsumer::PortAudioConsumer(AudioPlayer* audioPlayer, AudioQueue<float>* audioQueue) : sys(portaudio::System::instance()), audioPlayer(audioPlayer), audioQueue(audioQueue)
+PortAudioConsumer::PortAudioConsumer(AudioPlayer* audioPlayer, AudioQueue<float>* audioQueue)
+ : sys(portaudio::System::instance())
+ , audioPlayer(audioPlayer)
+ , audioQueue(audioQueue)
 {
 	XOJ_INIT_TYPE(PortAudioConsumer);
 }
@@ -32,7 +35,6 @@ std::list<DeviceInfo> PortAudioConsumer::getOutputDevices()
 			DeviceInfo deviceInfo(&(*i), this->audioPlayer->getSettings()->getAudioOutputDevice() == i->index());
 			deviceList.push_back(deviceInfo);
 		}
-
 	}
 	return deviceList;
 }
@@ -45,7 +47,9 @@ const DeviceInfo PortAudioConsumer::getSelectedOutputDevice()
 	}
 	catch (portaudio::PaException& e)
 	{
-		g_warning("PortAudioConsumer: Selected output device was not found - fallback to default output device\nCaused by: %s", e.what());
+		g_warning("PortAudioConsumer: Selected output device was not found - fallback to default output device\nCaused "
+		          "by: %s",
+		          e.what());
 		return DeviceInfo(&sys.defaultOutputDevice(), true);
 	}
 }
@@ -97,12 +101,15 @@ bool PortAudioConsumer::startPlaying()
 	}
 
 	this->outputChannels = channels;
-	portaudio::DirectionSpecificStreamParameters outParams(*device, channels, portaudio::FLOAT32, true, device->defaultLowOutputLatency(), nullptr);
-	portaudio::StreamParameters params(portaudio::DirectionSpecificStreamParameters::null(), outParams, sampleRate, this->framesPerBuffer, paNoFlag);
+	portaudio::DirectionSpecificStreamParameters outParams(*device, channels, portaudio::FLOAT32, true,
+	                                                       device->defaultLowOutputLatency(), nullptr);
+	portaudio::StreamParameters params(portaudio::DirectionSpecificStreamParameters::null(), outParams, sampleRate,
+	                                   this->framesPerBuffer, paNoFlag);
 
 	try
 	{
-		this->outputStream = new portaudio::MemFunCallbackStream<PortAudioConsumer>(params, *this, &PortAudioConsumer::playCallback);
+		this->outputStream =
+		        new portaudio::MemFunCallbackStream<PortAudioConsumer>(params, *this, &PortAudioConsumer::playCallback);
 	}
 	catch (portaudio::PaException& e)
 	{
@@ -124,8 +131,8 @@ bool PortAudioConsumer::startPlaying()
 	return true;
 }
 
-int PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer, const PaStreamCallbackTimeInfo* timeInfo,
-									PaStreamCallbackFlags statusFlags)
+int PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer,
+                                    const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags)
 {
 	XOJ_CHECK_TYPE(PortAudioConsumer);
 

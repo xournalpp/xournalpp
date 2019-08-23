@@ -6,8 +6,8 @@
 
 
 PluginDialogEntry::PluginDialogEntry(Plugin* plugin, GladeSearchpath* gladeSearchPath, GtkWidget* w)
- : GladeGui(gladeSearchPath, "pluginEntry.glade", "offscreenwindow"),
-   plugin(plugin)
+ : GladeGui(gladeSearchPath, "pluginEntry.glade", "offscreenwindow")
+ , plugin(plugin)
 {
 	XOJ_INIT_TYPE(PluginDialogEntry);
 
@@ -35,7 +35,8 @@ void PluginDialogEntry::loadSettings()
 	gtk_label_set_text(GTK_LABEL(get("lbVersion")), plugin->getVersion().c_str());
 	gtk_label_set_text(GTK_LABEL(get("lbDescription")), plugin->getDescription().c_str());
 
-	gtk_label_set_text(GTK_LABEL(get("lbDefaultText")), plugin->isDefaultEnabled() ? _("default enabled") : _("default disabled"));
+	gtk_label_set_text(GTK_LABEL(get("lbDefaultText")),
+	                   plugin->isDefaultEnabled() ? _("default enabled") : _("default disabled"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbEnabled")), plugin->isEnabled());
 #endif
 }

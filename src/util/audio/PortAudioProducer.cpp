@@ -1,9 +1,9 @@
 #include "PortAudioProducer.h"
 
 PortAudioProducer::PortAudioProducer(Settings* settings, AudioQueue<float>* audioQueue)
-		: sys(portaudio::System::instance()),
-		  settings(settings),
-		  audioQueue(audioQueue)
+ : sys(portaudio::System::instance())
+ , settings(settings)
+ , audioQueue(audioQueue)
 {
 	XOJ_INIT_TYPE(PortAudioProducer);
 }
@@ -34,7 +34,6 @@ std::list<DeviceInfo> PortAudioProducer::getInputDevices()
 			DeviceInfo deviceInfo(&(*i), this->settings->getAudioInputDevice() == i->index());
 			deviceList.push_back(deviceInfo);
 		}
-
 	}
 	return deviceList;
 }
@@ -49,7 +48,9 @@ const DeviceInfo PortAudioProducer::getSelectedInputDevice()
 	}
 	catch (portaudio::PaException& e)
 	{
-		g_message("PortAudioProducer: Selected input device not found - fallback to default input device\nCaused by: %s", e.what());
+		g_message(
+		        "PortAudioProducer: Selected input device not found - fallback to default input device\nCaused by: %s",
+		        e.what());
 		return DeviceInfo(&sys.defaultInputDevice(), true);
 	}
 }
@@ -85,15 +86,19 @@ bool PortAudioProducer::startRecording()
 
 	// Restrict recording channels to 2 as playback devices should have 2 channels at least
 	this->inputChannels = std::min(2, device->maxInputChannels());
-	portaudio::DirectionSpecificStreamParameters inParams(*device, this->inputChannels, portaudio::FLOAT32, true, device->defaultLowInputLatency(), nullptr);
-	portaudio::StreamParameters params(inParams, portaudio::DirectionSpecificStreamParameters::null(), this->settings->getAudioSampleRate(), this->framesPerBuffer, paNoFlag);
+	portaudio::DirectionSpecificStreamParameters inParams(*device, this->inputChannels, portaudio::FLOAT32, true,
+	                                                      device->defaultLowInputLatency(), nullptr);
+	portaudio::StreamParameters params(inParams, portaudio::DirectionSpecificStreamParameters::null(),
+	                                   this->settings->getAudioSampleRate(), this->framesPerBuffer, paNoFlag);
 
-	this->audioQueue->setAudioAttributes(this->settings->getAudioSampleRate(), static_cast<unsigned int>(this->inputChannels));
+	this->audioQueue->setAudioAttributes(this->settings->getAudioSampleRate(),
+	                                     static_cast<unsigned int>(this->inputChannels));
 
 	// Specify the callback used for buffering the recorded data
 	try
 	{
-		this->inputStream = new portaudio::MemFunCallbackStream<PortAudioProducer>(params, *this, &PortAudioProducer::recordCallback);
+		this->inputStream = new portaudio::MemFunCallbackStream<PortAudioProducer>(params, *this,
+		                                                                           &PortAudioProducer::recordCallback);
 	}
 	catch (portaudio::PaException& e)
 	{
@@ -116,7 +121,7 @@ bool PortAudioProducer::startRecording()
 }
 
 int PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer,
-									  const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags)
+                                      const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags)
 {
 	XOJ_CHECK_TYPE(PortAudioProducer);
 	std::unique_lock<std::mutex> lock(this->audioQueue->syncMutex());

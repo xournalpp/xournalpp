@@ -5,7 +5,11 @@
 #include <config.h>
 #include <i18n.h>
 
-#define error(...) if (loadHandler->error == NULL) { loadHandler->error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); }
+#define error(...)                                                                                     \
+	if (loadHandler->error == NULL)                                                                    \
+	{                                                                                                  \
+		loadHandler->error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); \
+	}
 
 typedef struct
 {
@@ -13,20 +17,10 @@ typedef struct
 	const int rgb;
 } PredefinedColor;
 
-static PredefinedColor PREDEFINED_COLORS[] =
-{
-	{ "black",      0x000000 },
-	{ "blue",       0x3333cc },
-	{ "red",        0xff0000 },
-	{ "green",      0x008000 },
-	{ "gray",       0x808080 },
-	{ "lightblue",  0x00c0ff },
-	{ "lightgreen", 0x00ff00 },
-	{ "magenta",    0xff00ff },
-	{ "orange",     0xff8000 },
-	{ "yellow",     0xffff00 },
-	{ "white",      0xffffff }
-};
+static PredefinedColor PREDEFINED_COLORS[] = {{"black", 0x000000},      {"blue", 0x3333cc},    {"red", 0xff0000},
+                                              {"green", 0x008000},      {"gray", 0x808080},    {"lightblue", 0x00c0ff},
+                                              {"lightgreen", 0x00ff00}, {"magenta", 0xff00ff}, {"orange", 0xff8000},
+                                              {"yellow", 0xffff00},     {"white", 0xffffff}};
 
 const int COLOR_COUNT = sizeof(PREDEFINED_COLORS) / sizeof(PredefinedColor);
 

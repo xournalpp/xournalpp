@@ -53,9 +53,8 @@ void PrintHandler::drawPage(GtkPrintOperation* operation, GtkPrintContext* conte
 	view.drawPage(page, cr, true /* dont render eraseable */);
 }
 
-void PrintHandler::requestPageSetup(GtkPrintOperation* operation,
-									GtkPrintContext* context, gint pageNr, GtkPageSetup* setup,
-									PrintHandler* handler)
+void PrintHandler::requestPageSetup(GtkPrintOperation* operation, GtkPrintContext* context, gint pageNr,
+                                    GtkPageSetup* setup, PrintHandler* handler)
 {
 	XOJ_CHECK_TYPE_OBJ(handler, PrintHandler);
 

@@ -105,7 +105,7 @@ void Document::clearDocument(bool destroy)
 		bool lastLock = tryLock();
 		unlock();
 		this->handler->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED);
-		if (!lastLock) // document was locked before
+		if (!lastLock)  // document was locked before
 		{
 			lock();
 		}
@@ -279,7 +279,7 @@ void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterato
 
 	do
 	{
-		GtkTreeIter treeIter = { 0 };
+		GtkTreeIter treeIter = {0};
 
 		XojPdfAction* action = iter->getAction();
 		XojLinkDest* link = action->getDestination();
@@ -297,7 +297,7 @@ void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterato
 		char* titleMarkup = g_markup_escape_text(action->getTitle().c_str(), -1);
 
 		gtk_tree_store_set(GTK_TREE_STORE(contentsModel), &treeIter, DOCUMENT_LINKS_COLUMN_NAME, titleMarkup,
-						   DOCUMENT_LINKS_COLUMN_LINK, link, DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, "", -1);
+		                   DOCUMENT_LINKS_COLUMN_LINK, link, DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, "", -1);
 
 		g_free(titleMarkup);
 		g_object_unref(link);
@@ -311,8 +311,7 @@ void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterato
 
 		delete action;
 
-	}
-	while (iter->next());
+	} while (iter->next());
 }
 
 void Document::buildContentsModel()
@@ -328,7 +327,8 @@ void Document::buildContentsModel()
 		return;
 	}
 
-	this->contentsModel = (GtkTreeModel*) gtk_tree_store_new(4, G_TYPE_STRING, G_TYPE_OBJECT, G_TYPE_BOOLEAN, G_TYPE_STRING);
+	this->contentsModel =
+	        (GtkTreeModel*) gtk_tree_store_new(4, G_TYPE_STRING, G_TYPE_OBJECT, G_TYPE_BOOLEAN, G_TYPE_STRING);
 	buildTreeContentsModel(NULL, iter);
 	delete iter;
 }
@@ -392,7 +392,8 @@ bool Document::readPdf(Path filename, bool initPages, bool attachToDocument, gpo
 
 			return false;
 		}
-	} else
+	}
+	else
 	{
 		if (!pdfDocument.load(filename.c_str(), password, &popplerError))
 		{
@@ -562,7 +563,7 @@ Document& Document::operator=(const Document& doc)
 	bool lastLock = tryLock();
 	unlock();
 	this->handler->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
-	if (!lastLock) // document was locked before
+	if (!lastLock)  // document was locked before
 	{
 		lock();
 	}

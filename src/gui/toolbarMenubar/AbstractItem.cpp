@@ -1,9 +1,9 @@
 #include "AbstractItem.h"
 
 AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action, GtkWidget* menuitem)
- : action(action),
-   id(id),
-   handler(handler)
+ : action(action)
+ , id(id)
+ , handler(handler)
 {
 	XOJ_INIT_TYPE(AbstractItem);
 
@@ -38,16 +38,17 @@ void AbstractItem::setMenuItem(GtkWidget* menuitem)
 
 	if (this->menuitem != NULL)
 	{
-		g_warning("The menu item %i / %s has already a menu item registered!", action, ActionType_toString(action).c_str());
+		g_warning("The menu item %i / %s has already a menu item registered!", action,
+		          ActionType_toString(action).c_str());
 		return;
 	}
 
-	menuSignalHandler = g_signal_connect(menuitem, "activate", G_CALLBACK(
-			+[](GtkMenuItem* menuitem, AbstractItem* self)
-			{
-				XOJ_CHECK_TYPE_OBJ(self, AbstractItem);
-				self->activated(NULL, menuitem, NULL);
-			}), this);
+	menuSignalHandler =
+	        g_signal_connect(menuitem, "activate", G_CALLBACK(+[](GtkMenuItem* menuitem, AbstractItem* self) {
+		                         XOJ_CHECK_TYPE_OBJ(self, AbstractItem);
+		                         self->activated(NULL, menuitem, NULL);
+	                         }),
+	                         this);
 
 	g_object_ref(G_OBJECT(menuitem));
 	this->menuitem = menuitem;
@@ -157,9 +158,8 @@ void AbstractItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButt
 	actionPerformed(action, group, event, menuitem, toolbutton, selected);
 }
 
-void AbstractItem::actionPerformed(ActionType action, ActionGroup group,
-								   GdkEvent* event, GtkMenuItem* menuitem,
-								   GtkToolButton* toolbutton, bool selected)
+void AbstractItem::actionPerformed(ActionType action, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
+                                   GtkToolButton* toolbutton, bool selected)
 {
 	handler->actionPerformed(action, group, event, menuitem, toolbutton, selected);
 }

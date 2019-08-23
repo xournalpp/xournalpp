@@ -35,18 +35,18 @@ void printUndoList(GList* list)
 #endif  // UNDO_TRACE
 
 #ifdef UNDO_TRACE
-#	define PRINTCONTENTS()               \
-		g_message("redoList");            \
-		printUndoList(this->redoList);    \
-		g_message("undoList");            \
-		printUndoList(this->undoList);    \
-		g_message("savedUndo");           \
-		if (this->savedUndo)              \
-		{                                 \
-			printAction(this->savedUndo); \
-		}
+#define PRINTCONTENTS()               \
+	g_message("redoList");            \
+	printUndoList(this->redoList);    \
+	g_message("undoList");            \
+	printUndoList(this->undoList);    \
+	g_message("savedUndo");           \
+	if (this->savedUndo)              \
+	{                                 \
+		printAction(this->savedUndo); \
+	}
 #else
-#	define PRINTCONTENTS() (void) 0
+#define PRINTCONTENTS() (void) 0
 #endif  // UNDO_TRACE
 
 UndoRedoHandler::UndoRedoHandler(Control* control)

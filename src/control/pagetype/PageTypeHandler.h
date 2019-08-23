@@ -17,7 +17,8 @@
 
 #include <map>
 
-class PageTypeInfo {
+class PageTypeInfo
+{
 public:
 	PageType page;
 	string name;

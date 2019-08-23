@@ -28,11 +28,11 @@ void RulerHandler::snapRotation(double& x, double& y)
 	//snap to a grid - get the angle of the points
 	//if it's near 0, pi/4, 3pi/4, pi, or the negatives
 	//within epsilon, fix it to that value.
-	
+
 	double dist = sqrt(pow(x - firstPoint.x, 2.0) + pow(y - firstPoint.y, 2.0));
 	double angle = atan2((y - firstPoint.y), (x - firstPoint.x));
 	double epsilon = xournal->getControl()->getSettings()->getSnapRotationTolerance();
-	
+
 	if (std::abs(angle) < epsilon)
 	{
 		x = dist + firstPoint.x;
@@ -79,8 +79,8 @@ void RulerHandler::snapRotation(double& x, double& y)
 void RulerHandler::drawShape(Point& currentPoint, const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(RulerHandler);
-	
-	this->currPoint = currentPoint;	// in case redrawn by keypress event in base class.
+
+	this->currPoint = currentPoint;  // in case redrawn by keypress event in base class.
 
 	double x = currentPoint.x;
 	double y = currentPoint.y;
@@ -92,12 +92,11 @@ void RulerHandler::drawShape(Point& currentPoint, const PositionInputData& pos)
 	if (!altDown && xournal->getControl()->getSettings()->isSnapGrid())
 	{
 		Point firstPoint = stroke->getPoint(0);
-		snapToGrid(firstPoint.x,firstPoint.y);
-		stroke->setFirstPoint(firstPoint.x,firstPoint.y);
+		snapToGrid(firstPoint.x, firstPoint.y);
+		stroke->setFirstPoint(firstPoint.x, firstPoint.y);
 	}
 
 
-		
 	if (stroke->getPointCount() < 2)
 	{
 		stroke->addPoint(currentPoint);
@@ -111,15 +110,14 @@ void RulerHandler::drawShape(Point& currentPoint, const PositionInputData& pos)
 	{
 		if (xournal->getControl()->getSettings()->isSnapRotation())
 		{
-			snapRotation(x,y);
+			snapRotation(x, y);
 		}
 
 		if (xournal->getControl()->getSettings()->isSnapGrid())
 		{
-			snapToGrid(x,y);
+			snapToGrid(x, y);
 		}
 	}
 
 	stroke->setLastPoint(x, y);
 }
-

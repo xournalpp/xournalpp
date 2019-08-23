@@ -54,9 +54,9 @@ void ImagesDialog::loadImagesFromPages()
 
 bool ImagesDialog::isImageAlreadyInTheList(BackgroundImage& image)
 {
-	for (BaseElementView* v : this->elements)
+	for (BaseElementView* v: this->elements)
 	{
-		ImageElementView* iv = (ImageElementView*)v;
+		ImageElementView* iv = (ImageElementView*) v;
 		if (iv->backgroundImage == image)
 		{
 			return true;
@@ -94,9 +94,9 @@ BackgroundImage ImagesDialog::getSelectedImage()
 {
 	XOJ_CHECK_TYPE(ImagesDialog);
 
-	if (confirmed && selected >= 0 && selected < (int)elements.size())
+	if (confirmed && selected >= 0 && selected < (int) elements.size())
 	{
-		return ((ImageElementView*)elements[selected])->backgroundImage;
+		return ((ImageElementView*) elements[selected])->backgroundImage;
 	}
 	else
 	{

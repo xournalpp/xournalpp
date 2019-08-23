@@ -29,7 +29,7 @@ void ToolbarData::operator=(const ToolbarData& other)
 	this->predefined = other.predefined;
 
 	contents.clear();
-	for (const ToolbarEntry* e : other.contents)
+	for (const ToolbarEntry* e: other.contents)
 	{
 		contents.push_back(new ToolbarEntry(*e));
 	}
@@ -39,7 +39,7 @@ ToolbarData::~ToolbarData()
 {
 	XOJ_CHECK_TYPE(ToolbarData);
 
-	for (ToolbarEntry* e : this->contents)
+	for (ToolbarEntry* e: this->contents)
 	{
 		delete e;
 	}
@@ -132,11 +132,11 @@ void ToolbarData::saveToKeyFile(GKeyFile* config)
 
 	string group = getId();
 
-	for (ToolbarEntry* e : this->contents)
+	for (ToolbarEntry* e: this->contents)
 	{
 		string line = "";
 
-		for (ToolbarItem* it : e->getItems())
+		for (ToolbarItem* it: e->getItems())
 		{
 			line += ",";
 			line += it->getName();
@@ -159,7 +159,7 @@ int ToolbarData::insertItem(string toolbar, string item, int position)
 
 	g_return_val_if_fail(isPredefined() == false, -1);
 
-	for (ToolbarEntry* e : this->contents)
+	for (ToolbarEntry* e: this->contents)
 	{
 		if (e->getName() == toolbar)
 		{
@@ -186,7 +186,7 @@ bool ToolbarData::removeItemByID(string toolbar, int id)
 
 	g_return_val_if_fail(isPredefined() == false, false);
 
-	for (ToolbarEntry* e : contents)
+	for (ToolbarEntry* e: contents)
 	{
 		if (e->getName() == toolbar)
 		{

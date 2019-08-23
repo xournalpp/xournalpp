@@ -8,12 +8,13 @@
 #include <i18n.h>
 
 
-ImageExport::ImageExport(Document* doc, Path filename, ExportGraphicsFormat format, bool hideBackground, PageRangeVector& exportRange)
- : doc(doc),
-   filename(filename),
-   format(format),
-   hideBackground(hideBackground),
-   exportRange(exportRange)
+ImageExport::ImageExport(
+        Document* doc, Path filename, ExportGraphicsFormat format, bool hideBackground, PageRangeVector& exportRange)
+ : doc(doc)
+ , filename(filename)
+ , format(format)
+ , hideBackground(hideBackground)
+ , exportRange(exportRange)
 {
 	XOJ_INIT_TYPE(ImageExport);
 }
@@ -54,9 +55,8 @@ void ImageExport::createSurface(double width, double height, int id)
 
 	if (format == EXPORT_GRAPHICS_PNG)
 	{
-		this->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-												   width * this->pngDpi / 72.0,
-												   height * this->pngDpi / 72.0);
+		this->surface = cairo_image_surface_create(
+		        CAIRO_FORMAT_ARGB32, width * this->pngDpi / 72.0, height * this->pngDpi / 72.0);
 		this->cr = cairo_create(this->surface);
 		double factor = this->pngDpi / 72.0;
 		cairo_scale(this->cr, factor, factor);
@@ -173,7 +173,8 @@ void ImageExport::exportGraphics(ProgressListener* stateListener)
 	// the ui is blocked, so there should be no changes...
 	int count = doc->getPageCount();
 
-	bool onePage = ((this->exportRange.size() == 1) && (this->exportRange[0]->getFirst() == this->exportRange[0]->getLast()));
+	bool onePage =
+	        ((this->exportRange.size() == 1) && (this->exportRange[0]->getFirst() == this->exportRange[0]->getLast()));
 
 	char selectedPages[count];
 	int selectedCount = 0;
@@ -181,7 +182,7 @@ void ImageExport::exportGraphics(ProgressListener* stateListener)
 	{
 		selectedPages[i] = 0;
 	}
-	for (PageRangeEntry* e : this->exportRange)
+	for (PageRangeEntry* e: this->exportRange)
 	{
 		for (int x = e->getFirst(); x <= e->getLast(); x++)
 		{
@@ -212,4 +213,3 @@ void ImageExport::exportGraphics(ProgressListener* stateListener)
 		}
 	}
 }
-

@@ -90,7 +90,7 @@ void LayerController::fireRebuildLayerMenu()
 {
 	XOJ_CHECK_TYPE(LayerController);
 
-	for (LayerCtrlListener* l : this->listener)
+	for (LayerCtrlListener* l: this->listener)
 	{
 		l->rebuildLayerMenu();
 	}
@@ -100,7 +100,7 @@ void LayerController::fireLayerVisibilityChanged()
 {
 	XOJ_CHECK_TYPE(LayerController);
 
-	for (LayerCtrlListener* l : this->listener)
+	for (LayerCtrlListener* l: this->listener)
 	{
 		l->layerVisibilityChanged();
 	}
@@ -110,7 +110,7 @@ bool LayerController::actionPerformed(ActionType type)
 {
 	XOJ_CHECK_TYPE(LayerController);
 
-	switch(type)
+	switch (type)
 	{
 	case ACTION_NEW_LAYER:
 		addNewLayer();
@@ -126,32 +126,32 @@ bool LayerController::actionPerformed(ActionType type)
 		return true;
 
 	case ACTION_GOTO_NEXT_LAYER:
+	{
+		PageRef p = getCurrentPage();
+		int layer = p->getSelectedLayerId();
+		if (layer < (int) p->getLayerCount())
 		{
-			PageRef p = getCurrentPage();
-			int layer = p->getSelectedLayerId();
-			if (layer < (int)p->getLayerCount())
-			{
-				switchToLay(layer + 1, true);
-			}
+			switchToLay(layer + 1, true);
 		}
+	}
 		return true;
 
 	case ACTION_GOTO_PREVIOUS_LAYER:
+	{
+		PageRef p = getCurrentPage();
+		int layer = p->getSelectedLayerId();
+		if (layer > 0)
 		{
-			PageRef p = getCurrentPage();
-			int layer = p->getSelectedLayerId();
-			if (layer > 0)
-			{
-				switchToLay(layer - 1, true);
-			}
+			switchToLay(layer - 1, true);
 		}
+	}
 		return true;
 
 	case ACTION_GOTO_TOP_LAYER:
-		{
-			PageRef p = getCurrentPage();
-			switchToLay(p->getLayerCount(), true);
-		}
+	{
+		PageRef p = getCurrentPage();
+		switchToLay(p->getLayerCount(), true);
+	}
 		return true;
 	default:
 		return false;
@@ -273,7 +273,7 @@ void LayerController::moveCurrentLayer(bool up)
 		return;
 	}
 
-	if (lId == (int)p->getLayerCount() && up)
+	if (lId == (int) p->getLayerCount() && up)
 	{
 		// top layer cannot be moved up
 		return;
@@ -382,7 +382,7 @@ void LayerController::switchToLay(int layer, bool hideShow)
 	{
 		for (size_t i = 1; i <= p->getLayerCount(); i++)
 		{
-			p->setLayerVisible(i, (int)i <= layer);
+			p->setLayerVisible(i, (int) i <= layer);
 		}
 	}
 

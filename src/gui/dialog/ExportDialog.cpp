@@ -11,12 +11,13 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath)
 
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spDpi")), 300);
 
-	g_signal_connect(get("rdRangePages"), "toggled", G_CALLBACK(
-		+[](GtkToggleButton* togglebutton, ExportDialog* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, ExportDialog);
-			gtk_widget_set_sensitive(self->get("txtPages"), gtk_toggle_button_get_active(togglebutton));
-		}), this);
+	g_signal_connect(get("rdRangePages"),
+	                 "toggled",
+	                 G_CALLBACK(+[](GtkToggleButton* togglebutton, ExportDialog* self) {
+		                 XOJ_CHECK_TYPE_OBJ(self, ExportDialog);
+		                 gtk_widget_set_sensitive(self->get("txtPages"), gtk_toggle_button_get_active(togglebutton));
+	                 }),
+	                 this);
 }
 
 ExportDialog::~ExportDialog()
@@ -37,7 +38,6 @@ void ExportDialog::initPages(int current, int count)
 
 	this->currentPage = current;
 	this->pageCount = count;
-
 }
 
 void ExportDialog::removeDpiSelection()
@@ -104,4 +104,3 @@ void ExportDialog::show(GtkWindow* parent)
 
 	gtk_widget_hide(this->window);
 }
-

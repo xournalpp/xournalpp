@@ -21,7 +21,8 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarT
 	this->scrollPreview = gtk_scrolled_window_new(NULL, NULL);
 	g_object_ref(this->scrollPreview);
 
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(this->scrollPreview), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(this->scrollPreview), GTK_POLICY_AUTOMATIC,
+	                               GTK_POLICY_AUTOMATIC);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(this->scrollPreview), GTK_SHADOW_IN);
 
 	gtk_container_add(GTK_CONTAINER(this->scrollPreview), this->iconViewPreview);
@@ -53,7 +54,7 @@ SidebarPreviewBase::~SidebarPreviewBase()
 
 	this->scrollPreview = NULL;
 
-	for (SidebarPreviewBaseEntry* p : this->previews)
+	for (SidebarPreviewBaseEntry* p: this->previews)
 	{
 		delete p;
 	}
@@ -195,4 +196,3 @@ void SidebarPreviewBase::pageInserted(int page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewBase);
 }
-

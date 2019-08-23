@@ -74,7 +74,8 @@ void DocumentView::applyColor(cairo_t* cr, int c, int alpha)
 	cairo_set_source_rgba(cr, r, g, b, alpha / 255.0);
 }
 
-void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool changeSource, bool noAlpha)
+void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool changeSource,
+                              bool noAlpha)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
@@ -114,7 +115,7 @@ void DocumentView::drawImage(cairo_t* cr, Image* i)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	cairo_matrix_t defaultMatrix = { 0 };
+	cairo_matrix_t defaultMatrix = {0};
 	cairo_get_matrix(cr, &defaultMatrix);
 
 	cairo_surface_t* img = i->getImage();
@@ -138,7 +139,7 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	cairo_matrix_t defaultMatrix = { 0 };
+	cairo_matrix_t defaultMatrix = {0};
 	cairo_get_matrix(cr, &defaultMatrix);
 
 	PopplerDocument* pdf = texImage->getPdf();
@@ -220,16 +221,16 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
 	int drawn = 0;
 	int notDrawn = 0;
-#endif // DEBUG_SHOW_REPAINT_BOUNDS
-	for (Element* e : *l->getElements())
+#endif  // DEBUG_SHOW_REPAINT_BOUNDS
+	for (Element* e: *l->getElements())
 	{
 #ifdef DEBUG_SHOW_ELEMENT_BOUNDS
 		cairo_set_source_rgb(cr, 0, 1, 0);
 		cairo_set_line_width(cr, 1);
 		cairo_rectangle(cr, e->getX(), e->getY(), e->getElementWidth(), e->getElementHeight());
 		cairo_stroke(cr);
-#endif // DEBUG_SHOW_REPAINT_BOUNDS
-		//cairo_new_path(cr);
+#endif  // DEBUG_SHOW_REPAINT_BOUNDS \
+        //cairo_new_path(cr);
 
 		if (this->lX != -1)
 		{
@@ -238,28 +239,27 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 				drawElement(cr, e);
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
 				drawn++;
-#endif // DEBUG_SHOW_REPAINT_BOUNDS
+#endif  // DEBUG_SHOW_REPAINT_BOUNDS
 			}
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
 			else
 			{
 				notDrawn++;
 			}
-#endif // DEBUG_SHOW_REPAINT_BOUNDS
-
+#endif  // DEBUG_SHOW_REPAINT_BOUNDS
 		}
 		else
 		{
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
 			drawn++;
-#endif // DEBUG_SHOW_REPAINT_BOUNDS
+#endif  // DEBUG_SHOW_REPAINT_BOUNDS
 			drawElement(cr, e);
 		}
 	}
 
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
 	g_message("DBG:DocumentView: draw %i / not draw %i", drawn, notDrawn);
-#endif // DEBUG_SHOW_REPAINT_BOUNDS
+#endif  // DEBUG_SHOW_REPAINT_BOUNDS
 }
 
 void DocumentView::paintBackgroundImage()
@@ -269,7 +269,7 @@ void DocumentView::paintBackgroundImage()
 	GdkPixbuf* pixbuff = page->getBackgroundImage().getPixbuf();
 	if (pixbuff)
 	{
-		cairo_matrix_t matrix = { 0 };
+		cairo_matrix_t matrix = {0};
 		cairo_get_matrix(cr, &matrix);
 
 		int width = gdk_pixbuf_get_width(pixbuff);
@@ -291,7 +291,7 @@ void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	for (Element* e : *container->getElements())
+	for (Element* e: *container->getElements())
 	{
 		drawElement(cr, e);
 	}
@@ -344,7 +344,7 @@ void DocumentView::finializeDrawing()
 	{
 		g_message("DBG:repaint complete");
 	}
-#endif // DEBUG_SHOW_REPAINT_BOUNDS
+#endif  // DEBUG_SHOW_REPAINT_BOUNDS
 
 	this->lX = -1;
 	this->lY = -1;
@@ -424,7 +424,7 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStr
 	}
 
 	int layer = 0;
-	for (Layer* l : *page->getLayers())
+	for (Layer* l: *page->getLayers())
 	{
 		if (!page->isLayerVisible(l))
 		{

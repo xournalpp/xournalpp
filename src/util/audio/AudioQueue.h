@@ -19,7 +19,7 @@
 #include <condition_variable>
 
 template <typename T>
-class AudioQueue : protected std::deque<T>
+class AudioQueue: protected std::deque<T>
 {
 public:
 	AudioQueue()
@@ -155,7 +155,7 @@ public:
 		this->channels = channels;
 	}
 
-	void getAudioAttributes(double &sampleRate, unsigned int &channels)
+	void getAudioAttributes(double& sampleRate, unsigned int& channels)
 	{
 		sampleRate = this->sampleRate;
 		channels = this->channels;

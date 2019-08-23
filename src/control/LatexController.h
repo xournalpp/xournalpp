@@ -50,13 +50,15 @@ public:
 	void run();
 
 private:
-
 	/**
 	 * Provides information about whether a particular dependency was found or not.
 	 */
-	class FindDependencyStatus {
+	class FindDependencyStatus
+	{
 	public:
-		FindDependencyStatus(bool success, string errorMsg) : success(success), errorMsg(errorMsg) {};
+		FindDependencyStatus(bool success, string errorMsg)
+		 : success(success)
+		 , errorMsg(errorMsg){};
 		bool success;
 		string errorMsg;
 	};

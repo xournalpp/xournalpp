@@ -33,7 +33,7 @@ public:
 	void setMouseDown(bool mouseDown);
 	void setInvisible(bool invisible);
 	void setInsidePage(bool insidePage);
-	void activateDrawDirCursor(bool enable, bool shift=false, bool ctrl=false);
+	void activateDrawDirCursor(bool enable, bool shift = false, bool ctrl = false);
 	void setInputDeviceClass(InputDeviceClass inputDevice);
 
 private:
@@ -46,7 +46,7 @@ private:
 
 	GdkCursor* createHighlighterOrPenCursor(int size, double alpha);
 	GdkCursor* createCustomDrawDirCursor(int size, bool shift, bool ctrl);
-	
+
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -59,7 +59,7 @@ private:
 
 	bool mouseDown = false;
 	bool invisible = false;
-	
+
 	// One shot drawDir custom cursor -drawn instead of pen/stylus then cleared.
 	bool drawDirActive = false;
 	bool drawDirShift = false;

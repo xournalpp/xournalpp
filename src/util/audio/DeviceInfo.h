@@ -7,14 +7,15 @@
  * https://github.com/xournalpp/xournalpp
  *
  * @license GNU GPLv2 or later
- */#pragma once
+ */
+#pragma once
 
 #include <XournalType.h>
 
 #include <portaudiocpp/PortAudioCpp.hxx>
 #include <string>
 
-class DeviceInfo
+        class DeviceInfo
 {
 public:
 	DeviceInfo(portaudio::Device* device, bool selected);

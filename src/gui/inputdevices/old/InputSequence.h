@@ -27,7 +27,6 @@ public:
 	virtual ~InputSequence();
 
 public:
-
 	/**
 	 * Mouse / Pen / Touch move
 	 */
@@ -183,7 +182,7 @@ private:
 	/**
 	 * State flags from GDKevent (Shift down etc.)
 	 */
-	GdkModifierType state = (GdkModifierType)0;
+	GdkModifierType state = (GdkModifierType) 0;
 
 	/**
 	 * Position X
@@ -230,11 +229,9 @@ private:
 	 */
 	double scrollOffsetY = 0;
 
-	
+
 	/**
 	 * event time
 	 */
 	guint32 eventTime;
-	
-	
 };

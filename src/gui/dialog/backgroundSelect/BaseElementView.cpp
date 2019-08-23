@@ -7,8 +7,8 @@
 #include <Util.h>
 
 BaseElementView::BaseElementView(int id, BackgroundSelectDialogBase* dlg)
- : dlg(dlg),
-   id(id)
+ : dlg(dlg)
+ , id(id)
 {
 	XOJ_INIT_TYPE(BaseElementView);
 
@@ -97,7 +97,7 @@ void BaseElementView::paint(cairo_t* cr)
 		cairo_rectangle(cr2, 0, 0, alloc.width, alloc.height);
 		cairo_fill(cr2);
 
-		cairo_matrix_t defaultMatrix = { 0 };
+		cairo_matrix_t defaultMatrix = {0};
 		cairo_get_matrix(cr2, &defaultMatrix);
 
 		cairo_translate(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2);
@@ -118,18 +118,18 @@ void BaseElementView::paint(cairo_t* cr)
 			cairo_set_line_cap(cr2, CAIRO_LINE_CAP_BUTT);
 			cairo_set_line_join(cr2, CAIRO_LINE_JOIN_BEVEL);
 
-			cairo_rectangle(cr2, Shadow::getShadowTopLeftSize() + 1.5,
-							Shadow::getShadowTopLeftSize() + 1.5, width + 2, height + 2);
+			cairo_rectangle(cr2, Shadow::getShadowTopLeftSize() + 1.5, Shadow::getShadowTopLeftSize() + 1.5, width + 2,
+			                height + 2);
 
 			cairo_stroke(cr2);
 
-			Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize(),
-							   Shadow::getShadowTopLeftSize(), width + 4, height + 4);
+			Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 4,
+			                   height + 4);
 		}
 		else
 		{
-			Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize() + 2,
-							   Shadow::getShadowTopLeftSize() + 2, width, height);
+			Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width,
+			                   height);
 		}
 
 		cairo_destroy(cr2);
@@ -175,4 +175,3 @@ void BaseElementView::updateSize()
 
 	gtk_widget_set_size_request(this->widget, this->getWidth(), this->getHeight());
 }
-

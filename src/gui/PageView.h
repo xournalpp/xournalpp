@@ -33,7 +33,7 @@ class TextEditor;
 class VerticalToolHandler;
 class XournalView;
 
-class XojPageView : public Redrawable, public PageListener
+class XojPageView: public Redrawable, public PageListener
 {
 public:
 	XojPageView(XournalView* xournal, PageRef page);
@@ -77,17 +77,17 @@ public:
 	 */
 	bool containsPoint(int x, int y, bool local = false);
 	bool containsY(int y);
-	
+
 	/**
 	 * Returns Row assigned in current layout
-	 */ 
+	 */
 	int getMappedRow();
-	
+
 	/**
 	 * Returns Column assigned in current layout
-	 */ 
+	 */
 	int getMappedCol();
-	
+
 
 	GtkColorWrapper getSelectionColor();
 	int getBufferPixels();
@@ -140,13 +140,13 @@ public:
 	 * respect to the display
 	 */
 	int getY() const;
-	
+
 	TexImage* getSelectedTex();
 	Text* getSelectedText();
 
 	Rectangle getRect();
 
-public: // event handler
+public:  // event handler
 	bool onButtonPressEvent(const PositionInputData& pos);
 	bool onButtonReleaseEvent(const PositionInputData& pos);
 	bool onButtonDoublePressEvent(const PositionInputData& pos);
@@ -164,9 +164,9 @@ public: // event handler
 	 */
 	void paintPageSync(cairo_t* cr, GdkRectangle* rect);
 
-public: // listener
+public:  // listener
 	void rectChanged(Rectangle& rect);
-	void rangeChanged(Range &range);
+	void rangeChanged(Range& range);
 	void pageChanged();
 	void elementChanged(Element* elem);
 
@@ -178,13 +178,11 @@ private:
 	void addRerenderRect(double x, double y, double width, double height);
 
 	void drawLoadingPage(cairo_t* cr);
-	
+
 	void setX(int x);
 	void setY(int y);
 
-	void setMappedRowCol(int row, int col );	//row, column assigned by mapper during layout.
-
-	
+	void setMappedRowCol(int row, int col);  //row, column assigned by mapper during layout.
 
 
 private:
@@ -237,8 +235,8 @@ private:
 	bool rerenderComplete = false;
 
 	GMutex drawingMutex;
-	
-	int dispX;	//position on display - set in Layout::layoutPages
+
+	int dispX;  //position on display - set in Layout::layoutPages
 	int dispY;
 
 

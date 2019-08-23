@@ -38,7 +38,6 @@ public:
 	virtual ~RecentManager();
 
 public:
-
 	/**
 	 * Adds a file to the underlying GtkRecentManager
 	 * without altering the menu
@@ -90,7 +89,6 @@ public:
 	void addListener(RecentManagerListener* listener);
 
 private:
-
 	/**
 	 * Filters a list of GtkRecentInfo according to their file types
 	 *

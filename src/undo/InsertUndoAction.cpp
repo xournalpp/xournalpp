@@ -83,7 +83,8 @@ bool InsertUndoAction::redo(Control* control)
 	return true;
 }
 
-InsertsUndoAction::InsertsUndoAction(PageRef page, Layer* layer, vector<Element*> elements) : UndoAction("InsertsUndoAction")
+InsertsUndoAction::InsertsUndoAction(PageRef page, Layer* layer, vector<Element*> elements)
+ : UndoAction("InsertsUndoAction")
 {
 	XOJ_INIT_TYPE(InsertsUndoAction);
 
@@ -99,7 +100,7 @@ InsertsUndoAction::~InsertsUndoAction()
 	if (this->undone)
 	{
 		// Insert was undone, so this is not needed anymore
-		for (Element* e : this->elements)
+		for (Element* e: this->elements)
 		{
 			delete e;
 			e = NULL;
@@ -120,7 +121,7 @@ bool InsertsUndoAction::undo(Control* control)
 {
 	XOJ_CHECK_TYPE(InsertsUndoAction);
 
-	for (Element* elem : this->elements)
+	for (Element* elem: this->elements)
 	{
 		this->layer->removeElement(elem, false);
 		this->page->fireElementChanged(elem);
@@ -135,7 +136,7 @@ bool InsertsUndoAction::redo(Control* control)
 {
 	XOJ_CHECK_TYPE(InsertsUndoAction);
 
-	for (Element* elem : this->elements)
+	for (Element* elem: this->elements)
 	{
 		this->layer->addElement(elem);
 		this->page->fireElementChanged(elem);

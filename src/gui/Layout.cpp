@@ -26,15 +26,15 @@ constexpr size_t const XOURNAL_PADDING_BETWEEN = 15;
 
 
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
- : view(view),
-   scrollHandling(scrollHandling)
+ : view(view)
+ , scrollHandling(scrollHandling)
 {
 	XOJ_INIT_TYPE(Layout);
 
 	g_signal_connect(scrollHandling->getHorizontal(), "value-changed", G_CALLBACK(horizontalScrollChanged), this);
 
 	g_signal_connect(scrollHandling->getVertical(), "value-changed", G_CALLBACK(verticalScrollChanged), this);
-	
+
 
 	lastScrollHorizontal = gtk_adjustment_get_value(scrollHandling->getHorizontal());
 	lastScrollVertical = gtk_adjustment_get_value(scrollHandling->getVertical());
@@ -74,7 +74,7 @@ void Layout::updateVisibility()
 	XOJ_CHECK_TYPE(Layout);
 
 	Rectangle visRect = getVisibleRect();
-	
+
 	// step through every possible page position and update using p->setIsVisible()
 	// Using initial grid aprox speeds things up by a factor of 5.  See previous git check-in for specifics.
 	int x1 = 0;
@@ -106,14 +106,12 @@ void Layout::updateVisibility()
 				else
 				{
 					pageView->setIsVisible(false);
-							
 				}
 			}
 			x1 = x2;
 		}
 		y1 = y2;
 	}
-	
 }
 
 Rectangle Layout::getVisibleRect()
@@ -218,7 +216,7 @@ void Layout::layoutPages(int width, int height)
 	int64_t y = borderY;
 
 
-	// Iterate over ALL possible rows and columns. 
+	// Iterate over ALL possible rows and columns.
 	//We don't know which page, if any,  is to be displayed in each row, column -  ask the mapper object!
 	//Then assign that page coordinates with center, left or right justify within row,column grid cell as required.
 	for (size_t r = 0; r < rows; r++)
@@ -248,24 +246,23 @@ void Layout::layoutPages(int width, int height)
 							paddingRight = XOURNAL_ROOM_FOR_SHADOW;
 						}
 						else
-						{								//align left
+						{  //align left
 							paddingLeft = XOURNAL_ROOM_FOR_SHADOW;
 							paddingRight = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
 						}
 					}
 					else
-					{	// not paired page mode - center
-						paddingLeft = XOURNAL_PADDING_BETWEEN / 2 + columnPadding / 2;      //center justify
+					{                                                                   // not paired page mode - center
+						paddingLeft = XOURNAL_PADDING_BETWEEN / 2 + columnPadding / 2;  //center justify
 						paddingRight = XOURNAL_PADDING_BETWEEN - paddingLeft + columnPadding / 2;
 					}
 
 					x += paddingLeft;
 
-					v->setX(x);		//set the page position
+					v->setX(x);  //set the page position
 					v->setY(y);
 
 					x += vDisplayWidth + paddingRight;
-
 				}
 			}
 			else
@@ -303,20 +300,22 @@ void Layout::scrollRelative(double x, double y)
 {
 	XOJ_CHECK_TYPE(Layout);
 
-	if(this->view->getControl()->getSettings()->isPresentationMode())
+	if (this->view->getControl()->getSettings()->isPresentationMode())
 	{
 		return;
 	}
 
-	gtk_adjustment_set_value(scrollHandling->getHorizontal(), gtk_adjustment_get_value(scrollHandling->getHorizontal()) + x);
-	gtk_adjustment_set_value(scrollHandling->getVertical(), gtk_adjustment_get_value(scrollHandling->getVertical()) + y);
+	gtk_adjustment_set_value(scrollHandling->getHorizontal(),
+	                         gtk_adjustment_get_value(scrollHandling->getHorizontal()) + x);
+	gtk_adjustment_set_value(scrollHandling->getVertical(),
+	                         gtk_adjustment_get_value(scrollHandling->getVertical()) + y);
 }
 
 void Layout::scrollAbs(double x, double y)
 {
 	XOJ_CHECK_TYPE(Layout);
 
-	if(this->view->getControl()->getSettings()->isPresentationMode())
+	if (this->view->getControl()->getSettings()->isPresentationMode())
 	{
 		return;
 	}
@@ -340,14 +339,14 @@ XojPageView* Layout::getViewAt(int x, int y)
 
 	XOJ_CHECK_TYPE(Layout);
 
-//  No need to check page cache as the Linear search below starts at cached position.
-//  Keep Binary search handy to check against.
-//	
-//  //Binary Search ... too much overhead makes this a slower option in our use case.
-// 	auto rit = std::lower_bound( this->sizeRow.begin(),  this->sizeRow.end(), y);
-// 	int rb = rit - this->sizeRow.begin();	//get index
-// 	auto cit = std::lower_bound( this->sizeCol.begin(),  this->sizeCol.end(), x);
-// 	int cb = cit - this->sizeCol.begin();
+	//  No need to check page cache as the Linear search below starts at cached position.
+	//  Keep Binary search handy to check against.
+	//
+	//  //Binary Search ... too much overhead makes this a slower option in our use case.
+	// 	auto rit = std::lower_bound( this->sizeRow.begin(),  this->sizeRow.end(), y);
+	// 	int rb = rit - this->sizeRow.begin();	//get index
+	// 	auto cit = std::lower_bound( this->sizeCol.begin(),  this->sizeCol.end(), x);
+	// 	int cb = cit - this->sizeCol.begin();
 
 
 	auto fast_linear_search = [](std::vector<unsigned> const& container, size_t start, size_t value) {
@@ -378,7 +377,6 @@ XojPageView* Layout::getViewAt(int x, int y)
 		{
 			return this->view->viewPages[*optionalPage];
 		}
-		
 	}
 
 	return nullptr;

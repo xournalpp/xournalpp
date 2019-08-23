@@ -23,7 +23,7 @@ class Control;
 class GladeGui;
 class SidebarPageButton;
 
-class Sidebar : public DocumentListener, public SidebarToolbarActionListener
+class Sidebar: public DocumentListener, public SidebarToolbarActionListener
 {
 public:
 	Sidebar(GladeGui* gui, Control* control);
@@ -73,7 +73,6 @@ public:
 	virtual void documentChanged(DocumentChangeType type);
 
 private:
-
 	/**
 	 * Page selected
 	 */
@@ -131,5 +130,4 @@ public:
 	Sidebar* sidebar = NULL;
 	int index = 0;
 	AbstractSidebarPage* page = NULL;
-
 };

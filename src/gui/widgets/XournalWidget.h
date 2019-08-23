@@ -15,7 +15,7 @@
 
 G_BEGIN_DECLS
 
-#define GTK_XOURNAL(obj) G_TYPE_CHECK_INSTANCE_CAST(obj, gtk_xournal_get_type (), GtkXournal)
+#define GTK_XOURNAL(obj) G_TYPE_CHECK_INSTANCE_CAST(obj, gtk_xournal_get_type(), GtkXournal)
 #define GTK_XOURNAL_CLASS(klass) GTK_CHECK_CLASS_CAST(klass, gtk_xournal_get_type(), GtkXournalClass)
 #define GTK_IS_XOURNAL(obj) G_TYPE_CHECK_INSTANCE_TYPE(obj, gtk_xournal_get_type())
 
@@ -69,7 +69,7 @@ struct _GtkXournal
 	/**
 	 * Deprecated input handling
 	 */
-	 NewGtkInputDevice* depInput = nullptr;
+	NewGtkInputDevice* depInput = nullptr;
 };
 
 struct _GtkXournalClass

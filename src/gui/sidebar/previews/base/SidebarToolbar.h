@@ -68,7 +68,6 @@ private:
 	static void btDeleteClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
 
 private:
-
 	/**
 	 * Listener for actions
 	 */

@@ -5,7 +5,8 @@
 
 #ifdef ENABLE_PLUGINS
 
-extern "C" {
+extern "C"
+{
 #include <lua.h>
 #include <lauxlib.h>
 #include <lualib.h>
@@ -14,29 +15,26 @@ extern "C" {
 
 #include "luapi_application.h"
 
-#define LOAD_FROM_INI(target, group, key) \
-	{ \
+#define LOAD_FROM_INI(target, group, key)                              \
+	{                                                                  \
 		char* value = g_key_file_get_string(config, group, key, NULL); \
-		if (value != NULL) \
-		{ \
-			target = value; \
-			g_free(value); \
-		} \
+		if (value != NULL)                                             \
+		{                                                              \
+			target = value;                                            \
+			g_free(value);                                             \
+		}                                                              \
 	}
 
 /*
  ** these libs are loaded by lua.c and are readily available to any Lua
  ** program
  */
-static const luaL_Reg loadedlibs[] = {
-	{ "app", luaopen_app },
-	{ NULL, NULL }
-};
+static const luaL_Reg loadedlibs[] = {{"app", luaopen_app}, {NULL, NULL}};
 
 Plugin::Plugin(Control* control, string name, string path)
- : control(control),
-   name(name),
-   path(path)
+ : control(control)
+ , name(name)
+ , path(path)
 {
 	XOJ_INIT_TYPE(Plugin);
 
@@ -54,7 +52,7 @@ Plugin::~Plugin()
 		lua = NULL;
 	}
 
-	for (MenuEntry* m : menuEntries)
+	for (MenuEntry* m: menuEntries)
 	{
 		delete m;
 	}
@@ -72,7 +70,7 @@ Plugin* Plugin::getPluginFromLua(lua_State* lua)
 
 	if (lua_islightuserdata(lua, -1))
 	{
-		Plugin* data = (Plugin*)lua_touserdata(lua, -1);
+		Plugin* data = (Plugin*) lua_touserdata(lua, -1);
 		lua_pop(lua, 1);
 
 		XOJ_CHECK_TYPE_OBJ(data, Plugin);
@@ -98,7 +96,7 @@ void Plugin::registerToolbar()
 	inInitUi = true;
 
 	lua_getglobal(lua, "initUi");
-	if (lua_isfunction (lua, -1) == 1)
+	if (lua_isfunction(lua, -1) == 1)
 	{
 		if (callFunction("initUi"))
 		{
@@ -131,11 +129,11 @@ void Plugin::registerMenu(GtkWindow* mainWindow, GtkWidget* menu)
 		return;
 	}
 
-    gtk_menu_shell_append(GTK_MENU_SHELL(menu), gtk_separator_menu_item_new());
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), gtk_separator_menu_item_new());
 
 	GtkAccelGroup* accelGroup = gtk_accel_group_new();
 
-	for (MenuEntry* m : menuEntries)
+	for (MenuEntry* m: menuEntries)
 	{
 		GtkWidget* mi = gtk_menu_item_new_with_label(m->menu.c_str());
 		m->widget = mi;
@@ -144,18 +142,19 @@ void Plugin::registerMenu(GtkWindow* mainWindow, GtkWidget* menu)
 		if (m->accelerator != "")
 		{
 			guint acceleratorKey = 0;
-			GdkModifierType mods = (GdkModifierType)0;
+			GdkModifierType mods = (GdkModifierType) 0;
 			gtk_accelerator_parse(m->accelerator.c_str(), &acceleratorKey, &mods);
 
 			gtk_widget_add_accelerator(mi, "activate", accelGroup, acceleratorKey, mods, GTK_ACCEL_VISIBLE);
 		}
 
-		g_signal_connect(mi, "activate", G_CALLBACK(
-			+[](GtkWidget* bt, MenuEntry* me)
-			{
-				XOJ_CHECK_TYPE_OBJ(me, MenuEntry);
-				me->plugin->executeMenuEntry(me);
-			}), m);
+		g_signal_connect(mi,
+		                 "activate",
+		                 G_CALLBACK(+[](GtkWidget* bt, MenuEntry* me) {
+			                 XOJ_CHECK_TYPE_OBJ(me, MenuEntry);
+			                 me->plugin->executeMenuEntry(me);
+		                 }),
+		                 m);
 	}
 
 	gtk_window_add_accel_group(GTK_WINDOW(mainWindow), accelGroup);
@@ -386,13 +385,13 @@ void Plugin::loadScript()
 
 
 	// Create Lua state variable
-    lua = luaL_newstate();
+	lua = luaL_newstate();
 
-    // Load Lua libraries
-    luaL_openlibs(lua);
+	// Load Lua libraries
+	luaL_openlibs(lua);
 
-    // Load but don't run the Lua script
-    string luafile = path + "/" + mainfile;
+	// Load but don't run the Lua script
+	string luafile = path + "/" + mainfile;
 	if (luaL_loadfile(lua, luafile.c_str()))
 	{
 		// Error out if file can't be read
@@ -456,4 +455,3 @@ bool Plugin::isValid()
 }
 
 #endif
-

@@ -18,7 +18,7 @@ class Element;
 class Layer;
 class Redrawable;
 
-class AddUndoAction : public UndoAction
+class AddUndoAction: public UndoAction
 {
 public:
 	AddUndoAction(const PageRef& page, bool eraser);

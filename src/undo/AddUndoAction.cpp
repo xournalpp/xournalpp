@@ -34,16 +34,15 @@ AddUndoAction::~AddUndoAction()
 	}
 	g_list_free(this->elements);
 
-	XOJ_RELEASE_TYPE(AddUndoAction)
-			;
+	XOJ_RELEASE_TYPE(AddUndoAction);
 }
 
 void AddUndoAction::addElement(Layer* layer, Element* e, int pos)
 {
 	XOJ_CHECK_TYPE(AddUndoAction);
 
-	this->elements = g_list_insert_sorted(this->elements, new PageLayerPosEntry<Element> (layer, e, pos),
-										  (GCompareFunc) PageLayerPosEntry<Element>::cmp);
+	this->elements = g_list_insert_sorted(this->elements, new PageLayerPosEntry<Element>(layer, e, pos),
+	                                      (GCompareFunc) PageLayerPosEntry<Element>::cmp);
 }
 
 bool AddUndoAction::redo(Control*)

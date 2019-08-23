@@ -7,7 +7,8 @@
 #include "InputContext.h"
 #include <gui/XournalppCursor.h>
 
-MouseInputHandler::MouseInputHandler(InputContext* inputContext) : PenInputHandler(inputContext)
+MouseInputHandler::MouseInputHandler(InputContext* inputContext)
+ : PenInputHandler(inputContext)
 {
 	XOJ_INIT_TYPE(MouseInputHandler);
 }
@@ -54,7 +55,7 @@ bool MouseInputHandler::handleImpl(InputEvent* event)
 	 * Trigger motion actions
 	 */
 	// Trigger motion action when pen/mouse is pressed and moved
-	if ( event->type == MOTION_EVENT) //mouse or pen moved
+	if (event->type == MOTION_EVENT)  //mouse or pen moved
 	{
 		this->actionMotion(event);
 		XournalppCursor* cursor = xournal->view->getCursor();
@@ -100,34 +101,34 @@ void MouseInputHandler::setPressedState(InputEvent* event)
 
 	this->inputContext->getXournal()->view->getCursor()->setInsidePage(currentPage != nullptr);
 
-	if (event->type == BUTTON_PRESS_EVENT) //mouse button pressed or pen touching surface
+	if (event->type == BUTTON_PRESS_EVENT)  //mouse button pressed or pen touching surface
 	{
 		this->deviceClassPressed = true;
 
 		switch (event->button)
 		{
-			case 2:
-				this->modifier2 = true;
-				break;
-			case 3:
-				this->modifier3 = true;
-			default:
-				break;
+		case 2:
+			this->modifier2 = true;
+			break;
+		case 3:
+			this->modifier3 = true;
+		default:
+			break;
 		}
 	}
-	if (event->type == BUTTON_RELEASE_EVENT) //mouse button released or pen not touching surface anymore
+	if (event->type == BUTTON_RELEASE_EVENT)  //mouse button released or pen not touching surface anymore
 	{
 		this->deviceClassPressed = false;
 
 		switch (event->button)
 		{
-			case 2:
-				this->modifier2 = false;
-				break;
-			case 3:
-				this->modifier3 = false;
-			default:
-				break;
+		case 2:
+			this->modifier2 = false;
+			break;
+		case 3:
+			this->modifier3 = false;
+		default:
+			break;
 		}
 	}
 }

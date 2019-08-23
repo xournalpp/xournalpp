@@ -49,7 +49,7 @@ Scheduler::~Scheduler()
 
 	stop();
 
-	Job * job = NULL;
+	Job* job = NULL;
 	while ((job = getNextJobUnlocked()) != NULL)
 	{
 		job->unref();
@@ -162,7 +162,7 @@ void Scheduler::unlock()
 	g_mutex_unlock(&this->schedulerMutex);
 }
 
-#define ZOOM_WAIT_US_TIMEOUT 300000 // 0.3s
+#define ZOOM_WAIT_US_TIMEOUT 300000  // 0.3s
 
 void Scheduler::blockRerenderZoom()
 {

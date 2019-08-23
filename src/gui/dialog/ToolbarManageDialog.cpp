@@ -8,43 +8,46 @@
 
 enum
 {
-	COLUMN_STRING, COLUMN_BOLD, COLUMN_POINTER, COLUMN_EDITABLE, N_COLUMNS
+	COLUMN_STRING,
+	COLUMN_BOLD,
+	COLUMN_POINTER,
+	COLUMN_EDITABLE,
+	N_COLUMNS
 };
 
 ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, ToolbarModel* model)
- : GladeGui(gladeSearchPath, "toolbarManageDialog.glade", "DialogManageToolbar"),
-   tbModel(model)
+ : GladeGui(gladeSearchPath, "toolbarManageDialog.glade", "DialogManageToolbar")
+ , tbModel(model)
 {
 	XOJ_INIT_TYPE(ToolbarManageDialog);
 
 	GtkTreeIter iter;
 	this->model = gtk_list_store_new(N_COLUMNS, G_TYPE_STRING, G_TYPE_INT, G_TYPE_POINTER, G_TYPE_BOOLEAN);
 	gtk_list_store_append(this->model, &iter);
-	gtk_list_store_set(this->model, &iter, COLUMN_STRING, _("Predefined"),
-					   COLUMN_BOLD, PANGO_WEIGHT_BOLD, COLUMN_POINTER, NULL, COLUMN_EDITABLE, false, -1);
+	gtk_list_store_set(this->model, &iter, COLUMN_STRING, _("Predefined"), COLUMN_BOLD, PANGO_WEIGHT_BOLD,
+	                   COLUMN_POINTER, NULL, COLUMN_EDITABLE, false, -1);
 
-	for (ToolbarData* data : *model->getToolbars())
+	for (ToolbarData* data: *model->getToolbars())
 	{
 		if (data->isPredefined())
 		{
 			gtk_list_store_append(this->model, &iter);
-			gtk_list_store_set(this->model, &iter, COLUMN_STRING, data->getName().c_str(),
-							   COLUMN_BOLD, PANGO_WEIGHT_NORMAL, COLUMN_POINTER, data,
-							   COLUMN_EDITABLE, false, -1);
+			gtk_list_store_set(this->model, &iter, COLUMN_STRING, data->getName().c_str(), COLUMN_BOLD,
+			                   PANGO_WEIGHT_NORMAL, COLUMN_POINTER, data, COLUMN_EDITABLE, false, -1);
 		}
 	}
 
 	gtk_list_store_append(this->model, &iter);
-	gtk_list_store_set(this->model, &iter, COLUMN_STRING, _("Customized"),
-					   COLUMN_BOLD, PANGO_WEIGHT_BOLD, COLUMN_POINTER, NULL, COLUMN_EDITABLE, false, -1);
+	gtk_list_store_set(this->model, &iter, COLUMN_STRING, _("Customized"), COLUMN_BOLD, PANGO_WEIGHT_BOLD,
+	                   COLUMN_POINTER, NULL, COLUMN_EDITABLE, false, -1);
 
-	for (ToolbarData* data : *model->getToolbars())
+	for (ToolbarData* data: *model->getToolbars())
 	{
 		if (!data->isPredefined())
 		{
 			gtk_list_store_append(this->model, &iter);
 			gtk_list_store_set(this->model, &iter, COLUMN_STRING, data->getName().c_str(), COLUMN_BOLD,
-							   PANGO_WEIGHT_NORMAL, COLUMN_POINTER, data, COLUMN_EDITABLE, true, -1);
+			                   PANGO_WEIGHT_NORMAL, COLUMN_POINTER, data, COLUMN_EDITABLE, true, -1);
 		}
 	}
 
@@ -52,10 +55,8 @@ ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, Toolb
 	gtk_tree_view_set_model(GTK_TREE_VIEW(tree), GTK_TREE_MODEL(this->model));
 
 	GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-	GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Toolbars"), renderer, "text",
-																		 COLUMN_STRING, "weight",
-																		 COLUMN_BOLD, "editable",
-																		 COLUMN_EDITABLE, NULL);
+	GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(
+	        _("Toolbars"), renderer, "text", COLUMN_STRING, "weight", COLUMN_BOLD, "editable", COLUMN_EDITABLE, NULL);
 
 	gtk_tree_view_append_column(GTK_TREE_VIEW(tree), column);
 
@@ -117,8 +118,7 @@ void ToolbarManageDialog::buttonDeleteCallback(GtkButton* button, ToolbarManageD
 				gtk_list_store_remove(dlg->model, &iter);
 				break;
 			}
-		}
-		while (gtk_tree_model_iter_next(GTK_TREE_MODEL(dlg->model), &iter));
+		} while (gtk_tree_model_iter_next(GTK_TREE_MODEL(dlg->model), &iter));
 	}
 
 	dlg->updateSelectionData();
@@ -148,7 +148,7 @@ void ToolbarManageDialog::addToolbarData(ToolbarData* data)
 	GtkTreeIter iter;
 	gtk_list_store_append(this->model, &iter);
 	gtk_list_store_set(this->model, &iter, COLUMN_STRING, data->getName().c_str(), COLUMN_BOLD, PANGO_WEIGHT_NORMAL,
-					   COLUMN_POINTER, data, COLUMN_EDITABLE, true, -1);
+	                   COLUMN_POINTER, data, COLUMN_EDITABLE, true, -1);
 
 	GtkWidget* tree = get("toolbarList");
 
@@ -158,8 +158,8 @@ void ToolbarManageDialog::addToolbarData(ToolbarData* data)
 	gtk_tree_view_set_cursor(GTK_TREE_VIEW(tree), path, column, true);
 }
 
-void ToolbarManageDialog::treeCellEditedCallback(GtkCellRendererText* renderer, gchar* pathString,
-												 gchar* newText, ToolbarManageDialog* dlg)
+void ToolbarManageDialog::treeCellEditedCallback(GtkCellRendererText* renderer, gchar* pathString, gchar* newText,
+                                                 ToolbarManageDialog* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarManageDialog);
 

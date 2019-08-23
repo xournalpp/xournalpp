@@ -5,7 +5,8 @@
 /**
  * Base class for Formatting
  */
-class PlaceholderElement {
+class PlaceholderElement
+{
 public:
 	virtual ~PlaceholderElement()
 	{
@@ -18,7 +19,8 @@ public:
 /**
  * Format String
  */
-class PlaceholderElementString : public PlaceholderElement{
+class PlaceholderElementString: public PlaceholderElement
+{
 public:
 	PlaceholderElementString(string text)
 	 : text(text)
@@ -39,7 +41,8 @@ private:
 /**
  * Format int
  */
-class PlaceholderElementInt : public PlaceholderElement{
+class PlaceholderElementInt: public PlaceholderElement
+{
 public:
 	PlaceholderElementInt(int64_t value)
 	 : value(value)
@@ -67,7 +70,7 @@ PlaceholderString::PlaceholderString(string text)
 
 PlaceholderString::~PlaceholderString()
 {
-	for (PlaceholderElement* e : data)
+	for (PlaceholderElement* e: data)
 	{
 		delete e;
 	}
@@ -112,7 +115,7 @@ string PlaceholderString::formatPart(string format)
 	// Placeholder index starting at 1, vector at 0
 	index--;
 
-	if (index < 0 || index >= (int)data.size())
+	if (index < 0 || index >= (int) data.size())
 	{
 		string notFound = "{";
 		notFound += std::to_string(index + 1);
@@ -138,11 +141,12 @@ void PlaceholderString::process()
 	string formatString;
 
 	// Should work, also for UTF-8
-	for (int i = 0; i < (int)text.length(); i++)
+	for (int i = 0; i < (int) text.length(); i++)
 	{
 		char c = text.at(i);
 
-		if (c == '{') {
+		if (c == '{')
+		{
 			closeBacket = false;
 			if (openBracket)
 			{
@@ -199,6 +203,7 @@ const char* PlaceholderString::c_str()
 	return processed.c_str();
 }
 
-std::ostream &operator<<(std::ostream &os, PlaceholderString &ps) {
-    return os << ps.str();
+std::ostream& operator<<(std::ostream& os, PlaceholderString& ps)
+{
+	return os << ps.str();
 }

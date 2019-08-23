@@ -10,18 +10,17 @@
 #include <cmath>
 
 
-guint32 BaseStrokeHandler::lastStrokeTime;		//persist for next stroke
+guint32 BaseStrokeHandler::lastStrokeTime;  //persist for next stroke
 
 
-
-BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift, bool flipControl)
+BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift,
+                                     bool flipControl)
  : InputHandler(xournal, redrawable, page)
 {
 	XOJ_INIT_TYPE(BaseStrokeHandler);
-	
+
 	this->flipShift = flipShift;
 	this->flipControl = flipControl;
-	
 }
 
 void BaseStrokeHandler::snapToGrid(double& x, double& y)
@@ -57,7 +56,7 @@ void BaseStrokeHandler::snapToGrid(double& x, double& y)
 		tmpX = x - xRem;
 		snapX = true;
 	}
-	if (xRem > gridSize - tolerance )
+	if (xRem > gridSize - tolerance)
 	{
 		tmpX = x + (gridSize - xRem);
 		snapX = true;
@@ -67,7 +66,7 @@ void BaseStrokeHandler::snapToGrid(double& x, double& y)
 		tmpY = y - yRem;
 		snapY = true;
 	}
-	if (yRem > gridSize - tolerance )
+	if (yRem > gridSize - tolerance)
 	{
 		tmpY = y + (gridSize - yRem);
 		snapY = true;
@@ -98,40 +97,43 @@ void BaseStrokeHandler::draw(cairo_t* cr)
 	view.drawStroke(cr, stroke, 0);
 }
 
-bool BaseStrokeHandler::onKeyEvent(GdkEventKey* event) 
+bool BaseStrokeHandler::onKeyEvent(GdkEventKey* event)
 {
-	if(event->is_modifier)
+	if (event->is_modifier)
 	{
 		Rectangle rect = stroke->boundingRect();
-			
+
 		PositionInputData pos;
-		pos.x = pos.y = pos.pressure = 0; //not used in redraw
-		if( event->keyval == GDK_KEY_Shift_L || event->keyval == GDK_KEY_Shift_R)
+		pos.x = pos.y = pos.pressure = 0;  //not used in redraw
+		if (event->keyval == GDK_KEY_Shift_L || event->keyval == GDK_KEY_Shift_R)
 		{
-			pos.state = (GdkModifierType)(event->state ^ GDK_SHIFT_MASK);	// event state does not include current this modifier keypress - so ^toggle will work for press and release.
+			pos.state = (GdkModifierType)(
+			        event->state ^
+			        GDK_SHIFT_MASK);  // event state does not include current this modifier keypress - so ^toggle will work for press and release.
 		}
-		else if( event->keyval == GDK_KEY_Control_L || event->keyval == GDK_KEY_Control_R)
+		else if (event->keyval == GDK_KEY_Control_L || event->keyval == GDK_KEY_Control_R)
 		{
 			pos.state = (GdkModifierType)(event->state ^ GDK_CONTROL_MASK);
 		}
-		else if( event->keyval == GDK_KEY_Alt_L || event->keyval == GDK_KEY_Alt_R)
+		else if (event->keyval == GDK_KEY_Alt_L || event->keyval == GDK_KEY_Alt_R)
 		{
 			pos.state = (GdkModifierType)(event->state ^ GDK_MOD1_MASK);
-		} 				
-		else{
+		}
+		else
+		{
 			return false;
 		}
-			
-		this->redrawable->repaintRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight()); 	
 
-		
-		Point malleablePoint = this->currPoint;		//make a copy as it might get snapped to grid.
-		this->drawShape( malleablePoint, pos );
+		this->redrawable->repaintRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(),
+		                              stroke->getElementHeight());
 
-		
-		
+
+		Point malleablePoint = this->currPoint;  //make a copy as it might get snapped to grid.
+		this->drawShape(malleablePoint, pos);
+
+
 		rect.add(stroke->boundingRect());
-		
+
 		double w = stroke->getWidth();
 		redrawable->repaintRect(rect.x - w, rect.y - w, rect.width + 2 * w, rect.height + 2 * w);
 
@@ -165,17 +167,15 @@ bool BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 		}
 	}
 
-	this->redrawable->repaintRect(stroke->getX(), stroke->getY(),
-								  stroke->getElementWidth(), stroke->getElementHeight());
+	this->redrawable->repaintRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(),
+	                              stroke->getElementHeight());
 
 	drawShape(currentPoint, pos);
-	
+
 	rect.add(stroke->boundingRect());
 	double w = stroke->getWidth();
 
-	redrawable->repaintRect(rect.x - w, rect.y - w,
-							rect.width + 2 * w,
-							rect.height + 2 * w);
+	redrawable->repaintRect(rect.x - w, rect.y - w, rect.width + 2 * w, rect.height + 2 * w);
 
 	return true;
 }
@@ -184,50 +184,51 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 
-	xournal->getCursor()->activateDrawDirCursor(false);	//in case released within  fixate_Dir_Mods_Dist
-	
+	xournal->getCursor()->activateDrawDirCursor(false);  //in case released within  fixate_Dir_Mods_Dist
+
 	if (stroke == NULL)
 	{
 		return;
 	}
-	
-	
+
+
 	Control* control = xournal->getControl();
 	Settings* settings = control->getSettings();
-	
-	if ( settings->getStrokeFilterEnabled() )		// Note: For simple strokes see StrokeHandler which has a slightly different version of this filter.  See //!
-	{	
-		int strokeFilterIgnoreTime,strokeFilterSuccessiveTime;
+
+	if (settings->getStrokeFilterEnabled())  // Note: For simple strokes see StrokeHandler which has a slightly different version of this filter.  See //!
+	{
+		int strokeFilterIgnoreTime, strokeFilterSuccessiveTime;
 		double strokeFilterIgnoreLength;
-		
-		settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnoreLength, &strokeFilterSuccessiveTime  );
-		double dpmm = settings->getDisplayDpi()/25.4;
-		
+
+		settings->getStrokeFilter(&strokeFilterIgnoreTime, &strokeFilterIgnoreLength, &strokeFilterSuccessiveTime);
+		double dpmm = settings->getDisplayDpi() / 25.4;
+
 		double zoom = xournal->getZoom();
-		double lengthSqrd =  ( pow(   ((pos.x / zoom) - (this->buttonDownPoint.x))  ,2) 
-					+ pow(   ((pos.y / zoom) - (this->buttonDownPoint.y))  ,2) ) * pow(xournal->getZoom(),2);
-								    
-		if (   lengthSqrd < pow((strokeFilterIgnoreLength*dpmm),2) && pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) 
+		double lengthSqrd = (pow(((pos.x / zoom) - (this->buttonDownPoint.x)), 2) +
+		                     pow(((pos.y / zoom) - (this->buttonDownPoint.y)), 2)) *
+		                    pow(xournal->getZoom(), 2);
+
+		if (lengthSqrd < pow((strokeFilterIgnoreLength * dpmm), 2) &&
+		    pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime)
 		{
-			if ( pos.timestamp - this->lastStrokeTime  > strokeFilterSuccessiveTime )
+			if (pos.timestamp - this->lastStrokeTime > strokeFilterSuccessiveTime)
 			{
 				//stroke not being added to layer... delete here.
 				delete stroke;
 				stroke = NULL;
 				this->userTapped = true;
-				
+
 				this->lastStrokeTime = pos.timestamp;
-				
+
 				xournal->getCursor()->updateCursor();
-				
+
 				return;
 			}
-
 		}
 		this->lastStrokeTime = pos.timestamp;
 	}
-	
-	
+
+
 	// This is not a valid stroke
 	if (stroke->getPointCount() < 2)
 	{
@@ -254,70 +255,68 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	stroke = NULL;
 
 	xournal->getCursor()->updateCursor();
-	
+
 	return;
 }
 
 void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
-	
+
 	double zoom = xournal->getZoom();
 	this->buttonDownPoint.x = pos.x / zoom;
-	this->buttonDownPoint.y =  pos.y / zoom;
+	this->buttonDownPoint.y = pos.y / zoom;
 
 	if (!stroke)
 	{
 		createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y));
 	}
-	
+
 	this->startStrokeTime = pos.timestamp;
 }
 
 
-void BaseStrokeHandler::modifyModifiersByDrawDir(double width, double height,  bool changeCursor)
+void BaseStrokeHandler::modifyModifiersByDrawDir(double width, double height, bool changeCursor)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
-		
+
 
 	bool gestureShift = this->flipShift;
 	bool gestureControl = this->flipControl;
-	
-	if( this->drawModifierFixed == NONE){		//User hasn't dragged out past DrawDirModsRadius  i.e. modifier not yet locked.
-		gestureShift = (width  < 0) != gestureShift;
-		gestureControl =  (height < 0 ) != gestureControl;
-		
-		this->modShift = this->modShift ==  !gestureShift;
-		this->modControl = this->modControl == !gestureControl;	
-		
+
+	if (this->drawModifierFixed == NONE)
+	{  //User hasn't dragged out past DrawDirModsRadius  i.e. modifier not yet locked.
+		gestureShift = (width < 0) != gestureShift;
+		gestureControl = (height < 0) != gestureControl;
+
+		this->modShift = this->modShift == !gestureShift;
+		this->modControl = this->modControl == !gestureControl;
+
 		double zoom = xournal->getZoom();
-		double fixate_Dir_Mods_Dist = std::pow( xournal->getControl()->getSettings()->getDrawDirModsRadius() / zoom, 2.0); 
-		if (std::pow(width,2.0) > fixate_Dir_Mods_Dist ||  std::pow(height,2.0) > fixate_Dir_Mods_Dist )
+		double fixate_Dir_Mods_Dist =
+		        std::pow(xournal->getControl()->getSettings()->getDrawDirModsRadius() / zoom, 2.0);
+		if (std::pow(width, 2.0) > fixate_Dir_Mods_Dist || std::pow(height, 2.0) > fixate_Dir_Mods_Dist)
 		{
-			this->drawModifierFixed = (DIRSET_MODIFIERS)(SET |
-				(gestureShift? SHIFT:NONE) |
-				(gestureControl? CONTROL:NONE) );
- 			if(changeCursor)
- 			{
+			this->drawModifierFixed =
+			        (DIRSET_MODIFIERS)(SET | (gestureShift ? SHIFT : NONE) | (gestureControl ? CONTROL : NONE));
+			if (changeCursor)
+			{
 				xournal->getCursor()->activateDrawDirCursor(false);
- 			}
+			}
 		}
 		else
 		{
- 			if (changeCursor)
- 			{
-				xournal->getCursor()->activateDrawDirCursor( true,  this->modShift, this->modControl);
- 			}
+			if (changeCursor)
+			{
+				xournal->getCursor()->activateDrawDirCursor(true, this->modShift, this->modControl);
+			}
 		}
 	}
 	else
 	{
 		gestureShift = gestureShift == !(this->drawModifierFixed & SHIFT);
 		gestureControl = gestureControl == !(this->drawModifierFixed & CONTROL);
-		this->modShift = this->modShift ==  !gestureShift;
-		this->modControl = this->modControl == !gestureControl;	
+		this->modShift = this->modShift == !gestureShift;
+		this->modControl = this->modControl == !gestureControl;
 	}
-
-
-		
 }

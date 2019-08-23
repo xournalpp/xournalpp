@@ -76,7 +76,7 @@ void XmlNode::setAttrib(const char* attrib, int value)
 	putAttrib(new IntAttribute(attrib, value));
 }
 
-void XmlNode::setAttrib(const char* attrib, size_t  value)
+void XmlNode::setAttrib(const char* attrib, size_t value)
 {
 	XOJ_CHECK_TYPE(XmlNode);
 
@@ -172,4 +172,3 @@ void XmlNode::writeAttributes(OutputStream* out)
 		out->write("\"");
 	}
 }
-

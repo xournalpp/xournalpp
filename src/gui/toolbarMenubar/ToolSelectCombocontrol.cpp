@@ -7,9 +7,9 @@
 #include <i18n.h>
 
 ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id)
- : ToolButton(handler, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select", _("Select Rectangle")),
-   toolMenuHandler(toolMenuHandler),
-   popup(gtk_menu_new())
+ : ToolButton(handler, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select", _("Select Rectangle"))
+ , toolMenuHandler(toolMenuHandler)
+ , popup(gtk_menu_new())
 {
 
 	XOJ_INIT_TYPE(ToolSelectCombocontrol);

@@ -10,8 +10,8 @@
 #include <i18n.h>
 
 RemoveLayerUndoAction::RemoveLayerUndoAction(LayerController* layerController, PageRef page, Layer* layer, int layerPos)
- : UndoAction("RemoveLayerUndoAction"),
-   layerController(layerController)
+ : UndoAction("RemoveLayerUndoAction")
+ , layerController(layerController)
 {
 	XOJ_INIT_TYPE(RemoveLayerUndoAction);
 

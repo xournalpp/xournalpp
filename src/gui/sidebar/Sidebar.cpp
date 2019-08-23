@@ -12,9 +12,9 @@
 #include <config-features.h>
 
 Sidebar::Sidebar(GladeGui* gui, Control* control)
- : toolbar(this, gui),
-   control(control),
-   gui(gui)
+ : toolbar(this, gui)
+ , control(control)
+ , gui(gui)
 {
 	XOJ_INIT_TYPE(Sidebar);
 
@@ -39,12 +39,13 @@ void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui)
 	// Init toolbar with icons
 
 	int i = 0;
-	for (AbstractSidebarPage* p : this->pages)
+	for (AbstractSidebarPage* p: this->pages)
 	{
 		GtkToolItem* it = gtk_toggle_tool_button_new();
 		p->tabButton = it;
 
-		gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), gtk_image_new_from_icon_name(p->getIconName().c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR));
+		gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), gtk_image_new_from_icon_name(p->getIconName().c_str(),
+		                                                                                  GTK_ICON_SIZE_SMALL_TOOLBAR));
 		g_signal_connect(it, "clicked", G_CALLBACK(&buttonClicked), new SidebarPageButton(this, i, p));
 		gtk_tool_item_set_tooltip_text(it, p->getName().c_str());
 		gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), p->getName().c_str());
@@ -92,7 +93,7 @@ Sidebar::~Sidebar()
 
 	this->control = NULL;
 
-	for (AbstractSidebarPage* p : this->pages)
+	for (AbstractSidebarPage* p: this->pages)
 	{
 		delete p;
 	}
@@ -123,7 +124,7 @@ void Sidebar::selectPageNr(size_t page, size_t pdfPage)
 {
 	XOJ_CHECK_TYPE(Sidebar);
 
-	for (AbstractSidebarPage* p : this->pages)
+	for (AbstractSidebarPage* p: this->pages)
 	{
 		p->selectPageNr(page, pdfPage);
 	}
@@ -137,7 +138,7 @@ void Sidebar::setSelectedPage(size_t page)
 	this->currentPage = NULL;
 
 	size_t i = 0;
-	for (AbstractSidebarPage* p : this->pages)
+	for (AbstractSidebarPage* p: this->pages)
 	{
 		if (page == i)
 		{
@@ -165,7 +166,7 @@ void Sidebar::updateEnableDisableButtons()
 	size_t i = 0;
 	size_t selected = npos;
 
-	for (AbstractSidebarPage* p : this->pages)
+	for (AbstractSidebarPage* p: this->pages)
 	{
 		gtk_widget_set_sensitive(GTK_WIDGET(p->tabButton), p->hasData());
 
@@ -187,7 +188,7 @@ void Sidebar::setTmpDisabled(bool disabled)
 	gtk_widget_set_sensitive(this->buttonCloseSidebar, !disabled);
 	gtk_widget_set_sensitive(GTK_WIDGET(this->tbSelectPage), !disabled);
 
-	for (AbstractSidebarPage* p : this->pages)
+	for (AbstractSidebarPage* p: this->pages)
 	{
 		p->setTmpDisabled(disabled);
 	}
@@ -228,4 +229,3 @@ SidebarPageButton::SidebarPageButton(Sidebar* sidebar, int index, AbstractSideba
 	this->index = index;
 	this->page = page;
 }
-

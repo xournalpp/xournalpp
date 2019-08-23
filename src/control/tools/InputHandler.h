@@ -37,8 +37,7 @@ public:
 	virtual ~InputHandler();
 
 public:
-
-	 /**
+	/**
 	 * This method is called from the XojPageView to draw
 	 * overlays displaying the drawing process.
 	 * It is called from XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect)
@@ -63,15 +62,15 @@ public:
 	 * repaints of the XojPageView if necessary.
 	 */
 	virtual bool onKeyEvent(GdkEventKey* event) = 0;
-	
- 	/**
+
+	/**
 	 * The current input device for stroken, do not react on other devices (linke mices)
 	 * This method is called from the XojPageView as soon
 	 * as the pointer is released.
 	 */
 	virtual void onButtonReleaseEvent(const PositionInputData& pos) = 0;
 
- 	/**
+	/**
 	 * This method is called from the XojPageView as soon
 	 * as the pointer is pressed.
 	 */
@@ -87,14 +86,13 @@ public:
 	 * but needs to be in the base interface.
 	 */
 	virtual void resetShapeRecognizer();
-	
+
 	/**
 	 * userTapped - experimental feature to take action on filtered draw. See cbDoActionOnStrokeFilter
 	 */
-	bool userTapped = false;	
+	bool userTapped = false;
 
 protected:
-
 	bool validMotion(Point p, Point q);
 
 	void createStroke(Point p);

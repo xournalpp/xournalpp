@@ -15,39 +15,39 @@
 
 #include <stdlib.h>
 
-#define error2(var, ...)																	\
-	if (var == NULL)																		\
-	{																						\
-		var = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__);		\
+#define error2(var, ...)                                                                \
+	if (var == NULL)                                                                    \
+	{                                                                                   \
+		var = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); \
 	}
 
-#define error(...)																			\
-	if (error == NULL)																		\
-	{																						\
-		error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__);	\
+#define error(...)                                                                        \
+	if (error == NULL)                                                                    \
+	{                                                                                     \
+		error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); \
 	}
 
 LoadHandler::LoadHandler()
- : attachedPdfMissing(false),
-   removePdfBackgroundFlag(false),
-   pdfReplacementAttach(false),
-   pdfFilenameParsed(false),
-   pos(PARSER_POS_NOT_STARTED),
-   fileVersion(0),
-   minimalFileVersion(0),
-   zipFp(NULL),
-   zipContentFile(NULL),
-   gzFp(NULL),
-   layer(NULL),
-   stroke(NULL),
-   text(NULL),
-   image(NULL),
-   teximage(NULL),
-   attributeNames(NULL),
-   attributeValues(NULL),
-   elementName(NULL),
-   loadedTimeStamp(0),
-   doc(&dHanlder)
+ : attachedPdfMissing(false)
+ , removePdfBackgroundFlag(false)
+ , pdfReplacementAttach(false)
+ , pdfFilenameParsed(false)
+ , pos(PARSER_POS_NOT_STARTED)
+ , fileVersion(0)
+ , minimalFileVersion(0)
+ , zipFp(NULL)
+ , zipContentFile(NULL)
+ , gzFp(NULL)
+ , layer(NULL)
+ , stroke(NULL)
+ , text(NULL)
+ , image(NULL)
+ , teximage(NULL)
+ , attributeNames(NULL)
+ , attributeValues(NULL)
+ , elementName(NULL)
+ , loadedTimeStamp(0)
+ , doc(&dHanlder)
 {
 	XOJ_INIT_TYPE(LoadHandler);
 
@@ -181,9 +181,11 @@ bool LoadHandler::openFile(string filename)
 		{
 			this->fileVersion = std::stoi(match.str(1));
 			this->minimalFileVersion = std::stoi(match.str(2));
-		} else
+		}
+		else
 		{
-			this->lastError = FS(_F("The file is not a valid .xopp file (Version string corrupted): \"{1}\"") % filename);
+			this->lastError =
+			        FS(_F("The file is not a valid .xopp file (Version string corrupted): \"{1}\"") % filename);
 			return false;
 		}
 		zip_fclose(versionFp);
@@ -208,7 +210,8 @@ bool LoadHandler::closeFile()
 	if (this->isGzFile)
 	{
 		return static_cast<bool>(gzclose(this->gzFp));
-	} else
+	}
+	else
 	{
 		zip_fclose(this->zipContentFile);
 		int zipError = zip_close(this->zipFp);
@@ -227,13 +230,15 @@ zip_int64_t LoadHandler::readContentFile(char* buffer, zip_uint64_t len)
 			return -1;
 		}
 		return gzread(this->gzFp, buffer, (unsigned int) len);
-	} else
+	}
+	else
 	{
 		zip_int64_t lengthRead = zip_fread(this->zipContentFile, buffer, len);
 		if (lengthRead > 0)
 		{
 			return lengthRead;
-		} else
+		}
+		else
 		{
 			return -1;
 		}
@@ -244,7 +249,8 @@ bool LoadHandler::parseXml()
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	const GMarkupParser parser = { LoadHandler::parserStartElement, LoadHandler::parserEndElement, LoadHandler::parserText, NULL, NULL };
+	const GMarkupParser parser = {LoadHandler::parserStartElement, LoadHandler::parserEndElement,
+	                              LoadHandler::parserText, NULL, NULL};
 	this->error = NULL;
 	gboolean valid = true;
 
@@ -270,8 +276,7 @@ bool LoadHandler::parseXml()
 			valid = false;
 			break;
 		}
-	}
-	while (len >= 0 && valid && !error);
+	} while (len >= 0 && valid && !error);
 
 	if (valid)
 	{
@@ -521,7 +526,7 @@ void LoadHandler::parseBgPdf()
 
 			pdfFilename = sFilename;
 
-			if (!strcmp("absolute", domain))   // Absolute OR relative path
+			if (!strcmp("absolute", domain))  // Absolute OR relative path
 			{
 				if (!g_file_test(sFilename, G_FILE_TEST_EXISTS))
 				{
@@ -553,7 +558,8 @@ void LoadHandler::parseBgPdf()
 					}
 
 					g_free(tmpFilename);
-				} else
+				}
+				else
 				{
 					gpointer data = nullptr;
 					gsize dataLength;
@@ -579,7 +585,6 @@ void LoadHandler::parseBgPdf()
 				error("%s", FC(_F("Unknown domain type: {1}") % domain));
 				return;
 			}
-
 		}
 		else
 		{
@@ -704,7 +709,8 @@ void LoadHandler::parseStroke()
 		if (this->isGzFile)
 		{
 			stroke->setAudioFilename(fn);
-		} else
+		}
+		else
 		{
 			string tempFile = getTempFileForPath(fn);
 			if (!tempFile.empty())
@@ -806,7 +812,8 @@ void LoadHandler::parseText()
 		if (this->isGzFile)
 		{
 			text->setAudioFilename(fn);
-		} else
+		}
+		else
 		{
 			string tempFile = getTempFileForPath(fn);
 			if (!tempFile.empty())
@@ -871,33 +878,33 @@ void LoadHandler::parseAttachment()
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	const char* path = LoadHandlerHelper::getAttrib("path",false, this);
+	const char* path = LoadHandlerHelper::getAttrib("path", false, this);
 
-	switch(this->pos)
+	switch (this->pos)
 	{
-		case PARSER_POS_IN_IMAGE:
-		{
-			gpointer data = nullptr;
-			gsize dataLength;
-			readZipAttachment(path, data, dataLength);
+	case PARSER_POS_IN_IMAGE:
+	{
+		gpointer data = nullptr;
+		gsize dataLength;
+		readZipAttachment(path, data, dataLength);
 
-			string imgData = string((char*)data, dataLength);
-			this->image->setImage(imgData);
-			break;
-		}
-		case PARSER_POS_IN_TEXIMAGE:
-		{
-			gpointer data = nullptr;
-			gsize dataLength;
-			readZipAttachment(path, data, dataLength);
+		string imgData = string((char*) data, dataLength);
+		this->image->setImage(imgData);
+		break;
+	}
+	case PARSER_POS_IN_TEXIMAGE:
+	{
+		gpointer data = nullptr;
+		gsize dataLength;
+		readZipAttachment(path, data, dataLength);
 
-			string imgData = string((char*)data, dataLength);
-			this->teximage->setBinaryData(imgData);
-			break;
-		}
-		default:
-			g_warning("Found attachment tag as child of a tag that should not have such a child (ignoring this tag)");
-			break;
+		string imgData = string((char*) data, dataLength);
+		this->teximage->setBinaryData(imgData);
+		break;
+	}
+	default:
+		g_warning("Found attachment tag as child of a tag that should not have such a child (ignoring this tag)");
+		break;
 	}
 }
 
@@ -915,22 +922,22 @@ void LoadHandler::parseLayer()
 		loadedTimeStamp = LoadHandlerHelper::getAttribInt("ts", this);
 		loadedFilename = LoadHandlerHelper::getAttrib("fn", false, this);
 	}
-	if (!strcmp(elementName, "stroke")) // start of a stroke
+	if (!strcmp(elementName, "stroke"))  // start of a stroke
 	{
 		this->pos = PARSER_POS_IN_STROKE;
 		parseStroke();
 	}
-	else if (!strcmp(elementName, "text")) // start of a text item
+	else if (!strcmp(elementName, "text"))  // start of a text item
 	{
 		this->pos = PARSER_POS_IN_TEXT;
 		parseText();
 	}
-	else if (!strcmp(elementName, "image")) // start of a image item
+	else if (!strcmp(elementName, "image"))  // start of a image item
 	{
 		this->pos = PARSER_POS_IN_IMAGE;
 		parseImage();
 	}
-	else if (!strcmp(elementName, "teximage")) // start of a image item
+	else if (!strcmp(elementName, "teximage"))  // start of a image item
 	{
 		this->pos = PARSER_POS_IN_TEXIMAGE;
 		parseTexImage();
@@ -960,7 +967,8 @@ void LoadHandler::parseAudio()
 	int statStatus = zip_stat(this->zipFp, filename, 0, &attachmentFileStat);
 	if (statStatus != 0)
 	{
-		error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename % zip_error_strerror(zip_get_error(this->zipFp))));
+		error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename %
+		               zip_error_strerror(zip_get_error(this->zipFp))));
 		return;
 	}
 
@@ -968,7 +976,8 @@ void LoadHandler::parseAudio()
 	if (attachmentFileStat.valid & ZIP_STAT_SIZE)
 	{
 		length = attachmentFileStat.size;
-	} else
+	}
+	else
 	{
 		error("%s", FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") % filename));
 		return;
@@ -978,7 +987,8 @@ void LoadHandler::parseAudio()
 
 	if (!attachmentFile)
 	{
-		error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename % zip_error_strerror(zip_get_error(this->zipFp))));
+		error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename %
+		               zip_error_strerror(zip_get_error(this->zipFp))));
 		return;
 	}
 
@@ -995,7 +1005,8 @@ void LoadHandler::parseAudio()
 			return;
 		}
 
-		gboolean writeSuccessful = g_output_stream_write_all(outputStream, data, static_cast<gsize>(read), nullptr, nullptr, nullptr);
+		gboolean writeSuccessful =
+		        g_output_stream_write_all(outputStream, data, static_cast<gsize>(read), nullptr, nullptr, nullptr);
 		if (!writeSuccessful)
 		{
 			g_object_unref(tmpFile);
@@ -1012,8 +1023,9 @@ void LoadHandler::parseAudio()
 	g_hash_table_insert(this->audioFiles, g_strdup(filename), g_file_get_path(tmpFile));
 }
 
-void LoadHandler::parserStartElement(GMarkupParseContext* context, const gchar* elementName, const gchar** attributeNames,
-                                     const gchar** attributeValues, gpointer userdata, GError** error)
+void LoadHandler::parserStartElement(GMarkupParseContext* context, const gchar* elementName,
+                                     const gchar** attributeNames, const gchar** attributeValues, gpointer userdata,
+                                     GError** error)
 {
 	LoadHandler* handler = (LoadHandler*) userdata;
 	// Return on error
@@ -1058,8 +1070,8 @@ void LoadHandler::parserStartElement(GMarkupParseContext* context, const gchar* 
 	handler->elementName = NULL;
 }
 
-void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* elementName,
-								   gpointer userdata, GError** error)
+void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* elementName, gpointer userdata,
+                                   GError** error)
 {
 	// Return on error
 	if (*error)
@@ -1112,8 +1124,8 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* el
 	}
 }
 
-void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
-                             gsize textLen, gpointer userdata, GError** error)
+void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text, gsize textLen, gpointer userdata,
+                             GError** error)
 {
 	// Return on error
 	if (*error)
@@ -1166,7 +1178,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 
 		if (handler->pressureBuffer.size() != 0)
 		{
-			if ((int)handler->pressureBuffer.size() >= handler->stroke->getPointCount() - 1)
+			if ((int) handler->pressureBuffer.size() >= handler->stroke->getPointCount() - 1)
 			{
 				handler->stroke->setPressure(handler->pressureBuffer);
 				handler->pressureBuffer.clear();
@@ -1174,8 +1186,8 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 			else
 			{
 				g_warning("%s", FC(_F("xoj-File: {1}") % handler->filename));
-				g_warning("%s", FC(_F("Wrong number of points, got {1}, expected {2}")
-										% handler->pressureBuffer.size() % (handler->stroke->getPointCount() - 1)));
+				g_warning("%s", FC(_F("Wrong number of points, got {1}, expected {2}") %
+				                   handler->pressureBuffer.size() % (handler->stroke->getPointCount() - 1)));
 			}
 		}
 		handler->pressureBuffer.clear();
@@ -1208,7 +1220,7 @@ string LoadHandler::parseBase64(const gchar* base64, gsize lenght)
 	guchar* binaryBuffer = g_base64_decode(base64data, &binaryBufferLen);
 	g_free(base64data);
 
-	string str = string((char*)binaryBuffer, binaryBufferLen);
+	string str = string((char*) binaryBuffer, binaryBufferLen);
 	g_free(binaryBuffer);
 
 	return str;
@@ -1223,7 +1235,7 @@ void LoadHandler::readImage(const gchar* base64string, gsize base64stringLen)
 		return;
 	}
 
-	this->image->setImage(parseBase64((char*)base64string, base64stringLen));
+	this->image->setImage(parseBase64((char*) base64string, base64stringLen));
 }
 
 void LoadHandler::readTexImage(const gchar* base64string, gsize base64stringLen)
@@ -1235,7 +1247,7 @@ void LoadHandler::readTexImage(const gchar* base64string, gsize base64stringLen)
 		return;
 	}
 
-	this->teximage->setBinaryData(parseBase64((char*)base64string, base64stringLen));
+	this->teximage->setBinaryData(parseBase64((char*) base64string, base64stringLen));
 }
 
 /**
@@ -1289,14 +1301,16 @@ bool LoadHandler::readZipAttachment(string filename, gpointer& data, gsize& leng
 	int statStatus = zip_stat(this->zipFp, filename.c_str(), 0, &attachmentFileStat);
 	if (statStatus != 0)
 	{
-		error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename % zip_error_strerror(zip_get_error(this->zipFp))));
+		error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename %
+		               zip_error_strerror(zip_get_error(this->zipFp))));
 		return false;
 	}
 
 	if (attachmentFileStat.valid & ZIP_STAT_SIZE)
 	{
 		length = attachmentFileStat.size;
-	} else
+	}
+	else
 	{
 		error("%s", FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") % filename));
 		return false;
@@ -1306,7 +1320,8 @@ bool LoadHandler::readZipAttachment(string filename, gpointer& data, gsize& leng
 
 	if (!attachmentFile)
 	{
-		error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename % zip_error_strerror(zip_get_error(this->zipFp))));
+		error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename %
+		               zip_error_strerror(zip_get_error(this->zipFp))));
 		return false;
 	}
 
@@ -1318,7 +1333,8 @@ bool LoadHandler::readZipAttachment(string filename, gpointer& data, gsize& leng
 		if (read == -1)
 		{
 			g_free(data);
-			error("%s", FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") % filename));
+			error("%s",
+			      FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") % filename));
 			return false;
 		}
 
@@ -1336,7 +1352,8 @@ string LoadHandler::getTempFileForPath(string filename)
 	if (tmpFilename)
 	{
 		return string((char*) tmpFilename);
-	} else
+	}
+	else
 	{
 		error("%s", FC(_F("Requested temporary file was not found for attachment {1}") % filename));
 		return "";

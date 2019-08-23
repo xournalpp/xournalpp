@@ -66,7 +66,7 @@ void PdfCache::clearCache()
 {
 	XOJ_CHECK_TYPE(PdfCache);
 
-	for (PdfCacheEntry* e : this->data)
+	for (PdfCacheEntry* e: this->data)
 	{
 		delete e;
 	}
@@ -77,7 +77,7 @@ cairo_surface_t* PdfCache::lookup(XojPdfPageSPtr popplerPage)
 {
 	XOJ_CHECK_TYPE(PdfCache);
 
-	for (PdfCacheEntry* e : this->data)
+	for (PdfCacheEntry* e: this->data)
 	{
 		XOJ_CHECK_TYPE_OBJ(e, PdfCacheEntry);
 		if (e->popplerPage->getPageId() == popplerPage->getPageId())
@@ -95,7 +95,7 @@ void PdfCache::cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img)
 
 	PdfCacheEntry* ne = new PdfCacheEntry(popplerPage, img);
 	this->data.push_front(ne);
-	
+
 	while (this->data.size() > this->size)
 	{
 		delete this->data.back();
@@ -114,8 +114,8 @@ void PdfCache::render(cairo_t* cr, XojPdfPageSPtr popplerPage, double zoom)
 	cairo_surface_t* img = lookup(popplerPage);
 	if (img == NULL)
 	{
-		img = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-										 popplerPage->getWidth() * this->zoom, popplerPage->getHeight() * this->zoom);
+		img = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, popplerPage->getWidth() * this->zoom,
+		                                 popplerPage->getHeight() * this->zoom);
 		cairo_t* cr2 = cairo_create(img);
 
 		cairo_scale(cr2, this->zoom, this->zoom);

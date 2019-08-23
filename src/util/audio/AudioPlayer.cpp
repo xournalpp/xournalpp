@@ -1,7 +1,9 @@
 #include <control/Control.h>
 #include "AudioPlayer.h"
 
-AudioPlayer::AudioPlayer(Control* control, Settings* settings) : control(control), settings(settings)
+AudioPlayer::AudioPlayer(Control* control, Settings* settings)
+ : control(control)
+ , settings(settings)
 {
 	XOJ_INIT_TYPE(AudioPlayer);
 
@@ -108,7 +110,7 @@ vector<DeviceInfo> AudioPlayer::getOutputDevices()
 
 	std::list<DeviceInfo> deviceList = this->portAudioConsumer->getOutputDevices();
 	return vector<DeviceInfo>{std::make_move_iterator(std::begin(deviceList)),
-							  std::make_move_iterator(std::end(deviceList))};
+	                          std::make_move_iterator(std::end(deviceList))};
 }
 
 Settings* AudioPlayer::getSettings()

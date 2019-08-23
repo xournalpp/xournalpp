@@ -18,11 +18,11 @@
 
 class ColorSelectImage;
 
-class ColorToolItem : public AbstractToolItem
+class ColorToolItem: public AbstractToolItem
 {
 public:
 	ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, int color,
-			bool selektor = false);
+	              bool selektor = false);
 	virtual ~ColorToolItem();
 
 public:

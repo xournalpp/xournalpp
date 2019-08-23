@@ -11,11 +11,13 @@
 #define DEFAULT_FONT "Sans"
 #define DEFAULT_FONT_SIZE 12
 
-#define WRITE_BOOL_PROP(var) xmlNode = saveProperty((const char *)#var, var ? "true" : "false", root)
-#define WRITE_STRING_PROP(var) xmlNode = saveProperty((const char *)#var, var.empty() ? "" : var.c_str(), root)
-#define WRITE_INT_PROP(var) xmlNode = saveProperty((const char *)#var, var, root)
-#define WRITE_DOUBLE_PROP(var) xmlNode = savePropertyDouble((const char *)#var, var, root)
-#define WRITE_COMMENT(var) com = xmlNewComment((const xmlChar *)var); xmlAddPrevSibling(xmlNode, com);
+#define WRITE_BOOL_PROP(var) xmlNode = saveProperty((const char*) #var, var ? "true" : "false", root)
+#define WRITE_STRING_PROP(var) xmlNode = saveProperty((const char*) #var, var.empty() ? "" : var.c_str(), root)
+#define WRITE_INT_PROP(var) xmlNode = saveProperty((const char*) #var, var, root)
+#define WRITE_DOUBLE_PROP(var) xmlNode = savePropertyDouble((const char*) #var, var, root)
+#define WRITE_COMMENT(var)                     \
+	com = xmlNewComment((const xmlChar*) var); \
+	xmlAddPrevSibling(xmlNode, com);
 
 const char* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default", "stylus", "stylus2"};
 
@@ -49,16 +51,16 @@ void Settings::loadDefault()
 	this->showPairedPages = false;
 	this->presentationMode = false;
 
-	this->numColumns = 1;	// only one of these applies at a time
+	this->numColumns = 1;  // only one of these applies at a time
 	this->numRows = 1;
-	this->viewFixedRows = false;	
-	
+	this->viewFixedRows = false;
+
 	this->layoutVertical = false;
 	this->layoutRightToLeft = false;
 	this->layoutBottomToTop = false;
-	
+
 	this->numPairsOffset = 1;
-	
+
 	this->zoomStep = 10.0;
 	this->zoomStepScroll = 2.0;
 
@@ -98,7 +100,7 @@ void Settings::loadDefault()
 	//Drawing direction emulates modifier keys
 	this->drawDirModsRadius = 50;
 	this->drawDirModsEnabled = false;
-	
+
 	this->snapRotation = true;
 	this->snapRotationTolerance = 0.20;
 
@@ -129,8 +131,8 @@ void Settings::loadDefault()
 
 	this->pdfPageCacheSize = 10;
 
-	this->selectionBorderColor = 0xff0000; // red
-	this->selectionMarkerColor = 0x729FCF; // light blue
+	this->selectionBorderColor = 0xff0000;  // red
+	this->selectionMarkerColor = 0x729FCF;  // light blue
 
 	this->backgroundColor = 0xDCDAD5;
 
@@ -158,7 +160,6 @@ void Settings::loadDefault()
 	this->trySelectOnStrokeFiltered = false;
 
 	this->inTransaction = false;
-
 }
 
 /**
@@ -167,9 +168,10 @@ void Settings::loadDefault()
 *  Delete this and replace calls to this function with calls to g_ascii_strtod() in 2020.
 * 	See: https://developer.gnome.org/glib/stable/glib-String-Utility-Functions.html#g-strtod
 */
-double tempg_ascii_strtod( const gchar* txt, gchar ** endptr )
+double tempg_ascii_strtod(const gchar* txt, gchar** endptr)
 {
-	return g_strtod ( txt, endptr  );		//  makes best guess between locale formatted and C formatted numbers. See link above.
+	return g_strtod(txt,
+	                endptr);  //  makes best guess between locale formatted and C formatted numbers. See link above.
 }
 
 
@@ -200,7 +202,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem)
 			}
 			else if (sType == "double")
 			{
-				double d = tempg_ascii_strtod((const char*) value, NULL);	//g_ascii_strtod ignores locale setting.
+				double d = tempg_ascii_strtod((const char*) value, NULL);  //g_ascii_strtod ignores locale setting.
 				elem.setDouble((const char*) name, d);
 			}
 			else if (sType == "hex")
@@ -238,7 +240,6 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem)
 			continue;
 		}
 	}
-
 }
 
 void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
@@ -519,7 +520,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "drawDirModsRadius") == 0)
 	{
 		this->drawDirModsRadius = g_ascii_strtoll((const char*) value, NULL, 10);
-	}	
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "snapRotation") == 0)
 	{
 		this->snapRotation = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
@@ -569,19 +570,19 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioSampleRate") == 0)
 	{
-		this->audioSampleRate = tempg_ascii_strtod((const char *) value, NULL);
+		this->audioSampleRate = tempg_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioGain") == 0)
 	{
-		this->audioGain = tempg_ascii_strtod((const char *) value, NULL);
+		this->audioGain = tempg_ascii_strtod((const char*) value, NULL);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioInputDevice") == 0)
 	{
-		this->audioInputDevice = g_ascii_strtoll((const char *) value, NULL, 10);
+		this->audioInputDevice = g_ascii_strtoll((const char*) value, NULL, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioOutputDevice") == 0)
 	{
-		this->audioOutputDevice = g_ascii_strtoll((const char *) value, NULL, 10);
+		this->audioOutputDevice = g_ascii_strtoll((const char*) value, NULL, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "experimentalInputSystemEnabled") == 0)
 	{
@@ -627,7 +628,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 void Settings::loadDeviceClasses()
 {
 	SElement& s = getCustomElement("deviceClasses");
-	for (auto device : s.children())
+	for (auto device: s.children())
 	{
 		SElement& deviceNode = device.second;
 		int deviceClass;
@@ -726,7 +727,7 @@ void Settings::loadButtonConfig()
 
 bool Settings::load()
 {
-	
+
 	XOJ_CHECK_TYPE(Settings);
 
 	xmlKeepBlanksDefault(0);
@@ -847,7 +848,7 @@ void Settings::saveButtonConfig()
 		{
 			e.setString("drawingType", drawingTypeToString(cfg->drawingType));
 			e.setString("size", toolSizeToString(cfg->size));
-		} // end if pen or highlighter
+		}  // end if pen or highlighter
 
 		if (type == TOOL_PEN || type == TOOL_HILIGHTER || type == TOOL_TEXT)
 		{
@@ -917,10 +918,9 @@ void Settings::save()
 	/* Create metadata root */
 	root = xmlNewDocNode(doc, NULL, (const xmlChar*) "settings", NULL);
 	xmlDocSetRootElement(doc, root);
-	xmlNodePtr com = xmlNewComment((const xmlChar*)
-								   "The Xournal++ settings file. Do not edit this file! "
-								   "The most settings are available in the Settings dialog, "
-								   "the others are commented in this file, but handle with care!");
+	xmlNodePtr com = xmlNewComment((const xmlChar*) "The Xournal++ settings file. Do not edit this file! "
+	                                                "The most settings are available in the Settings dialog, "
+	                                                "the others are commented in this file, but handle with care!");
 	xmlAddPrevSibling(root, com);
 
 	WRITE_BOOL_PROP(pressureSensitivity);
@@ -988,7 +988,8 @@ void Settings::save()
 	}
 
 	WRITE_BOOL_PROP(autoloadPdfXoj);
-	WRITE_COMMENT("Hides scroolbars in the main window, allowed values: \"none\", \"horizontal\", \"vertical\", \"both\"");
+	WRITE_COMMENT(
+	        "Hides scroolbars in the main window, allowed values: \"none\", \"horizontal\", \"vertical\", \"both\"");
 
 	WRITE_STRING_PROP(defaultSaveName);
 
@@ -996,13 +997,13 @@ void Settings::save()
 	WRITE_INT_PROP(autosaveTimeout);
 
 	WRITE_BOOL_PROP(addHorizontalSpace);
-	WRITE_INT_PROP(addHorizontalSpaceAmount);	
+	WRITE_INT_PROP(addHorizontalSpaceAmount);
 	WRITE_BOOL_PROP(addVerticalSpace);
 	WRITE_INT_PROP(addVerticalSpaceAmount);
-	
+
 	WRITE_BOOL_PROP(drawDirModsEnabled);
 	WRITE_INT_PROP(drawDirModsRadius);
-	
+
 
 	WRITE_BOOL_PROP(snapRotation);
 	WRITE_DOUBLE_PROP(snapRotationTolerance);
@@ -1072,7 +1073,7 @@ void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 
 	xmlSetProp(xmlNode, (const xmlChar*) "name", (const xmlChar*) name.c_str());
 
-	for (std::map<string, SAttribute>::value_type p : elem.attributes())
+	for (std::map<string, SAttribute>::value_type p: elem.attributes())
 	{
 		string aname = p.first;
 		SAttribute& attrib = p.second;
@@ -1144,7 +1145,7 @@ void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 		}
 	}
 
-	for (std::map<string, SElement>::value_type p : elem.children())
+	for (std::map<string, SElement>::value_type p: elem.children())
 	{
 		saveData(xmlNode, p.first, p.second);
 	}
@@ -1299,7 +1300,7 @@ int Settings::getAddVerticalSpaceAmount()
 void Settings::setAddVerticalSpaceAmount(int pixels)
 {
 	XOJ_CHECK_TYPE(Settings);
-	
+
 	if (this->addVerticalSpaceAmount == pixels)
 	{
 		return;
@@ -1405,7 +1406,6 @@ bool Settings::isHighlightPosition()
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->highlightPosition;
-
 }
 
 void Settings::setHighlightPosition(bool highlight)
@@ -2395,22 +2395,20 @@ void Settings::setPluginDisabled(string pluginDisabled)
 }
 
 
-void Settings::getStrokeFilter( int* ignoreTime, double* ignoreLength, int* successiveTime)
+void Settings::getStrokeFilter(int* ignoreTime, double* ignoreLength, int* successiveTime)
 {
 	XOJ_CHECK_TYPE(Settings);
 	*ignoreTime = this->strokeFilterIgnoreTime;
 	*ignoreLength = this->strokeFilterIgnoreLength;
 	*successiveTime = this->strokeFilterSuccessiveTime;
-
 }
 
-void Settings::setStrokeFilter( int ignoreTime, double ignoreLength, int successiveTime)
+void Settings::setStrokeFilter(int ignoreTime, double ignoreLength, int successiveTime)
 {
 	XOJ_CHECK_TYPE(Settings);
 	this->strokeFilterIgnoreTime = ignoreTime;
 	this->strokeFilterIgnoreLength = ignoreLength;
 	this->strokeFilterSuccessiveTime = successiveTime;
-
 }
 
 void Settings::setStrokeFilterEnabled(bool enabled)
@@ -2555,31 +2553,31 @@ int Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource d
 		guint deviceType = 0;
 		switch (deviceSource)
 		{
-			case GDK_SOURCE_CURSOR:
+		case GDK_SOURCE_CURSOR:
 #if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
-			case GDK_SOURCE_TABLET_PAD:
+		case GDK_SOURCE_TABLET_PAD:
 #endif
-			case GDK_SOURCE_KEYBOARD:
-				deviceType = 0;
-				break;
-			case GDK_SOURCE_MOUSE:
-			case GDK_SOURCE_TOUCHPAD:
+		case GDK_SOURCE_KEYBOARD:
+			deviceType = 0;
+			break;
+		case GDK_SOURCE_MOUSE:
+		case GDK_SOURCE_TOUCHPAD:
 #if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
-			case GDK_SOURCE_TRACKPOINT:
+		case GDK_SOURCE_TRACKPOINT:
 #endif
-				deviceType = 1;
-				break;
-			case GDK_SOURCE_PEN:
-				deviceType = 2;
-				break;
-			case GDK_SOURCE_ERASER:
-				deviceType = 3;
-				break;
-			case GDK_SOURCE_TOUCHSCREEN:
-				deviceType = 4;
-				break;
-		    default:
-			    deviceType = 0;
+			deviceType = 1;
+			break;
+		case GDK_SOURCE_PEN:
+			deviceType = 2;
+			break;
+		case GDK_SOURCE_ERASER:
+			deviceType = 3;
+			break;
+		case GDK_SOURCE_TOUCHSCREEN:
+			deviceType = 4;
+			break;
+		default:
+			deviceType = 0;
 		}
 		return deviceType;
 	}
@@ -2885,6 +2883,4 @@ bool SElement::getString(const string name, string& value)
 	value = attrib.sValue;
 
 	return true;
-
 }
-

@@ -10,7 +10,9 @@
 
 
 HandRecognition::HandRecognition(GtkWidget* widget, InputContext* inputContext, Settings* settings)
- : widget(widget), inputContext(inputContext), settings(settings)
+ : widget(widget)
+ , inputContext(inputContext)
+ , settings(settings)
 {
 	XOJ_INIT_TYPE(HandRecognition);
 
@@ -93,7 +95,7 @@ void HandRecognition::reload()
 
 		touchImpl = new TouchDisableCustom(enableCommand, disableCommand);
 	}
-	else // Auto detect
+	else  // Auto detect
 	{
 		//touchImpl = new TouchDisableGdk(this->widget);
 #ifdef X11_ENABLED
@@ -139,7 +141,7 @@ bool HandRecognition::enableTimeout(HandRecognition* self)
 
 	int nextTime = now - self->lastPenAction + self->disableTimeout;
 
-	g_timeout_add(nextTime, (GSourceFunc)enableTimeout, self);
+	g_timeout_add(nextTime, (GSourceFunc) enableTimeout, self);
 
 	// Do not call again, a new time is scheduled
 	return false;
@@ -157,7 +159,7 @@ void HandRecognition::penEvent()
 	{
 		touchState = false;
 		disableTouch();
-		g_timeout_add(disableTimeout, (GSourceFunc)enableTimeout, this);
+		g_timeout_add(disableTimeout, (GSourceFunc) enableTimeout, this);
 	}
 }
 
@@ -240,5 +242,3 @@ void HandRecognition::unblock()
 	this->enableTouch();
 	this->touchState = true;
 }
-
-

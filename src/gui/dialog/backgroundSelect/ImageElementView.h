@@ -17,14 +17,13 @@
 
 #include <XournalType.h>
 
-class ImageElementView : public BaseElementView
+class ImageElementView: public BaseElementView
 {
 public:
 	ImageElementView(int id, BackgroundSelectDialogBase* dlg);
 	~ImageElementView();
 
 protected:
-
 	/**
 	 * Paint the contents (without border / selection)
 	 */

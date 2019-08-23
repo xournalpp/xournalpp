@@ -50,7 +50,8 @@ SearchBar::SearchBar(Control* control)
 	                 this);
 
 	cssTextFild = gtk_css_provider_new();
-	gtk_style_context_add_provider(gtk_widget_get_style_context(win->get("searchTextField")), GTK_STYLE_PROVIDER(cssTextFild), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	gtk_style_context_add_provider(gtk_widget_get_style_context(win->get("searchTextField")),
+	                               GTK_STYLE_PROVIDER(cssTextFild), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
 SearchBar::~SearchBar()
@@ -171,11 +172,8 @@ void SearchBar::searchNext()
 		{
 			control->getScrollHandler()->scrollToPage(x, top);
 			gtk_label_set_text(GTK_LABEL(lbSearchState),
-				(occures == 1
-					? FC(_F("Text found once on page {1}") % (x + 1))
-					: FC(_F("Text found {1} times on page {2}") % occures % (x + 1))
-				)
-			);
+			                   (occures == 1 ? FC(_F("Text found once on page {1}") % (x + 1)) :
+			                                   FC(_F("Text found {1} times on page {2}") % occures % (x + 1))));
 			return;
 		}
 
@@ -227,11 +225,8 @@ void SearchBar::searchPrevious()
 		{
 			control->getScrollHandler()->scrollToPage(x, top);
 			gtk_label_set_text(GTK_LABEL(lbSearchState),
-				(occures == 1
-					? FC(_F("Text found once on page {1}") % (x + 1))
-					: FC(_F("Text found {1} times on page {2}") % occures % (x + 1))
-				)
-			);
+			                   (occures == 1 ? FC(_F("Text found once on page {1}") % (x + 1)) :
+			                                   FC(_F("Text found {1} times on page {2}") % occures % (x + 1))));
 			return;
 		}
 

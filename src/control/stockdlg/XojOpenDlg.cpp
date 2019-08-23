@@ -8,14 +8,13 @@
 #include <gio/gio.h>
 
 XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings)
- : win(win),
-   settings(settings)
+ : win(win)
+ , settings(settings)
 {
 	XOJ_INIT_TYPE(XojOpenDlg);
 
-	dialog = gtk_file_chooser_dialog_new(_("Open file"), win, GTK_FILE_CHOOSER_ACTION_OPEN,
-										 _("_Cancel"), GTK_RESPONSE_CANCEL,
-										 _("_Open"), GTK_RESPONSE_OK, NULL);
+	dialog = gtk_file_chooser_dialog_new(_("Open file"), win, GTK_FILE_CHOOSER_ACTION_OPEN, _("_Cancel"),
+	                                     GTK_RESPONSE_CANCEL, _("_Open"), GTK_RESPONSE_OK, NULL);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
@@ -137,7 +136,7 @@ Path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 		gtk_file_filter_add_pattern(filterSupported, "*.xopt");
 		gtk_file_filter_add_pattern(filterSupported, "*.pdf");
 		gtk_file_filter_add_pattern(filterSupported, "*.PDF");
-		gtk_file_filter_add_pattern(filterSupported, "*.moj"); // MrWriter
+		gtk_file_filter_add_pattern(filterSupported, "*.moj");  // MrWriter
 		gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterSupported);
 
 		addFilterXoj();
@@ -235,7 +234,7 @@ void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userDa
 
 	if (pixbuf)
 	{
-		GtkWidget * image = gtk_file_chooser_get_preview_widget(fileChooser);
+		GtkWidget* image = gtk_file_chooser_get_preview_widget(fileChooser);
 		gtk_image_set_from_pixbuf(GTK_IMAGE(image), pixbuf);
 		g_object_unref(pixbuf);
 		gtk_file_chooser_set_preview_widget_active(fileChooser, true);

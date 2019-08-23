@@ -10,11 +10,12 @@
 
 bool ColorToolItem::inUpdate = false;
 
-ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, int color, bool selektor)
- : AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR),
-   color(color),
-   toolHandler(toolHandler),
-   parent(parent)
+ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, int color,
+                             bool selektor)
+ : AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR)
+ , color(color)
+ , toolHandler(toolHandler)
+ , parent(parent)
 {
 	XOJ_INIT_TYPE(ColorToolItem);
 
@@ -115,7 +116,6 @@ void ColorToolItem::enableColor(int color)
 			{
 				this->toolHandler->setColor(this->color, true);
 			}
-
 		}
 	}
 }
@@ -180,9 +180,8 @@ void ColorToolItem::showColorchooser()
 	{
 		GdkRGBA color;
 		gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dialog), &color);
-		this->color = (((int)(color.red * 255)) & 0xff) << 16 |
-				(((int)(color.green * 255)) & 0xff) << 8 |
-				(((int)(color.blue * 255)) & 0xff);
+		this->color = (((int) (color.red * 255)) & 0xff) << 16 | (((int) (color.green * 255)) & 0xff) << 8 |
+		              (((int) (color.blue * 255)) & 0xff);
 	}
 
 	gtk_widget_destroy(dialog);
@@ -211,7 +210,8 @@ void ColorToolItem::enable(bool enabled)
 		if (enabled)
 		{
 			icon->setState(COLOR_ICON_STATE_ENABLED);
-		} else
+		}
+		else
 		{
 			icon->setState(COLOR_ICON_STATE_DISABLED);
 		}

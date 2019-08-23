@@ -20,7 +20,6 @@
 class Point
 {
 public:
-
 	/**
 	 * @brief Default constructor.
 	 */
@@ -50,7 +49,6 @@ public:
 	virtual ~Point();
 
 public:
-
 	/**
 	 * @brief Compute the distance to another point.
 	 * @param p The other point.

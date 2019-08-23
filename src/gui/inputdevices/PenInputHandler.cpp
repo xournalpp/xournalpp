@@ -17,7 +17,8 @@
 
 #define WIDGET_SCROLL_BORDER 25
 
-PenInputHandler::PenInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)
+PenInputHandler::PenInputHandler(InputContext* inputContext)
+ : AbstractInputHandler(inputContext)
 {
 	XOJ_INIT_TYPE(PenInputHandler);
 }
@@ -71,7 +72,8 @@ void PenInputHandler::handleScrollEvent(InputEvent* event)
 	// see github Gnome/evince@1adce5486b10e763bed869
 
 	// GTK handles event compression/filtering differently between versions - this may be needed on certain hardware/GTK combinations.
-	if (std::abs((double)(this->scrollStartX - event->absoluteX)) < 0.1 && std::abs((double)(this->scrollStartY - event->absoluteY)) < 0.1 )
+	if (std::abs((double) (this->scrollStartX - event->absoluteX)) < 0.1 &&
+	    std::abs((double) (this->scrollStartY - event->absoluteY)) < 0.1)
 	{
 		return;
 	}
@@ -116,7 +118,9 @@ bool PenInputHandler::actionStart(InputEvent* event)
 	if (toolType != TOOL_IMAGE)
 	{
 		this->inputRunning = true;
-	} else {
+	}
+	else
+	{
 		this->deviceClassPressed = false;
 	}
 
@@ -126,7 +130,6 @@ bool PenInputHandler::actionStart(InputEvent* event)
 
 	XournalppCursor* cursor = xournal->view->getCursor();
 	cursor->setMouseDown(true);
-
 
 
 	// Save the starting offset when hand-tool is selected to get a reference for the scroll-offset
@@ -151,7 +154,8 @@ bool PenInputHandler::actionStart(InputEvent* event)
 		PositionInputData selectionPos = this->getInputDataRelativeToCurrentPage(view, event);
 
 		// Check if event modifies selection instead of page
-		CursorSelectionType selType = selection->getSelectionTypeForPos(selectionPos.x, selectionPos.y, xournal->view->getZoom());
+		CursorSelectionType selType =
+		        selection->getSelectionTypeForPos(selectionPos.x, selectionPos.y, xournal->view->getZoom());
 		if (selType)
 		{
 
@@ -207,11 +211,11 @@ bool PenInputHandler::actionMotion(InputEvent* event)
 	gint width = gtk_widget_get_allocated_width(widget);
 	gint height = gtk_widget_get_allocated_height(widget);
 
-	if (!this->penInWidget && eventX > WIDGET_SCROLL_BORDER && eventY > WIDGET_SCROLL_BORDER && eventX < width - WIDGET_SCROLL_BORDER && eventY < height - WIDGET_SCROLL_BORDER)
+	if (!this->penInWidget && eventX > WIDGET_SCROLL_BORDER && eventY > WIDGET_SCROLL_BORDER &&
+	    eventX < width - WIDGET_SCROLL_BORDER && eventY < height - WIDGET_SCROLL_BORDER)
 	{
 		this->penInWidget = true;
 	}
-
 
 
 	GtkXournal* xournal = this->inputContext->getXournal();
@@ -312,7 +316,8 @@ bool PenInputHandler::actionMotion(InputEvent* event)
 		// Relay the event to the page
 		PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
 		return currentPage->onMotionNotifyEvent(pos);
-	} else
+	}
+	else
 	{
 		return false;
 	}
@@ -339,7 +344,8 @@ bool PenInputHandler::actionEnd(InputEvent* event)
 	{
 		PositionInputData pos = getInputDataRelativeToCurrentPage(this->sequenceStartPage, event);
 		this->sequenceStartPage->onButtonReleaseEvent(pos);
-	} else
+	}
+	else
 	{
 		//Relay the event to the page
 		XojPageView* currentPage = getPageAtCurrentPosition(event);
@@ -389,8 +395,8 @@ void PenInputHandler::actionPerform(InputEvent* event)
 	XOJ_CHECK_TYPE(PenInputHandler);
 
 #ifdef DEBUG_INPUT
-	g_message("Discrete input action; modifier1=%s, modifier2=%2",
-	          this->modifier2 ? "true" : "false", this->modifier3 ? "true" : "false");
+	g_message("Discrete input action; modifier1=%s, modifier2=%2", this->modifier2 ? "true" : "false",
+	          this->modifier3 ? "true" : "false");
 #endif
 
 	XojPageView* currentPage = this->getPageAtCurrentPosition(event);
@@ -427,7 +433,8 @@ void PenInputHandler::actionLeaveWindow(InputEvent* event)
 		{
 			this->actionEnd(this->lastHitEvent);
 		}
-	} else if (this->deviceClassPressed)
+	}
+	else if (this->deviceClassPressed)
 	{
 		// scroll if we have an active selection
 		gdouble eventX = event->relativeX;
@@ -444,8 +451,7 @@ void PenInputHandler::actionLeaveWindow(InputEvent* event)
 		gint width = gtk_widget_get_allocated_width(widget);
 		gint height = gtk_widget_get_allocated_height(widget);
 
-		new std::thread([&,eventX,eventY, width, height]()
-		{
+		new std::thread([&, eventX, eventY, width, height]() {
 			int offsetX = 0, offsetY = 0;
 
 			// TODO: make offset dependent on how big the distance between pen and view is
@@ -475,17 +481,15 @@ void PenInputHandler::actionLeaveWindow(InputEvent* event)
 
 			while (!this->penInWidget)
 			{
-				Util::execInUiThread([&]()
-				{
+				Util::execInUiThread([&]() {
 					GtkXournal* xournal = this->inputContext->getXournal();
 					xournal->layout->scrollRelative(offsetX, offsetY);
 				});
 
 				//sleep for half a second until we scroll again
-				g_usleep((gulong) (0.5 * G_USEC_PER_SEC));
+				g_usleep((gulong)(0.5 * G_USEC_PER_SEC));
 			}
 		});
-
 	}
 }
 

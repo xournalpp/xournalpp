@@ -82,7 +82,7 @@ void PreviewJob::drawBackgroundPdf(Document* doc)
 	int pgNo = this->sidebarPreview->page->getPdfPageNr();
 	XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 	PdfView::drawPage(this->sidebarPreview->sidebar->getCache(), popplerPage, cr2, zoom,
-					  this->sidebarPreview->page->getWidth(), this->sidebarPreview->page->getHeight());
+	                  this->sidebarPreview->page->getWidth(), this->sidebarPreview->page->getHeight());
 }
 
 void PreviewJob::drawPage(int layer)
@@ -126,11 +126,11 @@ void PreviewJob::run()
 	doc->lock();
 
 	PreviewRenderType type = this->sidebarPreview->getRenderType();
-	int layer = -100; // all layer
+	int layer = -100;  // all layer
 
 	if (RENDER_TYPE_PAGE_LAYER == type)
 	{
-		layer = ((SidebarPreviewLayerEntry*)this->sidebarPreview)->getLayer();
+		layer = ((SidebarPreviewLayerEntry*) this->sidebarPreview)->getLayer();
 	}
 
 	if (this->sidebarPreview->page->getBackgroundType().isPdfPage())

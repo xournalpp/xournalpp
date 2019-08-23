@@ -30,11 +30,11 @@ class UndoAction;
 class EditSelectionContents;
 class DeleteUndoAction;
 
-class EditSelectionContents : public ElementContainer, public Serializeable
+class EditSelectionContents: public ElementContainer, public Serializeable
 {
 public:
-	EditSelectionContents(double x, double y, double width, double height,
-						  PageRef sourcePage, Layer* sourceLayer, XojPageView* sourceView);
+	EditSelectionContents(double x, double y, double width, double height, PageRef sourcePage, Layer* sourceLayer,
+	                      XojPageView* sourceView);
 	virtual ~EditSelectionContents();
 
 public:
@@ -42,7 +42,8 @@ public:
 	 * Sets the tool size for pen or eraser, returs an undo action
 	 * (or NULL if nothing is done)
 	 */
-	UndoAction* setSize(ToolSize size, const double* thicknessPen, const double* thicknessHilighter, const double* thicknessEraser);
+	UndoAction* setSize(ToolSize size, const double* thicknessPen, const double* thicknessHilighter,
+	                    const double* thicknessEraser);
 
 	/**
 	 * Set the color of all elements, return an undo action
@@ -88,12 +89,11 @@ public:
 	/**
 	 * Finish the editing
 	 */
-	void finalizeSelection(double x, double y, double width, double height, bool aspectRatio,
-						   Layer* layer, PageRef targetPage, XojPageView* targetView, UndoRedoHandler* undo);
+	void finalizeSelection(double x, double y, double width, double height, bool aspectRatio, Layer* layer,
+	                       PageRef targetPage, XojPageView* targetView, UndoRedoHandler* undo);
 
-	void updateContent(double x, double y, double rotation, double width, double height, bool aspectRatio,
-					   Layer* layer, PageRef targetPage, XojPageView* targetView, UndoRedoHandler* undo,
-					   CursorSelectionType type);
+	void updateContent(double x, double y, double rotation, double width, double height, bool aspectRatio, Layer* layer,
+	                   PageRef targetPage, XojPageView* targetView, UndoRedoHandler* undo, CursorSelectionType type);
 
 private:
 	/**
@@ -108,13 +108,12 @@ private:
 	static bool repaintSelection(EditSelectionContents* selection);
 
 public:
-	
 	/**
 	 * Gets the original view of the contents
 	 */
-	XojPageView * getSourceView();
-	
-	
+	XojPageView* getSourceView();
+
+
 	/**
 	 * Gets the original X of the contents
 	 */
@@ -125,7 +124,7 @@ public:
 	 */
 	double getOriginalY();
 
-	
+
 	/**
 	 * Gets the original width of the contents
 	 */
@@ -136,7 +135,7 @@ public:
 	 */
 	double getOriginalHeight();
 
-	UndoAction* copySelection(PageRef page, XojPageView *view, double x, double y);
+	UndoAction* copySelection(PageRef page, XojPageView* view, double x, double y);
 
 public:
 	// Serialize interface
@@ -162,7 +161,7 @@ private:
 	 * The given rotation. Original rotation should always be zero (double)
 	 */
 	double rotation = 0;
-	double lastRotation = 0; // for undoing multiple rotations during one selection edit.
+	double lastRotation = 0;  // for undoing multiple rotations during one selection edit.
 
 	/**
 	 * The offset to the original selection

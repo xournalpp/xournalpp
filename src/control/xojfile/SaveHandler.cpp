@@ -111,8 +111,8 @@ void SaveHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAu
 	XOJ_CHECK_TYPE(SaveHandler);
 
 	/** set stroke timestamp value to the XmlPointNode */
-	xmlAudioNode->setAttrib("ts",audioElement->getTimestamp());
-	xmlAudioNode->setAttrib("fn",audioElement->getAudioFilename());
+	xmlAudioNode->setAttrib("ts", audioElement->getTimestamp());
+	xmlAudioNode->setAttrib("fn", audioElement->getAudioFilename());
 }
 
 void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s)
@@ -196,7 +196,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 
 	XmlNode* layer = new XmlNode("layer");
 	page->addChild(layer);
-	for(Element* e : *l->getElements())
+	for (Element* e: *l->getElements())
 	{
 		if (e->getType() == ELEMENT_STROKE)
 		{
@@ -288,7 +288,8 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 					{
 						this->errorMessage += "\n";
 					}
-					this->errorMessage += FS(_F("Could not write background \"{1}\", {2}") % filename.str() % error->message);
+					this->errorMessage +=
+					        FS(_F("Could not write background \"{1}\", {2}") % filename.str() % error->message);
 
 					g_error_free(error);
 				}
@@ -346,7 +347,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 		page->addChild(layer);
 	}
 
-	for (Layer* l : *p->getLayers())
+	for (Layer* l: *p->getLayers())
 	{
 		visitLayer(page, l);
 	}
@@ -411,7 +412,6 @@ void SaveHandler::saveTo(OutputStream* out, Path filename, ProgressListener* lis
 			this->errorMessage += FS(_F("Could not write background \"{1}\". Continuing anyway.") % tmpfn);
 		}
 	}
-
 }
 
 string SaveHandler::getErrorMessage()

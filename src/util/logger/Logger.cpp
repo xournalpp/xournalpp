@@ -46,11 +46,15 @@ inline std::string NowTime()
 	return result;
 }
 
-#endif //WIN32
+#endif  //WIN32
 
-Log::Log() { }
+Log::Log()
+{
+}
 
-Log::~Log() { }
+Log::~Log()
+{
+}
 
 std::ofstream logfile;
 
@@ -74,4 +78,4 @@ void Log::closelog()
 	logfile.close();
 }
 
-#endif // DEV_CALL_LOG
+#endif  // DEV_CALL_LOG

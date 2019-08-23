@@ -16,7 +16,7 @@
 
 class InputContext;
 
-class PenInputHandler : public AbstractInputHandler
+class PenInputHandler: public AbstractInputHandler
 {
 private:
 	XOJ_TYPE_ATTRIB;
@@ -68,7 +68,7 @@ protected:
 	/**
 	 * Page a selection started at as we require this for motion updates
 	 */
-	 XojPageView* sequenceStartPage = nullptr;
+	XojPageView* sequenceStartPage = nullptr;
 
 public:
 	explicit PenInputHandler(InputContext* inputContext);
@@ -116,5 +116,3 @@ protected:
 	 */
 	void updateLastEvent(InputEvent* event);
 };
-
-

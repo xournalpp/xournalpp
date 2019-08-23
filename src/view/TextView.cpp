@@ -7,9 +7,13 @@
 #include <Util.h>
 #include <StringUtils.h>
 
-TextView::TextView() { }
+TextView::TextView()
+{
+}
 
-TextView::~TextView() { }
+TextView::~TextView()
+{
+}
 
 static int textDpi = 72;
 
@@ -84,7 +88,7 @@ vector<XojPdfRectangle> TextView::findText(Text* t, string& search)
 		if (pos != -1)
 		{
 			XojPdfRectangle mark;
-			PangoRectangle rect = { 0 };
+			PangoRectangle rect = {0};
 			pango_layout_index_to_pos(layout, pos, &rect);
 			mark.x1 = ((double) rect.x) / PANGO_SCALE + t->getX();
 			mark.y1 = ((double) rect.y) / PANGO_SCALE + t->getY();
@@ -95,8 +99,7 @@ vector<XojPdfRectangle> TextView::findText(Text* t, string& search)
 
 			list.push_back(mark);
 		}
-	}
-	while (pos != -1);
+	} while (pos != -1);
 
 	g_object_unref(layout);
 	cairo_surface_destroy(surface);

@@ -9,7 +9,8 @@
 #include "gui/XournalppCursor.h"
 #include <cmath>
 
-StylusInputHandler::StylusInputHandler(InputContext* inputContext) : PenInputHandler(inputContext)
+StylusInputHandler::StylusInputHandler(InputContext* inputContext)
+ : PenInputHandler(inputContext)
 {
 	XOJ_INIT_TYPE(StylusInputHandler);
 }
@@ -44,12 +45,14 @@ bool StylusInputHandler::handleImpl(InputEvent* event)
 		{
 			this->actionStart(event);
 			return true;
-		} else if (this->inputRunning)
+		}
+		else if (this->inputRunning)
 		{
 			// TPCButton is disabled and modifier button was pressed
 			this->actionEnd(event);
 			this->actionStart(event);
-		} else
+		}
+		else
 		{
 			// No input running but modifier key was pressed
 			// Change the tool depending on the key
@@ -65,7 +68,7 @@ bool StylusInputHandler::handleImpl(InputEvent* event)
 	}
 
 	// Trigger motion action when pen/mouse is pressed and moved
-	if (event->type == MOTION_EVENT) //mouse or pen moved
+	if (event->type == MOTION_EVENT)  //mouse or pen moved
 	{
 		this->actionMotion(event);
 		XournalppCursor* cursor = xournal->view->getCursor();
@@ -77,7 +80,8 @@ bool StylusInputHandler::handleImpl(InputEvent* event)
 	// Check if enter/leave events occur in possible locations. This is a bug of the hardware (there are such devices!)
 	if ((event->type == ENTER_EVENT || event->type == LEAVE_EVENT) && this->deviceClassPressed && this->lastEvent)
 	{
-		if (std::abs(event->relativeX - lastEvent->relativeX) > 100 || std::abs(event->relativeY - lastEvent->relativeY) > 100)
+		if (std::abs(event->relativeX - lastEvent->relativeX) > 100 ||
+		    std::abs(event->relativeY - lastEvent->relativeY) > 100)
 		{
 			g_message("Discard impossible event - this is a sign of bugged hardware or drivers");
 			return true;
@@ -102,12 +106,14 @@ bool StylusInputHandler::handleImpl(InputEvent* event)
 		{
 			this->actionEnd(event);
 			return true;
-		} else if (this->inputRunning)
+		}
+		else if (this->inputRunning)
 		{
 			// TPCButton is disabled and modifier button was released
 			this->actionEnd(event);
 			this->actionStart(event);
-		} else
+		}
+		else
 		{
 			// No input running but modifier key was pressed
 			// Change the tool depending on the key
@@ -134,36 +140,36 @@ void StylusInputHandler::setPressedState(InputEvent* event)
 
 	this->inputContext->getXournal()->view->getCursor()->setInsidePage(currentPage != nullptr);
 
-	if (event->type == BUTTON_PRESS_EVENT) //mouse button pressed or pen touching surface
+	if (event->type == BUTTON_PRESS_EVENT)  //mouse button pressed or pen touching surface
 	{
 		switch (event->button)
 		{
-			case 1:
-				this->deviceClassPressed = true;
-				break;
-			case 2:
-				this->modifier2 = true;
-				break;
-			case 3:
-				this->modifier3 = true;
-			default:
-				break;
+		case 1:
+			this->deviceClassPressed = true;
+			break;
+		case 2:
+			this->modifier2 = true;
+			break;
+		case 3:
+			this->modifier3 = true;
+		default:
+			break;
 		}
 	}
-	if (event->type == BUTTON_RELEASE_EVENT) //mouse button released or pen not touching surface anymore
+	if (event->type == BUTTON_RELEASE_EVENT)  //mouse button released or pen not touching surface anymore
 	{
 		switch (event->button)
 		{
-			case 1:
-				this->deviceClassPressed = false;
-				break;
-			case 2:
-				this->modifier2 = false;
-				break;
-			case 3:
-				this->modifier3 = false;
-			default:
-				break;
+		case 1:
+			this->deviceClassPressed = false;
+			break;
+		case 2:
+			this->modifier2 = false;
+			break;
+		case 3:
+			this->modifier3 = false;
+		default:
+			break;
 		}
 	}
 
@@ -210,4 +216,3 @@ bool StylusInputHandler::changeTool(InputEvent* event)
 
 	return false;
 }
-

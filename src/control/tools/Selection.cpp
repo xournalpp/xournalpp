@@ -9,7 +9,7 @@ Selection::Selection(Redrawable* view)
 
 	this->view = view;
 	this->page = NULL;
-	
+
 	this->x1Box = 0;
 	this->x2Box = 0;
 	this->y1Box = 0;
@@ -28,7 +28,8 @@ Selection::~Selection()
 
 //////////////////////////////////////////////////////////
 
-RectSelection::RectSelection(double x, double y, Redrawable* view) : Selection(view)
+RectSelection::RectSelection(double x, double y, Redrawable* view)
+ : Selection(view)
 {
 	XOJ_INIT_TYPE(RectSelection);
 
@@ -60,7 +61,7 @@ bool RectSelection::finalize(PageRef page)
 	this->page = page;
 
 	Layer* l = page->getSelectedLayer();
-	for (Element* e : *l->getElements())
+	for (Element* e: *l->getElements())
 	{
 		if (e->isInSelection(this))
 		{
@@ -153,7 +154,8 @@ public:
 	double y;
 };
 
-RegionSelect::RegionSelect(double x, double y, Redrawable* view) : Selection(view)
+RegionSelect::RegionSelect(double x, double y, Redrawable* view)
+ : Selection(view)
 {
 	XOJ_INIT_TYPE(RegionSelect);
 
@@ -374,7 +376,7 @@ bool RegionSelect::finalize(PageRef page)
 	}
 
 	Layer* l = page->getSelectedLayer();
-	for (Element* e : *l->getElements())
+	for (Element* e: *l->getElements())
 	{
 		if (e->isInSelection(this))
 		{

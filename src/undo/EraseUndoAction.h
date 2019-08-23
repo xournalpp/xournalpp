@@ -18,7 +18,7 @@ class Layer;
 class Redrawable;
 class Stroke;
 
-class EraseUndoAction : public UndoAction
+class EraseUndoAction: public UndoAction
 {
 public:
 	EraseUndoAction(PageRef page);
@@ -35,7 +35,7 @@ public:
 	void finalize();
 
 	virtual string getText();
-	
+
 private:
 	XOJ_TYPE_ATTRIB;
 

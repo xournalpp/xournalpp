@@ -19,7 +19,7 @@ SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar)
 	gtk_tree_view_set_enable_search(GTK_TREE_VIEW(treeViewBookmarks), true);
 	gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeViewBookmarks), DOCUMENT_LINKS_COLUMN_NAME);
 	gtk_tree_view_set_search_equal_func(GTK_TREE_VIEW(treeViewBookmarks),
-										(GtkTreeViewSearchEqualFunc) treeSearchFunction, this, NULL);
+	                                    (GtkTreeViewSearchEqualFunc) treeSearchFunction, this, NULL);
 
 	this->scrollBookmarks = gtk_scrolled_window_new(NULL, NULL);
 	g_object_ref(this->scrollBookmarks);
@@ -37,15 +37,16 @@ SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar)
 	gtk_tree_view_column_set_expand(GTK_TREE_VIEW_COLUMN(column), TRUE);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeViewBookmarks), column);
 
-	GtkCellRenderer* renderer = (GtkCellRenderer*) g_object_new(GTK_TYPE_CELL_RENDERER_TEXT, "ellipsize",
-																PANGO_ELLIPSIZE_END, NULL);
+	GtkCellRenderer* renderer =
+	        (GtkCellRenderer*) g_object_new(GTK_TYPE_CELL_RENDERER_TEXT, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
 	gtk_tree_view_column_pack_start(GTK_TREE_VIEW_COLUMN(column), renderer, TRUE);
-	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), renderer, "markup", DOCUMENT_LINKS_COLUMN_NAME, NULL);
+	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), renderer, "markup", DOCUMENT_LINKS_COLUMN_NAME,
+	                                    NULL);
 
 	renderer = gtk_cell_renderer_text_new();
 	gtk_tree_view_column_pack_end(GTK_TREE_VIEW_COLUMN(column), renderer, FALSE);
-	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), renderer,
-										"text", DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, NULL);
+	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), renderer, "text",
+	                                    DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, NULL);
 	g_object_set(G_OBJECT(renderer), "style", PANGO_STYLE_ITALIC, NULL);
 
 	g_signal_connect(treeViewBookmarks, "cursor-changed", G_CALLBACK(treeBookmarkSelected), this);
@@ -88,12 +89,13 @@ void SidebarIndexPage::askInsertPdfPage(size_t pdfPage)
 {
 	XOJ_CHECK_TYPE(SidebarIndexPage);
 
-	GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(), GTK_DIALOG_MODAL,
-											   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
-											   FC(_F("Your current document does not contain PDF Page no {1}\n"
-													 "Would you like to insert this page?\n\n"
-													 "Tip: You can select Journal → Paper Background → PDF Background "
-													 "to insert a PDF page.") % (pdfPage + 1)));
+	GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION,
+	                                           GTK_BUTTONS_NONE, "%s",
+	                                           FC(_F("Your current document does not contain PDF Page no {1}\n"
+	                                                 "Would you like to insert this page?\n\n"
+	                                                 "Tip: You can select Journal → Paper Background → PDF Background "
+	                                                 "to insert a PDF page.") %
+	                                              (pdfPage + 1)));
 
 	gtk_dialog_add_button(GTK_DIALOG(dialog), "Cancel", 1);
 	gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert after", 2);
@@ -148,7 +150,7 @@ bool SidebarIndexPage::treeBookmarkSelected(GtkWidget* treeview, SidebarIndexPag
 	if (selection)
 	{
 		GtkTreeModel* model = NULL;
-		GtkTreeIter iter = { 0 };
+		GtkTreeIter iter = {0};
 
 		if (gtk_tree_selection_get_selected(selection, &model, &iter))
 		{
@@ -176,7 +178,8 @@ bool SidebarIndexPage::treeBookmarkSelected(GtkWidget* treeview, SidebarIndexPag
 					{
 						if (dest->shouldChangeTop())
 						{
-							sidebar->control->getScrollHandler()->scrollToPage(page, dest->getTop() * sidebar->control->getZoomControl()->getZoom());
+							sidebar->control->getScrollHandler()->scrollToPage(
+							        page, dest->getTop() * sidebar->control->getZoomControl()->getZoom());
 						}
 						else
 						{
@@ -186,7 +189,6 @@ bool SidebarIndexPage::treeBookmarkSelected(GtkWidget* treeview, SidebarIndexPag
 							}
 						}
 					}
-
 				}
 			}
 			g_object_unref(link);
@@ -207,8 +209,8 @@ bool SidebarIndexPage::searchTimeoutFunc(SidebarIndexPage* sidebar)
 	return false;
 }
 
-gboolean SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, const gchar* key,
-											  GtkTreeIter* iter, SidebarIndexPage* sidebar)
+gboolean SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, const gchar* key, GtkTreeIter* iter,
+                                              SidebarIndexPage* sidebar)
 {
 	XOJ_CHECK_TYPE_OBJ(sidebar, SidebarIndexPage);
 
@@ -218,8 +220,8 @@ gboolean SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, 
 		g_source_remove(sidebar->searchTimeout);
 		sidebar->searchTimeout = 0;
 	}
-	sidebar->searchTimeout = g_timeout_add_seconds_full(G_PRIORITY_DEFAULT_IDLE, 2,
-														(GSourceFunc) searchTimeoutFunc, sidebar, NULL);
+	sidebar->searchTimeout =
+	        g_timeout_add_seconds_full(G_PRIORITY_DEFAULT_IDLE, 2, (GSourceFunc) searchTimeoutFunc, sidebar, NULL);
 
 	// Source: Pidgin
 	gchar* text;
@@ -301,7 +303,7 @@ int SidebarIndexPage::expandOpenLinks(GtkTreeModel* model, GtkTreeIter* parent)
 {
 	XOJ_CHECK_TYPE(SidebarIndexPage);
 
-	GtkTreeIter iter = { 0 };
+	GtkTreeIter iter = {0};
 	XojLinkDest* link = NULL;
 	if (model == NULL)
 	{
@@ -328,8 +330,7 @@ int SidebarIndexPage::expandOpenLinks(GtkTreeModel* model, GtkTreeIter* parent)
 			count++;
 
 			count += expandOpenLinks(model, &iter);
-		}
-		while (gtk_tree_model_iter_next(model, &iter));
+		} while (gtk_tree_model_iter_next(model, &iter));
 	}
 
 	return count;

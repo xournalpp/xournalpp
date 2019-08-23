@@ -81,7 +81,7 @@ void InputSequence::copyAxes(GdkEvent* event)
 	XOJ_CHECK_TYPE(InputSequence);
 
 	clearAxes();
-	setAxes((gdouble*)g_memdup(event->motion.axes, sizeof(gdouble) * gdk_device_get_n_axes(device)));
+	setAxes((gdouble*) g_memdup(event->motion.axes, sizeof(gdouble) * gdk_device_get_n_axes(device)));
 }
 
 /**
@@ -140,8 +140,8 @@ XojPageView* InputSequence::getPageAtCurrentPosition()
 
 	double x = this->x + xournal->x;
 	double y = this->y + xournal->y;
-	
-	return xournal->layout->getViewAt(x,y);
+
+	return xournal->layout->getViewAt(x, y);
 }
 
 /**
@@ -156,7 +156,7 @@ void InputSequence::handleScrollEvent()
 	// see github Gnome/evince@1adce5486b10e763bed869
 
 	// GTK handles event compression/filtering differently between versions - this may be needed on certain hardware/GTK combinations.
-	if (std::abs(lastMousePositionX - rootX) < 0.1 && std::abs( lastMousePositionY - rootY) < 0.1 )
+	if (std::abs(lastMousePositionX - rootX) < 0.1 && std::abs(lastMousePositionY - rootY) < 0.1)
 	{
 		return;
 	}
@@ -366,11 +366,8 @@ bool InputSequence::checkStillRunning()
 	GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(inputHandler->getXournal()));
 	gdk_device_get_state(device, window, NULL, &mask);
 
-	if ((GDK_BUTTON1_MASK & mask) ||
-		(GDK_BUTTON2_MASK & mask) ||
-		(GDK_BUTTON3_MASK & mask) ||
-		(GDK_BUTTON4_MASK & mask) ||
-		(GDK_BUTTON5_MASK & mask))
+	if ((GDK_BUTTON1_MASK & mask) || (GDK_BUTTON2_MASK & mask) || (GDK_BUTTON3_MASK & mask) ||
+	    (GDK_BUTTON4_MASK & mask) || (GDK_BUTTON5_MASK & mask))
 	{
 		// Button still down
 		// Input is still running, probably everything OK

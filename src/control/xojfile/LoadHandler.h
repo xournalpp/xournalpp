@@ -26,16 +26,16 @@
 
 enum ParserPosition
 {
-    PARSER_POS_NOT_STARTED = 1,	// Waiting for opening <xounal> tag
-    PARSER_POS_STARTED,			// Waiting for Metainfo or contents like <page>
-    PARSER_POS_IN_PAGE,			// Starting page tag read
-    PARSER_POS_IN_LAYER,		// Starting layer tag read
-    PARSER_POS_IN_STROKE,		// Starting layer tag read
-    PARSER_POS_IN_TEXT,			// Starting text tag read
-    PARSER_POS_IN_IMAGE,		// Starting image tag read
-    PARSER_POS_IN_TEXIMAGE,		// Starting latex tag read
+	PARSER_POS_NOT_STARTED = 1,  // Waiting for opening <xounal> tag
+	PARSER_POS_STARTED,          // Waiting for Metainfo or contents like <page>
+	PARSER_POS_IN_PAGE,          // Starting page tag read
+	PARSER_POS_IN_LAYER,         // Starting layer tag read
+	PARSER_POS_IN_STROKE,        // Starting layer tag read
+	PARSER_POS_IN_TEXT,          // Starting text tag read
+	PARSER_POS_IN_IMAGE,         // Starting image tag read
+	PARSER_POS_IN_TEXIMAGE,      // Starting latex tag read
 
-    PASER_POS_FINISHED			// Document is parsed
+	PASER_POS_FINISHED  // Document is parsed
 };
 
 class LoadHandler
@@ -80,8 +80,8 @@ private:
 	static void parserEndElement(GMarkupParseContext* context, const gchar* element_name, gpointer userdata,
 	                             GError** error);
 	static void parserStartElement(GMarkupParseContext* context, const gchar* element_name,
-	                               const gchar** attribute_names, const gchar** attribute_values,
-	                               gpointer userdata, GError** error);
+	                               const gchar** attribute_names, const gchar** attribute_values, gpointer userdata,
+	                               GError** error);
 
 	const char* getAttrib(const char* name, bool optional = false);
 	double getAttribDouble(const char* name);
@@ -153,4 +153,3 @@ private:
 
 	friend class LoadHandlerHelper;
 };
-

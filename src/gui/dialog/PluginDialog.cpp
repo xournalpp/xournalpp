@@ -6,8 +6,8 @@
 
 
 PluginDialog::PluginDialog(GladeSearchpath* gladeSearchPath, Settings* settings)
- : GladeGui(gladeSearchPath, "plugin.glade", "pluginDialog"),
-   settings(settings)
+ : GladeGui(gladeSearchPath, "plugin.glade", "pluginDialog")
+ , settings(settings)
 {
 	XOJ_INIT_TYPE(PluginDialog);
 }
@@ -16,7 +16,7 @@ PluginDialog::~PluginDialog()
 {
 	XOJ_CHECK_TYPE(PluginDialog);
 
-	for (PluginDialogEntry* p : this->plugins)
+	for (PluginDialogEntry* p: this->plugins)
 	{
 		delete p;
 	}
@@ -31,7 +31,7 @@ void PluginDialog::loadPluginList(PluginController* pc)
 
 	GtkWidget* pluginBox = get("pluginBox");
 
-	for (Plugin* p : pc->getPlugins())
+	for (Plugin* p: pc->getPlugins())
 	{
 		this->plugins.push_back(new PluginDialogEntry(p, getGladeSearchPath(), pluginBox));
 	}
@@ -45,7 +45,7 @@ void PluginDialog::saveSettings()
 	string pluginDisabled;
 
 	// Save plugin settings
-	for (PluginDialogEntry* bcg : this->plugins)
+	for (PluginDialogEntry* bcg: this->plugins)
 	{
 		bcg->saveSettings(pluginEnabled, pluginDisabled);
 	}

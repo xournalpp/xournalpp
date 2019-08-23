@@ -17,7 +17,7 @@
 class Layer;
 class LayerController;
 
-class InsertLayerUndoAction : public UndoAction
+class InsertLayerUndoAction: public UndoAction
 {
 public:
 	InsertLayerUndoAction(LayerController* layerController, PageRef page, Layer* layer, int layerPosition);

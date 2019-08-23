@@ -57,11 +57,13 @@ PreviewExtractResult XojPreviewExtractor::readPreview(char* buffer, int len)
 			{
 				inTag = false;
 				int tagLen = i - startTag;
-				if (tagLen == TAG_PREVIEW_NAME_LEN && strncmp(TAG_PREVIEW_NAME, buffer + startTag, TAG_PREVIEW_NAME_LEN) == 0)
+				if (tagLen == TAG_PREVIEW_NAME_LEN &&
+				    strncmp(TAG_PREVIEW_NAME, buffer + startTag, TAG_PREVIEW_NAME_LEN) == 0)
 				{
 					startPreview = i + 1;
 				}
-				if (tagLen == TAG_PREVIEW_END_NAME_LEN && strncmp(TAG_PREVIEW_END_NAME, buffer + startTag, TAG_PREVIEW_END_NAME_LEN) == 0)
+				if (tagLen == TAG_PREVIEW_END_NAME_LEN &&
+				    strncmp(TAG_PREVIEW_END_NAME, buffer + startTag, TAG_PREVIEW_END_NAME_LEN) == 0)
 				{
 					endPreview = i - TAG_PREVIEW_END_NAME_LEN - 1;
 					break;
@@ -132,7 +134,8 @@ PreviewExtractResult XojPreviewExtractor::readFile(Path file)
 
 		gzclose(fp);
 		return result;
-	} else if (!zipFp)
+	}
+	else if (!zipFp)
 	{
 		return PREVIEW_RESULT_COULD_NOT_OPEN_FILE;
 	}
@@ -147,7 +150,8 @@ PreviewExtractResult XojPreviewExtractor::readFile(Path file)
 	if (thumbStat.valid & ZIP_STAT_SIZE)
 	{
 		dataLen = thumbStat.size;
-	} else
+	}
+	else
 	{
 		return PREVIEW_RESULT_ERROR_READING_PREVIEW;
 	}
@@ -159,7 +163,7 @@ PreviewExtractResult XojPreviewExtractor::readFile(Path file)
 		return PREVIEW_RESULT_ERROR_READING_PREVIEW;
 	}
 
-	data = (unsigned char *)g_malloc(thumbStat.size);
+	data = (unsigned char*) g_malloc(thumbStat.size);
 	zip_uint64_t readBytes = 0;
 	while (readBytes < dataLen)
 	{
@@ -177,5 +181,3 @@ PreviewExtractResult XojPreviewExtractor::readFile(Path file)
 	zip_close(zipFp);
 	return PREVIEW_RESULT_IMAGE_READ;
 }
-
-

@@ -8,8 +8,8 @@
 
 
 FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height)
- : GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog"),
-   settings(settings)
+ : GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog")
+ , settings(settings)
 {
 	XOJ_INIT_TYPE(FormatDialog);
 
@@ -123,11 +123,8 @@ void FormatDialog::loadPageFormats()
 		GtkPaperSize* s = (GtkPaperSize*) l->data;
 
 		string name = gtk_paper_size_get_name(s);
-		if (name == GTK_PAPER_NAME_A3 ||
-			name == GTK_PAPER_NAME_A4 ||
-			name == GTK_PAPER_NAME_A5 ||
-			name == GTK_PAPER_NAME_LETTER ||
-			name == GTK_PAPER_NAME_LEGAL)
+		if (name == GTK_PAPER_NAME_A3 || name == GTK_PAPER_NAME_A4 || name == GTK_PAPER_NAME_A5 ||
+		    name == GTK_PAPER_NAME_LETTER || name == GTK_PAPER_NAME_LEGAL)
 		{
 			continue;
 		}
@@ -249,7 +246,7 @@ void FormatDialog::cbFormatChangedCb(GtkComboBox* widget, FormatDialog* dlg)
 	}
 	GtkTreeModel* model = gtk_combo_box_get_model(widget);
 
-	GValue value = { 0 };
+	GValue value = {0};
 	gtk_tree_model_get_value(model, &iter, 1, &value);
 
 	if (!G_VALUE_HOLDS_POINTER(&value))
@@ -357,7 +354,7 @@ void FormatDialog::show(GtkWindow* parent)
 		}
 	}
 
-	if (ret == 1) //OK
+	if (ret == 1)  //OK
 	{
 		settings->setSizeUnitIndex(this->selectedScale);
 

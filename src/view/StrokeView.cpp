@@ -5,11 +5,11 @@
 #include "model/Stroke.h"
 
 StrokeView::StrokeView(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool noAlpha)
- : cr(cr),
-   s(s),
-   startPoint(startPoint),
-   scaleFactor(scaleFactor),
-   noAlpha(noAlpha)
+ : cr(cr)
+ , s(s)
+ , startPoint(startPoint)
+ , scaleFactor(scaleFactor)
+ , noAlpha(noAlpha)
 {
 }
 
@@ -81,13 +81,14 @@ void StrokeView::changeCairoSource(bool markAudioStroke)
 	}
 
 
-	if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER ||
-		(s->getAudioFilename().length() == 0 && markAudioStroke))
+	if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER || (s->getAudioFilename().length() == 0 && markAudioStroke))
 	{
-		if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+		if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
+		{
 			cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
 		}
-		else {
+		else
+		{
 			cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 		}
 
@@ -224,4 +225,3 @@ void StrokeView::paint(bool dontRenderEditingStroke)
 		drawWithPressuire();
 	}
 }
-

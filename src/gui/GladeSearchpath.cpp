@@ -29,7 +29,7 @@ string GladeSearchpath::findFile(string subdir, string file)
 	}
 
 	// We step through each directory to find it.
-	for (string dir : directories)
+	for (string dir: directories)
 	{
 		string pathname = dir + G_DIR_SEPARATOR_S + filename;
 

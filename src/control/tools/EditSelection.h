@@ -30,7 +30,7 @@ class UndoAction;
 class EditSelectionContents;
 class DeleteUndoAction;
 
-class EditSelection : public ElementContainer, public Serializeable
+class EditSelection: public ElementContainer, public Serializeable
 {
 public:
 	EditSelection(UndoRedoHandler* undo, PageRef page, XojPageView* view);
@@ -122,7 +122,8 @@ public:
 	 * Sets the tool size for pen or eraser, returns an undo action
 	 * (or NULL if nothing is done)
 	 */
-	UndoAction* setSize(ToolSize size, const double* thicknessPen, const double* thicknessHilighter, const double* thicknessEraser);
+	UndoAction* setSize(ToolSize size, const double* thicknessPen, const double* thicknessHilighter,
+	                    const double* thicknessEraser);
 
 	/**
 	 * Set the color of all elements, return an undo action
@@ -213,7 +214,6 @@ public:
 	void readSerialized(ObjectInputStream& in);
 
 private:
-
 	/**
 	 * Draws an indicator where you can scale the selection
 	 */
@@ -224,13 +224,11 @@ private:
 	 */
 	void drawAnchorRotation(cairo_t* cr, double x, double y, double zoom);
 
-	
+
 	/**
 	 * Draws an indicator where you can delete the selection
 	 */
 	void drawDeleteRect(cairo_t* cr, double x, double y, double zoom);
-	
-
 
 
 	/**
@@ -250,7 +248,7 @@ private:
 	 */
 	void translateToView(XojPageView* v);
 
-private: // DATA
+private:  // DATA
 	XOJ_TYPE_ATTRIB;
 
 	/**
@@ -268,8 +266,8 @@ private: // DATA
 	/**
 	 * Use to translate to rotated selection
 	 */
-		_cairo_matrix cmatrix;
-	
+	_cairo_matrix cmatrix;
+
 	/**
 	 * The size
 	 */
@@ -288,13 +286,13 @@ private: // DATA
 	 * (we cannot only set the font size for text)
 	 */
 	bool aspectRatio;
-	
+
 	/**
 	 * Size of the editing handles 
 	 */
 
 	int btnWidth = 8;
-	
+
 	/**
 	 * The source page (form where the Elements come)
 	 */
@@ -310,7 +308,7 @@ private: // DATA
 	 */
 	EditSelectionContents* contents;
 
-private: // HANDLER
+private:  // HANDLER
 	/**
 	 * The page view for the anchor
 	 */
@@ -320,5 +318,4 @@ private: // HANDLER
 	 * Undo redo handler
 	 */
 	UndoRedoHandler* undo;
-
 };

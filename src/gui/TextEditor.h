@@ -27,7 +27,12 @@ public:
 	virtual ~TextEditor();
 
 	/** Represents the different kinds of text selection */
-	enum class SelectType { word, paragraph, all };
+	enum class SelectType
+	{
+		word,
+		paragraph,
+		all
+	};
 
 	void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
 

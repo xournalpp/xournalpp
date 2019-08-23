@@ -19,9 +19,9 @@ class BaseSelectObject
 {
 public:
 	BaseSelectObject(XojPageView* view)
- 	 : view(view),
-	   x(0),
-	   y(0)
+	 : view(view)
+	 , x(0)
+	 , y(0)
 	{
 	}
 
@@ -37,9 +37,9 @@ public:
 
 		// clear old selection anyway
 		view->xournal->getControl()->clearSelection();
-		matchRect = { gint(x - 10), gint(y - 10), 20, 20 };
+		matchRect = {gint(x - 10), gint(y - 10), 20, 20};
 
-		for (Layer* l : *view->page->getLayers())
+		for (Layer* l: *view->page->getLayers())
 		{
 			if (view->page->isLayerVisible(l))
 			{
@@ -52,7 +52,7 @@ public:
 protected:
 	bool checkLayer(Layer* l)
 	{
-		for (Element* e : *l->getElements())
+		for (Element* e: *l->getElements())
 		{
 			if (e->intersectsArea(&matchRect))
 			{
@@ -74,14 +74,14 @@ protected:
 	double y;
 };
 
-class SelectObject : public BaseSelectObject
+class SelectObject: public BaseSelectObject
 {
 public:
 	SelectObject(XojPageView* view)
- 	 : BaseSelectObject(view),
-	   strokeMatch(NULL),
-	   elementMatch(NULL),
-	   gap(1000000000)
+	 : BaseSelectObject(view)
+	 , strokeMatch(NULL)
+	 , elementMatch(NULL)
+	 , gap(1000000000)
 	{
 	}
 
@@ -100,13 +100,14 @@ public:
 
 		if (elementMatch)
 		{
-			view->xournal->setSelection(new EditSelection(view->xournal->getControl()->getUndoRedoHandler(), elementMatch, view, view->page));
+			view->xournal->setSelection(new EditSelection(view->xournal->getControl()->getUndoRedoHandler(),
+			                                              elementMatch, view, view->page));
 
 			view->repaintPage();
-			
+
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -129,7 +130,7 @@ protected:
 			elementMatch = e;
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -139,11 +140,11 @@ private:
 	double gap;
 };
 
-class PlayObject : public BaseSelectObject
+class PlayObject: public BaseSelectObject
 {
 public:
 	PlayObject(XojPageView* view)
- 	 : BaseSelectObject(view)
+	 : BaseSelectObject(view)
 	{
 	}
 
@@ -189,6 +190,3 @@ protected:
 		return false;
 	}
 };
-
-
-

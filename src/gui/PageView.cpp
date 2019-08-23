@@ -487,9 +487,8 @@ bool XojPageView::onButtonDoublePressEvent(const PositionInputData& pos)
 		double origx = x - (selection->getXOnView() - selection->getOriginalXOnView());
 		double origy = y - (selection->getYOnView() - selection->getOriginalYOnView());
 		std::vector<Element*>* elems = selection->getElements();
-		auto it = std::find_if(elems->begin(), elems->end(), [&](Element*& elem) {
-			return elem->intersectsArea(origx - 5, origy - 5, 5, 5);
-		});
+		auto it = std::find_if(elems->begin(), elems->end(),
+		                       [&](Element*& elem) { return elem->intersectsArea(origx - 5, origy - 5, 5, 5); });
 		if (it != elems->end())
 		{
 			// Enter editing mode on the selected object
@@ -879,8 +878,8 @@ void XojPageView::drawLoadingPage(cairo_t* cr)
 	cairo_set_font_size(cr, 32.0);
 	cairo_text_extents_t ex;
 	cairo_text_extents(cr, txtLoading.c_str(), &ex);
-	cairo_move_to(
-	        cr, (page->getWidth() - ex.width) / 2 - ex.x_bearing, (page->getHeight() - ex.height) / 2 - ex.y_bearing);
+	cairo_move_to(cr, (page->getWidth() - ex.width) / 2 - ex.x_bearing,
+	              (page->getHeight() - ex.height) / 2 - ex.y_bearing);
 	cairo_show_text(cr, txtLoading.c_str());
 
 	rerenderPage();

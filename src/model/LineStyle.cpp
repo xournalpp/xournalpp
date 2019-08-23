@@ -96,7 +96,7 @@ void LineStyle::setDashes(const double* dashes, int dashCount)
 		return;
 	}
 
-	this->dashes = (double*)g_malloc(dashCount * sizeof(double));
+	this->dashes = (double*) g_malloc(dashCount * sizeof(double));
 	this->dashCount = dashCount;
 
 	memcpy(this->dashes, dashes, this->dashCount * sizeof(double));

@@ -199,7 +199,7 @@ void SidebarPreviewPages::updatePreviews()
 		return;
 	}
 
-	for (SidebarPreviewBaseEntry* p : this->previews)
+	for (SidebarPreviewBaseEntry* p: this->previews)
 	{
 		delete p;
 	}
@@ -290,7 +290,7 @@ void SidebarPreviewPages::unselectPage()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 
-	for (SidebarPreviewBaseEntry* p : this->previews)
+	for (SidebarPreviewBaseEntry* p: this->previews)
 	{
 		p->setSelected(false);
 	}
@@ -334,7 +334,7 @@ void SidebarPreviewPages::pageSelected(size_t page)
 		}
 
 		this->toolbar->setHidden(false);
-		this->toolbar->setButtonEnabled((SidebarActions)actions);
+		this->toolbar->setButtonEnabled((SidebarActions) actions);
 	}
 }
 

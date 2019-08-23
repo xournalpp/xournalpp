@@ -43,7 +43,9 @@ bool AbstractInputHandler::handle(InputEvent* event)
 	{
 		this->inputContext->getXournal()->view->getCursor()->setInputDeviceClass(event->deviceClass);
 		return this->handleImpl(event);
-	} else {
+	}
+	else
+	{
 		return true;
 	}
 }
@@ -73,7 +75,7 @@ XojPageView* AbstractInputHandler::getPageAtCurrentPosition(InputEvent* event)
 	double x = eventX + xournal->x;
 	double y = eventY + xournal->y;
 
-	return xournal->layout->getViewAt(x,y);
+	return xournal->layout->getViewAt(x, y);
 }
 
 /**

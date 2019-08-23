@@ -35,7 +35,7 @@ PluginController::~PluginController()
 	XOJ_CHECK_TYPE(PluginController);
 #ifdef ENABLE_PLUGINS
 
-	for (Plugin* p : this->plugins)
+	for (Plugin* p: this->plugins)
 	{
 		delete p;
 	}
@@ -86,7 +86,8 @@ void PluginController::loadPluginsFrom(string path)
 
 		if (p->isDefaultEnabled())
 		{
-			p->setEnabled(!(std::find(pluginDisabled.begin(), pluginDisabled.end(), p->getName()) != pluginDisabled.end()));
+			p->setEnabled(
+			        !(std::find(pluginDisabled.begin(), pluginDisabled.end(), p->getName()) != pluginDisabled.end()));
 		}
 		else
 		{
@@ -109,7 +110,7 @@ void PluginController::registerToolbar()
 	XOJ_CHECK_TYPE(PluginController);
 
 #ifdef ENABLE_PLUGINS
-	for (Plugin* p : this->plugins)
+	for (Plugin* p: this->plugins)
 	{
 		p->registerToolbar();
 	}
@@ -137,7 +138,7 @@ void PluginController::registerMenu()
 
 #ifdef ENABLE_PLUGINS
 	GtkWidget* menuPlugin = control->getWindow()->get("menuPlugin");
-	for (Plugin* p : this->plugins)
+	for (Plugin* p: this->plugins)
 	{
 		p->registerMenu(control->getGtkWindow(), menuPlugin);
 	}
