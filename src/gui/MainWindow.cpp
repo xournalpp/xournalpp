@@ -508,6 +508,9 @@ void MainWindow::updateScrollbarSidebarPosition()
 
 		gtk_widget_set_visible(gtk_scrolled_window_get_hscrollbar(scrolledWindow), !(type & SCROLLBAR_HIDE_HORIZONTAL));
 		gtk_widget_set_visible(gtk_scrolled_window_get_vscrollbar(scrolledWindow), !(type & SCROLLBAR_HIDE_VERTICAL));
+
+		gtk_scrolled_window_set_overlay_scrolling(scrolledWindow,
+		                                          !control->getSettings()->isScrollbarFadeoutDisabled());
 	}
 
 	GtkWidget* sidebar = get("sidebar");
