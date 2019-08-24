@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-24 08:15+0000\n"
-"PO-Revision-Date: 2019-08-24 08:25\n"
+"PO-Revision-Date: 2019-08-24 11:26\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -525,7 +525,7 @@ msgstr "Rellenar"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:525
 msgid "Fine"
-msgstr ""
+msgstr "Fino"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:72
 msgid "Floating Toolbox (experimental)"
@@ -1162,7 +1162,7 @@ msgstr "Se produjo un error al mostrar la ayuda: {1}"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:90
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:527
 msgid "Thick"
-msgstr ""
+msgstr "Grueso"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Thickness - don't change"
@@ -1170,7 +1170,7 @@ msgstr "Grosor – no cambiar"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
 msgid "Thin"
-msgstr ""
+msgstr "Delgado"
 
 #: ../src/control/Control.cpp:2941
 msgid "This document is not saved yet."
@@ -1256,11 +1256,11 @@ msgstr "Espacio vertical"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:524
 msgid "Very Fine"
-msgstr ""
+msgstr "Muy fino"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:529
 msgid "Very Thick"
-msgstr ""
+msgstr "Muy grueso"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:146
@@ -2396,11 +2396,11 @@ msgstr ""
 
 #: ../ui/main.glade:2042
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "Intercambiar la página actual con la anterior"
 
 #: ../ui/main.glade:2064
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "Intercambiar la página actual con la siguiente"
 
 #: ../ui/main.glade:840
 msgid "T_oolbars"
