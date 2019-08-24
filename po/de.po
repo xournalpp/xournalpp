@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-23 17:35+0000\n"
-"PO-Revision-Date: 2019-08-23 17:44\n"
+"POT-Creation-Date: 2019-08-24 08:15+0000\n"
+"PO-Revision-Date: 2019-08-24 08:25\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -148,7 +148,7 @@ msgstr "Schwarz"
 msgid "Blue"
 msgstr "Blau"
 
-#: ../src/control/Control.cpp:2348 ../src/control/Control.cpp:2911
+#: ../src/control/Control.cpp:2388 ../src/control/Control.cpp:2951
 #: ../src/control/XournalMain.cpp:139
 msgid "Cancel"
 msgstr "Abbrechen"
@@ -362,11 +362,11 @@ msgstr "Datei löschen"
 msgid "Delete layer"
 msgstr "Ebene löschen"
 
-#: ../src/control/Control.cpp:2907
+#: ../src/control/Control.cpp:2947
 msgid "Discard"
 msgstr "Verwerfen"
 
-#: ../src/control/Control.cpp:2274
+#: ../src/control/Control.cpp:2314
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -378,7 +378,7 @@ msgstr "Öffnen sie keine automatisch gespeicherten Dateien. Diese werden ansons
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Das Hintergrund PDF darf nicht überschrieben werden! Dies verursacht Fehler!"
 
-#: ../src/control/Control.cpp:2901
+#: ../src/control/Control.cpp:2941
 msgid "Document file was removed."
 msgstr "Datei des Dokuments wurde entfernt."
 
@@ -456,7 +456,7 @@ msgstr "Linie löschen"
 msgid "Eraser"
 msgstr "Radierer"
 
-#: ../src/control/Control.cpp:2577
+#: ../src/control/Control.cpp:2617
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Fehler beim Öffnen des PDFs \"{1}\"\n"
@@ -466,7 +466,7 @@ msgstr "Fehler beim Öffnen des PDFs \"{1}\"\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Fehler beim Laden der Glade-Datei \"{1}\" (Datei \"{2}\")"
 
-#: ../src/control/Control.cpp:2373
+#: ../src/control/Control.cpp:2413
 msgid "Error opening file \"{1}\""
 msgstr "Fehler beim Öffnen der Datei \"{1}\""
 
@@ -515,13 +515,17 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "Datei konnte nicht geöffnet werden, Sie müssen sie manuell öffnen:\n"
 "URL: {1}"
 
-#: ../src/control/Control.cpp:2305
+#: ../src/control/Control.cpp:2345
 msgid "Filename: {1}"
 msgstr "Dateiname: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:511
 msgid "Fill"
 msgstr "Füllung"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:525
+msgid "Fine"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:72
 msgid "Floating Toolbox (experimental)"
@@ -672,7 +676,7 @@ msgid "Manage Toolbars"
 msgstr "Werkzeugleisten verwalten"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:525
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:526
 msgid "Medium"
 msgstr "Mittel"
 
@@ -870,7 +874,7 @@ msgstr "Präsentationsmodus"
 msgid "Record Audio / Stop Recording"
 msgstr "Aufzeichnung starten / stoppen"
 
-#: ../src/control/Control.cpp:983
+#: ../src/control/Control.cpp:1011
 msgid "Recorder could not be started."
 msgstr "Aufzeichnung konnte nicht gestartet werden."
 
@@ -888,7 +892,7 @@ msgstr "Wiederherstellen"
 msgid "Redo: "
 msgstr "Wiederherstellen: "
 
-#: ../src/control/Control.cpp:2347
+#: ../src/control/Control.cpp:2387
 msgid "Remove PDF Background"
 msgstr "PDF-Hintergrund entfernen"
 
@@ -940,16 +944,16 @@ msgstr "SVG Bild"
 msgid "SVG with transparent background"
 msgstr "SVG mit transparentem Hintergrund"
 
-#: ../src/control/Control.cpp:2902 ../src/control/jobs/SaveJob.cpp:13
+#: ../src/control/Control.cpp:2942 ../src/control/jobs/SaveJob.cpp:13
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Save"
 msgstr "Speichern"
 
-#: ../src/control/Control.cpp:2902
+#: ../src/control/Control.cpp:2942
 msgid "Save As..."
 msgstr "Speichern unter..."
 
-#: ../src/control/Control.cpp:2696 ../src/gui/dialog/PageTemplateDialog.cpp:110
+#: ../src/control/Control.cpp:2736 ../src/gui/dialog/PageTemplateDialog.cpp:110
 msgid "Save File"
 msgstr "Speichere Datei"
 
@@ -990,7 +994,7 @@ msgstr "Rechteck auswählen"
 msgid "Select Region"
 msgstr "Bereich auswählen"
 
-#: ../src/control/Control.cpp:2346
+#: ../src/control/Control.cpp:2386
 msgid "Select another PDF"
 msgstr "Andere PDF-Datei auswählen"
 
@@ -1107,15 +1111,15 @@ msgstr "Text nicht gefunden"
 msgid "Text not found, searched on all pages"
 msgstr "Text nicht gefunden, auf allen Seiten gesucht"
 
-#: ../src/control/Control.cpp:1181
+#: ../src/control/Control.cpp:1209
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Die Werkzeugleistenkonfiguration \"{1}\" ist vordefiniert, möchten Sie eine Kopie erstellen?"
 
-#: ../src/control/Control.cpp:2343
+#: ../src/control/Control.cpp:2383
 msgid "The attached background PDF could not be found."
 msgstr "Der angehängte PDF-Hintergrund konnte nicht gefunden werden."
 
-#: ../src/control/Control.cpp:2344
+#: ../src/control/Control.cpp:2384
 msgid "The background PDF could not be found."
 msgstr "Der PDF-Hintergrund konnte nicht gefunden werden."
 
@@ -1156,7 +1160,7 @@ msgid "There was an error displaying help: {1}"
 msgstr "Es ist ein Fehler aufgetreten beim Anzeigen der Hilfe: {1}"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:90
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:526
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:527
 msgid "Thick"
 msgstr "Dick"
 
@@ -1165,11 +1169,10 @@ msgid "Thickness - don't change"
 msgstr "Dicke - nicht ändern"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:524
 msgid "Thin"
 msgstr "Dünn"
 
-#: ../src/control/Control.cpp:2901
+#: ../src/control/Control.cpp:2941
 msgid "This document is not saved yet."
 msgstr "Dieses Dokument wurde noch nicht gespeichert."
 
@@ -1239,7 +1242,7 @@ msgstr "Unbekannter pixmap::domain Typ: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Unbekannter Linientyp: \"{1}\", verwende Stift"
 
-#: ../src/control/Control.cpp:2774
+#: ../src/control/Control.cpp:2814
 msgid "Unsaved Document"
 msgstr "Ungespeichertes Dokument"
 
@@ -1250,6 +1253,14 @@ msgstr "Vertikaler Platz"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:68
 msgid "Vertical space"
 msgstr "Vertikaler Platz"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:524
+msgid "Very Fine"
+msgstr ""
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:529
+msgid "Very Thick"
+msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:146
@@ -1288,7 +1299,7 @@ msgstr "Xournal Dateien"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ ist das letzte mal abgestürzt. Soll die Datei wiederhergestellt werden?"
 
-#: ../src/control/Control.cpp:2708 ../src/control/stockdlg/XojOpenDlg.cpp:84
+#: ../src/control/Control.cpp:2748 ../src/control/stockdlg/XojOpenDlg.cpp:84
 msgid "Xournal++ files"
 msgstr "Xournal++ Dateien"
 
@@ -1340,7 +1351,7 @@ msgstr "Zoom-Regler"
 msgid "Zoom to 100%"
 msgstr "Zoom auf 100%"
 
-#: ../src/control/Control.cpp:2699 ../src/control/jobs/BaseExportJob.cpp:25
+#: ../src/control/Control.cpp:2739 ../src/control/jobs/BaseExportJob.cpp:25
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:111
@@ -1352,7 +1363,7 @@ msgstr "_Abbrechen"
 msgid "_Open"
 msgstr "Ö_ffnen"
 
-#: ../src/control/Control.cpp:2701 ../src/control/jobs/BaseExportJob.cpp:26
+#: ../src/control/Control.cpp:2741 ../src/control/jobs/BaseExportJob.cpp:26
 #: ../src/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr "_Speichern"
@@ -1851,7 +1862,7 @@ msgstr "Ebene löschen"
 msgid "Delete stroke"
 msgstr "Linie löschen"
 
-#: ../ui/main.glade:2062
+#: ../ui/main.glade:2106
 msgid "Delete this page"
 msgstr "Diese Seite löschen"
 
@@ -1913,11 +1924,11 @@ msgstr "Zeichenbereich"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Zeichenwerkzeuge - Setze Optionen via Zeichenrichtung (experimentell)"
 
-#: ../ui/main.glade:2466
+#: ../ui/main.glade:2510
 msgid "Duplicate"
 msgstr "Duplizieren"
 
-#: ../ui/main.glade:2503
+#: ../ui/main.glade:2547
 msgid "Edit (not implemented yet)"
 msgstr "Bearbeiten (noch nicht implementiert)"
 
@@ -1989,19 +2000,19 @@ msgstr "Exportieren"
 msgid "Export as..."
 msgstr "Exportieren als..."
 
-#: ../ui/main.glade:1581 ../ui/main.glade:1742
+#: ../ui/main.glade:1581 ../ui/main.glade:1786
 msgid "Fi_ll"
 msgstr "Ausfü_llen"
 
-#: ../ui/main.glade:1591 ../ui/main.glade:1752
+#: ../ui/main.glade:1591 ../ui/main.glade:1796
 msgid "Fill transparency"
 msgstr "Füllung Transparenz"
 
-#: ../ui/main.glade:2260
+#: ../ui/main.glade:2304
 msgid "Find next occurrence of the search string"
 msgstr "Nächstes Vorkommen des Textes suchen"
 
-#: ../ui/main.glade:2238
+#: ../ui/main.glade:2282
 msgid "Find previous occurrence of the search string"
 msgstr "Vorheriges Vorkommen des Textes suchen"
 
@@ -2065,7 +2076,7 @@ msgstr "Vertikale Bildlaufleiste ausblenden"
 msgid "Highlight cursor position"
 msgstr "Position des Mauszeigers hervorheben"
 
-#: ../ui/main.glade:1692
+#: ../ui/main.glade:1714
 msgid "Highlighter Opti_ons"
 msgstr "Textmarker _Optionen"
 
@@ -2101,15 +2112,15 @@ msgstr "Eingabesystem"
 msgid "Insert Latex"
 msgstr "LaTeX einfügen"
 
-#: ../ui/main.glade:2458
+#: ../ui/main.glade:2502
 msgid "Insert Page After"
 msgstr "Seite danach einfügen"
 
-#: ../ui/main.glade:2450
+#: ../ui/main.glade:2494
 msgid "Insert Page Before"
 msgstr "Seite davor einfügen"
 
-#: ../ui/main.glade:2041
+#: ../ui/main.glade:2085
 msgid "Insert a copy of the current page below"
 msgstr "Eine Kopie der aktuellen Seite unten einfügen"
 
@@ -2159,11 +2170,11 @@ msgstr "Maus"
 msgid "Mouse Buttons"
 msgstr "Maustasten"
 
-#: ../ui/main.glade:2488
+#: ../ui/main.glade:2532
 msgid "Move Down"
 msgstr "Nach hinten verschieben"
 
-#: ../ui/main.glade:2480
+#: ../ui/main.glade:2524
 msgid "Move Up"
 msgstr "Nach vorne verschieben"
 
@@ -2237,7 +2248,7 @@ msgid "Partially based on Xournal\n"
 msgstr "Teilweise basierend auf Xournal\n"
 "von Denis Auroux"
 
-#: ../ui/main.glade:1788
+#: ../ui/main.glade:1832
 msgid "Pause"
 msgstr "Pausieren"
 
@@ -2249,7 +2260,7 @@ msgstr "Stift Optionen"
 msgid "Plugin Manager"
 msgstr "Plugin-Manager"
 
-#: ../ui/main.glade:1833
+#: ../ui/main.glade:1877
 msgid "Plugin _Manager"
 msgstr "Plugin-Manager"
 
@@ -2277,7 +2288,7 @@ msgstr "Bereich"
 msgid "Recent _Documents"
 msgstr "Zuletzt geöffnete _Dokumente"
 
-#: ../ui/main.glade:1778
+#: ../ui/main.glade:1822
 msgid "Record / Stop"
 msgstr "Aufnehmen / Stop"
 
@@ -2397,11 +2408,11 @@ msgstr "Stifttasten"
 msgid "Successive (ms)"
 msgstr "Aufeinander folgend (ms)"
 
-#: ../ui/main.glade:1998
+#: ../ui/main.glade:2042
 msgid "Swap the current page with the one above"
 msgstr "Seite mit Vorheriger tauschen"
 
-#: ../ui/main.glade:2020
+#: ../ui/main.glade:2064
 msgid "Swap the current page with the one below"
 msgstr "Seite mit Nächster tauschen"
 
@@ -2417,7 +2428,7 @@ msgstr "Vorlage:"
 msgid "Test"
 msgstr "Testen"
 
-#: ../ui/main.glade:1766
+#: ../ui/main.glade:1810
 msgid "Text Font..."
 msgstr "Schriftart..."
 
@@ -2614,7 +2625,7 @@ msgstr "_Erste Seite"
 msgid "_Goto Page"
 msgstr "_Gehe zur Seite"
 
-#: ../ui/main.glade:1847
+#: ../ui/main.glade:1891
 msgid "_Help"
 msgstr "_Hilfe"
 
@@ -2666,7 +2677,7 @@ msgstr "_Mehrseitiges Layout"
 msgid "_Pen"
 msgstr "_Stift"
 
-#: ../ui/main.glade:1822
+#: ../ui/main.glade:1866
 msgid "_Plugin"
 msgstr "_Plugin"
 
@@ -2718,31 +2729,31 @@ msgstr "_Vertikaler Platz"
 msgid "_View"
 msgstr "_Ansicht"
 
-#: ../ui/main.glade:1677
+#: ../ui/main.glade:1699
 msgid "_delete strokes"
 msgstr "_Linien löschen"
 
-#: ../ui/main.glade:1481 ../ui/main.glade:1616 ../ui/main.glade:1703
+#: ../ui/main.glade:1481 ../ui/main.glade:1627 ../ui/main.glade:1736
 msgid "_fine"
 msgstr "_dünn"
 
-#: ../ui/main.glade:1492 ../ui/main.glade:1627 ../ui/main.glade:1714
+#: ../ui/main.glade:1492 ../ui/main.glade:1638 ../ui/main.glade:1747
 msgid "_medium"
 msgstr "_mittel"
 
-#: ../ui/main.glade:1655
+#: ../ui/main.glade:1677
 msgid "_standard"
 msgstr "_Standard"
 
-#: ../ui/main.glade:1503 ../ui/main.glade:1638 ../ui/main.glade:1725
+#: ../ui/main.glade:1503 ../ui/main.glade:1649 ../ui/main.glade:1758
 msgid "_thick"
 msgstr "_dick"
 
-#: ../ui/main.glade:1470
+#: ../ui/main.glade:1470 ../ui/main.glade:1616 ../ui/main.glade:1725
 msgid "_very fine"
 msgstr "_sehr dünn"
 
-#: ../ui/main.glade:1666
+#: ../ui/main.glade:1688
 msgid "_whiteout"
 msgstr "_weiß übermalen"
 
@@ -2783,7 +2794,7 @@ msgstr "s <i>(nach denen der Touchscreen reaktiviert wird)</i>"
 msgid "save to file"
 msgstr "Speichere in Datei"
 
-#: ../ui/main.glade:1514
+#: ../ui/main.glade:1514 ../ui/main.glade:1660 ../ui/main.glade:1769
 msgid "ver_y thick"
 msgstr "sehr dick"
 
