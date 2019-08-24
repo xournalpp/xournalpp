@@ -1470,7 +1470,7 @@
                                     <property name="label" translatable="yes">_very fine</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_as_radio">True</property>
-                                    <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_VERY_THIN:GROUP_PEN_SIZE" swapped="no"/>
+                                    <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_VERY_FINE:GROUP_PEN_SIZE" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>
@@ -1609,6 +1609,17 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <child>
+                                  <object class="GtkCheckMenuItem" id="eraserVeryFine">
+                                    <property name="name">eraserFine</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">_very fine</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="draw_as_radio">True</property>
+                                    <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_VERY_FINE:GROUP_ERASER_SIZE" swapped="no"/>
+                                  </object>
+                                </child>
+                                <child>
                                   <object class="GtkCheckMenuItem" id="eraserFine">
                                     <property name="name">eraserFine</property>
                                     <property name="visible">True</property>
@@ -1639,6 +1650,17 @@
                                     <property name="use_underline">True</property>
                                     <property name="draw_as_radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_THICK:GROUP_ERASER_SIZE" swapped="no"/>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkCheckMenuItem" id="eraserVeryThick">
+                                    <property name="name">eraserVeryThick</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">ver_y thick</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="draw_as_radio">True</property>
+                                    <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_VERY_THICK:GROUP_ERASER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>
@@ -1696,6 +1718,17 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <child>
+                                  <object class="GtkCheckMenuItem" id="highlighterVeryFine">
+                                    <property name="name">highlighterVeryFine</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">_very fine</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="draw_as_radio">True</property>
+                                    <signal name="toggled" handler="ACTION_TOOL_HILIGHTER_SIZE_VERY_FINE:GROUP_HILIGHTER_SIZE" swapped="no"/>
+                                  </object>
+                                </child>
+                                <child>
                                   <object class="GtkCheckMenuItem" id="highlighterFine">
                                     <property name="name">highlighterFine</property>
                                     <property name="visible">True</property>
@@ -1726,6 +1759,17 @@
                                     <property name="use_underline">True</property>
                                     <property name="draw_as_radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_HILIGHTER_SIZE_THICK:GROUP_HILIGHTER_SIZE" swapped="no"/>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkCheckMenuItem" id="highlighterVeryThick">
+                                    <property name="name">highlighterThick</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">ver_y thick</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="draw_as_radio">True</property>
+                                    <signal name="toggled" handler="ACTION_TOOL_HILIGHTER_SIZE_VERY_THICK:GROUP_HILIGHTER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>

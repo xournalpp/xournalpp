@@ -47,21 +47,21 @@ void ToolHandler::initTools()
 	tools[TOOL_PEN - TOOL_PEN] = t;
 
 	thickness = new double[5];
-	thickness[TOOL_SIZE_VERY_FINE] = 2.83;
+	thickness[TOOL_SIZE_VERY_FINE] = 1;
 	thickness[TOOL_SIZE_FINE] = 2.83;
 	thickness[TOOL_SIZE_MEDIUM] = 8.50;
-	thickness[TOOL_SIZE_THICK] = 19.84;
-	thickness[TOOL_SIZE_VERY_THICK] = 19.84;
+	thickness[TOOL_SIZE_THICK] = 12;
+	thickness[TOOL_SIZE_VERY_THICK] = 18;
 	t = new Tool("eraser", TOOL_ERASER, 0x000000, TOOL_CAP_SIZE, thickness);
 	tools[TOOL_ERASER - TOOL_PEN] = t;
 
 	// highlighter thicknesses = 1, 3, 7 mm
 	thickness = new double[5];
-	thickness[TOOL_SIZE_VERY_FINE] = 2.83;
+	thickness[TOOL_SIZE_VERY_FINE] = 1;
 	thickness[TOOL_SIZE_FINE] = 2.83;
 	thickness[TOOL_SIZE_MEDIUM] = 8.50;
 	thickness[TOOL_SIZE_THICK] = 19.84;
-	thickness[TOOL_SIZE_VERY_THICK] = 19.84;
+	thickness[TOOL_SIZE_VERY_THICK] = 30;
 	t = new Tool("hilighter", TOOL_HILIGHTER, 0xFFFF00,
 			TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE |
 			TOOL_CAP_CIRCLE | TOOL_CAP_ARROW | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
@@ -490,7 +490,7 @@ void ToolHandler::saveSettings()
 			switch (t->getSize())
 			{
 			case TOOL_SIZE_VERY_FINE:
-				value = "VERY_THIN";
+				value = "VERY_FINE";
 				break;
 			case TOOL_SIZE_FINE:
 				value = "THIN";
@@ -595,7 +595,8 @@ void ToolHandler::loadSettings()
 			string value;
 			if (t->hasCapability(TOOL_CAP_SIZE) && st.getString("size", value))
 			{
-				if (value == "VERY_THIN")	  t->setSize(TOOL_SIZE_VERY_FINE);
+				if (value == "VERY_FINE")
+					t->setSize(TOOL_SIZE_VERY_FINE);
 				else if (value == "THIN")	  t->setSize(TOOL_SIZE_FINE);
 				else if (value == "MEDIUM")	  t->setSize(TOOL_SIZE_MEDIUM);
 				else if (value == "BIG")	  t->setSize(TOOL_SIZE_THICK);
