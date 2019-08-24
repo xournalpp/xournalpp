@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-23 17:35+0000\n"
-"PO-Revision-Date: 2019-08-23 17:44\n"
+"PO-Revision-Date: 2019-08-24 07:15\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -832,7 +832,7 @@ msgstr "Número de página"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Paired pages"
-msgstr ""
+msgstr "Páginas emparejadas"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 #: ../src/undo/AddUndoAction.cpp:108
@@ -1448,7 +1448,7 @@ msgstr "varita apuntadora"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:314
 msgid "whiteout"
-msgstr ""
+msgstr "corrector"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1176
 msgid "xoj-File: {1}"
@@ -1860,7 +1860,7 @@ msgstr "Desactivar dibujo en este dispositivo"
 
 #: ../ui/settings.glade:2301
 msgid "Disable scrollbar fade out"
-msgstr ""
+msgstr "Desactivar desvanecimiento de barra de desplazamiento"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
@@ -2199,7 +2199,7 @@ msgstr "Páginas:"
 
 #: ../ui/settings.glade:3051
 msgid "Paired Pages"
-msgstr ""
+msgstr "Páginas emparejadas"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2421,7 +2421,7 @@ msgstr "Esta es una funcionalidad experimental. Utilícela prudentemente."
 
 #: ../ui/settings.glade:1500
 msgid "Timeout"
-msgstr ""
+msgstr "Límite de tiempo"
 
 #: ../ui/settings.glade:1413 ../ui/settings.glade:1882
 #: ../ui/settingsDeviceClassConfig.glade:45
@@ -2458,7 +2458,7 @@ msgstr "Ver"
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
-msgstr ""
+msgstr "Corrector"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
@@ -2730,7 +2730,7 @@ msgstr "_muy fino"
 
 #: ../ui/main.glade:1666
 msgid "_whiteout"
-msgstr ""
+msgstr "co_rrector"
 
 #: ../ui/pageTemplate.glade:158
 msgid "change"
