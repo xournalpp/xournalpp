@@ -9,6 +9,12 @@
 #include <algorithm>
 #include <numeric>
 #include <cstdlib>
+
+#include <chrono>
+typedef std::chrono::high_resolution_clock Clock;
+#include <iostream>
+
+
 /**
  * Padding outside the pages, including shadow
  */
@@ -23,6 +29,12 @@ constexpr size_t const XOURNAL_ROOM_FOR_SHADOW = 3;
  * Padding between the pages
  */
 constexpr size_t const XOURNAL_PADDING_BETWEEN = 15;
+
+
+double searchtime1 = 0;
+double searchtime2 = 0;
+double searchtime3 = 0;
+double plotindex = 0;
 
 
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
@@ -349,6 +361,7 @@ XojPageView* Layout::getViewAt(int x, int y)
 // 	auto cit = std::lower_bound( this->sizeCol.begin(),  this->sizeCol.end(), x);
 // 	int cb = cit - this->sizeCol.begin();
 
+	auto t0 = Clock::now();
 
 	auto fast_linear_search = [](std::vector<unsigned> const& container, size_t start, size_t value) {
 		auto row_i = std::next(begin(container), start);
@@ -367,6 +380,83 @@ XojPageView* Layout::getViewAt(int x, int y)
 	auto const& col_i = fast_linear_search(this->widthCols, this->lastGetViewAtCol, x);
 
 
+	auto t1 = Clock::now();
+
+	/* Linear Up or Down Search from last position: */
+	/* This is over 7x faster than the above code  */
+
+	// Rows:
+	int r = std::max(0, static_cast<int>(this->lastGetViewAtRow) - 1);
+	if (r > 0 && y <= this->heightRows[r])  //search lower
+	{
+		for (r--; r >= 0; r--)
+		{
+			if (y > this->heightRows[r])
+			{
+				break;  // past region - it's back up one
+			}
+		}
+		r++;
+	}
+	else  //search higher
+	{
+		for (; r < this->heightRows.size(); r++)
+		{
+			if (y <= this->heightRows[r]) break;  // found region
+		}
+	}
+
+
+	//Now for columns:
+	int c = std::max(0, static_cast<int>(this->lastGetViewAtCol) - 1);
+	if (c > 0 && x <= this->widthCols[c])  //search lower
+	{
+		for (c--; c >= 0; c--)
+		{
+			if (x > this->widthCols[c])
+			{
+				break;  // past region
+			}
+		}
+		c++;
+	}
+	else
+	{
+		for (; c < this->widthCols.size(); c++)
+		{
+			if (x <= this->widthCols[c]) break;  // found region
+		}
+	}
+
+
+	auto t2 = Clock::now();
+
+	//Binary Search ... too much overhead makes this a slower option in our use case.
+	/* This is over 2x faster than the first code block but 3x slower than the second code block*/
+	auto rit = std::lower_bound(this->heightRows.begin(), this->heightRows.end(), y);
+	int rb = rit - this->heightRows.begin();  //get index
+	auto cit = std::lower_bound(this->widthCols.begin(), this->widthCols.end(), x);
+	int cb = cit - this->widthCols.begin();
+
+	auto t3 = Clock::now();
+
+	searchtime1 += std::chrono::duration_cast<std::chrono::nanoseconds>(t1 - t0).count();
+	searchtime2 += std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
+	searchtime3 += std::chrono::duration_cast<std::chrono::nanoseconds>(t3 - t2).count();
+
+
+	if (plotindex == 0)
+	{
+		std::clog << " index \tagreeR \t agreeC \t new \told \t linear" << std::endl;
+	}
+	//remove these along with timing etc when done testing:
+	int r0 = std::distance(this->heightRows.cbegin(), row_i);
+	int c0 = std::distance(this->widthCols.cbegin(), col_i);
+
+	std::clog << plotindex++ << '\t' << r0 << '=' << r << '=' << rb << '\t' << c0 << '=' << c << '=' << cb << '\t'
+	          << searchtime1 << '\t' << searchtime2 << '\t' << searchtime3 << '\t' << std::endl;
+
+
 	if (col_i != end(this->widthCols) && row_i != end(this->heightRows))
 	{
 		//Todo c++14+ cbegin(...);
@@ -374,11 +464,11 @@ XojPageView* Layout::getViewAt(int x, int y)
 		this->lastGetViewAtCol = std::distance(this->widthCols.cbegin(), col_i);
 		auto optionalPage = this->mapper.at({this->lastGetViewAtCol, this->lastGetViewAtRow});
 
+
 		if (optionalPage && this->view->viewPages[*optionalPage]->containsPoint(x, y, false))
 		{
 			return this->view->viewPages[*optionalPage];
 		}
-		
 	}
 
 	return nullptr;
