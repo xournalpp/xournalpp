@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-23 17:35+0000\n"
-"PO-Revision-Date: 2019-08-23 17:44\n"
+"POT-Creation-Date: 2019-08-24 08:15+0000\n"
+"PO-Revision-Date: 2019-08-24 08:25\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -148,7 +148,7 @@ msgstr "Черный"
 msgid "Blue"
 msgstr "Синий"
 
-#: ../src/control/Control.cpp:2348 ../src/control/Control.cpp:2911
+#: ../src/control/Control.cpp:2388 ../src/control/Control.cpp:2951
 #: ../src/control/XournalMain.cpp:139
 msgid "Cancel"
 msgstr "Отмена"
@@ -361,11 +361,11 @@ msgstr "Удалить файл"
 msgid "Delete layer"
 msgstr "Удалить слой"
 
-#: ../src/control/Control.cpp:2907
+#: ../src/control/Control.cpp:2947
 msgid "Discard"
 msgstr "Не сохранять"
 
-#: ../src/control/Control.cpp:2274
+#: ../src/control/Control.cpp:2314
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -377,7 +377,7 @@ msgstr "Не открывайте автоматически сохранённ�
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Не перезаписывайте фоновый PDF! Это приведёт к ошибкам!"
 
-#: ../src/control/Control.cpp:2901
+#: ../src/control/Control.cpp:2941
 msgid "Document file was removed."
 msgstr "Файл документа был удален."
 
@@ -455,7 +455,7 @@ msgstr "Удалить черту"
 msgid "Eraser"
 msgstr "Ластик"
 
-#: ../src/control/Control.cpp:2577
+#: ../src/control/Control.cpp:2617
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Ошибка аннотации PDF файла «{1}»\n"
@@ -465,7 +465,7 @@ msgstr "Ошибка аннотации PDF файла «{1}»\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Ошибка загрузки glade файла «{1}» (попробуйте загрузить «{2}»)"
 
-#: ../src/control/Control.cpp:2373
+#: ../src/control/Control.cpp:2413
 msgid "Error opening file \"{1}\""
 msgstr "Ошибка при открытии файла «{1}»"
 
@@ -514,13 +514,17 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "Файл не может быть открыт. Вы должны сделать это вручную:\n"
 "URL: {1}"
 
-#: ../src/control/Control.cpp:2305
+#: ../src/control/Control.cpp:2345
 msgid "Filename: {1}"
 msgstr "Имя файла: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:511
 msgid "Fill"
 msgstr "Заливка"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:525
+msgid "Fine"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:72
 msgid "Floating Toolbox (experimental)"
@@ -671,7 +675,7 @@ msgid "Manage Toolbars"
 msgstr "Управление панелями"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:525
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:526
 msgid "Medium"
 msgstr "Средний"
 
@@ -869,7 +873,7 @@ msgstr "Режим презентации"
 msgid "Record Audio / Stop Recording"
 msgstr "Запись аудио / Остановить запись"
 
-#: ../src/control/Control.cpp:983
+#: ../src/control/Control.cpp:1011
 msgid "Recorder could not be started."
 msgstr "Запись не может быть запущена."
 
@@ -887,7 +891,7 @@ msgstr "Вернуть"
 msgid "Redo: "
 msgstr "Вернуть: "
 
-#: ../src/control/Control.cpp:2347
+#: ../src/control/Control.cpp:2387
 msgid "Remove PDF Background"
 msgstr "Удалить PDF фон"
 
@@ -939,16 +943,16 @@ msgstr "SVG графика"
 msgid "SVG with transparent background"
 msgstr "SVG с прозрачным фоном"
 
-#: ../src/control/Control.cpp:2902 ../src/control/jobs/SaveJob.cpp:13
+#: ../src/control/Control.cpp:2942 ../src/control/jobs/SaveJob.cpp:13
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Save"
 msgstr "Сохранить"
 
-#: ../src/control/Control.cpp:2902
+#: ../src/control/Control.cpp:2942
 msgid "Save As..."
 msgstr "Сохранить как..."
 
-#: ../src/control/Control.cpp:2696 ../src/gui/dialog/PageTemplateDialog.cpp:110
+#: ../src/control/Control.cpp:2736 ../src/gui/dialog/PageTemplateDialog.cpp:110
 msgid "Save File"
 msgstr "Сохранить файл"
 
@@ -989,7 +993,7 @@ msgstr "Прямоугольное выделение"
 msgid "Select Region"
 msgstr "Выделение лассо"
 
-#: ../src/control/Control.cpp:2346
+#: ../src/control/Control.cpp:2386
 msgid "Select another PDF"
 msgstr "Выбрать другой PDF"
 
@@ -1106,15 +1110,15 @@ msgstr "Текст не найден"
 msgid "Text not found, searched on all pages"
 msgstr "Текст не найден, поиск на всех страницах"
 
-#: ../src/control/Control.cpp:1181
+#: ../src/control/Control.cpp:1209
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Конфигурация панели инструментов \"{1}\" предопределена. Создать копию для редактирования?"
 
-#: ../src/control/Control.cpp:2343
+#: ../src/control/Control.cpp:2383
 msgid "The attached background PDF could not be found."
 msgstr "Присоединённый фоновый PDF не найден."
 
-#: ../src/control/Control.cpp:2344
+#: ../src/control/Control.cpp:2384
 msgid "The background PDF could not be found."
 msgstr "Фоновый PDF не найден."
 
@@ -1155,7 +1159,7 @@ msgid "There was an error displaying help: {1}"
 msgstr "Произошла ошибка при отображении справки: {1}"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:90
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:526
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:527
 msgid "Thick"
 msgstr "Жирный"
 
@@ -1164,11 +1168,10 @@ msgid "Thickness - don't change"
 msgstr "Толщина - не изменять"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:524
 msgid "Thin"
 msgstr "Тонкий"
 
-#: ../src/control/Control.cpp:2901
+#: ../src/control/Control.cpp:2941
 msgid "This document is not saved yet."
 msgstr "Этот документ еще не сохранен."
 
@@ -1238,7 +1241,7 @@ msgstr "Неизвестный тип pixmap::domain: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Неизвестный тип черты: \"{1}\", предполагается, что это перо"
 
-#: ../src/control/Control.cpp:2774
+#: ../src/control/Control.cpp:2814
 msgid "Unsaved Document"
 msgstr "Несохранённый документ"
 
@@ -1249,6 +1252,14 @@ msgstr "Вертикальный отступ"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:68
 msgid "Vertical space"
 msgstr "Вертикальный отступ"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:524
+msgid "Very Fine"
+msgstr ""
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:529
+msgid "Very Thick"
+msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:146
@@ -1287,7 +1298,7 @@ msgstr "Xournal файлы"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "В последний раз программа Xournal++ аварийно завершилась. Хотите восстановить последний редактируемый файл?"
 
-#: ../src/control/Control.cpp:2708 ../src/control/stockdlg/XojOpenDlg.cpp:84
+#: ../src/control/Control.cpp:2748 ../src/control/stockdlg/XojOpenDlg.cpp:84
 msgid "Xournal++ files"
 msgstr "Xournal++ файлы"
 
@@ -1339,7 +1350,7 @@ msgstr "Ползунок масштабирования"
 msgid "Zoom to 100%"
 msgstr "Увеличить до 100%"
 
-#: ../src/control/Control.cpp:2699 ../src/control/jobs/BaseExportJob.cpp:25
+#: ../src/control/Control.cpp:2739 ../src/control/jobs/BaseExportJob.cpp:25
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:111
@@ -1351,7 +1362,7 @@ msgstr "_Отмена"
 msgid "_Open"
 msgstr "_Открыть"
 
-#: ../src/control/Control.cpp:2701 ../src/control/jobs/BaseExportJob.cpp:26
+#: ../src/control/Control.cpp:2741 ../src/control/jobs/BaseExportJob.cpp:26
 #: ../src/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr "_Сохранить"
@@ -1848,7 +1859,7 @@ msgstr "Удалить слой"
 msgid "Delete stroke"
 msgstr "Удалить черту"
 
-#: ../ui/main.glade:2062
+#: ../ui/main.glade:2106
 msgid "Delete this page"
 msgstr "Удалить эту страницу"
 
@@ -1910,11 +1921,11 @@ msgstr "Область рисования"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Инструменты рисования - настройка параметров с помощью направления рисования (экспериментально)"
 
-#: ../ui/main.glade:2466
+#: ../ui/main.glade:2510
 msgid "Duplicate"
 msgstr "Дублировать"
 
-#: ../ui/main.glade:2503
+#: ../ui/main.glade:2547
 msgid "Edit (not implemented yet)"
 msgstr "Редактировать (пока не реализовано)"
 
@@ -1986,19 +1997,19 @@ msgstr "Экспорт"
 msgid "Export as..."
 msgstr "Экспортировать как..."
 
-#: ../ui/main.glade:1581 ../ui/main.glade:1742
+#: ../ui/main.glade:1581 ../ui/main.glade:1786
 msgid "Fi_ll"
 msgstr "_Заливка"
 
-#: ../ui/main.glade:1591 ../ui/main.glade:1752
+#: ../ui/main.glade:1591 ../ui/main.glade:1796
 msgid "Fill transparency"
 msgstr "Прозрачность заливки"
 
-#: ../ui/main.glade:2260
+#: ../ui/main.glade:2304
 msgid "Find next occurrence of the search string"
 msgstr "Найти следующее вхождение искомой строки"
 
-#: ../ui/main.glade:2238
+#: ../ui/main.glade:2282
 msgid "Find previous occurrence of the search string"
 msgstr "Найти предыдущее вхождение искомой строки"
 
@@ -2062,7 +2073,7 @@ msgstr "Скрыть вертикальную прокрутку"
 msgid "Highlight cursor position"
 msgstr "Положение курсора маркера"
 
-#: ../ui/main.glade:1692
+#: ../ui/main.glade:1714
 msgid "Highlighter Opti_ons"
 msgstr "Параметры _маркера"
 
@@ -2098,15 +2109,15 @@ msgstr "Система ввода"
 msgid "Insert Latex"
 msgstr "Вставить Latex"
 
-#: ../ui/main.glade:2458
+#: ../ui/main.glade:2502
 msgid "Insert Page After"
 msgstr "Вставить страницу после"
 
-#: ../ui/main.glade:2450
+#: ../ui/main.glade:2494
 msgid "Insert Page Before"
 msgstr "Вставить страницу перед"
 
-#: ../ui/main.glade:2041
+#: ../ui/main.glade:2085
 msgid "Insert a copy of the current page below"
 msgstr "Вставить копию текущей страницы ниже"
 
@@ -2156,11 +2167,11 @@ msgstr "Мышь"
 msgid "Mouse Buttons"
 msgstr "Кнопки мыши"
 
-#: ../ui/main.glade:2488
+#: ../ui/main.glade:2532
 msgid "Move Down"
 msgstr "Переместить вниз"
 
-#: ../ui/main.glade:2480
+#: ../ui/main.glade:2524
 msgid "Move Up"
 msgstr "Переместить вверх"
 
@@ -2234,7 +2245,7 @@ msgid "Partially based on Xournal\n"
 msgstr "Частично основано на Xournal\n"
 "от Denis Auroux"
 
-#: ../ui/main.glade:1788
+#: ../ui/main.glade:1832
 msgid "Pause"
 msgstr "Пауза"
 
@@ -2246,7 +2257,7 @@ msgstr "Параметры _пера"
 msgid "Plugin Manager"
 msgstr "Менеджер плагинов"
 
-#: ../ui/main.glade:1833
+#: ../ui/main.glade:1877
 msgid "Plugin _Manager"
 msgstr "Менеджер _плагинов"
 
@@ -2274,7 +2285,7 @@ msgstr "Диапазон"
 msgid "Recent _Documents"
 msgstr "Недавние _документы"
 
-#: ../ui/main.glade:1778
+#: ../ui/main.glade:1822
 msgid "Record / Stop"
 msgstr "Запись / Стоп"
 
@@ -2394,11 +2405,11 @@ msgstr "Кнопки стилуса"
 msgid "Successive (ms)"
 msgstr "Последовательно (мс)"
 
-#: ../ui/main.glade:1998
+#: ../ui/main.glade:2042
 msgid "Swap the current page with the one above"
 msgstr "Поменять текущую страницу с находящейся выше"
 
-#: ../ui/main.glade:2020
+#: ../ui/main.glade:2064
 msgid "Swap the current page with the one below"
 msgstr "Поменять текущую страницу с находящейся ниже"
 
@@ -2414,7 +2425,7 @@ msgstr "Шаблон:"
 msgid "Test"
 msgstr "Проверить"
 
-#: ../ui/main.glade:1766
+#: ../ui/main.glade:1810
 msgid "Text Font..."
 msgstr "Шрифт текста..."
 
@@ -2611,7 +2622,7 @@ msgstr "_Первая страница"
 msgid "_Goto Page"
 msgstr "_Перейти на страницу"
 
-#: ../ui/main.glade:1847
+#: ../ui/main.glade:1891
 msgid "_Help"
 msgstr "_Справка"
 
@@ -2663,7 +2674,7 @@ msgstr "_Парные страницы"
 msgid "_Pen"
 msgstr "_Перо"
 
-#: ../ui/main.glade:1822
+#: ../ui/main.glade:1866
 msgid "_Plugin"
 msgstr "П_лагины"
 
@@ -2715,31 +2726,31 @@ msgstr "_Вертикальный отступ"
 msgid "_View"
 msgstr "_Вид"
 
-#: ../ui/main.glade:1677
+#: ../ui/main.glade:1699
 msgid "_delete strokes"
 msgstr "_удалить черту"
 
-#: ../ui/main.glade:1481 ../ui/main.glade:1616 ../ui/main.glade:1703
+#: ../ui/main.glade:1481 ../ui/main.glade:1627 ../ui/main.glade:1736
 msgid "_fine"
 msgstr "_тонкий"
 
-#: ../ui/main.glade:1492 ../ui/main.glade:1627 ../ui/main.glade:1714
+#: ../ui/main.glade:1492 ../ui/main.glade:1638 ../ui/main.glade:1747
 msgid "_medium"
 msgstr "_средний"
 
-#: ../ui/main.glade:1655
+#: ../ui/main.glade:1677
 msgid "_standard"
 msgstr "_стандартный"
 
-#: ../ui/main.glade:1503 ../ui/main.glade:1638 ../ui/main.glade:1725
+#: ../ui/main.glade:1503 ../ui/main.glade:1649 ../ui/main.glade:1758
 msgid "_thick"
 msgstr "_жирный"
 
-#: ../ui/main.glade:1470
+#: ../ui/main.glade:1470 ../ui/main.glade:1616 ../ui/main.glade:1725
 msgid "_very fine"
 msgstr "_очень тонкий"
 
-#: ../ui/main.glade:1666
+#: ../ui/main.glade:1688
 msgid "_whiteout"
 msgstr "_забеливание"
 
@@ -2780,7 +2791,7 @@ msgstr "с <i>(после чего сенсорный экран будет сн
 msgid "save to file"
 msgstr "Сохранить в файл"
 
-#: ../ui/main.glade:1514
+#: ../ui/main.glade:1514 ../ui/main.glade:1660 ../ui/main.glade:1769
 msgid "ver_y thick"
 msgstr "очень _жирный"
 
