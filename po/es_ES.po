@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-24 08:15+0000\n"
-"PO-Revision-Date: 2019-08-24 11:26\n"
+"PO-Revision-Date: 2019-08-25 20:25\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1577,7 +1577,8 @@ msgstr "<b>Color</b>"
 #: ../ui/pageTemplate.glade:110
 msgid "<b>Configure Xournal++ Template Page</b>\n"
 "This settings will be used if you create a new document"
-msgstr ""
+msgstr "<b>Configurar la página de plantilla de Xournal++</b>\n"
+"Esta configuración se utilizará cuando cree un documento nuevo"
 
 #: ../ui/pageTemplate.glade:241 ../ui/pageTemplate.glade:282
 msgid "<b>Copy last page</b>\n"
