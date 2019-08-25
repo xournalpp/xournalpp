@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-24 08:15+0000\n"
-"PO-Revision-Date: 2019-08-24 08:25\n"
+"PO-Revision-Date: 2019-08-25 08:35\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -212,7 +212,8 @@ msgstr "Impossible de trouver pdflatex dans PATH.\n"
 #: ../src/control/LatexController.cpp:111
 msgid "Could not find the LaTeX package 'standalone'.\n"
 "Please install standalone (found in texlive-latex-extra) and make sure it's accessible by your LaTeX installation."
-msgstr ""
+msgstr "Impossible de trouver le paquet LaTeX 'standalone'.\n"
+"Veuillez installer standalone (trouvé dans texlive-latex-extra) et assurez-vous qu'il est accessible par votre installation LaTeX."
 
 #: ../src/control/LatexController.cpp:470
 msgid "Could not load LaTeX PDF file"
@@ -383,7 +384,7 @@ msgstr "Le fichier du document a été supprimé."
 
 #: ../src/control/xojfile/LoadHandler.cpp:303
 msgid "Document is corrupted (no pages found in file)"
-msgstr ""
+msgstr "Le document est corrompu (aucune page trouvée dans le fichier)"
 
 #: ../src/control/xojfile/LoadHandler.cpp:298
 msgid "Document is not complete (maybe the end is cut off?)"
@@ -524,7 +525,7 @@ msgstr "Remplir"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:525
 msgid "Fine"
-msgstr ""
+msgstr "Fin"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:72
 msgid "Floating Toolbox (experimental)"
@@ -1255,11 +1256,11 @@ msgstr "Espace vertical"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:524
 msgid "Very Fine"
-msgstr ""
+msgstr "Très Fin"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:529
 msgid "Very Thick"
-msgstr ""
+msgstr "Très Épais"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:146
