@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-24 08:15+0000\n"
-"PO-Revision-Date: 2019-08-24 08:25\n"
+"PO-Revision-Date: 2019-08-26 14:06\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -524,7 +524,7 @@ msgstr "Заливка"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:525
 msgid "Fine"
-msgstr ""
+msgstr "Тонкий"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:72
 msgid "Floating Toolbox (experimental)"
@@ -1255,11 +1255,11 @@ msgstr "Вертикальный отступ"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:524
 msgid "Very Fine"
-msgstr ""
+msgstr "Очень тонкий"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:529
 msgid "Very Thick"
-msgstr ""
+msgstr "Очень жирный"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:146
@@ -1877,7 +1877,7 @@ msgstr "Отключить рисование для этого устройст
 
 #: ../ui/settings.glade:2301
 msgid "Disable scrollbar fade out"
-msgstr ""
+msgstr "Отключить скрытие панели прокрутки"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
