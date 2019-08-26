@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-24 08:15+0000\n"
-"PO-Revision-Date: 2019-08-25 08:35\n"
+"PO-Revision-Date: 2019-08-26 08:29\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1879,7 +1879,7 @@ msgstr "Désactiver le dessin pour ce périphérique"
 
 #: ../ui/settings.glade:2301
 msgid "Disable scrollbar fade out"
-msgstr ""
+msgstr "Désactiver la disparition de la barre de défilement"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
