@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-27 05:08+0000\n"
-"PO-Revision-Date: 2019-08-28 18:00\n"
+"PO-Revision-Date: 2019-08-28 18:08\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -113,19 +113,20 @@ msgstr "Atrybut koloru nie został ustawiony!"
 #: ../src/control/AudioController.cpp:152
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Nie ustawiono folderu pliku dźwiękowego! Nagrywanie nie będzie działać!\n"
+"Ustaw proszę folder do nagrań pod \"Preferencje > Nagrywanie dźwięku\""
 
 #: ../src/control/Control.cpp:264
 msgid "Autosave failed with an error: {1}"
-msgstr ""
+msgstr "Auto-zapis się nie powiódł z powodu błędu: {1}"
 
 #: ../src/control/Control.cpp:226
 msgid "Autosave renamed from {1} to {2}"
-msgstr ""
+msgstr "Zmieniono nazwę auto-zapisu z {1} na {2}"
 
 #: ../src/control/jobs/AutosaveJob.cpp:60
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "Auto-zapis do {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Back"
@@ -162,7 +163,7 @@ msgstr "Zmień czcionkę"
 
 #: ../src/undo/FillUndoAction.cpp:117
 msgid "Change stroke fill"
-msgstr ""
+msgstr "Zmień wypełnienie kreski"
 
 #: ../src/undo/SizeUndoAction.cpp:139
 msgid "Change stroke width"
@@ -196,16 +197,17 @@ msgstr "Nie można stworzyć kopii zapasowej! (Plik został stworzony w starszej
 
 #: ../src/util/Util.cpp:120
 msgid "Could not create folder: {1}"
-msgstr ""
+msgstr "Nie można utworzyć folderu: {1}"
 
 #: ../src/control/LatexController.cpp:106
 msgid "Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
-msgstr ""
+msgstr "Nie znaleziono kpsewhich w ŚCIEŻCE; zainstaluj kpsewhich i umieść pod ścieżką."
 
 #: ../src/control/LatexController.cpp:82
 msgid "Could not find pdflatex in PATH.\n"
 "Please install pdflatex first and make sure it's in the PATH."
-msgstr ""
+msgstr "Nie znaleziono pdflatex po ŚCIEŻKĄ.\n"
+"Zainstaluj pdflatex i upewnij się że znajduje się pod ŚCIEŻKĄ."
 
 #: ../src/control/LatexController.cpp:111
 msgid "Could not find the LaTeX package 'standalone'.\n"
