@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-27 05:08+0000\n"
-"PO-Revision-Date: 2019-08-27 05:16\n"
+"PO-Revision-Date: 2019-08-28 18:44\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -525,7 +525,7 @@ msgstr "Füllung"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:525
 msgid "Fine"
-msgstr ""
+msgstr "Fein"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:72
 msgid "Floating Toolbox (experimental)"
@@ -1256,11 +1256,11 @@ msgstr "Vertikaler Platz"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:524
 msgid "Very Fine"
-msgstr ""
+msgstr "Sehr fein"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:529
 msgid "Very Thick"
-msgstr ""
+msgstr "Sehr dick"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:146
@@ -1471,7 +1471,7 @@ msgstr "xoj-preview-extractor: rufe auf mit INPUT.xoj OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:158
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr ""
+msgstr "xoj-preview-extractor: Konnte Icon \"{1}\" nicht finden"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:102
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
@@ -1884,7 +1884,7 @@ msgstr "Zeichnen mit diesem Gerät deaktivieren"
 
 #: ../ui/settings.glade:2301
 msgid "Disable scrollbar fade out"
-msgstr ""
+msgstr "Scrollbar-Ausblenden deaktivieren"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
