@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-27 05:08+0000\n"
-"PO-Revision-Date: 2019-08-28 18:17\n"
+"PO-Revision-Date: 2019-08-28 18:30\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -327,7 +327,7 @@ msgstr "Niestandardowy Eksport"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "Dostosuj Paski Narzędzi"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:38
 msgid "Customized"
@@ -356,7 +356,7 @@ msgstr "Usuń aktywną stronę"
 
 #: ../src/control/XournalMain.cpp:188
 msgid "Delete file"
-msgstr ""
+msgstr "Usuń plik"
 
 #: ../src/undo/RemoveLayerUndoAction.cpp:41
 msgid "Delete layer"
@@ -370,11 +370,13 @@ msgstr "Odrzuć"
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr ""
+msgstr "Nie otwieraj plików Auto-zapisu. Mogą zostać nadpisane!\n"
+"Skopiuj plik do innego folderu.\n"
+"Pliki w Folderze {1} nie mogą zostać otwarte."
 
 #: ../src/control/jobs/BaseExportJob.cpp:46
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr ""
+msgstr "Nie nadpisuj pliku kanwy PDF! To może spowodować błędy!"
 
 #: ../src/control/Control.cpp:2941
 msgid "Document file was removed."
@@ -382,7 +384,7 @@ msgstr "Dokument został usunięty."
 
 #: ../src/control/xojfile/LoadHandler.cpp:303
 msgid "Document is corrupted (no pages found in file)"
-msgstr ""
+msgstr "Dokument jest uszkodzony (nie znaleziono stron w pliku)"
 
 #: ../src/control/xojfile/LoadHandler.cpp:298
 msgid "Document is not complete (maybe the end is cut off?)"
@@ -394,7 +396,7 @@ msgstr "Dokument nie został załadowany! ({1}), {2}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:28
 msgid "Dotted"
-msgstr ""
+msgstr "Kropkowana"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:107
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:32
@@ -426,7 +428,7 @@ msgstr "Rysuj prostokąt"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:473
 msgid "Draw coordinate system"
-msgstr ""
+msgstr "Narysuj układ współrzędnych"
 
 #: ../src/undo/InsertUndoAction.cpp:40
 msgid "Draw stroke"
@@ -434,7 +436,7 @@ msgstr "Rysuj kreskę"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:97
 msgid "Drawing Type - don't change"
-msgstr ""
+msgstr "Typ rysowania - nie zmieniaj"
 
 #: ../src/undo/TextBoxUndoAction.cpp:52
 msgid "Edit text"
@@ -442,7 +444,7 @@ msgstr "Edytuj tekst"
 
 #: ../src/undo/EmergencySaveRestore.cpp:36
 msgid "Emergency saved document"
-msgstr ""
+msgstr "Awaryjnie zapisany dokument"
 
 #: ../src/undo/AddUndoAction.cpp:104 ../src/undo/DeleteUndoAction.cpp:99
 #: ../src/undo/EraseUndoAction.cpp:129
@@ -483,15 +485,15 @@ msgstr "Błędna grubość kreski: {1}"
 
 #: ../src/control/jobs/ImageExport.cpp:143
 msgid "Error save image #1"
-msgstr ""
+msgstr "Błąd zapisu obrazu #1"
 
 #: ../src/control/jobs/ImageExport.cpp:160
 msgid "Error save image #2"
-msgstr ""
+msgstr "Błąd zapisu obrazu #2"
 
 #: ../src/control/jobs/AutosaveJob.cpp:25
 msgid "Error while autosaving: {1}"
-msgstr ""
+msgstr "Błąd podczas auto-zapisu: {1}"
 
 #: ../src/util/CrashHandler.cpp:47
 msgid "Error: {1}"
@@ -519,15 +521,15 @@ msgstr "Nazwa pliku: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:511
 msgid "Fill"
-msgstr ""
+msgstr "Wypełnij"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:525
 msgid "Fine"
-msgstr ""
+msgstr "Drobna"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:72
 msgid "Floating Toolbox (experimental)"
-msgstr ""
+msgstr "Pływające narzędzia (eksperymentalne)"
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:71
 msgid "Font"
@@ -543,7 +545,7 @@ msgstr "Idź do ostatniej strony"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Go to next layer"
-msgstr ""
+msgstr "Idź do następnej warstwy"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Go to page"
@@ -1289,16 +1291,16 @@ msgstr "Pliki Xournala"
 
 #: ../src/control/XournalMain.cpp:183
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "Xournal++ przestał odpowiadać się ostatnim razem. Czy chcesz przywrócić ostatni edytowany plik?"
 
 #: ../src/control/Control.cpp:2748 ../src/control/stockdlg/XojOpenDlg.cpp:84
 msgid "Xournal++ files"
-msgstr ""
+msgstr "Pliki Xournal++"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:94
 #: ../src/gui/dialog/PageTemplateDialog.cpp:117
 msgid "Xournal++ template"
-msgstr ""
+msgstr "Szablony Xournal++"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:145
@@ -1308,7 +1310,8 @@ msgstr "Żółty"
 #: ../src/control/PageBackgroundChangeController.cpp:227
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr ""
+msgstr "Nie ma żadnych stron PDF do wybrania. Anulowano działanie.\n"
+"Wybierz inny typ kanwy: Menu \"Journal\" -> \"Skonfiguruj Stronę Szablonu\"."
 
 #: ../src/control/XournalMain.cpp:126
 msgid "You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker."
@@ -1347,17 +1350,17 @@ msgstr "Powiększ do 100%"
 #: ../src/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:111
 msgid "_Cancel"
-msgstr ""
+msgstr "_Anuluj"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:18
 msgid "_Open"
-msgstr ""
+msgstr "_Otwórz"
 
 #: ../src/control/Control.cpp:2741 ../src/control/jobs/BaseExportJob.cpp:26
 #: ../src/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
-msgstr ""
+msgstr "_Zapisz"
 
 #: ../src/util/DeviceListHelper.cpp:130
 msgid "cursor"
@@ -1365,19 +1368,19 @@ msgstr "kursor"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:298
 msgid "dash-/ dotted"
-msgstr ""
+msgstr "kreska / kropka"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:295
 msgid "dashed"
-msgstr ""
+msgstr "przerywana"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:38
 msgid "default disabled"
-msgstr ""
+msgstr "domyślnie wyłączone"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:38
 msgid "default enabled"
-msgstr ""
+msgstr "domyślnie włączony"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:315
 msgid "delete stroke"
@@ -1385,11 +1388,11 @@ msgstr "usuń kreski"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:301
 msgid "dotted"
-msgstr ""
+msgstr "kropkowana"
 
 #: ../src/undo/AddUndoAction.cpp:120 ../src/undo/DeleteUndoAction.cpp:114
 msgid "elements"
-msgstr ""
+msgstr "elementy"
 
 #: ../src/util/DeviceListHelper.cpp:126
 msgid "eraser"
@@ -1397,15 +1400,15 @@ msgstr "gumka"
 
 #: ../src/undo/AddUndoAction.cpp:132 ../src/undo/DeleteUndoAction.cpp:126
 msgid "image"
-msgstr ""
+msgstr "obraz"
 
 #: ../src/util/DeviceListHelper.cpp:135
 msgid "keyboard"
-msgstr ""
+msgstr "klawiatura"
 
 #: ../src/undo/AddUndoAction.cpp:135 ../src/undo/DeleteUndoAction.cpp:129
 msgid "latex"
-msgstr ""
+msgstr "latex"
 
 #: ../src/util/DeviceListHelper.cpp:118
 msgid "mouse"
@@ -1413,7 +1416,7 @@ msgstr "myszka"
 
 #: ../src/control/LatexController.cpp:317
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "pdflatex napotkał błąd: {1} (kod zakończenia: {2})"
 
 #: ../src/util/DeviceListHelper.cpp:122
 msgid "pen"
@@ -1421,7 +1424,7 @@ msgstr "pióro"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:222
 msgid "show"
-msgstr ""
+msgstr "pokaż"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:292
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:313
@@ -1430,19 +1433,19 @@ msgstr "standardowa"
 
 #: ../src/undo/AddUndoAction.cpp:129 ../src/undo/DeleteUndoAction.cpp:123
 msgid "stroke"
-msgstr ""
+msgstr "kreska"
 
 #: ../src/undo/AddUndoAction.cpp:138 ../src/undo/DeleteUndoAction.cpp:132
 msgid "text"
-msgstr ""
+msgstr "tekst"
 
 #: ../src/util/DeviceListHelper.cpp:143
 msgid "touchpad"
-msgstr ""
+msgstr "touchpad"
 
 #: ../src/util/DeviceListHelper.cpp:139
 msgid "touchscreen"
-msgstr ""
+msgstr "ekran dotykowy"
 
 #: ../src/util/DeviceListHelper.cpp:148
 msgid "trackpoint"
@@ -1462,7 +1465,7 @@ msgstr "xoj-preview-extractor: wywołaj z argumentami WEJŚCIE.xoj WYJŚCIE.png"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:158
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr ""
+msgstr "xoj-preview-extractor: nie znaleziono ikony \"{1}\""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:102
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
@@ -1490,15 +1493,15 @@ msgstr "xoj-preview-extractor: stworzono miniaturkę"
 
 #: ../src/util/Util.cpp:110
 msgid "xournalpp-{1}"
-msgstr ""
+msgstr "xournalpp-{1}"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
-msgstr ""
+msgstr " = Pływające narzędzia (eksperymentalne) ="
 
 #: ../ui/settings.glade:2628 ../ui/settings.glade:2639
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../ui/settings.glade:418
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
