@@ -341,20 +341,15 @@ XojPageView* Layout::getViewAt(int x, int y)
 
 	//Binary Search:
 	auto rit = std::lower_bound(this->heightRows.begin(), this->heightRows.end(), y);
-	int foundRow = rit - this->heightRows.begin();  //get index
+	int const foundRow = std::distance(this->heightRows.begin(), rit);
 	auto cit = std::lower_bound(this->widthCols.begin(), this->widthCols.end(), x);
-	int foundCol = cit - this->widthCols.begin();
+	int const foundCol = std::distance(this->widthCols.begin(), cit);
 
+	auto optionalPage = this->mapper.at({foundCol, foundRow});
 
-	if (foundCol < this->widthCols.size() && foundRow < this->heightRows.size())
+	if (optionalPage && this->view->viewPages[*optionalPage]->containsPoint(x, y, false))
 	{
-		auto optionalPage = this->mapper.at({foundCol, foundRow});
-
-
-		if (optionalPage && this->view->viewPages[*optionalPage]->containsPoint(x, y, false))
-		{
-			return this->view->viewPages[*optionalPage];
-		}
+		return this->view->viewPages[*optionalPage];
 	}
 
 	return nullptr;
