@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-27 05:08+0000\n"
-"PO-Revision-Date: 2019-08-27 18:03\n"
+"PO-Revision-Date: 2019-08-29 06:07\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1780,7 +1780,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2019
 msgid "Background color for window Background"
-msgstr ""
+msgstr "Color de fondo de la ventana"
 
 #: ../ui/settings.glade:2153
 msgid "Big cursor for pen"
@@ -2373,7 +2373,7 @@ msgstr "Acople"
 
 #: ../ui/settings.glade:2572
 msgid "Speed for Ctrl + Scroll"
-msgstr ""
+msgstr "Velocidad de desplazamiento con Ctrl"
 
 #: ../ui/settings.glade:2600
 msgid "Speed for a Zoomstep"
@@ -2429,7 +2429,7 @@ msgstr "La unidad de la regla es el cm"
 
 #: ../ui/settings.glade:768
 msgid "These settings take only effect if the experimental input system is activated"
-msgstr ""
+msgstr "Esta configuración solo surte efecto si se activa el sistema de entrada experimental"
 
 #: ../ui/settings.glade:621
 msgid "This is an experimental feature! Use it with care."
