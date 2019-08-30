@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-27 05:08+0000\n"
-"PO-Revision-Date: 2019-08-29 06:07\n"
+"PO-Revision-Date: 2019-08-30 19:55\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -2039,7 +2039,7 @@ msgstr "Tolerancia de acople de retícula"
 
 #: ../ui/main.glade:1441
 msgid "H_and Tool"
-msgstr ""
+msgstr "Herramienta _mano"
 
 #: ../ui/settings.glade:1717
 msgid "Hand Recognition"
