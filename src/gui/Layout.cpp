@@ -198,8 +198,6 @@ void Layout::layoutPages(int width, int height)
 	auto const rows = this->heightRows.size();
 	auto const columns = this->widthCols.size();
 
-	this->lastGetViewAtRow = rows / 2;  //reset to middle
-	this->lastGetViewAtCol = columns / 2;
 
 	//add space around the entire page area to accomodate older Wacom tablets with limited sense area.
 	int64_t const v_padding =
@@ -340,49 +338,23 @@ XojPageView* Layout::getViewAt(int x, int y)
 
 	XOJ_CHECK_TYPE(Layout);
 
-//  No need to check page cache as the Linear search below starts at cached position.
-//  Keep Binary search handy to check against.
-//	
-//  //Binary Search ... too much overhead makes this a slower option in our use case.
-// 	auto rit = std::lower_bound( this->sizeRow.begin(),  this->sizeRow.end(), y);
-// 	int rb = rit - this->sizeRow.begin();	//get index
-// 	auto cit = std::lower_bound( this->sizeCol.begin(),  this->sizeCol.end(), x);
-// 	int cb = cit - this->sizeCol.begin();
 
+	//Binary Search:
+	auto rit = std::lower_bound(this->heightRows.begin(), this->heightRows.end(), y);
+	int const foundRow = std::distance(this->heightRows.begin(), rit);
+	auto cit = std::lower_bound(this->widthCols.begin(), this->widthCols.end(), x);
+	int const foundCol = std::distance(this->widthCols.begin(), cit);
 
-	auto fast_linear_search = [](std::vector<unsigned> const& container, size_t start, size_t value) {
-		auto row_i = std::next(begin(container), start);
-		if (row_i != begin(container) && value < *row_i)
-		{
-			//Todo: replace with c++14
-			//Todo: rend(this->heightRows)
-			//Todo: std::make_reverse_iterator(c_i)
-			auto rbeg_i = std::reverse_iterator<decltype(row_i)>(row_i);
-			return std::find_if(rbeg_i, container.rend(), [value](int item) { return value > item; }).base();
-		}
-		return std::find_if(row_i, end(container), [value](int item) { return value <= item; });
-	};
+	auto optionalPage = this->mapper.at({foundCol, foundRow});
 
-	auto const& row_i = fast_linear_search(this->heightRows, this->lastGetViewAtRow, y);
-	auto const& col_i = fast_linear_search(this->widthCols, this->lastGetViewAtCol, x);
-
-
-	if (col_i != end(this->widthCols) && row_i != end(this->heightRows))
+	if (optionalPage && this->view->viewPages[*optionalPage]->containsPoint(x, y, false))
 	{
-		//Todo c++14+ cbegin(...);
-		this->lastGetViewAtRow = std::distance(this->heightRows.cbegin(), row_i);
-		this->lastGetViewAtCol = std::distance(this->widthCols.cbegin(), col_i);
-		auto optionalPage = this->mapper.at({this->lastGetViewAtCol, this->lastGetViewAtRow});
-
-		if (optionalPage && this->view->viewPages[*optionalPage]->containsPoint(x, y, false))
-		{
-			return this->view->viewPages[*optionalPage];
-		}
-		
+		return this->view->viewPages[*optionalPage];
 	}
 
 	return nullptr;
 }
+
 // Todo replace with boost::optional<size_t> Layout::getIndexAtGridMap(size_t row, size_t col)
 //                  or std::optional<size_t> Layout::getIndexAtGridMap(size_t row, size_t col)
 LayoutMapper::optional_size_t Layout::getIndexAtGridMap(size_t row, size_t col)

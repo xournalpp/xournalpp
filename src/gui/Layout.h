@@ -138,12 +138,6 @@ private:
 	size_t minHeight = 0;
 
 	/**
-	 * cache the last GetViewAt() row and column.
-	 */
-	size_t lastGetViewAtRow = 0;
-	size_t lastGetViewAtCol = 0;
-
-	/**
 	 * layoutPages invalidates the precalculation of recalculate
 	 * this bool prevents that layotPages can be called without a previously call to recalculate
 	 * Todo: we may want to remove the additional calculation in layoutPages, since we stored those values in
