@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-27 05:08+0000\n"
-"PO-Revision-Date: 2019-08-27 05:15\n"
+"PO-Revision-Date: 2019-09-01 07:56\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -212,7 +212,8 @@ msgstr "无法在系统 PATH 路径下找到 pdflatex.\n"
 #: ../src/control/LatexController.cpp:111
 msgid "Could not find the LaTeX package 'standalone'.\n"
 "Please install standalone (found in texlive-latex-extra) and make sure it's accessible by your LaTeX installation."
-msgstr ""
+msgstr "未找到LaTeX包：”standalone“\n"
+"请安装 standalone （在 texlive-latex-extra 中找到），并确保它能被你安装的LaTeX访问。"
 
 #: ../src/control/LatexController.cpp:470
 msgid "Could not load LaTeX PDF file"
@@ -288,7 +289,7 @@ msgstr "无法移除工具栏 {2} 位置 {3} 上的工具项 {1}"
 
 #: ../src/control/Control.cpp:254
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr ""
+msgstr "无法将自动保存的文件 \"{1}\" 重新命名为 \"{2}\": {3}"
 
 #: ../src/control/LatexController.cpp:133
 msgid "Could not save .tex file: {1}"
