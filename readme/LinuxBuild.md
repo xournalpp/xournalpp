@@ -109,7 +109,18 @@ TODO
 
 #### AppImage
 
-TODO
+One way to generate an AppImage is to first generate the `.tar.gz` package and
+then use that as the `AppDir` for `linuxdeploy`. For an example, see
+[`azure-pipelines/release.yml`](../azure-pipelines/release.yml)
+
+```bash
+cmake .. -DPACK_GENERATOR="TGZ"
+cmake --build . --target package
+# Extract the package contents in preparation for AppImage packaging
+tar xf packages/xournalpp-*.tar.gz --one-top-level=appimage_staging/usr --strip=1
+# Generate AppImage with linuxdeploy, assuming you have it downloaded
+./linuxdeploy.AppImage --appdir=appimage_staging --output appimage
+```
 
 #### Flatpak
 
