@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-27 05:08+0000\n"
-"PO-Revision-Date: 2019-09-01 07:56\n"
+"PO-Revision-Date: 2019-09-01 08:05\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -293,11 +293,11 @@ msgstr "无法将自动保存的文件 \"{1}\" 重新命名为 \"{2}\": {3}"
 
 #: ../src/control/LatexController.cpp:133
 msgid "Could not save .tex file: {1}"
-msgstr ""
+msgstr "无法保存 .tex 文件：{1}"
 
 #: ../src/control/LatexController.cpp:154
 msgid "Could not start pdflatex: {1} (exit code: {2})"
-msgstr ""
+msgstr "无法启动 pdlampex: {1} (退出代码: {2})"
 
 #: ../src/undo/UndoRedoHandler.cpp:123
 msgid "Could not undo \"{1}\"\n"
@@ -370,11 +370,13 @@ msgstr "丢弃"
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr ""
+msgstr "请勿打开自动保存文件。它们可能会被覆盖！\n"
+"复制文件到另一个文件夹。\n"
+"无法打开文件夹 {1} 中的文件。"
 
 #: ../src/control/jobs/BaseExportJob.cpp:46
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr ""
+msgstr "请勿覆盖背景 PDF！这将造成故障！"
 
 #: ../src/control/Control.cpp:2941
 msgid "Document file was removed."
@@ -382,7 +384,7 @@ msgstr "文档已删除。"
 
 #: ../src/control/xojfile/LoadHandler.cpp:303
 msgid "Document is corrupted (no pages found in file)"
-msgstr ""
+msgstr "文档已损坏 (文件中没有找到页面)"
 
 #: ../src/control/xojfile/LoadHandler.cpp:298
 msgid "Document is not complete (maybe the end is cut off?)"
@@ -394,7 +396,7 @@ msgstr "文档未加载！({1}), {2}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:28
 msgid "Dotted"
-msgstr ""
+msgstr "虚线（点）"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:107
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:32
@@ -426,7 +428,7 @@ msgstr "绘制矩形"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:473
 msgid "Draw coordinate system"
-msgstr ""
+msgstr "绘制坐标系统"
 
 #: ../src/undo/InsertUndoAction.cpp:40
 msgid "Draw stroke"
@@ -434,7 +436,7 @@ msgstr "绘制笔划"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:97
 msgid "Drawing Type - don't change"
-msgstr ""
+msgstr "绘制类型 - 不更改"
 
 #: ../src/undo/TextBoxUndoAction.cpp:52
 msgid "Edit text"
@@ -442,7 +444,7 @@ msgstr "编辑文本"
 
 #: ../src/undo/EmergencySaveRestore.cpp:36
 msgid "Emergency saved document"
-msgstr ""
+msgstr "紧急保存的文档"
 
 #: ../src/undo/AddUndoAction.cpp:104 ../src/undo/DeleteUndoAction.cpp:99
 #: ../src/undo/EraseUndoAction.cpp:129
@@ -483,15 +485,15 @@ msgstr "读入笔划粗细出错：{1}"
 
 #: ../src/control/jobs/ImageExport.cpp:143
 msgid "Error save image #1"
-msgstr ""
+msgstr "保存图像 #1 时出错"
 
 #: ../src/control/jobs/ImageExport.cpp:160
 msgid "Error save image #2"
-msgstr ""
+msgstr "保存图像 #2 时出错"
 
 #: ../src/control/jobs/AutosaveJob.cpp:25
 msgid "Error while autosaving: {1}"
-msgstr ""
+msgstr "自动保存时出错: {1}"
 
 #: ../src/util/CrashHandler.cpp:47
 msgid "Error: {1}"
@@ -519,15 +521,15 @@ msgstr "文件名：{1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:511
 msgid "Fill"
-msgstr ""
+msgstr "填充"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:525
 msgid "Fine"
-msgstr ""
+msgstr "精细"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:72
 msgid "Floating Toolbox (experimental)"
-msgstr ""
+msgstr "浮动工具箱(实验)"
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:71
 msgid "Font"
@@ -543,7 +545,7 @@ msgstr "末页"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Go to next layer"
-msgstr ""
+msgstr "跳至下一层"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Go to page"
@@ -551,11 +553,11 @@ msgstr "跳转到页面"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Go to previous layer"
-msgstr ""
+msgstr "跳至上一层"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Go to top layer"
-msgstr ""
+msgstr "跳至顶部层"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:27
 msgid "Graph"
@@ -573,7 +575,7 @@ msgstr "绿色"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Grid Snapping"
-msgstr ""
+msgstr "网格截图"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:71
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:481
@@ -582,7 +584,7 @@ msgstr "手形工具"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:99
 msgid "Hide all"
-msgstr ""
+msgstr "隐藏所有"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:65
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:463
@@ -596,11 +598,11 @@ msgstr "图片"
 
 #: ../src/control/XournalMain.cpp:260
 msgid "Image file successfully created"
-msgstr ""
+msgstr "图片文件创建成功"
 
 #: ../src/control/XournalMain.cpp:315
 msgid "Image output filename (.png / .svg)"
-msgstr ""
+msgstr "图像输出文件名 (.png/ .svg)"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:18
 msgid "Images"
@@ -671,7 +673,7 @@ msgstr "品红"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Manage Toolbars"
-msgstr ""
+msgstr "管理工具栏"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:526
@@ -683,7 +685,10 @@ msgid "Missing the needed UI file:\n"
 "{1}\n"
 " .app corrupted?\n"
 "Path: {2}"
-msgstr ""
+msgstr "缺少所需的用户界面文件：\n"
+"{1}\n"
+" .app 已损坏？\n"
+"路径: {2}"
 
 #: ../src/undo/MoveUndoAction.cpp:20
 msgid "Move"
@@ -691,7 +696,7 @@ msgstr "移动"
 
 #: ../src/undo/MoveLayerUndoAction.cpp:38
 msgid "Move layer"
-msgstr ""
+msgstr "移动图层"
 
 #: ../src/undo/SwapUndoAction.cpp:88
 msgid "Move page downwards"
