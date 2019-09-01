@@ -41,7 +41,7 @@ portaudio-devel libsndfile-devel alsa-lib-devel cppunit-devel lua-devel
 
 The basic steps to compile Xournal++ are:
 
-````bash
+```bash
 git clone http://github.com/xournalpp/xournalpp.git
 cd xournalpp
 mkdir build
