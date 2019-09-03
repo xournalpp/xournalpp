@@ -66,6 +66,11 @@
  */
 #cmakedefine GIT_BRANCH "@GIT_BRANCH@"
 
+/**
+ * Current git commit id (with "-dirty" appended if dirty source tree)
+ */
+#define GIT_COMMIT_ID "@RELEASE_IDENTIFIER@"
+
 
 /* --- I18N --- */
 
