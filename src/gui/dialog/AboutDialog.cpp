@@ -10,6 +10,7 @@ AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath)
 
 	gtk_label_set_markup(GTK_LABEL(get("lbBuildDate")), __DATE__ ", " __TIME__);
 	gtk_label_set_markup(GTK_LABEL(get("lbVersion")), PROJECT_VERSION);
+	gtk_label_set_markup(GTK_LABEL(get("lbRevId")), GIT_COMMIT_ID);
 
 	GtkWidget* w = get("vbox1");
 	GtkWidget* linkButton = gtk_link_button_new("http://github.com/xournalpp/xournalpp");
