@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-05 06:31+0000\n"
-"PO-Revision-Date: 2019-09-05 23:35\n"
+"PO-Revision-Date: 2019-09-05 23:47\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -914,7 +914,7 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:189
 msgid "Restore file"
-msgstr ""
+msgstr "还原文件"
 
 #: ../src/undo/RotateUndoAction.cpp:74
 msgid "Rotation"
@@ -1405,7 +1405,7 @@ msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:135
 msgid "keyboard"
-msgstr ""
+msgstr "键盘"
 
 #: ../src/undo/AddUndoAction.cpp:135 ../src/undo/DeleteUndoAction.cpp:129
 msgid "latex"
@@ -1425,7 +1425,7 @@ msgstr "画笔"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:222
 msgid "show"
-msgstr ""
+msgstr "显示"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:292
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:313
@@ -1438,19 +1438,19 @@ msgstr ""
 
 #: ../src/undo/AddUndoAction.cpp:138 ../src/undo/DeleteUndoAction.cpp:132
 msgid "text"
-msgstr ""
+msgstr "文本"
 
 #: ../src/util/DeviceListHelper.cpp:143
 msgid "touchpad"
-msgstr ""
+msgstr "触控板"
 
 #: ../src/util/DeviceListHelper.cpp:139
 msgid "touchscreen"
-msgstr ""
+msgstr "触摸屏"
 
 #: ../src/util/DeviceListHelper.cpp:148
 msgid "trackpoint"
-msgstr ""
+msgstr "小红点"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:314
 msgid "whiteout"
