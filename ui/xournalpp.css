@@ -1,5 +1,10 @@
 /*  
  * Backup before modifying
+ *
+ * 
+ *  Try running Xournal++ like this:    GTK_DEBUG=interactive  xournalpp
+ * 
+ *  See: https://wiki.gnome.org/action/show/Projects/GTK/Inspector
  */
 
 
@@ -41,3 +46,28 @@ GtkToolItem>GtkBox>GtkLabel+GtkLabel+GtkButton
 	box-shadow:none;
 	background-image:none
 }
+
+
+
+/*  If you want to change the size of toolbar buttons try these:
+*   All toolbars:
+*/
+
+/*
+GtkToolbar GtkButton
+{
+	padding: 2
+}
+*/
+
+
+
+/* Or for individual toolbars: tbLeft1 tbLeft2 tbTop1 tbTop2 tbBottom1 tbFloat4 etc: 
+ */
+ 
+/*
+#tbLeft2 GtkButton
+{
+	padding: 2
+}
+*/

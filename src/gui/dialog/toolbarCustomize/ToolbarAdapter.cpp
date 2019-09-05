@@ -133,7 +133,6 @@ void ToolbarAdapter::showToolbar()
 	gtk_widget_show(this->w);
 
 	GtkToolbar* tb = GTK_TOOLBAR(this->w);
-	gtk_toolbar_set_icon_size(tb, GTK_ICON_SIZE_SMALL_TOOLBAR);
 
 	GtkToolItem* it = gtk_tool_item_new();
 	this->spacerItem = it;
