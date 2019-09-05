@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-27 05:08+0000\n"
-"PO-Revision-Date: 2019-08-28 18:30\n"
+"POT-Creation-Date: 2019-09-05 06:31+0000\n"
+"PO-Revision-Date: 2019-09-05 06:38\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -1747,7 +1747,7 @@ msgid "Available Placeholders"
 msgstr ""
 
 #: ../ui/settings.glade:2019
-msgid "Background color for window Background"
+msgid "Background color between pages"
 msgstr ""
 
 #: ../ui/settings.glade:2153
