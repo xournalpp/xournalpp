@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-05 06:31+0000\n"
-"PO-Revision-Date: 2019-09-05 06:38\n"
+"PO-Revision-Date: 2019-09-06 13:47\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2009,7 +2009,7 @@ msgstr "Remp_lir"
 
 #: ../ui/main.glade:1591 ../ui/main.glade:1796
 msgid "Fill transparency"
-msgstr "Remplir la transparence"
+msgstr "Transparence du remplissage"
 
 #: ../ui/main.glade:2304
 msgid "Find next occurrence of the search string"
