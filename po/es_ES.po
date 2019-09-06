@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-05 06:31+0000\n"
-"PO-Revision-Date: 2019-09-06 07:49\n"
+"PO-Revision-Date: 2019-09-06 13:47\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1712,7 +1712,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1377
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
-msgstr "<i>Puede configurar dispositivos que GTK no identifica como pantallas táctiles para que se comporten como una.</i>"
+msgstr "<i>Puede configurar dispositivos que GTK no identifica como pantallas táctiles para que se comporten como tales.</i>"
 
 #: ../ui/about.glade:73
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
@@ -1776,7 +1776,7 @@ msgstr "Guardado automático"
 
 #: ../ui/settings.glade:465
 msgid "Available Placeholders"
-msgstr ""
+msgstr "Sustitutos disponibles"
 
 #: ../ui/settings.glade:2019
 msgid "Background color between pages"
@@ -1999,7 +1999,7 @@ msgstr "Re_llenar"
 
 #: ../ui/main.glade:1591 ../ui/main.glade:1796
 msgid "Fill transparency"
-msgstr ""
+msgstr "Transparencia de relleno"
 
 #: ../ui/main.glade:2304
 msgid "Find next occurrence of the search string"
