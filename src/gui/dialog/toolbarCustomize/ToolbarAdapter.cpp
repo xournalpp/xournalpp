@@ -133,7 +133,6 @@ void ToolbarAdapter::showToolbar()
 	gtk_widget_show(this->w);
 
 	GtkToolbar* tb = GTK_TOOLBAR(this->w);
-	gtk_toolbar_set_icon_size(tb, GTK_ICON_SIZE_SMALL_TOOLBAR);
 
 	GtkToolItem* it = gtk_tool_item_new();
 	this->spacerItem = it;
@@ -259,7 +258,13 @@ bool ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* co
 		return false;
 	}
 
-	gint ipos = gtk_toolbar_get_drop_index(toolbar, x, y);
+	// x,y are already in toolbar coordinates as the gtk_toolbar_get_drop_index() specification requires.
+	// However, without this translation we have an unwanted vertical offset.
+	gint wx = 0;
+	gint wy = 0;
+	gtk_widget_translate_coordinates(GTK_WIDGET(toolbar), gtk_widget_get_toplevel(GTK_WIDGET(toolbar)), x, y, &wx, &wy);
+
+	gint ipos = gtk_toolbar_get_drop_index(toolbar, wx, wy);
 
 	GtkOrientation orientation = gtk_orientable_get_orientation(GTK_ORIENTABLE(toolbar));
 	gdk_drag_status(context, gdk_drag_context_get_suggested_action(context), time);
@@ -307,7 +312,12 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
 	ToolItemDragDropData* d = (ToolItemDragDropData*) gtk_selection_data_get_data( data);
 	g_return_if_fail(ToolitemDragDrop::checkToolItemDragDropData(d));
 
-	int pos = gtk_toolbar_get_drop_index(toolbar, x, y);
+	// fix vertical position bug as in toolbarDragMotionCb() above.
+	gint wx = 0;
+	gint wy = 0;
+	gtk_widget_translate_coordinates(GTK_WIDGET(toolbar), gtk_widget_get_toplevel(GTK_WIDGET(toolbar)), x, y, &wx, &wy);
+
+	gint pos = gtk_toolbar_get_drop_index(toolbar, wx, wy);
 
 	if (d->type == TOOL_ITEM_ITEM)
 	{
