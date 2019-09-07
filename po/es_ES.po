@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-05 06:31+0000\n"
-"PO-Revision-Date: 2019-09-06 13:47\n"
+"POT-Creation-Date: 2019-09-07 09:40+0000\n"
+"PO-Revision-Date: 2019-09-07 09:42\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -279,11 +279,11 @@ msgid "Could not redo \"{1}\"\n"
 msgstr "No se pudo rehacer «{1}».\n"
 "Se produjo un problema… Envíenos un informe de error."
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:210
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:209
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
 msgstr "No se pudo quitar el elemento de la barra de herramientas {1} en la posición {2}"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:205
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:204
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "No se pudo quitar el elemento {1} de la barra de herramientas {2} en la posición {3}"
 
@@ -896,11 +896,11 @@ msgstr "Rehacer: "
 msgid "Remove PDF Background"
 msgstr "Quitar fondo PDF"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:198
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:197
 msgid "Removed tool item from Toolbar {1} ID {2}"
 msgstr "Se quitó el elemento de la barra de herramientas {1} con id. {2}"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:194
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:193
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr "Se quitó el elemento {1} de la barra de herramientas {2} con id. {3}"
 
