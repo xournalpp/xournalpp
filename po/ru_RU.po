@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-07 09:40+0000\n"
-"PO-Revision-Date: 2019-09-07 09:42\n"
+"PO-Revision-Date: 2019-09-07 21:24\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1470,7 +1470,7 @@ msgstr "xoj-preview-extractor: вызов с INPUT.xoj OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:158
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr ""
+msgstr "xoj-preview-extractor: не удалось найти иконку \"{1}\""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:102
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
@@ -1785,7 +1785,7 @@ msgstr "Доступные подстановки"
 
 #: ../ui/settings.glade:2019
 msgid "Background color between pages"
-msgstr ""
+msgstr "Цвет фона между страницами"
 
 #: ../ui/settings.glade:2153
 msgid "Big cursor for pen"
