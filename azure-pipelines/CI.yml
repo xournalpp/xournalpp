@@ -62,6 +62,8 @@ stages:
               cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
           - bash: |
               export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
-              ctest --verbose
+              install_name_tool -add_rpath /Users/git-bin/gtk/inst/lib/. test/test-loadHandler
+              install_name_tool -add_rpath /Users/git-bin/gtk/inst/lib/. test/test-util
+              CI=true ctest --verbose
             workingDirectory: ./build
             displayName: 'Run tests'
