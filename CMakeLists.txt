@@ -6,6 +6,7 @@ project ("Xournal++" CXX C)
 set (CPACK_PACKAGE_VERSION_MAJOR "1")
 set (CPACK_PACKAGE_VERSION_MINOR "0")
 set (CPACK_PACKAGE_VERSION_PATCH "13")
+set (CPACK_DEBIAN_PACKAGE_RELEASE 1)
 set (PROJECT_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 set (PROJECT_PACKAGE "xournalpp")
 set (PROJECT_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
@@ -240,43 +241,37 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 	# Install icons
 	install(FILES ui/pixmaps/com.github.xournalpp.xournalpp.svg
-			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps)
+			DESTINATION share/icons/hicolor/scalable/apps)
 
 	# Symlink are not easy to use with CMake, therefor simple install a copy...
 	install(FILES ui/pixmaps/application-x-xopp.svg
-			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
+			DESTINATION share/icons/hicolor/scalable/mimetypes/)
 	install(FILES ui/pixmaps/application-x-xopt.svg
-			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
+			DESTINATION share/icons/hicolor/scalable/mimetypes/)
 	install(FILES ui/pixmaps/application-x-xojpp.svg
-			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
+			DESTINATION share/icons/hicolor/scalable/mimetypes/)
 
 	install(FILES ui/pixmaps/gnome-mime-application-x-xopp.svg
-			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
+			DESTINATION share/icons/hicolor/scalable/mimetypes/)
 	install(FILES ui/pixmaps/gnome-mime-application-x-xopt.svg
-			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
+			DESTINATION share/icons/hicolor/scalable/mimetypes/)
 
 	install(FILES desktop/com.github.xournalpp.xournalpp.xml
-			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mime/packages)
+			DESTINATION share/mime/packages)
 	install(FILES desktop/com.github.xournalpp.xournalpp.desktop
-			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
+			DESTINATION share/applications)
 	install(FILES desktop/x-xojpp.desktop
-			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
+			DESTINATION share/mimelnk/application)
 	install(FILES desktop/x-xopp.desktop
-			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
+			DESTINATION share/mimelnk/application)
 	install(FILES desktop/x-xopt.desktop
-			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
+			DESTINATION share/mimelnk/application)
 
 	install(FILES desktop/com.github.xournalpp.xournalpp.thumbnailer
-			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/thumbnailers)
+	        DESTINATION share/thumbnailers)
 
 	install(FILES desktop/com.github.xournalpp.xournalpp.appdata.xml
-			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/metainfo)
-
-	# TODO: Only package post install scripts with distro-specific packages
-	# Also update manual install instructions
-
-	# install(CODE "execute_process(COMMAND ${CMAKE_CURRENT_BINARY_DIR}/cmake/postinst configure)")
-
+			DESTINATION share/metainfo)
 endif ()
 
 # Uninstall target
@@ -310,11 +305,26 @@ endif (CMAKE_DEBUG_INCLUDES_LDFLAGS)
 set (CPACK_OUTPUT_FILE_PREFIX packages)
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Xournal++ - Open source hand note-taking program")
 set (CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
-set (CPACK_GENERATOR "TGZ")
 set (CPACK_PACKAGE_INSTALL_DIRECTORY "Xournal++")
 
 include(TargetArch)
 target_architecture(PACKAGE_ARCH)
 set (CPACK_PACKAGE_FILE_NAME "xournalpp-${PROJECT_VERSION}-${DISTRO_NAME}-${DISTRO_CODENAME}-${PACKAGE_ARCH}")
+
+# .deb package options
+set (CPACK_DEBIAN_PACKAGE_HOMEPAGE ${PACKAGE_URL})
+set (CPACK_DEBIAN_PACKAGE_MAINTAINER "Andreas Butti <andreasbutti@gmail.com>")
+set (CPACK_DEBIAN_PACKAGE_SECTION "graphics")
+set (CPACK_DEBIAN_PACKAGE_DEPENDS
+    "libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1), zlib1g")
+set (CPACK_DEBIAN_PACKAGE_SUGGESTS "texlive-base, texlive-latex-extra")  # Latex tool
+# Use debian's arch scheme; we only care about x86/amd64 for now but feel free to add more
+if (${PACKAGE_ARCH} STREQUAL "x86_64")
+  set (CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
+endif()
+
+if (NOT DEFINED CPACK_GENERATOR)
+  set (CPACK_GENERATOR "TGZ")
+endif ()
 
 include (CPack)

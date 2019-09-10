@@ -528,7 +528,7 @@ void XournalView::scrollTo(size_t pageNo, double yDocument)
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 
 	int x = v->getX();
-	int y = v->getY() + yDocument;
+	int y = v->getY() + std::lround(yDocument);
 	int width = v->getDisplayWidth();
 	int height = v->getDisplayHeight();
 
@@ -543,17 +543,17 @@ void XournalView::pageRelativeXY(int offCol, int offRow)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	int currPage = getCurrentPage();
+	size_t currPage = getCurrentPage();
 
 	XojPageView* view = getViewFor(currPage);
 	int row = view->getMappedRow();
 	int col = view->getMappedCol();
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
-	int page = layout->getIndexAtGridMap(row + offRow, col + offCol);
-	if (page >= 0)
+	auto optionalPageIndex = layout->getIndexAtGridMap(row + offRow, col + offCol);
+	if (optionalPageIndex)
 	{
-		this->scrollTo(page, 0);
+		this->scrollTo(*optionalPageIndex, 0);
 	}
 }
 
@@ -688,7 +688,7 @@ void XournalView::zoomChanged()
 	XOJ_CHECK_TYPE(XournalView);
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
-	int currentPage = this->getCurrentPage();
+	size_t currentPage = this->getCurrentPage();
 	XojPageView* view = getViewFor(currentPage);
 	ZoomControl* zoom = control->getZoomControl();
 
@@ -697,8 +697,6 @@ void XournalView::zoomChanged()
 		return;
 	}
 
-	// move this somewhere else maybe
-	layout->layoutPages();
 
 	if (zoom->isZoomPresentationMode() || zoom->isZoomFitMode())
 	{
@@ -712,6 +710,8 @@ void XournalView::zoomChanged()
 			layout->scrollAbs(std::get<0>(pos), std::get<1>(pos));
 		}
 	}
+	// move this somewhere else maybe
+	layout->recalculate();
 
 	Document* doc = control->getDocument();
 	doc->lock();
@@ -839,7 +839,7 @@ void XournalView::pageInserted(size_t page)
 	this->viewPages[page] = pageView;
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
-	layout->layoutPages();
+	layout->recalculate();
 	layout->updateVisibility();
 }
 
@@ -914,7 +914,7 @@ void XournalView::setSelection(EditSelection* selection)
 		}
 		else if (e->getType() == ELEMENT_STROKE)
 		{
-			auto* s = (Stroke*) e;
+			auto* s = static_cast<Stroke*>(e);
 			if (s->getToolType() != STROKE_TOOL_ERASER)
 			{
 				canChangeColor = true;
@@ -959,7 +959,7 @@ void XournalView::layoutPages()
 	XOJ_CHECK_TYPE(XournalView);
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
-	layout->layoutPages();
+	layout->recalculate();
 }
 
 int XournalView::getDisplayHeight() const
@@ -989,7 +989,7 @@ bool XournalView::isPageVisible(size_t page, int* visibleHeight)
 	{
 		if (visibleHeight)
 		{
-			*visibleHeight = rect->height;
+			*visibleHeight = std::lround(rect->height);
 		}
 
 		delete rect;

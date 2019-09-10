@@ -84,6 +84,7 @@ void Settings::loadDefault()
 	this->highlightPosition = false;
 	this->darkTheme = false;
 	this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
+	this->disableScrollbarFadeout = false;
 
 	//Set this for autosave frequency in minutes.
 	this->autosaveTimeout = 3;
@@ -562,6 +563,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 			this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
 		}
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "disableScrollbarFadeout") == 0)
+	{
+		this->disableScrollbarFadeout = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioSampleRate") == 0)
 	{
 		this->audioSampleRate = tempg_ascii_strtod((const char *) value, NULL);
@@ -963,6 +968,8 @@ void Settings::save()
 	WRITE_BOOL_PROP(highlightPosition);
 	WRITE_BOOL_PROP(darkTheme);
 
+	WRITE_BOOL_PROP(disableScrollbarFadeout);
+
 	if (this->scrollbarHideType == SCROLLBAR_HIDE_BOTH)
 	{
 		saveProperty((const char*) "scrollbarHideType", "both", root);
@@ -979,7 +986,6 @@ void Settings::save()
 	{
 		saveProperty((const char*) "scrollbarHideType", "none", root);
 	}
-
 
 	WRITE_BOOL_PROP(autoloadPdfXoj);
 	WRITE_COMMENT("Hides scroolbars in the main window, allowed values: \"none\", \"horizontal\", \"vertical\", \"both\"");
@@ -2577,6 +2583,18 @@ int Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource d
 		}
 		return deviceType;
 	}
+}
+
+bool Settings::isScrollbarFadeoutDisabled()
+{
+	return disableScrollbarFadeout;
+}
+
+void Settings::setScrollbarFadeoutDisabled(bool disable)
+{
+	if (disableScrollbarFadeout == disable) return;
+	disableScrollbarFadeout = disable;
+	save();
 }
 
 //////////////////////////////////////////////////

@@ -521,9 +521,12 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolDrawCombocontrol(this, listener, "DRAW"));
 
 	// General tool configuration - working for every tool which support it
-	ADD_CUSTOM_ITEM_TGL("FINE", ACTION_SIZE_FINE, GROUP_SIZE, true, "thickness_thin", _("Thin"));
+	ADD_CUSTOM_ITEM_TGL("VERY_FINE", ACTION_SIZE_VERY_FINE, GROUP_SIZE, true, "thickness_very_fine", _("Very Fine"));
+	ADD_CUSTOM_ITEM_TGL("FINE", ACTION_SIZE_FINE, GROUP_SIZE, true, "thickness_fine", _("Fine"));
 	ADD_CUSTOM_ITEM_TGL("MEDIUM", ACTION_SIZE_MEDIUM, GROUP_SIZE, true, "thickness_medium", _("Medium"));
 	ADD_CUSTOM_ITEM_TGL("THICK", ACTION_SIZE_THICK, GROUP_SIZE, true, "thickness_thick", _("Thick"));
+	ADD_CUSTOM_ITEM_TGL("VERY_THICK", ACTION_SIZE_VERY_THICK, GROUP_SIZE, true, "thickness_very_thick",
+	                    _("Very Thick"));
 
 
 	// now connect all Glade Signals

@@ -1,193 +1,201 @@
 #include "gui/LayoutMapper.h"
 
+#include <algorithm>
 
-LayoutMapper::LayoutMapper(){
-	
-	XOJ_INIT_TYPE(LayoutMapper);
-	
-	this->actualPages = 0;
-	this->possiblePages = 0;
-	this->rows = 0;
-	this->cols = 0;
-	this->layoutType = Horizontal;
-	
-}
+/**
+ * calculate
+ *
+ * Set mapper to LayoutType with number of pages and of fixed rows or columns
+ * @param data the data to be configured
+ * @param numRows Number of rows ( used if useRows )
+ * @param numCols  Number of columns ( used if !useRows )
+ * @param useRows  use pages/rows to recalculate cols else recalculate rows
+ * @param firstPageOffset  Pages to offset - usually one or zero in order to pair up properly
+ */
 
-LayoutMapper::~LayoutMapper()
+void calculate(LayoutMapper::internal_data& data, size_t numRows, size_t numCols, bool useRows, int firstPageOffset)
 {
-	XOJ_RELEASE_TYPE(LayoutMapper);
-}
-
-
-void LayoutMapper::configureFromSettings(int numPages, Settings* settings)
-{
-	XOJ_CHECK_TYPE(LayoutMapper);
-
-	// get from user settings:
-	bool isPairedPages = settings->isShowPairedPages();
-	int numCols = settings->getViewColumns();
-	int numRows = settings->getViewRows();
-	bool fixRows = settings->isViewFixedRows();
-	int pairsOffset = settings->getPairsOffset();
-	bool isVertical = settings->getViewLayoutVert();
-	bool isRightToLeft = settings->getViewLayoutR2L();
-	bool isBottomToTop = settings->getViewLayoutB2T();
-
-	if (!isPairedPages)
-	{
-		pairsOffset = 0;
-	}
-
-	//assemble bitflags for LayoutType
-	int type = isVertical ? LayoutBitFlags::Vertically : 0;
-	type |= isRightToLeft ? LayoutBitFlags::RightToLeft : 0;
-	type |= isBottomToTop ? LayoutBitFlags::BottomToTop : 0;
-
-	
-	this->configure(numPages, numRows, numCols, fixRows, (LayoutType)type, isPairedPages, pairsOffset);
-}
-
-void LayoutMapper::configureForPresentation(int numPages, Settings* settings)
-{
-	bool isPairedPages = settings->isShowPairedPages();
-	int numCols = 1;
-	int numRows = 1;
-	bool fixRows = false; //i.e. use columns
-	int pairsOffset = settings->getPairsOffset();
-	if (!isPairedPages)
-	{
-		pairsOffset = 0;
-	}
-
-	this->configure(numPages, numRows, numCols, fixRows, Vertical, isPairedPages, pairsOffset);
-}	
-	
-	
-void LayoutMapper::configure(int pages, int numRows, int numCols, bool useRows, LayoutType type, bool isPaired,
-		int firstPageOffset)
-{
-	XOJ_CHECK_TYPE(LayoutMapper);
-
-	this->isPairedPages = isPaired;
 	if (useRows)
 	{
-		this->rows = MAX(1, numRows);
+		data.rows = std::max<size_t>(1ul, numRows);
 
 		// using  + ( rows-1) to round up (int)pages/rows
-		this->cols = MAX(1, (pages + firstPageOffset + (this->rows - 1)) / this->rows);
-		if (isPaired)
+		data.cols = std::max<size_t>(1ul, (data.actualPages + firstPageOffset + (data.rows - 1)) / data.rows);
+		if (data.showPairedPages)
 		{
-			this->cols += this->cols % 2;	//make even
+			data.cols += data.cols % 2;  //make even
 		}
-
 	}
 	else
 	{
-		this->cols = MAX(1, numCols);
-		if (isPaired)
+		data.cols = std::max<size_t>(1ul, numCols);
+		if (data.showPairedPages)
 		{
-			this->cols += this->cols % 2;	//make even
+			data.cols += data.cols % 2;  //make even
 		}
-		this->rows = MAX(1, (pages + firstPageOffset + (this->cols - 1)) / this->cols);
+		data.rows = std::max<size_t>(1ul, (data.actualPages + firstPageOffset + (data.cols - 1)) / data.cols);
 	}
 
-	this->layoutType = type;
 
-	if (type & LayoutBitFlags::Vertically)
+	if (data.orientation == LayoutMapper::Vertical)
 	{
 		// Vertical Layout
-		if (isPaired)
+		if (data.showPairedPages)
 		{
-			this->offset = firstPageOffset % (2 * this->rows);
+			data.offset = firstPageOffset % (2 * data.rows);
 		}
 		else
 		{
-			this->offset = firstPageOffset % this->rows;
+			data.offset = firstPageOffset % data.rows;
 		}
 	}
 	else
 	{
 		// Horizontal Layout
-		this->offset = firstPageOffset % this->cols;
+		data.offset = firstPageOffset % data.cols;
 	}
-
-	this->possiblePages = this->rows * this->cols;
-	this->actualPages = pages;
 }
 
-int LayoutMapper::getColumns()
+void LayoutMapper::configureFromSettings(size_t numPages, Settings* settings)
 {
-	XOJ_CHECK_TYPE(LayoutMapper);
+	internal_data data;
+	// get from user settings:
+	data.actualPages = numPages;
+	data.showPairedPages = settings->isShowPairedPages();
+	const int pairsOffset = data.showPairedPages ? settings->getPairsOffset() : 0;
 
-	return this->cols;
-}
+	const bool fixRows = settings->isPresentationMode() ? false : settings->isViewFixedRows();
+	const size_t numCols = settings->isPresentationMode() ? 1 : settings->getViewColumns();
+	const size_t numRows = settings->isPresentationMode() ? 1 : settings->getViewRows();
 
-int LayoutMapper::getRows()
-{
-	XOJ_CHECK_TYPE(LayoutMapper);
+	//assemble bitflags for LayoutType
+	data.orientation = (settings->isPresentationMode() || settings->getViewLayoutVert()) ? Vertical : Horizontal;
+	data.horizontalDir = settings->getViewLayoutR2L() ? RightToLeft : LeftToRight;
+	data.verticalDir = settings->getViewLayoutB2T() ? BottomToTop : TopToBottom;
 
-	return this->rows;
-}
-
-int LayoutMapper::getFirstPageOffset()
-{
-	XOJ_CHECK_TYPE(LayoutMapper);
-
-	return this->offset;
-}
-
-int LayoutMapper::getPairedPages()
-{
-	XOJ_CHECK_TYPE(LayoutMapper);
-
-	return this->isPairedPages;
-}
-
-int LayoutMapper::map(int x, int y)
-{
-	XOJ_CHECK_TYPE(LayoutMapper);
-
-	if (this->layoutType < BitFlagsUsedToHere)
+	calculate(data, numRows, numCols, fixRows, pairsOffset);
+	if (data == data_)
 	{
-		int res;
-		if (this->layoutType & LayoutBitFlags::RightToLeft)
-		{
-			// reverse x
-			x = this->cols - 1 - x;
-		}
+		return;
+	}
+	data_ = data;
+	precalculateMappers();
+}
 
-		if (this->layoutType & LayoutBitFlags::BottomToTop)
-		{
-			// reverse y
-			y = this->rows - 1 - y;
-		}
+void LayoutMapper::precalculateMappers()
+{
+	this->pageToRaster.clear();
+	this->rasterToPage.clear();
+	this->pageToRaster.resize(data_.actualPages);
+	this->rasterToPage.reserve(data_.rows * data_.cols);
 
-		if (this->layoutType & LayoutBitFlags::Vertically)
+	for (size_t col{}; col < data_.cols; ++col)
+	{
+		for (size_t row{}; row < data_.rows; ++row)
 		{
-			if (this->isPairedPages)
+			auto maybe_index = map(col, row);
+			if (maybe_index)
 			{
-				res = ((y + this->rows * ((int) (x / 2))) * 2) + x % 2;
-			}
-			else
-			{
-				res = y + this->rows * x;
+				this->pageToRaster[*maybe_index] = std::pair<size_t, size_t>{col, row};
+				this->rasterToPage.emplace(std::pair<size_t, size_t>{col, row}, *maybe_index);
 			}
 		}
-		else //Horizontal
-		{
-			res = x + this->cols * y;
-		}
+	}
+}
 
-		res -= this->offset;
+size_t LayoutMapper::getColumns() const
+{
+	return data_.cols;
+}
 
-		if (res >= this->actualPages)
-		{
-			res = -1;
-		}
+size_t LayoutMapper::getRows() const
+{
+	return data_.rows;
+}
 
-		return res;
+int LayoutMapper::getFirstPageOffset() const
+{
+	return data_.offset;
+}
+
+bool LayoutMapper::isPairedPages() const
+{
+	return data_.showPairedPages;
+}
+
+
+// Todo: replace with map<pair(x,y)> -> index and vector<index> -> pair(x,y)
+//       precalculate it in configure
+// Todo: replace with
+//       boost::optional<size_t> LayoutMapper::map(size_t x, size_t y) or
+//       std::optional<size_t> LayoutMapper::map(size_t x, size_t y)
+LayoutMapper::optional_size_t LayoutMapper::map(size_t col, size_t row)
+{
+	if (isRightToLeft())
+	{
+		// reverse x
+		col = data_.cols - 1 - col;
 	}
 
-	g_warning("LayoutMapper::Unknown layout: %d\n", this->layoutType);
-	return 0;
+	if (isBottomToTop())
+	{
+		// reverse y
+		row = data_.rows - 1 - row;
+	}
+
+	size_t res;
+	if (isVertical())
+	{
+		if (data_.showPairedPages)
+		{
+			res = ((row + data_.rows * (col / 2)) * 2) + col % 2;
+		}
+		else
+		{
+			res = row + data_.rows * col;
+		}
+	}
+	else  //Horizontal
+	{
+		res = col + data_.cols * row;
+	}
+
+	res -= data_.offset;
+
+	if (res >= data_.actualPages)
+	{
+		return {};
+	}
+
+	return res;
+}
+
+bool LayoutMapper::isVertical() const
+{
+	return data_.orientation == Vertical;
+}
+
+bool LayoutMapper::isBottomToTop() const
+{
+	return data_.verticalDir == BottomToTop;
+}
+
+bool LayoutMapper::isRightToLeft() const
+{
+	return data_.horizontalDir == RightToLeft;
+}
+
+std::pair<size_t, size_t> LayoutMapper::at(size_t page) const
+{
+	return pageToRaster.at(page);
+}
+LayoutMapper::optional_size_t LayoutMapper::at(std::pair<size_t, size_t> rasterXY) const
+{
+	LayoutMapper::optional_size_t ret;
+	auto iter = rasterToPage.find(rasterXY);
+	if (iter != end(rasterToPage))
+	{
+		ret = iter->second;
+	}
+	return ret;
 }

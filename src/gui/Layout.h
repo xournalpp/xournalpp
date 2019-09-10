@@ -37,11 +37,6 @@ public:
 
 public:
 	/**
-	 * Adjusts the layout size to the given values
-	 */
-	void setSize(int widgetWidth, int widgetHeight);
-
-	/**
 	 * Increases the adjustments by the given amounts
 	 */
 	void scrollRelative(double x, double y);
@@ -63,22 +58,31 @@ public:
 	/**
 	 * Returns the height of the entire Layout
 	 */
-	double getLayoutHeight();
+	int getMinimalHeight();
 
 	/**
 	 * Returns the width of the entire Layout
 	 */
-	double getLayoutWidth();
+	int getMinimalWidth();
 
 	/**
 	 * Returns the Rectangle which is currently visible
 	 */
 	Rectangle getVisibleRect();
 
+
+	/**
+	 * recalculate and resize Layout
+	 */
+	void recalculate();
+
 	/**
 	 * Performs a layout of the XojPageView's managed in this Layout
+	 * Sets out pages in a grid.
+	 * Document pages are assigned to grid positions by the mapper object and may be ordered in a myriad of ways.
+	 * only call this on size allocation
 	 */
-	void layoutPages();
+	void layoutPages(int width, int height);
 
 	/**
 	 * Updates the current XojPageView. The XojPageView is selected based on
@@ -87,19 +91,16 @@ public:
 	 */
 	void updateVisibility();
 
-	
-	
 	/**
 	 * Return the pageview containing co-ordinates.
-	 * 
-	 */	
+	 */
 	XojPageView* getViewAt(int x, int y);
 
 	/**
 	 * Return the page index found ( or -1 if not found) at layout grid row,col
 	 * 
-	 */	
-	int getIndexAtGridMap(int row, int col);
+	 */
+	LayoutMapper::optional_size_t getIndexAtGridMap(size_t row, size_t col);
 
 protected:
 	static void horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
@@ -107,45 +108,39 @@ protected:
 
 private:
 	void checkScroll(GtkAdjustment* adjustment, double& lastScroll);
+
 	void setLayoutSize(int width, int height);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XournalView* view = NULL;	
-
 	LayoutMapper mapper;
 
-	ScrollHandling* scrollHandling = NULL;
+	XournalView* view = nullptr;
+	ScrollHandling* scrollHandling = nullptr;
+
+	std::vector<unsigned> widthCols;
+	std::vector<unsigned> heightRows;
 
 	double lastScrollHorizontal = -1;
 	double lastScrollVertical = -1;
 
 	/**
-	 * The last width of the widget
+	 * The last width and height of the widget
 	 */
 	int lastWidgetWidth = 0;
+	int lastWidgetHeight = 0;
 
 	/**
 	 * The width and height of all our pages
 	 */
-	int layoutWidth = 0;
-	int layoutHeight = 0;
-	
-	
+	size_t minWidth = 0;
+	size_t minHeight = 0;
+
 	/**
-	 *The following are useful for locating page at a pixel location
+	 * layoutPages invalidates the precalculation of recalculate
+	 * this bool prevents that layotPages can be called without a previously call to recalculate
+	 * Todo: we may want to remove the additional calculation in layoutPages, since we stored those values in
 	 */
-	
-	int rows;
-	int columns;
-	
-	std::vector<int> sizeCol;
-	std::vector<int> sizeRow;
-	
-	/**
-	 * cache the last GetViewAt() row and column.
-	 */
-	int lastGetViewAtRow = 0;
-	int lastGetViewAtCol = 0;
+	bool valid = false;
 };

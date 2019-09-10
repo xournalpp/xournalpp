@@ -15,7 +15,7 @@ stages:
             parameters:
               cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
           - bash: |
-              cmake .. -DCMAKE_INSTALL_PREFIX=$PWD/staging
+              cmake .. -DCMAKE_INSTALL_PREFIX=$PWD/staging -DCPACK_GENERATOR="TGZ;DEB"
               cmake --build . --target package
             workingDirectory: ./build
             displayName: 'Generate packages'

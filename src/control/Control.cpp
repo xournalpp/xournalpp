@@ -337,7 +337,6 @@ void Control::initWindow(MainWindow* win)
 	win->setRecentMenu(recent->getMenu());
 	selectTool(toolHandler->getToolType());
 	this->win = win;
-	this->zoom->initZoomHandler(win->getXournal()->getWidget(), win->getXournal(), this);
 	this->sidebar = new Sidebar(win, this);
 
 	XojMsgBox::setDefaultWindow(getGtkWindow());
@@ -692,7 +691,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		setFill(enabled);
 		break;
 
-	case ACTION_SIZE_VERY_THIN:
+	case ACTION_SIZE_VERY_FINE:
 		if (enabled)
 		{
 			setToolSize(TOOL_SIZE_VERY_FINE);
@@ -736,6 +735,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		setLineStyle("dot");
 		break;
 
+	case ACTION_TOOL_ERASER_SIZE_VERY_FINE:
+		if (enabled)
+		{
+			this->toolHandler->setEraserSize(TOOL_SIZE_VERY_FINE);
+			eraserSizeChanged();
+		}
+		break;
 	case ACTION_TOOL_ERASER_SIZE_FINE:
 		if (enabled)
 		{
@@ -757,7 +763,14 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 			eraserSizeChanged();
 		}
 		break;
-	case ACTION_TOOL_PEN_SIZE_VERY_THIN:
+	case ACTION_TOOL_ERASER_SIZE_VERY_THICK:
+		if (enabled)
+		{
+			this->toolHandler->setEraserSize(TOOL_SIZE_VERY_THICK);
+			eraserSizeChanged();
+		}
+		break;
+	case ACTION_TOOL_PEN_SIZE_VERY_FINE:
 		if (enabled)
 		{
 			this->toolHandler->setPenSize(TOOL_SIZE_VERY_FINE);
@@ -800,6 +813,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 
 
+	case ACTION_TOOL_HILIGHTER_SIZE_VERY_FINE:
+		if (enabled)
+		{
+			this->toolHandler->setHilighterSize(TOOL_SIZE_VERY_FINE);
+			hilighterSizeChanged();
+		}
+		break;
 	case ACTION_TOOL_HILIGHTER_SIZE_FINE:
 		if (enabled)
 		{
@@ -818,6 +838,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		if (enabled)
 		{
 			this->toolHandler->setHilighterSize(TOOL_SIZE_THICK);
+			hilighterSizeChanged();
+		}
+		break;
+	case ACTION_TOOL_HILIGHTER_SIZE_VERY_THICK:
+		if (enabled)
+		{
+			this->toolHandler->setHilighterSize(TOOL_SIZE_VERY_THICK);
 			hilighterSizeChanged();
 		}
 		break;
@@ -1934,7 +1961,7 @@ void Control::toolChanged()
 	fireEnableAction(ACTION_SIZE_THICK, enableSize);
 	fireEnableAction(ACTION_SIZE_FINE, enableSize);
 	fireEnableAction(ACTION_SIZE_VERY_THICK, enableSize);
-	fireEnableAction(ACTION_SIZE_VERY_THIN, enableSize);
+	fireEnableAction(ACTION_SIZE_VERY_FINE, enableSize);
 
 	bool enableFill = toolHandler->hasCapability(TOOL_CAP_FILL);
 
@@ -1997,6 +2024,9 @@ void Control::eraserSizeChanged()
 
 	switch (toolHandler->getEraserSize())
 	{
+	case TOOL_SIZE_VERY_FINE:
+		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_VERY_FINE);
+		break;
 	case TOOL_SIZE_FINE:
 		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_FINE);
 		break;
@@ -2005,6 +2035,9 @@ void Control::eraserSizeChanged()
 		break;
 	case TOOL_SIZE_THICK:
 		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_THICK);
+		break;
+	case TOOL_SIZE_VERY_THICK:
+		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_VERY_THICK);
 		break;
 	default:
 		break;
@@ -2018,7 +2051,7 @@ void Control::penSizeChanged()
 	switch (toolHandler->getPenSize())
 	{
 	case TOOL_SIZE_VERY_FINE:
-		fireActionSelected(GROUP_PEN_SIZE, ACTION_TOOL_PEN_SIZE_VERY_THIN);
+		fireActionSelected(GROUP_PEN_SIZE, ACTION_TOOL_PEN_SIZE_VERY_FINE);
 		break;
 	case TOOL_SIZE_FINE:
 		fireActionSelected(GROUP_PEN_SIZE, ACTION_TOOL_PEN_SIZE_FINE);
@@ -2043,6 +2076,9 @@ void Control::hilighterSizeChanged()
 
 	switch (toolHandler->getHilighterSize())
 	{
+	case TOOL_SIZE_VERY_FINE:
+		fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_VERY_FINE);
+		break;
 	case TOOL_SIZE_FINE:
 		fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_FINE);
 		break;
@@ -2051,6 +2087,9 @@ void Control::hilighterSizeChanged()
 		break;
 	case TOOL_SIZE_THICK:
 		fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_THICK);
+		break;
+	case TOOL_SIZE_VERY_THICK:
+		fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_VERY_THICK);
 		break;
 	default:
 		break;
@@ -2080,7 +2119,7 @@ void Control::toolSizeChanged()
 		fireActionSelected(GROUP_SIZE, ACTION_NONE);
 		break;
 	case TOOL_SIZE_VERY_FINE:
-		fireActionSelected(GROUP_SIZE, ACTION_SIZE_VERY_THICK);
+		fireActionSelected(GROUP_SIZE, ACTION_SIZE_VERY_FINE);
 		break;
 	case TOOL_SIZE_FINE:
 		fireActionSelected(GROUP_SIZE, ACTION_SIZE_FINE);
@@ -2092,7 +2131,7 @@ void Control::toolSizeChanged()
 		fireActionSelected(GROUP_SIZE, ACTION_SIZE_THICK);
 		break;
 	case TOOL_SIZE_VERY_THICK:
-		fireActionSelected(GROUP_SIZE, ACTION_SIZE_VERY_THIN);
+		fireActionSelected(GROUP_SIZE, ACTION_SIZE_VERY_THICK);
 		break;
 	}
 

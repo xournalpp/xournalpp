@@ -41,7 +41,7 @@ portaudio-devel libsndfile-devel alsa-lib-devel cppunit-devel lua-devel
 
 The basic steps to compile Xournal++ are:
 
-````bash
+```bash
 git clone http://github.com/xournalpp/xournalpp.git
 cd xournalpp
 mkdir build
@@ -59,15 +59,23 @@ The binary executable will be placed in the `build/src/` subdirectory.
 
 ### Packaging and Installation
 
-After compilation, you can generate a `.tar.gz` file containing the binary and
-everything it needs with
+After compilation, select which packages you want to generate (see the relevant
+sections below) and then run the `package` target. The generated packages will
+be located in `build/packages`. For example:
 
 ```bash
-cmake --build . --package
+cmake .. -DCPACK_GENERATOR="TGZ;DEB"  # Generate .tar.gz and .deb packages
+cmake --build . --target package
 ```
 
+By default, a standalone `.tar.gz` package will be generated. For
+distro-agnostic packaging platforms such as AppImages and Flatpaks, see the
+relevant sections below.
+
+#### Installation from source
+
 If you don't want to make a package, you can install Xournal++ into your user
-folder with
+folder (or any other folder) by specifying `CMAKE_INSTALL_PREFIX`:
 
 ```bash
 cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/.local
@@ -79,6 +87,26 @@ If you want to install Xournal++ systemwide directly from the build directory
 (not recommended: generate a native package or an AppImage/Flatpak instead), run
 
 ```bash
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr
 sudo cmake --build . --target install
 ./cmake/postinst configure
 ```
+
+#### .deb packages
+
+```bash
+cmake .. -DCPACK_GENERATOR="DEB" ..
+cmake --build . --target package
+```
+
+#### .rpm packages
+
+TODO
+
+#### AppImage
+
+TODO
+
+#### Flatpak
+
+TODO
