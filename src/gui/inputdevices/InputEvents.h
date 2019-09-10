@@ -13,7 +13,8 @@
 
 #include <glib.h>
 #include <gdk/gdk.h>
-#include <control/settings/Settings.h>
+#include "control/settings/Settings.h"
+#include "model/Point.h"
 
 enum InputEventType
 {
@@ -61,7 +62,7 @@ public:
 
 	guint button = 0;
 	GdkModifierType state = (GdkModifierType) 0;
-	gdouble pressure = 1.0;
+	gdouble pressure = Point::NO_PRESSURE;
 
 	GdkEventSequence* sequence = nullptr;
 	guint32 timestamp = 0;

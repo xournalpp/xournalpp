@@ -1,4 +1,4 @@
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.new_local/bin:$PATH"
 
 curl -L https://github.com/uclouvain/openjpeg/archive/v2.3.0.tar.gz -o openjpeg.tar.gz
 tar xf openjpeg.tar.gz
@@ -16,6 +16,7 @@ cd ..
 export LIBRARY_PATH="$HOME/gtk/inst/lib:$LIBRARY_PATH"
 
 jhbuild build freetype fontconfig
+jhbuild buildone -acf cairo
 
 curl https://poppler.freedesktop.org/poppler-0.72.0.tar.xz -o poppler.tar.xz
 tar xf poppler.tar.xz

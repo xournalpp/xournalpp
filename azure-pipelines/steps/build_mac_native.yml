@@ -7,39 +7,23 @@ steps:
       ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
     displayName: 'Uninstall brew'
   - bash: |
-      cd /
-      sudo mkdir gtk
-      sudo chown ${uid}
-      cd gtk
-      curl -L -o gtk-bin.tar.gz https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/master/gtk/mac/10.14/gtk-bin.tar.gz
+      cd /Users
+      sudo mkdir git-bin
+      sudo chown $USER git-bin
+      cd git-bin
+      curl -L -o gtk-bin.tar.gz https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/master/gtk/mac/10.13/gtk-bin.tar.gz
       tar -xzf gtk-bin.tar.gz
-      export PATH="$HOME/.local/bin:/gtk/inst/bin:$PATH"
+      export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
     displayName: 'Unpack GTK'
   - bash: |
-      jhbuild exec ./build-poppler.sh
-    workingDirectory: ./mac-setup
-    displayName: 'Build dependencies (Poppler)'
+      curl -L -o libxml.tar.gz https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/master/libxml/mac/10.13/libxml.tar.gz
+      sudo tar -xzf libxml.tar.gz -C /
+      
+    displayName: 'Unpack libxml'
   - bash: |
-      ./build-mac-integration.sh
+      export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
+      cmake -DCMAKE_INSTALL_PREFIX:PATH=/Users/git-bin/gtk/inst .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type}} ${{ parameters.cmake_flags }}
+      make -j 4
+      make install
     workingDirectory: ./mac-setup
-    displayName: 'Build dependencies (gtk-mac-integration)'
-  - bash: |
-      ./build-portaudio.sh
-    workingDirectory: ./mac-setup
-    displayName: 'Build dependencies (PortAudio)'
-  - bash: | 
-      ./build-libzip.sh
-    workingDirectory: ./mac-setup
-    displayName: 'Build dependencies (libzip)'
-  - bash: |
-      ./build-sndfile.sh
-    workingDirectory: ./mac-setup
-    displayName: 'Build dependencies (sndfile)'
-  - bash: |
-      mkdir build
-    displayName: 'Create build directory'
-  - bash: |
-      cmake -GNinja .. -DCMAKE_INSTALL_PREFIX:PATH=/gtk/inst -DCMAKE_BUILD_TYPE=${{ parameters.build_type}} ${{ parameters.cmake_flags }}
-      cmake --build .
-    workingDirectory: ./build
     displayName: 'Build Xournal++'
