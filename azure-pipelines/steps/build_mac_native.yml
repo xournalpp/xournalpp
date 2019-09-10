@@ -1,0 +1,32 @@
+parameters:
+  build_type: ''
+  cmake_flags: ''
+
+steps:
+  - bash: |
+      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+    displayName: 'Uninstall brew'
+  - bash: |
+      cd /Users
+      sudo mkdir git-bin
+      sudo chown $USER git-bin
+      cd git-bin
+      curl -L -o gtk-bin.tar.gz https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/master/gtk/mac/10.13/gtk-bin.tar.gz
+      tar -xzf gtk-bin.tar.gz
+      export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
+    displayName: 'Unpack GTK'
+  - bash: |
+      curl -L -o libxml.tar.gz https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/master/libxml/mac/10.13/libxml.tar.gz
+      sudo tar -xzf libxml.tar.gz -C /
+      
+    displayName: 'Unpack libxml'
+  - bash: |
+      mkdir build
+    displayName: 'Create Build Directory'
+  - bash: |
+      export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
+      cmake -DCMAKE_INSTALL_PREFIX:PATH=/Users/git-bin/gtk/inst .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type}} ${{ parameters.cmake_flags }}
+      make -j 4
+      make install
+    workingDirectory: ./build
+    displayName: 'Build Xournal++'

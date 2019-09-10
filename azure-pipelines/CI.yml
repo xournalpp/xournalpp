@@ -56,11 +56,14 @@ stages:
           vmImage: 'macOS-10.13'
         displayName: 'Test Xournal++ on MacOS'
         steps:
-          - template: steps/build_mac.yml
+          - template: steps/build_mac_native.yml
             parameters:
               build_type: 'Debug'
               cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
           - bash: |
-              ctest --verbose
+              export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
+              install_name_tool -add_rpath /Users/git-bin/gtk/inst/lib/. test/test-loadHandler
+              install_name_tool -add_rpath /Users/git-bin/gtk/inst/lib/. test/test-util
+              CI=true ctest --verbose
             workingDirectory: ./build
             displayName: 'Run tests'

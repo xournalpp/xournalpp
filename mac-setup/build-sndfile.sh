@@ -1,7 +1,7 @@
 # go to script directory
 cd "${0%/*}"
 
-export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
+export PATH="$HOME/.new_local/bin:$HOME/gtk/inst/bin:$PATH"
 
 git clone https://github.com/erikd/libsndfile.git
 

@@ -1,7 +1,7 @@
 # go to script directory
 cd "${0%/*}"
 
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.new_local/bin:$PATH"
 export LIBRARY_PATH="$HOME/gtk/inst/lib:$LIBRARY_PATH"
 
 curl -L  http://www.portaudio.com/archives/pa_stable_v190600_20161030.tgz -o pa_stable_v190600_20161030.tgz

@@ -54,17 +54,24 @@ stages:
               targetPath: './windows-setup/xournalpp-setup.exe'
             displayName: 'Publish Windows Setup'
 
-#      - job: macOS
-#        pool:
-#          vmImage: 'macOS-10.13'
-#        displayName: 'Build for macOS'
-#        steps:
-#          - template: steps/build_mac.yml
-#            parameters:
-#              build_type: 'Release'
-#              cmake_flags: ''
-#          - bash: |
-#              ctest
-#            workingDirectory: ./build
-#            displayName: 'Run tests'
-#
+      - job: macOS
+        pool:
+          vmImage: 'macOS-10.13'
+        displayName: 'Build for macOS'
+        condition: always()
+        steps:
+          - template: steps/build_mac_native.yml
+            parameters:
+              build_type: 'Release'
+              cmake_flags: ''
+          - bash: |
+              export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
+              ./build-app.sh /Users/gtk-bin/gtk
+            workingDirectory: ./mac-setup
+            displayName: 'Create App'
+          - task: PublishPipelineArtifact@0
+            inputs:
+              artifactName: 'macOS'
+              targetPath: './mac-setup/Xournal++.zip'
+            displayName: 'Publish macOS Setup'
+
