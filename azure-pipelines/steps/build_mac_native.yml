@@ -6,21 +6,17 @@ steps:
   - bash: |
       ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
     displayName: 'Uninstall brew'
-#  - bash: |
-#      cd $HOME
-#      mkdir gtk
-#      cd gtk
-#      curl -L -o gtk-bin.tar.gz https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/master/gtk/mac/10.14/gtk-bin.tar.gz
-#      tar -xzf gtk-bin.tar.gz
-#      export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
-#    displayName: 'Unpack GTK'
   - bash: |
-      ps -ww -o pid= -o ppid= -o args=
-      ./build-gtk3.sh
-    workingDirectory: ./mac-setup
-    displayName: 'Build dependencies (GTK)'
+      cd /
+      sudo mkdir gtk
+      sudo chown ${uid}
+      cd gtk
+      curl -L -o gtk-bin.tar.gz https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/master/gtk/mac/10.14/gtk-bin.tar.gz
+      tar -xzf gtk-bin.tar.gz
+      export PATH="$HOME/.local/bin:/gtk/inst/bin:$PATH"
+    displayName: 'Unpack GTK'
   - bash: |
-      ./build-poppler.sh
+      jhbuild exec ./build-poppler.sh
     workingDirectory: ./mac-setup
     displayName: 'Build dependencies (Poppler)'
   - bash: |
@@ -43,7 +39,7 @@ steps:
       mkdir build
     displayName: 'Create build directory'
   - bash: |
-      cmake -GNinja .. -DCMAKE_INSTALL_PREFIX:PATH=$HOME/gtk/inst -DCMAKE_BUILD_TYPE=${{ parameters.build_type}} ${{ parameters.cmake_flags }}
+      cmake -GNinja .. -DCMAKE_INSTALL_PREFIX:PATH=/gtk/inst -DCMAKE_BUILD_TYPE=${{ parameters.build_type}} ${{ parameters.cmake_flags }}
       cmake --build .
     workingDirectory: ./build
     displayName: 'Build Xournal++'
