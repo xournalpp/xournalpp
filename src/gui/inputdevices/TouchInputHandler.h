@@ -11,8 +11,9 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include "../../util/XournalType.h"
 #include "AbstractInputHandler.h"
+#include <cmath>
 
 class InputContext;
 
@@ -20,14 +21,21 @@ class TouchInputHandler : public AbstractInputHandler
 {
 private:
 	XOJ_TYPE_ATTRIB;
-	GdkEventSequence* currentSequence = nullptr;
-	double lastPosX = -1.0;
-	double lastPosY = -1.0;
+	GdkEventSequence* primarySequence = nullptr;
+  GdkEventSequence* secondarySequence = nullptr;
+	double priLastPosX = -1.0;
+	double priLastPosY = -1.0;
+  double secLastPosX = -1.0;
+  double secLastPosY = -1.0;
+  double lastDiff = 0.0;
 
 private:
 	void actionStart(InputEvent* event);
 	void actionMotion(InputEvent* event);
 	void actionEnd(InputEvent* event);
+  void zoomStart(InputEvent* event);
+  void zoomMotion(InputEvent* event);
+  void zoomEnd(InputEvent* event);
 
 public:
 	explicit TouchInputHandler(InputContext* inputContext);

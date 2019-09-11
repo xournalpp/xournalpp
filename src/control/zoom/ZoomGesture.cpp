@@ -107,7 +107,7 @@ void ZoomGesture::zoomChanged(double zoom)
 
 	if (gestureActive)
 	{
-		zoomControl->zoomSequnceChange(zoom, true);
+		zoomControl->zoomSequenceChange(zoom, true);
 	}
 }
 
