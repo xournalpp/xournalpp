@@ -36,6 +36,8 @@ cd ..
 
 echo "create package"
 
+export GTKDIR="$1/inst"
+
 gtk-mac-bundler xournalpp.bundle
 
 mkdir -p Xournal++.app/Contents/Resources
