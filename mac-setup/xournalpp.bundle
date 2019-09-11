@@ -2,7 +2,7 @@
 <app-bundle>
 
   <meta>
-    <prefix name="default">${env:HOME}/gtk/inst</prefix>
+    <prefix name="default">${env:GTKDIR}</prefix>
     <destination overwrite="yes">.</destination>
 
     <!-- Comment this out to keep the install names in binaries -->
