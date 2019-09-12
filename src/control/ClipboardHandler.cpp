@@ -1,6 +1,7 @@
 #include "ClipboardHandler.h"
 
 #include "Control.h"
+#include "Util.h"
 #include "view/DocumentView.h"
 
 #include <config.h>
@@ -203,7 +204,7 @@ bool ClipboardHandler::copy()
 
 	DocumentView view;
 
-	double dpiFactor = 1.0 / 72.0 * 300.0;
+	double dpiFactor = 1.0 / Util::DPI_NORMALIZATION_FACTOR * 300.0;
 
 	int width = selection->getWidth() * dpiFactor;
 	int height = selection->getHeight() * dpiFactor;

@@ -2,6 +2,7 @@
 
 #include "control/jobs/ProgressListener.h"
 #include "model/Document.h"
+#include "Util.h"
 #include "view/PdfView.h"
 
 #include <cairo-svg.h>
@@ -55,10 +56,10 @@ void ImageExport::createSurface(double width, double height, int id)
 	if (format == EXPORT_GRAPHICS_PNG)
 	{
 		this->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-												   width * this->pngDpi / 72.0,
-												   height * this->pngDpi / 72.0);
+		                                           width * this->pngDpi / Util::DPI_NORMALIZATION_FACTOR,
+		                                           height * this->pngDpi / Util::DPI_NORMALIZATION_FACTOR);
 		this->cr = cairo_create(this->surface);
-		double factor = this->pngDpi / 72.0;
+		double factor = this->pngDpi / Util::DPI_NORMALIZATION_FACTOR;
 		cairo_scale(this->cr, factor, factor);
 	}
 	else if (format == EXPORT_GRAPHICS_SVG)
@@ -193,7 +194,7 @@ void ImageExport::exportGraphics(ProgressListener* stateListener)
 	stateListener->setMaximumState(selectedCount);
 
 	DocumentView view;
-	double zoom = this->pngDpi / 72.0;
+	double zoom = this->pngDpi / Util::DPI_NORMALIZATION_FACTOR;
 	int current = 0;
 
 	for (int i = 0; i < count; i++)

@@ -115,7 +115,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	this->zoom = new ZoomControl();
 	this->zoom->setZoomStep(this->settings->getZoomStep() / 100.0);
 	this->zoom->setZoomStepScroll(this->settings->getZoomStepScroll() / 100.0);
-	this->zoom->setZoom100Value(this->settings->getDisplayDpi() / 72.0);
+	this->zoom->setZoom100Value(this->settings->getDisplayDpi() / Util::DPI_NORMALIZATION_FACTOR);
 
 	this->toolHandler = new ToolHandler(this, this, this->settings);
 	this->toolHandler->loadSettings();
@@ -2258,7 +2258,7 @@ void Control::showSettings()
 
 	this->zoom->setZoomStep(settings->getZoomStep() / 100.0);
 	this->zoom->setZoomStepScroll(settings->getZoomStepScroll() / 100.0);
-	this->zoom->setZoom100Value(settings->getDisplayDpi() / 72.0);
+	this->zoom->setZoom100Value(settings->getDisplayDpi() / Util::DPI_NORMALIZATION_FACTOR);
 
 	getWindow()->getXournal()->getHandRecognition()->reload();
 
@@ -3067,8 +3067,10 @@ void Control::clipboardPasteImage(GdkPixbuf* img)
 	auto image = new Image();
 	image->setImage(img);
 
-	auto width = static_cast<double>(gdk_pixbuf_get_width(img)) / settings->getDisplayDpi() * 72.0;
-	auto height = static_cast<double>(gdk_pixbuf_get_height(img)) / settings->getDisplayDpi() * 72.0;
+	auto width =
+	        static_cast<double>(gdk_pixbuf_get_width(img)) / settings->getDisplayDpi() * Util::DPI_NORMALIZATION_FACTOR;
+	auto height = static_cast<double>(gdk_pixbuf_get_height(img)) / settings->getDisplayDpi() *
+	              Util::DPI_NORMALIZATION_FACTOR;
 
 	int pageNr = getCurrentPageNo();
 	if (pageNr == -1)
