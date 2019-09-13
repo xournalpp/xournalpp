@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-07 09:40+0000\n"
-"PO-Revision-Date: 2019-09-07 09:42\n"
+"PO-Revision-Date: 2019-09-13 10:10\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -545,7 +545,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Go to top layer"
-msgstr ""
+msgstr "Přejít na horní vrstvu"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:27
 msgid "Graph"
@@ -572,7 +572,7 @@ msgstr "Ruka"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:99
 msgid "Hide all"
-msgstr ""
+msgstr "Skrýt vše"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:65
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:463
@@ -586,7 +586,7 @@ msgstr "Obrázek"
 
 #: ../src/control/XournalMain.cpp:260
 msgid "Image file successfully created"
-msgstr ""
+msgstr "Obrázek úspěšně vytvořen"
 
 #: ../src/control/XournalMain.cpp:315
 msgid "Image output filename (.png / .svg)"
@@ -722,7 +722,7 @@ msgstr ""
 
 #: ../src/plugin/Plugin.cpp:417 ../src/plugin/Plugin.cpp:438
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../src/control/jobs/BaseExportJob.cpp:113
 msgid "Only local files are supported\n"
