@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-07 09:40+0000\n"
-"PO-Revision-Date: 2019-09-08 10:55\n"
+"PO-Revision-Date: 2019-09-14 20:54\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -2085,7 +2085,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3277
 msgid "Ignore Time (ms)"
-msgstr ""
+msgstr "Tiempo para ignorar (ms)"
 
 #: ../ui/settings.glade:3766
 msgid "Input Device"
@@ -2574,7 +2574,7 @@ msgstr "_Anotar PDF"
 
 #: ../ui/main.glade:593
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "De a_bajo hacia arriba"
 
 #: ../ui/main.glade:608
 msgid "_Cols/Rows"
@@ -2706,7 +2706,7 @@ msgstr "Capa _superior"
 
 #: ../ui/main.glade:582
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "De _arriba hacia abajo"
 
 #: ../ui/main.glade:535
 msgid "_Vertical"
