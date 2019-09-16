@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-07 09:40+0000\n"
-"PO-Revision-Date: 2019-09-07 09:42\n"
+"PO-Revision-Date: 2019-09-16 15:38\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -26,7 +26,7 @@ msgstr "\n\n"
 msgid "\n"
 "Will now attempt to run without this file."
 msgstr "\n"
-"Versuche nun ohne der Datei zu starten."
+"Versuche nun ohne die Datei zu starten."
 
 #: ../src/gui/MainWindow.cpp:843
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -50,10 +50,10 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not in {2}"
 msgstr "<span foreground='red' size='x-large'>Benötigte UI-Datei fehlt:\n"
 "<b>{1}</b></span>\n"
-"Konnte sie an keiner der folgenden Orte finden:\n"
-" Nicht relativ\n"
-" Nicht im Arbeitsverzeichnis\n"
-" Nicht in {2}"
+"Konnte sie an keinem Ort finden.\n"
+"Nicht relativ\n"
+"Nicht im Arbeitsverzeichnis\n"
+"Nicht in {2}"
 
 #: ../src/control/XournalMain.cpp:317
 msgid "Absolute path for the audio files playback"
@@ -1788,7 +1788,7 @@ msgstr "Verfügbare Platzhalter"
 
 #: ../ui/settings.glade:2019
 msgid "Background color between pages"
-msgstr ""
+msgstr "Hintergrundfarbe zwischen den Seiten"
 
 #: ../ui/settings.glade:2153
 msgid "Big cursor for pen"
@@ -1884,7 +1884,7 @@ msgstr "Zeichnen mit diesem Gerät deaktivieren"
 
 #: ../ui/settings.glade:2301
 msgid "Disable scrollbar fade out"
-msgstr "Scrollbar-Ausblenden deaktivieren"
+msgstr "Scrollbar-Ausblendung deaktivieren"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
