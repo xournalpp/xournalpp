@@ -49,15 +49,9 @@ else ()
     set(LIB_ENDING "so")
 endif ()
 
-if (WIN32)
-    set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-mwindows")
-endif ()
-
 ## For touch workaround, may need to be disabled for a Wayland Build
-if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+if (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
     set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-lX11 -lXi")
-elseif(${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
-	set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-lX11 -lXi -lexecinfo")
 endif ()
 
 ## Libraries ##
@@ -66,6 +60,14 @@ macro (add_includes_ldflags LDFLAGS INCLUDES)
     set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "${LDFLAGS}")
     set (xournalpp_INCLUDE_DIRS ${xournalpp_INCLUDE_DIRS} "${INCLUDES}")
 endmacro (add_includes_ldflags LDFLAGS INCLUDES)
+
+# libexec
+if (WIN32)
+    set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-mwindows")
+else ()
+    find_package(Backtrace REQUIRED)
+    add_includes_ldflags ("${Backtrace_LIBRARIES}" "${Backtrace_INCLUDE_DIRS}")
+endif ()
 
 # GLIB
 pkg_check_modules (Glib REQUIRED "glib-2.0 >= 2.32.0")
