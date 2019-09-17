@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-07 09:40+0000\n"
-"PO-Revision-Date: 2019-09-07 09:42\n"
+"POT-Creation-Date: 2019-09-17 14:43+0000\n"
+"PO-Revision-Date: 2019-09-17 14:46\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -482,11 +482,11 @@ msgstr "Kan PDF niet uitlezen: {1}"
 msgid "Error reading width of a stroke: {1}"
 msgstr "Kan breedte van penseelstreek niet uitlezen: {1}"
 
-#: ../src/control/jobs/ImageExport.cpp:143
+#: ../src/control/jobs/ImageExport.cpp:144
 msgid "Error save image #1"
 msgstr "Kan afbeelding #1 niet opslaan"
 
-#: ../src/control/jobs/ImageExport.cpp:160
+#: ../src/control/jobs/ImageExport.cpp:161
 msgid "Error save image #2"
 msgstr "Kan afbeelding #2 niet opslaan"
 
