@@ -62,6 +62,8 @@ extern void writeCoordinateString(OutputStream* out, double xVal, double yVal);
 
 constexpr const gchar* PRECISION_FORMAT_STRING = "%.8f";
 
+constexpr const auto DPI_NORMALIZATION_FACTOR = 72.0;
+
 }  // namespace Util
 
 static const size_t npos = std::numeric_limits<size_t>::max();
