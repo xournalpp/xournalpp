@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-17 14:43+0000\n"
-"PO-Revision-Date: 2019-09-17 14:47\n"
+"PO-Revision-Date: 2019-09-17 15:44\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -2003,11 +2003,11 @@ msgstr "Transparencia de relleno"
 
 #: ../ui/main.glade:2304
 msgid "Find next occurrence of the search string"
-msgstr ""
+msgstr "Encontrar la ocurrencia siguiente del término de búsqueda"
 
 #: ../ui/main.glade:2282
 msgid "Find previous occurrence of the search string"
-msgstr ""
+msgstr "Encontrar la ocurrencia anterior del término de búsqueda"
 
 #: ../ui/settings.glade:3019
 msgid "First Page Offset "
