@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-07 09:40+0000\n"
-"PO-Revision-Date: 2019-09-17 13:14\n"
+"PO-Revision-Date: 2019-09-17 13:24\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -196,7 +196,7 @@ msgstr "未能產生備份檔案！(此檔案應為老版本Xournal所建)"
 
 #: ../src/util/Util.cpp:120
 msgid "Could not create folder: {1}"
-msgstr "無法建立資料夾：{1}"
+msgstr "無法建立資料夾： {1}"
 
 #: ../src/control/LatexController.cpp:106
 msgid "Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
