@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-07 09:40+0000\n"
-"PO-Revision-Date: 2019-09-16 15:38\n"
+"POT-Creation-Date: 2019-09-17 14:43+0000\n"
+"PO-Revision-Date: 2019-09-17 14:46\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -483,11 +483,11 @@ msgstr "Fehler beim Lesen des PDFs: {1}"
 msgid "Error reading width of a stroke: {1}"
 msgstr "Fehler beim Lesen der Dicke einer Linie: {1}"
 
-#: ../src/control/jobs/ImageExport.cpp:143
+#: ../src/control/jobs/ImageExport.cpp:144
 msgid "Error save image #1"
 msgstr "Fehler beim Speichern des Bildes #1"
 
-#: ../src/control/jobs/ImageExport.cpp:160
+#: ../src/control/jobs/ImageExport.cpp:161
 msgid "Error save image #2"
 msgstr "Fehler beim Speichern des Bildes #2"
 
