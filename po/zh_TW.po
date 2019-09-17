@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-07 09:40+0000\n"
-"PO-Revision-Date: 2019-09-07 09:42\n"
+"PO-Revision-Date: 2019-09-17 13:14\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -19,12 +19,14 @@ msgstr ""
 #: ../src/control/XournalMain.cpp:580
 msgid "\n\n"
 "Will now attempt to run without this file."
-msgstr ""
+msgstr "\n\n"
+"現在將嘗試在沒有此檔案的情況下執行。"
 
 #: ../src/control/XournalMain.cpp:560
 msgid "\n"
 "Will now attempt to run without this file."
-msgstr ""
+msgstr "\n"
+"現在將嘗試在沒有此檔案的情況下執行。"
 
 #: ../src/gui/MainWindow.cpp:843
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -37,7 +39,7 @@ msgstr ""
 
 #: ../src/gui/dialog/SettingsDialog.cpp:119
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr ""
+msgstr "<b>沒有找到任何裝置。這可能是錯的 - 要回報錯誤嗎？</b>"
 
 #: ../src/control/XournalMain.cpp:576
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -46,7 +48,12 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr ""
+msgstr "<span foreground='red' size='x-large'>遺失必須的使用者界面檔案：\n"
+"<b>{1}</b></span>\n"
+"無法在任何位置找到他們。\n"
+"  不在相對位置\n"
+"  不在工作目錄\n"
+"  不在 {2}"
 
 #: ../src/control/XournalMain.cpp:317
 msgid "Absolute path for the audio files playback"
@@ -62,11 +69,11 @@ msgstr "所有檔案"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:257
 msgid "Apply to all pages"
-msgstr ""
+msgstr "套用到所有頁面"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:246
 msgid "Apply to current page"
-msgstr ""
+msgstr "套用到目前的頁面"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:30
 #: ../src/control/stockdlg/XojOpenDlg.cpp:154
@@ -118,7 +125,7 @@ msgstr ""
 
 #: ../src/control/jobs/AutosaveJob.cpp:60
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "自動儲存到 {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Back"
@@ -189,7 +196,7 @@ msgstr "未能產生備份檔案！(此檔案應為老版本Xournal所建)"
 
 #: ../src/util/Util.cpp:120
 msgid "Could not create folder: {1}"
-msgstr ""
+msgstr "無法建立資料夾：{1}"
 
 #: ../src/control/LatexController.cpp:106
 msgid "Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
@@ -279,11 +286,11 @@ msgstr ""
 
 #: ../src/control/Control.cpp:254
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr ""
+msgstr "無法將自動儲存檔案 \"{1}\" 重新命名至 \"{2}\"： {3}"
 
 #: ../src/control/LatexController.cpp:133
 msgid "Could not save .tex file: {1}"
-msgstr ""
+msgstr "無法儲存 .tex 檔案： {1}"
 
 #: ../src/control/LatexController.cpp:154
 msgid "Could not start pdflatex: {1} (exit code: {2})"
@@ -305,7 +312,7 @@ msgstr "未能寫上背景\"{1}\"，不管啦繼續哦..."
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:109
 msgid "Create new layer"
-msgstr ""
+msgstr "建立新圖層"
 
 #: ../src/gui/dialog/FormatDialog.cpp:72
 msgid "Custom"
@@ -313,11 +320,11 @@ msgstr "設置"
 
 #: ../src/control/jobs/CustomExportJob.cpp:18
 msgid "Custom Export"
-msgstr ""
+msgstr "自訂匯出"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "自訂工具列"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:38
 msgid "Customized"
@@ -346,7 +353,7 @@ msgstr "刪除當前頁"
 
 #: ../src/control/XournalMain.cpp:188
 msgid "Delete file"
-msgstr ""
+msgstr "刪除檔案"
 
 #: ../src/undo/RemoveLayerUndoAction.cpp:41
 msgid "Delete layer"
@@ -384,7 +391,7 @@ msgstr "文檔未加載！({1}), {2}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:28
 msgid "Dotted"
-msgstr ""
+msgstr "虛線"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:107
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:32
@@ -481,7 +488,7 @@ msgstr ""
 
 #: ../src/control/jobs/AutosaveJob.cpp:25
 msgid "Error while autosaving: {1}"
-msgstr ""
+msgstr "自動儲存時發生錯誤：{1}"
 
 #: ../src/util/CrashHandler.cpp:47
 msgid "Error: {1}"
@@ -533,7 +540,7 @@ msgstr "末頁"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Go to next layer"
-msgstr ""
+msgstr "前往下一圖層"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Go to page"
