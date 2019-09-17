@@ -29,6 +29,40 @@ PenInputHandler::~PenInputHandler()
 	XOJ_RELEASE_TYPE(PenInputHandler);
 }
 
+/**
+ * Get input data relative to current input page
+ */
+PositionInputData PenInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent* event)
+{
+    XOJ_CHECK_TYPE(PenInputHandler);
+
+    GtkXournal* xournal = inputContext->getXournal();
+
+    gdouble eventX = event->relativeX;
+    gdouble eventY = event->relativeY;
+
+    gint scale = gtk_widget_get_scale_factor(&xournal->widget);
+
+    //take scroll offset into account
+    this->inputContext->getScrollHandling()->translate(eventX, eventY);
+
+    PositionInputData pos = {};
+    pos.x = eventX - page->getX() - xournal->x;
+    pos.y = eventY - page->getY() - xournal->y;
+    pos.pressure = Point::NO_PRESSURE;
+
+    if (this->inputContext->getSettings()->isPressureSensitivity())
+    {
+        pos.pressure = event->pressure;
+    }
+
+    pos.state = this->inputContext->getModifierState();
+    pos.timestamp = event->timestamp;
+
+    return pos;
+}
+
+
 void PenInputHandler::updateLastEvent(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(PenInputHandler);
@@ -196,6 +230,7 @@ bool PenInputHandler::actionMotion(InputEvent* event)
 	 */
 	gdouble eventX = event->relativeX;
 	gdouble eventY = event->relativeY;
+
 	GtkAdjustment* adjHorizontal = this->inputContext->getScrollHandling()->getHorizontal();
 	GtkAdjustment* adjVertical = this->inputContext->getScrollHandling()->getVertical();
 	double h = gtk_adjustment_get_value(adjHorizontal);

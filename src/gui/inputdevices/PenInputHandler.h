@@ -115,6 +115,15 @@ protected:
 	 * @param event
 	 */
 	void updateLastEvent(InputEvent* event);
+
+	/**
+	 * Like AbstractInputHandler::getInputDataRelativeToCurrentPage, but honouring the GDK_SCALE, which apparently
+	 * isn't done by GDK for pens.
+	 * @param page The page the event happened on
+	 * @param event The event triggering the action
+	 * @return The positon of the event
+	 */
+    PositionInputData getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent* event);
 };
 
 
