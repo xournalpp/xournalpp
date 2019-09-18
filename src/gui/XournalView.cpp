@@ -94,9 +94,9 @@ XournalView::~XournalView()
 	XOJ_RELEASE_TYPE(XournalView);
 }
 
-gint pageViewCmpSize(XojPageView* a, XojPageView* b)
+gint pageViewIncreasingClockTime(XojPageView* a, XojPageView* b)
 {
-	return a->getLastVisibleTime() - b->getLastVisibleTime();
+	return a->getLastVisibleTime() - b->getLastVisibleTime();  // >0 will put a after b
 }
 
 void XournalView::staticLayoutPages(GtkWidget* widget, GtkAllocation* allocation, void* data)
@@ -117,7 +117,7 @@ gboolean XournalView::clearMemoryTimer(XournalView* widget)
 		XojPageView* v = widget->viewPages[i];
 		if (v->getLastVisibleTime() > 0)
 		{
-			list = g_list_insert_sorted(list, v, (GCompareFunc) pageViewCmpSize);
+			list = g_list_insert_sorted(list, v, (GCompareFunc) pageViewIncreasingClockTime);
 		}
 	}
 
@@ -126,7 +126,7 @@ gboolean XournalView::clearMemoryTimer(XournalView* widget)
 
 	int i = 0;
 
-	for (GList* l = list; l != nullptr; l = l->next)
+	for (GList* l = g_list_last(list); l != nullptr; l = l->prev)  // older (higher time) to newer (lower time)
 	{
 		if (firstPages)
 		{
