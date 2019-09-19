@@ -14,7 +14,7 @@ poppler-glib texlive-bin texlive-pictures gettext libzip
 
 ### For Fedora/CentOS/RHEL:
 ```bash
-sudo dnf install gcc-c++ cmake gtk3-devel libxml2-devel cppunit-devel portaudio-devel libsndfile-devel \
+sudo dnf install make gcc-c++ cmake gtk3-devel libxml2-devel cppunit-devel portaudio-devel libsndfile-devel \
 poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel
 ```
 
