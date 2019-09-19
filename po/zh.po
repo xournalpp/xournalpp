@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-17 14:43+0000\n"
-"PO-Revision-Date: 2019-09-17 14:46\n"
+"PO-Revision-Date: 2019-09-19 09:03\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -737,7 +737,7 @@ msgstr ""
 
 #: ../src/plugin/Plugin.cpp:417 ../src/plugin/Plugin.cpp:438
 msgid "OK"
-msgstr ""
+msgstr "确定"
 
 #: ../src/control/jobs/BaseExportJob.cpp:113
 msgid "Only local files are supported\n"
@@ -951,7 +951,7 @@ msgstr "保存"
 
 #: ../src/control/Control.cpp:2942
 msgid "Save As..."
-msgstr ""
+msgstr "另存为..."
 
 #: ../src/control/Control.cpp:2736 ../src/gui/dialog/PageTemplateDialog.cpp:110
 msgid "Save File"
@@ -960,7 +960,7 @@ msgstr "保存文件"
 #: ../src/control/jobs/CustomExportJob.cpp:162
 #: ../src/control/jobs/SaveJob.cpp:143
 msgid "Save file error: {1}"
-msgstr ""
+msgstr "保存文件错误: {1}"
 
 #: ../src/undo/ScaleUndoAction.cpp:73
 msgid "Scale"
@@ -1000,11 +1000,11 @@ msgstr "选择其他PDF"
 
 #: ../src/util/XojMsgBox.cpp:81
 msgid "Select another name"
-msgstr ""
+msgstr "选择另一个名称"
 
 #: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:140
 msgid "Select background color"
-msgstr ""
+msgstr "选择背景颜色"
 
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:59
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:175
@@ -1033,7 +1033,7 @@ msgstr "识别形状"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:90
 msgid "Show all"
-msgstr ""
+msgstr "显示全部"
 
 #: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:134
 msgid "Show only not used pages (one unused page)"
@@ -1046,12 +1046,14 @@ msgstr "只显示未使用页面({1}个未使用页面)"
 #: ../src/control/XournalMain.cpp:390
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr ""
+msgstr "对不起，Xournal++ 只能一次打开一个文件。\n"
+"其他文件已被忽略。"
 
 #: ../src/control/XournalMain.cpp:405
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
-msgstr ""
+msgstr "对不起，Xournal++ 目前无法打开远程目录里的文件。\n"
+"您必须复制文件至本地目录。"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Staves"
