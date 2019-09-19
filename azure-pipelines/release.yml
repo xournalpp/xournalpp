@@ -59,17 +59,11 @@ stages:
               cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=$PWD/staging -DCPACK_GENERATOR="TGZ;DEB"'
               cmake_commands: '--target package'
           - bash: |
-              # Download linuxdeploy
-              wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage -O linuxdeploy.AppImage
-              chmod +x linuxdeploy.AppImage
-              # Extract tar contents to appimage_staging; tar file already
-              # contains a top level dir
-              TAR_NAME=$(ls packages/xournalpp-*.tar.gz | head -n 1)
-              tar xf $TAR_NAME --one-top-level=appimage_staging/usr --strip=1
-              ./linuxdeploy.AppImage --appdir=appimage_staging --output appimage
+              # Build AppImage
+              export VERSION=$(cat VERSION | sed '1q;d')
+              export ARCH=$(cat VERSION | sed '4q;d')
+              ../azure-pipelines/util/build_appimage.sh
               # Move and rename the generated AppImage file
-              VERSION=$(cat VERSION | sed '1q;d')
-              ARCH=$(echo "$TAR_NAME" | sed -e 's/^.*-\(.*\).tar.gz/\1/')
               find . -name '*.AppImage' -not -name 'linuxdeploy.AppImage' -exec mv {} packages/xournalpp-$VERSION-$ARCH.AppImage \;
             workingDirectory: ./build
             displayName: 'Create AppImage'
