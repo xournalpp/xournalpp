@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-17 14:43+0000\n"
-"PO-Revision-Date: 2019-09-19 09:03\n"
+"PO-Revision-Date: 2019-09-19 09:30\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -800,7 +800,7 @@ msgstr "PDF输出文件名"
 
 #: ../src/control/jobs/CustomExportJob.cpp:24
 msgid "PDF with plain background"
-msgstr ""
+msgstr "带有纯背景的 PDF"
 
 #: ../src/control/jobs/CustomExportJob.cpp:25
 msgid "PNG graphics"
@@ -1061,7 +1061,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Stop"
-msgstr ""
+msgstr "停止"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:111
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
@@ -1125,11 +1125,11 @@ msgstr "背景PDF未找到。"
 
 #: ../src/control/xojfile/LoadHandler.cpp:155
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "文件不是有效的 .xopp 文件 (Mimetype 缺失): \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:163
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "文件不是有效的 .xopp 文件 (Mimetype 错误): \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:172
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
@@ -1256,11 +1256,11 @@ msgstr "垂直间距"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:524
 msgid "Very Fine"
-msgstr ""
+msgstr "非常精细"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:529
 msgid "Very Thick"
-msgstr ""
+msgstr "非常粗"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:146
@@ -1316,11 +1316,12 @@ msgstr "黄色"
 #: ../src/control/PageBackgroundChangeController.cpp:227
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr ""
+msgstr "您没有任何可以选择的 PDF 页面。操作取消。\n"
+"请选择另一个背景类型：点击“日记”菜单 → “配置页面模板”。"
 
 #: ../src/control/XournalMain.cpp:126
 msgid "You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "您正在使用 {1}/{2} 分支。发送错误报告将直接将您转向Git仓库的问题跟踪器。"
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:93
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -1395,7 +1396,7 @@ msgstr ""
 
 #: ../src/undo/AddUndoAction.cpp:120 ../src/undo/DeleteUndoAction.cpp:114
 msgid "elements"
-msgstr ""
+msgstr "元素"
 
 #: ../src/util/DeviceListHelper.cpp:126
 msgid "eraser"
@@ -1403,7 +1404,7 @@ msgstr "橡皮"
 
 #: ../src/undo/AddUndoAction.cpp:132 ../src/undo/DeleteUndoAction.cpp:126
 msgid "image"
-msgstr ""
+msgstr "图片"
 
 #: ../src/util/DeviceListHelper.cpp:135
 msgid "keyboard"
@@ -1411,7 +1412,7 @@ msgstr "键盘"
 
 #: ../src/undo/AddUndoAction.cpp:135 ../src/undo/DeleteUndoAction.cpp:129
 msgid "latex"
-msgstr ""
+msgstr "latex"
 
 #: ../src/util/DeviceListHelper.cpp:118
 msgid "mouse"
@@ -1419,7 +1420,7 @@ msgstr "鼠标"
 
 #: ../src/control/LatexController.cpp:317
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "pdflatex遇到了一个错误: {1} (退出代码: {2})"
 
 #: ../src/util/DeviceListHelper.cpp:122
 msgid "pen"
@@ -1436,7 +1437,7 @@ msgstr "标准"
 
 #: ../src/undo/AddUndoAction.cpp:129 ../src/undo/DeleteUndoAction.cpp:123
 msgid "stroke"
-msgstr ""
+msgstr "笔划"
 
 #: ../src/undo/AddUndoAction.cpp:138 ../src/undo/DeleteUndoAction.cpp:132
 msgid "text"
@@ -1468,39 +1469,39 @@ msgstr ""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:158
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr ""
+msgstr "xoj-preview-extractor: 找不到图标 \"{1}\""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:102
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr ""
+msgstr "xoj-preview-extractor: 文件 \"{1}\" 没有预览"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:94
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr ""
+msgstr "xoj-preview-extractor: \"{1}\" 不是 .xoj 文件"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:107
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr ""
+msgstr "xoj-preview-extractor: 没有预览和页面，可能是无效的文件？"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:98
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: 打开导入文件 \"{1}\" 失败"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:176
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: 打开导出文件 \"{1}\" 失败"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:183
 msgid "xoj-preview-extractor: successfully extracted"
-msgstr ""
+msgstr "xoj-preview-extractor: 成功提取"
 
 #: ../src/util/Util.cpp:110
 msgid "xournalpp-{1}"
-msgstr ""
+msgstr "xournalpp-{1}"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
-msgstr ""
+msgstr " = 浮动工具箱 (实验性) ="
 
 #: ../ui/settings.glade:2628 ../ui/settings.glade:2639
 msgid "%"
