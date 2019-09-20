@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-17 14:43+0000\n"
-"PO-Revision-Date: 2019-09-17 14:46\n"
+"POT-Creation-Date: 2019-09-20 00:03+0000\n"
+"PO-Revision-Date: 2019-09-20 00:21\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1766,7 +1766,7 @@ msgstr "Audioaufzeichnung"
 msgid "Author: "
 msgstr "Autor: "
 
-#: ../ui/about.glade:161
+#: ../ui/about.glade:186
 msgid "Authors:"
 msgstr "Autoren:"
 
@@ -1802,9 +1802,9 @@ msgstr "Rahmenfarbe"
 msgid "Border color for current page and other selections"
 msgstr "Rahmenfarbe der gewählten Seite und anderer Auswahlen"
 
-#: ../ui/about.glade:128
-msgid "Built on:"
-msgstr "Kompiliert am:"
+#: ../ui/about.glade:127
+msgid "Built on"
+msgstr ""
 
 #: ../ui/settings.glade:1201
 msgid "Button 1"
@@ -2028,13 +2028,17 @@ msgstr "Verschiebung der ersten Seite "
 msgid "Fullscreen"
 msgstr "Vollbild"
 
-#: ../ui/about.glade:251
+#: ../ui/about.glade:280
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 oder neuer"
 
 #: ../ui/settings.glade:3867
 msgid "Gain"
 msgstr "Gain"
+
+#: ../ui/about.glade:153
+msgid "Git commit"
+msgstr ""
 
 #: ../ui/settings.glade:2107
 msgid "Global"
@@ -2136,7 +2140,7 @@ msgstr "Layout"
 msgid "Left / Right-Handed"
 msgstr "Links / Rechtshändig"
 
-#: ../ui/about.glade:235
+#: ../ui/about.glade:264
 msgid "License"
 msgstr "Lizenz"
 
@@ -2246,7 +2250,7 @@ msgstr "Seitenformat"
 msgid "Paper b_ackground"
 msgstr "Seitenhintergrund"
 
-#: ../ui/about.glade:217
+#: ../ui/about.glade:246
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr "Teilweise basierend auf Xournal\n"
@@ -2283,6 +2287,10 @@ msgstr "Präsentationsmodus"
 #: ../ui/settings.glade:1129
 msgid "Pressure Sensitivity"
 msgstr "Druckempfindlichkeit"
+
+#: ../ui/about.glade:167
+msgid "RELEASE_IDENTIFIER"
+msgstr ""
 
 #: ../ui/exportSettings.glade:127
 msgid "Range"
@@ -2473,7 +2481,7 @@ msgstr "Versuche Objekt als erstes auszuwählen; Wenn nichts ausgewählt wurde, 
 msgid "Usually 0 or 1"
 msgstr "Normalerweise 0 oder 1"
 
-#: ../ui/about.glade:100
+#: ../ui/about.glade:101
 msgid "Version"
 msgstr "Version"
 
@@ -2493,7 +2501,7 @@ msgstr "Weiß übermalen"
 msgid "Width:"
 msgstr "Breite:"
 
-#: ../ui/about.glade:202
+#: ../ui/about.glade:231
 msgid "With help from the community"
 msgstr "Mit Hilfe der Community"
 
