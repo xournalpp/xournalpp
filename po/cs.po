@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-17 14:43+0000\n"
-"PO-Revision-Date: 2019-09-17 14:46\n"
+"POT-Creation-Date: 2019-09-20 00:03+0000\n"
+"PO-Revision-Date: 2019-09-20 00:21\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -1713,7 +1713,7 @@ msgstr ""
 msgid "Author: "
 msgstr ""
 
-#: ../ui/about.glade:161
+#: ../ui/about.glade:186
 msgid "Authors:"
 msgstr ""
 
@@ -1749,8 +1749,8 @@ msgstr "Barva okraje"
 msgid "Border color for current page and other selections"
 msgstr ""
 
-#: ../ui/about.glade:128
-msgid "Built on:"
+#: ../ui/about.glade:127
+msgid "Built on"
 msgstr ""
 
 #: ../ui/settings.glade:1201
@@ -1972,12 +1972,16 @@ msgstr ""
 msgid "Fullscreen"
 msgstr "Celá obrazovka"
 
-#: ../ui/about.glade:251
+#: ../ui/about.glade:280
 msgid "GNU GPLv2 or later"
 msgstr ""
 
 #: ../ui/settings.glade:3867
 msgid "Gain"
+msgstr ""
+
+#: ../ui/about.glade:153
+msgid "Git commit"
 msgstr ""
 
 #: ../ui/settings.glade:2107
@@ -2078,7 +2082,7 @@ msgstr ""
 msgid "Left / Right-Handed"
 msgstr ""
 
-#: ../ui/about.glade:235
+#: ../ui/about.glade:264
 msgid "License"
 msgstr ""
 
@@ -2187,7 +2191,7 @@ msgstr "_Formát papíru"
 msgid "Paper b_ackground"
 msgstr "Pozadí _papíru"
 
-#: ../ui/about.glade:217
+#: ../ui/about.glade:246
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
@@ -2222,6 +2226,10 @@ msgstr ""
 
 #: ../ui/settings.glade:1129
 msgid "Pressure Sensitivity"
+msgstr ""
+
+#: ../ui/about.glade:167
+msgid "RELEASE_IDENTIFIER"
 msgstr ""
 
 #: ../ui/exportSettings.glade:127
@@ -2413,7 +2421,7 @@ msgstr ""
 msgid "Usually 0 or 1"
 msgstr ""
 
-#: ../ui/about.glade:100
+#: ../ui/about.glade:101
 msgid "Version"
 msgstr ""
 
@@ -2433,7 +2441,7 @@ msgstr "Bělení"
 msgid "Width:"
 msgstr "Šířka:"
 
-#: ../ui/about.glade:202
+#: ../ui/about.glade:231
 msgid "With help from the community"
 msgstr ""
 
