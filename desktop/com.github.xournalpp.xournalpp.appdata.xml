@@ -17,7 +17,7 @@
     flexibility, functionality and speed. Stroke recognizer and other parts are
     based on Xournal Code, which you can find at sourceforge. It supports Linux
     (e.g. Ubuntu, Debian, Arch, Suse), macOS and Windows 10. Supports pen input
-    from devices such as Wacom Tablets. 
+    from devices such as Wacom Tablets.
    </p>
    <p>Xournal++ features:</p>
    <ul>
@@ -66,7 +66,13 @@
   <launchable type="desktop-id">com.github.xournalpp.xournalpp.desktop</launchable>
   <provides>
     <id>xournalpp.desktop</id>
+    <binary>xournalpp</binary>
   </provides>
+  <mimetypes>
+    <mimetype>application/x-xojpp</mimetype>
+    <mimetype>application/x-xopp</mimetype>
+    <mimetype>application/x-xopt</mimetype>
+  </mimetypes>
   <update_contact>webmaster_AT_huberulrich.de</update_contact>
   <content_rating type="oars-1.0"/>
   <releases>
