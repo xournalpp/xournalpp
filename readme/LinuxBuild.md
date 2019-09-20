@@ -6,6 +6,8 @@ Please create pull requests (or file issues) if you have more precise dependenci
 
 Lua is needed for plugins, if it is missing, the plugins will be disabled.
 
+The installation instructions don't assume any specific build tool (other than CMake), but they do require make, ninja, or another supported CMake generator. It is required that such a tool is installed in order to build xournalpp.
+
 ### Arch
 ```bash
 sudo pacman -S cmake gtk3 base-devel libxml2 cppunit portaudio libsndfile \
@@ -14,7 +16,7 @@ poppler-glib texlive-bin texlive-pictures gettext libzip
 
 ### For Fedora/CentOS/RHEL:
 ```bash
-sudo dnf install make gcc-c++ cmake gtk3-devel libxml2-devel cppunit-devel portaudio-devel libsndfile-devel \
+sudo dnf install gcc-c++ cmake gtk3-devel libxml2-devel cppunit-devel portaudio-devel libsndfile-devel \
 poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel
 ```
 
