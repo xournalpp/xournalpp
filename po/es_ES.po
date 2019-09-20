@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-20 00:03+0000\n"
-"PO-Revision-Date: 2019-09-20 00:21\n"
+"PO-Revision-Date: 2019-09-20 19:09\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -561,7 +561,7 @@ msgstr "Ir a la capa superior"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:27
 msgid "Graph"
-msgstr ""
+msgstr "Cuadriculado"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:141
@@ -854,7 +854,7 @@ msgstr "Lápiz"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Plain"
-msgstr ""
+msgstr "Simple"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
@@ -926,11 +926,11 @@ msgstr "Acople de giro"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:24
 msgid "Ruled"
-msgstr ""
+msgstr "Con renglones"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Ruled with vertical line"
-msgstr ""
+msgstr "Con renglones y línea vertical"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 msgid "Ruler"
@@ -1370,7 +1370,7 @@ msgstr "_Guardar"
 
 #: ../src/util/DeviceListHelper.cpp:130
 msgid "cursor"
-msgstr ""
+msgstr "cursor"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:298
 msgid "dash-/ dotted"
@@ -1382,11 +1382,11 @@ msgstr "discontinua"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:38
 msgid "default disabled"
-msgstr ""
+msgstr "desactivado por defecto"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:38
 msgid "default enabled"
-msgstr ""
+msgstr "activado por defecto"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:315
 msgid "delete stroke"
@@ -1588,7 +1588,9 @@ msgstr "<b>Configurar la página de plantilla de Xournal++</b>\n"
 msgid "<b>Copy last page</b>\n"
 "Use the settings above\n"
 "for the fist Page"
-msgstr ""
+msgstr "<b>Copiar la última página</b>\n"
+"Usar la configuración de arriba\n"
+"para la primera página"
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
@@ -1607,7 +1609,8 @@ msgstr "<b>Configuración de exportación de documento</b>\n"
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "<i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>Caja de Herramientas vacía</b>\n"
+"<i>Menú: Ver/Barras de Herramientas</i>"
 
 #: ../ui/fillTransparency.glade:79
 msgid "<b>Fill transparency settings</b>\n"
@@ -1629,7 +1632,7 @@ msgstr "<b>Separador</b>"
 
 #: ../ui/settings.glade:701
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
-msgstr ""
+msgstr "<i>Asigna clases de dispositivo a cada dispositivo de entrada de su sistema. Sólo cambie éstos valores si sus dispositivos no están correctamente asignados. (por ejemplo, cuando su lápiz digital se muestra como pantalla táctil)</i>"
 
 #: ../ui/settings.glade:3652
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
@@ -1641,7 +1644,7 @@ msgstr "<i>Los cambios surtirán efecto solo en las grabaciones y reproducciones
 
 #: ../ui/settings.glade:913
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
-msgstr ""
+msgstr "<i>Define qué herramientas serán seleccionadas si pulsa un botón del ratón. Después de liberar el botón, la herramienta usada será seleccionada.</i>"
 
 #: ../ui/exportSettings.glade:209
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
