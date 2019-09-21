@@ -1,6 +1,6 @@
 #include "Stacktrace.h"
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <Windows.h>
 #else
 #include <execinfo.h>
@@ -28,7 +28,7 @@ Stacktrace::Stacktrace() { }
 
 Stacktrace::~Stacktrace() { }
 
-#ifdef WIN32
+#ifdef _WIN32
 std::string Stacktrace::getExePath()
 {
 	char szFileName[MAX_PATH + 1];
