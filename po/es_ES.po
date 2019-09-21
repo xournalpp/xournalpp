@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-20 00:03+0000\n"
-"PO-Revision-Date: 2019-09-20 19:09\n"
+"PO-Revision-Date: 2019-09-21 21:45\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1609,8 +1609,8 @@ msgstr "<b>Configuración de exportación de documento</b>\n"
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "<i>Menu: View/Toolbars</i>"
-msgstr "<b>Caja de Herramientas vacía</b>\n"
-"<i>Menú: Ver/Barras de Herramientas</i>"
+msgstr "<b>Cuadro de herramientas vacío</b>\n"
+"<i>Menú: Ver ▸ Barras de herramientas</i>"
 
 #: ../ui/fillTransparency.glade:79
 msgid "<b>Fill transparency settings</b>\n"
@@ -1799,7 +1799,7 @@ msgstr "Color de borde de la página actual y otras selecciones"
 
 #: ../ui/about.glade:127
 msgid "Built on"
-msgstr ""
+msgstr "Compilado el"
 
 #: ../ui/settings.glade:1201
 msgid "Button 1"
@@ -2030,7 +2030,7 @@ msgstr "Ganancia"
 
 #: ../ui/about.glade:153
 msgid "Git commit"
-msgstr ""
+msgstr "Consigna de Git"
 
 #: ../ui/settings.glade:2107
 msgid "Global"
