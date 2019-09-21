@@ -147,7 +147,7 @@ void Util::openFileWithFilebrowser(const Path& filename)
 {
 #ifdef __APPLE__
 	constexpr auto const OPEN_PATTERN = "open \"{1}\"";
-#elif WIN32
+#elif _WIN32
 	constexpr auto const OPEN_PATTERN = "explorer.exe /n,/e,\"{1}\"";
 #else // linux, unix, ...
 	constexpr auto const OPEN_PATTERN = R"(nautilus "file://{1}" || dolphin "file://{1}" || konqueror "file://{1}" &)";

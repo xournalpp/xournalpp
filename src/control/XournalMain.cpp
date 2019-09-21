@@ -50,7 +50,7 @@ void XournalMain::initLocalisation()
 
 #ifdef ENABLE_NLS
 
-#ifdef WIN32
+#ifdef _WIN32
 #undef PACKAGE_LOCALE_DIR
 #define PACKAGE_LOCALE_DIR "../share/locale/"
 #endif
@@ -64,14 +64,14 @@ void XournalMain::initLocalisation()
 	bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 	textdomain(GETTEXT_PACKAGE);
 
-#ifdef WIN32
+#ifdef _WIN32
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif
 
 #endif //ENABLE_NLS
 
 	// Not working on Windows! Working on Linux, but not sure if it's needed
-#ifndef WIN32
+#ifndef _WIN32
 try
 {
 	std::locale::global(std::locale("")); // "" - system default locale
