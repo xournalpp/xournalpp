@@ -67,7 +67,6 @@ private:
 	void clearRedo();
 
 private:
-	XOJ_TYPE_ATTRIB;
 	std::deque<UndoActionPtr> undoList;
 	std::deque<UndoActionPtr> redoList;
 

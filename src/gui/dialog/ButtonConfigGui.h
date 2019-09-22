@@ -38,8 +38,6 @@ private:
 	void enableDisableTools();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Settings* settings;
 
 	GtkWidget* cbDevice;

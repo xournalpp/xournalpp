@@ -13,8 +13,6 @@ ToolListener::~ToolListener() { }
 
 ToolHandler::ToolHandler(ToolListener* listener, ActionHandler* actionHandler, Settings* settings)
 {
-	XOJ_INIT_TYPE(ToolHandler);
-
 	this->settings = settings;
 	initTools();
 	this->listener = listener;
@@ -23,8 +21,6 @@ ToolHandler::ToolHandler(ToolListener* listener, ActionHandler* actionHandler, S
 
 void ToolHandler::initTools()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	Tool* t = NULL;
 
 	for (int i = 0; i < TOOL_COUNT; i++)
@@ -113,8 +109,6 @@ void ToolHandler::initTools()
 
 ToolHandler::~ToolHandler()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	for (int i = 0; i < TOOL_COUNT; i++)
 	{
 		delete tools[i];
@@ -123,22 +117,16 @@ ToolHandler::~ToolHandler()
 
 	// Do not delete settings!
 	this->settings = NULL;
-
-	XOJ_RELEASE_TYPE(ToolHandler);
 }
 
 void ToolHandler::setEraserType(EraserType eraserType)
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	this->eraserType = eraserType;
 	eraserTypeChanged();
 }
 
 void ToolHandler::eraserTypeChanged()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	if (this->actionHandler == NULL)
 	{
 		return;
@@ -163,15 +151,11 @@ void ToolHandler::eraserTypeChanged()
 
 EraserType ToolHandler::getEraserType()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	return this->eraserType;
 }
 
 void ToolHandler::selectTool(ToolType type, bool fireToolChanged)
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	if (type < 1 || type > TOOL_COUNT)
 	{
 		g_warning("unknown tool selected: %i\n", type);
@@ -187,8 +171,6 @@ void ToolHandler::selectTool(ToolType type, bool fireToolChanged)
 
 void ToolHandler::fireToolChanged()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	if (listener)
 	{
 		listener->toolChanged();
@@ -202,50 +184,36 @@ Tool& ToolHandler::getTool(ToolType type)
 
 ToolType ToolHandler::getToolType()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	return this->current->type;
 }
 
 bool ToolHandler::hasCapability(ToolCapabilities cap)
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	return (current->capabilities & cap) != 0;
 }
 
 ToolSize ToolHandler::getSize()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	return this->current->getSize();
 }
 
 ToolSize ToolHandler::getPenSize()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	return tools[TOOL_PEN - TOOL_PEN]->getSize();
 }
 
 ToolSize ToolHandler::getEraserSize()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	return tools[TOOL_ERASER - TOOL_PEN]->getSize();
 }
 
 ToolSize ToolHandler::getHilighterSize()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	return tools[TOOL_HILIGHTER - TOOL_PEN]->getSize();
 }
 
 void ToolHandler::setPenSize(ToolSize size)
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	this->tools[TOOL_PEN - TOOL_PEN]->setSize(size);
 
 	if (this->current->type == TOOL_PEN)
@@ -256,8 +224,6 @@ void ToolHandler::setPenSize(ToolSize size)
 
 void ToolHandler::setEraserSize(ToolSize size)
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	this->tools[TOOL_ERASER - TOOL_PEN]->setSize(size);
 
 	if (this->current->type == TOOL_ERASER)
@@ -268,8 +234,6 @@ void ToolHandler::setEraserSize(ToolSize size)
 
 void ToolHandler::setHilighterSize(ToolSize size)
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	this->tools[TOOL_HILIGHTER - TOOL_PEN]->setSize(size);
 
 	if (this->current->type == TOOL_HILIGHTER)
@@ -280,8 +244,6 @@ void ToolHandler::setHilighterSize(ToolSize size)
 
 void ToolHandler::setPenFillEnabled(bool fill, bool fireEvent)
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	this->tools[TOOL_PEN - TOOL_PEN]->setFill(fill);
 
 	if (this->current->type == TOOL_PEN && fireEvent)
@@ -292,29 +254,21 @@ void ToolHandler::setPenFillEnabled(bool fill, bool fireEvent)
 
 bool ToolHandler::getPenFillEnabled()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	return this->tools[TOOL_PEN - TOOL_PEN]->getFill();
 }
 
 void ToolHandler::setPenFill(int alpha)
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	this->tools[TOOL_PEN - TOOL_PEN]->setFillAlpha(alpha);
 }
 
 int ToolHandler::getPenFill()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	return this->tools[TOOL_PEN - TOOL_PEN]->getFillAlpha();
 }
 
 void ToolHandler::setHilighterFillEnabled(bool fill, bool fireEvent)
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	this->tools[TOOL_HILIGHTER - TOOL_PEN]->setFill(fill);
 
 	if (this->current->type == TOOL_HILIGHTER && fireEvent)
@@ -325,29 +279,21 @@ void ToolHandler::setHilighterFillEnabled(bool fill, bool fireEvent)
 
 bool ToolHandler::getHilighterFillEnabled()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	return this->tools[TOOL_HILIGHTER - TOOL_PEN]->getFill();
 }
 
 void ToolHandler::setHilighterFill(int alpha)
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	this->tools[TOOL_HILIGHTER - TOOL_PEN]->setFillAlpha(alpha);
 }
 
 int ToolHandler::getHilighterFill()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	return this->tools[TOOL_HILIGHTER - TOOL_PEN]->getFillAlpha();
 }
 
 double ToolHandler::getThickness()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	if (this->current->thickness)
 	{
 		return this->current->thickness[this->current->getSize()];
@@ -361,8 +307,6 @@ double ToolHandler::getThickness()
 
 void ToolHandler::setSize(ToolSize size)
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	if (size < TOOL_SIZE_VERY_FINE || size > TOOL_SIZE_VERY_THICK)
 	{
 		g_warning("ToolHandler::setSize: Invalid size! %i", size);
@@ -375,8 +319,6 @@ void ToolHandler::setSize(ToolSize size)
 
 void ToolHandler::setLineStyle(const LineStyle& style)
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	this->tools[TOOL_PEN - TOOL_PEN]->setLineStyle(style);
 	this->listener->toolLineStyleChanged();
 }
@@ -392,8 +334,6 @@ void ToolHandler::setLineStyle(const LineStyle& style)
  */
 void ToolHandler::setColor(int color, bool userSelection)
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	this->colorFound = false;
 
 	this->current->setColor(color);
@@ -407,8 +347,6 @@ void ToolHandler::setColor(int color, bool userSelection)
 
 int ToolHandler::getColor()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	return current->getColor();
 }
 
@@ -417,8 +355,6 @@ int ToolHandler::getColor()
  */
 int ToolHandler::getFill()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	if (!current->getFill())
 	{
 		return -1;
@@ -429,43 +365,31 @@ int ToolHandler::getFill()
 
 const LineStyle& ToolHandler::getLineStyle()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	return current->getLineStyle();
 }
 
 DrawingType ToolHandler::getDrawingType()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	return current->getDrawingType();
 }
 
 void ToolHandler::setDrawingType(DrawingType drawingType)
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	current->setDrawingType(drawingType);
 }
 
 void ToolHandler::setColorFound()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	this->colorFound = true;
 }
 
 ArrayIterator<Tool*> ToolHandler::iterator()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	return ArrayIterator<Tool*> (tools, TOOL_COUNT);
 }
 
 void ToolHandler::saveSettings()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	SElement& s = settings->getCustomElement("tools");
 	s.clear();
 
@@ -544,8 +468,6 @@ void ToolHandler::saveSettings()
 
 void ToolHandler::loadSettings()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	SElement& s = settings->getCustomElement("tools");
 
 	string selectedTool;
@@ -622,8 +544,6 @@ void ToolHandler::loadSettings()
 
 void ToolHandler::copyCurrentConfig()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	// If there is no last config, create one, if there is already one
 	// do not overwrite this config!
 	if (this->lastSelectedTool == NULL)
@@ -634,8 +554,6 @@ void ToolHandler::copyCurrentConfig()
 
 void ToolHandler::restoreLastConfig()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	if (this->lastSelectedTool == NULL)
 	{
 		return;
@@ -652,8 +570,6 @@ void ToolHandler::restoreLastConfig()
 
 const double* ToolHandler::getToolThickness(ToolType type)
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	return this->tools[type - TOOL_PEN]->thickness;
 }
 
@@ -662,8 +578,6 @@ const double* ToolHandler::getToolThickness(ToolType type)
  */
 void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFill)
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	// For all selection tools, apply the features
 	for (int i = TOOL_SELECT_RECT - TOOL_PEN; i <= TOOL_SELECT_OBJECT - TOOL_PEN; i++)
 	{
@@ -690,8 +604,6 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
 
 bool ToolHandler::isSinglePageTool()
 {
-	XOJ_CHECK_TYPE(ToolHandler);
-
 	ToolType toolType = this->getToolType();
 	DrawingType drawingType = this->getDrawingType();
 

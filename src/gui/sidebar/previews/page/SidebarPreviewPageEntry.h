@@ -37,7 +37,5 @@ protected:
 	virtual void mouseButtonPressCallback();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	friend class PreviewJob;
 };

@@ -20,8 +20,6 @@
 
 EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page, ToolHandler* handler, Redrawable* view)
 {
-	XOJ_INIT_TYPE(EraseHandler);
-
 	this->page = page;
 	this->handler = handler;
 	this->view = view;
@@ -36,14 +34,10 @@ EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page, T
 
 EraseHandler::~EraseHandler()
 {
-	XOJ_CHECK_TYPE(EraseHandler);
-
 	if (this->eraseDeleteUndoAction)
 	{
 		this->finalize();
 	}
-
-	XOJ_RELEASE_TYPE(EraseHandler);
 }
 
 /**
@@ -51,8 +45,6 @@ EraseHandler::~EraseHandler()
  */
 void EraseHandler::erase(double x, double y)
 {
-	XOJ_CHECK_TYPE(EraseHandler);
-
 	this->halfEraserSize = this->handler->getThickness();
 	GdkRectangle eraserRect = {
 		gint(x - halfEraserSize),
@@ -80,8 +72,6 @@ void EraseHandler::erase(double x, double y)
 
 void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* range)
 {
-	XOJ_CHECK_TYPE(EraseHandler);
-
 	if (!s->intersects(x, y, halfEraserSize))
 	{
 		return;
@@ -149,8 +139,6 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
 
 void EraseHandler::finalize()
 {
-	XOJ_CHECK_TYPE(EraseHandler);
-
 	if (this->eraseUndoAction)
 	{
 		this->eraseUndoAction->finalize();

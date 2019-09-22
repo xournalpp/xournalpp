@@ -14,21 +14,16 @@
 
 ImageHandler::ImageHandler(Control* control, XojPageView* view)
 {
-	XOJ_INIT_TYPE(ImageHandler);
-
 	this->control = control;
 	this->view = view;
 }
 
 ImageHandler::~ImageHandler()
 {
-	XOJ_RELEASE_TYPE(ImageHandler);
 }
 
 bool ImageHandler::insertImage(double x, double y)
 {
-	XOJ_CHECK_TYPE(ImageHandler);
-
 	GFile* file = ImageOpenDlg::show(control->getGtkWindow(), control->getSettings());
 	if (file == nullptr)
 	{
@@ -39,8 +34,6 @@ bool ImageHandler::insertImage(double x, double y)
 
 bool ImageHandler::insertImage(GFile* file, double x, double y)
 {
-	XOJ_CHECK_TYPE(ImageHandler);
-
 	GError* err = nullptr;
 	GFileInputStream* in = g_file_read(file, nullptr, &err);
 

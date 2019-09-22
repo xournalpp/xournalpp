@@ -3,25 +3,18 @@
 
 PortAudioConsumer::PortAudioConsumer(AudioPlayer* audioPlayer, AudioQueue<float>* audioQueue) : sys(portaudio::System::instance()), audioPlayer(audioPlayer), audioQueue(audioQueue)
 {
-	XOJ_INIT_TYPE(PortAudioConsumer);
 }
 
 PortAudioConsumer::~PortAudioConsumer()
 {
-	XOJ_CHECK_TYPE(PortAudioConsumer);
-
 	if (portaudio::System::exists())
 	{
 		portaudio::System::terminate();
 	}
-
-	XOJ_RELEASE_TYPE(PortAudioConsumer);
 }
 
 std::list<DeviceInfo> PortAudioConsumer::getOutputDevices()
 {
-	XOJ_CHECK_TYPE(PortAudioConsumer);
-
 	std::list<DeviceInfo> deviceList;
 
 	for (portaudio::System::DeviceIterator i = this->sys.devicesBegin(); i != sys.devicesEnd(); ++i)
@@ -52,15 +45,11 @@ const DeviceInfo PortAudioConsumer::getSelectedOutputDevice()
 
 bool PortAudioConsumer::isPlaying()
 {
-	XOJ_CHECK_TYPE(PortAudioConsumer);
-
 	return this->outputStream != nullptr && this->outputStream->isActive();
 }
 
 bool PortAudioConsumer::startPlaying()
 {
-	XOJ_CHECK_TYPE(PortAudioConsumer);
-
 	// Abort a playback stream if one is currently active
 	if (this->outputStream != nullptr && this->outputStream->isActive())
 	{
@@ -127,8 +116,6 @@ bool PortAudioConsumer::startPlaying()
 int PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer, const PaStreamCallbackTimeInfo* timeInfo,
 									PaStreamCallbackFlags statusFlags)
 {
-	XOJ_CHECK_TYPE(PortAudioConsumer);
-
 	if (statusFlags)
 	{
 		g_warning("PortAudioConsumer: PortAudio reported a stream warning: %s", std::to_string(statusFlags).c_str());
@@ -189,8 +176,6 @@ int PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer,
 
 void PortAudioConsumer::stopPlaying()
 {
-	XOJ_CHECK_TYPE(PortAudioConsumer);
-
 	// Stop the playback
 	if (this->outputStream != nullptr)
 	{

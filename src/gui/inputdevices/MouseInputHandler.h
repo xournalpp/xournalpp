@@ -17,8 +17,6 @@
 class MouseInputHandler : public PenInputHandler
 {
 private:
-	XOJ_TYPE_ATTRIB;
-
 	void setPressedState(InputEvent*);
 public:
 	explicit MouseInputHandler(InputContext* inputContext);

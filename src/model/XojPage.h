@@ -80,8 +80,6 @@ public:
 	XojPage* clone();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * The reference counter
 	 */

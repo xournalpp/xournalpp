@@ -34,8 +34,6 @@ public:
 	vector<Element*>* getElements() override;
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Redrawable* view = nullptr;
 	PageRef page;
 	Layer* layer = nullptr;

@@ -82,8 +82,6 @@ public:
 	bool equalsPos(const Point& p);
 
 public:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * @brief Private storage for x coordinate.
 	 */

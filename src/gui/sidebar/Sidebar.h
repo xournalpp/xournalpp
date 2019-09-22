@@ -80,8 +80,6 @@ private:
 	static void buttonClicked(GtkToolButton* toolbutton, SidebarPageButton* buttonData);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Control* control = NULL;
 
 	GladeGui* gui = NULL;

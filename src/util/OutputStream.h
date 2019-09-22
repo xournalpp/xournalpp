@@ -44,8 +44,6 @@ public:
 	string& getLastError();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	gzFile fp = NULL;
 
 	string error;

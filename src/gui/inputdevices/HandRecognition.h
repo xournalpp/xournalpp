@@ -71,8 +71,6 @@ private:
 	void disableTouch();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * If touch disabling is enabled
 	 */

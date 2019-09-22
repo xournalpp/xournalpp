@@ -7,24 +7,17 @@
 UndoRedoController::UndoRedoController(Control* control)
  : control(control)
 {
-	XOJ_INIT_TYPE(UndoRedoController);
 }
 
 UndoRedoController::~UndoRedoController()
 {
-	XOJ_CHECK_TYPE(UndoRedoController);
-
 	this->control = NULL;
 	this->layer = NULL;
 	elements.clear();
-
-	XOJ_RELEASE_TYPE(UndoRedoController);
 }
 
 void UndoRedoController::before()
 {
-	XOJ_CHECK_TYPE(UndoRedoController);
-
 	EditSelection* selection = control->getWindow()->getXournal()->getSelection();
 	if (selection != NULL)
 	{
@@ -40,8 +33,6 @@ void UndoRedoController::before()
 
 void UndoRedoController::after()
 {
-	XOJ_CHECK_TYPE(UndoRedoController);
-
 	control->resetShapeRecognizer();
 
 	// Restore selection, if any

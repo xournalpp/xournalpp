@@ -106,5 +106,4 @@ protected:
 	Stroke* stroke;
 
 private:
-	XOJ_TYPE_ATTRIB;
-};
+	};

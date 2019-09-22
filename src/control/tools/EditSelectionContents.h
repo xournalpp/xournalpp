@@ -144,8 +144,6 @@ public:
 	void readSerialized(ObjectInputStream& in);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * The original size to calculate the zoom factor for reascaling the items
 	 */

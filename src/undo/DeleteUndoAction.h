@@ -33,8 +33,6 @@ public:
 	string getText() override;
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	GList* elements = nullptr;
 	bool eraser = true;
 };

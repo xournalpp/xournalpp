@@ -54,9 +54,7 @@ protected:
 	void writeAttributes(OutputStream* out);
 
 public:
-	XOJ_TYPE_ATTRIB;
-
-protected:
+	protected:
 	GList* children;
 	GList* attributes;
 

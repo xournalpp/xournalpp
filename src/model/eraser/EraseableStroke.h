@@ -45,9 +45,6 @@ private:
 	void addRepaintRect(double x, double y, double width, double height);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-
 	GMutex partLock;
 	PartList * parts = NULL;
 

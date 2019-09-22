@@ -5,18 +5,14 @@ TextAttribute::TextAttribute(string name, string value)
  : XMLAttribute(name),
    value(value)
 {
-	XOJ_INIT_TYPE(TextAttribute);
 }
 
 TextAttribute::~TextAttribute()
 {
-	XOJ_RELEASE_TYPE(TextAttribute);
 }
 
 void TextAttribute::writeOut(OutputStream* out)
 {
-	XOJ_CHECK_TYPE(TextAttribute);
-
 	string v = this->value;
 	StringUtils::replaceAllChars(v, {
 		replace_pair('&', "&amp;"),

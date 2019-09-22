@@ -124,8 +124,6 @@ protected:
 	void initTools();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Tool* tools[TOOL_COUNT] = { 0 };
 	Tool* current = NULL;
 

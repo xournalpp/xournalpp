@@ -94,8 +94,6 @@ public:
 	void setLineStyle(const LineStyle& style);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Color of the tool for all drawing tools
 	 */

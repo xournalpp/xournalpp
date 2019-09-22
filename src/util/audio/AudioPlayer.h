@@ -36,9 +36,7 @@ public:
 	Settings* getSettings();
 	void disableAudioPlaybackButtons();
 private:
-	XOJ_TYPE_ATTRIB;
-
-protected:
+	protected:
 	Settings* settings = nullptr;
 	Control* control = nullptr;
 

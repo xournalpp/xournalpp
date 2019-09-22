@@ -33,5 +33,4 @@ protected:
 	virtual void writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode);
 
 private:
-	XOJ_TYPE_ATTRIB;
-};
+	};

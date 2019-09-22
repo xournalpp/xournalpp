@@ -27,8 +27,6 @@ private:
 	void freeSearchResults();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	PageRef page;
 	XojPdfPageSPtr pdf;
 

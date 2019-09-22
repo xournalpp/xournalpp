@@ -47,9 +47,6 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control* control)
                         Util::rgb_to_GdkRGBA(0xffffff)}
 // clang-format on
 {
-	XOJ_INIT_TYPE(SelectBackgroundColorDialog);
-
-
 	Settings* settings = control->getSettings();
 	SElement& el = settings->getCustomElement("lastUsedPageBgColor");
 
@@ -78,14 +75,10 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control* control)
 
 SelectBackgroundColorDialog::~SelectBackgroundColorDialog()
 {
-	XOJ_CHECK_TYPE(SelectBackgroundColorDialog);
-	XOJ_RELEASE_TYPE(SelectBackgroundColorDialog);
 }
 
 void SelectBackgroundColorDialog::storeLastUsedValuesInSettings()
 {
-	XOJ_CHECK_TYPE(SelectBackgroundColorDialog);
-
 	if (this->selected < 0)
 	{
 		// No color selected, do not save to list
@@ -128,15 +121,11 @@ void SelectBackgroundColorDialog::storeLastUsedValuesInSettings()
 
 int SelectBackgroundColorDialog::getSelectedColor()
 {
-	XOJ_CHECK_TYPE(SelectBackgroundColorDialog);
-
 	return this->selected;
 }
 
 void SelectBackgroundColorDialog::show(GtkWindow* parent)
 {
-	XOJ_CHECK_TYPE(SelectBackgroundColorDialog);
-
 	GtkWidget* dialog = gtk_color_chooser_dialog_new(_("Select background color"), parent);
 	gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(dialog), false);
 

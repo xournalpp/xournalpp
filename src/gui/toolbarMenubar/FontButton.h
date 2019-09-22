@@ -42,9 +42,6 @@ protected:
 	virtual GtkWidget* getNewToolIcon();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-
 	GtkWidget* fontButton = NULL;
 	GladeGui* gui = NULL;
 	string description;

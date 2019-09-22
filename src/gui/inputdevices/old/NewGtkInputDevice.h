@@ -69,9 +69,7 @@ private:
 	static bool eventCallback(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-protected:
+	protected:
 	/**
 	 * Running input
 	 */

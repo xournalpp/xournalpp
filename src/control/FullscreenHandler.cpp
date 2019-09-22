@@ -10,27 +10,19 @@ GtkWidget* gtk_invisible_new();
 FullscreenHandler::FullscreenHandler(Settings* settings)
  : settings(settings)
 {
-	XOJ_INIT_TYPE(FullscreenHandler);
 }
 
 FullscreenHandler::~FullscreenHandler()
 {
-	XOJ_CHECK_TYPE(FullscreenHandler);
-
-	XOJ_RELEASE_TYPE(FullscreenHandler);
 }
 
 bool FullscreenHandler::isFullscreen()
 {
-	XOJ_CHECK_TYPE(FullscreenHandler);
-
 	return this->fullscreen;
 }
 
 void FullscreenHandler::hideWidget(MainWindow* win, string widgetName)
 {
-	XOJ_CHECK_TYPE(FullscreenHandler);
-
 	if ("sidebarContents" == widgetName && settings->isSidebarVisible())
 	{
 		this->sidebarHidden = true;
@@ -91,8 +83,6 @@ void FullscreenHandler::hideWidget(MainWindow* win, string widgetName)
 
 void FullscreenHandler::enableFullscreen(MainWindow* win)
 {
-	XOJ_CHECK_TYPE(FullscreenHandler);
-
 	gtk_window_fullscreen((GtkWindow*) *win);
 
 	string hideWidgets = settings->getFullscreenHideElements();
@@ -104,8 +94,6 @@ void FullscreenHandler::enableFullscreen(MainWindow* win)
 
 void FullscreenHandler::disableFullscreen(MainWindow* win)
 {
-	XOJ_CHECK_TYPE(FullscreenHandler);
-
 	gtk_window_unfullscreen((GtkWindow*) *win);
 
 	for (GtkWidget* w : hiddenFullscreenWidgets)
@@ -146,8 +134,6 @@ void FullscreenHandler::disableFullscreen(MainWindow* win)
 
 void FullscreenHandler::setFullscreen(MainWindow* win, bool enabled)
 {
-	XOJ_CHECK_TYPE(FullscreenHandler);
-
 	if (enabled)
 	{
 		enableFullscreen(win);

@@ -29,5 +29,4 @@ protected:
 	virtual bool isUriValid(string& uri);
 
 private:
-	XOJ_TYPE_ATTRIB;
-};
+	};

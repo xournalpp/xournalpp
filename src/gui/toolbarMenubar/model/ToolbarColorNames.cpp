@@ -8,7 +8,6 @@
 
 ToolbarColorNames::ToolbarColorNames()
 {
-	XOJ_INIT_TYPE(ToolbarColorNames);
 	this->predefinedColorNames = g_hash_table_new_full(g_int_hash, g_int_equal, g_free, g_free);
 	this->config = g_key_file_new();
 	g_key_file_set_string(this->config, "info", "about", "Xournalpp custom color names");
@@ -17,13 +16,9 @@ ToolbarColorNames::ToolbarColorNames()
 
 ToolbarColorNames::~ToolbarColorNames()
 {
-	XOJ_CHECK_TYPE(ToolbarColorNames);
-
 	g_hash_table_destroy(this->predefinedColorNames);
 	this->predefinedColorNames = NULL;
 	g_key_file_free(this->config);
-
-	XOJ_RELEASE_TYPE(ToolbarColorNames);
 }
 
 static ToolbarColorNames* instance = NULL;
@@ -46,8 +41,6 @@ void ToolbarColorNames::freeInstance()
 
 void ToolbarColorNames::loadFile(const string file)
 {
-	XOJ_CHECK_TYPE(ToolbarColorNames);
-
 	GError* error = NULL;
 	if (!g_key_file_load_from_file(config, file.c_str(), G_KEY_FILE_NONE, &error))
 	{
@@ -61,8 +54,6 @@ void ToolbarColorNames::loadFile(const string file)
 
 void ToolbarColorNames::saveFile(const string file)
 {
-	XOJ_CHECK_TYPE(ToolbarColorNames);
-
 	gsize len = 0;
 	char* data = g_key_file_to_data(this->config, &len, NULL);
 
@@ -81,8 +72,6 @@ void ToolbarColorNames::saveFile(const string file)
 
 void ToolbarColorNames::addColor(int color, string name, bool predefined)
 {
-	XOJ_CHECK_TYPE(ToolbarColorNames);
-
 	int* key = g_new(int, 1);
 	*key = color;
 
@@ -100,8 +89,6 @@ void ToolbarColorNames::addColor(int color, string name, bool predefined)
 
 string ToolbarColorNames::getColorName(int color)
 {
-	XOJ_CHECK_TYPE(ToolbarColorNames);
-
 	string colorName;
 
 	char colorHex[16];
@@ -129,8 +116,6 @@ string ToolbarColorNames::getColorName(int color)
 
 void ToolbarColorNames::initPredefinedColors()
 {
-	XOJ_CHECK_TYPE(ToolbarColorNames);
-
 	// Here you can add predefined color names
 	// this ordering fixes #2
 	addColor(0x000000, _("Black"),		 true);

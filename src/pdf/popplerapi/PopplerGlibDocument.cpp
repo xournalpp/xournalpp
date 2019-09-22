@@ -8,14 +8,11 @@
 
 PopplerGlibDocument::PopplerGlibDocument()
 {
-	XOJ_INIT_TYPE(PopplerGlibDocument);
 }
 
 PopplerGlibDocument::PopplerGlibDocument(const PopplerGlibDocument& doc)
  : document(doc.document)
 {
-	XOJ_INIT_TYPE(PopplerGlibDocument);
-
 	if (document)
 	{
 		g_object_ref(document);
@@ -24,21 +21,15 @@ PopplerGlibDocument::PopplerGlibDocument(const PopplerGlibDocument& doc)
 
 PopplerGlibDocument::~PopplerGlibDocument()
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
 	if (document)
 	{
 		g_object_unref(document);
 		document = NULL;
 	}
-
-	XOJ_RELEASE_TYPE(PopplerGlibDocument);
 }
 
 void PopplerGlibDocument::assign(XojPdfDocumentInterface* doc)
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
 	if (document)
 	{
 		g_object_unref(document);
@@ -53,15 +44,11 @@ void PopplerGlibDocument::assign(XojPdfDocumentInterface* doc)
 
 bool PopplerGlibDocument::equals(XojPdfDocumentInterface* doc)
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
 	return document == ((PopplerGlibDocument*)doc)->document;
 }
 
 bool PopplerGlibDocument::save(Path filename, GError** error)
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
 	if (document == NULL)
 	{
 		return false;
@@ -77,8 +64,6 @@ bool PopplerGlibDocument::save(Path filename, GError** error)
 
 bool PopplerGlibDocument::load(Path filename, string password, GError** error)
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
 	string uri = filename.toUri(error);
 	if (*error != NULL)
 	{
@@ -96,8 +81,6 @@ bool PopplerGlibDocument::load(Path filename, string password, GError** error)
 
 bool PopplerGlibDocument::load(gpointer data, gsize length, string password, GError** error)
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
 	if (document)
 	{
 		g_object_unref(document);
@@ -109,15 +92,11 @@ bool PopplerGlibDocument::load(gpointer data, gsize length, string password, GEr
 
 bool PopplerGlibDocument::isLoaded()
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
 	return this->document != NULL;
 }
 
 XojPdfPageSPtr PopplerGlibDocument::getPage(size_t page)
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
 	if (document == NULL)
 	{
 		return NULL;
@@ -132,8 +111,6 @@ XojPdfPageSPtr PopplerGlibDocument::getPage(size_t page)
 
 size_t PopplerGlibDocument::getPageCount()
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
 	if (document == NULL)
 	{
 		return 0;
@@ -144,8 +121,6 @@ size_t PopplerGlibDocument::getPageCount()
 
 XojPdfBookmarkIterator* PopplerGlibDocument::getContentsIter()
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
 	if (document == NULL)
 	{
 		return NULL;

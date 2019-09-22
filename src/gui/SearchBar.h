@@ -39,8 +39,6 @@ private:
 	bool searchTextonCurrentPage(const char* text, int* occures, double* top);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Control* control;
 	GtkCssProvider* cssTextFild;
 };

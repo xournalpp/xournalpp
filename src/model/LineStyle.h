@@ -52,8 +52,6 @@ public:
 	void setDashes(const double* dashes, int dashCount);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Dash definition (NULL for no Dash)
 	 */

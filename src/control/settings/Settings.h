@@ -55,8 +55,6 @@ public:
 	virtual ~SAttribute();
 
 public:
-	XOJ_TYPE_ATTRIB;
-
 	string sValue;
 	int iValue;
 	double dValue;
@@ -79,8 +77,6 @@ public:
 	void unref();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	std::map<string, SAttribute> attributes;
 	std::map<string, SElement> children;
 
@@ -120,8 +116,6 @@ public:
 	std::map<string, SElement>& children();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	__RefSElement* element;
 };
 
@@ -467,8 +461,6 @@ public:
 	void transactionEnd();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 *  The config filename
 	 */

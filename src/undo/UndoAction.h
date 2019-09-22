@@ -38,8 +38,6 @@ public:
 	const char* getClassName() const;
 
 protected:
-	XOJ_TYPE_ATTRIB;
-
 	// This is only for debugging / Testing purpose
 	const char* className = NULL;
 

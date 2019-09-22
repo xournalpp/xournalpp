@@ -11,8 +11,6 @@
 EraseableStroke::EraseableStroke(Stroke* stroke)
  : stroke(stroke)
 {
-	XOJ_INIT_TYPE(EraseableStroke);
-
 	this->parts = new PartList();
 	g_mutex_init(&this->partLock);
 
@@ -24,12 +22,8 @@ EraseableStroke::EraseableStroke(Stroke* stroke)
 
 EraseableStroke::~EraseableStroke()
 {
-	XOJ_CHECK_TYPE(EraseableStroke);
-
 	delete this->parts;
 	this->parts = NULL;
-
-	XOJ_RELEASE_TYPE(EraseableStroke);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -38,8 +32,6 @@ EraseableStroke::~EraseableStroke()
 
 void EraseableStroke::draw(cairo_t* cr)
 {
-	XOJ_CHECK_TYPE(EraseableStroke);
-
 	Point lastPoint;
 
 	g_mutex_lock(&this->partLock);
@@ -85,8 +77,6 @@ void EraseableStroke::draw(cairo_t* cr)
  */
 Range* EraseableStroke::erase(double x, double y, double halfEraserSize, Range* range)
 {
-	XOJ_CHECK_TYPE(EraseableStroke);
-
 	this->repaintRect = range;
 
 	g_mutex_lock(&this->partLock);
@@ -112,8 +102,6 @@ Range* EraseableStroke::erase(double x, double y, double halfEraserSize, Range* 
 
 void EraseableStroke::addRepaintRect(double x, double y, double width, double height)
 {
-	XOJ_CHECK_TYPE(EraseableStroke);
-
 	if (this->repaintRect)
 	{
 		this->repaintRect->addPoint(x, y);
@@ -128,8 +116,6 @@ void EraseableStroke::addRepaintRect(double x, double y, double width, double he
 
 void EraseableStroke::erase(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list)
 {
-	XOJ_CHECK_TYPE(EraseableStroke);
-
 	if (part->points->next == NULL)
 	{
 		return;
@@ -241,8 +227,6 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize, Eraseable
 bool EraseableStroke::erasePart(double x, double y, double halfEraserSize, EraseableStrokePart* part,
 								PartList* list, bool* deleteStrokeAfter)
 {
-	XOJ_CHECK_TYPE(EraseableStroke);
-
 	bool changed = false;
 
 	part->splitFor(halfEraserSize);
@@ -357,8 +341,6 @@ bool EraseableStroke::erasePart(double x, double y, double halfEraserSize, Erase
 
 GList* EraseableStroke::getStroke(Stroke* original)
 {
-	XOJ_CHECK_TYPE(EraseableStroke);
-
 	GList* list = NULL;
 
 	Stroke* s = NULL;

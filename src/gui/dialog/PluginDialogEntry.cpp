@@ -9,8 +9,6 @@ PluginDialogEntry::PluginDialogEntry(Plugin* plugin, GladeSearchpath* gladeSearc
  : GladeGui(gladeSearchPath, "pluginEntry.glade", "offscreenwindow"),
    plugin(plugin)
 {
-	XOJ_INIT_TYPE(PluginDialogEntry);
-
 	GtkWidget* pluginMainBox = get("pluginMainBox");
 	gtk_container_remove(GTK_CONTAINER(getWindow()), pluginMainBox);
 	gtk_container_add(GTK_CONTAINER(w), pluginMainBox);
@@ -21,14 +19,10 @@ PluginDialogEntry::PluginDialogEntry(Plugin* plugin, GladeSearchpath* gladeSearc
 
 PluginDialogEntry::~PluginDialogEntry()
 {
-	XOJ_CHECK_TYPE(PluginDialogEntry);
-	XOJ_RELEASE_TYPE(PluginDialogEntry);
 }
 
 void PluginDialogEntry::loadSettings()
 {
-	XOJ_CHECK_TYPE(PluginDialogEntry);
-
 #ifdef ENABLE_PLUGINS
 	gtk_label_set_text(GTK_LABEL(get("pluginName")), plugin->getName().c_str());
 	gtk_label_set_text(GTK_LABEL(get("lbAuthor")), plugin->getAuthor().c_str());
@@ -47,8 +41,6 @@ void PluginDialogEntry::show(GtkWindow* parent)
 
 void PluginDialogEntry::saveSettings(string& pluginEnabled, string& pluginDisabled)
 {
-	XOJ_CHECK_TYPE(PluginDialogEntry);
-
 #ifdef ENABLE_PLUGINS
 	bool state = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("cbEnabled")));
 

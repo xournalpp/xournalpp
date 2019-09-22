@@ -39,8 +39,6 @@ private:
 	static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	GtkWidget* dialog;
 
 	GtkWindow* win;

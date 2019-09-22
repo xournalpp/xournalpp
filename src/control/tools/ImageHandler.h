@@ -29,8 +29,6 @@ public:
 	bool insertImage(GFile* file, double x, double y);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Control* control;
 	XojPageView* view;
 };

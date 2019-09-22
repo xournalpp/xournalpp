@@ -19,8 +19,6 @@ class InputContext;
 class PenInputHandler : public AbstractInputHandler
 {
 private:
-	XOJ_TYPE_ATTRIB;
-
 	XojPageView* lastActivePage = nullptr;
 
 protected:

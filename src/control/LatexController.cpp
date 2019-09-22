@@ -55,17 +55,12 @@ LatexController::LatexController(Control* control)
  , doc(control->getDocument())
  , texTmpDir(Util::getTmpDirSubfolder("tex"))
 {
-	XOJ_INIT_TYPE(LatexController);
 	Util::ensureFolderExists(this->texTmpDir);
 }
 
 LatexController::~LatexController()
 {
-	XOJ_CHECK_TYPE(LatexController);
-
 	this->control = nullptr;
-
-	XOJ_RELEASE_TYPE(LatexController);
 }
 
 /**
@@ -73,8 +68,6 @@ LatexController::~LatexController()
  */
 LatexController::FindDependencyStatus LatexController::findTexDependencies()
 {
-	XOJ_CHECK_TYPE(LatexController);
-
 	gchar* pdflatex = g_find_program_in_path("pdflatex");
 	if (!pdflatex)
 	{
@@ -118,7 +111,6 @@ LatexController::FindDependencyStatus LatexController::findTexDependencies()
 
 std::unique_ptr<GPid> LatexController::runCommandAsync(string texString)
 {
-	XOJ_CHECK_TYPE(LatexController);
 	g_assert(!this->isUpdating);
 
 	string texContents = LATEX_TEMPLATE_1;
@@ -171,8 +163,6 @@ std::unique_ptr<GPid> LatexController::runCommandAsync(string texString)
  */
 void LatexController::findSelectedTexElement()
 {
-	XOJ_CHECK_TYPE(LatexController);
-
 	this->doc->lock();
 	int pageNr = this->control->getCurrentPageNo();
 	if (pageNr == -1)
@@ -248,8 +238,6 @@ void LatexController::findSelectedTexElement()
 
 string LatexController::showTexEditDialog()
 {
-	XOJ_CHECK_TYPE(LatexController);
-
 	// Attach the signal handler before setting the buffer text so that the
 	// callback is triggered
 	gulong signalHandler = g_signal_connect(dlg.getTextBuffer(), "changed", G_CALLBACK(handleTexChanged), this);
@@ -295,13 +283,11 @@ void LatexController::triggerImageUpdate(string texString)
  */
 void LatexController::handleTexChanged(GtkTextBuffer* buffer, LatexController* self)
 {
-	XOJ_CHECK_TYPE_OBJ(self, LatexController);
 	self->triggerImageUpdate(self->dlg.getBufferContents());
 }
 
 void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, LatexController* self)
 {
-	XOJ_CHECK_TYPE_OBJ(self, LatexController);
 	g_assert(self->isUpdating);
 	GError* err = nullptr;
 	g_spawn_check_exit_status(returnCode, &err);
@@ -344,7 +330,6 @@ void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, LatexContro
 
 void LatexController::setUpdating(bool newValue)
 {
-	XOJ_CHECK_TYPE(LatexController);
 	GtkWidget* okButton = this->dlg.get("texokbutton");
 	bool buttonEnabled = true;
 	if ((!this->isUpdating && newValue) || (this->isUpdating && !newValue))
@@ -372,8 +357,6 @@ void LatexController::setUpdating(bool newValue)
 
 void LatexController::deleteOldImage()
 {
-	XOJ_CHECK_TYPE(LatexController);
-
 	if (this->selectedTexImage != nullptr)
 	{
 		g_assert(this->selectedText == nullptr);
@@ -392,8 +375,6 @@ void LatexController::deleteOldImage()
 
 std::unique_ptr<TexImage> LatexController::convertDocumentToImage(PopplerDocument* doc, string formula)
 {
-	XOJ_CHECK_TYPE(LatexController);
-
 	if (poppler_document_get_n_pages(doc) < 1)
 	{
 		return nullptr;
@@ -435,8 +416,6 @@ std::unique_ptr<TexImage> LatexController::convertDocumentToImage(PopplerDocumen
 
 std::unique_ptr<TexImage> LatexController::loadRendered(string renderedTex)
 {
-	XOJ_CHECK_TYPE(LatexController);
-
 	if (!this->isValidTex)
 	{
 		return nullptr;
@@ -485,8 +464,6 @@ std::unique_ptr<TexImage> LatexController::loadRendered(string renderedTex)
 
 void LatexController::insertTexImage()
 {
-	XOJ_CHECK_TYPE(LatexController);
-
 	g_assert(this->temporaryRender != nullptr);
 	TexImage* img = this->temporaryRender.release();
 
@@ -505,8 +482,6 @@ void LatexController::insertTexImage()
 
 void LatexController::run()
 {
-	XOJ_CHECK_TYPE(LatexController);
-
 	auto depStatus = this->findTexDependencies();
 	if (!depStatus.success)
 	{

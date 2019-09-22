@@ -32,8 +32,6 @@ public:
 	virtual XojPdfAction* getAction();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	PopplerIndexIter* iter;
 	PopplerDocument* document;
 };

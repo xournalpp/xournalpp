@@ -48,8 +48,6 @@ protected:
 	void checkboxToggled();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Layer preview index
 	 */

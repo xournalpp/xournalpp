@@ -28,6 +28,5 @@ public:
 	virtual XojPdfAction* getAction() = 0;
 
 private:
-	XOJ_TYPE_ATTRIB;
-};
+	};
 

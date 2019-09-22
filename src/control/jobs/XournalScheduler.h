@@ -54,5 +54,4 @@ private:
 	bool existsSource(void* source, JobType type, JobPriority priority);
 
 private:
-	XOJ_TYPE_ATTRIB;
-};
+	};

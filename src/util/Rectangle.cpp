@@ -4,7 +4,6 @@
 
 Rectangle::Rectangle()
 {
-	XOJ_INIT_TYPE(Rectangle);
 }
 
 Rectangle::Rectangle(double x, double y, double width, double height)
@@ -13,7 +12,6 @@ Rectangle::Rectangle(double x, double y, double width, double height)
  , width(width)
  , height(height)
 {
-	XOJ_INIT_TYPE(Rectangle);
 }
 
 Rectangle::Rectangle(const Range& rect)
@@ -22,18 +20,14 @@ Rectangle::Rectangle(const Range& rect)
  , width(rect.getWidth())
  , height(rect.getHeight())
 {
-	XOJ_INIT_TYPE(Rectangle);
 }
 
 Rectangle::~Rectangle()
 {
-	XOJ_RELEASE_TYPE(Rectangle);
 }
 
 bool Rectangle::intersects(const Rectangle& other, Rectangle* dest) const
 {
-	XOJ_CHECK_TYPE(Rectangle);
-
 	double destX, destY;
 	double destW, destH;
 
@@ -66,8 +60,6 @@ bool Rectangle::intersects(const Rectangle& other, Rectangle* dest) const
 
 void Rectangle::add(double x, double y, double width, double height)
 {
-	XOJ_CHECK_TYPE(Rectangle);
-
 	if (width <= 0 || height <= 0)
 	{
 		return;

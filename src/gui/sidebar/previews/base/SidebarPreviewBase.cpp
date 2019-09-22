@@ -9,8 +9,6 @@
 SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
  : AbstractSidebarPage(control, toolbar)
 {
-	XOJ_INIT_TYPE(SidebarPreviewBase);
-
 	this->layoutmanager = new SidebarLayout();
 
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
@@ -40,8 +38,6 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarT
 
 SidebarPreviewBase::~SidebarPreviewBase()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
 	gtk_widget_destroy(this->iconViewPreview);
 	this->iconViewPreview = NULL;
 
@@ -58,28 +54,20 @@ SidebarPreviewBase::~SidebarPreviewBase()
 		delete p;
 	}
 	this->previews.clear();
-
-	XOJ_RELEASE_TYPE(SidebarPreviewBase);
 }
 
 void SidebarPreviewBase::enableSidebar()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
 	enabled = true;
 }
 
 void SidebarPreviewBase::disableSidebar()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
 	enabled = false;
 }
 
 void SidebarPreviewBase::sizeChanged(GtkWidget* widget, GtkAllocation* allocation, SidebarPreviewBase* sidebar)
 {
-	XOJ_CHECK_TYPE_OBJ(sidebar, SidebarPreviewBase);
-
 	static int lastWidth = -1;
 
 	if (lastWidth == -1)
@@ -96,43 +84,31 @@ void SidebarPreviewBase::sizeChanged(GtkWidget* widget, GtkAllocation* allocatio
 
 double SidebarPreviewBase::getZoom()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
 	return this->zoom;
 }
 
 PdfCache* SidebarPreviewBase::getCache()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
 	return this->cache;
 }
 
 void SidebarPreviewBase::layout()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
 	this->layoutmanager->layout(this);
 }
 
 bool SidebarPreviewBase::hasData()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
 	return true;
 }
 
 GtkWidget* SidebarPreviewBase::getWidget()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
 	return this->scrollPreview;
 }
 
 void SidebarPreviewBase::documentChanged(DocumentChangeType type)
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
 	if (type == DOCUMENT_CHANGE_COMPLETE || type == DOCUMENT_CHANGE_CLEARED)
 	{
 		updatePreviews();
@@ -141,8 +117,6 @@ void SidebarPreviewBase::documentChanged(DocumentChangeType type)
 
 bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 {
-	XOJ_CHECK_TYPE_OBJ(sidebar, SidebarPreviewBase);
-
 	if (!sidebar->enabled)
 	{
 		return false;
@@ -188,11 +162,9 @@ bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 
 void SidebarPreviewBase::pageDeleted(int page)
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
 }
 
 void SidebarPreviewBase::pageInserted(int page)
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
 }
 

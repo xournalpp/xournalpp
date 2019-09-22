@@ -14,10 +14,8 @@ XojPdfRectangle::XojPdfRectangle(double x1, double y1, double x2, double y2)
 
 XojPdfPage::XojPdfPage()
 {
-	XOJ_INIT_TYPE(XojPdfPage);
 }
 
 XojPdfPage::~XojPdfPage()
 {
-	XOJ_RELEASE_TYPE(XojPdfPage);
 }

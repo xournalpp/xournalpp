@@ -3,20 +3,14 @@
 
 VorbisProducer::VorbisProducer(AudioQueue<float>* audioQueue) : audioQueue(audioQueue)
 {
-	XOJ_INIT_TYPE(VorbisProducer);
 }
 
 VorbisProducer::~VorbisProducer()
 {
-	XOJ_CHECK_TYPE(VorbisProducer);
-
-	XOJ_RELEASE_TYPE(VorbisProducer);
 }
 
 bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 {
-	XOJ_CHECK_TYPE(VorbisProducer);
-
 	this->sfInfo.format = 0;
 	this->sfFile = sf_open(filename.c_str(), SFM_READ, &sfInfo);
 	if (sfFile == nullptr)
@@ -66,8 +60,6 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 
 void VorbisProducer::abort()
 {
-	XOJ_CHECK_TYPE(VorbisProducer);
-
 	this->stopProducer = true;
 	// Wait for producer to finish
 	stop();
@@ -77,8 +69,6 @@ void VorbisProducer::abort()
 
 void VorbisProducer::stop()
 {
-	XOJ_CHECK_TYPE(VorbisProducer);
-
 	// Wait for producer to finish
 	if (this->producerThread && this->producerThread->joinable())
 	{

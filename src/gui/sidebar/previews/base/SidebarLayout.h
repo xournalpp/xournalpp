@@ -30,6 +30,4 @@ public:
 	void layout(SidebarPreviewBase* sidebar);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-};
+	};

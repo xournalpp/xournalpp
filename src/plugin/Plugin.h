@@ -30,18 +30,13 @@ public:
 	MenuEntry(Plugin* plugin)
 	 : plugin(plugin)
 	{
-		XOJ_INIT_TYPE(MenuEntry);
 	}
 
 	~MenuEntry()
 	{
-		XOJ_CHECK_TYPE(MenuEntry);
-		XOJ_RELEASE_TYPE(MenuEntry);
 	}
 
 public:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * The Plugin
 	 */
@@ -182,8 +177,6 @@ public:
 	static Plugin* getPluginFromLua(lua_State* lua);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Plugin root path
 	 */

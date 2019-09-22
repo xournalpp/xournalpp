@@ -195,8 +195,6 @@ private:
 	void zoomPresentation();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	XournalView* view = NULL;
 	Control* control = NULL;
 

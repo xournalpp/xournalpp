@@ -49,8 +49,6 @@ private:
 	void initMouseButtonEvents(const char* hbox, int button, bool withDevice = false);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Settings* settings = NULL;
 	Control* control = NULL;
 	GtkWidget* callib = NULL;

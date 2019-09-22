@@ -8,14 +8,10 @@
 RectangleHandler::RectangleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift, bool flipControl)
  : BaseStrokeHandler(xournal, redrawable, page, flipShift, flipControl)
 {
-	XOJ_INIT_TYPE(RectangleHandler);
 }
 
 RectangleHandler::~RectangleHandler()
 {
-	XOJ_CHECK_TYPE(RectangleHandler);
-
-	XOJ_RELEASE_TYPE(RectangleHandler);
 }
 
 void RectangleHandler::drawShape(Point& c, const PositionInputData& pos)

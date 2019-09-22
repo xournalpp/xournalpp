@@ -59,8 +59,6 @@ public:
 	double area() const;
 
 public:
-	XOJ_TYPE_ATTRIB;
-
 	double x = 0;
 	double y = 0;
 	double width = 0;

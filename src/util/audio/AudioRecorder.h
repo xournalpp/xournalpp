@@ -32,9 +32,7 @@ public:
 	vector<DeviceInfo> getInputDevices();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-protected:
+	protected:
 	Settings* settings = nullptr;
 
 	AudioQueue<float>* audioQueue = nullptr;

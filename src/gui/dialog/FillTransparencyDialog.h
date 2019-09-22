@@ -28,7 +28,5 @@ private:
 	void setPreviewImage(int alpha);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	int resultAlpha = -1;
 };

@@ -39,8 +39,6 @@ public:
 	bool removeItemByID(string toolbar, int id);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	string id;
 	string name;
 	std::vector<ToolbarEntry*> contents;

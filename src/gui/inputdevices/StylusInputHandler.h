@@ -25,8 +25,6 @@ public:
 	bool handleImpl(InputEvent* event) override;
 	bool changeTool(InputEvent* event) override;
 private:
-	XOJ_TYPE_ATTRIB;
-
 	void setPressedState(InputEvent*);
 };
 

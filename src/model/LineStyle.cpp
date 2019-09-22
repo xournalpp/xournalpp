@@ -6,30 +6,22 @@
 
 LineStyle::LineStyle()
 {
-	XOJ_INIT_TYPE(LineStyle);
 }
 
 LineStyle::LineStyle(const LineStyle& other)
 {
-	XOJ_INIT_TYPE(LineStyle);
 	*this = other;
 }
 
 LineStyle::~LineStyle()
 {
-	XOJ_CHECK_TYPE(LineStyle);
-
 	g_free(this->dashes);
 	this->dashes = NULL;
 	this->dashCount = 0;
-
-	XOJ_RELEASE_TYPE(LineStyle);
 }
 
 void LineStyle::operator=(const LineStyle& other)
 {
-	XOJ_CHECK_TYPE(LineStyle);
-
 	const double* dashes = NULL;
 	int dashCount = 0;
 
@@ -40,8 +32,6 @@ void LineStyle::operator=(const LineStyle& other)
 
 void LineStyle::serialize(ObjectOutputStream& out)
 {
-	XOJ_CHECK_TYPE(LineStyle);
-
 	out.writeObject("LineStyle");
 
 	out.writeData(this->dashes, this->dashCount, sizeof(double));
@@ -51,8 +41,6 @@ void LineStyle::serialize(ObjectOutputStream& out)
 
 void LineStyle::readSerialized(ObjectInputStream& in)
 {
-	XOJ_CHECK_TYPE(LineStyle);
-
 	in.readObject("LineStyle");
 
 	g_free(this->dashes);
@@ -70,8 +58,6 @@ void LineStyle::readSerialized(ObjectInputStream& in)
  */
 bool LineStyle::getDashes(const double*& dashes, int& dashCount) const
 {
-	XOJ_CHECK_TYPE(LineStyle);
-
 	dashes = this->dashes;
 	dashCount = this->dashCount;
 
@@ -86,8 +72,6 @@ bool LineStyle::getDashes(const double*& dashes, int& dashCount) const
  */
 void LineStyle::setDashes(const double* dashes, int dashCount)
 {
-	XOJ_CHECK_TYPE(LineStyle);
-
 	g_free(this->dashes);
 	if (dashCount == 0 || dashes == NULL)
 	{
@@ -109,7 +93,5 @@ void LineStyle::setDashes(const double* dashes, int dashCount)
  */
 bool LineStyle::hasDashes() const
 {
-	XOJ_CHECK_TYPE(LineStyle);
-
 	return this->dashCount > 0;
 }

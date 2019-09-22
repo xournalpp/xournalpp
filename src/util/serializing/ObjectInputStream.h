@@ -45,8 +45,6 @@ private:
 	string getType(char type);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	GString* str = NULL;
 	gsize pos = 0;
 };

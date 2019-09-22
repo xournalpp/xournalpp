@@ -58,8 +58,6 @@ private:
 										  GtkSelectionData* data, guint info, guint time, ToolbarAdapter* adapter);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	GtkWidget* w;
 	string toolbarName;
 	MainWindow* window;

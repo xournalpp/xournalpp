@@ -8,14 +8,10 @@
 CoordinateSystemHandler::CoordinateSystemHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift, bool flipControl)
  : BaseStrokeHandler(xournal, redrawable, page, flipShift, flipControl)
 {
-	XOJ_INIT_TYPE(CoordinateSystemHandler);
 }
 
 CoordinateSystemHandler::~CoordinateSystemHandler()
 {
-	XOJ_CHECK_TYPE(CoordinateSystemHandler);
-
-	XOJ_RELEASE_TYPE(CoordinateSystemHandler);
 }
 
 /**

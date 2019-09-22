@@ -44,7 +44,5 @@ private:
 	void rerenderRectangle(Rectangle* rect);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	XojPageView* view;
 };

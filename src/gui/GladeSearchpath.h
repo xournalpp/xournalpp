@@ -33,8 +33,6 @@ public:
 	string getFirstSearchPath();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Search directory for icons and Glade files
 	 */

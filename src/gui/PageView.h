@@ -188,8 +188,6 @@ private:
 
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	PageRef page;
 	XournalView* xournal;
 	Settings* settings;

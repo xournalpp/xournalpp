@@ -25,36 +25,26 @@ public:
 FontUndoAction::FontUndoAction(PageRef page, Layer* layer)
  : UndoAction("FontUndoAction")
 {
-	XOJ_INIT_TYPE(FontUndoAction);
-
 	this->page = page;
 	this->layer = layer;
 }
 
 FontUndoAction::~FontUndoAction()
 {
-	XOJ_CHECK_TYPE(FontUndoAction);
-
 	for (FontUndoActionEntry* e : this->data)
 	{
 		delete e;
 	}
 	this->data.clear();
-
-	XOJ_RELEASE_TYPE(FontUndoAction);
 }
 
 void FontUndoAction::addStroke(Text* e, XojFont& oldFont, XojFont& newFont)
 {
-	XOJ_CHECK_TYPE(FontUndoAction);
-
 	this->data.push_back(new FontUndoActionEntry(e, oldFont, newFont));
 }
 
 bool FontUndoAction::undo(Control* control)
 {
-	XOJ_CHECK_TYPE(FontUndoAction);
-
 	if (this->data.empty())
 	{
 		return true;
@@ -91,8 +81,6 @@ bool FontUndoAction::undo(Control* control)
 
 bool FontUndoAction::redo(Control* control)
 {
-	XOJ_CHECK_TYPE(FontUndoAction);
-
 	if (this->data.empty())
 	{
 		return true;
@@ -129,7 +117,5 @@ bool FontUndoAction::redo(Control* control)
 
 string FontUndoAction::getText()
 {
-	XOJ_CHECK_TYPE(FontUndoAction);
-
 	return _("Change font");
 }

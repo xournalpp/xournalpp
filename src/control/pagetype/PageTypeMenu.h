@@ -69,8 +69,6 @@ private:
 	cairo_surface_t* createPreviewImage(PageType pt);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	bool showSpecial;
 
 	GtkWidget* menu;
