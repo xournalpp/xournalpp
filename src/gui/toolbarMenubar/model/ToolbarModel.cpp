@@ -8,33 +8,24 @@
 
 ToolbarModel::ToolbarModel()
 {
-	XOJ_INIT_TYPE(ToolbarModel);
 }
 
 ToolbarModel::~ToolbarModel()
 {
-	XOJ_CHECK_TYPE(ToolbarModel);
-
 	for (ToolbarData* data : this->toolbars)
 	{
 		delete data;
 	}
 	this->toolbars.clear();
-
-	XOJ_RELEASE_TYPE(ToolbarModel);
 }
 
 vector<ToolbarData*>* ToolbarModel::getToolbars()
 {
-	XOJ_CHECK_TYPE(ToolbarModel);
-
 	return &this->toolbars;
 }
 
 void ToolbarModel::parseGroup(GKeyFile* config, const char* group, bool predefined)
 {
-	XOJ_CHECK_TYPE(ToolbarModel);
-
 	ToolbarData* data = new ToolbarData(predefined);
 
 	data->name = (predefined ? "predef_" : "custom_");
@@ -47,8 +38,6 @@ void ToolbarModel::parseGroup(GKeyFile* config, const char* group, bool predefin
 
 void ToolbarModel::remove(ToolbarData* data)
 {
-	XOJ_CHECK_TYPE(ToolbarModel);
-
 	for (size_t i = 0; i < this->toolbars.size(); i++)
 	{
 		if (this->toolbars[i] == data)
@@ -61,15 +50,11 @@ void ToolbarModel::remove(ToolbarData* data)
 
 void ToolbarModel::add(ToolbarData* data)
 {
-	XOJ_CHECK_TYPE(ToolbarModel);
-
 	this->toolbars.push_back(data);
 }
 
 bool ToolbarModel::parse(string filename, bool predefined)
 {
-	XOJ_CHECK_TYPE(ToolbarModel);
-
 	GKeyFile* config = g_key_file_new();
 	g_key_file_set_list_separator(config, ',');
 	if (!g_key_file_load_from_file(config, filename.c_str(), G_KEY_FILE_NONE, NULL))
@@ -93,8 +78,6 @@ bool ToolbarModel::parse(string filename, bool predefined)
 
 void ToolbarModel::initCopyNameId(ToolbarData* data)
 {
-	XOJ_CHECK_TYPE(ToolbarModel);
-
 	for (int i = 0; i < 100; i++)
 	{
 		string id = data->getId() + " Copy";
@@ -129,8 +112,6 @@ void ToolbarModel::initCopyNameId(ToolbarData* data)
 
 bool ToolbarModel::existsId(string id)
 {
-	XOJ_CHECK_TYPE(ToolbarModel);
-
 	for (ToolbarData* data : this->toolbars)
 	{
 		if (data->getId() == id)

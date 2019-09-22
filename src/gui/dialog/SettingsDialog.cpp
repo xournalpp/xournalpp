@@ -17,8 +17,6 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
    control(control),
    callib(zoomcallib_new())
 {
-	XOJ_INIT_TYPE(SettingsDialog);
-
 	GtkWidget* vbox = get("zoomVBox");
 	g_return_if_fail(vbox != NULL);
 
@@ -28,58 +26,50 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 	g_signal_connect(slider, "change-value", G_CALLBACK(
 		+[](GtkRange* range, GtkScrollType scroll, gdouble value, SettingsDialog* self)
 		{
-			XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-			self->setDpi((int) value);
+	self->setDpi((int) value);
 		}), this);
 
 	g_signal_connect(get("cbAutosave"), "toggled", G_CALLBACK(
 		+[](GtkToggleButton* togglebutton, SettingsDialog* self)
 		{
-			XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-			self->enableWithCheckbox("cbAutosave", "boxAutosave");
+	self->enableWithCheckbox("cbAutosave", "boxAutosave");
 		}), this);
 
 
 	g_signal_connect(get("btTestEnable"), "clicked", G_CALLBACK(
 		+[](GtkButton* bt, SettingsDialog* self)
 		{
-			XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-			system(gtk_entry_get_text(GTK_ENTRY(self->get("txtEnableTouchCommand"))));
+	system(gtk_entry_get_text(GTK_ENTRY(self->get("txtEnableTouchCommand"))));
 		}), this);
 
 	g_signal_connect(get("btTestDisable"), "clicked", G_CALLBACK(
 		+[](GtkButton* bt, SettingsDialog* self)
 		{
-			XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-			system(gtk_entry_get_text(GTK_ENTRY(self->get("txtDisableTouchCommand"))));
+	system(gtk_entry_get_text(GTK_ENTRY(self->get("txtDisableTouchCommand"))));
 		}), this);
 
 	g_signal_connect(get("cbAddVerticalSpace"), "toggled", G_CALLBACK(
 			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
 			{
-				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-				self->enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpace");
+	self->enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpace");
 			}), this);
 
 	g_signal_connect(get("cbAddHorizontalSpace"), "toggled", G_CALLBACK(
 			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
 			{
-				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-				self->enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpace");
+	self->enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpace");
 			}), this);
 
 	g_signal_connect(get("cbDrawDirModsEnabled"), "toggled", G_CALLBACK(
 			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
 			{
-				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-				self->enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
+	self->enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
 			}), this);
 
 	g_signal_connect(get("cbStrokeFilterEnabled"), "toggled", G_CALLBACK(
 			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
 			{
-				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
+	self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
 				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
 				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
 				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
@@ -89,15 +79,13 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 	g_signal_connect(get("cbDisableTouchOnPenNear"), "toggled", G_CALLBACK(
 			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
 			{
-				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-				self->enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
+	self->enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
 			}), this);
 
 	g_signal_connect(get("cbTouchDisableMethod"), "changed", G_CALLBACK(
 			+[](GtkComboBox* comboBox, SettingsDialog* self)
 			{
-				XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-				self->customHandRecognitionToggled();
+	self->customHandRecognitionToggled();
 			}), this);
 
 	gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
@@ -124,8 +112,6 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 
 SettingsDialog::~SettingsDialog()
 {
-	XOJ_CHECK_TYPE(SettingsDialog);
-
 	for (ButtonConfigGui* bcg : this->buttonConfigs)
 	{
 		delete bcg;
@@ -140,21 +126,15 @@ SettingsDialog::~SettingsDialog()
 
 	// DO NOT delete settings!
 	this->settings = NULL;
-
-	XOJ_RELEASE_TYPE(SettingsDialog);
 }
 
 void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool withDevice)
 {
-	XOJ_CHECK_TYPE(SettingsDialog);
-
 	this->buttonConfigs.push_back(new ButtonConfigGui(getGladeSearchPath(), get(hbox), settings, button, withDevice));
 }
 
 void SettingsDialog::initMouseButtonEvents()
 {
-	XOJ_CHECK_TYPE(SettingsDialog);
-
 	initMouseButtonEvents("hboxMidleMouse", 1);
 	initMouseButtonEvents("hboxRightMouse", 2);
 	initMouseButtonEvents("hboxEraser", 0);
@@ -167,8 +147,6 @@ void SettingsDialog::initMouseButtonEvents()
 
 void SettingsDialog::setDpi(int dpi)
 {
-	XOJ_CHECK_TYPE(SettingsDialog);
-
 	if (this->dpi == dpi)
 	{
 		return;
@@ -180,8 +158,6 @@ void SettingsDialog::setDpi(int dpi)
 
 void SettingsDialog::show(GtkWindow* parent)
 {
-	XOJ_CHECK_TYPE(SettingsDialog);
-
 	load();
 
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
@@ -197,16 +173,12 @@ void SettingsDialog::show(GtkWindow* parent)
 
 void SettingsDialog::loadCheckbox(const char* name, gboolean value)
 {
-	XOJ_CHECK_TYPE(SettingsDialog);
-
 	GtkToggleButton* b = GTK_TOGGLE_BUTTON(get(name));
 	gtk_toggle_button_set_active(b, value);
 }
 
 bool SettingsDialog::getCheckbox(const char* name)
 {
-	XOJ_CHECK_TYPE(SettingsDialog);
-
 	GtkToggleButton* b = GTK_TOGGLE_BUTTON(get(name));
 	return gtk_toggle_button_get_active(b);
 }
@@ -216,8 +188,6 @@ bool SettingsDialog::getCheckbox(const char* name)
  */
 void SettingsDialog::enableWithCheckbox(string checkbox, string widget)
 {
-	XOJ_CHECK_TYPE(SettingsDialog);
-
 	GtkWidget* cbAutosave = get(std::move(checkbox));
 	bool autosaveEnabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbAutosave));
 	gtk_widget_set_sensitive(get(std::move(widget)), autosaveEnabled);
@@ -225,8 +195,6 @@ void SettingsDialog::enableWithCheckbox(string checkbox, string widget)
 
 void SettingsDialog::customHandRecognitionToggled()
 {
-	XOJ_CHECK_TYPE(SettingsDialog);
-
 	GtkWidget* cbTouchDisableMethod = get("cbTouchDisableMethod");
 	int touchMethod = gtk_combo_box_get_active(GTK_COMBO_BOX(cbTouchDisableMethod));
 	gtk_widget_set_sensitive(get("boxCustomTouchDisableSettings"), touchMethod == 2);
@@ -234,8 +202,6 @@ void SettingsDialog::customHandRecognitionToggled()
 
 void SettingsDialog::load()
 {
-	XOJ_CHECK_TYPE(SettingsDialog);
-
 	loadCheckbox("cbSettingPresureSensitivity", settings->isPressureSensitivity());
 	loadCheckbox("cbEnableZoomGestures", settings->isZoomGesturesEnabled());
 	loadCheckbox("cbShowSidebarRight", settings->isSidebarOnRight());
@@ -452,8 +418,6 @@ void SettingsDialog::load()
 
 string SettingsDialog::updateHideString(const string& hidden, bool hideMenubar, bool hideSidebar)
 {
-	XOJ_CHECK_TYPE(SettingsDialog);
-
 	string newHidden;
 
 	for (const string& element: StringUtils::split(hidden, ','))
@@ -511,8 +475,6 @@ string SettingsDialog::updateHideString(const string& hidden, bool hideMenubar, 
 
 void SettingsDialog::save()
 {
-	XOJ_CHECK_TYPE(SettingsDialog);
-
 	settings->transactionStart();
 
 	settings->setPressureSensitivity(getCheckbox("cbSettingPresureSensitivity"));

@@ -25,35 +25,25 @@ public:
 ColorUndoAction::ColorUndoAction(PageRef page, Layer* layer)
  : UndoAction("ColorUndoAction")
 {
-	XOJ_INIT_TYPE(ColorUndoAction);
-
 	this->page = page;
 	this->layer = layer;
 }
 
 ColorUndoAction::~ColorUndoAction()
 {
-	XOJ_CHECK_TYPE(ColorUndoAction);
-
 	for (ColorUndoActionEntry* e : this->data)
 	{
 		delete e;
 	}
-
-	XOJ_RELEASE_TYPE(ColorUndoAction);
 }
 
 void ColorUndoAction::addStroke(Element* e, int originalColor, double newColor)
 {
-	XOJ_CHECK_TYPE(ColorUndoAction);
-
 	this->data.push_back(new ColorUndoActionEntry(e, originalColor, newColor));
 }
 
 bool ColorUndoAction::undo(Control* control)
 {
-	XOJ_CHECK_TYPE(ColorUndoAction);
-
 	if (this->data.empty())
 	{
 		return true;
@@ -83,8 +73,6 @@ bool ColorUndoAction::undo(Control* control)
 
 bool ColorUndoAction::redo(Control* control)
 {
-	XOJ_CHECK_TYPE(ColorUndoAction);
-
 	if (this->data.empty())
 	{
 		return true;
@@ -114,7 +102,5 @@ bool ColorUndoAction::redo(Control* control)
 
 string ColorUndoAction::getText()
 {
-	XOJ_CHECK_TYPE(ColorUndoAction);
-
 	return _("Change color");
 }

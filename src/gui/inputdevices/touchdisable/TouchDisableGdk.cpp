@@ -8,25 +8,18 @@
 
 TouchDisableGdk::TouchDisableGdk(GtkWidget* widget) : TouchDisableInterface(), widget(widget)
 {
-	XOJ_INIT_TYPE(TouchDisableGdk);
 }
 
 TouchDisableGdk::~TouchDisableGdk()
 {
-	XOJ_CHECK_TYPE(TouchDisableGdk);
-
-	XOJ_RELEASE_TYPE(TouchDisableGdk);
 }
 
 void TouchDisableGdk::init()
 {
-	XOJ_CHECK_TYPE(TouchDisableGdk);
 }
 
 void TouchDisableGdk::enableTouch()
 {
-	XOJ_CHECK_TYPE(TouchDisableGdk);
-
 #ifdef DEBUG_INPUT
 	g_message("Enable touch");
 #endif
@@ -37,8 +30,6 @@ void TouchDisableGdk::enableTouch()
 
 void TouchDisableGdk::disableTouch()
 {
-	XOJ_CHECK_TYPE(TouchDisableGdk);
-
 #ifdef DEBUG_INPUT
 	g_message("Disable touch using GDK grabs");
 #endif

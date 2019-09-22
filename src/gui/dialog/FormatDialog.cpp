@@ -11,8 +11,6 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
  : GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog"),
    settings(settings)
 {
-	XOJ_INIT_TYPE(FormatDialog);
-
 	this->selectedScale = settings->getSizeUnitIndex();
 
 	this->scale = XOJ_UNITS[this->selectedScale].scale;
@@ -93,8 +91,6 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 
 FormatDialog::~FormatDialog()
 {
-	XOJ_CHECK_TYPE(FormatDialog);
-
 	for (GList* l = this->list; l != NULL; l = l->next)
 	{
 		GtkPaperSize* s = (GtkPaperSize*) l->data;
@@ -103,16 +99,12 @@ FormatDialog::~FormatDialog()
 
 	g_list_free(this->list);
 	this->list = NULL;
-
-	XOJ_RELEASE_TYPE(FormatDialog);
 }
 
 #define ADD_FORMAT(format) this->list = g_list_append(this->list, gtk_paper_size_new(format))
 
 void FormatDialog::loadPageFormats()
 {
-	XOJ_CHECK_TYPE(FormatDialog);
-
 	this->list = gtk_paper_size_get_paper_sizes(false);
 
 	GList* next = NULL;
@@ -143,22 +135,16 @@ void FormatDialog::loadPageFormats()
 
 double FormatDialog::getWidth()
 {
-	XOJ_CHECK_TYPE(FormatDialog);
-
 	return this->width;
 }
 
 double FormatDialog::getHeight()
 {
-	XOJ_CHECK_TYPE(FormatDialog);
-
 	return this->height;
 }
 
 void FormatDialog::setOrientation(Orientation orientation)
 {
-	XOJ_CHECK_TYPE(FormatDialog);
-
 	if (this->orientation == orientation)
 	{
 		return;
@@ -174,8 +160,6 @@ void FormatDialog::setOrientation(Orientation orientation)
 
 void FormatDialog::spinValueChangedCb(GtkSpinButton* spinbutton, FormatDialog* dlg)
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, FormatDialog);
-
 	if (dlg->ignoreSpinChange)
 	{
 		return;
@@ -217,8 +201,6 @@ void FormatDialog::spinValueChangedCb(GtkSpinButton* spinbutton, FormatDialog* d
 
 void FormatDialog::cbUnitChanged(GtkComboBox* widget, FormatDialog* dlg)
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, FormatDialog);
-
 	int selectd = gtk_combo_box_get_active(widget);
 	if (dlg->selectedScale == selectd)
 	{
@@ -239,8 +221,6 @@ void FormatDialog::cbUnitChanged(GtkComboBox* widget, FormatDialog* dlg)
 
 void FormatDialog::cbFormatChangedCb(GtkComboBox* widget, FormatDialog* dlg)
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, FormatDialog);
-
 	GtkTreeIter iter;
 
 	if (!gtk_combo_box_get_active_iter(widget, &iter))
@@ -292,8 +272,6 @@ void FormatDialog::cbFormatChangedCb(GtkComboBox* widget, FormatDialog* dlg)
 
 void FormatDialog::portraitSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg)
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, FormatDialog);
-
 	bool activated = gtk_toggle_tool_button_get_active(bt);
 
 	if (activated)
@@ -314,8 +292,6 @@ void FormatDialog::portraitSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg
 
 void FormatDialog::landscapeSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg)
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, FormatDialog);
-
 	bool activated = gtk_toggle_tool_button_get_active(bt);
 
 	if (activated)
@@ -344,8 +320,6 @@ void FormatDialog::setSpinValues(double width, double heigth)
 
 void FormatDialog::show(GtkWindow* parent)
 {
-	XOJ_CHECK_TYPE(FormatDialog);
-
 	int ret = 0;
 	while (ret == 0)
 	{

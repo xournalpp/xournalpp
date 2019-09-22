@@ -3,8 +3,6 @@
 SidebarToolbar::SidebarToolbar(SidebarToolbarActionListener* listener, GladeGui* gui)
  : listener(listener)
 {
-	XOJ_INIT_TYPE(SidebarToolbar);
-
 	this->btUp = GTK_BUTTON(gui->get("btUp"));
 	this->btDown = GTK_BUTTON(gui->get("btDown"));
 	this->btCopy = GTK_BUTTON(gui->get("btCopy"));
@@ -18,8 +16,6 @@ SidebarToolbar::SidebarToolbar(SidebarToolbarActionListener* listener, GladeGui*
 
 SidebarToolbar::~SidebarToolbar()
 {
-	XOJ_CHECK_TYPE(SidebarToolbar);
-	XOJ_RELEASE_TYPE(SidebarToolbar);
 }
 
 void SidebarToolbar::runAction(SidebarActions actions)
@@ -29,36 +25,26 @@ void SidebarToolbar::runAction(SidebarActions actions)
 
 void SidebarToolbar::btUpClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar)
 {
-	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
-
 	toolbar->runAction(SIDEBAR_ACTION_MOVE_UP);
 }
 
 void SidebarToolbar::btDownClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar)
 {
-	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
-
 	toolbar->runAction(SIDEBAR_ACTION_MOVE_DOWN);
 }
 
 void SidebarToolbar::btCopyClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar)
 {
-	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
-
 	toolbar->runAction(SIDEBAR_ACTION_COPY);
 }
 
 void SidebarToolbar::btDeleteClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar)
 {
-	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
-
 	toolbar->runAction(SIDEBAR_ACTION_DELETE);
 }
 
 void SidebarToolbar::setHidden(bool hidden)
 {
-	XOJ_CHECK_TYPE(SidebarToolbar);
-
 	gtk_widget_set_visible(GTK_WIDGET(this->btUp), !hidden);
 	gtk_widget_set_visible(GTK_WIDGET(this->btDown), !hidden);
 	gtk_widget_set_visible(GTK_WIDGET(this->btCopy), !hidden);
@@ -67,8 +53,6 @@ void SidebarToolbar::setHidden(bool hidden)
 
 void SidebarToolbar::setButtonEnabled(SidebarActions enabledActions)
 {
-	XOJ_CHECK_TYPE(SidebarToolbar);
-
 	gtk_widget_set_sensitive(GTK_WIDGET(this->btUp), enabledActions & SIDEBAR_ACTION_MOVE_UP);
 	gtk_widget_set_sensitive(GTK_WIDGET(this->btDown), enabledActions & SIDEBAR_ACTION_MOVE_DOWN);
 	gtk_widget_set_sensitive(GTK_WIDGET(this->btCopy), enabledActions & SIDEBAR_ACTION_COPY);

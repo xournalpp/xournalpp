@@ -11,20 +11,15 @@ ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType typ
  : AbstractToolItem(id, handler, type, NULL),
    zoom(zoom)
 {
-	XOJ_INIT_TYPE(ToolZoomSlider);
-
 	zoom->addZoomListener(this);
 }
 
 ToolZoomSlider::~ToolZoomSlider()
 {
-	XOJ_RELEASE_TYPE(ToolZoomSlider);
 }
 
 void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self)
 {
-	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
-
 	if (!self->sliderChangingByZoomControlOrInit &&
 		!self->zoom->isZoomPresentationMode() &&
 		(self->sliderChangingBySliderDrag || self->sliderChangingBySliderHoverScroll))
@@ -37,8 +32,6 @@ void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self)
 
 bool ToolZoomSlider::sliderButtonPress(GtkRange* range, GdkEvent *event, ToolZoomSlider* self)
 {
-	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
-
 	if(!self->sliderChangingBySliderDrag && !self->zoom->isZoomPresentationMode())
 	{
 		self->zoom->setZoomFitMode(false);
@@ -50,8 +43,6 @@ bool ToolZoomSlider::sliderButtonPress(GtkRange* range, GdkEvent *event, ToolZoo
 
 bool ToolZoomSlider::sliderButtonRelease(GtkRange* range, GdkEvent *event, ToolZoomSlider* self)
 {
-	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
-
 	self->zoom->endZoomSequence();
 	self->sliderChangingBySliderDrag = false;
 	return false;
@@ -59,8 +50,6 @@ bool ToolZoomSlider::sliderButtonRelease(GtkRange* range, GdkEvent *event, ToolZ
 
 bool ToolZoomSlider::sliderHoverScroll(GtkWidget* range,  GdkEventScroll* event, ToolZoomSlider* self)
 {
-	XOJ_CHECK_TYPE_OBJ(self, ToolZoomSlider);
-
 	gint64 now = g_get_monotonic_time();
 	if (now > self->sliderHoverScrollLastTime + 500)
 	{
@@ -79,8 +68,6 @@ gchar* ToolZoomSlider::sliderFormatValue(GtkRange *range, gdouble value, ToolZoo
 
 void ToolZoomSlider::zoomChanged()
 {
-	XOJ_CHECK_TYPE(ToolZoomSlider);
-
 	if (this->slider == NULL || this->sliderChangingBySliderDrag)
 	{
 		return;
@@ -94,30 +81,22 @@ void ToolZoomSlider::zoomChanged()
 
 void ToolZoomSlider::zoomRangeValuesChanged()
 {
-	XOJ_CHECK_TYPE(ToolZoomSlider);
-
 	updateScaleMarks();
 }
 
 string ToolZoomSlider::getToolDisplayName()
 {
-	XOJ_CHECK_TYPE(ToolZoomSlider);
-
 	return _("Zoom slider");
 }
 
 GtkWidget* ToolZoomSlider::getNewToolIcon()
 {
-	XOJ_CHECK_TYPE(ToolZoomSlider);
-
 	return gtk_image_new_from_icon_name("zoom-in" , GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
 // Should be called when the window size changes
 void ToolZoomSlider::updateScaleMarks()
 {
-	XOJ_CHECK_TYPE(ToolZoomSlider);
-
 	if (this->slider == NULL)
 	{
 		return;
@@ -130,8 +109,6 @@ void ToolZoomSlider::updateScaleMarks()
 
 GtkToolItem* ToolZoomSlider::createItem(bool horizontal)
 {
-	XOJ_CHECK_TYPE(ToolZoomSlider);
-
 	this->horizontal = horizontal;
 	this->item = newItem();
 	g_object_ref(this->item);
@@ -166,8 +143,6 @@ GtkToolItem* ToolZoomSlider::createTmpItem(bool horizontal)
 
 void ToolZoomSlider::enable(bool enabled)
 {
-	XOJ_CHECK_TYPE(ToolZoomSlider);
-
 	if (this->item)
 	{
 		gtk_widget_set_sensitive(GTK_WIDGET(this->item), enabled);
@@ -180,8 +155,6 @@ void ToolZoomSlider::enable(bool enabled)
 
 GtkToolItem* ToolZoomSlider::newItem()
 {
-	XOJ_CHECK_TYPE(ToolZoomSlider);
-
 	GtkToolItem* it = gtk_tool_item_new();
 
 	if (this->slider)

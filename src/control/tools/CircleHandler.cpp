@@ -9,21 +9,15 @@
 CircleHandler::CircleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift, bool flipControl)
  : BaseStrokeHandler(xournal, redrawable, page, flipShift, flipControl)
 {
-	XOJ_INIT_TYPE(CircleHandler);
 }
 
 CircleHandler::~CircleHandler()
 {
-	XOJ_CHECK_TYPE(CircleHandler);
-
-	XOJ_RELEASE_TYPE(CircleHandler);
 }
 
 
 void CircleHandler::drawShape(Point& c, const PositionInputData& pos)
 {
-	XOJ_CHECK_TYPE(CircleHandler);
-	
 	this->currPoint = c;
 		
 	/**

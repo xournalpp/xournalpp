@@ -31,8 +31,6 @@ public:
 	PageRangeVector getRange();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	int currentPage = 0;
 	int pageCount = 0;
 

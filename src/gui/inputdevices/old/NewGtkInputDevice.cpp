@@ -15,8 +15,6 @@ NewGtkInputDevice::NewGtkInputDevice(GtkWidget* widget, XournalView* view, Scrol
  : AbstractInputDevice(widget, view),
    scrollHandling(scrollHandling)
 {
-	XOJ_INIT_TYPE(NewGtkInputDevice);
-
 	pointerInputList = g_hash_table_new_full(NULL, NULL, NULL, (GDestroyNotify) InputSequence::free);
 	touchInputList = g_hash_table_new_full(NULL, NULL, NULL, (GDestroyNotify) InputSequence::free);
 
@@ -25,14 +23,10 @@ NewGtkInputDevice::NewGtkInputDevice(GtkWidget* widget, XournalView* view, Scrol
 
 NewGtkInputDevice::~NewGtkInputDevice()
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	g_hash_table_destroy(pointerInputList);
 	pointerInputList = NULL;
 	g_hash_table_destroy(touchInputList);
 	touchInputList = NULL;
-
-	XOJ_RELEASE_TYPE(NewGtkInputDevice);
 }
 
 /**
@@ -40,36 +34,26 @@ NewGtkInputDevice::~NewGtkInputDevice()
  */
 void NewGtkInputDevice::focusWidget()
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	gtk_widget_grab_focus(widget);
 }
 
 Settings* NewGtkInputDevice::getSettings()
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	return view->getControl()->getSettings();
 }
 
 ToolHandler* NewGtkInputDevice::getToolHandler()
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	return view->getControl()->getToolHandler();
 }
 
 GtkXournal* NewGtkInputDevice::getXournal()
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	return GTK_XOURNAL(widget);
 }
 
 XournalView* NewGtkInputDevice::getView()
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	return view;
 }
 
@@ -80,8 +64,6 @@ XournalView* NewGtkInputDevice::getView()
  */
 bool NewGtkInputDevice::startInput(InputSequence* input)
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	if (inputRunning == input)
 	{
 		g_warning("Input for the same device started twice!");
@@ -112,8 +94,6 @@ bool NewGtkInputDevice::startInput(InputSequence* input)
  */
 void NewGtkInputDevice::stopInput(InputSequence* input)
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	if (inputRunning == input)
 	{
 		inputRunning = NULL;
@@ -125,8 +105,6 @@ void NewGtkInputDevice::stopInput(InputSequence* input)
  */
 void NewGtkInputDevice::initWidget()
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	gtk_widget_set_support_multidevice(widget, true);
 
 	int mask =
@@ -152,8 +130,6 @@ void NewGtkInputDevice::initWidget()
 
 bool NewGtkInputDevice::eventCallback(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self)
 {
-	XOJ_CHECK_TYPE_OBJ(self, NewGtkInputDevice);
-
 	return self->eventHandler(event);
 }
 

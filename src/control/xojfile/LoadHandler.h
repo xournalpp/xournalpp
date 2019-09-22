@@ -101,8 +101,6 @@ private:
 	string getTempFileForPath(string filename);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	string lastError;
 	string pdfMissing;
 	bool attachedPdfMissing;

@@ -36,8 +36,6 @@ private:
 	void operator=(const Tool& t);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	string name;
 	ToolType type;
 

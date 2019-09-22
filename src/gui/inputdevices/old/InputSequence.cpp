@@ -19,15 +19,11 @@
 InputSequence::InputSequence(NewGtkInputDevice* inputHandler)
  : inputHandler(inputHandler)
 {
-	XOJ_INIT_TYPE(InputSequence);
-
 	this->presureSensitivity = inputHandler->getSettings()->isPressureSensitivity();
 }
 
 InputSequence::~InputSequence()
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	if (inputRunning)
 	{
 		actionEnd(__UINT32_MAX__);
@@ -36,8 +32,6 @@ InputSequence::~InputSequence()
 
 	// Make 100% sure there is no input running
 	stopInput();
-
-	XOJ_RELEASE_TYPE(InputSequence);
 }
 
 /**
@@ -45,8 +39,6 @@ InputSequence::~InputSequence()
  */
 void InputSequence::setDevice(GdkDevice* device)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	this->device = device;
 }
 
@@ -55,8 +47,6 @@ void InputSequence::setDevice(GdkDevice* device)
  */
 void InputSequence::clearAxes()
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	g_clear_pointer(&axes, g_free);
 }
 
@@ -67,8 +57,6 @@ void InputSequence::clearAxes()
  */
 void InputSequence::setAxes(gdouble* axes)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	clearAxes();
 	this->axes = axes;
 }
@@ -78,8 +66,6 @@ void InputSequence::setAxes(gdouble* axes)
  */
 void InputSequence::copyAxes(GdkEvent* event)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	clearAxes();
 	setAxes((gdouble*)g_memdup(event->motion.axes, sizeof(gdouble) * gdk_device_get_n_axes(device)));
 }
@@ -89,8 +75,6 @@ void InputSequence::copyAxes(GdkEvent* event)
  */
 void InputSequence::setCurrentPosition(double x, double y)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	this->x = x;
 	this->y = y;
 }
@@ -100,8 +84,6 @@ void InputSequence::setCurrentPosition(double x, double y)
  */
 void InputSequence::setCurrentRootPosition(double x, double y)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	this->rootX = x;
 	this->rootY = y;
 }
@@ -111,8 +93,6 @@ void InputSequence::setCurrentRootPosition(double x, double y)
  */
 void InputSequence::setButton(guint button, guint time)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	this->button = button;
 	this->eventTime = time;
 }
@@ -122,8 +102,6 @@ void InputSequence::setButton(guint button, guint time)
  */
 void InputSequence::setState(GdkModifierType state)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	this->state = state;
 }
 
@@ -134,8 +112,6 @@ void InputSequence::setState(GdkModifierType state)
  */
 XojPageView* InputSequence::getPageAtCurrentPosition()
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	GtkXournal* xournal = inputHandler->getXournal();
 
 	double x = this->x + xournal->x;
@@ -149,8 +125,6 @@ XojPageView* InputSequence::getPageAtCurrentPosition()
  */
 void InputSequence::handleScrollEvent()
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	// use root coordinates as reference point because
 	// scrolling changes window relative coordinates
 	// see github Gnome/evince@1adce5486b10e763bed869
@@ -185,8 +159,6 @@ void InputSequence::handleScrollEvent()
  */
 bool InputSequence::actionMoved(guint32 time)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	GtkXournal* xournal = inputHandler->getXournal();
 	ToolHandler* h = inputHandler->getToolHandler();
 
@@ -258,8 +230,6 @@ bool InputSequence::actionMoved(guint32 time)
  */
 bool InputSequence::actionStart(guint32 time)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	this->eventTime = time;
 
 	inputHandler->focusWidget();
@@ -389,8 +359,6 @@ bool InputSequence::checkStillRunning()
  */
 void InputSequence::actionEnd(guint32 time)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	if (!inputRunning)
 	{
 		return;
@@ -449,8 +417,6 @@ void InputSequence::actionEnd(guint32 time)
  */
 PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* page)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	GtkXournal* xournal = inputHandler->getXournal();
 
 	PositionInputData pos;
@@ -475,8 +441,6 @@ PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* 
  */
 void InputSequence::checkCanStartInput()
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	if (inputHandler->startInput(this))
 	{
 		inputRunning = true;
@@ -492,8 +456,6 @@ void InputSequence::checkCanStartInput()
  */
 void InputSequence::stopInput()
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	inputRunning = false;
 	inputHandler->stopInput(this);
 }
@@ -504,8 +466,6 @@ void InputSequence::stopInput()
  */
 bool InputSequence::changeTool()
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	Settings* settings = inputHandler->getSettings();
 	ButtonConfig* cfgTouch = settings->getTouchButtonConfig();
 	ToolHandler* h = inputHandler->getToolHandler();

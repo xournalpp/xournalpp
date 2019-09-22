@@ -47,17 +47,7 @@
 #define ERRORLOG_DIR "@DEV_ERRORLOG_DIR@"
 
 
-/* --- Memory checks and logging --- */
-
-/**
- * Compile with memory checking support
- */
-#cmakedefine DEV_MEMORY_CHECKING
-
-/**
- * Compile with memory leak checking support
- */
-#cmakedefine DEV_MEMORY_LEAK_CHECKING
+/* --- Logging --- */
 
 /**
  * Compile with call log

@@ -69,8 +69,6 @@ public:
 	virtual void pageChanged(size_t page);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Layer Controller
 	 */

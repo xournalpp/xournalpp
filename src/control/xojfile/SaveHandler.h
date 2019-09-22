@@ -52,8 +52,6 @@ protected:
 	virtual void writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode);
 
 protected:
-	XOJ_TYPE_ATTRIB;
-
 	XmlNode* root;
 	bool firstPdfPageVisited;
 	int attachBgId;

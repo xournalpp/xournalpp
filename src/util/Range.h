@@ -30,8 +30,6 @@ public:
 	double getY2() const;
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	double x1;
 	double y1;
 	double y2;

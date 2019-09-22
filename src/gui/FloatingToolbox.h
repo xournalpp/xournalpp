@@ -85,8 +85,6 @@ private:
 
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	MainWindow* mainWindow;
 	GtkWidget *floatingToolbox;
 

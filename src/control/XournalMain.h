@@ -41,5 +41,4 @@ private:
 	string findResourcePath(string searchFile);
 
 private:
-	XOJ_TYPE_ATTRIB;
-};
+	};

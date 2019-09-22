@@ -42,7 +42,5 @@ private:
 	void loadFormat(GKeyFile* config, const char* group);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	vector<PageTypeInfo*> types;
 };

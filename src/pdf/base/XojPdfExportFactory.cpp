@@ -6,12 +6,10 @@
 
 XojPdfExportFactory::XojPdfExportFactory()
 {
-	XOJ_INIT_TYPE(XojPdfExportFactory);
 }
 
 XojPdfExportFactory::~XojPdfExportFactory()
 {
-	XOJ_RELEASE_TYPE(XojPdfExportFactory);
 }
 
 XojPdfExport* XojPdfExportFactory::createExport(Document* doc, ProgressListener* listener)

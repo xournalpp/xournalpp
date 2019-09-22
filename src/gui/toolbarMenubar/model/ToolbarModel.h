@@ -39,7 +39,5 @@ private:
 	void parseGroup(GKeyFile* config, const char* group, bool predefined);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	vector<ToolbarData*> toolbars;
 };

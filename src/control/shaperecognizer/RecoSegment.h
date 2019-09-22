@@ -33,8 +33,6 @@ public:
 	void calcSegmentGeometry(const Point* pt, int start, int end, Inertia* s);
 
 public:
-	XOJ_TYPE_ATTRIB;
-
 	Stroke* stroke;
 	int startpt;
 	int endpt;

@@ -46,8 +46,6 @@ private:
 	void saveToModel();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Settings* settings;
 
 	PageTemplateSettings model;

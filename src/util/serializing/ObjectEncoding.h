@@ -26,7 +26,5 @@ public:
 	GString* getData();
 
 public:
-	XOJ_TYPE_ATTRIB;
-
 	GString* data;
 };

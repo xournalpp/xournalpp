@@ -133,8 +133,6 @@ private:
 	void insertTexImage();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Control* control = NULL;
 
 	/**

@@ -5,8 +5,6 @@
 AudioRecorder::AudioRecorder(Settings* settings)
 		: settings(settings)
 {
-	XOJ_INIT_TYPE(AudioRecorder);
-
 	this->audioQueue = new AudioQueue<float>();
 	this->portAudioProducer = new PortAudioProducer(settings, this->audioQueue);
 	this->vorbisConsumer = new VorbisConsumer(settings, this->audioQueue);
@@ -14,8 +12,6 @@ AudioRecorder::AudioRecorder(Settings* settings)
 
 AudioRecorder::~AudioRecorder()
 {
-	XOJ_CHECK_TYPE(AudioRecorder);
-
 	this->stop();
 
 	delete this->portAudioProducer;
@@ -26,14 +22,10 @@ AudioRecorder::~AudioRecorder()
 
 	delete this->audioQueue;
 	this->audioQueue = nullptr;
-
-	XOJ_RELEASE_TYPE(AudioRecorder);
 }
 
 bool AudioRecorder::start(string filename)
 {
-	XOJ_CHECK_TYPE(AudioRecorder);
-
 	// Start recording
 	bool status = this->portAudioProducer->startRecording();
 
@@ -45,8 +37,6 @@ bool AudioRecorder::start(string filename)
 
 void AudioRecorder::stop()
 {
-	XOJ_CHECK_TYPE(AudioRecorder);
-
 	// Stop recording audio
 	this->portAudioProducer->stopRecording();
 
@@ -59,15 +49,11 @@ void AudioRecorder::stop()
 
 bool AudioRecorder::isRecording()
 {
-	XOJ_CHECK_TYPE(AudioRecorder);
-
 	return this->portAudioProducer->isRecording();
 }
 
 std::vector<DeviceInfo> AudioRecorder::getInputDevices()
 {
-	XOJ_CHECK_TYPE(AudioRecorder);
-
 	std::list<DeviceInfo> deviceList = this->portAudioProducer->getInputDevices();
 	return vector<DeviceInfo>{std::make_move_iterator(std::begin(deviceList)),
 							  std::make_move_iterator(std::end(deviceList))};

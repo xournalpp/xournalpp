@@ -17,8 +17,6 @@
 CustomExportJob::CustomExportJob(Control* control)
  : BaseExportJob(control, _("Custom Export"))
 {
-	XOJ_INIT_TYPE(CustomExportJob);
-
 	// Supported filters
 	filters[_("PDF files")] = new ExportType(".pdf", false); 
 	filters[_("PDF with plain background")] = new ExportType(".pdf", true);
@@ -31,8 +29,6 @@ CustomExportJob::CustomExportJob(Control* control)
 
 CustomExportJob::~CustomExportJob()
 {
-	XOJ_CHECK_TYPE(CustomExportJob);
-
 	for (PageRangeEntry* e : exportRange)
 	{
 		delete e;
@@ -43,14 +39,10 @@ CustomExportJob::~CustomExportJob()
 	{
 		delete filter.second;
 	}
-
-	XOJ_RELEASE_TYPE(CustomExportJob);
 }
 
 void CustomExportJob::addFilterToDialog()
 {
-	XOJ_CHECK_TYPE(CustomExportJob);
-
 	// Runs on every filter inside the filters map
 	for (auto& filter : filters)
 	{
@@ -60,8 +52,6 @@ void CustomExportJob::addFilterToDialog()
 
 bool CustomExportJob::isUriValid(string& uri)
 {
-	XOJ_CHECK_TYPE(CustomExportJob);
-
 	if (!BaseExportJob::isUriValid(uri))
 	{
 		return false;
@@ -131,8 +121,6 @@ bool CustomExportJob::showFilechooser()
  */
 void CustomExportJob::exportGraphics()
 {
-	XOJ_CHECK_TYPE(CustomExportJob);
-
 	bool hideBackground = filters[this->chosenFilterName]->withoutBackground;
 
 	ImageExport imgExport(control->getDocument(), filename, format, hideBackground, exportRange);
@@ -144,8 +132,6 @@ void CustomExportJob::exportGraphics()
 
 void CustomExportJob::run()
 {
-	XOJ_CHECK_TYPE(CustomExportJob);
-
 	if (exportTypeXoj)
 	{
 		SaveJob::updatePreview(control);
@@ -189,8 +175,6 @@ void CustomExportJob::run()
 
 void CustomExportJob::afterRun()
 {
-	XOJ_CHECK_TYPE(CustomExportJob);
-
 	if (!this->lastError.empty())
 	{
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), this->lastError);

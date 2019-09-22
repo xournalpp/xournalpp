@@ -4,20 +4,14 @@
 
 StavesBackgroundPainter::StavesBackgroundPainter()
 {
-	XOJ_INIT_TYPE(StavesBackgroundPainter);
 }
 
 StavesBackgroundPainter::~StavesBackgroundPainter()
 {
-	XOJ_CHECK_TYPE(StavesBackgroundPainter);
-
-	XOJ_RELEASE_TYPE(StavesBackgroundPainter);
 }
 
 void StavesBackgroundPainter::resetConfig()
 {
-	XOJ_CHECK_TYPE(StavesBackgroundPainter);
-
 	this->foregroundColor1 = 0x000000;
 	this->foregroundColor2 = 0xFF0080;
 	this->lineWidth = 0.5;
@@ -25,8 +19,6 @@ void StavesBackgroundPainter::resetConfig()
 
 void StavesBackgroundPainter::paint()
 {
-	XOJ_CHECK_TYPE(StavesBackgroundPainter);
-
 	paintBackgroundColor();
 
 	double lineSize = 4 * staveDistance + 5 * lineWidth * lineWidthFactor + lineDistance;
@@ -44,8 +36,6 @@ void StavesBackgroundPainter::paint()
 
 void StavesBackgroundPainter::paintBackgroundStaves(double offset)
 {
-	XOJ_CHECK_TYPE(StavesBackgroundPainter);
-
 	Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
 	cairo_set_line_width(cr, lineWidth * lineWidthFactor);
 

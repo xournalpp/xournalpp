@@ -31,8 +31,6 @@ public:
 	virtual string getText();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	PageType origType;
 	int origPdfPage;
 	BackgroundImage origBackgroundImage;

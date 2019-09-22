@@ -5,20 +5,14 @@ VorbisConsumer::VorbisConsumer(Settings* settings, AudioQueue<float>* audioQueue
 		: settings(settings),
 		  audioQueue(audioQueue)
 {
-	XOJ_INIT_TYPE(VorbisConsumer);
 }
 
 VorbisConsumer::~VorbisConsumer()
 {
-	XOJ_CHECK_TYPE(VorbisConsumer);
-
-	XOJ_RELEASE_TYPE(VorbisConsumer);
 }
 
 bool VorbisConsumer::start(string filename)
 {
-	XOJ_CHECK_TYPE(VorbisConsumer);
-
 	double sampleRate;
 	unsigned int channels;
 	this->audioQueue->getAudioAttributes(sampleRate, channels);
@@ -78,8 +72,6 @@ bool VorbisConsumer::start(string filename)
 
 void VorbisConsumer::join()
 {
-	XOJ_CHECK_TYPE(VorbisConsumer);
-
 	// Join the consumer thread to wait for completion
 	if (this->consumerThread && this->consumerThread->joinable())
 	{
@@ -89,8 +81,6 @@ void VorbisConsumer::join()
 
 void VorbisConsumer::stop()
 {
-	XOJ_CHECK_TYPE(VorbisConsumer);
-
 	// Stop consumer
 	this->audioQueue->signalEndOfStream();
 

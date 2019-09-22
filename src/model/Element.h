@@ -74,9 +74,7 @@ public:
 	virtual Element* clone() = 0;
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-protected:
+	protected:
 	virtual void calcSize() = 0;
 
 	void serializeElement(ObjectOutputStream& out);

@@ -59,8 +59,6 @@ protected:
 	void showColorchooser();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Color
 	 */

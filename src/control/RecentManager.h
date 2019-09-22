@@ -123,9 +123,6 @@ private:
 	static int sortRecentsEntries(GtkRecentInfo* a, GtkRecentInfo* b);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-
 	int maxRecent = 10;
 	int recentHandlerId;
 

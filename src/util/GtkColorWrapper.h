@@ -44,5 +44,4 @@ public:
 	guint16 blue;
 
 private:
-	XOJ_TYPE_ATTRIB;
-};
+	};

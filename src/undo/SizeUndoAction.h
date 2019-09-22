@@ -36,8 +36,6 @@ public:
 	static vector<double> getPressure(Stroke* s);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	std::vector<SizeUndoActionEntry*> data;
 
 	Layer* layer;

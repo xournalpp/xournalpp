@@ -33,8 +33,6 @@ public:
 	void addStroke(Element* e, int originalColor, double newColor);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	std::vector<ColorUndoActionEntry*> data;
 	Layer* layer;
 };

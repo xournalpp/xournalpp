@@ -100,9 +100,6 @@ private:
 	static bool fillPageLabels(GtkTreeModel* tree_model, GtkTreePath* path, GtkTreeIter* iter, Document* doc);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-
 	DocumentHandler* handler = NULL;
 
 	XojPdfDocument pdfDocument;

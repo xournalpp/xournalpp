@@ -32,8 +32,6 @@ protected:
 	void addMenuitem(string text, string icon, ActionType type, ActionGroup group);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	ToolMenuHandler* toolMenuHandler = NULL;
 	GtkWidget* popup = NULL;
 

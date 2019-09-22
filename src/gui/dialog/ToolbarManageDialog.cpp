@@ -15,8 +15,6 @@ ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, Toolb
  : GladeGui(gladeSearchPath, "toolbarManageDialog.glade", "DialogManageToolbar"),
    tbModel(model)
 {
-	XOJ_INIT_TYPE(ToolbarManageDialog);
-
 	GtkTreeIter iter;
 	this->model = gtk_list_store_new(N_COLUMNS, G_TYPE_STRING, G_TYPE_INT, G_TYPE_POINTER, G_TYPE_BOOLEAN);
 	gtk_list_store_append(this->model, &iter);
@@ -74,18 +72,12 @@ ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, Toolb
 
 ToolbarManageDialog::~ToolbarManageDialog()
 {
-	XOJ_CHECK_TYPE(ToolbarManageDialog);
-
 	g_object_unref(this->model);
 	this->tbModel = NULL;
-
-	XOJ_RELEASE_TYPE(ToolbarManageDialog);
 }
 
 void ToolbarManageDialog::buttonNewCallback(GtkButton* button, ToolbarManageDialog* dlg)
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarManageDialog);
-
 	ToolbarData* data = new ToolbarData(false);
 	data->setName(_("New"));
 	data->setId("custom");
@@ -95,8 +87,6 @@ void ToolbarManageDialog::buttonNewCallback(GtkButton* button, ToolbarManageDial
 
 void ToolbarManageDialog::buttonDeleteCallback(GtkButton* button, ToolbarManageDialog* dlg)
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarManageDialog);
-
 	ToolbarData* selected = dlg->getSelectedEntry();
 	if (selected == NULL)
 	{
@@ -127,8 +117,6 @@ void ToolbarManageDialog::buttonDeleteCallback(GtkButton* button, ToolbarManageD
 
 void ToolbarManageDialog::buttonCopyCallback(GtkButton* button, ToolbarManageDialog* dlg)
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarManageDialog);
-
 	ToolbarData* selected = dlg->getSelectedEntry();
 	if (selected == NULL)
 	{
@@ -142,8 +130,6 @@ void ToolbarManageDialog::buttonCopyCallback(GtkButton* button, ToolbarManageDia
 
 void ToolbarManageDialog::addToolbarData(ToolbarData* data)
 {
-	XOJ_CHECK_TYPE(ToolbarManageDialog);
-
 	this->tbModel->add(data);
 	GtkTreeIter iter;
 	gtk_list_store_append(this->model, &iter);
@@ -161,8 +147,6 @@ void ToolbarManageDialog::addToolbarData(ToolbarData* data)
 void ToolbarManageDialog::treeCellEditedCallback(GtkCellRendererText* renderer, gchar* pathString,
 												 gchar* newText, ToolbarManageDialog* dlg)
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarManageDialog);
-
 	GtkTreeIter iter;
 	ToolbarData* data = NULL;
 
@@ -177,8 +161,6 @@ void ToolbarManageDialog::treeCellEditedCallback(GtkCellRendererText* renderer, 
 
 void ToolbarManageDialog::entrySelected(ToolbarData* data)
 {
-	XOJ_CHECK_TYPE(ToolbarManageDialog);
-
 	GtkWidget* btCopy = get("btCopy");
 	GtkWidget* btDelete = get("btDelete");
 
@@ -196,8 +178,6 @@ void ToolbarManageDialog::entrySelected(ToolbarData* data)
 
 ToolbarData* ToolbarManageDialog::getSelectedEntry()
 {
-	XOJ_CHECK_TYPE(ToolbarManageDialog);
-
 	GtkTreeIter iter;
 	GtkTreeModel* model = NULL;
 	ToolbarData* data = NULL;
@@ -223,22 +203,16 @@ ToolbarData* ToolbarManageDialog::getSelectedEntry()
 
 void ToolbarManageDialog::updateSelectionData()
 {
-	XOJ_CHECK_TYPE(ToolbarManageDialog);
-
 	entrySelected(getSelectedEntry());
 }
 
 void ToolbarManageDialog::treeSelectionChangedCallback(GtkTreeSelection* selection, ToolbarManageDialog* dlg)
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarManageDialog);
-
 	dlg->updateSelectionData();
 }
 
 void ToolbarManageDialog::show(GtkWindow* parent)
 {
-	XOJ_CHECK_TYPE(ToolbarManageDialog);
-
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 	gtk_dialog_run(GTK_DIALOG(this->window));
 	gtk_widget_hide(this->window);

@@ -320,8 +320,6 @@ protected:
 	bool loadPdf(const Path& filename, int scrollToPage);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * "Closes" the document, preparing the editor for a new document.
 	 */

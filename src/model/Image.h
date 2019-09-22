@@ -47,9 +47,6 @@ private:
 
 	static cairo_status_t cairoReadFunction(Image* image, unsigned char* data, unsigned int length);
 private:
-	XOJ_TYPE_ATTRIB;
-
-
 	cairo_surface_t* image = NULL;
 
 	string data;

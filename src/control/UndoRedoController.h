@@ -32,8 +32,6 @@ public:
 	static void redo(Control* control);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Controller
 	 */

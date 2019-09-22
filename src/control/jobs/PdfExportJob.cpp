@@ -8,25 +8,19 @@
 PdfExportJob::PdfExportJob(Control* control)
  : BaseExportJob(control, _("PDF Export"))
 {
-	XOJ_INIT_TYPE(PdfExportJob);
 }
 
 PdfExportJob::~PdfExportJob()
 {
-	XOJ_RELEASE_TYPE(PdfExportJob);
 }
 
 void PdfExportJob::addFilterToDialog()
 {
-	XOJ_CHECK_TYPE(PdfExportJob);
-
 	addFileFilterToDialog(_("PDF files"), "*.pdf");
 }
 
 bool PdfExportJob::isUriValid(string& uri)
 {
-	XOJ_CHECK_TYPE(PdfExportJob);
-
 	if (!BaseExportJob::isUriValid(uri))
 	{
 		return false;
@@ -42,8 +36,6 @@ bool PdfExportJob::isUriValid(string& uri)
 
 void PdfExportJob::run()
 {
-	XOJ_CHECK_TYPE(PdfExportJob);
-
 	Document* doc = control->getDocument();
 
 	doc->lock();

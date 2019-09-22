@@ -47,8 +47,6 @@ public:
 	void setHideUnused();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	XojPdfPageSPtr page;
 
 	/**

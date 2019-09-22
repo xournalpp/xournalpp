@@ -35,8 +35,6 @@ public:
 	virtual int getPageId();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	PopplerPage* page;
 };
 

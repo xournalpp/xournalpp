@@ -32,8 +32,6 @@ public:
 	int getId();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	string name;
 	int id;
 

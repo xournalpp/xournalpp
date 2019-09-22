@@ -49,8 +49,6 @@ public:
 	virtual void init();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * X11 Display
 	 */

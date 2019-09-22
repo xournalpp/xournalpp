@@ -32,8 +32,6 @@ public:
 	void addStroke(Stroke* s, int originalFill, int newFill);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	std::vector<FillUndoActionEntry*> data;
 
 	Layer* layer;

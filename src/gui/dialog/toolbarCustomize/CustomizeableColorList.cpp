@@ -5,8 +5,6 @@
 
 CustomizeableColorList::CustomizeableColorList()
 {
-	XOJ_INIT_TYPE(CustomizeableColorList);
-
 	this->addPredefinedColor(0x000000, _("Black"));
 	this->addPredefinedColor(0x008000, _("Green"));
 	this->addPredefinedColor(0x00c0ff, _("Light Blue"));
@@ -22,21 +20,15 @@ CustomizeableColorList::CustomizeableColorList()
 
 CustomizeableColorList::~CustomizeableColorList()
 {
-	XOJ_CHECK_TYPE(CustomizeableColorList);
-
 	for (XojColor* c : this->colors)
 	{
 		delete c;
 	}
 	this->colors.clear();
-
-	XOJ_RELEASE_TYPE(CustomizeableColorList);
 }
 
 vector<XojColor*>* CustomizeableColorList::getPredefinedColors()
 {
-	XOJ_CHECK_TYPE(CustomizeableColorList);
-
 	return &this->colors;
 }
 

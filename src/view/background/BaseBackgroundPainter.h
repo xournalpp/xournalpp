@@ -43,9 +43,7 @@ protected:
 	void paintBackgroundColor();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-protected:
+	protected:
 	BackgroundConfig* config = NULL;
 	PageRef page;
 	cairo_t* cr = NULL;

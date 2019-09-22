@@ -36,8 +36,6 @@ protected:
 	static bool finished(Control* control);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-protected:
+	protected:
 	Control* control;
 };

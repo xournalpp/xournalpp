@@ -10,18 +10,14 @@
 
 PrintHandler::PrintHandler()
 {
-	XOJ_INIT_TYPE(PrintHandler);
 }
 
 PrintHandler::~PrintHandler()
 {
-	XOJ_RELEASE_TYPE(PrintHandler);
 }
 
 void PrintHandler::drawPage(GtkPrintOperation* operation, GtkPrintContext* context, int pageNr, PrintHandler* handler)
 {
-	XOJ_CHECK_TYPE_OBJ(handler, PrintHandler);
-
 	cairo_t* cr = gtk_print_context_get_cairo_context(context);
 
 	PageRef page = handler->doc->getPage(pageNr);
@@ -57,8 +53,6 @@ void PrintHandler::requestPageSetup(GtkPrintOperation* operation,
 									GtkPrintContext* context, gint pageNr, GtkPageSetup* setup,
 									PrintHandler* handler)
 {
-	XOJ_CHECK_TYPE_OBJ(handler, PrintHandler);
-
 	PageRef page = handler->doc->getPage(pageNr);
 	if (!page.isValid())
 	{
@@ -84,8 +78,6 @@ void PrintHandler::requestPageSetup(GtkPrintOperation* operation,
 
 void PrintHandler::print(Document* doc, int currentPage)
 {
-	XOJ_CHECK_TYPE(PrintHandler);
-
 	Path filename = Util::getConfigFile(PRINT_CONFIG_FILE);
 
 	GtkPrintSettings* settings = gtk_print_settings_new_from_file(filename.c_str(), NULL);

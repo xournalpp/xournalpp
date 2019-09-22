@@ -35,8 +35,6 @@ public:
 	void textEditFinished();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Layer* layer;
 	Text* text;
 	string lastText;

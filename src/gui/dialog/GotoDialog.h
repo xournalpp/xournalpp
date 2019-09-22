@@ -26,7 +26,5 @@ public:
 	int getSelectedPage();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	int selectedPage = -1;
 };

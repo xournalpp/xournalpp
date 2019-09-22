@@ -36,8 +36,6 @@ private:
 	void move();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	vector<Element*> elements;
 	PageRef targetPage;
 

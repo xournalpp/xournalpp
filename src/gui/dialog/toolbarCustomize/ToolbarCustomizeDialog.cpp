@@ -30,8 +30,6 @@ struct _ToolItemDragData
 ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath, MainWindow* win, ToolbarDragDropHandler* handler)
  : GladeGui(gladeSearchPath, "toolbarCustomizeDialog.glade", "DialogCustomizeToolbar")
 {
-	XOJ_INIT_TYPE(ToolbarCustomizeDialog);
-
 	this->win = win;
 	this->handler = handler;
 	this->colorList = new CustomizeableColorList();
@@ -79,8 +77,6 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
 
 ToolbarCustomizeDialog::~ToolbarCustomizeDialog()
 {
-	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
-
 	freeIconview();
 	freeColorIconview();
 
@@ -94,8 +90,6 @@ ToolbarCustomizeDialog::~ToolbarCustomizeDialog()
 
 	delete this->colorList;
 	this->colorList = NULL;
-
-	XOJ_RELEASE_TYPE(ToolbarCustomizeDialog);
 }
 
 void ToolbarCustomizeDialog::toolitemDragBeginSeparator(GtkWidget* widget, GdkDragContext* context, void* unused)
@@ -131,8 +125,6 @@ void ToolbarCustomizeDialog::toolitemDragDataGetSeparator(GtkWidget* widget, Gdk
  */
 void ToolbarCustomizeDialog::toolitemDragBegin(GtkWidget* widget, GdkDragContext* context, ToolItemDragData* data)
 {
-	XOJ_CHECK_TYPE_OBJ(data->dlg, ToolbarCustomizeDialog);
-
 	ToolItemDragCurrentData::setData(TOOL_ITEM_ITEM, -1, data->item);
 
 	gtk_drag_set_icon_pixbuf(context, data->icon, -2, -2);
@@ -144,7 +136,6 @@ void ToolbarCustomizeDialog::toolitemDragBegin(GtkWidget* widget, GdkDragContext
  */
 void ToolbarCustomizeDialog::toolitemDragEnd(GtkWidget* widget, GdkDragContext* context, ToolItemDragData* data)
 {
-	XOJ_CHECK_TYPE_OBJ(data->dlg, ToolbarCustomizeDialog);
 	ToolItemDragCurrentData::clearData();
 	gtk_widget_show(data->ebox);
 }
@@ -188,8 +179,6 @@ void ToolbarCustomizeDialog::toolitemColorDragBegin(GtkWidget* widget, GdkDragCo
  */
 void ToolbarCustomizeDialog::toolitemColorDragEnd(GtkWidget* widget, GdkDragContext* context, ToolbarCustomizeDialog* dlg)
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarCustomizeDialog);
-
 	ToolItemDragCurrentData::clearData();
 	gtk_widget_show(widget);
 
@@ -219,8 +208,6 @@ void ToolbarCustomizeDialog::toolitemColorDragDataGet(GtkWidget* widget, GdkDrag
 void ToolbarCustomizeDialog::dragDataReceived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y,
 											  GtkSelectionData* data, guint info, guint time, ToolbarCustomizeDialog* dlg)
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarCustomizeDialog);
-
 	if (gtk_selection_data_get_data_type(data) != ToolbarDragDropHelper::atomToolItem)
 	{
 		gtk_drag_finish(dragContext, false, false, time);
@@ -257,8 +244,6 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget* widget, GdkDragContext*
  */
 void ToolbarCustomizeDialog::freeIconview()
 {
-	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
-
 	GtkGrid* table = GTK_GRID(get("tbDefaultTools"));
 
 	GList* children = gtk_container_get_children(GTK_CONTAINER(table));
@@ -276,8 +261,6 @@ void ToolbarCustomizeDialog::freeIconview()
  */
 void ToolbarCustomizeDialog::rebuildIconview()
 {
-	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
-
 	freeIconview();
 
 	GtkGrid* table = GTK_GRID(get("tbDefaultTools"));
@@ -339,8 +322,6 @@ void ToolbarCustomizeDialog::rebuildIconview()
  */
 void ToolbarCustomizeDialog::freeColorIconview()
 {
-	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
-
 	GtkGrid* table = GTK_GRID(get("tbColor"));
 
 	GList* children = gtk_container_get_children(GTK_CONTAINER(table));
@@ -355,8 +336,6 @@ void ToolbarCustomizeDialog::freeColorIconview()
 
 void ToolbarCustomizeDialog::rebuildColorIcons()
 {
-	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
-
 	GtkGrid* table = GTK_GRID(get("tbColor"));
 	g_return_if_fail(table != NULL);
 
@@ -408,8 +387,6 @@ void ToolbarCustomizeDialog::rebuildColorIcons()
 
 void ToolbarCustomizeDialog::windowResponseCb(GtkDialog* dialog, int response, ToolbarCustomizeDialog* dlg)
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarCustomizeDialog);
-
 	gtk_widget_hide(GTK_WIDGET(dialog));
 
 	dlg->handler->toolbarConfigDialogClosed();
@@ -420,8 +397,6 @@ void ToolbarCustomizeDialog::windowResponseCb(GtkDialog* dialog, int response, T
  */
 void ToolbarCustomizeDialog::show(GtkWindow* parent)
 {
-	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
-
 	g_signal_connect(this->window, "response", G_CALLBACK(windowResponseCb), this);
 
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);

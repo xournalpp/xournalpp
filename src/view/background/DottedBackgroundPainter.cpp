@@ -4,21 +4,14 @@
 
 DottedBackgroundPainter::DottedBackgroundPainter()
 {
-	XOJ_INIT_TYPE(DottedBackgroundPainter);
-
 }
 
 DottedBackgroundPainter::~DottedBackgroundPainter()
 {
-	XOJ_CHECK_TYPE(DottedBackgroundPainter);
-
-	XOJ_RELEASE_TYPE(DottedBackgroundPainter);
 }
 
 void DottedBackgroundPainter::resetConfig()
 {
-	XOJ_CHECK_TYPE(DottedBackgroundPainter);
-
 	this->foregroundColor1 = 0xBDBDBD;
 	this->lineWidth = 1.5;
 	this->drawRaster1 = 14.17;
@@ -26,16 +19,12 @@ void DottedBackgroundPainter::resetConfig()
 
 void DottedBackgroundPainter::paint()
 {
-	XOJ_CHECK_TYPE(DottedBackgroundPainter);
-
 	paintBackgroundColor();
 	paintBackgroundDotted();
 }
 
 void DottedBackgroundPainter::paintBackgroundDotted()
 {
-	XOJ_CHECK_TYPE(DottedBackgroundPainter);
-
 	Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
 
 	cairo_set_line_width(cr, lineWidth * lineWidthFactor);

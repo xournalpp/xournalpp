@@ -25,24 +25,17 @@ StrokeHandler::StrokeHandler(XournalView* xournal, XojPageView* redrawable, Page
  , crMask(nullptr)
  , reco(nullptr)
 {
-	XOJ_INIT_TYPE(StrokeHandler);
 }
 
 StrokeHandler::~StrokeHandler()
 {
-	XOJ_CHECK_TYPE(StrokeHandler);
-
 	destroySurface();
 	delete reco;
 	reco = nullptr;
-
-	XOJ_RELEASE_TYPE(StrokeHandler);
 }
 
 void StrokeHandler::draw(cairo_t* cr)
 {
-	XOJ_CHECK_TYPE(StrokeHandler);
-
 	if (!stroke)
 	{
 		return;
@@ -70,8 +63,6 @@ bool StrokeHandler::onKeyEvent(GdkEventKey* event)
 
 bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 {
-	XOJ_CHECK_TYPE(StrokeHandler);
-
 	if (!stroke)
 	{
 		return false;
@@ -144,8 +135,6 @@ bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 
 void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 {
-	XOJ_CHECK_TYPE(StrokeHandler);
-
 	if (!stroke)
 	{
 		return;
@@ -262,8 +251,6 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 
 void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Layer* layer)
 {
-	XOJ_CHECK_TYPE(StrokeHandler);
-
 	Stroke* recognized = result->getRecognized();
 	recognized->setWidth(stroke->hasPressure() ? stroke->getAvgPressure() : stroke->getWidth());
 
@@ -299,8 +286,6 @@ void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Laye
 
 void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 {
-	XOJ_CHECK_TYPE(StrokeHandler);
-
 	destroySurface();
 
 	double zoom = xournal->getZoom();
@@ -337,8 +322,6 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 
 void StrokeHandler::destroySurface()
 {
-	XOJ_CHECK_TYPE(StrokeHandler);
-
 	if (surfMask || crMask)
 	{
 		cairo_destroy(crMask);
@@ -350,8 +333,6 @@ void StrokeHandler::destroySurface()
 
 void StrokeHandler::resetShapeRecognizer()
 {
-	XOJ_CHECK_TYPE(StrokeHandler);
-
 	if (reco)
 	{
 		delete reco;

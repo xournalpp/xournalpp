@@ -25,8 +25,6 @@ public:
 	void disableTouch() override;
 	void init() override;
 private:
-	XOJ_TYPE_ATTRIB;
-
 	GtkWidget* widget;
 };
 

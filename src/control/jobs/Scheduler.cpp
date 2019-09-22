@@ -11,8 +11,6 @@
 
 Scheduler::Scheduler()
 {
-	XOJ_INIT_TYPE(Scheduler);
-
 	this->name = "Scheduler";
 
 	// Thread
@@ -37,8 +35,6 @@ Scheduler::Scheduler()
 
 Scheduler::~Scheduler()
 {
-	XOJ_CHECK_TYPE(Scheduler);
-
 	SDEBUG("Destroy scheduler");
 
 	if (this->jobRenderThreadTimerId)
@@ -59,8 +55,6 @@ Scheduler::~Scheduler()
 	{
 		g_free(this->blockRenderZoomTime);
 	}
-
-	XOJ_RELEASE_TYPE(Scheduler);
 }
 
 void Scheduler::start()
@@ -90,7 +84,6 @@ void Scheduler::stop()
 
 void Scheduler::addJob(Job* job, JobPriority priority)
 {
-	XOJ_CHECK_TYPE(Scheduler);
 	SDEBUG("Adding job...");
 
 	g_mutex_lock(&this->jobQueueMutex);
@@ -106,8 +99,6 @@ void Scheduler::addJob(Job* job, JobPriority priority)
 
 Job* Scheduler::getNextJobUnlocked(bool onlyNotRender, bool* hasRenderJobs)
 {
-	XOJ_CHECK_TYPE(Scheduler);
-
 	Job* job = NULL;
 
 	for (int i = JOB_PRIORITY_URGENT; i < JOB_N_PRIORITIES; i++)
@@ -147,8 +138,6 @@ Job* Scheduler::getNextJobUnlocked(bool onlyNotRender, bool* hasRenderJobs)
  */
 void Scheduler::lock()
 {
-	XOJ_CHECK_TYPE(Scheduler);
-
 	g_mutex_lock(&this->schedulerMutex);
 }
 
@@ -157,8 +146,6 @@ void Scheduler::lock()
  */
 void Scheduler::unlock()
 {
-	XOJ_CHECK_TYPE(Scheduler);
-
 	g_mutex_unlock(&this->schedulerMutex);
 }
 
@@ -166,8 +153,6 @@ void Scheduler::unlock()
 
 void Scheduler::blockRerenderZoom()
 {
-	XOJ_CHECK_TYPE(Scheduler);
-
 	g_mutex_lock(&this->blockRenderMutex);
 
 	if (this->blockRenderZoomTime == NULL)
@@ -183,8 +168,6 @@ void Scheduler::blockRerenderZoom()
 
 void Scheduler::unblockRerenderZoom()
 {
-	XOJ_CHECK_TYPE(Scheduler);
-
 	g_mutex_lock(&this->blockRenderMutex);
 
 	g_free(this->blockRenderZoomTime);
@@ -224,8 +207,6 @@ glong g_time_val_diff(GTimeVal* t1, GTimeVal* t2)
  */
 bool Scheduler::jobRenderThreadTimer(Scheduler* scheduler)
 {
-	XOJ_CHECK_TYPE_OBJ(scheduler, Scheduler);
-
 	scheduler->jobRenderThreadTimerId = 0;
 
 	g_mutex_lock(&scheduler->blockRenderMutex);
@@ -240,8 +221,6 @@ bool Scheduler::jobRenderThreadTimer(Scheduler* scheduler)
 
 gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 {
-	XOJ_CHECK_TYPE_OBJ(scheduler, Scheduler);
-
 	while (scheduler->threadRunning)
 	{
 		// lock the whole scheduler

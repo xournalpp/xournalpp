@@ -9,8 +9,6 @@
 
 PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath)
 {
-	XOJ_INIT_TYPE(PageTypeHandler);
-
 	string file = gladeSearchPath->findFile("", "pagetemplates.ini");
 
 	if (!parseIni(file) || this->types.size() < 5)
@@ -36,21 +34,15 @@ PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath)
 
 PageTypeHandler::~PageTypeHandler()
 {
-	XOJ_CHECK_TYPE(PageTypeHandler);
-
 	for (PageTypeInfo* t : types)
 	{
 		delete t;
 	}
 	types.clear();
-
-	XOJ_RELEASE_TYPE(PageTypeHandler);
 }
 
 bool PageTypeHandler::parseIni(const string& filename)
 {
-	XOJ_CHECK_TYPE(PageTypeHandler);
-
 	GKeyFile* config = g_key_file_new();
 	g_key_file_set_list_separator(config, ',');
 	if (!g_key_file_load_from_file(config, filename.c_str(), G_KEY_FILE_NONE, nullptr))
@@ -74,8 +66,6 @@ bool PageTypeHandler::parseIni(const string& filename)
 
 void PageTypeHandler::loadFormat(GKeyFile* config, const char* group)
 {
-	XOJ_CHECK_TYPE(PageTypeHandler);
-
 	string strName;
 	gchar* name = g_key_file_get_locale_string(config, group, "name", nullptr, nullptr);
 	if (name != nullptr)
@@ -115,8 +105,6 @@ void PageTypeHandler::addPageTypeInfo(string name, PageTypeFormat format, string
 
 vector<PageTypeInfo*>& PageTypeHandler::getPageTypes()
 {
-	XOJ_CHECK_TYPE(PageTypeHandler);
-
 	return this->types;
 }
 

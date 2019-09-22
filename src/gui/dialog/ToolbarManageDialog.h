@@ -42,8 +42,6 @@ private:
 	ToolbarData* getSelectedEntry();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	ToolbarModel* tbModel;
 	GtkListStore* model;
 };
