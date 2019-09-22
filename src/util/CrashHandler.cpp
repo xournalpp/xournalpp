@@ -21,7 +21,7 @@ void setEmergencyDocument(Document* doc)
 	document = doc;
 }
 
-#ifdef WIN32
+#ifdef _WIN32
 #include "CrashHandlerWindows.h"
 #else
 #include "CrashHandlerUnix.h"

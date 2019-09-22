@@ -16,7 +16,7 @@
 #include <string>
 using std::string;
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <Windows.h>
 #include <direct.h>
 #else
@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
 {
 	string exePath;
 
-#ifdef WIN32
+#ifdef _WIN32
 	char szFileName[MAX_PATH + 1];
 	GetModuleFileNameA(NULL, szFileName, MAX_PATH + 1);
 	exePath = szFileName;
@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
 	}
 
 
-#ifdef WIN32
+#ifdef _WIN32
 	STARTUPINFO info = {};
 	PROCESS_INFORMATION processInfo;
 	char* cmd = new char[command.size() + 1];
