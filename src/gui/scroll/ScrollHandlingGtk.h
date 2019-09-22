@@ -33,5 +33,4 @@ public:
 	virtual void scrollChanged();
 
 private:
-	XOJ_TYPE_ATTRIB;
-};
+	};

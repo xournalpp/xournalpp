@@ -34,8 +34,6 @@ public:
 	void addStroke(Text* e, XojFont& oldFont, XojFont& newFont);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	std::vector<FontUndoActionEntry*> data;
 
 	Layer* layer;

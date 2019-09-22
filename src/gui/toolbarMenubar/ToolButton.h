@@ -44,8 +44,6 @@ protected:
 	virtual GtkWidget* getNewToolIcon();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	string iconName;
 	string description;
 };

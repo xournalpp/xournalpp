@@ -42,9 +42,7 @@ protected:
 	virtual GtkToolItem* newItem() = 0;
 
 public:
-	XOJ_TYPE_ATTRIB;
-
-protected:
+	protected:
 	GtkToolItem* item = NULL;
 	GtkWidget* popupMenu = NULL;
 

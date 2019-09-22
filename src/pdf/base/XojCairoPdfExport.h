@@ -38,8 +38,6 @@ private:
 	void exportPage(size_t page);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Document* doc = NULL;
 	ProgressListener* progressListener = NULL;
 

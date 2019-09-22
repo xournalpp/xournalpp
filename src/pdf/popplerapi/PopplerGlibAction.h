@@ -38,8 +38,6 @@ private:
 	void linkFromDest(LinkDestination* link, PopplerDest* pDest);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	PopplerAction* action;
 	PopplerDocument* document;
 };

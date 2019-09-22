@@ -3,8 +3,6 @@
 LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath)
  : GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
 {
-	XOJ_INIT_TYPE(LatexDialog);
-
 	this->texBox = get("texView");
 	this->textBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(this->texBox));
 	this->texTempRender = get("texImage");
@@ -21,25 +19,20 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath)
 
 LatexDialog::~LatexDialog()
 {
-	XOJ_RELEASE_TYPE(LatexDialog);
 }
 
 void LatexDialog::setFinalTex(string texString)
 {
-	XOJ_CHECK_TYPE(LatexDialog);
 	this->finalLatex = texString;
 }
 
 string LatexDialog::getFinalTex()
 {
-	XOJ_CHECK_TYPE(LatexDialog);
 	return this->finalLatex;
 }
 
 void LatexDialog::setTempRender(PopplerDocument* pdf)
 {
-	XOJ_CHECK_TYPE(LatexDialog);
-
 	if (poppler_document_get_n_pages(pdf) < 1)
 	{
 		return;
@@ -79,7 +72,6 @@ void LatexDialog::setTempRender(PopplerDocument* pdf)
 
 GtkTextBuffer* LatexDialog::getTextBuffer()
 {
-	XOJ_CHECK_TYPE(LatexDialog);
 	return this->textBuffer;
 }
 
@@ -99,8 +91,6 @@ void LatexDialog::show(GtkWindow *parent)
 
 void LatexDialog::show(GtkWindow *parent, bool selectText)
 {
-	XOJ_CHECK_TYPE(LatexDialog);
-
 	gtk_text_buffer_set_text(this->textBuffer, this->finalLatex.c_str(), -1);
 	if (selectText)
 	{

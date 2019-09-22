@@ -34,8 +34,6 @@ private:
 	void disableFullscreen(MainWindow* win);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Settings
 	 */

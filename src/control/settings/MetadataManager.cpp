@@ -26,18 +26,12 @@ MetadataEntry::MetadataEntry()
 MetadataManager::MetadataManager()
  : metadata(NULL)
 {
-	XOJ_INIT_TYPE(MetadataManager);
-
 	g_mutex_init(&this->mutex);
 }
 
 MetadataManager::~MetadataManager()
 {
-	XOJ_CHECK_TYPE(MetadataManager);
-
 	documentChanged();
-
-	XOJ_RELEASE_TYPE(MetadataManager);
 }
 
 /**
@@ -64,8 +58,6 @@ void MetadataManager::deleteMetadataFile(string path)
  */
 void MetadataManager::documentChanged()
 {
-	XOJ_CHECK_TYPE(MetadataManager);
-
 	g_mutex_lock(&this->mutex);
 	MetadataEntry* m = metadata;
 	metadata = NULL;
@@ -90,8 +82,6 @@ bool sortMetadata(MetadataEntry& a, MetadataEntry& b)
  */
 vector<MetadataEntry> MetadataManager::loadList()
 {
-	XOJ_CHECK_TYPE(MetadataManager);
-
 	Path folder = Util::getConfigSubfolder("metadata");
 
 	vector<MetadataEntry> data;
@@ -131,8 +121,6 @@ vector<MetadataEntry> MetadataManager::loadList()
  */
 MetadataEntry MetadataManager::loadMetadataFile(string path, string file)
 {
-	XOJ_CHECK_TYPE(MetadataManager);
-
 	MetadataEntry entry;
 	entry.metadataFile = path;
 
@@ -206,8 +194,6 @@ MetadataEntry MetadataManager::loadMetadataFile(string path, string file)
  */
 MetadataEntry MetadataManager::getForFile(string file)
 {
-	XOJ_CHECK_TYPE(MetadataManager);
-
 	vector<MetadataEntry> files = loadList();
 
 	MetadataEntry entry;
@@ -265,8 +251,6 @@ void MetadataManager::storeMetadata(MetadataEntry* m)
  */
 void MetadataManager::storeMetadata(string file, int page, double zoom)
 {
-	XOJ_CHECK_TYPE(MetadataManager);
-
 	if (file == "")
 	{
 		return;

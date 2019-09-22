@@ -74,9 +74,7 @@ private:
 	static gboolean mouseButtonPressCallback(GtkWidget* widget, GdkEventButton* event, BaseElementView* element);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-protected:
+	protected:
 	BackgroundSelectDialogBase* dlg;
 
 private:

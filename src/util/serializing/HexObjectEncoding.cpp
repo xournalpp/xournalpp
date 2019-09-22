@@ -4,18 +4,14 @@
 
 HexObjectEncoding::HexObjectEncoding()
 {
-	XOJ_INIT_TYPE(HexObjectEncoding);
 }
 
 HexObjectEncoding::~HexObjectEncoding()
 {
-	XOJ_RELEASE_TYPE(HexObjectEncoding);
 }
 
 void HexObjectEncoding::addData(const void* data, int len)
 {
-	XOJ_CHECK_TYPE(HexObjectEncoding);
-
 	char* buffer = (char*) g_malloc(len * 2);
 
 	for (int i = 0; i < len; i++)

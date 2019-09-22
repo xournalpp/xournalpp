@@ -112,8 +112,6 @@ protected:
 	void allocPointSize(int size);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	// The stroke width cannot be inherited from Element
 	double width = 0;
 

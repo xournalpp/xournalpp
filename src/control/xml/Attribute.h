@@ -26,8 +26,5 @@ public:
 	string getName();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-
 	string name;
 };

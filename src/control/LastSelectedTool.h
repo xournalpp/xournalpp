@@ -30,8 +30,6 @@ public:
 	Tool* restoreAndGet();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * The last tool
 	 */

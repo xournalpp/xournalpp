@@ -27,8 +27,6 @@ public:
 	virtual void writeOut(OutputStream* out);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	cairo_surface_t* img;
 
 	OutputStream* out;

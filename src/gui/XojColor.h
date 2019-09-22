@@ -24,8 +24,6 @@ public:
 	string getName();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	int color;
 	// the localized name of the color
 	string name;

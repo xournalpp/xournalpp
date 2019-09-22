@@ -80,8 +80,6 @@ protected:
 	static void sizeChanged(GtkWidget* widget, GtkAllocation* allocation, SidebarPreviewBase* sidebar);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * The scrollbar with the icons
 	 */

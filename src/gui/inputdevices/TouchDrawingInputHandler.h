@@ -19,8 +19,6 @@ class InputContext;
 class TouchDrawingInputHandler : public PenInputHandler
 {
 private:
-	XOJ_TYPE_ATTRIB;
-
 	GdkEventSequence* currentSequence = nullptr;
 public:
 	explicit TouchDrawingInputHandler(InputContext* inputContext);

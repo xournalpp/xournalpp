@@ -31,5 +31,4 @@ public:
 	virtual void resetConfig();
 
 private:
-	XOJ_TYPE_ATTRIB;
-};
+	};

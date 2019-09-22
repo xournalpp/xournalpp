@@ -39,9 +39,6 @@ private:
 	void eraseStroke(Layer* l, Stroke* s, double x, double y, Range* range);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-
 	PageRef page;
 	ToolHandler* handler;
 	Redrawable* view;

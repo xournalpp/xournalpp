@@ -52,9 +52,6 @@ private:
 	static double scaleFuncInv(double x);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-
 	/**
 	 * The slider is currently changing by user, do not update value
 	 */

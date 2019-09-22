@@ -28,8 +28,6 @@ private:
 	void addPredefinedColor(int color, string name);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	vector<XojColor*> colors;
 
 };

@@ -8,24 +8,16 @@ ColorSelectImage::ColorSelectImage(int color, bool circle)
  : color(color),
    circle(circle)
 {
-	XOJ_INIT_TYPE(ColorSelectImage);
-
 	widget = gtk_drawing_area_new();
 	gtk_widget_set_size_request(widget, 16, 16);
 
 	g_signal_connect(widget, "draw", G_CALLBACK(
 		+[](GtkWidget *widget, cairo_t* cr, ColorSelectImage* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, ColorSelectImage);
-			self->drawWidget(cr);
-		}), this);
+		{ self->drawWidget(cr); }), this);
 }
 
 ColorSelectImage::~ColorSelectImage()
 {
-	XOJ_CHECK_TYPE(ColorSelectImage);
-
-	XOJ_RELEASE_TYPE(ColorSelectImage);
 }
 
 /**
@@ -33,8 +25,6 @@ ColorSelectImage::~ColorSelectImage()
  */
 void ColorSelectImage::drawWidget(cairo_t* cr)
 {
-	XOJ_CHECK_TYPE(ColorSelectImage);
-
 	IconConfig config;
 	config.color = color;
 	config.size = size;
@@ -52,8 +42,6 @@ void ColorSelectImage::drawWidget(cairo_t* cr)
  */
 GtkWidget* ColorSelectImage::getWidget()
 {
-	XOJ_CHECK_TYPE(ColorSelectImage);
-
 	return widget;
 }
 
@@ -62,8 +50,6 @@ GtkWidget* ColorSelectImage::getWidget()
  */
 void ColorSelectImage::setColor(int color)
 {
-	XOJ_CHECK_TYPE(ColorSelectImage);
-
 	this->color = color;
 	gtk_widget_queue_draw(widget);
 }
@@ -73,8 +59,6 @@ void ColorSelectImage::setColor(int color)
  */
 void ColorSelectImage::setState(ColorIconState state)
 {
-	XOJ_CHECK_TYPE(ColorSelectImage);
-
 	this->state = state;
 	gtk_widget_queue_draw(widget);
 }

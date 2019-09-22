@@ -29,8 +29,6 @@ public:
 	virtual string getText();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	LayerController* layerController;
 	Layer* layer;
 	int layerPos;

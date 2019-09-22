@@ -11,8 +11,6 @@
 TextBoxUndoAction::TextBoxUndoAction(PageRef page, Layer* layer, Element* element, Element* oldelement)
  : UndoAction("TextBoxUndoAction")
 {
-	XOJ_INIT_TYPE(TextBoxUndoAction);
-
 	this->page = page;
 	this->layer = layer;
 	this->element = element;
@@ -21,8 +19,6 @@ TextBoxUndoAction::TextBoxUndoAction(PageRef page, Layer* layer, Element* elemen
 
 TextBoxUndoAction::~TextBoxUndoAction()
 {
-	XOJ_CHECK_TYPE(TextBoxUndoAction);
-
 	if (this->undone)
 	{
 		// Insert was undone, so this is not needed anymore
@@ -41,21 +37,15 @@ TextBoxUndoAction::~TextBoxUndoAction()
 	}
 	this->element = NULL;
 	this->oldelement = NULL;
-
-	XOJ_RELEASE_TYPE(TextBoxUndoAction);
 }
 
 string TextBoxUndoAction::getText()
 {
-	XOJ_CHECK_TYPE(TextBoxUndoAction);
-
 	return _("Edit text");
 }
 
 bool TextBoxUndoAction::undo(Control* control)
 {
-	XOJ_CHECK_TYPE(TextBoxUndoAction);
-
 	this->layer->removeElement(this->element, false);
 	this->layer->addElement(this->oldelement);
 
@@ -79,8 +69,6 @@ bool TextBoxUndoAction::undo(Control* control)
 
 bool TextBoxUndoAction::redo(Control* control)
 {
-	XOJ_CHECK_TYPE(TextBoxUndoAction);
-
 	this->layer->removeElement(this->oldelement, false);
 	this->layer->addElement(this->element);
 

@@ -36,8 +36,6 @@ private:
 	void initPredefinedColors();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	GKeyFile* config;
 	GHashTable* predefinedColorNames;
 };

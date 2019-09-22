@@ -55,8 +55,6 @@ public:
 	void setBackgroundType(PageType backgroundType);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Copy the settings from the last page
 	 */

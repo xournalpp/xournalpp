@@ -59,8 +59,6 @@ protected:
 	void modifyModifiersByDrawDir(double width, double height, bool changeCursor = true);
 
 protected:
-	XOJ_TYPE_ATTRIB;
-
 	DocumentView view;
 	Point currPoint;
 	Point buttonDownPoint;	// used for tapSelect and filtering - never snapped to grid. See startPoint defined in derived classes such as CircleHandler.

@@ -104,8 +104,6 @@ private:
 	static bool jobRenderThreadTimer(Scheduler* scheduler);
 
 protected:
-	XOJ_TYPE_ATTRIB;
-
 	bool threadRunning = true;
 
 	int jobRenderThreadTimerId = 0;

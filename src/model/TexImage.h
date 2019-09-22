@@ -86,8 +86,6 @@ private:
 	void loadBinaryData();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Tex PDF Document, if rendered as PDF
 	 */

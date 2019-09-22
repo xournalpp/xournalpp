@@ -30,8 +30,6 @@ public:
 	virtual string getText();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Layer* layer;
 	Element* element;
 };
@@ -49,8 +47,6 @@ public:
 	virtual string getText();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Layer* layer;
 	vector<Element*> elements;
 

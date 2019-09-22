@@ -89,8 +89,6 @@ public:
 	void ensureLayerExists(PageRef page);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Control* control;
 
 	std::list<LayerCtrlListener*> listener;

@@ -38,15 +38,11 @@ Plugin::Plugin(Control* control, string name, string path)
    name(name),
    path(path)
 {
-	XOJ_INIT_TYPE(Plugin);
-
 	loadIni();
 }
 
 Plugin::~Plugin()
 {
-	XOJ_CHECK_TYPE(Plugin);
-
 	if (lua)
 	{
 		// Clean up, free the Lua state var
@@ -59,8 +55,6 @@ Plugin::~Plugin()
 		delete m;
 	}
 	menuEntries.clear();
-
-	XOJ_RELEASE_TYPE(Plugin);
 }
 
 /**
@@ -74,10 +68,7 @@ Plugin* Plugin::getPluginFromLua(lua_State* lua)
 	{
 		Plugin* data = (Plugin*)lua_touserdata(lua, -1);
 		lua_pop(lua, 1);
-
-		XOJ_CHECK_TYPE_OBJ(data, Plugin);
-
-		return data;
+	return data;
 	}
 
 	return NULL;
@@ -88,8 +79,6 @@ Plugin* Plugin::getPluginFromLua(lua_State* lua)
  */
 void Plugin::registerToolbar()
 {
-	XOJ_CHECK_TYPE(Plugin);
-
 	if (!this->valid || !this->enabled)
 	{
 		return;
@@ -123,8 +112,6 @@ void Plugin::registerToolbar()
  */
 void Plugin::registerMenu(GtkWindow* mainWindow, GtkWidget* menu)
 {
-	XOJ_CHECK_TYPE(Plugin);
-
 	if (menuEntries.empty() || !this->enabled)
 	{
 		// No entries - nothing to do
@@ -153,8 +140,7 @@ void Plugin::registerMenu(GtkWindow* mainWindow, GtkWidget* menu)
 		g_signal_connect(mi, "activate", G_CALLBACK(
 			+[](GtkWidget* bt, MenuEntry* me)
 			{
-				XOJ_CHECK_TYPE_OBJ(me, MenuEntry);
-				me->plugin->executeMenuEntry(me);
+	me->plugin->executeMenuEntry(me);
 			}), m);
 	}
 
@@ -166,8 +152,6 @@ void Plugin::registerMenu(GtkWindow* mainWindow, GtkWidget* menu)
  */
 void Plugin::executeMenuEntry(MenuEntry* entry)
 {
-	XOJ_CHECK_TYPE(Plugin);
-
 	callFunction(entry->callback);
 }
 
@@ -176,8 +160,6 @@ void Plugin::executeMenuEntry(MenuEntry* entry)
  */
 string Plugin::getName()
 {
-	XOJ_CHECK_TYPE(Plugin);
-
 	return name;
 }
 
@@ -186,8 +168,6 @@ string Plugin::getName()
  */
 string Plugin::getDescription()
 {
-	XOJ_CHECK_TYPE(Plugin);
-
 	return description;
 }
 
@@ -196,8 +176,6 @@ string Plugin::getDescription()
  */
 string Plugin::getAuthor()
 {
-	XOJ_CHECK_TYPE(Plugin);
-
 	return author;
 }
 
@@ -206,8 +184,6 @@ string Plugin::getAuthor()
  */
 string Plugin::getVersion()
 {
-	XOJ_CHECK_TYPE(Plugin);
-
 	return version;
 }
 
@@ -216,8 +192,6 @@ string Plugin::getVersion()
  */
 bool Plugin::isEnabled()
 {
-	XOJ_CHECK_TYPE(Plugin);
-
 	return enabled;
 }
 
@@ -234,8 +208,6 @@ void Plugin::setEnabled(bool enabled)
  */
 bool Plugin::isDefaultEnabled()
 {
-	XOJ_CHECK_TYPE(Plugin);
-
 	return defaultEnabled;
 }
 
@@ -244,8 +216,6 @@ bool Plugin::isDefaultEnabled()
  */
 bool Plugin::isInInitUi()
 {
-	XOJ_CHECK_TYPE(Plugin);
-
 	return inInitUi;
 }
 
@@ -270,8 +240,6 @@ int Plugin::registerMenu(string menu, string callback, string accelerator)
  */
 Control* Plugin::getControl()
 {
-	XOJ_CHECK_TYPE(Plugin);
-
 	return control;
 }
 
@@ -280,8 +248,6 @@ Control* Plugin::getControl()
  */
 void Plugin::loadIni()
 {
-	XOJ_CHECK_TYPE(Plugin);
-
 	GKeyFile* config = g_key_file_new();
 	g_key_file_set_list_separator(config, ',');
 
@@ -364,8 +330,6 @@ void Plugin::addPluginToLuaPath()
  */
 void Plugin::loadScript()
 {
-	XOJ_CHECK_TYPE(Plugin);
-
 	if (mainfile == "")
 	{
 		this->valid = false;
@@ -450,8 +414,6 @@ bool Plugin::callFunction(string fnc)
  */
 bool Plugin::isValid()
 {
-	XOJ_CHECK_TYPE(Plugin);
-
 	return valid;
 }
 

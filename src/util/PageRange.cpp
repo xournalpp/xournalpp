@@ -5,28 +5,21 @@
 
 PageRangeEntry::PageRangeEntry(int first, int last)
 {
-	XOJ_INIT_TYPE(PageRangeEntry);
-
 	this->first = first;
 	this->last = last;
 }
 
 PageRangeEntry::~PageRangeEntry()
 {
-	XOJ_RELEASE_TYPE(PageRangeEntry);
 }
 
 int PageRangeEntry::getLast()
 {
-	XOJ_CHECK_TYPE(PageRangeEntry);
-
 	return this->last;
 }
 
 int PageRangeEntry::getFirst()
 {
-	XOJ_CHECK_TYPE(PageRangeEntry);
-
 	return this->first;
 }
 

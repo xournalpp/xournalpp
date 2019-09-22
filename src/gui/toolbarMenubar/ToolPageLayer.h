@@ -66,8 +66,6 @@ private:
 	void selectLayer(int layerId);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	LayerController* lc = NULL;
 	GladeGui* gui = NULL;
 

@@ -5,8 +5,6 @@
 
 Selection::Selection(Redrawable* view)
 {
-	XOJ_INIT_TYPE(Selection);
-
 	this->view = view;
 	this->page = NULL;
 	
@@ -18,20 +16,14 @@ Selection::Selection(Redrawable* view)
 
 Selection::~Selection()
 {
-	XOJ_CHECK_TYPE(Selection);
-
 	this->view = NULL;
 	this->page = NULL;
-
-	XOJ_RELEASE_TYPE(Selection);
 }
 
 //////////////////////////////////////////////////////////
 
 RectSelection::RectSelection(double x, double y, Redrawable* view) : Selection(view)
 {
-	XOJ_INIT_TYPE(RectSelection);
-
 	this->sx = x;
 	this->sy = y;
 	this->ex = x;
@@ -44,13 +36,10 @@ RectSelection::RectSelection(double x, double y, Redrawable* view) : Selection(v
 
 RectSelection::~RectSelection()
 {
-	XOJ_RELEASE_TYPE(RectSelection);
 }
 
 bool RectSelection::finalize(PageRef page)
 {
-	XOJ_CHECK_TYPE(RectSelection);
-
 	this->x1 = MIN(this->sx, this->ex);
 	this->x2 = MAX(this->sx, this->ex);
 
@@ -75,8 +64,6 @@ bool RectSelection::finalize(PageRef page)
 
 bool RectSelection::contains(double x, double y)
 {
-	XOJ_CHECK_TYPE(RectSelection);
-
 	if (x < this->x1 || x > this->x2)
 	{
 		return false;
@@ -91,8 +78,6 @@ bool RectSelection::contains(double x, double y)
 
 void RectSelection::currentPos(double x, double y)
 {
-	XOJ_CHECK_TYPE(RectSelection);
-
 	int aX = MIN(x, this->ex);
 	aX = MIN(aX, this->sx) - 10;
 
@@ -113,8 +98,6 @@ void RectSelection::currentPos(double x, double y)
 
 void RectSelection::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 {
-	XOJ_CHECK_TYPE(RectSelection);
-
 	GtkColorWrapper selectionColor = view->getSelectionColor();
 
 	// set the line always the same size on display
@@ -155,29 +138,21 @@ public:
 
 RegionSelect::RegionSelect(double x, double y, Redrawable* view) : Selection(view)
 {
-	XOJ_INIT_TYPE(RegionSelect);
-
 	this->points = NULL;
 	currentPos(x, y);
 }
 
 RegionSelect::~RegionSelect()
 {
-	XOJ_CHECK_TYPE(RegionSelect);
-
 	for (GList* l = this->points; l != NULL; l = l->next)
 	{
 		delete (RegionPoint*) l->data;
 	}
 	g_list_free(this->points);
-
-	XOJ_RELEASE_TYPE(RegionSelect);
 }
 
 void RegionSelect::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 {
-	XOJ_CHECK_TYPE(RegionSelect);
-
 	// at least three points needed
 	if (this->points && this->points->next && this->points->next->next)
 	{
@@ -206,8 +181,6 @@ void RegionSelect::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 
 void RegionSelect::currentPos(double x, double y)
 {
-	XOJ_CHECK_TYPE(RegionSelect);
-
 	this->points = g_list_append(this->points, new RegionPoint(x, y));
 
 	// at least three points needed
@@ -247,8 +220,6 @@ void RegionSelect::currentPos(double x, double y)
 
 bool RegionSelect::contains(double x, double y)
 {
-	XOJ_CHECK_TYPE(RegionSelect);
-
 	if (x < this->x1Box || x > this->x2Box)
 	{
 		return false;
@@ -341,8 +312,6 @@ bool RegionSelect::contains(double x, double y)
 
 bool RegionSelect::finalize(PageRef page)
 {
-	XOJ_CHECK_TYPE(RegionSelect);
-
 	this->page = page;
 
 	this->x1Box = 0;

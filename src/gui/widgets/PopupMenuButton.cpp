@@ -67,15 +67,11 @@ PopupMenuButton::PopupMenuButton(GtkWidget* button, GtkWidget* menu)
  : button(button),
    menu(menu)
 {
-	XOJ_INIT_TYPE(PopupMenuButton);
-
 	g_signal_connect(button, "clicked", G_CALLBACK(
 		+[](GtkButton* button, PopupMenuButton* self)
 	{
-			XOJ_CHECK_TYPE_OBJ(self, PopupMenuButton);
-
-			gtk_menu_popup(GTK_MENU(self->menu), NULL, NULL, (GtkMenuPositionFunc) menu_position_func,
-			               button, 0, gtk_get_current_event_time());
+		                 gtk_menu_popup(GTK_MENU(self->menu), NULL, NULL, (GtkMenuPositionFunc) menu_position_func,
+		                                button, 0, gtk_get_current_event_time());
 
 			gtk_menu_shell_select_first(GTK_MENU_SHELL(self->menu), FALSE);
 
@@ -88,15 +84,10 @@ PopupMenuButton::PopupMenuButton(GtkWidget* button, GtkWidget* menu)
 
 PopupMenuButton::~PopupMenuButton()
 {
-	XOJ_CHECK_TYPE(PopupMenuButton);
-
-	XOJ_RELEASE_TYPE(PopupMenuButton);
 }
 
 void PopupMenuButton::setMenu(GtkWidget* menu)
 {
-	XOJ_CHECK_TYPE(PopupMenuButton);
-
 	gtk_menu_detach(GTK_MENU(this->menu));
 	this->menu = menu;
 

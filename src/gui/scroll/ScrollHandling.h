@@ -42,9 +42,7 @@ public:
 	virtual void scrollChanged() = 0;
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-protected:
+	protected:
 	GtkAdjustment* adjHorizontal = NULL;
 	GtkAdjustment* adjVertical = NULL;
 

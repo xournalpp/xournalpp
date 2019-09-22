@@ -12,8 +12,6 @@
 TextUndoAction::TextUndoAction(PageRef page, Layer* layer, Text* text, string lastText, TextEditor* textEditor)
  : UndoAction("TextUndoAction")
 {
-	XOJ_INIT_TYPE(TextUndoAction);
-
 	this->page = page;
 	this->layer = layer;
 	this->text = text;
@@ -23,34 +21,25 @@ TextUndoAction::TextUndoAction(PageRef page, Layer* layer, Text* text, string la
 
 TextUndoAction::~TextUndoAction()
 {
-	XOJ_RELEASE_TYPE(TextUndoAction);
 }
 
 string TextUndoAction::getUndoText()
 {
-	XOJ_CHECK_TYPE(TextUndoAction);
-
 	return this->lastText;
 }
 
 void TextUndoAction::textEditFinished()
 {
-	XOJ_CHECK_TYPE(TextUndoAction);
-
 	this->textEditor = NULL;
 }
 
 string TextUndoAction::getText()
 {
-	XOJ_CHECK_TYPE(TextUndoAction);
-
 	return _("Text changes");
 }
 
 bool TextUndoAction::undo(Control* control)
 {
-	XOJ_CHECK_TYPE(TextUndoAction);
-
 	double x1 = text->getX();
 	double y1 = text->getY();
 	double x2 = text->getX() + text->getElementWidth();
@@ -74,8 +63,6 @@ bool TextUndoAction::undo(Control* control)
 
 bool TextUndoAction::redo(Control* control)
 {
-	XOJ_CHECK_TYPE(TextUndoAction);
-
 	double x1 = text->getX();
 	double y1 = text->getY();
 	double x2 = text->getX() + text->getElementWidth();

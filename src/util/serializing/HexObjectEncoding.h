@@ -23,5 +23,4 @@ public:
 	virtual void addData(const void* data, int len);
 
 private:
-	XOJ_TYPE_ATTRIB;
-};
+	};

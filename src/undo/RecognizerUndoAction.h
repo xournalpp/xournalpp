@@ -32,8 +32,6 @@ public:
 	virtual string getText();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Layer* layer;
 	Stroke* recognized;
 	std::vector<Stroke*> original;

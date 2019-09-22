@@ -28,8 +28,6 @@
 
 EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page, XojPageView* view)
 {
-	XOJ_INIT_TYPE(EditSelection);
-
 	this->x = 0;
 	this->y = 0;
 	this->rotation = 0;
@@ -41,8 +39,6 @@ EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page, XojPageView* v
 
 EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection, XojPageView* view)
 {
-	XOJ_INIT_TYPE(EditSelection);
-
 	calcSizeFromElements(selection->selectedElements);
 
 	contstruct(undo, view, view->getPage());
@@ -58,8 +54,6 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection, XojPag
 
 EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* view, PageRef page)
 {
-	XOJ_INIT_TYPE(EditSelection);
-
 	this->x = e->getX();
 	this->y = e->getY();
 	this->width = e->getElementWidth();
@@ -75,8 +69,6 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* vie
 
 EditSelection::EditSelection(UndoRedoHandler* undo, vector<Element*> elements, XojPageView* view, PageRef page)
 {
-	XOJ_INIT_TYPE(EditSelection);
-
 	calcSizeFromElements(elements);
 
 	contstruct(undo, view, page);
@@ -92,8 +84,6 @@ EditSelection::EditSelection(UndoRedoHandler* undo, vector<Element*> elements, X
 
 void EditSelection::calcSizeFromElements(vector<Element*> elements)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	if (elements.empty())
 	{
 		x = 0;
@@ -123,8 +113,6 @@ void EditSelection::calcSizeFromElements(vector<Element*> elements)
  */
 void EditSelection::contstruct(UndoRedoHandler* undo, XojPageView* view, PageRef sourcePage)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	this->view = view;
 	this->undo = undo;
 	this->sourcePage = sourcePage;
@@ -148,8 +136,6 @@ void EditSelection::contstruct(UndoRedoHandler* undo, XojPageView* view, PageRef
 
 EditSelection::~EditSelection()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	finalizeSelection();
 
 	this->sourcePage = NULL;
@@ -160,8 +146,6 @@ EditSelection::~EditSelection()
 
 	this->view = NULL;
 	this->undo = NULL;
-
-	XOJ_RELEASE_TYPE(EditSelection);
 }
 
 /**
@@ -170,8 +154,6 @@ EditSelection::~EditSelection()
  */
 void EditSelection::finalizeSelection()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	XojPageView* v = getPageViewUnderCursor();
 	if (v == NULL)
 	{	// Not on any page - move back to original page and position
@@ -207,8 +189,6 @@ void EditSelection::finalizeSelection()
  */
 double EditSelection::getXOnView()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	return this->x;
 }
 
@@ -218,20 +198,16 @@ double EditSelection::getXOnView()
  */
 double EditSelection::getYOnView()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	return this->y;
 }
 
 double EditSelection::getOriginalXOnView()
 {
-	XOJ_CHECK_TYPE(EditSelection);
 	return this->contents->getOriginalX();
 }
 
 double EditSelection::getOriginalYOnView()
 {
-	XOJ_CHECK_TYPE(EditSelection);
 	return this->contents->getOriginalY();
 }
 
@@ -240,8 +216,6 @@ double EditSelection::getOriginalYOnView()
  */
 double EditSelection::getWidth()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	return this->width;
 }
 
@@ -250,8 +224,6 @@ double EditSelection::getWidth()
  */
 double EditSelection::getHeight()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	return this->height;
 }
 
@@ -260,8 +232,6 @@ double EditSelection::getHeight()
  */
 PageRef EditSelection::getSourcePage()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	return this->sourcePage;
 }
 
@@ -270,8 +240,6 @@ PageRef EditSelection::getSourcePage()
  */
 Layer* EditSelection::getSourceLayer()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	return this->sourceLayer;
 }
 
@@ -280,8 +248,6 @@ Layer* EditSelection::getSourceLayer()
  */
 int EditSelection::getXOnViewAbsolute()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	double zoom = view->getXournal()->getZoom();
 	return this->view->getX() + this->getXOnView() * zoom;
 }
@@ -291,8 +257,6 @@ int EditSelection::getXOnViewAbsolute()
  */
 int EditSelection::getYOnViewAbsolute()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	double zoom = view->getXournal()->getZoom();
 	return this->view->getY() + this->getYOnView() * zoom;
 }
@@ -302,8 +266,6 @@ int EditSelection::getYOnViewAbsolute()
  */
 int EditSelection::getViewWidth()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	double zoom = view->getXournal()->getZoom();
 	return this->width * zoom;
 }
@@ -313,8 +275,6 @@ int EditSelection::getViewWidth()
  */
 int EditSelection::getViewHeight()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	double zoom = view->getXournal()->getZoom();
 	return this->height * zoom;
 }
@@ -328,8 +288,6 @@ UndoAction* EditSelection::setSize(ToolSize size,
 								   const double* thicknessHilighter,
 								   const double* thicknessEraser)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	return this->contents->setSize(size, thicknessPen, thicknessHilighter, thicknessEraser);
 }
 
@@ -339,8 +297,6 @@ UndoAction* EditSelection::setSize(ToolSize size,
  */
 UndoAction* EditSelection::setFill(int alphaPen, int alphaHighligther)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	return this->contents->setFill(alphaPen, alphaHighligther);
 }
 
@@ -350,8 +306,6 @@ UndoAction* EditSelection::setFill(int alphaPen, int alphaHighligther)
  */
 UndoAction* EditSelection::setColor(int color)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	return this->contents->setColor(color);
 }
 
@@ -361,8 +315,6 @@ UndoAction* EditSelection::setColor(int color)
  */
 UndoAction* EditSelection::setFont(XojFont& font)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	return this->contents->setFont(font);
 }
 
@@ -372,8 +324,6 @@ UndoAction* EditSelection::setFont(XojFont& font)
  */
 void EditSelection::fillUndoItem(DeleteUndoAction* undo)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	this->contents->fillUndoItem(undo);
 }
 
@@ -382,8 +332,6 @@ void EditSelection::fillUndoItem(DeleteUndoAction* undo)
  */
 void EditSelection::addElement(Element* e)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	this->contents->addElement(e);
 
 	if (e->rescaleOnlyAspectRatio())
@@ -403,8 +351,6 @@ void EditSelection::addElement(Element* e)
  */
 vector<Element*>* EditSelection::getElements()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	return this->contents->getElements();
 }
 
@@ -414,9 +360,6 @@ vector<Element*>* EditSelection::getElements()
  */
 void EditSelection::mouseUp()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
-	
 	if (this->mouseDownType == CURSOR_SELECTION_DELETE )
 	{
 		this->view->getXournal()->deleteSelection();
@@ -457,8 +400,6 @@ void EditSelection::mouseUp()
  */
 void EditSelection::mouseDown(CursorSelectionType type, double x, double y)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	double zoom = this->view->getXournal()->getZoom();
 
 
@@ -483,8 +424,6 @@ void EditSelection::mouseDown(CursorSelectionType type, double x, double y)
  */
 void EditSelection::mouseMove(double mouseX, double mouseY)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	double zoom = this->view->getXournal()->getZoom();
 		
 	if (this->mouseDownType == CURSOR_SELECTION_MOVE)
@@ -656,8 +595,6 @@ void EditSelection::mouseMove(double mouseX, double mouseY)
 
 XojPageView* EditSelection::getPageViewUnderCursor()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-	
 	double zoom = view->getXournal()->getZoom();
 	
 	//get grabbing hand position
@@ -677,8 +614,6 @@ XojPageView* EditSelection::getPageViewUnderCursor()
  */
 void EditSelection::translateToView(XojPageView* v)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	double zoom = view->getXournal()->getZoom();
 
 	int aX1 = getXOnViewAbsolute();
@@ -704,8 +639,6 @@ void EditSelection::translateToView(XojPageView* v)
 
 void EditSelection::copySelection()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	undo->addUndoAction(UndoActionPtr(contents->copySelection(this->view->getPage(), this->view, this->x, this->y)));
 }
 
@@ -714,8 +647,6 @@ void EditSelection::copySelection()
  */
 bool EditSelection::isMoving()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	return this->mouseDownType != CURSOR_SELECTION_NONE;
 }
 
@@ -724,8 +655,6 @@ bool EditSelection::isMoving()
  */
 void EditSelection::moveSelection(double dx, double dy)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	this->x -= dx;
 	this->y -= dy;
 
@@ -739,8 +668,6 @@ void EditSelection::moveSelection(double dx, double dy)
  */
 void EditSelection::ensureWithinVisibleArea()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	int viewx = this->view->getX();
 	int viewy = this->view->getY();
 	double zoom = this->view->getXournal()->getZoom();
@@ -755,8 +682,6 @@ void EditSelection::ensureWithinVisibleArea()
  */
 CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, double zoom)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	double x1 = getXOnView() * zoom;
 	double x2 = x1 + (this->width * zoom);
 	double y1 = getYOnView() * zoom;
@@ -839,8 +764,6 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 
 void EditSelection::snapRotation()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	bool snapping = this->view->getXournal()->getControl()->getSettings()->isSnapRotation();
 	if (!snapping)
 	{
@@ -867,8 +790,6 @@ void EditSelection::snapRotation()
  */
 void EditSelection::paint(cairo_t* cr, double zoom)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	double x = this->x;
 	double y = this->y;
 	
@@ -944,8 +865,6 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 
 void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double zoom)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	GtkColorWrapper selectionColor = view->getSelectionColor();
 	selectionColor.apply(cr);
 	cairo_rectangle(cr, x * zoom - (this->btnWidth/2), y * zoom - (this->btnWidth/2), this->btnWidth, this->btnWidth);
@@ -959,8 +878,6 @@ void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double z
  */
 void EditSelection::drawAnchorRect(cairo_t* cr, double x, double y, double zoom)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	GtkColorWrapper selectionColor = view->getSelectionColor();
 	selectionColor.apply(cr);
 	cairo_rectangle(cr, x * zoom - (this->btnWidth/2), y * zoom - (this->btnWidth/2), this->btnWidth, this->btnWidth);
@@ -975,8 +892,6 @@ void EditSelection::drawAnchorRect(cairo_t* cr, double x, double y, double zoom)
  */
 void EditSelection::drawDeleteRect(cairo_t* cr, double x, double y, double zoom)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	cairo_set_source_rgb(cr, 0, 0, 0);
 	cairo_rectangle(cr, x * zoom - (this->btnWidth/2), y * zoom - (this->btnWidth/2), this->btnWidth, this->btnWidth);
 	cairo_stroke(cr);
@@ -993,15 +908,11 @@ void EditSelection::drawDeleteRect(cairo_t* cr, double x, double y, double zoom)
 
 XojPageView* EditSelection::getView()
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	return this->view;
 }
 
 void EditSelection::serialize(ObjectOutputStream& out)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	out.writeObject("EditSelection");
 
 	out.writeDouble(this->x);
@@ -1021,8 +932,6 @@ void EditSelection::serialize(ObjectOutputStream& out)
 
 void EditSelection::readSerialized(ObjectInputStream& in)
 {
-	XOJ_CHECK_TYPE(EditSelection);
-
 	in.readObject("EditSelection");
 	this->x = in.readDouble();
 	this->y = in.readDouble();

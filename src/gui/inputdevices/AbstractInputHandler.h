@@ -29,8 +29,6 @@ class InputContext;
 class AbstractInputHandler
 {
 private:
-	XOJ_TYPE_ATTRIB;
-
 	bool blocked = false;
 
 protected:

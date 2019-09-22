@@ -29,8 +29,6 @@ public:
 	const int getOutputChannels() const;
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	const string deviceName;
 	const PaDeviceIndex index;
 	const bool selected;

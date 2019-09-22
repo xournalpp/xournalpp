@@ -25,8 +25,6 @@ void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, 
 ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, int button, bool withDevice)
  : GladeGui(gladeSearchPath, "settingsButtonConfig.glade", "offscreenwindow")
 {
-	XOJ_INIT_TYPE(ButtonConfigGui);
-
 	this->settings = settings;
 	this->button = button;
 	this->withDevice = withDevice;
@@ -119,14 +117,10 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 
 ButtonConfigGui::~ButtonConfigGui()
 {
-	XOJ_CHECK_TYPE(ButtonConfigGui);
-	XOJ_RELEASE_TYPE(ButtonConfigGui);
 }
 
 void ButtonConfigGui::loadSettings()
 {
-	XOJ_CHECK_TYPE(ButtonConfigGui);
-
 	ButtonConfig* cfg = settings->getButtonConfig(button);
 
 	GtkTreeModel* model = gtk_combo_box_get_model(GTK_COMBO_BOX(cbTool));
@@ -226,8 +220,6 @@ void ButtonConfigGui::show(GtkWindow*)
 
 void ButtonConfigGui::saveSettings()
 {
-	XOJ_CHECK_TYPE(ButtonConfigGui);
-
 	GtkTreeIter iter;
 	gtk_combo_box_get_active_iter(GTK_COMBO_BOX(cbTool), &iter);
 
@@ -295,14 +287,11 @@ void ButtonConfigGui::saveSettings()
 
 void ButtonConfigGui::cbSelectCallback(GtkComboBox*, ButtonConfigGui* gui)
 {
-	XOJ_CHECK_TYPE_OBJ(gui, ButtonConfigGui);
 	gui->enableDisableTools();
 }
 
 void ButtonConfigGui::enableDisableTools()
 {
-	XOJ_CHECK_TYPE(ButtonConfigGui);
-
 	GtkTreeIter iter;
 	gtk_combo_box_get_active_iter(GTK_COMBO_BOX(cbTool), &iter);
 	GtkTreeModel* model = gtk_combo_box_get_model(GTK_COMBO_BOX(cbTool));

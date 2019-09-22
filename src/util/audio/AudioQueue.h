@@ -24,21 +24,15 @@ class AudioQueue : protected std::deque<T>
 public:
 	AudioQueue()
 	{
-		XOJ_INIT_TYPE(AudioQueue);
 	}
 
 	~AudioQueue()
 	{
-		XOJ_CHECK_TYPE(AudioQueue);
-
-		XOJ_RELEASE_TYPE(AudioQueue);
 	}
 
 public:
 	void reset()
 	{
-		XOJ_CHECK_TYPE(AudioQueue);
-
 		this->popNotified = false;
 		this->pushNotified = false;
 		this->streamEnd = false;
@@ -50,22 +44,16 @@ public:
 
 	bool empty()
 	{
-		XOJ_CHECK_TYPE(AudioQueue);
-
 		return std::deque<T>::empty();
 	}
 
 	unsigned long size()
 	{
-		XOJ_CHECK_TYPE(AudioQueue);
-
 		return std::deque<T>::size();
 	}
 
 	void push(T* samples, unsigned long nSamples)
 	{
-		XOJ_CHECK_TYPE(AudioQueue);
-
 		for (unsigned long i = 0; i < nSamples; i++)
 		{
 			this->push_front(samples[i]);
@@ -79,8 +67,6 @@ public:
 
 	void pop(T* returnBuffer, unsigned long& returnBufferLength, unsigned long nSamples)
 	{
-		XOJ_CHECK_TYPE(AudioQueue);
-
 		if (this->channels == 0)
 		{
 			returnBufferLength = 0;
@@ -106,8 +92,6 @@ public:
 
 	void signalEndOfStream()
 	{
-		XOJ_CHECK_TYPE(AudioQueue);
-
 		this->streamEnd = true;
 		this->pushNotified = true;
 		this->pushLockCondition.notify_one();
@@ -117,8 +101,6 @@ public:
 
 	void waitForProducer(std::unique_lock<std::mutex>& lock)
 	{
-		XOJ_CHECK_TYPE(AudioQueue);
-
 		while (!this->pushNotified)
 		{
 			this->pushLockCondition.wait(lock);
@@ -127,8 +109,6 @@ public:
 
 	void waitForConsumer(std::unique_lock<std::mutex>& lock)
 	{
-		XOJ_CHECK_TYPE(AudioQueue);
-
 		while (!this->popNotified)
 		{
 			this->popLockCondition.wait(lock);
@@ -137,15 +117,11 @@ public:
 
 	bool hasStreamEnded()
 	{
-		XOJ_CHECK_TYPE(AudioQueue);
-
 		return this->streamEnd;
 	}
 
 	std::mutex& syncMutex()
 	{
-		XOJ_CHECK_TYPE(AudioQueue);
-
 		return this->queueLock;
 	}
 
@@ -162,8 +138,6 @@ public:
 	}
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 protected:
 	std::mutex queueLock;
 	bool streamEnd = false;

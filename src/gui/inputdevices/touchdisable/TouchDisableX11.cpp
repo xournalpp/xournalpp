@@ -6,13 +6,10 @@
 
 TouchDisableX11::TouchDisableX11()
 {
-	XOJ_INIT_TYPE(TouchDisableX11);
 }
 
 TouchDisableX11::~TouchDisableX11()
 {
-	XOJ_CHECK_TYPE(TouchDisableX11);
-
 	if (touchdev)
 	{
 		XCloseDevice(display, touchdev);
@@ -20,14 +17,10 @@ TouchDisableX11::~TouchDisableX11()
 	}
 
 	display = NULL;
-
-	XOJ_RELEASE_TYPE(TouchDisableX11);
 }
 
 void TouchDisableX11::init()
 {
-	XOJ_CHECK_TYPE(TouchDisableX11);
-
 	// Get display from GTK
 	display = gdk_x11_display_get_xdisplay(gdk_display_get_default());
 	if (display == NULL)
@@ -79,8 +72,6 @@ void TouchDisableX11::init()
 
 void TouchDisableX11::enableTouch()
 {
-	XOJ_CHECK_TYPE(TouchDisableX11);
-
 	if (!touchdev)
 	{
 		return;
@@ -93,8 +84,6 @@ void TouchDisableX11::enableTouch()
 
 void TouchDisableX11::disableTouch()
 {
-	XOJ_CHECK_TYPE(TouchDisableX11);
-
 	if (!touchdev)
 	{
 		return;

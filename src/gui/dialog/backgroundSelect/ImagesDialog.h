@@ -43,5 +43,4 @@ private:
 	static void filechooserButtonCallback(GtkButton* button, ImagesDialog* dlg);
 
 private:
-	XOJ_TYPE_ATTRIB;
-};
+	};

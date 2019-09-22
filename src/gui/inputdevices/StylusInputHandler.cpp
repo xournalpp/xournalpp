@@ -11,20 +11,14 @@
 
 StylusInputHandler::StylusInputHandler(InputContext* inputContext) : PenInputHandler(inputContext)
 {
-	XOJ_INIT_TYPE(StylusInputHandler);
 }
 
 StylusInputHandler::~StylusInputHandler()
 {
-	XOJ_CHECK_TYPE(StylusInputHandler);
-
-	XOJ_RELEASE_TYPE(StylusInputHandler);
 }
 
 bool StylusInputHandler::handleImpl(InputEvent* event)
 {
-	XOJ_CHECK_TYPE(StylusInputHandler);
-
 	// Only handle events when there is no active gesture
 	GtkXournal* xournal = inputContext->getXournal();
 	if (xournal->view->getControl()->getWindow()->isGestureActive())
@@ -128,8 +122,6 @@ bool StylusInputHandler::handleImpl(InputEvent* event)
 
 void StylusInputHandler::setPressedState(InputEvent* event)
 {
-	XOJ_CHECK_TYPE(StylusInputHandler);
-
 	XojPageView* currentPage = getPageAtCurrentPosition(event);
 
 	this->inputContext->getXournal()->view->getCursor()->setInsidePage(currentPage != nullptr);
@@ -175,8 +167,6 @@ void StylusInputHandler::setPressedState(InputEvent* event)
 
 bool StylusInputHandler::changeTool(InputEvent* event)
 {
-	XOJ_CHECK_TYPE(StylusInputHandler);
-
 	Settings* settings = this->inputContext->getSettings();
 	ToolHandler* toolHandler = this->inputContext->getToolHandler();
 

@@ -29,7 +29,5 @@ public:
 	bool loadValueHex(string key, int& value);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	map<string, string> data;
 };

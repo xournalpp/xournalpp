@@ -150,8 +150,6 @@ private:
 	void loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename);
 	
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Control* control;
 
 	XournalView* xournal = NULL;

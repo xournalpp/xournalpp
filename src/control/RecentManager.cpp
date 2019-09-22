@@ -17,8 +17,6 @@ RecentManagerListener::~RecentManagerListener() { }
 
 RecentManager::RecentManager()
 {
-	XOJ_INIT_TYPE(RecentManager);
-
 	this->menu = gtk_menu_new();
 
 	GtkRecentManager* recentManager = gtk_recent_manager_get_default();
@@ -29,8 +27,6 @@ RecentManager::RecentManager()
 
 RecentManager::~RecentManager()
 {
-	XOJ_CHECK_TYPE(RecentManager);
-
 	if (this->recentHandlerId)
 	{
 		GtkRecentManager* recentManager = gtk_recent_manager_get_default();
@@ -38,14 +34,10 @@ RecentManager::~RecentManager()
 		this->recentHandlerId = 0;
 	}
 	this->menu = NULL;
-
-	XOJ_RELEASE_TYPE(RecentManager);
 }
 
 void RecentManager::addListener(RecentManagerListener* listener)
 {
-	XOJ_CHECK_TYPE(RecentManager);
-
 	this->listener.push_back(listener);
 }
 
@@ -57,8 +49,6 @@ void RecentManager::recentManagerChangedCallback(GtkRecentManager* manager, Rece
 
 void RecentManager::addRecentFileFilename(Path filename)
 {
-	XOJ_CHECK_TYPE(RecentManager);
-
 	GtkRecentManager* recentManager;
 	GtkRecentData* recentData;
 
@@ -99,8 +89,6 @@ void RecentManager::addRecentFileFilename(Path filename)
 
 void RecentManager::removeRecentFileFilename(Path filename)
 {
-	XOJ_CHECK_TYPE(RecentManager);
-
 	GFile* file = g_file_new_for_path(filename.c_str());
 
 	GtkRecentManager* recentManager = gtk_recent_manager_get_default();
@@ -111,22 +99,16 @@ void RecentManager::removeRecentFileFilename(Path filename)
 
 int RecentManager::getMaxRecent()
 {
-	XOJ_CHECK_TYPE(RecentManager);
-
 	return this->maxRecent;
 }
 
 void RecentManager::setMaxRecent(int maxRecent)
 {
-	XOJ_CHECK_TYPE(RecentManager);
-
 	this->maxRecent = maxRecent;
 }
 
 void RecentManager::openRecent(Path p)
 {
-	XOJ_CHECK_TYPE(RecentManager);
-
 	if (p.getFilename().empty())
 	{
 		return;
@@ -140,15 +122,11 @@ void RecentManager::openRecent(Path p)
 
 GtkWidget* RecentManager::getMenu()
 {
-	XOJ_CHECK_TYPE(RecentManager);
-
 	return menu;
 }
 
 void RecentManager::freeOldMenus()
 {
-	XOJ_CHECK_TYPE(RecentManager);
-
 	for (GtkWidget* w : menuItemList)
 	{
 		gtk_widget_destroy(w);
@@ -164,8 +142,6 @@ int RecentManager::sortRecentsEntries(GtkRecentInfo* a, GtkRecentInfo* b)
 
 GList* RecentManager::filterRecent(GList* items, bool xoj)
 {
-	XOJ_CHECK_TYPE(RecentManager);
-
 	GList* filteredItems = NULL;
 
 	// filter
@@ -205,8 +181,6 @@ GList* RecentManager::filterRecent(GList* items, bool xoj)
 
 void RecentManager::recentsMenuActivateCallback(GtkAction* action, RecentManager* recentManager)
 {
-	XOJ_CHECK_TYPE_OBJ(recentManager, RecentManager);
-
 	GtkRecentInfo* info = (GtkRecentInfo*) g_object_get_data(G_OBJECT(action), "gtk-recent-info");
 	g_return_if_fail(info != NULL);
 
@@ -219,8 +193,6 @@ void RecentManager::recentsMenuActivateCallback(GtkAction* action, RecentManager
 
 void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
 {
-	XOJ_CHECK_TYPE(RecentManager);
-
 	string display_name = gtk_recent_info_get_display_name(info);
 
 	// escape underscore
@@ -266,8 +238,6 @@ void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
 
 void RecentManager::updateMenu()
 {
-	XOJ_CHECK_TYPE(RecentManager);
-
 	GtkRecentManager* recentManager = gtk_recent_manager_get_default();
 	GList* items = gtk_recent_manager_get_items(recentManager);
 	GList* filteredItemsXoj = filterRecent(items, true);

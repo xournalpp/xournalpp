@@ -38,8 +38,6 @@ public:
  	GtkBuilder* getBuilder();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * The Glade resources
 	 */

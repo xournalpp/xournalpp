@@ -2,12 +2,10 @@
 
 XojPdfExport::XojPdfExport()
 {
-	XOJ_INIT_TYPE(XojPdfExport);
 }
 
 XojPdfExport::~XojPdfExport()
 {
-	XOJ_RELEASE_TYPE(XojPdfExport);
 }
 
 /**
@@ -15,6 +13,5 @@ XojPdfExport::~XojPdfExport()
  */
 void XojPdfExport::setNoBackgroundExport(bool noBackgroundExport)
 {
-	XOJ_CHECK_TYPE(XojPdfExport);
 	// Does nothing in the base class
 }

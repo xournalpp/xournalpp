@@ -46,8 +46,6 @@ public:
 	static void printDebugStrokeParts();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	double width = 0;
 	double splitSize = 0;
 

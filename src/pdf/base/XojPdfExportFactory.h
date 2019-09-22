@@ -28,6 +28,5 @@ public:
 	static XojPdfExport* createExport(Document* doc, ProgressListener* listener);
 
 private:
-	XOJ_TYPE_ATTRIB;
-};
+	};
 

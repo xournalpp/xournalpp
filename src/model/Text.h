@@ -58,8 +58,6 @@ protected:
 	virtual void calcSize();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	XojFont font;
 
 	string text;

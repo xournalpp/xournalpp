@@ -29,7 +29,5 @@ public:
 	virtual void layerVisibilityChanged();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	LayerController* handler;
 };

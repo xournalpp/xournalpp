@@ -48,7 +48,5 @@ private:
 	void scrollToSpinPage();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Control* control = NULL;
 };

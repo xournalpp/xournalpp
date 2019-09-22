@@ -24,8 +24,6 @@
 
 ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* parent)
 {
-	XOJ_INIT_TYPE(ToolMenuHandler);
-
 	this->parent = parent;
 	this->control = control;
 	this->listener = control;
@@ -46,8 +44,6 @@ ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* par
 
 ToolMenuHandler::~ToolMenuHandler()
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	delete this->tbModel;
 	this->tbModel = NULL;
 
@@ -70,14 +66,10 @@ ToolMenuHandler::~ToolMenuHandler()
 		delete it;
 		it = NULL;
 	}
-
-	XOJ_RELEASE_TYPE(ToolMenuHandler);
 }
 
 void ToolMenuHandler::freeDynamicToolbarItems()
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	for (AbstractToolItem* it : this->toolItems)
 	{
 		it->setUsed(false);
@@ -92,8 +84,6 @@ void ToolMenuHandler::freeDynamicToolbarItems()
 
 void ToolMenuHandler::unloadToolbar(GtkWidget* toolbar)
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	for (int i = gtk_toolbar_get_n_items(GTK_TOOLBAR(toolbar)) - 1; i >= 0; i--)
 	{
 		GtkToolItem* tbItem = gtk_toolbar_get_nth_item(GTK_TOOLBAR(toolbar), i);
@@ -105,8 +95,6 @@ void ToolMenuHandler::unloadToolbar(GtkWidget* toolbar)
 
 void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal)
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	int count = 0;
 
 	for (ToolbarEntry* e : d->contents)
@@ -224,8 +212,6 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 
 void ToolMenuHandler::removeColorToolItem(AbstractToolItem* it)
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	g_return_if_fail(it != NULL);
 	for (unsigned int i = 0; i < this->toolbarColorItems.size(); i++)
 	{
@@ -240,16 +226,12 @@ void ToolMenuHandler::removeColorToolItem(AbstractToolItem* it)
 
 void ToolMenuHandler::addColorToolItem(AbstractToolItem* it)
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	g_return_if_fail(it != NULL);
 	this->toolbarColorItems.push_back((ColorToolItem*) it);
 }
 
 void ToolMenuHandler::setTmpDisabled(bool disabled)
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	for (AbstractToolItem* it : this->toolItems)
 	{
 		it->setTmpDisabled(disabled);
@@ -271,22 +253,16 @@ void ToolMenuHandler::setTmpDisabled(bool disabled)
 
 void ToolMenuHandler::addToolItem(AbstractToolItem* it)
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	this->toolItems.push_back(it);
 }
 
 void ToolMenuHandler::registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group)
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	this->menuItems.push_back(new MenuItem(listener, widget, type, group));
 }
 
 void ToolMenuHandler::initPenToolItem()
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	ToolButton* tbPen = new ToolButton(listener, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, "tool_pencil", _("Pen"));
 
 	registerMenupoint(tbPen->registerPopupMenuEntry(_("standard"), "line-style-plain"),
@@ -306,8 +282,6 @@ void ToolMenuHandler::initPenToolItem()
 
 void ToolMenuHandler::initEraserToolItem()
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	ToolButton* tbEraser = new ToolButton(listener, "ERASER", ACTION_TOOL_ERASER, GROUP_TOOL, true, "tool_eraser", _("Eraser"));
 
 	registerMenupoint(tbEraser->registerPopupMenuEntry(_("standard")), ACTION_TOOL_ERASER_STANDARD, GROUP_ERASER_MODE);
@@ -320,8 +294,6 @@ void ToolMenuHandler::initEraserToolItem()
 void ToolMenuHandler::signalConnectCallback(GtkBuilder* builder, GObject* object, const gchar* signalName,
 		const gchar* handlerName, GObject* connectObject, GConnectFlags flags, ToolMenuHandler* self)
 {
-	XOJ_CHECK_TYPE_OBJ(self, ToolMenuHandler);
-
 	string actionName = handlerName;
 	string groupName = "";
 
@@ -379,8 +351,6 @@ void ToolMenuHandler::signalConnectCallback(GtkBuilder* builder, GObject* object
 
 void ToolMenuHandler::initToolItems()
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	// Items ordered by menu, if possible.
 	// There are some entries which are not available in the menu, like the Zoom slider
 	// All menu items without tool icon are not listed here - they are connected by Glade Signals
@@ -535,66 +505,48 @@ void ToolMenuHandler::initToolItems()
 
 void ToolMenuHandler::setFontButtonFont(XojFont& font)
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	this->fontButton->setFont(font);
 }
 
 XojFont ToolMenuHandler::getFontButtonFont()
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	return this->fontButton->getFont();
 }
 
 void ToolMenuHandler::showFontSelectionDlg()
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	this->fontButton->showFontDialog();
 }
 
 void ToolMenuHandler::setUndoDescription(string description)
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	this->undoButton->updateDescription(description);
 	gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditUndo")), description.c_str());
 }
 
 void ToolMenuHandler::setRedoDescription(string description)
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	this->redoButton->updateDescription(description);
 	gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditRedo")), description.c_str());
 }
 
 SpinPageAdapter* ToolMenuHandler::getPageSpinner()
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	return this->toolPageSpinner->getPageSpinner();
 }
 
 void ToolMenuHandler::setPageText(string text)
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	this->toolPageSpinner->setText(text);
 }
 
 ToolbarModel* ToolMenuHandler::getModel()
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	return this->tbModel;
 }
 
 bool ToolMenuHandler::isColorInUse(int color)
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	for (ColorToolItem* it : this->toolbarColorItems)
 	{
 		if (it->getColor() == color)
@@ -608,15 +560,11 @@ bool ToolMenuHandler::isColorInUse(int color)
 
 vector<AbstractToolItem*>* ToolMenuHandler::getToolItems()
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	return &this->toolItems;
 }
 
 void ToolMenuHandler::disableAudioPlaybackButtons()
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	setAudioPlaybackPaused(false);
 
 	this->audioPausePlaybackButton->enable(false);
@@ -628,8 +576,6 @@ void ToolMenuHandler::disableAudioPlaybackButtons()
 
 void ToolMenuHandler::enableAudioPlaybackButtons()
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	this->audioPausePlaybackButton->enable(true);
 	this->audioStopPlaybackButton->enable(true);
 
@@ -639,8 +585,6 @@ void ToolMenuHandler::enableAudioPlaybackButtons()
 
 void ToolMenuHandler::setAudioPlaybackPaused(bool paused)
 {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
 	this->audioPausePlaybackButton->setActive(paused);
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(gui->get("menuAudioPausePlayback")), paused);
 }
