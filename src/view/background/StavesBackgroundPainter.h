@@ -33,8 +33,6 @@ public:
 	void paintBackgroundStaves(double offset);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	const double headerSize = 80;
 	const double footerSize = 20;
 	const double borderSize = 50;

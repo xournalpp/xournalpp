@@ -46,8 +46,6 @@ protected:
 	virtual void calcSize();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	double zoom = 1;
 
 	BackgroundImage backgroundImage;

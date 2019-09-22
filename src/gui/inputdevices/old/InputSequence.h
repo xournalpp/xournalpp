@@ -133,8 +133,6 @@ private:
 	PositionInputData getInputDataRelativeToCurrentPage(XojPageView* page);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * true if this input is running, false to ignore
 	 */

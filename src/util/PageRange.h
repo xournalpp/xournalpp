@@ -24,8 +24,6 @@ public:
 	int getFirst();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	int first;
 	int last;
 };

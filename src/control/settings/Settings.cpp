@@ -22,27 +22,20 @@ const char* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default", "
 Settings::Settings(Path filename)
  : filename(std::move(filename))
 {
-	XOJ_INIT_TYPE(Settings);
 	loadDefault();
 }
 
 Settings::~Settings()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	for (int i = 0; i < BUTTON_COUNT; i++)
 	{
 		delete this->buttonConfig[i];
 		this->buttonConfig[i] = NULL;
 	}
-
-	XOJ_RELEASE_TYPE(Settings);
 }
 
 void Settings::loadDefault()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	this->pressureSensitivity = true;
 	this->zoomGesturesEnabled = true;
 	this->maximized = false;
@@ -175,8 +168,6 @@ double tempg_ascii_strtod( const gchar* txt, gchar ** endptr )
 
 void Settings::parseData(xmlNodePtr cur, SElement& elem)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	for (xmlNodePtr x = cur->children; x != NULL; x = x->next)
 	{
 		if (!xmlStrcmp(x->name, (const xmlChar*) "data"))
@@ -243,8 +234,6 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem)
 
 void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	// Parse data map
 	if (!xmlStrcmp(cur->name, (const xmlChar*) "data"))
 	{
@@ -641,8 +630,6 @@ void Settings::loadDeviceClasses()
 
 void Settings::loadButtonConfig()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	SElement& s = getCustomElement("buttonConfig");
 
 	for (int i = 0; i < BUTTON_COUNT; i++)
@@ -726,9 +713,6 @@ void Settings::loadButtonConfig()
 
 bool Settings::load()
 {
-	
-	XOJ_CHECK_TYPE(Settings);
-
 	xmlKeepBlanksDefault(0);
 
 	if (!filename.exists())
@@ -782,8 +766,6 @@ bool Settings::load()
 
 xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value, xmlNodePtr parent)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	char text[G_ASCII_DTOSTR_BUF_SIZE];
 	//  g_ascii_ version uses C locale always.
 	g_ascii_formatd(text, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, value);
@@ -793,8 +775,6 @@ xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value, xmlNodeP
 
 xmlNodePtr Settings::saveProperty(const gchar* key, int value, xmlNodePtr parent)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	char* text = g_strdup_printf("%i", value);
 	xmlNodePtr xmlNode = saveProperty(key, text, parent);
 	g_free(text);
@@ -803,8 +783,6 @@ xmlNodePtr Settings::saveProperty(const gchar* key, int value, xmlNodePtr parent
 
 xmlNodePtr Settings::saveProperty(const gchar* key, const gchar* value, xmlNodePtr parent)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	xmlNodePtr xmlNode = xmlNewChild(parent, NULL, (const xmlChar*) "property", NULL);
 
 	xmlSetProp(xmlNode, (const xmlChar*) "name", (const xmlChar*) key);
@@ -816,8 +794,6 @@ xmlNodePtr Settings::saveProperty(const gchar* key, const gchar* value, xmlNodeP
 
 void Settings::saveDeviceClasses()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	SElement& s = getCustomElement("deviceClasses");
 
 	for (const std::map<string, std::pair<int, GdkInputSource>>::value_type& device: inputDeviceClasses)
@@ -830,8 +806,6 @@ void Settings::saveDeviceClasses()
 
 void Settings::saveButtonConfig()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	SElement& s = getCustomElement("buttonConfig");
 	s.clear();
 
@@ -874,8 +848,6 @@ void Settings::saveButtonConfig()
  */
 void Settings::transactionStart()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	inTransaction = true;
 }
 
@@ -884,16 +856,12 @@ void Settings::transactionStart()
  */
 void Settings::transactionEnd()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	inTransaction = false;
 	save();
 }
 
 void Settings::save()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (inTransaction)
 	{
 		return;
@@ -1066,8 +1034,6 @@ void Settings::save()
 
 void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	xmlNodePtr xmlNode = xmlNewChild(root, NULL, (const xmlChar*) "data", NULL);
 
 	xmlSetProp(xmlNode, (const xmlChar*) "name", (const xmlChar*) name.c_str());
@@ -1076,9 +1042,6 @@ void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 	{
 		string aname = p.first;
 		SAttribute& attrib = p.second;
-
-		XOJ_CHECK_TYPE_OBJ(&attrib, SAttribute);
-
 		string type;
 		string value;
 
@@ -1153,22 +1116,16 @@ void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 // Getter- / Setter
 bool Settings::isPressureSensitivity() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->pressureSensitivity;
 }
 
 bool Settings::isZoomGesturesEnabled() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->zoomGesturesEnabled;
 }
 
 void Settings::setZoomGesturesEnabled(bool enable)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->zoomGesturesEnabled == enable)
 	{
 		return;
@@ -1179,15 +1136,11 @@ void Settings::setZoomGesturesEnabled(bool enable)
 
 bool Settings::isSidebarOnRight() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->sidebarOnRight;
 }
 
 void Settings::setSidebarOnRight(bool right)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->sidebarOnRight == right)
 	{
 		return;
@@ -1200,15 +1153,11 @@ void Settings::setSidebarOnRight(bool right)
 
 bool Settings::isScrollbarOnLeft() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->scrollbarOnLeft;
 }
 
 void Settings::setScrollbarOnLeft(bool right)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->scrollbarOnLeft == right)
 	{
 		return;
@@ -1221,15 +1170,11 @@ void Settings::setScrollbarOnLeft(bool right)
 
 bool Settings::isMenubarVisible() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->menubarVisible;
 }
 
 void Settings::setMenubarVisible(bool visible)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	this->menubarVisible = visible;
 
 	save();
@@ -1242,8 +1187,6 @@ int Settings::getAutosaveTimeout() const
 
 void Settings::setAutosaveTimeout(int autosave)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->autosaveTimeout == autosave)
 	{
 		return;
@@ -1256,15 +1199,11 @@ void Settings::setAutosaveTimeout(int autosave)
 
 bool Settings::isAutosaveEnabled() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->autosaveEnabled;
 }
 
 void Settings::setAutosaveEnabled(bool autosave)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->autosaveEnabled == autosave)
 	{
 		return;
@@ -1277,29 +1216,21 @@ void Settings::setAutosaveEnabled(bool autosave)
 
 bool Settings::getAddVerticalSpace() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->addVerticalSpace;
 }
 
 void Settings::setAddVerticalSpace(bool space)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	this->addVerticalSpace = space;
 }
 
 int Settings::getAddVerticalSpaceAmount() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->addVerticalSpaceAmount;
 }
 
 void Settings::setAddVerticalSpaceAmount(int pixels)
 {
-	XOJ_CHECK_TYPE(Settings);
-	
 	if (this->addVerticalSpaceAmount == pixels)
 	{
 		return;
@@ -1312,29 +1243,21 @@ void Settings::setAddVerticalSpaceAmount(int pixels)
 
 bool Settings::getAddHorizontalSpace() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->addHorizontalSpace;
 }
 
 void Settings::setAddHorizontalSpace(bool space)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	this->addHorizontalSpace = space;
 }
 
 int Settings::getAddHorizontalSpaceAmount() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->addHorizontalSpaceAmount;
 }
 
 void Settings::setAddHorizontalSpaceAmount(int pixels)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->addHorizontalSpaceAmount == pixels)
 	{
 		return;
@@ -1347,29 +1270,21 @@ void Settings::setAddHorizontalSpaceAmount(int pixels)
 
 bool Settings::getDrawDirModsEnabled() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->drawDirModsEnabled;
 }
 
 void Settings::setDrawDirModsEnabled(bool enable)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	this->drawDirModsEnabled = enable;
 }
 
 int Settings::getDrawDirModsRadius() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->drawDirModsRadius;
 }
 
 void Settings::setDrawDirModsRadius(int pixels)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->drawDirModsRadius == pixels)
 	{
 		return;
@@ -1382,15 +1297,11 @@ void Settings::setDrawDirModsRadius(int pixels)
 
 bool Settings::isShowBigCursor() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->showBigCursor;
 }
 
 void Settings::setShowBigCursor(bool b)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->showBigCursor == b)
 	{
 		return;
@@ -1402,16 +1313,12 @@ void Settings::setShowBigCursor(bool b)
 
 bool Settings::isHighlightPosition() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->highlightPosition;
 
 }
 
 void Settings::setHighlightPosition(bool highlight)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->highlightPosition == highlight)
 	{
 		return;
@@ -1423,15 +1330,11 @@ void Settings::setHighlightPosition(bool highlight)
 
 bool Settings::isSnapRotation() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->snapRotation;
 }
 
 void Settings::setSnapRotation(bool b)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->snapRotation == b)
 	{
 		return;
@@ -1443,30 +1346,22 @@ void Settings::setSnapRotation(bool b)
 
 double Settings::getSnapRotationTolerance() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->snapRotationTolerance;
 }
 
 void Settings::setSnapRotationTolerance(double tolerance)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	this->snapRotationTolerance = tolerance;
 	save();
 }
 
 bool Settings::isSnapGrid() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->snapGrid;
 }
 
 void Settings::setSnapGrid(bool b)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->snapGrid == b)
 	{
 		return;
@@ -1478,30 +1373,22 @@ void Settings::setSnapGrid(bool b)
 
 void Settings::setSnapGridTolerance(double tolerance)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	this->snapGridTolerance = tolerance;
 	save();
 }
 
 double Settings::getSnapGridTolerance() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->snapGridTolerance;
 }
 
 bool Settings::isTouchWorkaround() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->touchWorkaround;
 }
 
 void Settings::setTouchWorkaround(bool b)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->touchWorkaround == b)
 	{
 		return;
@@ -1513,15 +1400,11 @@ void Settings::setTouchWorkaround(bool b)
 
 ScrollbarHideType Settings::getScrollbarHideType() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->scrollbarHideType;
 }
 
 void Settings::setScrollbarHideType(ScrollbarHideType type)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->scrollbarHideType == type)
 	{
 		return;
@@ -1534,15 +1417,11 @@ void Settings::setScrollbarHideType(ScrollbarHideType type)
 
 bool Settings::isAutloadPdfXoj() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->autoloadPdfXoj;
 }
 
 void Settings::setAutoloadPdfXoj(bool load)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->autoloadPdfXoj == load)
 	{
 		return;
@@ -1553,15 +1432,11 @@ void Settings::setAutoloadPdfXoj(bool load)
 
 string const& Settings::getDefaultSaveName() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->defaultSaveName;
 }
 
 void Settings::setDefaultSaveName(string name)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->defaultSaveName == name)
 	{
 		return;
@@ -1574,15 +1449,11 @@ void Settings::setDefaultSaveName(string name)
 
 string const& Settings::getPageTemplate() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->pageTemplate;
 }
 
 void Settings::setPageTemplate(string pageTemplate)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->pageTemplate == pageTemplate)
 	{
 		return;
@@ -1595,15 +1466,11 @@ void Settings::setPageTemplate(string pageTemplate)
 
 string const& Settings::getAudioFolder() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->audioFolder;
 }
 
 void Settings::setAudioFolder(string audioFolder)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->audioFolder == audioFolder)
 	{
 		return;
@@ -1616,15 +1483,11 @@ void Settings::setAudioFolder(string audioFolder)
 
 string const& Settings::getSizeUnit() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return sizeUnit;
 }
 
 void Settings::setSizeUnit(string sizeUnit)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->sizeUnit == sizeUnit)
 	{
 		return;
@@ -1640,8 +1503,6 @@ void Settings::setSizeUnit(string sizeUnit)
  */
 int Settings::getSizeUnitIndex() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	string unit = getSizeUnit();
 
 	for (int i = 0; i < XOJ_UNIT_COUNT; i++)
@@ -1660,8 +1521,6 @@ int Settings::getSizeUnitIndex() const
  */
 void Settings::setSizeUnitIndex(int sizeUnitId)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (sizeUnitId < 0 || sizeUnitId >= XOJ_UNIT_COUNT)
 	{
 		sizeUnitId = 0;
@@ -1672,8 +1531,6 @@ void Settings::setSizeUnitIndex(int sizeUnitId)
 
 void Settings::setShowPairedPages(bool showPairedPages)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->showPairedPages == showPairedPages)
 	{
 		return;
@@ -1685,15 +1542,11 @@ void Settings::setShowPairedPages(bool showPairedPages)
 
 bool Settings::isShowPairedPages() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->showPairedPages;
 }
 
 void Settings::setPresentationMode(bool presentationMode)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->presentationMode == presentationMode)
 	{
 		return;
@@ -1705,15 +1558,11 @@ void Settings::setPresentationMode(bool presentationMode)
 
 bool Settings::isPresentationMode() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->presentationMode;
 }
 
 void Settings::setPressureSensitivity(gboolean presureSensitivity)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->pressureSensitivity == presureSensitivity)
 	{
 		return;
@@ -1725,8 +1574,6 @@ void Settings::setPressureSensitivity(gboolean presureSensitivity)
 
 void Settings::setPairsOffset(int numOffset)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->numPairsOffset == numOffset)
 	{
 		return;
@@ -1738,15 +1585,11 @@ void Settings::setPairsOffset(int numOffset)
 
 int Settings::getPairsOffset() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->numPairsOffset;
 }
 
 void Settings::setViewColumns(int numColumns)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->numColumns == numColumns)
 	{
 		return;
@@ -1758,16 +1601,12 @@ void Settings::setViewColumns(int numColumns)
 
 int Settings::getViewColumns() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->numColumns;
 }
 
 
 void Settings::setViewRows(int numRows)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->numRows == numRows)
 	{
 		return;
@@ -1779,15 +1618,11 @@ void Settings::setViewRows(int numRows)
 
 int Settings::getViewRows() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->numRows;
 }
 
 void Settings::setViewFixedRows(bool viewFixedRows)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->viewFixedRows == viewFixedRows)
 	{
 		return;
@@ -1799,15 +1634,11 @@ void Settings::setViewFixedRows(bool viewFixedRows)
 
 bool Settings::isViewFixedRows() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->viewFixedRows;
 }
 
 void Settings::setViewLayoutVert(bool vert)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->layoutVertical == vert)
 	{
 		return;
@@ -1819,15 +1650,11 @@ void Settings::setViewLayoutVert(bool vert)
 
 bool Settings::getViewLayoutVert() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->layoutVertical;
 }
 
 void Settings::setViewLayoutR2L(bool r2l)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->layoutRightToLeft == r2l)
 	{
 		return;
@@ -1839,15 +1666,11 @@ void Settings::setViewLayoutR2L(bool r2l)
 
 bool Settings::getViewLayoutR2L() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->layoutRightToLeft;
 }
 
 void Settings::setViewLayoutB2T(bool b2t)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->layoutBottomToTop == b2t)
 	{
 		return;
@@ -1859,45 +1682,33 @@ void Settings::setViewLayoutB2T(bool b2t)
 
 bool Settings::getViewLayoutB2T() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->layoutBottomToTop;
 }
 
 void Settings::setLastSavePath(Path p)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	this->lastSavePath = p;
 	save();
 }
 
 Path const& Settings::getLastSavePath() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->lastSavePath;
 }
 
 void Settings::setLastOpenPath(Path p)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	this->lastOpenPath = p;
 	save();
 }
 
 Path const& Settings::getLastOpenPath() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->lastOpenPath;
 }
 
 void Settings::setLastImagePath(Path path)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->lastImagePath == path)
 	{
 		return;
@@ -1908,15 +1719,11 @@ void Settings::setLastImagePath(Path path)
 
 Path const& Settings::getLastImagePath() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->lastImagePath;
 }
 
 void Settings::setZoomStep(double zoomStep)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->zoomStep == zoomStep)
 	{
 		return;
@@ -1927,15 +1734,11 @@ void Settings::setZoomStep(double zoomStep)
 
 double Settings::getZoomStep() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->zoomStep;
 }
 
 void Settings::setZoomStepScroll(double zoomStepScroll)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->zoomStepScroll == zoomStepScroll)
 	{
 		return;
@@ -1946,15 +1749,11 @@ void Settings::setZoomStepScroll(double zoomStepScroll)
 
 double Settings::getZoomStepScroll() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->zoomStepScroll;
 }
 
 void Settings::setDisplayDpi(int dpi)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->displayDpi == dpi)
 	{
 		return;
@@ -1970,7 +1769,6 @@ int Settings::getDisplayDpi() const
 
 void Settings::setDarkTheme(bool dark)
 {
-	XOJ_CHECK_TYPE(Settings);
 	if (this->darkTheme == dark)
 	{
 		return;
@@ -1981,22 +1779,16 @@ void Settings::setDarkTheme(bool dark)
 
 bool Settings::isDarkTheme() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->darkTheme;
 }
 
 bool Settings::isSidebarVisible() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->showSidebar;
 }
 
 void Settings::setSidebarVisible(bool visible)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->showSidebar == visible)
 	{
 		return;
@@ -2007,14 +1799,11 @@ void Settings::setSidebarVisible(bool visible)
 
 int Settings::getSidebarWidth() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->sidebarWidth;
 }
 
 void Settings::setSidebarWidth(int width)
 {
-	XOJ_CHECK_TYPE(Settings);
 	width = std::max(width, 50);
 
 	if (this->sidebarWidth == width)
@@ -2027,8 +1816,6 @@ void Settings::setSidebarWidth(int width)
 
 void Settings::setMainWndSize(int width, int height)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	this->mainWndWidth = width;
 	this->mainWndHeight = height;
 
@@ -2037,36 +1824,26 @@ void Settings::setMainWndSize(int width, int height)
 
 int Settings::getMainWndWidth() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->mainWndWidth;
 }
 
 int Settings::getMainWndHeight() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->mainWndHeight;
 }
 
 bool Settings::isMainWndMaximized() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->maximized;
 }
 
 void Settings::setMainWndMaximized(bool max)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	this->maximized = max;
 }
 
 void Settings::setSelectedToolbar(string name)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->selectedToolbar == name)
 	{
 		return;
@@ -2077,29 +1854,21 @@ void Settings::setSelectedToolbar(string name)
 
 string const& Settings::getSelectedToolbar() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->selectedToolbar;
 }
 
 SElement& Settings::getCustomElement(string name)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->data[name];
 }
 
 void Settings::customSettingsChanged()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	save();
 }
 
 ButtonConfig* Settings::getButtonConfig(int id)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (id < 0 || id >= BUTTON_COUNT)
 	{
 		g_error("Settings::getButtonConfig try to get id=%i out of range!", id);
@@ -2110,57 +1879,41 @@ ButtonConfig* Settings::getButtonConfig(int id)
 
 ButtonConfig* Settings::getEraserButtonConfig()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->buttonConfig[0];
 }
 
 ButtonConfig* Settings::getMiddleButtonConfig()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->buttonConfig[1];
 }
 
 ButtonConfig* Settings::getRightButtonConfig()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->buttonConfig[2];
 }
 
 ButtonConfig* Settings::getTouchButtonConfig()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->buttonConfig[3];
 }
 
 ButtonConfig* Settings::getDefaultButtonConfig()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->buttonConfig[4];
 }
 
 ButtonConfig* Settings::getStylusButton1Config()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->buttonConfig[5];
 }
 
 ButtonConfig* Settings::getStylusButton2Config()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->buttonConfig[6];
 }
 
 string const& Settings::getFullscreenHideElements() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->fullscreenHideElements;
 }
 
@@ -2172,30 +1925,22 @@ void Settings::setFullscreenHideElements(string elements)
 
 string const& Settings::getPresentationHideElements() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->presentationHideElements;
 }
 
 void Settings::setPresentationHideElements(string elements)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	this->presentationHideElements = elements;
 	save();
 }
 
 int Settings::getPdfPageCacheSize() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->pdfPageCacheSize;
 }
 
 void Settings::setPdfPageCacheSize(int size)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->pdfPageCacheSize == size)
 	{
 		return;
@@ -2206,15 +1951,11 @@ void Settings::setPdfPageCacheSize(int size)
 
 int Settings::getBorderColor() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->selectionBorderColor;
 }
 
 void Settings::setBorderColor(int color)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->selectionBorderColor == color)
 	{
 		return;
@@ -2225,15 +1966,11 @@ void Settings::setBorderColor(int color)
 
 int Settings::getSelectionColor() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->selectionMarkerColor;
 }
 
 void Settings::setSelectionColor(int color)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->selectionMarkerColor == color)
 	{
 		return;
@@ -2244,15 +1981,11 @@ void Settings::setSelectionColor(int color)
 
 int Settings::getBackgroundColor() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->backgroundColor;
 }
 
 void Settings::setBackgroundColor(int color)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->backgroundColor == color)
 	{
 		return;
@@ -2263,15 +1996,11 @@ void Settings::setBackgroundColor(int color)
 
 XojFont& Settings::getFont()
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->font;
 }
 
 void Settings::setFont(const XojFont& font)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	this->font = font;
 	save();
 }
@@ -2279,15 +2008,11 @@ void Settings::setFont(const XojFont& font)
 
 PaDeviceIndex Settings::getAudioInputDevice() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->audioInputDevice;
 }
 
 void Settings::setAudioInputDevice(PaDeviceIndex deviceIndex)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->audioInputDevice == deviceIndex)
 	{
 		return;
@@ -2298,15 +2023,11 @@ void Settings::setAudioInputDevice(PaDeviceIndex deviceIndex)
 
 PaDeviceIndex Settings::getAudioOutputDevice() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->audioOutputDevice;
 }
 
 void Settings::setAudioOutputDevice(PaDeviceIndex deviceIndex)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->audioOutputDevice == deviceIndex)
 	{
 		return;
@@ -2317,15 +2038,11 @@ void Settings::setAudioOutputDevice(PaDeviceIndex deviceIndex)
 
 double Settings::getAudioSampleRate() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->audioSampleRate;
 }
 
 void Settings::setAudioSampleRate(double sampleRate)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->audioSampleRate == sampleRate)
 	{
 		return;
@@ -2336,15 +2053,11 @@ void Settings::setAudioSampleRate(double sampleRate)
 
 double Settings::getAudioGain() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->audioGain;
 }
 
 void Settings::setAudioGain(double gain)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->audioGain == gain)
 	{
 		return;
@@ -2355,15 +2068,11 @@ void Settings::setAudioGain(double gain)
 
 string const& Settings::getPluginEnabled() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->pluginEnabled;
 }
 
 void Settings::setPluginEnabled(string pluginEnabled)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->pluginEnabled == pluginEnabled)
 	{
 		return;
@@ -2374,15 +2083,11 @@ void Settings::setPluginEnabled(string pluginEnabled)
 
 string const& Settings::getPluginDisabled() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->pluginDisabled;
 }
 
 void Settings::setPluginDisabled(string pluginDisabled)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->pluginDisabled == pluginDisabled)
 	{
 		return;
@@ -2394,7 +2099,6 @@ void Settings::setPluginDisabled(string pluginDisabled)
 
 void Settings::getStrokeFilter(int* ignoreTime, double* ignoreLength, int* successiveTime) const
 {
-	XOJ_CHECK_TYPE(Settings);
 	*ignoreTime = this->strokeFilterIgnoreTime;
 	*ignoreLength = this->strokeFilterIgnoreLength;
 	*successiveTime = this->strokeFilterSuccessiveTime;
@@ -2403,7 +2107,6 @@ void Settings::getStrokeFilter(int* ignoreTime, double* ignoreLength, int* succe
 
 void Settings::setStrokeFilter( int ignoreTime, double ignoreLength, int successiveTime)
 {
-	XOJ_CHECK_TYPE(Settings);
 	this->strokeFilterIgnoreTime = ignoreTime;
 	this->strokeFilterIgnoreLength = ignoreLength;
 	this->strokeFilterSuccessiveTime = successiveTime;
@@ -2412,46 +2115,37 @@ void Settings::setStrokeFilter( int ignoreTime, double ignoreLength, int success
 
 void Settings::setStrokeFilterEnabled(bool enabled)
 {
-	XOJ_CHECK_TYPE(Settings);
 	this->strokeFilterEnabled = enabled;
 }
 
 bool Settings::getStrokeFilterEnabled() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->strokeFilterEnabled;
 }
 
 void Settings::setDoActionOnStrokeFiltered(bool enabled)
 {
-	XOJ_CHECK_TYPE(Settings);
 	this->doActionOnStrokeFiltered = enabled;
 }
 
 bool Settings::getDoActionOnStrokeFiltered() const
 {
-	XOJ_CHECK_TYPE(Settings);
 	return this->doActionOnStrokeFiltered;
 }
 
 void Settings::setTrySelectOnStrokeFiltered(bool enabled)
 {
-	XOJ_CHECK_TYPE(Settings);
 	this->trySelectOnStrokeFiltered = enabled;
 }
 
 bool Settings::getTrySelectOnStrokeFiltered() const
 {
-	XOJ_CHECK_TYPE(Settings);
 	return this->trySelectOnStrokeFiltered;
 }
 
 
 void Settings::setExperimentalInputSystemEnabled(bool systemEnabled)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->experimentalInputSystemEnabled == systemEnabled)
 	{
 		return;
@@ -2462,15 +2156,11 @@ void Settings::setExperimentalInputSystemEnabled(bool systemEnabled)
 
 bool Settings::getExperimentalInputSystemEnabled() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->experimentalInputSystemEnabled;
 }
 
 void Settings::setInputSystemTPCButtonEnabled(bool tpcButtonEnabled)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->inputSystemTPCButton == tpcButtonEnabled)
 	{
 		return;
@@ -2481,15 +2171,11 @@ void Settings::setInputSystemTPCButtonEnabled(bool tpcButtonEnabled)
 
 bool Settings::getInputSystemTPCButtonEnabled() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->inputSystemTPCButton;
 }
 
 void Settings::setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnabled)
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	if (this->inputSystemDrawOutsideWindow == drawOutsideWindowEnabled)
 	{
 		return;
@@ -2500,8 +2186,6 @@ void Settings::setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnab
 
 bool Settings::getInputSystemDrawOutsideWindowEnabled() const
 {
-	XOJ_CHECK_TYPE(Settings);
-
 	return this->inputSystemDrawOutsideWindow;
 }
 
@@ -2598,8 +2282,6 @@ void Settings::setScrollbarFadeoutDisabled(bool disable)
 
 SAttribute::SAttribute()
 {
-	XOJ_INIT_TYPE(SAttribute);
-
 	this->dValue = 0;
 	this->iValue = 0;
 	this->type = ATTRIBUTE_TYPE_NONE;
@@ -2607,46 +2289,33 @@ SAttribute::SAttribute()
 
 SAttribute::SAttribute(const SAttribute& attrib)
 {
-	XOJ_INIT_TYPE(SAttribute);
-
 	*this = attrib;
 }
 
 SAttribute::~SAttribute()
 {
-	XOJ_CHECK_TYPE(SAttribute);
-
 	this->iValue = 0;
 	this->type = ATTRIBUTE_TYPE_NONE;
-
-	XOJ_RELEASE_TYPE(SAttribute);
 }
 
 //////////////////////////////////////////////////
 
 __RefSElement::__RefSElement()
 {
-	XOJ_INIT_TYPE(__RefSElement);
-
 	this->refcount = 0;
 }
 
 __RefSElement::~__RefSElement()
 {
-	XOJ_RELEASE_TYPE(__RefSElement);
 }
 
 void __RefSElement::ref()
 {
-	XOJ_CHECK_TYPE(__RefSElement);
-
 	this->refcount++;
 }
 
 void __RefSElement::unref()
 {
-	XOJ_CHECK_TYPE(__RefSElement);
-
 	this->refcount--;
 	if (this->refcount == 0)
 	{
@@ -2656,146 +2325,93 @@ void __RefSElement::unref()
 
 SElement::SElement()
 {
-	XOJ_INIT_TYPE(SElement);
-
 	this->element = new __RefSElement();
 	this->element->ref();
 }
 
 SElement::SElement(const SElement& elem)
 {
-	XOJ_INIT_TYPE(SElement);
-
 	this->element = elem.element;
 	this->element->ref();
 }
 
 SElement::~SElement()
 {
-	XOJ_CHECK_TYPE(SElement);
-
 	this->element->unref();
 	this->element = NULL;
-
-	XOJ_RELEASE_TYPE(SElement);
 }
 
 void SElement::operator=(const SElement& elem)
 {
-	XOJ_CHECK_TYPE(SElement);
-
 	this->element = elem.element;
 	this->element->ref();
 }
 
 std::map<string, SAttribute>& SElement::attributes()
 {
-	XOJ_CHECK_TYPE(SElement);
-
 	return this->element->attributes;
 }
 
 std::map<string, SElement>& SElement::children()
 {
-	XOJ_CHECK_TYPE(SElement);
-
 	return this->element->children;
 }
 
 void SElement::clear()
 {
-	XOJ_CHECK_TYPE(SElement);
-
 	this->element->attributes.clear();
 	this->element->children.clear();
 }
 
 SElement& SElement::child(string name)
 {
-	XOJ_CHECK_TYPE(SElement);
-
 	return this->element->children[name];
 }
 
 void SElement::setComment(const string name, const string comment)
 {
-	XOJ_CHECK_TYPE(SElement);
-
 	SAttribute& attrib = this->element->attributes[name];
-
-	XOJ_CHECK_TYPE_OBJ(&attrib, SAttribute);
-
 	attrib.comment = comment;
 }
 
 void SElement::setIntHex(const string name, const int value)
 {
-	XOJ_CHECK_TYPE(SElement);
-
 	SAttribute& attrib = this->element->attributes[name];
-
-	XOJ_CHECK_TYPE_OBJ(&attrib, SAttribute);
-
 	attrib.iValue = value;
 	attrib.type = ATTRIBUTE_TYPE_INT_HEX;
 }
 
 void SElement::setInt(const string name, const int value)
 {
-	XOJ_CHECK_TYPE(SElement);
-
 	SAttribute& attrib = this->element->attributes[name];
-
-	XOJ_CHECK_TYPE_OBJ(&attrib, SAttribute);
-
 	attrib.iValue = value;
 	attrib.type = ATTRIBUTE_TYPE_INT;
 }
 
 void SElement::setBool(const string name, const bool value)
 {
-	XOJ_CHECK_TYPE(SElement);
-
 	SAttribute& attrib = this->element->attributes[name];
-
-	XOJ_CHECK_TYPE_OBJ(&attrib, SAttribute);
-
 	attrib.iValue = value;
 	attrib.type = ATTRIBUTE_TYPE_BOOLEAN;
 }
 
 void SElement::setString(const string name, const string value)
 {
-	XOJ_CHECK_TYPE(SElement);
-
 	SAttribute& attrib = this->element->attributes[name];
-
-	XOJ_CHECK_TYPE_OBJ(&attrib, SAttribute);
-
 	attrib.sValue = value;
 	attrib.type = ATTRIBUTE_TYPE_STRING;
 }
 
 void SElement::setDouble(const string name, const double value)
 {
-	XOJ_CHECK_TYPE(SElement);
-
 	SAttribute& attrib = this->element->attributes[name];
-
-	XOJ_CHECK_TYPE_OBJ(&attrib, SAttribute);
-
 	attrib.dValue = value;
 	attrib.type = ATTRIBUTE_TYPE_DOUBLE;
 }
 
 bool SElement::getDouble(const string name, double& value)
 {
-	XOJ_CHECK_TYPE(SElement);
-
 	SAttribute& attrib = this->element->attributes[name];
-
-	XOJ_CHECK_TYPE_OBJ(&attrib, SAttribute);
-
 	if (attrib.type == ATTRIBUTE_TYPE_NONE)
 	{
 		this->element->attributes.erase(name);
@@ -2814,12 +2430,7 @@ bool SElement::getDouble(const string name, double& value)
 
 bool SElement::getInt(const string name, int& value)
 {
-	XOJ_CHECK_TYPE(SElement);
-
 	SAttribute& attrib = this->element->attributes[name];
-
-	XOJ_CHECK_TYPE_OBJ(&attrib, SAttribute);
-
 	if (attrib.type == ATTRIBUTE_TYPE_NONE)
 	{
 		this->element->attributes.erase(name);
@@ -2838,12 +2449,7 @@ bool SElement::getInt(const string name, int& value)
 
 bool SElement::getBool(const string name, bool& value)
 {
-	XOJ_CHECK_TYPE(SElement);
-
 	SAttribute& attrib = this->element->attributes[name];
-
-	XOJ_CHECK_TYPE_OBJ(&attrib, SAttribute);
-
 	if (attrib.type == ATTRIBUTE_TYPE_NONE)
 	{
 		this->element->attributes.erase(name);
@@ -2862,12 +2468,7 @@ bool SElement::getBool(const string name, bool& value)
 
 bool SElement::getString(const string name, string& value)
 {
-	XOJ_CHECK_TYPE(SElement);
-
 	SAttribute& attrib = this->element->attributes[name];
-
-	XOJ_CHECK_TYPE_OBJ(&attrib, SAttribute);
-
 	if (attrib.type == ATTRIBUTE_TYPE_NONE)
 	{
 		this->element->attributes.erase(name);

@@ -28,8 +28,6 @@ private:
 	void applyScale(double fx, double fy);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	vector<Element*> elements;
 
 	double x0;

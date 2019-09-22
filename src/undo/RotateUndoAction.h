@@ -28,8 +28,6 @@ private:
 	void applyRotation(double rotation);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	vector<Element*> elements;
 
 	double x0;

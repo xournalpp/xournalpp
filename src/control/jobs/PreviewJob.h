@@ -46,8 +46,6 @@ private:
 	void drawPage(int layer);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Graphics buffer
 	 */

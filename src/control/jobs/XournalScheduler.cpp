@@ -6,34 +6,25 @@
 XournalScheduler::XournalScheduler()
  : Scheduler()
 {
-	XOJ_INIT_TYPE(XournalScheduler);
-
 	this->name = "XournalScheduler";
 }
 
 XournalScheduler::~XournalScheduler()
 {
-	XOJ_RELEASE_TYPE(XournalScheduler);
 }
 
 void XournalScheduler::removeSidebar(SidebarPreviewBaseEntry* preview)
 {
-	XOJ_CHECK_TYPE(XournalScheduler);
-
 	removeSource(preview, JOB_TYPE_PREVIEW, JOB_PRIORITY_HIGH);
 }
 
 void XournalScheduler::removePage(XojPageView* view)
 {
-	XOJ_CHECK_TYPE(XournalScheduler);
-
 	removeSource(view, JOB_TYPE_RENDER, JOB_PRIORITY_URGENT);
 }
 
 void XournalScheduler::removeAllJobs()
 {
-	XOJ_CHECK_TYPE(XournalScheduler);
-
 	g_mutex_lock(&this->jobQueueMutex);
 
 	for (int priority = JOB_PRIORITY_URGENT; priority < JOB_N_PRIORITIES; priority++)
@@ -59,16 +50,12 @@ void XournalScheduler::removeAllJobs()
 
 void XournalScheduler::finishTask()
 {
-	XOJ_CHECK_TYPE(XournalScheduler);
-
 	g_mutex_lock(&this->jobRunningMutex);
 	g_mutex_unlock(&this->jobRunningMutex);
 }
 
 void XournalScheduler::removeSource(void* source, JobType type, JobPriority priority)
 {
-	XOJ_CHECK_TYPE(XournalScheduler);
-
 	g_mutex_lock(&this->jobQueueMutex);
 
 	int length = g_queue_get_length(this->jobQueue[priority]);
@@ -97,8 +84,6 @@ void XournalScheduler::removeSource(void* source, JobType type, JobPriority prio
 
 bool XournalScheduler::existsSource(void* source, JobType type, JobPriority priority)
 {
-	XOJ_CHECK_TYPE(XournalScheduler);
-
 	bool exists = false;
 	g_mutex_lock(&this->jobQueueMutex);
 
@@ -124,8 +109,6 @@ bool XournalScheduler::existsSource(void* source, JobType type, JobPriority prio
 
 void XournalScheduler::addRepaintSidebar(SidebarPreviewBaseEntry* preview)
 {
-	XOJ_CHECK_TYPE(XournalScheduler);
-
 	if (existsSource(preview, JOB_TYPE_PREVIEW, JOB_PRIORITY_HIGH))
 	{
 		return;
@@ -138,8 +121,6 @@ void XournalScheduler::addRepaintSidebar(SidebarPreviewBaseEntry* preview)
 
 void XournalScheduler::addRerenderPage(XojPageView* view)
 {
-	XOJ_CHECK_TYPE(XournalScheduler);
-
 	if (existsSource(view, JOB_TYPE_RENDER, JOB_PRIORITY_URGENT))
 	{
 		return;

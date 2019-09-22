@@ -20,14 +20,10 @@
 
 XojExportHandler::XojExportHandler()
 {
-	XOJ_INIT_TYPE(XojExportHandler);
 }
 
 XojExportHandler::~XojExportHandler()
 {
-	XOJ_CHECK_TYPE(XojExportHandler);
-
-	XOJ_RELEASE_TYPE(XojExportHandler);
 }
 
 /**
@@ -35,16 +31,12 @@ XojExportHandler::~XojExportHandler()
  */
 void XojExportHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s)
 {
-	XOJ_CHECK_TYPE(XojExportHandler);
-
 	// Fill is not exported in .xoj
 	// Line style is also not supported
 }
 
 void XojExportHandler::writeHeader()
 {
-	XOJ_CHECK_TYPE(XojExportHandler);
-
 	this->root->setAttrib("creator", PROJECT_STRING);
 	// Keep this version on 2, as this is anyway not read by Xournal
 	this->root->setAttrib("fileversion", "2");
@@ -71,6 +63,5 @@ void XojExportHandler::writeSolidBackground(XmlNode* background, PageRef p)
 
 void XojExportHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode)
 {
-	XOJ_CHECK_TYPE(XojExportHandler);
 	// Do nothing since timestamp are not supported by Xournal
 }

@@ -51,6 +51,4 @@ protected:
 	AudioPlayer* audioPlayer;
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-};
+	};

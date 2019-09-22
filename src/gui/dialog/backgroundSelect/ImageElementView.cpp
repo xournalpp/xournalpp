@@ -5,20 +5,14 @@
 ImageElementView::ImageElementView(int id, BackgroundSelectDialogBase* dlg)
  : BaseElementView(id, dlg)
 {
-	XOJ_INIT_TYPE(ImageElementView);
 }
 
 ImageElementView::~ImageElementView()
 {
-	XOJ_CHECK_TYPE(ImageElementView);
-
-	XOJ_RELEASE_TYPE(ImageElementView);
 }
 
 void ImageElementView::calcSize()
 {
-	XOJ_CHECK_TYPE(ImageElementView);
-
 	if (this->width == -1)
 	{
 		GdkPixbuf* p = backgroundImage.getPixbuf();
@@ -49,14 +43,10 @@ void ImageElementView::paintContents(cairo_t* cr)
 
 int ImageElementView::getContentWidth()
 {
-	XOJ_CHECK_TYPE(ImageElementView);
-
 	return width;
 }
 
 int ImageElementView::getContentHeight()
 {
-	XOJ_CHECK_TYPE(ImageElementView);
-
 	return height;
 }

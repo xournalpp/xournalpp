@@ -4,17 +4,12 @@
 ZoomGesture::ZoomGesture(ZoomControl* zoomControl)
  : zoomControl(zoomControl)
 {
-	XOJ_INIT_TYPE(ZoomGesture);
 }
 
 ZoomGesture::~ZoomGesture()
 {
-	XOJ_CHECK_TYPE(ZoomGesture);
-
 	g_object_unref(this->gesture);
 	this->gesture = NULL;
-
-	XOJ_RELEASE_TYPE(ZoomGesture);
 }
 
 void ZoomGesture::connect(GtkWidget* parent)
@@ -26,36 +21,29 @@ void ZoomGesture::connect(GtkWidget* parent)
 	g_signal_connect(this->gesture, "begin", G_CALLBACK(
 			+[](GtkGesture* gesture, GdkEventSequence* sequence, ZoomGesture* self)
 			{
-				XOJ_CHECK_TYPE_OBJ(self, ZoomGesture);
-				self->zoomBegin();
+	self->zoomBegin();
 			}), this);
 
 	g_signal_connect(this->gesture, "scale-changed", G_CALLBACK(
 			+[](GtkGestureZoom* gesture, gdouble scale, ZoomGesture* self)
 			{
-				XOJ_CHECK_TYPE_OBJ(self, ZoomGesture);
-				self->zoomChanged(scale);
+	self->zoomChanged(scale);
 			}), this);
 
 	g_signal_connect(this->gesture, "end", G_CALLBACK(
 			+[](GtkGesture* gesture, GdkEventSequence* sequence, ZoomGesture* self)
 			{
-				XOJ_CHECK_TYPE_OBJ(self, ZoomGesture);
-				self->zoomEnd();
+	self->zoomEnd();
 			}), this);
 }
 
 bool ZoomGesture::isGestureActive()
 {
-	XOJ_CHECK_TYPE(ZoomGesture);
-
 	return gestureActive;
 }
 
 void ZoomGesture::disable()
 {
-	XOJ_CHECK_TYPE(ZoomGesture);
-
 	this->enabled = false;
 	this->gestureActive = false;
 
@@ -65,15 +53,11 @@ void ZoomGesture::disable()
 
 void ZoomGesture::enable()
 {
-	XOJ_CHECK_TYPE(ZoomGesture);
-
 	this->enabled = true;
 }
 
 void ZoomGesture::zoomBegin()
 {
-	XOJ_CHECK_TYPE(ZoomGesture);
-
 	if(!enabled || zoomControl->isZoomPresentationMode())
 	{
 		return;
@@ -98,8 +82,6 @@ void ZoomGesture::zoomBegin()
 
 void ZoomGesture::zoomChanged(double zoom)
 {
-	XOJ_CHECK_TYPE(ZoomGesture);
-
 	if(!enabled || zoomControl->isZoomPresentationMode())
 	{
 		return;
@@ -113,8 +95,6 @@ void ZoomGesture::zoomChanged(double zoom)
 
 void ZoomGesture::zoomEnd()
 {
-	XOJ_CHECK_TYPE(ZoomGesture);
-
 	if(!enabled || zoomControl->isZoomPresentationMode())
 	{
 		return;

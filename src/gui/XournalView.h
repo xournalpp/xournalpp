@@ -161,8 +161,6 @@ private:
 	static void staticLayoutPages(GtkWidget *widget, GtkAllocation* allocation, void* data);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Scrollbars
 	 */

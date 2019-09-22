@@ -78,8 +78,6 @@ private:
 	static bool callAfterCallback(Job* job);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	int afterRunId = 0;
 
 	int refCount = 1;

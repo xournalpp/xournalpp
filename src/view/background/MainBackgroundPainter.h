@@ -37,8 +37,6 @@ public:
 	void setLineWidthFactor(double factor);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	map<PageTypeFormat, BaseBackgroundPainter*> painter;
 	BaseBackgroundPainter* defaultPainter;
 };

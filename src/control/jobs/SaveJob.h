@@ -34,7 +34,5 @@ protected:
 	virtual void afterRun();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	string lastError;
 };

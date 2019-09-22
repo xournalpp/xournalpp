@@ -62,8 +62,6 @@ private:
 	                               ClipboardHandler* handler);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	ClipboardListener* listener = NULL;
 	GtkClipboard* clipboard = NULL;
 	gulong hanlderId = -1;

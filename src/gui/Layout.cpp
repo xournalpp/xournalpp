@@ -29,8 +29,6 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
  : view(view),
    scrollHandling(scrollHandling)
 {
-	XOJ_INIT_TYPE(Layout);
-
 	g_signal_connect(scrollHandling->getHorizontal(), "value-changed", G_CALLBACK(horizontalScrollChanged), this);
 
 	g_signal_connect(scrollHandling->getVertical(), "value-changed", G_CALLBACK(verticalScrollChanged), this);
@@ -42,7 +40,6 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
 
 void Layout::horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout)
 {
-	XOJ_CHECK_TYPE_OBJ(layout, Layout);
 	layout->checkScroll(adjustment, layout->lastScrollHorizontal);
 	layout->updateVisibility();
 	layout->scrollHandling->scrollChanged();
@@ -50,7 +47,6 @@ void Layout::horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout)
 
 void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout)
 {
-	XOJ_CHECK_TYPE_OBJ(layout, Layout);
 	layout->checkScroll(adjustment, layout->lastScrollVertical);
 	layout->updateVisibility();
 	layout->scrollHandling->scrollChanged();
@@ -58,20 +54,15 @@ void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout)
 
 Layout::~Layout()
 {
-	XOJ_RELEASE_TYPE(Layout);
 }
 
 void Layout::checkScroll(GtkAdjustment* adjustment, double& lastScroll)
 {
-	XOJ_CHECK_TYPE(Layout);
-
 	lastScroll = gtk_adjustment_get_value(adjustment);
 }
 
 void Layout::updateVisibility()
 {
-	XOJ_CHECK_TYPE(Layout);
-
 	Rectangle visRect = getVisibleRect();
 	
 	// step through every possible page position and update using p->setIsVisible()
@@ -118,8 +109,6 @@ void Layout::updateVisibility()
 
 Rectangle Layout::getVisibleRect()
 {
-	XOJ_CHECK_TYPE(Layout);
-
 	return Rectangle(gtk_adjustment_get_value(scrollHandling->getHorizontal()),
 	                 gtk_adjustment_get_value(scrollHandling->getVertical()),
 	                 gtk_adjustment_get_page_size(scrollHandling->getHorizontal()),
@@ -142,8 +131,6 @@ inline size_t sumIf(size_t base, size_t addend, bool predicate)
 
 void Layout::recalculate()
 {
-	XOJ_CHECK_TYPE(Layout);
-
 	auto* settings = view->getControl()->getSettings();
 	size_t len = view->viewPagesLen;
 	mapper.configureFromSettings(len, settings);
@@ -181,8 +168,6 @@ void Layout::recalculate()
 
 void Layout::layoutPages(int width, int height)
 {
-	XOJ_CHECK_TYPE(Layout);
-
 	if (!valid)
 	{
 		recalculate();
@@ -293,14 +278,11 @@ void Layout::layoutPages(int width, int height)
 
 void Layout::setLayoutSize(int width, int height)
 {
-	XOJ_CHECK_TYPE(Layout);
 	this->scrollHandling->setLayoutSize(width, height);
 }
 
 void Layout::scrollRelative(double x, double y)
 {
-	XOJ_CHECK_TYPE(Layout);
-
 	if(this->view->getControl()->getSettings()->isPresentationMode())
 	{
 		return;
@@ -312,8 +294,6 @@ void Layout::scrollRelative(double x, double y)
 
 void Layout::scrollAbs(double x, double y)
 {
-	XOJ_CHECK_TYPE(Layout);
-
 	if(this->view->getControl()->getSettings()->isPresentationMode())
 	{
 		return;
@@ -326,8 +306,6 @@ void Layout::scrollAbs(double x, double y)
 
 void Layout::ensureRectIsVisible(int x, int y, int width, int height)
 {
-	XOJ_CHECK_TYPE(Layout);
-
 	gtk_adjustment_clamp_page(scrollHandling->getHorizontal(), x - 5, x + width + 10);
 	gtk_adjustment_clamp_page(scrollHandling->getVertical(), y - 5, y + height + 10);
 }
@@ -335,10 +313,6 @@ void Layout::ensureRectIsVisible(int x, int y, int width, int height)
 
 XojPageView* Layout::getViewAt(int x, int y)
 {
-
-	XOJ_CHECK_TYPE(Layout);
-
-
 	//Binary Search:
 	auto rit = std::lower_bound(this->heightRows.begin(), this->heightRows.end(), y);
 	int const foundRow = std::distance(this->heightRows.begin(), rit);

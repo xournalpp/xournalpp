@@ -67,8 +67,6 @@ private:
 	static void windowResponseCb(GtkDialog* dialog, int response, ToolbarCustomizeDialog* dlg);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	CustomizeableColorList* colorList;
 
 	std::list<ToolItemDragData*> itemDatalist;

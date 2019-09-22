@@ -41,8 +41,6 @@ private:
 	void firePageChanged();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	GtkWidget* widget;
 	size_t page;
 

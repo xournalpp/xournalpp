@@ -8,8 +8,6 @@
 SwapUndoAction::SwapUndoAction(size_t pageNr, bool moveUp, PageRef swappedPage, PageRef otherPage)
  : UndoAction("SwapUndoAction")
 {
-	XOJ_INIT_TYPE(SwapUndoAction);
-
 	this->pageNr = pageNr;
 	this->moveUp = moveUp;
 	this->swappedPage = swappedPage;
@@ -18,15 +16,10 @@ SwapUndoAction::SwapUndoAction(size_t pageNr, bool moveUp, PageRef swappedPage, 
 
 SwapUndoAction::~SwapUndoAction()
 {
-	XOJ_CHECK_TYPE(SwapUndoAction);
-
-	XOJ_RELEASE_TYPE(SwapUndoAction);
 }
 
 bool SwapUndoAction::undo(Control* control)
 {
-	XOJ_CHECK_TYPE(SwapUndoAction);
-
 	swap(control);
 	this->undone = true;
 
@@ -35,8 +28,6 @@ bool SwapUndoAction::undo(Control* control)
 
 bool SwapUndoAction::redo(Control* control)
 {
-	XOJ_CHECK_TYPE(SwapUndoAction);
-
 	swap(control);
 	this->undone = false;
 
@@ -45,8 +36,6 @@ bool SwapUndoAction::redo(Control* control)
 
 void SwapUndoAction::swap(Control* control)
 {
-	XOJ_CHECK_TYPE(SwapUndoAction);
-
 	Document* doc = control->getDocument();
 
 	doc->unlock();
@@ -73,8 +62,6 @@ void SwapUndoAction::swap(Control* control)
 
 vector<PageRef> SwapUndoAction::getPages()
 {
-	XOJ_CHECK_TYPE(SwapUndoAction);
-
 	vector<PageRef> pages;
 	pages.push_back(this->swappedPage);
 	pages.push_back(this->otherPage);
@@ -83,7 +70,5 @@ vector<PageRef> SwapUndoAction::getPages()
 
 string SwapUndoAction::getText()
 {
-	XOJ_CHECK_TYPE(SwapUndoAction);
-
 	return moveUp ? _("Move page upwards") : _("Move page downwards");
 }

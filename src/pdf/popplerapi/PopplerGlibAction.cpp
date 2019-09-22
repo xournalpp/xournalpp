@@ -4,14 +4,11 @@ PopplerGlibAction::PopplerGlibAction(PopplerAction* action, PopplerDocument* doc
  : action(action),
    document(document)
 {
-	XOJ_INIT_TYPE(PopplerGlibAction);
 	g_object_ref(document);
 }
 
 PopplerGlibAction::~PopplerGlibAction()
 {
-	XOJ_CHECK_TYPE(PopplerGlibAction);
-
 	poppler_action_free(action);
 	action = NULL;
 
@@ -20,14 +17,10 @@ PopplerGlibAction::~PopplerGlibAction()
 		g_object_unref(document);
 		document = NULL;
 	}
-
-	XOJ_RELEASE_TYPE(PopplerGlibAction);
 }
 
 XojLinkDest* PopplerGlibAction::getDestination()
 {
-	XOJ_CHECK_TYPE(PopplerGlibAction);
-
 	XojLinkDest* dest = link_dest_new();
 	dest->dest = new LinkDestination();
 	dest->dest->setName(getTitle());
@@ -51,8 +44,6 @@ XojLinkDest* PopplerGlibAction::getDestination()
 
 void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest)
 {
-	XOJ_CHECK_TYPE(PopplerGlibAction);
-
 	switch(pDest->type)
 	{
 	case POPPLER_DEST_UNKNOWN:
@@ -138,7 +129,5 @@ void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest)
 
 string PopplerGlibAction::getTitle()
 {
-	XOJ_CHECK_TYPE(PopplerGlibAction);
-
 	return ((PopplerActionAny*)action)->title;
 }

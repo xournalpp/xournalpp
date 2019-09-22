@@ -25,7 +25,5 @@ public:
 	virtual const char* what();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	string message;
 };

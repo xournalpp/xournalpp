@@ -71,8 +71,6 @@ public:
 	Layer* clone();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	vector<Element*> elements;
 
 	bool visible = true;

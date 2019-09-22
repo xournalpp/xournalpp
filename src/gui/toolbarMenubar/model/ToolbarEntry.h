@@ -44,8 +44,6 @@ public:
 	const ToolbarItemVector& getItems() const;
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	string name;
 	ToolbarItemVector entries;
 };

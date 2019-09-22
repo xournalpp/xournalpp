@@ -68,9 +68,7 @@ public:
 	Control* getControl();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-protected:
+	protected:
 	/**
 	 * The Control of the Application
 	 */

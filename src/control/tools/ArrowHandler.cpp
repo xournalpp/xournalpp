@@ -8,20 +8,14 @@
 ArrowHandler::ArrowHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
  : BaseStrokeHandler(xournal, redrawable, page)
 {
-	XOJ_INIT_TYPE(ArrowHandler);
 }
 
 ArrowHandler::~ArrowHandler()
 {
-	XOJ_CHECK_TYPE(ArrowHandler);
-
-	XOJ_RELEASE_TYPE(ArrowHandler);
 }
 
 void ArrowHandler::drawShape(Point& c, const PositionInputData& pos)
 {
-	XOJ_CHECK_TYPE(ArrowHandler);
-	
 	this->currPoint = c;	// in case redrawn by keypress event in base class.
 
 	/**

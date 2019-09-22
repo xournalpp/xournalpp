@@ -13,24 +13,17 @@
 Document::Document(DocumentHandler* handler)
  : handler(handler)
 {
-	XOJ_INIT_TYPE(Document);
 	g_mutex_init(&this->documentLock);
 }
 
 Document::~Document()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	clearDocument(true);
 	freeTreeContentModel();
-
-	XOJ_RELEASE_TYPE(Document);
 }
 
 void Document::freeTreeContentModel()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	if (this->contentsModel)
 	{
 		gtk_tree_model_foreach(this->contentsModel, (GtkTreeModelForeachFunc) freeTreeContentEntry, this);
@@ -59,8 +52,6 @@ bool Document::freeTreeContentEntry(GtkTreeModel* treeModel, GtkTreePath* path, 
 
 void Document::lock()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	g_mutex_lock(&this->documentLock);
 
 	//	if(tryLock()) {
@@ -74,7 +65,6 @@ void Document::lock()
 
 void Document::unlock()
 {
-	XOJ_CHECK_TYPE(Document);
 	g_mutex_unlock(&this->documentLock);
 
 	//	fprintf(stderr, "Unlocked by\n");
@@ -84,15 +74,11 @@ void Document::unlock()
 
 bool Document::tryLock()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	return g_mutex_trylock(&this->documentLock);
 }
 
 void Document::clearDocument(bool destroy)
 {
-	XOJ_CHECK_TYPE(Document);
-
 	if (this->preview)
 	{
 		cairo_surface_destroy(this->preview);
@@ -123,36 +109,26 @@ void Document::clearDocument(bool destroy)
  */
 size_t Document::getPageCount()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	return this->pages.size();
 }
 
 size_t Document::getPdfPageCount()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	return pdfDocument.getPageCount();
 }
 
 void Document::setFilename(Path filename)
 {
-	XOJ_CHECK_TYPE(Document);
-
 	this->filename = filename;
 }
 
 Path Document::getFilename()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	return filename;
 }
 
 Path Document::getPdfFilename()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	return pdfFilename;
 }
 
@@ -203,15 +179,11 @@ Path Document::createSaveFilename(DocumentType type, string defaultSaveName)
 
 cairo_surface_t* Document::getPreview()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	return this->preview;
 }
 
 void Document::setPreview(cairo_surface_t* preview)
 {
-	XOJ_CHECK_TYPE(Document);
-
 	if (this->preview)
 	{
 		cairo_surface_destroy(this->preview);
@@ -228,8 +200,6 @@ void Document::setPreview(cairo_surface_t* preview)
 
 Path Document::getEvMetadataFilename()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	if (!this->filename.isEmpty())
 	{
 		return this->filename;
@@ -243,22 +213,16 @@ Path Document::getEvMetadataFilename()
 
 bool Document::isPdfDocumentLoaded()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	return pdfDocument.isLoaded();
 }
 
 bool Document::isAttachPdf()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	return this->attachPdf;
 }
 
 size_t Document::findPdfPage(size_t pdfPage)
 {
-	XOJ_CHECK_TYPE(Document);
-
 	for (size_t i = 0; i < getPageCount(); i++)
 	{
 		PageRef p = this->pages[i];
@@ -275,8 +239,6 @@ size_t Document::findPdfPage(size_t pdfPage)
 
 void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterator* iter)
 {
-	XOJ_CHECK_TYPE(Document);
-
 	do
 	{
 		GtkTreeIter treeIter = { 0 };
@@ -317,8 +279,6 @@ void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterato
 
 void Document::buildContentsModel()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	freeTreeContentModel();
 
 	XojPdfBookmarkIterator* iter = pdfDocument.getContentsIter();
@@ -335,8 +295,6 @@ void Document::buildContentsModel()
 
 GtkTreeModel* Document::getContentsModel()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	return this->contentsModel;
 }
 
@@ -366,8 +324,6 @@ bool Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTre
 
 void Document::updateIndexPageNumbers()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	if (this->contentsModel != NULL)
 	{
 		gtk_tree_model_foreach(this->contentsModel, (GtkTreeModelForeachFunc) fillPageLabels, this);
@@ -376,8 +332,6 @@ void Document::updateIndexPageNumbers()
 
 bool Document::readPdf(Path filename, bool initPages, bool attachToDocument, gpointer data, gsize length)
 {
-	XOJ_CHECK_TYPE(Document);
-
 	GError* popplerError = NULL;
 
 	lock();
@@ -438,8 +392,6 @@ bool Document::readPdf(Path filename, bool initPages, bool attachToDocument, gpo
 
 void Document::setPageSize(PageRef p, double width, double height)
 {
-	XOJ_CHECK_TYPE(Document);
-
 	p->setSize(width, height);
 }
 
@@ -458,15 +410,11 @@ double Document::getPageHeight(PageRef p)
  */
 string Document::getLastErrorMsg()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	return lastError;
 }
 
 void Document::deletePage(size_t pNr)
 {
-	XOJ_CHECK_TYPE(Document);
-
 	vector<PageRef>::iterator it = this->pages.begin() + pNr;
 	this->pages.erase(it);
 
@@ -475,8 +423,6 @@ void Document::deletePage(size_t pNr)
 
 void Document::insertPage(const PageRef& p, size_t position)
 {
-	XOJ_CHECK_TYPE(Document);
-
 	this->pages.insert(this->pages.begin() + position, p);
 
 	updateIndexPageNumbers();
@@ -484,8 +430,6 @@ void Document::insertPage(const PageRef& p, size_t position)
 
 void Document::addPage(const PageRef& p)
 {
-	XOJ_CHECK_TYPE(Document);
-
 	this->pages.push_back(p);
 
 	updateIndexPageNumbers();
@@ -493,8 +437,6 @@ void Document::addPage(const PageRef& p)
 
 size_t Document::indexOf(const PageRef& page)
 {
-	XOJ_CHECK_TYPE(Document);
-
 	for (size_t i = 0; i < this->pages.size(); i++)
 	{
 		PageRef pg = this->pages[i];
@@ -509,8 +451,6 @@ size_t Document::indexOf(const PageRef& page)
 
 PageRef Document::getPage(size_t page)
 {
-	XOJ_CHECK_TYPE(Document);
-
 	if (getPageCount() <= page)
 	{
 		return NULL;
@@ -525,22 +465,16 @@ PageRef Document::getPage(size_t page)
 
 XojPdfPageSPtr Document::getPdfPage(size_t page)
 {
-	XOJ_CHECK_TYPE(Document);
-
 	return this->pdfDocument.getPage(page);
 }
 
 XojPdfDocument& Document::getPdfDocument()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	return this->pdfDocument;
 }
 
 Document& Document::operator=(const Document& doc)
 {
-	XOJ_CHECK_TYPE(Document);
-
 	clearDocument();
 
 	// Copy PDF Document
@@ -571,14 +505,10 @@ Document& Document::operator=(const Document& doc)
 
 void Document::setCreateBackupOnSave(bool backup)
 {
-	XOJ_CHECK_TYPE(Document);
-
 	this->createBackupOnSave = backup;
 }
 
 bool Document::shouldCreateBackupOnSave()
 {
-	XOJ_CHECK_TYPE(Document);
-
 	return this->createBackupOnSave;
 }

@@ -11,8 +11,6 @@
 SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar)
  : AbstractSidebarPage(control, toolbar)
 {
-	XOJ_INIT_TYPE(SidebarIndexPage);
-
 	this->treeViewBookmarks = gtk_tree_view_new();
 	g_object_ref(this->treeViewBookmarks);
 
@@ -57,8 +55,6 @@ SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar)
 
 SidebarIndexPage::~SidebarIndexPage()
 {
-	XOJ_CHECK_TYPE(SidebarIndexPage);
-
 	if (this->searchTimeout)
 	{
 		g_source_remove(this->searchTimeout);
@@ -67,27 +63,20 @@ SidebarIndexPage::~SidebarIndexPage()
 
 	g_object_unref(this->treeViewBookmarks);
 	g_object_unref(this->scrollBookmarks);
-
-	XOJ_RELEASE_TYPE(SidebarIndexPage);
 }
 
 void SidebarIndexPage::enableSidebar()
 {
-	XOJ_CHECK_TYPE(SidebarIndexPage);
-
 	toolbar->setHidden(true);
 }
 
 void SidebarIndexPage::disableSidebar()
 {
-	XOJ_CHECK_TYPE(SidebarIndexPage);
 	// Nothing to do at the moment
 }
 
 void SidebarIndexPage::askInsertPdfPage(size_t pdfPage)
 {
-	XOJ_CHECK_TYPE(SidebarIndexPage);
-
 	GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(), GTK_DIALOG_MODAL,
 											   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
 											   FC(_F("Your current document does not contain PDF Page no {1}\n"
@@ -134,8 +123,6 @@ void SidebarIndexPage::askInsertPdfPage(size_t pdfPage)
 
 bool SidebarIndexPage::treeBookmarkSelected(GtkWidget* treeview, SidebarIndexPage* sidebar)
 {
-	XOJ_CHECK_TYPE_OBJ(sidebar, SidebarIndexPage);
-
 	if (sidebar->searchTimeout)
 	{
 		return false;
@@ -199,7 +186,6 @@ bool SidebarIndexPage::treeBookmarkSelected(GtkWidget* treeview, SidebarIndexPag
 
 bool SidebarIndexPage::searchTimeoutFunc(SidebarIndexPage* sidebar)
 {
-	XOJ_CHECK_TYPE_OBJ(sidebar, SidebarIndexPage);
 	sidebar->searchTimeout = 0;
 
 	treeBookmarkSelected(sidebar->treeViewBookmarks, sidebar);
@@ -210,9 +196,6 @@ bool SidebarIndexPage::searchTimeoutFunc(SidebarIndexPage* sidebar)
 gboolean SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, const gchar* key,
 											  GtkTreeIter* iter, SidebarIndexPage* sidebar)
 {
-	XOJ_CHECK_TYPE_OBJ(sidebar, SidebarIndexPage);
-
-
 	if (sidebar->searchTimeout)
 	{
 		g_source_remove(sidebar->searchTimeout);
@@ -271,36 +254,26 @@ gboolean SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, 
 
 string SidebarIndexPage::getName()
 {
-	XOJ_CHECK_TYPE(SidebarIndexPage);
-
 	return _("Contents");
 }
 
 string SidebarIndexPage::getIconName()
 {
-	XOJ_CHECK_TYPE(SidebarIndexPage);
-
 	return "sidebar_index";
 }
 
 bool SidebarIndexPage::hasData()
 {
-	XOJ_CHECK_TYPE(SidebarIndexPage);
-
 	return this->hasContents;
 }
 
 GtkWidget* SidebarIndexPage::getWidget()
 {
-	XOJ_CHECK_TYPE(SidebarIndexPage);
-
 	return this->scrollBookmarks;
 }
 
 int SidebarIndexPage::expandOpenLinks(GtkTreeModel* model, GtkTreeIter* parent)
 {
-	XOJ_CHECK_TYPE(SidebarIndexPage);
-
 	GtkTreeIter iter = { 0 };
 	XojLinkDest* link = NULL;
 	if (model == NULL)
@@ -337,15 +310,11 @@ int SidebarIndexPage::expandOpenLinks(GtkTreeModel* model, GtkTreeIter* parent)
 
 void SidebarIndexPage::selectPageNr(size_t page, size_t pdfPage)
 {
-	XOJ_CHECK_TYPE(SidebarIndexPage);
-
 	selectPageNr(page, pdfPage, NULL);
 }
 
 bool SidebarIndexPage::selectPageNr(size_t page, size_t pdfPage, GtkTreeIter* parent)
 {
-	XOJ_CHECK_TYPE(SidebarIndexPage);
-
 	GtkTreeIter iter;
 
 	Document* doc = control->getDocument();
@@ -430,8 +399,6 @@ bool SidebarIndexPage::selectPageNr(size_t page, size_t pdfPage, GtkTreeIter* pa
 
 void SidebarIndexPage::documentChanged(DocumentChangeType type)
 {
-	XOJ_CHECK_TYPE(SidebarIndexPage);
-
 	if (type == DOCUMENT_CHANGE_CLEARED)
 	{
 		gtk_tree_view_set_model(GTK_TREE_VIEW(this->treeViewBookmarks), NULL);

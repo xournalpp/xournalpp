@@ -42,8 +42,6 @@ private:
 	static void tbSelectMenuitemActivated(GtkCheckMenuItem* menuitem, MenuSelectToolbarData* data);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	MainWindow* win = NULL;
 
 	vector<GtkWidget*> menuitems;

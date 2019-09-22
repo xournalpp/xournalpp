@@ -7,18 +7,12 @@
 TexImage::TexImage()
  : Element(ELEMENT_TEXIMAGE)
 {
-	XOJ_INIT_TYPE(TexImage);
-
 	this->sizeCalculated = true;
 }
 
 TexImage::~TexImage()
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	freeImageAndPdf();
-
-	XOJ_RELEASE_TYPE(TexImage);
 }
 
 /**
@@ -26,8 +20,6 @@ TexImage::~TexImage()
  */
 void TexImage::freeImageAndPdf()
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	if (this->image)
 	{
 		cairo_surface_destroy(this->image);
@@ -45,8 +37,6 @@ void TexImage::freeImageAndPdf()
 
 Element* TexImage::clone()
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	TexImage* img = new TexImage();
 
 	img->x = this->x;
@@ -73,22 +63,16 @@ Element* TexImage::clone()
 
 void TexImage::setWidth(double width)
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	this->width = width;
 }
 
 void TexImage::setHeight(double height)
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	this->height = height;
 }
 
 cairo_status_t TexImage::cairoReadFunction(TexImage* image, unsigned char* data, unsigned int length)
 {
-	XOJ_CHECK_TYPE_OBJ(image, TexImage);
-
 	for (unsigned int i = 0; i < length; i++, image->read++)
 	{
 		if (image->read >= image->binaryData.length())
@@ -106,8 +90,6 @@ cairo_status_t TexImage::cairoReadFunction(TexImage* image, unsigned char* data,
  */
 void TexImage::setBinaryData(string binaryData)
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	this->binaryData = binaryData;
 }
 
@@ -116,29 +98,21 @@ void TexImage::setBinaryData(string binaryData)
  */
 string& TexImage::getBinaryData()
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	return this->binaryData;
 }
 
 void TexImage::setText(string text)
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	this->text = text;
 }
 
 string TexImage::getText()
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	return this->text;
 }
 
 cairo_surface_t* TexImage::getImage()
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	if (this->image == NULL && this->parsedBinaryData == false)
 	{
 		loadBinaryData();
@@ -152,8 +126,6 @@ cairo_surface_t* TexImage::getImage()
  */
 void TexImage::loadBinaryData()
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	freeImageAndPdf();
 
 	if (this->binaryData.length() < 4)
@@ -188,8 +160,6 @@ void TexImage::loadBinaryData()
  */
 PopplerDocument* TexImage::getPdf()
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	if (this->pdf == NULL && this->parsedBinaryData == false)
 	{
 		loadBinaryData();
@@ -205,8 +175,6 @@ PopplerDocument* TexImage::getPdf()
  */
 void TexImage::setPdf(PopplerDocument* pdf)
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	if (this->pdf != NULL)
 	{
 		g_object_unref(this->pdf);
@@ -223,8 +191,6 @@ void TexImage::setPdf(PopplerDocument* pdf)
 
 void TexImage::scale(double x0, double y0, double fx, double fy)
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	this->x -= x0;
 	this->x *= fx;
 	this->x += x0;
@@ -238,15 +204,11 @@ void TexImage::scale(double x0, double y0, double fx, double fy)
 
 void TexImage::rotate(double x0, double y0, double xo, double yo, double th)
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	// Rotation for TexImages not yet implemented
 }
 
 void TexImage::serialize(ObjectOutputStream& out)
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	out.writeObject("TexImage");
 
 	serializeElement(out);
@@ -262,8 +224,6 @@ void TexImage::serialize(ObjectOutputStream& out)
 
 void TexImage::readSerialized(ObjectInputStream& in)
 {
-	XOJ_CHECK_TYPE(TexImage);
-
 	in.readObject("TexImage");
 
 	readSerializedElement(in);
@@ -285,5 +245,4 @@ void TexImage::readSerialized(ObjectInputStream& in)
 
 void TexImage::calcSize()
 {
-	XOJ_CHECK_TYPE(TexImage);
 }

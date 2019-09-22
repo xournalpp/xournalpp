@@ -4,8 +4,6 @@
 
 BackgroundConfig::BackgroundConfig(string config)
 {
-	XOJ_INIT_TYPE(BackgroundConfig);
-
 	for (string s : StringUtils::split(config, ','))
 	{
 		size_t dotPos = s.find_last_of("=");
@@ -20,15 +18,10 @@ BackgroundConfig::BackgroundConfig(string config)
 
 BackgroundConfig::~BackgroundConfig()
 {
-	XOJ_CHECK_TYPE(BackgroundConfig);
-
-	XOJ_RELEASE_TYPE(BackgroundConfig);
 }
 
 bool BackgroundConfig::loadValue(string key, string& value)
 {
-	XOJ_CHECK_TYPE(BackgroundConfig);
-
 	auto it = data.find(key);
 	if (it != this->data.end())
 	{
@@ -41,8 +34,6 @@ bool BackgroundConfig::loadValue(string key, string& value)
 
 bool BackgroundConfig::loadValue(string key, int& value)
 {
-	XOJ_CHECK_TYPE(BackgroundConfig);
-
 	string str;
 	if (loadValue(key, str))
 	{
@@ -55,8 +46,6 @@ bool BackgroundConfig::loadValue(string key, int& value)
 
 bool BackgroundConfig::loadValue(string key, double& value)
 {
-	XOJ_CHECK_TYPE(BackgroundConfig);
-
 	string str;
 	if (loadValue(key, str))
 	{
@@ -69,8 +58,6 @@ bool BackgroundConfig::loadValue(string key, double& value)
 
 bool BackgroundConfig::loadValueHex(string key, int& value)
 {
-	XOJ_CHECK_TYPE(BackgroundConfig);
-
 	string str;
 	if (loadValue(key, str))
 	{

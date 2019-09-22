@@ -11,8 +11,6 @@
 
 XmlNode::XmlNode(const char* tag)
 {
-	XOJ_INIT_TYPE(XmlNode);
-
 	this->tag = g_strdup(tag);
 	this->attributes = NULL;
 	this->children = NULL;
@@ -20,8 +18,6 @@ XmlNode::XmlNode(const char* tag)
 
 XmlNode::~XmlNode()
 {
-	XOJ_CHECK_TYPE(XmlNode);
-
 	for (GList* l = this->children; l != NULL; l = l->next)
 	{
 		XmlNode* node = (XmlNode*) l->data;
@@ -40,14 +36,10 @@ XmlNode::~XmlNode()
 
 	g_free(this->tag);
 	this->tag = NULL;
-
-	XOJ_RELEASE_TYPE(XmlNode);
 }
 
 void XmlNode::setAttrib(const char* attrib, const char* value)
 {
-	XOJ_CHECK_TYPE(XmlNode);
-
 	if (value == NULL)
 	{
 		value = "";
@@ -57,29 +49,21 @@ void XmlNode::setAttrib(const char* attrib, const char* value)
 
 void XmlNode::setAttrib(const char* attrib, string value)
 {
-	XOJ_CHECK_TYPE(XmlNode);
-
 	putAttrib(new TextAttribute(attrib, value));
 }
 
 void XmlNode::setAttrib(const char* attrib, double value)
 {
-	XOJ_CHECK_TYPE(XmlNode);
-
 	putAttrib(new DoubleAttribute(attrib, value));
 }
 
 void XmlNode::setAttrib(const char* attrib, int value)
 {
-	XOJ_CHECK_TYPE(XmlNode);
-
 	putAttrib(new IntAttribute(attrib, value));
 }
 
 void XmlNode::setAttrib(const char* attrib, size_t  value)
 {
-	XOJ_CHECK_TYPE(XmlNode);
-
 	putAttrib(new SizeTAttribute(attrib, value));
 }
 
@@ -88,15 +72,11 @@ void XmlNode::setAttrib(const char* attrib, size_t  value)
  */
 void XmlNode::setAttrib(const char* attrib, double* value, int count)
 {
-	XOJ_CHECK_TYPE(XmlNode);
-
 	putAttrib(new DoubleArrayAttribute(attrib, value, count));
 }
 
 void XmlNode::writeOut(OutputStream* out, ProgressListener* listener)
 {
-	XOJ_CHECK_TYPE(XmlNode);
-
 	out->write("<");
 	out->write(tag);
 	writeAttributes(out);
@@ -134,15 +114,11 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener)
 
 void XmlNode::addChild(XmlNode* node)
 {
-	XOJ_CHECK_TYPE(XmlNode);
-
 	this->children = g_list_append(this->children, node);
 }
 
 void XmlNode::putAttrib(XMLAttribute* a)
 {
-	XOJ_CHECK_TYPE(XmlNode);
-
 	for (GList* l = this->attributes; l != NULL; l = l->next)
 	{
 		XMLAttribute* attrib = (XMLAttribute*) l->data;
@@ -160,8 +136,6 @@ void XmlNode::putAttrib(XMLAttribute* a)
 
 void XmlNode::writeAttributes(OutputStream* out)
 {
-	XOJ_CHECK_TYPE(XmlNode);
-
 	for (GList* l = this->attributes; l != NULL; l = l->next)
 	{
 		XMLAttribute* attrib = (XMLAttribute*) l->data;

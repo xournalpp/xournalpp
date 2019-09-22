@@ -36,8 +36,6 @@ public:
 	void clearToolbarsFromDragAndDrop();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Control* control;
 
 	ToolbarAdapter** toolbars = NULL;

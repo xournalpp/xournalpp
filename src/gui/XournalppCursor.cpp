@@ -64,8 +64,6 @@ cursorStruct cssCursors[CRSR_END_OF_CURSORS];
 XournalppCursor::XournalppCursor(Control* control)
  : control(control)
 {
-	XOJ_INIT_TYPE(XournalppCursor);
-
 	// clang-format off
 	// NOTE: Go ahead and use a fancy css cursor... but specify a common backup cursor. 
 	cssCursors[CRSR_NULL                ] = 	{"",""};
@@ -99,14 +97,11 @@ XournalppCursor::XournalppCursor(Control* control)
 
 XournalppCursor::~XournalppCursor()
 {
-	XOJ_RELEASE_TYPE(XournalppCursor);
 }
 
 
 void XournalppCursor::setInputDeviceClass(InputDeviceClass device)
 {
-	XOJ_CHECK_TYPE(XournalppCursor);
-
 	this->inputDevice = device;
 }
 
@@ -114,7 +109,6 @@ void XournalppCursor::setInputDeviceClass(InputDeviceClass device)
 // pen or hi-light cursor will be a DrawDir cursor instead
 void XournalppCursor::activateDrawDirCursor(bool enable, bool shift, bool ctrl)
 {
-	XOJ_CHECK_TYPE(XournalppCursor);
 	this->drawDirActive = enable;
 	this->drawDirShift = shift;
 	this->drawDirCtrl = ctrl;
@@ -123,8 +117,6 @@ void XournalppCursor::activateDrawDirCursor(bool enable, bool shift, bool ctrl)
 
 void XournalppCursor::setMouseDown(bool mouseDown)
 {
-	XOJ_CHECK_TYPE(XournalppCursor);
-
 	if (this->mouseDown == mouseDown)
 	{
 		return;
@@ -144,8 +136,6 @@ void XournalppCursor::setMouseDown(bool mouseDown)
 
 void XournalppCursor::setMouseSelectionType(CursorSelectionType selectionType)
 {
-	XOJ_CHECK_TYPE(XournalppCursor);
-
 	if (this->selectionType == selectionType)
 	{
 		return;
@@ -160,8 +150,6 @@ void XournalppCursor::setMouseSelectionType(CursorSelectionType selectionType)
  */
 void XournalppCursor::setCursorBusy(bool busy)
 {
-	XOJ_CHECK_TYPE(XournalppCursor);
-
 	MainWindow* win = control->getWindow();
 	if (!win) return;
 
@@ -193,8 +181,6 @@ void XournalppCursor::setCursorBusy(bool busy)
 
 void XournalppCursor::setInsidePage(bool insidePage)
 {
-	XOJ_CHECK_TYPE(XournalppCursor);
-
 	if (this->insidePage == insidePage)
 	{
 		return;
@@ -208,8 +194,6 @@ void XournalppCursor::setInsidePage(bool insidePage)
 
 void XournalppCursor::setInvisible(bool invisible)
 {
-	XOJ_CHECK_TYPE(XournalppCursor);
-
 	if (this->invisible == invisible)
 	{
 		return;
@@ -223,8 +207,6 @@ void XournalppCursor::setInvisible(bool invisible)
 
 void XournalppCursor::updateCursor()
 {
-	XOJ_CHECK_TYPE(XournalppCursor);
-
 	MainWindow* win = control->getWindow();
 	if (!win) return;
 
@@ -412,8 +394,6 @@ GdkCursor* XournalppCursor::getEraserCursor()
 
 GdkCursor* XournalppCursor::getHighlighterCursor()
 {
-	XOJ_CHECK_TYPE(XournalppCursor);
-
 	if (this->drawDirActive)
 	{
 		return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
@@ -427,8 +407,6 @@ GdkCursor* XournalppCursor::getHighlighterCursor()
 
 GdkCursor* XournalppCursor::getPenCursor()
 {
-	XOJ_CHECK_TYPE(XournalppCursor);
-
 	if (this->drawDirActive)
 	{
 		return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
@@ -442,8 +420,6 @@ GdkCursor* XournalppCursor::getPenCursor()
 
 GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 {
-	XOJ_CHECK_TYPE(XournalppCursor);
-
 	int rgb = control->getToolHandler()->getColor();
 	double r = ((rgb >> 16) & 0xff) / 255.0;
 	double g = ((rgb >> 8) & 0xff) / 255.0;
@@ -530,8 +506,6 @@ GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 
 void XournalppCursor::setCursor(int cursorID)
 {
-	XOJ_CHECK_TYPE(XournalppCursor);
-
 	if (cursorID == this->currentCursor) return;
 
 	MainWindow* win = control->getWindow();
@@ -571,7 +545,6 @@ void XournalppCursor::setCursor(int cursorID)
 
 GdkCursor* XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
 {
-	XOJ_CHECK_TYPE(XournalppCursor);
 	bool big = control->getSettings()->isShowBigCursor();
 	bool bright = control->getSettings()->isHighlightPosition();
 

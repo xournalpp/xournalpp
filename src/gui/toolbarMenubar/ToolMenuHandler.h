@@ -86,8 +86,6 @@ private:
 	void initEraserToolItem();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	vector<ColorToolItem*> toolbarColorItems;
 	GtkWindow* parent = NULL;
 

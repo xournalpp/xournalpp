@@ -13,8 +13,6 @@ VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, 
  , startY(y)
  , endY(y)
 {
-	XOJ_INIT_TYPE(VerticalToolHandler);
-
 	for (Element* e: *this->layer->getElements())
 	{
 		if (e->getY() >= y)
@@ -48,8 +46,6 @@ VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, 
 
 VerticalToolHandler::~VerticalToolHandler()
 {
-	XOJ_CHECK_TYPE(VerticalToolHandler);
-
 	this->view = nullptr;
 
 	if (this->crBuffer)
@@ -57,14 +53,10 @@ VerticalToolHandler::~VerticalToolHandler()
 		cairo_surface_destroy(this->crBuffer);
 		this->crBuffer = nullptr;
 	}
-
-	XOJ_RELEASE_TYPE(VerticalToolHandler);
 }
 
 void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 {
-	XOJ_CHECK_TYPE(VerticalToolHandler);
-
 	GtkColorWrapper selectionColor = view->getSelectionColor();
 
 	cairo_set_line_width(cr, 1);
@@ -97,8 +89,6 @@ void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 
 void VerticalToolHandler::currentPos(double x, double y)
 {
-	XOJ_CHECK_TYPE(VerticalToolHandler);
-
 	if (this->endY == y)
 	{
 		return;
@@ -112,15 +102,11 @@ void VerticalToolHandler::currentPos(double x, double y)
 
 vector<Element*>* VerticalToolHandler::getElements()
 {
-	XOJ_CHECK_TYPE(VerticalToolHandler);
-
 	return &this->elements;
 }
 
 std::unique_ptr<MoveUndoAction> VerticalToolHandler::finalize()
 {
-	XOJ_CHECK_TYPE(VerticalToolHandler);
-
 	double dY = this->endY - this->startY;
 
 	auto undo =

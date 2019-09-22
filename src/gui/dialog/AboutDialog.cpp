@@ -6,8 +6,6 @@
 AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath)
  : GladeGui(gladeSearchPath, "about.glade", "aboutDialog")
 {
-	XOJ_INIT_TYPE(AboutDialog);
-
 	gtk_label_set_markup(GTK_LABEL(get("lbBuildDate")), __DATE__ ", " __TIME__);
 	gtk_label_set_markup(GTK_LABEL(get("lbVersion")), PROJECT_VERSION);
 	gtk_label_set_markup(GTK_LABEL(get("lbRevId")), GIT_COMMIT_ID);
@@ -20,13 +18,10 @@ AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath)
 
 AboutDialog::~AboutDialog()
 {
-	XOJ_RELEASE_TYPE(AboutDialog);
 }
 
 void AboutDialog::show(GtkWindow* parent)
 {
-	XOJ_CHECK_TYPE(AboutDialog);
-
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 	gtk_dialog_run(GTK_DIALOG(this->window));
 	gtk_widget_hide(this->window);

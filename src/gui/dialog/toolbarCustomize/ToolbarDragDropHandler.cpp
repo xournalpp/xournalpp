@@ -12,22 +12,15 @@
 ToolbarDragDropHandler::ToolbarDragDropHandler(Control* control)
  : control(control)
 {
-	XOJ_INIT_TYPE(ToolbarDragDropHandler);
 }
 
 ToolbarDragDropHandler::~ToolbarDragDropHandler()
 {
-	XOJ_CHECK_TYPE(ToolbarDragDropHandler);
-
 	clearToolbarsFromDragAndDrop();
-
-	XOJ_RELEASE_TYPE(ToolbarDragDropHandler);
 }
 
 void ToolbarDragDropHandler::prepareToolbarsForDragAndDrop()
 {
-	XOJ_CHECK_TYPE(ToolbarDragDropHandler);
-
 	int len = 0;
 	MainWindow* win = control->getWindow();
 	GtkWidget** widgets = win->getToolbarWidgets(len);
@@ -45,8 +38,6 @@ void ToolbarDragDropHandler::prepareToolbarsForDragAndDrop()
 
 void ToolbarDragDropHandler::clearToolbarsFromDragAndDrop()
 {
-	XOJ_CHECK_TYPE(ToolbarDragDropHandler);
-
 	if (this->toolbars == NULL)
 	{
 		return;
@@ -63,8 +54,6 @@ void ToolbarDragDropHandler::clearToolbarsFromDragAndDrop()
 
 void ToolbarDragDropHandler::toolbarConfigDialogClosed()
 {
-	XOJ_CHECK_TYPE(ToolbarDragDropHandler);
-
 	delete this->customizeDialog;
 	this->customizeDialog = NULL;
 
@@ -79,8 +68,6 @@ void ToolbarDragDropHandler::toolbarConfigDialogClosed()
 
 void ToolbarDragDropHandler::configure()
 {
-	XOJ_CHECK_TYPE(ToolbarDragDropHandler);
-
 	MainWindow* win = control->getWindow();
 	
 	

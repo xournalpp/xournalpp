@@ -12,8 +12,6 @@
 
 ShapeRecognizer::ShapeRecognizer()
 {
-	XOJ_INIT_TYPE(ShapeRecognizer);
-
 	resetRecognizer();
 	this->stroke = NULL;
 	this->queueLength = 0;
@@ -21,17 +19,11 @@ ShapeRecognizer::ShapeRecognizer()
 
 ShapeRecognizer::~ShapeRecognizer()
 {
-	XOJ_CHECK_TYPE(ShapeRecognizer);
-
 	resetRecognizer();
-
-	XOJ_RELEASE_TYPE(ShapeRecognizer);
 }
 
 void ShapeRecognizer::resetRecognizer()
 {
-	XOJ_CHECK_TYPE(ShapeRecognizer);
-
 	RDEBUG("reset");
 
 	for (int i = 0; i < MAX_POLYGON_SIDES + 1; i++)
@@ -47,8 +39,6 @@ void ShapeRecognizer::resetRecognizer()
  */
 Stroke* ShapeRecognizer::tryRectangle()
 {
-	XOJ_CHECK_TYPE(ShapeRecognizer);
-
 	// first, we need whole strokes to combine to 4 segments...
 	if (this->queueLength < 4)
 	{
@@ -129,8 +119,6 @@ Stroke* ShapeRecognizer::tryRectangle()
 
 Stroke* ShapeRecognizer::tryArrow()
 {
-	XOJ_CHECK_TYPE(ShapeRecognizer);
-
 	bool rev[3];
 
 	// first, we need whole strokes to combine to nsides segments...
@@ -297,8 +285,6 @@ Stroke* ShapeRecognizer::tryArrow()
  */
 int ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss)
 {
-	XOJ_CHECK_TYPE(ShapeRecognizer);
-
 	Inertia s;
 	int i1, i2, n1, n2;
 
@@ -418,8 +404,6 @@ int ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsid
  */
 void ShapeRecognizer::optimizePolygonal(const Point* pt, int nsides, int* breaks, Inertia* ss)
 {
-	XOJ_CHECK_TYPE(ShapeRecognizer);
-
 	for (int i = 1; i < nsides; i++)
 	{
 		// optimize break between sides i and i+1
@@ -475,8 +459,6 @@ void ShapeRecognizer::optimizePolygonal(const Point* pt, int nsides, int* breaks
 
 Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 {
-	XOJ_CHECK_TYPE(ShapeRecognizer);
-
 	//to eliminate bug #52, remove this until it's perfected
 	return NULL;
 
@@ -541,8 +523,6 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
  */
 ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 {
-	XOJ_CHECK_TYPE(ShapeRecognizer);
-
 	this->stroke = stroke;
 
 	if (stroke->getPointCount() < 3)

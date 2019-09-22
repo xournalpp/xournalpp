@@ -51,8 +51,6 @@ protected:
 protected:
 		Point buttonDownPoint;	// used for tapSelect and filtering - never snapped to grid.
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * The masking surface
 	 */

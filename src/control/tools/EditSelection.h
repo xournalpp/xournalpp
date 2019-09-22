@@ -251,8 +251,6 @@ private:
 	void translateToView(XojPageView* v);
 
 private: // DATA
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Support rotation
 	 */

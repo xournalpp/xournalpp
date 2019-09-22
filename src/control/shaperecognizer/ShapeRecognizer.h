@@ -39,8 +39,6 @@ private:
 	int findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	RecoSegment queue[MAX_POLYGON_SIDES + 1];
 	int queueLength;
 

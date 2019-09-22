@@ -34,7 +34,5 @@ public:
 	void paintBackgroundVerticalLine();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	bool verticalLine;
 };

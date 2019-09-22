@@ -40,8 +40,6 @@ public:
 	void calc(const Point* pt, int start, int end);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	double mass;
 	double sx;
 	double sy;

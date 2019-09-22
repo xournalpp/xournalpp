@@ -5,21 +5,14 @@
 
 GraphBackgroundPainter::GraphBackgroundPainter()
 {
-	XOJ_INIT_TYPE(GraphBackgroundPainter);
-
 }
 
 GraphBackgroundPainter::~GraphBackgroundPainter()
 {
-	XOJ_CHECK_TYPE(GraphBackgroundPainter);
-
-	XOJ_RELEASE_TYPE(GraphBackgroundPainter);
 }
 
 void GraphBackgroundPainter::resetConfig()
 {
-	XOJ_CHECK_TYPE(GraphBackgroundPainter);
-
 	this->foregroundColor1 = 0xBDBDBD;
 	this->lineWidth = 0.5;
 	this->drawRaster1 = 14.17;
@@ -29,23 +22,17 @@ void GraphBackgroundPainter::resetConfig()
 
 double GraphBackgroundPainter::getUnitSize()
 {
-	XOJ_CHECK_TYPE(GraphBackgroundPainter);
-
 	return this->drawRaster1;
 }
 
 void GraphBackgroundPainter::paint()
 {
-	XOJ_CHECK_TYPE(GraphBackgroundPainter);
-
 	paintBackgroundColor();
 	paintBackgroundGraph();
 }
 
 void GraphBackgroundPainter::paintBackgroundGraph()
 {
-	XOJ_CHECK_TYPE(GraphBackgroundPainter);
-
 	Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
 
 	cairo_set_line_width(cr, lineWidth * lineWidthFactor);

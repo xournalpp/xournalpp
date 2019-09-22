@@ -30,8 +30,6 @@ private:
 	bool deletePage(Control* control);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	bool inserted;
 	int pagePos;
 };

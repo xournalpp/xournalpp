@@ -92,8 +92,6 @@ private:
 	int expandOpenLinks(GtkTreeModel* model, GtkTreeIter* parent);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * The Tree with the Bookmarks
 	 */

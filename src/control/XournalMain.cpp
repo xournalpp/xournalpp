@@ -36,18 +36,14 @@
 
 XournalMain::XournalMain()
 {
-	XOJ_INIT_TYPE(XournalMain);
 }
 
 XournalMain::~XournalMain()
 {
-	XOJ_RELEASE_TYPE(XournalMain);
 }
 
 void XournalMain::initLocalisation()
 {
-	XOJ_CHECK_TYPE(XournalMain);
-
 #ifdef ENABLE_NLS
 
 #ifdef _WIN32
@@ -86,8 +82,6 @@ catch (std::runtime_error &e)
 
 void XournalMain::checkForErrorlog()
 {
-	XOJ_CHECK_TYPE(XournalMain);
-
 	Path errorDir = Util::getConfigSubfolder(ERRORLOG_DIR);
 	GDir* home = g_dir_open(errorDir.c_str(), 0, NULL);
 
@@ -212,8 +206,6 @@ void XournalMain::checkForEmergencySave(Control* control) {
 
 int XournalMain::exportImg(const char* input, const char* output)
 {
-	XOJ_CHECK_TYPE(XournalMain);
-
 	LoadHandler loader;
 
 	Document* doc = loader.loadDocument(input);
@@ -264,8 +256,6 @@ int XournalMain::exportImg(const char* input, const char* output)
 
 int XournalMain::exportPdf(const char* input, const char* output)
 {
-	XOJ_CHECK_TYPE(XournalMain);
-
 	LoadHandler loader;
 
 	Document* doc = loader.loadDocument(input);
@@ -299,8 +289,6 @@ int XournalMain::exportPdf(const char* input, const char* output)
 
 int XournalMain::run(int argc, char* argv[])
 {
-	XOJ_CHECK_TYPE(XournalMain);
-
 	this->initLocalisation();
 
 	GError* error = NULL;
@@ -448,8 +436,6 @@ int XournalMain::run(int argc, char* argv[])
  */
 string XournalMain::findResourcePath(string searchFile)
 {
-	XOJ_CHECK_TYPE(XournalMain);
-
 	// First check if the files are available relative to the path
 	// So a "portable" installation will be possible
 	Path relative1 = searchFile;
@@ -530,8 +516,6 @@ string XournalMain::findResourcePath(string searchFile)
 
 void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound)
 {
-	XOJ_CHECK_TYPE(XournalMain);
-
 	string uiPath = findResourcePath(relativePathAndFile);	//i.e.  relativePathAndFile = "ui/about.glade"
 
 	if (uiPath != "")

@@ -103,8 +103,6 @@ private:
 	void paintBackgroundImage();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	cairo_t* cr = NULL;
 	PageRef page = NULL;
 	double width = 0;

@@ -9,8 +9,6 @@
 ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings)
  : BackgroundSelectDialogBase(gladeSearchPath, doc, settings, "images.glade", "ImagesDialog")
 {
-	XOJ_INIT_TYPE(ImagesDialog);
-
 	loadImagesFromPages();
 
 	g_signal_connect(get("buttonOk"), "clicked", G_CALLBACK(okButtonCallback), this);
@@ -19,9 +17,6 @@ ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Sett
 
 ImagesDialog::~ImagesDialog()
 {
-	XOJ_CHECK_TYPE(ImagesDialog);
-
-	XOJ_RELEASE_TYPE(ImagesDialog);
 }
 
 void ImagesDialog::loadImagesFromPages()
@@ -68,16 +63,12 @@ bool ImagesDialog::isImageAlreadyInTheList(BackgroundImage& image)
 
 void ImagesDialog::okButtonCallback(GtkButton* button, ImagesDialog* dlg)
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, ImagesDialog);
-
 	dlg->confirmed = true;
 	gtk_widget_hide(dlg->window);
 }
 
 void ImagesDialog::filechooserButtonCallback(GtkButton* button, ImagesDialog* dlg)
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, ImagesDialog);
-
 	dlg->selected = -2;
 	dlg->confirmed = true;
 	gtk_widget_hide(dlg->window);
@@ -85,15 +76,11 @@ void ImagesDialog::filechooserButtonCallback(GtkButton* button, ImagesDialog* dl
 
 bool ImagesDialog::shouldShowFilechooser()
 {
-	XOJ_CHECK_TYPE(ImagesDialog);
-
 	return selected == -2 && confirmed;
 }
 
 BackgroundImage ImagesDialog::getSelectedImage()
 {
-	XOJ_CHECK_TYPE(ImagesDialog);
-
 	if (confirmed && selected >= 0 && selected < (int)elements.size())
 	{
 		return ((ImageElementView*)elements[selected])->backgroundImage;
@@ -106,8 +93,6 @@ BackgroundImage ImagesDialog::getSelectedImage()
 
 void ImagesDialog::show(GtkWindow* parent)
 {
-	XOJ_CHECK_TYPE(ImagesDialog);
-
 	if (this->elements.empty())
 	{
 		this->selected = -2;

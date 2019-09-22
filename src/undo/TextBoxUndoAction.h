@@ -31,8 +31,6 @@ public:
 	virtual string getText();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Layer* layer;
 	Element* element;
 	Element* oldelement;

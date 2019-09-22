@@ -9,8 +9,6 @@
 
 FloatingToolbox::FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay)
 {
-	XOJ_INIT_TYPE(FloatingToolbox);
-
 	this->mainWindow = theMainWindow;
 	this->floatingToolbox = theMainWindow->get("floatingToolbox");
 	this->floatingToolboxX = 200;
@@ -28,16 +26,11 @@ FloatingToolbox::FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay)
 
 FloatingToolbox::~FloatingToolbox()
 {
-	XOJ_CHECK_TYPE(FloatingToolbox);
-
-	XOJ_RELEASE_TYPE(FloatingToolbox);
 }
 
 
 void FloatingToolbox::show(int x, int y)
 {
-	XOJ_CHECK_TYPE(FloatingToolbox);
-
 	this->floatingToolboxX = x;
 	this->floatingToolboxY = y;
 	this->show();
@@ -100,8 +93,6 @@ int FloatingToolbox::countWidgets()
 
 void FloatingToolbox::showForConfiguration()
 {
-	XOJ_CHECK_TYPE(FloatingToolbox);
-
 	if (this->floatingToolboxActivated())		// Do not show if not being used - at least while experimental.
 	{
 		GtkWidget* boxContents = this->mainWindow->get("boxContents");
@@ -117,8 +108,6 @@ void FloatingToolbox::showForConfiguration()
 
 void FloatingToolbox::show()
 {
-	XOJ_CHECK_TYPE(FloatingToolbox);
-
 	gtk_widget_hide(this->floatingToolbox);		//force showing in new position
 	gtk_widget_show_all(this->floatingToolbox);
 
@@ -136,8 +125,6 @@ void FloatingToolbox::show()
 
 void FloatingToolbox::hide()
 {
-	XOJ_CHECK_TYPE(FloatingToolbox);
-
 	if (this->floatingToolboxState == configuration)
 	{
 		this->floatingToolboxState = recalcSize;
@@ -168,8 +155,6 @@ gboolean  FloatingToolbox::getOverlayPosition(GtkOverlay*   overlay,
         GdkRectangle* allocation,
         FloatingToolbox* self)
 {
-	XOJ_CHECK_TYPE_OBJ(self, FloatingToolbox);
-
 	if (widget == self->floatingToolbox)
 	{
 		gtk_widget_get_allocation(widget, allocation);	//get existing width and height
@@ -210,8 +195,6 @@ gboolean  FloatingToolbox::getOverlayPosition(GtkOverlay*   overlay,
 
 void FloatingToolbox::handleLeaveFloatingToolbox(GtkWidget* floatingToolbox, GdkEvent*  event,  FloatingToolbox* self)
 {
-	XOJ_CHECK_TYPE_OBJ(self, FloatingToolbox);
-
 	if (floatingToolbox == self->floatingToolbox)
 	{
 		if (self->floatingToolboxState !=  configuration)

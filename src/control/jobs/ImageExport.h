@@ -73,8 +73,6 @@ private:
 	void exportImagePage(int pageId, int id, double zoom, ExportGraphicsFormat format, DocumentView& view);
 
 public:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Document to export
 	 */

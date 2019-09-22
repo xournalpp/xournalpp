@@ -87,6 +87,4 @@ private:
 	std::vector<std::tuple<GtkWidget*, gulong, std::unique_ptr<ContextMenuData>>> contextMenuSignals;
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-};
+	};
