@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-20 00:03+0000\n"
-"PO-Revision-Date: 2019-09-20 00:21\n"
+"PO-Revision-Date: 2019-09-23 12:19\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -2038,7 +2038,7 @@ msgstr "Gain"
 
 #: ../ui/about.glade:153
 msgid "Git commit"
-msgstr ""
+msgstr "Git commit"
 
 #: ../ui/settings.glade:2107
 msgid "Global"
