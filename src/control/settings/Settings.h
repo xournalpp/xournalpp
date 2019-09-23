@@ -128,7 +128,9 @@ private:
 class Settings
 {
 public:
-	Settings(Path filename);
+	/*[[implicit]]*/ Settings(Path filename);
+	Settings(const Settings& settings) = delete;
+	void operator=(const Settings& settings) = delete;
 	virtual ~Settings();
 
 public:
@@ -154,13 +156,13 @@ private:
 
 public:
 	// Getter- / Setter
-	bool isPressureSensitivity();
+	bool isPressureSensitivity() const;
 	void setPressureSensitivity(gboolean presureSensitivity);
 
 	/**
 	 * Getter, enable/disable
 	 */
-	bool isZoomGesturesEnabled();
+	bool isZoomGesturesEnabled() const;
 	void setZoomGesturesEnabled(bool enable);
 
 	/**
@@ -173,145 +175,145 @@ public:
 	 * The selected Toolbar
 	 */
 	void setSelectedToolbar(string name);
-	string getSelectedToolbar();
+	string const& getSelectedToolbar() const;
 
 	/**
 	 * Set the Zoomstep for one step in percent
 	 */
 	void setZoomStep(double zoomStep);
-	double getZoomStep();
+	double getZoomStep() const;
 
 	/**
 	 * Set the Zoomstep for Ctrl + Scroll in percent
 	 */
 	void setZoomStepScroll(double zoomStepScroll);
-	double getZoomStepScroll();
+	double getZoomStepScroll() const;
 
 	/**
 	 * Sets the screen resolution in DPI
 	 */
 	void setDisplayDpi(int dpi);
-	int getDisplayDpi();
+	int getDisplayDpi() const;
 
 	/**
 	 * Dark theme for white-coloured icons
 	 */
 	void setDarkTheme(bool dark);
-	bool isDarkTheme();
+	bool isDarkTheme() const;
 
 	/**
 	 * The last saved path
 	 */
 	void setLastSavePath(Path p);
-	Path getLastSavePath();
+	Path const& getLastSavePath() const;
 
 	/**
 	 * The last open path
 	 */
 	void setLastOpenPath(Path p);
-	Path getLastOpenPath();
+	Path const& getLastOpenPath() const;
 
 	void setLastImagePath(Path p);
-	Path getLastImagePath();
+	Path const& getLastImagePath() const;
 
 	void setMainWndSize(int width, int height);
 	void setMainWndMaximized(bool max);
-	int getMainWndWidth();
-	int getMainWndHeight();
-	bool isMainWndMaximized();
+	int getMainWndWidth() const;
+	int getMainWndHeight() const;
+	bool isMainWndMaximized() const;
 
-	bool isSidebarVisible();
+	bool isSidebarVisible() const;
 	void setSidebarVisible(bool visible);
 
-	int getSidebarWidth();
+	int getSidebarWidth() const;
 	void setSidebarWidth(int width);
 
-	bool isSidebarOnRight();
+	bool isSidebarOnRight() const;
 	void setSidebarOnRight(bool right);
 
-	bool isScrollbarOnLeft();
+	bool isScrollbarOnLeft() const;
 	void setScrollbarOnLeft(bool right);
 
-	bool isMenubarVisible();
+	bool isMenubarVisible() const;
 	void setMenubarVisible(bool visible);
 
 	void setShowPairedPages(bool showPairedPages);
-	bool isShowPairedPages();
+	bool isShowPairedPages() const;
 
 	void setPresentationMode(bool presentationMode);
-	bool isPresentationMode();
+	bool isPresentationMode() const;
 
 	void setPairsOffset(int numPairsOffset);
-	int getPairsOffset();
+	int getPairsOffset() const;
 
 	void setViewColumns(int numColumns);
-	int getViewColumns();
+	int getViewColumns() const;
 
 	void setViewRows(int numRows);
-	int getViewRows();
+	int getViewRows() const;
 
 	void setViewFixedRows(bool viewFixedRows);
-	bool isViewFixedRows();
+	bool isViewFixedRows() const;
 
 	void setViewLayoutVert(bool vert);
-	bool getViewLayoutVert();
+	bool getViewLayoutVert() const;
 
 	void setViewLayoutR2L(bool r2l);
-	bool getViewLayoutR2L();
+	bool getViewLayoutR2L() const;
 
 	void setViewLayoutB2T(bool b2t);
-	bool getViewLayoutB2T();
+	bool getViewLayoutB2T() const;
 
 
-	bool isAutloadPdfXoj();
+	bool isAutloadPdfXoj() const;
 	void setAutoloadPdfXoj(bool load);
 
-	int getAutosaveTimeout();
+	int getAutosaveTimeout() const;
 	void setAutosaveTimeout(int autosave);
-	bool isAutosaveEnabled();
+	bool isAutosaveEnabled() const;
 	void setAutosaveEnabled(bool autosave);
 
-	bool getAddVerticalSpace();
+	bool getAddVerticalSpace() const;
 	void setAddVerticalSpace(bool space);
-	int  getAddVerticalSpaceAmount();
+	int getAddVerticalSpaceAmount() const;
 	void setAddVerticalSpaceAmount(int pixels);
 
-	bool getAddHorizontalSpace();
+	bool getAddHorizontalSpace() const;
 	void setAddHorizontalSpace(bool space);
-	int  getAddHorizontalSpaceAmount();
+	int getAddHorizontalSpaceAmount() const;
 	void setAddHorizontalSpaceAmount(int pixels);
 
-	bool getDrawDirModsEnabled();
+	bool getDrawDirModsEnabled() const;
 	void setDrawDirModsEnabled(bool enable);
-	int  getDrawDirModsRadius();
+	int getDrawDirModsRadius() const;
 	void setDrawDirModsRadius(int pixels);
 
-	bool isTouchWorkaround();
+	bool isTouchWorkaround() const;
 	void setTouchWorkaround(bool b);
 
-	bool isSnapRotation();
+	bool isSnapRotation() const;
 	void setSnapRotation(bool b);
-	double getSnapRotationTolerance();
+	double getSnapRotationTolerance() const;
 	void setSnapRotationTolerance(double tolerance);
 
-	bool isSnapGrid();
+	bool isSnapGrid() const;
 	void setSnapGrid(bool b);
-	double getSnapGridTolerance();
+	double getSnapGridTolerance() const;
 	void setSnapGridTolerance(double tolerance);
 
-	bool isShowBigCursor();
+	bool isShowBigCursor() const;
 	void setShowBigCursor(bool b);
 
-	bool isHighlightPosition();
+	bool isHighlightPosition() const;
 	void setHighlightPosition(bool highlight);
 
-	ScrollbarHideType getScrollbarHideType();
+	ScrollbarHideType getScrollbarHideType() const;
 	void setScrollbarHideType(ScrollbarHideType type);
 
-	bool isScrollbarFadeoutDisabled();
+	bool isScrollbarFadeoutDisabled() const;
 	void setScrollbarFadeoutDisabled(bool disable);
 
-	string getDefaultSaveName();
+	string const& getDefaultSaveName() const;
 	void setDefaultSaveName(string name);
 
 	ButtonConfig* getButtonConfig(int id);
@@ -324,74 +326,74 @@ public:
 	ButtonConfig* getStylusButton1Config();
 	ButtonConfig* getStylusButton2Config();
 
-	string getFullscreenHideElements();
+	string const& getFullscreenHideElements() const;
 	void setFullscreenHideElements(string elements);
 
-	string getPresentationHideElements();
+	string const& getPresentationHideElements() const;
 	void setPresentationHideElements(string elements);
 
-	int getBorderColor();
+	int getBorderColor() const;
 	void setBorderColor(int color);
 
-	int getSelectionColor();
+	int getSelectionColor() const;
 	void setSelectionColor(int color);
 
-	int getBackgroundColor();
+	int getBackgroundColor() const;
 	void setBackgroundColor(int color);
 
-	int getPdfPageCacheSize();
+	int getPdfPageCacheSize() const;
 	void setPdfPageCacheSize(int size);
 
-	string getPageTemplate();
+	string const& getPageTemplate() const;
 	void setPageTemplate(string pageTemplate);
 
-	string getAudioFolder();
+	string const& getAudioFolder() const;
 	void setAudioFolder(string audioFolder);
 
-	PaDeviceIndex getAudioInputDevice();
+	PaDeviceIndex getAudioInputDevice() const;
 	void setAudioInputDevice(PaDeviceIndex deviceIndex);
 
-	PaDeviceIndex getAudioOutputDevice();
+	PaDeviceIndex getAudioOutputDevice() const;
 	void setAudioOutputDevice(PaDeviceIndex deviceIndex);
 
-	double getAudioSampleRate();
+	double getAudioSampleRate() const;
 	void setAudioSampleRate(double sampleRate);
 
-	double getAudioGain();
+	double getAudioGain() const;
 	void setAudioGain(double gain);
 
-	string getPluginEnabled();
+	string const& getPluginEnabled() const;
 	void setPluginEnabled(string pluginEnabled);
 
-	string getPluginDisabled();
+	string const& getPluginDisabled() const;
 	void setPluginDisabled(string pluginDisabled);
 
-	bool getExperimentalInputSystemEnabled();
+	bool getExperimentalInputSystemEnabled() const;
 	void setExperimentalInputSystemEnabled(bool systemEnabled);
 
-	bool getInputSystemTPCButtonEnabled();
+	bool getInputSystemTPCButtonEnabled() const;
 	void setInputSystemTPCButtonEnabled(bool tpcButtonEnabled);
 
-	bool getInputSystemDrawOutsideWindowEnabled();
+	bool getInputSystemDrawOutsideWindowEnabled() const;
 	void setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnabled);
 
 	void loadDeviceClasses();
 	void saveDeviceClasses();
 	void setDeviceClassForDevice(GdkDevice* device, int deviceClass);
 	void setDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource, int deviceClass);
-	int getDeviceClassForDevice(GdkDevice* device);
-	int getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource);
-	std::vector<InputDevice> getKnownInputDevices();
+	int getDeviceClassForDevice(GdkDevice* device) const;
+	int getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource) const;
+	std::vector<InputDevice> getKnownInputDevices() const;
 
 	/**
 	 * Get name, e.g. "cm"
 	 */
-	string getSizeUnit();
+	string const& getSizeUnit() const;
 
 	/**
 	 * Get size index in XOJ_UNITS
 	 */
-	int getSizeUnitIndex();
+	int getSizeUnitIndex() const;
 
 	/**
 	 * Set Unit, e.g. "cm"
@@ -411,13 +413,14 @@ public:
 	/**
 	 * Get StrokeFilter enabled
 	 */
-	bool getStrokeFilterEnabled();
+	bool getStrokeFilterEnabled() const;
 
 
 	/**
 	 * get strokeFilter settings
 	 */
-	void getStrokeFilter( int* strokeFilterIgnoreTime, double* strokeFilterIgnoreLength, int* strokeFilterSuccessiveTime);
+	void getStrokeFilter(int* strokeFilterIgnoreTime, double* strokeFilterIgnoreLength,
+	                     int* strokeFilterSuccessiveTime) const;
 
 	/**
 	 * configure stroke filter
@@ -432,9 +435,9 @@ public:
 	/**
 	 * Get DoActionOnStrokeFilter enabled
 	 */
-	bool getDoActionOnStrokeFiltered();
+	bool getDoActionOnStrokeFiltered() const;
 
-		/**
+	/**
 	 * Set TrySelectOnStrokeFilter enabled
 	 */
 	void setTrySelectOnStrokeFiltered(bool enabled);
@@ -442,8 +445,8 @@ public:
 	/**
 	 * Get TrySelectOnStrokeFilter enabled
 	 */
-	bool getTrySelectOnStrokeFiltered();
-	
+	bool getTrySelectOnStrokeFiltered() const;
+
 public:
 	// Custom settings
 	SElement& getCustomElement(string name);
@@ -462,20 +465,6 @@ public:
 	 * Stop transaction and save settings
 	 */
 	void transactionEnd();
-
-private:
-
-	/**
-	 * Not implemented, do not use
-	 * @param settings
-	 */
-	Settings(const Settings& settings);
-
-	/**
-	 * Not implemented, do not use
-	 * @param settings
-	 */
-	void operator=(const Settings& settings);
 
 private:
 	XOJ_TYPE_ATTRIB;
