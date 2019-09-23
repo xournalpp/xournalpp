@@ -34,10 +34,10 @@ void RenderJob::rerenderRectangle(Rectangle* rect)
 	double zoom = view->xournal->getZoom();
 	Document* doc = view->xournal->getDocument();
 
-	doc->lock();
+	std::unique_lock<Document> guard{*doc};
 	double pageWidth = view->page->getWidth();
 	double pageHeight = view->page->getHeight();
-	doc->unlock();
+	guard.unlock();
 
 	int x = rect->x * zoom;
 	int y = rect->y * zoom;
@@ -62,11 +62,10 @@ void RenderJob::rerenderRectangle(Rectangle* rect)
 		PdfCache* cache = view->xournal->getCache();
 		PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight);
 	}
-
-	doc->lock();
-	v.drawPage(view->page, crRect, false);
-	doc->unlock();
-
+	{
+		std::lock_guard<Document> guard{*doc};
+		v.drawPage(view->page, crRect, false);
+	}
 	cairo_destroy(crRect);
 
 	g_mutex_lock(&view->drawingMutex);
@@ -118,8 +117,7 @@ void RenderJob::run()
 
 		XojPdfPageSPtr popplerPage;
 
-		doc->lock();
-
+		std::lock_guard<Document> guard{*doc};
 		if (this->view->page->getBackgroundType().isPdfPage())
 		{
 			int pgNo = this->view->page->getPdfPageNr();
@@ -150,7 +148,6 @@ void RenderJob::run()
 		this->view->crBuffer = crBuffer;
 
 		g_mutex_unlock(&this->view->drawingMutex);
-		doc->unlock();
 	}
 	else
 	{

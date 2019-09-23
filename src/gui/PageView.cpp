@@ -158,10 +158,8 @@ bool XojPageView::searchTextOnPage(string& text, int* occures, double* top)
 		if (pNr != -1)
 		{
 			Document* doc = xournal->getControl()->getDocument();
-
-			doc->lock();
+			std::lock_guard<Document> guard{*doc};
 			pdf = doc->getPdfPage(pNr);
-			doc->unlock();
 		}
 		this->search = new SearchControl(page, pdf);
 	}
@@ -606,10 +604,8 @@ bool XojPageView::onButtonReleaseEvent(const PositionInputData& pos)
 	if (this->inEraser)
 	{
 		this->inEraser = false;
-		Document* doc = this->xournal->getControl()->getDocument();
-		doc->lock();
+		std::lock_guard<Document> guard{*this->xournal->getControl()->getDocument()};
 		this->eraser->finalize();
-		doc->unlock();
 	}
 
 	if (this->verticalSpace)

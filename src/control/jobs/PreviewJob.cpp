@@ -112,7 +112,7 @@ void PreviewJob::run()
 	drawBorder();
 
 	Document* doc = this->sidebarPreview->sidebar->getControl()->getDocument();
-	doc->lock();
+	std::unique_lock<Document> guard{*doc};
 
 	PreviewRenderType type = this->sidebarPreview->getRenderType();
 	int layer = -100; // all layer
@@ -129,7 +129,7 @@ void PreviewJob::run()
 
 	drawPage(layer);
 
-	doc->unlock();
+	guard.unlock();
 
 	finishPaint();
 }

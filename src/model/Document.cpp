@@ -9,6 +9,7 @@
 #include <i18n.h>
 #include <Stacktrace.h>
 #include <Util.h>
+#include <mutex>
 
 Document::Document(DocumentHandler* handler)
  : handler(handler)
@@ -72,7 +73,7 @@ void Document::unlock()
 	//	fprintf(stderr, "\n\n\n\n");
 }
 
-bool Document::tryLock()
+bool Document::try_lock()
 {
 	return g_mutex_trylock(&this->documentLock);
 }
@@ -88,7 +89,7 @@ void Document::clearDocument(bool destroy)
 	if (!destroy)
 	{
 		// release lock
-		bool lastLock = tryLock();
+		bool lastLock = try_lock();
 		unlock();
 		this->handler->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED);
 		if (!lastLock) // document was locked before
@@ -334,7 +335,7 @@ bool Document::readPdf(Path filename, bool initPages, bool attachToDocument, gpo
 {
 	GError* popplerError = nullptr;
 
-	lock();
+	std::unique_lock<Document> guard{*this};
 
 	if (data != nullptr)
 	{
@@ -342,8 +343,6 @@ bool Document::readPdf(Path filename, bool initPages, bool attachToDocument, gpo
 		{
 			lastError = FS(_F("Document not loaded! ({1}), {2}") % filename.str() % popplerError->message);
 			g_error_free(popplerError);
-			unlock();
-
 			return false;
 		}
 	} else
@@ -352,8 +351,6 @@ bool Document::readPdf(Path filename, bool initPages, bool attachToDocument, gpo
 		{
 			lastError = FS(_F("Document not loaded! ({1}), {2}") % filename.str() % popplerError->message);
 			g_error_free(popplerError);
-			unlock();
-
 			return false;
 		}
 	}
@@ -383,7 +380,7 @@ bool Document::readPdf(Path filename, bool initPages, bool attachToDocument, gpo
 	buildContentsModel();
 	updateIndexPageNumbers();
 
-	unlock();
+	guard.unlock();
 
 	this->handler->fireDocumentChanged(DOCUMENT_CHANGE_PDF_BOOKMARKS);
 
@@ -473,6 +470,10 @@ XojPdfDocument& Document::getPdfDocument()
 	return this->pdfDocument;
 }
 
+//Todo: the locking is broken, fix it,
+//      1. the Document isn't locked in this operation, but should be
+//      2. locking and unlocking aren't in the same scope, thats error prone
+//      3. No c++11 RAII lock guards used here
 Document& Document::operator=(const Document& doc)
 {
 	clearDocument();
@@ -493,7 +494,7 @@ Document& Document::operator=(const Document& doc)
 	buildContentsModel();
 	updateIndexPageNumbers();
 
-	bool lastLock = tryLock();
+	bool lastLock = try_lock();
 	unlock();
 	this->handler->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
 	if (!lastLock) // document was locked before

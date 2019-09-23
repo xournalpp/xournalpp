@@ -12,6 +12,7 @@
 #include <i18n.h>
 #include <config-features.h>
 #include <XojMsgBox.h>
+#include <util/cpp14memory.h>
 
 
 CustomExportJob::CustomExportJob(Control* control)
@@ -81,8 +82,8 @@ bool CustomExportJob::showFilechooser()
 	}
 
 	Document* doc = control->getDocument();
-	doc->lock();
-	ExportDialog* dlg = new ExportDialog(control->getGladeSearchPath());
+	std::lock_guard<Document> guard{*doc};
+	auto dlg = mem::make_unique<ExportDialog>(control->getGladeSearchPath());
 	if (filename.hasExtension(".pdf"))
 	{
 		dlg->removeDpiSelection();
@@ -112,8 +113,6 @@ bool CustomExportJob::showFilechooser()
 	exportRange = dlg->getRange();
 	pngDpi = dlg->getPngDpi();
 
-	delete dlg;
-	doc->unlock();
 	return true;
 }
 
@@ -139,11 +138,11 @@ void CustomExportJob::run()
 		Document* doc = this->control->getDocument();
 
 		XojExportHandler h;
-		doc->lock();
-		h.prepareSave(doc);
-		h.saveTo(filename, this->control);
-		doc->unlock();
-
+		{
+			std::lock_guard<Document> guard{*doc};
+			h.prepareSave(doc);
+			h.saveTo(filename, this->control);
+		}
 		if (!h.getErrorMessage().empty())
 		{
 			this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());

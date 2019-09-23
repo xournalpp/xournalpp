@@ -17,6 +17,7 @@
 #include "util/cpp14memory.h"
 
 #include <cmath>
+#include <mutex>
 
 EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page, ToolHandler* handler, Redrawable* view)
 {
@@ -80,9 +81,9 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
 	// delete complete element
 	if (this->handler->getEraserType() == ERASER_TYPE_DELETE_STROKE)
 	{
-		this->doc->lock();
+		std::unique_lock<Document> guard{*this->doc};
 		int pos = l->removeElement(s, false);
-		this->doc->unlock();
+		guard.unlock();
 
 		if (pos == -1)
 		{
@@ -122,10 +123,11 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
 		EraseableStroke* eraseable = nullptr;
 		if (s->getEraseable() == nullptr)
 		{
-			doc->lock();
-			eraseable = new EraseableStroke(s);
-			s->setEraseable(eraseable);
-			doc->unlock();
+			{
+				std::lock_guard<Document> guard{*this->doc};
+				eraseable = new EraseableStroke(s);
+				s->setEraseable(eraseable);
+			}
 			this->eraseUndoAction->addOriginal(l, s, pos);
 		}
 		else

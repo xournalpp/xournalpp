@@ -82,7 +82,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 			return;
 		}
 
-		doc->lock();
+		std::unique_lock<Document> guard{*doc};
 		size_t page = doc->indexOf(swappedPage);
 		PageRef otherPage = doc->getPage(page - 1);
 		if (page != npos)
@@ -90,7 +90,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 			doc->deletePage(page);
 			doc->insertPage(swappedPage, page - 1);
 		}
-		doc->unlock();
+		guard.unlock();
 
 		UndoRedoHandler* undo = control->getUndoRedoHandler();
 		undo->addUndoAction(mem::make_unique<SwapUndoAction>(page - 1, true, swappedPage, otherPage));
@@ -111,7 +111,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 			return;
 		}
 
-		doc->lock();
+		std::unique_lock<Document> guard{*doc};
 		size_t page = doc->indexOf(swappedPage);
 		PageRef otherPage = doc->getPage(page + 1);
 		if (page != npos)
@@ -119,7 +119,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 			doc->deletePage(page);
 			doc->insertPage(swappedPage, page + 1);
 		}
-		doc->unlock();
+		guard.unlock();
 
 		UndoRedoHandler* undo = control->getUndoRedoHandler();
 		undo->addUndoAction(mem::make_unique<SwapUndoAction>(page, false, swappedPage, otherPage));
@@ -140,13 +140,13 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 			return;
 		}
 
-		doc->lock();
+		std::unique_lock<Document> guard{*doc};
 		size_t page = doc->indexOf(currentPage);
 
 		PageRef newPage = currentPage.clone();
 		doc->insertPage(newPage, page + 1);
 
-		doc->unlock();
+		guard.unlock();
 
 		UndoRedoHandler* undo = control->getUndoRedoHandler();
 		undo->addUndoAction(mem::make_unique<CopyUndoAction>(newPage, page + 1));
@@ -176,12 +176,11 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action)
 void SidebarPreviewPages::updatePreviews()
 {
 	Document* doc = this->getControl()->getDocument();
-	doc->lock();
+	std::lock_guard<Document> guard{*doc};
 	size_t len = doc->getPageCount();
 
 	if (this->previews.size() == len)
 	{
-		doc->unlock();
 		return;
 	}
 
@@ -199,7 +198,6 @@ void SidebarPreviewPages::updatePreviews()
 	}
 
 	layout();
-	doc->unlock();
 }
 
 void SidebarPreviewPages::pageSizeChanged(size_t page)
@@ -245,11 +243,10 @@ void SidebarPreviewPages::pageDeleted(size_t page)
 void SidebarPreviewPages::pageInserted(size_t page)
 {
 	Document* doc = control->getDocument();
-	doc->lock();
 
+	std::unique_lock<Document> guard{*doc};
 	SidebarPreviewBaseEntry* p = new SidebarPreviewPageEntry(this, doc->getPage(page));
-
-	doc->unlock();
+	guard.unlock();
 
 	this->previews.insert(this->previews.begin() + page, p);
 

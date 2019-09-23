@@ -49,11 +49,10 @@ void ScrollHandler::goToFirstPage()
 void ScrollHandler::scrollToPage(const PageRef& page, double top)
 {
 	Document* doc = this->control->getDocument();
-
-	doc->lock();
-	int p = doc->indexOf(page);
-	doc->unlock();
-
+	int p = [doc, &page] {
+		std::lock_guard<Document> guard{*doc};
+		return doc->indexOf(page);
+	}();
 	if (p != -1)
 	{
 		scrollToPage(p, top);

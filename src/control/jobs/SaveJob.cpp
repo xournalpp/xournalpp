@@ -46,8 +46,7 @@ void SaveJob::updatePreview(Control* control)
 
 	Document* doc = control->getDocument();
 
-	doc->lock();
-
+	std::lock_guard<Document> guard{*doc};
 	if (doc->getPageCount() > 0)
 	{
 		PageRef page = doc->getPage(0);
@@ -93,8 +92,6 @@ void SaveJob::updatePreview(Control* control)
 	{
 		doc->setPreview(nullptr);
 	}
-
-	doc->unlock();
 }
 
 bool SaveJob::save()
@@ -103,13 +100,13 @@ bool SaveJob::save()
 	Document* doc = this->control->getDocument();
 
 	SaveHandler h;
-
-	doc->lock();
-	h.prepareSave(doc);
-	Path filename = doc->getFilename();
-	filename.clearExtensions();
-	filename += ".xopp";
-	doc->unlock();
+	auto filename = [this, doc, &h] {
+		std::lock_guard<Document> guard{*doc};
+		h.prepareSave(doc);
+		Path filename = doc->getFilename();
+		filename.clearExtensions();
+		return filename += ".xopp";
+	}();
 
 	if (doc->shouldCreateBackupOnSave())
 	{
@@ -123,13 +120,11 @@ bool SaveJob::save()
 
 		doc->setCreateBackupOnSave(false);
 	}
-
-	doc->lock();
-
-	h.saveTo(filename, this->control);
-	doc->setFilename(filename);
-	doc->unlock();
-
+	{
+		std::lock_guard<Document> guard{*doc};
+		h.saveTo(filename, this->control);
+		doc->setFilename(filename);
+	}
 	if (!h.getErrorMessage().empty())
 	{
 		this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());

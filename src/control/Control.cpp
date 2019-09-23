@@ -69,10 +69,12 @@
 #include <memory>
 #include <numeric>
 #include <sstream>
+#include <utility>
 
 
 Control::Control(GladeSearchpath* gladeSearchPath)
 {
+
 	this->recent = new RecentManager();
 	this->undoRedo = new UndoRedoHandler(this);
 	this->recent->addListener(this);
@@ -136,6 +138,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 
 Control::~Control()
 {
+
 	g_source_remove(this->changeTimout);
 	this->enableAutosave(false);
 
@@ -190,10 +193,12 @@ Control::~Control()
 	this->layerController = nullptr;
 	delete this->fullscreenHandler;
 	this->fullscreenHandler = nullptr;
+
 }
 
 void Control::renameLastAutosaveFile()
 {
+
 	if (this->lastAutosaveFilename.isEmpty())
 	{
 		return;
@@ -266,6 +271,7 @@ void Control::setLastAutosaveFile(Path newAutosaveFile)
 
 void Control::deleteLastAutosaveFile(Path newAutosaveFile)
 {
+
 	if (!this->lastAutosaveFilename.isEmpty())
 	{
 		// delete old autosave file
@@ -276,10 +282,10 @@ void Control::deleteLastAutosaveFile(Path newAutosaveFile)
 
 bool Control::checkChangedDocument(Control* control)
 {
-	if (!control->doc->tryLock())
+	std::unique_lock<Document> guard{*control->doc, std::try_to_lock};
+	if (!guard)
 	{
-		// call again later
-		return true;
+		return true;  // call again later
 	}
 	for (XojPage* page: control->changedPages)
 	{
@@ -293,14 +299,12 @@ bool Control::checkChangedDocument(Control* control)
 	}
 	control->changedPages.clear();
 
-	control->doc->unlock();
-
-	// Call again
-	return true;
+	return true;  // Call again
 }
 
 void Control::saveSettings()
 {
+
 	this->toolHandler->saveSettings();
 
 	gint width = 0;
@@ -318,6 +322,7 @@ void Control::saveSettings()
 
 void Control::initWindow(MainWindow* win)
 {
+
 	win->setRecentMenu(recent->getMenu());
 	selectTool(toolHandler->getToolType());
 	this->win = win;
@@ -374,6 +379,7 @@ void Control::initWindow(MainWindow* win)
 
 bool Control::autosaveCallback(Control* control)
 {
+
 	if (!control->undoRedo->isChangedAutosave())
 	{
 		// do nothing, nothing changed
@@ -393,6 +399,7 @@ bool Control::autosaveCallback(Control* control)
 
 void Control::enableAutosave(bool enable)
 {
+
 	if (this->autosaveTimeout)
 	{
 		g_source_remove(this->autosaveTimeout);
@@ -408,6 +415,7 @@ void Control::enableAutosave(bool enable)
 
 void Control::updatePageNumbers(size_t page, size_t pdfPage)
 {
+
 	if (this->win == nullptr)
 	{
 		return;
@@ -435,6 +443,7 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage)
 void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
                               GtkToolButton* toolbutton, bool enabled)
 {
+
 	if (layerController->actionPerformed(type))
 	{
 		return;
@@ -1084,6 +1093,7 @@ bool Control::paste()
 
 void Control::selectFillAlpha(bool pen)
 {
+
 	int alpha = 0;
 
 	if (pen)
@@ -1117,6 +1127,7 @@ void Control::selectFillAlpha(bool pen)
 
 void Control::clearSelectionEndText()
 {
+
 	clearSelection();
 	if (win)
 	{
@@ -1131,9 +1142,11 @@ void Control::clearSelectionEndText()
  */
 size_t Control::firePageSelected(PageRef page)
 {
-	this->doc->lock();
-	size_t pageId = this->doc->indexOf(page);
-	this->doc->unlock();
+
+	size_t pageId = [this, page] {
+		std::lock_guard<Document> guard{*this->doc};
+		return this->doc->indexOf(page);
+	}();
 	if (pageId == npos)
 	{
 		return npos;
@@ -1145,11 +1158,13 @@ size_t Control::firePageSelected(PageRef page)
 
 void Control::firePageSelected(size_t page)
 {
+
 	DocumentHandler::firePageSelected(page);
 }
 
 void Control::manageToolbars()
 {
+
 	ToolbarManageDialog dlg(this->gladeSearchPath, this->win->getToolbarModel());
 	dlg.show(GTK_WINDOW(this->win->getWindow()));
 
@@ -1161,6 +1176,7 @@ void Control::manageToolbars()
 
 void Control::customizeToolbars()
 {
+
 	g_return_if_fail(this->win != nullptr);
 
 	if (this->win->getSelectedToolbar()->isPredefined())
@@ -1203,6 +1219,7 @@ void Control::customizeToolbars()
 
 void Control::endDragDropToolbar()
 {
+
 	if (!this->dragDropHandler)
 	{
 		return;
@@ -1213,6 +1230,7 @@ void Control::endDragDropToolbar()
 
 void Control::startDragDropToolbar()
 {
+
 	if (!this->dragDropHandler)
 	{
 		return;
@@ -1223,6 +1241,7 @@ void Control::startDragDropToolbar()
 
 bool Control::isInDragAndDropToolbar()
 {
+
 	if (!this->dragDropHandler)
 	{
 		return false;
@@ -1233,6 +1252,7 @@ bool Control::isInDragAndDropToolbar()
 
 void Control::setShapeTool(ActionType type, bool enabled)
 {
+
 	if (enabled == false)
 	{
 		// Disable all entries
@@ -1292,6 +1312,7 @@ void Control::setShapeTool(ActionType type, bool enabled)
 
 void Control::setFullscreen(bool enabled)
 {
+
 	fullscreenHandler->setFullscreen(win, enabled);
 
 	fireActionSelected(GROUP_FULLSCREEN, enabled ? ACTION_FULLSCREEN : ACTION_NONE);
@@ -1299,11 +1320,13 @@ void Control::setFullscreen(bool enabled)
 
 void Control::disableSidebarTmp(bool disabled)
 {
+
 	this->sidebar->setTmpDisabled(disabled);
 }
 
 void Control::addDefaultPage(string pageTemplate)
 {
+
 	if (pageTemplate == "")
 	{
 		pageTemplate = settings->getPageTemplate();
@@ -1316,15 +1339,17 @@ void Control::addDefaultPage(string pageTemplate)
 	page->setBackgroundColor(model.getBackgroundColor());
 	page->setBackgroundType(model.getBackgroundType());
 
-	this->doc->lock();
+	{
+		std::lock_guard<Document> guard{*this->doc};
 	this->doc->addPage(page);
-	this->doc->unlock();
+	}
 
 	updateDeletePageButton();
 }
 
 void Control::updateDeletePageButton()
 {
+
 	if (this->win)
 	{
 		GtkWidget* w = this->win->get("menuDeletePage");
@@ -1334,6 +1359,7 @@ void Control::updateDeletePageButton()
 
 void Control::deletePage()
 {
+
 	clearSelectionEndText();
 	// don't allow delete pages if we have less than 2 pages,
 	// so we can be (more or less) sure there is at least one page.
@@ -1349,16 +1375,18 @@ void Control::deletePage()
 		return;
 	}
 
-	this->doc->lock();
-	PageRef page = doc->getPage(pNr);
-	this->doc->unlock();
+	PageRef page = [this, pNr] {
+		std::lock_guard<Document> guard{*this->doc};
+		return doc->getPage(pNr);
+	}();
 
 	// first send event, then delete page...
 	firePageDeleted(pNr);
 
-	this->doc->lock();
+	{
+		std::lock_guard<Document> guard{*this->doc};
 	doc->deletePage(pNr);
-	this->doc->unlock();
+	}
 
 	updateDeletePageButton();
 	this->undoRedo->addUndoAction(mem::make_unique<InsertDeletePageUndoAction>(page, pNr, false));
@@ -1373,14 +1401,17 @@ void Control::deletePage()
 
 void Control::insertNewPage(size_t position)
 {
+
 	pageBackgroundChangeController->insertNewPage(position);
 }
 
 void Control::insertPage(const PageRef& page, size_t position)
 {
-	this->doc->lock();
+
+	{
+		std::lock_guard<Document> guard{*this->doc};
 	this->doc->insertPage(page, position);
-	this->doc->unlock();
+	}
 	firePageInserted(position);
 
 	getCursor()->updateCursor();
@@ -1415,6 +1446,7 @@ void Control::gotoPage()
 
 void Control::updateBackgroundSizeButton()
 {
+
 	if (this->win == nullptr)
 	{
 		return;
@@ -1438,6 +1470,7 @@ void Control::updateBackgroundSizeButton()
 
 void Control::paperTemplate()
 {
+
 	auto* dlg = new PageTemplateDialog(this->gladeSearchPath, settings, pageTypes);
 	dlg->show(GTK_WINDOW(this->win->getWindow()));
 
@@ -1451,6 +1484,7 @@ void Control::paperTemplate()
 
 void Control::paperFormat()
 {
+
 	PageRef page = getCurrentPage();
 	if (!page.isValid() || page->getBackgroundType().isPdfPage())
 	{
@@ -1466,9 +1500,8 @@ void Control::paperFormat()
 
 	if (width > 0)
 	{
-		this->doc->lock();
+		std::lock_guard<Document> guard{*this->doc};
 		this->doc->setPageSize(page, width, height);
-		this->doc->unlock();
 	}
 
 	size_t pageNo = doc->indexOf(page);
@@ -1482,10 +1515,12 @@ void Control::paperFormat()
 
 void Control::changePageBackgroundColor()
 {
+
 	int pNr = getCurrentPageNo();
-	this->doc->lock();
-	PageRef p = this->doc->getPage(pNr);
-	this->doc->unlock();
+	PageRef p = [this, pNr] {
+		std::lock_guard<Document> guard{*this->doc};
+		return this->doc->getPage(pNr);
+	}();
 
 	if (!p.isValid())
 	{
@@ -1513,6 +1548,7 @@ void Control::changePageBackgroundColor()
 
 void Control::setViewPairedPages(bool enabled)
 {
+
 	settings->setShowPairedPages(enabled);
 	fireActionSelected(GROUP_PAIRED_PAGES, enabled ? ACTION_VIEW_PAIRED_PAGES : ACTION_NOT_SELECTED);
 
@@ -1523,6 +1559,7 @@ void Control::setViewPairedPages(bool enabled)
 
 void Control::setViewPresentationMode(bool enabled)
 {
+
 	if (enabled)
 	{
 		bool success = zoom->updateZoomPresentationValue();
@@ -1572,6 +1609,7 @@ void Control::setViewPresentationMode(bool enabled)
 
 void Control::setPairsOffset(int numOffset)
 {
+
 	settings->setPairsOffset(numOffset);
 	fireActionSelected(GROUP_PAIRED_PAGES, numOffset ? ACTION_SET_PAIRS_OFFSET : ACTION_NOT_SELECTED);
 	int currentPage = getCurrentPageNo();
@@ -1581,6 +1619,7 @@ void Control::setPairsOffset(int numOffset)
 
 void Control::setViewColumns(int numColumns)
 {
+
 	settings->setViewColumns(numColumns);
 	settings->setViewFixedRows(false);
 
@@ -1625,6 +1664,7 @@ void Control::setViewColumns(int numColumns)
 
 void Control::setViewRows(int numRows)
 {
+
 	settings->setViewRows(numRows);
 	settings->setViewFixedRows(true);
 
@@ -1669,6 +1709,7 @@ void Control::setViewRows(int numRows)
 
 void Control::setViewLayoutVert(bool vert)
 {
+
 	settings->setViewLayoutVert(vert);
 
 	ActionType action;
@@ -1691,6 +1732,7 @@ void Control::setViewLayoutVert(bool vert)
 
 void Control::setViewLayoutR2L(bool r2l)
 {
+
 	settings->setViewLayoutR2L(r2l);
 
 	ActionType action;
@@ -1713,6 +1755,7 @@ void Control::setViewLayoutR2L(bool r2l)
 
 void Control::setViewLayoutB2T(bool b2t)
 {
+
 	settings->setViewLayoutB2T(b2t);
 
 	ActionType action;
@@ -1740,6 +1783,7 @@ void Control::setViewLayoutB2T(bool b2t)
  */
 void Control::zoomCallback(ActionType type, bool enabled)
 {
+
 	switch (type)
 	{
 	case ACTION_ZOOM_100:
@@ -1766,6 +1810,7 @@ void Control::zoomCallback(ActionType type, bool enabled)
 
 size_t Control::getCurrentPageNo()
 {
+
 	if (this->win)
 	{
 		return this->win->getXournal()->getCurrentPage();
@@ -1775,25 +1820,26 @@ size_t Control::getCurrentPageNo()
 
 bool Control::searchTextOnPage(string text, int p, int* occures, double* top)
 {
+
 	return getWindow()->getXournal()->searchTextOnPage(text, p, occures, top);
 }
 
 PageRef Control::getCurrentPage()
 {
-	this->doc->lock();
-	PageRef p = this->doc->getPage(getCurrentPageNo());
-	this->doc->unlock();
 
-	return p;
+	std::lock_guard<Document> guard{*this->doc};
+	return this->doc->getPage(getCurrentPageNo());
 }
 
 void Control::fileOpened(const char* uri)
 {
+
 	openFile(uri);
 }
 
 void Control::undoRedoChanged()
 {
+
 	fireEnableAction(ACTION_UNDO, undoRedo->canUndo());
 	fireEnableAction(ACTION_REDO, undoRedo->canRedo());
 
@@ -1805,6 +1851,7 @@ void Control::undoRedoChanged()
 
 void Control::undoRedoPageChanged(PageRef page)
 {
+
 	for (XojPage* p: this->changedPages)
 	{
 		if (p == (XojPage*) page)
@@ -1820,6 +1867,7 @@ void Control::undoRedoPageChanged(PageRef page)
 
 void Control::selectTool(ToolType type)
 {
+
 	toolHandler->selectTool(type);
 
 	if (win)
@@ -1830,12 +1878,14 @@ void Control::selectTool(ToolType type)
 
 void Control::selectDefaultTool()
 {
+
 	ButtonConfig* cfg = settings->getDefaultButtonConfig();
 	cfg->acceptActions(toolHandler);
 }
 
 void Control::toolChanged()
 {
+
 	ToolType type = toolHandler->getToolType();
 
 	// Convert enum values, enums has to be in the same order!
@@ -1918,6 +1968,7 @@ void Control::toolChanged()
 
 void Control::eraserSizeChanged()
 {
+
 	switch (toolHandler->getEraserSize())
 	{
 	case TOOL_SIZE_VERY_FINE:
@@ -1942,6 +1993,7 @@ void Control::eraserSizeChanged()
 
 void Control::penSizeChanged()
 {
+
 	switch (toolHandler->getPenSize())
 	{
 	case TOOL_SIZE_VERY_FINE:
@@ -1966,6 +2018,7 @@ void Control::penSizeChanged()
 
 void Control::hilighterSizeChanged()
 {
+
 	switch (toolHandler->getHilighterSize())
 	{
 	case TOOL_SIZE_VERY_FINE:
@@ -1990,6 +2043,7 @@ void Control::hilighterSizeChanged()
 
 void Control::toolSizeChanged()
 {
+
 	if (toolHandler->getToolType() == TOOL_PEN)
 	{
 		penSizeChanged();
@@ -2030,6 +2084,7 @@ void Control::toolSizeChanged()
 
 void Control::toolFillChanged()
 {
+
 	fireActionSelected(GROUP_FILL, toolHandler->getFill() != -1 ? ACTION_TOOL_FILL : ACTION_NONE);
 	fireActionSelected(GROUP_PEN_FILL, toolHandler->getPenFillEnabled() ? ACTION_TOOL_PEN_FILL : ACTION_NONE);
 	fireActionSelected(GROUP_HILIGHTER_FILL,
@@ -2038,6 +2093,7 @@ void Control::toolFillChanged()
 
 void Control::toolLineStyleChanged()
 {
+
 	const LineStyle& lineStyle = toolHandler->getTool(TOOL_PEN).getLineStyle();
 	string style = StrokeStyle::formatStyle(lineStyle);
 
@@ -2069,6 +2125,7 @@ void Control::toolLineStyleChanged()
  */
 void Control::toolColorChanged(bool userSelection)
 {
+
 	fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR);
 	getCursor()->updateCursor();
 
@@ -2095,11 +2152,13 @@ void Control::toolColorChanged(bool userSelection)
 
 void Control::setCustomColorSelected()
 {
+
 	fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR_CUSTOM);
 }
 
 void Control::showSettings()
 {
+
 	// take note of some settings before to compare with after
 	int selectionColor = settings->getBorderColor();
 	bool verticalSpace = settings->getAddVerticalSpace();
@@ -2149,6 +2208,7 @@ void Control::showSettings()
 
 bool Control::newFile(string pageTemplate)
 {
+
 	if (!this->close(true))
 	{
 		return false;
@@ -2156,9 +2216,10 @@ bool Control::newFile(string pageTemplate)
 
 	Document newDoc(this);
 
-	this->doc->lock();
+	{
+		std::lock_guard<Document> guard{*this->doc};
 	*doc = newDoc;
-	this->doc->unlock();
+	}
 
 	addDefaultPage(std::move(pageTemplate));
 
@@ -2202,6 +2263,7 @@ bool Control::shouldFileOpen(string filename)
 
 bool Control::openFile(Path filename, int scrollToPage, bool forceOpen)
 {
+
 	if (!forceOpen && !shouldFileOpen(filename.str()))
 	{
 		return false;
@@ -2296,10 +2358,11 @@ bool Control::openFile(Path filename, int scrollToPage, bool forceOpen)
 	{
 		this->closeDocument();
 
-		this->doc->lock();
+		{
+			std::lock_guard<Document> guard{*this->doc};
 		this->doc->clearDocument();
 		*this->doc = *loadedDocument;
-		this->doc->unlock();
+		}
 
 		// Set folder as last save path, so the next save will be at the current document location
 		// This is important because of the new .xopp format, where Xournal .xoj handled as import,
@@ -2313,6 +2376,7 @@ bool Control::openFile(Path filename, int scrollToPage, bool forceOpen)
 
 bool Control::loadPdf(const Path& filename, int scrollToPage)
 {
+
 	LoadHandler loadHandler;
 
 	if (settings->isAutloadPdfXoj())
@@ -2332,10 +2396,11 @@ bool Control::loadPdf(const Path& filename, int scrollToPage)
 
 		if (tmp)
 		{
-			this->doc->lock();
+			{
+				std::lock_guard<Document> guard{*this->doc};
 			this->doc->clearDocument();
 			*this->doc = *tmp;
-			this->doc->unlock();
+			}
 
 			fileLoaded(scrollToPage);
 			return true;
@@ -2349,6 +2414,7 @@ bool Control::loadPdf(const Path& filename, int scrollToPage)
 
 bool Control::loadXoptTemplate(Path filename)
 {
+
 	string contents;
 	if (!PathUtil::readString(contents, filename))
 	{
@@ -2360,9 +2426,11 @@ bool Control::loadXoptTemplate(Path filename)
 
 void Control::fileLoaded(int scrollToPage)
 {
-	this->doc->lock();
-	Path file = this->doc->getEvMetadataFilename();
-	this->doc->unlock();
+
+	Path file = [this] {
+		std::lock_guard<Document> guard{*this->doc};
+		return this->doc->getEvMetadataFilename();
+	}();
 
 	if (!file.isEmpty())
 	{
@@ -2444,6 +2512,7 @@ void Control::loadMetadata(MetadataEntry md)
 
 bool Control::annotatePdf(Path filename, bool attachPdf, bool attachToDocument)
 {
+
 	if (!this->close(false))
 	{
 		return false;
@@ -2470,17 +2539,19 @@ bool Control::annotatePdf(Path filename, bool attachPdf, bool attachToDocument)
 	{
 		this->recent->addRecentFileFilename(filename.c_str());
 
-		this->doc->lock();
-		Path file = this->doc->getEvMetadataFilename();
-		this->doc->unlock();
+		Path file = [this] {
+			std::lock_guard<Document> guard{*this->doc};
+			return this->doc->getEvMetadataFilename();
+		}();
 		MetadataEntry md = metadata->getForFile(file.str());
 		loadMetadata(md);
 	}
 	else
 	{
-		this->doc->lock();
-		string errMsg = doc->getLastErrorMsg();
-		this->doc->unlock();
+		string errMsg = [this] {
+			std::lock_guard<Document> guard{*this->doc};
+			return this->doc->getLastErrorMsg();
+		}();
 
 		string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filename.str() % errMsg);
 		XojMsgBox::showErrorToUser(getGtkWindow(), msg);
@@ -2496,14 +2567,15 @@ bool Control::annotatePdf(Path filename, bool attachPdf, bool attachToDocument)
 
 void Control::print()
 {
+
 	PrintHandler print;
-	this->doc->lock();
+	std::lock_guard<Document> guard{*this->doc};
 	print.print(this->doc, getCurrentPageNo());
-	this->doc->unlock();
 }
 
 void Control::block(string name)
 {
+
 	if (this->isBlocking)
 	{
 		return;
@@ -2527,6 +2599,7 @@ void Control::block(string name)
 
 void Control::unblock()
 {
+
 	if (!this->isBlocking)
 	{
 		return;
@@ -2543,22 +2616,26 @@ void Control::unblock()
 
 void Control::setMaximumState(int max)
 {
+
 	this->maxState = max;
 }
 
 void Control::setCurrentState(int state)
 {
+
 	Util::execInUiThread([=]() { gtk_progress_bar_set_fraction(this->pgState, gdouble(state) / this->maxState); });
 }
 
 bool Control::save(bool synchron)
 {
+
 	// clear selection before saving
 	clearSelectionEndText();
 
-	this->doc->lock();
-	Path filename = this->doc->getFilename();
-	this->doc->unlock();
+	Path filename = [this] {
+		std::lock_guard<Document> guard{*this->doc};
+		return this->doc->getFilename();
+	}();
 
 	if (filename.isEmpty())
 	{
@@ -2587,6 +2664,7 @@ bool Control::save(bool synchron)
 
 bool Control::showSaveDialog()
 {
+
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Save File"),
 	                                                getGtkWindow(),
 	                                                GTK_FILE_CHOOSER_ACTION_SAVE,
@@ -2603,10 +2681,16 @@ bool Control::showSaveDialog()
 	gtk_file_filter_add_pattern(filterXoj, "*.xopp");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
-	this->doc->lock();
-	Path suggested_folder = this->doc->createSaveFolder(this->settings->getLastSavePath());
-	Path suggested_name = this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
-	this->doc->unlock();
+	// Todo: c++17
+	//       auto [suggested_folder, suggested_name] = [&] {
+	auto pair = [&] {
+		std::lock_guard<Document> guard{*this->doc};
+		return std::pair<Path, Path>{
+		        this->doc->createSaveFolder(this->settings->getLastSavePath()),
+		        this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName())};
+	}();
+	auto& suggested_folder = pair.first;  // Todo: remove with c++17
+	auto& suggested_name = pair.second;   // Todo: remove with c++17
 
 	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), suggested_folder.c_str());
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), suggested_name.c_str());
@@ -2646,19 +2730,19 @@ bool Control::showSaveDialog()
 
 	gtk_widget_destroy(dialog);
 
-	this->doc->lock();
+	std::lock_guard<Document> guard{*this->doc};
 
 	this->doc->setFilename(filename);
-	this->doc->unlock();
 
 	return true;
 }
 
 void Control::updateWindowTitle()
 {
+
 	string title = "";
 
-	this->doc->lock();
+	std::unique_lock<Document> guard{*this->doc};
 	if (doc->getFilename().isEmpty())
 	{
 		if (doc->getPdfFilename().isEmpty())
@@ -2683,7 +2767,7 @@ void Control::updateWindowTitle()
 
 		title += doc->getFilename().getFilename();
 	}
-	this->doc->unlock();
+	guard.unlock();
 
 	title += " - Xournal++";
 
@@ -2692,6 +2776,7 @@ void Control::updateWindowTitle()
 
 void Control::exportAsPdf()
 {
+
 	exportBase(new PdfExportJob(this));
 }
 
@@ -2716,13 +2801,15 @@ void Control::exportBase(BaseExportJob* job)
 
 bool Control::saveAs()
 {
+
 	if (!showSaveDialog())
 	{
 		return false;
 	}
-	this->doc->lock();
-	Path filename = doc->getFilename();
-	this->doc->unlock();
+	Path filename = [this] {
+		std::lock_guard<Document> guard{*this->doc};
+		return this->doc->getFilename();
+	}();
 
 	if (filename.isEmpty())
 	{
@@ -2736,9 +2823,10 @@ bool Control::saveAs()
 
 void Control::resetSavedStatus()
 {
-	this->doc->lock();
-	Path filename = this->doc->getFilename();
-	this->doc->unlock();
+	Path filename = [this] {
+		std::lock_guard<Document> guard{*this->doc};
+		return this->doc->getFilename();
+	}();
 
 	this->undoRedo->documentSaved();
 	this->recent->addRecentFileFilename(filename);
@@ -2747,6 +2835,7 @@ void Control::resetSavedStatus()
 
 void Control::quit(bool allowCancel)
 {
+
 	if (!this->close(false, allowCancel))
 	{
 		if (!allowCancel)
@@ -2774,6 +2863,7 @@ void Control::quit(bool allowCancel)
 
 bool Control::close(const bool allowDestroy, const bool allowCancel)
 {
+
 	clearSelectionEndText();
 	metadata->documentChanged();
 
@@ -2838,15 +2928,17 @@ void Control::closeDocument()
 {
 	this->undoRedo->clearContents();
 
-	this->doc->lock();
+	{
+		std::lock_guard<Document> guard{*this->doc};
 	this->doc->clearDocument(true);
-	this->doc->unlock();
+	}
 
 	this->undoRedoChanged();
 }
 
 bool Control::checkExistingFile(Path& folder, Path& filename)
 {
+
 	if (filename.exists())
 	{
 		string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % filename.getFilename());
@@ -2858,6 +2950,7 @@ bool Control::checkExistingFile(Path& folder, Path& filename)
 
 void Control::resetShapeRecognizer()
 {
+
 	if (this->win)
 	{
 		this->win->getXournal()->resetShapeRecognizer();
@@ -2866,23 +2959,27 @@ void Control::resetShapeRecognizer()
 
 void Control::showAbout()
 {
+
 	AboutDialog dlg(this->gladeSearchPath);
 	dlg.show(GTK_WINDOW(this->win->getWindow()));
 }
 
 void Control::clipboardCutCopyEnabled(bool enabled)
 {
+
 	fireEnableAction(ACTION_CUT, enabled);
 	fireEnableAction(ACTION_COPY, enabled);
 }
 
 void Control::clipboardPasteEnabled(bool enabled)
 {
+
 	fireEnableAction(ACTION_PASTE, enabled);
 }
 
 void Control::clipboardPasteText(string text)
 {
+
 	Text* t = new Text();
 	t->setText(text);
 	t->setFont(settings->getFont());
@@ -2893,6 +2990,7 @@ void Control::clipboardPasteText(string text)
 
 void Control::clipboardPasteImage(GdkPixbuf* img)
 {
+
 	auto image = new Image();
 	image->setImage(img);
 
@@ -2907,11 +3005,14 @@ void Control::clipboardPasteImage(GdkPixbuf* img)
 		return;
 	}
 
-	this->doc->lock();
+	//Todo cpp17 auto [pageWidth,pageHeight] = [this, pageNr] {
+	auto pair = [this, pageNr] {
+		std::lock_guard<Document> guard{*this->doc};
 	PageRef page = this->doc->getPage(pageNr);
-	auto pageWidth = page->getWidth();
-	auto pageHeight = page->getHeight();
-	this->doc->unlock();
+		return std::pair<double, double>{page->getWidth(), page->getHeight()};
+	}();
+	auto pageWidth = pair.first;
+	auto pageHeight = pair.second;
 
 	// Size: 3/4 of the page size
 	pageWidth = pageWidth * 3.0 / 4.0;
@@ -2940,6 +3041,7 @@ void Control::clipboardPasteImage(GdkPixbuf* img)
 
 void Control::clipboardPaste(Element* e)
 {
+
 	double x = 0;
 	double y = 0;
 	int pageNr = getCurrentPageNo();
@@ -2954,7 +3056,7 @@ void Control::clipboardPaste(Element* e)
 		return;
 	}
 
-	this->doc->lock();
+	std::unique_lock<Document> guard{*this->doc};
 	PageRef page = this->doc->getPage(pageNr);
 	Layer* layer = page->getSelectedLayer();
 	win->getXournal()->getPasteTarget(x, y);
@@ -2969,7 +3071,7 @@ void Control::clipboardPaste(Element* e)
 	e->setY(y);
 	layer->addElement(e);
 
-	this->doc->unlock();
+	guard.unlock();
 
 	undoRedo->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, e));
 	EditSelection* selection = new EditSelection(this->undoRedo, e, view, page);
@@ -2979,13 +3081,14 @@ void Control::clipboardPaste(Element* e)
 
 void Control::clipboardPasteXournal(ObjectInputStream& in)
 {
+
 	int pNr = getCurrentPageNo();
 	if (pNr == -1 && win != nullptr)
 	{
 		return;
 	}
 
-	this->doc->lock();
+	std::unique_lock<Document> guard{*this->doc};
 	PageRef page = this->doc->getPage(pNr);
 	Layer* layer = page->getSelectedLayer();
 
@@ -2993,7 +3096,6 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 
 	if (!view || !page)
 	{
-		this->doc->unlock();
 		return;
 	}
 
@@ -3011,7 +3113,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 		selection->readSerialized(in);
 
 		// document lock not needed anymore, because we don't change the document, we only change the selection
-		this->doc->unlock();
+		guard.unlock();
 
 		int count = in.readInt();
 		auto pasteAddUndoAction = mem::make_unique<AddUndoAction>(page, false);
@@ -3087,6 +3189,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 
 void Control::deleteSelection()
 {
+
 	if (win)
 	{
 		win->getXournal()->deleteSelection();
@@ -3095,6 +3198,7 @@ void Control::deleteSelection()
 
 void Control::clearSelection()
 {
+
 	if (this->win)
 	{
 		this->win->getXournal()->clearSelection();
@@ -3103,6 +3207,7 @@ void Control::clearSelection()
 
 void Control::setClipboardHandlerSelection(EditSelection* selection)
 {
+
 	if (this->clipboardHandler)
 	{
 		this->clipboardHandler->setSelection(selection);
@@ -3111,11 +3216,13 @@ void Control::setClipboardHandlerSelection(EditSelection* selection)
 
 void Control::setCopyPasteEnabled(bool enabled)
 {
+
 	this->clipboardHandler->setCopyPasteEnabled(enabled);
 }
 
 void Control::setFill(bool fill)
 {
+
 	EditSelection* sel = nullptr;
 	if (this->win)
 	{
@@ -3142,6 +3249,7 @@ void Control::setFill(bool fill)
 
 void Control::setLineStyle(const string& style)
 {
+
 	LineStyle stl = StrokeStyle::parseStyle(style.c_str());
 
 	EditSelection* sel = nullptr;
@@ -3164,6 +3272,7 @@ void Control::setLineStyle(const string& style)
 
 void Control::setToolSize(ToolSize size)
 {
+
 	EditSelection* sel = nullptr;
 	if (this->win)
 	{
@@ -3182,6 +3291,7 @@ void Control::setToolSize(ToolSize size)
 
 void Control::fontChanged()
 {
+
 	XojFont font = win->getFontButtonFont();
 	settings->setFont(font);
 
@@ -3207,6 +3317,7 @@ void Control::fontChanged()
  */
 void Control::runLatex()
 {
+
 	LatexController latex(this);
 	latex.run();
 }
@@ -3217,46 +3328,55 @@ void Control::runLatex()
 
 UndoRedoHandler* Control::getUndoRedoHandler()
 {
+
 	return this->undoRedo;
 }
 
 ZoomControl* Control::getZoomControl()
 {
+
 	return this->zoom;
 }
 
 XournalppCursor* Control::getCursor()
 {
+
 	return this->cursor;
 }
 
 RecentManager* Control::getRecentManager()
 {
+
 	return this->recent;
 }
 
 Document* Control::getDocument()
 {
+
 	return this->doc;
 }
 
 ToolHandler* Control::getToolHandler()
 {
+
 	return this->toolHandler;
 }
 
 XournalScheduler* Control::getScheduler()
 {
+
 	return this->scheduler;
 }
 
 MainWindow* Control::getWindow()
 {
+
 	return this->win;
 }
 
 GtkWindow* Control::getGtkWindow()
 {
+
 	return GTK_WINDOW(this->win->getWindow());
 }
 
@@ -3267,18 +3387,21 @@ bool Control::isFullscreen()
 
 void Control::rotationSnappingToggle()
 {
+
 	settings->setSnapRotation(!settings->isSnapRotation());
 	fireActionSelected(GROUP_SNAPPING, settings->isSnapRotation() ? ACTION_ROTATION_SNAPPING : ACTION_NONE);
 }
 
 void Control::gridSnappingToggle()
 {
+
 	settings->setSnapGrid(!settings->isSnapGrid());
 	fireActionSelected(GROUP_GRID_SNAPPING, settings->isSnapGrid() ? ACTION_GRID_SNAPPING : ACTION_NONE);
 }
 
 TextEditor* Control::getTextEditor()
 {
+
 	if (this->win)
 	{
 		return this->win->getXournal()->getTextEditor();
@@ -3288,55 +3411,66 @@ TextEditor* Control::getTextEditor()
 
 GladeSearchpath* Control::getGladeSearchPath()
 {
+
 	return this->gladeSearchPath;
 }
 
 Settings* Control::getSettings()
 {
+
 	return settings;
 }
 
 ScrollHandler* Control::getScrollHandler()
 {
+
 	return this->scrollHandler;
 }
 
 MetadataManager* Control::getMetadataManager()
 {
+
 	return this->metadata;
 }
 
 Sidebar* Control::getSidebar()
 {
+
 	return this->sidebar;
 }
 
 SearchBar* Control::getSearchBar()
 {
+
 	return this->searchBar;
 }
 
 AudioController* Control::getAudioController()
 {
+
 	return this->audioController;
 }
 
 PageTypeHandler* Control::getPageTypes()
 {
+
 	return this->pageTypes;
 }
 
 PageTypeMenu* Control::getNewPageType()
 {
+
 	return this->newPageType;
 }
 
 PageBackgroundChangeController* Control::getPageBackgroundChangeController()
 {
+
 	return this->pageBackgroundChangeController;
 }
 
 LayerController* Control::getLayerController()
 {
+
 	return this->layerController;
 }

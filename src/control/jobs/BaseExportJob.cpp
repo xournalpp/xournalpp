@@ -6,6 +6,8 @@
 #include <StringUtils.h>
 #include <XojMsgBox.h>
 
+#include <mutex>
+
 BaseExportJob::BaseExportJob(Control* control, string name)
  : BlockingJob(control, name)
 {
@@ -57,10 +59,10 @@ bool BaseExportJob::showFilechooser()
 
 	Settings* settings = control->getSettings();
 	Document* doc = control->getDocument();
-	doc->lock();
+	std::unique_lock<Document> guard{*doc};
 	Path folder = doc->createSaveFolder(settings->getLastSavePath());
 	Path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName());
-	doc->unlock();
+	guard.unlock();
 
 	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), folder.c_str());
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), name.c_str());

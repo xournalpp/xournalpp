@@ -88,7 +88,7 @@ public:
 
 	void lock();
 	void unlock();
-	bool tryLock();
+	bool try_lock();
 
 private:
 	void buildContentsModel();

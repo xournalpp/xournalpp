@@ -7,6 +7,7 @@
 
 #include <cairo-svg.h>
 #include <i18n.h>
+#include <mutex>
 
 
 ImageExport::ImageExport(Document* doc, Path filename, ExportGraphicsFormat format, bool hideBackground, PageRangeVector& exportRange)
@@ -27,6 +28,7 @@ ImageExport::~ImageExport()
  */
 void ImageExport::setPngDpi(int dpi)
 {
+
 	this->pngDpi = dpi;
 }
 
@@ -35,6 +37,7 @@ void ImageExport::setPngDpi(int dpi)
  */
 string ImageExport::getLastErrorMsg()
 {
+
 	return lastError;
 }
 
@@ -43,6 +46,7 @@ string ImageExport::getLastErrorMsg()
  */
 void ImageExport::createSurface(double width, double height, int id)
 {
+
 	if (format == EXPORT_GRAPHICS_PNG)
 	{
 		this->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
@@ -70,6 +74,7 @@ void ImageExport::createSurface(double width, double height, int id)
  */
 bool ImageExport::freeSurface(int id)
 {
+
 	cairo_destroy(this->cr);
 
 	cairo_status_t status = CAIRO_STATUS_SUCCESS;
@@ -94,6 +99,7 @@ bool ImageExport::freeSurface(int id)
  */
 string ImageExport::getFilenameWithNumber(int no)
 {
+
 	if (no == -1)
 	{
 		// No number to add
@@ -116,9 +122,11 @@ string ImageExport::getFilenameWithNumber(int no)
  */
 void ImageExport::exportImagePage(int pageId, int id, double zoom, ExportGraphicsFormat format, DocumentView& view)
 {
-	doc->lock();
-	PageRef page = doc->getPage(pageId);
-	doc->unlock();
+
+	PageRef page = [this, pageId] {
+		std::lock_guard<Document> guard{*this->doc};
+		return doc->getPage(pageId);
+	}();
 
 	createSurface(page->getWidth(), page->getHeight(), id);
 
@@ -152,6 +160,7 @@ void ImageExport::exportImagePage(int pageId, int id, double zoom, ExportGraphic
  */
 void ImageExport::exportGraphics(ProgressListener* stateListener)
 {
+
 	// don't lock the page here for the whole flow, else we get a dead lock...
 	// the ui is blocked, so there should be no changes...
 	int count = doc->getPageCount();

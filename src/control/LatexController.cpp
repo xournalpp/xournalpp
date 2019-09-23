@@ -60,7 +60,9 @@ LatexController::LatexController(Control* control)
 
 LatexController::~LatexController()
 {
+
 	this->control = nullptr;
+
 }
 
 /**
@@ -68,6 +70,7 @@ LatexController::~LatexController()
  */
 LatexController::FindDependencyStatus LatexController::findTexDependencies()
 {
+
 	gchar* pdflatex = g_find_program_in_path("pdflatex");
 	if (!pdflatex)
 	{
@@ -163,17 +166,16 @@ std::unique_ptr<GPid> LatexController::runCommandAsync(string texString)
  */
 void LatexController::findSelectedTexElement()
 {
-	this->doc->lock();
+
+	std::unique_lock<Document> guard{*this->doc};
 	int pageNr = this->control->getCurrentPageNo();
 	if (pageNr == -1)
 	{
-		this->doc->unlock();
 		return;
 	}
 	this->view = this->control->getWindow()->getXournal()->getViewFor(pageNr);
 	if (view == nullptr)
 	{
-		this->doc->unlock();
 		return;
 	}
 
@@ -230,7 +232,7 @@ void LatexController::findSelectedTexElement()
 			this->posy = 0.5 * this->page->getHeight();
 		}
 	}
-	this->doc->unlock();
+	guard.unlock();
 
 	// need to do this otherwise we can't remove the image for its replacement
 	this->control->clearSelectionEndText();
@@ -238,6 +240,7 @@ void LatexController::findSelectedTexElement()
 
 string LatexController::showTexEditDialog()
 {
+
 	// Attach the signal handler before setting the buffer text so that the
 	// callback is triggered
 	gulong signalHandler = g_signal_connect(dlg.getTextBuffer(), "changed", G_CALLBACK(handleTexChanged), this);
@@ -357,6 +360,7 @@ void LatexController::setUpdating(bool newValue)
 
 void LatexController::deleteOldImage()
 {
+
 	if (this->selectedTexImage != nullptr)
 	{
 		g_assert(this->selectedText == nullptr);
@@ -375,6 +379,7 @@ void LatexController::deleteOldImage()
 
 std::unique_ptr<TexImage> LatexController::convertDocumentToImage(PopplerDocument* doc, string formula)
 {
+
 	if (poppler_document_get_n_pages(doc) < 1)
 	{
 		return nullptr;
@@ -416,6 +421,7 @@ std::unique_ptr<TexImage> LatexController::convertDocumentToImage(PopplerDocumen
 
 std::unique_ptr<TexImage> LatexController::loadRendered(string renderedTex)
 {
+
 	if (!this->isValidTex)
 	{
 		return nullptr;
@@ -464,15 +470,16 @@ std::unique_ptr<TexImage> LatexController::loadRendered(string renderedTex)
 
 void LatexController::insertTexImage()
 {
+
 	g_assert(this->temporaryRender != nullptr);
 	TexImage* img = this->temporaryRender.release();
 
 	this->deleteOldImage();
 
-	doc->lock();
+	std::unique_lock<Document> guard{*this->doc};
 	layer->addElement(img);
 	view->rerenderElement(img);
-	doc->unlock();
+	guard.unlock();
 	control->getUndoRedoHandler()->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, img));
 
 	// Select element
@@ -482,6 +489,7 @@ void LatexController::insertTexImage()
 
 void LatexController::run()
 {
+
 	auto depStatus = this->findTexDependencies();
 	if (!depStatus.success)
 	{

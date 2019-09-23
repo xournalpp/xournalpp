@@ -37,11 +37,10 @@ bool PdfExportJob::isUriValid(string& uri)
 void PdfExportJob::run()
 {
 	Document* doc = control->getDocument();
-
-	doc->lock();
-	XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
-	doc->unlock();
-
+	XojPdfExport* pdfe = [this, doc] {
+		std::lock_guard<Document> guard{*doc};
+		return XojPdfExportFactory::createExport(doc, control);
+	}();
 	if (!pdfe->createPdf(this->filename))
 	{
 		if (control->getWindow())

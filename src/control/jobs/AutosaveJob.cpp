@@ -31,10 +31,11 @@ void AutosaveJob::run()
 
 	Document* doc = control->getDocument();
 
-	doc->lock();
-	handler.prepareSave(doc);
-	Path filename = doc->getFilename();
-	doc->unlock();
+	Path filename = [doc, &handler] {
+		std::lock_guard<Document> guard{*doc};
+		handler.prepareSave(doc);
+		return doc->getFilename();
+	}();
 
 	if (filename.isEmpty())
 	{

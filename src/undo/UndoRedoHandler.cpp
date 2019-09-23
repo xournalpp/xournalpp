@@ -104,10 +104,9 @@ void UndoRedoHandler::undo()
 	this->redoList.emplace_back(std::move(this->undoList.back()));
 	this->undoList.pop_back();
 
-	Document* doc = control->getDocument();
-	doc->lock();
+	std::unique_lock<Document> guard{*control->getDocument()};
 	bool undoResult = undoAction.undo(this->control);
-	doc->unlock();
+	guard.unlock();
 
 	if (!undoResult)
 	{
@@ -136,10 +135,9 @@ void UndoRedoHandler::redo()
 	this->undoList.emplace_back(std::move(this->redoList.back()));
 	this->redoList.pop_back();
 
-	Document* doc = control->getDocument();
-	doc->lock();
+	std::unique_lock<Document> guard{*control->getDocument()};
 	bool redoResult = redoAction.redo(this->control);
-	doc->unlock();
+	guard.unlock();
 
 	if (!redoResult)
 	{

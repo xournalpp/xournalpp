@@ -449,9 +449,9 @@ void XournalView::pageSelected(size_t page)
 	}
 
 	Document* doc = control->getDocument();
-	doc->lock();
+	std::unique_lock<Document> guard{*doc};
 	Path file = doc->getEvMetadataFilename();
-	doc->unlock();
+	guard.unlock();
 
 	control->getMetadataManager()->storeMetadata(file.str(), page, getZoom());
 
@@ -653,9 +653,9 @@ void XournalView::zoomChanged()
 	layout->recalculate();
 
 	Document* doc = control->getDocument();
-	doc->lock();
+	std::unique_lock<Document> guard{*doc};
 	Path file = doc->getEvMetadataFilename();
-	doc->unlock();
+	guard.unlock();
 
 	control->getMetadataManager()->storeMetadata(file.str(), getCurrentPage(), zoom->getZoomReal());
 
@@ -758,9 +758,9 @@ void XournalView::pageInserted(size_t page)
 	delete[] lastViewPages;
 
 	Document* doc = control->getDocument();
-	doc->lock();
+	std::unique_lock<Document> guard{*doc};
 	XojPageView* pageView = new XojPageView(this, doc->getPage(page));
-	doc->unlock();
+	guard.unlock();
 
 	this->viewPages[page] = pageView;
 
@@ -918,7 +918,7 @@ void XournalView::documentChanged(DocumentChangeType type)
 	}
 
 	XournalScheduler* scheduler = this->control->getScheduler();
-	scheduler->lock();
+	std::lock_guard<XournalScheduler> _{*scheduler};
 	scheduler->removeAllJobs();
 
 	clearSelection();
@@ -930,7 +930,7 @@ void XournalView::documentChanged(DocumentChangeType type)
 	delete[] this->viewPages;
 
 	Document* doc = control->getDocument();
-	doc->lock();
+	std::unique_lock<Document> guard{*doc};
 
 	this->viewPagesLen = doc->getPageCount();
 	this->viewPages = new XojPageView*[viewPagesLen];
@@ -941,12 +941,10 @@ void XournalView::documentChanged(DocumentChangeType type)
 		viewPages[i] = pageView;
 	}
 
-	doc->unlock();
+	guard.unlock();
 
 	layoutPages();
 	scrollTo(0, 0);
-
-	scheduler->unlock();
 }
 
 bool XournalView::cut()

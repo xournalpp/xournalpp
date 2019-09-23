@@ -127,10 +127,10 @@ bool PageBackgroundChangeController::applyImageBackground(PageRef page)
 {
 	Document* doc = control->getDocument();
 
-	doc->lock();
-	ImagesDialog dlg(control->getGladeSearchPath(), doc, control->getSettings());
-	doc->unlock();
-
+	auto dlg = [this, doc] {
+		std::lock_guard<Document> guard{*doc};
+		return ImagesDialog{control->getGladeSearchPath(), doc, control->getSettings()};
+	}();
 	dlg.show(GTK_WINDOW(control->getGtkWindow()));
 	BackgroundImage img = dlg.getSelectedImage();
 
@@ -212,10 +212,10 @@ bool PageBackgroundChangeController::applyPdfBackground(PageRef page)
 		return false;
 	}
 
-	doc->lock();
-	PdfPagesDialog* dlg = new PdfPagesDialog(control->getGladeSearchPath(), doc, control->getSettings());
-	doc->unlock();
-
+	auto* dlg = [this, doc] {
+		std::lock_guard<Document> guard{*doc};
+		return new PdfPagesDialog(control->getGladeSearchPath(), doc, control->getSettings());
+	}();
 	dlg->show(GTK_WINDOW(control->getGtkWindow()));
 
 	int selected = dlg->getSelectedPage();
