@@ -67,14 +67,14 @@ bool ToolbarData::isPredefined()
 void ToolbarData::load(GKeyFile* config, const char* group)
 {
 	gsize length = 0;
-	gchar** keys = g_key_file_get_keys(config, group, &length, NULL);
-	if (keys == NULL)
+	gchar** keys = g_key_file_get_keys(config, group, &length, nullptr);
+	if (keys == nullptr)
 	{
 		return;
 	}
 
-	gchar* name = g_key_file_get_locale_string(config, group, "name", NULL, NULL);
-	if (name != NULL)
+	gchar* name = g_key_file_get_locale_string(config, group, "name", nullptr, nullptr);
+	if (name != nullptr)
 	{
 		this->name = name;
 		g_free(name);
@@ -90,7 +90,7 @@ void ToolbarData::load(GKeyFile* config, const char* group)
 		ToolbarEntry* e = new ToolbarEntry();
 		gsize keyLen = 0;
 		e->setName(keys[i]);
-		gchar** list = g_key_file_get_string_list(config, group, keys[i], &keyLen, NULL);
+		gchar** list = g_key_file_get_string_list(config, group, keys[i], &keyLen, nullptr);
 
 		for (gsize x = 0; x < keyLen; x++)
 		{

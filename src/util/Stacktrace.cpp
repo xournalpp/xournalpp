@@ -32,7 +32,7 @@ Stacktrace::~Stacktrace() { }
 std::string Stacktrace::getExePath()
 {
 	char szFileName[MAX_PATH + 1];
-	GetModuleFileNameA(NULL, szFileName, MAX_PATH + 1);
+	GetModuleFileNameA(nullptr, szFileName, MAX_PATH + 1);
 
 	return szFileName;
 }
@@ -76,7 +76,7 @@ std::string Stacktrace::getExePath()
 void Stacktrace::printStracktrace(std::ostream& stream)
 {
 	void* trace[32];
-	char** messages = (char**) NULL;
+	char** messages = (char**) nullptr;
 	char buff[2048];
 
 	int trace_size = backtrace(trace, 32);
@@ -93,7 +93,7 @@ void Stacktrace::printStracktrace(std::ostream& stream)
 
 		sprintf(syscom, "addr2line %p -e %s", trace[i], exeName.c_str());
 		FILE* fProc = popen(syscom, "r");
-		while (fgets(buff, sizeof(buff), fProc) != NULL)
+		while (fgets(buff, sizeof(buff), fProc) != nullptr)
 		{
 			stream << buff;
 		}

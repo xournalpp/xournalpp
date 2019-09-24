@@ -39,7 +39,7 @@ public:
 
 	void scrollToAnnotatedPage(bool next);
 
-	bool isPageVisible(size_t page, int* visibleHeight = NULL);
+	bool isPageVisible(size_t page, int* visibleHeight = nullptr);
 
 public:
 	virtual void pageChanged(size_t page);
@@ -48,5 +48,5 @@ private:
 	void scrollToSpinPage();
 
 private:
-	Control* control = NULL;
+	Control* control = nullptr;
 };

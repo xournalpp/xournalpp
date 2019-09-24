@@ -30,7 +30,7 @@ string TextUndoAction::getUndoText()
 
 void TextUndoAction::textEditFinished()
 {
-	this->textEditor = NULL;
+	this->textEditor = nullptr;
 }
 
 string TextUndoAction::getText()

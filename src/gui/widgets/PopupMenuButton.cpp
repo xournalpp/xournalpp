@@ -70,12 +70,12 @@ PopupMenuButton::PopupMenuButton(GtkWidget* button, GtkWidget* menu)
 	g_signal_connect(button, "clicked", G_CALLBACK(
 		+[](GtkButton* button, PopupMenuButton* self)
 	{
-		                 gtk_menu_popup(GTK_MENU(self->menu), NULL, NULL, (GtkMenuPositionFunc) menu_position_func,
+		                 gtk_menu_popup(GTK_MENU(self->menu), nullptr, nullptr, (GtkMenuPositionFunc) menu_position_func,
 		                                button, 0, gtk_get_current_event_time());
 
 			gtk_menu_shell_select_first(GTK_MENU_SHELL(self->menu), FALSE);
 
-			// GTK 3.22: gtk_menu_popup_at_widget(menu, button, GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, NULL);
+			// GTK 3.22: gtk_menu_popup_at_widget(menu, button, GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, nullptr);
 
 		}), this);
 

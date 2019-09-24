@@ -22,7 +22,7 @@ InsertUndoAction::~InsertUndoAction()
 		// Insert was undone, so this is not needed anymore
 		delete this->element;
 	}
-	this->element = NULL;
+	this->element = nullptr;
 }
 
 string InsertUndoAction::getText()
@@ -86,7 +86,7 @@ InsertsUndoAction::~InsertsUndoAction()
 		for (Element* e : this->elements)
 		{
 			delete e;
-			e = NULL;
+			e = nullptr;
 		}
 	}
 }

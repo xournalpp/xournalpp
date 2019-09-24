@@ -15,7 +15,7 @@ XojCairoPdfExport::XojCairoPdfExport(Document* doc, ProgressListener* progressLi
 
 XojCairoPdfExport::~XojCairoPdfExport()
 {
-	if (this->surface != NULL)
+	if (this->surface != nullptr)
 	{
 		endPdf();
 	}
@@ -45,9 +45,9 @@ bool XojCairoPdfExport::startPdf(Path file)
 void XojCairoPdfExport::endPdf()
 {
 	cairo_destroy(this->cr);
-	this->cr = NULL;
+	this->cr = nullptr;
 	cairo_surface_destroy(this->surface);
-	this->surface = NULL;
+	this->surface = nullptr;
 }
 
 void XojCairoPdfExport::exportPage(size_t page)

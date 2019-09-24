@@ -42,7 +42,7 @@ private:
 	void storeLastUsedValuesInSettings();
 
 private:
-	Control* control = NULL;
+	Control* control = nullptr;
 
 	/**
 	 * Last used background colors (stored in settings)

@@ -16,8 +16,8 @@ extern "C" {
 
 #define LOAD_FROM_INI(target, group, key) \
 	{ \
-		char* value = g_key_file_get_string(config, group, key, NULL); \
-		if (value != NULL) \
+		char* value = g_key_file_get_string(config, group, key, nullptr); \
+		if (value != nullptr) \
 		{ \
 			target = value; \
 			g_free(value); \
@@ -30,7 +30,7 @@ extern "C" {
  */
 static const luaL_Reg loadedlibs[] = {
 	{ "app", luaopen_app },
-	{ NULL, NULL }
+	{ nullptr, nullptr }
 };
 
 Plugin::Plugin(Control* control, string name, string path)
@@ -47,7 +47,7 @@ Plugin::~Plugin()
 	{
 		// Clean up, free the Lua state var
 		lua_close(lua);
-		lua = NULL;
+		lua = nullptr;
 	}
 
 	for (MenuEntry* m : menuEntries)
@@ -71,7 +71,7 @@ Plugin* Plugin::getPluginFromLua(lua_State* lua)
 	return data;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -252,7 +252,7 @@ void Plugin::loadIni()
 	g_key_file_set_list_separator(config, ',');
 
 	string filename = path + "/plugin.ini";
-	if (!g_key_file_load_from_file(config, filename.c_str(), G_KEY_FILE_NONE, NULL))
+	if (!g_key_file_load_from_file(config, filename.c_str(), G_KEY_FILE_NONE, nullptr))
 	{
 		g_key_file_free(config);
 		return;

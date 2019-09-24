@@ -24,7 +24,7 @@ MetadataEntry::MetadataEntry()
 
 
 MetadataManager::MetadataManager()
- : metadata(NULL)
+ : metadata(nullptr)
 {
 	g_mutex_init(&this->mutex);
 }
@@ -60,10 +60,10 @@ void MetadataManager::documentChanged()
 {
 	g_mutex_lock(&this->mutex);
 	MetadataEntry* m = metadata;
-	metadata = NULL;
+	metadata = nullptr;
 	g_mutex_unlock(&this->mutex);
 
-	if (m == NULL)
+	if (m == nullptr)
 	{
 		return;
 	}
@@ -86,17 +86,17 @@ vector<MetadataEntry> MetadataManager::loadList()
 
 	vector<MetadataEntry> data;
 
-	GError* error = NULL;
+	GError* error = nullptr;
 	GDir* home = g_dir_open(folder.c_str(), 0, &error);
-	if (error != NULL)
+	if (error != nullptr)
 	{
-		XojMsgBox::showErrorToUser(NULL, error->message);
+		XojMsgBox::showErrorToUser(nullptr, error->message);
 		g_error_free(error);
 		return data;
 	}
 
 	const gchar* file;
-	while ((file = g_dir_read_name(home)) != NULL)
+	while ((file = g_dir_read_name(home)) != nullptr)
 	{
 		string path = folder.str();
 		path += "/";
@@ -128,7 +128,7 @@ MetadataEntry MetadataManager::loadMetadataFile(string path, string file)
 	ifstream infile(path.c_str());
 
 	string time = file.substr(0, file.size() - 9);
-	entry.time = strtoll(time.c_str(), NULL, 10);
+	entry.time = strtoll(time.c_str(), nullptr, 10);
 
 	if (!getline(infile, line))
 	{
@@ -167,7 +167,7 @@ MetadataEntry MetadataManager::loadMetadataFile(string path, string file)
 		return entry;
 	}
 
-	entry.page = strtoll(line.substr(5).c_str(), NULL, 10);
+	entry.page = strtoll(line.substr(5).c_str(), nullptr, 10);
 
 	if (!getline(infile, line))
 	{
@@ -183,7 +183,7 @@ MetadataEntry MetadataManager::loadMetadataFile(string path, string file)
 		return entry;
 	}
 
-	entry.zoom = strtod(line.substr(5).c_str(), NULL);
+	entry.zoom = strtod(line.substr(5).c_str(), nullptr);
 
 	entry.valid = true;
 	return entry;
@@ -257,7 +257,7 @@ void MetadataManager::storeMetadata(string file, int page, double zoom)
 	}
 
 	g_mutex_lock(&this->mutex);
-	if (metadata == NULL)
+	if (metadata == nullptr)
 	{
 		metadata = new MetadataEntry();
 	}

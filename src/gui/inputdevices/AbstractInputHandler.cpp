@@ -40,7 +40,7 @@ bool AbstractInputHandler::handle(InputEvent* event)
 /**
  * Get Page at current position
  *
- * @return page or NULL if none
+ * @return page or nullptr if none
  */
 XojPageView* AbstractInputHandler::getPageAtCurrentPosition(InputEvent* event)
 {

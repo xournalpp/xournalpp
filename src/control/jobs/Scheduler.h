@@ -99,7 +99,7 @@ public:
 
 private:
 	static gpointer jobThreadCallback(Scheduler* scheduler);
-	Job* getNextJobUnlocked(bool onlyNotRender = false, bool* hasRenderJobs = NULL);
+	Job* getNextJobUnlocked(bool onlyNotRender = false, bool* hasRenderJobs = nullptr);
 
 	static bool jobRenderThreadTimer(Scheduler* scheduler);
 
@@ -108,7 +108,7 @@ protected:
 
 	int jobRenderThreadTimerId = 0;
 
-	GThread* thread = NULL;
+	GThread* thread = nullptr;
 
 	GCond jobQueueCond;
 	GMutex jobQueueMutex;
@@ -127,7 +127,7 @@ protected:
 
 	GQueue* jobQueue[JOB_N_PRIORITIES];
 
-	GTimeVal* blockRenderZoomTime = NULL;
+	GTimeVal* blockRenderZoomTime = nullptr;
 	GMutex blockRenderMutex;
 
 	string name;

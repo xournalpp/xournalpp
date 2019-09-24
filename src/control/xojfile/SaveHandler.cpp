@@ -21,22 +21,22 @@
 
 SaveHandler::SaveHandler()
 {
-	this->root = NULL;
+	this->root = nullptr;
 	this->firstPdfPageVisited = false;
 	this->attachBgId = 1;
-	this->backgroundImages = NULL;
+	this->backgroundImages = nullptr;
 }
 
 SaveHandler::~SaveHandler()
 {
 	delete this->root;
 
-	for (GList* l = this->backgroundImages; l != NULL; l = l->next)
+	for (GList* l = this->backgroundImages; l != nullptr; l = l->next)
 	{
 		delete (BackgroundImage*) l->data;
 	}
 	g_list_free(this->backgroundImages);
-	this->backgroundImages = NULL;
+	this->backgroundImages = nullptr;
 }
 
 void SaveHandler::prepareSave(Document* doc)
@@ -45,14 +45,14 @@ void SaveHandler::prepareSave(Document* doc)
 	{
 		// cleanup old data
 		delete this->root;
-		this->root = NULL;
+		this->root = nullptr;
 
-		for (GList* l = this->backgroundImages; l != NULL; l = l->next)
+		for (GList* l = this->backgroundImages; l != nullptr; l = l->next)
 		{
 			delete (BackgroundImage*) l->data;
 		}
 		g_list_free(this->backgroundImages);
-		this->backgroundImages = NULL;
+		this->backgroundImages = nullptr;
 	}
 
 	this->firstPdfPageVisited = false;
@@ -261,7 +261,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 				Path filename = Path(doc->getFilename().str() + ".bg.pdf");
 				background->setAttrib("filename", filename.str());
 
-				GError* error = NULL;
+				GError* error = nullptr;
 				doc->getPdfDocument().save(filename, &error);
 
 				if (error)
@@ -376,12 +376,12 @@ void SaveHandler::saveTo(OutputStream* out, Path filename, ProgressListener* lis
 	out->write("<?xml version=\"1.0\" standalone=\"no\"?>\n");
 	root->writeOut(out, listener);
 
-	for (GList* l = this->backgroundImages; l != NULL; l = l->next)
+	for (GList* l = this->backgroundImages; l != nullptr; l = l->next)
 	{
 		BackgroundImage* img = (BackgroundImage*) l->data;
 
 		string tmpfn = filename.str() + "." + img->getFilename();
-		if (!gdk_pixbuf_save(img->getPixbuf(), tmpfn.c_str(), "png", NULL, NULL))
+		if (!gdk_pixbuf_save(img->getPixbuf(), tmpfn.c_str(), "png", nullptr, nullptr))
 		{
 			if (!this->errorMessage.empty())
 			{

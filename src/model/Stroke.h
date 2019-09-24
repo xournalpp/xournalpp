@@ -118,7 +118,7 @@ private:
 	StrokeTool toolType = STROKE_TOOL_PEN;
 
 	// The array with the points
-	Point* points = NULL;
+	Point* points = nullptr;
 	int pointCount = 0;
 	int pointAllocCount = 0;
 
@@ -127,7 +127,7 @@ private:
 	 */
 	LineStyle lineStyle;
 
-	EraseableStroke* eraseable = NULL;
+	EraseableStroke* eraseable = nullptr;
 
 	/**
 	 * Option to fill the shape:

@@ -44,7 +44,7 @@ public:
 	string& getLastError();
 
 private:
-	gzFile fp = NULL;
+	gzFile fp = nullptr;
 
 	string error;
 

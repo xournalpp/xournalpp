@@ -16,8 +16,8 @@ AbstractInputDevice::AbstractInputDevice(GtkWidget* widget, XournalView* view)
 
 AbstractInputDevice::~AbstractInputDevice()
 {
-	widget = NULL;
-	view = NULL;
+	widget = nullptr;
+	view = nullptr;
 }
 
 

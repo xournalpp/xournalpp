@@ -163,7 +163,7 @@ gboolean  FloatingToolbox::getOverlayPosition(GtkOverlay*   overlay,
 		    allocation->height < 2)  // if recalcSize or configuration or  initiation.
 		{
 			GtkRequisition natural;
-			gtk_widget_get_preferred_size(widget,  NULL,  &natural);
+			gtk_widget_get_preferred_size(widget,  nullptr,  &natural);
 			allocation->width = natural.width;
 			allocation->height = natural.height;
 		}

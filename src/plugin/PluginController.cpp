@@ -52,9 +52,9 @@ void PluginController::loadPluginsFrom(string path)
 {
 #ifdef ENABLE_PLUGINS
 
-	GError* error = NULL;
+	GError* error = nullptr;
 	GDir* dir = g_dir_open(path.c_str(), 0, &error);
-	if (error != NULL)
+	if (error != nullptr)
 	{
 		g_warning("Could not open plugin dir: «%s»", path.c_str());
 		g_error_free(error);
@@ -66,7 +66,7 @@ void PluginController::loadPluginsFrom(string path)
 	vector<string> pluginDisabled = StringUtils::split(settings->getPluginDisabled(), ',');
 
 	const gchar* file;
-	while ((file = g_dir_read_name(dir)) != NULL)
+	while ((file = g_dir_read_name(dir)) != nullptr)
 	{
 		string pluginFolder = path;
 		pluginFolder += "/";

@@ -158,44 +158,44 @@ static void gtk_xoj_int_txt_class_init(GtkXojIntTxtClass* klass)
 	 */
 	signals[SELECT_ALL] = g_signal_new_class_handler("select-all",
 			G_OBJECT_CLASS_TYPE(widget_class), (GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-			G_CALLBACK(gtk_xoj_int_txt_select_all), NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0
+			G_CALLBACK(gtk_xoj_int_txt_select_all), nullptr, nullptr, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0
 	);
 
 	signals[MOVE_CURSOR] = g_signal_new_class_handler("move-cursor",
 			G_OBJECT_CLASS_TYPE(widget_class), (GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-			G_CALLBACK(gtk_xoj_int_txt_move_cursor), NULL, NULL, NULL, G_TYPE_NONE, 2,
+			G_CALLBACK(gtk_xoj_int_txt_move_cursor), nullptr, nullptr, nullptr, G_TYPE_NONE, 2,
 			G_TYPE_INT, G_TYPE_INT
 	);
 
 	signals[DELETE_FROM_CURSOR] = g_signal_new_class_handler("delete-from-cursor",
 			G_OBJECT_CLASS_TYPE(widget_class), (GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-			G_CALLBACK(gtk_xoj_int_txt_delete_from_cursor), NULL, NULL, NULL, G_TYPE_NONE, 2,
+			G_CALLBACK(gtk_xoj_int_txt_delete_from_cursor), nullptr, nullptr, nullptr, G_TYPE_NONE, 2,
 			G_TYPE_INT, G_TYPE_INT
 	);
 
 	signals[BACKSPACE] = g_signal_new_class_handler("backspace",
 			G_OBJECT_CLASS_TYPE(widget_class), (GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-			G_CALLBACK(gtk_xoj_int_txt_backspace), NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0
+			G_CALLBACK(gtk_xoj_int_txt_backspace), nullptr, nullptr, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0
 	);
 
 	signals[CUT_CLIPBOARD] = g_signal_new_class_handler("cut-clipboard",
 			G_OBJECT_CLASS_TYPE(widget_class), (GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-			G_CALLBACK(gtk_xoj_int_txt_cut_clipboard), NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0
+			G_CALLBACK(gtk_xoj_int_txt_cut_clipboard), nullptr, nullptr, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0
 	);
 
 	signals[COPY_CLIPBOARD] = g_signal_new_class_handler("copy-clipboard",
 			G_OBJECT_CLASS_TYPE(widget_class), (GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-			G_CALLBACK(gtk_xoj_int_txt_copy_clipboard), NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0
+			G_CALLBACK(gtk_xoj_int_txt_copy_clipboard), nullptr, nullptr, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0
 	);
 
 	signals[PASTE_CLIPBOARD] = g_signal_new_class_handler("paste-clipboard",
 			G_OBJECT_CLASS_TYPE(widget_class), (GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-			G_CALLBACK(gtk_xoj_int_txt_paste_clipboard), NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0
+			G_CALLBACK(gtk_xoj_int_txt_paste_clipboard), nullptr, nullptr, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0
 	);
 
 	signals[TOGGLE_OVERWRITE] = g_signal_new_class_handler("toggle-overwrite",
 			G_OBJECT_CLASS_TYPE(widget_class), (GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-			G_CALLBACK(gtk_xoj_int_txt_toggle_overwrite), NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0
+			G_CALLBACK(gtk_xoj_int_txt_toggle_overwrite), nullptr, nullptr, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0
 	);
 
 	////////////////////////////////////////////////////////
@@ -349,7 +349,7 @@ static void gtk_xoj_int_txt_init(GtkXojIntTxt* invisible)
 GtkWidget*
 gtk_xoj_int_txt_new(TextEditor* te)
 {
-	GtkXojIntTxt* txt = (GtkXojIntTxt*) g_object_new(GTK_TYPE_XOJ_INT_TXT, NULL);
+	GtkXojIntTxt* txt = (GtkXojIntTxt*) g_object_new(GTK_TYPE_XOJ_INT_TXT, nullptr);
 	txt->te = te;
 	return (GtkWidget*) txt;
 }
@@ -359,7 +359,7 @@ static void gtk_invisible_realize(GtkWidget* widget)
 	gtk_widget_set_realized(widget, TRUE);
 
 	GdkWindow* parent = gtk_widget_get_parent_window(widget);
-	if (parent == NULL)
+	if (parent == nullptr)
 	{
 		parent = gdk_screen_get_root_window(gdk_screen_get_default());
 	}

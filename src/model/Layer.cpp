@@ -29,9 +29,9 @@ Layer* Layer::clone()
 
 void Layer::addElement(Element* e)
 {
-	if (e == NULL)
+	if (e == nullptr)
 	{
-		g_warning("addElement(NULL)!");
+		g_warning("addElement(nullptr)!");
 		Stacktrace::printStracktrace();
 		return;
 	}
@@ -50,9 +50,9 @@ void Layer::addElement(Element* e)
 
 void Layer::insertElement(Element* e, int pos)
 {
-	if (e == NULL)
+	if (e == nullptr)
 	{
-		g_warning("insertElement(NULL)!");
+		g_warning("insertElement(nullptr)!");
 		Stacktrace::printStracktrace();
 		return;
 	}

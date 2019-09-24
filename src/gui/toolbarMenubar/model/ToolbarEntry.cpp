@@ -59,7 +59,7 @@ bool ToolbarEntry::removeItemById(int id)
 		if (this->entries[i]->getId() == id)
 		{
 			delete this->entries[i];
-			entries[i] = NULL;
+			entries[i] = nullptr;
 			entries.erase(entries.begin() + i);
 			return true;
 		}

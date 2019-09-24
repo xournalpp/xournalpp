@@ -79,8 +79,8 @@ class SelectObject : public BaseSelectObject
 public:
 	SelectObject(XojPageView* view)
  	 : BaseSelectObject(view),
-	   strokeMatch(NULL),
-	   elementMatch(NULL),
+	   strokeMatch(nullptr),
+	   elementMatch(nullptr),
 	   gap(1000000000)
 	{
 	}

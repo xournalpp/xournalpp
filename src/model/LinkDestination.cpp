@@ -11,15 +11,15 @@ G_DEFINE_TYPE(XojLinkDest, link_dest, G_TYPE_OBJECT) // @suppress("Unused static
 
 static void link_dest_init(XojLinkDest* linkAction)
 {
-	linkAction->dest = NULL;
+	linkAction->dest = nullptr;
 }
 
-static gpointer parent_class = NULL;
+static gpointer parent_class = nullptr;
 
 static void link_dest_finalize(GObject* object)
 {
 	delete LINK_DEST(object)->dest;
-	LINK_DEST(object)->dest = NULL;
+	LINK_DEST(object)->dest = nullptr;
 
 	G_OBJECT_CLASS(parent_class)->finalize(object);
 }
@@ -43,7 +43,7 @@ static void link_dest_class_init(XojLinkDestClass* linkClass)
 
 XojLinkDest* link_dest_new()
 {
-	return LINK_DEST(g_object_new(TYPE_LINK_DEST, NULL));
+	return LINK_DEST(g_object_new(TYPE_LINK_DEST, nullptr));
 }
 
 LinkDestination::LinkDestination()

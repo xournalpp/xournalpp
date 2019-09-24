@@ -41,13 +41,13 @@ public:
 private:
 	static Shadow* instance;
 
-	cairo_surface_t* edgeTopLeft = NULL;
-	cairo_surface_t* edgeTopRight = NULL;
-	cairo_surface_t* edgeBottomLeft = NULL;
-	cairo_surface_t* edgeBottomRight = NULL;
+	cairo_surface_t* edgeTopLeft = nullptr;
+	cairo_surface_t* edgeTopRight = nullptr;
+	cairo_surface_t* edgeBottomLeft = nullptr;
+	cairo_surface_t* edgeBottomRight = nullptr;
 
-	cairo_surface_t* top = NULL;
-	cairo_surface_t* right = NULL;
-	cairo_surface_t* bottom = NULL;
-	cairo_surface_t* left = NULL;
+	cairo_surface_t* top = nullptr;
+	cairo_surface_t* right = nullptr;
+	cairo_surface_t* bottom = nullptr;
+	cairo_surface_t* left = nullptr;
 };

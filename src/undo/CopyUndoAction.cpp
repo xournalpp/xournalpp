@@ -15,7 +15,7 @@ CopyUndoAction::CopyUndoAction(PageRef pageref, int pageNr)
 
 CopyUndoAction::~CopyUndoAction()
 {
-	this->page = NULL;
+	this->page = nullptr;
 }
 
 bool CopyUndoAction::undo(Control* control)

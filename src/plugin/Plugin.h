@@ -45,7 +45,7 @@ public:
 	/**
 	 * Menu item
 	 */
-	GtkWidget* widget = NULL;
+	GtkWidget* widget = nullptr;
 
 	/**
 	 * Menu display name
@@ -220,7 +220,7 @@ private:
 	/**
 	 * Lua engine
 	 */
-	lua_State* lua = NULL;
+	lua_State* lua = nullptr;
 
 	/**
 	 * All registered menu entries

@@ -13,7 +13,7 @@ XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings)
 {
 	dialog = gtk_file_chooser_dialog_new(_("Open file"), win, GTK_FILE_CHOOSER_ACTION_OPEN,
 										 _("_Cancel"), GTK_RESPONSE_CANCEL,
-										 _("_Open"), GTK_RESPONSE_OK, NULL);
+										 _("_Open"), GTK_RESPONSE_OK, nullptr);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
@@ -36,7 +36,7 @@ XojOpenDlg::~XojOpenDlg()
 	{
 		gtk_widget_destroy(dialog);
 	}
-	dialog = NULL;
+	dialog = nullptr;
 }
 
 void XojOpenDlg::addFilterAllFiles()
@@ -86,7 +86,7 @@ Path XojOpenDlg::runDialog()
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
 	{
 		gtk_widget_destroy(dialog);
-		dialog = NULL;
+		dialog = nullptr;
 		return Path("");
 	}
 
@@ -126,7 +126,7 @@ Path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 	addFilterPdf();
 	addFilterAllFiles();
 
-	GtkWidget* attachOpt = NULL;
+	GtkWidget* attachOpt = nullptr;
 	if (pdf)
 	{
 		attachOpt = gtk_check_button_new_with_label(_("Attach file to the journal"));
@@ -137,7 +137,7 @@ Path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 
 	GtkWidget* image = gtk_image_new();
 	gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), image);
-	g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback), NULL);
+	g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback), nullptr);
 
 	auto lastOpenPath = this->settings->getLastOpenPath();
 	if (!lastOpenPath.isEmpty())
@@ -180,7 +180,7 @@ void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userDa
 
 	Path filepath = filename;
 	g_free(filename);
-	filename = NULL;
+	filename = nullptr;
 
 	if (!filepath.hasXournalFileExt())
 	{
@@ -197,19 +197,19 @@ void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userDa
 		return;
 	}
 
-	GError* error = NULL;
+	GError* error = nullptr;
 	gsize dataLen = 0;
 	unsigned char* imageData = extractor.getData(dataLen);
 
-	GInputStream* in = g_memory_input_stream_new_from_data(imageData, dataLen, NULL);
-	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(in, NULL, &error);
-	if (error != NULL)
+	GInputStream* in = g_memory_input_stream_new_from_data(imageData, dataLen, nullptr);
+	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(in, nullptr, &error);
+	if (error != nullptr)
 	{
 		g_warning("Could not load preview image, error: %s\n", error->message);
 		g_error_free(error);
 	}
 
-	g_input_stream_close(in, NULL, NULL);
+	g_input_stream_close(in, nullptr, nullptr);
 
 	if (pixbuf)
 	{

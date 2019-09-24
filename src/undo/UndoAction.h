@@ -39,7 +39,7 @@ public:
 
 protected:
 	// This is only for debugging / Testing purpose
-	const char* className = NULL;
+	const char* className = nullptr;
 
 	PageRef page;
 	bool undone = false;

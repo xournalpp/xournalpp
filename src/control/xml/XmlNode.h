@@ -44,7 +44,7 @@ public:
 
 	virtual void writeOut(OutputStream* out)
 	{
-		writeOut(out, NULL);
+		writeOut(out, nullptr);
 	}
 
 	void addChild(XmlNode* node);

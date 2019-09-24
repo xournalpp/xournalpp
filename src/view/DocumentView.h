@@ -103,8 +103,8 @@ private:
 	void paintBackgroundImage();
 
 private:
-	cairo_t* cr = NULL;
-	PageRef page = NULL;
+	cairo_t* cr = nullptr;
+	PageRef page = nullptr;
 	double width = 0;
 	double height = 0;
 	bool dontRenderEditingStroke = false;

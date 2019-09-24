@@ -47,7 +47,7 @@ private:
 
 	static cairo_status_t cairoReadFunction(Image* image, unsigned char* data, unsigned int length);
 private:
-	cairo_surface_t* image = NULL;
+	cairo_surface_t* image = nullptr;
 
 	string data;
 

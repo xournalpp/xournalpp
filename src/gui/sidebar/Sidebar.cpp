@@ -80,7 +80,7 @@ void Sidebar::addPage(AbstractSidebarPage* page)
 
 Sidebar::~Sidebar()
 {
-	this->control = NULL;
+	this->control = nullptr;
 
 	for (AbstractSidebarPage* p : this->pages)
 	{
@@ -88,8 +88,8 @@ Sidebar::~Sidebar()
 	}
 	this->pages.clear();
 
-	this->sidebar = NULL;
-	this->currentPage = NULL;
+	this->sidebar = nullptr;
+	this->currentPage = nullptr;
 }
 
 /**
@@ -115,8 +115,8 @@ void Sidebar::selectPageNr(size_t page, size_t pdfPage)
 
 void Sidebar::setSelectedPage(size_t page)
 {
-	this->visiblePage = NULL;
-	this->currentPage = NULL;
+	this->visiblePage = nullptr;
+	this->currentPage = nullptr;
 
 	size_t i = 0;
 	for (AbstractSidebarPage* p : this->pages)

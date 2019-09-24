@@ -14,7 +14,7 @@
 using std::to_string;
 #include <ctime>
 
-static Document* document = NULL;
+static Document* document = nullptr;
 
 void setEmergencyDocument(Document* doc)
 {
@@ -29,7 +29,7 @@ void setEmergencyDocument(Document* doc)
 
 void emergencySave()
 {
-	if (document == NULL)
+	if (document == nullptr)
 	{
 		return;
 	}

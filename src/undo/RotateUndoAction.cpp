@@ -20,7 +20,7 @@ RotateUndoAction::RotateUndoAction(PageRef page, vector<Element*>* elements, dou
 
 RotateUndoAction::~RotateUndoAction()
 {
-	this->page = NULL;
+	this->page = nullptr;
 }
 
 bool RotateUndoAction::undo(Control* control)

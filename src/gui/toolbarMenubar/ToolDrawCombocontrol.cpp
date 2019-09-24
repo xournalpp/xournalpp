@@ -45,7 +45,7 @@ ToolDrawCombocontrol::~ToolDrawCombocontrol()
 		delete t;
 	}
 	this->drawTypes.clear();
-	this->toolMenuHandler = NULL;
+	this->toolMenuHandler = nullptr;
 }
 
 void ToolDrawCombocontrol::createMenuItem(string name, string icon, ActionType type)

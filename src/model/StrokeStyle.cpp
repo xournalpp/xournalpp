@@ -39,7 +39,7 @@ LineStyle StrokeStyle::parseStyle(const char* style)
 	const char* widths = style + 6;
 	while (*widths != 0)
 	{
-		char* tmpptr = NULL;
+		char* tmpptr = nullptr;
 		double val = g_ascii_strtod(widths, &tmpptr);
 		if (tmpptr == widths)
 		{
@@ -94,7 +94,7 @@ string StrokeStyle::formatStyle(const double* dashes, int count)
 
 string StrokeStyle::formatStyle(const LineStyle& style)
 {
-	const double* dashes = NULL;
+	const double* dashes = nullptr;
 	int dashCount = 0;
 	if (style.getDashes(dashes, dashCount))
 	{

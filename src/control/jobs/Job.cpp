@@ -50,7 +50,7 @@ void Job::execute()
 
 void* Job::getSource()
 {
-	return NULL;
+	return nullptr;
 }
 
 bool Job::callAfterCallback(Job* job)

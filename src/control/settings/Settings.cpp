@@ -30,7 +30,7 @@ Settings::~Settings()
 	for (int i = 0; i < BUTTON_COUNT; i++)
 	{
 		delete this->buttonConfig[i];
-		this->buttonConfig[i] = NULL;
+		this->buttonConfig[i] = nullptr;
 	}
 }
 
@@ -168,7 +168,7 @@ double tempg_ascii_strtod( const gchar* txt, gchar ** endptr )
 
 void Settings::parseData(xmlNodePtr cur, SElement& elem)
 {
-	for (xmlNodePtr x = cur->children; x != NULL; x = x->next)
+	for (xmlNodePtr x = cur->children; x != nullptr; x = x->next)
 	{
 		if (!xmlStrcmp(x->name, (const xmlChar*) "data"))
 		{
@@ -191,7 +191,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem)
 			}
 			else if (sType == "double")
 			{
-				double d = tempg_ascii_strtod((const char*) value, NULL);	//g_ascii_strtod ignores locale setting.
+				double d = tempg_ascii_strtod((const char*) value, nullptr);	//g_ascii_strtod ignores locale setting.
 				elem.setDouble((const char*) name, d);
 			}
 			else if (sType == "hex")
@@ -238,7 +238,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	if (!xmlStrcmp(cur->name, (const xmlChar*) "data"))
 	{
 		xmlChar* name = xmlGetProp(cur, (const xmlChar*) "name");
-		if (name == NULL)
+		if (name == nullptr)
 		{
 			g_warning("Settings::%s:No name property!\n", cur->name);
 			return;
@@ -262,7 +262,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 
 	xmlChar* name = xmlGetProp(cur, (const xmlChar*) "name");
-	if (name == NULL)
+	if (name == nullptr)
 	{
 		g_warning("Settings::%s:No name property!\n", cur->name);
 		return;
@@ -297,7 +297,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 
 	xmlChar* value = xmlGetProp(cur, (const xmlChar*) "value");
-	if (value == NULL)
+	if (value == nullptr)
 	{
 		xmlFree(name);
 		g_warning("No value property!\n");
@@ -335,23 +335,23 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "zoomStep") == 0)
 	{
-		this->zoomStep = tempg_ascii_strtod((const char*) value, NULL);
+		this->zoomStep = tempg_ascii_strtod((const char*) value, nullptr);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "zoomStepScroll") == 0)
 	{
-		this->zoomStepScroll = tempg_ascii_strtod((const char*) value, NULL);
+		this->zoomStepScroll = tempg_ascii_strtod((const char*) value, nullptr);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "displayDpi") == 0)
 	{
-		this->displayDpi = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->displayDpi = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "mainWndWidth") == 0)
 	{
-		this->mainWndWidth = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->mainWndWidth = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "mainWndHeight") == 0)
 	{
-		this->mainWndHeight = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->mainWndHeight = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "maximized") == 0)
 	{
@@ -363,7 +363,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "sidebarWidth") == 0)
 	{
-		this->sidebarWidth = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->sidebarWidth = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "sidebarOnRight") == 0)
 	{
@@ -379,11 +379,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "numColumns") == 0)
 	{
-		this->numColumns = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->numColumns = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "numRows") == 0)
 	{
-		this->numRows = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->numRows = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "viewFixedRows") == 0)
 	{
@@ -407,7 +407,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "numPairsOffset") == 0)
 	{
-		this->numPairsOffset = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->numPairsOffset = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "presentationMode") == 0)
 	{
@@ -459,7 +459,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "autosaveTimeout") == 0)
 	{
-		this->autosaveTimeout = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->autosaveTimeout = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "fullscreenHideElements") == 0)
 	{
@@ -471,19 +471,19 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "pdfPageCacheSize") == 0)
 	{
-		this->pdfPageCacheSize = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->pdfPageCacheSize = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "selectionBorderColor") == 0)
 	{
-		this->selectionBorderColor = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->selectionBorderColor = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "selectionMarkerColor") == 0)
 	{
-		this->selectionMarkerColor = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->selectionMarkerColor = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "backgroundColor") == 0)
 	{
-		this->backgroundColor = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->backgroundColor = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "addHorizontalSpace") == 0)
 	{
@@ -491,7 +491,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "addHorizontalSpaceAmount") == 0)
 	{
-		this->addHorizontalSpaceAmount = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->addHorizontalSpaceAmount = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "addVerticalSpace") == 0)
 	{
@@ -499,7 +499,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "addVerticalSpaceAmount") == 0)
 	{
-		this->addVerticalSpaceAmount = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->addVerticalSpaceAmount = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "drawDirModsEnabled") == 0)
 	{
@@ -507,7 +507,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "drawDirModsRadius") == 0)
 	{
-		this->drawDirModsRadius = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->drawDirModsRadius = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}	
 	else if (xmlStrcmp(name, (const xmlChar*) "snapRotation") == 0)
 	{
@@ -515,7 +515,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "snapRotationTolerance") == 0)
 	{
-		this->snapRotationTolerance = tempg_ascii_strtod((const char*) value, NULL);
+		this->snapRotationTolerance = tempg_ascii_strtod((const char*) value, nullptr);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "snapGrid") == 0)
 	{
@@ -527,7 +527,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "snapGridTolerance") == 0)
 	{
-		this->snapGridTolerance = tempg_ascii_strtod((const char*) value, NULL);
+		this->snapGridTolerance = tempg_ascii_strtod((const char*) value, nullptr);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "touchWorkaround") == 0)
 	{
@@ -558,19 +558,19 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioSampleRate") == 0)
 	{
-		this->audioSampleRate = tempg_ascii_strtod((const char *) value, NULL);
+		this->audioSampleRate = tempg_ascii_strtod((const char *) value, nullptr);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioGain") == 0)
 	{
-		this->audioGain = tempg_ascii_strtod((const char *) value, NULL);
+		this->audioGain = tempg_ascii_strtod((const char *) value, nullptr);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioInputDevice") == 0)
 	{
-		this->audioInputDevice = g_ascii_strtoll((const char *) value, NULL, 10);
+		this->audioInputDevice = g_ascii_strtoll((const char *) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioOutputDevice") == 0)
 	{
-		this->audioOutputDevice = g_ascii_strtoll((const char *) value, NULL, 10);
+		this->audioOutputDevice = g_ascii_strtoll((const char *) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "experimentalInputSystemEnabled") == 0)
 	{
@@ -586,15 +586,15 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterIgnoreTime") == 0)
 	{
-		this->strokeFilterIgnoreTime = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->strokeFilterIgnoreTime = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterIgnoreLength") == 0)
 	{
-		this->strokeFilterIgnoreLength = tempg_ascii_strtod((const char*) value, NULL);
+		this->strokeFilterIgnoreLength = tempg_ascii_strtod((const char*) value, nullptr);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterSuccessiveTime") == 0)
 	{
-		this->strokeFilterSuccessiveTime = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->strokeFilterSuccessiveTime = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "strokeFilterEnabled") == 0)
 	{
@@ -723,14 +723,14 @@ bool Settings::load()
 
 	xmlDocPtr doc = xmlParseFile(filename.c_str());
 
-	if (doc == NULL)
+	if (doc == nullptr)
 	{
 		g_warning("Settings::load:: doc == null, could not load Settings!\n");
 		return false;
 	}
 
 	xmlNodePtr cur = xmlDocGetRootElement(doc);
-	if (cur == NULL)
+	if (cur == nullptr)
 	{
 		g_message("The settings file \"%s\" is empty", filename.c_str());
 		xmlFreeDoc(doc);
@@ -749,7 +749,7 @@ bool Settings::load()
 	cur = xmlDocGetRootElement(doc);
 	cur = cur->xmlChildrenNode;
 
-	while (cur != NULL)
+	while (cur != nullptr)
 	{
 		parseItem(doc, cur);
 
@@ -783,7 +783,7 @@ xmlNodePtr Settings::saveProperty(const gchar* key, int value, xmlNodePtr parent
 
 xmlNodePtr Settings::saveProperty(const gchar* key, const gchar* value, xmlNodePtr parent)
 {
-	xmlNodePtr xmlNode = xmlNewChild(parent, NULL, (const xmlChar*) "property", NULL);
+	xmlNodePtr xmlNode = xmlNewChild(parent, nullptr, (const xmlChar*) "property", nullptr);
 
 	xmlSetProp(xmlNode, (const xmlChar*) "name", (const xmlChar*) key);
 
@@ -874,7 +874,7 @@ void Settings::save()
 	xmlIndentTreeOutput = TRUE;
 
 	doc = xmlNewDoc((const xmlChar*) "1.0");
-	if (doc == NULL)
+	if (doc == nullptr)
 	{
 		return;
 	}
@@ -883,7 +883,7 @@ void Settings::save()
 	saveDeviceClasses();
 
 	/* Create metadata root */
-	root = xmlNewDocNode(doc, NULL, (const xmlChar*) "settings", NULL);
+	root = xmlNewDocNode(doc, nullptr, (const xmlChar*) "settings", nullptr);
 	xmlDocSetRootElement(doc, root);
 	xmlNodePtr com = xmlNewComment((const xmlChar*)
 								   "The Xournal++ settings file. Do not edit this file! "
@@ -1013,7 +1013,7 @@ void Settings::save()
 	WRITE_BOOL_PROP(inputSystemDrawOutsideWindow);
 
 	xmlNodePtr xmlFont;
-	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
+	xmlFont = xmlNewChild(root, nullptr, (const xmlChar*) "property", nullptr);
 	xmlSetProp(xmlFont, (const xmlChar*) "name", (const xmlChar*) "font");
 	xmlSetProp(xmlFont, (const xmlChar*) "font", (const xmlChar*) this->font.getName().c_str());
 
@@ -1034,7 +1034,7 @@ void Settings::save()
 
 void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 {
-	xmlNodePtr xmlNode = xmlNewChild(root, NULL, (const xmlChar*) "data", NULL);
+	xmlNodePtr xmlNode = xmlNewChild(root, nullptr, (const xmlChar*) "data", nullptr);
 
 	xmlSetProp(xmlNode, (const xmlChar*) "name", (const xmlChar*) name.c_str());
 
@@ -1094,7 +1094,7 @@ void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 		}
 
 		xmlNodePtr at;
-		at = xmlNewChild(xmlNode, NULL, (const xmlChar*) "attribute", NULL);
+		at = xmlNewChild(xmlNode, nullptr, (const xmlChar*) "attribute", nullptr);
 
 		xmlSetProp(at, (const xmlChar*) "name", (const xmlChar*) aname.c_str());
 		xmlSetProp(at, (const xmlChar*) "type", (const xmlChar*) type.c_str());
@@ -1874,7 +1874,7 @@ ButtonConfig* Settings::getButtonConfig(int id)
 	if (id < 0 || id >= BUTTON_COUNT)
 	{
 		g_error("Settings::getButtonConfig try to get id=%i out of range!", id);
-		return NULL;
+		return nullptr;
 	}
 	return this->buttonConfig[id];
 }
@@ -2340,7 +2340,7 @@ SElement::SElement(const SElement& elem)
 SElement::~SElement()
 {
 	this->element->unref();
-	this->element = NULL;
+	this->element = nullptr;
 }
 
 void SElement::operator=(const SElement& elem)

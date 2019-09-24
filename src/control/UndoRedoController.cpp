@@ -11,15 +11,15 @@ UndoRedoController::UndoRedoController(Control* control)
 
 UndoRedoController::~UndoRedoController()
 {
-	this->control = NULL;
-	this->layer = NULL;
+	this->control = nullptr;
+	this->layer = nullptr;
 	elements.clear();
 }
 
 void UndoRedoController::before()
 {
 	EditSelection* selection = control->getWindow()->getXournal()->getSelection();
-	if (selection != NULL)
+	if (selection != nullptr)
 	{
 		layer = selection->getSourceLayer();
 		for (Element* e: *selection->getElements())
@@ -37,7 +37,7 @@ void UndoRedoController::after()
 
 	// Restore selection, if any
 
-	if (layer == NULL)
+	if (layer == nullptr)
 	{
 		// No layer - no selection
 		return;

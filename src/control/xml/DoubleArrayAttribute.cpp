@@ -10,7 +10,7 @@ DoubleArrayAttribute::DoubleArrayAttribute(const char* name, double* values, int
 DoubleArrayAttribute::~DoubleArrayAttribute()
 {
 	delete values;
-	values = NULL;
+	values = nullptr;
 }
 
 void DoubleArrayAttribute::writeOut(OutputStream* out)

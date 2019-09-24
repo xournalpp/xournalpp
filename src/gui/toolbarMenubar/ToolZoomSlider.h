@@ -60,8 +60,8 @@ private:
 	bool sliderChangingBySliderHoverScroll = false;
 	gint64 sliderHoverScrollLastTime = 0;
 
-	GtkWidget* slider = NULL;
-	ZoomControl* zoom = NULL;
+	GtkWidget* slider = nullptr;
+	ZoomControl* zoom = nullptr;
 	bool horizontal = true;
 };
 

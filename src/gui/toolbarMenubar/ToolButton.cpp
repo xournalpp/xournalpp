@@ -33,12 +33,12 @@ ToolButton::~ToolButton()
  */
 GtkWidget* ToolButton::registerPopupMenuEntry(string name, string iconName)
 {
-	if (this->popupMenu == NULL)
+	if (this->popupMenu == nullptr)
 	{
 		setPopupMenu(gtk_menu_new());
 	}
 
-	GtkWidget* menuItem = NULL;
+	GtkWidget* menuItem = nullptr;
 	if (iconName == "")
 	{
 		menuItem = gtk_check_menu_item_new_with_label(name.c_str());

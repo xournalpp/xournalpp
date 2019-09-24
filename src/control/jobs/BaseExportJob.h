@@ -42,7 +42,7 @@ protected:
 
 private:
 	protected:
-	GtkWidget* dialog = NULL;
+	GtkWidget* dialog = nullptr;
 
 	Path filename;
 

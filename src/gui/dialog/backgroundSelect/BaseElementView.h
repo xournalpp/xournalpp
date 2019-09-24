@@ -85,6 +85,6 @@ private:
 
 	bool selected = false;
 
-	GtkWidget* widget = NULL;
-	cairo_surface_t* crBuffer = NULL;
+	GtkWidget* widget = nullptr;
+	cairo_surface_t* crBuffer = nullptr;
 };

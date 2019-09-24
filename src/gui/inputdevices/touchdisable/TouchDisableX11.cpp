@@ -13,17 +13,17 @@ TouchDisableX11::~TouchDisableX11()
 	if (touchdev)
 	{
 		XCloseDevice(display, touchdev);
-		touchdev = NULL;
+		touchdev = nullptr;
 	}
 
-	display = NULL;
+	display = nullptr;
 }
 
 void TouchDisableX11::init()
 {
 	// Get display from GTK
 	display = gdk_x11_display_get_xdisplay(gdk_display_get_default());
-	if (display == NULL)
+	if (display == nullptr)
 	{
 		g_error("Could not open X11 display");
 		return;
@@ -52,7 +52,7 @@ void TouchDisableX11::init()
 		}
 	}
 
-	if (touch == NULL)
+	if (touch == nullptr)
 	{
 		g_warning("Could not find touchscreen device for disabling");
 		return;

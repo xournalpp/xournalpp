@@ -31,8 +31,8 @@ public:
 
 public:
 	void prepareSave(Document* doc);
-	void saveTo(Path filename, ProgressListener* listener = NULL);
-	void saveTo(OutputStream* out, Path filename, ProgressListener* listener = NULL);
+	void saveTo(Path filename, ProgressListener* listener = nullptr);
+	void saveTo(OutputStream* out, Path filename, ProgressListener* listener = nullptr);
 	string getErrorMessage();
 
 protected:

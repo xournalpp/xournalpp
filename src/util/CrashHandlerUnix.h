@@ -79,7 +79,7 @@ static void crashHandler(int sig)
 		g_warning("[Crash Handler] Wrote crash log to: %s", filename.c_str());
 	}
 
-	lt = time(NULL);
+	lt = time(nullptr);
 
 	fp << FORMAT_STR("Date: {1}") % ctime(&lt);
 	fp << FORMAT_STR("Error: signal {1}") % sig;

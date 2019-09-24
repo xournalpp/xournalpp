@@ -31,7 +31,7 @@
 EditSelectionContents::EditSelectionContents(double x, double y, double width, double height, PageRef sourcePage,
                                              Layer* sourceLayer, XojPageView* sourceView)
 {
-	this->crBuffer = NULL;
+	this->crBuffer = nullptr;
 
 	this->rescaleId = 0;
 
@@ -79,7 +79,7 @@ vector<Element*>* EditSelectionContents::getElements()
 
 /**
  * Sets the tool size for pen or eraser, returs an undo action
- * (or NULL if nothing is done)
+ * (or nullptr if nothing is done)
  */
 UndoAction* EditSelectionContents::setSize(ToolSize size,
                                            const double* thicknessPen,
@@ -137,13 +137,13 @@ UndoAction* EditSelectionContents::setSize(ToolSize size,
 	else
 	{
 		delete undo;
-		return NULL;
+		return nullptr;
 	}
 }
 
 /**
  * Fills the stroke, return an undo action
- * (Or NULL if nothing done, e.g. because there is only an image)
+ * (Or nullptr if nothing done, e.g. because there is only an image)
  */
 UndoAction* EditSelectionContents::setFill(int alphaPen, int alphaHighligther)
 {
@@ -195,13 +195,13 @@ UndoAction* EditSelectionContents::setFill(int alphaPen, int alphaHighligther)
 	else
 	{
 		delete undo;
-		return NULL;
+		return nullptr;
 	}
 }
 
 /**
  * Sets the font of all containing text elements, return an undo action
- * (or NULL if there are no Text elements)
+ * (or nullptr if there are no Text elements)
  */
 UndoAction* EditSelectionContents::setFont(XojFont& font)
 {
@@ -254,12 +254,12 @@ UndoAction* EditSelectionContents::setFont(XojFont& font)
 		return undo;
 	}
 	delete undo;
-	return NULL;
+	return nullptr;
 }
 
 /**
  * Set the color of all elements, return an undo action
- * (Or NULL if nothing done, e.g. because there is only an image)
+ * (Or nullptr if nothing done, e.g. because there is only an image)
  */
 UndoAction* EditSelectionContents::setColor(int color)
 {
@@ -289,10 +289,10 @@ UndoAction* EditSelectionContents::setColor(int color)
 	else
 	{
 		delete undo;
-		return NULL;
+		return nullptr;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -338,7 +338,7 @@ void EditSelectionContents::deleteViewBuffer()
 	if (this->crBuffer)
 	{
 		cairo_surface_destroy(this->crBuffer);
-		this->crBuffer = NULL;
+		this->crBuffer = nullptr;
 	}
 }
 
@@ -510,7 +510,7 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
 		this->rotation = rotation;
 	}
 
-	if (this->crBuffer == NULL)
+	if (this->crBuffer == nullptr)
 	{
 		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width * zoom, height * zoom);
 		cairo_t* cr2 = cairo_create(this->crBuffer);

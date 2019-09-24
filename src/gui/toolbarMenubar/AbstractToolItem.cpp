@@ -7,17 +7,17 @@ AbstractToolItem::AbstractToolItem(string id, ActionHandler* handler, ActionType
 
 AbstractToolItem::~AbstractToolItem()
 {
-	this->item = NULL;
+	this->item = nullptr;
 	if (this->popupMenu)
 	{
 		g_object_unref(G_OBJECT(this->popupMenu));
-		this->popupMenu = NULL;
+		this->popupMenu = nullptr;
 	}
 }
 
 void AbstractToolItem::selected(ActionGroup group, ActionType action)
 {
-	if (this->item == NULL)
+	if (this->item == nullptr)
 	{
 		return;
 	}
@@ -57,7 +57,7 @@ void AbstractToolItem::toolButtonCallback(GtkToolButton* toolbutton, AbstractToo
 		item->toolToggleButtonActive = selected;
 	}
 
-	item->activated(NULL, NULL, toolbutton);
+	item->activated(nullptr, nullptr, toolbutton);
 }
 
 GtkToolItem* AbstractToolItem::createItem(bool horizontal)

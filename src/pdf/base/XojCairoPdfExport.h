@@ -38,11 +38,11 @@ private:
 	void exportPage(size_t page);
 
 private:
-	Document* doc = NULL;
-	ProgressListener* progressListener = NULL;
+	Document* doc = nullptr;
+	ProgressListener* progressListener = nullptr;
 
-	cairo_surface_t* surface = NULL;
-	cairo_t* cr = NULL;
+	cairo_surface_t* surface = nullptr;
+	cairo_t* cr = nullptr;
 
 	bool noBackgroundExport = false;
 

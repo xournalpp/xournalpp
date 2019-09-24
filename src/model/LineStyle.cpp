@@ -16,13 +16,13 @@ LineStyle::LineStyle(const LineStyle& other)
 LineStyle::~LineStyle()
 {
 	g_free(this->dashes);
-	this->dashes = NULL;
+	this->dashes = nullptr;
 	this->dashCount = 0;
 }
 
 void LineStyle::operator=(const LineStyle& other)
 {
-	const double* dashes = NULL;
+	const double* dashes = nullptr;
 	int dashCount = 0;
 
 	other.getDashes(dashes, dashCount);
@@ -44,7 +44,7 @@ void LineStyle::readSerialized(ObjectInputStream& in)
 	in.readObject("LineStyle");
 
 	g_free(this->dashes);
-	this->dashes = NULL;
+	this->dashes = nullptr;
 	this->dashCount = 0;
 	in.readData((void**) &this->dashes, &this->dashCount);
 
@@ -73,10 +73,10 @@ bool LineStyle::getDashes(const double*& dashes, int& dashCount) const
 void LineStyle::setDashes(const double* dashes, int dashCount)
 {
 	g_free(this->dashes);
-	if (dashCount == 0 || dashes == NULL)
+	if (dashCount == 0 || dashes == nullptr)
 	{
 		this->dashCount = 0;
-		this->dashes = NULL;
+		this->dashes = nullptr;
 		return;
 	}
 

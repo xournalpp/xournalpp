@@ -35,8 +35,8 @@ TextBoxUndoAction::~TextBoxUndoAction()
 		//if it hasn't been undone we clear out the old element,
 		//since that won't be used in the future and isn't drawn.
 	}
-	this->element = NULL;
-	this->oldelement = NULL;
+	this->element = nullptr;
+	this->oldelement = nullptr;
 }
 
 string TextBoxUndoAction::getText()

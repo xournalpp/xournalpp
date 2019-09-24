@@ -26,7 +26,7 @@ void ToolbarDragDropHandler::prepareToolbarsForDragAndDrop()
 	GtkWidget** widgets = win->getToolbarWidgets(len);
 
 	this->toolbars = new ToolbarAdapter*[len + 1];
-	this->toolbars[len] = NULL;
+	this->toolbars[len] = nullptr;
 
 	for (int i = 0; i < len; i++)
 	{
@@ -38,7 +38,7 @@ void ToolbarDragDropHandler::prepareToolbarsForDragAndDrop()
 
 void ToolbarDragDropHandler::clearToolbarsFromDragAndDrop()
 {
-	if (this->toolbars == NULL)
+	if (this->toolbars == nullptr)
 	{
 		return;
 	}
@@ -49,13 +49,13 @@ void ToolbarDragDropHandler::clearToolbarsFromDragAndDrop()
 	}
 	delete[] this->toolbars;
 
-	this->toolbars = NULL;
+	this->toolbars = nullptr;
 }
 
 void ToolbarDragDropHandler::toolbarConfigDialogClosed()
 {
 	delete this->customizeDialog;
-	this->customizeDialog = NULL;
+	this->customizeDialog = nullptr;
 
 	MainWindow* win = control->getWindow();
 
@@ -84,7 +84,7 @@ void ToolbarDragDropHandler::configure()
 
 bool ToolbarDragDropHandler::isInDragAndDrop()
 {
-	if (this->toolbars == NULL)
+	if (this->toolbars == nullptr)
 	{
 		return false;
 	}

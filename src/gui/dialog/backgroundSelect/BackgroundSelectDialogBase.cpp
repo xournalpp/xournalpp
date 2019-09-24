@@ -10,13 +10,13 @@ BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSea
    settings(settings),
    doc(doc)
 {
-	this->layoutContainer = gtk_layout_new(NULL, NULL);
+	this->layoutContainer = gtk_layout_new(nullptr, nullptr);
 	gtk_widget_show(this->layoutContainer);
 	this->scrollPreview = get("scrollContents");
 	gtk_container_add(GTK_CONTAINER(scrollPreview), layoutContainer);
 
 	gtk_widget_set_events(this->layoutContainer, GDK_EXPOSURE_MASK);
-	g_signal_connect(this->layoutContainer, "draw", G_CALLBACK(Util::paintBackgroundWhite), NULL);
+	g_signal_connect(this->layoutContainer, "draw", G_CALLBACK(Util::paintBackgroundWhite), nullptr);
 
 	g_signal_connect(this->window, "size-allocate", G_CALLBACK(sizeAllocate), this);
 	gtk_window_set_default_size(GTK_WINDOW(this->window), 800, 600);

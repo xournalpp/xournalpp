@@ -27,7 +27,7 @@ MainBackgroundPainter::~MainBackgroundPainter()
 	painter.clear();
 
 	delete defaultPainter;
-	defaultPainter = NULL;
+	defaultPainter = nullptr;
 }
 
 /**

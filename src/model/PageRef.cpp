@@ -30,7 +30,7 @@ PageRef::~PageRef()
 	if (this->page)
 	{
 		this->page->unreference();
-		this->page = NULL;
+		this->page = nullptr;
 	}
 }
 
@@ -74,9 +74,9 @@ const XojPage* PageRef::operator->() const
 
 PageRef PageRef::clone()
 {
-	if (this->page == NULL)
+	if (this->page == nullptr)
 	{
-		return PageRef(NULL);
+		return PageRef(nullptr);
 	}
 	else
 	{
@@ -86,7 +86,7 @@ PageRef PageRef::clone()
 
 bool PageRef::isValid()
 {
-	return this->page != NULL;
+	return this->page != nullptr;
 }
 
 PageRef::operator XojPage* ()

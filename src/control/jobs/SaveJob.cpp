@@ -91,7 +91,7 @@ void SaveJob::updatePreview(Control* control)
 	}
 	else
 	{
-		doc->setPreview(NULL);
+		doc->setPreview(nullptr);
 	}
 
 	doc->unlock();

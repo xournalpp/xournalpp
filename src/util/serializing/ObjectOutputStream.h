@@ -40,5 +40,5 @@ public:
 	GString* getStr();
 
 private:
-	ObjectEncoding* encoder = NULL;
+	ObjectEncoding* encoder = nullptr;
 };

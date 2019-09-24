@@ -50,8 +50,8 @@ void BaseBackgroundPainter::paint(cairo_t* cr, PageRef page, BackgroundConfig* c
 
 	paint();
 
-	this->cr = NULL;
-	this->config = NULL;
+	this->cr = nullptr;
+	this->config = nullptr;
 }
 
 void BaseBackgroundPainter::paint()

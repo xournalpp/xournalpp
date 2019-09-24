@@ -14,7 +14,7 @@ Tool::Tool(string name, ToolType type, int color, int capabilities, double* thic
 Tool::~Tool()
 {
 	delete[] this->thickness;
-	this->thickness = NULL;
+	this->thickness = nullptr;
 }
 
 string Tool::getName()

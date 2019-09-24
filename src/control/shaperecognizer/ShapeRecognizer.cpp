@@ -13,7 +13,7 @@
 ShapeRecognizer::ShapeRecognizer()
 {
 	resetRecognizer();
-	this->stroke = NULL;
+	this->stroke = nullptr;
 	this->queueLength = 0;
 }
 
@@ -28,7 +28,7 @@ void ShapeRecognizer::resetRecognizer()
 
 	for (int i = 0; i < MAX_POLYGON_SIDES + 1; i++)
 	{
-		this->queue[i].stroke = NULL;
+		this->queue[i].stroke = nullptr;
 	}
 
 	this->queueLength = 0;
@@ -42,13 +42,13 @@ Stroke* ShapeRecognizer::tryRectangle()
 	// first, we need whole strokes to combine to 4 segments...
 	if (this->queueLength < 4)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	RecoSegment* rs = &this->queue[this->queueLength - 4];
 	if (rs->startpt != 0)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	// check edges make angles ~= Pi/2 and vertices roughly match
@@ -82,7 +82,7 @@ Stroke* ShapeRecognizer::tryRectangle()
 							(r1->reversed ? r1->y1 : r1->y2) - (r2->reversed ? r2->y2 : r2->y1));
 		if (dist > RECTANGLE_LINEAR_TOLERANCE * (r1->radius + r2->radius))
 		{
-			return NULL;
+			return nullptr;
 		}
 	}
 
@@ -124,13 +124,13 @@ Stroke* ShapeRecognizer::tryArrow()
 	// first, we need whole strokes to combine to nsides segments...
 	if (queueLength < 3)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	RecoSegment* rs = &this->queue[queueLength - 3];
 	if (rs->startpt != 0)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	// check arrow head not too big, and orient main segment
@@ -138,7 +138,7 @@ Stroke* ShapeRecognizer::tryArrow()
 	{
 		if (rs[i].radius > ARROW_MAXSIZE * rs[0].radius)
 		{
-			return NULL;
+			return nullptr;
 		}
 
 		rev[i] = hypot(rs[i].xcenter - rs->x1, rs[i].ycenter - rs->y1) < hypot(rs[i].xcenter - rs->x2, rs[i].ycenter - rs->y2);
@@ -146,7 +146,7 @@ Stroke* ShapeRecognizer::tryArrow()
 
 	if (rev[1] != rev[2])
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	double x1;
@@ -191,24 +191,24 @@ Stroke* ShapeRecognizer::tryArrow()
 		RDEBUG("arrow: alpha[%d] = %.1f degrees", i, (alpha[i] * 180 / M_PI));
 		if (fabs(alpha[i]) < ARROW_ANGLE_MIN || fabs(alpha[i]) > ARROW_ANGLE_MAX)
 		{
-			return NULL;
+			return nullptr;
 		}
 	}
 
 	// check arrow head segments are roughly symmetric
 	if (alpha[1] * alpha[2] > 0 || fabs(alpha[1] + alpha[2]) > ARROW_ASYMMETRY_MAX_ANGLE)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	if (rs[1].radius / rs[2].radius > 1 + ARROW_ASYMMETRY_MAX_LINEAR)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	if (rs[2].radius / rs[1].radius > 1 + ARROW_ASYMMETRY_MAX_LINEAR)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	// check vertices roughly match
@@ -220,7 +220,7 @@ Stroke* ShapeRecognizer::tryArrow()
 		RDEBUG("linear tolerance: tip[%d] = %.2f", j, (dist / rs[j].radius));
 		if (dist > ARROW_TIP_LINEAR_TOLERANCE * rs[j].radius)
 		{
-			return NULL;
+			return nullptr;
 		}
 	}
 
@@ -231,7 +231,7 @@ Stroke* ShapeRecognizer::tryArrow()
 
 	if (fabs(dist) > ARROW_SIDEWAYS_GAP_TOLERANCE)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	dist = (pt.x - x2) * cos(angle) + (pt.y - y2) * sin(angle);
@@ -241,7 +241,7 @@ Stroke* ShapeRecognizer::tryArrow()
 
 	if (dist < ARROW_MAIN_LINEAR_GAP_MIN || dist > ARROW_MAIN_LINEAR_GAP_MAX)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	// make an arrow of the correct size and slope
@@ -460,22 +460,22 @@ void ShapeRecognizer::optimizePolygonal(const Point* pt, int nsides, int* breaks
 Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 {
 	//to eliminate bug #52, remove this until it's perfected
-	return NULL;
+	return nullptr;
 
 /*
-	RecoSegment* r1 = NULL;
-	RecoSegment* r2 = NULL;
+	RecoSegment* r1 = nullptr;
+	RecoSegment* r2 = nullptr;
 
 	// first, we need whole strokes to combine to nsides segments...
 	if (this->queueLength < nsides)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	RecoSegment* rs = &this->queue[this->queueLength - nsides];
 	if (rs->startpt != 0)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	// check vertices roughly match
@@ -499,7 +499,7 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 							(r2->reversed ? r2->y2 : r2->y1) - pt.y);
 		if (dist > POLYGON_LINEAR_TOLERANCE * (r1->radius + r2->radius))
 		{
-			return NULL;
+			return nullptr;
 		}
 	}
 
@@ -527,7 +527,7 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 
 	if (stroke->getPointCount() < 3)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	Inertia ss[4];
@@ -572,9 +572,9 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			rs[i].calcSegmentGeometry(stroke->getPoints(), brk[i], brk[i + 1], ss + i);
 		}
 
-		Stroke* tmp = NULL;
+		Stroke* tmp = nullptr;
 
-		if ((tmp = tryRectangle()) != NULL)
+		if ((tmp = tryRectangle()) != nullptr)
 		{
 			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
 			resetRecognizer();
@@ -582,7 +582,7 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			return result;
 		}
 
-//		if ((tmp = tryArrow()) != NULL)
+//		if ((tmp = tryArrow()) != nullptr)
 //		{
 //			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
 //			resetRecognizer();
@@ -590,7 +590,7 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 //			return result;
 //		}
 //
-//		if ((tmp = tryClosedPolygon(3)) != NULL)
+//		if ((tmp = tryClosedPolygon(3)) != nullptr)
 //		{
 //			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
 //			RDEBUG("return tryClosedPolygon(3)");
@@ -598,7 +598,7 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 //			return result;
 //		}
 //
-//		if ((tmp = tryClosedPolygon(4)) != NULL)
+//		if ((tmp = tryClosedPolygon(4)) != nullptr)
 //		{
 //			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
 //			RDEBUG("return tryClosedPolygon(4)");
@@ -642,5 +642,5 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 		return new ShapeRecognizerResult(s);
 	}
 
-	return NULL;
+	return nullptr;
 }
