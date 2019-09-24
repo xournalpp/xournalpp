@@ -34,7 +34,7 @@ public:
 	void unregisterListener();
 
 private:
-	ActionHandler* handler = NULL;
+	ActionHandler* handler = nullptr;
 };
 
 class ActionSelectionListener

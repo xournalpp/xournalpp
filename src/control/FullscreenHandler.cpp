@@ -41,7 +41,7 @@ void FullscreenHandler::hideWidget(MainWindow* win, string widgetName)
 		GtkWidget* mainMenubar = win->get("mainMenubar");
 		GtkWidget* mainBox = win->get("mainBox");
 
-		if (mainMenubar == NULL || !gtk_widget_is_visible(mainMenubar))
+		if (mainMenubar == nullptr || !gtk_widget_is_visible(mainMenubar))
 		{
 			// Menu not visible (global menu or something like this)
 			return;
@@ -67,7 +67,7 @@ void FullscreenHandler::hideWidget(MainWindow* win, string widgetName)
 	return;
 
 	GtkWidget* w = win->get(widgetName);
-	if (w == NULL)
+	if (w == nullptr)
 	{
 		g_warning("Fullscreen: Try to hide \"%s\", but coulden't find it. Wrong entry in ~/"
 				  CONFIG_DIR "/" SETTINGS_XML_FILE "?", widgetName.c_str());
@@ -197,23 +197,23 @@ GType gtk_invisible_get_type()
 		{
 			sizeof(GtkInvisibleMenuClass),
 			// base initialize
-			NULL,
+			nullptr,
 			// base finalize
-			NULL,
+			nullptr,
 			// class initialize
 			(GClassInitFunc) gtk_invisible_menu_class_init,
 			// class finalize
-			NULL,
+			nullptr,
 			// class data,
-			NULL,
+			nullptr,
 			// instance size
 			sizeof(GtkInvisibleMenu),
 			// n_preallocs
 			0,
 			// instance init
-			NULL,
+			nullptr,
 			// value table
-			(const GTypeValueTable*) NULL
+			(const GTypeValueTable*) nullptr
 		};
 
 		gtk_invisible_menu_type = g_type_register_static(GTK_TYPE_FIXED,
@@ -227,5 +227,5 @@ GType gtk_invisible_get_type()
 
 GtkWidget* gtk_invisible_new()
 {
-	return GTK_WIDGET(g_object_new(gtk_invisible_get_type(), NULL));
+	return GTK_WIDGET(g_object_new(gtk_invisible_get_type(), nullptr));
 }

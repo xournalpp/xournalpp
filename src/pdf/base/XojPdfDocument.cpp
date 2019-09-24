@@ -17,7 +17,7 @@ XojPdfDocument::XojPdfDocument(const XojPdfDocument& doc)
 XojPdfDocument::~XojPdfDocument()
 {
 	delete doc;
-	doc = NULL;
+	doc = nullptr;
 }
 
 XojPdfDocument& XojPdfDocument::operator=(const XojPdfDocument& doc)

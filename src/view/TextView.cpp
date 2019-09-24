@@ -29,7 +29,7 @@ PangoLayout* TextView::initPango(cairo_t* cr, Text* t)
 	pango_cairo_context_set_resolution(pango_layout_get_context(layout), textDpi);
 	pango_cairo_update_layout(cr, layout);
 
-	pango_context_set_matrix(pango_layout_get_context(layout), NULL);
+	pango_context_set_matrix(pango_layout_get_context(layout), nullptr);
 	updatePangoFont(layout, t);
 	return layout;
 }

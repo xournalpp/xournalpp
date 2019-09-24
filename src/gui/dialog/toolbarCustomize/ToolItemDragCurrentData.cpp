@@ -2,12 +2,12 @@
 
 #include <Stacktrace.h>
 
-ToolItemDragDropData* ToolItemDragCurrentData::data = NULL;
+ToolItemDragDropData* ToolItemDragCurrentData::data = nullptr;
 
 void ToolItemDragCurrentData::clearData()
 {
 	g_free(data);
-	data = NULL;
+	data = nullptr;
 }
 
 void ToolItemDragCurrentData::setData(GtkWidget* widget)
@@ -15,7 +15,7 @@ void ToolItemDragCurrentData::setData(GtkWidget* widget)
 	data = g_new(ToolItemDragDropData, 1);
 
 	ToolItemDragDropData* d = ToolitemDragDrop::metadataGetMetadata(widget);
-	if (d == NULL)
+	if (d == nullptr)
 	{
 		g_warning("ToolItemDragCurrentData::setData(GtkWidget * widget) could not get data!");
 		Stacktrace::printStracktrace();
@@ -27,7 +27,7 @@ void ToolItemDragCurrentData::setData(GtkWidget* widget)
 
 void ToolItemDragCurrentData::setData(ToolItemType type, int id, AbstractToolItem* item)
 {
-	g_return_if_fail(item != NULL || type != TOOL_ITEM_ITEM);
+	g_return_if_fail(item != nullptr || type != TOOL_ITEM_ITEM);
 
 	data = ToolitemDragDrop::ToolItemDragDropData_new(item);
 	data->type = type;
@@ -36,7 +36,7 @@ void ToolItemDragCurrentData::setData(ToolItemType type, int id, AbstractToolIte
 
 void ToolItemDragCurrentData::setDataColor(int id, int color)
 {
-	data = ToolitemDragDrop::ToolItemDragDropData_new(NULL);
+	data = ToolitemDragDrop::ToolItemDragDropData_new(nullptr);
 	data->type = TOOL_ITEM_COLOR;
 	data->id = id;
 	data->color = color;

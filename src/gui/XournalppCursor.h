@@ -50,7 +50,7 @@ private:
 private:
 	InputDeviceClass inputDevice = INPUT_DEVICE_MOUSE;
 
-	Control* control = NULL;
+	Control* control = nullptr;
 	bool busy = false;
 	bool insidePage = false;
 	CursorSelectionType selectionType = CURSOR_SELECTION_NONE;

@@ -14,7 +14,7 @@ SpinPageAdapter::SpinPageAdapter()
 SpinPageAdapter::~SpinPageAdapter()
 {
 	g_object_unref(this->widget);
-	this->widget = NULL;
+	this->widget = nullptr;
 }
 
 bool SpinPageAdapter::pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter)

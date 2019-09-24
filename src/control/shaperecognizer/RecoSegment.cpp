@@ -7,7 +7,7 @@
 
 RecoSegment::RecoSegment()
 {
-	this->stroke = NULL;
+	this->stroke = nullptr;
 	this->angle = 0;
 	this->endpt = 0;
 

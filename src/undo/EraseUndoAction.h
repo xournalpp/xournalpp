@@ -37,6 +37,6 @@ public:
 	virtual string getText();
 	
 private:
-	GList* edited = NULL;
-	GList* original = NULL;
+	GList* edited = nullptr;
+	GList* original = nullptr;
 };

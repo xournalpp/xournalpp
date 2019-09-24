@@ -32,7 +32,7 @@ ColorToolItem::~ColorToolItem()
 void ColorToolItem::freeIcons()
 {
 	delete this->icon;
-	this->icon = NULL;
+	this->icon = nullptr;
 }
 
 bool ColorToolItem::isSelector()

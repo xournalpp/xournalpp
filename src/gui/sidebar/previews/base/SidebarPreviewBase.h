@@ -83,7 +83,7 @@ private:
 	/**
 	 * The scrollbar with the icons
 	 */
-	GtkWidget* scrollPreview = NULL;
+	GtkWidget* scrollPreview = nullptr;
 
 	/**
 	 * The Zoom of the previews
@@ -93,12 +93,12 @@ private:
 	/**
 	 * For preview rendering
 	 */
-	PdfCache* cache = NULL;
+	PdfCache* cache = nullptr;
 
 	/**
 	 * The layouting class for the prviews
 	 */
-	SidebarLayout* layoutmanager = NULL;
+	SidebarLayout* layoutmanager = nullptr;
 
 
 	// Members also used by subclasses
@@ -113,7 +113,7 @@ protected:
 	/**
 	 * The widget within the scrollarea with the page icons
 	 */
-	GtkWidget* iconViewPreview = NULL;
+	GtkWidget* iconViewPreview = nullptr;
 
 	/**
 	 * The previews

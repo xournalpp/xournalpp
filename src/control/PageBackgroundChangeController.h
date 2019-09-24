@@ -77,7 +77,7 @@ private:
 	bool applyImageBackground(PageRef page);
 
 private:
-	Control* control = NULL;
-	PageTypeMenu* currentPageType = NULL;
+	Control* control = nullptr;
+	PageTypeMenu* currentPageType = nullptr;
 	bool ignoreEvent = false;
 };

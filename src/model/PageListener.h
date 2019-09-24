@@ -34,5 +34,5 @@ public:
 	virtual void pageChanged() { }
 
 private:
-	PageHandler* handler = NULL;
+	PageHandler* handler = nullptr;
 };

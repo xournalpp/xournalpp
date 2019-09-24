@@ -96,7 +96,7 @@ private:
 	/**
 	 * Buffer because of performance reasons
 	 */
-	cairo_surface_t* crBuffer = NULL;
+	cairo_surface_t* crBuffer = nullptr;
 
 	friend class PreviewJob;
 };

@@ -45,9 +45,9 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
 PageTemplateDialog::~PageTemplateDialog()
 {
 	delete pageMenu;
-	pageMenu = NULL;
+	pageMenu = nullptr;
 	delete popupMenuButton;
-	popupMenuButton = NULL;
+	popupMenuButton = nullptr;
 }
 
 void PageTemplateDialog::updateDataFromModel()
@@ -86,7 +86,7 @@ void PageTemplateDialog::saveToFile()
 
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Save File"), GTK_WINDOW(this->getWindow()),
 													GTK_FILE_CHOOSER_ACTION_SAVE, _("_Cancel"), GTK_RESPONSE_CANCEL,
-													_("_Save"), GTK_RESPONSE_OK, NULL);
+													_("_Save"), GTK_RESPONSE_OK, nullptr);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
@@ -101,7 +101,7 @@ void PageTemplateDialog::saveToFile()
 	}
 
 
-	time_t curtime = time(NULL);
+	time_t curtime = time(nullptr);
 	char stime[128];
 	strftime(stime, sizeof(stime), "%F-Template-%H-%M.xopt", localtime(&curtime));
 	string saveFilename = stime;

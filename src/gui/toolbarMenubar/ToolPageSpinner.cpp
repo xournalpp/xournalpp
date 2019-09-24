@@ -7,7 +7,7 @@
 #include <i18n.h>
 
 ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type)
- : AbstractToolItem(id, handler, type, NULL)
+ : AbstractToolItem(id, handler, type, nullptr)
 {
 	this->gui = gui;
 	this->pageSpinner = new SpinPageAdapter();
@@ -16,7 +16,7 @@ ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string i
 ToolPageSpinner::~ToolPageSpinner()
 {
 	delete this->pageSpinner;
-	this->pageSpinner = NULL;
+	this->pageSpinner = nullptr;
 }
 
 SpinPageAdapter* ToolPageSpinner::getPageSpinner()

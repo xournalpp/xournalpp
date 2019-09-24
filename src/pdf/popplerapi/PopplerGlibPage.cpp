@@ -4,7 +4,7 @@
 PopplerGlibPage::PopplerGlibPage(PopplerPage* page)
  : page(page)
 {
-	if (page != NULL)
+	if (page != nullptr)
 	{
 		g_object_ref(page);
 	}
@@ -13,7 +13,7 @@ PopplerGlibPage::PopplerGlibPage(PopplerPage* page)
 PopplerGlibPage::PopplerGlibPage(const PopplerGlibPage& other)
  : page(other.page)
 {
-	if (page != NULL)
+	if (page != nullptr)
 	{
 		g_object_ref(page);
 	}
@@ -24,7 +24,7 @@ PopplerGlibPage::~PopplerGlibPage()
 	if (page)
 	{
 		g_object_unref(page);
-		page = NULL;
+		page = nullptr;
 	}
 }
 
@@ -33,11 +33,11 @@ void PopplerGlibPage::operator=(const PopplerGlibPage& other)
 	if (page)
 	{
 		g_object_unref(page);
-		page = NULL;
+		page = nullptr;
 	}
 
 	page = other.page;
-	if (page != NULL)
+	if (page != nullptr)
 	{
 		g_object_ref(page);
 	}
@@ -46,7 +46,7 @@ void PopplerGlibPage::operator=(const PopplerGlibPage& other)
 double PopplerGlibPage::getWidth()
 {
 	double width = 0;
-	poppler_page_get_size(page, &width, NULL);
+	poppler_page_get_size(page, &width, nullptr);
 
 	return width;
 }
@@ -54,7 +54,7 @@ double PopplerGlibPage::getWidth()
 double PopplerGlibPage::getHeight()
 {
 	double height = 0;
-	poppler_page_get_size(page, NULL, &height);
+	poppler_page_get_size(page, nullptr, &height);
 
 	return height;
 }

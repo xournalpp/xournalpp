@@ -15,7 +15,7 @@ Image::~Image()
 	if (this->image)
 	{
 		cairo_surface_destroy(this->image);
-		this->image = NULL;
+		this->image = nullptr;
 	}
 }
 
@@ -65,7 +65,7 @@ void Image::setImage(string data)
 	if (this->image)
 	{
 		cairo_surface_destroy(this->image);
-		this->image = NULL;
+		this->image = nullptr;
 	}
 	this->data = data;
 }
@@ -80,7 +80,7 @@ void Image::setImage(cairo_surface_t* image)
 	if (this->image)
 	{
 		cairo_surface_destroy(this->image);
-		this->image = NULL;
+		this->image = nullptr;
 	}
 
 	this->image = image;
@@ -88,7 +88,7 @@ void Image::setImage(cairo_surface_t* image)
 
 cairo_surface_t* Image::getImage()
 {
-	if (this->image == NULL && this->data.length())
+	if (this->image == nullptr && this->data.length())
 	{
 		this->read = 0;
 		this->image = cairo_image_surface_create_from_png_stream((cairo_read_func_t) &cairoReadFunction, this);
@@ -140,7 +140,7 @@ void Image::readSerialized(ObjectInputStream& in)
 	if (this->image)
 	{
 		cairo_surface_destroy(this->image);
-		this->image = NULL;
+		this->image = nullptr;
 	}
 
 	this->image = in.readImage();

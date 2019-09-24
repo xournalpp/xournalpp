@@ -25,7 +25,7 @@ RemoveLayerUndoAction::~RemoveLayerUndoAction()
 		// The layer was NOT undone, also NOT restored
 		delete this->layer;
 	}
-	this->layer = NULL;
+	this->layer = nullptr;
 }
 
 string RemoveLayerUndoAction::getText()

@@ -13,7 +13,7 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath)
 	// Background color for the temporary render, default is white because
 	// on dark themed DE the LaTex is hard to read
 	this->cssProvider = gtk_css_provider_new();
-	gtk_css_provider_load_from_data(this->cssProvider, "*{background-color:white;padding:10px;}", -1, NULL);
+	gtk_css_provider_load_from_data(this->cssProvider, "*{background-color:white;padding:10px;}", -1, nullptr);
 	gtk_style_context_add_provider(gtk_widget_get_style_context(this->texTempRender), GTK_STYLE_PROVIDER(this->cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
@@ -39,10 +39,10 @@ void LatexDialog::setTempRender(PopplerDocument* pdf)
 	}
 
 	// If a previous render exists, destroy it
-	if (this->scaledRender != NULL)
+	if (this->scaledRender != nullptr)
 	{
 		cairo_surface_destroy(this->scaledRender);
-		this->scaledRender = NULL;
+		this->scaledRender = nullptr;
 	}
 
 	PopplerPage* page = poppler_document_get_page(pdf, 0);

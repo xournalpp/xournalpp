@@ -71,7 +71,7 @@ private:
 	/**
 	 * Visible checkbox
 	 */
-	GtkWidget* cbVisible = NULL;
+	GtkWidget* cbVisible = nullptr;
 
 	/**
 	 * Ignore events

@@ -100,7 +100,7 @@ private:
 	static bool fillPageLabels(GtkTreeModel* tree_model, GtkTreePath* path, GtkTreeIter* iter, Document* doc);
 
 private:
-	DocumentHandler* handler = NULL;
+	DocumentHandler* handler = nullptr;
 
 	XojPdfDocument pdfDocument;
 
@@ -123,7 +123,7 @@ private:
 	/**
 	 * The bookmark contents model
 	 */
-	GtkTreeModel* contentsModel = NULL;
+	GtkTreeModel* contentsModel = nullptr;
 
 	/**
 	 *  create a backup before save, because the original file was an older fileversion
@@ -133,7 +133,7 @@ private:
 	/**
 	 * The preview for the file
 	 */
-	cairo_surface_t* preview = NULL;
+	cairo_surface_t* preview = nullptr;
 
 	/**
 	 * The lock of the document

@@ -20,7 +20,7 @@ InputHandler::InputHandler(XournalView* xournal, XojPageView* redrawable, PageRe
  : xournal(xournal),
    redrawable(redrawable),
    page(page),
-   stroke(NULL)
+   stroke(nullptr)
 {
 }
 

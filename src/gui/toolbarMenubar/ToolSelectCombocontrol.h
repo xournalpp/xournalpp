@@ -32,9 +32,9 @@ protected:
 	void addMenuitem(string text, string icon, ActionType type, ActionGroup group);
 
 private:
-	ToolMenuHandler* toolMenuHandler = NULL;
-	GtkWidget* popup = NULL;
+	ToolMenuHandler* toolMenuHandler = nullptr;
+	GtkWidget* popup = nullptr;
 
-	GtkWidget* iconWidget = NULL;
-	GtkWidget* labelWidget = NULL;
+	GtkWidget* iconWidget = nullptr;
+	GtkWidget* labelWidget = nullptr;
 };

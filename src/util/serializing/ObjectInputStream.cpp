@@ -13,7 +13,7 @@ ObjectInputStream::~ObjectInputStream()
 	if (this->str)
 	{
 		g_string_free(this->str, true);
-		this->str = NULL;
+		this->str = nullptr;
 	}
 }
 
@@ -169,7 +169,7 @@ void ObjectInputStream::readData(void** data, int* length)
 	if (len == 0)
 	{
 		*length = 0;
-		*data = NULL;
+		*data = nullptr;
 	}
 	else
 	{

@@ -45,18 +45,18 @@ ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* par
 ToolMenuHandler::~ToolMenuHandler()
 {
 	delete this->tbModel;
-	this->tbModel = NULL;
+	this->tbModel = nullptr;
 
 	// Owned by control
-	this->pageBackgroundChangeController = NULL;
+	this->pageBackgroundChangeController = nullptr;
 
 	// Owned by control
-	this->newPageType = NULL;
+	this->newPageType = nullptr;
 
 	for (MenuItem* it : this->menuItems)
 	{
 		delete it;
-		it = NULL;
+		it = nullptr;
 	}
 
 	freeDynamicToolbarItems();
@@ -64,7 +64,7 @@ ToolMenuHandler::~ToolMenuHandler()
 	for (AbstractToolItem* it : this->toolItems)
 	{
 		delete it;
-		it = NULL;
+		it = nullptr;
 	}
 }
 
@@ -152,7 +152,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 					count++;
 
 					color = color.substr(2);
-					gint c = g_ascii_strtoll(color.c_str(), NULL, 16);
+					gint c = g_ascii_strtoll(color.c_str(), nullptr, 16);
 
 					ColorToolItem* item = new ColorToolItem(listener, toolHandler, this->parent, c);
 					this->toolbarColorItems.push_back(item);
@@ -212,7 +212,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 
 void ToolMenuHandler::removeColorToolItem(AbstractToolItem* it)
 {
-	g_return_if_fail(it != NULL);
+	g_return_if_fail(it != nullptr);
 	for (unsigned int i = 0; i < this->toolbarColorItems.size(); i++)
 	{
 		if (this->toolbarColorItems[i] == it)
@@ -226,7 +226,7 @@ void ToolMenuHandler::removeColorToolItem(AbstractToolItem* it)
 
 void ToolMenuHandler::addColorToolItem(AbstractToolItem* it)
 {
-	g_return_if_fail(it != NULL);
+	g_return_if_fail(it != nullptr);
 	this->toolbarColorItems.push_back((ColorToolItem*) it);
 }
 

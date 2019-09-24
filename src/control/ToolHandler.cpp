@@ -21,11 +21,11 @@ ToolHandler::ToolHandler(ToolListener* listener, ActionHandler* actionHandler, S
 
 void ToolHandler::initTools()
 {
-	Tool* t = NULL;
+	Tool* t = nullptr;
 
 	for (int i = 0; i < TOOL_COUNT; i++)
 	{
-		tools[i] = NULL;
+		tools[i] = nullptr;
 	}
 
 	double* thickness = new double[5];
@@ -64,43 +64,43 @@ void ToolHandler::initTools()
 			thickness);
 	tools[TOOL_HILIGHTER - TOOL_PEN] = t;
 
-	t = new Tool("text", TOOL_TEXT, 0x000000, TOOL_CAP_COLOR, NULL);
+	t = new Tool("text", TOOL_TEXT, 0x000000, TOOL_CAP_COLOR, nullptr);
 	tools[TOOL_TEXT - TOOL_PEN] = t;
 
-	t = new Tool("image", TOOL_IMAGE, 0x000000, TOOL_CAP_NONE, NULL);
+	t = new Tool("image", TOOL_IMAGE, 0x000000, TOOL_CAP_NONE, nullptr);
 	tools[TOOL_IMAGE - TOOL_PEN] = t;
 
-	t = new Tool("selectRect", TOOL_SELECT_RECT, 0x000000, TOOL_CAP_NONE, NULL);
+	t = new Tool("selectRect", TOOL_SELECT_RECT, 0x000000, TOOL_CAP_NONE, nullptr);
 	tools[TOOL_SELECT_RECT - TOOL_PEN] = t;
 
-	t = new Tool("selectRegion", TOOL_SELECT_REGION, 0x000000, TOOL_CAP_NONE, NULL);
+	t = new Tool("selectRegion", TOOL_SELECT_REGION, 0x000000, TOOL_CAP_NONE, nullptr);
 	tools[TOOL_SELECT_REGION - TOOL_PEN] = t;
 
-	t = new Tool("selectObject", TOOL_SELECT_OBJECT, 0x000000, TOOL_CAP_NONE, NULL);
+	t = new Tool("selectObject", TOOL_SELECT_OBJECT, 0x000000, TOOL_CAP_NONE, nullptr);
 	tools[TOOL_SELECT_OBJECT - TOOL_PEN] = t;
 
-	t = new Tool("verticalSpace", TOOL_VERTICAL_SPACE, 0x000000, TOOL_CAP_NONE, NULL);
+	t = new Tool("verticalSpace", TOOL_VERTICAL_SPACE, 0x000000, TOOL_CAP_NONE, nullptr);
 	tools[TOOL_VERTICAL_SPACE - TOOL_PEN] = t;
 
-	t = new Tool("hand", TOOL_HAND, 0x000000, TOOL_CAP_NONE, NULL);
+	t = new Tool("hand", TOOL_HAND, 0x000000, TOOL_CAP_NONE, nullptr);
 	tools[TOOL_HAND - TOOL_PEN] = t;
 
-	t = new Tool("playObject", TOOL_PLAY_OBJECT, 0x000000, TOOL_CAP_NONE, NULL);
+	t = new Tool("playObject", TOOL_PLAY_OBJECT, 0x000000, TOOL_CAP_NONE, nullptr);
 	tools[TOOL_PLAY_OBJECT - TOOL_PEN] = t;
 
-	t = new Tool("drawRect", TOOL_DRAW_RECT, 0x000000, TOOL_CAP_NONE, NULL);
+	t = new Tool("drawRect", TOOL_DRAW_RECT, 0x000000, TOOL_CAP_NONE, nullptr);
 	tools[TOOL_DRAW_RECT - TOOL_PEN] = t;
 
-	t = new Tool("drawCircle", TOOL_DRAW_CIRCLE, 0x000000, TOOL_CAP_NONE, NULL);
+	t = new Tool("drawCircle", TOOL_DRAW_CIRCLE, 0x000000, TOOL_CAP_NONE, nullptr);
 	tools[TOOL_DRAW_CIRCLE - TOOL_PEN] = t;
 
-	t = new Tool("drawArrow", TOOL_DRAW_ARROW, 0x000000, TOOL_CAP_NONE, NULL);
+	t = new Tool("drawArrow", TOOL_DRAW_ARROW, 0x000000, TOOL_CAP_NONE, nullptr);
 	tools[TOOL_DRAW_ARROW - TOOL_PEN] = t;
 
-	t = new Tool("drawCoordinateSystem", TOOL_DRAW_COORDINATE_SYSTEM, 0x000000, TOOL_CAP_NONE, NULL);
+	t = new Tool("drawCoordinateSystem", TOOL_DRAW_COORDINATE_SYSTEM, 0x000000, TOOL_CAP_NONE, nullptr);
 	tools[TOOL_DRAW_COORDINATE_SYSTEM - TOOL_PEN] = t;
 	
-	t = new Tool("showFloatingToolbox", TOOL_FLOATING_TOOLBOX, 0x000000, TOOL_CAP_NONE, NULL);
+	t = new Tool("showFloatingToolbox", TOOL_FLOATING_TOOLBOX, 0x000000, TOOL_CAP_NONE, nullptr);
 	tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] = t;
 	
 
@@ -112,11 +112,11 @@ ToolHandler::~ToolHandler()
 	for (int i = 0; i < TOOL_COUNT; i++)
 	{
 		delete tools[i];
-		tools[i] = NULL;
+		tools[i] = nullptr;
 	}
 
 	// Do not delete settings!
-	this->settings = NULL;
+	this->settings = nullptr;
 }
 
 void ToolHandler::setEraserType(EraserType eraserType)
@@ -127,7 +127,7 @@ void ToolHandler::setEraserType(EraserType eraserType)
 
 void ToolHandler::eraserTypeChanged()
 {
-	if (this->actionHandler == NULL)
+	if (this->actionHandler == nullptr)
 	{
 		return;
 	}
@@ -546,7 +546,7 @@ void ToolHandler::copyCurrentConfig()
 {
 	// If there is no last config, create one, if there is already one
 	// do not overwrite this config!
-	if (this->lastSelectedTool == NULL)
+	if (this->lastSelectedTool == nullptr)
 	{
 		this->lastSelectedTool = new LastSelectedTool(this->current);
 	}
@@ -554,14 +554,14 @@ void ToolHandler::copyCurrentConfig()
 
 void ToolHandler::restoreLastConfig()
 {
-	if (this->lastSelectedTool == NULL)
+	if (this->lastSelectedTool == nullptr)
 	{
 		return;
 	}
 
 	this->current = this->lastSelectedTool->restoreAndGet();
 	delete this->lastSelectedTool;
-	this->lastSelectedTool = NULL;
+	this->lastSelectedTool = nullptr;
 
 	this->listener->toolColorChanged(false);
 	this->listener->toolSizeChanged();

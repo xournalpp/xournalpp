@@ -32,6 +32,6 @@ public:
 	virtual JobType getType();
 
 private:
-	Control* control = NULL;
+	Control* control = nullptr;
 	string error;
 };

@@ -16,7 +16,7 @@ PreviewJob::PreviewJob(SidebarPreviewBaseEntry* sidebar)
 
 PreviewJob::~PreviewJob()
 {
-	this->sidebarPreview = NULL;
+	this->sidebarPreview = nullptr;
 }
 
 void* PreviewJob::getSource()

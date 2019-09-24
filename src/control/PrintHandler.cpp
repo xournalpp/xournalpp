@@ -80,9 +80,9 @@ void PrintHandler::print(Document* doc, int currentPage)
 {
 	Path filename = Util::getConfigFile(PRINT_CONFIG_FILE);
 
-	GtkPrintSettings* settings = gtk_print_settings_new_from_file(filename.c_str(), NULL);
+	GtkPrintSettings* settings = gtk_print_settings_new_from_file(filename.c_str(), nullptr);
 
-	if (settings == NULL)
+	if (settings == nullptr)
 	{
 		settings = gtk_print_settings_new();
 	}
@@ -99,17 +99,17 @@ void PrintHandler::print(Document* doc, int currentPage)
 	g_signal_connect(op, "draw_page", G_CALLBACK(drawPage), this);
 	g_signal_connect(op, "request-page-setup", G_CALLBACK(requestPageSetup), this);
 
-	GtkPrintOperationResult res = gtk_print_operation_run(op, GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG, NULL, NULL);
+	GtkPrintOperationResult res = gtk_print_operation_run(op, GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG, nullptr, nullptr);
 	if (res == GTK_PRINT_OPERATION_RESULT_APPLY)
 	{
 		g_object_unref(settings);
 		settings = gtk_print_operation_get_print_settings(op);
-		gtk_print_settings_to_file(settings, filename.c_str(), NULL);
+		gtk_print_settings_to_file(settings, filename.c_str(), nullptr);
 
-		settings = NULL;
+		settings = nullptr;
 	}
 
 	g_object_unref(op);
 
-	this->doc = NULL;
+	this->doc = nullptr;
 }

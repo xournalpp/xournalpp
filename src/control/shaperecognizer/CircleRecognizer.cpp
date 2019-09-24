@@ -85,5 +85,5 @@ Stroke* CircleRecognizer::recognize(Stroke* stroke)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }

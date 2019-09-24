@@ -52,7 +52,7 @@ SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, 
 SidebarPreviewLayerEntry::~SidebarPreviewLayerEntry()
 {
 	gtk_widget_destroy(this->box);
-	this->box = NULL;
+	this->box = nullptr;
 }
 
 void SidebarPreviewLayerEntry::checkboxToggled()

@@ -21,8 +21,8 @@ MoveLayerUndoAction::MoveLayerUndoAction(LayerController* layerController, PageR
 
 MoveLayerUndoAction::~MoveLayerUndoAction()
 {
-	this->layerController = NULL;
-	this->layer = NULL;
+	this->layerController = nullptr;
+	this->layer = nullptr;
 }
 
 string MoveLayerUndoAction::getText()

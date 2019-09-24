@@ -79,7 +79,7 @@ f_image_surface_create(cairo_format_t format, int width, int height)
 	cairo_surface_t* surface = cairo_image_surface_create_for_data(pixels, format, width, height, width * size);
 
 	cairo_surface_set_user_data(surface, &pixel_key, pixels, g_free);
-	cairo_surface_set_user_data(surface, &format_key, GINT_TO_POINTER(format), NULL);
+	cairo_surface_set_user_data(surface, &format_key, GINT_TO_POINTER(format), nullptr);
 
 	return surface;
 }
@@ -294,24 +294,24 @@ convert_no_alpha(guchar* dest_data, int dest_stride, guchar* src_data, int src_s
  * The pixbuf will contain an alpha channel if the @surface contains one.
  *
  * Return value: (transfer full): A newly-created pixbuf with a reference
- *     count of 1, or %NULL on error
+ *     count of 1, or %nullptr on error
  */
 GdkPixbuf*
 xoj_pixbuf_get_from_surface(cairo_surface_t* surface, gint src_x, gint src_y, gint width, gint height)
 {
 	/* General sanity checks */
-	g_return_val_if_fail(surface != NULL, NULL);
-	g_return_val_if_fail(width > 0 && height > 0, NULL);
+	g_return_val_if_fail(surface != nullptr, nullptr);
+	g_return_val_if_fail(width > 0 && height > 0, nullptr);
 
 	cairo_content_t content = (cairo_content_t) (cairo_surface_get_content(surface) | CAIRO_CONTENT_COLOR);
 	GdkPixbuf* dest = gdk_pixbuf_new(GDK_COLORSPACE_RGB, !!(content & CAIRO_CONTENT_ALPHA), 8, width, height);
 
 	surface = gdk_cairo_surface_coerce_to_image(surface, content, src_x, src_y, width, height);
 	cairo_surface_flush(surface);
-	if (cairo_surface_status(surface) || dest == NULL)
+	if (cairo_surface_status(surface) || dest == nullptr)
 	{
 		cairo_surface_destroy(surface);
-		return NULL;
+		return nullptr;
 	}
 
 	if (gdk_pixbuf_get_has_alpha(dest))

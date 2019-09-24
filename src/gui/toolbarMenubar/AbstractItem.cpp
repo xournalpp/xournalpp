@@ -28,7 +28,7 @@ AbstractItem::~AbstractItem()
  */
 void AbstractItem::setMenuItem(GtkWidget* menuitem)
 {
-	if (this->menuitem != NULL)
+	if (this->menuitem != nullptr)
 	{
 		g_warning("The menu item %i / %s has already a menu item registered!", action, ActionType_toString(action).c_str());
 		return;
@@ -37,7 +37,7 @@ void AbstractItem::setMenuItem(GtkWidget* menuitem)
 	menuSignalHandler = g_signal_connect(menuitem, "activate", G_CALLBACK(
 			+[](GtkMenuItem* menuitem, AbstractItem* self)
 			{
-	self->activated(NULL, menuitem, NULL);
+	self->activated(nullptr, menuitem, nullptr);
 			}), this);
 
 	g_object_ref(G_OBJECT(menuitem));

@@ -44,9 +44,9 @@ protected:
 
 private:
 	protected:
-	BackgroundConfig* config = NULL;
+	BackgroundConfig* config = nullptr;
 	PageRef page;
-	cairo_t* cr = NULL;
+	cairo_t* cr = nullptr;
 
 	double width = 0;
 	double height = 0;

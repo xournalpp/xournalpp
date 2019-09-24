@@ -22,7 +22,7 @@ private:
 	virtual ~ImageOpenDlg();
 
 public:
-	static GFile* show(GtkWindow* win, Settings* settings, bool localOnly = false, bool* attach = NULL);
+	static GFile* show(GtkWindow* win, Settings* settings, bool localOnly = false, bool* attach = nullptr);
 
 private:
 	static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);

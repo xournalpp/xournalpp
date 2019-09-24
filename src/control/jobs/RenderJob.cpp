@@ -21,7 +21,7 @@ RenderJob::RenderJob(XojPageView* view)
 
 RenderJob::~RenderJob()
 {
-	this->view = NULL;
+	this->view = nullptr;
 }
 
 void* RenderJob::getSource()

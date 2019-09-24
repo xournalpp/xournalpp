@@ -9,7 +9,7 @@ ZoomGesture::ZoomGesture(ZoomControl* zoomControl)
 ZoomGesture::~ZoomGesture()
 {
 	g_object_unref(this->gesture);
-	this->gesture = NULL;
+	this->gesture = nullptr;
 }
 
 void ZoomGesture::connect(GtkWidget* parent)

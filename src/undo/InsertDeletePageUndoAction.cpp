@@ -17,7 +17,7 @@ InsertDeletePageUndoAction::InsertDeletePageUndoAction(PageRef page, int pagePos
 
 InsertDeletePageUndoAction::~InsertDeletePageUndoAction()
 {
-	this->page = NULL;
+	this->page = nullptr;
 }
 
 bool InsertDeletePageUndoAction::undo(Control* control)

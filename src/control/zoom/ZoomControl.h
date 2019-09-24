@@ -195,8 +195,8 @@ private:
 	void zoomPresentation();
 
 private:
-	XournalView* view = NULL;
-	Control* control = NULL;
+	XournalView* view = nullptr;
+	Control* control = nullptr;
 
 	std::vector<ZoomListener*> listener;
 
