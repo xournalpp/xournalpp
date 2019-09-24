@@ -34,5 +34,5 @@ public:
 	virtual void pageSelected(size_t page);
 
 private:
-	DocumentHandler* handler = NULL;
+	DocumentHandler* handler = nullptr;
 };

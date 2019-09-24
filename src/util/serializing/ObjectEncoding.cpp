@@ -17,6 +17,6 @@ void ObjectEncoding::addStr(const char* str)
 GString* ObjectEncoding::getData()
 {
 	GString* str = this->data;
-	this->data = NULL;
+	this->data = nullptr;
 	return str;
 }

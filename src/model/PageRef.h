@@ -45,6 +45,6 @@ public:
 	PageRef clone();
 
 private:
-	XojPage* page = NULL;
+	XojPage* page = nullptr;
 };
 

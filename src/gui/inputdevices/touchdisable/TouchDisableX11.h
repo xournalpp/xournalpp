@@ -52,7 +52,7 @@ private:
 	/**
 	 * X11 Display
 	 */
-	Display* display = NULL;
+	Display* display = nullptr;
 
 	/**
 	 * Touch device ID
@@ -62,12 +62,12 @@ private:
 	/**
 	 * Touch device
 	 */
-	XDeviceInfo* touch = NULL;
+	XDeviceInfo* touch = nullptr;
 
 	/**
 	 * Touch device
 	 */
-	XDevice* touchdev = NULL;
+	XDevice* touchdev = nullptr;
 
 	/**
 	 * Enable flag

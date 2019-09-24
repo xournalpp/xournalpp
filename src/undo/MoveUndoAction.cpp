@@ -53,7 +53,7 @@ void MoveUndoAction::move()
 
 bool MoveUndoAction::undo(Control* control)
 {
-	if (this->sourceLayer != this->targetLayer && this->targetLayer != NULL)
+	if (this->sourceLayer != this->targetLayer && this->targetLayer != nullptr)
 	{
 		switchLayer(&this->elements, this->targetLayer, this->sourceLayer);
 	}
@@ -67,7 +67,7 @@ bool MoveUndoAction::undo(Control* control)
 
 bool MoveUndoAction::redo(Control* control)
 {
-	if (this->sourceLayer != this->targetLayer && this->targetLayer != NULL)
+	if (this->sourceLayer != this->targetLayer && this->targetLayer != nullptr)
 	{
 		switchLayer(&this->elements, this->sourceLayer, this->targetLayer);
 	}

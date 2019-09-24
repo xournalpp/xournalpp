@@ -16,7 +16,7 @@
 class AbstractToolItem : public AbstractItem
 {
 public:
-	AbstractToolItem(string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem = NULL);
+	AbstractToolItem(string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem = nullptr);
 	virtual ~AbstractToolItem();
 
 public:
@@ -43,8 +43,8 @@ protected:
 
 public:
 	protected:
-	GtkToolItem* item = NULL;
-	GtkWidget* popupMenu = NULL;
+	GtkToolItem* item = nullptr;
+	GtkWidget* popupMenu = nullptr;
 
 	bool toolToggleButtonActive = false;
 	bool toolToggleOnlyEnable = false;

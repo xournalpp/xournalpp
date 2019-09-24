@@ -22,7 +22,7 @@ DocumentView::DocumentView()
 DocumentView::~DocumentView()
 {
 	delete this->backgroundPainter;
-	this->backgroundPainter = NULL;
+	this->backgroundPainter = nullptr;
 }
 
 /**
@@ -321,8 +321,8 @@ void DocumentView::finializeDrawing()
 	this->lWidth = -1;
 	this->lHeight = -1;
 
-	this->page = NULL;
-	this->cr = NULL;
+	this->page = nullptr;
+	this->cr = nullptr;
 }
 
 /**

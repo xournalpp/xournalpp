@@ -19,7 +19,7 @@ ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, Toolb
 	this->model = gtk_list_store_new(N_COLUMNS, G_TYPE_STRING, G_TYPE_INT, G_TYPE_POINTER, G_TYPE_BOOLEAN);
 	gtk_list_store_append(this->model, &iter);
 	gtk_list_store_set(this->model, &iter, COLUMN_STRING, _("Predefined"),
-					   COLUMN_BOLD, PANGO_WEIGHT_BOLD, COLUMN_POINTER, NULL, COLUMN_EDITABLE, false, -1);
+					   COLUMN_BOLD, PANGO_WEIGHT_BOLD, COLUMN_POINTER, nullptr, COLUMN_EDITABLE, false, -1);
 
 	for (ToolbarData* data : *model->getToolbars())
 	{
@@ -34,7 +34,7 @@ ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, Toolb
 
 	gtk_list_store_append(this->model, &iter);
 	gtk_list_store_set(this->model, &iter, COLUMN_STRING, _("Customized"),
-					   COLUMN_BOLD, PANGO_WEIGHT_BOLD, COLUMN_POINTER, NULL, COLUMN_EDITABLE, false, -1);
+					   COLUMN_BOLD, PANGO_WEIGHT_BOLD, COLUMN_POINTER, nullptr, COLUMN_EDITABLE, false, -1);
 
 	for (ToolbarData* data : *model->getToolbars())
 	{
@@ -53,7 +53,7 @@ ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, Toolb
 	GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Toolbars"), renderer, "text",
 																		 COLUMN_STRING, "weight",
 																		 COLUMN_BOLD, "editable",
-																		 COLUMN_EDITABLE, NULL);
+																		 COLUMN_EDITABLE, nullptr);
 
 	gtk_tree_view_append_column(GTK_TREE_VIEW(tree), column);
 
@@ -67,13 +67,13 @@ ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, Toolb
 	g_signal_connect(get("btDelete"), "clicked", G_CALLBACK(buttonDeleteCallback), this);
 	g_signal_connect(get("btCopy"), "clicked", G_CALLBACK(buttonCopyCallback), this);
 
-	entrySelected(NULL);
+	entrySelected(nullptr);
 }
 
 ToolbarManageDialog::~ToolbarManageDialog()
 {
 	g_object_unref(this->model);
-	this->tbModel = NULL;
+	this->tbModel = nullptr;
 }
 
 void ToolbarManageDialog::buttonNewCallback(GtkButton* button, ToolbarManageDialog* dlg)
@@ -88,7 +88,7 @@ void ToolbarManageDialog::buttonNewCallback(GtkButton* button, ToolbarManageDial
 void ToolbarManageDialog::buttonDeleteCallback(GtkButton* button, ToolbarManageDialog* dlg)
 {
 	ToolbarData* selected = dlg->getSelectedEntry();
-	if (selected == NULL)
+	if (selected == nullptr)
 	{
 		return;
 	}
@@ -99,7 +99,7 @@ void ToolbarManageDialog::buttonDeleteCallback(GtkButton* button, ToolbarManageD
 	{
 		do
 		{
-			ToolbarData* data = NULL;
+			ToolbarData* data = nullptr;
 			gtk_tree_model_get(GTK_TREE_MODEL(dlg->model), &iter, COLUMN_POINTER, &data, -1);
 
 			if (data == selected)
@@ -118,7 +118,7 @@ void ToolbarManageDialog::buttonDeleteCallback(GtkButton* button, ToolbarManageD
 void ToolbarManageDialog::buttonCopyCallback(GtkButton* button, ToolbarManageDialog* dlg)
 {
 	ToolbarData* selected = dlg->getSelectedEntry();
-	if (selected == NULL)
+	if (selected == nullptr)
 	{
 		return;
 	}
@@ -148,7 +148,7 @@ void ToolbarManageDialog::treeCellEditedCallback(GtkCellRendererText* renderer, 
 												 gchar* newText, ToolbarManageDialog* dlg)
 {
 	GtkTreeIter iter;
-	ToolbarData* data = NULL;
+	ToolbarData* data = nullptr;
 
 	gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(dlg->model), &iter, pathString);
 	gtk_tree_model_get(GTK_TREE_MODEL(dlg->model), &iter, COLUMN_POINTER, &data, -1);
@@ -164,7 +164,7 @@ void ToolbarManageDialog::entrySelected(ToolbarData* data)
 	GtkWidget* btCopy = get("btCopy");
 	GtkWidget* btDelete = get("btDelete");
 
-	if (data == NULL)
+	if (data == nullptr)
 	{
 		gtk_widget_set_sensitive(btCopy, false);
 		gtk_widget_set_sensitive(btDelete, false);
@@ -179,15 +179,15 @@ void ToolbarManageDialog::entrySelected(ToolbarData* data)
 ToolbarData* ToolbarManageDialog::getSelectedEntry()
 {
 	GtkTreeIter iter;
-	GtkTreeModel* model = NULL;
-	ToolbarData* data = NULL;
+	GtkTreeModel* model = nullptr;
+	ToolbarData* data = nullptr;
 
 	GtkWidget* tree = get("toolbarList");
 
 	GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(tree));
-	if (selection == NULL)
+	if (selection == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	if (gtk_tree_selection_get_selected(selection, &model, &iter))
@@ -197,7 +197,7 @@ ToolbarData* ToolbarManageDialog::getSelectedEntry()
 	}
 	else
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 

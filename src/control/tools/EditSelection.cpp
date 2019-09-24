@@ -138,14 +138,14 @@ EditSelection::~EditSelection()
 {
 	finalizeSelection();
 
-	this->sourcePage = NULL;
-	this->sourceLayer = NULL;
+	this->sourcePage = nullptr;
+	this->sourceLayer = nullptr;
 
 	delete this->contents;
-	this->contents = NULL;
+	this->contents = nullptr;
 
-	this->view = NULL;
-	this->undo = NULL;
+	this->view = nullptr;
+	this->undo = nullptr;
 }
 
 /**
@@ -155,7 +155,7 @@ EditSelection::~EditSelection()
 void EditSelection::finalizeSelection()
 {
 	XojPageView* v = getPageViewUnderCursor();
-	if (v == NULL)
+	if (v == nullptr)
 	{	// Not on any page - move back to original page and position
 		this->x = this->contents->getOriginalX();
 		this->y = this->contents->getOriginalY();
@@ -281,7 +281,7 @@ int EditSelection::getViewHeight()
 
 /**
  * Sets the tool size for pen or eraser, returs an undo action
- * (or NULL if nothing is done)
+ * (or nullptr if nothing is done)
  */
 UndoAction* EditSelection::setSize(ToolSize size,
 								   const double* thicknessPen,
@@ -293,7 +293,7 @@ UndoAction* EditSelection::setSize(ToolSize size,
 
 /**
  * Fills the stroke, return an undo action
- * (Or NULL if nothing done, e.g. because there is only an image)
+ * (Or nullptr if nothing done, e.g. because there is only an image)
  */
 UndoAction* EditSelection::setFill(int alphaPen, int alphaHighligther)
 {
@@ -302,7 +302,7 @@ UndoAction* EditSelection::setFill(int alphaPen, int alphaHighligther)
 
 /**
  * Set the color of all elements, return an undo action
- * (Or NULL if nothing done, e.g. because there is only an image)
+ * (Or nullptr if nothing done, e.g. because there is only an image)
  */
 UndoAction* EditSelection::setColor(int color)
 {
@@ -311,7 +311,7 @@ UndoAction* EditSelection::setColor(int color)
 
 /**
  * Sets the font of all containing text elements, return an undo action
- * (or NULL if there are no Text elements)
+ * (or nullptr if there are no Text elements)
  */
 UndoAction* EditSelection::setFont(XojFont& font)
 {
@@ -830,7 +830,7 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 	selectionColor.applyWithAlpha(cr, 0.3);
 	cairo_fill(cr);
 
-	cairo_set_dash(cr, NULL, 0, 0);
+	cairo_set_dash(cr, nullptr, 0, 0);
 
 	if (!this->aspectRatio)
 	{

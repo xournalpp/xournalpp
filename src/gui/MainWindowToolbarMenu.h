@@ -42,11 +42,11 @@ private:
 	static void tbSelectMenuitemActivated(GtkCheckMenuItem* menuitem, MenuSelectToolbarData* data);
 
 private:
-	MainWindow* win = NULL;
+	MainWindow* win = nullptr;
 
 	vector<GtkWidget*> menuitems;
 	vector<MenuSelectToolbarData*> toolbarMenuData;
 
-	ToolbarData* selectedToolbar = NULL;
+	ToolbarData* selectedToolbar = nullptr;
 	bool inPredefinedSection = false;
 };

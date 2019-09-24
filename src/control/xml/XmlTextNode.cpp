@@ -9,13 +9,13 @@ XmlTextNode::XmlTextNode(const char* tag, const char* text) : XmlAudioNode(tag)
 
 XmlTextNode::XmlTextNode(const char* tag) : XmlAudioNode(tag)
 {
-	this->text = NULL;
+	this->text = nullptr;
 }
 
 XmlTextNode::~XmlTextNode()
 {
 	g_free(this->text);
-	this->text = NULL;
+	this->text = nullptr;
 }
 
 void XmlTextNode::setText(const char* text)

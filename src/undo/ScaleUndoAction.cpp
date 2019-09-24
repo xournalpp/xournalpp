@@ -19,7 +19,7 @@ ScaleUndoAction::ScaleUndoAction(PageRef page, vector<Element*>* elements, doubl
 
 ScaleUndoAction::~ScaleUndoAction()
 {
-	this->page = NULL;
+	this->page = nullptr;
 }
 
 bool ScaleUndoAction::undo(Control* control)

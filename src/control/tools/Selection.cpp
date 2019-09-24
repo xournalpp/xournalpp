@@ -6,7 +6,7 @@
 Selection::Selection(Redrawable* view)
 {
 	this->view = view;
-	this->page = NULL;
+	this->page = nullptr;
 	
 	this->x1Box = 0;
 	this->x2Box = 0;
@@ -16,8 +16,8 @@ Selection::Selection(Redrawable* view)
 
 Selection::~Selection()
 {
-	this->view = NULL;
-	this->page = NULL;
+	this->view = nullptr;
+	this->page = nullptr;
 }
 
 //////////////////////////////////////////////////////////
@@ -138,13 +138,13 @@ public:
 
 RegionSelect::RegionSelect(double x, double y, Redrawable* view) : Selection(view)
 {
-	this->points = NULL;
+	this->points = nullptr;
 	currentPos(x, y);
 }
 
 RegionSelect::~RegionSelect()
 {
-	for (GList* l = this->points; l != NULL; l = l->next)
+	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
 		delete (RegionPoint*) l->data;
 	}
@@ -165,7 +165,7 @@ void RegionSelect::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 		RegionPoint* r0 = (RegionPoint*) this->points->data;
 		cairo_move_to(cr, r0->x, r0->y);
 
-		for (GList* l = this->points->next; l != NULL; l = l->next)
+		for (GList* l = this->points->next; l != nullptr; l = l->next)
 		{
 			RegionPoint* r = (RegionPoint*) l->data;
 			cairo_line_to(cr, r->x, r->y);
@@ -193,7 +193,7 @@ void RegionSelect::currentPos(double x, double y)
 		double ay = r0->y;
 		double by = r0->y;
 
-		for (GList* l = this->points; l != NULL; l = l->next)
+		for (GList* l = this->points; l != nullptr; l = l->next)
 		{
 			RegionPoint* r = (RegionPoint*) l->data;
 			if (ax > r->x)
@@ -228,7 +228,7 @@ bool RegionSelect::contains(double x, double y)
 	{
 		return false;
 	}
-	if (this->points == NULL || this->points->next == NULL)
+	if (this->points == nullptr || this->points->next == nullptr)
 	{
 		return false;
 	}
@@ -242,7 +242,7 @@ bool RegionSelect::contains(double x, double y)
 	double curx, cury;
 
 	// Walk the edges of the polygon
-	for (GList* l = this->points; l != NULL; lastx = curx, lasty = cury, l = l->next)
+	for (GList* l = this->points; l != nullptr; lastx = curx, lasty = cury, l = l->next)
 	{
 		RegionPoint* last = (RegionPoint*) l->data;
 		curx = last->x;
@@ -319,7 +319,7 @@ bool RegionSelect::finalize(PageRef page)
 	this->y1Box = 0;
 	this->y2Box = 0;
 
-	for (GList* l = this->points; l != NULL; l = l->next)
+	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
 		RegionPoint* p = (RegionPoint*) l->data;
 

@@ -29,7 +29,7 @@ void zoomcallib_set_val(ZoomCallib* callib, gint val)
 
 GtkWidget* zoomcallib_new()
 {
-	return GTK_WIDGET(g_object_new(zoomcallib_get_type(), NULL));
+	return GTK_WIDGET(g_object_new(zoomcallib_get_type(), nullptr));
 }
 
 static void zoomcallib_class_init(ZoomCallibClass* klass)
@@ -63,9 +63,9 @@ static void zoomcallib_get_preferred_height(GtkWidget* widget, gint* minimal_hei
 
 static void zoomcallib_size_allocate(GtkWidget* widget, GtkAllocation* allocation)
 {
-	g_return_if_fail(widget != NULL);
+	g_return_if_fail(widget != nullptr);
 	g_return_if_fail(IS_ZOOM_CALLIB(widget));
-	g_return_if_fail(allocation != NULL);
+	g_return_if_fail(allocation != nullptr);
 
 	gtk_widget_set_allocation(widget, allocation);
 
@@ -82,7 +82,7 @@ static void zoomcallib_realize(GtkWidget* widget)
 	guint attributes_mask;
 	GtkAllocation allocation;
 
-	g_return_if_fail(widget != NULL);
+	g_return_if_fail(widget != nullptr);
 	g_return_if_fail(IS_ZOOM_CALLIB(widget));
 
 	gtk_widget_set_realized(widget, TRUE);

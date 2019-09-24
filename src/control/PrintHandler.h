@@ -35,5 +35,5 @@ private:
 								 GtkPageSetup* setup, PrintHandler* handler);
 
 private:
-	Document* doc = NULL;
+	Document* doc = nullptr;
 };

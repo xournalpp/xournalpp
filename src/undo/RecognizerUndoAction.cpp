@@ -30,7 +30,7 @@ RecognizerUndoAction::~RecognizerUndoAction()
 			delete s;
 		}
 	}
-	this->recognized = NULL;
+	this->recognized = nullptr;
 	this->original.clear();
 }
 

@@ -13,7 +13,7 @@ RepaintHandler::RepaintHandler(XournalView* xournal)
 
 RepaintHandler::~RepaintHandler()
 {
-	this->xournal = NULL;
+	this->xournal = nullptr;
 }
 
 void RepaintHandler::repaintPage(XojPageView* view)

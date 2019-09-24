@@ -125,12 +125,12 @@ protected:
 
 private:
 	Tool* tools[TOOL_COUNT] = { 0 };
-	Tool* current = NULL;
+	Tool* current = nullptr;
 
 	/**
 	 * Last selected tool, reference with color values etc.
 	 */
-	LastSelectedTool* lastSelectedTool = NULL;
+	LastSelectedTool* lastSelectedTool = nullptr;
 
 	EraserType eraserType = ERASER_TYPE_DEFAULT;
 
@@ -141,9 +141,9 @@ private:
 	 */
 	bool colorFound = false;
 
-	ToolListener* listener = NULL;
+	ToolListener* listener = nullptr;
 
-	ActionHandler* actionHandler = NULL;
+	ActionHandler* actionHandler = nullptr;
 
-	Settings* settings = NULL;
+	Settings* settings = nullptr;
 };

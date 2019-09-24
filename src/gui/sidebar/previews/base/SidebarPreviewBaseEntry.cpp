@@ -34,15 +34,15 @@ SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, Pa
 SidebarPreviewBaseEntry::~SidebarPreviewBaseEntry()
 {
 	this->sidebar->getControl()->getScheduler()->removeSidebar(this);
-	this->page = NULL;
+	this->page = nullptr;
 
 	gtk_widget_destroy(this->widget);
-	this->widget = NULL;
+	this->widget = nullptr;
 
 	if (this->crBuffer)
 	{
 		cairo_surface_destroy(this->crBuffer);
-		this->crBuffer = NULL;
+		this->crBuffer = nullptr;
 	}
 }
 
@@ -105,7 +105,7 @@ void SidebarPreviewBaseEntry::paint(cairo_t* cr)
 
 	g_mutex_lock(&this->drawingMutex);
 
-	if (this->crBuffer == NULL)
+	if (this->crBuffer == nullptr)
 	{
 		drawLoadingPage();
 		doRepaint = true;

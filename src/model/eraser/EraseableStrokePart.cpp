@@ -13,7 +13,7 @@ EraseableStrokePart::EraseableStrokePart(Point a, Point b)
 
 EraseableStrokePart::EraseableStrokePart(double width)
 {
-	this->points = NULL;
+	this->points = nullptr;
 	this->width = width;
 	this->splitSize = 0;
 
@@ -22,18 +22,18 @@ EraseableStrokePart::EraseableStrokePart(double width)
 
 EraseableStrokePart::~EraseableStrokePart()
 {
-	for (GList* l = this->points; l != NULL; l = l->next)
+	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
 		Point* p = (Point*) l->data;
 		delete p;
 	}
 	g_list_free(this->points);
-	this->points = NULL;
+	this->points = nullptr;
 }
 
 void EraseableStrokePart::calcSize()
 {
-	if (this->points == NULL)
+	if (this->points == nullptr)
 	{
 		this->x = 0;
 		this->y = 0;
@@ -47,7 +47,7 @@ void EraseableStrokePart::calcSize()
 	double x2 = ((Point*) g_list_first(this->points)->data)->x;
 	double y2 = ((Point*) g_list_first(this->points)->data)->y;
 
-	for (GList* l = this->points; l != NULL; l = l->next)
+	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
 		Point* p = (Point*) l->data;
 		x1 = MIN(x1, p->x);
@@ -66,7 +66,7 @@ EraseableStrokePart* EraseableStrokePart::clone()
 {
 	EraseableStrokePart* part = new EraseableStrokePart(this->width);
 
-	for (GList* l = this->points; l != NULL; l = l->next)
+	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
 		Point* p = (Point*) l->data;
 		part->addPoint(*p);
@@ -116,7 +116,7 @@ GList* EraseableStrokePart::getPoints()
 
 void EraseableStrokePart::clearSplitData()
 {
-	for (GList* l = this->points->next; l->next != NULL;)
+	for (GList* l = this->points->next; l->next != nullptr;)
 	{
 		Point* p = (Point*) l->data;
 		delete p;

@@ -134,7 +134,7 @@ void ImageExport::exportImagePage(int pageId, int id, double zoom, ExportGraphic
 		int pgNo = page->getPdfPageNr();
 		XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
-		PdfView::drawPage(NULL, popplerPage, cr, zoom, page->getWidth(), page->getHeight());
+		PdfView::drawPage(nullptr, popplerPage, cr, zoom, page->getWidth(), page->getHeight());
 	}
 
 	view.drawPage(page, this->cr, true, hideBackground);

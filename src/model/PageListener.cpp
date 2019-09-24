@@ -22,6 +22,6 @@ void PageListener::unregisterListener()
 	if (this->handler)
 	{
 		this->handler->removeListener(this);
-		this->handler = NULL;
+		this->handler = nullptr;
 	}
 }

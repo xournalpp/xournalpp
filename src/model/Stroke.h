@@ -129,7 +129,7 @@ private:
 	 */
 	LineStyle lineStyle;
 
-	EraseableStroke* eraseable = NULL;
+	EraseableStroke* eraseable = nullptr;
 
 	/**
 	 * Option to fill the shape:

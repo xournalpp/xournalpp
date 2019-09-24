@@ -11,7 +11,7 @@ BlockingJob::BlockingJob(Control* control, string name)
 
 BlockingJob::~BlockingJob()
 {
-	this->control = NULL;
+	this->control = nullptr;
 }
 
 void BlockingJob::execute()

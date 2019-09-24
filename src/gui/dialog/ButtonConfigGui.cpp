@@ -17,7 +17,7 @@ void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, 
 	GtkTreeIter iter;
 
 	gtk_list_store_append(typeModel, &iter);
-	GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon, 24, (GtkIconLookupFlags) 0, NULL);
+	GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon, 24, (GtkIconLookupFlags) 0, nullptr);
 	gtk_list_store_set(typeModel, &iter, 0, pixbuf, -1);
 	gtk_list_store_set(typeModel, &iter, 1, name, 2, action, -1);
 }
@@ -75,11 +75,11 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 
 	GtkCellRenderer* renderer = gtk_cell_renderer_pixbuf_new();
 	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(this->cbTool), renderer, false);
-	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "pixbuf", 0, NULL);
+	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "pixbuf", 0, nullptr);
 
 	renderer = gtk_cell_renderer_text_new();
 	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(this->cbTool), renderer, true);
-	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "text", 1, NULL);
+	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "text", 1, nullptr);
 
 	this->cbThickness = get("cbThickness");
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Thickness - don't change"));

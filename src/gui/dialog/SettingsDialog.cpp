@@ -18,10 +18,10 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
    callib(zoomcallib_new())
 {
 	GtkWidget* vbox = get("zoomVBox");
-	g_return_if_fail(vbox != NULL);
+	g_return_if_fail(vbox != nullptr);
 
 	GtkWidget* slider = get("zoomCallibSlider");
-	g_return_if_fail(slider != NULL);
+	g_return_if_fail(slider != nullptr);
 
 	g_signal_connect(slider, "change-value", G_CALLBACK(
 		+[](GtkRange* range, GtkScrollType scroll, gdouble value, SettingsDialog* self)
@@ -97,7 +97,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 	GtkWidget* container = get("hboxInputDeviceClasses");
 	for (const InputDevice& inputDevice: deviceList)
 	{
-		// Only add real devices (core pointers have vendor and product id NULL)
+		// Only add real devices (core pointers have vendor and product id nullptr)
 		this->deviceClassConfigs.push_back(
 		        new DeviceClassConfigGui(getGladeSearchPath(), container, settings, inputDevice));
 	}
@@ -125,7 +125,7 @@ SettingsDialog::~SettingsDialog()
 	this->deviceClassConfigs.clear();
 
 	// DO NOT delete settings!
-	this->settings = NULL;
+	this->settings = nullptr;
 }
 
 void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool withDevice)
@@ -536,7 +536,7 @@ void SettingsDialog::save()
 
 	settings->setDefaultSaveName(gtk_entry_get_text(GTK_ENTRY(get("txtDefaultSaveName"))));
 	char* uri = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(get("fcAudioPath")));
-	if (uri != NULL)
+	if (uri != nullptr)
 	{
 		settings->setAudioFolder(uri);
 		g_free(uri);

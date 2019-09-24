@@ -97,7 +97,7 @@ bool Element::intersectsArea(const GdkRectangle* src)
 		gint(getElementHeight())
 	};
 
-	return gdk_rectangle_intersect(src, &rect, NULL);
+	return gdk_rectangle_intersect(src, &rect, nullptr);
 }
 
 bool Element::intersectsArea(double x, double y, double width, double height)

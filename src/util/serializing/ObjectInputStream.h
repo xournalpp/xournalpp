@@ -45,6 +45,6 @@ private:
 	string getType(char type);
 
 private:
-	GString* str = NULL;
+	GString* str = nullptr;
 	gsize pos = 0;
 };

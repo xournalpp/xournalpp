@@ -99,7 +99,7 @@ private:
 	/**
 	 * Implementation for touch disabling
 	 */
-	TouchDisableInterface* touchImpl = NULL;
+	TouchDisableInterface* touchImpl = nullptr;
 
 	/**
 	 * XournalView
@@ -114,5 +114,5 @@ private:
 	/**
 	 * Settings
 	 */
-	Settings* settings = NULL;
+	Settings* settings = nullptr;
 };

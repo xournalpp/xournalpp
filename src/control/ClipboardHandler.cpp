@@ -164,7 +164,7 @@ bool ClipboardHandler::copy()
 	// prepare text contents
 	/////////////////////////////////////////////////////////////////
 
-	GList* textElements = NULL;
+	GList* textElements = nullptr;
 
 	for (Element* e : *this->selection->getElements())
 	{
@@ -175,7 +175,7 @@ bool ClipboardHandler::copy()
 	}
 
 	string text = "";
-	for (GList* l = textElements; l != NULL; l = l->next)
+	for (GList* l = textElements; l != nullptr; l = l->next)
 	{
 		Text* e = (Text*) l->data;
 		if (text != "")
@@ -230,7 +230,7 @@ bool ClipboardHandler::copy()
 	// copy to clipboard
 	/////////////////////////////////////////////////////////////////
 
-	GtkTargetList* list = gtk_target_list_new(NULL, 0);
+	GtkTargetList* list = gtk_target_list_new(nullptr, 0);
 	GtkTargetEntry* targets;
 	int n_targets;
 
@@ -252,7 +252,7 @@ bool ClipboardHandler::copy()
 	gtk_clipboard_set_with_data(this->clipboard, targets, n_targets,
 								(GtkClipboardGetFunc) ClipboardContents::getFunction,
 								(GtkClipboardClearFunc) ClipboardContents::clearFunction, contents);
-	gtk_clipboard_set_can_store(this->clipboard, NULL, 0);
+	gtk_clipboard_set_can_store(this->clipboard, nullptr, 0);
 
 	gtk_target_table_free(targets, n_targets);
 	gtk_target_list_unref(list);
@@ -266,7 +266,7 @@ void ClipboardHandler::setSelection(EditSelection* selection)
 {
 	this->selection = selection;
 
-	this->listener->clipboardCutCopyEnabled(selection != NULL);
+	this->listener->clipboardCutCopyEnabled(selection != nullptr);
 }
 
 void ClipboardHandler::setCopyPasteEnabled(bool enabled)

@@ -2,7 +2,7 @@
 #include "LayerController.h"
 
 LayerCtrlListener::LayerCtrlListener()
- : handler(NULL)
+ : handler(nullptr)
 {
 }
 

@@ -8,7 +8,7 @@
 #include <cmath>
 
 ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom)
- : AbstractToolItem(id, handler, type, NULL),
+ : AbstractToolItem(id, handler, type, nullptr),
    zoom(zoom)
 {
 	zoom->addZoomListener(this);
@@ -68,7 +68,7 @@ gchar* ToolZoomSlider::sliderFormatValue(GtkRange *range, gdouble value, ToolZoo
 
 void ToolZoomSlider::zoomChanged()
 {
-	if (this->slider == NULL || this->sliderChangingBySliderDrag)
+	if (this->slider == nullptr || this->sliderChangingBySliderDrag)
 	{
 		return;
 	}
@@ -97,14 +97,14 @@ GtkWidget* ToolZoomSlider::getNewToolIcon()
 // Should be called when the window size changes
 void ToolZoomSlider::updateScaleMarks()
 {
-	if (this->slider == NULL)
+	if (this->slider == nullptr)
 	{
 		return;
 	}
 
 	gtk_scale_clear_marks(GTK_SCALE(this->slider));
-	gtk_scale_add_mark(GTK_SCALE(this->slider), scaleFunc(zoom->getZoom100Value()), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
-	gtk_scale_add_mark(GTK_SCALE(this->slider), scaleFunc(zoom->getZoomFitValue()), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
+	gtk_scale_add_mark(GTK_SCALE(this->slider), scaleFunc(zoom->getZoom100Value()), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, nullptr);
+	gtk_scale_add_mark(GTK_SCALE(this->slider), scaleFunc(zoom->getZoomFitValue()), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, nullptr);
 }
 
 GtkToolItem* ToolZoomSlider::createItem(bool horizontal)

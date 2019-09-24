@@ -39,8 +39,8 @@ private:
 	vector<Element*> elements;
 	PageRef targetPage;
 
-	Layer* sourceLayer = NULL;
-	Layer* targetLayer = NULL;
+	Layer* sourceLayer = nullptr;
+	Layer* targetLayer = nullptr;
 
 	string text;
 

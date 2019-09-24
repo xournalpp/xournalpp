@@ -8,7 +8,7 @@
 #include <i18n.h>
 
 ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, string id, ActionType type)
- : AbstractToolItem(id, handler, type, NULL),
+ : AbstractToolItem(id, handler, type, nullptr),
    lc(lc),
    gui(gui),
    menu(gtk_menu_new())
@@ -28,7 +28,7 @@ ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* 
 ToolPageLayer::~ToolPageLayer()
 {
 	delete popupMenuButton;
-	popupMenuButton = NULL;
+	popupMenuButton = nullptr;
 }
 
 void ToolPageLayer::rebuildLayerMenu()
@@ -209,7 +209,7 @@ void ToolPageLayer::createLayerMenuItemShow(int layerId)
 void ToolPageLayer::updateMenu()
 {
 	// Remove all items from Menu (does sometimes not work)
-	// gtk_container_foreach(GTK_CONTAINER(menu), (GtkCallback) gtk_widget_destroy, NULL);
+	// gtk_container_foreach(GTK_CONTAINER(menu), (GtkCallback) gtk_widget_destroy, nullptr);
 
 	// Create a new menu on refresh
 	menu = gtk_menu_new();

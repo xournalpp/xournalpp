@@ -53,9 +53,9 @@ public:
 
 private:
 	/**
-	 * Dash definition (NULL for no Dash)
+	 * Dash definition (nullptr for no Dash)
 	 */
-	double* dashes = NULL;
+	double* dashes = nullptr;
 
 	/**
 	 * Dash count (0 for no dash)

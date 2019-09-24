@@ -25,7 +25,7 @@ ShapeRecognizerResult::ShapeRecognizerResult(Stroke* result, ShapeRecognizer* re
 
 ShapeRecognizerResult::~ShapeRecognizerResult()
 {
-	this->recognized = NULL;
+	this->recognized = nullptr;
 }
 
 void ShapeRecognizerResult::addSourceStroke(Stroke* s)

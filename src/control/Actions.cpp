@@ -11,7 +11,7 @@ ActionEnabledListener::~ActionEnabledListener()
 
 void ActionEnabledListener::registerListener(ActionHandler* handler)
 {
-	if (this->handler == NULL)
+	if (this->handler == nullptr)
 	{
 		this->handler = handler;
 		this->handler->addListener(this);
@@ -23,13 +23,13 @@ void ActionEnabledListener::unregisterListener()
 	if (this->handler)
 	{
 		this->handler->removeListener(this);
-		this->handler = NULL;
+		this->handler = nullptr;
 	}
 }
 
 ActionSelectionListener::ActionSelectionListener()
 {
-	this->handler = NULL;
+	this->handler = nullptr;
 }
 
 ActionSelectionListener::~ActionSelectionListener()
@@ -39,7 +39,7 @@ ActionSelectionListener::~ActionSelectionListener()
 
 void ActionSelectionListener::registerListener(ActionHandler* handler)
 {
-	if (this->handler == NULL)
+	if (this->handler == nullptr)
 	{
 		this->handler = handler;
 		handler->addListener(this);
@@ -48,7 +48,7 @@ void ActionSelectionListener::registerListener(ActionHandler* handler)
 
 void ActionSelectionListener::unregisterListener()
 {
-	if (this->handler != NULL)
+	if (this->handler != nullptr)
 	{
 		handler->removeListener(this);
 	}

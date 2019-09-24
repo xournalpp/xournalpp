@@ -32,7 +32,7 @@ public:
 	PartList* clone();
 
 private:
-	GList* data = NULL;
+	GList* data = nullptr;
 
 	friend class EraseableStroke;
 };

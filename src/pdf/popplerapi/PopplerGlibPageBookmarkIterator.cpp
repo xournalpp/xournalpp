@@ -10,12 +10,12 @@ PopplerGlibPageBookmarkIterator::PopplerGlibPageBookmarkIterator(PopplerIndexIte
 PopplerGlibPageBookmarkIterator::~PopplerGlibPageBookmarkIterator()
 {
 	poppler_index_iter_free(iter);
-	iter = NULL;
+	iter = nullptr;
 
 	if (document)
 	{
 		g_object_unref(document);
-		document = NULL;
+		document = nullptr;
 	}
 }
 
@@ -32,9 +32,9 @@ bool PopplerGlibPageBookmarkIterator::isOpen()
 XojPdfBookmarkIterator* PopplerGlibPageBookmarkIterator::getChildIter()
 {
 	PopplerIndexIter* child = poppler_index_iter_get_child(iter);
-	if (child == NULL)
+	if (child == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	return new PopplerGlibPageBookmarkIterator(child, document);
@@ -44,9 +44,9 @@ XojPdfAction* PopplerGlibPageBookmarkIterator::getAction()
 {
 	PopplerAction* action = poppler_index_iter_get_action(iter);
 
-	if (action == NULL)
+	if (action == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	return new PopplerGlibAction(action, document);

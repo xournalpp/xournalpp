@@ -117,7 +117,7 @@ private:
 	/**
 	 * The widget which is drawn
 	 */
-	GtkWidget* widget = NULL;
+	GtkWidget* widget = nullptr;
 
 	/**
 	 * Color of the icon

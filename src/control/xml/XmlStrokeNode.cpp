@@ -3,10 +3,10 @@
 
 XmlStrokeNode::XmlStrokeNode(const char* tag) : XmlNode(tag)
 {
-	this->points = NULL;
+	this->points = nullptr;
 	this->pointsLength = 0;
 	this->width = 0;
-	this->widths = NULL;
+	this->widths = nullptr;
 	this->widthsLength = 0;
 }
 

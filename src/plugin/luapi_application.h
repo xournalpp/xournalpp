@@ -81,18 +81,18 @@ static int applib_registerUi(lua_State* L)
 	//   -2 = "MenuName"
 	//   -1 = "functionName"
 
-	const char* accelerator = luaL_optstring(L, -3, NULL);
-	const char* menu = luaL_optstring(L, -2, NULL);
-	const char* callback = luaL_optstring(L, -1, NULL);
-	if (callback == NULL)
+	const char* accelerator = luaL_optstring(L, -3, nullptr);
+	const char* menu = luaL_optstring(L, -2, nullptr);
+	const char* callback = luaL_optstring(L, -1, nullptr);
+	if (callback == nullptr)
 	{
 		luaL_error(L, "Missing callback function!");
 	}
-	if (menu == NULL)
+	if (menu == nullptr)
 	{
 		menu = "";
 	}
-	if (accelerator == NULL)
+	if (accelerator == nullptr)
 	{
 		accelerator = "";
 	}
@@ -145,8 +145,8 @@ static int applib_uiAction(lua_State* L)
 	bool enabled = true;
 
 	ActionGroup group = GROUP_NOGROUP;
-	const char* groupStr = luaL_optstring(L, -3, NULL);
-	if (groupStr != NULL)
+	const char* groupStr = luaL_optstring(L, -3, nullptr);
+	if (groupStr != nullptr)
 	{
 		group = ActionGroup_fromString(groupStr);
 	}
@@ -156,16 +156,16 @@ static int applib_uiAction(lua_State* L)
 		enabled = lua_toboolean(L, -2);
 	}
 
-	const char* actionStr = luaL_optstring(L, -1, NULL);
-	if (actionStr == NULL)
+	const char* actionStr = luaL_optstring(L, -1, nullptr);
+	if (actionStr == nullptr)
 	{
 		luaL_error(L, "Missing action!");
 	}
 
 	ActionType action = ActionType_fromString(actionStr);
-	GdkEvent* event = NULL;
-	GtkMenuItem* menuitem = NULL;
-	GtkToolButton* toolbutton = NULL;
+	GdkEvent* event = nullptr;
+	GtkMenuItem* menuitem = nullptr;
+	GtkToolButton* toolbutton = nullptr;
 
 	Control* ctrl = plugin->getControl();
 	ctrl->actionPerformed(action, group, event, menuitem, toolbutton, enabled);
@@ -218,9 +218,9 @@ static const luaL_Reg applib[] = {
 	{ "changeCurrentPageBackground", applib_changeCurrentPageBackground },
 
 	// Placeholder
-//	{"MSG_BT_OK", NULL},
+//	{"MSG_BT_OK", nullptr},
 
-	{NULL, NULL}
+	{nullptr, nullptr}
 };
 
 /**
