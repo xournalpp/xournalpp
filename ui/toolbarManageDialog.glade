@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.22.1 -->
 <interface>
-  <requires lib="gtk+" version="3.0"/>
+  <requires lib="gtk+" version="3.18"/>
   <object class="GtkDialog" id="DialogManageToolbar">
     <property name="name">DialogManageToolbar</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Manage Toolbar</property>
-    <property name="icon">pixmaps/xournalpp.svg</property>
+    <property name="icon">pixmaps/com.github.xournalpp.xournalpp.svg</property>
     <property name="type_hint">normal</property>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="visible">True</property>
@@ -59,7 +62,6 @@
                     <property name="can_focus">True</property>
                     <child internal-child="selection">
                       <object class="GtkTreeSelection" id="treeview-selection"/>
-                        <property name="name">treeview-selection</property>
                     </child>
                   </object>
                   <packing>
@@ -75,8 +77,8 @@
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkButton" id="btCopy">
-                        <property name="name">btCopy</property>
                         <property name="label">gtk-copy</property>
+                        <property name="name">btCopy</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
@@ -91,8 +93,8 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="btDelete">
-                        <property name="name">btDelete</property>
                         <property name="label">gtk-delete</property>
+                        <property name="name">btDelete</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
@@ -107,8 +109,8 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="btNew">
-                        <property name="name">btNew</property>
                         <property name="label">gtk-new</property>
+                        <property name="name">btNew</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
