@@ -505,13 +505,13 @@ void MainWindow::updateScrollbarSidebarPosition()
 
 	if (sidebarRight)
 	{
-		gtk_paned_pack1(GTK_PANED(panelMainContents), boxContents, TRUE, FALSE);
-		gtk_paned_pack2(GTK_PANED(panelMainContents), sidebar, FALSE, FALSE);
+		gtk_paned_pack1(GTK_PANED(panelMainContents), boxContents, true, false);
+		gtk_paned_pack2(GTK_PANED(panelMainContents), sidebar, false, false);
 	}
 	else
 	{
-		gtk_paned_pack1(GTK_PANED(panelMainContents), sidebar, FALSE, FALSE);
-		gtk_paned_pack2(GTK_PANED(panelMainContents), boxContents, TRUE, FALSE);
+		gtk_paned_pack1(GTK_PANED(panelMainContents), sidebar, false, false);
+		gtk_paned_pack2(GTK_PANED(panelMainContents), boxContents, true, false);
 	}
 
 	gtk_paned_set_position(GTK_PANED(panelMainContents), divider);

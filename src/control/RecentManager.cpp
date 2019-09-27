@@ -73,7 +73,7 @@ void RecentManager::addRecentFileFilename(Path filename)
 	recentData->app_name = (gchar*) g_get_application_name();
 	recentData->app_exec = g_strjoin(" ", g_get_prgname(), "%u", nullptr);
 	recentData->groups = groups;
-	recentData->is_private = FALSE;
+	recentData->is_private = false;
 
 	GFile* file = g_file_new_for_path(filename.c_str());
 	gchar* uri = g_file_get_uri(file);

@@ -48,7 +48,7 @@ void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui)
 		gtk_toolbar_insert(tbSelectPage, it, -1);
 
 		// Add widget to sidebar
-		gtk_box_pack_start(GTK_BOX(sidebar), p->getWidget(), TRUE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX(sidebar), p->getWidget(), true, true, 0);
 
 		i++;
 	}

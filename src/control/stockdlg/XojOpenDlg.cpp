@@ -131,7 +131,7 @@ Path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 	{
 		attachOpt = gtk_check_button_new_with_label(_("Attach file to the journal"));
 		g_object_ref(attachOpt);
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(attachOpt), FALSE);
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(attachOpt), false);
 		gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(dialog), attachOpt);
 	}
 

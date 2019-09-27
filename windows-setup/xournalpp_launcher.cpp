@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
 	strncpy(cmd, command.c_str(), command.size());
 	cmd[command.size()] = 0;
 //	MessageBoxA(nullptr, cmd, "Debug", 0);
-	if (CreateProcessA(nullptr, cmd, nullptr, nullptr, TRUE, 0, nullptr, folder.c_str(), &info, &processInfo))
+	if (CreateProcessA(nullptr, cmd, nullptr, nullptr, true, 0, nullptr, folder.c_str(), &info, &processInfo))
 	{
 		WaitForSingleObject(processInfo.hProcess, INFINITE);
 		CloseHandle(processInfo.hProcess);

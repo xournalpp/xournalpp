@@ -174,7 +174,7 @@ static void gtk_invisible_menu_get_preferred_height(GtkWidget *widget, gint *min
 
 static gboolean gtk_invisible_menu_draw(GtkWidget *widget, cairo_t *cr)
 {
-	return FALSE;
+	return false;
 }
 
 static void gtk_invisible_menu_class_init(GtkInvisibleMenuClass* klass)

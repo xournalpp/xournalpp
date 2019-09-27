@@ -146,7 +146,7 @@ static void gtk_xoj_int_txt_class_init(GtkXojIntTxtClass* klass)
 	/**
 	 * GtkTextView::select-all:
 	 * @text_view: the object which received the signal
-	 * @select: %TRUE to select, %FALSE to unselect
+	 * @select: %true to select, %false to unselect
 	 *
 	 * The ::select-all signal is a
 	 * <link linkend="keybinding-signals">keybinding signal</link>
@@ -343,7 +343,7 @@ static void gtk_xoj_int_txt_class_init(GtkXojIntTxtClass* klass)
 
 static void gtk_xoj_int_txt_init(GtkXojIntTxt* invisible)
 {
-	gtk_widget_set_has_window(GTK_WIDGET(invisible), TRUE);
+	gtk_widget_set_has_window(GTK_WIDGET(invisible), true);
 }
 
 GtkWidget*
@@ -356,7 +356,7 @@ gtk_xoj_int_txt_new(TextEditor* te)
 
 static void gtk_invisible_realize(GtkWidget* widget)
 {
-	gtk_widget_set_realized(widget, TRUE);
+	gtk_widget_set_realized(widget, true);
 
 	GdkWindow* parent = gtk_widget_get_parent_window(widget);
 	if (parent == nullptr)
@@ -371,7 +371,7 @@ static void gtk_invisible_realize(GtkWidget* widget)
 	attributes.height = 0;
 	attributes.window_type = GDK_WINDOW_TEMP;
 	attributes.wclass = GDK_INPUT_ONLY;
-	attributes.override_redirect = TRUE;
+	attributes.override_redirect = true;
 	attributes.event_mask = gtk_widget_get_events(widget);
 
 	gint attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_NOREDIR;
@@ -388,7 +388,7 @@ static void gtk_invisible_style_set(GtkWidget* widget, GtkStyle* previous_style)
 
 static void gtk_invisible_show(GtkWidget* widget)
 {
-	gtk_widget_set_visible(widget, TRUE);
+	gtk_widget_set_visible(widget, true);
 	gtk_widget_map(widget);
 }
 

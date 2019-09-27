@@ -49,7 +49,7 @@ SidebarPreviewBaseEntry::~SidebarPreviewBaseEntry()
 gboolean SidebarPreviewBaseEntry::drawCallback(GtkWidget* widget, cairo_t* cr, SidebarPreviewBaseEntry* preview)
 {
 	preview->paint(cr);
-	return TRUE;
+	return true;
 }
 
 void SidebarPreviewBaseEntry::setSelected(bool selected)
