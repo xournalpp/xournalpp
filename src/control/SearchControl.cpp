@@ -85,7 +85,7 @@ bool SearchControl::search(string text, int* occures, double* top)
 			double min = first.y1;
 			for (XojPdfRectangle rect : this->results)
 			{
-				min = MIN(min, rect.y1);
+				min = std::min(min, rect.y1);
 			}
 
 			*top = min;

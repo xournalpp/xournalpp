@@ -33,10 +33,10 @@ bool Rectangle::intersects(const Rectangle& other, Rectangle* dest) const
 
 	bool returnVal = false;
 
-	destX = MAX(this->x, other.x);
-	destY = MAX(this->y, other.y);
-	destW = MIN(this->x + this->width, other.x + other.width) - destX;
-	destH = MIN(this->y + this->height, other.y + other.height) - destY;
+	destX = std::max(this->x, other.x);
+	destY = std::max(this->y, other.y);
+	destW = std::min(this->x + this->width, other.x + other.width) - destX;
+	destH = std::min(this->y + this->height, other.y + other.height) - destY;
 
 	if (destW > 0 && destH > 0)
 	{
@@ -65,11 +65,11 @@ void Rectangle::add(double x, double y, double width, double height)
 		return;
 	}
 
-	double x1 = MIN(this->x, x);
-	double y1 = MIN(this->y, y);
+	double x1 = std::min(this->x, x);
+	double y1 = std::min(this->y, y);
 
-	double x2 = MAX(this->x + this->width, x + width);
-	double y2 = MAX(this->y + this->height, y + height);
+	double x2 = std::max(this->x + this->width, x + width);
+	double y2 = std::max(this->y + this->height, y + height);
 
 	this->x = x1;
 	this->y = y1;
@@ -89,11 +89,11 @@ Rectangle Rectangle::translated(double dx, double dy)
 
 Rectangle Rectangle::intersect(const Rectangle &other)
 {
-	double x1 = MAX(this->x, other.x);
-	double y1 = MAX(this->y, other.y);
+	double x1 = std::max(this->x, other.x);
+	double y1 = std::max(this->y, other.y);
 
-	double x2 = MIN(this->x + this->width, other.x + other.width);
-	double y2 = MIN(this->y + this->height, other.y + other.height);
+	double x2 = std::min(this->x + this->width, other.x + other.width);
+	double y2 = std::min(this->y + this->height, other.y + other.height);
 
 	return Rectangle(x1, y1, x2 - x1, y2 - y1);
 }

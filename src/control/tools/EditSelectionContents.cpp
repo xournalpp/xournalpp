@@ -229,21 +229,21 @@ UndoAction* EditSelectionContents::setFont(XojFont& font)
 			else
 			{
 				// size with old font
-				x1 = MIN(x1, t->getX());
-				y1 = MIN(y1, t->getY());
+				x1 = std::min(x1, t->getX());
+				y1 = std::min(y1, t->getY());
 
-				x2 = MAX(x2, t->getX() + t->getElementWidth());
-				y2 = MAX(y2, t->getY() + t->getElementHeight());
+				x2 = std::max(x2, t->getX() + t->getElementWidth());
+				y2 = std::max(y2, t->getY() + t->getElementHeight());
 			}
 
 			t->setFont(font);
 
 			// size with new font
-			x1 = MIN(x1, t->getX());
-			y1 = MIN(y1, t->getY());
+			x1 = std::min(x1, t->getX());
+			y1 = std::min(y1, t->getY());
 
-			x2 = MAX(x2, t->getX() + t->getElementWidth());
-			y2 = MAX(y2, t->getY() + t->getElementHeight());
+			x2 = std::max(x2, t->getX() + t->getElementWidth());
+			y2 = std::max(y2, t->getY() + t->getElementHeight());
 		}
 	}
 

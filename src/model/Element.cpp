@@ -105,10 +105,10 @@ bool Element::intersectsArea(double x, double y, double width, double height)
 	double dest_x, dest_y;
 	double dest_w, dest_h;
 
-	dest_x = MAX(getX(), x);
-	dest_y = MAX(getY(), y);
-	dest_w = MIN(getX() + getElementWidth(), x + width) - dest_x;
-	dest_h = MIN(getY() + getElementHeight(), y + height) - dest_y;
+	dest_x = std::max(getX(), x);
+	dest_y = std::max(getY(), y);
+	dest_w = std::min(getX() + getElementWidth(), x + width) - dest_x;
+	dest_h = std::min(getY() + getElementHeight(), y + height) - dest_y;
 
 	return (dest_w > 0 && dest_h > 0);
 }

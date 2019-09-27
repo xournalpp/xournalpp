@@ -72,11 +72,11 @@ void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest)
 
 			if (pDest->top)
 			{
-				link->setChangeTop(pageHeight - MIN(pageHeight, pDest->top));
+				link->setChangeTop(pageHeight - std::min(pageHeight, pDest->top));
 			}
 			else if (pDest->bottom)
 			{
-				link->setChangeTop(pageHeight - MIN(pageHeight, pageHeight - pDest->bottom));
+				link->setChangeTop(pageHeight - std::min(pageHeight, pageHeight - pDest->bottom));
 			}
 
 			if (pDest->zoom != 0)

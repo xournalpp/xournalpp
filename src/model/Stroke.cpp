@@ -390,7 +390,7 @@ bool Stroke::intersects(double x, double y, double halfEraserSize, double* gap)
 			/**
 			 * The normale to a vector, the padding to a point
 			 */
-			double p = ABS((x - lastX) * (lastY - py) + (y - lastY) * (px - lastX)) / hypot(lastX - x, lastY - y);
+			double p = std::abs((x - lastX) * (lastY - py) + (y - lastY) * (px - lastX)) / hypot(lastX - x, lastY - y);
 
 			// The space to the line is in the range, but it can also be parallel
 			// and not enough close, so calculate a "circle" with the center on the

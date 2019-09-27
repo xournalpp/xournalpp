@@ -59,10 +59,10 @@ bool ColorUndoAction::undo(Control* control)
 	{
 		e->e->setColor(e->oldColor);
 
-		x1 = MIN(x1, e->e->getX());
-		x2 = MAX(x2, e->e->getX() + e->e->getElementWidth());
-		y1 = MIN(y1, e->e->getY());
-		y2 = MAX(y2, e->e->getY() + e->e->getElementHeight());
+		x1 = std::min(x1, e->e->getX());
+		x2 = std::max(x2, e->e->getX() + e->e->getElementWidth());
+		y1 = std::min(y1, e->e->getY());
+		y2 = std::max(y2, e->e->getY() + e->e->getElementHeight());
 	}
 
 	Rectangle rect(x1, y1, x2 - x1, y2 - y1);
@@ -88,10 +88,10 @@ bool ColorUndoAction::redo(Control* control)
 	{
 		e->e->setColor(e->newColor);
 
-		x1 = MIN(x1, e->e->getX());
-		x2 = MAX(x2, e->e->getX() + e->e->getElementWidth());
-		y1 = MIN(y1, e->e->getY());
-		y2 = MAX(y2, e->e->getY() + e->e->getElementHeight());
+		x1 = std::min(x1, e->e->getX());
+		x2 = std::max(x2, e->e->getX() + e->e->getElementWidth());
+		y1 = std::min(y1, e->e->getY());
+		y2 = std::max(y2, e->e->getY() + e->e->getElementHeight());
 	}
 
 	Rectangle rect(x1, y1, x2 - x1, y2 - y1);

@@ -49,10 +49,10 @@ bool TextUndoAction::undo(Control* control)
 	text->setText(lastText);
 	this->textEditor->setText(lastText);
 
-	x1 = MIN(x1, text->getX());
-	y1 = MIN(y1, text->getY());
-	x2 = MAX(x2, text->getX() + text->getElementWidth());
-	y2 = MAX(y2, text->getY() + text->getElementHeight());
+	x1 = std::min(x1, text->getX());
+	y1 = std::min(y1, text->getY());
+	x2 = std::max(x2, text->getX() + text->getElementWidth());
+	y2 = std::max(y2, text->getY() + text->getElementHeight());
 
 	Rectangle rect(x1, y1, x2 - x1, y2 - y1);
 	this->page->fireRectChanged(rect);
@@ -71,10 +71,10 @@ bool TextUndoAction::redo(Control* control)
 	text->setText(newText);
 	this->textEditor->setText(newText);
 
-	x1 = MIN(x1, text->getX());
-	y1 = MIN(y1, text->getY());
-	x2 = MAX(x2, text->getX() + text->getElementWidth());
-	y2 = MAX(y2, text->getY() + text->getElementHeight());
+	x1 = std::min(x1, text->getX());
+	y1 = std::min(y1, text->getY());
+	x2 = std::max(x2, text->getX() + text->getElementWidth());
+	y2 = std::max(y2, text->getY() + text->getElementHeight());
 
 	Rectangle rect(x1, y1, x2 - x1, y2 - y1);
 	this->page->fireRectChanged(rect);

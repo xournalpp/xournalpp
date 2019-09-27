@@ -72,7 +72,7 @@ GdkPixbuf* ImageOpenDlg::pixbufScaleDownIfNecessary(GdkPixbuf* pixbuf, gint maxS
 
 	if (width > maxSize || height > maxSize)
 	{
-		double factor = (gdouble) maxSize / MAX(width, height);
+		double factor = (gdouble) maxSize / std::max(width, height);
 
 		width = width * factor;
 		height = height * factor;

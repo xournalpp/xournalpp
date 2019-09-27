@@ -51,7 +51,7 @@ void RectangleHandler::drawShape(Point& c, const PositionInputData& pos)
 		{
 			int signW = width>0?1:-1;
 			int signH = height>0?1:-1;
-			width = MAX( width*signW, height*signH) * signW;	
+			width = std::max( width*signW, height*signH) * signW;
 			height = (width * signW) * signH;
 		}
 		
