@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-20 00:03+0000\n"
+"POT-Creation-Date: 2019-09-27 23:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -958,7 +958,7 @@ msgstr ""
 msgid "Save File"
 msgstr ""
 
-#: ../src/control/jobs/CustomExportJob.cpp:162
+#: ../src/control/jobs/CustomExportJob.cpp:163
 #: ../src/control/jobs/SaveJob.cpp:143
 msgid "Save file error: {1}"
 msgstr ""
