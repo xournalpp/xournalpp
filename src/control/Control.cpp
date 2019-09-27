@@ -2962,8 +2962,8 @@ void Control::clipboardPaste(Element* e)
 	double width = e->getElementWidth();
 	double height = e->getElementHeight();
 
-	x = MAX(0, x - width / 2);
-	y = MAX(0, y - height / 2);
+	x = std::max(0.0, x - width / 2);
+	y = std::max(0.0, y - height / 2);
 
 	e->setX(x);
 	e->setY(y);

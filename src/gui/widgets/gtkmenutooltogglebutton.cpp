@@ -22,6 +22,7 @@
 //#undef GTK_DISABLE_DEPRECATED /* GtkTooltips */
 
 #include "gtkmenutooltogglebutton.h"
+#include <cmath>
 
 #define GTK_MENU_TOOL_TOGGLE_BUTTON_GET_PRIVATE(object)(G_TYPE_INSTANCE_GET_PRIVATE ((object), GTK_TYPE_MENU_TOOL_TOGGLE_BUTTON, GtkMenuToolToggleButtonPrivate))
 
@@ -252,7 +253,7 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
 
 		if (direction == GTK_TEXT_DIR_LTR)
 		{
-			*x += MAX(allocation.width - menu_req.width, 0);
+			*x += std::max(allocation.width - menu_req.width, 0);
 		}
 		else if (menu_req.width > allocation.width)
 		{

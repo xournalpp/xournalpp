@@ -50,10 +50,10 @@ void EraseableStrokePart::calcSize()
 	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
 		Point* p = (Point*) l->data;
-		x1 = MIN(x1, p->x);
-		x2 = MAX(x2, p->x);
-		y1 = MIN(y1, p->y);
-		y2 = MAX(y2, p->y);
+		x1 = std::min(x1, p->x);
+		x2 = std::max(x2, p->x);
+		y1 = std::min(y1, p->y);
+		y2 = std::max(y2, p->y);
 	}
 
 	this->x = x1;

@@ -36,7 +36,7 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
 
 	if (direction == GTK_TEXT_DIR_LTR)
 	{
-		*x += MAX(allocation.width - menu_req.width, 0);
+		*x += std::max(allocation.width - menu_req.width, 0);
 	}
 	else if (menu_req.width > allocation.width)
 	{

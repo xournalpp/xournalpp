@@ -54,10 +54,10 @@ bool TextBoxUndoAction::undo(Control* control)
 	double x2 = element->getX() + element->getElementWidth();
 	double y2 = element->getY() + element->getElementHeight();
 
-	x1 = MIN(x1, oldelement->getX());
-	y1 = MIN(y1, oldelement->getY());
-	x2 = MAX(x2, oldelement->getX() + oldelement->getElementWidth());
-	y2 = MAX(y2, oldelement->getY() + oldelement->getElementHeight());
+	x1 = std::min(x1, oldelement->getX());
+	y1 = std::min(y1, oldelement->getY());
+	x2 = std::max(x2, oldelement->getX() + oldelement->getElementWidth());
+	y2 = std::max(y2, oldelement->getY() + oldelement->getElementHeight());
 
 	Rectangle rect(x1, y1, x2 - x1, y2 - y1);
 	this->page->fireRectChanged(rect);
@@ -77,10 +77,10 @@ bool TextBoxUndoAction::redo(Control* control)
 	double x2 = oldelement->getX() + oldelement->getElementWidth();
 	double y2 = oldelement->getY() + oldelement->getElementHeight();
 
-	x1 = MIN(x1, element->getX());
-	y1 = MIN(y1, element->getY());
-	x2 = MAX(x2, element->getX() + element->getElementWidth());
-	y2 = MAX(y2, element->getY() + element->getElementHeight());
+	x1 = std::min(x1, element->getX());
+	y1 = std::min(y1, element->getY());
+	x2 = std::max(x2, element->getX() + element->getElementWidth());
+	y2 = std::max(y2, element->getY() + element->getElementHeight());
 
 	Rectangle rect(x1, y1, x2 - x1, y2 - y1);
 	this->page->fireRectChanged(rect);
