@@ -19,7 +19,7 @@
 #include <condition_variable>
 
 template <typename T>
-class AudioQueue : protected std::deque<T>
+class AudioQueue
 {
 public:
 	AudioQueue()
@@ -30,16 +30,31 @@ public:
 	{
 	}
 
+private:
+	std::unique_ptr<T[]> buf;
+	size_t buf_head = 0;
+	size_t buf_tail = 0;
+	bool buf_full = 0;
+	int buf_max_size = 0;
+
 public:
 	void reset()
 	{
 		this->popNotified = false;
 		this->pushNotified = false;
 		this->streamEnd = false;
-		this->clear();
+
+		buf_head = buf_tail = 0;
+		buf_full = false;
+
+		for (long i = 0; i < buf_max_size; i++)
+		{
+			buf[i] = 0;
+		}		
 
 		this->sampleRate = -1;
 		this->channels = 0;
+
 	}
 
 	bool empty()
@@ -47,7 +62,7 @@ public:
 		return std::deque<T>::empty();
 	}
 
-	unsigned long size()
+	unsigned long size() const
 	{
 		return std::deque<T>::size();
 	}
@@ -56,20 +71,27 @@ public:
 	{
 		for (unsigned long i = 0; i < nSamples; i++)
 		{
-			this->push_front(samples[i]);
-		}
+			buf[buf_head] = samples[i];
 
+			if(buf_full)
+			{
+				buf_tail = (buf_tail + 1) % buf_max_size;
+			}
+
+			buf_head = (buf_head + 1) % buf_max_size;
+		    buf_full = buf_head == buf_tail;
+		}
 		this->popNotified = false;
 
 		this->pushNotified = true;
 		this->pushLockCondition.notify_one();
 	}
 
-	void pop(T* returnBuffer, unsigned long& returnBufferLength, unsigned long nSamples)
+	void pop(T* returnbuf, unsigned long& returnbufLength, unsigned long nSamples)
 	{
 		if (this->channels == 0)
 		{
-			returnBufferLength = 0;
+			returnbufLength = 0;
 
 			this->popNotified = true;
 			this->popLockCondition.notify_one();
@@ -77,12 +99,13 @@ public:
 			return;
 		}
 
-		returnBufferLength = std::min(nSamples, this->size() - this->size() % this->channels);
-		for (long i = 0; i < returnBufferLength; i++)
+		returnbufLength = std::min(nSamples, this->size() - this->size() % this->channels);
+		for (long i = 0; i < returnbufLength; i++)
 		{
-			returnBuffer[i] = this->back();
-			this->pop_back();
+			returnbuf[i] = buf[buf_tail];
+			buf_tail = (buf_tail + 1) % buf_max_size;
 		}
+		buf_full = false;
 
 		this->pushNotified = false;
 
