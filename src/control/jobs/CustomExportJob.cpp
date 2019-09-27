@@ -115,6 +115,7 @@ bool CustomExportJob::showFilechooser()
 
 	if (!dlg->isConfirmed())
 	{
+		doc->unlock();
 		return false;
 	}
 
