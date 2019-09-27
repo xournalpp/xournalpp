@@ -871,7 +871,7 @@ void Settings::save()
 	xmlNodePtr root;
 	xmlNodePtr xmlNode;
 
-	xmlIndentTreeOutput = TRUE;
+	xmlIndentTreeOutput = true;
 
 	doc = xmlNewDoc((const xmlChar*) "1.0");
 	if (doc == nullptr)

@@ -13,7 +13,7 @@ AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath)
 	GtkWidget* w = get("vbox1");
 	GtkWidget* linkButton = gtk_link_button_new("http://github.com/xournalpp/xournalpp");
 	gtk_widget_show(linkButton);
-	gtk_box_pack_start(GTK_BOX(w), linkButton, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(w), linkButton, true, true, 0);
 }
 
 AboutDialog::~AboutDialog()

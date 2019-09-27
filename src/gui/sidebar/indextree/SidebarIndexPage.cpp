@@ -27,21 +27,21 @@ SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar)
 
 	GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeViewBookmarks));
 	gtk_tree_selection_set_mode(selection, GTK_SELECTION_SINGLE);
-	gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeViewBookmarks), FALSE);
+	gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeViewBookmarks), false);
 	gtk_container_add(GTK_CONTAINER(scrollBookmarks), treeViewBookmarks);
 
 
 	GtkTreeViewColumn* column = gtk_tree_view_column_new();
-	gtk_tree_view_column_set_expand(GTK_TREE_VIEW_COLUMN(column), TRUE);
+	gtk_tree_view_column_set_expand(GTK_TREE_VIEW_COLUMN(column), true);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeViewBookmarks), column);
 
 	GtkCellRenderer* renderer = (GtkCellRenderer*) g_object_new(GTK_TYPE_CELL_RENDERER_TEXT, "ellipsize",
 																PANGO_ELLIPSIZE_END, nullptr);
-	gtk_tree_view_column_pack_start(GTK_TREE_VIEW_COLUMN(column), renderer, TRUE);
+	gtk_tree_view_column_pack_start(GTK_TREE_VIEW_COLUMN(column), renderer, true);
 	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), renderer, "markup", DOCUMENT_LINKS_COLUMN_NAME, nullptr);
 
 	renderer = gtk_cell_renderer_text_new();
-	gtk_tree_view_column_pack_end(GTK_TREE_VIEW_COLUMN(column), renderer, FALSE);
+	gtk_tree_view_column_pack_end(GTK_TREE_VIEW_COLUMN(column), renderer, false);
 	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), renderer,
 										"text", DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, nullptr);
 	g_object_set(G_OBJECT(renderer), "style", PANGO_STYLE_ITALIC, nullptr);
@@ -209,7 +209,7 @@ gboolean SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, 
 	gtk_tree_model_get(model, iter, DOCUMENT_LINKS_COLUMN_NAME, &text, -1);
 	if (text == nullptr)
 	{
-		return TRUE;
+		return true;
 	}
 
 	gchar* tmp = g_utf8_normalize(key, -1, G_NORMALIZE_DEFAULT);
@@ -224,7 +224,7 @@ gboolean SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, 
 	{
 		g_free(enteredstring);
 		g_free(normalized);
-		return FALSE;
+		return false;
 	}
 
 	/* Use Pango to separate by words. */
@@ -234,12 +234,12 @@ gboolean SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, 
 	pango_get_log_attrs(normalized, strlen(normalized), -1, nullptr, log_attrs, len + 1);
 
 	gchar* word = normalized;
-	gboolean result = TRUE;
+	gboolean result = true;
 	for (size_t i = 0; i < (len - 1); i++)
 	{
 		if (log_attrs[i].is_word_start && g_str_has_prefix(word, enteredstring))
 		{
-			result = FALSE;
+			result = false;
 			break;
 		}
 		word = g_utf8_next_char(word);
@@ -292,7 +292,7 @@ int SidebarIndexPage::expandOpenLinks(GtkTreeModel* model, GtkTreeIter* parent)
 			if (link->dest->getExpand())
 			{
 				GtkTreePath* path = gtk_tree_model_get_path(model, &iter);
-				gtk_tree_view_expand_row(GTK_TREE_VIEW(treeViewBookmarks), path, FALSE);
+				gtk_tree_view_expand_row(GTK_TREE_VIEW(treeViewBookmarks), path, false);
 				gtk_tree_path_free(path);
 			}
 

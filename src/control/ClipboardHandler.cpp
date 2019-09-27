@@ -240,7 +240,7 @@ bool ClipboardHandler::copy()
 		gtk_target_list_add_text_targets(list, 0);
 	}
 	// we always copy an image to clipboard
-	gtk_target_list_add_image_targets(list, 0, TRUE);
+	gtk_target_list_add_image_targets(list, 0, true);
 	gtk_target_list_add(list, atomSvg1, 0, 0);
 	gtk_target_list_add(list, atomSvg2, 0, 0);
 	gtk_target_list_add(list, atomXournal, 0, 0);
@@ -325,7 +325,7 @@ gboolean gtk_selection_data_targets_include_xournal(GtkSelectionData* selection_
 {
 	GdkAtom* targets;
 	gint n_targets;
-	gboolean result = FALSE;
+	gboolean result = false;
 
 	if (gtk_selection_data_get_targets(selection_data, &targets, &n_targets))
 	{

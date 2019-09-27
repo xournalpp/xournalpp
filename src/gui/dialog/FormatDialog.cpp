@@ -33,7 +33,7 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 	g_object_unref(store);
 
 	GtkCellRenderer* cell = gtk_cell_renderer_text_new();
-	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(cbTemplate), cell, TRUE);
+	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(cbTemplate), cell, true);
 	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(cbTemplate), cell, "text", 0, nullptr);
 
 	int selectedFormat = -1;

@@ -59,7 +59,7 @@ Stroke* ShapeRecognizer::tryRectangle()
 		RecoSegment* r2 = &rs[(i + 1) % 4];
 		if (fabs(fabs(r1->angle - r2->angle) - M_PI / 2) > RECTANGLE_ANGLE_TOLERANCE)
 		{
-			return FALSE;
+			return nullptr;
 		}
 		avgAngle += r1->angle;
 		if (r2->angle > r1->angle)
@@ -176,7 +176,7 @@ Stroke* ShapeRecognizer::tryArrow()
 	// check arrow head not too big, and angles roughly ok
 	for (int i = 1; i <= 2; i++)
 	{
-		rs[i].reversed = FALSE;
+		rs[i].reversed = false;
 		alpha[i] = rs[i].angle - angle;
 		while (alpha[i] < -M_PI / 2)
 		{
