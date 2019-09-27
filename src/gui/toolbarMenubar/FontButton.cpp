@@ -111,8 +111,8 @@ GtkWidget* FontButton::newFontButton()
 {
 	GtkWidget* w = gtk_font_button_new();
 	gtk_widget_show(w);
-	gtk_font_button_set_use_font(GTK_FONT_BUTTON(w), TRUE);
-	gtk_button_set_focus_on_click(GTK_BUTTON(w), FALSE);
+	gtk_font_button_set_use_font(GTK_FONT_BUTTON(w), true);
+	gtk_button_set_focus_on_click(GTK_BUTTON(w), false);
 
 	return w;
 }

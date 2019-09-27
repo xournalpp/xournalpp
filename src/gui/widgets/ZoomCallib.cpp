@@ -85,7 +85,7 @@ static void zoomcallib_realize(GtkWidget* widget)
 	g_return_if_fail(widget != nullptr);
 	g_return_if_fail(IS_ZOOM_CALLIB(widget));
 
-	gtk_widget_set_realized(widget, TRUE);
+	gtk_widget_set_realized(widget, true);
 
 	attributes.window_type = GDK_WINDOW_CHILD;
 
@@ -169,5 +169,5 @@ static gboolean zoomcallib_draw(GtkWidget* widget, cairo_t* cr)
 		}
 	}
 
-	return TRUE;
+	return true;
 }

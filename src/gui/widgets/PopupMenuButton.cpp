@@ -60,7 +60,7 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
 		*y -= menu_req.height;
 	}
 
-	*push_in = FALSE;
+	*push_in = false;
 }
 
 PopupMenuButton::PopupMenuButton(GtkWidget* button, GtkWidget* menu)
@@ -73,7 +73,7 @@ PopupMenuButton::PopupMenuButton(GtkWidget* button, GtkWidget* menu)
 		                 gtk_menu_popup(GTK_MENU(self->menu), nullptr, nullptr, (GtkMenuPositionFunc) menu_position_func,
 		                                button, 0, gtk_get_current_event_time());
 
-			gtk_menu_shell_select_first(GTK_MENU_SHELL(self->menu), FALSE);
+			gtk_menu_shell_select_first(GTK_MENU_SHELL(self->menu), false);
 
 			// GTK 3.22: gtk_menu_popup_at_widget(menu, button, GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, nullptr);
 

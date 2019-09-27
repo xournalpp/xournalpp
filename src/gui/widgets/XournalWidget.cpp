@@ -171,7 +171,7 @@ static void gtk_xournal_init(GtkXournal* xournal)
 {
 	GtkWidget* widget = GTK_WIDGET(xournal);
 
-	gtk_widget_set_can_focus(widget, TRUE);
+	gtk_widget_set_can_focus(widget, true);
 }
 
 static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width)
@@ -212,10 +212,10 @@ static void gtk_xournal_realize(GtkWidget* widget)
 	g_return_if_fail(widget != nullptr);
 	g_return_if_fail(GTK_IS_XOURNAL(widget));
 
-	gtk_widget_set_realized(widget, TRUE);
+	gtk_widget_set_realized(widget, true);
 
-	gtk_widget_set_hexpand(widget, TRUE);
-	gtk_widget_set_vexpand(widget, TRUE);
+	gtk_widget_set_hexpand(widget, true);
+	gtk_widget_set_vexpand(widget, true);
 
 	GtkAllocation allocation;
 	gtk_widget_get_allocation(widget, &allocation);
@@ -293,8 +293,8 @@ void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2, int y2)
 
 static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
 {
-	g_return_val_if_fail(widget != nullptr, FALSE);
-	g_return_val_if_fail(GTK_IS_XOURNAL(widget), FALSE);
+	g_return_val_if_fail(widget != nullptr, false);
+	g_return_val_if_fail(GTK_IS_XOURNAL(widget), false);
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
@@ -347,7 +347,7 @@ static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
 		xournal->selection->paint(cr, zoom);
 	}
 
-	return TRUE;
+	return true;
 }
 
 static void gtk_xournal_destroy(GtkWidget* object)

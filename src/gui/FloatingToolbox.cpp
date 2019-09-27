@@ -16,7 +16,7 @@ FloatingToolbox::FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay)
 	this->floatingToolboxState = recalcSize;
 
 	gtk_overlay_add_overlay(overlay, this->floatingToolbox);
-	gtk_overlay_set_overlay_pass_through(overlay, this->floatingToolbox, TRUE);
+	gtk_overlay_set_overlay_pass_through(overlay, this->floatingToolbox, true);
 	gtk_widget_add_events(this->floatingToolbox, GDK_LEAVE_NOTIFY_MASK);
 	g_signal_connect(this->floatingToolbox, "leave-notify-event", G_CALLBACK(handleLeaveFloatingToolbox), this);
 	//position overlay widgets
@@ -57,19 +57,19 @@ bool FloatingToolbox::floatingToolboxActivated()
 
 		if (cfg->getAction() == TOOL_FLOATING_TOOLBOX)
 		{
-			return true;													// return TRUE
+			return true;													// return true
 		}
 	}
 
 	//check if user can show Floating Menu with tap.
 	if (settings->getDoActionOnStrokeFiltered() && settings->getStrokeFilterEnabled())
 	{
-		return true;  // return TRUE
+		return true;  // return true
 	}
 
 	if (this->countWidgets() > 0)  // FloatingToolbox contains something
 	{
-		return true;  // return TRUE
+		return true;  // return true
 	}
 
 	return false;
