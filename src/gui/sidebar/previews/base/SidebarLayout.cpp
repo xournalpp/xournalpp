@@ -71,7 +71,7 @@ public:
 
 		for (SidebarPreviewBaseEntry* p : this->list)
 		{
-			height = MAX(height, p->getHeight());
+			height = std::max(height, p->getHeight());
 		}
 
 
@@ -116,7 +116,7 @@ void SidebarLayout::layout(SidebarPreviewBase* sidebar)
 		{
 			y += row.placeAt(y, GTK_LAYOUT(sidebar->iconViewPreview));
 
-			width = MAX(width, row.getWidth());
+			width = std::max(width, row.getWidth());
 
 			row.clear();
 			row.add(p);
@@ -127,7 +127,7 @@ void SidebarLayout::layout(SidebarPreviewBase* sidebar)
 	{
 		y += row.placeAt(y, GTK_LAYOUT(sidebar->iconViewPreview));
 
-		width = MAX(width, row.getWidth());
+		width = std::max(width, row.getWidth());
 
 		row.clear();
 	}

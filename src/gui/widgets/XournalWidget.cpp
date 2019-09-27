@@ -155,7 +155,7 @@ Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p)
 		g_warning("XournalWidget:gtk_xournal_get_visible_area: intersection rectangle coordinates are negative which should never happen");
 	}
 
-	return new Rectangle(MAX(r3.x, 0) / zoom, MAX(r3.y, 0) / zoom, r3.width / zoom, r3.height / zoom);
+	return new Rectangle(std::max(r3.x, 0) / zoom, std::max(r3.y, 0) / zoom, r3.width / zoom, r3.height / zoom);
 }
 
 Layout* gtk_xournal_get_layout(GtkWidget* widget)

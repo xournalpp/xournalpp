@@ -15,11 +15,11 @@ Range::~Range()
 
 void Range::addPoint(double x, double y)
 {
-	this->x1 = MIN(this->x1, x);
-	this->x2 = MAX(this->x2, x);
+	this->x1 = std::min(this->x1, x);
+	this->x2 = std::max(this->x2, x);
 
-	this->y1 = MIN(this->y1, y);
-	this->y2 = MAX(this->y2, y);
+	this->y1 = std::min(this->y1, y);
+	this->y2 = std::max(this->y2, y);
 }
 
 double Range::getX() const

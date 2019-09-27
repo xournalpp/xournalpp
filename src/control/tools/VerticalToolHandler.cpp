@@ -25,7 +25,7 @@ VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, 
 	{
 		this->layer->removeElement(e, false);
 
-		this->jumpY = MAX(this->jumpY, e->getY() + e->getElementHeight());
+		this->jumpY = std::max(this->jumpY, e->getY() + e->getElementHeight());
 	}
 
 	this->jumpY = this->page->getHeight() - this->jumpY;
@@ -93,7 +93,7 @@ void VerticalToolHandler::currentPos(double x, double y)
 	{
 		return;
 	}
-	double y1 = MIN(this->endY, y);
+	double y1 = std::min(this->endY, y);
 
 	this->endY = y;
 

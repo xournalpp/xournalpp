@@ -40,11 +40,11 @@ RectSelection::~RectSelection()
 
 bool RectSelection::finalize(PageRef page)
 {
-	this->x1 = MIN(this->sx, this->ex);
-	this->x2 = MAX(this->sx, this->ex);
+	this->x1 = std::min(this->sx, this->ex);
+	this->x2 = std::max(this->sx, this->ex);
 
-	this->y1 = MIN(this->sy, this->ey);
-	this->y2 = MAX(this->sy, this->ey);
+	this->y1 = std::min(this->sy, this->ey);
+	this->y2 = std::max(this->sy, this->ey);
 
 	this->page = page;
 
@@ -78,17 +78,17 @@ bool RectSelection::contains(double x, double y)
 
 void RectSelection::currentPos(double x, double y)
 {
-	int aX = MIN(x, this->ex);
-	aX = MIN(aX, this->sx) - 10;
+	double aX = std::min(x, this->ex);
+	aX = std::min(aX, this->sx) - 10;
 
-	int bX = MAX(x, this->ex);
-	bX = MAX(bX, this->sx) + 10;
+	double bX = std::max(x, this->ex);
+	bX = std::max(bX, this->sx) + 10;
 
-	int aY = MIN(y, this->ey);
-	aY = MIN(aY, this->sy) - 10;
+	double aY = std::min(y, this->ey);
+	aY = std::min(aY, this->sy) - 10;
 
-	int bY = MAX(y, this->ey);
-	bY = MAX(bY, this->sy) + 10;
+	double bY = std::max(y, this->ey);
+	bY = std::max(bY, this->sy) + 10;
 
 	view->repaintArea(aX, aY, bX, bY);
 
@@ -104,11 +104,11 @@ void RectSelection::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 	cairo_set_line_width(cr, 1 / zoom);
 	selectionColor.apply(cr);
 
-	int aX = MIN(this->sx, this->ex);
-	int bX = MAX(this->sx, this->ex);
+	int aX = std::min(this->sx, this->ex);
+	int bX = std::max(this->sx, this->ex);
 
-	int aY = MIN(this->sy, this->ey);
-	int bY = MAX(this->sy, this->ey);
+	int aY = std::min(this->sy, this->ey);
+	int bY = std::max(this->sy, this->ey);
 
 	cairo_move_to(cr, aX, aY);
 	cairo_line_to(cr, bX, aY);

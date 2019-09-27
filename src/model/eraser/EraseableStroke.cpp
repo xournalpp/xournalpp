@@ -187,7 +187,7 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize, Eraseable
 	/**
 	 * The normale to a vector, the padding to a point
 	 */
-	double p = ABS((x - aX) * (aY - bY) + (y - aY) * (bX - aX)) / hypot(aX - x, aY - y);
+	double p = std::abs((x - aX) * (aY - bY) + (y - aY) * (bX - aX)) / hypot(aX - x, aY - y);
 
 	// The space to the line is in the range, but it can also be parallel
 	// and not enough close, so calculate a "circle" with the center on the
