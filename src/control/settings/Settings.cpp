@@ -1887,7 +1887,7 @@ void Settings::setLastOpenPath(Path p)
 	save();
 }
 
-Path Settings::getLastOpenPath()
+Path const& Settings::getLastOpenPath() const
 {
 	XOJ_CHECK_TYPE(Settings);
 

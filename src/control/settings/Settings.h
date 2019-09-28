@@ -209,7 +209,7 @@ public:
 	 * The last open path
 	 */
 	void setLastOpenPath(Path p);
-	Path getLastOpenPath();
+	Path const& getLastOpenPath() const;
 
 	void setLastImagePath(Path p);
 	Path getLastImagePath();
