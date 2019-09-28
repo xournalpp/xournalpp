@@ -11,6 +11,8 @@ assignees: ''
 
 **Affects versions :**
  - OS: [e.g. Linux (which distro), Mac, Windows]
+ - In case of linux, which desktop environment [Wayland, Gnome-Wayland, XWayland, X11]
+ - Which version of libgtk do you use.
  - Version of Xournal++ [e.g. 1.0.10, specific commit, specific branch]
 
 **Describe the bug**
