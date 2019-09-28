@@ -22,7 +22,7 @@ if (WIN32)
 elseif (APPLE)
   # Nothing to do for APPLE
 else ()
-  add_definitions (-rdynamic)
+  add_link_options(-rdynamic)
 endif ()
 
 option (DEBUG_COMPILE "Pass -Wall to CXX_FLAGS" OFF)
