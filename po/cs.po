@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-20 00:03+0000\n"
-"PO-Revision-Date: 2019-09-20 00:21\n"
+"POT-Creation-Date: 2019-09-27 23:02+0000\n"
+"PO-Revision-Date: 2019-09-27 23:06\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -941,7 +941,7 @@ msgstr "Uložit jako..."
 msgid "Save File"
 msgstr "Uložit soubor"
 
-#: ../src/control/jobs/CustomExportJob.cpp:162
+#: ../src/control/jobs/CustomExportJob.cpp:163
 #: ../src/control/jobs/SaveJob.cpp:143
 msgid "Save file error: {1}"
 msgstr "Chyba ukládání souboru: {1}"
