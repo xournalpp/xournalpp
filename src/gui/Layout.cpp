@@ -38,7 +38,6 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
 
 	lastScrollHorizontal = gtk_adjustment_get_value(scrollHandling->getHorizontal());
 	lastScrollVertical = gtk_adjustment_get_value(scrollHandling->getVertical());
-	recalculate();
 }
 
 void Layout::horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout)
