@@ -7,7 +7,7 @@
 #include <i18n.h>
 #include <Util.h>
 #include <util/DeviceListHelper.h>
-
+#include <utility>
 #define DEFAULT_FONT "Sans"
 #define DEFAULT_FONT_SIZE 12
 
@@ -20,7 +20,7 @@
 const char* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default", "stylus", "stylus2"};
 
 Settings::Settings(Path filename)
- : filename(filename)
+ : filename(std::move(filename))
 {
 	XOJ_INIT_TYPE(Settings);
 	loadDefault();
@@ -374,7 +374,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "sidebarWidth") == 0)
 	{
-		this->sidebarWidth = g_ascii_strtoll((const char*) value, NULL, 10);
+		this->sidebarWidth = std::max<int>(g_ascii_strtoll((const char*) value, NULL, 10), 50);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "sidebarOnRight") == 0)
 	{
@@ -1151,14 +1151,14 @@ void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 }
 
 // Getter- / Setter
-bool Settings::isPressureSensitivity()
+bool Settings::isPressureSensitivity() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->pressureSensitivity;
 }
 
-bool Settings::isZoomGesturesEnabled()
+bool Settings::isZoomGesturesEnabled() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1177,7 +1177,7 @@ void Settings::setZoomGesturesEnabled(bool enable)
 	save();
 }
 
-bool Settings::isSidebarOnRight()
+bool Settings::isSidebarOnRight() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1198,7 +1198,7 @@ void Settings::setSidebarOnRight(bool right)
 	save();
 }
 
-bool Settings::isScrollbarOnLeft()
+bool Settings::isScrollbarOnLeft() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1219,7 +1219,7 @@ void Settings::setScrollbarOnLeft(bool right)
 	save();
 }
 
-bool Settings::isMenubarVisible()
+bool Settings::isMenubarVisible() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1235,7 +1235,7 @@ void Settings::setMenubarVisible(bool visible)
 	save();
 }
 
-int Settings::getAutosaveTimeout()
+int Settings::getAutosaveTimeout() const
 {
 	return this->autosaveTimeout;
 }
@@ -1254,7 +1254,7 @@ void Settings::setAutosaveTimeout(int autosave)
 	save();
 }
 
-bool Settings::isAutosaveEnabled()
+bool Settings::isAutosaveEnabled() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1275,7 +1275,7 @@ void Settings::setAutosaveEnabled(bool autosave)
 	save();
 }
 
-bool Settings::getAddVerticalSpace()
+bool Settings::getAddVerticalSpace() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1289,7 +1289,7 @@ void Settings::setAddVerticalSpace(bool space)
 	this->addVerticalSpace = space;
 }
 
-int Settings::getAddVerticalSpaceAmount()
+int Settings::getAddVerticalSpaceAmount() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1310,7 +1310,7 @@ void Settings::setAddVerticalSpaceAmount(int pixels)
 }
 
 
-bool Settings::getAddHorizontalSpace()
+bool Settings::getAddHorizontalSpace() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1324,7 +1324,7 @@ void Settings::setAddHorizontalSpace(bool space)
 	this->addHorizontalSpace = space;
 }
 
-int Settings::getAddHorizontalSpaceAmount()
+int Settings::getAddHorizontalSpaceAmount() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1345,7 +1345,7 @@ void Settings::setAddHorizontalSpaceAmount(int pixels)
 }
 
 
-bool Settings::getDrawDirModsEnabled()
+bool Settings::getDrawDirModsEnabled() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1359,7 +1359,7 @@ void Settings::setDrawDirModsEnabled(bool enable)
 	this->drawDirModsEnabled = enable;
 }
 
-int Settings::getDrawDirModsRadius()
+int Settings::getDrawDirModsRadius() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1380,7 +1380,7 @@ void Settings::setDrawDirModsRadius(int pixels)
 }
 
 
-bool Settings::isShowBigCursor()
+bool Settings::isShowBigCursor() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1400,7 +1400,7 @@ void Settings::setShowBigCursor(bool b)
 	save();
 }
 
-bool Settings::isHighlightPosition()
+bool Settings::isHighlightPosition() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1421,7 +1421,7 @@ void Settings::setHighlightPosition(bool highlight)
 	save();
 }
 
-bool Settings::isSnapRotation()
+bool Settings::isSnapRotation() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1441,7 +1441,7 @@ void Settings::setSnapRotation(bool b)
 	save();
 }
 
-double Settings::getSnapRotationTolerance()
+double Settings::getSnapRotationTolerance() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1456,7 +1456,7 @@ void Settings::setSnapRotationTolerance(double tolerance)
 	save();
 }
 
-bool Settings::isSnapGrid()
+bool Settings::isSnapGrid() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1484,14 +1484,14 @@ void Settings::setSnapGridTolerance(double tolerance)
 	save();
 }
 
-double Settings::getSnapGridTolerance()
+double Settings::getSnapGridTolerance() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->snapGridTolerance;
 }
 
-bool Settings::isTouchWorkaround()
+bool Settings::isTouchWorkaround() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1511,7 +1511,7 @@ void Settings::setTouchWorkaround(bool b)
 	save();
 }
 
-ScrollbarHideType Settings::getScrollbarHideType()
+ScrollbarHideType Settings::getScrollbarHideType() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1532,7 +1532,7 @@ void Settings::setScrollbarHideType(ScrollbarHideType type)
 	save();
 }
 
-bool Settings::isAutloadPdfXoj()
+bool Settings::isAutloadPdfXoj() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1551,7 +1551,7 @@ void Settings::setAutoloadPdfXoj(bool load)
 	save();
 }
 
-string Settings::getDefaultSaveName()
+string const& Settings::getDefaultSaveName() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1572,7 +1572,7 @@ void Settings::setDefaultSaveName(string name)
 	save();
 }
 
-string Settings::getPageTemplate()
+string const& Settings::getPageTemplate() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1593,7 +1593,7 @@ void Settings::setPageTemplate(string pageTemplate)
 	save();
 }
 
-string Settings::getAudioFolder()
+string const& Settings::getAudioFolder() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1614,7 +1614,7 @@ void Settings::setAudioFolder(string audioFolder)
 	save();
 }
 
-string Settings::getSizeUnit()
+string const& Settings::getSizeUnit() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1638,7 +1638,7 @@ void Settings::setSizeUnit(string sizeUnit)
 /**
  * Get size index in XOJ_UNITS
  */
-int Settings::getSizeUnitIndex()
+int Settings::getSizeUnitIndex() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1683,7 +1683,7 @@ void Settings::setShowPairedPages(bool showPairedPages)
 	save();
 }
 
-bool Settings::isShowPairedPages()
+bool Settings::isShowPairedPages() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1703,7 +1703,7 @@ void Settings::setPresentationMode(bool presentationMode)
 	save();
 }
 
-bool Settings::isPresentationMode()
+bool Settings::isPresentationMode() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1736,7 +1736,7 @@ void Settings::setPairsOffset(int numOffset)
 	save();
 }
 
-int Settings::getPairsOffset()
+int Settings::getPairsOffset() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1756,7 +1756,7 @@ void Settings::setViewColumns(int numColumns)
 	save();
 }
 
-int Settings::getViewColumns()
+int Settings::getViewColumns() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1777,7 +1777,7 @@ void Settings::setViewRows(int numRows)
 	save();
 }
 
-int Settings::getViewRows()
+int Settings::getViewRows() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1797,7 +1797,7 @@ void Settings::setViewFixedRows(bool viewFixedRows)
 	save();
 }
 
-bool Settings::isViewFixedRows()
+bool Settings::isViewFixedRows() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1817,7 +1817,7 @@ void Settings::setViewLayoutVert(bool vert)
 	save();
 }
 
-bool Settings::getViewLayoutVert()
+bool Settings::getViewLayoutVert() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1837,7 +1837,7 @@ void Settings::setViewLayoutR2L(bool r2l)
 	save();
 }
 
-bool Settings::getViewLayoutR2L()
+bool Settings::getViewLayoutR2L() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1857,7 +1857,7 @@ void Settings::setViewLayoutB2T(bool b2t)
 	save();
 }
 
-bool Settings::getViewLayoutB2T()
+bool Settings::getViewLayoutB2T() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1872,7 +1872,7 @@ void Settings::setLastSavePath(Path p)
 	save();
 }
 
-Path Settings::getLastSavePath()
+Path const& Settings::getLastSavePath() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1906,7 +1906,7 @@ void Settings::setLastImagePath(Path path)
 	save();
 }
 
-Path Settings::getLastImagePath()
+Path const& Settings::getLastImagePath() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1925,7 +1925,7 @@ void Settings::setZoomStep(double zoomStep)
 	save();
 }
 
-double Settings::getZoomStep()
+double Settings::getZoomStep() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1944,7 +1944,7 @@ void Settings::setZoomStepScroll(double zoomStepScroll)
 	save();
 }
 
-double Settings::getZoomStepScroll()
+double Settings::getZoomStepScroll() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1963,7 +1963,7 @@ void Settings::setDisplayDpi(int dpi)
 	save();
 }
 
-int Settings::getDisplayDpi()
+int Settings::getDisplayDpi() const
 {
 	return this->displayDpi;
 }
@@ -1979,14 +1979,14 @@ void Settings::setDarkTheme(bool dark)
 	save();
 }
 
-bool Settings::isDarkTheme()
+bool Settings::isDarkTheme() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->darkTheme;
 }
 
-bool Settings::isSidebarVisible()
+bool Settings::isSidebarVisible() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2005,20 +2005,17 @@ void Settings::setSidebarVisible(bool visible)
 	save();
 }
 
-int Settings::getSidebarWidth()
+int Settings::getSidebarWidth() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	if (this->sidebarWidth < 50)
-	{
-		setSidebarWidth(150);
-	}
 	return this->sidebarWidth;
 }
 
 void Settings::setSidebarWidth(int width)
 {
 	XOJ_CHECK_TYPE(Settings);
+	width = std::max(width, 50);
 
 	if (this->sidebarWidth == width)
 	{
@@ -2038,21 +2035,21 @@ void Settings::setMainWndSize(int width, int height)
 	save();
 }
 
-int Settings::getMainWndWidth()
+int Settings::getMainWndWidth() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->mainWndWidth;
 }
 
-int Settings::getMainWndHeight()
+int Settings::getMainWndHeight() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->mainWndHeight;
 }
 
-bool Settings::isMainWndMaximized()
+bool Settings::isMainWndMaximized() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2078,7 +2075,7 @@ void Settings::setSelectedToolbar(string name)
 	save();
 }
 
-string Settings::getSelectedToolbar()
+string const& Settings::getSelectedToolbar() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2160,7 +2157,7 @@ ButtonConfig* Settings::getStylusButton2Config()
 	return this->buttonConfig[6];
 }
 
-string Settings::getFullscreenHideElements()
+string const& Settings::getFullscreenHideElements() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2173,7 +2170,7 @@ void Settings::setFullscreenHideElements(string elements)
 	save();
 }
 
-string Settings::getPresentationHideElements()
+string const& Settings::getPresentationHideElements() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2188,7 +2185,7 @@ void Settings::setPresentationHideElements(string elements)
 	save();
 }
 
-int Settings::getPdfPageCacheSize()
+int Settings::getPdfPageCacheSize() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2207,7 +2204,7 @@ void Settings::setPdfPageCacheSize(int size)
 	save();
 }
 
-int Settings::getBorderColor()
+int Settings::getBorderColor() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2226,7 +2223,7 @@ void Settings::setBorderColor(int color)
 	save();
 }
 
-int Settings::getSelectionColor()
+int Settings::getSelectionColor() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2245,7 +2242,7 @@ void Settings::setSelectionColor(int color)
 	save();
 }
 
-int Settings::getBackgroundColor()
+int Settings::getBackgroundColor() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2280,7 +2277,7 @@ void Settings::setFont(const XojFont& font)
 }
 
 
-PaDeviceIndex Settings::getAudioInputDevice()
+PaDeviceIndex Settings::getAudioInputDevice() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2299,7 +2296,7 @@ void Settings::setAudioInputDevice(PaDeviceIndex deviceIndex)
 	save();
 }
 
-PaDeviceIndex Settings::getAudioOutputDevice()
+PaDeviceIndex Settings::getAudioOutputDevice() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2318,7 +2315,7 @@ void Settings::setAudioOutputDevice(PaDeviceIndex deviceIndex)
 	save();
 }
 
-double Settings::getAudioSampleRate()
+double Settings::getAudioSampleRate() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2337,7 +2334,7 @@ void Settings::setAudioSampleRate(double sampleRate)
 	save();
 }
 
-double Settings::getAudioGain()
+double Settings::getAudioGain() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2356,7 +2353,7 @@ void Settings::setAudioGain(double gain)
 	save();
 }
 
-string Settings::getPluginEnabled()
+string const& Settings::getPluginEnabled() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2375,7 +2372,7 @@ void Settings::setPluginEnabled(string pluginEnabled)
 	save();
 }
 
-string Settings::getPluginDisabled()
+string const& Settings::getPluginDisabled() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2395,7 +2392,7 @@ void Settings::setPluginDisabled(string pluginDisabled)
 }
 
 
-void Settings::getStrokeFilter( int* ignoreTime, double* ignoreLength, int* successiveTime)
+void Settings::getStrokeFilter(int* ignoreTime, double* ignoreLength, int* successiveTime) const
 {
 	XOJ_CHECK_TYPE(Settings);
 	*ignoreTime = this->strokeFilterIgnoreTime;
@@ -2419,7 +2416,7 @@ void Settings::setStrokeFilterEnabled(bool enabled)
 	this->strokeFilterEnabled = enabled;
 }
 
-bool Settings::getStrokeFilterEnabled()
+bool Settings::getStrokeFilterEnabled() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2432,7 +2429,7 @@ void Settings::setDoActionOnStrokeFiltered(bool enabled)
 	this->doActionOnStrokeFiltered = enabled;
 }
 
-bool Settings::getDoActionOnStrokeFiltered()
+bool Settings::getDoActionOnStrokeFiltered() const
 {
 	XOJ_CHECK_TYPE(Settings);
 	return this->doActionOnStrokeFiltered;
@@ -2444,7 +2441,7 @@ void Settings::setTrySelectOnStrokeFiltered(bool enabled)
 	this->trySelectOnStrokeFiltered = enabled;
 }
 
-bool Settings::getTrySelectOnStrokeFiltered()
+bool Settings::getTrySelectOnStrokeFiltered() const
 {
 	XOJ_CHECK_TYPE(Settings);
 	return this->trySelectOnStrokeFiltered;
@@ -2463,7 +2460,7 @@ void Settings::setExperimentalInputSystemEnabled(bool systemEnabled)
 	save();
 }
 
-bool Settings::getExperimentalInputSystemEnabled()
+bool Settings::getExperimentalInputSystemEnabled() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2482,7 +2479,7 @@ void Settings::setInputSystemTPCButtonEnabled(bool tpcButtonEnabled)
 	save();
 }
 
-bool Settings::getInputSystemTPCButtonEnabled()
+bool Settings::getInputSystemTPCButtonEnabled() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2501,7 +2498,7 @@ void Settings::setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnab
 	save();
 }
 
-bool Settings::getInputSystemDrawOutsideWindowEnabled()
+bool Settings::getInputSystemDrawOutsideWindowEnabled() const
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -2528,7 +2525,7 @@ void Settings::setDeviceClassForDevice(const string& deviceName, GdkInputSource 
 	}
 }
 
-std::vector<InputDevice> Settings::getKnownInputDevices()
+std::vector<InputDevice> Settings::getKnownInputDevices() const
 {
 	std::vector<InputDevice> inputDevices;
 	for (std::pair<string, std::pair<int, GdkInputSource>> device: inputDeviceClasses)
@@ -2538,12 +2535,12 @@ std::vector<InputDevice> Settings::getKnownInputDevices()
 	return inputDevices;
 }
 
-int Settings::getDeviceClassForDevice(GdkDevice* device)
+int Settings::getDeviceClassForDevice(GdkDevice* device) const
 {
 	return this->getDeviceClassForDevice(gdk_device_get_name(device), gdk_device_get_source(device));
 }
 
-int Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource)
+int Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource) const
 {
 	auto search = inputDeviceClasses.find(deviceName);
 	if (search != inputDeviceClasses.end())
@@ -2585,7 +2582,7 @@ int Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource d
 	}
 }
 
-bool Settings::isScrollbarFadeoutDisabled()
+bool Settings::isScrollbarFadeoutDisabled() const
 {
 	return disableScrollbarFadeout;
 }
