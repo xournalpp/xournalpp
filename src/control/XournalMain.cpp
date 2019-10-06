@@ -6,6 +6,7 @@
 #include <gtk/gtk.h>
 #include <libintl.h>
 
+#include "filesystem.h"
 #include "control/jobs/ImageExport.h"
 #include "control/jobs/ProgressListener.h"
 #include "gui/GladeSearchpath.h"
@@ -69,6 +70,21 @@ void XournalMain::initLocalisation() {
     }
 #endif
     std::cout.imbue(std::locale());
+}
+
+void XournalMain::migrateSettings() {
+    Path newConfigPath(g_get_user_config_dir());
+    newConfigPath /= g_get_prgname();
+
+    if (!newConfigPath.exists()) {
+        Path oldConfigPath(g_get_home_dir());
+        oldConfigPath /= ".xournalpp";
+
+        if (oldConfigPath.exists()) {
+            fs::create_directories(newConfigPath.str());
+            fs::copy(oldConfigPath.str(), newConfigPath.str(), fs::copy_options::recursive);
+        }
+    }
 }
 
 void XournalMain::checkForErrorlog() {
@@ -260,6 +276,7 @@ auto XournalMain::exportPdf(const char* input, const char* output) -> int {
 auto XournalMain::run(int argc, char* argv[]) -> int {
     g_set_prgname("com.github.xournalpp.xournalpp");
     this->initLocalisation();
+    this->migrateSettings();
 
     GError* error = nullptr;
     GOptionContext* context = g_option_context_new("FILE");
