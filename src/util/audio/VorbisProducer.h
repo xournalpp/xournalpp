@@ -31,6 +31,7 @@ public:
 	bool start(string filename, unsigned int timestamp);
 	void abort();
 	void stop();
+	void seek(int seconds);
 
 private:
 	const int sample_buffer_size = 16384;
@@ -43,4 +44,5 @@ private:
 	std::thread* producerThread = nullptr;
 
 	long startPosition = 0;
+	int seekSeconds = 0;
 };

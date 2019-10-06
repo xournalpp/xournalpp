@@ -1003,6 +1003,14 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		}
 		break;
 
+	case ACTION_AUDIO_SEEK_FORWARDS:
+		this->getAudioController()->seekForwards();
+		break;
+
+	case ACTION_AUDIO_SEEK_BACKWARDS:
+		this->getAudioController()->seekBackwards();
+		break;
+
 	case ACTION_AUDIO_STOP_PLAYBACK:
 		this->getAudioController()->stopPlayback();
 		break;

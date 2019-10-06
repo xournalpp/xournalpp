@@ -100,6 +100,20 @@ void AudioController::pausePlayback()
 	this->audioPlayer->pause();
 }
 
+void AudioController::seekForwards()
+{
+	XOJ_CHECK_TYPE(AudioController);
+
+	this->audioPlayer->seek(10);
+}
+
+void AudioController::seekBackwards()
+{
+	XOJ_CHECK_TYPE(AudioController);
+
+	this->audioPlayer->seek(-10);
+}
+
 void AudioController::continuePlayback()
 {
 	this->control->getWindow()->getToolMenuHandler()->setAudioPlaybackPaused(false);
