@@ -104,14 +104,14 @@ void AudioController::seekForwards()
 {
 	XOJ_CHECK_TYPE(AudioController);
 
-	this->audioPlayer->seek(10);
+	this->audioPlayer->seek(5);
 }
 
 void AudioController::seekBackwards()
 {
 	XOJ_CHECK_TYPE(AudioController);
 
-	this->audioPlayer->seek(-10);
+	this->audioPlayer->seek(-5);
 }
 
 void AudioController::continuePlayback()
