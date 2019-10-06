@@ -1843,6 +1843,29 @@
                             <signal name="activate" handler="ACTION_AUDIO_STOP_PLAYBACK" swapped="no"/>
                           </object>
                         </child>
+
+                        <child>
+                          <object class="GtkMenuItem" id="menuAudioSeekForwards">
+                            <property name="name">menuAudioSeekForwards</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Forward</property>
+                            <property name="use_underline">True</property>
+                            <signal name="activate" handler="ACTION_AUDIO_SEEK_FORWARDS" swapped="no"/>
+                          </object>
+                        </child>
+
+                        <child>
+                          <object class="GtkMenuItem" id="menuAudioSeekBackwards">
+                            <property name="name">menuAudioSeekBackwards</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Back</property>
+                            <property name="use_underline">True</property>
+                            <signal name="activate" handler="ACTION_AUDIO_SEEK_BACKWARDS" swapped="no"/>
+                          </object>
+                        </child>
+
                         <child>
                           <object class="GtkMenuItem" id="menuEditTex">
                             <property name="name">menuEditTex</property>
