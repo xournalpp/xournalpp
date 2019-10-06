@@ -31,6 +31,7 @@ public:
 
 private:
     static void initLocalisation();
+    static void migrateSettings();
 
     static void checkForErrorlog();
     static void checkForEmergencySave(Control* control);
