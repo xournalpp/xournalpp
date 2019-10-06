@@ -20,7 +20,6 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 	}
 
 	sf_count_t seekPosition = this->sfInfo.samplerate / 1000 * timestamp;
-	seekPosition -= 15 * 44100;
 	this->startPosition = seekPosition;
 
 	if (seekPosition < this->sfInfo.frames)
