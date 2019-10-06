@@ -1,5 +1,4 @@
 #include "VorbisProducer.h"
-#include <iostream>
 
 
 VorbisProducer::VorbisProducer(AudioQueue<float>* audioQueue) : audioQueue(audioQueue)
@@ -23,7 +22,6 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 	sf_count_t seekPosition = this->sfInfo.samplerate / 1000 * timestamp;
 	seekPosition -= 15 * 44100;
 	this->startPosition = seekPosition;
-	std::cout<<"seekPosition: "<<seekPosition/this->sfInfo.samplerate<<" seconds\n";
 
 	if (seekPosition < this->sfInfo.frames)
 	{
@@ -53,10 +51,8 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 						std::this_thread::sleep_for(std::chrono::microseconds(100));
 					}
 
-					// std::cout<<" tot: "<<(this->startPosition+tot)/this->sfInfo.samplerate<<"\n";
 					if (this->seekSeconds != 0)
 					{
-						std::cout<<"seeking "<<seekSeconds<<" seconds\n";
 						tot += seekSeconds * this->sfInfo.samplerate;
 						sf_seek(this->sfFile, tot, SEEK_SET);
 						this->seekSeconds = 0;

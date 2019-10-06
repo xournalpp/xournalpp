@@ -104,6 +104,7 @@ void AudioController::seekForwards()
 {
 	XOJ_CHECK_TYPE(AudioController);
 
+	/** TODO: add default seek parameter in settings */
 	this->audioPlayer->seek(5);
 }
 
