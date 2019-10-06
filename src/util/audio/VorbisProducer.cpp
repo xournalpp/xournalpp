@@ -1,4 +1,5 @@
 #include "VorbisProducer.h"
+#include <iostream>
 
 
 VorbisProducer::VorbisProducer(AudioQueue<float>* audioQueue) : audioQueue(audioQueue)
@@ -20,6 +21,10 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 	}
 
 	sf_count_t seekPosition = this->sfInfo.samplerate / 1000 * timestamp;
+	seekPosition -= 15 * 44100;
+	this->startPosition = seekPosition;
+	std::cout<<"seekPosition: "<<seekPosition/this->sfInfo.samplerate<<" seconds\n";
+
 	if (seekPosition < this->sfInfo.frames)
 	{
 		sf_seek(this->sfFile, seekPosition, SEEK_SET);
@@ -36,15 +41,18 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 			{
 				long numSamples = 1;
 				auto sampleBuffer = new float[1024 * this->sfInfo.channels];
-
+				long tot = 0;
+				
 				while (!this->stopProducer && numSamples > 0 && !this->audioQueue->hasStreamEnded())
 				{
 					numSamples = sf_readf_float(this->sfFile, sampleBuffer, 1024);
+					tot+=numSamples;
 
 					while (this->audioQueue->size() >= this->sample_buffer_size && !this->audioQueue->hasStreamEnded() && !this->stopProducer)
 					{
 						std::this_thread::sleep_for(std::chrono::microseconds(100));
 					}
+					std::cout<<" tot: "<<(this->startPosition+tot)/this->sfInfo.samplerate<<"\n";
 
 					this->audioQueue->push(sampleBuffer, static_cast<unsigned long>(numSamples * this->sfInfo.channels));
 				}
@@ -52,6 +60,7 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 
 				delete[] sampleBuffer;
 				sampleBuffer = nullptr;
+				this->startPosition = 0;
 
 				sf_close(this->sfFile);
 			});
