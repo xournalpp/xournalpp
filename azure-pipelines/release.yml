@@ -55,7 +55,7 @@ stages:
         steps:
           - template: steps/build_linux.yml
             parameters:
-              build_type: 'Release'
+              build_type: 'RelWithDebInfo'
               cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=$PWD/staging -DCPACK_GENERATOR="TGZ;DEB"'
               cmake_commands: '--target package'
           - task: PublishPipelineArtifact@1
@@ -72,7 +72,7 @@ stages:
         steps:
           - template: steps/build_windows.yml
             parameters:
-              build_type: 'Release'
+              build_type: 'RelWithDebInfo'
               cmake_flags: ''
           - script: |
               set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
@@ -97,7 +97,7 @@ stages:
         steps:
           - template: steps/build_mac_native.yml
             parameters:
-              build_type: 'Release'
+              build_type: 'RelWithDebInfo'
               cmake_flags: ''
           - bash: |
               export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"

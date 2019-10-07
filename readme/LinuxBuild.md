@@ -57,6 +57,7 @@ mkdir build
 cd build
 cmake ..
 cmake --build .
+# For a faster build, set the flag -DCMAKE_BUILD_TYPE=RelWithDebInfo
 ```
 
 Use `cmake-gui ..` to graphically configure compilation.
