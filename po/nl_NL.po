@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-27 23:02+0000\n"
-"PO-Revision-Date: 2019-09-27 23:06\n"
+"POT-Creation-Date: 2019-10-07 22:49+0000\n"
+"PO-Revision-Date: 2019-10-07 22:55\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -2026,7 +2026,7 @@ msgstr "Compensatie van eerste pagina "
 msgid "Fullscreen"
 msgstr "Beeldvullend"
 
-#: ../ui/about.glade:280
+#: ../ui/about.glade:281
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 of hoger"
 
@@ -2138,7 +2138,7 @@ msgstr "Indeling"
 msgid "Left / Right-Handed"
 msgstr "Links-/Rechtshandig"
 
-#: ../ui/about.glade:264
+#: ../ui/about.glade:265
 msgid "License"
 msgstr "Licentie"
 
@@ -2248,7 +2248,7 @@ msgstr "Papier_formaat"
 msgid "Paper b_ackground"
 msgstr "Papier_achtergrond"
 
-#: ../ui/about.glade:246
+#: ../ui/about.glade:247
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr "Deels gebaseerd op Xournal\n"
@@ -2499,7 +2499,7 @@ msgstr "Correctievloeistof"
 msgid "Width:"
 msgstr "Breedte:"
 
-#: ../ui/about.glade:231
+#: ../ui/about.glade:232
 msgid "With help from the community"
 msgstr "Met dank aan de gemeenschap"
 
