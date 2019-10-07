@@ -4,6 +4,7 @@
 parameters:
   build_type: 'Debug'
   cmake_flags: ''
+  cmake_commands: ''
 
 steps:
   - bash: |
@@ -15,6 +16,6 @@ steps:
     displayName: 'Create build directory'
   - bash: |
       cmake -GNinja .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type}} ${{ parameters.cmake_flags }}
-      cmake --build .
+      cmake --build . ${{ parameters.cmake_commands}}
     workingDirectory: ./build
     displayName: 'Build Xournal++'

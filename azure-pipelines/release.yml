@@ -12,7 +12,10 @@ schedules:
       include:
       - master
 pr: none
-
+variables:
+  versionNumber: ''
+  versionTag: ''
+  buildType: 'unknown'
 stages:
   - stage: SetVersionInformation
     jobs:
@@ -25,11 +28,9 @@ stages:
               mkdir build
               cd build
               cmake ..
+              exit 0
             displayName: 'Create Version Information'
           - bash: |
-              mkdir build
-              cd build
-              cmake ..
               VER=$(cat VERSION | sed '1q;d')
               TAG=`date +"%Y%m%d"`
               echo "##vso[build.updatebuildnumber]${VER}-nightly.${TAG}"
@@ -38,9 +39,6 @@ stages:
             workingDirectory: ./build
             condition: or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['runForRelease'], False)) # Run for scheduled (nightlies)
           - bash: |
-              mkdir build
-              cd build
-              cmake ..
               VER=$(cat VERSION | sed '1q;d')
               echo "##vso[build.updatebuildnumber]${VER}"
             name: 'VersionRelease'
@@ -57,17 +55,15 @@ stages:
         steps:
           - template: steps/build_linux.yml
             parameters:
-              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
-          - bash: |
-              cmake .. -DCMAKE_INSTALL_PREFIX=$PWD/staging -DCPACK_GENERATOR="TGZ;DEB"
-              cmake --build . --target package
-            workingDirectory: ./build
-            displayName: 'Generate packages'
+              build_type: 'Release'
+              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=$PWD/staging -DCPACK_GENERATOR="TGZ;DEB"'
+              cmake_commands: '--target package'
           - task: PublishPipelineArtifact@1
             inputs:
               artifactName: 'linux-packages'
               targetPath: '$(System.DefaultWorkingDirectory)/build/packages'
             displayName: 'Publish packages'
+          
       - job: Windows
         pool:
           vmImage: 'vs2017-win2016'
