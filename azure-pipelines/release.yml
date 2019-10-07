@@ -16,33 +16,37 @@ pr: none
 stages:
   - stage: SetVersionInformation
     jobs:
-      - job: 'VersioningNightlies'
+      - job: 'Versioning'
         pool:
           vmImage: 'ubuntu-16.04'
-        displayName: 'Set Version for Nightly'
-        condition: eq(variables['Build.Reason'], 'Schedule') # Run for scheduled (nightlies)
+        displayName: 'Set Build Number'
         steps:
-          - script: |
+          - bash: |
+              mkdir build
+              cd build
+              cmake ..
+            displayName: 'Create Version Information'
+          - bash: |
               mkdir build
               cd build
               cmake ..
               VER=$(cat VERSION | sed '1q;d')
               TAG=`date +"%Y%m%d"`
               echo "##vso[build.updatebuildnumber]${VER}-nightly.${TAG}"
-            displayName: 'Set Version Information'
-      - job: 'VersioningReleases'
-        pool:
-          vmImage: 'ubuntu-16.04'
-        displayName: 'Set Version for Release'
-        condition: ne(variables['Build.Reason'], 'Schedule') # Run for non-scheduled (releases)
-        steps:
-          - script: |
+            name: 'VersionNightly'
+            displayName: 'Set Version Information for Nightly'
+            workingDirectory: ./build
+            condition: or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['runForRelease'], False)) # Run for scheduled (nightlies)
+          - bash: |
               mkdir build
               cd build
               cmake ..
               VER=$(cat VERSION | sed '1q;d')
               echo "##vso[build.updatebuildnumber]${VER}"
-            displayName: 'Set Version Information'
+            name: 'VersionRelease'
+            displayName: 'Set Version Information for Release'
+            workingDirectory: ./build
+            condition: ne(succeded('VersioningNightlies'))
   - stage: Release
     jobs:
       - job: 'Linux'
