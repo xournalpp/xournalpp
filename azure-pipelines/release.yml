@@ -46,7 +46,7 @@ stages:
             name: 'VersionRelease'
             displayName: 'Set Version Information for Release'
             workingDirectory: ./build
-            condition: not(succeeded('VersionNightly'))
+            condition: and(ne(variables['Build.Reason'], 'Schedule'), ne(variables['runForRelease'], False)) # Run for non-scheduled (release)
   - stage: Release
     jobs:
       - job: 'Linux'
