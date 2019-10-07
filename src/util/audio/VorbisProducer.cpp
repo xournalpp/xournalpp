@@ -53,6 +53,7 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 					if (this->seekSeconds != 0)
 					{
 						tot += seekSeconds * this->sfInfo.samplerate;
+						if (tot < 0) tot = 0;
 						sf_seek(this->sfFile, tot, SEEK_SET);
 						this->seekSeconds = 0;
 					}
