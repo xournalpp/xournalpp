@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-27 23:02+0000\n"
-"PO-Revision-Date: 2019-09-27 23:06\n"
+"POT-Creation-Date: 2019-10-07 22:49+0000\n"
+"PO-Revision-Date: 2019-10-07 22:55\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Traditional, Hong Kong\n"
 "Language: zh_HK\n"
@@ -1970,7 +1970,7 @@ msgstr ""
 msgid "Fullscreen"
 msgstr "全屏"
 
-#: ../ui/about.glade:280
+#: ../ui/about.glade:281
 msgid "GNU GPLv2 or later"
 msgstr ""
 
@@ -2080,7 +2080,7 @@ msgstr ""
 msgid "Left / Right-Handed"
 msgstr ""
 
-#: ../ui/about.glade:264
+#: ../ui/about.glade:265
 msgid "License"
 msgstr ""
 
@@ -2189,7 +2189,7 @@ msgstr "紙張樣式(_F)"
 msgid "Paper b_ackground"
 msgstr "紙張背景(_a)"
 
-#: ../ui/about.glade:246
+#: ../ui/about.glade:247
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
@@ -2439,7 +2439,7 @@ msgstr "涂白"
 msgid "Width:"
 msgstr "寬度："
 
-#: ../ui/about.glade:231
+#: ../ui/about.glade:232
 msgid "With help from the community"
 msgstr ""
 
