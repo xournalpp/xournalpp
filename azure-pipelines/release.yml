@@ -46,7 +46,7 @@ stages:
             name: 'VersionRelease'
             displayName: 'Set Version Information for Release'
             workingDirectory: ./build
-            condition: not(succeded('VersioningNightlies'))
+            condition: not(succeeded('VersionNightly'))
   - stage: Release
     jobs:
       - job: 'Linux'
