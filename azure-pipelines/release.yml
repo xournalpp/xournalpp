@@ -1,8 +1,48 @@
 trigger:
-  - master
+  branches:
+    include:
+      - master
+  tags:
+    include:
+      - '*'
+schedules:
+  - cron: "0 0 * * *"
+    displayName: Nightly build
+    branches:
+      include:
+      - master
 pr: none
 
 stages:
+  - stage: SetVersionInformation
+    jobs:
+      - job: 'VersioningNightlies'
+        pool:
+          vmImage: 'ubuntu-16.04'
+        displayName: 'Set Version for Nightly'
+        condition: eq(variables['Build.Reason'], 'Schedule') # Run for scheduled (nightlies)
+        steps:
+          - script: |
+              mkdir build
+              cd build
+              cmake ..
+              VER=$(cat VERSION | sed '1q;d')
+              TAG=`date +"%Y%m%d"`
+              echo "##vso[build.updatebuildnumber]${VER}-nightly.${TAG}"
+            displayName: 'Set Version Information'
+      - job: 'VersioningReleases'
+        pool:
+          vmImage: 'ubuntu-16.04'
+        displayName: 'Set Version for Release'
+        condition: ne(variables['Build.Reason'], 'Schedule') # Run for non-scheduled (releases)
+        steps:
+          - script: |
+              mkdir build
+              cd build
+              cmake ..
+              VER=$(cat VERSION | sed '1q;d')
+              echo "##vso[build.updatebuildnumber]${VER}"
+            displayName: 'Set Version Information'
   - stage: Release
     jobs:
       - job: 'Linux'
@@ -24,11 +64,6 @@ stages:
               artifactName: 'linux-packages'
               targetPath: '$(System.DefaultWorkingDirectory)/build/packages'
             displayName: 'Publish packages'
-          - task: PublishPipelineArtifact@1
-            inputs:
-              artifactName: 'VERSION'
-              targetPath: '$(System.DefaultWorkingDirectory)/build/VERSION'
-            displayName: 'Upload project version file'
       - job: Windows
         pool:
           vmImage: 'vs2017-win2016'
