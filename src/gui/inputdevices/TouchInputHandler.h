@@ -29,9 +29,9 @@ private:
   	double lastDiff = 0.0;
 
 private:
-	void actionStart(InputEvent* event);
-	void actionMotion(InputEvent* event);
-	void actionEnd(InputEvent* event);
+	void scrollStart(InputEvent* event);
+	void scrollMotion(InputEvent* event);
+	void scrollEnd(InputEvent* event);
   void zoomStart(InputEvent* event);
   void zoomMotion(InputEvent* event);
   void zoomEnd(InputEvent* event);
