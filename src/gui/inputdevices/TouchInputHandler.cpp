@@ -33,7 +33,7 @@ bool TouchInputHandler::handleImpl(InputEvent* event)
 		if (this->primarySequence == nullptr)
 		{
 			this->primarySequence = event->sequence;
-			actionStart(event);
+			scrollStart(event);
 		}
 
 		if (this->primarySequence && this->primarySequence != event->sequence && this->secondarySequence == nullptr)
@@ -49,13 +49,13 @@ bool TouchInputHandler::handleImpl(InputEvent* event)
 		{
 			zoomMotion(event);
 		} else {
-			actionMotion(event);
+			scrollMotion(event);
 		}
 	}
 
 	if (event->type == BUTTON_RELEASE_EVENT)
 	{
-		actionEnd(event);
+		scrollEnd(event);
 		this->primarySequence = nullptr;
 		this->secondarySequence = nullptr;
 	}
@@ -63,7 +63,7 @@ bool TouchInputHandler::handleImpl(InputEvent* event)
 	return false;
 }
 
-void TouchInputHandler::actionStart(InputEvent* event)
+void TouchInputHandler::scrollStart(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(TouchInputHandler);
 
@@ -72,7 +72,7 @@ void TouchInputHandler::actionStart(InputEvent* event)
 
 }
 
-void TouchInputHandler::actionMotion(InputEvent* event)
+void TouchInputHandler::scrollMotion(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(TouchInputHandler);
 
@@ -113,7 +113,7 @@ void TouchInputHandler::actionMotion(InputEvent* event)
 	}
 }
 
-void TouchInputHandler::actionEnd(InputEvent* event)
+void TouchInputHandler::scrollEnd(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(TouchInputHandler);
 
