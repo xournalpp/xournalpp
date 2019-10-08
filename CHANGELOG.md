@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.14 (Unreleased)
+## 1.0.14
 
 **Attention:** users who installed with `make install` will need to follow
 special instructions to update. See the "Breaking change" below.
