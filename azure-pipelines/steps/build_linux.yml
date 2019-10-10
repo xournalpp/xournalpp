@@ -8,10 +8,6 @@ parameters:
 
 steps:
   - bash: |
-      sudo apt-get update
-      sudo apt-get install -y cmake ninja-build libcppunit-dev libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev
-    displayName: 'Install dependencies'
-  - bash: |
       mkdir build
     displayName: 'Create build directory'
   - bash: |
