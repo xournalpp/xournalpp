@@ -46,10 +46,10 @@ stages:
             condition: and(ne(variables['Build.Reason'], 'Schedule'), ne(variables['runForRelease'], False)) # Run for non-scheduled (release)
   - stage: Release
     jobs:
-      - job: 'Linux'
+      - job: 'Ubuntu'
         pool:
           vmImage: 'ubuntu-16.04'
-        displayName: 'Build for Linux'
+        displayName: 'Build for Ubuntu'
         condition: always()
         steps:
           - template: steps/build_linux.yml
@@ -59,7 +59,24 @@ stages:
               cmake_commands: '--target package'
           - task: PublishPipelineArtifact@1
             inputs:
-              artifactName: 'linux-packages'
+              artifactName: 'linux-ubuntu-packages'
+              targetPath: '$(System.DefaultWorkingDirectory)/build/packages'
+            displayName: 'Publish packages'
+      - job: 'Debian'
+        pool:
+          vmImage: 'ubuntu-16.04'
+        container: debian:latest-slim
+        displayName: 'Build for Debian'
+        condition: always()
+        steps:
+          - template: steps/build_linux.yml
+            parameters:
+              build_type: 'RelWithDebInfo'
+              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=$PWD/staging -DCPACK_GENERATOR="TGZ;DEB"'
+              cmake_commands: '--target package'
+          - task: PublishPipelineArtifact@1
+            inputs:
+              artifactName: 'linux-debian-packages'
               targetPath: '$(System.DefaultWorkingDirectory)/build/packages'
             displayName: 'Publish packages'
           
