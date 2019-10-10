@@ -119,9 +119,12 @@ void TouchInputHandler::zoomStart()
 		return;
 	}
 
-	// TODO: Breaks with additional space around pages...
-	double centerX = (this->priLastRelX + this->secLastRelX) / 2.0;
-	double centerY = (this->priLastRelY + this->secLastRelY) / 2.0;
+	// Take horizontal and vertical padding of view into account when calculating the center of the gesture
+	int vPadding = inputContext->getSettings()->getAddVerticalSpace() ? inputContext->getSettings()->getAddVerticalSpaceAmount() : 0;
+	int hPadding = inputContext->getSettings()->getAddHorizontalSpace() ? inputContext->getSettings()->getAddHorizontalSpaceAmount() : 0;
+
+	double centerX = (this->priLastRelX + this->secLastRelX) / 2.0 - hPadding;
+	double centerY = (this->priLastRelY + this->secLastRelY) / 2.0 - vPadding;
 
 	this->startZoomDistance = std::pow(this->priLastAbsX - this->secLastAbsX, 2.0) + std::pow(this->priLastAbsY - this->secLastAbsY, 2.0);
 	lastZoomScrollCenterX = (this->priLastAbsX + this->secLastAbsX) / 2;
