@@ -16,6 +16,7 @@
 #include <vector>
 #include <deque>
 #include <mutex>
+#include <cmath>
 #include <condition_variable>
 
 template <typename T>
