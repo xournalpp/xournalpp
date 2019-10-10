@@ -17,28 +17,36 @@
 
 class InputContext;
 
-class TouchInputHandler : public AbstractInputHandler
+class TouchInputHandler: public AbstractInputHandler
 {
 private:
 	GdkEventSequence* primarySequence = nullptr;
   	GdkEventSequence* secondarySequence = nullptr;
-	double priLastPosX = -1.0;
-	double priLastPosY = -1.0;
-  	double secLastPosX = -1.0;
-  	double secLastPosY = -1.0;
-  	double lastDiff = 0.0;
+
+  	double startZoomDistance = 0.0;
+  	double lastZoomScrollCenterX = 0.0;
+  	double lastZoomScrollCenterY = 0.0;
+
+	double priLastAbsX = -1.0;
+	double priLastAbsY = -1.0;
+	double secLastAbsX = -1.0;
+	double secLastAbsY = -1.0;
+
+	double priLastRelX = -1.0;
+	double priLastRelY = -1.0;
+	double secLastRelX = -1.0;
+	double secLastRelY = -1.0;
 
 private:
-	void scrollStart(InputEvent* event);
+	void sequenceStart(InputEvent* event);
 	void scrollMotion(InputEvent* event);
-	void scrollEnd(InputEvent* event);
-  void zoomStart(InputEvent* event);
-  void zoomMotion(InputEvent* event);
-  void zoomEnd(InputEvent* event);
+	void zoomStart();
+	void zoomMotion(InputEvent* event);
+	void zoomEnd();
 
 public:
 	explicit TouchInputHandler(InputContext* inputContext);
-	~TouchInputHandler() override;
+	~TouchInputHandler() override = default;
 
 	bool handleImpl(InputEvent* event) override;
 

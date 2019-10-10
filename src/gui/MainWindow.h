@@ -26,7 +26,6 @@ class ToolbarData;
 class ToolbarModel;
 class XournalView;
 class MainWindowToolbarMenu;
-class ZoomGesture;
 
 
 class MainWindow : public GladeGui, public LayerCtrlListener
@@ -155,8 +154,6 @@ private:
 	XournalView* xournal = nullptr;
 	GtkWidget* winXournal = nullptr;
 	ScrollHandling* scrollHandling = nullptr;
-
-	ZoomGesture* zoomGesture = nullptr;
 
 	// Toolbars
 	ToolMenuHandler* toolbar;

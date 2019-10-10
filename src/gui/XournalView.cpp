@@ -24,10 +24,9 @@
 #include <cmath>
 #include <tuple>
 
-XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling, ZoomGesture* zoomGesture)
+XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling)
  : scrollHandling(scrollHandling)
  , control(control)
- , zoomGesture(zoomGesture)
 {
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
@@ -596,11 +595,6 @@ HandRecognition* XournalView::getHandRecognition()
 ScrollHandling* XournalView::getScrollHandling()
 {
 	return scrollHandling;
-}
-
-ZoomGesture* XournalView::getZoomGestureHandler()
-{
-	return zoomGesture;
 }
 
 GtkWidget* XournalView::getWidget()
