@@ -147,7 +147,9 @@ void TouchInputHandler::zoomStart(InputEvent* event)
 		zoomControl->setZoomFitMode(false);
 	}
 
-	zoomControl->startZoomSequence(centerX, centerY);
+	Rectangle zoomSequenceRectangle = zoomControl->getVisibleRect();
+
+	zoomControl->startZoomSequence(centerX - zoomSequenceRectangle.x, centerY - zoomSequenceRectangle.y);
 }
 
 void TouchInputHandler::zoomMotion(InputEvent* event)
@@ -184,4 +186,11 @@ void TouchInputHandler::zoomMotion(InputEvent* event)
 
 	// TODO: Better algorithm for the zoom value
 	zoomControl->zoomSequenceChange(zoomControl->getZoom() + diff/80000, false);
+
+	Rectangle zoomSequenceRectangle = zoomControl->getVisibleRect();
+
+	double centerX = (this->priLastPosX + this->secLastPosX) / 2;
+	double centerY = (this->priLastPosY + this->secLastPosY) / 2;
+
+	zoomControl->setScrollPositionAfterZoom(centerX - zoomSequenceRectangle.x, centerY - zoomSequenceRectangle.y);
 }
