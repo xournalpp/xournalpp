@@ -1,10 +1,9 @@
 trigger:
-  branches:
-    include:
-      - master
   tags:
     include:
       - '*'
+    exclude:
+      - nightly
 schedules:
   - cron: "0 0 * * *"
     displayName: Nightly build
