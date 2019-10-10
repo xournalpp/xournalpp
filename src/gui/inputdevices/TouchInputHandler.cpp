@@ -127,8 +127,8 @@ void TouchInputHandler::zoomStart()
 	double centerY = (this->priLastRelY + this->secLastRelY) / 2.0 - vPadding;
 
 	this->startZoomDistance = std::pow(this->priLastAbsX - this->secLastAbsX, 2.0) + std::pow(this->priLastAbsY - this->secLastAbsY, 2.0);
-	lastZoomScrollCenterX = (this->priLastAbsX + this->secLastAbsX) / 2;
-	lastZoomScrollCenterY = (this->priLastAbsY + this->secLastAbsY) / 2;
+	lastZoomScrollCenterX = (this->priLastAbsX + this->secLastAbsX) / 2.0;
+	lastZoomScrollCenterY = (this->priLastAbsY + this->secLastAbsY) / 2.0;
 
 	ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
 
@@ -162,8 +162,8 @@ void TouchInputHandler::zoomMotion(InputEvent* event)
 	ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
 	zoomControl->zoomSequenceChange(zoom, true);
 
-	double centerX = (this->priLastAbsX + this->secLastAbsX) / 2;
-	double centerY = (this->priLastAbsY + this->secLastAbsY) / 2;
+	double centerX = (this->priLastAbsX + this->secLastAbsX) / 2.0;
+	double centerY = (this->priLastAbsY + this->secLastAbsY) / 2.0;
 
 	std::tuple<double, double> lastScrollPosition = zoomControl->getScrollPositionAfterZoom();
 	double offsetX = std::get<0>(lastScrollPosition) - (centerX - lastZoomScrollCenterX);
