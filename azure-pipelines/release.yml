@@ -65,7 +65,7 @@ stages:
       - job: 'Debian'
         pool:
           vmImage: 'ubuntu-16.04'
-        container: debian:9-slim
+        container: debian:latest
         displayName: 'Build for Debian'
         condition: always()
         steps:
@@ -83,7 +83,7 @@ stages:
       - job: Windows
         pool:
           vmImage: 'vs2017-win2016'
-        displayName: 'Build Release for Windows'
+        displayName: 'Build for Windows'
         condition: always()
         steps:
           - template: steps/build_windows.yml
