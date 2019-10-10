@@ -65,7 +65,7 @@ stages:
       - job: 'Debian'
         pool:
           vmImage: 'ubuntu-16.04'
-        container: debian:latest-slim
+        container: debian:9-slim
         displayName: 'Build for Debian'
         condition: always()
         steps:
