@@ -22,17 +22,14 @@ template <typename T>
 class AudioQueue : protected std::deque<T>
 {
 public:
-	AudioQueue()
-	{
-	}
+	AudioQueue() = default;
 
-	~AudioQueue()
-	{
-	}
+	~AudioQueue() = default;
 
 public:
 	void reset()
 	{
+		std::lock_guard<std::mutex> lock(internalLock);
 		this->popNotified = false;
 		this->pushNotified = false;
 		this->streamEnd = false;
@@ -44,19 +41,24 @@ public:
 
 	bool empty()
 	{
+		std::lock_guard<std::mutex> lock(internalLock);
 		return std::deque<T>::empty();
 	}
 
 	unsigned long size()
 	{
+		std::lock_guard<std::mutex> lock(internalLock);
 		return std::deque<T>::size();
 	}
 
 	void push(T* samples, unsigned long nSamples)
 	{
-		for (unsigned long i = 0; i < nSamples; i++)
 		{
-			this->push_front(samples[i]);
+			std::lock_guard<std::mutex> lock(internalLock);
+			for (unsigned long i = 0; i < nSamples; i++)
+			{
+				this->push_front(samples[i]);
+			}
 		}
 
 		this->popNotified = false;
@@ -77,11 +79,14 @@ public:
 			return;
 		}
 
-		returnBufferLength = std::min(nSamples, this->size() - this->size() % this->channels);
-		for (long i = 0; i < returnBufferLength; i++)
 		{
-			returnBuffer[i] = this->back();
-			this->pop_back();
+			std::lock_guard<std::mutex> lock(internalLock);
+			returnBufferLength = std::min(nSamples, std::deque<T>::size() - std::deque<T>::size() % this->channels);
+			for (unsigned long i = 0; i < returnBufferLength; i++)
+			{
+				returnBuffer[i] = this->back();
+				this->pop_back();
+			}
 		}
 
 		this->pushNotified = false;
@@ -127,12 +132,14 @@ public:
 
 	void setAudioAttributes(double sampleRate, unsigned int channels)
 	{
+		std::lock_guard<std::mutex> lock(internalLock);
 		this->sampleRate = sampleRate;
 		this->channels = channels;
 	}
 
 	void getAudioAttributes(double &sampleRate, unsigned int &channels)
 	{
+		std::lock_guard<std::mutex> lock(internalLock);
 		sampleRate = this->sampleRate;
 		channels = this->channels;
 	}
@@ -140,6 +147,7 @@ public:
 private:
 protected:
 	std::mutex queueLock;
+	std::mutex internalLock;
 	bool streamEnd = false;
 	std::condition_variable pushLockCondition;
 	bool pushNotified = false;
