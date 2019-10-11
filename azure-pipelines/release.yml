@@ -76,7 +76,8 @@ stages:
         steps:
           - bash: |
               sudo apt-get update
-              sudo apt-get install -y gcc g++ cmake ninja-build libcppunit-dev libgtk-3-dev libpoppler-glib-dev libxml2-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev gettext
+              sudo apt-get install -y gcc g++ cmake ninja-build libcppunit-dev libgtk-3-dev libpoppler-glib-dev libxml2-dev portaudio19-dev libsndfile-dev liblua5.3-dev \
+                                      libzip-dev gettext lsb-release
             displayName: 'Install dependencies'
           - template: steps/build_linux.yml
             parameters:
