@@ -3,7 +3,7 @@
 **Windows Build is working now, but Xournal++ is not yet fully supported
 on Windows.**
 
-See also [Linux Build](LinuxBuild.md)
+See also [Linux Build](LinuxBuild.md) and the [azure configuration](/azure-pipelines/release.yml) 
 
 Pull requests with fixes to the Code **and to this manual** are welcome!
 This manual is not yet completed.
