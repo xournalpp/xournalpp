@@ -33,7 +33,7 @@ pacman -S git
 ```bash
 pacman -S mingw-w64-x86_64-toolchain; \
 pacman -S mingw-w64-x86_64-cmake; \
-pacman -S mingw-w64-x86_64-make; \
+pacman -S make; \
 pacman -S mingw-w64-x86_64-ninja; \
 pacman -S patch; \
 pacman -S mingw-w64-x86_64-cppunit
