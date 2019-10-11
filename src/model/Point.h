@@ -32,6 +32,8 @@ public:
 	 */
 	Point(const Point& p);
 
+	Point& operator=(Point const&) = default;
+
 	/**
 	 * @brief Point from two values.
 	 * @param x X value of the point.
