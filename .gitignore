@@ -49,3 +49,6 @@ repo/
 flatpak-build/
 .flatpak-builder/
 *.flatpak
+
+# Lua
+lua-*
