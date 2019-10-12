@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-07 22:49+0000\n"
-"PO-Revision-Date: 2019-10-12 08:55\n"
+"PO-Revision-Date: 2019-10-12 09:05\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -82,29 +82,29 @@ msgstr "Attacher le fichier au journal"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:140
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme double, la valeur est \"{2}\""
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre à virgule (double), la valeur est \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:132
 msgid "Attribute \"{1}\" could not be parsed as double, the value is NULL"
-msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme double, la valeur est NULL"
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre à virgule (double), la valeur est NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:160
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:183
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme int, la valeur est \"{2}\""
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre entier (int), la valeur est \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:152
 msgid "Attribute \"{1}\" could not be parsed as int, the value is NULL"
-msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme int, la valeur est NULL"
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre entier (int), la valeur est NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:205
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:228
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme taille_t, la valeur est \"{2}\""
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre entier (size_t), la valeur est \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:197
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is NULL"
-msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme taille_t, la valeur est NULL"
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre entier (size_t), la valeur est NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:70
 msgid "Attribute color not set!"
