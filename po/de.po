@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-07 22:49+0000\n"
-"PO-Revision-Date: 2019-10-07 22:55\n"
+"PO-Revision-Date: 2019-10-12 09:05\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -2290,7 +2290,7 @@ msgstr "Druckempfindlichkeit"
 
 #: ../ui/about.glade:167
 msgid "RELEASE_IDENTIFIER"
-msgstr ""
+msgstr "RELEASE_IDENTIFIER"
 
 #: ../ui/exportSettings.glade:127
 msgid "Range"
