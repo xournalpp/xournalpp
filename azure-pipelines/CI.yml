@@ -19,6 +19,7 @@ stages:
           vmImage: 'ubuntu-16.04'
         displayName: 'Test Xournal++ on Linux'
         steps:
+          - template: steps/install_deps_ubuntu.yml
           - template: steps/build_linux.yml
             parameters:
               build_type: 'Debug'
