@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-12 21:00+0000\n"
-"PO-Revision-Date: 2019-10-12 21:05\n"
+"PO-Revision-Date: 2019-10-14 06:57\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1560,7 +1560,8 @@ msgstr "%a\t\tNombre de día abreviado (ej., jue)\n"
 #: ../ui/settings.glade:3353
 msgid "... AND How much time must have passed since last stroke.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr ""
+msgstr "... Y cuánto tiempo debe haber pasado desde la última carrera.\n\n"
+"<i>Recomendado: 500ms</i>"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
