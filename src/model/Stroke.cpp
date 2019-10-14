@@ -170,9 +170,14 @@ int Stroke::getPointCount() const
 	return this->points.size();
 }
 
-ArrayIterator<Point> Stroke::pointIterator() const
+std::vector<Point>::const_iterator Stroke::iteratorBegin() const
 {
-	return ArrayIterator<Point>(points.data(), points.size());
+    return std::begin(points);
+}
+
+std::vector<Point>::const_iterator Stroke::iteratorEnd() const
+{
+    return std::end(points);
 }
 
 void Stroke::deletePointsFrom(int index)
@@ -246,8 +251,8 @@ void Stroke::rotate(double x0, double y0, double xo, double yo, double th)
 		p.x -= xo-offset;	//center to origin
 		p.y -= yo-offset;
 
-		double x1 = p.x * cos(th) - p.y * sin(th); 	
-		double y1 = p.y * cos(th) + p.x * sin(th);	
+		double x1 = p.x * cos(th) - p.y * sin(th);
+		double y1 = p.y * cos(th) + p.x * sin(th);
 		p.x = x1;
 		p.y = y1;
 

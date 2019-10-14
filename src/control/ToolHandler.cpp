@@ -99,10 +99,10 @@ void ToolHandler::initTools()
 
 	t = new Tool("drawCoordinateSystem", TOOL_DRAW_COORDINATE_SYSTEM, 0x000000, TOOL_CAP_NONE, nullptr);
 	tools[TOOL_DRAW_COORDINATE_SYSTEM - TOOL_PEN] = t;
-	
+
 	t = new Tool("showFloatingToolbox", TOOL_FLOATING_TOOLBOX, 0x000000, TOOL_CAP_NONE, nullptr);
 	tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] = t;
-	
+
 
 	selectTool(TOOL_PEN);
 }
@@ -383,9 +383,14 @@ void ToolHandler::setColorFound()
 	this->colorFound = true;
 }
 
-ArrayIterator<Tool*> ToolHandler::iterator()
+std::array<Tool*, TOOL_COUNT>::const_iterator ToolHandler::begin()
 {
-	return ArrayIterator<Tool*> (tools, TOOL_COUNT);
+    return std::begin(tools);
+}
+
+std::array<Tool*, TOOL_COUNT>::const_iterator ToolHandler::end()
+{
+    return std::end(tools);
 }
 
 void ToolHandler::saveSettings()
@@ -395,23 +400,20 @@ void ToolHandler::saveSettings()
 
 	s.setString("current", this->current->getName());
 
-	ArrayIterator<Tool*> it = iterator();
-
-	for (; it.hasNext();)
+	for (auto&& tool: tools)
 	{
-		Tool* t = it.next();
-		SElement& st = s.child(t->getName());
-		if (t->hasCapability(TOOL_CAP_COLOR))
+		SElement& st = s.child(tool->getName());
+		if (tool->hasCapability(TOOL_CAP_COLOR))
 		{
-			st.setIntHex("color", t->getColor());
+			st.setIntHex("color", tool->getColor());
 		}
 
-		st.setString("drawingType", drawingTypeToString(t->getDrawingType()));
+		st.setString("drawingType", drawingTypeToString(tool->getDrawingType()));
 
-		if (t->hasCapability(TOOL_CAP_SIZE))
+		if (tool->hasCapability(TOOL_CAP_SIZE))
 		{
 			string value;
-			switch (t->getSize())
+			switch (tool->getSize())
 			{
 			case TOOL_SIZE_VERY_FINE:
 				value = "VERY_FINE";
@@ -435,18 +437,18 @@ void ToolHandler::saveSettings()
 			st.setString("size", value);
 		}
 
-		if (t->type == TOOL_PEN || t->type == TOOL_HILIGHTER)
+		if (tool->type == TOOL_PEN || tool->type == TOOL_HILIGHTER)
 		{
-			st.setInt("fill", t->getFill());
-			st.setInt("fillAlpha", t->getFillAlpha());
+			st.setInt("fill", tool->getFill());
+			st.setInt("fillAlpha", tool->getFillAlpha());
 		}
 
-		if (t->type == TOOL_PEN)
+		if (tool->type == TOOL_PEN)
 		{
-			st.setString("style", StrokeStyle::formatStyle(t->getLineStyle()));
+			st.setString("style", StrokeStyle::formatStyle(tool->getLineStyle()));
 		}
 
-		if (t->type == TOOL_ERASER)
+		if (tool->type == TOOL_ERASER)
 		{
 			if (this->eraserType == ERASER_TYPE_DELETE_STROKE)
 			{
@@ -473,60 +475,61 @@ void ToolHandler::loadSettings()
 	string selectedTool;
 	if (s.getString("current", selectedTool))
 	{
-		ArrayIterator<Tool*> it = iterator();
-
-		for (; it.hasNext();)
+		for (auto&& tool: tools)
 		{
-			Tool* t = it.next();
-			SElement& st = s.child(t->getName());
+			SElement& st = s.child(tool->getName());
 
-			if (selectedTool == t->getName())
+			if (selectedTool == tool->getName())
 			{
-				this->current = t;
+				this->current = tool;
 			}
 
 			int color = 0;
-			if (t->hasCapability(TOOL_CAP_COLOR) && st.getInt("color", color))
+			if (tool->hasCapability(TOOL_CAP_COLOR) && st.getInt("color", color))
 			{
-				t->setColor(color);
+				tool->setColor(color);
 			}
 
 			string drawingType;
 			if (st.getString("drawingType", drawingType))
 			{
-				t->setDrawingType(drawingTypeFromString(drawingType));
+				tool->setDrawingType(drawingTypeFromString(drawingType));
 			}
 
 			int fill = -1;
 			if (st.getInt("fill", fill))
 			{
-				t->setFill(fill);
+				tool->setFill(fill);
 			}
 			int fillAlpha = -1;
 			if (st.getInt("fillAlpha", fillAlpha))
 			{
-				t->setFillAlpha(fillAlpha);
+				tool->setFillAlpha(fillAlpha);
 			}
 
 			string style;
 			if (st.getString("style", style))
 			{
-				t->setLineStyle(StrokeStyle::parseStyle(style.c_str()));
+				tool->setLineStyle(StrokeStyle::parseStyle(style.c_str()));
 			}
 
 			string value;
-			if (t->hasCapability(TOOL_CAP_SIZE) && st.getString("size", value))
+			if (tool->hasCapability(TOOL_CAP_SIZE) && st.getString("size", value))
 			{
 				if (value == "VERY_FINE")
-					t->setSize(TOOL_SIZE_VERY_FINE);
-				else if (value == "THIN")	  t->setSize(TOOL_SIZE_FINE);
-				else if (value == "MEDIUM")	  t->setSize(TOOL_SIZE_MEDIUM);
-				else if (value == "BIG")	  t->setSize(TOOL_SIZE_THICK);
-				else if (value == "VERY_BIG") t->setSize(TOOL_SIZE_VERY_THICK);
+					tool->setSize(TOOL_SIZE_VERY_FINE);
+				else if (value == "THIN")
+					tool->setSize(TOOL_SIZE_FINE);
+				else if (value == "MEDIUM")
+					tool->setSize(TOOL_SIZE_MEDIUM);
+				else if (value == "BIG")
+					tool->setSize(TOOL_SIZE_THICK);
+				else if (value == "VERY_BIG")
+					tool->setSize(TOOL_SIZE_VERY_THICK);
 				else g_warning("Settings::Unknown tool size: %s\n", value.c_str());
 			}
 
-			if (t->type == TOOL_ERASER)
+			if (tool->type == TOOL_ERASER)
 			{
 				string type;
 
@@ -579,7 +582,7 @@ const double* ToolHandler::getToolThickness(ToolType type)
 void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFill)
 {
 	// For all selection tools, apply the features
-	for (int i = TOOL_SELECT_RECT - TOOL_PEN; i <= TOOL_SELECT_OBJECT - TOOL_PEN; i++)
+	for (size_t i = TOOL_SELECT_RECT - TOOL_PEN; i <= TOOL_SELECT_OBJECT - TOOL_PEN; i++)
 	{
 		Tool* t = tools[i];
 		t->setCapability(TOOL_CAP_COLOR, setColor);

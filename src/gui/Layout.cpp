@@ -132,7 +132,7 @@ inline size_t sumIf(size_t base, size_t addend, bool predicate)
 void Layout::recalculate()
 {
 	auto* settings = view->getControl()->getSettings();
-	size_t len = view->viewPagesLen;
+	size_t len = view->viewPages.size();
 	mapper.configureFromSettings(len, settings);
 	size_t colCount = mapper.getColumns();
 	size_t rowCount = mapper.getRows();
@@ -174,7 +174,7 @@ void Layout::layoutPages(int width, int height)
 	}
 	valid = false;
 
-	size_t const len = this->view->viewPagesLen;
+	size_t const len = this->view->viewPages.size();
 	Settings* settings = this->view->getControl()->getSettings();
 
 	// get from mapper (some may have changed to accomodate paired setting etc.)

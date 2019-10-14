@@ -16,8 +16,6 @@
 #include "model/PageRef.h"
 #include "widgets/XournalWidget.h"
 
-#include <Arrayiterator.h>
-
 #include <gtk/gtk.h>
 
 class Control;
@@ -51,7 +49,7 @@ public:
 	void layoutPages();
 
 	void scrollTo(size_t pageNo, double y = 0);
-	
+
 	//Relative navigation in current layout:
 	void pageRelativeXY(int offCol, int offRow );
 
@@ -94,7 +92,9 @@ public:
 	void repaintSelection(bool evenWithoutSelection = false);
 
 	TextEditor* getTextEditor();
-	ArrayIterator<XojPageView*> pageViewIterator();
+	std::vector<XojPageView*>::const_iterator iteratorBegin() const;
+	std::vector<XojPageView*>::const_iterator iteratorEnd() const;
+
 	Control* getControl();
 	double getZoom();
 	int getDpiScaleFactor();
@@ -162,8 +162,7 @@ private:
 	GtkWidget* widget = nullptr;
 	double margin = 75;
 
-	XojPageView** viewPages = nullptr;
-	size_t viewPagesLen = 0;
+	std::vector<XojPageView*> viewPages;
 
 	Control* control = nullptr;
 

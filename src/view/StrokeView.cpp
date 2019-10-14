@@ -19,11 +19,12 @@ StrokeView::~StrokeView()
 
 void StrokeView::drawFillStroke()
 {
-	ArrayIterator<Point> points = s->pointIterator();
+	auto points = s->iteratorBegin();
 
-	if (points.hasNext())
+	if (points != s->iteratorEnd())
 	{
-		Point p = points.next();
+		Point p = *points;
+		points++;
 		cairo_move_to(cr, p.x, p.y);
 	}
 	else
@@ -31,9 +32,10 @@ void StrokeView::drawFillStroke()
 		return;
 	}
 
-	while (points.hasNext())
+	while (points != s->iteratorEnd())
 	{
-		Point p = points.next();
+		Point p = *points;
+		points++;
 		cairo_line_to(cr, p.x, p.y);
 	}
 
@@ -109,7 +111,7 @@ void StrokeView::drawNoPressure()
 {
 	int count = 1;
 	double width = s->getWidth();
-	ArrayIterator<Point> points = s->pointIterator();
+	std::vector<Point>::const_iterator points = s->iteratorBegin();
 
 	bool group = false;
 	if (s->getFill() != -1 && s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
@@ -126,11 +128,11 @@ void StrokeView::drawNoPressure()
 	cairo_set_line_width(cr, width * scaleFactor);
 	applyDashed(0);
 
-	Point lastPoint = points.get();
+	Point lastPoint = *points;
 
-	while (points.hasNext())
+	while (points != s->iteratorEnd())
 	{
-		Point p = points.next();
+		Point p = *points;
 
 		if (startPoint <= count)
 		{
@@ -143,6 +145,7 @@ void StrokeView::drawNoPressure()
 
 		count++;
 		lastPoint = p;
+		points++;
 	}
 
 	cairo_stroke(cr);
@@ -171,13 +174,15 @@ void StrokeView::drawWithPressuire()
 {
 	int count = 1;
 	double width = s->getWidth();
-	ArrayIterator<Point> points = s->pointIterator();
+	std::vector<Point>::const_iterator points = s->iteratorBegin();
 
-	Point lastPoint1 = points.next();
+	Point lastPoint1 = *points;
+	points++;
 	double dashOffset = 0;
-	while (points.hasNext())
+	while (points != s->iteratorEnd())
 	{
-		Point p = points.next();
+		Point p = *points;
+		points++;
 		if (startPoint <= count)
 		{
 			if (lastPoint1.z != Point::NO_PRESSURE)

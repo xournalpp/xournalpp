@@ -11,10 +11,10 @@
 
 #pragma once
 
+#include <array>
 #include "Tool.h"
 #include "settings/Settings.h"
 
-#include <Arrayiterator.h>
 #include <XournalType.h>
 
 class LastSelectedTool;
@@ -105,7 +105,8 @@ public:
 	void copyCurrentConfig();
 	void restoreLastConfig();
 
-	ArrayIterator<Tool*> iterator();
+	std::array<Tool*, TOOL_COUNT>::const_iterator begin();
+	std::array<Tool*, TOOL_COUNT>::const_iterator end();
 
 	/**
 	 * Change the selection tools capabilities, depending on the selected elements
@@ -124,7 +125,9 @@ protected:
 	void initTools();
 
 private:
-	Tool* tools[TOOL_COUNT] = { 0 };
+	XOJ_TYPE_ATTRIB;
+
+    std::array<Tool*, TOOL_COUNT> tools;
 	Tool* current = nullptr;
 
 	/**

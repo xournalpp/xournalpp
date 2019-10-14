@@ -298,7 +298,7 @@ static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
-	ArrayIterator<XojPageView*> it = xournal->view->pageViewIterator();
+	auto it = xournal->view->iteratorBegin();
 
 	double x1, x2, y1, y2;
 
@@ -314,9 +314,10 @@ static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
 
 	Rectangle clippingRect(x1 - 10, y1 - 10, x2 - x1 + 20, y2 - y1 + 20);
 
-	while (it.hasNext())
+	while (it != xournal->view->iteratorEnd())
 	{
-		XojPageView* pv = it.next();
+		XojPageView* pv = *it;
+		it++;
 
 		int px = pv->getX();
 		int py = pv->getY();
