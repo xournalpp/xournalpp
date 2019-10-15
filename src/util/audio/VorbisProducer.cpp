@@ -36,6 +36,7 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 			{
 				size_t numFrames = 1;
 				auto sampleBuffer = new float[1024 * this->sfInfo.channels];
+				std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
 
 				while (!this->stopProducer && numFrames > 0 && !this->audioQueue->hasStreamEnded())
 				{
@@ -43,7 +44,7 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 
 					while (this->audioQueue->size() >= this->sample_buffer_size && !this->audioQueue->hasStreamEnded() && !this->stopProducer)
 					{
-						std::this_thread::sleep_for(std::chrono::microseconds(100));
+						audioQueue->waitForConsumer(lock);
 					}
 
 					this->audioQueue->push(sampleBuffer, static_cast<size_t>(numFrames * this->sfInfo.channels));
