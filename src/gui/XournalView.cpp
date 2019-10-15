@@ -958,7 +958,7 @@ std::vector<XojPageView*>::const_iterator XournalView::iteratorBegin() const
 
 std::vector<XojPageView*>::const_iterator XournalView::iteratorEnd() const
 {
-    XOJ_CHECK_TYPE(XournalView);
+	XOJ_CHECK_TYPE(XournalView);
 
 	return viewPages.end();
 }

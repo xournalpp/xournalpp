@@ -437,18 +437,18 @@ void ToolHandler::saveSettings()
 			st.setString("size", value);
 		}
 
-        if (tool->type == TOOL_PEN || tool->type == TOOL_HILIGHTER)
+		if (tool->type == TOOL_PEN || tool->type == TOOL_HILIGHTER)
 		{
-            st.setInt("fill", tool->getFill());
-            st.setInt("fillAlpha", tool->getFillAlpha());
+			st.setInt("fill", tool->getFill());
+			st.setInt("fillAlpha", tool->getFillAlpha());
 		}
 
-        if (tool->type == TOOL_PEN)
+		if (tool->type == TOOL_PEN)
 		{
-            st.setString("style", StrokeStyle::formatStyle(tool->getLineStyle()));
+			st.setString("style", StrokeStyle::formatStyle(tool->getLineStyle()));
 		}
 
-        if (tool->type == TOOL_ERASER)
+		if (tool->type == TOOL_ERASER)
 		{
 			if (this->eraserType == ERASER_TYPE_DELETE_STROKE)
 			{
@@ -585,9 +585,9 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
 	for (size_t i = TOOL_SELECT_RECT - TOOL_PEN; i <= TOOL_SELECT_OBJECT - TOOL_PEN; i++)
 	{
 		Tool* t = tools[i];
-        t->setCapability(TOOL_CAP_COLOR, setColor);
-        t->setCapability(TOOL_CAP_SIZE, setSize);
-        t->setCapability(TOOL_CAP_FILL, setFill);
+		t->setCapability(TOOL_CAP_COLOR, setColor);
+		t->setCapability(TOOL_CAP_SIZE, setSize);
+		t->setCapability(TOOL_CAP_FILL, setFill);
 		t->setSize(TOOL_SIZE_NONE);
 		t->setColor(-1);
 		t->setFill(false);
