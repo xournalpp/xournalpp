@@ -1,7 +1,7 @@
 trigger:
   tags:
     include:
-      - '*'
+      - ?*.?*.?*
     exclude:
       - nightly
 schedules:
@@ -36,14 +36,14 @@ stages:
             name: 'VersionNightly'
             displayName: 'Set Version Information for Nightly'
             workingDirectory: ./build
-            condition: or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['runForRelease'], False)) # Run for scheduled (nightlies)
+            condition: or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['runForRelease'], 'False')) # Run for scheduled (nightlies)
           - bash: |
               VER=$(cat VERSION | sed '1q;d')
               echo "##vso[build.updatebuildnumber]${VER}"
             name: 'VersionRelease'
             displayName: 'Set Version Information for Release'
             workingDirectory: ./build
-            condition: and(ne(variables['Build.Reason'], 'Schedule'), ne(variables['runForRelease'], False)) # Run for non-scheduled (release)
+            condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['runForRelease'], 'False')) # Run for non-scheduled (release)
   - stage: Release
     jobs:
       - job: 'Ubuntu'
