@@ -48,7 +48,7 @@ bool VorbisConsumer::start(string filename)
 				{
 					audioQueue->waitForProducer(lock);
 
-					while (!audioQueue->empty())
+					while (audioQueue->size() > 64 * channels || (audioQueue->hasStreamEnded() && !audioQueue->empty()))
 					{
 						this->audioQueue->pop(buffer, bufferLength, 64 * channels);
 
@@ -61,7 +61,7 @@ bool VorbisConsumer::start(string filename)
 							}
 						}
 
-						sf_writef_float(sfFile, buffer, 64);
+						sf_writef_float(sfFile, buffer, std::min<size_t>(bufferLength / channels, 64));
 					}
 				}
 
