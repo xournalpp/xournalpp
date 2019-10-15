@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.15
+
+**Attention**: Please see the 1.0.14 patch notes before installing this version.
+
+* Fixed an issue where copying and pasting strokes would crash the program.
+
 ## 1.0.14
 
 **Attention:** users who installed with `make install` will need to follow
