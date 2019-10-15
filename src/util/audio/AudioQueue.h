@@ -16,7 +16,7 @@
 #include <vector>
 #include <deque>
 #include <mutex>
-#include <cmath>
+#include <algorithm>
 #include <condition_variable>
 
 template <typename T>
@@ -46,17 +46,17 @@ public:
 		return std::deque<T>::empty();
 	}
 
-	unsigned long size()
+	size_t size()
 	{
 		std::lock_guard<std::mutex> lock(internalLock);
 		return std::deque<T>::size();
 	}
 
-	void push(T* samples, unsigned long nSamples)
+	void push(T* samples, size_t nSamples)
 	{
 		{
 			std::lock_guard<std::mutex> lock(internalLock);
-			for (unsigned long i = 0; i < nSamples; i++)
+			for (size_t i = 0; i < nSamples; i++)
 			{
 				this->push_front(samples[i]);
 			}
@@ -68,7 +68,7 @@ public:
 		this->pushLockCondition.notify_one();
 	}
 
-	void pop(T* returnBuffer, unsigned long& returnBufferLength, unsigned long nSamples)
+	void pop(T* returnBuffer, size_t& returnBufferLength, size_t nSamples)
 	{
 		if (this->channels == 0)
 		{
@@ -82,8 +82,8 @@ public:
 
 		{
 			std::lock_guard<std::mutex> lock(internalLock);
-			returnBufferLength = std::min(nSamples, (unsigned long)(std::deque<T>::size() - std::deque<T>::size() % this->channels));
-			for (unsigned long i = 0; i < returnBufferLength; i++)
+			returnBufferLength = std::min<size_t>(nSamples, std::deque<T>::size() - std::deque<T>::size() % this->channels);
+			for (size_t i = 0; i < returnBufferLength; i++)
 			{
 				returnBuffer[i] = this->back();
 				this->pop_back();

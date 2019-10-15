@@ -112,7 +112,7 @@ int PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuffe
 
 	if (inputBuffer != nullptr)
 	{
-		unsigned long providedFrames = framesPerBuffer * this->inputChannels;
+		size_t providedFrames = framesPerBuffer * this->inputChannels;
 
 		this->audioQueue->push((float*) inputBuffer, providedFrames);
 	}

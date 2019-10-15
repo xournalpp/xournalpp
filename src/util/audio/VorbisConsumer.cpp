@@ -41,7 +41,7 @@ bool VorbisConsumer::start(string filename)
 				std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
 
 				float buffer[64 * channels];
-				unsigned long bufferLength;
+				size_t bufferLength;
 				double audioGain = this->settings->getAudioGain();
 
 				while (!(this->stopConsumer || (audioQueue->hasStreamEnded() && audioQueue->empty())))
