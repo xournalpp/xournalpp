@@ -140,17 +140,17 @@ Use the `Play Object` tool to click on a stroke or text node and listen to the c
 
 ## Installing
 ### Ubuntu and derivates
-````bash
+```bash
 sudo add-apt-repository ppa:andreasbutti/xournalpp-master
 sudo apt update
 sudo apt install xournalpp
-````
+```
 
 ### OpenSuse
 On openSUSE Tumbleweed, the released version of xournalpp is available from the main repository:
-````bash
+```bash
 sudo zypper in xournalpp
-````
+```
 
 For openSUSE Leap 15.0 and earlier, use the install link from [X11:Utilities](https://software.opensuse.org//download.html?project=X11%3AUtilities&package=xournalpp).
 
@@ -160,6 +160,23 @@ For all versions of openSUSE, bleeding edge packages synced to xournalpp git mas
 The most recent stable release is available [in the [extra] repository](https://www.archlinux.org/packages/?q=xournalpp).
 
 To build the latest state of the master branch yourself, use [this AUR package](https://aur.archlinux.org/packages/xournalpp-git/).
+
+### Flatpak
+
+We officially support a [FlatHub
+release](https://flathub.org/apps/details/com.github.xournalpp.xournalpp), which
+can be installed with
+
+```bash
+flatpak install flathub com.github.xournalpp.xournalpp
+```
+
+Note that for Xournal++ to work properly, you must have at least one GTK theme
+and one icon theme installed on Flatpak.
+
+The Flatpak manifest can be found at the [Xournal++ Flatpak packaging
+repository](https://github.com/flathub/com.github.xournalpp.xournalpp), and all
+Flatpak-related packaging issues should be reported there.
 
 ### Windows
 **The windows Version has a Bug:**
