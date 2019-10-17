@@ -32,9 +32,6 @@ public:
 	virtual JobType getType();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-
-	Control* control = NULL;
+	Control* control = nullptr;
 	string error;
 };

@@ -25,12 +25,10 @@ void OutputStream::write(const char* str)
 
 GzOutputStream::GzOutputStream(Path filename)
 {
-	XOJ_INIT_TYPE(GzOutputStream);
-
 	this->filename = filename;
 
 	this->fp = GzUtil::openPath(filename, "w");
-	if (this->fp == NULL)
+	if (this->fp == nullptr)
 	{
 		this->error = FS(_F("Error opening file: \"{1}\"") % filename.str());
 	}
@@ -38,38 +36,28 @@ GzOutputStream::GzOutputStream(Path filename)
 
 GzOutputStream::~GzOutputStream()
 {
-	XOJ_CHECK_TYPE(GzOutputStream);
-
 	if (this->fp)
 	{
 		close();
 	}
-	this->fp = NULL;
-
-	XOJ_RELEASE_TYPE(GzOutputStream);
+	this->fp = nullptr;
 }
 
 string& GzOutputStream::getLastError()
 {
-	XOJ_CHECK_TYPE(GzOutputStream);
-
 	return this->error;
 }
 
 void GzOutputStream::write(const char* data, int len)
 {
-	XOJ_CHECK_TYPE(GzOutputStream);
-
 	gzwrite(this->fp, data, len);
 }
 
 void GzOutputStream::close()
 {
-	XOJ_CHECK_TYPE(GzOutputStream);
-
 	if (this->fp)
 	{
 		gzclose(this->fp);
-		this->fp = NULL;
+		this->fp = nullptr;
 	}
 }

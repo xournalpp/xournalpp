@@ -133,9 +133,7 @@ private:
 	void insertTexImage();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-	Control* control = NULL;
+	Control* control = nullptr;
 
 	/**
 	 * LaTex editor dialog
@@ -191,12 +189,12 @@ private:
 	/**
 	 * Document
 	 */
-	Document* doc = NULL;
+	Document* doc = nullptr;
 
 	/**
 	 * Page View
 	 */
-	XojPageView* view = NULL;
+	XojPageView* view = nullptr;
 
 	/**
 	 * Selected Page
@@ -206,7 +204,7 @@ private:
 	/**
 	 * Selected layer
 	 */
-	Layer* layer = NULL;
+	Layer* layer = nullptr;
 
 	/**
 	 * The directory in which the LaTeX files will be generated. Note that this
@@ -217,9 +215,9 @@ private:
 	/**
 	 * Previously existing TexImage
 	 */
-	TexImage* selectedTexImage = NULL;
+	TexImage* selectedTexImage = nullptr;
 
-	Text* selectedText = NULL;
+	Text* selectedText = nullptr;
 
 	/**
 	 * The controller owns the rendered preview in order to be able to delete it

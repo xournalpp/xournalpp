@@ -16,19 +16,13 @@
 
 DocumentView::DocumentView()
 {
-	XOJ_INIT_TYPE(DocumentView);
-
 	this->backgroundPainter = new MainBackgroundPainter();
 }
 
 DocumentView::~DocumentView()
 {
-	XOJ_CHECK_TYPE(DocumentView);
-
 	delete this->backgroundPainter;
-	this->backgroundPainter = NULL;
-
-	XOJ_RELEASE_TYPE(DocumentView);
+	this->backgroundPainter = nullptr;
 }
 
 /**
@@ -36,8 +30,6 @@ DocumentView::~DocumentView()
  */
 void DocumentView::setMarkAudioStroke(bool markAudioStroke)
 {
-	XOJ_CHECK_TYPE(DocumentView);
-
 	this->markAudioStroke = markAudioStroke;
 }
 
@@ -76,8 +68,6 @@ void DocumentView::applyColor(cairo_t* cr, int c, int alpha)
 
 void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool changeSource, bool noAlpha)
 {
-	XOJ_CHECK_TYPE(DocumentView);
-
 	if (s->getPointCount() < 2)
 	{
 		// Should not happen
@@ -97,8 +87,6 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 
 void DocumentView::drawText(cairo_t* cr, Text* t)
 {
-	XOJ_CHECK_TYPE(DocumentView);
-
 	if (t->isInEditing())
 	{
 		return;
@@ -112,8 +100,6 @@ void DocumentView::drawText(cairo_t* cr, Text* t)
 
 void DocumentView::drawImage(cairo_t* cr, Image* i)
 {
-	XOJ_CHECK_TYPE(DocumentView);
-
 	cairo_matrix_t defaultMatrix = { 0 };
 	cairo_get_matrix(cr, &defaultMatrix);
 
@@ -136,8 +122,6 @@ void DocumentView::drawImage(cairo_t* cr, Image* i)
 
 void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage)
 {
-	XOJ_CHECK_TYPE(DocumentView);
-
 	cairo_matrix_t defaultMatrix = { 0 };
 	cairo_get_matrix(cr, &defaultMatrix);
 
@@ -186,8 +170,6 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage)
 
 void DocumentView::drawElement(cairo_t* cr, Element* e)
 {
-	XOJ_CHECK_TYPE(DocumentView);
-
 	if (e->getType() == ELEMENT_STROKE)
 	{
 		drawStroke(cr, (Stroke*) e);
@@ -213,8 +195,6 @@ void DocumentView::drawElement(cairo_t* cr, Element* e)
  */
 void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 {
-	XOJ_CHECK_TYPE(DocumentView);
-
 	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
 
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
@@ -264,8 +244,6 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 
 void DocumentView::paintBackgroundImage()
 {
-	XOJ_CHECK_TYPE(DocumentView);
-
 	GdkPixbuf* pixbuff = page->getBackgroundImage().getPixbuf();
 	if (pixbuff)
 	{
@@ -289,8 +267,6 @@ void DocumentView::paintBackgroundImage()
 
 void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container)
 {
-	XOJ_CHECK_TYPE(DocumentView);
-
 	for (Element* e : *container->getElements())
 	{
 		drawElement(cr, e);
@@ -299,8 +275,6 @@ void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container)
 
 void DocumentView::limitArea(double x, double y, double width, double height)
 {
-	XOJ_CHECK_TYPE(DocumentView);
-
 	this->lX = x;
 	this->lY = y;
 	this->lWidth = width;
@@ -315,8 +289,6 @@ void DocumentView::limitArea(double x, double y, double width, double height)
  */
 void DocumentView::initDrawing(PageRef page, cairo_t* cr, bool dontRenderEditingStroke)
 {
-	XOJ_CHECK_TYPE(DocumentView);
-
 	this->cr = cr;
 	this->page = page;
 	this->width = page->getWidth();
@@ -329,8 +301,6 @@ void DocumentView::initDrawing(PageRef page, cairo_t* cr, bool dontRenderEditing
  */
 void DocumentView::finializeDrawing()
 {
-	XOJ_CHECK_TYPE(DocumentView);
-
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
 	if (this->lX != -1)
 	{
@@ -351,8 +321,8 @@ void DocumentView::finializeDrawing()
 	this->lWidth = -1;
 	this->lHeight = -1;
 
-	this->page = NULL;
-	this->cr = NULL;
+	this->page = nullptr;
+	this->cr = nullptr;
 }
 
 /**
@@ -407,8 +377,6 @@ void DocumentView::drawTransparentBackgroundPattern()
  */
 void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hideBackground)
 {
-	XOJ_CHECK_TYPE(DocumentView);
-
 	initDrawing(page, cr, dontRenderEditingStroke);
 
 	bool backgroundVisible = page->isLayerVisible(0);

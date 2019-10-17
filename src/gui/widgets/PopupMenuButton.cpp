@@ -36,7 +36,7 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
 
 	if (direction == GTK_TEXT_DIR_LTR)
 	{
-		*x += MAX(allocation.width - menu_req.width, 0);
+		*x += std::max(allocation.width - menu_req.width, 0);
 	}
 	else if (menu_req.width > allocation.width)
 	{
@@ -60,26 +60,22 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
 		*y -= menu_req.height;
 	}
 
-	*push_in = FALSE;
+	*push_in = false;
 }
 
 PopupMenuButton::PopupMenuButton(GtkWidget* button, GtkWidget* menu)
  : button(button),
    menu(menu)
 {
-	XOJ_INIT_TYPE(PopupMenuButton);
-
 	g_signal_connect(button, "clicked", G_CALLBACK(
 		+[](GtkButton* button, PopupMenuButton* self)
 	{
-			XOJ_CHECK_TYPE_OBJ(self, PopupMenuButton);
+		                 gtk_menu_popup(GTK_MENU(self->menu), nullptr, nullptr, (GtkMenuPositionFunc) menu_position_func,
+		                                button, 0, gtk_get_current_event_time());
 
-			gtk_menu_popup(GTK_MENU(self->menu), NULL, NULL, (GtkMenuPositionFunc) menu_position_func,
-			               button, 0, gtk_get_current_event_time());
+			gtk_menu_shell_select_first(GTK_MENU_SHELL(self->menu), false);
 
-			gtk_menu_shell_select_first(GTK_MENU_SHELL(self->menu), FALSE);
-
-			// GTK 3.22: gtk_menu_popup_at_widget(menu, button, GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, NULL);
+			// GTK 3.22: gtk_menu_popup_at_widget(menu, button, GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, nullptr);
 
 		}), this);
 
@@ -88,15 +84,10 @@ PopupMenuButton::PopupMenuButton(GtkWidget* button, GtkWidget* menu)
 
 PopupMenuButton::~PopupMenuButton()
 {
-	XOJ_CHECK_TYPE(PopupMenuButton);
-
-	XOJ_RELEASE_TYPE(PopupMenuButton);
 }
 
 void PopupMenuButton::setMenu(GtkWidget* menu)
 {
-	XOJ_CHECK_TYPE(PopupMenuButton);
-
 	gtk_menu_detach(GTK_MENU(this->menu));
 	this->menu = menu;
 

@@ -16,7 +16,7 @@
 #include <string>
 using std::string;
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <Windows.h>
 #include <direct.h>
 #else
@@ -50,9 +50,9 @@ int main(int argc, char* argv[])
 {
 	string exePath;
 
-#ifdef WIN32
+#ifdef _WIN32
 	char szFileName[MAX_PATH + 1];
-	GetModuleFileNameA(NULL, szFileName, MAX_PATH + 1);
+	GetModuleFileNameA(nullptr, szFileName, MAX_PATH + 1);
 	exePath = szFileName;
 #else
 	char result[1024];
@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
 
 	for (int i = 1; i < argc; i++)
 	{
-	MessageBoxA(NULL, argv[i], "Debug IN", 0);
+	MessageBoxA(nullptr, argv[i], "Debug IN", 0);
 	
 		command += " \"";
 		command += escapeString(argv[i]);
@@ -87,14 +87,14 @@ int main(int argc, char* argv[])
 	}
 
 
-#ifdef WIN32
+#ifdef _WIN32
 	STARTUPINFO info = {};
 	PROCESS_INFORMATION processInfo;
 	char* cmd = new char[command.size() + 1];
 	strncpy(cmd, command.c_str(), command.size());
 	cmd[command.size()] = 0;
-//	MessageBoxA(NULL, cmd, "Debug", 0);
-	if (CreateProcessA(NULL, cmd, NULL, NULL, TRUE, 0, NULL, folder.c_str(), &info, &processInfo))
+//	MessageBoxA(nullptr, cmd, "Debug", 0);
+	if (CreateProcessA(nullptr, cmd, nullptr, nullptr, true, 0, nullptr, folder.c_str(), &info, &processInfo))
 	{
 		WaitForSingleObject(processInfo.hProcess, INFINITE);
 		CloseHandle(processInfo.hProcess);

@@ -38,10 +38,8 @@ public:
 	const char* getClassName() const;
 
 protected:
-	XOJ_TYPE_ATTRIB;
-
 	// This is only for debugging / Testing purpose
-	const char* className = NULL;
+	const char* className = nullptr;
 
 	PageRef page;
 	bool undone = false;

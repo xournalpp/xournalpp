@@ -32,11 +32,9 @@ protected:
 	void addMenuitem(string text, string icon, ActionType type, ActionGroup group);
 
 private:
-	XOJ_TYPE_ATTRIB;
+	ToolMenuHandler* toolMenuHandler = nullptr;
+	GtkWidget* popup = nullptr;
 
-	ToolMenuHandler* toolMenuHandler = NULL;
-	GtkWidget* popup = NULL;
-
-	GtkWidget* iconWidget = NULL;
-	GtkWidget* labelWidget = NULL;
+	GtkWidget* iconWidget = nullptr;
+	GtkWidget* labelWidget = nullptr;
 };

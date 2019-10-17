@@ -26,23 +26,16 @@ public:
 MainWindowToolbarMenu::MainWindowToolbarMenu(MainWindow* win)
  : win(win)
 {
-	XOJ_INIT_TYPE(MainWindowToolbarMenu);
 }
 
 MainWindowToolbarMenu::~MainWindowToolbarMenu()
 {
-	XOJ_CHECK_TYPE(MainWindowToolbarMenu);
-
 	menuitems.clear();
 	freeToolMenu();
-
-	XOJ_RELEASE_TYPE(MainWindowToolbarMenu);
 }
 
 void MainWindowToolbarMenu::freeToolMenu()
 {
-	XOJ_CHECK_TYPE(MainWindowToolbarMenu);
-
 	for (MenuSelectToolbarData* data : toolbarMenuData)
 	{
 		delete data;
@@ -52,8 +45,6 @@ void MainWindowToolbarMenu::freeToolMenu()
 
 void MainWindowToolbarMenu::setTmpDisabled(bool disabled)
 {
-	XOJ_CHECK_TYPE(MainWindowToolbarMenu);
-
 	for (MenuSelectToolbarData* data : this->toolbarMenuData)
 	{
 		gtk_widget_set_sensitive(data->item, !disabled);
@@ -62,15 +53,13 @@ void MainWindowToolbarMenu::setTmpDisabled(bool disabled)
 
 void MainWindowToolbarMenu::selectToolbar(Settings* settings, ToolMenuHandler* toolbar)
 {
-	XOJ_CHECK_TYPE(MainWindowToolbarMenu);
-
-	selectedToolbar = NULL;
+	selectedToolbar = nullptr;
 
 	string selectedId = settings->getSelectedToolbar();
 
 	for (ToolbarData* d : *toolbar->getModel()->getToolbars())
 	{
-		if (selectedToolbar == NULL)
+		if (selectedToolbar == nullptr)
 		{
 			selectedToolbar = d;
 		}
@@ -85,15 +74,11 @@ void MainWindowToolbarMenu::selectToolbar(Settings* settings, ToolMenuHandler* t
 
 ToolbarData* MainWindowToolbarMenu::getSelectedToolbar()
 {
-	XOJ_CHECK_TYPE(MainWindowToolbarMenu);
-
 	return selectedToolbar;
 }
 
 void MainWindowToolbarMenu::removeOldElements(GtkMenuShell* menubar)
 {
-	XOJ_CHECK_TYPE(MainWindowToolbarMenu);
-
 	for (GtkWidget* w : menuitems)
 	{
 		gtk_container_remove(GTK_CONTAINER(menubar), w);
@@ -110,8 +95,6 @@ void MainWindowToolbarMenu::tbSelectMenuitemActivated(GtkCheckMenuItem* checkmen
 
 void MainWindowToolbarMenu::menuClicked(GtkCheckMenuItem* menuitem, MenuSelectToolbarData* data)
 {
-	XOJ_CHECK_TYPE(MainWindowToolbarMenu);
-
 	if (!gtk_check_menu_item_get_active(menuitem))
 	{
 		// Ignore disabled menus
@@ -138,8 +121,6 @@ void MainWindowToolbarMenu::menuClicked(GtkCheckMenuItem* menuitem, MenuSelectTo
 
 void MainWindowToolbarMenu::addToolbarMenuEntry(ToolbarData* d, GtkMenuShell* menubar, int& menuPos)
 {
-	XOJ_CHECK_TYPE(MainWindowToolbarMenu);
-
 	GtkWidget* item = gtk_check_menu_item_new_with_label(d->getName().c_str());
 	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(item), true);
 	gtk_widget_show(item);
@@ -167,8 +148,6 @@ void MainWindowToolbarMenu::addToolbarMenuEntry(ToolbarData* d, GtkMenuShell* me
 
 void MainWindowToolbarMenu::updateToolbarMenu(GtkMenuShell* menubar, Settings* settings, ToolMenuHandler* toolbar)
 {
-	XOJ_CHECK_TYPE(MainWindowToolbarMenu);
-
 	selectToolbar(settings, toolbar);
 	removeOldElements(menubar);
 

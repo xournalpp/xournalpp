@@ -7,33 +7,22 @@ class PdfCacheEntry
 public:
 	PdfCacheEntry(XojPdfPageSPtr popplerPage, cairo_surface_t* img)
 	{
-		XOJ_INIT_TYPE(PdfCacheEntry);
-
 		this->popplerPage = popplerPage;
 		this->rendered = img;
 	}
 
 	~PdfCacheEntry()
 	{
-		XOJ_CHECK_TYPE(PdfCacheEntry);
-
-		this->popplerPage = NULL;
+		this->popplerPage = nullptr;
 		cairo_surface_destroy(this->rendered);
-		this->rendered = NULL;
-
-		XOJ_RELEASE_TYPE(PdfCacheEntry);
+		this->rendered = nullptr;
 	}
-
-	XOJ_TYPE_ATTRIB;
-
 	XojPdfPageSPtr popplerPage;
 	cairo_surface_t* rendered;
 };
 
 PdfCache::PdfCache(int size)
 {
-	XOJ_INIT_TYPE(PdfCache);
-
 	this->size = size;
 
 	g_mutex_init(&this->renderMutex);
@@ -41,18 +30,12 @@ PdfCache::PdfCache(int size)
 
 PdfCache::~PdfCache()
 {
-	XOJ_CHECK_TYPE(PdfCache);
-
 	clearCache();
 	this->size = 0;
-
-	XOJ_RELEASE_TYPE(PdfCache);
 }
 
 void PdfCache::setZoom(double zoom)
 {
-	XOJ_CHECK_TYPE(PdfCache);
-
 	if (this->zoom == zoom)
 	{
 		return;
@@ -64,8 +47,6 @@ void PdfCache::setZoom(double zoom)
 
 void PdfCache::clearCache()
 {
-	XOJ_CHECK_TYPE(PdfCache);
-
 	for (PdfCacheEntry* e : this->data)
 	{
 		delete e;
@@ -75,24 +56,19 @@ void PdfCache::clearCache()
 
 cairo_surface_t* PdfCache::lookup(XojPdfPageSPtr popplerPage)
 {
-	XOJ_CHECK_TYPE(PdfCache);
-
 	for (PdfCacheEntry* e : this->data)
 	{
-		XOJ_CHECK_TYPE_OBJ(e, PdfCacheEntry);
 		if (e->popplerPage->getPageId() == popplerPage->getPageId())
 		{
 			return e->rendered;
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 void PdfCache::cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img)
 {
-	XOJ_CHECK_TYPE(PdfCache);
-
 	PdfCacheEntry* ne = new PdfCacheEntry(popplerPage, img);
 	this->data.push_front(ne);
 	
@@ -105,14 +81,12 @@ void PdfCache::cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img)
 
 void PdfCache::render(cairo_t* cr, XojPdfPageSPtr popplerPage, double zoom)
 {
-	XOJ_CHECK_TYPE(PdfCache);
-
 	g_mutex_lock(&this->renderMutex);
 
 	this->setZoom(zoom);
 
 	cairo_surface_t* img = lookup(popplerPage);
-	if (img == NULL)
+	if (img == nullptr)
 	{
 		img = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
 										 popplerPage->getWidth() * this->zoom, popplerPage->getHeight() * this->zoom);

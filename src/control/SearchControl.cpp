@@ -6,32 +6,22 @@
 
 SearchControl::SearchControl(PageRef page, XojPdfPageSPtr pdf)
 {
-	XOJ_INIT_TYPE(SearchControl);
-
 	this->page = page;
 	this->pdf = pdf;
 }
 
 SearchControl::~SearchControl()
 {
-	XOJ_CHECK_TYPE(SearchControl);
-
 	freeSearchResults();
-
-	XOJ_RELEASE_TYPE(SearchControl);
 }
 
 void SearchControl::freeSearchResults()
 {
-	XOJ_CHECK_TYPE(SearchControl);
-
 	this->results.clear();
 }
 
 void SearchControl::paint(cairo_t* cr, GdkRectangle* rect, double zoom, GtkColorWrapper color)
 {
-	XOJ_CHECK_TYPE(SearchControl);
-
 	// set the line always the same size on display
 	cairo_set_line_width(cr, 1 / zoom);
 
@@ -47,8 +37,6 @@ void SearchControl::paint(cairo_t* cr, GdkRectangle* rect, double zoom, GtkColor
 
 bool SearchControl::search(string text, int* occures, double* top)
 {
-	XOJ_CHECK_TYPE(SearchControl);
-
 	freeSearchResults();
 
 	if (text.empty()) return true;
@@ -97,7 +85,7 @@ bool SearchControl::search(string text, int* occures, double* top)
 			double min = first.y1;
 			for (XojPdfRectangle rect : this->results)
 			{
-				min = MIN(min, rect.y1);
+				min = std::min(min, rect.y1);
 			}
 
 			*top = min;

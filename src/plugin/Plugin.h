@@ -30,18 +30,13 @@ public:
 	MenuEntry(Plugin* plugin)
 	 : plugin(plugin)
 	{
-		XOJ_INIT_TYPE(MenuEntry);
 	}
 
 	~MenuEntry()
 	{
-		XOJ_CHECK_TYPE(MenuEntry);
-		XOJ_RELEASE_TYPE(MenuEntry);
 	}
 
 public:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * The Plugin
 	 */
@@ -50,7 +45,7 @@ public:
 	/**
 	 * Menu item
 	 */
-	GtkWidget* widget = NULL;
+	GtkWidget* widget = nullptr;
 
 	/**
 	 * Menu display name
@@ -182,8 +177,6 @@ public:
 	static Plugin* getPluginFromLua(lua_State* lua);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Plugin root path
 	 */
@@ -227,7 +220,7 @@ private:
 	/**
 	 * Lua engine
 	 */
-	lua_State* lua = NULL;
+	lua_State* lua = nullptr;
 
 	/**
 	 * All registered menu entries

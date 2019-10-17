@@ -2,29 +2,21 @@
 
 XmlImageNode::XmlImageNode(const char* tag) : XmlNode(tag)
 {
-	XOJ_INIT_TYPE(XmlImageNode);
-
-	this->img = NULL;
-	this->out = NULL;
+	this->img = nullptr;
+	this->out = nullptr;
 	this->pos = 0;
 }
 
 XmlImageNode::~XmlImageNode()
 {
-	XOJ_CHECK_TYPE(XmlImageNode);
-
 	if (this->img)
 	{
 		cairo_surface_destroy(this->img);
 	}
-
-	XOJ_RELEASE_TYPE(XmlImageNode);
 }
 
 void XmlImageNode::setImage(cairo_surface_t* img)
 {
-	XOJ_CHECK_TYPE(XmlImageNode);
-
 	if (this->img)
 	{
 		cairo_surface_destroy(this->img);
@@ -51,17 +43,15 @@ cairo_status_t XmlImageNode::pngWriteFunction(XmlImageNode* image, unsigned char
 
 void XmlImageNode::writeOut(OutputStream* out)
 {
-	XOJ_CHECK_TYPE(XmlImageNode);
-
 	out->write("<");
 	out->write(tag);
 	writeAttributes(out);
 
 	out->write(">");
 
-	if (this->img == NULL)
+	if (this->img == nullptr)
 	{
-		g_error("XmlImageNode::writeOut(); this->img == NULL");
+		g_error("XmlImageNode::writeOut(); this->img == nullptr");
 	}
 	else
 	{
@@ -72,7 +62,7 @@ void XmlImageNode::writeOut(OutputStream* out)
 		out->write(base64_str);
 		g_free(base64_str);
 
-		this->out = NULL;
+		this->out = nullptr;
 	}
 
 	out->write("</");

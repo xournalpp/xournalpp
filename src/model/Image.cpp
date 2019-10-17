@@ -7,28 +7,20 @@
 Image::Image()
  : Element(ELEMENT_IMAGE)
 {
-	XOJ_INIT_TYPE(Image);
-
 	this->sizeCalculated = true;
 }
 
 Image::~Image()
 {
-	XOJ_CHECK_TYPE(Image);
-
 	if (this->image)
 	{
 		cairo_surface_destroy(this->image);
-		this->image = NULL;
+		this->image = nullptr;
 	}
-
-	XOJ_RELEASE_TYPE(Image);
 }
 
 Element* Image::clone()
 {
-	XOJ_CHECK_TYPE(Image);
-
 	Image* img = new Image();
 
 	img->x = this->x;
@@ -45,22 +37,16 @@ Element* Image::clone()
 
 void Image::setWidth(double width)
 {
-	XOJ_CHECK_TYPE(Image);
-
 	this->width = width;
 }
 
 void Image::setHeight(double height)
 {
-	XOJ_CHECK_TYPE(Image);
-
 	this->height = height;
 }
 
 cairo_status_t Image::cairoReadFunction(Image* image, unsigned char* data, unsigned int length)
 {
-	XOJ_CHECK_TYPE_OBJ(image, Image);
-
 	for (unsigned int i = 0; i < length; i++, image->read++)
 	{
 		if (image->read >= image->data.length())
@@ -76,12 +62,10 @@ cairo_status_t Image::cairoReadFunction(Image* image, unsigned char* data, unsig
 
 void Image::setImage(string data)
 {
-	XOJ_CHECK_TYPE(Image);
-
 	if (this->image)
 	{
 		cairo_surface_destroy(this->image);
-		this->image = NULL;
+		this->image = nullptr;
 	}
 	this->data = data;
 }
@@ -93,12 +77,10 @@ void Image::setImage(GdkPixbuf* img)
 
 void Image::setImage(cairo_surface_t* image)
 {
-	XOJ_CHECK_TYPE(Image);
-
 	if (this->image)
 	{
 		cairo_surface_destroy(this->image);
-		this->image = NULL;
+		this->image = nullptr;
 	}
 
 	this->image = image;
@@ -106,9 +88,7 @@ void Image::setImage(cairo_surface_t* image)
 
 cairo_surface_t* Image::getImage()
 {
-	XOJ_CHECK_TYPE(Image);
-
-	if (this->image == NULL && this->data.length())
+	if (this->image == nullptr && this->data.length())
 	{
 		this->read = 0;
 		this->image = cairo_image_surface_create_from_png_stream((cairo_read_func_t) &cairoReadFunction, this);
@@ -119,8 +99,6 @@ cairo_surface_t* Image::getImage()
 
 void Image::scale(double x0, double y0, double fx, double fy)
 {
-	XOJ_CHECK_TYPE(Image);
-
 	this->x -= x0;
 	this->x *= fx;
 	this->x += x0;
@@ -134,13 +112,10 @@ void Image::scale(double x0, double y0, double fx, double fy)
 
 void Image::rotate(double x0, double y0, double xo, double yo, double th)
 {
-	XOJ_CHECK_TYPE(Image);
 }
 
 void Image::serialize(ObjectOutputStream& out)
 {
-	XOJ_CHECK_TYPE(Image);
-
 	out.writeObject("Image");
 
 	serializeElement(out);
@@ -155,8 +130,6 @@ void Image::serialize(ObjectOutputStream& out)
 
 void Image::readSerialized(ObjectInputStream& in)
 {
-	XOJ_CHECK_TYPE(Image);
-
 	in.readObject("Image");
 
 	readSerializedElement(in);
@@ -167,7 +140,7 @@ void Image::readSerialized(ObjectInputStream& in)
 	if (this->image)
 	{
 		cairo_surface_destroy(this->image);
-		this->image = NULL;
+		this->image = nullptr;
 	}
 
 	this->image = in.readImage();
@@ -177,5 +150,4 @@ void Image::readSerialized(ObjectInputStream& in)
 
 void Image::calcSize()
 {
-	XOJ_CHECK_TYPE(Image);
 }

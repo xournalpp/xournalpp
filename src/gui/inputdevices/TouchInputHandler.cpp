@@ -7,20 +7,14 @@
 
 TouchInputHandler::TouchInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)
 {
-	XOJ_INIT_TYPE(TouchInputHandler);
 }
 
 TouchInputHandler::~TouchInputHandler()
 {
-	XOJ_CHECK_TYPE(TouchInputHandler);
-
-	XOJ_RELEASE_TYPE(TouchInputHandler);
 }
 
 bool TouchInputHandler::handleImpl(InputEvent* event)
 {
-	XOJ_CHECK_TYPE(TouchInputHandler);
-
 	// Disallow multitouch
 	if (this->currentSequence && this->currentSequence != event->sequence)
 	{
@@ -49,8 +43,6 @@ bool TouchInputHandler::handleImpl(InputEvent* event)
 
 void TouchInputHandler::actionStart(InputEvent* event)
 {
-	XOJ_CHECK_TYPE(TouchInputHandler);
-
 	this->lastPosX = event->absoluteX;
 	this->lastPosY = event->absoluteY;
 
@@ -58,8 +50,6 @@ void TouchInputHandler::actionStart(InputEvent* event)
 
 void TouchInputHandler::actionMotion(InputEvent* event)
 {
-	XOJ_CHECK_TYPE(TouchInputHandler);
-
 	// Manually scroll when gesture is active
 	if (this->inputContext->getView()->getZoomGestureHandler()->isGestureActive())
 	{
@@ -99,8 +89,6 @@ void TouchInputHandler::actionMotion(InputEvent* event)
 
 void TouchInputHandler::actionEnd(InputEvent* event)
 {
-	XOJ_CHECK_TYPE(TouchInputHandler);
-
 	this->lastPosX = -1.0;
 	this->lastPosY = -1.0;
 }

@@ -114,12 +114,10 @@ private:
 	static void drawWidget(cairo_t* cr, const IconConfig& config);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * The widget which is drawn
 	 */
-	GtkWidget* widget = NULL;
+	GtkWidget* widget = nullptr;
 
 	/**
 	 * Color of the icon

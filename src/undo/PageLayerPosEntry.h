@@ -17,8 +17,6 @@ class PageLayerPosEntry
 public:
 	PageLayerPosEntry(Layer* layer, T* element, int pos)
 	{
-		XOJ_INIT_TYPE(PageLayerPosEntry);
-		
 		this->element = element;
 		this->pos = pos;
 		this->layer = layer;
@@ -26,13 +24,10 @@ public:
 	
 	~PageLayerPosEntry()
 	{
-		XOJ_RELEASE_TYPE(PageLayerPosEntry);
 	}
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-public:
+	public:
 	Layer* layer;
 	T* element;
 	int pos;

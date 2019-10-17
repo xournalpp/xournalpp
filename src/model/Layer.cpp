@@ -4,26 +4,19 @@
 
 Layer::Layer()
 {
-	XOJ_INIT_TYPE(Layer);
 }
 
 Layer::~Layer()
 {
-	XOJ_CHECK_TYPE(Layer);
-
 	for (Element* e : this->elements)
 	{
 		delete e;
 	}
 	this->elements.clear();
-
-	XOJ_RELEASE_TYPE(Layer);
 }
 
 Layer* Layer::clone()
 {
-	XOJ_CHECK_TYPE(Layer);
-
 	Layer* layer = new Layer();
 
 	for (Element* e : this->elements)
@@ -36,11 +29,9 @@ Layer* Layer::clone()
 
 void Layer::addElement(Element* e)
 {
-	XOJ_CHECK_TYPE(Layer);
-
-	if (e == NULL)
+	if (e == nullptr)
 	{
-		g_warning("addElement(NULL)!");
+		g_warning("addElement(nullptr)!");
 		Stacktrace::printStracktrace();
 		return;
 	}
@@ -59,11 +50,9 @@ void Layer::addElement(Element* e)
 
 void Layer::insertElement(Element* e, int pos)
 {
-	XOJ_CHECK_TYPE(Layer);
-
-	if (e == NULL)
+	if (e == nullptr)
 	{
-		g_warning("insertElement(NULL)!");
+		g_warning("insertElement(nullptr)!");
 		Stacktrace::printStracktrace();
 		return;
 	}
@@ -98,8 +87,6 @@ void Layer::insertElement(Element* e, int pos)
 
 int Layer::indexOf(Element* e)
 {
-	XOJ_CHECK_TYPE(Layer);
-	
 	for (unsigned int i = 0; i < this->elements.size(); i++)
 	{
 		if (this->elements[i] == e)
@@ -113,8 +100,6 @@ int Layer::indexOf(Element* e)
 
 int Layer::removeElement(Element* e, bool free)
 {
-	XOJ_CHECK_TYPE(Layer);
-
 	for (unsigned int i = 0; i < this->elements.size(); i++)
 	{
 		if (e == this->elements[i])
@@ -136,8 +121,6 @@ int Layer::removeElement(Element* e, bool free)
 
 bool Layer::isAnnotated()
 {
-	XOJ_CHECK_TYPE(Layer);
-
 	return !this->elements.empty();
 }
 
@@ -146,8 +129,6 @@ bool Layer::isAnnotated()
  */
 bool Layer::isVisible()
 {
-	XOJ_CHECK_TYPE(Layer);
-
 	return visible;
 }
 
@@ -156,14 +137,10 @@ bool Layer::isVisible()
  */
 void Layer::setVisible(bool visible)
 {
-	XOJ_CHECK_TYPE(Layer);
-
 	this->visible = visible;
 }
 
 vector<Element*>* Layer::getElements()
 {
-	XOJ_CHECK_TYPE(Layer);
-
 	return &this->elements;
 }

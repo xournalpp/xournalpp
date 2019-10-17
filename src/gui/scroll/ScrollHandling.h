@@ -42,12 +42,10 @@ public:
 	virtual void scrollChanged() = 0;
 
 private:
-	XOJ_TYPE_ATTRIB;
+	protected:
+	GtkAdjustment* adjHorizontal = nullptr;
+	GtkAdjustment* adjVertical = nullptr;
 
-protected:
-	GtkAdjustment* adjHorizontal = NULL;
-	GtkAdjustment* adjVertical = NULL;
-
-	GtkWidget* xournal = NULL;
-	Layout* layout = NULL;
+	GtkWidget* xournal = nullptr;
+	Layout* layout = nullptr;
 };

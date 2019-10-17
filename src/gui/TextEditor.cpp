@@ -20,8 +20,6 @@ TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool own
  , text(text)
  , ownText(ownText)
 {
-	XOJ_INIT_TYPE(TextEditor);
-
 	this->text->setInEditing(true);
 	this->textWidget = gtk_xoj_int_txt_new(this);
 	this->lastText = text->getText();
@@ -53,8 +51,6 @@ TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool own
 
 TextEditor::~TextEditor()
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	this->text->setInEditing(false);
 	this->widget = nullptr;
 
@@ -103,14 +99,10 @@ TextEditor::~TextEditor()
 		g_object_unref(this->layout);
 		this->layout = nullptr;
 	}
-
-	XOJ_RELEASE_TYPE(TextEditor);
 }
 
 Text* TextEditor::getText()
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	GtkTextIter start, end;
 
 	gtk_text_buffer_get_bounds(this->buffer, &start, &end);
@@ -123,8 +115,6 @@ Text* TextEditor::getText()
 
 void TextEditor::setText(string text)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	gtk_text_buffer_set_text(this->buffer, text.c_str(), -1);
 
 	GtkTextIter first = {0};
@@ -134,9 +124,6 @@ void TextEditor::setText(string text)
 
 UndoAction* TextEditor::setColor(int color)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
-
 	int origColor = this->text->getColor();
 	this->text->setColor(color);
 
@@ -156,8 +143,6 @@ UndoAction* TextEditor::setColor(int color)
 
 void TextEditor::setFont(XojFont font)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	this->text->setFont(font);
 	TextView::updatePangoFont(this->layout, this->text);
 	this->repaintEditor();
@@ -165,15 +150,11 @@ void TextEditor::setFont(XojFont font)
 
 void TextEditor::textCopyed()
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	this->ownText = false;
 }
 
 void TextEditor::iMCommitCallback(GtkIMContext* context, const gchar* str, TextEditor* te)
 {
-	XOJ_CHECK_TYPE_OBJ(te, TextEditor);
-
 	gtk_text_buffer_begin_user_action(te->buffer);
 	gboolean had_selection = gtk_text_buffer_get_selection_bounds(te->buffer, nullptr, nullptr);
 
@@ -216,8 +197,6 @@ void TextEditor::iMCommitCallback(GtkIMContext* context, const gchar* str, TextE
 
 void TextEditor::iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te)
 {
-	XOJ_CHECK_TYPE_OBJ(te, TextEditor);
-
 	gchar* str;
 	PangoAttrList* attrs;
 	gint cursor_pos;
@@ -256,8 +235,6 @@ out:
 
 bool TextEditor::iMRetrieveSurroundingCallback(GtkIMContext* context, TextEditor* te)
 {
-	XOJ_CHECK_TYPE_OBJ(te, TextEditor);
-
 	GtkTextIter start;
 	GtkTextIter end;
 
@@ -279,8 +256,6 @@ bool TextEditor::iMRetrieveSurroundingCallback(GtkIMContext* context, TextEditor
 
 bool TextEditor::imDeleteSurroundingCallback(GtkIMContext* context, gint offset, gint n_chars, TextEditor* te)
 {
-	XOJ_CHECK_TYPE_OBJ(te, TextEditor);
-
 	GtkTextIter start;
 	GtkTextIter end;
 
@@ -300,8 +275,6 @@ bool TextEditor::imDeleteSurroundingCallback(GtkIMContext* context, gint offset,
 
 bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	if (gtk_bindings_activate_event(G_OBJECT(this->textWidget), event))
 	{
 		return true;
@@ -378,8 +351,6 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 
 bool TextEditor::onKeyReleaseEvent(GdkEventKey* event)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	GtkTextIter iter;
 
 	GtkTextMark* insert = gtk_text_buffer_get_insert(this->buffer);
@@ -394,8 +365,6 @@ bool TextEditor::onKeyReleaseEvent(GdkEventKey* event)
 
 void TextEditor::toggleOverwrite()
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	this->cursorOverwrite = !this->cursorOverwrite;
 	repaintCursor();
 }
@@ -449,8 +418,6 @@ void TextEditor::toggleBold()
 
 void TextEditor::selectAtCursor(TextEditor::SelectType ty)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	GtkTextMark* mark = gtk_text_buffer_get_insert(this->buffer);
 	GtkTextIter startPos;
 	GtkTextIter endPos;
@@ -524,9 +491,6 @@ void TextEditor::selectAtCursor(TextEditor::SelectType ty)
 
 void TextEditor::moveCursor(GtkMovementStep step, int count, bool extendSelection)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
-
 	resetImContext();
 
 	// Not possible, but we have to handle the events, else the page gets scrolled
@@ -662,8 +626,6 @@ void TextEditor::moveCursor(GtkMovementStep step, int count, bool extendSelectio
 
 void TextEditor::findPos(GtkTextIter* iter, double xPos, double yPos)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	if (!this->layout)
 	{
 		return;
@@ -680,8 +642,6 @@ void TextEditor::findPos(GtkTextIter* iter, double xPos, double yPos)
 
 void TextEditor::contentsChanged(bool forceCreateUndoAction)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	string currentText = getText()->getText();
 
 	// I know it's a little bit bulky, but ABS on substracted size_t is a little bit unsafe
@@ -704,8 +664,6 @@ void TextEditor::contentsChanged(bool forceCreateUndoAction)
 
 UndoAction* TextEditor::getFirstUndoAction()
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	if (!this->undoActions.empty())
 	{
 		return &this->undoActions.front().get();
@@ -715,8 +673,6 @@ UndoAction* TextEditor::getFirstUndoAction()
 
 void TextEditor::markPos(double x, double y, bool extendSelection)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	if (this->layout == nullptr)
 	{
 		this->markPosX = x;
@@ -744,16 +700,12 @@ void TextEditor::markPos(double x, double y, bool extendSelection)
 
 void TextEditor::mousePressed(double x, double y)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	this->mouseDown = true;
 	markPos(x, y, false);
 }
 
 void TextEditor::mouseMoved(double x, double y)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	if (this->mouseDown)
 	{
 		markPos(x, y, true);
@@ -762,15 +714,11 @@ void TextEditor::mouseMoved(double x, double y)
 
 void TextEditor::mouseReleased()
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	this->mouseDown = false;
 }
 
 void TextEditor::jumpALine(GtkTextIter* textIter, int count)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	int cursorLine = gtk_text_iter_get_line(textIter);
 
 	if (cursorLine + count < 0)
@@ -794,8 +742,6 @@ void TextEditor::jumpALine(GtkTextIter* textIter, int count)
 
 void TextEditor::calcVirtualCursor()
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	this->virtualCursor = 0;
 	GtkTextIter cursorIter = {nullptr};
 	GtkTextMark* cursor = gtk_text_buffer_get_insert(this->buffer);
@@ -810,8 +756,6 @@ void TextEditor::calcVirtualCursor()
 
 void TextEditor::moveCursor(const GtkTextIter* newLocation, gboolean extendSelection)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	Control* control = gui->getXournal()->getControl();
 
 	if (extendSelection)
@@ -853,8 +797,6 @@ static gboolean find_whitepace_region(const GtkTextIter* center, GtkTextIter* st
 
 void TextEditor::deleteFromCursor(GtkDeleteType type, int count)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	GtkTextIter insert;
 	// gboolean leave_one = false; // not needed
 
@@ -1000,8 +942,6 @@ void TextEditor::deleteFromCursor(GtkDeleteType type, int count)
 
 void TextEditor::backspace()
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	GtkTextIter insert;
 
 	resetImContext();
@@ -1029,8 +969,6 @@ void TextEditor::backspace()
 
 string TextEditor::getSelection()
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	GtkTextIter start, end;
 	char* text;
 	string s;
@@ -1046,16 +984,12 @@ string TextEditor::getSelection()
 
 void TextEditor::copyToCliboard()
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	GtkClipboard* clipboard = gtk_widget_get_clipboard(this->widget, GDK_SELECTION_CLIPBOARD);
 	gtk_text_buffer_copy_clipboard(this->buffer, clipboard);
 }
 
 void TextEditor::cutToClipboard()
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	GtkClipboard* clipboard = gtk_widget_get_clipboard(this->widget, GDK_SELECTION_CLIPBOARD);
 	gtk_text_buffer_cut_clipboard(this->buffer, clipboard, true);
 
@@ -1065,8 +999,6 @@ void TextEditor::cutToClipboard()
 
 void TextEditor::pasteFromClipboard()
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	GtkClipboard* clipboard = gtk_widget_get_clipboard(this->widget, GDK_SELECTION_CLIPBOARD);
 	gtk_text_buffer_paste_clipboard(this->buffer, clipboard, nullptr, true);
 }
@@ -1079,8 +1011,6 @@ void TextEditor::bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* cl
 
 void TextEditor::resetImContext()
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	if (this->needImReset)
 	{
 		this->needImReset = false;
@@ -1090,8 +1020,6 @@ void TextEditor::resetImContext()
 
 void TextEditor::repaintCursor()
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	repaintEditor();
 }
 
@@ -1105,8 +1033,6 @@ void TextEditor::repaintCursor()
  */
 gint TextEditor::blinkCallback(TextEditor* te)
 {
-	XOJ_CHECK_TYPE_OBJ(te, TextEditor);
-
 	if (te->cursorVisible)
 	{
 		te->blinkTimeout = gdk_threads_add_timeout(
@@ -1128,8 +1054,6 @@ gint TextEditor::blinkCallback(TextEditor* te)
 
 void TextEditor::repaintEditor()
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	this->gui->repaintPage();
 }
 
@@ -1154,8 +1078,6 @@ int TextEditor::getCharOffset(int byteOffset)
 
 void TextEditor::drawCursor(cairo_t* cr, double x, double y, double height, double zoom)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	double cw = 2 / zoom;
 	double dX = 0;
 	if (this->cursorOverwrite)
@@ -1184,8 +1106,6 @@ void TextEditor::drawCursor(cairo_t* cr, double x, double y, double height, doub
 
 void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 {
-	XOJ_CHECK_TYPE(TextEditor);
-
 	GtkColorWrapper selectionColor = this->gui->getSelectionColor();
 
 	cairo_save(cr);

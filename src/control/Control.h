@@ -320,8 +320,6 @@ protected:
 	bool loadPdf(const Path& filename, int scrollToPage);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * "Closes" the document, preparing the editor for a new document.
 	 */
@@ -332,12 +330,12 @@ private:
 	ZoomControl* zoom;
 
 	Settings* settings;
-	MainWindow* win = NULL;
+	MainWindow* win = nullptr;
 
-	Document* doc = NULL;
+	Document* doc = nullptr;
 
-	Sidebar* sidebar = NULL;
-	SearchBar* searchBar = NULL;
+	Sidebar* sidebar = nullptr;
+	SearchBar* searchBar = nullptr;
 
 	ToolHandler* toolHandler;
 
@@ -349,7 +347,7 @@ private:
 
 	AudioController* audioController;
 
-	ToolbarDragDropHandler* dragDropHandler = NULL;
+	ToolbarDragDropHandler* dragDropHandler = nullptr;
 
 	/**
 	 * The cursor handler
@@ -369,7 +367,7 @@ private:
 	/**
 	 * Our clipboard abstraction
 	 */
-	ClipboardHandler* clipboardHandler = NULL;
+	ClipboardHandler* clipboardHandler = nullptr;
 
 	/**
 	 * The autosave handler ID
@@ -382,9 +380,9 @@ private:
 	/**
 	 * State / Blocking attributes
 	 */
-	GtkWidget* statusbar = NULL;
-	GtkLabel* lbState = NULL;
-	GtkProgressBar* pgState = NULL;
+	GtkWidget* statusbar = nullptr;
+	GtkLabel* lbState = nullptr;
+	GtkProgressBar* pgState = nullptr;
 	int maxState = 0;
 	bool isBlocking;
 

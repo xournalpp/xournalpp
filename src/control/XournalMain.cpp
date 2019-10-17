@@ -36,21 +36,17 @@
 
 XournalMain::XournalMain()
 {
-	XOJ_INIT_TYPE(XournalMain);
 }
 
 XournalMain::~XournalMain()
 {
-	XOJ_RELEASE_TYPE(XournalMain);
 }
 
 void XournalMain::initLocalisation()
 {
-	XOJ_CHECK_TYPE(XournalMain);
-
 #ifdef ENABLE_NLS
 
-#ifdef WIN32
+#ifdef _WIN32
 #undef PACKAGE_LOCALE_DIR
 #define PACKAGE_LOCALE_DIR "../share/locale/"
 #endif
@@ -64,14 +60,14 @@ void XournalMain::initLocalisation()
 	bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 	textdomain(GETTEXT_PACKAGE);
 
-#ifdef WIN32
+#ifdef _WIN32
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif
 
 #endif //ENABLE_NLS
 
 	// Not working on Windows! Working on Linux, but not sure if it's needed
-#ifndef WIN32
+#ifndef _WIN32
 try
 {
 	std::locale::global(std::locale("")); // "" - system default locale
@@ -86,12 +82,10 @@ catch (std::runtime_error &e)
 
 void XournalMain::checkForErrorlog()
 {
-	XOJ_CHECK_TYPE(XournalMain);
-
 	Path errorDir = Util::getConfigSubfolder(ERRORLOG_DIR);
-	GDir* home = g_dir_open(errorDir.c_str(), 0, NULL);
+	GDir* home = g_dir_open(errorDir.c_str(), 0, nullptr);
 
-	if (home == NULL)
+	if (home == nullptr)
 	{
 		return;
 	}
@@ -99,7 +93,7 @@ void XournalMain::checkForErrorlog()
 	vector<string> errorList;
 
 	const gchar* file;
-	while ((file = g_dir_read_name(home)) != NULL)
+	while ((file = g_dir_read_name(home)) != nullptr)
 	{
 		if (g_file_test(file, G_FILE_TEST_IS_REGULAR))
 		{
@@ -129,7 +123,7 @@ void XournalMain::checkForErrorlog()
 #endif
 	msg += FS(_F("The most recent log file name: {1}") % errorList[0]);
 
-	GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
+	GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL,
 		GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
 
 	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
@@ -161,7 +155,7 @@ void XournalMain::checkForErrorlog()
 		{
 			string msg = FS(_F("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}")
 					% errorlogPath.str());
-			XojMsgBox::showErrorToUser(NULL, msg);
+			XojMsgBox::showErrorToUser(nullptr, msg);
 		}
 	}
 	else if (res == 5) // Cancel
@@ -182,7 +176,7 @@ void XournalMain::checkForEmergencySave(Control* control) {
 
 	string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
 
-	GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
+	GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL,
 		GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
 
 	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete file"), 1);
@@ -212,12 +206,10 @@ void XournalMain::checkForEmergencySave(Control* control) {
 
 int XournalMain::exportImg(const char* input, const char* output)
 {
-	XOJ_CHECK_TYPE(XournalMain);
-
 	LoadHandler loader;
 
 	Document* doc = loader.loadDocument(input);
-	if (doc == NULL)
+	if (doc == nullptr)
 	{
 		g_error("%s", loader.getLastError().c_str());
 		return -2;
@@ -264,12 +256,10 @@ int XournalMain::exportImg(const char* input, const char* output)
 
 int XournalMain::exportPdf(const char* input, const char* output)
 {
-	XOJ_CHECK_TYPE(XournalMain);
-
 	LoadHandler loader;
 
 	Document* doc = loader.loadDocument(input);
-	if (doc == NULL)
+	if (doc == nullptr)
 	{
 		g_error("%s", loader.getLastError().c_str());
 		return -2;
@@ -277,7 +267,7 @@ int XournalMain::exportPdf(const char* input, const char* output)
 
 	GFile* file = g_file_new_for_commandline_arg(output);
 
-	XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, NULL);
+	XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, nullptr);
 	char* cpath = g_file_get_path(file);
 	string path = cpath;
 	g_free(cpath);
@@ -299,16 +289,14 @@ int XournalMain::exportPdf(const char* input, const char* output)
 
 int XournalMain::run(int argc, char* argv[])
 {
-	XOJ_CHECK_TYPE(XournalMain);
-
 	this->initLocalisation();
 
-	GError* error = NULL;
+	GError* error = nullptr;
 	GOptionContext* context = g_option_context_new("FILE");
 
-	gchar** optFilename = NULL;
-	gchar* pdfFilename = NULL;
-	gchar* imgFilename = NULL;
+	gchar** optFilename = nullptr;
+	gchar* pdfFilename = nullptr;
+	gchar* imgFilename = nullptr;
 	int openAtPageNumber = -1;
 
 	string create_pdf = _("PDF output filename");
@@ -316,11 +304,11 @@ int XournalMain::run(int argc, char* argv[])
 	string page_jump = _("Jump to Page (first Page: 1)");
 	string audio_folder = _("Absolute path for the audio files playback");
 	GOptionEntry options[] = {
-		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      create_pdf.c_str(), NULL },
-		{ "create-img",      'i', 0, G_OPTION_ARG_FILENAME,       &imgFilename,      create_img.c_str(), NULL },
+		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      create_pdf.c_str(), nullptr },
+		{ "create-img",      'i', 0, G_OPTION_ARG_FILENAME,       &imgFilename,      create_img.c_str(), nullptr },
 		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, page_jump.c_str(), "N" },
-		{G_OPTION_REMAINING,   0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>", NULL },
-		{NULL}
+		{G_OPTION_REMAINING,   0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>", nullptr },
+		{nullptr}
 	};
 
 	g_option_context_add_main_entries(context, options, GETTEXT_PACKAGE);
@@ -330,10 +318,10 @@ int XournalMain::run(int argc, char* argv[])
 	{
 		g_error("%s", error->message);
 		g_error_free(error);
-		gchar* help = g_option_context_get_help(context, true, NULL);
+		gchar* help = g_option_context_get_help(context, true, nullptr);
 		g_message("%s", help);
 		g_free(help);
-		error = NULL;
+		error = nullptr;
 	}
 	g_option_context_free(context);
 
@@ -349,7 +337,7 @@ int XournalMain::run(int argc, char* argv[])
 	// Checks for input method compatibility
 
 	const char* imModule = g_getenv("GTK_IM_MODULE");
-	if (imModule != NULL && strcmp(imModule, "xim") == 0)
+	if (imModule != nullptr && strcmp(imModule, "xim") == 0)
 	{
 		g_setenv("GTK_IM_MODULE", "ibus", true);
 		g_warning("Unsupported input method: xim, changed to: ibus");
@@ -380,7 +368,7 @@ int XournalMain::run(int argc, char* argv[])
 	MainWindow* win = new MainWindow(gladePath, control);
 	control->initWindow(win);
 
-	win->show(NULL);
+	win->show(nullptr);
 
 	bool opened = false;
 	if (optFilename)
@@ -448,8 +436,6 @@ int XournalMain::run(int argc, char* argv[])
  */
 string XournalMain::findResourcePath(string searchFile)
 {
-	XOJ_CHECK_TYPE(XournalMain);
-
 	// First check if the files are available relative to the path
 	// So a "portable" installation will be possible
 	Path relative1 = searchFile;
@@ -530,8 +516,6 @@ string XournalMain::findResourcePath(string searchFile)
 
 void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound)
 {
-	XOJ_CHECK_TYPE(XournalMain);
-
 	string uiPath = findResourcePath(relativePathAndFile);	//i.e.  relativePathAndFile = "ui/about.glade"
 
 	if (uiPath != "")
@@ -559,7 +543,7 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* rela
 	{
 		msg += _("\nWill now attempt to run without this file.");
 	}
-	XojMsgBox::showErrorToUser(NULL, msg);
+	XojMsgBox::showErrorToUser(nullptr, msg);
 #else
 	// Check at the target installation directory
 	Path absolute = PACKAGE_DATA_DIR;
@@ -579,7 +563,7 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* rela
 	{
 		msg += _("\n\nWill now attempt to run without this file.");
 	}
-	XojMsgBox::showErrorToUser(NULL, msg);
+	XojMsgBox::showErrorToUser(nullptr, msg);
 #endif
 
 	if (failIfNotFound)

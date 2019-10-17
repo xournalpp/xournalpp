@@ -19,15 +19,11 @@
 InputSequence::InputSequence(NewGtkInputDevice* inputHandler)
  : inputHandler(inputHandler)
 {
-	XOJ_INIT_TYPE(InputSequence);
-
 	this->presureSensitivity = inputHandler->getSettings()->isPressureSensitivity();
 }
 
 InputSequence::~InputSequence()
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	if (inputRunning)
 	{
 		actionEnd(__UINT32_MAX__);
@@ -36,8 +32,6 @@ InputSequence::~InputSequence()
 
 	// Make 100% sure there is no input running
 	stopInput();
-
-	XOJ_RELEASE_TYPE(InputSequence);
 }
 
 /**
@@ -45,8 +39,6 @@ InputSequence::~InputSequence()
  */
 void InputSequence::setDevice(GdkDevice* device)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	this->device = device;
 }
 
@@ -55,8 +47,6 @@ void InputSequence::setDevice(GdkDevice* device)
  */
 void InputSequence::clearAxes()
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	g_clear_pointer(&axes, g_free);
 }
 
@@ -67,8 +57,6 @@ void InputSequence::clearAxes()
  */
 void InputSequence::setAxes(gdouble* axes)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	clearAxes();
 	this->axes = axes;
 }
@@ -78,8 +66,6 @@ void InputSequence::setAxes(gdouble* axes)
  */
 void InputSequence::copyAxes(GdkEvent* event)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	clearAxes();
 	setAxes((gdouble*)g_memdup(event->motion.axes, sizeof(gdouble) * gdk_device_get_n_axes(device)));
 }
@@ -89,8 +75,6 @@ void InputSequence::copyAxes(GdkEvent* event)
  */
 void InputSequence::setCurrentPosition(double x, double y)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	this->x = x;
 	this->y = y;
 }
@@ -100,8 +84,6 @@ void InputSequence::setCurrentPosition(double x, double y)
  */
 void InputSequence::setCurrentRootPosition(double x, double y)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	this->rootX = x;
 	this->rootY = y;
 }
@@ -111,8 +93,6 @@ void InputSequence::setCurrentRootPosition(double x, double y)
  */
 void InputSequence::setButton(guint button, guint time)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	this->button = button;
 	this->eventTime = time;
 }
@@ -122,20 +102,16 @@ void InputSequence::setButton(guint button, guint time)
  */
 void InputSequence::setState(GdkModifierType state)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	this->state = state;
 }
 
 /**
  * Get Page at current position
  *
- * @return page or NULL if none
+ * @return page or nullptr if none
  */
 XojPageView* InputSequence::getPageAtCurrentPosition()
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	GtkXournal* xournal = inputHandler->getXournal();
 
 	double x = this->x + xournal->x;
@@ -149,8 +125,6 @@ XojPageView* InputSequence::getPageAtCurrentPosition()
  */
 void InputSequence::handleScrollEvent()
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	// use root coordinates as reference point because
 	// scrolling changes window relative coordinates
 	// see github Gnome/evince@1adce5486b10e763bed869
@@ -185,8 +159,6 @@ void InputSequence::handleScrollEvent()
  */
 bool InputSequence::actionMoved(guint32 time)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	GtkXournal* xournal = inputHandler->getXournal();
 	ToolHandler* h = inputHandler->getToolHandler();
 
@@ -227,7 +199,7 @@ bool InputSequence::actionMoved(guint32 time)
 		return true;
 	}
 
-	XojPageView* pv = NULL;
+	XojPageView* pv = nullptr;
 
 	if (current_view)
 	{
@@ -238,12 +210,12 @@ bool InputSequence::actionMoved(guint32 time)
 		pv = getPageAtCurrentPosition();
 	}
 
-	xournal->view->getCursor()->setInsidePage(pv != NULL);
+	xournal->view->getCursor()->setInsidePage(pv != nullptr);
 
 	if (pv && inputRunning)
 	{
 		// allow events only to a single page!
-		if (currentInputPage == NULL || pv == currentInputPage)
+		if (currentInputPage == nullptr || pv == currentInputPage)
 		{
 			PositionInputData pos = getInputDataRelativeToCurrentPage(pv);
 			return pv->onMotionNotifyEvent(pos);
@@ -258,8 +230,6 @@ bool InputSequence::actionMoved(guint32 time)
  */
 bool InputSequence::actionStart(guint32 time)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	this->eventTime = time;
 
 	inputHandler->focusWidget();
@@ -364,7 +334,7 @@ bool InputSequence::checkStillRunning()
 
 	GdkModifierType mask = (GdkModifierType) 0;
 	GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(inputHandler->getXournal()));
-	gdk_device_get_state(device, window, NULL, &mask);
+	gdk_device_get_state(device, window, nullptr, &mask);
 
 	if ((GDK_BUTTON1_MASK & mask) ||
 		(GDK_BUTTON2_MASK & mask) ||
@@ -389,8 +359,6 @@ bool InputSequence::checkStillRunning()
  */
 void InputSequence::actionEnd(guint32 time)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	if (!inputRunning)
 	{
 		return;
@@ -401,7 +369,7 @@ void InputSequence::actionEnd(guint32 time)
 	// Mouse button not pressed anymore
 	this->button = 0;
 
-	current_view = NULL;
+	current_view = nullptr;
 
 	GtkXournal* xournal = inputHandler->getXournal();
 	XournalppCursor* cursor = xournal->view->getCursor();
@@ -427,11 +395,11 @@ void InputSequence::actionEnd(guint32 time)
 	{
 		PositionInputData pos = getInputDataRelativeToCurrentPage(currentInputPage);
 		currentInputPage->onButtonReleaseEvent(pos);
-		currentInputPage = NULL;
+		currentInputPage = nullptr;
 	}
 
 	EditSelection* tmpSelection = xournal->selection;
-	xournal->selection = NULL;
+	xournal->selection = nullptr;
 
 	h->restoreLastConfig();
 
@@ -449,8 +417,6 @@ void InputSequence::actionEnd(guint32 time)
  */
 PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* page)
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	GtkXournal* xournal = inputHandler->getXournal();
 
 	PositionInputData pos;
@@ -475,8 +441,6 @@ PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* 
  */
 void InputSequence::checkCanStartInput()
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	if (inputHandler->startInput(this))
 	{
 		inputRunning = true;
@@ -492,8 +456,6 @@ void InputSequence::checkCanStartInput()
  */
 void InputSequence::stopInput()
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	inputRunning = false;
 	inputHandler->stopInput(this);
 }
@@ -504,14 +466,12 @@ void InputSequence::stopInput()
  */
 bool InputSequence::changeTool()
 {
-	XOJ_CHECK_TYPE(InputSequence);
-
 	Settings* settings = inputHandler->getSettings();
 	ButtonConfig* cfgTouch = settings->getTouchButtonConfig();
 	ToolHandler* h = inputHandler->getToolHandler();
 	GtkXournal* xournal = inputHandler->getXournal();
 
-	ButtonConfig* cfg = NULL;
+	ButtonConfig* cfg = nullptr;
 	if (gdk_device_get_source(device) == GDK_SOURCE_PEN)
 	{
 		penDevice = true;

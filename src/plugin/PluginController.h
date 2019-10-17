@@ -51,8 +51,6 @@ public:
 	vector<Plugin*>& getPlugins();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * The main controller
 	 */

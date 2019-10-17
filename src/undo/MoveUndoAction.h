@@ -36,13 +36,11 @@ private:
 	void move();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	vector<Element*> elements;
 	PageRef targetPage;
 
-	Layer* sourceLayer = NULL;
-	Layer* targetLayer = NULL;
+	Layer* sourceLayer = nullptr;
+	Layer* targetLayer = nullptr;
 
 	string text;
 

@@ -30,8 +30,6 @@ public:
 	vector<Stroke*>* getSources();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Stroke* recognized;
 	vector<Stroke*> source;
 };

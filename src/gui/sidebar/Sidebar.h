@@ -80,11 +80,9 @@ private:
 	static void buttonClicked(GtkToolButton* toolbutton, SidebarPageButton* buttonData);
 
 private:
-	XOJ_TYPE_ATTRIB;
+	Control* control = nullptr;
 
-	Control* control = NULL;
-
-	GladeGui* gui = NULL;
+	GladeGui* gui = nullptr;
 
 	/**
 	 * The sidebar pages
@@ -94,27 +92,27 @@ private:
 	/**
 	 * The Toolbar with the pages
 	 */
-	GtkToolbar* tbSelectPage = NULL;
+	GtkToolbar* tbSelectPage = nullptr;
 
 	/**
 	 * The close button of the sidebar
 	 */
-	GtkWidget* buttonCloseSidebar = NULL;
+	GtkWidget* buttonCloseSidebar = nullptr;
 
 	/**
 	 * The current visible page in the sidebar
 	 */
-	GtkWidget* visiblePage = NULL;
+	GtkWidget* visiblePage = nullptr;
 
 	/**
 	 * Current active page
 	 */
-	AbstractSidebarPage* currentPage = NULL;
+	AbstractSidebarPage* currentPage = nullptr;
 
 	/**
 	 * The sidebar widget
 	 */
-	GtkWidget* sidebar = NULL;
+	GtkWidget* sidebar = nullptr;
 
 	/**
 	 * Sidebar toolbar
@@ -128,8 +126,8 @@ public:
 	SidebarPageButton(Sidebar* sidebar, int index, AbstractSidebarPage* page);
 
 public:
-	Sidebar* sidebar = NULL;
+	Sidebar* sidebar = nullptr;
 	int index = 0;
-	AbstractSidebarPage* page = NULL;
+	AbstractSidebarPage* page = nullptr;
 
 };

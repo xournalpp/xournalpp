@@ -29,8 +29,6 @@ public:
 	void setAudioFilename(string filename);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	string audioFilename;
 };
 

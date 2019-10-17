@@ -34,7 +34,5 @@ public:
 	virtual void pageChanged() { }
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-	PageHandler* handler = NULL;
+	PageHandler* handler = nullptr;
 };

@@ -2,8 +2,6 @@
 
 EraseableStrokePart::EraseableStrokePart(Point a, Point b)
 {
-	XOJ_INIT_TYPE(EraseableStrokePart);
-
 	addPoint(a);
 	addPoint(b);
 	this->width = a.z;
@@ -15,9 +13,7 @@ EraseableStrokePart::EraseableStrokePart(Point a, Point b)
 
 EraseableStrokePart::EraseableStrokePart(double width)
 {
-	XOJ_INIT_TYPE(EraseableStrokePart);
-
-	this->points = NULL;
+	this->points = nullptr;
 	this->width = width;
 	this->splitSize = 0;
 
@@ -26,24 +22,18 @@ EraseableStrokePart::EraseableStrokePart(double width)
 
 EraseableStrokePart::~EraseableStrokePart()
 {
-	XOJ_CHECK_TYPE(EraseableStrokePart);
-
-	for (GList* l = this->points; l != NULL; l = l->next)
+	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
 		Point* p = (Point*) l->data;
 		delete p;
 	}
 	g_list_free(this->points);
-	this->points = NULL;
-
-	XOJ_RELEASE_TYPE(EraseableStrokePart);
+	this->points = nullptr;
 }
 
 void EraseableStrokePart::calcSize()
 {
-	XOJ_CHECK_TYPE(EraseableStrokePart);
-
-	if (this->points == NULL)
+	if (this->points == nullptr)
 	{
 		this->x = 0;
 		this->y = 0;
@@ -57,13 +47,13 @@ void EraseableStrokePart::calcSize()
 	double x2 = ((Point*) g_list_first(this->points)->data)->x;
 	double y2 = ((Point*) g_list_first(this->points)->data)->y;
 
-	for (GList* l = this->points; l != NULL; l = l->next)
+	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
 		Point* p = (Point*) l->data;
-		x1 = MIN(x1, p->x);
-		x2 = MAX(x2, p->x);
-		y1 = MIN(y1, p->y);
-		y2 = MAX(y2, p->y);
+		x1 = std::min(x1, p->x);
+		x2 = std::max(x2, p->x);
+		y1 = std::min(y1, p->y);
+		y2 = std::max(y2, p->y);
 	}
 
 	this->x = x1;
@@ -74,11 +64,9 @@ void EraseableStrokePart::calcSize()
 
 EraseableStrokePart* EraseableStrokePart::clone()
 {
-	XOJ_CHECK_TYPE(EraseableStrokePart);
-
 	EraseableStrokePart* part = new EraseableStrokePart(this->width);
 
-	for (GList* l = this->points; l != NULL; l = l->next)
+	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
 		Point* p = (Point*) l->data;
 		part->addPoint(*p);
@@ -91,36 +79,26 @@ EraseableStrokePart* EraseableStrokePart::clone()
 
 double EraseableStrokePart::getX()
 {
-	XOJ_CHECK_TYPE(EraseableStrokePart);
-
 	return this->x;
 }
 
 double EraseableStrokePart::getY()
 {
-	XOJ_CHECK_TYPE(EraseableStrokePart);
-
 	return this->y;
 }
 
 double EraseableStrokePart::getElementWidth()
 {
-	XOJ_CHECK_TYPE(EraseableStrokePart);
-
 	return this->elementWidth;
 }
 
 double EraseableStrokePart::getElementHeight()
 {
-	XOJ_CHECK_TYPE(EraseableStrokePart);
-
 	return this->elementHeight;
 }
 
 void EraseableStrokePart::addPoint(Point p)
 {
-	XOJ_CHECK_TYPE(EraseableStrokePart);
-
 	calcSize();
 
 	this->points = g_list_append(this->points, new Point(p));
@@ -128,23 +106,17 @@ void EraseableStrokePart::addPoint(Point p)
 
 double EraseableStrokePart::getWidth()
 {
-	XOJ_CHECK_TYPE(EraseableStrokePart);
-
 	return this->width;
 }
 
 GList* EraseableStrokePart::getPoints()
 {
-	XOJ_CHECK_TYPE(EraseableStrokePart);
-
 	return this->points;
 }
 
 void EraseableStrokePart::clearSplitData()
 {
-	XOJ_CHECK_TYPE(EraseableStrokePart);
-
-	for (GList* l = this->points->next; l->next != NULL;)
+	for (GList* l = this->points->next; l->next != nullptr;)
 	{
 		Point* p = (Point*) l->data;
 		delete p;
@@ -157,8 +129,6 @@ void EraseableStrokePart::clearSplitData()
 
 void EraseableStrokePart::splitFor(double halfEraserSize)
 {
-	XOJ_CHECK_TYPE(EraseableStrokePart);
-
 	if (halfEraserSize == this->splitSize)
 	{
 		return;

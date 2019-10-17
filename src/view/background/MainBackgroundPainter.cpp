@@ -9,8 +9,6 @@
 
 MainBackgroundPainter::MainBackgroundPainter()
 {
-	XOJ_INIT_TYPE(MainBackgroundPainter);
-
 	defaultPainter = new BaseBackgroundPainter();
 
 	painter[PageTypeFormat::Ruled] = new LineBackgroundPainter(false);
@@ -22,8 +20,6 @@ MainBackgroundPainter::MainBackgroundPainter()
 
 MainBackgroundPainter::~MainBackgroundPainter()
 {
-	XOJ_CHECK_TYPE(MainBackgroundPainter);
-
 	for (auto& e : painter)
 	{
 		delete e.second;
@@ -31,9 +27,7 @@ MainBackgroundPainter::~MainBackgroundPainter()
 	painter.clear();
 
 	delete defaultPainter;
-	defaultPainter = NULL;
-
-	XOJ_RELEASE_TYPE(MainBackgroundPainter);
+	defaultPainter = nullptr;
 }
 
 /**
@@ -41,8 +35,6 @@ MainBackgroundPainter::~MainBackgroundPainter()
  */
 void MainBackgroundPainter::setLineWidthFactor(double factor)
 {
-	XOJ_CHECK_TYPE(MainBackgroundPainter);
-
 	for (auto& e : painter)
 	{
 		e.second->setLineWidthFactor(factor);
@@ -51,8 +43,6 @@ void MainBackgroundPainter::setLineWidthFactor(double factor)
 
 void MainBackgroundPainter::paint(PageType pt, cairo_t* cr, PageRef page)
 {
-	XOJ_CHECK_TYPE(MainBackgroundPainter);
-
 	auto it = this->painter.find(pt.format);
 
 	BaseBackgroundPainter* painter = defaultPainter;

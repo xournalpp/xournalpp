@@ -30,9 +30,6 @@ public:
 	DrawingType getDrawingType();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-
 	ToolType action;
 	int color;
 	ToolSize size;

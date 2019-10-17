@@ -3,29 +3,21 @@
 
 XmlStrokeNode::XmlStrokeNode(const char* tag) : XmlNode(tag)
 {
-	XOJ_INIT_TYPE(XmlStrokeNode);
-
-	this->points = NULL;
+	this->points = nullptr;
 	this->pointsLength = 0;
 	this->width = 0;
-	this->widths = NULL;
+	this->widths = nullptr;
 	this->widthsLength = 0;
 }
 
 XmlStrokeNode::~XmlStrokeNode()
 {
-	XOJ_CHECK_TYPE(XmlStrokeNode);
-
 	delete[] this->points;
 	delete[] this->widths;
-
-	XOJ_RELEASE_TYPE(XmlStrokeNode);
 }
 
 void XmlStrokeNode::setPoints(Point* points, int pointsLength)
 {
-	XOJ_CHECK_TYPE(XmlStrokeNode);
-
 	if (this->points)
 	{
 		delete[] this->points;
@@ -40,8 +32,6 @@ void XmlStrokeNode::setPoints(Point* points, int pointsLength)
 
 void XmlStrokeNode::setWidth(double width, double* widths, int widthsLength)
 {
-	XOJ_CHECK_TYPE(XmlStrokeNode);
-
 	this->width = width;
 
 	if (this->widths)
@@ -59,8 +49,6 @@ void XmlStrokeNode::setWidth(double width, double* widths, int widthsLength)
 
 void XmlStrokeNode::writeOut(OutputStream* out)
 {
-	XOJ_CHECK_TYPE(XmlStrokeNode);
-
 	out->write("<");
 	out->write(tag);
 	writeAttributes(out);

@@ -20,16 +20,12 @@ InputHandler::InputHandler(XournalView* xournal, XojPageView* redrawable, PageRe
  : xournal(xournal),
    redrawable(redrawable),
    page(page),
-   stroke(NULL)
+   stroke(nullptr)
 {
-	XOJ_INIT_TYPE(InputHandler);
 }
 
 InputHandler::~InputHandler()
 {
-	XOJ_CHECK_TYPE(InputHandler);
-
-	XOJ_RELEASE_TYPE(InputHandler);
 }
 
 /**
@@ -37,8 +33,6 @@ InputHandler::~InputHandler()
  */
 Stroke* InputHandler::getStroke()
 {
-	XOJ_CHECK_TYPE(InputHandler);
-
 	return stroke;
 }
 
@@ -53,8 +47,6 @@ void InputHandler::resetShapeRecognizer()
 
 void InputHandler::createStroke(Point p)
 {
-	XOJ_CHECK_TYPE(InputHandler);
-
 	ToolHandler* h = xournal->getControl()->getToolHandler();
 
 	stroke = new Stroke();
@@ -91,7 +83,5 @@ void InputHandler::createStroke(Point p)
 
 bool InputHandler::validMotion(Point p, Point q)
 {
-	XOJ_CHECK_TYPE(InputHandler);
-
 	return hypot(p.x - q.x, p.y - q.y) >= PIXEL_MOTION_THRESHOLD;
 }

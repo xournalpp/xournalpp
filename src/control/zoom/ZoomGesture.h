@@ -35,10 +35,8 @@ private:
 	void zoomEnd();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-	ZoomControl* zoomControl = NULL;
-	GtkGesture* gesture = NULL;
+	ZoomControl* zoomControl = nullptr;
+	GtkGesture* gesture = nullptr;
 
 	bool gestureActive = false;
 	bool enabled = true;

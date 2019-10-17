@@ -3,26 +3,18 @@
 
 DoubleArrayAttribute::DoubleArrayAttribute(const char* name, double* values, int count) : XMLAttribute(name)
 {
-	XOJ_INIT_TYPE(DoubleArrayAttribute);
-
 	this->values = values;
 	this->count = count;
 }
 
 DoubleArrayAttribute::~DoubleArrayAttribute()
 {
-	XOJ_CHECK_TYPE(DoubleArrayAttribute);
-
 	delete values;
-	values = NULL;
-
-	XOJ_RELEASE_TYPE(DoubleArrayAttribute);
+	values = nullptr;
 }
 
 void DoubleArrayAttribute::writeOut(OutputStream* out)
 {
-	XOJ_CHECK_TYPE(DoubleArrayAttribute);
-
 	if (this->count > 0)
 	{
 		char str[G_ASCII_DTOSTR_BUF_SIZE];

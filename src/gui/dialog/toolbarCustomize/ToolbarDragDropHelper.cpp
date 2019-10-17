@@ -19,14 +19,14 @@ GdkPixbuf* ToolbarDragDropHelper::getImagePixbuf(GtkImage* image)
 
 	case GTK_IMAGE_ICON_NAME:
 	{
-		const gchar* iconName = NULL;
-		gtk_image_get_icon_name(image, &iconName, NULL);
-		return gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), iconName, 22, (GtkIconLookupFlags) 0, NULL);
+		const gchar* iconName = nullptr;
+		gtk_image_get_icon_name(image, &iconName, nullptr);
+		return gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), iconName, 22, (GtkIconLookupFlags) 0, nullptr);
 	}
 
 	default:
 		g_warning("Image storage type %d not handled", gtk_image_get_storage_type(image));
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -39,11 +39,11 @@ void ToolbarDragDropHelper::dragDestAddToolbar(GtkWidget* target)
 	}
 	else
 	{
-		targetList = gtk_target_list_new(NULL, 0);
+		targetList = gtk_target_list_new(nullptr, 0);
 	}
 
 	// If not exist add, else do nothing
-	if (!gtk_target_list_find(targetList, atomToolItem, NULL))
+	if (!gtk_target_list_find(targetList, atomToolItem, nullptr))
 	{
 		gtk_target_list_add(targetList, atomToolItem, 0, 0);
 	}
@@ -58,7 +58,7 @@ void ToolbarDragDropHelper::dragSourceAddToolbar(GtkWidget* widget)
 	if (targetList)
 	{
 		// List contains already this type
-		if (gtk_target_list_find(targetList, atomToolItem, NULL))
+		if (gtk_target_list_find(targetList, atomToolItem, nullptr))
 		{
 			return;
 		}
@@ -67,7 +67,7 @@ void ToolbarDragDropHelper::dragSourceAddToolbar(GtkWidget* widget)
 	}
 	else
 	{
-		targetList = gtk_target_list_new(NULL, 0);
+		targetList = gtk_target_list_new(nullptr, 0);
 	}
 	gtk_target_list_add(targetList, atomToolItem, 0, 0);
 	gtk_drag_source_set_target_list(widget, targetList);

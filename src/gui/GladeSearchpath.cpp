@@ -2,22 +2,15 @@
 
 GladeSearchpath::GladeSearchpath()
 {
-	XOJ_INIT_TYPE(GladeSearchpath);
 }
 
 GladeSearchpath::~GladeSearchpath()
 {
-	XOJ_CHECK_TYPE(GladeSearchpath);
-
 	directories.clear();
-
-	XOJ_RELEASE_TYPE(GladeSearchpath);
 }
 
 string GladeSearchpath::findFile(string subdir, string file)
 {
-	XOJ_CHECK_TYPE(GladeSearchpath);
-
 	string filename;
 	if (subdir == "")
 	{
@@ -60,7 +53,5 @@ string GladeSearchpath::getFirstSearchPath()
  */
 void GladeSearchpath::addSearchDirectory(string directory)
 {
-	XOJ_CHECK_TYPE(GladeSearchpath);
-
 	this->directories.push_back(directory);
 }

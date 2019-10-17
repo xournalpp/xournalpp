@@ -9,22 +9,15 @@
 RepaintHandler::RepaintHandler(XournalView* xournal)
  : xournal(xournal)
 {
-	XOJ_INIT_TYPE(RepaintHandler);
 }
 
 RepaintHandler::~RepaintHandler()
 {
-	XOJ_CHECK_TYPE(RepaintHandler);
-
-	this->xournal = NULL;
-
-	XOJ_RELEASE_TYPE(RepaintHandler);
+	this->xournal = nullptr;
 }
 
 void RepaintHandler::repaintPage(XojPageView* view)
 {
-	XOJ_CHECK_TYPE(RepaintHandler);
-
 	if (xournal->getScrollHandling()->fullRepaint())
 	{
 		gtk_widget_queue_draw(this->xournal->getWidget());
@@ -42,9 +35,6 @@ void RepaintHandler::repaintPage(XojPageView* view)
 
 void RepaintHandler::repaintPageArea(XojPageView* view, int x1, int y1, int x2, int y2)
 {
-	XOJ_CHECK_TYPE(RepaintHandler);
-
-
 	if (xournal->getScrollHandling()->fullRepaint())
 	{
 		gtk_widget_queue_draw(this->xournal->getWidget());
@@ -59,7 +49,5 @@ void RepaintHandler::repaintPageArea(XojPageView* view, int x1, int y1, int x2, 
 
 void RepaintHandler::repaintPageBorder(XojPageView* view)
 {
-	XOJ_CHECK_TYPE(RepaintHandler);
-
 	gtk_widget_queue_draw(this->xournal->getWidget());
 }

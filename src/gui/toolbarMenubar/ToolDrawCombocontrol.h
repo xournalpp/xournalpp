@@ -33,12 +33,10 @@ protected:
 	void createMenuItem(string name, string icon, ActionType type);
 
 private:
-	XOJ_TYPE_ATTRIB;
+	ToolMenuHandler* toolMenuHandler = nullptr;
 
-	ToolMenuHandler* toolMenuHandler = NULL;
-
-	GtkWidget* iconWidget = NULL;
-	GtkWidget* labelWidget = NULL;
+	GtkWidget* iconWidget = nullptr;
+	GtkWidget* labelWidget = nullptr;
 
 	vector<ToolDrawType *> drawTypes;
 };

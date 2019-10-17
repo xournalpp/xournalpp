@@ -29,9 +29,9 @@ public:
 
 public:
 	/**
-	 * Returns a repaint rectangle or NULL, the rectangle is own by the caller
+	 * Returns a repaint rectangle or nullptr, the rectangle is own by the caller
 	 */
-	Range* erase(double x, double y, double halfEraserSize, Range* range = NULL);
+	Range* erase(double x, double y, double halfEraserSize, Range* range = nullptr);
 
 	GList* getStroke(Stroke* original);
 
@@ -45,13 +45,10 @@ private:
 	void addRepaintRect(double x, double y, double width, double height);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-
 	GMutex partLock;
-	PartList * parts = NULL;
+	PartList * parts = nullptr;
 
-	Range* repaintRect = NULL;
+	Range* repaintRect = nullptr;
 
-	Stroke* stroke = NULL;
+	Stroke* stroke = nullptr;
 };

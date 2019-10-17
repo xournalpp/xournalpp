@@ -51,7 +51,5 @@ struct BackgroundImage
 
 private:
 	struct Content;
-
-	XOJ_TYPE_ATTRIB;
 	std::shared_ptr<Content> img;
 };

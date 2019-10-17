@@ -15,9 +15,9 @@
  */
 bool PathUtil::readString(string& output, Path& path, bool showErrorToUser)
 {
-	gchar* contents = NULL;
+	gchar* contents = nullptr;
 	gsize length = 0;
-	GError* error = NULL;
+	GError* error = nullptr;
 	if (g_file_get_contents(path.c_str(), &contents, &length, &error))
 	{
 		output = contents;
@@ -28,7 +28,7 @@ bool PathUtil::readString(string& output, Path& path, bool showErrorToUser)
 	{
 		if (showErrorToUser)
 		{
-			XojMsgBox::showErrorToUser(NULL, error->message);
+			XojMsgBox::showErrorToUser(nullptr, error->message);
 		}
 
 		g_error_free(error);

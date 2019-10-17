@@ -40,8 +40,6 @@ protected:
 	void cloneAudioData(const AudioElement *other);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	// Stroke timestamp, to match it to the audio stream
 	size_t timestamp = 0;
 	string audioFilename = "";

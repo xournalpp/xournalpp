@@ -35,9 +35,7 @@ public:
 	void stop();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-protected:
+	protected:
 	bool stopConsumer = false;
 
 	Settings* settings = nullptr;

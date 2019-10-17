@@ -34,7 +34,5 @@ public:
 	virtual void pageSelected(size_t page);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-	DocumentHandler* handler = NULL;
+	DocumentHandler* handler = nullptr;
 };

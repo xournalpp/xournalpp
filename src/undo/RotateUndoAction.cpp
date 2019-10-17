@@ -9,8 +9,6 @@
 RotateUndoAction::RotateUndoAction(PageRef page, vector<Element*>* elements, double x0, double y0, double xo, double yo, double rotation)
  : UndoAction("RotateUndoAction")
 {
-	XOJ_INIT_TYPE(RotateUndoAction);
-
 	this->page = page;
 	this->elements = *elements;
 	this->x0 = x0;
@@ -22,17 +20,11 @@ RotateUndoAction::RotateUndoAction(PageRef page, vector<Element*>* elements, dou
 
 RotateUndoAction::~RotateUndoAction()
 {
-	XOJ_CHECK_TYPE(RotateUndoAction);
-
-	this->page = NULL;
-
-	XOJ_RELEASE_TYPE(RotateUndoAction);
+	this->page = nullptr;
 }
 
 bool RotateUndoAction::undo(Control* control)
 {
-	XOJ_CHECK_TYPE(RotateUndoAction);
-
 	applyRotation(-this->rotation);
 	this->undone = true;
 	return true;
@@ -40,8 +32,6 @@ bool RotateUndoAction::undo(Control* control)
 
 bool RotateUndoAction::redo(Control* control)
 {
-	XOJ_CHECK_TYPE(RotateUndoAction);
-
 	applyRotation(this->rotation);
 	this->undone = false;
 	return true;
@@ -49,8 +39,6 @@ bool RotateUndoAction::redo(Control* control)
 
 void RotateUndoAction::applyRotation(double rotation)
 {
-	XOJ_CHECK_TYPE(RotateUndoAction);
-
 	if (this->elements.empty()) return;
 
 	Range r(elements.front()->getX(), elements.front()->getY());
@@ -69,7 +57,5 @@ void RotateUndoAction::applyRotation(double rotation)
 
 string RotateUndoAction::getText()
 {
-	XOJ_CHECK_TYPE(RotateUndoAction);
-
 	return _("Rotation");
 }

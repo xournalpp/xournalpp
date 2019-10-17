@@ -103,10 +103,8 @@ private:
 	void paintBackgroundImage();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-	cairo_t* cr = NULL;
-	PageRef page = NULL;
+	cairo_t* cr = nullptr;
+	PageRef page = nullptr;
 	double width = 0;
 	double height = 0;
 	bool dontRenderEditingStroke = false;

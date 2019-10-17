@@ -33,10 +33,8 @@ protected:
 	virtual GtkWidget* getNewToolIcon();
 
 private:
-	XOJ_TYPE_ATTRIB;
+	GladeGui* gui = nullptr;
 
-	GladeGui* gui = NULL;
-
-	SpinPageAdapter* pageSpinner = NULL;
-	GtkWidget* lbPageNo = NULL;
+	SpinPageAdapter* pageSpinner = nullptr;
+	GtkWidget* lbPageNo = nullptr;
 };

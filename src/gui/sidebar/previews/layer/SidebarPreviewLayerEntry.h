@@ -48,8 +48,6 @@ protected:
 	void checkboxToggled();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Layer preview index
 	 */
@@ -73,7 +71,7 @@ private:
 	/**
 	 * Visible checkbox
 	 */
-	GtkWidget* cbVisible = NULL;
+	GtkWidget* cbVisible = nullptr;
 
 	/**
 	 * Ignore events

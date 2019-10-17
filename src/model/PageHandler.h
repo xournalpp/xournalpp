@@ -37,8 +37,6 @@ private:
 	void removeListener(PageListener* l);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	std::list<PageListener*> listener;
 
 	friend class PageListener;

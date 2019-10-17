@@ -10,8 +10,6 @@ BaseElementView::BaseElementView(int id, BackgroundSelectDialogBase* dlg)
  : dlg(dlg),
    id(id)
 {
-	XOJ_INIT_TYPE(BaseElementView);
-
 	this->widget = gtk_drawing_area_new();
 	gtk_widget_show(this->widget);
 
@@ -22,31 +20,23 @@ BaseElementView::BaseElementView(int id, BackgroundSelectDialogBase* dlg)
 
 BaseElementView::~BaseElementView()
 {
-	XOJ_CHECK_TYPE(BaseElementView);
-
 	gtk_widget_destroy(this->widget);
 
 	if (this->crBuffer)
 	{
 		cairo_surface_destroy(this->crBuffer);
-		this->crBuffer = NULL;
+		this->crBuffer = nullptr;
 	}
-
-	XOJ_RELEASE_TYPE(BaseElementView);
 }
 
 gboolean BaseElementView::drawCallback(GtkWidget* widget, cairo_t* cr, BaseElementView* element)
 {
-	XOJ_CHECK_TYPE_OBJ(element, BaseElementView);
-
 	element->paint(cr);
 	return true;
 }
 
 gboolean BaseElementView::mouseButtonPressCallback(GtkWidget* widget, GdkEventButton* event, BaseElementView* element)
 {
-	XOJ_CHECK_TYPE_OBJ(element, BaseElementView);
-
 	element->dlg->setSelected(element->id);
 	return true;
 }
@@ -54,8 +44,6 @@ gboolean BaseElementView::mouseButtonPressCallback(GtkWidget* widget, GdkEventBu
 
 void BaseElementView::setSelected(bool selected)
 {
-	XOJ_CHECK_TYPE(BaseElementView);
-
 	if (this->selected == selected)
 	{
 		return;
@@ -67,24 +55,20 @@ void BaseElementView::setSelected(bool selected)
 
 void BaseElementView::repaint()
 {
-	XOJ_CHECK_TYPE(BaseElementView);
-
 	if (this->crBuffer)
 	{
 		cairo_surface_destroy(this->crBuffer);
-		this->crBuffer = NULL;
+		this->crBuffer = nullptr;
 	}
 	gtk_widget_queue_draw(this->widget);
 }
 
 void BaseElementView::paint(cairo_t* cr)
 {
-	XOJ_CHECK_TYPE(BaseElementView);
-
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(this->widget, &alloc);
 
-	if (this->crBuffer == NULL)
+	if (this->crBuffer == nullptr)
 	{
 		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
 
@@ -141,38 +125,29 @@ void BaseElementView::paint(cairo_t* cr)
 
 GtkWidget* BaseElementView::getWidget()
 {
-	XOJ_CHECK_TYPE(BaseElementView);
-
 	updateSize();
 	return this->widget;
 }
 
 int BaseElementView::getWidth()
 {
-	XOJ_CHECK_TYPE(BaseElementView);
-
 	calcSize();
 	return getContentWidth() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 }
 
 int BaseElementView::getHeight()
 {
-	XOJ_CHECK_TYPE(BaseElementView);
-
 	calcSize();
 	return getContentHeight() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 }
 
 void BaseElementView::calcSize()
 {
-	XOJ_CHECK_TYPE(BaseElementView);
 	// Not implemented in the base class
 }
 
 void BaseElementView::updateSize()
 {
-	XOJ_CHECK_TYPE(BaseElementView);
-
 	gtk_widget_set_size_request(this->widget, this->getWidth(), this->getHeight());
 }
 

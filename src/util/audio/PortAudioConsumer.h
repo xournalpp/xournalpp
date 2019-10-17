@@ -39,9 +39,7 @@ public:
 	void stopPlaying();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-protected:
+	protected:
 	const unsigned long framesPerBuffer = 64;
 
 	portaudio::AutoSystem autoSys;

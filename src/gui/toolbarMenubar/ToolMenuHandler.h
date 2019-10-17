@@ -86,32 +86,30 @@ private:
 	void initEraserToolItem();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	vector<ColorToolItem*> toolbarColorItems;
-	GtkWindow* parent = NULL;
+	GtkWindow* parent = nullptr;
 
 	vector<AbstractToolItem*> toolItems;
 	vector<MenuItem*> menuItems;
 
-	ToolButton* undoButton = NULL;
-	ToolButton* redoButton = NULL;
+	ToolButton* undoButton = nullptr;
+	ToolButton* redoButton = nullptr;
 
-	ToolButton* audioPausePlaybackButton = NULL;
-	ToolButton* audioStopPlaybackButton = NULL;
+	ToolButton* audioPausePlaybackButton = nullptr;
+	ToolButton* audioStopPlaybackButton = nullptr;
 
-	ToolPageSpinner* toolPageSpinner = NULL;
-	ToolPageLayer* toolPageLayer = NULL;
-	FontButton* fontButton = NULL;
+	ToolPageSpinner* toolPageSpinner = nullptr;
+	ToolPageLayer* toolPageLayer = nullptr;
+	FontButton* fontButton = nullptr;
 
-	Control* control = NULL;
-	ActionHandler* listener = NULL;
-	ZoomControl* zoom = NULL;
-	GladeGui* gui = NULL;
-	ToolHandler* toolHandler = NULL;
+	Control* control = nullptr;
+	ActionHandler* listener = nullptr;
+	ZoomControl* zoom = nullptr;
+	GladeGui* gui = nullptr;
+	ToolHandler* toolHandler = nullptr;
 
-	ToolbarModel* tbModel = NULL;
+	ToolbarModel* tbModel = nullptr;
 
-	PageTypeMenu* newPageType = NULL;
-	PageBackgroundChangeController* pageBackgroundChangeController = NULL;
+	PageTypeMenu* newPageType = nullptr;
+	PageBackgroundChangeController* pageBackgroundChangeController = nullptr;
 };

@@ -37,14 +37,12 @@ private:
 	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, BackgroundSelectDialogBase* dlg);
 
 private:
-	XOJ_TYPE_ATTRIB;
+	protected:
+	Settings* settings = nullptr;
+	GtkWidget* scrollPreview = nullptr;
+	GtkWidget* layoutContainer = nullptr;
 
-protected:
-	Settings* settings = NULL;
-	GtkWidget* scrollPreview = NULL;
-	GtkWidget* layoutContainer = NULL;
-
-	Document* doc = NULL;
+	Document* doc = nullptr;
 
 	/**
 	 * Selection confirmed

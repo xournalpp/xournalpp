@@ -46,12 +46,10 @@ public:
 	static void printDebugStrokeParts();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	double width = 0;
 	double splitSize = 0;
 
-	GList* points = NULL;
+	GList* points = nullptr;
 
 	double x = 0;
 	double y = 0;

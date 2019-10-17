@@ -3,8 +3,6 @@
 LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath)
  : GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
 {
-	XOJ_INIT_TYPE(LatexDialog);
-
 	this->texBox = get("texView");
 	this->textBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(this->texBox));
 	this->texTempRender = get("texImage");
@@ -15,41 +13,36 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath)
 	// Background color for the temporary render, default is white because
 	// on dark themed DE the LaTex is hard to read
 	this->cssProvider = gtk_css_provider_new();
-	gtk_css_provider_load_from_data(this->cssProvider, "*{background-color:white;padding:10px;}", -1, NULL);
+	gtk_css_provider_load_from_data(this->cssProvider, "*{background-color:white;padding:10px;}", -1, nullptr);
 	gtk_style_context_add_provider(gtk_widget_get_style_context(this->texTempRender), GTK_STYLE_PROVIDER(this->cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
 LatexDialog::~LatexDialog()
 {
-	XOJ_RELEASE_TYPE(LatexDialog);
 }
 
 void LatexDialog::setFinalTex(string texString)
 {
-	XOJ_CHECK_TYPE(LatexDialog);
 	this->finalLatex = texString;
 }
 
 string LatexDialog::getFinalTex()
 {
-	XOJ_CHECK_TYPE(LatexDialog);
 	return this->finalLatex;
 }
 
 void LatexDialog::setTempRender(PopplerDocument* pdf)
 {
-	XOJ_CHECK_TYPE(LatexDialog);
-
 	if (poppler_document_get_n_pages(pdf) < 1)
 	{
 		return;
 	}
 
 	// If a previous render exists, destroy it
-	if (this->scaledRender != NULL)
+	if (this->scaledRender != nullptr)
 	{
 		cairo_surface_destroy(this->scaledRender);
-		this->scaledRender = NULL;
+		this->scaledRender = nullptr;
 	}
 
 	PopplerPage* page = poppler_document_get_page(pdf, 0);
@@ -79,7 +72,6 @@ void LatexDialog::setTempRender(PopplerDocument* pdf)
 
 GtkTextBuffer* LatexDialog::getTextBuffer()
 {
-	XOJ_CHECK_TYPE(LatexDialog);
 	return this->textBuffer;
 }
 
@@ -99,8 +91,6 @@ void LatexDialog::show(GtkWindow *parent)
 
 void LatexDialog::show(GtkWindow *parent, bool selectText)
 {
-	XOJ_CHECK_TYPE(LatexDialog);
-
 	gtk_text_buffer_set_text(this->textBuffer, this->finalLatex.c_str(), -1);
 	if (selectText)
 	{

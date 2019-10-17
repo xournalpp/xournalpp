@@ -46,8 +46,6 @@ public:
 	XojPdfDocumentInterface* getDocumentInterface();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	XojPdfDocumentInterface* doc;
 };
 

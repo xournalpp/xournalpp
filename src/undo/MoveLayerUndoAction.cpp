@@ -15,33 +15,23 @@ MoveLayerUndoAction::MoveLayerUndoAction(LayerController* layerController, PageR
    newLayerPos(newLayerPos),
    layerController(layerController)
 {
-	XOJ_INIT_TYPE(MoveLayerUndoAction);
-
 	this->page = page;
 	this->layer = layer;
 }
 
 MoveLayerUndoAction::~MoveLayerUndoAction()
 {
-	XOJ_CHECK_TYPE(MoveLayerUndoAction);
-
-	this->layerController = NULL;
-	this->layer = NULL;
-
-	XOJ_RELEASE_TYPE(MoveLayerUndoAction);
+	this->layerController = nullptr;
+	this->layer = nullptr;
 }
 
 string MoveLayerUndoAction::getText()
 {
-	XOJ_CHECK_TYPE(MoveLayerUndoAction);
-
 	return _("Move layer");
 }
 
 bool MoveLayerUndoAction::undo(Control* control)
 {
-	XOJ_CHECK_TYPE(MoveLayerUndoAction);
-
 	layerController->removeLayer(this->page, this->layer);
 	layerController->insertLayer(this->page, this->layer, oldLayerPos);
 
@@ -52,8 +42,6 @@ bool MoveLayerUndoAction::undo(Control* control)
 
 bool MoveLayerUndoAction::redo(Control* control)
 {
-	XOJ_CHECK_TYPE(MoveLayerUndoAction);
-
 	layerController->removeLayer(this->page, this->layer);
 	layerController->insertLayer(this->page, this->layer, newLayerPos);
 

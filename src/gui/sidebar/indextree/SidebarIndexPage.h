@@ -92,17 +92,15 @@ private:
 	int expandOpenLinks(GtkTreeModel* model, GtkTreeIter* parent);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * The Tree with the Bookmarks
 	 */
-	GtkWidget* treeViewBookmarks = NULL;
+	GtkWidget* treeViewBookmarks = nullptr;
 
 	/**
 	 * The scrollbars for the Tree
 	 */
-	GtkWidget* scrollBookmarks = NULL;
+	GtkWidget* scrollBookmarks = nullptr;
 
 	/**
 	 * If currently searching, scroll to the page is disable, else search is not really working

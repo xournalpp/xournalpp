@@ -13,22 +13,15 @@ LayerController::LayerController(Control* control)
  : control(control)
  , selectedPage(npos)
 {
-	XOJ_INIT_TYPE(LayerController);
 }
 
 LayerController::~LayerController()
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	// Do not delete the listeners!
-
-	XOJ_RELEASE_TYPE(LayerController);
 }
 
 void LayerController::documentChanged(DocumentChangeType type)
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	if (type == DOCUMENT_CHANGE_CLEARED || type == DOCUMENT_CHANGE_COMPLETE)
 	{
 		fireRebuildLayerMenu();
@@ -37,8 +30,6 @@ void LayerController::documentChanged(DocumentChangeType type)
 
 void LayerController::pageSelected(size_t page)
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	if (selectedPage == page)
 	{
 		return;
@@ -50,46 +41,34 @@ void LayerController::pageSelected(size_t page)
 
 void LayerController::insertLayer(PageRef page, Layer* layer, int layerPos)
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	page->insertLayer(layer, layerPos);
 	fireRebuildLayerMenu();
 }
 
 void LayerController::removeLayer(PageRef page, Layer* layer)
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	page->removeLayer(layer);
 	fireRebuildLayerMenu();
 }
 
 void LayerController::addLayer(PageRef page, Layer* layer)
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	page->addLayer(layer);
 	fireRebuildLayerMenu();
 }
 
 void LayerController::addListener(LayerCtrlListener* listener)
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	this->listener.push_back(listener);
 }
 
 void LayerController::removeListener(LayerCtrlListener* listener)
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	this->listener.remove(listener);
 }
 
 void LayerController::fireRebuildLayerMenu()
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	for (LayerCtrlListener* l : this->listener)
 	{
 		l->rebuildLayerMenu();
@@ -98,8 +77,6 @@ void LayerController::fireRebuildLayerMenu()
 
 void LayerController::fireLayerVisibilityChanged()
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	for (LayerCtrlListener* l : this->listener)
 	{
 		l->layerVisibilityChanged();
@@ -108,8 +85,6 @@ void LayerController::fireLayerVisibilityChanged()
 
 bool LayerController::actionPerformed(ActionType type)
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	switch(type)
 	{
 	case ACTION_NEW_LAYER:
@@ -163,7 +138,6 @@ bool LayerController::actionPerformed(ActionType type)
  */
 void LayerController::showAllLayer()
 {
-	XOJ_CHECK_TYPE(LayerController);
 	hideOrHideAllLayer(true);
 }
 
@@ -172,7 +146,6 @@ void LayerController::showAllLayer()
  */
 void LayerController::hideAllLayer()
 {
-	XOJ_CHECK_TYPE(LayerController);
 	hideOrHideAllLayer(false);
 }
 
@@ -193,8 +166,6 @@ void LayerController::hideOrHideAllLayer(bool show)
 
 void LayerController::addNewLayer()
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	control->clearSelectionEndText();
 	PageRef p = getCurrentPage();
 	if (!p.isValid())
@@ -214,8 +185,6 @@ void LayerController::addNewLayer()
 
 void LayerController::deleteCurrentLayer()
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	control->clearSelectionEndText();
 
 	PageRef p = getCurrentPage();
@@ -248,8 +217,6 @@ void LayerController::deleteCurrentLayer()
 
 void LayerController::moveCurrentLayer(bool up)
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	control->clearSelectionEndText();
 
 	PageRef p = getCurrentPage();
@@ -301,8 +268,6 @@ void LayerController::moveCurrentLayer(bool up)
 
 void LayerController::copyCurrentLayer()
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	control->clearSelectionEndText();
 
 	PageRef p = getCurrentPage();
@@ -336,22 +301,16 @@ void LayerController::copyCurrentLayer()
 
 PageRef LayerController::getCurrentPage()
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	return control->getDocument()->getPage(selectedPage);
 }
 
 size_t LayerController::getCurrentPageId()
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	return selectedPage;
 }
 
 void LayerController::setLayerVisible(int layerId, bool visible)
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	getCurrentPage()->setLayerVisible(layerId, visible);
 	fireLayerVisibilityChanged();
 
@@ -366,8 +325,6 @@ void LayerController::setLayerVisible(int layerId, bool visible)
  */
 void LayerController::switchToLay(int layer, bool hideShow)
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	control->clearSelectionEndText();
 
 	PageRef p = getCurrentPage();
@@ -396,8 +353,6 @@ void LayerController::switchToLay(int layer, bool hideShow)
  */
 size_t LayerController::getLayerCount()
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	PageRef page = getCurrentPage();
 	if (!page.isValid())
 	{
@@ -412,8 +367,6 @@ size_t LayerController::getLayerCount()
  */
 size_t LayerController::getCurrentLayerId()
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	PageRef page = getCurrentPage();
 	if (!page.isValid())
 	{
@@ -428,8 +381,6 @@ size_t LayerController::getCurrentLayerId()
  */
 void LayerController::ensureLayerExists(PageRef page)
 {
-	XOJ_CHECK_TYPE(LayerController);
-
 	if (page->getSelectedLayerId() > 0)
 	{
 		return;

@@ -42,9 +42,7 @@ private:
 	void storeLastUsedValuesInSettings();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-	Control* control = NULL;
+	Control* control = nullptr;
 
 	/**
 	 * Last used background colors (stored in settings)

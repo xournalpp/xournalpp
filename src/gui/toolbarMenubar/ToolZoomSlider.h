@@ -52,9 +52,6 @@ private:
 	static double scaleFuncInv(double x);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-
 	/**
 	 * The slider is currently changing by user, do not update value
 	 */
@@ -63,8 +60,8 @@ private:
 	bool sliderChangingBySliderHoverScroll = false;
 	gint64 sliderHoverScrollLastTime = 0;
 
-	GtkWidget* slider = NULL;
-	ZoomControl* zoom = NULL;
+	GtkWidget* slider = nullptr;
+	ZoomControl* zoom = nullptr;
 	bool horizontal = true;
 };
 

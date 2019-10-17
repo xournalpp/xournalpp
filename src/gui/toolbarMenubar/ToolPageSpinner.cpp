@@ -7,35 +7,25 @@
 #include <i18n.h>
 
 ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type)
- : AbstractToolItem(id, handler, type, NULL)
+ : AbstractToolItem(id, handler, type, nullptr)
 {
-	XOJ_INIT_TYPE(ToolPageSpinner);
-
 	this->gui = gui;
 	this->pageSpinner = new SpinPageAdapter();
 }
 
 ToolPageSpinner::~ToolPageSpinner()
 {
-	XOJ_CHECK_TYPE(ToolPageSpinner);
-
 	delete this->pageSpinner;
-	this->pageSpinner = NULL;
-
-	XOJ_RELEASE_TYPE(ToolPageSpinner);
+	this->pageSpinner = nullptr;
 }
 
 SpinPageAdapter* ToolPageSpinner::getPageSpinner()
 {
-	XOJ_CHECK_TYPE(ToolPageSpinner);
-
 	return pageSpinner;
 }
 
 void ToolPageSpinner::setText(string text)
 {
-	XOJ_CHECK_TYPE(ToolPageSpinner);
-
 	if (lbPageNo)
 	{
 		gtk_label_set_text(GTK_LABEL(lbPageNo), text.c_str());
@@ -44,22 +34,16 @@ void ToolPageSpinner::setText(string text)
 
 string ToolPageSpinner::getToolDisplayName()
 {
-	XOJ_CHECK_TYPE(ToolPageSpinner);
-
 	return _("Page number");
 }
 
 GtkWidget* ToolPageSpinner::getNewToolIcon()
 {
-	XOJ_CHECK_TYPE(ToolPageSpinner);
-
 	return gtk_image_new_from_icon_name("pageSpinner", GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
 GtkToolItem* ToolPageSpinner::newItem()
 {
-	XOJ_CHECK_TYPE(ToolPageSpinner);
-
 	GtkToolItem* it = gtk_tool_item_new();
 
 	GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);

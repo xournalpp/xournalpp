@@ -25,8 +25,6 @@ public:
 	void setMenu(GtkWidget* menu);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	GtkWidget* button;
 	GtkWidget* menu;
 };

@@ -150,19 +150,17 @@ private:
 	void loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename);
 	
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Control* control;
 
-	XournalView* xournal = NULL;
-	GtkWidget* winXournal = NULL;
-	ScrollHandling* scrollHandling = NULL;
+	XournalView* xournal = nullptr;
+	GtkWidget* winXournal = nullptr;
+	ScrollHandling* scrollHandling = nullptr;
 
-	ZoomGesture* zoomGesture = NULL;
+	ZoomGesture* zoomGesture = nullptr;
 
 	// Toolbars
 	ToolMenuHandler* toolbar;
-	ToolbarData* selectedToolbar = NULL;
+	ToolbarData* selectedToolbar = nullptr;
 	bool toolbarIntialized = false;
 
 	bool maximized = false;

@@ -16,8 +16,6 @@ ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, G
    toolHandler(toolHandler),
    parent(parent)
 {
-	XOJ_INIT_TYPE(ColorToolItem);
-
 	this->group = GROUP_COLOR;
 
 	updateName();
@@ -25,11 +23,7 @@ ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, G
 
 ColorToolItem::~ColorToolItem()
 {
-	XOJ_CHECK_TYPE(ColorToolItem);
-
 	freeIcons();
-
-	XOJ_RELEASE_TYPE(ColorToolItem);
 }
 
 /**
@@ -37,23 +31,17 @@ ColorToolItem::~ColorToolItem()
  */
 void ColorToolItem::freeIcons()
 {
-	XOJ_CHECK_TYPE(ColorToolItem);
-
 	delete this->icon;
-	this->icon = NULL;
+	this->icon = nullptr;
 }
 
 bool ColorToolItem::isSelector()
 {
-	XOJ_CHECK_TYPE(ColorToolItem);
-
 	return this->action == ACTION_SELECT_COLOR_CUSTOM;
 }
 
 void ColorToolItem::updateName()
 {
-	XOJ_CHECK_TYPE(ColorToolItem);
-
 	if (this->action == ACTION_SELECT_COLOR_CUSTOM)
 	{
 		this->name = _("Select color");
@@ -66,8 +54,6 @@ void ColorToolItem::updateName()
 
 void ColorToolItem::actionSelected(ActionGroup group, ActionType action)
 {
-	XOJ_CHECK_TYPE(ColorToolItem);
-
 	inUpdate = true;
 	if (this->group == group && this->item)
 	{
@@ -82,8 +68,6 @@ void ColorToolItem::actionSelected(ActionGroup group, ActionType action)
 
 void ColorToolItem::enableColor(int color)
 {
-	XOJ_CHECK_TYPE(ColorToolItem);
-
 	if (isSelector())
 	{
 		if (this->icon)
@@ -122,15 +106,11 @@ void ColorToolItem::enableColor(int color)
 
 int ColorToolItem::getColor()
 {
-	XOJ_CHECK_TYPE(ColorToolItem);
-
 	return this->color;
 }
 
 string ColorToolItem::getId()
 {
-	XOJ_CHECK_TYPE(ColorToolItem);
-
 	if (isSelector())
 	{
 		return "COLOR_SELECT";
@@ -145,8 +125,6 @@ string ColorToolItem::getId()
 
 bool ColorToolItem::colorEqualsMoreOreLess(int color)
 {
-	XOJ_CHECK_TYPE(ColorToolItem);
-
 	if (color == -1)
 	{
 		return false;
@@ -220,8 +198,6 @@ void ColorToolItem::enable(bool enabled)
 
 void ColorToolItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton)
 {
-	XOJ_CHECK_TYPE(ColorToolItem);
-
 	if (switchToPen)
 	{
 		toolHandler->selectTool(TOOL_PEN, true);
@@ -245,8 +221,6 @@ void ColorToolItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolBut
 
 GtkToolItem* ColorToolItem::newItem()
 {
-	XOJ_CHECK_TYPE(ColorToolItem);
-
 	this->icon = new ColorSelectImage(this->color, !isSelector());
 
 	GtkToolItem* it = gtk_toggle_tool_button_new();
@@ -262,14 +236,10 @@ GtkToolItem* ColorToolItem::newItem()
 
 string ColorToolItem::getToolDisplayName()
 {
-	XOJ_CHECK_TYPE(ColorToolItem);
-
 	return this->name;
 }
 
 GtkWidget* ColorToolItem::getNewToolIcon()
 {
-	XOJ_CHECK_TYPE(ColorToolItem);
-
 	return ColorSelectImage::newColorIcon(this->color, 16, !isSelector());
 }

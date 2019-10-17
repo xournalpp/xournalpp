@@ -71,8 +71,6 @@ private:
 	void disableTouch();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * If touch disabling is enabled
 	 */
@@ -101,7 +99,7 @@ private:
 	/**
 	 * Implementation for touch disabling
 	 */
-	TouchDisableInterface* touchImpl = NULL;
+	TouchDisableInterface* touchImpl = nullptr;
 
 	/**
 	 * XournalView
@@ -116,5 +114,5 @@ private:
 	/**
 	 * Settings
 	 */
-	Settings* settings = NULL;
+	Settings* settings = nullptr;
 };

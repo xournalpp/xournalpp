@@ -11,15 +11,15 @@ G_DEFINE_TYPE(XojLinkDest, link_dest, G_TYPE_OBJECT) // @suppress("Unused static
 
 static void link_dest_init(XojLinkDest* linkAction)
 {
-	linkAction->dest = NULL;
+	linkAction->dest = nullptr;
 }
 
-static gpointer parent_class = NULL;
+static gpointer parent_class = nullptr;
 
 static void link_dest_finalize(GObject* object)
 {
 	delete LINK_DEST(object)->dest;
-	LINK_DEST(object)->dest = NULL;
+	LINK_DEST(object)->dest = nullptr;
 
 	G_OBJECT_CLASS(parent_class)->finalize(object);
 }
@@ -43,13 +43,11 @@ static void link_dest_class_init(XojLinkDestClass* linkClass)
 
 XojLinkDest* link_dest_new()
 {
-	return LINK_DEST(g_object_new(TYPE_LINK_DEST, NULL));
+	return LINK_DEST(g_object_new(TYPE_LINK_DEST, nullptr));
 }
 
 LinkDestination::LinkDestination()
 {
-	XOJ_INIT_TYPE(LinkDestination);
-
 	this->page = npos;
 	this->changeLeft = false;
 	this->changeZoom = false;
@@ -62,113 +60,82 @@ LinkDestination::LinkDestination()
 
 LinkDestination::~LinkDestination()
 {
-	XOJ_RELEASE_TYPE(LinkDestination);
 }
 
 size_t LinkDestination::getPdfPage()
 {
-	XOJ_CHECK_TYPE(LinkDestination);
-
 	return this->page;
 }
 
 void LinkDestination::setPdfPage(size_t page)
 {
-	XOJ_CHECK_TYPE(LinkDestination);
-
 	this->page = page;
 }
 
 void LinkDestination::setExpand(bool expand)
 {
-	XOJ_CHECK_TYPE(LinkDestination);
-
 	this->expand = expand;
 }
 
 bool LinkDestination::getExpand()
 {
-	XOJ_CHECK_TYPE(LinkDestination);
-
 	return this->expand;
 }
 
 bool LinkDestination::shouldChangeLeft()
 {
-	XOJ_CHECK_TYPE(LinkDestination);
-
 	return changeLeft;
 }
 
 bool LinkDestination::shouldChangeZoom()
 {
-	XOJ_CHECK_TYPE(LinkDestination);
-
 	return changeZoom;
 }
 
 bool LinkDestination::shouldChangeTop()
 {
-	XOJ_CHECK_TYPE(LinkDestination);
-
 	return changeTop;
 }
 
 double LinkDestination::getZoom()
 {
-	XOJ_CHECK_TYPE(LinkDestination);
-
 	return zoom;
 }
 
 double LinkDestination::getLeft()
 {
-	XOJ_CHECK_TYPE(LinkDestination);
-
 	return left;
 }
 
 double LinkDestination::getTop()
 {
-	XOJ_CHECK_TYPE(LinkDestination);
-
 	return top;
 }
 
 void LinkDestination::setChangeLeft(double left)
 {
-	XOJ_CHECK_TYPE(LinkDestination);
-
 	this->left = left;
 	this->changeLeft = true;
 }
 
 void LinkDestination::setChangeZoom(double zoom)
 {
-	XOJ_CHECK_TYPE(LinkDestination);
-
 	this->zoom = zoom;
 	this->changeZoom = true;
 }
 
 void LinkDestination::setChangeTop(double top)
 {
-	XOJ_CHECK_TYPE(LinkDestination);
-
 	this->top = top;
 	this->changeTop = true;
 }
 
 void LinkDestination::setName(string name)
 {
-	XOJ_CHECK_TYPE(LinkDestination);
-
 	this->name = name;
 }
 
 string LinkDestination::getName()
 {
-	XOJ_CHECK_TYPE(LinkDestination);
-
 	return this->name;
 }

@@ -12,29 +12,20 @@
 PreviewJob::PreviewJob(SidebarPreviewBaseEntry* sidebar)
  : sidebarPreview(sidebar)
 {
-	XOJ_INIT_TYPE(PreviewJob);
 }
 
 PreviewJob::~PreviewJob()
 {
-	XOJ_CHECK_TYPE(PreviewJob);
-
-	this->sidebarPreview = NULL;
-
-	XOJ_RELEASE_TYPE(PreviewJob);
+	this->sidebarPreview = nullptr;
 }
 
 void* PreviewJob::getSource()
 {
-	XOJ_CHECK_TYPE(PreviewJob);
-
 	return this->sidebarPreview;
 }
 
 JobType PreviewJob::getType()
 {
-	XOJ_CHECK_TYPE(PreviewJob);
-
 	return JOB_TYPE_PREVIEW;
 }
 
@@ -117,8 +108,6 @@ void PreviewJob::drawPage(int layer)
 
 void PreviewJob::run()
 {
-	XOJ_CHECK_TYPE(PreviewJob);
-
 	initGraphics();
 	drawBorder();
 

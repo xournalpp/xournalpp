@@ -35,7 +35,5 @@ private:
 								 GtkPageSetup* setup, PrintHandler* handler);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-	Document* doc = NULL;
+	Document* doc = nullptr;
 };

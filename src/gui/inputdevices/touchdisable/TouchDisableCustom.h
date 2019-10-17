@@ -27,8 +27,6 @@ public:
 	virtual void disableTouch();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	string enableCommand;
 	string disableCommand;
 };

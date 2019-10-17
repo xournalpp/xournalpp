@@ -16,8 +16,6 @@ Sidebar::Sidebar(GladeGui* gui, Control* control)
    control(control),
    gui(gui)
 {
-	XOJ_INIT_TYPE(Sidebar);
-
 	this->tbSelectPage = GTK_TOOLBAR(gui->get("tbSelectSidebarPage"));
 	this->buttonCloseSidebar = gui->get("buttonCloseSidebar");
 
@@ -30,8 +28,6 @@ Sidebar::Sidebar(GladeGui* gui, Control* control)
 
 void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui)
 {
-	XOJ_CHECK_TYPE(Sidebar);
-
 	addPage(new SidebarIndexPage(this->control, &this->toolbar));
 	addPage(new SidebarPreviewPages(this->control, this->gui, &this->toolbar));
 	addPage(new SidebarPreviewLayers(this->control, this->gui, &this->toolbar));
@@ -52,7 +48,7 @@ void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui)
 		gtk_toolbar_insert(tbSelectPage, it, -1);
 
 		// Add widget to sidebar
-		gtk_box_pack_start(GTK_BOX(sidebar), p->getWidget(), TRUE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX(sidebar), p->getWidget(), true, true, 0);
 
 		i++;
 	}
@@ -64,8 +60,6 @@ void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui)
 
 void Sidebar::buttonClicked(GtkToolButton* toolbutton, SidebarPageButton* buttonData)
 {
-	XOJ_CHECK_TYPE_OBJ(buttonData->sidebar, Sidebar);
-
 	if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(toolbutton)))
 	{
 		if (buttonData->sidebar->visiblePage != buttonData->page->getWidget())
@@ -81,16 +75,12 @@ void Sidebar::buttonClicked(GtkToolButton* toolbutton, SidebarPageButton* button
 
 void Sidebar::addPage(AbstractSidebarPage* page)
 {
-	XOJ_CHECK_TYPE(Sidebar);
-
 	this->pages.push_back(page);
 }
 
 Sidebar::~Sidebar()
 {
-	XOJ_CHECK_TYPE(Sidebar);
-
-	this->control = NULL;
+	this->control = nullptr;
 
 	for (AbstractSidebarPage* p : this->pages)
 	{
@@ -98,10 +88,8 @@ Sidebar::~Sidebar()
 	}
 	this->pages.clear();
 
-	this->sidebar = NULL;
-	this->currentPage = NULL;
-
-	XOJ_RELEASE_TYPE(Sidebar);
+	this->sidebar = nullptr;
+	this->currentPage = nullptr;
 }
 
 /**
@@ -109,8 +97,6 @@ Sidebar::~Sidebar()
  */
 void Sidebar::actionPerformed(SidebarActions action)
 {
-	XOJ_CHECK_TYPE(Sidebar);
-
 	if (!this->currentPage)
 	{
 		return;
@@ -121,8 +107,6 @@ void Sidebar::actionPerformed(SidebarActions action)
 
 void Sidebar::selectPageNr(size_t page, size_t pdfPage)
 {
-	XOJ_CHECK_TYPE(Sidebar);
-
 	for (AbstractSidebarPage* p : this->pages)
 	{
 		p->selectPageNr(page, pdfPage);
@@ -131,10 +115,8 @@ void Sidebar::selectPageNr(size_t page, size_t pdfPage)
 
 void Sidebar::setSelectedPage(size_t page)
 {
-	XOJ_CHECK_TYPE(Sidebar);
-
-	this->visiblePage = NULL;
-	this->currentPage = NULL;
+	this->visiblePage = nullptr;
+	this->currentPage = nullptr;
 
 	size_t i = 0;
 	for (AbstractSidebarPage* p : this->pages)
@@ -160,8 +142,6 @@ void Sidebar::setSelectedPage(size_t page)
 
 void Sidebar::updateEnableDisableButtons()
 {
-	XOJ_CHECK_TYPE(Sidebar);
-
 	size_t i = 0;
 	size_t selected = npos;
 
@@ -182,8 +162,6 @@ void Sidebar::updateEnableDisableButtons()
 
 void Sidebar::setTmpDisabled(bool disabled)
 {
-	XOJ_CHECK_TYPE(Sidebar);
-
 	gtk_widget_set_sensitive(this->buttonCloseSidebar, !disabled);
 	gtk_widget_set_sensitive(GTK_WIDGET(this->tbSelectPage), !disabled);
 
@@ -197,8 +175,6 @@ void Sidebar::setTmpDisabled(bool disabled)
 
 void Sidebar::saveSize()
 {
-	XOJ_CHECK_TYPE(Sidebar);
-
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(this->sidebar, &alloc);
 
@@ -207,15 +183,11 @@ void Sidebar::saveSize()
 
 Control* Sidebar::getControl()
 {
-	XOJ_CHECK_TYPE(Sidebar);
-
 	return this->control;
 }
 
 void Sidebar::documentChanged(DocumentChangeType type)
 {
-	XOJ_CHECK_TYPE(Sidebar);
-
 	if (type == DOCUMENT_CHANGE_CLEARED || type == DOCUMENT_CHANGE_COMPLETE || type == DOCUMENT_CHANGE_PDF_BOOKMARKS)
 	{
 		updateEnableDisableButtons();

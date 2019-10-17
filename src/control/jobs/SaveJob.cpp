@@ -12,18 +12,14 @@
 SaveJob::SaveJob(Control* control)
  : BlockingJob(control, _("Save"))
 {
-	XOJ_INIT_TYPE(SaveJob);
 }
 
 SaveJob::~SaveJob()
 {
-	XOJ_RELEASE_TYPE(SaveJob);
 }
 
 void SaveJob::run()
 {
-	XOJ_CHECK_TYPE(SaveJob);
-
 	save();
 
 	if (this->control->getWindow())
@@ -34,8 +30,6 @@ void SaveJob::run()
 
 void SaveJob::afterRun()
 {
-	XOJ_CHECK_TYPE(SaveJob);
-
 	if (!this->lastError.empty())
 	{
 		XojMsgBox::showErrorToUser(control->getGtkWindow(), this->lastError);
@@ -97,7 +91,7 @@ void SaveJob::updatePreview(Control* control)
 	}
 	else
 	{
-		doc->setPreview(NULL);
+		doc->setPreview(nullptr);
 	}
 
 	doc->unlock();
@@ -105,8 +99,6 @@ void SaveJob::updatePreview(Control* control)
 
 bool SaveJob::save()
 {
-	XOJ_CHECK_TYPE(SaveJob);
-
 	updatePreview(control);
 	Document* doc = this->control->getDocument();
 

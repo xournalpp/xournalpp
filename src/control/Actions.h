@@ -34,10 +34,7 @@ public:
 	void unregisterListener();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-
-	ActionHandler* handler = NULL;
+	ActionHandler* handler = nullptr;
 };
 
 class ActionSelectionListener
@@ -52,9 +49,6 @@ public:
 	void unregisterListener();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-
 	ActionHandler* handler;
 };
 
@@ -78,8 +72,6 @@ public:
 	void removeListener(ActionSelectionListener* listener);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	std::list<ActionEnabledListener*> enabledListener;
 	std::list<ActionSelectionListener*> selectionListener;
 };

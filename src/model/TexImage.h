@@ -86,17 +86,15 @@ private:
 	void loadBinaryData();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Tex PDF Document, if rendered as PDF
 	 */
-	PopplerDocument* pdf = NULL;
+	PopplerDocument* pdf = nullptr;
 
 	/**
 	 * Tex image, if rendered as image
 	 */
-	cairo_surface_t* image = NULL;
+	cairo_surface_t* image = nullptr;
 
 	/**
 	 * PNG Image / PDF Document

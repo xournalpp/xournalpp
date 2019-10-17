@@ -31,8 +31,6 @@ public:
 	virtual void show(GtkWindow* parent);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Plugin instance
 	 */

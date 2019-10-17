@@ -17,8 +17,6 @@ guint32 BaseStrokeHandler::lastStrokeTime;		//persist for next stroke
 BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift, bool flipControl)
  : InputHandler(xournal, redrawable, page)
 {
-	XOJ_INIT_TYPE(BaseStrokeHandler);
-	
 	this->flipShift = flipShift;
 	this->flipControl = flipControl;
 	
@@ -26,8 +24,6 @@ BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawab
 
 void BaseStrokeHandler::snapToGrid(double& x, double& y)
 {
-	XOJ_CHECK_TYPE(BaseStrokeHandler);
-
 	if (!xournal->getControl()->getSettings()->isSnapGrid())
 	{
 		return;
@@ -82,15 +78,10 @@ void BaseStrokeHandler::snapToGrid(double& x, double& y)
 
 BaseStrokeHandler::~BaseStrokeHandler()
 {
-	XOJ_CHECK_TYPE(BaseStrokeHandler);
-
-	XOJ_RELEASE_TYPE(BaseStrokeHandler);
 }
 
 void BaseStrokeHandler::draw(cairo_t* cr)
 {
-	XOJ_CHECK_TYPE(BaseStrokeHandler);
-
 	double zoom = xournal->getZoom();
 	int dpiScaleFactor = xournal->getDpiScaleFactor();
 
@@ -142,8 +133,6 @@ bool BaseStrokeHandler::onKeyEvent(GdkEventKey* event)
 
 bool BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 {
-	XOJ_CHECK_TYPE(BaseStrokeHandler);
-
 	if (!stroke)
 	{
 		return false;
@@ -182,11 +171,9 @@ bool BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 
 void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 {
-	XOJ_CHECK_TYPE(BaseStrokeHandler);
-
 	xournal->getCursor()->activateDrawDirCursor(false);	//in case released within  fixate_Dir_Mods_Dist
 	
-	if (stroke == NULL)
+	if (stroke == nullptr)
 	{
 		return;
 	}
@@ -213,7 +200,7 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 			{
 				//stroke not being added to layer... delete here.
 				delete stroke;
-				stroke = NULL;
+				stroke = nullptr;
 				this->userTapped = true;
 				
 				this->lastStrokeTime = pos.timestamp;
@@ -233,7 +220,7 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	{
 		g_warning("Stroke incomplete!");
 		delete stroke;
-		stroke = NULL;
+		stroke = nullptr;
 		return;
 	}
 
@@ -251,7 +238,7 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	layer->addElement(stroke);
 	page->fireElementChanged(stroke);
 
-	stroke = NULL;
+	stroke = nullptr;
 
 	xournal->getCursor()->updateCursor();
 	
@@ -260,8 +247,6 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 
 void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 {
-	XOJ_CHECK_TYPE(BaseStrokeHandler);
-	
 	double zoom = xournal->getZoom();
 	this->buttonDownPoint.x = pos.x / zoom;
 	this->buttonDownPoint.y =  pos.y / zoom;
@@ -277,9 +262,6 @@ void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos)
 
 void BaseStrokeHandler::modifyModifiersByDrawDir(double width, double height,  bool changeCursor)
 {
-	XOJ_CHECK_TYPE(BaseStrokeHandler);
-		
-
 	bool gestureShift = this->flipShift;
 	bool gestureControl = this->flipControl;
 	

@@ -11,8 +11,6 @@ SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, Pa
  : sidebar(sidebar),
    page(page)
 {
-	XOJ_INIT_TYPE(SidebarPreviewBaseEntry);
-
 	this->widget = gtk_button_new();	// re: issue 1072
 	
 	gtk_widget_show(this->widget);
@@ -28,43 +26,34 @@ SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, Pa
 	g_signal_connect(this->widget, "clicked", G_CALLBACK(
 		+[](GtkWidget* widget, SidebarPreviewBaseEntry* self)
 		{
-			XOJ_CHECK_TYPE_OBJ(self, SidebarPreviewBaseEntry);
-			self->mouseButtonPressCallback();
+	self->mouseButtonPressCallback();
 			return true;
 		}), this);
 }
 
 SidebarPreviewBaseEntry::~SidebarPreviewBaseEntry()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBaseEntry);
-
 	this->sidebar->getControl()->getScheduler()->removeSidebar(this);
-	this->page = NULL;
+	this->page = nullptr;
 
 	gtk_widget_destroy(this->widget);
-	this->widget = NULL;
+	this->widget = nullptr;
 
 	if (this->crBuffer)
 	{
 		cairo_surface_destroy(this->crBuffer);
-		this->crBuffer = NULL;
+		this->crBuffer = nullptr;
 	}
-
-	XOJ_RELEASE_TYPE(SidebarPreviewBaseEntry);
 }
 
 gboolean SidebarPreviewBaseEntry::drawCallback(GtkWidget* widget, cairo_t* cr, SidebarPreviewBaseEntry* preview)
 {
-	XOJ_CHECK_TYPE_OBJ(preview, SidebarPreviewBaseEntry);
-
 	preview->paint(cr);
-	return TRUE;
+	return true;
 }
 
 void SidebarPreviewBaseEntry::setSelected(bool selected)
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBaseEntry);
-
 	if (this->selected == selected)
 	{
 		return;
@@ -76,15 +65,11 @@ void SidebarPreviewBaseEntry::setSelected(bool selected)
 
 void SidebarPreviewBaseEntry::repaint()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBaseEntry);
-
 	sidebar->getControl()->getScheduler()->addRepaintSidebar(this);
 }
 
 void SidebarPreviewBaseEntry::drawLoadingPage()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBaseEntry);
-
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(widget, &alloc);
 
@@ -116,13 +101,11 @@ void SidebarPreviewBaseEntry::drawLoadingPage()
 
 void SidebarPreviewBaseEntry::paint(cairo_t* cr)
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBaseEntry);
-
 	bool doRepaint = false;
 
 	g_mutex_lock(&this->drawingMutex);
 
-	if (this->crBuffer == NULL)
+	if (this->crBuffer == nullptr)
 	{
 		drawLoadingPage();
 		doRepaint = true;
@@ -168,44 +151,32 @@ void SidebarPreviewBaseEntry::paint(cairo_t* cr)
 
 void SidebarPreviewBaseEntry::updateSize()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBaseEntry);
-
 	gtk_widget_set_size_request(this->widget, getWidgetWidth(), getWidgetHeight());
 }
 
 int SidebarPreviewBaseEntry::getWidgetWidth()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBaseEntry);
-
 	return page->getWidth() * sidebar->getZoom()
 			+ Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 }
 
 int SidebarPreviewBaseEntry::getWidgetHeight()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBaseEntry);
-
 	return page->getHeight() * sidebar->getZoom()
 			+ Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 }
 
 int SidebarPreviewBaseEntry::getWidth()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBaseEntry);
-
 	return getWidgetWidth();
 }
 
 int SidebarPreviewBaseEntry::getHeight()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBaseEntry);
-
 	return getWidgetHeight();
 }
 
 GtkWidget* SidebarPreviewBaseEntry::getWidget()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewBaseEntry);
-
 	return this->widget;
 }

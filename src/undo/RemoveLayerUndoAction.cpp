@@ -13,8 +13,6 @@ RemoveLayerUndoAction::RemoveLayerUndoAction(LayerController* layerController, P
  : UndoAction("RemoveLayerUndoAction"),
    layerController(layerController)
 {
-	XOJ_INIT_TYPE(RemoveLayerUndoAction);
-
 	this->page = page;
 	this->layer = layer;
 	this->layerPos = layerPos;
@@ -22,29 +20,21 @@ RemoveLayerUndoAction::RemoveLayerUndoAction(LayerController* layerController, P
 
 RemoveLayerUndoAction::~RemoveLayerUndoAction()
 {
-	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
-
 	if (!this->undone)
 	{
 		// The layer was NOT undone, also NOT restored
 		delete this->layer;
 	}
-	this->layer = NULL;
-
-	XOJ_RELEASE_TYPE(RemoveLayerUndoAction);
+	this->layer = nullptr;
 }
 
 string RemoveLayerUndoAction::getText()
 {
-	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
-
 	return _("Delete layer");
 }
 
 bool RemoveLayerUndoAction::undo(Control* control)
 {
-	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
-
 	layerController->insertLayer(this->page, this->layer, this->layerPos);
 	Document* doc = control->getDocument();
 	int id = doc->indexOf(this->page);
@@ -56,8 +46,6 @@ bool RemoveLayerUndoAction::undo(Control* control)
 
 bool RemoveLayerUndoAction::redo(Control* control)
 {
-	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
-
 	Document* doc = control->getDocument();
 	layerController->removeLayer(page, layer);
 	int id = doc->indexOf(this->page);

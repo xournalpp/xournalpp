@@ -15,24 +15,18 @@ NewGtkInputDevice::NewGtkInputDevice(GtkWidget* widget, XournalView* view, Scrol
  : AbstractInputDevice(widget, view),
    scrollHandling(scrollHandling)
 {
-	XOJ_INIT_TYPE(NewGtkInputDevice);
-
-	pointerInputList = g_hash_table_new_full(NULL, NULL, NULL, (GDestroyNotify) InputSequence::free);
-	touchInputList = g_hash_table_new_full(NULL, NULL, NULL, (GDestroyNotify) InputSequence::free);
+	pointerInputList = g_hash_table_new_full(nullptr, nullptr, nullptr, (GDestroyNotify) InputSequence::free);
+	touchInputList = g_hash_table_new_full(nullptr, nullptr, nullptr, (GDestroyNotify) InputSequence::free);
 
 	ignoreTouch = !view->getControl()->getSettings()->isTouchWorkaround();
 }
 
 NewGtkInputDevice::~NewGtkInputDevice()
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	g_hash_table_destroy(pointerInputList);
-	pointerInputList = NULL;
+	pointerInputList = nullptr;
 	g_hash_table_destroy(touchInputList);
-	touchInputList = NULL;
-
-	XOJ_RELEASE_TYPE(NewGtkInputDevice);
+	touchInputList = nullptr;
 }
 
 /**
@@ -40,36 +34,26 @@ NewGtkInputDevice::~NewGtkInputDevice()
  */
 void NewGtkInputDevice::focusWidget()
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	gtk_widget_grab_focus(widget);
 }
 
 Settings* NewGtkInputDevice::getSettings()
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	return view->getControl()->getSettings();
 }
 
 ToolHandler* NewGtkInputDevice::getToolHandler()
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	return view->getControl()->getToolHandler();
 }
 
 GtkXournal* NewGtkInputDevice::getXournal()
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	return GTK_XOURNAL(widget);
 }
 
 XournalView* NewGtkInputDevice::getView()
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	return view;
 }
 
@@ -80,8 +64,6 @@ XournalView* NewGtkInputDevice::getView()
  */
 bool NewGtkInputDevice::startInput(InputSequence* input)
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	if (inputRunning == input)
 	{
 		g_warning("Input for the same device started twice!");
@@ -89,7 +71,7 @@ bool NewGtkInputDevice::startInput(InputSequence* input)
 	}
 
 
-	if (inputRunning == NULL)
+	if (inputRunning == nullptr)
 	{
 		inputRunning = input;
 		return true;
@@ -112,11 +94,9 @@ bool NewGtkInputDevice::startInput(InputSequence* input)
  */
 void NewGtkInputDevice::stopInput(InputSequence* input)
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	if (inputRunning == input)
 	{
-		inputRunning = NULL;
+		inputRunning = nullptr;
 	}
 }
 
@@ -125,8 +105,6 @@ void NewGtkInputDevice::stopInput(InputSequence* input)
  */
 void NewGtkInputDevice::initWidget()
 {
-	XOJ_CHECK_TYPE(NewGtkInputDevice);
-
 	gtk_widget_set_support_multidevice(widget, true);
 
 	int mask =
@@ -152,8 +130,6 @@ void NewGtkInputDevice::initWidget()
 
 bool NewGtkInputDevice::eventCallback(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self)
 {
-	XOJ_CHECK_TYPE_OBJ(self, NewGtkInputDevice);
-
 	return self->eventHandler(event);
 }
 
@@ -231,7 +207,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	GdkDevice* sourceDevice = gdk_event_get_source_device(event);
 	GdkEventSequence* sequence = gdk_event_get_event_sequence(event);
 
-	if (sourceDevice == NULL)
+	if (sourceDevice == nullptr)
 	{
 		sourceDevice = device;
 	}
@@ -247,7 +223,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	{
 		InputSequence* input = (InputSequence*) g_hash_table_lookup(touchInputList, sequence);
 
-		if (input != NULL)
+		if (input != nullptr)
 		{
 			input->actionEnd(((GdkEventTouch *)event)->time);
 		}
@@ -261,12 +237,12 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		return true;
 	}
 
-	InputSequence* input = NULL;
-	if (sequence == NULL)
+	InputSequence* input = nullptr;
+	if (sequence == nullptr)
 	{
 		input = (InputSequence*) g_hash_table_lookup(pointerInputList, sourceDevice);
 
-		if (input == NULL)
+		if (input == nullptr)
 		{
 			input = new InputSequence(this);
 			g_hash_table_insert(pointerInputList, sourceDevice, input);
@@ -276,7 +252,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 	{
 		input = (InputSequence*) g_hash_table_lookup(touchInputList, sequence);
 
-		if (input == NULL)
+		if (input == nullptr)
 		{
 			input = new InputSequence(this);
 			g_hash_table_insert(touchInputList, sequence, input);

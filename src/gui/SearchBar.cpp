@@ -8,8 +8,6 @@
 SearchBar::SearchBar(Control* control)
  : control(control)
 {
-	XOJ_INIT_TYPE(SearchBar);
-
 	MainWindow* win = control->getWindow();
 
 	GtkWidget* close = win->get("buttonCloseSearch");
@@ -18,13 +16,11 @@ SearchBar::SearchBar(Control* control)
 	GtkWidget* next = win->get("btSearchForward");
 	GtkWidget* previous = win->get("btSearchBack");
 	g_signal_connect(next, "clicked", G_CALLBACK(+[](GtkButton* button, SearchBar* self) {
-		                 XOJ_CHECK_TYPE_OBJ(self, SearchBar);
-		                 self->searchNext();
+ self->searchNext();
 	                 }),
 	                 this);
 	g_signal_connect(previous, "clicked", G_CALLBACK(+[](GtkButton* button, SearchBar* self) {
-		                 XOJ_CHECK_TYPE_OBJ(self, SearchBar);
-		                 self->searchPrevious();
+ self->searchPrevious();
 	                 }),
 	                 this);
 
@@ -34,8 +30,7 @@ SearchBar::SearchBar(Control* control)
 	// Enable next/previous search when pressing Enter / Shift+Enter
 	g_signal_connect(searchTextField, "key-press-event",
 	                 G_CALLBACK(+[](GtkWidget* entry, GdkEventKey* event, SearchBar* self) {
-		                 XOJ_CHECK_TYPE_OBJ(self, SearchBar);
-		                 if (event->keyval == GDK_KEY_Return)
+ if (event->keyval == GDK_KEY_Return)
 		                 {
 			                 if (event->state & GDK_SHIFT_MASK)
 				                 self->searchPrevious();
@@ -55,17 +50,11 @@ SearchBar::SearchBar(Control* control)
 
 SearchBar::~SearchBar()
 {
-	XOJ_CHECK_TYPE(SearchBar);
-
-	this->control = NULL;
-
-	XOJ_RELEASE_TYPE(SearchBar);
+	this->control = nullptr;
 }
 
 bool SearchBar::searchTextonCurrentPage(const char* text, int* occures, double* top)
 {
-	XOJ_CHECK_TYPE(SearchBar);
-
 	int p = control->getCurrentPageNo();
 
 	return control->searchTextOnPage(text, p, occures, top);
@@ -73,8 +62,6 @@ bool SearchBar::searchTextonCurrentPage(const char* text, int* occures, double* 
 
 void SearchBar::search(const char* text)
 {
-	XOJ_CHECK_TYPE(SearchBar);
-
 	MainWindow* win = control->getWindow();
 	GtkWidget* lbSearchState = win->get("lbSearchState");
 
@@ -83,7 +70,7 @@ void SearchBar::search(const char* text)
 
 	if (*text != 0)
 	{
-		found = searchTextonCurrentPage(text, &occures, NULL);
+		found = searchTextonCurrentPage(text, &occures, nullptr);
 		if (found)
 		{
 			if (occures == 1)
@@ -104,39 +91,33 @@ void SearchBar::search(const char* text)
 	}
 	else
 	{
-		searchTextonCurrentPage("", NULL, NULL);
+		searchTextonCurrentPage("", nullptr, nullptr);
 		gtk_label_set_text(GTK_LABEL(lbSearchState), "");
 	}
 
 	if (found)
 	{
-		gtk_css_provider_load_from_data(cssTextFild, "GtkSearchEntry {}", -1, NULL);
+		gtk_css_provider_load_from_data(cssTextFild, "GtkSearchEntry {}", -1, nullptr);
 	}
 	else
 	{
-		gtk_css_provider_load_from_data(cssTextFild, "GtkSearchEntry { color: #ff0000; }", -1, NULL);
+		gtk_css_provider_load_from_data(cssTextFild, "GtkSearchEntry { color: #ff0000; }", -1, nullptr);
 	}
 }
 
 void SearchBar::searchTextChangedCallback(GtkEntry* entry, SearchBar* searchBar)
 {
-	XOJ_CHECK_TYPE_OBJ(searchBar, SearchBar);
-
 	const char* text = gtk_entry_get_text(entry);
 	searchBar->search(text);
 }
 
 void SearchBar::buttonCloseSearchClicked(GtkButton* button, SearchBar* searchBar)
 {
-	XOJ_CHECK_TYPE_OBJ(searchBar, SearchBar);
-
 	searchBar->showSearchBar(false);
 }
 
 void SearchBar::searchNext()
 {
-	XOJ_CHECK_TYPE(SearchBar);
-
 	int page = control->getCurrentPageNo();
 	int count = control->getDocument()->getPageCount();
 	if (count < 2)
@@ -191,8 +172,6 @@ void SearchBar::searchNext()
 
 void SearchBar::searchPrevious()
 {
-	XOJ_CHECK_TYPE(SearchBar);
-
 	int page = control->getCurrentPageNo();
 	int count = control->getDocument()->getPageCount();
 	if (count < 2)
@@ -247,8 +226,6 @@ void SearchBar::searchPrevious()
 
 void SearchBar::showSearchBar(bool show)
 {
-	XOJ_CHECK_TYPE(SearchBar);
-
 	MainWindow* win = control->getWindow();
 	GtkWidget* searchBar = win->get("searchBar");
 
@@ -263,7 +240,7 @@ void SearchBar::showSearchBar(bool show)
 		gtk_widget_hide(searchBar);
 		for (int i = control->getDocument()->getPageCount() - 1; i >= 0; i--)
 		{
-			control->searchTextOnPage("", i, NULL, NULL);
+			control->searchTextOnPage("", i, nullptr, nullptr);
 		}
 	}
 }

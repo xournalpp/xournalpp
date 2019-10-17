@@ -67,9 +67,7 @@ protected:
 	virtual void paint(cairo_t* cr);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-protected:
+	protected:
 	/**
 	 * If this page is currently selected
 	 */
@@ -98,7 +96,7 @@ protected:
 	/**
 	 * Buffer because of performance reasons
 	 */
-	cairo_surface_t* crBuffer = NULL;
+	cairo_surface_t* crBuffer = nullptr;
 
 	friend class PreviewJob;
 };

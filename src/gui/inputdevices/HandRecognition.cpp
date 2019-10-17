@@ -12,11 +12,9 @@
 HandRecognition::HandRecognition(GtkWidget* widget, InputContext* inputContext, Settings* settings)
  : widget(widget), inputContext(inputContext), settings(settings)
 {
-	XOJ_INIT_TYPE(HandRecognition);
-
 #ifdef X11_ENABLED
 	const char* sessionType = g_getenv("XDG_SESSION_TYPE");
-	if (sessionType != NULL && strcmp(sessionType, "x11") == 0)
+	if (sessionType != nullptr && strcmp(sessionType, "x11") == 0)
 	{
 		x11Session = true;
 	}
@@ -27,8 +25,6 @@ HandRecognition::HandRecognition(GtkWidget* widget, InputContext* inputContext, 
 
 HandRecognition::~HandRecognition()
 {
-	XOJ_CHECK_TYPE(HandRecognition);
-
 	// Enable touchscreen on quit application
 	if (!touchState)
 	{
@@ -36,9 +32,7 @@ HandRecognition::~HandRecognition()
 	}
 
 	delete touchImpl;
-	touchImpl = NULL;
-
-	XOJ_RELEASE_TYPE(HandRecognition);
+	touchImpl = nullptr;
 }
 
 /**
@@ -46,8 +40,6 @@ HandRecognition::~HandRecognition()
  */
 void HandRecognition::reload()
 {
-	XOJ_CHECK_TYPE(HandRecognition);
-
 	SElement& touch = settings->getCustomElement("touch");
 
 	enabled = false;
@@ -56,7 +48,7 @@ void HandRecognition::reload()
 	if (!enabled)
 	{
 		delete touchImpl;
-		touchImpl = NULL;
+		touchImpl = nullptr;
 		return;
 	}
 
@@ -68,7 +60,7 @@ void HandRecognition::reload()
 	}
 
 	delete touchImpl;
-	touchImpl = NULL;
+	touchImpl = nullptr;
 
 	string disableMethod;
 	touch.getString("method", disableMethod);
@@ -117,8 +109,6 @@ void HandRecognition::reload()
  */
 bool HandRecognition::enableTimeout(HandRecognition* self)
 {
-	XOJ_CHECK_TYPE_OBJ(self, HandRecognition);
-
 	gint64 now = g_get_monotonic_time() / 1000;
 	gint64 lastPenActionTime = now - self->lastPenAction;
 	if (lastPenActionTime < 20)
@@ -150,7 +140,6 @@ bool HandRecognition::enableTimeout(HandRecognition* self)
  */
 void HandRecognition::penEvent()
 {
-	XOJ_CHECK_TYPE(HandRecognition);
 	lastPenAction = g_get_monotonic_time() / 1000;
 
 	if (touchState)
@@ -166,8 +155,6 @@ void HandRecognition::penEvent()
  */
 void HandRecognition::enableTouch()
 {
-	XOJ_CHECK_TYPE(HandRecognition);
-
 	if (inputContext)
 	{
 		inputContext->unblockDevice(InputContext::TOUCHSCREEN);
@@ -183,8 +170,6 @@ void HandRecognition::enableTouch()
  */
 void HandRecognition::disableTouch()
 {
-	XOJ_CHECK_TYPE(HandRecognition);
-
 	if (inputContext)
 	{
 		inputContext->blockDevice(InputContext::TOUCHSCREEN);
@@ -200,8 +185,6 @@ void HandRecognition::disableTouch()
  */
 void HandRecognition::event(GdkDevice* device)
 {
-	XOJ_CHECK_TYPE(HandRecognition);
-
 	if (!enabled)
 	{
 		return;
@@ -220,8 +203,6 @@ void HandRecognition::event(GdkDevice* device)
  */
 void HandRecognition::event(InputDeviceClass device)
 {
-	XOJ_CHECK_TYPE(HandRecognition);
-
 	if (!enabled)
 	{
 		return;
@@ -235,8 +216,6 @@ void HandRecognition::event(InputDeviceClass device)
 
 void HandRecognition::unblock()
 {
-	XOJ_CHECK_TYPE(HandRecognition);
-
 	this->enableTouch();
 	this->touchState = true;
 }

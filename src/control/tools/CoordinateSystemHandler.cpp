@@ -8,14 +8,10 @@
 CoordinateSystemHandler::CoordinateSystemHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift, bool flipControl)
  : BaseStrokeHandler(xournal, redrawable, page, flipShift, flipControl)
 {
-	XOJ_INIT_TYPE(CoordinateSystemHandler);
 }
 
 CoordinateSystemHandler::~CoordinateSystemHandler()
 {
-	XOJ_CHECK_TYPE(CoordinateSystemHandler);
-
-	XOJ_RELEASE_TYPE(CoordinateSystemHandler);
 }
 
 /**
@@ -61,7 +57,7 @@ void CoordinateSystemHandler::drawShape(Point& c, const PositionInputData& pos)
 		{
 			int signW = width>0?1:-1;
 			int signH = height>0?1:-1;
-			width = MAX( width*signW, height*signH) * signW;	
+			width = std::max( width*signW, height*signH) * signW;
 			height = (width * signW) * signH;
 		}
 		

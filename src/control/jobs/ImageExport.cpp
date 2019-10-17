@@ -16,14 +16,10 @@ ImageExport::ImageExport(Document* doc, Path filename, ExportGraphicsFormat form
    hideBackground(hideBackground),
    exportRange(exportRange)
 {
-	XOJ_INIT_TYPE(ImageExport);
 }
 
 ImageExport::~ImageExport()
 {
-	XOJ_CHECK_TYPE(ImageExport);
-
-	XOJ_RELEASE_TYPE(ImageExport);
 }
 
 /**
@@ -31,8 +27,6 @@ ImageExport::~ImageExport()
  */
 void ImageExport::setPngDpi(int dpi)
 {
-	XOJ_CHECK_TYPE(ImageExport);
-
 	this->pngDpi = dpi;
 }
 
@@ -41,8 +35,6 @@ void ImageExport::setPngDpi(int dpi)
  */
 string ImageExport::getLastErrorMsg()
 {
-	XOJ_CHECK_TYPE(ImageExport);
-
 	return lastError;
 }
 
@@ -51,8 +43,6 @@ string ImageExport::getLastErrorMsg()
  */
 void ImageExport::createSurface(double width, double height, int id)
 {
-	XOJ_CHECK_TYPE(ImageExport);
-
 	if (format == EXPORT_GRAPHICS_PNG)
 	{
 		this->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
@@ -80,8 +70,6 @@ void ImageExport::createSurface(double width, double height, int id)
  */
 bool ImageExport::freeSurface(int id)
 {
-	XOJ_CHECK_TYPE(ImageExport);
-
 	cairo_destroy(this->cr);
 
 	cairo_status_t status = CAIRO_STATUS_SUCCESS;
@@ -106,8 +94,6 @@ bool ImageExport::freeSurface(int id)
  */
 string ImageExport::getFilenameWithNumber(int no)
 {
-	XOJ_CHECK_TYPE(ImageExport);
-
 	if (no == -1)
 	{
 		// No number to add
@@ -130,8 +116,6 @@ string ImageExport::getFilenameWithNumber(int no)
  */
 void ImageExport::exportImagePage(int pageId, int id, double zoom, ExportGraphicsFormat format, DocumentView& view)
 {
-	XOJ_CHECK_TYPE(ImageExport);
-
 	doc->lock();
 	PageRef page = doc->getPage(pageId);
 	doc->unlock();
@@ -150,7 +134,7 @@ void ImageExport::exportImagePage(int pageId, int id, double zoom, ExportGraphic
 		int pgNo = page->getPdfPageNr();
 		XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
-		PdfView::drawPage(NULL, popplerPage, cr, zoom, page->getWidth(), page->getHeight());
+		PdfView::drawPage(nullptr, popplerPage, cr, zoom, page->getWidth(), page->getHeight());
 	}
 
 	view.drawPage(page, this->cr, true, hideBackground);
@@ -168,8 +152,6 @@ void ImageExport::exportImagePage(int pageId, int id, double zoom, ExportGraphic
  */
 void ImageExport::exportGraphics(ProgressListener* stateListener)
 {
-	XOJ_CHECK_TYPE(ImageExport);
-
 	// don't lock the page here for the whole flow, else we get a dead lock...
 	// the ui is blocked, so there should be no changes...
 	int count = doc->getPageCount();

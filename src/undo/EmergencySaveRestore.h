@@ -28,5 +28,4 @@ public:
 	virtual string getText();
 
 private:
-	XOJ_TYPE_ATTRIB;
-};
+	};

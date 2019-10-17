@@ -20,36 +20,28 @@ PageTypeMenu::PageTypeMenu(PageTypeHandler* types, Settings* settings, bool show
    types(types),
    settings(settings),
    ignoreEvents(false),
-   listener(NULL),
+   listener(nullptr),
    menuX(0),
    menuY(0),
-   backgroundPainter(NULL),
+   backgroundPainter(nullptr),
    showPreview(showPreview),
-   pageTypeApplyListener(NULL)
+   pageTypeApplyListener(nullptr)
 {
-	XOJ_INIT_TYPE(PageTypeMenu);
-
 	initDefaultMenu();
 	loadDefaultPage();
 }
 
 PageTypeMenu::~PageTypeMenu()
 {
-	XOJ_CHECK_TYPE(PageTypeMenu);
-
 	/**
 	 * The menu is used from the GUI
 	 * Therefore the menu is not freed here, this will be done in the GUI
 	 */
-	menu = NULL;
-
-	XOJ_RELEASE_TYPE(PageTypeMenu);
+	menu = nullptr;
 }
 
 void PageTypeMenu::loadDefaultPage()
 {
-	XOJ_CHECK_TYPE(PageTypeMenu);
-
 	PageTemplateSettings model;
 	model.parse(settings->getPageTemplate());
 	setSelected(model.getPageInsertType());
@@ -57,8 +49,6 @@ void PageTypeMenu::loadDefaultPage()
 
 cairo_surface_t* PageTypeMenu::createPreviewImage(PageType pt)
 {
-	XOJ_CHECK_TYPE(PageTypeMenu);
-
 	int previewWidth = 100;
 	int previewHeight = 141;
 	double zoom = 0.5;
@@ -88,12 +78,10 @@ cairo_surface_t* PageTypeMenu::createPreviewImage(PageType pt)
 
 void PageTypeMenu::addMenuEntry(PageTypeInfo* t)
 {
-	XOJ_CHECK_TYPE(PageTypeMenu);
-
 	bool special = t->page.isSpecial();
 	bool showImg = !special && showPreview;
 
-	GtkWidget* entry = NULL;
+	GtkWidget* entry = nullptr;
 	if (showImg)
 	{
 		cairo_surface_t* img = createPreviewImage(t->page);
@@ -154,9 +142,7 @@ void PageTypeMenu::addMenuEntry(PageTypeInfo* t)
 	g_signal_connect(entry, "toggled", G_CALLBACK(
 		+[](GtkWidget* togglebutton, PageTypeMenu* self)
 		{
-			XOJ_CHECK_TYPE_OBJ(self, PageTypeMenu);
-
-			if (self->ignoreEvents)
+	if (self->ignoreEvents)
 			{
 				return;
 			}
@@ -185,7 +171,7 @@ void PageTypeMenu::entrySelected(PageTypeInfo* t)
 
 	selected = t->page;
 
-	if (listener != NULL)
+	if (listener != nullptr)
 	{
 		listener->changeCurrentPageBackground(t);
 	}
@@ -193,8 +179,6 @@ void PageTypeMenu::entrySelected(PageTypeInfo* t)
 
 void PageTypeMenu::setSelected(PageType selected)
 {
-	XOJ_CHECK_TYPE(PageTypeMenu);
-
 	for (MenuCallbackInfo& info : menuInfos)
 	{
 		if (info.info->page == selected)
@@ -207,15 +191,11 @@ void PageTypeMenu::setSelected(PageType selected)
 
 void PageTypeMenu::setListener(PageTypeMenuChangeListener* listener)
 {
-	XOJ_CHECK_TYPE(PageTypeMenu);
-
 	this->listener = listener;
 }
 
 void PageTypeMenu::hideCopyPage()
 {
-	XOJ_CHECK_TYPE(PageTypeMenu);
-
 	for (MenuCallbackInfo& info : menuInfos)
 	{
 		if (info.info->page.format == PageTypeFormat::Copy)
@@ -231,8 +211,6 @@ void PageTypeMenu::hideCopyPage()
  */
 void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener, bool onlyAllMenu)
 {
-	XOJ_CHECK_TYPE(PageTypeMenu);
-
 	this->pageTypeApplyListener = pageTypeApplyListener;
 
 	GtkWidget* separator = gtk_separator_menu_item_new();
@@ -249,8 +227,7 @@ void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApply
 		g_signal_connect(menuEntryApply, "activate", G_CALLBACK(
 			+[](GtkWidget* menu, PageTypeMenu* self)
 			{
-				XOJ_CHECK_TYPE_OBJ(self, PageTypeMenu);
-				self->pageTypeApplyListener->applyCurrentPageBackground(false);
+	self->pageTypeApplyListener->applyCurrentPageBackground(false);
 			}), this);
 	}
 
@@ -260,8 +237,7 @@ void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApply
 	g_signal_connect(menuEntryApplyAll, "activate", G_CALLBACK(
 		+[](GtkWidget* menu, PageTypeMenu* self)
 		{
-			XOJ_CHECK_TYPE_OBJ(self, PageTypeMenu);
-			self->pageTypeApplyListener->applyCurrentPageBackground(true);
+	self->pageTypeApplyListener->applyCurrentPageBackground(true);
 		}), this);
 }
 
@@ -284,8 +260,6 @@ GtkWidget* PageTypeMenu::createApplyMenuItem(const char* text)
 
 void PageTypeMenu::initDefaultMenu()
 {
-	XOJ_CHECK_TYPE(PageTypeMenu);
-
 	this->backgroundPainter = new MainBackgroundPainter();
 	this->backgroundPainter->setLineWidthFactor(2);
 
@@ -323,19 +297,15 @@ void PageTypeMenu::initDefaultMenu()
 	}
 
 	delete this->backgroundPainter;
-	this->backgroundPainter = NULL;
+	this->backgroundPainter = nullptr;
 }
 
 GtkWidget* PageTypeMenu::getMenu()
 {
-	XOJ_CHECK_TYPE(PageTypeMenu);
-
 	return menu;
 }
 
 PageType PageTypeMenu::getSelected()
 {
-	XOJ_CHECK_TYPE(PageTypeMenu);
-
 	return selected;
 }

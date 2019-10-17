@@ -139,7 +139,7 @@ void Util::openFileWithDefaultApplicaion(const Path& filename)
 	if (system(command.c_str()) != 0)
 	{
 		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename.str());
-		XojMsgBox::showErrorToUser(NULL, msg);
+		XojMsgBox::showErrorToUser(nullptr, msg);
 	}
 }
 
@@ -147,7 +147,7 @@ void Util::openFileWithFilebrowser(const Path& filename)
 {
 #ifdef __APPLE__
 	constexpr auto const OPEN_PATTERN = "open \"{1}\"";
-#elif WIN32
+#elif _WIN32
 	constexpr auto const OPEN_PATTERN = "explorer.exe /n,/e,\"{1}\"";
 #else // linux, unix, ...
 	constexpr auto const OPEN_PATTERN = R"(nautilus "file://{1}" || dolphin "file://{1}" || konqueror "file://{1}" &)";
@@ -156,7 +156,7 @@ void Util::openFileWithFilebrowser(const Path& filename)
 	if (system(command.c_str()) != 0)
 	{
 		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename.str());
-		XojMsgBox::showErrorToUser(NULL, msg);
+		XojMsgBox::showErrorToUser(nullptr, msg);
 	}
 }
 

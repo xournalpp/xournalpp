@@ -5,7 +5,7 @@
 #include <config.h>
 #include <i18n.h>
 
-#define error(...) if (loadHandler->error == NULL) { loadHandler->error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); }
+#define error(...) if (loadHandler->error == nullptr) { loadHandler->error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); }
 
 typedef struct
 {
@@ -65,7 +65,7 @@ int LoadHandlerHelper::parseBackgroundColor(LoadHandler* loadHandler)
 
 bool LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* loadHandler)
 {
-	if (text == NULL)
+	if (text == nullptr)
 	{
 		error("%s", _("Attribute color not set!"));
 		return false;
@@ -73,7 +73,7 @@ bool LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* lo
 
 	if (text[0] == '#')
 	{
-		gchar* ptr = NULL;
+		gchar* ptr = nullptr;
 		int c = g_ascii_strtoull(&text[1], &ptr, 16);
 		if (ptr != text + strlen(text))
 		{
@@ -106,7 +106,7 @@ const char* LoadHandlerHelper::getAttrib(const char* name, bool optional, LoadHa
 	const char** aName = loadHandler->attributeNames;
 	const char** aValue = loadHandler->attributeValues;
 
-	while (*aName != NULL)
+	while (*aName != nullptr)
 	{
 		if (!strcmp(*aName, name))
 		{
@@ -120,20 +120,20 @@ const char* LoadHandlerHelper::getAttrib(const char* name, bool optional, LoadHa
 	{
 		g_warning("Parser: attribute %s not found!", name);
 	}
-	return NULL;
+	return nullptr;
 }
 
 double LoadHandlerHelper::getAttribDouble(const char* name, LoadHandler* loadHandler)
 {
 	const char* attrib = getAttrib(name, false, loadHandler);
 
-	if (attrib == NULL)
+	if (attrib == nullptr)
 	{
-		error("%s", FC(_F("Attribute \"{1}\" could not be parsed as double, the value is NULL") % name));
+		error("%s", FC(_F("Attribute \"{1}\" could not be parsed as double, the value is nullptr") % name));
 		return 0;
 	}
 
-	char* ptr = NULL;
+	char* ptr = nullptr;
 	double val = g_ascii_strtod(attrib, &ptr);
 	if (ptr == attrib)
 	{
@@ -147,13 +147,13 @@ int LoadHandlerHelper::getAttribInt(const char* name, LoadHandler* loadHandler)
 {
 	const char* attrib = getAttrib(name, false, loadHandler);
 
-	if (attrib == NULL)
+	if (attrib == nullptr)
 	{
-		error("%s", FC(_F("Attribute \"{1}\" could not be parsed as int, the value is NULL") % name));
+		error("%s", FC(_F("Attribute \"{1}\" could not be parsed as int, the value is nullptr") % name));
 		return 0;
 	}
 
-	char* ptr = NULL;
+	char* ptr = nullptr;
 	int val = strtol(attrib, &ptr, 10);
 	if (ptr == attrib)
 	{
@@ -167,7 +167,7 @@ bool LoadHandlerHelper::getAttribInt(const char* name, bool optional, LoadHandle
 {
 	const char* attrib = getAttrib(name, optional, loadHandler);
 
-	if (attrib == NULL)
+	if (attrib == nullptr)
 	{
 		if (!optional)
 		{
@@ -176,7 +176,7 @@ bool LoadHandlerHelper::getAttribInt(const char* name, bool optional, LoadHandle
 		return false;
 	}
 
-	char* ptr = NULL;
+	char* ptr = nullptr;
 	int val = strtol(attrib, &ptr, 10);
 	if (ptr == attrib)
 	{
@@ -192,13 +192,13 @@ size_t LoadHandlerHelper::getAttribSizeT(const char* name, LoadHandler* loadHand
 {
 	const char* attrib = getAttrib(name, false, loadHandler);
 
-	if (attrib == NULL)
+	if (attrib == nullptr)
 	{
-		error("%s", FC(_F("Attribute \"{1}\" could not be parsed as size_t, the value is NULL") % name));
+		error("%s", FC(_F("Attribute \"{1}\" could not be parsed as size_t, the value is nullptr") % name));
 		return 0;
 	}
 
-	char* ptr = NULL;
+	char* ptr = nullptr;
 	size_t val = g_ascii_strtoull(attrib, &ptr, 10);
 	if (ptr == attrib)
 	{
@@ -212,7 +212,7 @@ bool LoadHandlerHelper::getAttribSizeT(const char* name, bool optional, LoadHand
 {
 	const char* attrib = getAttrib(name, optional, loadHandler);
 
-	if (attrib == NULL)
+	if (attrib == nullptr)
 	{
 		if (!optional)
 		{
@@ -221,7 +221,7 @@ bool LoadHandlerHelper::getAttribSizeT(const char* name, bool optional, LoadHand
 		return false;
 	}
 
-	char* ptr = NULL;
+	char* ptr = nullptr;
 	size_t val = strtoull(attrib, &ptr, 10);
 	if (ptr == attrib)
 	{

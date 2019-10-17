@@ -9,20 +9,14 @@
 
 MouseInputHandler::MouseInputHandler(InputContext* inputContext) : PenInputHandler(inputContext)
 {
-	XOJ_INIT_TYPE(MouseInputHandler);
 }
 
 MouseInputHandler::~MouseInputHandler()
 {
-	XOJ_CHECK_TYPE(MouseInputHandler);
-
-	XOJ_RELEASE_TYPE(MouseInputHandler);
 }
 
 bool MouseInputHandler::handleImpl(InputEvent* event)
 {
-	XOJ_CHECK_TYPE(MouseInputHandler);
-
 	// Only handle events when there is no active gesture
 	GtkXournal* xournal = inputContext->getXournal();
 	if (xournal->view->getControl()->getWindow()->isGestureActive())
@@ -94,8 +88,6 @@ bool MouseInputHandler::handleImpl(InputEvent* event)
 
 void MouseInputHandler::setPressedState(InputEvent* event)
 {
-	XOJ_CHECK_TYPE(MouseInputHandler);
-
 	XojPageView* currentPage = getPageAtCurrentPosition(event);
 
 	this->inputContext->getXournal()->view->getCursor()->setInsidePage(currentPage != nullptr);
@@ -134,8 +126,6 @@ void MouseInputHandler::setPressedState(InputEvent* event)
 
 bool MouseInputHandler::changeTool(InputEvent* event)
 {
-	XOJ_CHECK_TYPE(MouseInputHandler);
-
 	Settings* settings = this->inputContext->getSettings();
 	ToolHandler* toolHandler = this->inputContext->getToolHandler();
 	GtkXournal* xournal = this->inputContext->getXournal();
@@ -165,5 +155,4 @@ bool MouseInputHandler::changeTool(InputEvent* event)
 
 void MouseInputHandler::onBlock()
 {
-	XOJ_CHECK_TYPE(MouseInputHandler);
 }

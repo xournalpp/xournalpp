@@ -4,20 +4,14 @@ XmlTexNode::XmlTexNode(const char* tag, string& binaryData)
  : XmlNode(tag),
    binaryData(binaryData)
 {
-	XOJ_INIT_TYPE(XmlTexNode);
 }
 
 XmlTexNode::~XmlTexNode()
 {
-	XOJ_CHECK_TYPE(XmlTexNode);
-
-	XOJ_RELEASE_TYPE(XmlTexNode);
 }
 
 void XmlTexNode::writeOut(OutputStream* out)
 {
-	XOJ_CHECK_TYPE(XmlTexNode);
-
 	out->write("<");
 	out->write(tag);
 	writeAttributes(out);

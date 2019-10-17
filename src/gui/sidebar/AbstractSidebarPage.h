@@ -68,23 +68,21 @@ public:
 	Control* getControl();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-protected:
+	protected:
 	/**
 	 * The Control of the Application
 	 */
-	Control* control = NULL;
+	Control* control = nullptr;
 
 	/**
 	 * The Toolbar to move, copy & delete pages
 	 */
-	SidebarToolbar* toolbar = NULL;
+	SidebarToolbar* toolbar = nullptr;
 
 public:
 	/**
 	 * The Sidebar button
 	 */
-	GtkToolItem* tabButton = NULL;
+	GtkToolItem* tabButton = nullptr;
 
 };

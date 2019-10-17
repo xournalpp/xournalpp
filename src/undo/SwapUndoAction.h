@@ -33,8 +33,6 @@ private:
 	void swap(Control* control);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	size_t pageNr;
 	PageRef swappedPage;
 	PageRef otherPage;

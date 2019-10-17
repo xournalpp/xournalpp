@@ -39,7 +39,5 @@ public:
 	void repaintPageBorder(XojPageView* view);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	XournalView* xournal;
 };

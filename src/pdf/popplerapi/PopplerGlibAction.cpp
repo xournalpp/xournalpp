@@ -4,30 +4,23 @@ PopplerGlibAction::PopplerGlibAction(PopplerAction* action, PopplerDocument* doc
  : action(action),
    document(document)
 {
-	XOJ_INIT_TYPE(PopplerGlibAction);
 	g_object_ref(document);
 }
 
 PopplerGlibAction::~PopplerGlibAction()
 {
-	XOJ_CHECK_TYPE(PopplerGlibAction);
-
 	poppler_action_free(action);
-	action = NULL;
+	action = nullptr;
 
 	if (document)
 	{
 		g_object_unref(document);
-		document = NULL;
+		document = nullptr;
 	}
-
-	XOJ_RELEASE_TYPE(PopplerGlibAction);
 }
 
 XojLinkDest* PopplerGlibAction::getDestination()
 {
-	XOJ_CHECK_TYPE(PopplerGlibAction);
-
 	XojLinkDest* dest = link_dest_new();
 	dest->dest = new LinkDestination();
 	dest->dest->setName(getTitle());
@@ -38,7 +31,7 @@ XojLinkDest* PopplerGlibAction::getDestination()
 		PopplerActionGotoDest* actionDest = (PopplerActionGotoDest*)action;
 		PopplerDest* pDest = actionDest->dest;
 
-		if (pDest == NULL)
+		if (pDest == nullptr)
 		{
 			return dest;
 		}
@@ -51,8 +44,6 @@ XojLinkDest* PopplerGlibAction::getDestination()
 
 void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest)
 {
-	XOJ_CHECK_TYPE(PopplerGlibAction);
-
 	switch(pDest->type)
 	{
 	case POPPLER_DEST_UNKNOWN:
@@ -61,7 +52,7 @@ void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest)
 	case POPPLER_DEST_XYZ:
 		{
 			PopplerPage* page = poppler_document_get_page(document, pDest->page_num);
-			if (page == NULL)
+			if (page == nullptr)
 			{
 				return;
 			}
@@ -81,11 +72,11 @@ void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest)
 
 			if (pDest->top)
 			{
-				link->setChangeTop(pageHeight - MIN(pageHeight, pDest->top));
+				link->setChangeTop(pageHeight - std::min(pageHeight, pDest->top));
 			}
 			else if (pDest->bottom)
 			{
-				link->setChangeTop(pageHeight - MIN(pageHeight, pageHeight - pDest->bottom));
+				link->setChangeTop(pageHeight - std::min(pageHeight, pageHeight - pDest->bottom));
 			}
 
 			if (pDest->zoom != 0)
@@ -120,7 +111,7 @@ void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest)
 	case POPPLER_DEST_NAMED:
 		{
 			PopplerDest* pDest2 = poppler_document_find_dest(document, pDest->named_dest);
-			if (pDest2 != NULL)
+			if (pDest2 != nullptr)
 			{
 				linkFromDest(link, pDest2);
 				poppler_dest_free(pDest2);
@@ -138,7 +129,5 @@ void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest)
 
 string PopplerGlibAction::getTitle()
 {
-	XOJ_CHECK_TYPE(PopplerGlibAction);
-
 	return ((PopplerActionAny*)action)->title;
 }

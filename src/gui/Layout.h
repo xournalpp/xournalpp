@@ -112,8 +112,6 @@ private:
 	void setLayoutSize(int width, int height);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	LayoutMapper mapper;
 
 	XournalView* view = nullptr;

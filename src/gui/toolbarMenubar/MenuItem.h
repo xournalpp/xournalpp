@@ -23,5 +23,4 @@ public:
 	virtual ~MenuItem();
 
 private:
-	XOJ_TYPE_ATTRIB;
-};
+	};

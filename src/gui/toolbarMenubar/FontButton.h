@@ -21,7 +21,7 @@ class FontButton : public AbstractToolItem
 {
 public:
 	FontButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type,
-			   string description, GtkWidget* menuitem = NULL);
+			   string description, GtkWidget* menuitem = nullptr);
 	virtual ~FontButton();
 
 public:
@@ -42,11 +42,8 @@ protected:
 	virtual GtkWidget* getNewToolIcon();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-
-	GtkWidget* fontButton = NULL;
-	GladeGui* gui = NULL;
+	GtkWidget* fontButton = nullptr;
+	GladeGui* gui = nullptr;
 	string description;
 
 	XojFont font;

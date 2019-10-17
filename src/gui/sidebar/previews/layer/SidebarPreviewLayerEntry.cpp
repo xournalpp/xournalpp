@@ -12,8 +12,6 @@ SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, 
    layer(layer),
    box(gtk_box_new(GTK_ORIENTATION_VERTICAL, 2))
 {
-	XOJ_INIT_TYPE(SidebarPreviewLayerEntry);
-
 	GtkWidget* toolbar = gtk_box_new(GTK_ORIENTATION_HORIZONTAL,6);
 
 	string text;
@@ -31,8 +29,7 @@ SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, 
 	g_signal_connect(cbVisible, "toggled", G_CALLBACK(
 		+[](GtkToggleButton* source, SidebarPreviewLayerEntry* self)
 		{
-			XOJ_CHECK_TYPE_OBJ(self, SidebarPreviewLayerEntry);
-			self->checkboxToggled();
+	self->checkboxToggled();
 		}), this);
 
 
@@ -54,18 +51,12 @@ SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, 
 
 SidebarPreviewLayerEntry::~SidebarPreviewLayerEntry()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewLayerEntry);
-
 	gtk_widget_destroy(this->box);
-	this->box = NULL;
-
-	XOJ_RELEASE_TYPE(SidebarPreviewLayerEntry);
+	this->box = nullptr;
 }
 
 void SidebarPreviewLayerEntry::checkboxToggled()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewLayerEntry);
-
 	if (inUpdate)
 	{
 		return;
@@ -77,36 +68,26 @@ void SidebarPreviewLayerEntry::checkboxToggled()
 
 void SidebarPreviewLayerEntry::mouseButtonPressCallback()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewLayerEntry);
-
 	((SidebarPreviewLayers*)sidebar)->layerSelected(index);
 }
 
 PreviewRenderType SidebarPreviewLayerEntry::getRenderType()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewLayerEntry);
-
 	return RENDER_TYPE_PAGE_LAYER;
 }
 
 int SidebarPreviewLayerEntry::getHeight()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewLayerEntry);
-
 	return getWidgetHeight() + toolbarHeight;
 }
 
 int SidebarPreviewLayerEntry::getLayer()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewLayerEntry);
-
 	return layer;
 }
 
 GtkWidget* SidebarPreviewLayerEntry::getWidget()
 {
-	XOJ_CHECK_TYPE(SidebarPreviewLayerEntry);
-
 	return this->box;
 }
 
@@ -115,8 +96,6 @@ GtkWidget* SidebarPreviewLayerEntry::getWidget()
  */
 void SidebarPreviewLayerEntry::setVisibleCheckbox(bool enabled)
 {
-	XOJ_CHECK_TYPE(SidebarPreviewLayerEntry);
-
 	inUpdate = true;
 
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cbVisible), enabled);

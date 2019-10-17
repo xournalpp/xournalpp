@@ -6,21 +6,16 @@
 FontButton::FontButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, string description,
 					   GtkWidget* menuitem) : AbstractToolItem(id, handler, type, menuitem)
 {
-	XOJ_INIT_TYPE(FontButton);
-
 	this->gui = gui;
 	this->description = description;
 }
 
 FontButton::~FontButton()
 {
-	XOJ_RELEASE_TYPE(FontButton);
 }
 
 void FontButton::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton)
 {
-	XOJ_CHECK_TYPE(FontButton);
-
 	GtkFontButton* button = GTK_FONT_BUTTON(fontButton);
 
 	string name = gtk_font_button_get_font_name(button);
@@ -29,7 +24,7 @@ void FontButton::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton
 	this->font.setName(name.substr(0, pos));
 	this->font.setSize(std::stod(name.substr(pos + 1)));
 
-	handler->actionPerformed(ACTION_FONT_BUTTON_CHANGED, GROUP_NOGROUP, event, menuitem, NULL, true);
+	handler->actionPerformed(ACTION_FONT_BUTTON_CHANGED, GROUP_NOGROUP, event, menuitem, nullptr, true);
 }
 
 void FontButton::setFontFontButton(GtkWidget* fontButton, XojFont& font)
@@ -41,10 +36,8 @@ void FontButton::setFontFontButton(GtkWidget* fontButton, XojFont& font)
 
 void FontButton::setFont(XojFont& font)
 {
-	XOJ_CHECK_TYPE(FontButton);
-
 	this->font = font;
-	if (this->fontButton == NULL)
+	if (this->fontButton == nullptr)
 	{
 		return;
 	}
@@ -54,8 +47,6 @@ void FontButton::setFont(XojFont& font)
 
 XojFont FontButton::getFont()
 {
-	XOJ_CHECK_TYPE(FontButton);
-
 	//essentially, copy the font object to prevent a memory leak.
 	XojFont newfont;
 	newfont.setName(font.getName());
@@ -66,22 +57,16 @@ XojFont FontButton::getFont()
 
 string FontButton::getToolDisplayName()
 {
-	XOJ_CHECK_TYPE(FontButton);
-
 	return _("Font");
 }
 
 GtkWidget* FontButton::getNewToolIcon()
 {
-	XOJ_CHECK_TYPE(FontButton);
-
 	return gtk_image_new_from_icon_name("font-x-generic" , GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
 GtkToolItem* FontButton::createItem(bool horizontal)
 {
-	XOJ_CHECK_TYPE(FontButton);
-
 	if (this->item)
 	{
 		return this->item;
@@ -95,7 +80,6 @@ GtkToolItem* FontButton::createItem(bool horizontal)
 
 GtkToolItem* FontButton::createTmpItem(bool horizontal)
 {
-	XOJ_CHECK_TYPE(FontButton);
 	GtkWidget* fontButton = newFontButton();
 
 	GtkToolItem* it = gtk_tool_item_new();
@@ -115,9 +99,7 @@ GtkToolItem* FontButton::createTmpItem(bool horizontal)
 
 void FontButton::showFontDialog()
 {
-	XOJ_CHECK_TYPE(FontButton);
-
-	if (this->fontButton == NULL)
+	if (this->fontButton == nullptr)
 	{
 		newItem();
 	}
@@ -127,19 +109,16 @@ void FontButton::showFontDialog()
 
 GtkWidget* FontButton::newFontButton()
 {
-	XOJ_CHECK_TYPE(FontButton);
 	GtkWidget* w = gtk_font_button_new();
 	gtk_widget_show(w);
-	gtk_font_button_set_use_font(GTK_FONT_BUTTON(w), TRUE);
-	gtk_button_set_focus_on_click(GTK_BUTTON(w), FALSE);
+	gtk_font_button_set_use_font(GTK_FONT_BUTTON(w), true);
+	gtk_button_set_focus_on_click(GTK_BUTTON(w), false);
 
 	return w;
 }
 
 GtkToolItem* FontButton::newItem()
 {
-	XOJ_CHECK_TYPE(FontButton);
-
 	if (this->fontButton)
 	{
 		g_object_unref(this->fontButton);

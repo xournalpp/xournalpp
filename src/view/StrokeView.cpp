@@ -42,7 +42,7 @@ void StrokeView::drawFillStroke()
 
 void StrokeView::applyDashed(double offset)
 {
-	const double* dashes = NULL;
+	const double* dashes = nullptr;
 	int dashCount = 0;
 	if (s->getLineStyle().getDashes(dashes, dashCount))
 	{
@@ -51,7 +51,7 @@ void StrokeView::applyDashed(double offset)
 	else
 	{
 		// Disable dash
-		cairo_set_dash(cr, NULL, 0, 0);
+		cairo_set_dash(cr, nullptr, 0, 0);
 	}
 }
 

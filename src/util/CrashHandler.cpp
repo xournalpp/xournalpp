@@ -14,14 +14,14 @@
 using std::to_string;
 #include <ctime>
 
-static Document* document = NULL;
+static Document* document = nullptr;
 
 void setEmergencyDocument(Document* doc)
 {
 	document = doc;
 }
 
-#ifdef WIN32
+#ifdef _WIN32
 #include "CrashHandlerWindows.h"
 #else
 #include "CrashHandlerUnix.h"
@@ -29,7 +29,7 @@ void setEmergencyDocument(Document* doc)
 
 void emergencySave()
 {
-	if (document == NULL)
+	if (document == nullptr)
 	{
 		return;
 	}

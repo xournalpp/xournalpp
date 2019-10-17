@@ -3,28 +3,21 @@
 AbstractToolItem::AbstractToolItem(string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem)
  : AbstractItem(id, handler, type, menuitem)
 {
-	XOJ_INIT_TYPE(AbstractToolItem);
 }
 
 AbstractToolItem::~AbstractToolItem()
 {
-	XOJ_CHECK_TYPE(AbstractToolItem);
-
-	this->item = NULL;
+	this->item = nullptr;
 	if (this->popupMenu)
 	{
 		g_object_unref(G_OBJECT(this->popupMenu));
-		this->popupMenu = NULL;
+		this->popupMenu = nullptr;
 	}
-
-	XOJ_RELEASE_TYPE(AbstractToolItem);
 }
 
 void AbstractToolItem::selected(ActionGroup group, ActionType action)
 {
-	XOJ_CHECK_TYPE(AbstractToolItem);
-
-	if (this->item == NULL)
+	if (this->item == nullptr)
 	{
 		return;
 	}
@@ -44,8 +37,6 @@ void AbstractToolItem::selected(ActionGroup group, ActionType action)
 
 void AbstractToolItem::toolButtonCallback(GtkToolButton* toolbutton, AbstractToolItem* item)
 {
-	XOJ_CHECK_TYPE_OBJ(item, AbstractToolItem);
-
 	if (toolbutton && GTK_IS_TOGGLE_TOOL_BUTTON(toolbutton))
 	{
 		bool selected = gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(toolbutton));
@@ -66,13 +57,11 @@ void AbstractToolItem::toolButtonCallback(GtkToolButton* toolbutton, AbstractToo
 		item->toolToggleButtonActive = selected;
 	}
 
-	item->activated(NULL, NULL, toolbutton);
+	item->activated(nullptr, nullptr, toolbutton);
 }
 
 GtkToolItem* AbstractToolItem::createItem(bool horizontal)
 {
-	XOJ_CHECK_TYPE(AbstractToolItem);
-
 	if (this->item)
 	{
 		return this->item;
@@ -104,8 +93,6 @@ GtkToolItem* AbstractToolItem::createTmpItem(bool horizontal)
 
 void AbstractToolItem::setPopupMenu(GtkWidget* popupMenu)
 {
-	XOJ_CHECK_TYPE(AbstractToolItem);
-
 	if (this->popupMenu)
 	{
 		g_object_unref(this->popupMenu);
@@ -120,15 +107,11 @@ void AbstractToolItem::setPopupMenu(GtkWidget* popupMenu)
 
 bool AbstractToolItem::isUsed()
 {
-	XOJ_CHECK_TYPE(AbstractToolItem);
-
 	return used;
 }
 
 void AbstractToolItem::setUsed(bool used)
 {
-	XOJ_CHECK_TYPE(AbstractToolItem);
-
 	this->used = used;
 }
 
@@ -137,8 +120,6 @@ void AbstractToolItem::setUsed(bool used)
  */
 void AbstractToolItem::enable(bool enabled)
 {
-	XOJ_CHECK_TYPE(AbstractToolItem);
-
 	if (this->item)
 	{
 		gtk_widget_set_sensitive(GTK_WIDGET(this->item), enabled);

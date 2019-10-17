@@ -40,8 +40,6 @@ private:
 	void updateFontDesc();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	string name;
 	double size = 0;
 };

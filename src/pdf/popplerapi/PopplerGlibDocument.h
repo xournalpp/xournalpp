@@ -37,7 +37,5 @@ public:
 	virtual XojPdfBookmarkIterator* getContentsIter();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-	PopplerDocument* document = NULL;
+	PopplerDocument* document = nullptr;
 };

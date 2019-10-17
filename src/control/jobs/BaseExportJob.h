@@ -41,10 +41,8 @@ protected:
 	virtual bool isUriValid(string& uri);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-protected:
-	GtkWidget* dialog = NULL;
+	protected:
+	GtkWidget* dialog = nullptr;
 
 	Path filename;
 

@@ -11,11 +11,9 @@ XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings)
  : win(win),
    settings(settings)
 {
-	XOJ_INIT_TYPE(XojOpenDlg);
-
 	dialog = gtk_file_chooser_dialog_new(_("Open file"), win, GTK_FILE_CHOOSER_ACTION_OPEN,
 										 _("_Cancel"), GTK_RESPONSE_CANCEL,
-										 _("_Open"), GTK_RESPONSE_OK, NULL);
+										 _("_Open"), GTK_RESPONSE_OK, nullptr);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
@@ -34,21 +32,15 @@ XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings)
 
 XojOpenDlg::~XojOpenDlg()
 {
-	XOJ_CHECK_TYPE(XojOpenDlg);
-
 	if (dialog)
 	{
 		gtk_widget_destroy(dialog);
 	}
-	dialog = NULL;
-
-	XOJ_RELEASE_TYPE(XojOpenDlg);
+	dialog = nullptr;
 }
 
 void XojOpenDlg::addFilterAllFiles()
 {
-	XOJ_CHECK_TYPE(XojOpenDlg);
-
 	GtkFileFilter* filterAll = gtk_file_filter_new();
 	gtk_file_filter_set_name(filterAll, _("All files"));
 	gtk_file_filter_add_pattern(filterAll, "*");
@@ -57,8 +49,6 @@ void XojOpenDlg::addFilterAllFiles()
 
 void XojOpenDlg::addFilterPdf()
 {
-	XOJ_CHECK_TYPE(XojOpenDlg);
-
 	GtkFileFilter* filterPdf = gtk_file_filter_new();
 	gtk_file_filter_set_name(filterPdf, _("PDF files"));
 	gtk_file_filter_add_pattern(filterPdf, "*.pdf");
@@ -68,8 +58,6 @@ void XojOpenDlg::addFilterPdf()
 
 void XojOpenDlg::addFilterXoj()
 {
-	XOJ_CHECK_TYPE(XojOpenDlg);
-
 	GtkFileFilter* filterXoj = gtk_file_filter_new();
 	gtk_file_filter_set_name(filterXoj, _("Xournal files"));
 	gtk_file_filter_add_pattern(filterXoj, "*.xoj");
@@ -78,8 +66,6 @@ void XojOpenDlg::addFilterXoj()
 
 void XojOpenDlg::addFilterXopp()
 {
-	XOJ_CHECK_TYPE(XojOpenDlg);
-
 	GtkFileFilter* filterXopp = gtk_file_filter_new();
 	gtk_file_filter_set_name(filterXopp, _("Xournal++ files"));
 	gtk_file_filter_add_pattern(filterXopp, "*.xopp");
@@ -88,8 +74,6 @@ void XojOpenDlg::addFilterXopp()
 
 void XojOpenDlg::addFilterXopt()
 {
-	XOJ_CHECK_TYPE(XojOpenDlg);
-
 	GtkFileFilter* filterXopt = gtk_file_filter_new();
 	gtk_file_filter_set_name(filterXopt, _("Xournal++ template"));
 	gtk_file_filter_add_pattern(filterXopt, "*.xopt");
@@ -98,13 +82,11 @@ void XojOpenDlg::addFilterXopt()
 
 Path XojOpenDlg::runDialog()
 {
-	XOJ_CHECK_TYPE(XojOpenDlg);
-
 	gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
 	{
 		gtk_widget_destroy(dialog);
-		dialog = NULL;
+		dialog = nullptr;
 		return Path("");
 	}
 
@@ -116,8 +98,6 @@ Path XojOpenDlg::runDialog()
 
 Path XojOpenDlg::showOpenTemplateDialog()
 {
-	XOJ_CHECK_TYPE(XojOpenDlg);
-
 	addFilterAllFiles();
 	addFilterXopt();
 
@@ -126,8 +106,6 @@ Path XojOpenDlg::showOpenTemplateDialog()
 
 Path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 {
-	XOJ_CHECK_TYPE(XojOpenDlg);
-
 	if (!pdf)
 	{
 		GtkFileFilter* filterSupported = gtk_file_filter_new();
@@ -148,18 +126,18 @@ Path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 	addFilterPdf();
 	addFilterAllFiles();
 
-	GtkWidget* attachOpt = NULL;
+	GtkWidget* attachOpt = nullptr;
 	if (pdf)
 	{
 		attachOpt = gtk_check_button_new_with_label(_("Attach file to the journal"));
 		g_object_ref(attachOpt);
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(attachOpt), FALSE);
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(attachOpt), false);
 		gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(dialog), attachOpt);
 	}
 
 	GtkWidget* image = gtk_image_new();
 	gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), image);
-	g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback), NULL);
+	g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback), nullptr);
 
 	auto lastOpenPath = this->settings->getLastOpenPath();
 	if (!lastOpenPath.isEmpty())
@@ -202,7 +180,7 @@ void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userDa
 
 	Path filepath = filename;
 	g_free(filename);
-	filename = NULL;
+	filename = nullptr;
 
 	if (!filepath.hasXournalFileExt())
 	{
@@ -219,19 +197,19 @@ void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userDa
 		return;
 	}
 
-	GError* error = NULL;
+	GError* error = nullptr;
 	gsize dataLen = 0;
 	unsigned char* imageData = extractor.getData(dataLen);
 
-	GInputStream* in = g_memory_input_stream_new_from_data(imageData, dataLen, NULL);
-	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(in, NULL, &error);
-	if (error != NULL)
+	GInputStream* in = g_memory_input_stream_new_from_data(imageData, dataLen, nullptr);
+	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(in, nullptr, &error);
+	if (error != nullptr)
 	{
 		g_warning("Could not load preview image, error: %s\n", error->message);
 		g_error_free(error);
 	}
 
-	g_input_stream_close(in, NULL, NULL);
+	g_input_stream_close(in, nullptr, nullptr);
 
 	if (pixbuf)
 	{

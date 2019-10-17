@@ -116,8 +116,6 @@ protected:
 	virtual void calcSize();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	// The stroke width cannot be inherited from Element
 	double width = 0;
 
@@ -131,7 +129,7 @@ private:
 	 */
 	LineStyle lineStyle;
 
-	EraseableStroke* eraseable = NULL;
+	EraseableStroke* eraseable = nullptr;
 
 	/**
 	 * Option to fill the shape:

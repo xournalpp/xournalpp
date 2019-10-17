@@ -19,7 +19,6 @@ class InputContext;
 class TouchInputHandler : public AbstractInputHandler
 {
 private:
-	XOJ_TYPE_ATTRIB;
 	GdkEventSequence* currentSequence = nullptr;
 	double lastPosX = -1.0;
 	double lastPosY = -1.0;

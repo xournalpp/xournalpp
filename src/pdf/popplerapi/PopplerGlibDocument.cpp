@@ -8,14 +8,11 @@
 
 PopplerGlibDocument::PopplerGlibDocument()
 {
-	XOJ_INIT_TYPE(PopplerGlibDocument);
 }
 
 PopplerGlibDocument::PopplerGlibDocument(const PopplerGlibDocument& doc)
  : document(doc.document)
 {
-	XOJ_INIT_TYPE(PopplerGlibDocument);
-
 	if (document)
 	{
 		g_object_ref(document);
@@ -24,21 +21,15 @@ PopplerGlibDocument::PopplerGlibDocument(const PopplerGlibDocument& doc)
 
 PopplerGlibDocument::~PopplerGlibDocument()
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
 	if (document)
 	{
 		g_object_unref(document);
-		document = NULL;
+		document = nullptr;
 	}
-
-	XOJ_RELEASE_TYPE(PopplerGlibDocument);
 }
 
 void PopplerGlibDocument::assign(XojPdfDocumentInterface* doc)
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
 	if (document)
 	{
 		g_object_unref(document);
@@ -53,22 +44,18 @@ void PopplerGlibDocument::assign(XojPdfDocumentInterface* doc)
 
 bool PopplerGlibDocument::equals(XojPdfDocumentInterface* doc)
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
 	return document == ((PopplerGlibDocument*)doc)->document;
 }
 
 bool PopplerGlibDocument::save(Path filename, GError** error)
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
-	if (document == NULL)
+	if (document == nullptr)
 	{
 		return false;
 	}
 
 	string uri = filename.toUri(error);
-	if (*error != NULL)
+	if (*error != nullptr)
 	{
 		return false;
 	}
@@ -77,10 +64,8 @@ bool PopplerGlibDocument::save(Path filename, GError** error)
 
 bool PopplerGlibDocument::load(Path filename, string password, GError** error)
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
 	string uri = filename.toUri(error);
-	if (*error != NULL)
+	if (*error != nullptr)
 	{
 		return false;
 	}
@@ -91,36 +76,30 @@ bool PopplerGlibDocument::load(Path filename, string password, GError** error)
 	}
 
 	this->document = poppler_document_new_from_file(uri.c_str(), password.c_str(), error);
-	return this->document != NULL;
+	return this->document != nullptr;
 }
 
 bool PopplerGlibDocument::load(gpointer data, gsize length, string password, GError** error)
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
 	if (document)
 	{
 		g_object_unref(document);
 	}
 
 	this->document = poppler_document_new_from_data(static_cast<char*>(data), static_cast<int>(length), password.c_str(), error);
-	return this->document != NULL;
+	return this->document != nullptr;
 }
 
 bool PopplerGlibDocument::isLoaded()
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
-	return this->document != NULL;
+	return this->document != nullptr;
 }
 
 XojPdfPageSPtr PopplerGlibDocument::getPage(size_t page)
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
-	if (document == NULL)
+	if (document == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	PopplerPage* pg = poppler_document_get_page(document, page);
@@ -132,9 +111,7 @@ XojPdfPageSPtr PopplerGlibDocument::getPage(size_t page)
 
 size_t PopplerGlibDocument::getPageCount()
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
-	if (document == NULL)
+	if (document == nullptr)
 	{
 		return 0;
 	}
@@ -144,18 +121,16 @@ size_t PopplerGlibDocument::getPageCount()
 
 XojPdfBookmarkIterator* PopplerGlibDocument::getContentsIter()
 {
-	XOJ_CHECK_TYPE(PopplerGlibDocument);
-
-	if (document == NULL)
+	if (document == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	PopplerIndexIter* iter = poppler_index_iter_new(document);
 
-	if (iter == NULL)
+	if (iter == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	return new PopplerGlibPageBookmarkIterator(iter, document);

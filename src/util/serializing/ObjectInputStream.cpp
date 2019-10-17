@@ -6,26 +6,19 @@
 
 ObjectInputStream::ObjectInputStream()
 {
-	XOJ_INIT_TYPE(ObjectInputStream);
 }
 
 ObjectInputStream::~ObjectInputStream()
 {
-	XOJ_CHECK_TYPE(ObjectInputStream);
-
 	if (this->str)
 	{
 		g_string_free(this->str, true);
-		this->str = NULL;
+		this->str = nullptr;
 	}
-
-	XOJ_RELEASE_TYPE(ObjectInputStream);
 }
 
 bool ObjectInputStream::read(const char* data, int len)
 {
-	XOJ_CHECK_TYPE(ObjectInputStream);
-
 	if (this->str)
 	{
 		g_string_free(this->str, true);
@@ -59,8 +52,6 @@ bool ObjectInputStream::read(const char* data, int len)
 
 void ObjectInputStream::readObject(const char* name)
 {
-	XOJ_CHECK_TYPE(ObjectInputStream);
-
 	string type = readObject();
 	if (type != name)
 	{
@@ -71,16 +62,12 @@ void ObjectInputStream::readObject(const char* name)
 
 string ObjectInputStream::readObject()
 {
-	XOJ_CHECK_TYPE(ObjectInputStream);
-
 	checkType('{');
 	return readString();
 }
 
 string ObjectInputStream::getNextObjectName()
 {
-	XOJ_CHECK_TYPE(ObjectInputStream);
-
 	int pos = this->pos;
 	checkType('{');
 	string name = readString();
@@ -92,15 +79,11 @@ string ObjectInputStream::getNextObjectName()
 
 void ObjectInputStream::endObject()
 {
-	XOJ_CHECK_TYPE(ObjectInputStream);
-
 	checkType('}');
 }
 
 int ObjectInputStream::readInt()
 {
-	XOJ_CHECK_TYPE(ObjectInputStream);
-
 	checkType('i');
 
 	if (this->pos + sizeof(int) >= this->str->len)
@@ -115,8 +98,6 @@ int ObjectInputStream::readInt()
 
 double ObjectInputStream::readDouble()
 {
-	XOJ_CHECK_TYPE(ObjectInputStream);
-
 	checkType('d');
 
 	if (this->pos + sizeof(double) >= this->str->len)
@@ -131,8 +112,6 @@ double ObjectInputStream::readDouble()
 
 size_t ObjectInputStream::readSizeT()
 {
-	XOJ_CHECK_TYPE(ObjectInputStream);
-
 	checkType('l');
 
 	if (this->pos + sizeof(size_t) >= this->str->len)
@@ -147,8 +126,6 @@ size_t ObjectInputStream::readSizeT()
 
 string ObjectInputStream::readString()
 {
-	XOJ_CHECK_TYPE(ObjectInputStream);
-
 	checkType('s');
 
 	if (this->pos + sizeof(int) >= this->str->len)
@@ -171,8 +148,6 @@ string ObjectInputStream::readString()
 
 void ObjectInputStream::readData(void** data, int* length)
 {
-	XOJ_CHECK_TYPE(ObjectInputStream);
-
 	checkType('b');
 
 	if (this->pos + 2 * sizeof(int) >= this->str->len)
@@ -194,7 +169,7 @@ void ObjectInputStream::readData(void** data, int* length)
 	if (len == 0)
 	{
 		*length = 0;
-		*data = NULL;
+		*data = nullptr;
 	}
 	else
 	{
@@ -240,8 +215,6 @@ cairo_status_t cairoReadFunction(PngDatasource* obj, unsigned char* data, unsign
 
 cairo_surface_t* ObjectInputStream::readImage()
 {
-	XOJ_CHECK_TYPE(ObjectInputStream);
-
 	checkType('m');
 
 	if (this->pos + sizeof(int) >= this->str->len)
@@ -270,8 +243,6 @@ cairo_surface_t* ObjectInputStream::readImage()
 
 void ObjectInputStream::checkType(char type)
 {
-	XOJ_CHECK_TYPE(ObjectInputStream);
-
 	if (this->pos + 2 > this->str->len)
 	{
 		throw InputStreamException(FS(FORMAT_STR("End reached, but try to read {1}, index {2} of {3}")
@@ -295,8 +266,6 @@ void ObjectInputStream::checkType(char type)
 
 string ObjectInputStream::getType(char type)
 {
-	XOJ_CHECK_TYPE(ObjectInputStream);
-
 	string ret;
 	if (type == '{')
 	{

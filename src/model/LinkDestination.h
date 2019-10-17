@@ -46,8 +46,6 @@ public:
 	void setName(string name);
 	string getName();
 private:
-	XOJ_TYPE_ATTRIB;
-
 	size_t page;
 	bool expand;
 

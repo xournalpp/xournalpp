@@ -48,11 +48,9 @@ private:
 	GdkCursor* createCustomDrawDirCursor(int size, bool shift, bool ctrl);
 	
 private:
-	XOJ_TYPE_ATTRIB;
-
 	InputDeviceClass inputDevice = INPUT_DEVICE_MOUSE;
 
-	Control* control = NULL;
+	Control* control = nullptr;
 	bool busy = false;
 	bool insidePage = false;
 	CursorSelectionType selectionType = CURSOR_SELECTION_NONE;

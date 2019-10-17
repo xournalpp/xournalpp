@@ -23,6 +23,9 @@
 
 #include "gtkmenutooltogglebutton.h"
 
+#include <cmath>
+#include <algorithm>
+
 #define GTK_MENU_TOOL_TOGGLE_BUTTON_GET_PRIVATE(object)(G_TYPE_INSTANCE_GET_PRIVATE ((object), GTK_TYPE_MENU_TOOL_TOGGLE_BUTTON, GtkMenuToolToggleButtonPrivate))
 
 struct _GtkMenuToolToggleButtonPrivate
@@ -85,7 +88,7 @@ static void gtk_menu_tool_toggle_button_construct_contents(
 	{
 		g_object_ref(priv->arrow_button);
 		gtk_container_remove(GTK_CONTAINER(gtk_widget_get_parent(priv->arrow_button)), priv->arrow_button);
-		gtk_box_pack_end(GTK_BOX(box), priv->arrow_button, FALSE, FALSE, 0);
+		gtk_box_pack_end(GTK_BOX(box), priv->arrow_button, false, false, 0);
 		g_object_unref(priv->arrow_button);
 	}
 
@@ -94,11 +97,11 @@ static void gtk_menu_tool_toggle_button_construct_contents(
 		gchar* tmp;
 
 		/* Transfer a possible tooltip to the new box */
-		g_object_get(priv->box, "tooltip-markup", &tmp, NULL);
+		g_object_get(priv->box, "tooltip-markup", &tmp, nullptr);
 
 		if (tmp)
 		{
-			g_object_set(box, "tooltip-markup", tmp, NULL);
+			g_object_set(box, "tooltip-markup", tmp, nullptr);
 			g_free(tmp);
 		}
 
@@ -201,7 +204,7 @@ static void gtk_menu_tool_toggle_button_class_init(GtkMenuToolToggleButtonClass*
 	 */
 	signals[SHOW_MENU] = g_signal_new("show-menu", G_OBJECT_CLASS_TYPE (klass),
 	                                  G_SIGNAL_RUN_FIRST,
-	                                  G_STRUCT_OFFSET (GtkMenuToolToggleButtonClass, show_menu), NULL, NULL,
+	                                  G_STRUCT_OFFSET (GtkMenuToolToggleButtonClass, show_menu), nullptr, nullptr,
 	                                  g_cclosure_marshal_VOID__VOID,
 	                                  G_TYPE_NONE, 0);
 
@@ -252,7 +255,7 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
 
 		if (direction == GTK_TEXT_DIR_LTR)
 		{
-			*x += MAX(allocation.width - menu_req.width, 0);
+			*x += std::max(allocation.width - menu_req.width, 0);
 		}
 		else if (menu_req.width > allocation.width)
 		{
@@ -299,7 +302,7 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
 		}
 	}
 
-	*push_in = FALSE;
+	*push_in = false;
 }
 
 static void popup_menu_under_arrow(GtkMenuToolToggleButton* button,
@@ -314,7 +317,7 @@ static void popup_menu_under_arrow(GtkMenuToolToggleButton* button,
 		return;
 	}
 
-	gtk_menu_popup(priv->menu, NULL, NULL, (GtkMenuPositionFunc) menu_position_func,
+	gtk_menu_popup(priv->menu, nullptr, nullptr, (GtkMenuPositionFunc) menu_position_func,
 	               button, event ? event->button : 0,
 	               event ? event->time : gtk_get_current_event_time());
 }
@@ -334,8 +337,8 @@ static void arrow_button_toggled_cb(GtkToggleButton* togglebutton,
 	{
 		/* we get here only when the menu is activated by a key
 		 * press, so that we can select the first menu item */
-		popup_menu_under_arrow(button, NULL);
-		gtk_menu_shell_select_first(GTK_MENU_SHELL(priv->menu), FALSE);
+		popup_menu_under_arrow(button, nullptr);
+		gtk_menu_shell_select_first(GTK_MENU_SHELL(priv->menu), false);
 	}
 }
 
@@ -346,13 +349,13 @@ static gboolean arrow_button_button_press_event_cb(GtkWidget* widget,
 	if (event->button == 1)
 	{
 		popup_menu_under_arrow(button, event);
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget), TRUE);
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget), true);
 
-		return TRUE;
+		return true;
 	}
 	else
 	{
-		return FALSE;
+		return false;
 	}
 }
 
@@ -360,7 +363,7 @@ static void gtk_menu_tool_toggle_button_init(GtkMenuToolToggleButton* button)
 {
 	button->priv = GTK_MENU_TOOL_TOGGLE_BUTTON_GET_PRIVATE(button);
 
-	gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(button), FALSE);
+	gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(button), false);
 
 	GtkWidget* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 
@@ -373,10 +376,10 @@ static void gtk_menu_tool_toggle_button_init(GtkMenuToolToggleButton* button)
 	GtkWidget* arrow_button = gtk_toggle_button_new();
 	GtkWidget* arrow = gtk_image_new_from_icon_name("pan-down-symbolic", GTK_ICON_SIZE_SMALL_TOOLBAR);
 	gtk_container_add(GTK_CONTAINER(arrow_button), arrow);
-	gtk_box_pack_end(GTK_BOX(box), arrow_button, FALSE, FALSE, 0);
+	gtk_box_pack_end(GTK_BOX(box), arrow_button, false, false, 0);
 
 	/* the arrow button is insentive until we set a menu */
-	gtk_widget_set_sensitive(arrow_button, FALSE);
+	gtk_widget_set_sensitive(arrow_button, false);
 
 	gtk_widget_show_all(box);
 
@@ -415,8 +418,8 @@ static void gtk_menu_tool_toggle_button_destroy(GtkWidget* object)
 
 /**
  * gtk_menu_tool_button_new:
- * @icon_widget: a widget that will be used as icon widget, or %NULL
- * @label: a string that will be used as label, or %NULL
+ * @icon_widget: a widget that will be used as icon widget, or %nullptr
+ * @label: a string that will be used as label, or %nullptr
  *
  * Creates a new #GtkMenuToolButton using @icon_widget as icon and
  * @label as label.
@@ -428,7 +431,7 @@ static void gtk_menu_tool_toggle_button_destroy(GtkWidget* object)
 GtkToolItem*
 gtk_menu_tool_toggle_button_new(GtkWidget* icon_widget, const gchar* label)
 {
-	void* button = g_object_new(GTK_TYPE_MENU_TOOL_TOGGLE_BUTTON, NULL);
+	void* button = g_object_new(GTK_TYPE_MENU_TOOL_TOGGLE_BUTTON, nullptr);
 
 	if (label)
 	{
@@ -458,10 +461,10 @@ gtk_menu_tool_toggle_button_new(GtkWidget* icon_widget, const gchar* label)
 GtkToolItem*
 gtk_menu_tool_toggle_button_new_from_stock(const gchar* stock_id)
 {
-	g_return_val_if_fail (stock_id != NULL, NULL);
+	g_return_val_if_fail (stock_id != nullptr, nullptr);
 
 	void* button = g_object_new(GTK_TYPE_MENU_TOOL_TOGGLE_BUTTON,
-								"stock-id", stock_id, NULL);
+								"stock-id", stock_id, nullptr);
 
 	return GTK_TOOL_ITEM(button);
 }
@@ -475,9 +478,9 @@ static int menu_deactivate_cb(GtkMenuShell* menu_shell,
 {
 	GtkMenuToolToggleButtonPrivate* priv = button->priv;
 
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (priv->arrow_button), FALSE);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (priv->arrow_button), false);
 
-	return TRUE;
+	return true;
 }
 
 static void menu_detacher(GtkWidget* widget, GtkMenu* menu)
@@ -487,7 +490,7 @@ static void menu_detacher(GtkWidget* widget, GtkMenu* menu)
 
 	g_return_if_fail (priv->menu == menu);
 
-	priv->menu = NULL;
+	priv->menu = nullptr;
 }
 
 /**
@@ -496,7 +499,7 @@ static void menu_detacher(GtkWidget* widget, GtkMenu* menu)
  * @menu: the #GtkMenu associated with #GtkMenuToolButton
  *
  * Sets the #GtkMenu that is popped up when the user clicks on the arrow.
- * If @menu is NULL, the arrow button becomes insensitive.
+ * If @menu is nullptr, the arrow button becomes insensitive.
  *
  * Since: 2.6
  **/
@@ -506,7 +509,7 @@ void gtk_menu_tool_toggle_button_set_menu(GtkMenuToolToggleButton* button,
 	GtkMenuToolToggleButtonPrivate* priv;
 
 	g_return_if_fail (GTK_IS_MENU_TOOL_TOGGLE_BUTTON (button));
-	g_return_if_fail (GTK_IS_MENU (menu) || menu == NULL);
+	g_return_if_fail (GTK_IS_MENU (menu) || menu == nullptr);
 
 	priv = button->priv;
 
@@ -531,14 +534,14 @@ void gtk_menu_tool_toggle_button_set_menu(GtkMenuToolToggleButton* button,
 		{
 			gtk_menu_attach_to_widget(priv->menu, GTK_WIDGET(button), menu_detacher);
 
-			gtk_widget_set_sensitive(priv->arrow_button, TRUE);
+			gtk_widget_set_sensitive(priv->arrow_button, true);
 
 			g_signal_connect (priv->menu, "deactivate",
 			                  G_CALLBACK (menu_deactivate_cb), button);
 		}
 		else
 		{
-			gtk_widget_set_sensitive(priv->arrow_button, FALSE);
+			gtk_widget_set_sensitive(priv->arrow_button, false);
 		}
 	}
 
@@ -558,7 +561,7 @@ void gtk_menu_tool_toggle_button_set_menu(GtkMenuToolToggleButton* button,
 GtkWidget*
 gtk_menu_tool_toggle_button_get_menu(GtkMenuToolToggleButton* button)
 {
-	g_return_val_if_fail(GTK_IS_MENU_TOOL_TOGGLE_BUTTON(button), NULL);
+	g_return_val_if_fail(GTK_IS_MENU_TOOL_TOGGLE_BUTTON(button), nullptr);
 
 	return GTK_WIDGET(button->priv->menu);
 }

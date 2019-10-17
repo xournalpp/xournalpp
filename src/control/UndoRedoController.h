@@ -32,17 +32,15 @@ public:
 	static void redo(Control* control);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Controller
 	 */
-	Control* control = NULL;
+	Control* control = nullptr;
 
 	/**
 	 * Layer of the selection before change
 	 */
-	Layer* layer = NULL;
+	Layer* layer = nullptr;
 
 	/**
 	 * Selected elements

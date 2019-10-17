@@ -10,8 +10,6 @@
 RecognizerUndoAction::RecognizerUndoAction(PageRef page, Layer* layer, Stroke* original, Stroke* recognized)
  : UndoAction("RecognizerUndoAction")
 {
-	XOJ_INIT_TYPE(RecognizerUndoAction);
-
 	this->page = page;
 	this->layer = layer;
 	this->recognized = recognized;
@@ -21,8 +19,6 @@ RecognizerUndoAction::RecognizerUndoAction(PageRef page, Layer* layer, Stroke* o
 
 RecognizerUndoAction::~RecognizerUndoAction()
 {
-	XOJ_CHECK_TYPE(RecognizerUndoAction);
-
 	if (this->undone)
 	{
 		delete this->recognized;
@@ -34,16 +30,12 @@ RecognizerUndoAction::~RecognizerUndoAction()
 			delete s;
 		}
 	}
-	this->recognized = NULL;
+	this->recognized = nullptr;
 	this->original.clear();
-
-	XOJ_RELEASE_TYPE(RecognizerUndoAction);
 }
 
 void RecognizerUndoAction::addSourceElement(Stroke* s)
 {
-	XOJ_CHECK_TYPE(RecognizerUndoAction);
-	
 	for (Stroke* s2 : this->original)
 	{
 		if (s2 == s)
@@ -59,8 +51,6 @@ void RecognizerUndoAction::addSourceElement(Stroke* s)
 
 bool RecognizerUndoAction::undo(Control* control)
 {
-	XOJ_CHECK_TYPE(RecognizerUndoAction);
-
 	int pos = this->layer->removeElement(this->recognized, false);
 	this->page->fireElementChanged(this->recognized);
 
@@ -78,8 +68,6 @@ bool RecognizerUndoAction::undo(Control* control)
 
 bool RecognizerUndoAction::redo(Control* control)
 {
-	XOJ_CHECK_TYPE(RecognizerUndoAction);
-
 	int pos = 0;
 	for (Stroke* s : this->original)
 	{
@@ -96,8 +84,6 @@ bool RecognizerUndoAction::redo(Control* control)
 
 string RecognizerUndoAction::getText()
 {
-	XOJ_CHECK_TYPE(RecognizerUndoAction);
-
 	return _("Stroke recognizer");
 }
 

@@ -43,11 +43,9 @@ private:
 	static void spinValueChangedCb(GtkSpinButton* spinbutton, FormatDialog* dlg);
 
 private:
-	XOJ_TYPE_ATTRIB;
+	Settings* settings = nullptr;
 
-	Settings* settings = NULL;
-
-	GList* list = NULL;
+	GList* list = nullptr;
 
 	Orientation orientation = ORIENTATION_NOT_DEFINED;
 	double scale = 0;

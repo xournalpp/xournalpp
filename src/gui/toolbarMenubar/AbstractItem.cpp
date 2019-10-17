@@ -5,8 +5,6 @@ AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action,
    id(id),
    handler(handler)
 {
-	XOJ_INIT_TYPE(AbstractItem);
-
 	ActionEnabledListener::registerListener(handler);
 	ActionSelectionListener::registerListener(handler);
 
@@ -18,15 +16,11 @@ AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action,
 
 AbstractItem::~AbstractItem()
 {
-	XOJ_CHECK_TYPE(AbstractItem);
-
 	if (this->menuitem)
 	{
 		g_signal_handler_disconnect(this->menuitem, menuSignalHandler);
 		g_object_unref(G_OBJECT(this->menuitem));
 	}
-
-	XOJ_RELEASE_TYPE(AbstractItem);
 }
 
 /**
@@ -34,9 +28,7 @@ AbstractItem::~AbstractItem()
  */
 void AbstractItem::setMenuItem(GtkWidget* menuitem)
 {
-	XOJ_CHECK_TYPE(AbstractItem);
-
-	if (this->menuitem != NULL)
+	if (this->menuitem != nullptr)
 	{
 		g_warning("The menu item %i / %s has already a menu item registered!", action, ActionType_toString(action).c_str());
 		return;
@@ -45,8 +37,7 @@ void AbstractItem::setMenuItem(GtkWidget* menuitem)
 	menuSignalHandler = g_signal_connect(menuitem, "activate", G_CALLBACK(
 			+[](GtkMenuItem* menuitem, AbstractItem* self)
 			{
-				XOJ_CHECK_TYPE_OBJ(self, AbstractItem);
-				self->activated(NULL, menuitem, NULL);
+	self->activated(nullptr, menuitem, nullptr);
 			}), this);
 
 	g_object_ref(G_OBJECT(menuitem));
@@ -60,8 +51,6 @@ void AbstractItem::setMenuItem(GtkWidget* menuitem)
 
 void AbstractItem::actionSelected(ActionGroup group, ActionType action)
 {
-	XOJ_CHECK_TYPE(AbstractItem);
-
 	if (this->group != group)
 	{
 		return;
@@ -88,13 +77,10 @@ void AbstractItem::actionSelected(ActionGroup group, ActionType action)
  */
 void AbstractItem::selected(ActionGroup group, ActionType action)
 {
-	XOJ_CHECK_TYPE(AbstractItem);
 }
 
 void AbstractItem::actionEnabledAction(ActionType action, bool enabled)
 {
-	XOJ_CHECK_TYPE(AbstractItem);
-
 	if (this->action != action)
 	{
 		return;
@@ -110,8 +96,6 @@ void AbstractItem::actionEnabledAction(ActionType action, bool enabled)
 
 void AbstractItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton)
 {
-	XOJ_CHECK_TYPE(AbstractItem);
-
 	bool selected = true;
 
 	if (menuitem)
@@ -166,15 +150,11 @@ void AbstractItem::actionPerformed(ActionType action, ActionGroup group,
 
 string AbstractItem::getId()
 {
-	XOJ_CHECK_TYPE(AbstractItem);
-
 	return id;
 }
 
 void AbstractItem::setTmpDisabled(bool disabled)
 {
-	XOJ_CHECK_TYPE(AbstractItem);
-
 	bool ena = false;
 	if (disabled)
 	{
@@ -194,19 +174,14 @@ void AbstractItem::setTmpDisabled(bool disabled)
 
 void AbstractItem::enable(bool enabled)
 {
-	XOJ_CHECK_TYPE(AbstractItem);
 }
 
 bool AbstractItem::isEnabled()
 {
-	XOJ_CHECK_TYPE(AbstractItem);
-
 	return this->enabled;
 }
 
 ActionType AbstractItem::getActionType()
 {
-	XOJ_CHECK_TYPE(AbstractItem);
-
 	return this->action;
 }

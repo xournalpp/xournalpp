@@ -29,7 +29,5 @@ public:
 	virtual void writeOut(OutputStream* out);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	GList* points;
 };

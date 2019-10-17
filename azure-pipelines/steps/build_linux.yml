@@ -11,6 +11,8 @@ steps:
       mkdir build
     displayName: 'Create build directory'
   - bash: |
+      export CXX=g++-8
+      export CC=gcc-8
       cmake -GNinja .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type}} ${{ parameters.cmake_flags }}
       cmake --build . ${{ parameters.cmake_commands}}
     workingDirectory: ./build

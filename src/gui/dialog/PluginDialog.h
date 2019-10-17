@@ -31,8 +31,6 @@ private:
 	void saveSettings();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Settings* settings;
 
 	vector<PluginDialogEntry*> plugins;

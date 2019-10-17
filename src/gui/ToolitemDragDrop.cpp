@@ -36,7 +36,7 @@ void ToolitemDragDrop::attachMetadata(GtkWidget* w, int id, ToolItemType type)
 	ToolItemDragDropData* d = g_new(ToolItemDragDropData, 1);
 	d->identify = ToolItemDragDropData_Identify;
 	d->id = id;
-	d->item = NULL;
+	d->item = nullptr;
 	d->type = type;
 	d->color = 0;
 
@@ -93,12 +93,12 @@ bool ToolitemDragDrop::isToolItemEnabled(ToolItemDragDropData* d)
 		return true;
 	}
 
-	if (d->type == TOOL_ITEM_COLOR && d->item == NULL)
+	if (d->type == TOOL_ITEM_COLOR && d->item == nullptr)
 	{
 		return true;
 	}
 
-	g_return_val_if_fail(d->item != NULL, true);
+	g_return_val_if_fail(d->item != nullptr, true);
 
 	return d->item->isEnabled();
 }
@@ -107,18 +107,18 @@ ToolItemDragDropData* ToolitemDragDrop::metadataGetMetadata(GtkWidget* w)
 {
 	const int* ptr = (const int*) g_object_get_data(G_OBJECT(w), ATTACH_DRAG_DROP_DATA);
 
-	if (ptr == NULL)
+	if (ptr == nullptr)
 	{
 		g_warning("ToolitemDragDrop::metadataGetMetadata Could not get Metadata %s from %s\n", ATTACH_DRAG_DROP_DATA,
 				  g_type_name(G_TYPE_FROM_INSTANCE(w)));
-		return NULL;
+		return nullptr;
 	}
 
 	if (!checkToolItemDragDropData((ToolItemDragDropData*) ptr))
 	{
 		g_warning("ToolitemDragDrop::metadataGetMetadata data is not an instance of ToolItemDragDropData!");
 
-		return NULL;
+		return nullptr;
 	}
 
 	return (ToolItemDragDropData*) ptr;

@@ -8,20 +8,14 @@
 
 KeyboardInputHandler::KeyboardInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)
 {
-	XOJ_INIT_TYPE(KeyboardInputHandler);
 }
 
 KeyboardInputHandler::~KeyboardInputHandler()
 {
-	XOJ_CHECK_TYPE(KeyboardInputHandler);
-
-	XOJ_RELEASE_TYPE(KeyboardInputHandler);
 }
 
 bool KeyboardInputHandler::handleImpl(InputEvent* event)
 {
-	XOJ_CHECK_TYPE(KeyboardInputHandler);
-
 	auto keyEvent = (GdkEventKey*) event->sourceEvent;
 	GtkXournal* xournal = inputContext->getXournal();
 

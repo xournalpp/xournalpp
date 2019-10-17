@@ -40,19 +40,19 @@ public:
 public:
 	/**
 	 * Sets the tool size for pen or eraser, returs an undo action
-	 * (or NULL if nothing is done)
+	 * (or nullptr if nothing is done)
 	 */
 	UndoAction* setSize(ToolSize size, const double* thicknessPen, const double* thicknessHilighter, const double* thicknessEraser);
 
 	/**
 	 * Set the color of all elements, return an undo action
-	 * (Or NULL if nothing done, e.g. because there is only an image)
+	 * (Or nullptr if nothing done, e.g. because there is only an image)
 	 */
 	UndoAction* setColor(int color);
 
 	/**
 	 * Sets the font of all containing text elements, return an undo action
-	 * (or NULL if there are no Text elements)
+	 * (or nullptr if there are no Text elements)
 	 */
 	UndoAction* setFont(XojFont& font);
 
@@ -64,7 +64,7 @@ public:
 
 	/**
 	 * Fills the stroke, return an undo action
-	 * (Or NULL if nothing done, e.g. because there is only an image)
+	 * (Or nullptr if nothing done, e.g. because there is only an image)
 	 */
 	UndoAction* setFill(int alphaPen, int alphaHighligther);
 
@@ -144,8 +144,6 @@ public:
 	void readSerialized(ObjectInputStream& in);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * The original size to calculate the zoom factor for reascaling the items
 	 */

@@ -6,7 +6,6 @@
 
 AudioController::AudioController(Settings* settings, Control* control)
 {
-	XOJ_INIT_TYPE(AudioController);
 	this->settings = settings;
 	this->control = control;
 	this->audioRecorder = new AudioRecorder(settings);
@@ -15,21 +14,15 @@ AudioController::AudioController(Settings* settings, Control* control)
 
 AudioController::~AudioController()
 {
-	XOJ_CHECK_TYPE(AudioController);
-
 	delete this->audioRecorder;
 	this->audioRecorder = nullptr;
 
 	delete this->audioPlayer;
 	this->audioPlayer = nullptr;
-
-	XOJ_RELEASE_TYPE(AudioController);
 }
 
 bool AudioController::startRecording()
 {
-	XOJ_CHECK_TYPE(AudioController);
-
 	if (!this->isRecording())
 	{
 		if (getAudioFolder().isEmpty())
@@ -67,8 +60,6 @@ bool AudioController::startRecording()
 
 bool AudioController::stopRecording()
 {
-	XOJ_CHECK_TYPE(AudioController);
-
 	if (this->audioRecorder->isRecording())
 	{
 		audioFilename = "";
@@ -83,22 +74,16 @@ bool AudioController::stopRecording()
 
 bool AudioController::isRecording()
 {
-	XOJ_CHECK_TYPE(AudioController);
-
 	return this->audioRecorder->isRecording();
 }
 
 bool AudioController::isPlaying()
 {
-	XOJ_CHECK_TYPE(AudioController);
-
 	return this->audioPlayer->isPlaying();
 }
 
 bool AudioController::startPlayback(string filename, unsigned int timestamp)
 {
-	XOJ_CHECK_TYPE(AudioController);
-
 	this->audioPlayer->stop();
 	bool status = this->audioPlayer->start(std::move(filename), timestamp);
 	if (status)
@@ -110,8 +95,6 @@ bool AudioController::startPlayback(string filename, unsigned int timestamp)
 
 void AudioController::pausePlayback()
 {
-	XOJ_CHECK_TYPE(AudioController);
-
 	this->control->getWindow()->getToolMenuHandler()->setAudioPlaybackPaused(true);
 
 	this->audioPlayer->pause();
@@ -119,8 +102,6 @@ void AudioController::pausePlayback()
 
 void AudioController::continuePlayback()
 {
-	XOJ_CHECK_TYPE(AudioController);
-
 	this->control->getWindow()->getToolMenuHandler()->setAudioPlaybackPaused(false);
 
 	this->audioPlayer->play();
@@ -128,23 +109,17 @@ void AudioController::continuePlayback()
 
 void AudioController::stopPlayback()
 {
-	XOJ_CHECK_TYPE(AudioController);
-
 	this->control->getWindow()->getToolMenuHandler()->disableAudioPlaybackButtons();
 	this->audioPlayer->stop();
 }
 
 string AudioController::getAudioFilename()
 {
-	XOJ_CHECK_TYPE(AudioController);
-
 	return this->audioFilename;
 }
 
 Path AudioController::getAudioFolder()
 {
-	XOJ_CHECK_TYPE(AudioController);
-
 	string af = this->settings->getAudioFolder();
 
 	if (af.length() < 8)
@@ -161,21 +136,15 @@ Path AudioController::getAudioFolder()
 
 size_t AudioController::getStartTime()
 {
-	XOJ_CHECK_TYPE(AudioController);
-
 	return this->timestamp;
 }
 
 vector<DeviceInfo> AudioController::getOutputDevices()
 {
-	XOJ_CHECK_TYPE(AudioController);
-
 	return this->audioPlayer->getOutputDevices();
 }
 
 vector<DeviceInfo> AudioController::getInputDevices()
 {
-	XOJ_CHECK_TYPE(AudioController);
-
 	return this->audioRecorder->getInputDevices();
 }

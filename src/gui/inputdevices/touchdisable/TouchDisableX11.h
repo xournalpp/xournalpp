@@ -11,26 +11,33 @@
 
 #pragma once
 
-#include <XournalType.h>
-
-#include "TouchDisableInterface.h"
-
+#ifdef __unix__
 #define X11_ENABLED
+#endif
 
-#ifdef WIN32
+#ifdef __APPLE__
 #undef X11_ENABLED
 #endif
-#ifdef __APPLE__
+
+#ifdef _WIN32
+#undef X11_ENABLED
+#endif
+
+#ifdef _WIN64
 #undef X11_ENABLED
 #endif
 
 #ifdef X11_ENABLED
 
+#include "TouchDisableInterface.h"
+
+#include "XournalType.h"
+
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/extensions/XInput.h>
 
-class TouchDisableX11 : public TouchDisableInterface
+class TouchDisableX11: public TouchDisableInterface
 {
 public:
 	TouchDisableX11();
@@ -42,12 +49,10 @@ public:
 	virtual void init();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * X11 Display
 	 */
-	Display* display = NULL;
+	Display* display = nullptr;
 
 	/**
 	 * Touch device ID
@@ -57,12 +62,12 @@ private:
 	/**
 	 * Touch device
 	 */
-	XDeviceInfo* touch = NULL;
+	XDeviceInfo* touch = nullptr;
 
 	/**
 	 * Touch device
 	 */
-	XDevice* touchdev = NULL;
+	XDevice* touchdev = nullptr;
 
 	/**
 	 * Enable flag

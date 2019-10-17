@@ -6,24 +6,16 @@
 BlockingJob::BlockingJob(Control* control, string name)
  : control(control)
 {
-	XOJ_INIT_TYPE(BlockingJob);
-
 	control->block(name);
 }
 
 BlockingJob::~BlockingJob()
 {
-	XOJ_CHECK_TYPE(BlockingJob);
-
-	this->control = NULL;
-
-	XOJ_RELEASE_TYPE(BlockingJob);
+	this->control = nullptr;
 }
 
 void BlockingJob::execute()
 {
-	XOJ_CHECK_TYPE(BlockingJob);
-
 	this->run();
 
 	g_idle_add((GSourceFunc) finished, this->control);

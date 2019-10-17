@@ -21,32 +21,21 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
    settings(settings),
    pageMenu(new PageTypeMenu(types, settings, true, false))
 {
-	XOJ_INIT_TYPE(PageTemplateDialog);
-
 	model.parse(settings->getPageTemplate());
 
 	pageMenu->setListener(this);
 
 	g_signal_connect(get("btChangePaperSize"), "clicked", G_CALLBACK(
 		+[](GtkToggleButton* togglebutton, PageTemplateDialog* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, PageTemplateDialog);
-			self->showPageSizeDialog();
-		}), this);
+		{ self->showPageSizeDialog(); }), this);
 
 	g_signal_connect(get("btLoad"), "clicked", G_CALLBACK(
 		+[](GtkToggleButton* togglebutton, PageTemplateDialog* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, PageTemplateDialog);
-			self->loadFromFile();
-		}), this);
+		{ self->loadFromFile(); }), this);
 
 	g_signal_connect(get("btSave"), "clicked", G_CALLBACK(
 		+[](GtkToggleButton* togglebutton, PageTemplateDialog* self)
-		{
-			XOJ_CHECK_TYPE_OBJ(self, PageTemplateDialog);
-			self->saveToFile();
-		}), this);
+		{ self->saveToFile(); }), this);
 
 	popupMenuButton = new PopupMenuButton(get("btBackgroundDropdown"), pageMenu->getMenu());
 
@@ -55,20 +44,14 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
 
 PageTemplateDialog::~PageTemplateDialog()
 {
-	XOJ_CHECK_TYPE(PageTemplateDialog);
-
 	delete pageMenu;
-	pageMenu = NULL;
+	pageMenu = nullptr;
 	delete popupMenuButton;
-	popupMenuButton = NULL;
-
-	XOJ_RELEASE_TYPE(PageTemplateDialog);
+	popupMenuButton = nullptr;
 }
 
 void PageTemplateDialog::updateDataFromModel()
 {
-	XOJ_CHECK_TYPE(PageTemplateDialog);
-
 	GdkRGBA color = Util::rgb_to_GdkRGBA(model.getBackgroundColor());
 	gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("cbBackgroundButton")), &color);
 
@@ -82,8 +65,6 @@ void PageTemplateDialog::updateDataFromModel()
 
 void PageTemplateDialog::changeCurrentPageBackground(PageTypeInfo* info)
 {
-	XOJ_CHECK_TYPE(PageTemplateDialog);
-
 	model.setBackgroundType(info->page);
 
 	gtk_label_set_text(GTK_LABEL(get("lbBackgroundType")), info->name.c_str());
@@ -91,8 +72,6 @@ void PageTemplateDialog::changeCurrentPageBackground(PageTypeInfo* info)
 
 void PageTemplateDialog::saveToModel()
 {
-	XOJ_CHECK_TYPE(PageTemplateDialog);
-
 	model.setCopyLastPageSettings(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPage"))));
 	model.setCopyLastPageSize(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPageSize"))));
 
@@ -103,13 +82,11 @@ void PageTemplateDialog::saveToModel()
 
 void PageTemplateDialog::saveToFile()
 {
-	XOJ_CHECK_TYPE(PageTemplateDialog);
-
 	saveToModel();
 
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Save File"), GTK_WINDOW(this->getWindow()),
 													GTK_FILE_CHOOSER_ACTION_SAVE, _("_Cancel"), GTK_RESPONSE_CANCEL,
-													_("_Save"), GTK_RESPONSE_OK, NULL);
+													_("_Save"), GTK_RESPONSE_OK, nullptr);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
@@ -124,7 +101,7 @@ void PageTemplateDialog::saveToFile()
 	}
 
 
-	time_t curtime = time(NULL);
+	time_t curtime = time(nullptr);
 	char stime[128];
 	strftime(stime, sizeof(stime), "%F-Template-%H-%M.xopt", localtime(&curtime));
 	string saveFilename = stime;
@@ -158,8 +135,6 @@ void PageTemplateDialog::saveToFile()
 
 void PageTemplateDialog::loadFromFile()
 {
-	XOJ_CHECK_TYPE(PageTemplateDialog);
-
 	XojOpenDlg dlg(GTK_WINDOW(this->getWindow()), this->settings);
 	Path filename = dlg.showOpenTemplateDialog();
 
@@ -175,8 +150,6 @@ void PageTemplateDialog::loadFromFile()
 
 void PageTemplateDialog::updatePageSize()
 {
-	XOJ_CHECK_TYPE(PageTemplateDialog);
-
 	const FormatUnits* formatUnit = &XOJ_UNITS[settings->getSizeUnitIndex()];
 
 	char buffer[64];
@@ -194,8 +167,6 @@ void PageTemplateDialog::updatePageSize()
 
 void PageTemplateDialog::showPageSizeDialog()
 {
-	XOJ_CHECK_TYPE(PageTemplateDialog);
-
 	FormatDialog* dlg = new FormatDialog(getGladeSearchPath(), settings, model.getPageWidth(), model.getPageHeight());
 	dlg->show(GTK_WINDOW(this->window));
 
@@ -218,15 +189,11 @@ void PageTemplateDialog::showPageSizeDialog()
  */
 bool PageTemplateDialog::isSaved()
 {
-	XOJ_CHECK_TYPE(PageTemplateDialog);
-
 	return saved;
 }
 
 void PageTemplateDialog::show(GtkWindow* parent)
 {
-	XOJ_CHECK_TYPE(PageTemplateDialog);
-
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 	int ret = gtk_dialog_run(GTK_DIALOG(this->window));
 

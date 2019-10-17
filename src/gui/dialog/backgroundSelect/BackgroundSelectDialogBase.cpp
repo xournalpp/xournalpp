@@ -10,15 +10,13 @@ BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSea
    settings(settings),
    doc(doc)
 {
-	XOJ_INIT_TYPE(BackgroundSelectDialogBase);
-
-	this->layoutContainer = gtk_layout_new(NULL, NULL);
+	this->layoutContainer = gtk_layout_new(nullptr, nullptr);
 	gtk_widget_show(this->layoutContainer);
 	this->scrollPreview = get("scrollContents");
 	gtk_container_add(GTK_CONTAINER(scrollPreview), layoutContainer);
 
 	gtk_widget_set_events(this->layoutContainer, GDK_EXPOSURE_MASK);
-	g_signal_connect(this->layoutContainer, "draw", G_CALLBACK(Util::paintBackgroundWhite), NULL);
+	g_signal_connect(this->layoutContainer, "draw", G_CALLBACK(Util::paintBackgroundWhite), nullptr);
 
 	g_signal_connect(this->window, "size-allocate", G_CALLBACK(sizeAllocate), this);
 	gtk_window_set_default_size(GTK_WINDOW(this->window), 800, 600);
@@ -26,21 +24,15 @@ BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSea
 
 BackgroundSelectDialogBase::~BackgroundSelectDialogBase()
 {
-	XOJ_CHECK_TYPE(BackgroundSelectDialogBase);
-
 	for (BaseElementView* e : elements)
 	{
 		delete e;
 	}
 	elements.clear();
-
-	XOJ_RELEASE_TYPE(BackgroundSelectDialogBase);
 }
 
 void BackgroundSelectDialogBase::sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, BackgroundSelectDialogBase* dlg)
 {
-	XOJ_CHECK_TYPE_OBJ(dlg, BackgroundSelectDialogBase);
-
 	GtkAllocation alloc = { 0 };
 	gtk_widget_get_allocation(dlg->scrollPreview, &alloc);
 	if (dlg->lastWidth == alloc.width)
@@ -53,15 +45,11 @@ void BackgroundSelectDialogBase::sizeAllocate(GtkWidget* widget, GtkRequisition*
 
 Settings* BackgroundSelectDialogBase::getSettings()
 {
-	XOJ_CHECK_TYPE(BackgroundSelectDialogBase);
-
 	return this->settings;
 }
 
 void BackgroundSelectDialogBase::layout()
 {
-	XOJ_CHECK_TYPE(BackgroundSelectDialogBase);
-
 	double x = 0;
 	double y = 0;
 	double height = 0;
@@ -79,7 +67,7 @@ void BackgroundSelectDialogBase::layout()
 
 		if (x + p->getWidth() > alloc.width)
 		{
-			width = MAX(width, x);
+			width = std::max(width, x);
 			y += height;
 			x = 0;
 			height = 0;
@@ -87,7 +75,7 @@ void BackgroundSelectDialogBase::layout()
 
 		gtk_layout_move(GTK_LAYOUT(this->layoutContainer), p->getWidget(), x, y);
 
-		height = MAX(height, p->getHeight());
+		height = std::max(height, (double) p->getHeight()); //TODO: page height should be double as well
 
 		x += p->getWidth();
 	}
@@ -97,8 +85,6 @@ void BackgroundSelectDialogBase::layout()
 
 void BackgroundSelectDialogBase::show(GtkWindow* parent)
 {
-	XOJ_CHECK_TYPE(BackgroundSelectDialogBase);
-
 	for (BaseElementView* e : elements)
 	{
 		gtk_layout_put(GTK_LAYOUT(this->layoutContainer), e->getWidget(), 0, 0);
@@ -118,8 +104,6 @@ void BackgroundSelectDialogBase::show(GtkWindow* parent)
 
 void BackgroundSelectDialogBase::setSelected(int selected)
 {
-	XOJ_CHECK_TYPE(BackgroundSelectDialogBase);
-
 	if (this->selected == selected)
 	{
 		return;

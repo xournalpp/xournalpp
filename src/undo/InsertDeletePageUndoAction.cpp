@@ -10,8 +10,6 @@
 InsertDeletePageUndoAction::InsertDeletePageUndoAction(PageRef page, int pagePos, bool inserted)
  : UndoAction("InsertDeletePageUndoAction")
 {
-	XOJ_INIT_TYPE(InsertDeletePageUndoAction);
-
 	this->inserted = inserted;
 	this->page = page;
 	this->pagePos = pagePos;
@@ -19,17 +17,11 @@ InsertDeletePageUndoAction::InsertDeletePageUndoAction(PageRef page, int pagePos
 
 InsertDeletePageUndoAction::~InsertDeletePageUndoAction()
 {
-	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
-
-	this->page = NULL;
-
-	XOJ_RELEASE_TYPE(InsertDeletePageUndoAction);
+	this->page = nullptr;
 }
 
 bool InsertDeletePageUndoAction::undo(Control* control)
 {
-	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
-
 	if (this->inserted)
 	{
 		return deletePage(control);
@@ -42,8 +34,6 @@ bool InsertDeletePageUndoAction::undo(Control* control)
 
 bool InsertDeletePageUndoAction::redo(Control* control)
 {
-	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
-
 	if (this->inserted)
 	{
 		return insertPage(control);
@@ -56,8 +46,6 @@ bool InsertDeletePageUndoAction::redo(Control* control)
 
 bool InsertDeletePageUndoAction::insertPage(Control* control)
 {
-	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
-
 	Document* doc = control->getDocument();
 
 	//just in case there would be a hang here,
@@ -82,8 +70,6 @@ bool InsertDeletePageUndoAction::insertPage(Control* control)
 
 bool InsertDeletePageUndoAction::deletePage(Control* control)
 {
-	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
-
 	Document* doc = control->getDocument();
 
 	//in order to fix the hang, we need to get out
@@ -118,8 +104,6 @@ bool InsertDeletePageUndoAction::deletePage(Control* control)
 
 string InsertDeletePageUndoAction::getText()
 {
-	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
-
 	if (this->inserted)
 	{
 		return _("Page inserted");

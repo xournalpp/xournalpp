@@ -17,7 +17,7 @@ void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, 
 	GtkTreeIter iter;
 
 	gtk_list_store_append(typeModel, &iter);
-	GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon, 24, (GtkIconLookupFlags) 0, NULL);
+	GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon, 24, (GtkIconLookupFlags) 0, nullptr);
 	gtk_list_store_set(typeModel, &iter, 0, pixbuf, -1);
 	gtk_list_store_set(typeModel, &iter, 1, name, 2, action, -1);
 }
@@ -25,8 +25,6 @@ void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, 
 ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, int button, bool withDevice)
  : GladeGui(gladeSearchPath, "settingsButtonConfig.glade", "offscreenwindow")
 {
-	XOJ_INIT_TYPE(ButtonConfigGui);
-
 	this->settings = settings;
 	this->button = button;
 	this->withDevice = withDevice;
@@ -77,11 +75,11 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 
 	GtkCellRenderer* renderer = gtk_cell_renderer_pixbuf_new();
 	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(this->cbTool), renderer, false);
-	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "pixbuf", 0, NULL);
+	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "pixbuf", 0, nullptr);
 
 	renderer = gtk_cell_renderer_text_new();
 	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(this->cbTool), renderer, true);
-	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "text", 1, NULL);
+	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "text", 1, nullptr);
 
 	this->cbThickness = get("cbThickness");
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Thickness - don't change"));
@@ -119,14 +117,10 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 
 ButtonConfigGui::~ButtonConfigGui()
 {
-	XOJ_CHECK_TYPE(ButtonConfigGui);
-	XOJ_RELEASE_TYPE(ButtonConfigGui);
 }
 
 void ButtonConfigGui::loadSettings()
 {
-	XOJ_CHECK_TYPE(ButtonConfigGui);
-
 	ButtonConfig* cfg = settings->getButtonConfig(button);
 
 	GtkTreeModel* model = gtk_combo_box_get_model(GTK_COMBO_BOX(cbTool));
@@ -226,8 +220,6 @@ void ButtonConfigGui::show(GtkWindow*)
 
 void ButtonConfigGui::saveSettings()
 {
-	XOJ_CHECK_TYPE(ButtonConfigGui);
-
 	GtkTreeIter iter;
 	gtk_combo_box_get_active_iter(GTK_COMBO_BOX(cbTool), &iter);
 
@@ -295,14 +287,11 @@ void ButtonConfigGui::saveSettings()
 
 void ButtonConfigGui::cbSelectCallback(GtkComboBox*, ButtonConfigGui* gui)
 {
-	XOJ_CHECK_TYPE_OBJ(gui, ButtonConfigGui);
 	gui->enableDisableTools();
 }
 
 void ButtonConfigGui::enableDisableTools()
 {
-	XOJ_CHECK_TYPE(ButtonConfigGui);
-
 	GtkTreeIter iter;
 	gtk_combo_box_get_active_iter(GTK_COMBO_BOX(cbTool), &iter);
 	GtkTreeModel* model = gtk_combo_box_get_model(GTK_COMBO_BOX(cbTool));

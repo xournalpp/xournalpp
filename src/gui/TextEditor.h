@@ -89,8 +89,6 @@ private:
 	void contentsChanged(bool forceCreateUndoAction = false);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	XojPageView* gui = nullptr;
 	GtkWidget* widget = nullptr;
 	GtkWidget* textWidget = nullptr;

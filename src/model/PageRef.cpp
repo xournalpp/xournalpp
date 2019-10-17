@@ -5,12 +5,10 @@
 
 PageRef::PageRef()
 {
-	XOJ_INIT_TYPE(PageRef);
 }
 
 PageRef::PageRef(const PageRef& ref)
 {
-	XOJ_INIT_TYPE(PageRef);
 	this->page = ref.page;
 	if (this->page)
 	{
@@ -20,7 +18,6 @@ PageRef::PageRef(const PageRef& ref)
 
 PageRef::PageRef(XojPage* page)
 {
-	XOJ_INIT_TYPE(PageRef);
 	this->page = page;
 	if (this->page)
 	{
@@ -30,15 +27,11 @@ PageRef::PageRef(XojPage* page)
 
 PageRef::~PageRef()
 {
-	XOJ_CHECK_TYPE(PageRef);
-
 	if (this->page)
 	{
 		this->page->unreference();
-		this->page = NULL;
+		this->page = nullptr;
 	}
-
-	XOJ_RELEASE_TYPE(PageRef);
 }
 
 void PageRef::operator=(const PageRef& ref)
@@ -61,37 +54,29 @@ void PageRef::operator=(XojPage* page)
 
 XojPage& PageRef::operator*()
 {
-	XOJ_CHECK_TYPE(PageRef);
-
 	return *(this->page);
 }
 
 XojPage* PageRef::operator->()
 {
-	XOJ_CHECK_TYPE(PageRef);
-
 	return this->page;
 }
 
 const XojPage& PageRef::operator*() const
 {
-	XOJ_CHECK_TYPE(PageRef);
-
 	return *(this->page);
 }
 
 const XojPage* PageRef::operator->() const
 {
-	XOJ_CHECK_TYPE(PageRef);
-
 	return this->page;
 }
 
 PageRef PageRef::clone()
 {
-	if (this->page == NULL)
+	if (this->page == nullptr)
 	{
-		return PageRef(NULL);
+		return PageRef(nullptr);
 	}
 	else
 	{
@@ -101,21 +86,15 @@ PageRef PageRef::clone()
 
 bool PageRef::isValid()
 {
-	XOJ_CHECK_TYPE(PageRef);
-
-	return this->page != NULL;
+	return this->page != nullptr;
 }
 
 PageRef::operator XojPage* ()
 {
-	XOJ_CHECK_TYPE(PageRef);
-
 	return this->page;
 }
 
 bool PageRef::operator==(const PageRef& ref)
 {
-	XOJ_CHECK_TYPE(PageRef);
-
 	return this->page == ref.page;
 }

@@ -2,8 +2,6 @@
 
 Tool::Tool(string name, ToolType type, int color, int capabilities, double* thickness)
 {
-	XOJ_INIT_TYPE(Tool);
-
 	this->name = name;
 	this->type = type;
 	this->thickness = thickness;
@@ -15,25 +13,17 @@ Tool::Tool(string name, ToolType type, int color, int capabilities, double* thic
 
 Tool::~Tool()
 {
-	XOJ_CHECK_TYPE(Tool);
-
 	delete[] this->thickness;
-	this->thickness = NULL;
-
-	XOJ_RELEASE_TYPE(Tool);
+	this->thickness = nullptr;
 }
 
 string Tool::getName()
 {
-	XOJ_CHECK_TYPE(Tool);
-
 	return this->name;
 }
 
 void Tool::setCapability(int capability, bool enabled)
 {
-	XOJ_CHECK_TYPE(Tool);
-
 	if (enabled)
 	{
 		this->capabilities |= capability;
@@ -46,8 +36,6 @@ void Tool::setCapability(int capability, bool enabled)
 
 bool Tool::hasCapability(ToolCapabilities cap)
 {
-	XOJ_CHECK_TYPE(Tool);
-
 	return (this->capabilities & cap) != 0;
 }
 

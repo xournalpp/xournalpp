@@ -8,18 +8,14 @@
 ScrollHandler::ScrollHandler(Control* control)
  : control(control)
 {
-	XOJ_INIT_TYPE(ScrollHandler);
 }
 
 ScrollHandler::~ScrollHandler()
 {
-	XOJ_RELEASE_TYPE(ScrollHandler);
 }
 
 void ScrollHandler::goToPreviousPage()
 {
-	XOJ_CHECK_TYPE(ScrollHandler);
-
 	if (this->control->getWindow())
 	{
 		scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() - 1);
@@ -28,8 +24,6 @@ void ScrollHandler::goToPreviousPage()
 
 void ScrollHandler::goToNextPage()
 {
-	XOJ_CHECK_TYPE(ScrollHandler);
-
 	if (this->control->getWindow())
 	{
 		scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() + 1);
@@ -38,8 +32,6 @@ void ScrollHandler::goToNextPage()
 
 void ScrollHandler::goToLastPage()
 {
-	XOJ_CHECK_TYPE(ScrollHandler);
-
 	if (this->control->getWindow())
 	{
 		scrollToPage(this->control->getDocument()->getPageCount() - 1);
@@ -48,8 +40,6 @@ void ScrollHandler::goToLastPage()
 
 void ScrollHandler::goToFirstPage()
 {
-	XOJ_CHECK_TYPE(ScrollHandler);
-
 	if (this->control->getWindow())
 	{
 		scrollToPage(0);
@@ -58,8 +48,6 @@ void ScrollHandler::goToFirstPage()
 
 void ScrollHandler::scrollToPage(const PageRef& page, double top)
 {
-	XOJ_CHECK_TYPE(ScrollHandler);
-
 	Document* doc = this->control->getDocument();
 
 	doc->lock();
@@ -74,12 +62,10 @@ void ScrollHandler::scrollToPage(const PageRef& page, double top)
 
 void ScrollHandler::scrollToPage(size_t page, double top)
 {
-	XOJ_CHECK_TYPE(ScrollHandler);
-
 	MainWindow* win = this->control->getWindow();
-	if (win == NULL)
+	if (win == nullptr)
 	{
-		g_error("Windows is NULL!");
+		g_error("Windows is nullptr!");
 		return;
 	}
 
@@ -88,8 +74,6 @@ void ScrollHandler::scrollToPage(size_t page, double top)
 
 void ScrollHandler::scrollToSpinPage()
 {
-	XOJ_CHECK_TYPE(ScrollHandler);
-
 	if (!this->control->getWindow())
 	{
 		return;
@@ -105,8 +89,6 @@ void ScrollHandler::scrollToSpinPage()
 
 void ScrollHandler::scrollToAnnotatedPage(bool next)
 {
-	XOJ_CHECK_TYPE(ScrollHandler);
-
 	if (!this->control->getWindow())
 	{
 		return;
@@ -129,8 +111,6 @@ void ScrollHandler::scrollToAnnotatedPage(bool next)
 
 bool ScrollHandler::isPageVisible(size_t page, int* visibleHeight)
 {
-	XOJ_CHECK_TYPE(ScrollHandler);
-
 	if (!this->control->getWindow())
 	{
 		if (visibleHeight)
@@ -145,7 +125,5 @@ bool ScrollHandler::isPageVisible(size_t page, int* visibleHeight)
 
 void ScrollHandler::pageChanged(size_t page)
 {
-	XOJ_CHECK_TYPE(ScrollHandler);
-
 	scrollToSpinPage();
 }

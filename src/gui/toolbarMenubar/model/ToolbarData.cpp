@@ -9,21 +9,16 @@
 ToolbarData::ToolbarData(bool predefined)
  : predefined(predefined)
 {
-	XOJ_INIT_TYPE(ToolbarData);
 }
 
 ToolbarData::ToolbarData(const ToolbarData& data)
 {
-	XOJ_INIT_TYPE(ToolbarData);
-
 	*this = data;
 	this->predefined = false;
 }
 
 void ToolbarData::operator=(const ToolbarData& other)
 {
-	XOJ_CHECK_TYPE(ToolbarData);
-
 	this->id = other.id;
 	this->name = other.name;
 	this->predefined = other.predefined;
@@ -37,65 +32,49 @@ void ToolbarData::operator=(const ToolbarData& other)
 
 ToolbarData::~ToolbarData()
 {
-	XOJ_CHECK_TYPE(ToolbarData);
-
 	for (ToolbarEntry* e : this->contents)
 	{
 		delete e;
 	}
 	contents.clear();
-
-	XOJ_RELEASE_TYPE(ToolbarData);
 }
 
 string ToolbarData::getName()
 {
-	XOJ_CHECK_TYPE(ToolbarData);
-
 	return this->name;
 }
 
 void ToolbarData::setName(string name)
 {
-	XOJ_CHECK_TYPE(ToolbarData);
-
 	this->name = name;
 }
 
 string ToolbarData::getId()
 {
-	XOJ_CHECK_TYPE(ToolbarData);
-
 	return this->id;
 }
 
 void ToolbarData::setId(string id)
 {
-	XOJ_CHECK_TYPE(ToolbarData);
-
 	this->id = id;
 }
 
 bool ToolbarData::isPredefined()
 {
-	XOJ_CHECK_TYPE(ToolbarData);
-
 	return this->predefined;
 }
 
 void ToolbarData::load(GKeyFile* config, const char* group)
 {
-	XOJ_CHECK_TYPE(ToolbarData);
-
 	gsize length = 0;
-	gchar** keys = g_key_file_get_keys(config, group, &length, NULL);
-	if (keys == NULL)
+	gchar** keys = g_key_file_get_keys(config, group, &length, nullptr);
+	if (keys == nullptr)
 	{
 		return;
 	}
 
-	gchar* name = g_key_file_get_locale_string(config, group, "name", NULL, NULL);
-	if (name != NULL)
+	gchar* name = g_key_file_get_locale_string(config, group, "name", nullptr, nullptr);
+	if (name != nullptr)
 	{
 		this->name = name;
 		g_free(name);
@@ -111,7 +90,7 @@ void ToolbarData::load(GKeyFile* config, const char* group)
 		ToolbarEntry* e = new ToolbarEntry();
 		gsize keyLen = 0;
 		e->setName(keys[i]);
-		gchar** list = g_key_file_get_string_list(config, group, keys[i], &keyLen, NULL);
+		gchar** list = g_key_file_get_string_list(config, group, keys[i], &keyLen, nullptr);
 
 		for (gsize x = 0; x < keyLen; x++)
 		{
@@ -128,8 +107,6 @@ void ToolbarData::load(GKeyFile* config, const char* group)
 
 void ToolbarData::saveToKeyFile(GKeyFile* config)
 {
-	XOJ_CHECK_TYPE(ToolbarData);
-
 	string group = getId();
 
 	for (ToolbarEntry* e : this->contents)
@@ -153,8 +130,6 @@ void ToolbarData::saveToKeyFile(GKeyFile* config)
 
 int ToolbarData::insertItem(string toolbar, string item, int position)
 {
-	XOJ_CHECK_TYPE(ToolbarData);
-
 	g_message("%s", FC(FORMAT_STR("ToolbarData::insertItem({1}, {2}, {3});") % toolbar % item % position));
 
 	g_return_val_if_fail(isPredefined() == false, -1);
@@ -182,8 +157,6 @@ int ToolbarData::insertItem(string toolbar, string item, int position)
 
 bool ToolbarData::removeItemByID(string toolbar, int id)
 {
-	XOJ_CHECK_TYPE(ToolbarData);
-
 	g_return_val_if_fail(isPredefined() == false, false);
 
 	for (ToolbarEntry* e : contents)

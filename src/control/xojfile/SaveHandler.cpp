@@ -21,46 +21,38 @@
 
 SaveHandler::SaveHandler()
 {
-	XOJ_INIT_TYPE(SaveHandler);
-
-	this->root = NULL;
+	this->root = nullptr;
 	this->firstPdfPageVisited = false;
 	this->attachBgId = 1;
-	this->backgroundImages = NULL;
+	this->backgroundImages = nullptr;
 }
 
 SaveHandler::~SaveHandler()
 {
-	XOJ_CHECK_TYPE(SaveHandler);
-
 	delete this->root;
 
-	for (GList* l = this->backgroundImages; l != NULL; l = l->next)
+	for (GList* l = this->backgroundImages; l != nullptr; l = l->next)
 	{
 		delete (BackgroundImage*) l->data;
 	}
 	g_list_free(this->backgroundImages);
-	this->backgroundImages = NULL;
-
-	XOJ_RELEASE_TYPE(SaveHandler);
+	this->backgroundImages = nullptr;
 }
 
 void SaveHandler::prepareSave(Document* doc)
 {
-	XOJ_CHECK_TYPE(SaveHandler);
-
 	if (this->root)
 	{
 		// cleanup old data
 		delete this->root;
-		this->root = NULL;
+		this->root = nullptr;
 
-		for (GList* l = this->backgroundImages; l != NULL; l = l->next)
+		for (GList* l = this->backgroundImages; l != nullptr; l = l->next)
 		{
 			delete (BackgroundImage*) l->data;
 		}
 		g_list_free(this->backgroundImages);
-		this->backgroundImages = NULL;
+		this->backgroundImages = nullptr;
 	}
 
 	this->firstPdfPageVisited = false;
@@ -108,8 +100,6 @@ string SaveHandler::getColorStr(int c, unsigned char alpha)
 
 void SaveHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode)
 {
-	XOJ_CHECK_TYPE(SaveHandler);
-
 	/** set stroke timestamp value to the XmlPointNode */
 	xmlAudioNode->setAttrib("ts",audioElement->getTimestamp());
 	xmlAudioNode->setAttrib("fn",audioElement->getAudioFilename());
@@ -117,8 +107,6 @@ void SaveHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAu
 
 void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s)
 {
-	XOJ_CHECK_TYPE(SaveHandler);
-
 	StrokeTool t = s->getToolType();
 
 	unsigned char alpha = 0xff;
@@ -177,8 +165,6 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s)
  */
 void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s)
 {
-	XOJ_CHECK_TYPE(SaveHandler);
-
 	if (s->getFill() != -1)
 	{
 		stroke->setAttrib("fill", s->getFill());
@@ -192,8 +178,6 @@ void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s)
 
 void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 {
-	XOJ_CHECK_TYPE(SaveHandler);
-
 	XmlNode* layer = new XmlNode("layer");
 	page->addChild(layer);
 	for(Element* e : *l->getElements())
@@ -251,8 +235,6 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 
 void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 {
-	XOJ_CHECK_TYPE(SaveHandler);
-
 	XmlNode* page = new XmlNode("page");
 	root->addChild(page);
 	page->setAttrib("width", p->getWidth());
@@ -279,7 +261,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 				Path filename = Path(doc->getFilename().str() + ".bg.pdf");
 				background->setAttrib("filename", filename.str());
 
-				GError* error = NULL;
+				GError* error = nullptr;
 				doc->getPdfDocument().save(filename, &error);
 
 				if (error)
@@ -389,19 +371,17 @@ void SaveHandler::saveTo(Path filename, ProgressListener* listener)
 
 void SaveHandler::saveTo(OutputStream* out, Path filename, ProgressListener* listener)
 {
-	XOJ_CHECK_TYPE(SaveHandler);
-
 	// XMLNode should be locale-safe ( store doubles using Locale 'C' format
 
 	out->write("<?xml version=\"1.0\" standalone=\"no\"?>\n");
 	root->writeOut(out, listener);
 
-	for (GList* l = this->backgroundImages; l != NULL; l = l->next)
+	for (GList* l = this->backgroundImages; l != nullptr; l = l->next)
 	{
 		BackgroundImage* img = (BackgroundImage*) l->data;
 
 		string tmpfn = filename.str() + "." + img->getFilename();
-		if (!gdk_pixbuf_save(img->getPixbuf(), tmpfn.c_str(), "png", NULL, NULL))
+		if (!gdk_pixbuf_save(img->getPixbuf(), tmpfn.c_str(), "png", nullptr, nullptr))
 		{
 			if (!this->errorMessage.empty())
 			{
@@ -416,7 +396,5 @@ void SaveHandler::saveTo(OutputStream* out, Path filename, ProgressListener* lis
 
 string SaveHandler::getErrorMessage()
 {
-	XOJ_CHECK_TYPE(SaveHandler);
-
 	return this->errorMessage;
 }

@@ -11,19 +11,14 @@ XojCairoPdfExport::XojCairoPdfExport(Document* doc, ProgressListener* progressLi
  : doc(doc),
    progressListener(progressListener)
 {
-	XOJ_INIT_TYPE(XojCairoPdfExport);
 }
 
 XojCairoPdfExport::~XojCairoPdfExport()
 {
-	XOJ_CHECK_TYPE(XojCairoPdfExport);
-
-	if (this->surface != NULL)
+	if (this->surface != nullptr)
 	{
 		endPdf();
 	}
-
-	XOJ_RELEASE_TYPE(XojCairoPdfExport);
 }
 
 /**
@@ -31,14 +26,11 @@ XojCairoPdfExport::~XojCairoPdfExport()
  */
 void XojCairoPdfExport::setNoBackgroundExport(bool noBackgroundExport)
 {
-	XOJ_CHECK_TYPE(XojCairoPdfExport);
 	this->noBackgroundExport = noBackgroundExport;
 }
 
 bool XojCairoPdfExport::startPdf(Path file)
 {
-	XOJ_CHECK_TYPE(XojCairoPdfExport);
-
 	this->surface = cairo_pdf_surface_create(file.c_str(), 0, 0);
 	this->cr = cairo_create(surface);
 
@@ -52,18 +44,14 @@ bool XojCairoPdfExport::startPdf(Path file)
 
 void XojCairoPdfExport::endPdf()
 {
-	XOJ_CHECK_TYPE(XojCairoPdfExport);
-
 	cairo_destroy(this->cr);
-	this->cr = NULL;
+	this->cr = nullptr;
 	cairo_surface_destroy(this->surface);
-	this->surface = NULL;
+	this->surface = nullptr;
 }
 
 void XojCairoPdfExport::exportPage(size_t page)
 {
-	XOJ_CHECK_TYPE(XojCairoPdfExport);
-
 	PageRef p = doc->getPage(page);
 
 	cairo_pdf_surface_set_size(this->surface, p->getWidth(), p->getHeight());
@@ -86,8 +74,6 @@ void XojCairoPdfExport::exportPage(size_t page)
 
 bool XojCairoPdfExport::createPdf(Path file, PageRangeVector& range)
 {
-	XOJ_CHECK_TYPE(XojCairoPdfExport);
-
 	if (range.size() == 0)
 	{
 		this->lastError = _("No pages to export!");
@@ -135,8 +121,6 @@ bool XojCairoPdfExport::createPdf(Path file, PageRangeVector& range)
 
 bool XojCairoPdfExport::createPdf(Path file)
 {
-	XOJ_CHECK_TYPE(XojCairoPdfExport);
-
 	if (doc->getPageCount() < 1)
 	{
 		lastError = _("No pages to export!");
@@ -170,8 +154,6 @@ bool XojCairoPdfExport::createPdf(Path file)
 
 string XojCairoPdfExport::getLastError()
 {
-	XOJ_CHECK_TYPE(XojCairoPdfExport);
-
 	return lastError;
 }
 
