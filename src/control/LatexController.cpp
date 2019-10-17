@@ -22,7 +22,7 @@
  * the rendered formula is blank. Otherwise, a completely blank, sizeless PDF
  * will be generated, which Poppler will be unable to load.
  */
-const char* LATEX_TEMPLATE_1 = R"(\documentclass[crop, border=5pt]{standalone})"
+const char* LATEX_TEMPLATE_1 = R"(\documentclass[varwidth=true, crop, border=5pt]{standalone})"
                                "\n"
                                R"(\usepackage{amsmath})"
                                "\n"
