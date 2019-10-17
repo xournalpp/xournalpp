@@ -7,7 +7,6 @@
 
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
-#include "control/zoom/ZoomGesture.h"
 #include "gui/GladeSearchpath.h"
 #include "gui/scroll/ScrollHandlingGtk.h"
 #include "gui/scroll/ScrollHandlingXournalpp.h"
@@ -172,9 +171,6 @@ MainWindow::~MainWindow()
 	delete this->toolbar;
 	this->toolbar = nullptr;
 
-	delete this->zoomGesture;
-	this->zoomGesture = nullptr;
-
 	delete scrollHandling;
 	scrollHandling = nullptr;
 }
@@ -219,14 +215,7 @@ void MainWindow::initXournalWidget()
 
 		scrollHandling = new ScrollHandlingXournalpp();
 
-		this->zoomGesture = new ZoomGesture(control->getZoomControl());
-
-		this->xournal = new XournalView(box2, control, scrollHandling, zoomGesture);
-
-		if (control->getSettings()->isZoomGesturesEnabled())
-		{
-			this->zoomGesture->connect(this->xournal->getWidget());
-		}
+		this->xournal = new XournalView(box2, control, scrollHandling);
 
 		gtk_container_add(GTK_CONTAINER(box2), gtk_scrollbar_new(GTK_ORIENTATION_VERTICAL, scrollHandling->getVertical()));
 		gtk_container_add(GTK_CONTAINER(box1), gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, scrollHandling->getHorizontal()));
@@ -248,14 +237,7 @@ void MainWindow::initXournalWidget()
 
 		scrollHandling = new ScrollHandlingGtk(GTK_SCROLLABLE(vpXournal));
 
-		this->zoomGesture = new ZoomGesture(control->getZoomControl());
-
-		this->xournal = new XournalView(vpXournal, control, scrollHandling, zoomGesture);
-
-		if (control->getSettings()->isZoomGesturesEnabled())
-		{
-			this->zoomGesture->connect(winXournal);
-		}
+		this->xournal = new XournalView(vpXournal, control, scrollHandling);
 
 		control->getZoomControl()->initZoomHandler(winXournal, xournal, control);
 		gtk_widget_show_all(winXournal);
@@ -328,16 +310,6 @@ void MainWindow::initHideMenu()
 Layout* MainWindow::getLayout()
 {
 	return gtk_xournal_get_layout(GTK_WIDGET(this->xournal->getWidget()));
-}
-
-bool MainWindow::isGestureActive()
-{
-	if (zoomGesture == nullptr) // Gestures disabled
-	{
-		return false;
-	}
-
-	return zoomGesture->isGestureActive();
 }
 
 bool cancellable_cancel(GCancellable* cancel)

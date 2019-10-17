@@ -205,7 +205,6 @@ void InputContext::blockDevice(InputContext::DeviceType deviceType)
 		case TOUCHSCREEN:
 			this->touchDrawingHandler->block(true);
 			this->touchHandler->block(true);
-			this->getView()->getZoomGestureHandler()->disable();
 			break;
 	}
 }
@@ -223,7 +222,6 @@ void InputContext::unblockDevice(InputContext::DeviceType deviceType)
 		case TOUCHSCREEN:
 			this->touchDrawingHandler->block(false);
 			this->touchHandler->block(false);
-			this->getView()->getZoomGestureHandler()->enable();
 			break;
 	}
 }

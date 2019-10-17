@@ -25,7 +25,7 @@ void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self)
 		(self->sliderChangingBySliderDrag || self->sliderChangingBySliderHoverScroll))
 	{
 		double back = self->zoom->getZoom100Value() * scaleFuncInv(gtk_range_get_value(range));
-		self->zoom->zoomSequnceChange(back, false);
+		self->zoom->zoomSequenceChange(back, false);
 	}
 	self->sliderChangingBySliderHoverScroll = false;
 }

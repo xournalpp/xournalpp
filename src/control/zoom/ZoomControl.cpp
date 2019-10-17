@@ -41,7 +41,7 @@ void ZoomControl::zoomOneStep(bool zoomIn, double x, double y)
 	{
 		newZoom = this->zoom - this->zoomStep;
 	}
-	this->zoomSequnceChange(newZoom, false);
+	this->zoomSequenceChange(newZoom, false);
 
 	endZoomSequence();
 }
@@ -74,7 +74,7 @@ void ZoomControl::zoomScroll(bool zoomIn, double x, double y)
 	{
 		newZoom = this->zoom - this->zoomStepScroll;
 	}
-	this->zoomSequnceChange(newZoom, false);
+	this->zoomSequenceChange(newZoom, false);
 }
 
 /**
@@ -109,7 +109,7 @@ void ZoomControl::startZoomSequence(double centerX, double centerY)
  * @param zoom Current zoom value
  * @param relative If the zoom is relative to the start value (for Gesture)
  */
-void ZoomControl::zoomSequnceChange(double zoom, bool relative)
+void ZoomControl::zoomSequenceChange(double zoom, bool relative)
 {
 	if (relative && this->zoomSequenceStart != -1)
 	{
@@ -317,7 +317,7 @@ void ZoomControl::zoom100()
 	}
 
 	startZoomSequence(-1, -1);
-	this->zoomSequnceChange(this->zoom100Value, false);
+	this->zoomSequenceChange(this->zoom100Value, false);
 	endZoomSequence();
 }
 
@@ -326,7 +326,7 @@ void ZoomControl::zoomFit()
 	if(this->zoomFitMode && !this->zoomPresentationMode && this->zoom != this->zoomFitValue)
 	{
 		startZoomSequence(-1, -1);
-		this->zoomSequnceChange(this->zoomFitValue, false);
+		this->zoomSequenceChange(this->zoomFitValue, false);
 		endZoomSequence();
 	}
 }
@@ -336,7 +336,7 @@ void ZoomControl::zoomPresentation()
 	if(this->zoomPresentationMode && this->zoom != this->zoomPresentationValue)
 	{
 		startZoomSequence(-1, -1);
-		this->zoomSequnceChange(this->zoomPresentationValue, false);
+		this->zoomSequenceChange(this->zoomPresentationValue, false);
 		endZoomSequence();
 	}
 }

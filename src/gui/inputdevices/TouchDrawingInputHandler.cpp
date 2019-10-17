@@ -20,11 +20,6 @@ bool TouchDrawingInputHandler::handleImpl(InputEvent* event)
 {
 	// Only handle events when there is no active gesture
 	GtkXournal* xournal = inputContext->getXournal();
-	if (xournal->view->getControl()->getWindow()->isGestureActive())
-	{
-		// Do not further relay events as they are of no interest
-		return true;
-	}
 
 	// Disallow multitouch
 	if (this->currentSequence && this->currentSequence != event->sequence)
