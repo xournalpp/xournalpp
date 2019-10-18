@@ -16,17 +16,16 @@ stages:
         git config --local user.name "Azure Pipelines"
         git config --local user.email "azuredevops@microsoft.com"
       displayName: 'Setup git'
-    - bash: |
-        sudo apt-get update
-        sudo apt-get install -y cmake libcppunit-dev libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev liblua5.3-dev libzip-dev
-      displayName: 'Install dependencies'
+    - template: steps/install_deps_ubuntu.yml
     - bash: |
         git checkout master
         mkdir build
       displayName: 'Create build directory'
     - bash: |
+        export CXX=g++-8
+        export CC=gcc-8
         cmake ..
-        make pot
+        cmake --build . --target pot
       workingDirectory: ./build
       displayName: 'Build Xournal++ translation template'
     - task: DownloadSecureFile@1
