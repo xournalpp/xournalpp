@@ -61,9 +61,6 @@ macro (add_includes_ldflags LDFLAGS INCLUDES)
     set (xournalpp_INCLUDE_DIRS ${xournalpp_INCLUDE_DIRS} "${INCLUDES}")
 endmacro (add_includes_ldflags LDFLAGS INCLUDES)
 
-find_package(CXX17 REQUIRED COMPONENTS optional)
-set(xournalpp_LDFLAGS ${xournalpp_LDFLAGS} cxx17)
-
 # libexec
 if (WIN32)
     set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-mwindows")
