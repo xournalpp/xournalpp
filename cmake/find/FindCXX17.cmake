@@ -23,13 +23,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED on)
 
 # Normalize and check the component list we were given
 set(want_components ${CXX17_FIND_COMPONENTS})
-if (CXX17_FIND_COMPONENTS STREQUAL "")
-#Nothing to do here
-endif ()
 
 # Warn on any unrecognized components
-if (NOT extra_components STREQUAL "")
-    set(extra_components ${want_components})
+if (extra_components)
     list(REMOVE_ITEM extra_components optional filesystem map)
     foreach (component IN LISTS extra_components)
         message(WARNING "Extraneous find_package component for Filesystem: ${component}")
@@ -63,13 +59,6 @@ if ("map" IN_LIST want_components)
     endif ()
 endif ()
 
-if (TARGET cxx17)
-    # This module has already been processed. Don't do it again.
-    return()
-endif ()
-
-add_library(cxx17 INTERFACE IMPORTED)
-target_compile_features(cxx17 INTERFACE cxx_std_17)
 set(_found TRUE)
 
 cmake_pop_check_state()
