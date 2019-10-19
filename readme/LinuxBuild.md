@@ -2,6 +2,10 @@
 
 ## Install dependencies
 
+Xournal++ is programmed with c++17 and needs the <optional> header and one filesystem library, either the STL or the boost implementation.
+Therefore it is required to install a compiler implementing those features.
+We recommend g++-8 or clang-9 and above.
+
 Please create pull requests (or file issues) if you have more precise dependencies.
 
 Lua is needed for plugins, if it is missing, the plugins will be disabled.
@@ -12,6 +16,8 @@ Lua is needed for plugins, if it is missing, the plugins will be disabled.
 The installation instructions don't assume any specific build tool (other than CMake), 
 but they do require make, ninja, or another supported CMake generator. It is required 
 that such a tool is installed in order to build xournalpp.
+
+The minimum required CMake version is 3.10, but we recommend to use >=3.15.
 
 ### Distribution specific commands
 
