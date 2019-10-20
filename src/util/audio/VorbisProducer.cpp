@@ -34,19 +34,20 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 	this->producerThread = new std::thread(
 			[&, filename]
 			{
-				long numSamples = 1;
+				size_t numFrames = 1;
 				auto sampleBuffer = new float[1024 * this->sfInfo.channels];
+				std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
 
-				while (!this->stopProducer && numSamples > 0 && !this->audioQueue->hasStreamEnded())
+				while (!this->stopProducer && numFrames > 0 && !this->audioQueue->hasStreamEnded())
 				{
-					numSamples = sf_readf_float(this->sfFile, sampleBuffer, 1024);
+			        numFrames = sf_readf_float(this->sfFile, sampleBuffer, 1024);
 
 					while (this->audioQueue->size() >= this->sample_buffer_size && !this->audioQueue->hasStreamEnded() && !this->stopProducer)
 					{
-						std::this_thread::sleep_for(std::chrono::microseconds(100));
+						audioQueue->waitForConsumer(lock);
 					}
 
-					this->audioQueue->push(sampleBuffer, static_cast<unsigned long>(numSamples * this->sfInfo.channels));
+					this->audioQueue->push(sampleBuffer, static_cast<size_t>(numFrames * this->sfInfo.channels));
 				}
 				this->audioQueue->signalEndOfStream();
 
