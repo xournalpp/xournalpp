@@ -25,8 +25,12 @@ steps:
     displayName: 'Create Build Directory'
   - bash: |
       export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
-      cmake -DCMAKE_INSTALL_PREFIX:PATH=/Users/git-bin/gtk/inst .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type}} ${{ parameters.cmake_flags }}
-      make -j 4
-      make install
+      cmake -DCMAKE_INSTALL_PREFIX:PATH=/Users/git-bin/gtk/inst .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type }} ${{ parameters.cmake_flags }}
+      # Make sure pot is up to date with sources (maybe translation pipeline is currently running)
+      cmake --build . --target pot
+      cmake --build . --target translations
+      # Build Xournal++
+      cmake --build .
+      cmake --build . --target install
     workingDirectory: ./build
     displayName: 'Build Xournal++'
