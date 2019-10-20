@@ -36,7 +36,7 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 	this->producerThread = new std::thread(
 			[&, filename]
 			{
-				long numSamples = 1;
+				size_t numFrames = 1;
 				auto sampleBuffer = new float[1024 * this->sfInfo.channels];
 				long tot = this->startPosition;
 				
@@ -47,7 +47,7 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 
 					while (this->audioQueue->size() >= this->sample_buffer_size && !this->audioQueue->hasStreamEnded() && !this->stopProducer)
 					{
-						std::this_thread::sleep_for(std::chrono::microseconds(100));
+						audioQueue->waitForConsumer(lock);
 					}
 
 					if (this->seekSeconds != 0)

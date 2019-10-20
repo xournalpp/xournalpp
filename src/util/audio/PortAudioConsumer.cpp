@@ -123,7 +123,7 @@ int PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer,
 
 	if (outputBuffer != nullptr)
 	{
-		unsigned long outputBufferLength;
+		size_t outputBufferLength;
 		this->audioQueue->pop(((float*) outputBuffer), outputBufferLength, framesPerBuffer * this->outputChannels);
 
 		// Fill buffer to requested length if necessary
