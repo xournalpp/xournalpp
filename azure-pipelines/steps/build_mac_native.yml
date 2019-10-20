@@ -13,20 +13,26 @@ steps:
       cd git-bin
       curl -L -o gtk-bin.tar.gz https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/master/gtk/mac/10.13/gtk-bin.tar.gz
       tar -xzf gtk-bin.tar.gz
-      export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
     displayName: 'Unpack GTK'
   - bash: |
       curl -L -o libxml.tar.gz https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/master/libxml/mac/10.13/libxml.tar.gz
       sudo tar -xzf libxml.tar.gz -C /
-      
     displayName: 'Unpack libxml'
   - bash: |
       mkdir build
     displayName: 'Create Build Directory'
   - bash: |
+      curl -L -o ninja-mac.zip $(curl -s https://api.github.com/repos/ninja-build/ninja/releases/latest | grep "browser_download_url.*mac\.zip" | cut -d : -f 2,3 | tr -d '"')
+      unzip ninja-mac.zip -d /Users/git-bin/gtk/inst/bin
+    displayName: 'Get Ninja'
+  - bash: |
       export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
-      cmake -DCMAKE_INSTALL_PREFIX:PATH=/Users/git-bin/gtk/inst .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type}} ${{ parameters.cmake_flags }}
-      make -j 4
-      make install
+      cmake -GNinja -DCMAKE_INSTALL_PREFIX:PATH=/Users/git-bin/gtk/inst .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type }} ${{ parameters.cmake_flags }}
+      # Make sure pot is up to date with sources (maybe translation pipeline is currently running)
+      cmake --build . --target pot
+      cmake --build . --target translations
+      # Build Xournal++
+      cmake --build .
+      cmake --build . --target install
     workingDirectory: ./build
     displayName: 'Build Xournal++'
