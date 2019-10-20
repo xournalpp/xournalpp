@@ -20,7 +20,7 @@ if (XGETTEXT_FOUND)
       "${PROJECT_SOURCE_DIR}/ui/*.glade"
   )
 
-  gettext_create_translations ("${potfile}" ALL)
+  gettext_create_translations ("${potfile}")
 
 else (XGETTEXT_FOUND)
   message (ERROR "Gettext not found!")
