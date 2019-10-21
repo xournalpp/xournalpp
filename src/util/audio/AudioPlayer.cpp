@@ -84,6 +84,12 @@ void AudioPlayer::stop()
 	this->audioQueue->reset();
 }
 
+void AudioPlayer::seek(int seconds)
+{
+	// set seek flag here in vorbisProducer
+	this->vorbisProducer->seek(seconds);
+}
+
 vector<DeviceInfo> AudioPlayer::getOutputDevices()
 {
 	std::list<DeviceInfo> deviceList = this->portAudioConsumer->getOutputDevices();

@@ -35,6 +35,8 @@ public:
 	void pausePlayback();
 	void continuePlayback();
 	void stopPlayback();
+	void seekForwards();
+	void seekBackwards();
 
 	string getAudioFilename();
 	Path getAudioFolder();

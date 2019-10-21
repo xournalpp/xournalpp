@@ -20,6 +20,7 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 	}
 
 	sf_count_t seekPosition = this->sfInfo.samplerate / 1000 * timestamp;
+
 	if (seekPosition < this->sfInfo.frames)
 	{
 		sf_seek(this->sfFile, seekPosition, SEEK_SET);
@@ -37,14 +38,20 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 				size_t numFrames = 1;
 				auto sampleBuffer = new float[1024 * this->sfInfo.channels];
 				std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
-
+								
 				while (!this->stopProducer && numFrames > 0 && !this->audioQueue->hasStreamEnded())
 				{
-			        numFrames = sf_readf_float(this->sfFile, sampleBuffer, 1024);
+					numFrames = sf_readf_float(this->sfFile, sampleBuffer, 1024);
 
 					while (this->audioQueue->size() >= this->sample_buffer_size && !this->audioQueue->hasStreamEnded() && !this->stopProducer)
 					{
 						audioQueue->waitForConsumer(lock);
+					}
+
+					if (this->seekSeconds != 0)
+					{
+						sf_seek(this->sfFile,seekSeconds * this->sfInfo.samplerate, SEEK_CUR);
+						this->seekSeconds = 0;
 					}
 
 					this->audioQueue->push(sampleBuffer, static_cast<size_t>(numFrames * this->sfInfo.channels));
@@ -75,4 +82,10 @@ void VorbisProducer::stop()
 	{
 		this->producerThread->join();
 	}
+}
+
+
+void VorbisProducer::seek(int seconds)
+{
+	this->seekSeconds = seconds;
 }

@@ -458,6 +458,10 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(audioPausePlaybackButton);
 	audioStopPlaybackButton = new ToolButton(listener, "AUDIO_STOP_PLAYBACK", ACTION_AUDIO_STOP_PLAYBACK, "audio-playback-stop", _("Stop"));
 	addToolItem(audioStopPlaybackButton);
+	audioSeekForwardsButton = new ToolButton(listener, "AUDIO_SEEK_FORWARDS", ACTION_AUDIO_SEEK_FORWARDS, "audio-seek-forwards", _("Forward"));
+	addToolItem(audioSeekForwardsButton);
+	audioSeekBackwardsButton = new ToolButton(listener, "AUDIO_SEEK_BACKWARDS", ACTION_AUDIO_SEEK_BACKWARDS, "audio-seek-backwards", _("Back"));
+	addToolItem(audioSeekBackwardsButton);
 
 	// Menu Help
 	// ************************************************************************
@@ -569,18 +573,26 @@ void ToolMenuHandler::disableAudioPlaybackButtons()
 
 	this->audioPausePlaybackButton->enable(false);
 	this->audioStopPlaybackButton->enable(false);
+	this->audioSeekBackwardsButton->enable(false);
+	this->audioSeekForwardsButton->enable(false);
 
 	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioPausePlayback")), false);
 	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioStopPlayback")), false);
+	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekForwards")), false);
+	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekBackwards")), false);
 }
 
 void ToolMenuHandler::enableAudioPlaybackButtons()
 {
 	this->audioPausePlaybackButton->enable(true);
 	this->audioStopPlaybackButton->enable(true);
+	this->audioSeekBackwardsButton->enable(true);
+	this->audioSeekForwardsButton->enable(true);
 
 	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioPausePlayback")), true);
 	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioStopPlayback")), true);
+	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekForwards")), true);
+	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekBackwards")), true);
 }
 
 void ToolMenuHandler::setAudioPlaybackPaused(bool paused)

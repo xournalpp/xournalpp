@@ -100,6 +100,16 @@ void AudioController::pausePlayback()
 	this->audioPlayer->pause();
 }
 
+void AudioController::seekForwards()
+{
+	this->audioPlayer->seek(this->settings->getDefaultSeekTime());
+}
+
+void AudioController::seekBackwards()
+{
+	this->audioPlayer->seek(-1 * this->settings->getDefaultSeekTime());
+}
+
 void AudioController::continuePlayback()
 {
 	this->control->getWindow()->getToolMenuHandler()->setAudioPlaybackPaused(false);

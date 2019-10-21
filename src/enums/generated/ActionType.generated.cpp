@@ -552,6 +552,16 @@ ActionType ActionType_fromString(string value)
 		return ACTION_AUDIO_STOP_PLAYBACK;
 	}
 
+	if (value == "ACTION_AUDIO_SEEK_FORWARDS")
+	{
+		return ACTION_AUDIO_SEEK_FORWARDS;
+	}
+
+	if (value == "ACTION_AUDIO_SEEK_BACKWARDS")
+	{
+		return ACTION_AUDIO_SEEK_BACKWARDS;
+	}
+
 	if (value == "ACTION_SET_PAIRS_OFFSET")
 	{
 		return ACTION_SET_PAIRS_OFFSET;
@@ -1253,6 +1263,16 @@ string ActionType_toString(ActionType value)
 	if (value == ACTION_AUDIO_STOP_PLAYBACK)
 	{
 		return "ACTION_AUDIO_STOP_PLAYBACK";
+	}
+
+	if (value == ACTION_AUDIO_SEEK_FORWARDS)
+	{
+		return "ACTION_AUDIO_SEEK_FORWARDS";
+	}
+
+	if (value == ACTION_AUDIO_SEEK_BACKWARDS)
+	{
+		return "ACTION_AUDIO_SEEK_BACKWARDS";
 	}
 
 	if (value == ACTION_SET_PAIRS_OFFSET)

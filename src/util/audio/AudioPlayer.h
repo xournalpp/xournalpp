@@ -30,6 +30,7 @@ public:
 	void stop();
 	bool play();
 	void pause();
+	void seek(int seconds);
 
 	vector<DeviceInfo> getOutputDevices();
 
