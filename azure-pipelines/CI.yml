@@ -43,8 +43,8 @@ stages:
               build_type: 'Debug'
               cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
           - script: |
-              set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
-              %CD:~0,2%\msys64\usr\bin\bash -lc "CI=true ctest --verbose"
+              set PATH=%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
+              C:\msys64\usr\bin\bash -lc "CI=true ctest --verbose"
             workingDirectory: ./build
             env:
               MSYS2_ARCH: x86_64
