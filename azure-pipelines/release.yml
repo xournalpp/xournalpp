@@ -98,8 +98,8 @@ stages:
               build_type: 'RelWithDebInfo'
               cmake_flags: ''
           - script: |
-              set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
-              %CD:~0,2%\msys64\usr\bin\bash -lc "./build-setup.sh"
+              set PATH=%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
+              C:\msys64\usr\bin\bash -lc "./build-setup.sh"
             workingDirectory: ./windows-setup
             env:
               MSYS2_ARCH: x86_64
