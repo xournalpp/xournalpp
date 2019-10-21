@@ -821,7 +821,7 @@ private:
 	/**
 	 * Whether the new experimental input system is activated
 	 */
-	bool experimentalInputSystemEnabled;
+	bool newInputSystemEnabled;
 
 	/**
 	 * Whether Wacom parameter TabletPCButton is enabled
