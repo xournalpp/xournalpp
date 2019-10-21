@@ -1,5 +1,23 @@
 # Changelog
 
+## Nightlies
+
+* Audio playback
+    * Added seeking functionality
+    * Fixed race condition in audio system leading to crashes
+    * Fixed bug where gaps in the audio stream could appear while recording
+* Input System
+    * Previous experimental input system is now default. Should errors occur
+      please file a bug report and deactivate it in the settings.
+    * Zoom gesture reimplemented for better compatibility
+* LaTeX
+    * Added support for `\newline`
+* Misc
+    * Updated to C++17
+    * Cleaned up the codebase (see ticket 1279 for details)
+    * Updated translations
+    * Introduced Flatpak Image
+
 ## 1.0.15
 
 **Attention**: Please see the 1.0.14 patch notes before installing this version.
