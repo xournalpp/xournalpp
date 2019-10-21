@@ -92,8 +92,7 @@ public:
 	void repaintSelection(bool evenWithoutSelection = false);
 
 	TextEditor* getTextEditor();
-	std::vector<XojPageView*>::const_iterator iteratorBegin() const;
-	std::vector<XojPageView*>::const_iterator iteratorEnd() const;
+	std::vector<XojPageView*> const& getViewPages() const;
 
 	Control* getControl();
 	double getZoom();

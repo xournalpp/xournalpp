@@ -298,8 +298,6 @@ static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
-	auto it = xournal->view->iteratorBegin();
-
 	double x1, x2, y1, y2;
 
 	cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
@@ -314,11 +312,8 @@ static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
 
 	Rectangle clippingRect(x1 - 10, y1 - 10, x2 - x1 + 20, y2 - y1 + 20);
 
-	while (it != xournal->view->iteratorEnd())
+	for (auto&& pv: xournal->view->getViewPages())
 	{
-		XojPageView* pv = *it;
-		it++;
-
 		int px = pv->getX();
 		int py = pv->getY();
 		int pw = pv->getDisplayWidth();
@@ -370,4 +365,3 @@ static void gtk_xournal_destroy(GtkWidget* object)
 	delete xournal->depInput;
 	xournal->depInput = nullptr;
 }
-
