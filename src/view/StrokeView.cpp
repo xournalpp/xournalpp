@@ -3,6 +3,7 @@
 
 #include "model/eraser/EraseableStroke.h"
 #include "model/Stroke.h"
+#include "util/LoopUtil.h"
 
 StrokeView::StrokeView(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool noAlpha)
  : cr(cr),
@@ -19,25 +20,10 @@ StrokeView::~StrokeView()
 
 void StrokeView::drawFillStroke()
 {
-	auto points = s->iteratorBegin();
-
-	if (points != s->iteratorEnd())
-	{
-		Point p = *points;
-		points++;
-		cairo_move_to(cr, p.x, p.y);
-	}
-	else
-	{
-		return;
-	}
-
-	while (points != s->iteratorEnd())
-	{
-		Point p = *points;
-		points++;
-		cairo_line_to(cr, p.x, p.y);
-	}
+	for_first_then_each(
+	        s->getPointVector(),
+	        [this](auto first) { cairo_move_to(this->cr, first.x, first.y); },
+	        [this](auto other) { cairo_line_to(this->cr, other.x, other.y); });
 
 	cairo_fill(cr);
 }
@@ -111,7 +97,6 @@ void StrokeView::drawNoPressure()
 {
 	int count = 1;
 	double width = s->getWidth();
-	std::vector<Point>::const_iterator points = s->iteratorBegin();
 
 	bool group = false;
 	if (s->getFill() != -1 && s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
@@ -128,24 +113,17 @@ void StrokeView::drawNoPressure()
 	cairo_set_line_width(cr, width * scaleFactor);
 	applyDashed(0);
 
-	Point lastPoint = *points;
-
-	while (points != s->iteratorEnd())
+	for (auto&& point: s->getPointVector())
 	{
-		Point p = *points;
-
 		if (startPoint <= count)
 		{
-			cairo_line_to(cr, p.x, p.y);
+			cairo_line_to(cr, point.x, point.y);
 		}
 		else
 		{
-			cairo_move_to(cr, p.x, p.y);
+			cairo_move_to(cr, point.x, point.y);
 		}
-
 		count++;
-		lastPoint = p;
-		points++;
 	}
 
 	cairo_stroke(cr);
@@ -174,35 +152,33 @@ void StrokeView::drawWithPressuire()
 {
 	int count = 1;
 	double width = s->getWidth();
-	std::vector<Point>::const_iterator points = s->iteratorBegin();
 
-	Point lastPoint1 = *points;
-	points++;
+	Point lastPoint1;
 	double dashOffset = 0;
-	while (points != s->iteratorEnd())
-	{
-		Point p = *points;
-		points++;
-		if (startPoint <= count)
-		{
-			if (lastPoint1.z != Point::NO_PRESSURE)
-			{
-				width = lastPoint1.z;
-			}
 
-			// Set width
-			cairo_set_line_width(cr, width * scaleFactor);
-			applyDashed(dashOffset);
+	for_first_then_each(
+	        s->getPointVector(),
+	        [&lastPoint1](auto first) { lastPoint1 = first; },
+	        [this, &lastPoint1, &dashOffset, &count, &width](auto other) {
+		        if (startPoint <= count)
+		        {
+			        if (lastPoint1.z != Point::NO_PRESSURE)
+			        {
+				        width = lastPoint1.z;
+			        }
 
-			cairo_move_to(cr, lastPoint1.x, lastPoint1.y);
-			cairo_line_to(cr, p.x, p.y);
-			cairo_stroke(cr);
-		}
-		count++;
-		dashOffset += lastPoint1.lineLengthTo(p);
+			        // Set width
+			        cairo_set_line_width(cr, width * scaleFactor);
+			        applyDashed(dashOffset);
 
-		lastPoint1 = p;
-	}
+			        cairo_move_to(cr, lastPoint1.x, lastPoint1.y);
+			        cairo_line_to(cr, other.x, other.y);
+			        cairo_stroke(cr);
+		        }
+		        count++;
+		        dashOffset += lastPoint1.lineLengthTo(other);
+		        lastPoint1 = other;
+	        });
 
 	cairo_stroke(cr);
 }
@@ -229,4 +205,3 @@ void StrokeView::paint(bool dontRenderEditingStroke)
 		drawWithPressuire();
 	}
 }
-

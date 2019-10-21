@@ -170,14 +170,9 @@ int Stroke::getPointCount() const
 	return this->points.size();
 }
 
-std::vector<Point>::const_iterator Stroke::iteratorBegin() const
+std::vector<Point> const& Stroke::getPointVector() const
 {
-    return std::begin(points);
-}
-
-std::vector<Point>::const_iterator Stroke::iteratorEnd() const
-{
-    return std::end(points);
+	return points;
 }
 
 void Stroke::deletePointsFrom(int index)

@@ -5,6 +5,7 @@
 #include "model/Stroke.h"
 
 #include <cmath>
+#include "util/LoopUtil.h"
 
 /**
  * Create circle stroke for inertia
@@ -45,27 +46,19 @@ double CircleRecognizer::scoreCircle(Stroke* s, Inertia& inertia)
 	double y0 = inertia.centerY();
 	double r0 = inertia.rad();
 
-	auto it = s->iteratorBegin();
+	Point p1;
+	for_first_then_each(
+	        s->getPointVector(),
+	        [&p1, &x0, &y0, &r0](auto first) { p1 = first; },
+	        [&p1, &x0, &y0, &r0, &sum](auto other) {
+		        Point p2 = other;
 
-	if (it != s->iteratorEnd())
-	{
-		return 0;
-	}
+		        double dm = hypot(p2.x - p1.x, p2.y - p1.y);
+		        double deltar = hypot(p1.x - x0, p1.y - y0) - r0;
+		        sum += dm * fabs(deltar);
 
-	Point p1 = *it;
-	it++;
-
-	while (it != s->iteratorEnd())
-	{
-		Point p2 = *it;
-
-		double dm = hypot(p2.x - p1.x, p2.y - p1.y);
-		double deltar = hypot(p1.x - x0, p1.y - y0) - r0;
-		sum += dm * fabs(deltar);
-
-		p1 = p2;
-		it++;
-	}
+		        p2 = p1;
+	        });
 
 	return sum / (inertia.getMass() * r0);
 }

@@ -70,8 +70,7 @@ public:
 	void setLastPoint(const Point& p);
 	int getPointCount() const;
 	void freeUnusedPointItems();
-	std::vector<Point>::const_iterator iteratorBegin() const;
-	std::vector<Point>::const_iterator iteratorEnd() const;
+	std::vector<Point> const& getPointVector() const;
 	Point getPoint(int index) const;
 	const Point* getPoints() const;
 
@@ -91,7 +90,7 @@ public:
 	void setLastPressure(double pressure);
 	void clearPressure();
 	void scalePressure(double factor);
-	
+
 	bool hasPressure() const;
 	double getAvgPressure() const;
 
