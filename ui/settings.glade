@@ -3952,7 +3952,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                           <object class="GtkLabel" id="label3">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">Default Seek Time</property>
+                                            <property name="label" translatable="yes">Default Seek Time (in seconds)</property>
                                             <property name="xalign">0</property>
                                           </object>
                                           <packing>

@@ -33,7 +33,7 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 	this->audioQueue->setAudioAttributes(this->sfInfo.samplerate, static_cast<unsigned int>(this->sfInfo.channels));
 
 	this->producerThread = new std::thread(
-			[&, filename, seekPosition]
+			[&, filename]
 			{
 				size_t numFrames = 1;
 				auto sampleBuffer = new float[1024 * this->sfInfo.channels];
