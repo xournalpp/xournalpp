@@ -20,6 +20,12 @@ configure
 po/POTFILES
 stamp-h1
 
+# Eclipse
+.autotools
+.cproject
+.project
+.settings/
+
 # PPA Build (ubuntu)
 ppa-build
 
