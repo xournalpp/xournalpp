@@ -105,8 +105,6 @@ bool PortAudioProducer::startRecording()
 int PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer,
 									  const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags)
 {
-	std::unique_lock<std::mutex> lock(this->audioQueue->syncMutex());
-
 	if (statusFlags)
 	{
 		g_message("PortAudioProducer: statusFlag: %s", std::to_string(statusFlags).c_str());
@@ -114,7 +112,7 @@ int PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuffe
 
 	if (inputBuffer != nullptr)
 	{
-		unsigned long providedFrames = framesPerBuffer * this->inputChannels;
+		size_t providedFrames = framesPerBuffer * this->inputChannels;
 
 		this->audioQueue->push((float*) inputBuffer, providedFrames);
 	}

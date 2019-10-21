@@ -48,7 +48,7 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 
 					while (this->audioQueue->size() >= this->sample_buffer_size && !this->audioQueue->hasStreamEnded() && !this->stopProducer)
 					{
-						std::this_thread::sleep_for(std::chrono::microseconds(100));
+						audioQueue->waitForConsumer(lock);
 					}
 
 					if (this->seekSeconds != 0)
