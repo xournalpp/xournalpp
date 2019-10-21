@@ -10,7 +10,6 @@
 
 ToolListener::~ToolListener() { }
 
-
 ToolHandler::ToolHandler(ToolListener* listener, ActionHandler* actionHandler, Settings* settings)
 {
 	this->settings = settings;
@@ -35,12 +34,11 @@ void ToolHandler::initTools()
 	thickness[TOOL_SIZE_MEDIUM] = 1.41;
 	thickness[TOOL_SIZE_THICK] = 2.26;
 	thickness[TOOL_SIZE_VERY_THICK] = 5.67;
-	t = new Tool("pen", TOOL_PEN, 0x3333CC,
-			TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE |
-			TOOL_CAP_CIRCLE | TOOL_CAP_ARROW | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL |
-			TOOL_CAP_DASH_LINE,
-			thickness);
-	tools[TOOL_PEN - TOOL_PEN] = t;
+	tools[TOOL_PEN - TOOL_PEN] = std::make_unique<Tool>(
+	        "pen", TOOL_PEN, 0x3333CC,
+	        TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_CIRCLE | TOOL_CAP_ARROW |
+	                TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL | TOOL_CAP_DASH_LINE,
+	        thickness);
 
 	thickness = new double[5];
 	thickness[TOOL_SIZE_VERY_FINE] = 1;
@@ -48,8 +46,7 @@ void ToolHandler::initTools()
 	thickness[TOOL_SIZE_MEDIUM] = 8.50;
 	thickness[TOOL_SIZE_THICK] = 12;
 	thickness[TOOL_SIZE_VERY_THICK] = 18;
-	t = new Tool("eraser", TOOL_ERASER, 0x000000, TOOL_CAP_SIZE, thickness);
-	tools[TOOL_ERASER - TOOL_PEN] = t;
+	tools[TOOL_ERASER - TOOL_PEN] = std::make_unique<Tool>("eraser", TOOL_ERASER, 0x000000, TOOL_CAP_SIZE, thickness);
 
 	// highlighter thicknesses = 1, 3, 7 mm
 	thickness = new double[5];
@@ -58,50 +55,47 @@ void ToolHandler::initTools()
 	thickness[TOOL_SIZE_MEDIUM] = 8.50;
 	thickness[TOOL_SIZE_THICK] = 19.84;
 	thickness[TOOL_SIZE_VERY_THICK] = 30;
-	t = new Tool("hilighter", TOOL_HILIGHTER, 0xFFFF00,
-			TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE |
-			TOOL_CAP_CIRCLE | TOOL_CAP_ARROW | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
-			thickness);
-	tools[TOOL_HILIGHTER - TOOL_PEN] = t;
+	tools[TOOL_HILIGHTER - TOOL_PEN] =
+	        std::make_unique<Tool>("hilighter", TOOL_HILIGHTER, 0xFFFF00,
+	                               TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE |
+	                                       TOOL_CAP_CIRCLE | TOOL_CAP_ARROW | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
+	                               thickness);
 
-	t = new Tool("text", TOOL_TEXT, 0x000000, TOOL_CAP_COLOR, nullptr);
-	tools[TOOL_TEXT - TOOL_PEN] = t;
+	tools[TOOL_TEXT - TOOL_PEN] = std::make_unique<Tool>("text", TOOL_TEXT, 0x000000, TOOL_CAP_COLOR, nullptr);
 
-	t = new Tool("image", TOOL_IMAGE, 0x000000, TOOL_CAP_NONE, nullptr);
-	tools[TOOL_IMAGE - TOOL_PEN] = t;
+	tools[TOOL_IMAGE - TOOL_PEN] = std::make_unique<Tool>("image", TOOL_IMAGE, 0x000000, TOOL_CAP_NONE, nullptr);
 
-	t = new Tool("selectRect", TOOL_SELECT_RECT, 0x000000, TOOL_CAP_NONE, nullptr);
-	tools[TOOL_SELECT_RECT - TOOL_PEN] = t;
+	tools[TOOL_SELECT_RECT - TOOL_PEN] =
+	        std::make_unique<Tool>("selectRect", TOOL_SELECT_RECT, 0x000000, TOOL_CAP_NONE, nullptr);
 
-	t = new Tool("selectRegion", TOOL_SELECT_REGION, 0x000000, TOOL_CAP_NONE, nullptr);
-	tools[TOOL_SELECT_REGION - TOOL_PEN] = t;
+	tools[TOOL_SELECT_REGION - TOOL_PEN] =
+	        std::make_unique<Tool>("selectRegion", TOOL_SELECT_REGION, 0x000000, TOOL_CAP_NONE, nullptr);
 
-	t = new Tool("selectObject", TOOL_SELECT_OBJECT, 0x000000, TOOL_CAP_NONE, nullptr);
-	tools[TOOL_SELECT_OBJECT - TOOL_PEN] = t;
+	tools[TOOL_SELECT_OBJECT - TOOL_PEN] =
+	        std::make_unique<Tool>("selectObject", TOOL_SELECT_OBJECT, 0x000000, TOOL_CAP_NONE, nullptr);
 
-	t = new Tool("verticalSpace", TOOL_VERTICAL_SPACE, 0x000000, TOOL_CAP_NONE, nullptr);
-	tools[TOOL_VERTICAL_SPACE - TOOL_PEN] = t;
+	tools[TOOL_VERTICAL_SPACE - TOOL_PEN] =
+	        std::make_unique<Tool>("verticalSpace", TOOL_VERTICAL_SPACE, 0x000000, TOOL_CAP_NONE, nullptr);
 
-	t = new Tool("hand", TOOL_HAND, 0x000000, TOOL_CAP_NONE, nullptr);
-	tools[TOOL_HAND - TOOL_PEN] = t;
+	tools[TOOL_HAND - TOOL_PEN] = std::make_unique<Tool>("hand", TOOL_HAND, 0x000000, TOOL_CAP_NONE, nullptr);
 
-	t = new Tool("playObject", TOOL_PLAY_OBJECT, 0x000000, TOOL_CAP_NONE, nullptr);
-	tools[TOOL_PLAY_OBJECT - TOOL_PEN] = t;
+	tools[TOOL_PLAY_OBJECT - TOOL_PEN] =
+	        std::make_unique<Tool>("playObject", TOOL_PLAY_OBJECT, 0x000000, TOOL_CAP_NONE, nullptr);
 
-	t = new Tool("drawRect", TOOL_DRAW_RECT, 0x000000, TOOL_CAP_NONE, nullptr);
-	tools[TOOL_DRAW_RECT - TOOL_PEN] = t;
+	tools[TOOL_DRAW_RECT - TOOL_PEN] =
+	        std::make_unique<Tool>("drawRect", TOOL_DRAW_RECT, 0x000000, TOOL_CAP_NONE, nullptr);
 
-	t = new Tool("drawCircle", TOOL_DRAW_CIRCLE, 0x000000, TOOL_CAP_NONE, nullptr);
-	tools[TOOL_DRAW_CIRCLE - TOOL_PEN] = t;
+	tools[TOOL_DRAW_CIRCLE - TOOL_PEN] =
+	        std::make_unique<Tool>("drawCircle", TOOL_DRAW_CIRCLE, 0x000000, TOOL_CAP_NONE, nullptr);
 
-	t = new Tool("drawArrow", TOOL_DRAW_ARROW, 0x000000, TOOL_CAP_NONE, nullptr);
-	tools[TOOL_DRAW_ARROW - TOOL_PEN] = t;
+	tools[TOOL_DRAW_ARROW - TOOL_PEN] =
+	        std::make_unique<Tool>("drawArrow", TOOL_DRAW_ARROW, 0x000000, TOOL_CAP_NONE, nullptr);
 
-	t = new Tool("drawCoordinateSystem", TOOL_DRAW_COORDINATE_SYSTEM, 0x000000, TOOL_CAP_NONE, nullptr);
-	tools[TOOL_DRAW_COORDINATE_SYSTEM - TOOL_PEN] = t;
+	tools[TOOL_DRAW_COORDINATE_SYSTEM - TOOL_PEN] =
+	        std::make_unique<Tool>("drawCoordinateSystem", TOOL_DRAW_COORDINATE_SYSTEM, 0x000000, TOOL_CAP_NONE, nullptr);
 
-	t = new Tool("showFloatingToolbox", TOOL_FLOATING_TOOLBOX, 0x000000, TOOL_CAP_NONE, nullptr);
-	tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] = t;
+	tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] =
+	        std::make_unique<Tool>("showFloatingToolbox", TOOL_FLOATING_TOOLBOX, 0x000000, TOOL_CAP_NONE, nullptr);
 
 
 	selectTool(TOOL_PEN);
@@ -109,12 +103,6 @@ void ToolHandler::initTools()
 
 ToolHandler::~ToolHandler()
 {
-	for (int i = 0; i < TOOL_COUNT; i++)
-	{
-		delete tools[i];
-		tools[i] = nullptr;
-	}
-
 	// Do not delete settings!
 	this->settings = nullptr;
 }
@@ -161,7 +149,7 @@ void ToolHandler::selectTool(ToolType type, bool fireToolChanged)
 		g_warning("unknown tool selected: %i\n", type);
 		return;
 	}
-	this->current = tools[type - TOOL_PEN];
+	this->current = tools[type - TOOL_PEN].get();
 
 	if (fireToolChanged)
 	{
@@ -383,14 +371,9 @@ void ToolHandler::setColorFound()
 	this->colorFound = true;
 }
 
-std::array<Tool*, TOOL_COUNT>::const_iterator ToolHandler::begin()
+std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& ToolHandler::getTools() const
 {
-    return std::begin(tools);
-}
-
-std::array<Tool*, TOOL_COUNT>::const_iterator ToolHandler::end()
-{
-    return std::end(tools);
+	return tools;
 }
 
 void ToolHandler::saveSettings()
@@ -481,7 +464,7 @@ void ToolHandler::loadSettings()
 
 			if (selectedTool == tool->getName())
 			{
-				this->current = tool;
+				this->current = tool.get();
 			}
 
 			int color = 0;
@@ -584,7 +567,7 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
 	// For all selection tools, apply the features
 	for (size_t i = TOOL_SELECT_RECT - TOOL_PEN; i <= TOOL_SELECT_OBJECT - TOOL_PEN; i++)
 	{
-		Tool* t = tools[i];
+		Tool* t = tools[i].get();
 		t->setCapability(TOOL_CAP_COLOR, setColor);
 		t->setCapability(TOOL_CAP_SIZE, setSize);
 		t->setCapability(TOOL_CAP_FILL, setFill);

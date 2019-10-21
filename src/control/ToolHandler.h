@@ -105,8 +105,7 @@ public:
 	void copyCurrentConfig();
 	void restoreLastConfig();
 
-	std::array<Tool*, TOOL_COUNT>::const_iterator begin();
-	std::array<Tool*, TOOL_COUNT>::const_iterator end();
+	std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& getTools() const;
 
 	/**
 	 * Change the selection tools capabilities, depending on the selected elements
@@ -125,8 +124,8 @@ protected:
 	void initTools();
 
 private:
-    std::array<Tool*, TOOL_COUNT> tools;
-	Tool* current = nullptr;
+	std::array<std::unique_ptr<Tool>, TOOL_COUNT> tools;
+	Tool* current = NULL;
 
 	/**
 	 * Last selected tool, reference with color values etc.

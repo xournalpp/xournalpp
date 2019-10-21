@@ -953,14 +953,14 @@ Document* XournalView::getDocument()
 
 std::vector<XojPageView*>::const_iterator XournalView::iteratorBegin() const
 {
-    return viewPages.begin();
+	return begin(viewPages);
 }
 
 std::vector<XojPageView*>::const_iterator XournalView::iteratorEnd() const
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	return viewPages.end();
+	return end(viewPages);
 }
 
 XournalppCursor* XournalView::getCursor()
