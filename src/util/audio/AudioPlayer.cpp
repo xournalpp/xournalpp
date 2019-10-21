@@ -86,8 +86,6 @@ void AudioPlayer::stop()
 
 void AudioPlayer::seek(int seconds)
 {
-	XOJ_CHECK_TYPE(AudioPlayer);
-
 	// set seek flag here in vorbisProducer
 	this->vorbisProducer->seek(seconds);
 }

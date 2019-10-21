@@ -102,16 +102,12 @@ void AudioController::pausePlayback()
 
 void AudioController::seekForwards()
 {
-	XOJ_CHECK_TYPE(AudioController);
-
 	/** TODO: add default seek parameter in settings */
 	this->audioPlayer->seek(5);
 }
 
 void AudioController::seekBackwards()
 {
-	XOJ_CHECK_TYPE(AudioController);
-
 	this->audioPlayer->seek(-5);
 }
 

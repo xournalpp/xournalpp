@@ -20,7 +20,6 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 	}
 
 	sf_count_t seekPosition = this->sfInfo.samplerate / 1000 * timestamp;
-	this->startPosition = seekPosition;
 
 	if (seekPosition < this->sfInfo.frames)
 	{
@@ -34,16 +33,18 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 	this->audioQueue->setAudioAttributes(this->sfInfo.samplerate, static_cast<unsigned int>(this->sfInfo.channels));
 
 	this->producerThread = new std::thread(
-			[&, filename]
+			[&, filename, seekPosition]
 			{
-				long numSamples = 1;
+				size_t numFrames = 1;
 				auto sampleBuffer = new float[1024 * this->sfInfo.channels];
-				long tot = this->startPosition;
+				std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
 				
-				while (!this->stopProducer && numSamples > 0 && !this->audioQueue->hasStreamEnded())
+				size_t position = seekPosition;
+				
+				while (!this->stopProducer && numFrames > 0 && !this->audioQueue->hasStreamEnded())
 				{
-					numSamples = sf_readf_float(this->sfFile, sampleBuffer, 1024);
-					tot+=numSamples;
+					numFrames = sf_readf_float(this->sfFile, sampleBuffer, 1024);
+					position+=numFrames;
 
 					while (this->audioQueue->size() >= this->sample_buffer_size && !this->audioQueue->hasStreamEnded() && !this->stopProducer)
 					{
@@ -52,19 +53,18 @@ bool VorbisProducer::start(std::string filename, unsigned int timestamp)
 
 					if (this->seekSeconds != 0)
 					{
-						tot += seekSeconds * this->sfInfo.samplerate;
-						if (tot < 0) tot = 0;
-						sf_seek(this->sfFile, tot, SEEK_SET);
+						position += seekSeconds * this->sfInfo.samplerate;
+						if (position < 0) position = 0;
+						sf_seek(this->sfFile, position, SEEK_SET);
 						this->seekSeconds = 0;
 					}
 
-					this->audioQueue->push(sampleBuffer, static_cast<unsigned long>(numSamples * this->sfInfo.channels));
+					this->audioQueue->push(sampleBuffer, static_cast<size_t>(numFrames * this->sfInfo.channels));
 				}
 				this->audioQueue->signalEndOfStream();
 
 				delete[] sampleBuffer;
 				sampleBuffer = nullptr;
-				this->startPosition = 0;
 
 				sf_close(this->sfFile);
 			});
@@ -92,7 +92,5 @@ void VorbisProducer::stop()
 
 void VorbisProducer::seek(int seconds)
 {
-	XOJ_CHECK_TYPE(VorbisProducer);
-
 	this->seekSeconds = seconds;
 }

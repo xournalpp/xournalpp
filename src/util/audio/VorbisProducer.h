@@ -43,6 +43,5 @@ private:
 	AudioQueue<float>* audioQueue = nullptr;
 	std::thread* producerThread = nullptr;
 
-	long startPosition = 0;
 	int seekSeconds = 0;
 };
