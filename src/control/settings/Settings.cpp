@@ -140,7 +140,7 @@ void Settings::loadDefault()
 	this->pluginEnabled = "";
 	this->pluginDisabled = "";
 
-	this->experimentalInputSystemEnabled = false;
+	this->newInputSystemEnabled = true;
 	this->inputSystemTPCButton = false;
 	this->inputSystemDrawOutsideWindow = true;
 
@@ -577,9 +577,9 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->audioOutputDevice = g_ascii_strtoll((const char *) value, nullptr, 10);
 	}
-	else if (xmlStrcmp(name, (const xmlChar*) "experimentalInputSystemEnabled") == 0)
+	else if (xmlStrcmp(name, (const xmlChar*) "newInputSystemEnabled") == 0)
 	{
-		this->experimentalInputSystemEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+		this->newInputSystemEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "inputSystemTPCButton") == 0)
 	{
@@ -1014,7 +1014,7 @@ void Settings::save()
 	WRITE_BOOL_PROP(doActionOnStrokeFiltered);
 	WRITE_BOOL_PROP(trySelectOnStrokeFiltered);
 
-	WRITE_BOOL_PROP(experimentalInputSystemEnabled);
+	WRITE_BOOL_PROP(newInputSystemEnabled);
 	WRITE_BOOL_PROP(inputSystemTPCButton);
 	WRITE_BOOL_PROP(inputSystemDrawOutsideWindow);
 
@@ -2167,17 +2167,17 @@ bool Settings::getTrySelectOnStrokeFiltered() const
 
 void Settings::setExperimentalInputSystemEnabled(bool systemEnabled)
 {
-	if (this->experimentalInputSystemEnabled == systemEnabled)
+	if (this->newInputSystemEnabled == systemEnabled)
 	{
 		return;
 	}
-	this->experimentalInputSystemEnabled = systemEnabled;
+	this->newInputSystemEnabled = systemEnabled;
 	save();
 }
 
 bool Settings::getExperimentalInputSystemEnabled() const
 {
-	return this->experimentalInputSystemEnabled;
+	return this->newInputSystemEnabled;
 }
 
 void Settings::setInputSystemTPCButtonEnabled(bool tpcButtonEnabled)
