@@ -356,6 +356,9 @@ public:
 	double getAudioGain() const;
 	void setAudioGain(double gain);
 
+	unsigned int getDefaultSeekTime() const;
+	void setDefaultSeekTime(unsigned int t);
+
 	string const& getPluginEnabled() const;
 	void setPluginEnabled(string pluginEnabled);
 
@@ -785,6 +788,11 @@ private:
 	 * The gain by which to amplify the recorded audio samples
 	 */
 	double audioGain;
+
+	/**
+	 * The default time by which the playback will seek backwards and forwards
+	 */
+	unsigned int defaultSeekTime;
 
 	/**
 	 * List of enabled plugins (only the one which are not enabled by default)

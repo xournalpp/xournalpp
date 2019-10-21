@@ -135,6 +135,7 @@ void Settings::loadDefault()
 	this->audioInputDevice = -1;
 	this->audioOutputDevice = -1;
 	this->audioGain = 1.0;
+	this->defaultSeekTime = 5;
 
 	this->pluginEnabled = "";
 	this->pluginDisabled = "";
@@ -563,6 +564,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "audioGain") == 0)
 	{
 		this->audioGain = tempg_ascii_strtod((const char *) value, nullptr);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "defaultSeekTime") == 0)
+	{
+		this->defaultSeekTime = tempg_ascii_strtod((const char *) value, nullptr);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioInputDevice") == 0)
 	{
@@ -996,6 +1001,7 @@ void Settings::save()
 	WRITE_INT_PROP(audioOutputDevice);
 	WRITE_DOUBLE_PROP(audioSampleRate);
 	WRITE_DOUBLE_PROP(audioGain);
+	WRITE_INT_PROP(defaultSeekTime);
 
 	WRITE_STRING_PROP(pluginEnabled);
 	WRITE_STRING_PROP(pluginDisabled);
@@ -2063,6 +2069,21 @@ void Settings::setAudioGain(double gain)
 		return;
 	}
 	this->audioGain = gain;
+	save();
+}
+
+unsigned int Settings::getDefaultSeekTime() const
+{
+	return this->defaultSeekTime;
+}
+
+void Settings::setDefaultSeekTime(unsigned int t)
+{
+	if (this->defaultSeekTime == t)
+	{
+		return;
+	}
+	this->defaultSeekTime = t;
 	save();
 }
 

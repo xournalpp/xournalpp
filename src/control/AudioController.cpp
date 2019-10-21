@@ -102,13 +102,12 @@ void AudioController::pausePlayback()
 
 void AudioController::seekForwards()
 {
-	/** TODO: add default seek parameter in settings */
-	this->audioPlayer->seek(5);
+	this->audioPlayer->seek(this->settings->getDefaultSeekTime());
 }
 
 void AudioController::seekBackwards()
 {
-	this->audioPlayer->seek(-5);
+	this->audioPlayer->seek(-1 * this->settings->getDefaultSeekTime());
 }
 
 void AudioController::continuePlayback()

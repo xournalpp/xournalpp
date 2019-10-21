@@ -414,6 +414,7 @@ void SettingsDialog::load()
 	}
 
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spAudioGain")), settings->getAudioGain());
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")), settings->getDefaultSeekTime());
 }
 
 string SettingsDialog::updateHideString(const string& hidden, bool hideMenubar, bool hideSidebar)
@@ -641,6 +642,7 @@ void SettingsDialog::save()
 	}
 
 	settings->setAudioGain((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spAudioGain"))));
+	settings->setDefaultSeekTime((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime"))));
 
 	for (DeviceClassConfigGui* deviceClassConfigGui : this->deviceClassConfigs)
 	{
