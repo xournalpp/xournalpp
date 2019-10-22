@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-21 23:28+0000\n"
-"PO-Revision-Date: 2019-10-21 23:38\n"
+"PO-Revision-Date: 2019-10-22 10:44\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -86,7 +86,7 @@ msgstr "Attribut \"{1}\" konnte nicht als Fließkommazahl ausgelesen werden, der
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:132
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr ""
+msgstr "Attribut \"{1}\" konnte nicht als Fließkommazahl ausgelesen werden, der Wert ist Null"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:160
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:183
@@ -95,7 +95,7 @@ msgstr "Attribut \"{1}\" konnte nicht als Ganzzahl ausgelesen werden, der Wert i
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:152
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr ""
+msgstr "Attribut \"{1}\" konnte nicht als Ganzzahl ausgelesen werden, der Wert ist NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:205
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:228
@@ -104,7 +104,7 @@ msgstr "Attribut \"{1}\" konnte nicht als size_t ausgelesen werden, der Wert ist
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:197
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr ""
+msgstr "Attribut \"{1}\" konnte nicht als size_t ausgelesen werden, der Wert ist NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:70
 msgid "Attribute color not set!"
@@ -538,7 +538,7 @@ msgstr "Schriftart"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Forward"
-msgstr ""
+msgstr "Weiterleiten"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Go to first page"
@@ -1570,7 +1570,7 @@ msgstr "... UND Wie viel Zeit seit dem letzten Strich vergangen sein muss.\n\n"
 
 #: ../ui/settings.glade:3968
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -2279,7 +2279,7 @@ msgstr "Stift Optionen"
 
 #: ../ui/settings.glade:3988
 msgid "Playback Settings"
-msgstr ""
+msgstr "Wiedergabeeinstellungen"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
