@@ -125,8 +125,6 @@ protected:
 	void initTools();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
     std::array<Tool*, TOOL_COUNT> tools;
 	Tool* current = nullptr;
 
