@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-21 23:28+0000\n"
-"PO-Revision-Date: 2019-10-21 23:38\n"
+"PO-Revision-Date: 2019-10-23 00:34\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -86,7 +86,7 @@ msgstr "L'attributo \"{1}\" non può essere interpretato come double, il valore 
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:132
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr ""
+msgstr "L'attributo \"{1}\" non può essere analizzato come doppio, il valore è nullptr"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:160
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:183
@@ -95,7 +95,7 @@ msgstr "L'attributo \"{1}\" non può essere interpretato come int, il valore è 
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:152
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr ""
+msgstr "L'attributo \"{1}\" non può essere analizzato come int, il valore è nullptr"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:205
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:228
@@ -104,7 +104,7 @@ msgstr "L'attributo \"{1}\" non può essere interpretato come int, il valore è 
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:197
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr ""
+msgstr "L'attributo \"{1}\" non può essere analizzato come dimensione_t, il valore è nullptr"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:70
 msgid "Attribute color not set!"
@@ -213,7 +213,8 @@ msgstr "Impossibile trovare pdflatex in PATH.\n"
 #: ../src/control/LatexController.cpp:104
 msgid "Could not find the LaTeX package 'standalone'.\n"
 "Please install standalone (found in texlive-latex-extra) and make sure it's accessible by your LaTeX installation."
-msgstr ""
+msgstr "Impossibile trovare il pacchetto LaTeX 'normalizzazione'.\n"
+"Si prega di installare una sola (trovato in texlive-latex-extra) e assicurarsi che sia accessibile dalla tua installazione LaTeX."
 
 #: ../src/control/LatexController.cpp:449
 msgid "Could not load LaTeX PDF file"
@@ -525,7 +526,7 @@ msgstr "Riempi"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Fine"
-msgstr ""
+msgstr "Fine"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:70
 msgid "Floating Toolbox (experimental)"
@@ -537,7 +538,7 @@ msgstr "Carattere"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Forward"
-msgstr ""
+msgstr "Inoltra"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Go to first page"
@@ -1061,7 +1062,7 @@ msgstr "Ci dispiace, Xournal++ non può aprire files in remoto al momento\n"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:24
 msgid "Staves"
-msgstr ""
+msgstr "Moduli"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Stop"
@@ -1260,11 +1261,11 @@ msgstr "Spazio verticale"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:498
 msgid "Very Fine"
-msgstr ""
+msgstr "Molto sottile"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:503
 msgid "Very Thick"
-msgstr ""
+msgstr "Molto spesso"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:18
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:131
@@ -1475,7 +1476,7 @@ msgstr "xoj-preview-extractor: chiama con INPUT.xoj OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:158
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr ""
+msgstr "xoj-preview-extractor: impossibile trovare l'icona \"{1}\""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:102
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
@@ -1568,7 +1569,7 @@ msgstr "... E quanto tempo deve essere passato dall'ultimo tratto.\n\n"
 
 #: ../ui/settings.glade:3968
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1606,7 +1607,7 @@ msgstr "<b>Strumenti di Default</b>"
 
 #: ../ui/settings.glade:3568
 msgid "<b>Default</b>"
-msgstr ""
+msgstr "<b>Predefinito</b>"
 
 #: ../ui/exportSettings.glade:90
 msgid "<b>Document export settings</b>\n"
@@ -1617,7 +1618,8 @@ msgstr "<b>Impostazioni Esportazione Documento</b>\n"
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "<i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>Toolbox vuoto</b>\n"
+"<i>Menu: Vista/Toolbar</i>"
 
 #: ../ui/fillTransparency.glade:79
 msgid "<b>Fill transparency settings</b>\n"
@@ -1639,7 +1641,7 @@ msgstr "<b>Separatore</b>"
 
 #: ../ui/settings.glade:708
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
-msgstr ""
+msgstr "<i>Assegna classi di dispositivo ad ogni dispositivo di input del sistema. Cambia questi valori solo se i tuoi dispositivi non sono correttamente abbinati. (ad esempio la penna viene mostrata come touchscreen)</i>"
 
 #: ../ui/settings.glade:3659
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
@@ -1740,7 +1742,8 @@ msgstr "<i>Puoi configurare i dispositivi non identificati da GTK come touchscre
 #: ../ui/about.glade:73
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
-msgstr ""
+msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+"<i>La prossima generazione</i>"
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
@@ -1802,7 +1805,7 @@ msgstr "Segnaposto disponibili"
 
 #: ../ui/settings.glade:2026
 msgid "Background color between pages"
-msgstr ""
+msgstr "Colore di sfondo tra le pagine"
 
 #: ../ui/settings.glade:2160
 msgid "Big cursor for pen"
@@ -1818,7 +1821,7 @@ msgstr "Colore bordi per la pagina corrente e le altre selezioni"
 
 #: ../ui/about.glade:127
 msgid "Built on"
-msgstr ""
+msgstr "Basato su"
 
 #: ../ui/settings.glade:1208
 msgid "Button 1"
@@ -1866,7 +1869,7 @@ msgstr "<b>Nome salvataggio predefinito</b> "
 
 #: ../ui/settings.glade:3955
 msgid "Default Seek Time (in seconds)"
-msgstr ""
+msgstr "Tempo di ricerca predefinito (in secondi)"
 
 #: ../ui/settings.glade:386
 msgid "Default name: "
@@ -1902,7 +1905,7 @@ msgstr "Disabilita i disegni per questo dispositivo"
 
 #: ../ui/settings.glade:2308
 msgid "Disable scrollbar fade out"
-msgstr ""
+msgstr "Disattiva dissolvenza barra di scorrimento"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
@@ -1980,7 +1983,7 @@ msgstr "<b>Sensibilità alla Pressione</b>"
 
 #: ../ui/settings.glade:3266
 msgid "Enable Tap action"
-msgstr ""
+msgstr "Abilita azione tocco"
 
 #: ../ui/settings.glade:796
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
@@ -2052,15 +2055,15 @@ msgstr "GNU GPLv2 o sucessivo"
 
 #: ../ui/settings.glade:3874
 msgid "Gain"
-msgstr ""
+msgstr "Gain"
 
 #: ../ui/about.glade:153
 msgid "Git commit"
-msgstr ""
+msgstr "Commit Git"
 
 #: ../ui/settings.glade:2114
 msgid "Global"
-msgstr ""
+msgstr "Globale"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
@@ -2109,16 +2112,18 @@ msgstr "Opzi_oni Evidenziatore"
 #: ../ui/settings.glade:3317
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "Quanto corto (mm a schermo)  del tratto e...\n\n"
+"<i>Raccomandato: 1 mm</i>"
 
 #: ../ui/settings.glade:3297
 msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "Quanto è breve (tempo)  E...\n\n"
+"<i>Raccomandato: 150ms</i>"
 
 #: ../ui/settings.glade:3284
 msgid "Ignore Time (ms)"
-msgstr ""
+msgstr "Ignora tempo (ms)"
 
 #: ../ui/settings.glade:3773
 msgid "Input Device"
@@ -2126,7 +2131,7 @@ msgstr "Dispositivo di Input"
 
 #: ../ui/settings.glade:744
 msgid "Input Devices"
-msgstr ""
+msgstr "Dispositivo di immisione"
 
 #: ../ui/settings.glade:869
 msgid "Input System"
@@ -2179,7 +2184,8 @@ msgstr "Lunghezza massima (mm)"
 #: ../ui/settings.glade:827
 msgid "Merge button events with stylus tip events\n"
 "<i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
+msgstr "Unisci gli eventi dei pulsanti con gli stili di punta\n"
+"<i>(Controlla questo se</i> \"<tt>xsetwacom ottiene *deviceId* Pulsante TabletPC</tt>\" <i>restituisce</i> \"<tt>su</tt>\"<i>)</i>"
 
 #: ../ui/settings.glade:961
 msgid "Middle Mouse Button"
@@ -2195,11 +2201,11 @@ msgstr "Pulsanti del Mouse"
 
 #: ../ui/main.glade:2555
 msgid "Move Down"
-msgstr ""
+msgstr "Sposta giù"
 
 #: ../ui/main.glade:2547
 msgid "Move Up"
-msgstr ""
+msgstr "Sposta su"
 
 #: ../ui/main.glade:1066
 msgid "N_ext annotated page"
@@ -2281,7 +2287,7 @@ msgstr "_Opzioni Penna"
 
 #: ../ui/settings.glade:3988
 msgid "Playback Settings"
-msgstr ""
+msgstr "Impostazioni di riproduzione"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
@@ -2309,11 +2315,11 @@ msgstr "<b>Sensibilità alla Pressione</b> "
 
 #: ../ui/about.glade:167
 msgid "RELEASE_IDENTIFIER"
-msgstr ""
+msgstr "RICEDERE_IDENTIFIER"
 
 #: ../ui/exportSettings.glade:127
 msgid "Range"
-msgstr ""
+msgstr "Intervallo"
 
 #: ../ui/main.glade:190
 msgid "Recent _Documents"
@@ -2453,7 +2459,7 @@ msgstr "B_arre degli Strumenti"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
-msgstr ""
+msgstr "Modello:"
 
 #: ../ui/settings.glade:1660 ../ui/settings.glade:1673
 msgid "Test"
@@ -2674,7 +2680,7 @@ msgstr "_Immagine"
 
 #: ../ui/main.glade:1092
 msgid "_Journal"
-msgstr ""
+msgstr "_Giornale"
 
 #: ../ui/main.glade:1011
 msgid "_Last Page"
