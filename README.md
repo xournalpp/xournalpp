@@ -146,7 +146,7 @@ sudo apt update
 sudo apt install xournalpp
 ```
 
-### OpenSuse
+### openSUSE
 On openSUSE Tumbleweed, the released version of xournalpp is available from the main repository:
 ```bash
 sudo zypper in xournalpp
