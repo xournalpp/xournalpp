@@ -20,13 +20,6 @@ ToolHandler::ToolHandler(ToolListener* listener, ActionHandler* actionHandler, S
 
 void ToolHandler::initTools()
 {
-	Tool* t = nullptr;
-
-	for (int i = 0; i < TOOL_COUNT; i++)
-	{
-		tools[i] = nullptr;
-	}
-
 	double* thickness = new double[5];
 	// pen thicknesses = 0.15, 0.3, 0.5, 0.8, 2 mm
 	thickness[TOOL_SIZE_VERY_FINE] = 0.42;

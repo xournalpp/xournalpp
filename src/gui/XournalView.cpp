@@ -673,7 +673,7 @@ void XournalView::pageDeleted(size_t page)
 	size_t currentPage = control->getCurrentPageNo();
 
 	delete this->viewPages[page];
-	viewPages.erase(viewPages.begin() + page);
+	viewPages.erase(begin(viewPages) + page);
 
 	layoutPages();
 	control->getScrollHandler()->scrollToPage(currentPage);
@@ -712,7 +712,7 @@ void XournalView::pageInserted(size_t page)
 	XojPageView* pageView = new XojPageView(this, doc->getPage(page));
 	doc->unlock();
 
-	viewPages.insert(viewPages.begin() + page, pageView);
+	viewPages.insert(begin(viewPages) + page, pageView);
 
 	this->viewPages[page] = pageView;
 
