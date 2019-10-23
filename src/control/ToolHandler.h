@@ -12,6 +12,7 @@
 #pragma once
 
 #include <array>
+#include <memory>
 #include "Tool.h"
 #include "settings/Settings.h"
 
