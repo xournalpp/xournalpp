@@ -84,8 +84,8 @@ void ToolHandler::initTools()
 	tools[TOOL_DRAW_ARROW - TOOL_PEN] =
 	        std::make_unique<Tool>("drawArrow", TOOL_DRAW_ARROW, 0x000000, TOOL_CAP_NONE, nullptr);
 
-	tools[TOOL_DRAW_COORDINATE_SYSTEM - TOOL_PEN] =
-	        std::make_unique<Tool>("drawCoordinateSystem", TOOL_DRAW_COORDINATE_SYSTEM, 0x000000, TOOL_CAP_NONE, nullptr);
+	tools[TOOL_DRAW_COORDINATE_SYSTEM - TOOL_PEN] = std::make_unique<Tool>(
+	        "drawCoordinateSystem", TOOL_DRAW_COORDINATE_SYSTEM, 0x000000, TOOL_CAP_NONE, nullptr);
 
 	tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] =
 	        std::make_unique<Tool>("showFloatingToolbox", TOOL_FLOATING_TOOLBOX, 0x000000, TOOL_CAP_NONE, nullptr);

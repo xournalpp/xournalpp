@@ -410,7 +410,7 @@ void XournalView::requestFocus()
 
 bool XournalView::searchTextOnPage(string text, size_t p, int* occures, double* top)
 {
-    if (p == npos || p >= this->viewPages.size())
+	if (p == npos || p >= this->viewPages.size())
 	{
 		return false;
 	}
@@ -429,7 +429,7 @@ void XournalView::forceUpdatePagenumbers()
 
 XojPageView* XournalView::getViewFor(size_t pageNr)
 {
-    if (pageNr == npos || pageNr >= this->viewPages.size())
+	if (pageNr == npos || pageNr >= this->viewPages.size())
 	{
 		return nullptr;
 	}
@@ -520,7 +520,7 @@ void XournalView::pageRelativeXY(int offCol, int offRow)
 
 void XournalView::endTextAllPages(XojPageView* except)
 {
-    for (size_t i = 0; i < this->viewPages.size(); i++)
+	for (size_t i = 0; i < this->viewPages.size(); i++)
 	{
 		XojPageView* v = this->viewPages[i];
 		if (except != v)
@@ -563,7 +563,7 @@ void XournalView::getPasteTarget(double& x, double& y)
  */
 Rectangle* XournalView::getVisibleRect(size_t page)
 {
-    if (page == npos || page >= this->viewPages.size())
+	if (page == npos || page >= this->viewPages.size())
 	{
 		return nullptr;
 	}
@@ -662,7 +662,7 @@ void XournalView::pageSizeChanged(size_t page)
 
 void XournalView::pageChanged(size_t page)
 {
-    if (page != npos && page < this->viewPages.size())
+	if (page != npos && page < this->viewPages.size())
 	{
 		this->viewPages[page]->rerenderPage();
 	}
@@ -681,7 +681,7 @@ void XournalView::pageDeleted(size_t page)
 
 TextEditor* XournalView::getTextEditor()
 {
-    for (auto&& page : viewPages)
+	for (auto&& page: viewPages)
 	{
 		if (page->getTextEditor())
 		{
@@ -694,7 +694,7 @@ TextEditor* XournalView::getTextEditor()
 
 void XournalView::resetShapeRecognizer()
 {
-    for (auto&& page : viewPages)
+	for (auto&& page: viewPages)
 	{
 		page->resetShapeRecognizer();
 	}
