@@ -13,6 +13,11 @@
 
 #include <iterator>
 
+/**
+ *	for_first_then_each
+ *	loop over the container from begin to end but handles the first element
+ *	differently.
+ */
 template <typename Container, typename Function_first, typename Function_others>
 void for_first_then_each(Container container, Function_first function_first, Function_others function_others)
 {
