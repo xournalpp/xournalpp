@@ -35,6 +35,7 @@ sub push_changes {
 	}
 }
 
+# Extract ranges of added lines
 while (my $line = <STDIN>) {
 	if ($line =~ /^diff .* a\/(?<old_file>.*) b\/(?<new_file>.*)$/) {
 		# New file
@@ -43,6 +44,10 @@ while (my $line = <STDIN>) {
 	} elsif ($line =~ /^@@ -([0-9]+)(,([0-9]+))? \+(?<new_pos>[0-9]+)(,(?<new_len>[0-9]+))? @@/) {
 		my $new_len = $+{new_len};
 		$new_len = 1 if ($new_len eq "");
+        if ($new_len == 0) {
+          # Ignore hunks with no added lines
+          next;
+        }
 		push @hunks, [$+{new_pos}, $new_len];
 	}
 }
