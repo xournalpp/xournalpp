@@ -49,7 +49,7 @@ double CircleRecognizer::scoreCircle(Stroke* s, Inertia& inertia)
 	Point p1;
 	for_first_then_each(
 	        s->getPointVector(),
-	        [&p1, &x0, &y0, &r0](auto first) { p1 = first; },
+	        [&p1](auto first) { p1 = first; },
 	        [&p1, &x0, &y0, &r0, &sum](auto other) {
 		        Point p2 = other;
 
@@ -57,7 +57,7 @@ double CircleRecognizer::scoreCircle(Stroke* s, Inertia& inertia)
 		        double deltar = hypot(p1.x - x0, p1.y - y0) - r0;
 		        sum += dm * fabs(deltar);
 
-		        p2 = p1;
+		        p1 = p2;
 	        });
 
 	return sum / (inertia.getMass() * r0);
