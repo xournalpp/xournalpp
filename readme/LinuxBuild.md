@@ -39,7 +39,7 @@ sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev portaudio19-dev libs
 libcppunit-dev dvipng texlive libxml2-dev liblua5.3-dev libzip-dev
 ````
 
-#### For OpenSuse:
+#### For openSUSE:
 ```bash
 sudo zypper install cmake gtk3-devel cppunit-devel portaudio-devel libsndfile-devel \
 texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel
