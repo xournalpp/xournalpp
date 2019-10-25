@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-21 23:28+0000\n"
-"PO-Revision-Date: 2019-10-21 23:38\n"
+"PO-Revision-Date: 2019-10-25 21:06\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -566,7 +566,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:69
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:451
 msgid "Hand"
-msgstr ""
+msgstr "Käsi"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:82
 msgid "Hide all"
@@ -1519,7 +1519,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3968
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
