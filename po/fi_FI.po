@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-21 23:28+0000\n"
-"PO-Revision-Date: 2019-10-26 08:56\n"
+"PO-Revision-Date: 2019-10-26 09:05\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -954,7 +954,7 @@ msgstr "Haku"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:453
 msgid "Select Font"
-msgstr ""
+msgstr "Valitse fontti"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:448
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
@@ -2286,11 +2286,11 @@ msgstr "Valitse taustaväri"
 
 #: ../ui/settings.glade:3696
 msgid "Select Folder"
-msgstr ""
+msgstr "Valitse kansio"
 
 #: ../ui/images.glade:8
 msgid "Select Image"
-msgstr ""
+msgstr "Valitse kuva"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -2427,7 +2427,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3038
 msgid "Usually 0 or 1"
-msgstr ""
+msgstr "Yleensä 0 tai 1"
 
 #: ../ui/about.glade:101
 msgid "Version"
@@ -2483,7 +2483,7 @@ msgstr ""
 
 #: ../ui/main.glade:644
 msgid "_2 Columns"
-msgstr ""
+msgstr "_2 saraketta"
 
 #: ../ui/main.glade:749
 msgid "_2 Rows"
@@ -2491,7 +2491,7 @@ msgstr "_2 riviä"
 
 #: ../ui/main.glade:655
 msgid "_3 Columns"
-msgstr ""
+msgstr "_3 saraketta"
 
 #: ../ui/main.glade:760
 msgid "_3 Rows"
@@ -2499,7 +2499,7 @@ msgstr "_3 riviä"
 
 #: ../ui/main.glade:666
 msgid "_4 Columns"
-msgstr ""
+msgstr "_4 saraketta"
 
 #: ../ui/main.glade:771
 msgid "_4 Rows"
@@ -2507,7 +2507,7 @@ msgstr "_4 riviä"
 
 #: ../ui/main.glade:677
 msgid "_5 Columns"
-msgstr ""
+msgstr "_5 saraketta"
 
 #: ../ui/main.glade:782
 msgid "_5 Rows"
@@ -2515,7 +2515,7 @@ msgstr "_5 riviä"
 
 #: ../ui/main.glade:688
 msgid "_6 Columns"
-msgstr ""
+msgstr "_6 saraketta"
 
 #: ../ui/main.glade:793
 msgid "_6 Rows"
@@ -2523,7 +2523,7 @@ msgstr "_6 riviä"
 
 #: ../ui/main.glade:699
 msgid "_7 Columns"
-msgstr ""
+msgstr "_7 saraketta"
 
 #: ../ui/main.glade:804
 msgid "_7 Rows"
@@ -2531,7 +2531,7 @@ msgstr "_7 riviä"
 
 #: ../ui/main.glade:710
 msgid "_8 Columns"
-msgstr ""
+msgstr "_8 saraketta"
 
 #: ../ui/main.glade:815
 msgid "_8 Rows"
