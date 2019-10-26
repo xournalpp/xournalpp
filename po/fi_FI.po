@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-21 23:28+0000\n"
-"PO-Revision-Date: 2019-10-25 21:06\n"
+"PO-Revision-Date: 2019-10-26 08:56\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -1175,7 +1175,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:53
 msgid "Toolbars"
-msgstr ""
+msgstr "Työkalupalkki"
 
 #: ../src/util/CrashHandler.cpp:37
 msgid "Trying to emergency save the current open document…"
@@ -2487,7 +2487,7 @@ msgstr ""
 
 #: ../ui/main.glade:749
 msgid "_2 Rows"
-msgstr ""
+msgstr "_2 riviä"
 
 #: ../ui/main.glade:655
 msgid "_3 Columns"
@@ -2495,7 +2495,7 @@ msgstr ""
 
 #: ../ui/main.glade:760
 msgid "_3 Rows"
-msgstr ""
+msgstr "_3 riviä"
 
 #: ../ui/main.glade:666
 msgid "_4 Columns"
@@ -2503,7 +2503,7 @@ msgstr ""
 
 #: ../ui/main.glade:771
 msgid "_4 Rows"
-msgstr ""
+msgstr "_4 riviä"
 
 #: ../ui/main.glade:677
 msgid "_5 Columns"
@@ -2511,7 +2511,7 @@ msgstr ""
 
 #: ../ui/main.glade:782
 msgid "_5 Rows"
-msgstr ""
+msgstr "_5 riviä"
 
 #: ../ui/main.glade:688
 msgid "_6 Columns"
@@ -2519,7 +2519,7 @@ msgstr ""
 
 #: ../ui/main.glade:793
 msgid "_6 Rows"
-msgstr ""
+msgstr "_6 riviä"
 
 #: ../ui/main.glade:699
 msgid "_7 Columns"
@@ -2527,7 +2527,7 @@ msgstr ""
 
 #: ../ui/main.glade:804
 msgid "_7 Rows"
-msgstr ""
+msgstr "_7 riviä"
 
 #: ../ui/main.glade:710
 msgid "_8 Columns"
@@ -2535,7 +2535,7 @@ msgstr ""
 
 #: ../ui/main.glade:815
 msgid "_8 Rows"
-msgstr ""
+msgstr "_8 riviä"
 
 #: ../ui/main.glade:199
 msgid "_Annotate PDF"
@@ -2639,7 +2639,7 @@ msgstr "_Kynä"
 
 #: ../ui/main.glade:1889
 msgid "_Plugin"
-msgstr ""
+msgstr "_Lisäosa"
 
 #: ../ui/main.glade:475
 msgid "_Presentation Mode"
