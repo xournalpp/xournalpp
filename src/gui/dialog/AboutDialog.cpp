@@ -16,9 +16,7 @@ AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath)
 	gtk_box_pack_start(GTK_BOX(w), linkButton, true, true, 0);
 }
 
-AboutDialog::~AboutDialog()
-{
-}
+AboutDialog::~AboutDialog() = default;
 
 void AboutDialog::show(GtkWindow* parent)
 {
