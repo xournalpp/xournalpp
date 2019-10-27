@@ -13,17 +13,17 @@
 
 #include "Attribute.h"
 #include <XournalType.h>
+#include <vector>
 
 class DoubleArrayAttribute : public XMLAttribute
 {
 public:
-	DoubleArrayAttribute(const char* name, double* values, int count);
+	DoubleArrayAttribute(const char* name, std::vector<double>&& values);
 	virtual ~DoubleArrayAttribute();
 
 public:
 	virtual void writeOut(OutputStream* out);
 
 private:
-	double* values;
-	int count;
+	std::vector<double> values;
 };

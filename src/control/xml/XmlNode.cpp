@@ -72,7 +72,8 @@ void XmlNode::setAttrib(const char* attrib, size_t  value)
  */
 void XmlNode::setAttrib(const char* attrib, double* value, int count)
 {
-	putAttrib(new DoubleArrayAttribute(attrib, value, count));
+	putAttrib(new DoubleArrayAttribute(attrib, std::vector<double>{value, value + count}));
+	g_free(value);
 }
 
 void XmlNode::writeOut(OutputStream* out, ProgressListener* listener)
