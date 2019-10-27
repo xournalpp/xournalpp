@@ -43,6 +43,7 @@
 #include "pixbuf-utils.h"
 
 #include "util/cpp14memory.h"
+#include "util/XojMsgBox.h"
 
 #include <gdk/gdk.h>
 
@@ -413,6 +414,15 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 		{
 			PlayObject play(this);
 			play.at(x, y);
+			if (play.playbackStatus)
+			{
+				auto& status = *play.playbackStatus;
+				if (!status.success)
+				{
+					string message = FS(_F("Unable to play audio recording {1}") % status.filename);
+					XojMsgBox::showErrorToUser(this->xournal->getControl()->getGtkWindow(), message);
+				}
+			}
 		}
 	}
 	else if (h->getToolType() == TOOL_TEXT)
