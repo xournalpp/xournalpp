@@ -2842,12 +2842,14 @@ void Control::exportAsPdf()
 {
 	XOJ_CHECK_TYPE(Control);
 
+	this->clearSelectionEndText();
 	exportBase(new PdfExportJob(this));
 }
 
 void Control::exportAs()
 {
 	XOJ_CHECK_TYPE(Control);
+	this->clearSelectionEndText();
 	exportBase(new CustomExportJob(this));
 }
 
