@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-21 23:28+0000\n"
-"PO-Revision-Date: 2019-10-31 12:16\n"
+"PO-Revision-Date: 2019-10-31 12:28\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -1054,7 +1054,8 @@ msgstr "Przepraszamy, Xournal++ może mieć otwarty tylko jeden plik na raz.\n"
 #: ../src/control/XournalMain.cpp:393
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
-msgstr ""
+msgstr "Przepraszamy, Xournal++ nie otwiera plików zdalnych.\n"
+"Aby otworzyć plik, skopiuj go do lokalnego katalogu."
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:24
 msgid "Staves"
@@ -1126,19 +1127,19 @@ msgstr "PDF w tle nie został znaleziony."
 
 #: ../src/control/xojfile/LoadHandler.cpp:138
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "Plik nie jest prawidłowym plikiem .xopp (brak Mimetype): \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:146
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "Plik nie jest prawidłowym plikiem .xopp (błędny Mimetype): \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:155
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr ""
+msgstr "Plik nie jest prawidłowym plikiem .xopp (brak znacznika wersji): \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:169
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr ""
+msgstr "Plik nie jest prawidłowym plikiem .xopp (Uszkodzony znacznik wersji): \"{1}\""
 
 #: ../src/control/LatexController.cpp:353
 msgid "The formula is empty when rendered or invalid."
@@ -1167,7 +1168,7 @@ msgstr "Gruby"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Thickness - don't change"
-msgstr ""
+msgstr "Grubość - nie zmieniaj"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Thin"
@@ -1188,7 +1189,7 @@ msgstr "Zmień pełny ekran"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:60
 msgid "Tool - don't change"
-msgstr ""
+msgstr "Narzędzie - nie zmieniaj"
 
 #: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:141
 msgid "Toolbar found: {1}"
@@ -1290,7 +1291,7 @@ msgstr "Błąd parsera XML: {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:27
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "Xournal (Zgodność)"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal files"
@@ -1456,7 +1457,7 @@ msgstr "ekran dotykowy"
 
 #: ../src/util/DeviceListHelper.cpp:148
 msgid "trackpoint"
-msgstr ""
+msgstr "trackpoint"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:288
 msgid "whiteout"
@@ -1539,7 +1540,8 @@ msgstr ""
 #: ../ui/settings.glade:3360
 msgid "... AND How much time must have passed since last stroke.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr ""
+msgstr "... ORAZ ile czasu musi upłynąć od ostatniego uderzenia.\n\n"
+"<i>Zalecane: 500ms</i>"
 
 #: ../ui/settings.glade:3968
 msgid "1,00"
@@ -1551,11 +1553,11 @@ msgstr "<b>... lub wybierz już używany obraz:</b>"
 
 #: ../ui/pageTemplate.glade:256
 msgid "<b>Background Color</b>"
-msgstr ""
+msgstr "<b>Kolor tła</b>"
 
 #: ../ui/pageTemplate.glade:269
 msgid "<b>Background</b>"
-msgstr ""
+msgstr "<b>Tło</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
@@ -1564,7 +1566,8 @@ msgstr "<b>Kolor</b>"
 #: ../ui/pageTemplate.glade:110
 msgid "<b>Configure Xournal++ Template Page</b>\n"
 "This settings will be used if you create a new document"
-msgstr ""
+msgstr "<b>Skonfiguruj szablon strony Xournal++</b>\n"
+"Te ustawienia zostaną użyte, jeśli utworzysz nowy dokument"
 
 #: ../ui/pageTemplate.glade:241 ../ui/pageTemplate.glade:282
 msgid "<b>Copy last page</b>\n"
@@ -1583,7 +1586,8 @@ msgstr "<b>Domyślne</b>"
 #: ../ui/exportSettings.glade:90
 msgid "<b>Document export settings</b>\n"
 "Select pages to export"
-msgstr ""
+msgstr "<b>Ustawienia eksportu dokumentu</b>\n"
+"Wybierz strony do wyeksportowania"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
