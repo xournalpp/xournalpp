@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-21 23:28+0000\n"
-"PO-Revision-Date: 2019-10-31 12:52\n"
+"PO-Revision-Date: 2019-10-31 13:05\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -57,7 +57,7 @@ msgstr "<span foreground='red' size='x-large'>Brakuje wymaganego pliku UI:\n"
 
 #: ../src/control/XournalMain.cpp:305
 msgid "Absolute path for the audio files playback"
-msgstr "Bezpośrednia ścieżka do odtwarzania plików dzwiękowych"
+msgstr "Bezpośrednia ścieżka do odtwarzania plików dźwiękowych"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Add/Edit Tex"
@@ -100,7 +100,7 @@ msgstr ""
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:205
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:228
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr "Atribut \"{1}\" nie może być przetworzony jako jako size_t, wartość to \"{2}\""
+msgstr "Atrybut \"{1}\" nie może być przetworzony jako jako size_t, wartość to \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:197
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
@@ -2670,7 +2670,7 @@ msgstr "_Pióro"
 
 #: ../ui/main.glade:1889
 msgid "_Plugin"
-msgstr ""
+msgstr "_Wtyczki"
 
 #: ../ui/main.glade:475
 msgid "_Presentation Mode"
