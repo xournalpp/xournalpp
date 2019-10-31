@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-21 23:28+0000\n"
-"PO-Revision-Date: 2019-10-29 21:23\n"
+"PO-Revision-Date: 2019-10-31 11:57\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -932,7 +932,7 @@ msgstr "Linie z marginesem"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Ruled with vertical line"
-msgstr ""
+msgstr "Linie z marginesem"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Ruler"
