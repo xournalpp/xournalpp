@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-21 23:28+0000\n"
-"PO-Revision-Date: 2019-10-31 11:57\n"
+"PO-Revision-Date: 2019-10-31 12:16\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -562,7 +562,7 @@ msgstr "Idź do poprzedniej warstwy"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Go to top layer"
-msgstr ""
+msgstr "Przejdź do górnej warstwy"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Graph"
@@ -580,7 +580,7 @@ msgstr "Zielony"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "Grid Snapping"
-msgstr ""
+msgstr "Przyciąganie do siatki"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:69
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:451
@@ -838,7 +838,7 @@ msgstr "Numer strony"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:389
 msgid "Paired pages"
-msgstr ""
+msgstr "Tryb dwóch stron"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
 #: ../src/undo/AddUndoAction.cpp:94
@@ -847,7 +847,7 @@ msgstr "Wklej"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:457
 msgid "Pause / Play"
-msgstr ""
+msgstr "Wstrzymaj / Odtwórz"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:61
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:266
@@ -862,7 +862,7 @@ msgstr "Bez tła"
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:17
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:81
 msgid "Play Object"
-msgstr ""
+msgstr "Odtwórz Obiekt"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:21
 msgid "Predefined"
@@ -874,11 +874,11 @@ msgstr "Tryb prezentacji"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:456
 msgid "Record Audio / Stop Recording"
-msgstr ""
+msgstr "Nagraj dźwięk / Zatrzymaj nagrywanie"
 
 #: ../src/control/Control.cpp:987
 msgid "Recorder could not be started."
-msgstr ""
+msgstr "Nagrywarka nie mogła zostać uruchomiona."
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:14
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:127
@@ -900,11 +900,11 @@ msgstr "Usuń PDF w tle"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:179
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr ""
+msgstr "Usunięto element z paska narzędzi {1} ID {2}"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:175
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr ""
+msgstr "Usunięto element {1} z paska narzędzi {2} ID {3}"
 
 #: ../src/util/XojMsgBox.cpp:82
 msgid "Replace"
@@ -912,7 +912,7 @@ msgstr "Zamień"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1276
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr ""
+msgstr "Żądany plik tymczasowy nie został znaleziony dla załącznika {1}"
 
 #: ../src/control/XournalMain.cpp:183
 msgid "Restore file"
@@ -924,7 +924,7 @@ msgstr "Obracanie"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "Rotation Snapping"
-msgstr ""
+msgstr "Przyciąganie rotacyjne"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:22
 msgid "Ruled"
@@ -1048,7 +1048,8 @@ msgstr "Pokaż tylko nieużywane strony ({1} nieużywanych stron)"
 #: ../src/control/XournalMain.cpp:378
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr ""
+msgstr "Przepraszamy, Xournal++ może mieć otwarty tylko jeden plik na raz.\n"
+"Inne pliki są pomijane."
 
 #: ../src/control/XournalMain.cpp:393
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
