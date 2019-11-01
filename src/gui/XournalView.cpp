@@ -714,8 +714,6 @@ void XournalView::pageInserted(size_t page)
 
 	viewPages.insert(begin(viewPages) + page, pageView);
 
-	this->viewPages[page] = pageView;
-
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	layout->recalculate();
 	layout->updateVisibility();
@@ -885,6 +883,7 @@ void XournalView::documentChanged(DocumentChangeType type)
 	doc->lock();
 
 	size_t pagecount = doc->getPageCount();
+	viewPages.reserve(pagecount);
 	for (size_t i = 0; i < pagecount; i++)
 	{
 		viewPages.push_back(new XojPageView(this, doc->getPage(i)));

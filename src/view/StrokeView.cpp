@@ -22,8 +22,8 @@ void StrokeView::drawFillStroke()
 {
 	for_first_then_each(
 	        s->getPointVector(),
-	        [this](auto first) { cairo_move_to(this->cr, first.x, first.y); },
-	        [this](auto other) { cairo_line_to(this->cr, other.x, other.y); });
+	        [this](auto const& first) { cairo_move_to(this->cr, first.x, first.y); },
+	        [this](auto const& other) { cairo_line_to(this->cr, other.x, other.y); });
 
 	cairo_fill(cr);
 }
@@ -113,19 +113,10 @@ void StrokeView::drawNoPressure()
 	cairo_set_line_width(cr, width * scaleFactor);
 	applyDashed(0);
 
-	for (auto&& point: s->getPointVector())
-	{
-		if (startPoint <= count)
-		{
-			cairo_line_to(cr, point.x, point.y);
-		}
-		else
-		{
-			cairo_move_to(cr, point.x, point.y);
-		}
-		count++;
-	}
-
+	for_first_then_each(
+	        s->getPointVector(),
+	        [this](auto const& first) { cairo_move_to(cr, first.x, first.y); },
+	        [this](auto const& other) { cairo_line_to(cr, other.x, other.y); });
 	cairo_stroke(cr);
 
 	if (group)
@@ -148,39 +139,21 @@ void StrokeView::drawNoPressure()
  * Draw a stroke with pressure, for this multiple
  * lines with different widths needs to be drawn
  */
-void StrokeView::drawWithPressuire()
+void StrokeView::drawWithPressure()
 {
-	int count = 1;
-	double width = s->getWidth();
-
-	Point lastPoint1;
 	double dashOffset = 0;
 
-	for_first_then_each(
-	        s->getPointVector(),
-	        [&lastPoint1](auto first) { lastPoint1 = first; },
-	        [this, &lastPoint1, &dashOffset, &count, &width](auto other) {
-		        if (startPoint <= count)
-		        {
-			        if (lastPoint1.z != Point::NO_PRESSURE)
-			        {
-				        width = lastPoint1.z;
-			        }
-
-			        // Set width
-			        cairo_set_line_width(cr, width * scaleFactor);
-			        applyDashed(dashOffset);
-
-			        cairo_move_to(cr, lastPoint1.x, lastPoint1.y);
-			        cairo_line_to(cr, other.x, other.y);
-			        cairo_stroke(cr);
-		        }
-		        count++;
-		        dashOffset += lastPoint1.lineLengthTo(other);
-		        lastPoint1 = other;
-	        });
-
-	cairo_stroke(cr);
+	for (auto p1i = begin(s->getPointVector()), p2i = std::next(p1i), endi = end(s->getPointVector());
+	     p1i != endi && p2i != endi; ++p1i, ++p2i)
+	{
+		auto width = p1i->z != Point::NO_PRESSURE ? p1i->z : s->getWidth();
+		cairo_set_line_width(cr, width * scaleFactor);
+		applyDashed(dashOffset);
+		cairo_move_to(cr, p1i->x, p1i->y);
+		cairo_line_to(cr, p2i->x, p2i->y);
+		cairo_stroke(cr);
+		dashOffset += p1i->lineLengthTo(*p2i);
+	}
 }
 
 void StrokeView::paint(bool dontRenderEditingStroke)
@@ -202,6 +175,6 @@ void StrokeView::paint(bool dontRenderEditingStroke)
 	}
 	else
 	{
-		drawWithPressuire();
+		drawWithPressure();
 	}
 }

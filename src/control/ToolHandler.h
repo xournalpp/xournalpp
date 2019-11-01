@@ -126,7 +126,7 @@ protected:
 
 private:
 	std::array<std::unique_ptr<Tool>, TOOL_COUNT> tools;
-	Tool* current = NULL;
+	Tool* current = nullptr;
 
 	/**
 	 * Last selected tool, reference with color values etc.

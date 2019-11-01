@@ -36,7 +36,11 @@ Stroke* CircleRecognizer::makeCircleShape(Stroke* originalStroke, Inertia& inert
  */
 double CircleRecognizer::scoreCircle(Stroke* s, Inertia& inertia)
 {
-	if (inertia.getMass() == 0.0)
+	double r0 = inertia.rad();
+	double divisor = inertia.getMass() * r0;
+
+	//Todo: test: std::abs(divisor) <= std::numeric_limits<double>::epsilon()
+	if (divisor == 0)
 	{
 		return 0;
 	}
@@ -44,23 +48,17 @@ double CircleRecognizer::scoreCircle(Stroke* s, Inertia& inertia)
 	double sum = 0.0;
 	double x0 = inertia.centerX();
 	double y0 = inertia.centerY();
-	double r0 = inertia.rad();
 
-	Point p1;
-	for_first_then_each(
-	        s->getPointVector(),
-	        [&p1](auto first) { p1 = first; },
-	        [&p1, &x0, &y0, &r0, &sum](auto other) {
-		        Point p2 = other;
+	auto const& pv = s->getPointVector();
+	for (auto pt_1st = begin(pv), pt_2nd = std::next(pt_1st), p_end_i = end(pv); pt_1st != p_end_i && pt_2nd != p_end_i;
+	     ++pt_2nd, ++pt_1st)
+	{
+		double dm = hypot(pt_2nd->x - pt_1st->x, pt_2nd->y - pt_1st->y);
+		double deltar = hypot(pt_1st->x - x0, pt_1st->y - y0) - r0;
+		sum += dm * fabs(deltar);
+	}
 
-		        double dm = hypot(p2.x - p1.x, p2.y - p1.y);
-		        double deltar = hypot(p1.x - x0, p1.y - y0) - r0;
-		        sum += dm * fabs(deltar);
-
-		        p1 = p2;
-	        });
-
-	return sum / (inertia.getMass() * r0);
+	return sum / (divisor);
 }
 
 Stroke* CircleRecognizer::recognize(Stroke* stroke)

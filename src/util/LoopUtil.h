@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include <iterator>
 
 /**
@@ -18,13 +19,12 @@
  *	loop over the container from begin to end but handles the first element
  *	differently.
  */
-template <typename Container, typename Function_first, typename Function_others>
-void for_first_then_each(Container container, Function_first function_first, Function_others function_others)
+template <typename Container, typename Fun1, typename Fun2>
+void for_first_then_each(Container&& c, Fun1 f1, Fun2&& f2)
 {
-	if (cbegin(container) == cend(container)) return;
-	function_first(*cbegin(container));
-	for (auto it = std::next(cbegin(container)); it != cend(container); it++)
-	{
-		function_others(*it);
-	};
+	auto begi = begin(c);
+	auto endi = end(c);
+	if (begi == endi) return;
+	f1(*begi);
+	std::for_each(std::next(begi), endi, std::forward<Fun2&&>(f2));
 };
