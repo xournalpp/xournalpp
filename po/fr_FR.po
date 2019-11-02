@@ -364,7 +364,7 @@ msgstr "Supprimer le calque"
 
 #: ../src/control/Control.cpp:2790
 msgid "Discard"
-msgstr "Annuler"
+msgstr "Abandonner"
 
 #: ../src/control/Control.cpp:2192
 msgid "Do not open Autosave files. They may will be overwritten!\n"
