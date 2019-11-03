@@ -2,35 +2,20 @@
 
 #include <cmath>
 
-Point::Point()
-{
-}
-
-Point::Point(const Point& p)
-{
-	this->x = p.x;
-	this->y = p.y;
-	this->z = p.z;
-}
-
 Point::Point(double x, double y)
+ : x(x)
+ , y(y)
 {
-	this->x = x;
-	this->y = y;
 }
 
 Point::Point(double x, double y, double z)
-{
-	this->x = x;
-	this->y = y;
-	this->z = z;
-}
-
-Point::~Point()
+ : x(x)
+ , y(y)
+ , z(z)
 {
 }
 
-double Point::lineLengthTo(const Point& p)
+double Point::lineLengthTo(const Point& p) const
 {
 	return std::hypot(this->x - p.x, this->y - p.y);
 }
