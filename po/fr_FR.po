@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-21 23:28+0000\n"
-"PO-Revision-Date: 2019-11-04 17:19\n"
+"PO-Revision-Date: 2019-11-04 17:28\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -538,7 +538,7 @@ msgstr "Police"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Forward"
-msgstr ""
+msgstr "Avancer"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Go to first page"
@@ -1570,7 +1570,7 @@ msgstr "... ET combien de temps doit être passé depuis le dernier trait.\n\n"
 
 #: ../ui/settings.glade:3968
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1860,7 +1860,7 @@ msgstr "Nom du fichier par défaut"
 
 #: ../ui/settings.glade:3955
 msgid "Default Seek Time (in seconds)"
-msgstr ""
+msgstr "Temps de recherche par défaut (en secondes)"
 
 #: ../ui/settings.glade:386
 msgid "Default name: "
@@ -2278,7 +2278,7 @@ msgstr "_Option du stylo"
 
 #: ../ui/settings.glade:3988
 msgid "Playback Settings"
-msgstr ""
+msgstr "Paramètres de lecture"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
