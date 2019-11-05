@@ -44,7 +44,7 @@ private:
 	 * Draw a stroke with pressure, for this multiple
 	 * lines with different widths needs to be drawn
 	 */
-	void drawWithPressuire();
+	void drawWithPressure();
 
 
 private:

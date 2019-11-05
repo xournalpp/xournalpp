@@ -16,8 +16,6 @@
 #include "LineStyle.h"
 #include "Element.h"
 
-#include <Arrayiterator.h>
-
 enum StrokeTool
 {
 	STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER
@@ -72,7 +70,7 @@ public:
 	void setLastPoint(const Point& p);
 	int getPointCount() const;
 	void freeUnusedPointItems();
-	ArrayIterator<Point> pointIterator() const;
+	std::vector<Point> const& getPointVector() const;
 	Point getPoint(int index) const;
 	const Point* getPoints() const;
 
@@ -92,7 +90,7 @@ public:
 	void setLastPressure(double pressure);
 	void clearPressure();
 	void scalePressure(double factor);
-	
+
 	bool hasPressure() const;
 	double getAvgPressure() const;
 

@@ -20,17 +20,9 @@
 class Point
 {
 public:
-
-	/**
-	 * @brief Default constructor.
-	 */
-	Point();
-
-	/**
-	 * @brief Copy constructor.
-	 * @param p The point to copy.
-	 */
-	Point(const Point& p);
+	Point() = default;
+	~Point() = default;
+	Point(const Point& p) = default;
 
 	Point& operator=(Point const&) = default;
 
@@ -49,8 +41,6 @@ public:
 	 */
 	Point(double x, double y, double z);
 
-	virtual ~Point();
-
 public:
 
 	/**
@@ -58,7 +48,7 @@ public:
 	 * @param p The other point.
 	 * @return The Euclidean distance to the other point.
 	 */
-	double lineLengthTo(const Point& p);
+	double lineLengthTo(const Point& p) const;
 
 	/**
 	 * @brief The slope to another point.

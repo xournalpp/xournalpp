@@ -66,19 +66,16 @@ XournalView::~XournalView()
 {
 	g_source_remove(this->cleanupTimeout);
 
-	for (size_t i = 0; i < this->viewPagesLen; i++)
+	for (auto&& page: viewPages)
 	{
-		delete this->viewPages[i];
+		delete page;
 	}
-	delete[] this->viewPages;
-	this->viewPagesLen = 0;
-	this->viewPages = nullptr;
+	viewPages.clear();
 
 	delete this->cache;
 	this->cache = nullptr;
 	delete this->repaintHandler;
 	this->repaintHandler = nullptr;
-
 
 	gtk_widget_destroy(this->widget);
 	this->widget = nullptr;
@@ -102,12 +99,11 @@ gboolean XournalView::clearMemoryTimer(XournalView* widget)
 {
 	GList* list = nullptr;
 
-	for (size_t i = 0; i < widget->viewPagesLen; i++)
+	for (auto&& page: widget->viewPages)
 	{
-		XojPageView* v = widget->viewPages[i];
-		if (v->getLastVisibleTime() > 0)
+		if (page->getLastVisibleTime() > 0)
 		{
-			list = g_list_insert_sorted(list, v, (GCompareFunc) pageViewIncreasingClockTime);
+			list = g_list_insert_sorted(list, page, (GCompareFunc) pageViewIncreasingClockTime);
 		}
 	}
 
@@ -154,7 +150,7 @@ const int scrollKeySize = 30;
 bool XournalView::onKeyPressEvent(GdkEventKey* event)
 {
 	size_t p = getCurrentPage();
-	if (p != npos && p < this->viewPagesLen)
+	if (p != npos && p < this->viewPages.size())
 	{
 		XojPageView* v = this->viewPages[p];
 		if (v->onKeyPressEvent(event))
@@ -381,7 +377,7 @@ RepaintHandler* XournalView::getRepaintHandler()
 bool XournalView::onKeyReleaseEvent(GdkEventKey* event)
 {
 	size_t p = getCurrentPage();
-	if (p != npos && p < this->viewPagesLen)
+	if (p != npos && p < this->viewPages.size())
 	{
 		XojPageView* v = this->viewPages[p];
 		if (v->onKeyReleaseEvent(event))
@@ -414,7 +410,7 @@ void XournalView::requestFocus()
 
 bool XournalView::searchTextOnPage(string text, size_t p, int* occures, double* top)
 {
-	if (p == npos || p >= this->viewPagesLen)
+	if (p == npos || p >= this->viewPages.size())
 	{
 		return false;
 	}
@@ -433,7 +429,7 @@ void XournalView::forceUpdatePagenumbers()
 
 XojPageView* XournalView::getViewFor(size_t pageNr)
 {
-	if (pageNr == npos || pageNr >= this->viewPagesLen)
+	if (pageNr == npos || pageNr >= this->viewPages.size())
 	{
 		return nullptr;
 	}
@@ -454,7 +450,7 @@ void XournalView::pageSelected(size_t page)
 
 	control->getMetadataManager()->storeMetadata(file.str(), page, getZoom());
 
-	if (this->lastSelectedPage != npos && this->lastSelectedPage < this->viewPagesLen)
+	if (this->lastSelectedPage != npos && this->lastSelectedPage < this->viewPages.size())
 	{
 		this->viewPages[this->lastSelectedPage]->setSelected(false);
 	}
@@ -463,7 +459,7 @@ void XournalView::pageSelected(size_t page)
 
 	size_t pdfPage = npos;
 
-	if (page != npos && page < viewPagesLen)
+	if (page != npos && page < viewPages.size())
 	{
 		XojPageView* vp = viewPages[page];
 		vp->setSelected(true);
@@ -483,7 +479,7 @@ Control* XournalView::getControl()
 
 void XournalView::scrollTo(size_t pageNo, double yDocument)
 {
-	if (pageNo >= this->viewPagesLen)
+	if (pageNo >= this->viewPages.size())
 	{
 		return;
 	}
@@ -524,7 +520,7 @@ void XournalView::pageRelativeXY(int offCol, int offRow)
 
 void XournalView::endTextAllPages(XojPageView* except)
 {
-	for (size_t i = 0; i < this->viewPagesLen; i++)
+	for (size_t i = 0; i < this->viewPages.size(); i++)
 	{
 		XojPageView* v = this->viewPages[i];
 		if (except != v)
@@ -536,7 +532,7 @@ void XournalView::endTextAllPages(XojPageView* except)
 
 void XournalView::layerChanged(size_t page)
 {
-	if (page != npos && page < this->viewPagesLen)
+	if (page != npos && page < this->viewPages.size())
 	{
 		this->viewPages[page]->rerenderPage();
 	}
@@ -567,7 +563,7 @@ void XournalView::getPasteTarget(double& x, double& y)
  */
 Rectangle* XournalView::getVisibleRect(size_t page)
 {
-	if (page == npos || page >= this->viewPagesLen)
+	if (page == npos || page >= this->viewPages.size())
 	{
 		return nullptr;
 	}
@@ -666,7 +662,7 @@ void XournalView::pageSizeChanged(size_t page)
 
 void XournalView::pageChanged(size_t page)
 {
-	if (page != npos && page < this->viewPagesLen)
+	if (page != npos && page < this->viewPages.size())
 	{
 		this->viewPages[page]->rerenderPage();
 	}
@@ -677,19 +673,7 @@ void XournalView::pageDeleted(size_t page)
 	size_t currentPage = control->getCurrentPageNo();
 
 	delete this->viewPages[page];
-
-	for (size_t i = page; i < this->viewPagesLen - 1; i++)
-	{
-		this->viewPages[i] = this->viewPages[i + 1];
-	}
-
-	this->viewPagesLen--;
-	this->viewPages[this->viewPagesLen] = nullptr;
-
-	if (currentPage >= page)
-	{
-		currentPage--;
-	}
+	viewPages.erase(begin(viewPages) + page);
 
 	layoutPages();
 	control->getScrollHandler()->scrollToPage(currentPage);
@@ -697,12 +681,11 @@ void XournalView::pageDeleted(size_t page)
 
 TextEditor* XournalView::getTextEditor()
 {
-	for (size_t i = 0; i < this->viewPagesLen; i++)
+	for (auto&& page: viewPages)
 	{
-		XojPageView* v = this->viewPages[i];
-		if (v->getTextEditor())
+		if (page->getTextEditor())
 		{
-			return v->getTextEditor();
+			return page->getTextEditor();
 		}
 	}
 
@@ -711,10 +694,9 @@ TextEditor* XournalView::getTextEditor()
 
 void XournalView::resetShapeRecognizer()
 {
-	for (size_t i = 0; i < this->viewPagesLen; i++)
+	for (auto&& page: viewPages)
 	{
-		XojPageView* v = this->viewPages[i];
-		v->resetShapeRecognizer();
+		page->resetShapeRecognizer();
 	}
 }
 
@@ -725,38 +707,12 @@ PdfCache* XournalView::getCache()
 
 void XournalView::pageInserted(size_t page)
 {
-	XojPageView** lastViewPages = this->viewPages;
-
-	this->viewPages = new XojPageView*[this->viewPagesLen + 1];
-
-	for (size_t i = 0; i < page; i++)
-	{
-		this->viewPages[i] = lastViewPages[i];
-
-		// unselect to prevent problems...
-		this->viewPages[i]->setSelected(false);
-	}
-
-	for (size_t i = page; i < this->viewPagesLen; i++)
-	{
-		this->viewPages[i + 1] = lastViewPages[i];
-
-		// unselect to prevent problems...
-		this->viewPages[i + 1]->setSelected(false);
-	}
-
-	this->lastSelectedPage = -1;
-
-	this->viewPagesLen++;
-
-	delete[] lastViewPages;
-
 	Document* doc = control->getDocument();
 	doc->lock();
 	XojPageView* pageView = new XojPageView(this, doc->getPage(page));
 	doc->unlock();
 
-	this->viewPages[page] = pageView;
+	viewPages.insert(begin(viewPages) + page, pageView);
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	layout->recalculate();
@@ -917,22 +873,20 @@ void XournalView::documentChanged(DocumentChangeType type)
 
 	clearSelection();
 
-	for (size_t i = 0; i < this->viewPagesLen; i++)
+	for (auto&& page: viewPages)
 	{
-		delete this->viewPages[i];
+		delete page;
 	}
-	delete[] this->viewPages;
+	viewPages.clear();
 
 	Document* doc = control->getDocument();
 	doc->lock();
 
-	this->viewPagesLen = doc->getPageCount();
-	this->viewPages = new XojPageView*[viewPagesLen];
-
-	for (size_t i = 0; i < viewPagesLen; i++)
+	size_t pagecount = doc->getPageCount();
+	viewPages.reserve(pagecount);
+	for (size_t i = 0; i < pagecount; i++)
 	{
-		XojPageView* pageView = new XojPageView(this, doc->getPage(i));
-		viewPages[i] = pageView;
+		viewPages.push_back(new XojPageView(this, doc->getPage(i)));
 	}
 
 	doc->unlock();
@@ -946,7 +900,7 @@ void XournalView::documentChanged(DocumentChangeType type)
 bool XournalView::cut()
 {
 	size_t p = getCurrentPage();
-	if (p == npos || p >= viewPagesLen)
+	if (p == npos || p >= viewPages.size())
 	{
 		return false;
 	}
@@ -958,7 +912,7 @@ bool XournalView::cut()
 bool XournalView::copy()
 {
 	size_t p = getCurrentPage();
-	if (p == npos || p >= viewPagesLen)
+	if (p == npos || p >= viewPages.size())
 	{
 		return false;
 	}
@@ -970,7 +924,7 @@ bool XournalView::copy()
 bool XournalView::paste()
 {
 	size_t p = getCurrentPage();
-	if (p == npos || p >= viewPagesLen)
+	if (p == npos || p >= viewPages.size())
 	{
 		return false;
 	}
@@ -982,7 +936,7 @@ bool XournalView::paste()
 bool XournalView::actionDelete()
 {
 	size_t p = getCurrentPage();
-	if (p == npos || p >= viewPagesLen)
+	if (p == npos || p >= viewPages.size())
 	{
 		return false;
 	}
@@ -996,11 +950,10 @@ Document* XournalView::getDocument()
 	return control->getDocument();
 }
 
-ArrayIterator<XojPageView*> XournalView::pageViewIterator()
+std::vector<XojPageView*> const& XournalView::getViewPages() const
 {
-	return ArrayIterator<XojPageView*>(viewPages, viewPagesLen);
+	return viewPages;
 }
-
 
 XournalppCursor* XournalView::getCursor()
 {
