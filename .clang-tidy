@@ -1,0 +1,34 @@
+Checks: "*,\
+-misc-unused-parameters,\
+-cppcoreguidelines-pro-type-union-access,\
+-clang-analyzer-alpha*,\
+-google-build-using-namespace,\
+-clang-analyzer-optin.osx*,\
+-clang-analyzer-osx*,\
+-llvm-include-order,\
+-llvm-header-guard,\
+-readability-named-parameter,\
+-cppcoreguidelines-pro-type-reinterpret-cast,\
+-cppcoreguidelines-pro-type-vararg,\
+-misc-move-const-arg,\
+-google-runtime-references,\
+-cert-err58-cpp,\
+-fuchsia-overloaded-operator,\
+-fuchsia-default-arguments,\
+-hicpp-vararg,\
+-clang-analyzer-optin.cplusplus.VirtualCall,\
+-cppcoreguidelines-owning-memory,\
+-*-magic-numbers,\
+-*-non-private-member-variables-in-classes,\
+-fuchsia-statically-constructed-objects,\
+-readability-isolate-declaration,\
+-fuchsia-multiple-inheritance,\
+-fuchsia-trailing-return,\
+-portability-simd-intrinsics,\
+-modernize-use-nodiscard,\
+-hicpp-multiway-paths-covered,\
+-cert-msc32-c,\
+-cert-msc51-cpp"
+WarningsAsErrors: '*'
+HeaderFilterRegex: '*.(h|hpp|hxx)'
+AnalyzeTemporaryDtors: false

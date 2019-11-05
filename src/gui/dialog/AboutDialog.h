@@ -17,10 +17,10 @@ class AboutDialog : public GladeGui
 {
 public:
 	AboutDialog(GladeSearchpath* gladeSearchPath);
-	virtual ~AboutDialog();
+	~AboutDialog() override;
 
 public:
-	virtual void show(GtkWindow* parent);
+	void show(GtkWindow* parent) override;
 
 private:
 	};
