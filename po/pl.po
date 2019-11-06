@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-21 23:28+0000\n"
-"PO-Revision-Date: 2019-10-31 13:05\n"
+"POT-Creation-Date: 2019-11-06 00:38+0000\n"
+"PO-Revision-Date: 2019-11-06 00:47\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -149,7 +149,7 @@ msgstr "Czarny"
 msgid "Blue"
 msgstr "Niebieski"
 
-#: ../src/control/Control.cpp:2272 ../src/control/Control.cpp:2802
+#: ../src/control/Control.cpp:2272 ../src/control/Control.cpp:2804
 #: ../src/control/XournalMain.cpp:133
 msgid "Cancel"
 msgstr "Anuluj"
@@ -363,7 +363,7 @@ msgstr "Usuń plik"
 msgid "Delete layer"
 msgstr "Usuń warstwę"
 
-#: ../src/control/Control.cpp:2798
+#: ../src/control/Control.cpp:2800
 msgid "Discard"
 msgstr "Odrzuć"
 
@@ -379,7 +379,7 @@ msgstr "Nie otwieraj plików Auto-zapisu. Mogą zostać nadpisane!\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Nie nadpisuj pliku kanwy PDF! To może spowodować błędy!"
 
-#: ../src/control/Control.cpp:2792
+#: ../src/control/Control.cpp:2794
 msgid "Document file was removed."
 msgstr "Dokument został usunięty."
 
@@ -946,12 +946,12 @@ msgstr "Obraz SVG"
 msgid "SVG with transparent background"
 msgstr "Obraz SVG z przezroczystym tłem"
 
-#: ../src/control/Control.cpp:2793 ../src/control/jobs/SaveJob.cpp:13
+#: ../src/control/Control.cpp:2795 ../src/control/jobs/SaveJob.cpp:13
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:363
 msgid "Save"
 msgstr "Zapisz"
 
-#: ../src/control/Control.cpp:2793
+#: ../src/control/Control.cpp:2795
 msgid "Save As..."
 msgstr "Zapisz jako..."
 
@@ -1174,7 +1174,7 @@ msgstr "Grubość - nie zmieniaj"
 msgid "Thin"
 msgstr "Cienki"
 
-#: ../src/control/Control.cpp:2792
+#: ../src/control/Control.cpp:2794
 msgid "This document is not saved yet."
 msgstr "Dokument nie został jeszcze zapisany."
 
