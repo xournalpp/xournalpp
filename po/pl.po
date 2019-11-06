@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-06 00:38+0000\n"
-"PO-Revision-Date: 2019-11-06 00:47\n"
+"PO-Revision-Date: 2019-11-06 22:48\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -86,7 +86,7 @@ msgstr "Atrybut \"{1}\" nie jest typu zmiennoprzecinkowego (wartość: \"{2}\")"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:132
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr ""
+msgstr "Atrybut \"{1}\" nie może zostać sparsowany do typu double, wartość nullptr"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:160
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:183
@@ -95,7 +95,7 @@ msgstr "Atrybut \"{1}\" nie jest typu całkowitego (wartość: \"{2}\")"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:152
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr ""
+msgstr "Atrybut \"{1}\" nie może zostać sparsowany do typu int, wartość nullptr"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:205
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:228
@@ -104,7 +104,7 @@ msgstr "Atrybut \"{1}\" nie może być przetworzony jako jako size_t, wartość 
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:197
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr ""
+msgstr "Atrybut \"{1}\" nie może zostać sparsowany do typu size_t, wartość nullptr"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:70
 msgid "Attribute color not set!"
@@ -690,7 +690,10 @@ msgid "Missing the needed UI file:\n"
 "{1}\n"
 " .app corrupted?\n"
 "Path: {2}"
-msgstr ""
+msgstr "Brakuje wymaganego pliku UI:\n"
+"{1}\n"
+" .app uszkodzony?\n"
+"Ścieżka: {2}"
 
 #: ../src/undo/MoveUndoAction.cpp:18
 msgid "Move"
