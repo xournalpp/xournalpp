@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-21 23:28+0000\n"
-"PO-Revision-Date: 2019-11-04 17:28\n"
+"POT-Creation-Date: 2019-11-06 00:38+0000\n"
+"PO-Revision-Date: 2019-11-06 00:47\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -149,7 +149,7 @@ msgstr "Noir"
 msgid "Blue"
 msgstr "Bleu"
 
-#: ../src/control/Control.cpp:2272 ../src/control/Control.cpp:2802
+#: ../src/control/Control.cpp:2272 ../src/control/Control.cpp:2804
 #: ../src/control/XournalMain.cpp:133
 msgid "Cancel"
 msgstr "Annuler"
@@ -363,7 +363,7 @@ msgstr "Supprimer le fichier"
 msgid "Delete layer"
 msgstr "Supprimer le calque"
 
-#: ../src/control/Control.cpp:2798
+#: ../src/control/Control.cpp:2800
 msgid "Discard"
 msgstr "Annuler"
 
@@ -379,7 +379,7 @@ msgstr "Ne pas ouvrir les fichiers de sauvegarde automatique. Ils peuvent être 
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Ne pas écraser le PDF d'arrière-plan ! Cela causera des erreurs !"
 
-#: ../src/control/Control.cpp:2792
+#: ../src/control/Control.cpp:2794
 msgid "Document file was removed."
 msgstr "Le fichier du document a été supprimé."
 
@@ -949,12 +949,12 @@ msgstr "Graphiques SVG"
 msgid "SVG with transparent background"
 msgstr "SVG avec fond transparent"
 
-#: ../src/control/Control.cpp:2793 ../src/control/jobs/SaveJob.cpp:13
+#: ../src/control/Control.cpp:2795 ../src/control/jobs/SaveJob.cpp:13
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:363
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: ../src/control/Control.cpp:2793
+#: ../src/control/Control.cpp:2795
 msgid "Save As..."
 msgstr "Enregistrer sous..."
 
@@ -1177,7 +1177,7 @@ msgstr "Épaisseur - ne pas changer"
 msgid "Thin"
 msgstr "Fin"
 
-#: ../src/control/Control.cpp:2792
+#: ../src/control/Control.cpp:2794
 msgid "This document is not saved yet."
 msgstr "Ce document n'est pas encore enregistré."
 
