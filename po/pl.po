@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-06 00:38+0000\n"
-"PO-Revision-Date: 2019-11-06 22:48\n"
+"PO-Revision-Date: 2019-11-06 23:55\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -1146,7 +1146,7 @@ msgstr "Plik nie jest prawidłowym plikiem .xopp (Uszkodzony znacznik wersji): \
 
 #: ../src/control/LatexController.cpp:353
 msgid "The formula is empty when rendered or invalid."
-msgstr ""
+msgstr "Pusty lub nieprawidłowy wzór podczas renderowania."
 
 #: ../src/control/XournalMain.cpp:124
 msgid "The most recent log file name: {1}"
