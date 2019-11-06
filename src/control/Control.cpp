@@ -2700,11 +2700,13 @@ void Control::updateWindowTitle()
 
 void Control::exportAsPdf()
 {
+	this->clearSelectionEndText();
 	exportBase(new PdfExportJob(this));
 }
 
 void Control::exportAs()
 {
+	this->clearSelectionEndText();
 	exportBase(new CustomExportJob(this));
 }
 
