@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-21 23:28+0000\n"
+"POT-Creation-Date: 2019-11-06 00:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -148,7 +148,7 @@ msgstr ""
 msgid "Blue"
 msgstr ""
 
-#: ../src/control/Control.cpp:2272 ../src/control/Control.cpp:2802
+#: ../src/control/Control.cpp:2272 ../src/control/Control.cpp:2804
 #: ../src/control/XournalMain.cpp:133
 msgid "Cancel"
 msgstr ""
@@ -367,7 +367,7 @@ msgstr ""
 msgid "Delete layer"
 msgstr ""
 
-#: ../src/control/Control.cpp:2798
+#: ../src/control/Control.cpp:2800
 msgid "Discard"
 msgstr ""
 
@@ -382,7 +382,7 @@ msgstr ""
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/control/Control.cpp:2792
+#: ../src/control/Control.cpp:2794
 msgid "Document file was removed."
 msgstr ""
 
@@ -950,12 +950,12 @@ msgstr ""
 msgid "SVG with transparent background"
 msgstr ""
 
-#: ../src/control/Control.cpp:2793 ../src/control/jobs/SaveJob.cpp:13
+#: ../src/control/Control.cpp:2795 ../src/control/jobs/SaveJob.cpp:13
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:363
 msgid "Save"
 msgstr ""
 
-#: ../src/control/Control.cpp:2793
+#: ../src/control/Control.cpp:2795
 msgid "Save As..."
 msgstr ""
 
@@ -1184,7 +1184,7 @@ msgstr ""
 msgid "Thin"
 msgstr ""
 
-#: ../src/control/Control.cpp:2792
+#: ../src/control/Control.cpp:2794
 msgid "This document is not saved yet."
 msgstr ""
 
