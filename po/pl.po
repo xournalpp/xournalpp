@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-06 00:38+0000\n"
-"PO-Revision-Date: 2019-11-06 23:55\n"
+"PO-Revision-Date: 2019-11-07 00:15\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -1737,23 +1737,23 @@ msgstr ""
 
 #: ../ui/settings.glade:3830
 msgid "Audio Devices"
-msgstr ""
+msgstr "Urządzenia dźwiękowe"
 
 #: ../ui/settings.glade:4035
 msgid "Audio Recording"
-msgstr ""
+msgstr "Nagrywanie dźwięku"
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
-msgstr ""
+msgstr "Autor: "
 
 #: ../ui/about.glade:186
 msgid "Authors:"
-msgstr ""
+msgstr "Autorzy:"
 
 #: ../ui/settings.glade:1522
 msgid "Autodetect"
-msgstr ""
+msgstr "Automatyczne wykrywanie"
 
 #: ../ui/settings.glade:566
 msgid "Autoloading Journals"
@@ -1761,7 +1761,7 @@ msgstr ""
 
 #: ../ui/settings.glade:323
 msgid "Autosaving"
-msgstr ""
+msgstr "Automatyczne zapisywanie"
 
 #: ../ui/settings.glade:472
 msgid "Available Placeholders"
