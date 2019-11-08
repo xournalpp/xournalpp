@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-06 00:38+0000\n"
+"POT-Creation-Date: 2019-11-08 18:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -668,7 +668,7 @@ msgstr ""
 msgid "Light Green"
 msgstr ""
 
-#: ../src/gui/PageView.cpp:811
+#: ../src/gui/PageView.cpp:821
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:16
 msgid "Loading..."
@@ -1211,6 +1211,10 @@ msgstr ""
 
 #: ../src/util/CrashHandler.cpp:37
 msgid "Trying to emergency save the current open document…"
+msgstr ""
+
+#: ../src/gui/PageView.cpp:422
+msgid "Unable to play audio recording {1}"
 msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
