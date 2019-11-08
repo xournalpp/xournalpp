@@ -14,6 +14,7 @@
 // No include needed, this is included after PageView.h
 
 #include <util/audio/AudioPlayer.h>
+#include <optional>
 
 class BaseSelectObject
 {
@@ -143,13 +144,22 @@ class PlayObject : public BaseSelectObject
 {
 public:
 	PlayObject(XojPageView* view)
- 	 : BaseSelectObject(view)
+	 : BaseSelectObject(view)
+	 , playbackStatus()
 	{
 	}
 
 	virtual ~PlayObject()
 	{
 	}
+
+	struct Status
+	{
+		bool success;
+		std::string filename;
+	};
+
+	std::optional<Status> playbackStatus;
 
 public:
 	bool at(double x, double y)
@@ -182,8 +192,10 @@ protected:
 
 					fn = path.str();
 				}
-				view->getXournal()->getControl()->getAudioController()->startPlayback(fn, (unsigned int) ts);
-				return true;
+				auto* ac = view->getXournal()->getControl()->getAudioController();
+				bool success = ac->startPlayback(fn, (unsigned int) ts);
+				playbackStatus = {success, fn};
+				return success;
 			}
 		}
 		return false;
