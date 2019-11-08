@@ -156,6 +156,7 @@ void Stroke::setLastPoint(const Point& p)
 	if (!this->points.empty())
 	{
 		this->points.back() = p;
+		this->sizeCalculated = false;
 	}
 }
 
