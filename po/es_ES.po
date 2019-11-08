@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-06 00:38+0000\n"
-"PO-Revision-Date: 2019-11-06 00:47\n"
+"POT-Creation-Date: 2019-11-08 18:14+0000\n"
+"PO-Revision-Date: 2019-11-08 18:27\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -665,7 +665,7 @@ msgstr "Azul claro"
 msgid "Light Green"
 msgstr "Verde claro"
 
-#: ../src/gui/PageView.cpp:811
+#: ../src/gui/PageView.cpp:821
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:16
 msgid "Loading..."
@@ -1205,6 +1205,10 @@ msgstr "Barras de herramientas"
 #: ../src/util/CrashHandler.cpp:37
 msgid "Trying to emergency save the current open document…"
 msgstr "Intentando guardar de emergencia el documento abierto actualmente…"
+
+#: ../src/gui/PageView.cpp:422
+msgid "Unable to play audio recording {1}"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 #: ../src/undo/UndoRedoHandler.cpp:229
