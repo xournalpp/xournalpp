@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.16
+
+* Fixed currently editing textboxes not exporting to PDF.
+* Fixed line tool breaking when snap-to-grid is disabled.
+
 ## 1.0.15
 
 **Attention**: Please see the 1.0.14 patch notes before installing this version.
