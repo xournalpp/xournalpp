@@ -2,26 +2,19 @@
 
 #include <StringUtils.h>
 
-XmlTextNode::XmlTextNode(const char* tag, const char* text) : XmlAudioNode(tag)
+XmlTextNode::XmlTextNode(const char* tag, std::string text)
+ : XmlAudioNode(tag)
+ , text(std::move(text))
 {
-	this->text = g_strdup(text);
 }
 
 XmlTextNode::XmlTextNode(const char* tag) : XmlAudioNode(tag)
 {
-	this->text = nullptr;
 }
 
-XmlTextNode::~XmlTextNode()
+void XmlTextNode::setText(std::string text)
 {
-	g_free(this->text);
-	this->text = nullptr;
-}
-
-void XmlTextNode::setText(const char* text)
-{
-	g_free(this->text);
-	this->text = g_strdup(text);
+	this->text = std::move(text);
 }
 
 void XmlTextNode::writeOut(OutputStream* out)
