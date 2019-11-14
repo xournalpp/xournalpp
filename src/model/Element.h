@@ -74,7 +74,7 @@ public:
 	virtual Element* clone() = 0;
 
 private:
-	protected:
+protected:
 	virtual void calcSize() = 0;
 
 	void serializeElement(ObjectOutputStream& out);

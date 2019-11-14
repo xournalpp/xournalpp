@@ -8,10 +8,10 @@
 #include <i18n.h>
 
 ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, string id, ActionType type)
- : AbstractToolItem(id, handler, type, nullptr),
-   lc(lc),
-   gui(gui),
-   menu(gtk_menu_new())
+ : AbstractToolItem(id, handler, type, nullptr)
+ , lc(lc)
+ , gui(gui)
+ , menu(gtk_menu_new())
 {
 	this->layerLabel = gtk_label_new(_("Loading..."));
 	this->layerButton = gtk_button_new_with_label("⌄");
@@ -72,28 +72,25 @@ auto ToolPageLayer::createSpecialMenuEntry(string name) -> GtkWidget*
 void ToolPageLayer::addSpecialButtonTop()
 {
 	GtkWidget* itShowAll = createSpecialMenuEntry(_("Show all"));
-	g_signal_connect(itShowAll, "activate", G_CALLBACK(
-		+[](GtkWidget* menu, ToolPageLayer* self)
-		{
-	self->lc->showAllLayer();
-		}), this);
+	g_signal_connect(itShowAll,
+	                 "activate",
+	                 G_CALLBACK(+[](GtkWidget* menu, ToolPageLayer* self) { self->lc->showAllLayer(); }),
+	                 this);
 
 
 	GtkWidget* itHideAll = createSpecialMenuEntry(_("Hide all"));
-	g_signal_connect(itHideAll, "activate", G_CALLBACK(
-		+[](GtkWidget* menu, ToolPageLayer* self)
-		{
-	self->lc->hideAllLayer();
-		}), this);
+	g_signal_connect(itHideAll,
+	                 "activate",
+	                 G_CALLBACK(+[](GtkWidget* menu, ToolPageLayer* self) { self->lc->hideAllLayer(); }),
+	                 this);
 
 	createSeparator();
 
 	GtkWidget* itNewLayer = createSpecialMenuEntry(_("Create new layer"));
-	g_signal_connect(itNewLayer, "activate", G_CALLBACK(
-		+[](GtkWidget* menu, ToolPageLayer* self)
-		{
-	self->lc->addNewLayer();
-		}), this);
+	g_signal_connect(itNewLayer,
+	                 "activate",
+	                 G_CALLBACK(+[](GtkWidget* menu, ToolPageLayer* self) { self->lc->addNewLayer(); }),
+	                 this);
 
 	createSeparator();
 }
@@ -179,11 +176,10 @@ void ToolPageLayer::createLayerMenuItem(string text, int layerId)
 	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(itLayer), true);
 	gtk_menu_attach(GTK_MENU(menu), itLayer, 0, 2, menuY, menuY + 1);
 
-	g_signal_connect(itLayer, "activate", G_CALLBACK(
-		+[](GtkWidget* menu, ToolPageLayer* self)
-		{
-	self->layerMenuClicked(menu);
-		}), this);
+	g_signal_connect(itLayer,
+	                 "activate",
+	                 G_CALLBACK(+[](GtkWidget* menu, ToolPageLayer* self) { self->layerMenuClicked(menu); }),
+	                 this);
 
 	layerItems[layerId] = itLayer;
 }
@@ -194,11 +190,10 @@ void ToolPageLayer::createLayerMenuItemShow(int layerId)
 	gtk_menu_attach(GTK_MENU(menu), itShow, 2, 3, menuY, menuY + 1);
 	gtk_widget_set_hexpand(itShow, false);
 
-	g_signal_connect(itShow, "activate", G_CALLBACK(
-		+[](GtkWidget* menu, ToolPageLayer* self)
-		{
-	self->layerMenuShowClicked(menu);
-		}), this);
+	g_signal_connect(itShow,
+	                 "activate",
+	                 G_CALLBACK(+[](GtkWidget* menu, ToolPageLayer* self) { self->layerMenuShowClicked(menu); }),
+	                 this);
 
 	showLayerItems[layerId] = itShow;
 }

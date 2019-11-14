@@ -23,12 +23,11 @@ SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, Pa
 
 	g_signal_connect(this->widget, "draw", G_CALLBACK(drawCallback), this);
 
-	g_signal_connect(this->widget, "clicked", G_CALLBACK(
-		+[](GtkWidget* widget, SidebarPreviewBaseEntry* self)
-		{
-	self->mouseButtonPressCallback();
-			return true;
-		}), this);
+	g_signal_connect(this->widget, "clicked", G_CALLBACK(+[](GtkWidget* widget, SidebarPreviewBaseEntry* self) {
+		                 self->mouseButtonPressCallback();
+		                 return true;
+	                 }),
+	                 this);
 }
 
 SidebarPreviewBaseEntry::~SidebarPreviewBaseEntry()

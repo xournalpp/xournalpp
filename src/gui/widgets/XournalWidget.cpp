@@ -33,28 +33,25 @@ auto gtk_xournal_get_type(void) -> GType
 
 	if (!gtk_xournal_type)
 	{
-		static const GTypeInfo gtk_xournal_info =
-		{
-			sizeof(GtkXournalClass),
-			// base initialize
-			nullptr,
-			// base finalize
-			nullptr,
-			// class initialize
-			(GClassInitFunc) gtk_xournal_class_init,
-			// class finalize
-			nullptr,
-			// class data,
-			nullptr,
-			// instance size
-			sizeof(GtkXournal),
-			// n_preallocs
-			0,
-			// instance init
-			(GInstanceInitFunc) gtk_xournal_init,
-			// value table
-			(const GTypeValueTable*) nullptr
-		};
+		static const GTypeInfo gtk_xournal_info = {sizeof(GtkXournalClass),
+		                                           // base initialize
+		                                           nullptr,
+		                                           // base finalize
+		                                           nullptr,
+		                                           // class initialize
+		                                           (GClassInitFunc) gtk_xournal_class_init,
+		                                           // class finalize
+		                                           nullptr,
+		                                           // class data,
+		                                           nullptr,
+		                                           // instance size
+		                                           sizeof(GtkXournal),
+		                                           // n_preallocs
+		                                           0,
+		                                           // instance init
+		                                           (GInstanceInitFunc) gtk_xournal_init,
+		                                           // value table
+		                                           (const GTypeValueTable*) nullptr};
 
 		gtk_xournal_type = g_type_register_static(GTK_TYPE_WIDGET,
 		                                          "GtkXournal",

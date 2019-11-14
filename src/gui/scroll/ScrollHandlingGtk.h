@@ -33,4 +33,4 @@ public:
 	void scrollChanged() override;
 
 private:
-	};
+};

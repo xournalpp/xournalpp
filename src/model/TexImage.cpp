@@ -143,7 +143,8 @@ void TexImage::loadBinaryData()
 	}
 	else if (type[1] == 'P' && type[2] == 'D' && type[3] == 'F')
 	{
-		this->pdf = poppler_document_new_from_data((char*)this->binaryData.c_str(), this->binaryData.length(), nullptr, nullptr);
+		this->pdf = poppler_document_new_from_data((char*) this->binaryData.c_str(), this->binaryData.length(), nullptr,
+		                                           nullptr);
 	}
 	else
 	{

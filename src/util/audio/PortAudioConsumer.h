@@ -39,7 +39,7 @@ public:
 	void stopPlaying();
 
 private:
-	protected:
+protected:
 	const unsigned long framesPerBuffer = 64;
 
 	portaudio::AutoSystem autoSys;

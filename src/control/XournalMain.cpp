@@ -64,14 +64,14 @@ void XournalMain::initLocalisation()
 
 	// Not working on Windows! Working on Linux, but not sure if it's needed
 #ifndef _WIN32
-try
-{
-	std::locale::global(std::locale("")); // "" - system default locale
-}
-catch (std::runtime_error &e)
-{
-	g_warning("XournalMain: System default locale could not be set.\nCaused by: %s", e.what());
-}
+	try
+	{
+		std::locale::global(std::locale(""));  // "" - system default locale
+	}
+	catch (std::runtime_error& e)
+	{
+		g_warning("XournalMain: System default locale could not be set.\nCaused by: %s", e.what());
+	}
 #endif
 	std::cout.imbue(std::locale());
 }
@@ -119,8 +119,8 @@ void XournalMain::checkForErrorlog()
 #endif
 	msg += FS(_F("The most recent log file name: {1}") % errorList[0]);
 
-	GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL,
-		GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
+	GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
+	                                           msg.c_str());
 
 	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
 	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), 2);
@@ -172,8 +172,8 @@ void XournalMain::checkForEmergencySave(Control* control) {
 
 	string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
 
-	GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL,
-		GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
+	GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
+	                                           msg.c_str());
 
 	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete file"), 1);
 	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Restore file"), 2);
@@ -299,13 +299,11 @@ auto XournalMain::run(int argc, char* argv[]) -> int
 	string create_img = _("Image output filename (.png / .svg)");
 	string page_jump = _("Jump to Page (first Page: 1)");
 	string audio_folder = _("Absolute path for the audio files playback");
-	GOptionEntry options[] = {
-		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      create_pdf.c_str(), nullptr },
-		{ "create-img",      'i', 0, G_OPTION_ARG_FILENAME,       &imgFilename,      create_img.c_str(), nullptr },
-		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, page_jump.c_str(), "N" },
-		{G_OPTION_REMAINING,   0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>", nullptr },
-		{nullptr}
-	};
+	GOptionEntry options[] = {{"create-pdf", 'p', 0, G_OPTION_ARG_FILENAME, &pdfFilename, create_pdf.c_str(), nullptr},
+	                          {"create-img", 'i', 0, G_OPTION_ARG_FILENAME, &imgFilename, create_img.c_str(), nullptr},
+	                          {"page", 'n', 0, G_OPTION_ARG_INT, &openAtPageNumber, page_jump.c_str(), "N"},
+	                          {G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename, "<input>", nullptr},
+	                          {nullptr}};
 
 	g_option_context_add_main_entries(context, options, GETTEXT_PACKAGE);
 	// parse options, so we don't need gtk_init, but don't init display (so we have a commandline mode)

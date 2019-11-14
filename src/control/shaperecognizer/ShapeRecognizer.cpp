@@ -462,7 +462,7 @@ auto ShapeRecognizer::tryClosedPolygon(int nsides) -> Stroke*
 	//to eliminate bug #52, remove this until it's perfected
 	return nullptr;
 
-/*
+	/*
 	RecoSegment* r1 = nullptr;
 	RecoSegment* r2 = nullptr;
 
@@ -582,29 +582,29 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
 			return result;
 		}
 
-//		if ((tmp = tryArrow()) != nullptr)
-//		{
-//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-//			resetRecognizer();
-//			RDEBUG("return tryArrow()");
-//			return result;
-//		}
-//
-//		if ((tmp = tryClosedPolygon(3)) != nullptr)
-//		{
-//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-//			RDEBUG("return tryClosedPolygon(3)");
-//			resetRecognizer();
-//			return result;
-//		}
-//
-//		if ((tmp = tryClosedPolygon(4)) != nullptr)
-//		{
-//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-//			RDEBUG("return tryClosedPolygon(4)");
-//			resetRecognizer();
-//			return result;
-//		}
+		//		if ((tmp = tryArrow()) != nullptr)
+		//		{
+		//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
+		//			resetRecognizer();
+		//			RDEBUG("return tryArrow()");
+		//			return result;
+		//		}
+		//
+		//		if ((tmp = tryClosedPolygon(3)) != nullptr)
+		//		{
+		//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
+		//			RDEBUG("return tryClosedPolygon(3)");
+		//			resetRecognizer();
+		//			return result;
+		//		}
+		//
+		//		if ((tmp = tryClosedPolygon(4)) != nullptr)
+		//		{
+		//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
+		//			RDEBUG("return tryClosedPolygon(4)");
+		//			resetRecognizer();
+		//			return result;
+		//		}
 
 
 		// Removed complicated recognition

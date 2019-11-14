@@ -25,17 +25,18 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
 
 	pageMenu->setListener(this);
 
-	g_signal_connect(get("btChangePaperSize"), "clicked", G_CALLBACK(
-		+[](GtkToggleButton* togglebutton, PageTemplateDialog* self)
-		{ self->showPageSizeDialog(); }), this);
+	g_signal_connect(
+	        get("btChangePaperSize"), "clicked",
+	        G_CALLBACK(+[](GtkToggleButton* togglebutton, PageTemplateDialog* self) { self->showPageSizeDialog(); }),
+	        this);
 
-	g_signal_connect(get("btLoad"), "clicked", G_CALLBACK(
-		+[](GtkToggleButton* togglebutton, PageTemplateDialog* self)
-		{ self->loadFromFile(); }), this);
+	g_signal_connect(get("btLoad"), "clicked",
+	                 G_CALLBACK(+[](GtkToggleButton* togglebutton, PageTemplateDialog* self) { self->loadFromFile(); }),
+	                 this);
 
-	g_signal_connect(get("btSave"), "clicked", G_CALLBACK(
-		+[](GtkToggleButton* togglebutton, PageTemplateDialog* self)
-		{ self->saveToFile(); }), this);
+	g_signal_connect(get("btSave"), "clicked",
+	                 G_CALLBACK(+[](GtkToggleButton* togglebutton, PageTemplateDialog* self) { self->saveToFile(); }),
+	                 this);
 
 	popupMenuButton = new PopupMenuButton(get("btBackgroundDropdown"), pageMenu->getMenu());
 
@@ -84,9 +85,9 @@ void PageTemplateDialog::saveToFile()
 {
 	saveToModel();
 
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Save File"), GTK_WINDOW(this->getWindow()),
-													GTK_FILE_CHOOSER_ACTION_SAVE, _("_Cancel"), GTK_RESPONSE_CANCEL,
-													_("_Save"), GTK_RESPONSE_OK, nullptr);
+	GtkWidget* dialog =
+	        gtk_file_chooser_dialog_new(_("Save File"), GTK_WINDOW(this->getWindow()), GTK_FILE_CHOOSER_ACTION_SAVE,
+	                                    _("_Cancel"), GTK_RESPONSE_CANCEL, _("_Save"), GTK_RESPONSE_OK, nullptr);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 

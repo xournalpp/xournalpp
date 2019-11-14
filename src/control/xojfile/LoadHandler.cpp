@@ -15,39 +15,39 @@
 
 #include <cstdlib>
 
-#define error2(var, ...)																	\
-	if (var == nullptr)																		\
-	{																						\
-		var = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__);		\
+#define error2(var, ...)                                                                \
+	if (var == nullptr)                                                                 \
+	{                                                                                   \
+		var = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); \
 	}
 
-#define error(...)																			\
-	if (error == nullptr)																		\
-	{																						\
-		error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__);	\
+#define error(...)                                                                        \
+	if (error == nullptr)                                                                 \
+	{                                                                                     \
+		error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); \
 	}
 
 LoadHandler::LoadHandler()
- : attachedPdfMissing(false),
-   removePdfBackgroundFlag(false),
-   pdfReplacementAttach(false),
-   pdfFilenameParsed(false),
-   pos(PARSER_POS_NOT_STARTED),
-   fileVersion(0),
-   minimalFileVersion(0),
-   zipFp(nullptr),
-   zipContentFile(nullptr),
-   gzFp(nullptr),
-   layer(nullptr),
-   stroke(nullptr),
-   text(nullptr),
-   image(nullptr),
-   teximage(nullptr),
-   attributeNames(nullptr),
-   attributeValues(nullptr),
-   elementName(nullptr),
-   loadedTimeStamp(0),
-   doc(&dHanlder)
+ : attachedPdfMissing(false)
+ , removePdfBackgroundFlag(false)
+ , pdfReplacementAttach(false)
+ , pdfFilenameParsed(false)
+ , pos(PARSER_POS_NOT_STARTED)
+ , fileVersion(0)
+ , minimalFileVersion(0)
+ , zipFp(nullptr)
+ , zipContentFile(nullptr)
+ , gzFp(nullptr)
+ , layer(nullptr)
+ , stroke(nullptr)
+ , text(nullptr)
+ , image(nullptr)
+ , teximage(nullptr)
+ , attributeNames(nullptr)
+ , attributeValues(nullptr)
+ , elementName(nullptr)
+ , loadedTimeStamp(0)
+ , doc(&dHanlder)
 {
 	this->error = nullptr;
 
@@ -221,7 +221,8 @@ auto LoadHandler::readContentFile(char* buffer, zip_uint64_t len) -> zip_int64_t
 
 auto LoadHandler::parseXml() -> bool
 {
-	const GMarkupParser parser = { LoadHandler::parserStartElement, LoadHandler::parserEndElement, LoadHandler::parserText, nullptr, nullptr };
+	const GMarkupParser parser = {LoadHandler::parserStartElement, LoadHandler::parserEndElement,
+	                              LoadHandler::parserText, nullptr, nullptr};
 	this->error = nullptr;
 	gboolean valid = true;
 

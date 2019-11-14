@@ -460,9 +460,11 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(audioPausePlaybackButton);
 	audioStopPlaybackButton = new ToolButton(listener, "AUDIO_STOP_PLAYBACK", ACTION_AUDIO_STOP_PLAYBACK, "audio-playback-stop", _("Stop"));
 	addToolItem(audioStopPlaybackButton);
-	audioSeekForwardsButton = new ToolButton(listener, "AUDIO_SEEK_FORWARDS", ACTION_AUDIO_SEEK_FORWARDS, "audio-seek-forwards", _("Forward"));
+	audioSeekForwardsButton = new ToolButton(listener, "AUDIO_SEEK_FORWARDS", ACTION_AUDIO_SEEK_FORWARDS,
+	                                         "audio-seek-forwards", _("Forward"));
 	addToolItem(audioSeekForwardsButton);
-	audioSeekBackwardsButton = new ToolButton(listener, "AUDIO_SEEK_BACKWARDS", ACTION_AUDIO_SEEK_BACKWARDS, "audio-seek-backwards", _("Back"));
+	audioSeekBackwardsButton = new ToolButton(listener, "AUDIO_SEEK_BACKWARDS", ACTION_AUDIO_SEEK_BACKWARDS,
+	                                          "audio-seek-backwards", _("Back"));
 	addToolItem(audioSeekBackwardsButton);
 
 	// Menu Help

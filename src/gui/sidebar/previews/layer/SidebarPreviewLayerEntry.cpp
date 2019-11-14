@@ -26,11 +26,11 @@ SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, 
 
 	cbVisible = gtk_check_button_new_with_label(text.c_str());
 
-	g_signal_connect(cbVisible, "toggled", G_CALLBACK(
-		+[](GtkToggleButton* source, SidebarPreviewLayerEntry* self)
-		{
-	self->checkboxToggled();
-		}), this);
+	g_signal_connect(
+	        cbVisible,
+	        "toggled",
+	        G_CALLBACK(+[](GtkToggleButton* source, SidebarPreviewLayerEntry* self) { self->checkboxToggled(); }),
+	        this);
 
 
 	// Left padding

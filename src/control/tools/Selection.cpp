@@ -7,7 +7,7 @@ Selection::Selection(Redrawable* view)
 {
 	this->view = view;
 	this->page = nullptr;
-	
+
 	this->x1Box = 0;
 	this->x2Box = 0;
 	this->y1Box = 0;

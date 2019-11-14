@@ -9,11 +9,12 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath)
 {
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spDpi")), 300);
 
-	g_signal_connect(get("rdRangePages"), "toggled", G_CALLBACK(
-		+[](GtkToggleButton* togglebutton, ExportDialog* self)
-		{
+	g_signal_connect(get("rdRangePages"),
+	                 "toggled",
+	                 G_CALLBACK(+[](GtkToggleButton* togglebutton, ExportDialog* self) {
 		                 gtk_widget_set_sensitive(self->get("txtPages"), gtk_toggle_button_get_active(togglebutton));
-	                 }), this);
+	                 }),
+	                 this);
 }
 
 ExportDialog::~ExportDialog() = default;

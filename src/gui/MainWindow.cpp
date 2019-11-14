@@ -164,7 +164,7 @@ MainWindow::~MainWindow()
 
 	delete this->floatingToolbox;
 	this->floatingToolbox = nullptr;
-	
+
 	delete this->xournal;
 	this->xournal = nullptr;
 
@@ -289,13 +289,12 @@ void MainWindow::initHideMenu()
 	else
 	{
 		// Menu found, allow to hide it
-		g_signal_connect(menuItem, "activate", G_CALLBACK(
-			+[](GtkMenuItem* menuitem, MainWindow* self)
-			{ toggleMenuBar(self); }), this);
+		g_signal_connect(menuItem, "activate",
+		                 G_CALLBACK(+[](GtkMenuItem* menuitem, MainWindow* self) { toggleMenuBar(self); }), this);
 
 		GtkAccelGroup* accelGroup = gtk_accel_group_new();
 		gtk_accel_group_connect(accelGroup, GDK_KEY_F10, (GdkModifierType) 0, GTK_ACCEL_VISIBLE,
-				g_cclosure_new_swap(G_CALLBACK(toggleMenuBar), this, nullptr));
+		                        g_cclosure_new_swap(G_CALLBACK(toggleMenuBar), this, nullptr));
 		gtk_window_add_accel_group(GTK_WINDOW(getWindow()), accelGroup);
 	}
 
@@ -536,7 +535,7 @@ void MainWindow::setSidebarVisible(bool visible)
 	gtk_widget_set_visible(sidebar, visible);
 	settings->setSidebarVisible(visible);
 
-	if(!visible && (control->getSidebar() != nullptr))
+	if (!visible && (control->getSidebar() != nullptr))
 	{
 		saveSidebarSize();
 	}
@@ -819,7 +818,7 @@ void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssF
 {
 	string filename = gladeSearchPath->findFile("", cssFilename);
 	GtkCssProvider *provider = gtk_css_provider_new ();
-	gtk_css_provider_load_from_path (provider, filename.c_str(), nullptr);
+	gtk_css_provider_load_from_path(provider, filename.c_str(), nullptr);
 	gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider),
 											  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 	g_object_unref(provider);

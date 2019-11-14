@@ -20,8 +20,8 @@
 class FontButton : public AbstractToolItem
 {
 public:
-	FontButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type,
-			   string description, GtkWidget* menuitem = nullptr);
+	FontButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, string description,
+	           GtkWidget* menuitem = nullptr);
 	virtual ~FontButton();
 
 public:

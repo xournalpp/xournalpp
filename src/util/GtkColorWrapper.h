@@ -44,4 +44,4 @@ public:
 	guint16 blue;
 
 private:
-	};
+};

@@ -5,7 +5,11 @@
 #include <config.h>
 #include <i18n.h>
 
-#define error(...) if (loadHandler->error == nullptr) { loadHandler->error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); }
+#define error(...)                                                                                     \
+	if (loadHandler->error == nullptr)                                                                 \
+	{                                                                                                  \
+		loadHandler->error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); \
+	}
 
 struct PredefinedColor
 {

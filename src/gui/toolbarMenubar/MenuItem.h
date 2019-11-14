@@ -23,4 +23,4 @@ public:
 	virtual ~MenuItem();
 
 private:
-	};
+};

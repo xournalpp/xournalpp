@@ -25,8 +25,8 @@ auto main(int argc, char* argv[]) -> int
 #endif
 
 	// Use this two line to test the crash handler...
-//	int* crash = nullptr;
-//	*crash = 0;
+	//	int* crash = nullptr;
+	//	*crash = 0;
 
 	auto* main = new XournalMain();
 	int result = main->run(argc, argv);

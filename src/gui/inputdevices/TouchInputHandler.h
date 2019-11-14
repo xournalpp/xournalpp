@@ -21,11 +21,11 @@ class TouchInputHandler: public AbstractInputHandler
 {
 private:
 	GdkEventSequence* primarySequence = nullptr;
-  	GdkEventSequence* secondarySequence = nullptr;
+	GdkEventSequence* secondarySequence = nullptr;
 
-  	double startZoomDistance = 0.0;
-  	double lastZoomScrollCenterX = 0.0;
-  	double lastZoomScrollCenterY = 0.0;
+	double startZoomDistance = 0.0;
+	double lastZoomScrollCenterX = 0.0;
+	double lastZoomScrollCenterY = 0.0;
 
 	double priLastAbsX = -1.0;
 	double priLastAbsY = -1.0;

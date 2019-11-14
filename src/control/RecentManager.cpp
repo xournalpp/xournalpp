@@ -52,7 +52,7 @@ void RecentManager::addRecentFileFilename(Path filename)
 	GtkRecentManager* recentManager;
 	GtkRecentData* recentData;
 
-	static gchar* groups[2] = { g_strdup(GROUP), nullptr};
+	static gchar* groups[2] = {g_strdup(GROUP), nullptr};
 
 	recentManager = gtk_recent_manager_get_default();
 

@@ -11,9 +11,10 @@ ColorSelectImage::ColorSelectImage(int color, bool circle)
 	widget = gtk_drawing_area_new();
 	gtk_widget_set_size_request(widget, 16, 16);
 
-	g_signal_connect(widget, "draw", G_CALLBACK(
-		+[](GtkWidget *widget, cairo_t* cr, ColorSelectImage* self)
-		{ self->drawWidget(cr); }), this);
+	g_signal_connect(widget,
+	                 "draw",
+	                 G_CALLBACK(+[](GtkWidget* widget, cairo_t* cr, ColorSelectImage* self) { self->drawWidget(cr); }),
+	                 this);
 }
 
 ColorSelectImage::~ColorSelectImage() = default;

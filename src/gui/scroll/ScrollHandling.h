@@ -42,7 +42,7 @@ public:
 	virtual void scrollChanged() = 0;
 
 private:
-	protected:
+protected:
 	GtkAdjustment* adjHorizontal = nullptr;
 	GtkAdjustment* adjVertical = nullptr;
 

@@ -9,12 +9,14 @@ FillTransparencyDialog::FillTransparencyDialog(GladeSearchpath* gladeSearchPath,
 
 	setPreviewImage(alpha);
 
-	g_signal_connect(scaleAlpha, "change-value", G_CALLBACK(
-		+[](GtkRange* range, GtkScrollType scroll, gdouble value, FillTransparencyDialog* self)
-		{
+	g_signal_connect(
+	        scaleAlpha,
+	        "change-value",
+	        G_CALLBACK(+[](GtkRange* range, GtkScrollType scroll, gdouble value, FillTransparencyDialog* self) {
 		        self->setPreviewImage((int) (value / 100 * 255));
 		        gtk_range_set_value(range, value);
-		}), this);
+	        }),
+	        this);
 }
 
 FillTransparencyDialog::~FillTransparencyDialog() = default;

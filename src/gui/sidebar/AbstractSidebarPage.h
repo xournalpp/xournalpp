@@ -68,7 +68,7 @@ public:
 	Control* getControl();
 
 private:
-	protected:
+protected:
 	/**
 	 * The Control of the Application
 	 */
@@ -84,5 +84,4 @@ public:
 	 * The Sidebar button
 	 */
 	GtkToolItem* tabButton = nullptr;
-
 };

@@ -36,6 +36,6 @@ protected:
 	static bool finished(Control* control);
 
 private:
-	protected:
+protected:
 	Control* control;
 };

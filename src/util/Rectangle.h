@@ -24,7 +24,6 @@ public:
 	virtual ~Rectangle();
 
 public:
-
 	/**
 	 * Returns whether this rectangle intersects another
 	 *

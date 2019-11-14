@@ -125,7 +125,7 @@ void EditSelection::contstruct(UndoRedoHandler* undo, XojPageView* view, PageRef
 	this->mouseDownType = CURSOR_SELECTION_NONE;
 
 	int dpi = this->view->getXournal()->getControl()->getSettings()->getDisplayDpi();
-	this->btnWidth = std::max(10,dpi/8);
+	this->btnWidth = std::max(10, dpi / 8);
 
 	this->contents = new EditSelectionContents(this->x, this->y, this->width, this->height,
 											   this->sourcePage, this->sourceLayer, this->view);
@@ -466,8 +466,8 @@ void EditSelection::mouseMove(double mouseX, double mouseY)
 			this->width /= f;
 			this->height /= f;
 
-			this->x = std::min( this->x + oldW - minSize, this->x + oldW - this->width);
-			this->y = std::min( this->y + oldH - minSize, this->y + oldH - this->height);
+			this->x = std::min(this->x + oldW - minSize, this->x + oldW - this->width);
+			this->y = std::min(this->y + oldH - minSize, this->y + oldH - this->height);
 		}
 		else if (this->mouseDownType == CURSOR_SELECTION_TOP_RIGHT)
 		{
@@ -488,7 +488,7 @@ void EditSelection::mouseMove(double mouseX, double mouseY)
 			this->width *= f;
 			this->height *= f;
 
-			this->y = std::min( this->y + oldH - minSize, this->y + oldH - this->height);
+			this->y = std::min(this->y + oldH - minSize, this->y + oldH - this->height);
 		}
 		else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_LEFT)
 		{
@@ -508,7 +508,7 @@ void EditSelection::mouseMove(double mouseX, double mouseY)
 			this->width *= f;
 			this->height *= f;
 
-			this->x = std::min( this->x + oldW - minSize, this->x + oldW - this->width);
+			this->x = std::min(this->x + oldW - minSize, this->x + oldW - this->width);
 		}
 		else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_RIGHT)
 		{
@@ -531,7 +531,7 @@ void EditSelection::mouseMove(double mouseX, double mouseY)
 		{
 			dy = ry - this->y;
 
-			this->y = std::min( this->y+height-minSize, this->y +dy);
+			this->y = std::min(this->y + height - minSize, this->y + dy);
 			this->height -= dy;
 
 		}
@@ -543,7 +543,7 @@ void EditSelection::mouseMove(double mouseX, double mouseY)
 		else if (this->mouseDownType == CURSOR_SELECTION_LEFT)
 		{
 			dx = rx - this->x;
-			this->x = std::min( this->x+width-minSize, this->x +dx);
+			this->x = std::min(this->x + width - minSize, this->x + dx);
 			this->width -= dx;
 		}
 		else if (this->mouseDownType == CURSOR_SELECTION_RIGHT)
@@ -553,8 +553,8 @@ void EditSelection::mouseMove(double mouseX, double mouseY)
 		}
 
 
-	//	this->width = std::max( this->width , minSize);
-	//	this->height = std::max( this->height, minSize);
+		//	this->width = std::max( this->width , minSize);
+		//	this->height = std::max( this->height, minSize);
 
 		if( this->width < minSize)
 		{

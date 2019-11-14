@@ -106,4 +106,4 @@ protected:
 	Stroke* stroke;
 
 private:
-	};
+};

@@ -45,7 +45,7 @@ Scheduler::~Scheduler()
 
 	stop();
 
-	Job * job = nullptr;
+	Job* job = nullptr;
 	while ((job = getNextJobUnlocked()) != nullptr)
 	{
 		job->unref();

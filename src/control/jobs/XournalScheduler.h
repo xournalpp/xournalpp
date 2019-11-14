@@ -54,4 +54,4 @@ private:
 	bool existsSource(void* source, JobType type, JobPriority priority);
 
 private:
-	};
+};

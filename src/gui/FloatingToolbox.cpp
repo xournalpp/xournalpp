@@ -55,7 +55,7 @@ auto FloatingToolbox::floatingToolboxActivated() -> bool
 
 		if (cfg->getAction() == TOOL_FLOATING_TOOLBOX)
 		{
-			return true;													// return true
+			return true;  // return true
 		}
 	}
 
@@ -161,7 +161,7 @@ auto FloatingToolbox::getOverlayPosition(GtkOverlay* overlay,
 		    allocation->height < 2)  // if recalcSize or configuration or  initiation.
 		{
 			GtkRequisition natural;
-			gtk_widget_get_preferred_size(widget,  nullptr,  &natural);
+			gtk_widget_get_preferred_size(widget, nullptr, &natural);
 			allocation->width = natural.width;
 			allocation->height = natural.height;
 		}

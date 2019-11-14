@@ -28,5 +28,4 @@ public:
 	static XojPdfExport* createExport(Document* doc, ProgressListener* listener);
 
 private:
-	};
-
+};

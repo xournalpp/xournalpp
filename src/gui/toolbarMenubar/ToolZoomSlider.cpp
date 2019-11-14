@@ -8,8 +8,8 @@
 #include <cmath>
 
 ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom)
- : AbstractToolItem(id, handler, type, nullptr),
-   zoom(zoom)
+ : AbstractToolItem(id, handler, type, nullptr)
+ , zoom(zoom)
 {
 	zoom->addZoomListener(this);
 }
@@ -101,8 +101,14 @@ void ToolZoomSlider::updateScaleMarks()
 	}
 
 	gtk_scale_clear_marks(GTK_SCALE(this->slider));
-	gtk_scale_add_mark(GTK_SCALE(this->slider), scaleFunc(zoom->getZoom100Value()), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, nullptr);
-	gtk_scale_add_mark(GTK_SCALE(this->slider), scaleFunc(zoom->getZoomFitValue()), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, nullptr);
+	gtk_scale_add_mark(GTK_SCALE(this->slider),
+	                   scaleFunc(zoom->getZoom100Value()),
+	                   horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT,
+	                   nullptr);
+	gtk_scale_add_mark(GTK_SCALE(this->slider),
+	                   scaleFunc(zoom->getZoomFitValue()),
+	                   horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT,
+	                   nullptr);
 }
 
 auto ToolZoomSlider::createItem(bool horizontal) -> GtkToolItem*

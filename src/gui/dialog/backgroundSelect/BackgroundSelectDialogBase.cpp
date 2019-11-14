@@ -75,7 +75,7 @@ void BackgroundSelectDialogBase::layout()
 
 		gtk_layout_move(GTK_LAYOUT(this->layoutContainer), p->getWidget(), x, y);
 
-		height = std::max(height, (double) p->getHeight()); //TODO: page height should be double as well
+		height = std::max(height, (double) p->getHeight());  //TODO: page height should be double as well
 
 		x += p->getWidth();
 	}

@@ -175,28 +175,25 @@ auto gtk_invisible_get_type() -> GType
 
 	if (!gtk_invisible_menu_type)
 	{
-		static const GTypeInfo gtk_inivisible_menu_info =
-		{
-			sizeof(GtkInvisibleMenuClass),
-			// base initialize
-			nullptr,
-			// base finalize
-			nullptr,
-			// class initialize
-			(GClassInitFunc) gtk_invisible_menu_class_init,
-			// class finalize
-			nullptr,
-			// class data,
-			nullptr,
-			// instance size
-			sizeof(GtkInvisibleMenu),
-			// n_preallocs
-			0,
-			// instance init
-			nullptr,
-			// value table
-			(const GTypeValueTable*) nullptr
-		};
+		static const GTypeInfo gtk_inivisible_menu_info = {sizeof(GtkInvisibleMenuClass),
+		                                                   // base initialize
+		                                                   nullptr,
+		                                                   // base finalize
+		                                                   nullptr,
+		                                                   // class initialize
+		                                                   (GClassInitFunc) gtk_invisible_menu_class_init,
+		                                                   // class finalize
+		                                                   nullptr,
+		                                                   // class data,
+		                                                   nullptr,
+		                                                   // instance size
+		                                                   sizeof(GtkInvisibleMenu),
+		                                                   // n_preallocs
+		                                                   0,
+		                                                   // instance init
+		                                                   nullptr,
+		                                                   // value table
+		                                                   (const GTypeValueTable*) nullptr};
 
 		gtk_invisible_menu_type = g_type_register_static(GTK_TYPE_FIXED,
 		                                          "GtkInvisibleMenu",

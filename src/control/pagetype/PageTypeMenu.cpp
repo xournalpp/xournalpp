@@ -15,17 +15,17 @@ PageTypeApplyListener::~PageTypeApplyListener() = default;
 
 
 PageTypeMenu::PageTypeMenu(PageTypeHandler* types, Settings* settings, bool showPreview, bool showSpecial)
- : showSpecial(showSpecial),
-   menu(gtk_menu_new()),
-   types(types),
-   settings(settings),
-   ignoreEvents(false),
-   listener(nullptr),
-   menuX(0),
-   menuY(0),
-   backgroundPainter(nullptr),
-   showPreview(showPreview),
-   pageTypeApplyListener(nullptr)
+ : showSpecial(showSpecial)
+ , menu(gtk_menu_new())
+ , types(types)
+ , settings(settings)
+ , ignoreEvents(false)
+ , listener(nullptr)
+ , menuX(0)
+ , menuY(0)
+ , backgroundPainter(nullptr)
+ , showPreview(showPreview)
+ , pageTypeApplyListener(nullptr)
 {
 	initDefaultMenu();
 	loadDefaultPage();
@@ -139,24 +139,24 @@ void PageTypeMenu::addMenuEntry(PageTypeInfo* t)
 	info.info = t;
 	menuInfos.push_back(info);
 
-	g_signal_connect(entry, "toggled", G_CALLBACK(
-		+[](GtkWidget* togglebutton, PageTypeMenu* self)
-		{
-	if (self->ignoreEvents)
-			{
-				return;
-			}
+	g_signal_connect(entry,
+	                 "toggled",
+	                 G_CALLBACK(+[](GtkWidget* togglebutton, PageTypeMenu* self) {
+		                 if (self->ignoreEvents)
+		                 {
+			                 return;
+		                 }
 
-			for (MenuCallbackInfo& info : self->menuInfos)
-			{
-				if (info.entry == togglebutton)
-				{
-					self->entrySelected(info.info);
-					break;
-				}
-			}
-
-		}), this);
+		                 for (MenuCallbackInfo& info: self->menuInfos)
+		                 {
+			                 if (info.entry == togglebutton)
+			                 {
+				                 self->entrySelected(info.info);
+				                 break;
+			                 }
+		                 }
+	                 }),
+	                 this);
 }
 
 void PageTypeMenu::entrySelected(PageTypeInfo* t)
@@ -224,21 +224,23 @@ void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApply
 		GtkWidget* menuEntryApply = createApplyMenuItem(_("Apply to current page"));
 		gtk_menu_attach(GTK_MENU(menu), menuEntryApply, 0, PREVIEW_COLUMNS, menuY, menuY + 1);
 		menuY++;
-		g_signal_connect(menuEntryApply, "activate", G_CALLBACK(
-			+[](GtkWidget* menu, PageTypeMenu* self)
-			{
-	self->pageTypeApplyListener->applyCurrentPageBackground(false);
-			}), this);
+		g_signal_connect(menuEntryApply,
+		                 "activate",
+		                 G_CALLBACK(+[](GtkWidget* menu, PageTypeMenu* self) {
+			                 self->pageTypeApplyListener->applyCurrentPageBackground(false);
+		                 }),
+		                 this);
 	}
 
 	GtkWidget* menuEntryApplyAll = createApplyMenuItem(_("Apply to all pages"));
 	gtk_menu_attach(GTK_MENU(menu), menuEntryApplyAll, 0, PREVIEW_COLUMNS, menuY, menuY + 1);
 	menuY++;
-	g_signal_connect(menuEntryApplyAll, "activate", G_CALLBACK(
-		+[](GtkWidget* menu, PageTypeMenu* self)
-		{
-	self->pageTypeApplyListener->applyCurrentPageBackground(true);
-		}), this);
+	g_signal_connect(menuEntryApplyAll,
+	                 "activate",
+	                 G_CALLBACK(+[](GtkWidget* menu, PageTypeMenu* self) {
+		                 self->pageTypeApplyListener->applyCurrentPageBackground(true);
+	                 }),
+	                 this);
 }
 
 auto PageTypeMenu::createApplyMenuItem(const char* text) -> GtkWidget*

@@ -2,8 +2,8 @@
 #include "XmlPointNode.h"
 
 XmlPointNode::XmlPointNode(const char* tag)
- : XmlAudioNode(tag),
-   points(nullptr)
+ : XmlAudioNode(tag)
+ , points(nullptr)
 {
 }
 

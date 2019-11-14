@@ -36,11 +36,10 @@ void AbstractItem::setMenuItem(GtkWidget* menuitem)
 		return;
 	}
 
-	menuSignalHandler = g_signal_connect(menuitem, "activate", G_CALLBACK(
-			+[](GtkMenuItem* menuitem, AbstractItem* self)
-			{
-	self->activated(nullptr, menuitem, nullptr);
-			}), this);
+	menuSignalHandler = g_signal_connect(
+	        menuitem, "activate",
+	        G_CALLBACK(+[](GtkMenuItem* menuitem, AbstractItem* self) { self->activated(nullptr, menuitem, nullptr); }),
+	        this);
 
 	g_object_ref(G_OBJECT(menuitem));
 	this->menuitem = menuitem;

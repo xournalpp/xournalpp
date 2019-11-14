@@ -30,37 +30,36 @@ auto VorbisProducer::start(std::string filename, unsigned int timestamp) -> bool
 
 	this->audioQueue->setAudioAttributes(this->sfInfo.samplerate, static_cast<unsigned int>(this->sfInfo.channels));
 
-	this->producerThread = new std::thread(
-			[&, filename]
+	this->producerThread = new std::thread([&, filename] {
+		size_t numFrames = 1;
+		auto sampleBuffer = new float[1024 * this->sfInfo.channels];
+		std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
+
+		while (!this->stopProducer && numFrames > 0 && !this->audioQueue->hasStreamEnded())
+		{
+			numFrames = sf_readf_float(this->sfFile, sampleBuffer, 1024);
+
+			while (this->audioQueue->size() >= this->sample_buffer_size && !this->audioQueue->hasStreamEnded() &&
+			       !this->stopProducer)
 			{
-				size_t numFrames = 1;
-				auto sampleBuffer = new float[1024 * this->sfInfo.channels];
-				std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
-								
-				while (!this->stopProducer && numFrames > 0 && !this->audioQueue->hasStreamEnded())
-				{
-					numFrames = sf_readf_float(this->sfFile, sampleBuffer, 1024);
+				audioQueue->waitForConsumer(lock);
+			}
 
-					while (this->audioQueue->size() >= this->sample_buffer_size && !this->audioQueue->hasStreamEnded() && !this->stopProducer)
-					{
-						audioQueue->waitForConsumer(lock);
-					}
+			if (this->seekSeconds != 0)
+			{
+				sf_seek(this->sfFile, seekSeconds * this->sfInfo.samplerate, SEEK_CUR);
+				this->seekSeconds = 0;
+			}
 
-					if (this->seekSeconds != 0)
-					{
-						sf_seek(this->sfFile,seekSeconds * this->sfInfo.samplerate, SEEK_CUR);
-						this->seekSeconds = 0;
-					}
+			this->audioQueue->push(sampleBuffer, static_cast<size_t>(numFrames * this->sfInfo.channels));
+		}
+		this->audioQueue->signalEndOfStream();
 
-					this->audioQueue->push(sampleBuffer, static_cast<size_t>(numFrames * this->sfInfo.channels));
-				}
-				this->audioQueue->signalEndOfStream();
+		delete[] sampleBuffer;
+		sampleBuffer = nullptr;
 
-				delete[] sampleBuffer;
-				sampleBuffer = nullptr;
-
-				sf_close(this->sfFile);
-			});
+		sf_close(this->sfFile);
+	});
 	return true;
 }
 

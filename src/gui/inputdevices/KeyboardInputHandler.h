@@ -17,7 +17,7 @@
 class KeyboardInputHandler : public AbstractInputHandler
 {
 private:
-	public:
+public:
 	explicit KeyboardInputHandler(InputContext* inputContext);
 	~KeyboardInputHandler() override;
 	bool handleImpl(InputEvent* event) override;

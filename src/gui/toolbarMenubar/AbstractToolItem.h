@@ -42,7 +42,7 @@ protected:
 	virtual GtkToolItem* newItem() = 0;
 
 public:
-	protected:
+protected:
 	GtkToolItem* item = nullptr;
 	GtkWidget* popupMenu = nullptr;
 

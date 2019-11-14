@@ -170,7 +170,7 @@ auto BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> boo
 void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 {
 	xournal->getCursor()->activateDrawDirCursor(false);	//in case released within  fixate_Dir_Mods_Dist
-	
+
 	if (stroke == nullptr)
 	{
 		return;

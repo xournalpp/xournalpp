@@ -212,8 +212,8 @@ void XournalppCursor::updateCursor()
 	if (!xournal) return;
 
 	GdkCursor* cursor = nullptr;
-	
-	
+
+
 	if (this->busy)
 	{
 		setCursor(CRSR_BUSY);

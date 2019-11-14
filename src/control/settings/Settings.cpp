@@ -192,7 +192,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem)
 			}
 			else if (sType == "double")
 			{
-				double d = tempg_ascii_strtod((const char*) value, nullptr);	//g_ascii_strtod ignores locale setting.
+				double d = tempg_ascii_strtod((const char*) value, nullptr);  //g_ascii_strtod ignores locale setting.
 				elem.setDouble((const char*) name, d);
 			}
 			else if (sType == "hex")
@@ -559,23 +559,23 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioSampleRate") == 0)
 	{
-		this->audioSampleRate = tempg_ascii_strtod((const char *) value, nullptr);
+		this->audioSampleRate = tempg_ascii_strtod((const char*) value, nullptr);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioGain") == 0)
 	{
-		this->audioGain = tempg_ascii_strtod((const char *) value, nullptr);
+		this->audioGain = tempg_ascii_strtod((const char*) value, nullptr);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "defaultSeekTime") == 0)
 	{
-		this->defaultSeekTime = tempg_ascii_strtod((const char *) value, nullptr);
+		this->defaultSeekTime = tempg_ascii_strtod((const char*) value, nullptr);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioInputDevice") == 0)
 	{
-		this->audioInputDevice = g_ascii_strtoll((const char *) value, nullptr, 10);
+		this->audioInputDevice = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "audioOutputDevice") == 0)
 	{
-		this->audioOutputDevice = g_ascii_strtoll((const char *) value, nullptr, 10);
+		this->audioOutputDevice = g_ascii_strtoll((const char*) value, nullptr, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "newInputSystemEnabled") == 0)
 	{

@@ -17,10 +17,10 @@
 #define PIXEL_MOTION_THRESHOLD 0.3
 
 InputHandler::InputHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
- : xournal(xournal),
-   redrawable(redrawable),
-   page(page),
-   stroke(nullptr)
+ : xournal(xournal)
+ , redrawable(redrawable)
+ , page(page)
+ , stroke(nullptr)
 {
 }
 
