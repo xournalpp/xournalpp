@@ -55,7 +55,7 @@ auto PageRef::operator*() -> XojPage&
 	return *(this->page);
 }
 
-auto PageRef::operator->() -> XojPage*
+auto PageRef::operator-> () -> XojPage*
 {
 	return this->page;
 }
@@ -65,7 +65,7 @@ auto PageRef::operator*() const -> const XojPage&
 	return *(this->page);
 }
 
-auto PageRef::operator->() const -> const XojPage*
+auto PageRef::operator-> () const -> const XojPage*
 {
 	return this->page;
 }
