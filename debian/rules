@@ -2,3 +2,6 @@
 %:
 	dh $@
 
+override_dh_auto_build:
+	make translations all
+
