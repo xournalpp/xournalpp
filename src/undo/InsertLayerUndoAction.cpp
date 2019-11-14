@@ -27,12 +27,12 @@ InsertLayerUndoAction::~InsertLayerUndoAction()
 	}
 }
 
-string InsertLayerUndoAction::getText()
+auto InsertLayerUndoAction::getText() -> string
 {
 	return _("Insert layer");
 }
 
-bool InsertLayerUndoAction::undo(Control* control)
+auto InsertLayerUndoAction::undo(Control* control) -> bool
 {
 	// perform the same thing we did to InsertDeletePage
 	// to prevent a double lock (we're already locked here)
@@ -45,7 +45,7 @@ bool InsertLayerUndoAction::undo(Control* control)
 	return true;
 }
 
-bool InsertLayerUndoAction::redo(Control* control)
+auto InsertLayerUndoAction::redo(Control* control) -> bool
 {
 	layerController->insertLayer(this->page, this->layer, layerPosition);
 	Document* doc = control->getDocument();

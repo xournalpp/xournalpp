@@ -2,11 +2,12 @@
 
 #include <glib.h>
 #include <zlib.h>
-#include <string.h>
+#include <cstring>
 
 #include <GzUtil.h>
 #include <zip.h>
 #include <iostream>
+#include <array>
 
 const char* TAG_PREVIEW_NAME = "preview";
 const int TAG_PREVIEW_NAME_LEN = strlen(TAG_PREVIEW_NAME);
@@ -16,9 +17,7 @@ const char* TAG_PREVIEW_END_NAME = "/preview";
 const int TAG_PREVIEW_END_NAME_LEN = strlen(TAG_PREVIEW_END_NAME);
 #define BUF_SIZE 8192
 
-XojPreviewExtractor::XojPreviewExtractor()
-{
-}
+XojPreviewExtractor::XojPreviewExtractor() = default;
 
 XojPreviewExtractor::~XojPreviewExtractor()
 {
@@ -30,7 +29,7 @@ XojPreviewExtractor::~XojPreviewExtractor()
 /**
  * @return The preview data, should be a binary PNG
  */
-unsigned char* XojPreviewExtractor::getData(gsize& dataLen)
+auto XojPreviewExtractor::getData(gsize& dataLen) -> unsigned char*
 {
 	dataLen = this->dataLen;
 	return this->data;
@@ -42,7 +41,7 @@ unsigned char* XojPreviewExtractor::getData(gsize& dataLen)
  * @param len Buffer len
  * @return If an image was read, or the error
  */
-PreviewExtractResult XojPreviewExtractor::readPreview(char* buffer, int len)
+auto XojPreviewExtractor::readPreview(char* buffer, int len) -> PreviewExtractResult
 {
 	bool inTag = false;
 	int startTag = 0;
@@ -103,7 +102,7 @@ PreviewExtractResult XojPreviewExtractor::readPreview(char* buffer, int len)
  * @param file .xoj File
  * @return true if a preview was read, false if not
  */
-PreviewExtractResult XojPreviewExtractor::readFile(Path file)
+auto XojPreviewExtractor::readFile(Path file) -> PreviewExtractResult
 {
 	// check file extensions
 	if (!file.hasXournalFileExt())
@@ -125,10 +124,10 @@ PreviewExtractResult XojPreviewExtractor::readFile(Path file)
 		// The <preview> Tag is within the first 179 Bytes
 		// The Preview should end within the first 8k
 
-		char buffer[BUF_SIZE];
-		int readLen = gzread(fp, buffer, BUF_SIZE);
+		std::array<char, BUF_SIZE> buffer;
+		int readLen = gzread(fp, buffer.data(), BUF_SIZE);
 
-		PreviewExtractResult result = readPreview(buffer, readLen);
+		PreviewExtractResult result = readPreview(buffer.data(), readLen);
 
 		gzclose(fp);
 		return result;

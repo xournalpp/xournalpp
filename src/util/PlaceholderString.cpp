@@ -2,17 +2,17 @@
 
 #include <glib.h>
 
+#include <utility>
+
 /**
  * Base class for Formatting
  */
 class PlaceholderElement {
 public:
-	virtual ~PlaceholderElement()
-	{
-	}
+	virtual ~PlaceholderElement() = default;
 
 public:
-	virtual string format(string format) = 0;
+	virtual auto format(std::string format) -> std::string = 0;
 };
 
 /**
@@ -20,19 +20,19 @@ public:
  */
 class PlaceholderElementString : public PlaceholderElement{
 public:
-	PlaceholderElementString(string text)
-	 : text(text)
+	PlaceholderElementString(std::string text)
+	 : text(std::move(text))
 	{
 	}
 
 public:
-	string format(string format)
+	auto format(std::string format) -> std::string override
 	{
 		return text;
 	}
 
 private:
-	string text;
+	std::string text;
 };
 
 
@@ -47,7 +47,7 @@ public:
 	}
 
 public:
-	string format(string format)
+	auto format(std::string format) -> std::string override
 	{
 		return std::to_string(value);
 	}
@@ -60,8 +60,8 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-PlaceholderString::PlaceholderString(string text)
- : text(text)
+PlaceholderString::PlaceholderString(std::string text)
+ : text(std::move(text))
 {
 }
 
@@ -75,24 +75,24 @@ PlaceholderString::~PlaceholderString()
 	data.clear();
 }
 
-PlaceholderString& PlaceholderString::operator%(int64_t value)
+auto PlaceholderString::operator%(int64_t value) -> PlaceholderString&
 {
 	data.push_back(new PlaceholderElementInt(value));
 	return *this;
 }
 
-PlaceholderString& PlaceholderString::operator%(string value)
+auto PlaceholderString::operator%(std::string value) -> PlaceholderString&
 {
 	data.push_back(new PlaceholderElementString(value));
 	return *this;
 }
 
-string PlaceholderString::formatPart(string format)
+auto PlaceholderString::formatPart(std::string format) -> std::string
 {
-	string formatDef;
+	std::string formatDef;
 
 	std::size_t comma = format.find(',');
-	if (comma != string::npos)
+	if (comma != std::string::npos)
 	{
 		formatDef = format.substr(comma + 1);
 		format = format.substr(0, comma);
@@ -114,7 +114,7 @@ string PlaceholderString::formatPart(string format)
 
 	if (index < 0 || index >= (int)data.size())
 	{
-		string notFound = "{";
+		std::string notFound = "{";
 		notFound += std::to_string(index + 1);
 		notFound += "}";
 		return notFound;
@@ -135,14 +135,13 @@ void PlaceholderString::process()
 
 	bool openBracket = false;
 	bool closeBacket = false;
-	string formatString;
+	std::string formatString;
 
 	// Should work, also for UTF-8
-	for (int i = 0; i < (int)text.length(); i++)
+	for (char c: text)
 	{
-		char c = text.at(i);
-
-		if (c == '{') {
+		if (c == '{')
+		{
 			closeBacket = false;
 			if (openBracket)
 			{
@@ -185,20 +184,21 @@ void PlaceholderString::process()
 	}
 }
 
-string PlaceholderString::str()
+auto PlaceholderString::str() -> std::string
 {
 	process();
 
 	return processed;
 }
 
-const char* PlaceholderString::c_str()
+auto PlaceholderString::c_str() -> const char*
 {
 	process();
 
 	return processed.c_str();
 }
 
-std::ostream &operator<<(std::ostream &os, PlaceholderString &ps) {
-    return os << ps.str();
+auto operator<<(std::ostream& os, PlaceholderString& ps) -> std::ostream&
+{
+	return os << ps.str();
 }

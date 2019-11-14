@@ -35,9 +35,9 @@ void TexImage::freeImageAndPdf()
 	this->parsedBinaryData = false;
 }
 
-Element* TexImage::clone()
+auto TexImage::clone() -> Element*
 {
-	TexImage* img = new TexImage();
+	auto* img = new TexImage();
 
 	img->x = this->x;
 	img->y = this->y;
@@ -71,7 +71,7 @@ void TexImage::setHeight(double height)
 	this->height = height;
 }
 
-cairo_status_t TexImage::cairoReadFunction(TexImage* image, unsigned char* data, unsigned int length)
+auto TexImage::cairoReadFunction(TexImage* image, unsigned char* data, unsigned int length) -> cairo_status_t
 {
 	for (unsigned int i = 0; i < length; i++, image->read++)
 	{
@@ -96,7 +96,7 @@ void TexImage::setBinaryData(string binaryData)
 /**
  * Gets the binary data, a .PNG image or a .PDF
  */
-string& TexImage::getBinaryData()
+auto TexImage::getBinaryData() -> string&
 {
 	return this->binaryData;
 }
@@ -106,12 +106,12 @@ void TexImage::setText(string text)
 	this->text = text;
 }
 
-string TexImage::getText()
+auto TexImage::getText() -> string
 {
 	return this->text;
 }
 
-cairo_surface_t* TexImage::getImage()
+auto TexImage::getImage() -> cairo_surface_t*
 {
 	if (this->image == nullptr && this->parsedBinaryData == false)
 	{
@@ -158,7 +158,7 @@ void TexImage::loadBinaryData()
  *
  * The document needs to be referenced, if it will be hold somewhere
  */
-PopplerDocument* TexImage::getPdf()
+auto TexImage::getPdf() -> PopplerDocument*
 {
 	if (this->pdf == nullptr && this->parsedBinaryData == false)
 	{

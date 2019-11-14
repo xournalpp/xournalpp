@@ -17,7 +17,7 @@ Tool::~Tool()
 	this->thickness = nullptr;
 }
 
-string Tool::getName()
+auto Tool::getName() -> string
 {
 	return this->name;
 }
@@ -34,12 +34,12 @@ void Tool::setCapability(int capability, bool enabled)
 	}
 }
 
-bool Tool::hasCapability(ToolCapabilities cap)
+auto Tool::hasCapability(ToolCapabilities cap) -> bool
 {
 	return (this->capabilities & cap) != 0;
 }
 
-double Tool::getThickness(ToolSize size)
+auto Tool::getThickness(ToolSize size) -> double
 {
 	return this->thickness[size - TOOL_SIZE_VERY_FINE];
 }

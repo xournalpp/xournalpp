@@ -19,7 +19,7 @@ PopplerGlibAction::~PopplerGlibAction()
 	}
 }
 
-XojLinkDest* PopplerGlibAction::getDestination()
+auto PopplerGlibAction::getDestination() -> XojLinkDest*
 {
 	XojLinkDest* dest = link_dest_new();
 	dest->dest = new LinkDestination();
@@ -28,7 +28,7 @@ XojLinkDest* PopplerGlibAction::getDestination()
 	// every other action is not supported in Xournal
 	if (action->type == POPPLER_ACTION_GOTO_DEST)
 	{
-		PopplerActionGotoDest* actionDest = (PopplerActionGotoDest*)action;
+		auto* actionDest = (PopplerActionGotoDest*) action;
 		PopplerDest* pDest = actionDest->dest;
 
 		if (pDest == nullptr)
@@ -127,7 +127,7 @@ void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest)
 	link->setPdfPage(pDest->page_num - 1);
 }
 
-string PopplerGlibAction::getTitle()
+auto PopplerGlibAction::getTitle() -> string
 {
 	return ((PopplerActionAny*)action)->title;
 }

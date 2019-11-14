@@ -6,7 +6,7 @@
 #include <i18n.h>
 #include <XojMsgBox.h>
 
-#include <stdlib.h>
+#include <cstdlib>
 
 GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, string glade, string mainWnd)
 {
@@ -41,7 +41,7 @@ GladeGui::~GladeGui()
 	g_object_unref(builder);
 }
 
-GtkWidget* GladeGui::get(string name)
+auto GladeGui::get(string name) -> GtkWidget*
 {
 	GtkWidget* w = GTK_WIDGET(gtk_builder_get_object(builder, name.c_str()));
 	if (w == nullptr)
@@ -51,17 +51,17 @@ GtkWidget* GladeGui::get(string name)
 	return w;
 }
 
-GtkWidget* GladeGui::getWindow()
+auto GladeGui::getWindow() -> GtkWidget*
 {
 	return this->window;
 }
 
-GladeSearchpath* GladeGui::getGladeSearchPath()
+auto GladeGui::getGladeSearchPath() -> GladeSearchpath*
 {
 	return this->gladeSearchPath;
 }
 
-GtkBuilder* GladeGui::getBuilder()
+auto GladeGui::getBuilder() -> GtkBuilder*
 {
 	return this->builder;
 }

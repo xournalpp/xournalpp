@@ -53,7 +53,7 @@ SearchBar::~SearchBar()
 	this->control = nullptr;
 }
 
-bool SearchBar::searchTextonCurrentPage(const char* text, int* occures, double* top)
+auto SearchBar::searchTextonCurrentPage(const char* text, int* occures, double* top) -> bool
 {
 	int p = control->getCurrentPageNo();
 

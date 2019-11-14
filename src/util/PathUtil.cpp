@@ -4,6 +4,8 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 
+#include <array>
+
 /**
  * Read a file to a string
  *
@@ -13,7 +15,7 @@
  *
  * @return true if the file was read, false if not
  */
-bool PathUtil::readString(string& output, Path& path, bool showErrorToUser)
+auto PathUtil::readString(string& output, Path& path, bool showErrorToUser) -> bool
 {
 	gchar* contents = nullptr;
 	gsize length = 0;
@@ -36,9 +38,9 @@ bool PathUtil::readString(string& output, Path& path, bool showErrorToUser)
 	}
 }
 
-bool PathUtil::copy(Path src, Path dest)
+auto PathUtil::copy(Path src, Path dest) -> bool
 {
-	char buffer[16384]; // 16k
+	std::array<char, 16 * 1024> buffer;  // 16k
 
 	FILE* fpRead = g_fopen(src.c_str(), "rb");
 	if (!fpRead)
@@ -55,10 +57,10 @@ bool PathUtil::copy(Path src, Path dest)
 
 	while (!feof(fpRead))
 	{
-		size_t bytes = fread(buffer, 1, sizeof(buffer), fpRead);
+		size_t bytes = fread(buffer.data(), 1, buffer.size(), fpRead);
 		if (bytes)
 		{
-			fwrite(buffer, 1, bytes, fpWrite);
+			fwrite(buffer.data(), 1, bytes, fpWrite);
 		}
 	}
 

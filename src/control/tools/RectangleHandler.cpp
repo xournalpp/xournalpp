@@ -10,9 +10,7 @@ RectangleHandler::RectangleHandler(XournalView* xournal, XojPageView* redrawable
 {
 }
 
-RectangleHandler::~RectangleHandler()
-{
-}
+RectangleHandler::~RectangleHandler() = default;
 
 void RectangleHandler::drawShape(Point& c, const PositionInputData& pos)
 {

@@ -82,9 +82,7 @@ PopupMenuButton::PopupMenuButton(GtkWidget* button, GtkWidget* menu)
 	gtk_menu_attach_to_widget(GTK_MENU(menu), button, menu_detacher);
 }
 
-PopupMenuButton::~PopupMenuButton()
-{
-}
+PopupMenuButton::~PopupMenuButton() = default;
 
 void PopupMenuButton::setMenu(GtkWidget* menu)
 {

@@ -1,6 +1,6 @@
 #include "PdfCache.h"
 
-#include <stdio.h>
+#include <cstdio>
 
 class PdfCacheEntry
 {
@@ -54,7 +54,7 @@ void PdfCache::clearCache()
 	this->data.clear();
 }
 
-cairo_surface_t* PdfCache::lookup(XojPdfPageSPtr popplerPage)
+auto PdfCache::lookup(XojPdfPageSPtr popplerPage) -> cairo_surface_t*
 {
 	for (PdfCacheEntry* e : this->data)
 	{
@@ -69,7 +69,7 @@ cairo_surface_t* PdfCache::lookup(XojPdfPageSPtr popplerPage)
 
 void PdfCache::cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img)
 {
-	PdfCacheEntry* ne = new PdfCacheEntry(popplerPage, img);
+	auto* ne = new PdfCacheEntry(popplerPage, img);
 	this->data.push_front(ne);
 	
 	while (this->data.size() > this->size)

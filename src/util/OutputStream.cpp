@@ -3,11 +3,11 @@
 #include "GzUtil.h"
 #include <i18n.h>
 
-#include <stdlib.h>
+#include <cstdlib>
 
-OutputStream::OutputStream() { }
+OutputStream::OutputStream() = default;
 
-OutputStream::~OutputStream() { }
+OutputStream::~OutputStream() = default;
 
 void OutputStream::write(const string& str)
 {
@@ -43,7 +43,7 @@ GzOutputStream::~GzOutputStream()
 	this->fp = nullptr;
 }
 
-string& GzOutputStream::getLastError()
+auto GzOutputStream::getLastError() -> string&
 {
 	return this->error;
 }

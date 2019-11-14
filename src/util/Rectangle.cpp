@@ -2,9 +2,7 @@
 
 #include "Range.h"
 
-Rectangle::Rectangle()
-{
-}
+Rectangle::Rectangle() = default;
 
 Rectangle::Rectangle(double x, double y, double width, double height)
  : x(x)
@@ -22,11 +20,9 @@ Rectangle::Rectangle(const Range& rect)
 {
 }
 
-Rectangle::~Rectangle()
-{
-}
+Rectangle::~Rectangle() = default;
 
-bool Rectangle::intersects(const Rectangle& other, Rectangle* dest) const
+auto Rectangle::intersects(const Rectangle& other, Rectangle* dest) const -> bool
 {
 	double destX, destY;
 	double destW, destH;
@@ -82,12 +78,12 @@ void Rectangle::add(const Rectangle &other)
 	add(other.x, other.y, other.width, other.height);
 }
 
-Rectangle Rectangle::translated(double dx, double dy)
+auto Rectangle::translated(double dx, double dy) -> Rectangle
 {
 	return Rectangle(this->x + dx, this->y + dy, this->width, this->height);
 }
 
-Rectangle Rectangle::intersect(const Rectangle &other)
+auto Rectangle::intersect(const Rectangle& other) -> Rectangle
 {
 	double x1 = std::max(this->x, other.x);
 	double y1 = std::max(this->y, other.y);
@@ -98,7 +94,7 @@ Rectangle Rectangle::intersect(const Rectangle &other)
 	return Rectangle(x1, y1, x2 - x1, y2 - y1);
 }
 
-Rectangle& Rectangle::operator*=(double factor)
+auto Rectangle::operator*=(double factor) -> Rectangle&
 {
 	x *= factor;
 	y *= factor;
@@ -109,7 +105,7 @@ Rectangle& Rectangle::operator*=(double factor)
 	return *this;
 }
 
-double Rectangle::area() const
+auto Rectangle::area() const -> double
 {
 	return width * height;
 }

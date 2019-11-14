@@ -1,9 +1,11 @@
 #include "AbstractItem.h"
 
+#include <utility>
+
 AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action, GtkWidget* menuitem)
- : action(action),
-   id(id),
-   handler(handler)
+ : action(action)
+ , id(std::move(id))
+ , handler(handler)
 {
 	ActionEnabledListener::registerListener(handler);
 	ActionSelectionListener::registerListener(handler);
@@ -148,7 +150,7 @@ void AbstractItem::actionPerformed(ActionType action, ActionGroup group,
 	handler->actionPerformed(action, group, event, menuitem, toolbutton, selected);
 }
 
-string AbstractItem::getId()
+auto AbstractItem::getId() -> string
 {
 	return id;
 }
@@ -176,12 +178,12 @@ void AbstractItem::enable(bool enabled)
 {
 }
 
-bool AbstractItem::isEnabled()
+auto AbstractItem::isEnabled() -> bool
 {
 	return this->enabled;
 }
 
-ActionType AbstractItem::getActionType()
+auto AbstractItem::getActionType() -> ActionType
 {
 	return this->action;
 }

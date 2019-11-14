@@ -66,7 +66,7 @@ void UndoRedoController::after()
 		visibleElements.push_back(e);
 	}
 
-	EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), visibleElements, view, page);
+	auto* selection = new EditSelection(control->getUndoRedoHandler(), visibleElements, view, page);
 	control->getWindow()->getXournal()->setSelection(selection);
 }
 

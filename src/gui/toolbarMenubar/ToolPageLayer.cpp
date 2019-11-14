@@ -49,7 +49,7 @@ void ToolPageLayer::createSeparator()
 	menuY++;
 }
 
-GtkWidget* ToolPageLayer::createSpecialMenuEntry(string name)
+auto ToolPageLayer::createSpecialMenuEntry(string name) -> GtkWidget*
 {
 	GtkWidget* it = gtk_menu_item_new();
 	GtkWidget* lb = gtk_label_new(name.c_str());
@@ -289,17 +289,17 @@ void ToolPageLayer::updateLayerData()
 	gtk_label_set_text(GTK_LABEL(layerLabel), lb.c_str());
 }
 
-string ToolPageLayer::getToolDisplayName()
+auto ToolPageLayer::getToolDisplayName() -> string
 {
 	return _("Layer selection");
 }
 
-GtkWidget* ToolPageLayer::getNewToolIcon()
+auto ToolPageLayer::getNewToolIcon() -> GtkWidget*
 {
 	return gtk_image_new_from_icon_name("layers", GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
-GtkToolItem* ToolPageLayer::newItem()
+auto ToolPageLayer::newItem() -> GtkToolItem*
 {
 	GtkToolItem* it = gtk_tool_item_new();
 

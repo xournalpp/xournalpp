@@ -3,9 +3,7 @@
 #include "BackgroundImage.h"
 #include "XojPage.h"
 
-PageRef::PageRef()
-{
-}
+PageRef::PageRef() = default;
 
 PageRef::PageRef(const PageRef& ref)
 {
@@ -52,27 +50,27 @@ void PageRef::operator=(XojPage* page)
 	}
 }
 
-XojPage& PageRef::operator*()
+auto PageRef::operator*() -> XojPage&
 {
 	return *(this->page);
 }
 
-XojPage* PageRef::operator->()
+auto PageRef::operator->() -> XojPage*
 {
 	return this->page;
 }
 
-const XojPage& PageRef::operator*() const
+auto PageRef::operator*() const -> const XojPage&
 {
 	return *(this->page);
 }
 
-const XojPage* PageRef::operator->() const
+auto PageRef::operator->() const -> const XojPage*
 {
 	return this->page;
 }
 
-PageRef PageRef::clone()
+auto PageRef::clone() -> PageRef
 {
 	if (this->page == nullptr)
 	{
@@ -84,7 +82,7 @@ PageRef PageRef::clone()
 	}
 }
 
-bool PageRef::isValid()
+auto PageRef::isValid() -> bool
 {
 	return this->page != nullptr;
 }
@@ -94,7 +92,7 @@ PageRef::operator XojPage* ()
 	return this->page;
 }
 
-bool PageRef::operator==(const PageRef& ref)
+auto PageRef::operator==(const PageRef& ref) -> bool
 {
 	return this->page == ref.page;
 }

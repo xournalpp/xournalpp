@@ -177,7 +177,7 @@ void SettingsDialog::loadCheckbox(const char* name, gboolean value)
 	gtk_toggle_button_set_active(b, value);
 }
 
-bool SettingsDialog::getCheckbox(const char* name)
+auto SettingsDialog::getCheckbox(const char* name) -> bool
 {
 	GtkToggleButton* b = GTK_TOGGLE_BUTTON(get(name));
 	return gtk_toggle_button_get_active(b);
@@ -417,7 +417,7 @@ void SettingsDialog::load()
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")), settings->getDefaultSeekTime());
 }
 
-string SettingsDialog::updateHideString(const string& hidden, bool hideMenubar, bool hideSidebar)
+auto SettingsDialog::updateHideString(const string& hidden, bool hideMenubar, bool hideSidebar) -> string
 {
 	string newHidden;
 

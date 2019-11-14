@@ -1,8 +1,6 @@
 #include "Actions.h"
 
-ActionEnabledListener::ActionEnabledListener()
-{
-}
+ActionEnabledListener::ActionEnabledListener() = default;
 
 ActionEnabledListener::~ActionEnabledListener()
 {
@@ -54,13 +52,9 @@ void ActionSelectionListener::unregisterListener()
 	}
 }
 
-ActionHandler::ActionHandler()
-{
-}
+ActionHandler::ActionHandler() = default;
 
-ActionHandler::~ActionHandler()
-{
-}
+ActionHandler::~ActionHandler() = default;
 
 void ActionHandler::fireEnableAction(ActionType action, bool enabled)
 {

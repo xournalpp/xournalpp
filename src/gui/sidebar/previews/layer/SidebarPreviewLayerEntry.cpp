@@ -71,22 +71,22 @@ void SidebarPreviewLayerEntry::mouseButtonPressCallback()
 	((SidebarPreviewLayers*)sidebar)->layerSelected(index);
 }
 
-PreviewRenderType SidebarPreviewLayerEntry::getRenderType()
+auto SidebarPreviewLayerEntry::getRenderType() -> PreviewRenderType
 {
 	return RENDER_TYPE_PAGE_LAYER;
 }
 
-int SidebarPreviewLayerEntry::getHeight()
+auto SidebarPreviewLayerEntry::getHeight() -> int
 {
 	return getWidgetHeight() + toolbarHeight;
 }
 
-int SidebarPreviewLayerEntry::getLayer()
+auto SidebarPreviewLayerEntry::getLayer() -> int
 {
 	return layer;
 }
 
-GtkWidget* SidebarPreviewLayerEntry::getWidget()
+auto SidebarPreviewLayerEntry::getWidget() -> GtkWidget*
 {
 	return this->box;
 }

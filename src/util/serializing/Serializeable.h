@@ -24,5 +24,5 @@ public:
 	virtual void serialize(ObjectOutputStream& out) = 0;
 	virtual void readSerialized(ObjectInputStream& in) = 0;
 
-	virtual ~Serializeable() { }
+	virtual ~Serializeable() = default;
 };

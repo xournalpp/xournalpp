@@ -19,7 +19,7 @@ void ToolitemDragDrop::attachMetadata(GtkWidget* w, int id, AbstractToolItem* ai
 	g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, (GDestroyNotify) g_free);
 }
 
-ToolItemDragDropData* ToolitemDragDrop::ToolItemDragDropData_new( AbstractToolItem* item)
+auto ToolitemDragDrop::ToolItemDragDropData_new(AbstractToolItem* item) -> ToolItemDragDropData*
 {
 	ToolItemDragDropData* d = g_new(ToolItemDragDropData, 1);
 	d->identify = ToolItemDragDropData_Identify;
@@ -55,7 +55,7 @@ void ToolitemDragDrop::attachMetadataColor(GtkWidget* w, int id, int color, Abst
 	g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, (GDestroyNotify) g_free);
 }
 
-GtkWidget* ToolitemDragDrop::getIcon(ToolItemDragDropData* data)
+auto ToolitemDragDrop::getIcon(ToolItemDragDropData* data) -> GtkWidget*
 {
 	if (data->type == TOOL_ITEM_ITEM || data->type == TOOL_ITEM_COLOR)
 	{
@@ -70,12 +70,12 @@ GtkWidget* ToolitemDragDrop::getIcon(ToolItemDragDropData* data)
 	return gtk_image_new();
 }
 
-bool ToolitemDragDrop::checkToolItemDragDropData(ToolItemDragDropData* d)
+auto ToolitemDragDrop::checkToolItemDragDropData(ToolItemDragDropData* d) -> bool
 {
 	return d->identify == ToolItemDragDropData_Identify;
 }
 
-bool ToolitemDragDrop::isToolItemEnabled(ToolItemDragDropData* d)
+auto ToolitemDragDrop::isToolItemEnabled(ToolItemDragDropData* d) -> bool
 {
 	if (!checkToolItemDragDropData(d))
 	{
@@ -103,7 +103,7 @@ bool ToolitemDragDrop::isToolItemEnabled(ToolItemDragDropData* d)
 	return d->item->isEnabled();
 }
 
-ToolItemDragDropData* ToolitemDragDrop::metadataGetMetadata(GtkWidget* w)
+auto ToolitemDragDrop::metadataGetMetadata(GtkWidget* w) -> ToolItemDragDropData*
 {
 	const int* ptr = (const int*) g_object_get_data(G_OBJECT(w), ATTACH_DRAG_DROP_DATA);
 

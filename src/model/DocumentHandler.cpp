@@ -2,15 +2,6 @@
 
 #include "DocumentListener.h"
 
-DocumentHandler::DocumentHandler()
-{
-}
-
-DocumentHandler::~DocumentHandler()
-{
-	// Do not delete the listeners!
-}
-
 void DocumentHandler::addListener(DocumentListener* l)
 {
 	this->listener.push_back(l);

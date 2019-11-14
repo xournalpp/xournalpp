@@ -19,17 +19,17 @@ PopplerGlibPageBookmarkIterator::~PopplerGlibPageBookmarkIterator()
 	}
 }
 
-bool PopplerGlibPageBookmarkIterator::next()
+auto PopplerGlibPageBookmarkIterator::next() -> bool
 {
 	return poppler_index_iter_next(iter);
 }
 
-bool PopplerGlibPageBookmarkIterator::isOpen()
+auto PopplerGlibPageBookmarkIterator::isOpen() -> bool
 {
 	return poppler_index_iter_is_open(iter);
 }
 
-XojPdfBookmarkIterator* PopplerGlibPageBookmarkIterator::getChildIter()
+auto PopplerGlibPageBookmarkIterator::getChildIter() -> XojPdfBookmarkIterator*
 {
 	PopplerIndexIter* child = poppler_index_iter_get_child(iter);
 	if (child == nullptr)
@@ -40,7 +40,7 @@ XojPdfBookmarkIterator* PopplerGlibPageBookmarkIterator::getChildIter()
 	return new PopplerGlibPageBookmarkIterator(child, document);
 }
 
-XojPdfAction* PopplerGlibPageBookmarkIterator::getAction()
+auto PopplerGlibPageBookmarkIterator::getAction() -> XojPdfAction*
 {
 	PopplerAction* action = poppler_index_iter_get_action(iter);
 

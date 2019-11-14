@@ -11,9 +11,7 @@ BaseExportJob::BaseExportJob(Control* control, string name)
 {
 }
 
-BaseExportJob::~BaseExportJob()
-{
-}
+BaseExportJob::~BaseExportJob() = default;
 
 void BaseExportJob::initDialog()
 {
@@ -32,7 +30,7 @@ void BaseExportJob::addFileFilterToDialog(string name, string pattern)
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 }
 
-bool BaseExportJob::checkOverwriteBackgroundPDF(Path& filename)
+auto BaseExportJob::checkOverwriteBackgroundPDF(Path& filename) -> bool
 {
 	// If the new file name (with the selected extension) is the previously selected pdf, warn the user
 	if (StringUtils::iequals(filename.str(), control->getDocument()->getPdfFilename().str()))
@@ -44,13 +42,13 @@ bool BaseExportJob::checkOverwriteBackgroundPDF(Path& filename)
 	return true;
 }
 
-string BaseExportJob::getFilterName()
+auto BaseExportJob::getFilterName() -> string
 {
 	GtkFileFilter* filter = gtk_file_chooser_get_filter(GTK_FILE_CHOOSER(dialog));
 	return gtk_file_filter_get_name(filter);
 }
 
-bool BaseExportJob::showFilechooser()
+auto BaseExportJob::showFilechooser() -> bool
 {
 	initDialog();
 	addFilterToDialog();
@@ -94,7 +92,7 @@ bool BaseExportJob::showFilechooser()
 	return true;
 }
 
-bool BaseExportJob::isUriValid(string& uri)
+auto BaseExportJob::isUriValid(string& uri) -> bool
 {
 	if (!StringUtils::startsWith(uri, "file://"))
 	{

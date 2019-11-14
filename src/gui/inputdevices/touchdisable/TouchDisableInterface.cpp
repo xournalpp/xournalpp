@@ -1,12 +1,8 @@
 #include "TouchDisableInterface.h"
 
-TouchDisableInterface::TouchDisableInterface()
-{
-}
+TouchDisableInterface::TouchDisableInterface() = default;
 
-TouchDisableInterface::~TouchDisableInterface()
-{
-}
+TouchDisableInterface::~TouchDisableInterface() = default;
 
 void TouchDisableInterface::init()
 {

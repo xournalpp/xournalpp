@@ -43,7 +43,7 @@ void BackgroundSelectDialogBase::sizeAllocate(GtkWidget* widget, GtkRequisition*
 	dlg->layout();
 }
 
-Settings* BackgroundSelectDialogBase::getSettings()
+auto BackgroundSelectDialogBase::getSettings() -> Settings*
 {
 	return this->settings;
 }

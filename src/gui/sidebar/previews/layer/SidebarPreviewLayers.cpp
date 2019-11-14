@@ -63,12 +63,12 @@ void SidebarPreviewLayers::enableSidebar()
 	rebuildLayerMenu();
 }
 
-string SidebarPreviewLayers::getName()
+auto SidebarPreviewLayers::getName() -> string
 {
 	return _("Layer Preview");
 }
 
-string SidebarPreviewLayers::getIconName()
+auto SidebarPreviewLayers::getIconName() -> string
 {
 	return "layer";
 }
@@ -153,7 +153,7 @@ void SidebarPreviewLayers::layerVisibilityChanged()
 
 	for (int i = 0; i < (int)this->previews.size(); i++)
 	{
-		SidebarPreviewLayerEntry* sp = (SidebarPreviewLayerEntry*)this->previews[this->previews.size() - i - 1];
+		auto* sp = (SidebarPreviewLayerEntry*) this->previews[this->previews.size() - i - 1];
 		sp->setVisibleCheckbox(p->isLayerVisible(i));
 	}
 }

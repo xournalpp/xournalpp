@@ -115,9 +115,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 	loadSettings();
 }
 
-ButtonConfigGui::~ButtonConfigGui()
-{
-}
+ButtonConfigGui::~ButtonConfigGui() = default;
 
 void ButtonConfigGui::loadSettings()
 {

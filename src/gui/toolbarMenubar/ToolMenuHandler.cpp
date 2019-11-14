@@ -154,7 +154,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 					color = color.substr(2);
 					gint c = g_ascii_strtoll(color.c_str(), nullptr, 16);
 
-					ColorToolItem* item = new ColorToolItem(listener, toolHandler, this->parent, c);
+					auto* item = new ColorToolItem(listener, toolHandler, this->parent, c);
 					this->toolbarColorItems.push_back(item);
 
 					GtkToolItem* it = item->createItem(horizontal);
@@ -263,7 +263,7 @@ void ToolMenuHandler::registerMenupoint(GtkWidget* widget, ActionType type, Acti
 
 void ToolMenuHandler::initPenToolItem()
 {
-	ToolButton* tbPen = new ToolButton(listener, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, "tool_pencil", _("Pen"));
+	auto* tbPen = new ToolButton(listener, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, "tool_pencil", _("Pen"));
 
 	registerMenupoint(tbPen->registerPopupMenuEntry(_("standard"), "line-style-plain"),
 			ACTION_TOOL_LINE_STYLE_PLAIN, GROUP_LINE_STYLE);
@@ -282,7 +282,8 @@ void ToolMenuHandler::initPenToolItem()
 
 void ToolMenuHandler::initEraserToolItem()
 {
-	ToolButton* tbEraser = new ToolButton(listener, "ERASER", ACTION_TOOL_ERASER, GROUP_TOOL, true, "tool_eraser", _("Eraser"));
+	auto* tbEraser =
+	        new ToolButton(listener, "ERASER", ACTION_TOOL_ERASER, GROUP_TOOL, true, "tool_eraser", _("Eraser"));
 
 	registerMenupoint(tbEraser->registerPopupMenuEntry(_("standard")), ACTION_TOOL_ERASER_STANDARD, GROUP_ERASER_MODE);
 	registerMenupoint(tbEraser->registerPopupMenuEntry(_("whiteout")), ACTION_TOOL_ERASER_WHITEOUT, GROUP_ERASER_MODE);
@@ -416,7 +417,8 @@ void ToolMenuHandler::initToolItems()
 	// Menu Journal
 	// ************************************************************************
 
-	ToolButton* tbInsertNewPage = new ToolButton(listener, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER, "addPage", _("Insert page"));
+	auto* tbInsertNewPage =
+	        new ToolButton(listener, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER, "addPage", _("Insert page"));
 	addToolItem(tbInsertNewPage);
 	tbInsertNewPage->setPopupMenu(this->newPageType->getMenu());
 
@@ -476,7 +478,7 @@ void ToolMenuHandler::initToolItems()
 	toolPageSpinner = new ToolPageSpinner(gui, listener, "PAGE_SPIN", ACTION_FOOTER_PAGESPIN);
 	addToolItem(toolPageSpinner);
 
-	ToolZoomSlider* toolZoomSlider = new ToolZoomSlider(listener, "ZOOM_SLIDER", ACTION_FOOTER_ZOOM_SLIDER, zoom);
+	auto* toolZoomSlider = new ToolZoomSlider(listener, "ZOOM_SLIDER", ACTION_FOOTER_ZOOM_SLIDER, zoom);
 	addToolItem(toolZoomSlider);
 
 	toolPageLayer = new ToolPageLayer(control->getLayerController(), gui, listener, "LAYER", ACTION_FOOTER_LAYER);
@@ -512,7 +514,7 @@ void ToolMenuHandler::setFontButtonFont(XojFont& font)
 	this->fontButton->setFont(font);
 }
 
-XojFont ToolMenuHandler::getFontButtonFont()
+auto ToolMenuHandler::getFontButtonFont() -> XojFont
 {
 	return this->fontButton->getFont();
 }
@@ -534,7 +536,7 @@ void ToolMenuHandler::setRedoDescription(string description)
 	gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditRedo")), description.c_str());
 }
 
-SpinPageAdapter* ToolMenuHandler::getPageSpinner()
+auto ToolMenuHandler::getPageSpinner() -> SpinPageAdapter*
 {
 	return this->toolPageSpinner->getPageSpinner();
 }
@@ -544,12 +546,12 @@ void ToolMenuHandler::setPageText(string text)
 	this->toolPageSpinner->setText(text);
 }
 
-ToolbarModel* ToolMenuHandler::getModel()
+auto ToolMenuHandler::getModel() -> ToolbarModel*
 {
 	return this->tbModel;
 }
 
-bool ToolMenuHandler::isColorInUse(int color)
+auto ToolMenuHandler::isColorInUse(int color) -> bool
 {
 	for (ColorToolItem* it : this->toolbarColorItems)
 	{
@@ -562,7 +564,7 @@ bool ToolMenuHandler::isColorInUse(int color)
 	return false;
 }
 
-vector<AbstractToolItem*>* ToolMenuHandler::getToolItems()
+auto ToolMenuHandler::getToolItems() -> vector<AbstractToolItem*>*
 {
 	return &this->toolItems;
 }

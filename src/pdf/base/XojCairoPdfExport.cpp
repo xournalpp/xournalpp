@@ -29,7 +29,7 @@ void XojCairoPdfExport::setNoBackgroundExport(bool noBackgroundExport)
 	this->noBackgroundExport = noBackgroundExport;
 }
 
-bool XojCairoPdfExport::startPdf(Path file)
+auto XojCairoPdfExport::startPdf(Path file) -> bool
 {
 	this->surface = cairo_pdf_surface_create(file.c_str(), 0, 0);
 	this->cr = cairo_create(surface);
@@ -72,7 +72,7 @@ void XojCairoPdfExport::exportPage(size_t page)
 	cairo_show_page(this->cr);
 }
 
-bool XojCairoPdfExport::createPdf(Path file, PageRangeVector& range)
+auto XojCairoPdfExport::createPdf(Path file, PageRangeVector& range) -> bool
 {
 	if (range.size() == 0)
 	{
@@ -119,7 +119,7 @@ bool XojCairoPdfExport::createPdf(Path file, PageRangeVector& range)
 	return true;
 }
 
-bool XojCairoPdfExport::createPdf(Path file)
+auto XojCairoPdfExport::createPdf(Path file) -> bool
 {
 	if (doc->getPageCount() < 1)
 	{
@@ -152,7 +152,7 @@ bool XojCairoPdfExport::createPdf(Path file)
 	return true;
 }
 
-string XojCairoPdfExport::getLastError()
+auto XojCairoPdfExport::getLastError() -> string
 {
 	return lastError;
 }

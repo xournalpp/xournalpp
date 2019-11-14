@@ -24,14 +24,12 @@ InputHandler::InputHandler(XournalView* xournal, XojPageView* redrawable, PageRe
 {
 }
 
-InputHandler::~InputHandler()
-{
-}
+InputHandler::~InputHandler() = default;
 
 /**
  * @return Current editing stroke
  */
-Stroke* InputHandler::getStroke()
+auto InputHandler::getStroke() -> Stroke*
 {
 	return stroke;
 }
@@ -81,7 +79,7 @@ void InputHandler::createStroke(Point p)
 	stroke->addPoint(p);
 }
 
-bool InputHandler::validMotion(Point p, Point q)
+auto InputHandler::validMotion(Point p, Point q) -> bool
 {
 	return hypot(p.x - q.x, p.y - q.y) >= PIXEL_MOTION_THRESHOLD;
 }

@@ -16,9 +16,7 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath)
 	                 }), this);
 }
 
-ExportDialog::~ExportDialog()
-{
-}
+ExportDialog::~ExportDialog() = default;
 
 void ExportDialog::initPages(int current, int count)
 {
@@ -39,17 +37,17 @@ void ExportDialog::removeDpiSelection()
 	gtk_widget_hide(get("lbDpi"));
 }
 
-int ExportDialog::getPngDpi()
+auto ExportDialog::getPngDpi() -> int
 {
 	return gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDpi")));
 }
 
-bool ExportDialog::isConfirmed()
+auto ExportDialog::isConfirmed() -> bool
 {
 	return this->confirmed;
 }
 
-PageRangeVector ExportDialog::getRange()
+auto ExportDialog::getRange() -> PageRangeVector
 {
 	GtkWidget* rdRangeCurrent = get("rdRangeCurrent");
 	GtkWidget* rdRangePages = get("rdRangePages");

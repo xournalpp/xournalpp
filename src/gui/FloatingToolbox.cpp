@@ -24,9 +24,7 @@ FloatingToolbox::FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay)
 }
 
 
-FloatingToolbox::~FloatingToolbox()
-{
-}
+FloatingToolbox::~FloatingToolbox() = default;
 
 
 void FloatingToolbox::show(int x, int y)
@@ -45,7 +43,7 @@ void FloatingToolbox::show(int x, int y)
  *    or put tools in the FloatingToolbox.
  *
  */
-bool FloatingToolbox::floatingToolboxActivated()
+auto FloatingToolbox::floatingToolboxActivated() -> bool
 {
 	Settings* settings = this->mainWindow->getControl()->getSettings();
 	ButtonConfig* cfg = nullptr;
@@ -76,7 +74,7 @@ bool FloatingToolbox::floatingToolboxActivated()
 }
 
 
-int FloatingToolbox::countWidgets()
+auto FloatingToolbox::countWidgets() -> int
 {
 	int count = 0;
 
@@ -150,10 +148,10 @@ void FloatingToolbox::flagRecalculateSizeRequired()
  * ->floatingToolboxY.
  *
  */
-gboolean  FloatingToolbox::getOverlayPosition(GtkOverlay*   overlay,
-        GtkWidget*    widget,
-        GdkRectangle* allocation,
-        FloatingToolbox* self)
+auto FloatingToolbox::getOverlayPosition(GtkOverlay* overlay,
+                                         GtkWidget* widget,
+                                         GdkRectangle* allocation,
+                                         FloatingToolbox* self) -> gboolean
 {
 	if (widget == self->floatingToolbox)
 	{

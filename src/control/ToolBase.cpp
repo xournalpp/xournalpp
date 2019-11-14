@@ -1,12 +1,8 @@
 #include "ToolBase.h"
 
-ToolBase::ToolBase()
-{
-}
+ToolBase::ToolBase() = default;
 
-ToolBase::~ToolBase()
-{
-}
+ToolBase::~ToolBase() = default;
 
 /**
  * Apply data from another ToolBase or any extending class
@@ -24,7 +20,7 @@ void ToolBase::applyFrom(const ToolBase* t)
 /**
  * @return Color of the tool for all drawing tools
  */
-int ToolBase::getColor() const
+auto ToolBase::getColor() const -> int
 {
 	return this->color;
 }
@@ -40,7 +36,7 @@ void ToolBase::setColor(int color)
 /**
  * @return Size of a drawing tool
  */
-ToolSize ToolBase::getSize() const
+auto ToolBase::getSize() const -> ToolSize
 {
 	return this->size;
 }
@@ -56,7 +52,7 @@ void ToolBase::setSize(ToolSize size)
 /**
  * @return Draw special shape
  */
-DrawingType ToolBase::getDrawingType() const
+auto ToolBase::getDrawingType() const -> DrawingType
 {
 	return this->drawingType;
 }
@@ -72,7 +68,7 @@ void ToolBase::setDrawingType(DrawingType drawingType)
 /**
  * @return Fill of the shape is enabled
  */
-bool ToolBase::getFill() const
+auto ToolBase::getFill() const -> bool
 {
 	return this->fill;
 }
@@ -88,7 +84,7 @@ void ToolBase::setFill(bool fill)
 /**
  * @return Alpha for fill
  */
-int ToolBase::getFillAlpha() const
+auto ToolBase::getFillAlpha() const -> int
 {
 	return this->fillAlpha;
 }
@@ -104,7 +100,7 @@ void ToolBase::setFillAlpha(int fillAlpha)
 /**
  * @return Style of the line drawing
  */
-const LineStyle& ToolBase::getLineStyle() const
+auto ToolBase::getLineStyle() const -> const LineStyle&
 {
 	return this->lineStyle;
 }

@@ -6,9 +6,7 @@
 
 #include <fstream>
 
-ToolbarModel::ToolbarModel()
-{
-}
+ToolbarModel::ToolbarModel() = default;
 
 ToolbarModel::~ToolbarModel()
 {
@@ -19,14 +17,14 @@ ToolbarModel::~ToolbarModel()
 	this->toolbars.clear();
 }
 
-vector<ToolbarData*>* ToolbarModel::getToolbars()
+auto ToolbarModel::getToolbars() -> vector<ToolbarData*>*
 {
 	return &this->toolbars;
 }
 
 void ToolbarModel::parseGroup(GKeyFile* config, const char* group, bool predefined)
 {
-	ToolbarData* data = new ToolbarData(predefined);
+	auto* data = new ToolbarData(predefined);
 
 	data->name = (predefined ? "predef_" : "custom_");
 	data->id = group;
@@ -53,7 +51,7 @@ void ToolbarModel::add(ToolbarData* data)
 	this->toolbars.push_back(data);
 }
 
-bool ToolbarModel::parse(string filename, bool predefined)
+auto ToolbarModel::parse(string filename, bool predefined) -> bool
 {
 	GKeyFile* config = g_key_file_new();
 	g_key_file_set_list_separator(config, ',');
@@ -110,7 +108,7 @@ void ToolbarModel::initCopyNameId(ToolbarData* data)
 	}
 }
 
-bool ToolbarModel::existsId(string id)
+auto ToolbarModel::existsId(string id) -> bool
 {
 	for (ToolbarData* data : this->toolbars)
 	{

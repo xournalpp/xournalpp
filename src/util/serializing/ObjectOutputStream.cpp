@@ -73,7 +73,7 @@ void ObjectOutputStream::writeData(const void* data, int len, int width)
 	}
 }
 
-static cairo_status_t cairoWriteFunction(GString* string, const unsigned char* data, unsigned int length)
+static auto cairoWriteFunction(GString* string, const unsigned char* data, unsigned int length) -> cairo_status_t
 {
 	g_string_append_len(string, (const gchar*) data, length);
 	return CAIRO_STATUS_SUCCESS;
@@ -93,7 +93,7 @@ void ObjectOutputStream::writeImage(cairo_surface_t* img)
 	g_string_free(imgStr, true);
 }
 
-GString* ObjectOutputStream::getStr()
+auto ObjectOutputStream::getStr() -> GString*
 {
 	return this->encoder->getData();
 }

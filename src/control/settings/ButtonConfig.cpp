@@ -12,21 +12,19 @@ ButtonConfig::ButtonConfig(ToolType action, int color, ToolSize size, DrawingTyp
 	this->disableDrawing = false;
 }
 
-ButtonConfig::~ButtonConfig()
-{
-}
+ButtonConfig::~ButtonConfig() = default;
 
-bool ButtonConfig::getDisableDrawing()
+auto ButtonConfig::getDisableDrawing() -> bool
 {
 	return this->disableDrawing;
 }
 
-DrawingType ButtonConfig::getDrawingType()
+auto ButtonConfig::getDrawingType() -> DrawingType
 {
 	return this->drawingType;
 }
 
-ToolType ButtonConfig::getAction()
+auto ButtonConfig::getAction() -> ToolType
 {
 	return this->action;
 }

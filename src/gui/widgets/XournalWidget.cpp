@@ -24,10 +24,10 @@ static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_wid
 static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height);
 static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocation);
 static void gtk_xournal_realize(GtkWidget* widget);
-static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr);
+static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean;
 static void gtk_xournal_destroy(GtkWidget* object);
 
-GType gtk_xournal_get_type(void)
+auto gtk_xournal_get_type(void) -> GType
 {
 	static GType gtk_xournal_type = 0;
 
@@ -65,7 +65,7 @@ GType gtk_xournal_get_type(void)
 	return gtk_xournal_type;
 }
 
-GtkWidget* gtk_xournal_new(XournalView* view, InputContext* inputContext)
+auto gtk_xournal_new(XournalView* view, InputContext* inputContext) -> GtkWidget*
 {
 	GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), nullptr));
 	xoj->view = view;
@@ -82,7 +82,7 @@ GtkWidget* gtk_xournal_new(XournalView* view, InputContext* inputContext)
 	return GTK_WIDGET(xoj);
 }
 
-GtkWidget* gtk_xournal_new_deprecated(XournalView* view, ScrollHandling* scrollHandling)
+auto gtk_xournal_new_deprecated(XournalView* view, ScrollHandling* scrollHandling) -> GtkWidget*
 {
 	GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), nullptr));
 	xoj->view = view;
@@ -115,7 +115,7 @@ static void gtk_xournal_class_init(GtkXournalClass* klass)
 	widget_class->destroy = gtk_xournal_destroy;
 }
 
-Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p)
+auto gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p) -> Rectangle*
 {
 	g_return_val_if_fail(widget != nullptr, nullptr);
 	g_return_val_if_fail(GTK_IS_XOURNAL(widget), nullptr);
@@ -158,7 +158,7 @@ Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p)
 	return new Rectangle(std::max(r3.x, 0) / zoom, std::max(r3.y, 0) / zoom, r3.width / zoom, r3.height / zoom);
 }
 
-Layout* gtk_xournal_get_layout(GtkWidget* widget)
+auto gtk_xournal_get_layout(GtkWidget* widget) -> Layout*
 {
 	g_return_val_if_fail(widget != nullptr, nullptr);
 	g_return_val_if_fail(GTK_IS_XOURNAL(widget), nullptr);
@@ -291,7 +291,7 @@ void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2, int y2)
 	gtk_widget_queue_draw_area(widget, x1, y1, x2 - x1, y2 - y1);
 }
 
-static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
+static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean
 {
 	g_return_val_if_fail(widget != nullptr, false);
 	g_return_val_if_fail(GTK_IS_XOURNAL(widget), false);

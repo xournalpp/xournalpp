@@ -22,14 +22,14 @@ ScaleUndoAction::~ScaleUndoAction()
 	this->page = nullptr;
 }
 
-bool ScaleUndoAction::undo(Control* control)
+auto ScaleUndoAction::undo(Control* control) -> bool
 {
 	applyScale(1 / this->fx, 1 / this->fy);
 	this->undone = true;
 	return true;
 }
 
-bool ScaleUndoAction::redo(Control* control)
+auto ScaleUndoAction::redo(Control* control) -> bool
 {
 	applyScale(this->fx, this->fy);
 	this->undone = false;
@@ -54,7 +54,7 @@ void ScaleUndoAction::applyScale(double fx, double fy)
 	this->page->fireRangeChanged(r);
 }
 
-string ScaleUndoAction::getText()
+auto ScaleUndoAction::getText() -> string
 {
 	return _("Scale");
 }

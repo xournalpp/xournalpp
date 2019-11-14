@@ -10,9 +10,7 @@ CoordinateSystemHandler::CoordinateSystemHandler(XournalView* xournal, XojPageVi
 {
 }
 
-CoordinateSystemHandler::~CoordinateSystemHandler()
-{
-}
+CoordinateSystemHandler::~CoordinateSystemHandler() = default;
 
 /**
  * Draw a Cartesian coordinate system.

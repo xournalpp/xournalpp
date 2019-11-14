@@ -8,8 +8,8 @@
 
 #include <i18n.h>
 
-PageTypeMenuChangeListener::~PageTypeMenuChangeListener() {}
-PageTypeApplyListener::~PageTypeApplyListener() {}
+PageTypeMenuChangeListener::~PageTypeMenuChangeListener() = default;
+PageTypeApplyListener::~PageTypeApplyListener() = default;
 
 #define PREVIEW_COLUMNS 3
 
@@ -47,7 +47,7 @@ void PageTypeMenu::loadDefaultPage()
 	setSelected(model.getPageInsertType());
 }
 
-cairo_surface_t* PageTypeMenu::createPreviewImage(PageType pt)
+auto PageTypeMenu::createPreviewImage(PageType pt) -> cairo_surface_t*
 {
 	int previewWidth = 100;
 	int previewHeight = 141;
@@ -241,7 +241,7 @@ void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApply
 		}), this);
 }
 
-GtkWidget* PageTypeMenu::createApplyMenuItem(const char* text)
+auto PageTypeMenu::createApplyMenuItem(const char* text) -> GtkWidget*
 {
 	GtkWidget* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	GtkWidget* icon = gtk_image_new_from_icon_name("gtk-apply", GTK_ICON_SIZE_MENU);
@@ -300,12 +300,12 @@ void PageTypeMenu::initDefaultMenu()
 	this->backgroundPainter = nullptr;
 }
 
-GtkWidget* PageTypeMenu::getMenu()
+auto PageTypeMenu::getMenu() -> GtkWidget*
 {
 	return menu;
 }
 
-PageType PageTypeMenu::getSelected()
+auto PageTypeMenu::getSelected() -> PageType
 {
 	return selected;
 }

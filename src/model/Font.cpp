@@ -3,15 +3,11 @@
 #include <serializing/ObjectInputStream.h>
 #include <serializing/ObjectOutputStream.h>
 
-XojFont::XojFont()
-{
-}
+XojFont::XojFont() = default;
 
-XojFont::~XojFont()
-{
-}
+XojFont::~XojFont() = default;
 
-string XojFont::getName()
+auto XojFont::getName() -> string
 {
 	return this->name;
 }
@@ -21,7 +17,7 @@ void XojFont::setName(string name)
 	this->name = name;
 }
 
-double XojFont::getSize()
+auto XojFont::getSize() -> double
 {
 	return size;
 }

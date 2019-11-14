@@ -19,9 +19,9 @@ Image::~Image()
 	}
 }
 
-Element* Image::clone()
+auto Image::clone() -> Element*
 {
-	Image* img = new Image();
+	auto* img = new Image();
 
 	img->x = this->x;
 	img->y = this->y;
@@ -45,7 +45,7 @@ void Image::setHeight(double height)
 	this->height = height;
 }
 
-cairo_status_t Image::cairoReadFunction(Image* image, unsigned char* data, unsigned int length)
+auto Image::cairoReadFunction(Image* image, unsigned char* data, unsigned int length) -> cairo_status_t
 {
 	for (unsigned int i = 0; i < length; i++, image->read++)
 	{
@@ -86,7 +86,7 @@ void Image::setImage(cairo_surface_t* image)
 	this->image = image;
 }
 
-cairo_surface_t* Image::getImage()
+auto Image::getImage() -> cairo_surface_t*
 {
 	if (this->image == nullptr && this->data.length())
 	{

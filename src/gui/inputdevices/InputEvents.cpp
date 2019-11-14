@@ -9,7 +9,7 @@ InputEvent::~InputEvent()
 	gdk_event_free(this->sourceEvent);
 }
 
-InputEvent* InputEvent::copy()
+auto InputEvent::copy() -> InputEvent*
 {
 	auto inputEvent = new InputEvent();
 
@@ -33,7 +33,7 @@ InputEvent* InputEvent::copy()
 	return inputEvent;
 }
 
-InputEventType InputEvents::translateEventType(GdkEventType type)
+auto InputEvents::translateEventType(GdkEventType type) -> InputEventType
 {
 	switch (type)
 	{
@@ -73,7 +73,7 @@ InputEventType InputEvents::translateEventType(GdkEventType type)
 	}
 }
 
-InputDeviceClass InputEvents::translateDeviceType(const string& name, GdkInputSource source, Settings* settings)
+auto InputEvents::translateDeviceType(const string& name, GdkInputSource source, Settings* settings) -> InputDeviceClass
 {
 	int deviceType = settings->getDeviceClassForDevice(name, source);
 	switch (deviceType)
@@ -100,12 +100,12 @@ InputDeviceClass InputEvents::translateDeviceType(const string& name, GdkInputSo
 	}
 }
 
-InputDeviceClass InputEvents::translateDeviceType(GdkDevice* device, Settings* settings)
+auto InputEvents::translateDeviceType(GdkDevice* device, Settings* settings) -> InputDeviceClass
 {
 	return translateDeviceType(gdk_device_get_name(device), gdk_device_get_source(device), settings);
 }
 
-InputEvent* InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings)
+auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> InputEvent*
 {
 	auto targetEvent = new InputEvent();
 

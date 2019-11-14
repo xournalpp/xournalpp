@@ -1,7 +1,7 @@
 #include "PageRange.h"
 
-#include <ctype.h>
-#include <stdlib.h>
+#include <cctype>
+#include <cstdlib>
 
 PageRangeEntry::PageRangeEntry(int first, int last)
 {
@@ -9,26 +9,24 @@ PageRangeEntry::PageRangeEntry(int first, int last)
 	this->last = last;
 }
 
-PageRangeEntry::~PageRangeEntry()
-{
-}
+PageRangeEntry::~PageRangeEntry() = default;
 
-int PageRangeEntry::getLast()
+auto PageRangeEntry::getLast() -> int
 {
 	return this->last;
 }
 
-int PageRangeEntry::getFirst()
+auto PageRangeEntry::getFirst() -> int
 {
 	return this->first;
 }
 
-bool PageRange::isSeparator(char c)
+auto PageRange::isSeparator(char c) -> bool
 {
 	return (c == ',' || c == ';' || c == ':');
 }
 
-PageRangeVector PageRange::parse(const char* str)
+auto PageRange::parse(const char* str) -> PageRangeVector
 {
 	PageRangeVector data;
 

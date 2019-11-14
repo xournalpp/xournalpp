@@ -15,17 +15,17 @@ Point::Point(double x, double y, double z)
 {
 }
 
-double Point::lineLengthTo(const Point& p) const
+auto Point::lineLengthTo(const Point& p) const -> double
 {
 	return std::hypot(this->x - p.x, this->y - p.y);
 }
 
-double Point::slopeTo(const Point& p)
+auto Point::slopeTo(const Point& p) -> double
 {
 	return std::atan2(this->x - p.x, this->y - p.y);
 }
 
-Point Point::lineTo(const Point& p, double length)
+auto Point::lineTo(const Point& p, double length) -> Point
 {
 	double factor = lineLengthTo(p);
 	factor = length / factor;
@@ -40,7 +40,7 @@ Point Point::lineTo(const Point& p, double length)
 	return Point(x, y);
 }
 
-bool Point::equalsPos(const Point& p)
+auto Point::equalsPos(const Point& p) -> bool
 {
 	return this->x == p.x && this->y == p.y;
 }

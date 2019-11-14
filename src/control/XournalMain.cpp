@@ -34,13 +34,9 @@
 #include <algorithm>  // std::sort
 
 
-XournalMain::XournalMain()
-{
-}
+XournalMain::XournalMain() = default;
 
-XournalMain::~XournalMain()
-{
-}
+XournalMain::~XournalMain() = default;
 
 void XournalMain::initLocalisation()
 {
@@ -99,7 +95,7 @@ void XournalMain::checkForErrorlog()
 		{
 			if (StringUtils::startsWith(file, "errorlog."))
 			{
-				errorList.push_back(file);
+				errorList.emplace_back(file);
 			}
 		}
 	}
@@ -204,7 +200,7 @@ void XournalMain::checkForEmergencySave(Control* control) {
 	gtk_widget_destroy(dialog);
 }
 
-int XournalMain::exportImg(const char* input, const char* output)
+auto XournalMain::exportImg(const char* input, const char* output) -> int
 {
 	LoadHandler loader;
 
@@ -254,7 +250,7 @@ int XournalMain::exportImg(const char* input, const char* output)
 	return 0; // no error
 }
 
-int XournalMain::exportPdf(const char* input, const char* output)
+auto XournalMain::exportPdf(const char* input, const char* output) -> int
 {
 	LoadHandler loader;
 
@@ -287,7 +283,7 @@ int XournalMain::exportPdf(const char* input, const char* output)
 	return 0; // no error
 }
 
-int XournalMain::run(int argc, char* argv[])
+auto XournalMain::run(int argc, char* argv[]) -> int
 {
 	this->initLocalisation();
 
@@ -346,7 +342,7 @@ int XournalMain::run(int argc, char* argv[])
 	// Init GTK Display
 	gtk_init(&argc, &argv);
 
-	GladeSearchpath* gladePath = new GladeSearchpath();
+	auto* gladePath = new GladeSearchpath();
 	initResourcePath(gladePath, "ui/about.glade");
 	initResourcePath(gladePath, "ui/xournalpp.css",  false); 	//will notify user if file not present. Path ui/ already added above.
 
@@ -354,7 +350,7 @@ int XournalMain::run(int argc, char* argv[])
 	string colorNameFile = Util::getConfigFile("colornames.ini").str();
 	ToolbarColorNames::getInstance().loadFile(colorNameFile);
 
-	Control* control = new Control(gladePath);
+	auto* control = new Control(gladePath);
 
 	if (control->getSettings()->isDarkTheme())
 	{
@@ -365,7 +361,7 @@ int XournalMain::run(int argc, char* argv[])
 	string icon = gladePath->getFirstSearchPath() + "/icons/";
 	gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.c_str());
 
-	MainWindow* win = new MainWindow(gladePath, control);
+	auto* win = new MainWindow(gladePath, control);
 	control->initWindow(win);
 
 	win->show(nullptr);
@@ -434,7 +430,7 @@ int XournalMain::run(int argc, char* argv[])
  * Find a file in a resource folder, and return the resource folder path
  * Return an empty string, if the folder was not found
  */
-string XournalMain::findResourcePath(string searchFile)
+auto XournalMain::findResourcePath(string searchFile) -> string
 {
 	// First check if the files are available relative to the path
 	// So a "portable" installation will be possible

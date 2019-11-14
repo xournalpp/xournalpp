@@ -1,14 +1,10 @@
 #include "HexObjectEncoding.h"
 
-#include <stdio.h>
+#include <cstdio>
 
-HexObjectEncoding::HexObjectEncoding()
-{
-}
+HexObjectEncoding::HexObjectEncoding() = default;
 
-HexObjectEncoding::~HexObjectEncoding()
-{
-}
+HexObjectEncoding::~HexObjectEncoding() = default;
 
 void HexObjectEncoding::addData(const void* data, int len)
 {

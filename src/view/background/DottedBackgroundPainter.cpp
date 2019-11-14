@@ -2,13 +2,9 @@
 
 #include <Util.h>
 
-DottedBackgroundPainter::DottedBackgroundPainter()
-{
-}
+DottedBackgroundPainter::DottedBackgroundPainter() = default;
 
-DottedBackgroundPainter::~DottedBackgroundPainter()
-{
-}
+DottedBackgroundPainter::~DottedBackgroundPainter() = default;
 
 void DottedBackgroundPainter::resetConfig()
 {

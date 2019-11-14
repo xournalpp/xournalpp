@@ -15,7 +15,7 @@ void AudioElement::setAudioFilename(string fn)
 	this->audioFilename = fn;
 }
 
-string AudioElement::getAudioFilename() const
+auto AudioElement::getAudioFilename() const -> string
 {
 	return this->audioFilename;
 }
@@ -25,7 +25,7 @@ void AudioElement::setTimestamp(size_t timestamp)
 	this->timestamp = timestamp;
 }
 
-size_t AudioElement::getTimestamp() const
+auto AudioElement::getTimestamp() const -> size_t
 {
 	return this->timestamp;
 }

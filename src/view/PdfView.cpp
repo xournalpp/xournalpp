@@ -3,9 +3,9 @@
 #include <config.h>
 #include <i18n.h>
 
-PdfView::PdfView() { }
+PdfView::PdfView() = default;
 
-PdfView::~PdfView() { }
+PdfView::~PdfView() = default;
 
 void PdfView::drawPage(PdfCache* cache, XojPdfPageSPtr popplerPage, cairo_t* cr,
 					   double zoom, double width, double height, bool forPrinting)

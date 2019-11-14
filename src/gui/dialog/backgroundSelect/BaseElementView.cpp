@@ -29,13 +29,14 @@ BaseElementView::~BaseElementView()
 	}
 }
 
-gboolean BaseElementView::drawCallback(GtkWidget* widget, cairo_t* cr, BaseElementView* element)
+auto BaseElementView::drawCallback(GtkWidget* widget, cairo_t* cr, BaseElementView* element) -> gboolean
 {
 	element->paint(cr);
 	return true;
 }
 
-gboolean BaseElementView::mouseButtonPressCallback(GtkWidget* widget, GdkEventButton* event, BaseElementView* element)
+auto BaseElementView::mouseButtonPressCallback(GtkWidget* widget, GdkEventButton* event, BaseElementView* element)
+        -> gboolean
 {
 	element->dlg->setSelected(element->id);
 	return true;
@@ -123,19 +124,19 @@ void BaseElementView::paint(cairo_t* cr)
 	cairo_paint(cr);
 }
 
-GtkWidget* BaseElementView::getWidget()
+auto BaseElementView::getWidget() -> GtkWidget*
 {
 	updateSize();
 	return this->widget;
 }
 
-int BaseElementView::getWidth()
+auto BaseElementView::getWidth() -> int
 {
 	calcSize();
 	return getContentWidth() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 }
 
-int BaseElementView::getHeight()
+auto BaseElementView::getHeight() -> int
 {
 	calcSize();
 	return getContentHeight() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;

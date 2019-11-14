@@ -2,9 +2,7 @@
 
 #include <Stacktrace.h>
 
-Layer::Layer()
-{
-}
+Layer::Layer() = default;
 
 Layer::~Layer()
 {
@@ -15,9 +13,9 @@ Layer::~Layer()
 	this->elements.clear();
 }
 
-Layer* Layer::clone()
+auto Layer::clone() -> Layer*
 {
-	Layer* layer = new Layer();
+	auto* layer = new Layer();
 
 	for (Element* e : this->elements)
 	{
@@ -85,7 +83,7 @@ void Layer::insertElement(Element* e, int pos)
 	}
 }
 
-int Layer::indexOf(Element* e)
+auto Layer::indexOf(Element* e) -> int
 {
 	for (unsigned int i = 0; i < this->elements.size(); i++)
 	{
@@ -98,7 +96,7 @@ int Layer::indexOf(Element* e)
 	return -1;
 }
 
-int Layer::removeElement(Element* e, bool free)
+auto Layer::removeElement(Element* e, bool free) -> int
 {
 	for (unsigned int i = 0; i < this->elements.size(); i++)
 	{
@@ -119,7 +117,7 @@ int Layer::removeElement(Element* e, bool free)
 	return -1;
 }
 
-bool Layer::isAnnotated()
+auto Layer::isAnnotated() -> bool
 {
 	return !this->elements.empty();
 }
@@ -127,7 +125,7 @@ bool Layer::isAnnotated()
 /**
  * @return true if the layer is visible
  */
-bool Layer::isVisible()
+auto Layer::isVisible() -> bool
 {
 	return visible;
 }
@@ -140,7 +138,7 @@ void Layer::setVisible(bool visible)
 	this->visible = visible;
 }
 
-vector<Element*>* Layer::getElements()
+auto Layer::getElements() -> vector<Element*>*
 {
 	return &this->elements;
 }

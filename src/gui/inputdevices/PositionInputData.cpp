@@ -1,16 +1,16 @@
 #include "PositionInputData.h"
 
-bool PositionInputData::isShiftDown() const
+auto PositionInputData::isShiftDown() const -> bool
 {
 	return state & GDK_SHIFT_MASK;
 }
- 
-bool PositionInputData::isControlDown() const
+
+auto PositionInputData::isControlDown() const -> bool
 {
 	return state & GDK_CONTROL_MASK;
 }
 
-bool PositionInputData::isAltDown() const
+auto PositionInputData::isAltDown() const -> bool
 {
 	return state & GDK_MOD1_MASK;
 }

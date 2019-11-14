@@ -24,7 +24,7 @@ void XmlImageNode::setImage(cairo_surface_t* img)
 	this->img = cairo_surface_reference(img);
 }
 
-cairo_status_t XmlImageNode::pngWriteFunction(XmlImageNode* image, unsigned char* data, unsigned int length)
+auto XmlImageNode::pngWriteFunction(XmlImageNode* image, unsigned char* data, unsigned int length) -> cairo_status_t
 {
 	for (unsigned int i = 0; i < length; i++, image->pos++)
 	{

@@ -17,9 +17,7 @@ PluginDialogEntry::PluginDialogEntry(Plugin* plugin, GladeSearchpath* gladeSearc
 	loadSettings();
 }
 
-PluginDialogEntry::~PluginDialogEntry()
-{
-}
+PluginDialogEntry::~PluginDialogEntry() = default;
 
 void PluginDialogEntry::loadSettings()
 {

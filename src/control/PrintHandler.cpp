@@ -8,13 +8,9 @@
 
 #include <cmath>
 
-PrintHandler::PrintHandler()
-{
-}
+PrintHandler::PrintHandler() = default;
 
-PrintHandler::~PrintHandler()
-{
-}
+PrintHandler::~PrintHandler() = default;
 
 void PrintHandler::drawPage(GtkPrintOperation* operation, GtkPrintContext* context, int pageNr, PrintHandler* handler)
 {

@@ -73,9 +73,7 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control* control)
 	}
 }
 
-SelectBackgroundColorDialog::~SelectBackgroundColorDialog()
-{
-}
+SelectBackgroundColorDialog::~SelectBackgroundColorDialog() = default;
 
 void SelectBackgroundColorDialog::storeLastUsedValuesInSettings()
 {
@@ -87,9 +85,9 @@ void SelectBackgroundColorDialog::storeLastUsedValuesInSettings()
 
 	GdkRGBA newColor = Util::rgb_to_GdkRGBA(this->selected);
 
-	for (int i = 0; i < LAST_BACKGROUND_COLOR_COUNT; i++)
+	for (auto& lastBackgroundColor: lastBackgroundColors)
 	{
-		if (gdk_rgba_equal(&lastBackgroundColors[i], &newColor))
+		if (gdk_rgba_equal(&lastBackgroundColor, &newColor))
 		{
 			// The new color is already in the list, do not save
 			return;
@@ -119,7 +117,7 @@ void SelectBackgroundColorDialog::storeLastUsedValuesInSettings()
 	settings->customSettingsChanged();
 }
 
-int SelectBackgroundColorDialog::getSelectedColor()
+auto SelectBackgroundColorDialog::getSelectedColor() -> int
 {
 	return this->selected;
 }

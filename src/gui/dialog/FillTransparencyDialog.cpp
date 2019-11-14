@@ -17,9 +17,7 @@ FillTransparencyDialog::FillTransparencyDialog(GladeSearchpath* gladeSearchPath,
 		}), this);
 }
 
-FillTransparencyDialog::~FillTransparencyDialog()
-{
-}
+FillTransparencyDialog::~FillTransparencyDialog() = default;
 
 const int PREVIEW_WIDTH = 70;
 const int PREVIEW_HEIGTH = 50;
@@ -52,7 +50,7 @@ void FillTransparencyDialog::setPreviewImage(int alpha)
 	gtk_image_set_from_surface(GTK_IMAGE(preview), surface);
 }
 
-int FillTransparencyDialog::getResultAlpha()
+auto FillTransparencyDialog::getResultAlpha() -> int
 {
 	return resultAlpha;
 }

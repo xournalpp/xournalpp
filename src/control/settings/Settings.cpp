@@ -27,10 +27,10 @@ Settings::Settings(Path filename)
 
 Settings::~Settings()
 {
-	for (int i = 0; i < BUTTON_COUNT; i++)
+	for (auto& i: this->buttonConfig)
 	{
-		delete this->buttonConfig[i];
-		this->buttonConfig[i] = nullptr;
+		delete i;
+		i = nullptr;
 	}
 }
 
@@ -161,7 +161,7 @@ void Settings::loadDefault()
 *  Delete this and replace calls to this function with calls to g_ascii_strtod() in 2020.
 * 	See: https://developer.gnome.org/glib/stable/glib-String-Utility-Functions.html#g-strtod
 */
-double tempg_ascii_strtod( const gchar* txt, gchar ** endptr )
+auto tempg_ascii_strtod(const gchar* txt, gchar** endptr) -> double
 {
 	return g_strtod ( txt, endptr  );		//  makes best guess between locale formatted and C formatted numbers. See link above.
 }
@@ -716,7 +716,7 @@ void Settings::loadButtonConfig()
 	}
 }
 
-bool Settings::load()
+auto Settings::load() -> bool
 {
 	xmlKeepBlanksDefault(0);
 
@@ -769,7 +769,7 @@ bool Settings::load()
 	return true;
 }
 
-xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value, xmlNodePtr parent)
+auto Settings::savePropertyDouble(const gchar* key, double value, xmlNodePtr parent) -> xmlNodePtr
 {
 	char text[G_ASCII_DTOSTR_BUF_SIZE];
 	//  g_ascii_ version uses C locale always.
@@ -778,7 +778,7 @@ xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value, xmlNodeP
 	return xmlNode;
 }
 
-xmlNodePtr Settings::saveProperty(const gchar* key, int value, xmlNodePtr parent)
+auto Settings::saveProperty(const gchar* key, int value, xmlNodePtr parent) -> xmlNodePtr
 {
 	char* text = g_strdup_printf("%i", value);
 	xmlNodePtr xmlNode = saveProperty(key, text, parent);
@@ -786,7 +786,7 @@ xmlNodePtr Settings::saveProperty(const gchar* key, int value, xmlNodePtr parent
 	return xmlNode;
 }
 
-xmlNodePtr Settings::saveProperty(const gchar* key, const gchar* value, xmlNodePtr parent)
+auto Settings::saveProperty(const gchar* key, const gchar* value, xmlNodePtr parent) -> xmlNodePtr
 {
 	xmlNodePtr xmlNode = xmlNewChild(parent, nullptr, (const xmlChar*) "property", nullptr);
 
@@ -1120,12 +1120,12 @@ void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 }
 
 // Getter- / Setter
-bool Settings::isPressureSensitivity() const
+auto Settings::isPressureSensitivity() const -> bool
 {
 	return this->pressureSensitivity;
 }
 
-bool Settings::isZoomGesturesEnabled() const
+auto Settings::isZoomGesturesEnabled() const -> bool
 {
 	return this->zoomGesturesEnabled;
 }
@@ -1140,7 +1140,7 @@ void Settings::setZoomGesturesEnabled(bool enable)
 	save();
 }
 
-bool Settings::isSidebarOnRight() const
+auto Settings::isSidebarOnRight() const -> bool
 {
 	return this->sidebarOnRight;
 }
@@ -1157,7 +1157,7 @@ void Settings::setSidebarOnRight(bool right)
 	save();
 }
 
-bool Settings::isScrollbarOnLeft() const
+auto Settings::isScrollbarOnLeft() const -> bool
 {
 	return this->scrollbarOnLeft;
 }
@@ -1174,7 +1174,7 @@ void Settings::setScrollbarOnLeft(bool right)
 	save();
 }
 
-bool Settings::isMenubarVisible() const
+auto Settings::isMenubarVisible() const -> bool
 {
 	return this->menubarVisible;
 }
@@ -1186,7 +1186,7 @@ void Settings::setMenubarVisible(bool visible)
 	save();
 }
 
-int Settings::getAutosaveTimeout() const
+auto Settings::getAutosaveTimeout() const -> int
 {
 	return this->autosaveTimeout;
 }
@@ -1203,7 +1203,7 @@ void Settings::setAutosaveTimeout(int autosave)
 	save();
 }
 
-bool Settings::isAutosaveEnabled() const
+auto Settings::isAutosaveEnabled() const -> bool
 {
 	return this->autosaveEnabled;
 }
@@ -1220,7 +1220,7 @@ void Settings::setAutosaveEnabled(bool autosave)
 	save();
 }
 
-bool Settings::getAddVerticalSpace() const
+auto Settings::getAddVerticalSpace() const -> bool
 {
 	return this->addVerticalSpace;
 }
@@ -1230,7 +1230,7 @@ void Settings::setAddVerticalSpace(bool space)
 	this->addVerticalSpace = space;
 }
 
-int Settings::getAddVerticalSpaceAmount() const
+auto Settings::getAddVerticalSpaceAmount() const -> int
 {
 	return this->addVerticalSpaceAmount;
 }
@@ -1247,7 +1247,7 @@ void Settings::setAddVerticalSpaceAmount(int pixels)
 }
 
 
-bool Settings::getAddHorizontalSpace() const
+auto Settings::getAddHorizontalSpace() const -> bool
 {
 	return this->addHorizontalSpace;
 }
@@ -1257,7 +1257,7 @@ void Settings::setAddHorizontalSpace(bool space)
 	this->addHorizontalSpace = space;
 }
 
-int Settings::getAddHorizontalSpaceAmount() const
+auto Settings::getAddHorizontalSpaceAmount() const -> int
 {
 	return this->addHorizontalSpaceAmount;
 }
@@ -1274,7 +1274,7 @@ void Settings::setAddHorizontalSpaceAmount(int pixels)
 }
 
 
-bool Settings::getDrawDirModsEnabled() const
+auto Settings::getDrawDirModsEnabled() const -> bool
 {
 	return this->drawDirModsEnabled;
 }
@@ -1284,7 +1284,7 @@ void Settings::setDrawDirModsEnabled(bool enable)
 	this->drawDirModsEnabled = enable;
 }
 
-int Settings::getDrawDirModsRadius() const
+auto Settings::getDrawDirModsRadius() const -> int
 {
 	return this->drawDirModsRadius;
 }
@@ -1301,7 +1301,7 @@ void Settings::setDrawDirModsRadius(int pixels)
 }
 
 
-bool Settings::isShowBigCursor() const
+auto Settings::isShowBigCursor() const -> bool
 {
 	return this->showBigCursor;
 }
@@ -1317,7 +1317,7 @@ void Settings::setShowBigCursor(bool b)
 	save();
 }
 
-bool Settings::isHighlightPosition() const
+auto Settings::isHighlightPosition() const -> bool
 {
 	return this->highlightPosition;
 
@@ -1334,7 +1334,7 @@ void Settings::setHighlightPosition(bool highlight)
 	save();
 }
 
-bool Settings::isSnapRotation() const
+auto Settings::isSnapRotation() const -> bool
 {
 	return this->snapRotation;
 }
@@ -1350,7 +1350,7 @@ void Settings::setSnapRotation(bool b)
 	save();
 }
 
-double Settings::getSnapRotationTolerance() const
+auto Settings::getSnapRotationTolerance() const -> double
 {
 	return this->snapRotationTolerance;
 }
@@ -1361,7 +1361,7 @@ void Settings::setSnapRotationTolerance(double tolerance)
 	save();
 }
 
-bool Settings::isSnapGrid() const
+auto Settings::isSnapGrid() const -> bool
 {
 	return this->snapGrid;
 }
@@ -1383,12 +1383,12 @@ void Settings::setSnapGridTolerance(double tolerance)
 	save();
 }
 
-double Settings::getSnapGridTolerance() const
+auto Settings::getSnapGridTolerance() const -> double
 {
 	return this->snapGridTolerance;
 }
 
-bool Settings::isTouchWorkaround() const
+auto Settings::isTouchWorkaround() const -> bool
 {
 	return this->touchWorkaround;
 }
@@ -1404,7 +1404,7 @@ void Settings::setTouchWorkaround(bool b)
 	save();
 }
 
-ScrollbarHideType Settings::getScrollbarHideType() const
+auto Settings::getScrollbarHideType() const -> ScrollbarHideType
 {
 	return this->scrollbarHideType;
 }
@@ -1421,7 +1421,7 @@ void Settings::setScrollbarHideType(ScrollbarHideType type)
 	save();
 }
 
-bool Settings::isAutloadPdfXoj() const
+auto Settings::isAutloadPdfXoj() const -> bool
 {
 	return this->autoloadPdfXoj;
 }
@@ -1436,7 +1436,7 @@ void Settings::setAutoloadPdfXoj(bool load)
 	save();
 }
 
-string const& Settings::getDefaultSaveName() const
+auto Settings::getDefaultSaveName() const -> string const&
 {
 	return this->defaultSaveName;
 }
@@ -1453,7 +1453,7 @@ void Settings::setDefaultSaveName(string name)
 	save();
 }
 
-string const& Settings::getPageTemplate() const
+auto Settings::getPageTemplate() const -> string const&
 {
 	return this->pageTemplate;
 }
@@ -1470,7 +1470,7 @@ void Settings::setPageTemplate(string pageTemplate)
 	save();
 }
 
-string const& Settings::getAudioFolder() const
+auto Settings::getAudioFolder() const -> string const&
 {
 	return this->audioFolder;
 }
@@ -1487,7 +1487,7 @@ void Settings::setAudioFolder(string audioFolder)
 	save();
 }
 
-string const& Settings::getSizeUnit() const
+auto Settings::getSizeUnit() const -> string const&
 {
 	return sizeUnit;
 }
@@ -1507,7 +1507,7 @@ void Settings::setSizeUnit(string sizeUnit)
 /**
  * Get size index in XOJ_UNITS
  */
-int Settings::getSizeUnitIndex() const
+auto Settings::getSizeUnitIndex() const -> int
 {
 	string unit = getSizeUnit();
 
@@ -1546,7 +1546,7 @@ void Settings::setShowPairedPages(bool showPairedPages)
 	save();
 }
 
-bool Settings::isShowPairedPages() const
+auto Settings::isShowPairedPages() const -> bool
 {
 	return this->showPairedPages;
 }
@@ -1562,7 +1562,7 @@ void Settings::setPresentationMode(bool presentationMode)
 	save();
 }
 
-bool Settings::isPresentationMode() const
+auto Settings::isPresentationMode() const -> bool
 {
 	return this->presentationMode;
 }
@@ -1589,7 +1589,7 @@ void Settings::setPairsOffset(int numOffset)
 	save();
 }
 
-int Settings::getPairsOffset() const
+auto Settings::getPairsOffset() const -> int
 {
 	return this->numPairsOffset;
 }
@@ -1605,7 +1605,7 @@ void Settings::setViewColumns(int numColumns)
 	save();
 }
 
-int Settings::getViewColumns() const
+auto Settings::getViewColumns() const -> int
 {
 	return this->numColumns;
 }
@@ -1622,7 +1622,7 @@ void Settings::setViewRows(int numRows)
 	save();
 }
 
-int Settings::getViewRows() const
+auto Settings::getViewRows() const -> int
 {
 	return this->numRows;
 }
@@ -1638,7 +1638,7 @@ void Settings::setViewFixedRows(bool viewFixedRows)
 	save();
 }
 
-bool Settings::isViewFixedRows() const
+auto Settings::isViewFixedRows() const -> bool
 {
 	return this->viewFixedRows;
 }
@@ -1654,7 +1654,7 @@ void Settings::setViewLayoutVert(bool vert)
 	save();
 }
 
-bool Settings::getViewLayoutVert() const
+auto Settings::getViewLayoutVert() const -> bool
 {
 	return this->layoutVertical;
 }
@@ -1670,7 +1670,7 @@ void Settings::setViewLayoutR2L(bool r2l)
 	save();
 }
 
-bool Settings::getViewLayoutR2L() const
+auto Settings::getViewLayoutR2L() const -> bool
 {
 	return this->layoutRightToLeft;
 }
@@ -1686,7 +1686,7 @@ void Settings::setViewLayoutB2T(bool b2t)
 	save();
 }
 
-bool Settings::getViewLayoutB2T() const
+auto Settings::getViewLayoutB2T() const -> bool
 {
 	return this->layoutBottomToTop;
 }
@@ -1697,7 +1697,7 @@ void Settings::setLastSavePath(Path p)
 	save();
 }
 
-Path const& Settings::getLastSavePath() const
+auto Settings::getLastSavePath() const -> Path const&
 {
 	return this->lastSavePath;
 }
@@ -1708,7 +1708,7 @@ void Settings::setLastOpenPath(Path p)
 	save();
 }
 
-Path const& Settings::getLastOpenPath() const
+auto Settings::getLastOpenPath() const -> Path const&
 {
 	return this->lastOpenPath;
 }
@@ -1723,7 +1723,7 @@ void Settings::setLastImagePath(Path path)
 	save();
 }
 
-Path const& Settings::getLastImagePath() const
+auto Settings::getLastImagePath() const -> Path const&
 {
 	return this->lastImagePath;
 }
@@ -1738,7 +1738,7 @@ void Settings::setZoomStep(double zoomStep)
 	save();
 }
 
-double Settings::getZoomStep() const
+auto Settings::getZoomStep() const -> double
 {
 	return this->zoomStep;
 }
@@ -1753,7 +1753,7 @@ void Settings::setZoomStepScroll(double zoomStepScroll)
 	save();
 }
 
-double Settings::getZoomStepScroll() const
+auto Settings::getZoomStepScroll() const -> double
 {
 	return this->zoomStepScroll;
 }
@@ -1768,7 +1768,7 @@ void Settings::setDisplayDpi(int dpi)
 	save();
 }
 
-int Settings::getDisplayDpi() const
+auto Settings::getDisplayDpi() const -> int
 {
 	return this->displayDpi;
 }
@@ -1783,12 +1783,12 @@ void Settings::setDarkTheme(bool dark)
 	save();
 }
 
-bool Settings::isDarkTheme() const
+auto Settings::isDarkTheme() const -> bool
 {
 	return this->darkTheme;
 }
 
-bool Settings::isSidebarVisible() const
+auto Settings::isSidebarVisible() const -> bool
 {
 	return this->showSidebar;
 }
@@ -1803,7 +1803,7 @@ void Settings::setSidebarVisible(bool visible)
 	save();
 }
 
-int Settings::getSidebarWidth() const
+auto Settings::getSidebarWidth() const -> int
 {
 	return this->sidebarWidth;
 }
@@ -1828,17 +1828,17 @@ void Settings::setMainWndSize(int width, int height)
 	save();
 }
 
-int Settings::getMainWndWidth() const
+auto Settings::getMainWndWidth() const -> int
 {
 	return this->mainWndWidth;
 }
 
-int Settings::getMainWndHeight() const
+auto Settings::getMainWndHeight() const -> int
 {
 	return this->mainWndHeight;
 }
 
-bool Settings::isMainWndMaximized() const
+auto Settings::isMainWndMaximized() const -> bool
 {
 	return this->maximized;
 }
@@ -1858,12 +1858,12 @@ void Settings::setSelectedToolbar(string name)
 	save();
 }
 
-string const& Settings::getSelectedToolbar() const
+auto Settings::getSelectedToolbar() const -> string const&
 {
 	return this->selectedToolbar;
 }
 
-SElement& Settings::getCustomElement(string name)
+auto Settings::getCustomElement(string name) -> SElement&
 {
 	return this->data[name];
 }
@@ -1873,7 +1873,7 @@ void Settings::customSettingsChanged()
 	save();
 }
 
-ButtonConfig* Settings::getButtonConfig(int id)
+auto Settings::getButtonConfig(int id) -> ButtonConfig*
 {
 	if (id < 0 || id >= BUTTON_COUNT)
 	{
@@ -1883,42 +1883,42 @@ ButtonConfig* Settings::getButtonConfig(int id)
 	return this->buttonConfig[id];
 }
 
-ButtonConfig* Settings::getEraserButtonConfig()
+auto Settings::getEraserButtonConfig() -> ButtonConfig*
 {
 	return this->buttonConfig[0];
 }
 
-ButtonConfig* Settings::getMiddleButtonConfig()
+auto Settings::getMiddleButtonConfig() -> ButtonConfig*
 {
 	return this->buttonConfig[1];
 }
 
-ButtonConfig* Settings::getRightButtonConfig()
+auto Settings::getRightButtonConfig() -> ButtonConfig*
 {
 	return this->buttonConfig[2];
 }
 
-ButtonConfig* Settings::getTouchButtonConfig()
+auto Settings::getTouchButtonConfig() -> ButtonConfig*
 {
 	return this->buttonConfig[3];
 }
 
-ButtonConfig* Settings::getDefaultButtonConfig()
+auto Settings::getDefaultButtonConfig() -> ButtonConfig*
 {
 	return this->buttonConfig[4];
 }
 
-ButtonConfig* Settings::getStylusButton1Config()
+auto Settings::getStylusButton1Config() -> ButtonConfig*
 {
 	return this->buttonConfig[5];
 }
 
-ButtonConfig* Settings::getStylusButton2Config()
+auto Settings::getStylusButton2Config() -> ButtonConfig*
 {
 	return this->buttonConfig[6];
 }
 
-string const& Settings::getFullscreenHideElements() const
+auto Settings::getFullscreenHideElements() const -> string const&
 {
 	return this->fullscreenHideElements;
 }
@@ -1929,7 +1929,7 @@ void Settings::setFullscreenHideElements(string elements)
 	save();
 }
 
-string const& Settings::getPresentationHideElements() const
+auto Settings::getPresentationHideElements() const -> string const&
 {
 	return this->presentationHideElements;
 }
@@ -1940,7 +1940,7 @@ void Settings::setPresentationHideElements(string elements)
 	save();
 }
 
-int Settings::getPdfPageCacheSize() const
+auto Settings::getPdfPageCacheSize() const -> int
 {
 	return this->pdfPageCacheSize;
 }
@@ -1955,7 +1955,7 @@ void Settings::setPdfPageCacheSize(int size)
 	save();
 }
 
-int Settings::getBorderColor() const
+auto Settings::getBorderColor() const -> int
 {
 	return this->selectionBorderColor;
 }
@@ -1970,7 +1970,7 @@ void Settings::setBorderColor(int color)
 	save();
 }
 
-int Settings::getSelectionColor() const
+auto Settings::getSelectionColor() const -> int
 {
 	return this->selectionMarkerColor;
 }
@@ -1985,7 +1985,7 @@ void Settings::setSelectionColor(int color)
 	save();
 }
 
-int Settings::getBackgroundColor() const
+auto Settings::getBackgroundColor() const -> int
 {
 	return this->backgroundColor;
 }
@@ -2000,7 +2000,7 @@ void Settings::setBackgroundColor(int color)
 	save();
 }
 
-XojFont& Settings::getFont()
+auto Settings::getFont() -> XojFont&
 {
 	return this->font;
 }
@@ -2012,7 +2012,7 @@ void Settings::setFont(const XojFont& font)
 }
 
 
-PaDeviceIndex Settings::getAudioInputDevice() const
+auto Settings::getAudioInputDevice() const -> PaDeviceIndex
 {
 	return this->audioInputDevice;
 }
@@ -2027,7 +2027,7 @@ void Settings::setAudioInputDevice(PaDeviceIndex deviceIndex)
 	save();
 }
 
-PaDeviceIndex Settings::getAudioOutputDevice() const
+auto Settings::getAudioOutputDevice() const -> PaDeviceIndex
 {
 	return this->audioOutputDevice;
 }
@@ -2042,7 +2042,7 @@ void Settings::setAudioOutputDevice(PaDeviceIndex deviceIndex)
 	save();
 }
 
-double Settings::getAudioSampleRate() const
+auto Settings::getAudioSampleRate() const -> double
 {
 	return this->audioSampleRate;
 }
@@ -2057,7 +2057,7 @@ void Settings::setAudioSampleRate(double sampleRate)
 	save();
 }
 
-double Settings::getAudioGain() const
+auto Settings::getAudioGain() const -> double
 {
 	return this->audioGain;
 }
@@ -2072,7 +2072,7 @@ void Settings::setAudioGain(double gain)
 	save();
 }
 
-unsigned int Settings::getDefaultSeekTime() const
+auto Settings::getDefaultSeekTime() const -> unsigned int
 {
 	return this->defaultSeekTime;
 }
@@ -2087,7 +2087,7 @@ void Settings::setDefaultSeekTime(unsigned int t)
 	save();
 }
 
-string const& Settings::getPluginEnabled() const
+auto Settings::getPluginEnabled() const -> string const&
 {
 	return this->pluginEnabled;
 }
@@ -2102,7 +2102,7 @@ void Settings::setPluginEnabled(string pluginEnabled)
 	save();
 }
 
-string const& Settings::getPluginDisabled() const
+auto Settings::getPluginDisabled() const -> string const&
 {
 	return this->pluginDisabled;
 }
@@ -2139,7 +2139,7 @@ void Settings::setStrokeFilterEnabled(bool enabled)
 	this->strokeFilterEnabled = enabled;
 }
 
-bool Settings::getStrokeFilterEnabled() const
+auto Settings::getStrokeFilterEnabled() const -> bool
 {
 	return this->strokeFilterEnabled;
 }
@@ -2149,7 +2149,7 @@ void Settings::setDoActionOnStrokeFiltered(bool enabled)
 	this->doActionOnStrokeFiltered = enabled;
 }
 
-bool Settings::getDoActionOnStrokeFiltered() const
+auto Settings::getDoActionOnStrokeFiltered() const -> bool
 {
 	return this->doActionOnStrokeFiltered;
 }
@@ -2159,7 +2159,7 @@ void Settings::setTrySelectOnStrokeFiltered(bool enabled)
 	this->trySelectOnStrokeFiltered = enabled;
 }
 
-bool Settings::getTrySelectOnStrokeFiltered() const
+auto Settings::getTrySelectOnStrokeFiltered() const -> bool
 {
 	return this->trySelectOnStrokeFiltered;
 }
@@ -2175,7 +2175,7 @@ void Settings::setExperimentalInputSystemEnabled(bool systemEnabled)
 	save();
 }
 
-bool Settings::getExperimentalInputSystemEnabled() const
+auto Settings::getExperimentalInputSystemEnabled() const -> bool
 {
 	return this->newInputSystemEnabled;
 }
@@ -2190,7 +2190,7 @@ void Settings::setInputSystemTPCButtonEnabled(bool tpcButtonEnabled)
 	save();
 }
 
-bool Settings::getInputSystemTPCButtonEnabled() const
+auto Settings::getInputSystemTPCButtonEnabled() const -> bool
 {
 	return this->inputSystemTPCButton;
 }
@@ -2205,7 +2205,7 @@ void Settings::setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnab
 	save();
 }
 
-bool Settings::getInputSystemDrawOutsideWindowEnabled() const
+auto Settings::getInputSystemDrawOutsideWindowEnabled() const -> bool
 {
 	return this->inputSystemDrawOutsideWindow;
 }
@@ -2230,7 +2230,7 @@ void Settings::setDeviceClassForDevice(const string& deviceName, GdkInputSource 
 	}
 }
 
-std::vector<InputDevice> Settings::getKnownInputDevices() const
+auto Settings::getKnownInputDevices() const -> std::vector<InputDevice>
 {
 	std::vector<InputDevice> inputDevices;
 	for (std::pair<string, std::pair<int, GdkInputSource>> device: inputDeviceClasses)
@@ -2240,12 +2240,12 @@ std::vector<InputDevice> Settings::getKnownInputDevices() const
 	return inputDevices;
 }
 
-int Settings::getDeviceClassForDevice(GdkDevice* device) const
+auto Settings::getDeviceClassForDevice(GdkDevice* device) const -> int
 {
 	return this->getDeviceClassForDevice(gdk_device_get_name(device), gdk_device_get_source(device));
 }
 
-int Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource) const
+auto Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource) const -> int
 {
 	auto search = inputDeviceClasses.find(deviceName);
 	if (search != inputDeviceClasses.end())
@@ -2287,7 +2287,7 @@ int Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource d
 	}
 }
 
-bool Settings::isScrollbarFadeoutDisabled() const
+auto Settings::isScrollbarFadeoutDisabled() const -> bool
 {
 	return disableScrollbarFadeout;
 }
@@ -2326,9 +2326,7 @@ __RefSElement::__RefSElement()
 	this->refcount = 0;
 }
 
-__RefSElement::~__RefSElement()
-{
-}
+__RefSElement::~__RefSElement() = default;
 
 void __RefSElement::ref()
 {
@@ -2368,12 +2366,12 @@ void SElement::operator=(const SElement& elem)
 	this->element->ref();
 }
 
-std::map<string, SAttribute>& SElement::attributes()
+auto SElement::attributes() -> std::map<string, SAttribute>&
 {
 	return this->element->attributes;
 }
 
-std::map<string, SElement>& SElement::children()
+auto SElement::children() -> std::map<string, SElement>&
 {
 	return this->element->children;
 }
@@ -2384,7 +2382,7 @@ void SElement::clear()
 	this->element->children.clear();
 }
 
-SElement& SElement::child(string name)
+auto SElement::child(string name) -> SElement&
 {
 	return this->element->children[name];
 }
@@ -2430,7 +2428,7 @@ void SElement::setDouble(const string name, const double value)
 	attrib.type = ATTRIBUTE_TYPE_DOUBLE;
 }
 
-bool SElement::getDouble(const string name, double& value)
+auto SElement::getDouble(const string name, double& value) -> bool
 {
 	SAttribute& attrib = this->element->attributes[name];
 	if (attrib.type == ATTRIBUTE_TYPE_NONE)
@@ -2449,7 +2447,7 @@ bool SElement::getDouble(const string name, double& value)
 	return true;
 }
 
-bool SElement::getInt(const string name, int& value)
+auto SElement::getInt(const string name, int& value) -> bool
 {
 	SAttribute& attrib = this->element->attributes[name];
 	if (attrib.type == ATTRIBUTE_TYPE_NONE)
@@ -2468,7 +2466,7 @@ bool SElement::getInt(const string name, int& value)
 	return true;
 }
 
-bool SElement::getBool(const string name, bool& value)
+auto SElement::getBool(const string name, bool& value) -> bool
 {
 	SAttribute& attrib = this->element->attributes[name];
 	if (attrib.type == ATTRIBUTE_TYPE_NONE)
@@ -2487,7 +2485,7 @@ bool SElement::getBool(const string name, bool& value)
 	return true;
 }
 
-bool SElement::getString(const string name, string& value)
+auto SElement::getString(const string name, string& value) -> bool
 {
 	SAttribute& attrib = this->element->attributes[name];
 	if (attrib.type == ATTRIBUTE_TYPE_NONE)

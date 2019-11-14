@@ -25,12 +25,12 @@ MoveLayerUndoAction::~MoveLayerUndoAction()
 	this->layer = nullptr;
 }
 
-string MoveLayerUndoAction::getText()
+auto MoveLayerUndoAction::getText() -> string
 {
 	return _("Move layer");
 }
 
-bool MoveLayerUndoAction::undo(Control* control)
+auto MoveLayerUndoAction::undo(Control* control) -> bool
 {
 	layerController->removeLayer(this->page, this->layer);
 	layerController->insertLayer(this->page, this->layer, oldLayerPos);
@@ -40,7 +40,7 @@ bool MoveLayerUndoAction::undo(Control* control)
 	return true;
 }
 
-bool MoveLayerUndoAction::redo(Control* control)
+auto MoveLayerUndoAction::redo(Control* control) -> bool
 {
 	layerController->removeLayer(this->page, this->layer);
 	layerController->insertLayer(this->page, this->layer, newLayerPos);

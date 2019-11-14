@@ -9,7 +9,7 @@ TouchInputHandler::TouchInputHandler(InputContext* inputContext) : AbstractInput
 {
 }
 
-bool TouchInputHandler::handleImpl(InputEvent* event)
+auto TouchInputHandler::handleImpl(InputEvent* event) -> bool
 {
 	// Don't handle more then 2 inputs
 	if (this->primarySequence && this->primarySequence != event->sequence

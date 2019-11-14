@@ -46,7 +46,7 @@ SidebarPreviewBaseEntry::~SidebarPreviewBaseEntry()
 	}
 }
 
-gboolean SidebarPreviewBaseEntry::drawCallback(GtkWidget* widget, cairo_t* cr, SidebarPreviewBaseEntry* preview)
+auto SidebarPreviewBaseEntry::drawCallback(GtkWidget* widget, cairo_t* cr, SidebarPreviewBaseEntry* preview) -> gboolean
 {
 	preview->paint(cr);
 	return true;
@@ -154,29 +154,29 @@ void SidebarPreviewBaseEntry::updateSize()
 	gtk_widget_set_size_request(this->widget, getWidgetWidth(), getWidgetHeight());
 }
 
-int SidebarPreviewBaseEntry::getWidgetWidth()
+auto SidebarPreviewBaseEntry::getWidgetWidth() -> int
 {
 	return page->getWidth() * sidebar->getZoom()
 			+ Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 }
 
-int SidebarPreviewBaseEntry::getWidgetHeight()
+auto SidebarPreviewBaseEntry::getWidgetHeight() -> int
 {
 	return page->getHeight() * sidebar->getZoom()
 			+ Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 }
 
-int SidebarPreviewBaseEntry::getWidth()
+auto SidebarPreviewBaseEntry::getWidth() -> int
 {
 	return getWidgetWidth();
 }
 
-int SidebarPreviewBaseEntry::getHeight()
+auto SidebarPreviewBaseEntry::getHeight() -> int
 {
 	return getWidgetHeight();
 }
 
-GtkWidget* SidebarPreviewBaseEntry::getWidget()
+auto SidebarPreviewBaseEntry::getWidget() -> GtkWidget*
 {
 	return this->widget;
 }

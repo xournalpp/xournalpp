@@ -1,9 +1,5 @@
 #include "XojPdfDocumentInterface.h"
 
-XojPdfDocumentInterface::XojPdfDocumentInterface()
-{
-}
+XojPdfDocumentInterface::XojPdfDocumentInterface() = default;
 
-XojPdfDocumentInterface::~XojPdfDocumentInterface()
-{
-}
+XojPdfDocumentInterface::~XojPdfDocumentInterface() = default;

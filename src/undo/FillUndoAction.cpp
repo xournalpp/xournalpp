@@ -16,9 +16,7 @@ public:
 		this->newFill = newFill;
 	}
 
-	~FillUndoActionEntry()
-	{
-	}
+	~FillUndoActionEntry() = default;
 	Stroke* s;
 	int originalFill;
 	int newFill;
@@ -45,7 +43,7 @@ void FillUndoAction::addStroke(Stroke* s, int originalFill, int newFill)
 	this->data.push_back(new FillUndoActionEntry(s, originalFill, newFill));
 }
 
-bool FillUndoAction::undo(Control* control)
+auto FillUndoAction::undo(Control* control) -> bool
 {
 	if (this->data.empty())
 	{
@@ -68,7 +66,7 @@ bool FillUndoAction::undo(Control* control)
 	return true;
 }
 
-bool FillUndoAction::redo(Control* control)
+auto FillUndoAction::redo(Control* control) -> bool
 {
 	if (this->data.empty())
 	{
@@ -91,7 +89,7 @@ bool FillUndoAction::redo(Control* control)
 	return true;
 }
 
-string FillUndoAction::getText()
+auto FillUndoAction::getText() -> string
 {
 	return _("Change stroke fill");
 }

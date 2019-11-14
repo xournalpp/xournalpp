@@ -8,21 +8,19 @@ ScrollHandlingGtk::ScrollHandlingGtk(GtkScrollable* scrollable)
 {
 }
 
-ScrollHandlingGtk::~ScrollHandlingGtk()
-{
-}
+ScrollHandlingGtk::~ScrollHandlingGtk() = default;
 
 void ScrollHandlingGtk::setLayoutSize(int width, int height)
 {
 	gtk_widget_queue_resize(xournal);
 }
 
-int ScrollHandlingGtk::getPreferredWidth()
+auto ScrollHandlingGtk::getPreferredWidth() -> int
 {
 	return layout->getMinimalWidth();
 }
 
-int ScrollHandlingGtk::getPreferredHeight()
+auto ScrollHandlingGtk::getPreferredHeight() -> int
 {
 	return layout->getMinimalHeight();
 }
@@ -37,7 +35,7 @@ void ScrollHandlingGtk::translate(double& x, double& y)
 	// Nothing to do here - all done by GTK
 }
 
-bool ScrollHandlingGtk::fullRepaint()
+auto ScrollHandlingGtk::fullRepaint() -> bool
 {
 	return false;
 }

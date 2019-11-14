@@ -17,24 +17,24 @@ Path::Path(const char* path)
 {
 }
 
-Path& Path::operator=(string p)
+auto Path::operator=(string p) -> Path&
 {
 	this->path = std::move(p);
 	return *this;
 }
 
-Path& Path::operator=(const char* p)
+auto Path::operator=(const char* p) -> Path&
 {
 	this->path = p;
 	return *this;
 }
 
-Path& Path::operator/=(const Path& p)
+auto Path::operator/=(const Path& p) -> Path&
 {
 	return *this /= p.str();
 }
 
-Path& Path::operator/=(const string& p)
+auto Path::operator/=(const string& p) -> Path&
 {
 	if (!path.empty())
 	{
@@ -45,7 +45,7 @@ Path& Path::operator/=(const string& p)
 	return *this;
 }
 
-Path& Path::operator/=(const char* p)
+auto Path::operator/=(const char* p) -> Path&
 {
 	if (!path.empty())
 	{
@@ -59,68 +59,68 @@ Path& Path::operator/=(const char* p)
 	return *this;
 }
 
-Path& Path::operator+=(const Path& p)
+auto Path::operator+=(const Path& p) -> Path&
 {
 	return *this += p.str();
 }
 
-Path& Path::operator+=(const string& p)
+auto Path::operator+=(const string& p) -> Path&
 {
 	path += p;
 	return *this;
 }
 
-Path& Path::operator+=(const char* p)
+auto Path::operator+=(const char* p) -> Path&
 {
 	path += p;
 	return *this;
 }
 
-Path Path::operator/(const Path& p) const
+auto Path::operator/(const Path& p) const -> Path
 {
 	return *this / p.str();
 }
 
-Path Path::operator/(const string& p) const
+auto Path::operator/(const string& p) const -> Path
 {
 	Path ret(*this);
 	ret /= p;
 	return ret;
 }
 
-Path Path::operator/(const char* p) const
+auto Path::operator/(const char* p) const -> Path
 {
 	Path ret(*this);
 	ret /= p;
 	return ret;
 }
 
-bool Path::operator==(const Path& other) const
+auto Path::operator==(const Path& other) const -> bool
 {
 	return this->path == other.path;
 }
 
-bool Path::isEmpty() const
+auto Path::isEmpty() const -> bool
 {
 	return path.empty();
 }
 
-bool Path::exists() const
+auto Path::exists() const -> bool
 {
 	return g_file_test(path.c_str(), G_FILE_TEST_EXISTS);
 }
 
-bool Path::deleteFile()
+auto Path::deleteFile() -> bool
 {
 	return g_unlink(c_str()) == 0;
 }
 
-bool Path::hasXournalFileExt() const
+auto Path::hasXournalFileExt() const -> bool
 {
 	return hasExtension(".xoj") || hasExtension(".xopp");
 }
 
-bool Path::hasExtension(const string& ext) const
+auto Path::hasExtension(const string& ext) const -> bool
 {
 	if (ext.length() >= path.length())
 	{
@@ -160,17 +160,17 @@ void Path::clearExtensions(const string& ext)
 	}
 }
 
-const string& Path::str() const
+auto Path::str() const -> const string&
 {
 	return path;
 }
 
-const char* Path::c_str() const
+auto Path::c_str() const -> const char*
 {
 	return path.c_str();
 }
 
-string Path::getEscapedPath() const
+auto Path::getEscapedPath() const -> string
 {
 	string escaped = path;
 	StringUtils::replaceAllChars(escaped, {replace_pair('\\', "\\\\"), replace_pair('\"', "\\\"")});
@@ -178,7 +178,7 @@ string Path::getEscapedPath() const
 	return escaped;
 }
 
-string Path::getFilename() const
+auto Path::getFilename() const -> string
 {
 	size_t separator = path.find_last_of("/\\");
 
@@ -190,7 +190,7 @@ string Path::getFilename() const
 	return path.substr(separator + 1);
 }
 
-string Path::toUri(GError** error)
+auto Path::toUri(GError** error) -> string
 {
 	char* uri = g_filename_to_uri(path.c_str(), nullptr, error);
 
@@ -206,13 +206,13 @@ string Path::toUri(GError** error)
 
 #ifndef BUILD_THUMBNAILER
 
-GFile* Path::toGFile()
+auto Path::toGFile() -> GFile*
 {
 	return g_file_new_for_path(path.c_str());
 }
 #endif
 
-Path Path::getParentPath() const
+auto Path::getParentPath() const -> Path
 {
 	size_t separator = path.find_last_of("/\\");
 
@@ -224,7 +224,7 @@ Path Path::getParentPath() const
 	return Path{path.substr(0, separator)};
 }
 
-Path Path::fromUri(const string& uri)
+auto Path::fromUri(const string& uri) -> Path
 {
 	if (!StringUtils::startsWith(uri, "file://"))
 	{
@@ -239,7 +239,7 @@ Path Path::fromUri(const string& uri)
 }
 
 #ifndef BUILD_THUMBNAILER
-Path Path::fromGFile(GFile* file)
+auto Path::fromGFile(GFile* file) -> Path
 {
 	char* uri = g_file_get_uri(file);
 	Path ret{fromUri(uri)};

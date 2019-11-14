@@ -10,9 +10,7 @@ ScrollHandler::ScrollHandler(Control* control)
 {
 }
 
-ScrollHandler::~ScrollHandler()
-{
-}
+ScrollHandler::~ScrollHandler() = default;
 
 void ScrollHandler::goToPreviousPage()
 {
@@ -109,7 +107,7 @@ void ScrollHandler::scrollToAnnotatedPage(bool next)
 	}
 }
 
-bool ScrollHandler::isPageVisible(size_t page, int* visibleHeight)
+auto ScrollHandler::isPageVisible(size_t page, int* visibleHeight) -> bool
 {
 	if (!this->control->getWindow())
 	{

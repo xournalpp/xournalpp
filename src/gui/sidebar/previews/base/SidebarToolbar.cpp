@@ -14,9 +14,7 @@ SidebarToolbar::SidebarToolbar(SidebarToolbarActionListener* listener, GladeGui*
 	g_signal_connect(this->btDelete, "clicked", G_CALLBACK(&btDeleteClicked), this);
 }
 
-SidebarToolbar::~SidebarToolbar()
-{
-}
+SidebarToolbar::~SidebarToolbar() = default;
 
 void SidebarToolbar::runAction(SidebarActions actions)
 {
@@ -60,9 +58,7 @@ void SidebarToolbar::setButtonEnabled(SidebarActions enabledActions)
 }
 
 
-SidebarToolbarActionListener::~SidebarToolbarActionListener()
-{
-}
+SidebarToolbarActionListener::~SidebarToolbarActionListener() = default;
 
 void SidebarToolbarActionListener::actionPerformed(SidebarActions action)
 {

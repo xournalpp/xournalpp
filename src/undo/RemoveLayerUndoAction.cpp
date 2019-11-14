@@ -28,12 +28,12 @@ RemoveLayerUndoAction::~RemoveLayerUndoAction()
 	this->layer = nullptr;
 }
 
-string RemoveLayerUndoAction::getText()
+auto RemoveLayerUndoAction::getText() -> string
 {
 	return _("Delete layer");
 }
 
-bool RemoveLayerUndoAction::undo(Control* control)
+auto RemoveLayerUndoAction::undo(Control* control) -> bool
 {
 	layerController->insertLayer(this->page, this->layer, this->layerPos);
 	Document* doc = control->getDocument();
@@ -44,7 +44,7 @@ bool RemoveLayerUndoAction::undo(Control* control)
 	return true;
 }
 
-bool RemoveLayerUndoAction::redo(Control* control)
+auto RemoveLayerUndoAction::redo(Control* control) -> bool
 {
 	Document* doc = control->getDocument();
 	layerController->removeLayer(page, layer);

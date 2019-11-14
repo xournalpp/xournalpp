@@ -41,7 +41,7 @@ PageTypeHandler::~PageTypeHandler()
 	types.clear();
 }
 
-bool PageTypeHandler::parseIni(const string& filename)
+auto PageTypeHandler::parseIni(const string& filename) -> bool
 {
 	GKeyFile* config = g_key_file_new();
 	g_key_file_set_list_separator(config, ',');
@@ -103,12 +103,12 @@ void PageTypeHandler::addPageTypeInfo(string name, PageTypeFormat format, string
 	this->types.push_back(pt);
 }
 
-vector<PageTypeInfo*>& PageTypeHandler::getPageTypes()
+auto PageTypeHandler::getPageTypes() -> vector<PageTypeInfo*>&
 {
 	return this->types;
 }
 
-PageTypeFormat PageTypeHandler::getPageTypeFormatForString(const string& format)
+auto PageTypeHandler::getPageTypeFormatForString(const string& format) -> PageTypeFormat
 {
 	if (format == "plain")
 	{
@@ -150,7 +150,7 @@ PageTypeFormat PageTypeHandler::getPageTypeFormatForString(const string& format)
 	return PageTypeFormat::Ruled;
 }
 
-string PageTypeHandler::getStringForPageTypeFormat(const PageTypeFormat& format)
+auto PageTypeHandler::getStringForPageTypeFormat(const PageTypeFormat& format) -> string
 {
 	switch (format)
 	{

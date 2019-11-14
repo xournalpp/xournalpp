@@ -13,9 +13,7 @@ Stroke::Stroke()
 {
 }
 
-Stroke::~Stroke()
-{
-}
+Stroke::~Stroke() = default;
 
 /**
  * Clone style attributes, but not the data (position, width etc.)
@@ -31,15 +29,15 @@ void Stroke::applyStyleFrom(const Stroke* other)
 	cloneAudioData(other);
 }
 
-Stroke* Stroke::cloneStroke() const
+auto Stroke::cloneStroke() const -> Stroke*
 {
-	Stroke* s = new Stroke();
+	auto* s = new Stroke();
 	s->applyStyleFrom(this);
 	s->points = this->points;
 	return s;
 }
 
-Element* Stroke::clone()
+auto Stroke::clone() -> Element*
 {
 	return this->cloneStroke();
 }
@@ -92,7 +90,7 @@ void Stroke::readSerialized(ObjectInputStream& in)
  * ...
  *   1: The shape is nearly fully transparent filled
  */
-int Stroke::getFill() const
+auto Stroke::getFill() const -> int
 {
 	return fill;
 }
@@ -114,12 +112,12 @@ void Stroke::setWidth(double width)
 	this->width = width;
 }
 
-double Stroke::getWidth() const
+auto Stroke::getWidth() const -> double
 {
 	return this->width;
 }
 
-bool Stroke::isInSelection(ShapeContainer* container)
+auto Stroke::isInSelection(ShapeContainer* container) -> bool
 {
 	for (auto&& p: this->points)
 	{
@@ -166,12 +164,12 @@ void Stroke::addPoint(const Point& p)
 	this->sizeCalculated = false;
 }
 
-int Stroke::getPointCount() const
+auto Stroke::getPointCount() const -> int
 {
 	return this->points.size();
 }
 
-std::vector<Point> const& Stroke::getPointVector() const
+auto Stroke::getPointVector() const -> std::vector<Point> const&
 {
 	return points;
 }
@@ -186,7 +184,7 @@ void Stroke::deletePoint(int index)
 	this->points.erase(std::next(begin(this->points), index));
 }
 
-Point Stroke::getPoint(int index) const
+auto Stroke::getPoint(int index) const -> Point
 {
 	if (index < 0 || index >= this->points.size())
 	{
@@ -196,7 +194,7 @@ Point Stroke::getPoint(int index) const
 	return points.at(index);
 }
 
-const Point* Stroke::getPoints() const
+auto Stroke::getPoints() const -> const Point*
 {
 	return this->points.data();
 }
@@ -211,7 +209,7 @@ void Stroke::setToolType(StrokeTool type)
 	this->toolType = type;
 }
 
-StrokeTool Stroke::getToolType() const
+auto Stroke::getToolType() const -> StrokeTool
 {
 	return this->toolType;
 }
@@ -221,7 +219,7 @@ void Stroke::setLineStyle(const LineStyle& style)
 	this->lineStyle = style;
 }
 
-const LineStyle& Stroke::getLineStyle() const
+auto Stroke::getLineStyle() const -> const LineStyle&
 {
 	return this->lineStyle;
 }
@@ -286,7 +284,7 @@ void Stroke::scale(double x0, double y0, double fx, double fy)
 	this->sizeCalculated = false;
 }
 
-bool Stroke::hasPressure() const
+auto Stroke::hasPressure() const -> bool
 {
 	if (!this->points.empty())
 	{
@@ -295,7 +293,7 @@ bool Stroke::hasPressure() const
 	return false;
 }
 
-double Stroke::getAvgPressure() const
+auto Stroke::getAvgPressure() const -> double
 {
 	return std::accumulate(begin(this->points), end(this->points), 0.0,
 	                       [](double l, Point const& p) { return l + p.z; }) /
@@ -349,7 +347,7 @@ void Stroke::setPressure(const vector<double>& pressure)
 /**
  * split index is the split point, minimimum is 1 NOT 0
  */
-bool Stroke::intersects(double x, double y, double halfEraserSize)
+auto Stroke::intersects(double x, double y, double halfEraserSize) -> bool
 {
 	return intersects(x, y, halfEraserSize, nullptr);
 }
@@ -357,7 +355,7 @@ bool Stroke::intersects(double x, double y, double halfEraserSize)
 /**
  * split index is the split point, minimimum is 1 NOT 0
  */
-bool Stroke::intersects(double x, double y, double halfEraserSize, double* gap)
+auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) -> bool
 {
 	if (this->points.empty())
 	{
@@ -469,7 +467,7 @@ void Stroke::calcSize()
 	Element::height = maxY - minY + 4;
 }
 
-EraseableStroke* Stroke::getEraseable()
+auto Stroke::getEraseable() -> EraseableStroke*
 {
 	return this->eraseable;
 }

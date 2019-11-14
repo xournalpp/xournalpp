@@ -12,8 +12,7 @@
 #include <cairo-svg.h>
 #include <pixbuf-utils.h>
 
-ClipboardListener::~ClipboardListener() {
-}
+ClipboardListener::~ClipboardListener() = default;
 
 ClipboardHandler::ClipboardHandler(ClipboardListener* listener, GtkWidget* widget)
 {
@@ -35,7 +34,7 @@ ClipboardHandler::~ClipboardHandler()
 
 static GdkAtom atomXournal = gdk_atom_intern_static_string("application/xournal");
 
-bool ClipboardHandler::paste()
+auto ClipboardHandler::paste() -> bool
 {
 	if (this->containsXournal)
 	{
@@ -59,7 +58,7 @@ bool ClipboardHandler::paste()
 	return false;
 }
 
-bool ClipboardHandler::cut()
+auto ClipboardHandler::cut() -> bool
 {
 	bool result = this->copy();
 	this->listener->deleteSelection();
@@ -67,7 +66,7 @@ bool ClipboardHandler::cut()
 	return result;
 }
 
-gint ElementCompareFunc(Element* a, Element* b)
+auto ElementCompareFunc(Element* a, Element* b) -> gint
 {
 	if (a->getY() == b->getY())
 	{
@@ -137,13 +136,13 @@ private:
 	GString* str;
 };
 
-static cairo_status_t svgWriteFunction(GString* string, const unsigned char* data, unsigned int length)
+static auto svgWriteFunction(GString* string, const unsigned char* data, unsigned int length) -> cairo_status_t
 {
 	g_string_append_len(string, (const gchar*) data, length);
 	return CAIRO_STATUS_SUCCESS;
 }
 
-bool ClipboardHandler::copy()
+auto ClipboardHandler::copy() -> bool
 {
 	if (!this->selection)
 	{
@@ -247,7 +246,7 @@ bool ClipboardHandler::copy()
 
 	targets = gtk_target_table_new_from_list(list, &n_targets);
 
-	ClipboardContents* contents = new ClipboardContents(text, image, svgString->str, out.getStr());
+	auto* contents = new ClipboardContents(text, image, svgString->str, out.getStr());
 
 	gtk_clipboard_set_with_data(this->clipboard, targets, n_targets,
 								(GtkClipboardGetFunc) ClipboardContents::getFunction,
@@ -321,7 +320,7 @@ void ClipboardHandler::pasteClipboardText(GtkClipboard* clipboard, const gchar* 
 	}
 }
 
-gboolean gtk_selection_data_targets_include_xournal(GtkSelectionData* selection_data)
+auto gtk_selection_data_targets_include_xournal(GtkSelectionData* selection_data) -> gboolean
 {
 	GdkAtom* targets;
 	gint n_targets;

@@ -7,9 +7,7 @@ BaseBackgroundPainter::BaseBackgroundPainter()
 	resetConfig();
 }
 
-BaseBackgroundPainter::~BaseBackgroundPainter()
-{
-}
+BaseBackgroundPainter::~BaseBackgroundPainter() = default;
 
 /**
  * Set a factor to draw the lines bolder, for previews

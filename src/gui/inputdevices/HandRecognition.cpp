@@ -107,7 +107,7 @@ void HandRecognition::reload()
  *
  * @return true to call again
  */
-bool HandRecognition::enableTimeout(HandRecognition* self)
+auto HandRecognition::enableTimeout(HandRecognition* self) -> bool
 {
 	gint64 now = g_get_monotonic_time() / 1000;
 	gint64 lastPenActionTime = now - self->lastPenAction;

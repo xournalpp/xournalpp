@@ -1,21 +1,21 @@
 #include "PdfElementView.h"
 
+#include <utility>
+
 #include "PdfPagesDialog.h"
 
 #include "pdf/base/XojPdfPage.h"
 
 
 PdfElementView::PdfElementView(int id, XojPdfPageSPtr page, PdfPagesDialog* dlg)
- : BaseElementView(id, dlg),
-   page(page)
+ : BaseElementView(id, dlg)
+ , page(std::move(page))
 {
 }
 
-PdfElementView::~PdfElementView()
-{
-}
+PdfElementView::~PdfElementView() = default;
 
-bool PdfElementView::isUsed()
+auto PdfElementView::isUsed() -> bool
 {
 	return this->used;
 }
@@ -37,12 +37,12 @@ void PdfElementView::paintContents(cairo_t* cr)
 	page->render(cr);
 }
 
-int PdfElementView::getContentWidth()
+auto PdfElementView::getContentWidth() -> int
 {
 	return page->getWidth() * ((PdfPagesDialog*)dlg)->getZoom();
 }
 
-int PdfElementView::getContentHeight()
+auto PdfElementView::getContentHeight() -> int
 {
 	return page->getHeight() * ((PdfPagesDialog*)dlg)->getZoom();
 }

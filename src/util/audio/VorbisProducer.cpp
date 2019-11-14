@@ -5,11 +5,9 @@ VorbisProducer::VorbisProducer(AudioQueue<float>* audioQueue) : audioQueue(audio
 {
 }
 
-VorbisProducer::~VorbisProducer()
-{
-}
+VorbisProducer::~VorbisProducer() = default;
 
-bool VorbisProducer::start(std::string filename, unsigned int timestamp)
+auto VorbisProducer::start(std::string filename, unsigned int timestamp) -> bool
 {
 	this->sfInfo.format = 0;
 	this->sfFile = sf_open(filename.c_str(), SFM_READ, &sfInfo);

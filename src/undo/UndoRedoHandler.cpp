@@ -154,12 +154,12 @@ void UndoRedoHandler::redo()
 	PRINTCONTENTS();
 }
 
-bool UndoRedoHandler::canUndo()
+auto UndoRedoHandler::canUndo() -> bool
 {
 	return !this->undoList.empty();
 }
 
-bool UndoRedoHandler::canRedo()
+auto UndoRedoHandler::canRedo() -> bool
 {
 	return !this->redoList.empty();
 }
@@ -199,7 +199,7 @@ void UndoRedoHandler::addUndoActionBefore(UndoActionPtr action, UndoAction* befo
 	PRINTCONTENTS();
 }
 
-bool UndoRedoHandler::removeUndoAction(UndoAction* action)
+auto UndoRedoHandler::removeUndoAction(UndoAction* action) -> bool
 {
 	auto iter = std::find_if(begin(this->undoList), end(this->undoList), [action](UndoActionPtr const& smtr_ptr) {
 		return smtr_ptr.get() == action;
@@ -214,7 +214,7 @@ bool UndoRedoHandler::removeUndoAction(UndoAction* action)
 	return true;
 }
 
-string UndoRedoHandler::undoDescription()
+auto UndoRedoHandler::undoDescription() -> string
 {
 	if (!this->undoList.empty())
 	{
@@ -229,7 +229,7 @@ string UndoRedoHandler::undoDescription()
 	return _("Undo");
 }
 
-string UndoRedoHandler::redoDescription()
+auto UndoRedoHandler::redoDescription() -> string
 {
 	if (!this->redoList.empty())
 	{
@@ -270,7 +270,7 @@ void UndoRedoHandler::addUndoRedoListener(UndoRedoListener* listener)
 	this->listener.emplace_back(listener);
 }
 
-bool UndoRedoHandler::isChanged()
+auto UndoRedoHandler::isChanged() -> bool
 {
 	if (this->undoList.empty())
 	{
@@ -280,7 +280,7 @@ bool UndoRedoHandler::isChanged()
 	return this->savedUndo != this->undoList.back().get();
 }
 
-bool UndoRedoHandler::isChangedAutosave()
+auto UndoRedoHandler::isChangedAutosave() -> bool
 {
 	if (this->undoList.empty())
 	{
@@ -299,7 +299,7 @@ void UndoRedoHandler::documentSaved()
 	this->savedUndo = this->undoList.empty() ? nullptr : this->undoList.back().get();
 }
 
-const char* UndoRedoHandler::getUndoStackTopTypeName()
+auto UndoRedoHandler::getUndoStackTopTypeName() -> const char*
 {
 	if (this->undoList.empty())
 	{
@@ -308,7 +308,7 @@ const char* UndoRedoHandler::getUndoStackTopTypeName()
 	return this->undoList.back()->getClassName();
 }
 
-const char* UndoRedoHandler::getRedoStackTopTypeName()
+auto UndoRedoHandler::getRedoStackTopTypeName() -> const char*
 {
 	if (this->redoList.empty())
 	{

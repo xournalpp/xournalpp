@@ -21,9 +21,7 @@ ToolButton::ToolButton(ActionHandler* handler, string id, ActionType type, Actio
 	this->toolToggleOnlyEnable = toolToggleOnlyEnable;
 }
 
-ToolButton::~ToolButton()
-{
-}
+ToolButton::~ToolButton() = default;
 
 /**
  * Register a popup menu entry, create a popup menu, if none is there
@@ -31,7 +29,7 @@ ToolButton::~ToolButton()
  * @param name The name of the item
  * @return The created menu item
  */
-GtkWidget* ToolButton::registerPopupMenuEntry(string name, string iconName)
+auto ToolButton::registerPopupMenuEntry(string name, string iconName) -> GtkWidget*
 {
 	if (this->popupMenu == nullptr)
 	{
@@ -74,7 +72,7 @@ void ToolButton::updateDescription(string description)
 	}
 }
 
-GtkToolItem* ToolButton::newItem()
+auto ToolButton::newItem() -> GtkToolItem*
 {
 	GtkToolItem* it;
 
@@ -109,12 +107,12 @@ GtkToolItem* ToolButton::newItem()
 	return it;
 }
 
-string ToolButton::getToolDisplayName()
+auto ToolButton::getToolDisplayName() -> string
 {
 	return this->description;
 }
 
-GtkWidget* ToolButton::getNewToolIcon()
+auto ToolButton::getNewToolIcon() -> GtkWidget*
 {
 	return gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
 }

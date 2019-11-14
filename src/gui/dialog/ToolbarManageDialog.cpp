@@ -78,7 +78,7 @@ ToolbarManageDialog::~ToolbarManageDialog()
 
 void ToolbarManageDialog::buttonNewCallback(GtkButton* button, ToolbarManageDialog* dlg)
 {
-	ToolbarData* data = new ToolbarData(false);
+	auto* data = new ToolbarData(false);
 	data->setName(_("New"));
 	data->setId("custom");
 	dlg->tbModel->initCopyNameId(data);
@@ -123,7 +123,7 @@ void ToolbarManageDialog::buttonCopyCallback(GtkButton* button, ToolbarManageDia
 		return;
 	}
 
-	ToolbarData* data = new ToolbarData(*selected);
+	auto* data = new ToolbarData(*selected);
 	dlg->tbModel->initCopyNameId(data);
 	dlg->addToolbarData(data);
 }
@@ -176,7 +176,7 @@ void ToolbarManageDialog::entrySelected(ToolbarData* data)
 	}
 }
 
-ToolbarData* ToolbarManageDialog::getSelectedEntry()
+auto ToolbarManageDialog::getSelectedEntry() -> ToolbarData*
 {
 	GtkTreeIter iter;
 	GtkTreeModel* model = nullptr;

@@ -4,9 +4,7 @@
 #include <serializing/ObjectInputStream.h>
 
 
-LineStyle::LineStyle()
-{
-}
+LineStyle::LineStyle() = default;
 
 LineStyle::LineStyle(const LineStyle& other)
 {
@@ -22,6 +20,7 @@ LineStyle::~LineStyle()
 
 void LineStyle::operator=(const LineStyle& other)
 {
+	if (this == &other) return;
 	const double* dashes = nullptr;
 	int dashCount = 0;
 
@@ -56,7 +55,7 @@ void LineStyle::readSerialized(ObjectInputStream& in)
  *
  * @return true if dashed
  */
-bool LineStyle::getDashes(const double*& dashes, int& dashCount) const
+auto LineStyle::getDashes(const double*& dashes, int& dashCount) const -> bool
 {
 	dashes = this->dashes;
 	dashCount = this->dashCount;
@@ -70,6 +69,7 @@ bool LineStyle::getDashes(const double*& dashes, int& dashCount) const
  * @param dashes Dash data, will be copied
  * @param dashCount Count of entries
  */
+//Todo(fabian): memmory use after free
 void LineStyle::setDashes(const double* dashes, int dashCount)
 {
 	g_free(this->dashes);
@@ -91,7 +91,7 @@ void LineStyle::setDashes(const double* dashes, int dashCount)
  *
  * @return true if dashed
  */
-bool LineStyle::hasDashes() const
+auto LineStyle::hasDashes() const -> bool
 {
 	return this->dashCount > 0;
 }

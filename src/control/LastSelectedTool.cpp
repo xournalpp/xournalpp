@@ -8,14 +8,12 @@ LastSelectedTool::LastSelectedTool(Tool* tool)
 	this->applyFrom(tool);
 }
 
-LastSelectedTool::~LastSelectedTool()
-{
-}
+LastSelectedTool::~LastSelectedTool() = default;
 
 /**
  * Restore the tool config and return it
  */
-Tool* LastSelectedTool::restoreAndGet()
+auto LastSelectedTool::restoreAndGet() -> Tool*
 {
 	tool->applyFrom(this);
 

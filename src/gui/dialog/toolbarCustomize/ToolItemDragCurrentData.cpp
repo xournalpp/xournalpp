@@ -48,7 +48,7 @@ void ToolItemDragCurrentData::setData(ToolItemDragDropData* d)
 	*data = *d;
 }
 
-ToolItemDragDropData* ToolItemDragCurrentData::getData()
+auto ToolItemDragCurrentData::getData() -> ToolItemDragDropData*
 {
 	return data;
 }

@@ -7,9 +7,7 @@ ImageElementView::ImageElementView(int id, BackgroundSelectDialogBase* dlg)
 {
 }
 
-ImageElementView::~ImageElementView()
-{
-}
+ImageElementView::~ImageElementView() = default;
 
 void ImageElementView::calcSize()
 {
@@ -41,12 +39,12 @@ void ImageElementView::paintContents(cairo_t* cr)
 	cairo_paint(cr);
 }
 
-int ImageElementView::getContentWidth()
+auto ImageElementView::getContentWidth() -> int
 {
 	return width;
 }
 
-int ImageElementView::getContentHeight()
+auto ImageElementView::getContentHeight() -> int
 {
 	return height;
 }

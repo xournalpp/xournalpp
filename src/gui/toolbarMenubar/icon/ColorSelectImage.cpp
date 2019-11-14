@@ -16,9 +16,7 @@ ColorSelectImage::ColorSelectImage(int color, bool circle)
 		{ self->drawWidget(cr); }), this);
 }
 
-ColorSelectImage::~ColorSelectImage()
-{
-}
+ColorSelectImage::~ColorSelectImage() = default;
 
 /**
  * Draw the widget
@@ -40,7 +38,7 @@ void ColorSelectImage::drawWidget(cairo_t* cr)
 /**
  * @return The widget which is drawn
  */
-GtkWidget* ColorSelectImage::getWidget()
+auto ColorSelectImage::getWidget() -> GtkWidget*
 {
 	return widget;
 }
@@ -66,7 +64,7 @@ void ColorSelectImage::setState(ColorIconState state)
 /**
  * Create a new GtkImage with preview color
  */
-GtkWidget* ColorSelectImage::newColorIcon(int color, int size, bool circle)
+auto ColorSelectImage::newColorIcon(int color, int size, bool circle) -> GtkWidget*
 {
 	cairo_surface_t* surface = newColorIconSurface(color, size, circle);
 	GtkWidget* w = gtk_image_new_from_surface(surface);
@@ -150,7 +148,7 @@ void ColorSelectImage::drawWidget(cairo_t* cr, const IconConfig& config)
 /**
  * Create a new cairo_surface_t* with preview color
  */
-cairo_surface_t* ColorSelectImage::newColorIconSurface(int color, int size, bool circle)
+auto ColorSelectImage::newColorIconSurface(int color, int size, bool circle) -> cairo_surface_t*
 {
 	cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, size, size);
 	cairo_t* cr = cairo_create(crBuffer);
@@ -170,7 +168,7 @@ cairo_surface_t* ColorSelectImage::newColorIconSurface(int color, int size, bool
 /**
  * Create a new GdkPixbuf* with preview color
  */
-GdkPixbuf* ColorSelectImage::newColorIconPixbuf(int color, int size, bool circle)
+auto ColorSelectImage::newColorIconPixbuf(int color, int size, bool circle) -> GdkPixbuf*
 {
 	cairo_surface_t* surface = newColorIconSurface(color, size, circle);
 	GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(surface, 0, 0, cairo_image_surface_get_width(surface), cairo_image_surface_get_height(surface));

@@ -18,13 +18,9 @@
 #include <config.h>
 #include <i18n.h>
 
-XojExportHandler::XojExportHandler()
-{
-}
+XojExportHandler::XojExportHandler() = default;
 
-XojExportHandler::~XojExportHandler()
-{
-}
+XojExportHandler::~XojExportHandler() = default;
 
 /**
  * Export the fill attributes

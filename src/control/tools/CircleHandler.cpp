@@ -11,9 +11,7 @@ CircleHandler::CircleHandler(XournalView* xournal, XojPageView* redrawable, Page
 {
 }
 
-CircleHandler::~CircleHandler()
-{
-}
+CircleHandler::~CircleHandler() = default;
 
 
 void CircleHandler::drawShape(Point& c, const PositionInputData& pos)

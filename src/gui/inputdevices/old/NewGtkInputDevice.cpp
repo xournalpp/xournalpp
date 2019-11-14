@@ -37,22 +37,22 @@ void NewGtkInputDevice::focusWidget()
 	gtk_widget_grab_focus(widget);
 }
 
-Settings* NewGtkInputDevice::getSettings()
+auto NewGtkInputDevice::getSettings() -> Settings*
 {
 	return view->getControl()->getSettings();
 }
 
-ToolHandler* NewGtkInputDevice::getToolHandler()
+auto NewGtkInputDevice::getToolHandler() -> ToolHandler*
 {
 	return view->getControl()->getToolHandler();
 }
 
-GtkXournal* NewGtkInputDevice::getXournal()
+auto NewGtkInputDevice::getXournal() -> GtkXournal*
 {
 	return GTK_XOURNAL(widget);
 }
 
-XournalView* NewGtkInputDevice::getView()
+auto NewGtkInputDevice::getView() -> XournalView*
 {
 	return view;
 }
@@ -62,7 +62,7 @@ XournalView* NewGtkInputDevice::getView()
  *
  * @return true if it should start
  */
-bool NewGtkInputDevice::startInput(InputSequence* input)
+auto NewGtkInputDevice::startInput(InputSequence* input) -> bool
 {
 	if (inputRunning == input)
 	{
@@ -128,7 +128,7 @@ void NewGtkInputDevice::initWidget()
     g_signal_connect(widget, "event", G_CALLBACK(eventCallback), this);
 }
 
-bool NewGtkInputDevice::eventCallback(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self)
+auto NewGtkInputDevice::eventCallback(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self) -> bool
 {
 	return self->eventHandler(event);
 }
@@ -136,7 +136,7 @@ bool NewGtkInputDevice::eventCallback(GtkWidget* widget, GdkEvent* event, NewGtk
 /**
  * Handle Key Press event
  */
-bool NewGtkInputDevice::eventKeyPressHandler(GdkEventKey* event)
+auto NewGtkInputDevice::eventKeyPressHandler(GdkEventKey* event) -> bool
 {
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
@@ -185,7 +185,7 @@ bool NewGtkInputDevice::eventKeyPressHandler(GdkEventKey* event)
 /**
  * Handle all GTK Events
  */
-bool NewGtkInputDevice::eventHandler(GdkEvent* event)
+auto NewGtkInputDevice::eventHandler(GdkEvent* event) -> bool
 {
 	if (event->type == GDK_KEY_PRESS)
 	{
@@ -221,7 +221,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 
 	if (event->type == GDK_TOUCH_END || event->type == GDK_TOUCH_CANCEL)
 	{
-		InputSequence* input = (InputSequence*) g_hash_table_lookup(touchInputList, sequence);
+		auto* input = (InputSequence*) g_hash_table_lookup(touchInputList, sequence);
 
 		if (input != nullptr)
 		{
@@ -282,7 +282,7 @@ bool NewGtkInputDevice::eventHandler(GdkEvent* event)
 		input->setButton(button, gdk_event_get_time(event) );
 	}
 
-	GdkModifierType state = (GdkModifierType)0;
+	auto state = (GdkModifierType) 0;
 	if (gdk_event_get_state(event, &state))
 	{
 		input->setState(state);

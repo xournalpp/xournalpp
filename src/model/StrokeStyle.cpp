@@ -2,13 +2,9 @@
 
 #include "model/Stroke.h"
 
-StrokeStyle::StrokeStyle()
-{
-}
+StrokeStyle::StrokeStyle() = default;
 
-StrokeStyle::~StrokeStyle()
-{
-}
+StrokeStyle::~StrokeStyle() = default;
 
 const double dashLinePattern[] = { 6, 3 };
 const double dashDotLinePattern[] = { 6, 3, 0.5, 3 };
@@ -22,7 +18,7 @@ const double dotLinePattern[] = { 0.5, 3 };
 		return style; \
 	}
 
-LineStyle StrokeStyle::parseStyle(const char* style)
+auto StrokeStyle::parseStyle(const char* style) -> LineStyle
 {
 	PARSE_STYLE("dash", dashLinePattern);
 	PARSE_STYLE("dashdot", dashDotLinePattern);
@@ -54,7 +50,7 @@ LineStyle StrokeStyle::parseStyle(const char* style)
 		return LineStyle();
 	}
 
-	double* dashesArr = new double[dash.size()];
+	auto* dashesArr = new double[dash.size()];
 	for (int i = 0; i < (int)dash.size(); i++)
 	{
 		dashesArr[i] = dash[i];
@@ -73,7 +69,7 @@ LineStyle StrokeStyle::parseStyle(const char* style)
 		return name; \
 	}
 
-string StrokeStyle::formatStyle(const double* dashes, int count)
+auto StrokeStyle::formatStyle(const double* dashes, int count) -> string
 {
 	FORMAT_STYLE("dash", dashLinePattern);
 	FORMAT_STYLE("dashdot", dashDotLinePattern);
@@ -92,7 +88,7 @@ string StrokeStyle::formatStyle(const double* dashes, int count)
 	return custom;
 }
 
-string StrokeStyle::formatStyle(const LineStyle& style)
+auto StrokeStyle::formatStyle(const LineStyle& style) -> string
 {
 	const double* dashes = nullptr;
 	int dashCount = 0;

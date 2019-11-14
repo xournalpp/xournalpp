@@ -167,7 +167,7 @@ void PageTemplateDialog::updatePageSize()
 
 void PageTemplateDialog::showPageSizeDialog()
 {
-	FormatDialog* dlg = new FormatDialog(getGladeSearchPath(), settings, model.getPageWidth(), model.getPageHeight());
+	auto* dlg = new FormatDialog(getGladeSearchPath(), settings, model.getPageWidth(), model.getPageHeight());
 	dlg->show(GTK_WINDOW(this->window));
 
 	double width = dlg->getWidth();
@@ -187,7 +187,7 @@ void PageTemplateDialog::showPageSizeDialog()
 /**
  * The dialog was confirmed / saved
  */
-bool PageTemplateDialog::isSaved()
+auto PageTemplateDialog::isSaved() -> bool
 {
 	return saved;
 }
