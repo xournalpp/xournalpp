@@ -38,19 +38,20 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 
 	int selectedFormat = -1;
 
-	if (height < width)
-	{
-		double tmp = width;
-		width = height;
-		height = tmp;
-	}
+	//Todo(fabian) why does this nothing and is still here or is it a bug? (Commented it out)
+	//		if (height < width)
+	//		{
+	//		double tmp = width;
+	//		width = height;
+	//		height = tmp;
+	//	}
 
 	loadPageFormats();
 
 	int i = 0;
 	for (GList* l = list; l != nullptr; l = l->next)
 	{
-		GtkPaperSize* s = (GtkPaperSize*) l->data;
+		auto* s = (GtkPaperSize*) l->data;
 
 		string displayName = gtk_paper_size_get_display_name(s);
 		if (StringUtils::startsWith(displayName, "custom_"))
@@ -93,7 +94,7 @@ FormatDialog::~FormatDialog()
 {
 	for (GList* l = this->list; l != nullptr; l = l->next)
 	{
-		GtkPaperSize* s = (GtkPaperSize*) l->data;
+		auto* s = (GtkPaperSize*) l->data;
 		gtk_paper_size_free(s);
 	}
 
@@ -112,7 +113,7 @@ void FormatDialog::loadPageFormats()
 	{
 		// Copy next here, because the entry may be deleted
 		next = l->next;
-		GtkPaperSize* s = (GtkPaperSize*) l->data;
+		auto* s = (GtkPaperSize*) l->data;
 
 		string name = gtk_paper_size_get_name(s);
 		if (name == GTK_PAPER_NAME_A3 ||
@@ -133,12 +134,12 @@ void FormatDialog::loadPageFormats()
 	ADD_FORMAT("custom_4x3_320x240mm");
 }
 
-double FormatDialog::getWidth()
+auto FormatDialog::getWidth() -> double
 {
 	return this->width;
 }
 
-double FormatDialog::getHeight()
+auto FormatDialog::getHeight() -> double
 {
 	return this->height;
 }
@@ -184,7 +185,7 @@ void FormatDialog::spinValueChangedCb(GtkSpinButton* spinbutton, FormatDialog* d
 	int i = 0;
 	for (GList* l = dlg->list; l != nullptr; l = l->next)
 	{
-		GtkPaperSize* s = (GtkPaperSize*) l->data;
+		auto* s = (GtkPaperSize*) l->data;
 		double w = gtk_paper_size_get_width(s, GTK_UNIT_POINTS);
 		double h = gtk_paper_size_get_height(s, GTK_UNIT_POINTS);
 
@@ -236,7 +237,7 @@ void FormatDialog::cbFormatChangedCb(GtkComboBox* widget, FormatDialog* dlg)
 	{
 		return;
 	}
-	GtkPaperSize* s = (GtkPaperSize*) g_value_get_pointer(&value);
+	auto* s = (GtkPaperSize*) g_value_get_pointer(&value);
 
 	if (s == nullptr)
 	{

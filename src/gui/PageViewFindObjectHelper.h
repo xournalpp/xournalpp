@@ -20,15 +20,11 @@ class BaseSelectObject
 {
 public:
 	BaseSelectObject(XojPageView* view)
- 	 : view(view),
-	   x(0),
-	   y(0)
+	 : view(view)
 	{
 	}
 
-	virtual ~BaseSelectObject()
-	{
-	}
+	virtual ~BaseSelectObject() = default;
 
 public:
 	virtual bool at(double x, double y)
@@ -69,28 +65,26 @@ protected:
 	virtual bool checkElement(Element* e) = 0;
 
 protected:
-	GdkRectangle matchRect;
-	XojPageView* view;
-	double x;
-	double y;
+	GdkRectangle matchRect{};
+	XojPageView* view{};
+	double x{0};
+	double y{0};
 };
 
 class SelectObject : public BaseSelectObject
 {
 public:
 	SelectObject(XojPageView* view)
- 	 : BaseSelectObject(view),
-	   strokeMatch(nullptr),
-	   elementMatch(nullptr),
-	   gap(1000000000)
+	 : BaseSelectObject(view)
+	 , strokeMatch(nullptr)
+	 , elementMatch(nullptr)
+	 , gap(1000000000)
 	{
 	}
 
-	virtual ~SelectObject()
-	{
-	}
+	~SelectObject() override = default;
 
-	bool at(double x, double y)
+	bool at(double x, double y) override
 	{
 		BaseSelectObject::at(x, y);
 
@@ -112,7 +106,7 @@ public:
 	}
 
 protected:
-	virtual bool checkElement(Element* e)
+	bool checkElement(Element* e) override
 	{
 		if (e->getType() == ELEMENT_STROKE)
 		{
@@ -149,9 +143,7 @@ public:
 	{
 	}
 
-	virtual ~PlayObject()
-	{
-	}
+	~PlayObject() override = default;
 
 	struct Status
 	{
@@ -162,13 +154,13 @@ public:
 	std::optional<Status> playbackStatus;
 
 public:
-	bool at(double x, double y)
+	bool at(double x, double y) override
 	{
 		return BaseSelectObject::at(x, y);
 	}
 
 protected:
-	virtual bool checkElement(Element* e)
+	bool checkElement(Element* e) override
 	{
 		if (e->getType() != ELEMENT_STROKE && e->getType() != ELEMENT_TEXT)
 		{

@@ -13,7 +13,7 @@ PortAudioConsumer::~PortAudioConsumer()
 	}
 }
 
-std::list<DeviceInfo> PortAudioConsumer::getOutputDevices()
+auto PortAudioConsumer::getOutputDevices() -> std::list<DeviceInfo>
 {
 	std::list<DeviceInfo> deviceList;
 
@@ -30,7 +30,7 @@ std::list<DeviceInfo> PortAudioConsumer::getOutputDevices()
 	return deviceList;
 }
 
-const DeviceInfo PortAudioConsumer::getSelectedOutputDevice()
+auto PortAudioConsumer::getSelectedOutputDevice() -> const DeviceInfo
 {
 	try
 	{
@@ -43,12 +43,12 @@ const DeviceInfo PortAudioConsumer::getSelectedOutputDevice()
 	}
 }
 
-bool PortAudioConsumer::isPlaying()
+auto PortAudioConsumer::isPlaying() -> bool
 {
 	return this->outputStream != nullptr && this->outputStream->isActive();
 }
 
-bool PortAudioConsumer::startPlaying()
+auto PortAudioConsumer::startPlaying() -> bool
 {
 	// Abort a playback stream if one is currently active
 	if (this->outputStream != nullptr && this->outputStream->isActive())
@@ -113,8 +113,8 @@ bool PortAudioConsumer::startPlaying()
 	return true;
 }
 
-int PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer, const PaStreamCallbackTimeInfo* timeInfo,
-									PaStreamCallbackFlags statusFlags)
+auto PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer,
+                                     const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags) -> int
 {
 	if (statusFlags)
 	{

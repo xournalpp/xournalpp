@@ -17,7 +17,8 @@ void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, 
 	GtkTreeIter iter;
 
 	gtk_list_store_append(typeModel, &iter);
-	GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon, 24, (GtkIconLookupFlags) 0, nullptr);
+	GdkPixbuf* pixbuf =
+	        gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon, 24, (GtkIconLookupFlags) 0, nullptr);
 	gtk_list_store_set(typeModel, &iter, 0, pixbuf, -1);
 	gtk_list_store_set(typeModel, &iter, 1, name, 2, action, -1);
 }
@@ -115,9 +116,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 	loadSettings();
 }
 
-ButtonConfigGui::~ButtonConfigGui()
-{
-}
+ButtonConfigGui::~ButtonConfigGui() = default;
 
 void ButtonConfigGui::loadSettings()
 {

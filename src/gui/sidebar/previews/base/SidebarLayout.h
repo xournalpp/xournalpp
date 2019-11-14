@@ -30,4 +30,4 @@ public:
 	void layout(SidebarPreviewBase* sidebar);
 
 private:
-	};
+};

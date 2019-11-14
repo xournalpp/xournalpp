@@ -43,7 +43,7 @@ void FontUndoAction::addStroke(Text* e, XojFont& oldFont, XojFont& newFont)
 	this->data.push_back(new FontUndoActionEntry(e, oldFont, newFont));
 }
 
-bool FontUndoAction::undo(Control* control)
+auto FontUndoAction::undo(Control* control) -> bool
 {
 	if (this->data.empty())
 	{
@@ -79,7 +79,7 @@ bool FontUndoAction::undo(Control* control)
 	return true;
 }
 
-bool FontUndoAction::redo(Control* control)
+auto FontUndoAction::redo(Control* control) -> bool
 {
 	if (this->data.empty())
 	{
@@ -115,7 +115,7 @@ bool FontUndoAction::redo(Control* control)
 	return true;
 }
 
-string FontUndoAction::getText()
+auto FontUndoAction::getText() -> string
 {
 	return _("Change font");
 }

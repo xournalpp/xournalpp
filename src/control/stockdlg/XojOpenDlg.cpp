@@ -11,9 +11,8 @@ XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings)
  : win(win),
    settings(settings)
 {
-	dialog = gtk_file_chooser_dialog_new(_("Open file"), win, GTK_FILE_CHOOSER_ACTION_OPEN,
-										 _("_Cancel"), GTK_RESPONSE_CANCEL,
-										 _("_Open"), GTK_RESPONSE_OK, nullptr);
+	dialog = gtk_file_chooser_dialog_new(_("Open file"), win, GTK_FILE_CHOOSER_ACTION_OPEN, _("_Cancel"),
+	                                     GTK_RESPONSE_CANCEL, _("_Open"), GTK_RESPONSE_OK, nullptr);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
@@ -80,7 +79,7 @@ void XojOpenDlg::addFilterXopt()
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXopt);
 }
 
-Path XojOpenDlg::runDialog()
+auto XojOpenDlg::runDialog() -> Path
 {
 	gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
@@ -96,7 +95,7 @@ Path XojOpenDlg::runDialog()
 	return file;
 }
 
-Path XojOpenDlg::showOpenTemplateDialog()
+auto XojOpenDlg::showOpenTemplateDialog() -> Path
 {
 	addFilterAllFiles();
 	addFilterXopt();
@@ -104,7 +103,7 @@ Path XojOpenDlg::showOpenTemplateDialog()
 	return runDialog();
 }
 
-Path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
+auto XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf) -> Path
 {
 	if (!pdf)
 	{

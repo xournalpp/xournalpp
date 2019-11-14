@@ -26,5 +26,4 @@ public:
 	virtual string getTitle() = 0;
 
 private:
-	};
-
+};

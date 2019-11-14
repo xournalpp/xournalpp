@@ -1,15 +1,13 @@
 #include "GladeSearchpath.h"
 
-GladeSearchpath::GladeSearchpath()
-{
-}
+GladeSearchpath::GladeSearchpath() = default;
 
 GladeSearchpath::~GladeSearchpath()
 {
 	directories.clear();
 }
 
-string GladeSearchpath::findFile(string subdir, string file)
+auto GladeSearchpath::findFile(string subdir, string file) -> string
 {
 	string filename;
 	if (subdir == "")
@@ -38,7 +36,7 @@ string GladeSearchpath::findFile(string subdir, string file)
 /**
  * @return The first search path
  */
-string GladeSearchpath::getFirstSearchPath()
+auto GladeSearchpath::getFirstSearchPath() -> string
 {
 	if (this->directories.size() < 1)
 	{

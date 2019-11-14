@@ -23,4 +23,4 @@ public:
 	void show(GtkWindow* parent) override;
 
 private:
-	};
+};

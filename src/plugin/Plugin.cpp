@@ -14,24 +14,21 @@ extern "C" {
 
 #include "luapi_application.h"
 
-#define LOAD_FROM_INI(target, group, key) \
-	{ \
+#define LOAD_FROM_INI(target, group, key)                                 \
+	{                                                                     \
 		char* value = g_key_file_get_string(config, group, key, nullptr); \
-		if (value != nullptr) \
-		{ \
-			target = value; \
-			g_free(value); \
-		} \
+		if (value != nullptr)                                             \
+		{                                                                 \
+			target = value;                                               \
+			g_free(value);                                                \
+		}                                                                 \
 	}
 
 /*
  ** these libs are loaded by lua.c and are readily available to any Lua
  ** program
  */
-static const luaL_Reg loadedlibs[] = {
-	{ "app", luaopen_app },
-	{ nullptr, nullptr }
-};
+static const luaL_Reg loadedlibs[] = {{"app", luaopen_app}, {nullptr, nullptr}};
 
 Plugin::Plugin(Control* control, string name, string path)
  : control(control),
@@ -68,7 +65,7 @@ Plugin* Plugin::getPluginFromLua(lua_State* lua)
 	{
 		Plugin* data = (Plugin*)lua_touserdata(lua, -1);
 		lua_pop(lua, 1);
-	return data;
+		return data;
 	}
 
 	return nullptr;
@@ -137,11 +134,8 @@ void Plugin::registerMenu(GtkWindow* mainWindow, GtkWidget* menu)
 			gtk_widget_add_accelerator(mi, "activate", accelGroup, acceleratorKey, mods, GTK_ACCEL_VISIBLE);
 		}
 
-		g_signal_connect(mi, "activate", G_CALLBACK(
-			+[](GtkWidget* bt, MenuEntry* me)
-			{
-	me->plugin->executeMenuEntry(me);
-			}), m);
+		g_signal_connect(mi, "activate",
+		                 G_CALLBACK(+[](GtkWidget* bt, MenuEntry* me) { me->plugin->executeMenuEntry(me); }), m);
 	}
 
 	gtk_window_add_accel_group(GTK_WINDOW(mainWindow), accelGroup);

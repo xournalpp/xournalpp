@@ -1,7 +1,7 @@
 #include "Scheduler.h"
 #include <config-debug.h>
 
-#include <inttypes.h>
+#include <cinttypes>
 
 #ifdef DEBUG_SHEDULER
 #define SDEBUG g_message
@@ -45,7 +45,7 @@ Scheduler::~Scheduler()
 
 	stop();
 
-	Job * job = nullptr;
+	Job* job = nullptr;
 	while ((job = getNextJobUnlocked()) != nullptr)
 	{
 		job->unref();
@@ -97,7 +97,7 @@ void Scheduler::addJob(Job* job, JobPriority priority)
 	g_mutex_unlock(&this->jobQueueMutex);
 }
 
-Job* Scheduler::getNextJobUnlocked(bool onlyNotRender, bool* hasRenderJobs)
+auto Scheduler::getNextJobUnlocked(bool onlyNotRender, bool* hasRenderJobs) -> Job*
 {
 	Job* job = nullptr;
 
@@ -194,7 +194,7 @@ void Scheduler::unblockRerenderZoom()
  * Returns:
  * Time difference in microseconds
  */
-glong g_time_val_diff(GTimeVal* t1, GTimeVal* t2)
+auto g_time_val_diff(GTimeVal* t1, GTimeVal* t2) -> glong
 {
 	g_assert(t1);
 	g_assert(t2);
@@ -205,7 +205,7 @@ glong g_time_val_diff(GTimeVal* t1, GTimeVal* t2)
  * If the Scheduler is blocking because we are zooming and there are only render jobs
  * we need to wakeup it later
  */
-bool Scheduler::jobRenderThreadTimer(Scheduler* scheduler)
+auto Scheduler::jobRenderThreadTimer(Scheduler* scheduler) -> bool
 {
 	scheduler->jobRenderThreadTimerId = 0;
 
@@ -219,7 +219,7 @@ bool Scheduler::jobRenderThreadTimer(Scheduler* scheduler)
 	return false;
 }
 
-gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
+auto Scheduler::jobThreadCallback(Scheduler* scheduler) -> gpointer
 {
 	while (scheduler->threadRunning)
 	{

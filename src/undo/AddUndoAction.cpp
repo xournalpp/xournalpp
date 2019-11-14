@@ -38,7 +38,7 @@ void AddUndoAction::addElement(Layer* layer, Element* e, int pos)
 										  (GCompareFunc) PageLayerPosEntry<Element>::cmp);
 }
 
-bool AddUndoAction::redo(Control*)
+auto AddUndoAction::redo(Control*) -> bool
 {
 	if (this->elements == nullptr)
 	{
@@ -59,7 +59,7 @@ bool AddUndoAction::redo(Control*)
 	return true;
 }
 
-bool AddUndoAction::undo(Control*)
+auto AddUndoAction::undo(Control*) -> bool
 {
 	if (this->elements == nullptr)
 	{
@@ -81,7 +81,7 @@ bool AddUndoAction::undo(Control*)
 	return true;
 }
 
-string AddUndoAction::getText()
+auto AddUndoAction::getText() -> string
 {
 	string text;
 

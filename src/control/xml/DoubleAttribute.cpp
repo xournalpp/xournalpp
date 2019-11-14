@@ -6,9 +6,7 @@ DoubleAttribute::DoubleAttribute(const char* name, double value) : XMLAttribute(
 	this->value = value;
 }
 
-DoubleAttribute::~DoubleAttribute()
-{
-}
+DoubleAttribute::~DoubleAttribute() = default;
 
 void DoubleAttribute::writeOut(OutputStream* out)
 {

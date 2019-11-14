@@ -33,4 +33,4 @@ public:
 	double getUnitSize();
 
 private:
-	};
+};

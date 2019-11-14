@@ -24,7 +24,7 @@ AudioRecorder::~AudioRecorder()
 	this->audioQueue = nullptr;
 }
 
-bool AudioRecorder::start(string filename)
+auto AudioRecorder::start(string filename) -> bool
 {
 	// Start recording
 	bool status = this->portAudioProducer->startRecording();
@@ -47,12 +47,12 @@ void AudioRecorder::stop()
 	this->audioQueue->reset();
 }
 
-bool AudioRecorder::isRecording()
+auto AudioRecorder::isRecording() -> bool
 {
 	return this->portAudioProducer->isRecording();
 }
 
-std::vector<DeviceInfo> AudioRecorder::getInputDevices()
+auto AudioRecorder::getInputDevices() -> std::vector<DeviceInfo>
 {
 	std::list<DeviceInfo> deviceList = this->portAudioProducer->getInputDevices();
 	return vector<DeviceInfo>{std::make_move_iterator(std::begin(deviceList)),

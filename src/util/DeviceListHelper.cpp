@@ -48,7 +48,7 @@ void addDevicesToList(std::vector<InputDevice>& deviceList, GList* devList, bool
 	}
 }
 
-vector<InputDevice> DeviceListHelper::getDeviceList(Settings* settings, bool ignoreTouchDevices)
+auto DeviceListHelper::getDeviceList(Settings* settings, bool ignoreTouchDevices) -> vector<InputDevice>
 {
 	vector<InputDevice> deviceList = settings->getKnownInputDevices();
 	if (ignoreTouchDevices)
@@ -96,12 +96,12 @@ InputDevice::InputDevice(string name, GdkInputSource source)
 {
 }
 
-string InputDevice::getName() const
+auto InputDevice::getName() const -> string
 {
 	return this->name;
 }
 
-GdkInputSource InputDevice::getSource() const
+auto InputDevice::getSource() const -> GdkInputSource
 {
 	return this->source;
 }
@@ -111,7 +111,7 @@ void InputDevice::updateType(GdkInputSource newSource)
 	this->source = newSource;
 }
 
-string InputDevice::getType() const
+auto InputDevice::getType() const -> string
 {
 	if (source == GDK_SOURCE_MOUSE)
 	{
@@ -152,7 +152,7 @@ string InputDevice::getType() const
 	return "";
 }
 
-bool InputDevice::operator==(const InputDevice& inputDevice) const
+auto InputDevice::operator==(const InputDevice& inputDevice) const -> bool
 {
 	return this->getName() == inputDevice.getName();
 }

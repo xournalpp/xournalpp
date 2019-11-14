@@ -43,7 +43,7 @@ void PopplerGlibPage::operator=(const PopplerGlibPage& other)
 	}
 }
 
-double PopplerGlibPage::getWidth()
+auto PopplerGlibPage::getWidth() -> double
 {
 	double width = 0;
 	poppler_page_get_size(page, &width, nullptr);
@@ -51,7 +51,7 @@ double PopplerGlibPage::getWidth()
 	return width;
 }
 
-double PopplerGlibPage::getHeight()
+auto PopplerGlibPage::getHeight() -> double
 {
 	double height = 0;
 	poppler_page_get_size(page, nullptr, &height);
@@ -71,12 +71,12 @@ void PopplerGlibPage::render(cairo_t* cr, bool forPrinting)
 	}
 }
 
-int PopplerGlibPage::getPageId()
+auto PopplerGlibPage::getPageId() -> int
 {
 	return poppler_page_get_index(page);
 }
 
-vector<XojPdfRectangle> PopplerGlibPage::findText(string& text)
+auto PopplerGlibPage::findText(string& text) -> vector<XojPdfRectangle>
 {
 	vector<XojPdfRectangle> findings;
 
@@ -85,9 +85,9 @@ vector<XojPdfRectangle> PopplerGlibPage::findText(string& text)
 
 	for (GList* l = matches; l && l->data; l = g_list_next(l))
 	{
-		PopplerRectangle* rect = (PopplerRectangle*) l->data;
+		auto* rect = (PopplerRectangle*) l->data;
 
-		findings.push_back(XojPdfRectangle(rect->x1, height - rect->y1, rect->x2, height - rect->y2));
+		findings.emplace_back(rect->x1, height - rect->y1, rect->x2, height - rect->y2);
 
 		poppler_rectangle_free(rect);
 	}

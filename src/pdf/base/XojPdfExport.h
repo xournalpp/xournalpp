@@ -32,5 +32,4 @@ public:
 	virtual void setNoBackgroundExport(bool noBackgroundExport);
 
 private:
-	};
-
+};

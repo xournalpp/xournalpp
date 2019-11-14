@@ -1,6 +1,6 @@
 #include "ToolbarSeparatorImage.h"
 
-GtkWidget* ToolbarSeparatorImage::newSepeartorImage()
+auto ToolbarSeparatorImage::newSepeartorImage() -> GtkWidget*
 {
 	cairo_surface_t* crImage = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 30, 30);
 	cairo_t* cr = cairo_create(crImage);

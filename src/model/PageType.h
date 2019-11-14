@@ -35,7 +35,7 @@ public:
 	~PageType();
 
 private:
-	public:
+public:
 	/**
 	 * Compare Operator
 	 */

@@ -1,11 +1,11 @@
 #include "Util.h"
 
-#include "config.h"
 #include "config-dev.h"
 #include "i18n.h"
 #include "StringUtils.h"
 #include "XojMsgBox.h"
 
+#include <array>
 #include <unistd.h>
 #include <utility>
 
@@ -22,7 +22,7 @@ struct CallbackUiData
 /**
  * This method is called in the GTK UI Thread
  */
-static bool execInUiThreadCallback(CallbackUiData* cb)
+static auto execInUiThreadCallback(CallbackUiData* cb) -> bool
 {
 	cb->callback();
 
@@ -41,7 +41,7 @@ void Util::execInUiThread(std::function<void()>&& callback)
 	gdk_threads_add_idle((GSourceFunc) execInUiThreadCallback, new CallbackUiData(std::move(callback)));
 }
 
-GdkRGBA Util::rgb_to_GdkRGBA(const uint32_t color)
+auto Util::rgb_to_GdkRGBA(const uint32_t color) -> GdkRGBA
 {  // clang-format off
 	return {((color >> 16U) & 0xFFU) / 255.0,
 	        ((color >> 8U) & 0xFFU) / 255.0,
@@ -61,13 +61,13 @@ void Util::cairo_set_source_rgbi(cairo_t* cr, int color)
 // https://stackoverflow.com/questions/1914115/converting-color-value-from-float-0-1-to-byte-0-255
 constexpr double MAXCOLOR = 256.0 - std::numeric_limits<double>::epsilon() * 128;
 
-inline uint32_t float_to_int_color(const double color)
+inline auto float_to_int_color(const double color) -> uint32_t
 {
 	static_assert(MAXCOLOR < 256.0, "MAXCOLOR isn't smaler than 256");
 	return static_cast<uint32_t>(color * MAXCOLOR);
 }
 
-uint32_t Util::gdkrgba_to_hex(const GdkRGBA& color)
+auto Util::gdkrgba_to_hex(const GdkRGBA& color) -> uint32_t
 {   // clang-format off
 	return float_to_int_color(color.alpha) << 24U |
 	       float_to_int_color(color.red)  << 16U |
@@ -76,19 +76,19 @@ uint32_t Util::gdkrgba_to_hex(const GdkRGBA& color)
 	// clang-format on
 }
 
-pid_t Util::getPid()
+auto Util::getPid() -> pid_t
 {
 	return ::getpid();
 }
 
-Path Util::getAutosaveFilename()
+auto Util::getAutosaveFilename() -> Path
 {
 	Path p(getConfigSubfolder("autosave"));
 	p /= std::to_string(getPid()) + ".xopp";
 	return p;
 }
 
-Path Util::getConfigSubfolder(const Path& subfolder)
+auto Util::getConfigSubfolder(const Path& subfolder) -> Path
 {
 	Path p(g_get_home_dir());
 	p /= CONFIG_DIR;
@@ -97,14 +97,14 @@ Path Util::getConfigSubfolder(const Path& subfolder)
 	return Util::ensureFolderExists(p);
 }
 
-Path Util::getConfigFile(const Path& relativeFileName)
+auto Util::getConfigFile(const Path& relativeFileName) -> Path
 {
 	Path p = getConfigSubfolder(relativeFileName.getParentPath());
 	p /= relativeFileName.getFilename();
 	return p;
 }
 
-Path Util::getTmpDirSubfolder(const Path& subfolder)
+auto Util::getTmpDirSubfolder(const Path& subfolder) -> Path
 {
 	Path p(g_get_tmp_dir());
 	p /= FS(_F("xournalpp-{1}") % Util::getPid());
@@ -112,7 +112,7 @@ Path Util::getTmpDirSubfolder(const Path& subfolder)
 	return Util::ensureFolderExists(p);
 }
 
-Path Util::ensureFolderExists(const Path& p)
+auto Util::ensureFolderExists(const Path& p) -> Path
 {
 	if (g_mkdir_with_parents(p.c_str(), 0700) == -1)
 	{
@@ -160,7 +160,7 @@ void Util::openFileWithFilebrowser(const Path& filename)
 	}
 }
 
-gboolean Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void*)
+auto Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void*) -> gboolean
 {
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(widget, &alloc);
@@ -172,10 +172,10 @@ gboolean Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void*)
 
 void Util::writeCoordinateString(OutputStream* out, double xVal, double yVal)
 {
-	char coordString[G_ASCII_DTOSTR_BUF_SIZE];
-	g_ascii_formatd(coordString, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, xVal);
-	out->write(coordString);
+	std::array<char, G_ASCII_DTOSTR_BUF_SIZE> coordString;
+	g_ascii_formatd(coordString.data(), G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, xVal);
+	out->write(coordString.data());
 	out->write(" ");
-	g_ascii_formatd(coordString, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, yVal);
-	out->write(coordString);
+	g_ascii_formatd(coordString.data(), G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, yVal);
+	out->write(coordString.data());
 }

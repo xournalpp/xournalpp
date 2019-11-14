@@ -23,7 +23,7 @@ ToolbarColorNames::~ToolbarColorNames()
 
 static ToolbarColorNames* instance = nullptr;
 
-ToolbarColorNames& ToolbarColorNames::getInstance()
+auto ToolbarColorNames::getInstance() -> ToolbarColorNames&
 {
 	if (instance == nullptr)
 	{
@@ -87,7 +87,7 @@ void ToolbarColorNames::addColor(int color, string name, bool predefined)
 	}
 }
 
-string ToolbarColorNames::getColorName(int color)
+auto ToolbarColorNames::getColorName(int color) -> string
 {
 	string colorName;
 

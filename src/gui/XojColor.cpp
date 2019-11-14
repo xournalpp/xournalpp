@@ -1,21 +1,21 @@
 #include "XojColor.h"
 
+#include <utility>
+
 XojColor::XojColor(int color, string name)
- : color(color),
-   name(name)
+ : color(color)
+ , name(std::move(name))
 {
 }
 
-XojColor::~XojColor()
-{
-}
+XojColor::~XojColor() = default;
 
-int XojColor::getColor()
+auto XojColor::getColor() -> int
 {
 	return this->color;
 }
 
-string XojColor::getName()
+auto XojColor::getName() -> string
 {
 	return this->name;
 }

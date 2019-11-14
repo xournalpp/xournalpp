@@ -9,16 +9,15 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath)
 {
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spDpi")), 300);
 
-	g_signal_connect(get("rdRangePages"), "toggled", G_CALLBACK(
-		+[](GtkToggleButton* togglebutton, ExportDialog* self)
-		{
+	g_signal_connect(get("rdRangePages"),
+	                 "toggled",
+	                 G_CALLBACK(+[](GtkToggleButton* togglebutton, ExportDialog* self) {
 		                 gtk_widget_set_sensitive(self->get("txtPages"), gtk_toggle_button_get_active(togglebutton));
-	                 }), this);
+	                 }),
+	                 this);
 }
 
-ExportDialog::~ExportDialog()
-{
-}
+ExportDialog::~ExportDialog() = default;
 
 void ExportDialog::initPages(int current, int count)
 {
@@ -39,17 +38,17 @@ void ExportDialog::removeDpiSelection()
 	gtk_widget_hide(get("lbDpi"));
 }
 
-int ExportDialog::getPngDpi()
+auto ExportDialog::getPngDpi() -> int
 {
 	return gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDpi")));
 }
 
-bool ExportDialog::isConfirmed()
+auto ExportDialog::isConfirmed() -> bool
 {
 	return this->confirmed;
 }
 
-PageRangeVector ExportDialog::getRange()
+auto ExportDialog::getRange() -> PageRangeVector
 {
 	GtkWidget* rdRangeCurrent = get("rdRangeCurrent");
 	GtkWidget* rdRangePages = get("rdRangePages");

@@ -60,7 +60,7 @@ void AbstractToolItem::toolButtonCallback(GtkToolButton* toolbutton, AbstractToo
 	item->activated(nullptr, nullptr, toolbutton);
 }
 
-GtkToolItem* AbstractToolItem::createItem(bool horizontal)
+auto AbstractToolItem::createItem(bool horizontal) -> GtkToolItem*
 {
 	if (this->item)
 	{
@@ -78,7 +78,7 @@ GtkToolItem* AbstractToolItem::createItem(bool horizontal)
 	return this->item;
 }
 
-GtkToolItem* AbstractToolItem::createTmpItem(bool horizontal)
+auto AbstractToolItem::createTmpItem(bool horizontal) -> GtkToolItem*
 {
 	GtkToolItem* item = newItem();
 
@@ -105,7 +105,7 @@ void AbstractToolItem::setPopupMenu(GtkWidget* popupMenu)
 	this->popupMenu = popupMenu;
 }
 
-bool AbstractToolItem::isUsed()
+auto AbstractToolItem::isUsed() -> bool
 {
 	return used;
 }

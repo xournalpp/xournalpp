@@ -66,7 +66,7 @@ LatexController::~LatexController()
 /**
  * Find the tex executable, return false if not found
  */
-LatexController::FindDependencyStatus LatexController::findTexDependencies()
+auto LatexController::findTexDependencies() -> LatexController::FindDependencyStatus
 {
 	gchar* pdflatex = g_find_program_in_path("pdflatex");
 	if (!pdflatex)
@@ -109,7 +109,7 @@ LatexController::FindDependencyStatus LatexController::findTexDependencies()
 	return LatexController::FindDependencyStatus(true, "");
 }
 
-std::unique_ptr<GPid> LatexController::runCommandAsync(string texString)
+auto LatexController::runCommandAsync(string texString) -> std::unique_ptr<GPid>
 {
 	g_assert(!this->isUpdating);
 
@@ -134,8 +134,7 @@ std::unique_ptr<GPid> LatexController::runCommandAsync(string texString)
 	char* argv[] = {cmd, texFlag, texFileEscaped, nullptr};
 
 	std::unique_ptr<GPid> pdflatexPid(new GPid);
-	GSpawnFlags flags =
-	        GSpawnFlags(G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL | G_SPAWN_DO_NOT_REAP_CHILD);
+	auto flags = GSpawnFlags(G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL | G_SPAWN_DO_NOT_REAP_CHILD);
 
 	this->setUpdating(true);
 	this->lastPreviewedTex = texString;
@@ -236,7 +235,7 @@ void LatexController::findSelectedTexElement()
 	this->control->clearSelectionEndText();
 }
 
-string LatexController::showTexEditDialog()
+auto LatexController::showTexEditDialog() -> string
 {
 	// Attach the signal handler before setting the buffer text so that the
 	// callback is triggered
@@ -373,7 +372,7 @@ void LatexController::deleteOldImage()
 	}
 }
 
-std::unique_ptr<TexImage> LatexController::convertDocumentToImage(PopplerDocument* doc, string formula)
+auto LatexController::convertDocumentToImage(PopplerDocument* doc, string formula) -> std::unique_ptr<TexImage>
 {
 	if (poppler_document_get_n_pages(doc) < 1)
 	{
@@ -414,7 +413,7 @@ std::unique_ptr<TexImage> LatexController::convertDocumentToImage(PopplerDocumen
 	return img;
 }
 
-std::unique_ptr<TexImage> LatexController::loadRendered(string renderedTex)
+auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexImage>
 {
 	if (!this->isValidTex)
 	{
@@ -476,7 +475,7 @@ void LatexController::insertTexImage()
 	control->getUndoRedoHandler()->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, img));
 
 	// Select element
-	EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
+	auto* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
 	view->getXournal()->setSelection(selection);
 }
 

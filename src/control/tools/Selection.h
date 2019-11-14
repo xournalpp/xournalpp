@@ -30,7 +30,7 @@ public:
 	virtual void currentPos(double x, double y) = 0;
 
 private:
-	protected:
+protected:
 	vector<Element*> selectedElements;
 	PageRef page;
 	Redrawable* view;

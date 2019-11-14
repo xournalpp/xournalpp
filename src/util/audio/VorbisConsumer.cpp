@@ -7,11 +7,9 @@ VorbisConsumer::VorbisConsumer(Settings* settings, AudioQueue<float>* audioQueue
 {
 }
 
-VorbisConsumer::~VorbisConsumer()
-{
-}
+VorbisConsumer::~VorbisConsumer() = default;
 
-bool VorbisConsumer::start(string filename)
+auto VorbisConsumer::start(string filename) -> bool
 {
 	double sampleRate;
 	unsigned int channels;
@@ -40,32 +38,32 @@ bool VorbisConsumer::start(string filename)
 			{
 				std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
 
-				float buffer[64 * channels];
-				size_t bufferLength;
-				double audioGain = this->settings->getAudioGain();
+		        std::vector<float> buffer(64 * channels);
+		        size_t bufferLength;
+		        double audioGain = this->settings->getAudioGain();
 
-				while (!(this->stopConsumer || (audioQueue->hasStreamEnded() && audioQueue->empty())))
-				{
-					audioQueue->waitForProducer(lock);
+		        while (!(this->stopConsumer || (audioQueue->hasStreamEnded() && audioQueue->empty())))
+		        {
+			        audioQueue->waitForProducer(lock);
 
-					while (audioQueue->size() > 64 * channels || (audioQueue->hasStreamEnded() && !audioQueue->empty()))
-					{
-						this->audioQueue->pop(buffer, bufferLength, 64 * channels);
+			        while (audioQueue->size() > 64 * channels || (audioQueue->hasStreamEnded() && !audioQueue->empty()))
+			        {
+				        this->audioQueue->pop(buffer.data(), bufferLength, 64 * channels);
 
-						// apply gain
-						if (audioGain != 1.0)
-						{
-							for (unsigned int i = 0; i < 64 * channels; ++i)
-							{
-								buffer[i] = buffer[i] * audioGain;
-							}
-						}
+				        // apply gain
+				        if (audioGain != 1.0)
+				        {
+					        for (unsigned int i = 0; i < 64 * channels; ++i)
+					        {
+						        buffer[i] = buffer[i] * audioGain;
+					        }
+				        }
 
-						sf_writef_float(sfFile, buffer, std::min<size_t>(bufferLength / channels, 64));
-					}
-				}
+				        sf_writef_float(sfFile, buffer.data(), std::min<size_t>(bufferLength / channels, 64));
+			        }
+		        }
 
-				sf_close(sfFile);
+		        sf_close(sfFile);
 			});
 	return true;
 }

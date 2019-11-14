@@ -21,9 +21,7 @@ PenInputHandler::PenInputHandler(InputContext* inputContext) : AbstractInputHand
 {
 }
 
-PenInputHandler::~PenInputHandler()
-{
-}
+PenInputHandler::~PenInputHandler() = default;
 
 void PenInputHandler::updateLastEvent(InputEvent* event)
 {
@@ -87,7 +85,7 @@ void PenInputHandler::handleScrollEvent(InputEvent* event)
 	}
 }
 
-bool PenInputHandler::actionStart(InputEvent* event)
+auto PenInputHandler::actionStart(InputEvent* event) -> bool
 {
 	this->inputContext->focusWidget();
 
@@ -176,7 +174,7 @@ bool PenInputHandler::actionStart(InputEvent* event)
 	return false;
 }
 
-bool PenInputHandler::actionMotion(InputEvent* event)
+auto PenInputHandler::actionMotion(InputEvent* event) -> bool
 {
 	/*
 	 * Workaround for misbehaving devices where Enter events are not published every time
@@ -306,7 +304,7 @@ bool PenInputHandler::actionMotion(InputEvent* event)
 	}
 }
 
-bool PenInputHandler::actionEnd(InputEvent* event)
+auto PenInputHandler::actionEnd(InputEvent* event) -> bool
 {
 	GtkXournal* xournal = inputContext->getXournal();
 	XournalppCursor* cursor = xournal->view->getCursor();

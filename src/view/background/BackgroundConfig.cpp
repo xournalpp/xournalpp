@@ -16,11 +16,9 @@ BackgroundConfig::BackgroundConfig(string config)
 	}
 }
 
-BackgroundConfig::~BackgroundConfig()
-{
-}
+BackgroundConfig::~BackgroundConfig() = default;
 
-bool BackgroundConfig::loadValue(string key, string& value)
+auto BackgroundConfig::loadValue(string key, string& value) -> bool
 {
 	auto it = data.find(key);
 	if (it != this->data.end())
@@ -32,7 +30,7 @@ bool BackgroundConfig::loadValue(string key, string& value)
 	return false;
 }
 
-bool BackgroundConfig::loadValue(string key, int& value)
+auto BackgroundConfig::loadValue(string key, int& value) -> bool
 {
 	string str;
 	if (loadValue(key, str))
@@ -44,7 +42,7 @@ bool BackgroundConfig::loadValue(string key, int& value)
 	return false;
 }
 
-bool BackgroundConfig::loadValue(string key, double& value)
+auto BackgroundConfig::loadValue(string key, double& value) -> bool
 {
 	string str;
 	if (loadValue(key, str))
@@ -56,7 +54,7 @@ bool BackgroundConfig::loadValue(string key, double& value)
 	return false;
 }
 
-bool BackgroundConfig::loadValueHex(string key, int& value)
+auto BackgroundConfig::loadValueHex(string key, int& value) -> bool
 {
 	string str;
 	if (loadValue(key, str))

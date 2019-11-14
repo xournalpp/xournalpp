@@ -48,7 +48,7 @@ public:
 	virtual int getPageId() = 0;
 
 private:
-	};
+};
 
 typedef std::shared_ptr<XojPdfPage> XojPdfPageSPtr;
 

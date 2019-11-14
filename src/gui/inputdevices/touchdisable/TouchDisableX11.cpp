@@ -4,9 +4,7 @@
 
 #include <gdk/gdkx.h>
 
-TouchDisableX11::TouchDisableX11()
-{
-}
+TouchDisableX11::TouchDisableX11() = default;
 
 TouchDisableX11::~TouchDisableX11()
 {

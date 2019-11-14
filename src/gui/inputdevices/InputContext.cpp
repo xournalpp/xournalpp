@@ -72,12 +72,12 @@ void InputContext::connect(GtkWidget* pWidget)
 	g_signal_connect(pWidget, "event", G_CALLBACK(eventCallback), this);
 }
 
-bool InputContext::eventCallback(GtkWidget* widget, GdkEvent* event, InputContext* self)
+auto InputContext::eventCallback(GtkWidget* widget, GdkEvent* event, InputContext* self) -> bool
 {
 	return self->handle(event);
 }
 
-bool InputContext::handle(GdkEvent* sourceEvent)
+auto InputContext::handle(GdkEvent* sourceEvent) -> bool
 {
 	printDebug(sourceEvent);
 
@@ -151,32 +151,32 @@ bool InputContext::handle(GdkEvent* sourceEvent)
 	return false;
 }
 
-GtkXournal* InputContext::getXournal()
+auto InputContext::getXournal() -> GtkXournal*
 {
 	return GTK_XOURNAL(widget);
 }
 
-XournalView* InputContext::getView()
+auto InputContext::getView() -> XournalView*
 {
 	return view;
 }
 
-Settings* InputContext::getSettings()
+auto InputContext::getSettings() -> Settings*
 {
 	return view->getControl()->getSettings();
 }
 
-ToolHandler* InputContext::getToolHandler()
+auto InputContext::getToolHandler() -> ToolHandler*
 {
 	return view->getControl()->getToolHandler();
 }
 
-ScrollHandling* InputContext::getScrollHandling()
+auto InputContext::getScrollHandling() -> ScrollHandling*
 {
 	return this->scrollHandling;
 }
 
-GdkModifierType InputContext::getModifierState()
+auto InputContext::getModifierState() -> GdkModifierType
 {
 	return this->modifierState;
 }
@@ -226,7 +226,7 @@ void InputContext::unblockDevice(InputContext::DeviceType deviceType)
 	}
 }
 
-bool InputContext::isBlocked(InputContext::DeviceType deviceType)
+auto InputContext::isBlocked(InputContext::DeviceType deviceType) -> bool
 {
 	switch (deviceType)
 	{

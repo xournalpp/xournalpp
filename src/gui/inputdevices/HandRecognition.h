@@ -114,5 +114,5 @@ private:
 	/**
 	 * Settings
 	 */
-	Settings* settings = nullptr;
+	  Settings* settings = nullptr;
 };

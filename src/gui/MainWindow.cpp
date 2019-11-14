@@ -164,7 +164,7 @@ MainWindow::~MainWindow()
 
 	delete this->floatingToolbox;
 	this->floatingToolbox = nullptr;
-	
+
 	delete this->xournal;
 	this->xournal = nullptr;
 
@@ -289,13 +289,12 @@ void MainWindow::initHideMenu()
 	else
 	{
 		// Menu found, allow to hide it
-		g_signal_connect(menuItem, "activate", G_CALLBACK(
-			+[](GtkMenuItem* menuitem, MainWindow* self)
-			{ toggleMenuBar(self); }), this);
+		g_signal_connect(menuItem, "activate",
+		                 G_CALLBACK(+[](GtkMenuItem* menuitem, MainWindow* self) { toggleMenuBar(self); }), this);
 
 		GtkAccelGroup* accelGroup = gtk_accel_group_new();
 		gtk_accel_group_connect(accelGroup, GDK_KEY_F10, (GdkModifierType) 0, GTK_ACCEL_VISIBLE,
-				g_cclosure_new_swap(G_CALLBACK(toggleMenuBar), this, nullptr));
+		                        g_cclosure_new_swap(G_CALLBACK(toggleMenuBar), this, nullptr));
 		gtk_window_add_accel_group(GTK_WINDOW(getWindow()), accelGroup);
 	}
 
@@ -307,12 +306,12 @@ void MainWindow::initHideMenu()
 	}
 }
 
-Layout* MainWindow::getLayout()
+auto MainWindow::getLayout() -> Layout*
 {
 	return gtk_xournal_get_layout(GTK_WIDGET(this->xournal->getWidget()));
 }
 
-bool cancellable_cancel(GCancellable* cancel)
+auto cancellable_cancel(GCancellable* cancel) -> bool
 {
 	g_cancellable_cancel(cancel);
 
@@ -420,7 +419,7 @@ void MainWindow::viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* wi
 	win->setSidebarVisible(a);
 }
 
-Control* MainWindow::getControl()
+auto MainWindow::getControl() -> Control*
 {
 	return control;
 }
@@ -496,7 +495,7 @@ void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win)
 	win->setSidebarVisible(false);
 }
 
-bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainWindow* win)
+auto MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainWindow* win) -> bool
 {
 
 	if (win->getXournal()->getSelection())
@@ -520,7 +519,7 @@ bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 	}
 }
 
-bool MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control)
+auto MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control) -> bool
 {
 	control->quit();
 
@@ -536,7 +535,7 @@ void MainWindow::setSidebarVisible(bool visible)
 	gtk_widget_set_visible(sidebar, visible);
 	settings->setSidebarVisible(visible);
 
-	if(!visible && (control->getSidebar() != nullptr))
+	if (!visible && (control->getSidebar() != nullptr))
 	{
 		saveSidebarSize();
 	}
@@ -562,17 +561,17 @@ void MainWindow::setMaximized(bool maximized)
 	this->maximized = maximized;
 }
 
-bool MainWindow::isMaximized()
+auto MainWindow::isMaximized() -> bool
 {
 	return this->maximized;
 }
 
-XournalView* MainWindow::getXournal()
+auto MainWindow::getXournal() -> XournalView*
 {
 	return xournal;
 }
 
-bool MainWindow::windowStateEventCallback(GtkWidget* window, GdkEventWindowState* event, MainWindow* win)
+auto MainWindow::windowStateEventCallback(GtkWidget* window, GdkEventWindowState* event, MainWindow* win) -> bool
 {
 	win->setMaximized(gtk_window_is_maximized(GTK_WINDOW(window)));
 
@@ -613,7 +612,7 @@ void MainWindow::toolbarSelected(ToolbarData* d)
 	this->loadToolbar(d);
 }
 
-ToolbarData* MainWindow::clearToolbar()
+auto MainWindow::clearToolbar() -> ToolbarData*
 {
 	if (this->selectedToolbar != nullptr)
 	{
@@ -644,18 +643,18 @@ void MainWindow::loadToolbar(ToolbarData* d)
 	this->floatingToolbox->flagRecalculateSizeRequired();	
 }
 
-ToolbarData* MainWindow::getSelectedToolbar()
+auto MainWindow::getSelectedToolbar() -> ToolbarData*
 {
 	return this->selectedToolbar;
 }
 
-GtkWidget** MainWindow::getToolbarWidgets(int& length)
+auto MainWindow::getToolbarWidgets(int& length) -> GtkWidget**
 {
 	length = TOOLBAR_DEFINITIONS_LEN;
 	return this->toolbarWidgets;
 }
 
-const char* MainWindow::getToolbarName(GtkToolbar* toolbar)
+auto MainWindow::getToolbarName(GtkToolbar* toolbar) -> const char*
 {
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++)
 	{
@@ -709,7 +708,7 @@ void MainWindow::setFontButtonFont(XojFont& font)
 	toolbar->setFontButtonFont(font);
 }
 
-XojFont MainWindow::getFontButtonFont()
+auto MainWindow::getFontButtonFont() -> XojFont
 {
 	return toolbar->getFontButtonFont();
 }
@@ -783,17 +782,17 @@ void MainWindow::setRedoDescription(string description)
 	toolbar->setRedoDescription(description);
 }
 
-SpinPageAdapter* MainWindow::getSpinPageNo()
+auto MainWindow::getSpinPageNo() -> SpinPageAdapter*
 {
 	return toolbar->getPageSpinner();
 }
 
-ToolbarModel* MainWindow::getToolbarModel()
+auto MainWindow::getToolbarModel() -> ToolbarModel*
 {
 	return this->toolbar->getModel();
 }
 
-ToolMenuHandler* MainWindow::getToolMenuHandler()
+auto MainWindow::getToolMenuHandler() -> ToolMenuHandler*
 {
 	return this->toolbar;
 }
@@ -819,7 +818,7 @@ void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssF
 {
 	string filename = gladeSearchPath->findFile("", cssFilename);
 	GtkCssProvider *provider = gtk_css_provider_new ();
-	gtk_css_provider_load_from_path (provider, filename.c_str(), nullptr);
+	gtk_css_provider_load_from_path(provider, filename.c_str(), nullptr);
 	gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider),
 											  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 	g_object_unref(provider);

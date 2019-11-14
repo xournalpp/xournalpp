@@ -13,41 +13,41 @@
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
 
-#include <stdlib.h>
+#include <cstdlib>
 
-#define error2(var, ...)																	\
-	if (var == nullptr)																		\
-	{																						\
-		var = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__);		\
+#define error2(var, ...)                                                                \
+	if (var == nullptr)                                                                 \
+	{                                                                                   \
+		var = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); \
 	}
 
-#define error(...)																			\
-	if (error == nullptr)																		\
-	{																						\
-		error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__);	\
+#define error(...)                                                                        \
+	if (error == nullptr)                                                                 \
+	{                                                                                     \
+		error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); \
 	}
 
 LoadHandler::LoadHandler()
- : attachedPdfMissing(false),
-   removePdfBackgroundFlag(false),
-   pdfReplacementAttach(false),
-   pdfFilenameParsed(false),
-   pos(PARSER_POS_NOT_STARTED),
-   fileVersion(0),
-   minimalFileVersion(0),
-   zipFp(nullptr),
-   zipContentFile(nullptr),
-   gzFp(nullptr),
-   layer(nullptr),
-   stroke(nullptr),
-   text(nullptr),
-   image(nullptr),
-   teximage(nullptr),
-   attributeNames(nullptr),
-   attributeValues(nullptr),
-   elementName(nullptr),
-   loadedTimeStamp(0),
-   doc(&dHanlder)
+ : attachedPdfMissing(false)
+ , removePdfBackgroundFlag(false)
+ , pdfReplacementAttach(false)
+ , pdfFilenameParsed(false)
+ , pos(PARSER_POS_NOT_STARTED)
+ , fileVersion(0)
+ , minimalFileVersion(0)
+ , zipFp(nullptr)
+ , zipContentFile(nullptr)
+ , gzFp(nullptr)
+ , layer(nullptr)
+ , stroke(nullptr)
+ , text(nullptr)
+ , image(nullptr)
+ , teximage(nullptr)
+ , attributeNames(nullptr)
+ , attributeValues(nullptr)
+ , elementName(nullptr)
+ , loadedTimeStamp(0)
+ , doc(&dHanlder)
 {
 	this->error = nullptr;
 
@@ -89,17 +89,17 @@ void LoadHandler::initAttributes()
 	this->audioFiles = g_hash_table_new(g_str_hash, g_str_equal);
 }
 
-string LoadHandler::getLastError()
+auto LoadHandler::getLastError() -> string
 {
 	return this->lastError;
 }
 
-bool LoadHandler::isAttachedPdfMissing()
+auto LoadHandler::isAttachedPdfMissing() -> bool
 {
 	return this->attachedPdfMissing;
 }
 
-string LoadHandler::getMissingPdfFilename()
+auto LoadHandler::getMissingPdfFilename() -> string
 {
 	return this->pdfMissing;
 }
@@ -115,7 +115,7 @@ void LoadHandler::setPdfReplacement(string filename, bool attachToDocument)
 	this->pdfReplacementAttach = attachToDocument;
 }
 
-bool LoadHandler::openFile(string filename)
+auto LoadHandler::openFile(string filename) -> bool
 {
 	this->filename = filename;
 	int zipError = 0;
@@ -184,7 +184,7 @@ bool LoadHandler::openFile(string filename)
 	return true;
 }
 
-bool LoadHandler::closeFile()
+auto LoadHandler::closeFile() -> bool
 {
 	if (this->isGzFile)
 	{
@@ -197,7 +197,7 @@ bool LoadHandler::closeFile()
 	}
 }
 
-zip_int64_t LoadHandler::readContentFile(char* buffer, zip_uint64_t len)
+auto LoadHandler::readContentFile(char* buffer, zip_uint64_t len) -> zip_int64_t
 {
 	if (this->isGzFile)
 	{
@@ -219,9 +219,10 @@ zip_int64_t LoadHandler::readContentFile(char* buffer, zip_uint64_t len)
 	}
 }
 
-bool LoadHandler::parseXml()
+auto LoadHandler::parseXml() -> bool
 {
-	const GMarkupParser parser = { LoadHandler::parserStartElement, LoadHandler::parserEndElement, LoadHandler::parserText, nullptr, nullptr };
+	const GMarkupParser parser = {LoadHandler::parserStartElement, LoadHandler::parserEndElement,
+	                              LoadHandler::parserText, nullptr, nullptr};
 	this->error = nullptr;
 	gboolean valid = true;
 
@@ -826,33 +827,33 @@ void LoadHandler::parseTexImage()
 
 void LoadHandler::parseAttachment()
 {
-	const char* path = LoadHandlerHelper::getAttrib("path",false, this);
+	if (this->pos != PARSER_POS_IN_IMAGE || this->pos != PARSER_POS_IN_TEXIMAGE)
+	{
+		g_warning("Found attachment tag as child of a tag that should not have such a child (ignoring this tag)");
+		return;
+	}
+	const char* path = LoadHandlerHelper::getAttrib("path", false, this);
+
+	//Todo(fabian) move the following 4 lines into readZipAttachment
+	gpointer data = nullptr;
+	gsize dataLength{0};
+	string imgData = readZipAttachment(path, data, dataLength) ? string{(char*) data, dataLength} : "";
+	g_free(data);
 
 	switch(this->pos)
 	{
 		case PARSER_POS_IN_IMAGE:
 		{
-			gpointer data = nullptr;
-			gsize dataLength;
-			readZipAttachment(path, data, dataLength);
-
-			string imgData = string((char*)data, dataLength);
-			this->image->setImage(imgData);
-			break;
-		}
-		case PARSER_POS_IN_TEXIMAGE:
-		{
-			gpointer data = nullptr;
-			gsize dataLength;
-			readZipAttachment(path, data, dataLength);
-
-			string imgData = string((char*)data, dataLength);
-			this->teximage->setBinaryData(imgData);
-			break;
-		}
-		default:
-			g_warning("Found attachment tag as child of a tag that should not have such a child (ignoring this tag)");
-			break;
+		    this->image->setImage(imgData);
+		    break;
+	    }
+	    case PARSER_POS_IN_TEXIMAGE:
+	    {
+		    this->teximage->setBinaryData(imgData);
+		    break;
+	    }
+	    default:
+		    break;
 	}
 }
 
@@ -958,7 +959,7 @@ void LoadHandler::parseAudio()
 
 		readBytes += read;
 	}
-
+	g_free(data);
 	zip_fclose(attachmentFile);
 
 	g_hash_table_insert(this->audioFiles, g_strdup(filename), g_file_get_path(tmpFile));
@@ -967,7 +968,7 @@ void LoadHandler::parseAudio()
 void LoadHandler::parserStartElement(GMarkupParseContext* context, const gchar* elementName, const gchar** attributeNames,
                                      const gchar** attributeValues, gpointer userdata, GError** error)
 {
-	LoadHandler* handler = (LoadHandler*) userdata;
+	auto* handler = (LoadHandler*) userdata;
 	// Return on error
 	if (*error)
 	{
@@ -1016,7 +1017,7 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* el
 		return;
 	}
 
-	LoadHandler* handler = (LoadHandler*) userdata;
+	auto* handler = (LoadHandler*) userdata;
 	if (handler->pos == PARSER_POS_STARTED && strcmp(elementName, handler->endRootTag) == 0)
 	{
 		handler->pos = PASER_POS_FINISHED;
@@ -1068,7 +1069,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 		return;
 	}
 
-	LoadHandler* handler = (LoadHandler*) userdata;
+	auto* handler = (LoadHandler*) userdata;
 	if (handler->pos == PARSER_POS_IN_STROKE)
 	{
 		const char* ptr = text;
@@ -1139,10 +1140,10 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 	}
 }
 
-string LoadHandler::parseBase64(const gchar* base64, gsize lenght)
+auto LoadHandler::parseBase64(const gchar* base64, gsize lenght) -> string
 {
 	// We have to copy the string in order to null terminate it, sigh.
-	gchar* base64data = (gchar*) g_memdup(base64, lenght + 1);
+	auto* base64data = (gchar*) g_memdup(base64, lenght + 1);
 	base64data[lenght] = '\0';
 
 	gsize binaryBufferLen = 0;
@@ -1178,7 +1179,7 @@ void LoadHandler::readTexImage(const gchar* base64string, gsize base64stringLen)
 /**
  * Document should not be freed, it will be freed with LoadHandler!
  */
-Document* LoadHandler::loadDocument(string filename)
+auto LoadHandler::loadDocument(string filename) -> Document*
 {
 	initAttributes();
 	doc.clearDocument();
@@ -1218,7 +1219,9 @@ Document* LoadHandler::loadDocument(string filename)
 	return &this->doc;
 }
 
-bool LoadHandler::readZipAttachment(string filename, gpointer& data, gsize& length)
+//Todo(fabian): return data and length by value not by reference, to ensure data and length is assigned always
+//      return string not a pointer. Ownage is not clear!
+auto LoadHandler::readZipAttachment(string filename, gpointer& data, gsize& length) -> bool
 {
 	zip_stat_t attachmentFileStat;
 	int statStatus = zip_stat(this->zipFp, filename.c_str(), 0, &attachmentFileStat);
@@ -1265,7 +1268,7 @@ bool LoadHandler::readZipAttachment(string filename, gpointer& data, gsize& leng
 	return true;
 }
 
-string LoadHandler::getTempFileForPath(string filename)
+auto LoadHandler::getTempFileForPath(string filename) -> string
 {
 	gpointer tmpFilename = g_hash_table_lookup(this->audioFiles, filename.c_str());
 	if (tmpFilename)

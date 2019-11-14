@@ -100,12 +100,12 @@ void VerticalToolHandler::currentPos(double x, double y)
 	this->view->repaintRect(0, y1, this->page->getWidth(), this->page->getHeight());
 }
 
-vector<Element*>* VerticalToolHandler::getElements()
+auto VerticalToolHandler::getElements() -> vector<Element*>*
 {
 	return &this->elements;
 }
 
-std::unique_ptr<MoveUndoAction> VerticalToolHandler::finalize()
+auto VerticalToolHandler::finalize() -> std::unique_ptr<MoveUndoAction>
 {
 	double dY = this->endY - this->startY;
 

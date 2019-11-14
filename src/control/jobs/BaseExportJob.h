@@ -41,7 +41,7 @@ protected:
 	virtual bool isUriValid(string& uri);
 
 private:
-	protected:
+protected:
 	GtkWidget* dialog = nullptr;
 
 	Path filename;

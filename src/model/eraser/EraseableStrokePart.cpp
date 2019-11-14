@@ -24,7 +24,7 @@ EraseableStrokePart::~EraseableStrokePart()
 {
 	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
-		Point* p = (Point*) l->data;
+		auto* p = (Point*) l->data;
 		delete p;
 	}
 	g_list_free(this->points);
@@ -49,7 +49,7 @@ void EraseableStrokePart::calcSize()
 
 	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
-		Point* p = (Point*) l->data;
+		auto* p = (Point*) l->data;
 		x1 = std::min(x1, p->x);
 		x2 = std::max(x2, p->x);
 		y1 = std::min(y1, p->y);
@@ -62,13 +62,13 @@ void EraseableStrokePart::calcSize()
 	this->elementHeight = y2 - y1;
 }
 
-EraseableStrokePart* EraseableStrokePart::clone()
+auto EraseableStrokePart::clone() -> EraseableStrokePart*
 {
-	EraseableStrokePart* part = new EraseableStrokePart(this->width);
+	auto* part = new EraseableStrokePart(this->width);
 
 	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
-		Point* p = (Point*) l->data;
+		auto* p = (Point*) l->data;
 		part->addPoint(*p);
 	}
 
@@ -77,22 +77,22 @@ EraseableStrokePart* EraseableStrokePart::clone()
 	return part;
 }
 
-double EraseableStrokePart::getX()
+auto EraseableStrokePart::getX() -> double
 {
 	return this->x;
 }
 
-double EraseableStrokePart::getY()
+auto EraseableStrokePart::getY() -> double
 {
 	return this->y;
 }
 
-double EraseableStrokePart::getElementWidth()
+auto EraseableStrokePart::getElementWidth() -> double
 {
 	return this->elementWidth;
 }
 
-double EraseableStrokePart::getElementHeight()
+auto EraseableStrokePart::getElementHeight() -> double
 {
 	return this->elementHeight;
 }
@@ -104,12 +104,12 @@ void EraseableStrokePart::addPoint(Point p)
 	this->points = g_list_append(this->points, new Point(p));
 }
 
-double EraseableStrokePart::getWidth()
+auto EraseableStrokePart::getWidth() -> double
 {
 	return this->width;
 }
 
-GList* EraseableStrokePart::getPoints()
+auto EraseableStrokePart::getPoints() -> GList*
 {
 	return this->points;
 }
@@ -118,7 +118,7 @@ void EraseableStrokePart::clearSplitData()
 {
 	for (GList* l = this->points->next; l->next != nullptr;)
 	{
-		Point* p = (Point*) l->data;
+		auto* p = (Point*) l->data;
 		delete p;
 		GList* link = l;
 		l = l->next;
@@ -136,8 +136,8 @@ void EraseableStrokePart::splitFor(double halfEraserSize)
 
 	this->splitSize = halfEraserSize;
 
-	Point* a = (Point*) g_list_first(this->points)->data;
-	Point* b = (Point*) g_list_last(this->points)->data;
+	auto* a = (Point*) g_list_first(this->points)->data;
+	auto* b = (Point*) g_list_last(this->points)->data;
 
 	// nothing to do, the size is enough small
 	if (a->lineLengthTo(*b) <= halfEraserSize)

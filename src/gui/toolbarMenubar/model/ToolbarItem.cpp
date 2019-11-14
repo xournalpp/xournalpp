@@ -25,21 +25,19 @@ ToolbarItem::ToolbarItem()
 	this->id = -100;
 }
 
-ToolbarItem::~ToolbarItem()
-{
-}
+ToolbarItem::~ToolbarItem() = default;
 
-string ToolbarItem::getName()
+auto ToolbarItem::getName() -> string
 {
 	return this->name;
 }
 
-bool ToolbarItem::operator==(ToolbarItem& other)
+auto ToolbarItem::operator==(ToolbarItem& other) -> bool
 {
 	return this->name == other.name;
 }
 
-int ToolbarItem::getId()
+auto ToolbarItem::getId() -> int
 {
 	return this->id;
 }

@@ -44,12 +44,12 @@ void ShapeRecognizerResult::addSourceStroke(Stroke* s)
 	this->source.push_back(s);
 }
 
-Stroke* ShapeRecognizerResult::getRecognized()
+auto ShapeRecognizerResult::getRecognized() -> Stroke*
 {
 	return this->recognized;
 }
 
-vector<Stroke*>* ShapeRecognizerResult::getSources()
+auto ShapeRecognizerResult::getSources() -> vector<Stroke*>*
 {
 	return &this->source;
 }

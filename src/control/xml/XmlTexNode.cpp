@@ -6,9 +6,7 @@ XmlTexNode::XmlTexNode(const char* tag, string& binaryData)
 {
 }
 
-XmlTexNode::~XmlTexNode()
-{
-}
+XmlTexNode::~XmlTexNode() = default;
 
 void XmlTexNode::writeOut(OutputStream* out)
 {

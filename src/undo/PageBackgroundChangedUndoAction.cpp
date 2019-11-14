@@ -19,11 +19,9 @@ PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page, P
 	this->newType.format = PageTypeFormat::Plain;
 }
 
-PageBackgroundChangedUndoAction::~PageBackgroundChangedUndoAction()
-{
-}
+PageBackgroundChangedUndoAction::~PageBackgroundChangedUndoAction() = default;
 
-bool PageBackgroundChangedUndoAction::undo(Control* control)
+auto PageBackgroundChangedUndoAction::undo(Control* control) -> bool
 {
 	this->newType = this->page->getBackgroundType();
 	this->newPdfPage = this->page->getPdfPageNr();
@@ -59,7 +57,7 @@ bool PageBackgroundChangedUndoAction::undo(Control* control)
 	return true;
 }
 
-bool PageBackgroundChangedUndoAction::redo(Control* control)
+auto PageBackgroundChangedUndoAction::redo(Control* control) -> bool
 {
 	Document* doc = control->getDocument();
 
@@ -92,7 +90,7 @@ bool PageBackgroundChangedUndoAction::redo(Control* control)
 
 }
 
-string PageBackgroundChangedUndoAction::getText()
+auto PageBackgroundChangedUndoAction::getText() -> string
 {
 	return _("Page background changed");
 }

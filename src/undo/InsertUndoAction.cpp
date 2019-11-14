@@ -25,7 +25,7 @@ InsertUndoAction::~InsertUndoAction()
 	this->element = nullptr;
 }
 
-string InsertUndoAction::getText()
+auto InsertUndoAction::getText() -> string
 {
 	if (element->getType() == ELEMENT_STROKE)
 	{
@@ -49,7 +49,7 @@ string InsertUndoAction::getText()
 	}
 }
 
-bool InsertUndoAction::undo(Control* control)
+auto InsertUndoAction::undo(Control* control) -> bool
 {
 	this->layer->removeElement(this->element, false);
 
@@ -60,7 +60,7 @@ bool InsertUndoAction::undo(Control* control)
 	return true;
 }
 
-bool InsertUndoAction::redo(Control* control)
+auto InsertUndoAction::redo(Control* control) -> bool
 {
 	this->layer->addElement(this->element);
 
@@ -91,12 +91,12 @@ InsertsUndoAction::~InsertsUndoAction()
 	}
 }
 
-string InsertsUndoAction::getText()
+auto InsertsUndoAction::getText() -> string
 {
 	return _("Insert elements");
 }
 
-bool InsertsUndoAction::undo(Control* control)
+auto InsertsUndoAction::undo(Control* control) -> bool
 {
 	for (Element* elem : this->elements)
 	{
@@ -109,7 +109,7 @@ bool InsertsUndoAction::undo(Control* control)
 	return true;
 }
 
-bool InsertsUndoAction::redo(Control* control)
+auto InsertsUndoAction::redo(Control* control) -> bool
 {
 	for (Element* elem : this->elements)
 	{

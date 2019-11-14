@@ -4,7 +4,7 @@
 
 Shadow* Shadow::instance = new Shadow();
 
-typedef const unsigned char* u8ptr;
+using u8ptr = const unsigned char*;
 
 Shadow::Shadow()
 {
@@ -66,12 +66,12 @@ Shadow::~Shadow()
 	this->bottom = nullptr;
 }
 
-int Shadow::getShadowBottomRightSize()
+auto Shadow::getShadowBottomRightSize() -> int
 {
 	return shadowBottomRightSize;
 }
 
-int Shadow::getShadowTopLeftSize()
+auto Shadow::getShadowTopLeftSize() -> int
 {
 	return shadowTopLeftSize;
 }

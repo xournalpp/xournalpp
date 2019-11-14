@@ -4,9 +4,7 @@
 
 #include <i18n.h>
 
-ObjectInputStream::ObjectInputStream()
-{
-}
+ObjectInputStream::ObjectInputStream() = default;
 
 ObjectInputStream::~ObjectInputStream()
 {
@@ -17,7 +15,7 @@ ObjectInputStream::~ObjectInputStream()
 	}
 }
 
-bool ObjectInputStream::read(const char* data, int len)
+auto ObjectInputStream::read(const char* data, int len) -> bool
 {
 	if (this->str)
 	{
@@ -60,13 +58,13 @@ void ObjectInputStream::readObject(const char* name)
 	}
 }
 
-string ObjectInputStream::readObject()
+auto ObjectInputStream::readObject() -> string
 {
 	checkType('{');
 	return readString();
 }
 
-string ObjectInputStream::getNextObjectName()
+auto ObjectInputStream::getNextObjectName() -> string
 {
 	int pos = this->pos;
 	checkType('{');
@@ -82,7 +80,7 @@ void ObjectInputStream::endObject()
 	checkType('}');
 }
 
-int ObjectInputStream::readInt()
+auto ObjectInputStream::readInt() -> int
 {
 	checkType('i');
 
@@ -96,7 +94,7 @@ int ObjectInputStream::readInt()
 	return i;
 }
 
-double ObjectInputStream::readDouble()
+auto ObjectInputStream::readDouble() -> double
 {
 	checkType('d');
 
@@ -110,7 +108,7 @@ double ObjectInputStream::readDouble()
 	return d;
 }
 
-size_t ObjectInputStream::readSizeT()
+auto ObjectInputStream::readSizeT() -> size_t
 {
 	checkType('l');
 
@@ -124,7 +122,7 @@ size_t ObjectInputStream::readSizeT()
 	return st;
 }
 
-string ObjectInputStream::readString()
+auto ObjectInputStream::readString() -> string
 {
 	checkType('s');
 
@@ -199,7 +197,7 @@ public:
 	int pos;
 };
 
-cairo_status_t cairoReadFunction(PngDatasource* obj, unsigned char* data, unsigned int length)
+auto cairoReadFunction(PngDatasource* obj, unsigned char* data, unsigned int length) -> cairo_status_t
 {
 	for (unsigned int i = 0; i < length; i++, obj->pos++)
 	{
@@ -213,7 +211,7 @@ cairo_status_t cairoReadFunction(PngDatasource* obj, unsigned char* data, unsign
 	return CAIRO_STATUS_SUCCESS;
 }
 
-cairo_surface_t* ObjectInputStream::readImage()
+auto ObjectInputStream::readImage() -> cairo_surface_t*
 {
 	checkType('m');
 
@@ -264,7 +262,7 @@ void ObjectInputStream::checkType(char type)
 	this->pos++;
 }
 
-string ObjectInputStream::getType(char type)
+auto ObjectInputStream::getType(char type) -> string
 {
 	string ret;
 	if (type == '{')

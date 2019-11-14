@@ -33,7 +33,8 @@ void Document::freeTreeContentModel()
 	}
 }
 
-bool Document::freeTreeContentEntry(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc)
+auto Document::freeTreeContentEntry(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc)
+        -> bool
 {
 	XojLinkDest* link = nullptr;
 	gtk_tree_model_get(treeModel, iter, DOCUMENT_LINKS_COLUMN_LINK, &link, -1);
@@ -72,7 +73,7 @@ void Document::unlock()
 	//	fprintf(stderr, "\n\n\n\n");
 }
 
-bool Document::tryLock()
+auto Document::tryLock() -> bool
 {
 	return g_mutex_trylock(&this->documentLock);
 }
@@ -107,12 +108,12 @@ void Document::clearDocument(bool destroy)
 /**
  * Returns the pageCount, this call don't need to be synchronized (if it's not critical, you may get wrong data)
  */
-size_t Document::getPageCount()
+auto Document::getPageCount() -> size_t
 {
 	return this->pages.size();
 }
 
-size_t Document::getPdfPageCount()
+auto Document::getPdfPageCount() -> size_t
 {
 	return pdfDocument.getPageCount();
 }
@@ -122,17 +123,17 @@ void Document::setFilename(Path filename)
 	this->filename = filename;
 }
 
-Path Document::getFilename()
+auto Document::getFilename() -> Path
 {
 	return filename;
 }
 
-Path Document::getPdfFilename()
+auto Document::getPdfFilename() -> Path
 {
 	return pdfFilename;
 }
 
-Path Document::createSaveFolder(Path lastSavePath)
+auto Document::createSaveFolder(Path lastSavePath) -> Path
 {
 	if (!filename.isEmpty())
 	{
@@ -148,7 +149,7 @@ Path Document::createSaveFolder(Path lastSavePath)
 	}
 }
 
-Path Document::createSaveFilename(DocumentType type, string defaultSaveName)
+auto Document::createSaveFilename(DocumentType type, string defaultSaveName) -> Path
 {
 	if (!filename.isEmpty())
 	{
@@ -177,7 +178,7 @@ Path Document::createSaveFilename(DocumentType type, string defaultSaveName)
 }
 
 
-cairo_surface_t* Document::getPreview()
+auto Document::getPreview() -> cairo_surface_t*
 {
 	return this->preview;
 }
@@ -198,7 +199,7 @@ void Document::setPreview(cairo_surface_t* preview)
 	}
 }
 
-Path Document::getEvMetadataFilename()
+auto Document::getEvMetadataFilename() -> Path
 {
 	if (!this->filename.isEmpty())
 	{
@@ -211,17 +212,17 @@ Path Document::getEvMetadataFilename()
 	return Path("");
 }
 
-bool Document::isPdfDocumentLoaded()
+auto Document::isPdfDocumentLoaded() -> bool
 {
 	return pdfDocument.isLoaded();
 }
 
-bool Document::isAttachPdf()
+auto Document::isAttachPdf() -> bool
 {
 	return this->attachPdf;
 }
 
-size_t Document::findPdfPage(size_t pdfPage)
+auto Document::findPdfPage(size_t pdfPage) -> size_t
 {
 	for (size_t i = 0; i < getPageCount(); i++)
 	{
@@ -293,12 +294,12 @@ void Document::buildContentsModel()
 	delete iter;
 }
 
-GtkTreeModel* Document::getContentsModel()
+auto Document::getContentsModel() -> GtkTreeModel*
 {
 	return this->contentsModel;
 }
 
-bool Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc)
+auto Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc) -> bool
 {
 	XojLinkDest* link = nullptr;
 	gtk_tree_model_get(treeModel, iter, DOCUMENT_LINKS_COLUMN_LINK, &link, -1);
@@ -330,7 +331,7 @@ void Document::updateIndexPageNumbers()
 	}
 }
 
-bool Document::readPdf(Path filename, bool initPages, bool attachToDocument, gpointer data, gsize length)
+auto Document::readPdf(Path filename, bool initPages, bool attachToDocument, gpointer data, gsize length) -> bool
 {
 	GError* popplerError = nullptr;
 
@@ -395,12 +396,12 @@ void Document::setPageSize(PageRef p, double width, double height)
 	p->setSize(width, height);
 }
 
-double Document::getPageWidth(PageRef p)
+auto Document::getPageWidth(PageRef p) -> double
 {
 	return p->getWidth();
 }
 
-double Document::getPageHeight(PageRef p)
+auto Document::getPageHeight(PageRef p) -> double
 {
 	return p->getHeight();
 }
@@ -408,14 +409,14 @@ double Document::getPageHeight(PageRef p)
 /**
  * @return The last error message to show to the user
  */
-string Document::getLastErrorMsg()
+auto Document::getLastErrorMsg() -> string
 {
 	return lastError;
 }
 
 void Document::deletePage(size_t pNr)
 {
-	vector<PageRef>::iterator it = this->pages.begin() + pNr;
+	auto it = this->pages.begin() + pNr;
 	this->pages.erase(it);
 
 	updateIndexPageNumbers();
@@ -435,7 +436,7 @@ void Document::addPage(const PageRef& p)
 	updateIndexPageNumbers();
 }
 
-size_t Document::indexOf(const PageRef& page)
+auto Document::indexOf(const PageRef& page) -> size_t
 {
 	for (size_t i = 0; i < this->pages.size(); i++)
 	{
@@ -449,7 +450,7 @@ size_t Document::indexOf(const PageRef& page)
 	return npos;
 }
 
-PageRef Document::getPage(size_t page)
+auto Document::getPage(size_t page) -> PageRef
 {
 	if (getPageCount() <= page)
 	{
@@ -463,17 +464,17 @@ PageRef Document::getPage(size_t page)
 	return this->pages[page];
 }
 
-XojPdfPageSPtr Document::getPdfPage(size_t page)
+auto Document::getPdfPage(size_t page) -> XojPdfPageSPtr
 {
 	return this->pdfDocument.getPage(page);
 }
 
-XojPdfDocument& Document::getPdfDocument()
+auto Document::getPdfDocument() -> XojPdfDocument&
 {
 	return this->pdfDocument;
 }
 
-Document& Document::operator=(const Document& doc)
+auto Document::operator=(const Document& doc) -> Document&
 {
 	clearDocument();
 
@@ -508,7 +509,7 @@ void Document::setCreateBackupOnSave(bool backup)
 	this->createBackupOnSave = backup;
 }
 
-bool Document::shouldCreateBackupOnSave()
+auto Document::shouldCreateBackupOnSave() -> bool
 {
 	return this->createBackupOnSave;
 }

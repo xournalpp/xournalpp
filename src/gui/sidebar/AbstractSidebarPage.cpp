@@ -16,7 +16,7 @@ void AbstractSidebarPage::selectPageNr(size_t page, size_t pdfPage)
 {
 }
 
-Control* AbstractSidebarPage::getControl()
+auto AbstractSidebarPage::getControl() -> Control*
 {
 	return this->control;
 }

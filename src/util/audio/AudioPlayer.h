@@ -37,7 +37,7 @@ public:
 	Settings* getSettings();
 	void disableAudioPlaybackButtons();
 private:
-	protected:
+protected:
 	Settings* settings = nullptr;
 	Control* control = nullptr;
 

@@ -19,9 +19,7 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler,
 	setPopupMenu(popup);
 }
 
-ToolSelectCombocontrol::~ToolSelectCombocontrol()
-{
-}
+ToolSelectCombocontrol::~ToolSelectCombocontrol() = default;
 
 void ToolSelectCombocontrol::addMenuitem(string text, string icon, ActionType type, ActionGroup group)
 {
@@ -91,7 +89,7 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action)
 	}
 }
 
-GtkToolItem* ToolSelectCombocontrol::newItem()
+auto ToolSelectCombocontrol::newItem() -> GtkToolItem*
 {
 	GtkToolItem* it;
 

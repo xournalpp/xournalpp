@@ -2,9 +2,7 @@
 
 #include "DocumentHandler.h"
 
-DocumentListener::DocumentListener()
-{
-}
+DocumentListener::DocumentListener() = default;
 
 DocumentListener::~DocumentListener()
 {

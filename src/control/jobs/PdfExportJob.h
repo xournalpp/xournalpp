@@ -29,4 +29,4 @@ protected:
 	virtual bool isUriValid(string& uri);
 
 private:
-	};
+};

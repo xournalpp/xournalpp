@@ -29,9 +29,7 @@ MoveUndoAction::MoveUndoAction(Layer* sourceLayer, PageRef sourcePage, vector<El
 	}
 }
 
-MoveUndoAction::~MoveUndoAction()
-{
-}
+MoveUndoAction::~MoveUndoAction() = default;
 
 void MoveUndoAction::move()
 {
@@ -51,7 +49,7 @@ void MoveUndoAction::move()
 	}
 }
 
-bool MoveUndoAction::undo(Control* control)
+auto MoveUndoAction::undo(Control* control) -> bool
 {
 	if (this->sourceLayer != this->targetLayer && this->targetLayer != nullptr)
 	{
@@ -65,7 +63,7 @@ bool MoveUndoAction::undo(Control* control)
 	return true;
 }
 
-bool MoveUndoAction::redo(Control* control)
+auto MoveUndoAction::redo(Control* control) -> bool
 {
 	if (this->sourceLayer != this->targetLayer && this->targetLayer != nullptr)
 	{
@@ -100,7 +98,7 @@ void MoveUndoAction::repaint()
 	}
 }
 
-vector<PageRef> MoveUndoAction::getPages()
+auto MoveUndoAction::getPages() -> vector<PageRef>
 {
 	vector<PageRef> pages;
 	pages.push_back(this->page);
@@ -108,7 +106,7 @@ vector<PageRef> MoveUndoAction::getPages()
 	return pages;
 }
 
-string MoveUndoAction::getText()
+auto MoveUndoAction::getText() -> string
 {
 	return text;
 }

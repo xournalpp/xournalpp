@@ -82,7 +82,7 @@ void ToolbarDragDropHandler::configure()
 	this->customizeDialog->show(GTK_WINDOW(win->getWindow()));
 }
 
-bool ToolbarDragDropHandler::isInDragAndDrop()
+auto ToolbarDragDropHandler::isInDragAndDrop() -> bool
 {
 	if (this->toolbars == nullptr)
 	{

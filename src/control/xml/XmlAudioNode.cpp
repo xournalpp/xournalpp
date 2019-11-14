@@ -6,11 +6,9 @@ XmlAudioNode::XmlAudioNode(const char* tag)
 {
 }
 
-XmlAudioNode::~XmlAudioNode()
-{
-}
+XmlAudioNode::~XmlAudioNode() = default;
 
-string XmlAudioNode::getAudioFilename()
+auto XmlAudioNode::getAudioFilename() -> string
 {
 	return this->audioFilename;
 }

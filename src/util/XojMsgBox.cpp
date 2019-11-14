@@ -25,8 +25,8 @@ void XojMsgBox::showErrorToUser(GtkWindow* win, string msg)
 		win = defaultWindow;
 	}
 
-	GtkWidget* dialog = gtk_message_dialog_new_with_markup(win, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-											   nullptr);
+	GtkWidget* dialog =
+	        gtk_message_dialog_new_with_markup(win, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, nullptr);
 	gtk_message_dialog_set_markup( GTK_MESSAGE_DIALOG (dialog), msg.c_str());
 	if (win != nullptr)
 	{
@@ -36,7 +36,7 @@ void XojMsgBox::showErrorToUser(GtkWindow* win, string msg)
 	gtk_widget_destroy(dialog);
 }
 
-int XojMsgBox::showPluginMessage(string pluginName, string msg, map<int, string> button, bool error)
+auto XojMsgBox::showPluginMessage(string pluginName, string msg, map<int, string> button, bool error) -> int
 {
 	string header = string("Xournal++ Plugin «") + pluginName + "»";
 
@@ -45,10 +45,10 @@ int XojMsgBox::showPluginMessage(string pluginName, string msg, map<int, string>
 		header = "<b>Error in </b>" + header;
 	}
 
-	GtkWidget* dialog = gtk_message_dialog_new_with_markup(defaultWindow, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE,
-											   nullptr);
+	GtkWidget* dialog = gtk_message_dialog_new_with_markup(defaultWindow, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
+	                                                       GTK_BUTTONS_NONE, nullptr);
 	gtk_message_dialog_set_markup( GTK_MESSAGE_DIALOG (dialog), header.c_str());
-	
+
 	if (defaultWindow != nullptr)
 	{
 		gtk_window_set_transient_for(GTK_WINDOW(dialog), defaultWindow);
@@ -70,7 +70,7 @@ int XojMsgBox::showPluginMessage(string pluginName, string msg, map<int, string>
 	return res;
 }
 
-int XojMsgBox::replaceFileQuestion(GtkWindow* win, string msg)
+auto XojMsgBox::replaceFileQuestion(GtkWindow* win, string msg) -> int
 {
 	GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
 											   "%s", msg.c_str());

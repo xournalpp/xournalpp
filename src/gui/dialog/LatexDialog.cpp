@@ -17,16 +17,14 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath)
 	gtk_style_context_add_provider(gtk_widget_get_style_context(this->texTempRender), GTK_STYLE_PROVIDER(this->cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
-LatexDialog::~LatexDialog()
-{
-}
+LatexDialog::~LatexDialog() = default;
 
 void LatexDialog::setFinalTex(string texString)
 {
 	this->finalLatex = texString;
 }
 
-string LatexDialog::getFinalTex()
+auto LatexDialog::getFinalTex() -> string
 {
 	return this->finalLatex;
 }
@@ -70,12 +68,13 @@ void LatexDialog::setTempRender(PopplerDocument* pdf)
 	gtk_image_set_from_surface(GTK_IMAGE(this->texTempRender), this->scaledRender);
 }
 
-GtkTextBuffer* LatexDialog::getTextBuffer()
+auto LatexDialog::getTextBuffer() -> GtkTextBuffer*
 {
 	return this->textBuffer;
 }
 
-string LatexDialog::getBufferContents() {
+auto LatexDialog::getBufferContents() -> string
+{
 	GtkTextIter start, end;
 	gtk_text_buffer_get_bounds(this->textBuffer, &start, &end);
 	gchar* chars = gtk_text_buffer_get_text(this->textBuffer, &start, &end, false);

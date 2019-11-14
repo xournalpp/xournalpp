@@ -1,12 +1,8 @@
 #include "BinObjectEncoding.h"
 
-BinObjectEncoding::BinObjectEncoding()
-{
-}
+BinObjectEncoding::BinObjectEncoding() = default;
 
-BinObjectEncoding::~BinObjectEncoding()
-{
-}
+BinObjectEncoding::~BinObjectEncoding() = default;
 
 void BinObjectEncoding::addData(const void* data, int len)
 {

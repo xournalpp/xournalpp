@@ -18,9 +18,9 @@ class ToolButton : public AbstractToolItem
 {
 public:
 	ToolButton(ActionHandler* handler, string id, ActionType type, string iconName, string description,
-			   GtkWidget* menuitem = nullptr);
-	ToolButton(ActionHandler* handler, string id, ActionType type, ActionGroup group,
-			   bool toolToggleOnlyEnable, string iconName, string description, GtkWidget* menuitem = nullptr);
+	           GtkWidget* menuitem = nullptr);
+	ToolButton(ActionHandler* handler, string id, ActionType type, ActionGroup group, bool toolToggleOnlyEnable,
+	           string iconName, string description, GtkWidget* menuitem = nullptr);
 
 	virtual ~ToolButton();
 

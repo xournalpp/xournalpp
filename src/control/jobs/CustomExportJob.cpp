@@ -50,7 +50,7 @@ void CustomExportJob::addFilterToDialog()
 	}
 }
 
-bool CustomExportJob::isUriValid(string& uri)
+auto CustomExportJob::isUriValid(string& uri) -> bool
 {
 	if (!BaseExportJob::isUriValid(uri))
 	{
@@ -67,7 +67,7 @@ bool CustomExportJob::isUriValid(string& uri)
 	return checkOverwriteBackgroundPDF(filename);
 }
 
-bool CustomExportJob::showFilechooser()
+auto CustomExportJob::showFilechooser() -> bool
 {
 	if (!BaseExportJob::showFilechooser())
 	{
@@ -82,7 +82,7 @@ bool CustomExportJob::showFilechooser()
 
 	Document* doc = control->getDocument();
 	doc->lock();
-	ExportDialog* dlg = new ExportDialog(control->getGladeSearchPath());
+	auto* dlg = new ExportDialog(control->getGladeSearchPath());
 	if (filename.hasExtension(".pdf"))
 	{
 		dlg->removeDpiSelection();

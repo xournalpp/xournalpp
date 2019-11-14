@@ -5,9 +5,7 @@ SizeTAttribute::SizeTAttribute(const char* name, size_t value) : XMLAttribute(na
 	this->value = value;
 }
 
-SizeTAttribute::~SizeTAttribute()
-{
-}
+SizeTAttribute::~SizeTAttribute() = default;
 
 void SizeTAttribute::writeOut(OutputStream* out)
 {

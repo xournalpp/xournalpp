@@ -7,18 +7,16 @@ UndoAction::UndoAction(const char* className)
 {
 }
 
-UndoAction::~UndoAction()
-{
-}
+UndoAction::~UndoAction() = default;
 
-vector<PageRef> UndoAction::getPages()
+auto UndoAction::getPages() -> vector<PageRef>
 {
 	vector<PageRef> pages;
 	pages.push_back(this->page);
 	return pages;
 }
 
-const char* UndoAction::getClassName() const
+auto UndoAction::getClassName() const -> const char*
 {
 	return this->className;
 }

@@ -39,7 +39,7 @@ ToolbarData::~ToolbarData()
 	contents.clear();
 }
 
-string ToolbarData::getName()
+auto ToolbarData::getName() -> string
 {
 	return this->name;
 }
@@ -49,7 +49,7 @@ void ToolbarData::setName(string name)
 	this->name = name;
 }
 
-string ToolbarData::getId()
+auto ToolbarData::getId() -> string
 {
 	return this->id;
 }
@@ -59,7 +59,7 @@ void ToolbarData::setId(string id)
 	this->id = id;
 }
 
-bool ToolbarData::isPredefined()
+auto ToolbarData::isPredefined() -> bool
 {
 	return this->predefined;
 }
@@ -87,7 +87,7 @@ void ToolbarData::load(GKeyFile* config, const char* group)
 			continue;
 		}
 
-		ToolbarEntry* e = new ToolbarEntry();
+		auto* e = new ToolbarEntry();
 		gsize keyLen = 0;
 		e->setName(keys[i]);
 		gchar** list = g_key_file_get_string_list(config, group, keys[i], &keyLen, nullptr);
@@ -128,7 +128,7 @@ void ToolbarData::saveToKeyFile(GKeyFile* config)
 	g_key_file_set_string(config, group.c_str(), "name", this->name.c_str());
 }
 
-int ToolbarData::insertItem(string toolbar, string item, int position)
+auto ToolbarData::insertItem(string toolbar, string item, int position) -> int
 {
 	g_message("%s", FC(FORMAT_STR("ToolbarData::insertItem({1}, {2}, {3});") % toolbar % item % position));
 
@@ -147,7 +147,7 @@ int ToolbarData::insertItem(string toolbar, string item, int position)
 		}
 	}
 
-	ToolbarEntry* newEntry = new ToolbarEntry();
+	auto* newEntry = new ToolbarEntry();
 	newEntry->setName(toolbar);
 	int id = newEntry->addItem(item);
 	contents.push_back(newEntry);
@@ -155,7 +155,7 @@ int ToolbarData::insertItem(string toolbar, string item, int position)
 	return id;
 }
 
-bool ToolbarData::removeItemByID(string toolbar, int id)
+auto ToolbarData::removeItemByID(string toolbar, int id) -> bool
 {
 	g_return_val_if_fail(isPredefined() == false, false);
 

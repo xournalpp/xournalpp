@@ -11,11 +11,11 @@ using std::string;
 
 
 // ** This needs to be copied to the header
-ActionType ActionType_fromString(string value);
-string ActionType_toString(ActionType value);
+auto ActionType_fromString(string value) -> ActionType;
+auto ActionType_toString(ActionType value) -> string;
 
 
-ActionType ActionType_fromString(string value)
+auto ActionType_fromString(string value) -> ActionType
 {
 	if (value == "ACTION_NONE")
 	{
@@ -727,8 +727,7 @@ ActionType ActionType_fromString(string value)
 }
 
 
-
-string ActionType_toString(ActionType value)
+auto ActionType_toString(ActionType value) -> string
 {
 	if (value == ACTION_NONE)
 	{

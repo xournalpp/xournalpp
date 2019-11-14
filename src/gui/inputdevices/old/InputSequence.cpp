@@ -47,7 +47,8 @@ void InputSequence::setDevice(GdkDevice* device)
  */
 void InputSequence::clearAxes()
 {
-	g_clear_pointer(&axes, g_free);
+	//Todo(fabian): find a better solution for the following
+	g_clear_pointer(&axes, g_free);  // NOLINT
 }
 
 /**
@@ -110,7 +111,7 @@ void InputSequence::setState(GdkModifierType state)
  *
  * @return page or nullptr if none
  */
-XojPageView* InputSequence::getPageAtCurrentPosition()
+auto InputSequence::getPageAtCurrentPosition() -> XojPageView*
 {
 	GtkXournal* xournal = inputHandler->getXournal();
 
@@ -157,7 +158,7 @@ void InputSequence::handleScrollEvent()
 /**
  * Mouse / Pen / Touch move
  */
-bool InputSequence::actionMoved(guint32 time)
+auto InputSequence::actionMoved(guint32 time) -> bool
 {
 	GtkXournal* xournal = inputHandler->getXournal();
 	ToolHandler* h = inputHandler->getToolHandler();
@@ -223,7 +224,7 @@ bool InputSequence::actionMoved(guint32 time)
 /**
  * Mouse / Pen down / touch start
  */
-bool InputSequence::actionStart(guint32 time)
+auto InputSequence::actionStart(guint32 time) -> bool
 {
 	this->eventTime = time;
 
@@ -319,7 +320,7 @@ bool InputSequence::actionStart(guint32 time)
  *
  * @return true if input is stopped now
  */
-bool InputSequence::checkStillRunning()
+auto InputSequence::checkStillRunning() -> bool
 {
 	if (!inputRunning)
 	{
@@ -327,7 +328,7 @@ bool InputSequence::checkStillRunning()
 		return true;
 	}
 
-	GdkModifierType mask = (GdkModifierType) 0;
+	auto mask = (GdkModifierType) 0;
 	GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(inputHandler->getXournal()));
 	gdk_device_get_state(device, window, nullptr, &mask);
 
@@ -404,7 +405,7 @@ void InputSequence::actionEnd(guint32 time)
 /**
  * Get input data relative to current input page
  */
-PositionInputData InputSequence::getInputDataRelativeToCurrentPage(XojPageView* page)
+auto InputSequence::getInputDataRelativeToCurrentPage(XojPageView* page) -> PositionInputData
 {
 	GtkXournal* xournal = inputHandler->getXournal();
 
@@ -453,7 +454,7 @@ void InputSequence::stopInput()
  * Change the tool according to the device and button
  * @return true to ignore event
  */
-bool InputSequence::changeTool()
+auto InputSequence::changeTool() -> bool
 {
 	Settings* settings = inputHandler->getSettings();
 	ButtonConfig* cfgTouch = settings->getTouchButtonConfig();

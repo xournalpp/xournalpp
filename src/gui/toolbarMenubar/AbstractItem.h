@@ -54,7 +54,7 @@ protected:
 								 GtkToolButton* toolbutton, bool selected);
 
 private:
-	protected:
+protected:
 	ActionGroup group = GROUP_NOGROUP;
 	ActionType action = ACTION_NONE;
 

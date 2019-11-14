@@ -41,7 +41,7 @@ static void link_dest_class_init(XojLinkDestClass* linkClass)
 	g_object_class->finalize = link_dest_finalize;
 }
 
-XojLinkDest* link_dest_new()
+auto link_dest_new() -> XojLinkDest*
 {
 	return LINK_DEST(g_object_new(TYPE_LINK_DEST, nullptr));
 }
@@ -58,11 +58,9 @@ LinkDestination::LinkDestination()
 	this->expand = false;
 }
 
-LinkDestination::~LinkDestination()
-{
-}
+LinkDestination::~LinkDestination() = default;
 
-size_t LinkDestination::getPdfPage()
+auto LinkDestination::getPdfPage() -> size_t
 {
 	return this->page;
 }
@@ -77,37 +75,37 @@ void LinkDestination::setExpand(bool expand)
 	this->expand = expand;
 }
 
-bool LinkDestination::getExpand()
+auto LinkDestination::getExpand() -> bool
 {
 	return this->expand;
 }
 
-bool LinkDestination::shouldChangeLeft()
+auto LinkDestination::shouldChangeLeft() -> bool
 {
 	return changeLeft;
 }
 
-bool LinkDestination::shouldChangeZoom()
+auto LinkDestination::shouldChangeZoom() -> bool
 {
 	return changeZoom;
 }
 
-bool LinkDestination::shouldChangeTop()
+auto LinkDestination::shouldChangeTop() -> bool
 {
 	return changeTop;
 }
 
-double LinkDestination::getZoom()
+auto LinkDestination::getZoom() -> double
 {
 	return zoom;
 }
 
-double LinkDestination::getLeft()
+auto LinkDestination::getLeft() -> double
 {
 	return left;
 }
 
-double LinkDestination::getTop()
+auto LinkDestination::getTop() -> double
 {
 	return top;
 }
@@ -135,7 +133,7 @@ void LinkDestination::setName(string name)
 	this->name = name;
 }
 
-string LinkDestination::getName()
+auto LinkDestination::getName() -> string
 {
 	return this->name;
 }

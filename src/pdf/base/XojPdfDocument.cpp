@@ -20,13 +20,13 @@ XojPdfDocument::~XojPdfDocument()
 	doc = nullptr;
 }
 
-XojPdfDocument& XojPdfDocument::operator=(const XojPdfDocument& doc)
+auto XojPdfDocument::operator=(const XojPdfDocument& doc) -> XojPdfDocument&
 {
 	this->doc->assign(doc.doc);
 	return *this;
 }
 
-bool XojPdfDocument::operator==(XojPdfDocument& doc)
+auto XojPdfDocument::operator==(XojPdfDocument& doc) -> bool
 {
 	return this->doc->equals(doc.doc);
 }
@@ -36,47 +36,47 @@ void XojPdfDocument::assign(XojPdfDocumentInterface* doc)
 	this->doc->assign(doc);
 }
 
-bool XojPdfDocument::equals(XojPdfDocumentInterface* doc)
+auto XojPdfDocument::equals(XojPdfDocumentInterface* doc) -> bool
 {
 	return this->doc->equals(doc);
 }
 
-bool XojPdfDocument::save(Path filename, GError** error)
+auto XojPdfDocument::save(Path filename, GError** error) -> bool
 {
 	return doc->save(filename, error);
 }
 
-bool XojPdfDocument::load(Path filename, string password, GError** error)
+auto XojPdfDocument::load(Path filename, string password, GError** error) -> bool
 {
 	return doc->load(filename, password, error);
 }
 
-bool XojPdfDocument::load(gpointer data, gsize length, string password, GError** error)
+auto XojPdfDocument::load(gpointer data, gsize length, string password, GError** error) -> bool
 {
 	return doc->load(data, length, password, error);
 }
 
-bool XojPdfDocument::isLoaded()
+auto XojPdfDocument::isLoaded() -> bool
 {
 	return doc->isLoaded();
 }
 
-XojPdfPageSPtr XojPdfDocument::getPage(size_t page)
+auto XojPdfDocument::getPage(size_t page) -> XojPdfPageSPtr
 {
 	return doc->getPage(page);
 }
 
-size_t XojPdfDocument::getPageCount()
+auto XojPdfDocument::getPageCount() -> size_t
 {
 	return doc->getPageCount();
 }
 
-XojPdfDocumentInterface* XojPdfDocument::getDocumentInterface()
+auto XojPdfDocument::getDocumentInterface() -> XojPdfDocumentInterface*
 {
 	return doc;
 }
 
-XojPdfBookmarkIterator* XojPdfDocument::getContentsIter()
+auto XojPdfDocument::getContentsIter() -> XojPdfBookmarkIterator*
 {
 	return doc->getContentsIter();
 }

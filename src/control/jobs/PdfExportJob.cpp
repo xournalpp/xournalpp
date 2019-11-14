@@ -10,16 +10,14 @@ PdfExportJob::PdfExportJob(Control* control)
 {
 }
 
-PdfExportJob::~PdfExportJob()
-{
-}
+PdfExportJob::~PdfExportJob() = default;
 
 void PdfExportJob::addFilterToDialog()
 {
 	addFileFilterToDialog(_("PDF files"), "*.pdf");
 }
 
-bool PdfExportJob::isUriValid(string& uri)
+auto PdfExportJob::isUriValid(string& uri) -> bool
 {
 	if (!BaseExportJob::isUriValid(uri))
 	{

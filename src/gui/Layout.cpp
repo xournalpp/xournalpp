@@ -52,9 +52,7 @@ void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout)
 	layout->scrollHandling->scrollChanged();
 }
 
-Layout::~Layout()
-{
-}
+Layout::~Layout() = default;
 
 void Layout::checkScroll(GtkAdjustment* adjustment, double& lastScroll)
 {
@@ -107,7 +105,7 @@ void Layout::updateVisibility()
 	
 }
 
-Rectangle Layout::getVisibleRect()
+auto Layout::getVisibleRect() -> Rectangle
 {
 	return Rectangle(gtk_adjustment_get_value(scrollHandling->getHorizontal()),
 	                 gtk_adjustment_get_value(scrollHandling->getVertical()),
@@ -119,7 +117,7 @@ Rectangle Layout::getVisibleRect()
 /**
  * adds the addend to base if the predicate is true
  */
-inline size_t sumIf(size_t base, size_t addend, bool predicate)
+inline auto sumIf(size_t base, size_t addend, bool predicate) -> size_t
 {
 	if (predicate)
 	{
@@ -311,7 +309,7 @@ void Layout::ensureRectIsVisible(int x, int y, int width, int height)
 }
 
 
-XojPageView* Layout::getViewAt(int x, int y)
+auto Layout::getViewAt(int x, int y) -> XojPageView*
 {
 	//Binary Search:
 	auto rit = std::lower_bound(this->heightRows.begin(), this->heightRows.end(), y);
@@ -331,17 +329,17 @@ XojPageView* Layout::getViewAt(int x, int y)
 
 // Todo replace with boost::optional<size_t> Layout::getIndexAtGridMap(size_t row, size_t col)
 //                  or std::optional<size_t> Layout::getIndexAtGridMap(size_t row, size_t col)
-LayoutMapper::optional_size_t Layout::getIndexAtGridMap(size_t row, size_t col)
+auto Layout::getIndexAtGridMap(size_t row, size_t col) -> LayoutMapper::optional_size_t
 {
 	return this->mapper.at({col, row});  //watch out.. x,y --> c,r
 }
 
-int Layout::getMinimalHeight()
+auto Layout::getMinimalHeight() -> int
 {
 	return this->minHeight;
 }
 
-int Layout::getMinimalWidth()
+auto Layout::getMinimalWidth() -> int
 {
 	return this->minWidth;
 }

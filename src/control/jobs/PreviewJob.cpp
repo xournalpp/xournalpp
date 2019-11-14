@@ -19,12 +19,12 @@ PreviewJob::~PreviewJob()
 	this->sidebarPreview = nullptr;
 }
 
-void* PreviewJob::getSource()
+auto PreviewJob::getSource() -> void*
 {
 	return this->sidebarPreview;
 }
 
-JobType PreviewJob::getType()
+auto PreviewJob::getType() -> JobType
 {
 	return JOB_TYPE_PREVIEW;
 }

@@ -11,11 +11,11 @@ using std::string;
 
 
 // ** This needs to be copied to the header
-ActionGroup ActionGroup_fromString(string value);
-string ActionGroup_toString(ActionGroup value);
+auto ActionGroup_fromString(string value) -> ActionGroup;
+auto ActionGroup_toString(ActionGroup value) -> string;
 
 
-ActionGroup ActionGroup_fromString(string value)
+auto ActionGroup_fromString(string value) -> ActionGroup
 {
 	if (value == "GROUP_NOGROUP")
 	{
@@ -147,8 +147,7 @@ ActionGroup ActionGroup_fromString(string value)
 }
 
 
-
-string ActionGroup_toString(ActionGroup value)
+auto ActionGroup_toString(ActionGroup value) -> string
 {
 	if (value == GROUP_NOGROUP)
 	{

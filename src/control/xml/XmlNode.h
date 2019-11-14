@@ -54,7 +54,7 @@ protected:
 	void writeAttributes(OutputStream* out);
 
 public:
-	protected:
+protected:
 	GList* children;
 	GList* attributes;
 

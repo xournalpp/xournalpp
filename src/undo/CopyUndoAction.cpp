@@ -18,7 +18,7 @@ CopyUndoAction::~CopyUndoAction()
 	this->page = nullptr;
 }
 
-bool CopyUndoAction::undo(Control* control)
+auto CopyUndoAction::undo(Control* control) -> bool
 {
 	Document* doc = control->getDocument();
 
@@ -40,7 +40,7 @@ bool CopyUndoAction::undo(Control* control)
 	return true;
 }
 
-bool CopyUndoAction::redo(Control* control)
+auto CopyUndoAction::redo(Control* control) -> bool
 {
 	Document* doc = control->getDocument();
 
@@ -64,7 +64,7 @@ bool CopyUndoAction::redo(Control* control)
 	return true;
 }
 
-string CopyUndoAction::getText()
+auto CopyUndoAction::getText() -> string
 {
 	return _("Copy page");
 }

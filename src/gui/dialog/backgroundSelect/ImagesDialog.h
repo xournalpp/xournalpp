@@ -43,4 +43,4 @@ private:
 	static void filechooserButtonCallback(GtkButton* button, ImagesDialog* dlg);
 
 private:
-	};
+};

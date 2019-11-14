@@ -1,15 +1,15 @@
 #include "TextAttribute.h"
 #include <StringUtils.h>
 
+#include <utility>
+
 TextAttribute::TextAttribute(string name, string value)
- : XMLAttribute(name),
-   value(value)
+ : XMLAttribute(name)
+ , value(std::move(value))
 {
 }
 
-TextAttribute::~TextAttribute()
-{
-}
+TextAttribute::~TextAttribute() = default;
 
 void TextAttribute::writeOut(OutputStream* out)
 {

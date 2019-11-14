@@ -5,10 +5,10 @@
 #include <Util.h>
 
 #include <gtk/gtk.h>
-#include <stdio.h>
+#include <cstdio>
 #include <config-debug.h>
 
-ToolListener::~ToolListener() { }
+ToolListener::~ToolListener() = default;
 
 ToolHandler::ToolHandler(ToolListener* listener, ActionHandler* actionHandler, Settings* settings)
 {
@@ -20,7 +20,7 @@ ToolHandler::ToolHandler(ToolListener* listener, ActionHandler* actionHandler, S
 
 void ToolHandler::initTools()
 {
-	double* thickness = new double[5];
+	auto* thickness = new double[5];
 	// pen thicknesses = 0.15, 0.3, 0.5, 0.8, 2 mm
 	thickness[TOOL_SIZE_VERY_FINE] = 0.42;
 	thickness[TOOL_SIZE_FINE] = 0.85;
@@ -130,7 +130,7 @@ void ToolHandler::eraserTypeChanged()
 	}
 }
 
-EraserType ToolHandler::getEraserType()
+auto ToolHandler::getEraserType() -> EraserType
 {
 	return this->eraserType;
 }
@@ -158,37 +158,37 @@ void ToolHandler::fireToolChanged()
 	}
 }
 
-Tool& ToolHandler::getTool(ToolType type)
+auto ToolHandler::getTool(ToolType type) -> Tool&
 {
 	return *(this->tools[type - TOOL_PEN]);
 }
 
-ToolType ToolHandler::getToolType()
+auto ToolHandler::getToolType() -> ToolType
 {
 	return this->current->type;
 }
 
-bool ToolHandler::hasCapability(ToolCapabilities cap)
+auto ToolHandler::hasCapability(ToolCapabilities cap) -> bool
 {
 	return (current->capabilities & cap) != 0;
 }
 
-ToolSize ToolHandler::getSize()
+auto ToolHandler::getSize() -> ToolSize
 {
 	return this->current->getSize();
 }
 
-ToolSize ToolHandler::getPenSize()
+auto ToolHandler::getPenSize() -> ToolSize
 {
 	return tools[TOOL_PEN - TOOL_PEN]->getSize();
 }
 
-ToolSize ToolHandler::getEraserSize()
+auto ToolHandler::getEraserSize() -> ToolSize
 {
 	return tools[TOOL_ERASER - TOOL_PEN]->getSize();
 }
 
-ToolSize ToolHandler::getHilighterSize()
+auto ToolHandler::getHilighterSize() -> ToolSize
 {
 	return tools[TOOL_HILIGHTER - TOOL_PEN]->getSize();
 }
@@ -233,7 +233,7 @@ void ToolHandler::setPenFillEnabled(bool fill, bool fireEvent)
 	}
 }
 
-bool ToolHandler::getPenFillEnabled()
+auto ToolHandler::getPenFillEnabled() -> bool
 {
 	return this->tools[TOOL_PEN - TOOL_PEN]->getFill();
 }
@@ -243,7 +243,7 @@ void ToolHandler::setPenFill(int alpha)
 	this->tools[TOOL_PEN - TOOL_PEN]->setFillAlpha(alpha);
 }
 
-int ToolHandler::getPenFill()
+auto ToolHandler::getPenFill() -> int
 {
 	return this->tools[TOOL_PEN - TOOL_PEN]->getFillAlpha();
 }
@@ -258,7 +258,7 @@ void ToolHandler::setHilighterFillEnabled(bool fill, bool fireEvent)
 	}
 }
 
-bool ToolHandler::getHilighterFillEnabled()
+auto ToolHandler::getHilighterFillEnabled() -> bool
 {
 	return this->tools[TOOL_HILIGHTER - TOOL_PEN]->getFill();
 }
@@ -268,12 +268,12 @@ void ToolHandler::setHilighterFill(int alpha)
 	this->tools[TOOL_HILIGHTER - TOOL_PEN]->setFillAlpha(alpha);
 }
 
-int ToolHandler::getHilighterFill()
+auto ToolHandler::getHilighterFill() -> int
 {
 	return this->tools[TOOL_HILIGHTER - TOOL_PEN]->getFillAlpha();
 }
 
-double ToolHandler::getThickness()
+auto ToolHandler::getThickness() -> double
 {
 	if (this->current->thickness)
 	{
@@ -326,7 +326,7 @@ void ToolHandler::setColor(int color, bool userSelection)
 	}
 }
 
-int ToolHandler::getColor()
+auto ToolHandler::getColor() -> int
 {
 	return current->getColor();
 }
@@ -334,7 +334,7 @@ int ToolHandler::getColor()
 /**
  * @return -1 if fill is disabled, else the fill alpha value
  */
-int ToolHandler::getFill()
+auto ToolHandler::getFill() -> int
 {
 	if (!current->getFill())
 	{
@@ -344,12 +344,12 @@ int ToolHandler::getFill()
 	return current->getFillAlpha();
 }
 
-const LineStyle& ToolHandler::getLineStyle()
+auto ToolHandler::getLineStyle() -> const LineStyle&
 {
 	return current->getLineStyle();
 }
 
-DrawingType ToolHandler::getDrawingType()
+auto ToolHandler::getDrawingType() -> DrawingType
 {
 	return current->getDrawingType();
 }
@@ -364,7 +364,7 @@ void ToolHandler::setColorFound()
 	this->colorFound = true;
 }
 
-std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& ToolHandler::getTools() const
+auto ToolHandler::getTools() const -> std::array<std::unique_ptr<Tool>, TOOL_COUNT> const&
 {
 	return tools;
 }
@@ -547,7 +547,7 @@ void ToolHandler::restoreLastConfig()
 	this->fireToolChanged();
 }
 
-const double* ToolHandler::getToolThickness(ToolType type)
+auto ToolHandler::getToolThickness(ToolType type) -> const double*
 {
 	return this->tools[type - TOOL_PEN]->thickness;
 }
@@ -581,7 +581,7 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
 	}
 }
 
-bool ToolHandler::isSinglePageTool()
+auto ToolHandler::isSinglePageTool() -> bool
 {
 	ToolType toolType = this->getToolType();
 	DrawingType drawingType = this->getDrawingType();

@@ -2,7 +2,7 @@
 
 #include "model/Element.h"
 
-Redrawable::~Redrawable() { }
+Redrawable::~Redrawable() = default;
 
 void Redrawable::repaintRange(Range& r)
 {

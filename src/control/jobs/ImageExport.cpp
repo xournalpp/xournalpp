@@ -8,19 +8,20 @@
 #include <cairo-svg.h>
 #include <i18n.h>
 
+#include <utility>
 
-ImageExport::ImageExport(Document* doc, Path filename, ExportGraphicsFormat format, bool hideBackground, PageRangeVector& exportRange)
- : doc(doc),
-   filename(filename),
-   format(format),
-   hideBackground(hideBackground),
-   exportRange(exportRange)
+
+ImageExport::ImageExport(
+        Document* doc, Path filename, ExportGraphicsFormat format, bool hideBackground, PageRangeVector& exportRange)
+ : doc(doc)
+ , filename(std::move(filename))
+ , format(format)
+ , hideBackground(hideBackground)
+ , exportRange(exportRange)
 {
 }
 
-ImageExport::~ImageExport()
-{
-}
+ImageExport::~ImageExport() = default;
 
 /**
  * PNG dpi
@@ -33,7 +34,7 @@ void ImageExport::setPngDpi(int dpi)
 /**
  * @return the last error message to show to the user
  */
-string ImageExport::getLastErrorMsg()
+auto ImageExport::getLastErrorMsg() -> string
 {
 	return lastError;
 }
@@ -68,7 +69,7 @@ void ImageExport::createSurface(double width, double height, int id)
 /**
  * Free / store the surface
  */
-bool ImageExport::freeSurface(int id)
+auto ImageExport::freeSurface(int id) -> bool
 {
 	cairo_destroy(this->cr);
 
@@ -92,7 +93,7 @@ bool ImageExport::freeSurface(int id)
 /**
  * Get a filename with a number, e.g. .../export-1.png, if the no is -1, return .../export.png
  */
-string ImageExport::getFilenameWithNumber(int no)
+auto ImageExport::getFilenameWithNumber(int no) -> string
 {
 	if (no == -1)
 	{

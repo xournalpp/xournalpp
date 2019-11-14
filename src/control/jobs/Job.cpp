@@ -7,9 +7,7 @@ Job::Job()
 	g_mutex_init(&this->refMutex);
 }
 
-Job::~Job()
-{
-}
+Job::~Job() = default;
 
 void Job::unref()
 {
@@ -48,12 +46,12 @@ void Job::execute()
 	this->run();
 }
 
-void* Job::getSource()
+auto Job::getSource() -> void*
 {
 	return nullptr;
 }
 
-bool Job::callAfterCallback(Job* job)
+auto Job::callAfterCallback(Job* job) -> bool
 {
 	job->afterRun();
 

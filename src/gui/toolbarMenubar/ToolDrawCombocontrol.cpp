@@ -6,10 +6,14 @@
 #include <config.h>
 #include <i18n.h>
 
+#include <utility>
+
 class ToolDrawType {
 public:
 	ToolDrawType(string name, string icon, ActionType type)
-	 : name(name), icon(icon), type(type)
+	 : name(std::move(name))
+	 , icon(std::move(icon))
+	 , type(type)
 	{
 	}
 
@@ -95,7 +99,7 @@ void ToolDrawCombocontrol::selected(ActionGroup group, ActionType action)
 	}
 }
 
-GtkToolItem* ToolDrawCombocontrol::newItem()
+auto ToolDrawCombocontrol::newItem() -> GtkToolItem*
 {
 	labelWidget = gtk_label_new(_("Draw Rectangle"));
 	iconWidget = gtk_image_new_from_icon_name(drawTypes[0]->icon.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);

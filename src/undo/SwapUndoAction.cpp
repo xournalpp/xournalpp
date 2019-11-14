@@ -14,11 +14,9 @@ SwapUndoAction::SwapUndoAction(size_t pageNr, bool moveUp, PageRef swappedPage, 
 	this->otherPage = otherPage;
 }
 
-SwapUndoAction::~SwapUndoAction()
-{
-}
+SwapUndoAction::~SwapUndoAction() = default;
 
-bool SwapUndoAction::undo(Control* control)
+auto SwapUndoAction::undo(Control* control) -> bool
 {
 	swap(control);
 	this->undone = true;
@@ -26,7 +24,7 @@ bool SwapUndoAction::undo(Control* control)
 	return true;
 }
 
-bool SwapUndoAction::redo(Control* control)
+auto SwapUndoAction::redo(Control* control) -> bool
 {
 	swap(control);
 	this->undone = false;
@@ -60,7 +58,7 @@ void SwapUndoAction::swap(Control* control)
 	doc->lock();
 }
 
-vector<PageRef> SwapUndoAction::getPages()
+auto SwapUndoAction::getPages() -> vector<PageRef>
 {
 	vector<PageRef> pages;
 	pages.push_back(this->swappedPage);
@@ -68,7 +66,7 @@ vector<PageRef> SwapUndoAction::getPages()
 	return pages;
 }
 
-string SwapUndoAction::getText()
+auto SwapUndoAction::getText() -> string
 {
 	return moveUp ? _("Move page upwards") : _("Move page downwards");
 }

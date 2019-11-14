@@ -15,9 +15,7 @@ ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Sett
 	g_signal_connect(get("btFilechooser"), "clicked", G_CALLBACK(filechooserButtonCallback), this);
 }
 
-ImagesDialog::~ImagesDialog()
-{
-}
+ImagesDialog::~ImagesDialog() = default;
 
 void ImagesDialog::loadImagesFromPages()
 {
@@ -41,17 +39,17 @@ void ImagesDialog::loadImagesFromPages()
 			continue;
 		}
 
-		ImageElementView* iv = new ImageElementView(this->elements.size(), this);
+		auto* iv = new ImageElementView(this->elements.size(), this);
 		iv->backgroundImage = p->getBackgroundImage();
 		this->elements.push_back(iv);
 	}
 }
 
-bool ImagesDialog::isImageAlreadyInTheList(BackgroundImage& image)
+auto ImagesDialog::isImageAlreadyInTheList(BackgroundImage& image) -> bool
 {
 	for (BaseElementView* v : this->elements)
 	{
-		ImageElementView* iv = (ImageElementView*)v;
+		auto* iv = (ImageElementView*) v;
 		if (iv->backgroundImage == image)
 		{
 			return true;
@@ -74,12 +72,12 @@ void ImagesDialog::filechooserButtonCallback(GtkButton* button, ImagesDialog* dl
 	gtk_widget_hide(dlg->window);
 }
 
-bool ImagesDialog::shouldShowFilechooser()
+auto ImagesDialog::shouldShowFilechooser() -> bool
 {
 	return selected == -2 && confirmed;
 }
 
-BackgroundImage ImagesDialog::getSelectedImage()
+auto ImagesDialog::getSelectedImage() -> BackgroundImage
 {
 	if (confirmed && selected >= 0 && selected < (int)elements.size())
 	{

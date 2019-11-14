@@ -76,9 +76,7 @@ void BaseStrokeHandler::snapToGrid(double& x, double& y)
 	}
 }
 
-BaseStrokeHandler::~BaseStrokeHandler()
-{
-}
+BaseStrokeHandler::~BaseStrokeHandler() = default;
 
 void BaseStrokeHandler::draw(cairo_t* cr)
 {
@@ -89,7 +87,7 @@ void BaseStrokeHandler::draw(cairo_t* cr)
 	view.drawStroke(cr, stroke, 0);
 }
 
-bool BaseStrokeHandler::onKeyEvent(GdkEventKey* event) 
+auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool
 {
 	if(event->is_modifier)
 	{
@@ -131,7 +129,7 @@ bool BaseStrokeHandler::onKeyEvent(GdkEventKey* event)
 	return false;
 }
 
-bool BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
+auto BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool
 {
 	if (!stroke)
 	{
@@ -172,7 +170,7 @@ bool BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
 void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 {
 	xournal->getCursor()->activateDrawDirCursor(false);	//in case released within  fixate_Dir_Mods_Dist
-	
+
 	if (stroke == nullptr)
 	{
 		return;

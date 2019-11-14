@@ -23,4 +23,4 @@ public:
 	virtual void addData(const void* data, int len);
 
 private:
-	};
+};

@@ -32,7 +32,7 @@ public:
 	virtual void initWidget() = 0;
 
 private:
-	protected:
+protected:
 	/**
 	 * Xournal Widget
 	 */

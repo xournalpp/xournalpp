@@ -46,7 +46,7 @@ private:
 
 private:
 	GMutex partLock;
-	PartList * parts = nullptr;
+	PartList* parts = nullptr;
 
 	Range* repaintRect = nullptr;
 

@@ -31,8 +31,8 @@ struct BackgroundImage::Content
 
 	Content(const Content&) = delete;
 	Content(Content&&) = default;
-	Content& operator=(const Content&) = delete;
-	Content& operator=(Content&&) = default;
+	auto operator=(const Content&) -> Content& = delete;
+	auto operator=(Content &&) -> Content& = default;
 
 	string filename;
 	GdkPixbuf* pixbuf = nullptr;
@@ -40,23 +40,17 @@ struct BackgroundImage::Content
 	bool attach = false;
 };
 
-BackgroundImage::BackgroundImage()
-{
-}
+BackgroundImage::BackgroundImage() = default;
 
-BackgroundImage::BackgroundImage(const BackgroundImage& img) : img(img.img)
-{
-}
+BackgroundImage::BackgroundImage(const BackgroundImage& img) = default;
 
 BackgroundImage::BackgroundImage(BackgroundImage&& img) noexcept : img(std::move(img.img))
 {
 }
 
-BackgroundImage::~BackgroundImage()
-{
-}
+BackgroundImage::~BackgroundImage() = default;
 
-bool BackgroundImage::operator==(const BackgroundImage& img)
+auto BackgroundImage::operator==(const BackgroundImage& img) -> bool
 {
 	return this->img == img.img;
 }
@@ -76,7 +70,7 @@ void BackgroundImage::loadFile(GInputStream* stream, string filename, GError** e
 	this->img = std::make_shared<Content>(stream, std::move(filename), error);
 }
 
-int BackgroundImage::getCloneId()
+auto BackgroundImage::getCloneId() -> int
 {
 	return this->img ? this->img->pageId : -1;
 }
@@ -94,7 +88,7 @@ void BackgroundImage::clearSaveState()
 	this->setCloneId(-1);
 }
 
-string BackgroundImage::getFilename()
+auto BackgroundImage::getFilename() -> string
 {
 	return this->img ? this->img->filename : "";
 }
@@ -107,7 +101,7 @@ void BackgroundImage::setFilename(string filename)
 	}
 }
 
-bool BackgroundImage::isAttached()
+auto BackgroundImage::isAttached() -> bool
 {
 	return this->img ? this->img->attach : false;
 }
@@ -123,12 +117,12 @@ void BackgroundImage::setAttach(bool attach)
 	this->img->attach = attach;
 }
 
-GdkPixbuf* BackgroundImage::getPixbuf()
+auto BackgroundImage::getPixbuf() -> GdkPixbuf*
 {
 	return this->img ? this->img->pixbuf : nullptr;
 }
 
-bool BackgroundImage::isEmpty()
+auto BackgroundImage::isEmpty() -> bool
 {
 	return !this->img;
 }

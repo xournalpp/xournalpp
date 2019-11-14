@@ -22,7 +22,7 @@ if (WIN32)
 elseif (APPLE OR LINUX)
   # Nothing to do for APPLE and linux
 else ()
-  add_definitions (-rdynamic)
+  set(xournalpp_LDFLAGS ${xournalpp_LDFLAGS} -rdynamic)
 endif ()
 
 option (DEBUG_COMPILE "Pass -Wall to CXX_FLAGS" OFF)

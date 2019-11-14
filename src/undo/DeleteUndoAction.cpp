@@ -35,7 +35,7 @@ void DeleteUndoAction::addElement(Layer* layer, Element* e, int pos)
 										  (GCompareFunc) PageLayerPosEntry<Element>::cmp);
 }
 
-bool DeleteUndoAction::undo(Control*)
+auto DeleteUndoAction::undo(Control*) -> bool
 {
 	if (this->elements == nullptr)
 	{
@@ -56,7 +56,7 @@ bool DeleteUndoAction::undo(Control*)
 	return true;
 }
 
-bool DeleteUndoAction::redo(Control*)
+auto DeleteUndoAction::redo(Control*) -> bool
 {
 	if (this->elements == nullptr)
 	{
@@ -78,7 +78,7 @@ bool DeleteUndoAction::redo(Control*)
 	return true;
 }
 
-string DeleteUndoAction::getText()
+auto DeleteUndoAction::getText() -> string
 {
 	if (eraser)
 	{

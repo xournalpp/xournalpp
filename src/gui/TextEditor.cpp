@@ -101,7 +101,7 @@ TextEditor::~TextEditor()
 	}
 }
 
-Text* TextEditor::getText()
+auto TextEditor::getText() -> Text*
 {
 	GtkTextIter start, end;
 
@@ -117,12 +117,12 @@ void TextEditor::setText(string text)
 {
 	gtk_text_buffer_set_text(this->buffer, text.c_str(), -1);
 
-	GtkTextIter first = {0};
+	GtkTextIter first = {nullptr};
 	gtk_text_buffer_get_iter_at_offset(this->buffer, &first, 0);
 	gtk_text_buffer_place_cursor(this->buffer, &first);
 }
 
-UndoAction* TextEditor::setColor(int color)
+auto TextEditor::setColor(int color) -> UndoAction*
 {
 	int origColor = this->text->getColor();
 	this->text->setColor(color);
@@ -135,7 +135,7 @@ UndoAction* TextEditor::setColor(int color)
 		return nullptr;
 	}
 
-	ColorUndoAction* undo = new ColorUndoAction(gui->getPage(), gui->getPage()->getSelectedLayer());
+	auto* undo = new ColorUndoAction(gui->getPage(), gui->getPage()->getSelectedLayer());
 	undo->addStroke(this->text, origColor, color);
 
 	return undo;
@@ -233,7 +233,7 @@ out:
 	g_free(str);
 }
 
-bool TextEditor::iMRetrieveSurroundingCallback(GtkIMContext* context, TextEditor* te)
+auto TextEditor::iMRetrieveSurroundingCallback(GtkIMContext* context, TextEditor* te) -> bool
 {
 	GtkTextIter start;
 	GtkTextIter end;
@@ -254,7 +254,7 @@ bool TextEditor::iMRetrieveSurroundingCallback(GtkIMContext* context, TextEditor
 	return true;
 }
 
-bool TextEditor::imDeleteSurroundingCallback(GtkIMContext* context, gint offset, gint n_chars, TextEditor* te)
+auto TextEditor::imDeleteSurroundingCallback(GtkIMContext* context, gint offset, gint n_chars, TextEditor* te) -> bool
 {
 	GtkTextIter start;
 	GtkTextIter end;
@@ -273,7 +273,7 @@ bool TextEditor::imDeleteSurroundingCallback(GtkIMContext* context, gint offset,
 	return true;
 }
 
-bool TextEditor::onKeyPressEvent(GdkEventKey* event)
+auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool
 {
 	if (gtk_bindings_activate_event(G_OBJECT(this->textWidget), event))
 	{
@@ -349,7 +349,7 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 	return retval;
 }
 
-bool TextEditor::onKeyReleaseEvent(GdkEventKey* event)
+auto TextEditor::onKeyReleaseEvent(GdkEventKey* event) -> bool
 {
 	GtkTextIter iter;
 
@@ -662,7 +662,7 @@ void TextEditor::contentsChanged(bool forceCreateUndoAction)
 	}
 }
 
-UndoAction* TextEditor::getFirstUndoAction()
+auto TextEditor::getFirstUndoAction() -> UndoAction*
 {
 	if (!this->undoActions.empty())
 	{
@@ -772,17 +772,17 @@ void TextEditor::moveCursor(const GtkTextIter* newLocation, gboolean extendSelec
 	this->repaintEditor();
 }
 
-static gboolean whitespace(gunichar ch, gpointer user_data)
+static auto whitespace(gunichar ch, gpointer user_data) -> gboolean
 {
 	return (ch == ' ' || ch == '\t');
 }
 
-static gboolean not_whitespace(gunichar ch, gpointer user_data)
+static auto not_whitespace(gunichar ch, gpointer user_data) -> gboolean
 {
 	return !whitespace(ch, user_data);
 }
 
-static gboolean find_whitepace_region(const GtkTextIter* center, GtkTextIter* start, GtkTextIter* end)
+static auto find_whitepace_region(const GtkTextIter* center, GtkTextIter* start, GtkTextIter* end) -> gboolean
 {
 	*start = *center;
 	*end = *center;
@@ -967,7 +967,7 @@ void TextEditor::backspace()
 	}
 }
 
-string TextEditor::getSelection()
+auto TextEditor::getSelection() -> string
 {
 	GtkTextIter start, end;
 	char* text;
@@ -1031,7 +1031,7 @@ void TextEditor::repaintCursor()
 /*
  * Blink!
  */
-gint TextEditor::blinkCallback(TextEditor* te)
+auto TextEditor::blinkCallback(TextEditor* te) -> gint
 {
 	if (te->cursorVisible)
 	{
@@ -1060,7 +1060,7 @@ void TextEditor::repaintEditor()
 /**
  * Calculate the UTF-8 Char offset into a byte offset.
  */
-int TextEditor::getByteOffset(int charOffset)
+auto TextEditor::getByteOffset(int charOffset) -> int
 {
 	const char* text = pango_layout_get_text(this->layout);
 	return g_utf8_offset_to_pointer(text, charOffset) - text;
@@ -1069,7 +1069,7 @@ int TextEditor::getByteOffset(int charOffset)
 /**
  * Calculate the UTF-8 Char byte offset into a char offset.
  */
-int TextEditor::getCharOffset(int byteOffset)
+auto TextEditor::getCharOffset(int byteOffset) -> int
 {
 	const char* text = pango_layout_get_text(this->layout);
 
@@ -1112,7 +1112,7 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 
 	DocumentView::applyColor(cr, this->text);
 
-	GtkTextIter cursorIter = {0};
+	GtkTextIter cursorIter = {nullptr};
 	GtkTextMark* cursor = gtk_text_buffer_get_insert(this->buffer);
 	gtk_text_buffer_get_iter_at_mark(this->buffer, &cursorIter, cursor);
 

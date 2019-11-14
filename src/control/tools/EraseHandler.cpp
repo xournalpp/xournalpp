@@ -53,7 +53,7 @@ void EraseHandler::erase(double x, double y)
 		gint(halfEraserSize * 2)
 	};
 
-	Range* range = new Range(x, y);
+	auto* range = new Range(x, y);
 
 	Layer* l = page->getSelectedLayer();
 

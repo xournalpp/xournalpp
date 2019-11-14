@@ -19,11 +19,9 @@ TextUndoAction::TextUndoAction(PageRef page, Layer* layer, Text* text, string la
 	this->textEditor = textEditor;
 }
 
-TextUndoAction::~TextUndoAction()
-{
-}
+TextUndoAction::~TextUndoAction() = default;
 
-string TextUndoAction::getUndoText()
+auto TextUndoAction::getUndoText() -> string
 {
 	return this->lastText;
 }
@@ -33,12 +31,12 @@ void TextUndoAction::textEditFinished()
 	this->textEditor = nullptr;
 }
 
-string TextUndoAction::getText()
+auto TextUndoAction::getText() -> string
 {
 	return _("Text changes");
 }
 
-bool TextUndoAction::undo(Control* control)
+auto TextUndoAction::undo(Control* control) -> bool
 {
 	double x1 = text->getX();
 	double y1 = text->getY();
@@ -61,7 +59,7 @@ bool TextUndoAction::undo(Control* control)
 	return true;
 }
 
-bool TextUndoAction::redo(Control* control)
+auto TextUndoAction::redo(Control* control) -> bool
 {
 	double x1 = text->getX();
 	double y1 = text->getY();

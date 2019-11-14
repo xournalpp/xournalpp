@@ -32,7 +32,7 @@ PageBackgroundChangeController::~PageBackgroundChangeController()
 	this->currentPageType = nullptr;
 }
 
-GtkWidget* PageBackgroundChangeController::getMenu()
+auto PageBackgroundChangeController::getMenu() -> GtkWidget*
 {
 	return currentPageType->getMenu();
 }
@@ -123,7 +123,7 @@ void PageBackgroundChangeController::changeCurrentPageBackground(PageType& pageT
  *
  * @return true on success, false if the user cancels
  */
-bool PageBackgroundChangeController::applyImageBackground(PageRef page)
+auto PageBackgroundChangeController::applyImageBackground(PageRef page) -> bool
 {
 	Document* doc = control->getDocument();
 
@@ -199,7 +199,7 @@ bool PageBackgroundChangeController::applyImageBackground(PageRef page)
  *
  * @return true on success, false if the user cancels
  */
-bool PageBackgroundChangeController::applyPdfBackground(PageRef page)
+auto PageBackgroundChangeController::applyPdfBackground(PageRef page) -> bool
 {
 	Document* doc = control->getDocument();
 
@@ -213,7 +213,7 @@ bool PageBackgroundChangeController::applyPdfBackground(PageRef page)
 	}
 
 	doc->lock();
-	PdfPagesDialog* dlg = new PdfPagesDialog(control->getGladeSearchPath(), doc, control->getSettings());
+	auto* dlg = new PdfPagesDialog(control->getGladeSearchPath(), doc, control->getSettings());
 	doc->unlock();
 
 	dlg->show(GTK_WINDOW(control->getGtkWindow()));
@@ -238,7 +238,7 @@ bool PageBackgroundChangeController::applyPdfBackground(PageRef page)
  *
  * @return true on success, false if the user cancels
  */
-bool PageBackgroundChangeController::applyPageBackground(PageRef page, PageType pt)
+auto PageBackgroundChangeController::applyPageBackground(PageRef page, PageType pt) -> bool
 {
 	if (pt.isPdfPage())
 	{

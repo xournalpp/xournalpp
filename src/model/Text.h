@@ -21,7 +21,7 @@ class Text : public AudioElement
 {
 public:
 	Text();
-	virtual ~Text();
+	~Text() override;
 
 public:
 	void setFont(XojFont& font);
@@ -36,26 +36,26 @@ public:
 	void setInEditing(bool inEditing);
 	bool isInEditing();
 
-	virtual void scale(double x0, double y0, double fx, double fy);
-	virtual void rotate(double x0, double y0, double xo, double yo, double th);
+	void scale(double x0, double y0, double fx, double fy) override;
+	void rotate(double x0, double y0, double xo, double yo, double th) override;
 
-	virtual bool rescaleOnlyAspectRatio();
+	bool rescaleOnlyAspectRatio() override;
 
 	/**
 	 * @overwrite
 	 */
-	virtual Element* clone();
+	Element* clone() override;
 
 	bool intersects(double x, double y, double halfSize) override;
 	bool intersects(double x, double y, double halfSize, double* gap) override;
 
 public:
 	// Serialize interface
-	void serialize(ObjectOutputStream& out);
-	void readSerialized(ObjectInputStream& in);
+	void serialize(ObjectOutputStream& out) override;
+	void readSerialized(ObjectInputStream& in) override;
 
 protected:
-	virtual void calcSize();
+	void calcSize() override;
 
 private:
 	XojFont font;

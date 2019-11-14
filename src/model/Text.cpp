@@ -13,11 +13,9 @@ Text::Text()
 	this->font.setSize(12);
 }
 
-Text::~Text()
-{
-}
+Text::~Text() = default;
 
-Element* Text::clone()
+auto Text::clone() -> Element*
 {
 	Text* text = new Text();
 	text->font = this->font;
@@ -30,7 +28,7 @@ Element* Text::clone()
 	return text;
 }
 
-XojFont& Text::getFont()
+auto Text::getFont() -> XojFont&
 {
 	return font;
 }
@@ -40,7 +38,7 @@ void Text::setFont(XojFont& font)
 	this->font = font;
 }
 
-string Text::getText()
+auto Text::getText() -> string
 {
 	return this->text;
 }
@@ -98,22 +96,22 @@ void Text::rotate(double x0, double y0, double xo, double yo, double th)
 {
 }
 
-bool Text::isInEditing()
+auto Text::isInEditing() -> bool
 {
 	return this->inEditing;
 }
 
-bool Text::rescaleOnlyAspectRatio()
+auto Text::rescaleOnlyAspectRatio() -> bool
 {
 	return true;
 }
 
-bool Text::intersects(double x, double y, double halfEraserSize)
+auto Text::intersects(double x, double y, double halfEraserSize) -> bool
 {
 	return intersects(x, y, halfEraserSize, nullptr);
 }
 
-bool Text::intersects(double x, double y, double halfEraserSize, double* gap)
+auto Text::intersects(double x, double y, double halfEraserSize, double* gap) -> bool
 {
 	double x1 = this->x - halfEraserSize;
 	double x2 = this->x + this->getElementWidth() + halfEraserSize;

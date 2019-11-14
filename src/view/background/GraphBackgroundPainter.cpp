@@ -3,13 +3,9 @@
 #include <Util.h>
 #include <cmath>
 
-GraphBackgroundPainter::GraphBackgroundPainter()
-{
-}
+GraphBackgroundPainter::GraphBackgroundPainter() = default;
 
-GraphBackgroundPainter::~GraphBackgroundPainter()
-{
-}
+GraphBackgroundPainter::~GraphBackgroundPainter() = default;
 
 void GraphBackgroundPainter::resetConfig()
 {
@@ -20,7 +16,7 @@ void GraphBackgroundPainter::resetConfig()
 	this->roundMargin = 0;
 }
 
-double GraphBackgroundPainter::getUnitSize()
+auto GraphBackgroundPainter::getUnitSize() -> double
 {
 	return this->drawRaster1;
 }

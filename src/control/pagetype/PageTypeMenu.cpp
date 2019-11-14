@@ -8,24 +8,24 @@
 
 #include <i18n.h>
 
-PageTypeMenuChangeListener::~PageTypeMenuChangeListener() {}
-PageTypeApplyListener::~PageTypeApplyListener() {}
+PageTypeMenuChangeListener::~PageTypeMenuChangeListener() = default;
+PageTypeApplyListener::~PageTypeApplyListener() = default;
 
 #define PREVIEW_COLUMNS 3
 
 
 PageTypeMenu::PageTypeMenu(PageTypeHandler* types, Settings* settings, bool showPreview, bool showSpecial)
- : showSpecial(showSpecial),
-   menu(gtk_menu_new()),
-   types(types),
-   settings(settings),
-   ignoreEvents(false),
-   listener(nullptr),
-   menuX(0),
-   menuY(0),
-   backgroundPainter(nullptr),
-   showPreview(showPreview),
-   pageTypeApplyListener(nullptr)
+ : showSpecial(showSpecial)
+ , menu(gtk_menu_new())
+ , types(types)
+ , settings(settings)
+ , ignoreEvents(false)
+ , listener(nullptr)
+ , menuX(0)
+ , menuY(0)
+ , backgroundPainter(nullptr)
+ , showPreview(showPreview)
+ , pageTypeApplyListener(nullptr)
 {
 	initDefaultMenu();
 	loadDefaultPage();
@@ -47,7 +47,7 @@ void PageTypeMenu::loadDefaultPage()
 	setSelected(model.getPageInsertType());
 }
 
-cairo_surface_t* PageTypeMenu::createPreviewImage(PageType pt)
+auto PageTypeMenu::createPreviewImage(PageType pt) -> cairo_surface_t*
 {
 	int previewWidth = 100;
 	int previewHeight = 141;
@@ -139,24 +139,24 @@ void PageTypeMenu::addMenuEntry(PageTypeInfo* t)
 	info.info = t;
 	menuInfos.push_back(info);
 
-	g_signal_connect(entry, "toggled", G_CALLBACK(
-		+[](GtkWidget* togglebutton, PageTypeMenu* self)
-		{
-	if (self->ignoreEvents)
-			{
-				return;
-			}
+	g_signal_connect(entry,
+	                 "toggled",
+	                 G_CALLBACK(+[](GtkWidget* togglebutton, PageTypeMenu* self) {
+		                 if (self->ignoreEvents)
+		                 {
+			                 return;
+		                 }
 
-			for (MenuCallbackInfo& info : self->menuInfos)
-			{
-				if (info.entry == togglebutton)
-				{
-					self->entrySelected(info.info);
-					break;
-				}
-			}
-
-		}), this);
+		                 for (MenuCallbackInfo& info: self->menuInfos)
+		                 {
+			                 if (info.entry == togglebutton)
+			                 {
+				                 self->entrySelected(info.info);
+				                 break;
+			                 }
+		                 }
+	                 }),
+	                 this);
 }
 
 void PageTypeMenu::entrySelected(PageTypeInfo* t)
@@ -224,24 +224,26 @@ void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApply
 		GtkWidget* menuEntryApply = createApplyMenuItem(_("Apply to current page"));
 		gtk_menu_attach(GTK_MENU(menu), menuEntryApply, 0, PREVIEW_COLUMNS, menuY, menuY + 1);
 		menuY++;
-		g_signal_connect(menuEntryApply, "activate", G_CALLBACK(
-			+[](GtkWidget* menu, PageTypeMenu* self)
-			{
-	self->pageTypeApplyListener->applyCurrentPageBackground(false);
-			}), this);
+		g_signal_connect(menuEntryApply,
+		                 "activate",
+		                 G_CALLBACK(+[](GtkWidget* menu, PageTypeMenu* self) {
+			                 self->pageTypeApplyListener->applyCurrentPageBackground(false);
+		                 }),
+		                 this);
 	}
 
 	GtkWidget* menuEntryApplyAll = createApplyMenuItem(_("Apply to all pages"));
 	gtk_menu_attach(GTK_MENU(menu), menuEntryApplyAll, 0, PREVIEW_COLUMNS, menuY, menuY + 1);
 	menuY++;
-	g_signal_connect(menuEntryApplyAll, "activate", G_CALLBACK(
-		+[](GtkWidget* menu, PageTypeMenu* self)
-		{
-	self->pageTypeApplyListener->applyCurrentPageBackground(true);
-		}), this);
+	g_signal_connect(menuEntryApplyAll,
+	                 "activate",
+	                 G_CALLBACK(+[](GtkWidget* menu, PageTypeMenu* self) {
+		                 self->pageTypeApplyListener->applyCurrentPageBackground(true);
+	                 }),
+	                 this);
 }
 
-GtkWidget* PageTypeMenu::createApplyMenuItem(const char* text)
+auto PageTypeMenu::createApplyMenuItem(const char* text) -> GtkWidget*
 {
 	GtkWidget* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	GtkWidget* icon = gtk_image_new_from_icon_name("gtk-apply", GTK_ICON_SIZE_MENU);
@@ -300,12 +302,12 @@ void PageTypeMenu::initDefaultMenu()
 	this->backgroundPainter = nullptr;
 }
 
-GtkWidget* PageTypeMenu::getMenu()
+auto PageTypeMenu::getMenu() -> GtkWidget*
 {
 	return menu;
 }
 
-PageType PageTypeMenu::getSelected()
+auto PageTypeMenu::getSelected() -> PageType
 {
 	return selected;
 }

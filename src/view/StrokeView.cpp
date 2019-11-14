@@ -14,9 +14,7 @@ StrokeView::StrokeView(cairo_t* cr, Stroke* s, int startPoint, double scaleFacto
 {
 }
 
-StrokeView::~StrokeView()
-{
-}
+StrokeView::~StrokeView() = default;
 
 void StrokeView::drawFillStroke()
 {
@@ -95,7 +93,6 @@ void StrokeView::changeCairoSource(bool markAudioStroke)
  */
 void StrokeView::drawNoPressure()
 {
-	int count = 1;
 	double width = s->getWidth();
 
 	bool group = false;

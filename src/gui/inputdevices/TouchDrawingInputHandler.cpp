@@ -12,11 +12,9 @@ TouchDrawingInputHandler::TouchDrawingInputHandler(InputContext* inputContext) :
 {
 }
 
-TouchDrawingInputHandler::~TouchDrawingInputHandler()
-{
-}
+TouchDrawingInputHandler::~TouchDrawingInputHandler() = default;
 
-bool TouchDrawingInputHandler::handleImpl(InputEvent* event)
+auto TouchDrawingInputHandler::handleImpl(InputEvent* event) -> bool
 {
 	// Only handle events when there is no active gesture
 	GtkXournal* xournal = inputContext->getXournal();
@@ -81,7 +79,7 @@ bool TouchDrawingInputHandler::handleImpl(InputEvent* event)
 	return false;
 }
 
-bool TouchDrawingInputHandler::changeTool(InputEvent* event)
+auto TouchDrawingInputHandler::changeTool(InputEvent* event) -> bool
 {
 	Settings* settings = this->inputContext->getSettings();
 	ButtonConfig* cfgTouch = settings->getTouchButtonConfig();

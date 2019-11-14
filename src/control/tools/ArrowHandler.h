@@ -23,5 +23,4 @@ private:
 	virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
 
 private:
-	};
-
+};

@@ -17,7 +17,7 @@ SpinPageAdapter::~SpinPageAdapter()
 	this->widget = nullptr;
 }
 
-bool SpinPageAdapter::pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter)
+auto SpinPageAdapter::pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter) -> bool
 {
 	adapter->lastTimeoutId = 0;
 	adapter->page = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(adapter->widget));
@@ -43,12 +43,12 @@ void SpinPageAdapter::pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinP
 	adapter->lastTimeoutId = g_timeout_add(100, (GSourceFunc) pageNrSpinChangedTimerCallback, adapter);
 }
 
-GtkWidget* SpinPageAdapter::getWidget()
+auto SpinPageAdapter::getWidget() -> GtkWidget*
 {
 	return this->widget;
 }
 
-int SpinPageAdapter::getPage()
+auto SpinPageAdapter::getPage() -> int
 {
 	return this->page;
 }
@@ -82,5 +82,4 @@ void SpinPageAdapter::firePageChanged()
 	}
 }
 
-SpinPageListener::~SpinPageListener() { }
-
+SpinPageListener::~SpinPageListener() = default;
