@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-08 18:14+0000\n"
-"PO-Revision-Date: 2019-11-14 06:38\n"
+"PO-Revision-Date: 2019-11-14 06:47\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -95,7 +95,7 @@ msgstr "变量\"{1\"}不能为整数，其值为\"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:152
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr ""
+msgstr "变量\"{1}\"不能为整数，其值为NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:205
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:228
@@ -1733,7 +1733,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3830
 msgid "Audio Devices"
-msgstr ""
+msgstr "音频设备"
 
 #: ../ui/settings.glade:4035
 msgid "Audio Recording"
@@ -1741,7 +1741,7 @@ msgstr ""
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
-msgstr ""
+msgstr "作者: "
 
 #: ../ui/about.glade:186
 msgid "Authors:"
@@ -1753,19 +1753,19 @@ msgstr ""
 
 #: ../ui/settings.glade:566
 msgid "Autoloading Journals"
-msgstr ""
+msgstr "自动加载日志文件"
 
 #: ../ui/settings.glade:323
 msgid "Autosaving"
-msgstr ""
+msgstr "自动保存"
 
 #: ../ui/settings.glade:472
 msgid "Available Placeholders"
-msgstr ""
+msgstr "可用的占位符"
 
 #: ../ui/settings.glade:2026
 msgid "Background color between pages"
-msgstr ""
+msgstr "页面背景颜色"
 
 #: ../ui/settings.glade:2160
 msgid "Big cursor for pen"
@@ -1785,11 +1785,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1208
 msgid "Button 1"
-msgstr ""
+msgstr "按钮1"
 
 #: ../ui/settings.glade:1246
 msgid "Button 2"
-msgstr ""
+msgstr "按钮 2"
 
 #: ../ui/settings.glade:2096
 msgid "Colors"
@@ -1797,15 +1797,15 @@ msgstr "颜色"
 
 #: ../ui/main.glade:1134
 msgid "Configure Page Template"
-msgstr ""
+msgstr "配置页模板"
 
 #: ../ui/pageTemplate.glade:185
 msgid "Copy last page settings"
-msgstr ""
+msgstr "复制最后一页的设置"
 
 #: ../ui/pageTemplate.glade:296
 msgid "Copy last page size"
-msgstr ""
+msgstr "复制最后一页的大小"
 
 #: ../ui/exportSettings.glade:158
 msgid "Current page"
@@ -1813,7 +1813,7 @@ msgstr "当前页"
 
 #: ../ui/settings.glade:2182
 msgid "Cursor"
-msgstr ""
+msgstr "光标"
 
 #: ../ui/settings.glade:1699
 msgid "Custom Commands (for Method \"Custom\")"
@@ -1821,11 +1821,11 @@ msgstr ""
 
 #: ../ui/settings.glade:2074
 msgid "Dark Theme (requires restart)"
-msgstr ""
+msgstr "暗色主题 (需要重启)"
 
 #: ../ui/settings.glade:498
 msgid "Default Save Name"
-msgstr ""
+msgstr "预设档名"
 
 #: ../ui/settings.glade:3955
 msgid "Default Seek Time (in seconds)"
