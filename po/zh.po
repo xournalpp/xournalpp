@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-08 18:14+0000\n"
-"PO-Revision-Date: 2019-11-14 06:47\n"
+"PO-Revision-Date: 2019-11-14 07:02\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1829,11 +1829,11 @@ msgstr "预设档名"
 
 #: ../ui/settings.glade:3955
 msgid "Default Seek Time (in seconds)"
-msgstr ""
+msgstr "默认寻找时间(秒)"
 
 #: ../ui/settings.glade:386
 msgid "Default name: "
-msgstr ""
+msgstr "默认名称: "
 
 #: ../ui/settings.glade:3608
 msgid "Defaults"
@@ -1849,7 +1849,7 @@ msgstr "删除笔划"
 
 #: ../ui/main.glade:2129
 msgid "Delete this page"
-msgstr ""
+msgstr "删除此页面"
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
@@ -1857,7 +1857,7 @@ msgstr "设备"
 
 #: ../ui/settings.glade:1627
 msgid "Disable"
-msgstr ""
+msgstr "禁用"
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
@@ -1865,11 +1865,11 @@ msgstr "取消此设备绘制"
 
 #: ../ui/settings.glade:2308
 msgid "Disable scrollbar fade out"
-msgstr ""
+msgstr "禁用滚动条淡出"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
-msgstr ""
+msgstr "已禁用"
 
 #: ../ui/settings.glade:1496
 msgid "Disabling Method"
@@ -1877,7 +1877,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2786
 msgid "Display DPI Calibration"
-msgstr ""
+msgstr "屏幕校准"
 
 #: ../ui/settings.glade:3271
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
@@ -1896,11 +1896,11 @@ msgstr "在这里和工具条之间可以来回拖动条目。"
 
 #: ../ui/main.glade:1364
 msgid "Draw _Line"
-msgstr ""
+msgstr "绘制直线"
 
 #: ../ui/settings.glade:3462
 msgid "Drawing Area"
-msgstr ""
+msgstr "绘图区域"
 
 #: ../ui/settings.glade:3234
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
@@ -1908,15 +1908,15 @@ msgstr ""
 
 #: ../ui/main.glade:2533
 msgid "Duplicate"
-msgstr ""
+msgstr "重复"
 
 #: ../ui/main.glade:2570
 msgid "Edit (not implemented yet)"
-msgstr ""
+msgstr "编辑(尚未实现)"
 
 #: ../ui/settings.glade:1615
 msgid "Enable"
-msgstr ""
+msgstr "启用"
 
 #: ../ui/settings.glade:3179
 msgid "Enable  with determination radius of "
@@ -1928,7 +1928,7 @@ msgstr ""
 
 #: ../ui/settings.glade:242
 msgid "Enable Autosaving"
-msgstr ""
+msgstr "启用自动保存"
 
 #: ../ui/settings.glade:1836
 msgid "Enable GTK Touch / Scrolling workaround  (requires restart)"
@@ -1936,11 +1936,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1114
 msgid "Enable Pressure Sensitivity"
-msgstr ""
+msgstr "启用压感"
 
 #: ../ui/settings.glade:3266
 msgid "Enable Tap action"
-msgstr ""
+msgstr "点击操作"
 
 #: ../ui/settings.glade:796
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
@@ -1948,11 +1948,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1466
 msgid "Enable internal Hand Recognition"
-msgstr ""
+msgstr "启用手势感知"
 
 #: ../ui/settings.glade:643
 msgid "Enable new input system (Requires restart)"
-msgstr ""
+msgstr "启用新的输入系统 (需要重启)"
 
 #: ../ui/settings.glade:1767
 msgid "Enable zoom gestures (requires restart)"
@@ -2143,23 +2143,23 @@ msgstr ""
 
 #: ../ui/settings.glade:961
 msgid "Middle Mouse Button"
-msgstr ""
+msgstr "鼠标中键"
 
 #: ../ui/settings.glade:1048 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
-msgstr ""
+msgstr "鼠标"
 
 #: ../ui/settings.glade:1017
 msgid "Mouse Buttons"
-msgstr ""
+msgstr "鼠标按钮"
 
 #: ../ui/main.glade:2555
 msgid "Move Down"
-msgstr ""
+msgstr "向下移动"
 
 #: ../ui/main.glade:2547
 msgid "Move Up"
-msgstr ""
+msgstr "向上移动"
 
 #: ../ui/main.glade:1066
 msgid "N_ext annotated page"
@@ -2191,7 +2191,7 @@ msgstr "选项"
 
 #: ../ui/settings.glade:3796
 msgid "Output Device"
-msgstr ""
+msgstr "输出设备"
 
 #: ../ui/main.glade:1077
 msgid "P_revious annotated Page"
