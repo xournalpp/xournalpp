@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-08 18:14+0000\n"
-"PO-Revision-Date: 2019-11-08 18:26\n"
+"PO-Revision-Date: 2019-11-14 01:15\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -923,7 +923,7 @@ msgstr "还原文件"
 
 #: ../src/undo/RotateUndoAction.cpp:60
 msgid "Rotation"
-msgstr ""
+msgstr "旋转"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "Rotation Snapping"
@@ -1661,7 +1661,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2714
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
-msgstr ""
+msgstr "<i>在你的屏幕上放置一个尺子并移动滑动条直到刻度对齐</i>"
 
 #: ../ui/settings.glade:3513
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
