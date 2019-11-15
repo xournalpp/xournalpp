@@ -118,7 +118,7 @@ stages:
         displayName: 'Build for macOS'
         condition: always()
         steps:
-          - template: steps/build_mac_native.yml
+          - template: steps/build_mac.yml
             parameters:
               build_type: 'RelWithDebInfo'
               cmake_flags: ''
