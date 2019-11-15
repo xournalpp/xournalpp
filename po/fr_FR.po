@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-15 04:07+0000\n"
-"PO-Revision-Date: 2019-11-15 04:14\n"
+"PO-Revision-Date: 2019-11-15 14:57\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1208,7 +1208,7 @@ msgstr "Essai de sauvegarde d'urgence du document actuellement ouvert…"
 
 #: ../src/gui/PageView.cpp:422
 msgid "Unable to play audio recording {1}"
-msgstr ""
+msgstr "Impossible de lire l'enregistrement audio {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 #: ../src/undo/UndoRedoHandler.cpp:229
