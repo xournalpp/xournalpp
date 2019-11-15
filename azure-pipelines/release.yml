@@ -67,7 +67,7 @@ stages:
         pool:
           vmImage: 'ubuntu-16.04'
         container:
-          image: littlehuba/debian-latest-sudo:latest
+          image: xournalpp/debian-latest-sudo:latest
         displayName: 'Build for Debian'
         condition: always()
         steps:
