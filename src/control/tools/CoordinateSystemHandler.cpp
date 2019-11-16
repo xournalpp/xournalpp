@@ -5,7 +5,8 @@
 #include "undo/InsertUndoAction.h"
 #include <cmath>
 
-CoordinateSystemHandler::CoordinateSystemHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift, bool flipControl)
+CoordinateSystemHandler::CoordinateSystemHandler(XournalView* xournal, XojPageView* redrawable, PageRef page,
+                                                 bool flipShift, bool flipControl)
  : BaseStrokeHandler(xournal, redrawable, page, flipShift, flipControl)
 {
 }
@@ -27,14 +28,14 @@ void CoordinateSystemHandler::drawShape(Point& c, const PositionInputData& pos)
 	Settings* settings = xournal->getControl()->getSettings();
 	if (pos.isAltDown() != settings->isSnapGrid())
 	{
-		snapToGrid(c.x,c.y);
+		snapToGrid(c.x, c.y);
 	}
 
-	if (!this->started) //initialize first point
+	if (!this->started)  //initialize first point
 	{
 		this->startPoint = c;
 		this->started = true;
-		stroke->addPoint(c);	//avoid complaints about <2 points.
+		stroke->addPoint(c);  //avoid complaints about <2 points.
 	}
 	else
 	{
@@ -43,37 +44,37 @@ void CoordinateSystemHandler::drawShape(Point& c, const PositionInputData& pos)
 
 		this->currPoint = c;
 
-		this->modShift = pos.isShiftDown() ;
-		this->modControl = pos.isControlDown() ;
-		
-		if ( settings->getDrawDirModsEnabled()) //change modifiers based on draw dir
+		this->modShift = pos.isShiftDown();
+		this->modControl = pos.isControlDown();
+
+		if (settings->getDrawDirModsEnabled())  //change modifiers based on draw dir
 		{
 			this->modifyModifiersByDrawDir(width, height, true);
 		}
-		
-		if (this->modShift)	// make square
+
+		if (this->modShift)  // make square
 		{
-			int signW = width>0?1:-1;
-			int signH = height>0?1:-1;
+			int signW = width > 0 ? 1 : -1;
+			int signH = height > 0 ? 1 : -1;
 			width = std::max(width * signW, height * signH) * signW;
 			height = (width * signW) * signH;
 		}
-		
+
 		Point p1 = this->startPoint;
-		
-		stroke->deletePointsFrom(0);	//delete previous points
-		
-		if ( !this->modControl )	//draw out from starting point
-		{			
-			stroke->addPoint(p1);		
+
+		stroke->deletePointsFrom(0);  //delete previous points
+
+		if (!this->modControl)  //draw out from starting point
+		{
+			stroke->addPoint(p1);
 			stroke->addPoint(Point(p1.x, p1.y + height));
 			stroke->addPoint(Point(p1.x + width, p1.y + height));
 		}
-		else	//Control is down 
+		else  //Control is down
 		{
-			stroke->addPoint(Point(p1.x, p1.y + height ));
-			stroke->addPoint(p1);		
-			stroke->addPoint(Point(p1.x + width, p1.y ));
+			stroke->addPoint(Point(p1.x, p1.y + height));
+			stroke->addPoint(p1);
+			stroke->addPoint(Point(p1.x + width, p1.y));
 		}
 	}
 }
