@@ -6,7 +6,13 @@
 ## Please help us with an important decision
 We would like to have your feedback concerning the new rendering system. One of the big changes will be that it will support infinity pages. Of course we will still provide support for showing the old multi-page documents. Therefore we would like to know how you want to have these rendered in the future. For this reason we have a small poll we kindly ask you to fill out:
 
-https://doodle.com/poll/svz5ezk3wpd3zzd3
+Thanks to everybody that did take part in the poll. The results were quite clear.
+
+We will provide two modes to import multiple page documents:
+- Multiple page documents are imported on the limited size pages and the view will show them like Xournal++ currently does. Note that in this mode infinity pages are technically not possible, you will be able to resize pages though
+- All pages will be imported onto one single infinity page. You can layout the pages at import into a multi-column/row grid if wanted. For printing we will integrate a feature that shows you the page borders so you end up with prints that make sense.
+
+We might add the mode to import each page onto its own infinity page later on.
 
 ## Important Notice
 For some required changes to our code base we can currently not admit any pull requests. We are very thankful to anybody that is willing to work on Xournal++ and hope that this inconvenience will not deter you from helping us out. The last PR that will be merged before we do the extensive changes to the code base is #1430, which will then be followed by one last release before our PR freeze. Afterwards we will do the necessary work to ensure a continued solid development of Xournal++. Once we are finished we will remove this note and welcome all your PRs with open hands! Thanks for your support!
