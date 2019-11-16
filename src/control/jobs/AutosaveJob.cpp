@@ -12,9 +12,7 @@ AutosaveJob::AutosaveJob(Control* control)
 {
 }
 
-AutosaveJob::~AutosaveJob()
-{
-}
+AutosaveJob::~AutosaveJob() = default;
 
 void AutosaveJob::afterRun()
 {
@@ -67,7 +65,7 @@ void AutosaveJob::run()
 	}
 }
 
-JobType AutosaveJob::getType()
+auto AutosaveJob::getType() -> JobType
 {
 	return JOB_TYPE_AUTOSAVE;
 }

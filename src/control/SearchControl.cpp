@@ -35,7 +35,7 @@ void SearchControl::paint(cairo_t* cr, GdkRectangle* rect, double zoom, GtkColor
 	}
 }
 
-bool SearchControl::search(string text, int* occures, double* top)
+auto SearchControl::search(string text, int* occures, double* top) -> bool
 {
 	freeSearchResults();
 

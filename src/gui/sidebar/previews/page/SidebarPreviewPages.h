@@ -87,4 +87,4 @@ private:
 	std::vector<std::tuple<GtkWidget*, gulong, std::unique_ptr<ContextMenuData>>> contextMenuSignals;
 
 private:
-	};
+};

@@ -37,7 +37,7 @@ private:
 	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, BackgroundSelectDialogBase* dlg);
 
 private:
-	protected:
+protected:
 	Settings* settings = nullptr;
 	GtkWidget* scrollPreview = nullptr;
 	GtkWidget* layoutContainer = nullptr;

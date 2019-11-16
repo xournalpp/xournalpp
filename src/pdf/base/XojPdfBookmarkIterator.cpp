@@ -1,9 +1,5 @@
 #include "XojPdfBookmarkIterator.h"
 
-XojPdfBookmarkIterator::XojPdfBookmarkIterator()
-{
-}
+XojPdfBookmarkIterator::XojPdfBookmarkIterator() = default;
 
-XojPdfBookmarkIterator::~XojPdfBookmarkIterator()
-{
-}
+XojPdfBookmarkIterator::~XojPdfBookmarkIterator() = default;

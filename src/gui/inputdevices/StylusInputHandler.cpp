@@ -13,11 +13,9 @@ StylusInputHandler::StylusInputHandler(InputContext* inputContext) : PenInputHan
 {
 }
 
-StylusInputHandler::~StylusInputHandler()
-{
-}
+StylusInputHandler::~StylusInputHandler() = default;
 
-bool StylusInputHandler::handleImpl(InputEvent* event)
+auto StylusInputHandler::handleImpl(InputEvent* event) -> bool
 {
 	// Only handle events when there is no active gesture
 	GtkXournal* xournal = inputContext->getXournal();
@@ -160,7 +158,7 @@ void StylusInputHandler::setPressedState(InputEvent* event)
 	}
 }
 
-bool StylusInputHandler::changeTool(InputEvent* event)
+auto StylusInputHandler::changeTool(InputEvent* event) -> bool
 {
 	Settings* settings = this->inputContext->getSettings();
 	ToolHandler* toolHandler = this->inputContext->getToolHandler();

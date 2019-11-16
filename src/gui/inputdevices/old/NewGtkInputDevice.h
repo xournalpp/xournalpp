@@ -69,7 +69,7 @@ private:
 	static bool eventCallback(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self);
 
 private:
-	protected:
+protected:
 	/**
 	 * Running input
 	 */

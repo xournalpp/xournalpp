@@ -11,9 +11,7 @@ AbstractInputHandler::AbstractInputHandler(InputContext* inputContext)
 	this->inputContext = inputContext;
 }
 
-AbstractInputHandler::~AbstractInputHandler()
-{
-}
+AbstractInputHandler::~AbstractInputHandler() = default;
 
 void AbstractInputHandler::block(bool block)
 {
@@ -21,12 +19,12 @@ void AbstractInputHandler::block(bool block)
 	this->onBlock();
 }
 
-bool AbstractInputHandler::isBlocked()
+auto AbstractInputHandler::isBlocked() -> bool
 {
 	return this->blocked;
 }
 
-bool AbstractInputHandler::handle(InputEvent* event)
+auto AbstractInputHandler::handle(InputEvent* event) -> bool
 {
 	if (!this->blocked)
 	{
@@ -42,7 +40,7 @@ bool AbstractInputHandler::handle(InputEvent* event)
  *
  * @return page or nullptr if none
  */
-XojPageView* AbstractInputHandler::getPageAtCurrentPosition(InputEvent* event)
+auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent* event) -> XojPageView*
 {
 	if (event == nullptr)
 	{
@@ -66,7 +64,7 @@ XojPageView* AbstractInputHandler::getPageAtCurrentPosition(InputEvent* event)
 /**
  * Get input data relative to current input page
  */
-PositionInputData AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent* event)
+auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent* event) -> PositionInputData
 {
 	GtkXournal* xournal = inputContext->getXournal();
 

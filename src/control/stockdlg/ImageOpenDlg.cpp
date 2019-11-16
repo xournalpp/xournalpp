@@ -6,11 +6,10 @@
 #include <i18n.h>
 #include <Util.h>
 
-GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bool* attach)
+auto ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bool* attach) -> GFile*
 {
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Open Image"), win, GTK_FILE_CHOOSER_ACTION_OPEN,
-													_("_Cancel"), GTK_RESPONSE_CANCEL,
-													_("_Open"), GTK_RESPONSE_OK, nullptr);
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Open Image"), win, GTK_FILE_CHOOSER_ACTION_OPEN, _("_Cancel"),
+	                                                GTK_RESPONSE_CANCEL, _("_Open"), GTK_RESPONSE_OK, nullptr);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), localOnly);
 
@@ -65,7 +64,7 @@ GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bo
 
 // Source: Empathy
 
-GdkPixbuf* ImageOpenDlg::pixbufScaleDownIfNecessary(GdkPixbuf* pixbuf, gint maxSize)
+auto ImageOpenDlg::pixbufScaleDownIfNecessary(GdkPixbuf* pixbuf, gint maxSize) -> GdkPixbuf*
 {
 	int width = gdk_pixbuf_get_width(pixbuf);
 	int height = gdk_pixbuf_get_height(pixbuf);

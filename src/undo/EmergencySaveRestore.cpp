@@ -7,23 +7,21 @@ EmergencySaveRestore::EmergencySaveRestore()
 {
 }
 
-EmergencySaveRestore::~EmergencySaveRestore()
-{
-}
+EmergencySaveRestore::~EmergencySaveRestore() = default;
 
-bool EmergencySaveRestore::redo(Control* control)
+auto EmergencySaveRestore::redo(Control* control) -> bool
 {
 	// Does nothing, only used to mark the document as changed
 	return true;
 }
 
-bool EmergencySaveRestore::undo(Control* control)
+auto EmergencySaveRestore::undo(Control* control) -> bool
 {
 	// Does nothing, only used to mark the document as changed
 	return true;
 }
 
-string EmergencySaveRestore::getText()
+auto EmergencySaveRestore::getText() -> string
 {
 	return _("Emergency saved document");
 }

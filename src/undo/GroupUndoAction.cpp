@@ -20,7 +20,7 @@ void GroupUndoAction::addAction(UndoAction* action)
 	actions.push_back(action);
 }
 
-vector<PageRef> GroupUndoAction::getPages()
+auto GroupUndoAction::getPages() -> vector<PageRef>
 {
 	vector<PageRef> pages;
 
@@ -53,18 +53,18 @@ vector<PageRef> GroupUndoAction::getPages()
 	return pages;
 }
 
-bool GroupUndoAction::redo(Control* control)
+auto GroupUndoAction::redo(Control* control) -> bool
 {
 	bool result = true;
-	for (size_t i = 0; i < actions.size(); i++)
+	for (auto& action: actions)
 	{
-		result = result && actions[i]->redo(control);
+		result = result && action->redo(control);
 	}
 
 	return result;
 }
 
-bool GroupUndoAction::undo(Control* control)
+auto GroupUndoAction::undo(Control* control) -> bool
 {
 	bool result = true;
 	for (int i = actions.size() - 1; i >= 0; i--)
@@ -75,7 +75,7 @@ bool GroupUndoAction::undo(Control* control)
 	return result;
 }
 
-string GroupUndoAction::getText()
+auto GroupUndoAction::getText() -> string
 {
 	if (actions.size() == 0)
 	{

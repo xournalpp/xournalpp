@@ -7,11 +7,9 @@ InputStreamException::InputStreamException(string message, string filename, int 
 	this->message = message + ", " + filename + ": " + std::to_string(line);
 }
 
-InputStreamException::~InputStreamException()
-{
-}
+InputStreamException::~InputStreamException() = default;
 
-const char* InputStreamException::what()
+auto InputStreamException::what() -> const char*
 {
 	return this->message.c_str();
 }

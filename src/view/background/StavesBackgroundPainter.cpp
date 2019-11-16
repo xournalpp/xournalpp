@@ -2,13 +2,9 @@
 
 #include <Util.h>
 
-StavesBackgroundPainter::StavesBackgroundPainter()
-{
-}
+StavesBackgroundPainter::StavesBackgroundPainter() = default;
 
-StavesBackgroundPainter::~StavesBackgroundPainter()
-{
-}
+StavesBackgroundPainter::~StavesBackgroundPainter() = default;
 
 void StavesBackgroundPainter::resetConfig()
 {

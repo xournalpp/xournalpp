@@ -227,7 +227,8 @@ void ToolbarAdapter::toolitemDragDataGet(GtkWidget* widget, GdkDragContext* cont
 /**
  * A tool item was dragged to the toolbar
  */
-bool ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* context, gint x, gint y, guint time, ToolbarAdapter* adapter)
+auto ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* context, gint x, gint y, guint time,
+                                         ToolbarAdapter* adapter) -> bool
 {
 	GdkAtom target = gtk_drag_dest_find_target(GTK_WIDGET(toolbar), context, nullptr);
 	if (target != ToolbarDragDropHelper::atomToolItem)
@@ -287,7 +288,7 @@ void ToolbarAdapter::toolbarDragLeafeCb(GtkToolbar* toolbar, GdkDragContext* con
 void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragContext* context, gint x, gint y,
 									  GtkSelectionData* data, guint info, guint time, ToolbarAdapter* adapter)
 {
-	ToolItemDragDropData* d = (ToolItemDragDropData*) gtk_selection_data_get_data( data);
+	auto* d = (ToolItemDragDropData*) gtk_selection_data_get_data(data);
 	g_return_if_fail(ToolitemDragDrop::checkToolItemDragDropData(d));
 
 	// fix vertical position bug as in toolbarDragMotionCb() above.
@@ -317,9 +318,8 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
 	}
 	else if (d->type == TOOL_ITEM_COLOR)
 	{
-		ColorToolItem* item = new ColorToolItem(adapter->window->getControl(),
-												adapter->window->getControl()->getToolHandler(),
-												GTK_WINDOW(adapter->window->getWindow()), d->color);
+		auto* item = new ColorToolItem(adapter->window->getControl(), adapter->window->getControl()->getToolHandler(),
+		                               GTK_WINDOW(adapter->window->getWindow()), d->color);
 
 		bool horizontal = gtk_orientable_get_orientation(GTK_ORIENTABLE(toolbar)) == GTK_ORIENTATION_HORIZONTAL;
 		GtkToolItem* it = item->createItem(horizontal);

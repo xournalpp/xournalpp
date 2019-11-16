@@ -2,8 +2,8 @@
 #include "XmlPointNode.h"
 
 XmlPointNode::XmlPointNode(const char* tag)
- : XmlAudioNode(tag),
-   points(nullptr)
+ : XmlAudioNode(tag)
+ , points(nullptr)
 {
 }
 
@@ -11,7 +11,7 @@ XmlPointNode::~XmlPointNode()
 {
 	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
-		Point* p = (Point*) l->data;
+		auto* p = (Point*) l->data;
 		delete p;
 	}
 	g_list_free(this->points);
@@ -34,7 +34,7 @@ void XmlPointNode::writeOut(OutputStream* out)
 
 	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
-		Point* p = (Point*) l->data;
+		auto* p = (Point*) l->data;
 		if (l != this->points)
 		{
 			out->write(" ");

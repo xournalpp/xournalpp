@@ -7,9 +7,9 @@
 #include <Util.h>
 #include <StringUtils.h>
 
-TextView::TextView() { }
+TextView::TextView() = default;
 
-TextView::~TextView() { }
+TextView::~TextView() = default;
 
 static int textDpi = 72;
 
@@ -18,7 +18,7 @@ void TextView::setDpi(int dpi)
 	textDpi = dpi;
 }
 
-PangoLayout* TextView::initPango(cairo_t* cr, Text* t)
+auto TextView::initPango(cairo_t* cr, Text* t) -> PangoLayout*
 {
 	PangoLayout* layout = pango_cairo_create_layout(cr);
 
@@ -61,7 +61,7 @@ void TextView::drawText(cairo_t* cr, Text* t)
 	cairo_restore(cr);
 }
 
-vector<XojPdfRectangle> TextView::findText(Text* t, string& search)
+auto TextView::findText(Text* t, string& search) -> vector<XojPdfRectangle>
 {
 	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
 	cairo_t* cr = cairo_create(surface);

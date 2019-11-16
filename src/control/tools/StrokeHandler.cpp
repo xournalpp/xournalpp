@@ -55,13 +55,13 @@ void StrokeHandler::draw(cairo_t* cr)
 }
 
 
-bool StrokeHandler::onKeyEvent(GdkEventKey* event)
+auto StrokeHandler::onKeyEvent(GdkEventKey* event) -> bool
 {
 	return false;
 }
 
 
-bool StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos)
+auto StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool
 {
 	if (!stroke)
 	{

@@ -8,11 +8,9 @@ Element::Element(ElementType type)
 {
 }
 
-Element::~Element()
-{
-}
+Element::~Element() = default;
 
-ElementType Element::getType() const
+auto Element::getType() const -> ElementType
 {
 	return this->type;
 }
@@ -27,7 +25,7 @@ void Element::setY(double y)
 	this->y = y;
 }
 
-double Element::getX()
+auto Element::getX() -> double
 {
 	if (!this->sizeCalculated)
 	{
@@ -37,7 +35,7 @@ double Element::getX()
 	return x;
 }
 
-double Element::getY()
+auto Element::getY() -> double
 {
 	if (!this->sizeCalculated)
 	{
@@ -53,7 +51,7 @@ void Element::move(double dx, double dy)
 	this->y += dy;
 }
 
-double Element::getElementWidth()
+auto Element::getElementWidth() -> double
 {
 	if (!this->sizeCalculated)
 	{
@@ -63,7 +61,7 @@ double Element::getElementWidth()
 	return this->width;
 }
 
-double Element::getElementHeight()
+auto Element::getElementHeight() -> double
 {
 	if (!this->sizeCalculated)
 	{
@@ -73,7 +71,7 @@ double Element::getElementHeight()
 	return this->height;
 }
 
-Rectangle Element::boundingRect()
+auto Element::boundingRect() -> Rectangle
 {
 	return Rectangle(getX(), getY(), getElementWidth(), getElementHeight());
 }
@@ -83,12 +81,12 @@ void Element::setColor(int color)
 	this->color = color;
 }
 
-int Element::getColor() const
+auto Element::getColor() const -> int
 {
 	return this->color;
 }
 
-bool Element::intersectsArea(const GdkRectangle* src)
+auto Element::intersectsArea(const GdkRectangle* src) -> bool
 {
 	GdkRectangle rect = {
 		gint(getX()),
@@ -100,7 +98,7 @@ bool Element::intersectsArea(const GdkRectangle* src)
 	return gdk_rectangle_intersect(src, &rect, nullptr);
 }
 
-bool Element::intersectsArea(double x, double y, double width, double height)
+auto Element::intersectsArea(double x, double y, double width, double height) -> bool
 {
 	double dest_x, dest_y;
 	double dest_w, dest_h;
@@ -113,7 +111,7 @@ bool Element::intersectsArea(double x, double y, double width, double height)
 	return (dest_w > 0 && dest_h > 0);
 }
 
-bool Element::isInSelection(ShapeContainer* container)
+auto Element::isInSelection(ShapeContainer* container) -> bool
 {
 	if (!container->contains(getX(), getY()))
 	{
@@ -135,7 +133,7 @@ bool Element::isInSelection(ShapeContainer* container)
 	return true;
 }
 
-bool Element::rescaleOnlyAspectRatio()
+auto Element::rescaleOnlyAspectRatio() -> bool
 {
 	return false;
 }

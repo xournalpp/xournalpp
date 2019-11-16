@@ -82,7 +82,8 @@ public:
 
 		{
 			std::lock_guard<std::mutex> lock(internalLock);
-			returnBufferLength = std::min<size_t>(nSamples, std::deque<T>::size() - std::deque<T>::size() % this->channels);
+			returnBufferLength =
+			        std::min<size_t>(nSamples, std::deque<T>::size() - std::deque<T>::size() % this->channels);
 			for (size_t i = 0; i < returnBufferLength; i++)
 			{
 				returnBuffer[i] = this->back();

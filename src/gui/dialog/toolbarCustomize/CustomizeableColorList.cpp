@@ -27,7 +27,7 @@ CustomizeableColorList::~CustomizeableColorList()
 	this->colors.clear();
 }
 
-vector<XojColor*>* CustomizeableColorList::getPredefinedColors()
+auto CustomizeableColorList::getPredefinedColors() -> vector<XojColor*>*
 {
 	return &this->colors;
 }

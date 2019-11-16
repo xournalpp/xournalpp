@@ -6,9 +6,7 @@ ScrollHandlingXournalpp::ScrollHandlingXournalpp()
 {
 }
 
-ScrollHandlingXournalpp::~ScrollHandlingXournalpp()
-{
-}
+ScrollHandlingXournalpp::~ScrollHandlingXournalpp() = default;
 
 void ScrollHandlingXournalpp::setLayoutSize(int width, int height)
 {
@@ -19,12 +17,12 @@ void ScrollHandlingXournalpp::setLayoutSize(int width, int height)
 	gtk_adjustment_set_upper(adjVertical, height);
 }
 
-int ScrollHandlingXournalpp::getPreferredWidth()
+auto ScrollHandlingXournalpp::getPreferredWidth() -> int
 {
 	return 400;
 }
 
-int ScrollHandlingXournalpp::getPreferredHeight()
+auto ScrollHandlingXournalpp::getPreferredHeight() -> int
 {
 	return 400;
 }
@@ -51,7 +49,7 @@ void ScrollHandlingXournalpp::translate(double& x, double& y)
 	y += v;
 }
 
-bool ScrollHandlingXournalpp::fullRepaint()
+auto ScrollHandlingXournalpp::fullRepaint() -> bool
 {
 	return true;
 }

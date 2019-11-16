@@ -67,24 +67,23 @@ PopupMenuButton::PopupMenuButton(GtkWidget* button, GtkWidget* menu)
  : button(button),
    menu(menu)
 {
-	g_signal_connect(button, "clicked", G_CALLBACK(
-		+[](GtkButton* button, PopupMenuButton* self)
-	{
-		                 gtk_menu_popup(GTK_MENU(self->menu), nullptr, nullptr, (GtkMenuPositionFunc) menu_position_func,
-		                                button, 0, gtk_get_current_event_time());
+	g_signal_connect(button,
+	                 "clicked",
+	                 G_CALLBACK(+[](GtkButton* button, PopupMenuButton* self) {
+		                 gtk_menu_popup(GTK_MENU(self->menu), nullptr, nullptr,
+		                                (GtkMenuPositionFunc) menu_position_func, button, 0,
+		                                gtk_get_current_event_time());
 
-			gtk_menu_shell_select_first(GTK_MENU_SHELL(self->menu), false);
+		                 gtk_menu_shell_select_first(GTK_MENU_SHELL(self->menu), false);
 
-			// GTK 3.22: gtk_menu_popup_at_widget(menu, button, GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, nullptr);
-
-		}), this);
+		                 // GTK 3.22: gtk_menu_popup_at_widget(menu, button, GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, nullptr);
+	                 }),
+	                 this);
 
 	gtk_menu_attach_to_widget(GTK_MENU(menu), button, menu_detacher);
 }
 
-PopupMenuButton::~PopupMenuButton()
-{
-}
+PopupMenuButton::~PopupMenuButton() = default;
 
 void PopupMenuButton::setMenu(GtkWidget* menu)
 {

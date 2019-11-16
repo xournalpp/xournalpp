@@ -10,9 +10,7 @@ ArrowHandler::ArrowHandler(XournalView* xournal, XojPageView* redrawable, PageRe
 {
 }
 
-ArrowHandler::~ArrowHandler()
-{
-}
+ArrowHandler::~ArrowHandler() = default;
 
 void ArrowHandler::drawShape(Point& c, const PositionInputData& pos)
 {

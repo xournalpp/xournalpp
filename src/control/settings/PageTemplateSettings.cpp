@@ -17,11 +17,9 @@ PageTemplateSettings::PageTemplateSettings()
 	backgroundType.format = PageTypeFormat::Lined;
 }
 
-PageTemplateSettings::~PageTemplateSettings()
-{
-}
+PageTemplateSettings::~PageTemplateSettings() = default;
 
-bool PageTemplateSettings::isCopyLastPageSettings()
+auto PageTemplateSettings::isCopyLastPageSettings() -> bool
 {
 	return this->copyLastPageSettings;
 }
@@ -31,7 +29,7 @@ void PageTemplateSettings::setCopyLastPageSettings(bool copyLastPageSettings)
 	this->copyLastPageSettings = copyLastPageSettings;
 }
 
-bool PageTemplateSettings::isCopyLastPageSize()
+auto PageTemplateSettings::isCopyLastPageSize() -> bool
 {
 	return this->copyLastPageSize;
 }
@@ -41,7 +39,7 @@ void PageTemplateSettings::setCopyLastPageSize(bool copyLastPageSize)
 	this->copyLastPageSize = copyLastPageSize;
 }
 
-double PageTemplateSettings::getPageWidth()
+auto PageTemplateSettings::getPageWidth() -> double
 {
 	return this->pageWidth;
 }
@@ -51,7 +49,7 @@ void PageTemplateSettings::setPageWidth(double pageWidth)
 	this->pageWidth = pageWidth;
 }
 
-double PageTemplateSettings::getPageHeight()
+auto PageTemplateSettings::getPageHeight() -> double
 {
 	return this->pageHeight;
 }
@@ -61,7 +59,7 @@ void PageTemplateSettings::setPageHeight(double pageHeight)
 	this->pageHeight = pageHeight;
 }
 
-int PageTemplateSettings::getBackgroundColor()
+auto PageTemplateSettings::getBackgroundColor() -> int
 {
 	return this->backgroundColor;
 }
@@ -71,12 +69,12 @@ void PageTemplateSettings::setBackgroundColor(int backgroundColor)
 	this->backgroundColor = backgroundColor;
 }
 
-PageType PageTemplateSettings::getBackgroundType()
+auto PageTemplateSettings::getBackgroundType() -> PageType
 {
 	return backgroundType;
 }
 
-PageType PageTemplateSettings::getPageInsertType()
+auto PageTemplateSettings::getPageInsertType() -> PageType
 {
 	if (copyLastPageSettings)
 	{
@@ -96,7 +94,7 @@ void PageTemplateSettings::setBackgroundType(PageType backgroundType)
  *
  * @return true if valid
  */
-bool PageTemplateSettings::parse(string tpl)
+auto PageTemplateSettings::parse(string tpl) -> bool
 {
 	stringstream ss(tpl.c_str());
 	string line;
@@ -156,7 +154,7 @@ bool PageTemplateSettings::parse(string tpl)
 /**
  * Convert to a parsable string
  */
-string PageTemplateSettings::toString()
+auto PageTemplateSettings::toString() -> string
 {
 	string str = "xoj/template\n";
 

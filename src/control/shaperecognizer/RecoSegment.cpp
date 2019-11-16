@@ -3,7 +3,7 @@
 #include "Inertia.h"
 
 #include <cmath>
-#include <stdlib.h>
+#include <cstdlib>
 
 RecoSegment::RecoSegment()
 {
@@ -22,11 +22,9 @@ RecoSegment::RecoSegment()
 	this->ycenter = 0;
 }
 
-RecoSegment::~RecoSegment()
-{
-}
+RecoSegment::~RecoSegment() = default;
 
-Point RecoSegment::calcEdgeIsect(RecoSegment* r2)
+auto RecoSegment::calcEdgeIsect(RecoSegment* r2) -> Point
 {
 	double t;
 	t = (r2->xcenter - this->xcenter) * sin(r2->angle) - (r2->ycenter - this->ycenter) * cos(r2->angle);

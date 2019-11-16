@@ -21,7 +21,7 @@ void BlockingJob::execute()
 	g_idle_add((GSourceFunc) finished, this->control);
 }
 
-bool BlockingJob::finished(Control* control)
+auto BlockingJob::finished(Control* control) -> bool
 {
 	// "this" is not needed, "control" is in
 	// the closure, therefore no sync needed
@@ -33,7 +33,7 @@ bool BlockingJob::finished(Control* control)
 	return false;
 }
 
-JobType BlockingJob::getType()
+auto BlockingJob::getType() -> JobType
 {
 	return JOB_TYPE_BLOCKING;
 }

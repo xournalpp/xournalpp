@@ -95,9 +95,7 @@ XournalppCursor::XournalppCursor(Control* control)
 };
 // clang-format on
 
-XournalppCursor::~XournalppCursor()
-{
-}
+XournalppCursor::~XournalppCursor() = default;
 
 
 void XournalppCursor::setInputDeviceClass(InputDeviceClass device)
@@ -214,8 +212,8 @@ void XournalppCursor::updateCursor()
 	if (!xournal) return;
 
 	GdkCursor* cursor = nullptr;
-	
-	
+
+
 	if (this->busy)
 	{
 		setCursor(CRSR_BUSY);
@@ -367,7 +365,7 @@ void XournalppCursor::updateCursor()
 }
 
 
-GdkCursor* XournalppCursor::getEraserCursor()
+auto XournalppCursor::getEraserCursor() -> GdkCursor*
 {
 
 	if (CRSR_ERASER == this->currentCursor) return nullptr;  // cursor already set
@@ -392,7 +390,7 @@ GdkCursor* XournalppCursor::getEraserCursor()
 }
 
 
-GdkCursor* XournalppCursor::getHighlighterCursor()
+auto XournalppCursor::getHighlighterCursor() -> GdkCursor*
 {
 	if (this->drawDirActive)
 	{
@@ -405,7 +403,7 @@ GdkCursor* XournalppCursor::getHighlighterCursor()
 }
 
 
-GdkCursor* XournalppCursor::getPenCursor()
+auto XournalppCursor::getPenCursor() -> GdkCursor*
 {
 	if (this->drawDirActive)
 	{
@@ -418,7 +416,7 @@ GdkCursor* XournalppCursor::getPenCursor()
 }
 
 
-GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
+auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> GdkCursor*
 {
 	int rgb = control->getToolHandler()->getColor();
 	double r = ((rgb >> 16) & 0xff) / 255.0;
@@ -543,7 +541,7 @@ void XournalppCursor::setCursor(int cursorID)
 }
 
 
-GdkCursor* XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
+auto XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl) -> GdkCursor*
 {
 	bool big = control->getSettings()->isShowBigCursor();
 	bool bright = control->getSettings()->isHighlightPosition();

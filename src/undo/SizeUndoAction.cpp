@@ -20,9 +20,7 @@ public:
 		this->pressureCount = pressureCount;
 	}
 
-	~SizeUndoActionEntry()
-	{
-	}
+	~SizeUndoActionEntry() = default;
 	Stroke* s;
 	double orignalWidth;
 	double newWidth;
@@ -47,7 +45,7 @@ SizeUndoAction::~SizeUndoAction()
 	this->data.clear();
 }
 
-vector<double> SizeUndoAction::getPressure(Stroke* s)
+auto SizeUndoAction::getPressure(Stroke* s) -> vector<double>
 {
 	int count = s->getPointCount();
 	vector<double> data;
@@ -65,7 +63,7 @@ void SizeUndoAction::addStroke(Stroke* s, double originalWidth, double newWidth,
 	this->data.push_back(new SizeUndoActionEntry(s, originalWidth, newWidth, originalPressure, newPressure, pressureCount));
 }
 
-bool SizeUndoAction::undo(Control* control)
+auto SizeUndoAction::undo(Control* control) -> bool
 {
 	if (this->data.empty())
 	{
@@ -89,7 +87,7 @@ bool SizeUndoAction::undo(Control* control)
 	return true;
 }
 
-bool SizeUndoAction::redo(Control* control)
+auto SizeUndoAction::redo(Control* control) -> bool
 {
 	if (this->data.empty())
 	{
@@ -113,7 +111,7 @@ bool SizeUndoAction::redo(Control* control)
 	return true;
 }
 
-string SizeUndoAction::getText()
+auto SizeUndoAction::getText() -> string
 {
 	return _("Change stroke width");
 }

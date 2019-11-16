@@ -11,9 +11,7 @@ CircleHandler::CircleHandler(XournalView* xournal, XojPageView* redrawable, Page
 {
 }
 
-CircleHandler::~CircleHandler()
-{
-}
+CircleHandler::~CircleHandler() = default;
 
 
 void CircleHandler::drawShape(Point& c, const PositionInputData& pos)
@@ -54,7 +52,7 @@ void CircleHandler::drawShape(Point& c, const PositionInputData& pos)
 		{
 			int signW = width>0?1:-1;
 			int signH = height>0?1:-1;
-			width = std::max( width*signW, height*signH) * signW;
+			width = std::max(width * signW, height * signH) * signW;
 			height = (width * signW) * signH;
 		}
 

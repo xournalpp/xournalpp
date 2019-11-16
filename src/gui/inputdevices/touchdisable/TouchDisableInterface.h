@@ -25,4 +25,4 @@ public:
 	virtual void init();
 
 private:
-	};
+};

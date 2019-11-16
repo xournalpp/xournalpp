@@ -5,9 +5,7 @@ IntAttribute::IntAttribute(const char* name, int value) : XMLAttribute(name)
 	this->value = value;
 }
 
-IntAttribute::~IntAttribute()
-{
-}
+IntAttribute::~IntAttribute() = default;
 
 void IntAttribute::writeOut(OutputStream* out)
 {

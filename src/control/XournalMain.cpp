@@ -34,13 +34,9 @@
 #include <algorithm>  // std::sort
 
 
-XournalMain::XournalMain()
-{
-}
+XournalMain::XournalMain() = default;
 
-XournalMain::~XournalMain()
-{
-}
+XournalMain::~XournalMain() = default;
 
 void XournalMain::initLocalisation()
 {
@@ -68,14 +64,14 @@ void XournalMain::initLocalisation()
 
 	// Not working on Windows! Working on Linux, but not sure if it's needed
 #ifndef _WIN32
-try
-{
-	std::locale::global(std::locale("")); // "" - system default locale
-}
-catch (std::runtime_error &e)
-{
-	g_warning("XournalMain: System default locale could not be set.\nCaused by: %s", e.what());
-}
+	try
+	{
+		std::locale::global(std::locale(""));  // "" - system default locale
+	}
+	catch (std::runtime_error& e)
+	{
+		g_warning("XournalMain: System default locale could not be set.\nCaused by: %s", e.what());
+	}
 #endif
 	std::cout.imbue(std::locale());
 }
@@ -99,7 +95,7 @@ void XournalMain::checkForErrorlog()
 		{
 			if (StringUtils::startsWith(file, "errorlog."))
 			{
-				errorList.push_back(file);
+				errorList.emplace_back(file);
 			}
 		}
 	}
@@ -123,8 +119,8 @@ void XournalMain::checkForErrorlog()
 #endif
 	msg += FS(_F("The most recent log file name: {1}") % errorList[0]);
 
-	GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL,
-		GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
+	GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
+	                                           msg.c_str());
 
 	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
 	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), 2);
@@ -176,8 +172,8 @@ void XournalMain::checkForEmergencySave(Control* control) {
 
 	string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
 
-	GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL,
-		GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
+	GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
+	                                           msg.c_str());
 
 	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete file"), 1);
 	gtk_dialog_add_button(GTK_DIALOG(dialog), _("Restore file"), 2);
@@ -204,7 +200,7 @@ void XournalMain::checkForEmergencySave(Control* control) {
 	gtk_widget_destroy(dialog);
 }
 
-int XournalMain::exportImg(const char* input, const char* output)
+auto XournalMain::exportImg(const char* input, const char* output) -> int
 {
 	LoadHandler loader;
 
@@ -254,7 +250,7 @@ int XournalMain::exportImg(const char* input, const char* output)
 	return 0; // no error
 }
 
-int XournalMain::exportPdf(const char* input, const char* output)
+auto XournalMain::exportPdf(const char* input, const char* output) -> int
 {
 	LoadHandler loader;
 
@@ -287,7 +283,7 @@ int XournalMain::exportPdf(const char* input, const char* output)
 	return 0; // no error
 }
 
-int XournalMain::run(int argc, char* argv[])
+auto XournalMain::run(int argc, char* argv[]) -> int
 {
 	this->initLocalisation();
 
@@ -303,13 +299,11 @@ int XournalMain::run(int argc, char* argv[])
 	string create_img = _("Image output filename (.png / .svg)");
 	string page_jump = _("Jump to Page (first Page: 1)");
 	string audio_folder = _("Absolute path for the audio files playback");
-	GOptionEntry options[] = {
-		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      create_pdf.c_str(), nullptr },
-		{ "create-img",      'i', 0, G_OPTION_ARG_FILENAME,       &imgFilename,      create_img.c_str(), nullptr },
-		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, page_jump.c_str(), "N" },
-		{G_OPTION_REMAINING,   0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>", nullptr },
-		{nullptr}
-	};
+	GOptionEntry options[] = {{"create-pdf", 'p', 0, G_OPTION_ARG_FILENAME, &pdfFilename, create_pdf.c_str(), nullptr},
+	                          {"create-img", 'i', 0, G_OPTION_ARG_FILENAME, &imgFilename, create_img.c_str(), nullptr},
+	                          {"page", 'n', 0, G_OPTION_ARG_INT, &openAtPageNumber, page_jump.c_str(), "N"},
+	                          {G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename, "<input>", nullptr},
+	                          {nullptr}};
 
 	g_option_context_add_main_entries(context, options, GETTEXT_PACKAGE);
 	// parse options, so we don't need gtk_init, but don't init display (so we have a commandline mode)
@@ -346,7 +340,7 @@ int XournalMain::run(int argc, char* argv[])
 	// Init GTK Display
 	gtk_init(&argc, &argv);
 
-	GladeSearchpath* gladePath = new GladeSearchpath();
+	auto* gladePath = new GladeSearchpath();
 	initResourcePath(gladePath, "ui/about.glade");
 	initResourcePath(gladePath, "ui/xournalpp.css",  false); 	//will notify user if file not present. Path ui/ already added above.
 
@@ -354,7 +348,7 @@ int XournalMain::run(int argc, char* argv[])
 	string colorNameFile = Util::getConfigFile("colornames.ini").str();
 	ToolbarColorNames::getInstance().loadFile(colorNameFile);
 
-	Control* control = new Control(gladePath);
+	auto* control = new Control(gladePath);
 
 	if (control->getSettings()->isDarkTheme())
 	{
@@ -365,7 +359,7 @@ int XournalMain::run(int argc, char* argv[])
 	string icon = gladePath->getFirstSearchPath() + "/icons/";
 	gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.c_str());
 
-	MainWindow* win = new MainWindow(gladePath, control);
+	auto* win = new MainWindow(gladePath, control);
 	control->initWindow(win);
 
 	win->show(nullptr);
@@ -434,7 +428,7 @@ int XournalMain::run(int argc, char* argv[])
  * Find a file in a resource folder, and return the resource folder path
  * Return an empty string, if the folder was not found
  */
-string XournalMain::findResourcePath(string searchFile)
+auto XournalMain::findResourcePath(string searchFile) -> string
 {
 	// First check if the files are available relative to the path
 	// So a "portable" installation will be possible

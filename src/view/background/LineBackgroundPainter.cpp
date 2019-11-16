@@ -7,9 +7,7 @@ LineBackgroundPainter::LineBackgroundPainter(bool verticalLine)
 {
 }
 
-LineBackgroundPainter::~LineBackgroundPainter()
-{
-}
+LineBackgroundPainter::~LineBackgroundPainter() = default;
 
 void LineBackgroundPainter::resetConfig()
 {

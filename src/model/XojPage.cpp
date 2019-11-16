@@ -34,9 +34,9 @@ void XojPage::unreference()
 	}
 }
 
-XojPage* XojPage::clone()
+auto XojPage::clone() -> XojPage*
 {
-	XojPage* page = new XojPage(this->width, this->height);
+	auto* page = new XojPage(this->width, this->height);
 
 	page->backgroundImage = this->backgroundImage;
 	for (Layer* l : this->layer)
@@ -88,12 +88,12 @@ void XojPage::setSelectedLayerId(int id)
 	this->currentLayer = id;
 }
 
-vector<Layer*>* XojPage::getLayers()
+auto XojPage::getLayers() -> vector<Layer*>*
 {
 	return &this->layer;
 }
 
-size_t XojPage::getLayerCount()
+auto XojPage::getLayerCount() -> size_t
 {
 	return this->layer.size();
 }
@@ -101,7 +101,7 @@ size_t XojPage::getLayerCount()
 /**
  * Layer ID 0 = Background, Layer ID 1 = Layer 1
  */
-int XojPage::getSelectedLayerId()
+auto XojPage::getSelectedLayerId() -> int
 {
 	if (this->currentLayer == npos)
 	{
@@ -133,7 +133,7 @@ void XojPage::setLayerVisible(int layerId, bool visible)
 	this->layer[layerId]->setVisible(visible);
 }
 
-bool XojPage::isLayerVisible(int layerId)
+auto XojPage::isLayerVisible(int layerId) -> bool
 {
 	if (layerId < 0)
 	{
@@ -154,7 +154,7 @@ bool XojPage::isLayerVisible(int layerId)
 	return this->layer[layerId]->isVisible();
 }
 
-bool XojPage::isLayerVisible(Layer* layer)
+auto XojPage::isLayerVisible(Layer* layer) -> bool
 {
 	return layer->isVisible();
 }
@@ -171,7 +171,7 @@ void XojPage::setBackgroundColor(int color)
 	this->backgroundColor = color;
 }
 
-int XojPage::getBackgroundColor()
+auto XojPage::getBackgroundColor() -> int
 {
 	return this->backgroundColor;
 }
@@ -182,22 +182,22 @@ void XojPage::setSize(double width, double height)
 	this->height = height;
 }
 
-double XojPage::getWidth() const
+auto XojPage::getWidth() const -> double
 {
 	return this->width;
 }
 
-double XojPage::getHeight() const
+auto XojPage::getHeight() const -> double
 {
 	return this->height;
 }
 
-size_t XojPage::getPdfPageNr()
+auto XojPage::getPdfPageNr() -> size_t
 {
 	return this->pdfBackgroundPage;
 }
 
-bool XojPage::isAnnotated()
+auto XojPage::isAnnotated() -> bool
 {
 	for (Layer* l : this->layer)
 	{
@@ -223,12 +223,12 @@ void XojPage::setBackgroundType(PageType bgType)
 	}
 }
 
-PageType XojPage::getBackgroundType()
+auto XojPage::getBackgroundType() -> PageType
 {
 	return this->bgType;
 }
 
-BackgroundImage& XojPage::getBackgroundImage()
+auto XojPage::getBackgroundImage() -> BackgroundImage&
 {
 	return this->backgroundImage;
 }
@@ -238,7 +238,7 @@ void XojPage::setBackgroundImage(BackgroundImage img)
 	this->backgroundImage = img;
 }
 
-Layer* XojPage::getSelectedLayer()
+auto XojPage::getSelectedLayer() -> Layer*
 {
 	if (this->layer.empty())
 	{

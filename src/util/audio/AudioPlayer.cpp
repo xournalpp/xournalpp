@@ -22,7 +22,7 @@ AudioPlayer::~AudioPlayer()
 	this->audioQueue = nullptr;
 }
 
-bool AudioPlayer::start(string filename, unsigned int timestamp)
+auto AudioPlayer::start(string filename, unsigned int timestamp) -> bool
 {
 	// Start the producer for reading the data
 	bool status = this->vorbisProducer->start(std::move(filename), timestamp);
@@ -36,7 +36,7 @@ bool AudioPlayer::start(string filename, unsigned int timestamp)
 	return status;
 }
 
-bool AudioPlayer::isPlaying()
+auto AudioPlayer::isPlaying() -> bool
 {
 	return this->portAudioConsumer->isPlaying();
 }
@@ -52,7 +52,7 @@ void AudioPlayer::pause()
 	this->portAudioConsumer->stopPlaying();
 }
 
-bool AudioPlayer::play()
+auto AudioPlayer::play() -> bool
 {
 	if (this->portAudioConsumer->isPlaying())
 	{
@@ -90,14 +90,14 @@ void AudioPlayer::seek(int seconds)
 	this->vorbisProducer->seek(seconds);
 }
 
-vector<DeviceInfo> AudioPlayer::getOutputDevices()
+auto AudioPlayer::getOutputDevices() -> vector<DeviceInfo>
 {
 	std::list<DeviceInfo> deviceList = this->portAudioConsumer->getOutputDevices();
 	return vector<DeviceInfo>{std::make_move_iterator(std::begin(deviceList)),
 							  std::make_move_iterator(std::end(deviceList))};
 }
 
-Settings* AudioPlayer::getSettings()
+auto AudioPlayer::getSettings() -> Settings*
 {
 	return this->settings;
 }

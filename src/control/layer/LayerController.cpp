@@ -15,11 +15,6 @@ LayerController::LayerController(Control* control)
 {
 }
 
-LayerController::~LayerController()
-{
-	// Do not delete the listeners!
-}
-
 void LayerController::documentChanged(DocumentChangeType type)
 {
 	if (type == DOCUMENT_CHANGE_CLEARED || type == DOCUMENT_CHANGE_COMPLETE)
@@ -83,7 +78,7 @@ void LayerController::fireLayerVisibilityChanged()
 	}
 }
 
-bool LayerController::actionPerformed(ActionType type)
+auto LayerController::actionPerformed(ActionType type) -> bool
 {
 	switch(type)
 	{
@@ -173,7 +168,7 @@ void LayerController::addNewLayer()
 		return;
 	}
 
-	Layer* l = new Layer();
+	auto* l = new Layer();
 	int layerPos = p->getSelectedLayerId();
 	p->insertLayer(l, layerPos);
 
@@ -299,12 +294,12 @@ void LayerController::copyCurrentLayer()
 	fireRebuildLayerMenu();
 }
 
-PageRef LayerController::getCurrentPage()
+auto LayerController::getCurrentPage() -> PageRef
 {
 	return control->getDocument()->getPage(selectedPage);
 }
 
-size_t LayerController::getCurrentPageId()
+auto LayerController::getCurrentPageId() -> size_t
 {
 	return selectedPage;
 }
@@ -351,7 +346,7 @@ void LayerController::switchToLay(int layer, bool hideShow)
 /**
  * @return Layer count of the current page
  */
-size_t LayerController::getLayerCount()
+auto LayerController::getLayerCount() -> size_t
 {
 	PageRef page = getCurrentPage();
 	if (!page.isValid())
@@ -365,7 +360,7 @@ size_t LayerController::getLayerCount()
 /**
  * @return Current layer ID
  */
-size_t LayerController::getCurrentLayerId()
+auto LayerController::getCurrentLayerId() -> size_t
 {
 	PageRef page = getCurrentPage();
 	if (!page.isValid())

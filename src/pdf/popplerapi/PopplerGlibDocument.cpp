@@ -6,9 +6,7 @@
 #include <memory>
 
 
-PopplerGlibDocument::PopplerGlibDocument()
-{
-}
+PopplerGlibDocument::PopplerGlibDocument() = default;
 
 PopplerGlibDocument::PopplerGlibDocument(const PopplerGlibDocument& doc)
  : document(doc.document)
@@ -42,12 +40,12 @@ void PopplerGlibDocument::assign(XojPdfDocumentInterface* doc)
 	}
 }
 
-bool PopplerGlibDocument::equals(XojPdfDocumentInterface* doc)
+auto PopplerGlibDocument::equals(XojPdfDocumentInterface* doc) -> bool
 {
 	return document == ((PopplerGlibDocument*)doc)->document;
 }
 
-bool PopplerGlibDocument::save(Path filename, GError** error)
+auto PopplerGlibDocument::save(Path filename, GError** error) -> bool
 {
 	if (document == nullptr)
 	{
@@ -62,7 +60,7 @@ bool PopplerGlibDocument::save(Path filename, GError** error)
 	return poppler_document_save(document, uri.c_str(), error);
 }
 
-bool PopplerGlibDocument::load(Path filename, string password, GError** error)
+auto PopplerGlibDocument::load(Path filename, string password, GError** error) -> bool
 {
 	string uri = filename.toUri(error);
 	if (*error != nullptr)
@@ -79,7 +77,7 @@ bool PopplerGlibDocument::load(Path filename, string password, GError** error)
 	return this->document != nullptr;
 }
 
-bool PopplerGlibDocument::load(gpointer data, gsize length, string password, GError** error)
+auto PopplerGlibDocument::load(gpointer data, gsize length, string password, GError** error) -> bool
 {
 	if (document)
 	{
@@ -90,12 +88,12 @@ bool PopplerGlibDocument::load(gpointer data, gsize length, string password, GEr
 	return this->document != nullptr;
 }
 
-bool PopplerGlibDocument::isLoaded()
+auto PopplerGlibDocument::isLoaded() -> bool
 {
 	return this->document != nullptr;
 }
 
-XojPdfPageSPtr PopplerGlibDocument::getPage(size_t page)
+auto PopplerGlibDocument::getPage(size_t page) -> XojPdfPageSPtr
 {
 	if (document == nullptr)
 	{
@@ -109,7 +107,7 @@ XojPdfPageSPtr PopplerGlibDocument::getPage(size_t page)
 	return pageptr;
 }
 
-size_t PopplerGlibDocument::getPageCount()
+auto PopplerGlibDocument::getPageCount() -> size_t
 {
 	if (document == nullptr)
 	{
@@ -119,7 +117,7 @@ size_t PopplerGlibDocument::getPageCount()
 	return poppler_document_get_n_pages(document);
 }
 
-XojPdfBookmarkIterator* PopplerGlibDocument::getContentsIter()
+auto PopplerGlibDocument::getContentsIter() -> XojPdfBookmarkIterator*
 {
 	if (document == nullptr)
 	{

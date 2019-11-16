@@ -19,9 +19,7 @@ GtkColorWrapper::GtkColorWrapper(const GdkRGBA& color)
 {
 }
 
-GtkColorWrapper::~GtkColorWrapper()
-{
-}
+GtkColorWrapper::~GtkColorWrapper() = default;
 
 /**
  * Apply the color to a cairo interface with "cairo_set_source_rgb"

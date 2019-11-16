@@ -15,7 +15,7 @@ PortAudioProducer::~PortAudioProducer()
 	}
 }
 
-std::list<DeviceInfo> PortAudioProducer::getInputDevices()
+auto PortAudioProducer::getInputDevices() -> std::list<DeviceInfo>
 {
 	std::list<DeviceInfo> deviceList;
 
@@ -32,7 +32,7 @@ std::list<DeviceInfo> PortAudioProducer::getInputDevices()
 	return deviceList;
 }
 
-const DeviceInfo PortAudioProducer::getSelectedInputDevice()
+auto PortAudioProducer::getSelectedInputDevice() -> const DeviceInfo
 {
 	try
 	{
@@ -45,12 +45,12 @@ const DeviceInfo PortAudioProducer::getSelectedInputDevice()
 	}
 }
 
-bool PortAudioProducer::isRecording()
+auto PortAudioProducer::isRecording() -> bool
 {
 	return this->inputStream != nullptr && this->inputStream->isActive();
 }
 
-bool PortAudioProducer::startRecording()
+auto PortAudioProducer::startRecording() -> bool
 {
 	// Check if there already is a recording
 	if (this->inputStream != nullptr)
@@ -102,8 +102,9 @@ bool PortAudioProducer::startRecording()
 	return true;
 }
 
-int PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer,
-									  const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags)
+auto PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer,
+                                       const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags)
+        -> int
 {
 	if (statusFlags)
 	{

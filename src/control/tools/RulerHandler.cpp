@@ -10,9 +10,7 @@ RulerHandler::RulerHandler(XournalView* xournal, XojPageView* redrawable, PageRe
 {
 }
 
-RulerHandler::~RulerHandler()
-{
-}
+RulerHandler::~RulerHandler() = default;
 
 
 void RulerHandler::snapRotation(double& x, double& y)

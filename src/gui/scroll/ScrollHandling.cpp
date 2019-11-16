@@ -7,16 +7,14 @@ ScrollHandling::ScrollHandling(GtkAdjustment* adjHorizontal, GtkAdjustment* adjV
 {
 }
 
-ScrollHandling::~ScrollHandling()
-{
-}
+ScrollHandling::~ScrollHandling() = default;
 
-GtkAdjustment* ScrollHandling::getHorizontal()
+auto ScrollHandling::getHorizontal() -> GtkAdjustment*
 {
 	return adjHorizontal;
 }
 
-GtkAdjustment* ScrollHandling::getVertical()
+auto ScrollHandling::getVertical() -> GtkAdjustment*
 {
 	return adjVertical;
 }

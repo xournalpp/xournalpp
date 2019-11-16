@@ -41,4 +41,4 @@ private:
 	string findResourcePath(string searchFile);
 
 private:
-	};
+};

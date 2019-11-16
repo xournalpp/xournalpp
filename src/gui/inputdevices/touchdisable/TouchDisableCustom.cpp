@@ -1,14 +1,14 @@
 #include "TouchDisableCustom.h"
 
+#include <utility>
+
 TouchDisableCustom::TouchDisableCustom(string enableCommand, string disableCommand)
- : enableCommand(enableCommand),
-   disableCommand(disableCommand)
+ : enableCommand(std::move(enableCommand))
+ , disableCommand(std::move(disableCommand))
 {
 }
 
-TouchDisableCustom::~TouchDisableCustom()
-{
-}
+TouchDisableCustom::~TouchDisableCustom() = default;
 
 void TouchDisableCustom::enableTouch()
 {

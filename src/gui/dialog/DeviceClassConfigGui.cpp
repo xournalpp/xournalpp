@@ -24,9 +24,7 @@ DeviceClassConfigGui::DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, Gtk
 	loadSettings();
 }
 
-DeviceClassConfigGui::~DeviceClassConfigGui()
-{
-}
+DeviceClassConfigGui::~DeviceClassConfigGui() = default;
 
 void DeviceClassConfigGui::loadSettings()
 {

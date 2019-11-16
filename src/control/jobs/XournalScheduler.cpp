@@ -9,9 +9,7 @@ XournalScheduler::XournalScheduler()
 	this->name = "XournalScheduler";
 }
 
-XournalScheduler::~XournalScheduler()
-{
-}
+XournalScheduler::~XournalScheduler() = default;
 
 void XournalScheduler::removeSidebar(SidebarPreviewBaseEntry* preview)
 {
@@ -82,7 +80,7 @@ void XournalScheduler::removeSource(void* source, JobType type, JobPriority prio
 	g_mutex_unlock(&this->jobQueueMutex);
 }
 
-bool XournalScheduler::existsSource(void* source, JobType type, JobPriority priority)
+auto XournalScheduler::existsSource(void* source, JobType type, JobPriority priority) -> bool
 {
 	bool exists = false;
 	g_mutex_lock(&this->jobQueueMutex);
@@ -114,7 +112,7 @@ void XournalScheduler::addRepaintSidebar(SidebarPreviewBaseEntry* preview)
 		return;
 	}
 
-	PreviewJob* job = new PreviewJob(preview);
+	auto* job = new PreviewJob(preview);
 	addJob(job, JOB_PRIORITY_HIGH);
 	job->unref();
 }
@@ -126,7 +124,7 @@ void XournalScheduler::addRerenderPage(XojPageView* view)
 		return;
 	}
 
-	RenderJob* job = new RenderJob(view);
+	auto* job = new RenderJob(view);
 	addJob(job, JOB_PRIORITY_URGENT);
 	job->unref();
 }

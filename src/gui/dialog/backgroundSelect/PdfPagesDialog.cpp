@@ -15,7 +15,7 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
 	for (size_t i = 0; i < doc->getPdfPageCount(); i++)
 	{
 		XojPdfPageSPtr p = doc->getPdfPage(i);
-		PdfElementView* pv = new PdfElementView(elements.size(), p, this);
+		auto* pv = new PdfElementView(elements.size(), p, this);
 		elements.push_back(pv);
 	}
 	if (doc->getPdfPageCount() > 0)
@@ -43,9 +43,7 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
 	g_signal_connect(get("buttonOk"), "clicked", G_CALLBACK(okButtonCallback), this);
 }
 
-PdfPagesDialog::~PdfPagesDialog()
-{
-}
+PdfPagesDialog::~PdfPagesDialog() = default;
 
 void PdfPagesDialog::updateOkButton()
 {
@@ -70,7 +68,7 @@ void PdfPagesDialog::onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dl
 	{
 		for (BaseElementView* p : dlg->elements)
 		{
-			PdfElementView* pv = (PdfElementView*)p;
+			auto* pv = (PdfElementView*) p;
 			pv->setHideUnused();
 		}
 	}
@@ -83,12 +81,12 @@ void PdfPagesDialog::onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dl
 	dlg->updateOkButton();
 }
 
-double PdfPagesDialog::getZoom()
+auto PdfPagesDialog::getZoom() -> double
 {
 	return 0.25;
 }
 
-int PdfPagesDialog::getSelectedPage()
+auto PdfPagesDialog::getSelectedPage() -> int
 {
 	if (confirmed)
 	{
@@ -105,7 +103,7 @@ void PdfPagesDialog::show(GtkWindow* parent)
 	int unused = 0;
 	for (BaseElementView* p : elements)
 	{
-		PdfElementView* pv = (PdfElementView*)p;
+		auto* pv = (PdfElementView*) p;
 		if (!pv->isUsed())
 		{
 			unused++;

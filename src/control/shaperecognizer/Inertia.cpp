@@ -19,21 +19,19 @@ Inertia::Inertia(const Inertia& inertia)
 	*this = inertia;
 }
 
-Inertia::~Inertia()
-{
-}
+Inertia::~Inertia() = default;
 
-double Inertia::centerX()
+auto Inertia::centerX() -> double
 {
 	return this->sx / this->mass;
 }
 
-double Inertia::centerY()
+auto Inertia::centerY() -> double
 {
 	return this->sy / this->mass;
 }
 
-double Inertia::xx()
+auto Inertia::xx() -> double
 {
 	if (this->mass <= 0.0)
 	{
@@ -42,7 +40,7 @@ double Inertia::xx()
 	return (this->sxx - this->sx * this->sx / this->mass) / this->mass;
 }
 
-double Inertia::xy()
+auto Inertia::xy() -> double
 {
 	if (this->mass <= 0.0)
 	{
@@ -51,7 +49,7 @@ double Inertia::xy()
 	return (this->sxy - this->sx * this->sy / this->mass) / this->mass;
 }
 
-double Inertia::yy()
+auto Inertia::yy() -> double
 {
 	if (this->mass <= 0.0)
 	{
@@ -60,7 +58,7 @@ double Inertia::yy()
 	return (this->syy - this->sy * this->sy / this->mass) / this->mass;
 }
 
-double Inertia::rad()
+auto Inertia::rad() -> double
 {
 	double ixx = this->xx();
 	double iyy = this->yy();
@@ -71,7 +69,7 @@ double Inertia::rad()
 	return sqrt(ixx + iyy);
 }
 
-double Inertia::det()
+auto Inertia::det() -> double
 {
 	double ixx = this->xx();
 	double iyy = this->yy();
@@ -89,7 +87,7 @@ double Inertia::det()
 	return 4 * (ixx * iyy - ixy * ixy) / (ixx + iyy) / (ixx + iyy);
 }
 
-double Inertia::getMass()
+auto Inertia::getMass() -> double
 {
 	return mass;
 }

@@ -181,7 +181,7 @@ void Sidebar::saveSize()
 	this->control->getSettings()->setSidebarWidth(alloc.width);
 }
 
-Control* Sidebar::getControl()
+auto Sidebar::getControl() -> Control*
 {
 	return this->control;
 }

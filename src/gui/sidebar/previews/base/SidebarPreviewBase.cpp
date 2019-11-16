@@ -82,12 +82,12 @@ void SidebarPreviewBase::sizeChanged(GtkWidget* widget, GtkAllocation* allocatio
 	}
 }
 
-double SidebarPreviewBase::getZoom()
+auto SidebarPreviewBase::getZoom() -> double
 {
 	return this->zoom;
 }
 
-PdfCache* SidebarPreviewBase::getCache()
+auto SidebarPreviewBase::getCache() -> PdfCache*
 {
 	return this->cache;
 }
@@ -97,12 +97,12 @@ void SidebarPreviewBase::layout()
 	this->layoutmanager->layout(this);
 }
 
-bool SidebarPreviewBase::hasData()
+auto SidebarPreviewBase::hasData() -> bool
 {
 	return true;
 }
 
-GtkWidget* SidebarPreviewBase::getWidget()
+auto SidebarPreviewBase::getWidget() -> GtkWidget*
 {
 	return this->scrollPreview;
 }
@@ -115,7 +115,7 @@ void SidebarPreviewBase::documentChanged(DocumentChangeType type)
 	}
 }
 
-bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
+auto SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar) -> bool
 {
 	if (!sidebar->enabled)
 	{

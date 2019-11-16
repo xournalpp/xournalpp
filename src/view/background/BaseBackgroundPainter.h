@@ -43,7 +43,7 @@ protected:
 	void paintBackgroundColor();
 
 private:
-	protected:
+protected:
 	BackgroundConfig* config = nullptr;
 	PageRef page;
 	cairo_t* cr = nullptr;

@@ -23,70 +23,66 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 	GtkWidget* slider = get("zoomCallibSlider");
 	g_return_if_fail(slider != nullptr);
 
-	g_signal_connect(slider, "change-value", G_CALLBACK(
-		+[](GtkRange* range, GtkScrollType scroll, gdouble value, SettingsDialog* self)
-		{
-	self->setDpi((int) value);
-		}), this);
+	g_signal_connect(slider, "change-value",
+	                 G_CALLBACK(+[](GtkRange* range, GtkScrollType scroll, gdouble value, SettingsDialog* self) {
+		                 self->setDpi((int) value);
+	                 }),
+	                 this);
 
-	g_signal_connect(get("cbAutosave"), "toggled", G_CALLBACK(
-		+[](GtkToggleButton* togglebutton, SettingsDialog* self)
-		{
-	self->enableWithCheckbox("cbAutosave", "boxAutosave");
-		}), this);
+	g_signal_connect(get("cbAutosave"), "toggled", G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+		                 self->enableWithCheckbox("cbAutosave", "boxAutosave");
+	                 }),
+	                 this);
 
 
-	g_signal_connect(get("btTestEnable"), "clicked", G_CALLBACK(
-		+[](GtkButton* bt, SettingsDialog* self)
-		{
-	system(gtk_entry_get_text(GTK_ENTRY(self->get("txtEnableTouchCommand"))));
-		}), this);
+	g_signal_connect(get("btTestEnable"), "clicked", G_CALLBACK(+[](GtkButton* bt, SettingsDialog* self) {
+		                 system(gtk_entry_get_text(GTK_ENTRY(self->get("txtEnableTouchCommand"))));
+	                 }),
+	                 this);
 
-	g_signal_connect(get("btTestDisable"), "clicked", G_CALLBACK(
-		+[](GtkButton* bt, SettingsDialog* self)
-		{
-	system(gtk_entry_get_text(GTK_ENTRY(self->get("txtDisableTouchCommand"))));
-		}), this);
+	g_signal_connect(get("btTestDisable"), "clicked", G_CALLBACK(+[](GtkButton* bt, SettingsDialog* self) {
+		                 system(gtk_entry_get_text(GTK_ENTRY(self->get("txtDisableTouchCommand"))));
+	                 }),
+	                 this);
 
-	g_signal_connect(get("cbAddVerticalSpace"), "toggled", G_CALLBACK(
-			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
-			{
-	self->enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpace");
-			}), this);
+	g_signal_connect(get("cbAddVerticalSpace"), "toggled",
+	                 G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+		                 self->enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpace");
+	                 }),
+	                 this);
 
-	g_signal_connect(get("cbAddHorizontalSpace"), "toggled", G_CALLBACK(
-			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
-			{
-	self->enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpace");
-			}), this);
+	g_signal_connect(get("cbAddHorizontalSpace"), "toggled",
+	                 G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+		                 self->enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpace");
+	                 }),
+	                 this);
 
-	g_signal_connect(get("cbDrawDirModsEnabled"), "toggled", G_CALLBACK(
-			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
-			{
-	self->enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
-			}), this);
+	g_signal_connect(get("cbDrawDirModsEnabled"), "toggled",
+	                 G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+		                 self->enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
+	                 }),
+	                 this);
 
-	g_signal_connect(get("cbStrokeFilterEnabled"), "toggled", G_CALLBACK(
-			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
-			{
-	self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
-				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
-				self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
-				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
-				self->enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
-			}), this);	
-	
-	g_signal_connect(get("cbDisableTouchOnPenNear"), "toggled", G_CALLBACK(
-			+[](GtkToggleButton* togglebutton, SettingsDialog* self)
-			{
-	self->enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
-			}), this);
+	g_signal_connect(get("cbStrokeFilterEnabled"), "toggled",
+	                 G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+		                 self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
+		                 self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
+		                 self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
+		                 self->enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
+		                 self->enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
+	                 }),
+	                 this);
 
-	g_signal_connect(get("cbTouchDisableMethod"), "changed", G_CALLBACK(
-			+[](GtkComboBox* comboBox, SettingsDialog* self)
-			{
-	self->customHandRecognitionToggled();
-			}), this);
+	g_signal_connect(get("cbDisableTouchOnPenNear"), "toggled",
+	                 G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+		                 self->enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
+	                 }),
+	                 this);
+
+	g_signal_connect(
+	        get("cbTouchDisableMethod"), "changed",
+	        G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) { self->customHandRecognitionToggled(); }),
+	        this);
 
 	gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
 	gtk_widget_show(callib);
@@ -177,7 +173,7 @@ void SettingsDialog::loadCheckbox(const char* name, gboolean value)
 	gtk_toggle_button_set_active(b, value);
 }
 
-bool SettingsDialog::getCheckbox(const char* name)
+auto SettingsDialog::getCheckbox(const char* name) -> bool
 {
 	GtkToggleButton* b = GTK_TOGGLE_BUTTON(get(name));
 	return gtk_toggle_button_get_active(b);
@@ -417,7 +413,7 @@ void SettingsDialog::load()
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")), settings->getDefaultSeekTime());
 }
 
-string SettingsDialog::updateHideString(const string& hidden, bool hideMenubar, bool hideSidebar)
+auto SettingsDialog::updateHideString(const string& hidden, bool hideMenubar, bool hideSidebar) -> string
 {
 	string newHidden;
 
@@ -642,7 +638,7 @@ void SettingsDialog::save()
 	}
 
 	settings->setAudioGain((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spAudioGain"))));
-	settings->setDefaultSeekTime((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime"))));
+	settings->setDefaultSeekTime((double) gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime"))));
 
 	for (DeviceClassConfigGui* deviceClassConfigGui : this->deviceClassConfigs)
 	{

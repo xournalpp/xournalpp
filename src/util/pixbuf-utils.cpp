@@ -41,16 +41,15 @@
 
 #include "pixbuf-utils.h"
 
-#include <math.h>
-#include <stdio.h>
-#include <errno.h>
+#include <cmath>
+#include <cstdio>
+#include <cerrno>
 #include <gdk/gdk.h>
 
 const cairo_user_data_key_t pixel_key = { 0 };
 const cairo_user_data_key_t format_key = { 0 };
 
-cairo_surface_t*
-f_image_surface_create(cairo_format_t format, int width, int height)
+auto f_image_surface_create(cairo_format_t format, int width, int height) -> cairo_surface_t*
 {
 	int size;
 
@@ -75,7 +74,7 @@ f_image_surface_create(cairo_format_t format, int width, int height)
 		break;
 	}
 
-	unsigned char* pixels = (unsigned char*) g_malloc(width * height * size);
+	auto* pixels = (unsigned char*) g_malloc(width * height * size);
 	cairo_surface_t* surface = cairo_image_surface_create_for_data(pixels, format, width, height, width * size);
 
 	cairo_surface_set_user_data(surface, &pixel_key, pixels, g_free);
@@ -84,31 +83,29 @@ f_image_surface_create(cairo_format_t format, int width, int height)
 	return surface;
 }
 
-void*
-f_image_surface_get_data(cairo_surface_t* surface)
+auto f_image_surface_get_data(cairo_surface_t* surface) -> void*
 {
 	return cairo_surface_get_user_data(surface, &pixel_key);
 }
 
-cairo_format_t f_image_surface_get_format(cairo_surface_t* surface)
+auto f_image_surface_get_format(cairo_surface_t* surface) -> cairo_format_t
 {
 	return (cairo_format_t) GPOINTER_TO_INT(cairo_surface_get_user_data(surface, &format_key));
 }
 
-int f_image_surface_get_width(cairo_surface_t* surface)
+auto f_image_surface_get_width(cairo_surface_t* surface) -> int
 {
 	return cairo_image_surface_get_width(surface);
 }
 
-int f_image_surface_get_height(cairo_surface_t* surface)
+auto f_image_surface_get_height(cairo_surface_t* surface) -> int
 {
 	return cairo_image_surface_get_height(surface);
 }
 
 /* Public functions.  */
 
-cairo_surface_t*
-f_pixbuf_to_cairo_surface(GdkPixbuf* pixbuf)
+auto f_pixbuf_to_cairo_surface(GdkPixbuf* pixbuf) -> cairo_surface_t*
 {
 	gint width = gdk_pixbuf_get_width(pixbuf);
 	gint height = gdk_pixbuf_get_height(pixbuf);
@@ -127,7 +124,7 @@ f_pixbuf_to_cairo_surface(GdkPixbuf* pixbuf)
 	}
 
 	cairo_surface_t* surface = f_image_surface_create(format, width, height);
-	guchar* cairo_pixels = (guchar*) f_image_surface_get_data(surface);
+	auto* cairo_pixels = (guchar*) f_image_surface_get_data(surface);
 
 	for (int j = height; j; j--)
 	{
@@ -192,7 +189,7 @@ f_pixbuf_to_cairo_surface(GdkPixbuf* pixbuf)
  * Source GTK 3
  */
 
-static cairo_format_t gdk_cairo_format_for_content(cairo_content_t content)
+static auto gdk_cairo_format_for_content(cairo_content_t content) -> cairo_format_t
 {
 	switch (content)
 	{
@@ -206,9 +203,8 @@ static cairo_format_t gdk_cairo_format_for_content(cairo_content_t content)
 	}
 }
 
-static cairo_surface_t*
-gdk_cairo_surface_coerce_to_image(cairo_surface_t* surface, cairo_content_t content,
-								  int src_x, int src_y, int width, int height)
+static auto gdk_cairo_surface_coerce_to_image(cairo_surface_t* surface, cairo_content_t content, int src_x, int src_y,
+                                              int width, int height) -> cairo_surface_t*
 {
 	cairo_surface_t* copy = cairo_image_surface_create(gdk_cairo_format_for_content(content), width, height);
 
@@ -229,7 +225,7 @@ convert_alpha(guchar* dest_data, int dest_stride, guchar* src_data, int src_stri
 
 	for (int y = 0; y < height; y++)
 	{
-		guint32* src = (guint32*) src_data;
+		auto* src = (guint32*) src_data;
 
 		for (int x = 0; x < width; x++)
 		{
@@ -263,7 +259,7 @@ convert_no_alpha(guchar* dest_data, int dest_stride, guchar* src_data, int src_s
 
 	for (int y = 0; y < height; y++)
 	{
-		guint32* src = (guint32*) src_data;
+		auto* src = (guint32*) src_data;
 
 		for (int x = 0; x < width; x++)
 		{
@@ -296,14 +292,14 @@ convert_no_alpha(guchar* dest_data, int dest_stride, guchar* src_data, int src_s
  * Return value: (transfer full): A newly-created pixbuf with a reference
  *     count of 1, or %nullptr on error
  */
-GdkPixbuf*
-xoj_pixbuf_get_from_surface(cairo_surface_t* surface, gint src_x, gint src_y, gint width, gint height)
+auto xoj_pixbuf_get_from_surface(cairo_surface_t* surface, gint src_x, gint src_y, gint width, gint height)
+        -> GdkPixbuf*
 {
 	/* General sanity checks */
 	g_return_val_if_fail(surface != nullptr, nullptr);
 	g_return_val_if_fail(width > 0 && height > 0, nullptr);
 
-	cairo_content_t content = (cairo_content_t) (cairo_surface_get_content(surface) | CAIRO_CONTENT_COLOR);
+	auto content = (cairo_content_t)(cairo_surface_get_content(surface) | CAIRO_CONTENT_COLOR);
 	GdkPixbuf* dest = gdk_pixbuf_new(GDK_COLORSPACE_RGB, !!(content & CAIRO_CONTENT_ALPHA), 8, width, height);
 
 	surface = gdk_cairo_surface_coerce_to_image(surface, content, src_x, src_y, width, height);

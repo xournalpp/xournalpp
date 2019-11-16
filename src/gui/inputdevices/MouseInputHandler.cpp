@@ -11,11 +11,9 @@ MouseInputHandler::MouseInputHandler(InputContext* inputContext) : PenInputHandl
 {
 }
 
-MouseInputHandler::~MouseInputHandler()
-{
-}
+MouseInputHandler::~MouseInputHandler() = default;
 
-bool MouseInputHandler::handleImpl(InputEvent* event)
+auto MouseInputHandler::handleImpl(InputEvent* event) -> bool
 {
 	// Only handle events when there is no active gesture
 	GtkXournal* xournal = inputContext->getXournal();
@@ -119,7 +117,7 @@ void MouseInputHandler::setPressedState(InputEvent* event)
 	}
 }
 
-bool MouseInputHandler::changeTool(InputEvent* event)
+auto MouseInputHandler::changeTool(InputEvent* event) -> bool
 {
 	Settings* settings = this->inputContext->getSettings();
 	ToolHandler* toolHandler = this->inputContext->getToolHandler();

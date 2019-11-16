@@ -20,7 +20,7 @@ XmlNode::~XmlNode()
 {
 	for (GList* l = this->children; l != nullptr; l = l->next)
 	{
-		XmlNode* node = (XmlNode*) l->data;
+		auto* node = (XmlNode*) l->data;
 		delete node;
 	}
 	g_list_free(this->children);
@@ -28,7 +28,7 @@ XmlNode::~XmlNode()
 
 	for (GList* l = this->attributes; l != nullptr; l = l->next)
 	{
-		XMLAttribute* attrib = (XMLAttribute*) l->data;
+		auto* attrib = (XMLAttribute*) l->data;
 		delete attrib;
 	}
 	g_list_free(this->attributes);
@@ -99,7 +99,7 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener)
 
 		for (GList* l = this->children; l != nullptr; l = l->next, ++i)
 		{
-			XmlNode* node = (XmlNode*) l->data;
+			auto* node = (XmlNode*) l->data;
 			node->writeOut(out);
 			if (listener)
 			{
@@ -122,7 +122,7 @@ void XmlNode::putAttrib(XMLAttribute* a)
 {
 	for (GList* l = this->attributes; l != nullptr; l = l->next)
 	{
-		XMLAttribute* attrib = (XMLAttribute*) l->data;
+		auto* attrib = (XMLAttribute*) l->data;
 
 		if (attrib->getName() == a->getName())
 		{
@@ -139,7 +139,7 @@ void XmlNode::writeAttributes(OutputStream* out)
 {
 	for (GList* l = this->attributes; l != nullptr; l = l->next)
 	{
-		XMLAttribute* attrib = (XMLAttribute*) l->data;
+		auto* attrib = (XMLAttribute*) l->data;
 		out->write(" ");
 		out->write(attrib->getName());
 		out->write("=\"");

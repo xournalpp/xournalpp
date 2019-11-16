@@ -2,13 +2,9 @@
 
 #include "PageListener.h"
 
-PageHandler::PageHandler()
-{
-}
+PageHandler::PageHandler() = default;
 
-PageHandler::~PageHandler()
-{
-}
+PageHandler::~PageHandler() = default;
 
 void PageHandler::addListener(PageListener* l)
 {

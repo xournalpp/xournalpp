@@ -32,7 +32,7 @@ public:
 	vector<DeviceInfo> getInputDevices();
 
 private:
-	protected:
+protected:
 	Settings* settings = nullptr;
 
 	AudioQueue<float>* audioQueue = nullptr;

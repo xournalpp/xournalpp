@@ -27,7 +27,7 @@ public:
 	}
 
 private:
-	public:
+public:
 	Layer* layer;
 	T* element;
 	int pos;

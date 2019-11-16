@@ -10,39 +10,33 @@ DeviceInfo::DeviceInfo(portaudio::Device* device, bool selected)
 }
 
 DeviceInfo::DeviceInfo(const DeviceInfo& other)
-		: deviceName(other.deviceName),
-		  index(other.index),
-		  selected(other.selected),
-		  inputChannels(other.inputChannels),
-		  outputChannels(other.outputChannels)
-{
-}
 
-DeviceInfo::~DeviceInfo()
-{
-}
 
-const string& DeviceInfo::getDeviceName() const
+        = default;
+
+DeviceInfo::~DeviceInfo() = default;
+
+auto DeviceInfo::getDeviceName() const -> const string&
 {
 	return deviceName;
 }
 
-const PaDeviceIndex DeviceInfo::getIndex() const
+auto DeviceInfo::getIndex() const -> const PaDeviceIndex
 {
 	return index;
 }
 
-const bool DeviceInfo::getSelected() const
+auto DeviceInfo::getSelected() const -> const bool
 {
 	return selected;
 }
 
-const int DeviceInfo::getInputChannels() const
+auto DeviceInfo::getInputChannels() const -> const int
 {
 	return inputChannels;
 }
 
-const int DeviceInfo::getOutputChannels() const
+auto DeviceInfo::getOutputChannels() const -> const int
 {
 	return outputChannels;
 }

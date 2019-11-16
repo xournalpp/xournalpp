@@ -2,9 +2,9 @@
 #include <sstream> // std::istringstream
 
 #include <glib.h>
-#include <string.h>
+#include <cstring>
 
-string StringUtils::toLowerCase(string input)
+auto StringUtils::toLowerCase(string input) -> string
 {	
 	char* lower = g_utf8_strdown(input.c_str(), input.size());
 	string lowerStr = lower;
@@ -36,7 +36,7 @@ void StringUtils::replaceAllChars(string& input, const std::vector<replace_pair>
 	input = out;
 }
 
-vector<string> StringUtils::split(string input, char delimiter)
+auto StringUtils::split(string input, char delimiter) -> vector<string>
 {
 	vector<string> tokens;
 	string token;
@@ -48,12 +48,12 @@ vector<string> StringUtils::split(string input, char delimiter)
 	return tokens;
 }
 
-bool StringUtils::startsWith(string str, string start)
+auto StringUtils::startsWith(string str, string start) -> bool
 {
 	return str.compare(0, start.length(), start) == 0;
 }
 
-bool StringUtils::endsWith(string str, string end)
+auto StringUtils::endsWith(string str, string end) -> bool
 {
 	if (end.size() > str.size())
 	{
@@ -65,24 +65,24 @@ bool StringUtils::endsWith(string str, string end)
 
 const std::string TRIM_CHARS = "\t\n\v\f\r ";
 
-std::string StringUtils::ltrim(std::string str)
+auto StringUtils::ltrim(std::string str) -> std::string
 {
 	str.erase(0, str.find_first_not_of(TRIM_CHARS));
 	return str;
 }
 
-std::string StringUtils::rtrim(std::string str)
+auto StringUtils::rtrim(std::string str) -> std::string
 {
 	str.erase(str.find_last_not_of(TRIM_CHARS) + 1);
 	return str;
 }
 
-std::string StringUtils::trim(std::string str)
+auto StringUtils::trim(std::string str) -> std::string
 {
 	return ltrim(rtrim(str));
 }
 
-bool StringUtils::iequals(string a, string b)
+auto StringUtils::iequals(string a, string b) -> bool
 {
 	gchar* ca = g_utf8_casefold (a.c_str(), a.size());
 	gchar* cb = g_utf8_casefold (b.c_str(), b.size());

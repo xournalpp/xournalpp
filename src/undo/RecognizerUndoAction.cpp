@@ -49,7 +49,7 @@ void RecognizerUndoAction::addSourceElement(Stroke* s)
 	this->original.push_back(s);
 }
 
-bool RecognizerUndoAction::undo(Control* control)
+auto RecognizerUndoAction::undo(Control* control) -> bool
 {
 	int pos = this->layer->removeElement(this->recognized, false);
 	this->page->fireElementChanged(this->recognized);
@@ -66,7 +66,7 @@ bool RecognizerUndoAction::undo(Control* control)
 	return true;
 }
 
-bool RecognizerUndoAction::redo(Control* control)
+auto RecognizerUndoAction::redo(Control* control) -> bool
 {
 	int pos = 0;
 	for (Stroke* s : this->original)
@@ -82,7 +82,7 @@ bool RecognizerUndoAction::redo(Control* control)
 	return true;
 }
 
-string RecognizerUndoAction::getText()
+auto RecognizerUndoAction::getText() -> string
 {
 	return _("Stroke recognizer");
 }

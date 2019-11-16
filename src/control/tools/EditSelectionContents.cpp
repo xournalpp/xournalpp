@@ -72,7 +72,7 @@ void EditSelectionContents::addElement(Element* e)
 /**
  * Returns all containig elements of this selections
  */
-vector<Element*>* EditSelectionContents::getElements()
+auto EditSelectionContents::getElements() -> vector<Element*>*
 {
 	return &this->selected;
 }
@@ -81,12 +81,12 @@ vector<Element*>* EditSelectionContents::getElements()
  * Sets the tool size for pen or eraser, returs an undo action
  * (or nullptr if nothing is done)
  */
-UndoAction* EditSelectionContents::setSize(ToolSize size,
-                                           const double* thicknessPen,
-                                           const double* thicknessHilighter,
-                                           const double* thicknessEraser)
+auto EditSelectionContents::setSize(ToolSize size,
+                                    const double* thicknessPen,
+                                    const double* thicknessHilighter,
+                                    const double* thicknessEraser) -> UndoAction*
 {
-	SizeUndoAction* undo = new SizeUndoAction(this->sourcePage, this->sourceLayer);
+	auto* undo = new SizeUndoAction(this->sourcePage, this->sourceLayer);
 
 	bool found = false;
 
@@ -94,7 +94,7 @@ UndoAction* EditSelectionContents::setSize(ToolSize size,
 	{
 		if (e->getType() == ELEMENT_STROKE)
 		{
-			Stroke* s = (Stroke*) e;
+			auto* s = (Stroke*) e;
 			StrokeTool tool = s->getToolType();
 
 			double originalWidth = s->getWidth();
@@ -145,9 +145,9 @@ UndoAction* EditSelectionContents::setSize(ToolSize size,
  * Fills the stroke, return an undo action
  * (Or nullptr if nothing done, e.g. because there is only an image)
  */
-UndoAction* EditSelectionContents::setFill(int alphaPen, int alphaHighligther)
+auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoAction*
 {
-	FillUndoAction* undo = new FillUndoAction(this->sourcePage, this->sourceLayer);
+	auto* undo = new FillUndoAction(this->sourcePage, this->sourceLayer);
 
 	bool found = false;
 
@@ -155,7 +155,7 @@ UndoAction* EditSelectionContents::setFill(int alphaPen, int alphaHighligther)
 	{
 		if (e->getType() == ELEMENT_STROKE)
 		{
-			Stroke* s = (Stroke*) e;
+			auto* s = (Stroke*) e;
 			StrokeTool tool = s->getToolType();
 			int newFill = 128;
 
@@ -203,14 +203,14 @@ UndoAction* EditSelectionContents::setFill(int alphaPen, int alphaHighligther)
  * Sets the font of all containing text elements, return an undo action
  * (or nullptr if there are no Text elements)
  */
-UndoAction* EditSelectionContents::setFont(XojFont& font)
+auto EditSelectionContents::setFont(XojFont& font) -> UndoAction*
 {
 	double x1 = 0.0 / 0.0;
 	double x2 = 0.0 / 0.0;
 	double y1 = 0.0 / 0.0;
 	double y2 = 0.0 / 0.0;
 
-	FontUndoAction* undo = new FontUndoAction(this->sourcePage, this->sourceLayer);
+	auto* undo = new FontUndoAction(this->sourcePage, this->sourceLayer);
 
 	for (Element* e: this->selected)
 	{
@@ -261,9 +261,9 @@ UndoAction* EditSelectionContents::setFont(XojFont& font)
  * Set the color of all elements, return an undo action
  * (Or nullptr if nothing done, e.g. because there is only an image)
  */
-UndoAction* EditSelectionContents::setColor(int color)
+auto EditSelectionContents::setColor(int color) -> UndoAction*
 {
-	ColorUndoAction* undo = new ColorUndoAction(this->sourcePage, this->sourceLayer);
+	auto* undo = new ColorUndoAction(this->sourcePage, this->sourceLayer);
 
 	bool found = false;
 
@@ -319,7 +319,7 @@ void EditSelectionContents::fillUndoItem(DeleteUndoAction* undo)
 /**
  * Callback to redrawing the buffer asynchron
  */
-bool EditSelectionContents::repaintSelection(EditSelectionContents* selection)
+auto EditSelectionContents::repaintSelection(EditSelectionContents* selection) -> bool
 {
 	// delete the selection buffer, force a redraw
 	selection->deleteViewBuffer();
@@ -345,7 +345,7 @@ void EditSelectionContents::deleteViewBuffer()
 /**
  * Gets the original width of the contents
  */
-double EditSelectionContents::getOriginalWidth()
+auto EditSelectionContents::getOriginalWidth() -> double
 {
 	return this->originalWidth;
 }
@@ -353,7 +353,7 @@ double EditSelectionContents::getOriginalWidth()
 /**
  * Gets the original height of the contents
  */
-double EditSelectionContents::getOriginalHeight()
+auto EditSelectionContents::getOriginalHeight() -> double
 {
 	return this->originalHeight;
 }
@@ -400,17 +400,17 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 	}
 }
 
-double EditSelectionContents::getOriginalX()
+auto EditSelectionContents::getOriginalX() -> double
 {
 	return this->originalX;
 }
 
-double EditSelectionContents::getOriginalY()
+auto EditSelectionContents::getOriginalY() -> double
 {
 	return this->originalY;
 }
 
-XojPageView* EditSelectionContents::getSourceView()
+auto EditSelectionContents::getSourceView() -> XojPageView*
 {
 	return this->sourceView;
 }
@@ -556,7 +556,7 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
 	cairo_restore(cr);
 }
 
-UndoAction* EditSelectionContents::copySelection(PageRef page, XojPageView* view, double x, double y)
+auto EditSelectionContents::copySelection(PageRef page, XojPageView* view, double x, double y) -> UndoAction*
 {
 	Layer* layer = page->getSelectedLayer();
 

@@ -17,7 +17,7 @@
 #include <i18n.h>
 #include <Util.h>
 
-typedef struct _ToolItemDragData ToolItemDragData;
+using ToolItemDragData = struct _ToolItemDragData;
 
 struct _ToolItemDragData
 {
@@ -214,7 +214,7 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget* widget, GdkDragContext*
 		return;
 	}
 
-	ToolItemDragDropData* d = (ToolItemDragDropData*) gtk_selection_data_get_data(data);
+	auto* d = (ToolItemDragDropData*) gtk_selection_data_get_data(data);
 	g_return_if_fail(ToolitemDragDrop::checkToolItemDragDropData(d));
 
 	if (d->type == TOOL_ITEM_ITEM)
@@ -249,7 +249,7 @@ void ToolbarCustomizeDialog::freeIconview()
 	GList* children = gtk_container_get_children(GTK_CONTAINER(table));
 	for (GList* l = children; l != nullptr; l = l->next)
 	{
-		GtkWidget* w = (GtkWidget*) l->data;
+		auto* w = (GtkWidget*) l->data;
 		gtk_container_remove(GTK_CONTAINER(table), w);
 	}
 
@@ -327,7 +327,7 @@ void ToolbarCustomizeDialog::freeColorIconview()
 	GList* children = gtk_container_get_children(GTK_CONTAINER(table));
 	for (GList* l = children; l != nullptr; l = l->next)
 	{
-		GtkWidget* w = (GtkWidget*) l->data;
+		auto* w = (GtkWidget*) l->data;
 		gtk_container_remove(GTK_CONTAINER(table), w);
 	}
 

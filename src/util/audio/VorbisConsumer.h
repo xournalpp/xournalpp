@@ -35,7 +35,7 @@ public:
 	void stop();
 
 private:
-	protected:
+protected:
 	bool stopConsumer = false;
 
 	Settings* settings = nullptr;

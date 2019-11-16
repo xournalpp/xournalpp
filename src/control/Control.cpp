@@ -274,7 +274,7 @@ void Control::deleteLastAutosaveFile(Path newAutosaveFile)
 	this->lastAutosaveFilename = newAutosaveFile;
 }
 
-bool Control::checkChangedDocument(Control* control)
+auto Control::checkChangedDocument(Control* control) -> bool
 {
 	if (!control->doc->tryLock())
 	{
@@ -372,7 +372,7 @@ void Control::initWindow(MainWindow* win)
 	fireActionSelected(GROUP_GRID_SNAPPING, settings->isSnapGrid() ? ACTION_GRID_SNAPPING : ACTION_NONE);
 }
 
-bool Control::autosaveCallback(Control* control)
+auto Control::autosaveCallback(Control* control) -> bool
 {
 	if (!control->undoRedo->isChangedAutosave())
 	{
@@ -384,7 +384,7 @@ bool Control::autosaveCallback(Control* control)
 		g_message("Info: autosave document...");
 	}
 
-	AutosaveJob* job = new AutosaveJob(control);
+	auto* job = new AutosaveJob(control);
 	control->scheduler->addJob(job, JOB_PRIORITY_NONE);
 	job->unref();
 
@@ -1055,7 +1055,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 
 	if (type >= ACTION_TOOL_PEN && type <= ACTION_TOOL_HAND)
 	{
-		ActionType at = (ActionType)(toolHandler->getToolType() - TOOL_PEN + ACTION_TOOL_PEN);
+		auto at = (ActionType)(toolHandler->getToolType() - TOOL_PEN + ACTION_TOOL_PEN);
 		if (type == at && !enabled)
 		{
 			fireActionSelected(GROUP_TOOL, at);
@@ -1063,7 +1063,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	}
 }
 
-bool Control::copy()
+auto Control::copy() -> bool
 {
 	if (this->win && this->win->getXournal()->copy())
 	{
@@ -1072,7 +1072,7 @@ bool Control::copy()
 	return this->clipboardHandler->copy();
 }
 
-bool Control::cut()
+auto Control::cut() -> bool
 {
 	if (this->win && this->win->getXournal()->cut())
 	{
@@ -1081,7 +1081,7 @@ bool Control::cut()
 	return this->clipboardHandler->cut();
 }
 
-bool Control::paste()
+auto Control::paste() -> bool
 {
 	if (this->win && this->win->getXournal()->paste())
 	{
@@ -1137,7 +1137,7 @@ void Control::clearSelectionEndText()
  *
  * @return the page ID or size_t_npos if the page is not found
  */
-size_t Control::firePageSelected(PageRef page)
+auto Control::firePageSelected(PageRef page) -> size_t
 {
 	this->doc->lock();
 	size_t pageId = this->doc->indexOf(page);
@@ -1188,7 +1188,7 @@ void Control::customizeToolbars()
 
 		if (res == -8)  // Yes
 		{
-			ToolbarData* data = new ToolbarData(*this->win->getSelectedToolbar());
+			auto* data = new ToolbarData(*this->win->getSelectedToolbar());
 
 			ToolbarModel* model = this->win->getToolbarModel();
 			model->initCopyNameId(data);
@@ -1229,7 +1229,7 @@ void Control::startDragDropToolbar()
 	this->dragDropHandler->prepareToolbarsForDragAndDrop();
 }
 
-bool Control::isInDragAndDropToolbar()
+auto Control::isInDragAndDropToolbar() -> bool
 {
 	if (!this->dragDropHandler)
 	{
@@ -1772,7 +1772,7 @@ void Control::zoomCallback(ActionType type, bool enabled)
 	}
 }
 
-size_t Control::getCurrentPageNo()
+auto Control::getCurrentPageNo() -> size_t
 {
 	if (this->win)
 	{
@@ -1781,12 +1781,12 @@ size_t Control::getCurrentPageNo()
 	return 0;
 }
 
-bool Control::searchTextOnPage(string text, int p, int* occures, double* top)
+auto Control::searchTextOnPage(string text, int p, int* occures, double* top) -> bool
 {
 	return getWindow()->getXournal()->searchTextOnPage(text, p, occures, top);
 }
 
-PageRef Control::getCurrentPage()
+auto Control::getCurrentPage() -> PageRef
 {
 	this->doc->lock();
 	PageRef p = this->doc->getPage(getCurrentPageNo());
@@ -1821,7 +1821,7 @@ void Control::undoRedoPageChanged(PageRef page)
 		}
 	}
 
-	XojPage* p = (XojPage*) page;
+	auto* p = (XojPage*) page;
 	this->changedPages.push_back(p);
 	p->reference();
 }
@@ -1847,7 +1847,7 @@ void Control::toolChanged()
 	ToolType type = toolHandler->getToolType();
 
 	// Convert enum values, enums has to be in the same order!
-	ActionType at = (ActionType)(type - TOOL_PEN + ACTION_TOOL_PEN);
+	auto at = (ActionType)(type - TOOL_PEN + ACTION_TOOL_PEN);
 
 	fireActionSelected(GROUP_TOOL, at);
 
@@ -2155,7 +2155,7 @@ void Control::showSettings()
 	delete dlg;
 }
 
-bool Control::newFile(string pageTemplate)
+auto Control::newFile(string pageTemplate) -> bool
 {
 	if (!this->close(true))
 	{
@@ -2180,7 +2180,7 @@ bool Control::newFile(string pageTemplate)
 /**
  * Check if this is an autosave file, return false in this case and display a user instruction
  */
-bool Control::shouldFileOpen(string filename)
+auto Control::shouldFileOpen(string filename) -> bool
 {
 	// Compare case insensitive, just in case (Windows, FAT Filesystem etc.)
 
@@ -2208,7 +2208,7 @@ bool Control::shouldFileOpen(string filename)
 	return true;
 }
 
-bool Control::openFile(Path filename, int scrollToPage, bool forceOpen)
+auto Control::openFile(Path filename, int scrollToPage, bool forceOpen) -> bool
 {
 	if (!forceOpen && !shouldFileOpen(filename.str()))
 	{
@@ -2319,7 +2319,7 @@ bool Control::openFile(Path filename, int scrollToPage, bool forceOpen)
 	return true;
 }
 
-bool Control::loadPdf(const Path& filename, int scrollToPage)
+auto Control::loadPdf(const Path& filename, int scrollToPage) -> bool
 {
 	LoadHandler loadHandler;
 
@@ -2355,7 +2355,7 @@ bool Control::loadPdf(const Path& filename, int scrollToPage)
 	return an;
 }
 
-bool Control::loadXoptTemplate(Path filename)
+auto Control::loadXoptTemplate(Path filename) -> bool
 {
 	string contents;
 	if (!PathUtil::readString(contents, filename))
@@ -2411,7 +2411,7 @@ public:
 /**
  * Load the data after processing the document...
  */
-bool Control::loadMetadataCallback(MetadataCallbackData* data)
+auto Control::loadMetadataCallback(MetadataCallbackData* data) -> bool
 {
 	if (!data->md.valid)
 	{
@@ -2450,7 +2450,7 @@ void Control::loadMetadata(MetadataEntry md)
 	g_idle_add((GSourceFunc) loadMetadataCallback, data);
 }
 
-bool Control::annotatePdf(Path filename, bool attachPdf, bool attachToDocument)
+auto Control::annotatePdf(Path filename, bool attachPdf, bool attachToDocument) -> bool
 {
 	if (!this->close(false))
 	{
@@ -2559,7 +2559,7 @@ void Control::setCurrentState(int state)
 	Util::execInUiThread([=]() { gtk_progress_bar_set_fraction(this->pgState, gdouble(state) / this->maxState); });
 }
 
-bool Control::save(bool synchron)
+auto Control::save(bool synchron) -> bool
 {
 	// clear selection before saving
 	clearSelectionEndText();
@@ -2593,7 +2593,7 @@ bool Control::save(bool synchron)
 	return result;
 }
 
-bool Control::showSaveDialog()
+auto Control::showSaveDialog() -> bool
 {
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Save File"),
 	                                                getGtkWindow(),
@@ -2724,7 +2724,7 @@ void Control::exportBase(BaseExportJob* job)
 	job->unref();
 }
 
-bool Control::saveAs()
+auto Control::saveAs() -> bool
 {
 	if (!showSaveDialog())
 	{
@@ -2782,7 +2782,7 @@ void Control::quit(bool allowCancel)
 	gtk_main_quit();
 }
 
-bool Control::close(const bool allowDestroy, const bool allowCancel)
+auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool
 {
 	clearSelectionEndText();
 	metadata->documentChanged();
@@ -2836,7 +2836,7 @@ bool Control::close(const bool allowDestroy, const bool allowCancel)
 	return true;
 }
 
-bool Control::closeAndDestroy(bool allowCancel)
+auto Control::closeAndDestroy(bool allowCancel) -> bool
 {
 	// We don't want to "double close", so disallow it first.
 	auto retval = this->close(false, allowCancel);
@@ -2855,7 +2855,7 @@ void Control::closeDocument()
 	this->undoRedoChanged();
 }
 
-bool Control::checkExistingFile(Path& folder, Path& filename)
+auto Control::checkExistingFile(Path& folder, Path& filename) -> bool
 {
 	if (filename.exists())
 	{
@@ -2982,7 +2982,7 @@ void Control::clipboardPaste(Element* e)
 	this->doc->unlock();
 
 	undoRedo->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, e));
-	EditSelection* selection = new EditSelection(this->undoRedo, e, view, page);
+	auto* selection = new EditSelection(this->undoRedo, e, view, page);
 
 	win->getXournal()->setSelection(selection);
 }
@@ -3225,52 +3225,52 @@ void Control::runLatex()
  * GETTER / SETTER
  */
 
-UndoRedoHandler* Control::getUndoRedoHandler()
+auto Control::getUndoRedoHandler() -> UndoRedoHandler*
 {
 	return this->undoRedo;
 }
 
-ZoomControl* Control::getZoomControl()
+auto Control::getZoomControl() -> ZoomControl*
 {
 	return this->zoom;
 }
 
-XournalppCursor* Control::getCursor()
+auto Control::getCursor() -> XournalppCursor*
 {
 	return this->cursor;
 }
 
-RecentManager* Control::getRecentManager()
+auto Control::getRecentManager() -> RecentManager*
 {
 	return this->recent;
 }
 
-Document* Control::getDocument()
+auto Control::getDocument() -> Document*
 {
 	return this->doc;
 }
 
-ToolHandler* Control::getToolHandler()
+auto Control::getToolHandler() -> ToolHandler*
 {
 	return this->toolHandler;
 }
 
-XournalScheduler* Control::getScheduler()
+auto Control::getScheduler() -> XournalScheduler*
 {
 	return this->scheduler;
 }
 
-MainWindow* Control::getWindow()
+auto Control::getWindow() -> MainWindow*
 {
 	return this->win;
 }
 
-GtkWindow* Control::getGtkWindow()
+auto Control::getGtkWindow() -> GtkWindow*
 {
 	return GTK_WINDOW(this->win->getWindow());
 }
 
-bool Control::isFullscreen()
+auto Control::isFullscreen() -> bool
 {
 	return this->fullscreenHandler->isFullscreen();
 }
@@ -3287,7 +3287,7 @@ void Control::gridSnappingToggle()
 	fireActionSelected(GROUP_GRID_SNAPPING, settings->isSnapGrid() ? ACTION_GRID_SNAPPING : ACTION_NONE);
 }
 
-TextEditor* Control::getTextEditor()
+auto Control::getTextEditor() -> TextEditor*
 {
 	if (this->win)
 	{
@@ -3296,57 +3296,57 @@ TextEditor* Control::getTextEditor()
 	return nullptr;
 }
 
-GladeSearchpath* Control::getGladeSearchPath()
+auto Control::getGladeSearchPath() -> GladeSearchpath*
 {
 	return this->gladeSearchPath;
 }
 
-Settings* Control::getSettings()
+auto Control::getSettings() -> Settings*
 {
 	return settings;
 }
 
-ScrollHandler* Control::getScrollHandler()
+auto Control::getScrollHandler() -> ScrollHandler*
 {
 	return this->scrollHandler;
 }
 
-MetadataManager* Control::getMetadataManager()
+auto Control::getMetadataManager() -> MetadataManager*
 {
 	return this->metadata;
 }
 
-Sidebar* Control::getSidebar()
+auto Control::getSidebar() -> Sidebar*
 {
 	return this->sidebar;
 }
 
-SearchBar* Control::getSearchBar()
+auto Control::getSearchBar() -> SearchBar*
 {
 	return this->searchBar;
 }
 
-AudioController* Control::getAudioController()
+auto Control::getAudioController() -> AudioController*
 {
 	return this->audioController;
 }
 
-PageTypeHandler* Control::getPageTypes()
+auto Control::getPageTypes() -> PageTypeHandler*
 {
 	return this->pageTypes;
 }
 
-PageTypeMenu* Control::getNewPageType()
+auto Control::getNewPageType() -> PageTypeMenu*
 {
 	return this->newPageType;
 }
 
-PageBackgroundChangeController* Control::getPageBackgroundChangeController()
+auto Control::getPageBackgroundChangeController() -> PageBackgroundChangeController*
 {
 	return this->pageBackgroundChangeController;
 }
 
-LayerController* Control::getLayerController()
+auto Control::getLayerController() -> LayerController*
 {
 	return this->layerController;
 }

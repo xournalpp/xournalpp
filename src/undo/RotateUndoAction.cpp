@@ -23,14 +23,14 @@ RotateUndoAction::~RotateUndoAction()
 	this->page = nullptr;
 }
 
-bool RotateUndoAction::undo(Control* control)
+auto RotateUndoAction::undo(Control* control) -> bool
 {
 	applyRotation(-this->rotation);
 	this->undone = true;
 	return true;
 }
 
-bool RotateUndoAction::redo(Control* control)
+auto RotateUndoAction::redo(Control* control) -> bool
 {
 	applyRotation(this->rotation);
 	this->undone = false;
@@ -55,7 +55,7 @@ void RotateUndoAction::applyRotation(double rotation)
 	this->page->fireRangeChanged(r);
 }
 
-string RotateUndoAction::getText()
+auto RotateUndoAction::getText() -> string
 {
 	return _("Rotation");
 }

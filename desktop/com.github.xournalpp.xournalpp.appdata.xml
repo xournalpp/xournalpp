@@ -79,6 +79,7 @@
     <!-- Could be automated more:
 	 `git tag --list | grep "^[0-9]*\.[0-9]*\.[0-9]*$`"
     -->
+    <release date="2019-11-10" version="1.0.16"/>
     <release date="2019-10-15" version="1.0.15"/>
     <release date="2019-10-12" version="1.0.14"/>
     <release date="2019-05-26" version="1.0.12"/>

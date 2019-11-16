@@ -210,18 +210,16 @@ static int applib_changeCurrentPageBackground(lua_State* L)
 }
 
 
-static const luaL_Reg applib[] = {
-	{ "msgbox", applib_msgbox },
-	{ "registerUi", applib_registerUi },
-	{ "uiAction", applib_uiAction },
-	{ "uiActionSelected", applib_uiActionSelected },
-	{ "changeCurrentPageBackground", applib_changeCurrentPageBackground },
+static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
+                                  {"registerUi", applib_registerUi},
+                                  {"uiAction", applib_uiAction},
+                                  {"uiActionSelected", applib_uiActionSelected},
+                                  {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
 
-	// Placeholder
-//	{"MSG_BT_OK", nullptr},
+                                  // Placeholder
+                                  //	{"MSG_BT_OK", nullptr},
 
-	{nullptr, nullptr}
-};
+                                  {nullptr, nullptr}};
 
 /**
  * Open application Library

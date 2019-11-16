@@ -31,4 +31,4 @@ public:
 	virtual void resetConfig();
 
 private:
-	};
+};

@@ -103,22 +103,22 @@ void LayoutMapper::precalculateMappers()
 	}
 }
 
-size_t LayoutMapper::getColumns() const
+auto LayoutMapper::getColumns() const -> size_t
 {
 	return data_.cols;
 }
 
-size_t LayoutMapper::getRows() const
+auto LayoutMapper::getRows() const -> size_t
 {
 	return data_.rows;
 }
 
-int LayoutMapper::getFirstPageOffset() const
+auto LayoutMapper::getFirstPageOffset() const -> int
 {
 	return data_.offset;
 }
 
-bool LayoutMapper::isPairedPages() const
+auto LayoutMapper::isPairedPages() const -> bool
 {
 	return data_.showPairedPages;
 }
@@ -129,7 +129,7 @@ bool LayoutMapper::isPairedPages() const
 // Todo: replace with
 //       boost::optional<size_t> LayoutMapper::map(size_t x, size_t y) or
 //       std::optional<size_t> LayoutMapper::map(size_t x, size_t y)
-LayoutMapper::optional_size_t LayoutMapper::map(size_t col, size_t row)
+auto LayoutMapper::map(size_t col, size_t row) -> LayoutMapper::optional_size_t
 {
 	if (isRightToLeft())
 	{
@@ -170,26 +170,26 @@ LayoutMapper::optional_size_t LayoutMapper::map(size_t col, size_t row)
 	return res;
 }
 
-bool LayoutMapper::isVertical() const
+auto LayoutMapper::isVertical() const -> bool
 {
 	return data_.orientation == Vertical;
 }
 
-bool LayoutMapper::isBottomToTop() const
+auto LayoutMapper::isBottomToTop() const -> bool
 {
 	return data_.verticalDir == BottomToTop;
 }
 
-bool LayoutMapper::isRightToLeft() const
+auto LayoutMapper::isRightToLeft() const -> bool
 {
 	return data_.horizontalDir == RightToLeft;
 }
 
-std::pair<size_t, size_t> LayoutMapper::at(size_t page) const
+auto LayoutMapper::at(size_t page) const -> std::pair<size_t, size_t>
 {
 	return pageToRaster.at(page);
 }
-LayoutMapper::optional_size_t LayoutMapper::at(std::pair<size_t, size_t> rasterXY) const
+auto LayoutMapper::at(std::pair<size_t, size_t> rasterXY) const -> LayoutMapper::optional_size_t
 {
 	LayoutMapper::optional_size_t ret;
 	auto iter = rasterToPage.find(rasterXY);

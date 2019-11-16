@@ -39,12 +39,12 @@ TextBoxUndoAction::~TextBoxUndoAction()
 	this->oldelement = nullptr;
 }
 
-string TextBoxUndoAction::getText()
+auto TextBoxUndoAction::getText() -> string
 {
 	return _("Edit text");
 }
 
-bool TextBoxUndoAction::undo(Control* control)
+auto TextBoxUndoAction::undo(Control* control) -> bool
 {
 	this->layer->removeElement(this->element, false);
 	this->layer->addElement(this->oldelement);
@@ -67,7 +67,7 @@ bool TextBoxUndoAction::undo(Control* control)
 	return true;
 }
 
-bool TextBoxUndoAction::redo(Control* control)
+auto TextBoxUndoAction::redo(Control* control) -> bool
 {
 	this->layer->removeElement(this->oldelement, false);
 	this->layer->addElement(this->element);

@@ -129,5 +129,4 @@ public:
 	Sidebar* sidebar = nullptr;
 	int index = 0;
 	AbstractSidebarPage* page = nullptr;
-
 };

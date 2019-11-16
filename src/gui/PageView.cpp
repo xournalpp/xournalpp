@@ -43,10 +43,11 @@
 #include "pixbuf-utils.h"
 
 #include "util/cpp14memory.h"
+#include "util/XojMsgBox.h"
 
 #include <gdk/gdk.h>
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <algorithm>
 #include <cmath>
 
@@ -109,7 +110,7 @@ void XojPageView::setIsVisible(bool visible)
 	}
 }
 
-int XojPageView::getLastVisibleTime()
+auto XojPageView::getLastVisibleTime() -> int
 {
 	if (this->crBuffer == nullptr)
 	{
@@ -130,7 +131,7 @@ void XojPageView::deleteViewBuffer()
 	g_mutex_unlock(&this->drawingMutex);
 }
 
-bool XojPageView::containsPoint(int x, int y, bool local)
+auto XojPageView::containsPoint(int x, int y, bool local) -> bool
 {
 	if (!local)
 	{
@@ -147,7 +148,7 @@ bool XojPageView::containsPoint(int x, int y, bool local)
 	}
 }
 
-bool XojPageView::searchTextOnPage(string& text, int* occures, double* top)
+auto XojPageView::searchTextOnPage(string& text, int* occures, double* top) -> bool
 {
 	if (this->search == nullptr)
 	{
@@ -313,7 +314,7 @@ void XojPageView::startText(double x, double y)
 	}
 }
 
-bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
+auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool
 {
 	Control* control = xournal->getControl();
 
@@ -413,6 +414,15 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 		{
 			PlayObject play(this);
 			play.at(x, y);
+			if (play.playbackStatus)
+			{
+				auto& status = *play.playbackStatus;
+				if (!status.success)
+				{
+					string message = FS(_F("Unable to play audio recording {1}") % status.filename);
+					XojMsgBox::showErrorToUser(this->xournal->getControl()->getGtkWindow(), message);
+				}
+			}
 		}
 	}
 	else if (h->getToolType() == TOOL_TEXT)
@@ -438,7 +448,7 @@ bool XojPageView::onButtonPressEvent(const PositionInputData& pos)
 	return true;
 }
 
-bool XojPageView::onButtonDoublePressEvent(const PositionInputData& pos)
+auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
 {
 	// This method assumes that it is called after onButtonPressEvent but before
 	// onButtonReleaseEvent
@@ -485,7 +495,7 @@ bool XojPageView::onButtonDoublePressEvent(const PositionInputData& pos)
 			{
 				Control* control = this->xournal->getControl();
 				this->xournal->clearSelection();
-				EditSelection* sel = new EditSelection(control->getUndoRedoHandler(), object, this, this->getPage());
+				auto* sel = new EditSelection(control->getUndoRedoHandler(), object, this, this->getPage());
 				this->xournal->setSelection(sel);
 				control->runLatex();
 			}
@@ -500,7 +510,7 @@ bool XojPageView::onButtonDoublePressEvent(const PositionInputData& pos)
 	return true;
 }
 
-bool XojPageView::onButtonTriplePressEvent(const PositionInputData& pos)
+auto XojPageView::onButtonTriplePressEvent(const PositionInputData& pos) -> bool
 {
 	// This method assumes that it is called after onButtonDoubleEvent but before
 	// onButtonReleaseEvent
@@ -530,7 +540,7 @@ void XojPageView::resetShapeRecognizer()
 	}
 }
 
-bool XojPageView::onMotionNotifyEvent(const PositionInputData& pos)
+auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool
 {
 	double zoom = xournal->getZoom();
 	double x = pos.x / zoom;
@@ -567,7 +577,7 @@ bool XojPageView::onMotionNotifyEvent(const PositionInputData& pos)
 	return false;
 }
 
-bool XojPageView::onButtonReleaseEvent(const PositionInputData& pos)
+auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool
 {
 	Control* control = xournal->getControl();
 
@@ -643,7 +653,7 @@ bool XojPageView::onButtonReleaseEvent(const PositionInputData& pos)
 	return false;
 }
 
-bool XojPageView::onKeyPressEvent(GdkEventKey* event)
+auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool
 {
 	// Esc leaves text edition
 	if (event->keyval == GDK_KEY_Escape)
@@ -679,7 +689,7 @@ bool XojPageView::onKeyPressEvent(GdkEventKey* event)
 	return false;
 }
 
-bool XojPageView::onKeyReleaseEvent(GdkEventKey* event)
+auto XojPageView::onKeyReleaseEvent(GdkEventKey* event) -> bool
 {
 	if (this->textEditor && this->textEditor->onKeyReleaseEvent(event))
 	{
@@ -729,7 +739,7 @@ void XojPageView::addRerenderRect(double x, double y, double width, double heigh
 		return;
 	}
 
-	Rectangle* rect = new Rectangle(x, y, width, height);
+	auto* rect = new Rectangle(x, y, width, height);
 
 	g_mutex_lock(&this->repaintRectMutex);
 
@@ -766,7 +776,7 @@ void XojPageView::setSelected(bool selected)
 	}
 }
 
-bool XojPageView::cut()
+auto XojPageView::cut() -> bool
 {
 	if (this->textEditor)
 	{
@@ -776,7 +786,7 @@ bool XojPageView::cut()
 	return false;
 }
 
-bool XojPageView::copy()
+auto XojPageView::copy() -> bool
 {
 	if (this->textEditor)
 	{
@@ -786,7 +796,7 @@ bool XojPageView::copy()
 	return false;
 }
 
-bool XojPageView::paste()
+auto XojPageView::paste() -> bool
 {
 	if (this->textEditor)
 	{
@@ -796,7 +806,7 @@ bool XojPageView::paste()
 	return false;
 }
 
-bool XojPageView::actionDelete()
+auto XojPageView::actionDelete() -> bool
 {
 	if (this->textEditor)
 	{
@@ -930,7 +940,7 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect)
 	}
 }
 
-bool XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect)
+auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool
 {
 	g_mutex_lock(&this->drawingMutex);
 
@@ -940,7 +950,7 @@ bool XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 	return true;
 }
 
-bool XojPageView::containsY(int y)
+auto XojPageView::containsY(int y) -> bool
 {
 	return (y >= this->getY() && y <= (this->getY() + this->getDisplayHeight()));
 }
@@ -949,12 +959,12 @@ bool XojPageView::containsY(int y)
  * GETTER / SETTER
  */
 
-bool XojPageView::isSelected()
+auto XojPageView::isSelected() -> bool
 {
 	return selected;
 }
 
-int XojPageView::getBufferPixels()
+auto XojPageView::getBufferPixels() -> int
 {
 	if (crBuffer)
 	{
@@ -963,17 +973,17 @@ int XojPageView::getBufferPixels()
 	return 0;
 }
 
-GtkColorWrapper XojPageView::getSelectionColor()
+auto XojPageView::getSelectionColor() -> GtkColorWrapper
 {
 	return settings->getSelectionColor();
 }
 
-TextEditor* XojPageView::getTextEditor()
+auto XojPageView::getTextEditor() -> TextEditor*
 {
 	return textEditor;
 }
 
-int XojPageView::getX() const
+auto XojPageView::getX() const -> int
 {
 	return this->dispX;
 }
@@ -983,7 +993,7 @@ void XojPageView::setX(int x)
 	this->dispX = x;
 }
 
-int XojPageView::getY() const
+auto XojPageView::getY() const -> int
 {
 	return this->dispY;
 }
@@ -1000,49 +1010,49 @@ void XojPageView::setMappedRowCol(int row, int col)
 }
 
 
-int XojPageView::getMappedRow()
+auto XojPageView::getMappedRow() -> int
 {
 	return this->mappedRow;
 }
 
 
-int XojPageView::getMappedCol()
+auto XojPageView::getMappedCol() -> int
 {
 	return this->mappedCol;
 }
 
 
-PageRef XojPageView::getPage()
+auto XojPageView::getPage() -> PageRef
 {
 	return page;
 }
 
-XournalView* XojPageView::getXournal()
+auto XojPageView::getXournal() -> XournalView*
 {
 	return this->xournal;
 }
 
-double XojPageView::getHeight() const
+auto XojPageView::getHeight() const -> double
 {
 	return this->page->getHeight();
 }
 
-double XojPageView::getWidth() const
+auto XojPageView::getWidth() const -> double
 {
 	return this->page->getWidth();
 }
 
-int XojPageView::getDisplayWidth() const
+auto XojPageView::getDisplayWidth() const -> int
 {
 	return std::lround(this->page->getWidth() * this->xournal->getZoom());
 }
 
-int XojPageView::getDisplayHeight() const
+auto XojPageView::getDisplayHeight() const -> int
 {
 	return std::lround(this->page->getHeight() * this->xournal->getZoom());
 }
 
-TexImage* XojPageView::getSelectedTex()
+auto XojPageView::getSelectedTex() -> TexImage*
 {
 	EditSelection* theSelection = this->xournal->getSelection();
 	if (!theSelection)
@@ -1060,7 +1070,7 @@ TexImage* XojPageView::getSelectedTex()
 	return nullptr;
 }
 
-Text* XojPageView::getSelectedText()
+auto XojPageView::getSelectedText() -> Text*
 {
 	EditSelection* theSelection = this->xournal->getSelection();
 	if (!theSelection)
@@ -1078,7 +1088,7 @@ Text* XojPageView::getSelectedText()
 	return nullptr;
 }
 
-Rectangle XojPageView::getRect()
+auto XojPageView::getRect() -> Rectangle
 {
 	return Rectangle(getX(), getY(), getDisplayWidth(), getDisplayHeight());
 }

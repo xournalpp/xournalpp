@@ -5,13 +5,9 @@
 
 #include <list>
 
-SidebarLayout::SidebarLayout()
-{
-}
+SidebarLayout::SidebarLayout() = default;
 
-SidebarLayout::~SidebarLayout()
-{
-}
+SidebarLayout::~SidebarLayout() = default;
 
 class SidebarRow
 {
@@ -28,7 +24,7 @@ public:
 	}
 
 public:
-	bool isSpaceFor(SidebarPreviewBaseEntry* p)
+	auto isSpaceFor(SidebarPreviewBaseEntry* p) -> bool
 	{
 		if (this->list.size() == 0)
 		{
@@ -54,17 +50,17 @@ public:
 		this->currentWidth = 0;
 	}
 
-	int getCount()
+	auto getCount() -> int
 	{
 		return this->list.size();
 	}
 
-	int getWidth()
+	auto getWidth() -> int
 	{
 		return this->currentWidth;
 	}
 
-	int placeAt(int y, GtkLayout* layout)
+	auto placeAt(int y, GtkLayout* layout) -> int
 	{
 		int height = 0;
 		int x = 0;

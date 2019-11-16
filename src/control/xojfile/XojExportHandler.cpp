@@ -18,13 +18,9 @@
 #include <config.h>
 #include <i18n.h>
 
-XojExportHandler::XojExportHandler()
-{
-}
+XojExportHandler::XojExportHandler() = default;
 
-XojExportHandler::~XojExportHandler()
-{
-}
+XojExportHandler::~XojExportHandler() = default;
 
 /**
  * Export the fill attributes
@@ -40,7 +36,8 @@ void XojExportHandler::writeHeader()
 	this->root->setAttrib("creator", PROJECT_STRING);
 	// Keep this version on 2, as this is anyway not read by Xournal
 	this->root->setAttrib("fileversion", "2");
-	this->root->addChild(new XmlTextNode("title", "Xournal document (Compatibility) - see " PROJECT_URL));
+	this->root->addChild(
+	        new XmlTextNode("title", std::string{"Xournal document (Compatibility) - see "} + PROJECT_URL));
 }
 
 void XojExportHandler::writeSolidBackground(XmlNode* background, PageRef p)

@@ -24,7 +24,7 @@ RenderJob::~RenderJob()
 	this->view = nullptr;
 }
 
-void* RenderJob::getSource()
+auto RenderJob::getSource() -> void*
 {
 	return this->view;
 }
@@ -184,7 +184,7 @@ void RenderJob::repaintWidget(GtkWidget* widget)
 	});
 }
 
-JobType RenderJob::getType()
+auto RenderJob::getType() -> JobType
 {
 	return JOB_TYPE_RENDER;
 }

@@ -14,9 +14,7 @@ SaveJob::SaveJob(Control* control)
 {
 }
 
-SaveJob::~SaveJob()
-{
-}
+SaveJob::~SaveJob() = default;
 
 void SaveJob::run()
 {
@@ -97,7 +95,7 @@ void SaveJob::updatePreview(Control* control)
 	doc->unlock();
 }
 
-bool SaveJob::save()
+auto SaveJob::save() -> bool
 {
 	updatePreview(control);
 	Document* doc = this->control->getDocument();

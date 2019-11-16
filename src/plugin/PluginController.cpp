@@ -30,18 +30,21 @@ PluginController::PluginController(Control* control)
 }
 
 PluginController::~PluginController()
-{
 #ifdef ENABLE_PLUGINS
+{
 
-	for (Plugin* p : this->plugins)
+
+	for (Plugin* p: this->plugins)
 	{
 		delete p;
 	}
 
 	this->plugins.clear();
-
-#endif
 }
+#else
+        = default;
+#endif
+
 
 /**
  * Load all plugins within this folder
@@ -144,7 +147,7 @@ void PluginController::registerMenu()
 /**
  * Return the plugin list
  */
-vector<Plugin*>& PluginController::getPlugins()
+auto PluginController::getPlugins() -> vector<Plugin*>&
 {
 	return plugins;
 }

@@ -42,7 +42,7 @@ void ColorUndoAction::addStroke(Element* e, int originalColor, double newColor)
 	this->data.push_back(new ColorUndoActionEntry(e, originalColor, newColor));
 }
 
-bool ColorUndoAction::undo(Control* control)
+auto ColorUndoAction::undo(Control* control) -> bool
 {
 	if (this->data.empty())
 	{
@@ -71,7 +71,7 @@ bool ColorUndoAction::undo(Control* control)
 	return true;
 }
 
-bool ColorUndoAction::redo(Control* control)
+auto ColorUndoAction::redo(Control* control) -> bool
 {
 	if (this->data.empty())
 	{
@@ -100,7 +100,7 @@ bool ColorUndoAction::redo(Control* control)
 	return true;
 }
 
-string ColorUndoAction::getText()
+auto ColorUndoAction::getText() -> string
 {
 	return _("Change color");
 }

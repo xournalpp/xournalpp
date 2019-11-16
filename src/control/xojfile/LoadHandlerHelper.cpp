@@ -5,13 +5,17 @@
 #include <config.h>
 #include <i18n.h>
 
-#define error(...) if (loadHandler->error == nullptr) { loadHandler->error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); }
+#define error(...)                                                                                     \
+	if (loadHandler->error == nullptr)                                                                 \
+	{                                                                                                  \
+		loadHandler->error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); \
+	}
 
-typedef struct
+struct PredefinedColor
 {
 	const char* name;
 	const int rgb;
-} PredefinedColor;
+};
 
 static PredefinedColor PREDEFINED_COLORS[] =
 {
@@ -28,9 +32,7 @@ static PredefinedColor PREDEFINED_COLORS[] =
 	{ "white",      0xffffff }
 };
 
-const int COLOR_COUNT = sizeof(PREDEFINED_COLORS) / sizeof(PredefinedColor);
-
-int LoadHandlerHelper::parseBackgroundColor(LoadHandler* loadHandler)
+auto LoadHandlerHelper::parseBackgroundColor(LoadHandler* loadHandler) -> int
 {
 	const char* sColor = LoadHandlerHelper::getAttrib("color", false, loadHandler);
 
@@ -63,7 +65,7 @@ int LoadHandlerHelper::parseBackgroundColor(LoadHandler* loadHandler)
 	return color;
 }
 
-bool LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* loadHandler)
+auto LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* loadHandler) -> bool
 {
 	if (text == nullptr)
 	{
@@ -87,11 +89,11 @@ bool LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* lo
 	}
 	else
 	{
-		for (int i = 0; i < COLOR_COUNT; i++)
+		for (auto& i: PREDEFINED_COLORS)
 		{
-			if (!strcmp(text, PREDEFINED_COLORS[i].name))
+			if (!strcmp(text, i.name))
 			{
-				color = PREDEFINED_COLORS[i].rgb;
+				color = i.rgb;
 				return true;
 			}
 		}
@@ -101,7 +103,7 @@ bool LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* lo
 }
 
 
-const char* LoadHandlerHelper::getAttrib(const char* name, bool optional, LoadHandler* loadHandler)
+auto LoadHandlerHelper::getAttrib(const char* name, bool optional, LoadHandler* loadHandler) -> const char*
 {
 	const char** aName = loadHandler->attributeNames;
 	const char** aValue = loadHandler->attributeValues;
@@ -123,7 +125,7 @@ const char* LoadHandlerHelper::getAttrib(const char* name, bool optional, LoadHa
 	return nullptr;
 }
 
-double LoadHandlerHelper::getAttribDouble(const char* name, LoadHandler* loadHandler)
+auto LoadHandlerHelper::getAttribDouble(const char* name, LoadHandler* loadHandler) -> double
 {
 	const char* attrib = getAttrib(name, false, loadHandler);
 
@@ -143,7 +145,7 @@ double LoadHandlerHelper::getAttribDouble(const char* name, LoadHandler* loadHan
 	return val;
 }
 
-int LoadHandlerHelper::getAttribInt(const char* name, LoadHandler* loadHandler)
+auto LoadHandlerHelper::getAttribInt(const char* name, LoadHandler* loadHandler) -> int
 {
 	const char* attrib = getAttrib(name, false, loadHandler);
 
@@ -163,7 +165,7 @@ int LoadHandlerHelper::getAttribInt(const char* name, LoadHandler* loadHandler)
 	return val;
 }
 
-bool LoadHandlerHelper::getAttribInt(const char* name, bool optional, LoadHandler* loadHandler, int& rValue)
+auto LoadHandlerHelper::getAttribInt(const char* name, bool optional, LoadHandler* loadHandler, int& rValue) -> bool
 {
 	const char* attrib = getAttrib(name, optional, loadHandler);
 
@@ -188,7 +190,7 @@ bool LoadHandlerHelper::getAttribInt(const char* name, bool optional, LoadHandle
 	return true;
 }
 
-size_t LoadHandlerHelper::getAttribSizeT(const char* name, LoadHandler* loadHandler)
+auto LoadHandlerHelper::getAttribSizeT(const char* name, LoadHandler* loadHandler) -> size_t
 {
 	const char* attrib = getAttrib(name, false, loadHandler);
 
@@ -208,7 +210,8 @@ size_t LoadHandlerHelper::getAttribSizeT(const char* name, LoadHandler* loadHand
 	return val;
 }
 
-bool LoadHandlerHelper::getAttribSizeT(const char* name, bool optional, LoadHandler* loadHandler, size_t& rValue)
+auto LoadHandlerHelper::getAttribSizeT(const char* name, bool optional, LoadHandler* loadHandler, size_t& rValue)
+        -> bool
 {
 	const char* attrib = getAttrib(name, optional, loadHandler);
 

@@ -6,11 +6,9 @@ GotoDialog::GotoDialog(GladeSearchpath* gladeSearchPath, int maxPage)
 	gtk_spin_button_set_range(GTK_SPIN_BUTTON(get("spinPage")), 1, maxPage);
 }
 
-GotoDialog::~GotoDialog()
-{
-}
+GotoDialog::~GotoDialog() = default;
 
-int GotoDialog::getSelectedPage()
+auto GotoDialog::getSelectedPage() -> int
 {
 	return this->selectedPage;
 }

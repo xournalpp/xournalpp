@@ -1,15 +1,15 @@
 #include "Attribute.h"
 
+#include <utility>
+
 XMLAttribute::XMLAttribute(string name)
- : name(name)
+ : name(std::move(name))
 {
 }
 
-XMLAttribute::~XMLAttribute()
-{
-}
+XMLAttribute::~XMLAttribute() = default;
 
-string XMLAttribute::getName()
+auto XMLAttribute::getName() -> string
 {
 	return name;
 }

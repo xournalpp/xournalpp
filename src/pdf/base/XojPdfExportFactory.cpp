@@ -4,15 +4,11 @@
 
 #include "XojCairoPdfExport.h"
 
-XojPdfExportFactory::XojPdfExportFactory()
-{
-}
+XojPdfExportFactory::XojPdfExportFactory() = default;
 
-XojPdfExportFactory::~XojPdfExportFactory()
-{
-}
+XojPdfExportFactory::~XojPdfExportFactory() = default;
 
-XojPdfExport* XojPdfExportFactory::createExport(Document* doc, ProgressListener* listener)
+auto XojPdfExportFactory::createExport(Document* doc, ProgressListener* listener) -> XojPdfExport*
 {
 	return new XojCairoPdfExport(doc, listener);
 }

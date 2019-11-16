@@ -25,17 +25,18 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
 
 	pageMenu->setListener(this);
 
-	g_signal_connect(get("btChangePaperSize"), "clicked", G_CALLBACK(
-		+[](GtkToggleButton* togglebutton, PageTemplateDialog* self)
-		{ self->showPageSizeDialog(); }), this);
+	g_signal_connect(
+	        get("btChangePaperSize"), "clicked",
+	        G_CALLBACK(+[](GtkToggleButton* togglebutton, PageTemplateDialog* self) { self->showPageSizeDialog(); }),
+	        this);
 
-	g_signal_connect(get("btLoad"), "clicked", G_CALLBACK(
-		+[](GtkToggleButton* togglebutton, PageTemplateDialog* self)
-		{ self->loadFromFile(); }), this);
+	g_signal_connect(get("btLoad"), "clicked",
+	                 G_CALLBACK(+[](GtkToggleButton* togglebutton, PageTemplateDialog* self) { self->loadFromFile(); }),
+	                 this);
 
-	g_signal_connect(get("btSave"), "clicked", G_CALLBACK(
-		+[](GtkToggleButton* togglebutton, PageTemplateDialog* self)
-		{ self->saveToFile(); }), this);
+	g_signal_connect(get("btSave"), "clicked",
+	                 G_CALLBACK(+[](GtkToggleButton* togglebutton, PageTemplateDialog* self) { self->saveToFile(); }),
+	                 this);
 
 	popupMenuButton = new PopupMenuButton(get("btBackgroundDropdown"), pageMenu->getMenu());
 
@@ -84,9 +85,9 @@ void PageTemplateDialog::saveToFile()
 {
 	saveToModel();
 
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Save File"), GTK_WINDOW(this->getWindow()),
-													GTK_FILE_CHOOSER_ACTION_SAVE, _("_Cancel"), GTK_RESPONSE_CANCEL,
-													_("_Save"), GTK_RESPONSE_OK, nullptr);
+	GtkWidget* dialog =
+	        gtk_file_chooser_dialog_new(_("Save File"), GTK_WINDOW(this->getWindow()), GTK_FILE_CHOOSER_ACTION_SAVE,
+	                                    _("_Cancel"), GTK_RESPONSE_CANCEL, _("_Save"), GTK_RESPONSE_OK, nullptr);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
@@ -167,7 +168,7 @@ void PageTemplateDialog::updatePageSize()
 
 void PageTemplateDialog::showPageSizeDialog()
 {
-	FormatDialog* dlg = new FormatDialog(getGladeSearchPath(), settings, model.getPageWidth(), model.getPageHeight());
+	auto* dlg = new FormatDialog(getGladeSearchPath(), settings, model.getPageWidth(), model.getPageHeight());
 	dlg->show(GTK_WINDOW(this->window));
 
 	double width = dlg->getWidth();
@@ -187,7 +188,7 @@ void PageTemplateDialog::showPageSizeDialog()
 /**
  * The dialog was confirmed / saved
  */
-bool PageTemplateDialog::isSaved()
+auto PageTemplateDialog::isSaved() -> bool
 {
 	return saved;
 }

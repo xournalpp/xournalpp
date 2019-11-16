@@ -35,7 +35,7 @@ void ColorToolItem::freeIcons()
 	this->icon = nullptr;
 }
 
-bool ColorToolItem::isSelector()
+auto ColorToolItem::isSelector() -> bool
 {
 	return this->action == ACTION_SELECT_COLOR_CUSTOM;
 }
@@ -104,12 +104,12 @@ void ColorToolItem::enableColor(int color)
 	}
 }
 
-int ColorToolItem::getColor()
+auto ColorToolItem::getColor() -> int
 {
 	return this->color;
 }
 
-string ColorToolItem::getId()
+auto ColorToolItem::getId() -> string
 {
 	if (isSelector())
 	{
@@ -123,7 +123,7 @@ string ColorToolItem::getId()
 	return id;
 }
 
-bool ColorToolItem::colorEqualsMoreOreLess(int color)
+auto ColorToolItem::colorEqualsMoreOreLess(int color) -> bool
 {
 	if (color == -1)
 	{
@@ -219,7 +219,7 @@ void ColorToolItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolBut
 	inUpdate = false;
 }
 
-GtkToolItem* ColorToolItem::newItem()
+auto ColorToolItem::newItem() -> GtkToolItem*
 {
 	this->icon = new ColorSelectImage(this->color, !isSelector());
 
@@ -234,12 +234,12 @@ GtkToolItem* ColorToolItem::newItem()
 	return it;
 }
 
-string ColorToolItem::getToolDisplayName()
+auto ColorToolItem::getToolDisplayName() -> string
 {
 	return this->name;
 }
 
-GtkWidget* ColorToolItem::getNewToolIcon()
+auto ColorToolItem::getNewToolIcon() -> GtkWidget*
 {
 	return ColorSelectImage::newColorIcon(this->color, 16, !isSelector());
 }

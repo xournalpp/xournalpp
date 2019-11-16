@@ -9,9 +9,7 @@ Range::Range(double x, double y)
 	this->y2 = y;
 }
 
-Range::~Range()
-{
-}
+Range::~Range() = default;
 
 void Range::addPoint(double x, double y)
 {
@@ -22,32 +20,32 @@ void Range::addPoint(double x, double y)
 	this->y2 = std::max(this->y2, y);
 }
 
-double Range::getX() const
+auto Range::getX() const -> double
 {
 	return this->x1;
 }
 
-double Range::getY() const
+auto Range::getY() const -> double
 {
 	return this->y1;
 }
 
-double Range::getWidth() const
+auto Range::getWidth() const -> double
 {
 	return this->x2 - this->x1;
 }
 
-double Range::getHeight() const
+auto Range::getHeight() const -> double
 {
 	return this->y2 - this->y1;
 }
 
-double Range::getX2() const
+auto Range::getX2() const -> double
 {
 	return this->x2;
 }
 
-double Range::getY2() const
+auto Range::getY2() const -> double
 {
 	return this->y2;
 }

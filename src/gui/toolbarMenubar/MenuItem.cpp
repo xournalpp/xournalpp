@@ -6,6 +6,4 @@ MenuItem::MenuItem(ActionHandler* handler, GtkWidget* widget, ActionType type, A
 	this->group = group;
 }
 
-MenuItem::~MenuItem()
-{
-}
+MenuItem::~MenuItem() = default;

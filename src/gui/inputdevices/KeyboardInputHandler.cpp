@@ -10,11 +10,9 @@ KeyboardInputHandler::KeyboardInputHandler(InputContext* inputContext) : Abstrac
 {
 }
 
-KeyboardInputHandler::~KeyboardInputHandler()
-{
-}
+KeyboardInputHandler::~KeyboardInputHandler() = default;
 
-bool KeyboardInputHandler::handleImpl(InputEvent* event)
+auto KeyboardInputHandler::handleImpl(InputEvent* event) -> bool
 {
 	auto keyEvent = (GdkEventKey*) event->sourceEvent;
 	GtkXournal* xournal = inputContext->getXournal();

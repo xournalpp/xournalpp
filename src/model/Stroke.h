@@ -32,11 +32,11 @@ public:
 
 	Stroke& operator=(Stroke const&) = default;
 	Stroke& operator=(Stroke&&) = default;
-	virtual ~Stroke();
+	~Stroke() override;
 
 public:
 	Stroke* cloneStroke() const;
-	virtual Element* clone();
+	Element* clone() override;
 
 	/**
 	 * Clone style attributes, but not the data (position, width etc.)
@@ -94,11 +94,11 @@ public:
 	bool hasPressure() const;
 	double getAvgPressure() const;
 
-	virtual void move(double dx, double dy);
-	virtual void scale(double x0, double y0, double fx, double fy);
-	virtual void rotate(double x0, double y0, double xo, double yo, double th);
+	void move(double dx, double dy) override;
+	void scale(double x0, double y0, double fx, double fy) override;
+	void rotate(double x0, double y0, double xo, double yo, double th) override;
 
-	virtual bool isInSelection(ShapeContainer* container);
+	bool isInSelection(ShapeContainer* container) override;
 
 	EraseableStroke* getEraseable();
 	void setEraseable(EraseableStroke* eraseable);
@@ -107,11 +107,11 @@ public:
 
 public:
 	// Serialize interface
-	void serialize(ObjectOutputStream& out);
-	void readSerialized(ObjectInputStream& in);
+	void serialize(ObjectOutputStream& out) override;
+	void readSerialized(ObjectInputStream& in) override;
 
 protected:
-	virtual void calcSize();
+	void calcSize() override;
 
 private:
 	// The stroke width cannot be inherited from Element

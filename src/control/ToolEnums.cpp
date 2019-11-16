@@ -1,6 +1,6 @@
 #include "ToolEnums.h"
 
-string toolSizeToString(ToolSize size)
+auto toolSizeToString(ToolSize size) -> string
 {
 	switch (size)
 	{
@@ -14,7 +14,7 @@ string toolSizeToString(ToolSize size)
 	}
 }
 
-ToolSize toolSizeFromString(string size)
+auto toolSizeFromString(string size) -> ToolSize
 {
 	if (size == "veryThin")  			return TOOL_SIZE_VERY_FINE;
 	else if (size == "thin")			return TOOL_SIZE_FINE;
@@ -25,7 +25,7 @@ ToolSize toolSizeFromString(string size)
 	else        						return TOOL_SIZE_NONE;
 }
 
-string drawingTypeToString(DrawingType type)
+auto drawingTypeToString(DrawingType type) -> string
 {
 	switch (type)
 	{
@@ -41,7 +41,7 @@ string drawingTypeToString(DrawingType type)
 	}
 }
 
-DrawingType drawingTypeFromString(string type)
+auto drawingTypeFromString(string type) -> DrawingType
 {
 	if (type == "dontChange")   					return DRAWING_TYPE_DONT_CHANGE;
 	else if (type == "line")						return DRAWING_TYPE_LINE;
@@ -54,7 +54,7 @@ DrawingType drawingTypeFromString(string type)
 	else	        								return DRAWING_TYPE_DEFAULT;
 }
 
-string toolTypeToString(ToolType type)
+auto toolTypeToString(ToolType type) -> string
 {
 	switch (type)
 	{
@@ -79,7 +79,7 @@ string toolTypeToString(ToolType type)
 	}
 }
 
-ToolType toolTypeFromString(string type)
+auto toolTypeFromString(string type) -> ToolType
 {
 	if (type == "none") 							return TOOL_NONE;
 	else if (type == "pen")  						return TOOL_PEN;
@@ -100,7 +100,7 @@ ToolType toolTypeFromString(string type)
 	else	      									return TOOL_NONE;
 }
 
-string eraserTypeToString(EraserType type)
+auto eraserTypeToString(EraserType type) -> string
 {
 	switch (type)
 	{
@@ -112,7 +112,7 @@ string eraserTypeToString(EraserType type)
 	}
 }
 
-EraserType eraserTypeFromString(string type)
+auto eraserTypeFromString(string type) -> EraserType
 {
 	if (type == "none") 					return ERASER_TYPE_NONE;
 	else if (type == "default")  			return ERASER_TYPE_DEFAULT;

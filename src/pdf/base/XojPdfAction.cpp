@@ -1,9 +1,5 @@
 #include "XojPdfAction.h"
 
-XojPdfAction::XojPdfAction()
-{
-}
+XojPdfAction::XojPdfAction() = default;
 
-XojPdfAction::~XojPdfAction()
-{
-}
+XojPdfAction::~XojPdfAction() = default;

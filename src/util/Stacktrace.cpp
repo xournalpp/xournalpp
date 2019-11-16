@@ -1,21 +1,21 @@
 #include "Stacktrace.h"
 
+#include <array>
+#include <iostream>
+
 #ifdef _WIN32
 #include <Windows.h>
 #else
 #include <execinfo.h>
 #include <unistd.h>
-#include <limits.h>
+#include <climits>
 #endif
 
 #ifdef __APPLE__
 #include <mach-o/dyld.h>
 #endif
 
-#include <Path.h>
 
-
-#include <iostream>
 using std::endl;
 
 /**
@@ -24,9 +24,9 @@ using std::endl;
  * Another solution would be backtrace-symbols.c from cairo/util, but its really complicated
  */
 
-Stacktrace::Stacktrace() { }
+Stacktrace::Stacktrace() = default;
 
-Stacktrace::~Stacktrace() { }
+Stacktrace::~Stacktrace() = default;
 
 #ifdef _WIN32
 std::string Stacktrace::getExePath()
@@ -44,6 +44,8 @@ void Stacktrace::printStracktrace(std::ostream& stream)
 #else
 
 #ifdef __APPLE__
+
+#include <Path.h>
 
 std::string Stacktrace::getExePath()
 {
@@ -65,22 +67,21 @@ std::string Stacktrace::getExePath()
 	return "";
 }
 #else
-std::string Stacktrace::getExePath()
+auto Stacktrace::getExePath() -> std::string
 {
-	char result[PATH_MAX];
-	ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
-	return std::string(result, (count > 0) ? count : 0);
+	std::array<char, PATH_MAX> result;
+	ssize_t count = readlink("/proc/self/exe", result.data(), PATH_MAX);
+	return std::string(result.data(), (count > 0) ? count : 0);
 }
 #endif
 
 void Stacktrace::printStracktrace(std::ostream& stream)
 {
-	void* trace[32];
-	char** messages = (char**) nullptr;
-	char buff[2048];
+	std::array<void*, 32> trace;
+	std::array<char, 2048> buff;
 
-	int trace_size = backtrace(trace, 32);
-	messages = backtrace_symbols(trace, trace_size);
+	int trace_size = backtrace(trace.data(), trace.size());
+	char** messages = backtrace_symbols(trace.data(), trace_size);
 
 	std::string exeName = getExePath();
 
@@ -89,13 +90,13 @@ void Stacktrace::printStracktrace(std::ostream& stream)
 	{
 		stream << "[bt] #" << i << " " << messages[i] << endl;
 
-		char syscom[1024];
+		std::array<char, 1024> syscom;
 
-		sprintf(syscom, "addr2line %p -e %s", trace[i], exeName.c_str());
-		FILE* fProc = popen(syscom, "r");
-		while (fgets(buff, sizeof(buff), fProc) != nullptr)
+		sprintf(syscom.data(), "addr2line %p -e %s", trace[i], exeName.c_str());
+		FILE* fProc = popen(syscom.data(), "r");
+		while (fgets(buff.data(), buff.size(), fProc) != nullptr)
 		{
-			stream << buff;
+			stream << buff.data();
 		}
 		pclose(fProc);
 	}

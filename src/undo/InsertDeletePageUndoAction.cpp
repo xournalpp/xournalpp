@@ -20,7 +20,7 @@ InsertDeletePageUndoAction::~InsertDeletePageUndoAction()
 	this->page = nullptr;
 }
 
-bool InsertDeletePageUndoAction::undo(Control* control)
+auto InsertDeletePageUndoAction::undo(Control* control) -> bool
 {
 	if (this->inserted)
 	{
@@ -32,7 +32,7 @@ bool InsertDeletePageUndoAction::undo(Control* control)
 	}
 }
 
-bool InsertDeletePageUndoAction::redo(Control* control)
+auto InsertDeletePageUndoAction::redo(Control* control) -> bool
 {
 	if (this->inserted)
 	{
@@ -44,7 +44,7 @@ bool InsertDeletePageUndoAction::redo(Control* control)
 	}
 }
 
-bool InsertDeletePageUndoAction::insertPage(Control* control)
+auto InsertDeletePageUndoAction::insertPage(Control* control) -> bool
 {
 	Document* doc = control->getDocument();
 
@@ -68,7 +68,7 @@ bool InsertDeletePageUndoAction::insertPage(Control* control)
 	return true;
 }
 
-bool InsertDeletePageUndoAction::deletePage(Control* control)
+auto InsertDeletePageUndoAction::deletePage(Control* control) -> bool
 {
 	Document* doc = control->getDocument();
 
@@ -102,7 +102,7 @@ bool InsertDeletePageUndoAction::deletePage(Control* control)
 	return true;
 }
 
-string InsertDeletePageUndoAction::getText()
+auto InsertDeletePageUndoAction::getText() -> string
 {
 	if (this->inserted)
 	{

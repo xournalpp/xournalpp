@@ -21,7 +21,7 @@ AudioController::~AudioController()
 	this->audioPlayer = nullptr;
 }
 
-bool AudioController::startRecording()
+auto AudioController::startRecording() -> bool
 {
 	if (!this->isRecording())
 	{
@@ -32,13 +32,13 @@ bool AudioController::startRecording()
 
 		this->timestamp = static_cast<size_t>(g_get_monotonic_time() / 1000);
 
-		char buffer[50];
+		std::array<char, 50> buffer;
 		time_t secs = time(nullptr);
 		tm* t = localtime(&secs);
 		// This prints the date and time in ISO format.
-		sprintf(buffer, "%04d-%02d-%02d_%02d-%02d-%02d", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour,
-				t->tm_min, t->tm_sec);
-		string data(buffer);
+		sprintf(buffer.data(), "%04d-%02d-%02d_%02d-%02d-%02d", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday,
+		        t->tm_hour, t->tm_min, t->tm_sec);
+		string data(buffer.data());
 		data += ".ogg";
 
 		audioFilename = data;
@@ -58,7 +58,7 @@ bool AudioController::startRecording()
 	return false;
 }
 
-bool AudioController::stopRecording()
+auto AudioController::stopRecording() -> bool
 {
 	if (this->audioRecorder->isRecording())
 	{
@@ -72,17 +72,17 @@ bool AudioController::stopRecording()
 	return true;
 }
 
-bool AudioController::isRecording()
+auto AudioController::isRecording() -> bool
 {
 	return this->audioRecorder->isRecording();
 }
 
-bool AudioController::isPlaying()
+auto AudioController::isPlaying() -> bool
 {
 	return this->audioPlayer->isPlaying();
 }
 
-bool AudioController::startPlayback(string filename, unsigned int timestamp)
+auto AudioController::startPlayback(string filename, unsigned int timestamp) -> bool
 {
 	this->audioPlayer->stop();
 	bool status = this->audioPlayer->start(std::move(filename), timestamp);
@@ -123,12 +123,12 @@ void AudioController::stopPlayback()
 	this->audioPlayer->stop();
 }
 
-string AudioController::getAudioFilename()
+auto AudioController::getAudioFilename() -> string
 {
 	return this->audioFilename;
 }
 
-Path AudioController::getAudioFolder()
+auto AudioController::getAudioFolder() -> Path
 {
 	string af = this->settings->getAudioFolder();
 
@@ -144,17 +144,17 @@ Path AudioController::getAudioFolder()
 	return Path::fromUri(af);
 }
 
-size_t AudioController::getStartTime()
+auto AudioController::getStartTime() -> size_t
 {
 	return this->timestamp;
 }
 
-vector<DeviceInfo> AudioController::getOutputDevices()
+auto AudioController::getOutputDevices() -> vector<DeviceInfo>
 {
 	return this->audioPlayer->getOutputDevices();
 }
 
-vector<DeviceInfo> AudioController::getInputDevices()
+auto AudioController::getInputDevices() -> vector<DeviceInfo>
 {
 	return this->audioRecorder->getInputDevices();
 }

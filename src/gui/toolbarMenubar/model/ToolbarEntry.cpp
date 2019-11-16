@@ -1,8 +1,6 @@
 #include "ToolbarEntry.h"
 
-ToolbarEntry::ToolbarEntry()
-{
-}
+ToolbarEntry::ToolbarEntry() = default;
 
 ToolbarEntry::ToolbarEntry(const ToolbarEntry& e)
 {
@@ -34,7 +32,7 @@ void ToolbarEntry::clearList()
 	entries.clear();
 }
 
-string ToolbarEntry::getName()
+auto ToolbarEntry::getName() -> string
 {
 	return this->name;
 }
@@ -44,15 +42,15 @@ void ToolbarEntry::setName(string name)
 	this->name = name;
 }
 
-int ToolbarEntry::addItem(string item)
+auto ToolbarEntry::addItem(string item) -> int
 {
-	ToolbarItem* it = new ToolbarItem(item);
+	auto* it = new ToolbarItem(item);
 	entries.push_back(it);
 
 	return it->getId();
 }
 
-bool ToolbarEntry::removeItemById(int id)
+auto ToolbarEntry::removeItemById(int id) -> bool
 {
 	for (unsigned int i = 0; i < this->entries.size(); i++)
 	{
@@ -67,9 +65,9 @@ bool ToolbarEntry::removeItemById(int id)
 	return false;
 }
 
-int ToolbarEntry::insertItem(string item, int position)
+auto ToolbarEntry::insertItem(string item, int position) -> int
 {
-	ToolbarItem* it = new ToolbarItem(item);
+	auto* it = new ToolbarItem(item);
 	if (position >= (int)entries.size())
 	{
 		entries.push_back(it);
@@ -80,7 +78,7 @@ int ToolbarEntry::insertItem(string item, int position)
 	return it->getId();
 }
 
-const ToolbarItemVector& ToolbarEntry::getItems() const
+auto ToolbarEntry::getItems() const -> const ToolbarItemVector&
 {
 	return entries;
 }

@@ -24,5 +24,4 @@ private:
 	void snapRotation(double& x, double& y);
 
 private:
-	};
-
+};

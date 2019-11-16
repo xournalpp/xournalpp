@@ -10,7 +10,7 @@
 /**
  * Create circle stroke for inertia
  */
-Stroke* CircleRecognizer::makeCircleShape(Stroke* originalStroke, Inertia& inertia)
+auto CircleRecognizer::makeCircleShape(Stroke* originalStroke, Inertia& inertia) -> Stroke*
 {
 	int npts = (int) (2 * inertia.rad());
 	if (npts < 12)
@@ -18,7 +18,7 @@ Stroke* CircleRecognizer::makeCircleShape(Stroke* originalStroke, Inertia& inert
 		npts = 12; // min. number of points
 	}
 
-	Stroke* s = new Stroke();
+	auto* s = new Stroke();
 	s->applyStyleFrom(originalStroke);
 
 	for (int i = 0; i <= npts; i++)
@@ -34,7 +34,7 @@ Stroke* CircleRecognizer::makeCircleShape(Stroke* originalStroke, Inertia& inert
 /**
  *  Test if we have a circle; inertia has been precomputed by caller
  */
-double CircleRecognizer::scoreCircle(Stroke* s, Inertia& inertia)
+auto CircleRecognizer::scoreCircle(Stroke* s, Inertia& inertia) -> double
 {
 	double r0 = inertia.rad();
 	double divisor = inertia.getMass() * r0;
@@ -61,7 +61,7 @@ double CircleRecognizer::scoreCircle(Stroke* s, Inertia& inertia)
 	return sum / (divisor);
 }
 
-Stroke* CircleRecognizer::recognize(Stroke* stroke)
+auto CircleRecognizer::recognize(Stroke* stroke) -> Stroke*
 {
 	Inertia s;
 	s.calc(stroke->getPoints(), 0, stroke->getPointCount());

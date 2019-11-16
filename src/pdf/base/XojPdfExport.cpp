@@ -1,12 +1,8 @@
 #include "XojPdfExport.h"
 
-XojPdfExport::XojPdfExport()
-{
-}
+XojPdfExport::XojPdfExport() = default;
 
-XojPdfExport::~XojPdfExport()
-{
-}
+XojPdfExport::~XojPdfExport() = default;
 
 /**
  * Export without background

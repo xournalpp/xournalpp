@@ -24,11 +24,9 @@ SidebarPreviewPageEntry::SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, P
 	g_signal_connect_after(this->widget, "button-press-event", clickCallback, this);
 }
 
-SidebarPreviewPageEntry::~SidebarPreviewPageEntry()
-{
-}
+SidebarPreviewPageEntry::~SidebarPreviewPageEntry() = default;
 
-PreviewRenderType SidebarPreviewPageEntry::getRenderType()
+auto SidebarPreviewPageEntry::getRenderType() -> PreviewRenderType
 {
 	return RENDER_TYPE_PAGE_PREVIEW;
 }

@@ -28,4 +28,4 @@ public:
 	virtual string getText();
 
 private:
-	};
+};

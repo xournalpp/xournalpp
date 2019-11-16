@@ -9,17 +9,17 @@ FillTransparencyDialog::FillTransparencyDialog(GladeSearchpath* gladeSearchPath,
 
 	setPreviewImage(alpha);
 
-	g_signal_connect(scaleAlpha, "change-value", G_CALLBACK(
-		+[](GtkRange* range, GtkScrollType scroll, gdouble value, FillTransparencyDialog* self)
-		{
+	g_signal_connect(
+	        scaleAlpha,
+	        "change-value",
+	        G_CALLBACK(+[](GtkRange* range, GtkScrollType scroll, gdouble value, FillTransparencyDialog* self) {
 		        self->setPreviewImage((int) (value / 100 * 255));
 		        gtk_range_set_value(range, value);
-		}), this);
+	        }),
+	        this);
 }
 
-FillTransparencyDialog::~FillTransparencyDialog()
-{
-}
+FillTransparencyDialog::~FillTransparencyDialog() = default;
 
 const int PREVIEW_WIDTH = 70;
 const int PREVIEW_HEIGTH = 50;
@@ -52,7 +52,7 @@ void FillTransparencyDialog::setPreviewImage(int alpha)
 	gtk_image_set_from_surface(GTK_IMAGE(preview), surface);
 }
 
-int FillTransparencyDialog::getResultAlpha()
+auto FillTransparencyDialog::getResultAlpha() -> int
 {
 	return resultAlpha;
 }

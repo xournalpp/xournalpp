@@ -33,4 +33,4 @@ private:
 	static void okButtonCallback(GtkButton* button, PdfPagesDialog* dlg);
 
 private:
-	};
+};

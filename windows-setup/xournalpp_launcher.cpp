@@ -79,8 +79,8 @@ int main(int argc, char* argv[])
 
 	for (int i = 1; i < argc; i++)
 	{
-	MessageBoxA(nullptr, argv[i], "Debug IN", 0);
-	
+		MessageBoxA(nullptr, argv[i], "Debug IN", 0);
+
 		command += " \"";
 		command += escapeString(argv[i]);
 		command += "\"";
@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
 	char* cmd = new char[command.size() + 1];
 	strncpy(cmd, command.c_str(), command.size());
 	cmd[command.size()] = 0;
-//	MessageBoxA(nullptr, cmd, "Debug", 0);
+	//	MessageBoxA(nullptr, cmd, "Debug", 0);
 	if (CreateProcessA(nullptr, cmd, nullptr, nullptr, true, 0, nullptr, folder.c_str(), &info, &processInfo))
 	{
 		WaitForSingleObject(processInfo.hProcess, INFINITE);

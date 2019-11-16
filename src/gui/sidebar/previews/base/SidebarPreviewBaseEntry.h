@@ -67,7 +67,7 @@ protected:
 	virtual void paint(cairo_t* cr);
 
 private:
-	protected:
+protected:
 	/**
 	 * If this page is currently selected
 	 */

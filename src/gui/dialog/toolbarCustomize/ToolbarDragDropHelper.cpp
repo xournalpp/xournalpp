@@ -3,14 +3,14 @@
 GdkAtom ToolbarDragDropHelper::atomToolItem = gdk_atom_intern_static_string("application/xournal-ToolbarItem");
 GtkTargetEntry ToolbarDragDropHelper::dropTargetEntry = { (gchar *)"move-buffer", GTK_TARGET_SAME_APP, 1 };
 
-ToolbarDragDropHelper::ToolbarDragDropHelper() { }
+ToolbarDragDropHelper::ToolbarDragDropHelper() = default;
 
-ToolbarDragDropHelper::~ToolbarDragDropHelper() { }
+ToolbarDragDropHelper::~ToolbarDragDropHelper() = default;
 
 /**
  * Get a GDK Pixbuf from GTK widget image
  */
-GdkPixbuf* ToolbarDragDropHelper::getImagePixbuf(GtkImage* image)
+auto ToolbarDragDropHelper::getImagePixbuf(GtkImage* image) -> GdkPixbuf*
 {
 	switch (gtk_image_get_storage_type(image))
 	{

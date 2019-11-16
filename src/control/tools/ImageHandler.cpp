@@ -18,11 +18,9 @@ ImageHandler::ImageHandler(Control* control, XojPageView* view)
 	this->view = view;
 }
 
-ImageHandler::~ImageHandler()
-{
-}
+ImageHandler::~ImageHandler() = default;
 
-bool ImageHandler::insertImage(double x, double y)
+auto ImageHandler::insertImage(double x, double y) -> bool
 {
 	GFile* file = ImageOpenDlg::show(control->getGtkWindow(), control->getSettings());
 	if (file == nullptr)
@@ -32,7 +30,7 @@ bool ImageHandler::insertImage(double x, double y)
 	return insertImage(file, x, y);
 }
 
-bool ImageHandler::insertImage(GFile* file, double x, double y)
+auto ImageHandler::insertImage(GFile* file, double x, double y) -> bool
 {
 	GError* err = nullptr;
 	GFileInputStream* in = g_file_read(file, nullptr, &err);
@@ -54,7 +52,7 @@ bool ImageHandler::insertImage(GFile* file, double x, double y)
 		return false;
 	}
 
-	Image* img = new Image();
+	auto* img = new Image();
 	img->setX(x);
 	img->setY(y);
 	img->setImage(pixbuf);
@@ -91,7 +89,7 @@ bool ImageHandler::insertImage(GFile* file, double x, double y)
 	        mem::make_unique<InsertUndoAction>(page, page->getSelectedLayer(), img));
 
 	view->rerenderElement(img);
-	EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
+	auto* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
 	control->getWindow()->getXournal()->setSelection(selection);
 
 	return true;

@@ -72,7 +72,7 @@ void MetadataManager::documentChanged()
 	delete m;
 }
 
-bool sortMetadata(MetadataEntry& a, MetadataEntry& b)
+auto sortMetadata(MetadataEntry& a, MetadataEntry& b) -> bool
 {
 	return a.time > b.time;
 }
@@ -80,7 +80,7 @@ bool sortMetadata(MetadataEntry& a, MetadataEntry& b)
 /**
  * Load the metadata list (sorted)
  */
-vector<MetadataEntry> MetadataManager::loadList()
+auto MetadataManager::loadList() -> vector<MetadataEntry>
 {
 	Path folder = Util::getConfigSubfolder("metadata");
 
@@ -119,7 +119,7 @@ vector<MetadataEntry> MetadataManager::loadList()
 /**
  * Parse a single metadata file
  */
-MetadataEntry MetadataManager::loadMetadataFile(string path, string file)
+auto MetadataManager::loadMetadataFile(string path, string file) -> MetadataEntry
 {
 	MetadataEntry entry;
 	entry.metadataFile = path;
@@ -192,7 +192,7 @@ MetadataEntry MetadataManager::loadMetadataFile(string path, string file)
 /**
  * Get the metadata for a file
  */
-MetadataEntry MetadataManager::getForFile(string file)
+auto MetadataManager::getForFile(string file) -> MetadataEntry
 {
 	vector<MetadataEntry> files = loadList();
 

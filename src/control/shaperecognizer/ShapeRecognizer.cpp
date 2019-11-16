@@ -26,9 +26,9 @@ void ShapeRecognizer::resetRecognizer()
 {
 	RDEBUG("reset");
 
-	for (int i = 0; i < MAX_POLYGON_SIDES + 1; i++)
+	for (auto& i: this->queue)
 	{
-		this->queue[i].stroke = nullptr;
+		i.stroke = nullptr;
 	}
 
 	this->queueLength = 0;
@@ -37,7 +37,7 @@ void ShapeRecognizer::resetRecognizer()
 /**
  *  Test if segments form standard shapes
  */
-Stroke* ShapeRecognizer::tryRectangle()
+auto ShapeRecognizer::tryRectangle() -> Stroke*
 {
 	// first, we need whole strokes to combine to 4 segments...
 	if (this->queueLength < 4)
@@ -98,7 +98,7 @@ Stroke* ShapeRecognizer::tryRectangle()
 		avgAngle = M_PI / 2;
 	}
 
-	Stroke* s = new Stroke();
+	auto* s = new Stroke();
 	s->applyStyleFrom(this->stroke);
 
 	for (int i = 0; i <= 3; i++)
@@ -117,7 +117,7 @@ Stroke* ShapeRecognizer::tryRectangle()
 	return s;
 }
 
-Stroke* ShapeRecognizer::tryArrow()
+auto ShapeRecognizer::tryArrow() -> Stroke*
 {
 	bool rev[3];
 
@@ -266,7 +266,7 @@ Stroke* ShapeRecognizer::tryArrow()
 	double delta = fabs(alpha[1] - alpha[2]) / 2;
 	dist = (hypot(rs[1].x1 - rs[1].x2, rs[1].y1 - rs[1].y2) + hypot(rs[2].x1 - rs[2].x2, rs[2].y1 - rs[2].y2)) / 2;
 
-	Stroke* s = new Stroke();
+	auto* s = new Stroke();
 	s->applyStyleFrom(this->stroke);
 
 	s->addPoint(Point(x1, y1));
@@ -283,7 +283,7 @@ Stroke* ShapeRecognizer::tryArrow()
 /*
  * check if something is a polygonal line with at most nsides sides
  */
-int ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss)
+auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss) -> int
 {
 	Inertia s;
 	int i1, i2, n1, n2;
@@ -457,12 +457,12 @@ void ShapeRecognizer::optimizePolygonal(const Point* pt, int nsides, int* breaks
 	}
 }
 
-Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
+auto ShapeRecognizer::tryClosedPolygon(int nsides) -> Stroke*
 {
 	//to eliminate bug #52, remove this until it's perfected
 	return nullptr;
 
-/*
+	/*
 	RecoSegment* r1 = nullptr;
 	RecoSegment* r2 = nullptr;
 
@@ -521,7 +521,7 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 /**
  * The main pattern recognition function
  */
-ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
+auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult*
 {
 	this->stroke = stroke;
 
@@ -576,35 +576,35 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 
 		if ((tmp = tryRectangle()) != nullptr)
 		{
-			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
+			auto* result = new ShapeRecognizerResult(tmp, this);
 			resetRecognizer();
 			RDEBUG("return tryRectangle()");
 			return result;
 		}
 
-//		if ((tmp = tryArrow()) != nullptr)
-//		{
-//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-//			resetRecognizer();
-//			RDEBUG("return tryArrow()");
-//			return result;
-//		}
-//
-//		if ((tmp = tryClosedPolygon(3)) != nullptr)
-//		{
-//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-//			RDEBUG("return tryClosedPolygon(3)");
-//			resetRecognizer();
-//			return result;
-//		}
-//
-//		if ((tmp = tryClosedPolygon(4)) != nullptr)
-//		{
-//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-//			RDEBUG("return tryClosedPolygon(4)");
-//			resetRecognizer();
-//			return result;
-//		}
+		//		if ((tmp = tryArrow()) != nullptr)
+		//		{
+		//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
+		//			resetRecognizer();
+		//			RDEBUG("return tryArrow()");
+		//			return result;
+		//		}
+		//
+		//		if ((tmp = tryClosedPolygon(3)) != nullptr)
+		//		{
+		//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
+		//			RDEBUG("return tryClosedPolygon(3)");
+		//			resetRecognizer();
+		//			return result;
+		//		}
+		//
+		//		if ((tmp = tryClosedPolygon(4)) != nullptr)
+		//		{
+		//			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
+		//			RDEBUG("return tryClosedPolygon(4)");
+		//			resetRecognizer();
+		//			return result;
+		//		}
 
 
 		// Removed complicated recognition
@@ -622,13 +622,13 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 				rs->x1 = rs->x2 = rs->xcenter;
 			}
 
-			Stroke* s = new Stroke();
+			auto* s = new Stroke();
 			s->applyStyleFrom(this->stroke);
 
 			s->addPoint(Point(rs->x1, rs->y1));
 			s->addPoint(Point(rs->x2, rs->y2));
 			rs->stroke = s;
-			ShapeRecognizerResult* result = new ShapeRecognizerResult(s);
+			auto* result = new ShapeRecognizerResult(s);
 			RDEBUG("return line");
 			return result;
 		}

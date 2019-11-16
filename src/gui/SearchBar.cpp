@@ -15,14 +15,10 @@ SearchBar::SearchBar(Control* control)
 
 	GtkWidget* next = win->get("btSearchForward");
 	GtkWidget* previous = win->get("btSearchBack");
-	g_signal_connect(next, "clicked", G_CALLBACK(+[](GtkButton* button, SearchBar* self) {
- self->searchNext();
-	                 }),
+	g_signal_connect(next, "clicked", G_CALLBACK(+[](GtkButton* button, SearchBar* self) { self->searchNext(); }),
 	                 this);
-	g_signal_connect(previous, "clicked", G_CALLBACK(+[](GtkButton* button, SearchBar* self) {
- self->searchPrevious();
-	                 }),
-	                 this);
+	g_signal_connect(previous, "clicked",
+	                 G_CALLBACK(+[](GtkButton* button, SearchBar* self) { self->searchPrevious(); }), this);
 
 	// TODO: When keybindings are implemented, handle previous search keybinding properly
 	GtkWidget* searchTextField = win->get("searchTextField");
@@ -30,7 +26,7 @@ SearchBar::SearchBar(Control* control)
 	// Enable next/previous search when pressing Enter / Shift+Enter
 	g_signal_connect(searchTextField, "key-press-event",
 	                 G_CALLBACK(+[](GtkWidget* entry, GdkEventKey* event, SearchBar* self) {
- if (event->keyval == GDK_KEY_Return)
+		                 if (event->keyval == GDK_KEY_Return)
 		                 {
 			                 if (event->state & GDK_SHIFT_MASK)
 				                 self->searchPrevious();
@@ -53,7 +49,7 @@ SearchBar::~SearchBar()
 	this->control = nullptr;
 }
 
-bool SearchBar::searchTextonCurrentPage(const char* text, int* occures, double* top)
+auto SearchBar::searchTextonCurrentPage(const char* text, int* occures, double* top) -> bool
 {
 	int p = control->getCurrentPageNo();
 

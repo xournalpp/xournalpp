@@ -7,7 +7,7 @@ Selection::Selection(Redrawable* view)
 {
 	this->view = view;
 	this->page = nullptr;
-	
+
 	this->x1Box = 0;
 	this->x2Box = 0;
 	this->y1Box = 0;
@@ -34,11 +34,9 @@ RectSelection::RectSelection(double x, double y, Redrawable* view) : Selection(v
 	this->y2 = 0;
 }
 
-RectSelection::~RectSelection()
-{
-}
+RectSelection::~RectSelection() = default;
 
-bool RectSelection::finalize(PageRef page)
+auto RectSelection::finalize(PageRef page) -> bool
 {
 	this->x1 = std::min(this->sx, this->ex);
 	this->x2 = std::max(this->sx, this->ex);
@@ -62,7 +60,7 @@ bool RectSelection::finalize(PageRef page)
 	return !this->selectedElements.empty();
 }
 
-bool RectSelection::contains(double x, double y)
+auto RectSelection::contains(double x, double y) -> bool
 {
 	if (x < this->x1 || x > this->x2)
 	{
@@ -162,12 +160,12 @@ void RegionSelect::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 		cairo_set_line_width(cr, 1 / zoom);
 		selectionColor.apply(cr);
 
-		RegionPoint* r0 = (RegionPoint*) this->points->data;
+		auto* r0 = (RegionPoint*) this->points->data;
 		cairo_move_to(cr, r0->x, r0->y);
 
 		for (GList* l = this->points->next; l != nullptr; l = l->next)
 		{
-			RegionPoint* r = (RegionPoint*) l->data;
+			auto* r = (RegionPoint*) l->data;
 			cairo_line_to(cr, r->x, r->y);
 		}
 
@@ -187,7 +185,7 @@ void RegionSelect::currentPos(double x, double y)
 	if (this->points && this->points->next && this->points->next->next)
 	{
 
-		RegionPoint* r0 = (RegionPoint*) this->points->data;
+		auto* r0 = (RegionPoint*) this->points->data;
 		double ax = r0->x;
 		double bx = r0->x;
 		double ay = r0->y;
@@ -195,7 +193,7 @@ void RegionSelect::currentPos(double x, double y)
 
 		for (GList* l = this->points; l != nullptr; l = l->next)
 		{
-			RegionPoint* r = (RegionPoint*) l->data;
+			auto* r = (RegionPoint*) l->data;
 			if (ax > r->x)
 			{
 				ax = r->x;
@@ -218,7 +216,7 @@ void RegionSelect::currentPos(double x, double y)
 	}
 }
 
-bool RegionSelect::contains(double x, double y)
+auto RegionSelect::contains(double x, double y) -> bool
 {
 	if (x < this->x1Box || x > this->x2Box)
 	{
@@ -235,7 +233,7 @@ bool RegionSelect::contains(double x, double y)
 
 	int hits = 0;
 
-	RegionPoint* last = (RegionPoint*) g_list_last(this->points)->data;
+	auto* last = (RegionPoint*) g_list_last(this->points)->data;
 
 	double lastx = last->x;
 	double lasty = last->y;
@@ -244,7 +242,7 @@ bool RegionSelect::contains(double x, double y)
 	// Walk the edges of the polygon
 	for (GList* l = this->points; l != nullptr; lastx = curx, lasty = cury, l = l->next)
 	{
-		RegionPoint* last = (RegionPoint*) l->data;
+		auto* last = (RegionPoint*) l->data;
 		curx = last->x;
 		cury = last->y;
 
@@ -310,7 +308,7 @@ bool RegionSelect::contains(double x, double y)
 	return (hits & 1) != 0;
 }
 
-bool RegionSelect::finalize(PageRef page)
+auto RegionSelect::finalize(PageRef page) -> bool
 {
 	this->page = page;
 
@@ -321,7 +319,7 @@ bool RegionSelect::finalize(PageRef page)
 
 	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
-		RegionPoint* p = (RegionPoint*) l->data;
+		auto* p = (RegionPoint*) l->data;
 
 		if (p->x < this->x1Box)
 		{
