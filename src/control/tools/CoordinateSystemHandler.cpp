@@ -68,7 +68,7 @@ void CoordinateSystemHandler::drawShape(Point& c, const PositionInputData& pos)
 		if ( !this->modControl )	//draw out from starting point
 		{			
 			stroke->addPoint(p1);		
-			stroke->addPoint(Point(p1.x + width, p1.y  ));
+			stroke->addPoint(Point(p1.x, p1.y + height));
 			stroke->addPoint(Point(p1.x + width, p1.y + height));
 		}
 		else	//Control is down 
@@ -77,14 +77,5 @@ void CoordinateSystemHandler::drawShape(Point& c, const PositionInputData& pos)
 			stroke->addPoint(p1);		
 			stroke->addPoint(Point(p1.x + width, p1.y ));
 		}
-		
-		
-		
-
-		
-		
-
 	}
-
-	
 }
