@@ -72,7 +72,7 @@ void CoordinateSystemHandler::drawShape(Point& c, const PositionInputData& pos)
 		else	//Control is down 
 		{
 			stroke->addPoint(Point(p1.x, p1.y + height ));
-			stroke->addPoint(p1);		
+			stroke->addPoint(p1);
 			stroke->addPoint(Point(p1.x + width, p1.y ));
 		}
 	}
