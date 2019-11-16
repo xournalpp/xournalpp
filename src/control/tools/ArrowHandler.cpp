@@ -55,9 +55,9 @@ void ArrowHandler::drawShape(Point& c, const PositionInputData& pos)
 		// We've now computed the line points for the arrow
 		// so we just have to build the head
 
-		// set up the size of the arrowhead to be 1/8 the length of arrow
+		// set up the size of the arrowhead to be 7x the thickness of the line
 		double dist = sqrt(pow(c.x - p.x, 2.0) + pow(c.y - p.y, 2.0));
-		double arrowDist = dist/8;
+		double arrowDist = xournal->getControl()->getToolHandler()->getThickness() * 7.0;
 
 		double angle = atan2((c.y - p.y), (c.x - p.x));
 		// an appropriate delta is Pi/3 radians for an arrow shape
