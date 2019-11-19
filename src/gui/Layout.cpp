@@ -68,6 +68,10 @@ void Layout::updateVisibility()
 	int x1 = 0;
 	int y1 = 0;
 
+	// Data to select page based on visibility
+	size_t mostPageNr = 0;
+	double mostPagePercent = 0;
+
 	for (size_t row = 0; row < this->heightRows.size(); ++row)
 	{
 		int y2 = this->heightRows[row];
@@ -87,9 +91,19 @@ void Layout::updateVisibility()
 					// now use exact check of page itself:
 					// visrect not outside current page dimensions:
 					Rectangle pageRect = pageView->getRect();
-					pageView->setIsVisible(
-					        !(visRect.x > pageRect.x + pageRect.width || visRect.x + visRect.width < pageRect.x) &&
-					        !(visRect.y > pageRect.y + pageRect.height || visRect.y + visRect.height < pageRect.y));
+					if (pageRect.intersects(visRect))
+					{
+						pageView->setIsVisible(true);
+
+						// Set the selected page
+						double percent = pageRect.intersect(visRect).area() / pageRect.area();
+
+						if (percent > mostPagePercent)
+						{
+							mostPageNr = *optionalPage;
+							mostPagePercent = percent;
+						}
+					}
 				}
 				else
 				{
@@ -102,6 +116,8 @@ void Layout::updateVisibility()
 		y1 = y2;
 		x1 = 0;
 	}
+
+	this->view->getControl()->firePageSelected(mostPageNr);
 	
 }
 
