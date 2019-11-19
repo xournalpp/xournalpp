@@ -11,7 +11,6 @@
 
 #include <gtk/gtk.h>
 
-using std::to_string;
 #include <ctime>
 
 static Document* document = nullptr;
