@@ -94,6 +94,7 @@ add_executable (xournalpp
 add_dependencies (xournalpp
   xournalpp-core
   util
+  translations
 )
 
 target_link_libraries (xournalpp ${xournalpp_LDFLAGS})
