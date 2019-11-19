@@ -6,11 +6,14 @@
 #include <i18n.h>
 
 
-SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, PageRef page, int layer, size_t index)
- : SidebarPreviewBaseEntry(sidebar, page),
-   index(index),
-   layer(layer),
-   box(gtk_box_new(GTK_ORIENTATION_VERTICAL, 2))
+SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar,
+                                                   const PageRef& page,
+                                                   int layer,
+                                                   size_t index)
+ : SidebarPreviewBaseEntry(sidebar, page)
+ , index(index)
+ , layer(layer)
+ , box(gtk_box_new(GTK_ORIENTATION_VERTICAL, 2))
 {
 	GtkWidget* toolbar = gtk_box_new(GTK_ORIENTATION_HORIZONTAL,6);
 

@@ -22,7 +22,7 @@ class Control;
 class BlockingJob : public Job
 {
 public:
-	BlockingJob(Control* control, string name);
+	BlockingJob(Control* control, const string& name);
 
 protected:
 	virtual ~BlockingJob();

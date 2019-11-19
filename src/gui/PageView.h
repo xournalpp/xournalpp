@@ -36,7 +36,7 @@ class XournalView;
 class XojPageView : public Redrawable, public PageListener
 {
 public:
-	XojPageView(XournalView* xournal, PageRef page);
+	XojPageView(XournalView* xournal, const PageRef& page);
 	virtual ~XojPageView();
 
 public:

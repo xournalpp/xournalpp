@@ -6,7 +6,8 @@
 #include <i18n.h>
 #include <Range.h>
 
-ScaleUndoAction::ScaleUndoAction(PageRef page, vector<Element*>* elements, double x0, double y0, double fx, double fy)
+ScaleUndoAction::ScaleUndoAction(const PageRef& page, vector<Element*>* elements, double x0, double y0, double fx,
+                                 double fy)
  : UndoAction("ScaleUndoAction")
 {
 	this->page = page;

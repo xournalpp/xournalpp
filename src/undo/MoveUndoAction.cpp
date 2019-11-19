@@ -9,8 +9,8 @@
 
 #include <i18n.h>
 
-MoveUndoAction::MoveUndoAction(Layer* sourceLayer, PageRef sourcePage, vector<Element*>* selected, double mx, double my,
-							   Layer* targetLayer, PageRef targetPage)
+MoveUndoAction::MoveUndoAction(Layer* sourceLayer, const PageRef& sourcePage, vector<Element*>* selected, double mx,
+                               double my, Layer* targetLayer, PageRef targetPage)
  : UndoAction("MoveUndoAction")
 {
 	this->page = sourcePage;

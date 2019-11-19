@@ -51,7 +51,7 @@
 #include <algorithm>
 #include <cmath>
 
-XojPageView::XojPageView(XournalView* xournal, PageRef page)
+XojPageView::XojPageView(XournalView* xournal, const PageRef& page)
 {
 	this->page = page;
 	this->registerListener(this->page);

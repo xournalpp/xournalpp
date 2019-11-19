@@ -32,8 +32,8 @@ struct BackgroundImage
 
 	void free();
 
-	void loadFile(string filename, GError** error);
-	void loadFile(GInputStream* stream, string filename, GError** error);
+	void loadFile(const string& filename, GError** error);
+	void loadFile(GInputStream* stream, const string& filename, GError** error);
 
 	int getCloneId();
 	void setCloneId(int id);

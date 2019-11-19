@@ -84,14 +84,14 @@ private:
 	 * @return The PID of the spawned process, or nullptr if the .tex file could
 	 * not be written or the command failed to start.
 	 */
-	std::unique_ptr<GPid> runCommandAsync(string texString);
+	std::unique_ptr<GPid> runCommandAsync(const string& texString);
 
 	/**
 	 * Asynchronously runs the LaTeX command and then updates the TeX image with
 	 * the given LaTeX string. If the preview is already being updated, then
 	 * this method will be a no-op.
 	 */
-	void triggerImageUpdate(string texString);
+	void triggerImageUpdate(const string& texString);
 
 	/**
 	 * Show the LaTex Editor dialog, returning the final formula input by the

@@ -30,7 +30,7 @@ public:
 	~VorbisConsumer();
 
 public:
-	bool start(string filename);
+	bool start(const string& filename);
 	void join();
 	void stop();
 

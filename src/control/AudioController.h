@@ -31,7 +31,7 @@ public:
 	bool isRecording();
 
 	bool isPlaying();
-	bool startPlayback(string filename, unsigned int timestamp);
+	bool startPlayback(const string& filename, unsigned int timestamp);
 	void pausePlayback();
 	void continuePlayback();
 	void stopPlayback();

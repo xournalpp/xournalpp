@@ -25,7 +25,7 @@ public:
 
 public:
 	SpinPageAdapter* getPageSpinner();
-	void setText(string text);
+	void setText(const string& text);
 	virtual string getToolDisplayName();
 
 protected:

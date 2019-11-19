@@ -56,7 +56,7 @@ public:
 
 	UndoAction* getFirstUndoAction();
 
-	void setText(string text);
+	void setText(const string& text);
 	void setFont(XojFont font);
 	UndoAction* setColor(int color);
 

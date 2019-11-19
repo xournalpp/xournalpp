@@ -22,6 +22,8 @@
 #include <config-features.h>
 #include <i18n.h>
 
+#include <utility>
+
 ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* parent)
 {
 	this->parent = parent;
@@ -526,13 +528,13 @@ void ToolMenuHandler::showFontSelectionDlg()
 	this->fontButton->showFontDialog();
 }
 
-void ToolMenuHandler::setUndoDescription(string description)
+void ToolMenuHandler::setUndoDescription(const string& description)
 {
 	this->undoButton->updateDescription(description);
 	gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditUndo")), description.c_str());
 }
 
-void ToolMenuHandler::setRedoDescription(string description)
+void ToolMenuHandler::setRedoDescription(const string& description)
 {
 	this->redoButton->updateDescription(description);
 	gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditRedo")), description.c_str());
@@ -543,7 +545,7 @@ auto ToolMenuHandler::getPageSpinner() -> SpinPageAdapter*
 	return this->toolPageSpinner->getPageSpinner();
 }
 
-void ToolMenuHandler::setPageText(string text)
+void ToolMenuHandler::setPageText(const string& text)
 {
 	this->toolPageSpinner->setText(text);
 }

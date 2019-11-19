@@ -21,7 +21,7 @@ class Stroke;
 class FillUndoAction : public UndoAction
 {
 public:
-	FillUndoAction(PageRef page, Layer* layer);
+	FillUndoAction(const PageRef& page, Layer* layer);
 	virtual ~FillUndoAction();
 
 public:

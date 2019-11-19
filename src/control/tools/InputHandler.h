@@ -33,7 +33,7 @@ class XojPageView;
 class InputHandler
 {
 public:
-	InputHandler(XournalView* xournal, XojPageView* redrawable, PageRef page);
+	InputHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
 	virtual ~InputHandler();
 
 public:

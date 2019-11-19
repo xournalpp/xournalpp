@@ -4,11 +4,14 @@
 
 #include <Util.h>
 
+#include <utility>
 
-BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings, string glade, string mainWnd)
- : GladeGui(gladeSearchPath, glade, mainWnd),
-   settings(settings),
-   doc(doc)
+
+BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc,
+                                                       Settings* settings, const string& glade, string mainWnd)
+ : GladeGui(gladeSearchPath, glade, std::move(mainWnd))
+ , settings(settings)
+ , doc(doc)
 {
 	this->layoutContainer = gtk_layout_new(nullptr, nullptr);
 	gtk_widget_show(this->layoutContainer);

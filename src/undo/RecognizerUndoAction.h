@@ -20,7 +20,7 @@ class Stroke;
 class RecognizerUndoAction : public UndoAction
 {
 public:
-	RecognizerUndoAction(PageRef page, Layer* layer, Stroke* original, Stroke* recognized);
+	RecognizerUndoAction(const PageRef& page, Layer* layer, Stroke* original, Stroke* recognized);
 	virtual ~RecognizerUndoAction();
 
 public:

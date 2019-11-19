@@ -38,7 +38,7 @@ private:
 	void initSettingsPath();
 	void initResourcePath(GladeSearchpath* gladePath);
 	void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound = true);
-	string findResourcePath(string searchFile);
+	string findResourcePath(const string& searchFile);
 
 private:
 };

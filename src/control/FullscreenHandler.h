@@ -30,7 +30,7 @@ public:
 
 private:
 	void enableFullscreen(MainWindow* win);
-	void hideWidget(MainWindow* win, string widgetName);
+	void hideWidget(MainWindow* win, const string& widgetName);
 	void disableFullscreen(MainWindow* win);
 
 private:

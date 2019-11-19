@@ -47,7 +47,7 @@ void RecentManager::recentManagerChangedCallback(GtkRecentManager* manager, Rece
 	recentManager->updateMenu();
 }
 
-void RecentManager::addRecentFileFilename(Path filename)
+void RecentManager::addRecentFileFilename(const Path& filename)
 {
 	GtkRecentManager* recentManager;
 	GtkRecentData* recentData;
@@ -87,7 +87,7 @@ void RecentManager::addRecentFileFilename(Path filename)
 	g_object_unref(file);
 }
 
-void RecentManager::removeRecentFileFilename(Path filename)
+void RecentManager::removeRecentFileFilename(const Path& filename)
 {
 	GFile* file = g_file_new_for_path(filename.c_str());
 
@@ -107,7 +107,7 @@ void RecentManager::setMaxRecent(int maxRecent)
 	this->maxRecent = maxRecent;
 }
 
-void RecentManager::openRecent(Path p)
+void RecentManager::openRecent(const Path& p)
 {
 	if (p.getFilename().empty())
 	{

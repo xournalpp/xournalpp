@@ -83,7 +83,7 @@ auto PlaceholderString::operator%(int64_t value) -> PlaceholderString&
 
 auto PlaceholderString::operator%(std::string value) -> PlaceholderString&
 {
-	data.push_back(new PlaceholderElementString(value));
+	data.push_back(new PlaceholderElementString(std::move(value)));
 	return *this;
 }
 

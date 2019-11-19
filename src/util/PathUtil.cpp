@@ -38,7 +38,7 @@ auto PathUtil::readString(string& output, Path& path, bool showErrorToUser) -> b
 	}
 }
 
-auto PathUtil::copy(Path src, Path dest) -> bool
+auto PathUtil::copy(const Path& src, const Path& dest) -> bool
 {
 	std::array<char, 16 * 1024> buffer;  // 16k
 

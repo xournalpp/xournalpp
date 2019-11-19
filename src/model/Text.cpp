@@ -6,6 +6,8 @@
 #include <serializing/ObjectOutputStream.h>
 #include <Stacktrace.h>
 
+#include <utility>
+
 Text::Text()
  : AudioElement(ELEMENT_TEXT)
 {
@@ -45,7 +47,7 @@ auto Text::getText() -> string
 
 void Text::setText(string text)
 {
-	this->text = text;
+	this->text = std::move(text);
 
 	calcSize();
 }

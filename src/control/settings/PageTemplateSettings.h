@@ -28,7 +28,7 @@ public:
 	 *
 	 * @return true if valid
 	 */
-	bool parse(string tpl);
+	bool parse(const string& tpl);
 
 	/**
 	 * Convert to a parsable string
@@ -52,7 +52,7 @@ public:
 
 	PageType getBackgroundType();
 	PageType getPageInsertType();
-	void setBackgroundType(PageType backgroundType);
+	void setBackgroundType(const PageType& backgroundType);
 
 private:
 	/**

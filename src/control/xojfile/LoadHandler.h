@@ -45,7 +45,7 @@ public:
 	virtual ~LoadHandler();
 
 public:
-	Document* loadDocument(string filename);
+	Document* loadDocument(const string& filename);
 
 	string getLastError();
 	bool isAttachedPdfMissing();
@@ -72,7 +72,7 @@ private:
 	string readLine();
 	zip_int64_t readContentFile(char* buffer, zip_uint64_t len);
 	bool closeFile();
-	bool openFile(string filename);
+	bool openFile(const string& filename);
 	bool parseXml();
 
 	static void parserText(GMarkupParseContext* context, const gchar* text, gsize text_len, gpointer userdata,
@@ -97,8 +97,8 @@ private:
 
 private:
 	string parseBase64(const gchar* base64, gsize lenght);
-	bool readZipAttachment(string filename, gpointer& data, gsize& length);
-	string getTempFileForPath(string filename);
+	bool readZipAttachment(const string& filename, gpointer& data, gsize& length);
+	string getTempFileForPath(const string& filename);
 
 private:
 	string lastError;

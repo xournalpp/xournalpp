@@ -5,7 +5,7 @@
 
 #include <i18n.h>
 
-SwapUndoAction::SwapUndoAction(size_t pageNr, bool moveUp, PageRef swappedPage, PageRef otherPage)
+SwapUndoAction::SwapUndoAction(size_t pageNr, bool moveUp, const PageRef& swappedPage, const PageRef& otherPage)
  : UndoAction("SwapUndoAction")
 {
 	this->pageNr = pageNr;

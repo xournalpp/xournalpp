@@ -22,7 +22,7 @@ class Redrawable;
 class ColorUndoAction : public UndoAction
 {
 public:
-	ColorUndoAction(PageRef page, Layer* layer);
+	ColorUndoAction(const PageRef& page, Layer* layer);
 	virtual ~ColorUndoAction();
 
 public:

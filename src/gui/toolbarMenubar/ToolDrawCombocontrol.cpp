@@ -24,8 +24,8 @@ public:
 };
 
 ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id)
- : ToolButton(handler, id, ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "rect-draw.png", _("Draw Rectangle")),
-   toolMenuHandler(toolMenuHandler)
+ : ToolButton(handler, std::move(id), ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "rect-draw.png", _("Draw Rectangle"))
+ , toolMenuHandler(toolMenuHandler)
 {
 	setPopupMenu(gtk_menu_new());
 
@@ -52,7 +52,7 @@ ToolDrawCombocontrol::~ToolDrawCombocontrol()
 	this->toolMenuHandler = nullptr;
 }
 
-void ToolDrawCombocontrol::createMenuItem(string name, string icon, ActionType type)
+void ToolDrawCombocontrol::createMenuItem(const string& name, const string& icon, ActionType type)
 {
 	GtkWidget* menuItem =  gtk_menu_item_new ();
 	GtkWidget* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);

@@ -9,10 +9,11 @@
 
 #include <i18n.h>
 
-InsertLayerUndoAction::InsertLayerUndoAction(LayerController* layerController, PageRef page, Layer* layer, int layerPosition)
- : UndoAction("InsertLayerUndoAction"),
-   layerPosition(layerPosition),
-   layerController(layerController)
+InsertLayerUndoAction::InsertLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer,
+                                             int layerPosition)
+ : UndoAction("InsertLayerUndoAction")
+ , layerPosition(layerPosition)
+ , layerController(layerController)
 {
 	this->page = page;
 	this->layer = layer;

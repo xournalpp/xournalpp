@@ -35,8 +35,8 @@ public:
 	void saveToKeyFile(GKeyFile* config);
 
 	// Editing API
-	int insertItem(string toolbar, string item, int position);
-	bool removeItemByID(string toolbar, int id);
+	int insertItem(const string& toolbar, const string& item, int position);
+	bool removeItemByID(const string& toolbar, int id);
 
 private:
 	string id;

@@ -7,7 +7,7 @@
 
 #include <i18n.h>
 
-InsertDeletePageUndoAction::InsertDeletePageUndoAction(PageRef page, int pagePos, bool inserted)
+InsertDeletePageUndoAction::InsertDeletePageUndoAction(const PageRef& page, int pagePos, bool inserted)
  : UndoAction("InsertDeletePageUndoAction")
 {
 	this->inserted = inserted;

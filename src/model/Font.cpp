@@ -3,6 +3,8 @@
 #include <serializing/ObjectInputStream.h>
 #include <serializing/ObjectOutputStream.h>
 
+#include <utility>
+
 XojFont::XojFont() = default;
 
 XojFont::~XojFont() = default;
@@ -14,7 +16,7 @@ auto XojFont::getName() -> string
 
 void XojFont::setName(string name)
 {
-	this->name = name;
+	this->name = std::move(name);
 }
 
 auto XojFont::getSize() -> double

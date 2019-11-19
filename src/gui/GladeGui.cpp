@@ -7,8 +7,9 @@
 #include <XojMsgBox.h>
 
 #include <cstdlib>
+#include <utility>
 
-GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, string glade, string mainWnd)
+GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const string& glade, string mainWnd)
 {
 	this->gladeSearchPath = gladeSearchPath;
 
@@ -33,7 +34,7 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, string glade, string mainWn
 		exit(-1);
 	}
 
-	this->window = get(mainWnd);
+	this->window = get(std::move(mainWnd));
 }
 
 GladeGui::~GladeGui()
@@ -41,7 +42,7 @@ GladeGui::~GladeGui()
 	g_object_unref(builder);
 }
 
-auto GladeGui::get(string name) -> GtkWidget*
+auto GladeGui::get(const string& name) -> GtkWidget*
 {
 	GtkWidget* w = GTK_WIDGET(gtk_builder_get_object(builder, name.c_str()));
 	if (w == nullptr)

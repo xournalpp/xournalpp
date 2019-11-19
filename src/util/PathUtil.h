@@ -31,5 +31,5 @@ public:
 	 */
 	static bool readString(string& output, Path& path, bool showErrorToUser = true);
 
-	static bool copy(Path src, Path dest);
+	static bool copy(const Path& src, const Path& dest);
 };

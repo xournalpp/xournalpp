@@ -5,7 +5,8 @@
 #include "undo/InsertUndoAction.h"
 #include <cmath>
 
-CoordinateSystemHandler::CoordinateSystemHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift, bool flipControl)
+CoordinateSystemHandler::CoordinateSystemHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page,
+                                                 bool flipShift, bool flipControl)
  : BaseStrokeHandler(xournal, redrawable, page, flipShift, flipControl)
 {
 }
@@ -64,7 +65,7 @@ void CoordinateSystemHandler::drawShape(Point& c, const PositionInputData& pos)
 		stroke->deletePointsFrom(0);	//delete previous points
 		
 		if ( !this->modControl )	//draw out from starting point
-		{			
+		{
 			stroke->addPoint(p1);
 			stroke->addPoint(Point(p1.x, p1.y + height));
 			stroke->addPoint(Point(p1.x + width, p1.y + height));

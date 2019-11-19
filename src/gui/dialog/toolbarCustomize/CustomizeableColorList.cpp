@@ -3,6 +3,8 @@
 #include <config.h>
 #include <i18n.h>
 
+#include <utility>
+
 CustomizeableColorList::CustomizeableColorList()
 {
 	this->addPredefinedColor(0x000000, _("Black"));
@@ -34,5 +36,5 @@ auto CustomizeableColorList::getPredefinedColors() -> vector<XojColor*>*
 
 void CustomizeableColorList::addPredefinedColor(int color, string name)
 {
-	this->colors.push_back(new XojColor(color, name));
+	this->colors.push_back(new XojColor(color, std::move(name)));
 }

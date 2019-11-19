@@ -1,5 +1,7 @@
 #include "LatexController.h"
 
+#include <utility>
+
 #include "Control.h"
 
 #include "gui/XournalView.h"
@@ -109,7 +111,7 @@ auto LatexController::findTexDependencies() -> LatexController::FindDependencySt
 	return LatexController::FindDependencyStatus(true, "");
 }
 
-auto LatexController::runCommandAsync(string texString) -> std::unique_ptr<GPid>
+auto LatexController::runCommandAsync(const string& texString) -> std::unique_ptr<GPid>
 {
 	g_assert(!this->isUpdating);
 
@@ -257,7 +259,7 @@ auto LatexController::showTexEditDialog() -> string
 	return result;
 }
 
-void LatexController::triggerImageUpdate(string texString)
+void LatexController::triggerImageUpdate(const string& texString)
 {
 	if (this->isUpdating)
 	{
@@ -389,7 +391,7 @@ auto LatexController::convertDocumentToImage(PopplerDocument* doc, string formul
 	std::unique_ptr<TexImage> img(new TexImage());
 	img->setX(posx);
 	img->setY(posy);
-	img->setText(formula);
+	img->setText(std::move(formula));
 
 	if (imgheight)
 	{
@@ -449,7 +451,7 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
 		return nullptr;
 	}
 
-	std::unique_ptr<TexImage> img = convertDocumentToImage(pdf, renderedTex);
+	std::unique_ptr<TexImage> img = convertDocumentToImage(pdf, std::move(renderedTex));
 	g_object_unref(pdf);
 
 	// Do not assign the PDF, theoretical it should work, but it gets a Poppler PDF error

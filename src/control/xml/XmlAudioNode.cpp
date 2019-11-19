@@ -1,5 +1,7 @@
 #include "XmlAudioNode.h"
 
+#include <utility>
+
 XmlAudioNode::XmlAudioNode(const char* tag)
 		: XmlNode(tag),
 		audioFilename("")
@@ -15,5 +17,5 @@ auto XmlAudioNode::getAudioFilename() -> string
 
 void XmlAudioNode::setAudioFilename(string filename)
 {
-	this->audioFilename = filename;
+	this->audioFilename = std::move(filename);
 }

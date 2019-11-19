@@ -26,7 +26,7 @@ public:
 	~AudioRecorder();
 
 public:
-	bool start(string filename);
+	bool start(const string& filename);
 	void stop();
 	bool isRecording();
 	vector<DeviceInfo> getInputDevices();

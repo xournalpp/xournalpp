@@ -29,7 +29,7 @@ class ShapeRecognizer;
 class StrokeHandler : public InputHandler
 {
 public:
-	StrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page);
+	StrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
 	virtual ~StrokeHandler();
 
 	void draw(cairo_t* cr);

@@ -19,11 +19,11 @@ using std::map;
 class BackgroundConfig
 {
 public:
-	BackgroundConfig(string config);
+	BackgroundConfig(const string& config);
 	virtual ~BackgroundConfig();
 
 public:
-	bool loadValue(string key, string& value);
+	bool loadValue(const string& key, string& value);
 	bool loadValue(string key, int& value);
 	bool loadValue(string key, double& value);
 	bool loadValueHex(string key, int& value);

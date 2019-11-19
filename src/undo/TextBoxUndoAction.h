@@ -21,7 +21,7 @@ class XojPage;
 class TextBoxUndoAction : public UndoAction
 {
 public:
-	TextBoxUndoAction(PageRef page, Layer* layer, Element* element, Element* oldelement);
+	TextBoxUndoAction(const PageRef& page, Layer* layer, Element* element, Element* oldelement);
 	virtual ~TextBoxUndoAction();
 
 public:

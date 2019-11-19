@@ -28,11 +28,11 @@ private:
 
 public:
 	vector<ToolbarData*>* getToolbars();
-	bool parse(string filename, bool predefined);
+	bool parse(const string& filename, bool predefined);
 	void add(ToolbarData* data);
 	void remove(ToolbarData* data);
-	void save(Path filename);
-	bool existsId(string id);
+	void save(const Path& filename);
+	bool existsId(const string& id);
 	void initCopyNameId(ToolbarData* data);
 
 private:

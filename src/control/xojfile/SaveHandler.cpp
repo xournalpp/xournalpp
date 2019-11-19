@@ -349,7 +349,7 @@ void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p)
 	}
 }
 
-void SaveHandler::saveTo(Path filename, ProgressListener* listener)
+void SaveHandler::saveTo(const Path& filename, ProgressListener* listener)
 {
 	GzOutputStream out(filename);
 
@@ -369,7 +369,7 @@ void SaveHandler::saveTo(Path filename, ProgressListener* listener)
 	}
 }
 
-void SaveHandler::saveTo(OutputStream* out, Path filename, ProgressListener* listener)
+void SaveHandler::saveTo(OutputStream* out, const Path& filename, ProgressListener* listener)
 {
 	// XMLNode should be locale-safe ( store doubles using Locale 'C' format
 

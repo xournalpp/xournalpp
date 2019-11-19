@@ -33,8 +33,8 @@ class DeleteUndoAction;
 class EditSelectionContents : public ElementContainer, public Serializeable
 {
 public:
-	EditSelectionContents(double x, double y, double width, double height,
-						  PageRef sourcePage, Layer* sourceLayer, XojPageView* sourceView);
+	EditSelectionContents(double x, double y, double width, double height, const PageRef& sourcePage,
+	                      Layer* sourceLayer, XojPageView* sourceView);
 	virtual ~EditSelectionContents();
 
 public:
@@ -88,12 +88,12 @@ public:
 	/**
 	 * Finish the editing
 	 */
-	void finalizeSelection(double x, double y, double width, double height, bool aspectRatio,
-						   Layer* layer, PageRef targetPage, XojPageView* targetView, UndoRedoHandler* undo);
+	void finalizeSelection(double x, double y, double width, double height, bool aspectRatio, Layer* layer,
+	                       const PageRef& targetPage, XojPageView* targetView, UndoRedoHandler* undo);
 
-	void updateContent(double x, double y, double rotation, double width, double height, bool aspectRatio,
-					   Layer* layer, PageRef targetPage, XojPageView* targetView, UndoRedoHandler* undo,
-					   CursorSelectionType type);
+	void updateContent(double x, double y, double rotation, double width, double height, bool aspectRatio, Layer* layer,
+	                   const PageRef& targetPage, XojPageView* targetView, UndoRedoHandler* undo,
+	                   CursorSelectionType type);
 
 private:
 	/**

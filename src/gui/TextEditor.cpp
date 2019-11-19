@@ -113,7 +113,7 @@ auto TextEditor::getText() -> Text*
 	return this->text;
 }
 
-void TextEditor::setText(string text)
+void TextEditor::setText(const string& text)
 {
 	gtk_text_buffer_set_text(this->buffer, text.c_str(), -1);
 

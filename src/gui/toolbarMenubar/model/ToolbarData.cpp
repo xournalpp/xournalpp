@@ -6,6 +6,8 @@
 
 #include <StringUtils.h>
 
+#include <utility>
+
 ToolbarData::ToolbarData(bool predefined)
  : predefined(predefined)
 {
@@ -46,7 +48,7 @@ auto ToolbarData::getName() -> string
 
 void ToolbarData::setName(string name)
 {
-	this->name = name;
+	this->name = std::move(name);
 }
 
 auto ToolbarData::getId() -> string
@@ -56,7 +58,7 @@ auto ToolbarData::getId() -> string
 
 void ToolbarData::setId(string id)
 {
-	this->id = id;
+	this->id = std::move(id);
 }
 
 auto ToolbarData::isPredefined() -> bool
@@ -128,7 +130,7 @@ void ToolbarData::saveToKeyFile(GKeyFile* config)
 	g_key_file_set_string(config, group.c_str(), "name", this->name.c_str());
 }
 
-auto ToolbarData::insertItem(string toolbar, string item, int position) -> int
+auto ToolbarData::insertItem(const string& toolbar, const string& item, int position) -> int
 {
 	g_message("%s", FC(FORMAT_STR("ToolbarData::insertItem({1}, {2}, {3});") % toolbar % item % position));
 
@@ -155,7 +157,7 @@ auto ToolbarData::insertItem(string toolbar, string item, int position) -> int
 	return id;
 }
 
-auto ToolbarData::removeItemByID(string toolbar, int id) -> bool
+auto ToolbarData::removeItemByID(const string& toolbar, int id) -> bool
 {
 	g_return_val_if_fail(isPredefined() == false, false);
 

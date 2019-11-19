@@ -1,7 +1,9 @@
 #include "AbstractToolItem.h"
 
+#include <utility>
+
 AbstractToolItem::AbstractToolItem(string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem)
- : AbstractItem(id, handler, type, menuitem)
+ : AbstractItem(std::move(id), handler, type, menuitem)
 {
 }
 

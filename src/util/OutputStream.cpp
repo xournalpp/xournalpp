@@ -23,7 +23,7 @@ void OutputStream::write(const char* str)
 /// GzOutputStream /////////////////////////////////////
 ////////////////////////////////////////////////////////
 
-GzOutputStream::GzOutputStream(Path filename)
+GzOutputStream::GzOutputStream(const Path& filename)
 {
 	this->filename = filename;
 

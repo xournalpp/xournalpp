@@ -13,10 +13,12 @@
 
 #include <i18n.h>
 
+#include <utility>
+
 ToolbarAdapter::ToolbarAdapter(GtkWidget* toolbar, string toolbarName, ToolMenuHandler* toolHandler, MainWindow* window)
 {
 	this->w = toolbar;
-	this->toolbarName = toolbarName;
+	this->toolbarName = std::move(toolbarName);
 	this->toolHandler = toolHandler;
 	this->window = window;
 
@@ -165,7 +167,7 @@ void ToolbarAdapter::toolitemDragEnd(GtkWidget* widget, GdkDragContext* context,
 /**
  * Remove a toolbar item from the tool where it was
  */
-void ToolbarAdapter::removeFromToolbar(AbstractToolItem* item, string toolbarName, int id)
+void ToolbarAdapter::removeFromToolbar(AbstractToolItem* item, const string& toolbarName, int id)
 {
 	ToolbarData* d = this->window->getSelectedToolbar();
 	if (d->removeItemByID(toolbarName, id))

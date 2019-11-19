@@ -28,7 +28,8 @@ enum DIRSET_MODIFIERS
 class BaseStrokeHandler : public InputHandler
 {
 public:
-	BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page, bool flipShift = false, bool flipControl = false);
+	BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift = false,
+	                  bool flipControl = false);
 
 	virtual ~BaseStrokeHandler();
 

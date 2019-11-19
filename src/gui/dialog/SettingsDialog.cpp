@@ -182,11 +182,11 @@ auto SettingsDialog::getCheckbox(const char* name) -> bool
 /**
  * Autosave was toggled, enable / disable autosave config
  */
-void SettingsDialog::enableWithCheckbox(string checkbox, string widget)
+void SettingsDialog::enableWithCheckbox(const string& checkbox, const string& widget)
 {
-	GtkWidget* cbAutosave = get(std::move(checkbox));
+	GtkWidget* cbAutosave = get(checkbox);
 	bool autosaveEnabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbAutosave));
-	gtk_widget_set_sensitive(get(std::move(widget)), autosaveEnabled);
+	gtk_widget_set_sensitive(get(widget), autosaveEnabled);
 }
 
 void SettingsDialog::customHandRecognitionToggled()

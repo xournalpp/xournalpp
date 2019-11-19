@@ -19,7 +19,7 @@
 guint32 StrokeHandler::lastStrokeTime;  // persist for next stroke
 
 
-StrokeHandler::StrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
+StrokeHandler::StrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page)
  : InputHandler(xournal, redrawable, page)
  , surfMask(nullptr)
  , crMask(nullptr)

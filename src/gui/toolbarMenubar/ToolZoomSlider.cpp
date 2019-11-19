@@ -6,9 +6,10 @@
 #include <i18n.h>
 #include <StringUtils.h>
 #include <cmath>
+#include <utility>
 
 ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom)
- : AbstractToolItem(id, handler, type, nullptr)
+ : AbstractToolItem(std::move(id), handler, type, nullptr)
  , zoom(zoom)
 {
 	zoom->addZoomListener(this);

@@ -7,9 +7,9 @@
 
 #include <i18n.h>
 
-SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, PageRef page)
- : sidebar(sidebar),
-   page(page)
+SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, const PageRef& page)
+ : sidebar(sidebar)
+ , page(page)
 {
 	this->widget = gtk_button_new();	// re: issue 1072
 	

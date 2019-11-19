@@ -84,7 +84,7 @@ auto PageTemplateSettings::getPageInsertType() -> PageType
 	return backgroundType;
 }
 
-void PageTemplateSettings::setBackgroundType(PageType backgroundType)
+void PageTemplateSettings::setBackgroundType(const PageType& backgroundType)
 {
 	this->backgroundType = backgroundType;
 }
@@ -94,7 +94,7 @@ void PageTemplateSettings::setBackgroundType(PageType backgroundType)
  *
  * @return true if valid
  */
-auto PageTemplateSettings::parse(string tpl) -> bool
+auto PageTemplateSettings::parse(const string& tpl) -> bool
 {
 	stringstream ss(tpl.c_str());
 	string line;
@@ -111,7 +111,7 @@ auto PageTemplateSettings::parse(string tpl) -> bool
 
 	while (std::getline(ss, line, '\n'))
 	{
-		size_t pos = line.find("=");
+		size_t pos = line.find('=');
 		if (pos == string::npos)
 		{
 			continue;
@@ -130,7 +130,7 @@ auto PageTemplateSettings::parse(string tpl) -> bool
 		}
 		else if (key == "size")
 		{
-			pos = value.find("x");
+			pos = value.find('x');
 			pageWidth = std::stod(value.substr(0, pos));
 			pageHeight = std::stod(value.substr(pos + 1));
 		}

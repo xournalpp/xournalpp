@@ -19,7 +19,7 @@ class SidebarPreviewBase;
 class SidebarPreviewLayerEntry : public SidebarPreviewBaseEntry
 {
 public:
-	SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, PageRef page, int layer, size_t index);
+	SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, const PageRef& page, int layer, size_t index);
 	virtual ~SidebarPreviewLayerEntry();
 
 public:

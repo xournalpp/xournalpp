@@ -20,8 +20,8 @@ class XojPage;
 class MoveUndoAction : public UndoAction
 {
 public:
-	MoveUndoAction(Layer* sourceLayer, PageRef sourcePage, vector<Element*>* selected, double mx, double my,
-				   Layer* targetLayer, PageRef targetPage);
+	MoveUndoAction(Layer* sourceLayer, const PageRef& sourcePage, vector<Element*>* selected, double mx, double my,
+	               Layer* targetLayer, PageRef targetPage);
 	virtual ~MoveUndoAction();
 
 public:

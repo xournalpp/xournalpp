@@ -55,7 +55,7 @@ void MainWindowToolbarMenu::selectToolbar(Settings* settings, ToolMenuHandler* t
 {
 	selectedToolbar = nullptr;
 
-	string selectedId = settings->getSelectedToolbar();
+	const string& selectedId = settings->getSelectedToolbar();
 
 	for (ToolbarData* d : *toolbar->getModel()->getToolbars())
 	{

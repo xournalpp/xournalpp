@@ -16,7 +16,7 @@
 class ScaleUndoAction : public UndoAction
 {
 public:
-	ScaleUndoAction(PageRef page, vector<Element*>* elements, double x0, double y0, double fx, double fy);
+	ScaleUndoAction(const PageRef& page, vector<Element*>* elements, double x0, double y0, double fx, double fy);
 	virtual ~ScaleUndoAction();
 
 public:

@@ -4,7 +4,7 @@
 #include <utility>
 
 TextAttribute::TextAttribute(string name, string value)
- : XMLAttribute(name)
+ : XMLAttribute(std::move(name))
  , value(std::move(value))
 {
 }

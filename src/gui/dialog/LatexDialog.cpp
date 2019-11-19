@@ -1,5 +1,7 @@
 #include "LatexDialog.h"
 
+#include <utility>
+
 LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath)
  : GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
 {
@@ -21,7 +23,7 @@ LatexDialog::~LatexDialog() = default;
 
 void LatexDialog::setFinalTex(string texString)
 {
-	this->finalLatex = texString;
+	this->finalLatex = std::move(texString);
 }
 
 auto LatexDialog::getFinalTex() -> string

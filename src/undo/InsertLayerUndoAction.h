@@ -20,7 +20,7 @@ class LayerController;
 class InsertLayerUndoAction : public UndoAction
 {
 public:
-	InsertLayerUndoAction(LayerController* layerController, PageRef page, Layer* layer, int layerPosition);
+	InsertLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer, int layerPosition);
 	virtual ~InsertLayerUndoAction();
 
 public:

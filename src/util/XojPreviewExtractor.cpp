@@ -102,7 +102,7 @@ auto XojPreviewExtractor::readPreview(char* buffer, int len) -> PreviewExtractRe
  * @param file .xoj File
  * @return true if a preview was read, false if not
  */
-auto XojPreviewExtractor::readFile(Path file) -> PreviewExtractResult
+auto XojPreviewExtractor::readFile(const Path& file) -> PreviewExtractResult
 {
 	// check file extensions
 	if (!file.hasXournalFileExt())

@@ -49,11 +49,11 @@ public:
 
 	void initToolItems();
 
-	void setUndoDescription(string description);
-	void setRedoDescription(string description);
+	void setUndoDescription(const string& description);
+	void setRedoDescription(const string& description);
 
 	SpinPageAdapter* getPageSpinner();
-	void setPageText(string text);
+	void setPageText(const string& text);
 
 	void setFontButtonFont(XojFont& font);
 	XojFont getFontButtonFont();

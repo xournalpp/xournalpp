@@ -17,7 +17,7 @@
 class CopyUndoAction : public UndoAction
 {
 public:
-	CopyUndoAction(PageRef pageref, int pageNr);
+	CopyUndoAction(const PageRef& pageref, int pageNr);
 	virtual ~CopyUndoAction();
 
 public:

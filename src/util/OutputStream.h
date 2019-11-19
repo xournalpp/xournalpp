@@ -33,7 +33,7 @@ public:
 class GzOutputStream : public OutputStream
 {
 public:
-	GzOutputStream(Path filename);
+	GzOutputStream(const Path& filename);
 	virtual ~GzOutputStream();
 
 public:

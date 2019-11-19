@@ -3,7 +3,7 @@
 #include "control/Control.h"
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
 
-SidebarPreviewPageEntry::SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, PageRef page)
+SidebarPreviewPageEntry::SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, const PageRef& page)
  : SidebarPreviewBaseEntry(sidebar, page)
  , sidebar(sidebar)
 {

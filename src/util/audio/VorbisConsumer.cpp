@@ -9,7 +9,7 @@ VorbisConsumer::VorbisConsumer(Settings* settings, AudioQueue<float>* audioQueue
 
 VorbisConsumer::~VorbisConsumer() = default;
 
-auto VorbisConsumer::start(string filename) -> bool
+auto VorbisConsumer::start(const string& filename) -> bool
 {
 	double sampleRate;
 	unsigned int channels;

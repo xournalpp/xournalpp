@@ -39,7 +39,7 @@ void ToolbarColorNames::freeInstance()
 	instance = nullptr;
 }
 
-void ToolbarColorNames::loadFile(const string file)
+void ToolbarColorNames::loadFile(const string& file)
 {
 	GError* error = nullptr;
 	if (!g_key_file_load_from_file(config, file.c_str(), G_KEY_FILE_NONE, &error))
@@ -52,7 +52,7 @@ void ToolbarColorNames::loadFile(const string file)
 	g_key_file_set_string(this->config, "info", "about", "Xournalpp custom color names");
 }
 
-void ToolbarColorNames::saveFile(const string file)
+void ToolbarColorNames::saveFile(const string& file)
 {
 	gsize len = 0;
 	char* data = g_key_file_to_data(this->config, &len, nullptr);
@@ -70,7 +70,7 @@ void ToolbarColorNames::saveFile(const string file)
 	g_free(data);
 }
 
-void ToolbarColorNames::addColor(int color, string name, bool predefined)
+void ToolbarColorNames::addColor(int color, const string& name, bool predefined)
 {
 	int* key = g_new(int, 1);
 	*key = color;

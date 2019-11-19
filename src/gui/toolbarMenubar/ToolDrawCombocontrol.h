@@ -30,7 +30,7 @@ public:
 
 protected:
 	virtual GtkToolItem* newItem();
-	void createMenuItem(string name, string icon, ActionType type);
+	void createMenuItem(const string& name, const string& icon, ActionType type);
 
 private:
 	ToolMenuHandler* toolMenuHandler = nullptr;

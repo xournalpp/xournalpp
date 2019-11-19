@@ -35,7 +35,7 @@ public:
 	/**
 	 * Autosave was toggled, enable / disable autosave config
 	 */
-	void enableWithCheckbox(string checkbox, string widget);
+	void enableWithCheckbox(const string& checkbox, const string& widget);
 	void customHandRecognitionToggled();
 
 private:

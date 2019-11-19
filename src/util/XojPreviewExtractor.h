@@ -60,7 +60,7 @@ public:
 	 * @param file .xoj File
 	 * @return If an image was read, or the error
 	 */
-	PreviewExtractResult readFile(Path file);
+	PreviewExtractResult readFile(const Path& file);
 
 	/**
 	 * Try to read the preview from byte buffer

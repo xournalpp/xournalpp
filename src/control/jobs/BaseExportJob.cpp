@@ -6,7 +6,9 @@
 #include <StringUtils.h>
 #include <XojMsgBox.h>
 
-BaseExportJob::BaseExportJob(Control* control, string name)
+#include <utility>
+
+BaseExportJob::BaseExportJob(Control* control, const string& name)
  : BlockingJob(control, name)
 {
 }
@@ -21,7 +23,7 @@ void BaseExportJob::initDialog()
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 }
 
-void BaseExportJob::addFileFilterToDialog(string name, string pattern)
+void BaseExportJob::addFileFilterToDialog(const string& name, const string& pattern)
 {
 	GtkFileFilter* filter = gtk_file_filter_new();
 	gtk_file_filter_set_name(filter, name.c_str());

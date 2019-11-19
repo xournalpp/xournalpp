@@ -74,8 +74,8 @@ public:
 
 	void updateScrollbarSidebarPosition();
 
-	void setUndoDescription(string description);
-	void setRedoDescription(string description);
+	void setUndoDescription(const string& description);
+	void setRedoDescription(const string& description);
 
 	SpinPageAdapter* getSpinPageNo();
 	ToolbarModel* getToolbarModel();

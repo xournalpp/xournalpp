@@ -30,8 +30,9 @@ public:
 	 */
 	static void setDefaultWindow(GtkWindow* win);
 
-	static void showErrorToUser(GtkWindow* win, string msg);
-	static int showPluginMessage(string pluginName, string msg, map<int, string> button, bool error = false);
-	static int replaceFileQuestion(GtkWindow* win, string msg);
+	static void showErrorToUser(GtkWindow* win, const string& msg);
+	static int showPluginMessage(const string& pluginName, const string& msg, const map<int, string>& button,
+	                             bool error = false);
+	static int replaceFileQuestion(GtkWindow* win, const string& msg);
 	static void showHelp(GtkWindow* win);
 };

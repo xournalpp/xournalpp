@@ -9,8 +9,11 @@
 #include <i18n.h>
 #include <Util.h>
 
-DeviceClassConfigGui::DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, InputDevice device)
- : GladeGui(gladeSearchPath, "settingsDeviceClassConfig.glade", "offscreenwindow"), settings(settings), device(device)
+DeviceClassConfigGui::DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings,
+                                           const InputDevice& device)
+ : GladeGui(gladeSearchPath, "settingsDeviceClassConfig.glade", "offscreenwindow")
+ , settings(settings)
+ , device(device)
 {
 	GtkWidget* mainGrid = get("deviceClassGrid");
 	gtk_container_remove(GTK_CONTAINER(getWindow()), mainGrid);

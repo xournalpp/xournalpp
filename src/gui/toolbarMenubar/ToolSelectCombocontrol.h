@@ -29,7 +29,7 @@ public:
 
 protected:
 	virtual GtkToolItem* newItem();
-	void addMenuitem(string text, string icon, ActionType type, ActionGroup group);
+	void addMenuitem(const string& text, const string& icon, ActionType type, ActionGroup group);
 
 private:
 	ToolMenuHandler* toolMenuHandler = nullptr;

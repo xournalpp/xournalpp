@@ -21,7 +21,7 @@ class Stroke;
 class SizeUndoAction : public UndoAction
 {
 public:
-	SizeUndoAction(PageRef page, Layer* layer);
+	SizeUndoAction(const PageRef& page, Layer* layer);
 	virtual ~SizeUndoAction();
 
 public:

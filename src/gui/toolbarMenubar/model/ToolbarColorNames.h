@@ -25,10 +25,10 @@ public:
 	static void freeInstance();
 
 public:
-	void loadFile(const string file);
-	void saveFile(const string file);
+	void loadFile(const string& file);
+	void saveFile(const string& file);
 
-	void addColor(int color, string name, bool predefined);
+	void addColor(int color, const string& name, bool predefined);
 
 	string getColorName(int color);
 

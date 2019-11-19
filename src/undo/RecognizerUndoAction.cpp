@@ -7,7 +7,7 @@
 #include <i18n.h>
 #include <Stacktrace.h>
 
-RecognizerUndoAction::RecognizerUndoAction(PageRef page, Layer* layer, Stroke* original, Stroke* recognized)
+RecognizerUndoAction::RecognizerUndoAction(const PageRef& page, Layer* layer, Stroke* original, Stroke* recognized)
  : UndoAction("RecognizerUndoAction")
 {
 	this->page = page;

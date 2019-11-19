@@ -37,7 +37,7 @@ auto PageBackgroundChangeController::getMenu() -> GtkWidget*
 	return currentPageType->getMenu();
 }
 
-void PageBackgroundChangeController::changeAllPagesBackground(PageType pt)
+void PageBackgroundChangeController::changeAllPagesBackground(const PageType& pt)
 {
 	control->clearSelectionEndText();
 

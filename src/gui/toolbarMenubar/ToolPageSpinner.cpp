@@ -6,8 +6,10 @@
 #include <config.h>
 #include <i18n.h>
 
+#include <utility>
+
 ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type)
- : AbstractToolItem(id, handler, type, nullptr)
+ : AbstractToolItem(std::move(id), handler, type, nullptr)
 {
 	this->gui = gui;
 	this->pageSpinner = new SpinPageAdapter();
@@ -24,7 +26,7 @@ auto ToolPageSpinner::getPageSpinner() -> SpinPageAdapter*
 	return pageSpinner;
 }
 
-void ToolPageSpinner::setText(string text)
+void ToolPageSpinner::setText(const string& text)
 {
 	if (lbPageNo)
 	{

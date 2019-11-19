@@ -7,7 +7,9 @@
 
 #include <i18n.h>
 
-InsertUndoAction::InsertUndoAction(PageRef page, Layer* layer, Element* element)
+#include <utility>
+
+InsertUndoAction::InsertUndoAction(const PageRef& page, Layer* layer, Element* element)
  : UndoAction("InsertUndoAction")
 {
 	this->page = page;
@@ -71,11 +73,12 @@ auto InsertUndoAction::redo(Control* control) -> bool
 	return true;
 }
 
-InsertsUndoAction::InsertsUndoAction(PageRef page, Layer* layer, vector<Element*> elements) : UndoAction("InsertsUndoAction")
+InsertsUndoAction::InsertsUndoAction(const PageRef& page, Layer* layer, vector<Element*> elements)
+ : UndoAction("InsertsUndoAction")
 {
 	this->page = page;
 	this->layer = layer;
-	this->elements = elements;
+	this->elements = std::move(elements);
 }
 
 InsertsUndoAction::~InsertsUndoAction()

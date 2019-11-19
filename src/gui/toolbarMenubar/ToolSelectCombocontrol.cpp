@@ -6,10 +6,12 @@
 #include <config.h>
 #include <i18n.h>
 
+#include <utility>
+
 ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id)
- : ToolButton(handler, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select", _("Select Rectangle")),
-   toolMenuHandler(toolMenuHandler),
-   popup(gtk_menu_new())
+ : ToolButton(handler, std::move(id), ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select", _("Select Rectangle"))
+ , toolMenuHandler(toolMenuHandler)
+ , popup(gtk_menu_new())
 {
 	addMenuitem(_("Select Rectangle"), "rect-select", ACTION_TOOL_SELECT_RECT, GROUP_TOOL);
 	addMenuitem(_("Select Region"), "lasso", ACTION_TOOL_SELECT_REGION, GROUP_TOOL);
@@ -21,7 +23,7 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler,
 
 ToolSelectCombocontrol::~ToolSelectCombocontrol() = default;
 
-void ToolSelectCombocontrol::addMenuitem(string text, string icon, ActionType type, ActionGroup group)
+void ToolSelectCombocontrol::addMenuitem(const string& text, const string& icon, ActionType type, ActionGroup group)
 {
 	GtkWidget* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	GtkWidget* label = gtk_label_new(text.c_str());

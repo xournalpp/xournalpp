@@ -28,7 +28,7 @@ public:
 	~VorbisProducer();
 
 public:
-	bool start(string filename, unsigned int timestamp);
+	bool start(const string& filename, unsigned int timestamp);
 	void abort();
 	void stop();
 	void seek(int seconds);
