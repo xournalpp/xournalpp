@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-15 04:07+0000\n"
-"PO-Revision-Date: 2019-11-15 04:14\n"
+"PO-Revision-Date: 2019-11-20 12:09\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1694,7 +1694,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1755
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
-msgstr ""
+msgstr "<i>使用缩放手势来缩放日记页。</i>"
 
 #: ../ui/settings.glade:1384
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
@@ -2036,7 +2036,7 @@ msgstr "手形工具(_a)"
 
 #: ../ui/settings.glade:1724
 msgid "Hand Recognition"
-msgstr ""
+msgstr "手势识别"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
