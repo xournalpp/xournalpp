@@ -21,6 +21,10 @@
 # https://github.com/ypcs/geary
 #
 ##
+#
+# With modifications by Bryan Tan to fix an issue with the translation target.
+#
+##
 # Add find_package handler for gettext programs msgmerge, msgfmt, msgcat and
 # xgettext.
 ##
@@ -692,7 +696,7 @@ if(XGETTEXT_FOUND)
     endif()
 
     add_custom_target(translations
-      "${make_all}"
+      ${make_all}
       DEPENDS
         ${_gmoFiles}
         ${desktopfiles}
