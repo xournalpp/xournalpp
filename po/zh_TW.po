@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-15 04:07+0000\n"
-"PO-Revision-Date: 2019-11-15 04:14\n"
+"POT-Creation-Date: 2019-11-21 01:13+0000\n"
+"PO-Revision-Date: 2019-11-21 01:16\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -28,7 +28,7 @@ msgid "\n"
 msgstr "\n"
 "現在將嘗試在沒有此檔案的情況下執行。"
 
-#: ../src/gui/MainWindow.cpp:742
+#: ../src/gui/MainWindow.cpp:744
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr "頁，共{1}頁"
@@ -59,7 +59,7 @@ msgstr "<span foreground='red' size='x-large'>遺失必須的使用者界面檔�
 msgid "Absolute path for the audio files playback"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Add/Edit Tex"
 msgstr "插入/編輯TeX"
 
@@ -115,11 +115,11 @@ msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr ""
 
-#: ../src/control/Control.cpp:256
+#: ../src/control/Control.cpp:257
 msgid "Autosave failed with an error: {1}"
 msgstr ""
 
-#: ../src/control/Control.cpp:218
+#: ../src/control/Control.cpp:219
 msgid "Autosave renamed from {1} to {2}"
 msgstr ""
 
@@ -127,28 +127,28 @@ msgstr ""
 msgid "Autosaving to {1}"
 msgstr "自動儲存到 {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:406
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:467
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Back"
 msgstr "後退"
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:20
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:232
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:282
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:23
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:234
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:284
 msgid "Background"
 msgstr "背景"
 
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:8
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:121
 msgid "Black"
 msgstr "黑色"
 
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:14
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:125
 msgid "Blue"
 msgstr "藍色"
 
-#: ../src/control/Control.cpp:2272 ../src/control/Control.cpp:2804
+#: ../src/control/Control.cpp:2273 ../src/control/Control.cpp:2805
 #: ../src/control/XournalMain.cpp:129
 msgid "Cancel"
 msgstr "取消"
@@ -165,7 +165,7 @@ msgstr "改變字型"
 msgid "Change stroke fill"
 msgstr ""
 
-#: ../src/undo/SizeUndoAction.cpp:116
+#: ../src/undo/SizeUndoAction.cpp:121
 msgid "Change stroke width"
 msgstr "改變筆劃粗細"
 
@@ -177,7 +177,7 @@ msgstr "色彩\"{1}\"未定義！"
 msgid "Contents"
 msgstr "內容"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:378
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:95
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:103
 msgid "Copy"
@@ -199,29 +199,29 @@ msgstr "未能產生備份檔案！(此檔案應為老版本Xournal所建)"
 msgid "Could not create folder: {1}"
 msgstr "無法建立資料夾： {1}"
 
-#: ../src/control/LatexController.cpp:99
+#: ../src/control/LatexController.cpp:101
 msgid "Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
 msgstr ""
 
-#: ../src/control/LatexController.cpp:75
+#: ../src/control/LatexController.cpp:77
 msgid "Could not find pdflatex in PATH.\n"
 "Please install pdflatex first and make sure it's in the PATH."
 msgstr ""
 
-#: ../src/control/LatexController.cpp:104
+#: ../src/control/LatexController.cpp:106
 msgid "Could not find the LaTeX package 'standalone'.\n"
 "Please install standalone (found in texlive-latex-extra) and make sure it's accessible by your LaTeX installation."
 msgstr ""
 
-#: ../src/control/LatexController.cpp:448
+#: ../src/control/LatexController.cpp:450
 msgid "Could not load LaTeX PDF file"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:431
+#: ../src/control/LatexController.cpp:433
 msgid "Could not load LaTeX PDF file, File Error: {1}"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:439
+#: ../src/control/LatexController.cpp:441
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr ""
 
@@ -229,45 +229,45 @@ msgstr ""
 msgid "Could not load pagetemplates.ini file"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:947
+#: ../src/control/xojfile/LoadHandler.cpp:948
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:956
+#: ../src/control/xojfile/LoadHandler.cpp:957
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:926
-#: ../src/control/xojfile/LoadHandler.cpp:1239
-#: ../src/control/xojfile/LoadHandler.cpp:1259
+#: ../src/control/xojfile/LoadHandler.cpp:927
+#: ../src/control/xojfile/LoadHandler.cpp:1240
+#: ../src/control/xojfile/LoadHandler.cpp:1260
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:916
-#: ../src/control/xojfile/LoadHandler.cpp:934
-#: ../src/control/xojfile/LoadHandler.cpp:1230
-#: ../src/control/xojfile/LoadHandler.cpp:1247
+#: ../src/control/xojfile/LoadHandler.cpp:917
+#: ../src/control/xojfile/LoadHandler.cpp:935
+#: ../src/control/xojfile/LoadHandler.cpp:1231
+#: ../src/control/xojfile/LoadHandler.cpp:1248
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:181
+#: ../src/control/xojfile/LoadHandler.cpp:182
 msgid "Could not open file: \"{1}\""
 msgstr "不能打開檔案\"{1}\""
 
-#: ../src/gui/MainWindow.cpp:88
+#: ../src/gui/MainWindow.cpp:90
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "未能解析配置檔案toolbar.ini: {1}\n"
 "工具條將不可用"
 
-#: ../src/gui/MainWindow.cpp:78
+#: ../src/gui/MainWindow.cpp:80
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "未能解析一般檔案toolbar.ini: {1}\n"
 "工具條將不可用"
 
-#: ../src/control/xojfile/LoadHandler.cpp:417
-#: ../src/control/xojfile/LoadHandler.cpp:445
+#: ../src/control/xojfile/LoadHandler.cpp:418
+#: ../src/control/xojfile/LoadHandler.cpp:446
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "未能讀入圖像：{1}。錯誤提示為：{2}"
 
@@ -277,23 +277,23 @@ msgid "Could not redo \"{1}\"\n"
 msgstr "未能重複操作\"{1}\"\n"
 "有錯誤發生***請提交一個錯誤報告***"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:191
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:193
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
 msgstr ""
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:186
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:188
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr ""
 
-#: ../src/control/Control.cpp:246
+#: ../src/control/Control.cpp:247
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "無法將自動儲存檔案 \"{1}\" 重新命名至 \"{2}\"： {3}"
 
-#: ../src/control/LatexController.cpp:125
+#: ../src/control/LatexController.cpp:127
 msgid "Could not save .tex file: {1}"
 msgstr "無法儲存 .tex 檔案： {1}"
 
-#: ../src/control/LatexController.cpp:145
+#: ../src/control/LatexController.cpp:147
 msgid "Could not start pdflatex: {1} (exit code: {2})"
 msgstr ""
 
@@ -311,7 +311,7 @@ msgstr "未能寫上背景\"{1}\", {2}"
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "未能寫上背景\"{1}\"，不管啦繼續哦..."
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:89
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:91
 msgid "Create new layer"
 msgstr "建立新圖層"
 
@@ -323,7 +323,7 @@ msgstr "設置"
 msgid "Custom Export"
 msgstr "自訂匯出"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:395
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:397
 msgid "Customize Toolbars"
 msgstr "自訂工具列"
 
@@ -331,15 +331,15 @@ msgstr "自訂工具列"
 msgid "Customized"
 msgstr "設置過"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:377
 msgid "Cut"
 msgstr "剪切"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Default Tool"
 msgstr "預設工具"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 #: ../src/undo/DeleteUndoAction.cpp:88
 msgid "Delete"
 msgstr "刪除"
@@ -348,7 +348,7 @@ msgstr "刪除"
 msgid "Delete Logfile"
 msgstr "刪除日誌檔案"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:425
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Delete current page"
 msgstr "刪除當前頁"
 
@@ -356,37 +356,37 @@ msgstr "刪除當前頁"
 msgid "Delete file"
 msgstr "刪除檔案"
 
-#: ../src/undo/RemoveLayerUndoAction.cpp:33
+#: ../src/undo/RemoveLayerUndoAction.cpp:34
 msgid "Delete layer"
 msgstr "刪除層"
 
-#: ../src/control/Control.cpp:2800
+#: ../src/control/Control.cpp:2801
 msgid "Discard"
 msgstr "丟棄"
 
-#: ../src/control/Control.cpp:2200
+#: ../src/control/Control.cpp:2201
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
 msgstr ""
 
-#: ../src/control/jobs/BaseExportJob.cpp:37
+#: ../src/control/jobs/BaseExportJob.cpp:39
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/control/Control.cpp:2794
+#: ../src/control/Control.cpp:2795
 msgid "Document file was removed."
 msgstr "文檔已刪除。"
 
-#: ../src/control/xojfile/LoadHandler.cpp:281
+#: ../src/control/xojfile/LoadHandler.cpp:282
 msgid "Document is corrupted (no pages found in file)"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:276
+#: ../src/control/xojfile/LoadHandler.cpp:277
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "文檔檔案不完整"
 
-#: ../src/model/Document.cpp:344 ../src/model/Document.cpp:354
+#: ../src/model/Document.cpp:346 ../src/model/Document.cpp:356
 msgid "Document not loaded! ({1}), {2}"
 msgstr "文檔未加載！({1}), {2}"
 
@@ -396,13 +396,13 @@ msgstr "虛線"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:106
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:444
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Draw Arrow"
 msgstr "繪製箭頭"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:104
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:443
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:445
 msgid "Draw Circle"
 msgstr "繪製圓形"
 
@@ -416,17 +416,17 @@ msgstr "繪製直線"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:32
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:104
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:107
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Draw Rectangle"
 msgstr "繪製矩形"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:108
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:445
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:447
 msgid "Draw coordinate system"
 msgstr ""
 
-#: ../src/undo/InsertUndoAction.cpp:32
+#: ../src/undo/InsertUndoAction.cpp:34
 msgid "Draw stroke"
 msgstr "繪製筆劃"
 
@@ -448,21 +448,21 @@ msgid "Erase stroke"
 msgstr "擦除筆劃"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:286
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:288
 msgid "Eraser"
 msgstr "橡皮"
 
-#: ../src/control/Control.cpp:2493
+#: ../src/control/Control.cpp:2494
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "PDF檔案\"{1}\"標註出錯\n"
 "{2}"
 
-#: ../src/gui/GladeGui.cpp:22
+#: ../src/gui/GladeGui.cpp:23
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "加載glade檔案\"{1}\"出錯(嘗試加載\"{2}\")"
 
-#: ../src/control/Control.cpp:2297
+#: ../src/control/Control.cpp:2298
 msgid "Error opening file \"{1}\""
 msgstr "打開檔案\"{1}\"出錯"
 
@@ -470,12 +470,12 @@ msgstr "打開檔案\"{1}\"出錯"
 msgid "Error opening file: \"{1}\""
 msgstr "打開檔案\"{1}\"出錯"
 
-#: ../src/control/xojfile/LoadHandler.cpp:538
-#: ../src/control/xojfile/LoadHandler.cpp:565
+#: ../src/control/xojfile/LoadHandler.cpp:539
+#: ../src/control/xojfile/LoadHandler.cpp:566
 msgid "Error reading PDF: {1}"
 msgstr "讀入PDF出錯：{1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:632
+#: ../src/control/xojfile/LoadHandler.cpp:633
 msgid "Error reading width of a stroke: {1}"
 msgstr "讀入筆劃粗細出錯：{1}"
 
@@ -491,7 +491,7 @@ msgstr ""
 msgid "Error while autosaving: {1}"
 msgstr "自動儲存時發生錯誤：{1}"
 
-#: ../src/util/CrashHandler.cpp:47
+#: ../src/util/CrashHandler.cpp:46
 msgid "Error: {1}"
 msgstr "錯誤：{1}"
 
@@ -501,7 +501,7 @@ msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 msgstr "錯誤日誌未能刪除，請手工處理。\n"
 "日誌檔案: {1}"
 
-#: ../src/control/jobs/BaseExportJob.cpp:18
+#: ../src/control/jobs/BaseExportJob.cpp:20
 msgid "Export PDF"
 msgstr "輸出為PDF"
 
@@ -511,15 +511,15 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "未能打開檔案，請手動操作：\n"
 "URL: {1}"
 
-#: ../src/control/Control.cpp:2229
+#: ../src/control/Control.cpp:2230
 msgid "Filename: {1}"
 msgstr "檔案名：{1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Fill"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:503
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:505
 msgid "Fine"
 msgstr ""
 
@@ -527,35 +527,35 @@ msgstr ""
 msgid "Floating Toolbox (experimental)"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/FontButton.cpp:58
+#: ../src/gui/toolbarMenubar/FontButton.cpp:61
 msgid "Font"
 msgstr "字型"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:464
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:466
 msgid "Forward"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:405
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Go to first page"
 msgstr "首頁"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:409
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 msgid "Go to last page"
 msgstr "末頁"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Go to next layer"
 msgstr "前往下一圖層"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:407
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Go to page"
 msgstr "跳轉到頁面"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Go to previous layer"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Go to top layer"
 msgstr ""
 
@@ -563,36 +563,36 @@ msgstr ""
 msgid "Graph"
 msgstr "圖形"
 
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:13
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:126
 msgid "Gray"
 msgstr "灰色"
 
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:9
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:11
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:122
 msgid "Green"
 msgstr "綠色"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:385
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:387
 msgid "Grid Snapping"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:70
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:453
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:455
 msgid "Hand"
 msgstr "手形工具"
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:81
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:83
 msgid "Hide all"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:64
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 msgid "Highlighter"
 msgstr "高亮"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:439
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Image"
 msgstr "圖片"
 
@@ -608,23 +608,23 @@ msgstr ""
 msgid "Images"
 msgstr "圖片"
 
-#: ../src/undo/InsertUndoAction.cpp:96
+#: ../src/undo/InsertUndoAction.cpp:99
 msgid "Insert elements"
 msgstr "插入元素"
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:66 ../src/undo/InsertUndoAction.cpp:40
+#: ../src/gui/dialog/ButtonConfigGui.cpp:66 ../src/undo/InsertUndoAction.cpp:42
 msgid "Insert image"
 msgstr "插入圖片"
 
-#: ../src/undo/InsertUndoAction.cpp:44
+#: ../src/undo/InsertUndoAction.cpp:46
 msgid "Insert latex"
 msgstr "插入LaTeX"
 
-#: ../src/undo/InsertLayerUndoAction.cpp:32
+#: ../src/undo/InsertLayerUndoAction.cpp:33
 msgid "Insert layer"
 msgstr "插入層"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Insert page"
 msgstr "插入頁面"
 
@@ -632,7 +632,7 @@ msgstr "插入頁面"
 msgid "Jump to Page (first Page: 1)"
 msgstr "跳到頁面(第一頁:1)"
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:302
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:304
 msgid "Layer"
 msgstr "圖層"
 
@@ -640,43 +640,43 @@ msgstr "圖層"
 msgid "Layer Preview"
 msgstr "圖層預覽"
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:289
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:291
 msgid "Layer selection"
 msgstr "選擇圖層"
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:24
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:222
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:278
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:27
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:224
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:280
 msgid "Layer {1}"
 msgstr "{1}圖層"
 
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:123
 msgid "Light Blue"
 msgstr "淺藍"
 
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:11
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:13
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:124
 msgid "Light Green"
 msgstr "淺綠"
 
 #: ../src/gui/PageView.cpp:821
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:87
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:16
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:18
 msgid "Loading..."
 msgstr "加載中..."
 
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:128
 msgid "Magenta"
 msgstr "品紅"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:394
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Manage Toolbars"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:504
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:506
 msgid "Medium"
 msgstr "中"
 
@@ -691,7 +691,7 @@ msgstr ""
 msgid "Move"
 msgstr "移動"
 
-#: ../src/undo/MoveLayerUndoAction.cpp:30
+#: ../src/undo/MoveLayerUndoAction.cpp:31
 msgid "Move layer"
 msgstr ""
 
@@ -707,15 +707,15 @@ msgstr "向前移動頁面"
 msgid "New"
 msgstr "新建"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:362
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
 msgid "New Xournal"
 msgstr "新建日記"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Next"
 msgstr "下一個"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Next annotated page"
 msgstr "下一個標註頁面"
 
@@ -736,7 +736,7 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: ../src/control/jobs/BaseExportJob.cpp:98
+#: ../src/control/jobs/BaseExportJob.cpp:100
 msgid "Only local files are supported\n"
 "Path: {1}"
 msgstr ""
@@ -754,7 +754,7 @@ msgid "Open Logfile directory"
 msgstr "打開日誌檔案目錄"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:14
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:363
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
 msgid "Open file"
 msgstr "打開檔案"
 
@@ -763,7 +763,7 @@ msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "打開{1}"
 
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:18
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:129
 msgid "Orange"
 msgstr "橙色"
@@ -772,7 +772,7 @@ msgstr "橙色"
 msgid "PDF Export"
 msgstr "輸出為PDF"
 
-#: ../src/gui/MainWindow.cpp:740
+#: ../src/gui/MainWindow.cpp:742
 msgid "PDF Page {1}"
 msgstr "PDF頁碼{1}"
 
@@ -806,7 +806,7 @@ msgstr ""
 msgid "PNG with transparent background"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:51
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:53
 msgid "Page"
 msgstr "頁面"
 
@@ -814,7 +814,7 @@ msgstr "頁面"
 msgid "Page Preview"
 msgstr "頁面預覽"
 
-#: ../src/undo/PageBackgroundChangedUndoAction.cpp:95
+#: ../src/undo/PageBackgroundChangedUndoAction.cpp:97
 msgid "Page background changed"
 msgstr "頁面背景改變"
 
@@ -826,25 +826,25 @@ msgstr "頁面刪除"
 msgid "Page inserted"
 msgstr "頁面插入"
 
-#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:37
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:39
 msgid "Page number"
 msgstr "頁碼"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:390
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "Paired pages"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:377
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 #: ../src/undo/AddUndoAction.cpp:94
 msgid "Paste"
 msgstr "粘貼"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:459
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Pause / Play"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:62
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:266
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:268
 msgid "Pen"
 msgstr "畫筆"
 
@@ -852,9 +852,9 @@ msgstr "畫筆"
 msgid "Plain"
 msgstr "空白"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:452
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:17
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:79
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:454
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:81
 msgid "Play Object"
 msgstr ""
 
@@ -862,24 +862,24 @@ msgstr ""
 msgid "Predefined"
 msgstr "預定"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Presentation mode"
 msgstr "演講模式"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:458
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:460
 msgid "Record Audio / Stop Recording"
 msgstr ""
 
-#: ../src/control/Control.cpp:987
+#: ../src/control/Control.cpp:988
 msgid "Recorder could not be started."
 msgstr ""
 
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:14
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:127
 msgid "Red"
 msgstr "紅色"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:371
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:373
 #: ../src/undo/UndoRedoHandler.cpp:244
 msgid "Redo"
 msgstr "重複"
@@ -888,23 +888,23 @@ msgstr "重複"
 msgid "Redo: "
 msgstr "重複："
 
-#: ../src/control/Control.cpp:2271
+#: ../src/control/Control.cpp:2272
 msgid "Remove PDF Background"
 msgstr "去掉PDF背景"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:179
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:181
 msgid "Removed tool item from Toolbar {1} ID {2}"
 msgstr ""
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:175
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:177
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr ""
 
-#: ../src/util/XojMsgBox.cpp:82
+#: ../src/util/XojMsgBox.cpp:83
 msgid "Replace"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:1279
+#: ../src/control/xojfile/LoadHandler.cpp:1280
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
@@ -912,11 +912,11 @@ msgstr ""
 msgid "Restore file"
 msgstr ""
 
-#: ../src/undo/RotateUndoAction.cpp:60
+#: ../src/undo/RotateUndoAction.cpp:61
 msgid "Rotation"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:384
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 msgid "Rotation Snapping"
 msgstr ""
 
@@ -928,7 +928,7 @@ msgstr "定標"
 msgid "Ruled with vertical line"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:448
 msgid "Ruler"
 msgstr "標尺"
 
@@ -940,16 +940,16 @@ msgstr ""
 msgid "SVG with transparent background"
 msgstr ""
 
-#: ../src/control/Control.cpp:2795 ../src/control/jobs/SaveJob.cpp:13
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
+#: ../src/control/Control.cpp:2796 ../src/control/jobs/SaveJob.cpp:13
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:366
 msgid "Save"
 msgstr "保存"
 
-#: ../src/control/Control.cpp:2795
+#: ../src/control/Control.cpp:2796
 msgid "Save As..."
 msgstr ""
 
-#: ../src/control/Control.cpp:2598 ../src/gui/dialog/PageTemplateDialog.cpp:89
+#: ../src/control/Control.cpp:2599 ../src/gui/dialog/PageTemplateDialog.cpp:89
 msgid "Save File"
 msgstr "保存檔案"
 
@@ -958,43 +958,43 @@ msgstr "保存檔案"
 msgid "Save file error: {1}"
 msgstr ""
 
-#: ../src/undo/ScaleUndoAction.cpp:59
+#: ../src/undo/ScaleUndoAction.cpp:60
 msgid "Scale"
 msgstr "縮放"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:379
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "Search"
 msgstr "搜索"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:455
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:457
 msgid "Select Font"
 msgstr "選擇字型"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:450
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:72
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:452
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:74
 msgid "Select Object"
 msgstr "選擇對象"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:10
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:58
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:96
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:451
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:60
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:98
 msgid "Select Rectangle"
 msgstr "選擇矩形"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:448
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:15
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:65
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:450
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:17
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:67
 msgid "Select Region"
 msgstr "選擇區域"
 
-#: ../src/control/Control.cpp:2270
+#: ../src/control/Control.cpp:2271
 msgid "Select another PDF"
 msgstr "選擇其他PDF"
 
-#: ../src/util/XojMsgBox.cpp:81
+#: ../src/util/XojMsgBox.cpp:82
 msgid "Select another name"
 msgstr ""
 
@@ -1023,11 +1023,11 @@ msgstr "選擇錯誤報告"
 msgid "Separator"
 msgstr "分割線"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:443
 msgid "Shape Recognizer"
 msgstr "識別形狀"
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:74
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:76
 msgid "Show all"
 msgstr ""
 
@@ -1053,7 +1053,7 @@ msgstr ""
 msgid "Staves"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:461
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:463
 msgid "Stop"
 msgstr ""
 
@@ -1063,7 +1063,7 @@ msgstr ""
 msgid "Stroke recognizer"
 msgstr "筆劃識別"
 
-#: ../src/util/CrashHandler.cpp:51
+#: ../src/util/CrashHandler.cpp:50
 msgid "Successfully saved document to \"{1}\""
 msgstr "文檔已經保存為\"{1}\""
 
@@ -1072,7 +1072,7 @@ msgid "Supported files"
 msgstr "支撐檔案"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:65
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 msgid "Text"
 msgstr "文本"
 
@@ -1081,7 +1081,7 @@ msgstr "文本"
 msgid "Text %i times found on this page"
 msgstr "文本在本頁面出現%i次"
 
-#: ../src/undo/TextUndoAction.cpp:36
+#: ../src/undo/TextUndoAction.cpp:38
 msgid "Text changes"
 msgstr "文本改變"
 
@@ -1105,35 +1105,35 @@ msgstr "文本未找到"
 msgid "Text not found, searched on all pages"
 msgstr "找遍所有頁面未找到文本"
 
-#: ../src/control/Control.cpp:1181
+#: ../src/control/Control.cpp:1182
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "工具條配置\"{1}\"是預置的，要產生一個拷貝到編輯?"
 
-#: ../src/control/Control.cpp:2267
+#: ../src/control/Control.cpp:2268
 msgid "The attached background PDF could not be found."
 msgstr "附加的背景PDF未找到。"
 
-#: ../src/control/Control.cpp:2268
+#: ../src/control/Control.cpp:2269
 msgid "The background PDF could not be found."
 msgstr "背景PDF未找到。"
 
-#: ../src/control/xojfile/LoadHandler.cpp:138
+#: ../src/control/xojfile/LoadHandler.cpp:139
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:146
+#: ../src/control/xojfile/LoadHandler.cpp:147
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:155
+#: ../src/control/xojfile/LoadHandler.cpp:156
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:169
+#: ../src/control/xojfile/LoadHandler.cpp:170
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr ""
 
-#: ../src/control/LatexController.cpp:352
+#: ../src/control/LatexController.cpp:354
 msgid "The formula is empty when rendered or invalid."
 msgstr ""
 
@@ -1149,12 +1149,12 @@ msgstr "發現Xournal++的錯誤日誌檔案，請發送一個錯誤報告，將
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "發現Xournal++的錯誤日誌檔案，請發送一個錯誤報告，將會被修正。"
 
-#: ../src/util/XojMsgBox.cpp:102
+#: ../src/util/XojMsgBox.cpp:103
 msgid "There was an error displaying help: {1}"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:505
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:507
 msgid "Thick"
 msgstr "粗"
 
@@ -1166,7 +1166,7 @@ msgstr ""
 msgid "Thin"
 msgstr "細"
 
-#: ../src/control/Control.cpp:2794
+#: ../src/control/Control.cpp:2795
 msgid "This document is not saved yet."
 msgstr ""
 
@@ -1175,7 +1175,7 @@ msgstr ""
 msgid "This image could not be loaded. Error message: {1}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:392
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:394
 msgid "Toggle fullscreen"
 msgstr "全屏"
 
@@ -1183,7 +1183,7 @@ msgstr "全屏"
 msgid "Tool - don't change"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:141
+#: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:143
 msgid "Toolbar found: {1}"
 msgstr "發現工具條：{1}"
 
@@ -1191,7 +1191,7 @@ msgstr "發現工具條：{1}"
 msgid "Toolbars"
 msgstr "工具條"
 
-#: ../src/util/CrashHandler.cpp:37
+#: ../src/util/CrashHandler.cpp:36
 msgid "Trying to emergency save the current open document…"
 msgstr ""
 
@@ -1199,7 +1199,7 @@ msgstr ""
 msgid "Unable to play audio recording {1}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 #: ../src/undo/UndoRedoHandler.cpp:229
 msgid "Undo"
 msgstr "撤銷"
@@ -1208,15 +1208,15 @@ msgstr "撤銷"
 msgid "Undo: "
 msgstr "撤銷："
 
-#: ../src/control/xojfile/LoadHandler.cpp:336
+#: ../src/control/xojfile/LoadHandler.cpp:337
 msgid "Unexpected root tag: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:367
+#: ../src/control/xojfile/LoadHandler.cpp:368
 msgid "Unexpected tag in document: \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:610
+#: ../src/control/xojfile/LoadHandler.cpp:611
 msgid "Unknown background type: {1}"
 msgstr ""
 
@@ -1224,27 +1224,27 @@ msgstr ""
 msgid "Unknown color value \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:547
+#: ../src/control/xojfile/LoadHandler.cpp:548
 msgid "Unknown domain type: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:267
+#: ../src/control/xojfile/LoadHandler.cpp:268
 msgid "Unknown parser error"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:462
+#: ../src/control/xojfile/LoadHandler.cpp:463
 msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:727
+#: ../src/control/xojfile/LoadHandler.cpp:728
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2674
+#: ../src/control/Control.cpp:2675
 msgid "Unsaved Document"
 msgstr "未保存文檔"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:451
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:453
 msgid "Vertical Space"
 msgstr "垂直間距"
 
@@ -1252,15 +1252,15 @@ msgstr "垂直間距"
 msgid "Vertical space"
 msgstr "垂直間距"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:502
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:504
 msgid "Very Fine"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:507
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:509
 msgid "Very Thick"
 msgstr ""
 
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:18
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:131
 msgid "White"
 msgstr "白色"
@@ -1269,19 +1269,19 @@ msgstr "白色"
 msgid "With PDF background"
 msgstr "使用PDF背景"
 
-#: ../src/undo/InsertUndoAction.cpp:36
+#: ../src/undo/InsertUndoAction.cpp:38
 msgid "Write text"
 msgstr "寫文本"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1107
+#: ../src/control/xojfile/LoadHandler.cpp:1108
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:1121
+#: ../src/control/xojfile/LoadHandler.cpp:1122
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:262
+#: ../src/control/xojfile/LoadHandler.cpp:263
 msgid "XML Parser error: {1}"
 msgstr ""
 
@@ -1297,7 +1297,7 @@ msgstr "Xournal檔案"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/control/Control.cpp:2610 ../src/control/stockdlg/XojOpenDlg.cpp:69
+#: ../src/control/Control.cpp:2611 ../src/control/stockdlg/XojOpenDlg.cpp:69
 msgid "Xournal++ files"
 msgstr ""
 
@@ -1306,7 +1306,7 @@ msgstr ""
 msgid "Xournal++ template"
 msgstr ""
 
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:130
 msgid "Yellow"
 msgstr "黃色"
@@ -1326,27 +1326,27 @@ msgid "Your current document does not contain PDF Page no {1}\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:399
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Zoom fit to screen"
 msgstr "適合屏幕"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:398
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 msgid "Zoom in"
 msgstr "放大"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:397
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:399
 msgid "Zoom out"
 msgstr "縮小"
 
-#: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:87
+#: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:88
 msgid "Zoom slider"
 msgstr "縮放游標"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:402
 msgid "Zoom to 100%"
 msgstr "原始尺寸"
 
-#: ../src/control/Control.cpp:2601 ../src/control/jobs/BaseExportJob.cpp:19
+#: ../src/control/Control.cpp:2602 ../src/control/jobs/BaseExportJob.cpp:21
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:11
 #: ../src/control/stockdlg/XojOpenDlg.cpp:14
 #: ../src/gui/dialog/PageTemplateDialog.cpp:90
@@ -1358,7 +1358,7 @@ msgstr ""
 msgid "_Open"
 msgstr ""
 
-#: ../src/control/Control.cpp:2603 ../src/control/jobs/BaseExportJob.cpp:19
+#: ../src/control/Control.cpp:2604 ../src/control/jobs/BaseExportJob.cpp:21
 #: ../src/gui/dialog/PageTemplateDialog.cpp:90
 msgid "_Save"
 msgstr ""
@@ -1367,11 +1367,11 @@ msgstr ""
 msgid "cursor"
 msgstr "光標"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:274
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:276
 msgid "dash-/ dotted"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:271
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:273
 msgid "dashed"
 msgstr ""
 
@@ -1383,11 +1383,11 @@ msgstr ""
 msgid "default enabled"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:290
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:292
 msgid "delete stroke"
 msgstr "刪除筆劃"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:277
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:279
 msgid "dotted"
 msgstr ""
 
@@ -1415,7 +1415,7 @@ msgstr ""
 msgid "mouse"
 msgstr "滑鼠"
 
-#: ../src/control/LatexController.cpp:302
+#: ../src/control/LatexController.cpp:304
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
 msgstr ""
 
@@ -1423,12 +1423,12 @@ msgstr ""
 msgid "pen"
 msgstr "畫筆"
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:189
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:191
 msgid "show"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:268
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:288
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:270
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:290
 msgid "standard"
 msgstr "標準"
 
@@ -1452,11 +1452,11 @@ msgstr ""
 msgid "trackpoint"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:289
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "whiteout"
 msgstr "涂白"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1120
+#: ../src/control/xojfile/LoadHandler.cpp:1121
 msgid "xoj-File: {1}"
 msgstr ""
 
