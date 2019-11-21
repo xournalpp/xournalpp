@@ -34,7 +34,7 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const string& glade, string
 		exit(-1);
 	}
 
-	this->window = get(std::move(mainWnd));
+	this->window = get(mainWnd);
 }
 
 GladeGui::~GladeGui()

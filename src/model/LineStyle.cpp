@@ -20,7 +20,10 @@ LineStyle::~LineStyle()
 
 void LineStyle::operator=(const LineStyle& other)
 {
-	if (this == &other) return;
+	if (this == &other)
+	{
+		return;
+	}
 	const double* dashes = nullptr;
 	int dashCount = 0;
 

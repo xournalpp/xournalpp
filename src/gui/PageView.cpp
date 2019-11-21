@@ -152,7 +152,10 @@ auto XojPageView::searchTextOnPage(string& text, int* occures, double* top) -> b
 {
 	if (this->search == nullptr)
 	{
-		if (text.empty()) return true;
+		if (text.empty())
+		{
+			return true;
+		}
 
 		int pNr = this->page->getPdfPageNr();
 		XojPdfPageSPtr pdf = nullptr;

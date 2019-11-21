@@ -41,7 +41,10 @@ auto SearchControl::search(string text, int* occures, double* top) -> bool
 {
 	freeSearchResults();
 
-	if (text.empty()) return true;
+	if (text.empty())
+	{
+		return true;
+	}
 
 	if (this->pdf)
 	{

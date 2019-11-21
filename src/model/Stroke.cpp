@@ -452,7 +452,10 @@ void Stroke::calcSize()
 
 	for (auto&& p: points)
 	{
-		if (hasPressure) halfThick = p.z / 2.0;
+		if (hasPressure)
+		{
+			halfThick = p.z / 2.0;
+		}
 
 		minX = std::min(minX, p.x - halfThick);
 		minY = std::min(minY, p.y - halfThick);

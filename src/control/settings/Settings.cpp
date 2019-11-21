@@ -2296,7 +2296,10 @@ auto Settings::isScrollbarFadeoutDisabled() const -> bool
 
 void Settings::setScrollbarFadeoutDisabled(bool disable)
 {
-	if (disableScrollbarFadeout == disable) return;
+	if (disableScrollbarFadeout == disable)
+	{
+		return;
+	}
 	disableScrollbarFadeout = disable;
 	save();
 }

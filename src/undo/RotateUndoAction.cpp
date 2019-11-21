@@ -40,7 +40,10 @@ auto RotateUndoAction::redo(Control* control) -> bool
 
 void RotateUndoAction::applyRotation(double rotation)
 {
-	if (this->elements.empty()) return;
+	if (this->elements.empty())
+	{
+		return;
+	}
 
 	Range r(elements.front()->getX(), elements.front()->getY());
 

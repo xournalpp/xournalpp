@@ -39,7 +39,10 @@ auto ScaleUndoAction::redo(Control* control) -> bool
 
 void ScaleUndoAction::applyScale(double fx, double fy)
 {
-	if (this->elements.empty()) return;
+	if (this->elements.empty())
+	{
+		return;
+	}
 
 	Range r(elements.front()->getX(), elements.front()->getY());
 
