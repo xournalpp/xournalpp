@@ -130,7 +130,7 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool
 			return this->touchDrawingHandler->handle(event);
 		}
 
-		    return this->touchHandler->handle(event);
+		return this->touchHandler->handle(event);
 	}
 
 	// handle keyboard

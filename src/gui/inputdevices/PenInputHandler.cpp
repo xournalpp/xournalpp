@@ -155,12 +155,12 @@ auto PenInputHandler::actionStart(InputEvent* event) -> bool
 		}
 
 
-		    xournal->view->clearSelection();
-			if (changeTool(event))
-			{
-				// Do not handle event in any further way to make click only deselect selection
-				return true;
-			}
+		xournal->view->clearSelection();
+		if (changeTool(event))
+		{
+			// Do not handle event in any further way to make click only deselect selection
+			return true;
+		}
 	}
 
 	// Forward event to page
@@ -300,7 +300,7 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool
 		return currentPage->onMotionNotifyEvent(pos);
 	}
 
-	    return false;
+	return false;
 }
 
 auto PenInputHandler::actionEnd(InputEvent* event) -> bool

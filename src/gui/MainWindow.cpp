@@ -465,9 +465,9 @@ void MainWindow::updateScrollbarSidebarPosition()
 	}
 
 
-	    GtkAllocation allocation;
-		gtk_widget_get_allocation(panelMainContents, &allocation);
-		divider = allocation.width - divider;
+	GtkAllocation allocation;
+	gtk_widget_get_allocation(panelMainContents, &allocation);
+	divider = allocation.width - divider;
 
 
 	g_object_ref(sidebar);
@@ -515,10 +515,9 @@ auto MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 		win->getControl()->getSearchBar()->showSearchBar(false);
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+
+
+	return false;
 }
 
 auto MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control) -> bool

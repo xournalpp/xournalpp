@@ -28,13 +28,13 @@ auto PathUtil::readString(string& output, Path& path, bool showErrorToUser) -> b
 	}
 
 
-	    if (showErrorToUser)
-		{
-			XojMsgBox::showErrorToUser(nullptr, error->message);
-		}
+	if (showErrorToUser)
+	{
+		XojMsgBox::showErrorToUser(nullptr, error->message);
+	}
 
-		g_error_free(error);
-		return false;
+	g_error_free(error);
+	return false;
 }
 
 auto PathUtil::copy(const Path& src, const Path& dest) -> bool

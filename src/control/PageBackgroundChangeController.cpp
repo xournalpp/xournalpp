@@ -151,12 +151,12 @@ auto PageBackgroundChangeController::applyImageBackground(PageRef page) -> bool
 		}
 
 
-		    char* name = g_file_get_path(file);
-			filename = name;
-			g_free(name);
-			name = nullptr;
-			g_object_unref(file);
-			file = nullptr;
+		char* name = g_file_get_path(file);
+		filename = name;
+		g_free(name);
+		name = nullptr;
+		g_object_unref(file);
+		file = nullptr;
 
 
 		BackgroundImage newImg;
@@ -172,8 +172,8 @@ auto PageBackgroundChangeController::applyImageBackground(PageRef page) -> bool
 		}
 
 
-		    page->setBackgroundImage(newImg);
-			page->setBackgroundType(PageType(PageTypeFormat::Image));
+		page->setBackgroundImage(newImg);
+		page->setBackgroundType(PageType(PageTypeFormat::Image));
 	}
 
 	// Apply correct page size
@@ -249,8 +249,8 @@ auto PageBackgroundChangeController::applyPageBackground(PageRef page, const Pag
 	}
 
 
-	    page->setBackgroundType(pt);
-		return true;
+	page->setBackgroundType(pt);
+	return true;
 }
 
 /**

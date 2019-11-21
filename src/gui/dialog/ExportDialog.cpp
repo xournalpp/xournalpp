@@ -65,9 +65,9 @@ auto ExportDialog::getRange() -> PageRangeVector
 	}
 
 
-	    PageRangeVector range;
-		range.push_back(new PageRangeEntry(0, this->pageCount - 1));
-		return range;
+	PageRangeVector range;
+	range.push_back(new PageRangeEntry(0, this->pageCount - 1));
+	return range;
 }
 
 void ExportDialog::show(GtkWindow* parent)

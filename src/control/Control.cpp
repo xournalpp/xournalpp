@@ -382,7 +382,7 @@ auto Control::autosaveCallback(Control* control) -> bool
 	}
 
 
-	    g_message("Info: autosave document...");
+	g_message("Info: autosave document...");
 
 
 	auto* job = new AutosaveJob(control);
@@ -2303,17 +2303,17 @@ auto Control::openFile(Path filename, int scrollToPage, bool forceOpen) -> bool
 	}
 
 
-	    this->closeDocument();
+	this->closeDocument();
 
-		this->doc->lock();
-		this->doc->clearDocument();
-		*this->doc = *loadedDocument;
-		this->doc->unlock();
+	this->doc->lock();
+	this->doc->clearDocument();
+	*this->doc = *loadedDocument;
+	this->doc->unlock();
 
-		// Set folder as last save path, so the next save will be at the current document location
-		// This is important because of the new .xopp format, where Xournal .xoj handled as import,
-		// not as file to load
-		settings->setLastSavePath(filename.getParentPath());
+	// Set folder as last save path, so the next save will be at the current document location
+	// This is important because of the new .xopp format, where Xournal .xoj handled as import,
+	// not as file to load
+	settings->setLastSavePath(filename.getParentPath());
 
 
 	fileLoaded(scrollToPage);

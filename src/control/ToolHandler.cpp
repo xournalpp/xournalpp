@@ -281,8 +281,8 @@ auto ToolHandler::getThickness() -> double
 	}
 
 
-	    g_warning("Request size of \"%s\"", this->current->getName().c_str());
-		return 0;
+	g_warning("Request size of \"%s\"", this->current->getName().c_str());
+	return 0;
 }
 
 void ToolHandler::setSize(ToolSize size)

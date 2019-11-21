@@ -81,12 +81,12 @@ auto NewGtkInputDevice::startInput(InputSequence* input) -> bool
 	}
 
 
-	    if (inputRunning->checkStillRunning())
-		{
-			g_warning("Input was not stopped correctly!");
-			inputRunning = input;
-			return true;
-		}
+	if (inputRunning->checkStillRunning())
+	{
+		g_warning("Input was not stopped correctly!");
+		inputRunning = input;
+		return true;
+	}
 
 
 	return false;
@@ -175,7 +175,7 @@ auto NewGtkInputDevice::eventKeyPressHandler(GdkEventKey* event) -> bool
 			selection->moveSelection(-d, 0);
 			return true;
 		}
-		else if (event->keyval == GDK_KEY_Down)
+		if (event->keyval == GDK_KEY_Down)
 		{
 			selection->moveSelection(0, -d);
 			return true;

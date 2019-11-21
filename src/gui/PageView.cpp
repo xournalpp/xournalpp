@@ -144,7 +144,7 @@ auto XojPageView::containsPoint(int x, int y, bool local) const -> bool
 	}
 
 
-	    return x >= 0 && y >= 0 && x <= this->getWidth() && y <= this->getHeight();
+	return x >= 0 && y >= 0 && x <= this->getWidth() && y <= this->getHeight();
 }
 
 auto XojPageView::searchTextOnPage(string& text, int* occures, double* top) -> bool
@@ -672,7 +672,7 @@ auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool
 		}
 
 
-		    return false;
+		return false;
 	}
 
 	if (this->textEditor)

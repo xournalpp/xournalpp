@@ -58,7 +58,7 @@ private:
 	/**
 	 * Parse a single metadata file
 	 */
-	MetadataEntry loadMetadataFile(const string& path, const string& file);
+	static MetadataEntry loadMetadataFile(const string& path, const string& file);
 
 	/**
 	 * Store metadata to file

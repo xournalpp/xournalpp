@@ -290,11 +290,11 @@ auto InputSequence::actionStart(guint32 time) -> bool
 		}
 
 
-		    xournal->view->clearSelection();
-			if (changeTool())
-			{
-				return true;
-			}
+		xournal->view->clearSelection();
+		if (changeTool())
+		{
+			return true;
+		}
 	}
 
 	XojPageView* pv = getPageAtCurrentPosition();

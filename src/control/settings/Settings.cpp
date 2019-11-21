@@ -2258,10 +2258,10 @@ auto Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource 
 	}
 
 
-	    guint deviceType = 0;
-		switch (deviceSource)
-		{
-			case GDK_SOURCE_CURSOR:
+	guint deviceType = 0;
+	switch (deviceSource)
+	{
+	case GDK_SOURCE_CURSOR:
 #if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
 			case GDK_SOURCE_TABLET_PAD:
 #endif

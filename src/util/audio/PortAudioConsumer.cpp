@@ -166,7 +166,7 @@ auto PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer
 		}
 
 
-		    return paContinue;
+		return paContinue;
 	}
 
 	// The output buffer is no longer available - Abort!

@@ -411,7 +411,7 @@ auto XournalppCursor::getHighlighterCursor() -> GdkCursor*
 	}
 
 
-	    return createHighlighterOrPenCursor(5, 120 / 255.0);
+	return createHighlighterOrPenCursor(5, 120 / 255.0);
 }
 
 
@@ -423,7 +423,7 @@ auto XournalppCursor::getPenCursor() -> GdkCursor*
 	}
 
 
-	    return createHighlighterOrPenCursor(3, 1.0);
+	return createHighlighterOrPenCursor(3, 1.0);
 }
 
 

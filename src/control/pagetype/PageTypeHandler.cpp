@@ -122,7 +122,7 @@ auto PageTypeHandler::getPageTypeFormatForString(const string& format) -> PageTy
 	{
 		return PageTypeFormat::Lined;
 	}
-	else if (format == "staves")
+	if (format == "staves")
 	{
 		return PageTypeFormat::Staves;
 	}

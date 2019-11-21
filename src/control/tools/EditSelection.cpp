@@ -368,13 +368,13 @@ void EditSelection::mouseUp()
 	}
 
 
-	    PageRef page = this->view->getPage();
-		Layer* layer = page->getSelectedLayer();
+	PageRef page = this->view->getPage();
+	Layer* layer = page->getSelectedLayer();
 
-		snapRotation();
+	snapRotation();
 
-		this->contents->updateContent(this->x, this->y, this->rotation, this->width, this->height, this->aspectRatio,
-									layer, page, this->view, this->undo, this->mouseDownType);
+	this->contents->updateContent(this->x, this->y, this->rotation, this->width, this->height, this->aspectRatio, layer,
+	                              page, this->view, this->undo, this->mouseDownType);
 
 	this->mouseDownType = CURSOR_SELECTION_NONE;
 

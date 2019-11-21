@@ -85,7 +85,7 @@ auto ImagesDialog::getSelectedImage() -> BackgroundImage
 	}
 
 
-	    return BackgroundImage();
+	return BackgroundImage();
 }
 
 void ImagesDialog::show(GtkWindow* parent)

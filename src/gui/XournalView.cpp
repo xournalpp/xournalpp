@@ -259,15 +259,15 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool
 		}
 
 
-		    if (state & GDK_SHIFT_MASK)
-			{
-				this->pageRelativeXY(0, -1);
-			}
-			else
-			{
-				layout->scrollRelative(0, -scrollKeySize);
-			}
-			return true;
+		if (state & GDK_SHIFT_MASK)
+		{
+			this->pageRelativeXY(0, -1);
+		}
+		else
+		{
+			layout->scrollRelative(0, -scrollKeySize);
+		}
+		return true;
 	}
 
 	if (event->keyval == GDK_KEY_Down)
@@ -279,15 +279,15 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool
 		}
 
 
-		    if (state & GDK_SHIFT_MASK)
-			{
-				this->pageRelativeXY(0, 1);
-			}
-			else
-			{
-				layout->scrollRelative(0, scrollKeySize);
-			}
-			return true;
+		if (state & GDK_SHIFT_MASK)
+		{
+			this->pageRelativeXY(0, 1);
+		}
+		else
+		{
+			layout->scrollRelative(0, scrollKeySize);
+		}
+		return true;
 	}
 
 	if (event->keyval == GDK_KEY_Left)

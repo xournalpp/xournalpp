@@ -101,30 +101,30 @@ auto LayerController::actionPerformed(ActionType type) -> bool
 			int layer = p->getSelectedLayerId();
 		    if (layer < static_cast<int>(p->getLayerCount()))
 		    {
-				switchToLay(layer + 1, true);
-			}
-		}
-		return true;
+			    switchToLay(layer + 1, true);
+		    }
+	    }
+		    return true;
 
-	case ACTION_GOTO_PREVIOUS_LAYER:
-		{
-			PageRef p = getCurrentPage();
-			int layer = p->getSelectedLayerId();
-			if (layer > 0)
-			{
-				switchToLay(layer - 1, true);
-			}
-		}
-		return true;
+	    case ACTION_GOTO_PREVIOUS_LAYER:
+	    {
+		    PageRef p = getCurrentPage();
+		    int layer = p->getSelectedLayerId();
+		    if (layer > 0)
+		    {
+			    switchToLay(layer - 1, true);
+		    }
+	    }
+		    return true;
 
-	case ACTION_GOTO_TOP_LAYER:
-		{
-			PageRef p = getCurrentPage();
-			switchToLay(p->getLayerCount(), true);
-		}
-		return true;
-	default:
-		return false;
+	    case ACTION_GOTO_TOP_LAYER:
+	    {
+		    PageRef p = getCurrentPage();
+		    switchToLay(p->getLayerCount(), true);
+	    }
+		    return true;
+	    default:
+		    return false;
 	}
 }
 

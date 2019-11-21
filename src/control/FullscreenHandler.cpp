@@ -193,8 +193,8 @@ auto gtk_invisible_get_type() -> GType
 		        // value table
 		        (const GTypeValueTable*) nullptr};
 
-		gtk_invisible_menu_type = g_type_register_static(
-		        GTK_TYPE_FIXED, "GtkInvisibleMenu", &gtk_inivisible_menu_info, static_cast<GTypeFlags>(0));
+		gtk_invisible_menu_type = g_type_register_static(GTK_TYPE_FIXED, "GtkInvisibleMenu", &gtk_inivisible_menu_info,
+		                                                 static_cast<GTypeFlags>(0));
 	}
 
 	return gtk_invisible_menu_type;

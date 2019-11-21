@@ -37,7 +37,7 @@ auto InsertUndoAction::getText() -> string
 	{
 		return _("Write text");
 	}
-	else if (element->getType() == ELEMENT_IMAGE)
+	if (element->getType() == ELEMENT_IMAGE)
 	{
 		return _("Insert image");
 	}

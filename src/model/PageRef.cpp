@@ -78,7 +78,7 @@ auto PageRef::clone() -> PageRef
 	}
 
 
-	    return PageRef(this->page->clone());
+	return PageRef(this->page->clone());
 }
 
 auto PageRef::isValid() -> bool

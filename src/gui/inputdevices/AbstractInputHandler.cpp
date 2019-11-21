@@ -31,7 +31,7 @@ auto AbstractInputHandler::handle(InputEvent* event) -> bool
 		this->inputContext->getXournal()->view->getCursor()->setInputDeviceClass(event->deviceClass);
 		return this->handleImpl(event);
 	}
-	    return true;
+	return true;
 }
 
 /**

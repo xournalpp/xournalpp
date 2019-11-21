@@ -196,7 +196,7 @@ auto ToolbarManageDialog::getSelectedEntry() -> ToolbarData*
 	}
 
 
-	    return nullptr;
+	return nullptr;
 }
 
 void ToolbarManageDialog::updateSelectionData()

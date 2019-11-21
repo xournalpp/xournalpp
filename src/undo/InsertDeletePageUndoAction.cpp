@@ -28,7 +28,7 @@ auto InsertDeletePageUndoAction::undo(Control* control) -> bool
 	}
 
 
-	    return insertPage(control);
+	return insertPage(control);
 }
 
 auto InsertDeletePageUndoAction::redo(Control* control) -> bool
@@ -39,7 +39,7 @@ auto InsertDeletePageUndoAction::redo(Control* control) -> bool
 	}
 
 
-	    return deletePage(control);
+	return deletePage(control);
 }
 
 auto InsertDeletePageUndoAction::insertPage(Control* control) -> bool
@@ -108,5 +108,5 @@ auto InsertDeletePageUndoAction::getText() -> string
 	}
 
 
-	    return _("Page deleted");
+	return _("Page deleted");
 }

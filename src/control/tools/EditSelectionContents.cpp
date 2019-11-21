@@ -136,8 +136,8 @@ auto EditSelectionContents::setSize(ToolSize size,
 	}
 
 
-	    delete undo;
-		return nullptr;
+	delete undo;
+	return nullptr;
 }
 
 /**
@@ -193,8 +193,8 @@ auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoA
 	}
 
 
-	    delete undo;
-		return nullptr;
+	delete undo;
+	return nullptr;
 }
 
 /**
@@ -286,8 +286,8 @@ auto EditSelectionContents::setColor(int color) -> UndoAction*
 	}
 
 
-	    delete undo;
-		return nullptr;
+	delete undo;
+	return nullptr;
 
 
 	return nullptr;

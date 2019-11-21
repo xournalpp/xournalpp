@@ -148,7 +148,7 @@ auto Document::createSaveFolder(Path lastSavePath) -> Path
 	}
 
 
-	    return lastSavePath;
+	return lastSavePath;
 }
 
 auto Document::createSaveFilename(DocumentType type, const string& defaultSaveName) -> Path
@@ -168,14 +168,14 @@ auto Document::createSaveFilename(DocumentType type, const string& defaultSaveNa
 	}
 
 
-	    time_t curtime = time(nullptr);
-		char stime[128];
-		strftime(stime, sizeof(stime), defaultSaveName.c_str(), localtime(&curtime));
+	time_t curtime = time(nullptr);
+	char stime[128];
+	strftime(stime, sizeof(stime), defaultSaveName.c_str(), localtime(&curtime));
 
-		// Remove the extension, file format is handled by the filter combo box
-		Path p = stime;
-		p.clearExtensions();
-		return p;
+	// Remove the extension, file format is handled by the filter combo box
+	Path p = stime;
+	p.clearExtensions();
+	return p;
 }
 
 

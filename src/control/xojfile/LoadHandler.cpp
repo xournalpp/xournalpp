@@ -192,9 +192,9 @@ auto LoadHandler::closeFile() -> bool
 		return static_cast<bool>(gzclose(this->gzFp));
 	}
 
-	    zip_fclose(this->zipContentFile);
-		int zipError = zip_close(this->zipFp);
-		return zipError == 0;
+	zip_fclose(this->zipContentFile);
+	int zipError = zip_close(this->zipFp);
+	return zipError == 0;
 }
 
 auto LoadHandler::readContentFile(char* buffer, zip_uint64_t len) -> zip_int64_t
@@ -208,13 +208,13 @@ auto LoadHandler::readContentFile(char* buffer, zip_uint64_t len) -> zip_int64_t
 		return gzread(this->gzFp, buffer, static_cast<unsigned int>(len));
 	}
 
-	    zip_int64_t lengthRead = zip_fread(this->zipContentFile, buffer, len);
-		if (lengthRead > 0)
-		{
-			return lengthRead;
-		}
+	zip_int64_t lengthRead = zip_fread(this->zipContentFile, buffer, len);
+	if (lengthRead > 0)
+	{
+		return lengthRead;
+	}
 
-	        return -1;
+	return -1;
 }
 
 auto LoadHandler::parseXml() -> bool
@@ -1275,6 +1275,6 @@ auto LoadHandler::getTempFileForPath(const string& filename) -> string
 		return string(static_cast<char*>(tmpFilename));
 	}
 
-	    error("%s", FC(_F("Requested temporary file was not found for attachment {1}") % filename));
-		return "";
+	error("%s", FC(_F("Requested temporary file was not found for attachment {1}") % filename));
+	return "";
 }

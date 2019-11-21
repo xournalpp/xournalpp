@@ -214,8 +214,8 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 		}
 		BaseStrokeHandler::lastStrokeTime = pos.timestamp;
 	}
-	
-	
+
+
 	// This is not a valid stroke
 	if (stroke->getPointCount() < 2)
 	{
@@ -277,10 +277,10 @@ void BaseStrokeHandler::modifyModifiersByDrawDir(double width, double height,  b
 		{
 			this->drawModifierFixed = static_cast<DIRSET_MODIFIERS>(SET | (gestureShift ? SHIFT : NONE) |
 			                                                        (gestureControl ? CONTROL : NONE));
-			if(changeCursor)
- 			{
+			if (changeCursor)
+			{
 				xournal->getCursor()->activateDrawDirCursor(false);
- 			}
+			}
 		}
 		else
 		{

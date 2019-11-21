@@ -49,7 +49,8 @@ auto KeyboardInputHandler::handleImpl(InputEvent* event) -> bool
 			{
 				selection->moveSelection(-d, 0);
 				return true;
-			} else if (keyEvent->keyval == GDK_KEY_Down)
+			}
+			if (keyEvent->keyval == GDK_KEY_Down)
 			{
 				selection->moveSelection(0, -d);
 				return true;
@@ -59,5 +60,5 @@ auto KeyboardInputHandler::handleImpl(InputEvent* event) -> bool
 		return xournal->view->onKeyPressEvent(keyEvent);
 	}
 
-	    return inputContext->getView()->onKeyReleaseEvent(keyEvent);
+	return inputContext->getView()->onKeyReleaseEvent(keyEvent);
 }

@@ -24,7 +24,7 @@ auto toolSizeFromString(const string& size) -> ToolSize
 	{
 		return TOOL_SIZE_FINE;
 	}
-	else if (size == "medium")
+	if (size == "medium")
 	{
 		return TOOL_SIZE_MEDIUM;
 	}
@@ -72,7 +72,7 @@ auto drawingTypeFromString(const string& type) -> DrawingType
 	{
 		return DRAWING_TYPE_LINE;
 	}
-	else if (type == "rectangle")
+	if (type == "rectangle")
 	{
 		return DRAWING_TYPE_RECTANGLE;
 	}
@@ -137,7 +137,7 @@ auto toolTypeFromString(const string& type) -> ToolType
 	{
 		return TOOL_PEN;
 	}
-	else if (type == "eraser")
+	if (type == "eraser")
 	{
 		return TOOL_ERASER;
 	}
@@ -221,7 +221,7 @@ auto eraserTypeFromString(const string& type) -> EraserType
 	{
 		return ERASER_TYPE_DEFAULT;
 	}
-	else if (type == "whiteout")
+	if (type == "whiteout")
 	{
 		return ERASER_TYPE_WHITEOUT;
 	}

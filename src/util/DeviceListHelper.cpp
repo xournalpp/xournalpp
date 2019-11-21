@@ -125,7 +125,7 @@ auto InputDevice::getType() const -> string
 	{
 		return _("eraser");
 	}
-	else if (source == GDK_SOURCE_CURSOR)
+	if (source == GDK_SOURCE_CURSOR)
 	{
 		return _("cursor");
 	}
