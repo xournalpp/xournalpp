@@ -18,7 +18,7 @@
 class InputStreamException : public std::exception
 {
 public:
-	InputStreamException(string message, string filename, int line);
+	InputStreamException(const string& message, const string& filename, int line);
 	virtual ~InputStreamException();
 
 public:

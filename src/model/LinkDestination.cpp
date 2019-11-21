@@ -1,5 +1,7 @@
 #include "LinkDestination.h"
 
+#include <utility>
+
 #include "Util.h"
 
 struct _LinkDestClass
@@ -130,7 +132,7 @@ void LinkDestination::setChangeTop(double top)
 
 void LinkDestination::setName(string name)
 {
-	this->name = name;
+	this->name = std::move(name);
 }
 
 auto LinkDestination::getName() -> string

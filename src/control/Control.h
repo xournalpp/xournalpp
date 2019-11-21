@@ -186,7 +186,7 @@ public:
 	 *
 	 * @return the page ID or size_t_npos if the page is not found
 	 */
-	size_t firePageSelected(PageRef page);
+	size_t firePageSelected(const PageRef& page);
 	void firePageSelected(size_t page);
 
 	void addDefaultPage(string pageTemplate);
@@ -222,7 +222,7 @@ public:
 
 	XournalScheduler* getScheduler();
 
-	void block(string name);
+	void block(const string& name);
 	void unblock();
 
 	void renameLastAutosaveFile();

@@ -36,7 +36,7 @@ public:
 	virtual void layerVisibilityChanged();
 
 protected:
-	GtkWidget* createSpecialMenuEntry(string name);
+	GtkWidget* createSpecialMenuEntry(const string& name);
 	void createSeparator();
 
 	/**
@@ -58,7 +58,7 @@ protected:
 	virtual GtkWidget* getNewToolIcon();
 
 private:
-	void createLayerMenuItem(string text, int layerId);
+	void createLayerMenuItem(const string& text, int layerId);
 	void layerMenuClicked(GtkWidget* menu);
 	void createLayerMenuItemShow(int layerId);
 	void layerMenuShowClicked(GtkWidget* menu);

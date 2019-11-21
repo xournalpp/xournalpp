@@ -60,12 +60,12 @@ void BackgroundImage::free()
 	this->img.reset();
 }
 
-void BackgroundImage::loadFile(string filename, GError** error)
+void BackgroundImage::loadFile(const string& filename, GError** error)
 {
 	this->img = std::make_shared<Content>(std::move(filename), error);
 }
 
-void BackgroundImage::loadFile(GInputStream* stream, string filename, GError** error)
+void BackgroundImage::loadFile(GInputStream* stream, const string& filename, GError** error)
 {
 	this->img = std::make_shared<Content>(stream, std::move(filename), error);
 }

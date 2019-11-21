@@ -1,13 +1,14 @@
 #include "PdfCache.h"
 
 #include <cstdio>
+#include <utility>
 
 class PdfCacheEntry
 {
 public:
 	PdfCacheEntry(XojPdfPageSPtr popplerPage, cairo_surface_t* img)
 	{
-		this->popplerPage = popplerPage;
+		this->popplerPage = std::move(popplerPage);
 		this->rendered = img;
 	}
 
@@ -54,7 +55,7 @@ void PdfCache::clearCache()
 	this->data.clear();
 }
 
-auto PdfCache::lookup(XojPdfPageSPtr popplerPage) -> cairo_surface_t*
+auto PdfCache::lookup(const XojPdfPageSPtr& popplerPage) -> cairo_surface_t*
 {
 	for (PdfCacheEntry* e : this->data)
 	{
@@ -69,7 +70,7 @@ auto PdfCache::lookup(XojPdfPageSPtr popplerPage) -> cairo_surface_t*
 
 void PdfCache::cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img)
 {
-	auto* ne = new PdfCacheEntry(popplerPage, img);
+	auto* ne = new PdfCacheEntry(std::move(popplerPage), img);
 	this->data.push_front(ne);
 	
 	while (this->data.size() > this->size)
@@ -79,7 +80,7 @@ void PdfCache::cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img)
 	}
 }
 
-void PdfCache::render(cairo_t* cr, XojPdfPageSPtr popplerPage, double zoom)
+void PdfCache::render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, double zoom)
 {
 	g_mutex_lock(&this->renderMutex);
 

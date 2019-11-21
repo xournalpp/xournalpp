@@ -69,6 +69,7 @@
 #include <memory>
 #include <numeric>
 #include <sstream>
+#include <utility>
 
 
 Control::Control(GladeSearchpath* gladeSearchPath)
@@ -202,7 +203,7 @@ void Control::renameLastAutosaveFile()
 	Path filename = this->lastAutosaveFilename;
 	Path renamed = Util::getAutosaveFilename();
 	renamed.clearExtensions();
-	if (filename.str().find_first_of(".") != 0)
+	if (filename.str().find_first_of('.') != 0)
 	{
 		// This file must be a fresh, unsaved document. Since this file is
 		// already in ~/.xournalpp/autosave/, we need to change the renamed filename.
@@ -251,7 +252,7 @@ void Control::renameLastAutosaveFile()
 	if (!errors.empty())
 	{
 		string error = std::accumulate(errors.begin() + 1, errors.end(), *errors.begin(),
-		                               [](string e1, string e2) { return e1 + "\n" + e2; });
+		                               [](const string& e1, const string& e2) { return e1 + "\n" + e2; });
 		Util::execInUiThread([=]() {
 			string msg = FS(_F("Autosave failed with an error: {1}") % error);
 			XojMsgBox::showErrorToUser(getGtkWindow(), msg);
@@ -261,7 +262,7 @@ void Control::renameLastAutosaveFile()
 
 void Control::setLastAutosaveFile(Path newAutosaveFile)
 {
-	this->lastAutosaveFilename = newAutosaveFile;
+	this->lastAutosaveFilename = std::move(newAutosaveFile);
 }
 
 void Control::deleteLastAutosaveFile(Path newAutosaveFile)
@@ -271,7 +272,7 @@ void Control::deleteLastAutosaveFile(Path newAutosaveFile)
 		// delete old autosave file
 		g_unlink(this->lastAutosaveFilename.c_str());
 	}
-	this->lastAutosaveFilename = newAutosaveFile;
+	this->lastAutosaveFilename = std::move(newAutosaveFile);
 }
 
 auto Control::checkChangedDocument(Control* control) -> bool
@@ -1137,7 +1138,7 @@ void Control::clearSelectionEndText()
  *
  * @return the page ID or size_t_npos if the page is not found
  */
-auto Control::firePageSelected(PageRef page) -> size_t
+auto Control::firePageSelected(const PageRef& page) -> size_t
 {
 	this->doc->lock();
 	size_t pageId = this->doc->indexOf(page);
@@ -1783,7 +1784,7 @@ auto Control::getCurrentPageNo() -> size_t
 
 auto Control::searchTextOnPage(string text, int p, int* occures, double* top) -> bool
 {
-	return getWindow()->getXournal()->searchTextOnPage(text, p, occures, top);
+	return getWindow()->getXournal()->searchTextOnPage(std::move(text), p, occures, top);
 }
 
 auto Control::getCurrentPage() -> PageRef
@@ -2510,7 +2511,7 @@ void Control::print()
 	this->doc->unlock();
 }
 
-void Control::block(string name)
+void Control::block(const string& name)
 {
 	if (this->isBlocking)
 	{

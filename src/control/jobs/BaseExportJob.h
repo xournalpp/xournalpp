@@ -21,7 +21,7 @@ class Control;
 class BaseExportJob : public BlockingJob
 {
 public:
-	BaseExportJob(Control* control, string name);
+	BaseExportJob(Control* control, const string& name);
 
 protected:
 	virtual ~BaseExportJob();
@@ -36,7 +36,7 @@ public:
 protected:
 	void initDialog();
 	virtual void addFilterToDialog() = 0;
-	void addFileFilterToDialog(string name, string pattern);
+	void addFileFilterToDialog(const string& name, const string& pattern);
 	bool checkOverwriteBackgroundPDF(Path& filename);
 	virtual bool isUriValid(string& uri);
 

@@ -6,6 +6,8 @@
 #include <i18n.h>
 #include <Range.h>
 
+#include <utility>
+
 class SizeUndoActionEntry
 {
 public:
@@ -15,8 +17,8 @@ public:
 		this->s = s;
 		this->orignalWidth = orignalWidth;
 		this->newWidth = newWidth;
-		this->originalPressure = originalPressure;
-		this->newPressure = newPressure;
+		this->originalPressure = std::move(originalPressure);
+		this->newPressure = std::move(newPressure);
 		this->pressureCount = pressureCount;
 	}
 
@@ -30,7 +32,8 @@ public:
 	int pressureCount;
 };
 
-SizeUndoAction::SizeUndoAction(PageRef page, Layer* layer) : UndoAction("SizeUndoAction")
+SizeUndoAction::SizeUndoAction(const PageRef& page, Layer* layer)
+ : UndoAction("SizeUndoAction")
 {
 	this->page = page;
 	this->layer = layer;
@@ -49,6 +52,7 @@ auto SizeUndoAction::getPressure(Stroke* s) -> vector<double>
 {
 	int count = s->getPointCount();
 	vector<double> data;
+	data.reserve(count);
 	for (int i = 0; i < count; i++)
 	{
 		data.push_back(s->getPoint(i).z);
@@ -60,7 +64,8 @@ auto SizeUndoAction::getPressure(Stroke* s) -> vector<double>
 void SizeUndoAction::addStroke(Stroke* s, double originalWidth, double newWidth, vector<double> originalPressure,
 							   vector<double> newPressure, int pressureCount)
 {
-	this->data.push_back(new SizeUndoActionEntry(s, originalWidth, newWidth, originalPressure, newPressure, pressureCount));
+	this->data.push_back(new SizeUndoActionEntry(s, originalWidth, newWidth, std::move(originalPressure),
+	                                             std::move(newPressure), pressureCount));
 }
 
 auto SizeUndoAction::undo(Control* control) -> bool

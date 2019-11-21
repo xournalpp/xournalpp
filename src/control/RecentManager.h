@@ -43,13 +43,13 @@ public:
 	 * Adds a file to the underlying GtkRecentManager
 	 * without altering the menu
 	 */
-	void addRecentFileFilename(Path filename);
+	void addRecentFileFilename(const Path& filename);
 
 	/**
 	 * Removes a file from the underlying GtkRecentManager
 	 * without altering the menu
 	 */
-	void removeRecentFileFilename(Path filename);
+	void removeRecentFileFilename(const Path& filename);
 
 	/**
 	 * Removes all of the menu items corresponding to recent files
@@ -75,7 +75,7 @@ public:
 	 * Notifies all RecentManagerListener%s that a new
 	 * file is opened
 	 */
-	void openRecent(Path p);
+	void openRecent(const Path& p);
 
 	/**
 	 * Returns the root menu containing all the items

@@ -12,6 +12,8 @@
 #include <cairo-svg.h>
 #include <pixbuf-utils.h>
 
+#include <utility>
+
 ClipboardListener::~ClipboardListener() = default;
 
 ClipboardHandler::ClipboardHandler(ClipboardListener* listener, GtkWidget* widget)
@@ -84,9 +86,9 @@ class ClipboardContents
 public:
 	ClipboardContents(string text, GdkPixbuf* image, string svg, GString* str)
 	{
-		this->text = text;
+		this->text = std::move(text);
 		this->image = image;
-		this->svg = svg;
+		this->svg = std::move(svg);
 		this->str = str;
 	}
 

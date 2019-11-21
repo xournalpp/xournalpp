@@ -51,7 +51,7 @@ PluginController::~PluginController()
  *
  * @param path The path which contains the plugin folders
  */
-void PluginController::loadPluginsFrom(string path)
+void PluginController::loadPluginsFrom(const string& path)
 {
 #ifdef ENABLE_PLUGINS
 

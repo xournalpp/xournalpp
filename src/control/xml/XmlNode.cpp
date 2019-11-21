@@ -1,5 +1,7 @@
 #include "XmlNode.h"
 
+#include <utility>
+
 #include "DoubleArrayAttribute.h"
 #include "DoubleAttribute.h"
 #include "IntAttribute.h"
@@ -49,7 +51,7 @@ void XmlNode::setAttrib(const char* attrib, const char* value)
 
 void XmlNode::setAttrib(const char* attrib, string value)
 {
-	putAttrib(new TextAttribute(attrib, value));
+	putAttrib(new TextAttribute(attrib, std::move(value)));
 }
 
 void XmlNode::setAttrib(const char* attrib, double value)

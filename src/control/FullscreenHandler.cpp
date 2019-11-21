@@ -19,7 +19,7 @@ auto FullscreenHandler::isFullscreen() -> bool
 	return this->fullscreen;
 }
 
-void FullscreenHandler::hideWidget(MainWindow* win, string widgetName)
+void FullscreenHandler::hideWidget(MainWindow* win, const string& widgetName)
 {
 	if ("sidebarContents" == widgetName && settings->isSidebarVisible())
 	{
@@ -70,7 +70,7 @@ void FullscreenHandler::enableFullscreen(MainWindow* win)
 	gtk_window_fullscreen((GtkWindow*) *win);
 
 	string hideWidgets = settings->getFullscreenHideElements();
-	for (string s : StringUtils::split(hideWidgets, ','))
+	for (const string& s: StringUtils::split(hideWidgets, ','))
 	{
 		hideWidget(win, s);
 	}

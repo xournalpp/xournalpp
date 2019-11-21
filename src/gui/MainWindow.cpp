@@ -31,6 +31,8 @@
 #include <util/DeviceListHelper.h>
 #include <gui/inputdevices/InputEvents.h>
 
+#include <utility>
+
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
  : GladeGui(gladeSearchPath, "main.glade", "mainWindow"),
    ignoreNextHideEvent(false)
@@ -772,12 +774,12 @@ void MainWindow::show(GtkWindow* parent)
 	gtk_widget_show(this->window);
 }
 
-void MainWindow::setUndoDescription(string description)
+void MainWindow::setUndoDescription(const string& description)
 {
 	toolbar->setUndoDescription(description);
 }
 
-void MainWindow::setRedoDescription(string description)
+void MainWindow::setRedoDescription(const string& description)
 {
 	toolbar->setRedoDescription(description);
 }

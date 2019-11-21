@@ -47,7 +47,7 @@ void PageTypeMenu::loadDefaultPage()
 	setSelected(model.getPageInsertType());
 }
 
-auto PageTypeMenu::createPreviewImage(PageType pt) -> cairo_surface_t*
+auto PageTypeMenu::createPreviewImage(const PageType& pt) -> cairo_surface_t*
 {
 	int previewWidth = 100;
 	int previewHeight = 141;
@@ -177,7 +177,7 @@ void PageTypeMenu::entrySelected(PageTypeInfo* t)
 	}
 }
 
-void PageTypeMenu::setSelected(PageType selected)
+void PageTypeMenu::setSelected(const PageType& selected)
 {
 	for (MenuCallbackInfo& info : menuInfos)
 	{

@@ -32,9 +32,9 @@ public:
 	 * @param iconName To load an icon
 	 * @return The created menu item
 	 */
-	GtkWidget* registerPopupMenuEntry(string name, string iconName = "");
+	GtkWidget* registerPopupMenuEntry(const string& name, const string& iconName = "");
 
-	void updateDescription(string description);
+	void updateDescription(const string& description);
 	virtual string getToolDisplayName();
 	void setActive(bool active);
 

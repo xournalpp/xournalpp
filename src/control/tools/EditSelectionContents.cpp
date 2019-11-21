@@ -28,7 +28,7 @@
 
 #include <cmath>
 
-EditSelectionContents::EditSelectionContents(double x, double y, double width, double height, PageRef sourcePage,
+EditSelectionContents::EditSelectionContents(double x, double y, double width, double height, const PageRef& sourcePage,
                                              Layer* sourceLayer, XojPageView* sourceView)
 {
 	this->crBuffer = nullptr;
@@ -362,7 +362,7 @@ auto EditSelectionContents::getOriginalHeight() -> double
  * The contents of the selection
  */
 void EditSelectionContents::finalizeSelection(double x, double y, double width, double height, bool aspectRatio,
-                                              Layer* layer, PageRef targetPage, XojPageView* targetView,
+                                              Layer* layer, const PageRef& targetPage, XojPageView* targetView,
                                               UndoRedoHandler* undo)
 {
 	double fx = width / this->originalWidth;
@@ -417,8 +417,8 @@ auto EditSelectionContents::getSourceView() -> XojPageView*
 
 
 void EditSelectionContents::updateContent(double x, double y, double rotation, double width, double height,
-                                          bool aspectRatio, Layer* layer, PageRef targetPage, XojPageView* targetView,
-                                          UndoRedoHandler* undo, CursorSelectionType type)
+                                          bool aspectRatio, Layer* layer, const PageRef& targetPage,
+                                          XojPageView* targetView, UndoRedoHandler* undo, CursorSelectionType type)
 {
 	double mx = x - this->lastX;
 	double my = y - this->lastY;

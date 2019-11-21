@@ -9,13 +9,15 @@
 #include <i18n.h>
 #include <Rectangle.h>
 
-TextUndoAction::TextUndoAction(PageRef page, Layer* layer, Text* text, string lastText, TextEditor* textEditor)
+#include <utility>
+
+TextUndoAction::TextUndoAction(const PageRef& page, Layer* layer, Text* text, string lastText, TextEditor* textEditor)
  : UndoAction("TextUndoAction")
 {
 	this->page = page;
 	this->layer = layer;
 	this->text = text;
-	this->lastText = lastText;
+	this->lastText = std::move(lastText);
 	this->textEditor = textEditor;
 }
 

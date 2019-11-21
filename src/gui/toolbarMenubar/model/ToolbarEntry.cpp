@@ -1,5 +1,7 @@
 #include "ToolbarEntry.h"
 
+#include <utility>
+
 ToolbarEntry::ToolbarEntry() = default;
 
 ToolbarEntry::ToolbarEntry(const ToolbarEntry& e)
@@ -39,12 +41,12 @@ auto ToolbarEntry::getName() -> string
 
 void ToolbarEntry::setName(string name)
 {
-	this->name = name;
+	this->name = std::move(name);
 }
 
 auto ToolbarEntry::addItem(string item) -> int
 {
-	auto* it = new ToolbarItem(item);
+	auto* it = new ToolbarItem(std::move(item));
 	entries.push_back(it);
 
 	return it->getId();
@@ -67,7 +69,7 @@ auto ToolbarEntry::removeItemById(int id) -> bool
 
 auto ToolbarEntry::insertItem(string item, int position) -> int
 {
-	auto* it = new ToolbarItem(item);
+	auto* it = new ToolbarItem(std::move(item));
 	if (position >= (int)entries.size())
 	{
 		entries.push_back(it);

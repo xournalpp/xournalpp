@@ -25,7 +25,7 @@ enum ToolSize
 	TOOL_SIZE_NONE
 };
 string toolSizeToString(ToolSize size);
-ToolSize toolSizeFromString(string size);
+ToolSize toolSizeFromString(const string& size);
 
 
 enum DrawingType
@@ -47,7 +47,7 @@ enum DrawingType
 	DRAWING_TYPE_STROKE_RECOGNIZER
 };
 string drawingTypeToString(DrawingType type);
-DrawingType drawingTypeFromString(string type);
+DrawingType drawingTypeFromString(const string& type);
 
 
 // Has to be in the same order as in Action.h: ActionType!
@@ -80,7 +80,7 @@ enum ToolType
 #define TOOL_COUNT (TOOL_END_ENTRY - 1)
 
 string toolTypeToString(ToolType type);
-ToolType toolTypeFromString(string type);
+ToolType toolTypeFromString(const string& type);
 
 
 enum EraserType
@@ -91,7 +91,7 @@ enum EraserType
 	ERASER_TYPE_DELETE_STROKE
 };
 string eraserTypeToString(EraserType type);
-EraserType eraserTypeFromString(string type);
+EraserType eraserTypeFromString(const string& type);
 
 
 enum ToolCapabilities

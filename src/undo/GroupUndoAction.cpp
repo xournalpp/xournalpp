@@ -34,7 +34,7 @@ auto GroupUndoAction::getPages() -> vector<PageRef>
 			}
 
 			bool pageAlreadyInTheList = false;
-			for (PageRef p : pages)
+			for (const PageRef& p: pages)
 			{
 				if (addPage == p)
 				{

@@ -5,7 +5,7 @@
 #include "undo/InsertUndoAction.h"
 #include <cmath>
 
-RulerHandler::RulerHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
+RulerHandler::RulerHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page)
  : BaseStrokeHandler(xournal, redrawable, page)
 {
 }

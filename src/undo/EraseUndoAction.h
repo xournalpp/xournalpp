@@ -21,7 +21,7 @@ class Stroke;
 class EraseUndoAction : public UndoAction
 {
 public:
-	EraseUndoAction(PageRef page);
+	EraseUndoAction(const PageRef& page);
 	virtual ~EraseUndoAction();
 
 public:

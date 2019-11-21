@@ -7,8 +7,8 @@ PdfView::PdfView() = default;
 
 PdfView::~PdfView() = default;
 
-void PdfView::drawPage(PdfCache* cache, XojPdfPageSPtr popplerPage, cairo_t* cr,
-					   double zoom, double width, double height, bool forPrinting)
+void PdfView::drawPage(PdfCache* cache, const XojPdfPageSPtr& popplerPage, cairo_t* cr, double zoom, double width,
+                       double height, bool forPrinting)
 {
 	if (popplerPage)
 	{

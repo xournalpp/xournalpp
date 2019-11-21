@@ -19,7 +19,7 @@ class LayerController;
 class RemoveLayerUndoAction : public UndoAction
 {
 public:
-	RemoveLayerUndoAction(LayerController* layerController, PageRef page, Layer* layer, int layerPos);
+	RemoveLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer, int layerPos);
 	virtual ~RemoveLayerUndoAction();
 
 public:

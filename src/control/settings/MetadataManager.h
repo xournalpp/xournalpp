@@ -37,12 +37,12 @@ public:
 	/**
 	 * Get the metadata for a file
 	 */
-	MetadataEntry getForFile(string file);
+	MetadataEntry getForFile(const string& file);
 
 	/**
 	 * Store the current data into metadata
 	 */
-	void storeMetadata(string file, int page, double zoom);
+	void storeMetadata(const string& file, int page, double zoom);
 
 	/**
 	 * Document was closed, a new document was opened etc.
@@ -53,12 +53,12 @@ private:
 	/**
 	 * Delete an old metadata file
 	 */
-	void deleteMetadataFile(string path);
+	void deleteMetadataFile(const string& path);
 
 	/**
 	 * Parse a single metadata file
 	 */
-	MetadataEntry loadMetadataFile(string path, string file);
+	MetadataEntry loadMetadataFile(const string& path, const string& file);
 
 	/**
 	 * Store metadata to file

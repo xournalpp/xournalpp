@@ -37,7 +37,7 @@ MetadataManager::~MetadataManager()
 /**
  * Delete an old metadata file
  */
-void MetadataManager::deleteMetadataFile(string path)
+void MetadataManager::deleteMetadataFile(const string& path)
 {
 	// be carefull, delete the Metadata file, NOT the Document!
 	if (path.substr(path.size() - 9) != ".metadata")
@@ -119,7 +119,7 @@ auto MetadataManager::loadList() -> vector<MetadataEntry>
 /**
  * Parse a single metadata file
  */
-auto MetadataManager::loadMetadataFile(string path, string file) -> MetadataEntry
+auto MetadataManager::loadMetadataFile(const string& path, const string& file) -> MetadataEntry
 {
 	MetadataEntry entry;
 	entry.metadataFile = path;
@@ -192,12 +192,12 @@ auto MetadataManager::loadMetadataFile(string path, string file) -> MetadataEntr
 /**
  * Get the metadata for a file
  */
-auto MetadataManager::getForFile(string file) -> MetadataEntry
+auto MetadataManager::getForFile(const string& file) -> MetadataEntry
 {
 	vector<MetadataEntry> files = loadList();
 
 	MetadataEntry entry;
-	for (MetadataEntry e : files)
+	for (const MetadataEntry& e: files)
 	{
 		if (e.path == file)
 		{
@@ -221,7 +221,7 @@ auto MetadataManager::getForFile(string file) -> MetadataEntry
 void MetadataManager::storeMetadata(MetadataEntry* m)
 {
 	vector<MetadataEntry> files = loadList();
-	for (MetadataEntry e : files)
+	for (const MetadataEntry& e: files)
 	{
 		if (e.path == m->path)
 		{
@@ -249,7 +249,7 @@ void MetadataManager::storeMetadata(MetadataEntry* m)
 /**
  * Store the current data into metadata
  */
-void MetadataManager::storeMetadata(string file, int page, double zoom)
+void MetadataManager::storeMetadata(const string& file, int page, double zoom)
 {
 	if (file == "")
 	{

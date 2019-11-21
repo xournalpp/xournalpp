@@ -19,7 +19,7 @@ class Control;
 class SwapUndoAction : public UndoAction
 {
 public:
-	SwapUndoAction(size_t pageNr, bool moveUp, PageRef swappedPage, PageRef otherPage);
+	SwapUndoAction(size_t pageNr, bool moveUp, const PageRef& swappedPage, const PageRef& otherPage);
 
 	virtual ~SwapUndoAction();
 

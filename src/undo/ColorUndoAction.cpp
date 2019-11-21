@@ -22,7 +22,7 @@ public:
 	int newColor;
 };
 
-ColorUndoAction::ColorUndoAction(PageRef page, Layer* layer)
+ColorUndoAction::ColorUndoAction(const PageRef& page, Layer* layer)
  : UndoAction("ColorUndoAction")
 {
 	this->page = page;

@@ -56,7 +56,7 @@ auto DeviceListHelper::getDeviceList(Settings* settings, bool ignoreTouchDevices
 		deviceList.erase(
 		        std::remove_if(deviceList.begin(),
 		                       deviceList.end(),
-		                       [](InputDevice device) { return device.getSource() == GDK_SOURCE_TOUCHSCREEN; }),
+		                       [](const InputDevice& device) { return device.getSource() == GDK_SOURCE_TOUCHSCREEN; }),
 		        deviceList.end());
 	}
 

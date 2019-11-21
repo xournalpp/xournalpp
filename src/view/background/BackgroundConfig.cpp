@@ -2,11 +2,13 @@
 
 #include <StringUtils.h>
 
-BackgroundConfig::BackgroundConfig(string config)
+#include <utility>
+
+BackgroundConfig::BackgroundConfig(const string& config)
 {
-	for (string s : StringUtils::split(config, ','))
+	for (const string& s: StringUtils::split(config, ','))
 	{
-		size_t dotPos = s.find_last_of("=");
+		size_t dotPos = s.find_last_of('=');
 		if (dotPos != string::npos)
 		{
 			string key = s.substr(0, dotPos);
@@ -18,7 +20,7 @@ BackgroundConfig::BackgroundConfig(string config)
 
 BackgroundConfig::~BackgroundConfig() = default;
 
-auto BackgroundConfig::loadValue(string key, string& value) -> bool
+auto BackgroundConfig::loadValue(const string& key, string& value) -> bool
 {
 	auto it = data.find(key);
 	if (it != this->data.end())
@@ -33,7 +35,7 @@ auto BackgroundConfig::loadValue(string key, string& value) -> bool
 auto BackgroundConfig::loadValue(string key, int& value) -> bool
 {
 	string str;
-	if (loadValue(key, str))
+	if (loadValue(std::move(key), str))
 	{
 		value = std::stoul(str, nullptr, 10);
 		return true;
@@ -45,7 +47,7 @@ auto BackgroundConfig::loadValue(string key, int& value) -> bool
 auto BackgroundConfig::loadValue(string key, double& value) -> bool
 {
 	string str;
-	if (loadValue(key, str))
+	if (loadValue(std::move(key), str))
 	{
 		value = std::stoul(str, nullptr, 10);
 		return true;
@@ -57,7 +59,7 @@ auto BackgroundConfig::loadValue(string key, double& value) -> bool
 auto BackgroundConfig::loadValueHex(string key, int& value) -> bool
 {
 	string str;
-	if (loadValue(key, str))
+	if (loadValue(std::move(key), str))
 	{
 		value = std::stoul(str, nullptr, 16);
 		return true;

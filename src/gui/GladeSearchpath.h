@@ -20,12 +20,12 @@ public:
 	virtual ~GladeSearchpath();
 
 public:
-	void addSearchDirectory(string directory);
+	void addSearchDirectory(const string& directory);
 
 	/**
 	 * Searches for a path, return the path, an empty string if not found
 	 */
-	string findFile(string subdir, string file);
+	string findFile(const string& subdir, const string& file);
 
 	/**
 	 * @return The first search path

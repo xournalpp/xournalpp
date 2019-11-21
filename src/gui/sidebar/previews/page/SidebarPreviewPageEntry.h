@@ -22,7 +22,7 @@ class SidebarPreviewPages;
 class SidebarPreviewPageEntry : public SidebarPreviewBaseEntry
 {
 public:
-	SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, PageRef page);
+	SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, const PageRef& page);
 	virtual ~SidebarPreviewPageEntry();
 
 public:

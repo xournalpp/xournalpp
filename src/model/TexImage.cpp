@@ -4,6 +4,8 @@
 #include <serializing/ObjectInputStream.h>
 #include <serializing/ObjectOutputStream.h>
 
+#include <utility>
+
 TexImage::TexImage()
  : Element(ELEMENT_TEXIMAGE)
 {
@@ -90,7 +92,7 @@ auto TexImage::cairoReadFunction(TexImage* image, unsigned char* data, unsigned 
  */
 void TexImage::setBinaryData(string binaryData)
 {
-	this->binaryData = binaryData;
+	this->binaryData = std::move(binaryData);
 }
 
 /**
@@ -103,7 +105,7 @@ auto TexImage::getBinaryData() -> string&
 
 void TexImage::setText(string text)
 {
-	this->text = text;
+	this->text = std::move(text);
 }
 
 auto TexImage::getText() -> string

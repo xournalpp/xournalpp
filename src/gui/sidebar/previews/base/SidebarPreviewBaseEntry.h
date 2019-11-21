@@ -36,7 +36,7 @@ typedef enum {
 class SidebarPreviewBaseEntry
 {
 public:
-	SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, PageRef page);
+	SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, const PageRef& page);
 	virtual ~SidebarPreviewBaseEntry();
 
 public:

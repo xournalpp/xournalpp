@@ -52,7 +52,7 @@ public:
 	GtkWidget* getMenu();
 	PageType getSelected();
 	void loadDefaultPage();
-	void setSelected(PageType selected);
+	void setSelected(const PageType& selected);
 	void setListener(PageTypeMenuChangeListener* listener);
 	void hideCopyPage();
 
@@ -66,7 +66,7 @@ private:
 	void initDefaultMenu();
 	void addMenuEntry(PageTypeInfo* t);
 	void entrySelected(PageTypeInfo* t);
-	cairo_surface_t* createPreviewImage(PageType pt);
+	cairo_surface_t* createPreviewImage(const PageType& pt);
 
 private:
 	bool showSpecial;

@@ -428,7 +428,7 @@ auto XournalMain::run(int argc, char* argv[]) -> int
  * Find a file in a resource folder, and return the resource folder path
  * Return an empty string, if the folder was not found
  */
-auto XournalMain::findResourcePath(string searchFile) -> string
+auto XournalMain::findResourcePath(const string& searchFile) -> string
 {
 	// First check if the files are available relative to the path
 	// So a "portable" installation will be possible

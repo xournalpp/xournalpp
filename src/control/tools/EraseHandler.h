@@ -28,7 +28,7 @@ class UndoRedoHandler;
 class EraseHandler
 {
 public:
-	EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page, ToolHandler* handler, Redrawable* view);
+	EraseHandler(UndoRedoHandler* undo, Document* doc, const PageRef& page, ToolHandler* handler, Redrawable* view);
 	virtual ~EraseHandler();
 
 public:

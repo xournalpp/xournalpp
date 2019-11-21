@@ -9,7 +9,7 @@
 
 #include <i18n.h>
 
-EraseUndoAction::EraseUndoAction(PageRef page)
+EraseUndoAction::EraseUndoAction(const PageRef& page)
  : UndoAction("EraseUndoAction")
 {
 	this->page = page;

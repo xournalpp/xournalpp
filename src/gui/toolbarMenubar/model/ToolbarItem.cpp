@@ -1,10 +1,12 @@
 #include "ToolbarItem.h"
 
+#include <utility>
+
 int ToolbarItem::sid = 0;
 
 ToolbarItem::ToolbarItem(string name)
 {
-	this->name = name;
+	this->name = std::move(name);
 	this->id = ToolbarItem::sid++;
 
 	if (ToolbarItem::sid < 0)

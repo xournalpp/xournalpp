@@ -22,7 +22,7 @@ public:
 	int newFill;
 };
 
-FillUndoAction::FillUndoAction(PageRef page, Layer* layer)
+FillUndoAction::FillUndoAction(const PageRef& page, Layer* layer)
  : UndoAction("FillUndoAction")
 {
 	this->page = page;

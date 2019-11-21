@@ -22,10 +22,10 @@ AudioPlayer::~AudioPlayer()
 	this->audioQueue = nullptr;
 }
 
-auto AudioPlayer::start(string filename, unsigned int timestamp) -> bool
+auto AudioPlayer::start(const string& filename, unsigned int timestamp) -> bool
 {
 	// Start the producer for reading the data
-	bool status = this->vorbisProducer->start(std::move(filename), timestamp);
+	bool status = this->vorbisProducer->start(filename, timestamp);
 
 	// Start playing
 	if (status)

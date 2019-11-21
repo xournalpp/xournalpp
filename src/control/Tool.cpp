@@ -1,8 +1,10 @@
 #include "Tool.h"
 
+#include <utility>
+
 Tool::Tool(string name, ToolType type, int color, int capabilities, double* thickness)
 {
-	this->name = name;
+	this->name = std::move(name);
 	this->type = type;
 	this->thickness = thickness;
 

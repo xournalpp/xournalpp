@@ -8,7 +8,7 @@
 #include <i18n.h>
 #include <Rectangle.h>
 
-TextBoxUndoAction::TextBoxUndoAction(PageRef page, Layer* layer, Element* element, Element* oldelement)
+TextBoxUndoAction::TextBoxUndoAction(const PageRef& page, Layer* layer, Element* element, Element* oldelement)
  : UndoAction("TextBoxUndoAction")
 {
 	this->page = page;

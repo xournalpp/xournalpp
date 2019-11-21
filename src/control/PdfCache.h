@@ -31,12 +31,12 @@ private:
 	void operator=(const PdfCache& cache);
 
 public:
-	void render(cairo_t* cr, XojPdfPageSPtr popplerPage, double zoom);
+	void render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, double zoom);
 
 private:
 	void setZoom(double zoom);
 	void clearCache();
-	cairo_surface_t* lookup(XojPdfPageSPtr popplerPage);
+	cairo_surface_t* lookup(const XojPdfPageSPtr& popplerPage);
 	void cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img);
 
 private:

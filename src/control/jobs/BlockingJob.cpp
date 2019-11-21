@@ -3,7 +3,7 @@
 #include "control/Control.h"
 #include "control/xojfile/SaveHandler.h"
 
-BlockingJob::BlockingJob(Control* control, string name)
+BlockingJob::BlockingJob(Control* control, const string& name)
  : control(control)
 {
 	control->block(name);

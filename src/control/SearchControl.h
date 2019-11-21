@@ -18,7 +18,7 @@
 class SearchControl
 {
 public:
-	SearchControl(PageRef page, XojPdfPageSPtr pdf);
+	SearchControl(const PageRef& page, XojPdfPageSPtr pdf);
 	virtual ~SearchControl();
 
 	bool search(string text, int* occures, double* top);

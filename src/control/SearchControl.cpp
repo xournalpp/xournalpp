@@ -1,13 +1,15 @@
 #include "SearchControl.h"
 
+#include <utility>
+
 #include "model/Text.h"
 #include "model/Layer.h"
 #include "view/TextView.h"
 
-SearchControl::SearchControl(PageRef page, XojPdfPageSPtr pdf)
+SearchControl::SearchControl(const PageRef& page, XojPdfPageSPtr pdf)
 {
 	this->page = page;
-	this->pdf = pdf;
+	this->pdf = std::move(pdf);
 }
 
 SearchControl::~SearchControl()

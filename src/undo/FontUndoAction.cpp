@@ -22,7 +22,7 @@ public:
 	XojFont newFont;
 };
 
-FontUndoAction::FontUndoAction(PageRef page, Layer* layer)
+FontUndoAction::FontUndoAction(const PageRef& page, Layer* layer)
  : UndoAction("FontUndoAction")
 {
 	this->page = page;

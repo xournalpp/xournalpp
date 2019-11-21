@@ -23,7 +23,7 @@ class SettingsDialog;
 class DeviceClassConfigGui : public GladeGui
 {
 public:
-	DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, InputDevice device);
+	DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, const InputDevice& device);
 	virtual ~DeviceClassConfigGui();
 
 public:

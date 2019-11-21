@@ -6,7 +6,7 @@
 
 #include <i18n.h>
 
-CopyUndoAction::CopyUndoAction(PageRef pageref, int pageNr)
+CopyUndoAction::CopyUndoAction(const PageRef& pageref, int pageNr)
  : UndoAction("CopyUndoAction")
 {
 	this->page = pageref;

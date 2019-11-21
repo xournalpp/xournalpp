@@ -14,6 +14,7 @@
 #include <gtk/gtk.h>
 
 #include <cstdlib>
+#include <utility>
 
 #define error2(var, ...)                                                                \
 	if (var == nullptr)                                                                 \
@@ -111,11 +112,11 @@ void LoadHandler::removePdfBackground()
 
 void LoadHandler::setPdfReplacement(string filename, bool attachToDocument)
 {
-	this->pdfReplacementFilename = filename;
+	this->pdfReplacementFilename = std::move(filename);
 	this->pdfReplacementAttach = attachToDocument;
 }
 
-auto LoadHandler::openFile(string filename) -> bool
+auto LoadHandler::openFile(const string& filename) -> bool
 {
 	this->filename = filename;
 	int zipError = 0;
@@ -1179,7 +1180,7 @@ void LoadHandler::readTexImage(const gchar* base64string, gsize base64stringLen)
 /**
  * Document should not be freed, it will be freed with LoadHandler!
  */
-auto LoadHandler::loadDocument(string filename) -> Document*
+auto LoadHandler::loadDocument(const string& filename) -> Document*
 {
 	initAttributes();
 	doc.clearDocument();
@@ -1221,7 +1222,7 @@ auto LoadHandler::loadDocument(string filename) -> Document*
 
 //Todo(fabian): return data and length by value not by reference, to ensure data and length is assigned always
 //      return string not a pointer. Ownage is not clear!
-auto LoadHandler::readZipAttachment(string filename, gpointer& data, gsize& length) -> bool
+auto LoadHandler::readZipAttachment(const string& filename, gpointer& data, gsize& length) -> bool
 {
 	zip_stat_t attachmentFileStat;
 	int statStatus = zip_stat(this->zipFp, filename.c_str(), 0, &attachmentFileStat);
@@ -1268,7 +1269,7 @@ auto LoadHandler::readZipAttachment(string filename, gpointer& data, gsize& leng
 	return true;
 }
 
-auto LoadHandler::getTempFileForPath(string filename) -> string
+auto LoadHandler::getTempFileForPath(const string& filename) -> string
 {
 	gpointer tmpFilename = g_hash_table_lookup(this->audioFiles, filename.c_str());
 	if (tmpFilename)

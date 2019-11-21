@@ -29,7 +29,7 @@ void XojCairoPdfExport::setNoBackgroundExport(bool noBackgroundExport)
 	this->noBackgroundExport = noBackgroundExport;
 }
 
-auto XojCairoPdfExport::startPdf(Path file) -> bool
+auto XojCairoPdfExport::startPdf(const Path& file) -> bool
 {
 	this->surface = cairo_pdf_surface_create(file.c_str(), 0, 0);
 	this->cr = cairo_create(surface);

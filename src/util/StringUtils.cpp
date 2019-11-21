@@ -3,8 +3,9 @@
 
 #include <glib.h>
 #include <cstring>
+#include <utility>
 
-auto StringUtils::toLowerCase(string input) -> string
+auto StringUtils::toLowerCase(const string& input) -> string
 {	
 	char* lower = g_utf8_strdown(input.c_str(), input.size());
 	string lowerStr = lower;
@@ -12,13 +13,13 @@ auto StringUtils::toLowerCase(string input) -> string
 	return lowerStr;
 }
 
-void StringUtils::replaceAllChars(string& input, const std::vector<replace_pair> replaces)
+void StringUtils::replaceAllChars(string& input, const std::vector<replace_pair>& replaces)
 {
 	string out;
 	bool found = false;
 	for (char c : input)
 	{
-		for (replace_pair p : replaces)
+		for (const replace_pair& p: replaces)
 		{
 			if (c == p.first)
 			{
@@ -36,7 +37,7 @@ void StringUtils::replaceAllChars(string& input, const std::vector<replace_pair>
 	input = out;
 }
 
-auto StringUtils::split(string input, char delimiter) -> vector<string>
+auto StringUtils::split(const string& input, char delimiter) -> vector<string>
 {
 	vector<string> tokens;
 	string token;
@@ -48,12 +49,12 @@ auto StringUtils::split(string input, char delimiter) -> vector<string>
 	return tokens;
 }
 
-auto StringUtils::startsWith(string str, string start) -> bool
+auto StringUtils::startsWith(const string& str, const string& start) -> bool
 {
 	return str.compare(0, start.length(), start) == 0;
 }
 
-auto StringUtils::endsWith(string str, string end) -> bool
+auto StringUtils::endsWith(const string& str, const string& end) -> bool
 {
 	if (end.size() > str.size())
 	{
@@ -79,10 +80,10 @@ auto StringUtils::rtrim(std::string str) -> std::string
 
 auto StringUtils::trim(std::string str) -> std::string
 {
-	return ltrim(rtrim(str));
+	return ltrim(rtrim(std::move(str)));
 }
 
-auto StringUtils::iequals(string a, string b) -> bool
+auto StringUtils::iequals(const string& a, const string& b) -> bool
 {
 	gchar* ca = g_utf8_casefold (a.c_str(), a.size());
 	gchar* cb = g_utf8_casefold (b.c_str(), b.size());

@@ -21,8 +21,8 @@ class BaseElementView;
 class BackgroundSelectDialogBase : public GladeGui
 {
 public:
-	BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings,
-			string glade, string mainWnd);
+	BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings, const string& glade,
+	                           string mainWnd);
 	~BackgroundSelectDialogBase();
 
 public:

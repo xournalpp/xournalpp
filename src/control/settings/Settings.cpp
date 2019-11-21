@@ -1038,16 +1038,14 @@ void Settings::save()
 	xmlFreeDoc(doc);
 }
 
-void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
+void Settings::saveData(xmlNodePtr root, const string& name, SElement& elem)
 {
 	xmlNodePtr xmlNode = xmlNewChild(root, nullptr, (const xmlChar*) "data", nullptr);
 
 	xmlSetProp(xmlNode, (const xmlChar*) "name", (const xmlChar*) name.c_str());
 
-	for (std::map<string, SAttribute>::value_type p : elem.attributes())
+	for (auto const& [aname, attrib]: elem.attributes())
 	{
-		string aname = p.first;
-		SAttribute& attrib = p.second;
 		string type;
 		string value;
 
@@ -1441,7 +1439,7 @@ auto Settings::getDefaultSaveName() const -> string const&
 	return this->defaultSaveName;
 }
 
-void Settings::setDefaultSaveName(string name)
+void Settings::setDefaultSaveName(const string& name)
 {
 	if (this->defaultSaveName == name)
 	{
@@ -1458,7 +1456,7 @@ auto Settings::getPageTemplate() const -> string const&
 	return this->pageTemplate;
 }
 
-void Settings::setPageTemplate(string pageTemplate)
+void Settings::setPageTemplate(const string& pageTemplate)
 {
 	if (this->pageTemplate == pageTemplate)
 	{
@@ -1475,7 +1473,7 @@ auto Settings::getAudioFolder() const -> string const&
 	return this->audioFolder;
 }
 
-void Settings::setAudioFolder(string audioFolder)
+void Settings::setAudioFolder(const string& audioFolder)
 {
 	if (this->audioFolder == audioFolder)
 	{
@@ -1492,7 +1490,7 @@ auto Settings::getSizeUnit() const -> string const&
 	return sizeUnit;
 }
 
-void Settings::setSizeUnit(string sizeUnit)
+void Settings::setSizeUnit(const string& sizeUnit)
 {
 	if (this->sizeUnit == sizeUnit)
 	{
@@ -1693,7 +1691,7 @@ auto Settings::getViewLayoutB2T() const -> bool
 
 void Settings::setLastSavePath(Path p)
 {
-	this->lastSavePath = p;
+	this->lastSavePath = std::move(p);
 	save();
 }
 
@@ -1704,7 +1702,7 @@ auto Settings::getLastSavePath() const -> Path const&
 
 void Settings::setLastOpenPath(Path p)
 {
-	this->lastOpenPath = p;
+	this->lastOpenPath = std::move(p);
 	save();
 }
 
@@ -1713,7 +1711,7 @@ auto Settings::getLastOpenPath() const -> Path const&
 	return this->lastOpenPath;
 }
 
-void Settings::setLastImagePath(Path path)
+void Settings::setLastImagePath(const Path& path)
 {
 	if (this->lastImagePath == path)
 	{
@@ -1848,7 +1846,7 @@ void Settings::setMainWndMaximized(bool max)
 	this->maximized = max;
 }
 
-void Settings::setSelectedToolbar(string name)
+void Settings::setSelectedToolbar(const string& name)
 {
 	if (this->selectedToolbar == name)
 	{
@@ -1863,7 +1861,7 @@ auto Settings::getSelectedToolbar() const -> string const&
 	return this->selectedToolbar;
 }
 
-auto Settings::getCustomElement(string name) -> SElement&
+auto Settings::getCustomElement(const string& name) -> SElement&
 {
 	return this->data[name];
 }
@@ -1925,7 +1923,7 @@ auto Settings::getFullscreenHideElements() const -> string const&
 
 void Settings::setFullscreenHideElements(string elements)
 {
-	this->fullscreenHideElements = elements;
+	this->fullscreenHideElements = std::move(elements);
 	save();
 }
 
@@ -1936,7 +1934,7 @@ auto Settings::getPresentationHideElements() const -> string const&
 
 void Settings::setPresentationHideElements(string elements)
 {
-	this->presentationHideElements = elements;
+	this->presentationHideElements = std::move(elements);
 	save();
 }
 
@@ -2092,7 +2090,7 @@ auto Settings::getPluginEnabled() const -> string const&
 	return this->pluginEnabled;
 }
 
-void Settings::setPluginEnabled(string pluginEnabled)
+void Settings::setPluginEnabled(const string& pluginEnabled)
 {
 	if (this->pluginEnabled == pluginEnabled)
 	{
@@ -2107,7 +2105,7 @@ auto Settings::getPluginDisabled() const -> string const&
 	return this->pluginDisabled;
 }
 
-void Settings::setPluginDisabled(string pluginDisabled)
+void Settings::setPluginDisabled(const string& pluginDisabled)
 {
 	if (this->pluginDisabled == pluginDisabled)
 	{
@@ -2233,7 +2231,7 @@ void Settings::setDeviceClassForDevice(const string& deviceName, GdkInputSource 
 auto Settings::getKnownInputDevices() const -> std::vector<InputDevice>
 {
 	std::vector<InputDevice> inputDevices;
-	for (std::pair<string, std::pair<int, GdkInputSource>> device: inputDeviceClasses)
+	for (const std::pair<string, std::pair<int, GdkInputSource>>& device: inputDeviceClasses)
 	{
 		inputDevices.emplace_back(device.first, device.second.second);
 	}
@@ -2382,53 +2380,53 @@ void SElement::clear()
 	this->element->children.clear();
 }
 
-auto SElement::child(string name) -> SElement&
+auto SElement::child(const string& name) -> SElement&
 {
 	return this->element->children[name];
 }
 
-void SElement::setComment(const string name, const string comment)
+void SElement::setComment(const string& name, const string& comment)
 {
 	SAttribute& attrib = this->element->attributes[name];
 	attrib.comment = comment;
 }
 
-void SElement::setIntHex(const string name, const int value)
+void SElement::setIntHex(const string& name, const int value)
 {
 	SAttribute& attrib = this->element->attributes[name];
 	attrib.iValue = value;
 	attrib.type = ATTRIBUTE_TYPE_INT_HEX;
 }
 
-void SElement::setInt(const string name, const int value)
+void SElement::setInt(const string& name, const int value)
 {
 	SAttribute& attrib = this->element->attributes[name];
 	attrib.iValue = value;
 	attrib.type = ATTRIBUTE_TYPE_INT;
 }
 
-void SElement::setBool(const string name, const bool value)
+void SElement::setBool(const string& name, const bool value)
 {
 	SAttribute& attrib = this->element->attributes[name];
 	attrib.iValue = value;
 	attrib.type = ATTRIBUTE_TYPE_BOOLEAN;
 }
 
-void SElement::setString(const string name, const string value)
+void SElement::setString(const string& name, const string& value)
 {
 	SAttribute& attrib = this->element->attributes[name];
 	attrib.sValue = value;
 	attrib.type = ATTRIBUTE_TYPE_STRING;
 }
 
-void SElement::setDouble(const string name, const double value)
+void SElement::setDouble(const string& name, const double value)
 {
 	SAttribute& attrib = this->element->attributes[name];
 	attrib.dValue = value;
 	attrib.type = ATTRIBUTE_TYPE_DOUBLE;
 }
 
-auto SElement::getDouble(const string name, double& value) -> bool
+auto SElement::getDouble(const string& name, double& value) -> bool
 {
 	SAttribute& attrib = this->element->attributes[name];
 	if (attrib.type == ATTRIBUTE_TYPE_NONE)
@@ -2447,7 +2445,7 @@ auto SElement::getDouble(const string name, double& value) -> bool
 	return true;
 }
 
-auto SElement::getInt(const string name, int& value) -> bool
+auto SElement::getInt(const string& name, int& value) -> bool
 {
 	SAttribute& attrib = this->element->attributes[name];
 	if (attrib.type == ATTRIBUTE_TYPE_NONE)
@@ -2466,7 +2464,7 @@ auto SElement::getInt(const string name, int& value) -> bool
 	return true;
 }
 
-auto SElement::getBool(const string name, bool& value) -> bool
+auto SElement::getBool(const string& name, bool& value) -> bool
 {
 	SAttribute& attrib = this->element->attributes[name];
 	if (attrib.type == ATTRIBUTE_TYPE_NONE)
@@ -2485,7 +2483,7 @@ auto SElement::getBool(const string name, bool& value) -> bool
 	return true;
 }
 
-auto SElement::getString(const string name, string& value) -> bool
+auto SElement::getString(const string& name, string& value) -> bool
 {
 	SAttribute& attrib = this->element->attributes[name];
 	if (attrib.type == ATTRIBUTE_TYPE_NONE)

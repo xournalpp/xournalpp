@@ -33,17 +33,17 @@ class DeleteUndoAction;
 class EditSelection : public ElementContainer, public Serializeable
 {
 public:
-	EditSelection(UndoRedoHandler* undo, PageRef page, XojPageView* view);
+	EditSelection(UndoRedoHandler* undo, const PageRef& page, XojPageView* view);
 	EditSelection(UndoRedoHandler* undo, Selection* selection, XojPageView* view);
-	EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* view, PageRef page);
-	EditSelection(UndoRedoHandler* undo, vector<Element*> elements, XojPageView* view, PageRef page);
+	EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* view, const PageRef& page);
+	EditSelection(UndoRedoHandler* undo, const vector<Element*>& elements, XojPageView* view, const PageRef& page);
 	virtual ~EditSelection();
 
 private:
 	/**
 	 * Our internal constructor
 	 */
-	void contstruct(UndoRedoHandler* undo, XojPageView* view, PageRef sourcePage);
+	void contstruct(UndoRedoHandler* undo, XojPageView* view, const PageRef& sourcePage);
 
 	/**
 	 * Calculate the size from the element list

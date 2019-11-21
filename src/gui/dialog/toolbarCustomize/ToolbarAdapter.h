@@ -44,7 +44,7 @@ private:
 	/**
 	 * Remove a toolbar item from the tool where it was
 	 */
-	void removeFromToolbar(AbstractToolItem* item, string toolbarName, int id);
+	void removeFromToolbar(AbstractToolItem* item, const string& toolbarName, int id);
 	static void toolitemDragDataGet(GtkWidget* widget, GdkDragContext* context, GtkSelectionData* selection_data,
 									guint info, guint time, ToolbarAdapter* adapter);
 

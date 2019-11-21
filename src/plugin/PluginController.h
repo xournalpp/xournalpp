@@ -28,7 +28,7 @@ public:
 	 *
 	 * @param path The path which contains the plugin folders
 	 */
-	void loadPluginsFrom(string path);
+	void loadPluginsFrom(const string& path);
 
 	/**
 	 * Register toolbar item and all other UI stuff

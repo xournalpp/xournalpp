@@ -7,8 +7,10 @@
 #include <config.h>
 #include <i18n.h>
 
+#include <utility>
+
 ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, string id, ActionType type)
- : AbstractToolItem(id, handler, type, nullptr)
+ : AbstractToolItem(std::move(id), handler, type, nullptr)
  , lc(lc)
  , gui(gui)
  , menu(gtk_menu_new())
@@ -49,7 +51,7 @@ void ToolPageLayer::createSeparator()
 	menuY++;
 }
 
-auto ToolPageLayer::createSpecialMenuEntry(string name) -> GtkWidget*
+auto ToolPageLayer::createSpecialMenuEntry(const string& name) -> GtkWidget*
 {
 	GtkWidget* it = gtk_menu_item_new();
 	GtkWidget* lb = gtk_label_new(name.c_str());
@@ -170,7 +172,7 @@ void ToolPageLayer::layerMenuShowClicked(GtkWidget* menu)
 	lc->setLayerVisible(layerId, checked);
 }
 
-void ToolPageLayer::createLayerMenuItem(string text, int layerId)
+void ToolPageLayer::createLayerMenuItem(const string& text, int layerId)
 {
 	GtkWidget* itLayer = gtk_check_menu_item_new_with_label(text.c_str());
 	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(itLayer), true);

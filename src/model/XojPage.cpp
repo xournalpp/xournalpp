@@ -1,5 +1,7 @@
 #include "XojPage.h"
 
+#include <utility>
+
 #include "BackgroundImage.h"
 #include "Document.h"
 
@@ -235,7 +237,7 @@ auto XojPage::getBackgroundImage() -> BackgroundImage&
 
 void XojPage::setBackgroundImage(BackgroundImage img)
 {
-	this->backgroundImage = img;
+	this->backgroundImage = std::move(img);
 }
 
 auto XojPage::getSelectedLayer() -> Layer*

@@ -1,22 +1,23 @@
 #include "ToolButton.h"
 
+#include <utility>
+
 #include "gui/widgets/gtkmenutooltogglebutton.h"
 
 ToolButton::ToolButton(ActionHandler* handler, string id, ActionType type, string iconName, string description,
-					   GtkWidget* menuitem)
- : AbstractToolItem(id, handler, type, menuitem)
+                       GtkWidget* menuitem)
+ : AbstractToolItem(std::move(id), handler, type, menuitem)
 {
-	this->iconName = iconName;
-	this->description = description;
+	this->iconName = std::move(iconName);
+	this->description = std::move(description);
 }
 
-ToolButton::ToolButton(ActionHandler* handler, string id, ActionType type, ActionGroup group,
-					   bool toolToggleOnlyEnable, string iconName, string description,
-					   GtkWidget* menuitem)
- : AbstractToolItem(id, handler, type, menuitem)
+ToolButton::ToolButton(ActionHandler* handler, string id, ActionType type, ActionGroup group, bool toolToggleOnlyEnable,
+                       string iconName, string description, GtkWidget* menuitem)
+ : AbstractToolItem(std::move(id), handler, type, menuitem)
 {
-	this->iconName = iconName;
-	this->description = description;
+	this->iconName = std::move(iconName);
+	this->description = std::move(description);
 	this->group = group;
 	this->toolToggleOnlyEnable = toolToggleOnlyEnable;
 }
@@ -29,7 +30,7 @@ ToolButton::~ToolButton() = default;
  * @param name The name of the item
  * @return The created menu item
  */
-auto ToolButton::registerPopupMenuEntry(string name, string iconName) -> GtkWidget*
+auto ToolButton::registerPopupMenuEntry(const string& name, const string& iconName) -> GtkWidget*
 {
 	if (this->popupMenu == nullptr)
 	{
@@ -62,7 +63,7 @@ auto ToolButton::registerPopupMenuEntry(string name, string iconName) -> GtkWidg
 	return menuItem;
 }
 
-void ToolButton::updateDescription(string description)
+void ToolButton::updateDescription(const string& description)
 {
 	this->description = description;
 	if (GTK_IS_TOOL_ITEM(item))

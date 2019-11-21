@@ -10,6 +10,8 @@
 #include <Stacktrace.h>
 #include <Util.h>
 
+#include <utility>
+
 Document::Document(DocumentHandler* handler)
  : handler(handler)
 {
@@ -120,7 +122,7 @@ auto Document::getPdfPageCount() -> size_t
 
 void Document::setFilename(Path filename)
 {
-	this->filename = filename;
+	this->filename = std::move(filename);
 }
 
 auto Document::getFilename() -> Path
@@ -149,7 +151,7 @@ auto Document::createSaveFolder(Path lastSavePath) -> Path
 	}
 }
 
-auto Document::createSaveFilename(DocumentType type, string defaultSaveName) -> Path
+auto Document::createSaveFilename(DocumentType type, const string& defaultSaveName) -> Path
 {
 	if (!filename.isEmpty())
 	{
@@ -331,7 +333,7 @@ void Document::updateIndexPageNumbers()
 	}
 }
 
-auto Document::readPdf(Path filename, bool initPages, bool attachToDocument, gpointer data, gsize length) -> bool
+auto Document::readPdf(const Path& filename, bool initPages, bool attachToDocument, gpointer data, gsize length) -> bool
 {
 	GError* popplerError = nullptr;
 

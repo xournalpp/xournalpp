@@ -24,13 +24,13 @@ AudioRecorder::~AudioRecorder()
 	this->audioQueue = nullptr;
 }
 
-auto AudioRecorder::start(string filename) -> bool
+auto AudioRecorder::start(const string& filename) -> bool
 {
 	// Start recording
 	bool status = this->portAudioProducer->startRecording();
 
 	// Start the consumer for writing the data
-	status = status && this->vorbisConsumer->start(std::move(filename));
+	status = status && this->vorbisConsumer->start(filename);
 
 	return status;
 }

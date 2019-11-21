@@ -82,10 +82,10 @@ auto AudioController::isPlaying() -> bool
 	return this->audioPlayer->isPlaying();
 }
 
-auto AudioController::startPlayback(string filename, unsigned int timestamp) -> bool
+auto AudioController::startPlayback(const string& filename, unsigned int timestamp) -> bool
 {
 	this->audioPlayer->stop();
-	bool status = this->audioPlayer->start(std::move(filename), timestamp);
+	bool status = this->audioPlayer->start(filename, timestamp);
 	if (status)
 	{
 		this->control->getWindow()->getToolMenuHandler()->enableAudioPlaybackButtons();

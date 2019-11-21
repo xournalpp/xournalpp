@@ -4,6 +4,8 @@
 #include <serializing/ObjectInputStream.h>
 #include <serializing/ObjectOutputStream.h>
 
+#include <utility>
+
 Image::Image()
  : Element(ELEMENT_IMAGE)
 {
@@ -67,7 +69,7 @@ void Image::setImage(string data)
 		cairo_surface_destroy(this->image);
 		this->image = nullptr;
 	}
-	this->data = data;
+	this->data = std::move(data);
 }
 
 void Image::setImage(GdkPixbuf* img)

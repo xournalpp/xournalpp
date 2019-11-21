@@ -7,7 +7,7 @@ GladeSearchpath::~GladeSearchpath()
 	directories.clear();
 }
 
-auto GladeSearchpath::findFile(string subdir, string file) -> string
+auto GladeSearchpath::findFile(const string& subdir, const string& file) -> string
 {
 	string filename;
 	if (subdir == "")
@@ -20,7 +20,7 @@ auto GladeSearchpath::findFile(string subdir, string file) -> string
 	}
 
 	// We step through each directory to find it.
-	for (string dir : directories)
+	for (const string& dir: directories)
 	{
 		string pathname = dir + G_DIR_SEPARATOR_S + filename;
 
@@ -49,7 +49,7 @@ auto GladeSearchpath::getFirstSearchPath() -> string
 /**
  * Use this function to set the directory containing installed pixmaps and Glade XML files.
  */
-void GladeSearchpath::addSearchDirectory(string directory)
+void GladeSearchpath::addSearchDirectory(const string& directory)
 {
 	this->directories.push_back(directory);
 }

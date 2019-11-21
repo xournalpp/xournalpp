@@ -38,7 +38,8 @@ public:
 		PDF
 	};
 
-	bool readPdf(Path filename, bool initPages, bool attachToDocument, gpointer data = nullptr, gsize length = 0);
+	bool readPdf(const Path& filename, bool initPages, bool attachToDocument, gpointer data = nullptr,
+	             gsize length = 0);
 
 	size_t getPageCount();
 	size_t getPdfPageCount();
@@ -70,7 +71,7 @@ public:
 	Path getFilename();
 	Path getPdfFilename();
 	Path createSaveFolder(Path lastSavePath);
-	Path createSaveFilename(DocumentType type, string defaultSaveName);
+	Path createSaveFilename(DocumentType type, const string& defaultSaveName);
 
 	Path getEvMetadataFilename();
 

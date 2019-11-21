@@ -33,7 +33,7 @@ public:
 	virtual void setNoBackgroundExport(bool noBackgroundExport);
 
 private:
-	bool startPdf(Path file);
+	bool startPdf(const Path& file);
 	void endPdf();
 	void exportPage(size_t page);
 

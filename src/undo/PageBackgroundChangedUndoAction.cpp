@@ -5,15 +5,17 @@
 
 #include <i18n.h>
 
-PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page, PageType origType, int origPdfPage,
-																 BackgroundImage origBackgroundImage,
-																 double origW, double origH)
+#include <utility>
+
+PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(const PageRef& page, const PageType& origType,
+                                                                 int origPdfPage, BackgroundImage origBackgroundImage,
+                                                                 double origW, double origH)
  : UndoAction("PageBackgroundChangedUndoAction")
 {
 	this->page = page;
 	this->origType = origType;
 	this->origPdfPage = origPdfPage;
-	this->origBackgroundImage = origBackgroundImage;
+	this->origBackgroundImage = std::move(origBackgroundImage);
 	this->origW = origW;
 	this->origH = origH;
 	this->newType.format = PageTypeFormat::Plain;

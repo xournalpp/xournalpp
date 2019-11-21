@@ -102,7 +102,7 @@ auto ImageExport::getFilenameWithNumber(int no) -> string
 	}
 
 	string filepath = filename.str();
-	size_t dotPos = filepath.find_last_of(".");
+	size_t dotPos = filepath.find_last_of('.');
 	if (dotPos == string::npos)
 	{
 		// No file extension, add number

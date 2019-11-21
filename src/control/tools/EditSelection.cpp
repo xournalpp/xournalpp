@@ -26,7 +26,7 @@
 
 #define MINPIXSIZE 5	// smallest can scale down to, in pixels.
 
-EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page, XojPageView* view)
+EditSelection::EditSelection(UndoRedoHandler* undo, const PageRef& page, XojPageView* view)
 {
 	this->x = 0;
 	this->y = 0;
@@ -52,7 +52,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection, XojPag
 	view->rerenderPage();
 }
 
-EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* view, PageRef page)
+EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* view, const PageRef& page)
 {
 	this->x = e->getX();
 	this->y = e->getY();
@@ -67,7 +67,8 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* vie
 	view->rerenderElement(e);
 }
 
-EditSelection::EditSelection(UndoRedoHandler* undo, vector<Element*> elements, XojPageView* view, PageRef page)
+EditSelection::EditSelection(UndoRedoHandler* undo, const vector<Element*>& elements, XojPageView* view,
+                             const PageRef& page)
 {
 	calcSizeFromElements(elements);
 
@@ -111,7 +112,7 @@ void EditSelection::calcSizeFromElements(vector<Element*> elements)
 /**
  * Our internal constructor
  */
-void EditSelection::contstruct(UndoRedoHandler* undo, XojPageView* view, PageRef sourcePage)
+void EditSelection::contstruct(UndoRedoHandler* undo, XojPageView* view, const PageRef& sourcePage)
 {
 	this->view = view;
 	this->undo = undo;

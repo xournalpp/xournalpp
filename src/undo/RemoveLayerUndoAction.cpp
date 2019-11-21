@@ -9,9 +9,10 @@
 
 #include <i18n.h>
 
-RemoveLayerUndoAction::RemoveLayerUndoAction(LayerController* layerController, PageRef page, Layer* layer, int layerPos)
- : UndoAction("RemoveLayerUndoAction"),
-   layerController(layerController)
+RemoveLayerUndoAction::RemoveLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer,
+                                             int layerPos)
+ : UndoAction("RemoveLayerUndoAction")
+ , layerController(layerController)
 {
 	this->page = page;
 	this->layer = layer;

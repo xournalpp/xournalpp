@@ -97,20 +97,20 @@ public:
 
 	void clear();
 
-	SElement& child(string name);
+	SElement& child(const string& name);
 
-	void setIntHex(const string name, const int value);
-	void setInt(const string name, const int value);
-	void setDouble(const string name, const double value);
-	void setBool(const string name, const bool value);
-	void setString(const string name, const string value);
+	void setIntHex(const string& name, const int value);
+	void setInt(const string& name, const int value);
+	void setDouble(const string& name, const double value);
+	void setBool(const string& name, const bool value);
+	void setString(const string& name, const string& value);
 
-	void setComment(const string name, const string comment);
+	void setComment(const string& name, const string& comment);
 
-	bool getInt(const string name, int& value);
-	bool getDouble(const string name, double& value);
-	bool getBool(const string name, bool& value);
-	bool getString(const string name, string& value);
+	bool getInt(const string& name, int& value);
+	bool getDouble(const string& name, double& value);
+	bool getBool(const string& name, bool& value);
+	bool getString(const string& name, string& value);
 
 	std::map<string, SAttribute>& attributes();
 	std::map<string, SElement>& children();
@@ -143,7 +143,7 @@ private:
 	xmlNodePtr saveProperty(const gchar* key, const gchar* value,
 							xmlNodePtr parent);
 
-	void saveData(xmlNodePtr root, string name, SElement& elem);
+	void saveData(xmlNodePtr root, const string& name, SElement& elem);
 
 	void saveButtonConfig();
 	void loadButtonConfig();
@@ -168,7 +168,7 @@ public:
 	/**
 	 * The selected Toolbar
 	 */
-	void setSelectedToolbar(string name);
+	void setSelectedToolbar(const string& name);
 	string const& getSelectedToolbar() const;
 
 	/**
@@ -207,7 +207,7 @@ public:
 	void setLastOpenPath(Path p);
 	Path const& getLastOpenPath() const;
 
-	void setLastImagePath(Path p);
+	void setLastImagePath(const Path& p);
 	Path const& getLastImagePath() const;
 
 	void setMainWndSize(int width, int height);
@@ -308,7 +308,7 @@ public:
 	void setScrollbarFadeoutDisabled(bool disable);
 
 	string const& getDefaultSaveName() const;
-	void setDefaultSaveName(string name);
+	void setDefaultSaveName(const string& name);
 
 	ButtonConfig* getButtonConfig(int id);
 
@@ -339,10 +339,10 @@ public:
 	void setPdfPageCacheSize(int size);
 
 	string const& getPageTemplate() const;
-	void setPageTemplate(string pageTemplate);
+	void setPageTemplate(const string& pageTemplate);
 
 	string const& getAudioFolder() const;
-	void setAudioFolder(string audioFolder);
+	void setAudioFolder(const string& audioFolder);
 
 	PaDeviceIndex getAudioInputDevice() const;
 	void setAudioInputDevice(PaDeviceIndex deviceIndex);
@@ -360,10 +360,10 @@ public:
 	void setDefaultSeekTime(unsigned int t);
 
 	string const& getPluginEnabled() const;
-	void setPluginEnabled(string pluginEnabled);
+	void setPluginEnabled(const string& pluginEnabled);
 
 	string const& getPluginDisabled() const;
-	void setPluginDisabled(string pluginDisabled);
+	void setPluginDisabled(const string& pluginDisabled);
 
 	bool getExperimentalInputSystemEnabled() const;
 	void setExperimentalInputSystemEnabled(bool systemEnabled);
@@ -395,7 +395,7 @@ public:
 	/**
 	 * Set Unit, e.g. "cm"
 	 */
-	void setSizeUnit(string sizeUnit);
+	void setSizeUnit(const string& sizeUnit);
 
 	/**
 	 * Set size index in XOJ_UNITS
@@ -446,7 +446,7 @@ public:
 
 public:
 	// Custom settings
-	SElement& getCustomElement(string name);
+	SElement& getCustomElement(const string& name);
 
 	/**
 	 * Call this after you have done all custom settings changes

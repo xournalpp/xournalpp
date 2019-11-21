@@ -25,7 +25,7 @@ class AudioPlayer
 public:
 	explicit AudioPlayer(Control* control, Settings* settings);
 	~AudioPlayer();
-	bool start(string filename, unsigned int timestamp = 0);
+	bool start(const string& filename, unsigned int timestamp = 0);
 	bool isPlaying();
 	void stop();
 	bool play();

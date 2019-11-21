@@ -9,11 +9,12 @@
 
 #include <i18n.h>
 
-MoveLayerUndoAction::MoveLayerUndoAction(LayerController* layerController, PageRef page, Layer* layer, int oldLayerPos, int newLayerPos)
- : UndoAction("MoveLayerUndoAction"),
-   oldLayerPos(oldLayerPos),
-   newLayerPos(newLayerPos),
-   layerController(layerController)
+MoveLayerUndoAction::MoveLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer,
+                                         int oldLayerPos, int newLayerPos)
+ : UndoAction("MoveLayerUndoAction")
+ , oldLayerPos(oldLayerPos)
+ , newLayerPos(newLayerPos)
+ , layerController(layerController)
 {
 	this->page = page;
 	this->layer = layer;

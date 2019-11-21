@@ -1,5 +1,7 @@
 #include "AudioElement.h"
 
+#include <utility>
+
 AudioElement::AudioElement(ElementType type)
  : Element(type)
 {
@@ -12,7 +14,7 @@ AudioElement::~AudioElement()
 
 void AudioElement::setAudioFilename(string fn)
 {
-	this->audioFilename = fn;
+	this->audioFilename = std::move(fn);
 }
 
 auto AudioElement::getAudioFilename() const -> string

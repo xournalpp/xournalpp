@@ -51,7 +51,7 @@ void ToolbarModel::add(ToolbarData* data)
 	this->toolbars.push_back(data);
 }
 
-auto ToolbarModel::parse(string filename, bool predefined) -> bool
+auto ToolbarModel::parse(const string& filename, bool predefined) -> bool
 {
 	GKeyFile* config = g_key_file_new();
 	g_key_file_set_list_separator(config, ',');
@@ -108,7 +108,7 @@ void ToolbarModel::initCopyNameId(ToolbarData* data)
 	}
 }
 
-auto ToolbarModel::existsId(string id) -> bool
+auto ToolbarModel::existsId(const string& id) -> bool
 {
 	for (ToolbarData* data : this->toolbars)
 	{
@@ -149,7 +149,7 @@ const char* TOOLBAR_INI_HEADER =
 		"  LAYER: The layer dropdown menu\n"
 		"\n";
 
-void ToolbarModel::save(Path filename)
+void ToolbarModel::save(const Path& filename)
 {
 	GKeyFile* config = g_key_file_new();
 	g_key_file_set_list_separator(config, ',');

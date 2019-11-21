@@ -21,7 +21,7 @@ class TextEditor;
 class TextUndoAction : public UndoAction
 {
 public:
-	TextUndoAction(PageRef page, Layer* layer, Text* text, string lastText, TextEditor* textEditor);
+	TextUndoAction(const PageRef& page, Layer* layer, Text* text, string lastText, TextEditor* textEditor);
 	virtual ~TextUndoAction();
 
 public:

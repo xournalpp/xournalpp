@@ -18,7 +18,8 @@
 
 #include <cmath>
 
-EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page, ToolHandler* handler, Redrawable* view)
+EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, const PageRef& page, ToolHandler* handler,
+                           Redrawable* view)
 {
 	this->page = page;
 	this->handler = handler;
