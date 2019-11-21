@@ -206,7 +206,7 @@ auto MetadataManager::getForFile(const string& file) -> MetadataEntry
 		}
 	}
 
-	for (int i = 20; i < (int)files.size(); i++)
+	for (int i = 20; i < static_cast<int>(files.size()); i++)
 	{
 		string path = files[i].metadataFile;
 		deleteMetadataFile(path);

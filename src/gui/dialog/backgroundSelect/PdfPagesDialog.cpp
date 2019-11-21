@@ -30,7 +30,7 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
 		if (p->getBackgroundType().isPdfPage())
 		{
 			int pdfPage = p->getPdfPageNr();
-			if (pdfPage >= 0 && pdfPage < (int)elements.size())
+			if (pdfPage >= 0 && pdfPage < static_cast<int>(elements.size()))
 			{
 				(dynamic_cast<PdfElementView*>(elements[p->getPdfPageNr()]))->setUsed(true);
 			}
@@ -48,7 +48,7 @@ PdfPagesDialog::~PdfPagesDialog() = default;
 void PdfPagesDialog::updateOkButton()
 {
 	bool valid = false;
-	if (selected >= 0 && selected < (int)elements.size())
+	if (selected >= 0 && selected < static_cast<int>(elements.size()))
 	{
 		BaseElementView* p = this->elements[this->selected];
 		valid = gtk_widget_get_visible(p->getWidget());

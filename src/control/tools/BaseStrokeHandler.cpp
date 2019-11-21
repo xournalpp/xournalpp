@@ -98,15 +98,17 @@ auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool
 		pos.x = pos.y = pos.pressure = 0; //not used in redraw
 		if( event->keyval == GDK_KEY_Shift_L || event->keyval == GDK_KEY_Shift_R)
 		{
-			pos.state = (GdkModifierType)(event->state ^ GDK_SHIFT_MASK);	// event state does not include current this modifier keypress - so ^toggle will work for press and release.
+			pos.state = static_cast<GdkModifierType>(
+			        event->state ^
+			        GDK_SHIFT_MASK);  // event state does not include current this modifier keypress - so ^toggle will work for press and release.
 		}
 		else if( event->keyval == GDK_KEY_Control_L || event->keyval == GDK_KEY_Control_R)
 		{
-			pos.state = (GdkModifierType)(event->state ^ GDK_CONTROL_MASK);
+			pos.state = static_cast<GdkModifierType>(event->state ^ GDK_CONTROL_MASK);
 		}
 		else if( event->keyval == GDK_KEY_Alt_L || event->keyval == GDK_KEY_Alt_R)
 		{
-			pos.state = (GdkModifierType)(event->state ^ GDK_MOD1_MASK);
+			pos.state = static_cast<GdkModifierType>(event->state ^ GDK_MOD1_MASK);
 		} 				
 		else{
 			return false;
@@ -275,10 +277,9 @@ void BaseStrokeHandler::modifyModifiersByDrawDir(double width, double height,  b
 		double fixate_Dir_Mods_Dist = std::pow( xournal->getControl()->getSettings()->getDrawDirModsRadius() / zoom, 2.0); 
 		if (std::pow(width,2.0) > fixate_Dir_Mods_Dist ||  std::pow(height,2.0) > fixate_Dir_Mods_Dist )
 		{
-			this->drawModifierFixed = (DIRSET_MODIFIERS)(SET |
-				(gestureShift? SHIFT:NONE) |
-				(gestureControl? CONTROL:NONE) );
- 			if(changeCursor)
+			this->drawModifierFixed = static_cast<DIRSET_MODIFIERS>(SET | (gestureShift ? SHIFT : NONE) |
+			                                                        (gestureControl ? CONTROL : NONE));
+			if(changeCursor)
  			{
 				xournal->getCursor()->activateDrawDirCursor(false);
  			}

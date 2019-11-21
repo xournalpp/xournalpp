@@ -114,8 +114,8 @@ void ToolbarCustomizeDialog::toolitemDragDataGetSeparator(GtkWidget* widget, Gdk
 	ToolItemDragDropData* it = ToolitemDragDrop::ToolItemDragDropData_new(nullptr);
 	it->type = TOOL_ITEM_SEPARATOR;
 
-	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
-						   (const guchar*) it, sizeof(ToolItemDragDropData));
+	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, reinterpret_cast<const guchar*>(it),
+	                       sizeof(ToolItemDragDropData));
 
 	g_free(it);
 }
@@ -152,8 +152,8 @@ void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget* widget, GdkDragConte
 
 	ToolItemDragDropData* it = ToolitemDragDrop::ToolItemDragDropData_new(data->item);
 
-	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
-						   (const guchar*) it, sizeof(ToolItemDragDropData));
+	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, reinterpret_cast<const guchar*>(it),
+	                       sizeof(ToolItemDragDropData));
 
 	g_free(it);
 }
@@ -196,8 +196,8 @@ void ToolbarCustomizeDialog::toolitemColorDragDataGet(GtkWidget* widget, GdkDrag
 	it->color = color;
 	it->type = TOOL_ITEM_COLOR;
 
-	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
-						   (const guchar*) it, sizeof(ToolItemDragDropData));
+	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, reinterpret_cast<const guchar*>(it),
+	                       sizeof(ToolItemDragDropData));
 
 	g_free(it);
 }
@@ -249,7 +249,7 @@ void ToolbarCustomizeDialog::freeIconview()
 	GList* children = gtk_container_get_children(GTK_CONTAINER(table));
 	for (GList* l = children; l != nullptr; l = l->next)
 	{
-		auto* w = (GtkWidget*) l->data;
+		auto* w = static_cast<GtkWidget*>(l->data);
 		gtk_container_remove(GTK_CONTAINER(table), w);
 	}
 
@@ -327,7 +327,7 @@ void ToolbarCustomizeDialog::freeColorIconview()
 	GList* children = gtk_container_get_children(GTK_CONTAINER(table));
 	for (GList* l = children; l != nullptr; l = l->next)
 	{
-		auto* w = (GtkWidget*) l->data;
+		auto* w = static_cast<GtkWidget*>(l->data);
 		gtk_container_remove(GTK_CONTAINER(table), w);
 	}
 

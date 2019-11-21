@@ -682,7 +682,7 @@ auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool
 
 	if (this->inputHandler)
 	{
-		return this->inputHandler->onKeyEvent((GdkEventKey*) event);
+		return this->inputHandler->onKeyEvent(event);
 	}
 
 
@@ -696,7 +696,7 @@ auto XojPageView::onKeyReleaseEvent(GdkEventKey* event) -> bool
 		return true;
 	}
 
-	if (this->inputHandler && this->inputHandler->onKeyEvent((GdkEventKey*) event))
+	if (this->inputHandler && this->inputHandler->onKeyEvent(event))
 	{
 		return true;
 	}
@@ -868,7 +868,7 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect)
 
 	if (width != dispWidth)
 	{
-		double scale = ((double) dispWidth) / ((double) width);
+		double scale = (static_cast<double>(dispWidth)) / (width);
 
 		// Scale current image to fit the zoom level
 		cairo_scale(cr, scale, scale);

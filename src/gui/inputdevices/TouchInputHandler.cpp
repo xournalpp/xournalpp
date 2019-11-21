@@ -147,7 +147,7 @@ void TouchInputHandler::zoomStart()
 	ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
 
 	// Disable zoom fit as we are zooming currently
-	// TODO this should happen internally!!!
+	// TODO(fabian): this should happen internally!!!
 	if (zoomControl->isZoomFitMode())
 	{
 		zoomControl->setZoomFitMode(false);

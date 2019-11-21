@@ -69,7 +69,7 @@ void Job::callAfterRun()
 
 	this->ref();
 
-	this->afterRunId = gdk_threads_add_idle((GSourceFunc) Job::callAfterCallback, this);
+	this->afterRunId = gdk_threads_add_idle(reinterpret_cast<GSourceFunc>(Job::callAfterCallback), this);
 }
 
 /**

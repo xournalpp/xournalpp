@@ -150,7 +150,7 @@ auto SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar) -> bool
 
 		if (x == -1)
 		{
-			g_idle_add((GSourceFunc) scrollToPreview, sidebar);
+			g_idle_add(reinterpret_cast<GSourceFunc>(scrollToPreview), sidebar);
 			return false;
 		}
 

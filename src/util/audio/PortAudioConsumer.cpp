@@ -79,7 +79,7 @@ auto PortAudioConsumer::startPlaying() -> bool
 		return false;
 	}
 
-	if ((unsigned int) device->maxOutputChannels() < channels)
+	if (static_cast<unsigned int>(device->maxOutputChannels()) < channels)
 	{
 		this->audioQueue->signalEndOfStream();
 		g_warning("Output device has not enough channels to play audio file. (Requires at least 2 channels)");
@@ -125,7 +125,8 @@ auto PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer
 	if (outputBuffer != nullptr)
 	{
 		size_t outputBufferLength = 0;
-		this->audioQueue->pop(((float*) outputBuffer), outputBufferLength, framesPerBuffer * this->outputChannels);
+		this->audioQueue->pop((static_cast<float*>(outputBuffer)), outputBufferLength,
+		                      framesPerBuffer * this->outputChannels);
 
 		// Fill buffer to requested length if necessary
 
@@ -137,7 +138,7 @@ auto PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer
 				g_warning("PortAudioConsumer: Not enough audio samples available to fill requested frame");
 			}
 
-			auto outputBufferImpl = (float*) outputBuffer;
+			auto outputBufferImpl = static_cast<float*>(outputBuffer);
 
 			if (outputBufferLength > this->outputChannels)
 			{

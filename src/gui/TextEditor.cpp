@@ -751,7 +751,7 @@ void TextEditor::calcVirtualCursor()
 
 	PangoRectangle rect = {0};
 	pango_layout_index_to_pos(this->layout, offset, &rect);
-	this->virtualCursor = ((double) rect.x) / PANGO_SCALE;
+	this->virtualCursor = (static_cast<double>(rect.x)) / PANGO_SCALE;
 }
 
 void TextEditor::moveCursor(const GtkTextIter* newLocation, gboolean extendSelection)
@@ -788,9 +788,13 @@ static auto find_whitepace_region(const GtkTextIter* center, GtkTextIter* start,
 	*end = *center;
 
 	if (gtk_text_iter_backward_find_char(start, not_whitespace, nullptr, nullptr))
+	{
 		gtk_text_iter_forward_char(start); /* we want the first whitespace... */
+	}
 	if (whitespace(gtk_text_iter_get_char(end), nullptr))
+	{
 		gtk_text_iter_forward_find_char(end, not_whitespace, nullptr, nullptr);
+	}
 
 	return !gtk_text_iter_equal(start, end);
 }
@@ -1035,13 +1039,15 @@ auto TextEditor::blinkCallback(TextEditor* te) -> gint
 {
 	if (te->cursorVisible)
 	{
-		te->blinkTimeout = gdk_threads_add_timeout(
-		        te->cursorBlinkTime * CURSOR_OFF_MULTIPLIER / CURSOR_DIVIDER, (GSourceFunc) blinkCallback, te);
+		te->blinkTimeout = gdk_threads_add_timeout(te->cursorBlinkTime * CURSOR_OFF_MULTIPLIER / CURSOR_DIVIDER,
+		                                           reinterpret_cast<GSourceFunc>(blinkCallback),
+		                                           te);
 	}
 	else
 	{
-		te->blinkTimeout = gdk_threads_add_timeout(
-		        te->cursorBlinkTime * CURSOR_ON_MULTIPLIER / CURSOR_DIVIDER, (GSourceFunc) blinkCallback, te);
+		te->blinkTimeout = gdk_threads_add_timeout(te->cursorBlinkTime * CURSOR_ON_MULTIPLIER / CURSOR_DIVIDER,
+		                                           reinterpret_cast<GSourceFunc>(blinkCallback),
+		                                           te);
 	}
 
 	te->cursorVisible = !te->cursorVisible;
@@ -1183,16 +1189,16 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 	int w = 0;
 	int h = 0;
 	pango_layout_get_size(this->layout, &w, &h);
-	double width = ((double) w) / PANGO_SCALE;
-	double height = ((double) h) / PANGO_SCALE;
+	double width = (static_cast<double>(w)) / PANGO_SCALE;
+	double height = (static_cast<double>(h)) / PANGO_SCALE;
 
 	int offset = gtk_text_iter_get_offset(&cursorIter);
 	PangoRectangle rect = {0};
 	int pangoOffset = getByteOffset(offset) + preeditString.length();
 	pango_layout_index_to_pos(this->layout, pangoOffset, &rect);
-	double cX = ((double) rect.x) / PANGO_SCALE;
-	double cY = ((double) rect.y) / PANGO_SCALE;
-	double cHeight = ((double) rect.height) / PANGO_SCALE;
+	double cX = (static_cast<double>(rect.x)) / PANGO_SCALE;
+	double cY = (static_cast<double>(rect.y)) / PANGO_SCALE;
+	double cHeight = (static_cast<double>(rect.height)) / PANGO_SCALE;
 
 	drawCursor(cr, cX, cY, cHeight, zoom);
 

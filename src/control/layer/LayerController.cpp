@@ -99,8 +99,8 @@ auto LayerController::actionPerformed(ActionType type) -> bool
 		{
 			PageRef p = getCurrentPage();
 			int layer = p->getSelectedLayerId();
-			if (layer < (int)p->getLayerCount())
-			{
+		    if (layer < static_cast<int>(p->getLayerCount()))
+		    {
 				switchToLay(layer + 1, true);
 			}
 		}
@@ -235,7 +235,7 @@ void LayerController::moveCurrentLayer(bool up)
 		return;
 	}
 
-	if (lId == (int)p->getLayerCount() && up)
+	if (lId == static_cast<int>(p->getLayerCount()) && up)
 	{
 		// top layer cannot be moved up
 		return;
@@ -334,7 +334,7 @@ void LayerController::switchToLay(int layer, bool hideShow)
 	{
 		for (size_t i = 1; i <= p->getLayerCount(); i++)
 		{
-			p->setLayerVisible(i, (int)i <= layer);
+			p->setLayerVisible(i, static_cast<int>(i) <= layer);
 		}
 	}
 

@@ -105,7 +105,7 @@ auto ToolbarColorNames::getColorName(int color) -> string
 		return colorName;
 	}
 
-	char* value = (char*) g_hash_table_lookup(this->predefinedColorNames, &color);
+	char* value = static_cast<char*>(g_hash_table_lookup(this->predefinedColorNames, &color));
 	if (value)
 	{
 		return value;

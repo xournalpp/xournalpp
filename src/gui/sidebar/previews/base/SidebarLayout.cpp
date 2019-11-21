@@ -12,7 +12,7 @@ SidebarLayout::~SidebarLayout() = default;
 class SidebarRow
 {
 public:
-	SidebarRow(int width)
+	explicit SidebarRow(int width)
 	{
 		this->width = width;
 		this->currentWidth = 0;

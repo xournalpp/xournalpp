@@ -221,7 +221,7 @@ auto PageBackgroundChangeController::applyPdfBackground(PageRef page) -> bool
 	int selected = dlg->getSelectedPage();
 	delete dlg;
 
-	if (selected >= 0 && selected < (int) doc->getPdfPageCount())
+	if (selected >= 0 && selected < static_cast<int>(doc->getPdfPageCount()))
 	{
 		// no need to set a type, if we set the page number the type is also set
 		page->setBackgroundPdfPageNr(selected);

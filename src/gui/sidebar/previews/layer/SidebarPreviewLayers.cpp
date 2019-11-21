@@ -151,7 +151,7 @@ void SidebarPreviewLayers::layerVisibilityChanged()
 		return;
 	}
 
-	for (int i = 0; i < (int)this->previews.size(); i++)
+	for (int i = 0; i < static_cast<int>(this->previews.size()); i++)
 	{
 		auto* sp = dynamic_cast<SidebarPreviewLayerEntry*>(this->previews[this->previews.size() - i - 1]);
 		sp->setVisibleCheckbox(p->isLayerVisible(i));
@@ -207,7 +207,7 @@ void SidebarPreviewLayers::updateSelectedLayer()
 	}
 
 	this->toolbar->setHidden(false);
-	this->toolbar->setButtonEnabled((SidebarActions)actions);
+	this->toolbar->setButtonEnabled(static_cast<SidebarActions>(actions));
 }
 
 void SidebarPreviewLayers::layerSelected(size_t layerIndex)

@@ -38,7 +38,8 @@ static auto execInUiThreadCallback(CallbackUiData* cb) -> bool
  */
 void Util::execInUiThread(std::function<void()>&& callback)
 {
-	gdk_threads_add_idle((GSourceFunc) execInUiThreadCallback, new CallbackUiData(std::move(callback)));
+	gdk_threads_add_idle(reinterpret_cast<GSourceFunc>(execInUiThreadCallback),
+	                     new CallbackUiData(std::move(callback)));
 }
 
 auto Util::rgb_to_GdkRGBA(const uint32_t color) -> GdkRGBA

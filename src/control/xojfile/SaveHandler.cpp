@@ -33,7 +33,7 @@ SaveHandler::~SaveHandler()
 
 	for (GList* l = this->backgroundImages; l != nullptr; l = l->next)
 	{
-		delete (BackgroundImage*) l->data;
+		delete static_cast<BackgroundImage*>(l->data);
 	}
 	g_list_free(this->backgroundImages);
 	this->backgroundImages = nullptr;
@@ -49,7 +49,7 @@ void SaveHandler::prepareSave(Document* doc)
 
 		for (GList* l = this->backgroundImages; l != nullptr; l = l->next)
 		{
-			delete (BackgroundImage*) l->data;
+			delete static_cast<BackgroundImage*>(l->data);
 		}
 		g_list_free(this->backgroundImages);
 		this->backgroundImages = nullptr;
@@ -378,7 +378,7 @@ void SaveHandler::saveTo(OutputStream* out, const Path& filename, ProgressListen
 
 	for (GList* l = this->backgroundImages; l != nullptr; l = l->next)
 	{
-		auto* img = (BackgroundImage*) l->data;
+		auto* img = static_cast<BackgroundImage*>(l->data);
 
 		string tmpfn = filename.str() + "." + img->getFilename();
 		if (!gdk_pixbuf_save(img->getPixbuf(), tmpfn.c_str(), "png", nullptr, nullptr))

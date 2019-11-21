@@ -14,22 +14,22 @@ Shadow::Shadow()
 
 	this->edgeTopLeft = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, sTlSize * 2, sTlSize * 2);
 	cairo_t* cr = cairo_create(this->edgeTopLeft);
-	drawShadowEdge(cr, 0, 0, sTlSize, sTlSize, (u8ptr) shadowEdge1, 0, 0, 0);
+	drawShadowEdge(cr, 0, 0, sTlSize, sTlSize, reinterpret_cast<u8ptr>(shadowEdge1), 0, 0, 0);
 	cairo_destroy(cr);
 
 	this->edgeTopRight = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, sBrSize * 2, sTlSize * 2);
 	cr = cairo_create(this->edgeTopRight);
-	drawShadowEdge(cr, 0, 0, sBrSize, sTlSize, (u8ptr) shadowEdge2, 0, 0, 0);
+	drawShadowEdge(cr, 0, 0, sBrSize, sTlSize, reinterpret_cast<u8ptr>(shadowEdge2), 0, 0, 0);
 	cairo_destroy(cr);
 
 	this->edgeBottomRight = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, sBrSize * 2, sBrSize * 2);
 	cr = cairo_create(this->edgeBottomRight);
-	drawShadowEdge(cr, 0, 0, sBrSize, sBrSize, (u8ptr) shadowEdge3, 0, 0, 0);
+	drawShadowEdge(cr, 0, 0, sBrSize, sBrSize, reinterpret_cast<u8ptr>(shadowEdge3), 0, 0, 0);
 	cairo_destroy(cr);
 
 	this->edgeBottomLeft = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, sTlSize * 2, sBrSize * 2);
 	cr = cairo_create(this->edgeBottomLeft);
-	drawShadowEdge(cr, 0, 0, sTlSize, sBrSize, (u8ptr) shadowEdge4, 0, 0, 0);
+	drawShadowEdge(cr, 0, 0, sTlSize, sBrSize, reinterpret_cast<u8ptr>(shadowEdge4), 0, 0, 0);
 	cairo_destroy(cr);
 }
 

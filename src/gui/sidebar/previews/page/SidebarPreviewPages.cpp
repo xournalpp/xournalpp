@@ -308,7 +308,7 @@ void SidebarPreviewPages::pageSelected(size_t page)
 		}
 
 		this->toolbar->setHidden(false);
-		this->toolbar->setButtonEnabled((SidebarActions)actions);
+		this->toolbar->setButtonEnabled(static_cast<SidebarActions>(actions));
 	}
 }
 

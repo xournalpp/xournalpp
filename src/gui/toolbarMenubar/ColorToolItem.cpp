@@ -158,9 +158,9 @@ void ColorToolItem::showColorchooser()
 	{
 		GdkRGBA color;
 		gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dialog), &color);
-		this->color = (((int)(color.red * 255)) & 0xff) << 16 |
-				(((int)(color.green * 255)) & 0xff) << 8 |
-				(((int)(color.blue * 255)) & 0xff);
+		this->color = ((static_cast<int>(color.red * 255)) & 0xff) << 16 |
+		              ((static_cast<int>(color.green * 255)) & 0xff) << 8 |
+		              ((static_cast<int>(color.blue * 255)) & 0xff);
 	}
 
 	gtk_widget_destroy(dialog);

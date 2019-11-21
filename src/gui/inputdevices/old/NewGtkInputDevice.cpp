@@ -16,8 +16,10 @@ NewGtkInputDevice::NewGtkInputDevice(GtkWidget* widget, XournalView* view, Scrol
  : AbstractInputDevice(widget, view),
    scrollHandling(scrollHandling)
 {
-	pointerInputList = g_hash_table_new_full(nullptr, nullptr, nullptr, (GDestroyNotify) InputSequence::free);
-	touchInputList = g_hash_table_new_full(nullptr, nullptr, nullptr, (GDestroyNotify) InputSequence::free);
+	pointerInputList =
+	        g_hash_table_new_full(nullptr, nullptr, nullptr, reinterpret_cast<GDestroyNotify>(InputSequence::free));
+	touchInputList =
+	        g_hash_table_new_full(nullptr, nullptr, nullptr, reinterpret_cast<GDestroyNotify>(InputSequence::free));
 
 	ignoreTouch = !view->getControl()->getSettings()->isTouchWorkaround();
 }
@@ -222,11 +224,11 @@ auto NewGtkInputDevice::eventHandler(GdkEvent* event) -> bool
 
 	if (event->type == GDK_TOUCH_END || event->type == GDK_TOUCH_CANCEL)
 	{
-		auto* input = (InputSequence*) g_hash_table_lookup(touchInputList, sequence);
+		auto* input = static_cast<InputSequence*>(g_hash_table_lookup(touchInputList, sequence));
 
 		if (input != nullptr)
 		{
-			input->actionEnd(((GdkEventTouch *)event)->time);
+			input->actionEnd((reinterpret_cast<GdkEventTouch*>(event))->time);
 		}
 
 		g_hash_table_remove(touchInputList, sequence);
@@ -241,7 +243,7 @@ auto NewGtkInputDevice::eventHandler(GdkEvent* event) -> bool
 	InputSequence* input = nullptr;
 	if (sequence == nullptr)
 	{
-		input = (InputSequence*) g_hash_table_lookup(pointerInputList, sourceDevice);
+		input = static_cast<InputSequence*>(g_hash_table_lookup(pointerInputList, sourceDevice));
 
 		if (input == nullptr)
 		{
@@ -251,7 +253,7 @@ auto NewGtkInputDevice::eventHandler(GdkEvent* event) -> bool
 	}
 	else
 	{
-		input = (InputSequence*) g_hash_table_lookup(touchInputList, sequence);
+		input = static_cast<InputSequence*>(g_hash_table_lookup(touchInputList, sequence));
 
 		if (input == nullptr)
 		{
@@ -283,7 +285,7 @@ auto NewGtkInputDevice::eventHandler(GdkEvent* event) -> bool
 		input->setButton(button, gdk_event_get_time(event) );
 	}
 
-	auto state = (GdkModifierType) 0;
+	auto state = static_cast<GdkModifierType>(0);
 	if (gdk_event_get_state(event, &state))
 	{
 		input->setState(state);
@@ -292,7 +294,9 @@ auto NewGtkInputDevice::eventHandler(GdkEvent* event) -> bool
 	if (event->type == GDK_MOTION_NOTIFY || event->type == GDK_TOUCH_UPDATE)
 	{
 		input->copyAxes(event);
-		guint32 time = event->type == GDK_MOTION_NOTIFY ? ((GdkEventMotion *)event)->time : ((GdkEventTouch *)event)->time;	// or call gdk_event_get_time(event)
+		guint32 time = event->type == GDK_MOTION_NOTIFY ?
+		                       (reinterpret_cast<GdkEventMotion*>(event))->time :
+		                       (reinterpret_cast<GdkEventTouch*>(event))->time;  // or call gdk_event_get_time(event)
 		input->actionMoved(time);
 
 		XournalppCursor* cursor = view->getControl()->getWindow()->getXournal()->getCursor();
@@ -304,13 +308,15 @@ auto NewGtkInputDevice::eventHandler(GdkEvent* event) -> bool
 	else if (event->type == GDK_BUTTON_PRESS || event->type == GDK_TOUCH_BEGIN)
 	{
 		input->copyAxes(event);
-		guint32 time = event->type == GDK_BUTTON_PRESS ? ((GdkEventButton *)event)->time : ((GdkEventTouch *)event)->time;  //or call gdk_event_get_time()
+		guint32 time = event->type == GDK_BUTTON_PRESS ?
+		                       (reinterpret_cast<GdkEventButton*>(event))->time :
+		                       (reinterpret_cast<GdkEventTouch*>(event))->time;  //or call gdk_event_get_time()
 		input->actionStart(time);
 	}
 	else if (event->type == GDK_BUTTON_RELEASE)
 	{
 		input->copyAxes(event);
-		input->actionEnd( ((GdkEventButton *)event)->time );
+		input->actionEnd((reinterpret_cast<GdkEventButton*>(event))->time);
 	}
 
 	return true;

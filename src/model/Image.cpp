@@ -93,7 +93,8 @@ auto Image::getImage() -> cairo_surface_t*
 	if (this->image == nullptr && this->data.length())
 	{
 		this->read = 0;
-		this->image = cairo_image_surface_create_from_png_stream((cairo_read_func_t) &cairoReadFunction, this);
+		this->image = cairo_image_surface_create_from_png_stream(
+		        reinterpret_cast<cairo_read_func_t>(&cairoReadFunction), this);
 	}
 
 	return this->image;

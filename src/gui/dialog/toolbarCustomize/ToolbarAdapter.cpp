@@ -223,7 +223,7 @@ void ToolbarAdapter::toolitemDragDataGet(GtkWidget* widget, GdkDragContext* cont
 	adapter->removeFromToolbar(data->item, adapter->toolbarName, data->id);
 
 	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
-						   (const guchar*) data, sizeof(ToolItemDragDropData));
+	                       reinterpret_cast<const guchar*>(data), sizeof(ToolItemDragDropData));
 }
 
 /**
@@ -235,7 +235,7 @@ auto ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* co
 	GdkAtom target = gtk_drag_dest_find_target(GTK_WIDGET(toolbar), context, nullptr);
 	if (target != ToolbarDragDropHelper::atomToolItem)
 	{
-		gdk_drag_status(context, (GdkDragAction) 0, time);
+		gdk_drag_status(context, static_cast<GdkDragAction>(0), time);
 		return false;
 	}
 

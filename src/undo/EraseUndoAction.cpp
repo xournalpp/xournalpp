@@ -19,7 +19,7 @@ EraseUndoAction::~EraseUndoAction()
 {
 	for (GList* l = this->original; l != nullptr; l = l->next)
 	{
-		auto* e = (PageLayerPosEntry<Stroke>*) l->data;
+		auto* e = static_cast<PageLayerPosEntry<Stroke>*>(l->data);
 		if (!undone)
 		{
 			delete e->element;
@@ -31,7 +31,7 @@ EraseUndoAction::~EraseUndoAction()
 
 	for (GList* l = this->edited; l != nullptr; l = l->next)
 	{
-		auto* e = (PageLayerPosEntry<Stroke>*) l->data;
+		auto* e = static_cast<PageLayerPosEntry<Stroke>*>(l->data);
 		if (undone)
 		{
 			delete e->element;
@@ -44,21 +44,21 @@ EraseUndoAction::~EraseUndoAction()
 
 void EraseUndoAction::addOriginal(Layer* layer, Stroke* element, int pos)
 {
-	this->original = g_list_insert_sorted(this->original, new PageLayerPosEntry<Stroke> (layer, element, pos),
-										  (GCompareFunc) PageLayerPosEntry<Stroke>::cmp);
+	this->original = g_list_insert_sorted(this->original, new PageLayerPosEntry<Stroke>(layer, element, pos),
+	                                      reinterpret_cast<GCompareFunc>(PageLayerPosEntry<Stroke>::cmp));
 }
 
 void EraseUndoAction::addEdited(Layer* layer, Stroke* element, int pos)
 {
-	this->edited = g_list_insert_sorted(this->edited, new PageLayerPosEntry<Stroke> (layer, element, pos),
-										(GCompareFunc) PageLayerPosEntry<Stroke>::cmp);
+	this->edited = g_list_insert_sorted(this->edited, new PageLayerPosEntry<Stroke>(layer, element, pos),
+	                                    reinterpret_cast<GCompareFunc>(PageLayerPosEntry<Stroke>::cmp));
 }
 
 void EraseUndoAction::removeEdited(Stroke* element)
 {
 	for (GList* l = this->edited; l != nullptr; l = l->next)
 	{
-		auto* p = (PageLayerPosEntry<Stroke>*) l->data;
+		auto* p = static_cast<PageLayerPosEntry<Stroke>*>(l->data);
 		if (p->element == element)
 		{
 			this->edited = g_list_delete_link(this->edited, l);
@@ -73,7 +73,7 @@ void EraseUndoAction::finalize()
 {
 	for (GList* l = this->original; l != nullptr;)
 	{
-		auto* p = (PageLayerPosEntry<Stroke>*) l->data;
+		auto* p = static_cast<PageLayerPosEntry<Stroke>*>(l->data);
 		GList* del = l;
 		l = l->next;
 
@@ -93,7 +93,7 @@ void EraseUndoAction::finalize()
 			GList* stroke = e->getStroke(p->element);
 			for (GList* ls = stroke; ls != nullptr; ls = ls->next)
 			{
-				auto* copy = (Stroke*) ls->data;
+				auto* copy = static_cast<Stroke*>(ls->data);
 				p->layer->insertElement(copy, pos);
 				this->addEdited(p->layer, copy, pos);
 				pos++;
@@ -117,7 +117,7 @@ auto EraseUndoAction::undo(Control* control) -> bool
 {
 	for (GList* l = this->edited; l != nullptr; l = l->next)
 	{
-		auto* e = (PageLayerPosEntry<Stroke>*) l->data;
+		auto* e = static_cast<PageLayerPosEntry<Stroke>*>(l->data);
 
 		e->layer->removeElement(e->element, false);
 		this->page->fireElementChanged(e->element);
@@ -125,7 +125,7 @@ auto EraseUndoAction::undo(Control* control) -> bool
 
 	for (GList* l = this->original; l != nullptr; l = l->next)
 	{
-		auto* e = (PageLayerPosEntry<Stroke>*) l->data;
+		auto* e = static_cast<PageLayerPosEntry<Stroke>*>(l->data);
 
 		e->layer->insertElement(e->element, e->pos);
 		this->page->fireElementChanged(e->element);
@@ -139,7 +139,7 @@ auto EraseUndoAction::redo(Control* control) -> bool
 {
 	for (GList* l = this->original; l != nullptr; l = l->next)
 	{
-		auto* e = (PageLayerPosEntry<Stroke>*) l->data;
+		auto* e = static_cast<PageLayerPosEntry<Stroke>*>(l->data);
 
 		e->layer->removeElement(e->element, false);
 		this->page->fireElementChanged(e->element);
@@ -147,7 +147,7 @@ auto EraseUndoAction::redo(Control* control) -> bool
 
 	for (GList* l = this->edited; l != nullptr; l = l->next)
 	{
-		auto* e = (PageLayerPosEntry<Stroke>*) l->data;
+		auto* e = static_cast<PageLayerPosEntry<Stroke>*>(l->data);
 
 		e->layer->insertElement(e->element, e->pos);
 		this->page->fireElementChanged(e->element);

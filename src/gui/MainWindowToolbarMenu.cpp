@@ -103,7 +103,7 @@ void MainWindowToolbarMenu::menuClicked(GtkCheckMenuItem* menuitem, MenuSelectTo
 
 	win->toolbarSelected(data->d);
 
-	for (int i = 0; i < (int)this->toolbarMenuData.size(); i++)
+	for (int i = 0; i < static_cast<int>(this->toolbarMenuData.size()); i++)
 	{
 		if (data->index == i)
 		{

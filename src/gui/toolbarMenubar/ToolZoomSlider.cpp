@@ -62,7 +62,7 @@ auto ToolZoomSlider::sliderHoverScroll(GtkWidget* range, GdkEventScroll* event, 
 
 auto ToolZoomSlider::sliderFormatValue(GtkRange* range, gdouble value, ToolZoomSlider* self) -> gchar*
 {
-	return g_strdup_printf("%d%%", (int) (100 * scaleFuncInv(value)));
+	return g_strdup_printf("%d%%", static_cast<int>(100 * scaleFuncInv(value)));
 }
 
 void ToolZoomSlider::zoomChanged()

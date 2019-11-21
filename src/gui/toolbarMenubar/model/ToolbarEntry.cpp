@@ -70,7 +70,7 @@ auto ToolbarEntry::removeItemById(int id) -> bool
 auto ToolbarEntry::insertItem(string item, int position) -> int
 {
 	auto* it = new ToolbarItem(std::move(item));
-	if (position >= (int)entries.size())
+	if (position >= static_cast<int>(entries.size()))
 	{
 		entries.push_back(it);
 		return it->getId();

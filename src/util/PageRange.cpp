@@ -52,7 +52,7 @@ auto PageRange::parse(const char* str) -> PageRangeVector
 		}
 		else
 		{
-			start = (int) strtol(p, &next, 10);
+			start = static_cast<int>(strtol(p, &next, 10));
 			if (start < 1)
 			{
 				start = 1;
@@ -70,7 +70,7 @@ auto PageRange::parse(const char* str) -> PageRangeVector
 		if (*p == '-')
 		{
 			p++;
-			end = (int) strtol(p, &next, 10);
+			end = static_cast<int>(strtol(p, &next, 10));
 			if (next == p) // a half-open range like 2-
 			{
 				end = 0;

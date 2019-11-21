@@ -295,7 +295,7 @@ void MainWindow::initHideMenu()
 		                 G_CALLBACK(+[](GtkMenuItem* menuitem, MainWindow* self) { toggleMenuBar(self); }), this);
 
 		GtkAccelGroup* accelGroup = gtk_accel_group_new();
-		gtk_accel_group_connect(accelGroup, GDK_KEY_F10, (GdkModifierType) 0, GTK_ACCEL_VISIBLE,
+		gtk_accel_group_connect(accelGroup, GDK_KEY_F10, static_cast<GdkModifierType>(0), GTK_ACCEL_VISIBLE,
 		                        g_cclosure_new_swap(G_CALLBACK(toggleMenuBar), this, nullptr));
 		gtk_window_add_accel_group(GTK_WINDOW(getWindow()), accelGroup);
 	}
@@ -335,7 +335,7 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
 	guchar* text = gtk_selection_data_get_text(data);
 	if (text)
 	{
-		win->control->clipboardPasteText((const char*) text);
+		win->control->clipboardPasteText(reinterpret_cast<const char*>(text));
 
 		g_free(text);
 		gtk_drag_finish(dragContext, true, false, time);
@@ -360,7 +360,7 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
 			const char* uri = uris[i];
 
 			GCancellable* cancel = g_cancellable_new();
-			int cancelTimeout = g_timeout_add(3000, (GSourceFunc) cancellable_cancel, cancel);
+			int cancelTimeout = g_timeout_add(3000, reinterpret_cast<GSourceFunc>(cancellable_cancel), cancel);
 
 			GFile* file = g_file_new_for_uri(uri);
 			GError* err = nullptr;

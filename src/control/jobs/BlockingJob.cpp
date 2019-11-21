@@ -18,7 +18,7 @@ void BlockingJob::execute()
 {
 	this->run();
 
-	g_idle_add((GSourceFunc) finished, this->control);
+	g_idle_add(reinterpret_cast<GSourceFunc>(finished), this->control);
 }
 
 auto BlockingJob::finished(Control* control) -> bool

@@ -158,7 +158,7 @@ auto XojPreviewExtractor::readFile(const Path& file) -> PreviewExtractResult
 		return PREVIEW_RESULT_ERROR_READING_PREVIEW;
 	}
 
-	data = (unsigned char *)g_malloc(thumbStat.size);
+	data = static_cast<unsigned char*>(g_malloc(thumbStat.size));
 	zip_uint64_t readBytes = 0;
 	while (readBytes < dataLen)
 	{

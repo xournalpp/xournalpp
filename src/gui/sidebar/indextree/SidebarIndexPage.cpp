@@ -17,7 +17,8 @@ SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar)
 	gtk_tree_view_set_enable_search(GTK_TREE_VIEW(treeViewBookmarks), true);
 	gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeViewBookmarks), DOCUMENT_LINKS_COLUMN_NAME);
 	gtk_tree_view_set_search_equal_func(GTK_TREE_VIEW(treeViewBookmarks),
-	                                    (GtkTreeViewSearchEqualFunc) treeSearchFunction, this, nullptr);
+	                                    reinterpret_cast<GtkTreeViewSearchEqualFunc>(treeSearchFunction), this,
+	                                    nullptr);
 
 	this->scrollBookmarks = gtk_scrolled_window_new(nullptr, nullptr);
 	g_object_ref(this->scrollBookmarks);
@@ -35,8 +36,8 @@ SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar)
 	gtk_tree_view_column_set_expand(GTK_TREE_VIEW_COLUMN(column), true);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeViewBookmarks), column);
 
-	auto* renderer =
-	        (GtkCellRenderer*) g_object_new(GTK_TYPE_CELL_RENDERER_TEXT, "ellipsize", PANGO_ELLIPSIZE_END, nullptr);
+	auto* renderer = static_cast<GtkCellRenderer*>(
+	        g_object_new(GTK_TYPE_CELL_RENDERER_TEXT, "ellipsize", PANGO_ELLIPSIZE_END, nullptr));
 	gtk_tree_view_column_pack_start(GTK_TREE_VIEW_COLUMN(column), renderer, true);
 	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), renderer, "markup", DOCUMENT_LINKS_COLUMN_NAME,
 	                                    nullptr);
@@ -202,8 +203,8 @@ auto SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, cons
 		g_source_remove(sidebar->searchTimeout);
 		sidebar->searchTimeout = 0;
 	}
-	sidebar->searchTimeout =
-	        g_timeout_add_seconds_full(G_PRIORITY_DEFAULT_IDLE, 2, (GSourceFunc) searchTimeoutFunc, sidebar, nullptr);
+	sidebar->searchTimeout = g_timeout_add_seconds_full(
+	        G_PRIORITY_DEFAULT_IDLE, 2, reinterpret_cast<GSourceFunc>(searchTimeoutFunc), sidebar, nullptr);
 
 	// Source: Pidgin
 	gchar* text = nullptr;

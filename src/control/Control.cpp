@@ -122,7 +122,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	/**
 	 * This is needed to update the previews
 	 */
-	this->changeTimout = g_timeout_add_seconds(5, (GSourceFunc) checkChangedDocument, this);
+	this->changeTimout = g_timeout_add_seconds(5, reinterpret_cast<GSourceFunc>(checkChangedDocument), this);
 
 	this->pageBackgroundChangeController = new PageBackgroundChangeController(this);
 
@@ -403,7 +403,7 @@ void Control::enableAutosave(bool enable)
 	if (enable)
 	{
 		int timeout = settings->getAutosaveTimeout() * 60;
-		this->autosaveTimeout = g_timeout_add_seconds(timeout, (GSourceFunc) autosaveCallback, this);
+		this->autosaveTimeout = g_timeout_add_seconds(timeout, reinterpret_cast<GSourceFunc>(autosaveCallback), this);
 	}
 }
 
@@ -984,7 +984,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		if (!result)
 		{
 			Util::execInUiThread([=]() {
-				gtk_toggle_tool_button_set_active((GtkToggleToolButton*) toolbutton, !enabled);
+				gtk_toggle_tool_button_set_active(reinterpret_cast<GtkToggleToolButton*>(toolbutton), !enabled);
 				string msg = _("Recorder could not be started.");
 				g_warning("%s", msg.c_str());
 				XojMsgBox::showErrorToUser(Control::getGtkWindow(), msg);
@@ -1056,7 +1056,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 
 	if (type >= ACTION_TOOL_PEN && type <= ACTION_TOOL_HAND)
 	{
-		auto at = (ActionType)(toolHandler->getToolType() - TOOL_PEN + ACTION_TOOL_PEN);
+		auto at = static_cast<ActionType>(toolHandler->getToolType() - TOOL_PEN + ACTION_TOOL_PEN);
 		if (type == at && !enabled)
 		{
 			fireActionSelected(GROUP_TOOL, at);
@@ -1848,7 +1848,7 @@ void Control::toolChanged()
 	ToolType type = toolHandler->getToolType();
 
 	// Convert enum values, enums has to be in the same order!
-	auto at = (ActionType)(type - TOOL_PEN + ACTION_TOOL_PEN);
+	auto at = static_cast<ActionType>(type - TOOL_PEN + ACTION_TOOL_PEN);
 
 	fireActionSelected(GROUP_TOOL, at);
 
@@ -2448,7 +2448,7 @@ void Control::loadMetadata(MetadataEntry md)
 	data->md = std::move(md);
 	data->ctrl = this;
 
-	g_idle_add((GSourceFunc) loadMetadataCallback, data);
+	g_idle_add(reinterpret_cast<GSourceFunc>(loadMetadataCallback), data);
 }
 
 auto Control::annotatePdf(Path filename, bool attachPdf, bool attachToDocument) -> bool
@@ -3161,7 +3161,7 @@ void Control::setLineStyle(const string& style)
 		sel = this->win->getXournal()->getSelection();
 	}
 
-	// TODO allow to change selection
+	// TODO(fabian): allow to change selection
 	if (sel)
 	{
 		//		UndoAction* undo = sel->setSize(size, toolHandler->getToolThickness(TOOL_PEN),

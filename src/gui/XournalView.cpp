@@ -59,7 +59,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 
 	gtk_widget_grab_focus(this->widget);
 
-	this->cleanupTimeout = g_timeout_add_seconds(5, (GSourceFunc) clearMemoryTimer, this);
+	this->cleanupTimeout = g_timeout_add_seconds(5, reinterpret_cast<GSourceFunc>(clearMemoryTimer), this);
 }
 
 XournalView::~XournalView()
@@ -91,7 +91,7 @@ auto pageViewIncreasingClockTime(XojPageView* a, XojPageView* b) -> gint
 
 void XournalView::staticLayoutPages(GtkWidget* widget, GtkAllocation* allocation, void* data)
 {
-	auto* xv = (XournalView*) data;
+	auto* xv = static_cast<XournalView*>(data);
 	xv->layoutPages();
 }
 
@@ -103,7 +103,7 @@ auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean
 	{
 		if (page->getLastVisibleTime() > 0)
 		{
-			list = g_list_insert_sorted(list, page, (GCompareFunc) pageViewIncreasingClockTime);
+			list = g_list_insert_sorted(list, page, reinterpret_cast<GCompareFunc>(pageViewIncreasingClockTime));
 		}
 	}
 
@@ -120,7 +120,7 @@ auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean
 		}
 		else
 		{
-			auto* v = (XojPageView*) l->data;
+			auto* v = static_cast<XojPageView*>(l->data);
 
 			if (pixel <= 0)
 			{

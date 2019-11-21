@@ -177,9 +177,9 @@ static void gtk_menu_tool_toggle_button_get_property(GObject* object,
 static void gtk_menu_tool_toggle_button_class_init(GtkMenuToolToggleButtonClass*
                                                    klass)
 {
-	auto* object_class = (GObjectClass*) klass;
-	auto* widget_class = (GtkWidgetClass*) klass;
-	auto* toolitem_class = (GtkToolItemClass*) klass;
+	auto* object_class = reinterpret_cast<GObjectClass*>(klass);
+	auto* widget_class = reinterpret_cast<GtkWidgetClass*>(klass);
+	auto* toolitem_class = reinterpret_cast<GtkToolItemClass*>(klass);
 
 	object_class->set_property = gtk_menu_tool_toggle_button_set_property;
 	object_class->get_property = gtk_menu_tool_toggle_button_get_property;
@@ -205,10 +205,9 @@ static void gtk_menu_tool_toggle_button_class_init(GtkMenuToolToggleButtonClass*
 	                                  G_STRUCT_OFFSET(GtkMenuToolToggleButtonClass, show_menu), nullptr, nullptr,
 	                                  g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
-	GParamSpec* pspec = g_param_spec_object("menu", "Menu",
-	                                        "The dropdown menu",
-	                                        GTK_TYPE_MENU,
-	                                        (GParamFlags)(G_PARAM_READWRITE|G_PARAM_STATIC_NAME|G_PARAM_STATIC_NICK|G_PARAM_STATIC_BLURB));
+	GParamSpec* pspec = g_param_spec_object("menu", "Menu", "The dropdown menu", GTK_TYPE_MENU,
+	                                        static_cast<GParamFlags>(G_PARAM_READWRITE | G_PARAM_STATIC_NAME |
+	                                                                 G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB));
 	g_object_class_install_property(object_class, PROP_MENU, pspec);
 
 	g_type_class_add_private(object_class, sizeof(GtkMenuToolToggleButtonPrivate));
@@ -314,7 +313,7 @@ static void popup_menu_under_arrow(GtkMenuToolToggleButton* button,
 		return;
 	}
 
-	gtk_menu_popup(priv->menu, nullptr, nullptr, (GtkMenuPositionFunc) menu_position_func, button,
+	gtk_menu_popup(priv->menu, nullptr, nullptr, reinterpret_cast<GtkMenuPositionFunc>(menu_position_func), button,
 	               event ? event->button : 0, event ? event->time : gtk_get_current_event_time());
 }
 

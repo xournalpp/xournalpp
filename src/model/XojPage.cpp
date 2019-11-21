@@ -62,7 +62,7 @@ void XojPage::addLayer(Layer* layer)
 
 void XojPage::insertLayer(Layer* layer, int index)
 {
-	if (index >= (int)this->layer.size())
+	if (index >= static_cast<int>(this->layer.size()))
 	{
 		addLayer(layer);
 		return;
@@ -127,7 +127,7 @@ void XojPage::setLayerVisible(int layerId, bool visible)
 	}
 
 	layerId--;
-	if (layerId >= (int)this->layer.size())
+	if (layerId >= static_cast<int>(this->layer.size()))
 	{
 		return;
 	}
@@ -148,7 +148,7 @@ auto XojPage::isLayerVisible(int layerId) -> bool
 	}
 
 	layerId--;
-	if (layerId >= (int)this->layer.size())
+	if (layerId >= static_cast<int>(this->layer.size()))
 	{
 		return false;
 	}

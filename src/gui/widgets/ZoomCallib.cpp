@@ -36,7 +36,7 @@ static void zoomcallib_class_init(ZoomCallibClass* klass)
 {
 	GtkWidgetClass* widget_class = nullptr;
 
-	widget_class = (GtkWidgetClass*) klass;
+	widget_class = reinterpret_cast<GtkWidgetClass*>(klass);
 
 	widget_class->realize = zoomcallib_realize;
 	widget_class->size_allocate = zoomcallib_size_allocate;

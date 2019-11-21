@@ -79,7 +79,7 @@ auto ImagesDialog::shouldShowFilechooser() -> bool
 
 auto ImagesDialog::getSelectedImage() -> BackgroundImage
 {
-	if (confirmed && selected >= 0 && selected < (int)elements.size())
+	if (confirmed && selected >= 0 && selected < static_cast<int>(elements.size()))
 	{
 		return (dynamic_cast<ImageElementView*>(elements[selected]))->backgroundImage;
 	}

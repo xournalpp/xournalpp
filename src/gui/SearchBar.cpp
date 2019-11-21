@@ -20,7 +20,7 @@ SearchBar::SearchBar(Control* control)
 	g_signal_connect(previous, "clicked",
 	                 G_CALLBACK(+[](GtkButton* button, SearchBar* self) { self->searchPrevious(); }), this);
 
-	// TODO: When keybindings are implemented, handle previous search keybinding properly
+	// TODO(fabian): When keybindings are implemented, handle previous search keybinding properly
 	GtkWidget* searchTextField = win->get("searchTextField");
 	g_signal_connect(searchTextField, "search-changed", G_CALLBACK(searchTextChangedCallback), this);
 	// Enable next/previous search when pressing Enter / Shift+Enter

@@ -670,8 +670,9 @@ void EditSelection::ensureWithinVisibleArea()
 	double zoom = this->view->getXournal()->getZoom();
 	// need to modify this to take into account the position
 	// of the object, plus typecast because XojPageView takes ints
-	this->view->getXournal()->ensureRectIsVisible((int) (viewx + this->x * zoom), (int) (viewy + this->y * zoom),
-												  (int) (this->width * zoom), (int) (this->height * zoom));
+	this->view->getXournal()->ensureRectIsVisible(
+	        static_cast<int>(viewx + this->x * zoom), static_cast<int>(viewy + this->y * zoom),
+	        static_cast<int>(this->width * zoom), static_cast<int>(this->height * zoom));
 }
 
 /**

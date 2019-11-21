@@ -28,7 +28,8 @@ void Document::freeTreeContentModel()
 {
 	if (this->contentsModel)
 	{
-		gtk_tree_model_foreach(this->contentsModel, (GtkTreeModelForeachFunc) freeTreeContentEntry, this);
+		gtk_tree_model_foreach(this->contentsModel, reinterpret_cast<GtkTreeModelForeachFunc>(freeTreeContentEntry),
+		                       this);
 
 		g_object_unref(this->contentsModel);
 		this->contentsModel = nullptr;
@@ -291,7 +292,8 @@ void Document::buildContentsModel()
 		return;
 	}
 
-	this->contentsModel = (GtkTreeModel*) gtk_tree_store_new(4, G_TYPE_STRING, G_TYPE_OBJECT, G_TYPE_BOOLEAN, G_TYPE_STRING);
+	this->contentsModel = reinterpret_cast<GtkTreeModel*>(
+	        gtk_tree_store_new(4, G_TYPE_STRING, G_TYPE_OBJECT, G_TYPE_BOOLEAN, G_TYPE_STRING));
 	buildTreeContentsModel(nullptr, iter);
 	delete iter;
 }
@@ -329,7 +331,7 @@ void Document::updateIndexPageNumbers()
 {
 	if (this->contentsModel != nullptr)
 	{
-		gtk_tree_model_foreach(this->contentsModel, (GtkTreeModelForeachFunc) fillPageLabels, this);
+		gtk_tree_model_foreach(this->contentsModel, reinterpret_cast<GtkTreeModelForeachFunc>(fillPageLabels), this);
 	}
 }
 

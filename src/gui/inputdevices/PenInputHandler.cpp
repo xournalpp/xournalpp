@@ -61,7 +61,8 @@ void PenInputHandler::handleScrollEvent(InputEvent* event)
 	// see github Gnome/evince@1adce5486b10e763bed869
 
 	// GTK handles event compression/filtering differently between versions - this may be needed on certain hardware/GTK combinations.
-	if (std::abs((double)(this->scrollStartX - event->absoluteX)) < 0.1 && std::abs((double)(this->scrollStartY - event->absoluteY)) < 0.1 )
+	if (std::abs((this->scrollStartX - event->absoluteX)) < 0.1 &&
+	    std::abs((this->scrollStartY - event->absoluteY)) < 0.1)
 	{
 		return;
 	}
@@ -287,8 +288,8 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool
 		// Enforce input to stay within page
 		pos.x = std::max(0.0, pos.x);
 		pos.y = std::max(0.0, pos.y);
-		pos.x = std::min(pos.x, (double) sequenceStartPage->getDisplayWidth());
-		pos.y = std::min(pos.y, (double) sequenceStartPage->getDisplayHeight());
+		pos.x = std::min(pos.x, static_cast<double>(sequenceStartPage->getDisplayWidth()));
+		pos.y = std::min(pos.y, static_cast<double>(sequenceStartPage->getDisplayHeight()));
 
 		return sequenceStartPage->onMotionNotifyEvent(pos);
 	}
@@ -428,7 +429,7 @@ void PenInputHandler::actionLeaveWindow(InputEvent* event)
 		{
 			int offsetX = 0, offsetY = 0;
 
-			// TODO: make offset dependent on how big the distance between pen and view is
+			// TODO(fabian): make offset dependent on how big the distance between pen and view is
 			if (eventX < WIDGET_SCROLL_BORDER)
 			{
 				offsetX = -10;
@@ -462,7 +463,7 @@ void PenInputHandler::actionLeaveWindow(InputEvent* event)
 				});
 
 				//sleep for half a second until we scroll again
-				g_usleep((gulong) (0.5 * G_USEC_PER_SEC));
+				g_usleep(static_cast<gulong>(0.5 * G_USEC_PER_SEC));
 			}
 		});
 

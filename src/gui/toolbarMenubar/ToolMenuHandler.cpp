@@ -510,7 +510,8 @@ void ToolMenuHandler::initToolItems()
 
 
 	// now connect all Glade Signals
-	gtk_builder_connect_signals_full(gui->getBuilder(), (GtkBuilderConnectFunc)signalConnectCallback, this);
+	gtk_builder_connect_signals_full(gui->getBuilder(), reinterpret_cast<GtkBuilderConnectFunc>(signalConnectCallback),
+	                                 this);
 }
 
 void ToolMenuHandler::setFontButtonFont(XojFont& font)

@@ -74,7 +74,7 @@ auto f_image_surface_create(cairo_format_t format, int width, int height) -> cai
 		break;
 	}
 
-	auto* pixels = (unsigned char*) g_malloc(width * height * size);
+	auto* pixels = static_cast<unsigned char*>(g_malloc(width * height * size));
 	cairo_surface_t* surface = cairo_image_surface_create_for_data(pixels, format, width, height, width * size);
 
 	cairo_surface_set_user_data(surface, &pixel_key, pixels, g_free);
@@ -90,7 +90,7 @@ auto f_image_surface_get_data(cairo_surface_t* surface) -> void*
 
 auto f_image_surface_get_format(cairo_surface_t* surface) -> cairo_format_t
 {
-	return (cairo_format_t) GPOINTER_TO_INT(cairo_surface_get_user_data(surface, &format_key));
+	return static_cast<cairo_format_t> GPOINTER_TO_INT(cairo_surface_get_user_data(surface, &format_key));
 }
 
 auto f_image_surface_get_width(cairo_surface_t* surface) -> int
@@ -124,7 +124,7 @@ auto f_pixbuf_to_cairo_surface(GdkPixbuf* pixbuf) -> cairo_surface_t*
 	}
 
 	cairo_surface_t* surface = f_image_surface_create(format, width, height);
-	auto* cairo_pixels = (guchar*) f_image_surface_get_data(surface);
+	auto* cairo_pixels = static_cast<guchar*>(f_image_surface_get_data(surface));
 
 	for (int j = height; j; j--)
 	{
@@ -225,7 +225,7 @@ convert_alpha(guchar* dest_data, int dest_stride, guchar* src_data, int src_stri
 
 	for (int y = 0; y < height; y++)
 	{
-		auto* src = (guint32*) src_data;
+		auto* src = reinterpret_cast<guint32*>(src_data);
 
 		for (int x = 0; x < width; x++)
 		{
@@ -259,7 +259,7 @@ convert_no_alpha(guchar* dest_data, int dest_stride, guchar* src_data, int src_s
 
 	for (int y = 0; y < height; y++)
 	{
-		auto* src = (guint32*) src_data;
+		auto* src = reinterpret_cast<guint32*>(src_data);
 
 		for (int x = 0; x < width; x++)
 		{
@@ -299,7 +299,7 @@ auto xoj_pixbuf_get_from_surface(cairo_surface_t* surface, gint src_x, gint src_
 	g_return_val_if_fail(surface != nullptr, nullptr);
 	g_return_val_if_fail(width > 0 && height > 0, nullptr);
 
-	auto content = (cairo_content_t)(cairo_surface_get_content(surface) | CAIRO_CONTENT_COLOR);
+	auto content = static_cast<cairo_content_t>(cairo_surface_get_content(surface) | CAIRO_CONTENT_COLOR);
 	GdkPixbuf* dest = gdk_pixbuf_new(GDK_COLORSPACE_RGB, !!(content & CAIRO_CONTENT_ALPHA), 8, width, height);
 
 	surface = gdk_cairo_surface_coerce_to_image(surface, content, src_x, src_y, width, height);
@@ -311,13 +311,17 @@ auto xoj_pixbuf_get_from_surface(cairo_surface_t* surface, gint src_x, gint src_
 	}
 
 	if (gdk_pixbuf_get_has_alpha(dest))
+	{
 		convert_alpha(gdk_pixbuf_get_pixels(dest), gdk_pixbuf_get_rowstride(dest),
 					  cairo_image_surface_get_data(surface), cairo_image_surface_get_stride(surface),
 					  0, 0, width, height);
+	}
 	else
+	{
 		convert_no_alpha(gdk_pixbuf_get_pixels(dest), gdk_pixbuf_get_rowstride(dest),
-						 cairo_image_surface_get_data(surface), cairo_image_surface_get_stride(surface),
-						 0, 0, width, height);
+		                 cairo_image_surface_get_data(surface), cairo_image_surface_get_stride(surface), 0, 0, width,
+		                 height);
+	}
 
 	cairo_surface_destroy(surface);
 	return dest;

@@ -86,12 +86,12 @@ auto TextView::findText(Text* t, string& search) -> vector<XojPdfRectangle>
 			XojPdfRectangle mark;
 			PangoRectangle rect = { 0 };
 			pango_layout_index_to_pos(layout, pos, &rect);
-			mark.x1 = ((double) rect.x) / PANGO_SCALE + t->getX();
-			mark.y1 = ((double) rect.y) / PANGO_SCALE + t->getY();
+			mark.x1 = (static_cast<double>(rect.x)) / PANGO_SCALE + t->getX();
+			mark.y1 = (static_cast<double>(rect.y)) / PANGO_SCALE + t->getY();
 
 			pango_layout_index_to_pos(layout, pos + srch.length(), &rect);
-			mark.x2 = ((double) rect.x + rect.width) / PANGO_SCALE + t->getX();
-			mark.y2 = ((double) rect.y + rect.height) / PANGO_SCALE + t->getY();
+			mark.x2 = (static_cast<double>(rect.x) + rect.width) / PANGO_SCALE + t->getX();
+			mark.y2 = (static_cast<double>(rect.y) + rect.height) / PANGO_SCALE + t->getY();
 
 			list.push_back(mark);
 		}
@@ -116,8 +116,8 @@ void TextView::calcSize(Text* t, double& width, double& height)
 	int w = 0;
 	int h = 0;
 	pango_layout_get_size(layout, &w, &h);
-	width = ((double) w) / PANGO_SCALE;
-	height = ((double) h) / PANGO_SCALE;
+	width = (static_cast<double>(w)) / PANGO_SCALE;
+	height = (static_cast<double>(h)) / PANGO_SCALE;
 	g_object_unref(layout);
 
 	cairo_surface_destroy(surface);

@@ -20,7 +20,7 @@ void StavesBackgroundPainter::paint()
 	double lineSize = 4 * staveDistance + 5 * lineWidth * lineWidthFactor + lineDistance;
 	double offset = headerSize;
 
-	int numStaves = (int) ((height - headerSize - footerSize + lineDistance) / (lineSize));
+	int numStaves = static_cast<int>((height - headerSize - footerSize + lineDistance) / (lineSize));
 
 	for (int line = 0; line < numStaves; line++)
 	{

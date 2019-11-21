@@ -20,7 +20,7 @@ public:
  */
 class PlaceholderElementString : public PlaceholderElement{
 public:
-	PlaceholderElementString(std::string text)
+	explicit PlaceholderElementString(std::string text)
 	 : text(std::move(text))
 	{
 	}
@@ -41,7 +41,7 @@ private:
  */
 class PlaceholderElementInt : public PlaceholderElement{
 public:
-	PlaceholderElementInt(int64_t value)
+	explicit PlaceholderElementInt(int64_t value)
 	 : value(value)
 	{
 	}
@@ -112,7 +112,7 @@ auto PlaceholderString::formatPart(std::string format) -> std::string
 	// Placeholder index starting at 1, vector at 0
 	index--;
 
-	if (index < 0 || index >= (int)data.size())
+	if (index < 0 || index >= static_cast<int>(data.size()))
 	{
 		std::string notFound = "{";
 		notFound += std::to_string(index + 1);

@@ -5,7 +5,7 @@ FillTransparencyDialog::FillTransparencyDialog(GladeSearchpath* gladeSearchPath,
 {
 	GtkWidget* scaleAlpha = get("scaleAlpha");
 
-	gtk_range_set_value(GTK_RANGE(scaleAlpha), (int)(alpha / 255.0 * 100));
+	gtk_range_set_value(GTK_RANGE(scaleAlpha), static_cast<int>(alpha / 255.0 * 100));
 
 	setPreviewImage(alpha);
 
@@ -68,7 +68,7 @@ void FillTransparencyDialog::show(GtkWindow* parent)
 	{
 
 		GtkWidget* scaleAlpha = get("scaleAlpha");
-		resultAlpha = (int)(gtk_range_get_value(GTK_RANGE(scaleAlpha)) * 255.0 / 100.0);
+		resultAlpha = static_cast<int>(gtk_range_get_value(GTK_RANGE(scaleAlpha)) * 255.0 / 100.0);
 	}
 	else
 	{

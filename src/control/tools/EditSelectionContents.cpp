@@ -515,8 +515,8 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
 		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width * zoom, height * zoom);
 		cairo_t* cr2 = cairo_create(this->crBuffer);
 
-		int dx = (int) (this->relativeX * zoom);
-		int dy = (int) (this->relativeY * zoom);
+		int dx = static_cast<int>(this->relativeX * zoom);
+		int dy = static_cast<int>(this->relativeY * zoom);
 
 		cairo_scale(cr2, fx, fy);
 		cairo_translate(cr2, -dx, -dy);
@@ -532,23 +532,23 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
 	int wImg = cairo_image_surface_get_width(this->crBuffer);
 	int hImg = cairo_image_surface_get_height(this->crBuffer);
 
-	int wTarget = (int) (width * zoom);
-	int hTarget = (int) (height * zoom);
+	int wTarget = static_cast<int>(width * zoom);
+	int hTarget = static_cast<int>(height * zoom);
 
-	double sx = (double) wTarget / wImg;
-	double sy = (double) hTarget / hImg;
+	double sx = static_cast<double>(wTarget) / wImg;
+	double sy = static_cast<double>(hTarget) / hImg;
 
 	if (wTarget != wImg || hTarget != hImg || std::abs(rotation) > __DBL_EPSILON__)
 	{
 		if (!this->rescaleId)
 		{
-			this->rescaleId = g_idle_add((GSourceFunc) repaintSelection, this);
+			this->rescaleId = g_idle_add(reinterpret_cast<GSourceFunc>(repaintSelection), this);
 		}
 		cairo_scale(cr, sx, sy);
 	}
 
-	double dx = (int) (x * zoom / sx);
-	double dy = (int) (y * zoom / sy);
+	double dx = static_cast<int>(x * zoom / sx);
+	double dy = static_cast<int>(y * zoom / sy);
 
 	cairo_set_source_surface(cr, this->crBuffer, dx, dy);
 	cairo_paint(cr);

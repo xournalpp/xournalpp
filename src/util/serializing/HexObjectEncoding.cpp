@@ -8,7 +8,7 @@ HexObjectEncoding::~HexObjectEncoding() = default;
 
 void HexObjectEncoding::addData(const void* data, int len)
 {
-	char* buffer = (char*) g_malloc(len * 2);
+	char* buffer = static_cast<char*>(g_malloc(len * 2));
 
 	for (int i = 0; i < len; i++)
 	{

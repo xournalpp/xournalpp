@@ -40,7 +40,7 @@ void EraseableStroke::draw(cairo_t* cr)
 
 	for (GList* l = tmpCopy->data; l != nullptr; l = l->next)
 	{
-		auto* part = (EraseableStrokePart*) l->data;
+		auto* part = static_cast<EraseableStrokePart*>(l->data);
 		if (part->getWidth() == Point::NO_PRESSURE)
 		{
 			cairo_set_line_width(cr, w);
@@ -51,13 +51,13 @@ void EraseableStroke::draw(cairo_t* cr)
 		}
 
 		GList* pl = part->getPoints();
-		auto* p = (Point*) pl->data;
+		auto* p = static_cast<Point*>(pl->data);
 		cairo_move_to(cr, p->x, p->y);
 
 		pl = pl->next;
 		for (; pl != nullptr; pl = pl->next)
 		{
-			auto* p = (Point*) pl->data;
+			auto* p = static_cast<Point*>(pl->data);
 			cairo_line_to(cr, p->x, p->y);
 		}
 		cairo_stroke(cr);
@@ -83,7 +83,7 @@ auto EraseableStroke::erase(double x, double y, double halfEraserSize, Range* ra
 
 	for (GList* l = tmpCopy->data; l != nullptr;)
 	{
-		auto* p = (EraseableStrokePart*) l->data;
+		auto* p = static_cast<EraseableStrokePart*>(l->data);
 		l = l->next;
 		erase(x, y, halfEraserSize, p, tmpCopy);
 	}
@@ -121,8 +121,8 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize, Eraseable
 
 	Point eraser(x, y);
 
-	auto* a = (Point*) g_list_first(part->points)->data;
-	auto* b = (Point*) g_list_last(part->points)->data;
+	auto* a = static_cast<Point*>(g_list_first(part->points)->data);
+	auto* b = static_cast<Point*>(g_list_last(part->points)->data);
 
 	if (eraser.lineLengthTo(*a) < halfEraserSize * 1.2 && eraser.lineLengthTo(*b) < halfEraserSize * 1.2)
 	{
@@ -239,7 +239,7 @@ auto EraseableStroke::erasePart(double x, double y, double halfEraserSize, Erase
 	 */
 	for (GList* l = part->getPoints(); l != nullptr;)
 	{
-		auto* p = (Point*) l->data;
+		auto* p = static_cast<Point*>(l->data);
 		l = l->next;
 		if (p->x >= x1 && p->y >= y1 && p->x <= x2 && p->y <= y2)
 		{
@@ -259,7 +259,7 @@ auto EraseableStroke::erasePart(double x, double y, double halfEraserSize, Erase
 	 */
 	for (GList* l = g_list_last(part->getPoints()); l != nullptr;)
 	{
-		auto* p = (Point*) l->data;
+		auto* p = static_cast<Point*>(l->data);
 		l = l->prev;
 		if (p->x >= x1 && p->y >= y1 && p->x <= x2 && p->y <= y2)
 		{
@@ -283,7 +283,7 @@ auto EraseableStroke::erasePart(double x, double y, double halfEraserSize, Erase
 
 	for (GList* l = part->points; l != nullptr;)
 	{
-		auto* p = (Point*) l->data;
+		auto* p = static_cast<Point*>(l->data);
 		l = l->next;
 		if (p->x >= x1 && p->y >= y1 && p->x <= x2 && p->y <= y2)
 		{
@@ -312,7 +312,7 @@ auto EraseableStroke::erasePart(double x, double y, double halfEraserSize, Erase
 	part->points = nullptr;
 	if (lists)
 	{
-		part->points = (GList*) lists->data;
+		part->points = static_cast<GList*>(lists->data);
 		lists = g_list_delete_link(lists, lists);
 
 		int pos = g_list_index(list->data, part) + 1;
@@ -321,7 +321,7 @@ auto EraseableStroke::erasePart(double x, double y, double halfEraserSize, Erase
 		for (GList* l = lists; l != nullptr; l = l->next)
 		{
 			auto* newPart = new EraseableStrokePart(part->width);
-			newPart->points = (GList*) l->data;
+			newPart->points = static_cast<GList*>(l->data);
 			list->data = g_list_insert(list->data, newPart, pos++);
 		}
 
@@ -345,15 +345,15 @@ auto EraseableStroke::getStroke(Stroke* original) -> GList*
 	Point lastPoint(NAN, NAN);
 	for (GList* l = this->parts->data; l != nullptr; l = l->next)
 	{
-		auto* p = (EraseableStrokePart*) l->data;
+		auto* p = static_cast<EraseableStrokePart*>(l->data);
 		GList* points = p->getPoints();
 		if (g_list_length(points) < 2)
 		{
 			continue;
 		}
 
-		Point a = *((Point*) g_list_first(points)->data);
-		Point b = *((Point*) g_list_last(points)->data);
+		Point a = *(static_cast<Point*>(g_list_first(points)->data));
+		Point b = *(static_cast<Point*>(g_list_last(points)->data));
 		a.z = p->width;
 
 		if (!lastPoint.equalsPos(a) || s == nullptr)

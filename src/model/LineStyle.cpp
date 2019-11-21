@@ -45,7 +45,7 @@ void LineStyle::readSerialized(ObjectInputStream& in)
 	g_free(this->dashes);
 	this->dashes = nullptr;
 	this->dashCount = 0;
-	in.readData((void**) &this->dashes, &this->dashCount);
+	in.readData(reinterpret_cast<void**>(&this->dashes), &this->dashCount);
 
 	in.endObject();
 }
@@ -80,7 +80,7 @@ void LineStyle::setDashes(const double* dashes, int dashCount)
 		return;
 	}
 
-	this->dashes = (double*)g_malloc(dashCount * sizeof(double));
+	this->dashes = static_cast<double*>(g_malloc(dashCount * sizeof(double)));
 	this->dashCount = dashCount;
 
 	memcpy(this->dashes, dashes, this->dashCount * sizeof(double));

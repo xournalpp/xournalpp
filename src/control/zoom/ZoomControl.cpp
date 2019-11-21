@@ -480,7 +480,7 @@ auto ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScr
 		return true;
 	}
 
-	//TODO: Disabling scroll here is maybe a bit hacky
+	// TODO(fabian): Disabling scroll here is maybe a bit hacky
 	if(zoom->isZoomPresentationMode())
 	{
 		//disable scroll while presentationMode

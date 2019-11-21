@@ -69,13 +69,13 @@ void Stroke::readSerialized(ObjectInputStream& in)
 
 	this->width = in.readDouble();
 
-	this->toolType = (StrokeTool) in.readInt();
+	this->toolType = static_cast<StrokeTool>(in.readInt());
 
 	this->fill = in.readInt();
 
 	Point* p{};
 	int count{};
-	in.readData((void**) &p, &count);
+	in.readData(reinterpret_cast<void**>(&p), &count);
 	this->points = std::vector<Point>{p, p + count};
 	g_free(p);
 	this->lineStyle.readSerialized(in);

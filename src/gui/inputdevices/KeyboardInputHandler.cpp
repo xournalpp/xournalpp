@@ -14,7 +14,7 @@ KeyboardInputHandler::~KeyboardInputHandler() = default;
 
 auto KeyboardInputHandler::handleImpl(InputEvent* event) -> bool
 {
-	auto keyEvent = (GdkEventKey*) event->sourceEvent;
+	auto keyEvent = reinterpret_cast<GdkEventKey*>(event->sourceEvent);
 	GtkXournal* xournal = inputContext->getXournal();
 
 	if (keyEvent->type == GDK_KEY_PRESS)
