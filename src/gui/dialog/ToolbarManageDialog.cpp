@@ -194,10 +194,9 @@ auto ToolbarManageDialog::getSelectedEntry() -> ToolbarData*
 		gtk_tree_model_get(model, &iter, COLUMN_POINTER, &data, -1);
 		return data;
 	}
-	else
-	{
-		return nullptr;
-	}
+
+
+	    return nullptr;
 }
 
 void ToolbarManageDialog::updateSelectionData()

@@ -5,7 +5,7 @@
 #include "gui/PageView.h"
 #include "gui/widgets/XournalWidget.h"
 #include "gui/XournalView.h"
-#include "math.h"
+#include <cmath>
 
 ZoomControl::ZoomControl()
 {
@@ -148,7 +148,7 @@ void ZoomControl::setScrollPositionAfterZoom(double x, double y)
 /**
  * Zoom to correct position on zooming
  */
-auto ZoomControl::getScrollPositionAfterZoom() -> std::tuple<double, double>
+auto ZoomControl::getScrollPositionAfterZoom() const -> std::tuple<double, double>
 {
 	if (this->zoomSequenceStart == -1 )
 	{
@@ -203,12 +203,12 @@ void ZoomControl::fireZoomRangeValueChanged()
 	}
 }
 
-auto ZoomControl::getZoom() -> double
+auto ZoomControl::getZoom() const -> double
 {
 	return this->zoom;
 }
 
-auto ZoomControl::getZoomReal() -> double
+auto ZoomControl::getZoomReal() const -> double
 {
 	return this->zoom / this->zoom100Value;
 }
@@ -262,7 +262,7 @@ auto ZoomControl::updateZoomFitValue(const Rectangle& widget_rect, size_t pageNo
 	return true;
 }
 
-auto ZoomControl::getZoomFitValue() -> double
+auto ZoomControl::getZoomFitValue() const -> double
 {
 	return this->zoomFitValue;
 }
@@ -293,12 +293,12 @@ auto ZoomControl::updateZoomPresentationValue(size_t pageNo) -> bool
 	return true;
 }
 
-auto ZoomControl::getZoomPresentationValue() -> double
+auto ZoomControl::getZoomPresentationValue() const -> double
 {
 	return this->zoomPresentationValue;
 }
 
-auto ZoomControl::getZoom100Value() -> double
+auto ZoomControl::getZoom100Value() const -> double
 {
 	return this->zoom100Value;
 }
@@ -354,7 +354,7 @@ void ZoomControl::setZoomFitMode(bool isZoomFitMode)
 	}
 }
 
-auto ZoomControl::isZoomFitMode() -> bool
+auto ZoomControl::isZoomFitMode() const -> bool
 {
 	return this->zoomFitMode;
 }
@@ -369,17 +369,17 @@ void ZoomControl::setZoomPresentationMode(bool isZoomPresentationMode)
 	}
 }
 
-auto ZoomControl::isZoomPresentationMode() -> bool
+auto ZoomControl::isZoomPresentationMode() const -> bool
 {
 	return this->zoomPresentationMode;
 }
 
-auto ZoomControl::getZoomStep() -> double
+auto ZoomControl::getZoomStep() const -> double
 {
 	return this->zoomStep;
 }
 
-auto ZoomControl::getZoomStepReal() -> double
+auto ZoomControl::getZoomStepReal() const -> double
 {
 	return this->zoomStepReal;
 }
@@ -390,12 +390,12 @@ void ZoomControl::setZoomStep(double zoomStep)
 	this->zoomStep = zoomStep * this->zoom100Value;
 }
 
-auto ZoomControl::getZoomStepScroll() -> double
+auto ZoomControl::getZoomStepScroll() const -> double
 {
 	return this->zoomStepScroll;
 }
 
-auto ZoomControl::getZoomStepScrollReal() -> double
+auto ZoomControl::getZoomStepScrollReal() const -> double
 {
 	return this->zoomStepScrollReal;
 }
@@ -406,12 +406,12 @@ void ZoomControl::setZoomStepScroll(double zoomStep)
 	this->zoomStepScroll = zoomStep * this->zoom100Value;
 }
 
-auto ZoomControl::getZoomMax() -> double
+auto ZoomControl::getZoomMax() const -> double
 {
 	return this->zoomMax;
 }
 
-auto ZoomControl::getZoomMaxReal() -> double
+auto ZoomControl::getZoomMaxReal() const -> double
 {
 	return this->zoomMaxReal;
 }
@@ -422,12 +422,12 @@ void ZoomControl::setZoomMax(double zoomMax)
 	this->zoomMax = zoomMax * this->zoom100Value;
 }
 
-auto ZoomControl::getZoomMin() -> double
+auto ZoomControl::getZoomMin() const -> double
 {
 	return this->zoomMin;
 }
 
-auto ZoomControl::getZoomMinReal() -> double
+auto ZoomControl::getZoomMinReal() const -> double
 {
 	return this->zoomMinReal;
 }

@@ -134,12 +134,12 @@ void FormatDialog::loadPageFormats()
 	ADD_FORMAT("custom_4x3_320x240mm");
 }
 
-auto FormatDialog::getWidth() -> double
+auto FormatDialog::getWidth() const -> double
 {
 	return this->width;
 }
 
-auto FormatDialog::getHeight() -> double
+auto FormatDialog::getHeight() const -> double
 {
 	return this->height;
 }

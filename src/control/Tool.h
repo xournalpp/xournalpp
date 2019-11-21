@@ -18,13 +18,13 @@
 class Tool : public ToolBase
 {
 public:
-	Tool(string name, ToolType tool, int color, int capabilities, double* thickness);
+	Tool(string name, ToolType type, int color, int capabilities, double* thickness);
 	virtual ~Tool();
 
 public:
 	string getName();
 
-	bool hasCapability(ToolCapabilities cap);
+	bool hasCapability(ToolCapabilities cap) const;
 
 	double getThickness(ToolSize size);
 

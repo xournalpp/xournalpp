@@ -153,15 +153,14 @@ auto PenInputHandler::actionStart(InputEvent* event) -> bool
 			// Only modify selection and do not forward event to page
 			return true;
 		}
-		else
-		{
-			xournal->view->clearSelection();
+
+
+		    xournal->view->clearSelection();
 			if (changeTool(event))
 			{
 				// Do not handle event in any further way to make click only deselect selection
 				return true;
 			}
-		}
 	}
 
 	// Forward event to page
@@ -215,7 +214,7 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool
 		}
 		return false;
 	}
-	else if (xournal->selection)
+	if (xournal->selection)
 	{
 		EditSelection* selection = xournal->selection;
 		XojPageView* view = selection->getView();
@@ -299,10 +298,9 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool
 		// Relay the event to the page
 		PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
 		return currentPage->onMotionNotifyEvent(pos);
-	} else
-	{
-		return false;
 	}
+
+	    return false;
 }
 
 auto PenInputHandler::actionEnd(InputEvent* event) -> bool

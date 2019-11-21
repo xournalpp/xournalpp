@@ -140,7 +140,7 @@ auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean
 	return true;
 }
 
-auto XournalView::getCurrentPage() -> size_t
+auto XournalView::getCurrentPage() const -> size_t
 {
 	return currentPage;
 }
@@ -257,9 +257,9 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool
 			control->getScrollHandler()->goToPreviousPage();
 			return true;
 		}
-		else
-		{
-			if (state & GDK_SHIFT_MASK)
+
+
+		    if (state & GDK_SHIFT_MASK)
 			{
 				this->pageRelativeXY(0, -1);
 			}
@@ -268,7 +268,6 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool
 				layout->scrollRelative(0, -scrollKeySize);
 			}
 			return true;
-		}
 	}
 
 	if (event->keyval == GDK_KEY_Down)
@@ -278,9 +277,9 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool
 			control->getScrollHandler()->goToNextPage();
 			return true;
 		}
-		else
-		{
-			if (state & GDK_SHIFT_MASK)
+
+
+		    if (state & GDK_SHIFT_MASK)
 			{
 				this->pageRelativeXY(0, 1);
 			}
@@ -289,7 +288,6 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool
 				layout->scrollRelative(0, scrollKeySize);
 			}
 			return true;
-		}
 	}
 
 	if (event->keyval == GDK_KEY_Left)

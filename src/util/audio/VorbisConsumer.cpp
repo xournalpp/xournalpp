@@ -1,6 +1,6 @@
 #include <cmath>
 
-#include "math.h"
+#include <cmath>
 #include "VorbisConsumer.h"
 
 VorbisConsumer::VorbisConsumer(Settings* settings, AudioQueue<float>* audioQueue)
@@ -9,7 +9,6 @@ VorbisConsumer::VorbisConsumer(Settings* settings, AudioQueue<float>* audioQueue
 {
 }
 
-VorbisConsumer::~VorbisConsumer() = default;
 
 auto VorbisConsumer::start(const string& filename) -> bool
 {

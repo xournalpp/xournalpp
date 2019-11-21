@@ -33,21 +33,21 @@ public:
 	/**
 	 * Convert to a parsable string
 	 */
-	string toString();
+	string toString() const;
 
-	bool isCopyLastPageSettings();
+	bool isCopyLastPageSettings() const;
 	void setCopyLastPageSettings(bool copyLastPageSettings);
 
-	bool isCopyLastPageSize();
+	bool isCopyLastPageSize() const;
 	void setCopyLastPageSize(bool copyLastPageSize);
 
-	double getPageWidth();
+	double getPageWidth() const;
 	void setPageWidth(double pageWidth);
 
-	double getPageHeight();
+	double getPageHeight() const;
 	void setPageHeight(double pageHeight);
 
-	int getBackgroundColor();
+	int getBackgroundColor() const;
 	void setBackgroundColor(int backgroundColor);
 
 	PageType getBackgroundType();

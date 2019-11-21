@@ -17,10 +17,10 @@ void calculate(LayoutMapper::internal_data& data, size_t numRows, size_t numCols
 {
 	if (useRows)
 	{
-		data.rows = std::max<size_t>(1ul, numRows);
+		data.rows = std::max<size_t>(1UL, numRows);
 
 		// using  + ( rows-1) to round up (int)pages/rows
-		data.cols = std::max<size_t>(1ul, (data.actualPages + firstPageOffset + (data.rows - 1)) / data.rows);
+		data.cols = std::max<size_t>(1UL, (data.actualPages + firstPageOffset + (data.rows - 1)) / data.rows);
 		if (data.showPairedPages)
 		{
 			data.cols += data.cols % 2;  //make even
@@ -28,12 +28,12 @@ void calculate(LayoutMapper::internal_data& data, size_t numRows, size_t numCols
 	}
 	else
 	{
-		data.cols = std::max<size_t>(1ul, numCols);
+		data.cols = std::max<size_t>(1UL, numCols);
 		if (data.showPairedPages)
 		{
 			data.cols += data.cols % 2;  //make even
 		}
-		data.rows = std::max<size_t>(1ul, (data.actualPages + firstPageOffset + (data.cols - 1)) / data.cols);
+		data.rows = std::max<size_t>(1UL, (data.actualPages + firstPageOffset + (data.cols - 1)) / data.cols);
 	}
 
 
@@ -129,7 +129,7 @@ auto LayoutMapper::isPairedPages() const -> bool
 // Todo: replace with
 //       boost::optional<size_t> LayoutMapper::map(size_t x, size_t y) or
 //       std::optional<size_t> LayoutMapper::map(size_t x, size_t y)
-auto LayoutMapper::map(size_t col, size_t row) -> LayoutMapper::optional_size_t
+auto LayoutMapper::map(size_t col, size_t row) const -> LayoutMapper::optional_size_t
 {
 	if (isRightToLeft())
 	{

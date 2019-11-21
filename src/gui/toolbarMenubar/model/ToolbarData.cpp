@@ -61,7 +61,7 @@ void ToolbarData::setId(string id)
 	this->id = std::move(id);
 }
 
-auto ToolbarData::isPredefined() -> bool
+auto ToolbarData::isPredefined() const -> bool
 {
 	return this->predefined;
 }
@@ -113,7 +113,7 @@ void ToolbarData::saveToKeyFile(GKeyFile* config)
 
 	for (ToolbarEntry* e : this->contents)
 	{
-		string line = "";
+		string line = line;
 
 		for (ToolbarItem* it : e->getItems())
 		{

@@ -6,7 +6,7 @@
 #include "control/Control.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
-#include "math.h"
+#include <cmath>
 #include "model/Document.h"
 #include "model/Layer.h"
 #include "model/Element.h"
@@ -188,7 +188,7 @@ void EditSelection::finalizeSelection()
  * get the X coordinate relative to the provided view (getView())
  * in document coordinates
  */
-auto EditSelection::getXOnView() -> double
+auto EditSelection::getXOnView() const -> double
 {
 	return this->x;
 }
@@ -197,7 +197,7 @@ auto EditSelection::getXOnView() -> double
  * get the Y coordinate relative to the provided view (getView())
  * in document coordinates
  */
-auto EditSelection::getYOnView() -> double
+auto EditSelection::getYOnView() const -> double
 {
 	return this->y;
 }
@@ -215,7 +215,7 @@ auto EditSelection::getOriginalYOnView() -> double
 /**
  * get the width in document coordinates (multiple with zoom)
  */
-auto EditSelection::getWidth() -> double
+auto EditSelection::getWidth() const -> double
 {
 	return this->width;
 }
@@ -223,7 +223,7 @@ auto EditSelection::getWidth() -> double
 /**
  * get the height in document coordinates (multiple with zoom)
  */
-auto EditSelection::getHeight() -> double
+auto EditSelection::getHeight() const -> double
 {
 	return this->height;
 }
@@ -366,16 +366,16 @@ void EditSelection::mouseUp()
 		this->view->getXournal()->deleteSelection();
 		return;
 	}
-	else
-	{
-		PageRef page = this->view->getPage();
+
+
+	    PageRef page = this->view->getPage();
 		Layer* layer = page->getSelectedLayer();
 
 		snapRotation();
 
 		this->contents->updateContent(this->x, this->y, this->rotation, this->width, this->height, this->aspectRatio,
 									layer, page, this->view, this->undo, this->mouseDownType);
-	}
+
 	this->mouseDownType = CURSOR_SELECTION_NONE;
 
 	double zoom = this->view->getXournal()->getZoom();
@@ -888,7 +888,7 @@ void EditSelection::drawAnchorRect(cairo_t* cr, double x, double y, double zoom)
 /**
  * draws an idicator where you can delete the selection
  */
-void EditSelection::drawDeleteRect(cairo_t* cr, double x, double y, double zoom)
+void EditSelection::drawDeleteRect(cairo_t* cr, double x, double y, double zoom) const
 {
 	cairo_set_source_rgb(cr, 0, 0, 0);
 	cairo_rectangle(cr, x * zoom - (this->btnWidth/2), y * zoom - (this->btnWidth/2), this->btnWidth, this->btnWidth);

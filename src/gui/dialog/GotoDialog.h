@@ -23,7 +23,7 @@ public:
 	virtual void show(GtkWindow* parent);
 
 	// returns the selected page or -1 if closed
-	int getSelectedPage();
+	int getSelectedPage() const;
 
 private:
 	int selectedPage = -1;

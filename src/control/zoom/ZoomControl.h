@@ -62,13 +62,13 @@ public:
 	 * Zoom so that the page fits the current size of the window
 	 */
 	void setZoomFitMode(bool isZoomFitMode);
-	bool isZoomFitMode();
+	bool isZoomFitMode() const;
 
 	/**
 	 * Zoom so that the document completely fits the View.
 	 */
 	void setZoomPresentationMode(bool isZoomPresentationMode);
-	bool isZoomPresentationMode();
+	bool isZoomPresentationMode() const;
 
 	/**
 	 * Zoom so that the displayed page on the screen has the same size as the real size
@@ -79,12 +79,12 @@ public:
 	/**
 	 * @return zoom value depending zoom100Value
 	 */
-	double getZoom();
+	double getZoom() const;
 
 	/**
 	 * @return real zoom value in percent
 	 */
-	double getZoomReal();
+	double getZoomReal() const;
 
 	/**
 	 * Set the current zoom, does not preserve the current page position.
@@ -106,22 +106,22 @@ public:
 	/**
 	 * @return zoom value for zoom 100% depending zoom100Value
 	 */
-	double getZoom100Value();
+	double getZoom100Value() const;
 
 	/**
 	 * Updates when, the window size changes
 	 * @param zoom zoom value depending zoom100Value
 	 */
 	bool updateZoomFitValue(size_t pageNo = 0);
-	bool updateZoomFitValue(const Rectangle& allocation, size_t pageNo = 0);
+	bool updateZoomFitValue(const Rectangle& widget_rect, size_t pageNo = 0);
 
 	/**
 	 * @return zoom value for zoom fit depending zoom100Value
 	 */
-	double getZoomFitValue();
+	double getZoomFitValue() const;
 
 	bool updateZoomPresentationValue(size_t pageNo = 0);
-	double getZoomPresentationValue();
+	double getZoomPresentationValue() const;
 
 	void addZoomListener(ZoomListener* listener);
 
@@ -156,27 +156,27 @@ public:
 	/**
 	 * Zoom to correct position on zooming
 	 */
-	std::tuple<double, double> getScrollPositionAfterZoom();
+	std::tuple<double, double> getScrollPositionAfterZoom() const;
 
 	/**
 	 * Get visible rect on xournal view, for Zoom Gesture
 	 */
 	Rectangle getVisibleRect();
 
-	double getZoomStep();
-	double getZoomStepReal();
+	double getZoomStep() const;
+	double getZoomStepReal() const;
 	void setZoomStep(double zoomStep);
 
-	double getZoomStepScroll();
-	double getZoomStepScrollReal();
+	double getZoomStepScroll() const;
+	double getZoomStepScrollReal() const;
 	void setZoomStepScroll(double zoomStep);
 
-	double getZoomMax();
-	double getZoomMaxReal();
+	double getZoomMax() const;
+	double getZoomMaxReal() const;
 	void setZoomMax(double zoomMax);
 
-	double getZoomMin();
-	double getZoomMinReal();
+	double getZoomMin() const;
+	double getZoomMinReal() const;
 	void setZoomMin(double zoomMin);
 
 protected:

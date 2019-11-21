@@ -2,7 +2,7 @@
 
 #include "XournalView.h"
 #include "control/Control.h"
-#include "math.h"
+#include <cmath>
 
 #include <Util.h>
 #include <pixbuf-utils.h>
@@ -409,10 +409,9 @@ auto XournalppCursor::getHighlighterCursor() -> GdkCursor*
 	{
 		return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
 	}
-	else
-	{
-		return createHighlighterOrPenCursor(5, 120 / 255.0);
-	}
+
+
+	    return createHighlighterOrPenCursor(5, 120 / 255.0);
 }
 
 
@@ -422,10 +421,9 @@ auto XournalppCursor::getPenCursor() -> GdkCursor*
 	{
 		return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
 	}
-	else
-	{
-		return createHighlighterOrPenCursor(3, 1.0);
-	}
+
+
+	    return createHighlighterOrPenCursor(3, 1.0);
 }
 
 

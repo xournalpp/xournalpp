@@ -53,7 +53,7 @@ private:
 	/**
 	 * Delete an old metadata file
 	 */
-	void deleteMetadataFile(const string& path);
+	static void deleteMetadataFile(const string& path);
 
 	/**
 	 * Parse a single metadata file

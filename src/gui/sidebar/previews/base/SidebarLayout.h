@@ -27,7 +27,7 @@ public:
 	/**
 	 * Layouts the sidebar
 	 */
-	void layout(SidebarPreviewBase* sidebar);
+	static void layout(SidebarPreviewBase* sidebar);
 
 private:
 };

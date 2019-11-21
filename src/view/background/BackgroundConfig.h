@@ -24,9 +24,9 @@ public:
 
 public:
 	bool loadValue(const string& key, string& value);
-	bool loadValue(string key, int& value);
-	bool loadValue(string key, double& value);
-	bool loadValueHex(string key, int& value);
+	bool loadValue(const string& key, int& value);
+	bool loadValue(const string& key, double& value);
+	bool loadValueHex(const string& key, int& value);
 
 private:
 	map<string, string> data;

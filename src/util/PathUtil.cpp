@@ -26,29 +26,28 @@ auto PathUtil::readString(string& output, Path& path, bool showErrorToUser) -> b
 		g_free(contents);
 		return true;
 	}
-	else
-	{
-		if (showErrorToUser)
+
+
+	    if (showErrorToUser)
 		{
 			XojMsgBox::showErrorToUser(nullptr, error->message);
 		}
 
 		g_error_free(error);
 		return false;
-	}
 }
 
 auto PathUtil::copy(const Path& src, const Path& dest) -> bool
 {
 	std::array<char, 16 * 1024> buffer{};  // 16k
 
-	FILE* fpRead = g_fopen(src.c_str(), "rb");
+	FILE* fpRead = g_fopen(src.c_str(), "rbe");
 	if (!fpRead)
 	{
 		return false;
 	}
 
-	FILE* fpWrite = g_fopen(dest.c_str(), "wb");
+	FILE* fpWrite = g_fopen(dest.c_str(), "wbe");
 	if (!fpWrite)
 	{
 		fclose(fpRead);

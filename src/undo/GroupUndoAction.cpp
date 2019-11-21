@@ -77,7 +77,7 @@ auto GroupUndoAction::undo(Control* control) -> bool
 
 auto GroupUndoAction::getText() -> string
 {
-	if (actions.size() == 0)
+	if (actions.empty())
 	{
 		return "!! NOTHING !!";
 	}

@@ -57,13 +57,13 @@ public:
 	 * get the X coordinate relative to the provided view (getView())
 	 * in document coordinates
 	 */
-	double getXOnView();
+	double getXOnView() const;
 
 	/**
 	 * Get the Y coordinate relative to the provided view (getView())
 	 * in document coordinates
 	 */
-	double getYOnView();
+	double getYOnView() const;
 
 	/**
 	 * @return The original X coordinates of the provided view in document
@@ -80,12 +80,12 @@ public:
 	/**
 	 * Get the width in document coordinates (multiple with zoom)
 	 */
-	double getWidth();
+	double getWidth() const;
 
 	/**
 	 * Get the height in document coordinates (multiple with zoom)
 	 */
-	double getHeight();
+	double getHeight() const;
 
 	/**
 	 * Get the source page (where the selection was done)
@@ -228,9 +228,7 @@ private:
 	/**
 	 * Draws an indicator where you can delete the selection
 	 */
-	void drawDeleteRect(cairo_t* cr, double x, double y, double zoom);
-	
-
+	void drawDeleteRect(cairo_t* cr, double x, double y, double zoom) const;
 
 
 	/**

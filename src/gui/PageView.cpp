@@ -131,7 +131,7 @@ void XojPageView::deleteViewBuffer()
 	g_mutex_unlock(&this->drawingMutex);
 }
 
-auto XojPageView::containsPoint(int x, int y, bool local) -> bool
+auto XojPageView::containsPoint(int x, int y, bool local) const -> bool
 {
 	if (!local)
 	{
@@ -142,10 +142,9 @@ auto XojPageView::containsPoint(int x, int y, bool local) -> bool
 
 		return leftOk && rightOk && topOk && bottomOk;
 	}
-	else
-	{
-		return x >= 0 && y >= 0 && x <= this->getWidth() && y <= this->getHeight();
-	}
+
+
+	    return x >= 0 && y >= 0 && x <= this->getWidth() && y <= this->getHeight();
 }
 
 auto XojPageView::searchTextOnPage(string& text, int* occures, double* top) -> bool
@@ -666,15 +665,14 @@ auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool
 			endText();
 			return true;
 		}
-		else if (xournal->getSelection())
+		if (xournal->getSelection())
 		{
 			xournal->clearSelection();
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+
+
+		    return false;
 	}
 
 	if (this->textEditor)
@@ -953,7 +951,7 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool
 	return true;
 }
 
-auto XojPageView::containsY(int y) -> bool
+auto XojPageView::containsY(int y) const -> bool
 {
 	return (y >= this->getY() && y <= (this->getY() + this->getDisplayHeight()));
 }
@@ -962,7 +960,7 @@ auto XojPageView::containsY(int y) -> bool
  * GETTER / SETTER
  */
 
-auto XojPageView::isSelected() -> bool
+auto XojPageView::isSelected() const -> bool
 {
 	return selected;
 }
@@ -1013,13 +1011,13 @@ void XojPageView::setMappedRowCol(int row, int col)
 }
 
 
-auto XojPageView::getMappedRow() -> int
+auto XojPageView::getMappedRow() const -> int
 {
 	return this->mappedRow;
 }
 
 
-auto XojPageView::getMappedCol() -> int
+auto XojPageView::getMappedCol() const -> int
 {
 	return this->mappedCol;
 }
@@ -1091,7 +1089,7 @@ auto XojPageView::getSelectedText() -> Text*
 	return nullptr;
 }
 
-auto XojPageView::getRect() -> Rectangle
+auto XojPageView::getRect() const -> Rectangle
 {
 	return Rectangle(getX(), getY(), getDisplayWidth(), getDisplayHeight());
 }

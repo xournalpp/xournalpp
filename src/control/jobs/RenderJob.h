@@ -39,7 +39,7 @@ private:
 	/**
 	 * Repaint the widget in UI Thread
 	 */
-	void repaintWidget(GtkWidget* widget);
+	static void repaintWidget(GtkWidget* widget);
 
 	void rerenderRectangle(Rectangle* rect);
 

@@ -8,7 +8,7 @@
 #include "gui/scroll/ScrollHandling.h"
 #include "gui/Shadow.h"
 #include "gui/XournalView.h"
-#include "math.h"
+#include <cmath>
 
 #include <config-debug.h>
 #include <Rectangle.h>

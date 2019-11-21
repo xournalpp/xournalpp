@@ -44,7 +44,7 @@ public:
 	// Also set the size over doc->setPageSize!
 	void setBackgroundPdfPageNr(size_t page);
 
-	void setBackgroundType(PageType bgType);
+	void setBackgroundType(const PageType& bgType);
 	PageType getBackgroundType();
 
 	/**
@@ -55,18 +55,18 @@ public:
 	double getWidth() const;
 	double getHeight() const;
 
-	size_t getPdfPageNr();
+	size_t getPdfPageNr() const;
 
 	bool isAnnotated();
 
 	void setBackgroundColor(int color);
-	int getBackgroundColor();
+	int getBackgroundColor() const;
 
 	vector<Layer*>* getLayers();
 	size_t getLayerCount();
 	int getSelectedLayerId();
 	void setSelectedLayerId(int id);
-	bool isLayerVisible(Layer* layer);
+	static bool isLayerVisible(Layer* layer);
 	bool isLayerVisible(int layerId);
 
 	Layer* getSelectedLayer();

@@ -27,7 +27,7 @@ public:
 	void removeDpiSelection();
 	void initPages(int current, int count);
 	int getPngDpi();
-	bool isConfirmed();
+	bool isConfirmed() const;
 	PageRangeVector getRange();
 
 private:

@@ -149,15 +149,15 @@ auto PageBackgroundChangeController::applyImageBackground(PageRef page) -> bool
 			// The user canceled
 			return false;
 		}
-		else
-		{
-			char* name = g_file_get_path(file);
+
+
+		    char* name = g_file_get_path(file);
 			filename = name;
 			g_free(name);
 			name = nullptr;
 			g_object_unref(file);
 			file = nullptr;
-		}
+
 
 		BackgroundImage newImg;
 		GError* err = nullptr;
@@ -170,11 +170,10 @@ auto PageBackgroundChangeController::applyImageBackground(PageRef page) -> bool
 			g_error_free(err);
 			return false;
 		}
-		else
-		{
-			page->setBackgroundImage(newImg);
+
+
+		    page->setBackgroundImage(newImg);
 			page->setBackgroundType(PageType(PageTypeFormat::Image));
-		}
 	}
 
 	// Apply correct page size
@@ -238,21 +237,20 @@ auto PageBackgroundChangeController::applyPdfBackground(PageRef page) -> bool
  *
  * @return true on success, false if the user cancels
  */
-auto PageBackgroundChangeController::applyPageBackground(PageRef page, PageType pt) -> bool
+auto PageBackgroundChangeController::applyPageBackground(PageRef page, const PageType& pt) -> bool
 {
 	if (pt.isPdfPage())
 	{
 		return applyPdfBackground(page);
 	}
-	else if (pt.isImagePage())
+	if (pt.isImagePage())
 	{
 		return applyImageBackground(page);
 	}
-	else
-	{
-		page->setBackgroundType(pt);
+
+
+	    page->setBackgroundType(pt);
 		return true;
-	}
 }
 
 /**

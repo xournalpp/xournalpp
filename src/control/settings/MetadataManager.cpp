@@ -251,7 +251,7 @@ void MetadataManager::storeMetadata(MetadataEntry* m)
  */
 void MetadataManager::storeMetadata(const string& file, int page, double zoom)
 {
-	if (file == "")
+	if (file.empty())
 	{
 		return;
 	}

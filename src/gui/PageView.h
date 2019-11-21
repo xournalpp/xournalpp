@@ -52,7 +52,7 @@ public:
 
 	void setIsVisible(bool visible);
 
-	bool isSelected();
+	bool isSelected() const;
 
 	void endText();
 
@@ -75,19 +75,19 @@ public:
 	 * Returns whether this PageView contains the
 	 * given point on the display
 	 */
-	bool containsPoint(int x, int y, bool local = false);
-	bool containsY(int y);
-	
+	bool containsPoint(int x, int y, bool local = false) const;
+	bool containsY(int y) const;
+
 	/**
 	 * Returns Row assigned in current layout
-	 */ 
-	int getMappedRow();
-	
+	 */
+	int getMappedRow() const;
+
 	/**
 	 * Returns Column assigned in current layout
-	 */ 
-	int getMappedCol();
-	
+	 */
+	int getMappedCol() const;
+
 
 	GtkColorWrapper getSelectionColor();
 	int getBufferPixels();
@@ -144,7 +144,7 @@ public:
 	TexImage* getSelectedTex();
 	Text* getSelectedText();
 
-	Rectangle getRect();
+	Rectangle getRect() const;
 
 public: // event handler
 	bool onButtonPressEvent(const PositionInputData& pos);

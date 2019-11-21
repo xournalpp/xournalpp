@@ -7,7 +7,7 @@
 #include "gui/PageView.h"
 #include "gui/scroll/ScrollHandling.h"
 #include "gui/XournalView.h"
-#include "math.h"
+#include <cmath>
 #include "util/DeviceListHelper.h"
 #include "model/Point.h"
 
@@ -79,15 +79,15 @@ auto NewGtkInputDevice::startInput(InputSequence* input) -> bool
 		inputRunning = input;
 		return true;
 	}
-	else
-	{
-		if (inputRunning->checkStillRunning())
+
+
+	    if (inputRunning->checkStillRunning())
 		{
 			g_warning("Input was not stopped correctly!");
 			inputRunning = input;
 			return true;
 		}
-	}
+
 
 	return false;
 }
@@ -165,12 +165,12 @@ auto NewGtkInputDevice::eventKeyPressHandler(GdkEventKey* event) -> bool
 			selection->moveSelection(d, 0);
 			return true;
 		}
-		else if (event->keyval == GDK_KEY_Up)
+		if (event->keyval == GDK_KEY_Up)
 		{
 			selection->moveSelection(0, d);
 			return true;
 		}
-		else if (event->keyval == GDK_KEY_Right)
+		if (event->keyval == GDK_KEY_Right)
 		{
 			selection->moveSelection(-d, 0);
 			return true;
@@ -234,7 +234,7 @@ auto NewGtkInputDevice::eventHandler(GdkEvent* event) -> bool
 		g_hash_table_remove(touchInputList, sequence);
 		return true;
 	}
-	else if (event->type == GDK_LEAVE_NOTIFY)
+	if (event->type == GDK_LEAVE_NOTIFY)
 	{
 		g_hash_table_remove(pointerInputList, sourceDevice);
 		return true;

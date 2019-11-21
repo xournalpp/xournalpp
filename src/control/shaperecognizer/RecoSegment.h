@@ -25,7 +25,7 @@ public:
 	virtual ~RecoSegment();
 
 public:
-	Point calcEdgeIsect(RecoSegment* r2);
+	Point calcEdgeIsect(RecoSegment* r2) const;
 
 	/**
 	 * Find the geometry of a recognized segment

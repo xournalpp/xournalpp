@@ -44,13 +44,13 @@ auto ClipboardHandler::paste() -> bool
 		                               reinterpret_cast<GtkClipboardReceivedFunc>(pasteClipboardContents), this);
 		return true;
 	}
-	else if (this->containsText)
+	if (this->containsText)
 	{
 		gtk_clipboard_request_text(this->clipboard, reinterpret_cast<GtkClipboardTextReceivedFunc>(pasteClipboardText),
 		                           this);
 		return true;
 	}
-	else if (this->containsImage)
+	if (this->containsImage)
 	{
 		gtk_clipboard_request_image(this->clipboard,
 		                            reinterpret_cast<GtkClipboardImageReceivedFunc>(pasteClipboardImage), this);
@@ -98,7 +98,6 @@ public:
 		g_string_free(this->str, true);
 	}
 
-public:
 
 	static void getFunction(GtkClipboard* clipboard, GtkSelectionData* selection,
 							guint info, ClipboardContents* contents)
@@ -176,11 +175,11 @@ auto ClipboardHandler::copy() -> bool
 		}
 	}
 
-	string text = "";
+	string text = text;
 	for (GList* l = textElements; l != nullptr; l = l->next)
 	{
 		Text* e = static_cast<Text*>(l->data);
-		if (text != "")
+		if (!text.empty())
 		{
 			text += "\n";
 		}

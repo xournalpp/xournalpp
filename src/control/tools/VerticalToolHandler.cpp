@@ -1,7 +1,7 @@
 #include "VerticalToolHandler.h"
 #include <util/cpp14memory.h>
 
-#include "math.h"
+#include <cmath>
 #include "model/Layer.h"
 #include "undo/UndoRedoHandler.h"
 #include "util/GtkColorWrapper.h"

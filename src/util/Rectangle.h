@@ -44,14 +44,14 @@ public:
 	 * by the function arguments
 	 *
 	 */
-	Rectangle translated(double dx, double dy);
+	Rectangle translated(double dx, double dy) const;
 
 	/**
 	 * Same as the above, provided for convenience
 	 */
 	void add(const Rectangle &other);
 
-	Rectangle intersect(const Rectangle &other);
+	Rectangle intersect(const Rectangle& other) const;
 
 	Rectangle& operator*=(double factor);
 

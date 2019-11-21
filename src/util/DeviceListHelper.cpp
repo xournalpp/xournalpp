@@ -117,11 +117,11 @@ auto InputDevice::getType() const -> string
 	{
 		return _("mouse");
 	}
-	else if (source == GDK_SOURCE_PEN)
+	if (source == GDK_SOURCE_PEN)
 	{
 		return _("pen");
 	}
-	else if (source == GDK_SOURCE_ERASER)
+	if (source == GDK_SOURCE_ERASER)
 	{
 		return _("eraser");
 	}

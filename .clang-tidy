@@ -1,4 +1,5 @@
 Checks: "*,\
+-readability-identifier-naming,\
 -misc-unused-parameters,\
 -cppcoreguidelines-pro-type-union-access,\
 -clang-analyzer-alpha*,\

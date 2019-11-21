@@ -28,16 +28,16 @@ public:
 public:
 	virtual void show(GtkWindow* parent);
 
-	double getWidth();
-	double getHeight();
+	double getWidth() const;
+	double getHeight() const;
 
 private:
 	void loadPageFormats();
-	void setOrientation(Orientation portrait);
+	void setOrientation(Orientation orientation);
 	void setSpinValues(double width, double heigth);
 
-	static void portraitSelectedCb(GtkToggleToolButton* toggle_tool_button, FormatDialog* dlg);
-	static void landscapeSelectedCb(GtkToggleToolButton* toggle_tool_button, FormatDialog* dlg);
+	static void portraitSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg);
+	static void landscapeSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg);
 	static void cbFormatChangedCb(GtkComboBox* widget, FormatDialog* dlg);
 	static void cbUnitChanged(GtkComboBox* widget, FormatDialog* dlg);
 	static void spinValueChangedCb(GtkSpinButton* spinbutton, FormatDialog* dlg);

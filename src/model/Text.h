@@ -34,7 +34,7 @@ public:
 	void setHeight(double height);
 
 	void setInEditing(bool inEditing);
-	bool isInEditing();
+	bool isInEditing() const;
 
 	void scale(double x0, double y0, double fx, double fy) override;
 	void rotate(double x0, double y0, double xo, double yo, double th) override;
@@ -46,8 +46,8 @@ public:
 	 */
 	Element* clone() override;
 
-	bool intersects(double x, double y, double halfSize) override;
-	bool intersects(double x, double y, double halfSize, double* gap) override;
+	bool intersects(double x, double y, double halfEraserSize) override;
+	bool intersects(double x, double y, double halfEraserSize, double* gap) override;
 
 public:
 	// Serialize interface

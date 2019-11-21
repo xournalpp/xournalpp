@@ -29,7 +29,7 @@ public:
 	void setName(string name);
 	string getId();
 	void setId(string id);
-	bool isPredefined();
+	bool isPredefined() const;
 
 	void load(GKeyFile* config, const char* group);
 	void saveToKeyFile(GKeyFile* config);

@@ -4,7 +4,7 @@
 #include "control/layer/LayerController.h"
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
-#include "math.h"
+#include <cmath>
 #include "undo/InsertUndoAction.h"
 #include "util/cpp14memory.h"
 
@@ -197,22 +197,22 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 								    
 		if (   lengthSqrd < pow((strokeFilterIgnoreLength*dpmm),2) && pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) 
 		{
-			if ( pos.timestamp - this->lastStrokeTime  > strokeFilterSuccessiveTime )
+			if (pos.timestamp - BaseStrokeHandler::lastStrokeTime > strokeFilterSuccessiveTime)
 			{
 				//stroke not being added to layer... delete here.
 				delete stroke;
 				stroke = nullptr;
 				this->userTapped = true;
-				
-				this->lastStrokeTime = pos.timestamp;
-				
+
+				BaseStrokeHandler::lastStrokeTime = pos.timestamp;
+
 				xournal->getCursor()->updateCursor();
 				
 				return;
 			}
 
 		}
-		this->lastStrokeTime = pos.timestamp;
+		BaseStrokeHandler::lastStrokeTime = pos.timestamp;
 	}
 	
 	
@@ -242,8 +242,6 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	stroke = nullptr;
 
 	xournal->getCursor()->updateCursor();
-	
-	return;
 }
 
 void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos)

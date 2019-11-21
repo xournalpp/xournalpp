@@ -53,7 +53,7 @@ public:
 	//Relative navigation in current layout:
 	void pageRelativeXY(int offCol, int offRow );
 
-	size_t getCurrentPage();
+	size_t getCurrentPage() const;
 
 	void clearSelection();
 

@@ -4,7 +4,7 @@
 #include "Inertia.h"
 #include "ShapeRecognizerResult.h"
 
-#include "math.h"
+#include <cmath>
 #include "model/Stroke.h"
 
 #include <config-debug.h>

@@ -23,7 +23,7 @@ public:
 	virtual ~OutputStream();
 
 public:
-	virtual void write(const char* data);
+	virtual void write(const char* str);
 	virtual void write(const char* data, int len) = 0;
 	virtual void write(const string& str);
 

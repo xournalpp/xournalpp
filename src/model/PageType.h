@@ -44,17 +44,17 @@ public:
 	/**
 	 * PDF background
 	 */
-	bool isPdfPage();
+	bool isPdfPage() const;
 
 	/**
 	 * Image Background
 	 */
-	bool isImagePage();
+	bool isImagePage() const;
 
 	/**
 	 * Special background
 	 */
-	bool isSpecial();
+	bool isSpecial() const;
 
 public:
 	/**

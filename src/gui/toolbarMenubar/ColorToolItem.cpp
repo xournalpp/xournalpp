@@ -104,7 +104,7 @@ void ColorToolItem::enableColor(int color)
 	}
 }
 
-auto ColorToolItem::getColor() -> int
+auto ColorToolItem::getColor() const -> int
 {
 	return this->color;
 }
@@ -123,7 +123,7 @@ auto ColorToolItem::getId() -> string
 	return id;
 }
 
-auto ColorToolItem::colorEqualsMoreOreLess(int color) -> bool
+auto ColorToolItem::colorEqualsMoreOreLess(int color) const -> bool
 {
 	if (color == -1)
 	{
@@ -138,11 +138,7 @@ auto ColorToolItem::colorEqualsMoreOreLess(int color) -> bool
 	int g2 = (this->color & 0xff00) >> 8;
 	int b2 = (this->color & 0xff);
 
-	if (std::abs(r1 - r2) < 10 && std::abs(g1 - g2) < 10 && std::abs(b1 - b2) < 10)
-	{
-		return true;
-	}
-	return false;
+	return std::abs(r1 - r2) < 10 && std::abs(g1 - g2) < 10 && std::abs(b1 - b2) < 10;
 }
 
 /**

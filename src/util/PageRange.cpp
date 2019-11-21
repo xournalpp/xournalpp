@@ -11,12 +11,12 @@ PageRangeEntry::PageRangeEntry(int first, int last)
 
 PageRangeEntry::~PageRangeEntry() = default;
 
-auto PageRangeEntry::getLast() -> int
+auto PageRangeEntry::getLast() const -> int
 {
 	return this->last;
 }
 
-auto PageRangeEntry::getFirst() -> int
+auto PageRangeEntry::getFirst() const -> int
 {
 	return this->first;
 }

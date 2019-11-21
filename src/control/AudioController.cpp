@@ -144,7 +144,7 @@ auto AudioController::getAudioFolder() -> Path
 	return Path::fromUri(af);
 }
 
-auto AudioController::getStartTime() -> size_t
+auto AudioController::getStartTime() const -> size_t
 {
 	return this->timestamp;
 }

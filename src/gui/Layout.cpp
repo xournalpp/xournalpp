@@ -40,14 +40,14 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
 
 void Layout::horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout)
 {
-	layout->checkScroll(adjustment, layout->lastScrollHorizontal);
+	Layout::checkScroll(adjustment, layout->lastScrollHorizontal);
 	layout->updateVisibility();
 	layout->scrollHandling->scrollChanged();
 }
 
 void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout)
 {
-	layout->checkScroll(adjustment, layout->lastScrollVertical);
+	Layout::checkScroll(adjustment, layout->lastScrollVertical);
 	layout->updateVisibility();
 	layout->scrollHandling->scrollChanged();
 }
@@ -334,12 +334,12 @@ auto Layout::getIndexAtGridMap(size_t row, size_t col) -> LayoutMapper::optional
 	return this->mapper.at({col, row});  //watch out.. x,y --> c,r
 }
 
-auto Layout::getMinimalHeight() -> int
+auto Layout::getMinimalHeight() const -> int
 {
 	return this->minHeight;
 }
 
-auto Layout::getMinimalWidth() -> int
+auto Layout::getMinimalWidth() const -> int
 {
 	return this->minWidth;
 }

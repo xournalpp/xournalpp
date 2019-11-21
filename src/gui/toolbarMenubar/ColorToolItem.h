@@ -28,7 +28,7 @@ public:
 public:
 	virtual void actionSelected(ActionGroup group, ActionType action);
 	void enableColor(int color);
-	bool colorEqualsMoreOreLess(int color);
+	bool colorEqualsMoreOreLess(int color) const;
 	virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
 
 	virtual string getToolDisplayName();
@@ -36,7 +36,7 @@ public:
 
 	virtual string getId();
 
-	int getColor();
+	int getColor() const;
 
 	/**
 	 * Enable / Disable the tool item

@@ -1,6 +1,6 @@
 #include "PortAudioConsumer.h"
 #include "AudioPlayer.h"
-#include "math.h"
+#include <cmath>
 
 PortAudioConsumer::PortAudioConsumer(AudioPlayer* audioPlayer, AudioQueue<float>* audioQueue) : sys(portaudio::System::instance()), audioPlayer(audioPlayer), audioQueue(audioQueue)
 {
@@ -164,10 +164,9 @@ auto PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer
 			this->audioPlayer->disableAudioPlaybackButtons();
 			return paComplete;
 		}
-		else
-		{
-			return paContinue;
-		}
+
+
+		    return paContinue;
 	}
 
 	// The output buffer is no longer available - Abort!

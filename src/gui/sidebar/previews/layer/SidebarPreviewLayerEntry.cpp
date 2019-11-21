@@ -84,7 +84,7 @@ auto SidebarPreviewLayerEntry::getHeight() -> int
 	return getWidgetHeight() + toolbarHeight;
 }
 
-auto SidebarPreviewLayerEntry::getLayer() -> int
+auto SidebarPreviewLayerEntry::getLayer() const -> int
 {
 	return layer;
 }

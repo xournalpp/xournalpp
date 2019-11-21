@@ -69,7 +69,7 @@ public:
 
 	~InputEvent();
 
-	InputEvent* copy();
+	InputEvent* copy() const;
 };
 
 class InputEvents

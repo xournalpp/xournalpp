@@ -83,10 +83,9 @@ auto ImagesDialog::getSelectedImage() -> BackgroundImage
 	{
 		return (dynamic_cast<ImageElementView*>(elements[selected]))->backgroundImage;
 	}
-	else
-	{
-		return BackgroundImage();
-	}
+
+
+	    return BackgroundImage();
 }
 
 void ImagesDialog::show(GtkWindow* parent)

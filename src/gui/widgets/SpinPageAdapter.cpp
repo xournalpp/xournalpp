@@ -48,7 +48,7 @@ auto SpinPageAdapter::getWidget() -> GtkWidget*
 	return this->widget;
 }
 
-auto SpinPageAdapter::getPage() -> int
+auto SpinPageAdapter::getPage() const -> int
 {
 	return this->page;
 }

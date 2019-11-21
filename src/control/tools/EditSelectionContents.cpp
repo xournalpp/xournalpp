@@ -134,11 +134,10 @@ auto EditSelectionContents::setSize(ToolSize size,
 
 		return undo;
 	}
-	else
-	{
-		delete undo;
+
+
+	    delete undo;
 		return nullptr;
-	}
 }
 
 /**
@@ -192,11 +191,10 @@ auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoA
 
 		return undo;
 	}
-	else
-	{
-		delete undo;
+
+
+	    delete undo;
 		return nullptr;
-	}
 }
 
 /**
@@ -286,11 +284,11 @@ auto EditSelectionContents::setColor(int color) -> UndoAction*
 
 		return undo;
 	}
-	else
-	{
-		delete undo;
+
+
+	    delete undo;
 		return nullptr;
-	}
+
 
 	return nullptr;
 }
@@ -345,7 +343,7 @@ void EditSelectionContents::deleteViewBuffer()
 /**
  * Gets the original width of the contents
  */
-auto EditSelectionContents::getOriginalWidth() -> double
+auto EditSelectionContents::getOriginalWidth() const -> double
 {
 	return this->originalWidth;
 }
@@ -353,7 +351,7 @@ auto EditSelectionContents::getOriginalWidth() -> double
 /**
  * Gets the original height of the contents
  */
-auto EditSelectionContents::getOriginalHeight() -> double
+auto EditSelectionContents::getOriginalHeight() const -> double
 {
 	return this->originalHeight;
 }
@@ -400,12 +398,12 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 	}
 }
 
-auto EditSelectionContents::getOriginalX() -> double
+auto EditSelectionContents::getOriginalX() const -> double
 {
 	return this->originalX;
 }
 
-auto EditSelectionContents::getOriginalY() -> double
+auto EditSelectionContents::getOriginalY() const -> double
 {
 	return this->originalY;
 }

@@ -101,7 +101,7 @@ auto LatexController::findTexDependencies() -> LatexController::FindDependencySt
 		string msg = _("Could not find kpsewhich in PATH; please install kpsewhich and put it on path.");
 		return LatexController::FindDependencyStatus(false, msg);
 	}
-	else if (kpsewhichStatus != 0)
+	if (kpsewhichStatus != 0)
 	{
 		string msg = FS(_F("Could not find the LaTeX package 'standalone'.\nPlease install standalone (found in texlive-latex-extra) and make sure "
 		                   "it's accessible by your LaTeX installation."));
@@ -255,7 +255,7 @@ auto LatexController::showTexEditDialog() -> string
 
 	string result = this->dlg.getFinalTex();
 	// If the user cancelled, there is no change in the latex string.
-	result = result == "" ? initialTex : result;
+	result = result.empty() ? initialTex : result;
 	return result;
 }
 
@@ -374,7 +374,7 @@ void LatexController::deleteOldImage()
 	}
 }
 
-auto LatexController::convertDocumentToImage(PopplerDocument* doc, string formula) -> std::unique_ptr<TexImage>
+auto LatexController::convertDocumentToImage(PopplerDocument* doc, string formula) const -> std::unique_ptr<TexImage>
 {
 	if (poppler_document_get_n_pages(doc) < 1)
 	{

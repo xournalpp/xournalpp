@@ -4,7 +4,7 @@
 
 #include "TouchInputHandler.h"
 #include "InputContext.h"
-#include "math.h"
+#include <cmath>
 
 TouchInputHandler::TouchInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)
 {

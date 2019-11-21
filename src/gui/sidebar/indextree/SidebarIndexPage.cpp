@@ -379,20 +379,18 @@ auto SidebarIndexPage::selectPageNr(size_t page, size_t pdfPage, GtkTreeIter* pa
 			g_object_unref(model);
 			return true;
 		}
-		else
-		{
-			g_object_unref(link);
+
+
+		    g_object_unref(link);
 
 			if (selectPageNr(page, pdfPage, &iter))
 			{
 				g_object_unref(model);
 				return true;
 			}
-			else
-			{
-				valid = gtk_tree_model_iter_next(model, &iter);
-			}
-		}
+
+
+		        valid = gtk_tree_model_iter_next(model, &iter);
 	}
 
 	g_object_unref(model);

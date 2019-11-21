@@ -115,7 +115,7 @@ auto TexImage::getText() -> string
 
 auto TexImage::getImage() -> cairo_surface_t*
 {
-	if (this->image == nullptr && this->parsedBinaryData == false)
+	if (this->image == nullptr && !this->parsedBinaryData)
 	{
 		loadBinaryData();
 	}
@@ -164,7 +164,7 @@ void TexImage::loadBinaryData()
  */
 auto TexImage::getPdf() -> PopplerDocument*
 {
-	if (this->pdf == nullptr && this->parsedBinaryData == false)
+	if (this->pdf == nullptr && !this->parsedBinaryData)
 	{
 		loadBinaryData();
 	}

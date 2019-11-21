@@ -117,7 +117,7 @@ void SelectBackgroundColorDialog::storeLastUsedValuesInSettings()
 	settings->customSettingsChanged();
 }
 
-auto SelectBackgroundColorDialog::getSelectedColor() -> int
+auto SelectBackgroundColorDialog::getSelectedColor() const -> int
 {
 	return this->selected;
 }

@@ -114,11 +114,11 @@ auto PageTypeHandler::getPageTypeFormatForString(const string& format) -> PageTy
 	{
 		return PageTypeFormat::Plain;
 	}
-	else if (format == "ruled")
+	if (format == "ruled")
 	{
 		return PageTypeFormat::Ruled;
 	}
-	else if (format == "lined")
+	if (format == "lined")
 	{
 		return PageTypeFormat::Lined;
 	}

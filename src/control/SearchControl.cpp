@@ -22,7 +22,7 @@ void SearchControl::freeSearchResults()
 	this->results.clear();
 }
 
-void SearchControl::paint(cairo_t* cr, GdkRectangle* rect, double zoom, GtkColorWrapper color)
+void SearchControl::paint(cairo_t* cr, GdkRectangle* rect, double zoom, const GtkColorWrapper& color)
 {
 	// set the line always the same size on display
 	cairo_set_line_width(cr, 1 / zoom);
@@ -78,7 +78,7 @@ auto SearchControl::search(string text, int* occures, double* top) -> bool
 
 	if (top)
 	{
-		if (this->results.size() == 0)
+		if (this->results.empty())
 		{
 			*top = 0;
 		}
@@ -97,5 +97,5 @@ auto SearchControl::search(string text, int* occures, double* top) -> bool
 		}
 	}
 
-	return this->results.size() > 0;
+	return !this->results.empty();
 }

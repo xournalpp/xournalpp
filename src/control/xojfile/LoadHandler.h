@@ -48,7 +48,7 @@ public:
 	Document* loadDocument(const string& filename);
 
 	string getLastError();
-	bool isAttachedPdfMissing();
+	bool isAttachedPdfMissing() const;
 	string getMissingPdfFilename();
 
 	void removePdfBackground();
@@ -75,13 +75,12 @@ private:
 	bool openFile(const string& filename);
 	bool parseXml();
 
-	static void parserText(GMarkupParseContext* context, const gchar* text, gsize text_len, gpointer userdata,
+	static void parserText(GMarkupParseContext* context, const gchar* text, gsize textLen, gpointer userdata,
 	                       GError** error);
-	static void parserEndElement(GMarkupParseContext* context, const gchar* element_name, gpointer userdata,
+	static void parserEndElement(GMarkupParseContext* context, const gchar* elementName, gpointer userdata,
 	                             GError** error);
-	static void parserStartElement(GMarkupParseContext* context, const gchar* element_name,
-	                               const gchar** attribute_names, const gchar** attribute_values,
-	                               gpointer userdata, GError** error);
+	static void parserStartElement(GMarkupParseContext* context, const gchar* elementName, const gchar** attributeNames,
+	                               const gchar** attributeValues, gpointer userdata, GError** error);
 
 	const char* getAttrib(const char* name, bool optional = false);
 	double getAttribDouble(const char* name);
@@ -96,7 +95,7 @@ private:
 	void readTexImage(const gchar* base64string, gsize base64stringLen);
 
 private:
-	string parseBase64(const gchar* base64, gsize lenght);
+	static string parseBase64(const gchar* base64, gsize lenght);
 	bool readZipAttachment(const string& filename, gpointer& data, gsize& length);
 	string getTempFileForPath(const string& filename);
 

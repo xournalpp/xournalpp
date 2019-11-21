@@ -66,7 +66,7 @@ void HandRecognition::reload()
 	touch.getString("method", disableMethod);
 	if (disableMethod == "X11")
 	{
-		if (x11Session == false)
+		if (!x11Session)
 		{
 			g_warning("X11 Touch workaround is selected, but no X11 Session running!");
 			enabled = false;

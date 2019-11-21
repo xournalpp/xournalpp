@@ -33,7 +33,7 @@ auto InsertUndoAction::getText() -> string
 	{
 		return _("Draw stroke");
 	}
-	else if (element->getType() == ELEMENT_TEXT)
+	if (element->getType() == ELEMENT_TEXT)
 	{
 		return _("Write text");
 	}

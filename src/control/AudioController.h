@@ -40,7 +40,7 @@ public:
 
 	string getAudioFilename();
 	Path getAudioFolder();
-	size_t getStartTime();
+	size_t getStartTime() const;
 	vector<DeviceInfo> getOutputDevices();
 	vector<DeviceInfo> getInputDevices();
 

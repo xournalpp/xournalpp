@@ -77,22 +77,22 @@ auto EraseableStrokePart::clone() -> EraseableStrokePart*
 	return part;
 }
 
-auto EraseableStrokePart::getX() -> double
+auto EraseableStrokePart::getX() const -> double
 {
 	return this->x;
 }
 
-auto EraseableStrokePart::getY() -> double
+auto EraseableStrokePart::getY() const -> double
 {
 	return this->y;
 }
 
-auto EraseableStrokePart::getElementWidth() -> double
+auto EraseableStrokePart::getElementWidth() const -> double
 {
 	return this->elementWidth;
 }
 
-auto EraseableStrokePart::getElementHeight() -> double
+auto EraseableStrokePart::getElementHeight() const -> double
 {
 	return this->elementHeight;
 }
@@ -104,7 +104,7 @@ void EraseableStrokePart::addPoint(Point p)
 	this->points = g_list_append(this->points, new Point(p));
 }
 
-auto EraseableStrokePart::getWidth() -> double
+auto EraseableStrokePart::getWidth() const -> double
 {
 	return this->width;
 }

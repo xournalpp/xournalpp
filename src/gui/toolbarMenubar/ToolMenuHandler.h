@@ -41,7 +41,7 @@ public:
 
 public:
 	void freeDynamicToolbarItems();
-	void unloadToolbar(GtkWidget* tBunload);
+	static void unloadToolbar(GtkWidget* toolbar);
 
 	void load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal);
 

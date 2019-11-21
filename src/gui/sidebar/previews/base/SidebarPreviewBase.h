@@ -55,7 +55,7 @@ public:
 	/**
 	 * Gets the zoom factor for the previews
 	 */
-	double getZoom();
+	double getZoom() const;
 
 	/**
 	 * Gets the PDF cache for preview rendering

@@ -125,7 +125,7 @@ auto Layer::isAnnotated() -> bool
 /**
  * @return true if the layer is visible
  */
-auto Layer::isVisible() -> bool
+auto Layer::isVisible() const -> bool
 {
 	return visible;
 }

@@ -463,12 +463,12 @@ void MainWindow::updateScrollbarSidebarPosition()
 		// Already correct
 		return;
 	}
-	else
-	{
-		GtkAllocation allocation;
+
+
+	    GtkAllocation allocation;
 		gtk_widget_get_allocation(panelMainContents, &allocation);
 		divider = allocation.width - divider;
-	}
+
 
 	g_object_ref(sidebar);
 	g_object_ref(boxContents);
@@ -505,12 +505,12 @@ auto MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 		//something is selected - give that control
 		return false;
 	}
-	else if (win->getXournal()->getTextEditor())
+	if (win->getXournal()->getTextEditor())
 	{
 		//editing text - give that control
 		return false;
 	}
-	else if (event->keyval == GDK_KEY_Escape)
+	if (event->keyval == GDK_KEY_Escape)
 	{
 		win->getControl()->getSearchBar()->showSearchBar(false);
 		return true;
@@ -563,7 +563,7 @@ void MainWindow::setMaximized(bool maximized)
 	this->maximized = maximized;
 }
 
-auto MainWindow::isMaximized() -> bool
+auto MainWindow::isMaximized() const -> bool
 {
 	return this->maximized;
 }
@@ -620,7 +620,7 @@ auto MainWindow::clearToolbar() -> ToolbarData*
 	{
 		for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++)
 		{
-			this->toolbar->unloadToolbar(this->toolbarWidgets[i]);
+			ToolMenuHandler::unloadToolbar(this->toolbarWidgets[i]);
 		}
 
 		this->toolbar->freeDynamicToolbarItems();

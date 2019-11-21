@@ -20,7 +20,7 @@ auto toolSizeFromString(const string& size) -> ToolSize
 	{
 		return TOOL_SIZE_VERY_FINE;
 	}
-	else if (size == "thin")
+	if (size == "thin")
 	{
 		return TOOL_SIZE_FINE;
 	}
@@ -68,7 +68,7 @@ auto drawingTypeFromString(const string& type) -> DrawingType
 	{
 		return DRAWING_TYPE_DONT_CHANGE;
 	}
-	else if (type == "line")
+	if (type == "line")
 	{
 		return DRAWING_TYPE_LINE;
 	}
@@ -133,7 +133,7 @@ auto toolTypeFromString(const string& type) -> ToolType
 	{
 		return TOOL_NONE;
 	}
-	else if (type == "pen")
+	if (type == "pen")
 	{
 		return TOOL_PEN;
 	}
@@ -217,7 +217,7 @@ auto eraserTypeFromString(const string& type) -> EraserType
 	{
 		return ERASER_TYPE_NONE;
 	}
-	else if (type == "default")
+	if (type == "default")
 	{
 		return ERASER_TYPE_DEFAULT;
 	}

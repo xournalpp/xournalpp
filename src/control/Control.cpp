@@ -380,10 +380,10 @@ auto Control::autosaveCallback(Control* control) -> bool
 		// do nothing, nothing changed
 		return true;
 	}
-	else
-	{
-		g_message("Info: autosave document...");
-	}
+
+
+	    g_message("Info: autosave document...");
+
 
 	auto* job = new AutosaveJob(control);
 	control->scheduler->addJob(job, JOB_PRIORITY_NONE);
@@ -971,7 +971,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 
 	case ACTION_AUDIO_RECORD:
 	{
-		bool result = 0;
+		bool result = false;
 		if (enabled)
 		{
 			result = audioController->startRecording();
@@ -1242,7 +1242,7 @@ auto Control::isInDragAndDropToolbar() -> bool
 
 void Control::setShapeTool(ActionType type, bool enabled)
 {
-	if (enabled == false)
+	if (!enabled)
 	{
 		// Disable all entries
 		this->toolHandler->setDrawingType(DRAWING_TYPE_DEFAULT);
@@ -1313,7 +1313,7 @@ void Control::disableSidebarTmp(bool disabled)
 
 void Control::addDefaultPage(string pageTemplate)
 {
-	if (pageTemplate == "")
+	if (pageTemplate.empty())
 	{
 		pageTemplate = settings->getPageTemplate();
 	}
@@ -1476,7 +1476,7 @@ void Control::paperFormat()
 	if (width > 0)
 	{
 		this->doc->lock();
-		this->doc->setPageSize(page, width, height);
+		Document::setPageSize(page, width, height);
 		this->doc->unlock();
 	}
 
@@ -2301,9 +2301,9 @@ auto Control::openFile(Path filename, int scrollToPage, bool forceOpen) -> bool
 		fileLoaded(scrollToPage);
 		return false;
 	}
-	else
-	{
-		this->closeDocument();
+
+
+	    this->closeDocument();
 
 		this->doc->lock();
 		this->doc->clearDocument();
@@ -2314,7 +2314,7 @@ auto Control::openFile(Path filename, int scrollToPage, bool forceOpen) -> bool
 		// This is important because of the new .xopp format, where Xournal .xoj handled as import,
 		// not as file to load
 		settings->setLastSavePath(filename.getParentPath());
-	}
+
 
 	fileLoaded(scrollToPage);
 	return true;
@@ -2388,7 +2388,7 @@ void Control::fileLoaded(int scrollToPage)
 		}
 
 		loadMetadata(md);
-		recent->addRecentFileFilename(file);
+		RecentManager::addRecentFileFilename(file);
 	}
 	else
 	{
@@ -2477,7 +2477,7 @@ auto Control::annotatePdf(Path filename, bool attachPdf, bool attachToDocument) 
 
 	if (res)
 	{
-		this->recent->addRecentFileFilename(filename.c_str());
+		RecentManager::addRecentFileFilename(filename.c_str());
 
 		this->doc->lock();
 		Path file = this->doc->getEvMetadataFilename();
@@ -2665,7 +2665,7 @@ auto Control::showSaveDialog() -> bool
 
 void Control::updateWindowTitle()
 {
-	string title = "";
+	string title = title;
 
 	this->doc->lock();
 	if (doc->getFilename().isEmpty())
@@ -2752,7 +2752,7 @@ void Control::resetSavedStatus()
 	this->doc->unlock();
 
 	this->undoRedo->documentSaved();
-	this->recent->addRecentFileFilename(filename);
+	RecentManager::addRecentFileFilename(filename);
 	this->updateWindowTitle();
 }
 

@@ -24,7 +24,7 @@ GtkColorWrapper::~GtkColorWrapper() = default;
 /**
  * Apply the color to a cairo interface with "cairo_set_source_rgb"
  */
-void GtkColorWrapper::apply(cairo_t* cr)
+void GtkColorWrapper::apply(cairo_t* cr) const
 {
 	cairo_set_source_rgb(cr, red / 65536.0, green / 65536.0, blue / 65536.0);
 }
@@ -32,7 +32,7 @@ void GtkColorWrapper::apply(cairo_t* cr)
 /**
  * Apply the color to a cairo interface with "cairo_set_source_rgba" and a specified alpha value
  */
-void GtkColorWrapper::applyWithAlpha(cairo_t* cr, double alpha)
+void GtkColorWrapper::applyWithAlpha(cairo_t* cr, double alpha) const
 {
 	cairo_set_source_rgba(cr, red / 65536.0, green / 65536.0, blue / 65536.0, alpha);
 }

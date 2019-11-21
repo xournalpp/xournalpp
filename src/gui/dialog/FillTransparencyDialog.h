@@ -22,7 +22,7 @@ public:
 public:
 	virtual void show(GtkWindow* parent);
 
-	int getResultAlpha();
+	int getResultAlpha() const;
 
 private:
 	void setPreviewImage(int alpha);

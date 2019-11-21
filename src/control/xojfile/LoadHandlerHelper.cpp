@@ -87,9 +87,9 @@ auto LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* lo
 
 		return true;
 	}
-	else
-	{
-		for (auto& i: PREDEFINED_COLORS)
+
+
+	    for (auto& i: PREDEFINED_COLORS)
 		{
 			if (!strcmp(text, i.name))
 			{
@@ -99,7 +99,6 @@ auto LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* lo
 		}
 		error("%s", FC(_F("Color \"{1}\" unknown (not defined in default color list)!") % text));
 		return false;
-	}
 }
 
 

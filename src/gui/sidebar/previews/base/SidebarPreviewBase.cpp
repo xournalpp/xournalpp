@@ -82,7 +82,7 @@ void SidebarPreviewBase::sizeChanged(GtkWidget* widget, GtkAllocation* allocatio
 	}
 }
 
-auto SidebarPreviewBase::getZoom() -> double
+auto SidebarPreviewBase::getZoom() const -> double
 {
 	return this->zoom;
 }
@@ -94,7 +94,7 @@ auto SidebarPreviewBase::getCache() -> PdfCache*
 
 void SidebarPreviewBase::layout()
 {
-	this->layoutmanager->layout(this);
+	SidebarLayout::layout(this);
 }
 
 auto SidebarPreviewBase::hasData() -> bool

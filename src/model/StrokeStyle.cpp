@@ -10,12 +10,12 @@ const double dashLinePattern[] = { 6, 3 };
 const double dashDotLinePattern[] = { 6, 3, 0.5, 3 };
 const double dotLinePattern[] = { 0.5, 3 };
 
-#define PARSE_STYLE(name, def) \
-	if (strcmp(style, name) == 0) \
-	{ \
-		LineStyle style; \
-		style.setDashes(def, sizeof(def) / sizeof(def[0])); \
-		return style; \
+#define PARSE_STYLE(name, def)                                \
+	if (strcmp(style, name) == 0)                             \
+	{                                                         \
+		LineStyle style;                                      \
+		style.setDashes(def, sizeof(def) / sizeof((def)[0])); \
+		return style;                                         \
 	}
 
 auto StrokeStyle::parseStyle(const char* style) -> LineStyle
@@ -45,7 +45,7 @@ auto StrokeStyle::parseStyle(const char* style) -> LineStyle
 		dash.push_back(val);
 	}
 
-	if (dash.size() == 0)
+	if (dash.empty())
 	{
 		return LineStyle();
 	}
@@ -63,10 +63,10 @@ auto StrokeStyle::parseStyle(const char* style) -> LineStyle
 	return ls;
 }
 
-#define FORMAT_STYLE(name, def) \
-	if (count == (sizeof(def) / sizeof(def[0])) && memcmp(dashes, def, count * sizeof(def[0])) == 0) \
-	{ \
-		return name; \
+#define FORMAT_STYLE(name, def)                                                                          \
+	if (count == (sizeof(def) / sizeof((def)[0])) && memcmp(dashes, def, count * sizeof((def)[0])) == 0) \
+	{                                                                                                    \
+		return name;                                                                                     \
 	}
 
 auto StrokeStyle::formatStyle(const double* dashes, int count) -> string

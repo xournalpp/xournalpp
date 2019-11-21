@@ -114,7 +114,7 @@ auto Scheduler::getNextJobUnlocked(bool onlyNotRender, bool* hasRenderJobs) -> J
 					g_queue_delete_link(this->jobQueue[i], l);
 					return job;
 				}
-				else if (hasRenderJobs)
+				if (hasRenderJobs)
 				{
 					*hasRenderJobs = true;
 				}

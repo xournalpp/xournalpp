@@ -131,7 +131,8 @@ auto XojPreviewExtractor::readFile(const Path& file) -> PreviewExtractResult
 
 		gzclose(fp);
 		return result;
-	} else if (!zipFp)
+	}
+	if (!zipFp)
 	{
 		return PREVIEW_RESULT_COULD_NOT_OPEN_FILE;
 	}

@@ -10,7 +10,7 @@ XojColor::XojColor(int color, string name)
 
 XojColor::~XojColor() = default;
 
-auto XojColor::getColor() -> int
+auto XojColor::getColor() const -> int
 {
 	return this->color;
 }

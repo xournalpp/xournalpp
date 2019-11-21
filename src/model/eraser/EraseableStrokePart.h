@@ -26,7 +26,7 @@ private:
 
 public:
 	void addPoint(Point p);
-	double getWidth();
+	double getWidth() const;
 
 	GList* getPoints();
 
@@ -38,10 +38,10 @@ public:
 	void calcSize();
 
 public:
-	double getX();
-	double getY();
-	double getElementWidth();
-	double getElementHeight();
+	double getX() const;
+	double getY() const;
+	double getElementWidth() const;
+	double getElementHeight() const;
 
 	static void printDebugStrokeParts();
 

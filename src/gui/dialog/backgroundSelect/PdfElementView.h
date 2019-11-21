@@ -42,7 +42,7 @@ protected:
 	virtual int getContentHeight();
 
 public:
-	bool isUsed();
+	bool isUsed() const;
 	void setUsed(bool used);
 	void setHideUnused();
 

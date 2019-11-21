@@ -19,7 +19,7 @@ void AbstractInputHandler::block(bool block)
 	this->onBlock();
 }
 
-auto AbstractInputHandler::isBlocked() -> bool
+auto AbstractInputHandler::isBlocked() const -> bool
 {
 	return this->blocked;
 }
@@ -30,9 +30,8 @@ auto AbstractInputHandler::handle(InputEvent* event) -> bool
 	{
 		this->inputContext->getXournal()->view->getCursor()->setInputDeviceClass(event->deviceClass);
 		return this->handleImpl(event);
-	} else {
-		return true;
 	}
+	    return true;
 }
 
 /**

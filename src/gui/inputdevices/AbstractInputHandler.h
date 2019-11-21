@@ -44,7 +44,7 @@ public:
 	virtual ~AbstractInputHandler();
 
 	void block(bool block);
-	bool isBlocked();
+	bool isBlocked() const;
 	virtual void onBlock();
 	bool handle(InputEvent* event);
 	virtual bool handleImpl(InputEvent* event) = 0;

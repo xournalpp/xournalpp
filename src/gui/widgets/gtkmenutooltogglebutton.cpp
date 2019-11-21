@@ -348,10 +348,9 @@ static auto arrow_button_button_press_event_cb(GtkWidget* widget,
 
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+
+
+	    return false;
 }
 
 static void gtk_menu_tool_toggle_button_init(GtkMenuToolToggleButton* button)

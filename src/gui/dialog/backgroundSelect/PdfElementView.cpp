@@ -15,7 +15,7 @@ PdfElementView::PdfElementView(int id, XojPdfPageSPtr page, PdfPagesDialog* dlg)
 
 PdfElementView::~PdfElementView() = default;
 
-auto PdfElementView::isUsed() -> bool
+auto PdfElementView::isUsed() const -> bool
 {
 	return this->used;
 }
@@ -32,18 +32,18 @@ void PdfElementView::setHideUnused()
 
 void PdfElementView::paintContents(cairo_t* cr)
 {
-	double zoom = (dynamic_cast<PdfPagesDialog*>(dlg))->getZoom();
+	double zoom = PdfPagesDialog::getZoom();
 	cairo_scale(cr, zoom, zoom);
 	page->render(cr);
 }
 
 auto PdfElementView::getContentWidth() -> int
 {
-	return page->getWidth() * (dynamic_cast<PdfPagesDialog*>(dlg))->getZoom();
+	return page->getWidth() * PdfPagesDialog::getZoom();
 }
 
 auto PdfElementView::getContentHeight() -> int
 {
-	return page->getHeight() * (dynamic_cast<PdfPagesDialog*>(dlg))->getZoom();
+	return page->getHeight() * PdfPagesDialog::getZoom();
 }
 

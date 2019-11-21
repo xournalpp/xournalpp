@@ -47,7 +47,7 @@ public:
 	 *
 	 * @return true if the file existed and is deleted, false if an error occurred
 	 */
-	bool deleteFile();
+	bool deleteFile() const;
 
 	bool operator==(const Path& other) const;
 

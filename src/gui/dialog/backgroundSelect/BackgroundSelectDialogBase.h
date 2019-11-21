@@ -22,7 +22,7 @@ class BackgroundSelectDialogBase : public GladeGui
 {
 public:
 	BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings, const string& glade,
-	                           string mainWnd);
+	                           const string& mainWnd);
 	~BackgroundSelectDialogBase();
 
 public:

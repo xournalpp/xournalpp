@@ -25,7 +25,7 @@ class VorbisProducer
 {
 public:
 	explicit VorbisProducer(AudioQueue<float>* audioQueue);
-	~VorbisProducer();
+	~VorbisProducer() = default;
 
 public:
 	bool start(const string& filename, unsigned int timestamp);

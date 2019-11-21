@@ -27,7 +27,7 @@ public:
 public:
 	GtkWidget* getWidget();
 
-	int getPage();
+	int getPage() const;
 	void setPage(size_t page);
 	void setMinMaxPage(size_t min, size_t max);
 

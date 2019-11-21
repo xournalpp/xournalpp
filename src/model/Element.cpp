@@ -3,7 +3,7 @@
 #include <serializing/ObjectInputStream.h>
 #include <serializing/ObjectOutputStream.h>
 
-#include "math.h"
+#include <cmath>
 
 Element::Element(ElementType type)
  : type(type)
@@ -140,7 +140,7 @@ auto Element::rescaleOnlyAspectRatio() -> bool
 	return false;
 }
 
-void Element::serializeElement(ObjectOutputStream& out)
+void Element::serializeElement(ObjectOutputStream& out) const
 {
 	out.writeObject("Element");
 

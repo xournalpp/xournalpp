@@ -176,7 +176,7 @@ auto InputSequence::actionMoved(guint32 time) -> bool
 		}
 		return false;
 	}
-	else if (xournal->selection)
+	if (xournal->selection)
 	{
 		EditSelection* selection = xournal->selection;
 		XojPageView* view = selection->getView();
@@ -267,7 +267,7 @@ auto InputSequence::actionStart(guint32 time) -> bool
 
 		return true;
 	}
-	else if (xournal->selection)
+	if (xournal->selection)
 	{
 		EditSelection* selection = xournal->selection;
 
@@ -288,14 +288,13 @@ auto InputSequence::actionStart(guint32 time) -> bool
 			xournal->selection->mouseDown(selType, pos.x, pos.y);
 			return true;
 		}
-		else
-		{
-			xournal->view->clearSelection();
+
+
+		    xournal->view->clearSelection();
 			if (changeTool())
 			{
 				return true;
 			}
-		}
 	}
 
 	XojPageView* pv = getPageAtCurrentPosition();
@@ -431,14 +430,7 @@ auto InputSequence::getInputDataRelativeToCurrentPage(XojPageView* page) -> Posi
  */
 void InputSequence::checkCanStartInput()
 {
-	if (inputHandler->startInput(this))
-	{
-		inputRunning = true;
-	}
-	else
-	{
-		inputRunning = false;
-	}
+	inputRunning = inputHandler->startInput(this);
 }
 
 /**

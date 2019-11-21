@@ -39,8 +39,8 @@ public:
 
 private:
 	void erase(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list);
-	bool erasePart(double x, double y, double halfEraserSize, EraseableStrokePart* part,
-				   PartList* list, bool* deleteStrokeAfter);
+	static bool erasePart(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list,
+	                      bool* deleteStrokeAfter);
 
 	void addRepaintRect(double x, double y, double width, double height);
 

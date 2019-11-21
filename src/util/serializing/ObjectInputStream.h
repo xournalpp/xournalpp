@@ -42,7 +42,7 @@ public:
 private:
 	void checkType(char type);
 
-	string getType(char type);
+	static string getType(char type);
 
 private:
 	GString* str = nullptr;

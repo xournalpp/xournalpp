@@ -6,7 +6,7 @@
 #include "control/shaperecognizer/ShapeRecognizerResult.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
-#include "math.h"
+#include <cmath>
 #include "undo/InsertUndoAction.h"
 #include "undo/RecognizerUndoAction.h"
 
@@ -42,7 +42,7 @@ void StrokeHandler::draw(cairo_t* cr)
 		return;
 	}
 
-	view.applyColor(cr, stroke);
+	DocumentView::applyColor(cr, stroke);
 
 	if (stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
 		cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
@@ -161,7 +161,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 		if (lengthSqrd < pow((strokeFilterIgnoreLength * dpmm), 2) &&
 		    pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime)
 		{
-			if (pos.timestamp - this->lastStrokeTime > strokeFilterSuccessiveTime)
+			if (pos.timestamp - StrokeHandler::lastStrokeTime > strokeFilterSuccessiveTime)
 			{
 				// stroke not being added to layer... delete here but clear first!
 
@@ -174,12 +174,12 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 				stroke = nullptr;
 				this->userTapped = true;
 
-				this->lastStrokeTime = pos.timestamp;
+				StrokeHandler::lastStrokeTime = pos.timestamp;
 
 				return;
 			}
 		}
-		this->lastStrokeTime = pos.timestamp;
+		StrokeHandler::lastStrokeTime = pos.timestamp;
 	}
 
 	// Backward compatibility and also easier to handle for me;-)

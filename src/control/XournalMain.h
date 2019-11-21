@@ -27,18 +27,19 @@ public:
 	int run(int argc, char* argv[]);
 
 private:
-	void initLocalisation();
+	static void initLocalisation();
 
-	void checkForErrorlog();
-	void checkForEmergencySave(Control* control);
+	static void checkForErrorlog();
+	static void checkForEmergencySave(Control* control);
 
-	int exportPdf(const char* input, const char* output);
-	int exportImg(const char* input, const char* output);
+	static int exportPdf(const char* input, const char* output);
+	static int exportImg(const char* input, const char* output);
 
 	void initSettingsPath();
 	void initResourcePath(GladeSearchpath* gladePath);
-	void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound = true);
-	string findResourcePath(const string& searchFile);
+	static void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile,
+	                             bool failIfNotFound = true);
+	static string findResourcePath(const string& searchFile);
 
 private:
 };

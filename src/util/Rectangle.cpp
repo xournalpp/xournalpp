@@ -1,7 +1,7 @@
 #include "Rectangle.h"
 
 #include "Range.h"
-#include "math.h"
+#include <cmath>
 
 Rectangle::Rectangle() = default;
 
@@ -79,12 +79,12 @@ void Rectangle::add(const Rectangle &other)
 	add(other.x, other.y, other.width, other.height);
 }
 
-auto Rectangle::translated(double dx, double dy) -> Rectangle
+auto Rectangle::translated(double dx, double dy) const -> Rectangle
 {
 	return Rectangle(this->x + dx, this->y + dy, this->width, this->height);
 }
 
-auto Rectangle::intersect(const Rectangle& other) -> Rectangle
+auto Rectangle::intersect(const Rectangle& other) const -> Rectangle
 {
 	double x1 = std::max(this->x, other.x);
 	double y1 = std::max(this->y, other.y);

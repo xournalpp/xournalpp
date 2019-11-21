@@ -1,7 +1,7 @@
 #include "Shadow.h"
 
 #include "ShadowCode.c"
-#include "math.h"
+#include <cmath>
 
 Shadow* Shadow::instance = new Shadow();
 

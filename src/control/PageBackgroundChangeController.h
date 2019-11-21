@@ -53,14 +53,14 @@ private:
 	/**
 	 * Copy the background from source to target
 	 */
-	void copyBackgroundFromOtherPage(PageRef target, PageRef source);
+	static void copyBackgroundFromOtherPage(PageRef target, PageRef source);
 
 	/**
 	 * Apply the background to the page, asks for PDF Page or Image, if needed
 	 *
 	 * @return true on success, false if the user cancels
 	 */
-	bool applyPageBackground(PageRef page, PageType pt);
+	bool applyPageBackground(PageRef page, const PageType& pt);
 
 	/**
 	 * Apply a new PDF Background, asks the user which page should be selected

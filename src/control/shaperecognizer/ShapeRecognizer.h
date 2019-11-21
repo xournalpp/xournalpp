@@ -33,8 +33,8 @@ private:
 	Stroke* tryRectangle();
 	Stroke* tryArrow();
 
-	Stroke* tryClosedPolygon(int nsides);
-	void optimizePolygonal(const Point* pt, int nsides, int* breaks, Inertia* ss);
+	static Stroke* tryClosedPolygon(int nsides);
+	static void optimizePolygonal(const Point* pt, int nsides, int* breaks, Inertia* ss);
 
 	int findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss);
 

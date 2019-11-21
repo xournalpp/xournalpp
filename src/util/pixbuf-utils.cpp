@@ -155,7 +155,13 @@ auto f_pixbuf_to_cairo_surface(GdkPixbuf* pixbuf) -> cairo_surface_t*
 			guchar* end = p + 4 * width;
 			guint t1 = 0, t2 = 0, t3 = 0;
 
-#define MULT(d,c,a,t) G_STMT_START { t = c * a + 0x7f; d = ((t >> 8) + t) >> 8; } G_STMT_END
+#define MULT(d, c, a, t)               \
+	G_STMT_START                       \
+	{                                  \
+		(t) = (c) * (a) + 0x7f;        \
+		(d) = (((t) >> 8) + (t)) >> 8; \
+	}                                  \
+	G_STMT_END
 
 			while (p < end)
 			{

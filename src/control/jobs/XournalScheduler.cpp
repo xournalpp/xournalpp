@@ -4,7 +4,7 @@
 #include "RenderJob.h"
 
 XournalScheduler::XournalScheduler()
- : Scheduler()
+
 {
 	this->name = "XournalScheduler";
 }

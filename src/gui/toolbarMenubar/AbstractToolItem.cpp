@@ -50,7 +50,7 @@ void AbstractToolItem::toolButtonCallback(GtkToolButton* toolbutton, AbstractToo
 		}
 
 		// don't allow deselect this button
-		if (item->toolToggleOnlyEnable && selected == false)
+		if (item->toolToggleOnlyEnable && !selected)
 		{
 			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(toolbutton), true);
 			return;
@@ -107,7 +107,7 @@ void AbstractToolItem::setPopupMenu(GtkWidget* popupMenu)
 	this->popupMenu = popupMenu;
 }
 
-auto AbstractToolItem::isUsed() -> bool
+auto AbstractToolItem::isUsed() const -> bool
 {
 	return used;
 }

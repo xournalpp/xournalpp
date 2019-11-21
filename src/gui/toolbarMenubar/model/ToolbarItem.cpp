@@ -39,7 +39,7 @@ auto ToolbarItem::operator==(ToolbarItem& other) -> bool
 	return this->name == other.name;
 }
 
-auto ToolbarItem::getId() -> int
+auto ToolbarItem::getId() const -> int
 {
 	return this->id;
 }

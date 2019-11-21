@@ -1,6 +1,6 @@
 #include "Selection.h"
 
-#include "math.h"
+#include <cmath>
 #include "model/Layer.h"
 #include "util/GtkColorWrapper.h"
 

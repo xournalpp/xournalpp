@@ -5,7 +5,6 @@
 
 #include <StringUtils.h>
 
-auto gtk_invisible_new() -> GtkWidget*;
 
 FullscreenHandler::FullscreenHandler(Settings* settings)
  : settings(settings)
@@ -14,7 +13,7 @@ FullscreenHandler::FullscreenHandler(Settings* settings)
 
 FullscreenHandler::~FullscreenHandler() = default;
 
-auto FullscreenHandler::isFullscreen() -> bool
+auto FullscreenHandler::isFullscreen() const -> bool
 {
 	return this->fullscreen;
 }
@@ -61,8 +60,6 @@ void FullscreenHandler::hideWidget(MainWindow* win, const string& widgetName)
 
 		return;
 	}
-
-	return;
 }
 
 void FullscreenHandler::enableFullscreen(MainWindow* win)

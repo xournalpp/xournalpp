@@ -77,7 +77,7 @@ private:
 protected:
 	virtual void calcSize() = 0;
 
-	void serializeElement(ObjectOutputStream& out);
+	void serializeElement(ObjectOutputStream& out) const;
 	void readSerializedElement(ObjectInputStream& in);
 
 protected:

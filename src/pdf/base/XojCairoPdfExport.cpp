@@ -74,7 +74,7 @@ void XojCairoPdfExport::exportPage(size_t page)
 
 auto XojCairoPdfExport::createPdf(Path file, PageRangeVector& range) -> bool
 {
-	if (range.size() == 0)
+	if (range.empty())
 	{
 		this->lastError = _("No pages to export!");
 		return false;

@@ -58,7 +58,7 @@ public:
 	/**
 	 * @return true if the layer is visible
 	 */
-	bool isVisible();
+	bool isVisible() const;
 
 	/**
 	 * @param visible true if the layer is visible

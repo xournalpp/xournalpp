@@ -142,14 +142,13 @@ auto Document::createSaveFolder(Path lastSavePath) -> Path
 	{
 		return filename.getParentPath();
 	}
-	else if (!pdfFilename.isEmpty())
+	if (!pdfFilename.isEmpty())
 	{
 		return pdfFilename.getParentPath();
 	}
-	else
-	{
-		return lastSavePath;
-	}
+
+
+	    return lastSavePath;
 }
 
 auto Document::createSaveFilename(DocumentType type, const string& defaultSaveName) -> Path
@@ -161,15 +160,15 @@ auto Document::createSaveFilename(DocumentType type, const string& defaultSaveNa
 		p.clearExtensions();
 		return p;
 	}
-	else if (!pdfFilename.isEmpty())
+	if (!pdfFilename.isEmpty())
 	{
 		Path p = pdfFilename.getFilename();
 		p.clearExtensions();
 		return p;
 	}
-	else
-	{
-		time_t curtime = time(nullptr);
+
+
+	    time_t curtime = time(nullptr);
 		char stime[128];
 		strftime(stime, sizeof(stime), defaultSaveName.c_str(), localtime(&curtime));
 
@@ -177,7 +176,6 @@ auto Document::createSaveFilename(DocumentType type, const string& defaultSaveNa
 		Path p = stime;
 		p.clearExtensions();
 		return p;
-	}
 }
 
 
@@ -220,7 +218,7 @@ auto Document::isPdfDocumentLoaded() -> bool
 	return pdfDocument.isLoaded();
 }
 
-auto Document::isAttachPdf() -> bool
+auto Document::isAttachPdf() const -> bool
 {
 	return this->attachPdf;
 }
@@ -513,7 +511,7 @@ void Document::setCreateBackupOnSave(bool backup)
 	this->createBackupOnSave = backup;
 }
 
-auto Document::shouldCreateBackupOnSave() -> bool
+auto Document::shouldCreateBackupOnSave() const -> bool
 {
 	return this->createBackupOnSave;
 }

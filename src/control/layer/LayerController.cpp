@@ -299,7 +299,7 @@ auto LayerController::getCurrentPage() -> PageRef
 	return control->getDocument()->getPage(selectedPage);
 }
 
-auto LayerController::getCurrentPageId() -> size_t
+auto LayerController::getCurrentPageId() const -> size_t
 {
 	return selectedPage;
 }

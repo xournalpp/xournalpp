@@ -31,7 +31,8 @@ auto StylusInputHandler::handleImpl(InputEvent* event) -> bool
 		{
 			this->actionStart(event);
 			return true;
-		} else if (this->inputRunning)
+		}
+		if (this->inputRunning)
 		{
 			// TPCButton is disabled and modifier button was pressed
 			this->actionEnd(event);
@@ -89,7 +90,8 @@ auto StylusInputHandler::handleImpl(InputEvent* event) -> bool
 		{
 			this->actionEnd(event);
 			return true;
-		} else if (this->inputRunning)
+		}
+		if (this->inputRunning)
 		{
 			// TPCButton is disabled and modifier button was released
 			this->actionEnd(event);

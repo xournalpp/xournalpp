@@ -95,7 +95,7 @@ auto LoadHandler::getLastError() -> string
 	return this->lastError;
 }
 
-auto LoadHandler::isAttachedPdfMissing() -> bool
+auto LoadHandler::isAttachedPdfMissing() const -> bool
 {
 	return this->attachedPdfMissing;
 }
@@ -190,12 +190,11 @@ auto LoadHandler::closeFile() -> bool
 	if (this->isGzFile)
 	{
 		return static_cast<bool>(gzclose(this->gzFp));
-	} else
-	{
-		zip_fclose(this->zipContentFile);
+	}
+
+	    zip_fclose(this->zipContentFile);
 		int zipError = zip_close(this->zipFp);
 		return zipError == 0;
-	}
 }
 
 auto LoadHandler::readContentFile(char* buffer, zip_uint64_t len) -> zip_int64_t
@@ -207,17 +206,15 @@ auto LoadHandler::readContentFile(char* buffer, zip_uint64_t len) -> zip_int64_t
 			return -1;
 		}
 		return gzread(this->gzFp, buffer, static_cast<unsigned int>(len));
-	} else
-	{
-		zip_int64_t lengthRead = zip_fread(this->zipContentFile, buffer, len);
+	}
+
+	    zip_int64_t lengthRead = zip_fread(this->zipContentFile, buffer, len);
 		if (lengthRead > 0)
 		{
 			return lengthRead;
-		} else
-		{
-			return -1;
 		}
-	}
+
+	        return -1;
 }
 
 auto LoadHandler::parseXml() -> bool
@@ -273,12 +270,12 @@ auto LoadHandler::parseXml() -> bool
 
 	g_markup_parse_context_free(context);
 
-	if (this->pos != PASER_POS_FINISHED && this->lastError == "")
+	if (this->pos != PASER_POS_FINISHED && this->lastError.empty())
 	{
 		lastError = _("Document is not complete (maybe the end is cut off?)");
 		return false;
 	}
-	else if (this->pos == PASER_POS_FINISHED && this->doc.getPageCount() == 0)
+	if (this->pos == PASER_POS_FINISHED && this->doc.getPageCount() == 0)
 	{
 		lastError = _("Document is corrupted (no pages found in file)");
 		return false;
@@ -478,7 +475,7 @@ void LoadHandler::parseBgPdf()
 	if (!this->pdfFilenameParsed)
 	{
 
-		if (this->pdfReplacementFilename == "")
+		if (this->pdfReplacementFilename.empty())
 		{
 			const char* domain = LoadHandlerHelper::getAttrib("domain", false, this);
 			const char* sFilename = LoadHandlerHelper::getAttrib("filename", false, this);
@@ -1110,7 +1107,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 			return;
 		}
 
-		if (handler->pressureBuffer.size() != 0)
+		if (!handler->pressureBuffer.empty())
 		{
 			if (static_cast<int>(handler->pressureBuffer.size()) >= handler->stroke->getPointCount() - 1)
 			{
@@ -1276,9 +1273,8 @@ auto LoadHandler::getTempFileForPath(const string& filename) -> string
 	if (tmpFilename)
 	{
 		return string(static_cast<char*>(tmpFilename));
-	} else
-	{
-		error("%s", FC(_F("Requested temporary file was not found for attachment {1}") % filename));
-		return "";
 	}
+
+	    error("%s", FC(_F("Requested temporary file was not found for attachment {1}") % filename));
+		return "";
 }

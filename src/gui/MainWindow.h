@@ -64,7 +64,7 @@ public:
 	void saveSidebarSize();
 
 	void setMaximized(bool maximized);
-	bool isMaximized();
+	bool isMaximized() const;
 
 	XournalView* getXournal();
 
@@ -120,7 +120,7 @@ private:
 	/**
 	 * Sidebar show / hidden
 	 */
-	static void viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* control);
+	static void viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* win);
 
 	/**
 	 * Window close Button is pressed
@@ -146,8 +146,8 @@ private:
 	/**
 	 * Load Overall CSS file with custom icons, other styling and potentially, user changes
 	 */
-	void loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename);
-	
+	static void loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename);
+
 private:
 	Control* control;
 

@@ -137,11 +137,9 @@ private:
 	void loadDefault();
 	void parseItem(xmlDocPtr doc, xmlNodePtr cur);
 
-	xmlNodePtr savePropertyDouble(const gchar* key, double value,
-								  xmlNodePtr parent);
-	xmlNodePtr saveProperty(const gchar* key, int value, xmlNodePtr parent);
-	xmlNodePtr saveProperty(const gchar* key, const gchar* value,
-							xmlNodePtr parent);
+	static xmlNodePtr savePropertyDouble(const gchar* key, double value, xmlNodePtr parent);
+	static xmlNodePtr saveProperty(const gchar* key, int value, xmlNodePtr parent);
+	static xmlNodePtr saveProperty(const gchar* key, const gchar* value, xmlNodePtr parent);
 
 	void saveData(xmlNodePtr root, const string& name, SElement& elem);
 
@@ -237,7 +235,7 @@ public:
 	void setPresentationMode(bool presentationMode);
 	bool isPresentationMode() const;
 
-	void setPairsOffset(int numPairsOffset);
+	void setPairsOffset(int numOffset);
 	int getPairsOffset() const;
 
 	void setViewColumns(int numColumns);

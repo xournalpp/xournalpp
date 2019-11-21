@@ -83,8 +83,8 @@ public:
 	const LineStyle& getLineStyle() const;
 	void setLineStyle(const LineStyle& style);
 
-	bool intersects(double x, double y, double halfSize) override;
-	bool intersects(double x, double y, double halfSize, double* gap) override;
+	bool intersects(double x, double y, double halfEraserSize) override;
+	bool intersects(double x, double y, double halfEraserSize, double* gap) override;
 
 	void setPressure(const vector<double>& pressure);
 	void setLastPressure(double pressure);

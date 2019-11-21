@@ -52,7 +52,7 @@ void FillTransparencyDialog::setPreviewImage(int alpha)
 	gtk_image_set_from_surface(GTK_IMAGE(preview), surface);
 }
 
-auto FillTransparencyDialog::getResultAlpha() -> int
+auto FillTransparencyDialog::getResultAlpha() const -> int
 {
 	return resultAlpha;
 }

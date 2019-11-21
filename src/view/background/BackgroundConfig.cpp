@@ -32,7 +32,7 @@ auto BackgroundConfig::loadValue(const string& key, string& value) -> bool
 	return false;
 }
 
-auto BackgroundConfig::loadValue(string key, int& value) -> bool
+auto BackgroundConfig::loadValue(const string& key, int& value) -> bool
 {
 	string str;
 	if (loadValue(key, str))
@@ -44,7 +44,7 @@ auto BackgroundConfig::loadValue(string key, int& value) -> bool
 	return false;
 }
 
-auto BackgroundConfig::loadValue(string key, double& value) -> bool
+auto BackgroundConfig::loadValue(const string& key, double& value) -> bool
 {
 	string str;
 	if (loadValue(key, str))
@@ -56,7 +56,7 @@ auto BackgroundConfig::loadValue(string key, double& value) -> bool
 	return false;
 }
 
-auto BackgroundConfig::loadValueHex(string key, int& value) -> bool
+auto BackgroundConfig::loadValueHex(const string& key, int& value) -> bool
 {
 	string str;
 	if (loadValue(key, str))

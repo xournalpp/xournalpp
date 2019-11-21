@@ -173,7 +173,7 @@ void XojPage::setBackgroundColor(int color)
 	this->backgroundColor = color;
 }
 
-auto XojPage::getBackgroundColor() -> int
+auto XojPage::getBackgroundColor() const -> int
 {
 	return this->backgroundColor;
 }
@@ -194,7 +194,7 @@ auto XojPage::getHeight() const -> double
 	return this->height;
 }
 
-auto XojPage::getPdfPageNr() -> size_t
+auto XojPage::getPdfPageNr() const -> size_t
 {
 	return this->pdfBackgroundPage;
 }
@@ -211,7 +211,7 @@ auto XojPage::isAnnotated() -> bool
 	return false;
 }
 
-void XojPage::setBackgroundType(PageType bgType)
+void XojPage::setBackgroundType(const PageType& bgType)
 {
 	this->bgType = bgType;
 

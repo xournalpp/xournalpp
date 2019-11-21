@@ -97,7 +97,7 @@ void RecentManager::removeRecentFileFilename(const Path& filename)
 	g_object_unref(file);
 }
 
-auto RecentManager::getMaxRecent() -> int
+auto RecentManager::getMaxRecent() const -> int
 {
 	return this->maxRecent;
 }

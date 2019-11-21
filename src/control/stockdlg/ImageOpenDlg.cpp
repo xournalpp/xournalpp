@@ -24,7 +24,7 @@ auto ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bool
 	}
 
 	GtkWidget* cbAttach = nullptr;
-	if (attach)
+	if (*attach)
 	{
 		cbAttach = gtk_check_button_new_with_label(_("Attach file to the journal"));
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cbAttach), false);

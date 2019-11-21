@@ -11,7 +11,7 @@ class PlaceholderElement {
 public:
 	virtual ~PlaceholderElement() = default;
 
-public:
+
 	virtual auto format(std::string format) -> std::string = 0;
 };
 
@@ -25,7 +25,7 @@ public:
 	{
 	}
 
-public:
+
 	auto format(std::string format) -> std::string override
 	{
 		return text;
@@ -46,7 +46,7 @@ public:
 	{
 	}
 
-public:
+
 	auto format(std::string format) -> std::string override
 	{
 		return std::to_string(value);
@@ -127,7 +127,7 @@ auto PlaceholderString::formatPart(std::string format) -> std::string
 
 void PlaceholderString::process()
 {
-	if (processed != "")
+	if (!processed.empty())
 	{
 		// Already processed
 		return;

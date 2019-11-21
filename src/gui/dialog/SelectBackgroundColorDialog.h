@@ -36,7 +36,7 @@ public:
 	/**
 	 * Return the selected color as RGB, -1 if no color is selected
 	 */
-	int getSelectedColor();
+	int getSelectedColor() const;
 
 private:
 	void storeLastUsedValuesInSettings();

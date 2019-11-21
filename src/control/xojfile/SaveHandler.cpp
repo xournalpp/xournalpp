@@ -192,7 +192,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 		else if (e->getType() == ELEMENT_TEXT)
 		{
 			Text* t = dynamic_cast<Text*>(e);
-			auto* text = new XmlTextNode("text", t->getText().c_str());
+			auto* text = new XmlTextNode("text", t->getText());
 			layer->addChild(text);
 
 			XojFont& f = t->getFont();
