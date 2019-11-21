@@ -139,5 +139,5 @@ private:
 	/**
 	 * The lock of the document
 	 */
-	GMutex documentLock;
+	GMutex documentLock{};
 };

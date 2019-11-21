@@ -88,7 +88,7 @@ void XournalMain::checkForErrorlog()
 
 	vector<string> errorList;
 
-	const gchar* file;
+	const gchar* file = nullptr;
 	while ((file = g_dir_read_name(home)) != nullptr)
 	{
 		if (g_file_test(file, G_FILE_TEST_IS_REGULAR))

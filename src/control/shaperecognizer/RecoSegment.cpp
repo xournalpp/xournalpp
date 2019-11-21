@@ -1,6 +1,7 @@
 #include "RecoSegment.h"
 
 #include "Inertia.h"
+#include "math.h"
 
 #include <cmath>
 #include <cstdlib>
@@ -26,7 +27,7 @@ RecoSegment::~RecoSegment() = default;
 
 auto RecoSegment::calcEdgeIsect(RecoSegment* r2) -> Point
 {
-	double t;
+	double t = NAN;
 	t = (r2->xcenter - this->xcenter) * sin(r2->angle) - (r2->ycenter - this->ycenter) * cos(r2->angle);
 	t /= sin(r2->angle - this->angle);
 	double x = this->xcenter + t * cos(this->angle);

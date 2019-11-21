@@ -1,4 +1,6 @@
 #include <cmath>
+
+#include "math.h"
 #include "VorbisConsumer.h"
 
 VorbisConsumer::VorbisConsumer(Settings* settings, AudioQueue<float>* audioQueue)
@@ -11,8 +13,8 @@ VorbisConsumer::~VorbisConsumer() = default;
 
 auto VorbisConsumer::start(const string& filename) -> bool
 {
-	double sampleRate;
-	unsigned int channels;
+	double sampleRate = NAN;
+	unsigned int channels = 0;
 	this->audioQueue->getAudioAttributes(sampleRate, channels);
 
 	if (sampleRate == -1)
@@ -39,7 +41,7 @@ auto VorbisConsumer::start(const string& filename) -> bool
 				std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
 
 		        std::vector<float> buffer(64 * channels);
-		        size_t bufferLength;
+		        size_t bufferLength = 0;
 		        double audioGain = this->settings->getAudioGain();
 
 		        while (!(this->stopConsumer || (audioQueue->hasStreamEnded() && audioQueue->empty())))

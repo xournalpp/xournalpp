@@ -124,7 +124,7 @@ auto XojPreviewExtractor::readFile(const Path& file) -> PreviewExtractResult
 		// The <preview> Tag is within the first 179 Bytes
 		// The Preview should end within the first 8k
 
-		std::array<char, BUF_SIZE> buffer;
+		std::array<char, BUF_SIZE> buffer{};
 		int readLen = gzread(fp, buffer.data(), BUF_SIZE);
 
 		PreviewExtractResult result = readPreview(buffer.data(), readLen);

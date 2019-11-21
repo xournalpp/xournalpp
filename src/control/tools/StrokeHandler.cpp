@@ -6,6 +6,7 @@
 #include "control/shaperecognizer/ShapeRecognizerResult.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
+#include "math.h"
 #include "undo/InsertUndoAction.h"
 #include "undo/RecognizerUndoAction.h"
 
@@ -146,8 +147,8 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	if (settings->getStrokeFilterEnabled())  // Note: For shape tools see BaseStrokeHandler which has a slightly
 	                                         // different version of this filter. See //!
 	{
-		int strokeFilterIgnoreTime, strokeFilterSuccessiveTime;
-		double strokeFilterIgnoreLength;
+		int strokeFilterIgnoreTime = 0, strokeFilterSuccessiveTime = 0;
+		double strokeFilterIgnoreLength = NAN;
 
 		settings->getStrokeFilter(&strokeFilterIgnoreTime, &strokeFilterIgnoreLength, &strokeFilterSuccessiveTime);
 		double dpmm = settings->getDisplayDpi() / 25.4;

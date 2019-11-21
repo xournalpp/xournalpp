@@ -4,6 +4,7 @@
 
 #include "TouchInputHandler.h"
 #include "InputContext.h"
+#include "math.h"
 
 TouchInputHandler::TouchInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)
 {
@@ -95,8 +96,8 @@ void TouchInputHandler::sequenceStart(InputEvent* event)
 
 void TouchInputHandler::scrollMotion(InputEvent* event)
 {
-	double offsetX;
-	double offsetY;
+	double offsetX = NAN;
+	double offsetY = NAN;
 
 	// Will only be called if there is a single sequence (zooming handles two sequences)
 	if (event->sequence == this->primarySequence)

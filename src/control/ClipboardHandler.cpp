@@ -232,8 +232,8 @@ auto ClipboardHandler::copy() -> bool
 	/////////////////////////////////////////////////////////////////
 
 	GtkTargetList* list = gtk_target_list_new(nullptr, 0);
-	GtkTargetEntry* targets;
-	int n_targets;
+	GtkTargetEntry* targets = nullptr;
+	int n_targets = 0;
 
 	// if we have text elements...
 	if (!text.empty())
@@ -324,8 +324,8 @@ void ClipboardHandler::pasteClipboardText(GtkClipboard* clipboard, const gchar* 
 
 auto gtk_selection_data_targets_include_xournal(GtkSelectionData* selection_data) -> gboolean
 {
-	GdkAtom* targets;
-	gint n_targets;
+	GdkAtom* targets = nullptr;
+	gint n_targets = 0;
 	gboolean result = false;
 
 	if (gtk_selection_data_get_targets(selection_data, &targets, &n_targets))

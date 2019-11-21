@@ -230,18 +230,18 @@ private:
 	 */
 	int lastVisibleTime = -1;
 
-	GMutex repaintRectMutex;
+	GMutex repaintRectMutex{};
 	vector<Rectangle*> rerenderRects;
 	bool rerenderComplete = false;
 
-	GMutex drawingMutex;
-	
-	int dispX;	//position on display - set in Layout::layoutPages
-	int dispY;
+	GMutex drawingMutex{};
+
+	int dispX{};  //position on display - set in Layout::layoutPages
+	int dispY{};
 
 
-	int mappedRow;
-	int mappedCol;
+	int mappedRow{};
+	int mappedCol{};
 
 
 	friend class RenderJob;

@@ -5,6 +5,7 @@
 #include "gui/PageView.h"
 #include "gui/widgets/XournalWidget.h"
 #include "gui/XournalView.h"
+#include "math.h"
 
 ZoomControl::ZoomControl()
 {
@@ -30,7 +31,7 @@ void ZoomControl::zoomOneStep(bool zoomIn, double x, double y)
 		this->setZoomFitMode(false);
 	}
 
-	double newZoom;
+	double newZoom = NAN;
 	if (zoomIn)
 	{
 		newZoom = this->zoom + this->zoomStep;
@@ -63,7 +64,7 @@ void ZoomControl::zoomScroll(bool zoomIn, double x, double y)
 		startZoomSequence(x, y);
 	}
 
-	double newZoom;
+	double newZoom = NAN;
 	if (zoomIn)
 	{
 		newZoom = this->zoom + this->zoomStepScroll;

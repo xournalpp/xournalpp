@@ -409,7 +409,7 @@ auto InputSequence::getInputDataRelativeToCurrentPage(XojPageView* page) -> Posi
 {
 	GtkXournal* xournal = inputHandler->getXournal();
 
-	PositionInputData pos;
+	PositionInputData pos{};
 	pos.x = x - page->getX() - xournal->x;
 	pos.y = y - page->getY() - xournal->y;
 	pos.pressure = Point::NO_PRESSURE;

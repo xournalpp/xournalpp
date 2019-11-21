@@ -8,6 +8,7 @@
 #include "gui/scroll/ScrollHandling.h"
 #include "gui/Shadow.h"
 #include "gui/XournalView.h"
+#include "math.h"
 
 #include <config-debug.h>
 #include <Rectangle.h>
@@ -98,7 +99,7 @@ auto gtk_xournal_new_deprecated(XournalView* view, ScrollHandling* scrollHandlin
 
 static void gtk_xournal_class_init(GtkXournalClass* klass)
 {
-	GtkWidgetClass* widget_class;
+	GtkWidgetClass* widget_class = nullptr;
 
 	widget_class = (GtkWidgetClass*) klass;
 
@@ -204,7 +205,7 @@ static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocati
 static void gtk_xournal_realize(GtkWidget* widget)
 {
 	GdkWindowAttr attributes;
-	guint attributes_mask;
+	guint attributes_mask = 0;
 
 	g_return_if_fail(widget != nullptr);
 	g_return_if_fail(GTK_IS_XOURNAL(widget));
@@ -295,7 +296,7 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
-	double x1, x2, y1, y2;
+	double x1 = NAN, x2 = NAN, y1 = NAN, y2 = NAN;
 
 	cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
 

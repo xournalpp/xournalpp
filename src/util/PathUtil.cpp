@@ -40,7 +40,7 @@ auto PathUtil::readString(string& output, Path& path, bool showErrorToUser) -> b
 
 auto PathUtil::copy(const Path& src, const Path& dest) -> bool
 {
-	std::array<char, 16 * 1024> buffer;  // 16k
+	std::array<char, 16 * 1024> buffer{};  // 16k
 
 	FILE* fpRead = g_fopen(src.c_str(), "rb");
 	if (!fpRead)

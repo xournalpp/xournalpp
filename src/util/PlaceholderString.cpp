@@ -98,7 +98,7 @@ auto PlaceholderString::formatPart(std::string format) -> std::string
 		format = format.substr(0, comma);
 	}
 
-	int index;
+	int index = 0;
 	try
 	{
 		index = std::stoi(format);

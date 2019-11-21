@@ -232,7 +232,5 @@ private:
 	/**
 	 * event time
 	 */
-	guint32 eventTime;
-	
-	
+	guint32 eventTime{};
 };

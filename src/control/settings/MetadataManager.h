@@ -73,6 +73,6 @@ private:
 
 
 private:
-	GMutex mutex;
+	GMutex mutex{};
 	MetadataEntry* metadata;
 };

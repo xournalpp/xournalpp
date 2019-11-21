@@ -719,7 +719,7 @@ void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage
 {
 	SpinPageAdapter* spinPageNo = getSpinPageNo();
 
-	size_t min;
+	size_t min = 0;
 	size_t max = pagecount;
 
 	if (pagecount == 0)

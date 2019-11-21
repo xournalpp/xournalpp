@@ -1,5 +1,6 @@
 #include "Selection.h"
 
+#include "math.h"
 #include "model/Layer.h"
 #include "util/GtkColorWrapper.h"
 
@@ -237,7 +238,7 @@ auto RegionSelect::contains(double x, double y) -> bool
 
 	double lastx = last->x;
 	double lasty = last->y;
-	double curx, cury;
+	double curx = NAN, cury = NAN;
 
 	// Walk the edges of the polygon
 	for (GList* l = this->points; l != nullptr; lastx = curx, lasty = cury, l = l->next)
@@ -251,7 +252,7 @@ auto RegionSelect::contains(double x, double y) -> bool
 			continue;
 		}
 
-		int leftx;
+		int leftx = 0;
 		if (curx < lastx)
 		{
 			if (x >= lastx)
@@ -269,7 +270,7 @@ auto RegionSelect::contains(double x, double y) -> bool
 			leftx = lastx;
 		}
 
-		double test1, test2;
+		double test1 = NAN, test2 = NAN;
 		if (cury < lasty)
 		{
 			if (y < cury || y >= lasty)

@@ -45,7 +45,7 @@ private:
 	void addRepaintRect(double x, double y, double width, double height);
 
 private:
-	GMutex partLock;
+	GMutex partLock{};
 	PartList* parts = nullptr;
 
 	Range* repaintRect = nullptr;

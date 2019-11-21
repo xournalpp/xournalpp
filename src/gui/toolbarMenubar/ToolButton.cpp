@@ -75,7 +75,7 @@ void ToolButton::updateDescription(const string& description)
 
 auto ToolButton::newItem() -> GtkToolItem*
 {
-	GtkToolItem* it;
+	GtkToolItem* it = nullptr;
 
 	if (group != GROUP_NOGROUP)
 	{

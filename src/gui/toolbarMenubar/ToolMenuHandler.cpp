@@ -223,13 +223,13 @@ void ToolMenuHandler::removeColorToolItem(AbstractToolItem* it)
 			break;
 		}
 	}
-	delete (ColorToolItem*) it;
+	delete dynamic_cast<ColorToolItem*>(it);
 }
 
 void ToolMenuHandler::addColorToolItem(AbstractToolItem* it)
 {
 	g_return_if_fail(it != nullptr);
-	this->toolbarColorItems.push_back((ColorToolItem*) it);
+	this->toolbarColorItems.push_back(dynamic_cast<ColorToolItem*>(it));
 }
 
 void ToolMenuHandler::setTmpDisabled(bool disabled)

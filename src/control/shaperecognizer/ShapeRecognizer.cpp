@@ -4,6 +4,7 @@
 #include "Inertia.h"
 #include "ShapeRecognizerResult.h"
 
+#include "math.h"
 #include "model/Stroke.h"
 
 #include <config-debug.h>
@@ -149,11 +150,11 @@ auto ShapeRecognizer::tryArrow() -> Stroke*
 		return nullptr;
 	}
 
-	double x1;
-	double y1;
-	double x2;
-	double y2;
-	double angle;
+	double x1 = NAN;
+	double y1 = NAN;
+	double x2 = NAN;
+	double y2 = NAN;
+	double angle = NAN;
 
 	if (rev[1])
 	{
@@ -286,7 +287,7 @@ auto ShapeRecognizer::tryArrow() -> Stroke*
 auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss) -> int
 {
 	Inertia s;
-	int i1, i2, n1, n2;
+	int i1 = 0, i2 = 0, n1 = 0, n2 = 0;
 
 	if (end == start)
 	{
@@ -320,8 +321,8 @@ auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsi
 		return 0; // failed!
 	}
 
-	double det1;
-	double det2;
+	double det1 = NAN;
+	double det2 = NAN;
 	Inertia s1;
 	Inertia s2;
 

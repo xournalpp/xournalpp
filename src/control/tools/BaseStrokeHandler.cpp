@@ -4,6 +4,7 @@
 #include "control/layer/LayerController.h"
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
+#include "math.h"
 #include "undo/InsertUndoAction.h"
 #include "util/cpp14memory.h"
 
@@ -92,8 +93,8 @@ auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool
 	if(event->is_modifier)
 	{
 		Rectangle rect = stroke->boundingRect();
-			
-		PositionInputData pos;
+
+		PositionInputData pos{};
 		pos.x = pos.y = pos.pressure = 0; //not used in redraw
 		if( event->keyval == GDK_KEY_Shift_L || event->keyval == GDK_KEY_Shift_R)
 		{
@@ -181,10 +182,10 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	Settings* settings = control->getSettings();
 	
 	if ( settings->getStrokeFilterEnabled() )		// Note: For simple strokes see StrokeHandler which has a slightly different version of this filter.  See //!
-	{	
-		int strokeFilterIgnoreTime,strokeFilterSuccessiveTime;
-		double strokeFilterIgnoreLength;
-		
+	{
+		int strokeFilterIgnoreTime = 0, strokeFilterSuccessiveTime = 0;
+		double strokeFilterIgnoreLength = NAN;
+
 		settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnoreLength, &strokeFilterSuccessiveTime  );
 		double dpmm = settings->getDisplayDpi()/25.4;
 		

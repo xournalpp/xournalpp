@@ -272,8 +272,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	if (xmlStrcmp(name, (const xmlChar*) "font") == 0)
 	{
 		xmlFree(name);
-		xmlChar* font;
-		xmlChar* size;
+		xmlChar* font = nullptr;
+		xmlChar* size = nullptr;
 
 		font = xmlGetProp(cur, (const xmlChar*) "font");
 		if (font)
@@ -624,8 +624,8 @@ void Settings::loadDeviceClasses()
 	for (auto device : s.children())
 	{
 		SElement& deviceNode = device.second;
-		int deviceClass;
-		int deviceSource;
+		int deviceClass = 0;
+		int deviceSource = 0;
 		deviceNode.getInt("deviceClass", deviceClass);
 		deviceNode.getInt("deviceSource", deviceSource);
 		inputDeviceClasses.insert(std::pair<string, std::pair<int, GdkInputSource>>(
@@ -872,9 +872,9 @@ void Settings::save()
 		return;
 	}
 
-	xmlDocPtr doc;
-	xmlNodePtr root;
-	xmlNodePtr xmlNode;
+	xmlDocPtr doc = nullptr;
+	xmlNodePtr root = nullptr;
+	xmlNodePtr xmlNode = nullptr;
 
 	xmlIndentTreeOutput = true;
 
@@ -1018,7 +1018,7 @@ void Settings::save()
 	WRITE_BOOL_PROP(inputSystemTPCButton);
 	WRITE_BOOL_PROP(inputSystemDrawOutsideWindow);
 
-	xmlNodePtr xmlFont;
+	xmlNodePtr xmlFont = nullptr;
 	xmlFont = xmlNewChild(root, nullptr, (const xmlChar*) "property", nullptr);
 	xmlSetProp(xmlFont, (const xmlChar*) "name", (const xmlChar*) "font");
 	xmlSetProp(xmlFont, (const xmlChar*) "font", (const xmlChar*) this->font.getName().c_str());
@@ -1097,7 +1097,7 @@ void Settings::saveData(xmlNodePtr root, const string& name, SElement& elem)
 			continue;
 		}
 
-		xmlNodePtr at;
+		xmlNodePtr at = nullptr;
 		at = xmlNewChild(xmlNode, nullptr, (const xmlChar*) "attribute", nullptr);
 
 		xmlSetProp(at, (const xmlChar*) "name", (const xmlChar*) aname.c_str());

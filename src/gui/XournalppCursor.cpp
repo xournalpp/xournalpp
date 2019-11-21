@@ -2,6 +2,7 @@
 
 #include "XournalView.h"
 #include "control/Control.h"
+#include "math.h"
 
 #include <Util.h>
 #include <pixbuf-utils.h>
@@ -582,7 +583,7 @@ auto XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
 	{
 		cairo_text_extents_t extents;
 		const char* utf8 = "CONTROL";
-		double x, y;
+		double x = NAN, y = NAN;
 		cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
 		cairo_set_font_size(cr, fontSize);
 		cairo_text_extents(cr, utf8, &extents);
@@ -596,7 +597,7 @@ auto XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
 	{
 		cairo_text_extents_t extents;
 		const char* utf8 = "SHIFT";
-		double x, y;
+		double x = NAN, y = NAN;
 		cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
 		cairo_set_font_size(cr, fontSize);
 		cairo_text_extents(cr, utf8, &extents);

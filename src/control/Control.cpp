@@ -971,7 +971,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 
 	case ACTION_AUDIO_RECORD:
 	{
-		bool result;
+		bool result = 0;
 		if (enabled)
 		{
 			result = audioController->startRecording();
@@ -1593,7 +1593,7 @@ void Control::setViewColumns(int numColumns)
 	settings->setViewColumns(numColumns);
 	settings->setViewFixedRows(false);
 
-	ActionType action;
+	ActionType action{};
 
 	switch (numColumns)
 	{
@@ -1637,7 +1637,7 @@ void Control::setViewRows(int numRows)
 	settings->setViewRows(numRows);
 	settings->setViewFixedRows(true);
 
-	ActionType action;
+	ActionType action{};
 
 	switch (numRows)
 	{
@@ -1680,7 +1680,7 @@ void Control::setViewLayoutVert(bool vert)
 {
 	settings->setViewLayoutVert(vert);
 
-	ActionType action;
+	ActionType action{};
 
 	if (vert)
 	{
@@ -1702,7 +1702,7 @@ void Control::setViewLayoutR2L(bool r2l)
 {
 	settings->setViewLayoutR2L(r2l);
 
-	ActionType action;
+	ActionType action{};
 
 	if (r2l)
 	{
@@ -1724,7 +1724,7 @@ void Control::setViewLayoutB2T(bool b2t)
 {
 	settings->setViewLayoutB2T(b2t);
 
-	ActionType action;
+	ActionType action{};
 
 	if (b2t)
 	{
@@ -2405,7 +2405,7 @@ void Control::fileLoaded(int scrollToPage)
 class MetadataCallbackData
 {
 public:
-	Control* ctrl;
+	Control* ctrl{};
 	MetadataEntry md;
 };
 

@@ -63,7 +63,7 @@ static void gtk_menu_tool_toggle_button_construct_contents(
 
 	GtkOrientation orientation = gtk_tool_item_get_orientation(GTK_TOOL_ITEM (button));
 
-	GtkWidget* box;
+	GtkWidget* box = nullptr;
 	if (orientation == GTK_ORIENTATION_HORIZONTAL)
 	{
 		box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -93,7 +93,7 @@ static void gtk_menu_tool_toggle_button_construct_contents(
 
 	if (priv->box)
 	{
-		gchar* tmp;
+		gchar* tmp = nullptr;
 
 		/* Transfer a possible tooltip to the new box */
 		g_object_get(priv->box, "tooltip-markup", &tmp, nullptr);
@@ -498,7 +498,7 @@ static void menu_detacher(GtkWidget* widget, GtkMenu* menu)
 void gtk_menu_tool_toggle_button_set_menu(GtkMenuToolToggleButton* button,
                                           GtkWidget* menu)
 {
-	GtkMenuToolToggleButtonPrivate* priv;
+	GtkMenuToolToggleButtonPrivate* priv = nullptr;
 
 	g_return_if_fail (GTK_IS_MENU_TOOL_TOGGLE_BUTTON (button));
 	g_return_if_fail(GTK_IS_MENU(menu) || menu == nullptr);

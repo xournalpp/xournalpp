@@ -38,7 +38,7 @@ private:
 
 protected:
 	bool stopProducer = false;
-	SF_INFO sfInfo;
+	SF_INFO sfInfo{};
 	SNDFILE_tag* sfFile = nullptr;
 
 	AudioQueue<float>* audioQueue = nullptr;

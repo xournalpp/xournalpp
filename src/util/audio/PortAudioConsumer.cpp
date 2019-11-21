@@ -1,5 +1,6 @@
 #include "PortAudioConsumer.h"
 #include "AudioPlayer.h"
+#include "math.h"
 
 PortAudioConsumer::PortAudioConsumer(AudioPlayer* audioPlayer, AudioQueue<float>* audioQueue) : sys(portaudio::System::instance()), audioPlayer(audioPlayer), audioQueue(audioQueue)
 {
@@ -56,8 +57,8 @@ auto PortAudioConsumer::startPlaying() -> bool
 		this->outputStream->abort();
 	}
 
-	double sampleRate;
-	unsigned int channels;
+	double sampleRate = NAN;
+	unsigned int channels = 0;
 	this->audioQueue->getAudioAttributes(sampleRate, channels);
 
 	if (sampleRate == -1)
@@ -123,7 +124,7 @@ auto PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer
 
 	if (outputBuffer != nullptr)
 	{
-		size_t outputBufferLength;
+		size_t outputBufferLength = 0;
 		this->audioQueue->pop(((float*) outputBuffer), outputBufferLength, framesPerBuffer * this->outputChannels);
 
 		// Fill buffer to requested length if necessary

@@ -94,7 +94,7 @@ auto EditSelectionContents::setSize(ToolSize size,
 	{
 		if (e->getType() == ELEMENT_STROKE)
 		{
-			auto* s = (Stroke*) e;
+			auto* s = dynamic_cast<Stroke*>(e);
 			StrokeTool tool = s->getToolType();
 
 			double originalWidth = s->getWidth();
@@ -155,7 +155,7 @@ auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoA
 	{
 		if (e->getType() == ELEMENT_STROKE)
 		{
-			auto* s = (Stroke*) e;
+			auto* s = dynamic_cast<Stroke*>(e);
 			StrokeTool tool = s->getToolType();
 			int newFill = 128;
 
@@ -216,7 +216,7 @@ auto EditSelectionContents::setFont(XojFont& font) -> UndoAction*
 	{
 		if (e->getType() == ELEMENT_TEXT)
 		{
-			Text* t = (Text*) e;
+			Text* t = dynamic_cast<Text*>(e);
 			undo->addStroke(t, t->getFont(), font);
 
 			if (std::isnan(x1))

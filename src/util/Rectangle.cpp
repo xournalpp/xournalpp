@@ -1,6 +1,7 @@
 #include "Rectangle.h"
 
 #include "Range.h"
+#include "math.h"
 
 Rectangle::Rectangle() = default;
 
@@ -24,8 +25,8 @@ Rectangle::~Rectangle() = default;
 
 auto Rectangle::intersects(const Rectangle& other, Rectangle* dest) const -> bool
 {
-	double destX, destY;
-	double destW, destH;
+	double destX = NAN, destY = NAN;
+	double destW = NAN, destH = NAN;
 
 	bool returnVal = false;
 

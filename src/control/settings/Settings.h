@@ -56,8 +56,8 @@ public:
 
 public:
 	string sValue;
-	int iValue;
-	double dValue;
+	int iValue{};
+	double dValue{};
 
 	AttributeType type;
 
@@ -478,48 +478,48 @@ private:
 	/**
 	 *  Use pen pressure to control stroke width?
 	 */
-	bool pressureSensitivity;
+	bool pressureSensitivity{};
 
 	/**
 	 * If the touch zoom gestures are enabled
 	 */
-	bool zoomGesturesEnabled;
+	bool zoomGesturesEnabled{};
 
 	/**
 	 *  If the sidebar is visible
 	 */
-	bool showSidebar;
+	bool showSidebar{};
 
 	/**
 	 *  The Width of the Sidebar
 	 */
-	int sidebarWidth;
+	int sidebarWidth{};
 
 	/**
 	 *  If the sidebar is on the right
 	 */
-	bool sidebarOnRight;
+	bool sidebarOnRight{};
 
 	/**
 	 *  Show a better visible cursor for pen
 	 */
-	bool showBigCursor;
+	bool showBigCursor{};
 
 	/**
 	 * Show a yellow circle around the cursor
 	 */
-	bool highlightPosition;
+	bool highlightPosition{};
 
 	/**
 	 * If the user uses a dark-themed DE, he should enable this
 	 * (white icons)
 	 */
-	bool darkTheme;
+	bool darkTheme{};
 
 	/**
 	 * If the menu bar is visible on startup
 	 */
-	 bool menubarVisible;
+	bool menubarVisible{};
 
 	/**
 	 *  Hide the scrollbar
@@ -529,7 +529,7 @@ private:
 	/**
 	 * Disable scrollbar fade out (overlay scrolling)
 	 */
-	bool disableScrollbarFadeout;
+	bool disableScrollbarFadeout{};
 
 	/**
 	 *  The selected Toolbar name
@@ -559,139 +559,137 @@ private:
 	/**
 	 * Zoomstep for one step
 	 */
-	double zoomStep;
+	double zoomStep{};
 
 	/**
 	 * Zoomstep for Ctrl + Scroll zooming
 	 */
-	double zoomStepScroll;
+	double zoomStepScroll{};
 
 	/**
 	 * The display resolution, in pixels per inch
 	 */
-	gint displayDpi;
+	gint displayDpi{};
 
 	/**
 	 *  If the window is maximized
 	 */
-	bool maximized;
+	bool maximized{};
 
 	/**
 	 * Width of the main window
 	 */
-	int mainWndWidth;
+	int mainWndWidth{};
 
 	/**
 	 * Height of the main window
 	 */
-	int mainWndHeight;
+	int mainWndHeight{};
 
 	/**
 	 * Show the scrollbar on the left side
 	 */
-	bool scrollbarOnLeft;
+	bool scrollbarOnLeft{};
 
 	/**
 	 *  Pairs pages
 	 */
-	bool showPairedPages;
+	bool showPairedPages{};
 
 	/**
 	 *  Sets presentation mode
 	 */
-	bool presentationMode;
+	bool presentationMode{};
 
 	/**
 	 *  Offsets first page ( to align pairing )
 	 */
-	int numPairsOffset;
+	int numPairsOffset{};
 
 	/**
 	 *  Use when fixed number of columns
 	 */
-	int numColumns;
+	int numColumns{};
 
 	/**
 	 *  Use when fixed number of rows
 	 */
-	int numRows;
+	int numRows{};
 
 	/**
 	 *  USE  fixed rows, otherwise fixed columns
 	 */
-	bool viewFixedRows;
+	bool viewFixedRows{};
 
 	/**
 	 *  Layout Vertical then Horizontal
 	 */
-	bool layoutVertical;
+	bool layoutVertical{};
 
 	/**
 	 *  Layout pages right to left
 	 */
-	bool layoutRightToLeft;
+	bool layoutRightToLeft{};
 
 	/**
 	 *  Layout Bottom to Top
 	 */
-	bool layoutBottomToTop;
-
-
+	bool layoutBottomToTop{};
 
 
 	/**
 	 * Automatically load filename.pdf.xoj / .pdf.xopp instead of filename.pdf (true/false)
 	 */
-	bool autoloadPdfXoj;
+	bool autoloadPdfXoj{};
 
 	/**
 	 * Automatically save documents for crash recovery each x minutes
 	 */
-	int autosaveTimeout;
+	int autosaveTimeout{};
 
 	/**
 	 *  Enable automatic save
 	 */
-	bool autosaveEnabled;
+	bool autosaveEnabled{};
 
 	/**
 	 * Allow scroll outside the page display area (horizontal)
 	 */
-	bool addHorizontalSpace;
+	bool addHorizontalSpace{};
 
 	/**
 	 * How much allowance to scroll outside the page display area (either side of )
 	 */
-	int addHorizontalSpaceAmount;
+	int addHorizontalSpaceAmount{};
 
 	/**
 	 * Allow scroll outside the page display area (vertical)
 	 */
-	bool addVerticalSpace;
+	bool addVerticalSpace{};
 
 	/** How much allowance to scroll outside the page display area (above and below)
 	*/
-	int addVerticalSpaceAmount;
+	int addVerticalSpaceAmount{};
 
 	/**
 	 * Emulate modifier keys based on initial direction of drawing tool ( for Rectangle, Ellipse etc. )
 	 */
-	bool drawDirModsEnabled;
+	bool drawDirModsEnabled{};
 
 	/**
 	 * Radius at which emulated modifiers are locked on for the rest of drawing operation
 	 */
-	int drawDirModsRadius;
+	int drawDirModsRadius{};
 
 	/**
 	 * Rotation snapping enabled by default
 	 */
-	bool snapRotation;
+	bool snapRotation{};
 
 	/**
 	 * grid snapping enabled by default
 	 */
-	bool snapGrid;
+	bool snapGrid{};
 
 	/**
 	 * Default name if you save a new document
@@ -709,7 +707,7 @@ private:
 	 * 5: Pen Button 1
 	 * 6: Pen Button 2
 	 */
-	ButtonConfig* buttonConfig[BUTTON_COUNT];
+	ButtonConfig* buttonConfig[BUTTON_COUNT]{};
 
 	/**
 	 * Which gui elements are hidden if you are in Fullscreen mode,
@@ -721,23 +719,23 @@ private:
 	/**
 	 *  The count of pages which will be cached
 	 */
-	int pdfPageCacheSize;
+	int pdfPageCacheSize{};
 
 	/**
 	 * The color to draw borders on selected elements
 	 * (Page, insert image selection etc.)
 	 */
-	int selectionBorderColor;
+	int selectionBorderColor{};
 
 	/**
 	 * Color for Text selection, Stroke selection etc.
 	 */
-	int selectionMarkerColor;
+	int selectionMarkerColor{};
 
 	/**
 	 * The color for Xournal page background
 	 */
-	int backgroundColor;
+	int backgroundColor{};
 
 	/**
 	 * Page template String
@@ -757,42 +755,42 @@ private:
 	/**
 	 * Snap tolerance for the graph/dotted grid
 	 */
-	double snapGridTolerance;
+	double snapGridTolerance{};
 
 	/**
 	 * Rotation epsilon for rotation snapping feature
 	 */
-	double snapRotationTolerance;
+	double snapRotationTolerance{};
 
 	/**
 	 * Do not use GTK Scrolling / Touch handling
 	 */
-	bool touchWorkaround;
+	bool touchWorkaround{};
 
 	/**
 	 * The index of the audio device used for recording
 	 */
-	PaDeviceIndex audioInputDevice;
+	PaDeviceIndex audioInputDevice{};
 
 	/**
 	 * The index of the audio device used for playback
 	 */
-	PaDeviceIndex audioOutputDevice;
+	PaDeviceIndex audioOutputDevice{};
 
 	/**
 	 * The sample rate used for recording
 	 */
-	double audioSampleRate;
+	double audioSampleRate{};
 
 	/**
 	 * The gain by which to amplify the recorded audio samples
 	 */
-	double audioGain;
+	double audioGain{};
 
 	/**
 	 * The default time by which the playback will seek backwards and forwards
 	 */
-	unsigned int defaultSeekTime;
+	unsigned int defaultSeekTime{};
 
 	/**
 	 * List of enabled plugins (only the one which are not enabled by default)
@@ -811,31 +809,29 @@ private:
 	 * strokeFilterIgnoreTime 			within this time (ms)  will be ignored..
 	 * strokeFilterSuccessiveTime		...unless successive within this time.
 	 */
-	int strokeFilterIgnoreTime;
-	double strokeFilterIgnoreLength;
-	int strokeFilterSuccessiveTime;
-	bool strokeFilterEnabled;
-	bool doActionOnStrokeFiltered;
-	bool trySelectOnStrokeFiltered;
+	int strokeFilterIgnoreTime{};
+	double strokeFilterIgnoreLength{};
+	int strokeFilterSuccessiveTime{};
+	bool strokeFilterEnabled{};
+	bool doActionOnStrokeFiltered{};
+	bool trySelectOnStrokeFiltered{};
 
 	/**
 	 * Whether the new experimental input system is activated
 	 */
-	bool newInputSystemEnabled;
+	bool newInputSystemEnabled{};
 
 	/**
 	 * Whether Wacom parameter TabletPCButton is enabled
 	 */
-	bool inputSystemTPCButton;
+	bool inputSystemTPCButton{};
 
-	bool inputSystemDrawOutsideWindow;
+	bool inputSystemDrawOutsideWindow{};
 
 	std::map<string, std::pair<int, GdkInputSource>> inputDeviceClasses = {};
 
 	/**
 	 * "Transaction" running, do not save until the end is reached
 	 */
-	bool inTransaction;
-
-
+	bool inTransaction{};
 };

@@ -197,9 +197,9 @@ void TextEditor::iMCommitCallback(GtkIMContext* context, const gchar* str, TextE
 
 void TextEditor::iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te)
 {
-	gchar* str;
-	PangoAttrList* attrs;
-	gint cursor_pos;
+	gchar* str = nullptr;
+	PangoAttrList* attrs = nullptr;
+	gint cursor_pos = 0;
 	GtkTextIter iter;
 
 	gtk_text_buffer_get_iter_at_mark(te->buffer, &iter, gtk_text_buffer_get_insert(te->buffer));
@@ -970,7 +970,7 @@ void TextEditor::backspace()
 auto TextEditor::getSelection() -> string
 {
 	GtkTextIter start, end;
-	char* text;
+	char* text = nullptr;
 	string s;
 
 	if (gtk_text_buffer_get_selection_bounds(buffer, &start, &end))

@@ -32,7 +32,7 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
 			int pdfPage = p->getPdfPageNr();
 			if (pdfPage >= 0 && pdfPage < (int)elements.size())
 			{
-				((PdfElementView*)elements[p->getPdfPageNr()])->setUsed(true);
+				(dynamic_cast<PdfElementView*>(elements[p->getPdfPageNr()]))->setUsed(true);
 			}
 		}
 	}
@@ -68,7 +68,7 @@ void PdfPagesDialog::onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dl
 	{
 		for (BaseElementView* p : dlg->elements)
 		{
-			auto* pv = (PdfElementView*) p;
+			auto* pv = dynamic_cast<PdfElementView*>(p);
 			pv->setHideUnused();
 		}
 	}
@@ -103,7 +103,7 @@ void PdfPagesDialog::show(GtkWindow* parent)
 	int unused = 0;
 	for (BaseElementView* p : elements)
 	{
-		auto* pv = (PdfElementView*) p;
+		auto* pv = dynamic_cast<PdfElementView*>(p);
 		if (!pv->isUsed())
 		{
 			unused++;

@@ -206,7 +206,7 @@ auto SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, cons
 	        g_timeout_add_seconds_full(G_PRIORITY_DEFAULT_IDLE, 2, (GSourceFunc) searchTimeoutFunc, sidebar, nullptr);
 
 	// Source: Pidgin
-	gchar* text;
+	gchar* text = nullptr;
 	gtk_tree_model_get(model, iter, DOCUMENT_LINKS_COLUMN_NAME, &text, -1);
 	if (text == nullptr)
 	{

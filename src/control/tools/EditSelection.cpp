@@ -6,6 +6,7 @@
 #include "control/Control.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
+#include "math.h"
 #include "model/Document.h"
 #include "model/Layer.h"
 #include "model/Element.h"
@@ -452,7 +453,7 @@ void EditSelection::mouseMove(double mouseX, double mouseY)
 		{
 			dx = rx - this->x;
 			dy = ry - this->y;
-			double f;
+			double f = NAN;
 			if (std::abs(dy) < std::abs(dx))
 			{
 				f = (this->height + dy) / this->height;
@@ -475,7 +476,7 @@ void EditSelection::mouseMove(double mouseX, double mouseY)
 			dx = rx - this->x - this->width;
 			dy = ry - this->y;
 
-			double f;
+			double f = NAN;
 			if (std::abs(dy) < std::abs(dx))
 			{
 				f = this->height / (this->height + dy);
@@ -495,7 +496,7 @@ void EditSelection::mouseMove(double mouseX, double mouseY)
 		{
 			dx = rx - this->x;
 			dy = ry - this->y - this->height;
-			double f;
+			double f = NAN;
 			if (std::abs(dy) < std::abs(dx))
 			{
 				f = (this->height + dy) / this->height;
@@ -515,7 +516,7 @@ void EditSelection::mouseMove(double mouseX, double mouseY)
 		{
 			dx = rx - this->x - this->width;
 			dy = ry - this->y - this->height;
-			double f;
+			double f = NAN;
 			if (std::abs(dy) < std::abs(dx))
 			{
 				f = (this->height + dy) / this->height;

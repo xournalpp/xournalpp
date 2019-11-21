@@ -49,8 +49,8 @@ void RecentManager::recentManagerChangedCallback(GtkRecentManager* manager, Rece
 
 void RecentManager::addRecentFileFilename(const Path& filename)
 {
-	GtkRecentManager* recentManager;
-	GtkRecentData* recentData;
+	GtkRecentManager* recentManager = nullptr;
+	GtkRecentData* recentData = nullptr;
 
 	static gchar* groups[2] = {g_strdup(GROUP), nullptr};
 

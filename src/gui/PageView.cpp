@@ -254,7 +254,7 @@ void XojPageView::startText(double x, double y)
 				GdkRectangle matchRect = {gint(x - 10), gint(y - 10), 20, 20};
 				if (e->intersectsArea(&matchRect))
 				{
-					text = (Text*) e;
+					text = dynamic_cast<Text*>(e);
 					break;
 				}
 			}
@@ -436,7 +436,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool
 	}
 	else if (h->getToolType() == TOOL_FLOATING_TOOLBOX)
 	{
-		gint wx, wy;
+		gint wx = 0, wy = 0;
 		GtkWidget* widget = xournal->getWidget();
 		gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
 
@@ -600,7 +600,7 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool
 
 			if (doAction)  // pop up a menu
 			{
-				gint wx, wy;
+				gint wx = 0, wy = 0;
 				GtkWidget* widget = xournal->getWidget();
 				gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
 				wx += std::lround(pos.x + this->getX());
@@ -1064,7 +1064,7 @@ auto XojPageView::getSelectedTex() -> TexImage*
 	{
 		if (e->getType() == ELEMENT_TEXIMAGE)
 		{
-			return (TexImage*) e;
+			return dynamic_cast<TexImage*>(e);
 		}
 	}
 	return nullptr;
@@ -1082,7 +1082,7 @@ auto XojPageView::getSelectedText() -> Text*
 	{
 		if (e->getType() == ELEMENT_TEXT)
 		{
-			return (Text*) e;
+			return dynamic_cast<Text*>(e);
 		}
 	}
 	return nullptr;

@@ -7,6 +7,7 @@
 #include "gui/PageView.h"
 #include "gui/scroll/ScrollHandling.h"
 #include "gui/XournalView.h"
+#include "math.h"
 #include "util/DeviceListHelper.h"
 #include "model/Point.h"
 
@@ -264,7 +265,7 @@ auto NewGtkInputDevice::eventHandler(GdkEvent* event) -> bool
 	input->setDevice(sourceDevice);
 	input->clearAxes();
 
-	gdouble x, y;
+	gdouble x = NAN, y = NAN;
 	if (gdk_event_get_coords(event, &x, &y))
 	{
 		scrollHandling->translate(x, y);

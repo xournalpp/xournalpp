@@ -184,14 +184,14 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 	{
 		if (e->getType() == ELEMENT_STROKE)
 		{
-			auto* s = (Stroke*) e;
+			auto* s = dynamic_cast<Stroke*>(e);
 			auto* stroke = new XmlPointNode("stroke");
 			layer->addChild(stroke);
 			visitStroke(stroke, s);
 		}
 		else if (e->getType() == ELEMENT_TEXT)
 		{
-			Text* t = (Text*) e;
+			Text* t = dynamic_cast<Text*>(e);
 			auto* text = new XmlTextNode("text", t->getText().c_str());
 			layer->addChild(text);
 
@@ -207,7 +207,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 		}
 		else if (e->getType() == ELEMENT_IMAGE)
 		{
-			auto* i = (Image*) e;
+			auto* i = dynamic_cast<Image*>(e);
 			auto* image = new XmlImageNode("image");
 			layer->addChild(image);
 
@@ -220,7 +220,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 		}
 		else if (e->getType() == ELEMENT_TEXIMAGE)
 		{
-			auto* i = (TexImage*) e;
+			auto* i = dynamic_cast<TexImage*>(e);
 			auto* image = new XmlTexNode("teximage", i->getBinaryData());
 			layer->addChild(image);
 

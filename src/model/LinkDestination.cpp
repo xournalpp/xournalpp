@@ -33,7 +33,7 @@ static void link_dest_dispose(GObject* object)
 
 static void link_dest_class_init(XojLinkDestClass* linkClass)
 {
-	GObjectClass* g_object_class;
+	GObjectClass* g_object_class = nullptr;
 
 	parent_class = g_type_class_peek_parent(linkClass);
 

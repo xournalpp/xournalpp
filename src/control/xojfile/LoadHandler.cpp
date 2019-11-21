@@ -425,7 +425,7 @@ void LoadHandler::parseBgPixmap()
 	{
 		//This is the new zip file attach domain
 		gpointer data = nullptr;
-		gsize dataLength;
+		gsize dataLength = 0;
 		bool success = readZipAttachment(filename, data, dataLength);
 		if (!success)
 		{
@@ -525,7 +525,7 @@ void LoadHandler::parseBgPdf()
 				} else
 				{
 					gpointer data = nullptr;
-					gsize dataLength;
+					gsize dataLength = 0;
 					bool success = readZipAttachment(pdfFilename, data, dataLength);
 					if (!success)
 					{
@@ -900,7 +900,7 @@ void LoadHandler::parseAudio()
 {
 	const char* filename = LoadHandlerHelper::getAttrib("fn", false, this);
 
-	GFileIOStream* fileStream;
+	GFileIOStream* fileStream = nullptr;
 	GFile* tmpFile = g_file_new_tmp("xournal_audio_XXXXXX.tmp", &fileStream, nullptr);
 	if (!tmpFile)
 	{
@@ -918,7 +918,7 @@ void LoadHandler::parseAudio()
 		return;
 	}
 
-	gsize length;
+	gsize length = 0;
 	if (attachmentFileStat.valid & ZIP_STAT_SIZE)
 	{
 		length = attachmentFileStat.size;

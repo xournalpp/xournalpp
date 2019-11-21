@@ -66,12 +66,12 @@ void SidebarPreviewLayerEntry::checkboxToggled()
 	}
 
 	bool check = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbVisible));
-	((SidebarPreviewLayers*)sidebar)->layerVisibilityChanged(layer + 1, check);
+	(dynamic_cast<SidebarPreviewLayers*>(sidebar))->layerVisibilityChanged(layer + 1, check);
 }
 
 void SidebarPreviewLayerEntry::mouseButtonPressCallback()
 {
-	((SidebarPreviewLayers*)sidebar)->layerSelected(index);
+	(dynamic_cast<SidebarPreviewLayers*>(sidebar))->layerSelected(index);
 }
 
 auto SidebarPreviewLayerEntry::getRenderType() -> PreviewRenderType

@@ -95,7 +95,7 @@ auto MetadataManager::loadList() -> vector<MetadataEntry>
 		return data;
 	}
 
-	const gchar* file;
+	const gchar* file = nullptr;
 	while ((file = g_dir_read_name(home)) != nullptr)
 	{
 		string path = folder.str();

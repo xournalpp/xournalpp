@@ -259,40 +259,40 @@ private: // DATA
 	/**
 	 * The position (and rotation) relative to the current view
 	 */
-	double x;
-	double y;
+	double x{};
+	double y{};
 	double rotation = 0;
 
 	/**
 	 * Use to translate to rotated selection
 	 */
-		_cairo_matrix cmatrix;
-	
+	_cairo_matrix cmatrix{};
+
 	/**
 	 * The size
 	 */
-	double width;
-	double height;
+	double width{};
+	double height{};
 
 	/**
 	 * Mouse coordinates for moving / resizing
 	 */
 	CursorSelectionType mouseDownType;
-	double relMousePosX;
-	double relMousePosY;
+	double relMousePosX{};
+	double relMousePosY{};
 
 	/**
 	 * If both scale axes should have the same scale factor, e.g. for Text
 	 * (we cannot only set the font size for text)
 	 */
-	bool aspectRatio;
-	
+	bool aspectRatio{};
+
 	/**
 	 * Size of the editing handles 
 	 */
 
-	int btnWidth = 8;
-	
+	int btnWidth{8};
+
 	/**
 	 * The source page (form where the Elements come)
 	 */
@@ -301,22 +301,21 @@ private: // DATA
 	/**
 	 * The source layer (form where the Elements come)
 	 */
-	Layer* sourceLayer;
+	Layer* sourceLayer{};
 
 	/**
 	 * The contents of the selection
 	 */
-	EditSelectionContents* contents;
+	EditSelectionContents* contents{};
 
 private: // HANDLER
 	/**
 	 * The page view for the anchor
 	 */
-	XojPageView* view;
+	XojPageView* view{};
 
 	/**
 	 * Undo redo handler
 	 */
-	UndoRedoHandler* undo;
-
+	UndoRedoHandler* undo{};
 };

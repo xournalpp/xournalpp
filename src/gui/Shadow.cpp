@@ -1,6 +1,7 @@
 #include "Shadow.h"
 
 #include "ShadowCode.c"
+#include "math.h"
 
 Shadow* Shadow::instance = new Shadow();
 
@@ -116,7 +117,7 @@ void Shadow::drawShadowTop(cairo_t* cr, int x, int y, int width, double r, doubl
 		this->top = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, shadowTopLeftSize);
 		cairo_t* cr2 = cairo_create(this->top);
 
-		double a;
+		double a = NAN;
 
 		// draw shadow on top and left
 		for (int i = 0; i < shadowTopLeftSize; i++)
@@ -150,7 +151,7 @@ void Shadow::drawShadowLeft(cairo_t* cr, int x, int y, int height, double r, dou
 		this->left = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, shadowTopLeftSize, height);
 		cairo_t* cr2 = cairo_create(this->left);
 
-		double a;
+		double a = NAN;
 
 		// draw shadow on top and left
 		for (int i = 0; i < shadowTopLeftSize; i++)
@@ -184,7 +185,7 @@ void Shadow::drawShadowRight(cairo_t* cr, int x, int y, int height, double r, do
 		this->right = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, shadowBottomRightSize, height);
 		cairo_t* cr2 = cairo_create(this->right);
 
-		double a;
+		double a = NAN;
 
 		// draw shadow on top and left
 		for (int i = 0; i < shadowBottomRightSize; i++)
@@ -218,7 +219,7 @@ void Shadow::drawShadowBottom(cairo_t* cr, int x, int y, int width, double r, do
 		this->bottom = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, shadowBottomRightSize);
 		cairo_t* cr2 = cairo_create(this->bottom);
 
-		double a;
+		double a = NAN;
 
 		// draw shadow on top and left
 		for (int i = 0; i < shadowBottomRightSize; i++)

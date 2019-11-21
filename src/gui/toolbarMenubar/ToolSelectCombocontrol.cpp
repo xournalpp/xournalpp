@@ -93,7 +93,7 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action)
 
 auto ToolSelectCombocontrol::newItem() -> GtkToolItem*
 {
-	GtkToolItem* it;
+	GtkToolItem* it = nullptr;
 
 	labelWidget = gtk_label_new(_("Select Rectangle"));
 	iconWidget = gtk_image_new_from_icon_name("rect-select", GTK_ICON_SIZE_SMALL_TOOLBAR);

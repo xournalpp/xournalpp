@@ -51,7 +51,7 @@ const cairo_user_data_key_t format_key = { 0 };
 
 auto f_image_surface_create(cairo_format_t format, int width, int height) -> cairo_surface_t*
 {
-	int size;
+	int size = 0;
 
 	switch (format)
 	{
@@ -113,7 +113,7 @@ auto f_pixbuf_to_cairo_surface(GdkPixbuf* pixbuf) -> cairo_surface_t*
 	int gdk_rowstride = gdk_pixbuf_get_rowstride(pixbuf);
 	int n_channels = gdk_pixbuf_get_n_channels(pixbuf);
 
-	cairo_format_t format;
+	cairo_format_t format{};
 	if (n_channels == 3)
 	{
 		format = CAIRO_FORMAT_RGB24;
@@ -153,7 +153,7 @@ auto f_pixbuf_to_cairo_surface(GdkPixbuf* pixbuf) -> cairo_surface_t*
 		else
 		{
 			guchar* end = p + 4 * width;
-			guint t1, t2, t3;
+			guint t1 = 0, t2 = 0, t3 = 0;
 
 #define MULT(d,c,a,t) G_STMT_START { t = c * a + 0x7f; d = ((t >> 8) + t) >> 8; } G_STMT_END
 

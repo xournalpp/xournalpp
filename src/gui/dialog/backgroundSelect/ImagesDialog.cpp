@@ -49,7 +49,7 @@ auto ImagesDialog::isImageAlreadyInTheList(BackgroundImage& image) -> bool
 {
 	for (BaseElementView* v : this->elements)
 	{
-		auto* iv = (ImageElementView*) v;
+		auto* iv = dynamic_cast<ImageElementView*>(v);
 		if (iv->backgroundImage == image)
 		{
 			return true;
@@ -81,7 +81,7 @@ auto ImagesDialog::getSelectedImage() -> BackgroundImage
 {
 	if (confirmed && selected >= 0 && selected < (int)elements.size())
 	{
-		return ((ImageElementView*)elements[selected])->backgroundImage;
+		return (dynamic_cast<ImageElementView*>(elements[selected]))->backgroundImage;
 	}
 	else
 	{

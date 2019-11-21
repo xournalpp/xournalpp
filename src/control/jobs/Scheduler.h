@@ -110,25 +110,25 @@ protected:
 
 	GThread* thread = nullptr;
 
-	GCond jobQueueCond;
-	GMutex jobQueueMutex;
+	GCond jobQueueCond{};
+	GMutex jobQueueMutex{};
 
-	GMutex schedulerMutex;
+	GMutex schedulerMutex{};
 
 	/**
 	 * This is need to be sure there is no job running if we delete a page, else we may access delete memory...
 	 */
-	GMutex jobRunningMutex;
+	GMutex jobRunningMutex{};
 
-	GQueue queueUrgent;
-	GQueue queueHigh;
-	GQueue queueLow;
-	GQueue queueNone;
+	GQueue queueUrgent{};
+	GQueue queueHigh{};
+	GQueue queueLow{};
+	GQueue queueNone{};
 
-	GQueue* jobQueue[JOB_N_PRIORITIES];
+	GQueue* jobQueue[JOB_N_PRIORITIES]{};
 
 	GTimeVal* blockRenderZoomTime = nullptr;
-	GMutex blockRenderMutex;
+	GMutex blockRenderMutex{};
 
 	string name;
 };

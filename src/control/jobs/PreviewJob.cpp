@@ -119,7 +119,7 @@ void PreviewJob::run()
 
 	if (RENDER_TYPE_PAGE_LAYER == type)
 	{
-		layer = ((SidebarPreviewLayerEntry*)this->sidebarPreview)->getLayer();
+		layer = (dynamic_cast<SidebarPreviewLayerEntry*>(this->sidebarPreview))->getLayer();
 	}
 
 	if (this->sidebarPreview->page->getBackgroundType().isPdfPage())

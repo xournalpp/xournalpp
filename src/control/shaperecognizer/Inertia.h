@@ -40,10 +40,10 @@ public:
 	void calc(const Point* pt, int start, int end);
 
 private:
-	double mass;
-	double sx;
-	double sy;
-	double sxx;
-	double sxy;
-	double syy;
+	double mass{};
+	double sx{};
+	double sy{};
+	double sxx{};
+	double sxy{};
+	double syy{};
 };

@@ -40,7 +40,7 @@ private:
 	void cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img);
 
 private:
-	GMutex renderMutex;
+	GMutex renderMutex{};
 
 	list<PdfCacheEntry*> data;
 	list<PdfCacheEntry*>::size_type size = 0;

@@ -60,7 +60,7 @@ auto DeviceListHelper::getDeviceList(Settings* settings, bool ignoreTouchDevices
 		        deviceList.end());
 	}
 
-	GList* pointerSlaves;
+	GList* pointerSlaves = nullptr;
 	// TODO remove after completely switching to gtk 3.20 or use c++17 if constexpr (predicate){...} else{...} ...
 #if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
 	GdkDisplay* display = gdk_display_get_default();

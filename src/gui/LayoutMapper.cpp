@@ -143,7 +143,7 @@ auto LayoutMapper::map(size_t col, size_t row) -> LayoutMapper::optional_size_t
 		row = data_.rows - 1 - row;
 	}
 
-	size_t res;
+	size_t res = 0;
 	if (isVertical())
 	{
 		if (data_.showPairedPages)
