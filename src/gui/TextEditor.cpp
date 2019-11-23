@@ -299,7 +299,8 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool
 	}
 	else if (event->state & GDK_CONTROL_MASK)
 	{
-		if (event->keyval == GDK_KEY_b)
+		//Bold text
+		if (event->keyval == GDK_KEY_b || event->keyval == GDK_KEY_B)
 		{
 			toggleBold();
 			return true;
