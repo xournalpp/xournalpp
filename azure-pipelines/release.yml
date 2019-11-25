@@ -89,7 +89,8 @@ stages:
           
       - job: Windows
         pool:
-          vmImage: 'vs2017-win2016'
+          vmImage: 'win1803'
+        container: mcr.microsoft.com/windows:1909
         displayName: 'Build for Windows'
         condition: always()
         steps:
