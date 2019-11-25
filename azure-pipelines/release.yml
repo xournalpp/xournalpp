@@ -89,7 +89,7 @@ stages:
           
       - job: Windows
         pool:
-          vmImage: 'win1803'
+          vmImage: 'win2016-vs2017'
         displayName: 'Build for Windows'
         condition: always()
         steps:
