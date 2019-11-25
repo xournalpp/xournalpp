@@ -33,7 +33,7 @@ echo "Listing required binaries"
 ldd ../build/src/xournalpp.exe
 echo ""
 
-ldd ../build/src/xournalpp.exe | grep '\/mingw.*\.dll' -o | xargs -I{} cp "{}" setup/bin/
+ldd ../build/src/xournalpp.exe | grep '\/mingw.*\.dll|\/c/windows/SYSTEM32/lib.*\.dll' -o | xargs -I{} cp "{}" setup/bin/
 
 echo "copy ui"
 
