@@ -31,6 +31,7 @@ pacman -S mingw-w64-x86_64-toolchain \
           mingw-w64-x86_64-ninja \
           patch \
           make \
+          tar \
           mingw-w64-x86_64-cppunit
 ```
 -> press enter multiple times / confirm all default values
