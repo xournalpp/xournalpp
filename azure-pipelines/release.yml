@@ -90,7 +90,7 @@ stages:
       - job: Windows
         pool:
           vmImage: 'win1803'
-        container: mcr.microsoft.com/windows:1909-amd64
+        container: mcr.microsoft.com/windows:1809-amd64
         displayName: 'Build for Windows'
         condition: always()
         steps:
