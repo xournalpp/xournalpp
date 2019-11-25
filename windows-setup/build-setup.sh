@@ -28,6 +28,11 @@ echo "build windows launcher"
 echo "copy binaries"
 
 cp ../build/src/xournalpp.exe ./setup/bin/xournalpp_bin.exe
+
+echo "Listing required binaries"
+ldd ../build/src/xournalpp.exe
+echo ""
+
 ldd ../build/src/xournalpp.exe | grep '\/mingw.*\.dll' -o | xargs -I{} cp "{}" setup/bin/
 
 echo "copy ui"
