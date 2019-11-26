@@ -113,7 +113,7 @@ void ToolbarData::saveToKeyFile(GKeyFile* config)
 
 	for (ToolbarEntry* e : this->contents)
 	{
-		string line = line;
+		string line{};
 
 		for (ToolbarItem* it : e->getItems())
 		{

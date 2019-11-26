@@ -175,7 +175,7 @@ auto ClipboardHandler::copy() -> bool
 		}
 	}
 
-	string text = text;
+	string text{};
 	for (GList* l = textElements; l != nullptr; l = l->next)
 	{
 		Text* e = static_cast<Text*>(l->data);

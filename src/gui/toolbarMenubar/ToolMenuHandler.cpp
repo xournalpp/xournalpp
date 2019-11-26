@@ -298,7 +298,7 @@ void ToolMenuHandler::signalConnectCallback(GtkBuilder* builder, GObject* object
 		const gchar* handlerName, GObject* connectObject, GConnectFlags flags, ToolMenuHandler* self)
 {
 	string actionName = handlerName;
-	string groupName = groupName;
+	string groupName{};
 
 	size_t pos = actionName.find(':');
 	if (pos != string::npos)

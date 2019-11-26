@@ -2665,7 +2665,7 @@ auto Control::showSaveDialog() -> bool
 
 void Control::updateWindowTitle()
 {
-	string title = title;
+	string title{};
 
 	this->doc->lock();
 	if (doc->getFilename().isEmpty())
