@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-26 11:49+0000\n"
-"PO-Revision-Date: 2019-11-26 11:50\n"
+"POT-Creation-Date: 2019-11-26 15:35+0000\n"
+"PO-Revision-Date: 2019-11-26 15:55\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -431,7 +431,7 @@ msgstr "Dessiner un rectangle"
 msgid "Draw coordinate system"
 msgstr "Dessiner le système de coordonnées"
 
-#: ../src/undo/InsertUndoAction.cpp:34
+#: ../src/undo/InsertUndoAction.cpp:35
 msgid "Draw stroke"
 msgstr "Dessiner le trait"
 
@@ -613,15 +613,15 @@ msgstr "Nom du fichier d'export d'image (.png / .svg)"
 msgid "Images"
 msgstr "Images"
 
-#: ../src/undo/InsertUndoAction.cpp:99
+#: ../src/undo/InsertUndoAction.cpp:92
 msgid "Insert elements"
 msgstr "Insérer des éléments"
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:66 ../src/undo/InsertUndoAction.cpp:42
+#: ../src/gui/dialog/ButtonConfigGui.cpp:66 ../src/undo/InsertUndoAction.cpp:39
 msgid "Insert image"
 msgstr "Insérer une image"
 
-#: ../src/undo/InsertUndoAction.cpp:46
+#: ../src/undo/InsertUndoAction.cpp:41
 msgid "Insert latex"
 msgstr "Insérer latex"
 
@@ -1280,7 +1280,7 @@ msgstr "Blanc"
 msgid "With PDF background"
 msgstr "Avec fond PDF"
 
-#: ../src/undo/InsertUndoAction.cpp:38
+#: ../src/undo/InsertUndoAction.cpp:37
 msgid "Write text"
 msgstr "Écrire du texte"
 
@@ -1377,7 +1377,7 @@ msgstr "_Ouvrir"
 msgid "_Save"
 msgstr "_Sauvegarder"
 
-#: ../src/util/DeviceListHelper.cpp:130
+#: ../src/util/DeviceListHelper.cpp:125
 msgid "cursor"
 msgstr "curseur"
 
@@ -1409,7 +1409,7 @@ msgstr "pointillé"
 msgid "elements"
 msgstr "éléments"
 
-#: ../src/util/DeviceListHelper.cpp:126
+#: ../src/util/DeviceListHelper.cpp:123
 msgid "eraser"
 msgstr "gomme"
 
@@ -1417,7 +1417,7 @@ msgstr "gomme"
 msgid "image"
 msgstr "image"
 
-#: ../src/util/DeviceListHelper.cpp:135
+#: ../src/util/DeviceListHelper.cpp:128
 msgid "keyboard"
 msgstr "clavier"
 
@@ -1425,7 +1425,7 @@ msgstr "clavier"
 msgid "latex"
 msgstr "latex"
 
-#: ../src/util/DeviceListHelper.cpp:118
+#: ../src/util/DeviceListHelper.cpp:119
 msgid "mouse"
 msgstr "souris"
 
@@ -1433,7 +1433,7 @@ msgstr "souris"
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
 msgstr "pdflatex a rencontré une erreur : {1} (code de sortie : {2})"
 
-#: ../src/util/DeviceListHelper.cpp:122
+#: ../src/util/DeviceListHelper.cpp:121
 msgid "pen"
 msgstr "stylo"
 
@@ -1450,19 +1450,23 @@ msgstr "standard"
 msgid "stroke"
 msgstr "trait"
 
+#: ../src/util/DeviceListHelper.cpp:137
+msgid "tablet pad"
+msgstr ""
+
 #: ../src/undo/AddUndoAction.cpp:124 ../src/undo/DeleteUndoAction.cpp:118
 msgid "text"
 msgstr "texte"
 
-#: ../src/util/DeviceListHelper.cpp:143
+#: ../src/util/DeviceListHelper.cpp:132
 msgid "touchpad"
 msgstr "touchpad"
 
-#: ../src/util/DeviceListHelper.cpp:139
+#: ../src/util/DeviceListHelper.cpp:130
 msgid "touchscreen"
 msgstr "écran tactile"
 
-#: ../src/util/DeviceListHelper.cpp:148
+#: ../src/util/DeviceListHelper.cpp:135
 msgid "trackpoint"
 msgstr "trackpoint"
 
