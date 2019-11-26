@@ -68,7 +68,9 @@ endif ()
 
 macro(add_includes_ldflags LDFLAGS INCLUDES)
 	set(xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "${LDFLAGS}")
-	set(xournalpp_INCLUDE_DIRS ${xournalpp_INCLUDE_DIRS} "${INCLUDES}")
+    include_directories(SYSTEM ${INCLUDES})
+    # Do not add system headers and external libraries to the additional include paths
+    # set(xournalpp_INCLUDE_DIRS ${xournalpp_INCLUDE_DIRS} "${INCLUDES}")
 endmacro (add_includes_ldflags LDFLAGS INCLUDES)
 
 # libexec
@@ -150,6 +152,8 @@ if (Lua_FOUND)
 	add_includes_ldflags("${Lua_LDFLAGS}" "${Lua_INCLUDE_DIRS}")
 	set(ENABLE_PLUGINS "true")
 endif ()
+
+unset(add_includes_ldflags)
 
 #
 # DO NOT INCLUDE LIBRARIES WITH pkg_check_modules AFTER THIS LINE!!!

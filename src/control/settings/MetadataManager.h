@@ -37,7 +37,7 @@ public:
 	/**
 	 * Get the metadata for a file
 	 */
-	MetadataEntry getForFile(const string& file);
+	static MetadataEntry getForFile(const string& file);
 
 	/**
 	 * Store the current data into metadata
@@ -63,7 +63,7 @@ private:
 	/**
 	 * Store metadata to file
 	 */
-	void storeMetadata(MetadataEntry* m);
+	static void storeMetadata(MetadataEntry* m);
 
 private:
 	/**
