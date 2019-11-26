@@ -284,6 +284,7 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool
 	bool obscure = false;
 
 	GtkTextIter iter;
+	GdkModifierType modifiers = gtk_accelerator_get_default_mod_mask();
 	GtkTextMark* insert = gtk_text_buffer_get_insert(this->buffer);
 	gtk_text_buffer_get_iter_at_mark(this->buffer, &iter, insert);
 	bool canInsert = gtk_text_iter_can_insert(&iter, true);
@@ -297,15 +298,15 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool
 		obscure = canInsert;
 		retval = true;
 	}
-	else if (event->state & GDK_CONTROL_MASK)
+	else if ((event->state & modifiers) == GDK_CONTROL_MASK)
 	{
-		//Bold text
+		// Bold text
 		if (event->keyval == GDK_KEY_b || event->keyval == GDK_KEY_B)
 		{
 			toggleBold();
 			return true;
 		}
-		// CTRL + Alt + Plus to increase text size
+		// Increase text size
 		if (event->keyval == GDK_KEY_plus)
 		{
 			incSize();
