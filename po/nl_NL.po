@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 01:13+0000\n"
-"PO-Revision-Date: 2019-11-21 01:16\n"
+"POT-Creation-Date: 2019-11-26 11:49+0000\n"
+"PO-Revision-Date: 2019-11-26 11:50\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -28,12 +28,12 @@ msgid "\n"
 msgstr "\n"
 "Er wordt nu geprobeerd op te starten zonder dit bestand."
 
-#: ../src/gui/MainWindow.cpp:744
+#: ../src/gui/MainWindow.cpp:743
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr " van {1}{2}"
 
-#: ../src/control/settings/Settings.cpp:103
+#: ../src/control/settings/Settings.cpp:105
 msgid "%F-Note-%H-%M"
 msgstr "%F-Notitie-%H-%M"
 
@@ -80,29 +80,29 @@ msgstr "Toepassen op huidige pagina"
 msgid "Attach file to the journal"
 msgstr "Bestand toevoegen"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:142
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:141
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
 msgstr "Het attribuut '{1}' kan niet dubbel worden verwerkt; de waarde is '{2}'"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:134
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:133
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:162
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:185
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:161
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:184
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
 msgstr "Het attribuut '{1}' kan niet worden verwerkt als int; de waarde is '{2}'"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:154
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:153
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:207
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:231
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:206
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:230
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "Het attribuut '{1}' kan niet worden verwerkt als size_t; de waarde is '{2}'"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:199
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:198
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
 msgstr ""
 
@@ -174,7 +174,7 @@ msgstr "Penseelbreedte aanpassen"
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
 msgstr "De kleur '{1}' is onbekend (niet opgegeven op de standaard kleurenlijst)!"
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:258
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:259
 msgid "Contents"
 msgstr "Inhoud"
 
@@ -196,7 +196,7 @@ msgstr "Pagina kopiëren"
 msgid "Could not create backup! (The file was created from an older Xournal version)"
 msgstr "Kan geen back-up creëren! (het bestand is gecreëerd in een oude versie van Xournal)"
 
-#: ../src/util/Util.cpp:120
+#: ../src/util/Util.cpp:121
 msgid "Could not create folder: {1}"
 msgstr "Kan map niet creëren: {1}"
 
@@ -231,24 +231,24 @@ msgstr "Kan LaTeX PDF-bestand niet openen: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Kan pagetemplates.ini niet openen"
 
-#: ../src/control/xojfile/LoadHandler.cpp:948
+#: ../src/control/xojfile/LoadHandler.cpp:946
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Kan bijlage niet openen: {1}. Foutmelding: kan bestand niet uitlezen"
 
-#: ../src/control/xojfile/LoadHandler.cpp:957
+#: ../src/control/xojfile/LoadHandler.cpp:955
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Kan bijlage niet openen: {1}. Foutmelding: kan bestand niet wegschrijven"
 
-#: ../src/control/xojfile/LoadHandler.cpp:927
-#: ../src/control/xojfile/LoadHandler.cpp:1240
-#: ../src/control/xojfile/LoadHandler.cpp:1260
+#: ../src/control/xojfile/LoadHandler.cpp:925
+#: ../src/control/xojfile/LoadHandler.cpp:1238
+#: ../src/control/xojfile/LoadHandler.cpp:1258
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Kan bijlage niet openen: {1}. Foutmelding: geen geldige grootte opgegeven"
 
-#: ../src/control/xojfile/LoadHandler.cpp:917
-#: ../src/control/xojfile/LoadHandler.cpp:935
-#: ../src/control/xojfile/LoadHandler.cpp:1231
-#: ../src/control/xojfile/LoadHandler.cpp:1248
+#: ../src/control/xojfile/LoadHandler.cpp:915
+#: ../src/control/xojfile/LoadHandler.cpp:933
+#: ../src/control/xojfile/LoadHandler.cpp:1229
+#: ../src/control/xojfile/LoadHandler.cpp:1246
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Kan bijlage niet openen: {1}. Foutmelding: {2}"
 
@@ -268,8 +268,8 @@ msgid "Could not parse general toolbar.ini file: {1}\n"
 msgstr "Kan algemeen toolbar.ini-bestand niet verwerken: {1}\n"
 "Werkbalken zijn niet beschikbaar"
 
-#: ../src/control/xojfile/LoadHandler.cpp:418
-#: ../src/control/xojfile/LoadHandler.cpp:446
+#: ../src/control/xojfile/LoadHandler.cpp:416
+#: ../src/control/xojfile/LoadHandler.cpp:444
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Kan afbeelding niet uitlezen: {1}. Foutmelding: {2}"
 
@@ -382,11 +382,11 @@ msgstr "Overschrijf de achtergrond-pdf niet: dit veroorzaakt fouten!"
 msgid "Document file was removed."
 msgstr "Het documentbestand is verwijderd."
 
-#: ../src/control/xojfile/LoadHandler.cpp:282
+#: ../src/control/xojfile/LoadHandler.cpp:280
 msgid "Document is corrupted (no pages found in file)"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:277
+#: ../src/control/xojfile/LoadHandler.cpp:275
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Het document is onvolledig (is het einde afgesneden?)"
 
@@ -474,20 +474,20 @@ msgstr "Kan bestand '{1}' niet openen"
 msgid "Error opening file: \"{1}\""
 msgstr "Kan bestand niet openen: '{1}'"
 
-#: ../src/control/xojfile/LoadHandler.cpp:539
-#: ../src/control/xojfile/LoadHandler.cpp:566
+#: ../src/control/xojfile/LoadHandler.cpp:537
+#: ../src/control/xojfile/LoadHandler.cpp:564
 msgid "Error reading PDF: {1}"
 msgstr "Kan PDF niet uitlezen: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:633
+#: ../src/control/xojfile/LoadHandler.cpp:631
 msgid "Error reading width of a stroke: {1}"
 msgstr "Kan breedte van penseelstreek niet uitlezen: {1}"
 
-#: ../src/control/jobs/ImageExport.cpp:129
+#: ../src/control/jobs/ImageExport.cpp:124
 msgid "Error save image #1"
 msgstr "Kan afbeelding #1 niet opslaan"
 
-#: ../src/control/jobs/ImageExport.cpp:146
+#: ../src/control/jobs/ImageExport.cpp:141
 msgid "Error save image #2"
 msgstr "Kan afbeelding #2 niet opslaan"
 
@@ -509,7 +509,7 @@ msgstr "Het foutlog kan niet worden verwijderd; doe dit handmatig.\n"
 msgid "Export PDF"
 msgstr "PDF-bestand exporteren"
 
-#: ../src/util/Util.cpp:141 ../src/util/Util.cpp:158
+#: ../src/util/Util.cpp:142 ../src/util/Util.cpp:159
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Het bestand kan niet worden geopend; doe dit handmatig.\n"
@@ -664,7 +664,7 @@ msgstr "Lichtblauw"
 msgid "Light Green"
 msgstr "Lichtgroen"
 
-#: ../src/gui/PageView.cpp:821
+#: ../src/gui/PageView.cpp:822
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:87
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:18
 msgid "Loading..."
@@ -780,7 +780,7 @@ msgstr "Oranje"
 msgid "PDF Export"
 msgstr "PDF-bestand exporteren"
 
-#: ../src/gui/MainWindow.cpp:742
+#: ../src/gui/MainWindow.cpp:741
 msgid "PDF Page {1}"
 msgstr "PDF-pagina {1}"
 
@@ -826,11 +826,11 @@ msgstr "Paginavoorbeeld"
 msgid "Page background changed"
 msgstr "Pagina-achtergrond gewijzigd"
 
-#: ../src/undo/InsertDeletePageUndoAction.cpp:113
+#: ../src/undo/InsertDeletePageUndoAction.cpp:111
 msgid "Page deleted"
 msgstr "Pagina verwijderd"
 
-#: ../src/undo/InsertDeletePageUndoAction.cpp:109
+#: ../src/undo/InsertDeletePageUndoAction.cpp:107
 msgid "Page inserted"
 msgstr "Pagina ingevoegd"
 
@@ -912,7 +912,7 @@ msgstr "Item {1} is verwijderd van werkbalk {2} (ID {2})"
 msgid "Replace"
 msgstr "Vervangen"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1280
+#: ../src/control/xojfile/LoadHandler.cpp:1278
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Het opgevraagde tijdelijke bestand van bijlage {1} is niet aangetroffen"
 
@@ -920,7 +920,7 @@ msgstr "Het opgevraagde tijdelijke bestand van bijlage {1} is niet aangetroffen"
 msgid "Restore file"
 msgstr "Bestand herstellen"
 
-#: ../src/undo/RotateUndoAction.cpp:61
+#: ../src/undo/RotateUndoAction.cpp:64
 msgid "Rotation"
 msgstr "Draaien"
 
@@ -966,7 +966,7 @@ msgstr "Bestand opslaan"
 msgid "Save file error: {1}"
 msgstr "Fout tijdens opslaan: {1}"
 
-#: ../src/undo/ScaleUndoAction.cpp:60
+#: ../src/undo/ScaleUndoAction.cpp:63
 msgid "Scale"
 msgstr "Schaal"
 
@@ -1011,7 +1011,7 @@ msgid "Select background color"
 msgstr "Achtergrondkleur kiezen"
 
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:47
-#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:153
+#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:149
 msgid "Select color"
 msgstr "Kleur kiezen"
 
@@ -1205,7 +1205,7 @@ msgstr "Werkbalken"
 msgid "Trying to emergency save the current open document…"
 msgstr "Bezig met opslaan van huidig document voor noodgevallen…"
 
-#: ../src/gui/PageView.cpp:422
+#: ../src/gui/PageView.cpp:424
 msgid "Unable to play audio recording {1}"
 msgstr ""
 
@@ -1218,15 +1218,15 @@ msgstr "Ongedaan maken"
 msgid "Undo: "
 msgstr "Ongedaan maken: "
 
-#: ../src/control/xojfile/LoadHandler.cpp:337
+#: ../src/control/xojfile/LoadHandler.cpp:335
 msgid "Unexpected root tag: {1}"
 msgstr "Onverwacht rootlabel: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:368
+#: ../src/control/xojfile/LoadHandler.cpp:366
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Onverwacht label in document: '{1}'"
 
-#: ../src/control/xojfile/LoadHandler.cpp:611
+#: ../src/control/xojfile/LoadHandler.cpp:609
 msgid "Unknown background type: {1}"
 msgstr "Onbekende achtergrond: {1}"
 
@@ -1234,19 +1234,19 @@ msgstr "Onbekende achtergrond: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Onbekende kleurwaarde: '{1}'"
 
-#: ../src/control/xojfile/LoadHandler.cpp:548
+#: ../src/control/xojfile/LoadHandler.cpp:546
 msgid "Unknown domain type: {1}"
 msgstr "Onbekend domein: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:268
+#: ../src/control/xojfile/LoadHandler.cpp:266
 msgid "Unknown parser error"
 msgstr "Onbekende verwerkfout"
 
-#: ../src/control/xojfile/LoadHandler.cpp:463
+#: ../src/control/xojfile/LoadHandler.cpp:461
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Onbekend pixmap::domein: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:728
+#: ../src/control/xojfile/LoadHandler.cpp:726
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Onbekende penseelsoort: '{1}' - aangenomen wordt dat het een pen is"
 
@@ -1283,15 +1283,15 @@ msgstr "Witte PDF-achtergrond"
 msgid "Write text"
 msgstr "Tekst opstellen"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1108
+#: ../src/control/xojfile/LoadHandler.cpp:1106
 msgid "Wrong count of points ({1})"
 msgstr "Onjuiste puntentelling ({1})"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1122
+#: ../src/control/xojfile/LoadHandler.cpp:1120
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Onjuist aantal punten - verkregen: {1}, verwacht: {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:263
+#: ../src/control/xojfile/LoadHandler.cpp:261
 msgid "XML Parser error: {1}"
 msgstr "XML-verwerkfout: {1}"
 
@@ -1321,7 +1321,7 @@ msgstr "Xournal++-sjabloon"
 msgid "Yellow"
 msgstr "Geel"
 
-#: ../src/control/PageBackgroundChangeController.cpp:209
+#: ../src/control/PageBackgroundChangeController.cpp:208
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr "De actie is afgebroken: je hebt geen PDF-pagina's om uit te kiezen.\n"
@@ -1331,7 +1331,7 @@ msgstr "De actie is afgebroken: je hebt geen PDF-pagina's om uit te kiezen.\n"
 msgid "You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker."
 msgstr "Je gebruikt een versie uit {1}/{2}. Voor bugmeldingen wordt je doorgestuurd naar de probleemtracker van de repo."
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:83
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:84
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
@@ -1469,7 +1469,7 @@ msgstr "spoorpunt"
 msgid "whiteout"
 msgstr "correctievloeistof"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1121
+#: ../src/control/xojfile/LoadHandler.cpp:1119
 msgid "xoj-File: {1}"
 msgstr "xoj-bestand: {1}"
 
@@ -1505,7 +1505,7 @@ msgstr "xoj-preview-extractor: kan het bestand '{1}' niet openen"
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: uitpakken voltooid"
 
-#: ../src/util/Util.cpp:110
+#: ../src/util/Util.cpp:111
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
