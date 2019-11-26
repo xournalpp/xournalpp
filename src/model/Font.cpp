@@ -19,7 +19,7 @@ void XojFont::setName(string name)
 	this->name = std::move(name);
 }
 
-auto XojFont::getSize() -> double
+auto XojFont::getSize() const -> double
 {
 	return size;
 }

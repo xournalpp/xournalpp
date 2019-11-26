@@ -26,7 +26,7 @@ public:
 public:
 	void acceptActions(ToolHandler* toolHandler);
 	ToolType getAction();
-	bool getDisableDrawing();
+	bool getDisableDrawing() const;
 	DrawingType getDrawingType();
 
 private:

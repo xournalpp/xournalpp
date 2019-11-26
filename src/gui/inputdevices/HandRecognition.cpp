@@ -66,7 +66,7 @@ void HandRecognition::reload()
 	touch.getString("method", disableMethod);
 	if (disableMethod == "X11")
 	{
-		if (x11Session == false)
+		if (!x11Session)
 		{
 			g_warning("X11 Touch workaround is selected, but no X11 Session running!");
 			enabled = false;
@@ -129,7 +129,7 @@ auto HandRecognition::enableTimeout(HandRecognition* self) -> bool
 
 	int nextTime = now - self->lastPenAction + self->disableTimeout;
 
-	g_timeout_add(nextTime, (GSourceFunc)enableTimeout, self);
+	g_timeout_add(nextTime, reinterpret_cast<GSourceFunc>(enableTimeout), self);
 
 	// Do not call again, a new time is scheduled
 	return false;
@@ -146,7 +146,7 @@ void HandRecognition::penEvent()
 	{
 		touchState = false;
 		disableTouch();
-		g_timeout_add(disableTimeout, (GSourceFunc)enableTimeout, this);
+		g_timeout_add(disableTimeout, reinterpret_cast<GSourceFunc>(enableTimeout), this);
 	}
 }
 

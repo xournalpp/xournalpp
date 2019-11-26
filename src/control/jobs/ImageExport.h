@@ -44,7 +44,7 @@ public:
 	/**
 	 * @return The last error message to show to the user
 	 */
-	string getLastErrorMsg();
+	string getLastErrorMsg() const;
 
 	/**
 	 * Create one Graphics file per page
@@ -65,7 +65,7 @@ private:
 	/**
 	 * Get a filename with a number, e.g. .../export-1.png, if the no is -1, return .../export.png
 	 */
-	string getFilenameWithNumber(int no);
+	string getFilenameWithNumber(int no) const;
 
 	/**
 	 * Export a single Image page

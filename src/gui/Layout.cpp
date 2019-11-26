@@ -40,14 +40,14 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling)
 
 void Layout::horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout)
 {
-	layout->checkScroll(adjustment, layout->lastScrollHorizontal);
+	Layout::checkScroll(adjustment, layout->lastScrollHorizontal);
 	layout->updateVisibility();
 	layout->scrollHandling->scrollChanged();
 }
 
 void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout)
 {
-	layout->checkScroll(adjustment, layout->lastScrollVertical);
+	Layout::checkScroll(adjustment, layout->lastScrollVertical);
 	layout->updateVisibility();
 	layout->scrollHandling->scrollChanged();
 }
@@ -231,8 +231,8 @@ void Layout::layoutPages(int width, int height)
 				v->setMappedRowCol(r, c);  //store row and column for e.g. proper arrow key navigation
 				int64_t vDisplayWidth = v->getDisplayWidth();
 				{
-					int64_t paddingLeft;
-					int64_t paddingRight;
+					int64_t paddingLeft = 0;
+					int64_t paddingRight = 0;
 					auto columnPadding = static_cast<int64_t>(this->widthCols[c] - vDisplayWidth);
 
 					if (isPairedPages && len > 1)
@@ -350,12 +350,12 @@ auto Layout::getIndexAtGridMap(size_t row, size_t col) -> LayoutMapper::optional
 	return this->mapper.at({col, row});  //watch out.. x,y --> c,r
 }
 
-auto Layout::getMinimalHeight() -> int
+auto Layout::getMinimalHeight() const -> int
 {
 	return this->minHeight;
 }
 
-auto Layout::getMinimalWidth() -> int
+auto Layout::getMinimalWidth() const -> int
 {
 	return this->minWidth;
 }

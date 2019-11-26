@@ -4,6 +4,7 @@
 
 #include "TouchInputHandler.h"
 #include "InputContext.h"
+#include <cmath>
 
 TouchInputHandler::TouchInputHandler(InputContext* inputContext) : AbstractInputHandler(inputContext)
 {
@@ -95,8 +96,8 @@ void TouchInputHandler::sequenceStart(InputEvent* event)
 
 void TouchInputHandler::scrollMotion(InputEvent* event)
 {
-	double offsetX;
-	double offsetY;
+	double offsetX = NAN;
+	double offsetY = NAN;
 
 	// Will only be called if there is a single sequence (zooming handles two sequences)
 	if (event->sequence == this->primarySequence)
@@ -146,7 +147,7 @@ void TouchInputHandler::zoomStart()
 	ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
 
 	// Disable zoom fit as we are zooming currently
-	// TODO this should happen internally!!!
+	// TODO(fabian): this should happen internally!!!
 	if (zoomControl->isZoomFitMode())
 	{
 		zoomControl->setZoomFitMode(false);

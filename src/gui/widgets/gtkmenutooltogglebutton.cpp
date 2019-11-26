@@ -63,7 +63,7 @@ static void gtk_menu_tool_toggle_button_construct_contents(
 
 	GtkOrientation orientation = gtk_tool_item_get_orientation(GTK_TOOL_ITEM (button));
 
-	GtkWidget* box;
+	GtkWidget* box = nullptr;
 	if (orientation == GTK_ORIENTATION_HORIZONTAL)
 	{
 		box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -93,7 +93,7 @@ static void gtk_menu_tool_toggle_button_construct_contents(
 
 	if (priv->box)
 	{
-		gchar* tmp;
+		gchar* tmp = nullptr;
 
 		/* Transfer a possible tooltip to the new box */
 		g_object_get(priv->box, "tooltip-markup", &tmp, nullptr);
@@ -177,9 +177,9 @@ static void gtk_menu_tool_toggle_button_get_property(GObject* object,
 static void gtk_menu_tool_toggle_button_class_init(GtkMenuToolToggleButtonClass*
                                                    klass)
 {
-	auto* object_class = (GObjectClass*) klass;
-	auto* widget_class = (GtkWidgetClass*) klass;
-	auto* toolitem_class = (GtkToolItemClass*) klass;
+	auto* object_class = reinterpret_cast<GObjectClass*>(klass);
+	auto* widget_class = reinterpret_cast<GtkWidgetClass*>(klass);
+	auto* toolitem_class = reinterpret_cast<GtkToolItemClass*>(klass);
 
 	object_class->set_property = gtk_menu_tool_toggle_button_set_property;
 	object_class->get_property = gtk_menu_tool_toggle_button_get_property;
@@ -205,10 +205,9 @@ static void gtk_menu_tool_toggle_button_class_init(GtkMenuToolToggleButtonClass*
 	                                  G_STRUCT_OFFSET(GtkMenuToolToggleButtonClass, show_menu), nullptr, nullptr,
 	                                  g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
-	GParamSpec* pspec = g_param_spec_object("menu", "Menu",
-	                                        "The dropdown menu",
-	                                        GTK_TYPE_MENU,
-	                                        (GParamFlags)(G_PARAM_READWRITE|G_PARAM_STATIC_NAME|G_PARAM_STATIC_NICK|G_PARAM_STATIC_BLURB));
+	GParamSpec* pspec = g_param_spec_object("menu", "Menu", "The dropdown menu", GTK_TYPE_MENU,
+	                                        static_cast<GParamFlags>(G_PARAM_READWRITE | G_PARAM_STATIC_NAME |
+	                                                                 G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB));
 	g_object_class_install_property(object_class, PROP_MENU, pspec);
 
 	g_type_class_add_private(object_class, sizeof(GtkMenuToolToggleButtonPrivate));
@@ -314,7 +313,7 @@ static void popup_menu_under_arrow(GtkMenuToolToggleButton* button,
 		return;
 	}
 
-	gtk_menu_popup(priv->menu, nullptr, nullptr, (GtkMenuPositionFunc) menu_position_func, button,
+	gtk_menu_popup(priv->menu, nullptr, nullptr, reinterpret_cast<GtkMenuPositionFunc>(menu_position_func), button,
 	               event ? event->button : 0, event ? event->time : gtk_get_current_event_time());
 }
 
@@ -349,10 +348,9 @@ static auto arrow_button_button_press_event_cb(GtkWidget* widget,
 
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+
+
+	return false;
 }
 
 static void gtk_menu_tool_toggle_button_init(GtkMenuToolToggleButton* button)
@@ -498,7 +496,7 @@ static void menu_detacher(GtkWidget* widget, GtkMenu* menu)
 void gtk_menu_tool_toggle_button_set_menu(GtkMenuToolToggleButton* button,
                                           GtkWidget* menu)
 {
-	GtkMenuToolToggleButtonPrivate* priv;
+	GtkMenuToolToggleButtonPrivate* priv = nullptr;
 
 	g_return_if_fail (GTK_IS_MENU_TOOL_TOGGLE_BUTTON (button));
 	g_return_if_fail(GTK_IS_MENU(menu) || menu == nullptr);

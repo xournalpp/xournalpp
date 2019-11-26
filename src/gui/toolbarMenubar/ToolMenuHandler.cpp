@@ -223,13 +223,13 @@ void ToolMenuHandler::removeColorToolItem(AbstractToolItem* it)
 			break;
 		}
 	}
-	delete (ColorToolItem*) it;
+	delete dynamic_cast<ColorToolItem*>(it);
 }
 
 void ToolMenuHandler::addColorToolItem(AbstractToolItem* it)
 {
 	g_return_if_fail(it != nullptr);
-	this->toolbarColorItems.push_back((ColorToolItem*) it);
+	this->toolbarColorItems.push_back(dynamic_cast<ColorToolItem*>(it));
 }
 
 void ToolMenuHandler::setTmpDisabled(bool disabled)
@@ -298,7 +298,7 @@ void ToolMenuHandler::signalConnectCallback(GtkBuilder* builder, GObject* object
 		const gchar* handlerName, GObject* connectObject, GConnectFlags flags, ToolMenuHandler* self)
 {
 	string actionName = handlerName;
-	string groupName = "";
+	string groupName{};
 
 	size_t pos = actionName.find(':');
 	if (pos != string::npos)
@@ -316,7 +316,7 @@ void ToolMenuHandler::signalConnectCallback(GtkBuilder* builder, GObject* object
 		return;
 	}
 
-	if (groupName != "")
+	if (!groupName.empty())
 	{
 		group = ActionGroup_fromString(groupName);
 	}
@@ -510,7 +510,8 @@ void ToolMenuHandler::initToolItems()
 
 
 	// now connect all Glade Signals
-	gtk_builder_connect_signals_full(gui->getBuilder(), (GtkBuilderConnectFunc)signalConnectCallback, this);
+	gtk_builder_connect_signals_full(gui->getBuilder(), reinterpret_cast<GtkBuilderConnectFunc>(signalConnectCallback),
+	                                 this);
 }
 
 void ToolMenuHandler::setFontButtonFont(XojFont& font)

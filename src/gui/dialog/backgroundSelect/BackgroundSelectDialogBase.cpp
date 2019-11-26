@@ -8,7 +8,7 @@
 
 
 BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc,
-                                                       Settings* settings, const string& glade, string mainWnd)
+                                                       Settings* settings, const string& glade, const string& mainWnd)
  : GladeGui(gladeSearchPath, glade, std::move(mainWnd))
  , settings(settings)
  , doc(doc)
@@ -78,7 +78,8 @@ void BackgroundSelectDialogBase::layout()
 
 		gtk_layout_move(GTK_LAYOUT(this->layoutContainer), p->getWidget(), x, y);
 
-		height = std::max(height, (double) p->getHeight());  //TODO: page height should be double as well
+		height = std::max(height,
+		                  static_cast<double>(p->getHeight()));  // TODO(fabian): page height should be double as well
 
 		x += p->getWidth();
 	}
@@ -113,12 +114,12 @@ void BackgroundSelectDialogBase::setSelected(int selected)
 	}
 
 	int lastSelected = this->selected;
-	if (lastSelected >= 0 && lastSelected < (int)elements.size())
+	if (lastSelected >= 0 && lastSelected < static_cast<int>(elements.size()))
 	{
 		elements[lastSelected]->setSelected(false);
 	}
 
-	if (selected >= 0 && selected < (int)elements.size())
+	if (selected >= 0 && selected < static_cast<int>(elements.size()))
 	{
 		elements[selected]->setSelected(true);
 		this->selected = selected;

@@ -57,13 +57,13 @@ public:
 	 * get the X coordinate relative to the provided view (getView())
 	 * in document coordinates
 	 */
-	double getXOnView();
+	double getXOnView() const;
 
 	/**
 	 * Get the Y coordinate relative to the provided view (getView())
 	 * in document coordinates
 	 */
-	double getYOnView();
+	double getYOnView() const;
 
 	/**
 	 * @return The original X coordinates of the provided view in document
@@ -80,12 +80,12 @@ public:
 	/**
 	 * Get the width in document coordinates (multiple with zoom)
 	 */
-	double getWidth();
+	double getWidth() const;
 
 	/**
 	 * Get the height in document coordinates (multiple with zoom)
 	 */
-	double getHeight();
+	double getHeight() const;
 
 	/**
 	 * Get the source page (where the selection was done)
@@ -228,9 +228,7 @@ private:
 	/**
 	 * Draws an indicator where you can delete the selection
 	 */
-	void drawDeleteRect(cairo_t* cr, double x, double y, double zoom);
-	
-
+	void drawDeleteRect(cairo_t* cr, double x, double y, double zoom) const;
 
 
 	/**
@@ -259,40 +257,40 @@ private: // DATA
 	/**
 	 * The position (and rotation) relative to the current view
 	 */
-	double x;
-	double y;
+	double x{};
+	double y{};
 	double rotation = 0;
 
 	/**
 	 * Use to translate to rotated selection
 	 */
-		_cairo_matrix cmatrix;
-	
+	_cairo_matrix cmatrix{};
+
 	/**
 	 * The size
 	 */
-	double width;
-	double height;
+	double width{};
+	double height{};
 
 	/**
 	 * Mouse coordinates for moving / resizing
 	 */
 	CursorSelectionType mouseDownType;
-	double relMousePosX;
-	double relMousePosY;
+	double relMousePosX{};
+	double relMousePosY{};
 
 	/**
 	 * If both scale axes should have the same scale factor, e.g. for Text
 	 * (we cannot only set the font size for text)
 	 */
-	bool aspectRatio;
-	
+	bool aspectRatio{};
+
 	/**
 	 * Size of the editing handles 
 	 */
 
-	int btnWidth = 8;
-	
+	int btnWidth{8};
+
 	/**
 	 * The source page (form where the Elements come)
 	 */
@@ -301,22 +299,21 @@ private: // DATA
 	/**
 	 * The source layer (form where the Elements come)
 	 */
-	Layer* sourceLayer;
+	Layer* sourceLayer{};
 
 	/**
 	 * The contents of the selection
 	 */
-	EditSelectionContents* contents;
+	EditSelectionContents* contents{};
 
 private: // HANDLER
 	/**
 	 * The page view for the anchor
 	 */
-	XojPageView* view;
+	XojPageView* view{};
 
 	/**
 	 * Undo redo handler
 	 */
-	UndoRedoHandler* undo;
-
+	UndoRedoHandler* undo{};
 };

@@ -33,7 +33,7 @@ static void link_dest_dispose(GObject* object)
 
 static void link_dest_class_init(XojLinkDestClass* linkClass)
 {
-	GObjectClass* g_object_class;
+	GObjectClass* g_object_class = nullptr;
 
 	parent_class = g_type_class_peek_parent(linkClass);
 
@@ -62,7 +62,7 @@ LinkDestination::LinkDestination()
 
 LinkDestination::~LinkDestination() = default;
 
-auto LinkDestination::getPdfPage() -> size_t
+auto LinkDestination::getPdfPage() const -> size_t
 {
 	return this->page;
 }
@@ -77,37 +77,37 @@ void LinkDestination::setExpand(bool expand)
 	this->expand = expand;
 }
 
-auto LinkDestination::getExpand() -> bool
+auto LinkDestination::getExpand() const -> bool
 {
 	return this->expand;
 }
 
-auto LinkDestination::shouldChangeLeft() -> bool
+auto LinkDestination::shouldChangeLeft() const -> bool
 {
 	return changeLeft;
 }
 
-auto LinkDestination::shouldChangeZoom() -> bool
+auto LinkDestination::shouldChangeZoom() const -> bool
 {
 	return changeZoom;
 }
 
-auto LinkDestination::shouldChangeTop() -> bool
+auto LinkDestination::shouldChangeTop() const -> bool
 {
 	return changeTop;
 }
 
-auto LinkDestination::getZoom() -> double
+auto LinkDestination::getZoom() const -> double
 {
 	return zoom;
 }
 
-auto LinkDestination::getLeft() -> double
+auto LinkDestination::getLeft() const -> double
 {
 	return left;
 }
 
-auto LinkDestination::getTop() -> double
+auto LinkDestination::getTop() const -> double
 {
 	return top;
 }

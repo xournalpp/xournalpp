@@ -17,8 +17,8 @@ void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, 
 	GtkTreeIter iter;
 
 	gtk_list_store_append(typeModel, &iter);
-	GdkPixbuf* pixbuf =
-	        gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon, 24, (GtkIconLookupFlags) 0, nullptr);
+	GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon, 24,
+	                                             static_cast<GtkIconLookupFlags>(0), nullptr);
 	gtk_list_store_set(typeModel, &iter, 0, pixbuf, -1);
 	gtk_list_store_set(typeModel, &iter, 1, name, 2, action, -1);
 }
@@ -226,7 +226,7 @@ void ButtonConfigGui::saveSettings()
 	GtkTreeModel* model = gtk_combo_box_get_model(GTK_COMBO_BOX(cbTool));
 	gtk_tree_model_get_value(model, &iter, 2, &value);
 
-	auto action = (ToolType) g_value_get_int(&value);
+	auto action = static_cast<ToolType>(g_value_get_int(&value));
 	ButtonConfig* cfg = settings->getButtonConfig(button);
 	cfg->action = action;
 
@@ -253,7 +253,7 @@ void ButtonConfigGui::saveSettings()
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(colorButton), &color);
 	cfg->color = Util::gdkrgba_to_hex(color);
 
-	cfg->drawingType = (DrawingType) gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbDrawingType));
+	cfg->drawingType = static_cast<DrawingType>(gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbDrawingType)));
 
 	int eraserMode = gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbEraserType));
 
@@ -297,7 +297,7 @@ void ButtonConfigGui::enableDisableTools()
 
 	GValue value = {0};
 	gtk_tree_model_get_value(model, &iter, 2, &value);
-	auto action = (ToolType) g_value_get_int(&value);
+	auto action = static_cast<ToolType>(g_value_get_int(&value));
 
 	switch (action)
 	{

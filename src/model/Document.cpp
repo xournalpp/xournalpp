@@ -28,7 +28,8 @@ void Document::freeTreeContentModel()
 {
 	if (this->contentsModel)
 	{
-		gtk_tree_model_foreach(this->contentsModel, (GtkTreeModelForeachFunc) freeTreeContentEntry, this);
+		gtk_tree_model_foreach(this->contentsModel, reinterpret_cast<GtkTreeModelForeachFunc>(freeTreeContentEntry),
+		                       this);
 
 		g_object_unref(this->contentsModel);
 		this->contentsModel = nullptr;
@@ -141,14 +142,13 @@ auto Document::createSaveFolder(Path lastSavePath) -> Path
 	{
 		return filename.getParentPath();
 	}
-	else if (!pdfFilename.isEmpty())
+	if (!pdfFilename.isEmpty())
 	{
 		return pdfFilename.getParentPath();
 	}
-	else
-	{
-		return lastSavePath;
-	}
+
+
+	return lastSavePath;
 }
 
 auto Document::createSaveFilename(DocumentType type, const string& defaultSaveName) -> Path
@@ -160,23 +160,22 @@ auto Document::createSaveFilename(DocumentType type, const string& defaultSaveNa
 		p.clearExtensions();
 		return p;
 	}
-	else if (!pdfFilename.isEmpty())
+	if (!pdfFilename.isEmpty())
 	{
 		Path p = pdfFilename.getFilename();
 		p.clearExtensions();
 		return p;
 	}
-	else
-	{
-		time_t curtime = time(nullptr);
-		char stime[128];
-		strftime(stime, sizeof(stime), defaultSaveName.c_str(), localtime(&curtime));
 
-		// Remove the extension, file format is handled by the filter combo box
-		Path p = stime;
-		p.clearExtensions();
-		return p;
-	}
+
+	time_t curtime = time(nullptr);
+	char stime[128];
+	strftime(stime, sizeof(stime), defaultSaveName.c_str(), localtime(&curtime));
+
+	// Remove the extension, file format is handled by the filter combo box
+	Path p = stime;
+	p.clearExtensions();
+	return p;
 }
 
 
@@ -219,7 +218,7 @@ auto Document::isPdfDocumentLoaded() -> bool
 	return pdfDocument.isLoaded();
 }
 
-auto Document::isAttachPdf() -> bool
+auto Document::isAttachPdf() const -> bool
 {
 	return this->attachPdf;
 }
@@ -291,7 +290,8 @@ void Document::buildContentsModel()
 		return;
 	}
 
-	this->contentsModel = (GtkTreeModel*) gtk_tree_store_new(4, G_TYPE_STRING, G_TYPE_OBJECT, G_TYPE_BOOLEAN, G_TYPE_STRING);
+	this->contentsModel = reinterpret_cast<GtkTreeModel*>(
+	        gtk_tree_store_new(4, G_TYPE_STRING, G_TYPE_OBJECT, G_TYPE_BOOLEAN, G_TYPE_STRING));
 	buildTreeContentsModel(nullptr, iter);
 	delete iter;
 }
@@ -329,7 +329,7 @@ void Document::updateIndexPageNumbers()
 {
 	if (this->contentsModel != nullptr)
 	{
-		gtk_tree_model_foreach(this->contentsModel, (GtkTreeModelForeachFunc) fillPageLabels, this);
+		gtk_tree_model_foreach(this->contentsModel, reinterpret_cast<GtkTreeModelForeachFunc>(fillPageLabels), this);
 	}
 }
 
@@ -511,7 +511,7 @@ void Document::setCreateBackupOnSave(bool backup)
 	this->createBackupOnSave = backup;
 }
 
-auto Document::shouldCreateBackupOnSave() -> bool
+auto Document::shouldCreateBackupOnSave() const -> bool
 {
 	return this->createBackupOnSave;
 }

@@ -34,7 +34,7 @@ void ImageExport::setPngDpi(int dpi)
 /**
  * @return the last error message to show to the user
  */
-auto ImageExport::getLastErrorMsg() -> string
+auto ImageExport::getLastErrorMsg() const -> string
 {
 	return lastError;
 }
@@ -82,18 +82,13 @@ auto ImageExport::freeSurface(int id) -> bool
 	cairo_surface_destroy(surface);
 
 	// we ignore this problem
-	if (status != CAIRO_STATUS_SUCCESS)
-	{
-		return false;
-	}
-
-	return true;
+	return status == CAIRO_STATUS_SUCCESS;
 }
 
 /**
  * Get a filename with a number, e.g. .../export-1.png, if the no is -1, return .../export.png
  */
-auto ImageExport::getFilenameWithNumber(int no) -> string
+auto ImageExport::getFilenameWithNumber(int no) const -> string
 {
 	if (no == -1)
 	{

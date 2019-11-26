@@ -11,8 +11,6 @@ using std::string;
 
 
 // ** This needs to be copied to the header
-auto ActionType_fromString(const string& value) -> ActionType;
-auto ActionType_toString(ActionType value) -> string;
 
 
 auto ActionType_fromString(const string& value) -> ActionType

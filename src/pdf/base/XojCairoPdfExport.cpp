@@ -74,7 +74,7 @@ void XojCairoPdfExport::exportPage(size_t page)
 
 auto XojCairoPdfExport::createPdf(Path file, PageRangeVector& range) -> bool
 {
-	if (range.size() == 0)
+	if (range.empty())
 	{
 		this->lastError = _("No pages to export!");
 		return false;
@@ -101,7 +101,7 @@ auto XojCairoPdfExport::createPdf(Path file, PageRangeVector& range) -> bool
 	{
 		for (int i = e->getFirst(); i <= e->getLast(); i++)
 		{
-			if (i < 0 || i > (int)doc->getPageCount())
+			if (i < 0 || i > static_cast<int>(doc->getPageCount()))
 			{
 				continue;
 			}

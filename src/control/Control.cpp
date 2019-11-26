@@ -122,7 +122,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	/**
 	 * This is needed to update the previews
 	 */
-	this->changeTimout = g_timeout_add_seconds(5, (GSourceFunc) checkChangedDocument, this);
+	this->changeTimout = g_timeout_add_seconds(5, reinterpret_cast<GSourceFunc>(checkChangedDocument), this);
 
 	this->pageBackgroundChangeController = new PageBackgroundChangeController(this);
 
@@ -380,10 +380,10 @@ auto Control::autosaveCallback(Control* control) -> bool
 		// do nothing, nothing changed
 		return true;
 	}
-	else
-	{
-		g_message("Info: autosave document...");
-	}
+
+
+	g_message("Info: autosave document...");
+
 
 	auto* job = new AutosaveJob(control);
 	control->scheduler->addJob(job, JOB_PRIORITY_NONE);
@@ -403,7 +403,7 @@ void Control::enableAutosave(bool enable)
 	if (enable)
 	{
 		int timeout = settings->getAutosaveTimeout() * 60;
-		this->autosaveTimeout = g_timeout_add_seconds(timeout, (GSourceFunc) autosaveCallback, this);
+		this->autosaveTimeout = g_timeout_add_seconds(timeout, reinterpret_cast<GSourceFunc>(autosaveCallback), this);
 	}
 }
 
@@ -971,7 +971,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 
 	case ACTION_AUDIO_RECORD:
 	{
-		bool result;
+		bool result = false;
 		if (enabled)
 		{
 			result = audioController->startRecording();
@@ -984,7 +984,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		if (!result)
 		{
 			Util::execInUiThread([=]() {
-				gtk_toggle_tool_button_set_active((GtkToggleToolButton*) toolbutton, !enabled);
+				gtk_toggle_tool_button_set_active(reinterpret_cast<GtkToggleToolButton*>(toolbutton), !enabled);
 				string msg = _("Recorder could not be started.");
 				g_warning("%s", msg.c_str());
 				XojMsgBox::showErrorToUser(Control::getGtkWindow(), msg);
@@ -1056,7 +1056,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 
 	if (type >= ACTION_TOOL_PEN && type <= ACTION_TOOL_HAND)
 	{
-		auto at = (ActionType)(toolHandler->getToolType() - TOOL_PEN + ACTION_TOOL_PEN);
+		auto at = static_cast<ActionType>(toolHandler->getToolType() - TOOL_PEN + ACTION_TOOL_PEN);
 		if (type == at && !enabled)
 		{
 			fireActionSelected(GROUP_TOOL, at);
@@ -1242,7 +1242,7 @@ auto Control::isInDragAndDropToolbar() -> bool
 
 void Control::setShapeTool(ActionType type, bool enabled)
 {
-	if (enabled == false)
+	if (!enabled)
 	{
 		// Disable all entries
 		this->toolHandler->setDrawingType(DRAWING_TYPE_DEFAULT);
@@ -1313,7 +1313,7 @@ void Control::disableSidebarTmp(bool disabled)
 
 void Control::addDefaultPage(string pageTemplate)
 {
-	if (pageTemplate == "")
+	if (pageTemplate.empty())
 	{
 		pageTemplate = settings->getPageTemplate();
 	}
@@ -1476,7 +1476,7 @@ void Control::paperFormat()
 	if (width > 0)
 	{
 		this->doc->lock();
-		this->doc->setPageSize(page, width, height);
+		Document::setPageSize(page, width, height);
 		this->doc->unlock();
 	}
 
@@ -1593,7 +1593,7 @@ void Control::setViewColumns(int numColumns)
 	settings->setViewColumns(numColumns);
 	settings->setViewFixedRows(false);
 
-	ActionType action;
+	ActionType action{};
 
 	switch (numColumns)
 	{
@@ -1637,7 +1637,7 @@ void Control::setViewRows(int numRows)
 	settings->setViewRows(numRows);
 	settings->setViewFixedRows(true);
 
-	ActionType action;
+	ActionType action{};
 
 	switch (numRows)
 	{
@@ -1680,7 +1680,7 @@ void Control::setViewLayoutVert(bool vert)
 {
 	settings->setViewLayoutVert(vert);
 
-	ActionType action;
+	ActionType action{};
 
 	if (vert)
 	{
@@ -1702,7 +1702,7 @@ void Control::setViewLayoutR2L(bool r2l)
 {
 	settings->setViewLayoutR2L(r2l);
 
-	ActionType action;
+	ActionType action{};
 
 	if (r2l)
 	{
@@ -1724,7 +1724,7 @@ void Control::setViewLayoutB2T(bool b2t)
 {
 	settings->setViewLayoutB2T(b2t);
 
-	ActionType action;
+	ActionType action{};
 
 	if (b2t)
 	{
@@ -1848,7 +1848,7 @@ void Control::toolChanged()
 	ToolType type = toolHandler->getToolType();
 
 	// Convert enum values, enums has to be in the same order!
-	auto at = (ActionType)(type - TOOL_PEN + ACTION_TOOL_PEN);
+	auto at = static_cast<ActionType>(type - TOOL_PEN + ACTION_TOOL_PEN);
 
 	fireActionSelected(GROUP_TOOL, at);
 
@@ -2301,20 +2301,20 @@ auto Control::openFile(Path filename, int scrollToPage, bool forceOpen) -> bool
 		fileLoaded(scrollToPage);
 		return false;
 	}
-	else
-	{
-		this->closeDocument();
 
-		this->doc->lock();
-		this->doc->clearDocument();
-		*this->doc = *loadedDocument;
-		this->doc->unlock();
 
-		// Set folder as last save path, so the next save will be at the current document location
-		// This is important because of the new .xopp format, where Xournal .xoj handled as import,
-		// not as file to load
-		settings->setLastSavePath(filename.getParentPath());
-	}
+	this->closeDocument();
+
+	this->doc->lock();
+	this->doc->clearDocument();
+	*this->doc = *loadedDocument;
+	this->doc->unlock();
+
+	// Set folder as last save path, so the next save will be at the current document location
+	// This is important because of the new .xopp format, where Xournal .xoj handled as import,
+	// not as file to load
+	settings->setLastSavePath(filename.getParentPath());
+
 
 	fileLoaded(scrollToPage);
 	return true;
@@ -2388,7 +2388,7 @@ void Control::fileLoaded(int scrollToPage)
 		}
 
 		loadMetadata(md);
-		recent->addRecentFileFilename(file);
+		RecentManager::addRecentFileFilename(file);
 	}
 	else
 	{
@@ -2405,7 +2405,7 @@ void Control::fileLoaded(int scrollToPage)
 class MetadataCallbackData
 {
 public:
-	Control* ctrl;
+	Control* ctrl{};
 	MetadataEntry md;
 };
 
@@ -2448,7 +2448,7 @@ void Control::loadMetadata(MetadataEntry md)
 	data->md = std::move(md);
 	data->ctrl = this;
 
-	g_idle_add((GSourceFunc) loadMetadataCallback, data);
+	g_idle_add(reinterpret_cast<GSourceFunc>(loadMetadataCallback), data);
 }
 
 auto Control::annotatePdf(Path filename, bool attachPdf, bool attachToDocument) -> bool
@@ -2477,7 +2477,7 @@ auto Control::annotatePdf(Path filename, bool attachPdf, bool attachToDocument) 
 
 	if (res)
 	{
-		this->recent->addRecentFileFilename(filename.c_str());
+		RecentManager::addRecentFileFilename(filename.c_str());
 
 		this->doc->lock();
 		Path file = this->doc->getEvMetadataFilename();
@@ -2665,7 +2665,7 @@ auto Control::showSaveDialog() -> bool
 
 void Control::updateWindowTitle()
 {
-	string title = "";
+	string title{};
 
 	this->doc->lock();
 	if (doc->getFilename().isEmpty())
@@ -2752,7 +2752,7 @@ void Control::resetSavedStatus()
 	this->doc->unlock();
 
 	this->undoRedo->documentSaved();
-	this->recent->addRecentFileFilename(filename);
+	RecentManager::addRecentFileFilename(filename);
 	this->updateWindowTitle();
 }
 
@@ -3161,7 +3161,7 @@ void Control::setLineStyle(const string& style)
 		sel = this->win->getXournal()->getSelection();
 	}
 
-	// TODO allow to change selection
+	// TODO(fabian): allow to change selection
 	if (sel)
 	{
 		//		UndoAction* undo = sel->setSize(size, toolHandler->getToolThickness(TOOL_PEN),

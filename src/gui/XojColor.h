@@ -20,7 +20,7 @@ public:
 	virtual ~XojColor();
 
 public:
-	int getColor();
+	int getColor() const;
 	string getName();
 
 private:

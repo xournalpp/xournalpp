@@ -57,7 +57,8 @@ void LatexDialog::setTempRender(PopplerDocument* pdf)
 		zoom = 1200 / pageWidth;
 	}
 
-	this->scaledRender = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, (int)(pageWidth * zoom), (int)(pageHeight * zoom));
+	this->scaledRender = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int>(pageWidth * zoom),
+	                                                static_cast<int>(pageHeight * zoom));
 	cairo_t* cr = cairo_create(this->scaledRender);
 
 	cairo_scale(cr, zoom, zoom);

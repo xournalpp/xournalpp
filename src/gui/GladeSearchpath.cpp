@@ -10,7 +10,7 @@ GladeSearchpath::~GladeSearchpath()
 auto GladeSearchpath::findFile(const string& subdir, const string& file) -> string
 {
 	string filename;
-	if (subdir == "")
+	if (subdir.empty())
 	{
 		filename = file;
 	}
@@ -38,7 +38,7 @@ auto GladeSearchpath::findFile(const string& subdir, const string& file) -> stri
  */
 auto GladeSearchpath::getFirstSearchPath() -> string
 {
-	if (this->directories.size() < 1)
+	if (this->directories.empty())
 	{
 		return "";
 	}

@@ -115,7 +115,7 @@ auto TexImage::getText() -> string
 
 auto TexImage::getImage() -> cairo_surface_t*
 {
-	if (this->image == nullptr && this->parsedBinaryData == false)
+	if (this->image == nullptr && !this->parsedBinaryData)
 	{
 		loadBinaryData();
 	}
@@ -141,12 +141,13 @@ void TexImage::loadBinaryData()
 	if (type[1] == 'P' && type[2] == 'N' && type[3] == 'G')
 	{
 		this->read = 0;
-		this->image = cairo_image_surface_create_from_png_stream((cairo_read_func_t) &cairoReadFunction, this);
+		this->image = cairo_image_surface_create_from_png_stream(
+		        reinterpret_cast<cairo_read_func_t>(&cairoReadFunction), this);
 	}
 	else if (type[1] == 'P' && type[2] == 'D' && type[3] == 'F')
 	{
-		this->pdf = poppler_document_new_from_data((char*) this->binaryData.c_str(), this->binaryData.length(), nullptr,
-		                                           nullptr);
+		this->pdf = poppler_document_new_from_data(const_cast<char*>(this->binaryData.c_str()),
+		                                           this->binaryData.length(), nullptr, nullptr);
 	}
 	else
 	{
@@ -163,7 +164,7 @@ void TexImage::loadBinaryData()
  */
 auto TexImage::getPdf() -> PopplerDocument*
 {
-	if (this->pdf == nullptr && this->parsedBinaryData == false)
+	if (this->pdf == nullptr && !this->parsedBinaryData)
 	{
 		loadBinaryData();
 	}
@@ -239,7 +240,7 @@ void TexImage::readSerialized(ObjectInputStream& in)
 
 	char* data = nullptr;
 	int len = 0;
-	in.readData((void**)&data, &len);
+	in.readData(reinterpret_cast<void**>(&data), &len);
 
 	this->binaryData = string(data, len);
 

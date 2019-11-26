@@ -29,7 +29,7 @@ auto SpinPageAdapter::pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter) -
 void SpinPageAdapter::pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinPageAdapter* adapter)
 {
 	// Nothing changed.
-	if (gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spinbutton)) == (long) adapter->page)
+	if (gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spinbutton)) == static_cast<long>(adapter->page))
 	{
 		return;
 	}
@@ -40,7 +40,7 @@ void SpinPageAdapter::pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinP
 	}
 
 	// Give the spin button some time to realease, if we don't do he will send new events...
-	adapter->lastTimeoutId = g_timeout_add(100, (GSourceFunc) pageNrSpinChangedTimerCallback, adapter);
+	adapter->lastTimeoutId = g_timeout_add(100, reinterpret_cast<GSourceFunc>(pageNrSpinChangedTimerCallback), adapter);
 }
 
 auto SpinPageAdapter::getWidget() -> GtkWidget*
@@ -48,7 +48,7 @@ auto SpinPageAdapter::getWidget() -> GtkWidget*
 	return this->widget;
 }
 
-auto SpinPageAdapter::getPage() -> int
+auto SpinPageAdapter::getPage() const -> int
 {
 	return this->page;
 }

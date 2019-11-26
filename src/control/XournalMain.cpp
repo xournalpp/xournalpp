@@ -88,7 +88,7 @@ void XournalMain::checkForErrorlog()
 
 	vector<string> errorList;
 
-	const gchar* file;
+	const gchar* file = nullptr;
 	while ((file = g_dir_read_name(home)) != nullptr)
 	{
 		if (g_file_test(file, G_FILE_TEST_IS_REGULAR))
@@ -239,7 +239,7 @@ auto XournalMain::exportImg(const char* input, const char* output) -> int
 	exportRange.clear();
 
 	string errorMsg = imgExport.getLastErrorMsg();
-	if (errorMsg != "")
+	if (!errorMsg.empty())
 	{
 		g_message("Error exporting image: %s\n", errorMsg.c_str());
 		return -3;
@@ -512,7 +512,7 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* rela
 {
 	string uiPath = findResourcePath(relativePathAndFile);	//i.e.  relativePathAndFile = "ui/about.glade"
 
-	if (uiPath != "")
+	if (!uiPath.empty())
 	{
 		gladePath->addSearchDirectory(uiPath);
 		return;

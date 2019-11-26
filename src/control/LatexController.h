@@ -120,7 +120,7 @@ private:
 	 * Convert the given PDF Document to a TexImage and set the formula to the
 	 * given formula.
 	 */
-	std::unique_ptr<TexImage> convertDocumentToImage(PopplerDocument* doc, string formula);
+	std::unique_ptr<TexImage> convertDocumentToImage(PopplerDocument* doc, string formula) const;
 
 	/**
 	 * Load the preview PDF from disk and create a TexImage object.

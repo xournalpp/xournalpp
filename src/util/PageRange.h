@@ -20,8 +20,8 @@ public:
 	virtual ~PageRangeEntry();
 
 public:
-	int getLast();
-	int getFirst();
+	int getLast() const;
+	int getFirst() const;
 
 private:
 	int first;

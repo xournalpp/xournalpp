@@ -25,7 +25,7 @@ public:
 	virtual ~FullscreenHandler();
 
 public:
-	bool isFullscreen();
+	bool isFullscreen() const;
 	void setFullscreen(MainWindow* win, bool enabled);
 
 private:

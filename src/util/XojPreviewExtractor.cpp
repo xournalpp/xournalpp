@@ -124,14 +124,15 @@ auto XojPreviewExtractor::readFile(const Path& file) -> PreviewExtractResult
 		// The <preview> Tag is within the first 179 Bytes
 		// The Preview should end within the first 8k
 
-		std::array<char, BUF_SIZE> buffer;
+		std::array<char, BUF_SIZE> buffer{};
 		int readLen = gzread(fp, buffer.data(), BUF_SIZE);
 
 		PreviewExtractResult result = readPreview(buffer.data(), readLen);
 
 		gzclose(fp);
 		return result;
-	} else if (!zipFp)
+	}
+	if (!zipFp)
 	{
 		return PREVIEW_RESULT_COULD_NOT_OPEN_FILE;
 	}
@@ -158,7 +159,7 @@ auto XojPreviewExtractor::readFile(const Path& file) -> PreviewExtractResult
 		return PREVIEW_RESULT_ERROR_READING_PREVIEW;
 	}
 
-	data = (unsigned char *)g_malloc(thumbStat.size);
+	data = static_cast<unsigned char*>(g_malloc(thumbStat.size));
 	zip_uint64_t readBytes = 0;
 	while (readBytes < dataLen)
 	{

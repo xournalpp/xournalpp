@@ -1,6 +1,7 @@
 #include "VerticalToolHandler.h"
 #include <util/cpp14memory.h>
 
+#include <cmath>
 #include "model/Layer.h"
 #include "undo/UndoRedoHandler.h"
 #include "util/GtkColorWrapper.h"
@@ -63,8 +64,8 @@ void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 
 	selectionColor.apply(cr);
 
-	double y;
-	double height;
+	double y = NAN;
+	double height = NAN;
 
 	if (this->startY < this->endY)
 	{

@@ -36,7 +36,7 @@ protected:
 	virtual GtkToolItem* createTmpItem(bool horizontal);
 	virtual GtkToolItem* newItem();
 
-	GtkWidget* newFontButton();
+	static GtkWidget* newFontButton();
 	static void setFontFontButton(GtkWidget* fontButton, XojFont& font);
 
 	virtual GtkWidget* getNewToolIcon();

@@ -27,7 +27,7 @@ class VorbisConsumer
 {
 public:
 	explicit VorbisConsumer(Settings* settings, AudioQueue<float>* audioQueue);
-	~VorbisConsumer();
+	~VorbisConsumer() = default;
 
 public:
 	bool start(const string& filename);

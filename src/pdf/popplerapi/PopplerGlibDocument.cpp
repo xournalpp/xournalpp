@@ -33,7 +33,7 @@ void PopplerGlibDocument::assign(XojPdfDocumentInterface* doc)
 		g_object_unref(document);
 	}
 
-	document = ((PopplerGlibDocument*)doc)->document;
+	document = (dynamic_cast<PopplerGlibDocument*>(doc))->document;
 	if (document)
 	{
 		g_object_ref(document);
@@ -42,7 +42,7 @@ void PopplerGlibDocument::assign(XojPdfDocumentInterface* doc)
 
 auto PopplerGlibDocument::equals(XojPdfDocumentInterface* doc) -> bool
 {
-	return document == ((PopplerGlibDocument*)doc)->document;
+	return document == (dynamic_cast<PopplerGlibDocument*>(doc))->document;
 }
 
 auto PopplerGlibDocument::save(Path filename, GError** error) -> bool

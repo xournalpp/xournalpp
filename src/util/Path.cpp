@@ -110,7 +110,7 @@ auto Path::exists() const -> bool
 	return g_file_test(path.c_str(), G_FILE_TEST_EXISTS);
 }
 
-auto Path::deleteFile() -> bool
+auto Path::deleteFile() const -> bool
 {
 	return g_unlink(c_str()) == 0;
 }

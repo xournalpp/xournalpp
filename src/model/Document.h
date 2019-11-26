@@ -51,9 +51,9 @@ public:
 	PageRef getPage(size_t page);
 	void deletePage(size_t pNr);
 
-	void setPageSize(PageRef p, double width, double height);
-	double getPageWidth(PageRef p);
-	double getPageHeight(PageRef p);
+	static void setPageSize(PageRef p, double width, double height);
+	static double getPageWidth(PageRef p);
+	static double getPageHeight(PageRef p);
 
 	size_t indexOf(const PageRef& page);
 
@@ -78,11 +78,11 @@ public:
 	GtkTreeModel* getContentsModel();
 
 	void setCreateBackupOnSave(bool backup);
-	bool shouldCreateBackupOnSave();
+	bool shouldCreateBackupOnSave() const;
 
 	void clearDocument(bool destroy = false);
 
-	bool isAttachPdf();
+	bool isAttachPdf() const;
 
 	cairo_surface_t* getPreview();
 	void setPreview(cairo_surface_t* preview);
@@ -98,7 +98,7 @@ private:
 
 	void buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterator* iter);
 	void updateIndexPageNumbers();
-	static bool fillPageLabels(GtkTreeModel* tree_model, GtkTreePath* path, GtkTreeIter* iter, Document* doc);
+	static bool fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc);
 
 private:
 	DocumentHandler* handler = nullptr;
@@ -139,5 +139,5 @@ private:
 	/**
 	 * The lock of the document
 	 */
-	GMutex documentLock;
+	GMutex documentLock{};
 };

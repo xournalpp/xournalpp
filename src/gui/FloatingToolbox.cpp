@@ -94,7 +94,7 @@ void FloatingToolbox::showForConfiguration()
 	if (this->floatingToolboxActivated())		// Do not show if not being used - at least while experimental.
 	{
 		GtkWidget* boxContents = this->mainWindow->get("boxContents");
-		gint wx, wy;
+		gint wx = 0, wy = 0;
 		gtk_widget_translate_coordinates(boxContents, gtk_widget_get_toplevel(boxContents), 0, 0, &wx, &wy);
 		this->floatingToolboxX = wx + 40;	//when configuration state these are
 		this->floatingToolboxY = wy + 40;	// topleft coordinates( otherwise center).

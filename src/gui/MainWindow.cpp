@@ -295,7 +295,7 @@ void MainWindow::initHideMenu()
 		                 G_CALLBACK(+[](GtkMenuItem* menuitem, MainWindow* self) { toggleMenuBar(self); }), this);
 
 		GtkAccelGroup* accelGroup = gtk_accel_group_new();
-		gtk_accel_group_connect(accelGroup, GDK_KEY_F10, (GdkModifierType) 0, GTK_ACCEL_VISIBLE,
+		gtk_accel_group_connect(accelGroup, GDK_KEY_F10, static_cast<GdkModifierType>(0), GTK_ACCEL_VISIBLE,
 		                        g_cclosure_new_swap(G_CALLBACK(toggleMenuBar), this, nullptr));
 		gtk_window_add_accel_group(GTK_WINDOW(getWindow()), accelGroup);
 	}
@@ -335,7 +335,7 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
 	guchar* text = gtk_selection_data_get_text(data);
 	if (text)
 	{
-		win->control->clipboardPasteText((const char*) text);
+		win->control->clipboardPasteText(reinterpret_cast<const char*>(text));
 
 		g_free(text);
 		gtk_drag_finish(dragContext, true, false, time);
@@ -360,7 +360,7 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
 			const char* uri = uris[i];
 
 			GCancellable* cancel = g_cancellable_new();
-			int cancelTimeout = g_timeout_add(3000, (GSourceFunc) cancellable_cancel, cancel);
+			int cancelTimeout = g_timeout_add(3000, reinterpret_cast<GSourceFunc>(cancellable_cancel), cancel);
 
 			GFile* file = g_file_new_for_uri(uri);
 			GError* err = nullptr;
@@ -463,12 +463,12 @@ void MainWindow::updateScrollbarSidebarPosition()
 		// Already correct
 		return;
 	}
-	else
-	{
-		GtkAllocation allocation;
-		gtk_widget_get_allocation(panelMainContents, &allocation);
-		divider = allocation.width - divider;
-	}
+
+
+	GtkAllocation allocation;
+	gtk_widget_get_allocation(panelMainContents, &allocation);
+	divider = allocation.width - divider;
+
 
 	g_object_ref(sidebar);
 	g_object_ref(boxContents);
@@ -505,20 +505,19 @@ auto MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 		//something is selected - give that control
 		return false;
 	}
-	else if (win->getXournal()->getTextEditor())
+	if (win->getXournal()->getTextEditor())
 	{
 		//editing text - give that control
 		return false;
 	}
-	else if (event->keyval == GDK_KEY_Escape)
+	if (event->keyval == GDK_KEY_Escape)
 	{
 		win->getControl()->getSearchBar()->showSearchBar(false);
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+
+
+	return false;
 }
 
 auto MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control) -> bool
@@ -563,7 +562,7 @@ void MainWindow::setMaximized(bool maximized)
 	this->maximized = maximized;
 }
 
-auto MainWindow::isMaximized() -> bool
+auto MainWindow::isMaximized() const -> bool
 {
 	return this->maximized;
 }
@@ -620,7 +619,7 @@ auto MainWindow::clearToolbar() -> ToolbarData*
 	{
 		for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++)
 		{
-			this->toolbar->unloadToolbar(this->toolbarWidgets[i]);
+			ToolMenuHandler::unloadToolbar(this->toolbarWidgets[i]);
 		}
 
 		this->toolbar->freeDynamicToolbarItems();
@@ -719,7 +718,7 @@ void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage
 {
 	SpinPageAdapter* spinPageNo = getSpinPageNo();
 
-	size_t min;
+	size_t min = 0;
 	size_t max = pagecount;
 
 	if (pagecount == 0)

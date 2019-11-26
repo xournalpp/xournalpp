@@ -69,7 +69,7 @@ void CircleHandler::drawShape(Point& c, const PositionInputData& pos)
 		{
 			diameterX = width;
 			diameterY = height;
-			npts = (int) std::abs(diameterX * 2.0);
+			npts = static_cast<int>(std::abs(diameterX * 2.0));
 			center_x = this->startPoint.x + width / 2.0;
 			center_y = this->startPoint.y + height / 2.0;
 			angle = 0;
@@ -78,7 +78,7 @@ void CircleHandler::drawShape(Point& c, const PositionInputData& pos)
 		{	//control key down, draw centered at cursor
 			diameterX = width*2.0;
 			diameterY = height*2.0;
-			npts = (int) (std::abs(diameterX) + std::abs(diameterY));
+			npts = static_cast<int>(std::abs(diameterX) + std::abs(diameterY));
 			center_x = this->startPoint.x;
 			center_y = this->startPoint.y;
 			angle = 0;

@@ -16,7 +16,8 @@ void XmlTexNode::writeOut(OutputStream* out)
 
 	out->write(">");
 
-	gchar* base64_str = g_base64_encode((const guchar*)this->binaryData.c_str(), this->binaryData.length());
+	gchar* base64_str =
+	        g_base64_encode(reinterpret_cast<const guchar*>(this->binaryData.c_str()), this->binaryData.length());
 	out->write(base64_str);
 	g_free(base64_str);
 

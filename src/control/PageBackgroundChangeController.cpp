@@ -149,15 +149,15 @@ auto PageBackgroundChangeController::applyImageBackground(PageRef page) -> bool
 			// The user canceled
 			return false;
 		}
-		else
-		{
-			char* name = g_file_get_path(file);
-			filename = name;
-			g_free(name);
-			name = nullptr;
-			g_object_unref(file);
-			file = nullptr;
-		}
+
+
+		char* name = g_file_get_path(file);
+		filename = name;
+		g_free(name);
+		name = nullptr;
+		g_object_unref(file);
+		file = nullptr;
+
 
 		BackgroundImage newImg;
 		GError* err = nullptr;
@@ -170,11 +170,10 @@ auto PageBackgroundChangeController::applyImageBackground(PageRef page) -> bool
 			g_error_free(err);
 			return false;
 		}
-		else
-		{
-			page->setBackgroundImage(newImg);
-			page->setBackgroundType(PageType(PageTypeFormat::Image));
-		}
+
+
+		page->setBackgroundImage(newImg);
+		page->setBackgroundType(PageType(PageTypeFormat::Image));
 	}
 
 	// Apply correct page size
@@ -221,7 +220,7 @@ auto PageBackgroundChangeController::applyPdfBackground(PageRef page) -> bool
 	int selected = dlg->getSelectedPage();
 	delete dlg;
 
-	if (selected >= 0 && selected < (int) doc->getPdfPageCount())
+	if (selected >= 0 && selected < static_cast<int>(doc->getPdfPageCount()))
 	{
 		// no need to set a type, if we set the page number the type is also set
 		page->setBackgroundPdfPageNr(selected);
@@ -238,21 +237,20 @@ auto PageBackgroundChangeController::applyPdfBackground(PageRef page) -> bool
  *
  * @return true on success, false if the user cancels
  */
-auto PageBackgroundChangeController::applyPageBackground(PageRef page, PageType pt) -> bool
+auto PageBackgroundChangeController::applyPageBackground(PageRef page, const PageType& pt) -> bool
 {
 	if (pt.isPdfPage())
 	{
 		return applyPdfBackground(page);
 	}
-	else if (pt.isImagePage())
+	if (pt.isImagePage())
 	{
 		return applyImageBackground(page);
 	}
-	else
-	{
-		page->setBackgroundType(pt);
-		return true;
-	}
+
+
+	page->setBackgroundType(pt);
+	return true;
 }
 
 /**

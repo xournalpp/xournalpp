@@ -99,32 +99,32 @@ auto LayerController::actionPerformed(ActionType type) -> bool
 		{
 			PageRef p = getCurrentPage();
 			int layer = p->getSelectedLayerId();
-			if (layer < (int)p->getLayerCount())
-			{
-				switchToLay(layer + 1, true);
-			}
-		}
-		return true;
+		    if (layer < static_cast<int>(p->getLayerCount()))
+		    {
+			    switchToLay(layer + 1, true);
+		    }
+	    }
+		    return true;
 
-	case ACTION_GOTO_PREVIOUS_LAYER:
-		{
-			PageRef p = getCurrentPage();
-			int layer = p->getSelectedLayerId();
-			if (layer > 0)
-			{
-				switchToLay(layer - 1, true);
-			}
-		}
-		return true;
+	    case ACTION_GOTO_PREVIOUS_LAYER:
+	    {
+		    PageRef p = getCurrentPage();
+		    int layer = p->getSelectedLayerId();
+		    if (layer > 0)
+		    {
+			    switchToLay(layer - 1, true);
+		    }
+	    }
+		    return true;
 
-	case ACTION_GOTO_TOP_LAYER:
-		{
-			PageRef p = getCurrentPage();
-			switchToLay(p->getLayerCount(), true);
-		}
-		return true;
-	default:
-		return false;
+	    case ACTION_GOTO_TOP_LAYER:
+	    {
+		    PageRef p = getCurrentPage();
+		    switchToLay(p->getLayerCount(), true);
+	    }
+		    return true;
+	    default:
+		    return false;
 	}
 }
 
@@ -235,7 +235,7 @@ void LayerController::moveCurrentLayer(bool up)
 		return;
 	}
 
-	if (lId == (int)p->getLayerCount() && up)
+	if (lId == static_cast<int>(p->getLayerCount()) && up)
 	{
 		// top layer cannot be moved up
 		return;
@@ -299,7 +299,7 @@ auto LayerController::getCurrentPage() -> PageRef
 	return control->getDocument()->getPage(selectedPage);
 }
 
-auto LayerController::getCurrentPageId() -> size_t
+auto LayerController::getCurrentPageId() const -> size_t
 {
 	return selectedPage;
 }
@@ -334,7 +334,7 @@ void LayerController::switchToLay(int layer, bool hideShow)
 	{
 		for (size_t i = 1; i <= p->getLayerCount(); i++)
 		{
-			p->setLayerVisible(i, (int)i <= layer);
+			p->setLayerVisible(i, static_cast<int>(i) <= layer);
 		}
 	}
 

@@ -88,7 +88,10 @@ void MoveUndoAction::switchLayer(vector<Element*>* entries, Layer* oldLayer, Lay
 
 void MoveUndoAction::repaint()
 {
-	if (this->elements.empty()) return;
+	if (this->elements.empty())
+	{
+		return;
+	}
 
 	this->page->firePageChanged();
 

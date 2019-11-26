@@ -8,6 +8,7 @@
 #include "gui/scroll/ScrollHandling.h"
 #include "gui/Shadow.h"
 #include "gui/XournalView.h"
+#include <cmath>
 
 #include <config-debug.h>
 #include <Rectangle.h>
@@ -39,7 +40,7 @@ auto gtk_xournal_get_type(void) -> GType
 		                                           // base finalize
 		                                           nullptr,
 		                                           // class initialize
-		                                           (GClassInitFunc) gtk_xournal_class_init,
+		                                           reinterpret_cast<GClassInitFunc>(gtk_xournal_class_init),
 		                                           // class finalize
 		                                           nullptr,
 		                                           // class data,
@@ -49,14 +50,12 @@ auto gtk_xournal_get_type(void) -> GType
 		                                           // n_preallocs
 		                                           0,
 		                                           // instance init
-		                                           (GInstanceInitFunc) gtk_xournal_init,
+		                                           reinterpret_cast<GInstanceInitFunc>(gtk_xournal_init),
 		                                           // value table
 		                                           (const GTypeValueTable*) nullptr};
 
-		gtk_xournal_type = g_type_register_static(GTK_TYPE_WIDGET,
-		                                          "GtkXournal",
-		                                          &gtk_xournal_info,
-		                                          (GTypeFlags) 0);
+		gtk_xournal_type =
+		        g_type_register_static(GTK_TYPE_WIDGET, "GtkXournal", &gtk_xournal_info, static_cast<GTypeFlags>(0));
 	}
 
 	return gtk_xournal_type;
@@ -98,9 +97,9 @@ auto gtk_xournal_new_deprecated(XournalView* view, ScrollHandling* scrollHandlin
 
 static void gtk_xournal_class_init(GtkXournalClass* klass)
 {
-	GtkWidgetClass* widget_class;
+	GtkWidgetClass* widget_class = nullptr;
 
-	widget_class = (GtkWidgetClass*) klass;
+	widget_class = reinterpret_cast<GtkWidgetClass*>(klass);
 
 	widget_class->realize = gtk_xournal_realize;
 	widget_class->get_preferred_width = gtk_xournal_get_preferred_width;
@@ -123,10 +122,10 @@ auto gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p) -> Rectangl
 	GtkAdjustment* hadj = xournal->scrollHandling->getHorizontal();
 
 	GdkRectangle r2;
-	r2.x = (int)gtk_adjustment_get_value(hadj);
-	r2.y = (int)gtk_adjustment_get_value(vadj);
-	r2.width = (int)gtk_adjustment_get_page_size(hadj);
-	r2.height = (int)gtk_adjustment_get_page_size(vadj);
+	r2.x = static_cast<int>(gtk_adjustment_get_value(hadj));
+	r2.y = static_cast<int>(gtk_adjustment_get_value(vadj));
+	r2.width = static_cast<int>(gtk_adjustment_get_page_size(hadj));
+	r2.height = static_cast<int>(gtk_adjustment_get_page_size(vadj));
 
 	GdkRectangle r1;
 	r1.x = p->getX();
@@ -204,7 +203,7 @@ static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocati
 static void gtk_xournal_realize(GtkWidget* widget)
 {
 	GdkWindowAttr attributes;
-	guint attributes_mask;
+	guint attributes_mask = 0;
 
 	g_return_if_fail(widget != nullptr);
 	g_return_if_fail(GTK_IS_XOURNAL(widget));
@@ -295,7 +294,7 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
-	double x1, x2, y1, y2;
+	double x1 = NAN, x2 = NAN, y1 = NAN, y2 = NAN;
 
 	cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
 

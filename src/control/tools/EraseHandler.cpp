@@ -63,7 +63,7 @@ void EraseHandler::erase(double x, double y)
 	{
 		if (e->getType() == ELEMENT_STROKE && e->intersectsArea(&eraserRect))
 		{
-			eraseStroke(l, (Stroke*) e, x, y, range);
+			eraseStroke(l, dynamic_cast<Stroke*>(e), x, y, range);
 		}
 	}
 

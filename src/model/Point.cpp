@@ -20,12 +20,12 @@ auto Point::lineLengthTo(const Point& p) const -> double
 	return std::hypot(this->x - p.x, this->y - p.y);
 }
 
-auto Point::slopeTo(const Point& p) -> double
+auto Point::slopeTo(const Point& p) const -> double
 {
 	return std::atan2(this->x - p.x, this->y - p.y);
 }
 
-auto Point::lineTo(const Point& p, double length) -> Point
+auto Point::lineTo(const Point& p, double length) const -> Point
 {
 	double factor = lineLengthTo(p);
 	factor = length / factor;
@@ -40,7 +40,7 @@ auto Point::lineTo(const Point& p, double length) -> Point
 	return Point(x, y);
 }
 
-auto Point::equalsPos(const Point& p) -> bool
+auto Point::equalsPos(const Point& p) const -> bool
 {
 	return this->x == p.x && this->y == p.y;
 }

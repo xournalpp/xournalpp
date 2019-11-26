@@ -24,7 +24,7 @@ auto ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bool
 	}
 
 	GtkWidget* cbAttach = nullptr;
-	if (attach)
+	if (*attach)
 	{
 		cbAttach = gtk_check_button_new_with_label(_("Attach file to the journal"));
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cbAttach), false);
@@ -71,7 +71,7 @@ auto ImageOpenDlg::pixbufScaleDownIfNecessary(GdkPixbuf* pixbuf, gint maxSize) -
 
 	if (width > maxSize || height > maxSize)
 	{
-		double factor = (gdouble) maxSize / std::max(width, height);
+		double factor = static_cast<gdouble>(maxSize) / std::max(width, height);
 
 		width = width * factor;
 		height = height * factor;
@@ -79,7 +79,7 @@ auto ImageOpenDlg::pixbufScaleDownIfNecessary(GdkPixbuf* pixbuf, gint maxSize) -
 		return gdk_pixbuf_scale_simple(pixbuf, width, height, GDK_INTERP_HYPER);
 	}
 
-	return (GdkPixbuf*) g_object_ref(pixbuf);
+	return static_cast<GdkPixbuf*>(g_object_ref(pixbuf));
 }
 
 void ImageOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userData)

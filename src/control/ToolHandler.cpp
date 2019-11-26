@@ -279,11 +279,10 @@ auto ToolHandler::getThickness() -> double
 	{
 		return this->current->thickness[this->current->getSize()];
 	}
-	else
-	{
-		g_warning("Request size of \"%s\"", this->current->getName().c_str());
-		return 0;
-	}
+
+
+	g_warning("Request size of \"%s\"", this->current->getName().c_str());
+	return 0;
 }
 
 void ToolHandler::setSize(ToolSize size)
@@ -493,16 +492,29 @@ void ToolHandler::loadSettings()
 			if (tool->hasCapability(TOOL_CAP_SIZE) && st.getString("size", value))
 			{
 				if (value == "VERY_FINE")
+				{
 					tool->setSize(TOOL_SIZE_VERY_FINE);
+				}
 				else if (value == "THIN")
+				{
 					tool->setSize(TOOL_SIZE_FINE);
+				}
 				else if (value == "MEDIUM")
+				{
 					tool->setSize(TOOL_SIZE_MEDIUM);
+				}
 				else if (value == "BIG")
+				{
 					tool->setSize(TOOL_SIZE_THICK);
+				}
 				else if (value == "VERY_BIG")
+				{
 					tool->setSize(TOOL_SIZE_VERY_THICK);
-				else g_warning("Settings::Unknown tool size: %s\n", value.c_str());
+				}
+				else
+				{
+					g_warning("Settings::Unknown tool size: %s\n", value.c_str());
+				}
 			}
 
 			if (tool->type == TOOL_ERASER)
@@ -511,9 +523,18 @@ void ToolHandler::loadSettings()
 
 				if (st.getString("type", type))
 				{
-					if (type == "deleteStroke")	 setEraserType(ERASER_TYPE_DELETE_STROKE);
-					else if (type == "whiteout") setEraserType(ERASER_TYPE_WHITEOUT);
-					else						 setEraserType(ERASER_TYPE_DEFAULT);
+					if (type == "deleteStroke")
+					{
+						setEraserType(ERASER_TYPE_DELETE_STROKE);
+					}
+					else if (type == "whiteout")
+					{
+						setEraserType(ERASER_TYPE_WHITEOUT);
+					}
+					else
+					{
+						setEraserType(ERASER_TYPE_DEFAULT);
+					}
 					eraserTypeChanged();
 				}
 			}

@@ -19,7 +19,7 @@ class StrokeView
 {
 public:
 	StrokeView(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool noAlpha);
-	~StrokeView();
+	~StrokeView() = default;
 
 public:
 	void paint(bool dontRenderEditingStroke);
@@ -33,7 +33,7 @@ public:
 private:
 	void drawFillStroke();
 	void applyDashed(double offset);
-	void drawEraseableStroke(cairo_t* cr, Stroke* s);
+	static void drawEraseableStroke(cairo_t* cr, Stroke* s);
 
 	/**
 	 * No pressure sensitivity, one line is drawn

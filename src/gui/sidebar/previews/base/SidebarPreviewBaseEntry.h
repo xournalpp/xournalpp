@@ -86,7 +86,7 @@ protected:
 	/**
 	 * Mutex
 	 */
-	GMutex drawingMutex;
+	GMutex drawingMutex{};
 
 	/**
 	 * The Widget which is used for drawing

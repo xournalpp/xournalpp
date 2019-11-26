@@ -22,7 +22,8 @@ public:
 	virtual ~SearchControl();
 
 	bool search(string text, int* occures, double* top);
-	void paint(cairo_t* cr, GdkRectangle* rect, double zoom, GtkColorWrapper color);
+	void paint(cairo_t* cr, GdkRectangle* rect, double zoom, const GtkColorWrapper& color);
+
 private:
 	void freeSearchResults();
 

@@ -62,6 +62,6 @@ private:
 	string toolbarName;
 	MainWindow* window;
 
-	GtkToolItem* spacerItem;
+	GtkToolItem* spacerItem{};
 	ToolMenuHandler* toolHandler;
 };

@@ -150,7 +150,7 @@ private:
 	 *
 	 * @return Page index to put at coordinates
 	 */
-	optional_size_t map(size_t x, size_t y);
+	optional_size_t map(size_t col, size_t row) const;
 
 private:
 	struct internal_data

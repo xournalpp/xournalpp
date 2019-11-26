@@ -57,7 +57,7 @@ void ToolbarColorNames::saveFile(const string& file)
 	gsize len = 0;
 	char* data = g_key_file_to_data(this->config, &len, nullptr);
 
-	FILE* fp = g_fopen(file.c_str(), "wb");
+	FILE* fp = g_fopen(file.c_str(), "wbe");
 	if (!fp)
 	{
 		g_error("Could not save color file «%s»", file.c_str());
@@ -105,7 +105,7 @@ auto ToolbarColorNames::getColorName(int color) -> string
 		return colorName;
 	}
 
-	char* value = (char*) g_hash_table_lookup(this->predefinedColorNames, &color);
+	char* value = static_cast<char*>(g_hash_table_lookup(this->predefinedColorNames, &color));
 	if (value)
 	{
 		return value;

@@ -5,7 +5,6 @@
 
 #include <StringUtils.h>
 
-auto gtk_invisible_new() -> GtkWidget*;
 
 FullscreenHandler::FullscreenHandler(Settings* settings)
  : settings(settings)
@@ -14,7 +13,7 @@ FullscreenHandler::FullscreenHandler(Settings* settings)
 
 FullscreenHandler::~FullscreenHandler() = default;
 
-auto FullscreenHandler::isFullscreen() -> bool
+auto FullscreenHandler::isFullscreen() const -> bool
 {
 	return this->fullscreen;
 }
@@ -61,8 +60,6 @@ void FullscreenHandler::hideWidget(MainWindow* win, const string& widgetName)
 
 		return;
 	}
-
-	return;
 }
 
 void FullscreenHandler::enableFullscreen(MainWindow* win)
@@ -175,30 +172,29 @@ auto gtk_invisible_get_type() -> GType
 
 	if (!gtk_invisible_menu_type)
 	{
-		static const GTypeInfo gtk_inivisible_menu_info = {sizeof(GtkInvisibleMenuClass),
-		                                                   // base initialize
-		                                                   nullptr,
-		                                                   // base finalize
-		                                                   nullptr,
-		                                                   // class initialize
-		                                                   (GClassInitFunc) gtk_invisible_menu_class_init,
-		                                                   // class finalize
-		                                                   nullptr,
-		                                                   // class data,
-		                                                   nullptr,
-		                                                   // instance size
-		                                                   sizeof(GtkInvisibleMenu),
-		                                                   // n_preallocs
-		                                                   0,
-		                                                   // instance init
-		                                                   nullptr,
-		                                                   // value table
-		                                                   (const GTypeValueTable*) nullptr};
+		static const GTypeInfo gtk_inivisible_menu_info = {
+		        sizeof(GtkInvisibleMenuClass),
+		        // base initialize
+		        nullptr,
+		        // base finalize
+		        nullptr,
+		        // class initialize
+		        reinterpret_cast<GClassInitFunc>(gtk_invisible_menu_class_init),
+		        // class finalize
+		        nullptr,
+		        // class data,
+		        nullptr,
+		        // instance size
+		        sizeof(GtkInvisibleMenu),
+		        // n_preallocs
+		        0,
+		        // instance init
+		        nullptr,
+		        // value table
+		        (const GTypeValueTable*) nullptr};
 
-		gtk_invisible_menu_type = g_type_register_static(GTK_TYPE_FIXED,
-		                                          "GtkInvisibleMenu",
-		                                          &gtk_inivisible_menu_info,
-		                                          (GTypeFlags) 0);
+		gtk_invisible_menu_type = g_type_register_static(GTK_TYPE_FIXED, "GtkInvisibleMenu", &gtk_inivisible_menu_info,
+		                                                 static_cast<GTypeFlags>(0));
 	}
 
 	return gtk_invisible_menu_type;

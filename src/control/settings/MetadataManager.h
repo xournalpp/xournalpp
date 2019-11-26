@@ -53,12 +53,12 @@ private:
 	/**
 	 * Delete an old metadata file
 	 */
-	void deleteMetadataFile(const string& path);
+	static void deleteMetadataFile(const string& path);
 
 	/**
 	 * Parse a single metadata file
 	 */
-	MetadataEntry loadMetadataFile(const string& path, const string& file);
+	static MetadataEntry loadMetadataFile(const string& path, const string& file);
 
 	/**
 	 * Store metadata to file
@@ -73,6 +73,6 @@ private:
 
 
 private:
-	GMutex mutex;
+	GMutex mutex{};
 	MetadataEntry* metadata;
 };

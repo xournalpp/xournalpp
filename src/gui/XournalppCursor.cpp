@@ -2,6 +2,7 @@
 
 #include "XournalView.h"
 #include "control/Control.h"
+#include <cmath>
 
 #include <Util.h>
 #include <pixbuf-utils.h>
@@ -149,7 +150,10 @@ void XournalppCursor::setMouseSelectionType(CursorSelectionType selectionType)
 void XournalppCursor::setCursorBusy(bool busy)
 {
 	MainWindow* win = control->getWindow();
-	if (!win) return;
+	if (!win)
+	{
+		return;
+	}
 
 	if (this->busy == busy)
 	{
@@ -206,10 +210,16 @@ void XournalppCursor::setInvisible(bool invisible)
 void XournalppCursor::updateCursor()
 {
 	MainWindow* win = control->getWindow();
-	if (!win) return;
+	if (!win)
+	{
+		return;
+	}
 
 	XournalView* xournal = win->getXournal();
-	if (!xournal) return;
+	if (!xournal)
+	{
+		return;
+	}
 
 	GdkCursor* cursor = nullptr;
 
@@ -368,7 +378,10 @@ void XournalppCursor::updateCursor()
 auto XournalppCursor::getEraserCursor() -> GdkCursor*
 {
 
-	if (CRSR_ERASER == this->currentCursor) return nullptr;  // cursor already set
+	if (CRSR_ERASER == this->currentCursor)
+	{
+		return nullptr;  // cursor already set
+	}
 	this->currentCursor = CRSR_ERASER;
 
 
@@ -396,10 +409,9 @@ auto XournalppCursor::getHighlighterCursor() -> GdkCursor*
 	{
 		return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
 	}
-	else
-	{
-		return createHighlighterOrPenCursor(5, 120 / 255.0);
-	}
+
+
+	return createHighlighterOrPenCursor(5, 120 / 255.0);
 }
 
 
@@ -409,10 +421,9 @@ auto XournalppCursor::getPenCursor() -> GdkCursor*
 	{
 		return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
 	}
-	else
-	{
-		return createHighlighterOrPenCursor(3, 1.0);
-	}
+
+
+	return createHighlighterOrPenCursor(3, 1.0);
 }
 
 
@@ -428,10 +439,13 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
 	int width = size;
 
 	// create a hash of variables so we notice if one changes despite being the same cursor type:
-	gulong flavour =
-	        (big ? 1 : 0) | (bright ? 2 : 0) | (gulong)(64 * alpha) << 2 | (gulong) size << 9 | (gulong) rgb << 14;
+	gulong flavour = (big ? 1 : 0) | (bright ? 2 : 0) | static_cast<gulong>(64 * alpha) << 2 |
+	                 static_cast<gulong>(size) << 9 | static_cast<gulong>(rgb) << 14;
 
-	if (CRSR_PENORHIGHLIGHTER == this->currentCursor && flavour == this->currentCursorFlavour) return nullptr;
+	if (CRSR_PENORHIGHLIGHTER == this->currentCursor && flavour == this->currentCursorFlavour)
+	{
+		return nullptr;
+	}
 	this->currentCursor = CRSR_PENORHIGHLIGHTER;
 	this->currentCursorFlavour = flavour;
 
@@ -504,16 +518,28 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
 
 void XournalppCursor::setCursor(int cursorID)
 {
-	if (cursorID == this->currentCursor) return;
+	if (cursorID == this->currentCursor)
+	{
+		return;
+	}
 
 	MainWindow* win = control->getWindow();
-	if (!win) return;
+	if (!win)
+	{
+		return;
+	}
 
 	XournalView* xournal = win->getXournal();
-	if (!xournal) return;
+	if (!xournal)
+	{
+		return;
+	}
 
 	GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
-	if (!window) return;
+	if (!window)
+	{
+		return;
+	}
 
 	GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), cssCursors[cursorID].cssName);
 	if (cursor == nullptr)  // failed to get a cursor, try backup cursor.
@@ -525,7 +551,10 @@ void XournalppCursor::setCursor(int cursorID)
 			// Null cursor is ok but not wanted ... warn user
 			if (cursor == nullptr)
 			{
-				if (CRSR_nullptr == this->currentCursor) return;  // We've already been here
+				if (CRSR_nullptr == this->currentCursor)
+				{
+					return;  // We've already been here
+				}
 				g_warning("CSS Cursor and backup not valid '%s', '%s'",
 				          cssCursors[cursorID].cssName,
 				          cssCursors[cursorID].cssBackupName);
@@ -537,7 +566,10 @@ void XournalppCursor::setCursor(int cursorID)
 	this->currentCursor = cursorID;
 	gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
 	gdk_window_set_cursor(window, cursor);
-	if (cursor) g_object_unref(cursor);
+	if (cursor)
+	{
+		g_object_unref(cursor);
+	}
 }
 
 
@@ -547,9 +579,13 @@ auto XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
 	bool bright = control->getSettings()->isHighlightPosition();
 
 	int newCursorID = CRSR_DRAWDIRNONE + (shift ? 1 : 0) + (ctrl ? 2 : 0);
-	gulong flavour = (big ? 1 : 0) | (bright ? 2 : 0) | (gulong) size << 2;  // hash of variables for comparison only
+	gulong flavour =
+	        (big ? 1 : 0) | (bright ? 2 : 0) | static_cast<gulong>(size) << 2;  // hash of variables for comparison only
 
-	if (newCursorID == this->currentCursor && flavour == this->currentCursorFlavour) return nullptr;
+	if (newCursorID == this->currentCursor && flavour == this->currentCursorFlavour)
+	{
+		return nullptr;
+	}
 	this->currentCursor = newCursorID;
 	this->currentCursorFlavour = flavour;
 
@@ -582,7 +618,7 @@ auto XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
 	{
 		cairo_text_extents_t extents;
 		const char* utf8 = "CONTROL";
-		double x, y;
+		double x = NAN, y = NAN;
 		cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
 		cairo_set_font_size(cr, fontSize);
 		cairo_text_extents(cr, utf8, &extents);
@@ -596,7 +632,7 @@ auto XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
 	{
 		cairo_text_extents_t extents;
 		const char* utf8 = "SHIFT";
-		double x, y;
+		double x = NAN, y = NAN;
 		cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
 		cairo_set_font_size(cr, fontSize);
 		cairo_text_extents(cr, utf8, &extents);

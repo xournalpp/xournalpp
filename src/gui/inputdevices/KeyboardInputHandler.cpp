@@ -14,7 +14,7 @@ KeyboardInputHandler::~KeyboardInputHandler() = default;
 
 auto KeyboardInputHandler::handleImpl(InputEvent* event) -> bool
 {
-	auto keyEvent = (GdkEventKey*) event->sourceEvent;
+	auto keyEvent = reinterpret_cast<GdkEventKey*>(event->sourceEvent);
 	GtkXournal* xournal = inputContext->getXournal();
 
 	if (keyEvent->type == GDK_KEY_PRESS)
@@ -39,15 +39,18 @@ auto KeyboardInputHandler::handleImpl(InputEvent* event) -> bool
 			{
 				selection->moveSelection(d, 0);
 				return true;
-			} else if (keyEvent->keyval == GDK_KEY_Up)
+			}
+			if (keyEvent->keyval == GDK_KEY_Up)
 			{
 				selection->moveSelection(0, d);
 				return true;
-			} else if (keyEvent->keyval == GDK_KEY_Right)
+			}
+			if (keyEvent->keyval == GDK_KEY_Right)
 			{
 				selection->moveSelection(-d, 0);
 				return true;
-			} else if (keyEvent->keyval == GDK_KEY_Down)
+			}
+			if (keyEvent->keyval == GDK_KEY_Down)
 			{
 				selection->moveSelection(0, -d);
 				return true;
@@ -55,8 +58,7 @@ auto KeyboardInputHandler::handleImpl(InputEvent* event) -> bool
 		}
 
 		return xournal->view->onKeyPressEvent(keyEvent);
-	} else
-	{
-		return inputContext->getView()->onKeyReleaseEvent(keyEvent);
 	}
+
+	return inputContext->getView()->onKeyReleaseEvent(keyEvent);
 }

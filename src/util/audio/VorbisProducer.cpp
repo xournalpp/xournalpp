@@ -5,7 +5,6 @@ VorbisProducer::VorbisProducer(AudioQueue<float>* audioQueue) : audioQueue(audio
 {
 }
 
-VorbisProducer::~VorbisProducer() = default;
 
 auto VorbisProducer::start(const std::string& filename, unsigned int timestamp) -> bool
 {

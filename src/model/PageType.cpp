@@ -29,7 +29,7 @@ auto PageType::operator==(const PageType& other) const -> bool
 /**
  * PDF background
  */
-auto PageType::isPdfPage() -> bool
+auto PageType::isPdfPage() const -> bool
 {
 	return this->format == PageTypeFormat::Pdf;
 }
@@ -37,7 +37,7 @@ auto PageType::isPdfPage() -> bool
 /**
  * Image Background
  */
-auto PageType::isImagePage() -> bool
+auto PageType::isImagePage() const -> bool
 {
 	return this->format == PageTypeFormat::Image;
 }
@@ -45,7 +45,7 @@ auto PageType::isImagePage() -> bool
 /**
  * Special background
  */
-auto PageType::isSpecial() -> bool
+auto PageType::isSpecial() const -> bool
 {
 	return this->format == PageTypeFormat::Pdf || this->format == PageTypeFormat::Image ||
 	       this->format == PageTypeFormat::Copy;

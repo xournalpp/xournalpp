@@ -25,7 +25,7 @@ public:
 	virtual GtkToolItem* createTmpItem(bool horizontal);
 	void setPopupMenu(GtkWidget* popupMenu);
 
-	bool isUsed();
+	bool isUsed() const;
 	void setUsed(bool used);
 
 	static void toolButtonCallback(GtkToolButton* toolbutton, AbstractToolItem* item);

@@ -11,7 +11,7 @@ class PlaceholderElement {
 public:
 	virtual ~PlaceholderElement() = default;
 
-public:
+
 	virtual auto format(std::string format) -> std::string = 0;
 };
 
@@ -20,12 +20,12 @@ public:
  */
 class PlaceholderElementString : public PlaceholderElement{
 public:
-	PlaceholderElementString(std::string text)
+	explicit PlaceholderElementString(std::string text)
 	 : text(std::move(text))
 	{
 	}
 
-public:
+
 	auto format(std::string format) -> std::string override
 	{
 		return text;
@@ -41,12 +41,12 @@ private:
  */
 class PlaceholderElementInt : public PlaceholderElement{
 public:
-	PlaceholderElementInt(int64_t value)
+	explicit PlaceholderElementInt(int64_t value)
 	 : value(value)
 	{
 	}
 
-public:
+
 	auto format(std::string format) -> std::string override
 	{
 		return std::to_string(value);
@@ -98,7 +98,7 @@ auto PlaceholderString::formatPart(std::string format) -> std::string
 		format = format.substr(0, comma);
 	}
 
-	int index;
+	int index = 0;
 	try
 	{
 		index = std::stoi(format);
@@ -112,7 +112,7 @@ auto PlaceholderString::formatPart(std::string format) -> std::string
 	// Placeholder index starting at 1, vector at 0
 	index--;
 
-	if (index < 0 || index >= (int)data.size())
+	if (index < 0 || index >= static_cast<int>(data.size()))
 	{
 		std::string notFound = "{";
 		notFound += std::to_string(index + 1);
@@ -127,7 +127,7 @@ auto PlaceholderString::formatPart(std::string format) -> std::string
 
 void PlaceholderString::process()
 {
-	if (processed != "")
+	if (!processed.empty())
 	{
 		// Already processed
 		return;

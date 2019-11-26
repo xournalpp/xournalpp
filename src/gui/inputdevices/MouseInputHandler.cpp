@@ -71,7 +71,7 @@ auto MouseInputHandler::handleImpl(InputEvent* event) -> bool
 	// If we loose our Grab on the device end the current action
 	if (event->type == GRAB_BROKEN_EVENT && this->deviceClassPressed)
 	{
-		// TODO: We may need to update pressed state manually here
+		// TODO(fabian): We may need to update pressed state manually here
 		this->actionEnd(event);
 		return true;
 	}

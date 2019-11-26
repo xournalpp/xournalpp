@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include <utility>
 
-GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const string& glade, string mainWnd)
+GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const string& glade, const string& mainWnd)
 {
 	this->gladeSearchPath = gladeSearchPath;
 
@@ -34,7 +34,7 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const string& glade, string
 		exit(-1);
 	}
 
-	this->window = get(std::move(mainWnd));
+	this->window = get(mainWnd);
 }
 
 GladeGui::~GladeGui()

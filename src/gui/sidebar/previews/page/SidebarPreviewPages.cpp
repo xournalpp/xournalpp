@@ -287,17 +287,17 @@ void SidebarPreviewPages::pageSelected(size_t page)
 		scrollToPreview(this);
 
 		int actions = 0;
-		if (page != 0 && this->previews.size() != 0)
+		if (page != 0 && !this->previews.empty())
 		{
 			actions |= SIDEBAR_ACTION_MOVE_UP;
 		}
 
-		if (page != this->previews.size() - 1 && this->previews.size() != 0)
+		if (page != this->previews.size() - 1 && !this->previews.empty())
 		{
 			actions |= SIDEBAR_ACTION_MOVE_DOWN;
 		}
 
-		if (this->previews.size() != 0)
+		if (!this->previews.empty())
 		{
 			actions |= SIDEBAR_ACTION_COPY;
 		}
@@ -308,7 +308,7 @@ void SidebarPreviewPages::pageSelected(size_t page)
 		}
 
 		this->toolbar->setHidden(false);
-		this->toolbar->setButtonEnabled((SidebarActions)actions);
+		this->toolbar->setButtonEnabled(static_cast<SidebarActions>(actions));
 	}
 }
 

@@ -25,19 +25,19 @@ public:
 	virtual ~LinkDestination();
 
 public:
-	size_t getPdfPage();
+	size_t getPdfPage() const;
 	void setPdfPage(size_t page);
 
 	void setExpand(bool expand);
-	bool getExpand();
+	bool getExpand() const;
 
-	bool shouldChangeLeft();
-	bool shouldChangeZoom();
-	bool shouldChangeTop();
+	bool shouldChangeLeft() const;
+	bool shouldChangeZoom() const;
+	bool shouldChangeTop() const;
 
-	double getZoom();
-	double getLeft();
-	double getTop();
+	double getZoom() const;
+	double getLeft() const;
+	double getTop() const;
 
 	void setChangeLeft(double left);
 	void setChangeZoom(double zoom);

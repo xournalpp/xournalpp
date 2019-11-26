@@ -95,7 +95,7 @@ auto LoadHandler::getLastError() -> string
 	return this->lastError;
 }
 
-auto LoadHandler::isAttachedPdfMissing() -> bool
+auto LoadHandler::isAttachedPdfMissing() const -> bool
 {
 	return this->attachedPdfMissing;
 }
@@ -190,12 +190,11 @@ auto LoadHandler::closeFile() -> bool
 	if (this->isGzFile)
 	{
 		return static_cast<bool>(gzclose(this->gzFp));
-	} else
-	{
-		zip_fclose(this->zipContentFile);
-		int zipError = zip_close(this->zipFp);
-		return zipError == 0;
 	}
+
+	zip_fclose(this->zipContentFile);
+	int zipError = zip_close(this->zipFp);
+	return zipError == 0;
 }
 
 auto LoadHandler::readContentFile(char* buffer, zip_uint64_t len) -> zip_int64_t
@@ -206,18 +205,16 @@ auto LoadHandler::readContentFile(char* buffer, zip_uint64_t len) -> zip_int64_t
 		{
 			return -1;
 		}
-		return gzread(this->gzFp, buffer, (unsigned int) len);
-	} else
-	{
-		zip_int64_t lengthRead = zip_fread(this->zipContentFile, buffer, len);
-		if (lengthRead > 0)
-		{
-			return lengthRead;
-		} else
-		{
-			return -1;
-		}
+		return gzread(this->gzFp, buffer, static_cast<unsigned int>(len));
 	}
+
+	zip_int64_t lengthRead = zip_fread(this->zipContentFile, buffer, len);
+	if (lengthRead > 0)
+	{
+		return lengthRead;
+	}
+
+	return -1;
 }
 
 auto LoadHandler::parseXml() -> bool
@@ -231,7 +228,8 @@ auto LoadHandler::parseXml() -> bool
 	this->creator = "Unknown";
 	this->fileVersion = 1;
 
-	GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags) 0, this, nullptr);
+	GMarkupParseContext* context =
+	        g_markup_parse_context_new(&parser, static_cast<GMarkupParseFlags>(0), this, nullptr);
 
 	zip_int64_t len = 0;
 	do
@@ -272,12 +270,12 @@ auto LoadHandler::parseXml() -> bool
 
 	g_markup_parse_context_free(context);
 
-	if (this->pos != PASER_POS_FINISHED && this->lastError == "")
+	if (this->pos != PASER_POS_FINISHED && this->lastError.empty())
 	{
 		lastError = _("Document is not complete (maybe the end is cut off?)");
 		return false;
 	}
-	else if (this->pos == PASER_POS_FINISHED && this->doc.getPageCount() == 0)
+	if (this->pos == PASER_POS_FINISHED && this->doc.getPageCount() == 0)
 	{
 		lastError = _("Document is corrupted (no pages found in file)");
 		return false;
@@ -425,7 +423,7 @@ void LoadHandler::parseBgPixmap()
 	{
 		//This is the new zip file attach domain
 		gpointer data = nullptr;
-		gsize dataLength;
+		gsize dataLength = 0;
 		bool success = readZipAttachment(filename, data, dataLength);
 		if (!success)
 		{
@@ -477,7 +475,7 @@ void LoadHandler::parseBgPdf()
 	if (!this->pdfFilenameParsed)
 	{
 
-		if (this->pdfReplacementFilename == "")
+		if (this->pdfReplacementFilename.empty())
 		{
 			const char* domain = LoadHandlerHelper::getAttrib("domain", false, this);
 			const char* sFilename = LoadHandlerHelper::getAttrib("filename", false, this);
@@ -525,7 +523,7 @@ void LoadHandler::parseBgPdf()
 				} else
 				{
 					gpointer data = nullptr;
-					gsize dataLength;
+					gsize dataLength = 0;
 					bool success = readZipAttachment(pdfFilename, data, dataLength);
 					if (!success)
 					{
@@ -838,7 +836,7 @@ void LoadHandler::parseAttachment()
 	//Todo(fabian) move the following 4 lines into readZipAttachment
 	gpointer data = nullptr;
 	gsize dataLength{0};
-	string imgData = readZipAttachment(path, data, dataLength) ? string{(char*) data, dataLength} : "";
+	string imgData = readZipAttachment(path, data, dataLength) ? string{static_cast<char*>(data), dataLength} : "";
 	g_free(data);
 
 	switch(this->pos)
@@ -900,7 +898,7 @@ void LoadHandler::parseAudio()
 {
 	const char* filename = LoadHandlerHelper::getAttrib("fn", false, this);
 
-	GFileIOStream* fileStream;
+	GFileIOStream* fileStream = nullptr;
 	GFile* tmpFile = g_file_new_tmp("xournal_audio_XXXXXX.tmp", &fileStream, nullptr);
 	if (!tmpFile)
 	{
@@ -918,7 +916,7 @@ void LoadHandler::parseAudio()
 		return;
 	}
 
-	gsize length;
+	gsize length = 0;
 	if (attachmentFileStat.valid & ZIP_STAT_SIZE)
 	{
 		length = attachmentFileStat.size;
@@ -969,7 +967,7 @@ void LoadHandler::parseAudio()
 void LoadHandler::parserStartElement(GMarkupParseContext* context, const gchar* elementName, const gchar** attributeNames,
                                      const gchar** attributeValues, gpointer userdata, GError** error)
 {
-	auto* handler = (LoadHandler*) userdata;
+	auto* handler = static_cast<LoadHandler*>(userdata);
 	// Return on error
 	if (*error)
 	{
@@ -1018,7 +1016,7 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* el
 		return;
 	}
 
-	auto* handler = (LoadHandler*) userdata;
+	auto* handler = static_cast<LoadHandler*>(userdata);
 	if (handler->pos == PARSER_POS_STARTED && strcmp(elementName, handler->endRootTag) == 0)
 	{
 		handler->pos = PASER_POS_FINISHED;
@@ -1070,7 +1068,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 		return;
 	}
 
-	auto* handler = (LoadHandler*) userdata;
+	auto* handler = static_cast<LoadHandler*>(userdata);
 	if (handler->pos == PARSER_POS_IN_STROKE)
 	{
 		const char* ptr = text;
@@ -1081,7 +1079,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 
 		while (textLen > 0)
 		{
-			double tmp = g_ascii_strtod(text, (char**) (&ptr));
+			double tmp = g_ascii_strtod(text, const_cast<char**>(&ptr));
 			if (ptr == text)
 			{
 				break;
@@ -1109,9 +1107,9 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 			return;
 		}
 
-		if (handler->pressureBuffer.size() != 0)
+		if (!handler->pressureBuffer.empty())
 		{
-			if ((int)handler->pressureBuffer.size() >= handler->stroke->getPointCount() - 1)
+			if (static_cast<int>(handler->pressureBuffer.size()) >= handler->stroke->getPointCount() - 1)
 			{
 				handler->stroke->setPressure(handler->pressureBuffer);
 				handler->pressureBuffer.clear();
@@ -1144,14 +1142,14 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 auto LoadHandler::parseBase64(const gchar* base64, gsize lenght) -> string
 {
 	// We have to copy the string in order to null terminate it, sigh.
-	auto* base64data = (gchar*) g_memdup(base64, lenght + 1);
+	auto* base64data = static_cast<gchar*>(g_memdup(base64, lenght + 1));
 	base64data[lenght] = '\0';
 
 	gsize binaryBufferLen = 0;
 	guchar* binaryBuffer = g_base64_decode(base64data, &binaryBufferLen);
 	g_free(base64data);
 
-	string str = string((char*)binaryBuffer, binaryBufferLen);
+	string str = string(reinterpret_cast<char*>(binaryBuffer), binaryBufferLen);
 	g_free(binaryBuffer);
 
 	return str;
@@ -1164,7 +1162,7 @@ void LoadHandler::readImage(const gchar* base64string, gsize base64stringLen)
 		return;
 	}
 
-	this->image->setImage(parseBase64((char*)base64string, base64stringLen));
+	this->image->setImage(parseBase64(const_cast<char*>(base64string), base64stringLen));
 }
 
 void LoadHandler::readTexImage(const gchar* base64string, gsize base64stringLen)
@@ -1174,7 +1172,7 @@ void LoadHandler::readTexImage(const gchar* base64string, gsize base64stringLen)
 		return;
 	}
 
-	this->teximage->setBinaryData(parseBase64((char*)base64string, base64stringLen));
+	this->teximage->setBinaryData(parseBase64(const_cast<char*>(base64string), base64stringLen));
 }
 
 /**
@@ -1274,10 +1272,9 @@ auto LoadHandler::getTempFileForPath(const string& filename) -> string
 	gpointer tmpFilename = g_hash_table_lookup(this->audioFiles, filename.c_str());
 	if (tmpFilename)
 	{
-		return string((char*) tmpFilename);
-	} else
-	{
-		error("%s", FC(_F("Requested temporary file was not found for attachment {1}") % filename));
-		return "";
+		return string(static_cast<char*>(tmpFilename));
 	}
+
+	error("%s", FC(_F("Requested temporary file was not found for attachment {1}") % filename));
+	return "";
 }

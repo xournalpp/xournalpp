@@ -43,7 +43,7 @@ auto ExportDialog::getPngDpi() -> int
 	return gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDpi")));
 }
 
-auto ExportDialog::isConfirmed() -> bool
+auto ExportDialog::isConfirmed() const -> bool
 {
 	return this->confirmed;
 }
@@ -57,18 +57,17 @@ auto ExportDialog::getRange() -> PageRangeVector
 	{
 		return PageRange::parse(gtk_entry_get_text(GTK_ENTRY(get("txtPages"))));
 	}
-	else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(rdRangeCurrent)))
+	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(rdRangeCurrent)))
 	{
 		PageRangeVector range;
 		range.push_back(new PageRangeEntry(this->currentPage, this->currentPage));
 		return range;
 	}
-	else
-	{
-		PageRangeVector range;
-		range.push_back(new PageRangeEntry(0, this->pageCount - 1));
-		return range;
-	}
+
+
+	PageRangeVector range;
+	range.push_back(new PageRangeEntry(0, this->pageCount - 1));
+	return range;
 }
 
 void ExportDialog::show(GtkWindow* parent)

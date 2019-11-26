@@ -104,7 +104,7 @@ void ColorToolItem::enableColor(int color)
 	}
 }
 
-auto ColorToolItem::getColor() -> int
+auto ColorToolItem::getColor() const -> int
 {
 	return this->color;
 }
@@ -123,7 +123,7 @@ auto ColorToolItem::getId() -> string
 	return id;
 }
 
-auto ColorToolItem::colorEqualsMoreOreLess(int color) -> bool
+auto ColorToolItem::colorEqualsMoreOreLess(int color) const -> bool
 {
 	if (color == -1)
 	{
@@ -138,11 +138,7 @@ auto ColorToolItem::colorEqualsMoreOreLess(int color) -> bool
 	int g2 = (this->color & 0xff00) >> 8;
 	int b2 = (this->color & 0xff);
 
-	if (std::abs(r1 - r2) < 10 && std::abs(g1 - g2) < 10 && std::abs(b1 - b2) < 10)
-	{
-		return true;
-	}
-	return false;
+	return std::abs(r1 - r2) < 10 && std::abs(g1 - g2) < 10 && std::abs(b1 - b2) < 10;
 }
 
 /**
@@ -158,9 +154,9 @@ void ColorToolItem::showColorchooser()
 	{
 		GdkRGBA color;
 		gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dialog), &color);
-		this->color = (((int)(color.red * 255)) & 0xff) << 16 |
-				(((int)(color.green * 255)) & 0xff) << 8 |
-				(((int)(color.blue * 255)) & 0xff);
+		this->color = ((static_cast<int>(color.red * 255)) & 0xff) << 16 |
+		              ((static_cast<int>(color.green * 255)) & 0xff) << 8 |
+		              ((static_cast<int>(color.blue * 255)) & 0xff);
 	}
 
 	gtk_widget_destroy(dialog);

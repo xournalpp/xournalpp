@@ -82,7 +82,7 @@ void SidebarPreviewBase::sizeChanged(GtkWidget* widget, GtkAllocation* allocatio
 	}
 }
 
-auto SidebarPreviewBase::getZoom() -> double
+auto SidebarPreviewBase::getZoom() const -> double
 {
 	return this->zoom;
 }
@@ -94,7 +94,7 @@ auto SidebarPreviewBase::getCache() -> PdfCache*
 
 void SidebarPreviewBase::layout()
 {
-	this->layoutmanager->layout(this);
+	SidebarLayout::layout(this);
 }
 
 auto SidebarPreviewBase::hasData() -> bool
@@ -150,7 +150,7 @@ auto SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar) -> bool
 
 		if (x == -1)
 		{
-			g_idle_add((GSourceFunc) scrollToPreview, sidebar);
+			g_idle_add(reinterpret_cast<GSourceFunc>(scrollToPreview), sidebar);
 			return false;
 		}
 

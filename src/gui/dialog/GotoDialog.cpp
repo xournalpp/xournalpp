@@ -8,7 +8,7 @@ GotoDialog::GotoDialog(GladeSearchpath* gladeSearchPath, int maxPage)
 
 GotoDialog::~GotoDialog() = default;
 
-auto GotoDialog::getSelectedPage() -> int
+auto GotoDialog::getSelectedPage() const -> int
 {
 	return this->selectedPage;
 }

@@ -6,7 +6,8 @@
 #include <gui/XournalView.h>
 #include "TouchDisableGdk.h"
 
-TouchDisableGdk::TouchDisableGdk(GtkWidget* widget) : TouchDisableInterface(), widget(widget)
+TouchDisableGdk::TouchDisableGdk(GtkWidget* widget)
+ : widget(widget)
 {
 }
 

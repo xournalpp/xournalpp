@@ -3,6 +3,8 @@
 #include <serializing/ObjectInputStream.h>
 #include <serializing/ObjectOutputStream.h>
 
+#include <cmath>
+
 Element::Element(ElementType type)
  : type(type)
 {
@@ -100,8 +102,8 @@ auto Element::intersectsArea(const GdkRectangle* src) -> bool
 
 auto Element::intersectsArea(double x, double y, double width, double height) -> bool
 {
-	double dest_x, dest_y;
-	double dest_w, dest_h;
+	double dest_x = NAN, dest_y = NAN;
+	double dest_w = NAN, dest_h = NAN;
 
 	dest_x = std::max(getX(), x);
 	dest_y = std::max(getY(), y);
@@ -138,7 +140,7 @@ auto Element::rescaleOnlyAspectRatio() -> bool
 	return false;
 }
 
-void Element::serializeElement(ObjectOutputStream& out)
+void Element::serializeElement(ObjectOutputStream& out) const
 {
 	out.writeObject("Element");
 

@@ -32,7 +32,7 @@ auto AudioController::startRecording() -> bool
 
 		this->timestamp = static_cast<size_t>(g_get_monotonic_time() / 1000);
 
-		std::array<char, 50> buffer;
+		std::array<char, 50> buffer{};
 		time_t secs = time(nullptr);
 		tm* t = localtime(&secs);
 		// This prints the date and time in ISO format.
@@ -144,7 +144,7 @@ auto AudioController::getAudioFolder() -> Path
 	return Path::fromUri(af);
 }
 
-auto AudioController::getStartTime() -> size_t
+auto AudioController::getStartTime() const -> size_t
 {
 	return this->timestamp;
 }

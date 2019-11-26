@@ -89,7 +89,7 @@ auto ObjectInputStream::readInt() -> int
 		throw InputStreamException("End reached, but try to read an integer", __FILE__, __LINE__);
 	}
 
-	int i = *((int*) (this->str->str + this->pos));
+	int i = *(reinterpret_cast<int*>(this->str->str + this->pos));
 	this->pos += sizeof(int);
 	return i;
 }
@@ -103,7 +103,7 @@ auto ObjectInputStream::readDouble() -> double
 		throw InputStreamException("End reached, but try to read an double", __FILE__, __LINE__);
 	}
 
-	double d = *((double*) (this->str->str + this->pos));
+	double d = *(reinterpret_cast<double*>(this->str->str + this->pos));
 	this->pos += sizeof(double);
 	return d;
 }
@@ -117,7 +117,7 @@ auto ObjectInputStream::readSizeT() -> size_t
 		throw InputStreamException("End reached, but try to read an integer", __FILE__, __LINE__);
 	}
 
-	size_t st = *((size_t*) (this->str->str + this->pos));
+	size_t st = *(reinterpret_cast<size_t*>(this->str->str + this->pos));
 	this->pos += sizeof(size_t);
 	return st;
 }
@@ -131,7 +131,7 @@ auto ObjectInputStream::readString() -> string
 		throw InputStreamException("End reached, but try to read an string", __FILE__, __LINE__);
 	}
 
-	int len = *((int*) (this->str->str + this->pos));
+	int len = *(reinterpret_cast<int*>(this->str->str + this->pos));
 	this->pos += sizeof(int);
 
 	if (this->pos + len >= this->str->len)
@@ -153,10 +153,10 @@ void ObjectInputStream::readData(void** data, int* length)
 		throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
 	}
 
-	int len = *((int*) (this->str->str + this->pos));
+	int len = *(reinterpret_cast<int*>(this->str->str + this->pos));
 	this->pos += sizeof(int);
 
-	int width = *((int*) (this->str->str + this->pos));
+	int width = *(reinterpret_cast<int*>(this->str->str + this->pos));
 	this->pos += sizeof(int);
 
 	if (this->pos + (len * width) >= this->str->len)
@@ -220,7 +220,7 @@ auto ObjectInputStream::readImage() -> cairo_surface_t*
 		throw InputStreamException("End reached, but try to read an image", __FILE__, __LINE__);
 	}
 
-	int len = *((int*) (this->str->str + this->pos));
+	int len = *(reinterpret_cast<int*>(this->str->str + this->pos));
 	//this->pos += sizeof(int);
 	//totally not equivalent!
 	this->pos += sizeof(gsize);
@@ -232,7 +232,8 @@ auto ObjectInputStream::readImage() -> cairo_surface_t*
 
 	PngDatasource source(this->str->str + this->pos, len);
 	//cairo_surface_t * img = cairo_image_surface_create_from_png_stream((cairo_read_func_t) cairoReadFunction, &source);
-	cairo_surface_t* img = cairo_image_surface_create_from_png_stream((cairo_read_func_t) &cairoReadFunction, &source);
+	cairo_surface_t* img = cairo_image_surface_create_from_png_stream(
+	        reinterpret_cast<cairo_read_func_t>(&cairoReadFunction), &source);
 
 	this->pos += len;
 

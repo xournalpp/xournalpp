@@ -14,7 +14,6 @@ StrokeView::StrokeView(cairo_t* cr, Stroke* s, int startPoint, double scaleFacto
 {
 }
 
-StrokeView::~StrokeView() = default;
 
 void StrokeView::drawFillStroke()
 {

@@ -94,7 +94,7 @@ auto EditSelectionContents::setSize(ToolSize size,
 	{
 		if (e->getType() == ELEMENT_STROKE)
 		{
-			auto* s = (Stroke*) e;
+			auto* s = dynamic_cast<Stroke*>(e);
 			StrokeTool tool = s->getToolType();
 
 			double originalWidth = s->getWidth();
@@ -134,11 +134,10 @@ auto EditSelectionContents::setSize(ToolSize size,
 
 		return undo;
 	}
-	else
-	{
-		delete undo;
-		return nullptr;
-	}
+
+
+	delete undo;
+	return nullptr;
 }
 
 /**
@@ -155,7 +154,7 @@ auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoA
 	{
 		if (e->getType() == ELEMENT_STROKE)
 		{
-			auto* s = (Stroke*) e;
+			auto* s = dynamic_cast<Stroke*>(e);
 			StrokeTool tool = s->getToolType();
 			int newFill = 128;
 
@@ -192,11 +191,10 @@ auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoA
 
 		return undo;
 	}
-	else
-	{
-		delete undo;
-		return nullptr;
-	}
+
+
+	delete undo;
+	return nullptr;
 }
 
 /**
@@ -216,7 +214,7 @@ auto EditSelectionContents::setFont(XojFont& font) -> UndoAction*
 	{
 		if (e->getType() == ELEMENT_TEXT)
 		{
-			Text* t = (Text*) e;
+			Text* t = dynamic_cast<Text*>(e);
 			undo->addStroke(t, t->getFont(), font);
 
 			if (std::isnan(x1))
@@ -286,11 +284,11 @@ auto EditSelectionContents::setColor(int color) -> UndoAction*
 
 		return undo;
 	}
-	else
-	{
-		delete undo;
-		return nullptr;
-	}
+
+
+	delete undo;
+	return nullptr;
+
 
 	return nullptr;
 }
@@ -345,7 +343,7 @@ void EditSelectionContents::deleteViewBuffer()
 /**
  * Gets the original width of the contents
  */
-auto EditSelectionContents::getOriginalWidth() -> double
+auto EditSelectionContents::getOriginalWidth() const -> double
 {
 	return this->originalWidth;
 }
@@ -353,7 +351,7 @@ auto EditSelectionContents::getOriginalWidth() -> double
 /**
  * Gets the original height of the contents
  */
-auto EditSelectionContents::getOriginalHeight() -> double
+auto EditSelectionContents::getOriginalHeight() const -> double
 {
 	return this->originalHeight;
 }
@@ -400,12 +398,12 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 	}
 }
 
-auto EditSelectionContents::getOriginalX() -> double
+auto EditSelectionContents::getOriginalX() const -> double
 {
 	return this->originalX;
 }
 
-auto EditSelectionContents::getOriginalY() -> double
+auto EditSelectionContents::getOriginalY() const -> double
 {
 	return this->originalY;
 }
@@ -515,8 +513,8 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
 		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width * zoom, height * zoom);
 		cairo_t* cr2 = cairo_create(this->crBuffer);
 
-		int dx = (int) (this->relativeX * zoom);
-		int dy = (int) (this->relativeY * zoom);
+		int dx = static_cast<int>(this->relativeX * zoom);
+		int dy = static_cast<int>(this->relativeY * zoom);
 
 		cairo_scale(cr2, fx, fy);
 		cairo_translate(cr2, -dx, -dy);
@@ -532,23 +530,23 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
 	int wImg = cairo_image_surface_get_width(this->crBuffer);
 	int hImg = cairo_image_surface_get_height(this->crBuffer);
 
-	int wTarget = (int) (width * zoom);
-	int hTarget = (int) (height * zoom);
+	int wTarget = static_cast<int>(width * zoom);
+	int hTarget = static_cast<int>(height * zoom);
 
-	double sx = (double) wTarget / wImg;
-	double sy = (double) hTarget / hImg;
+	double sx = static_cast<double>(wTarget) / wImg;
+	double sy = static_cast<double>(hTarget) / hImg;
 
 	if (wTarget != wImg || hTarget != hImg || std::abs(rotation) > __DBL_EPSILON__)
 	{
 		if (!this->rescaleId)
 		{
-			this->rescaleId = g_idle_add((GSourceFunc) repaintSelection, this);
+			this->rescaleId = g_idle_add(reinterpret_cast<GSourceFunc>(repaintSelection), this);
 		}
 		cairo_scale(cr, sx, sy);
 	}
 
-	double dx = (int) (x * zoom / sx);
-	double dy = (int) (y * zoom / sy);
+	double dx = static_cast<int>(x * zoom / sx);
+	double dy = static_cast<int>(y * zoom / sy);
 
 	cairo_set_source_surface(cr, this->crBuffer, dx, dy);
 	cairo_paint(cr);

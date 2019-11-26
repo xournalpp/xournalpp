@@ -62,7 +62,7 @@ void XojPage::addLayer(Layer* layer)
 
 void XojPage::insertLayer(Layer* layer, int index)
 {
-	if (index >= (int)this->layer.size())
+	if (index >= static_cast<int>(this->layer.size()))
 	{
 		addLayer(layer);
 		return;
@@ -127,7 +127,7 @@ void XojPage::setLayerVisible(int layerId, bool visible)
 	}
 
 	layerId--;
-	if (layerId >= (int)this->layer.size())
+	if (layerId >= static_cast<int>(this->layer.size()))
 	{
 		return;
 	}
@@ -148,7 +148,7 @@ auto XojPage::isLayerVisible(int layerId) -> bool
 	}
 
 	layerId--;
-	if (layerId >= (int)this->layer.size())
+	if (layerId >= static_cast<int>(this->layer.size()))
 	{
 		return false;
 	}
@@ -173,7 +173,7 @@ void XojPage::setBackgroundColor(int color)
 	this->backgroundColor = color;
 }
 
-auto XojPage::getBackgroundColor() -> int
+auto XojPage::getBackgroundColor() const -> int
 {
 	return this->backgroundColor;
 }
@@ -194,7 +194,7 @@ auto XojPage::getHeight() const -> double
 	return this->height;
 }
 
-auto XojPage::getPdfPageNr() -> size_t
+auto XojPage::getPdfPageNr() const -> size_t
 {
 	return this->pdfBackgroundPage;
 }
@@ -211,7 +211,7 @@ auto XojPage::isAnnotated() -> bool
 	return false;
 }
 
-void XojPage::setBackgroundType(PageType bgType)
+void XojPage::setBackgroundType(const PageType& bgType)
 {
 	this->bgType = bgType;
 

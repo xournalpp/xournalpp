@@ -128,10 +128,9 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool
 		if (this->touchWorkaroundEnabled)
 		{
 			return this->touchDrawingHandler->handle(event);
-		} else
-		{
-			return this->touchHandler->handle(event);
 		}
+
+		return this->touchHandler->handle(event);
 	}
 
 	// handle keyboard

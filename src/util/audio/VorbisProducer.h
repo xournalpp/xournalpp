@@ -25,7 +25,7 @@ class VorbisProducer
 {
 public:
 	explicit VorbisProducer(AudioQueue<float>* audioQueue);
-	~VorbisProducer();
+	~VorbisProducer() = default;
 
 public:
 	bool start(const string& filename, unsigned int timestamp);
@@ -38,7 +38,7 @@ private:
 
 protected:
 	bool stopProducer = false;
-	SF_INFO sfInfo;
+	SF_INFO sfInfo{};
 	SNDFILE_tag* sfFile = nullptr;
 
 	AudioQueue<float>* audioQueue = nullptr;

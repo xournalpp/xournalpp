@@ -62,12 +62,12 @@ void BackgroundImage::free()
 
 void BackgroundImage::loadFile(const string& filename, GError** error)
 {
-	this->img = std::make_shared<Content>(std::move(filename), error);
+	this->img = std::make_shared<Content>(filename, error);
 }
 
 void BackgroundImage::loadFile(GInputStream* stream, const string& filename, GError** error)
 {
-	this->img = std::make_shared<Content>(stream, std::move(filename), error);
+	this->img = std::make_shared<Content>(stream, filename, error);
 }
 
 auto BackgroundImage::getCloneId() -> int

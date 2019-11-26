@@ -26,7 +26,7 @@ public:
 	string getName();
 	void setName(string name);
 
-	double getSize();
+	double getSize() const;
 	void setSize(double size);
 
 	void operator=(const XojFont& font);

@@ -68,7 +68,7 @@ void InputSequence::setAxes(gdouble* axes)
 void InputSequence::copyAxes(GdkEvent* event)
 {
 	clearAxes();
-	setAxes((gdouble*)g_memdup(event->motion.axes, sizeof(gdouble) * gdk_device_get_n_axes(device)));
+	setAxes(static_cast<gdouble*>(g_memdup(event->motion.axes, sizeof(gdouble) * gdk_device_get_n_axes(device))));
 }
 
 /**
@@ -176,7 +176,7 @@ auto InputSequence::actionMoved(guint32 time) -> bool
 		}
 		return false;
 	}
-	else if (xournal->selection)
+	if (xournal->selection)
 	{
 		EditSelection* selection = xournal->selection;
 		XojPageView* view = selection->getView();
@@ -267,7 +267,7 @@ auto InputSequence::actionStart(guint32 time) -> bool
 
 		return true;
 	}
-	else if (xournal->selection)
+	if (xournal->selection)
 	{
 		EditSelection* selection = xournal->selection;
 
@@ -288,13 +288,12 @@ auto InputSequence::actionStart(guint32 time) -> bool
 			xournal->selection->mouseDown(selType, pos.x, pos.y);
 			return true;
 		}
-		else
+
+
+		xournal->view->clearSelection();
+		if (changeTool())
 		{
-			xournal->view->clearSelection();
-			if (changeTool())
-			{
-				return true;
-			}
+			return true;
 		}
 	}
 
@@ -328,7 +327,7 @@ auto InputSequence::checkStillRunning() -> bool
 		return true;
 	}
 
-	auto mask = (GdkModifierType) 0;
+	auto mask = static_cast<GdkModifierType>(0);
 	GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(inputHandler->getXournal()));
 	gdk_device_get_state(device, window, nullptr, &mask);
 
@@ -409,7 +408,7 @@ auto InputSequence::getInputDataRelativeToCurrentPage(XojPageView* page) -> Posi
 {
 	GtkXournal* xournal = inputHandler->getXournal();
 
-	PositionInputData pos;
+	PositionInputData pos{};
 	pos.x = x - page->getX() - xournal->x;
 	pos.y = y - page->getY() - xournal->y;
 	pos.pressure = Point::NO_PRESSURE;
@@ -431,14 +430,7 @@ auto InputSequence::getInputDataRelativeToCurrentPage(XojPageView* page) -> Posi
  */
 void InputSequence::checkCanStartInput()
 {
-	if (inputHandler->startInput(this))
-	{
-		inputRunning = true;
-	}
-	else
-	{
-		inputRunning = false;
-	}
+	inputRunning = inputHandler->startInput(this);
 }
 
 /**

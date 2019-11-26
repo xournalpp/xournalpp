@@ -9,7 +9,7 @@ InputEvent::~InputEvent()
 	gdk_event_free(this->sourceEvent);
 }
 
-auto InputEvent::copy() -> InputEvent*
+auto InputEvent::copy() const -> InputEvent*
 {
 	auto inputEvent = new InputEvent();
 

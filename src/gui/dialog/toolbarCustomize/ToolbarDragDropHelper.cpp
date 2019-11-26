@@ -15,13 +15,14 @@ auto ToolbarDragDropHelper::getImagePixbuf(GtkImage* image) -> GdkPixbuf*
 	switch (gtk_image_get_storage_type(image))
 	{
 	case GTK_IMAGE_PIXBUF:
-		return (GdkPixbuf*) g_object_ref(gtk_image_get_pixbuf(image));
+		return static_cast<GdkPixbuf*>(g_object_ref(gtk_image_get_pixbuf(image)));
 
 	case GTK_IMAGE_ICON_NAME:
 	{
 		const gchar* iconName = nullptr;
 		gtk_image_get_icon_name(image, &iconName, nullptr);
-		return gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), iconName, 22, (GtkIconLookupFlags) 0, nullptr);
+		return gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), iconName, 22, static_cast<GtkIconLookupFlags>(0),
+		                                nullptr);
 	}
 
 	default:

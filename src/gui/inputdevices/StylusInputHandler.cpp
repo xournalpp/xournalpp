@@ -31,7 +31,8 @@ auto StylusInputHandler::handleImpl(InputEvent* event) -> bool
 		{
 			this->actionStart(event);
 			return true;
-		} else if (this->inputRunning)
+		}
+		if (this->inputRunning)
 		{
 			// TPCButton is disabled and modifier button was pressed
 			this->actionEnd(event);
@@ -89,7 +90,8 @@ auto StylusInputHandler::handleImpl(InputEvent* event) -> bool
 		{
 			this->actionEnd(event);
 			return true;
-		} else if (this->inputRunning)
+		}
+		if (this->inputRunning)
 		{
 			// TPCButton is disabled and modifier button was released
 			this->actionEnd(event);
@@ -105,7 +107,7 @@ auto StylusInputHandler::handleImpl(InputEvent* event) -> bool
 	// If we loose our Grab on the device end the current action
 	if (event->type == GRAB_BROKEN_EVENT && this->deviceClassPressed)
 	{
-		// TODO: We may need to update pressed state manually here
+		// TODO(fabian): We may need to update pressed state manually here
 		this->actionEnd(event);
 		return true;
 	}

@@ -38,7 +38,7 @@ auto ToolButton::registerPopupMenuEntry(const string& name, const string& iconNa
 	}
 
 	GtkWidget* menuItem = nullptr;
-	if (iconName == "")
+	if (iconName.empty())
 	{
 		menuItem = gtk_check_menu_item_new_with_label(name.c_str());
 	}
@@ -75,7 +75,7 @@ void ToolButton::updateDescription(const string& description)
 
 auto ToolButton::newItem() -> GtkToolItem*
 {
-	GtkToolItem* it;
+	GtkToolItem* it = nullptr;
 
 	if (group != GROUP_NOGROUP)
 	{

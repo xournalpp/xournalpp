@@ -19,7 +19,7 @@ DeleteUndoAction::~DeleteUndoAction()
 {
 	for (GList* l = this->elements; l != nullptr; l = l->next)
 	{
-		auto e = (PageLayerPosEntry<Element>*) l->data;
+		auto e = static_cast<PageLayerPosEntry<Element>*>(l->data);
 		if (!undone)
 		{
 			delete e->element;
@@ -31,8 +31,8 @@ DeleteUndoAction::~DeleteUndoAction()
 
 void DeleteUndoAction::addElement(Layer* layer, Element* e, int pos)
 {
-	this->elements = g_list_insert_sorted(this->elements, new PageLayerPosEntry<Element> (layer, e, pos),
-										  (GCompareFunc) PageLayerPosEntry<Element>::cmp);
+	this->elements = g_list_insert_sorted(this->elements, new PageLayerPosEntry<Element>(layer, e, pos),
+	                                      reinterpret_cast<GCompareFunc>(PageLayerPosEntry<Element>::cmp));
 }
 
 auto DeleteUndoAction::undo(Control*) -> bool
@@ -47,7 +47,7 @@ auto DeleteUndoAction::undo(Control*) -> bool
 
 	for (GList* l = this->elements; l != nullptr; l = l->next)
 	{
-		auto e = (PageLayerPosEntry<Element>*) l->data;
+		auto e = static_cast<PageLayerPosEntry<Element>*>(l->data);
 		e->layer->insertElement(e->element, e->pos);
 		this->page->fireElementChanged(e->element);
 	}
@@ -68,7 +68,7 @@ auto DeleteUndoAction::redo(Control*) -> bool
 
 	for (GList* l = this->elements; l != nullptr; l = l->next)
 	{
-		auto e = (PageLayerPosEntry<Element>*) l->data;
+		auto e = static_cast<PageLayerPosEntry<Element>*>(l->data);
 		e->layer->removeElement(e->element, false);
 		this->page->fireElementChanged(e->element);
 	}
@@ -89,11 +89,11 @@ auto DeleteUndoAction::getText() -> string
 
 	if (this->elements != nullptr)
 	{
-		ElementType type = ((PageLayerPosEntry<Element>*) this->elements->data)->element->getType();
+		ElementType type = (static_cast<PageLayerPosEntry<Element>*>(this->elements->data))->element->getType();
 
 		for (GList* l = this->elements->next; l != nullptr; l = l->next)
 		{
-			auto e = (PageLayerPosEntry<Element>*) l->data;
+			auto e = static_cast<PageLayerPosEntry<Element>*>(l->data);
 			if (type != e->element->getType())
 			{
 				text += " ";

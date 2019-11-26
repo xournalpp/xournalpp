@@ -7,7 +7,7 @@ ObjectEncoding::ObjectEncoding()
 
 ObjectEncoding::~ObjectEncoding() = default;
 
-void ObjectEncoding::addStr(const char* str)
+void ObjectEncoding::addStr(const char* str) const
 {
 	g_string_append(this->data, str);
 }

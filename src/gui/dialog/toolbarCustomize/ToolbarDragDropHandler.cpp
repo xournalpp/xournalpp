@@ -84,10 +84,5 @@ void ToolbarDragDropHandler::configure()
 
 auto ToolbarDragDropHandler::isInDragAndDrop() -> bool
 {
-	if (this->toolbars == nullptr)
-	{
-		return false;
-	}
-
-	return true;
+	return this->toolbars != nullptr;
 }

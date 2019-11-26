@@ -36,7 +36,7 @@ void Tool::setCapability(int capability, bool enabled)
 	}
 }
 
-auto Tool::hasCapability(ToolCapabilities cap) -> bool
+auto Tool::hasCapability(ToolCapabilities cap) const -> bool
 {
 	return (this->capabilities & cap) != 0;
 }

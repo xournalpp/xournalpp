@@ -81,5 +81,5 @@ private:
 	int afterRunId = 0;
 
 	int refCount = 1;
-	GMutex refMutex;
+	GMutex refMutex{};
 };

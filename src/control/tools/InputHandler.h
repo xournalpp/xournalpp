@@ -94,8 +94,7 @@ public:
 	bool userTapped = false;	
 
 protected:
-
-	bool validMotion(Point p, Point q);
+	static bool validMotion(Point p, Point q);
 
 	void createStroke(Point p);
 

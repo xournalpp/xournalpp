@@ -34,9 +34,9 @@ auto zoomcallib_new() -> GtkWidget*
 
 static void zoomcallib_class_init(ZoomCallibClass* klass)
 {
-	GtkWidgetClass* widget_class;
+	GtkWidgetClass* widget_class = nullptr;
 
-	widget_class = (GtkWidgetClass*) klass;
+	widget_class = reinterpret_cast<GtkWidgetClass*>(klass);
 
 	widget_class->realize = zoomcallib_realize;
 	widget_class->size_allocate = zoomcallib_size_allocate;
@@ -79,7 +79,7 @@ static void zoomcallib_size_allocate(GtkWidget* widget, GtkAllocation* allocatio
 static void zoomcallib_realize(GtkWidget* widget)
 {
 	GdkWindowAttr attributes;
-	guint attributes_mask;
+	guint attributes_mask = 0;
 	GtkAllocation allocation;
 
 	g_return_if_fail(widget != nullptr);
@@ -139,7 +139,7 @@ static auto zoomcallib_draw(GtkWidget* widget, cairo_t* cr) -> gboolean
 	gdouble x = 2;
 	for (int i = 0; x < allocation.width; x += hafCm, ++i)
 	{
-		int y;
+		int y = 0;
 		if (i % 2 == 0)
 		{
 			cairo_set_source_rgb(cr, 0, 0, 0);

@@ -188,7 +188,7 @@ void PageTemplateDialog::showPageSizeDialog()
 /**
  * The dialog was confirmed / saved
  */
-auto PageTemplateDialog::isSaved() -> bool
+auto PageTemplateDialog::isSaved() const -> bool
 {
 	return saved;
 }

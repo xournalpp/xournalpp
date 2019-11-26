@@ -12,7 +12,7 @@ SidebarLayout::~SidebarLayout() = default;
 class SidebarRow
 {
 public:
-	SidebarRow(int width)
+	explicit SidebarRow(int width)
 	{
 		this->width = width;
 		this->currentWidth = 0;
@@ -23,10 +23,10 @@ public:
 		clear();
 	}
 
-public:
+
 	auto isSpaceFor(SidebarPreviewBaseEntry* p) -> bool
 	{
-		if (this->list.size() == 0)
+		if (this->list.empty())
 		{
 			return true;
 		}
@@ -55,7 +55,7 @@ public:
 		return this->list.size();
 	}
 
-	auto getWidth() -> int
+	auto getWidth() const -> int
 	{
 		return this->currentWidth;
 	}

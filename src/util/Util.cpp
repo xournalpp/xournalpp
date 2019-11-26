@@ -38,7 +38,8 @@ static auto execInUiThreadCallback(CallbackUiData* cb) -> bool
  */
 void Util::execInUiThread(std::function<void()>&& callback)
 {
-	gdk_threads_add_idle((GSourceFunc) execInUiThreadCallback, new CallbackUiData(std::move(callback)));
+	gdk_threads_add_idle(reinterpret_cast<GSourceFunc>(execInUiThreadCallback),
+	                     new CallbackUiData(std::move(callback)));
 }
 
 auto Util::rgb_to_GdkRGBA(const uint32_t color) -> GdkRGBA
@@ -172,7 +173,7 @@ auto Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void*) -> gboole
 
 void Util::writeCoordinateString(OutputStream* out, double xVal, double yVal)
 {
-	std::array<char, G_ASCII_DTOSTR_BUF_SIZE> coordString;
+	std::array<char, G_ASCII_DTOSTR_BUF_SIZE> coordString{};
 	g_ascii_formatd(coordString.data(), G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, xVal);
 	out->write(coordString.data());
 	out->write(" ");

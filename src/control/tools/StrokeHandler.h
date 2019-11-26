@@ -67,7 +67,7 @@ private:
 
 	
 	// to filter out short strokes (usually the user tapping on the page to select it)
-	guint32 startStrokeTime;
+	guint32 startStrokeTime{};
 	static guint32 lastStrokeTime;	//persist across strokes - allow us to not ignore persistent dotting.
 	
 

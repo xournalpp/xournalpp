@@ -34,7 +34,7 @@ public:
 	/**
 	 * @return The layer to be rendered
 	 */
-	int getLayer();
+	int getLayer() const;
 
 	virtual GtkWidget* getWidget();
 

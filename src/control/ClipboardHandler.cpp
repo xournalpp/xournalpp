@@ -26,7 +26,7 @@ ClipboardHandler::ClipboardHandler(ClipboardListener* listener, GtkWidget* widge
 	this->listener->clipboardCutCopyEnabled(false);
 
 	gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"),
-								   (GtkClipboardReceivedFunc) receivedClipboardContents, this);
+	                               reinterpret_cast<GtkClipboardReceivedFunc>(receivedClipboardContents), this);
 }
 
 ClipboardHandler::~ClipboardHandler()
@@ -41,19 +41,19 @@ auto ClipboardHandler::paste() -> bool
 	if (this->containsXournal)
 	{
 		gtk_clipboard_request_contents(this->clipboard, atomXournal,
-									   (GtkClipboardReceivedFunc) pasteClipboardContents, this);
+		                               reinterpret_cast<GtkClipboardReceivedFunc>(pasteClipboardContents), this);
 		return true;
 	}
-	else if (this->containsText)
+	if (this->containsText)
 	{
-		gtk_clipboard_request_text(this->clipboard,
-		                           (GtkClipboardTextReceivedFunc) pasteClipboardText, this);
+		gtk_clipboard_request_text(this->clipboard, reinterpret_cast<GtkClipboardTextReceivedFunc>(pasteClipboardText),
+		                           this);
 		return true;
 	}
-	else if (this->containsImage)
+	if (this->containsImage)
 	{
 		gtk_clipboard_request_image(this->clipboard,
-									(GtkClipboardImageReceivedFunc) pasteClipboardImage, this);
+		                            reinterpret_cast<GtkClipboardImageReceivedFunc>(pasteClipboardImage), this);
 		return true;
 	}
 
@@ -98,7 +98,6 @@ public:
 		g_string_free(this->str, true);
 	}
 
-public:
 
 	static void getFunction(GtkClipboard* clipboard, GtkSelectionData* selection,
 							guint info, ClipboardContents* contents)
@@ -122,7 +121,8 @@ public:
 		}
 		else if (atomXournal == target)
 		{
-			gtk_selection_data_set(selection, target, 8, (guchar*) contents->str->str, contents->str->len);
+			gtk_selection_data_set(selection, target, 8, reinterpret_cast<guchar*>(contents->str->str),
+			                       contents->str->len);
 		}
 	}
 
@@ -140,7 +140,7 @@ private:
 
 static auto svgWriteFunction(GString* string, const unsigned char* data, unsigned int length) -> cairo_status_t
 {
-	g_string_append_len(string, (const gchar*) data, length);
+	g_string_append_len(string, reinterpret_cast<const gchar*>(data), length);
 	return CAIRO_STATUS_SUCCESS;
 }
 
@@ -171,15 +171,15 @@ auto ClipboardHandler::copy() -> bool
 	{
 		if (e->getType() == ELEMENT_TEXT)
 		{
-			textElements = g_list_insert_sorted(textElements, e, (GCompareFunc) ElementCompareFunc);
+			textElements = g_list_insert_sorted(textElements, e, reinterpret_cast<GCompareFunc>(ElementCompareFunc));
 		}
 	}
 
-	string text = "";
+	string text{};
 	for (GList* l = textElements; l != nullptr; l = l->next)
 	{
-		Text* e = (Text*) l->data;
-		if (text != "")
+		Text* e = static_cast<Text*>(l->data);
+		if (!text.empty())
 		{
 			text += "\n";
 		}
@@ -216,10 +216,9 @@ auto ClipboardHandler::copy() -> bool
 
 	GString* svgString = g_string_sized_new(1048576); // 1MB
 
-	cairo_surface_t* surfaceSVG = cairo_svg_surface_create_for_stream(
-									(cairo_write_func_t) svgWriteFunction, svgString,
-									selection->getWidth(), selection->getHeight()
-									);
+	cairo_surface_t* surfaceSVG =
+	        cairo_svg_surface_create_for_stream(reinterpret_cast<cairo_write_func_t>(svgWriteFunction), svgString,
+	                                            selection->getWidth(), selection->getHeight());
 	cairo_t* crSVG = cairo_create(surfaceSVG);
 
 	view.drawSelection(crSVG, this->selection);
@@ -232,8 +231,8 @@ auto ClipboardHandler::copy() -> bool
 	/////////////////////////////////////////////////////////////////
 
 	GtkTargetList* list = gtk_target_list_new(nullptr, 0);
-	GtkTargetEntry* targets;
-	int n_targets;
+	GtkTargetEntry* targets = nullptr;
+	int n_targets = 0;
 
 	// if we have text elements...
 	if (!text.empty())
@@ -251,8 +250,8 @@ auto ClipboardHandler::copy() -> bool
 	auto* contents = new ClipboardContents(text, image, svgString->str, out.getStr());
 
 	gtk_clipboard_set_with_data(this->clipboard, targets, n_targets,
-								(GtkClipboardGetFunc) ClipboardContents::getFunction,
-								(GtkClipboardClearFunc) ClipboardContents::clearFunction, contents);
+	                            reinterpret_cast<GtkClipboardGetFunc>(ClipboardContents::getFunction),
+	                            reinterpret_cast<GtkClipboardClearFunc>(ClipboardContents::clearFunction), contents);
 	gtk_clipboard_set_can_store(this->clipboard, nullptr, 0);
 
 	gtk_target_table_free(targets, n_targets);
@@ -292,9 +291,8 @@ void ClipboardHandler::ownerChangedCallback(GtkClipboard* clip, GdkEvent* event,
 
 void ClipboardHandler::clipboardUpdated(GdkAtom atom)
 {
-	gtk_clipboard_request_contents(clipboard,
-								   gdk_atom_intern_static_string("TARGETS"),
-								   (GtkClipboardReceivedFunc) receivedClipboardContents, this);
+	gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"),
+	                               reinterpret_cast<GtkClipboardReceivedFunc>(receivedClipboardContents), this);
 }
 
 void ClipboardHandler::pasteClipboardImage(GtkClipboard* clipboard, GdkPixbuf* pixbuf, ClipboardHandler* handler)
@@ -307,7 +305,8 @@ void ClipboardHandler::pasteClipboardContents(GtkClipboard* clipboard, GtkSelect
 {
 	ObjectInputStream in;
 
-	if (in.read((const char*) gtk_selection_data_get_data(selectionData), gtk_selection_data_get_length(selectionData)))
+	if (in.read(reinterpret_cast<const char*>(gtk_selection_data_get_data(selectionData)),
+	            gtk_selection_data_get_length(selectionData)))
 	{
 		handler->listener->clipboardPasteXournal(in);
 	}
@@ -324,8 +323,8 @@ void ClipboardHandler::pasteClipboardText(GtkClipboard* clipboard, const gchar* 
 
 auto gtk_selection_data_targets_include_xournal(GtkSelectionData* selection_data) -> gboolean
 {
-	GdkAtom* targets;
-	gint n_targets;
+	GdkAtom* targets = nullptr;
+	gint n_targets = 0;
 	gboolean result = false;
 
 	if (gtk_selection_data_get_targets(selection_data, &targets, &n_targets))

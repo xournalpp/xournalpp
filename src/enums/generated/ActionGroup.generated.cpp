@@ -11,8 +11,6 @@ using std::string;
 
 
 // ** This needs to be copied to the header
-auto ActionGroup_fromString(const string& value) -> ActionGroup;
-auto ActionGroup_toString(ActionGroup value) -> string;
 
 
 auto ActionGroup_fromString(const string& value) -> ActionGroup

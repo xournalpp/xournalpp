@@ -23,27 +23,27 @@ public:
 	virtual ~Inertia();
 
 public:
-	double centerX();
-	double centerY();
+	double centerX() const;
+	double centerY() const;
 
-	double xx();
-	double xy();
-	double yy();
+	double xx() const;
+	double xy() const;
+	double yy() const;
 
-	double rad();
+	double rad() const;
 
-	double det();
+	double det() const;
 
-	double getMass();
+	double getMass() const;
 
 	void increase(Point p1, Point p2, int coef);
 	void calc(const Point* pt, int start, int end);
 
 private:
-	double mass;
-	double sx;
-	double sy;
-	double sxx;
-	double sxy;
-	double syy;
+	double mass{};
+	double sx{};
+	double sy{};
+	double sxx{};
+	double sxy{};
+	double syy{};
 };

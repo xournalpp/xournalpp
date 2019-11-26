@@ -16,7 +16,7 @@ void ToolitemDragDrop::attachMetadata(GtkWidget* w, int id, AbstractToolItem* ai
 	d->type = TOOL_ITEM_ITEM;
 	d->color = 0;
 
-	g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, (GDestroyNotify) g_free);
+	g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, static_cast<GDestroyNotify>(g_free));
 }
 
 auto ToolitemDragDrop::ToolItemDragDropData_new(AbstractToolItem* item) -> ToolItemDragDropData*
@@ -40,7 +40,7 @@ void ToolitemDragDrop::attachMetadata(GtkWidget* w, int id, ToolItemType type)
 	d->type = type;
 	d->color = 0;
 
-	g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, (GDestroyNotify) g_free);
+	g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, static_cast<GDestroyNotify>(g_free));
 }
 
 void ToolitemDragDrop::attachMetadataColor(GtkWidget* w, int id, int color, AbstractToolItem* item)
@@ -52,7 +52,7 @@ void ToolitemDragDrop::attachMetadataColor(GtkWidget* w, int id, int color, Abst
 	d->type = TOOL_ITEM_COLOR;
 	d->color = color;
 
-	g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, (GDestroyNotify) g_free);
+	g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, static_cast<GDestroyNotify>(g_free));
 }
 
 auto ToolitemDragDrop::getIcon(ToolItemDragDropData* data) -> GtkWidget*
@@ -61,7 +61,7 @@ auto ToolitemDragDrop::getIcon(ToolItemDragDropData* data) -> GtkWidget*
 	{
 		return data->item->getNewToolIcon();
 	}
-	else if (data->type == TOOL_ITEM_SEPARATOR)
+	if (data->type == TOOL_ITEM_SEPARATOR)
 	{
 		return ToolbarSeparatorImage::newSepeartorImage();
 	}
@@ -105,7 +105,7 @@ auto ToolitemDragDrop::isToolItemEnabled(ToolItemDragDropData* d) -> bool
 
 auto ToolitemDragDrop::metadataGetMetadata(GtkWidget* w) -> ToolItemDragDropData*
 {
-	const int* ptr = (const int*) g_object_get_data(G_OBJECT(w), ATTACH_DRAG_DROP_DATA);
+	const int* ptr = static_cast<const int*>(g_object_get_data(G_OBJECT(w), ATTACH_DRAG_DROP_DATA));
 
 	if (ptr == nullptr)
 	{

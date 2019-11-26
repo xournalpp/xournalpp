@@ -22,7 +22,7 @@ public:
 
 public:
 	void setPoints(Point* points, int pointsLength);
-	void setWidth(double width, double* widths, int widthsLength);
+	void setWidth(double width, const double* widths, int widthsLength);
 
 	virtual void writeOut(OutputStream* out);
 

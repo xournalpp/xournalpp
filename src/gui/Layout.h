@@ -58,12 +58,12 @@ public:
 	/**
 	 * Returns the height of the entire Layout
 	 */
-	int getMinimalHeight();
+	int getMinimalHeight() const;
 
 	/**
 	 * Returns the width of the entire Layout
 	 */
-	int getMinimalWidth();
+	int getMinimalWidth() const;
 
 	/**
 	 * Returns the Rectangle which is currently visible
@@ -107,7 +107,7 @@ protected:
 	static void verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
 
 private:
-	void checkScroll(GtkAdjustment* adjustment, double& lastScroll);
+	static void checkScroll(GtkAdjustment* adjustment, double& lastScroll);
 
 	void setLayoutSize(int width, int height);
 

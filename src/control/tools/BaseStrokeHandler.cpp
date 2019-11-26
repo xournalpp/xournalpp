@@ -4,6 +4,7 @@
 #include "control/layer/LayerController.h"
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
+#include <cmath>
 #include "undo/InsertUndoAction.h"
 #include "util/cpp14memory.h"
 
@@ -92,20 +93,22 @@ auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool
 	if(event->is_modifier)
 	{
 		Rectangle rect = stroke->boundingRect();
-			
-		PositionInputData pos;
+
+		PositionInputData pos{};
 		pos.x = pos.y = pos.pressure = 0; //not used in redraw
 		if( event->keyval == GDK_KEY_Shift_L || event->keyval == GDK_KEY_Shift_R)
 		{
-			pos.state = (GdkModifierType)(event->state ^ GDK_SHIFT_MASK);	// event state does not include current this modifier keypress - so ^toggle will work for press and release.
+			pos.state = static_cast<GdkModifierType>(
+			        event->state ^
+			        GDK_SHIFT_MASK);  // event state does not include current this modifier keypress - so ^toggle will work for press and release.
 		}
 		else if( event->keyval == GDK_KEY_Control_L || event->keyval == GDK_KEY_Control_R)
 		{
-			pos.state = (GdkModifierType)(event->state ^ GDK_CONTROL_MASK);
+			pos.state = static_cast<GdkModifierType>(event->state ^ GDK_CONTROL_MASK);
 		}
 		else if( event->keyval == GDK_KEY_Alt_L || event->keyval == GDK_KEY_Alt_R)
 		{
-			pos.state = (GdkModifierType)(event->state ^ GDK_MOD1_MASK);
+			pos.state = static_cast<GdkModifierType>(event->state ^ GDK_MOD1_MASK);
 		} 				
 		else{
 			return false;
@@ -181,10 +184,10 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	Settings* settings = control->getSettings();
 	
 	if ( settings->getStrokeFilterEnabled() )		// Note: For simple strokes see StrokeHandler which has a slightly different version of this filter.  See //!
-	{	
-		int strokeFilterIgnoreTime,strokeFilterSuccessiveTime;
-		double strokeFilterIgnoreLength;
-		
+	{
+		int strokeFilterIgnoreTime = 0, strokeFilterSuccessiveTime = 0;
+		double strokeFilterIgnoreLength = NAN;
+
 		settings->getStrokeFilter( &strokeFilterIgnoreTime, &strokeFilterIgnoreLength, &strokeFilterSuccessiveTime  );
 		double dpmm = settings->getDisplayDpi()/25.4;
 		
@@ -194,25 +197,25 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 								    
 		if (   lengthSqrd < pow((strokeFilterIgnoreLength*dpmm),2) && pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) 
 		{
-			if ( pos.timestamp - this->lastStrokeTime  > strokeFilterSuccessiveTime )
+			if (pos.timestamp - BaseStrokeHandler::lastStrokeTime > strokeFilterSuccessiveTime)
 			{
 				//stroke not being added to layer... delete here.
 				delete stroke;
 				stroke = nullptr;
 				this->userTapped = true;
-				
-				this->lastStrokeTime = pos.timestamp;
-				
+
+				BaseStrokeHandler::lastStrokeTime = pos.timestamp;
+
 				xournal->getCursor()->updateCursor();
 				
 				return;
 			}
 
 		}
-		this->lastStrokeTime = pos.timestamp;
+		BaseStrokeHandler::lastStrokeTime = pos.timestamp;
 	}
-	
-	
+
+
 	// This is not a valid stroke
 	if (stroke->getPointCount() < 2)
 	{
@@ -239,8 +242,6 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	stroke = nullptr;
 
 	xournal->getCursor()->updateCursor();
-	
-	return;
 }
 
 void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos)
@@ -274,13 +275,12 @@ void BaseStrokeHandler::modifyModifiersByDrawDir(double width, double height,  b
 		double fixate_Dir_Mods_Dist = std::pow( xournal->getControl()->getSettings()->getDrawDirModsRadius() / zoom, 2.0); 
 		if (std::pow(width,2.0) > fixate_Dir_Mods_Dist ||  std::pow(height,2.0) > fixate_Dir_Mods_Dist )
 		{
-			this->drawModifierFixed = (DIRSET_MODIFIERS)(SET |
-				(gestureShift? SHIFT:NONE) |
-				(gestureControl? CONTROL:NONE) );
- 			if(changeCursor)
- 			{
+			this->drawModifierFixed = static_cast<DIRSET_MODIFIERS>(SET | (gestureShift ? SHIFT : NONE) |
+			                                                        (gestureControl ? CONTROL : NONE));
+			if (changeCursor)
+			{
 				xournal->getCursor()->activateDrawDirCursor(false);
- 			}
+			}
 		}
 		else
 		{

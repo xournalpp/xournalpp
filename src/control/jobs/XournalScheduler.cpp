@@ -4,7 +4,7 @@
 #include "RenderJob.h"
 
 XournalScheduler::XournalScheduler()
- : Scheduler()
+
 {
 	this->name = "XournalScheduler";
 }
@@ -30,7 +30,7 @@ void XournalScheduler::removeAllJobs()
 		int length = g_queue_get_length(this->jobQueue[priority]);
 		for (int i = 0; i < length; i++)
 		{
-			Job* job = (Job*) g_queue_peek_nth(this->jobQueue[priority], i);
+			Job* job = static_cast<Job*>(g_queue_peek_nth(this->jobQueue[priority], i));
 
 			JobType type = job->getType();
 			if (type == JOB_TYPE_PREVIEW || type == JOB_TYPE_RENDER)
@@ -59,7 +59,7 @@ void XournalScheduler::removeSource(void* source, JobType type, JobPriority prio
 	int length = g_queue_get_length(this->jobQueue[priority]);
 	for (int i = 0; i < length; i++)
 	{
-		Job* job = (Job*) g_queue_peek_nth(this->jobQueue[priority], i);
+		Job* job = static_cast<Job*>(g_queue_peek_nth(this->jobQueue[priority], i));
 
 		if (job->getType() == type)
 		{
@@ -88,7 +88,7 @@ auto XournalScheduler::existsSource(void* source, JobType type, JobPriority prio
 	int length = g_queue_get_length(this->jobQueue[priority]);
 	for (int i = 0; i < length; i++)
 	{
-		Job* job = (Job*) g_queue_peek_nth(this->jobQueue[priority], i);
+		Job* job = static_cast<Job*>(g_queue_peek_nth(this->jobQueue[priority], i));
 
 		if (job->getType() == type)
 		{

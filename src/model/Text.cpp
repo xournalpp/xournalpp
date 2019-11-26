@@ -98,7 +98,7 @@ void Text::rotate(double x0, double y0, double xo, double yo, double th)
 {
 }
 
-auto Text::isInEditing() -> bool
+auto Text::isInEditing() const -> bool
 {
 	return this->inEditing;
 }

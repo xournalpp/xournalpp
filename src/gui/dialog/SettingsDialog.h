@@ -43,7 +43,7 @@ private:
 	void loadCheckbox(const char* name, gboolean value);
 	bool getCheckbox(const char* name);
 
-	string updateHideString(const string& hidden, bool hideMenubar, bool hideSidebar);
+	static string updateHideString(const string& hidden, bool hideMenubar, bool hideSidebar);
 
 	void initMouseButtonEvents();
 	void initMouseButtonEvents(const char* hbox, int button, bool withDevice = false);

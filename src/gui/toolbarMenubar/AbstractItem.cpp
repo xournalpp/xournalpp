@@ -177,7 +177,7 @@ void AbstractItem::enable(bool enabled)
 {
 }
 
-auto AbstractItem::isEnabled() -> bool
+auto AbstractItem::isEnabled() const -> bool
 {
 	return this->enabled;
 }

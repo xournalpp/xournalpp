@@ -28,12 +28,12 @@ public:
 	/**
 	 * Apply the color to a cairo interface with "cairo_set_source_rgb"
 	 */
-	void apply(cairo_t* cr);
+	void apply(cairo_t* cr) const;
 
 	/**
 	 * Apply the color to a cairo interface with "cairo_set_source_rgba" and a specified alpha value
 	 */
-	void applyWithAlpha(cairo_t* cr, double alpha);
+	void applyWithAlpha(cairo_t* cr, double alpha) const;
 
 public:
 	/**

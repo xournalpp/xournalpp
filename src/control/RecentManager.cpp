@@ -49,8 +49,8 @@ void RecentManager::recentManagerChangedCallback(GtkRecentManager* manager, Rece
 
 void RecentManager::addRecentFileFilename(const Path& filename)
 {
-	GtkRecentManager* recentManager;
-	GtkRecentData* recentData;
+	GtkRecentManager* recentManager = nullptr;
+	GtkRecentData* recentData = nullptr;
 
 	static gchar* groups[2] = {g_strdup(GROUP), nullptr};
 
@@ -63,14 +63,14 @@ void RecentManager::addRecentFileFilename(const Path& filename)
 
 	if (filename.hasExtension(".pdf"))
 	{
-		recentData->mime_type = (gchar*) g_strdup(MIME_PDF);
+		recentData->mime_type = g_strdup(MIME_PDF);
 	}
 	else
 	{
-		recentData->mime_type = (gchar*) g_strdup(MIME);
+		recentData->mime_type = g_strdup(MIME);
 	}
 
-	recentData->app_name = (gchar*) g_get_application_name();
+	recentData->app_name = const_cast<gchar*>(g_get_application_name());
 	recentData->app_exec = g_strjoin(" ", g_get_prgname(), "%u", nullptr);
 	recentData->groups = groups;
 	recentData->is_private = false;
@@ -97,7 +97,7 @@ void RecentManager::removeRecentFileFilename(const Path& filename)
 	g_object_unref(file);
 }
 
-auto RecentManager::getMaxRecent() -> int
+auto RecentManager::getMaxRecent() const -> int
 {
 	return this->maxRecent;
 }
@@ -147,7 +147,7 @@ auto RecentManager::filterRecent(GList* items, bool xoj) -> GList*
 	// filter
 	for (GList* l = items; l != nullptr; l = l->next)
 	{
-		auto* info = (GtkRecentInfo*) l->data;
+		auto* info = static_cast<GtkRecentInfo*>(l->data);
 
 		const gchar * uri = gtk_recent_info_get_uri(info);
 		if( !uri )	// issue #1071
@@ -174,14 +174,14 @@ auto RecentManager::filterRecent(GList* items, bool xoj) -> GList*
 	}
 
 	// sort
-	filteredItems = g_list_sort(filteredItems, (GCompareFunc) sortRecentsEntries);
+	filteredItems = g_list_sort(filteredItems, reinterpret_cast<GCompareFunc>(sortRecentsEntries));
 
 	return filteredItems;
 }
 
 void RecentManager::recentsMenuActivateCallback(GtkAction* action, RecentManager* recentManager)
 {
-	auto* info = (GtkRecentInfo*) g_object_get_data(G_OBJECT(action), "gtk-recent-info");
+	auto* info = static_cast<GtkRecentInfo*>(g_object_get_data(G_OBJECT(action), "gtk-recent-info"));
 	g_return_if_fail(info != nullptr);
 
 	Path p = Path::fromUri(gtk_recent_info_get_uri(info));
@@ -226,7 +226,7 @@ void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
 	gtk_widget_set_tooltip_text(item, tip.c_str());
 
 	g_object_set_data_full(G_OBJECT(item), "gtk-recent-info", gtk_recent_info_ref(info),
-						   (GDestroyNotify) gtk_recent_info_unref);
+	                       reinterpret_cast<GDestroyNotify>(gtk_recent_info_unref));
 
 	g_signal_connect(item, "activate", G_CALLBACK(recentsMenuActivateCallback), this);
 
@@ -248,7 +248,7 @@ void RecentManager::updateMenu()
 	int xojCount = 0;
 	for (GList* l = filteredItemsXoj; l != nullptr; l = l->next)
 	{
-		auto* info = (GtkRecentInfo*) l->data;
+		auto* info = static_cast<GtkRecentInfo*>(l->data);
 
 		if (xojCount >= maxRecent)
 		{
@@ -269,7 +269,7 @@ void RecentManager::updateMenu()
 	int pdfCount = 0;
 	for (GList* l = filteredItemsPdf; l != nullptr; l = l->next)
 	{
-		auto* info = (GtkRecentInfo*) l->data;
+		auto* info = static_cast<GtkRecentInfo*>(l->data);
 
 		if (pdfCount >= maxRecent)
 		{
@@ -281,6 +281,6 @@ void RecentManager::updateMenu()
 	}
 	g_list_free(filteredItemsPdf);
 
-	g_list_foreach(items, (GFunc) gtk_recent_info_unref, nullptr);
+	g_list_foreach(items, reinterpret_cast<GFunc>(gtk_recent_info_unref), nullptr);
 	g_list_free(items);
 }

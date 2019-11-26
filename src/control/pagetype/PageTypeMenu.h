@@ -62,7 +62,7 @@ public:
 	void addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener, bool onlyAllMenu);
 
 private:
-	GtkWidget* createApplyMenuItem(const char* text);
+	static GtkWidget* createApplyMenuItem(const char* text);
 	void initDefaultMenu();
 	void addMenuEntry(PageTypeInfo* t);
 	void entrySelected(PageTypeInfo* t);

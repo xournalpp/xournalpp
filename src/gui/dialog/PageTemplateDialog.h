@@ -33,7 +33,7 @@ public:
 	/**
 	 * The dialog was confirmed / saved
 	 */
-	bool isSaved();
+	bool isSaved() const;
 
 	void changeCurrentPageBackground(PageTypeInfo* info);
 

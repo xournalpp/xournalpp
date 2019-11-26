@@ -19,7 +19,7 @@ PageTemplateSettings::PageTemplateSettings()
 
 PageTemplateSettings::~PageTemplateSettings() = default;
 
-auto PageTemplateSettings::isCopyLastPageSettings() -> bool
+auto PageTemplateSettings::isCopyLastPageSettings() const -> bool
 {
 	return this->copyLastPageSettings;
 }
@@ -29,7 +29,7 @@ void PageTemplateSettings::setCopyLastPageSettings(bool copyLastPageSettings)
 	this->copyLastPageSettings = copyLastPageSettings;
 }
 
-auto PageTemplateSettings::isCopyLastPageSize() -> bool
+auto PageTemplateSettings::isCopyLastPageSize() const -> bool
 {
 	return this->copyLastPageSize;
 }
@@ -39,7 +39,7 @@ void PageTemplateSettings::setCopyLastPageSize(bool copyLastPageSize)
 	this->copyLastPageSize = copyLastPageSize;
 }
 
-auto PageTemplateSettings::getPageWidth() -> double
+auto PageTemplateSettings::getPageWidth() const -> double
 {
 	return this->pageWidth;
 }
@@ -49,7 +49,7 @@ void PageTemplateSettings::setPageWidth(double pageWidth)
 	this->pageWidth = pageWidth;
 }
 
-auto PageTemplateSettings::getPageHeight() -> double
+auto PageTemplateSettings::getPageHeight() const -> double
 {
 	return this->pageHeight;
 }
@@ -59,7 +59,7 @@ void PageTemplateSettings::setPageHeight(double pageHeight)
 	this->pageHeight = pageHeight;
 }
 
-auto PageTemplateSettings::getBackgroundColor() -> int
+auto PageTemplateSettings::getBackgroundColor() const -> int
 {
 	return this->backgroundColor;
 }
@@ -96,7 +96,7 @@ void PageTemplateSettings::setBackgroundType(const PageType& backgroundType)
  */
 auto PageTemplateSettings::parse(const string& tpl) -> bool
 {
-	stringstream ss(tpl.c_str());
+	stringstream ss(tpl);
 	string line;
 
 	if (!std::getline(ss, line, '\n'))
@@ -154,7 +154,7 @@ auto PageTemplateSettings::parse(const string& tpl) -> bool
 /**
  * Convert to a parsable string
  */
-auto PageTemplateSettings::toString() -> string
+auto PageTemplateSettings::toString() const -> string
 {
 	string str = "xoj/template\n";
 

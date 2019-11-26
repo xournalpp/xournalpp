@@ -20,7 +20,7 @@ class GladeSearchpath;
 class GladeGui
 {
 public:
-	GladeGui(GladeSearchpath* gladeSearchPath, const string& glade, string mainWnd);
+	GladeGui(GladeSearchpath* gladeSearchPath, const string& glade, const string& mainWnd);
 	virtual ~GladeGui();
 
 	virtual void show(GtkWindow* parent) = 0;

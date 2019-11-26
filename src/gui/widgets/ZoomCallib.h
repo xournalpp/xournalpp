@@ -37,7 +37,7 @@ struct _ZoomCallibClass
 };
 
 GType zoomcallib_get_type(void);
-void zoomcallib_set_val(ZoomCallib* cpu, gint val);
+void zoomcallib_set_val(ZoomCallib* callib, gint val);
 GtkWidget* zoomcallib_new();
 
 G_END_DECLS

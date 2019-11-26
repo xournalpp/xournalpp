@@ -131,7 +131,7 @@ void XojPageView::deleteViewBuffer()
 	g_mutex_unlock(&this->drawingMutex);
 }
 
-auto XojPageView::containsPoint(int x, int y, bool local) -> bool
+auto XojPageView::containsPoint(int x, int y, bool local) const -> bool
 {
 	if (!local)
 	{
@@ -142,17 +142,19 @@ auto XojPageView::containsPoint(int x, int y, bool local) -> bool
 
 		return leftOk && rightOk && topOk && bottomOk;
 	}
-	else
-	{
-		return x >= 0 && y >= 0 && x <= this->getWidth() && y <= this->getHeight();
-	}
+
+
+	return x >= 0 && y >= 0 && x <= this->getWidth() && y <= this->getHeight();
 }
 
 auto XojPageView::searchTextOnPage(string& text, int* occures, double* top) -> bool
 {
 	if (this->search == nullptr)
 	{
-		if (text.empty()) return true;
+		if (text.empty())
+		{
+			return true;
+		}
 
 		int pNr = this->page->getPdfPageNr();
 		XojPdfPageSPtr pdf = nullptr;
@@ -254,7 +256,7 @@ void XojPageView::startText(double x, double y)
 				GdkRectangle matchRect = {gint(x - 10), gint(y - 10), 20, 20};
 				if (e->intersectsArea(&matchRect))
 				{
-					text = (Text*) e;
+					text = dynamic_cast<Text*>(e);
 					break;
 				}
 			}
@@ -436,7 +438,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool
 	}
 	else if (h->getToolType() == TOOL_FLOATING_TOOLBOX)
 	{
-		gint wx, wy;
+		gint wx = 0, wy = 0;
 		GtkWidget* widget = xournal->getWidget();
 		gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
 
@@ -600,7 +602,7 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool
 
 			if (doAction)  // pop up a menu
 			{
-				gint wx, wy;
+				gint wx = 0, wy = 0;
 				GtkWidget* widget = xournal->getWidget();
 				gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
 				wx += std::lround(pos.x + this->getX());
@@ -663,15 +665,14 @@ auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool
 			endText();
 			return true;
 		}
-		else if (xournal->getSelection())
+		if (xournal->getSelection())
 		{
 			xournal->clearSelection();
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+
+
+		return false;
 	}
 
 	if (this->textEditor)
@@ -682,7 +683,7 @@ auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool
 
 	if (this->inputHandler)
 	{
-		return this->inputHandler->onKeyEvent((GdkEventKey*) event);
+		return this->inputHandler->onKeyEvent(event);
 	}
 
 
@@ -696,7 +697,7 @@ auto XojPageView::onKeyReleaseEvent(GdkEventKey* event) -> bool
 		return true;
 	}
 
-	if (this->inputHandler && this->inputHandler->onKeyEvent((GdkEventKey*) event))
+	if (this->inputHandler && this->inputHandler->onKeyEvent(event))
 	{
 		return true;
 	}
@@ -868,7 +869,7 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect)
 
 	if (width != dispWidth)
 	{
-		double scale = ((double) dispWidth) / ((double) width);
+		double scale = (static_cast<double>(dispWidth)) / (width);
 
 		// Scale current image to fit the zoom level
 		cairo_scale(cr, scale, scale);
@@ -950,7 +951,7 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool
 	return true;
 }
 
-auto XojPageView::containsY(int y) -> bool
+auto XojPageView::containsY(int y) const -> bool
 {
 	return (y >= this->getY() && y <= (this->getY() + this->getDisplayHeight()));
 }
@@ -959,7 +960,7 @@ auto XojPageView::containsY(int y) -> bool
  * GETTER / SETTER
  */
 
-auto XojPageView::isSelected() -> bool
+auto XojPageView::isSelected() const -> bool
 {
 	return selected;
 }
@@ -1010,13 +1011,13 @@ void XojPageView::setMappedRowCol(int row, int col)
 }
 
 
-auto XojPageView::getMappedRow() -> int
+auto XojPageView::getMappedRow() const -> int
 {
 	return this->mappedRow;
 }
 
 
-auto XojPageView::getMappedCol() -> int
+auto XojPageView::getMappedCol() const -> int
 {
 	return this->mappedCol;
 }
@@ -1064,7 +1065,7 @@ auto XojPageView::getSelectedTex() -> TexImage*
 	{
 		if (e->getType() == ELEMENT_TEXIMAGE)
 		{
-			return (TexImage*) e;
+			return dynamic_cast<TexImage*>(e);
 		}
 	}
 	return nullptr;
@@ -1082,13 +1083,13 @@ auto XojPageView::getSelectedText() -> Text*
 	{
 		if (e->getType() == ELEMENT_TEXT)
 		{
-			return (Text*) e;
+			return dynamic_cast<Text*>(e);
 		}
 	}
 	return nullptr;
 }
 
-auto XojPageView::getRect() -> Rectangle
+auto XojPageView::getRect() const -> Rectangle
 {
 	return Rectangle(getX(), getY(), getDisplayWidth(), getDisplayHeight());
 }

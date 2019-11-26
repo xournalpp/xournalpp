@@ -25,7 +25,7 @@ public:
 public:
 	virtual void show(GtkWindow* parent);
 	void updateOkButton();
-	double getZoom();
+	static double getZoom();
 	int getSelectedPage();
 
 private:

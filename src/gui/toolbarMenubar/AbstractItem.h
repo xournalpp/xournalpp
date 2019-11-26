@@ -37,7 +37,7 @@ public:
 	virtual string getId();
 
 	void setTmpDisabled(bool disabled);
-	bool isEnabled();
+	bool isEnabled() const;
 
 	ActionType getActionType();
 

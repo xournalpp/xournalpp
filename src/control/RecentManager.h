@@ -43,13 +43,13 @@ public:
 	 * Adds a file to the underlying GtkRecentManager
 	 * without altering the menu
 	 */
-	void addRecentFileFilename(const Path& filename);
+	static void addRecentFileFilename(const Path& filename);
 
 	/**
 	 * Removes a file from the underlying GtkRecentManager
 	 * without altering the menu
 	 */
-	void removeRecentFileFilename(const Path& filename);
+	static void removeRecentFileFilename(const Path& filename);
 
 	/**
 	 * Removes all of the menu items corresponding to recent files
@@ -64,7 +64,7 @@ public:
 	/**
 	 * Returns the maximal number of recent files to be displayed
 	 */
-	int getMaxRecent();
+	int getMaxRecent() const;
 
 	/**
 	 * Sets the maximal number of recent files to be displayed
@@ -100,7 +100,7 @@ private:
 	 * @return      A pointer to a GList containing the relevant GtkRecentInfo%s sorted according to their
 	 *              modification dates
 	 */
-	GList* filterRecent(GList* items, bool xoj);
+	static GList* filterRecent(GList* items, bool xoj);
 	void addRecentMenu(GtkRecentInfo* info, int i);
 
 	/**

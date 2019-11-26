@@ -24,7 +24,8 @@ void XmlImageNode::setImage(cairo_surface_t* img)
 	this->img = cairo_surface_reference(img);
 }
 
-auto XmlImageNode::pngWriteFunction(XmlImageNode* image, unsigned char* data, unsigned int length) -> cairo_status_t
+auto XmlImageNode::pngWriteFunction(XmlImageNode* image, const unsigned char* data, unsigned int length)
+        -> cairo_status_t
 {
 	for (unsigned int i = 0; i < length; i++, image->pos++)
 	{
@@ -57,7 +58,7 @@ void XmlImageNode::writeOut(OutputStream* out)
 	{
 		this->out = out;
 		this->pos = 0;
-		cairo_surface_write_to_png_stream(this->img, (cairo_write_func_t) &pngWriteFunction, this);
+		cairo_surface_write_to_png_stream(this->img, reinterpret_cast<cairo_write_func_t>(&pngWriteFunction), this);
 		gchar* base64_str = g_base64_encode(this->buffer, this->pos);
 		out->write(base64_str);
 		g_free(base64_str);

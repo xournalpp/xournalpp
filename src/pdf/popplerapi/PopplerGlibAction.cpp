@@ -28,7 +28,7 @@ auto PopplerGlibAction::getDestination() -> XojLinkDest*
 	// every other action is not supported in Xournal
 	if (action->type == POPPLER_ACTION_GOTO_DEST)
 	{
-		auto* actionDest = (PopplerActionGotoDest*) action;
+		auto* actionDest = reinterpret_cast<PopplerActionGotoDest*>(action);
 		PopplerDest* pDest = actionDest->dest;
 
 		if (pDest == nullptr)
@@ -129,5 +129,5 @@ void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest)
 
 auto PopplerGlibAction::getTitle() -> string
 {
-	return ((PopplerActionAny*)action)->title;
+	return (reinterpret_cast<PopplerActionAny*>(action))->title;
 }

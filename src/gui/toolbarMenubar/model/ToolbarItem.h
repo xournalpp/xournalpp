@@ -29,7 +29,7 @@ public:
 
 	bool operator==(ToolbarItem& other);
 
-	int getId();
+	int getId() const;
 
 private:
 	string name;

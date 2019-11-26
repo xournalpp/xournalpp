@@ -17,7 +17,7 @@ public:
 	{
 	}
 
-public:
+
 	string name;
 	string icon;
 	ActionType type;

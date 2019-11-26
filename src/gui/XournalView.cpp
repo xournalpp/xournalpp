@@ -59,7 +59,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 
 	gtk_widget_grab_focus(this->widget);
 
-	this->cleanupTimeout = g_timeout_add_seconds(5, (GSourceFunc) clearMemoryTimer, this);
+	this->cleanupTimeout = g_timeout_add_seconds(5, reinterpret_cast<GSourceFunc>(clearMemoryTimer), this);
 }
 
 XournalView::~XournalView()
@@ -91,7 +91,7 @@ auto pageViewIncreasingClockTime(XojPageView* a, XojPageView* b) -> gint
 
 void XournalView::staticLayoutPages(GtkWidget* widget, GtkAllocation* allocation, void* data)
 {
-	auto* xv = (XournalView*) data;
+	auto* xv = static_cast<XournalView*>(data);
 	xv->layoutPages();
 }
 
@@ -103,7 +103,7 @@ auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean
 	{
 		if (page->getLastVisibleTime() > 0)
 		{
-			list = g_list_insert_sorted(list, page, (GCompareFunc) pageViewIncreasingClockTime);
+			list = g_list_insert_sorted(list, page, reinterpret_cast<GCompareFunc>(pageViewIncreasingClockTime));
 		}
 	}
 
@@ -120,7 +120,7 @@ auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean
 		}
 		else
 		{
-			auto* v = (XojPageView*) l->data;
+			auto* v = static_cast<XojPageView*>(l->data);
 
 			if (pixel <= 0)
 			{
@@ -140,7 +140,7 @@ auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean
 	return true;
 }
 
-auto XournalView::getCurrentPage() -> size_t
+auto XournalView::getCurrentPage() const -> size_t
 {
 	return currentPage;
 }
@@ -257,18 +257,17 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool
 			control->getScrollHandler()->goToPreviousPage();
 			return true;
 		}
+
+
+		if (state & GDK_SHIFT_MASK)
+		{
+			this->pageRelativeXY(0, -1);
+		}
 		else
 		{
-			if (state & GDK_SHIFT_MASK)
-			{
-				this->pageRelativeXY(0, -1);
-			}
-			else
-			{
-				layout->scrollRelative(0, -scrollKeySize);
-			}
-			return true;
+			layout->scrollRelative(0, -scrollKeySize);
 		}
+		return true;
 	}
 
 	if (event->keyval == GDK_KEY_Down)
@@ -278,18 +277,17 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool
 			control->getScrollHandler()->goToNextPage();
 			return true;
 		}
+
+
+		if (state & GDK_SHIFT_MASK)
+		{
+			this->pageRelativeXY(0, 1);
+		}
 		else
 		{
-			if (state & GDK_SHIFT_MASK)
-			{
-				this->pageRelativeXY(0, 1);
-			}
-			else
-			{
-				layout->scrollRelative(0, scrollKeySize);
-			}
-			return true;
+			layout->scrollRelative(0, scrollKeySize);
 		}
+		return true;
 	}
 
 	if (event->keyval == GDK_KEY_Left)
@@ -780,7 +778,7 @@ void XournalView::setSelection(EditSelection* selection)
 		}
 		else if (e->getType() == ELEMENT_STROKE)
 		{
-			auto* s = static_cast<Stroke*>(e);
+			auto* s = dynamic_cast<Stroke*>(e);
 			if (s->getToolType() != STROKE_TOOL_ERASER)
 			{
 				canChangeColor = true;

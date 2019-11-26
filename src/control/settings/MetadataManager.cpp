@@ -95,7 +95,7 @@ auto MetadataManager::loadList() -> vector<MetadataEntry>
 		return data;
 	}
 
-	const gchar* file;
+	const gchar* file = nullptr;
 	while ((file = g_dir_read_name(home)) != nullptr)
 	{
 		string path = folder.str();
@@ -206,7 +206,7 @@ auto MetadataManager::getForFile(const string& file) -> MetadataEntry
 		}
 	}
 
-	for (int i = 20; i < (int)files.size(); i++)
+	for (int i = 20; i < static_cast<int>(files.size()); i++)
 	{
 		string path = files[i].metadataFile;
 		deleteMetadataFile(path);
@@ -251,7 +251,7 @@ void MetadataManager::storeMetadata(MetadataEntry* m)
  */
 void MetadataManager::storeMetadata(const string& file, int page, double zoom)
 {
-	if (file == "")
+	if (file.empty())
 	{
 		return;
 	}

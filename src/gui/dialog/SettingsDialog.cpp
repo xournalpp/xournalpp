@@ -395,7 +395,7 @@ void SettingsDialog::load()
 		}
 	}
 
-	switch((int)settings->getAudioSampleRate())
+	switch (static_cast<int>(settings->getAudioSampleRate()))
 	{
 		case 96100:
 			gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 1);
@@ -606,21 +606,25 @@ void SettingsDialog::save()
 	touch.setString("cmdEnable", gtk_entry_get_text(GTK_ENTRY(get("txtEnableTouchCommand"))));
 	touch.setString("cmdDisable", gtk_entry_get_text(GTK_ENTRY(get("txtDisableTouchCommand"))));
 
-	touch.setInt("timeout", (int)(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spTouchDisableTimeout"))) * 1000));
+	touch.setInt("timeout",
+	             static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spTouchDisableTimeout"))) * 1000));
 
-	settings->setSnapRotationTolerance((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapRotationTolerance"))));
-	settings->setSnapGridTolerance((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridTolerance"))));
+	settings->setSnapRotationTolerance(
+	        static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapRotationTolerance")))));
+	settings->setSnapGridTolerance(
+	        static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridTolerance")))));
 
 	int selectedInputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioInputDevice"))) - 1;
-	if (selectedInputDeviceIndex >= 0 && selectedInputDeviceIndex < (int)this->audioInputDevices.size())
+	if (selectedInputDeviceIndex >= 0 && selectedInputDeviceIndex < static_cast<int>(this->audioInputDevices.size()))
 	{
-		settings->setAudioInputDevice((int) this->audioInputDevices[selectedInputDeviceIndex].getIndex());
+		settings->setAudioInputDevice(static_cast<int>(this->audioInputDevices[selectedInputDeviceIndex].getIndex()));
 	}
 
 	int selectedOutputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioOutputDevice"))) - 1;
-	if (selectedOutputDeviceIndex >= 0 && selectedOutputDeviceIndex < (int)this->audioOutputDevices.size())
+	if (selectedOutputDeviceIndex >= 0 && selectedOutputDeviceIndex < static_cast<int>(this->audioOutputDevices.size()))
 	{
-		settings->setAudioOutputDevice((int) this->audioOutputDevices[selectedOutputDeviceIndex].getIndex());
+		settings->setAudioOutputDevice(
+		        static_cast<int>(this->audioOutputDevices[selectedOutputDeviceIndex].getIndex()));
 	}
 
 	switch (gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioSampleRate"))))
@@ -637,8 +641,9 @@ void SettingsDialog::save()
 			break;
 	}
 
-	settings->setAudioGain((double)gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spAudioGain"))));
-	settings->setDefaultSeekTime((double) gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime"))));
+	settings->setAudioGain(static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spAudioGain")))));
+	settings->setDefaultSeekTime(
+	        static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")))));
 
 	for (DeviceClassConfigGui* deviceClassConfigGui : this->deviceClassConfigs)
 	{

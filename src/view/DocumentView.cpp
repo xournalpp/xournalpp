@@ -66,7 +66,8 @@ void DocumentView::applyColor(cairo_t* cr, int c, int alpha)
 	cairo_set_source_rgba(cr, r, g, b, alpha / 255.0);
 }
 
-void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool changeSource, bool noAlpha)
+void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool changeSource,
+                              bool noAlpha) const
 {
 	if (s->getPointCount() < 2)
 	{
@@ -168,23 +169,23 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage)
 	cairo_set_matrix(cr, &defaultMatrix);
 }
 
-void DocumentView::drawElement(cairo_t* cr, Element* e)
+void DocumentView::drawElement(cairo_t* cr, Element* e) const
 {
 	if (e->getType() == ELEMENT_STROKE)
 	{
-		drawStroke(cr, (Stroke*) e);
+		drawStroke(cr, dynamic_cast<Stroke*>(e));
 	}
 	else if (e->getType() == ELEMENT_TEXT)
 	{
-		drawText(cr, (Text*) e);
+		drawText(cr, dynamic_cast<Text*>(e));
 	}
 	else if (e->getType() == ELEMENT_IMAGE)
 	{
-		drawImage(cr, (Image*) e);
+		drawImage(cr, dynamic_cast<Image*>(e));
 	}
 	else if (e->getType() == ELEMENT_TEXIMAGE)
 	{
-		drawTexImage(cr, (TexImage*) e);
+		drawTexImage(cr, dynamic_cast<TexImage*>(e));
 	}
 }
 

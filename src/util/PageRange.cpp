@@ -11,12 +11,12 @@ PageRangeEntry::PageRangeEntry(int first, int last)
 
 PageRangeEntry::~PageRangeEntry() = default;
 
-auto PageRangeEntry::getLast() -> int
+auto PageRangeEntry::getLast() const -> int
 {
 	return this->last;
 }
 
-auto PageRangeEntry::getFirst() -> int
+auto PageRangeEntry::getFirst() const -> int
 {
 	return this->first;
 }
@@ -35,7 +35,7 @@ auto PageRange::parse(const char* str) -> PageRangeVector
 		return data;
 	}
 
-	int start, end;
+	int start = 0, end = 0;
 	char* next = nullptr;
 	const char* p = str;
 	while (*p)
@@ -52,7 +52,7 @@ auto PageRange::parse(const char* str) -> PageRangeVector
 		}
 		else
 		{
-			start = (int) strtol(p, &next, 10);
+			start = static_cast<int>(strtol(p, &next, 10));
 			if (start < 1)
 			{
 				start = 1;
@@ -70,7 +70,7 @@ auto PageRange::parse(const char* str) -> PageRangeVector
 		if (*p == '-')
 		{
 			p++;
-			end = (int) strtol(p, &next, 10);
+			end = static_cast<int>(strtol(p, &next, 10));
 			if (next == p) // a half-open range like 2-
 			{
 				end = 0;

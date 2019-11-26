@@ -1,5 +1,6 @@
 #include "Selection.h"
 
+#include <cmath>
 #include "model/Layer.h"
 #include "util/GtkColorWrapper.h"
 
@@ -144,7 +145,7 @@ RegionSelect::~RegionSelect()
 {
 	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
-		delete (RegionPoint*) l->data;
+		delete static_cast<RegionPoint*>(l->data);
 	}
 	g_list_free(this->points);
 }
@@ -160,12 +161,12 @@ void RegionSelect::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 		cairo_set_line_width(cr, 1 / zoom);
 		selectionColor.apply(cr);
 
-		auto* r0 = (RegionPoint*) this->points->data;
+		auto* r0 = static_cast<RegionPoint*>(this->points->data);
 		cairo_move_to(cr, r0->x, r0->y);
 
 		for (GList* l = this->points->next; l != nullptr; l = l->next)
 		{
-			auto* r = (RegionPoint*) l->data;
+			auto* r = static_cast<RegionPoint*>(l->data);
 			cairo_line_to(cr, r->x, r->y);
 		}
 
@@ -185,7 +186,7 @@ void RegionSelect::currentPos(double x, double y)
 	if (this->points && this->points->next && this->points->next->next)
 	{
 
-		auto* r0 = (RegionPoint*) this->points->data;
+		auto* r0 = static_cast<RegionPoint*>(this->points->data);
 		double ax = r0->x;
 		double bx = r0->x;
 		double ay = r0->y;
@@ -193,7 +194,7 @@ void RegionSelect::currentPos(double x, double y)
 
 		for (GList* l = this->points; l != nullptr; l = l->next)
 		{
-			auto* r = (RegionPoint*) l->data;
+			auto* r = static_cast<RegionPoint*>(l->data);
 			if (ax > r->x)
 			{
 				ax = r->x;
@@ -233,16 +234,16 @@ auto RegionSelect::contains(double x, double y) -> bool
 
 	int hits = 0;
 
-	auto* last = (RegionPoint*) g_list_last(this->points)->data;
+	auto* last = static_cast<RegionPoint*>(g_list_last(this->points)->data);
 
 	double lastx = last->x;
 	double lasty = last->y;
-	double curx, cury;
+	double curx = NAN, cury = NAN;
 
 	// Walk the edges of the polygon
 	for (GList* l = this->points; l != nullptr; lastx = curx, lasty = cury, l = l->next)
 	{
-		auto* last = (RegionPoint*) l->data;
+		auto* last = static_cast<RegionPoint*>(l->data);
 		curx = last->x;
 		cury = last->y;
 
@@ -251,7 +252,7 @@ auto RegionSelect::contains(double x, double y) -> bool
 			continue;
 		}
 
-		int leftx;
+		int leftx = 0;
 		if (curx < lastx)
 		{
 			if (x >= lastx)
@@ -269,7 +270,7 @@ auto RegionSelect::contains(double x, double y) -> bool
 			leftx = lastx;
 		}
 
-		double test1, test2;
+		double test1 = NAN, test2 = NAN;
 		if (cury < lasty)
 		{
 			if (y < cury || y >= lasty)
@@ -319,7 +320,7 @@ auto RegionSelect::finalize(PageRef page) -> bool
 
 	for (GList* l = this->points; l != nullptr; l = l->next)
 	{
-		auto* p = (RegionPoint*) l->data;
+		auto* p = static_cast<RegionPoint*>(l->data);
 
 		if (p->x < this->x1Box)
 		{

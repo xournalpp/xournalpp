@@ -24,7 +24,7 @@ void addDevicesToList(std::vector<InputDevice>& deviceList, GList* devList, bool
 {
 	while (devList != nullptr)
 	{
-		auto dev = (GdkDevice*) devList->data;
+		auto dev = static_cast<GdkDevice*>(devList->data);
 		if (GDK_SOURCE_KEYBOARD == gdk_device_get_source(dev))
 		{
 			// Skip keyboard
@@ -60,8 +60,8 @@ auto DeviceListHelper::getDeviceList(Settings* settings, bool ignoreTouchDevices
 		        deviceList.end());
 	}
 
-	GList* pointerSlaves;
-	// TODO remove after completely switching to gtk 3.20 or use c++17 if constexpr (predicate){...} else{...} ...
+	GList* pointerSlaves = nullptr;
+	// TODO(fabian): remove after completely switching to gtk 3.20 or use c++17 if constexpr (predicate){...} else{...} ...
 #if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
 	GdkDisplay* display = gdk_display_get_default();
 	GdkSeat* defaultSeat = gdk_display_get_default_seat(display);
@@ -117,15 +117,15 @@ auto InputDevice::getType() const -> string
 	{
 		return _("mouse");
 	}
-	else if (source == GDK_SOURCE_PEN)
+	if (source == GDK_SOURCE_PEN)
 	{
 		return _("pen");
 	}
-	else if (source == GDK_SOURCE_ERASER)
+	if (source == GDK_SOURCE_ERASER)
 	{
 		return _("eraser");
 	}
-	else if (source == GDK_SOURCE_CURSOR)
+	if (source == GDK_SOURCE_CURSOR)
 	{
 		return _("cursor");
 	}

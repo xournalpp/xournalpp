@@ -20,7 +20,7 @@ public:
 	virtual ~ObjectEncoding();
 
 public:
-	void addStr(const char* str);
+	void addStr(const char* str) const;
 	virtual void addData(const void* data, int len) = 0;
 
 	GString* getData();

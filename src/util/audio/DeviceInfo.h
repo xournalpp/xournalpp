@@ -30,8 +30,8 @@ public:
 
 private:
 	const string deviceName;
-	const PaDeviceIndex index;
-	const bool selected;
-	const int inputChannels;
-	const int outputChannels;
+	const PaDeviceIndex index{};
+	const bool selected{};
+	const int inputChannels{};
+	const int outputChannels{};
 };
