@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 01:13+0000\n"
-"PO-Revision-Date: 2019-11-21 01:15\n"
+"POT-Creation-Date: 2019-11-26 11:49+0000\n"
+"PO-Revision-Date: 2019-11-26 11:50\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -28,12 +28,12 @@ msgid "\n"
 msgstr "\n"
 "Попытаемся запустить без этого файла."
 
-#: ../src/gui/MainWindow.cpp:744
+#: ../src/gui/MainWindow.cpp:743
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr " из {1}{2}"
 
-#: ../src/control/settings/Settings.cpp:103
+#: ../src/control/settings/Settings.cpp:105
 msgid "%F-Note-%H-%M"
 msgstr "%F-Заметка-%H-%M"
 
@@ -80,29 +80,29 @@ msgstr "Применить к текущей странице"
 msgid "Attach file to the journal"
 msgstr "Прикрепить файл к журналу"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:142
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:141
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
 msgstr "Атрибут «{1}» не может быть обработан как double, значение «{2}»"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:134
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:133
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:162
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:185
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:161
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:184
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
 msgstr "Атрибут «{1}» не может быть обработан как int, значение «{2}»"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:154
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:153
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:207
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:231
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:206
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:230
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "Атрибут «{1}» не может быть обработан как size_t, значение «{2}»"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:199
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:198
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
 msgstr ""
 
@@ -174,7 +174,7 @@ msgstr "Изменить ширину черты"
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
 msgstr "Неизвестный цвет «{1}» (не определен в списке цветов по умолчанию)!"
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:258
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:259
 msgid "Contents"
 msgstr "Содержание"
 
@@ -196,7 +196,7 @@ msgstr "Копировать страницу"
 msgid "Could not create backup! (The file was created from an older Xournal version)"
 msgstr "Не удалось создать резервную копию! (Файл был создан в старой версии Xournal)"
 
-#: ../src/util/Util.cpp:120
+#: ../src/util/Util.cpp:121
 msgid "Could not create folder: {1}"
 msgstr "Не удалось создать папку: {1}"
 
@@ -231,24 +231,24 @@ msgstr "Не удалось загрузить LaTeX PDF файл: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Не удалось загрузить файл pagetemplates.ini"
 
-#: ../src/control/xojfile/LoadHandler.cpp:948
+#: ../src/control/xojfile/LoadHandler.cpp:946
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: Не удалось прочитать файл"
 
-#: ../src/control/xojfile/LoadHandler.cpp:957
+#: ../src/control/xojfile/LoadHandler.cpp:955
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: Не удалось записать файл"
 
-#: ../src/control/xojfile/LoadHandler.cpp:927
-#: ../src/control/xojfile/LoadHandler.cpp:1240
-#: ../src/control/xojfile/LoadHandler.cpp:1260
+#: ../src/control/xojfile/LoadHandler.cpp:925
+#: ../src/control/xojfile/LoadHandler.cpp:1238
+#: ../src/control/xojfile/LoadHandler.cpp:1258
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: недопустимый размер файла"
 
-#: ../src/control/xojfile/LoadHandler.cpp:917
-#: ../src/control/xojfile/LoadHandler.cpp:935
-#: ../src/control/xojfile/LoadHandler.cpp:1231
-#: ../src/control/xojfile/LoadHandler.cpp:1248
+#: ../src/control/xojfile/LoadHandler.cpp:915
+#: ../src/control/xojfile/LoadHandler.cpp:933
+#: ../src/control/xojfile/LoadHandler.cpp:1229
+#: ../src/control/xojfile/LoadHandler.cpp:1246
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: {2}"
 
@@ -268,8 +268,8 @@ msgid "Could not parse general toolbar.ini file: {1}\n"
 msgstr "Не удалось разобрать файл toolbar.ini: {1}\n"
 "Панели инструментов не будут доступны"
 
-#: ../src/control/xojfile/LoadHandler.cpp:418
-#: ../src/control/xojfile/LoadHandler.cpp:446
+#: ../src/control/xojfile/LoadHandler.cpp:416
+#: ../src/control/xojfile/LoadHandler.cpp:444
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Не удалось прочитать изображение: {1}. Сообщение об ошибке: {2}"
 
@@ -382,11 +382,11 @@ msgstr "Не перезаписывайте фоновый PDF! Это прив�
 msgid "Document file was removed."
 msgstr "Файл документа был удален."
 
-#: ../src/control/xojfile/LoadHandler.cpp:282
+#: ../src/control/xojfile/LoadHandler.cpp:280
 msgid "Document is corrupted (no pages found in file)"
 msgstr "Документ повреждён (в файле не найдено страниц)"
 
-#: ../src/control/xojfile/LoadHandler.cpp:277
+#: ../src/control/xojfile/LoadHandler.cpp:275
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Документ не завершён (его конец, вероятно, обрезан)"
 
@@ -474,20 +474,20 @@ msgstr "Ошибка при открытии файла «{1}»"
 msgid "Error opening file: \"{1}\""
 msgstr "Ошибка при открытии файла: «{1}»"
 
-#: ../src/control/xojfile/LoadHandler.cpp:539
-#: ../src/control/xojfile/LoadHandler.cpp:566
+#: ../src/control/xojfile/LoadHandler.cpp:537
+#: ../src/control/xojfile/LoadHandler.cpp:564
 msgid "Error reading PDF: {1}"
 msgstr "Ошибка при чтении PDF: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:633
+#: ../src/control/xojfile/LoadHandler.cpp:631
 msgid "Error reading width of a stroke: {1}"
 msgstr "Ошибка чтения ширины черты: {1}"
 
-#: ../src/control/jobs/ImageExport.cpp:129
+#: ../src/control/jobs/ImageExport.cpp:124
 msgid "Error save image #1"
 msgstr "Ошибка сохранения изображения #1"
 
-#: ../src/control/jobs/ImageExport.cpp:146
+#: ../src/control/jobs/ImageExport.cpp:141
 msgid "Error save image #2"
 msgstr "Ошибка сохранения изображения #2"
 
@@ -509,7 +509,7 @@ msgstr "Лог-файл ошибок не может быть удалён. Вы
 msgid "Export PDF"
 msgstr "Экспорт PDF"
 
-#: ../src/util/Util.cpp:141 ../src/util/Util.cpp:158
+#: ../src/util/Util.cpp:142 ../src/util/Util.cpp:159
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Файл не может быть открыт. Вы должны сделать это вручную:\n"
@@ -664,7 +664,7 @@ msgstr "Голубой"
 msgid "Light Green"
 msgstr "Салатный"
 
-#: ../src/gui/PageView.cpp:821
+#: ../src/gui/PageView.cpp:822
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:87
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:18
 msgid "Loading..."
@@ -780,7 +780,7 @@ msgstr "Оранжевый"
 msgid "PDF Export"
 msgstr "Экспорт в PDF"
 
-#: ../src/gui/MainWindow.cpp:742
+#: ../src/gui/MainWindow.cpp:741
 msgid "PDF Page {1}"
 msgstr "PDF страница {1}"
 
@@ -826,11 +826,11 @@ msgstr "Предпросмотр страницы"
 msgid "Page background changed"
 msgstr "Фон страницы изменен"
 
-#: ../src/undo/InsertDeletePageUndoAction.cpp:113
+#: ../src/undo/InsertDeletePageUndoAction.cpp:111
 msgid "Page deleted"
 msgstr "Страница удалена"
 
-#: ../src/undo/InsertDeletePageUndoAction.cpp:109
+#: ../src/undo/InsertDeletePageUndoAction.cpp:107
 msgid "Page inserted"
 msgstr "Страница вставлена"
 
@@ -912,7 +912,7 @@ msgstr "Инструмент {1} удалён с панели инструмен
 msgid "Replace"
 msgstr "Заменить"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1280
+#: ../src/control/xojfile/LoadHandler.cpp:1278
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Запрошенный временный файл не найден для вложения {1}"
 
@@ -920,7 +920,7 @@ msgstr "Запрошенный временный файл не найден д�
 msgid "Restore file"
 msgstr "Восстановить файл"
 
-#: ../src/undo/RotateUndoAction.cpp:61
+#: ../src/undo/RotateUndoAction.cpp:64
 msgid "Rotation"
 msgstr "Поворот"
 
@@ -966,7 +966,7 @@ msgstr "Сохранить файл"
 msgid "Save file error: {1}"
 msgstr "Ошибка сохранения файла: {1}"
 
-#: ../src/undo/ScaleUndoAction.cpp:60
+#: ../src/undo/ScaleUndoAction.cpp:63
 msgid "Scale"
 msgstr "Маштабирование"
 
@@ -1011,7 +1011,7 @@ msgid "Select background color"
 msgstr "Выбрать цвет фона"
 
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:47
-#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:153
+#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:149
 msgid "Select color"
 msgstr "Выбрать цвет"
 
@@ -1205,7 +1205,7 @@ msgstr "Панели инструментов"
 msgid "Trying to emergency save the current open document…"
 msgstr "Попытка аварийного сохранения текущего открытого документа…"
 
-#: ../src/gui/PageView.cpp:422
+#: ../src/gui/PageView.cpp:424
 msgid "Unable to play audio recording {1}"
 msgstr ""
 
@@ -1218,15 +1218,15 @@ msgstr "Отменить"
 msgid "Undo: "
 msgstr "Отменить: "
 
-#: ../src/control/xojfile/LoadHandler.cpp:337
+#: ../src/control/xojfile/LoadHandler.cpp:335
 msgid "Unexpected root tag: {1}"
 msgstr "Неожиданный корневой тег: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:368
+#: ../src/control/xojfile/LoadHandler.cpp:366
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Неожиданный тег в документе: «{1}»"
 
-#: ../src/control/xojfile/LoadHandler.cpp:611
+#: ../src/control/xojfile/LoadHandler.cpp:609
 msgid "Unknown background type: {1}"
 msgstr "Неизвестный тип фона: {1}"
 
@@ -1234,19 +1234,19 @@ msgstr "Неизвестный тип фона: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Неизвестное значение цвета «{1}»"
 
-#: ../src/control/xojfile/LoadHandler.cpp:548
+#: ../src/control/xojfile/LoadHandler.cpp:546
 msgid "Unknown domain type: {1}"
 msgstr "Неизвестный тип домена: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:268
+#: ../src/control/xojfile/LoadHandler.cpp:266
 msgid "Unknown parser error"
 msgstr "Неизвестная ошибка парсера"
 
-#: ../src/control/xojfile/LoadHandler.cpp:463
+#: ../src/control/xojfile/LoadHandler.cpp:461
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Неизвестный тип pixmap::domain: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:728
+#: ../src/control/xojfile/LoadHandler.cpp:726
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Неизвестный тип черты: \"{1}\", предполагается, что это перо"
 
@@ -1283,15 +1283,15 @@ msgstr "С PDF фоном"
 msgid "Write text"
 msgstr "Написать текст"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1108
+#: ../src/control/xojfile/LoadHandler.cpp:1106
 msgid "Wrong count of points ({1})"
 msgstr "Неправильное количество точек ({1})"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1122
+#: ../src/control/xojfile/LoadHandler.cpp:1120
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Неправильное количество точек, получено {1}, ожидается {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:263
+#: ../src/control/xojfile/LoadHandler.cpp:261
 msgid "XML Parser error: {1}"
 msgstr "Ошибка XML парсера: {1}"
 
@@ -1321,7 +1321,7 @@ msgstr "Xournal++ шаблон"
 msgid "Yellow"
 msgstr "Жёлтый"
 
-#: ../src/control/PageBackgroundChangeController.cpp:209
+#: ../src/control/PageBackgroundChangeController.cpp:208
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr "У вас нет PDF страниц для выбора. Отмена операции.\n"
@@ -1331,7 +1331,7 @@ msgstr "У вас нет PDF страниц для выбора. Отмена о
 msgid "You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker."
 msgstr "Вы используете ветку {1}/{2}. «Отправить отчёт об ошибке» перенаправит вас на баг трекер этого репозитория."
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:83
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:84
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
@@ -1469,7 +1469,7 @@ msgstr "trackpoint"
 msgid "whiteout"
 msgstr "забеливание"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1121
+#: ../src/control/xojfile/LoadHandler.cpp:1119
 msgid "xoj-File: {1}"
 msgstr "Файл xoj: {1}"
 
@@ -1505,7 +1505,7 @@ msgstr "xoj-preview-extractor: не удалось открыть файл вы�
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: успешно извлечено"
 
-#: ../src/util/Util.cpp:110
+#: ../src/util/Util.cpp:111
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
