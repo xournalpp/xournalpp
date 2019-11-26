@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-21 01:13+0000\n"
-"PO-Revision-Date: 2019-11-26 09:05\n"
+"PO-Revision-Date: 2019-11-26 09:29\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -86,7 +86,7 @@ msgstr "Attribut \"{1}\" konnte nicht als Fließkommazahl ausgelesen werden, der
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:134
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr "Attribut \"{1}\" konnte nicht als Fließkommazahl ausgelesen werden, der Wert ist Null"
+msgstr "Attribut \"{1}\" konnte nicht als Fließkommazahl ausgelesen werden, der Wert ist NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:162
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:185
@@ -1865,7 +1865,7 @@ msgstr "Standard Dateiname"
 
 #: ../ui/settings.glade:3955
 msgid "Default Seek Time (in seconds)"
-msgstr ""
+msgstr "Standard Suchzeit (in Sekunden)"
 
 #: ../ui/settings.glade:386
 msgid "Default name: "
