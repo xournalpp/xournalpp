@@ -659,7 +659,7 @@ auto MainWindow::getToolbarName(GtkToolbar* toolbar) -> const char*
 {
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++)
 	{
-		if ((void*) this->toolbarWidgets[i] == (void*) toolbar)
+		if (static_cast<void*>(this->toolbarWidgets[i]) == static_cast<void*>(toolbar))
 		{
 			return TOOLBAR_DEFINITIONS[i].propName;
 		}

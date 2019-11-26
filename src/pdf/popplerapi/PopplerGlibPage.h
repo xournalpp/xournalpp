@@ -22,13 +22,13 @@ public:
 	PopplerGlibPage(PopplerPage* page);
 	PopplerGlibPage(const PopplerGlibPage& other);
 	virtual ~PopplerGlibPage();
-	void operator=(const PopplerGlibPage& other);
+	PopplerGlibPage& operator=(const PopplerGlibPage& other);
 
 public:
 	virtual double getWidth();
 	virtual double getHeight();
 
-	virtual void render(cairo_t* cr, bool forPrinting = false);
+	virtual void render(cairo_t* cr, bool forPrinting = false);  // NOLINT(google-default-arguments)
 
 	virtual vector<XojPdfRectangle> findText(string& text);
 

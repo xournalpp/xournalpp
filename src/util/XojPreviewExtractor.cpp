@@ -15,7 +15,7 @@ const char* TAG_PAGE_NAME = "page";
 const int TAG_PAGE_NAME_LEN = strlen(TAG_PAGE_NAME);
 const char* TAG_PREVIEW_END_NAME = "/preview";
 const int TAG_PREVIEW_END_NAME_LEN = strlen(TAG_PREVIEW_END_NAME);
-#define BUF_SIZE 8192
+constexpr auto BUF_SIZE = 8192;
 
 XojPreviewExtractor::XojPreviewExtractor() = default;
 

@@ -31,7 +31,7 @@ auto PortAudioConsumer::getOutputDevices() -> std::list<DeviceInfo>
 	return deviceList;
 }
 
-auto PortAudioConsumer::getSelectedOutputDevice() -> const DeviceInfo
+auto PortAudioConsumer::getSelectedOutputDevice() -> DeviceInfo
 {
 	try
 	{

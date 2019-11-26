@@ -48,7 +48,7 @@ void DocumentView::applyColor(cairo_t* cr, Stroke* s)
 	}
 	else
 	{
-		applyColor(cr, (Element*) s);
+		applyColor(cr, static_cast<Element*>(s));
 	}
 }
 

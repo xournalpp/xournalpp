@@ -12,7 +12,7 @@ void HexObjectEncoding::addData(const void* data, int len)
 
 	for (int i = 0; i < len; i++)
 	{
-		int x = ((unsigned char*) data)[i];
+		int x = static_cast<uint8_t const*>(data)[i];
 		sprintf(&buffer[i * 2], "%02x", x);
 	}
 

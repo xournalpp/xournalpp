@@ -2,21 +2,19 @@
 
 #include <Rectangle.h>
 
-UndoAction::UndoAction(const char* className)
- : className(className)
+UndoAction::UndoAction(std::string className)
+ : className(std::move(className))
 {
 }
 
-UndoAction::~UndoAction() = default;
-
-auto UndoAction::getPages() -> vector<PageRef>
+auto UndoAction::getPages() -> std::vector<PageRef>
 {
-	vector<PageRef> pages;
+	std::vector<PageRef> pages;
 	pages.push_back(this->page);
 	return pages;
 }
 
-auto UndoAction::getClassName() const -> const char*
+auto UndoAction::getClassName() const -> std::string const&
 {
 	return this->className;
 }

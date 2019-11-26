@@ -52,7 +52,7 @@ auto gtk_xournal_get_type(void) -> GType
 		                                           // instance init
 		                                           reinterpret_cast<GInstanceInitFunc>(gtk_xournal_init),
 		                                           // value table
-		                                           (const GTypeValueTable*) nullptr};
+		                                           nullptr};
 
 		gtk_xournal_type =
 		        g_type_register_static(GTK_TYPE_WIDGET, "GtkXournal", &gtk_xournal_info, static_cast<GTypeFlags>(0));

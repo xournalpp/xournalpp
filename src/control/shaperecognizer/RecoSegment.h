@@ -8,23 +8,15 @@
  *
  * @license GNU GPLv2 or later
  */
-
 #pragma once
 
 #include "model/Point.h"
 
-#include <XournalType.h>
-
 class Stroke;
 class Inertia;
 
-class RecoSegment
+struct RecoSegment final
 {
-public:
-	RecoSegment();
-	virtual ~RecoSegment();
-
-public:
 	Point calcEdgeIsect(RecoSegment* r2) const;
 
 	/**
@@ -32,20 +24,19 @@ public:
 	 */
 	void calcSegmentGeometry(const Point* pt, int start, int end, Inertia* s);
 
-public:
-	Stroke* stroke;
-	int startpt;
-	int endpt;
+	Stroke* stroke{nullptr};
+	int startpt{0};
+	int endpt{0};
 
-	double xcenter;
-	double ycenter;
-	double angle;
-	double radius;
+	double xcenter{0};
+	double ycenter{0};
+	double angle{0};
+	double radius{0};
 
-	double x1;
-	double y1;
-	double x2;
-	double y2;
+	double x1{0};
+	double y1{0};
+	double x2{0};
+	double y2{0};
 
-	bool reversed;
+	bool reversed{};
 };

@@ -4,8 +4,10 @@ GtkColorWrapper::GtkColorWrapper() : red(0), green(0), blue(0)
 {
 }
 
-GtkColorWrapper::GtkColorWrapper(const int color)
- : red((color >> 8) & 0xff00), green(color & 0xff00), blue(color << 8)
+GtkColorWrapper::GtkColorWrapper(const uint32_t color)
+ : red((color >> 8U) & 0xff00U)
+ , green(color & 0xff00U)
+ , blue(color << 8U)
 {
 }
 

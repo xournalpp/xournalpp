@@ -9,13 +9,25 @@
 #include <algorithm>
 #include <cinttypes>
 
-#ifdef UNDO_TRACE
 
-void printAction(UndoAction* action)
+template <typename T>
+T* GetPtr(T* ptr)
+{
+	return ptr;
+}
+
+template <typename T>
+T* GetPtr(std::unique_ptr<T> ptr)
+{
+	return ptr.get();
+}
+
+template <typename PtrType>
+inline void printAction(PtrType& action)
 {
 	if (action)
 	{
-		g_message("%" PRIu64 " / %s", (uint64_t) action, action->getClassName());
+		g_message("%" PRIu64 " / %s", static_cast<uint64_t>(GetPtr(action)), action->getClassName());
 	}
 	else
 	{
@@ -23,31 +35,36 @@ void printAction(UndoAction* action)
 	}
 }
 
-void printUndoList(GList* list)
+template <typename PtrType>
+inline void printUndoList(std::deque<PtrType> list)
 {
-	for (GList* l = list; l != nullptr; l = l->next)
+	for (auto&& action: list)
 	{
-		UndoAction* action = (UndoAction*) l->data;
 		printAction(action);
 	}
 }
 
-#endif  // UNDO_TRACE
-
 #ifdef UNDO_TRACE
-#	define PRINTCONTENTS()               \
-		g_message("redoList");            \
-		printUndoList(this->redoList);    \
-		g_message("undoList");            \
-		printUndoList(this->undoList);    \
-		g_message("savedUndo");           \
-		if (this->savedUndo)              \
-		{                                 \
-			printAction(this->savedUndo); \
-		}
+constexpr bool UNDO_TRACE = true;
 #else
-#	define PRINTCONTENTS() (void) 0
-#endif  // UNDO_TRACE
+constexpr bool UNDO_TRACE = false;
+#endif
+
+void UndoRedoHandler::printContents()
+{
+	if constexpr (UNDO_TRACE)  //NOLINT
+	{
+		g_message("redoList");             //NOLINT
+		printUndoList(this->redoList);     //NOLINT
+		g_message("undoList");             //NOLINT
+		printUndoList(this->undoList);     //NOLINT
+		g_message("savedUndo");            //NOLINT
+		if (this->savedUndo)               //NOLINT
+		{                                  //NOLINT
+			printAction(this->savedUndo);  //NOLINT
+		}                                  //NOLINT
+	}
+}
 
 UndoRedoHandler::UndoRedoHandler(Control* control)
  : control(control)
@@ -76,7 +93,7 @@ void UndoRedoHandler::clearContents()
 	this->savedUndo = nullptr;
 	this->autosavedUndo = nullptr;
 
-	PRINTCONTENTS();
+	printContents();
 }
 
 void UndoRedoHandler::clearRedo()
@@ -88,7 +105,7 @@ void UndoRedoHandler::clearRedo()
 	}
 #endif
 	redoList.clear();
-	PRINTCONTENTS();
+	printContents();
 }
 
 void UndoRedoHandler::undo()
@@ -119,7 +136,7 @@ void UndoRedoHandler::undo()
 
 	fireUpdateUndoRedoButtons(undoAction.getPages());
 
-	PRINTCONTENTS();
+	printContents();
 }
 
 void UndoRedoHandler::redo()
@@ -151,7 +168,7 @@ void UndoRedoHandler::redo()
 
 	fireUpdateUndoRedoButtons(redoAction.getPages());
 
-	PRINTCONTENTS();
+	printContents();
 }
 
 auto UndoRedoHandler::canUndo() -> bool
@@ -178,7 +195,7 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action)
 	clearRedo();
 	fireUpdateUndoRedoButtons(this->undoList.back()->getPages());
 
-	PRINTCONTENTS();
+	printContents();
 }
 
 void UndoRedoHandler::addUndoActionBefore(UndoActionPtr action, UndoAction* before)
@@ -196,7 +213,7 @@ void UndoRedoHandler::addUndoActionBefore(UndoActionPtr action, UndoAction* befo
 	clearRedo();
 	fireUpdateUndoRedoButtons(this->undoList.back()->getPages());
 
-	PRINTCONTENTS();
+	printContents();
 }
 
 auto UndoRedoHandler::removeUndoAction(UndoAction* action) -> bool
@@ -297,22 +314,4 @@ void UndoRedoHandler::documentAutosaved()
 void UndoRedoHandler::documentSaved()
 {
 	this->savedUndo = this->undoList.empty() ? nullptr : this->undoList.back().get();
-}
-
-auto UndoRedoHandler::getUndoStackTopTypeName() -> const char*
-{
-	if (this->undoList.empty())
-	{
-		return nullptr;
-	}
-	return this->undoList.back()->getClassName();
-}
-
-auto UndoRedoHandler::getRedoStackTopTypeName() -> const char*
-{
-	if (this->redoList.empty())
-	{
-		return nullptr;
-	}
-	return this->redoList.back()->getClassName();
 }

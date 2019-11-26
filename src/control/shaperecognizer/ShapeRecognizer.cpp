@@ -26,12 +26,7 @@ ShapeRecognizer::~ShapeRecognizer()
 void ShapeRecognizer::resetRecognizer()
 {
 	RDEBUG("reset");
-
-	for (auto& i: this->queue)
-	{
-		i.stroke = nullptr;
-	}
-
+	this->queue = {};
 	this->queueLength = 0;
 }
 
@@ -150,11 +145,11 @@ auto ShapeRecognizer::tryArrow() -> Stroke*
 		return nullptr;
 	}
 
-	double x1 = NAN;
-	double y1 = NAN;
-	double x2 = NAN;
-	double y2 = NAN;
-	double angle = NAN;
+	double x1{};
+	double y1{};
+	double x2{};
+	double y2{};
+	double angle{};
 
 	if (rev[1])
 	{
@@ -321,8 +316,8 @@ auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsi
 		return 0; // failed!
 	}
 
-	double det1 = NAN;
-	double det2 = NAN;
+	double det1{};
+	double det2{};
 	Inertia s1;
 	Inertia s2;
 
@@ -458,67 +453,6 @@ void ShapeRecognizer::optimizePolygonal(const Point* pt, int nsides, int* breaks
 	}
 }
 
-auto ShapeRecognizer::tryClosedPolygon(int nsides) -> Stroke*
-{
-	//to eliminate bug #52, remove this until it's perfected
-	return nullptr;
-
-	/*
-	RecoSegment* r1 = nullptr;
-	RecoSegment* r2 = nullptr;
-
-	// first, we need whole strokes to combine to nsides segments...
-	if (this->queueLength < nsides)
-	{
-		return nullptr;
-	}
-
-	RecoSegment* rs = &this->queue[this->queueLength - nsides];
-	if (rs->startpt != 0)
-	{
-		return nullptr;
-	}
-
-	// check vertices roughly match
-	for (int i = 0; i < nsides; i++)
-	{
-		r1 = rs + i;
-		r2 = rs + (i + 1) % nsides;
-		// test if r1 points away from r2 rather than towards it
-		Point pt = r1->calcEdgeIsect(r2);
-		r1->reversed = (hypot(pt.x - r1->x1, pt.y - r1->y1) < hypot(pt.x - r1->x2, pt.y - r1->y2));
-	}
-
-	for (int i = 0; i < nsides; i++)
-	{
-		r1 = rs + i;
-		r2 = rs + (i + 1) % nsides;
-		Point pt = r1->calcEdgeIsect(r2);
-		double dist = hypot((r1->reversed ? r1->x1 : r1->x2) - pt.x,
-							(r1->reversed ? r1->y1 : r1->y2) - pt.y)
-								+ hypot((r2->reversed ? r2->x2 : r2->x1) - pt.x,
-							(r2->reversed ? r2->y2 : r2->y1) - pt.y);
-		if (dist > POLYGON_LINEAR_TOLERANCE * (r1->radius + r2->radius))
-		{
-			return nullptr;
-		}
-	}
-
-	Stroke* s = new Stroke();
-	s->applyStyleFrom(this->stroke);
-
-	for (int i = 0; i < nsides; i++)
-	{
-		Point p = rs[i].calcEdgeIsect(&rs[(i + 1) % nsides]);
-		s->addPoint(p);
-	}
-
-	s->addPoint(s->getPoint(0));
-
-	return s;
-*/
-}
-
 /**
  * The main pattern recognition function
  */
@@ -558,7 +492,7 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
 				i++;
 			}
 			queueLength -= i;
-			g_memmove(queue, queue + i, queueLength * sizeof(RecoSegment));
+			std::move(std::next(begin(queue), i), std::next(begin(queue), i + queueLength), begin(queue));
 		}
 
 		RDEBUG("Queue now has %i + %i edges", this->queueLength, n);

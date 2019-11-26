@@ -1,4 +1,6 @@
-Checks: "*,\
+Checks: "cppcoreguidelines*,\
+-cppcoreguidelines-pro-bounds-pointer-arithmetic,\
+-cppcoreguidelines-pro-type-cstyle-cast,\
 -readability-identifier-naming,\
 -misc-unused-parameters,\
 -cppcoreguidelines-pro-type-union-access,\

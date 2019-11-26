@@ -17,6 +17,7 @@
 #include <deque>
 #include <stack>
 #include <vector>
+#include <memory>
 
 class Control;
 
@@ -60,11 +61,9 @@ public:
 	void documentAutosaved();
 	void documentSaved();
 
-	const char* getUndoStackTopTypeName();
-	const char* getRedoStackTopTypeName();
-
 private:
 	void clearRedo();
+	void printContents();
 
 private:
 	std::deque<UndoActionPtr> undoList;

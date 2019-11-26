@@ -155,33 +155,32 @@ auto f_pixbuf_to_cairo_surface(GdkPixbuf* pixbuf) -> cairo_surface_t*
 			guchar* end = p + 4 * width;
 			guint t1 = 0, t2 = 0, t3 = 0;
 
-#define MULT(d, c, a, t)               \
-	G_STMT_START                       \
-	{                                  \
-		(t) = (c) * (a) + 0x7f;        \
-		(d) = (((t) >> 8) + (t)) >> 8; \
-	}                                  \
-	G_STMT_END
+			auto MULT = [](auto& d, auto c, auto a, auto& t) {
+				t = c * a + 0x7f;
+				d = ((t >> 8U) + t) >> 8U;
+			};
 
 			while (p < end)
 			{
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-				MULT(q[0], p[2], p[3], t1);
-				MULT(q[1], p[1], p[3], t2);
-				MULT(q[2], p[0], p[3], t3);
-				q[3] = p[3];
-#else
-				q[0] = p[3];
-				MULT(q[1], p[0], p[3], t1);
-				MULT(q[2], p[1], p[3], t2);
-				MULT(q[3], p[2], p[3], t3);
-#endif
+				if constexpr (G_BYTE_ORDER == G_LITTLE_ENDIAN)
+				{
+					MULT(q[0], p[2], p[3], t1);
+					MULT(q[1], p[1], p[3], t2);
+					MULT(q[2], p[0], p[3], t3);
+					q[3] = p[3];
+				}
+				else
+				{
+					q[0] = p[3];
+					MULT(q[1], p[0], p[3], t1);
+					MULT(q[2], p[1], p[3], t2);
+					MULT(q[3], p[2], p[3], t3);
+				}
 
 				p += 4;
 				q += 4;
 			}
 
-#undef MULT
 		}
 
 		gdk_pixels += gdk_rowstride;
@@ -245,9 +244,9 @@ convert_alpha(guchar* dest_data, int dest_stride, guchar* src_data, int src_stri
 			}
 			else
 			{
-				dest_data[x * 4 + 0] = (((src[x] & 0xff0000) >> 16) * 255 + alpha / 2) / alpha;
-				dest_data[x * 4 + 1] = (((src[x] & 0x00ff00) >>  8) * 255 + alpha / 2) / alpha;
-				dest_data[x * 4 + 2] = (((src[x] & 0x0000ff) >>  0) * 255 + alpha / 2) / alpha;
+				dest_data[x * 4 + 0] = (((src[x] & 0xff0000U) >> 16U) * 255 + alpha / 2) / alpha;
+				dest_data[x * 4 + 1] = (((src[x] & 0x00ff00U) >> 8U) * 255 + alpha / 2) / alpha;
+				dest_data[x * 4 + 2] = (((src[x] & 0x0000ffU) >> 0U) * 255 + alpha / 2) / alpha;
 			}
 			dest_data[x * 4 + 3] = alpha;
 		}
@@ -269,8 +268,8 @@ convert_no_alpha(guchar* dest_data, int dest_stride, guchar* src_data, int src_s
 
 		for (int x = 0; x < width; x++)
 		{
-			dest_data[x * 3 + 0] = src[x] >> 16;
-			dest_data[x * 3 + 1] = src[x] >>  8;
+			dest_data[x * 3 + 0] = src[x] >> 16U;
+			dest_data[x * 3 + 1] = src[x] >> 8U;
 			dest_data[x * 3 + 2] = src[x];
 		}
 
