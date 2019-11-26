@@ -69,7 +69,7 @@ private:
 	/**
 	 * Load the metadata list (sorted)
 	 */
-	vector<MetadataEntry> loadList();
+	static vector<MetadataEntry> loadList();
 
 
 private:

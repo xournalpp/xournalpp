@@ -311,3 +311,5 @@ CheckOptions:
     value:           '2'
   - key:             misc-assert-side-effect.AssertMacros
     value:           assert
+  - key:             cppcoreguidelines-macro-usage.AllowedRegexp
+    value:           DEBUG*|GTK_*|GDK_*|G_*|RELEASE*|assert|g_assert*
