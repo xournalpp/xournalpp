@@ -113,41 +113,30 @@ void InputDevice::updateType(GdkInputSource newSource)
 
 auto InputDevice::getType() const -> string
 {
-	if (source == GDK_SOURCE_MOUSE)
+	switch (source)
 	{
+	case GDK_SOURCE_MOUSE:
 		return _("mouse");
-	}
-	if (source == GDK_SOURCE_PEN)
-	{
+	case GDK_SOURCE_PEN:
 		return _("pen");
-	}
-	if (source == GDK_SOURCE_ERASER)
-	{
+	case GDK_SOURCE_ERASER:
 		return _("eraser");
-	}
-	if (source == GDK_SOURCE_CURSOR)
-	{
+	case GDK_SOURCE_CURSOR:
 		return _("cursor");
-	}
-	else if (source == GDK_SOURCE_KEYBOARD)
-	{
+	case GDK_SOURCE_KEYBOARD:
 		// not used: filtered above
 		return _("keyboard");
-	}
-	else if (source == GDK_SOURCE_TOUCHSCREEN)
-	{
+	case GDK_SOURCE_TOUCHSCREEN:
 		return _("touchscreen");
-	}
-	else if (source == GDK_SOURCE_TOUCHPAD)
-	{
+	case GDK_SOURCE_TOUCHPAD:
 		return _("touchpad");
-	}
 #if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
-	else if (source == GDK_SOURCE_TRACKPOINT)
-	{
+	case GDK_SOURCE_TRACKPOINT:
 		return _("trackpoint");
-	}
+	case GDK_SOURCE_TABLET_PAD:
+		return _("tablet pad");
 #endif
+	}
 
 	return "";
 }

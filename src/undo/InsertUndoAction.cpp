@@ -29,24 +29,17 @@ InsertUndoAction::~InsertUndoAction()
 
 auto InsertUndoAction::getText() -> string
 {
-	if (element->getType() == ELEMENT_STROKE)
+	switch (element->getType())
 	{
+	case ELEMENT_STROKE:
 		return _("Draw stroke");
-	}
-	if (element->getType() == ELEMENT_TEXT)
-	{
+	case ELEMENT_TEXT:
 		return _("Write text");
-	}
-	if (element->getType() == ELEMENT_IMAGE)
-	{
+	case ELEMENT_IMAGE:
 		return _("Insert image");
-	}
-	else if (element->getType() == ELEMENT_TEXIMAGE)
-	{
+	case ELEMENT_TEXIMAGE:
 		return _("Insert latex");
-	}
-	else
-	{
+	default:
 		return "";
 	}
 }

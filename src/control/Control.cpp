@@ -2375,7 +2375,7 @@ void Control::fileLoaded(int scrollToPage)
 
 	if (!file.isEmpty())
 	{
-		MetadataEntry md = metadata->getForFile(file.str());
+		MetadataEntry md = MetadataManager::getForFile(file.str());
 		if (!md.valid)
 		{
 			md.zoom = -1;
@@ -2482,7 +2482,7 @@ auto Control::annotatePdf(Path filename, bool attachPdf, bool attachToDocument) 
 		this->doc->lock();
 		Path file = this->doc->getEvMetadataFilename();
 		this->doc->unlock();
-		MetadataEntry md = metadata->getForFile(file.str());
+		MetadataEntry md = MetadataManager::getForFile(file.str());
 		loadMetadata(md);
 	}
 	else

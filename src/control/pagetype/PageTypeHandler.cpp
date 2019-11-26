@@ -126,27 +126,26 @@ auto PageTypeHandler::getPageTypeFormatForString(const string& format) -> PageTy
 	{
 		return PageTypeFormat::Staves;
 	}
-	else if (format == "graph")
+	if (format == "graph")
 	{
 		return PageTypeFormat::Graph;
 	}
-	else if (format == "dotted")
+	if (format == "dotted")
 	{
 		return PageTypeFormat::Dotted;
 	}
-	else if (format == ":pdf")
+	if (format == ":pdf")
 	{
 		return PageTypeFormat::Pdf;
 	}
-	else if (format == ":image")
+	if (format == ":image")
 	{
 		return PageTypeFormat::Image;
 	}
-	else if (format == ":copy")
+	if (format == ":copy")
 	{
 		return PageTypeFormat::Copy;
 	}
-
 	return PageTypeFormat::Ruled;
 }
 
@@ -173,5 +172,4 @@ auto PageTypeHandler::getStringForPageTypeFormat(const PageTypeFormat& format) -
 	case PageTypeFormat::Copy:
 		return ":copy";
 	}
-	return "lined_vline";
 }
