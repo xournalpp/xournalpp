@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 01:13+0000\n"
-"PO-Revision-Date: 2019-11-21 01:16\n"
+"POT-Creation-Date: 2019-11-26 11:49+0000\n"
+"PO-Revision-Date: 2019-11-26 11:50\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -28,12 +28,12 @@ msgid "\n"
 msgstr "\n"
 "将尝试在不使用此文件的情况下运行。"
 
-#: ../src/gui/MainWindow.cpp:744
+#: ../src/gui/MainWindow.cpp:743
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr "页，共{1}页"
 
-#: ../src/control/settings/Settings.cpp:103
+#: ../src/control/settings/Settings.cpp:105
 msgid "%F-Note-%H-%M"
 msgstr "%F-Note-%H-%M"
 
@@ -80,29 +80,29 @@ msgstr "应用到当前页面"
 msgid "Attach file to the journal"
 msgstr "将文件附加到日记"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:142
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:141
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
 msgstr "变量\"{1\"}不能为浮点数，其值为\"{2}\""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:134
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:133
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
 msgstr "变量\"{1}\"不能为浮点数，其值为NULL"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:162
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:185
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:161
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:184
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
 msgstr "变量\"{1\"}不能为整数，其值为\"{2}\""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:154
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:153
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
 msgstr "变量\"{1}\"不能为整数，其值为NULL"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:207
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:231
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:206
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:230
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "属性 \"{1}\" 无法被解析为 size_t, 其值为 \"{2}\""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:199
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:198
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
 msgstr ""
 
@@ -174,7 +174,7 @@ msgstr "改变笔划粗细"
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
 msgstr "色彩\"{1}\"未定义！"
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:258
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:259
 msgid "Contents"
 msgstr "内容"
 
@@ -196,7 +196,7 @@ msgstr "拷贝一页"
 msgid "Could not create backup! (The file was created from an older Xournal version)"
 msgstr "未能产生备份文件！(此文件应为老版本Xournal所建)"
 
-#: ../src/util/Util.cpp:120
+#: ../src/util/Util.cpp:121
 msgid "Could not create folder: {1}"
 msgstr "无法创建文件夹：{1}"
 
@@ -232,24 +232,24 @@ msgstr "无法加载 LaTeX PDF 文件: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "无法加载 pagempempui.ini 文件"
 
-#: ../src/control/xojfile/LoadHandler.cpp:948
+#: ../src/control/xojfile/LoadHandler.cpp:946
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "无法打开附件: {1}. 错误消息: 无法读取文件"
 
-#: ../src/control/xojfile/LoadHandler.cpp:957
+#: ../src/control/xojfile/LoadHandler.cpp:955
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "无法打开附件: {1}. 错误消息: 无法写入文件"
 
-#: ../src/control/xojfile/LoadHandler.cpp:927
-#: ../src/control/xojfile/LoadHandler.cpp:1240
-#: ../src/control/xojfile/LoadHandler.cpp:1260
+#: ../src/control/xojfile/LoadHandler.cpp:925
+#: ../src/control/xojfile/LoadHandler.cpp:1238
+#: ../src/control/xojfile/LoadHandler.cpp:1258
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "无法打开附件: {1}. 错误消息: 没有提供有效的文件大小"
 
-#: ../src/control/xojfile/LoadHandler.cpp:917
-#: ../src/control/xojfile/LoadHandler.cpp:935
-#: ../src/control/xojfile/LoadHandler.cpp:1231
-#: ../src/control/xojfile/LoadHandler.cpp:1248
+#: ../src/control/xojfile/LoadHandler.cpp:915
+#: ../src/control/xojfile/LoadHandler.cpp:933
+#: ../src/control/xojfile/LoadHandler.cpp:1229
+#: ../src/control/xojfile/LoadHandler.cpp:1246
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "无法打开附件: {1}. 错误消息: {2}"
 
@@ -269,8 +269,8 @@ msgid "Could not parse general toolbar.ini file: {1}\n"
 msgstr "未能解析一般文件toolbar.ini: {1}\n"
 "工具条将不可用"
 
-#: ../src/control/xojfile/LoadHandler.cpp:418
-#: ../src/control/xojfile/LoadHandler.cpp:446
+#: ../src/control/xojfile/LoadHandler.cpp:416
+#: ../src/control/xojfile/LoadHandler.cpp:444
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "未能读入图像：{1}。错误提示为：{2}"
 
@@ -383,11 +383,11 @@ msgstr "请勿覆盖背景 PDF！这将造成故障！"
 msgid "Document file was removed."
 msgstr "文档已删除。"
 
-#: ../src/control/xojfile/LoadHandler.cpp:282
+#: ../src/control/xojfile/LoadHandler.cpp:280
 msgid "Document is corrupted (no pages found in file)"
 msgstr "文档已损坏 (文件中没有找到页面)"
 
-#: ../src/control/xojfile/LoadHandler.cpp:277
+#: ../src/control/xojfile/LoadHandler.cpp:275
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "文档文件不完整"
 
@@ -475,20 +475,20 @@ msgstr "打开文件\"{1}\"出错"
 msgid "Error opening file: \"{1}\""
 msgstr "打开文件\"{1}\"出错"
 
-#: ../src/control/xojfile/LoadHandler.cpp:539
-#: ../src/control/xojfile/LoadHandler.cpp:566
+#: ../src/control/xojfile/LoadHandler.cpp:537
+#: ../src/control/xojfile/LoadHandler.cpp:564
 msgid "Error reading PDF: {1}"
 msgstr "读入PDF出错：{1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:633
+#: ../src/control/xojfile/LoadHandler.cpp:631
 msgid "Error reading width of a stroke: {1}"
 msgstr "读入笔划粗细出错：{1}"
 
-#: ../src/control/jobs/ImageExport.cpp:129
+#: ../src/control/jobs/ImageExport.cpp:124
 msgid "Error save image #1"
 msgstr "保存图像 #1 时出错"
 
-#: ../src/control/jobs/ImageExport.cpp:146
+#: ../src/control/jobs/ImageExport.cpp:141
 msgid "Error save image #2"
 msgstr "保存图像 #2 时出错"
 
@@ -510,7 +510,7 @@ msgstr "错误日志未能删除，请手工处理。\n"
 msgid "Export PDF"
 msgstr "输出为PDF"
 
-#: ../src/util/Util.cpp:141 ../src/util/Util.cpp:158
+#: ../src/util/Util.cpp:142 ../src/util/Util.cpp:159
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "未能打开文件，请手动操作：\n"
@@ -665,7 +665,7 @@ msgstr "浅蓝"
 msgid "Light Green"
 msgstr "浅绿"
 
-#: ../src/gui/PageView.cpp:821
+#: ../src/gui/PageView.cpp:822
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:87
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:18
 msgid "Loading..."
@@ -781,7 +781,7 @@ msgstr "橙色"
 msgid "PDF Export"
 msgstr "输出为PDF"
 
-#: ../src/gui/MainWindow.cpp:742
+#: ../src/gui/MainWindow.cpp:741
 msgid "PDF Page {1}"
 msgstr "PDF页码{1}"
 
@@ -827,11 +827,11 @@ msgstr "页面预览"
 msgid "Page background changed"
 msgstr "页面背景改变"
 
-#: ../src/undo/InsertDeletePageUndoAction.cpp:113
+#: ../src/undo/InsertDeletePageUndoAction.cpp:111
 msgid "Page deleted"
 msgstr "页面删除"
 
-#: ../src/undo/InsertDeletePageUndoAction.cpp:109
+#: ../src/undo/InsertDeletePageUndoAction.cpp:107
 msgid "Page inserted"
 msgstr "页面插入"
 
@@ -913,7 +913,7 @@ msgstr ""
 msgid "Replace"
 msgstr "替换"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1280
+#: ../src/control/xojfile/LoadHandler.cpp:1278
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
@@ -921,7 +921,7 @@ msgstr ""
 msgid "Restore file"
 msgstr "还原文件"
 
-#: ../src/undo/RotateUndoAction.cpp:61
+#: ../src/undo/RotateUndoAction.cpp:64
 msgid "Rotation"
 msgstr "旋转"
 
@@ -967,7 +967,7 @@ msgstr "保存文件"
 msgid "Save file error: {1}"
 msgstr "保存文件错误: {1}"
 
-#: ../src/undo/ScaleUndoAction.cpp:60
+#: ../src/undo/ScaleUndoAction.cpp:63
 msgid "Scale"
 msgstr "缩放"
 
@@ -1012,7 +1012,7 @@ msgid "Select background color"
 msgstr "选择背景颜色"
 
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:47
-#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:153
+#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:149
 msgid "Select color"
 msgstr "选色"
 
@@ -1206,7 +1206,7 @@ msgstr "工具条"
 msgid "Trying to emergency save the current open document…"
 msgstr "尝试紧急保存当前打开的文档…"
 
-#: ../src/gui/PageView.cpp:422
+#: ../src/gui/PageView.cpp:424
 msgid "Unable to play audio recording {1}"
 msgstr ""
 
@@ -1219,15 +1219,15 @@ msgstr "撤销"
 msgid "Undo: "
 msgstr "撤销："
 
-#: ../src/control/xojfile/LoadHandler.cpp:337
+#: ../src/control/xojfile/LoadHandler.cpp:335
 msgid "Unexpected root tag: {1}"
 msgstr "意外的根标签: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:368
+#: ../src/control/xojfile/LoadHandler.cpp:366
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "文档中意外的标签: \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:611
+#: ../src/control/xojfile/LoadHandler.cpp:609
 msgid "Unknown background type: {1}"
 msgstr "未知背景类型: {1}"
 
@@ -1235,19 +1235,19 @@ msgstr "未知背景类型: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "未知颜色值 “{1}”"
 
-#: ../src/control/xojfile/LoadHandler.cpp:548
+#: ../src/control/xojfile/LoadHandler.cpp:546
 msgid "Unknown domain type: {1}"
 msgstr "未知的域类型: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:268
+#: ../src/control/xojfile/LoadHandler.cpp:266
 msgid "Unknown parser error"
 msgstr "未知的解析器错误"
 
-#: ../src/control/xojfile/LoadHandler.cpp:463
+#: ../src/control/xojfile/LoadHandler.cpp:461
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "未知的 pixmap::domain 类型: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:728
+#: ../src/control/xojfile/LoadHandler.cpp:726
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "未知笔划类型: \"{1}\"，将假设为笔"
 
@@ -1284,15 +1284,15 @@ msgstr "使用PDF背景"
 msgid "Write text"
 msgstr "写文本"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1108
+#: ../src/control/xojfile/LoadHandler.cpp:1106
 msgid "Wrong count of points ({1})"
 msgstr "点数 ({1}) 错误"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1122
+#: ../src/control/xojfile/LoadHandler.cpp:1120
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "点数错误，读到 {1}，预期 {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:263
+#: ../src/control/xojfile/LoadHandler.cpp:261
 msgid "XML Parser error: {1}"
 msgstr "XML 解析器错误: {1}"
 
@@ -1322,7 +1322,7 @@ msgstr "Xournal++ 模板"
 msgid "Yellow"
 msgstr "黄色"
 
-#: ../src/control/PageBackgroundChangeController.cpp:209
+#: ../src/control/PageBackgroundChangeController.cpp:208
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr "您没有任何可以选择的 PDF 页面。操作取消。\n"
@@ -1332,7 +1332,7 @@ msgstr "您没有任何可以选择的 PDF 页面。操作取消。\n"
 msgid "You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker."
 msgstr "您正在使用 {1}/{2} 分支。发送错误报告将直接将您转向Git仓库的问题跟踪器。"
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:83
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:84
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
@@ -1468,7 +1468,7 @@ msgstr "小红点"
 msgid "whiteout"
 msgstr "涂白"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1121
+#: ../src/control/xojfile/LoadHandler.cpp:1119
 msgid "xoj-File: {1}"
 msgstr ""
 
@@ -1504,7 +1504,7 @@ msgstr "xoj-preview-extractor: 打开导出文件 \"{1}\" 失败"
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: 成功提取"
 
-#: ../src/util/Util.cpp:110
+#: ../src/util/Util.cpp:111
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
