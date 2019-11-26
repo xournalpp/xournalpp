@@ -32,8 +32,12 @@ cp ../build/src/xournalpp.exe ./setup/bin/xournalpp_bin.exe
 echo "Listing required binaries"
 ldd ../build/src/xournalpp.exe
 echo ""
-
-ldd ../build/src/xournalpp.exe | grep '\/mingw.*\.dll|\/c/windows/SYSTEM32/lib.*\.dll' -o | xargs -I{} cp "{}" setup/bin/
+echo "Following libraries will be copied"
+ldd ../build/src/xournalpp.exe | grep '\/mingw.*\.dll|\/c/windows/SYSTEM32/lib.*\.dll' -o
+echo ""
+echo "Starting copy..."
+ldd ../build/src/xournalpp.exe | grep '\/mingw.*\.dll|\/c/windows/SYSTEM32/lib.*\.dll' -o | xargs -t -I{} cp "{}" setup/bin/
+echo ""
 
 echo "copy ui"
 
@@ -59,7 +63,7 @@ echo "copy pixbuf libs"
 cp -r /mingw64/lib/gdk-pixbuf-2.0 setup/lib
 
 echo "copy pixbuf lib dependencies"
-ldd /mingw64/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll | grep '\/mingw.*\.dll' -o | xargs -I{} cp "{}" setup/bin/
+ldd /mingw64/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll | grep '\/mingw.*\.dll' -o | xargs -t -I{} cp "{}" setup/bin/
 
 echo "copy icons"
 cp -r /mingw64/share/icons setup/share/
