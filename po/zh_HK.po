@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-26 11:49+0000\n"
-"PO-Revision-Date: 2019-11-26 11:50\n"
+"POT-Creation-Date: 2019-11-26 15:35+0000\n"
+"PO-Revision-Date: 2019-11-26 15:55\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Chinese Traditional, Hong Kong\n"
 "Language: zh_HK\n"
@@ -419,7 +419,7 @@ msgstr "繪製矩形"
 msgid "Draw coordinate system"
 msgstr ""
 
-#: ../src/undo/InsertUndoAction.cpp:34
+#: ../src/undo/InsertUndoAction.cpp:35
 msgid "Draw stroke"
 msgstr "繪製筆劃"
 
@@ -601,15 +601,15 @@ msgstr ""
 msgid "Images"
 msgstr "圖片"
 
-#: ../src/undo/InsertUndoAction.cpp:99
+#: ../src/undo/InsertUndoAction.cpp:92
 msgid "Insert elements"
 msgstr "插入元素"
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:66 ../src/undo/InsertUndoAction.cpp:42
+#: ../src/gui/dialog/ButtonConfigGui.cpp:66 ../src/undo/InsertUndoAction.cpp:39
 msgid "Insert image"
 msgstr "插入圖片"
 
-#: ../src/undo/InsertUndoAction.cpp:46
+#: ../src/undo/InsertUndoAction.cpp:41
 msgid "Insert latex"
 msgstr "插入LaTeX"
 
@@ -1262,7 +1262,7 @@ msgstr "白色"
 msgid "With PDF background"
 msgstr "使用PDF背景"
 
-#: ../src/undo/InsertUndoAction.cpp:38
+#: ../src/undo/InsertUndoAction.cpp:37
 msgid "Write text"
 msgstr "寫文本"
 
@@ -1356,7 +1356,7 @@ msgstr ""
 msgid "_Save"
 msgstr ""
 
-#: ../src/util/DeviceListHelper.cpp:130
+#: ../src/util/DeviceListHelper.cpp:125
 msgid "cursor"
 msgstr "光標"
 
@@ -1388,7 +1388,7 @@ msgstr ""
 msgid "elements"
 msgstr ""
 
-#: ../src/util/DeviceListHelper.cpp:126
+#: ../src/util/DeviceListHelper.cpp:123
 msgid "eraser"
 msgstr "橡皮"
 
@@ -1396,7 +1396,7 @@ msgstr "橡皮"
 msgid "image"
 msgstr ""
 
-#: ../src/util/DeviceListHelper.cpp:135
+#: ../src/util/DeviceListHelper.cpp:128
 msgid "keyboard"
 msgstr ""
 
@@ -1404,7 +1404,7 @@ msgstr ""
 msgid "latex"
 msgstr ""
 
-#: ../src/util/DeviceListHelper.cpp:118
+#: ../src/util/DeviceListHelper.cpp:119
 msgid "mouse"
 msgstr "滑鼠"
 
@@ -1412,7 +1412,7 @@ msgstr "滑鼠"
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
 msgstr ""
 
-#: ../src/util/DeviceListHelper.cpp:122
+#: ../src/util/DeviceListHelper.cpp:121
 msgid "pen"
 msgstr "畫筆"
 
@@ -1429,19 +1429,23 @@ msgstr "標準"
 msgid "stroke"
 msgstr ""
 
+#: ../src/util/DeviceListHelper.cpp:137
+msgid "tablet pad"
+msgstr ""
+
 #: ../src/undo/AddUndoAction.cpp:124 ../src/undo/DeleteUndoAction.cpp:118
 msgid "text"
 msgstr ""
 
-#: ../src/util/DeviceListHelper.cpp:143
+#: ../src/util/DeviceListHelper.cpp:132
 msgid "touchpad"
 msgstr ""
 
-#: ../src/util/DeviceListHelper.cpp:139
+#: ../src/util/DeviceListHelper.cpp:130
 msgid "touchscreen"
 msgstr ""
 
-#: ../src/util/DeviceListHelper.cpp:148
+#: ../src/util/DeviceListHelper.cpp:135
 msgid "trackpoint"
 msgstr ""
 
