@@ -3,5 +3,5 @@
 	dh $@
 
 override_dh_auto_build:
-	make translations all
+	dh_auto_build -- translations all
 
