@@ -11,14 +11,23 @@
 
 #pragma once
 
+#include "config.h"
 #include <XournalType.h>
 #include "settings/Settings.h"
 #include "Control.h"
-#include <Path.h>
-#include <util/audio/AudioRecorder.h>
-#include <util/audio/AudioPlayer.h>
+#include "../util/Path.h"
 #include <gui/toolbarMenubar/ToolMenuHandler.h>
 
+#ifndef ENABLE_AUDIO
+class DeviceInfo {};
+#else
+#include "util/audio/DeviceInfo.h"
+#endif
+
+/**
+ * Dummy audio controller used if audio feature is disabled globally
+ * Actual implementation is in class AudioControllerImpl
+ */
 class AudioController
 {
 public:
@@ -26,31 +35,27 @@ public:
 	virtual ~AudioController();
 
 public:
-	bool startRecording();
-	bool stopRecording();
-	bool isRecording();
+	virtual bool startRecording();
+	virtual bool stopRecording();
+	virtual bool isRecording();
 
-	bool isPlaying();
-	bool startPlayback(const string& filename, unsigned int timestamp);
-	void pausePlayback();
-	void continuePlayback();
-	void stopPlayback();
-	void seekForwards();
-	void seekBackwards();
+	virtual bool isPlaying();
+	virtual bool startPlayback(string filename, unsigned int timestamp);
+	virtual void pausePlayback();
+	virtual void continuePlayback();
+	virtual void stopPlayback();
+	virtual void seekForwards();
+	virtual void seekBackwards();
 
-	string getAudioFilename();
-	Path getAudioFolder();
-	size_t getStartTime() const;
-	vector<DeviceInfo> getOutputDevices();
-	vector<DeviceInfo> getInputDevices();
+	virtual string getAudioFilename();
+	virtual Path getAudioFolder();
+	virtual size_t getStartTime() const;
+	virtual vector<DeviceInfo> getOutputDevices();
+	virtual vector<DeviceInfo> getInputDevices();
 
 protected:
 	string audioFilename;
 	size_t timestamp = 0;
 	Settings* settings;
 	Control* control;
-	AudioRecorder* audioRecorder;
-	AudioPlayer* audioPlayer;
-
-private:
 };

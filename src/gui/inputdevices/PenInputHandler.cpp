@@ -14,6 +14,7 @@
 #include <control/settings/ButtonConfig.h>
 
 #include <cmath>
+#include <thread>
 
 #define WIDGET_SCROLL_BORDER 25
 

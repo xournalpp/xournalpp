@@ -60,6 +60,10 @@ file (GLOB_RECURSE xournalpp_SOURCES_RECURSE
   view/*.cpp
 )
 
+if (NOT ENABLE_AUDIO)
+  list(REMOVE_ITEM xournalpp_SOURCES_RECURSE "${CMAKE_CURRENT_SOURCE_DIR}/control/AudioControllerImpl.cpp")
+endif (NOT ENABLE_AUDIO)
+
 # Here GLOB_RECURSE wouldn't be safe
 unset (xournalpp_SOURCES)
 file (GLOB xournalpp_SOURCES

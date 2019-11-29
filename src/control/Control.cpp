@@ -1,5 +1,9 @@
 #include "Control.h"
 
+#ifdef ENABLE_AUDIO
+#include "AudioControllerImpl.h"
+#endif
+
 #include "FullscreenHandler.h"
 #include "LatexController.h"
 #include "PageBackgroundChangeController.h"
@@ -100,7 +104,11 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	this->pageTypes = new PageTypeHandler(gladeSearchPath);
 	this->newPageType = new PageTypeMenu(this->pageTypes, settings, true, true);
 
+#ifdef ENABLE_AUDIO
+	this->audioController = new AudioControllerImpl(this->settings, this);
+#else
 	this->audioController = new AudioController(this->settings, this);
+#endif
 
 	this->scrollHandler = new ScrollHandler(this);
 

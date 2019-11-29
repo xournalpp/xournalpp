@@ -11,13 +11,18 @@
 
 #pragma once
 
+#ifdef ENABLE_AUDIO
 #include <util/audio/DeviceInfo.h>
+#endif
 #include <control/Control.h>
 #include "control/settings/Settings.h"
 #include "gui/GladeGui.h"
 #include "DeviceClassConfigGui.h"
 
 class ButtonConfigGui;
+#ifndef ENABLE_AUDIO
+class DeviceInfo;
+#endif
 
 class SettingsDialog : public GladeGui
 {

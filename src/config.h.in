@@ -83,3 +83,8 @@ constexpr auto GIT_COMMIT_ID = "@RELEASE_IDENTIFIER@";
  * Gettext package
  */
 constexpr auto GETTEXT_PACKAGE = "@GETTEXT_PACKAGE@";
+
+/**
+ * Enable audio features
+ */
+#cmakedefine ENABLE_AUDIO

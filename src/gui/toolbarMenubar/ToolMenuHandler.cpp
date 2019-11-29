@@ -194,6 +194,13 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 				}
 				if (!found)
 				{
+#ifndef ENABLE_AUDIO
+					// Ignore unavailable audio buttons if audio is disabled.
+					if (StringUtils::startsWith(name, "AUDIO_") || name == "PLAY_OBJECT")
+					{
+						break;
+					}
+#endif
 					g_warning("Toolbar item \"%s\" not found!", name.c_str());
 				}
 			}
@@ -451,12 +458,13 @@ void ToolMenuHandler::initToolItems()
 	ADD_CUSTOM_ITEM_TGL("SELECT_RECTANGLE", ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select", _("Select Rectangle"));
 	ADD_CUSTOM_ITEM_TGL("SELECT_OBJECT", ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL, true, "object-select", _("Select Object"));
 	ADD_CUSTOM_ITEM_TGL("VERTICAL_SPACE", ACTION_TOOL_VERTICAL_SPACE, GROUP_TOOL, true, "stretch", _("Vertical Space"));
-	ADD_CUSTOM_ITEM_TGL("PLAY_OBJECT", ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL, true, "object-play", _("Play Object"));
 	ADD_CUSTOM_ITEM_TGL("HAND", ACTION_TOOL_HAND, GROUP_TOOL, true, "hand", _("Hand"));
 
 	fontButton = new FontButton(listener, gui, "SELECT_FONT", ACTION_FONT_BUTTON_CHANGED, _("Select Font"));
 	addToolItem(fontButton);
 
+#ifdef ENABLE_AUDIO
+	ADD_CUSTOM_ITEM_TGL("PLAY_OBJECT", ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL, true, "object-play", _("Play Object"));
 	ADD_CUSTOM_ITEM_TGL("AUDIO_RECORDING", ACTION_AUDIO_RECORD, GROUP_AUDIO, false, "audio-record", _("Record Audio / Stop Recording"));
 	audioPausePlaybackButton = new ToolButton(listener, "AUDIO_PAUSE_PLAYBACK", ACTION_AUDIO_PAUSE_PLAYBACK, GROUP_AUDIO, false, "audio-playback-pause", _("Pause / Play"));
 	addToolItem(audioPausePlaybackButton);
@@ -468,6 +476,14 @@ void ToolMenuHandler::initToolItems()
 	audioSeekBackwardsButton = new ToolButton(listener, "AUDIO_SEEK_BACKWARDS", ACTION_AUDIO_SEEK_BACKWARDS,
 	                                          "audio-seek-backwards", _("Back"));
 	addToolItem(audioSeekBackwardsButton);
+#else
+	gtk_widget_destroy(GTK_WIDGET(gui->get("menuToolsPlayObject")));
+	gtk_widget_destroy(GTK_WIDGET(gui->get("menuAudioRecord")));
+	gtk_widget_destroy(GTK_WIDGET(gui->get("menuAudioPausePlayback")));
+	gtk_widget_destroy(GTK_WIDGET(gui->get("menuAudioStopPlayback")));
+	gtk_widget_destroy(GTK_WIDGET(gui->get("menuAudioSeekForwards")));
+	gtk_widget_destroy(GTK_WIDGET(gui->get("menuAudioSeekBackwards")));
+#endif
 
 	// Menu Help
 	// ************************************************************************
@@ -576,6 +592,7 @@ auto ToolMenuHandler::getToolItems() -> vector<AbstractToolItem*>*
 
 void ToolMenuHandler::disableAudioPlaybackButtons()
 {
+#ifdef ENABLE_AUDIO
 	setAudioPlaybackPaused(false);
 
 	this->audioPausePlaybackButton->enable(false);
@@ -587,10 +604,12 @@ void ToolMenuHandler::disableAudioPlaybackButtons()
 	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioStopPlayback")), false);
 	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekForwards")), false);
 	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekBackwards")), false);
+#endif
 }
 
 void ToolMenuHandler::enableAudioPlaybackButtons()
 {
+#ifdef ENABLE_AUDIO
 	this->audioPausePlaybackButton->enable(true);
 	this->audioStopPlaybackButton->enable(true);
 	this->audioSeekBackwardsButton->enable(true);
@@ -600,10 +619,13 @@ void ToolMenuHandler::enableAudioPlaybackButtons()
 	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioStopPlayback")), true);
 	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekForwards")), true);
 	gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekBackwards")), true);
+#endif
 }
 
 void ToolMenuHandler::setAudioPlaybackPaused(bool paused)
 {
+#ifdef ENABLE_AUDIO
 	this->audioPausePlaybackButton->setActive(paused);
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(gui->get("menuAudioPausePlayback")), paused);
+#endif
 }

@@ -365,6 +365,10 @@ void SettingsDialog::load()
 	touch.getInt("timeout", timeoutMs);
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spTouchDisableTimeout")), timeoutMs / 1000.0);
 
+#ifndef ENABLE_AUDIO
+	GtkNotebook* notebook = GTK_NOTEBOOK(get("notebook1"));
+	gtk_notebook_remove_page(notebook, gtk_notebook_page_num(notebook, get("audioRecordingTabBox")));
+#else
     this->audioInputDevices = this->control->getAudioController()->getInputDevices();
 	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioInputDevice")), "", "System default");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioInputDevice")), 0);
@@ -411,6 +415,7 @@ void SettingsDialog::load()
 
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spAudioGain")), settings->getAudioGain());
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")), settings->getDefaultSeekTime());
+#endif
 }
 
 auto SettingsDialog::updateHideString(const string& hidden, bool hideMenubar, bool hideSidebar) -> string
@@ -614,6 +619,7 @@ void SettingsDialog::save()
 	settings->setSnapGridTolerance(
 	        static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridTolerance")))));
 
+#ifdef ENABLE_AUDIO
 	int selectedInputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioInputDevice"))) - 1;
 	if (selectedInputDeviceIndex >= 0 && selectedInputDeviceIndex < static_cast<int>(this->audioInputDevices.size()))
 	{
@@ -626,6 +632,7 @@ void SettingsDialog::save()
 		settings->setAudioOutputDevice(
 		        static_cast<int>(this->audioOutputDevices[selectedOutputDeviceIndex].getIndex()));
 	}
+#endif
 
 	switch (gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioSampleRate"))))
 	{

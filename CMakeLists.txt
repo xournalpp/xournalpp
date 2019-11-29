@@ -116,6 +116,8 @@ add_includes_ldflags ("${ZIP_LDFLAGS}" "${ZIP_INCLUDE_DIRS}")
 find_package (Threads REQUIRED)
 set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} ${CMAKE_THREAD_LIBS_INIT})
 
+option (ENABLE_AUDIO "Include audio support" ON)
+if (ENABLE_AUDIO)
 # portaudio
 pkg_check_modules(PORTAUDIOCPP REQUIRED "portaudiocpp >= 12")
 add_includes_ldflags ("${PORTAUDIOCPP_LDFLAGS}" "${PORTAUDIOCPP_INCLUDE_DIRS}")
@@ -123,6 +125,7 @@ add_includes_ldflags ("${PORTAUDIOCPP_LDFLAGS}" "${PORTAUDIOCPP_INCLUDE_DIRS}")
 # sndfile
 pkg_check_modules(SNDFILE REQUIRED "sndfile >= 1.0.25")
 add_includes_ldflags ("${SNDFILE_LDFLAGS}" "${SNDFILE_INCLUDE_DIRS}")
+endif (ENABLE_AUDIO)
 
 ## Additional features ##
 
