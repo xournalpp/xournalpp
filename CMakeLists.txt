@@ -153,7 +153,7 @@ endif()
 if (Lua_FOUND)
 	message("Enable Xournal++ Plugins")
 	add_includes_ldflags("${Lua_LDFLAGS}" "${Lua_INCLUDE_DIRS}")
-	set(ENABLE_PLUGINS "true")
+	set(ENABLE_PLUGINS "ON")
 endif ()
 
 unset(add_includes_ldflags)
@@ -313,6 +313,8 @@ message("
 Configuration:
 	Compiler:                   ${CMAKE_CXX_COMPILER}
 	CppUnit enabled:            ${ENABLE_CPPUNIT}
+	Audio enabled:				${ENABLE_AUDIO}
+	Plugins enabled:			${ENABLE_PLUGINS}
 ")
 
 option(CMAKE_DEBUG_INCLUDES_LDFLAGS "List include dirs and ldflags for xournalpp target" OFF)
