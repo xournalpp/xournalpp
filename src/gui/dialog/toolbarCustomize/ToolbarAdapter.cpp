@@ -209,7 +209,7 @@ void ToolbarAdapter::toolitemDragDataGet(GtkWidget* widget, GdkDragContext* cont
 	{
 		GtkToolItem* it = gtk_toolbar_get_nth_item(tb, i);
 
-		if ((void*) it == (void*) widget)
+		if (static_cast<void*>(it) == static_cast<void*>(widget))
 		{
 			adapter->cleanToolItem(it);
 			gtk_container_remove(GTK_CONTAINER(tb), GTK_WIDGET(it));
@@ -290,7 +290,7 @@ void ToolbarAdapter::toolbarDragLeafeCb(GtkToolbar* toolbar, GdkDragContext* con
 void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragContext* context, gint x, gint y,
 									  GtkSelectionData* data, guint info, guint time, ToolbarAdapter* adapter)
 {
-	auto* d = (ToolItemDragDropData*) gtk_selection_data_get_data(data);
+	auto* d = reinterpret_cast<ToolItemDragDropData const*>(gtk_selection_data_get_data(data));
 	g_return_if_fail(ToolitemDragDrop::checkToolItemDragDropData(d));
 
 	// fix vertical position bug as in toolbarDragMotionCb() above.

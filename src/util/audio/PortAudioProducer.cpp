@@ -32,7 +32,7 @@ auto PortAudioProducer::getInputDevices() -> std::list<DeviceInfo>
 	return deviceList;
 }
 
-auto PortAudioProducer::getSelectedInputDevice() -> const DeviceInfo
+auto PortAudioProducer::getSelectedInputDevice() -> DeviceInfo
 {
 	try
 	{
@@ -115,7 +115,7 @@ auto PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuff
 	{
 		size_t providedFrames = framesPerBuffer * this->inputChannels;
 
-		this->audioQueue->push((float*) inputBuffer, providedFrames);
+		this->audioQueue->push(static_cast<float*>(const_cast<void*>(inputBuffer)), providedFrames);
 	}
 	return paContinue;
 }

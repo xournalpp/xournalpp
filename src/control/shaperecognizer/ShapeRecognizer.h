@@ -15,7 +15,7 @@
 #include "RecoSegment.h"
 #include "ShapeRecognizerConfig.h"
 
-#include <XournalType.h>
+#include <array>
 
 class Stroke;
 class Point;
@@ -33,13 +33,12 @@ private:
 	Stroke* tryRectangle();
 	Stroke* tryArrow();
 
-	static Stroke* tryClosedPolygon(int nsides);
 	static void optimizePolygonal(const Point* pt, int nsides, int* breaks, Inertia* ss);
 
 	int findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss);
 
 private:
-	RecoSegment queue[MAX_POLYGON_SIDES + 1];
+	std::array<RecoSegment, MAX_POLYGON_SIDES + 1> queue{};
 	int queueLength;
 
 	Stroke* stroke;

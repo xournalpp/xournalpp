@@ -13,7 +13,7 @@
 
 #include "model/PageRef.h"
 
-#include <config.h>
+#include "config.h"
 
 class Control;
 class XojPage;
@@ -21,8 +21,8 @@ class XojPage;
 class UndoAction
 {
 public:
-	UndoAction(const char* className);
-	virtual ~UndoAction();
+	UndoAction(std::string className);  // NOLINT
+	virtual ~UndoAction() = default;
 
 public:
 	virtual bool undo(Control* control) = 0;
@@ -35,12 +35,11 @@ public:
 	 */
 	virtual vector<PageRef> getPages();
 
-	const char* getClassName() const;
+	auto getClassName() const -> std::string const&;
 
 protected:
 	// This is only for debugging / Testing purpose
-	const char* className = nullptr;
-
+	std::string className;
 	PageRef page;
 	bool undone = false;
 };

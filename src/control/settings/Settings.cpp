@@ -949,19 +949,19 @@ void Settings::save()
 
 	if (this->scrollbarHideType == SCROLLBAR_HIDE_BOTH)
 	{
-		saveProperty((const char*) "scrollbarHideType", "both", root);
+		saveProperty("scrollbarHideType", "both", root);
 	}
 	else if (this->scrollbarHideType == SCROLLBAR_HIDE_HORIZONTAL)
 	{
-		saveProperty((const char*) "scrollbarHideType", "horizontal", root);
+		saveProperty("scrollbarHideType", "horizontal", root);
 	}
 	else if (this->scrollbarHideType == SCROLLBAR_HIDE_VERTICAL)
 	{
-		saveProperty((const char*) "scrollbarHideType", "vertical", root);
+		saveProperty("scrollbarHideType", "vertical", root);
 	}
 	else
 	{
-		saveProperty((const char*) "scrollbarHideType", "none", root);
+		saveProperty("scrollbarHideType", "none", root);
 	}
 
 	WRITE_BOOL_PROP(autoloadPdfXoj);

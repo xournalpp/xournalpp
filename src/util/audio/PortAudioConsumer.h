@@ -32,15 +32,16 @@ public:
 
 public:
 	std::list<DeviceInfo> getOutputDevices();
-	const DeviceInfo getSelectedOutputDevice();
+	DeviceInfo getSelectedOutputDevice();
 	bool isPlaying();
 	bool startPlaying();
-	int playCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer, const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags);
+	int playCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer,
+	                 const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags);
 	void stopPlaying();
 
 private:
 protected:
-	const unsigned long framesPerBuffer = 64;
+	constexpr static auto framesPerBuffer{64U};
 
 	portaudio::AutoSystem autoSys;
 	portaudio::System& sys;

@@ -34,8 +34,6 @@ void GraphBackgroundPainter::paintBackgroundGraph()
 	cairo_set_line_width(cr, lineWidth * lineWidthFactor);
 	double marginTopBottom = margin1;
 	double marginLeftRight = margin1;
-	double startX = drawRaster1;
-	double startY = drawRaster1;
 	double snappingOffset = 2.5;
 
 	if (roundMargin)
@@ -51,25 +49,27 @@ void GraphBackgroundPainter::paintBackgroundGraph()
 		//startY = marginTopBottom;
 	}
 
-	for (double x = startX; x < width; x += drawRaster1)
+	auto pos = [dr1 = drawRaster1](int i) { return dr1 + i * dr1; };
+
+	for (int x = 0; pos(x) < width; ++x)
 	{
-		if (x < margin1 || x > (width - margin1))
+		if (pos(x) < margin1 || pos(x) > (width - margin1))
 		{
 			continue;
 		}
-		cairo_move_to(cr, x, marginTopBottom-snappingOffset);
-		cairo_line_to(cr, x, height - marginTopBottom-snappingOffset);
+		cairo_move_to(cr, pos(x), marginTopBottom - snappingOffset);
+		cairo_line_to(cr, pos(x), height - marginTopBottom - snappingOffset);
 	}
 
-	for (double y = startY; y < height; y += drawRaster1)
+	for (int y = 0; pos(y) < height; ++y)
 	{
-		if (y < margin1 || y > (height - marginTopBottom))
+		if (pos(y) < margin1 || pos(y) > (height - marginTopBottom))
 		{
 			continue;
 		}
 
-		cairo_move_to(cr, marginLeftRight, y);
-		cairo_line_to(cr, width - marginLeftRight, y);
+		cairo_move_to(cr, marginLeftRight, pos(y));
+		cairo_line_to(cr, width - marginLeftRight, pos(y));
 	}
 
 	cairo_stroke(cr);

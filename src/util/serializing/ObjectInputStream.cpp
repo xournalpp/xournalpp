@@ -139,7 +139,7 @@ auto ObjectInputStream::readString() -> string
 		throw InputStreamException("End reached, but try to read an string", __FILE__, __LINE__);
 	}
 
-	string s((const char*) (this->str->str + this->pos), len);
+	string s((this->str->str + this->pos), len);
 	this->pos += len;
 	return s;
 }

@@ -64,7 +64,7 @@ void FullscreenHandler::hideWidget(MainWindow* win, const string& widgetName)
 
 void FullscreenHandler::enableFullscreen(MainWindow* win)
 {
-	gtk_window_fullscreen((GtkWindow*) *win);
+	gtk_window_fullscreen(static_cast<GtkWindow*>(*win));
 
 	string hideWidgets = settings->getFullscreenHideElements();
 	for (const string& s: StringUtils::split(hideWidgets, ','))
@@ -75,7 +75,7 @@ void FullscreenHandler::enableFullscreen(MainWindow* win)
 
 void FullscreenHandler::disableFullscreen(MainWindow* win)
 {
-	gtk_window_unfullscreen((GtkWindow*) *win);
+	gtk_window_unfullscreen(static_cast<GtkWindow*>(*win));
 
 	for (GtkWidget* w : hiddenFullscreenWidgets)
 	{
@@ -191,7 +191,7 @@ auto gtk_invisible_get_type() -> GType
 		        // instance init
 		        nullptr,
 		        // value table
-		        (const GTypeValueTable*) nullptr};
+		        nullptr};
 
 		gtk_invisible_menu_type = g_type_register_static(GTK_TYPE_FIXED, "GtkInvisibleMenu", &gtk_inivisible_menu_info,
 		                                                 static_cast<GTypeFlags>(0));

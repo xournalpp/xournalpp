@@ -1816,13 +1816,13 @@ void Control::undoRedoPageChanged(PageRef page)
 {
 	for (XojPage* p: this->changedPages)
 	{
-		if (p == (XojPage*) page)
+		if (p == static_cast<XojPage*>(page))
 		{
 			return;
 		}
 	}
 
-	auto* p = (XojPage*) page;
+	auto* p = static_cast<XojPage*>(page);
 	this->changedPages.push_back(p);
 	p->reference();
 }
@@ -2451,7 +2451,7 @@ void Control::loadMetadata(MetadataEntry md)
 	g_idle_add(reinterpret_cast<GSourceFunc>(loadMetadataCallback), data);
 }
 
-auto Control::annotatePdf(Path filename, bool attachPdf, bool attachToDocument) -> bool
+auto Control::annotatePdf(Path filename, bool /*attachPdf*/, bool attachToDocument) -> bool
 {
 	if (!this->close(false))
 	{

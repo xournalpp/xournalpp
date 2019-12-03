@@ -214,7 +214,7 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget* widget, GdkDragContext*
 		return;
 	}
 
-	auto* d = (ToolItemDragDropData*) gtk_selection_data_get_data(data);
+	auto* d = reinterpret_cast<ToolItemDragDropData const*>(gtk_selection_data_get_data(data));
 	g_return_if_fail(ToolitemDragDrop::checkToolItemDragDropData(d));
 
 	if (d->type == TOOL_ITEM_ITEM)

@@ -2,19 +2,6 @@
 
 #include <glib.h>
 
-#include <utility>
-
-/**
- * Base class for Formatting
- */
-class PlaceholderElement {
-public:
-	virtual ~PlaceholderElement() = default;
-
-
-	virtual auto format(std::string format) -> std::string = 0;
-};
-
 /**
  * Format String
  */
@@ -25,8 +12,7 @@ public:
 	{
 	}
 
-
-	auto format(std::string format) -> std::string override
+	auto format(std::string format) const -> std::string override
 	{
 		return text;
 	}
@@ -34,7 +20,6 @@ public:
 private:
 	std::string text;
 };
-
 
 /**
  * Format int
@@ -46,8 +31,7 @@ public:
 	{
 	}
 
-
-	auto format(std::string format) -> std::string override
+	auto format(std::string format) const -> std::string override
 	{
 		return std::to_string(value);
 	}
@@ -65,29 +49,19 @@ PlaceholderString::PlaceholderString(std::string text)
 {
 }
 
-PlaceholderString::~PlaceholderString()
-{
-	for (PlaceholderElement* e : data)
-	{
-		delete e;
-	}
-
-	data.clear();
-}
-
 auto PlaceholderString::operator%(int64_t value) -> PlaceholderString&
 {
-	data.push_back(new PlaceholderElementInt(value));
+	data.emplace_back(std::make_unique<PlaceholderElementInt>(value));
 	return *this;
 }
 
 auto PlaceholderString::operator%(std::string value) -> PlaceholderString&
 {
-	data.push_back(new PlaceholderElementString(std::move(value)));
+	data.emplace_back(std::make_unique<PlaceholderElementString>(std::move(value)));
 	return *this;
 }
 
-auto PlaceholderString::formatPart(std::string format) -> std::string
+auto PlaceholderString::formatPart(std::string format) const -> std::string
 {
 	std::string formatDef;
 
@@ -106,7 +80,6 @@ auto PlaceholderString::formatPart(std::string format) -> std::string
 	catch (const std::exception& e)
 	{
 		g_error("Could not parse «%s» as int, error: %s", format.c_str(), e.what());
-		return "{?}";
 	}
 
 	// Placeholder index starting at 1, vector at 0
@@ -120,16 +93,15 @@ auto PlaceholderString::formatPart(std::string format) -> std::string
 		return notFound;
 	}
 
-	PlaceholderElement* pe = data[index];
+	auto const& pe = data[index];
 
 	return pe->format(formatDef);
 }
 
-void PlaceholderString::process()
+void PlaceholderString::process() const
 {
 	if (!processed.empty())
 	{
-		// Already processed
 		return;
 	}
 
@@ -184,17 +156,15 @@ void PlaceholderString::process()
 	}
 }
 
-auto PlaceholderString::str() -> std::string
+auto PlaceholderString::str() const -> std::string
 {
 	process();
-
 	return processed;
 }
 
-auto PlaceholderString::c_str() -> const char*
+auto PlaceholderString::c_str() const -> const char*
 {
 	process();
-
 	return processed.c_str();
 }
 

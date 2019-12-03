@@ -28,8 +28,12 @@ PopplerGlibPage::~PopplerGlibPage()
 	}
 }
 
-void PopplerGlibPage::operator=(const PopplerGlibPage& other)
+PopplerGlibPage& PopplerGlibPage::operator=(const PopplerGlibPage& other)
 {
+	if (&other == this)
+	{
+		return *this;
+	}
 	if (page)
 	{
 		g_object_unref(page);
@@ -41,6 +45,7 @@ void PopplerGlibPage::operator=(const PopplerGlibPage& other)
 	{
 		g_object_ref(page);
 	}
+	return *this;
 }
 
 auto PopplerGlibPage::getWidth() -> double
@@ -59,7 +64,7 @@ auto PopplerGlibPage::getHeight() -> double
 	return height;
 }
 
-void PopplerGlibPage::render(cairo_t* cr, bool forPrinting)
+void PopplerGlibPage::render(cairo_t* cr, bool forPrinting)  // NOLINT(google-default-arguments)
 {
 	if (forPrinting)
 	{

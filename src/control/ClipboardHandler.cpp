@@ -116,8 +116,8 @@ public:
 		}
 		else if (atomSvg1 == target || atomSvg2 == target)
 		{
-			gtk_selection_data_set(selection, target, 8, (guchar*) contents->svg.c_str(),
-								   contents->svg.length());
+			gtk_selection_data_set(selection, target, 8, reinterpret_cast<guchar const*>(contents->svg.c_str()),
+			                       contents->svg.length());
 		}
 		else if (atomXournal == target)
 		{

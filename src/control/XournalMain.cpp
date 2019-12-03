@@ -371,7 +371,7 @@ auto XournalMain::run(int argc, char* argv[]) -> int
 		{
 			string msg = _("Sorry, Xournal++ can only open one file at once.\n"
 						   "Others are ignored.");
-			XojMsgBox::showErrorToUser((GtkWindow*) *win, msg);
+			XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*win), msg);
 		}
 
 		GFile* file = g_file_new_for_commandline_arg(optFilename[0]);
@@ -386,7 +386,7 @@ auto XournalMain::run(int argc, char* argv[]) -> int
 		{
 			string msg = _("Sorry, Xournal++ cannot open remote files at the moment.\n"
 						   "You have to copy the file to a local directory.");
-			XojMsgBox::showErrorToUser((GtkWindow*) *win, msg);
+			XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*win), msg);
 		}
 	}
 

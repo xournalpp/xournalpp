@@ -136,9 +136,11 @@ static auto zoomcallib_draw(GtkWidget* widget, cairo_t* cr) -> gboolean
 	                       CAIRO_FONT_WEIGHT_BOLD);
 	cairo_set_font_size(cr, 13);
 
-	gdouble x = 2;
-	for (int i = 0; x < allocation.width; x += hafCm, ++i)
+	auto cx = [x_base = 2, hafCm](int i) { return x_base + i * hafCm; };
+	for (int i = 0; cx(i) < allocation.width; ++i)
 	{
+		gdouble x = cx(i);
+
 		int y = 0;
 		if (i % 2 == 0)
 		{

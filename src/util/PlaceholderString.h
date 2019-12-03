@@ -9,57 +9,65 @@
  * @license GNU GPLv2 or later
  */
 
+// Todo(fabian): replace with cpp20 format library or https://github.com/fmtlib/fmt which are the same
+//               also using python like format string syntax
+
 #pragma once
 
 #include <string>
-using std::string;
-
 #include <vector>
-using std::vector;
-
 #include <ostream>
+#include <memory>
 
-class PlaceholderElement;
+/**
+ * Base class for Formatting
+ */
+class PlaceholderElement
+{
+public:
+	virtual ~PlaceholderElement() = default;
+	PlaceholderElement() = default;
+	PlaceholderElement(PlaceholderElement const& p) = default;
+	PlaceholderElement(PlaceholderElement&& p) = default;
+	PlaceholderElement& operator=(PlaceholderElement const&) = default;
+	PlaceholderElement& operator=(PlaceholderElement&&) = default;
+	virtual auto format(std::string format) const -> std::string = 0;
+};
 
 /**
  * Placeholder String, used for formatting. Support Placeholder like
  * {1}, {2} etc. Use {{ for {
  */
-class PlaceholderString {
-public:
-	PlaceholderString(string text);
-	~PlaceholderString();
+struct PlaceholderString
+{
+	PlaceholderString(std::string text);
 
 	// Placeholder methods
-public:
 	PlaceholderString& operator%(int64_t value);
-	PlaceholderString& operator%(string value);
-
-private:
-	string formatPart(string format);
-	void process();
+	PlaceholderString& operator%(std::string value);
 
 	// Process Method
-public:
-	string str();
-	const char* c_str();
+	std::string str() const;
+	const char* c_str() const;  // NOLINT(readability-identifier-naming)
 
 private:
+	std::string formatPart(std::string format) const;
+	void process() const;
 
 	/**
 	 * Values for Placeholder
 	 */
-	vector<PlaceholderElement*> data;
+	std::vector<std::unique_ptr<PlaceholderElement>> data;
 
 	/**
 	 * Input text
 	 */
-	string text;
+	std::string text;
 
 	/**
 	 * Processed String
 	 */
-	string processed;
+	mutable std::string processed;
 };
 
 std::ostream &operator<<(std::ostream &os, PlaceholderString &ps);

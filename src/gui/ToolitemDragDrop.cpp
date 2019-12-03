@@ -70,7 +70,7 @@ auto ToolitemDragDrop::getIcon(ToolItemDragDropData* data) -> GtkWidget*
 	return gtk_image_new();
 }
 
-auto ToolitemDragDrop::checkToolItemDragDropData(ToolItemDragDropData* d) -> bool
+auto ToolitemDragDrop::checkToolItemDragDropData(ToolItemDragDropData const* d) -> bool
 {
 	return d->identify == ToolItemDragDropData_Identify;
 }
@@ -82,17 +82,14 @@ auto ToolitemDragDrop::isToolItemEnabled(ToolItemDragDropData* d) -> bool
 		g_warning("ToolitemDragDrop::isToolItemEnabled data is not an instance of ToolItemDragDropData!");
 		return false;
 	}
-
 	if (d->type == TOOL_ITEM_SEPARATOR)
 	{
 		return true;
 	}
-
 	if (d->type == TOOL_ITEM_SPACER)
 	{
 		return true;
 	}
-
 	if (d->type == TOOL_ITEM_COLOR && d->item == nullptr)
 	{
 		return true;
@@ -105,21 +102,17 @@ auto ToolitemDragDrop::isToolItemEnabled(ToolItemDragDropData* d) -> bool
 
 auto ToolitemDragDrop::metadataGetMetadata(GtkWidget* w) -> ToolItemDragDropData*
 {
-	const int* ptr = static_cast<const int*>(g_object_get_data(G_OBJECT(w), ATTACH_DRAG_DROP_DATA));
-
+	void* ptr = g_object_get_data(G_OBJECT(w), ATTACH_DRAG_DROP_DATA);
 	if (ptr == nullptr)
 	{
 		g_warning("ToolitemDragDrop::metadataGetMetadata Could not get Metadata %s from %s\n", ATTACH_DRAG_DROP_DATA,
 				  g_type_name(G_TYPE_FROM_INSTANCE(w)));
 		return nullptr;
 	}
-
-	if (!checkToolItemDragDropData((ToolItemDragDropData*) ptr))
+	if (!checkToolItemDragDropData(static_cast<ToolItemDragDropData const*>(ptr)))
 	{
 		g_warning("ToolitemDragDrop::metadataGetMetadata data is not an instance of ToolItemDragDropData!");
-
 		return nullptr;
 	}
-
-	return (ToolItemDragDropData*) ptr;
+	return static_cast<ToolItemDragDropData*>(ptr);
 }
