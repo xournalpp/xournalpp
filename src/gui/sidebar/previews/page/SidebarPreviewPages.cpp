@@ -41,7 +41,18 @@ SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, Sideba
 		const gulong signalId = g_signal_connect(entry, "activate", callback, userdata.get());
 		g_object_ref(entry);
 		this->contextMenuSignals.emplace_back(entry, signalId, std::move(userdata));
+
+		if (pair.first == "sidebarPreviewMoveDown")
+		{
+			this->contextMenuMoveDown = entry;
+		}
+		else if (pair.first == "sidebarPreviewMoveUp")
+		{
+			this->contextMenuMoveUp = entry;
+		}
 	}
+	g_assert(this->contextMenuMoveDown != nullptr);
+	g_assert(this->contextMenuMoveUp != nullptr);
 }
 
 SidebarPreviewPages::~SidebarPreviewPages()
@@ -334,7 +345,10 @@ void SidebarPreviewPages::pageSelected(size_t page)
 		}
 
 		this->toolbar->setHidden(false);
-		this->toolbar->setButtonEnabled((SidebarActions)actions);
+		this->toolbar->setButtonEnabled(static_cast<SidebarActions>(actions));
+
+		gtk_widget_set_sensitive(this->contextMenuMoveUp, actions & SIDEBAR_ACTION_MOVE_UP);
+		gtk_widget_set_sensitive(this->contextMenuMoveDown, actions & SIDEBAR_ACTION_MOVE_DOWN);
 	}
 }
 
