@@ -375,6 +375,11 @@ void PenInputHandler::actionPerform(InputEvent* event)
 #endif
 
 	XojPageView* currentPage = this->getPageAtCurrentPosition(event);
+	if (currentPage == nullptr)
+	{
+		return;
+	}
+
 	PositionInputData pos = this->getInputDataRelativeToCurrentPage(currentPage, event);
 	if (event->type == BUTTON_2_PRESS_EVENT)
 	{
