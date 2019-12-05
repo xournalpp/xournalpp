@@ -70,6 +70,9 @@ private:
 	 */
 	GtkWidget* const contextMenu = nullptr;
 
+	GtkWidget* contextMenuMoveUp = nullptr;
+	GtkWidget* contextMenuMoveDown = nullptr;
+
 	/**
 	 * The data passed to the menu item callbacks.
 	 */
