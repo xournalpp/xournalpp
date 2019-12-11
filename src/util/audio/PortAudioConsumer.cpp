@@ -1,29 +1,20 @@
 #include "PortAudioConsumer.h"
 #include "AudioPlayer.h"
+
 #include <cmath>
 
-PortAudioConsumer::PortAudioConsumer(AudioPlayer* audioPlayer, AudioQueue<float>* audioQueue) : sys(portaudio::System::instance()), audioPlayer(audioPlayer), audioQueue(audioQueue)
-{
-}
+constexpr auto FRAMES_PER_BUFFER{64U};
 
-PortAudioConsumer::~PortAudioConsumer()
+auto PortAudioConsumer::getOutputDevices() const -> std::vector<DeviceInfo>
 {
-	if (portaudio::System::exists())
+	std::vector<DeviceInfo> deviceList;
+	deviceList.reserve(this->sys.deviceCount());
+
+	for (auto i = this->sys.devicesBegin(); i != sys.devicesEnd(); ++i)
 	{
-		portaudio::System::terminate();
-	}
-}
-
-auto PortAudioConsumer::getOutputDevices() -> std::list<DeviceInfo>
-{
-	std::list<DeviceInfo> deviceList;
-
-	for (portaudio::System::DeviceIterator i = this->sys.devicesBegin(); i != sys.devicesEnd(); ++i)
-	{
-
 		if (i->isFullDuplexDevice() || i->isOutputOnlyDevice())
 		{
-			DeviceInfo deviceInfo(&(*i), this->audioPlayer->getSettings()->getAudioOutputDevice() == i->index());
+			DeviceInfo deviceInfo(&(*i), this->audioPlayer.getSettings().getAudioOutputDevice() == i->index());
 			deviceList.push_back(deviceInfo);
 		}
 
@@ -31,11 +22,11 @@ auto PortAudioConsumer::getOutputDevices() -> std::list<DeviceInfo>
 	return deviceList;
 }
 
-auto PortAudioConsumer::getSelectedOutputDevice() -> DeviceInfo
+auto PortAudioConsumer::getSelectedOutputDevice() const -> DeviceInfo
 {
 	try
 	{
-		return DeviceInfo(&sys.deviceByIndex(this->audioPlayer->getSettings()->getAudioOutputDevice()), true);
+		return DeviceInfo(&sys.deviceByIndex(this->audioPlayer.getSettings().getAudioOutputDevice()), true);
 	}
 	catch (portaudio::PaException& e)
 	{
@@ -44,22 +35,20 @@ auto PortAudioConsumer::getSelectedOutputDevice() -> DeviceInfo
 	}
 }
 
-auto PortAudioConsumer::isPlaying() -> bool
+auto PortAudioConsumer::isPlaying() const -> bool
 {
-	return this->outputStream != nullptr && this->outputStream->isActive();
+	return this->outputStream && this->outputStream->isActive();
 }
 
 auto PortAudioConsumer::startPlaying() -> bool
 {
 	// Abort a playback stream if one is currently active
-	if (this->outputStream != nullptr && this->outputStream->isActive())
+	if (isPlaying())
 	{
 		this->outputStream->abort();
 	}
 
-	double sampleRate = NAN;
-	unsigned int channels = 0;
-	this->audioQueue->getAudioAttributes(sampleRate, channels);
+	auto [sampleRate, channels] = this->audioQueue.getAudioAttributes();
 
 	if (sampleRate == -1)
 	{
@@ -81,22 +70,24 @@ auto PortAudioConsumer::startPlaying() -> bool
 
 	if (static_cast<unsigned int>(device->maxOutputChannels()) < channels)
 	{
-		this->audioQueue->signalEndOfStream();
+		this->audioQueue.signalEndOfStream();
 		g_warning("Output device has not enough channels to play audio file. (Requires at least 2 channels)");
 		return false;
 	}
 
 	this->outputChannels = channels;
 	portaudio::DirectionSpecificStreamParameters outParams(*device, channels, portaudio::FLOAT32, true, device->defaultLowOutputLatency(), nullptr);
-	portaudio::StreamParameters params(portaudio::DirectionSpecificStreamParameters::null(), outParams, sampleRate, this->framesPerBuffer, paNoFlag);
+	portaudio::StreamParameters params(portaudio::DirectionSpecificStreamParameters::null(), outParams, sampleRate,
+	                                   FRAMES_PER_BUFFER, paNoFlag);
 
 	try
 	{
-		this->outputStream = new portaudio::MemFunCallbackStream<PortAudioConsumer>(params, *this, &PortAudioConsumer::playCallback);
+		this->outputStream = std::make_unique<portaudio::MemFunCallbackStream<PortAudioConsumer>>(
+		        params, *this, &PortAudioConsumer::playCallback);
 	}
 	catch (portaudio::PaException& e)
 	{
-		this->audioQueue->signalEndOfStream();
+		this->audioQueue.signalEndOfStream();
 		g_warning("PortAudioConsumer: Unable to open stream to device\nCaused by: %s", e.what());
 		return false;
 	}
@@ -107,15 +98,16 @@ auto PortAudioConsumer::startPlaying() -> bool
 	}
 	catch (portaudio::PaException& e)
 	{
-		this->audioQueue->signalEndOfStream();
+		this->audioQueue.signalEndOfStream();
 		g_warning("PortAudioConsumer: Unable to start stream\nCaused by: %s", e.what());
+		this->outputStream.reset();
 		return false;
 	}
 	return true;
 }
 
-auto PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer,
-                                     const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags) -> int
+auto PortAudioConsumer::playCallback(const void* /*inputBuffer*/, void* outputBuffer, unsigned long framesPerBuffer,
+                                     const PaStreamCallbackTimeInfo*, PaStreamCallbackFlags statusFlags) -> int
 {
 	if (statusFlags)
 	{
@@ -124,44 +116,36 @@ auto PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer
 
 	if (outputBuffer != nullptr)
 	{
-		size_t outputBufferLength = 0;
-		this->audioQueue->pop((static_cast<float*>(outputBuffer)), outputBufferLength,
-		                      framesPerBuffer * this->outputChannels);
-
+		auto begI = static_cast<float*>(outputBuffer);
+		auto midI = this->audioQueue.pop(begI, framesPerBuffer * this->outputChannels);
+		auto endI = std::next(begI, framesPerBuffer * this->outputChannels);
 		// Fill buffer to requested length if necessary
 
-		if (outputBufferLength < framesPerBuffer * this->outputChannels)
+		if (midI != endI)
 		{
-			// Show frame underflow warning if there are not enough samples and the stream is not yet finished
-			if (!this->audioQueue->hasStreamEnded())
+			// Show underflow warning if there are not enough samples and the stream is not yet finished
+			if (!this->audioQueue.hasStreamEnded())
 			{
 				g_warning("PortAudioConsumer: Not enough audio samples available to fill requested frame");
 			}
 
-			auto outputBufferImpl = static_cast<float*>(outputBuffer);
-
-			if (outputBufferLength > this->outputChannels)
+			if (midI > std::next(begI, this->outputChannels))
 			{
 				// If there is previous audio data use this data to ramp down the audio samples
-				for (auto i = outputBufferLength; i < framesPerBuffer * this->outputChannels; ++i)
-				{
-					outputBufferImpl[i] = outputBufferImpl[i - this->outputChannels] / 2;
-				}
+				std::transform(std::prev(midI, this->outputChannels), std::prev(endI, this->outputChannels), midI,
+				               [](auto&& ampl) { return ampl / 2.0; });
 			}
 			else
 			{
 				// If there is no data that could be used to ramp down just output silence
-				for (auto i = outputBufferLength; i < framesPerBuffer * this->outputChannels; ++i)
-				{
-					outputBufferImpl[i] = 0;
-				}
+				std::for_each(midI, endI, [](auto& ampl) { ampl = 0; });
 			}
 		}
 
 		// Continue playback if there is still data available
-		if (this->audioQueue->hasStreamEnded() && this->audioQueue->empty())
+		if (this->audioQueue.hasStreamEnded() && this->audioQueue.empty())
 		{
-			this->audioPlayer->disableAudioPlaybackButtons();
+			this->audioPlayer.disableAudioPlaybackButtons();
 			return paComplete;
 		}
 
@@ -170,15 +154,15 @@ auto PortAudioConsumer::playCallback(const void* inputBuffer, void* outputBuffer
 	}
 
 	// The output buffer is no longer available - Abort!
-	this->audioQueue->signalEndOfStream();
-	this->audioPlayer->disableAudioPlaybackButtons();
+	this->audioQueue.signalEndOfStream();
+	this->audioPlayer.disableAudioPlaybackButtons();
 	return paAbort;
 }
 
 void PortAudioConsumer::stopPlaying()
 {
 	// Stop the playback
-	if (this->outputStream != nullptr)
+	if (this->outputStream)
 	{
 		try
 		{
@@ -195,4 +179,5 @@ void PortAudioConsumer::stopPlaying()
 			 */
 		}
 	}
+	this->outputStream.reset();
 }

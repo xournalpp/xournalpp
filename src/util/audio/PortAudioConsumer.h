@@ -16,7 +16,7 @@
 #include "DeviceInfo.h"
 #include "AudioQueue.h"
 
-#include <control/settings/Settings.h>
+#include "control/settings/Settings.h"
 
 #include <portaudiocpp/PortAudioCpp.hxx>
 
@@ -24,31 +24,29 @@
 
 class AudioPlayer;
 
-class PortAudioConsumer
+class PortAudioConsumer final
 {
 public:
-	explicit PortAudioConsumer(AudioPlayer* audioPlayer, AudioQueue<float>* audioQueue);
-	~PortAudioConsumer();
+	explicit PortAudioConsumer(AudioPlayer& audioPlayer, AudioQueue<float>& audioQueue)
+	 : audioPlayer(audioPlayer)
+	 , audioQueue(audioQueue)
+	{
+	}
 
-public:
-	std::list<DeviceInfo> getOutputDevices();
-	DeviceInfo getSelectedOutputDevice();
-	bool isPlaying();
+	std::vector<DeviceInfo> getOutputDevices() const;
+	DeviceInfo getSelectedOutputDevice() const;
+	bool isPlaying() const;
 	bool startPlaying();
 	int playCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer,
 	                 const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags);
 	void stopPlaying();
 
 private:
-protected:
-	constexpr static auto framesPerBuffer{64U};
+	portaudio::System& sys{portaudio::System::instance()};
+	AudioPlayer& audioPlayer;
+	AudioQueue<float>& audioQueue;
 
-	portaudio::AutoSystem autoSys;
-	portaudio::System& sys;
-	AudioPlayer* audioPlayer;
-	AudioQueue<float>* audioQueue = nullptr;
+	std::unique_ptr<portaudio::MemFunCallbackStream<PortAudioConsumer>> outputStream;
 
 	int outputChannels = 0;
-
-	portaudio::MemFunCallbackStream<PortAudioConsumer>* outputStream = nullptr;
 };

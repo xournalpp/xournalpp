@@ -11,31 +11,33 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include "XournalType.h"
 
 #include "AudioQueue.h"
 #include "PortAudioProducer.h"
 #include "VorbisConsumer.h"
 
-#include <control/settings/Settings.h>
+#include "control/settings/Settings.h"
 
-class AudioRecorder
+#include <memory>
+
+struct AudioRecorder
 {
-public:
-	explicit AudioRecorder(Settings* settings);
+	explicit AudioRecorder(Settings& settings)
+	 : settings(settings)
+	{
+	}
 	~AudioRecorder();
 
-public:
 	bool start(const string& filename);
 	void stop();
-	bool isRecording();
-	vector<DeviceInfo> getInputDevices();
+	bool isRecording() const;
+	vector<DeviceInfo> getInputDevices() const;
 
 private:
-protected:
-	Settings* settings = nullptr;
+	Settings& settings;
 
-	AudioQueue<float>* audioQueue = nullptr;
-	PortAudioProducer* portAudioProducer = nullptr;
-	VorbisConsumer* vorbisConsumer = nullptr;
+	std::unique_ptr<AudioQueue<float>> audioQueue = std::make_unique<AudioQueue<float>>();
+	std::unique_ptr<PortAudioProducer> portAudioProducer = std::make_unique<PortAudioProducer>(settings, *audioQueue);
+	std::unique_ptr<VorbisConsumer> vorbisConsumer = std::make_unique<VorbisConsumer>(settings, *audioQueue);
 };

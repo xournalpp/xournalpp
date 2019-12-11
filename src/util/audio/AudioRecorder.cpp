@@ -2,26 +2,9 @@
 
 #include "AudioRecorder.h"
 
-AudioRecorder::AudioRecorder(Settings* settings)
-		: settings(settings)
-{
-	this->audioQueue = new AudioQueue<float>();
-	this->portAudioProducer = new PortAudioProducer(settings, this->audioQueue);
-	this->vorbisConsumer = new VorbisConsumer(settings, this->audioQueue);
-}
-
 AudioRecorder::~AudioRecorder()
 {
 	this->stop();
-
-	delete this->portAudioProducer;
-	this->portAudioProducer = nullptr;
-
-	delete this->vorbisConsumer;
-	this->vorbisConsumer = nullptr;
-
-	delete this->audioQueue;
-	this->audioQueue = nullptr;
 }
 
 auto AudioRecorder::start(const string& filename) -> bool
@@ -47,14 +30,12 @@ void AudioRecorder::stop()
 	this->audioQueue->reset();
 }
 
-auto AudioRecorder::isRecording() -> bool
+auto AudioRecorder::isRecording() const -> bool
 {
 	return this->portAudioProducer->isRecording();
 }
 
-auto AudioRecorder::getInputDevices() -> std::vector<DeviceInfo>
+auto AudioRecorder::getInputDevices() const -> std::vector<DeviceInfo>
 {
-	std::list<DeviceInfo> deviceList = this->portAudioProducer->getInputDevices();
-	return vector<DeviceInfo>{std::make_move_iterator(std::begin(deviceList)),
-							  std::make_move_iterator(std::end(deviceList))};
+	return this->portAudioProducer->getInputDevices();
 }
