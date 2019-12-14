@@ -8,7 +8,7 @@
     <property name="title" translatable="yes">Select PDF Page</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
-    <property name="icon">pixmaps/xournalpp.svg</property>
+    <property name="icon">pixmaps/com.github.xournalpp.xournalpp.svg</property>
     <property name="type_hint">dialog</property>
     <property name="urgency_hint">True</property>
     <child>
