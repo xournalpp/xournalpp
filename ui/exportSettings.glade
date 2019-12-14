@@ -24,7 +24,7 @@
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Export</property>
     <property name="window_position">center</property>
-    <property name="icon">pixmaps/xournalpp.svg</property>
+    <property name="icon">pixmaps/com.github.xournalpp.xournalpp.svg</property>
     <property name="type_hint">dialog</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox2">
