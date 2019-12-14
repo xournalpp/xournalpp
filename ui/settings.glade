@@ -111,7 +111,7 @@
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Xournal++ Preferences</property>
     <property name="window_position">center</property>
-    <property name="icon">pixmaps/xournalpp.svg</property>
+    <property name="icon">pixmaps/com.github.xournalpp.xournalpp.svg</property>
     <property name="type_hint">normal</property>
     <property name="gravity">center</property>
     <signal name="close" handler="gtk_widget_hide" swapped="no"/>
