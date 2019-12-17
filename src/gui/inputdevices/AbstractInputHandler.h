@@ -46,6 +46,7 @@ public:
 	void block(bool block);
 	bool isBlocked() const;
 	virtual void onBlock();
+	virtual void onUnblock();
 	bool handle(InputEvent* event);
 	virtual bool handleImpl(InputEvent* event) = 0;
 };

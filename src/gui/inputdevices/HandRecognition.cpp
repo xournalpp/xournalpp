@@ -145,7 +145,10 @@ void HandRecognition::penEvent()
 	if (touchState)
 	{
 		touchState = false;
-		disableTouch();
+		if (enabled)
+		{
+			disableTouch();
+		}
 		g_timeout_add(disableTimeout, reinterpret_cast<GSourceFunc>(enableTimeout), this);
 	}
 }
@@ -159,7 +162,7 @@ void HandRecognition::enableTouch()
 	{
 		inputContext->unblockDevice(InputContext::TOUCHSCREEN);
 	}
-	if (touchImpl)
+	if (touchImpl && enabled)
 	{
 		touchImpl->enableTouch();
 	}
@@ -185,11 +188,6 @@ void HandRecognition::disableTouch()
  */
 void HandRecognition::event(GdkDevice* device)
 {
-	if (!enabled)
-	{
-		return;
-	}
-
 	GdkInputSource dev = gdk_device_get_source(device);
 
 	if (dev == GDK_SOURCE_PEN || dev == GDK_SOURCE_ERASER)
@@ -203,11 +201,6 @@ void HandRecognition::event(GdkDevice* device)
  */
 void HandRecognition::event(InputDeviceClass device)
 {
-	if (!enabled)
-	{
-		return;
-	}
-
 	if (device == INPUT_DEVICE_PEN || device == INPUT_DEVICE_ERASER)
 	{
 		penEvent();

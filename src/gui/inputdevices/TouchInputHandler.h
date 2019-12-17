@@ -49,6 +49,7 @@ public:
 	~TouchInputHandler() override = default;
 
 	bool handleImpl(InputEvent* event) override;
+	void onUnblock();
 
 };
 
