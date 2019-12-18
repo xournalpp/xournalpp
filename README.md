@@ -40,7 +40,7 @@ Xournal++ is a hand note taking software written in C++ with the target of flexi
 Stroke recognizer and other parts are based on Xournal Code, which you can find at [sourceforge](http://sourceforge.net/projects/xournal/)
 
 Xournal++ features:
-* Support for Pen preassure, e.g. Wacom Tablet
+* Support for pen pressure, e.g. Wacom Tablet
 * Support for annotating PDFs
 * Fill shape functionality
 * PDF Export (with and without paper style)
