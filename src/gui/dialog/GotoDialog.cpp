@@ -16,10 +16,10 @@ auto GotoDialog::getSelectedPage() const -> int
 void GotoDialog::show(GtkWindow* parent)
 {
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
-    gtk_entry_set_activates_default(GTK_ENTRY(get("spinPage")), TRUE);
+	gtk_entry_set_activates_default(GTK_ENTRY(get("spinPage")), TRUE);
 
 	int returnCode = gtk_dialog_run(GTK_DIALOG(this->window));
-    gtk_widget_hide(this->window);
+	gtk_widget_hide(this->window);
 
 	if (returnCode == GTK_RESPONSE_OK)
 	{
