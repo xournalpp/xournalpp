@@ -153,8 +153,11 @@ public:
 public:
     /**
      * Add an element to the this selection
+     * @param order: specifies the index of the element from the source layer,
+     * in case we want to replace it back where it came from.
+     * 'InvalidLayerIndex' is a special value that says it has no source layer index (e.g, from clipboard)
      */
-    void addElement(Element* e);
+    void addElement(Element* e, Layer::ElementIndex order = Layer::InvalidElementIndex);
 
     /**
      * Returns all containig elements of this selections

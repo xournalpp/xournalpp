@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <map>
 #include <string>
 #include <vector>
 
@@ -73,8 +74,10 @@ public:
 public:
     /**
      * Add an element to the this selection
+     * @param orderInSourceLayer: specifies the index of the element from the source layer,
+     * in case we want to replace it back where it came from.
      */
-    void addElement(Element* e);
+    void addElement(Element* e, Layer::ElementIndex order);
 
     /**
      * Returns all containig elements of this selections
@@ -173,6 +176,11 @@ private:
      * The selected element (the only one which are handled by this instance)
      */
     vector<Element*> selected;
+
+    /**
+     * Mapping of elements in the selection to the indexes from the original selection layer.
+     */
+    std::map<Element*, Layer::ElementIndex> indexWithinLayer;
 
     /**
      * The rendered elements
