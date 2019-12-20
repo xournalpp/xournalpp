@@ -13,7 +13,6 @@
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Go to Page</property>
     <property name="resizable">False</property>
-    <property name="modal">True</property>
     <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>
     <child>
@@ -32,12 +31,12 @@
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="button1">
-                <property name="label">gtk-close</property>
-                <property name="use_action_appearance">False</property>
+              <object class="GtkButton" id="gotocancelbutton">
+                <property name="label">gtk-cancel</property>
+                <property name="name">gotocancelbutton</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
+                <property name="receives_default">False</property>
                 <property name="use_stock">True</property>
               </object>
               <packing>
@@ -47,14 +46,15 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="button2">
+              <object class="GtkButton" id="gotookbutton">
                 <property name="label">gtk-ok</property>
-                <property name="use_action_appearance">False</property>
+                <property name="name">gotookbutton</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="can_default">True</property>
+                <property name="has_default">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
-                <accelerator key="Return" signal="activate"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -114,8 +114,8 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="1">button1</action-widget>
-      <action-widget response="2">button2</action-widget>
+      <action-widget response="-6">gotocancelbutton</action-widget>
+      <action-widget response="-5">gotookbutton</action-widget>
     </action-widgets>
   </object>
 </interface>
