@@ -60,7 +60,10 @@ EditSelectionContents::~EditSelectionContents() {
 /**
  * Add an element to the this selection
  */
-void EditSelectionContents::addElement(Element* e) { this->selected.push_back(e); }
+void EditSelectionContents::addElement(Element* e, Layer::ElementIndex order) {
+    this->selected.emplace_back(e);
+    this->indexWithinLayer.emplace(e, order);
+}
 
 /**
  * Returns all containig elements of this selections
@@ -325,7 +328,10 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 
     bool move = mx != 0 || my != 0;
 
-    for (Element* e: this->selected) {
+
+    for (auto it = this->selected.rbegin(); it != this->selected.rend(); ++it) {
+        Element* e = *it;
+
         if (move) {
             e->move(mx, my);
         }
@@ -335,7 +341,15 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
         if (rotate) {
             e->rotate(x, y, this->lastWidth / 2, this->lastHeight / 2, this->rotation);
         }
-        layer->addElement(e);
+
+        auto layerIndex = indexWithinLayer.find(e);
+        if (layerIndex == indexWithinLayer.end() ||
+            layerIndex->second ==
+                    Layer::InvalidElementIndex) {  // if the element didn't have a source layer (e.g, clipboard)
+            layer->addElement(e);
+        } else {
+            layer->insertElement(e, layerIndex->second);
+        }
     }
 }
 

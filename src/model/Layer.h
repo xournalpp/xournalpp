@@ -17,10 +17,14 @@
 #include "Element.h"
 #include "XournalType.h"
 
+
 class Layer {
 public:
     Layer();
     virtual ~Layer();
+
+    using ElementIndex = std::ptrdiff_t;
+    static constexpr auto InvalidElementIndex = static_cast<ElementIndex>(-1);
 
 public:
     /**
@@ -35,17 +39,17 @@ public:
      *
      * @note Performs a check to determine whether the element is already contained in the Layer
      */
-    void insertElement(Element* e, int pos);
+    void insertElement(Element* e, ElementIndex pos);
 
     /**
      * Returns the index of the given Element with respect to the internal list
      */
-    int indexOf(Element* e);
+    ElementIndex indexOf(Element* e);
 
     /**
      * Removes an Element from the Layer and optionally deletes it
      */
-    int removeElement(Element* e, bool free);
+    ElementIndex removeElement(Element* e, bool free);
 
     /**
      * Returns an iterator over the Element%s contained in this Layer
