@@ -25,10 +25,12 @@ void GotoDialog::show(GtkWindow* parent)
 	XOJ_CHECK_TYPE(GotoDialog);
 
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
+	gtk_entry_set_activates_default(GTK_ENTRY(get("spinPage")), TRUE);
+
 	int returnCode = gtk_dialog_run(GTK_DIALOG(this->window));
 	gtk_widget_hide(this->window);
 
-	if (returnCode == 2)
+	if (returnCode == GTK_RESPONSE_OK)
 	{
 		this->selectedPage = gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spinPage")));
 	}
