@@ -52,7 +52,18 @@ void TextView::drawText(cairo_t* cr, Text* t)
 
 	PangoLayout* layout = initPango(cr, t);
 	string str = t->getText();
-	pango_layout_set_text(layout, str.c_str(), str.length());
+
+	PangoAttrList* pangoAttr;
+	char* plainText;
+	if (pango_parse_markup(str.c_str(), -1, 0, &pangoAttr, &plainText, NULL, NULL))
+	{
+		pango_layout_set_attributes(layout, pangoAttr);
+		pango_layout_set_text(layout, plainText, -1);
+	}
+	else
+	{
+		pango_layout_set_text(layout, str.c_str(), -1);
+	}
 
 	pango_cairo_show_layout(cr, layout);
 
