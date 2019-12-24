@@ -1,20 +1,11 @@
-#include <cmath>
-
-#include <cmath>
 #include "VorbisConsumer.h"
 
-VorbisConsumer::VorbisConsumer(Settings* settings, AudioQueue<float>* audioQueue)
-		: settings(settings),
-		  audioQueue(audioQueue)
-{
-}
-
+#include <algorithm>
+#include <cmath>
 
 auto VorbisConsumer::start(const string& filename) -> bool
 {
-	double sampleRate = NAN;
-	unsigned int channels = 0;
-	this->audioQueue->getAudioAttributes(sampleRate, channels);
+	auto [sampleRate, channels] = this->audioQueue.getAudioAttributes();
 
 	if (sampleRate == -1)
 	{
@@ -25,63 +16,57 @@ auto VorbisConsumer::start(const string& filename) -> bool
 	SF_INFO sfInfo;
 	sfInfo.channels = channels;
 	sfInfo.format = SF_FORMAT_OGG | SF_FORMAT_VORBIS;
-	sfInfo.samplerate = static_cast<int>(this->settings->getAudioSampleRate());
+	sfInfo.samplerate = static_cast<int>(this->settings.getAudioSampleRate());
 
-	SNDFILE_tag* sfFile = sf_open(filename.c_str(), SFM_WRITE, &sfInfo);
-	if (sfFile == nullptr)
+	auto SNDFILE_tag_closer = [](SNDFILE_tag* tag) { sf_close(tag); };
+	std::unique_ptr<SNDFILE_tag, decltype(SNDFILE_tag_closer)> sfFile{sf_open(filename.c_str(), SFM_WRITE, &sfInfo),
+	                                                                  std::move(SNDFILE_tag_closer)};
+	if (!sfFile)
 	{
-		g_warning("VorbisConsumer: output file \"%s\" could not be opened\ncaused by:%s", filename.c_str(), sf_strerror(sfFile));
+		g_warning("VorbisConsumer: output file \"%s\" could not be opened\ncaused by:%s", filename.c_str(),
+		          sf_strerror(sfFile.get()));
 		return false;
 	}
 
-	this->consumerThread = new std::thread(
-			[&, sfFile, channels]
+	this->consumerThread = std::thread([this, sfFile = std::move(sfFile), channels = channels] {
+		auto lock{audioQueue.aquire_lock()};
+		auto buffer_size{static_cast<size_t>(std::max(0, 64 * channels))};
+		std::vector<float> buffer;
+		buffer.reserve(buffer_size);  // efficiency
+		double audioGain = this->settings.getAudioGain();
+
+		while (!(this->stopConsumer || (audioQueue.hasStreamEnded() && audioQueue.empty())))
+		{
+			audioQueue.waitForProducer(lock);
+			while (audioQueue.size() > buffer_size || (audioQueue.hasStreamEnded() && !audioQueue.empty()))
 			{
-				std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
-
-		        std::vector<float> buffer(64 * channels);
-		        size_t bufferLength = 0;
-		        double audioGain = this->settings->getAudioGain();
-
-		        while (!(this->stopConsumer || (audioQueue->hasStreamEnded() && audioQueue->empty())))
-		        {
-			        audioQueue->waitForProducer(lock);
-
-			        while (audioQueue->size() > 64 * channels || (audioQueue->hasStreamEnded() && !audioQueue->empty()))
-			        {
-				        this->audioQueue->pop(buffer.data(), bufferLength, 64 * channels);
-
-				        // apply gain
-				        if (audioGain != 1.0)
-				        {
-					        for (unsigned int i = 0; i < 64 * channels; ++i)
-					        {
-						        buffer[i] = buffer[i] * audioGain;
-					        }
-				        }
-
-				        sf_writef_float(sfFile, buffer.data(), std::min<size_t>(bufferLength / channels, 64));
-			        }
-		        }
-
-		        sf_close(sfFile);
-			});
+				buffer.resize(0);
+				this->audioQueue.pop(std::back_inserter(buffer), buffer_size);
+				// apply gain
+				if (audioGain != 1.0)
+				{
+					std::for_each(begin(buffer), end(buffer), [audioGain](auto& val) { val *= audioGain; });
+				}
+				sf_writef_float(sfFile.get(), buffer.data(), std::min<size_t>(buffer.size() / channels, 64));
+			}
+		}
+	});
 	return true;
 }
 
 void VorbisConsumer::join()
 {
 	// Join the consumer thread to wait for completion
-	if (this->consumerThread && this->consumerThread->joinable())
+	if (this->consumerThread.joinable())
 	{
-		this->consumerThread->join();
+		this->consumerThread.join();
 	}
 }
 
 void VorbisConsumer::stop()
 {
 	// Stop consumer
-	this->audioQueue->signalEndOfStream();
+	this->audioQueue.signalEndOfStream();
 
 	// Wait for consumer to finish
 	join();

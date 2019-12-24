@@ -25,14 +25,15 @@
 class PortAudioProducer
 {
 public:
-	explicit PortAudioProducer(Settings* settings, AudioQueue<float>* audioQueue);
-	~PortAudioProducer();
+	PortAudioProducer(Settings& settings, AudioQueue<float>& audioQueue)
+	 : settings(settings)
+	 , audioQueue(audioQueue){};
 
-	std::list<DeviceInfo> getInputDevices();
+	std::vector<DeviceInfo> getInputDevices() const;
 
-	DeviceInfo getSelectedInputDevice();
+	DeviceInfo getSelectedInputDevice() const;
 
-	bool isRecording();
+	bool isRecording() const;
 
 	bool startRecording();
 
@@ -42,15 +43,12 @@ public:
 	void stopRecording();
 
 private:
-protected:
-	constexpr static auto framesPerBuffer{64U};
+	portaudio::System& sys{portaudio::System::instance()};
+	Settings& settings;
 
-	portaudio::AutoSystem autoSys;
-	portaudio::System& sys;
-	Settings* settings;
-	AudioQueue<float>* audioQueue;
+	AudioQueue<float>& audioQueue;
+
+	std::unique_ptr<portaudio::MemFunCallbackStream<PortAudioProducer>> inputStream;
 
 	int inputChannels = 0;
-
-	portaudio::MemFunCallbackStream<PortAudioProducer>* inputStream = nullptr;
 };

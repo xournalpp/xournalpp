@@ -4,23 +4,6 @@
 #include <i18n.h>
 #include <XojMsgBox.h>
 
-AudioController::AudioController(Settings* settings, Control* control)
-{
-	this->settings = settings;
-	this->control = control;
-	this->audioRecorder = new AudioRecorder(settings);
-	this->audioPlayer = new AudioPlayer(control, settings);
-}
-
-AudioController::~AudioController()
-{
-	delete this->audioRecorder;
-	this->audioRecorder = nullptr;
-
-	delete this->audioPlayer;
-	this->audioPlayer = nullptr;
-}
-
 auto AudioController::startRecording() -> bool
 {
 	if (!this->isRecording())
@@ -88,56 +71,56 @@ auto AudioController::startPlayback(const string& filename, unsigned int timesta
 	bool status = this->audioPlayer->start(filename, timestamp);
 	if (status)
 	{
-		this->control->getWindow()->getToolMenuHandler()->enableAudioPlaybackButtons();
+		this->control.getWindow()->getToolMenuHandler()->enableAudioPlaybackButtons();
 	}
 	return status;
 }
 
 void AudioController::pausePlayback()
 {
-	this->control->getWindow()->getToolMenuHandler()->setAudioPlaybackPaused(true);
+	this->control.getWindow()->getToolMenuHandler()->setAudioPlaybackPaused(true);
 
 	this->audioPlayer->pause();
 }
 
 void AudioController::seekForwards()
 {
-	this->audioPlayer->seek(this->settings->getDefaultSeekTime());
+	this->audioPlayer->seek(this->settings.getDefaultSeekTime());
 }
 
 void AudioController::seekBackwards()
 {
-	this->audioPlayer->seek(-1 * this->settings->getDefaultSeekTime());
+	this->audioPlayer->seek(-1 * this->settings.getDefaultSeekTime());
 }
 
 void AudioController::continuePlayback()
 {
-	this->control->getWindow()->getToolMenuHandler()->setAudioPlaybackPaused(false);
+	this->control.getWindow()->getToolMenuHandler()->setAudioPlaybackPaused(false);
 
 	this->audioPlayer->play();
 }
 
 void AudioController::stopPlayback()
 {
-	this->control->getWindow()->getToolMenuHandler()->disableAudioPlaybackButtons();
+	this->control.getWindow()->getToolMenuHandler()->disableAudioPlaybackButtons();
 	this->audioPlayer->stop();
 }
 
-auto AudioController::getAudioFilename() -> string
+auto AudioController::getAudioFilename() const -> string const&
 {
 	return this->audioFilename;
 }
 
-auto AudioController::getAudioFolder() -> Path
+auto AudioController::getAudioFolder() const -> Path
 {
-	string af = this->settings->getAudioFolder();
+	string const& af = this->settings.getAudioFolder();
 
 	if (af.length() < 8)
 	{
 		string msg = _("Audio folder not set! Recording won't work!\nPlease set the "
 					   "recording folder under \"Preferences > Audio recording\"");
 		g_warning("%s", msg.c_str());
-		XojMsgBox::showErrorToUser(this->control->getGtkWindow(), msg);
+		XojMsgBox::showErrorToUser(this->control.getGtkWindow(), msg);
 		return Path("");
 	}
 
@@ -149,12 +132,12 @@ auto AudioController::getStartTime() const -> size_t
 	return this->timestamp;
 }
 
-auto AudioController::getOutputDevices() -> vector<DeviceInfo>
+auto AudioController::getOutputDevices() const -> vector<DeviceInfo>
 {
 	return this->audioPlayer->getOutputDevices();
 }
 
-auto AudioController::getInputDevices() -> vector<DeviceInfo>
+auto AudioController::getInputDevices() const -> vector<DeviceInfo>
 {
 	return this->audioRecorder->getInputDevices();
 }

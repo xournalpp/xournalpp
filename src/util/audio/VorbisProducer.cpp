@@ -1,63 +1,60 @@
 #include "VorbisProducer.h"
 
-
-VorbisProducer::VorbisProducer(AudioQueue<float>* audioQueue) : audioQueue(audioQueue)
-{
-}
-
+constexpr auto sample_buffer_size = size_t{16384U};
 
 auto VorbisProducer::start(const std::string& filename, unsigned int timestamp) -> bool
 {
-	this->sfInfo.format = 0;
-	this->sfFile = sf_open(filename.c_str(), SFM_READ, &sfInfo);
-	if (sfFile == nullptr)
+	SF_INFO sfInfo{};
+	auto SNDFILE_tag_deleter = [](SNDFILE_tag* p) { sf_close(p); };
+	std::unique_ptr<SNDFILE_tag, decltype(SNDFILE_tag_deleter)> sfFile = {sf_open(filename.c_str(), SFM_READ, &sfInfo),
+	                                                                      SNDFILE_tag_deleter};
+	if (!sfFile)
 	{
-		g_warning("VorbisProducer: input file \"%s\" could not be opened\ncaused by:%s", filename.c_str(), sf_strerror(sfFile));
+		g_warning("VorbisProducer: input file \"%s\" could not be opened\ncaused by:%s", filename.c_str(),
+		          sf_strerror(sfFile.get()));
 		return false;
 	}
 
-	sf_count_t seekPosition = this->sfInfo.samplerate / 1000 * timestamp;
+	sf_count_t seekPosition = sfInfo.samplerate / 1000 * timestamp;
 
-	if (seekPosition < this->sfInfo.frames)
+	if (seekPosition < sfInfo.frames)
 	{
-		sf_seek(this->sfFile, seekPosition, SEEK_SET);
+		sf_seek(sfFile.get(), seekPosition, SEEK_SET);
 	}
 	else
 	{
 		g_warning("VorbisProducer: Seeking outside of audio file extent");
 	}
 
-	this->audioQueue->setAudioAttributes(this->sfInfo.samplerate, static_cast<unsigned int>(this->sfInfo.channels));
+	this->audioQueue.setAudioAttributes(sfInfo.samplerate, static_cast<unsigned int>(sfInfo.channels));
 
-	this->producerThread = new std::thread([&, filename] {
-		size_t numFrames = 1;
-		auto sampleBuffer = new float[1024 * this->sfInfo.channels];
-		std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
+	this->producerThread = std::thread([this, sfInfo, sfFile = std::move(sfFile)] {
+		size_t numFrames{1};
+		size_t const bufferSize{1024ULL * sfInfo.channels};
+		std::vector<float> sampleBuffer(bufferSize);
+		auto lock = audioQueue.aquire_lock();
 
-		while (!this->stopProducer && numFrames > 0 && !this->audioQueue->hasStreamEnded())
+		while (!this->stopProducer && numFrames > 0 && !this->audioQueue.hasStreamEnded())
 		{
-			numFrames = sf_readf_float(this->sfFile, sampleBuffer, 1024);
+			sampleBuffer.resize(bufferSize);
+			numFrames = sf_readf_float(sfFile.get(), sampleBuffer.data(), 1024);
+			sampleBuffer.resize(numFrames * sfInfo.channels);
 
-			while (this->audioQueue->size() >= this->sample_buffer_size && !this->audioQueue->hasStreamEnded() &&
+			while (this->audioQueue.size() >= sample_buffer_size && !this->audioQueue.hasStreamEnded() &&
 			       !this->stopProducer)
 			{
-				audioQueue->waitForConsumer(lock);
+				audioQueue.waitForConsumer(lock);
 			}
 
-			if (this->seekSeconds != 0)
+			if (auto tmpSeekSeconds = this->seekSeconds.load(); tmpSeekSeconds != 0)
 			{
-				sf_seek(this->sfFile, seekSeconds * this->sfInfo.samplerate, SEEK_CUR);
-				this->seekSeconds = 0;
+				sf_seek(sfFile.get(), tmpSeekSeconds * sfInfo.samplerate, SEEK_CUR);
+				this->seekSeconds -= tmpSeekSeconds;
 			}
 
-			this->audioQueue->push(sampleBuffer, static_cast<size_t>(numFrames * this->sfInfo.channels));
+			this->audioQueue.emplace(begin(sampleBuffer), end(sampleBuffer));
 		}
-		this->audioQueue->signalEndOfStream();
-
-		delete[] sampleBuffer;
-		sampleBuffer = nullptr;
-
-		sf_close(this->sfFile);
+		this->audioQueue.signalEndOfStream();
 	});
 	return true;
 }
@@ -74,9 +71,9 @@ void VorbisProducer::abort()
 void VorbisProducer::stop()
 {
 	// Wait for producer to finish
-	if (this->producerThread && this->producerThread->joinable())
+	if (this->producerThread.joinable())
 	{
-		this->producerThread->join();
+		this->producerThread.join();
 	}
 }
 

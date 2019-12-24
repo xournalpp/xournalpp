@@ -1,30 +1,19 @@
 #include "PortAudioProducer.h"
 
-PortAudioProducer::PortAudioProducer(Settings* settings, AudioQueue<float>* audioQueue)
-		: sys(portaudio::System::instance()),
-		  settings(settings),
-		  audioQueue(audioQueue)
-{
-}
+constexpr auto FRAMES_PER_BUFFER{64U};
 
-PortAudioProducer::~PortAudioProducer()
+auto PortAudioProducer::getInputDevices() const -> std::vector<DeviceInfo>
 {
-	if (portaudio::System::exists())
-	{
-		portaudio::System::terminate();
-	}
-}
+	auto devCount = this->sys.deviceCount();
+	std::vector<DeviceInfo> deviceList;
+	deviceList.reserve(devCount);
 
-auto PortAudioProducer::getInputDevices() -> std::list<DeviceInfo>
-{
-	std::list<DeviceInfo> deviceList;
-
-	for (portaudio::System::DeviceIterator i = this->sys.devicesBegin(); i != sys.devicesEnd(); ++i)
+	for (auto i = this->sys.devicesBegin(); i != sys.devicesEnd(); ++i)
 	{
 
 		if (i->isFullDuplexDevice() || i->isInputOnlyDevice())
 		{
-			DeviceInfo deviceInfo(&(*i), this->settings->getAudioInputDevice() == i->index());
+			DeviceInfo deviceInfo(&(*i), this->settings.getAudioInputDevice() == i->index());
 			deviceList.push_back(deviceInfo);
 		}
 
@@ -32,11 +21,11 @@ auto PortAudioProducer::getInputDevices() -> std::list<DeviceInfo>
 	return deviceList;
 }
 
-auto PortAudioProducer::getSelectedInputDevice() -> DeviceInfo
+auto PortAudioProducer::getSelectedInputDevice() const -> DeviceInfo
 {
 	try
 	{
-		return DeviceInfo(&sys.deviceByIndex(this->settings->getAudioInputDevice()), true);
+		return DeviceInfo(&sys.deviceByIndex(this->settings.getAudioInputDevice()), true);
 	}
 	catch (portaudio::PaException& e)
 	{
@@ -45,15 +34,15 @@ auto PortAudioProducer::getSelectedInputDevice() -> DeviceInfo
 	}
 }
 
-auto PortAudioProducer::isRecording() -> bool
+auto PortAudioProducer::isRecording() const -> bool
 {
-	return this->inputStream != nullptr && this->inputStream->isActive();
+	return this->inputStream && this->inputStream->isActive();
 }
 
 auto PortAudioProducer::startRecording() -> bool
 {
 	// Check if there already is a recording
-	if (this->inputStream != nullptr)
+	if (this->inputStream)
 	{
 		return false;
 	}
@@ -73,14 +62,17 @@ auto PortAudioProducer::startRecording() -> bool
 	// Restrict recording channels to 2 as playback devices should have 2 channels at least
 	this->inputChannels = std::min(2, device->maxInputChannels());
 	portaudio::DirectionSpecificStreamParameters inParams(*device, this->inputChannels, portaudio::FLOAT32, true, device->defaultLowInputLatency(), nullptr);
-	portaudio::StreamParameters params(inParams, portaudio::DirectionSpecificStreamParameters::null(), this->settings->getAudioSampleRate(), this->framesPerBuffer, paNoFlag);
+	portaudio::StreamParameters params(inParams, portaudio::DirectionSpecificStreamParameters::null(),
+	                                   this->settings.getAudioSampleRate(), FRAMES_PER_BUFFER, paNoFlag);
 
-	this->audioQueue->setAudioAttributes(this->settings->getAudioSampleRate(), static_cast<unsigned int>(this->inputChannels));
+	this->audioQueue.setAudioAttributes(this->settings.getAudioSampleRate(),
+	                                    static_cast<unsigned int>(this->inputChannels));
 
 	// Specify the callback used for buffering the recorded data
 	try
 	{
-		this->inputStream = new portaudio::MemFunCallbackStream<PortAudioProducer>(params, *this, &PortAudioProducer::recordCallback);
+		this->inputStream = std::make_unique<portaudio::MemFunCallbackStream<PortAudioProducer>>(
+		        params, *this, &PortAudioProducer::recordCallback);
 	}
 	catch (portaudio::PaException& e)
 	{
@@ -96,15 +88,15 @@ auto PortAudioProducer::startRecording() -> bool
 	catch (portaudio::PaException& e)
 	{
 		g_message("PortAudioProducer: Unable to start stream");
+		this->inputStream.reset();
 		return false;
 	}
 
 	return true;
 }
 
-auto PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer,
-                                       const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags)
-        -> int
+auto PortAudioProducer::recordCallback(const void* inputBuffer, void* /*outputBuffer*/, unsigned long framesPerBuffer,
+                                       const PaStreamCallbackTimeInfo*, PaStreamCallbackFlags statusFlags) -> int
 {
 	if (statusFlags)
 	{
@@ -114,8 +106,8 @@ auto PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuff
 	if (inputBuffer != nullptr)
 	{
 		size_t providedFrames = framesPerBuffer * this->inputChannels;
-
-		this->audioQueue->push(static_cast<float*>(const_cast<void*>(inputBuffer)), providedFrames);
+		auto begI = static_cast<float const*>(inputBuffer);
+		this->audioQueue.emplace(begI, std::next(begI, providedFrames));
 	}
 	return paContinue;
 }
@@ -123,17 +115,13 @@ auto PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuff
 void PortAudioProducer::stopRecording()
 {
 	// Stop the recording
-	if (this->inputStream != nullptr)
+	if (this->inputStream)
 	{
 		try
 		{
 			if (this->inputStream->isActive())
 			{
 				this->inputStream->stop();
-			}
-			if (this->inputStream->isOpen())
-			{
-				this->inputStream->close();
 			}
 		}
 		catch (portaudio::PaException& e)
@@ -143,9 +131,8 @@ void PortAudioProducer::stopRecording()
 	}
 
 	// Notify the consumer at the other side that ther will be no more data
-	this->audioQueue->signalEndOfStream();
+	this->audioQueue.signalEndOfStream();
 
 	// Allow new recording by removing the old one
-	delete this->inputStream;
-	this->inputStream = nullptr;
+	this->inputStream.reset();
 }

@@ -17,13 +17,18 @@
 #include "PortAudioConsumer.h"
 #include "VorbisProducer.h"
 
-#include <control/settings/Settings.h>
-#include <control/Control.h>
+#include "control/settings/Settings.h"
+#include "control/Control.h"
 
-class AudioPlayer
+class AudioPlayer final
 {
 public:
-	explicit AudioPlayer(Control* control, Settings* settings);
+	explicit AudioPlayer(Control& control, Settings& settings)
+	 : control(control)
+	 , settings(settings)
+	{
+	}
+
 	~AudioPlayer();
 	bool start(const string& filename, unsigned int timestamp = 0);
 	bool isPlaying();
@@ -34,15 +39,14 @@ public:
 
 	vector<DeviceInfo> getOutputDevices();
 
-	Settings* getSettings();
+	Settings& getSettings();
 	void disableAudioPlaybackButtons();
-private:
-protected:
-	Settings* settings = nullptr;
-	Control* control = nullptr;
 
-	AudioQueue<float>* audioQueue = nullptr;
-	PortAudioConsumer* portAudioConsumer = nullptr;
-	VorbisProducer* vorbisProducer = nullptr;
-	std::thread stopThread;
+private:
+	Control& control;
+	Settings& settings;
+
+	std::unique_ptr<AudioQueue<float>> audioQueue = std::make_unique<AudioQueue<float>>();
+	std::unique_ptr<PortAudioConsumer> portAudioConsumer = std::make_unique<PortAudioConsumer>(*this, *audioQueue);
+	std::unique_ptr<VorbisProducer> vorbisProducer = std::make_unique<VorbisProducer>(*audioQueue);
 };

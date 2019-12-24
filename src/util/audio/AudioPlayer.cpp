@@ -1,25 +1,10 @@
-#include <control/Control.h>
 #include "AudioPlayer.h"
 
-AudioPlayer::AudioPlayer(Control* control, Settings* settings) : control(control), settings(settings)
-{
-	this->audioQueue = new AudioQueue<float>();
-	this->portAudioConsumer = new PortAudioConsumer(this, this->audioQueue);
-	this->vorbisProducer = new VorbisProducer(this->audioQueue);
-}
+#include "control/Control.h"
 
 AudioPlayer::~AudioPlayer()
 {
 	this->stop();
-
-	delete this->portAudioConsumer;
-	this->portAudioConsumer = nullptr;
-
-	delete this->vorbisProducer;
-	this->vorbisProducer = nullptr;
-
-	delete this->audioQueue;
-	this->audioQueue = nullptr;
 }
 
 auto AudioPlayer::start(const string& filename, unsigned int timestamp) -> bool
@@ -66,7 +51,7 @@ void AudioPlayer::disableAudioPlaybackButtons()
 {
 	if (this->audioQueue->hasStreamEnded())
 	{
-		this->control->getWindow()->disableAudioPlaybackButtons();
+		this->control.getWindow()->disableAudioPlaybackButtons();
 	}
 }
 
@@ -92,12 +77,10 @@ void AudioPlayer::seek(int seconds)
 
 auto AudioPlayer::getOutputDevices() -> vector<DeviceInfo>
 {
-	std::list<DeviceInfo> deviceList = this->portAudioConsumer->getOutputDevices();
-	return vector<DeviceInfo>{std::make_move_iterator(std::begin(deviceList)),
-							  std::make_move_iterator(std::end(deviceList))};
+	return this->portAudioConsumer->getOutputDevices();
 }
 
-auto AudioPlayer::getSettings() -> Settings*
+auto AudioPlayer::getSettings() -> Settings&
 {
 	return this->settings;
 }
