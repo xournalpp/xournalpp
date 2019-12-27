@@ -1,7 +1,7 @@
 %global         build_timestamp %{lua: print(os.date("%Y%m%d"))}
 
 Name:           xournalpp
-Version:        1.0.10
+Version:        1.0.12
 Release:        0.%{build_timestamp}git
 Summary:        Handwriting note-taking software with PDF annotation support
 
