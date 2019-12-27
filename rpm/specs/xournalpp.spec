@@ -51,7 +51,7 @@ The %{name}-ui package contains a graphical user interface for  %{name}.
 
 
 %prep
-%autosetup -m %{name}-master
+%autosetup -n %{name}-master
 
 #Fix tlh aka klingon language
 mv po/tlh_AA.po po/tlh.po
