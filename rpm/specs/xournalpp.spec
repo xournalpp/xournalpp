@@ -1,7 +1,7 @@
 %global         build_timestamp %{lua: print(os.date("%Y%m%d"))}
 
 Name:           xournalpp
-Version:        1.0.17
+Version:        1.1.0
 Release:        0.%{build_timestamp}git
 Summary:        Handwriting note-taking software with PDF annotation support
 
@@ -96,7 +96,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %{_datadir}/%{name}/ui
 
 %changelog
-* Mon Dec 16 2019 Luya Tshimbalanga <luya@fedoraproject.org> - 1.0.17-0
+* Mon Dec 16 2019 Luya Tshimbalanga <luya@fedoraproject.org> - 1.1.0-0
 - Convert to automatic daily snapshot
 
 * Mon Dec 16 2019 Luya Tshimbalanga <luya@fedoraproject.org> - 1.0.16-7
