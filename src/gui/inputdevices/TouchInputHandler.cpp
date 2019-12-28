@@ -196,3 +196,23 @@ void TouchInputHandler::zoomEnd()
 	ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
 	zoomControl->endZoomSequence();
 }
+
+void TouchInputHandler::onUnblock()
+{
+	this->primarySequence = nullptr;
+	this->secondarySequence = nullptr;
+
+	this->startZoomDistance = 0.0;
+	this->lastZoomScrollCenterX = 0.0;
+	this->lastZoomScrollCenterY = 0.0;
+
+	this->priLastAbsX = -1.0;
+	this->priLastAbsY = -1.0;
+	this->secLastAbsX = -1.0;
+	this->secLastAbsY = -1.0;
+
+	this->priLastRelX = -1.0;
+	this->priLastRelY = -1.0;
+	this->secLastRelX = -1.0;
+	this->secLastRelY = -1.0;
+}

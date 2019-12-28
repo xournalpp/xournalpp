@@ -16,7 +16,14 @@ AbstractInputHandler::~AbstractInputHandler() = default;
 void AbstractInputHandler::block(bool block)
 {
 	this->blocked = block;
-	this->onBlock();
+	if(block == false)
+	{
+		this->onUnblock();
+	}
+	else 
+	{
+		this->onBlock();
+	}
 }
 
 auto AbstractInputHandler::isBlocked() const -> bool
@@ -91,5 +98,9 @@ auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, 
 }
 
 void AbstractInputHandler::onBlock()
+{
+}
+
+void AbstractInputHandler::onUnblock()
 {
 }

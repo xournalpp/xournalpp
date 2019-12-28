@@ -39,10 +39,10 @@ class InputContext
 
 private:
 	StylusInputHandler* stylusHandler;
-	TouchInputHandler* touchHandler;
 	MouseInputHandler* mouseHandler;
 	TouchDrawingInputHandler* touchDrawingHandler;
 	KeyboardInputHandler* keyboardHandler;
+	TouchInputHandler* touchHandler;
 
 	GtkWidget* widget = nullptr;
 	XournalView* view;
