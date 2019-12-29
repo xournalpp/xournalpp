@@ -4,121 +4,103 @@
 #include "model/Element.h"
 #include "model/Layer.h"
 #include "model/PageRef.h"
+
 #include "PageLayerPosEntry.h"
+#include "i18n.h"
 
-#include <i18n.h>
-
-DeleteUndoAction::DeleteUndoAction(const PageRef& page, bool eraser)
- : UndoAction("DeleteUndoAction")
-{
-	this->page = page;
-	this->eraser = eraser;
+DeleteUndoAction::DeleteUndoAction(const PageRef& page, bool eraser): UndoAction("DeleteUndoAction") {
+    this->page = page;
+    this->eraser = eraser;
 }
 
-DeleteUndoAction::~DeleteUndoAction()
-{
-	for (GList* l = this->elements; l != nullptr; l = l->next)
-	{
-		auto e = static_cast<PageLayerPosEntry<Element>*>(l->data);
-		if (!undone)
-		{
-			delete e->element;
-		}
-		delete e;
-	}
-	g_list_free(this->elements);
+DeleteUndoAction::~DeleteUndoAction() {
+    for (GList* l = this->elements; l != nullptr; l = l->next) {
+        auto e = static_cast<PageLayerPosEntry<Element>*>(l->data);
+        if (!undone) {
+            delete e->element;
+        }
+        delete e;
+    }
+    g_list_free(this->elements);
 }
 
-void DeleteUndoAction::addElement(Layer* layer, Element* e, int pos)
-{
-	this->elements = g_list_insert_sorted(this->elements, new PageLayerPosEntry<Element>(layer, e, pos),
-	                                      reinterpret_cast<GCompareFunc>(PageLayerPosEntry<Element>::cmp));
+void DeleteUndoAction::addElement(Layer* layer, Element* e, int pos) {
+    this->elements = g_list_insert_sorted(this->elements, new PageLayerPosEntry<Element>(layer, e, pos),
+                                          reinterpret_cast<GCompareFunc>(PageLayerPosEntry<Element>::cmp));
 }
 
-auto DeleteUndoAction::undo(Control*) -> bool
-{
-	if (this->elements == nullptr)
-	{
-		g_warning("Could not undo DeleteUndoAction, there is nothing to undo");
+auto DeleteUndoAction::undo(Control*) -> bool {
+    if (this->elements == nullptr) {
+        g_warning("Could not undo DeleteUndoAction, there is nothing to undo");
 
-		this->undone = true;
-		return false;
-	}
+        this->undone = true;
+        return false;
+    }
 
-	for (GList* l = this->elements; l != nullptr; l = l->next)
-	{
-		auto e = static_cast<PageLayerPosEntry<Element>*>(l->data);
-		e->layer->insertElement(e->element, e->pos);
-		this->page->fireElementChanged(e->element);
-	}
+    for (GList* l = this->elements; l != nullptr; l = l->next) {
+        auto e = static_cast<PageLayerPosEntry<Element>*>(l->data);
+        e->layer->insertElement(e->element, e->pos);
+        this->page->fireElementChanged(e->element);
+    }
 
-	this->undone = true;
-	return true;
+    this->undone = true;
+    return true;
 }
 
-auto DeleteUndoAction::redo(Control*) -> bool
-{
-	if (this->elements == nullptr)
-	{
-		g_warning("Could not redo DeleteUndoAction, there is nothing to redo");
+auto DeleteUndoAction::redo(Control*) -> bool {
+    if (this->elements == nullptr) {
+        g_warning("Could not redo DeleteUndoAction, there is nothing to redo");
 
-		this->undone = false;
-		return false;
-	}
+        this->undone = false;
+        return false;
+    }
 
-	for (GList* l = this->elements; l != nullptr; l = l->next)
-	{
-		auto e = static_cast<PageLayerPosEntry<Element>*>(l->data);
-		e->layer->removeElement(e->element, false);
-		this->page->fireElementChanged(e->element);
-	}
+    for (GList* l = this->elements; l != nullptr; l = l->next) {
+        auto e = static_cast<PageLayerPosEntry<Element>*>(l->data);
+        e->layer->removeElement(e->element, false);
+        this->page->fireElementChanged(e->element);
+    }
 
-	this->undone = false;
+    this->undone = false;
 
-	return true;
+    return true;
 }
 
-auto DeleteUndoAction::getText() -> string
-{
-	if (eraser)
-	{
-		return _("Erase stroke");
-	}
+auto DeleteUndoAction::getText() -> string {
+    if (eraser) {
+        return _("Erase stroke");
+    }
 
-	string text = _("Delete");
+    string text = _("Delete");
 
-	if (this->elements != nullptr)
-	{
-		ElementType type = (static_cast<PageLayerPosEntry<Element>*>(this->elements->data))->element->getType();
+    if (this->elements != nullptr) {
+        ElementType type = (static_cast<PageLayerPosEntry<Element>*>(this->elements->data))->element->getType();
 
-		for (GList* l = this->elements->next; l != nullptr; l = l->next)
-		{
-			auto e = static_cast<PageLayerPosEntry<Element>*>(l->data);
-			if (type != e->element->getType())
-			{
-				text += " ";
-				text += _("elements");
-				return text;
-			}
-		}
+        for (GList* l = this->elements->next; l != nullptr; l = l->next) {
+            auto e = static_cast<PageLayerPosEntry<Element>*>(l->data);
+            if (type != e->element->getType()) {
+                text += " ";
+                text += _("elements");
+                return text;
+            }
+        }
 
-		text += " ";
-		switch (type)
-		{
-			case ELEMENT_STROKE:
-				text += _("stroke");
-				break;
-			case ELEMENT_IMAGE:
-				text += _("image");
-				break;
-			case ELEMENT_TEXIMAGE:
-				text += _("latex");
-				break;
-			case ELEMENT_TEXT:
-				text += _("text");
-				break;
-		}
-	}
+        text += " ";
+        switch (type) {
+            case ELEMENT_STROKE:
+                text += _("stroke");
+                break;
+            case ELEMENT_IMAGE:
+                text += _("image");
+                break;
+            case ELEMENT_TEXIMAGE:
+                text += _("latex");
+                break;
+            case ELEMENT_TEXT:
+                text += _("text");
+                break;
+        }
+    }
 
-	return text;
+    return text;
 }

@@ -13,14 +13,13 @@
 
 #include "ObjectEncoding.h"
 
-class HexObjectEncoding : public ObjectEncoding
-{
+class HexObjectEncoding: public ObjectEncoding {
 public:
-	HexObjectEncoding();
-	virtual ~HexObjectEncoding();
+    HexObjectEncoding();
+    virtual ~HexObjectEncoding();
 
 public:
-	virtual void addData(const void* data, int len);
+    virtual void addData(const void* data, int len);
 
 private:
 };

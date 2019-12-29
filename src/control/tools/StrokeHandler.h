@@ -11,65 +11,61 @@
 
 #pragma once
 
-#include "InputHandler.h"
-
 #include "view/DocumentView.h"
+
+#include "InputHandler.h"
 
 class ShapeRecognizer;
 
 /**
  * @brief The stroke handler draws a stroke on a XojPageView
- * 
+ *
  * The stroke is drawn using a cairo_surface_t* as a mask:
  * As the pointer moves on the canvas single segments are
  * drawn opaquely on the initially transparent masking
  * surface. The surface is used to mask the stroke
  * when drawing it to the XojPageView
  */
-class StrokeHandler : public InputHandler
-{
+class StrokeHandler: public InputHandler {
 public:
-	StrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
-	virtual ~StrokeHandler();
+    StrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
+    virtual ~StrokeHandler();
 
-	void draw(cairo_t* cr);
+    void draw(cairo_t* cr);
 
-	bool onMotionNotifyEvent(const PositionInputData& pos);
-	void onButtonReleaseEvent(const PositionInputData& pos);
-	void onButtonPressEvent(const PositionInputData& pos);
-	bool onKeyEvent(GdkEventKey* event );
-	/**
-	 * Reset the shape recognizer, only implemented by drawing instances,
-	 * but needs to be in the base interface.
-	 */
-	virtual void resetShapeRecognizer();
-
-protected:
-	void strokeRecognizerDetected(ShapeRecognizerResult* result, Layer* layer);
-	void destroySurface();
+    bool onMotionNotifyEvent(const PositionInputData& pos);
+    void onButtonReleaseEvent(const PositionInputData& pos);
+    void onButtonPressEvent(const PositionInputData& pos);
+    bool onKeyEvent(GdkEventKey* event);
+    /**
+     * Reset the shape recognizer, only implemented by drawing instances,
+     * but needs to be in the base interface.
+     */
+    virtual void resetShapeRecognizer();
 
 protected:
-		Point buttonDownPoint;	// used for tapSelect and filtering - never snapped to grid.
+    void strokeRecognizerDetected(ShapeRecognizerResult* result, Layer* layer);
+    void destroySurface();
+
+protected:
+    Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid.
 private:
-	/**
-	 * The masking surface
-	 */
-	cairo_surface_t* surfMask;
+    /**
+     * The masking surface
+     */
+    cairo_surface_t* surfMask;
 
-	/**
-	 * And the corresponding cairo_t*
-	 */
-	cairo_t* crMask;
+    /**
+     * And the corresponding cairo_t*
+     */
+    cairo_t* crMask;
 
-	DocumentView view;
+    DocumentView view;
 
-	ShapeRecognizer* reco;
+    ShapeRecognizer* reco;
 
-	
-	// to filter out short strokes (usually the user tapping on the page to select it)
-	guint32 startStrokeTime{};
-	static guint32 lastStrokeTime;	//persist across strokes - allow us to not ignore persistent dotting.
-	
 
+    // to filter out short strokes (usually the user tapping on the page to select it)
+    guint32 startStrokeTime{};
+    static guint32 lastStrokeTime;  // persist across strokes - allow us to not ignore persistent dotting.
 };
-

@@ -15,35 +15,34 @@
 
 typedef vector<ToolbarItem*> ToolbarItemVector;
 
-class ToolbarEntry
-{
+class ToolbarEntry {
 public:
-	ToolbarEntry();
-	ToolbarEntry(const ToolbarEntry& e);
-	~ToolbarEntry();
+    ToolbarEntry();
+    ToolbarEntry(const ToolbarEntry& e);
+    ~ToolbarEntry();
 
-	void operator=(const ToolbarEntry& e);
+    void operator=(const ToolbarEntry& e);
 
 public:
-	void clearList();
+    void clearList();
 
-	string getName();
-	void setName(string name);
+    string getName();
+    void setName(string name);
 
-	/**
-	 * Adds a new item and return the ID of the item
-	 */
-	int addItem(string item);
-	bool removeItemById(int id);
+    /**
+     * Adds a new item and return the ID of the item
+     */
+    int addItem(string item);
+    bool removeItemById(int id);
 
-	/**
-	 * Insert a new item and return the ID of the item
-	 */
-	int insertItem(string item, int position);
+    /**
+     * Insert a new item and return the ID of the item
+     */
+    int insertItem(string item, int position);
 
-	const ToolbarItemVector& getItems() const;
+    const ToolbarItemVector& getItems() const;
 
 private:
-	string name;
-	ToolbarItemVector entries;
+    string name;
+    ToolbarItemVector entries;
 };

@@ -11,40 +11,41 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "ToolbarEntry.h"
+#include "XournalType.h"
 
-#include <XournalType.h>
-
-class ToolbarData
-{
+class ToolbarData {
 public:
-	ToolbarData(bool predefined);
-	ToolbarData(const ToolbarData& data);
-	virtual ~ToolbarData();
+    ToolbarData(bool predefined);
+    ToolbarData(const ToolbarData& data);
+    virtual ~ToolbarData();
 
-	void operator=(const ToolbarData& other);
+    void operator=(const ToolbarData& other);
 
 public:
-	string getName();
-	void setName(string name);
-	string getId();
-	void setId(string id);
-	bool isPredefined() const;
+    string getName();
+    void setName(string name);
+    string getId();
+    void setId(string id);
+    bool isPredefined() const;
 
-	void load(GKeyFile* config, const char* group);
-	void saveToKeyFile(GKeyFile* config);
+    void load(GKeyFile* config, const char* group);
+    void saveToKeyFile(GKeyFile* config);
 
-	// Editing API
-	int insertItem(const string& toolbar, const string& item, int position);
-	bool removeItemByID(const string& toolbar, int id);
+    // Editing API
+    int insertItem(const string& toolbar, const string& item, int position);
+    bool removeItemByID(const string& toolbar, int id);
 
 private:
-	string id;
-	string name;
-	std::vector<ToolbarEntry*> contents;
+    string id;
+    string name;
+    std::vector<ToolbarEntry*> contents;
 
-	bool predefined = false;
+    bool predefined = false;
 
-	friend class ToolbarModel;
-	friend class ToolMenuHandler;
+    friend class ToolbarModel;
+    friend class ToolMenuHandler;
 };

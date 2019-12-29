@@ -17,21 +17,20 @@ class PluginController;
 class PluginDialogEntry;
 class Settings;
 
-class PluginDialog : public GladeGui
-{
+class PluginDialog: public GladeGui {
 public:
-	PluginDialog(GladeSearchpath* gladeSearchPath, Settings* settings);
-	virtual ~PluginDialog();
+    PluginDialog(GladeSearchpath* gladeSearchPath, Settings* settings);
+    virtual ~PluginDialog();
 
 public:
-	void loadPluginList(PluginController* pc);
-	virtual void show(GtkWindow* parent);
+    void loadPluginList(PluginController* pc);
+    virtual void show(GtkWindow* parent);
 
 private:
-	void saveSettings();
+    void saveSettings();
 
 private:
-	Settings* settings;
+    Settings* settings;
 
-	vector<PluginDialogEntry*> plugins;
+    vector<PluginDialogEntry*> plugins;
 };

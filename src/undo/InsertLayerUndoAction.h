@@ -11,26 +11,28 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "UndoAction.h"
-#include <XournalType.h>
+#include "XournalType.h"
 
 class Layer;
 class LayerController;
 
-class InsertLayerUndoAction : public UndoAction
-{
+class InsertLayerUndoAction: public UndoAction {
 public:
-	InsertLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer, int layerPosition);
-	virtual ~InsertLayerUndoAction();
+    InsertLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer, int layerPosition);
+    virtual ~InsertLayerUndoAction();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
 
-	virtual string getText();
+    virtual string getText();
 
 private:
-	int layerPosition;
-	LayerController* layerController;
-	Layer* layer;
+    int layerPosition;
+    LayerController* layerController;
+    Layer* layer;
 };

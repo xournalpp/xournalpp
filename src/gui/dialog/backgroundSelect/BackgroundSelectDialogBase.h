@@ -11,56 +11,59 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "gui/GladeGui.h"
-#include <XournalType.h>
+
+#include "XournalType.h"
 
 class Document;
 class Settings;
 class BaseElementView;
 
-class BackgroundSelectDialogBase : public GladeGui
-{
+class BackgroundSelectDialogBase: public GladeGui {
 public:
-	BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings, const string& glade,
-	                           const string& mainWnd);
-	~BackgroundSelectDialogBase();
+    BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings, const string& glade,
+                               const string& mainWnd);
+    ~BackgroundSelectDialogBase();
 
 public:
-	Settings* getSettings();
-	virtual void show(GtkWindow* parent);
-	virtual void setSelected(int selected);
+    Settings* getSettings();
+    virtual void show(GtkWindow* parent);
+    virtual void setSelected(int selected);
 
 protected:
-	void layout();
+    void layout();
 
 private:
-	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, BackgroundSelectDialogBase* dlg);
+    static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, BackgroundSelectDialogBase* dlg);
 
 private:
 protected:
-	Settings* settings = nullptr;
-	GtkWidget* scrollPreview = nullptr;
-	GtkWidget* layoutContainer = nullptr;
+    Settings* settings = nullptr;
+    GtkWidget* scrollPreview = nullptr;
+    GtkWidget* layoutContainer = nullptr;
 
-	Document* doc = nullptr;
+    Document* doc = nullptr;
 
-	/**
-	 * Selection confirmed
-	 */
-	bool confirmed = false;
+    /**
+     * Selection confirmed
+     */
+    bool confirmed = false;
 
-	/**
-	 * Selected image, none if negative
-	 */
-	int selected = -1;
+    /**
+     * Selected image, none if negative
+     */
+    int selected = -1;
 
-	/**
-	 * To check if the size has real changed
-	 */
-	int lastWidth = 0;
+    /**
+     * To check if the size has real changed
+     */
+    int lastWidth = 0;
 
-	/**
-	 * Elements to display
-	 */
-	vector<BaseElementView*> elements;
+    /**
+     * Elements to display
+     */
+    vector<BaseElementView*> elements;
 };

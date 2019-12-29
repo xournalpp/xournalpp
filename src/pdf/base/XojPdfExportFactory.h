@@ -11,21 +11,22 @@
 
 #pragma once
 
-#include "XojPdfExport.h"
+#include <string>
+#include <vector>
 
-#include <XournalType.h>
+#include "XojPdfExport.h"
+#include "XournalType.h"
 
 class Document;
 class ProgressListener;
 
-class XojPdfExportFactory
-{
+class XojPdfExportFactory {
 private:
-	XojPdfExportFactory();
-	virtual ~XojPdfExportFactory();
+    XojPdfExportFactory();
+    virtual ~XojPdfExportFactory();
 
 public:
-	static XojPdfExport* createExport(Document* doc, ProgressListener* listener);
+    static XojPdfExport* createExport(Document* doc, ProgressListener* listener);
 
 private:
 };

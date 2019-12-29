@@ -11,24 +11,25 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "BaseBackgroundPainter.h"
+#include "XournalType.h"
 
-#include <XournalType.h>
-
-class DottedBackgroundPainter : public BaseBackgroundPainter
-{
+class DottedBackgroundPainter: public BaseBackgroundPainter {
 public:
-	DottedBackgroundPainter();
-	virtual ~DottedBackgroundPainter();
+    DottedBackgroundPainter();
+    virtual ~DottedBackgroundPainter();
 
 public:
-	virtual void paint();
-	void paintBackgroundDotted();
+    virtual void paint();
+    void paintBackgroundDotted();
 
-	/**
-	 * Reset all used configuration values
-	 */
-	virtual void resetConfig();
+    /**
+     * Reset all used configuration values
+     */
+    virtual void resetConfig();
 
 private:
 };

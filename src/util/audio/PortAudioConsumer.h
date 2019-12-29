@@ -11,42 +11,39 @@
 
 #pragma once
 
-#include <XournalType.h>
-
-#include "DeviceInfo.h"
-#include "AudioQueue.h"
-
-#include "control/settings/Settings.h"
+#include <list>
+#include <string>
+#include <vector>
 
 #include <portaudiocpp/PortAudioCpp.hxx>
 
-#include <list>
+#include "control/settings/Settings.h"
+
+#include "AudioQueue.h"
+#include "DeviceInfo.h"
+#include "XournalType.h"
 
 class AudioPlayer;
 
-class PortAudioConsumer final
-{
+class PortAudioConsumer final {
 public:
-	explicit PortAudioConsumer(AudioPlayer& audioPlayer, AudioQueue<float>& audioQueue)
-	 : audioPlayer(audioPlayer)
-	 , audioQueue(audioQueue)
-	{
-	}
+    explicit PortAudioConsumer(AudioPlayer& audioPlayer, AudioQueue<float>& audioQueue):
+            audioPlayer(audioPlayer), audioQueue(audioQueue) {}
 
-	std::vector<DeviceInfo> getOutputDevices() const;
-	DeviceInfo getSelectedOutputDevice() const;
-	bool isPlaying() const;
-	bool startPlaying();
-	int playCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer,
-	                 const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags);
-	void stopPlaying();
+    std::vector<DeviceInfo> getOutputDevices() const;
+    DeviceInfo getSelectedOutputDevice() const;
+    bool isPlaying() const;
+    bool startPlaying();
+    int playCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer,
+                     const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags);
+    void stopPlaying();
 
 private:
-	portaudio::System& sys{portaudio::System::instance()};
-	AudioPlayer& audioPlayer;
-	AudioQueue<float>& audioQueue;
+    portaudio::System& sys{portaudio::System::instance()};
+    AudioPlayer& audioPlayer;
+    AudioQueue<float>& audioQueue;
 
-	std::unique_ptr<portaudio::MemFunCallbackStream<PortAudioConsumer>> outputStream;
+    std::unique_ptr<portaudio::MemFunCallbackStream<PortAudioConsumer>> outputStream;
 
-	int outputChannels = 0;
+    int outputChannels = 0;
 };

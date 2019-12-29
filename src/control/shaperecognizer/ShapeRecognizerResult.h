@@ -11,25 +11,27 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
+
+#include "XournalType.h"
 
 class Stroke;
 
 class ShapeRecognizer;
 
-class ShapeRecognizerResult
-{
+class ShapeRecognizerResult {
 public:
-	ShapeRecognizerResult(Stroke* result);
-	ShapeRecognizerResult(Stroke* result, ShapeRecognizer* recognizer);
-	virtual ~ShapeRecognizerResult();
+    ShapeRecognizerResult(Stroke* result);
+    ShapeRecognizerResult(Stroke* result, ShapeRecognizer* recognizer);
+    virtual ~ShapeRecognizerResult();
 
 public:
-	void addSourceStroke(Stroke* s);
-	Stroke* getRecognized();
-	vector<Stroke*>* getSources();
+    void addSourceStroke(Stroke* s);
+    Stroke* getRecognized();
+    vector<Stroke*>* getSources();
 
 private:
-	Stroke* recognized;
-	vector<Stroke*> source;
+    Stroke* recognized;
+    vector<Stroke*> source;
 };

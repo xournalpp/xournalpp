@@ -11,46 +11,47 @@
 
 #pragma once
 
-#include "BaseElementView.h"
+#include <string>
+#include <vector>
+
 #include "pdf/base/XojPdfPage.h"
 
-#include <XournalType.h>
+#include "BaseElementView.h"
+#include "XournalType.h"
 
 class PdfPagesDialog;
 
-class PdfElementView : public BaseElementView
-{
+class PdfElementView: public BaseElementView {
 public:
-	PdfElementView(int id, XojPdfPageSPtr page, PdfPagesDialog* dlg);
-	~PdfElementView();
+    PdfElementView(int id, XojPdfPageSPtr page, PdfPagesDialog* dlg);
+    ~PdfElementView();
 
 protected:
+    /**
+     * Paint the contents (without border / selection)
+     */
+    virtual void paintContents(cairo_t* cr);
 
-	/**
-	 * Paint the contents (without border / selection)
-	 */
-	virtual void paintContents(cairo_t* cr);
+    /**
+     * Get the width in pixel, without shadow / border
+     */
+    virtual int getContentWidth();
 
-	/**
-	 * Get the width in pixel, without shadow / border
-	 */
-	virtual int getContentWidth();
-
-	/**
-	 * Get the height in pixel, without shadow / border
-	 */
-	virtual int getContentHeight();
+    /**
+     * Get the height in pixel, without shadow / border
+     */
+    virtual int getContentHeight();
 
 public:
-	bool isUsed() const;
-	void setUsed(bool used);
-	void setHideUnused();
+    bool isUsed() const;
+    void setUsed(bool used);
+    void setHideUnused();
 
 private:
-	XojPdfPageSPtr page;
+    XojPdfPageSPtr page;
 
-	/**
-	 * This page is already used as background
-	 */
-	bool used = false;
+    /**
+     * This page is already used as background
+     */
+    bool used = false;
 };

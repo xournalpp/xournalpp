@@ -11,19 +11,21 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "model/LinkDestination.h"
 
-#include <XournalType.h>
+#include "XournalType.h"
 
-class XojPdfAction
-{
+class XojPdfAction {
 public:
-	XojPdfAction();
-	virtual ~XojPdfAction();
+    XojPdfAction();
+    virtual ~XojPdfAction();
 
 public:
-	virtual XojLinkDest* getDestination() = 0;
-	virtual string getTitle() = 0;
+    virtual XojLinkDest* getDestination() = 0;
+    virtual string getTitle() = 0;
 
 private:
 };

@@ -11,12 +11,15 @@
 
 #pragma once
 
-#include <XournalType.h>
-#include <Rectangle.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
 
 #include "gui/LayoutMapper.h"
+
+#include "Rectangle.h"
+#include "XournalType.h"
 
 class XojPageView;
 class XournalView;
@@ -29,116 +32,115 @@ class ScrollHandling;
  * This class manages the layout of the XojPageView's contained
  * in the XournalWidget
  */
-class Layout
-{
+class Layout {
 public:
-	Layout(XournalView* view, ScrollHandling* scrollHandling);
-	virtual ~Layout();
+    Layout(XournalView* view, ScrollHandling* scrollHandling);
+    virtual ~Layout();
 
 public:
-	/**
-	 * Increases the adjustments by the given amounts
-	 */
-	void scrollRelative(double x, double y);
+    /**
+     * Increases the adjustments by the given amounts
+     */
+    void scrollRelative(double x, double y);
 
-	/**
-	 * Changes the adjustments by absolute amounts (for pinch-to-zoom)
-	 */
-	void scrollAbs(double x, double y);
+    /**
+     * Changes the adjustments by absolute amounts (for pinch-to-zoom)
+     */
+    void scrollAbs(double x, double y);
 
-	/**
-	 * Changes the adjustments in such a way as to make sure that
-	 * the given Rectangle is visible
-	 *
-	 * @remark If the given Rectangle won't fit into the scrolled window
-	 *         then only its top left corner will be visible
-	 */
-	void ensureRectIsVisible(int x, int y, int width, int height);
+    /**
+     * Changes the adjustments in such a way as to make sure that
+     * the given Rectangle is visible
+     *
+     * @remark If the given Rectangle won't fit into the scrolled window
+     *         then only its top left corner will be visible
+     */
+    void ensureRectIsVisible(int x, int y, int width, int height);
 
-	/**
-	 * Returns the height of the entire Layout
-	 */
-	int getMinimalHeight() const;
+    /**
+     * Returns the height of the entire Layout
+     */
+    int getMinimalHeight() const;
 
-	/**
-	 * Returns the width of the entire Layout
-	 */
-	int getMinimalWidth() const;
+    /**
+     * Returns the width of the entire Layout
+     */
+    int getMinimalWidth() const;
 
-	/**
-	 * Returns the Rectangle which is currently visible
-	 */
-	Rectangle getVisibleRect();
+    /**
+     * Returns the Rectangle which is currently visible
+     */
+    Rectangle getVisibleRect();
 
 
-	/**
-	 * recalculate and resize Layout
-	 */
-	void recalculate();
+    /**
+     * recalculate and resize Layout
+     */
+    void recalculate();
 
-	/**
-	 * Performs a layout of the XojPageView's managed in this Layout
-	 * Sets out pages in a grid.
-	 * Document pages are assigned to grid positions by the mapper object and may be ordered in a myriad of ways.
-	 * only call this on size allocation
-	 */
-	void layoutPages(int width, int height);
+    /**
+     * Performs a layout of the XojPageView's managed in this Layout
+     * Sets out pages in a grid.
+     * Document pages are assigned to grid positions by the mapper object and may be ordered in a myriad of ways.
+     * only call this on size allocation
+     */
+    void layoutPages(int width, int height);
 
-	/**
-	 * Updates the current XojPageView. The XojPageView is selected based on
-	 * the percentage of the visible area of the XojPageView relative
-	 * to its total area.
-	 */
-	void updateVisibility();
+    /**
+     * Updates the current XojPageView. The XojPageView is selected based on
+     * the percentage of the visible area of the XojPageView relative
+     * to its total area.
+     */
+    void updateVisibility();
 
-	/**
-	 * Return the pageview containing co-ordinates.
-	 */
-	XojPageView* getViewAt(int x, int y);
+    /**
+     * Return the pageview containing co-ordinates.
+     */
+    XojPageView* getViewAt(int x, int y);
 
-	/**
-	 * Return the page index found ( or -1 if not found) at layout grid row,col
-	 * 
-	 */
-	LayoutMapper::optional_size_t getIndexAtGridMap(size_t row, size_t col);
+    /**
+     * Return the page index found ( or -1 if not found) at layout grid row,col
+     *
+     */
+    LayoutMapper::optional_size_t getIndexAtGridMap(size_t row, size_t col);
 
 protected:
-	static void horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
-	static void verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
+    static void horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
+    static void verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
 
 private:
-	static void checkScroll(GtkAdjustment* adjustment, double& lastScroll);
+    static void checkScroll(GtkAdjustment* adjustment, double& lastScroll);
 
-	void setLayoutSize(int width, int height);
+    void setLayoutSize(int width, int height);
 
 private:
-	LayoutMapper mapper;
+    LayoutMapper mapper;
 
-	XournalView* view = nullptr;
-	ScrollHandling* scrollHandling = nullptr;
+    XournalView* view = nullptr;
+    ScrollHandling* scrollHandling = nullptr;
 
-	std::vector<unsigned> widthCols;
-	std::vector<unsigned> heightRows;
+    std::vector<unsigned> widthCols;
+    std::vector<unsigned> heightRows;
 
-	double lastScrollHorizontal = -1;
-	double lastScrollVertical = -1;
+    double lastScrollHorizontal = -1;
+    double lastScrollVertical = -1;
 
-	/**
-	 * The last width and height of the widget
-	 */
-	int lastWidgetWidth = 0;
-	int lastWidgetHeight = 0;
+    /**
+     * The last width and height of the widget
+     */
+    int lastWidgetWidth = 0;
+    int lastWidgetHeight = 0;
 
-	/**
-	 * The width and height of all our pages
-	 */
-	size_t minWidth = 0;
-	size_t minHeight = 0;
+    /**
+     * The width and height of all our pages
+     */
+    size_t minWidth = 0;
+    size_t minHeight = 0;
 
-	/**
-	 * layoutPages invalidates the precalculation of recalculate
-	 * this bool prevents that layotPages can be called without a previously call to recalculate
-	 * Todo: we may want to remove the additional calculation in layoutPages, since we stored those values in
-	 */
-	bool valid = false;
+    /**
+     * layoutPages invalidates the precalculation of recalculate
+     * this bool prevents that layotPages can be called without a previously call to recalculate
+     * Todo: we may want to remove the additional calculation in layoutPages, since we stored those values in
+     */
+    bool valid = false;
 };

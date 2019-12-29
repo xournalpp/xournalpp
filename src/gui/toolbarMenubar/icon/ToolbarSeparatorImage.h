@@ -16,12 +16,11 @@
 /**
  * Menuitem handler
  */
-class ToolbarSeparatorImage
-{
+class ToolbarSeparatorImage {
 private:
-	ToolbarSeparatorImage();
-	virtual ~ToolbarSeparatorImage();
+    ToolbarSeparatorImage();
+    virtual ~ToolbarSeparatorImage();
 
 public:
-	static GtkWidget* newSepeartorImage();
+    static GtkWidget* newSepeartorImage();
 };

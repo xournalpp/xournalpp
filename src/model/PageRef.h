@@ -11,40 +11,40 @@
 
 #pragma once
 
-#include "XojPage.h"
+#include <string>
+#include <vector>
 
-#include <XournalType.h>
+#include "XojPage.h"
+#include "XournalType.h"
 
 class Layer;
 class BackgroundImage;
 
-class PageRef
-{
+class PageRef {
 public:
-	// Todo move constructor
-	PageRef();
-	PageRef(const PageRef& ref);
-	PageRef(XojPage* page);
-	virtual ~PageRef();
+    // Todo move constructor
+    PageRef();
+    PageRef(const PageRef& ref);
+    PageRef(XojPage* page);
+    virtual ~PageRef();
 
 public:
-	bool isValid();
+    bool isValid();
 
-	operator XojPage* ();
+    operator XojPage*();
 
-	bool operator==(const PageRef& ref);
-	void operator=(const PageRef& ref);
-	void operator=(XojPage* page);
+    bool operator==(const PageRef& ref);
+    void operator=(const PageRef& ref);
+    void operator=(XojPage* page);
 
-	XojPage &operator*();
-	XojPage *operator->();
+    XojPage& operator*();
+    XojPage* operator->();
 
-	const XojPage &operator*() const;
-	const XojPage *operator->() const;
+    const XojPage& operator*() const;
+    const XojPage* operator->() const;
 
-	PageRef clone();
+    PageRef clone();
 
 private:
-	XojPage* page = nullptr;
+    XojPage* page = nullptr;
 };
-

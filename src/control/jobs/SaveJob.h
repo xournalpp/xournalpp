@@ -11,28 +11,29 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "BlockingJob.h"
+#include "XournalType.h"
 
-#include <XournalType.h>
-
-class SaveJob : public BlockingJob
-{
+class SaveJob: public BlockingJob {
 public:
-	SaveJob(Control* control);
+    SaveJob(Control* control);
 
 protected:
-	virtual ~SaveJob();
+    virtual ~SaveJob();
 
 public:
-	virtual void run();
+    virtual void run();
 
-	bool save();
+    bool save();
 
-	static void updatePreview(Control* control);
+    static void updatePreview(Control* control);
 
 protected:
-	virtual void afterRun();
+    virtual void afterRun();
 
 private:
-	string lastError;
+    string lastError;
 };

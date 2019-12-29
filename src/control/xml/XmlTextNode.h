@@ -11,21 +11,20 @@
 
 #pragma once
 
-#include "XmlNode.h"
 #include "XmlAudioNode.h"
+#include "XmlNode.h"
 
-class XmlTextNode : public XmlAudioNode
-{
+class XmlTextNode: public XmlAudioNode {
 public:
-	XmlTextNode(const char* tag, std::string text);
-	explicit XmlTextNode(const char* tag);
-	~XmlTextNode() override = default;
+    XmlTextNode(const char* tag, std::string text);
+    explicit XmlTextNode(const char* tag);
+    ~XmlTextNode() override = default;
 
 public:
-	void setText(std::string text);
+    void setText(std::string text);
 
-	void writeOut(OutputStream* out) override;
+    void writeOut(OutputStream* out) override;
 
 private:
-	std::string text;
+    std::string text;
 };

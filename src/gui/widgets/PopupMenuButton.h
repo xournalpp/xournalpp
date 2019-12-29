@@ -11,21 +11,22 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
 
-class PopupMenuButton
-{
+#include "XournalType.h"
+
+class PopupMenuButton {
 public:
-	PopupMenuButton(GtkWidget* button, GtkWidget* menu);
-	virtual ~PopupMenuButton();
+    PopupMenuButton(GtkWidget* button, GtkWidget* menu);
+    virtual ~PopupMenuButton();
 
 public:
-	void setMenu(GtkWidget* menu);
+    void setMenu(GtkWidget* menu);
 
 private:
-	GtkWidget* button;
-	GtkWidget* menu;
+    GtkWidget* button;
+    GtkWidget* menu;
 };
-

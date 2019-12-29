@@ -11,16 +11,16 @@
 
 #pragma once
 
-#include <XournalType.h>
-#include "AbstractInputHandler.h"
+#include <string>
+#include <vector>
 
-class KeyboardInputHandler : public AbstractInputHandler
-{
+#include "AbstractInputHandler.h"
+#include "XournalType.h"
+
+class KeyboardInputHandler: public AbstractInputHandler {
 private:
 public:
-	explicit KeyboardInputHandler(InputContext* inputContext);
-	~KeyboardInputHandler() override;
-	bool handleImpl(InputEvent* event) override;
+    explicit KeyboardInputHandler(InputContext* inputContext);
+    ~KeyboardInputHandler() override;
+    bool handleImpl(InputEvent* event) override;
 };
-
-

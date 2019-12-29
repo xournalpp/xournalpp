@@ -11,9 +11,12 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
+
+#include "XournalType.h"
 
 class Settings;
 class ToolbarData;
@@ -21,32 +24,31 @@ class ToolMenuHandler;
 class MenuSelectToolbarData;
 class MainWindow;
 
-class MainWindowToolbarMenu
-{
+class MainWindowToolbarMenu {
 public:
-	MainWindowToolbarMenu(MainWindow* win);
-	virtual ~MainWindowToolbarMenu();
+    MainWindowToolbarMenu(MainWindow* win);
+    virtual ~MainWindowToolbarMenu();
 
 public:
-	void updateToolbarMenu(GtkMenuShell* menubar, Settings* settings, ToolMenuHandler* toolbar);
-	ToolbarData* getSelectedToolbar();
-	void setTmpDisabled(bool disabled);
+    void updateToolbarMenu(GtkMenuShell* menubar, Settings* settings, ToolMenuHandler* toolbar);
+    ToolbarData* getSelectedToolbar();
+    void setTmpDisabled(bool disabled);
 
 private:
-	void freeToolMenu();
-	void selectToolbar(Settings* settings, ToolMenuHandler* toolbar);
-	void removeOldElements(GtkMenuShell* menubar);
-	void addToolbarMenuEntry(ToolbarData* d, GtkMenuShell* menubar, int& menuPos);
-	void menuClicked(GtkCheckMenuItem* menuitem, MenuSelectToolbarData* data);
+    void freeToolMenu();
+    void selectToolbar(Settings* settings, ToolMenuHandler* toolbar);
+    void removeOldElements(GtkMenuShell* menubar);
+    void addToolbarMenuEntry(ToolbarData* d, GtkMenuShell* menubar, int& menuPos);
+    void menuClicked(GtkCheckMenuItem* menuitem, MenuSelectToolbarData* data);
 
-	static void tbSelectMenuitemActivated(GtkCheckMenuItem* menuitem, MenuSelectToolbarData* data);
+    static void tbSelectMenuitemActivated(GtkCheckMenuItem* menuitem, MenuSelectToolbarData* data);
 
 private:
-	MainWindow* win = nullptr;
+    MainWindow* win = nullptr;
 
-	vector<GtkWidget*> menuitems;
-	vector<MenuSelectToolbarData*> toolbarMenuData;
+    vector<GtkWidget*> menuitems;
+    vector<MenuSelectToolbarData*> toolbarMenuData;
 
-	ToolbarData* selectedToolbar = nullptr;
-	bool inPredefinedSection = false;
+    ToolbarData* selectedToolbar = nullptr;
+    bool inPredefinedSection = false;
 };

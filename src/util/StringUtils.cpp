@@ -1,98 +1,80 @@
 #include "StringUtils.h"
-#include <sstream> // std::istringstream
 
-#include <glib.h>
 #include <cstring>
+#include <sstream>  // std::istringstream
 #include <utility>
 
-auto StringUtils::toLowerCase(const string& input) -> string
-{	
-	char* lower = g_utf8_strdown(input.c_str(), input.size());
-	string lowerStr = lower;
-	g_free(lower);
-	return lowerStr;
+#include <glib.h>
+
+auto StringUtils::toLowerCase(const string& input) -> string {
+    char* lower = g_utf8_strdown(input.c_str(), input.size());
+    string lowerStr = lower;
+    g_free(lower);
+    return lowerStr;
 }
 
-void StringUtils::replaceAllChars(string& input, const std::vector<replace_pair>& replaces)
-{
-	string out;
-	bool found = false;
-	for (char c : input)
-	{
-		for (const replace_pair& p: replaces)
-		{
-			if (c == p.first)
-			{
-				out += p.second;
-				found = true;
-				break;
-			}
-		}
-		if (!found)
-		{
-			out += c;
-		}
-		found = false;
-	}
-	input = out;
+void StringUtils::replaceAllChars(string& input, const std::vector<replace_pair>& replaces) {
+    string out;
+    bool found = false;
+    for (char c: input) {
+        for (const replace_pair& p: replaces) {
+            if (c == p.first) {
+                out += p.second;
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            out += c;
+        }
+        found = false;
+    }
+    input = out;
 }
 
-auto StringUtils::split(const string& input, char delimiter) -> vector<string>
-{
-	vector<string> tokens;
-	string token;
-	std::istringstream tokenStream(input);
-	while (std::getline(tokenStream, token, delimiter))
-	{
-		tokens.push_back(token);
-	}
-	return tokens;
+auto StringUtils::split(const string& input, char delimiter) -> vector<string> {
+    vector<string> tokens;
+    string token;
+    std::istringstream tokenStream(input);
+    while (std::getline(tokenStream, token, delimiter)) {
+        tokens.push_back(token);
+    }
+    return tokens;
 }
 
-auto StringUtils::startsWith(const string& str, const string& start) -> bool
-{
-	return str.compare(0, start.length(), start) == 0;
+auto StringUtils::startsWith(const string& str, const string& start) -> bool {
+    return str.compare(0, start.length(), start) == 0;
 }
 
-auto StringUtils::endsWith(const string& str, const string& end) -> bool
-{
-	if (end.size() > str.size())
-	{
-		return false;
-	}
+auto StringUtils::endsWith(const string& str, const string& end) -> bool {
+    if (end.size() > str.size()) {
+        return false;
+    }
 
-	return str.compare(str.length() - end.length(), end.length(), end) == 0;
+    return str.compare(str.length() - end.length(), end.length(), end) == 0;
 }
 
 const std::string TRIM_CHARS = "\t\n\v\f\r ";
 
-auto StringUtils::ltrim(std::string str) -> std::string
-{
-	str.erase(0, str.find_first_not_of(TRIM_CHARS));
-	return str;
+auto StringUtils::ltrim(std::string str) -> std::string {
+    str.erase(0, str.find_first_not_of(TRIM_CHARS));
+    return str;
 }
 
-auto StringUtils::rtrim(std::string str) -> std::string
-{
-	str.erase(str.find_last_not_of(TRIM_CHARS) + 1);
-	return str;
+auto StringUtils::rtrim(std::string str) -> std::string {
+    str.erase(str.find_last_not_of(TRIM_CHARS) + 1);
+    return str;
 }
 
-auto StringUtils::trim(std::string str) -> std::string
-{
-	return ltrim(rtrim(std::move(str)));
+auto StringUtils::trim(std::string str) -> std::string { return ltrim(rtrim(std::move(str))); }
+
+auto StringUtils::iequals(const string& a, const string& b) -> bool {
+    gchar* ca = g_utf8_casefold(a.c_str(), a.size());
+    gchar* cb = g_utf8_casefold(b.c_str(), b.size());
+    int result = strcmp(ca, cb);
+    g_free(ca);
+    g_free(cb);
+
+
+    return result == 0;
 }
-
-auto StringUtils::iequals(const string& a, const string& b) -> bool
-{
-	gchar* ca = g_utf8_casefold (a.c_str(), a.size());
-	gchar* cb = g_utf8_casefold (b.c_str(), b.size());
-	int result = strcmp(ca, cb);
-	g_free(ca);
-	g_free(cb);
-
-
-	return result == 0;
-}
-
-

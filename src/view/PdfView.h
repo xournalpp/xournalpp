@@ -11,18 +11,17 @@
 
 #pragma once
 
+#include <cairo/cairo.h>
+
 #include "control/PdfCache.h"
 #include "pdf/base/XojPdfPage.h"
 
-#include <cairo/cairo.h>
-
-class PdfView
-{
+class PdfView {
 private:
-	PdfView();
-	virtual ~PdfView();
+    PdfView();
+    virtual ~PdfView();
 
 public:
-	static void drawPage(PdfCache* cache, const XojPdfPageSPtr& popplerPage, cairo_t* cr, double zoom, double width,
-	                     double height, bool forPrinting = false);
+    static void drawPage(PdfCache* cache, const XojPdfPageSPtr& popplerPage, cairo_t* cr, double zoom, double width,
+                         double height, bool forPrinting = false);
 };

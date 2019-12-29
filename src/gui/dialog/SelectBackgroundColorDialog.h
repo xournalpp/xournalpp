@@ -11,10 +11,13 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
-#include <gtk/gtk.h>
 #include <gdk/gdk.h>
+#include <gtk/gtk.h>
+
+#include "XournalType.h"
 
 class Control;
 
@@ -24,33 +27,32 @@ class Control;
 const int LAST_BACKGROUND_COLOR_COUNT = 9;
 
 
-class SelectBackgroundColorDialog
-{
+class SelectBackgroundColorDialog {
 public:
-	SelectBackgroundColorDialog(Control* control);
-	virtual ~SelectBackgroundColorDialog();
+    SelectBackgroundColorDialog(Control* control);
+    virtual ~SelectBackgroundColorDialog();
 
 public:
-	void show(GtkWindow* parent);
+    void show(GtkWindow* parent);
 
-	/**
-	 * Return the selected color as RGB, -1 if no color is selected
-	 */
-	int getSelectedColor() const;
+    /**
+     * Return the selected color as RGB, -1 if no color is selected
+     */
+    int getSelectedColor() const;
 
 private:
-	void storeLastUsedValuesInSettings();
+    void storeLastUsedValuesInSettings();
 
 private:
-	Control* control = nullptr;
+    Control* control = nullptr;
 
-	/**
-	 * Last used background colors (stored in settings)
-	 */
-	GdkRGBA lastBackgroundColors[LAST_BACKGROUND_COLOR_COUNT];
+    /**
+     * Last used background colors (stored in settings)
+     */
+    GdkRGBA lastBackgroundColors[LAST_BACKGROUND_COLOR_COUNT];
 
-	/**
-	 * Selected color
-	 */
-	int selected = -1;
+    /**
+     * Selected color
+     */
+    int selected = -1;
 };

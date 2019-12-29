@@ -11,67 +11,69 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "Element.h"
-#include <XournalType.h>
+#include "XournalType.h"
 
-class Layer
-{
+class Layer {
 public:
-	Layer();
-	virtual ~Layer();
+    Layer();
+    virtual ~Layer();
 
 public:
-	/**
-	 * Appends an Element to this Layer
-	 *
-	 * @note Performs a check to determine whether the element is already contained in the Layer
-	 */
-	void addElement(Element* e);
+    /**
+     * Appends an Element to this Layer
+     *
+     * @note Performs a check to determine whether the element is already contained in the Layer
+     */
+    void addElement(Element* e);
 
-	/**
-	 * Inserts an Element in the specified position of the Layer%s internal list
-	 *
-	 * @note Performs a check to determine whether the element is already contained in the Layer
-	 */
-	void insertElement(Element* e, int pos);
+    /**
+     * Inserts an Element in the specified position of the Layer%s internal list
+     *
+     * @note Performs a check to determine whether the element is already contained in the Layer
+     */
+    void insertElement(Element* e, int pos);
 
-	/**
-	 * Returns the index of the given Element with respect to the internal list
-	 */
-	int indexOf(Element* e);
+    /**
+     * Returns the index of the given Element with respect to the internal list
+     */
+    int indexOf(Element* e);
 
-	/**
-	 * Removes an Element from the Layer and optionally deletes it
-	 */
-	int removeElement(Element* e, bool free);
+    /**
+     * Removes an Element from the Layer and optionally deletes it
+     */
+    int removeElement(Element* e, bool free);
 
-	/**
-	 * Returns an iterator over the Element%s contained in this Layer
-	 */
-	vector<Element*>* getElements();
+    /**
+     * Returns an iterator over the Element%s contained in this Layer
+     */
+    vector<Element*>* getElements();
 
-	/**
-	 * Returns whether or not the Layer is empty
-	 */
-	bool isAnnotated();
+    /**
+     * Returns whether or not the Layer is empty
+     */
+    bool isAnnotated();
 
-	/**
-	 * @return true if the layer is visible
-	 */
-	bool isVisible() const;
+    /**
+     * @return true if the layer is visible
+     */
+    bool isVisible() const;
 
-	/**
-	 * @param visible true if the layer is visible
-	 */
-	void setVisible(bool visible);
+    /**
+     * @param visible true if the layer is visible
+     */
+    void setVisible(bool visible);
 
-	/**
-	 * Creates a deep copy of this Layer by copying all of the Element%s contained in it
-	 */
-	Layer* clone();
+    /**
+     * Creates a deep copy of this Layer by copying all of the Element%s contained in it
+     */
+    Layer* clone();
 
 private:
-	vector<Element*> elements;
+    vector<Element*> elements;
 
-	bool visible = true;
+    bool visible = true;
 };

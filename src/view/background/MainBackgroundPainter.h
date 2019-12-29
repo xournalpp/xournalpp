@@ -11,32 +11,33 @@
 
 #pragma once
 
-#include "model/PageRef.h"
-
-#include <XournalType.h>
+#include <map>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
 
-#include <map>
+#include "model/PageRef.h"
+
+#include "XournalType.h"
 using std::map;
 
 class BaseBackgroundPainter;
 
-class MainBackgroundPainter
-{
+class MainBackgroundPainter {
 public:
-	MainBackgroundPainter();
-	virtual ~MainBackgroundPainter();
+    MainBackgroundPainter();
+    virtual ~MainBackgroundPainter();
 
 public:
-	virtual void paint(PageType pt, cairo_t* cr, PageRef page);
+    virtual void paint(PageType pt, cairo_t* cr, PageRef page);
 
-	/**
-	 * Set a factor to draw the lines bolder, for previews
-	 */
-	void setLineWidthFactor(double factor);
+    /**
+     * Set a factor to draw the lines bolder, for previews
+     */
+    void setLineWidthFactor(double factor);
 
 private:
-	map<PageTypeFormat, BaseBackgroundPainter*> painter;
-	BaseBackgroundPainter* defaultPainter;
+    map<PageTypeFormat, BaseBackgroundPainter*> painter;
+    BaseBackgroundPainter* defaultPainter;
 };

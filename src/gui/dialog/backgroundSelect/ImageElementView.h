@@ -11,46 +11,46 @@
 
 #pragma once
 
-#include "BaseElementView.h"
+#include <string>
+#include <vector>
 
 #include "model/BackgroundImage.h"
 
-#include <XournalType.h>
+#include "BaseElementView.h"
+#include "XournalType.h"
 
-class ImageElementView : public BaseElementView
-{
+class ImageElementView: public BaseElementView {
 public:
-	ImageElementView(int id, BackgroundSelectDialogBase* dlg);
-	~ImageElementView();
+    ImageElementView(int id, BackgroundSelectDialogBase* dlg);
+    ~ImageElementView();
 
 protected:
+    /**
+     * Paint the contents (without border / selection)
+     */
+    virtual void paintContents(cairo_t* cr);
 
-	/**
-	 * Paint the contents (without border / selection)
-	 */
-	virtual void paintContents(cairo_t* cr);
+    /**
+     * Get the width in pixel, without shadow / border
+     */
+    virtual int getContentWidth();
 
-	/**
-	 * Get the width in pixel, without shadow / border
-	 */
-	virtual int getContentWidth();
+    /**
+     * Get the height in pixel, without shadow / border
+     */
+    virtual int getContentHeight();
 
-	/**
-	 * Get the height in pixel, without shadow / border
-	 */
-	virtual int getContentHeight();
-
-	/**
-	 * Will be called before getContentWidth() / getContentHeight(), can be overwritten
-	 */
-	virtual void calcSize();
+    /**
+     * Will be called before getContentWidth() / getContentHeight(), can be overwritten
+     */
+    virtual void calcSize();
 
 private:
-	double zoom = 1;
+    double zoom = 1;
 
-	BackgroundImage backgroundImage;
-	int width = -1;
-	int height = -1;
+    BackgroundImage backgroundImage;
+    int width = -1;
+    int height = -1;
 
-	friend class ImagesDialog;
+    friend class ImagesDialog;
 };

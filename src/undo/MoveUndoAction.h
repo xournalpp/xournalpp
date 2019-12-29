@@ -17,33 +17,32 @@ class Layer;
 class Redrawable;
 class XojPage;
 
-class MoveUndoAction : public UndoAction
-{
+class MoveUndoAction: public UndoAction {
 public:
-	MoveUndoAction(Layer* sourceLayer, const PageRef& sourcePage, vector<Element*>* selected, double mx, double my,
-	               Layer* targetLayer, PageRef targetPage);
-	virtual ~MoveUndoAction();
+    MoveUndoAction(Layer* sourceLayer, const PageRef& sourcePage, vector<Element*>* selected, double mx, double my,
+                   Layer* targetLayer, PageRef targetPage);
+    virtual ~MoveUndoAction();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
-	vector<PageRef> getPages();
-	virtual string getText();
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
+    vector<PageRef> getPages();
+    virtual string getText();
 
 private:
-	void switchLayer(vector<Element*>* entries, Layer* oldLayer, Layer* newLayer);
-	void repaint();
-	void move();
+    void switchLayer(vector<Element*>* entries, Layer* oldLayer, Layer* newLayer);
+    void repaint();
+    void move();
 
 private:
-	vector<Element*> elements;
-	PageRef targetPage;
+    vector<Element*> elements;
+    PageRef targetPage;
 
-	Layer* sourceLayer = nullptr;
-	Layer* targetLayer = nullptr;
+    Layer* sourceLayer = nullptr;
+    Layer* targetLayer = nullptr;
 
-	string text;
+    string text;
 
-	double dx = 0;
-	double dy = 0;
+    double dx = 0;
+    double dy = 0;
 };

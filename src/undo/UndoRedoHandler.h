@@ -11,68 +11,67 @@
 
 #pragma once
 
-#include <XournalType.h>
-#include "UndoAction.h"
-
 #include <deque>
-#include <stack>
-#include <vector>
 #include <memory>
+#include <stack>
+#include <string>
+#include <vector>
+
+#include "UndoAction.h"
+#include "XournalType.h"
 
 class Control;
 
 using UndoActionPtr = std::unique_ptr<UndoAction>;
 
-class UndoRedoListener
-{
+class UndoRedoListener {
 public:
-	virtual void undoRedoChanged() = 0;
-	virtual void undoRedoPageChanged(PageRef page) = 0;
+    virtual void undoRedoChanged() = 0;
+    virtual void undoRedoPageChanged(PageRef page) = 0;
 
-	virtual ~UndoRedoListener() = default;
+    virtual ~UndoRedoListener() = default;
 };
 
-class UndoRedoHandler
-{
+class UndoRedoHandler {
 public:
-	explicit UndoRedoHandler(Control* control);
-	virtual ~UndoRedoHandler();
+    explicit UndoRedoHandler(Control* control);
+    virtual ~UndoRedoHandler();
 
-	void undo();
-	void redo();
+    void undo();
+    void redo();
 
-	bool canUndo();
-	bool canRedo();
+    bool canUndo();
+    bool canRedo();
 
-	void addUndoAction(UndoActionPtr action);
-	void addUndoActionBefore(UndoActionPtr action, UndoAction* before);
-	bool removeUndoAction(UndoAction* action);
+    void addUndoAction(UndoActionPtr action);
+    void addUndoActionBefore(UndoActionPtr action, UndoAction* before);
+    bool removeUndoAction(UndoAction* action);
 
-	string undoDescription();
-	string redoDescription();
+    string undoDescription();
+    string redoDescription();
 
-	void clearContents();
+    void clearContents();
 
-	void fireUpdateUndoRedoButtons(const vector<PageRef>& pages);
-	void addUndoRedoListener(UndoRedoListener* listener);
+    void fireUpdateUndoRedoButtons(const vector<PageRef>& pages);
+    void addUndoRedoListener(UndoRedoListener* listener);
 
-	bool isChanged();
-	bool isChangedAutosave();
-	void documentAutosaved();
-	void documentSaved();
-
-private:
-	void clearRedo();
-	void printContents();
+    bool isChanged();
+    bool isChangedAutosave();
+    void documentAutosaved();
+    void documentSaved();
 
 private:
-	std::deque<UndoActionPtr> undoList;
-	std::deque<UndoActionPtr> redoList;
+    void clearRedo();
+    void printContents();
 
-	UndoAction* savedUndo = nullptr;
-	UndoAction* autosavedUndo = nullptr;
+private:
+    std::deque<UndoActionPtr> undoList;
+    std::deque<UndoActionPtr> redoList;
 
-	std::vector<UndoRedoListener*> listener;
+    UndoAction* savedUndo = nullptr;
+    UndoAction* autosavedUndo = nullptr;
 
-	Control* control = nullptr;
+    std::vector<UndoRedoListener*> listener;
+
+    Control* control = nullptr;
 };

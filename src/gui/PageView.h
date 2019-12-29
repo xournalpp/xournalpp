@@ -11,16 +11,14 @@
 
 #pragma once
 
-#include "Redrawable.h"
-#include "Layout.h"
-
+#include "gui/inputdevices/PositionInputData.h"
 #include "model/PageListener.h"
 #include "model/PageRef.h"
 #include "model/TexImage.h"
 
-#include <Range.h>
-
-#include "gui/inputdevices/PositionInputData.h"
+#include "Layout.h"
+#include "Range.h"
+#include "Redrawable.h"
 
 class EditSelection;
 class EraseHandler;
@@ -33,222 +31,219 @@ class TextEditor;
 class VerticalToolHandler;
 class XournalView;
 
-class XojPageView : public Redrawable, public PageListener
-{
+class XojPageView: public Redrawable, public PageListener {
 public:
-	XojPageView(XournalView* xournal, const PageRef& page);
-	virtual ~XojPageView();
+    XojPageView(XournalView* xournal, const PageRef& page);
+    virtual ~XojPageView();
 
 public:
-	void updatePageSize(double width, double height);
+    void updatePageSize(double width, double height);
 
-	virtual void rerenderPage();
-	virtual void rerenderRect(double x, double y, double width, double height);
+    virtual void rerenderPage();
+    virtual void rerenderRect(double x, double y, double width, double height);
 
-	virtual void repaintPage();
-	virtual void repaintArea(double x1, double y1, double x2, double y2);
+    virtual void repaintPage();
+    virtual void repaintArea(double x1, double y1, double x2, double y2);
 
-	void setSelected(bool selected);
+    void setSelected(bool selected);
 
-	void setIsVisible(bool visible);
+    void setIsVisible(bool visible);
 
-	bool isSelected() const;
+    bool isSelected() const;
 
-	void endText();
+    void endText();
 
-	bool searchTextOnPage(string& text, int* occures, double* top);
+    bool searchTextOnPage(string& text, int* occures, double* top);
 
-	bool onKeyPressEvent(GdkEventKey* event);
-	bool onKeyReleaseEvent(GdkEventKey* event);
+    bool onKeyPressEvent(GdkEventKey* event);
+    bool onKeyReleaseEvent(GdkEventKey* event);
 
-	bool cut();
-	bool copy();
-	bool paste();
+    bool cut();
+    bool copy();
+    bool paste();
 
-	bool actionDelete();
+    bool actionDelete();
 
-	void resetShapeRecognizer();
+    void resetShapeRecognizer();
 
-	void deleteViewBuffer();
+    void deleteViewBuffer();
 
-	/**
-	 * Returns whether this PageView contains the
-	 * given point on the display
-	 */
-	bool containsPoint(int x, int y, bool local = false) const;
-	bool containsY(int y) const;
+    /**
+     * Returns whether this PageView contains the
+     * given point on the display
+     */
+    bool containsPoint(int x, int y, bool local = false) const;
+    bool containsY(int y) const;
 
-	/**
-	 * Returns Row assigned in current layout
-	 */
-	int getMappedRow() const;
+    /**
+     * Returns Row assigned in current layout
+     */
+    int getMappedRow() const;
 
-	/**
-	 * Returns Column assigned in current layout
-	 */
-	int getMappedCol() const;
+    /**
+     * Returns Column assigned in current layout
+     */
+    int getMappedCol() const;
 
 
-	GtkColorWrapper getSelectionColor();
-	int getBufferPixels();
+    GtkColorWrapper getSelectionColor();
+    int getBufferPixels();
 
-	/**
-	 * 0 if currently visible
-	 * -1 if no image is saved (never visible or cleanup)
-	 * else the time in Seconds
-	 */
-	int getLastVisibleTime();
-	TextEditor* getTextEditor();
+    /**
+     * 0 if currently visible
+     * -1 if no image is saved (never visible or cleanup)
+     * else the time in Seconds
+     */
+    int getLastVisibleTime();
+    TextEditor* getTextEditor();
 
-	/**
-	 * Returns a reference to the XojPage belonging to
-	 * this PageView
-	 */
-	PageRef getPage();
+    /**
+     * Returns a reference to the XojPage belonging to
+     * this PageView
+     */
+    PageRef getPage();
 
-	XournalView* getXournal();
+    XournalView* getXournal();
 
-	/**
-	 * Returns the width of this PageView
-	 */
-	double getWidth() const;
+    /**
+     * Returns the width of this PageView
+     */
+    double getWidth() const;
 
-	/**
-	 * Returns the height of this XojPageView
-	 */
-	double getHeight() const;
+    /**
+     * Returns the height of this XojPageView
+     */
+    double getHeight() const;
 
-	/**
-	 * Returns the width of this XojPageView as displayed
-	 * on the display taking into account the current zoom
-	 */
-	int getDisplayWidth() const;
-	/**
-	 * Returns the height of this XojPageView as displayed
-	 * on the display taking into account the current zoom
-	 */
-	int getDisplayHeight() const;
+    /**
+     * Returns the width of this XojPageView as displayed
+     * on the display taking into account the current zoom
+     */
+    int getDisplayWidth() const;
+    /**
+     * Returns the height of this XojPageView as displayed
+     * on the display taking into account the current zoom
+     */
+    int getDisplayHeight() const;
 
-	/**
-	 * Returns the x coordinate of this XojPageView with
-	 * respect to the display
-	 */
-	int getX() const;
+    /**
+     * Returns the x coordinate of this XojPageView with
+     * respect to the display
+     */
+    int getX() const;
 
-	/**
-	 * Returns the y coordinate of this XojPageView with
-	 * respect to the display
-	 */
-	int getY() const;
-	
-	TexImage* getSelectedTex();
-	Text* getSelectedText();
+    /**
+     * Returns the y coordinate of this XojPageView with
+     * respect to the display
+     */
+    int getY() const;
 
-	Rectangle getRect() const;
+    TexImage* getSelectedTex();
+    Text* getSelectedText();
 
-public: // event handler
-	bool onButtonPressEvent(const PositionInputData& pos);
-	bool onButtonReleaseEvent(const PositionInputData& pos);
-	bool onButtonDoublePressEvent(const PositionInputData& pos);
-	bool onButtonTriplePressEvent(const PositionInputData& pos);
-	bool onMotionNotifyEvent(const PositionInputData& pos);
+    Rectangle getRect() const;
 
-	/**
-	 * This method actually repaints the XojPageView, triggering
-	 * a rerender call if necessary
-	 */
-	bool paintPage(cairo_t* cr, GdkRectangle* rect);
+public:  // event handler
+    bool onButtonPressEvent(const PositionInputData& pos);
+    bool onButtonReleaseEvent(const PositionInputData& pos);
+    bool onButtonDoublePressEvent(const PositionInputData& pos);
+    bool onButtonTriplePressEvent(const PositionInputData& pos);
+    bool onMotionNotifyEvent(const PositionInputData& pos);
 
-	/**
-	 * Does the painting, called in synchronized block
-	 */
-	void paintPageSync(cairo_t* cr, GdkRectangle* rect);
+    /**
+     * This method actually repaints the XojPageView, triggering
+     * a rerender call if necessary
+     */
+    bool paintPage(cairo_t* cr, GdkRectangle* rect);
 
-public: // listener
-	void rectChanged(Rectangle& rect);
-	void rangeChanged(Range &range);
-	void pageChanged();
-	void elementChanged(Element* elem);
+    /**
+     * Does the painting, called in synchronized block
+     */
+    void paintPageSync(cairo_t* cr, GdkRectangle* rect);
+
+public:  // listener
+    void rectChanged(Rectangle& rect);
+    void rangeChanged(Range& range);
+    void pageChanged();
+    void elementChanged(Element* elem);
 
 private:
-	void handleScrollEvent(GdkEventButton* event);
+    void handleScrollEvent(GdkEventButton* event);
 
-	void startText(double x, double y);
+    void startText(double x, double y);
 
-	void addRerenderRect(double x, double y, double width, double height);
+    void addRerenderRect(double x, double y, double width, double height);
 
-	void drawLoadingPage(cairo_t* cr);
-	
-	void setX(int x);
-	void setY(int y);
+    void drawLoadingPage(cairo_t* cr);
 
-	void setMappedRowCol(int row, int col );	//row, column assigned by mapper during layout.
+    void setX(int x);
+    void setY(int y);
 
-	
+    void setMappedRowCol(int row, int col);  // row, column assigned by mapper during layout.
 
 
 private:
-	PageRef page;
-	XournalView* xournal;
-	Settings* settings;
-	EraseHandler* eraser = nullptr;
-	InputHandler* inputHandler = nullptr;
+    PageRef page;
+    XournalView* xournal;
+    Settings* settings;
+    EraseHandler* eraser = nullptr;
+    InputHandler* inputHandler = nullptr;
 
-	/**
-	 * The selected (while selection)
-	 */
-	Selection* selection = nullptr;
+    /**
+     * The selected (while selection)
+     */
+    Selection* selection = nullptr;
 
-	/**
-	 * The text editor View
-	 */
-	TextEditor* textEditor = nullptr;
+    /**
+     * The text editor View
+     */
+    TextEditor* textEditor = nullptr;
 
-	/**
-	 * For keeping old text changes to undo!
-	 */
-	Text* oldtext;
+    /**
+     * For keeping old text changes to undo!
+     */
+    Text* oldtext;
 
-	bool selected = false;
+    bool selected = false;
 
-	cairo_surface_t* crBuffer = nullptr;
+    cairo_surface_t* crBuffer = nullptr;
 
-	bool inEraser = false;
+    bool inEraser = false;
 
-	/**
-	 * Vertical Space
-	 */
-	VerticalToolHandler* verticalSpace = nullptr;
+    /**
+     * Vertical Space
+     */
+    VerticalToolHandler* verticalSpace = nullptr;
 
-	/**
-	 * Search handling
-	 */
-	SearchControl* search = nullptr;
+    /**
+     * Search handling
+     */
+    SearchControl* search = nullptr;
 
-	/**
-	 * Unixtimestam when the page was last time in the visible area
-	 */
-	int lastVisibleTime = -1;
+    /**
+     * Unixtimestam when the page was last time in the visible area
+     */
+    int lastVisibleTime = -1;
 
-	GMutex repaintRectMutex{};
-	vector<Rectangle*> rerenderRects;
-	bool rerenderComplete = false;
+    GMutex repaintRectMutex{};
+    vector<Rectangle*> rerenderRects;
+    bool rerenderComplete = false;
 
-	GMutex drawingMutex{};
+    GMutex drawingMutex{};
 
-	int dispX{};  //position on display - set in Layout::layoutPages
-	int dispY{};
-
-
-	int mappedRow{};
-	int mappedCol{};
+    int dispX{};  // position on display - set in Layout::layoutPages
+    int dispY{};
 
 
-	friend class RenderJob;
-	friend class InputHandler;
-	friend class BaseSelectObject;
-	friend class SelectObject;
-	friend class PlayObject;
-	//only function allowed to setX(), setY(), setMappedRowCol():
-	friend void Layout::layoutPages(int width, int height);
+    int mappedRow{};
+    int mappedCol{};
+
+
+    friend class RenderJob;
+    friend class InputHandler;
+    friend class BaseSelectObject;
+    friend class SelectObject;
+    friend class PlayObject;
+    // only function allowed to setX(), setY(), setMappedRowCol():
+    friend void Layout::layoutPages(int width, int height);
 };

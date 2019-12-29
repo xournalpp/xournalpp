@@ -11,34 +11,36 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
 
+#include "XournalType.h"
+
 class Control;
 
-class SearchBar
-{
+class SearchBar {
 public:
-	SearchBar(Control* control);
-	virtual ~SearchBar();
+    SearchBar(Control* control);
+    virtual ~SearchBar();
 
-	void showSearchBar(bool show);
-
-private:
-	static void buttonCloseSearchClicked(GtkButton* button, SearchBar* searchBar);
-	static void searchTextChangedCallback(GtkEntry* entry, SearchBar* searchBar);
-
-	static void buttonNextSearchClicked(GtkButton* button, SearchBar* searchBar);
-	static void buttonPreviousSearchClicked(GtkButton* button, SearchBar* searchBar);
-
-	void searchNext();
-	void searchPrevious();
-
-	void search(const char* text);
-	bool searchTextonCurrentPage(const char* text, int* occures, double* top);
+    void showSearchBar(bool show);
 
 private:
-	Control* control;
-	GtkCssProvider* cssTextFild;
+    static void buttonCloseSearchClicked(GtkButton* button, SearchBar* searchBar);
+    static void searchTextChangedCallback(GtkEntry* entry, SearchBar* searchBar);
+
+    static void buttonNextSearchClicked(GtkButton* button, SearchBar* searchBar);
+    static void buttonPreviousSearchClicked(GtkButton* button, SearchBar* searchBar);
+
+    void searchNext();
+    void searchPrevious();
+
+    void search(const char* text);
+    bool searchTextonCurrentPage(const char* text, int* occures, double* top);
+
+private:
+    Control* control;
+    GtkCssProvider* cssTextFild;
 };

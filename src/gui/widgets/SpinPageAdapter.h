@@ -11,46 +11,47 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <list>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
-#include <list>
+
+#include "XournalType.h"
 
 class SpinPageListener;
 
-class SpinPageAdapter
-{
+class SpinPageAdapter {
 public:
-	SpinPageAdapter();
-	virtual ~SpinPageAdapter();
+    SpinPageAdapter();
+    virtual ~SpinPageAdapter();
 
 public:
-	GtkWidget* getWidget();
+    GtkWidget* getWidget();
 
-	int getPage() const;
-	void setPage(size_t page);
-	void setMinMaxPage(size_t min, size_t max);
+    int getPage() const;
+    void setPage(size_t page);
+    void setMinMaxPage(size_t min, size_t max);
 
-	void addListener(SpinPageListener* listener);
-	void removeListener(SpinPageListener* listener);
+    void addListener(SpinPageListener* listener);
+    void removeListener(SpinPageListener* listener);
 
 private:
-	static bool pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter);
-	static void pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinPageAdapter* adapter);
+    static bool pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter);
+    static void pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinPageAdapter* adapter);
 
-	void firePageChanged();
+    void firePageChanged();
 
 private:
-	GtkWidget* widget;
-	size_t page;
+    GtkWidget* widget;
+    size_t page;
 
-	int lastTimeoutId;
-	std::list<SpinPageListener*> listener;
+    int lastTimeoutId;
+    std::list<SpinPageListener*> listener;
 };
 
-class SpinPageListener
-{
+class SpinPageListener {
 public:
-	virtual void pageChanged(size_t page) = 0;
-	virtual ~SpinPageListener();
+    virtual void pageChanged(size_t page) = 0;
+    virtual ~SpinPageListener();
 };

@@ -11,30 +11,32 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "AbstractToolItem.h"
-#include <XournalType.h>
+#include "XournalType.h"
 
 class GladeGui;
 class SpinPageAdapter;
 
-class ToolPageSpinner : public AbstractToolItem
-{
+class ToolPageSpinner: public AbstractToolItem {
 public:
-	ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type);
-	virtual ~ToolPageSpinner();
+    ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type);
+    virtual ~ToolPageSpinner();
 
 public:
-	SpinPageAdapter* getPageSpinner();
-	void setText(const string& text);
-	virtual string getToolDisplayName();
+    SpinPageAdapter* getPageSpinner();
+    void setText(const string& text);
+    virtual string getToolDisplayName();
 
 protected:
-	virtual GtkToolItem* newItem();
-	virtual GtkWidget* getNewToolIcon();
+    virtual GtkToolItem* newItem();
+    virtual GtkWidget* getNewToolIcon();
 
 private:
-	GladeGui* gui = nullptr;
+    GladeGui* gui = nullptr;
 
-	SpinPageAdapter* pageSpinner = nullptr;
-	GtkWidget* lbPageNo = nullptr;
+    SpinPageAdapter* pageSpinner = nullptr;
+    GtkWidget* lbPageNo = nullptr;
 };

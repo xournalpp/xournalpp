@@ -11,30 +11,28 @@
 
 #pragma once
 
-#include "pdf/base/XojPdfPage.h"
-
 #include <poppler.h>
 
+#include "pdf/base/XojPdfPage.h"
 
-class PopplerGlibPage : public XojPdfPage
-{
+
+class PopplerGlibPage: public XojPdfPage {
 public:
-	PopplerGlibPage(PopplerPage* page);
-	PopplerGlibPage(const PopplerGlibPage& other);
-	virtual ~PopplerGlibPage();
-	PopplerGlibPage& operator=(const PopplerGlibPage& other);
+    PopplerGlibPage(PopplerPage* page);
+    PopplerGlibPage(const PopplerGlibPage& other);
+    virtual ~PopplerGlibPage();
+    PopplerGlibPage& operator=(const PopplerGlibPage& other);
 
 public:
-	virtual double getWidth();
-	virtual double getHeight();
+    virtual double getWidth();
+    virtual double getHeight();
 
-	virtual void render(cairo_t* cr, bool forPrinting = false);  // NOLINT(google-default-arguments)
+    virtual void render(cairo_t* cr, bool forPrinting = false);  // NOLINT(google-default-arguments)
 
-	virtual vector<XojPdfRectangle> findText(string& text);
+    virtual vector<XojPdfRectangle> findText(string& text);
 
-	virtual int getPageId();
+    virtual int getPageId();
 
 private:
-	PopplerPage* page;
+    PopplerPage* page;
 };
-

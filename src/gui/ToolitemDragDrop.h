@@ -15,45 +15,37 @@
 
 class AbstractToolItem;
 
-enum ToolItemType
-{
-	TOOL_ITEM_SEPARATOR = 0,
-	TOOL_ITEM_SPACER,
-	TOOL_ITEM_ITEM,
-	TOOL_ITEM_COLOR
-};
+enum ToolItemType { TOOL_ITEM_SEPARATOR = 0, TOOL_ITEM_SPACER, TOOL_ITEM_ITEM, TOOL_ITEM_COLOR };
 
 #define ToolItemDragDropData_Identify 0xFA090201
 
-struct ToolItemDragDropData
-{
-	unsigned int identify;
-	ToolItemType type;
-	int id;
-	AbstractToolItem* item;
-	int color;
+struct ToolItemDragDropData {
+    unsigned int identify;
+    ToolItemType type;
+    int id;
+    AbstractToolItem* item;
+    int color;
 };
 
-class ToolitemDragDrop
-{
+class ToolitemDragDrop {
 private:
-	ToolitemDragDrop();
-	virtual ~ToolitemDragDrop();
+    ToolitemDragDrop();
+    virtual ~ToolitemDragDrop();
 
 public:
-	static void attachMetadata(GtkWidget* w, int id, AbstractToolItem* ait);
-	static void attachMetadata(GtkWidget* w, int id, ToolItemType type);
-	static void attachMetadataColor(GtkWidget* w, int id, int color, AbstractToolItem* item);
+    static void attachMetadata(GtkWidget* w, int id, AbstractToolItem* ait);
+    static void attachMetadata(GtkWidget* w, int id, ToolItemType type);
+    static void attachMetadataColor(GtkWidget* w, int id, int color, AbstractToolItem* item);
 
 public:
-	static ToolItemDragDropData* ToolItemDragDropData_new(AbstractToolItem* item);
-	static bool checkToolItemDragDropData(ToolItemDragDropData const* d);
-	static bool isToolItemEnabled(ToolItemDragDropData* d);
+    static ToolItemDragDropData* ToolItemDragDropData_new(AbstractToolItem* item);
+    static bool checkToolItemDragDropData(ToolItemDragDropData const* d);
+    static bool isToolItemEnabled(ToolItemDragDropData* d);
 
-	static ToolItemDragDropData* metadataGetMetadata(GtkWidget* w);
+    static ToolItemDragDropData* metadataGetMetadata(GtkWidget* w);
 
-	static GtkWidget* getIcon(ToolItemDragDropData* data);
+    static GtkWidget* getIcon(ToolItemDragDropData* data);
 
 public:
-	static void removeFromToolbarForMove(GtkWidget* widget);
+    static void removeFromToolbarForMove(GtkWidget* widget);
 };

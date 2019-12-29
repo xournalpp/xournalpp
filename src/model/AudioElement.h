@@ -11,38 +11,39 @@
 
 #pragma once
 
-#include "Element.h"
-#include <XournalType.h>
-#include <serializing/ObjectInputStream.h>
-#include <serializing/ObjectOutputStream.h>
+#include <string>
+#include <vector>
 
-class AudioElement : public Element
-{
+#include "serializing/ObjectInputStream.h"
+#include "serializing/ObjectOutputStream.h"
+
+#include "Element.h"
+#include "XournalType.h"
+
+class AudioElement: public Element {
 protected:
-	AudioElement(ElementType type);
+    AudioElement(ElementType type);
 
 public:
-	~AudioElement() override;
+    ~AudioElement() override;
 
-	void setTimestamp(size_t timestamp);
-	size_t getTimestamp() const;
+    void setTimestamp(size_t timestamp);
+    size_t getTimestamp() const;
 
-	void setAudioFilename(string fn);
-	string getAudioFilename() const;
+    void setAudioFilename(string fn);
+    string getAudioFilename() const;
 
-	virtual bool intersects(double x, double y, double halfSize) = 0;
-	virtual bool intersects(double x, double y, double halfSize, double* gap) = 0;
+    virtual bool intersects(double x, double y, double halfSize) = 0;
+    virtual bool intersects(double x, double y, double halfSize, double* gap) = 0;
 
 protected:
-	void serializeAudioElement(ObjectOutputStream& out);
-	void readSerializedAudioElement(ObjectInputStream& in);
+    void serializeAudioElement(ObjectOutputStream& out);
+    void readSerializedAudioElement(ObjectInputStream& in);
 
-	void cloneAudioData(const AudioElement *other);
+    void cloneAudioData(const AudioElement* other);
 
 private:
-	// Stroke timestamp, to match it to the audio stream
-	size_t timestamp = 0;
-	string audioFilename = "";
+    // Stroke timestamp, to match it to the audio stream
+    size_t timestamp = 0;
+    string audioFilename = "";
 };
-
-

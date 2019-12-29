@@ -11,28 +11,30 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "UndoAction.h"
-#include <XournalType.h>
+#include "XournalType.h"
 
-class GroupUndoAction : public UndoAction
-{
+class GroupUndoAction: public UndoAction {
 public:
-	GroupUndoAction();
-	virtual ~GroupUndoAction();
+    GroupUndoAction();
+    virtual ~GroupUndoAction();
 
 public:
-	void addAction(UndoAction* action);
+    void addAction(UndoAction* action);
 
-	/**
-	 * Get the affected pages
-	 */
-	virtual vector<PageRef> getPages();
+    /**
+     * Get the affected pages
+     */
+    virtual vector<PageRef> getPages();
 
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
 
-	virtual string getText();
+    virtual string getText();
 
 private:
-	vector<UndoAction*> actions;
+    vector<UndoAction*> actions;
 };

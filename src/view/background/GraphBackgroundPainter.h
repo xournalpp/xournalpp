@@ -11,26 +11,27 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "BaseBackgroundPainter.h"
+#include "XournalType.h"
 
-#include <XournalType.h>
-
-class GraphBackgroundPainter : public BaseBackgroundPainter
-{
+class GraphBackgroundPainter: public BaseBackgroundPainter {
 public:
-	GraphBackgroundPainter();
-	virtual ~GraphBackgroundPainter();
+    GraphBackgroundPainter();
+    virtual ~GraphBackgroundPainter();
 
 public:
-	virtual void paint();
-	void paintBackgroundGraph();
+    virtual void paint();
+    void paintBackgroundGraph();
 
-	/**
-	 * Reset all used configuration values
-	 */
-	virtual void resetConfig();
+    /**
+     * Reset all used configuration values
+     */
+    virtual void resetConfig();
 
-	double getUnitSize();
+    double getUnitSize();
 
 private:
 };

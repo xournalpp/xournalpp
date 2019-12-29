@@ -13,15 +13,14 @@
 
 #include "Attribute.h"
 
-class TextAttribute : public XMLAttribute
-{
+class TextAttribute: public XMLAttribute {
 public:
-	TextAttribute(string name, string value);
-	virtual ~TextAttribute();
+    TextAttribute(string name, string value);
+    virtual ~TextAttribute();
 
 public:
-	virtual void writeOut(OutputStream* out);
+    virtual void writeOut(OutputStream* out);
 
 private:
-	string value;
+    string value;
 };

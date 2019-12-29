@@ -9,130 +9,115 @@
  * @license GNU GPLv2 or later
  */
 
-#include <config-test.h>
-#include <XojPreviewExtractor.h>
-
-#include <cppunit/extensions/HelperMacros.h>
 #include <ctime>
+
+#include <XojPreviewExtractor.h>
+#include <config-test.h>
+#include <cppunit/extensions/HelperMacros.h>
 #include <stdlib.h>
 
 using namespace std;
 
-class XojPreviewExtractorTest : public CppUnit::TestFixture
-{
-	CPPUNIT_TEST_SUITE(XojPreviewExtractorTest);
+class XojPreviewExtractorTest: public CppUnit::TestFixture {
+    CPPUNIT_TEST_SUITE(XojPreviewExtractorTest);
 
-	CPPUNIT_TEST(testNonExistingFile);
-	CPPUNIT_TEST(testExtensionCheck);
-	CPPUNIT_TEST(testLoadGzipped);
-	CPPUNIT_TEST(testLoadGzipped2);
-	CPPUNIT_TEST(testLoad1Unzipped);
-	CPPUNIT_TEST(testNoPreview);
-	CPPUNIT_TEST(testInvalidFile);
+    CPPUNIT_TEST(testNonExistingFile);
+    CPPUNIT_TEST(testExtensionCheck);
+    CPPUNIT_TEST(testLoadGzipped);
+    CPPUNIT_TEST(testLoadGzipped2);
+    CPPUNIT_TEST(testLoad1Unzipped);
+    CPPUNIT_TEST(testNoPreview);
+    CPPUNIT_TEST(testInvalidFile);
 
-	CPPUNIT_TEST_SUITE_END();
+    CPPUNIT_TEST_SUITE_END();
 
 public:
-	void setUp()
-	{
-	}
+    void setUp() {}
 
-	void tearDown()
-	{
-	}
+    void tearDown() {}
 
-	void testNonExistingFile()
-	{
-		XojPreviewExtractor extractor;
-		PreviewExtractResult result = extractor.readFile(GET_TESTFILE("THIS FILE DOES NOT EXIST.xoj"));
+    void testNonExistingFile() {
+        XojPreviewExtractor extractor;
+        PreviewExtractResult result = extractor.readFile(GET_TESTFILE("THIS FILE DOES NOT EXIST.xoj"));
 
-		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_COULD_NOT_OPEN_FILE, result);
-	}
+        CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_COULD_NOT_OPEN_FILE, result);
+    }
 
-	void testExtensionCheck()
-	{
-		XojPreviewExtractor extractor;
-		PreviewExtractResult result = extractor.readFile(GET_TESTFILE("test.xoi"));
+    void testExtensionCheck() {
+        XojPreviewExtractor extractor;
+        PreviewExtractResult result = extractor.readFile(GET_TESTFILE("test.xoi"));
 
-		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_BAD_FILE_EXTENSION, result);
-	}
+        CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_BAD_FILE_EXTENSION, result);
+    }
 
-	void testLoadGzipped()
-	{
-		XojPreviewExtractor extractor;
-		PreviewExtractResult result = extractor.readFile(GET_TESTFILE("preview-test.xoj"));
+    void testLoadGzipped() {
+        XojPreviewExtractor extractor;
+        PreviewExtractResult result = extractor.readFile(GET_TESTFILE("preview-test.xoj"));
 
-		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
-		
-		gsize dataLen = 0;
-		unsigned char* imageData = extractor.getData(dataLen);
-		CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string((char*)imageData, (size_t)dataLen));
-	}
+        CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
 
-	void testLoadGzipped2()
-	{
-		XojPreviewExtractor extractor;
-		PreviewExtractResult result = extractor.readFile(GET_TESTFILE("preview-test2.xoj"));
+        gsize dataLen = 0;
+        unsigned char* imageData = extractor.getData(dataLen);
+        CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string((char*)imageData, (size_t)dataLen));
+    }
 
-		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
+    void testLoadGzipped2() {
+        XojPreviewExtractor extractor;
+        PreviewExtractResult result = extractor.readFile(GET_TESTFILE("preview-test2.xoj"));
 
-		gsize dataLen = 0;
-		extractor.getData(dataLen);
-		CPPUNIT_ASSERT_EQUAL((std::string::size_type) 2856, dataLen);
-	}
+        CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
 
-	void testLoad1Unzipped()
-	{
-		XojPreviewExtractor extractor;
-		PreviewExtractResult result = extractor.readFile(GET_TESTFILE("preview-test.unzipped.xoj"));
+        gsize dataLen = 0;
+        extractor.getData(dataLen);
+        CPPUNIT_ASSERT_EQUAL((std::string::size_type)2856, dataLen);
+    }
 
-		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
+    void testLoad1Unzipped() {
+        XojPreviewExtractor extractor;
+        PreviewExtractResult result = extractor.readFile(GET_TESTFILE("preview-test.unzipped.xoj"));
 
-		gsize dataLen = 0;
-		unsigned char* imageData = extractor.getData(dataLen);
-		CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string((char*)imageData, (size_t)dataLen));
-	}
+        CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
 
-	void testLoad1Zipped()
-	{
-		XojPreviewExtractor extractor;
-		PreviewExtractResult result = extractor.readFile(GET_TESTFILE("packaged_xopp/testPreview.xopp"));
+        gsize dataLen = 0;
+        unsigned char* imageData = extractor.getData(dataLen);
+        CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string((char*)imageData, (size_t)dataLen));
+    }
 
-		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
+    void testLoad1Zipped() {
+        XojPreviewExtractor extractor;
+        PreviewExtractResult result = extractor.readFile(GET_TESTFILE("packaged_xopp/testPreview.xopp"));
 
-		gsize dataLen = 0;
-		unsigned char* imageData = extractor.getData(dataLen);
-		CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string((char*)imageData, (size_t)dataLen));
-	}
+        CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
 
-	void testLoad2Zipped()
-	{
-		XojPreviewExtractor extractor;
-		PreviewExtractResult result = extractor.readFile(GET_TESTFILE("packaged_xopp/testPreview2.xopp"));
+        gsize dataLen = 0;
+        unsigned char* imageData = extractor.getData(dataLen);
+        CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string((char*)imageData, (size_t)dataLen));
+    }
 
-		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
+    void testLoad2Zipped() {
+        XojPreviewExtractor extractor;
+        PreviewExtractResult result = extractor.readFile(GET_TESTFILE("packaged_xopp/testPreview2.xopp"));
 
-		gsize dataLen = 0;
-		extractor.getData(dataLen);
-		CPPUNIT_ASSERT_EQUAL((std::string::size_type) 2856, dataLen);
-	}
+        CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
 
-	void testNoPreview()
-	{
-		XojPreviewExtractor extractor;
-		PreviewExtractResult result = extractor.readFile(GET_TESTFILE("preview-test-no-preview.unzipped.xoj"));
+        gsize dataLen = 0;
+        extractor.getData(dataLen);
+        CPPUNIT_ASSERT_EQUAL((std::string::size_type)2856, dataLen);
+    }
 
-		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_NO_PREVIEW, result);
-	}
+    void testNoPreview() {
+        XojPreviewExtractor extractor;
+        PreviewExtractResult result = extractor.readFile(GET_TESTFILE("preview-test-no-preview.unzipped.xoj"));
 
-	void testInvalidFile()
-	{
-		XojPreviewExtractor extractor;
-		PreviewExtractResult result = extractor.readFile(GET_TESTFILE("preview-test-invalid.xoj"));
+        CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_NO_PREVIEW, result);
+    }
 
-		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_ERROR_READING_PREVIEW, result);
-	}
+    void testInvalidFile() {
+        XojPreviewExtractor extractor;
+        PreviewExtractResult result = extractor.readFile(GET_TESTFILE("preview-test-invalid.xoj"));
 
+        CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_ERROR_READING_PREVIEW, result);
+    }
 };
 
 // Registers the fixture into the 'registry'

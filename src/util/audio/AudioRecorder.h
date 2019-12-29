@@ -11,33 +11,30 @@
 
 #pragma once
 
-#include "XournalType.h"
+#include <memory>
+#include <string>
+#include <vector>
+
+#include "control/settings/Settings.h"
 
 #include "AudioQueue.h"
 #include "PortAudioProducer.h"
 #include "VorbisConsumer.h"
+#include "XournalType.h"
 
-#include "control/settings/Settings.h"
+struct AudioRecorder {
+    explicit AudioRecorder(Settings& settings): settings(settings) {}
+    ~AudioRecorder();
 
-#include <memory>
-
-struct AudioRecorder
-{
-	explicit AudioRecorder(Settings& settings)
-	 : settings(settings)
-	{
-	}
-	~AudioRecorder();
-
-	bool start(const string& filename);
-	void stop();
-	bool isRecording() const;
-	vector<DeviceInfo> getInputDevices() const;
+    bool start(const string& filename);
+    void stop();
+    bool isRecording() const;
+    vector<DeviceInfo> getInputDevices() const;
 
 private:
-	Settings& settings;
+    Settings& settings;
 
-	std::unique_ptr<AudioQueue<float>> audioQueue = std::make_unique<AudioQueue<float>>();
-	std::unique_ptr<PortAudioProducer> portAudioProducer = std::make_unique<PortAudioProducer>(settings, *audioQueue);
-	std::unique_ptr<VorbisConsumer> vorbisConsumer = std::make_unique<VorbisConsumer>(settings, *audioQueue);
+    std::unique_ptr<AudioQueue<float>> audioQueue = std::make_unique<AudioQueue<float>>();
+    std::unique_ptr<PortAudioProducer> portAudioProducer = std::make_unique<PortAudioProducer>(settings, *audioQueue);
+    std::unique_ptr<VorbisConsumer> vorbisConsumer = std::make_unique<VorbisConsumer>(settings, *audioQueue);
 };

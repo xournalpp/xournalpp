@@ -11,32 +11,34 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "UndoAction.h"
-#include <XournalType.h>
+#include "XournalType.h"
 
 class Layer;
 class Redrawable;
 class Stroke;
 
-class EraseUndoAction : public UndoAction
-{
+class EraseUndoAction: public UndoAction {
 public:
-	EraseUndoAction(const PageRef& page);
-	virtual ~EraseUndoAction();
+    EraseUndoAction(const PageRef& page);
+    virtual ~EraseUndoAction();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
 
-	void addOriginal(Layer* layer, Stroke* element, int pos);
-	void addEdited(Layer* layer, Stroke* element, int pos);
-	void removeEdited(Stroke* element);
+    void addOriginal(Layer* layer, Stroke* element, int pos);
+    void addEdited(Layer* layer, Stroke* element, int pos);
+    void removeEdited(Stroke* element);
 
-	void finalize();
+    void finalize();
 
-	virtual string getText();
-	
+    virtual string getText();
+
 private:
-	GList* edited = nullptr;
-	GList* original = nullptr;
+    GList* edited = nullptr;
+    GList* original = nullptr;
 };

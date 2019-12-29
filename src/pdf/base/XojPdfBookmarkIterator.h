@@ -11,21 +11,22 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "XojPdfAction.h"
+#include "XournalType.h"
 
-#include <XournalType.h>
-
-class XojPdfBookmarkIterator
-{
+class XojPdfBookmarkIterator {
 public:
-	XojPdfBookmarkIterator();
-	virtual ~XojPdfBookmarkIterator();
+    XojPdfBookmarkIterator();
+    virtual ~XojPdfBookmarkIterator();
 
 public:
-	virtual bool next() = 0;
-	virtual bool isOpen() = 0;
-	virtual XojPdfBookmarkIterator* getChildIter() = 0;
-	virtual XojPdfAction* getAction() = 0;
+    virtual bool next() = 0;
+    virtual bool isOpen() = 0;
+    virtual XojPdfBookmarkIterator* getChildIter() = 0;
+    virtual XojPdfAction* getAction() = 0;
 
 private:
 };

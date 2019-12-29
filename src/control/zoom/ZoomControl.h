@@ -11,14 +11,16 @@
 
 #pragma once
 
-#include <model/DocumentListener.h>
-
-#include <XournalType.h>
-
-#include <Rectangle.h>
+#include <string>
 #include <tuple>
+#include <vector>
 
 #include <gtk/gtk.h>
+
+#include "model/DocumentListener.h"
+
+#include "Rectangle.h"
+#include "XournalType.h"
 
 #define DEFAULT_ZOOM_MAX 7
 #define DEFAULT_ZOOM_MIN 0.3
@@ -33,272 +35,270 @@ class XojPageView;
 class ZoomListener;
 class DocumentListener;
 
-class ZoomControl :
-	public DocumentListener
-{
+class ZoomControl: public DocumentListener {
 public:
-	ZoomControl();
-	virtual ~ZoomControl();
+    ZoomControl();
+    virtual ~ZoomControl();
 
-	/**
-	 * Zoom one step
-	 *
-	 * @param zoomIn zoom in or out
-	 * @param x x position of focus to zoom
-	 * @param y y position of focus to zoom
-	 */
-	void zoomOneStep(bool zoomIn, double x = -1, double y = -1);
+    /**
+     * Zoom one step
+     *
+     * @param zoomIn zoom in or out
+     * @param x x position of focus to zoom
+     * @param y y position of focus to zoom
+     */
+    void zoomOneStep(bool zoomIn, double x = -1, double y = -1);
 
-	/**
-	 * Zoom one step
-	 *
-	 * @param zoomIn zoom in or out
-	 * @param x x position of focus to zoom
-	 * @param y y position of focus to zoom
-	 */
-	void zoomScroll(bool zoomIn, double x, double y);
+    /**
+     * Zoom one step
+     *
+     * @param zoomIn zoom in or out
+     * @param x x position of focus to zoom
+     * @param y y position of focus to zoom
+     */
+    void zoomScroll(bool zoomIn, double x, double y);
 
-	/**
-	 * Zoom so that the page fits the current size of the window
-	 */
-	void setZoomFitMode(bool isZoomFitMode);
-	bool isZoomFitMode() const;
+    /**
+     * Zoom so that the page fits the current size of the window
+     */
+    void setZoomFitMode(bool isZoomFitMode);
+    bool isZoomFitMode() const;
 
-	/**
-	 * Zoom so that the document completely fits the View.
-	 */
-	void setZoomPresentationMode(bool isZoomPresentationMode);
-	bool isZoomPresentationMode() const;
+    /**
+     * Zoom so that the document completely fits the View.
+     */
+    void setZoomPresentationMode(bool isZoomPresentationMode);
+    bool isZoomPresentationMode() const;
 
-	/**
-	 * Zoom so that the displayed page on the screen has the same size as the real size
-	 * The dpi has to be set correctly
-	 */
-	void zoom100();
+    /**
+     * Zoom so that the displayed page on the screen has the same size as the real size
+     * The dpi has to be set correctly
+     */
+    void zoom100();
 
-	/**
-	 * @return zoom value depending zoom100Value
-	 */
-	double getZoom() const;
+    /**
+     * @return zoom value depending zoom100Value
+     */
+    double getZoom() const;
 
-	/**
-	 * @return real zoom value in percent
-	 */
-	double getZoomReal() const;
+    /**
+     * @return real zoom value in percent
+     */
+    double getZoomReal() const;
 
-	/**
-	 * Set the current zoom, does not preserve the current page position.
-	 * Use startZoomSequence() / zoomSequnceChange() / endZoomSequence() to preserve position
-	 * e.g. use zoomOneStep function
-	 *
-	 * @param zoom zoom value depending zoom100Value
-	 */
-	void setZoom(double zoom);
+    /**
+     * Set the current zoom, does not preserve the current page position.
+     * Use startZoomSequence() / zoomSequnceChange() / endZoomSequence() to preserve position
+     * e.g. use zoomOneStep function
+     *
+     * @param zoom zoom value depending zoom100Value
+     */
+    void setZoom(double zoom);
 
-	/**
-	 * Updates the when dpi is changed.
-	 * updates zoomMax, zoomMin, zoomStepBig, zoomStepScroll
-	 *
-	 * @param zoom zoom value depending zoom100Value
-	 */
-	void setZoom100Value(double zoom);
+    /**
+     * Updates the when dpi is changed.
+     * updates zoomMax, zoomMin, zoomStepBig, zoomStepScroll
+     *
+     * @param zoom zoom value depending zoom100Value
+     */
+    void setZoom100Value(double zoom);
 
-	/**
-	 * @return zoom value for zoom 100% depending zoom100Value
-	 */
-	double getZoom100Value() const;
+    /**
+     * @return zoom value for zoom 100% depending zoom100Value
+     */
+    double getZoom100Value() const;
 
-	/**
-	 * Updates when, the window size changes
-	 * @param zoom zoom value depending zoom100Value
-	 */
-	bool updateZoomFitValue(size_t pageNo = 0);
-	bool updateZoomFitValue(const Rectangle& widget_rect, size_t pageNo = 0);
+    /**
+     * Updates when, the window size changes
+     * @param zoom zoom value depending zoom100Value
+     */
+    bool updateZoomFitValue(size_t pageNo = 0);
+    bool updateZoomFitValue(const Rectangle& widget_rect, size_t pageNo = 0);
 
-	/**
-	 * @return zoom value for zoom fit depending zoom100Value
-	 */
-	double getZoomFitValue() const;
+    /**
+     * @return zoom value for zoom fit depending zoom100Value
+     */
+    double getZoomFitValue() const;
 
-	bool updateZoomPresentationValue(size_t pageNo = 0);
-	double getZoomPresentationValue() const;
+    bool updateZoomPresentationValue(size_t pageNo = 0);
+    double getZoomPresentationValue() const;
 
-	void addZoomListener(ZoomListener* listener);
+    void addZoomListener(ZoomListener* listener);
 
-	void initZoomHandler(GtkWidget* widget, XournalView* view, Control* control);
+    void initZoomHandler(GtkWidget* widget, XournalView* view, Control* control);
 
-	/**
-	 * Call this before any zoom is done, it saves the current page and position
-	 *
-	 * @param centerX Zoom Center X (use -1 for center of the visible rect)
-	 * @param centerY Zoom Center Y (use -1 for center of the visible rect)
-	 */
-	void startZoomSequence(double centerX, double centerY);
+    /**
+     * Call this before any zoom is done, it saves the current page and position
+     *
+     * @param centerX Zoom Center X (use -1 for center of the visible rect)
+     * @param centerY Zoom Center Y (use -1 for center of the visible rect)
+     */
+    void startZoomSequence(double centerX, double centerY);
 
-	/**
-	 * Change the zoom within a Zoom sequence (startZoomSequence() / endZoomSequence())
-	 *
-	 * @param zoom Current zoom value
-	 * @param relative If the zoom is relative to the start value (for Gesture)
-	 */
-	void zoomSequenceChange(double zoom, bool relative);
+    /**
+     * Change the zoom within a Zoom sequence (startZoomSequence() / endZoomSequence())
+     *
+     * @param zoom Current zoom value
+     * @param relative If the zoom is relative to the start value (for Gesture)
+     */
+    void zoomSequenceChange(double zoom, bool relative);
 
-	/**
-	 * Clear all stored data from startZoomSequence()
-	 */
-	void endZoomSequence();
+    /**
+     * Clear all stored data from startZoomSequence()
+     */
+    void endZoomSequence();
 
-	/**
-	 * Update the scroll position manually
-	 */
-	void setScrollPositionAfterZoom(double x, double y);
+    /**
+     * Update the scroll position manually
+     */
+    void setScrollPositionAfterZoom(double x, double y);
 
-	/**
-	 * Zoom to correct position on zooming
-	 */
-	std::tuple<double, double> getScrollPositionAfterZoom() const;
+    /**
+     * Zoom to correct position on zooming
+     */
+    std::tuple<double, double> getScrollPositionAfterZoom() const;
 
-	/**
-	 * Get visible rect on xournal view, for Zoom Gesture
-	 */
-	Rectangle getVisibleRect();
+    /**
+     * Get visible rect on xournal view, for Zoom Gesture
+     */
+    Rectangle getVisibleRect();
 
-	double getZoomStep() const;
-	double getZoomStepReal() const;
-	void setZoomStep(double zoomStep);
+    double getZoomStep() const;
+    double getZoomStepReal() const;
+    void setZoomStep(double zoomStep);
 
-	double getZoomStepScroll() const;
-	double getZoomStepScrollReal() const;
-	void setZoomStepScroll(double zoomStep);
+    double getZoomStepScroll() const;
+    double getZoomStepScrollReal() const;
+    void setZoomStepScroll(double zoomStep);
 
-	double getZoomMax() const;
-	double getZoomMaxReal() const;
-	void setZoomMax(double zoomMax);
+    double getZoomMax() const;
+    double getZoomMaxReal() const;
+    void setZoomMax(double zoomMax);
 
-	double getZoomMin() const;
-	double getZoomMinReal() const;
-	void setZoomMin(double zoomMin);
+    double getZoomMin() const;
+    double getZoomMinReal() const;
+    void setZoomMin(double zoomMin);
 
 protected:
-	void fireZoomChanged();
-	void fireZoomRangeValueChanged();
+    void fireZoomChanged();
+    void fireZoomRangeValueChanged();
 
-	void pageSizeChanged(size_t page);
-// 	void pageChanged(size_t page);
-	void pageSelected(size_t page);
+    void pageSizeChanged(size_t page);
+    // 	void pageChanged(size_t page);
+    void pageSelected(size_t page);
 
-	static bool onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom);
-	static bool onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle *allocation, ZoomControl* zoom);
-
-private:
-	void zoomFit();
-	void zoomPresentation();
+    static bool onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom);
+    static bool onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle* allocation, ZoomControl* zoom);
 
 private:
-	XournalView* view = nullptr;
-	Control* control = nullptr;
+    void zoomFit();
+    void zoomPresentation();
 
-	std::vector<ZoomListener*> listener;
+private:
+    XournalView* view = nullptr;
+    Control* control = nullptr;
 
-	/**
-	 * current Zoom value
-	 * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
-	 */
-	double zoom = 1.0;
+    std::vector<ZoomListener*> listener;
 
-	/**
-	 * for zoom sequence start zoom value
-	 * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
-	 */
-	double lastZoomValue = 1.0;
+    /**
+     * current Zoom value
+     * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
+     */
+    double zoom = 1.0;
 
-	bool zoomFitMode = false;
-	bool zoomPresentationMode = false;
+    /**
+     * for zoom sequence start zoom value
+     * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
+     */
+    double lastZoomValue = 1.0;
 
-	/**
-	 * Zoom value for 100% depends on the dpi
-	 */
-	double zoom100Value = 1.0;
-	double zoomFitValue = 1.0;
-	double zoomPresentationValue = 1.0;
+    bool zoomFitMode = false;
+    bool zoomPresentationMode = false;
 
-	/**
-	 * Base zoom on start, for relative zoom (Gesture)
-	 */
-	double zoomSequenceStart = -1;
+    /**
+     * Zoom value for 100% depends on the dpi
+     */
+    double zoom100Value = 1.0;
+    double zoomFitValue = 1.0;
+    double zoomPresentationValue = 1.0;
 
-	/**
-	 * Zoom point on widget, will not be zoomed!
-	 */
-	double zoomWidgetPosX = 0;
+    /**
+     * Base zoom on start, for relative zoom (Gesture)
+     */
+    double zoomSequenceStart = -1;
 
-	/**
-	 * Zoom point on widget, will not be zoomed!
-	 */
-	double zoomWidgetPosY = 0;
+    /**
+     * Zoom point on widget, will not be zoomed!
+     */
+    double zoomWidgetPosX = 0;
 
-	/**
-	 * Scroll position to scale
-	 */
-	double scrollPositionX = 0;
+    /**
+     * Zoom point on widget, will not be zoomed!
+     */
+    double zoomWidgetPosY = 0;
 
-	/**
-	 * Scroll position to scale
-	 */
-	double scrollPositionY = 0;
+    /**
+     * Scroll position to scale
+     */
+    double scrollPositionX = 0;
 
-	/**
-	 * Cursorposition x for Ctrl + Scroll
-	 */
-	double scrollCursorPositionX = 0;
+    /**
+     * Scroll position to scale
+     */
+    double scrollPositionY = 0;
 
-	/**
-	 * Cursorposition y for Ctrl + Scroll
-	 */
-	double scrollCursorPositionY = 0;
+    /**
+     * Cursorposition x for Ctrl + Scroll
+     */
+    double scrollCursorPositionX = 0;
 
-	/**
-	 * Zoomstep value for Ctrl - and Zoom In and Out Button
-	 * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
-	 */
-	double zoomStep = 0;
+    /**
+     * Cursorposition y for Ctrl + Scroll
+     */
+    double scrollCursorPositionY = 0;
 
-	/**
-	 * Real zoomstep value for Ctrl + and Zoom In and Out Button
-	 */
-	double zoomStepReal = DEFAULT_ZOOM_STEP;
+    /**
+     * Zoomstep value for Ctrl - and Zoom In and Out Button
+     * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
+     */
+    double zoomStep = 0;
 
-	/**
-	 * Zoomstep value for Ctrl-Scroll zooming
-	 * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
-	 */
-	double zoomStepScroll = 0;
+    /**
+     * Real zoomstep value for Ctrl + and Zoom In and Out Button
+     */
+    double zoomStepReal = DEFAULT_ZOOM_STEP;
 
-	/**
-	 * Real zoomstep value for Ctrl-Scroll zooming
-	 */
-	double zoomStepScrollReal = DEFAULT_ZOOM_STEP_SCROLL;
+    /**
+     * Zoomstep value for Ctrl-Scroll zooming
+     * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
+     */
+    double zoomStepScroll = 0;
 
-	/**
-	 * Zoom maximal value
-	 * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
-	 */
-	double zoomMax = 0;
+    /**
+     * Real zoomstep value for Ctrl-Scroll zooming
+     */
+    double zoomStepScrollReal = DEFAULT_ZOOM_STEP_SCROLL;
 
-	/**
-	 * Real zoom maximal value
-	 */
-	double zoomMaxReal = DEFAULT_ZOOM_MAX;
+    /**
+     * Zoom maximal value
+     * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
+     */
+    double zoomMax = 0;
 
-	/**
-	 * Zoom mininmal value
-	 * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
-	 */
-	double zoomMin = 0;
+    /**
+     * Real zoom maximal value
+     */
+    double zoomMaxReal = DEFAULT_ZOOM_MAX;
 
-	/**
-	 * Real zoom mininmal value
-	 * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
-	 */
-	double zoomMinReal = DEFAULT_ZOOM_MIN;
+    /**
+     * Zoom mininmal value
+     * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
+     */
+    double zoomMin = 0;
+
+    /**
+     * Real zoom mininmal value
+     * depends dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
+     */
+    double zoomMinReal = DEFAULT_ZOOM_MIN;
 };

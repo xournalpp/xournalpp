@@ -12,90 +12,90 @@
 
 #pragma once
 
-#include "AbstractInputDevice.h"
 #include "gui/widgets/XournalWidget.h"
+
+#include "AbstractInputDevice.h"
 
 class ScrollHandling;
 class Settings;
 class ToolHandler;
 class InputSequence;
 
-class NewGtkInputDevice : public AbstractInputDevice
-{
+class NewGtkInputDevice: public AbstractInputDevice {
 public:
-	NewGtkInputDevice(GtkWidget* widget, XournalView* view, ScrollHandling* scrollHandling);
-	virtual ~NewGtkInputDevice();
+    NewGtkInputDevice(GtkWidget* widget, XournalView* view, ScrollHandling* scrollHandling);
+    virtual ~NewGtkInputDevice();
 
 public:
-	/**
-	 * Initialize the input handling, set input events
-	 */
-	void initWidget();
+    /**
+     * Initialize the input handling, set input events
+     */
+    void initWidget();
 
-	/**
-	 * Focus the widget
-	 */
-	void focusWidget();
+    /**
+     * Focus the widget
+     */
+    void focusWidget();
 
-	Settings* getSettings();
-	ToolHandler* getToolHandler();
-	GtkXournal* getXournal();
-	XournalView* getView();
+    Settings* getSettings();
+    ToolHandler* getToolHandler();
+    GtkXournal* getXournal();
+    XournalView* getView();
 
-	/**
-	 * Try to start input
-	 *
-	 * @return true if it should start
-	 */
-	bool startInput(InputSequence* input);
+    /**
+     * Try to start input
+     *
+     * @return true if it should start
+     */
+    bool startInput(InputSequence* input);
 
-	/**
-	 * Stop input of this sequence
-	 */
-	void stopInput(InputSequence* input);
+    /**
+     * Stop input of this sequence
+     */
+    void stopInput(InputSequence* input);
 
 protected:
-	/**
-	 * Handle all GTK Events
-	 */
-	bool eventHandler(GdkEvent* event);
+    /**
+     * Handle all GTK Events
+     */
+    bool eventHandler(GdkEvent* event);
 
-	/**
-	 * Handle Key Press event
-	 */
-	bool eventKeyPressHandler(GdkEventKey* event);
+    /**
+     * Handle Key Press event
+     */
+    bool eventKeyPressHandler(GdkEventKey* event);
 
 private:
-	static bool eventCallback(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self);
+    static bool eventCallback(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self);
 
 private:
 protected:
-	/**
-	 * Running input
-	 */
-	InputSequence* inputRunning = nullptr;
+    /**
+     * Running input
+     */
+    InputSequence* inputRunning = nullptr;
 
-	/**
-	 * Current ongoing pointer events
-	 *
-	 * GdkDevice -> InputSequence
-	 */
-	GHashTable* pointerInputList;
+    /**
+     * Current ongoing pointer events
+     *
+     * GdkDevice -> InputSequence
+     */
+    GHashTable* pointerInputList;
 
-	/**
-	 * Current ongoing touch events
-	 *
-	 * GdkEventSequence -> InputSequence
-	 */
-	GHashTable* touchInputList;
+    /**
+     * Current ongoing touch events
+     *
+     * GdkEventSequence -> InputSequence
+     */
+    GHashTable* touchInputList;
 
-	/**
-	 * Scrollbars
-	 */
-	ScrollHandling* scrollHandling;
+    /**
+     * Scrollbars
+     */
+    ScrollHandling* scrollHandling;
 
-	/**
-	 * If touch drawing is not enabled, disable it
-	 */
-	bool ignoreTouch = false;
+    /**
+     * If touch drawing is not enabled, disable it
+     */
+    bool ignoreTouch = false;
 };

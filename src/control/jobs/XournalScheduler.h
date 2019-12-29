@@ -13,45 +13,47 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "control/jobs/Scheduler.h"
-#include "gui/sidebar/previews/page/SidebarPreviewPageEntry.h"
 #include "gui/PageView.h"
+#include "gui/sidebar/previews/page/SidebarPreviewPageEntry.h"
 
-#include <XournalType.h>
+#include "XournalType.h"
 
-class XournalScheduler : public Scheduler
-{
+class XournalScheduler: public Scheduler {
 public:
-	XournalScheduler();
-	virtual ~XournalScheduler();
+    XournalScheduler();
+    virtual ~XournalScheduler();
 
 public:
-	/**
-	 * Remove source, e.g. if a page is removed they don't need to repaint
-	 */
-	void removeSidebar(SidebarPreviewBaseEntry* preview);
-	void removePage(XojPageView* view);
+    /**
+     * Remove source, e.g. if a page is removed they don't need to repaint
+     */
+    void removeSidebar(SidebarPreviewBaseEntry* preview);
+    void removePage(XojPageView* view);
 
-	/**
-	 * Removes all PreviewJob%s / RenderJob%s scheduled to be run
-	 */
-	void removeAllJobs();
+    /**
+     * Removes all PreviewJob%s / RenderJob%s scheduled to be run
+     */
+    void removeAllJobs();
 
-	void addRepaintSidebar(SidebarPreviewBaseEntry* preview);
-	void addRerenderPage(XojPageView* view);
+    void addRepaintSidebar(SidebarPreviewBaseEntry* preview);
+    void addRerenderPage(XojPageView* view);
 
-	/**
-	 * Blocks until all currently running Job%s have been executed
-	 */
-	void finishTask();
+    /**
+     * Blocks until all currently running Job%s have been executed
+     */
+    void finishTask();
 
 private:
-	/**
-	 * Remove source, e.g. if a page is removed they don't need to repaint
-	 */
-	void removeSource(void* source, JobType type, JobPriority priority);
+    /**
+     * Remove source, e.g. if a page is removed they don't need to repaint
+     */
+    void removeSource(void* source, JobType type, JobPriority priority);
 
-	bool existsSource(void* source, JobType type, JobPriority priority);
+    bool existsSource(void* source, JobType type, JobPriority priority);
 
 private:
 };

@@ -13,15 +13,14 @@
 
 #include "BaseStrokeHandler.h"
 
-class RulerHandler : public BaseStrokeHandler
-{
+class RulerHandler: public BaseStrokeHandler {
 public:
-	RulerHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
-	virtual ~RulerHandler();
+    RulerHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
+    virtual ~RulerHandler();
 
 private:
-	virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
-	void snapRotation(double& x, double& y);
+    virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+    void snapRotation(double& x, double& y);
 
 private:
 };

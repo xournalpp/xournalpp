@@ -4,6 +4,4 @@ TouchDisableInterface::TouchDisableInterface() = default;
 
 TouchDisableInterface::~TouchDisableInterface() = default;
 
-void TouchDisableInterface::init()
-{
-}
+void TouchDisableInterface::init() {}

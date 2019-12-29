@@ -13,25 +13,24 @@
 
 #include "UndoAction.h"
 
-class ScaleUndoAction : public UndoAction
-{
+class ScaleUndoAction: public UndoAction {
 public:
-	ScaleUndoAction(const PageRef& page, vector<Element*>* elements, double x0, double y0, double fx, double fy);
-	virtual ~ScaleUndoAction();
+    ScaleUndoAction(const PageRef& page, vector<Element*>* elements, double x0, double y0, double fx, double fy);
+    virtual ~ScaleUndoAction();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
-	virtual string getText();
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
+    virtual string getText();
 
 private:
-	void applyScale(double fx, double fy);
+    void applyScale(double fx, double fy);
 
 private:
-	vector<Element*> elements;
+    vector<Element*> elements;
 
-	double x0;
-	double y0;
-	double fx;
-	double fy;
+    double x0;
+    double y0;
+    double fx;
+    double fy;
 };
