@@ -13,138 +13,140 @@
 
 #include <array>
 #include <memory>
-#include "Tool.h"
+#include <string>
+#include <vector>
+
 #include "settings/Settings.h"
 
-#include <XournalType.h>
+#include "Tool.h"
+#include "XournalType.h"
 
 class LastSelectedTool;
 
-class ToolListener
-{
+class ToolListener {
 public:
-	virtual void toolColorChanged(bool userSelection) = 0;
-	virtual void setCustomColorSelected() = 0;
-	virtual void toolSizeChanged() = 0;
-	virtual void toolFillChanged() = 0;
-	virtual void toolLineStyleChanged() = 0;
-	virtual void toolChanged() = 0;
+    virtual void toolColorChanged(bool userSelection) = 0;
+    virtual void setCustomColorSelected() = 0;
+    virtual void toolSizeChanged() = 0;
+    virtual void toolFillChanged() = 0;
+    virtual void toolLineStyleChanged() = 0;
+    virtual void toolChanged() = 0;
 
-	virtual ~ToolListener();
+    virtual ~ToolListener();
 };
 
 class ActionHandler;
 
-class ToolHandler
-{
+class ToolHandler {
 public:
-	ToolHandler(ToolListener* listener, ActionHandler* actionHandler, Settings* settings);
-	virtual ~ToolHandler();
+    ToolHandler(ToolListener* listener, ActionHandler* actionHandler, Settings* settings);
+    virtual ~ToolHandler();
 
-	/**
-	 * Select the color for the tool
-	 *
-	 * @param color Color
-	 * @param userSelection
-	 * 			true if the user selected the color
-	 * 			false if the color is selected by a tool change
-	 * 			and therefore should not be applied to a selection
-	 */
-	void setColor(int color, bool userSelection);
-	int getColor();
+    /**
+     * Select the color for the tool
+     *
+     * @param color Color
+     * @param userSelection
+     * 			true if the user selected the color
+     * 			false if the color is selected by a tool change
+     * 			and therefore should not be applied to a selection
+     */
+    void setColor(int color, bool userSelection);
+    int getColor();
 
-	/**
-	 * @return -1 if fill is disabled, else the fill alpha value
-	 */
-	int getFill();
+    /**
+     * @return -1 if fill is disabled, else the fill alpha value
+     */
+    int getFill();
 
-	DrawingType getDrawingType();
-	void setDrawingType(DrawingType drawingType);
+    DrawingType getDrawingType();
+    void setDrawingType(DrawingType drawingType);
 
-	const LineStyle& getLineStyle();
+    const LineStyle& getLineStyle();
 
-	void setColorFound();
+    void setColorFound();
 
-	ToolSize getSize();
-	void setSize(ToolSize size);
-	double getThickness();
+    ToolSize getSize();
+    void setSize(ToolSize size);
+    double getThickness();
 
-	void setLineStyle(const LineStyle& style);
+    void setLineStyle(const LineStyle& style);
 
-	ToolSize getPenSize();
-	ToolSize getEraserSize();
-	ToolSize getHilighterSize();
-	void setPenSize(ToolSize size);
-	void setEraserSize(ToolSize size);
-	void setHilighterSize(ToolSize size);
+    ToolSize getPenSize();
+    ToolSize getEraserSize();
+    ToolSize getHilighterSize();
+    void setPenSize(ToolSize size);
+    void setEraserSize(ToolSize size);
+    void setHilighterSize(ToolSize size);
 
-	void setPenFillEnabled(bool fill, bool fireEvent = true);
-	bool getPenFillEnabled();
-	void setPenFill(int alpha);
-	int getPenFill();
+    void setPenFillEnabled(bool fill, bool fireEvent = true);
+    bool getPenFillEnabled();
+    void setPenFill(int alpha);
+    int getPenFill();
 
-	void setHilighterFillEnabled(bool fill, bool fireEvent = true);
-	bool getHilighterFillEnabled();
-	void setHilighterFill(int alpha);
-	int getHilighterFill();
+    void setHilighterFillEnabled(bool fill, bool fireEvent = true);
+    bool getHilighterFillEnabled();
+    void setHilighterFill(int alpha);
+    int getHilighterFill();
 
-	void selectTool(ToolType type, bool fireToolChanged = true);
-	ToolType getToolType();
-	void fireToolChanged();
+    void selectTool(ToolType type, bool fireToolChanged = true);
+    ToolType getToolType();
+    void fireToolChanged();
 
-	Tool& getTool(ToolType type);
+    Tool& getTool(ToolType type);
 
-	void setEraserType(EraserType eraserType);
-	EraserType getEraserType();
-	void eraserTypeChanged();
+    void setEraserType(EraserType eraserType);
+    EraserType getEraserType();
+    void eraserTypeChanged();
 
-	bool hasCapability(ToolCapabilities cap);
+    bool hasCapability(ToolCapabilities cap);
 
-	void saveSettings();
-	void loadSettings();
+    void saveSettings();
+    void loadSettings();
 
-	void copyCurrentConfig();
-	void restoreLastConfig();
+    void copyCurrentConfig();
+    void restoreLastConfig();
 
-	std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& getTools() const;
+    std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& getTools() const;
 
-	/**
-	 * Change the selection tools capabilities, depending on the selected elements
-	 */
-	void setSelectionEditTools(bool setColor, bool setSize, bool setFill);
+    /**
+     * Change the selection tools capabilities, depending on the selected elements
+     */
+    void setSelectionEditTools(bool setColor, bool setSize, bool setFill);
 
-	const double* getToolThickness(ToolType type);
+    const double* getToolThickness(ToolType type);
 
-	/**
-	 * Returns whether the current tool will create an element that may only reside on a single page even when the pointer moves to another
-	 * @return
-	 */
-	bool isSinglePageTool();
+    /**
+     * Returns whether the current tool will create an element that may only reside on a single page even when the
+     * pointer moves to another
+     * @return
+     */
+    bool isSinglePageTool();
 
 protected:
-	void initTools();
+    void initTools();
 
 private:
-	std::array<std::unique_ptr<Tool>, TOOL_COUNT> tools;
-	Tool* current = nullptr;
+    std::array<std::unique_ptr<Tool>, TOOL_COUNT> tools;
+    Tool* current = nullptr;
 
-	/**
-	 * Last selected tool, reference with color values etc.
-	 */
-	LastSelectedTool* lastSelectedTool = nullptr;
+    /**
+     * Last selected tool, reference with color values etc.
+     */
+    LastSelectedTool* lastSelectedTool = nullptr;
 
-	EraserType eraserType = ERASER_TYPE_DEFAULT;
+    EraserType eraserType = ERASER_TYPE_DEFAULT;
 
-	/**
-	 * If a color is selected, it may be in the list,
-	 * so its a "predefined" color for us, but may it is
-	 * not in the list, so its a "custom" color for us
-	 */
-	bool colorFound = false;
+    /**
+     * If a color is selected, it may be in the list,
+     * so its a "predefined" color for us, but may it is
+     * not in the list, so its a "custom" color for us
+     */
+    bool colorFound = false;
 
-	ToolListener* listener = nullptr;
+    ToolListener* listener = nullptr;
 
-	ActionHandler* actionHandler = nullptr;
+    ActionHandler* actionHandler = nullptr;
 
-	Settings* settings = nullptr;
+    Settings* settings = nullptr;
 };

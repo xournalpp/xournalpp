@@ -11,67 +11,66 @@
 
 #pragma once
 
-#include "enums/ActionType.enum.h"
-#include "enums/ActionGroup.enum.h"
-
-#include <XournalType.h>
+#include <list>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
-#include <list>
+
+#include "enums/ActionGroup.enum.h"
+#include "enums/ActionType.enum.h"
+
+#include "XournalType.h"
 
 class ActionHandler;
 
-class ActionEnabledListener
-{
+class ActionEnabledListener {
 public:
-	ActionEnabledListener();
-	virtual ~ActionEnabledListener();
+    ActionEnabledListener();
+    virtual ~ActionEnabledListener();
 
 public:
-	virtual void actionEnabledAction(ActionType action, bool enabled) = 0;
+    virtual void actionEnabledAction(ActionType action, bool enabled) = 0;
 
-	void registerListener(ActionHandler* handler);
-	void unregisterListener();
+    void registerListener(ActionHandler* handler);
+    void unregisterListener();
 
 private:
-	ActionHandler* handler = nullptr;
+    ActionHandler* handler = nullptr;
 };
 
-class ActionSelectionListener
-{
+class ActionSelectionListener {
 public:
-	ActionSelectionListener();
-	virtual ~ActionSelectionListener();
+    ActionSelectionListener();
+    virtual ~ActionSelectionListener();
 
-	virtual void actionSelected(ActionGroup group, ActionType action) = 0;
+    virtual void actionSelected(ActionGroup group, ActionType action) = 0;
 
-	void registerListener(ActionHandler* handler);
-	void unregisterListener();
+    void registerListener(ActionHandler* handler);
+    void unregisterListener();
 
 private:
-	ActionHandler* handler;
+    ActionHandler* handler;
 };
 
-class ActionHandler
-{
+class ActionHandler {
 public:
-	ActionHandler();
-	virtual ~ActionHandler();
+    ActionHandler();
+    virtual ~ActionHandler();
 
 public:
-	virtual void actionPerformed(ActionType type, ActionGroup group,
-	                             GdkEvent* event, GtkMenuItem* menuitem,
-	                             GtkToolButton* toolbutton, bool enabled) = 0;
+    virtual void actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
+                                 GtkToolButton* toolbutton, bool enabled) = 0;
 
-	void fireEnableAction(ActionType action, bool enabled);
-	void addListener(ActionEnabledListener* listener);
-	void removeListener(ActionEnabledListener* listener);
+    void fireEnableAction(ActionType action, bool enabled);
+    void addListener(ActionEnabledListener* listener);
+    void removeListener(ActionEnabledListener* listener);
 
-	void fireActionSelected(ActionGroup group, ActionType action);
-	void addListener(ActionSelectionListener* listener);
-	void removeListener(ActionSelectionListener* listener);
+    void fireActionSelected(ActionGroup group, ActionType action);
+    void addListener(ActionSelectionListener* listener);
+    void removeListener(ActionSelectionListener* listener);
 
 private:
-	std::list<ActionEnabledListener*> enabledListener;
-	std::list<ActionSelectionListener*> selectionListener;
+    std::list<ActionEnabledListener*> enabledListener;
+    std::list<ActionSelectionListener*> selectionListener;
 };

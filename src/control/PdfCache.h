@@ -11,39 +11,42 @@
 
 #pragma once
 
-#include "pdf/base/XojPdfPage.h"
-#include <XournalType.h>
+#include <list>
+#include <string>
+#include <vector>
 
 #include <cairo/cairo.h>
-#include <list>
+
+#include "pdf/base/XojPdfPage.h"
+
+#include "XournalType.h"
 using std::list;
 
 class PdfCacheEntry;
 
-class PdfCache
-{
+class PdfCache {
 public:
-	PdfCache(int size);
-	virtual ~PdfCache();
+    PdfCache(int size);
+    virtual ~PdfCache();
 
 private:
-	PdfCache(const PdfCache& cache);
-	void operator=(const PdfCache& cache);
+    PdfCache(const PdfCache& cache);
+    void operator=(const PdfCache& cache);
 
 public:
-	void render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, double zoom);
+    void render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, double zoom);
 
 private:
-	void setZoom(double zoom);
-	void clearCache();
-	cairo_surface_t* lookup(const XojPdfPageSPtr& popplerPage);
-	void cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img);
+    void setZoom(double zoom);
+    void clearCache();
+    cairo_surface_t* lookup(const XojPdfPageSPtr& popplerPage);
+    void cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img);
 
 private:
-	GMutex renderMutex{};
+    GMutex renderMutex{};
 
-	list<PdfCacheEntry*> data;
-	list<PdfCacheEntry*>::size_type size = 0;
+    list<PdfCacheEntry*> data;
+    list<PdfCacheEntry*>::size_type size = 0;
 
-	double zoom = -1;
+    double zoom = -1;
 };

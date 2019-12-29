@@ -13,20 +13,19 @@
 
 #include "gui/GladeGui.h"
 
-class FillTransparencyDialog : public GladeGui
-{
+class FillTransparencyDialog: public GladeGui {
 public:
-	FillTransparencyDialog(GladeSearchpath* gladeSearchPath, int alpha);
-	virtual ~FillTransparencyDialog();
+    FillTransparencyDialog(GladeSearchpath* gladeSearchPath, int alpha);
+    virtual ~FillTransparencyDialog();
 
 public:
-	virtual void show(GtkWindow* parent);
+    virtual void show(GtkWindow* parent);
 
-	int getResultAlpha() const;
+    int getResultAlpha() const;
 
 private:
-	void setPreviewImage(int alpha);
+    void setPreviewImage(int alpha);
 
 private:
-	int resultAlpha = -1;
+    int resultAlpha = -1;
 };

@@ -2,24 +2,15 @@
 
 #include "control/Control.h"
 #include "control/settings/ButtonConfig.h"
-#include "gui/XournalppCursor.h"
 #include "gui/Layout.h"
-#include "gui/widgets/XournalWidget.h"
 #include "gui/XournalView.h"
+#include "gui/XournalppCursor.h"
+#include "gui/widgets/XournalWidget.h"
 
 
-AbstractInputDevice::AbstractInputDevice(GtkWidget* widget, XournalView* view)
- : widget(widget),
-   view(view)
-{
+AbstractInputDevice::AbstractInputDevice(GtkWidget* widget, XournalView* view): widget(widget), view(view) {}
+
+AbstractInputDevice::~AbstractInputDevice() {
+    widget = nullptr;
+    view = nullptr;
 }
-
-AbstractInputDevice::~AbstractInputDevice()
-{
-	widget = nullptr;
-	view = nullptr;
-}
-
-
-
-

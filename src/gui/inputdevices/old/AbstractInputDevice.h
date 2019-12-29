@@ -12,34 +12,36 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
+
+#include "XournalType.h"
 
 class XournalView;
 class XojPageView;
 
-class AbstractInputDevice
-{
+class AbstractInputDevice {
 public:
-	AbstractInputDevice(GtkWidget* widget, XournalView* view);
-	virtual ~AbstractInputDevice();
+    AbstractInputDevice(GtkWidget* widget, XournalView* view);
+    virtual ~AbstractInputDevice();
 
 public:
-	/**
-	 * Initialize the input handling, set input events
-	 */
-	virtual void initWidget() = 0;
+    /**
+     * Initialize the input handling, set input events
+     */
+    virtual void initWidget() = 0;
 
 private:
 protected:
-	/**
-	 * Xournal Widget
-	 */
-	GtkWidget* widget;
+    /**
+     * Xournal Widget
+     */
+    GtkWidget* widget;
 
-	/**
-	 * Xournal View
-	 */
-	XournalView* view;
+    /**
+     * Xournal View
+     */
+    XournalView* view;
 };

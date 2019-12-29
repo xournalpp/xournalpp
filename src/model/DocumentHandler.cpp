@@ -2,60 +2,42 @@
 
 #include "DocumentListener.h"
 
-void DocumentHandler::addListener(DocumentListener* l)
-{
-	this->listener.push_back(l);
+void DocumentHandler::addListener(DocumentListener* l) { this->listener.push_back(l); }
+
+void DocumentHandler::removeListener(DocumentListener* l) { this->listener.remove(l); }
+
+void DocumentHandler::fireDocumentChanged(DocumentChangeType type) {
+    for (DocumentListener* dl: this->listener) {
+        dl->documentChanged(type);
+    }
 }
 
-void DocumentHandler::removeListener(DocumentListener* l)
-{
-	this->listener.remove(l);
+void DocumentHandler::firePageSizeChanged(size_t page) {
+    for (DocumentListener* dl: this->listener) {
+        dl->pageSizeChanged(page);
+    }
 }
 
-void DocumentHandler::fireDocumentChanged(DocumentChangeType type)
-{
-	for (DocumentListener* dl : this->listener)
-	{
-		dl->documentChanged(type);
-	}
+void DocumentHandler::firePageChanged(size_t page) {
+    for (DocumentListener* dl: this->listener) {
+        dl->pageChanged(page);
+    }
 }
 
-void DocumentHandler::firePageSizeChanged(size_t page)
-{
-	for (DocumentListener* dl : this->listener)
-	{
-		dl->pageSizeChanged(page);
-	}
+void DocumentHandler::firePageInserted(size_t page) {
+    for (DocumentListener* dl: this->listener) {
+        dl->pageInserted(page);
+    }
 }
 
-void DocumentHandler::firePageChanged(size_t page)
-{
-	for (DocumentListener* dl : this->listener)
-	{
-		dl->pageChanged(page);
-	}
+void DocumentHandler::firePageDeleted(size_t page) {
+    for (DocumentListener* dl: this->listener) {
+        dl->pageDeleted(page);
+    }
 }
 
-void DocumentHandler::firePageInserted(size_t page)
-{
-	for (DocumentListener* dl : this->listener)
-	{
-		dl->pageInserted(page);
-	}
-}
-
-void DocumentHandler::firePageDeleted(size_t page)
-{
-	for (DocumentListener* dl : this->listener)
-	{
-		dl->pageDeleted(page);
-	}
-}
-
-void DocumentHandler::firePageSelected(size_t page)
-{
-	for (DocumentListener* dl : this->listener)
-	{
-		dl->pageSelected(page);
-	}
+void DocumentHandler::firePageSelected(size_t page) {
+    for (DocumentListener* dl: this->listener) {
+        dl->pageSelected(page);
+    }
 }

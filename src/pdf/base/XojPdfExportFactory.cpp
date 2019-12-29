@@ -8,8 +8,6 @@ XojPdfExportFactory::XojPdfExportFactory() = default;
 
 XojPdfExportFactory::~XojPdfExportFactory() = default;
 
-auto XojPdfExportFactory::createExport(Document* doc, ProgressListener* listener) -> XojPdfExport*
-{
-	return new XojCairoPdfExport(doc, listener);
+auto XojPdfExportFactory::createExport(Document* doc, ProgressListener* listener) -> XojPdfExport* {
+    return new XojCairoPdfExport(doc, listener);
 }
-

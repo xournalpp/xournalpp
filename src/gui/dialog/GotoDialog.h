@@ -13,18 +13,17 @@
 
 #include "gui/GladeGui.h"
 
-class GotoDialog : public GladeGui
-{
+class GotoDialog: public GladeGui {
 public:
-	GotoDialog(GladeSearchpath* gladeSearchPath, int maxPage);
-	virtual ~GotoDialog();
+    GotoDialog(GladeSearchpath* gladeSearchPath, int maxPage);
+    virtual ~GotoDialog();
 
 public:
-	virtual void show(GtkWindow* parent);
+    virtual void show(GtkWindow* parent);
 
-	// returns the selected page or -1 if closed
-	int getSelectedPage() const;
+    // returns the selected page or -1 if closed
+    int getSelectedPage() const;
 
 private:
-	int selectedPage = -1;
+    int selectedPage = -1;
 };

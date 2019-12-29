@@ -11,8 +11,11 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "UndoAction.h"
-#include <XournalType.h>
+#include "XournalType.h"
 
 class FontUndoActionEntry;
 class Layer;
@@ -20,21 +23,20 @@ class Redrawable;
 class Text;
 class XojFont;
 
-class FontUndoAction : public UndoAction
-{
+class FontUndoAction: public UndoAction {
 public:
-	FontUndoAction(const PageRef& page, Layer* layer);
-	virtual ~FontUndoAction();
+    FontUndoAction(const PageRef& page, Layer* layer);
+    virtual ~FontUndoAction();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
-	virtual string getText();
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
+    virtual string getText();
 
-	void addStroke(Text* e, XojFont& oldFont, XojFont& newFont);
+    void addStroke(Text* e, XojFont& oldFont, XojFont& newFont);
 
 private:
-	std::vector<FontUndoActionEntry*> data;
+    std::vector<FontUndoActionEntry*> data;
 
-	Layer* layer;
+    Layer* layer;
 };

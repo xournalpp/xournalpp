@@ -11,12 +11,13 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "model/LinkDestination.h"
 #include "pdf/base/XojPdfAction.h"
 
-#include <XournalType.h>
-
-#include <string>
+#include "XournalType.h"
 using std::string;
 
 #include <poppler.h>
@@ -24,21 +25,19 @@ using std::string;
 class LinkDestination;
 
 
-class PopplerGlibAction : public XojPdfAction
-{
+class PopplerGlibAction: public XojPdfAction {
 public:
-	PopplerGlibAction(PopplerAction* action, PopplerDocument* document);
-	virtual ~PopplerGlibAction();
+    PopplerGlibAction(PopplerAction* action, PopplerDocument* document);
+    virtual ~PopplerGlibAction();
 
 public:
-	virtual XojLinkDest* getDestination();
-	virtual string getTitle();
+    virtual XojLinkDest* getDestination();
+    virtual string getTitle();
 
 private:
-	void linkFromDest(LinkDestination* link, PopplerDest* pDest);
+    void linkFromDest(LinkDestination* link, PopplerDest* pDest);
 
 private:
-	PopplerAction* action;
-	PopplerDocument* document;
+    PopplerAction* action;
+    PopplerDocument* document;
 };
-

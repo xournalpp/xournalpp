@@ -11,36 +11,35 @@
 
 #pragma once
 
+#include <gdk/gdk.h>
+
 #include "control/Actions.h"
 #include "gui/GladeGui.h"
-
-#include <gdk/gdk.h>
-#include <util/DeviceListHelper.h>
+#include "util/DeviceListHelper.h"
 
 class Settings;
 class SettingsDialog;
 
-class DeviceClassConfigGui : public GladeGui
-{
+class DeviceClassConfigGui: public GladeGui {
 public:
-	DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, const InputDevice& device);
-	virtual ~DeviceClassConfigGui();
+    DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, const InputDevice& device);
+    virtual ~DeviceClassConfigGui();
 
 public:
-	void loadSettings();
-	void saveSettings();
+    void loadSettings();
+    void saveSettings();
 
-	// Not implemented! This is not a dialog!
-	virtual void show(GtkWindow* parent);
+    // Not implemented! This is not a dialog!
+    virtual void show(GtkWindow* parent);
 
 private:
-	static void cbSelectCallback(GtkComboBox* widget, DeviceClassConfigGui* gui);
-	void enableDisableTools();
+    static void cbSelectCallback(GtkComboBox* widget, DeviceClassConfigGui* gui);
+    void enableDisableTools();
 
 private:
-	Settings* settings;
-	InputDevice device;
+    Settings* settings;
+    InputDevice device;
 
-	GtkWidget* labelDevice;
-	GtkWidget* cbDeviceClass;
+    GtkWidget* labelDevice;
+    GtkWidget* cbDeviceClass;
 };

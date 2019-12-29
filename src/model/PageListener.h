@@ -11,28 +11,30 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
+
+#include "XournalType.h"
 
 class Element;
 class PageHandler;
 class Range;
 class Rectangle;
 
-class PageListener
-{
+class PageListener {
 public:
-	PageListener();
-	virtual ~PageListener();
+    PageListener();
+    virtual ~PageListener();
 
 public:
-	void registerListener(PageHandler* handler);
-	void unregisterListener();
+    void registerListener(PageHandler* handler);
+    void unregisterListener();
 
-	virtual void rectChanged(Rectangle& rect) { }
-	virtual void rangeChanged(Range &range) { }
-	virtual void elementChanged(Element* elem) { }
-	virtual void pageChanged() { }
+    virtual void rectChanged(Rectangle& rect) {}
+    virtual void rangeChanged(Range& range) {}
+    virtual void elementChanged(Element* elem) {}
+    virtual void pageChanged() {}
 
 private:
-	PageHandler* handler = nullptr;
+    PageHandler* handler = nullptr;
 };

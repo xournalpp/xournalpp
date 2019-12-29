@@ -11,40 +11,42 @@
 
 #pragma once
 
-#include "AbstractToolItem.h"
+#include <string>
+#include <vector>
+
 #include "gui/GladeGui.h"
 #include "model/Font.h"
 
-#include <XournalType.h>
+#include "AbstractToolItem.h"
+#include "XournalType.h"
 
-class FontButton : public AbstractToolItem
-{
+class FontButton: public AbstractToolItem {
 public:
-	FontButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, string description,
-	           GtkWidget* menuitem = nullptr);
-	virtual ~FontButton();
+    FontButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, string description,
+               GtkWidget* menuitem = nullptr);
+    virtual ~FontButton();
 
 public:
-	virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
-	void setFont(XojFont& font);
-	XojFont getFont();
-	virtual string getToolDisplayName();
-	void showFontDialog();
+    virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
+    void setFont(XojFont& font);
+    XojFont getFont();
+    virtual string getToolDisplayName();
+    void showFontDialog();
 
 protected:
-	virtual GtkToolItem* createItem(bool horizontal);
-	virtual GtkToolItem* createTmpItem(bool horizontal);
-	virtual GtkToolItem* newItem();
+    virtual GtkToolItem* createItem(bool horizontal);
+    virtual GtkToolItem* createTmpItem(bool horizontal);
+    virtual GtkToolItem* newItem();
 
-	static GtkWidget* newFontButton();
-	static void setFontFontButton(GtkWidget* fontButton, XojFont& font);
+    static GtkWidget* newFontButton();
+    static void setFontFontButton(GtkWidget* fontButton, XojFont& font);
 
-	virtual GtkWidget* getNewToolIcon();
+    virtual GtkWidget* getNewToolIcon();
 
 private:
-	GtkWidget* fontButton = nullptr;
-	GladeGui* gui = nullptr;
-	string description;
+    GtkWidget* fontButton = nullptr;
+    GladeGui* gui = nullptr;
+    string description;
 
-	XojFont font;
+    XojFont font;
 };

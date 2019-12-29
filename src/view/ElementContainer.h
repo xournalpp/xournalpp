@@ -15,9 +15,8 @@
 
 class Element;
 
-class ElementContainer
-{
+class ElementContainer {
 public:
-	virtual vector<Element*>* getElements() = 0;
-	virtual ~ElementContainer() {}
+    virtual vector<Element*>* getElements() = 0;
+    virtual ~ElementContainer() {}
 };

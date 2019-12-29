@@ -11,27 +11,28 @@
 
 #pragma once
 
-#include "ToolBase.h"
+#include <string>
+#include <vector>
 
-#include <XournalType.h>
+#include "ToolBase.h"
+#include "XournalType.h"
 
 class Tool;
 
-class LastSelectedTool : public ToolBase
-{
+class LastSelectedTool: public ToolBase {
 public:
-	LastSelectedTool(Tool* tool);
-	virtual ~LastSelectedTool();
+    LastSelectedTool(Tool* tool);
+    virtual ~LastSelectedTool();
 
 public:
-	/**
-	 * Restore the tool config and return it
-	 */
-	Tool* restoreAndGet();
+    /**
+     * Restore the tool config and return it
+     */
+    Tool* restoreAndGet();
 
 private:
-	/**
-	 * The last tool
-	 */
-	Tool* tool;
+    /**
+     * The last tool
+     */
+    Tool* tool;
 };

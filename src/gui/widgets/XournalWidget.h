@@ -15,7 +15,7 @@
 
 G_BEGIN_DECLS
 
-#define GTK_XOURNAL(obj) G_TYPE_CHECK_INSTANCE_CAST(obj, gtk_xournal_get_type (), GtkXournal)
+#define GTK_XOURNAL(obj) G_TYPE_CHECK_INSTANCE_CAST(obj, gtk_xournal_get_type(), GtkXournal)
 #define GTK_XOURNAL_CLASS(klass) GTK_CHECK_CLASS_CAST(klass, gtk_xournal_get_type(), GtkXournalClass)
 #define GTK_IS_XOURNAL(obj) G_TYPE_CHECK_INSTANCE_TYPE(obj, gtk_xournal_get_type())
 
@@ -33,48 +33,46 @@ class NewGtkInputDevice;
 typedef struct _GtkXournal GtkXournal;
 typedef struct _GtkXournalClass GtkXournalClass;
 
-struct _GtkXournal
-{
-	GtkWidget widget;
+struct _GtkXournal {
+    GtkWidget widget;
 
-	/**
-	 * The view class
-	 */
-	XournalView* view;
+    /**
+     * The view class
+     */
+    XournalView* view;
 
-	/**
-	 * Scrollbars
-	 */
-	ScrollHandling* scrollHandling;
+    /**
+     * Scrollbars
+     */
+    ScrollHandling* scrollHandling;
 
-	/**
-	 * Visible area
-	 */
-	int x;
-	int y;
+    /**
+     * Visible area
+     */
+    int x;
+    int y;
 
-	Layout* layout;
+    Layout* layout;
 
 
-	/**
-	 * Selected content, if any
-	 */
-	EditSelection* selection;
+    /**
+     * Selected content, if any
+     */
+    EditSelection* selection;
 
-	/**
-	 * Input handling
-	 */
-	InputContext* input = nullptr;
+    /**
+     * Input handling
+     */
+    InputContext* input = nullptr;
 
-	/**
-	 * Deprecated input handling
-	 */
-	 NewGtkInputDevice* depInput = nullptr;
+    /**
+     * Deprecated input handling
+     */
+    NewGtkInputDevice* depInput = nullptr;
 };
 
-struct _GtkXournalClass
-{
-	GtkWidgetClass parent_class;
+struct _GtkXournalClass {
+    GtkWidgetClass parent_class;
 };
 
 GType gtk_xournal_get_type();

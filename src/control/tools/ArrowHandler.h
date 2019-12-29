@@ -13,14 +13,13 @@
 
 #include "BaseStrokeHandler.h"
 
-class ArrowHandler : public BaseStrokeHandler
-{
+class ArrowHandler: public BaseStrokeHandler {
 public:
-	ArrowHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
-	virtual ~ArrowHandler();
+    ArrowHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
+    virtual ~ArrowHandler();
 
 private:
-	virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+    virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
 
 private:
 };

@@ -11,19 +11,20 @@
 
 #pragma once
 
-#include <XournalType.h>
-
 #include <exception>
+#include <string>
+#include <vector>
 
-class InputStreamException : public std::exception
-{
+#include "XournalType.h"
+
+class InputStreamException: public std::exception {
 public:
-	InputStreamException(const string& message, const string& filename, int line);
-	virtual ~InputStreamException();
+    InputStreamException(const string& message, const string& filename, int line);
+    virtual ~InputStreamException();
 
 public:
-	virtual const char* what();
+    virtual const char* what();
 
 private:
-	string message;
+    string message;
 };

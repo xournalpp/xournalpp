@@ -11,52 +11,54 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
+#include "control/xml/XmlAudioNode.h"
 #include "model/Document.h"
 #include "model/PageRef.h"
 #include "model/Stroke.h"
 
-#include <OutputStream.h>
-#include <XournalType.h>
-#include <control/xml/XmlAudioNode.h>
+#include "OutputStream.h"
+#include "XournalType.h"
 
 class XmlNode;
 class XmlPointNode;
 class ProgressListener;
 
-class SaveHandler
-{
+class SaveHandler {
 public:
-	SaveHandler();
-	virtual ~SaveHandler();
+    SaveHandler();
+    virtual ~SaveHandler();
 
 public:
-	void prepareSave(Document* doc);
-	void saveTo(const Path& filename, ProgressListener* listener = nullptr);
-	void saveTo(OutputStream* out, const Path& filename, ProgressListener* listener = nullptr);
-	string getErrorMessage();
+    void prepareSave(Document* doc);
+    void saveTo(const Path& filename, ProgressListener* listener = nullptr);
+    void saveTo(OutputStream* out, const Path& filename, ProgressListener* listener = nullptr);
+    string getErrorMessage();
 
 protected:
-	static string getColorStr(int c, unsigned char alpha = 0xff);
+    static string getColorStr(int c, unsigned char alpha = 0xff);
 
-	virtual void visitPage(XmlNode* root, PageRef p, Document* doc, int id);
-	virtual void visitLayer(XmlNode* page, Layer* l);
-	virtual void visitStroke(XmlPointNode* stroke, Stroke* s);
+    virtual void visitPage(XmlNode* root, PageRef p, Document* doc, int id);
+    virtual void visitLayer(XmlNode* page, Layer* l);
+    virtual void visitStroke(XmlPointNode* stroke, Stroke* s);
 
-	/**
-	 * Export the fill attributes
-	 */
-	virtual void visitStrokeExtended(XmlPointNode* stroke, Stroke* s);
+    /**
+     * Export the fill attributes
+     */
+    virtual void visitStrokeExtended(XmlPointNode* stroke, Stroke* s);
 
-	virtual void writeHeader();
-	virtual void writeSolidBackground(XmlNode* background, PageRef p);
-	virtual void writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode);
+    virtual void writeHeader();
+    virtual void writeSolidBackground(XmlNode* background, PageRef p);
+    virtual void writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode);
 
 protected:
-	XmlNode* root;
-	bool firstPdfPageVisited;
-	int attachBgId;
+    XmlNode* root;
+    bool firstPdfPageVisited;
+    int attachBgId;
 
-	string errorMessage;
+    string errorMessage;
 
-	GList* backgroundImages;
+    GList* backgroundImages;
 };

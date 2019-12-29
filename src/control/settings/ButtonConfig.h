@@ -11,36 +11,38 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "control/Tool.h"
 
-#include <XournalType.h>
+#include "XournalType.h"
 
 class ToolHandler;
 
-class ButtonConfig
-{
+class ButtonConfig {
 public:
-	ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType, EraserType eraserMode);
-	virtual ~ButtonConfig();
+    ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType, EraserType eraserMode);
+    virtual ~ButtonConfig();
 
 public:
-	void acceptActions(ToolHandler* toolHandler);
-	ToolType getAction();
-	bool getDisableDrawing() const;
-	DrawingType getDrawingType();
+    void acceptActions(ToolHandler* toolHandler);
+    ToolType getAction();
+    bool getDisableDrawing() const;
+    DrawingType getDrawingType();
 
 private:
-	ToolType action;
-	int color;
-	ToolSize size;
-	EraserType eraserMode;
-	DrawingType drawingType;
+    ToolType action;
+    int color;
+    ToolSize size;
+    EraserType eraserMode;
+    DrawingType drawingType;
 
-	bool disableDrawing;
+    bool disableDrawing;
 
 public:
-	string device;
+    string device;
 
-	friend class Settings;
-	friend class ButtonConfigGui;
+    friend class Settings;
+    friend class ButtonConfigGui;
 };

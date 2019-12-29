@@ -11,57 +11,58 @@
 
 #pragma once
 
-#include "AbstractToolItem.h"
+#include <string>
+#include <vector>
+
 #include "control/zoom/ZoomListener.h"
 
-#include <XournalType.h>
+#include "AbstractToolItem.h"
+#include "XournalType.h"
 
 #define SCALE_LOG_OFFSET 0.20753
 
 class ZoomControl;
 
-class ToolZoomSlider : public AbstractToolItem, public ZoomListener
-{
+class ToolZoomSlider: public AbstractToolItem, public ZoomListener {
 public:
-	ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom);
-	virtual ~ToolZoomSlider();
+    ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom);
+    virtual ~ToolZoomSlider();
 
 public:
-	static void sliderChanged(GtkRange* range, ToolZoomSlider* self);
-	static bool sliderButtonPress(GtkRange* range, GdkEvent *event, ToolZoomSlider* self);
-	static bool sliderButtonRelease(GtkRange* range, GdkEvent *event, ToolZoomSlider* self);
-	static bool sliderHoverScroll(GtkWidget* range,  GdkEventScroll* event, ToolZoomSlider* self);
-	static gchar* sliderFormatValue(GtkRange *range, gdouble value, ToolZoomSlider* self);
+    static void sliderChanged(GtkRange* range, ToolZoomSlider* self);
+    static bool sliderButtonPress(GtkRange* range, GdkEvent* event, ToolZoomSlider* self);
+    static bool sliderButtonRelease(GtkRange* range, GdkEvent* event, ToolZoomSlider* self);
+    static bool sliderHoverScroll(GtkWidget* range, GdkEventScroll* event, ToolZoomSlider* self);
+    static gchar* sliderFormatValue(GtkRange* range, gdouble value, ToolZoomSlider* self);
 
-	virtual void zoomChanged();
-	virtual void zoomRangeValuesChanged();
-	virtual string getToolDisplayName();
+    virtual void zoomChanged();
+    virtual void zoomRangeValuesChanged();
+    virtual string getToolDisplayName();
 
-	// Should be called when the window size changes
-	void updateScaleMarks();
-	virtual GtkToolItem* createItem(bool horizontal);
-	virtual GtkToolItem* createTmpItem(bool horizontal);
+    // Should be called when the window size changes
+    void updateScaleMarks();
+    virtual GtkToolItem* createItem(bool horizontal);
+    virtual GtkToolItem* createTmpItem(bool horizontal);
 
 protected:
-	virtual void enable(bool enabled);
-	virtual GtkToolItem* newItem();
-	virtual GtkWidget* getNewToolIcon();
+    virtual void enable(bool enabled);
+    virtual GtkToolItem* newItem();
+    virtual GtkWidget* getNewToolIcon();
 
 private:
-	static double scaleFunc(double x);
-	static double scaleFuncInv(double x);
+    static double scaleFunc(double x);
+    static double scaleFuncInv(double x);
 
 private:
-	/**
-	 * The slider is currently changing by user, do not update value
-	 */
-	bool sliderChangingByZoomControlOrInit = false;
-	bool sliderChangingBySliderDrag = false;
-	bool sliderChangingBySliderHoverScroll = false;
-	gint64 sliderHoverScrollLastTime = 0;
+    /**
+     * The slider is currently changing by user, do not update value
+     */
+    bool sliderChangingByZoomControlOrInit = false;
+    bool sliderChangingBySliderDrag = false;
+    bool sliderChangingBySliderHoverScroll = false;
+    gint64 sliderHoverScrollLastTime = 0;
 
-	GtkWidget* slider = nullptr;
-	ZoomControl* zoom = nullptr;
-	bool horizontal = true;
+    GtkWidget* slider = nullptr;
+    ZoomControl* zoom = nullptr;
+    bool horizontal = true;
 };
-

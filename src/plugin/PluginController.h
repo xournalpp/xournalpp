@@ -11,53 +11,55 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
+
+#include "XournalType.h"
 
 class Control;
 class Plugin;
 
-class PluginController
-{
+class PluginController {
 public:
-	PluginController(Control* control);
-	virtual ~PluginController();
+    PluginController(Control* control);
+    virtual ~PluginController();
 
 public:
-	/**
-	 * Load all plugins within this folder
-	 *
-	 * @param path The path which contains the plugin folders
-	 */
-	void loadPluginsFrom(const string& path);
+    /**
+     * Load all plugins within this folder
+     *
+     * @param path The path which contains the plugin folders
+     */
+    void loadPluginsFrom(const string& path);
 
-	/**
-	 * Register toolbar item and all other UI stuff
-	 */
-	void registerToolbar();
+    /**
+     * Register toolbar item and all other UI stuff
+     */
+    void registerToolbar();
 
-	/**
-	 * Show Plugin manager Dialog
-	 */
-	void showPluginManager();
+    /**
+     * Show Plugin manager Dialog
+     */
+    void showPluginManager();
 
-	/**
-	 * Register menu stuff
-	 */
-	void registerMenu();
+    /**
+     * Register menu stuff
+     */
+    void registerMenu();
 
-	/**
-	 * Return the plugin list
-	 */
-	vector<Plugin*>& getPlugins();
+    /**
+     * Return the plugin list
+     */
+    vector<Plugin*>& getPlugins();
 
 private:
-	/**
-	 * The main controller
-	 */
-	Control* control;
+    /**
+     * The main controller
+     */
+    Control* control;
 
-	/**
-	 * All loaded Plugins
-	 */
-	vector<Plugin*> plugins;
+    /**
+     * All loaded Plugins
+     */
+    vector<Plugin*> plugins;
 };

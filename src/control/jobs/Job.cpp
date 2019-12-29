@@ -2,74 +2,55 @@
 
 #include <gtk/gtk.h>
 
-Job::Job()
-{
-	g_mutex_init(&this->refMutex);
-}
+Job::Job() { g_mutex_init(&this->refMutex); }
 
 Job::~Job() = default;
 
-void Job::unref()
-{
-	g_mutex_lock(&this->refMutex);
-	this->refCount--;
+void Job::unref() {
+    g_mutex_lock(&this->refMutex);
+    this->refCount--;
 
-	if (this->refCount == 0)
-	{
-		g_mutex_unlock(&this->refMutex);
-		delete this;
-	}
-	else
-	{
-		g_mutex_unlock(&this->refMutex);
-	}
+    if (this->refCount == 0) {
+        g_mutex_unlock(&this->refMutex);
+        delete this;
+    } else {
+        g_mutex_unlock(&this->refMutex);
+    }
 }
 
-void Job::ref()
-{
-	g_mutex_lock(&this->refMutex);
-	this->refCount++;
-	g_mutex_unlock(&this->refMutex);
+void Job::ref() {
+    g_mutex_lock(&this->refMutex);
+    this->refCount++;
+    g_mutex_unlock(&this->refMutex);
 }
 
-void Job::deleteJob()
-{
-	if (this->afterRunId)
-	{
-		g_source_remove(this->afterRunId);
-		this->unref();
-	}
+void Job::deleteJob() {
+    if (this->afterRunId) {
+        g_source_remove(this->afterRunId);
+        this->unref();
+    }
 }
 
-void Job::execute()
-{
-	this->run();
+void Job::execute() { this->run(); }
+
+auto Job::getSource() -> void* { return nullptr; }
+
+auto Job::callAfterCallback(Job* job) -> bool {
+    job->afterRun();
+
+    job->afterRunId = 0;
+    job->unref();
+    return false;  // do not call again
 }
 
-auto Job::getSource() -> void*
-{
-	return nullptr;
-}
+void Job::callAfterRun() {
+    if (this->afterRunId) {
+        return;
+    }
 
-auto Job::callAfterCallback(Job* job) -> bool
-{
-	job->afterRun();
+    this->ref();
 
-	job->afterRunId = 0;
-	job->unref();
-	return false; // do not call again
-}
-
-void Job::callAfterRun()
-{
-	if (this->afterRunId)
-	{
-		return;
-	}
-
-	this->ref();
-
-	this->afterRunId = gdk_threads_add_idle(reinterpret_cast<GSourceFunc>(Job::callAfterCallback), this);
+    this->afterRunId = gdk_threads_add_idle(reinterpret_cast<GSourceFunc>(Job::callAfterCallback), this);
 }
 
 /**
@@ -77,6 +58,4 @@ void Job::callAfterRun()
  *
  * All UI Stuff should happen here
  */
-void Job::afterRun()
-{
-}
+void Job::afterRun() {}

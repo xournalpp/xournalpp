@@ -14,25 +14,24 @@
 #include "control/settings/Settings.h"
 #include "gui/GladeGui.h"
 
-#include <PageRange.h>
+#include "PageRange.h"
 
-class ExportDialog : public GladeGui
-{
+class ExportDialog: public GladeGui {
 public:
-	ExportDialog(GladeSearchpath* gladeSearchPath);
-	virtual ~ExportDialog();
+    ExportDialog(GladeSearchpath* gladeSearchPath);
+    virtual ~ExportDialog();
 
 public:
-	virtual void show(GtkWindow* parent);
-	void removeDpiSelection();
-	void initPages(int current, int count);
-	int getPngDpi();
-	bool isConfirmed() const;
-	PageRangeVector getRange();
+    virtual void show(GtkWindow* parent);
+    void removeDpiSelection();
+    void initPages(int current, int count);
+    int getPngDpi();
+    bool isConfirmed() const;
+    PageRangeVector getRange();
 
 private:
-	int currentPage = 0;
-	int pageCount = 0;
+    int currentPage = 0;
+    int pageCount = 0;
 
-	bool confirmed = false;
+    bool confirmed = false;
 };

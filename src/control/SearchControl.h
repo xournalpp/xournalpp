@@ -12,24 +12,23 @@
 #pragma once
 
 #include "model/PageRef.h"
-#include "util/GtkColorWrapper.h"
 #include "pdf/base/XojPdfPage.h"
+#include "util/GtkColorWrapper.h"
 
-class SearchControl
-{
+class SearchControl {
 public:
-	SearchControl(const PageRef& page, XojPdfPageSPtr pdf);
-	virtual ~SearchControl();
+    SearchControl(const PageRef& page, XojPdfPageSPtr pdf);
+    virtual ~SearchControl();
 
-	bool search(string text, int* occures, double* top);
-	void paint(cairo_t* cr, GdkRectangle* rect, double zoom, const GtkColorWrapper& color);
-
-private:
-	void freeSearchResults();
+    bool search(string text, int* occures, double* top);
+    void paint(cairo_t* cr, GdkRectangle* rect, double zoom, const GtkColorWrapper& color);
 
 private:
-	PageRef page;
-	XojPdfPageSPtr pdf;
+    void freeSearchResults();
 
-	vector<XojPdfRectangle> results;
+private:
+    PageRef page;
+    XojPdfPageSPtr pdf;
+
+    vector<XojPdfRectangle> results;
 };

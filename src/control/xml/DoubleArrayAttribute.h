@@ -11,19 +11,20 @@
 
 #pragma once
 
-#include "Attribute.h"
-#include <XournalType.h>
+#include <string>
 #include <vector>
 
-class DoubleArrayAttribute : public XMLAttribute
-{
+#include "Attribute.h"
+#include "XournalType.h"
+
+class DoubleArrayAttribute: public XMLAttribute {
 public:
-	DoubleArrayAttribute(const char* name, std::vector<double>&& values);
-	virtual ~DoubleArrayAttribute();
+    DoubleArrayAttribute(const char* name, std::vector<double>&& values);
+    virtual ~DoubleArrayAttribute();
 
 public:
-	virtual void writeOut(OutputStream* out);
+    virtual void writeOut(OutputStream* out);
 
 private:
-	std::vector<double> values;
+    std::vector<double> values;
 };

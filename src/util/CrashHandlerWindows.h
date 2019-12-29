@@ -9,8 +9,6 @@
  * @license GNU GPLv2 or later
  */
 
-void installCrashHandlers()
-{
-	// Implement SE-Exception Handler for Windows
+void installCrashHandlers() {
+    // Implement SE-Exception Handler for Windows
 }
-

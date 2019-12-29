@@ -11,11 +11,13 @@
 
 #pragma once
 
-#include "Job.h"
-
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
+
+#include "Job.h"
+#include "XournalType.h"
 
 class SidebarPreviewBaseEntry;
 class Document;
@@ -23,46 +25,45 @@ class Document;
 /**
  * @brief A Job which renders a SidebarPreviewPage
  */
-class PreviewJob : public Job
-{
+class PreviewJob: public Job {
 public:
-	PreviewJob(SidebarPreviewBaseEntry* sidebar);
+    PreviewJob(SidebarPreviewBaseEntry* sidebar);
 
 protected:
-	virtual ~PreviewJob();
+    virtual ~PreviewJob();
 
 public:
-	virtual void* getSource();
+    virtual void* getSource();
 
-	virtual void run();
+    virtual void run();
 
-	virtual JobType getType();
-
-private:
-	void initGraphics();
-	void drawBorder();
-	void finishPaint();
-	void drawBackgroundPdf(Document* doc);
-	void drawPage(int layer);
+    virtual JobType getType();
 
 private:
-	/**
-	 * Graphics buffer
-	 */
-	cairo_surface_t* crBuffer = nullptr;
+    void initGraphics();
+    void drawBorder();
+    void finishPaint();
+    void drawBackgroundPdf(Document* doc);
+    void drawPage(int layer);
 
-	/**
-	 * Graphics drawing
-	 */
-	cairo_t* cr2 = nullptr;
+private:
+    /**
+     * Graphics buffer
+     */
+    cairo_surface_t* crBuffer = nullptr;
 
-	/**
-	 * Zoom factor
-	 */
-	double zoom = 0;
+    /**
+     * Graphics drawing
+     */
+    cairo_t* cr2 = nullptr;
 
-	/**
-	 * Sidebar preview
-	 */
-	SidebarPreviewBaseEntry* sidebarPreview = nullptr;
+    /**
+     * Zoom factor
+     */
+    double zoom = 0;
+
+    /**
+     * Sidebar preview
+     */
+    SidebarPreviewBaseEntry* sidebarPreview = nullptr;
 };

@@ -13,18 +13,16 @@
 
 #include "BaseStrokeHandler.h"
 
-class CircleHandler : public BaseStrokeHandler
-{
+class CircleHandler: public BaseStrokeHandler {
 public:
-	CircleHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift = false,
-	              bool flipControl = false);
-	virtual ~CircleHandler();
+    CircleHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift = false,
+                  bool flipControl = false);
+    virtual ~CircleHandler();
 
 private:
-	virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
-	
+    virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+
 private:
-	Point startPoint;
-	bool started = false;
+    Point startPoint;
+    bool started = false;
 };
-

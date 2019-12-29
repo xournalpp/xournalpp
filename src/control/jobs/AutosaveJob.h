@@ -11,27 +11,28 @@
 
 #pragma once
 
-#include "Job.h"
+#include <string>
+#include <vector>
 
-#include <XournalType.h>
+#include "Job.h"
+#include "XournalType.h"
 
 class Control;
 
-class AutosaveJob : public Job
-{
+class AutosaveJob: public Job {
 public:
-	AutosaveJob(Control* control);
+    AutosaveJob(Control* control);
 
 protected:
-	virtual ~AutosaveJob();
+    virtual ~AutosaveJob();
 
 public:
-	virtual void run();
-	void afterRun();
+    virtual void run();
+    void afterRun();
 
-	virtual JobType getType();
+    virtual JobType getType();
 
 private:
-	Control* control = nullptr;
-	string error;
+    Control* control = nullptr;
+    string error;
 };

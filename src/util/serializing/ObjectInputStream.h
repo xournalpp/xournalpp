@@ -11,40 +11,39 @@
 
 #pragma once
 
-#include "InputStreamException.h"
-
 #include <gtk/gtk.h>
+
+#include "InputStreamException.h"
 
 class Serializeable;
 
-class ObjectInputStream
-{
+class ObjectInputStream {
 public:
-	ObjectInputStream();
-	virtual ~ObjectInputStream();
+    ObjectInputStream();
+    virtual ~ObjectInputStream();
 
 public:
-	bool read(const char* data, int len);
+    bool read(const char* data, int len);
 
-	void readObject(const char* name);
-	string readObject();
-	string getNextObjectName();
-	void endObject();
+    void readObject(const char* name);
+    string readObject();
+    string getNextObjectName();
+    void endObject();
 
-	int readInt();
-	double readDouble();
-	size_t readSizeT();
-	string readString();
+    int readInt();
+    double readDouble();
+    size_t readSizeT();
+    string readString();
 
-	void readData(void** data, int* len);
-	cairo_surface_t* readImage();
+    void readData(void** data, int* len);
+    cairo_surface_t* readImage();
 
 private:
-	void checkType(char type);
+    void checkType(char type);
 
-	static string getType(char type);
+    static string getType(char type);
 
 private:
-	GString* str = nullptr;
-	gsize pos = 0;
+    GString* str = nullptr;
+    gsize pos = 0;
 };

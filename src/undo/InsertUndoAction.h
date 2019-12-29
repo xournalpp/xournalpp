@@ -17,37 +17,34 @@ class Element;
 class Layer;
 class Redrawable;
 
-class InsertUndoAction : public UndoAction
-{
+class InsertUndoAction: public UndoAction {
 public:
-	InsertUndoAction(const PageRef& page, Layer* layer, Element* element);
-	virtual ~InsertUndoAction();
+    InsertUndoAction(const PageRef& page, Layer* layer, Element* element);
+    virtual ~InsertUndoAction();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
 
-	virtual string getText();
+    virtual string getText();
 
 private:
-	Layer* layer;
-	Element* element;
+    Layer* layer;
+    Element* element;
 };
 
-class InsertsUndoAction : public UndoAction
-{
+class InsertsUndoAction: public UndoAction {
 public:
-	InsertsUndoAction(const PageRef& page, Layer* layer, vector<Element*> elements);
-	virtual ~InsertsUndoAction();
+    InsertsUndoAction(const PageRef& page, Layer* layer, vector<Element*> elements);
+    virtual ~InsertsUndoAction();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
 
-	virtual string getText();
+    virtual string getText();
 
 private:
-	Layer* layer;
-	vector<Element*> elements;
-
+    Layer* layer;
+    vector<Element*> elements;
 };

@@ -19,23 +19,22 @@
 class SidebarPreviewBase;
 class SidebarPreviewPages;
 
-class SidebarPreviewPageEntry : public SidebarPreviewBaseEntry
-{
+class SidebarPreviewPageEntry: public SidebarPreviewBaseEntry {
 public:
-	SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, const PageRef& page);
-	virtual ~SidebarPreviewPageEntry();
+    SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, const PageRef& page);
+    virtual ~SidebarPreviewPageEntry();
 
 public:
-	/**
-	 * @return What should be rendered
-	 * @override
-	 */
-	virtual PreviewRenderType getRenderType();
+    /**
+     * @return What should be rendered
+     * @override
+     */
+    virtual PreviewRenderType getRenderType();
 
 protected:
-	SidebarPreviewPages* sidebar;
-	virtual void mouseButtonPressCallback();
+    SidebarPreviewPages* sidebar;
+    virtual void mouseButtonPressCallback();
 
 private:
-	friend class PreviewJob;
+    friend class PreviewJob;
 };

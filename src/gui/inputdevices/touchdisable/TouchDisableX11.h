@@ -29,50 +29,51 @@
 
 #ifdef X11_ENABLED
 
-#include "TouchDisableInterface.h"
+#include <string>
+#include <vector>
 
-#include "XournalType.h"
-
-#include <X11/Xlib.h>
 #include <X11/Xatom.h>
+#include <X11/Xlib.h>
 #include <X11/extensions/XInput.h>
 
-class TouchDisableX11: public TouchDisableInterface
-{
+#include "TouchDisableInterface.h"
+#include "XournalType.h"
+
+class TouchDisableX11: public TouchDisableInterface {
 public:
-	TouchDisableX11();
-	virtual ~TouchDisableX11();
+    TouchDisableX11();
+    virtual ~TouchDisableX11();
 
 public:
-	virtual void enableTouch();
-	virtual void disableTouch();
-	virtual void init();
+    virtual void enableTouch();
+    virtual void disableTouch();
+    virtual void init();
 
 private:
-	/**
-	 * X11 Display
-	 */
-	Display* display = nullptr;
+    /**
+     * X11 Display
+     */
+    Display* display = nullptr;
 
-	/**
-	 * Touch device ID
-	 */
-	Atom touchAtom = None;
+    /**
+     * Touch device ID
+     */
+    Atom touchAtom = None;
 
-	/**
-	 * Touch device
-	 */
-	XDeviceInfo* touch = nullptr;
+    /**
+     * Touch device
+     */
+    XDeviceInfo* touch = nullptr;
 
-	/**
-	 * Touch device
-	 */
-	XDevice* touchdev = nullptr;
+    /**
+     * Touch device
+     */
+    XDevice* touchdev = nullptr;
 
-	/**
-	 * Enable flag
-	 */
-	Atom enabledAtom = None;
+    /**
+     * Enable flag
+     */
+    Atom enabledAtom = None;
 };
 
 #endif

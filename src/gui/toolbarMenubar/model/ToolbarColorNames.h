@@ -12,30 +12,32 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
-class ToolbarColorNames
-{
+#include "XournalType.h"
+
+class ToolbarColorNames {
 private:
-	ToolbarColorNames();
-	virtual ~ToolbarColorNames();
+    ToolbarColorNames();
+    virtual ~ToolbarColorNames();
 
 public:
-	static ToolbarColorNames& getInstance();
-	static void freeInstance();
+    static ToolbarColorNames& getInstance();
+    static void freeInstance();
 
 public:
-	void loadFile(const string& file);
-	void saveFile(const string& file);
+    void loadFile(const string& file);
+    void saveFile(const string& file);
 
-	void addColor(int color, const string& name, bool predefined);
+    void addColor(int color, const string& name, bool predefined);
 
-	string getColorName(int color);
-
-private:
-	void initPredefinedColors();
+    string getColorName(int color);
 
 private:
-	GKeyFile* config;
-	GHashTable* predefinedColorNames;
+    void initPredefinedColors();
+
+private:
+    GKeyFile* config;
+    GHashTable* predefinedColorNames;
 };

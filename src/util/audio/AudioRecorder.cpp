@@ -1,41 +1,32 @@
-#include <utility>
-
 #include "AudioRecorder.h"
 
-AudioRecorder::~AudioRecorder()
-{
-	this->stop();
+#include <utility>
+
+AudioRecorder::~AudioRecorder() { this->stop(); }
+
+auto AudioRecorder::start(const string& filename) -> bool {
+    // Start recording
+    bool status = this->portAudioProducer->startRecording();
+
+    // Start the consumer for writing the data
+    status = status && this->vorbisConsumer->start(filename);
+
+    return status;
 }
 
-auto AudioRecorder::start(const string& filename) -> bool
-{
-	// Start recording
-	bool status = this->portAudioProducer->startRecording();
+void AudioRecorder::stop() {
+    // Stop recording audio
+    this->portAudioProducer->stopRecording();
 
-	// Start the consumer for writing the data
-	status = status && this->vorbisConsumer->start(filename);
+    // Wait for libsox to write all the data
+    this->vorbisConsumer->join();
 
-	return status;
+    // Reset the queue for the next recording
+    this->audioQueue->reset();
 }
 
-void AudioRecorder::stop()
-{
-	// Stop recording audio
-	this->portAudioProducer->stopRecording();
+auto AudioRecorder::isRecording() const -> bool { return this->portAudioProducer->isRecording(); }
 
-	// Wait for libsox to write all the data
-	this->vorbisConsumer->join();
-
-	// Reset the queue for the next recording
-	this->audioQueue->reset();
-}
-
-auto AudioRecorder::isRecording() const -> bool
-{
-	return this->portAudioProducer->isRecording();
-}
-
-auto AudioRecorder::getInputDevices() const -> std::vector<DeviceInfo>
-{
-	return this->portAudioProducer->getInputDevices();
+auto AudioRecorder::getInputDevices() const -> std::vector<DeviceInfo> {
+    return this->portAudioProducer->getInputDevices();
 }

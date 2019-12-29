@@ -14,18 +14,19 @@
 
 #pragma once
 
-#include "logger/Logger.h"
-#include "config-dev.h"
-
 #include <glib.h>
+
+#include "logger/Logger.h"
+
+#include "config-dev.h"
 
 
 // Todo: unclean, remove in the future:
 
 // Include string and vector everywhere
+#include <cstring>  // Todo: Use std::string_view if possible
 #include <string>
 #include <vector>
-#include <cstring>  // Todo: Use std::string_view if possible
 
 using std::string;
 using std::vector;

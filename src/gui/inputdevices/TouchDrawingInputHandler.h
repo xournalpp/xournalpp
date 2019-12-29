@@ -11,22 +11,24 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
+
 #include "PenInputHandler.h"
+#include "XournalType.h"
 
 class InputContext;
 
-class TouchDrawingInputHandler : public PenInputHandler
-{
+class TouchDrawingInputHandler: public PenInputHandler {
 private:
-	GdkEventSequence* currentSequence = nullptr;
+    GdkEventSequence* currentSequence = nullptr;
+
 public:
-	explicit TouchDrawingInputHandler(InputContext* inputContext);
-	~TouchDrawingInputHandler() override;
+    explicit TouchDrawingInputHandler(InputContext* inputContext);
+    ~TouchDrawingInputHandler() override;
 
-	bool handleImpl(InputEvent* event) override;
+    bool handleImpl(InputEvent* event) override;
+
 protected:
-	bool changeTool(InputEvent* event) override;
+    bool changeTool(InputEvent* event) override;
 };
-
-

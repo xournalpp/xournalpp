@@ -11,51 +11,53 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
+
+#include "XournalType.h"
 
 class Settings;
 class MainWindow;
 
-class FullscreenHandler
-{
+class FullscreenHandler {
 public:
-	FullscreenHandler(Settings* settings);
-	virtual ~FullscreenHandler();
+    FullscreenHandler(Settings* settings);
+    virtual ~FullscreenHandler();
 
 public:
-	bool isFullscreen() const;
-	void setFullscreen(MainWindow* win, bool enabled);
+    bool isFullscreen() const;
+    void setFullscreen(MainWindow* win, bool enabled);
 
 private:
-	void enableFullscreen(MainWindow* win);
-	void hideWidget(MainWindow* win, const string& widgetName);
-	void disableFullscreen(MainWindow* win);
+    void enableFullscreen(MainWindow* win);
+    void hideWidget(MainWindow* win, const string& widgetName);
+    void disableFullscreen(MainWindow* win);
 
 private:
-	/**
-	 * Settings
-	 */
-	Settings* settings;
+    /**
+     * Settings
+     */
+    Settings* settings;
 
-	/**
-	 * Fullscreen enabled
-	 */
-	bool fullscreen = false;
+    /**
+     * Fullscreen enabled
+     */
+    bool fullscreen = false;
 
-	/**
-	 * If the sidebar was hidden
-	 */
-	bool sidebarHidden = false;
+    /**
+     * If the sidebar was hidden
+     */
+    bool sidebarHidden = false;
 
-	/**
-	 * The menubar was hidden
-	 */
-	bool menubarHidden = false;
+    /**
+     * The menubar was hidden
+     */
+    bool menubarHidden = false;
 
-	/**
-	 * Currently hidden widgets
-	 */
-	vector<GtkWidget*> hiddenFullscreenWidgets;
+    /**
+     * Currently hidden widgets
+     */
+    vector<GtkWidget*> hiddenFullscreenWidgets;
 };

@@ -11,66 +11,68 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "control/layer/LayerCtrlListener.h"
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
 
-#include <XournalType.h>
+#include "XournalType.h"
 
-class SidebarPreviewLayers : public SidebarPreviewBase, public LayerCtrlListener
-{
+class SidebarPreviewLayers: public SidebarPreviewBase, public LayerCtrlListener {
 public:
-	SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar);
-	virtual ~SidebarPreviewLayers();
-
-public:
-	virtual void rebuildLayerMenu();
-	virtual void layerVisibilityChanged();
+    SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar);
+    virtual ~SidebarPreviewLayers();
 
 public:
-	/**
-	 * Called when an action is performed
-	 */
-	void actionPerformed(SidebarActions action);
+    virtual void rebuildLayerMenu();
+    virtual void layerVisibilityChanged();
 
-	void enableSidebar();
+public:
+    /**
+     * Called when an action is performed
+     */
+    void actionPerformed(SidebarActions action);
 
-	/**
-	 * @overwrite
-	 */
-	virtual string getName();
+    void enableSidebar();
 
-	/**
-	 * @overwrite
-	 */
-	virtual string getIconName();
+    /**
+     * @overwrite
+     */
+    virtual string getName();
 
-	/**
-	 * Update the preview images
-	 * @overwrite
-	 */
-	virtual void updatePreviews();
+    /**
+     * @overwrite
+     */
+    virtual string getIconName();
 
-	/**
-	 * Select a layer
-	 */
-	void layerSelected(size_t layerIndex);
+    /**
+     * Update the preview images
+     * @overwrite
+     */
+    virtual void updatePreviews();
 
-	/**
-	 * A layer was hidden / showed
-	 */
-	void layerVisibilityChanged(int layerIndex, bool enabled);
+    /**
+     * Select a layer
+     */
+    void layerSelected(size_t layerIndex);
+
+    /**
+     * A layer was hidden / showed
+     */
+    void layerVisibilityChanged(int layerIndex, bool enabled);
 
 protected:
-	void updateSelectedLayer();
+    void updateSelectedLayer();
 
 public:
-	// DocumentListener interface (only the part which is not handled by SidebarPreviewBase)
-	virtual void pageSizeChanged(size_t page);
-	virtual void pageChanged(size_t page);
+    // DocumentListener interface (only the part which is not handled by SidebarPreviewBase)
+    virtual void pageSizeChanged(size_t page);
+    virtual void pageChanged(size_t page);
 
 private:
-	/**
-	 * Layer Controller
-	 */
-	LayerController* lc;
+    /**
+     * Layer Controller
+     */
+    LayerController* lc;
 };

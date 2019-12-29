@@ -11,75 +11,76 @@
 
 #pragma once
 
-#include "control/Actions.h"
-
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
 
-class AbstractItem : public ActionEnabledListener, public ActionSelectionListener
-{
+#include "control/Actions.h"
+
+#include "XournalType.h"
+
+class AbstractItem: public ActionEnabledListener, public ActionSelectionListener {
 public:
-	AbstractItem(string id, ActionHandler* handler, ActionType action, GtkWidget* menuitem = nullptr);
-	virtual ~AbstractItem();
+    AbstractItem(string id, ActionHandler* handler, ActionType action, GtkWidget* menuitem = nullptr);
+    virtual ~AbstractItem();
 
 public:
-	virtual void actionSelected(ActionGroup group, ActionType action);
+    virtual void actionSelected(ActionGroup group, ActionType action);
 
-	/**
-	 * Override this method
-	 */
-	virtual void selected(ActionGroup group, ActionType action);
+    /**
+     * Override this method
+     */
+    virtual void selected(ActionGroup group, ActionType action);
 
-	virtual void actionEnabledAction(ActionType action, bool enabled);
-	virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
+    virtual void actionEnabledAction(ActionType action, bool enabled);
+    virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
 
-	virtual string getId();
+    virtual string getId();
 
-	void setTmpDisabled(bool disabled);
-	bool isEnabled() const;
+    void setTmpDisabled(bool disabled);
+    bool isEnabled() const;
 
-	ActionType getActionType();
+    ActionType getActionType();
 
-	/**
-	 * Register a menu item. If there is already one registered, the new one will be ignored
-	 */
-	void setMenuItem(GtkWidget* menuitem);
+    /**
+     * Register a menu item. If there is already one registered, the new one will be ignored
+     */
+    void setMenuItem(GtkWidget* menuitem);
 
 protected:
-	virtual void enable(bool enabled);
+    virtual void enable(bool enabled);
 
-	virtual void actionPerformed(ActionType action, ActionGroup group,
-								 GdkEvent* event, GtkMenuItem* menuitem,
-								 GtkToolButton* toolbutton, bool selected);
+    virtual void actionPerformed(ActionType action, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
+                                 GtkToolButton* toolbutton, bool selected);
 
 private:
 protected:
-	ActionGroup group = GROUP_NOGROUP;
-	ActionType action = ACTION_NONE;
+    ActionGroup group = GROUP_NOGROUP;
+    ActionType action = ACTION_NONE;
 
-	string id;
+    string id;
 
-	ActionHandler* handler = nullptr;
+    ActionHandler* handler = nullptr;
 
-	bool enabled = true;
+    bool enabled = true;
 
 private:
-	gulong menuSignalHandler = 0;
-	GtkWidget* menuitem = nullptr;
+    gulong menuSignalHandler = 0;
+    GtkWidget* menuitem = nullptr;
 
-	/**
-	 * This is a check menu item which is not displayed as radio
-	 */
-	bool checkMenuItem = false;
+    /**
+     * This is a check menu item which is not displayed as radio
+     */
+    bool checkMenuItem = false;
 
-	/**
-	 * ignore event if the menu is programmatically changed
-	 */
-	bool ignoreNextCheckMenuEvent = false;
+    /**
+     * ignore event if the menu is programmatically changed
+     */
+    bool ignoreNextCheckMenuEvent = false;
 
-	/**
-	 * Keep the state for toggle / radio menu handling
-	 */
-	bool itemActive = false;
+    /**
+     * Keep the state for toggle / radio menu handling
+     */
+    bool itemActive = false;
 };

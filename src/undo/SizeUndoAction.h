@@ -18,25 +18,24 @@ class Redrawable;
 class SizeUndoActionEntry;
 class Stroke;
 
-class SizeUndoAction : public UndoAction
-{
+class SizeUndoAction: public UndoAction {
 public:
-	SizeUndoAction(const PageRef& page, Layer* layer);
-	virtual ~SizeUndoAction();
+    SizeUndoAction(const PageRef& page, Layer* layer);
+    virtual ~SizeUndoAction();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
-	virtual string getText();
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
+    virtual string getText();
 
-	void addStroke(Stroke* s, double originalWidth, double newWidth,
-				   vector<double> originalPressure, vector<double> newPressure, int pressureCount);
+    void addStroke(Stroke* s, double originalWidth, double newWidth, vector<double> originalPressure,
+                   vector<double> newPressure, int pressureCount);
 
 public:
-	static vector<double> getPressure(Stroke* s);
+    static vector<double> getPressure(Stroke* s);
 
 private:
-	std::vector<SizeUndoActionEntry*> data;
+    std::vector<SizeUndoActionEntry*> data;
 
-	Layer* layer;
+    Layer* layer;
 };

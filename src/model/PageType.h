@@ -11,59 +11,50 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
-enum class PageTypeFormat
-{
-	Plain,
-	Ruled,
-	Lined,
-	Staves,
-	Graph,
-	Dotted,
-	Pdf,
-	Image,
-	Copy
-};
+#include "XournalType.h"
 
-class PageType
-{
+enum class PageTypeFormat { Plain, Ruled, Lined, Staves, Graph, Dotted, Pdf, Image, Copy };
+
+class PageType {
 public:
-	PageType();
-	explicit PageType(PageTypeFormat format);
-	PageType(const PageType& other);
-	~PageType();
+    PageType();
+    explicit PageType(PageTypeFormat format);
+    PageType(const PageType& other);
+    ~PageType();
 
 private:
 public:
-	/**
-	 * Compare Operator
-	 */
-	bool operator ==(const PageType& other) const;
+    /**
+     * Compare Operator
+     */
+    bool operator==(const PageType& other) const;
 
-	/**
-	 * PDF background
-	 */
-	bool isPdfPage() const;
+    /**
+     * PDF background
+     */
+    bool isPdfPage() const;
 
-	/**
-	 * Image Background
-	 */
-	bool isImagePage() const;
+    /**
+     * Image Background
+     */
+    bool isImagePage() const;
 
-	/**
-	 * Special background
-	 */
-	bool isSpecial() const;
+    /**
+     * Special background
+     */
+    bool isSpecial() const;
 
 public:
-	/**
-	 * Base format
-	 */
-	PageTypeFormat format;
+    /**
+     * Base format
+     */
+    PageTypeFormat format;
 
-	/**
-	 * Arguments for the format
-	 */
-	string config;
+    /**
+     * Arguments for the format
+     */
+    string config;
 };

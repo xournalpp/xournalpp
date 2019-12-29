@@ -20,145 +20,129 @@
 #include <vector>
 
 template <typename T>
-class AudioQueue
-{
+class AudioQueue {
 public:
-	void reset()
-	{
-		std::lock_guard<std::mutex> lock(internalLock);
-		this->popNotified = false;
-		this->pushNotified = false;
-		this->streamEnd = false;
-		internalQueue.clear();
+    void reset() {
+        std::lock_guard<std::mutex> lock(internalLock);
+        this->popNotified = false;
+        this->pushNotified = false;
+        this->streamEnd = false;
+        internalQueue.clear();
 
-		this->sampleRate = -1;
-		this->channels = 0;
-	}
+        this->sampleRate = -1;
+        this->channels = 0;
+    }
 
-	bool empty()
-	{
-		std::lock_guard<std::mutex> lock(internalLock);
-		return internalQueue.empty();
-	}
+    bool empty() {
+        std::lock_guard<std::mutex> lock(internalLock);
+        return internalQueue.empty();
+    }
 
-	size_t size()
-	{
-		std::lock_guard<std::mutex> lock(internalLock);
-		return internalQueue.size();
-	}
+    size_t size() {
+        std::lock_guard<std::mutex> lock(internalLock);
+        return internalQueue.size();
+    }
 
-	template <typename Iter>
-	void emplace(Iter begI, Iter endI)
-	{
-		std::lock_guard<std::mutex> lock(internalLock);
-		std::move(begI, endI, std::front_inserter(internalQueue));
+    template <typename Iter>
+    void emplace(Iter begI, Iter endI) {
+        std::lock_guard<std::mutex> lock(internalLock);
+        std::move(begI, endI, std::front_inserter(internalQueue));
 
-		this->pushNotified = true;
-		this->pushLockCondition.notify_one();
-	}
+        this->pushNotified = true;
+        this->pushLockCondition.notify_one();
+    }
 
-	template <typename InsertIter>
-	InsertIter pop(InsertIter insertIter, size_t nSamples)
-	{
-		std::lock_guard<std::mutex> lock(internalLock);
+    template <typename InsertIter>
+    InsertIter pop(InsertIter insertIter, size_t nSamples) {
+        std::lock_guard<std::mutex> lock(internalLock);
 
-		if (this->channels == 0)
-		{
-			this->popNotified = true;
-			this->popLockCondition.notify_one();
-			return insertIter;
-		}
+        if (this->channels == 0) {
+            this->popNotified = true;
+            this->popLockCondition.notify_one();
+            return insertIter;
+        }
 
 
-		auto queueSize = internalQueue.size();
-		auto returnBufferLength = std::min<size_t>(nSamples, queueSize - queueSize % this->channels);
-		auto begI = rbegin(internalQueue);
-		auto endI = std::next(begI, returnBufferLength);
+        auto queueSize = internalQueue.size();
+        auto returnBufferLength = std::min<size_t>(nSamples, queueSize - queueSize % this->channels);
+        auto begI = rbegin(internalQueue);
+        auto endI = std::next(begI, returnBufferLength);
 
-		auto ret = std::move(begI, endI, insertIter);
-		internalQueue.erase(endI.base(), begI.base());
+        auto ret = std::move(begI, endI, insertIter);
+        internalQueue.erase(endI.base(), begI.base());
 
-		this->popNotified = true;
-		this->popLockCondition.notify_one();
-		return ret;
-	}
+        this->popNotified = true;
+        this->popLockCondition.notify_one();
+        return ret;
+    }
 
-	void signalEndOfStream()
-	{
-		std::lock_guard<std::mutex> lock(internalLock);
-		this->streamEnd = true;
-		this->pushNotified = true;
-		this->popNotified = true;
-		this->pushLockCondition.notify_one();
-		this->popLockCondition.notify_one();
-	}
+    void signalEndOfStream() {
+        std::lock_guard<std::mutex> lock(internalLock);
+        this->streamEnd = true;
+        this->pushNotified = true;
+        this->popNotified = true;
+        this->pushLockCondition.notify_one();
+        this->popLockCondition.notify_one();
+    }
 
-	void waitForProducer(std::unique_lock<std::mutex>& lock)
-	{
-		//static_assert(lock.mutex() == &this->queueLock);
-		assert(lock.mutex() == &this->queueLock);
-		while (!this->pushNotified && !hasStreamEnded())
-		{
-			this->pushLockCondition.wait(lock);
-		}
-		this->pushNotified = false;
-	}
+    void waitForProducer(std::unique_lock<std::mutex>& lock) {
+        // static_assert(lock.mutex() == &this->queueLock);
+        assert(lock.mutex() == &this->queueLock);
+        while (!this->pushNotified && !hasStreamEnded()) {
+            this->pushLockCondition.wait(lock);
+        }
+        this->pushNotified = false;
+    }
 
-	void waitForConsumer(std::unique_lock<std::mutex>& lock)
-	{
-		//static_assert(lock.mutex() == &this->queueLock);
-		assert(lock.mutex() == &this->queueLock);
-		while (!this->popNotified && !hasStreamEnded())
-		{
-			this->popLockCondition.wait(lock);
-		}
-		this->popNotified = false;
-	}
+    void waitForConsumer(std::unique_lock<std::mutex>& lock) {
+        // static_assert(lock.mutex() == &this->queueLock);
+        assert(lock.mutex() == &this->queueLock);
+        while (!this->popNotified && !hasStreamEnded()) {
+            this->popLockCondition.wait(lock);
+        }
+        this->popNotified = false;
+    }
 
-	bool hasStreamEnded()
-	{
-		std::lock_guard<std::mutex> lock(internalLock);
-		return this->streamEnd;
-	}
+    bool hasStreamEnded() {
+        std::lock_guard<std::mutex> lock(internalLock);
+        return this->streamEnd;
+    }
 
-	[[nodiscard]] std::unique_lock<std::mutex> aquire_lock()
-	{
-		std::unique_lock retLock{this->queueLock, std::defer_lock};
-		std::lock(retLock, this->internalLock);
-		std::lock_guard{this->internalLock, std::adopt_lock};
-		return retLock;
-	}
+    [[nodiscard]] std::unique_lock<std::mutex> aquire_lock() {
+        std::unique_lock retLock{this->queueLock, std::defer_lock};
+        std::lock(retLock, this->internalLock);
+        std::lock_guard{this->internalLock, std::adopt_lock};
+        return retLock;
+    }
 
-	void setAudioAttributes(double lSampleRate, unsigned int lChannels)
-	{
-		std::lock_guard<std::mutex> lock(internalLock);
-		this->sampleRate = lSampleRate;
-		this->channels = lChannels;
-	}
+    void setAudioAttributes(double lSampleRate, unsigned int lChannels) {
+        std::lock_guard<std::mutex> lock(internalLock);
+        this->sampleRate = lSampleRate;
+        this->channels = lChannels;
+    }
 
-	/**
-	 * @return std::pair<double, int>,
-	 * std::pair<double, int>::first is the sample rate and std::pair<double, int>::second the channel count.
-	 */
-	[[nodiscard]] std::pair<double, int> getAudioAttributes()
-	{
-		std::lock_guard<std::mutex> lock(internalLock);
-		return {this->sampleRate, static_cast<int>(this->channels)};
-	}
+    /**
+     * @return std::pair<double, int>,
+     * std::pair<double, int>::first is the sample rate and std::pair<double, int>::second the channel count.
+     */
+    [[nodiscard]] std::pair<double, int> getAudioAttributes() {
+        std::lock_guard<std::mutex> lock(internalLock);
+        return {this->sampleRate, static_cast<int>(this->channels)};
+    }
 
 private:
-	std::mutex queueLock;
-	std::mutex internalLock;
+    std::mutex queueLock;
+    std::mutex internalLock;
 
-	std::deque<T> internalQueue;
+    std::deque<T> internalQueue;
 
-	std::condition_variable pushLockCondition;
-	std::condition_variable popLockCondition;
+    std::condition_variable pushLockCondition;
+    std::condition_variable popLockCondition;
 
-	double sampleRate{std::numeric_limits<double>::quiet_NaN()};
-	unsigned int channels{0};
+    double sampleRate{std::numeric_limits<double>::quiet_NaN()};
+    unsigned int channels{0};
 
-	bool streamEnd{false};
-	bool pushNotified{false};
-	bool popNotified{false};
+    bool streamEnd{false};
+    bool pushNotified{false};
+    bool popNotified{false};
 };

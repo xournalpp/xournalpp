@@ -11,37 +11,38 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "ToolBase.h"
+#include "XournalType.h"
 
-#include <XournalType.h>
-
-class Tool : public ToolBase
-{
+class Tool: public ToolBase {
 public:
-	Tool(string name, ToolType type, int color, int capabilities, double* thickness);
-	virtual ~Tool();
+    Tool(string name, ToolType type, int color, int capabilities, double* thickness);
+    virtual ~Tool();
 
 public:
-	string getName();
+    string getName();
 
-	bool hasCapability(ToolCapabilities cap) const;
+    bool hasCapability(ToolCapabilities cap) const;
 
-	double getThickness(ToolSize size);
+    double getThickness(ToolSize size);
 
 protected:
-	void setCapability(int capability, bool enabled);
+    void setCapability(int capability, bool enabled);
 
 private:
-	Tool(const Tool& t);
-	void operator=(const Tool& t);
+    Tool(const Tool& t);
+    void operator=(const Tool& t);
 
 private:
-	string name;
-	ToolType type;
+    string name;
+    ToolType type;
 
-	double* thickness;
+    double* thickness;
 
-	int capabilities;
+    int capabilities;
 
-	friend class ToolHandler;
+    friend class ToolHandler;
 };

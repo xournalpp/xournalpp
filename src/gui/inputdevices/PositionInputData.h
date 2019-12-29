@@ -16,19 +16,18 @@
 
 class PositionInputData {
 public:
-	bool isShiftDown() const;
-	bool isControlDown() const;
-	bool isAltDown() const;
+    bool isShiftDown() const;
+    bool isControlDown() const;
+    bool isAltDown() const;
 
 public:
-	double x;
-	double y;
-	double pressure;
-	guint32 timestamp;
+    double x;
+    double y;
+    double pressure;
+    guint32 timestamp;
 
-	/**
-	 * State flags from GDKevent (Shift down etc.)
-	 */
-	GdkModifierType state;
+    /**
+     * State flags from GDKevent (Shift down etc.)
+     */
+    GdkModifierType state;
 };
- 

@@ -11,35 +11,38 @@
 
 #pragma once
 
-#include <serializing/Serializeable.h>
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
 
-class XojFont : public Serializeable
-{
+#include "serializing/Serializeable.h"
+
+#include "XournalType.h"
+
+class XojFont: public Serializeable {
 public:
-	XojFont();
-	virtual ~XojFont();
-
-public:
-	string getName();
-	void setName(string name);
-
-	double getSize() const;
-	void setSize(double size);
-
-	void operator=(const XojFont& font);
+    XojFont();
+    virtual ~XojFont();
 
 public:
-	// Serialize interface
-	void serialize(ObjectOutputStream& out);
-	void readSerialized(ObjectInputStream& in);
+    string getName();
+    void setName(string name);
+
+    double getSize() const;
+    void setSize(double size);
+
+    void operator=(const XojFont& font);
+
+public:
+    // Serialize interface
+    void serialize(ObjectOutputStream& out);
+    void readSerialized(ObjectInputStream& in);
 
 private:
-	void updateFontDesc();
+    void updateFontDesc();
 
 private:
-	string name;
-	double size = 0;
+    string name;
+    double size = 0;
 };

@@ -11,28 +11,29 @@
 
 #pragma once
 
-#include "pdf/base/XojPdfBookmarkIterator.h"
-
-#include <XournalType.h>
-#include "PopplerGlibAction.h"
+#include <string>
+#include <vector>
 
 #include <poppler.h>
 
+#include "pdf/base/XojPdfBookmarkIterator.h"
 
-class PopplerGlibPageBookmarkIterator : public XojPdfBookmarkIterator
-{
+#include "PopplerGlibAction.h"
+#include "XournalType.h"
+
+
+class PopplerGlibPageBookmarkIterator: public XojPdfBookmarkIterator {
 public:
-	PopplerGlibPageBookmarkIterator(PopplerIndexIter* iter,	PopplerDocument* document);
-	virtual ~PopplerGlibPageBookmarkIterator();
+    PopplerGlibPageBookmarkIterator(PopplerIndexIter* iter, PopplerDocument* document);
+    virtual ~PopplerGlibPageBookmarkIterator();
 
 public:
-	virtual bool next();
-	virtual bool isOpen();
-	virtual XojPdfBookmarkIterator* getChildIter();
-	virtual XojPdfAction* getAction();
+    virtual bool next();
+    virtual bool isOpen();
+    virtual XojPdfBookmarkIterator* getChildIter();
+    virtual XojPdfAction* getAction();
 
 private:
-	PopplerIndexIter* iter;
-	PopplerDocument* document;
+    PopplerIndexIter* iter;
+    PopplerDocument* document;
 };
-

@@ -11,33 +11,35 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
+
+#include "XournalType.h"
 
 class XojPageView;
 class XournalView;
 
-class RepaintHandler
-{
+class RepaintHandler {
 public:
-	RepaintHandler(XournalView* xournal);
-	virtual ~RepaintHandler();
+    RepaintHandler(XournalView* xournal);
+    virtual ~RepaintHandler();
 
 public:
-	/**
-	 * Repaint a page
-	 */
-	void repaintPage(XojPageView* view);
+    /**
+     * Repaint a page
+     */
+    void repaintPage(XojPageView* view);
 
-	/**
-	 * Repaint a page area, coordinates are in view coordinates
-	 */
-	void repaintPageArea(XojPageView* view, int x1, int y1, int x2, int y2);
+    /**
+     * Repaint a page area, coordinates are in view coordinates
+     */
+    void repaintPageArea(XojPageView* view, int x1, int y1, int x2, int y2);
 
-	/**
-	 * Repaints the page border (at least)
-	 */
-	void repaintPageBorder(XojPageView* view);
+    /**
+     * Repaints the page border (at least)
+     */
+    void repaintPageBorder(XojPageView* view);
 
 private:
-	XournalView* xournal;
+    XournalView* xournal;
 };

@@ -11,75 +11,73 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
-enum JobType
-{
-	JOB_TYPE_BLOCKING, JOB_TYPE_PREVIEW, JOB_TYPE_RENDER, JOB_TYPE_AUTOSAVE
-};
+#include "XournalType.h"
 
-class Job
-{
+enum JobType { JOB_TYPE_BLOCKING, JOB_TYPE_PREVIEW, JOB_TYPE_RENDER, JOB_TYPE_AUTOSAVE };
+
+class Job {
 public:
-	Job();
+    Job();
 
 protected:
-	virtual ~Job();
+    virtual ~Job();
 
 public:
+    /**
+     * Unref the Job, the initial refcount is set to 1 on creation
+     */
+    void unref();
 
-	/**
-	 * Unref the Job, the initial refcount is set to 1 on creation
-	 */
-	void unref();
+    /**
+     * Increase the refcount
+     */
+    void ref();
 
-	/**
-	 * Increase the refcount
-	 */
-	void ref();
-
-	/**
-	 * Delete Job because e.g. the source was removed
-	 */
-	void deleteJob();
-
-public:
-	virtual JobType getType() = 0;
+    /**
+     * Delete Job because e.g. the source was removed
+     */
+    void deleteJob();
 
 public:
-	/**
-	 * this method is called
-	 */
-	virtual void execute();
+    virtual JobType getType() = 0;
 
-	virtual void* getSource();
+public:
+    /**
+     * this method is called
+     */
+    virtual void execute();
+
+    virtual void* getSource();
 
 protected:
-	/**
-	 * override this method
-	 */
-	virtual void run() = 0;
+    /**
+     * override this method
+     */
+    virtual void run() = 0;
 
-	/**
-	 * This method should be called as _last_ operation in run
-	 *
-	 * If you call it in another position the object will be deleted before run is finished!
-	 */
-	void callAfterRun();
+    /**
+     * This method should be called as _last_ operation in run
+     *
+     * If you call it in another position the object will be deleted before run is finished!
+     */
+    void callAfterRun();
 
-	/**
-	 * After run will be called from UI Thread after the Job is finished
-	 *
-	 * All UI Stuff should happen here
-	 */
-	virtual void afterRun();
-
-private:
-	static bool callAfterCallback(Job* job);
+    /**
+     * After run will be called from UI Thread after the Job is finished
+     *
+     * All UI Stuff should happen here
+     */
+    virtual void afterRun();
 
 private:
-	int afterRunId = 0;
+    static bool callAfterCallback(Job* job);
 
-	int refCount = 1;
-	GMutex refMutex{};
+private:
+    int afterRunId = 0;
+
+    int refCount = 1;
+    GMutex refMutex{};
 };

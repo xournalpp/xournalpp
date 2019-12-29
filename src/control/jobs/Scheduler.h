@@ -13,13 +13,16 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "Job.h"
-#include <XournalType.h>
+#include "XournalType.h"
 
 /**
  * @file Scheduler.h
  * @brief A file containing the defintion of the Scheduler
-*/
+ */
 
 /**
  * @enum JobPriority
@@ -28,107 +31,105 @@
  * Jobs with higher priority are processed before the
  * lower ones.
  */
-enum JobPriority
-{
-	/**
-	 * Urgent: used for rendering the current page
-	 */
-	JOB_PRIORITY_URGENT,
+enum JobPriority {
+    /**
+     * Urgent: used for rendering the current page
+     */
+    JOB_PRIORITY_URGENT,
 
-	/**
-	 * High: used for rendering thumbnail ranges
-	 */
-	JOB_PRIORITY_HIGH,
+    /**
+     * High: used for rendering thumbnail ranges
+     */
+    JOB_PRIORITY_HIGH,
 
-	/**
-	 * Low: used for rendering of pages not in the current range
-	 */
-	JOB_PRIORITY_LOW,
+    /**
+     * Low: used for rendering of pages not in the current range
+     */
+    JOB_PRIORITY_LOW,
 
-	/**
-	 * None: used for any other job (loading / saving / printing...)
-	 */
-	JOB_PRIORITY_NONE,
+    /**
+     * None: used for any other job (loading / saving / printing...)
+     */
+    JOB_PRIORITY_NONE,
 
-	/**
-	 * The number of priorities
-	 */
-	JOB_N_PRIORITIES
+    /**
+     * The number of priorities
+     */
+    JOB_N_PRIORITIES
 };
 
 
-class Scheduler
-{
+class Scheduler {
 public:
-	Scheduler();
-	virtual ~Scheduler();
+    Scheduler();
+    virtual ~Scheduler();
 
 public:
-	/**
-	 * Adds a Job to the Scheduler
-	 *
-	 * @param Job      the job
-	 * @param priority the desired priority
-	 *
-	 * The Job is now owned by the scheduler, and automatically freed if it is done
-	 */
-	void addJob(Job* job, JobPriority priority);
+    /**
+     * Adds a Job to the Scheduler
+     *
+     * @param Job      the job
+     * @param priority the desired priority
+     *
+     * The Job is now owned by the scheduler, and automatically freed if it is done
+     */
+    void addJob(Job* job, JobPriority priority);
 
-	void start();
-	void stop();
+    void start();
+    void stop();
 
-	/**
-	 * Locks the complete scheduler
-	 */
-	void lock();
+    /**
+     * Locks the complete scheduler
+     */
+    void lock();
 
-	/**
-	 * Unlocks the complete scheduler
-	 */
-	void unlock();
+    /**
+     * Unlocks the complete scheduler
+     */
+    void unlock();
 
-	/**
-	 * Don't render the next X ms so the scrolling performance is better
-	 */
-	void blockRerenderZoom();
+    /**
+     * Don't render the next X ms so the scrolling performance is better
+     */
+    void blockRerenderZoom();
 
-	/**
-	 * Remove the blocked rendering manually
-	 */
-	void unblockRerenderZoom();
+    /**
+     * Remove the blocked rendering manually
+     */
+    void unblockRerenderZoom();
 
 private:
-	static gpointer jobThreadCallback(Scheduler* scheduler);
-	Job* getNextJobUnlocked(bool onlyNotRender = false, bool* hasRenderJobs = nullptr);
+    static gpointer jobThreadCallback(Scheduler* scheduler);
+    Job* getNextJobUnlocked(bool onlyNotRender = false, bool* hasRenderJobs = nullptr);
 
-	static bool jobRenderThreadTimer(Scheduler* scheduler);
+    static bool jobRenderThreadTimer(Scheduler* scheduler);
 
 protected:
-	bool threadRunning = true;
+    bool threadRunning = true;
 
-	int jobRenderThreadTimerId = 0;
+    int jobRenderThreadTimerId = 0;
 
-	GThread* thread = nullptr;
+    GThread* thread = nullptr;
 
-	GCond jobQueueCond{};
-	GMutex jobQueueMutex{};
+    GCond jobQueueCond{};
+    GMutex jobQueueMutex{};
 
-	GMutex schedulerMutex{};
+    GMutex schedulerMutex{};
 
-	/**
-	 * This is need to be sure there is no job running if we delete a page, else we may access delete memory...
-	 */
-	GMutex jobRunningMutex{};
+    /**
+     * This is need to be sure there is no job running if we delete a page, else we may access delete memory...
+     */
+    GMutex jobRunningMutex{};
 
-	GQueue queueUrgent{};
-	GQueue queueHigh{};
-	GQueue queueLow{};
-	GQueue queueNone{};
+    GQueue queueUrgent{};
+    GQueue queueHigh{};
+    GQueue queueLow{};
+    GQueue queueNone{};
 
-	GQueue* jobQueue[JOB_N_PRIORITIES]{};
+    GQueue* jobQueue[JOB_N_PRIORITIES]{};
 
-	GTimeVal* blockRenderZoomTime = nullptr;
-	GMutex blockRenderMutex{};
+    GTimeVal* blockRenderZoomTime = nullptr;
+    GMutex blockRenderMutex{};
 
-	string name;
+    string name;
 };

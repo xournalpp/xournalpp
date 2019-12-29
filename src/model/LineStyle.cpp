@@ -1,56 +1,48 @@
 #include "LineStyle.h"
 
-#include <serializing/ObjectOutputStream.h>
-#include <serializing/ObjectInputStream.h>
+#include "serializing/ObjectInputStream.h"
+#include "serializing/ObjectOutputStream.h"
 
 
 LineStyle::LineStyle() = default;
 
-LineStyle::LineStyle(const LineStyle& other)
-{
-	*this = other;
+LineStyle::LineStyle(const LineStyle& other) { *this = other; }
+
+LineStyle::~LineStyle() {
+    g_free(this->dashes);
+    this->dashes = nullptr;
+    this->dashCount = 0;
 }
 
-LineStyle::~LineStyle()
-{
-	g_free(this->dashes);
-	this->dashes = nullptr;
-	this->dashCount = 0;
-}
+void LineStyle::operator=(const LineStyle& other) {
+    if (this == &other) {
+        return;
+    }
+    const double* dashes = nullptr;
+    int dashCount = 0;
 
-void LineStyle::operator=(const LineStyle& other)
-{
-	if (this == &other)
-	{
-		return;
-	}
-	const double* dashes = nullptr;
-	int dashCount = 0;
-
-	other.getDashes(dashes, dashCount);
-	setDashes(dashes, dashCount);
+    other.getDashes(dashes, dashCount);
+    setDashes(dashes, dashCount);
 }
 
 
-void LineStyle::serialize(ObjectOutputStream& out)
-{
-	out.writeObject("LineStyle");
+void LineStyle::serialize(ObjectOutputStream& out) {
+    out.writeObject("LineStyle");
 
-	out.writeData(this->dashes, this->dashCount, sizeof(double));
+    out.writeData(this->dashes, this->dashCount, sizeof(double));
 
-	out.endObject();
+    out.endObject();
 }
 
-void LineStyle::readSerialized(ObjectInputStream& in)
-{
-	in.readObject("LineStyle");
+void LineStyle::readSerialized(ObjectInputStream& in) {
+    in.readObject("LineStyle");
 
-	g_free(this->dashes);
-	this->dashes = nullptr;
-	this->dashCount = 0;
-	in.readData(reinterpret_cast<void**>(&this->dashes), &this->dashCount);
+    g_free(this->dashes);
+    this->dashes = nullptr;
+    this->dashCount = 0;
+    in.readData(reinterpret_cast<void**>(&this->dashes), &this->dashCount);
 
-	in.endObject();
+    in.endObject();
 }
 
 /**
@@ -58,12 +50,11 @@ void LineStyle::readSerialized(ObjectInputStream& in)
  *
  * @return true if dashed
  */
-auto LineStyle::getDashes(const double*& dashes, int& dashCount) const -> bool
-{
-	dashes = this->dashes;
-	dashCount = this->dashCount;
+auto LineStyle::getDashes(const double*& dashes, int& dashCount) const -> bool {
+    dashes = this->dashes;
+    dashCount = this->dashCount;
 
-	return this->dashCount > 0;
+    return this->dashCount > 0;
 }
 
 /**
@@ -72,21 +63,19 @@ auto LineStyle::getDashes(const double*& dashes, int& dashCount) const -> bool
  * @param dashes Dash data, will be copied
  * @param dashCount Count of entries
  */
-//Todo(fabian): memmory use after free
-void LineStyle::setDashes(const double* dashes, int dashCount)
-{
-	g_free(this->dashes);
-	if (dashCount == 0 || dashes == nullptr)
-	{
-		this->dashCount = 0;
-		this->dashes = nullptr;
-		return;
-	}
+// Todo(fabian): memmory use after free
+void LineStyle::setDashes(const double* dashes, int dashCount) {
+    g_free(this->dashes);
+    if (dashCount == 0 || dashes == nullptr) {
+        this->dashCount = 0;
+        this->dashes = nullptr;
+        return;
+    }
 
-	this->dashes = static_cast<double*>(g_malloc(dashCount * sizeof(double)));
-	this->dashCount = dashCount;
+    this->dashes = static_cast<double*>(g_malloc(dashCount * sizeof(double)));
+    this->dashCount = dashCount;
 
-	memcpy(this->dashes, dashes, this->dashCount * sizeof(double));
+    memcpy(this->dashes, dashes, this->dashCount * sizeof(double));
 }
 
 /**
@@ -94,7 +83,4 @@ void LineStyle::setDashes(const double* dashes, int dashCount)
  *
  * @return true if dashed
  */
-auto LineStyle::hasDashes() const -> bool
-{
-	return this->dashCount > 0;
-}
+auto LineStyle::hasDashes() const -> bool { return this->dashCount > 0; }

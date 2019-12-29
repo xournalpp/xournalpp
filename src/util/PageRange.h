@@ -11,32 +11,33 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "XournalType.h"
 
-class PageRangeEntry
-{
+class PageRangeEntry {
 public:
-	PageRangeEntry(int first, int last);
-	virtual ~PageRangeEntry();
+    PageRangeEntry(int first, int last);
+    virtual ~PageRangeEntry();
 
 public:
-	int getLast() const;
-	int getFirst() const;
+    int getLast() const;
+    int getFirst() const;
 
 private:
-	int first;
-	int last;
+    int first;
+    int last;
 };
 
 typedef vector<PageRangeEntry*> PageRangeVector;
 
-class PageRange
-{
+class PageRange {
 private:
-	PageRange();
-	virtual ~PageRange();
+    PageRange();
+    virtual ~PageRange();
 
 public:
-	static bool isSeparator(char c);
-	static PageRangeVector parse(const char* str);
+    static bool isSeparator(char c);
+    static PageRangeVector parse(const char* str);
 };

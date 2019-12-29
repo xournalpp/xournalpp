@@ -11,46 +11,48 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include <gtk/gtk.h>
 
-#include <XournalType.h>
+#include "XournalType.h"
 
 class GladeSearchpath;
 
-class GladeGui
-{
+class GladeGui {
 public:
-	GladeGui(GladeSearchpath* gladeSearchPath, const string& glade, const string& mainWnd);
-	virtual ~GladeGui();
+    GladeGui(GladeSearchpath* gladeSearchPath, const string& glade, const string& mainWnd);
+    virtual ~GladeGui();
 
-	virtual void show(GtkWindow* parent) = 0;
+    virtual void show(GtkWindow* parent) = 0;
 
-	operator GtkWindow* ();
-	operator GdkWindow* ();
+    operator GtkWindow*();
+    operator GdkWindow*();
 
-	GtkWidget* get(const string& name);
+    GtkWidget* get(const string& name);
 
-	void setThemePath(string themePath);
+    void setThemePath(string themePath);
 
-	GtkWidget* getWindow();
-	GladeSearchpath* getGladeSearchPath();
+    GtkWidget* getWindow();
+    GladeSearchpath* getGladeSearchPath();
 
- 	GtkBuilder* getBuilder();
+    GtkBuilder* getBuilder();
 
 private:
-	/**
-	 * The Glade resources
-	 */
-	GtkBuilder* builder;
+    /**
+     * The Glade resources
+     */
+    GtkBuilder* builder;
 
-	/**
-	 * Our search paths
-	 */
-	GladeSearchpath* gladeSearchPath;
+    /**
+     * Our search paths
+     */
+    GladeSearchpath* gladeSearchPath;
 
 protected:
-	/**
-	 * This window
-	 */
-	GtkWidget* window = nullptr;
+    /**
+     * This window
+     */
+    GtkWidget* window = nullptr;
 };

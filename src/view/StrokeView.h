@@ -15,43 +15,42 @@
 
 class Stroke;
 
-class StrokeView
-{
+class StrokeView {
 public:
-	StrokeView(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool noAlpha);
-	~StrokeView() = default;
+    StrokeView(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool noAlpha);
+    ~StrokeView() = default;
 
 public:
-	void paint(bool dontRenderEditingStroke);
+    void paint(bool dontRenderEditingStroke);
 
-	/**
-	 * Change cairo source, used to draw hilighter transparent,
-	 * but only if not currently drawing and so on (yes, complicated)
-	 */
-	void changeCairoSource(bool markAudioStroke);
+    /**
+     * Change cairo source, used to draw hilighter transparent,
+     * but only if not currently drawing and so on (yes, complicated)
+     */
+    void changeCairoSource(bool markAudioStroke);
 
 private:
-	void drawFillStroke();
-	void applyDashed(double offset);
-	static void drawEraseableStroke(cairo_t* cr, Stroke* s);
+    void drawFillStroke();
+    void applyDashed(double offset);
+    static void drawEraseableStroke(cairo_t* cr, Stroke* s);
 
-	/**
-	 * No pressure sensitivity, one line is drawn
-	 */
-	void drawNoPressure();
+    /**
+     * No pressure sensitivity, one line is drawn
+     */
+    void drawNoPressure();
 
-	/**
-	 * Draw a stroke with pressure, for this multiple
-	 * lines with different widths needs to be drawn
-	 */
-	void drawWithPressure();
+    /**
+     * Draw a stroke with pressure, for this multiple
+     * lines with different widths needs to be drawn
+     */
+    void drawWithPressure();
 
 
 private:
-	cairo_t* cr;
-	Stroke* s;
+    cairo_t* cr;
+    Stroke* s;
 
-	int startPoint;
-	double scaleFactor;
-	bool noAlpha;
+    int startPoint;
+    double scaleFactor;
+    bool noAlpha;
 };

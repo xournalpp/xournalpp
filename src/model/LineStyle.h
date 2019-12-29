@@ -11,54 +11,56 @@
 
 #pragma once
 
-#include <serializing/Serializeable.h>
+#include <string>
+#include <vector>
 
-#include <XournalType.h>
+#include "serializing/Serializeable.h"
+
+#include "XournalType.h"
 
 
-class LineStyle : public Serializeable
-{
+class LineStyle: public Serializeable {
 public:
-	LineStyle();
-	LineStyle(const LineStyle& other);
-	virtual ~LineStyle();
+    LineStyle();
+    LineStyle(const LineStyle& other);
+    virtual ~LineStyle();
 
-	void operator=(const LineStyle& other);
-
-public:
-	// Serialize interface
-	void serialize(ObjectOutputStream& out);
-	void readSerialized(ObjectInputStream& in);
+    void operator=(const LineStyle& other);
 
 public:
-	/**
-	 * Get dash array and count
-	 *
-	 * @return true if dashed
-	 */
-	bool getDashes(const double*& dashes, int& dashCount) const;
+    // Serialize interface
+    void serialize(ObjectOutputStream& out);
+    void readSerialized(ObjectInputStream& in);
 
-	/**
-	 * @return true if dashed
-	 */
-	bool hasDashes() const;
+public:
+    /**
+     * Get dash array and count
+     *
+     * @return true if dashed
+     */
+    bool getDashes(const double*& dashes, int& dashCount) const;
 
-	/**
-	 * Set the dash array and count
-	 *
-	 * @param dashes Dash data, will be copied
-	 * @param dashCount Count of entries
-	 */
-	void setDashes(const double* dashes, int dashCount);
+    /**
+     * @return true if dashed
+     */
+    bool hasDashes() const;
+
+    /**
+     * Set the dash array and count
+     *
+     * @param dashes Dash data, will be copied
+     * @param dashCount Count of entries
+     */
+    void setDashes(const double* dashes, int dashCount);
 
 private:
-	/**
-	 * Dash definition (nullptr for no Dash)
-	 */
-	double* dashes = nullptr;
+    /**
+     * Dash definition (nullptr for no Dash)
+     */
+    double* dashes = nullptr;
 
-	/**
-	 * Dash count (0 for no dash)
-	 */
-	int dashCount = 0;
+    /**
+     * Dash count (0 for no dash)
+     */
+    int dashCount = 0;
 };

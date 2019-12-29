@@ -11,122 +11,120 @@
 
 #pragma once
 
-#include "model/DocumentChangeType.h"
-#include "model/DocumentListener.h"
-#include "gui/sidebar/previews/base/SidebarToolbar.h"
+#include <list>
 
 #include <gtk/gtk.h>
-#include <list>
+
+#include "gui/sidebar/previews/base/SidebarToolbar.h"
+#include "model/DocumentChangeType.h"
+#include "model/DocumentListener.h"
 
 class AbstractSidebarPage;
 class Control;
 class GladeGui;
 class SidebarPageButton;
 
-class Sidebar : public DocumentListener, public SidebarToolbarActionListener
-{
+class Sidebar: public DocumentListener, public SidebarToolbarActionListener {
 public:
-	Sidebar(GladeGui* gui, Control* control);
-	virtual ~Sidebar();
+    Sidebar(GladeGui* gui, Control* control);
+    virtual ~Sidebar();
 
 private:
-	void initPages(GtkWidget* sidebar, GladeGui* gui);
-	void addPage(AbstractSidebarPage* page);
+    void initPages(GtkWidget* sidebar, GladeGui* gui);
+    void addPage(AbstractSidebarPage* page);
 
-	// SidebarToolbarActionListener
+    // SidebarToolbarActionListener
 public:
-	/**
-	 * Called when an action is performed
-	 */
-	virtual void actionPerformed(SidebarActions action);
-
-public:
-	/**
-	 * A page was selected, so also select this page in the sidebar
-	 */
-	void selectPageNr(size_t page, size_t pdfPage);
-
-	Control* getControl();
-
-	/**
-	 * Sets the current selected page
-	 */
-	void setSelectedPage(size_t page);
-
-	/**
-	 * Enable active and siable inactive buttons, select first active page
-	 */
-	void updateEnableDisableButtons();
-
-	/**
-	 * Temporary disable Sidebar (e.g. while saving)
-	 */
-	void setTmpDisabled(bool disabled);
-
-	/**
-	 * Saves the current size to the settings
-	 */
-	void saveSize();
+    /**
+     * Called when an action is performed
+     */
+    virtual void actionPerformed(SidebarActions action);
 
 public:
-	// DocumentListener interface
-	virtual void documentChanged(DocumentChangeType type);
+    /**
+     * A page was selected, so also select this page in the sidebar
+     */
+    void selectPageNr(size_t page, size_t pdfPage);
+
+    Control* getControl();
+
+    /**
+     * Sets the current selected page
+     */
+    void setSelectedPage(size_t page);
+
+    /**
+     * Enable active and siable inactive buttons, select first active page
+     */
+    void updateEnableDisableButtons();
+
+    /**
+     * Temporary disable Sidebar (e.g. while saving)
+     */
+    void setTmpDisabled(bool disabled);
+
+    /**
+     * Saves the current size to the settings
+     */
+    void saveSize();
+
+public:
+    // DocumentListener interface
+    virtual void documentChanged(DocumentChangeType type);
 
 private:
-
-	/**
-	 * Page selected
-	 */
-	static void buttonClicked(GtkToolButton* toolbutton, SidebarPageButton* buttonData);
+    /**
+     * Page selected
+     */
+    static void buttonClicked(GtkToolButton* toolbutton, SidebarPageButton* buttonData);
 
 private:
-	Control* control = nullptr;
+    Control* control = nullptr;
 
-	GladeGui* gui = nullptr;
+    GladeGui* gui = nullptr;
 
-	/**
-	 * The sidebar pages
-	 */
-	std::list<AbstractSidebarPage*> pages;
+    /**
+     * The sidebar pages
+     */
+    std::list<AbstractSidebarPage*> pages;
 
-	/**
-	 * The Toolbar with the pages
-	 */
-	GtkToolbar* tbSelectPage = nullptr;
+    /**
+     * The Toolbar with the pages
+     */
+    GtkToolbar* tbSelectPage = nullptr;
 
-	/**
-	 * The close button of the sidebar
-	 */
-	GtkWidget* buttonCloseSidebar = nullptr;
+    /**
+     * The close button of the sidebar
+     */
+    GtkWidget* buttonCloseSidebar = nullptr;
 
-	/**
-	 * The current visible page in the sidebar
-	 */
-	GtkWidget* visiblePage = nullptr;
+    /**
+     * The current visible page in the sidebar
+     */
+    GtkWidget* visiblePage = nullptr;
 
-	/**
-	 * Current active page
-	 */
-	AbstractSidebarPage* currentPage = nullptr;
+    /**
+     * Current active page
+     */
+    AbstractSidebarPage* currentPage = nullptr;
 
-	/**
-	 * The sidebar widget
-	 */
-	GtkWidget* sidebar = nullptr;
+    /**
+     * The sidebar widget
+     */
+    GtkWidget* sidebar = nullptr;
 
-	/**
-	 * Sidebar toolbar
-	 */
-	SidebarToolbar toolbar;
+    /**
+     * Sidebar toolbar
+     */
+    SidebarToolbar toolbar;
 };
 
-class SidebarPageButton
-{
+class SidebarPageButton {
 public:
-	SidebarPageButton(Sidebar* sidebar, int index, AbstractSidebarPage* page);
+    SidebarPageButton(Sidebar* sidebar, int index, AbstractSidebarPage* page);
 
 public:
-	Sidebar* sidebar = nullptr;
-	int index = 0;
-	AbstractSidebarPage* page = nullptr;
+    Sidebar* sidebar = nullptr;
+    int index = 0;
+    AbstractSidebarPage* page = nullptr;
 };

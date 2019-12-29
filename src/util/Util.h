@@ -11,20 +11,19 @@
 
 #pragma once
 
-#include "OutputStream.h"
-#include "Path.h"
+#include <cstdint>
+#include <functional>
+#include <limits>
+#include <string>
 
 #include <gtk/gtk.h>
 
-#include <string>
-#include <functional>
-#include <limits>
-#include <cstdint>
+#include "OutputStream.h"
+#include "Path.h"
 
 using std::string;
 
-namespace Util
-{
+namespace Util {
 
 void cairo_set_source_rgbi(cairo_t* cr, int color);
 
@@ -46,10 +45,10 @@ Path getTmpDirSubfolder(const Path& subfolder = "");
 Path ensureFolderExists(const Path& p);
 
 /**
-	 * Execute the callback in the UI Thread.
-	 *
-	 * Make sure the container class is not deleted before the UI stuff is finished!
-	 */
+ * Execute the callback in the UI Thread.
+ *
+ * Make sure the container class is not deleted before the UI stuff is finished!
+ */
 void execInUiThread(std::function<void()>&& callback);
 
 gboolean paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void* unused);

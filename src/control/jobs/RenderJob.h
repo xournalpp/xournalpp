@@ -11,38 +11,39 @@
 
 #pragma once
 
-#include "Job.h"
-
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
+
+#include "Job.h"
+#include "XournalType.h"
 
 class Rectangle;
 class XojPageView;
 
-class RenderJob : public Job
-{
+class RenderJob: public Job {
 public:
-	RenderJob(XojPageView* view);
+    RenderJob(XojPageView* view);
 
 protected:
-	virtual ~RenderJob();
+    virtual ~RenderJob();
 
 public:
-	virtual JobType getType();
+    virtual JobType getType();
 
-	void* getSource();
+    void* getSource();
 
-	void run();
-
-private:
-	/**
-	 * Repaint the widget in UI Thread
-	 */
-	static void repaintWidget(GtkWidget* widget);
-
-	void rerenderRectangle(Rectangle* rect);
+    void run();
 
 private:
-	XojPageView* view;
+    /**
+     * Repaint the widget in UI Thread
+     */
+    static void repaintWidget(GtkWidget* widget);
+
+    void rerenderRectangle(Rectangle* rect);
+
+private:
+    XojPageView* view;
 };

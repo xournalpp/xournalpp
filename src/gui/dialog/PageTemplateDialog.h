@@ -11,51 +11,50 @@
 
 #pragma once
 
-#include "control/settings/Settings.h"
-#include "gui/GladeGui.h"
 #include "control/pagetype/PageTypeMenu.h"
 #include "control/settings/PageTemplateSettings.h"
+#include "control/settings/Settings.h"
+#include "gui/GladeGui.h"
 
 class PageTypeHandler;
 class PageTypeMenu;
 class PageTypeInfo;
 class PopupMenuButton;
 
-class PageTemplateDialog : public GladeGui, public PageTypeMenuChangeListener
-{
+class PageTemplateDialog: public GladeGui, public PageTypeMenuChangeListener {
 public:
-	PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types);
-	virtual ~PageTemplateDialog();
+    PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types);
+    virtual ~PageTemplateDialog();
 
 public:
-	virtual void show(GtkWindow* parent);
+    virtual void show(GtkWindow* parent);
 
-	/**
-	 * The dialog was confirmed / saved
-	 */
-	bool isSaved() const;
+    /**
+     * The dialog was confirmed / saved
+     */
+    bool isSaved() const;
 
-	void changeCurrentPageBackground(PageTypeInfo* info);
+    void changeCurrentPageBackground(PageTypeInfo* info);
 
 private:
-	void showPageSizeDialog();
-	void updatePageSize();
-	void saveToFile();
-	void loadFromFile();
-	void updateDataFromModel();
-	void saveToModel();
+    void showPageSizeDialog();
+    void updatePageSize();
+    void saveToFile();
+    void loadFromFile();
+    void updateDataFromModel();
+    void saveToModel();
 
 private:
-	Settings* settings;
+    Settings* settings;
 
-	PageTemplateSettings model;
+    PageTemplateSettings model;
 
-	PageTypeMenu* pageMenu;
+    PageTypeMenu* pageMenu;
 
-	PopupMenuButton* popupMenuButton;
+    PopupMenuButton* popupMenuButton;
 
-	/**
-	 * The dialog was confirmed / saved
-	 */
-	bool saved = false;
+    /**
+     * The dialog was confirmed / saved
+     */
+    bool saved = false;
 };

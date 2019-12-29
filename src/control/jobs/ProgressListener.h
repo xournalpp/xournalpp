@@ -11,20 +11,18 @@
 
 #pragma once
 
-class ProgressListener
-{
+class ProgressListener {
 public:
-	virtual void setMaximumState(int max) = 0;
-	virtual void setCurrentState(int state) = 0;
+    virtual void setMaximumState(int max) = 0;
+    virtual void setCurrentState(int state) = 0;
 
-	virtual ~ProgressListener() { };
+    virtual ~ProgressListener(){};
 };
 
-class DummyProgressListener : public ProgressListener
-{
+class DummyProgressListener: public ProgressListener {
 public:
-	virtual void setMaximumState(int max) {};
-	virtual void setCurrentState(int state) {};
+    virtual void setMaximumState(int max){};
+    virtual void setCurrentState(int state){};
 
-	virtual ~DummyProgressListener() { };
+    virtual ~DummyProgressListener(){};
 };
