@@ -233,6 +233,10 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_RULER;
     }
 
+	if (value == "ACTION_TOOL_DRAW_SPLINE") {
+		return ACTION_TOOL_DRAW_SPLINE;
+	}
+
     if (value == "ACTION_TOOL_FLOATING_TOOLBOX") {
         return ACTION_TOOL_FLOATING_TOOLBOX;
     }
@@ -802,6 +806,10 @@ auto ActionType_toString(ActionType value) -> string {
     if (value == ACTION_RULER) {
         return "ACTION_RULER";
     }
+
+	if (value == ACTION_TOOL_DRAW_SPLINE) {
+		return "ACTION_TOOL_DRAW_SPLINE";
+	}
 
     if (value == ACTION_TOOL_FLOATING_TOOLBOX) {
         return "ACTION_TOOL_FLOATING_TOOLBOX";

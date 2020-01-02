@@ -56,6 +56,8 @@ auto drawingTypeToString(DrawingType type) -> string {
             return "strokeRecognizer";
         case DRAWING_TYPE_COORDINATE_SYSTEM:
             return "drawCoordinateSystem";
+	    case DRAWING_TYPE_SPLINE:     				
+            return "spline";
         default:
             return "";
     }
@@ -83,6 +85,9 @@ auto drawingTypeFromString(const string& type) -> DrawingType {
     if (type == "drawCoordinateSystem") {
         return DRAWING_TYPE_COORDINATE_SYSTEM;
     }
+	if (type == "spline") {
+		return DRAWING_TYPE_SPLINE;
+	}
     return DRAWING_TYPE_DEFAULT;
 }
 
@@ -120,6 +125,8 @@ auto toolTypeToString(ToolType type) -> string {
             return "drawArrow";
         case TOOL_DRAW_COORDINATE_SYSTEM:
             return "drawCoordinateSystem";
+	    case TOOL_DRAW_SPLINE:    				
+            return "drawSpline";
         case TOOL_FLOATING_TOOLBOX:
             return "showFloatingToolbox";
         default:
@@ -170,6 +177,9 @@ auto toolTypeFromString(const string& type) -> ToolType {
     if (type == "drawCoordinateSystem") {
         return TOOL_DRAW_COORDINATE_SYSTEM;
     }
+	if (type == "drawSpline") {
+		return TOOL_DRAW_SPLINE;
+	}
     if (type == "showFloatingToolbox") {
         return TOOL_FLOATING_TOOLBOX;
     }
