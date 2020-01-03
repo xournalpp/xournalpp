@@ -295,10 +295,11 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     XournalppCursor* cursor = xournal->getCursor();
     cursor->setMouseDown(true);
 
-	if ((h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HILIGHTER) && h->getDrawingType() != DRAWING_TYPE_SPLINE ||
-	    (h->getToolType() == TOOL_ERASER && h->getEraserType() == ERASER_TYPE_WHITEOUT)) {
-		delete this->inputHandler;
-		this->inputHandler = nullptr;
+    if ((h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HILIGHTER) &&
+                h->getDrawingType() != DRAWING_TYPE_SPLINE ||
+        (h->getToolType() == TOOL_ERASER && h->getEraserType() == ERASER_TYPE_WHITEOUT)) {
+        delete this->inputHandler;
+        this->inputHandler = nullptr;
 
         if (h->getDrawingType() == DRAWING_TYPE_LINE) {
             this->inputHandler = new RulerHandler(this->xournal, this, getPage());
@@ -315,12 +316,12 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         }
 
         this->inputHandler->onButtonPressEvent(pos);
-	} else if ((h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HILIGHTER) && h->getDrawingType() == DRAWING_TYPE_SPLINE) {
-		if (!this->inputHandler) 
-		{
-			this->inputHandler = new SplineHandler(this->xournal, this, getPage());
-		}
-		this->inputHandler->onButtonPressEvent(pos);
+    } else if ((h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HILIGHTER) &&
+               h->getDrawingType() == DRAWING_TYPE_SPLINE) {
+        if (!this->inputHandler) {
+            this->inputHandler = new SplineHandler(this->xournal, this, getPage());
+        }
+        this->inputHandler->onButtonPressEvent(pos);
     } else if (h->getToolType() == TOOL_ERASER) {
         this->eraser->erase(x, y);
         this->inEraser = true;
@@ -370,7 +371,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         wy += std::lround(pos.y) + this->getY();
 
         control->getWindow()->floatingToolbox->show(wx, wy);
-    } 
+    }
 
     return true;
 }
@@ -389,7 +390,7 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
     ToolType toolType = toolHandler->getToolType();
     bool isSelectTool = toolType == TOOL_SELECT_OBJECT || TOOL_SELECT_RECT || TOOL_SELECT_REGION;
 
-	DrawingType drawingType = toolHandler->getDrawingType();
+    DrawingType drawingType = toolHandler->getDrawingType();
 
     EditSelection* selection = xournal->getSelection();
     bool hasNoModifiers = !pos.isShiftDown() && !pos.isControlDown();
@@ -425,13 +426,12 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
         this->startText(x, y);
         this->textEditor->selectAtCursor(TextEditor::SelectType::word);
     } else if (drawingType == DRAWING_TYPE_SPLINE) {
-		if (this->inputHandler)
-		{
-			this->inputHandler->onButtonDoublePressEvent(pos);
-			delete this->inputHandler;
-			this->inputHandler = nullptr;
-		}
-	}
+        if (this->inputHandler) {
+            this->inputHandler->onButtonDoublePressEvent(pos);
+            delete this->inputHandler;
+            this->inputHandler = nullptr;
+        }
+    }
 
     return true;
 }
@@ -515,16 +515,12 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
             }
         }
 
-		ToolHandler* h = control->getToolHandler();
-		if (h->getDrawingType()==DRAWING_TYPE_SPLINE)
-		{
-			// Do NOT delete inputHandler yet, since drawing is not finished
-		} 
-		else 
-		{ 
-			delete this->inputHandler;
-			this->inputHandler = nullptr;
-		}
+        ToolHandler* h = control->getToolHandler();
+        bool isDrawingTypeSpline = h->getDrawingType() == DRAWING_TYPE_SPLINE;
+        if (!isDrawingTypeSpline || !this->inputHandler->getStroke()) {  // The Spline Tool finalizes drawing manually
+            delete this->inputHandler;
+            this->inputHandler = nullptr;
+        }
     }
 
     if (this->inEraser) {
@@ -571,7 +567,6 @@ auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool {
             return true;
         }
 
-
         return false;
     }
 
@@ -594,6 +589,14 @@ auto XojPageView::onKeyReleaseEvent(GdkEventKey* event) -> bool {
     }
 
     if (this->inputHandler && this->inputHandler->onKeyEvent(event)) {
+        DrawingType drawingType = this->xournal->getControl()->getToolHandler()->getDrawingType();
+        if (drawingType == DRAWING_TYPE_SPLINE) {  // Spline drawing has been finalized
+            if (this->inputHandler) {
+                delete this->inputHandler;
+                this->inputHandler = nullptr;
+            }
+        }
+
         return true;
     }
 

@@ -11,27 +11,28 @@
 
 #pragma once
 
-#include "InputHandler.h"
-
 #include "model/Point.h"
 #include "view/DocumentView.h"
 
-class SplineHandler : public InputHandler {
+#include "InputHandler.h"
+
+class SplineHandler: public InputHandler {
 public:
-	SplineHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
-	virtual ~SplineHandler();
+    SplineHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
+    virtual ~SplineHandler();
 
-	void draw(cairo_t* cr);
+    void draw(cairo_t* cr);
 
-	bool onMotionNotifyEvent(const PositionInputData& pos);
-	void onButtonReleaseEvent(const PositionInputData& pos);
-	void onButtonPressEvent(const PositionInputData& pos);
-	void onButtonDoublePressEvent(const PositionInputData& pos);
-	virtual bool onKeyEvent(GdkEventKey* event);
+    bool onMotionNotifyEvent(const PositionInputData& pos);
+    void onButtonReleaseEvent(const PositionInputData& pos);
+    void onButtonPressEvent(const PositionInputData& pos);
+    void onButtonDoublePressEvent(const PositionInputData& pos);
+    virtual bool onKeyEvent(GdkEventKey* event);
 
 private:
-	virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+    virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+    void finalizeSpline();
 
-protected:	
-	DocumentView view;
+protected:
+    DocumentView view;
 };

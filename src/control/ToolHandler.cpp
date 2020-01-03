@@ -49,12 +49,11 @@ void ToolHandler::initTools() {
     thickness[TOOL_SIZE_MEDIUM] = 8.50;
     thickness[TOOL_SIZE_THICK] = 19.84;
     thickness[TOOL_SIZE_VERY_THICK] = 30;
-    tools[TOOL_HILIGHTER - TOOL_PEN] =
-            std::make_unique<Tool>("hilighter", TOOL_HILIGHTER, 0xFFFF00,
-                                   TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE |
-                                            TOOL_CAP_CIRCLE | TOOL_CAP_ARROW | TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | 
-                                            TOOL_CAP_FILL,
-                                   thickness);
+    tools[TOOL_HILIGHTER - TOOL_PEN] = std::make_unique<Tool>(
+            "hilighter", TOOL_HILIGHTER, 0xFFFF00,
+            TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_CIRCLE | TOOL_CAP_ARROW |
+                    TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
+            thickness);
 
     tools[TOOL_TEXT - TOOL_PEN] = std::make_unique<Tool>("text", TOOL_TEXT, 0x000000, TOOL_CAP_COLOR, nullptr);
 
@@ -89,8 +88,8 @@ void ToolHandler::initTools() {
     tools[TOOL_DRAW_COORDINATE_SYSTEM - TOOL_PEN] = std::make_unique<Tool>(
             "drawCoordinateSystem", TOOL_DRAW_COORDINATE_SYSTEM, 0x000000, TOOL_CAP_NONE, nullptr);
 
-	tools[TOOL_DRAW_SPLINE - TOOL_PEN] =
-	        std::make_unique<Tool>("drawSpline", TOOL_DRAW_SPLINE, 0x000000, TOOL_CAP_NONE, nullptr);
+    tools[TOOL_DRAW_SPLINE - TOOL_PEN] =
+            std::make_unique<Tool>("drawSpline", TOOL_DRAW_SPLINE, 0x000000, TOOL_CAP_NONE, nullptr);
 
     tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] =
             std::make_unique<Tool>("showFloatingToolbox", TOOL_FLOATING_TOOLBOX, 0x000000, TOOL_CAP_NONE, nullptr);
@@ -473,8 +472,8 @@ auto ToolHandler::isSinglePageTool() -> bool {
     return toolType == (TOOL_PEN && (drawingType == DRAWING_TYPE_ARROW || drawingType == DRAWING_TYPE_CIRCLE ||
                                      drawingType == DRAWING_TYPE_COORDINATE_SYSTEM ||
                                      drawingType == DRAWING_TYPE_LINE || drawingType == DRAWING_TYPE_RECTANGLE)) ||
-                                     drawingType == DRAWING_TYPE_SPLINE ||
-           toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_OBJECT ||
-           toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_CIRCLE || toolType == TOOL_DRAW_COORDINATE_SYSTEM ||
-           toolType == TOOL_DRAW_ARROW || toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE;
+           drawingType == DRAWING_TYPE_SPLINE || toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT ||
+           toolType == TOOL_SELECT_OBJECT || toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_CIRCLE ||
+           toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW ||
+           toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE;
 }

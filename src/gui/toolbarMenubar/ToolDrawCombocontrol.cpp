@@ -31,7 +31,7 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, Act
     drawTypes.push_back(new ToolDrawType(_("Draw Line"), "ruler", ACTION_RULER));
     drawTypes.push_back(new ToolDrawType(_("Draw coordinate system"), "coordinate-system-draw",
                                          ACTION_TOOL_DRAW_COORDINATE_SYSTEM));
-	drawTypes.push_back(new ToolDrawType(_("Draw Spline"), "spline-draw", ACTION_TOOL_DRAW_SPLINE));
+    drawTypes.push_back(new ToolDrawType(_("Draw Spline"), "spline-draw", ACTION_TOOL_DRAW_SPLINE));
     drawTypes.push_back(new ToolDrawType(_("Stroke recognizer"), "shape_recognizer", ACTION_SHAPE_RECOGNIZER));
 
     for (ToolDrawType* t: drawTypes) {

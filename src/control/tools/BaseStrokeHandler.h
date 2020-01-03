@@ -31,7 +31,7 @@ public:
     bool onMotionNotifyEvent(const PositionInputData& pos);
     void onButtonReleaseEvent(const PositionInputData& pos);
     void onButtonPressEvent(const PositionInputData& pos);
-	void onButtonDoublePressEvent(const PositionInputData& pos);
+    void onButtonDoublePressEvent(const PositionInputData& pos);
     virtual bool onKeyEvent(GdkEventKey* event);
 
 private:

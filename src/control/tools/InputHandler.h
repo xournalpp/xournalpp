@@ -79,11 +79,11 @@ public:
      */
     virtual void onButtonPressEvent(const PositionInputData& pos) = 0;
 
- 	/**
-	 * This method is called from the XojPageView as soon
-	 * as the pointer is pressed a second time.
-	 */
-	virtual void onButtonDoublePressEvent(const PositionInputData& pos) = 0;
+    /**
+     * This method is called from the XojPageView as soon
+     * as the pointer is pressed a second time.
+     */
+    virtual void onButtonDoublePressEvent(const PositionInputData& pos) = 0;
 
     /**
      * @return Current editing stroke
