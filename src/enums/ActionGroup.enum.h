@@ -25,50 +25,48 @@ php generateConvert.php
 *******************************************************************************
 ******************************************************************************/
 
-enum ActionGroup
-{
-	GROUP_NOGROUP = 0,
-	GROUP_TOOL = 1,
-	GROUP_COLOR,
-	GROUP_SIZE,
-	GROUP_ERASER_MODE,
-	GROUP_ERASER_SIZE,
-	GROUP_PEN_SIZE,
-	GROUP_PEN_FILL,
-	GROUP_HILIGHTER_SIZE,
-	GROUP_HILIGHTER_FILL,
+enum ActionGroup {
+    GROUP_NOGROUP = 0,
+    GROUP_TOOL = 1,
+    GROUP_COLOR,
+    GROUP_SIZE,
+    GROUP_ERASER_MODE,
+    GROUP_ERASER_SIZE,
+    GROUP_PEN_SIZE,
+    GROUP_PEN_FILL,
+    GROUP_HILIGHTER_SIZE,
+    GROUP_HILIGHTER_FILL,
 
-	// Need group for toggle button, this is the first Toggle Group
-	GROUP_TOGGLE_GROUP,
+    // Need group for toggle button, this is the first Toggle Group
+    GROUP_TOGGLE_GROUP,
 
-	GROUP_PAIRED_PAGES,
-	GROUP_PRESENTATION_MODE,
+    GROUP_PAIRED_PAGES,
+    GROUP_PRESENTATION_MODE,
 
-	GROUP_FULLSCREEN,
+    GROUP_FULLSCREEN,
 
-	GROUP_RULER,
+    GROUP_RULER,
 
-	GROUP_LINE_STYLE,
+    GROUP_LINE_STYLE,
 
-	GROUP_AUDIO,
+    GROUP_AUDIO,
 
-	GROUP_SNAPPING,
+    GROUP_SNAPPING,
 
-	GROUP_GRID_SNAPPING,
+    GROUP_GRID_SNAPPING,
 
-	GROUP_FILL,
-	
-	GROUP_FIXED_ROW_OR_COLS,
-	
-	GROUP_LAYOUT_HORIZONTAL,
-	
-	GROUP_LAYOUT_LR,
-	
-	GROUP_LAYOUT_TB,
+    GROUP_FILL,
 
-	GROUP_ZOOM_FIT,
+    GROUP_FIXED_ROW_OR_COLS,
+
+    GROUP_LAYOUT_HORIZONTAL,
+
+    GROUP_LAYOUT_LR,
+
+    GROUP_LAYOUT_TB,
+
+    GROUP_ZOOM_FIT,
 };
 
 ActionGroup ActionGroup_fromString(const string& value);
 string ActionGroup_toString(ActionGroup value);
-

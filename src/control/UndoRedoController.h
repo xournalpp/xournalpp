@@ -11,39 +11,41 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
+
+#include "XournalType.h"
 
 class Control;
 class Layer;
 class Element;
 
-class UndoRedoController
-{
+class UndoRedoController {
 private:
-	UndoRedoController(Control* control);
-	virtual ~UndoRedoController();
+    UndoRedoController(Control* control);
+    virtual ~UndoRedoController();
 
 private:
-	void before();
-	void after();
+    void before();
+    void after();
 
 public:
-	static void undo(Control* control);
-	static void redo(Control* control);
+    static void undo(Control* control);
+    static void redo(Control* control);
 
 private:
-	/**
-	 * Controller
-	 */
-	Control* control = nullptr;
+    /**
+     * Controller
+     */
+    Control* control = nullptr;
 
-	/**
-	 * Layer of the selection before change
-	 */
-	Layer* layer = nullptr;
+    /**
+     * Layer of the selection before change
+     */
+    Layer* layer = nullptr;
 
-	/**
-	 * Selected elements
-	 */
-	vector<Element*> elements;
+    /**
+     * Selected elements
+     */
+    vector<Element*> elements;
 };

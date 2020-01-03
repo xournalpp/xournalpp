@@ -13,14 +13,13 @@
 
 #include <iostream>
 
-class Stacktrace
-{
+class Stacktrace {
 private:
-	Stacktrace();
-	virtual ~Stacktrace();
+    Stacktrace();
+    virtual ~Stacktrace();
 
 public:
-	static std::string getExePath();
-	static void printStracktrace();
-	static void printStracktrace(std::ostream& stream);
+    static std::string getExePath();
+    static void printStracktrace();
+    static void printStracktrace(std::ostream& stream);
 };

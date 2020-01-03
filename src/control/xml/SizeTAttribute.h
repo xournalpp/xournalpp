@@ -13,15 +13,14 @@
 
 #include "Attribute.h"
 
-class SizeTAttribute : public XMLAttribute
-{
+class SizeTAttribute: public XMLAttribute {
 public:
-	SizeTAttribute(const char* name, size_t value);
-	virtual ~SizeTAttribute();
+    SizeTAttribute(const char* name, size_t value);
+    virtual ~SizeTAttribute();
 
 public:
-	virtual void writeOut(OutputStream* out);
+    virtual void writeOut(OutputStream* out);
 
 private:
-	int value;
+    int value;
 };

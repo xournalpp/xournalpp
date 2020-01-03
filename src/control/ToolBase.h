@@ -12,115 +12,118 @@
 
 #pragma once
 
-#include "ToolEnums.h"
+#include <string>
+#include <vector>
+
 #include "model/LineStyle.h"
 
-#include <XournalType.h>
+#include "ToolEnums.h"
+#include "XournalType.h"
 
-class ToolBase
-{
+class ToolBase {
 public:
-	ToolBase();
-	virtual ~ToolBase();
+    ToolBase();
+    virtual ~ToolBase();
 
-	/**
-	 * Apply data from another ToolBase or any extending class
-	 */
-	void applyFrom(const ToolBase* t);
+    /**
+     * Apply data from another ToolBase or any extending class
+     */
+    void applyFrom(const ToolBase* t);
 
 private:
-	void operator=(const ToolBase& t);
-	ToolBase(const ToolBase& t);
+    void operator=(const ToolBase& t);
+    ToolBase(const ToolBase& t);
 
 public:
-	/**
-	 * @return Color of the tool for all drawing tools
-	 */
-	int getColor() const;
+    /**
+     * @return Color of the tool for all drawing tools
+     */
+    int getColor() const;
 
-	/**
-	 * @param color Color of the tool for all drawing tools
-	 */
-	void setColor(int color);
+    /**
+     * @param color Color of the tool for all drawing tools
+     */
+    void setColor(int color);
 
-	/**
-	 * @return Size of a drawing tool
-	 */
-	ToolSize getSize() const;
+    /**
+     * @return Size of a drawing tool
+     */
+    ToolSize getSize() const;
 
-	/**
-	 * @param size Size of a drawing tool
-	 */
-	void setSize(ToolSize size);
+    /**
+     * @param size Size of a drawing tool
+     */
+    void setSize(ToolSize size);
 
-	/**
-	 * @return Draw special shape
-	 */
-	DrawingType getDrawingType() const;
+    /**
+     * @return Draw special shape
+     */
+    DrawingType getDrawingType() const;
 
-	/**
-	 * @param drawingType Draw special shape
-	 */
-	void setDrawingType(DrawingType drawingType);
+    /**
+     * @param drawingType Draw special shape
+     */
+    void setDrawingType(DrawingType drawingType);
 
-	/**
-	 * @return Fill of the shape is enabled
-	 */
-	bool getFill() const;
+    /**
+     * @return Fill of the shape is enabled
+     */
+    bool getFill() const;
 
-	/**
-	 * @param fill Fill of the shape is enabled
-	 */
-	void setFill(bool fill);
+    /**
+     * @param fill Fill of the shape is enabled
+     */
+    void setFill(bool fill);
 
-	/**
-	 * @return Alpha for fill
-	 */
-	int getFillAlpha() const;
+    /**
+     * @return Alpha for fill
+     */
+    int getFillAlpha() const;
 
-	/**
-	 * @param fillAlpha Alpha for fill
-	 */
-	void setFillAlpha(int fillAlpha);
+    /**
+     * @param fillAlpha Alpha for fill
+     */
+    void setFillAlpha(int fillAlpha);
 
-	/**
-	 * @return Style of the line drawing
-	 */
-	const LineStyle& getLineStyle() const;
+    /**
+     * @return Style of the line drawing
+     */
+    const LineStyle& getLineStyle() const;
 
-	/**
-	 * @param style Style of the line drawing
-	 */
-	void setLineStyle(const LineStyle& style);
+    /**
+     * @param style Style of the line drawing
+     */
+    void setLineStyle(const LineStyle& style);
 
 private:
-	/**
-	 * Color of the tool for all drawing tools
-	 */
-	int color = 0x000000;
+    /**
+     * Color of the tool for all drawing tools
+     */
+    int color = 0x000000;
 
-	/**
-	 * Size of a drawing tool
-	 */
-	ToolSize size = TOOL_SIZE_MEDIUM;
+    /**
+     * Size of a drawing tool
+     */
+    ToolSize size = TOOL_SIZE_MEDIUM;
 
-	/**
-	 * Draw special shape
-	 */
-	DrawingType drawingType = DRAWING_TYPE_DEFAULT;
+    /**
+     * Draw special shape
+     */
+    DrawingType drawingType = DRAWING_TYPE_DEFAULT;
 
-	/**
-	 * Fill of the shape is enabled
-	 */
-	bool fill = false;
+    /**
+     * Fill of the shape is enabled
+     */
+    bool fill = false;
 
-	/**
-	 * Alpha for fill
-	 */
-	int fillAlpha = 128;;
+    /**
+     * Alpha for fill
+     */
+    int fillAlpha = 128;
+    ;
 
-	/**
-	 * Style of the line drawing
-	 */
-	LineStyle lineStyle;
+    /**
+     * Style of the line drawing
+     */
+    LineStyle lineStyle;
 };

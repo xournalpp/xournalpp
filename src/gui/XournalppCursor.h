@@ -11,59 +11,63 @@
 
 #pragma once
 
-#include "control/tools/CursorSelectionType.h"
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
-#include <gui/inputdevices/InputEvents.h>
+
+#include "control/tools/CursorSelectionType.h"
+#include "gui/inputdevices/InputEvents.h"
+
+#include "XournalType.h"
 
 class Control;
 
-class XournalppCursor
-{
+class XournalppCursor {
 public:
-	XournalppCursor(Control* control);
-	virtual ~XournalppCursor();
+    XournalppCursor(Control* control);
+    virtual ~XournalppCursor();
 
-	void setCursorBusy(bool busy);
-	void updateCursor();
+    void setCursorBusy(bool busy);
+    void updateCursor();
 
-	void setMouseSelectionType(CursorSelectionType selectionType);
+    void setMouseSelectionType(CursorSelectionType selectionType);
 
-	void setMouseDown(bool mouseDown);
-	void setInvisible(bool invisible);
-	void setInsidePage(bool insidePage);
-	void activateDrawDirCursor(bool enable, bool shift=false, bool ctrl=false);
-	void setInputDeviceClass(InputDeviceClass inputDevice);
+    void setMouseDown(bool mouseDown);
+    void setInvisible(bool invisible);
+    void setInsidePage(bool insidePage);
+    void activateDrawDirCursor(bool enable, bool shift = false, bool ctrl = false);
+    void setInputDeviceClass(InputDeviceClass inputDevice);
 
 private:
-	void setCursor(int id);
+    void setCursor(int id);
 
-	GdkCursor* getPenCursor();
+    GdkCursor* getPenCursor();
 
-	GdkCursor* getEraserCursor();
-	GdkCursor* getHighlighterCursor();
+    GdkCursor* getEraserCursor();
+    GdkCursor* getHighlighterCursor();
 
-	GdkCursor* createHighlighterOrPenCursor(int size, double alpha);
-	GdkCursor* createCustomDrawDirCursor(int size, bool shift, bool ctrl);
-	
+    GdkCursor* createHighlighterOrPenCursor(int size, double alpha);
+    GdkCursor* createCustomDrawDirCursor(int size, bool shift, bool ctrl);
+
 private:
-	InputDeviceClass inputDevice = INPUT_DEVICE_MOUSE;
+    InputDeviceClass inputDevice = INPUT_DEVICE_MOUSE;
 
-	Control* control = nullptr;
-	bool busy = false;
-	bool insidePage = false;
-	CursorSelectionType selectionType = CURSOR_SELECTION_NONE;
+    Control* control = nullptr;
+    bool busy = false;
+    bool insidePage = false;
+    CursorSelectionType selectionType = CURSOR_SELECTION_NONE;
 
-	bool mouseDown = false;
-	bool invisible = false;
-	
-	// One shot drawDir custom cursor -drawn instead of pen/stylus then cleared.
-	bool drawDirActive = false;
-	bool drawDirShift = false;
-	bool drawDirCtrl = false;
+    bool mouseDown = false;
+    bool invisible = false;
 
-	// avoid re-assigning same cursor
-	guint currentCursor = 0;      // enum AVAILABLECURSORS
-	gulong currentCursorFlavour{};  // for different flavours of a cursor (i.e. drawdir, pen and hilighter custom cursors)
+    // One shot drawDir custom cursor -drawn instead of pen/stylus then cleared.
+    bool drawDirActive = false;
+    bool drawDirShift = false;
+    bool drawDirCtrl = false;
+
+    // avoid re-assigning same cursor
+    guint currentCursor = 0;        // enum AVAILABLECURSORS
+    gulong currentCursorFlavour{};  // for different flavours of a cursor (i.e. drawdir, pen and hilighter custom
+                                    // cursors)
 };

@@ -11,30 +11,32 @@
 
 #pragma once
 
-#include "ToolButton.h"
+#include <string>
+#include <vector>
+
 #include "gui/GladeGui.h"
 
-#include <XournalType.h>
+#include "ToolButton.h"
+#include "XournalType.h"
 
 class ToolMenuHandler;
 
-class ToolSelectCombocontrol : public ToolButton
-{
+class ToolSelectCombocontrol: public ToolButton {
 public:
-	ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id);
-	virtual ~ToolSelectCombocontrol();
+    ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id);
+    virtual ~ToolSelectCombocontrol();
 
 public:
-	virtual void selected(ActionGroup group, ActionType action);
+    virtual void selected(ActionGroup group, ActionType action);
 
 protected:
-	virtual GtkToolItem* newItem();
-	void addMenuitem(const string& text, const string& icon, ActionType type, ActionGroup group);
+    virtual GtkToolItem* newItem();
+    void addMenuitem(const string& text, const string& icon, ActionType type, ActionGroup group);
 
 private:
-	ToolMenuHandler* toolMenuHandler = nullptr;
-	GtkWidget* popup = nullptr;
+    ToolMenuHandler* toolMenuHandler = nullptr;
+    GtkWidget* popup = nullptr;
 
-	GtkWidget* iconWidget = nullptr;
-	GtkWidget* labelWidget = nullptr;
+    GtkWidget* iconWidget = nullptr;
+    GtkWidget* labelWidget = nullptr;
 };

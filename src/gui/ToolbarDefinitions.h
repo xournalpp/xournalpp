@@ -9,22 +9,21 @@
  * @license GNU GPLv2 or later
  */
 
-typedef struct
-{
-	/**
-	 * The name in the glade.xml file
-	 */
-	const char* guiName;
+typedef struct {
+    /**
+     * The name in the glade.xml file
+     */
+    const char* guiName;
 
-	/**
-	 * The name in the .ini file
-	 */
-	const char* propName;
+    /**
+     * The name in the .ini file
+     */
+    const char* propName;
 
-	/**
-	 * if horizontal (true) or vertical (false)
-	 */
-	bool horizontal;
+    /**
+     * if horizontal (true) or vertical (false)
+     */
+    bool horizontal;
 } ToolbarEntryDefintion;
 
 const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {

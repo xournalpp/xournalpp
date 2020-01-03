@@ -11,30 +11,30 @@
 
 #pragma once
 
-#include "UndoAction.h"
 #include "model/PageRef.h"
+
+#include "UndoAction.h"
 
 class Control;
 
-class SwapUndoAction : public UndoAction
-{
+class SwapUndoAction: public UndoAction {
 public:
-	SwapUndoAction(size_t pageNr, bool moveUp, const PageRef& swappedPage, const PageRef& otherPage);
+    SwapUndoAction(size_t pageNr, bool moveUp, const PageRef& swappedPage, const PageRef& otherPage);
 
-	virtual ~SwapUndoAction();
+    virtual ~SwapUndoAction();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
-	vector<PageRef> getPages();
-	virtual string getText();
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
+    vector<PageRef> getPages();
+    virtual string getText();
 
 private:
-	void swap(Control* control);
+    void swap(Control* control);
 
 private:
-	size_t pageNr;
-	PageRef swappedPage;
-	PageRef otherPage;
-	bool moveUp;
+    size_t pageNr;
+    PageRef swappedPage;
+    PageRef otherPage;
+    bool moveUp;
 };

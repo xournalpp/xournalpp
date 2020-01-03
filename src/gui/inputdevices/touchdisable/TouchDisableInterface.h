@@ -11,18 +11,20 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
-class TouchDisableInterface
-{
+#include "XournalType.h"
+
+class TouchDisableInterface {
 public:
-	TouchDisableInterface();
-	virtual ~TouchDisableInterface();
+    TouchDisableInterface();
+    virtual ~TouchDisableInterface();
 
 public:
-	virtual void enableTouch() = 0;
-	virtual void disableTouch() = 0;
-	virtual void init();
+    virtual void enableTouch() = 0;
+    virtual void disableTouch() = 0;
+    virtual void init();
 
 private:
 };

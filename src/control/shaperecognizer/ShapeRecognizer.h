@@ -11,37 +11,37 @@
 
 #pragma once
 
+#include <array>
+
 #include "CircleRecognizer.h"
 #include "RecoSegment.h"
 #include "ShapeRecognizerConfig.h"
-
-#include <array>
 
 class Stroke;
 class Point;
 class ShapeRecognizerResult;
 
-class ShapeRecognizer
-{
+class ShapeRecognizer {
 public:
-	ShapeRecognizer();
-	virtual ~ShapeRecognizer();
+    ShapeRecognizer();
+    virtual ~ShapeRecognizer();
 
-	ShapeRecognizerResult* recognizePatterns(Stroke* stroke);
-	void resetRecognizer();
-private:
-	Stroke* tryRectangle();
-	Stroke* tryArrow();
-
-	static void optimizePolygonal(const Point* pt, int nsides, int* breaks, Inertia* ss);
-
-	int findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss);
+    ShapeRecognizerResult* recognizePatterns(Stroke* stroke);
+    void resetRecognizer();
 
 private:
-	std::array<RecoSegment, MAX_POLYGON_SIDES + 1> queue{};
-	int queueLength;
+    Stroke* tryRectangle();
+    Stroke* tryArrow();
 
-	Stroke* stroke;
+    static void optimizePolygonal(const Point* pt, int nsides, int* breaks, Inertia* ss);
 
-	friend class ShapeRecognizerResult;
+    int findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss);
+
+private:
+    std::array<RecoSegment, MAX_POLYGON_SIDES + 1> queue{};
+    int queueLength;
+
+    Stroke* stroke;
+
+    friend class ShapeRecognizerResult;
 };

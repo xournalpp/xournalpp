@@ -11,11 +11,10 @@
 
 #pragma once
 
-class ZoomListener
-{
+class ZoomListener {
 public:
-	virtual void zoomChanged() = 0;
-	virtual void zoomRangeValuesChanged();
+    virtual void zoomChanged() = 0;
+    virtual void zoomRangeValuesChanged();
 
-	virtual ~ZoomListener();
+    virtual ~ZoomListener();
 };

@@ -11,87 +11,89 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include "control/Actions.h"
 #include "model/DocumentListener.h"
 #include "model/PageRef.h"
 
+#include "XournalType.h"
+
 class LayerCtrlListener;
 class Control;
 class Layer;
 
-class LayerController : public DocumentListener
-{
+class LayerController: public DocumentListener {
 public:
-	LayerController(Control* control);
-	~LayerController() override = default;
+    LayerController(Control* control);
+    ~LayerController() override = default;
 
 public:
-	void documentChanged(DocumentChangeType type) override;
-	void pageSelected(size_t page) override;
+    void documentChanged(DocumentChangeType type) override;
+    void pageSelected(size_t page) override;
 
 public:
-	void insertLayer(PageRef page, Layer* layer, int layerPos);
-	void removeLayer(PageRef page, Layer* layer);
-	void addLayer(PageRef page, Layer* layer);
+    void insertLayer(PageRef page, Layer* layer, int layerPos);
+    void removeLayer(PageRef page, Layer* layer);
+    void addLayer(PageRef page, Layer* layer);
 
-	// Listener handling
+    // Listener handling
 public:
-	void addListener(LayerCtrlListener* listener);
-	void removeListener(LayerCtrlListener* listener);
+    void addListener(LayerCtrlListener* listener);
+    void removeListener(LayerCtrlListener* listener);
 
 protected:
-	void fireRebuildLayerMenu();
-	void fireLayerVisibilityChanged();
+    void fireRebuildLayerMenu();
+    void fireLayerVisibilityChanged();
 
 public:
-	bool actionPerformed(ActionType type);
+    bool actionPerformed(ActionType type);
 
-	/**
-	 * Show all layer on the current page
-	 */
-	void showAllLayer();
+    /**
+     * Show all layer on the current page
+     */
+    void showAllLayer();
 
-	/**
-	 * Hide all layer on the current page
-	 */
-	void hideAllLayer();
+    /**
+     * Hide all layer on the current page
+     */
+    void hideAllLayer();
 
-	/**
-	 * Show / Hide all layer on the current page
-	 */
-	void hideOrHideAllLayer(bool show);
+    /**
+     * Show / Hide all layer on the current page
+     */
+    void hideOrHideAllLayer(bool show);
 
-	void addNewLayer();
-	void deleteCurrentLayer();
-	void copyCurrentLayer();
-	void moveCurrentLayer(bool up);
-	void switchToLay(int layer, bool hideShow = false);
-	void setLayerVisible(int layerId, bool visible);
+    void addNewLayer();
+    void deleteCurrentLayer();
+    void copyCurrentLayer();
+    void moveCurrentLayer(bool up);
+    void switchToLay(int layer, bool hideShow = false);
+    void setLayerVisible(int layerId, bool visible);
 
-	PageRef getCurrentPage();
-	size_t getCurrentPageId() const;
+    PageRef getCurrentPage();
+    size_t getCurrentPageId() const;
 
-	/**
-	 * @return Layer count of the current page
-	 */
-	size_t getLayerCount();
+    /**
+     * @return Layer count of the current page
+     */
+    size_t getLayerCount();
 
-	/**
-	 * @return Current layer ID
-	 */
-	size_t getCurrentLayerId();
+    /**
+     * @return Current layer ID
+     */
+    size_t getCurrentLayerId();
 
-	/**
-	 * Make sure there is at least one layer on the page
-	 */
-	void ensureLayerExists(PageRef page);
+    /**
+     * Make sure there is at least one layer on the page
+     */
+    void ensureLayerExists(PageRef page);
 
 private:
-	Control* control;
+    Control* control;
 
-	std::list<LayerCtrlListener*> listener;
+    std::list<LayerCtrlListener*> listener;
 
-	size_t selectedPage;
+    size_t selectedPage;
 };

@@ -11,29 +11,31 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
-class ToolbarItem
-{
+#include "XournalType.h"
+
+class ToolbarItem {
 public:
-	ToolbarItem(string name);
-	ToolbarItem(const ToolbarItem& item);
-	ToolbarItem();
-	virtual ~ToolbarItem();
+    ToolbarItem(string name);
+    ToolbarItem(const ToolbarItem& item);
+    ToolbarItem();
+    virtual ~ToolbarItem();
 
 private:
-	void operator=(const ToolbarItem& other);
+    void operator=(const ToolbarItem& other);
 
 public:
-	string getName();
+    string getName();
 
-	bool operator==(ToolbarItem& other);
+    bool operator==(ToolbarItem& other);
 
-	int getId() const;
+    int getId() const;
 
 private:
-	string name;
-	int id;
+    string name;
+    int id;
 
-	static int sid;
+    static int sid;
 };

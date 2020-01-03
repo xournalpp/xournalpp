@@ -11,9 +11,12 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "model/PageRef.h"
 
-#include <XournalType.h>
+#include "XournalType.h"
 
 class DeleteUndoAction;
 class Document;
@@ -25,28 +28,27 @@ class Stroke;
 class ToolHandler;
 class UndoRedoHandler;
 
-class EraseHandler
-{
+class EraseHandler {
 public:
-	EraseHandler(UndoRedoHandler* undo, Document* doc, const PageRef& page, ToolHandler* handler, Redrawable* view);
-	virtual ~EraseHandler();
+    EraseHandler(UndoRedoHandler* undo, Document* doc, const PageRef& page, ToolHandler* handler, Redrawable* view);
+    virtual ~EraseHandler();
 
 public:
-	void erase(double x, double y);
-	void finalize();
+    void erase(double x, double y);
+    void finalize();
 
 private:
-	void eraseStroke(Layer* l, Stroke* s, double x, double y, Range* range);
+    void eraseStroke(Layer* l, Stroke* s, double x, double y, Range* range);
 
 private:
-	PageRef page;
-	ToolHandler* handler;
-	Redrawable* view;
-	Document* doc;
-	UndoRedoHandler* undo;
+    PageRef page;
+    ToolHandler* handler;
+    Redrawable* view;
+    Document* doc;
+    UndoRedoHandler* undo;
 
-	DeleteUndoAction* eraseDeleteUndoAction;
-	EraseUndoAction* eraseUndoAction;
+    DeleteUndoAction* eraseDeleteUndoAction;
+    EraseUndoAction* eraseUndoAction;
 
-	double halfEraserSize;
+    double halfEraserSize;
 };

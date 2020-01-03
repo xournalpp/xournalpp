@@ -11,43 +11,42 @@
 
 #pragma once
 
-#include "pdf/base/XojPdfPage.h"
-
 #include <gtk/gtk.h>
+
+#include "pdf/base/XojPdfPage.h"
 
 class Text;
 
-class TextView
-{
+class TextView {
 private:
-	TextView();
-	virtual ~TextView();
+    TextView();
+    virtual ~TextView();
 
 public:
-	static void setDpi(int dpi);
+    static void setDpi(int dpi);
 
-	/**
-	 * Calculates the size of a Text model
-	 */
-	static void calcSize(Text* t, double& width, double& height);
+    /**
+     * Calculates the size of a Text model
+     */
+    static void calcSize(Text* t, double& width, double& height);
 
-	/**
-	 * Draws a Text modle to a cairo surface
-	 */
-	static void drawText(cairo_t* cr, Text* t);
+    /**
+     * Draws a Text modle to a cairo surface
+     */
+    static void drawText(cairo_t* cr, Text* t);
 
-	/**
-	 * Searches text within a Text model, returns XojPopplerRectangle, have to been freed
-	 */
-	static vector<XojPdfRectangle> findText(Text* t, string& search);
+    /**
+     * Searches text within a Text model, returns XojPopplerRectangle, have to been freed
+     */
+    static vector<XojPdfRectangle> findText(Text* t, string& search);
 
-	/**
-	 * Initialize a Pango layout
-	 */
-	static PangoLayout* initPango(cairo_t* cr, Text* t);
+    /**
+     * Initialize a Pango layout
+     */
+    static PangoLayout* initPango(cairo_t* cr, Text* t);
 
-	/**
-	 * Sets the font name from Text model
-	 */
-	static void updatePangoFont(PangoLayout* layout, Text* t);
+    /**
+     * Sets the font name from Text model
+     */
+    static void updatePangoFont(PangoLayout* layout, Text* t);
 };

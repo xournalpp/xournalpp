@@ -11,37 +11,40 @@
 
 #pragma once
 
-#include <gdk/gdk.h>
-#include <XournalType.h>
+#include <string>
+#include <vector>
+
 #include <cairo.h>
+#include <gdk/gdk.h>
 
-class GtkColorWrapper
-{
+#include "XournalType.h"
+
+class GtkColorWrapper {
 public:
-	GtkColorWrapper();
-	GtkColorWrapper(const uint32_t color);
-	GtkColorWrapper(const GdkColor& color);
-	GtkColorWrapper(const GdkRGBA& color);
-	virtual ~GtkColorWrapper();
-
-public:
-	/**
-	 * Apply the color to a cairo interface with "cairo_set_source_rgb"
-	 */
-	void apply(cairo_t* cr) const;
-
-	/**
-	 * Apply the color to a cairo interface with "cairo_set_source_rgba" and a specified alpha value
-	 */
-	void applyWithAlpha(cairo_t* cr, double alpha) const;
+    GtkColorWrapper();
+    GtkColorWrapper(const uint32_t color);
+    GtkColorWrapper(const GdkColor& color);
+    GtkColorWrapper(const GdkRGBA& color);
+    virtual ~GtkColorWrapper();
 
 public:
-	/**
-	 * Color values, 0-65535
-	 */
-	guint16 red;
-	guint16 green;
-	guint16 blue;
+    /**
+     * Apply the color to a cairo interface with "cairo_set_source_rgb"
+     */
+    void apply(cairo_t* cr) const;
+
+    /**
+     * Apply the color to a cairo interface with "cairo_set_source_rgba" and a specified alpha value
+     */
+    void applyWithAlpha(cairo_t* cr, double alpha) const;
+
+public:
+    /**
+     * Color values, 0-65535
+     */
+    guint16 red;
+    guint16 green;
+    guint16 blue;
 
 private:
 };

@@ -13,17 +13,16 @@
 
 #include "BaseStrokeHandler.h"
 
-class CoordinateSystemHandler : public BaseStrokeHandler
-{
+class CoordinateSystemHandler: public BaseStrokeHandler {
 public:
-	CoordinateSystemHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift = false,
-	                        bool flipControl = false);
-	virtual ~CoordinateSystemHandler();
+    CoordinateSystemHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift = false,
+                            bool flipControl = false);
+    virtual ~CoordinateSystemHandler();
 
 private:
-	virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+    virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+
 private:
-	Point startPoint;
-	bool started = false;
+    Point startPoint;
+    bool started = false;
 };
-

@@ -1,159 +1,130 @@
 #include "XojCairoPdfExport.h"
 
-#include "view/DocumentView.h"
-
-#include <i18n.h>
-#include <Util.h>
-
 #include <cairo/cairo-pdf.h>
 
-XojCairoPdfExport::XojCairoPdfExport(Document* doc, ProgressListener* progressListener)
- : doc(doc),
-   progressListener(progressListener)
-{
-}
+#include "view/DocumentView.h"
 
-XojCairoPdfExport::~XojCairoPdfExport()
-{
-	if (this->surface != nullptr)
-	{
-		endPdf();
-	}
+#include "Util.h"
+#include "i18n.h"
+
+XojCairoPdfExport::XojCairoPdfExport(Document* doc, ProgressListener* progressListener):
+        doc(doc), progressListener(progressListener) {}
+
+XojCairoPdfExport::~XojCairoPdfExport() {
+    if (this->surface != nullptr) {
+        endPdf();
+    }
 }
 
 /**
  * Export without background
  */
-void XojCairoPdfExport::setNoBackgroundExport(bool noBackgroundExport)
-{
-	this->noBackgroundExport = noBackgroundExport;
+void XojCairoPdfExport::setNoBackgroundExport(bool noBackgroundExport) {
+    this->noBackgroundExport = noBackgroundExport;
 }
 
-auto XojCairoPdfExport::startPdf(const Path& file) -> bool
-{
-	this->surface = cairo_pdf_surface_create(file.c_str(), 0, 0);
-	this->cr = cairo_create(surface);
+auto XojCairoPdfExport::startPdf(const Path& file) -> bool {
+    this->surface = cairo_pdf_surface_create(file.c_str(), 0, 0);
+    this->cr = cairo_create(surface);
 
-	// Require Cairo 1.16
+    // Require Cairo 1.16
 #ifdef CAIRO_PDF_METADATA_TITLE
 //	cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_TITLE, doc->getFilename().c_str());
 #endif
 
-	return true;
+    return true;
 }
 
-void XojCairoPdfExport::endPdf()
-{
-	cairo_destroy(this->cr);
-	this->cr = nullptr;
-	cairo_surface_destroy(this->surface);
-	this->surface = nullptr;
+void XojCairoPdfExport::endPdf() {
+    cairo_destroy(this->cr);
+    this->cr = nullptr;
+    cairo_surface_destroy(this->surface);
+    this->surface = nullptr;
 }
 
-void XojCairoPdfExport::exportPage(size_t page)
-{
-	PageRef p = doc->getPage(page);
+void XojCairoPdfExport::exportPage(size_t page) {
+    PageRef p = doc->getPage(page);
 
-	cairo_pdf_surface_set_size(this->surface, p->getWidth(), p->getHeight());
+    cairo_pdf_surface_set_size(this->surface, p->getWidth(), p->getHeight());
 
-	DocumentView view;
+    DocumentView view;
 
-	if (p->getBackgroundType().isPdfPage() && !noBackgroundExport)
-	{
-		int pgNo = p->getPdfPageNr();
-		XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
+    if (p->getBackgroundType().isPdfPage() && !noBackgroundExport) {
+        int pgNo = p->getPdfPageNr();
+        XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
-		popplerPage->render(cr, true);
-	}
+        popplerPage->render(cr, true);
+    }
 
-	view.drawPage(p, this->cr, true /* dont render eraseable */, noBackgroundExport);
+    view.drawPage(p, this->cr, true /* dont render eraseable */, noBackgroundExport);
 
-	// next page
-	cairo_show_page(this->cr);
+    // next page
+    cairo_show_page(this->cr);
 }
 
-auto XojCairoPdfExport::createPdf(Path file, PageRangeVector& range) -> bool
-{
-	if (range.empty())
-	{
-		this->lastError = _("No pages to export!");
-		return false;
-	}
+auto XojCairoPdfExport::createPdf(Path file, PageRangeVector& range) -> bool {
+    if (range.empty()) {
+        this->lastError = _("No pages to export!");
+        return false;
+    }
 
-	if (!startPdf(file))
-	{
-		return false;
-	}
+    if (!startPdf(file)) {
+        return false;
+    }
 
-	int count = 0;
-	for (PageRangeEntry* e : range)
-	{
-		count += e->getLast() - e->getFirst() + 1;
-	}
+    int count = 0;
+    for (PageRangeEntry* e: range) {
+        count += e->getLast() - e->getFirst() + 1;
+    }
 
-	if (this->progressListener)
-	{
-		this->progressListener->setMaximumState(count);
-	}
+    if (this->progressListener) {
+        this->progressListener->setMaximumState(count);
+    }
 
-	int c = 0;
-	for (PageRangeEntry* e : range)
-	{
-		for (int i = e->getFirst(); i <= e->getLast(); i++)
-		{
-			if (i < 0 || i > static_cast<int>(doc->getPageCount()))
-			{
-				continue;
-			}
+    int c = 0;
+    for (PageRangeEntry* e: range) {
+        for (int i = e->getFirst(); i <= e->getLast(); i++) {
+            if (i < 0 || i > static_cast<int>(doc->getPageCount())) {
+                continue;
+            }
 
-			exportPage(i);
+            exportPage(i);
 
-			if (this->progressListener)
-			{
-				this->progressListener->setCurrentState(c++);
-			}
-		}
-	}
+            if (this->progressListener) {
+                this->progressListener->setCurrentState(c++);
+            }
+        }
+    }
 
-	endPdf();
-	return true;
+    endPdf();
+    return true;
 }
 
-auto XojCairoPdfExport::createPdf(Path file) -> bool
-{
-	if (doc->getPageCount() < 1)
-	{
-		lastError = _("No pages to export!");
-		return false;
-	}
+auto XojCairoPdfExport::createPdf(Path file) -> bool {
+    if (doc->getPageCount() < 1) {
+        lastError = _("No pages to export!");
+        return false;
+    }
 
-	if (!startPdf(file))
-	{
-		return false;
-	}
+    if (!startPdf(file)) {
+        return false;
+    }
 
-	int count = doc->getPageCount();
-	if (this->progressListener)
-	{
-		this->progressListener->setMaximumState(count);
-	}
+    int count = doc->getPageCount();
+    if (this->progressListener) {
+        this->progressListener->setMaximumState(count);
+    }
 
-	for (int i = 0; i < count; i++)
-	{
-		exportPage(i);
+    for (int i = 0; i < count; i++) {
+        exportPage(i);
 
-		if (this->progressListener)
-		{
-			this->progressListener->setCurrentState(i);
-		}
-	}
+        if (this->progressListener) {
+            this->progressListener->setCurrentState(i);
+        }
+    }
 
-	endPdf();
-	return true;
+    endPdf();
+    return true;
 }
 
-auto XojCairoPdfExport::getLastError() -> string
-{
-	return lastError;
-}
-
+auto XojCairoPdfExport::getLastError() -> string { return lastError; }

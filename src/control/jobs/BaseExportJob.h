@@ -11,56 +11,52 @@
 
 #pragma once
 
-#include "BlockingJob.h"
+#include <string>
+#include <vector>
 
-#include <PathUtil.h>
-#include <XournalType.h>
+#include "BlockingJob.h"
+#include "PathUtil.h"
+#include "XournalType.h"
 
 class Control;
 
-class BaseExportJob : public BlockingJob
-{
+class BaseExportJob: public BlockingJob {
 public:
-	BaseExportJob(Control* control, const string& name);
+    BaseExportJob(Control* control, const string& name);
 
 protected:
-	virtual ~BaseExportJob();
+    virtual ~BaseExportJob();
 
 public:
-	virtual void afterRun();
+    virtual void afterRun();
 
 public:
-	virtual bool showFilechooser();
-	string getFilterName();
+    virtual bool showFilechooser();
+    string getFilterName();
 
 protected:
-	void initDialog();
-	virtual void addFilterToDialog() = 0;
-	void addFileFilterToDialog(const string& name, const string& pattern);
-	bool checkOverwriteBackgroundPDF(Path& filename);
-	virtual bool isUriValid(string& uri);
+    void initDialog();
+    virtual void addFilterToDialog() = 0;
+    void addFileFilterToDialog(const string& name, const string& pattern);
+    bool checkOverwriteBackgroundPDF(Path& filename);
+    virtual bool isUriValid(string& uri);
 
 private:
 protected:
-	GtkWidget* dialog = nullptr;
+    GtkWidget* dialog = nullptr;
 
-	Path filename;
+    Path filename;
 
-	/**
-	 * Error message to show to the user
-	 */
-	string errorMsg;
+    /**
+     * Error message to show to the user
+     */
+    string errorMsg;
 
-	class ExportType
-	{
-	public:
-		string extension;
-		bool withoutBackground;
+    class ExportType {
+    public:
+        string extension;
+        bool withoutBackground;
 
-		ExportType(string ext, bool hideBg)
-		 : extension(ext),
-		   withoutBackground(hideBg)
-		{
-		}
-	};
+        ExportType(string ext, bool hideBg): extension(ext), withoutBackground(hideBg) {}
+    };
 };

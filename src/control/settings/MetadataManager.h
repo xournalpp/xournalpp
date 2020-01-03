@@ -11,68 +11,69 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
-class MetadataEntry
-{
+#include "XournalType.h"
+
+class MetadataEntry {
 public:
-	MetadataEntry();
+    MetadataEntry();
 
 public:
-	string metadataFile;
-	bool valid;
-	string path;
-	double zoom;
-	int page;
-	gint64 time;
+    string metadataFile;
+    bool valid;
+    string path;
+    double zoom;
+    int page;
+    gint64 time;
 };
 
-class MetadataManager
-{
+class MetadataManager {
 public:
-	MetadataManager();
-	virtual ~MetadataManager();
+    MetadataManager();
+    virtual ~MetadataManager();
 
 public:
-	/**
-	 * Get the metadata for a file
-	 */
-	static MetadataEntry getForFile(const string& file);
+    /**
+     * Get the metadata for a file
+     */
+    static MetadataEntry getForFile(const string& file);
 
-	/**
-	 * Store the current data into metadata
-	 */
-	void storeMetadata(const string& file, int page, double zoom);
+    /**
+     * Store the current data into metadata
+     */
+    void storeMetadata(const string& file, int page, double zoom);
 
-	/**
-	 * Document was closed, a new document was opened etc.
-	 */
-	void documentChanged();
-
-private:
-	/**
-	 * Delete an old metadata file
-	 */
-	static void deleteMetadataFile(const string& path);
-
-	/**
-	 * Parse a single metadata file
-	 */
-	static MetadataEntry loadMetadataFile(const string& path, const string& file);
-
-	/**
-	 * Store metadata to file
-	 */
-	static void storeMetadata(MetadataEntry* m);
+    /**
+     * Document was closed, a new document was opened etc.
+     */
+    void documentChanged();
 
 private:
-	/**
-	 * Load the metadata list (sorted)
-	 */
-	static vector<MetadataEntry> loadList();
+    /**
+     * Delete an old metadata file
+     */
+    static void deleteMetadataFile(const string& path);
+
+    /**
+     * Parse a single metadata file
+     */
+    static MetadataEntry loadMetadataFile(const string& path, const string& file);
+
+    /**
+     * Store metadata to file
+     */
+    static void storeMetadata(MetadataEntry* m);
+
+private:
+    /**
+     * Load the metadata list (sorted)
+     */
+    static vector<MetadataEntry> loadList();
 
 
 private:
-	GMutex mutex{};
-	MetadataEntry* metadata;
+    GMutex mutex{};
+    MetadataEntry* metadata;
 };

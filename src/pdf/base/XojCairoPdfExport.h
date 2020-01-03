@@ -11,41 +11,39 @@
 
 #pragma once
 
-#include "XojPdfExport.h"
-
 #include "control/jobs/ProgressListener.h"
 #include "model/Document.h"
 
-class XojCairoPdfExport : public XojPdfExport
-{
+#include "XojPdfExport.h"
+
+class XojCairoPdfExport: public XojPdfExport {
 public:
-	XojCairoPdfExport(Document* doc, ProgressListener* progressListener);
-	virtual ~XojCairoPdfExport();
+    XojCairoPdfExport(Document* doc, ProgressListener* progressListener);
+    virtual ~XojCairoPdfExport();
 
 public:
-	virtual bool createPdf(Path file);
-	virtual bool createPdf(Path file, PageRangeVector& range);
-	virtual string getLastError();
+    virtual bool createPdf(Path file);
+    virtual bool createPdf(Path file, PageRangeVector& range);
+    virtual string getLastError();
 
-	/**
-	 * Export without background
-	 */
-	virtual void setNoBackgroundExport(bool noBackgroundExport);
+    /**
+     * Export without background
+     */
+    virtual void setNoBackgroundExport(bool noBackgroundExport);
 
 private:
-	bool startPdf(const Path& file);
-	void endPdf();
-	void exportPage(size_t page);
+    bool startPdf(const Path& file);
+    void endPdf();
+    void exportPage(size_t page);
 
 private:
-	Document* doc = nullptr;
-	ProgressListener* progressListener = nullptr;
+    Document* doc = nullptr;
+    ProgressListener* progressListener = nullptr;
 
-	cairo_surface_t* surface = nullptr;
-	cairo_t* cr = nullptr;
+    cairo_surface_t* surface = nullptr;
+    cairo_t* cr = nullptr;
 
-	bool noBackgroundExport = false;
+    bool noBackgroundExport = false;
 
-	string lastError;
+    string lastError;
 };
-

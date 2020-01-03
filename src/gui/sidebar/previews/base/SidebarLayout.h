@@ -11,23 +11,25 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
 
+#include "XournalType.h"
+
 class SidebarPreviewBase;
 
-class SidebarLayout
-{
+class SidebarLayout {
 public:
-	SidebarLayout();
-	virtual ~SidebarLayout();
+    SidebarLayout();
+    virtual ~SidebarLayout();
 
 public:
-	/**
-	 * Layouts the sidebar
-	 */
-	static void layout(SidebarPreviewBase* sidebar);
+    /**
+     * Layouts the sidebar
+     */
+    static void layout(SidebarPreviewBase* sidebar);
 
 private:
 };

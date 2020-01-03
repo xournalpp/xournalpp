@@ -17,22 +17,21 @@ class Layer;
 class Redrawable;
 class Stroke;
 
-class RecognizerUndoAction : public UndoAction
-{
+class RecognizerUndoAction: public UndoAction {
 public:
-	RecognizerUndoAction(const PageRef& page, Layer* layer, Stroke* original, Stroke* recognized);
-	virtual ~RecognizerUndoAction();
+    RecognizerUndoAction(const PageRef& page, Layer* layer, Stroke* original, Stroke* recognized);
+    virtual ~RecognizerUndoAction();
 
 public:
-	void addSourceElement(Stroke* s);
+    void addSourceElement(Stroke* s);
 
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
 
-	virtual string getText();
+    virtual string getText();
 
 private:
-	Layer* layer;
-	Stroke* recognized;
-	std::vector<Stroke*> original;
+    Layer* layer;
+    Stroke* recognized;
+    std::vector<Stroke*> original;
 };

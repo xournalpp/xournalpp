@@ -11,22 +11,23 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include "TouchDisableInterface.h"
+#include "XournalType.h"
 
 
-class TouchDisableCustom : public TouchDisableInterface
-{
+class TouchDisableCustom: public TouchDisableInterface {
 public:
-	TouchDisableCustom(string enableCommand, string disableCommand);
-	virtual ~TouchDisableCustom();
+    TouchDisableCustom(string enableCommand, string disableCommand);
+    virtual ~TouchDisableCustom();
 
 public:
-	virtual void enableTouch();
-	virtual void disableTouch();
+    virtual void enableTouch();
+    virtual void disableTouch();
 
 private:
-	string enableCommand;
-	string disableCommand;
+    string enableCommand;
+    string disableCommand;
 };

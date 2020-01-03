@@ -15,16 +15,15 @@
 
 class Settings;
 
-class ImageOpenDlg
-{
+class ImageOpenDlg {
 private:
-	ImageOpenDlg();
-	virtual ~ImageOpenDlg();
+    ImageOpenDlg();
+    virtual ~ImageOpenDlg();
 
 public:
-	static GFile* show(GtkWindow* win, Settings* settings, bool localOnly = false, bool* attach = nullptr);
+    static GFile* show(GtkWindow* win, Settings* settings, bool localOnly = false, bool* attach = nullptr);
 
 private:
-	static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);
-	static GdkPixbuf* pixbufScaleDownIfNecessary(GdkPixbuf* pixbuf, gint maxSize);
+    static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);
+    static GdkPixbuf* pixbufScaleDownIfNecessary(GdkPixbuf* pixbuf, gint maxSize);
 };

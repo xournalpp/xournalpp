@@ -11,28 +11,30 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
 
+#include "XournalType.h"
+
 class EraseableStrokePart;
 
-class PartList
-{
+class PartList {
 public:
-	PartList();
-	virtual ~PartList();
+    PartList();
+    virtual ~PartList();
 
 private:
-	PartList(const PartList& list);
-	void operator=(const PartList& list);
+    PartList(const PartList& list);
+    void operator=(const PartList& list);
 
 public:
-	void add(EraseableStrokePart* part);
-	PartList* clone();
+    void add(EraseableStrokePart* part);
+    PartList* clone();
 
 private:
-	GList* data = nullptr;
+    GList* data = nullptr;
 
-	friend class EraseableStroke;
+    friend class EraseableStroke;
 };

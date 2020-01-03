@@ -13,27 +13,26 @@
 
 #include "UndoAction.h"
 
-class RotateUndoAction : public UndoAction
-{
+class RotateUndoAction: public UndoAction {
 public:
-	RotateUndoAction(const PageRef& page, vector<Element*>* elements, double x0, double y0, double xo, double yo,
-	                 double rotation);
-	virtual ~RotateUndoAction();
+    RotateUndoAction(const PageRef& page, vector<Element*>* elements, double x0, double y0, double xo, double yo,
+                     double rotation);
+    virtual ~RotateUndoAction();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
-	virtual string getText();
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
+    virtual string getText();
 
 private:
-	void applyRotation(double rotation);
+    void applyRotation(double rotation);
 
 private:
-	vector<Element*> elements;
+    vector<Element*> elements;
 
-	double x0;
-	double y0;
-	double xo;
-	double yo;
-	double rotation = 0;
+    double x0;
+    double y0;
+    double xo;
+    double yo;
+    double rotation = 0;
 };

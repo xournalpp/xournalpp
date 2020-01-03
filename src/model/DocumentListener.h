@@ -11,28 +11,30 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "DocumentChangeType.h"
-#include <XournalType.h>
+#include "XournalType.h"
 
 class DocumentHandler;
 
-class DocumentListener
-{
+class DocumentListener {
 public:
-	DocumentListener();
-	virtual ~DocumentListener();
+    DocumentListener();
+    virtual ~DocumentListener();
 
 public:
-	void registerListener(DocumentHandler* handler);
-	void unregisterListener();
+    void registerListener(DocumentHandler* handler);
+    void unregisterListener();
 
-	virtual void documentChanged(DocumentChangeType type);
-	virtual void pageSizeChanged(size_t page);
-	virtual void pageChanged(size_t page);
-	virtual void pageInserted(size_t page);
-	virtual void pageDeleted(size_t page);
-	virtual void pageSelected(size_t page);
+    virtual void documentChanged(DocumentChangeType type);
+    virtual void pageSizeChanged(size_t page);
+    virtual void pageChanged(size_t page);
+    virtual void pageInserted(size_t page);
+    virtual void pageDeleted(size_t page);
+    virtual void pageSelected(size_t page);
 
 private:
-	DocumentHandler* handler = nullptr;
+    DocumentHandler* handler = nullptr;
 };

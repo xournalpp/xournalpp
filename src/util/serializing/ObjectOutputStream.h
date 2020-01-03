@@ -11,34 +11,36 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
+
+#include "XournalType.h"
 
 class ObjectEncoding;
 class Serializeable;
 
-class ObjectOutputStream
-{
+class ObjectOutputStream {
 public:
-	ObjectOutputStream(ObjectEncoding* encoder);
-	virtual ~ObjectOutputStream();
+    ObjectOutputStream(ObjectEncoding* encoder);
+    virtual ~ObjectOutputStream();
 
 public:
-	void writeObject(const char* name);
-	void endObject();
+    void writeObject(const char* name);
+    void endObject();
 
-	void writeInt(int i);
-	void writeDouble(double d);
-	void writeSizeT(size_t st);
-	void writeString(const char* str);
-	void writeString(const string& s);
+    void writeInt(int i);
+    void writeDouble(double d);
+    void writeSizeT(size_t st);
+    void writeString(const char* str);
+    void writeString(const string& s);
 
-	void writeData(const void* data, int len, int width);
-	void writeImage(cairo_surface_t* img);
+    void writeData(const void* data, int len, int width);
+    void writeImage(cairo_surface_t* img);
 
-	GString* getStr();
+    GString* getStr();
 
 private:
-	ObjectEncoding* encoder = nullptr;
+    ObjectEncoding* encoder = nullptr;
 };

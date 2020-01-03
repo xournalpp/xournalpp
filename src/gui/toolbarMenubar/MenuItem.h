@@ -16,11 +16,10 @@
 /**
  * Menuitem handler
  */
-class MenuItem : public AbstractItem
-{
+class MenuItem: public AbstractItem {
 public:
-	MenuItem(ActionHandler* handler, GtkWidget* widget, ActionType type, ActionGroup group = GROUP_NOGROUP);
-	virtual ~MenuItem();
+    MenuItem(ActionHandler* handler, GtkWidget* widget, ActionType type, ActionGroup group = GROUP_NOGROUP);
+    virtual ~MenuItem();
 
 private:
 };

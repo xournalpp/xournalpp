@@ -11,28 +11,30 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "UndoAction.h"
-#include <XournalType.h>
+#include "XournalType.h"
 
 class Element;
 class Layer;
 class Redrawable;
 
-class DeleteUndoAction : public UndoAction
-{
+class DeleteUndoAction: public UndoAction {
 public:
-	DeleteUndoAction(const PageRef& page, bool eraser);
-	~DeleteUndoAction() override;
+    DeleteUndoAction(const PageRef& page, bool eraser);
+    ~DeleteUndoAction() override;
 
 public:
-	bool undo(Control*) override;
-	bool redo(Control*) override;
+    bool undo(Control*) override;
+    bool redo(Control*) override;
 
-	void addElement(Layer* layer, Element* e, int pos);
+    void addElement(Layer* layer, Element* e, int pos);
 
-	string getText() override;
+    string getText() override;
 
 private:
-	GList* elements = nullptr;
-	bool eraser = true;
+    GList* elements = nullptr;
+    bool eraser = true;
 };

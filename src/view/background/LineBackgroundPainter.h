@@ -11,28 +11,29 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "BaseBackgroundPainter.h"
+#include "XournalType.h"
 
-#include <XournalType.h>
-
-class LineBackgroundPainter : public BaseBackgroundPainter
-{
+class LineBackgroundPainter: public BaseBackgroundPainter {
 public:
-	LineBackgroundPainter(bool verticalLine);
-	virtual ~LineBackgroundPainter();
+    LineBackgroundPainter(bool verticalLine);
+    virtual ~LineBackgroundPainter();
 
 public:
-	virtual void paint();
+    virtual void paint();
 
-	/**
-	 * Reset all used configuration values
-	 */
-	virtual void resetConfig();
+    /**
+     * Reset all used configuration values
+     */
+    virtual void resetConfig();
 
 
-	void paintBackgroundRuled();
-	void paintBackgroundVerticalLine();
+    void paintBackgroundRuled();
+    void paintBackgroundVerticalLine();
 
 private:
-	bool verticalLine;
+    bool verticalLine;
 };

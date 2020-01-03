@@ -12,20 +12,22 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "UndoAction.h"
-#include <XournalType.h>
+#include "XournalType.h"
 
-class EmergencySaveRestore : public UndoAction
-{
+class EmergencySaveRestore: public UndoAction {
 public:
-	EmergencySaveRestore();
-	virtual ~EmergencySaveRestore();
+    EmergencySaveRestore();
+    virtual ~EmergencySaveRestore();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
 
-	virtual string getText();
+    virtual string getText();
 
 private:
 };

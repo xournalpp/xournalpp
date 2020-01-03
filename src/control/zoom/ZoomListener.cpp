@@ -2,6 +2,4 @@
 
 ZoomListener::~ZoomListener() = default;
 
-void ZoomListener::zoomRangeValuesChanged()
-{
-}
+void ZoomListener::zoomRangeValuesChanged() {}

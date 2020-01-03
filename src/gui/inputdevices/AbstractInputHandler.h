@@ -11,43 +11,44 @@
 
 #pragma once
 
-#include <XournalType.h>
-
-#include <model/Point.h>
-#include <gui/PageView.h>
-#include <gui/inputdevices/PositionInputData.h>
-#include <control/settings/ButtonConfig.h>
+#include <string>
+#include <vector>
 
 #include <gdk/gdk.h>
+
+#include "control/settings/ButtonConfig.h"
+#include "gui/PageView.h"
+#include "gui/inputdevices/PositionInputData.h"
+#include "model/Point.h"
+
 #include "InputEvents.h"
+#include "XournalType.h"
 
 class InputContext;
 
 /**
  * Abstract class for a specific input state
  */
-class AbstractInputHandler
-{
+class AbstractInputHandler {
 private:
-	bool blocked = false;
+    bool blocked = false;
 
 protected:
-	InputContext* inputContext;
-	bool inputRunning = false;
+    InputContext* inputContext;
+    bool inputRunning = false;
 
 protected:
-	XojPageView* getPageAtCurrentPosition(InputEvent* event);
-	PositionInputData getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent* event);
+    XojPageView* getPageAtCurrentPosition(InputEvent* event);
+    PositionInputData getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent* event);
 
 public:
-	explicit AbstractInputHandler(InputContext* inputContext);
-	virtual ~AbstractInputHandler();
+    explicit AbstractInputHandler(InputContext* inputContext);
+    virtual ~AbstractInputHandler();
 
-	void block(bool block);
-	bool isBlocked() const;
-	virtual void onBlock();
-	bool handle(InputEvent* event);
-	virtual bool handleImpl(InputEvent* event) = 0;
+    void block(bool block);
+    bool isBlocked() const;
+    virtual void onBlock();
+    virtual void onUnblock();
+    bool handle(InputEvent* event);
+    virtual bool handleImpl(InputEvent* event) = 0;
 };
-
-

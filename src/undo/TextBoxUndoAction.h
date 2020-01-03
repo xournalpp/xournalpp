@@ -18,20 +18,19 @@ class Layer;
 class Redrawable;
 class XojPage;
 
-class TextBoxUndoAction : public UndoAction
-{
+class TextBoxUndoAction: public UndoAction {
 public:
-	TextBoxUndoAction(const PageRef& page, Layer* layer, Element* element, Element* oldelement);
-	virtual ~TextBoxUndoAction();
+    TextBoxUndoAction(const PageRef& page, Layer* layer, Element* element, Element* oldelement);
+    virtual ~TextBoxUndoAction();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
 
-	virtual string getText();
+    virtual string getText();
 
 private:
-	Layer* layer;
-	Element* element;
-	Element* oldelement;
+    Layer* layer;
+    Element* element;
+    Element* oldelement;
 };

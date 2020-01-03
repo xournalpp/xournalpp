@@ -11,95 +11,90 @@
 
 #pragma once
 
-#include <serializing/Serializeable.h>
-#include <Rectangle.h>
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
 
-enum ElementType
-{
-	ELEMENT_STROKE = 1,
-	ELEMENT_IMAGE,
-	ELEMENT_TEXIMAGE,
-	ELEMENT_TEXT
-};
+#include "serializing/Serializeable.h"
 
-class ShapeContainer
-{
+#include "Rectangle.h"
+#include "XournalType.h"
+
+enum ElementType { ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT };
+
+class ShapeContainer {
 public:
-	virtual bool contains(double x, double y) = 0;
+    virtual bool contains(double x, double y) = 0;
 
-	virtual ~ShapeContainer() = default;
+    virtual ~ShapeContainer() = default;
 };
 
-class Element : public Serializeable
-{
+class Element: public Serializeable {
 protected:
-	Element(ElementType type);
+    Element(ElementType type);
 
 public:
-	~Element() override;
+    ~Element() override;
 
 public:
-	ElementType getType() const;
+    ElementType getType() const;
 
-	void setX(double x);
-	void setY(double y);
-	double getX();
-	double getY();
+    void setX(double x);
+    void setY(double y);
+    double getX();
+    double getY();
 
-	virtual void move(double dx, double dy);
-	virtual void scale(double x0, double y0, double fx, double fy) = 0;
-	virtual void rotate(double x0, double y0, double xo, double yo, double th) = 0;
+    virtual void move(double dx, double dy);
+    virtual void scale(double x0, double y0, double fx, double fy) = 0;
+    virtual void rotate(double x0, double y0, double xo, double yo, double th) = 0;
 
-	void setColor(int color);
-	int getColor() const;
+    void setColor(int color);
+    int getColor() const;
 
-	double getElementWidth();
-	double getElementHeight();
+    double getElementWidth();
+    double getElementHeight();
 
-	Rectangle boundingRect();
+    Rectangle boundingRect();
 
-	virtual bool intersectsArea(const GdkRectangle* src);
-	virtual bool intersectsArea(double x, double y, double width, double height);
+    virtual bool intersectsArea(const GdkRectangle* src);
+    virtual bool intersectsArea(double x, double y, double width, double height);
 
-	virtual bool isInSelection(ShapeContainer* container);
+    virtual bool isInSelection(ShapeContainer* container);
 
-	virtual bool rescaleOnlyAspectRatio();
+    virtual bool rescaleOnlyAspectRatio();
 
-	/**
-	 * Take 1:1 copy of this element
-	 */
-	virtual Element* clone() = 0;
+    /**
+     * Take 1:1 copy of this element
+     */
+    virtual Element* clone() = 0;
 
 private:
 protected:
-	virtual void calcSize() = 0;
+    virtual void calcSize() = 0;
 
-	void serializeElement(ObjectOutputStream& out) const;
-	void readSerializedElement(ObjectInputStream& in);
+    void serializeElement(ObjectOutputStream& out) const;
+    void readSerializedElement(ObjectInputStream& in);
 
 protected:
-	// If the size has been calculated
-	bool sizeCalculated = false;
+    // If the size has been calculated
+    bool sizeCalculated = false;
 
-	double width = 0;
-	double height = 0;
+    double width = 0;
+    double height = 0;
 
-	// The position on the screen
-	double x = 0;
-	double y = 0;
+    // The position on the screen
+    double x = 0;
+    double y = 0;
 
 private:
-	/**
-	 * Type of this element
-	 */
-	ElementType type;
+    /**
+     * Type of this element
+     */
+    ElementType type;
 
-	/**
-	 * The color in RGB format
-	 */
-	int color = 0;
+    /**
+     * The color in RGB format
+     */
+    int color = 0;
 };
-

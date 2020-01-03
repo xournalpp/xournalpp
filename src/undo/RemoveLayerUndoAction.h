@@ -16,20 +16,19 @@
 class Layer;
 class LayerController;
 
-class RemoveLayerUndoAction : public UndoAction
-{
+class RemoveLayerUndoAction: public UndoAction {
 public:
-	RemoveLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer, int layerPos);
-	virtual ~RemoveLayerUndoAction();
+    RemoveLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer, int layerPos);
+    virtual ~RemoveLayerUndoAction();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
 
-	virtual string getText();
+    virtual string getText();
 
 private:
-	LayerController* layerController;
-	Layer* layer;
-	int layerPos;
+    LayerController* layerController;
+    Layer* layer;
+    int layerPos;
 };

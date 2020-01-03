@@ -11,31 +11,32 @@
 
 #pragma once
 
-#include "Job.h"
-
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
 
+#include "Job.h"
+#include "XournalType.h"
+
 class Control;
 
-class BlockingJob : public Job
-{
+class BlockingJob: public Job {
 public:
-	BlockingJob(Control* control, const string& name);
+    BlockingJob(Control* control, const string& name);
 
 protected:
-	virtual ~BlockingJob();
+    virtual ~BlockingJob();
 
 public:
-	void execute();
+    void execute();
 
-	virtual JobType getType();
+    virtual JobType getType();
 
 protected:
-	static bool finished(Control* control);
+    static bool finished(Control* control);
 
 private:
 protected:
-	Control* control;
+    Control* control;
 };

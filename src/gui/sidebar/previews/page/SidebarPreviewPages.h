@@ -11,83 +11,84 @@
 
 #pragma once
 
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
+
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
 
-#include <XournalType.h>
-#include <memory>
-#include <utility>
+#include "XournalType.h"
 
-class SidebarPreviewPages : public SidebarPreviewBase
-{
+class SidebarPreviewPages: public SidebarPreviewBase {
 public:
-	SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar);
-	virtual ~SidebarPreviewPages();
+    SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar);
+    virtual ~SidebarPreviewPages();
 
 public:
-	/**
-	 * Called when an action is performed
-	 */
-	void actionPerformed(SidebarActions action);
+    /**
+     * Called when an action is performed
+     */
+    void actionPerformed(SidebarActions action);
 
-	/**
-	 * @overwrite
-	 */
-	virtual string getName();
+    /**
+     * @overwrite
+     */
+    virtual string getName();
 
-	/**
-	 * @overwrite
-	 */
-	virtual string getIconName();
+    /**
+     * @overwrite
+     */
+    virtual string getIconName();
 
-	/**
-	 * Update the preview images
-	 * @overwrite
-	 */
-	virtual void updatePreviews();
+    /**
+     * Update the preview images
+     * @overwrite
+     */
+    virtual void updatePreviews();
 
-	/**
-	 * Opens the page preview context menu, at the current cursor position, for
-	 * the given page.
-	 */
-	void openPreviewContextMenu();
+    /**
+     * Opens the page preview context menu, at the current cursor position, for
+     * the given page.
+     */
+    void openPreviewContextMenu();
 
 public:
-	// DocumentListener interface (only the part which is not handled by SidebarPreviewBase)
-	virtual void pageSizeChanged(size_t page);
-	virtual void pageChanged(size_t page);
-	virtual void pageSelected(size_t page);
-	virtual void pageInserted(size_t page);
-	virtual void pageDeleted(size_t page);
+    // DocumentListener interface (only the part which is not handled by SidebarPreviewBase)
+    virtual void pageSizeChanged(size_t page);
+    virtual void pageChanged(size_t page);
+    virtual void pageSelected(size_t page);
+    virtual void pageInserted(size_t page);
+    virtual void pageDeleted(size_t page);
 
 private:
-	/**
-	 * Unselect the last selected page, if any
-	 */
-	void unselectPage();
+    /**
+     * Unselect the last selected page, if any
+     */
+    void unselectPage();
 
-	/**
-	 * The context menu to display when a page is right-clicked.
-	 */
-	GtkWidget* const contextMenu = nullptr;
+    /**
+     * The context menu to display when a page is right-clicked.
+     */
+    GtkWidget* const contextMenu = nullptr;
 
-	GtkWidget* contextMenuMoveUp = nullptr;
-	GtkWidget* contextMenuMoveDown = nullptr;
+    GtkWidget* contextMenuMoveUp = nullptr;
+    GtkWidget* contextMenuMoveDown = nullptr;
 
-	/**
-	 * The data passed to the menu item callbacks.
-	 */
-	struct ContextMenuData
-	{
-		SidebarToolbar* toolbar;
-		SidebarActions actions;
-	};
+    /**
+     * The data passed to the menu item callbacks.
+     */
+    struct ContextMenuData {
+        SidebarToolbar* toolbar;
+        SidebarActions actions;
+    };
 
 
-	/**
-	 * The signals connected to the context menu items. This must be kept track
-	 * of so the data can be deallocated safely.
-	 */
-	std::vector<std::tuple<GtkWidget*, gulong, std::unique_ptr<ContextMenuData>>> contextMenuSignals;
+    /**
+     * The signals connected to the context menu items. This must be kept track
+     * of so the data can be deallocated safely.
+     */
+    std::vector<std::tuple<GtkWidget*, gulong, std::unique_ptr<ContextMenuData>>> contextMenuSignals;
 
 private:
 };

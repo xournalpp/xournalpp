@@ -16,11 +16,7 @@
 
 class MainWindow;
 
-enum FloatingToolBoxState {
-		recalcSize = 0,
-		configuration,
-		noChange
-};
+enum FloatingToolBoxState { recalcSize = 0, configuration, noChange };
 
 /************************
  * FloatingToolbox:
@@ -30,69 +26,69 @@ enum FloatingToolBoxState {
  *  had issues with leave-notify-event.
  */
 
-class FloatingToolbox 
-{
+class FloatingToolbox {
 public:
-	FloatingToolbox(MainWindow* theMainWindow, GtkOverlay *overlay);
-	virtual ~FloatingToolbox();
+    FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay);
+    virtual ~FloatingToolbox();
 
 public:
-	/**
-	 *  show(x,y): Show Toolbox at centered at x,y relative to main window. 
-	 */
-	void show(int x, int y);
+    /**
+     *  show(x,y): Show Toolbox at centered at x,y relative to main window.
+     */
+    void show(int x, int y);
 
-	/**
-	 * showForConfiguration
-	 * i.e. appear in fixed position in top left, extra space and do not hide automatically.
-	 */
-	void showForConfiguration();
-	
-	void hide();
-	
-	/**
-	 * flagRecalculateSizeRequired(): trigger recalc size on next getOverlayPosition. Used when new toolbars loaded.
-	 */
-	void flagRecalculateSizeRequired();
+    /**
+     * showForConfiguration
+     * i.e. appear in fixed position in top left, extra space and do not hide automatically.
+     */
+    void showForConfiguration();
+
+    void hide();
+
+    /**
+     * flagRecalculateSizeRequired(): trigger recalc size on next getOverlayPosition. Used when new toolbars loaded.
+     */
+    void flagRecalculateSizeRequired();
 
 private:
-	/**
-	 * Callback for positioning overlayed floating menu
-	 */
-	static gboolean  getOverlayPosition (GtkOverlay *overlay, GtkWidget *widget, GdkRectangle *allocation, FloatingToolbox* self);
-	
-	/**
-	 * Callback to hide floating Toolbar when mouse leaves it
-	 */
-	static void handleLeaveFloatingToolbox(GtkWidget * floatingToolbox, GdkEvent  *event,  FloatingToolbox* self);
+    /**
+     * Callback for positioning overlayed floating menu
+     */
+    static gboolean getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget, GdkRectangle* allocation,
+                                       FloatingToolbox* self);
 
-	/**
-	 * Show the Floating Toolbox
-	 * ... but hide some labels depending on conditions.
-	 */
-	void show();
+    /**
+     * Callback to hide floating Toolbar when mouse leaves it
+     */
+    static void handleLeaveFloatingToolbox(GtkWidget* floatingToolbox, GdkEvent* event, FloatingToolbox* self);
 
-	/**
-	 * check if user has assigned a button to activate, or has put tools in the FloatingToolbox.
-	 */
-	bool floatingToolboxActivated();
+    /**
+     * Show the Floating Toolbox
+     * ... but hide some labels depending on conditions.
+     */
+    void show();
 
-	/**
-	 * Return number of widgets in toolbox.
-	 * Note this includes non-tools such as spacers and separators.
-	 */
-	int countWidgets();
+    /**
+     * check if user has assigned a button to activate, or has put tools in the FloatingToolbox.
+     */
+    bool floatingToolboxActivated();
+
+    /**
+     * Return number of widgets in toolbox.
+     * Note this includes non-tools such as spacers and separators.
+     */
+    int countWidgets();
 
 
 private:
-	MainWindow* mainWindow;
-	GtkWidget *floatingToolbox;
+    MainWindow* mainWindow;
+    GtkWidget* floatingToolbox;
 
-	/**
-	 * Communicating with getOverlayPosition callback
-	 * */
-	int floatingToolboxX = 0;
-	int floatingToolboxY = 0;
-	FloatingToolBoxState floatingToolboxState = recalcSize;
-	int numWidgets = 0;
+    /**
+     * Communicating with getOverlayPosition callback
+     * */
+    int floatingToolboxX = 0;
+    int floatingToolboxY = 0;
+    FloatingToolBoxState floatingToolboxState = recalcSize;
+    int numWidgets = 0;
 };

@@ -11,20 +11,22 @@
 
 #pragma once
 
-#include <OutputStream.h>
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
-class XMLAttribute
-{
+#include "OutputStream.h"
+#include "XournalType.h"
+
+class XMLAttribute {
 public:
-	XMLAttribute(string name);
-	virtual ~XMLAttribute();
+    XMLAttribute(string name);
+    virtual ~XMLAttribute();
 
 public:
-	virtual void writeOut(OutputStream* out) = 0;
+    virtual void writeOut(OutputStream* out) = 0;
 
-	string getName();
+    string getName();
 
 private:
-	string name;
+    string name;
 };

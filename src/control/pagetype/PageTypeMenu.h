@@ -11,11 +11,14 @@
 
 #pragma once
 
-#include "model/PageType.h"
-
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
+
+#include "model/PageType.h"
+
+#include "XournalType.h"
 
 class PageTypeHandler;
 class PageTypeHandler;
@@ -24,71 +27,68 @@ class Settings;
 class MainBackgroundPainter;
 
 typedef struct {
-	GtkWidget* entry;
-	PageTypeInfo* info;
+    GtkWidget* entry;
+    PageTypeInfo* info;
 } MenuCallbackInfo;
 
-class PageTypeMenuChangeListener
-{
+class PageTypeMenuChangeListener {
 public:
-	virtual void changeCurrentPageBackground(PageTypeInfo* info) = 0;
-	virtual ~PageTypeMenuChangeListener();
+    virtual void changeCurrentPageBackground(PageTypeInfo* info) = 0;
+    virtual ~PageTypeMenuChangeListener();
 };
 
-class PageTypeApplyListener
-{
+class PageTypeApplyListener {
 public:
-	virtual void applyCurrentPageBackground(bool allPages) = 0;
-	virtual ~PageTypeApplyListener();
+    virtual void applyCurrentPageBackground(bool allPages) = 0;
+    virtual ~PageTypeApplyListener();
 };
 
-class PageTypeMenu
-{
+class PageTypeMenu {
 public:
-	PageTypeMenu(PageTypeHandler* types, Settings* settings, bool showPreview, bool showSpecial);
-	virtual ~PageTypeMenu();
+    PageTypeMenu(PageTypeHandler* types, Settings* settings, bool showPreview, bool showSpecial);
+    virtual ~PageTypeMenu();
 
 public:
-	GtkWidget* getMenu();
-	PageType getSelected();
-	void loadDefaultPage();
-	void setSelected(const PageType& selected);
-	void setListener(PageTypeMenuChangeListener* listener);
-	void hideCopyPage();
+    GtkWidget* getMenu();
+    PageType getSelected();
+    void loadDefaultPage();
+    void setSelected(const PageType& selected);
+    void setListener(PageTypeMenuChangeListener* listener);
+    void hideCopyPage();
 
-	/**
-	 * Apply background to current or to all pages button
-	 */
-	void addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener, bool onlyAllMenu);
+    /**
+     * Apply background to current or to all pages button
+     */
+    void addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener, bool onlyAllMenu);
 
 private:
-	static GtkWidget* createApplyMenuItem(const char* text);
-	void initDefaultMenu();
-	void addMenuEntry(PageTypeInfo* t);
-	void entrySelected(PageTypeInfo* t);
-	cairo_surface_t* createPreviewImage(const PageType& pt);
+    static GtkWidget* createApplyMenuItem(const char* text);
+    void initDefaultMenu();
+    void addMenuEntry(PageTypeInfo* t);
+    void entrySelected(PageTypeInfo* t);
+    cairo_surface_t* createPreviewImage(const PageType& pt);
 
 private:
-	bool showSpecial;
+    bool showSpecial;
 
-	GtkWidget* menu;
-	PageTypeHandler* types;
-	Settings* settings;
+    GtkWidget* menu;
+    PageTypeHandler* types;
+    Settings* settings;
 
-	vector<MenuCallbackInfo> menuInfos;
+    vector<MenuCallbackInfo> menuInfos;
 
-	PageType selected;
+    PageType selected;
 
-	bool ignoreEvents;
+    bool ignoreEvents;
 
-	PageTypeMenuChangeListener* listener;
+    PageTypeMenuChangeListener* listener;
 
-	int menuX;
-	int menuY;
+    int menuX;
+    int menuY;
 
-	MainBackgroundPainter* backgroundPainter;
+    MainBackgroundPainter* backgroundPainter;
 
-	bool showPreview;
+    bool showPreview;
 
-	PageTypeApplyListener* pageTypeApplyListener;
+    PageTypeApplyListener* pageTypeApplyListener;
 };

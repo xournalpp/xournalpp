@@ -11,66 +11,65 @@
 
 #pragma once
 
-#include "BaseExportJob.h"
-#include "ImageExport.h"
+#include <map>
 
 #include "view/DocumentView.h"
 
-#include <PageRange.h>
-#include <i18n.h>
-#include <map>
+#include "BaseExportJob.h"
+#include "ImageExport.h"
+#include "PageRange.h"
+#include "i18n.h"
 
 
-class CustomExportJob : public BaseExportJob
-{
+class CustomExportJob: public BaseExportJob {
 public:
-	CustomExportJob(Control* control);
+    CustomExportJob(Control* control);
 
 protected:
-	virtual ~CustomExportJob();
+    virtual ~CustomExportJob();
 
 public:
-	void run();
+    void run();
 
 public:
-	virtual bool showFilechooser();
+    virtual bool showFilechooser();
 
 protected:
-	virtual void afterRun();
+    virtual void afterRun();
 
-	virtual void addFilterToDialog();
+    virtual void addFilterToDialog();
 
-	/**
-	 * Create one Graphics file per page
-	 */
-	void exportGraphics();
+    /**
+     * Create one Graphics file per page
+     */
+    void exportGraphics();
 
-	virtual bool isUriValid(string& uri);
+    virtual bool isUriValid(string& uri);
 
 private:
-	/**
-	 * The range to export
-	 */
-	PageRangeVector exportRange;
+    /**
+     * The range to export
+     */
+    PageRangeVector exportRange;
 
-	/**
-	 * PNG dpi
-	 */
-	int pngDpi = 300;
+    /**
+     * PNG dpi
+     */
+    int pngDpi = 300;
 
-	/**
-	 * Export graphics format
-	 */
-	ExportGraphicsFormat format = EXPORT_GRAPHICS_UNDEFINED;
+    /**
+     * Export graphics format
+     */
+    ExportGraphicsFormat format = EXPORT_GRAPHICS_UNDEFINED;
 
-	/**
-	 * XOJ Export, else PNG Export
-	 */
-	bool exportTypeXoj = false;
+    /**
+     * XOJ Export, else PNG Export
+     */
+    bool exportTypeXoj = false;
 
-	string lastError;
+    string lastError;
 
-	string chosenFilterName;
+    string chosenFilterName;
 
-	std::map<string, ExportType*> filters;
+    std::map<string, ExportType*> filters;
 };

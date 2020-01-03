@@ -12,8 +12,8 @@
 #ifndef __ZOOMCALLIB_H__
 #define __ZOOMCALLIB_H__
 
-#include <gtk/gtk.h>
 #include <cairo.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
@@ -24,16 +24,14 @@ G_BEGIN_DECLS
 typedef struct _ZoomCallib ZoomCallib;
 typedef struct _ZoomCallibClass ZoomCallibClass;
 
-struct _ZoomCallib
-{
-	GtkWidget widget;
+struct _ZoomCallib {
+    GtkWidget widget;
 
-	gint val;
+    gint val;
 };
 
-struct _ZoomCallibClass
-{
-	GtkWidgetClass parent_class;
+struct _ZoomCallibClass {
+    GtkWidgetClass parent_class;
 };
 
 GType zoomcallib_get_type(void);

@@ -11,20 +11,22 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
-class ObjectEncoding
-{
+#include "XournalType.h"
+
+class ObjectEncoding {
 public:
-	ObjectEncoding();
-	virtual ~ObjectEncoding();
-
-public:
-	void addStr(const char* str) const;
-	virtual void addData(const void* data, int len) = 0;
-
-	GString* getData();
+    ObjectEncoding();
+    virtual ~ObjectEncoding();
 
 public:
-	GString* data;
+    void addStr(const char* str) const;
+    virtual void addData(const void* data, int len) = 0;
+
+    GString* getData();
+
+public:
+    GString* data;
 };

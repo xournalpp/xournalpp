@@ -13,18 +13,16 @@
 
 #include "BaseStrokeHandler.h"
 
-class RectangleHandler : public BaseStrokeHandler
-{
+class RectangleHandler: public BaseStrokeHandler {
 public:
-	RectangleHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift = false,
-	                 bool flipControl = false);
-	virtual ~RectangleHandler();
+    RectangleHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift = false,
+                     bool flipControl = false);
+    virtual ~RectangleHandler();
 
 private:
-	virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
-	
+    virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+
 private:
-	Point startPoint;
-	bool started = false;
+    Point startPoint;
+    bool started = false;
 };
-

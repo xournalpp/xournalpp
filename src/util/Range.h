@@ -11,27 +11,29 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "XournalType.h"
 
-class Range
-{
+class Range {
 public:
-	Range(double x, double y);
-	virtual ~Range();
+    Range(double x, double y);
+    virtual ~Range();
 
-	void addPoint(double x, double y);
+    void addPoint(double x, double y);
 
-	double getX() const;
-	double getY() const;
-	double getWidth() const;
-	double getHeight() const;
+    double getX() const;
+    double getY() const;
+    double getWidth() const;
+    double getHeight() const;
 
-	double getX2() const;
-	double getY2() const;
+    double getX2() const;
+    double getY2() const;
 
 private:
-	double x1;
-	double y1;
-	double y2;
-	double x2;
+    double x1;
+    double y1;
+    double y2;
+    double x2;
 };

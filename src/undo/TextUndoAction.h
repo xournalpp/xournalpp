@@ -18,27 +18,26 @@ class Redrawable;
 class Text;
 class TextEditor;
 
-class TextUndoAction : public UndoAction
-{
+class TextUndoAction: public UndoAction {
 public:
-	TextUndoAction(const PageRef& page, Layer* layer, Text* text, string lastText, TextEditor* textEditor);
-	virtual ~TextUndoAction();
+    TextUndoAction(const PageRef& page, Layer* layer, Text* text, string lastText, TextEditor* textEditor);
+    virtual ~TextUndoAction();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
 
-	virtual string getText();
+    virtual string getText();
 
-	string getUndoText();
+    string getUndoText();
 
-	void textEditFinished();
+    void textEditFinished();
 
 private:
-	Layer* layer;
-	Text* text;
-	string lastText;
-	string newText;
+    Layer* layer;
+    Text* text;
+    string lastText;
+    string newText;
 
-	TextEditor* textEditor;
+    TextEditor* textEditor;
 };

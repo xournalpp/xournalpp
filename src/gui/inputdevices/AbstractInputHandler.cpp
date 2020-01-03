@@ -3,35 +3,32 @@
 //
 
 #include "AbstractInputHandler.h"
-#include "InputContext.h"
-#include <gui/XournalppCursor.h>
 
-AbstractInputHandler::AbstractInputHandler(InputContext* inputContext)
-{
-	this->inputContext = inputContext;
-}
+#include "gui/XournalppCursor.h"
+
+#include "InputContext.h"
+
+AbstractInputHandler::AbstractInputHandler(InputContext* inputContext) { this->inputContext = inputContext; }
 
 AbstractInputHandler::~AbstractInputHandler() = default;
 
-void AbstractInputHandler::block(bool block)
-{
-	this->blocked = block;
-	this->onBlock();
+void AbstractInputHandler::block(bool block) {
+    this->blocked = block;
+    if (block == false) {
+        this->onUnblock();
+    } else {
+        this->onBlock();
+    }
 }
 
-auto AbstractInputHandler::isBlocked() const -> bool
-{
-	return this->blocked;
-}
+auto AbstractInputHandler::isBlocked() const -> bool { return this->blocked; }
 
-auto AbstractInputHandler::handle(InputEvent* event) -> bool
-{
-	if (!this->blocked)
-	{
-		this->inputContext->getXournal()->view->getCursor()->setInputDeviceClass(event->deviceClass);
-		return this->handleImpl(event);
-	}
-	return true;
+auto AbstractInputHandler::handle(InputEvent* event) -> bool {
+    if (!this->blocked) {
+        this->inputContext->getXournal()->view->getCursor()->setInputDeviceClass(event->deviceClass);
+        return this->handleImpl(event);
+    }
+    return true;
 }
 
 /**
@@ -39,57 +36,54 @@ auto AbstractInputHandler::handle(InputEvent* event) -> bool
  *
  * @return page or nullptr if none
  */
-auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent* event) -> XojPageView*
-{
-	if (event == nullptr)
-	{
-		return nullptr;
-	}
+auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent* event) -> XojPageView* {
+    if (event == nullptr) {
+        return nullptr;
+    }
 
-	gdouble eventX = event->relativeX;
-	gdouble eventY = event->relativeY;
+    gdouble eventX = event->relativeX;
+    gdouble eventY = event->relativeY;
 
-	//take scroll offset into account
-	this->inputContext->getScrollHandling()->translate(eventX, eventY);
+    // take scroll offset into account
+    this->inputContext->getScrollHandling()->translate(eventX, eventY);
 
-	GtkXournal* xournal = this->inputContext->getXournal();
+    GtkXournal* xournal = this->inputContext->getXournal();
 
-	double x = eventX + xournal->x;
-	double y = eventY + xournal->y;
+    double x = eventX + xournal->x;
+    double y = eventY + xournal->y;
 
-	return xournal->layout->getViewAt(x,y);
+    return xournal->layout->getViewAt(x, y);
 }
 
 /**
  * Get input data relative to current input page
  */
-auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent* event) -> PositionInputData
-{
-	g_assert(page != nullptr);
-	GtkXournal* xournal = inputContext->getXournal();
+auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent* event)
+        -> PositionInputData {
+    g_assert(page != nullptr);
+    GtkXournal* xournal = inputContext->getXournal();
 
-	gdouble eventX = event->relativeX;
-	gdouble eventY = event->relativeY;
+    gdouble eventX = event->relativeX;
+    gdouble eventY = event->relativeY;
 
-	//take scroll offset into account
-	this->inputContext->getScrollHandling()->translate(eventX, eventY);
+    // take scroll offset into account
+    this->inputContext->getScrollHandling()->translate(eventX, eventY);
 
-	PositionInputData pos = {};
-	pos.x = eventX - page->getX() - xournal->x;
-	pos.y = eventY - page->getY() - xournal->y;
-	pos.pressure = Point::NO_PRESSURE;
+    PositionInputData pos = {};
+    pos.x = eventX - page->getX() - xournal->x;
+    pos.y = eventY - page->getY() - xournal->y;
+    pos.pressure = Point::NO_PRESSURE;
 
-	if (this->inputContext->getSettings()->isPressureSensitivity())
-	{
-		pos.pressure = event->pressure;
-	}
+    if (this->inputContext->getSettings()->isPressureSensitivity()) {
+        pos.pressure = event->pressure;
+    }
 
-	pos.state = this->inputContext->getModifierState();
-	pos.timestamp = event->timestamp;
+    pos.state = this->inputContext->getModifierState();
+    pos.timestamp = event->timestamp;
 
-	return pos;
+    return pos;
 }
 
-void AbstractInputHandler::onBlock()
-{
-}
+void AbstractInputHandler::onBlock() {}
+
+void AbstractInputHandler::onUnblock() {}

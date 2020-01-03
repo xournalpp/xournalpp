@@ -30,36 +30,37 @@
 
 G_BEGIN_DECLS
 
-#define GTK_TYPE_MENU_TOOL_TOGGLE_BUTTON         (gtk_menu_tool_toggle_button_get_type ())
-#define GTK_MENU_TOOL_TOGGLE_BUTTON(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GTK_TYPE_MENU_TOOL_TOGGLE_BUTTON, GtkMenuToolToggleButton))
-#define GTK_MENU_TOOL_TOGGLE_BUTTON_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), GTK_TYPE_MENU_TOO_TOGGLEL_BUTTON, GtkMenuToolToggleButtonClass))
-#define GTK_IS_MENU_TOOL_TOGGLE_BUTTON(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GTK_TYPE_MENU_TOOL_TOGGLE_BUTTON))
-#define GTK_IS_MENU_TOOL_TOGGLE_BUTTON_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), GTK_TYPE_MENU_TOOL_TOGGLE_BUTTON))
-#define GTK_MENU_TOOL_TOGGLE_BUTTON_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), GTK_TYPE_MENU_TOOL_TOGGLE_BUTTON, GtkMenuToolToggleButtonClass))
+#define GTK_TYPE_MENU_TOOL_TOGGLE_BUTTON (gtk_menu_tool_toggle_button_get_type())
+#define GTK_MENU_TOOL_TOGGLE_BUTTON(o) \
+    (G_TYPE_CHECK_INSTANCE_CAST((o), GTK_TYPE_MENU_TOOL_TOGGLE_BUTTON, GtkMenuToolToggleButton))
+#define GTK_MENU_TOOL_TOGGLE_BUTTON_CLASS(k) \
+    (G_TYPE_CHECK_CLASS_CAST((k), GTK_TYPE_MENU_TOO_TOGGLEL_BUTTON, GtkMenuToolToggleButtonClass))
+#define GTK_IS_MENU_TOOL_TOGGLE_BUTTON(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), GTK_TYPE_MENU_TOOL_TOGGLE_BUTTON))
+#define GTK_IS_MENU_TOOL_TOGGLE_BUTTON_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), GTK_TYPE_MENU_TOOL_TOGGLE_BUTTON))
+#define GTK_MENU_TOOL_TOGGLE_BUTTON_GET_CLASS(o) \
+    (G_TYPE_INSTANCE_GET_CLASS((o), GTK_TYPE_MENU_TOOL_TOGGLE_BUTTON, GtkMenuToolToggleButtonClass))
 
 typedef struct _GtkMenuToolToggleButtonClass GtkMenuToolToggleButtonClass;
 typedef struct _GtkMenuToolToggleButton GtkMenuToolToggleButton;
 typedef struct _GtkMenuToolToggleButtonPrivate GtkMenuToolToggleButtonPrivate;
 
-struct _GtkMenuToolToggleButton
-{
-	GtkToggleToolButton parent;
+struct _GtkMenuToolToggleButton {
+    GtkToggleToolButton parent;
 
-	/*< private >*/
-	GtkMenuToolToggleButtonPrivate* priv;
+    /*< private >*/
+    GtkMenuToolToggleButtonPrivate* priv;
 };
 
-struct _GtkMenuToolToggleButtonClass
-{
-	GtkToggleToolButtonClass parent_class;
+struct _GtkMenuToolToggleButtonClass {
+    GtkToggleToolButtonClass parent_class;
 
-	void (*show_menu)(GtkMenuToolButton* button);
+    void (*show_menu)(GtkMenuToolButton* button);
 
-	/* Padding for future expansion */
-	void (*_gtk_reserved1)(void);
-	void (*_gtk_reserved2)(void);
-	void (*_gtk_reserved3)(void);
-	void (*_gtk_reserved4)(void);
+    /* Padding for future expansion */
+    void (*_gtk_reserved1)(void);
+    void (*_gtk_reserved2)(void);
+    void (*_gtk_reserved3)(void);
+    void (*_gtk_reserved4)(void);
 };
 
 GType gtk_menu_tool_toggle_button_get_type(void) G_GNUC_CONST;

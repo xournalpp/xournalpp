@@ -11,123 +11,122 @@
 
 #pragma once
 
-#include <Path.h>
-#include <XournalType.h>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>
 
-class RecentManagerListener
-{
-public:
-	virtual ~RecentManagerListener();
+#include "Path.h"
+#include "XournalType.h"
 
-	/**
-	 * This function is called whenever some file
-	 * from the recent menu is opened
-	 */
-	virtual void fileOpened(const gchar* uri) = 0;
+class RecentManagerListener {
+public:
+    virtual ~RecentManagerListener();
+
+    /**
+     * This function is called whenever some file
+     * from the recent menu is opened
+     */
+    virtual void fileOpened(const gchar* uri) = 0;
 };
 
 /**
  * @brief Handles the GtkMenu displaying the recent files
  */
-class RecentManager
-{
+class RecentManager {
 public:
-	RecentManager();
-	virtual ~RecentManager();
+    RecentManager();
+    virtual ~RecentManager();
 
 public:
+    /**
+     * Adds a file to the underlying GtkRecentManager
+     * without altering the menu
+     */
+    static void addRecentFileFilename(const Path& filename);
 
-	/**
-	 * Adds a file to the underlying GtkRecentManager
-	 * without altering the menu
-	 */
-	static void addRecentFileFilename(const Path& filename);
+    /**
+     * Removes a file from the underlying GtkRecentManager
+     * without altering the menu
+     */
+    static void removeRecentFileFilename(const Path& filename);
 
-	/**
-	 * Removes a file from the underlying GtkRecentManager
-	 * without altering the menu
-	 */
-	static void removeRecentFileFilename(const Path& filename);
+    /**
+     * Removes all of the menu items corresponding to recent files
+     */
+    void freeOldMenus();
 
-	/**
-	 * Removes all of the menu items corresponding to recent files
-	 */
-	void freeOldMenus();
+    /**
+     * Updates the menu of recent files
+     */
+    void updateMenu();
 
-	/**
-	 * Updates the menu of recent files
-	 */
-	void updateMenu();
+    /**
+     * Returns the maximal number of recent files to be displayed
+     */
+    int getMaxRecent() const;
 
-	/**
-	 * Returns the maximal number of recent files to be displayed
-	 */
-	int getMaxRecent() const;
+    /**
+     * Sets the maximal number of recent files to be displayed
+     */
+    void setMaxRecent(int maxRecent);
 
-	/**
-	 * Sets the maximal number of recent files to be displayed
-	 */
-	void setMaxRecent(int maxRecent);
+    /**
+     * Notifies all RecentManagerListener%s that a new
+     * file is opened
+     */
+    void openRecent(const Path& p);
 
-	/**
-	 * Notifies all RecentManagerListener%s that a new
-	 * file is opened
-	 */
-	void openRecent(const Path& p);
+    /**
+     * Returns the root menu containing all the items
+     * corresponding to the recent files
+     */
+    GtkWidget* getMenu();
 
-	/**
-	 * Returns the root menu containing all the items
-	 * corresponding to the recent files
-	 */
-	GtkWidget* getMenu();
-
-	/**
-	 * Adds a new RecentManagerListener to be notified
-	 * of opened files
-	 */
-	void addListener(RecentManagerListener* listener);
+    /**
+     * Adds a new RecentManagerListener to be notified
+     * of opened files
+     */
+    void addListener(RecentManagerListener* listener);
 
 private:
+    /**
+     * Filters a list of GtkRecentInfo according to their file types
+     *
+     * @param items A pointer to a GList containing GtkRecentInfo%s
+     * @param xoj   Returns xoj files if xoj is set, pdf files otherwise
+     *
+     * @return      A pointer to a GList containing the relevant GtkRecentInfo%s sorted according to their
+     *              modification dates
+     */
+    static GList* filterRecent(GList* items, bool xoj);
+    void addRecentMenu(GtkRecentInfo* info, int i);
 
-	/**
-	 * Filters a list of GtkRecentInfo according to their file types
-	 *
-	 * @param items A pointer to a GList containing GtkRecentInfo%s
-	 * @param xoj   Returns xoj files if xoj is set, pdf files otherwise
-	 *
-	 * @return      A pointer to a GList containing the relevant GtkRecentInfo%s sorted according to their
-	 *              modification dates
-	 */
-	static GList* filterRecent(GList* items, bool xoj);
-	void addRecentMenu(GtkRecentInfo* info, int i);
+    /**
+     * This callback function is triggered whenever a new
+     * file is added to the recent manager to recreate
+     * all of the menu items
+     */
+    static void recentManagerChangedCallback(GtkRecentManager* manager, RecentManager* recentManager);
 
-	/**
-	 * This callback function is triggered whenever a new
-	 * file is added to the recent manager to recreate
-	 * all of the menu items
-	 */
-	static void recentManagerChangedCallback(GtkRecentManager* manager, RecentManager* recentManager);
+    /**
+     * This callback function is triggered whenever one of
+     * the items corresponding to recent files is activated
+     */
+    static void recentsMenuActivateCallback(GtkAction* action, RecentManager* recentManager);
 
-	/**
-	 * This callback function is triggered whenever one of
-	 * the items corresponding to recent files is activated
-	 */
-	static void recentsMenuActivateCallback(GtkAction* action, RecentManager* recentManager);
-
-	/**
-	 * This function serves as a comparator to sort different
-	 * GtkRecentInfo%s according to their modification date
-	 */
-	static int sortRecentsEntries(GtkRecentInfo* a, GtkRecentInfo* b);
+    /**
+     * This function serves as a comparator to sort different
+     * GtkRecentInfo%s according to their modification date
+     */
+    static int sortRecentsEntries(GtkRecentInfo* a, GtkRecentInfo* b);
 
 private:
-	int maxRecent = 10;
-	int recentHandlerId;
+    int maxRecent = 10;
+    int recentHandlerId;
 
-	std::vector<RecentManagerListener*> listener;
+    std::vector<RecentManagerListener*> listener;
 
-	GtkWidget* menu;
-	std::vector<GtkWidget*> menuItemList;
+    GtkWidget* menu;
+    std::vector<GtkWidget*> menuItemList;
 };

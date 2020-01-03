@@ -2,100 +2,78 @@
 
 #include <utility>
 
-#include "model/Text.h"
 #include "model/Layer.h"
+#include "model/Text.h"
 #include "view/TextView.h"
 
-SearchControl::SearchControl(const PageRef& page, XojPdfPageSPtr pdf)
-{
-	this->page = page;
-	this->pdf = std::move(pdf);
+SearchControl::SearchControl(const PageRef& page, XojPdfPageSPtr pdf) {
+    this->page = page;
+    this->pdf = std::move(pdf);
 }
 
-SearchControl::~SearchControl()
-{
-	freeSearchResults();
+SearchControl::~SearchControl() { freeSearchResults(); }
+
+void SearchControl::freeSearchResults() { this->results.clear(); }
+
+void SearchControl::paint(cairo_t* cr, GdkRectangle* rect, double zoom, const GtkColorWrapper& color) {
+    // set the line always the same size on display
+    cairo_set_line_width(cr, 1 / zoom);
+
+    for (XojPdfRectangle rect: this->results) {
+        cairo_rectangle(cr, rect.x1, rect.y1, rect.x2 - rect.x1, rect.y2 - rect.y1);
+        color.apply(cr);
+        cairo_stroke_preserve(cr);
+        color.applyWithAlpha(cr, 0.3);
+        cairo_fill(cr);
+    }
 }
 
-void SearchControl::freeSearchResults()
-{
-	this->results.clear();
-}
+auto SearchControl::search(string text, int* occures, double* top) -> bool {
+    freeSearchResults();
 
-void SearchControl::paint(cairo_t* cr, GdkRectangle* rect, double zoom, const GtkColorWrapper& color)
-{
-	// set the line always the same size on display
-	cairo_set_line_width(cr, 1 / zoom);
+    if (text.empty()) {
+        return true;
+    }
 
-	for (XojPdfRectangle rect : this->results)
-	{
-		cairo_rectangle(cr, rect.x1, rect.y1, rect.x2 - rect.x1, rect.y2 - rect.y1);
-		color.apply(cr);
-		cairo_stroke_preserve(cr);
-		color.applyWithAlpha(cr, 0.3);
-		cairo_fill(cr);
-	}
-}
+    if (this->pdf) {
+        this->results = this->pdf->findText(text);
+    }
 
-auto SearchControl::search(string text, int* occures, double* top) -> bool
-{
-	freeSearchResults();
+    for (Layer* l: *this->page->getLayers()) {
+        if (!this->page->isLayerVisible(l)) {
+            continue;
+        }
 
-	if (text.empty())
-	{
-		return true;
-	}
+        for (Element* e: *l->getElements()) {
+            if (e->getType() == ELEMENT_TEXT) {
+                Text* t = dynamic_cast<Text*>(e);
 
-	if (this->pdf)
-	{
-		this->results = this->pdf->findText(text);
-	}
+                vector<XojPdfRectangle> textResult = TextView::findText(t, text);
 
-	for (Layer* l : *this->page->getLayers())
-	{
-		if (!this->page->isLayerVisible(l))
-		{
-			continue;
-		}
-		
-		for (Element* e : *l->getElements())
-		{
-			if (e->getType() == ELEMENT_TEXT)
-			{
-				Text* t = dynamic_cast<Text*>(e);
+                this->results.insert(this->results.end(), textResult.begin(), textResult.end());
+            }
+        }
+    }
 
-				vector<XojPdfRectangle> textResult = TextView::findText(t, text);
+    if (occures) {
+        *occures = this->results.size();
+    }
 
-				this->results.insert(this->results.end(), textResult.begin(), textResult.end());
-			}
-		}
-	}
+    if (top) {
+        if (this->results.empty()) {
+            *top = 0;
+        } else {
 
-	if (occures)
-	{
-		*occures = this->results.size();
-	}
+            XojPdfRectangle first = this->results[0];
 
-	if (top)
-	{
-		if (this->results.empty())
-		{
-			*top = 0;
-		}
-		else
-		{
+            double min = first.y1;
+            for (XojPdfRectangle rect: this->results) {
+                min = std::min(min, rect.y1);
+            }
 
-			XojPdfRectangle first = this->results[0];
+            *top = min;
+        }
+    }
 
-			double min = first.y1;
-			for (XojPdfRectangle rect : this->results)
-			{
-				min = std::min(min, rect.y1);
-			}
-
-			*top = min;
-		}
-	}
-
-	return !this->results.empty();
+    return !this->results.empty();
 }

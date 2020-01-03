@@ -11,25 +11,28 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "UndoAction.h"
-#include <XournalType.h>
+#include "XournalType.h"
 
-class InsertDeletePageUndoAction : public UndoAction
-{
+class InsertDeletePageUndoAction: public UndoAction {
 public:
-	InsertDeletePageUndoAction(const PageRef& page, int pagePos, bool inserted);
-	virtual ~InsertDeletePageUndoAction();
+    InsertDeletePageUndoAction(const PageRef& page, int pagePos, bool inserted);
+    virtual ~InsertDeletePageUndoAction();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
 
-	virtual string getText();
-private:
-	bool insertPage(Control* control);
-	bool deletePage(Control* control);
+    virtual string getText();
 
 private:
-	bool inserted;
-	int pagePos;
+    bool insertPage(Control* control);
+    bool deletePage(Control* control);
+
+private:
+    bool inserted;
+    int pagePos;
 };

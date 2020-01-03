@@ -12,75 +12,72 @@
 
 #pragma once
 
+#include <string>
+
 #include <gdk/gdk.h>
 
-#include <Path.h>
-
-#include <string>
+#include "Path.h"
 using std::string;
 
 enum PreviewExtractResult {
 
-	/**
-	 * Successfully read an image from file
-	 */
-	PREVIEW_RESULT_IMAGE_READ = 0,
-	
-	/**
-	 * File extension is wrong
-	 */
-	PREVIEW_RESULT_BAD_FILE_EXTENSION,
+    /**
+     * Successfully read an image from file
+     */
+    PREVIEW_RESULT_IMAGE_READ = 0,
 
-	/**
-	 * The file could not be openend / found
-	 */
-	PREVIEW_RESULT_COULD_NOT_OPEN_FILE,
+    /**
+     * File extension is wrong
+     */
+    PREVIEW_RESULT_BAD_FILE_EXTENSION,
 
-	/**
-	 * The preview could not be extracted
-	 */
-	PREVIEW_RESULT_ERROR_READING_PREVIEW,
+    /**
+     * The file could not be openend / found
+     */
+    PREVIEW_RESULT_COULD_NOT_OPEN_FILE,
 
-	/**
-	 * The file contains no preview
-	 */
-	PREVIEW_RESULT_NO_PREVIEW,
+    /**
+     * The preview could not be extracted
+     */
+    PREVIEW_RESULT_ERROR_READING_PREVIEW,
+
+    /**
+     * The file contains no preview
+     */
+    PREVIEW_RESULT_NO_PREVIEW,
 };
 
-class XojPreviewExtractor
-{
+class XojPreviewExtractor {
 public:
-	XojPreviewExtractor();
-	~XojPreviewExtractor();
+    XojPreviewExtractor();
+    ~XojPreviewExtractor();
 
 public:
+    /**
+     * Try to read the preview from file
+     * @param file .xoj File
+     * @return If an image was read, or the error
+     */
+    PreviewExtractResult readFile(const Path& file);
 
-	/**
-	 * Try to read the preview from file
-	 * @param file .xoj File
-	 * @return If an image was read, or the error
-	 */
-	PreviewExtractResult readFile(const Path& file);
+    /**
+     * Try to read the preview from byte buffer
+     * @param buffer Buffer
+     * @param len Buffer len
+     * @return If an image was read, or the error
+     */
+    PreviewExtractResult readPreview(char* buffer, int len);
 
-	/**
-	 * Try to read the preview from byte buffer
-	 * @param buffer Buffer
-	 * @param len Buffer len
-	 * @return If an image was read, or the error
-	 */
-	PreviewExtractResult readPreview(char* buffer, int len);
+    /**
+     * @return The preview data, should be a binary PNG
+     */
+    unsigned char* getData(gsize& dataLen);
 
-	/**
-	 * @return The preview data, should be a binary PNG
-	 */
-	unsigned char* getData(gsize& dataLen);
-
-	// Member
+    // Member
 private:
-
-	/**
-	 * Preview data
-	 */
-	unsigned char* data = nullptr;
-	gsize dataLen = 0;
+    /**
+     * Preview data
+     */
+    unsigned char* data = nullptr;
+    gsize dataLen = 0;
 };

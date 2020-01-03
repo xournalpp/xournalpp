@@ -11,10 +11,9 @@
 
 #pragma once
 
-typedef struct
-{
-	const char* name;
-	const double scale;
+typedef struct {
+    const char* name;
+    const double scale;
 } FormatUnits;
 
 extern const FormatUnits XOJ_UNITS[];

@@ -11,39 +11,41 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include <string>
+#include <vector>
+
+#include "XournalType.h"
 
 class Point;
 
-class Inertia
-{
+class Inertia {
 public:
-	Inertia();
-	Inertia(const Inertia& inertia);
-	virtual ~Inertia();
+    Inertia();
+    Inertia(const Inertia& inertia);
+    virtual ~Inertia();
 
 public:
-	double centerX() const;
-	double centerY() const;
+    double centerX() const;
+    double centerY() const;
 
-	double xx() const;
-	double xy() const;
-	double yy() const;
+    double xx() const;
+    double xy() const;
+    double yy() const;
 
-	double rad() const;
+    double rad() const;
 
-	double det() const;
+    double det() const;
 
-	double getMass() const;
+    double getMass() const;
 
-	void increase(Point p1, Point p2, int coef);
-	void calc(const Point* pt, int start, int end);
+    void increase(Point p1, Point p2, int coef);
+    void calc(const Point* pt, int start, int end);
 
 private:
-	double mass{};
-	double sx{};
-	double sy{};
-	double sxx{};
-	double sxy{};
-	double syy{};
+    double mass{};
+    double sx{};
+    double sy{};
+    double sxx{};
+    double sxy{};
+    double syy{};
 };

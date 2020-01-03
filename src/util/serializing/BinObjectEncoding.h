@@ -13,14 +13,13 @@
 
 #include "ObjectEncoding.h"
 
-class BinObjectEncoding : public ObjectEncoding
-{
+class BinObjectEncoding: public ObjectEncoding {
 public:
-	BinObjectEncoding();
-	virtual ~BinObjectEncoding();
+    BinObjectEncoding();
+    virtual ~BinObjectEncoding();
 
 public:
-	virtual void addData(const void* data, int len);
+    virtual void addData(const void* data, int len);
 
 private:
 };

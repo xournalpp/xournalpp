@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include "PlaceholderString.h"
-
 #include <libintl.h>
+
+#include "PlaceholderString.h"
 #undef snprintf
 
 #define _(msg) gettext(msg)
