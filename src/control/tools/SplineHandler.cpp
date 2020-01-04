@@ -25,49 +25,66 @@ SplineHandler::SplineHandler(XournalView* xournal, XojPageView* redrawable, cons
 SplineHandler::~SplineHandler() = default;
 
 void SplineHandler::draw(cairo_t* cr) {
-    if (stroke) {
-        double zoom = xournal->getZoom();
-        int dpiScaleFactor = xournal->getDpiScaleFactor();
-
-        cairo_scale(cr, zoom * dpiScaleFactor, zoom * dpiScaleFactor);
-        // draw circles around knot points
-        double lineWidth = 0.5;
-        double radius = 2.0;
-        int pointCount = stroke->getPointCount();
-        cairo_set_line_width(cr, lineWidth);
-        Point firstPoint = stroke->getPoint(0);
-        Point currPoint = stroke->getPoint(pointCount - 1);
-        double dist = currPoint.lineLengthTo(firstPoint);
-        cairo_set_source_rgb(cr, 1, 0, 0);                               // use red color for first knot
-        cairo_move_to(cr, firstPoint.x + radius, firstPoint.y);          // move to start point of circle arc;
-        cairo_arc(cr, firstPoint.x, firstPoint.y, radius, 0, 2 * M_PI);  // draw circle
-        if (dist < radius && pointCount > 3) {  // current point lies within the circle around the first knot
-            cairo_fill(cr);
-        } else {
-            cairo_stroke(cr);
-        }
-
-        cairo_set_source_rgb(cr, 0.3, 0.3, 0.3);       // use gray color for all knots except first one
-        for (size_t i = 1; i < pointCount - 1; i++) {  // dynamically changing knot is not circled
-            Point p = stroke->getPoint(i);
-            cairo_move_to(cr, p.x + radius, p.y);          // move to start point of circle arc;
-            cairo_arc(cr, p.x, p.y, radius, 0, 2 * M_PI);  // draw circle
-        }
-        cairo_stroke(cr);
-        // draw spline
-        view.drawStroke(cr, stroke, 0);
+    if (!stroke) {
+        return;
     }
+
+    double zoom = xournal->getZoom();
+    double radius = radiusConst * zoom;
+    if (xournal->getControl()->getToolHandler()->getDrawingType() != DRAWING_TYPE_SPLINE) {
+        g_warning("Drawing type is not spline any longer");
+        stroke = nullptr;
+        xournal->getCursor()->updateCursor();
+        return;
+    }
+
+    int dpiScaleFactor = xournal->getDpiScaleFactor();
+    cairo_scale(cr, zoom * dpiScaleFactor, zoom * dpiScaleFactor);
+
+    // draw circles around knot points
+    double lineWidth = 0.5 * zoom;
+    int pointCount = stroke->getPointCount();
+    cairo_set_line_width(cr, lineWidth);
+    Point firstPoint = stroke->getPoint(0);
+    Point currPoint = stroke->getPoint(pointCount - 1);
+    double dist = currPoint.lineLengthTo(firstPoint);
+    cairo_set_source_rgb(cr, 1, 0, 0);                               // use red color for first knot
+    cairo_move_to(cr, firstPoint.x + radius, firstPoint.y);          // move to start point of circle arc;
+    cairo_arc(cr, firstPoint.x, firstPoint.y, radius, 0, 2 * M_PI);  // draw circle
+    if (dist < radius && pointCount > 3) {  // current point lies within the circle around the first knot
+        cairo_fill(cr);
+    } else {
+        cairo_stroke(cr);
+    }
+
+    cairo_set_source_rgb(cr, 0.3, 0.3, 0.3);       // use gray color for all knots except first one
+    for (size_t i = 1; i < pointCount - 1; i++) {  // dynamically changing knot is not circled
+        Point p = stroke->getPoint(i);
+        cairo_move_to(cr, p.x + radius, p.y);          // move to start point of circle arc;
+        cairo_arc(cr, p.x, p.y, radius, 0, 2 * M_PI);  // draw circle
+    }
+    cairo_stroke(cr);
+
+    // draw spline
+    view.drawStroke(cr, stroke, 0);
 }
 
 auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
+    if (!stroke) {
+        return false;
+    }
     int pointCount = stroke->getPointCount();
+    double zoom = xournal->getZoom();
+    double radius = radiusConst * zoom;
+
     switch (event->keyval) {
         case GDK_KEY_Escape: {
             if (pointCount > 1) {
                 // remove dynamically changing point at cursor position
                 stroke->deletePoint(pointCount - 1);
-                this->redrawable->repaintRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(),
-                                              stroke->getElementHeight());
+                this->redrawable->repaintRect(stroke->getX() - radius, stroke->getY() - radius,
+                                              stroke->getElementWidth() + 2 * radius,
+                                              stroke->getElementHeight() + 2 * radius);
             }
             finalizeSpline();
             return true;
@@ -114,6 +131,7 @@ auto SplineHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
     }
 
     double zoom = xournal->getZoom();
+    double radius = radiusConst * zoom;
     int pointCount = stroke->getPointCount();
 
     Point currentPoint = Point(pos.x / zoom, pos.y / zoom);
@@ -125,8 +143,8 @@ auto SplineHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         }
     }
 
-    this->redrawable->repaintRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(),
-                                  stroke->getElementHeight());
+    this->redrawable->repaintRect(stroke->getX() - radius, stroke->getY() - radius,
+                                  stroke->getElementWidth() + 2 * radius, stroke->getElementHeight() + 2 * radius);
 
     drawShape(currentPoint, pos);
 
@@ -139,19 +157,22 @@ auto SplineHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
 }
 
 void SplineHandler::onButtonReleaseEvent(const PositionInputData& pos) {
+    if (!stroke) {
+        return;
+    }
+
     double zoom = xournal->getZoom();
-    if (stroke) {
-        Point currPoint = Point(pos.x / zoom, pos.y / zoom);
-        Point firstPoint = stroke->getPoint(0);
-        double dist = currPoint.lineLengthTo(firstPoint);
-        double radius = 2.0;
-        int pointCount = stroke->getPointCount();
-        if (dist < radius && pointCount > 1) {
-            stroke->setLastPoint(firstPoint);
-            finalizeSpline();
-        } else {
-            stroke->addPoint(currPoint);
-        }
+    double radius = radiusConst * zoom;
+    Point currPoint = Point(pos.x / zoom, pos.y / zoom);
+    Point firstPoint = stroke->getPoint(0);
+    double dist = currPoint.lineLengthTo(firstPoint);
+    int pointCount = stroke->getPointCount();
+    if (dist < radius && pointCount > 1) {
+        stroke->setLastPoint(firstPoint);
+        finalizeSpline();
+    } else {
+        stroke->addPoint(currPoint);
+        this->redrawable->rerenderRect(currPoint.x - radius, currPoint.y - radius, 2 * radius, 2 * radius);
     }
 }
 
@@ -165,7 +186,7 @@ void SplineHandler::onButtonPressEvent(const PositionInputData& pos) {
 void SplineHandler::onButtonDoublePressEvent(const PositionInputData& pos) { finalizeSpline(); }
 
 void SplineHandler::finalizeSpline() {
-    if (stroke == nullptr) {
+    if (!stroke) {
         return;
     }
 
@@ -180,19 +201,24 @@ void SplineHandler::finalizeSpline() {
     }
 
     stroke->freeUnusedPointItems();
-
     control->getLayerController()->ensureLayerExists(page);
 
     Layer* layer = page->getSelectedLayer();
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
 
+
     undo->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, stroke));
 
     layer->addElement(stroke);
-    page->fireElementChanged(stroke);
-    this->redrawable->repaintRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(),
-                                  stroke->getElementHeight());
+    page->fireElementChanged(stroke);  // calls draw method
+    double zoom = xournal->getZoom();
+    double radius = radiusConst * zoom;
+
+
+    this->redrawable->rerenderRect(stroke->getX() - radius, stroke->getY() - radius,
+                                   stroke->getElementWidth() + 2 * radius, stroke->getElementHeight() + 2 * radius);
+
 
     stroke = nullptr;
 
@@ -200,6 +226,10 @@ void SplineHandler::finalizeSpline() {
 }
 
 void SplineHandler::drawShape(Point& c, const PositionInputData& pos) {
+    if (!stroke) {
+        return;
+    }
+
     int pointCount = stroke->getPointCount();
     if (pointCount > 1) {
         // remove dynamically changing point at (previous) cursor position

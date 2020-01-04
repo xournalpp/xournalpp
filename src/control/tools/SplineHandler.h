@@ -35,4 +35,5 @@ private:
 
 protected:
     DocumentView view;
+    const double radiusConst = 1.5;
 };
