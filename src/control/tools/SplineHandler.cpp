@@ -70,57 +70,92 @@ void SplineHandler::draw(cairo_t* cr) {
 }
 
 auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
-    if (!stroke) {
+    if (!stroke ||
+        event->type != GDK_KEY_PRESS && event->keyval != GDK_KEY_Escape) {  // except for escape key only act on key
+                                                                            // press event, not on key release event
         return false;
     }
+
     int pointCount = stroke->getPointCount();
     double zoom = xournal->getZoom();
     double radius = radiusConst * zoom;
+    double x = stroke->getX() - radius;
+    double y = stroke->getY() - radius;
+    double w = stroke->getElementWidth() + 2 * radius;
+    double h = stroke->getElementHeight() + 2 * radius;
 
     switch (event->keyval) {
         case GDK_KEY_Escape: {
             if (pointCount > 1) {
                 // remove dynamically changing point at cursor position
                 stroke->deletePoint(pointCount - 1);
-                this->redrawable->repaintRect(stroke->getX() - radius, stroke->getY() - radius,
-                                              stroke->getElementWidth() + 2 * radius,
-                                              stroke->getElementHeight() + 2 * radius);
+                this->redrawable->repaintRect(x, y, w, h);
             }
             finalizeSpline();
             return true;
         }
-            /* TODO (Roland): Actions after backspace or key arrow
-            case GDK_KEY_BackSpace: {
-                if (pointCount > 2) {
-                    // delete last non dynammically changing point
-                }
-                break;
+        // Actions after backspace or key arrow press
+        case GDK_KEY_BackSpace: {
+            if (pointCount > 2) {
+                // delete last non dynammically changing point
+                stroke->deletePoint(pointCount - 2);
+                this->redrawable->repaintRect(x, y, w, h);
             }
-            case GDK_KEY_uparrow: {
-                if (pointCount > 2) {
-                    // move last non dynammically changing point up
-                }
-                break;
+            break;
+        }
+        case GDK_KEY_Up: {
+            if (pointCount > 2) {
+                // move last non dynammically changing point up
+                Point currPoint = stroke->getPoint(pointCount - 1);
+                Point lastSetPoint = stroke->getPoint(pointCount - 2);
+                lastSetPoint.y -= 1;
+                stroke->deletePointsFrom(pointCount - 2);
+                stroke->addPoint(lastSetPoint);
+                stroke->addPoint(currPoint);
+                this->redrawable->repaintRect(x, y, w, h + 1);
             }
-            case GDK_KEY_downarrow: {
-                if (pointCount > 2) {
-                    // move last non dynammically changing point down
-                }
-                break;
+            break;
+        }
+        case GDK_KEY_Down: {
+            if (pointCount > 2) {
+                // move last non dynammically changing point down
+                Point currPoint = stroke->getPoint(pointCount - 1);
+                Point lastSetPoint = stroke->getPoint(pointCount - 2);
+                lastSetPoint.y += 1;
+                stroke->deletePointsFrom(pointCount - 2);
+                stroke->addPoint(lastSetPoint);
+                stroke->addPoint(currPoint);
+                this->redrawable->repaintRect(x, y, w, h + 1);
             }
-            case GDK_KEY_rightarrow: {
-                if (pointCount > 2) {
-                    // move last non dynammically changing point right
-                }
-                break;
+            break;
+        }
+        case GDK_KEY_Right: {
+            if (pointCount > 2) {
+                // move last non dynammically changing point right
+                Point currPoint = stroke->getPoint(pointCount - 1);
+                Point lastSetPoint = stroke->getPoint(pointCount - 2);
+                lastSetPoint.x += 1;
+                stroke->deletePointsFrom(pointCount - 2);
+                stroke->addPoint(lastSetPoint);
+                stroke->addPoint(currPoint);
+                this->redrawable->rerenderRect(x, y, w + 1, h);
             }
-            case GDK_KEY_leftarrow: {
-                if (pointCount > 2) {
-                    // move last non dynammically changing point left
-                }
-                break;
+            break;
+        }
+        case GDK_KEY_Left: {
+            if (pointCount > 2) {
+                // move last non dynammically changing point left
+                Point currPoint = stroke->getPoint(pointCount - 1);
+                Point lastSetPoint = stroke->getPoint(pointCount - 2);
+                lastSetPoint.x -= 1;
+                stroke->deletePointsFrom(pointCount - 2);
+                stroke->addPoint(lastSetPoint);
+                stroke->addPoint(currPoint);
+                this->redrawable->rerenderRect(x, y, w + 1, h);
             }
-            */
+            break;
+        }
+            //
     }
     return false;
 }
