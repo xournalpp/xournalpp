@@ -37,14 +37,24 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling): view(view), s
 
 void Layout::horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
     Layout::checkScroll(adjustment, layout->lastScrollHorizontal);
-    layout->updateVisibility();
-    layout->scrollHandling->scrollChanged();
+    if (layout->listenScroll) {
+        layout->scrollChangedCallback();
+    }
 }
 
 void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
     Layout::checkScroll(adjustment, layout->lastScrollVertical);
-    layout->updateVisibility();
-    layout->scrollHandling->scrollChanged();
+    if (layout->listenScroll) {
+        layout->scrollChangedCallback();
+    }
+}
+
+void Layout::scrollChangedCallback() {
+    size_t selPage = this->updateVisibility();
+    this->scrollHandling->scrollChanged();
+    if (selPage != this->view->getCurrentPage()) {
+        this->view->getControl()->firePageSelected(selPage);
+    }
 }
 
 Layout::~Layout() = default;
@@ -53,7 +63,7 @@ void Layout::checkScroll(GtkAdjustment* adjustment, double& lastScroll) {
     lastScroll = gtk_adjustment_get_value(adjustment);
 }
 
-void Layout::updateVisibility() {
+size_t Layout::updateVisibility() {
     Rectangle visRect = getVisibleRect();
 
     // step through every possible page position and update using p->setIsVisible()
@@ -102,7 +112,7 @@ void Layout::updateVisibility() {
         x1 = 0;
     }
 
-    this->view->getControl()->firePageSelected(mostPageNr);
+    return mostPageNr;
 }
 
 auto Layout::getVisibleRect() -> Rectangle {
@@ -256,14 +266,8 @@ void Layout::layoutPages(int width, int height) {
 void Layout::setLayoutSize(int width, int height) { this->scrollHandling->setLayoutSize(width, height); }
 
 void Layout::scrollRelative(double x, double y) {
-    if (this->view->getControl()->getSettings()->isPresentationMode()) {
-        return;
-    }
-
-    gtk_adjustment_set_value(scrollHandling->getHorizontal(),
-                             gtk_adjustment_get_value(scrollHandling->getHorizontal()) + x);
-    gtk_adjustment_set_value(scrollHandling->getVertical(),
-                             gtk_adjustment_get_value(scrollHandling->getVertical()) + y);
+    this->scrollAbs(gtk_adjustment_get_value(scrollHandling->getHorizontal()) + x,
+                    gtk_adjustment_get_value(scrollHandling->getHorizontal()) + y);
 }
 
 void Layout::scrollAbs(double x, double y) {
@@ -271,14 +275,21 @@ void Layout::scrollAbs(double x, double y) {
         return;
     }
 
-    gtk_adjustment_set_value(scrollHandling->getHorizontal(), x);
+    // "Atomically" set both scroll values before the callback
+    this->listenScroll = false;
     gtk_adjustment_set_value(scrollHandling->getVertical(), y);
+    gtk_adjustment_set_value(scrollHandling->getHorizontal(), x);
+    this->listenScroll = true;
+    this->scrollChangedCallback();
 }
 
 
 void Layout::ensureRectIsVisible(int x, int y, int width, int height) {
-    gtk_adjustment_clamp_page(scrollHandling->getHorizontal(), x - 5, x + width + 10);
+    this->listenScroll = false;
     gtk_adjustment_clamp_page(scrollHandling->getVertical(), y - 5, y + height + 10);
+    gtk_adjustment_clamp_page(scrollHandling->getHorizontal(), x - 5, x + width + 10);
+    this->listenScroll = true;
+    this->scrollChangedCallback();
 }
 
 

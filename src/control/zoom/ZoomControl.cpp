@@ -173,8 +173,8 @@ auto ZoomControl::getZoom() const -> double { return this->zoom; }
 
 auto ZoomControl::getZoomReal() const -> double { return this->zoom / this->zoom100Value; }
 
-void ZoomControl::setZoom(double zoom) {
-    this->zoom = zoom;
+void ZoomControl::setZoom(double newZoom) {
+    this->zoom = newZoom;
     fireZoomChanged();
 }
 
@@ -256,7 +256,7 @@ void ZoomControl::zoom100() {
 
 void ZoomControl::zoomFit() {
     if (this->zoomFitMode && !this->zoomPresentationMode && this->zoom != this->zoomFitValue) {
-        startZoomSequence(-1, -1);
+        this->startZoomSequence(-1, -1);
         this->zoomSequenceChange(this->zoomFitValue, false);
         endZoomSequence();
     }

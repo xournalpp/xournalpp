@@ -87,11 +87,11 @@ public:
     void layoutPages(int width, int height);
 
     /**
-     * Updates the current XojPageView. The XojPageView is selected based on
-     * the percentage of the visible area of the XojPageView relative
-     * to its total area.
+     * Updates page visibility.
+     *
+     * @return the XojPageView with the maximum ratio of visible area to viewport area.
      */
-    void updateVisibility();
+    size_t updateVisibility();
 
     /**
      * Return the pageview containing co-ordinates.
@@ -104,9 +104,11 @@ public:
      */
     LayoutMapper::optional_size_t getIndexAtGridMap(size_t row, size_t col);
 
-protected:
+private:
     static void horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
     static void verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
+
+    void scrollChangedCallback();
 
 private:
     static void checkScroll(GtkAdjustment* adjustment, double& lastScroll);
@@ -143,4 +145,12 @@ private:
      * Todo: we may want to remove the additional calculation in layoutPages, since we stored those values in
      */
     bool valid = false;
+
+    /**
+     * When disabled, do not trigger scroll change callback on GTK scroll
+     * events. This is useful when changing both scroll coordinates at the same
+     * time (the page selection logic requires scroll coordinates to be updated
+     * atomically).
+     */
+    bool listenScroll = true;
 };

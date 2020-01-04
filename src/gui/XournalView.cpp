@@ -496,8 +496,29 @@ void XournalView::zoomChanged() {
     }
 
 
-    if (zoom->isZoomPresentationMode() || zoom->isZoomFitMode()) {
-        scrollTo(currentPage);
+    if (zoom->isZoomPresentationMode()) {
+        // Now that the zoom has been updated, we must also update the scroll.
+        // But the page coordinates will be incorrect until the layout is
+        // recalculated and the widgets are resized, so defer scrolling.
+        Util::execInUiThread([=] {
+            // TODO: Possible race condition
+            scrollTo(currentPage);
+        });
+    } else if (zoom->isZoomFitMode()) {
+        // The zoom is also updated here, like in the case of presentation mode.
+        Util::execInUiThread([=] {
+            // TODO: Possible race condition. If the user scrolls down quickly,
+            // the "fit" page will not be scrolled down to, so the previous page
+            // will be reselected and fit to.
+            if (this->getCurrentPage() == currentPage) {
+                // We cannot use `scrollTo` here since it will also fire another
+                // page selection event.
+                layout->ensureRectIsVisible(view->getX(),
+                                            view->getY(),
+                                            view->getDisplayWidth(),
+                                            view->getDisplayHeight());
+            }
+        });
     } else {
         std::tuple<double, double> pos = zoom->getScrollPositionAfterZoom();
         if (std::get<0>(pos) != -1 && std::get<1>(pos) != -1) {
