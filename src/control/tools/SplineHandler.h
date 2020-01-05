@@ -32,8 +32,9 @@ public:
 private:
     virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
     void finalizeSpline();
+    void movePoint(double dx, double dy);
 
 protected:
     DocumentView view;
-    const double radiusConst = 1.5;
+    const double radiusConst = 10.0;
 };

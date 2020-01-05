@@ -30,11 +30,12 @@ void SplineHandler::draw(cairo_t* cr) {
     }
 
     double zoom = xournal->getZoom();
-    double radius = radiusConst * zoom;
+    double radius = radiusConst / zoom;
     if (xournal->getControl()->getToolHandler()->getDrawingType() != DRAWING_TYPE_SPLINE) {
         g_warning("Drawing type is not spline any longer");
-        stroke = nullptr;
-        xournal->getCursor()->updateCursor();
+        finalizeSpline();
+        //        stroke = nullptr;
+        //        xournal->getCursor()->updateCursor();
         return;
     }
 
@@ -42,7 +43,7 @@ void SplineHandler::draw(cairo_t* cr) {
     cairo_scale(cr, zoom * dpiScaleFactor, zoom * dpiScaleFactor);
 
     // draw circles around knot points
-    double lineWidth = 0.5 * zoom;
+    double lineWidth = 2 / zoom;
     int pointCount = stroke->getPointCount();
     cairo_set_line_width(cr, lineWidth);
     Point firstPoint = stroke->getPoint(0);
@@ -78,7 +79,7 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
 
     int pointCount = stroke->getPointCount();
     double zoom = xournal->getZoom();
-    double radius = radiusConst * zoom;
+    double radius = radiusConst / zoom;
     double x = stroke->getX() - radius;
     double y = stroke->getY() - radius;
     double w = stroke->getElementWidth() + 2 * radius;
@@ -86,77 +87,39 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
 
     switch (event->keyval) {
         case GDK_KEY_Escape: {
-            if (pointCount > 1) {
+            if (pointCount > 0) {
                 // remove dynamically changing point at cursor position
                 stroke->deletePoint(pointCount - 1);
-                this->redrawable->repaintRect(x, y, w, h);
+                this->redrawable->rerenderRect(x, y, w, h);
             }
             finalizeSpline();
             return true;
         }
-        // Actions after backspace or key arrow press
         case GDK_KEY_BackSpace: {
-            if (pointCount > 2) {
+            if (pointCount > 1) {
                 // delete last non dynammically changing point
                 stroke->deletePoint(pointCount - 2);
-                this->redrawable->repaintRect(x, y, w, h);
             }
             break;
         }
         case GDK_KEY_Up: {
-            if (pointCount > 2) {
-                // move last non dynammically changing point up
-                Point currPoint = stroke->getPoint(pointCount - 1);
-                Point lastSetPoint = stroke->getPoint(pointCount - 2);
-                lastSetPoint.y -= 1;
-                stroke->deletePointsFrom(pointCount - 2);
-                stroke->addPoint(lastSetPoint);
-                stroke->addPoint(currPoint);
-                this->redrawable->repaintRect(x, y, w, h + 1);
-            }
+            movePoint(0, -1);
             break;
         }
         case GDK_KEY_Down: {
-            if (pointCount > 2) {
-                // move last non dynammically changing point down
-                Point currPoint = stroke->getPoint(pointCount - 1);
-                Point lastSetPoint = stroke->getPoint(pointCount - 2);
-                lastSetPoint.y += 1;
-                stroke->deletePointsFrom(pointCount - 2);
-                stroke->addPoint(lastSetPoint);
-                stroke->addPoint(currPoint);
-                this->redrawable->repaintRect(x, y, w, h + 1);
-            }
+            movePoint(0, 1);
             break;
         }
         case GDK_KEY_Right: {
-            if (pointCount > 2) {
-                // move last non dynammically changing point right
-                Point currPoint = stroke->getPoint(pointCount - 1);
-                Point lastSetPoint = stroke->getPoint(pointCount - 2);
-                lastSetPoint.x += 1;
-                stroke->deletePointsFrom(pointCount - 2);
-                stroke->addPoint(lastSetPoint);
-                stroke->addPoint(currPoint);
-                this->redrawable->rerenderRect(x, y, w + 1, h);
-            }
+            movePoint(1, 0);
             break;
         }
         case GDK_KEY_Left: {
-            if (pointCount > 2) {
-                // move last non dynammically changing point left
-                Point currPoint = stroke->getPoint(pointCount - 1);
-                Point lastSetPoint = stroke->getPoint(pointCount - 2);
-                lastSetPoint.x -= 1;
-                stroke->deletePointsFrom(pointCount - 2);
-                stroke->addPoint(lastSetPoint);
-                stroke->addPoint(currPoint);
-                this->redrawable->rerenderRect(x, y, w + 1, h);
-            }
+            movePoint(-1, 0);
             break;
         }
-            //
     }
+    this->redrawable->rerenderRect(x - 1, y - 1, w + 2, h + 2);
     return false;
 }
 
@@ -166,7 +129,7 @@ auto SplineHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
     }
 
     double zoom = xournal->getZoom();
-    double radius = radiusConst * zoom;
+    double radius = radiusConst / zoom;
     int pointCount = stroke->getPointCount();
 
     Point currentPoint = Point(pos.x / zoom, pos.y / zoom);
@@ -197,7 +160,7 @@ void SplineHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     }
 
     double zoom = xournal->getZoom();
-    double radius = radiusConst * zoom;
+    double radius = radiusConst / zoom;
     Point currPoint = Point(pos.x / zoom, pos.y / zoom);
     Point firstPoint = stroke->getPoint(0);
     double dist = currPoint.lineLengthTo(firstPoint);
@@ -219,6 +182,20 @@ void SplineHandler::onButtonPressEvent(const PositionInputData& pos) {
 }
 
 void SplineHandler::onButtonDoublePressEvent(const PositionInputData& pos) { finalizeSpline(); }
+
+void SplineHandler::movePoint(double dx, double dy) {
+    // move last non dynamically changing point
+    int pointCount = stroke->getPointCount();
+    if (pointCount > 1) {
+        Point currPoint = stroke->getPoint(pointCount - 1);
+        Point lastSetPoint = stroke->getPoint(pointCount - 2);
+        lastSetPoint.x += dx;
+        lastSetPoint.y += dy;
+        stroke->deletePointsFrom(pointCount - 2);
+        stroke->addPoint(lastSetPoint);
+        stroke->addPoint(currPoint);
+    }
+}
 
 void SplineHandler::finalizeSpline() {
     if (!stroke) {
@@ -246,9 +223,9 @@ void SplineHandler::finalizeSpline() {
     undo->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, stroke));
 
     layer->addElement(stroke);
-    page->fireElementChanged(stroke);  // calls draw method
+    //    page->fireElementChanged(stroke);  --> this would result in a crash if called from draw method
     double zoom = xournal->getZoom();
-    double radius = radiusConst * zoom;
+    double radius = radiusConst / zoom;
 
 
     this->redrawable->rerenderRect(stroke->getX() - radius, stroke->getY() - radius,
