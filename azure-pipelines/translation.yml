@@ -22,8 +22,8 @@ stages:
         mkdir build
       displayName: 'Create build directory'
     - bash: |
-        export CXX=g++-9
-        export CC=gcc-9
+        export CXX=g++-8
+        export CC=gcc-8
         cmake ..
         cmake --build . --target pot
       workingDirectory: ./build
