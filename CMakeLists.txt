@@ -73,6 +73,9 @@ macro(add_includes_ldflags LDFLAGS INCLUDES)
     # set(xournalpp_INCLUDE_DIRS ${xournalpp_INCLUDE_DIRS} "${INCLUDES}")
 endmacro (add_includes_ldflags LDFLAGS INCLUDES)
 
+find_package(CXX17 REQUIRED COMPONENTS optional)
+find_package(Filesystem REQUIRED COMPONENTS Boost Final Experimental)
+
 # libexec
 if (WIN32)
 	set(xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-mwindows")
@@ -167,6 +170,10 @@ configure_file(
 		src/config-features.h.in
 		src/config-features.h
 		ESCAPE_QUOTES @ONLY
+)
+configure_file (
+		src/filesystem.h.in
+		src/filesystem.h
 )
 
 ## I18n ##
