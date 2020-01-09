@@ -65,7 +65,7 @@ Xournal++ features:
 * bug reporting, autosave, and auto backup tools
 * Customizeable toolbar, with multiple configurations, e.g. to optimize toolbar for portrait / landscape
 * Page Template definitions
-* Shape drawing (line, arrow, circle, rect)
+* Shape drawing (line, arrow, circle, rect, splines)
 * Shape resizing and rotation
 * Rotation snapping every 45 degrees
 * Rect snapping to grid

@@ -278,6 +278,10 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
     this->startStrokeTime = pos.timestamp;
 }
 
+void StrokeHandler::onButtonDoublePressEvent(const PositionInputData& pos) {
+    // nothing to do
+}
+
 void StrokeHandler::destroySurface() {
     if (surfMask || crMask) {
         cairo_destroy(crMask);
