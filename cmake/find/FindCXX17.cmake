@@ -23,7 +23,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED on)
 
 # Normalize and check the component list we were given
 set(want_components ${CXX17_FIND_COMPONENTS})
-set(extra_components ${CXX17_FIND_COMPONENTS})
 
 # Warn on any unrecognized components
 if (extra_components)
@@ -39,13 +38,6 @@ if ("optional" IN_LIST want_components)
         message(FATAL_ERROR "optional header not found")
     endif ()
 
-endif ()
-if ("filesystem" IN_LIST want_components)
-    if (CXX17_FIND_REQUIRED)
-        find_package(Filesystem REQUIRED COMPONENTS Final Experimental Boost)
-    else (CXX17_FIND_REQUIRED)
-        find_package(Filesystem COMPONENTS Final Experimental Boost)
-    endif (CXX17_FIND_REQUIRED)
 endif ()
 if ("map" IN_LIST want_components)
     string(CONFIGURE [[
@@ -67,16 +59,9 @@ if ("map" IN_LIST want_components)
     endif ()
 endif ()
 
-if (TARGET cxx17)
-    # This module has already been processed. Don't do it again.
-    return()
-endif ()
-
-add_library(cxx17 INTERFACE IMPORTED)
-target_compile_features(cxx17 INTERFACE cxx_std_17)
 set(_found TRUE)
 
 cmake_pop_check_state()
 
-set(CXX17_FOUND ${_found} CACHE INTERNAL "")
+set(CXX17_FOUND ${_found} CACHE BOOL "TRUE if we can compile and link a program using cxx17" FORCE)
 
