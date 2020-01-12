@@ -228,6 +228,9 @@ void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
     this->startStrokeTime = pos.timestamp;
 }
 
+void BaseStrokeHandler::onButtonDoublePressEvent(const PositionInputData& pos) {
+    // nothing to do
+}
 
 void BaseStrokeHandler::modifyModifiersByDrawDir(double width, double height, bool changeCursor) {
     bool gestureShift = this->flipShift;

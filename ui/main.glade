@@ -222,8 +222,8 @@
                             <property name="use_underline">True</property>
                             <property name="use_stock">True</property>
                             <signal name="activate" handler="ACTION_SAVE_AS" swapped="no"/>
-                            <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                             <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -905,8 +905,8 @@
                             <property name="use_underline">True</property>
                             <property name="use_stock">True</property>
                             <signal name="activate" handler="ACTION_ZOOM_IN" swapped="no"/>
-                            <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                             <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -918,8 +918,8 @@
                             <property name="use_underline">True</property>
                             <property name="use_stock">True</property>
                             <signal name="activate" handler="ACTION_ZOOM_OUT" swapped="no"/>
-                            <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                             <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -1365,6 +1365,16 @@
                             <property name="use_underline">True</property>
                             <signal name="toggled" handler="ACTION_RULER" swapped="no"/>
                             <accelerator key="6" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckMenuItem" id="menuToolsDrawSpline">
+                            <property name="name">menuToolsDrawSpline</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="use_underline">True</property>
+                            <signal name="toggled" handler="ACTION_TOOL_DRAW_SPLINE" swapped="no"/>
+                            <accelerator key="7" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -1843,7 +1853,6 @@
                             <signal name="activate" handler="ACTION_AUDIO_STOP_PLAYBACK" swapped="no"/>
                           </object>
                         </child>
-
                         <child>
                           <object class="GtkMenuItem" id="menuAudioSeekForwards">
                             <property name="name">menuAudioSeekForwards</property>
@@ -1854,7 +1863,6 @@
                             <signal name="activate" handler="ACTION_AUDIO_SEEK_FORWARDS" swapped="no"/>
                           </object>
                         </child>
-
                         <child>
                           <object class="GtkMenuItem" id="menuAudioSeekBackwards">
                             <property name="name">menuAudioSeekBackwards</property>
@@ -1865,7 +1873,6 @@
                             <signal name="activate" handler="ACTION_AUDIO_SEEK_BACKWARDS" swapped="no"/>
                           </object>
                         </child>
-
                         <child>
                           <object class="GtkMenuItem" id="menuEditTex">
                             <property name="name">menuEditTex</property>

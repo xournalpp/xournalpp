@@ -65,7 +65,7 @@ Xournal++ features:
 * bug reporting, autosave, and auto backup tools
 * Customizeable toolbar, with multiple configurations, e.g. to optimize toolbar for portrait / landscape
 * Page Template definitions
-* Shape drawing (line, arrow, circle, rect)
+* Shape drawing (line, arrow, circle, rect, splines)
 * Shape resizing and rotation
 * Rotation snapping every 45 degrees
 * Rect snapping to grid
@@ -156,6 +156,20 @@ sudo add-apt-repository ppa:andreasbutti/xournalpp-master
 sudo apt update
 sudo apt install xournalpp
 ```
+
+### Fedora
+
+The released version of xournalpp is available in the main repository via _Software_ or the following command:
+
+```bash
+sudo dnf install xournalpp
+```
+or 
+```bash
+pkcon install xournalpp
+```
+The bleeding edge packages synced to xournalpp git master on a daily basis are available from [COPR luya/xournalpp](https://copr.fedorainfracloud.org/coprs/luya/xournalpp/).
+
 
 ### openSUSE
 On openSUSE Tumbleweed, the released version of xournalpp is available from the main repository:

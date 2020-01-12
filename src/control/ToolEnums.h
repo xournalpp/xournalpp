@@ -45,6 +45,7 @@ enum DrawingType {
     DRAWING_TYPE_CIRCLE,
     DRAWING_TYPE_ARROW,
     DRAWING_TYPE_COORDINATE_SYSTEM,
+    DRAWING_TYPE_SPLINE,
     DRAWING_TYPE_STROKE_RECOGNIZER
 };
 string drawingTypeToString(DrawingType type);
@@ -72,6 +73,7 @@ enum ToolType {
     TOOL_DRAW_ARROW = 14,
     TOOL_DRAW_COORDINATE_SYSTEM = 15,
     TOOL_FLOATING_TOOLBOX = 16,
+    TOOL_DRAW_SPLINE = 17,
 
     TOOL_END_ENTRY
 };
@@ -100,4 +102,5 @@ enum ToolCapabilities {
     TOOL_CAP_FILL = 1 << 7,
     TOOL_CAP_COORDINATE_SYSTEM = 1 << 8,
     TOOL_CAP_DASH_LINE = 1 << 9,
+    TOOL_CAP_SPLINE = 1 << 10,
 };
