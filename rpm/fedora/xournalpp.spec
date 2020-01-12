@@ -1,13 +1,19 @@
-%global         build_timestamp %{lua: print(os.date("%Y%m%d"))}
+%global	build_repo https://github.com/xournalpp/xournalpp
+
+
+%global latest_data %(git ls-remote %{build_repo} | grep 'refs/tags' | sort -Vrk 2 | head -1)
+%global numeric_ver %(echo %{latest_data} | grep -oP 'xournalpp.*' | grep -oP '[0-9.]+')
+%global commit_date %(date +"%Y%m%d")
+%global rel_build %{commit_date}%{?dist}
 
 Name:           xournalpp
-Version:        1.1.0
-Release:        0.%{build_timestamp}git
+Version:        %{numeric_ver}
+Release:        %{rel_build}
 Summary:        Handwriting note-taking software with PDF annotation support
 
 License:        GPLv2+
 URL:            https://github.com/%{name}/%{name}
-Source:        %{url}/archive/master.tar.gz#/%{name}-%{version}.tar.gz
+Source:         %{url}/archive/master.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildRequires:  cmake3 >= 3.10
 BuildRequires:  desktop-file-utils
@@ -96,8 +102,8 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %{_datadir}/%{name}/ui
 
 %changelog
-* Mon Dec 16 2019 Luya Tshimbalanga <luya@fedoraproject.org> - 1.1.0-0
-- Convert to automatic daily snapshot
+* Mon Dec 16 2019 Luya Tshimbalanga <luya@fedoraproject.org>
+- Implement some version autodetection to reduce maintenance work.
 
 * Mon Dec 16 2019 Luya Tshimbalanga <luya@fedoraproject.org> - 1.0.16-7
 - Remove architecture requirement for plugins and ui
