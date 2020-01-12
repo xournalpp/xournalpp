@@ -7,7 +7,7 @@
 %global rel_build %{commit_date}%{?dist}
 
 Name:           xournalpp
-Version:        %{numeric_ver}
+Version:        1.0.12
 Release:        %{rel_build}
 Summary:        Handwriting note-taking software with PDF annotation support
 
