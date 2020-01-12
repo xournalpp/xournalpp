@@ -157,6 +157,20 @@ sudo apt update
 sudo apt install xournalpp
 ```
 
+### Fedora
+
+The released version of xournalpp is available in the main repository via _Software_ or the following command:
+
+```bash
+sudo dnf install xournalpp
+```
+or 
+```bash
+pkcon install xournalpp
+```
+The bleeding edge packages synced to xournalpp git master on a daily basis are available from [COPR luya/xournalpp](https://copr.fedorainfracloud.org/coprs/luya/xournalpp/).
+
+
 ### openSUSE
 On openSUSE Tumbleweed, the released version of xournalpp is available from the main repository:
 ```bash
