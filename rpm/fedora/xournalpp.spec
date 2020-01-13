@@ -12,7 +12,7 @@ Summary:        Handwriting note-taking software with PDF annotation support
 
 License:        GPLv2+
 URL:            https://github.com/%{name}/%{name}
-Source:         %{url}/archive/%{build_commit}.tar.gz
+Source:         %{url}/archive/%{build_branch}.tar.gz
 
 BuildRequires:  cmake3 >= 3.10
 BuildRequires:  desktop-file-utils
@@ -55,7 +55,7 @@ The %{name}-ui package contains a graphical user interface for  %{name}.
 
 
 %prep
-%autosetup
+%autosetup -n %{name}-%{build_commit}
 
 #Fix tlh aka klingon language
 mv po/tlh_AA.po po/tlh.po
