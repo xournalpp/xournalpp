@@ -20,6 +20,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  pkgconfig(cppunit) >= 1.12-0
 BuildRequires:  gcc-c++
 BuildRequires:  gettext
+BuildRequires:  git
 BuildRequires:  libappstream-glib
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gtk+-3.0)
