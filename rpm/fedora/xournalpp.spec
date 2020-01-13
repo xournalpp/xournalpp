@@ -4,11 +4,11 @@
 %global	build_commit %(git ls-remote %{build_repo} | grep "refs/heads/%{build_branch}" | cut -c1-41)
 %global	build_shortcommit %(git ls-remote %{build_repo} | grep "refs/heads/%{build_branch}" | cut -c1-8)
 %global	build_timestamp %(date +"%Y%m%d")
-%global	rel_build %{build_timestamp}.%{build_shortcommit}
+%global	rel_build %{build_timestamp}.%{build_shortcommit}%{?dist}
 
 Name:           xournalpp
 Version:        %{version_string}
-Release:        0.1.%{build_timestamp}.%{build_shortcommit}%{?dist}
+Release:        0.1.%{rel_build}
 Summary:        Handwriting note-taking software with PDF annotation support
 
 License:        GPLv2+
