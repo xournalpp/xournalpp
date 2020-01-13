@@ -1,3 +1,4 @@
+%global	build_repo https://github.com/xournalpp/xournalpp
 %global	build_branch master
 %global	version_string 1.1.0
 %global	build_commit %(git ls-remote %{build_repo} | grep "refs/heads/%{build_branch}")
