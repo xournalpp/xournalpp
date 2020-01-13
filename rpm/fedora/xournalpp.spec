@@ -2,7 +2,7 @@
 %global	build_branch master
 %global	version_string 1.1.0
 %global	build_commit %(git ls-remote %{build_repo} | grep "refs/heads/%{build_branch}" | cut -c1-41)
-%global	build_shortcommit %(c=%{build_commit}; echo ${c:0:7})
+%global	build_shortcommit %(git ls-remote %{build_repo} | grep "refs/heads/%{build_branch}" | cut -c1-8)
 %global	build_timestamp %(date +"%Y%m%d")
 %global	rel_build %{build_timestamp}.%{build_shortcommit}
 
