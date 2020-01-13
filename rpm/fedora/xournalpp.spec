@@ -7,12 +7,12 @@
 
 Name:           xournalpp
 Version:        %{version_string}
-Release:        0.1%{?gitrel}%{?dist}
+Release:        0.1%{?rel_build}%{?dist}
 Summary:        Handwriting note-taking software with PDF annotation support
 
 License:        GPLv2+
 URL:            https://github.com/%{name}/%{name}
-Source:         %{url}/archive/%{build_branch}.tar.gz
+Source:         %{url}/archive/%{build_commit}.tar.gz
 
 BuildRequires:  cmake3 >= 3.10
 BuildRequires:  desktop-file-utils
