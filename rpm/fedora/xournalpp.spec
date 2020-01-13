@@ -6,7 +6,6 @@
 %global	build_timestamp %(date +"%Y%m%d")
 %global	rel_build .%{build_timestamp}.%{build_shortcommit}%{?dist}
 
-921103db8259eb9de72f42db8b939895f5651489
 Name:           xournalpp
 Version:        %{version_string}
 Release:        0.1%{?rel_build}%{?dist}
