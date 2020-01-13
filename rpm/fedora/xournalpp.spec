@@ -1,11 +1,12 @@
 %global	build_repo https://github.com/xournalpp/xournalpp
 %global	build_branch master
 %global	version_string 1.1.0
-%global	build_commit %(git ls-remote %{build_repo} | grep "refs/heads/%{build_branch}")
+%global	build_commit %(git ls-remote %{build_repo} | grep "refs/heads/%{build_branch}" | cut -c1-41)
 %global	build_shortcommit %(c=%{build_commit}; echo ${c:0:7})
 %global	build_timestamp %(date +"%Y%m%d")
 %global	rel_build .%{build_timestamp}.%{build_shortcommit}%{?dist}
 
+921103db8259eb9de72f42db8b939895f5651489
 Name:           xournalpp
 Version:        %{version_string}
 Release:        0.1%{?rel_build}%{?dist}
