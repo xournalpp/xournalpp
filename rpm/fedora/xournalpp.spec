@@ -1,23 +1,22 @@
-%global	build_repo https://github.com/xournalpp/xournalpp
-
-
-%global latest_data %(git ls-remote %{build_repo} | grep 'refs/tags' | sort -Vrk 2 | head -1)
-%global numeric_ver %(echo %{latest_data} | grep -oP 'xournalpp.*' | grep -oP '[0-9.]+')
-%global commit_date %(date +"%Y%m%d")
-%global rel_build %{commit_date}%{?dist}
+%global	build_branch master
+%global	version_string 1.1.0
+%global	build_commit %(git ls-remote %{build_repo} | grep "refs/heads/%{build_branch}")
+%global	build_shortcommit %(c=%{build_commit}; echo ${c:0:7})
+%global	build_timestamp %(date +"%Y%m%d")
+%global	rel_build .%{build_timestamp}.%{build_shortcommit}%{?dist}
 
 Name:           xournalpp
-Version:        1.0.12
-Release:        %{rel_build}
+Version:        %{version_string}
+Release:        0.1%{?gitrel}%{?dist}
 Summary:        Handwriting note-taking software with PDF annotation support
 
 License:        GPLv2+
 URL:            https://github.com/%{name}/%{name}
-Source:         %{url}/archive/master.tar.gz#/%{name}-%{version}.tar.gz
+Source:         %{url}/archive/%{build_branch}.tar.gz
 
 BuildRequires:  cmake3 >= 3.10
 BuildRequires:  desktop-file-utils
-BuildRequires:  cppunit-devel >= 1.12-0
+BuildRequires:  pkgconfig(cppunit) >= 1.12-0
 BuildRequires:  gcc-c++
 BuildRequires:  gettext
 BuildRequires:  libappstream-glib
@@ -30,7 +29,6 @@ BuildRequires:  pkgconfig(poppler-glib)
 BuildRequires:  pkgconfig(portaudiocpp) >= 12
 BuildRequires:  pkgconfig(sndfile)
 Requires:       hicolor-icon-theme
-Requires:       kde-filesystem
 Requires:       texlive-scheme-basic
 Requires:       texlive-dvipng
 Requires:       texlive-standalone
