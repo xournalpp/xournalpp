@@ -221,7 +221,7 @@ void DocumentView::paintBackgroundImage() {
 }
 
 void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container) {
-    for (Element* e: *container->getElements()) {
+    for (Element* e: container->getElements()) {
         drawElement(cr, e);
     }
 }

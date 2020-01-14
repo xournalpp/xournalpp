@@ -17,6 +17,6 @@ class Element;
 
 class ElementContainer {
 public:
-    virtual vector<Element*>* getElements() = 0;
-    virtual ~ElementContainer() {}
+    virtual vector<Element*> const& getElements() const = 0;
+    virtual ~ElementContainer() = default;
 };

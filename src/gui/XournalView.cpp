@@ -612,7 +612,7 @@ void XournalView::setSelection(EditSelection* selection) {
     bool canChangeColor = false;
     bool canChangeFill = false;
 
-    for (Element* e: *selection->getElements()) {
+    for (Element* e: selection->getElements()) {
         if (e->getType() == ELEMENT_TEXT) {
             canChangeColor = true;
         } else if (e->getType() == ELEMENT_STROKE) {

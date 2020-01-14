@@ -401,10 +401,10 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
         // original coordinates of the selection.
         double origx = x - (selection->getXOnView() - selection->getOriginalXOnView());
         double origy = y - (selection->getYOnView() - selection->getOriginalYOnView());
-        std::vector<Element*>* elems = selection->getElements();
-        auto it = std::find_if(elems->begin(), elems->end(),
-                               [&](Element*& elem) { return elem->intersectsArea(origx - 5, origy - 5, 5, 5); });
-        if (it != elems->end()) {
+        std::vector<Element*> const& elems = selection->getElements();
+        auto it = std::find_if(begin(elems), end(elems),
+                               [&](Element* elem) { return elem->intersectsArea(origx - 5, origy - 5, 5, 5); });
+        if (it != end(elems)) {
             // Enter editing mode on the selected object
             Element* object = *it;
             ElementType elemType = object->getType();
@@ -875,7 +875,7 @@ auto XojPageView::getSelectedTex() -> TexImage* {
         return nullptr;
     }
 
-    for (Element* e: *theSelection->getElements()) {
+    for (Element* e: theSelection->getElements()) {
         if (e->getType() == ELEMENT_TEXIMAGE) {
             return dynamic_cast<TexImage*>(e);
         }
@@ -889,7 +889,7 @@ auto XojPageView::getSelectedText() -> Text* {
         return nullptr;
     }
 
-    for (Element* e: *theSelection->getElements()) {
+    for (Element* e: theSelection->getElements()) {
         if (e->getType() == ELEMENT_TEXT) {
             return dynamic_cast<Text*>(e);
         }

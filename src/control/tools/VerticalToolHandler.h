@@ -33,7 +33,7 @@ public:
 
     std::unique_ptr<MoveUndoAction> finalize();
 
-    vector<Element*>* getElements() override;
+    vector<Element*> const& getElements() const override;
 
 private:
     Redrawable* view = nullptr;

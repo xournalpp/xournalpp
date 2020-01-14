@@ -293,7 +293,7 @@ void EditSelection::addElement(Element* e, Layer::ElementIndex order) {
 /**
  * Returns all containig elements of this selections
  */
-auto EditSelection::getElements() -> vector<Element*>* { return this->contents->getElements(); }
+auto EditSelection::getElements() const -> vector<Element*> const& { return this->contents->getElements(); }
 
 /**
  * Finish the current movement
@@ -791,8 +791,8 @@ void EditSelection::serialize(ObjectOutputStream& out) {
     this->contents->serialize(out);
     out.endObject();
 
-    out.writeInt(this->getElements()->size());
-    for (Element* e: *this->getElements()) {
+    out.writeInt(this->getElements().size());
+    for (Element* e: this->getElements()) {
         e->serialize(out);
     }
 }

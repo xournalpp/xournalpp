@@ -81,7 +81,7 @@ public:
     /**
      * Returns all containig elements of this selections
      */
-    vector<Element*>* getElements();
+    vector<Element*> const& getElements() const;
 
 public:
     /**
@@ -115,7 +115,7 @@ public:
     /**
      * Gets the original view of the contents
      */
-    XojPageView* getSourceView();
+    XojPageView* getSourceView() const;
 
 
     /**

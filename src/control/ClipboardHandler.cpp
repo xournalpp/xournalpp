@@ -139,7 +139,7 @@ auto ClipboardHandler::copy() -> bool {
 
     GList* textElements = nullptr;
 
-    for (Element* e: *this->selection->getElements()) {
+    for (Element* e: this->selection->getElements()) {
         if (e->getType() == ELEMENT_TEXT) {
             textElements = g_list_insert_sorted(textElements, e, reinterpret_cast<GCompareFunc>(ElementCompareFunc));
         }

@@ -74,7 +74,7 @@ void EditSelectionContents::addElement(Element* e, Layer::ElementIndex order) {
 /**
  * Returns all containig elements of this selections
  */
-auto EditSelectionContents::getElements() -> vector<Element*>* { return &this->selected; }
+auto EditSelectionContents::getElements() const -> vector<Element*> const& { return this->selected; }
 
 /**
  * Sets the tool size for pen or eraser, returs an undo action
@@ -122,8 +122,6 @@ auto EditSelectionContents::setSize(ToolSize size, const double* thicknessPen, c
 
         return undo;
     }
-
-
     delete undo;
     return nullptr;
 }
@@ -186,7 +184,6 @@ auto EditSelectionContents::setFont(XojFont& font) -> UndoAction* {
     double y2 = 0.0 / 0.0;
 
     auto* undo = new FontUndoAction(this->sourcePage, this->sourceLayer);
-
     for (Element* e: this->selected) {
         if (e->getType() == ELEMENT_TEXT) {
             Text* t = dynamic_cast<Text*>(e);
@@ -359,7 +356,7 @@ auto EditSelectionContents::getOriginalX() const -> double { return this->origin
 
 auto EditSelectionContents::getOriginalY() const -> double { return this->originalY; }
 
-auto EditSelectionContents::getSourceView() -> XojPageView* { return this->sourceView; }
+auto EditSelectionContents::getSourceView() const -> XojPageView* { return this->sourceView; }
 
 
 void EditSelectionContents::updateContent(double x, double y, double rotation, double width, double height,
@@ -493,7 +490,7 @@ auto EditSelectionContents::copySelection(PageRef page, XojPageView* view, doubl
 
     vector<Element*> new_elems;
 
-    for (Element* e: *getElements()) {
+    for (Element* e: getElements()) {
         Element* ec = e->clone();
 
         ec->move(x - this->originalX, y - this->originalY);

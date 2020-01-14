@@ -162,7 +162,7 @@ public:
     /**
      * Returns all containig elements of this selections
      */
-    vector<Element*>* getElements();
+    vector<Element*> const& getElements() const;
 
     /**
      * Finish the current movement
