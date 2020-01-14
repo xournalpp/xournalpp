@@ -71,6 +71,12 @@ The binary executable will be placed in the `build/src/` subdirectory.
 
 ### Creating Packages for Package Managers
 
+Please ensure that the `translations` target has been built before
+attempting to generate any package.
+```bash
+cmake --build . --target translations
+```
+
 After compilation, select which packages you want to generate (see the relevant
 sections below) and then run the `package` target. The generated packages will
 be located in `build/packages`. For example:
@@ -133,7 +139,7 @@ You can also build your local clone of Xournal++ by changing the source type to
 
 __We highly discourage installation from source__, as it may lead to issues when
 upgrading to newer versions later on. Please think about creating a native
-package, an AppImage or Flatpak instead. Instructions are below.
+package, an AppImage or Flatpak instead. Instructions are above.
 
 If you don't want to make a package, you can install Xournal++ into your user
 folder (or any other folder) by specifying `CMAKE_INSTALL_PREFIX`:
