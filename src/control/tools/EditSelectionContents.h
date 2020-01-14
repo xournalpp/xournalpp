@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <map>
-#include <string>
+#include <deque>
+#include <utility>
 #include <vector>
 
 #include "control/Tool.h"
@@ -175,12 +175,13 @@ private:
     /**
      * The selected element (the only one which are handled by this instance)
      */
-    vector<Element*> selected;
+    std::vector<Element*> selected;
 
     /**
      * Mapping of elements in the selection to the indexes from the original selection layer.
+     * Defines a insert order over the selection.
      */
-    std::map<Element*, Layer::ElementIndex> indexWithinLayer;
+    std::deque<std::pair<Element*, Layer::ElementIndex>> insertOrder;
 
     /**
      * The rendered elements
