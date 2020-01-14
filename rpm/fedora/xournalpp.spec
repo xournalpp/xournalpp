@@ -4,7 +4,7 @@
 %define	build_commit %(git ls-remote %{build_repo} | grep "refs/heads/%{build_branch}" | cut -c1-41)
 %define	build_shortcommit %(c=%{build_commit}; echo ${c:0:7})
 %global	build_timestamp %(date +"%Y%m%d")
-%global	rel_build %{build_timestamp}.{build_shortcommit}%{?dist}
+%global	rel_build %{build_timestamp}.%{build_shortcommit}%{?dist}
 
 Name:           xournalpp
 Version:        %{version_string}
