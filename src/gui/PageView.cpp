@@ -388,7 +388,8 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
 
     ToolHandler* toolHandler = this->xournal->getControl()->getToolHandler();
     ToolType toolType = toolHandler->getToolType();
-    bool isSelectTool = toolType == TOOL_SELECT_OBJECT || TOOL_SELECT_RECT || TOOL_SELECT_REGION;
+    bool isSelectTool =
+            (toolType == TOOL_SELECT_OBJECT || toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_REGION);
 
     DrawingType drawingType = toolHandler->getDrawingType();
 
