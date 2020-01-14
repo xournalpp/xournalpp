@@ -1,10 +1,10 @@
-%global	build_repo https://github.com/xournalpp/xournalpp
+%global	build_repo https://github.com/xournalpp/xournalpp/
 %global	build_branch master
 %global	version_string 1.1.0
 %define	build_commit %(git ls-remote %{build_repo} | grep "refs/heads/%{build_branch}" | cut -c1-41)
 %define	build_shortcommit %(git ls-remote %{build_repo} | grep "refs/heads/%{build_branch}" | cut -c1-8)
 %global	build_timestamp %(date +"%Y%m%d")
-%global	rel_build %{build_timestamp}%{build_shortcommit}%{?dist}
+%global	rel_build %{build_timestamp}git%{build_shortcommit}%{?dist}
 
 Name:           xournalpp
 Version:        %{version_string}
@@ -57,7 +57,7 @@ The %{name}-ui package contains a graphical user interface for  %{name}.
 
 
 %prep
-%autosetup -n %{name}-%{build_commit}
+%autosetup 
 
 #Fix tlh aka klingon language
 mv po/tlh_AA.po po/tlh.po
