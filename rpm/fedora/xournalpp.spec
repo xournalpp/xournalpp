@@ -5,6 +5,8 @@
 %define	build_shortcommit %(c=%{build_commit}; echo ${c:0:7})
 %global	build_timestamp %(date +"%Y%m%d")
 %global	rel_build %{build_timestamp}git%{build_shortcommit}%{?dist}
+%global         _with_cppunit 1
+
 
 Name:           xournalpp
 Version:        %{version_string}
@@ -17,11 +19,13 @@ Source:         %{url}/archive/%{build_branch}.tar.gz
 
 BuildRequires:  cmake3 >= 3.10
 BuildRequires:  desktop-file-utils
-BuildRequires:  pkgconfig(cppunit) >= 1.12-0
 BuildRequires:  gcc-c++
 BuildRequires:  gettext
 BuildRequires:  git
 BuildRequires:  libappstream-glib
+%{?_with_cppunit:
+BuildRequires:  pkgconfig(cppunit) >= 1.12-0
+}
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gtk+-3.0)
 BuildRequires:  pkgconfig(libxml-2.0)
@@ -30,10 +34,10 @@ BuildRequires:  pkgconfig(lua)
 BuildRequires:  pkgconfig(poppler-glib)
 BuildRequires:  pkgconfig(portaudiocpp) >= 12
 BuildRequires:  pkgconfig(sndfile)
+Recommends:     texlive-scheme-basic
+Recommends:     texlive-dvipng
+Recommends:     texlive-standalone
 Requires:       hicolor-icon-theme
-Requires:       texlive-scheme-basic
-Requires:       texlive-dvipng
-Requires:       texlive-standalone
 Requires:       %{name}-plugins = %{version}-%{release}
 Requires:       %{name}-ui = %{version}-%{release}
 
@@ -65,12 +69,18 @@ sed -i 's|tlh-AA|tlh|g' po/tlh.po
 
 %build
 %cmake3 \
-        -DENABLE_CPPUNIT=ON \
+        %{_with_cppunit: -DENABLE_CPPUNIT=ON} \
         .
 %make_build
 
 %install
 %make_install
+
+#Remove depreciated key from desktop file
+desktop-file-install \
+ --remove-key="Encoding" \
+  %{buildroot}%{_datadir}/applications/com.github.%{name}.%{name}.desktop
+
 %find_lang %{name}
 
 #Remove scripts from icons interface
