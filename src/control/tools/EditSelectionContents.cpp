@@ -7,6 +7,7 @@
 #include "gui/XournalView.h"
 #include "model/Document.h"
 #include "model/Element.h"
+#include "model/Font.h"
 #include "model/Layer.h"
 #include "model/Stroke.h"
 #include "model/Text.h"

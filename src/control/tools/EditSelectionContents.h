@@ -16,8 +16,6 @@
 #include <vector>
 
 #include "control/Tool.h"
-#include "model/Element.h"
-#include "model/Font.h"
 #include "model/PageRef.h"
 #include "view/ElementContainer.h"
 
@@ -32,6 +30,7 @@ class Element;
 class UndoAction;
 class EditSelectionContents;
 class DeleteUndoAction;
+class XojFont;
 
 class EditSelectionContents: public ElementContainer, public Serializeable {
 public:
