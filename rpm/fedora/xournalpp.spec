@@ -71,7 +71,7 @@ sed -i 's|tlh-AA|tlh|g' po/tlh.po
 %cmake3 \
         %{_with_cppunit: -DENABLE_CPPUNIT=ON} \
         .
-%make_build
+%make_build translations
 
 %install
 %make_install
