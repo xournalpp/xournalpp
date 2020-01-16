@@ -143,7 +143,7 @@ void RenderJob::run() {
     }
 
     // Schedule a repaint of the widget
-    repaintWidget(this->view->getXournal()->getWidget());
+    repaintWidget(this->view->getXournal()->getWidget()->getGtkWidget());
 
     // delete all rectangles
     for (Rectangle* rect: rerenderRects) {

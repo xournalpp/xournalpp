@@ -112,11 +112,7 @@ void ZoomControl::endZoomSequence() {
 /**
  * Get visible rect on xournal view, for Zoom Gesture
  */
-auto ZoomControl::getVisibleRect() -> Rectangle {
-    GtkWidget* widget = view->getWidget();
-    Layout* layout = gtk_xournal_get_layout(widget);
-    return layout->getVisibleRect();
-}
+auto ZoomControl::getVisibleRect() -> Rectangle { return this->view->getWidget()->getLayout()->getVisibleRect(); }
 
 void ZoomControl::setScrollPositionAfterZoom(double x, double y) {
     this->scrollPositionX = (x + this->zoomWidgetPosX) / this->zoom;
@@ -376,16 +372,15 @@ auto ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScr
 //       the pages manually, but it only works with the top Widget (GtkWindow) for now this works fine
 //       see https://stackoverflow.com/questions/1060039/gtk-detecting-window-resize-from-the-user
 auto ZoomControl::onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle* allocation, ZoomControl* zoom) -> bool {
-    g_assert_true(widget != zoom->view->getWidget());
+    // g_assert_true(widget != zoom->view->getWidget());
 
     Rectangle r(allocation->x, allocation->y, allocation->width, allocation->height);
 
     zoom->updateZoomPresentationValue();
     zoom->updateZoomFitValue(r);
 
-    auto layout = gtk_xournal_get_layout(zoom->view->getWidget());
-    layout->layoutPages(allocation->width, allocation->height);
-    gtk_widget_queue_resize(zoom->view->getWidget());
+    zoom->view->getWidget()->getLayout()->layoutPages(allocation->width, allocation->height);
+    gtk_widget_queue_resize(zoom->view->getWidget()->getGtkWidget());
 
     return true;
 }

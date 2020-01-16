@@ -290,12 +290,12 @@ void XournalppCursor::updateCursor() {
         }
     }
 
-    GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
+    GdkWindow* window = gtk_widget_get_window(xournal->getWidget()->getGtkWidget());
     if (window) {
         if (cursor != nullptr) {
             gdk_window_set_cursor(window, cursor);
         }
-        gtk_widget_set_sensitive(xournal->getWidget(), !this->busy);
+        gtk_widget_set_sensitive(xournal->getWidget()->getGtkWidget(), !this->busy);
     }
 
     gdk_display_sync(gdk_display_get_default());
@@ -427,7 +427,8 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
     cairo_surface_destroy(crCursor);
     GdkCursor* cursor = gdk_cursor_new_from_pixbuf(
-            gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, centerX, centerY);
+            gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()->getGtkWidget()), pixbuf, centerX,
+            centerY);
     g_object_unref(pixbuf);
     return cursor;
 }
@@ -448,7 +449,7 @@ void XournalppCursor::setCursor(int cursorID) {
         return;
     }
 
-    GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
+    GdkWindow* window = gtk_widget_get_window(xournal->getWidget()->getGtkWidget());
     if (!window) {
         return;
     }
@@ -472,7 +473,7 @@ void XournalppCursor::setCursor(int cursorID) {
     }
 
     this->currentCursor = cursorID;
-    gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
+    // gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()->getGtkWidget()), cursor);
     gdk_window_set_cursor(window, cursor);
     if (cursor) {
         g_object_unref(cursor);
@@ -548,7 +549,8 @@ auto XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
     GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
     cairo_surface_destroy(crCursor);
     GdkCursor* cursor = gdk_cursor_new_from_pixbuf(
-            gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, centerX, centerY);
+            gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()->getGtkWidget()), pixbuf, centerX,
+            centerY);
     g_object_unref(pixbuf);
 
     return cursor;

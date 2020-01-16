@@ -99,7 +99,7 @@ public:
     Document* getDocument();
     PdfCache* getCache();
     RepaintHandler* getRepaintHandler();
-    GtkWidget* getWidget();
+    XournalWidget* getWidget();
     XournalppCursor* getCursor();
 
     Rectangle* getVisibleRect(int page);
@@ -138,7 +138,7 @@ public:
     bool onKeyPressEvent(GdkEventKey* event);
     bool onKeyReleaseEvent(GdkEventKey* event);
 
-    static void onRealized(GtkWidget* widget, XournalView* view);
+    // static void onRealized(GtkWidget* widget, XournalView* view);
 
 private:
     void fireZoomChanged();
@@ -149,7 +149,7 @@ private:
 
     static gboolean clearMemoryTimer(XournalView* widget);
 
-    static void staticLayoutPages(GtkWidget* widget, GtkAllocation* allocation, void* data);
+    // static void staticLayoutPages(GtkWidget* widget, GtkAllocation* allocation, void* data);
 
 private:
     /**
@@ -157,7 +157,7 @@ private:
      */
     ScrollHandling* scrollHandling = nullptr;
 
-    GtkWidget* widget = nullptr;
+    std::unique_ptr<XournalWidget> widget;
     double margin = 75;
 
     std::vector<XojPageView*> viewPages;

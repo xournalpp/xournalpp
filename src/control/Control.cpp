@@ -329,7 +329,7 @@ void Control::initWindow(MainWindow* win) {
     toolFillChanged();
     toolLineStyleChanged();
 
-    this->clipboardHandler = new ClipboardHandler(this, win->getXournal()->getWidget());
+    this->clipboardHandler = new ClipboardHandler(this, win->getXournal()->getWidget()->getGtkWidget());
 
     this->enableAutosave(settings->isAutosaveEnabled());
 

@@ -42,9 +42,9 @@ InputContext::~InputContext() {
     this->keyboardHandler = nullptr;
 }
 
-void InputContext::connect(GtkWidget* pWidget) {
+void InputContext::connect(XournalWidget* pWidget) {
     this->widget = pWidget;
-    gtk_widget_set_support_multidevice(widget, true);
+    gtk_widget_set_support_multidevice(widget->getGtkWidget(), true);
 
     int mask =
             // Key handling
@@ -58,9 +58,9 @@ void InputContext::connect(GtkWidget* pWidget) {
             GDK_SMOOTH_SCROLL_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK | GDK_PROXIMITY_IN_MASK |
             GDK_PROXIMITY_OUT_MASK;
 
-    gtk_widget_add_events(pWidget, mask);
+    gtk_widget_add_events(pWidget->getGtkWidget(), mask);
 
-    g_signal_connect(pWidget, "event", G_CALLBACK(eventCallback), this);
+    g_signal_connect(pWidget->getGtkWidget(), "event", G_CALLBACK(eventCallback), this);
 }
 
 auto InputContext::eventCallback(GtkWidget* widget, GdkEvent* event, InputContext* self) -> bool {
@@ -69,6 +69,12 @@ auto InputContext::eventCallback(GtkWidget* widget, GdkEvent* event, InputContex
 
 auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     printDebug(sourceEvent);
+
+    // The drawing area widget is connected to the configure event, which has no
+    // device.
+    if (!gdk_event_get_source_device(sourceEvent)) {
+        return false;
+    }
 
     InputEvent* event = InputEvents::translateEvent(sourceEvent, this->getSettings());
 
@@ -131,7 +137,7 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     return false;
 }
 
-auto InputContext::getXournal() -> GtkXournal* { return GTK_XOURNAL(widget); }
+auto InputContext::getXournal() -> XournalWidget* { return this->widget; }
 
 auto InputContext::getView() -> XournalView* { return view; }
 
@@ -147,8 +153,8 @@ auto InputContext::getModifierState() -> GdkModifierType { return this->modifier
  * Focus the widget
  */
 void InputContext::focusWidget() {
-    if (!gtk_widget_has_focus(widget)) {
-        gtk_widget_grab_focus(widget);
+    if (!gtk_widget_has_focus(this->widget->getGtkWidget())) {
+        gtk_widget_grab_focus(this->widget->getGtkWidget());
     }
 }
 
@@ -256,12 +262,13 @@ void InputContext::printDebug(GdkEvent* event) {
                                 "GDK_SOURCE_CURSOR",   "GDK_SOURCE_KEYBOARD",   "GDK_SOURCE_TOUCHSCREEN",
                                 "GDK_SOURCE_TOUCHPAD", "GDK_SOURCE_TRACKPOINT", "GDK_SOURCE_TABLET_PAD"};
     GdkDevice* device = gdk_event_get_source_device(event);
-    message += "Source device:\t" + gdkInputSources[gdk_device_get_source(device)] + "\n";
-    string gdkInputClasses[] = {"INPUT_DEVICE_MOUSE",       "INPUT_DEVICE_PEN",      "INPUT_DEVICE_ERASER",
-                                "INPUT_DEVICE_TOUCHSCREEN", "INPUT_DEVICE_KEYBOARD", "INPUT_DEVICE_IGNORE"};
-    InputDeviceClass deviceClass = InputEvents::translateDeviceType(device, this->getSettings());
-    message += "Device Class:\t" + gdkInputClasses[deviceClass] + "\n";
-
+    if (device) {
+        message += "Source device:\t" + gdkInputSources[gdk_device_get_source(device)] + "\n";
+        string gdkInputClasses[] = {"INPUT_DEVICE_MOUSE",       "INPUT_DEVICE_PEN",      "INPUT_DEVICE_ERASER",
+                                    "INPUT_DEVICE_TOUCHSCREEN", "INPUT_DEVICE_KEYBOARD", "INPUT_DEVICE_IGNORE"};
+        InputDeviceClass deviceClass = InputEvents::translateDeviceType(device, this->getSettings());
+        message += "Device Class:\t" + gdkInputClasses[deviceClass] + "\n";
+    }
     if (event->type == GDK_BUTTON_PRESS || event->type == GDK_DOUBLE_BUTTON_PRESS ||
         event->type == GDK_TRIPLE_BUTTON_PRESS || event->type == GDK_BUTTON_RELEASE) {
         guint button;

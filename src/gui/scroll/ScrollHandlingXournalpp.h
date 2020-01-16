@@ -13,6 +13,9 @@
 
 #include "ScrollHandling.h"
 
+/**
+ * Scroll handling based on two added scrollbars.
+ */
 class ScrollHandlingXournalpp: public ScrollHandling {
 public:
     ScrollHandlingXournalpp();

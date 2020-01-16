@@ -231,8 +231,8 @@ void MainWindow::initXournalWidget() {
     }
     // Todo configure-event
 
-    Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
-    scrollHandling->init(this->xournal->getWidget(), layout);
+    Layout* layout = this->xournal->getWidget()->getLayout();
+    scrollHandling->init(this->xournal->getWidget()->getGtkWidget(), layout);
 }
 
 void MainWindow::setTouchscreenScrollingForDeviceMapping() {
@@ -283,7 +283,7 @@ void MainWindow::initHideMenu() {
     }
 }
 
-auto MainWindow::getLayout() -> Layout* { return gtk_xournal_get_layout(GTK_WIDGET(this->xournal->getWidget())); }
+auto MainWindow::getLayout() -> Layout* { return this->xournal->getWidget()->getLayout(); }
 
 auto cancellable_cancel(GCancellable* cancel) -> bool {
     g_cancellable_cancel(cancel);

@@ -34,13 +34,11 @@ NewGtkInputDevice::~NewGtkInputDevice() {
 /**
  * Focus the widget
  */
-void NewGtkInputDevice::focusWidget() { gtk_widget_grab_focus(widget); }
+void NewGtkInputDevice::focusWidget() { gtk_widget_grab_focus(this->view->getWidget()->getGtkWidget()); }
 
 auto NewGtkInputDevice::getSettings() -> Settings* { return view->getControl()->getSettings(); }
 
 auto NewGtkInputDevice::getToolHandler() -> ToolHandler* { return view->getControl()->getToolHandler(); }
-
-auto NewGtkInputDevice::getXournal() -> GtkXournal* { return GTK_XOURNAL(widget); }
 
 auto NewGtkInputDevice::getView() -> XournalView* { return view; }
 
@@ -85,6 +83,7 @@ void NewGtkInputDevice::stopInput(InputSequence* input) {
  * Initialize the input handling, set input events
  */
 void NewGtkInputDevice::initWidget() {
+    GtkWidget* widget = this->widget;
     gtk_widget_set_support_multidevice(widget, true);
 
     int mask =
@@ -104,6 +103,12 @@ void NewGtkInputDevice::initWidget() {
 }
 
 auto NewGtkInputDevice::eventCallback(GtkWidget* widget, GdkEvent* event, NewGtkInputDevice* self) -> bool {
+    // The drawing area widget is connected to the configure event, which has no
+    // device.
+    if (!gdk_event_get_source_device(event)) {
+        return false;
+    }
+
     return self->eventHandler(event);
 }
 
@@ -111,7 +116,7 @@ auto NewGtkInputDevice::eventCallback(GtkWidget* widget, GdkEvent* event, NewGtk
  * Handle Key Press event
  */
 auto NewGtkInputDevice::eventKeyPressHandler(GdkEventKey* event) -> bool {
-    GtkXournal* xournal = GTK_XOURNAL(widget);
+    XournalWidget* xournal = this->view->getWidget();
 
     EditSelection* selection = xournal->selection;
     if (selection) {
@@ -143,7 +148,7 @@ auto NewGtkInputDevice::eventKeyPressHandler(GdkEventKey* event) -> bool {
         }
     }
 
-    return xournal->view->onKeyPressEvent(event);
+    return this->view->onKeyPressEvent(event);
 }
 
 /**
