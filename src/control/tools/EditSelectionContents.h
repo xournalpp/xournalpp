@@ -11,7 +11,8 @@
 
 #pragma once
 
-#include <string>
+#include <deque>
+#include <utility>
 #include <vector>
 
 #include "control/Tool.h"
@@ -73,8 +74,10 @@ public:
 public:
     /**
      * Add an element to the this selection
+     * @param orderInSourceLayer: specifies the index of the element from the source layer,
+     * in case we want to replace it back where it came from.
      */
-    void addElement(Element* e);
+    void addElement(Element* e, Layer::ElementIndex order);
 
     /**
      * Returns all containig elements of this selections
@@ -172,7 +175,13 @@ private:
     /**
      * The selected element (the only one which are handled by this instance)
      */
-    vector<Element*> selected;
+    std::vector<Element*> selected;
+
+    /**
+     * Mapping of elements in the selection to the indexes from the original selection layer.
+     * Defines a insert order over the selection.
+     */
+    std::deque<std::pair<Element*, Layer::ElementIndex>> insertOrder;
 
     /**
      * The rendered elements
