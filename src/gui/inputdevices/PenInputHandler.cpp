@@ -65,7 +65,7 @@ void PenInputHandler::handleScrollEvent(InputEvent* event) {
         this->scrollOffsetY = this->scrollStartY - event->absoluteY;
 
         Util::execInUiThread([&]() {
-            this->inputContext->getXournal()->layout->scrollRelative(this->scrollOffsetX, this->scrollOffsetY);
+            this->inputContext->getXournal()->getLayout()->scrollRelative(this->scrollOffsetX, this->scrollOffsetY);
 
             // Scrolling done, so reset our counters
             this->scrollOffsetX = 0;
@@ -101,7 +101,7 @@ auto PenInputHandler::actionStart(InputEvent* event) -> bool {
 
     this->penInWidget = true;
 
-    GtkXournal* xournal = this->inputContext->getXournal();
+    XournalWidget* xournal = this->inputContext->getXournal();
 
     XournalppCursor* cursor = xournal->view->getCursor();
     cursor->setMouseDown(true);
@@ -172,7 +172,7 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool {
     eventX -= h;
     eventY -= v;
 
-    GtkWidget* widget = gtk_widget_get_parent(this->inputContext->getView()->getWidget());
+    GtkWidget* widget = gtk_widget_get_parent(this->inputContext->getView()->getWidget()->getGtkWidget());
     gint width = gtk_widget_get_allocated_width(widget);
     gint height = gtk_widget_get_allocated_height(widget);
 
@@ -182,7 +182,7 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool {
     }
 
 
-    GtkXournal* xournal = this->inputContext->getXournal();
+    XournalWidget* xournal = this->inputContext->getXournal();
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
 
     this->changeTool(event);
@@ -275,7 +275,7 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool {
 }
 
 auto PenInputHandler::actionEnd(InputEvent* event) -> bool {
-    GtkXournal* xournal = inputContext->getXournal();
+    XournalWidget* xournal = inputContext->getXournal();
     XournalppCursor* cursor = xournal->view->getCursor();
     ToolHandler* toolHandler = inputContext->getToolHandler();
 
@@ -376,7 +376,7 @@ void PenInputHandler::actionLeaveWindow(InputEvent* event) {
         eventX -= h;
         eventY -= v;
 
-        GtkWidget* widget = gtk_widget_get_parent(this->inputContext->getView()->getWidget());
+        GtkWidget* widget = this->inputContext->getView()->getWidget()->getGtkWidget();
         gint width = gtk_widget_get_allocated_width(widget);
         gint height = gtk_widget_get_allocated_height(widget);
 
@@ -405,10 +405,8 @@ void PenInputHandler::actionLeaveWindow(InputEvent* event) {
 #endif
 
             while (!this->penInWidget) {
-                Util::execInUiThread([&]() {
-                    GtkXournal* xournal = this->inputContext->getXournal();
-                    xournal->layout->scrollRelative(offsetX, offsetY);
-                });
+                Util::execInUiThread(
+                        [&]() { this->inputContext->getXournal()->getLayout()->scrollRelative(offsetX, offsetY); });
 
                 // sleep for half a second until we scroll again
                 g_usleep(static_cast<gulong>(0.5 * G_USEC_PER_SEC));

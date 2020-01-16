@@ -501,7 +501,7 @@ auto EditSelection::getPageViewUnderCursor() -> XojPageView* {
     double hy = this->view->getY() + (this->y + this->relMousePosY) * zoom;
 
 
-    Layout* layout = gtk_xournal_get_layout(this->view->getXournal()->getWidget());
+    Layout* layout = this->view->getXournal()->getWidget()->getLayout();
     XojPageView* v = layout->getViewAt(hx, hy);
 
     return v;

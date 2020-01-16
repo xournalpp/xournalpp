@@ -97,12 +97,12 @@ void InputSequence::setState(GdkModifierType state) { this->state = state; }
  * @return page or nullptr if none
  */
 auto InputSequence::getPageAtCurrentPosition() -> XojPageView* {
-    GtkXournal* xournal = inputHandler->getXournal();
+    XournalWidget* xournal = inputHandler->getView()->getWidget();
 
     double x = this->x + xournal->x;
     double y = this->y + xournal->y;
 
-    return xournal->layout->getViewAt(x, y);
+    return xournal->getLayout()->getViewAt(x, y);
 }
 
 /**
@@ -125,7 +125,7 @@ void InputSequence::handleScrollEvent() {
         scrollOffsetY = lastMousePositionY - rootY;
 
         Util::execInUiThread([=]() {
-            inputHandler->getXournal()->layout->scrollRelative(scrollOffsetX, scrollOffsetY);
+            inputHandler->getView()->getWidget()->getLayout()->scrollRelative(scrollOffsetX, scrollOffsetY);
 
             // Scrolling done, so reset our counters
             scrollOffsetX = 0;
@@ -141,7 +141,7 @@ void InputSequence::handleScrollEvent() {
  * Mouse / Pen / Touch move
  */
 auto InputSequence::actionMoved(guint32 time) -> bool {
-    GtkXournal* xournal = inputHandler->getXournal();
+    XournalWidget* xournal = inputHandler->getView()->getWidget();
     ToolHandler* h = inputHandler->getToolHandler();
 
     this->eventTime = time;
@@ -217,7 +217,7 @@ auto InputSequence::actionStart(guint32 time) -> bool {
         return true;
     }
 
-    GtkXournal* xournal = inputHandler->getXournal();
+    XournalWidget* xournal = inputHandler->getView()->getWidget();
 
     // hand tool don't change the selection, so you can scroll e.g.
     // with your touchscreen without remove the selection
@@ -286,7 +286,7 @@ auto InputSequence::checkStillRunning() -> bool {
     }
 
     auto mask = static_cast<GdkModifierType>(0);
-    GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(inputHandler->getXournal()));
+    GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(inputHandler->getView()->getWidget()));
     gdk_device_get_state(device, window, nullptr, &mask);
 
     if ((GDK_BUTTON1_MASK & mask) || (GDK_BUTTON2_MASK & mask) || (GDK_BUTTON3_MASK & mask) ||
@@ -318,7 +318,7 @@ void InputSequence::actionEnd(guint32 time) {
 
     current_view = nullptr;
 
-    GtkXournal* xournal = inputHandler->getXournal();
+    XournalWidget* xournal = inputHandler->getView()->getWidget();
     XournalppCursor* cursor = xournal->view->getCursor();
     ToolHandler* h = inputHandler->getToolHandler();
 
@@ -354,7 +354,7 @@ void InputSequence::actionEnd(guint32 time) {
  * Get input data relative to current input page
  */
 auto InputSequence::getInputDataRelativeToCurrentPage(XojPageView* page) -> PositionInputData {
-    GtkXournal* xournal = inputHandler->getXournal();
+    XournalWidget* xournal = inputHandler->getView()->getWidget();
 
     PositionInputData pos{};
     pos.x = x - page->getX() - xournal->x;
@@ -393,7 +393,7 @@ auto InputSequence::changeTool() -> bool {
     Settings* settings = inputHandler->getSettings();
     ButtonConfig* cfgTouch = settings->getTouchButtonConfig();
     ToolHandler* h = inputHandler->getToolHandler();
-    GtkXournal* xournal = inputHandler->getXournal();
+    XournalWidget* xournal = inputHandler->getView()->getWidget();
 
     ButtonConfig* cfg = nullptr;
     if (gdk_device_get_source(device) == GDK_SOURCE_PEN) {

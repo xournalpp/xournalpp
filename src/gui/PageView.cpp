@@ -263,7 +263,7 @@ void XojPageView::startText(double x, double y) {
             // perform the old swap onto the new text drawn.
         }
 
-        this->textEditor = new TextEditor(this, xournal->getWidget(), text, ownText);
+        this->textEditor = new TextEditor(this, xournal->getWidget()->getGtkWidget(), text, ownText);
         if (!ownText) {
             this->textEditor->mousePressed(x - text->getX(), y - text->getY());
         }
@@ -364,7 +364,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         imgHandler.insertImage(x, y);
     } else if (h->getToolType() == TOOL_FLOATING_TOOLBOX) {
         gint wx = 0, wy = 0;
-        GtkWidget* widget = xournal->getWidget();
+        GtkWidget* widget = xournal->getWidget()->getGtkWidget();
         gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
 
         wx += std::lround(pos.x) + this->getX();
@@ -507,7 +507,7 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
             if (doAction)  // pop up a menu
             {
                 gint wx = 0, wy = 0;
-                GtkWidget* widget = xournal->getWidget();
+                GtkWidget* widget = xournal->getWidget()->getGtkWidget();
                 gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
                 wx += std::lround(pos.x + this->getX());
                 wy += std::lround(pos.y + this->getY());

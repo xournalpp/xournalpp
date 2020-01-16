@@ -13,6 +13,13 @@
 
 #include "ScrollHandling.h"
 
+/**
+ * Scroll handling based on a GtkScrolledWindow.
+ *
+ * In this scroll handler, the GtkDrawingArea is placed inside of a
+ * GtkScrolledWindow. When the layout size changes, the GtkDrawingArea is
+ * resized to the new layout size.
+ */
 class ScrollHandlingGtk: public ScrollHandling {
 public:
     ScrollHandlingGtk(GtkScrollable* scrollable);

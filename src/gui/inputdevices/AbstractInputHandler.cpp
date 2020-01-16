@@ -47,12 +47,12 @@ auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent* event) -> XojPag
     // take scroll offset into account
     this->inputContext->getScrollHandling()->translate(eventX, eventY);
 
-    GtkXournal* xournal = this->inputContext->getXournal();
+    XournalWidget* xournal = this->inputContext->getXournal();
 
     double x = eventX + xournal->x;
     double y = eventY + xournal->y;
 
-    return xournal->layout->getViewAt(x, y);
+    return xournal->getLayout()->getViewAt(x, y);
 }
 
 /**
@@ -61,7 +61,7 @@ auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent* event) -> XojPag
 auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent* event)
         -> PositionInputData {
     g_assert(page != nullptr);
-    GtkXournal* xournal = inputContext->getXournal();
+    XournalWidget* xournal = inputContext->getXournal();
 
     gdouble eventX = event->relativeX;
     gdouble eventY = event->relativeY;
