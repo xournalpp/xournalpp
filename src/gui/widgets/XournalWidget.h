@@ -13,12 +13,6 @@
 
 #include <gtk/gtk.h>
 
-G_BEGIN_DECLS
-
-#define GTK_XOURNAL(obj) G_TYPE_CHECK_INSTANCE_CAST(obj, gtk_xournal_get_type(), GtkXournal)
-#define GTK_XOURNAL_CLASS(klass) GTK_CHECK_CLASS_CAST(klass, gtk_xournal_get_type(), GtkXournalClass)
-#define GTK_IS_XOURNAL(obj) G_TYPE_CHECK_INSTANCE_TYPE(obj, gtk_xournal_get_type())
-
 class AbstractInputDevice;
 class EditSelection;
 class Layout;
@@ -29,63 +23,46 @@ class XournalView;
 class InputContext;
 class NewGtkInputDevice;
 
+#include <memory>
 
-typedef struct _GtkXournal GtkXournal;
-typedef struct _GtkXournalClass GtkXournalClass;
+class XournalWidget {
+public:
+    XournalWidget(XournalView* view, std::unique_ptr<InputContext> inputContext);
+    XournalWidget(XournalView* view, ScrollHandling* scrollHandling);
+    virtual ~XournalWidget();
 
-struct _GtkXournal {
-    GtkWidget widget;
+    /** Current selection */
+    EditSelection* selection;
 
-    /**
-     * The view class
-     */
-    XournalView* view;
-
-    /**
-     * Scrollbars
-     */
-    ScrollHandling* scrollHandling;
-
-    /**
-     * Visible area
-     */
     int x;
     int y;
 
-    Layout* layout;
+    XournalView* const view;
 
+    auto getGtkWidget() -> GtkWidget*;
+    auto getLayout() -> Layout*;
+    auto repaintArea(int x1, int y1, int x2, int y2) -> void;
+    auto getVisibleArea(XojPageView* p) -> Rectangle*;
 
-    /**
-     * Selected content, if any
-     */
-    EditSelection* selection;
+private:
+    auto init() -> void;
 
-    /**
-     * Input handling
-     */
-    InputContext* input = nullptr;
+    static auto sizeAllocateCallback(GtkWidget* widget, GdkRectangle* allocation, XournalWidget* self) -> void;
+    static auto realizeCallback(GtkWidget* widget, XournalWidget* self) -> void;
+    static auto drawCallback(GtkWidget* widget, cairo_t* cr, XournalWidget* self) -> gboolean;
 
-    /**
-     * Deprecated input handling
-     */
-    NewGtkInputDevice* depInput = nullptr;
+    auto drawShadow(cairo_t* cr, int left, int top, int width, int height, bool selected) -> void;
+
+private:
+    GtkWidget* drawingArea;
+    ScrollHandling* scrollHandling;
+
+    /** Layout */
+    std::unique_ptr<Layout> layout;
+
+    /** New input handling */
+    std::unique_ptr<InputContext> input;
+
+    /** Deprecated input handling */
+    std::unique_ptr<NewGtkInputDevice> depInput;
 };
-
-struct _GtkXournalClass {
-    GtkWidgetClass parent_class;
-};
-
-GType gtk_xournal_get_type();
-
-GtkWidget* gtk_xournal_new(XournalView* view, InputContext* inputContext);
-GtkWidget* gtk_xournal_new_deprecated(XournalView* view, ScrollHandling* scrollHandling);
-
-Layout* gtk_xournal_get_layout(GtkWidget* widget);
-
-void gtk_xournal_scroll_relative(GtkWidget* widget, double x, double y);
-
-void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2, int y2);
-
-Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p);
-
-G_END_DECLS

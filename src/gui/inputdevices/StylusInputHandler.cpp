@@ -17,7 +17,7 @@ StylusInputHandler::~StylusInputHandler() = default;
 
 auto StylusInputHandler::handleImpl(InputEvent* event) -> bool {
     // Only handle events when there is no active gesture
-    GtkXournal* xournal = inputContext->getXournal();
+    XournalWidget* xournal = inputContext->getXournal();
 
     // Determine the pressed states of devices and associate them to the current event
     setPressedState(event);

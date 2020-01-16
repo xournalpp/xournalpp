@@ -15,7 +15,7 @@ MouseInputHandler::~MouseInputHandler() = default;
 
 auto MouseInputHandler::handleImpl(InputEvent* event) -> bool {
     // Only handle events when there is no active gesture
-    GtkXournal* xournal = inputContext->getXournal();
+    XournalWidget* xournal = inputContext->getXournal();
 
     // Determine the pressed states of devices and associate them to the current event
     setPressedState(event);
@@ -110,7 +110,7 @@ void MouseInputHandler::setPressedState(InputEvent* event) {
 auto MouseInputHandler::changeTool(InputEvent* event) -> bool {
     Settings* settings = this->inputContext->getSettings();
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
-    GtkXournal* xournal = this->inputContext->getXournal();
+    XournalWidget* xournal = this->inputContext->getXournal();
 
     ButtonConfig* cfg = nullptr;
     if (modifier2 /* Middle Button */ && !xournal->selection) {

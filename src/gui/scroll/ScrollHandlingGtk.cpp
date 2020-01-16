@@ -8,7 +8,10 @@ ScrollHandlingGtk::ScrollHandlingGtk(GtkScrollable* scrollable):
 
 ScrollHandlingGtk::~ScrollHandlingGtk() = default;
 
-void ScrollHandlingGtk::setLayoutSize(int width, int height) { gtk_widget_queue_resize(xournal); }
+void ScrollHandlingGtk::setLayoutSize(int width, int height) {
+    gtk_widget_set_size_request(xournal, width, height);
+    gtk_widget_queue_resize(xournal);
+}
 
 auto ScrollHandlingGtk::getPreferredWidth() -> int { return layout->getMinimalWidth(); }
 

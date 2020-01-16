@@ -15,7 +15,7 @@ TouchDrawingInputHandler::~TouchDrawingInputHandler() = default;
 
 auto TouchDrawingInputHandler::handleImpl(InputEvent* event) -> bool {
     // Only handle events when there is no active gesture
-    GtkXournal* xournal = inputContext->getXournal();
+    XournalWidget* xournal = inputContext->getXournal();
 
     // Disallow multitouch
     if (this->currentSequence && this->currentSequence != event->sequence) {

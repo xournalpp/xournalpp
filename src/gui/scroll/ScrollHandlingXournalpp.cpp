@@ -14,6 +14,7 @@ void ScrollHandlingXournalpp::setLayoutSize(int width, int height) {
     gtk_adjustment_set_upper(adjVertical, height);
 }
 
+// TODO: What are these magic constants?
 auto ScrollHandlingXournalpp::getPreferredWidth() -> int { return 400; }
 
 auto ScrollHandlingXournalpp::getPreferredHeight() -> int { return 400; }
