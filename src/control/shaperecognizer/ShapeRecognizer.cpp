@@ -395,9 +395,11 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
     int brk[5] = {0};
 
     // first see if it's a polygon
-    int n = findPolygonal(stroke->getPoints(), 0, stroke->getPointCount() - 1, MAX_POLYGON_SIDES, brk, ss);
+    auto&& [begi, endi] = stroke->getPoints();
+    std::vector<Point> points{begi, endi};
+    int n = findPolygonal(points.data(), 0, stroke->getPointCount() - 1, MAX_POLYGON_SIDES, brk, ss);
     if (n > 0) {
-        optimizePolygonal(stroke->getPoints(), n, brk, ss);
+        optimizePolygonal(points.data(), n, brk, ss);
 #ifdef DEBUG_RECOGNIZER
         g_message("--");
         g_message("ShapeReco:: Polygon, %d edges:", n);
@@ -425,7 +427,9 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
         for (int i = 0; i < n; i++) {
             rs[i].startpt = brk[i];
             rs[i].endpt = brk[i + 1];
-            rs[i].calcSegmentGeometry(stroke->getPoints(), brk[i], brk[i + 1], ss + i);
+            auto&& [begi, endi] = stroke->getPoints();
+            std::vector<Point> points{begi, endi};
+            rs[i].calcSegmentGeometry(points.data(), brk[i], brk[i + 1], ss + i);
         }
 
         Stroke* tmp = nullptr;

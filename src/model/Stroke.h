@@ -11,6 +11,9 @@
 
 #pragma once
 
+#include <deque>
+#include <utility>
+
 #include "AudioElement.h"
 #include "Element.h"
 #include "LineStyle.h"
@@ -22,15 +25,8 @@ class EraseableStroke;
 
 class Stroke: public AudioElement {
 public:
-    Stroke();
-    Stroke(Stroke const&) = default;
-    Stroke(Stroke&&) = default;
+    Stroke(): AudioElement(ELEMENT_STROKE) {}
 
-    Stroke& operator=(Stroke const&) = default;
-    Stroke& operator=(Stroke&&) = default;
-    ~Stroke() override;
-
-public:
     Stroke* cloneStroke() const;
     Element* clone() override;
 
@@ -68,7 +64,8 @@ public:
     void freeUnusedPointItems();
     std::vector<Point> const& getPointVector() const;
     Point getPoint(int index) const;
-    const Point* getPoints() const;
+    using PointIter = std::deque<Point>::const_iterator;
+    const std::pair<PointIter, PointIter> getPoints() const;
 
     void deletePoint(int index);
     void deletePointsFrom(int index);
@@ -116,7 +113,7 @@ private:
     StrokeTool toolType = STROKE_TOOL_PEN;
 
     // The array with the points
-    std::vector<Point> points{};
+    std::deque<Point> points{};
 
     /**
      * Dashed line

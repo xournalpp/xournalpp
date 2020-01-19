@@ -41,6 +41,13 @@ public:
     void increase(Point p1, Point p2, int coef);
     void calc(const Point* pt, int start, int end);
 
+    template <typename Iter>
+    void calc(Iter begi, Iter endi) {
+        for (auto &&fi = begi, si = std::next(fi); fi != endi && si != endi; ++fi, ++si) {
+            this->increase(*fi, *si, 1);
+        }
+    }
+
 private:
     double mass{};
     double sx{};

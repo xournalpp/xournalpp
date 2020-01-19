@@ -8,9 +8,7 @@
 
 #include "i18n.h"
 
-Stroke::Stroke(): AudioElement(ELEMENT_STROKE) {}
 
-Stroke::~Stroke() = default;
 
 /**
  * Clone style attributes, but not the data (position, width etc.)
@@ -45,7 +43,8 @@ void Stroke::serialize(ObjectOutputStream& out) {
 
     out.writeInt(fill);
 
-    out.writeData(this->points.data(), this->points.size(), sizeof(Point));
+    std::vector<Point> out_vec{begin(points), end(points)};
+    out.writeData(out_vec.data(), out_vec.size(), sizeof(Point));
 
     this->lineStyle.serialize(out);
 
@@ -66,7 +65,7 @@ void Stroke::readSerialized(ObjectInputStream& in) {
     Point* p{};
     int count{};
     in.readData(reinterpret_cast<void**>(&p), &count);
-    this->points = std::vector<Point>{p, p + count};
+    this->points = std::deque<Point>{p, p + count};
     g_free(p);
     this->lineStyle.readSerialized(in);
 
@@ -133,8 +132,6 @@ void Stroke::addPoint(const Point& p) {
 
 auto Stroke::getPointCount() const -> int { return this->points.size(); }
 
-auto Stroke::getPointVector() const -> std::vector<Point> const& { return points; }
-
 void Stroke::deletePointsFrom(int index) { points.resize(std::min(size_t(index), points.size())); }
 
 void Stroke::deletePoint(int index) { this->points.erase(std::next(begin(this->points), index)); }
@@ -147,7 +144,9 @@ auto Stroke::getPoint(int index) const -> Point {
     return points.at(index);
 }
 
-auto Stroke::getPoints() const -> const Point* { return this->points.data(); }
+auto Stroke::getPoints() const -> const std::pair<PointIter, PointIter> {
+    return {cbegin(this->points), cend(this->points)};
+}
 
 void Stroke::freeUnusedPointItems() { this->points = {begin(this->points), end(this->points)}; }
 

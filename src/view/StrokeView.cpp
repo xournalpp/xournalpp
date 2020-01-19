@@ -11,8 +11,9 @@ StrokeView::StrokeView(cairo_t* cr, Stroke* s, int startPoint, double scaleFacto
 
 
 void StrokeView::drawFillStroke() {
+    auto&& [begi, endi] = s->getPoints();
     for_first_then_each(
-            s->getPointVector(), [this](auto const& first) { cairo_move_to(this->cr, first.x, first.y); },
+            begi, endi, [this](auto const& first) { cairo_move_to(this->cr, first.x, first.y); },
             [this](auto const& other) { cairo_line_to(this->cr, other.x, other.y); });
 
     cairo_fill(cr);
@@ -88,8 +89,9 @@ void StrokeView::drawNoPressure() {
     cairo_set_line_width(cr, width * scaleFactor);
     applyDashed(0);
 
+    auto&& [begi, endi] = s->getPoints();
     for_first_then_each(
-            s->getPointVector(), [this](auto const& first) { cairo_move_to(cr, first.x, first.y); },
+            begi, endi, [this](auto const& first) { cairo_move_to(cr, first.x, first.y); },
             [this](auto const& other) { cairo_line_to(cr, other.x, other.y); });
     cairo_stroke(cr);
 
@@ -111,9 +113,8 @@ void StrokeView::drawNoPressure() {
  */
 void StrokeView::drawWithPressure() {
     double dashOffset = 0;
-
-    for (auto p1i = begin(s->getPointVector()), p2i = std::next(p1i), endi = end(s->getPointVector());
-         p1i != endi && p2i != endi; ++p1i, ++p2i) {
+    auto&& [pbegi, pendi] = s->getPoints();
+    for (auto p1i = pbegi, p2i = std::next(p1i), endi = pendi; p1i != endi && p2i != endi; ++p1i, ++p2i) {
         auto width = p1i->z != Point::NO_PRESSURE ? p1i->z : s->getWidth();
         cairo_set_line_width(cr, width * scaleFactor);
         applyDashed(dashOffset);

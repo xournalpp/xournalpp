@@ -1,6 +1,7 @@
 #include "Inertia.h"
 
 #include <cmath>
+#include <numeric>
 
 #include "model/Point.h"
 

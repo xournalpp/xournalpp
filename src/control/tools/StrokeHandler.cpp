@@ -155,8 +155,8 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     // Backward compatibility and also easier to handle for me;-)
     // I cannot draw a line with one point, to draw a visible line I need two points,
     // twice the same Point is also OK
-    if (auto const& pv = stroke->getPointVector(); pv.size() == 1) {
-        stroke->addPoint(pv.front());
+    if (stroke->getPointCount() == 1) {
+        stroke->addPoint(stroke->getPoint(0));
         // Todo: check if the following is the reason for a bug, that single points have no pressure:
         // No pressure sensitivity,
         stroke->clearPressure();

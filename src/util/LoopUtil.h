@@ -19,10 +19,8 @@
  *	loop over the container from begin to end but handles the first element
  *	differently.
  */
-template <typename Container, typename Fun1, typename Fun2>
-void for_first_then_each(Container&& c, Fun1 f1, Fun2&& f2) {
-    auto begi = begin(c);
-    auto endi = end(c);
+template <typename Iter, typename Fun1, typename Fun2>
+void for_first_then_each(Iter begi, Iter endi, Fun1 f1, Fun2&& f2) {
     if (begi == endi)
         return;
     f1(*begi);

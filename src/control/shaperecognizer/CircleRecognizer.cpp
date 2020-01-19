@@ -45,7 +45,8 @@ auto CircleRecognizer::scoreCircle(Stroke* s, Inertia& inertia) -> double {
     double x0 = inertia.centerX();
     double y0 = inertia.centerY();
 
-    auto const& pv = s->getPointVector();
+    auto&& [begi, endi] = s->getPoints();
+    std::vector<Point> pv{begi, endi};
     for (auto pt_1st = begin(pv), pt_2nd = std::next(pt_1st), p_end_i = end(pv); pt_1st != p_end_i && pt_2nd != p_end_i;
          ++pt_2nd, ++pt_1st) {
         double dm = hypot(pt_2nd->x - pt_1st->x, pt_2nd->y - pt_1st->y);
@@ -58,7 +59,9 @@ auto CircleRecognizer::scoreCircle(Stroke* s, Inertia& inertia) -> double {
 
 auto CircleRecognizer::recognize(Stroke* stroke) -> Stroke* {
     Inertia s;
-    s.calc(stroke->getPoints(), 0, stroke->getPointCount());
+    auto&& [begi, endi] = stroke->getPoints();
+    std::vector<Point> points{begi, endi};
+    s.calc(points.data(), 0, stroke->getPointCount());
     RDEBUG("Mass=%.0f, Center=(%.1f,%.1f), I=(%.0f,%.0f, %.0f), Rad=%.2f, Det=%.4f", s.getMass(), s.centerX(),
            s.centerY(), s.xx(), s.yy(), s.xy(), s.rad(), s.det());
 
