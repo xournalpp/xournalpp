@@ -193,6 +193,8 @@ void MainWindow::toggleMenuBar(MainWindow* win) {
 void MainWindow::initXournalWidget() {
     GtkWidget* boxContents = get("boxContents");
 
+    // TODO: Rename "Touch Workaround" to "Touch Drawing"; remove deprecated scroll handling and add option to always
+    // show scrollbars
     if (control->getSettings()->isTouchWorkaround()) {
         GtkWidget* box1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
         gtk_container_add(GTK_CONTAINER(boxContents), box1);
@@ -236,6 +238,8 @@ void MainWindow::initXournalWidget() {
 }
 
 void MainWindow::setTouchscreenScrollingForDeviceMapping() {
+    gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal),
+                                              !this->getControl()->getSettings()->isTouchWorkaround());
     for (InputDevice const& inputDevice: DeviceListHelper::getDeviceList(this->getControl()->getSettings())) {
         InputDeviceClass deviceClass = InputEvents::translateDeviceType(inputDevice.getName(), inputDevice.getSource(),
                                                                         this->getControl()->getSettings());
