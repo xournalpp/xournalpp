@@ -3,8 +3,16 @@
 [![Build Status](https://dev.azure.com/xournalpp/xournalpp/_apis/build/status/CI?branchName=master)](https://dev.azure.com/xournalpp/xournalpp/_build/latest?definitionId=1&branchName=master)
 [![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Important Notice
-For some required changes to our code base we can currently not admit any pull requests. We are very thankful to anybody that is willing to work on Xournal++ and hope that this inconvenience will not deter you from helping us out. The last PR that will be merged before we do the extensive changes to the code base is #1430, which will then be followed by one last release before our PR freeze. Afterwards we will do the necessary work to ensure a continued solid development of Xournal++. Once we are finished we will remove this note and welcome all your PRs with open hands! Thanks for your support!
+## Please help us with an important decision
+We would like to have your feedback concerning the new rendering system. One of the big changes will be that it will support infinity pages. Of course we will still provide support for showing the old multi-page documents. Therefore we would like to know how you want to have these rendered in the future. For this reason we have a small poll we kindly ask you to fill out:
+
+Thanks to everybody that did take part in the poll. The results were quite clear.
+
+We will provide two modes to import multiple page documents:
+- Multiple page documents are imported on the limited size pages and the view will show them like Xournal++ currently does. Note that in this mode infinity pages are technically not possible, you will be able to resize pages though
+- All pages will be imported onto one single infinity page. You can layout the pages at import into a multi-column/row grid if wanted. For printing we will integrate a feature that shows you the page borders so you end up with prints that make sense.
+
+We might add the mode to import each page onto its own infinity page later on.
 
 <table border="0px" ><tr><td width = 600px>
 
@@ -98,6 +106,13 @@ Multiple page background, easy selectable on the toolbar
 
 </td></tr></table>
 
+## User Manual and FAQ
+
+For general usage, consult the [User
+Manual](https://github.com/xournalpp/xournalpp/wiki/User-Manual). Answers to
+some common questions can be found in the
+[FAQ](https://github.com/xournalpp/xournalpp/wiki/Frequently-Asked-Questions).
+
 ## Experimental Features:
 Sometimes a feature is added that might not be rock solid, or the developers aren't sure it is useful. 
 Try these out and give us some feedback.
@@ -122,24 +137,25 @@ Here are a few under development that you can play with now.
      <img src="readme/moreexperimentals.png" width=50% />
 
 
-
-
-
-## How to use audio record and playback feature:
-- Go to `Edit > Preferences > Audio Recording` and set the `Audio Folder` as well as the appropriate `Input Device` and `Output Device`.
-
-If you need to edit the recording audio gain, take a look at the preferences tab mentioned above.
-
-**Please test this new feature in advance before relying on it to work. It could contain bugs specific to some hard-/software, which we have not yet found.**
-
-### How to record
-Just press the red button to start/stop recording and draw strokes using the `Pen` tool. The recording is associated with the drawn strokes and typed text while it is running.
-
-### Play the recorded audio
-Use the `Play Object` tool to click on a stroke or text node and listen to the corresponding audio. You can pause and stop the playback of the audio with the buttons next to the recording button in the toolbar.
-
 ## Installing
-### Ubuntu and derivates
+
+The official releases of Xournal++ can be found on the
+[Releases](https://github.com/xournalpp/xournalpp/releases) page. We provide
+binaries for Debian, Ubuntu, MacOS, and Windows.
+
+There is also an _unstable_, [automated nightly
+release](https://github.com/xournalpp/xournalpp/releases/tag/nightly) that
+includes the very latest features and bug fixes.
+
+Xournal++ is also available on official repositories of some popular Linux
+distros and platforms. However, **besides the Flatpak and the Ubuntu PPA
+releases, we are not responsible for the packaging of Xournal++ in distro
+repositories.**
+
+### Ubuntu and derivatives
+
+An _unstable_, nightly release is available for Ubuntu-based distributions via the following PPA:
+
 ```bash
 sudo add-apt-repository ppa:andreasbutti/xournalpp-master
 sudo apt update
@@ -148,7 +164,10 @@ sudo apt install xournalpp
 
 ### Fedora
 
-The [released version of xournalpp](https://src.fedoraproject.org/rpms/xournalpp) is available in the [main repository](https://bodhi.fedoraproject.org/updates/?packages=xournalpp) via _Software_ application or the following command:
+The [released version of
+xournalpp](https://src.fedoraproject.org/rpms/xournalpp) is available in the
+[main repository](https://bodhi.fedoraproject.org/updates/?packages=xournalpp)
+via _Software_ application or the following command:
 
 ```bash
 sudo dnf install xournalpp
@@ -157,23 +176,41 @@ or
 ```bash
 pkcon install xournalpp
 ```
+
 The bleeding edge packages synced to xournalpp git master on a daily basis are available from [COPR luya/xournalpp](https://copr.fedorainfracloud.org/coprs/luya/xournalpp/).
 [![Copr build status](https://copr.fedorainfracloud.org/coprs/luya/xournalpp/package/xournalpp/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/luya/xournalpp/package/xournalpp/)
 
 ### openSUSE
-On openSUSE Tumbleweed, the released version of xournalpp is available from the main repository:
+
+On openSUSE Tumbleweed, the released version of Xournal++ is available from the
+main repository:
+
 ```bash
 sudo zypper in xournalpp
 ```
 
-For openSUSE Leap 15.0 and earlier, use the install link from [X11:Utilities](https://software.opensuse.org//download.html?project=X11%3AUtilities&package=xournalpp).
+For openSUSE Leap 15.0 and earlier, use the install link from
+[X11:Utilities](https://software.opensuse.org//download.html?project=X11%3AUtilities&package=xournalpp).
 
-For all versions of openSUSE, bleeding edge packages synced to xournalpp git master on a weekly basis are available from [home:badshah400:Staging](https://software.opensuse.org//download.html?project=home%3Abadshah400%3AStaging&package=xournalpp).
+For all versions of openSUSE, bleeding edge packages synced to xournalpp git
+master on a weekly basis are available from
+[home:badshah400:Staging](https://software.opensuse.org//download.html?project=home%3Abadshah400%3AStaging&package=xournalpp).
 
 ### Arch Linux
-The most recent stable release is available [in the [extra] repository](https://www.archlinux.org/packages/?q=xournalpp).
 
-To build the latest state of the master branch yourself, use [this AUR package](https://aur.archlinux.org/packages/xournalpp-git/).
+The latest stable release is available [in the [extra]
+repository](https://www.archlinux.org/packages/?q=xournalpp).
+
+To build the latest state of the master branch yourself, use [this AUR
+package](https://aur.archlinux.org/packages/xournalpp-git/).
+
+### Solus Linux
+
+The latest stable release is available in the main repository:
+
+```bash
+sudo eopkg it xournalpp
+```
 
 ### Flatpak
 
@@ -193,6 +230,7 @@ repository](https://github.com/flathub/com.github.xournalpp.xournalpp), and all
 Flatpak-related packaging issues should be reported there.
 
 ### Windows
+
 **The windows Version has a Bug:**
 Please start Xournal++, touch with the Pen, Quit Xournal++ and start again.
 Then Pen input will be working, until you restart Windows. [#659](https://github.com/xournalpp/xournalpp/issues/659)
@@ -200,7 +238,10 @@ Then Pen input will be working, until you restart Windows. [#659](https://github
 https://github.com/xournalpp/xournalpp/releases
 
 ### Mac OS X
-Xournal++ will be deliverd with a patched GTK. Else pressure sensitivity is not working on Mac [#569](https://github.com/xournalpp/xournalpp/issues/569). (GTK-Issue)
+
+Xournal++ will be deliverd with a patched GTK. Else pressure sensitivity is not
+working on Mac [#569](https://github.com/xournalpp/xournalpp/issues/569).
+(GTK-Issue)
 
 https://github.com/xournalpp/xournalpp/releases
 
