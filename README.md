@@ -147,10 +147,8 @@ There is also an _unstable_, [automated nightly
 release](https://github.com/xournalpp/xournalpp/releases/tag/nightly) that
 includes the very latest features and bug fixes.
 
-Xournal++ is also available on official repositories of some popular Linux
-distros and platforms. However, **besides the Flatpak and the Ubuntu PPA
-releases, we are not responsible for the packaging of Xournal++ in distro
-repositories.**
+With the help of the community, Xournal++ is also available on official repositories
+of some popular Linux distros and platforms.
 
 ### Ubuntu and derivatives
 
@@ -161,6 +159,8 @@ sudo add-apt-repository ppa:andreasbutti/xournalpp-master
 sudo apt update
 sudo apt install xournalpp
 ```
+
+This PPA is provided by the Xournal++ team.
 
 ### Fedora
 
@@ -214,7 +214,7 @@ sudo eopkg it xournalpp
 
 ### Flatpak
 
-We officially support a [FlatHub
+The Xournal++ team officially supports a [FlatHub
 release](https://flathub.org/apps/details/com.github.xournalpp.xournalpp), which
 can be installed with
 
