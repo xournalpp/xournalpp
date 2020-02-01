@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.0.17
+
+* Fixed arrow tip scaling: now scales with thickness instead of length (#967,
+  thanks to @redweasel)
+* Changed coordinate draw direction (thanks to @redweasel)
+* Fixed audio playback failures not showing error messages to the user (#1573)
+* Fixed text tool bold shortcut not working when capslock is enabled (#1583,
+  thanks to @matepak)
+* Fixed sidebar preview context menu "Move Page Up" and "Move Page Down" buttons
+  not being disabled on the first and last page, respectively (#1637)
+* Fixed Enter keypress on the "Goto Page" (Ctrl-G) dialog not changing the page
+  (#975, thanks to @MrMallIronmaker)
+* Fixed missing Xournal++ icon errors on most of the dialog windows (#1667)
+* (Windows) Fixed missing libssl/libcrypto errors in the official installation
+  (#1660).
+
 ## 1.0.16
 
 * Fixed currently editing textboxes not exporting to PDF.
