@@ -166,6 +166,9 @@ auto Path::fromUri(const string& uri) -> Path {
     }
 
     gchar* filename = g_filename_from_uri(uri.c_str(), nullptr, nullptr);
+    if (filename == nullptr) {
+        return {};
+    }
     Path p(filename);
     g_free(filename);
 
