@@ -37,7 +37,9 @@ public:
     void tearDown() {}
 
     void testUnsupportedUri() {
-        Path b = Path::fromUri("http://localhost/test.txt");
+        Path a = Path::fromUri("http://localhost/test.txt");
+        CPPUNIT_ASSERT_EQUAL(true, a.isEmpty());
+        Path b = Path::fromUri("file://invalid");
         CPPUNIT_ASSERT_EQUAL(true, b.isEmpty());
     }
 
