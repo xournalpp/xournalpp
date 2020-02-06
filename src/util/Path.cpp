@@ -231,9 +231,12 @@ Path Path::fromUri(const string& uri)
 		return {};
 	}
 
-	gchar* filename = g_filename_from_uri(uri.c_str(), nullptr, nullptr);
-	Path p(filename);
-	g_free(filename);
+    gchar* filename = g_filename_from_uri(uri.c_str(), nullptr, nullptr);
+    if (filename == nullptr) {
+        return {};
+    }
+    Path p(filename);
+    g_free(filename);
 
 	return p;
 }
