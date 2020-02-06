@@ -34,4 +34,5 @@ public:
     double getUnitSize();
 
 private:
+    void updateGraphColor();
 };

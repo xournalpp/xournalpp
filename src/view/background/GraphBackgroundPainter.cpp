@@ -8,6 +8,16 @@ GraphBackgroundPainter::GraphBackgroundPainter() = default;
 
 GraphBackgroundPainter::~GraphBackgroundPainter() = default;
 
+void GraphBackgroundPainter::updateGraphColor() {
+    int color = this->page->getBackgroundColor() + 16777216;
+    if (color == 0x000000) {
+        this->foregroundColor1 = 0x202020;
+        return;
+    }
+
+    this->foregroundColor1 = 0xBDBDBD;
+}
+
 void GraphBackgroundPainter::resetConfig() {
     this->foregroundColor1 = 0xBDBDBD;
     this->lineWidth = 0.5;
@@ -19,11 +29,13 @@ void GraphBackgroundPainter::resetConfig() {
 auto GraphBackgroundPainter::getUnitSize() -> double { return this->drawRaster1; }
 
 void GraphBackgroundPainter::paint() {
+    this->updateGraphColor();
     paintBackgroundColor();
     paintBackgroundGraph();
 }
 
 void GraphBackgroundPainter::paintBackgroundGraph() {
+
     Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
 
     cairo_set_line_width(cr, lineWidth * lineWidthFactor);
