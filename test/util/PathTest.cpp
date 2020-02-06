@@ -40,11 +40,12 @@ public:
 	{
 	}
 
-	void testUnsupportedUri()
-	{
-		Path b = Path::fromUri("http://localhost/test.txt");
-		CPPUNIT_ASSERT_EQUAL(true, b.isEmpty());
-	}
+    void testUnsupportedUri() {
+        Path a = Path::fromUri("http://localhost/test.txt");
+        CPPUNIT_ASSERT_EQUAL(true, a.isEmpty());
+        Path b = Path::fromUri("file://invalid");
+        CPPUNIT_ASSERT_EQUAL(true, b.isEmpty());
+    }
 
 	void testPathFromUri()
 	{
