@@ -11,9 +11,10 @@ assignees: ''
 
 **Affects versions :**
  - OS: [e.g. Linux (which distro), Mac, Windows]
- - In case of linux, which desktop environment [Wayland, Gnome-Wayland, XWayland, X11]
- - Which version of libgtk do you use.
- - Version of Xournal++ [e.g. 1.0.10, specific commit, specific branch]
+ - (Linux only) Desktop environment: [e.g. Wayland, Gnome-Wayland, XWayland, X11]
+ - Which version of libgtk do you use
+ - Version of Xournal++: [e.g. 1.0.16, specific commit, specific branch]
+ - Installation method: [e.g. PPA, Flatpak, official release, etc.]
 
 **Describe the bug**
 A clear and concise description of what the bug is.
@@ -31,4 +32,4 @@ A clear and concise description of what you expected to happen.
 (Optional) If applicable, add screenshots to help explain your problem.
 
 **Additional context**
-Add any other context about the problem here.
+Add any other information or context about the problem here.

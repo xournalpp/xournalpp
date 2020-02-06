@@ -41,8 +41,8 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection, XojPag
     contstruct(undo, view, view->getPage());
 
     for (Element* e: selection->selectedElements) {
+        addElement(e, this->sourceLayer->indexOf(e));
         this->sourceLayer->removeElement(e, false);
-        addElement(e);
     }
 
     view->rerenderPage();
@@ -56,7 +56,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* vie
 
     contstruct(undo, view, page);
 
-    addElement(e);
+    addElement(e, this->sourceLayer->indexOf(e));
     this->sourceLayer->removeElement(e, false);
 
     view->rerenderElement(e);
@@ -69,7 +69,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, const vector<Element*>& elem
     contstruct(undo, view, page);
 
     for (Element* e: elements) {
-        addElement(e);
+        addElement(e, this->sourceLayer->indexOf(e));
         this->sourceLayer->removeElement(e, false);
     }
 
@@ -275,9 +275,10 @@ void EditSelection::fillUndoItem(DeleteUndoAction* undo) { this->contents->fillU
 
 /**
  * Add an element to the this selection
+ *
  */
-void EditSelection::addElement(Element* e) {
-    this->contents->addElement(e);
+void EditSelection::addElement(Element* e, Layer::ElementIndex order) {
+    this->contents->addElement(e, order);
 
     if (e->rescaleOnlyAspectRatio()) {
         this->aspectRatio = true;

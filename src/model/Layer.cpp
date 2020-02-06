@@ -38,7 +38,7 @@ void Layer::addElement(Element* e) {
     this->elements.push_back(e);
 }
 
-void Layer::insertElement(Element* e, int pos) {
+void Layer::insertElement(Element* e, ElementIndex pos) {
     if (e == nullptr) {
         g_warning("insertElement(nullptr)!");
         Stacktrace::printStracktrace();
@@ -67,17 +67,17 @@ void Layer::insertElement(Element* e, int pos) {
     }
 }
 
-auto Layer::indexOf(Element* e) -> int {
+auto Layer::indexOf(Element* e) -> ElementIndex {
     for (unsigned int i = 0; i < this->elements.size(); i++) {
         if (this->elements[i] == e) {
             return i;
         }
     }
 
-    return -1;
+    return InvalidElementIndex;
 }
 
-auto Layer::removeElement(Element* e, bool free) -> int {
+auto Layer::removeElement(Element* e, bool free) -> ElementIndex {
     for (unsigned int i = 0; i < this->elements.size(); i++) {
         if (e == this->elements[i]) {
             this->elements.erase(this->elements.begin() + i);
@@ -91,7 +91,7 @@ auto Layer::removeElement(Element* e, bool free) -> int {
 
     g_warning("Could not remove element from layer, it's not on the layer!");
     Stacktrace::printStracktrace();
-    return -1;
+    return InvalidElementIndex;
 }
 
 auto Layer::isAnnotated() -> bool { return !this->elements.empty(); }

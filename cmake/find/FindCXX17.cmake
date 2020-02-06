@@ -72,7 +72,7 @@ if (TARGET cxx17)
     return()
 endif ()
 
-add_library(cxx17 INTERFACE IMPORTED)
+add_library(cxx17 INTERFACE)
 target_compile_features(cxx17 INTERFACE cxx_std_17)
 set(_found TRUE)
 

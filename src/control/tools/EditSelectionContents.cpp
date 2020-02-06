@@ -60,7 +60,15 @@ EditSelectionContents::~EditSelectionContents() {
 /**
  * Add an element to the this selection
  */
-void EditSelectionContents::addElement(Element* e) { this->selected.push_back(e); }
+void EditSelectionContents::addElement(Element* e, Layer::ElementIndex order) {
+    g_assert(this->selected.size() == this->insertOrder.size());
+    this->selected.emplace_back(e);
+    if (order == Layer::InvalidElementIndex) {
+        this->insertOrder.emplace_back(e, order);
+    } else {
+        this->insertOrder.emplace_front(e, order);
+    }
+}
 
 /**
  * Returns all containig elements of this selections
@@ -268,6 +276,7 @@ void EditSelectionContents::fillUndoItem(DeleteUndoAction* undo) {
     }
 
     this->selected.clear();
+    this->insertOrder.clear();
 }
 
 /**
@@ -325,7 +334,8 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 
     bool move = mx != 0 || my != 0;
 
-    for (Element* e: this->selected) {
+    g_assert(this->selected.size() == this->insertOrder.size());
+    for (auto&& [e, index]: this->insertOrder) {
         if (move) {
             e->move(mx, my);
         }
@@ -335,7 +345,12 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
         if (rotate) {
             e->rotate(x, y, this->lastWidth / 2, this->lastHeight / 2, this->rotation);
         }
-        layer->addElement(e);
+        if (index == Layer::InvalidElementIndex) {
+            // if the element didn't have a source layer (e.g, clipboard)
+            layer->addElement(e);
+        } else {
+            layer->insertElement(e, index);
+        }
     }
 }
 
