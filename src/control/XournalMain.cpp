@@ -506,14 +506,13 @@ void on_startup(GApplication* application, XMPtr app_data) {
     // init singleton
     // ToolbarColorNames::getInstance();
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get());
-    {
-        auto icon = app_data->gladePath->getFirstSearchPath() / "icons";
-        gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.u8string().c_str());
-    }
 
-    if (app_data->control->getSettings()->isDarkTheme()) {
-        auto icon = app_data->gladePath->getFirstSearchPath() / "iconsDark";
-        gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.u8string().c_str());
+    // Set up icons
+    {
+        const auto monoIcons = app_data->gladePath->getFirstSearchPath() / "iconsMono";
+        const auto colorIcons = app_data->gladePath->getFirstSearchPath() / "iconsColor";
+        gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), monoIcons.u8string().c_str());
+        gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), colorIcons.u8string().c_str());
     }
 
     auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;

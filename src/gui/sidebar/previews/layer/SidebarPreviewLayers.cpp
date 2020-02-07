@@ -58,7 +58,7 @@ void SidebarPreviewLayers::enableSidebar() {
 
 auto SidebarPreviewLayers::getName() -> string { return stacked ? _("Layerstack Preview") : _("Layer Preview"); }
 
-auto SidebarPreviewLayers::getIconName() -> string { return stacked ? "sidebar-layerstack" : "layer"; }
+auto SidebarPreviewLayers::getIconName() -> string { return stacked ? "sidebar-layerstack" : "sidebar-layer"; }
 
 void SidebarPreviewLayers::pageSizeChanged(size_t page) {
     if (page != this->lc->getCurrentPageId() || !enabled) {

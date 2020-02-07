@@ -10,12 +10,12 @@
 #include "i18n.h"
 
 ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id):
-        ToolButton(handler, std::move(id), ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select",
+        ToolButton(handler, std::move(id), ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "select-rect",
                    _("Select Rectangle")),
         toolMenuHandler(toolMenuHandler),
         popup(gtk_menu_new()) {
-    addMenuitem(_("Select Rectangle"), "rect-select", ACTION_TOOL_SELECT_RECT, GROUP_TOOL);
-    addMenuitem(_("Select Region"), "lasso", ACTION_TOOL_SELECT_REGION, GROUP_TOOL);
+    addMenuitem(_("Select Rectangle"), "select-rect", ACTION_TOOL_SELECT_RECT, GROUP_TOOL);
+    addMenuitem(_("Select Region"), "select-lasso", ACTION_TOOL_SELECT_REGION, GROUP_TOOL);
     addMenuitem(_("Select Object"), "object-select", ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL);
     addMenuitem(_("Play Object"), "object-play", ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL);
 
@@ -51,12 +51,12 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action) {
 
         if (action == ACTION_TOOL_SELECT_RECT && this->action != ACTION_TOOL_SELECT_RECT) {
             this->action = ACTION_TOOL_SELECT_RECT;
-            gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), "rect-select", GTK_ICON_SIZE_SMALL_TOOLBAR);
+            gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), "select-rect", GTK_ICON_SIZE_SMALL_TOOLBAR);
 
             description = _("Select Rectangle");
         } else if (action == ACTION_TOOL_SELECT_REGION && this->action != ACTION_TOOL_SELECT_REGION) {
             this->action = ACTION_TOOL_SELECT_REGION;
-            gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), "lasso", GTK_ICON_SIZE_SMALL_TOOLBAR);
+            gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), "select-lasso", GTK_ICON_SIZE_SMALL_TOOLBAR);
 
             description = _("Select Region");
         } else if (action == ACTION_TOOL_SELECT_OBJECT && this->action != ACTION_TOOL_SELECT_OBJECT) {
@@ -84,7 +84,7 @@ auto ToolSelectCombocontrol::newItem() -> GtkToolItem* {
     GtkToolItem* it = nullptr;
 
     labelWidget = gtk_label_new(_("Select Rectangle"));
-    iconWidget = gtk_image_new_from_icon_name("rect-select", GTK_ICON_SIZE_SMALL_TOOLBAR);
+    iconWidget = gtk_image_new_from_icon_name("select-rect", GTK_ICON_SIZE_SMALL_TOOLBAR);
 
     it = gtk_menu_tool_toggle_button_new(iconWidget, "test0");
     gtk_tool_button_set_label_widget(GTK_TOOL_BUTTON(it), labelWidget);

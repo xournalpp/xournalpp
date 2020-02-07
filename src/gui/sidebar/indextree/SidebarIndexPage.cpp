@@ -225,7 +225,7 @@ auto SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, cons
 
 auto SidebarIndexPage::getName() -> string { return _("Contents"); }
 
-auto SidebarIndexPage::getIconName() -> string { return "sidebar_index"; }
+auto SidebarIndexPage::getIconName() -> string { return "sidebar-index"; }
 
 auto SidebarIndexPage::hasData() -> bool { return this->hasContents; }
 
