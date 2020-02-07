@@ -13,7 +13,7 @@
    height="22"
    id="svg2"
    version="1.1"
-   inkscape:version="0.92.4 5da689c313, 2019-01-14"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
    sodipodi:docname="tool_math_tex.svg">
   <defs
      id="defs4" />
@@ -24,17 +24,18 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="20.48"
-     inkscape:cx="21.209309"
-     inkscape:cy="4.9886566"
+     inkscape:zoom="40.96"
+     inkscape:cx="10.629072"
+     inkscape:cy="11.382383"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer2"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1015"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
      inkscape:window-x="0"
-     inkscape:window-y="36"
-     inkscape:window-maximized="1" />
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:snap-page="true" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -43,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <cc:license
            rdf:resource="http://creativecommons.org/licenses/by/4.0/" />
       </cc:Work>
@@ -66,7 +67,17 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1030.3622)">
+     transform="translate(0,-1030.3622)"
+     style="display:none">
+    <rect
+       style="opacity:1;fill:#5e5e5e;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect841"
+       width="22"
+       height="22"
+       x="0"
+       y="1030.3622"
+       rx="0.884"
+       ry="0.136957" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot2989"
@@ -89,21 +100,94 @@
            x="-11.71875"
            y="-5.1484375" /></flowRegion><flowPara
          id="flowPara3003"
-         style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:0px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';text-align:start;letter-spacing:-0.03px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="10.984859"
-       y="1039.3739"
-       id="text23"><tspan
-         sodipodi:role="line"
-         id="tspan21"
-         x="10.969859"
-         y="1039.3739"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:0px;font-family:C059;-inkscape-font-specification:C059;text-align:center;letter-spacing:-0.03px;text-anchor:middle">Math</tspan><tspan
-         sodipodi:role="line"
-         x="10.969859"
-         y="1048.5081"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:0px;font-family:C059;-inkscape-font-specification:C059;text-align:center;letter-spacing:-0.03px;text-anchor:middle"
-         id="tspan25">TEX</tspan></text>
+         style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Ebene 2">
+    <path
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#5b5b5b;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.90179801;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="M 4.8203125 0.96289062 A 1.4510441 1.4510441 0 0 0 3.7148438 3.2792969 A 1.4510441 1.4510441 0 0 0 3.8027344 3.3886719 A 1.4511732 1.4511732 0 0 0 3.8066406 3.3925781 L 10.523438 11 L 3.9921875 18.396484 A 1.4510441 1.4510441 0 0 0 4.2011719 20.871094 A 1.4510441 1.4510441 0 0 0 5.0917969 21.021484 C 5.282772 21.021742 7.93056 21.025509 10.826172 21.027344 C 12.325262 21.028251 13.839528 21.029897 15.007812 21.029297 C 16.176098 21.028616 16.838641 21.031484 17.15625 21.021484 A 1.4510441 1.4510441 0 1 0 17.064453 18.121094 C 17.152283 18.118294 16.171931 18.126253 15.005859 18.126953 C 13.839788 18.127633 12.326619 18.12786 10.828125 18.126953 C 9.4524102 18.126127 9.176032 18.126177 8.1035156 18.125 L 13.546875 11.960938 A 1.4510441 1.4510441 0 0 0 13.546875 10.039062 L 8.109375 3.8828125 C 9.1806478 3.8839761 9.4543071 3.8839374 10.826172 3.8847656 C 12.325262 3.8856726 13.839528 3.8854464 15.007812 3.8847656 C 16.176098 3.8840849 16.838655 3.8889363 17.15625 3.8789062 A 1.4510441 1.4510441 0 1 0 17.064453 0.97851562 C 17.152273 0.97574363 16.171931 0.983696 15.005859 0.984375 C 13.839788 0.98505446 12.326619 0.98332887 10.828125 0.98242188 C 7.9238373 0.98066495 5.249665 0.97679923 5.0761719 0.9765625 A 1.4510441 1.4510441 0 0 0 4.8203125 0.96289062 z "
+       id="path823" />
+    <g
+       transform="translate(24.137765,-78.575878)"
+       id="layer1-7"
+       inkscape:label="Ebene 1">
+      <g
+         id="text2985"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28px;line-height:125%;font-family:'URW Bookman L';-inkscape-font-specification:'URW Bookman L';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#5b5b5b;fill-opacity:1;stroke:#313131;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1">
+        <path
+           id="path3006"
+           style="line-height:125%;font-family:'URW Bookman L';-inkscape-font-specification:'URW Bookman L';fill:#5b5b5b;fill-opacity:1;stroke:#313131;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+           d="M 19.480701,1032.2986 H 3.2407015 l -1.596,4.928 0.924,0.336 c 1.6519983,-2.912 3.5840026,-4.2 6.16,-4.2 0.9239991,0 1.232,0.28 1.232,1.12 v 12.852 c 0,2.268 -0.4200014,2.968 -1.82,3.08 l -1.092,0.084 v 0.868 h 8.6239995 v -0.868 l -1.092,-0.084 c -1.399998,-0.112 -1.82,-0.812 -1.82,-3.08 v -12.74 c 0,-0.98 0.224001,-1.232 1.148,-1.232 2.463998,0 4.592002,1.456 6.16,4.2 l 0.98,-0.336 -1.568,-4.928"
+           inkscape:connector-curvature="0" />
+      </g>
+      <flowRoot
+         style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="flowRoot2989-2"
+         xml:space="preserve"><flowRegion
+           id="flowRegion2991-7"><rect
+             y="-921.75"
+             x="-3.125"
+             height="400"
+             width="387.5"
+             id="rect2993-2" /></flowRegion><flowPara
+           style="font-size:40px;line-height:1.25"
+           id="flowPara2995-2"> </flowPara></flowRoot>      <flowRoot
+         style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="flowRoot2997-6"
+         xml:space="preserve"><flowRegion
+           id="flowRegion2999-1"><rect
+             y="-5.1484375"
+             x="-11.71875"
+             height="41.015625"
+             width="50.195312"
+             id="rect3001-0" /></flowRegion><flowPara
+           style="font-size:40px;line-height:1.25"
+           id="flowPara3003-6"> </flowPara></flowRoot>    </g>
+    <g
+       transform="translate(36.100656,-61.144237)"
+       id="layer1-0"
+       inkscape:label="Ebene 1">
+      <g
+         id="text2985-9"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28px;line-height:125%;font-family:'URW Bookman L';-inkscape-font-specification:'URW Bookman L';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#5b5b5b;fill-opacity:1;stroke:#313131;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1">
+        <path
+           id="path3006-1"
+           style="line-height:125%;font-family:'URW Bookman L';-inkscape-font-specification:'URW Bookman L';fill:#5b5b5b;fill-opacity:1;stroke:#313131;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+           d="M 19.480701,1032.2986 H 3.2407015 l -1.596,4.928 0.924,0.336 c 1.6519983,-2.912 3.5840026,-4.2 6.16,-4.2 0.9239991,0 1.232,0.28 1.232,1.12 v 12.852 c 0,2.268 -0.4200014,2.968 -1.82,3.08 l -1.092,0.084 v 0.868 h 8.6239995 v -0.868 l -1.092,-0.084 c -1.399998,-0.112 -1.82,-0.812 -1.82,-3.08 v -12.74 c 0,-0.98 0.224001,-1.232 1.148,-1.232 2.463998,0 4.592002,1.456 6.16,4.2 l 0.98,-0.336 -1.568,-4.928"
+           inkscape:connector-curvature="0" />
+      </g>
+      <flowRoot
+         style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="flowRoot2989-7"
+         xml:space="preserve"><flowRegion
+           id="flowRegion2991-71"><rect
+             y="-921.75"
+             x="-3.125"
+             height="400"
+             width="387.5"
+             id="rect2993-1" /></flowRegion><flowPara
+           style="font-size:40px;line-height:1.25"
+           id="flowPara2995-5"> </flowPara></flowRoot>      <flowRoot
+         style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="flowRoot2997-9"
+         xml:space="preserve"><flowRegion
+           id="flowRegion2999-7"><rect
+             y="-5.1484375"
+             x="-11.71875"
+             height="41.015625"
+             width="50.195312"
+             id="rect3001-7" /></flowRegion><flowPara
+           style="font-size:40px;line-height:1.25"
+           id="flowPara3003-67"> </flowPara></flowRoot>    </g>
+    <g
+       transform="translate(6.327299,-1030.8837)"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28px;line-height:125%;font-family:'URW Bookman L';-inkscape-font-specification:'URW Bookman L';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#5b5b5b;fill-opacity:1;stroke:#313131;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+       id="text2985-3" />
+    <path
+       id="path927"
+       d="M 4.8203125 0.96289062 A 1.4510441 1.4510441 0 0 0 3.7148438 3.2792969 A 1.4510441 1.4510441 0 0 0 3.8027344 3.3886719 A 1.4511732 1.4511732 0 0 0 3.8066406 3.3925781 L 10.523438 11 L 3.9921875 18.396484 A 1.4510441 1.4510441 0 0 0 4.2011719 20.871094 A 1.4510441 1.4510441 0 0 0 5.0917969 21.021484 C 5.282772 21.021742 7.93056 21.025509 10.826172 21.027344 C 12.325262 21.028251 13.839528 21.029897 15.007812 21.029297 C 16.176098 21.028616 16.838641 21.031484 17.15625 21.021484 A 1.4510441 1.4510441 0 1 0 17.064453 18.121094 C 17.152283 18.118294 16.171931 18.126253 15.005859 18.126953 C 13.839788 18.127633 12.326619 18.12786 10.828125 18.126953 C 9.4524102 18.126127 9.176032 18.126177 8.1035156 18.125 L 13.546875 11.960938 A 1.4510441 1.4510441 0 0 0 13.546875 10.039062 L 8.109375 3.8828125 C 9.1806478 3.8839761 9.4543071 3.8839374 10.826172 3.8847656 C 12.325262 3.8856726 13.839528 3.8854464 15.007812 3.8847656 C 16.176098 3.8840849 16.838655 3.8889363 17.15625 3.8789062 A 1.4510441 1.4510441 0 1 0 17.064453 0.97851562 C 17.152273 0.97574363 16.171931 0.983696 15.005859 0.984375 C 13.839788 0.98505446 12.326619 0.98332887 10.828125 0.98242188 C 7.9238373 0.98066495 5.249665 0.97679923 5.0761719 0.9765625 A 1.4510441 1.4510441 0 0 0 4.8203125 0.96289062 z "
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#313131;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
   </g>
 </svg>

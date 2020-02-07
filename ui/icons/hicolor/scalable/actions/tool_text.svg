@@ -13,7 +13,7 @@
    height="22"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
    sodipodi:docname="tool_text.svg">
   <defs
      id="defs4" />
@@ -24,16 +24,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="20.48"
-     inkscape:cx="10.296448"
-     inkscape:cy="16.306083"
+     inkscape:zoom="10.24"
+     inkscape:cx="9.5171644"
+     inkscape:cy="8.5538751"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1280"
-     inkscape:window-height="1000"
-     inkscape:window-x="0"
-     inkscape:window-y="24"
+     inkscape:window-width="1920"
+     inkscape:window-height="1047"
+     inkscape:window-x="2560"
+     inkscape:window-y="6"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -63,22 +63,24 @@
     <flowRoot
        xml:space="preserve"
        id="flowRoot2989"
-       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
+       style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
          id="flowRegion2991"><rect
            id="rect2993"
            width="387.5"
            height="400"
            x="-3.125"
            y="-921.75" /></flowRegion><flowPara
-         id="flowPara2995"></flowPara></flowRoot>    <flowRoot
+         id="flowPara2995"
+         style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot2997"
-       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
+       style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
          id="flowRegion2999"><rect
            id="rect3001"
            width="50.195312"
            height="41.015625"
            x="-11.71875"
            y="-5.1484375" /></flowRegion><flowPara
-         id="flowPara3003"></flowPara></flowRoot>  </g>
+         id="flowPara3003"
+         style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>  </g>
 </svg>
