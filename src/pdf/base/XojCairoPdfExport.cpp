@@ -1,5 +1,8 @@
 #include "XojCairoPdfExport.h"
 
+#include <sstream>
+#include <stack>
+
 #include <cairo/cairo-pdf.h>
 
 #include "view/DocumentView.h"
@@ -27,13 +30,60 @@ auto XojCairoPdfExport::startPdf(const Path& file) -> bool {
     this->surface = cairo_pdf_surface_create(file.c_str(), 0, 0);
     this->cr = cairo_create(surface);
 
-    // Require Cairo 1.16
-#ifdef CAIRO_PDF_METADATA_TITLE
-//	cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_TITLE, doc->getFilename().c_str());
+#if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
+    cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_TITLE, doc->getFilename().c_str());
+    GtkTreeModel* tocModel = doc->getContentsModel();
+    this->populatePdfOutline(tocModel);
 #endif
 
     return true;
 }
+
+#if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
+void XojCairoPdfExport::populatePdfOutline(GtkTreeModel* tocModel) {
+    if (tocModel == nullptr)
+        return;
+
+    int idCounter = CAIRO_PDF_OUTLINE_ROOT;
+    std::stack<std::pair<GtkTreeIter, int>> nodeStack;
+
+    GtkTreeIter firstIter = {0};
+    gtk_tree_model_get_iter_first(tocModel, &firstIter);
+    nodeStack.push(std::make_pair(firstIter, idCounter));
+    while (!nodeStack.empty()) {
+        auto [iter, parentId] = nodeStack.top();
+        nodeStack.pop();
+        const int currentId = ++idCounter;
+        XojLinkDest* link = nullptr;
+
+        gtk_tree_model_get(tocModel, &iter, DOCUMENT_LINKS_COLUMN_LINK, &link, -1);
+        auto dest = link->dest;
+        auto pdfBgPage = dest->getPdfPage();  // Link destination in original background PDF
+        auto pageDest = pdfBgPage == npos ? npos : doc->findPdfPage(pdfBgPage);  // Destination in document
+        if (pageDest != npos) {
+            std::ostringstream linkAttrBuf;
+            linkAttrBuf << "page=" << pageDest + 1;
+            if (dest->shouldChangeLeft() && dest->shouldChangeTop()) {
+                linkAttrBuf << " pos=[" << dest->getLeft() << " " << dest->getTop() << "]";
+            }
+            const auto linkAttr = linkAttrBuf.str();
+            auto outlineFlags = dest->getExpand() ? CAIRO_PDF_OUTLINE_FLAG_OPEN : 0;
+            cairo_pdf_surface_add_outline(this->surface, parentId, link->dest->getName().data(), linkAttr.data(),
+                                          static_cast<cairo_pdf_outline_flags_t>(outlineFlags));
+        }
+        g_object_unref(link);
+
+        GtkTreeIter childIter;
+        if (gtk_tree_model_iter_children(tocModel, &childIter, &iter)) {
+            nodeStack.push(std::make_pair(childIter, currentId));
+        }
+
+        if (gtk_tree_model_iter_next(tocModel, &iter)) {
+            nodeStack.push(std::make_pair(iter, parentId));
+        }
+    }
+}
+#endif
 
 void XojCairoPdfExport::endPdf() {
     cairo_destroy(this->cr);
