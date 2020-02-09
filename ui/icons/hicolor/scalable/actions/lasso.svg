@@ -49,8 +49,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="15.839192"
-     inkscape:cx="8.7812796"
-     inkscape:cy="6.1158809"
+     inkscape:cx="-6.6551139"
+     inkscape:cy="5.6739392"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -67,7 +67,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -76,12 +76,6 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-1030.3622)">
-    <path
-       style="fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m 3.1786167,1045.2292 c 0,0 11.4732143,0.3572 13.6607153,-0.4911 1.986169,-1.0677 4.009063,-3.0222 3.258928,-6.116 -0.982143,-3.7946 -2.95576,-4.4047 -5.848214,-5.0447 -2.980123,-0.6593 -5.9375004,-0.8481 -7.7678579,-0.4464 -1.8683594,0.8195 -2.4086557,0.9781 -3.5267857,2.9911 -0.8482143,1.875 -0.6080928,4.9198 -0.4910715,5.4464 0.5357143,2.4107 1.5263068,1.7293 2.0982143,3.75 0.6696431,2.3661 -1.5178571,5.2678 -1.5178571,5.2678"
-       id="path3777"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccsccssc" />
     <path
        style="fill:#fff394;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 2.3311639,1049.3146 c 0.7547093,0.9389 2.1724047,1.0986 3.3484764,1.3593 2.6184754,0.5804 5.4667697,1.1779 8.0357877,0.4075 2.351535,-0.7052 4.719821,-2.2266 5.936553,-4.3589 0.946199,-1.6582 0.997711,-3.8385 0.56971,-5.699 -0.658868,-2.8641 -2.369851,-5.6202 -4.622336,-7.508 -1.487375,-1.2465 -3.479784,-1.9932 -5.414992,-2.1385 -1.9844593,-0.149 -4.1077056,0.3217 -5.8180201,1.3391 -1.205133,0.7169 -2.6072458,1.7614 -2.7856972,3.1522 -0.1734327,1.3517 1.3489309,2.379 1.8462546,3.6478 0.481243,1.2278 1.3286004,2.5071 1.0878857,3.8037 -0.2643423,1.4239 -2.2724136,2.0627 -2.6143504,3.4699 -0.201593,0.8297 -0.1041828,1.8594 0.4307283,2.5249 z"
