@@ -104,6 +104,13 @@ private:
 	 */
 	GtkWidget* scrollBookmarks = NULL;
 
+    /**
+     * Keep track of the tree bookmark selection handler; see documentChanged
+     * method for why this is necessary.
+     */
+    unsigned long selectHandler = 0;  // g_signal_connect uses 0 as error value
+
+
 	/**
 	 * If currently searching, scroll to the page is disable, else search is not really working
 	 *
@@ -115,5 +122,4 @@ private:
 	 * If there is something to display in the tree
 	 */
 	bool hasContents = false;
-
 };

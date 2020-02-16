@@ -48,7 +48,8 @@ SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar)
 										"text", DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, NULL);
 	g_object_set(G_OBJECT(renderer), "style", PANGO_STYLE_ITALIC, NULL);
 
-	g_signal_connect(treeViewBookmarks, "cursor-changed", G_CALLBACK(treeBookmarkSelected), this);
+    this->selectHandler = g_signal_connect(treeViewBookmarks, "cursor-changed", G_CALLBACK(treeBookmarkSelected), this);
+    g_assert(this->selectHandler != 0);
 
 	gtk_widget_show(this->treeViewBookmarks);
 
@@ -441,11 +442,17 @@ void SidebarIndexPage::documentChanged(DocumentChangeType type)
 
 		Document* doc = this->control->getDocument();
 
-		doc->lock();
-		GtkTreeModel* model = doc->getContentsModel();
-		gtk_tree_view_set_model(GTK_TREE_VIEW(this->treeViewBookmarks), model);
-		int count = expandOpenLinks(model, NULL);
-		doc->unlock();
+        //  Block the cursor-change signal when the document changes, otherwise
+        //  there will be a deadlock: both the selectHandler and this code will
+        //  lock the document.
+        g_signal_handler_block(this->treeViewBookmarks, this->selectHandler);
+        doc->lock();
+        GtkTreeModel* model = doc->getContentsModel();
+        gtk_tree_view_set_model(GTK_TREE_VIEW(this->treeViewBookmarks), model);
+        int count = expandOpenLinks(model, nullptr);
+        doc->unlock();
+        g_signal_handler_unblock(this->treeViewBookmarks, this->selectHandler);
+        this->treeBookmarkSelected(this->treeViewBookmarks, this);
 
 		hasContents = (count != 0);
 	}
