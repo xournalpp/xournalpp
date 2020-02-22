@@ -318,11 +318,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	// TODO: remove this typo fix in 2-3 release cycles
 	if (xmlStrcmp(name, (const xmlChar*) "presureSensitivity") == 0)
 	{
-		setPressureSensitivity(xmlStrcmp(value, (const xmlChar*) "true") ? false : true);
+		this->pressureSensitivity = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
 	}
 	if (xmlStrcmp(name, (const xmlChar*) "pressureSensitivity") == 0)
 	{
-		setPressureSensitivity(xmlStrcmp(value, (const xmlChar*) "true") ? false : true);
+		this->pressureSensitivity = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "zoomGesturesEnabled") == 0)
 	{
