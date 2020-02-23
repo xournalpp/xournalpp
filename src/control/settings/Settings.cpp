@@ -272,10 +272,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 
     // TODO(fabian): remove this typo fix in 2-3 release cycles
     if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presureSensitivity")) == 0) {
-        setPressureSensitivity(xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0);
+        this->pressureSensitivity = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     }
     if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pressureSensitivity")) == 0) {
-        setPressureSensitivity(xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0);
+        this->pressureSensitivity = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomGesturesEnabled")) == 0) {
         this->zoomGesturesEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectedToolbar")) == 0) {
