@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   height="22"
+   width="22"
+   version="1.1"
+   viewBox="0 0 22 22"
+   id="svg3844">
+  <defs
+     id="defs3848">
+    <linearGradient
+       gradientTransform="matrix(8.4623226,0,0,8.7104945,-314.07845,-201.28831)"
+       x1="55"
+       y1="156"
+       x2="115"
+       gradientUnits="userSpaceOnUse"
+       y2="196"
+       id="linearGradient4421">
+      <stop
+         offset="0"
+         style="stop-color:#dddd00"
+         id="stop4377" />
+      <stop
+         offset="1"
+         style="stop-color:#a8a800"
+         id="stop4379" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(8.4623226,0,0,8.7104945,-314.07845,-201.28831)"
+       x1="60"
+       y1="96"
+       x2="165"
+       gradientUnits="userSpaceOnUse"
+       y2="96"
+       id="linearGradient4425">
+      <stop
+         offset="0"
+         style="stop-color:#ffffff;stop-opacity:.098039"
+         id="stop4407" />
+      <stop
+         offset="1"
+         style="stop-color:#ffffff;stop-opacity:.19608"
+         id="stop4409" />
+    </linearGradient>
+  </defs>
+  <g
+     transform="matrix(0.11817087,0,0,0.11480405,-2.8850772,-2.8912901)"
+     id="g4415">
+    <path
+       style="fill:url(#linearGradient4421)"
+       d="m 160,26 35,35 -80,135 c -5,-1 -59,-38 -60,-40 z"
+       id="rect3854" />
+    <path
+       style="fill:#ffffff;fill-opacity:1"
+       d="m 55,156 60,40 c 0,0 -20,-5 -40,10 -6.6667,5 -29.287,2.1458 -25,-5 15,-25 5,-45 5,-45 z"
+       id="rect4385" />
+    <path
+       style="fill:#ff0000"
+       d="m 50,201 25,5 -10,10 -25,0 z"
+       id="rect4388" />
+    <path
+       d="m 160,31 5,5 c 0,0 -90,115 -95,125 0,0 -10,0 -10,-5 z"
+       style="fill:url(#linearGradient4425)"
+       id="path4399" />
+  </g>
+  <metadata
+     id="metadata20">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title></dc:title>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
