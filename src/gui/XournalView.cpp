@@ -391,7 +391,7 @@ void XournalView::scrollTo(size_t pageNo, double yDocument) {
     Layout* layout = gtk_xournal_get_layout(this->widget);
 
     int x = v->getX();
-    int y = v->getY() + std::lround(yDocument);
+    int y = v->getY();
     int width = v->getDisplayWidth();
     int height = v->getDisplayHeight();
 
