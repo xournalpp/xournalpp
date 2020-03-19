@@ -54,7 +54,7 @@ stages:
 
       - job: macOS
         pool:
-          vmImage: 'macOS-10.13'
+          vmImage: 'macOS-10.15'
         displayName: 'Test Xournal++ on MacOS'
         steps:
           - template: steps/build_mac.yml
