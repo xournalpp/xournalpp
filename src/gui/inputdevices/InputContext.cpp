@@ -103,6 +103,10 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
         return this->stylusHandler->handle(event);
     }
 
+    if (event->deviceClass == INPUT_DEVICE_MOUSE_KEYBOARD_COMBO) {
+        return this->mouseHandler->handle(event) || this->keyboardHandler->handle(event);
+    }
+
     // handle mouse devices
     if (event->deviceClass == INPUT_DEVICE_MOUSE) {
         return this->mouseHandler->handle(event);
@@ -259,8 +263,10 @@ void InputContext::printDebug(GdkEvent* event) {
                                 "GDK_SOURCE_TOUCHPAD", "GDK_SOURCE_TRACKPOINT", "GDK_SOURCE_TABLET_PAD"};
     GdkDevice* device = gdk_event_get_source_device(event);
     message += "Source device:\t" + gdkInputSources[gdk_device_get_source(device)] + "\n";
-    string gdkInputClasses[] = {"INPUT_DEVICE_MOUSE",       "INPUT_DEVICE_PEN",      "INPUT_DEVICE_ERASER",
-                                "INPUT_DEVICE_TOUCHSCREEN", "INPUT_DEVICE_KEYBOARD", "INPUT_DEVICE_IGNORE"};
+    string gdkInputClasses[] = {"INPUT_DEVICE_MOUSE",    "INPUT_DEVICE_PEN",
+                                "INPUT_DEVICE_ERASER",   "INPUT_DEVICE_TOUCHSCREEN",
+                                "INPUT_DEVICE_KEYBOARD", "INPUT_DEVICE_MOUSE_KEYBOARD_COMBO",
+                                "INPUT_DEVICE_IGNORE"};
     InputDeviceClass deviceClass = InputEvents::translateDeviceType(device, this->getSettings());
     message += "Device Class:\t" + gdkInputClasses[deviceClass] + "\n";
 

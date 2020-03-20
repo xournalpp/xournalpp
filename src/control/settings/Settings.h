@@ -48,6 +48,7 @@ enum class InputDeviceTypeOption {
     Pen = 2,
     Eraser = 3,
     Touchscreen = 4,
+    MouseKeyboardCombo = 5,
 };
 
 class ButtonConfig;

@@ -86,6 +86,8 @@ auto InputEvents::translateDeviceType(const string& name, GdkInputSource source,
             return INPUT_DEVICE_ERASER;
         case InputDeviceTypeOption::Touchscreen:
             return INPUT_DEVICE_TOUCHSCREEN;
+        case InputDeviceTypeOption::MouseKeyboardCombo:
+            return INPUT_DEVICE_MOUSE_KEYBOARD_COMBO;
         default:
             return INPUT_DEVICE_IGNORE;
     }
