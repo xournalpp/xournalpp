@@ -440,8 +440,8 @@ void Settings::loadDeviceClasses() {
         int deviceSource = 0;
         deviceNode.getInt("deviceClass", deviceClass);
         deviceNode.getInt("deviceSource", deviceSource);
-        inputDeviceClasses.insert(std::pair<string, std::pair<int, GdkInputSource>>(
-                device.first, std::pair<int, GdkInputSource>(deviceClass, static_cast<GdkInputSource>(deviceSource))));
+        inputDeviceClasses.emplace(device.first, std::make_pair(static_cast<InputDeviceTypeOption>(deviceClass),
+                                                                static_cast<GdkInputSource>(deviceSource)));
     }
 }
 
@@ -583,10 +583,13 @@ auto Settings::saveProperty(const gchar* key, const gchar* value, xmlNodePtr par
 void Settings::saveDeviceClasses() {
     SElement& s = getCustomElement("deviceClasses");
 
-    for (const std::map<string, std::pair<int, GdkInputSource>>::value_type& device: inputDeviceClasses) {
-        SElement& e = s.child(device.first);
-        e.setInt("deviceClass", device.second.first);
-        e.setInt("deviceSource", device.second.second);
+    for (auto& device: inputDeviceClasses) {
+        const std::string& name = device.first;
+        InputDeviceTypeOption& deviceClass = device.second.first;
+        GdkInputSource& source = device.second.second;
+        SElement& e = s.child(name);
+        e.setInt("deviceClass", static_cast<int>(deviceClass));
+        e.setInt("deviceSource", source);
     }
 }
 
@@ -1577,67 +1580,70 @@ void Settings::setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnab
 
 auto Settings::getInputSystemDrawOutsideWindowEnabled() const -> bool { return this->inputSystemDrawOutsideWindow; }
 
-void Settings::setDeviceClassForDevice(GdkDevice* device, int deviceClass) {
+void Settings::setDeviceClassForDevice(GdkDevice* device, InputDeviceTypeOption deviceClass) {
     this->setDeviceClassForDevice(gdk_device_get_name(device), gdk_device_get_source(device), deviceClass);
 }
 
-void Settings::setDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource, int deviceClass) {
+void Settings::setDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource,
+                                       InputDeviceTypeOption deviceClass) {
     auto it = inputDeviceClasses.find(deviceName);
     if (it != inputDeviceClasses.end()) {
         it->second.first = deviceClass;
         it->second.second = deviceSource;
     } else {
-        inputDeviceClasses.insert(std::pair<string, std::pair<int, GdkInputSource>>(
-                deviceName, std::pair<int, GdkInputSource>(deviceClass, deviceSource)));
+        inputDeviceClasses.emplace(deviceName, std::make_pair(deviceClass, deviceSource));
     }
 }
 
 auto Settings::getKnownInputDevices() const -> std::vector<InputDevice> {
     std::vector<InputDevice> inputDevices;
-    for (const std::pair<string, std::pair<int, GdkInputSource>>& device: inputDeviceClasses) {
-        inputDevices.emplace_back(device.first, device.second.second);
+    for (auto pair: inputDeviceClasses) {
+        const std::string& name = pair.first;
+        GdkInputSource& source = pair.second.second;
+        inputDevices.emplace_back(name, source);
     }
     return inputDevices;
 }
 
-auto Settings::getDeviceClassForDevice(GdkDevice* device) const -> int {
+auto Settings::getDeviceClassForDevice(GdkDevice* device) const -> InputDeviceTypeOption {
     return this->getDeviceClassForDevice(gdk_device_get_name(device), gdk_device_get_source(device));
 }
 
-auto Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource) const -> int {
+auto Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource) const
+        -> InputDeviceTypeOption {
     auto search = inputDeviceClasses.find(deviceName);
     if (search != inputDeviceClasses.end()) {
         return search->second.first;
     }
 
 
-    guint deviceType = 0;
+    InputDeviceTypeOption deviceType = InputDeviceTypeOption::Disabled;
     switch (deviceSource) {
         case GDK_SOURCE_CURSOR:
 #if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
         case GDK_SOURCE_TABLET_PAD:
 #endif
         case GDK_SOURCE_KEYBOARD:
-            deviceType = 0;
+            deviceType = InputDeviceTypeOption::Disabled;
             break;
         case GDK_SOURCE_MOUSE:
         case GDK_SOURCE_TOUCHPAD:
 #if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
         case GDK_SOURCE_TRACKPOINT:
 #endif
-            deviceType = 1;
+            deviceType = InputDeviceTypeOption::Mouse;
             break;
         case GDK_SOURCE_PEN:
-            deviceType = 2;
+            deviceType = InputDeviceTypeOption::Pen;
             break;
         case GDK_SOURCE_ERASER:
-            deviceType = 3;
+            deviceType = InputDeviceTypeOption::Eraser;
             break;
         case GDK_SOURCE_TOUCHSCREEN:
-            deviceType = 4;
+            deviceType = InputDeviceTypeOption::Touchscreen;
             break;
         default:
-            deviceType = 0;
+            deviceType = InputDeviceTypeOption::Disabled;
     }
     return deviceType;
 }

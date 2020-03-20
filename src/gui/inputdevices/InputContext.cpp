@@ -74,12 +74,14 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
 
     // Add the device to the list of known devices if it is currently unknown
     GdkDevice* sourceDevice = gdk_event_get_source_device(sourceEvent);
-    if (GDK_SOURCE_KEYBOARD != gdk_device_get_source(sourceDevice) &&
-        gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER &&
+    GdkInputSource inputSource = gdk_device_get_source(sourceDevice);
+    if (inputSource != GDK_SOURCE_KEYBOARD && gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER &&
         this->knownDevices.find(string(event->deviceName)) == this->knownDevices.end()) {
+
         this->knownDevices.insert(string(event->deviceName));
         this->getSettings()->transactionStart();
-        this->getSettings()->setDeviceClassForDevice(gdk_event_get_source_device(sourceEvent), event->deviceClass);
+        auto deviceClassOption = this->getSettings()->getDeviceClassForDevice(string(event->deviceName), inputSource);
+        this->getSettings()->setDeviceClassForDevice(sourceDevice, deviceClassOption);
         this->getSettings()->transactionEnd();
     }
 

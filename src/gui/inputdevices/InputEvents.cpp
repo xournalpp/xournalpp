@@ -69,22 +69,22 @@ auto InputEvents::translateEventType(GdkEventType type) -> InputEventType {
 
 auto InputEvents::translateDeviceType(const string& name, GdkInputSource source, Settings* settings)
         -> InputDeviceClass {
-    int deviceType = settings->getDeviceClassForDevice(name, source);
+    InputDeviceTypeOption deviceType = settings->getDeviceClassForDevice(name, source);
     switch (deviceType) {
-        case 0: {
+        case InputDeviceTypeOption::Disabled: {
             // Keyboards are not matched in their own class - do this here manually
             if (source == GDK_SOURCE_KEYBOARD) {
                 return INPUT_DEVICE_KEYBOARD;
             }
             return INPUT_DEVICE_IGNORE;
         }
-        case 1:
+        case InputDeviceTypeOption::Mouse:
             return INPUT_DEVICE_MOUSE;
-        case 2:
+        case InputDeviceTypeOption::Pen:
             return INPUT_DEVICE_PEN;
-        case 3:
+        case InputDeviceTypeOption::Eraser:
             return INPUT_DEVICE_ERASER;
-        case 4:
+        case InputDeviceTypeOption::Touchscreen:
             return INPUT_DEVICE_TOUCHSCREEN;
         default:
             return INPUT_DEVICE_IGNORE;

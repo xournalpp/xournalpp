@@ -39,6 +39,17 @@ enum ScrollbarHideType {
     SCROLLBAR_HIDE_BOTH = SCROLLBAR_HIDE_HORIZONTAL | SCROLLBAR_HIDE_VERTICAL
 };
 
+/**
+ * The user-selectable device types
+ */
+enum class InputDeviceTypeOption {
+    Disabled = 0,
+    Mouse = 1,
+    Pen = 2,
+    Eraser = 3,
+    Touchscreen = 4,
+};
+
 class ButtonConfig;
 class InputDevice;
 
@@ -369,10 +380,11 @@ public:
 
     void loadDeviceClasses();
     void saveDeviceClasses();
-    void setDeviceClassForDevice(GdkDevice* device, int deviceClass);
-    void setDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource, int deviceClass);
-    int getDeviceClassForDevice(GdkDevice* device) const;
-    int getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource) const;
+    void setDeviceClassForDevice(GdkDevice* device, InputDeviceTypeOption deviceClass);
+    void setDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource,
+                                 InputDeviceTypeOption deviceClass);
+    InputDeviceTypeOption getDeviceClassForDevice(GdkDevice* device) const;
+    InputDeviceTypeOption getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource) const;
     std::vector<InputDevice> getKnownInputDevices() const;
 
     /**
@@ -820,7 +832,7 @@ private:
 
     bool inputSystemDrawOutsideWindow{};
 
-    std::map<string, std::pair<int, GdkInputSource>> inputDeviceClasses = {};
+    std::map<string, std::pair<InputDeviceTypeOption, GdkInputSource>> inputDeviceClasses = {};
 
     /**
      * "Transaction" running, do not save until the end is reached
