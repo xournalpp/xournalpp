@@ -26,10 +26,12 @@
   <g
      transform="translate(0,-1030.3622)"
      id="layer1">
-    <path
-       transform="matrix(0.34468087,0,0,0.34468087,6.0581305,1036.2591)"
-       d="m 24.776786,14.857142 a 10.491072,10.491072 0 1 1 -20.9821436,0 10.491072,10.491072 0 1 1 20.9821436,0 z"
-       id="path2985"
-       style="fill:#ffffff;fill-opacity:1;stroke:none" />
+    <rect
+       y="1040.0414"
+       x="-0.039003372"
+       height="2.6416664"
+       width="22.078007"
+       id="rect4136"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
 </svg>
