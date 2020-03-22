@@ -74,12 +74,14 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
 
     // Add the device to the list of known devices if it is currently unknown
     GdkDevice* sourceDevice = gdk_event_get_source_device(sourceEvent);
-    if (GDK_SOURCE_KEYBOARD != gdk_device_get_source(sourceDevice) &&
-        gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER &&
+    GdkInputSource inputSource = gdk_device_get_source(sourceDevice);
+    if (inputSource != GDK_SOURCE_KEYBOARD && gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER &&
         this->knownDevices.find(string(event->deviceName)) == this->knownDevices.end()) {
+
         this->knownDevices.insert(string(event->deviceName));
         this->getSettings()->transactionStart();
-        this->getSettings()->setDeviceClassForDevice(gdk_event_get_source_device(sourceEvent), event->deviceClass);
+        auto deviceClassOption = this->getSettings()->getDeviceClassForDevice(string(event->deviceName), inputSource);
+        this->getSettings()->setDeviceClassForDevice(sourceDevice, deviceClassOption);
         this->getSettings()->transactionEnd();
     }
 
@@ -99,6 +101,10 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     // handle tablet stylus
     if (event->deviceClass == INPUT_DEVICE_PEN || event->deviceClass == INPUT_DEVICE_ERASER) {
         return this->stylusHandler->handle(event);
+    }
+
+    if (event->deviceClass == INPUT_DEVICE_MOUSE_KEYBOARD_COMBO) {
+        return this->mouseHandler->handle(event) || this->keyboardHandler->handle(event);
     }
 
     // handle mouse devices
@@ -257,8 +263,10 @@ void InputContext::printDebug(GdkEvent* event) {
                                 "GDK_SOURCE_TOUCHPAD", "GDK_SOURCE_TRACKPOINT", "GDK_SOURCE_TABLET_PAD"};
     GdkDevice* device = gdk_event_get_source_device(event);
     message += "Source device:\t" + gdkInputSources[gdk_device_get_source(device)] + "\n";
-    string gdkInputClasses[] = {"INPUT_DEVICE_MOUSE",       "INPUT_DEVICE_PEN",      "INPUT_DEVICE_ERASER",
-                                "INPUT_DEVICE_TOUCHSCREEN", "INPUT_DEVICE_KEYBOARD", "INPUT_DEVICE_IGNORE"};
+    string gdkInputClasses[] = {"INPUT_DEVICE_MOUSE",    "INPUT_DEVICE_PEN",
+                                "INPUT_DEVICE_ERASER",   "INPUT_DEVICE_TOUCHSCREEN",
+                                "INPUT_DEVICE_KEYBOARD", "INPUT_DEVICE_MOUSE_KEYBOARD_COMBO",
+                                "INPUT_DEVICE_IGNORE"};
     InputDeviceClass deviceClass = InputEvents::translateDeviceType(device, this->getSettings());
     message += "Device Class:\t" + gdkInputClasses[deviceClass] + "\n";
 

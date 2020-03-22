@@ -31,8 +31,11 @@ DeviceClassConfigGui::~DeviceClassConfigGui() = default;
 
 void DeviceClassConfigGui::loadSettings() {
     // Get device class of device if available or
-    int deviceType = this->settings->getDeviceClassForDevice(this->device.getName(), this->device.getSource());
-    gtk_combo_box_set_active(GTK_COMBO_BOX(this->cbDeviceClass), deviceType);
+    InputDeviceTypeOption deviceType =
+            this->settings->getDeviceClassForDevice(this->device.getName(), this->device.getSource());
+    // Use the ID of each option in case the combo box options get rearranged in the future
+    gtk_combo_box_set_active_id(GTK_COMBO_BOX(this->cbDeviceClass),
+                                g_strdup_printf("%i", static_cast<int>(deviceType)));
 }
 
 void DeviceClassConfigGui::show(GtkWindow* parent) {
@@ -40,6 +43,8 @@ void DeviceClassConfigGui::show(GtkWindow* parent) {
 }
 
 void DeviceClassConfigGui::saveSettings() {
-    int deviceClass = gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbDeviceClass));
+    const gchar* deviceClassId = gtk_combo_box_get_active_id(GTK_COMBO_BOX(this->cbDeviceClass));
+    g_assert(deviceClassId != nullptr);
+    auto deviceClass = static_cast<InputDeviceTypeOption>(g_ascii_strtoll(deviceClassId, nullptr, 10));
     this->settings->setDeviceClassForDevice(this->device.getName(), this->device.getSource(), deviceClass);
 }
