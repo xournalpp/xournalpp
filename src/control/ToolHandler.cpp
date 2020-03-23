@@ -394,15 +394,10 @@ void ToolHandler::setColor(int color, bool userSelection)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	this->colorFound = false;
-
 	this->current->setColor(color);
 	this->listener->toolColorChanged(userSelection);
 
-	if (!colorFound)
-	{
-		this->listener->setCustomColorSelected();
-	}
+	this->listener->setCustomColorSelected();
 }
 
 int ToolHandler::getColor()
@@ -446,13 +441,6 @@ void ToolHandler::setDrawingType(DrawingType drawingType)
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	current->setDrawingType(drawingType);
-}
-
-void ToolHandler::setColorFound()
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	this->colorFound = true;
 }
 
 ArrayIterator<Tool*> ToolHandler::iterator()
