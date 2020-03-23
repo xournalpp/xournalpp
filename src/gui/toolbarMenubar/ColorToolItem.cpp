@@ -10,7 +10,7 @@
 
 bool ColorToolItem::inUpdate = false;
 
-ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, int color, bool selektor)
+ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, unsigned int color, bool selektor)
  : AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR),
    color(color),
    toolHandler(toolHandler),
@@ -80,7 +80,7 @@ void ColorToolItem::actionSelected(ActionGroup group, ActionType action)
 	inUpdate = false;
 }
 
-void ColorToolItem::enableColor(int color)
+void ColorToolItem::enableColor(unsigned int color)
 {
 	XOJ_CHECK_TYPE(ColorToolItem);
 
@@ -99,28 +99,14 @@ void ColorToolItem::enableColor(int color)
 	}
 	else
 	{
-		bool active = colorEqualsMoreOreLess(color);
-
 		if (this->item)
 		{
-			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), active);
-		}
-
-		if (active)
-		{
-			this->toolHandler->setColorFound();
-
-			// Only equals more ore less, so we will set it exact to the default color
-			if (this->color != color)
-			{
-				this->toolHandler->setColor(this->color, true);
-			}
-
+			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), this->color == color);
 		}
 	}
 }
 
-int ColorToolItem::getColor()
+unsigned int ColorToolItem::getColor() const
 {
 	XOJ_CHECK_TYPE(ColorToolItem);
 
@@ -141,30 +127,6 @@ string ColorToolItem::getId()
 	string id = buffer;
 
 	return id;
-}
-
-bool ColorToolItem::colorEqualsMoreOreLess(int color)
-{
-	XOJ_CHECK_TYPE(ColorToolItem);
-
-	if (color == -1)
-	{
-		return false;
-	}
-
-	int r1 = (color & 0xff0000) >> 16;
-	int g1 = (color & 0xff00) >> 8;
-	int b1 = (color & 0xff);
-
-	int r2 = (this->color & 0xff0000) >> 16;
-	int g2 = (this->color & 0xff00) >> 8;
-	int b2 = (this->color & 0xff);
-
-	if (std::abs(r1 - r2) < 10 && std::abs(g1 - g2) < 10 && std::abs(b1 - b2) < 10)
-	{
-		return true;
-	}
-	return false;
 }
 
 /**
