@@ -21,6 +21,8 @@ void TouchDisableGdk::enableTouch() {
 
     gtk_grab_remove(this->widget);
     // Todo(@ulrich): replace this with gdk_device_ungrab
+    //                but gdk_device_ungrab is deprecated too, since GTK 3.20
+    //                gtk_seat_ungrab has to be used instead,
     gdk_pointer_ungrab(GDK_CURRENT_TIME);  // NOLINT
 }
 
@@ -34,7 +36,9 @@ void TouchDisableGdk::disableTouch() {
      * See the following link if window dragging by double clicks on empty widget space occurs
      * https://www.reddit.com/r/kde/comments/aaeo91
      */
-    // Todo(@ulrich): replace this with gdk_device_ungrab
+    // Todo(@ulrich): replace this with gdk_device_grab
+    //                but gdk_device_grab is deprecated too, since GTK 3.20
+    //                gtk_seat_grab has to be used instead,
     gdk_pointer_grab(window, false, GDK_TOUCH_MASK, nullptr, nullptr, GDK_CURRENT_TIME);  // NOLINT
     gtk_grab_add(this->widget);
 }

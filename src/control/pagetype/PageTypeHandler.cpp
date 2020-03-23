@@ -145,4 +145,5 @@ auto PageTypeHandler::getStringForPageTypeFormat(const PageTypeFormat& format) -
         case PageTypeFormat::Copy:
             return ":copy";
     }
+    return "ruled";
 }
