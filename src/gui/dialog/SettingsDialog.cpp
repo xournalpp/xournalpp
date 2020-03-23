@@ -44,14 +44,14 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 		+[](GtkButton* bt, SettingsDialog* self)
 		{
 			XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-			system(gtk_entry_get_text(GTK_ENTRY(self->get("txtEnableTouchCommand"))));
+			Util::systemWithMessage(gtk_entry_get_text(GTK_ENTRY(self->get("txtEnableTouchCommand"))));
 		}), this);
 
 	g_signal_connect(get("btTestDisable"), "clicked", G_CALLBACK(
 		+[](GtkButton* bt, SettingsDialog* self)
 		{
 			XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
-			system(gtk_entry_get_text(GTK_ENTRY(self->get("txtDisableTouchCommand"))));
+			Util::systemWithMessage(gtk_entry_get_text(GTK_ENTRY(self->get("txtDisableTouchCommand"))));
 		}), this);
 
 	g_signal_connect(get("cbAddVerticalSpace"), "toggled", G_CALLBACK(

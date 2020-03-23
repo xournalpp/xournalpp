@@ -8,6 +8,7 @@
 
 #include <unistd.h>
 #include <utility>
+#include <cstdlib>
 
 struct CallbackUiData
 {
@@ -178,4 +179,12 @@ void Util::writeCoordinateString(OutputStream* out, double xVal, double yVal)
 	out->write(" ");
 	g_ascii_formatd(coordString, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, yVal);
 	out->write(coordString);
+}
+
+void Util::systemWithMessage(const char* command) {
+    auto errc = std::system(command);
+    if (errc != 0) {
+        string msg = FS(_F("Error {1} executing system command: {2}") % errc % command);
+        XojMsgBox::showErrorToUser(nullptr, msg);
+    }
 }

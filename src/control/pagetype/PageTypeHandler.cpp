@@ -185,5 +185,5 @@ string PageTypeHandler::getStringForPageTypeFormat(const PageTypeFormat& format)
 	case PageTypeFormat::Copy:
 		return ":copy";
 	}
-	return "lined_vline";
+	return "ruled";
 }
