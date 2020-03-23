@@ -75,7 +75,7 @@ PageRangeVector ExportDialog::getRange()
 	else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(rdRangeCurrent)))
 	{
 		PageRangeVector range;
-		range.push_back(new PageRangeEntry(this->currentPage, this->currentPage));
+		range.push_back(new PageRangeEntry(this->currentPage - 1, this->currentPage - 1));
 		return range;
 	}
 	else
