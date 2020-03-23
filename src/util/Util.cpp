@@ -1,6 +1,7 @@
 #include "Util.h"
 
 #include <array>
+#include <cstdlib>
 #include <utility>
 
 #include <unistd.h>
@@ -159,4 +160,11 @@ void Util::writeCoordinateString(OutputStream* out, double xVal, double yVal) {
     out->write(" ");
     g_ascii_formatd(coordString.data(), G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, yVal);
     out->write(coordString.data());
+}
+
+void Util::systemWithMessage(const char* command) {
+    if (auto errc = std::system(command); errc != 0) {
+        string msg = FS(_F("Error {1} executing system command: {2}") % errc % command);
+        XojMsgBox::showErrorToUser(nullptr, msg);
+    }
 }

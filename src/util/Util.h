@@ -45,6 +45,11 @@ Path getTmpDirSubfolder(const Path& subfolder = "");
 Path ensureFolderExists(const Path& p);
 
 /**
+ * Wrap the system call to redirect errors to a dialog
+ */
+void systemWithMessage(const char* command);
+
+/**
  * Execute the callback in the UI Thread.
  *
  * Make sure the container class is not deleted before the UI stuff is finished!

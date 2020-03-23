@@ -50,6 +50,8 @@ private:
     static void printMemory() {
         string cmd = "bash -c \"cat /proc/";
         cmd += std::to_string(::getpid()) + "/status | grep Vm\"";
-        system(cmd.c_str());
+        if (system(cmd.c_str()) != 0) {
+            cout << "Error executing " << cmd.c_str() << endl;
+        };
     }
 };

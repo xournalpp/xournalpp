@@ -36,12 +36,12 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 
 
     g_signal_connect(get("btTestEnable"), "clicked", G_CALLBACK(+[](GtkButton* bt, SettingsDialog* self) {
-                         system(gtk_entry_get_text(GTK_ENTRY(self->get("txtEnableTouchCommand"))));
+                         Util::systemWithMessage(gtk_entry_get_text(GTK_ENTRY(self->get("txtEnableTouchCommand"))));
                      }),
                      this);
 
     g_signal_connect(get("btTestDisable"), "clicked", G_CALLBACK(+[](GtkButton* bt, SettingsDialog* self) {
-                         system(gtk_entry_get_text(GTK_ENTRY(self->get("txtDisableTouchCommand"))));
+                         Util::systemWithMessage(gtk_entry_get_text(GTK_ENTRY(self->get("txtDisableTouchCommand"))));
                      }),
                      this);
 
