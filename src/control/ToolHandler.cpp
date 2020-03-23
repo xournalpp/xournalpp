@@ -250,14 +250,9 @@ void ToolHandler::setLineStyle(const LineStyle& style) {
  * 			and therefore should not be applied to a selection
  */
 void ToolHandler::setColor(int color, bool userSelection) {
-    this->colorFound = false;
-
     this->current->setColor(color);
     this->listener->toolColorChanged(userSelection);
-
-    if (!colorFound) {
-        this->listener->setCustomColorSelected();
-    }
+    this->listener->setCustomColorSelected();
 }
 
 auto ToolHandler::getColor() -> int { return current->getColor(); }
@@ -278,8 +273,6 @@ auto ToolHandler::getLineStyle() -> const LineStyle& { return current->getLineSt
 auto ToolHandler::getDrawingType() -> DrawingType { return current->getDrawingType(); }
 
 void ToolHandler::setDrawingType(DrawingType drawingType) { current->setDrawingType(drawingType); }
-
-void ToolHandler::setColorFound() { this->colorFound = true; }
 
 auto ToolHandler::getTools() const -> std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& { return tools; }
 
