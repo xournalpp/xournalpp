@@ -1,5 +1,7 @@
 #include "TouchDisableCustom.h"
 
+#include "Util.h"
+
 TouchDisableCustom::TouchDisableCustom(string enableCommand, string disableCommand)
  : enableCommand(enableCommand),
    disableCommand(disableCommand)
@@ -17,12 +19,12 @@ void TouchDisableCustom::enableTouch()
 {
 	XOJ_CHECK_TYPE(TouchDisableCustom);
 
-	system(enableCommand.c_str());
+	Util::systemWithMessage(enableCommand.c_str());
 }
 
 void TouchDisableCustom::disableTouch()
 {
 	XOJ_CHECK_TYPE(TouchDisableCustom);
 
-	system(disableCommand.c_str());
+	Util::systemWithMessage(disableCommand.c_str());
 }
