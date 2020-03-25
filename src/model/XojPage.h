@@ -25,13 +25,9 @@
 class XojPage: public PageHandler {
 public:
     XojPage(double width, double height);
-    void reference();
-    void unreference();
-
-private:
+    ~XojPage() override;
     XojPage(const XojPage& page);
-    virtual ~XojPage();
-    void operator=(const XojPage& p);
+    void operator=(const XojPage& p) = delete;
 
     // Do not modify layers directly, use LayerController
     // So notification can be sent on change
@@ -82,11 +78,6 @@ public:
 
 private:
     /**
-     * The reference counter
-     */
-    int ref = 0;
-
-    /**
      * The Background image if any
      */
     BackgroundImage backgroundImage;
@@ -118,7 +109,7 @@ private:
     size_t pdfBackgroundPage = npos;
 
     /**
-     * The background color if the background type is palain
+     * The background color if the background type is plain
      */
     int backgroundColor = 0xffffff;
 

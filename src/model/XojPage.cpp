@@ -1,16 +1,13 @@
 #include "XojPage.h"
 
+#include <algorithm>
+#include <iterator>
 #include <utility>
 
 #include "BackgroundImage.h"
 #include "Document.h"
 
-XojPage::XojPage(double width, double height) {
-    this->bgType.format = PageTypeFormat::Lined;
-
-    this->width = width;
-    this->height = height;
-}
+XojPage::XojPage(double width, double height): width(width), height(height), bgType(PageTypeFormat::Lined) {}
 
 XojPage::~XojPage() {
     for (Layer* l: this->layer) {
@@ -19,30 +16,20 @@ XojPage::~XojPage() {
     this->layer.clear();
 }
 
-void XojPage::reference() { this->ref++; }
-
-void XojPage::unreference() {
-    this->ref--;
-    if (ref < 1) {
-        delete this;
-    }
+XojPage::XojPage(XojPage const& page):
+        width(page.width),
+        height(page.height),
+        backgroundImage(page.backgroundImage),
+        currentLayer(page.currentLayer),
+        bgType(page.bgType),
+        pdfBackgroundPage(page.pdfBackgroundPage),
+        backgroundColor(page.backgroundColor) {
+    this->layer.reserve(page.layer.size());
+    std::transform(begin(page.layer), end(page.layer), std::back_inserter(this->layer),
+                   [](auto* layer) { return layer->clone(); });
 }
 
-auto XojPage::clone() -> XojPage* {
-    auto* page = new XojPage(this->width, this->height);
-
-    page->backgroundImage = this->backgroundImage;
-    for (Layer* l: this->layer) {
-        page->addLayer(l->clone());
-    }
-
-    page->currentLayer = this->currentLayer;
-    page->bgType = this->bgType;
-    page->pdfBackgroundPage = this->pdfBackgroundPage;
-    page->backgroundColor = this->backgroundColor;
-
-    return page;
-}
+auto XojPage::clone() -> XojPage* { return new XojPage(*this); }
 
 void XojPage::addLayer(Layer* layer) {
     this->layer.push_back(layer);
