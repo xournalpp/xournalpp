@@ -139,9 +139,7 @@ Control::~Control() {
 
     this->scheduler->stop();
 
-    for (XojPage* page: this->changedPages) {
-        page->unreference();
-    }
+    this->changedPages.clear();  // can be removed, will be done by implicit destructor
 
     delete this->pluginController;
     this->pluginController = nullptr;
@@ -260,16 +258,13 @@ auto Control::checkChangedDocument(Control* control) -> bool {
         // call again later
         return true;
     }
-    for (XojPage* page: control->changedPages) {
+    for (auto const& page: control->changedPages) {
         int p = control->doc->indexOf(page);
         if (p != -1) {
             control->firePageChanged(p);
         }
-
-        page->unreference();
     }
     control->changedPages.clear();
-
     control->doc->unlock();
 
     // Call again
@@ -1188,12 +1183,12 @@ void Control::addDefaultPage(string pageTemplate) {
     PageTemplateSettings model;
     model.parse(pageTemplate);
 
-    PageRef page = new XojPage(model.getPageWidth(), model.getPageHeight());
+    auto page = std::make_shared<XojPage>(model.getPageWidth(), model.getPageHeight());
     page->setBackgroundColor(model.getBackgroundColor());
     page->setBackgroundType(model.getBackgroundType());
 
     this->doc->lock();
-    this->doc->addPage(page);
+    this->doc->addPage(std::move(page));
     this->doc->unlock();
 
     updateDeletePageButton();
@@ -1282,8 +1277,8 @@ void Control::updateBackgroundSizeButton() {
     }
 
     // Update paper color button
-    PageRef p = getCurrentPage();
-    if (!p.isValid() || this->win == nullptr) {
+    auto const& p = getCurrentPage();
+    if (!p || this->win == nullptr) {
         return;
     }
     GtkWidget* paperColor = win->get("menuJournalPaperColor");
@@ -1308,8 +1303,8 @@ void Control::paperTemplate() {
 }
 
 void Control::paperFormat() {
-    PageRef page = getCurrentPage();
-    if (!page.isValid() || page->getBackgroundType().isPdfPage()) {
+    auto const& page = getCurrentPage();
+    if (!page || page->getBackgroundType().isPdfPage()) {
         return;
     }
     clearSelectionEndText();
@@ -1337,10 +1332,10 @@ void Control::paperFormat() {
 void Control::changePageBackgroundColor() {
     int pNr = getCurrentPageNo();
     this->doc->lock();
-    PageRef p = this->doc->getPage(pNr);
+    auto const& p = this->doc->getPage(pNr);
     this->doc->unlock();
 
-    if (!p.isValid()) {
+    if (!p) {
         return;
     }
 
@@ -1617,15 +1612,11 @@ void Control::undoRedoChanged() {
 }
 
 void Control::undoRedoPageChanged(PageRef page) {
-    for (XojPage* p: this->changedPages) {
-        if (p == static_cast<XojPage*>(page)) {
-            return;
-        }
+    if (std::find(begin(this->changedPages), end(this->changedPages), page) == end(this->changedPages)) {
+        return;
     }
 
-    auto* p = static_cast<XojPage*>(page);
-    this->changedPages.push_back(p);
-    p->reference();
+    this->changedPages.emplace_back(std::move(page));
 }
 
 void Control::selectTool(ToolType type) {

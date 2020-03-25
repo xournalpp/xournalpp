@@ -106,9 +106,9 @@ void SidebarIndexPage::askInsertPdfPage(size_t pdfPage) {
     doc->unlock();
 
     if (pdf) {
-        PageRef page = new XojPage(pdf->getWidth(), pdf->getHeight());
+        auto page = std::make_shared<XojPage>(pdf->getWidth(), pdf->getHeight());
         page->setBackgroundPdfPageNr(pdfPage);
-        control->insertPage(page, position);
+        control->insertPage(std::move(page), position);
     }
 }
 

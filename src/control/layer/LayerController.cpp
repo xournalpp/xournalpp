@@ -127,7 +127,7 @@ void LayerController::hideOrHideAllLayer(bool show) {
 void LayerController::addNewLayer() {
     control->clearSelectionEndText();
     PageRef p = getCurrentPage();
-    if (!p.isValid()) {
+    if (!p) {
         return;
     }
 
@@ -146,7 +146,7 @@ void LayerController::deleteCurrentLayer() {
 
     PageRef p = getCurrentPage();
     int pId = selectedPage;
-    if (!p.isValid()) {
+    if (!p) {
         return;
     }
 
@@ -174,7 +174,7 @@ void LayerController::moveCurrentLayer(bool up) {
 
     PageRef p = getCurrentPage();
     int pId = selectedPage;
-    if (!p.isValid()) {
+    if (!p) {
         return;
     }
 
@@ -219,7 +219,7 @@ void LayerController::copyCurrentLayer() {
 
     PageRef p = getCurrentPage();
     int pId = selectedPage;
-    if (!p.isValid()) {
+    if (!p) {
         return;
     }
 
@@ -264,7 +264,7 @@ void LayerController::switchToLay(int layer, bool hideShow) {
     control->clearSelectionEndText();
 
     PageRef p = getCurrentPage();
-    if (!p.isValid()) {
+    if (!p) {
         return;
     }
 
@@ -286,7 +286,7 @@ void LayerController::switchToLay(int layer, bool hideShow) {
  */
 auto LayerController::getLayerCount() -> size_t {
     PageRef page = getCurrentPage();
-    if (!page.isValid()) {
+    if (!page) {
         return 0;
     }
 
@@ -298,7 +298,7 @@ auto LayerController::getLayerCount() -> size_t {
  */
 auto LayerController::getCurrentLayerId() -> size_t {
     PageRef page = getCurrentPage();
-    if (!page.isValid()) {
+    if (!page) {
         return 0;
     }
 

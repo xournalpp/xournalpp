@@ -221,7 +221,7 @@ void UndoRedoHandler::fireUpdateUndoRedoButtons(const vector<PageRef>& pages) {
     }
 
     for (PageRef page: pages) {
-        if (!page.isValid()) {
+        if (!page) {
             continue;
         }
 

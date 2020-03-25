@@ -70,7 +70,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action) {
         case SIDEBAR_ACTION_MOVE_UP: {
             Document* doc = control->getDocument();
             PageRef swappedPage = control->getCurrentPage();
-            if (!swappedPage.isValid() || doc->getPageCount() <= 1) {
+            if (!swappedPage || doc->getPageCount() <= 1) {
                 return;
             }
 
@@ -96,7 +96,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action) {
         case SIDEBAR_ACTION_MOVE_DOWN: {
             Document* doc = control->getDocument();
             PageRef swappedPage = control->getCurrentPage();
-            if (!swappedPage.isValid() || doc->getPageCount() <= 1) {
+            if (!swappedPage || doc->getPageCount() <= 1) {
                 return;
             }
 
@@ -122,16 +122,15 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action) {
         case SIDEBAR_ACTION_COPY: {
             Document* doc = control->getDocument();
             PageRef currentPage = control->getCurrentPage();
-            if (!currentPage.isValid()) {
+            if (!currentPage) {
                 return;
             }
 
             doc->lock();
             size_t page = doc->indexOf(currentPage);
 
-            PageRef newPage = currentPage.clone();
+            auto newPage = PageRef(currentPage->clone());
             doc->insertPage(newPage, page + 1);
-
             doc->unlock();
 
             UndoRedoHandler* undo = control->getUndoRedoHandler();

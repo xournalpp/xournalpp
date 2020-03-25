@@ -11,10 +11,7 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
-#include "XournalType.h"
+#include <memory>
 
 class Element;
 class PageHandler;
@@ -27,7 +24,7 @@ public:
     virtual ~PageListener();
 
 public:
-    void registerListener(PageHandler* handler);
+    void registerListener(std::shared_ptr<PageHandler> const& handler);
     void unregisterListener();
 
     virtual void rectChanged(Rectangle& rect) {}
@@ -36,5 +33,5 @@ public:
     virtual void pageChanged() {}
 
 private:
-    PageHandler* handler = nullptr;
+    std::weak_ptr<PageHandler> handler;
 };

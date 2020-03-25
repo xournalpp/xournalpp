@@ -286,7 +286,7 @@ void LoadHandler::parseContents() {
         double width = LoadHandlerHelper::getAttribDouble("width", this);
         double height = LoadHandlerHelper::getAttribDouble("height", this);
 
-        this->page = new XojPage(width, height);
+        this->page = std::make_unique<XojPage>(width, height);
 
         this->doc.addPage(this->page);
     } else if (strcmp(elementName, "audio") == 0) {
@@ -369,7 +369,7 @@ void LoadHandler::parseBgPixmap() {
     } else if (!strcmp(domain, "clone")) {
         PageRef p = doc.getPage(stoull(filename));
 
-        if (p.isValid()) {
+        if (p) {
             this->page->setBackgroundImage(p->getBackgroundImage());
         }
     } else {

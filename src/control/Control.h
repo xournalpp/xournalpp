@@ -363,7 +363,7 @@ private:
     /**
      * The pages wihch has changed since the last update (for preview update)
      */
-    std::vector<XojPage*> changedPages;
+    std::vector<PageRef> changedPages;
 
     /**
      * Our clipboard abstraction

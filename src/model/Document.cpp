@@ -296,9 +296,9 @@ auto Document::readPdf(const Path& filename, bool initPages, bool attachToDocume
     if (initPages) {
         for (size_t i = 0; i < pdfDocument.getPageCount(); i++) {
             XojPdfPageSPtr page = pdfDocument.getPage(i);
-            PageRef p = new XojPage(page->getWidth(), page->getHeight());
+            auto p = std::make_shared<XojPage>(page->getWidth(), page->getHeight());
             p->setBackgroundPdfPageNr(i);
-            addPage(p);
+            addPage(std::move(p));
         }
     }
 

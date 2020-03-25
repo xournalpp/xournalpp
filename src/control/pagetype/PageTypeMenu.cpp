@@ -48,13 +48,13 @@ auto PageTypeMenu::createPreviewImage(const PageType& pt) -> cairo_surface_t* {
     int previewHeight = 141;
     double zoom = 0.5;
 
-    PageRef page = new XojPage(previewWidth / zoom, previewHeight / zoom);
+    auto page = std::make_shared<XojPage>(previewWidth / zoom, previewHeight / zoom);
 
     cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, previewWidth, previewHeight);
     cairo_t* cr = cairo_create(surface);
     cairo_scale(cr, zoom, zoom);
 
-    backgroundPainter->paint(pt, cr, page);
+    backgroundPainter->paint(pt, cr, std::move(page));
 
     cairo_identity_matrix(cr);
 
