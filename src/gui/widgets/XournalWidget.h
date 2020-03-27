@@ -13,22 +13,18 @@
 
 #include <gtk/gtk.h>
 
-class AbstractInputDevice;
 class EditSelection;
 class Layout;
 class XojPageView;
 class Rectangle;
-class ScrollHandling;
 class XournalView;
 class InputContext;
-class NewGtkInputDevice;
 
 #include <memory>
 
 class XournalWidget {
 public:
-    XournalWidget(XournalView* view, std::unique_ptr<InputContext> inputContext);
-    XournalWidget(XournalView* view, ScrollHandling* scrollHandling);
+    XournalWidget(XournalView* view, std::shared_ptr<InputContext> inputContext);
     virtual ~XournalWidget();
 
     /** Current selection */
@@ -55,14 +51,10 @@ private:
 
 private:
     GtkWidget* drawingArea;
-    ScrollHandling* scrollHandling;
 
     /** Layout */
     std::unique_ptr<Layout> layout;
 
     /** New input handling */
-    std::unique_ptr<InputContext> input;
-
-    /** Deprecated input handling */
-    std::unique_ptr<NewGtkInputDevice> depInput;
+    std::shared_ptr<InputContext> input;
 };

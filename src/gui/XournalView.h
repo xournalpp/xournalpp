@@ -23,7 +23,6 @@ class XournalppCursor;
 class Document;
 class EditSelection;
 class Layout;
-class PagePositionHandler;
 class XojPageView;
 class PdfCache;
 class Rectangle;
@@ -34,7 +33,7 @@ class HandRecognition;
 
 class XournalView: public DocumentListener, public ZoomListener {
 public:
-    XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling);
+    XournalView(GtkScrolledWindow* parent, Control* control);
     virtual ~XournalView();
 
 public:
@@ -116,10 +115,10 @@ public:
      */
     HandRecognition* getHandRecognition();
 
-    /**
-     * @returnScrollbars
-     */
-    ScrollHandling* getScrollHandling();
+    GtkAdjustment* getHorizontalAdjustment();
+    GtkAdjustment* getVerticalAdjustment();
+
+    void queueResize();
 
 public:
     // ZoomListener interface
@@ -152,12 +151,11 @@ private:
     // static void staticLayoutPages(GtkWidget* widget, GtkAllocation* allocation, void* data);
 
 private:
-    /**
-     * Scrollbars
-     */
-    ScrollHandling* scrollHandling = nullptr;
-
     std::unique_ptr<XournalWidget> widget;
+
+    GtkAdjustment* horizontal = nullptr;
+    GtkAdjustment* vertical = nullptr;
+
     double margin = 75;
 
     std::vector<XojPageView*> viewPages;

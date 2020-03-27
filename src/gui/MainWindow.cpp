@@ -7,8 +7,6 @@
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
 #include "gui/GladeSearchpath.h"
-#include "gui/scroll/ScrollHandlingGtk.h"
-#include "gui/scroll/ScrollHandlingXournalpp.h"
 #include "toolbarMenubar/ToolMenuHandler.h"
 #include "toolbarMenubar/model/ToolbarData.h"
 #include "toolbarMenubar/model/ToolbarModel.h"
@@ -164,9 +162,6 @@ MainWindow::~MainWindow() {
 
     delete this->toolbar;
     this->toolbar = nullptr;
-
-    delete scrollHandling;
-    scrollHandling = nullptr;
 }
 
 /**
@@ -193,53 +188,27 @@ void MainWindow::toggleMenuBar(MainWindow* win) {
 void MainWindow::initXournalWidget() {
     GtkWidget* boxContents = get("boxContents");
 
-    // TODO: Rename "Touch Workaround" to "Touch Drawing"; remove deprecated scroll handling and add option to always
     // show scrollbars
-    if (control->getSettings()->isTouchWorkaround()) {
-        GtkWidget* box1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-        gtk_container_add(GTK_CONTAINER(boxContents), box1);
 
-        GtkWidget* box2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-        gtk_container_add(GTK_CONTAINER(box1), box2);
+    winXournal = gtk_scrolled_window_new(nullptr, nullptr);
 
-        scrollHandling = new ScrollHandlingXournalpp();
+    setTouchscreenScrollingForDeviceMapping();
 
-        this->xournal = new XournalView(box2, control, scrollHandling);
+    gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
 
-        gtk_container_add(GTK_CONTAINER(box2),
-                          gtk_scrollbar_new(GTK_ORIENTATION_VERTICAL, scrollHandling->getVertical()));
-        gtk_container_add(GTK_CONTAINER(box1),
-                          gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, scrollHandling->getHorizontal()));
+    GtkWidget* vpXournal = gtk_viewport_new(nullptr, nullptr);
 
-        control->getZoomControl()->initZoomHandler(box2, xournal, control);
-        gtk_widget_show_all(box1);
-    } else {
-        winXournal = gtk_scrolled_window_new(nullptr, nullptr);
+    gtk_container_add(GTK_CONTAINER(winXournal), vpXournal);
 
-        setTouchscreenScrollingForDeviceMapping();
+    this->xournal = new XournalView(GTK_SCROLLED_WINDOW(winXournal), control);
 
-        gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
+    control->getZoomControl()->initZoomHandler(winXournal, xournal, control);
+    gtk_widget_show_all(winXournal);
 
-        GtkWidget* vpXournal = gtk_viewport_new(nullptr, nullptr);
-
-        gtk_container_add(GTK_CONTAINER(winXournal), vpXournal);
-
-        scrollHandling = new ScrollHandlingGtk(GTK_SCROLLABLE(vpXournal));
-
-        this->xournal = new XournalView(vpXournal, control, scrollHandling);
-
-        control->getZoomControl()->initZoomHandler(winXournal, xournal, control);
-        gtk_widget_show_all(winXournal);
-    }
     // Todo configure-event
-
-    Layout* layout = this->xournal->getWidget()->getLayout();
-    scrollHandling->init(this->xournal->getWidget()->getGtkWidget(), layout);
 }
 
 void MainWindow::setTouchscreenScrollingForDeviceMapping() {
-    gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal),
-                                              !this->getControl()->getSettings()->isTouchWorkaround());
     for (InputDevice const& inputDevice: DeviceListHelper::getDeviceList(this->getControl()->getSettings())) {
         InputDeviceClass deviceClass = InputEvents::translateDeviceType(inputDevice.getName(), inputDevice.getSource(),
                                                                         this->getControl()->getSettings());
@@ -385,24 +354,21 @@ auto MainWindow::getControl() -> Control* { return control; }
 void MainWindow::updateScrollbarSidebarPosition() {
     GtkWidget* panelMainContents = get("panelMainContents");
 
-    if (winXournal != nullptr) {
-        GtkScrolledWindow* scrolledWindow = GTK_SCROLLED_WINDOW(winXournal);
+    GtkScrolledWindow* scrolledWindow = GTK_SCROLLED_WINDOW(winXournal);
 
-        ScrollbarHideType type = this->getControl()->getSettings()->getScrollbarHideType();
+    ScrollbarHideType type = this->getControl()->getSettings()->getScrollbarHideType();
 
-        bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
-        if (scrollbarOnLeft) {
-            gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_RIGHT);
-        } else {
-            gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_LEFT);
-        }
-
-        gtk_widget_set_visible(gtk_scrolled_window_get_hscrollbar(scrolledWindow), !(type & SCROLLBAR_HIDE_HORIZONTAL));
-        gtk_widget_set_visible(gtk_scrolled_window_get_vscrollbar(scrolledWindow), !(type & SCROLLBAR_HIDE_VERTICAL));
-
-        gtk_scrolled_window_set_overlay_scrolling(scrolledWindow,
-                                                  !control->getSettings()->isScrollbarFadeoutDisabled());
+    bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
+    if (scrollbarOnLeft) {
+        gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_RIGHT);
+    } else {
+        gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_LEFT);
     }
+
+    gtk_widget_set_visible(gtk_scrolled_window_get_hscrollbar(scrolledWindow), !(type & SCROLLBAR_HIDE_HORIZONTAL));
+    gtk_widget_set_visible(gtk_scrolled_window_get_vscrollbar(scrolledWindow), !(type & SCROLLBAR_HIDE_VERTICAL));
+
+    gtk_scrolled_window_set_overlay_scrolling(scrolledWindow, !control->getSettings()->isScrollbarFadeoutDisabled());
 
     GtkWidget* sidebar = get("sidebar");
     GtkWidget* boxContents = get("boxContents");

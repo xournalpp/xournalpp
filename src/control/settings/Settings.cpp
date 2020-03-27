@@ -95,8 +95,6 @@ void Settings::loadDefault() {
     this->snapGrid = true;
     this->snapGridTolerance = 0.25;
 
-    this->touchWorkaround = false;
-
     this->defaultSaveName = _("%F-Note-%H-%M");
 
     // Eraser
@@ -137,7 +135,6 @@ void Settings::loadDefault() {
     this->pluginEnabled = "";
     this->pluginDisabled = "";
 
-    this->newInputSystemEnabled = true;
     this->inputSystemTPCButton = false;
     this->inputSystemDrawOutsideWindow = true;
 
@@ -384,8 +381,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->snapGrid = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapGridTolerance")) == 0) {
         this->snapGridTolerance = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchWorkaround")) == 0) {
-        this->touchWorkaround = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("scrollbarHideType")) == 0) {
         if (xmlStrcmp(value, reinterpret_cast<const xmlChar*>("both")) == 0) {
             this->scrollbarHideType = SCROLLBAR_HIDE_BOTH;
@@ -408,8 +403,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->audioInputDevice = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioOutputDevice")) == 0) {
         this->audioOutputDevice = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("newInputSystemEnabled")) == 0) {
-        this->newInputSystemEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("inputSystemTPCButton")) == 0) {
         this->inputSystemTPCButton = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("inputSystemDrawOutsideWindow")) == 0) {
@@ -747,8 +740,6 @@ void Settings::save() {
     WRITE_BOOL_PROP(snapGrid);
     WRITE_DOUBLE_PROP(snapGridTolerance);
 
-    WRITE_BOOL_PROP(touchWorkaround);
-
     WRITE_INT_PROP(selectionBorderColor);
     WRITE_INT_PROP(backgroundColor);
     WRITE_INT_PROP(selectionMarkerColor);
@@ -779,7 +770,6 @@ void Settings::save() {
     WRITE_BOOL_PROP(doActionOnStrokeFiltered);
     WRITE_BOOL_PROP(trySelectOnStrokeFiltered);
 
-    WRITE_BOOL_PROP(newInputSystemEnabled);
     WRITE_BOOL_PROP(inputSystemTPCButton);
     WRITE_BOOL_PROP(inputSystemDrawOutsideWindow);
 
@@ -1038,17 +1028,6 @@ void Settings::setSnapGridTolerance(double tolerance) {
 }
 
 auto Settings::getSnapGridTolerance() const -> double { return this->snapGridTolerance; }
-
-auto Settings::isTouchWorkaround() const -> bool { return this->touchWorkaround; }
-
-void Settings::setTouchWorkaround(bool b) {
-    if (this->touchWorkaround == b) {
-        return;
-    }
-
-    this->touchWorkaround = b;
-    save();
-}
 
 auto Settings::getScrollbarHideType() const -> ScrollbarHideType { return this->scrollbarHideType; }
 
@@ -1548,17 +1527,6 @@ auto Settings::getDoActionOnStrokeFiltered() const -> bool { return this->doActi
 void Settings::setTrySelectOnStrokeFiltered(bool enabled) { this->trySelectOnStrokeFiltered = enabled; }
 
 auto Settings::getTrySelectOnStrokeFiltered() const -> bool { return this->trySelectOnStrokeFiltered; }
-
-
-void Settings::setExperimentalInputSystemEnabled(bool systemEnabled) {
-    if (this->newInputSystemEnabled == systemEnabled) {
-        return;
-    }
-    this->newInputSystemEnabled = systemEnabled;
-    save();
-}
-
-auto Settings::getExperimentalInputSystemEnabled() const -> bool { return this->newInputSystemEnabled; }
 
 void Settings::setInputSystemTPCButtonEnabled(bool tpcButtonEnabled) {
     if (this->inputSystemTPCButton == tpcButtonEnabled) {

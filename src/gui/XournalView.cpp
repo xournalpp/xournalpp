@@ -23,18 +23,13 @@
 #include "Util.h"
 #include "XournalppCursor.h"
 
-XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling):
-        scrollHandling(scrollHandling), control(control) {
+XournalView::XournalView(GtkScrolledWindow* parent, Control* control): control(control) {
     this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
     registerListener(control);
 
-    InputContext* inputContext = nullptr;
-    if (this->control->getSettings()->getExperimentalInputSystemEnabled()) {
-        this->widget = std::make_unique<XournalWidget>(this, std::make_unique<InputContext>(this, scrollHandling));
-    } else {
-        g_warning("TODO");
-        this->widget = std::make_unique<XournalWidget>(this, scrollHandling);
-    }
+    auto inputContext = std::make_shared<InputContext>(this);
+
+    this->widget = std::make_unique<XournalWidget>(this, inputContext);
 
     gtk_container_add(GTK_CONTAINER(parent), this->widget->getGtkWidget());
     gtk_widget_show(this->widget->getGtkWidget());
@@ -453,11 +448,6 @@ auto XournalView::getVisibleRect(XojPageView* redrawable) -> Rectangle* {
  */
 auto XournalView::getHandRecognition() -> HandRecognition* { return handRecognition; }
 
-/**
- * @returnScrollbars
- */
-auto XournalView::getScrollHandling() -> ScrollHandling* { return scrollHandling; }
-
 auto XournalView::getWidget() -> XournalWidget* { return this->widget.get(); }
 
 void XournalView::zoomIn() { control->getZoomControl()->zoomOneStep(ZOOM_IN); }
@@ -746,3 +736,9 @@ auto XournalView::getViewPages() const -> std::vector<XojPageView*> const& { ret
 auto XournalView::getCursor() -> XournalppCursor* { return control->getCursor(); }
 
 auto XournalView::getSelection() -> EditSelection* { return this->widget->selection; }
+
+auto XournalView::getHorizontalAdjustment() -> GtkAdjustment* { return this->horizontal; }
+
+auto XournalView::getVerticalAdjustment() -> GtkAdjustment* { return this->vertical; }
+
+void XournalView::queueResize() { gtk_widget_queue_resize(this->widget->getGtkWidget()); }

@@ -13,25 +13,14 @@
 #include "gui/Shadow.h"
 #include "gui/XournalView.h"
 #include "gui/inputdevices/InputContext.h"
-#include "gui/inputdevices/old/NewGtkInputDevice.h"
-#include "gui/scroll/ScrollHandling.h"
 
 #include "Rectangle.h"
 #include "Util.h"
 
-XournalWidget::XournalWidget(XournalView* view, std::unique_ptr<InputContext> inputContext):
+XournalWidget::XournalWidget(XournalView* view, std::shared_ptr<InputContext> inputContext):
         view(view), input(std::move(inputContext)), x(0), y(0), selection(nullptr) {
-    this->scrollHandling = this->input->getScrollHandling();
-    this->layout = std::make_unique<Layout>(view, this->input->getScrollHandling());
+    this->layout = std::make_unique<Layout>(view);
     this->init();
-}
-
-XournalWidget::XournalWidget(XournalView* view, ScrollHandling* scrollHandling):
-        view(view), scrollHandling(scrollHandling), x(0), y(0), selection(nullptr) {
-    this->layout = std::make_unique<Layout>(view, scrollHandling);
-    this->init();
-    this->depInput = std::make_unique<NewGtkInputDevice>(this->drawingArea, view, scrollHandling);
-    this->depInput->initWidget();
 }
 
 auto XournalWidget::init() -> void {
@@ -78,8 +67,8 @@ auto XournalWidget::repaintArea(int x1, int y1, int x2, int y2) -> void {
 }
 
 auto XournalWidget::getVisibleArea(XojPageView* p) -> Rectangle* {
-    GtkAdjustment* vadj = this->scrollHandling->getVertical();
-    GtkAdjustment* hadj = this->scrollHandling->getHorizontal();
+    GtkAdjustment* vadj = this->view->getVerticalAdjustment();
+    GtkAdjustment* hadj = this->view->getHorizontalAdjustment();
 
     GdkRectangle r2;
     r2.x = static_cast<int>(gtk_adjustment_get_value(hadj));
@@ -136,8 +125,6 @@ auto XournalWidget::drawCallback(GtkWidget* drawArea, cairo_t* cr, XournalWidget
     Util::cairo_set_source_rgbi(cr, settings->getBackgroundColor());
     cairo_rectangle(cr, x1, y1, x2 - x1, y2 - y1);
     cairo_fill(cr);
-
-    self->scrollHandling->translate(cr, x1, x2, y1, y2);
 
     Rectangle clippingRect(x1 - 10, y1 - 10, x2 - x1 + 20, y2 - y1 + 20);
 

@@ -287,9 +287,6 @@ public:
     int getDrawDirModsRadius() const;
     void setDrawDirModsRadius(int pixels);
 
-    bool isTouchWorkaround() const;
-    void setTouchWorkaround(bool b);
-
     bool isSnapRotation() const;
     void setSnapRotation(bool b);
     double getSnapRotationTolerance() const;
@@ -369,9 +366,6 @@ public:
 
     string const& getPluginDisabled() const;
     void setPluginDisabled(const string& pluginDisabled);
-
-    bool getExperimentalInputSystemEnabled() const;
-    void setExperimentalInputSystemEnabled(bool systemEnabled);
 
     bool getInputSystemTPCButtonEnabled() const;
     void setInputSystemTPCButtonEnabled(bool tpcButtonEnabled);
@@ -769,11 +763,6 @@ private:
     double snapRotationTolerance{};
 
     /**
-     * Do not use GTK Scrolling / Touch handling
-     */
-    bool touchWorkaround{};
-
-    /**
      * The index of the audio device used for recording
      */
     PaDeviceIndex audioInputDevice{};
@@ -820,11 +809,6 @@ private:
     bool strokeFilterEnabled{};
     bool doActionOnStrokeFiltered{};
     bool trySelectOnStrokeFiltered{};
-
-    /**
-     * Whether the new experimental input system is activated
-     */
-    bool newInputSystemEnabled{};
 
     /**
      * Whether Wacom parameter TabletPCButton is enabled

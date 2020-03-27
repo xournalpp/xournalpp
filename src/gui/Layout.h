@@ -23,7 +23,6 @@
 
 class XojPageView;
 class XournalView;
-class ScrollHandling;
 
 
 /**
@@ -34,7 +33,7 @@ class ScrollHandling;
  */
 class Layout {
 public:
-    Layout(XournalView* view, ScrollHandling* scrollHandling);
+    Layout(XournalView* view);
     virtual ~Layout();
 
 public:
@@ -117,7 +116,6 @@ private:
     LayoutMapper mapper;
 
     XournalView* view = nullptr;
-    ScrollHandling* scrollHandling = nullptr;
 
     std::vector<unsigned> widthCols;
     std::vector<unsigned> heightRows;

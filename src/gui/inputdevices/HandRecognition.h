@@ -25,7 +25,7 @@ class TouchDisableInterface;
 
 class HandRecognition {
 public:
-    HandRecognition(GtkWidget* widget, InputContext* inputContext, Settings* settings);
+    HandRecognition(GtkWidget* widget, std::shared_ptr<InputContext> inputContext, Settings* settings);
     virtual ~HandRecognition();
 
 public:
@@ -111,7 +111,7 @@ private:
     /**
      * InputContext
      */
-    InputContext* inputContext;
+    std::shared_ptr<InputContext> inputContext;
 
     /**
      * Settings
