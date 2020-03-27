@@ -196,10 +196,6 @@ void MainWindow::initXournalWidget() {
 
     gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
 
-    GtkWidget* vpXournal = gtk_viewport_new(nullptr, nullptr);
-
-    gtk_container_add(GTK_CONTAINER(winXournal), vpXournal);
-
     this->xournal = new XournalView(GTK_SCROLLED_WINDOW(winXournal), control);
 
     control->getZoomControl()->initZoomHandler(winXournal, xournal, control);

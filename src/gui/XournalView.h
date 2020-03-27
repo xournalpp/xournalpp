@@ -27,7 +27,6 @@ class XojPageView;
 class PdfCache;
 class Rectangle;
 class RepaintHandler;
-class ScrollHandling;
 class TextEditor;
 class HandRecognition;
 

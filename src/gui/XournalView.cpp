@@ -24,6 +24,9 @@
 #include "XournalppCursor.h"
 
 XournalView::XournalView(GtkScrolledWindow* parent, Control* control): control(control) {
+    this->horizontal = gtk_scrolled_window_get_hadjustment(parent);
+    this->vertical = gtk_scrolled_window_get_vadjustment(parent);
+
     this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
     registerListener(control);
 
