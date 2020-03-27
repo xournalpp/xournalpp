@@ -250,7 +250,10 @@ void Layout::layoutPages(int width, int height) {
     }
 }
 
-void Layout::setLayoutSize(int width, int height) { this->view->queueResize(); }
+void Layout::setLayoutSize(int width, int height) {
+    gtk_widget_set_size_request(this->view->widget->getGtkWidget(), width, height);
+    this->view->queueResize();
+}
 
 void Layout::scrollRelative(double x, double y) {
     if (this->view->getControl()->getSettings()->isPresentationMode()) {
