@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -13,7 +11,7 @@
    height="22"
    id="svg2"
    version="1.1"
-   inkscape:version="0.92.4 (unknown)"
+   inkscape:version="1.1-dev (3459c49765, 2020-03-29)"
    sodipodi:docname="tool_text.svg">
   <defs
      id="defs4" />
@@ -24,9 +22,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="20.48"
-     inkscape:cx="16.616507"
-     inkscape:cy="11.86679"
+     inkscape:zoom="28.963094"
+     inkscape:cx="18.155461"
+     inkscape:cy="9.4248527"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -56,16 +54,6 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-1030.3622)">
-    <path
-       style="fill:none;stroke:#5b5b5b;stroke-width:3.00000048;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 11.128739,1035.6322 v 12.6077"
-       id="path826"
-       inkscape:connector-curvature="0" />
-    <path
-       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#5b5b5b;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.00000048;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-       d="m 11.106259,1034.1619 a 1.449585,1.4495524 0 0 0 -1.4267921,1.4703 v 12.6067 a 1.449585,1.4495524 0 1 0 2.8988791,0 v -12.6067 a 1.449585,1.4495524 0 0 0 -1.472087,-1.4703 z"
-       id="path1007"
-       inkscape:connector-curvature="0" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot2989"
@@ -77,7 +65,8 @@
            x="-3.125"
            y="-921.75" /></flowRegion><flowPara
          id="flowPara2995"
-         style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>    <flowRoot
+         style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>
+    <flowRoot
        xml:space="preserve"
        id="flowRoot2997"
        style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -88,17 +77,7 @@
            x="-11.71875"
            y="-5.1484375" /></flowRegion><flowPara
          id="flowPara3003"
-         style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>    <path
-       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#313131;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-       d="m 11.106259,1034.1619 a 1.449585,1.4495524 0 0 0 -1.4267921,1.4703 v 12.6067 a 1.449585,1.4495524 0 1 0 2.8988791,0 v -12.6067 a 1.449585,1.4495524 0 0 0 -1.472087,-1.4703 z"
-       id="path1013"
-       inkscape:connector-curvature="0" />
-    <path
-       style="fill:none;stroke:#5b5b5b;stroke-width:3.00000024;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 17.515849,1035.6322 H 4.7416318"
-       id="path824"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc" />
+         style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>
     <flowRoot
        style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="flowRoot2989-5"
@@ -111,7 +90,8 @@
            width="387.5"
            id="rect2993-29" /></flowRegion><flowPara
          style="font-size:40px;line-height:1.25"
-         id="flowPara2995-1"> </flowPara></flowRoot>    <flowRoot
+         id="flowPara2995-1"> </flowPara></flowRoot>
+    <flowRoot
        style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="flowRoot2997-2"
        xml:space="preserve"
@@ -123,7 +103,8 @@
            width="50.195312"
            id="rect3001-9" /></flowRegion><flowPara
          style="font-size:40px;line-height:1.25"
-         id="flowPara3003-3"> </flowPara></flowRoot>    <g
+         id="flowPara3003-3"> </flowPara></flowRoot>
+    <g
        inkscape:label="Ebene 1"
        id="layer1-7"
        transform="translate(1.489761,948.32512)">
@@ -147,7 +128,8 @@
              x="-3.125"
              y="-921.75" /></flowRegion><flowPara
            id="flowPara2995-2"
-           style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>      <flowRoot
+           style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>
+      <flowRoot
          xml:space="preserve"
          id="flowRoot2997-6"
          style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -158,7 +140,8 @@
              x="-11.71875"
              y="-5.1484375" /></flowRegion><flowPara
            id="flowPara3003-6"
-           style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>    </g>
+           style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>
+    </g>
     <g
        inkscape:label="Ebene 1"
        id="layer1-0"
@@ -183,7 +166,8 @@
              x="-3.125"
              y="-921.75" /></flowRegion><flowPara
            id="flowPara2995-5"
-           style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>      <flowRoot
+           style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>
+      <flowRoot
          xml:space="preserve"
          id="flowRoot2997-9"
          style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -194,16 +178,34 @@
              x="-11.71875"
              y="-5.1484375" /></flowRegion><flowPara
            id="flowPara3003-67"
-           style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>    </g>
+           style="font-size:40px;line-height:1.25"> </flowPara></flowRoot>
+    </g>
     <g
        id="text2985-3"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28px;line-height:125%;font-family:'URW Bookman L';-inkscape-font-specification:'URW Bookman L';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#5b5b5b;fill-opacity:1;stroke:#313131;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
        transform="translate(-16.320705,-3.9827)" />
     <path
-       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#313131;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-       d="M 12.587621,1037.0815 H 17.5155 c 1.961183,0.029 1.961183,-2.9276 0,-2.8988 H 4.7423128 c -1.9611829,-0.029 -1.9611829,2.9275 0,2.8988 h 4.9346771"
-       id="path1005"
+       style="fill:none;stroke:#fafafa;stroke-width:3.00001;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 11.128726,1035.1347 v 13.6026"
+       id="path826"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#fafafa;stroke-width:3.00001;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 18.019865,1035.1347 H 4.2375907"
+       id="path824"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccc" />
+       sodipodi:nodetypes="cc" />
+    <path
+       id="path886"
+       d="m 11.128726,1035.1347 v 13.6026"
+       style="color:#000000;fill:none;stroke-width:3.00001;stroke-linecap:round" />
+    <path
+       id="path888"
+       style="color:#000000;fill:none;stroke:#5b5b5b;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 4.2381903,1033.5179 a 1.6183701,1.6183701 0 0 0 -1.6183701,1.6184 1.6183701,1.6183701 0 0 0 1.6183701,1.6183 h 5.2723463 v 11.984 a 1.6183701,1.6183701 0 0 0 1.6183694,1.6184 1.6183701,1.6183701 0 0 0 1.618371,-1.6184 v -11.984 h 5.272346 a 1.6183701,1.6183701 0 0 0 1.61837,-1.6183 1.6183701,1.6183701 0 0 0 -1.61837,-1.6184 h -6.890717 z" />
+    <path
+       id="path880"
+       d="M 18.019865,1035.1347 H 4.2375907"
+       style="color:#000000;fill:none;stroke-width:3.00001;stroke-linecap:round" />
   </g>
 </svg>
