@@ -16,29 +16,26 @@
 class EditSelection;
 class Layout;
 class XojPageView;
-class Rectangle;
 class XournalView;
 class InputContext;
+class Renderer;
 
 #include <memory>
 
+#include <util/Rectangle.h>
+
 class XournalWidget {
 public:
-    XournalWidget(XournalView* view, std::shared_ptr<InputContext> inputContext);
+    XournalWidget(std::shared_ptr<InputContext> inputContext, std::shared_ptr<Renderer> render);
     virtual ~XournalWidget();
 
-    /** Current selection */
-    EditSelection* selection;
-
-    int x;
-    int y;
-
-    XournalView* const view;
-
-    auto getGtkWidget() -> GtkWidget*;
-    auto getLayout() -> Layout*;
-    auto repaintArea(int x1, int y1, int x2, int y2) -> void;
-    auto getVisibleArea(XojPageView* p) -> Rectangle*;
+    auto getGtkWidget() -> GtkWidget*; //TODO remove and encapsulate widget completely
+    auto repaintArea(const Rectangle<int>& rect) -> void;
+    auto getVisibleArea() -> Rectangle<int>;
+    auto setVisibleArea(const Rectangle<int>& rect) -> void;
+    auto scroll(int xDiff, int yDiff) -> void;
+    auto zoom(int originX, int originY, double scale) -> void;
+    auto queueRedraw() -> void;
 
 private:
     auto init() -> void;
@@ -47,14 +44,20 @@ private:
     static auto realizeCallback(GtkWidget* widget, XournalWidget* self) -> void;
     static auto drawCallback(GtkWidget* widget, cairo_t* cr, XournalWidget* self) -> gboolean;
 
-    auto drawShadow(cairo_t* cr, int left, int top, int width, int height, bool selected) -> void;
-
 private:
     GtkWidget* drawingArea;
 
     /** Layout */
-    std::unique_ptr<Layout> layout;
+    std::shared_ptr<Renderer> renderer;
 
     /** New input handling */
     std::shared_ptr<InputContext> input;
+
+    /**
+     * Top left corner of the current visible rectangle
+     */
+    Rectangle<int> viewport;
+    double scale = 0;
+
+    static const int SIZE_EXTENSION = 50;
 };
