@@ -29,12 +29,19 @@ public:
     XournalWidget(std::shared_ptr<InputContext> inputContext, std::shared_ptr<Renderer> render);
     virtual ~XournalWidget();
 
-    auto getGtkWidget() -> GtkWidget*; //TODO remove and encapsulate widget completely
+    auto getGtkWidget() -> GtkWidget*;  // TODO remove and encapsulate widget completely
+
+    auto repaintArea(const Rectangle<double>& rect) -> void;
     auto repaintArea(const Rectangle<int>& rect) -> void;
-    auto getVisibleArea() -> Rectangle<int>;
-    auto setVisibleArea(const Rectangle<int>& rect) -> void;
+
+    auto getVisibleArea() -> Rectangle<double>;
+    auto getViewport() -> Rectangle<int>;
+
+    auto setVisibleArea(const Rectangle<double>& rect) -> void;
+
     auto scroll(int xDiff, int yDiff) -> void;
     auto zoom(int originX, int originY, double scale) -> void;
+
     auto queueRedraw() -> void;
 
 private:

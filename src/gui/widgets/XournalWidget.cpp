@@ -2,13 +2,14 @@
 
 #include <cmath>
 
-
 #include <gdk/gdk.h>
+
+#include "gui/Renderer.h"
 #include "gui/Shadow.h"
 #include "gui/inputdevices/InputContext.h"
-#include "gui/Renderer.h"
 
-XournalWidget::XournalWidget(std::shared_ptr<InputContext> inputContext, std::shared_ptr<Renderer> render): input(std::move(inputContext)), renderer(std::move(render)) {
+XournalWidget::XournalWidget(std::shared_ptr<InputContext> inputContext, std::shared_ptr<Renderer> render):
+        input(std::move(inputContext)), renderer(std::move(render)) {
     this->init();
     this->viewport = Rectangle<int>();
 }
@@ -25,24 +26,27 @@ auto XournalWidget::init() -> void {
     }
 }
 
-XournalWidget::~XournalWidget() {
-    gtk_widget_destroy(this->drawingArea);
-};
+XournalWidget::~XournalWidget() { gtk_widget_destroy(this->drawingArea); };
 
 auto XournalWidget::getGtkWidget() -> GtkWidget* { return this->drawingArea; }
 
 
-auto XournalWidget::repaintArea(const Rectangle<int>& rect) -> void {
-    if(rect.intersects(viewport.get()))
+auto XournalWidget::repaintArea(const Rectangle<double>& rect) -> void {}
+
+auto XournalWidget::repaintArea(const Rectangle<int>& rect) -> void {}
+
+auto XournalWidget::getViewport() -> Rectangle<int> { return this->viewport; }
+
+auto XournalWidget::getVisibleArea() -> Rectangle<double> {
+    Rectangle<double> visibleArea{};
+    visibleArea.x = static_cast<double>(viewport.x);
+    visibleArea.y = static_cast<double>(viewport.y);
+    visibleArea.width = static_cast<double>(viewport.width) * scale;
+    visibleArea.height = static_cast<double>(viewport.height) * scale;
+    return visibleArea;
 }
 
-auto XournalWidget::getVisibleArea() -> Rectangle<int> {
-    return this->viewport;
-}
-
-auto inline XournalWidget::queueRedraw() -> void {
-    gtk_widget_queue_draw(this->drawingArea);
-}
+auto inline XournalWidget::queueRedraw() -> void { gtk_widget_queue_draw(this->drawingArea); }
 
 auto XournalWidget::sizeAllocateCallback(GtkWidget* drawingArea, GdkRectangle* allocation, XournalWidget* self)
         -> void {
@@ -50,7 +54,7 @@ auto XournalWidget::sizeAllocateCallback(GtkWidget* drawingArea, GdkRectangle* a
         gdk_window_move_resize(gtk_widget_get_window(self->drawingArea), allocation->x, allocation->y,
                                allocation->width, allocation->height);
     }
-    Rectangle size = self->renderer->getDocumentSize();
+    Rectangle<int> size = self->renderer->getDocumentSize();
     int width = allocation->width + SIZE_EXTENSION;
     int height = allocation->height + SIZE_EXTENSION;
     if (width >= size.width)
@@ -69,9 +73,12 @@ auto XournalWidget::drawCallback(GtkWidget* drawArea, cairo_t* cr, XournalWidget
     double x1 = NAN, x2 = NAN, y1 = NAN, y2 = NAN;
     cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
 
-    Rectangle clippingRect(self->x - 10, self->y - 10, x2 - x1 + 20, y2 - y1 + 20);
+    // cairo clip is relative to viewport position
+    Rectangle<int> clippingRect(self->viewport.x + x1, self->viewport.y + y1, x2 - x1, y2 - y1);
 
     self->renderer->render(cr, clippingRect, self->scale);
-
     return true;
 }
+auto XournalWidget::scroll(int xDiff, int yDiff) -> void {}
+auto XournalWidget::setVisibleArea(const Rectangle<double>& rect) -> void {}
+auto XournalWidget::zoom(int originX, int originY, double scale) -> void {}
