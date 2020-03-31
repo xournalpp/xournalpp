@@ -112,7 +112,7 @@ void ZoomControl::endZoomSequence() {
 /**
  * Get visible rect on xournal view, for Zoom Gesture
  */
-auto ZoomControl::getVisibleRect() -> Rectangle {
+auto ZoomControl::getVisibleRect() -> Rectangle<double> {
     GtkWidget* widget = view->getWidget();
     Layout* layout = gtk_xournal_get_layout(widget);
     return layout->getVisibleRect();
@@ -189,7 +189,7 @@ void ZoomControl::setZoom100Value(double zoom) {
 
 auto ZoomControl::updateZoomFitValue(size_t pageNo) -> bool { return updateZoomFitValue(getVisibleRect(), pageNo); }
 
-auto ZoomControl::updateZoomFitValue(const Rectangle& widget_rect, size_t pageNo) -> bool {
+auto ZoomControl::updateZoomFitValue(const Rectangle<double>& widget_rect, size_t pageNo) -> bool {
     if (pageNo == 0) {
         pageNo = view->getCurrentPage();
     }
@@ -378,7 +378,7 @@ auto ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScr
 auto ZoomControl::onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle* allocation, ZoomControl* zoom) -> bool {
     g_assert_true(widget != zoom->view->getWidget());
 
-    Rectangle r(allocation->x, allocation->y, allocation->width, allocation->height);
+    Rectangle<double> r(allocation->x, allocation->y, allocation->width, allocation->height);
 
     zoom->updateZoomPresentationValue();
     zoom->updateZoomFitValue(r);

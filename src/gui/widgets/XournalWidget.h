@@ -12,6 +12,7 @@
 #pragma once
 
 #include <gtk/gtk.h>
+#include <util/Rectangle.h>
 
 G_BEGIN_DECLS
 
@@ -23,7 +24,6 @@ class AbstractInputDevice;
 class EditSelection;
 class Layout;
 class XojPageView;
-class Rectangle;
 class ScrollHandling;
 class XournalView;
 class InputContext;
@@ -86,6 +86,6 @@ void gtk_xournal_scroll_relative(GtkWidget* widget, double x, double y);
 
 void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2, int y2);
 
-Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p);
+Rectangle<double>* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p);
 
 G_END_DECLS

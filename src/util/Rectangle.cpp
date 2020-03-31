@@ -4,18 +4,20 @@
 
 #include "Range.h"
 
-Rectangle::Rectangle() = default;
+template <class T>
+Rectangle<T>::Rectangle() = default;
 
-Rectangle::Rectangle(double x, double y, double width, double height): x(x), y(y), width(width), height(height) {}
+template <class T>
+Rectangle<T>::Rectangle(T x, T y, T width, T height): x(x), y(y), width(width), height(height) {}
 
-Rectangle::Rectangle(const Range& rect):
+template <class T>
+Rectangle<T>::Rectangle(const Range& rect):
         x(rect.getX()), y(rect.getY()), width(rect.getWidth()), height(rect.getHeight()) {}
 
-Rectangle::~Rectangle() = default;
-
-auto Rectangle::intersects(const Rectangle& other, Rectangle* dest) const -> bool {
-    double destX = NAN, destY = NAN;
-    double destW = NAN, destH = NAN;
+template <class T>
+auto Rectangle<T>::intersects(const Rectangle<T>& other, Rectangle<T>* dest) const -> bool {
+    T destX = NAN, destY = NAN;
+    T destW = NAN, destH = NAN;
 
     bool returnVal = false;
 
@@ -40,16 +42,17 @@ auto Rectangle::intersects(const Rectangle& other, Rectangle* dest) const -> boo
     return returnVal;
 }
 
-void Rectangle::add(double x, double y, double width, double height) {
+template <class T>
+void Rectangle<T>::add(T x, T y, T width, T height) {
     if (width <= 0 || height <= 0) {
         return;
     }
 
-    double x1 = std::min(this->x, x);
-    double y1 = std::min(this->y, y);
+    T x1 = std::min(this->x, x);
+    T y1 = std::min(this->y, y);
 
-    double x2 = std::max(this->x + this->width, x + width);
-    double y2 = std::max(this->y + this->height, y + height);
+    T x2 = std::max(this->x + this->width, x + width);
+    T y2 = std::max(this->y + this->height, y + height);
 
     this->x = x1;
     this->y = y1;
@@ -57,13 +60,18 @@ void Rectangle::add(double x, double y, double width, double height) {
     this->height = y2 - y1;
 }
 
-void Rectangle::add(const Rectangle& other) { add(other.x, other.y, other.width, other.height); }
-
-auto Rectangle::translated(double dx, double dy) const -> Rectangle {
-    return Rectangle(this->x + dx, this->y + dy, this->width, this->height);
+template <class T>
+void Rectangle<T>::add(const Rectangle<T>& other) {
+    add(other.x, other.y, other.width, other.height);
 }
 
-auto Rectangle::intersect(const Rectangle& other) const -> Rectangle {
+template <class T>
+auto Rectangle<T>::translated(T dx, T dy) const -> Rectangle<T> {
+    return Rectangle<T>(this->x + dx, this->y + dy, this->width, this->height);
+}
+
+template <class T>
+auto Rectangle<T>::intersect(const Rectangle<T>& other) const -> Rectangle<T> {
     double x1 = std::max(this->x, other.x);
     double y1 = std::max(this->y, other.y);
 
@@ -73,7 +81,8 @@ auto Rectangle::intersect(const Rectangle& other) const -> Rectangle {
     return Rectangle(x1, y1, x2 - x1, y2 - y1);
 }
 
-auto Rectangle::operator*=(double factor) -> Rectangle& {
+template <class T>
+auto Rectangle<T>::operator*=(T factor) -> Rectangle<T>& {
     x *= factor;
     y *= factor;
 
@@ -83,4 +92,10 @@ auto Rectangle::operator*=(double factor) -> Rectangle& {
     return *this;
 }
 
-auto Rectangle::area() const -> double { return width * height; }
+template <class T>
+auto Rectangle<T>::area() const -> T {
+    return width * height;
+}
+
+template class Rectangle<double>;
+template class Rectangle<int>;
