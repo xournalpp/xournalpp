@@ -17,9 +17,9 @@
 #include <gtk/gtk.h>
 
 #include "Job.h"
+#include "Rectangle.h"
 #include "XournalType.h"
 
-class Rectangle;
 class XojPageView;
 
 class RenderJob: public Job {
@@ -42,7 +42,7 @@ private:
      */
     static void repaintWidget(GtkWidget* widget);
 
-    void rerenderRectangle(Rectangle* rect);
+    void rerenderRectangle(Rectangle<double>* rect);
 
 private:
     XojPageView* view;

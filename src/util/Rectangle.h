@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * A rectangle with double precision
+ * A Rectangle with variable precision
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -18,12 +18,12 @@
 
 class Range;
 
+template <class T>
 class Rectangle {
 public:
     Rectangle();
     explicit Rectangle(const Range& rect);
-    Rectangle(double x, double y, double width, double height);
-    virtual ~Rectangle();
+    Rectangle(T x, T y, T width, T height);
 
 public:
     /**
@@ -34,34 +34,34 @@ public:
      *
      * @return whether the rectangles intersect
      */
-    bool intersects(const Rectangle& other, Rectangle* dest = nullptr) const;
+    bool intersects(const Rectangle<T>& other, Rectangle<T>* dest = nullptr) const;
 
     /**
      * Computes the union of this rectangle with the one given by the parameters
      */
-    void add(double x, double y, double width, double height);
+    void add(T x, T y, T width, T height);
 
     /**
      * Returns a new Rectangle with an offset specified
      * by the function arguments
      *
      */
-    Rectangle translated(double dx, double dy) const;
+    Rectangle<T> translated(T dx, T dy) const;
 
     /**
      * Same as the above, provided for convenience
      */
-    void add(const Rectangle& other);
+    void add(const Rectangle<T>& other);
 
-    Rectangle intersect(const Rectangle& other) const;
+    Rectangle<T> intersect(const Rectangle<T>& other) const;
 
-    Rectangle& operator*=(double factor);
+    Rectangle<T>& operator*=(T factor);
 
-    double area() const;
+    T area() const;
 
 public:
-    double x = 0;
-    double y = 0;
-    double width = 0;
-    double height = 0;
+    T x = 0;
+    T y = 0;
+    T width = 0;
+    T height = 0;
 };

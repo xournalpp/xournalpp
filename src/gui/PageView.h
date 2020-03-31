@@ -141,7 +141,7 @@ public:
     TexImage* getSelectedTex();
     Text* getSelectedText();
 
-    Rectangle getRect() const;
+    Rectangle<double> getRect() const;
 
 public:  // event handler
     bool onButtonPressEvent(const PositionInputData& pos);
@@ -162,7 +162,7 @@ public:  // event handler
     void paintPageSync(cairo_t* cr, GdkRectangle* rect);
 
 public:  // listener
-    void rectChanged(Rectangle& rect);
+    void rectChanged(Rectangle<double>& rect);
     void rangeChanged(Range& range);
     void pageChanged();
     void elementChanged(Element* elem);
@@ -226,7 +226,7 @@ private:
     int lastVisibleTime = -1;
 
     GMutex repaintRectMutex{};
-    vector<Rectangle*> rerenderRects;
+    vector<Rectangle<double>*> rerenderRects;
     bool rerenderComplete = false;
 
     GMutex drawingMutex{};
