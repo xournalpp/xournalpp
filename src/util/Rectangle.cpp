@@ -97,5 +97,11 @@ auto Rectangle<T>::area() const -> T {
     return width * height;
 }
 
+template <class T>
+auto Rectangle<T>::scale(T scale) -> void {
+    width *= scale;
+    height *= scale;
+}
+
 template class Rectangle<double>;
 template class Rectangle<int>;

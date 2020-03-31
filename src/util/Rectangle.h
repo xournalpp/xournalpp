@@ -59,6 +59,12 @@ public:
 
     T area() const;
 
+    /**
+     * Scale rectangle by scale
+     * @param scale
+     */
+    auto scale(T scale) -> void;
+
 public:
     T x = 0;
     T y = 0;
