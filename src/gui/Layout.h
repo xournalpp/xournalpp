@@ -69,7 +69,7 @@ public:
     /**
      * Returns the Rectangle which is currently visible
      */
-    Rectangle getVisibleRect();
+    Rectangle<double> getVisibleRect();
 
 
     /**

@@ -15,12 +15,12 @@
 #include <string>
 #include <vector>
 
+#include "Rectangle.h"
 #include "XournalType.h"
 
 class Element;
 class PageListener;
 class Range;
-class Rectangle;
 
 class PageHandler {
 public:
@@ -28,7 +28,7 @@ public:
     virtual ~PageHandler();
 
 public:
-    void fireRectChanged(Rectangle& rect);
+    void fireRectChanged(Rectangle<double>& rect);
     void fireRangeChanged(Range& range);
     void fireElementChanged(Element* elem);
     void firePageChanged();

@@ -4,7 +4,8 @@ parameters:
 
 steps:
   - bash: |
-      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+      # Ignore Homebrew uninstall errors
+      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)" || true
     displayName: 'Uninstall brew'
   - bash: |
       cd /Users
@@ -33,7 +34,9 @@ steps:
       unzip ninja-mac.zip -d /Users/git-bin/gtk/inst/bin
     displayName: 'Get Ninja'
   - bash: |
-      curl -L -o boost_1_72_0.tar.gz https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.gz
+      set -e
+      # Using SourceForge instead of bintray due to boostorg/boost#299
+      curl -L -o boost_1_72_0.tar.gz https://sourceforge.net/projects/boost/files/boost/1.72.0/boost_1_72_0.tar.gz/download
       tar -xzf boost_1_72_0.tar.gz
       cd boost_1_72_0
       ./bootstrap.sh --prefix=/usr/local/boost-1.72.0

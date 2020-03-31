@@ -113,7 +113,7 @@ public:
      * @param zoom zoom value depending zoom100Value
      */
     bool updateZoomFitValue(size_t pageNo = 0);
-    bool updateZoomFitValue(const Rectangle& widget_rect, size_t pageNo = 0);
+    bool updateZoomFitValue(const Rectangle<double>& widget_rect, size_t pageNo = 0);
 
     /**
      * @return zoom value for zoom fit depending zoom100Value
@@ -161,7 +161,7 @@ public:
     /**
      * Get visible rect on xournal view, for Zoom Gesture
      */
-    Rectangle getVisibleRect();
+    Rectangle<double> getVisibleRect();
 
     double getZoomStep() const;
     double getZoomStepReal() const;

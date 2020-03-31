@@ -79,7 +79,7 @@ void BaseStrokeHandler::draw(cairo_t* cr) {
 
 auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool {
     if (event->is_modifier) {
-        Rectangle rect = stroke->boundingRect();
+        Rectangle<double> rect = stroke->boundingRect();
 
         PositionInputData pos{};
         pos.x = pos.y = pos.pressure = 0;  // not used in redraw
@@ -124,7 +124,7 @@ auto BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> boo
     int pointCount = stroke->getPointCount();
 
     Point currentPoint(x, y);
-    Rectangle rect = stroke->boundingRect();
+    Rectangle<double> rect = stroke->boundingRect();
 
     if (pointCount > 0) {
         if (!validMotion(currentPoint, stroke->getPoint(pointCount - 1))) {

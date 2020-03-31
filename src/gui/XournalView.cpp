@@ -419,7 +419,7 @@ void XournalView::getPasteTarget(double& x, double& y) {
         return;
     }
 
-    Rectangle* rect = getVisibleRect(pageNo);
+    Rectangle<double>* rect = getVisibleRect(pageNo);
 
     if (rect) {
         x = rect->x + rect->width / 2;
@@ -433,7 +433,7 @@ void XournalView::getPasteTarget(double& x, double& y) {
  *
  * Or nullptr if the page is not visible
  */
-auto XournalView::getVisibleRect(size_t page) -> Rectangle* {
+auto XournalView::getVisibleRect(size_t page) -> Rectangle<double>* {
     if (page == npos || page >= this->viewPages.size()) {
         return nullptr;
     }
@@ -442,7 +442,7 @@ auto XournalView::getVisibleRect(size_t page) -> Rectangle* {
     return getVisibleRect(p);
 }
 
-auto XournalView::getVisibleRect(XojPageView* redrawable) -> Rectangle* {
+auto XournalView::getVisibleRect(XojPageView* redrawable) -> Rectangle<double>* {
     return this->widget->getVisibleArea(redrawable);
 }
 
@@ -643,7 +643,7 @@ auto XournalView::getDisplayWidth() const -> int {
 }
 
 auto XournalView::isPageVisible(size_t page, int* visibleHeight) -> bool {
-    Rectangle* rect = getVisibleRect(page);
+    Rectangle<double>* rect = getVisibleRect(page);
     if (rect) {
         if (visibleHeight) {
             *visibleHeight = std::lround(rect->height);

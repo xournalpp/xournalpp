@@ -49,7 +49,7 @@ auto TextBoxUndoAction::undo(Control* control) -> bool {
     x2 = std::max(x2, oldelement->getX() + oldelement->getElementWidth());
     y2 = std::max(y2, oldelement->getY() + oldelement->getElementHeight());
 
-    Rectangle rect(x1, y1, x2 - x1, y2 - y1);
+    Rectangle<double> rect(x1, y1, x2 - x1, y2 - y1);
     this->page->fireRectChanged(rect);
 
     this->undone = true;

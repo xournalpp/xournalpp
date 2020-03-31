@@ -18,7 +18,6 @@
 #include "Range.h"
 
 class Element;
-class Rectangle;
 
 class Redrawable {
 public:

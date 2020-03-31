@@ -102,7 +102,7 @@ void Layout::updateVisibility() {
     this->view->getControl()->firePageSelected(mostPageNr);
 }
 
-auto Layout::getVisibleRect() -> Rectangle {
+auto Layout::getVisibleRect() -> Rectangle<double> {
     return Rectangle(gtk_adjustment_get_value(view->getHorizontalAdjustment()),
                      gtk_adjustment_get_value(view->getVerticalAdjustment()),
                      gtk_adjustment_get_page_size(view->getHorizontalAdjustment()),

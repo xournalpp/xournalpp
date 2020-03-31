@@ -79,7 +79,7 @@ XojPageView::~XojPageView() {
     endText();
     deleteViewBuffer();
 
-    for (Rectangle* rect: this->rerenderRects) {
+    for (Rectangle<double>* rect: this->rerenderRects) {
         delete rect;
     }
     this->rerenderRects.clear();
@@ -630,11 +630,11 @@ void XojPageView::addRerenderRect(double x, double y, double width, double heigh
         return;
     }
 
-    auto* rect = new Rectangle(x, y, width, height);
+    auto* rect = new Rectangle<double>(x, y, width, height);
 
     g_mutex_lock(&this->repaintRectMutex);
 
-    for (Rectangle* r: this->rerenderRects) {
+    for (Rectangle<double>* r: this->rerenderRects) {
         // its faster to redraw only one rect than repaint twice the same area
         // so loop through the rectangles to be redrawn, if new rectangle
         // intersects any of them, replace it by the union with the new one
@@ -897,11 +897,11 @@ auto XojPageView::getSelectedText() -> Text* {
     return nullptr;
 }
 
-auto XojPageView::getRect() const -> Rectangle {
-    return Rectangle(getX(), getY(), getDisplayWidth(), getDisplayHeight());
+auto XojPageView::getRect() const -> Rectangle<double> {
+    return Rectangle<double>(getX(), getY(), getDisplayWidth(), getDisplayHeight());
 }
 
-void XojPageView::rectChanged(Rectangle& rect) { rerenderRect(rect.x, rect.y, rect.width, rect.height); }
+void XojPageView::rectChanged(Rectangle<double>& rect) { rerenderRect(rect.x, rect.y, rect.width, rect.height); }
 
 void XojPageView::rangeChanged(Range& range) { rerenderRange(range); }
 
