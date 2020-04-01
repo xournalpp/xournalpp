@@ -299,7 +299,7 @@ auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) 
              */
             double p = std::abs((x - lastX) * (lastY - py) + (y - lastY) * (px - lastX)) / len;
 
-            // If the distance p of the center of the eraser box to the (full) line is in the range, 
+            // If the distance p of the center of the eraser box to the (full) line is in the range,
             // we check whether the eraser box is not too far from the line segment through the two points.
 
             if (p <= halfEraserSize) {
@@ -307,12 +307,12 @@ auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) 
                 double centerY = (lastY + py) / 2;
                 double distance = hypot(x - centerX, y - centerY);
 
-            // For the above check we imagine a circle whose center is the mid point of the two points of the stroke 
-            // and whose radius is half the length of the line segment plus half the diameter of the eraser box
-            // plus some small padding
-            // If the center of the eraser box lies within that circle then we consider it to be close enough
+                // For the above check we imagine a circle whose center is the mid point of the two points of the stroke
+                // and whose radius is half the length of the line segment plus half the diameter of the eraser box
+                // plus some small padding
+                // If the center of the eraser box lies within that circle then we consider it to be close enough
 
-                distance -= halfEraserSize*std::sqrt(2);
+                distance -= halfEraserSize * std::sqrt(2);
 
                 constexpr double PADDING = 0.1;
 
