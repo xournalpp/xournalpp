@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * A Rectangle with variable precision
+ * A rectangle data structure over a numeric data type.
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
