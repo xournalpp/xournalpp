@@ -260,14 +260,14 @@ void Stroke::setPressure(const vector<double>& pressure) {
 }
 
 /**
- * split index is the split point, minimimum is 1 NOT 0
+ * checks if the stroke is intersected by the eraser rectangle
  */
 auto Stroke::intersects(double x, double y, double halfEraserSize) -> bool {
     return intersects(x, y, halfEraserSize, nullptr);
 }
 
 /**
- * split index is the split point, minimimum is 1 NOT 0
+ * checks if the stroke is intersected by the eraser rectangle
  */
 auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) -> bool {
     if (this->points.empty()) {
@@ -295,25 +295,28 @@ auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) 
         double len = hypot(px - lastX, py - lastY);
         if (len >= halfEraserSize) {
             /**
-             * The normale to a vector, the padding to a point
+             * The distance of the center of the eraser box to the line passing through (lastx, lasty) and (px, py)
              */
-            double p = std::abs((x - lastX) * (lastY - py) + (y - lastY) * (px - lastX)) / hypot(lastX - x, lastY - y);
+            double p = std::abs((x - lastX) * (lastY - py) + (y - lastY) * (px - lastX)) / len;
 
-            // The space to the line is in the range, but it can also be parallel
-            // and not enough close, so calculate a "circle" with the center on the
-            // center of the line
+            // If the distance p of the center of the eraser box to the (full) line is in the range, 
+            // we check whether the eraser box is not too far from the line segment through the two points.
 
             if (p <= halfEraserSize) {
-                double centerX = (lastX + x) / 2;
-                double centerY = (lastY + y) / 2;
+                double centerX = (lastX + px) / 2;
+                double centerY = (lastY + py) / 2;
                 double distance = hypot(x - centerX, y - centerY);
 
-                // we should calculate the length of the line within the rectangle, to find out
-                // the distance from the border to the point, but the stroken are not rectangular
-                // so we can do it simpler
-                distance -= hypot((x2 - x1) / 2, (y2 - y1) / 2);
+            // For the above check we imagine a circle whose center is the mid point of the two points of the stroke 
+            // and whose radius is half the length of the line segment plus half the diameter of the eraser box
+            // plus some small padding
+            // If the center of the eraser box lies within that circle then we consider it to be close enough
 
-                if (distance <= (len / 2) + 0.1) {
+                distance -= halfEraserSize*std::sqrt(2);
+
+                constexpr double PADDING = 0.1;
+
+                if (distance <= len / 2 + PADDING) {
                     if (gap) {
                         *gap = distance;
                     }
