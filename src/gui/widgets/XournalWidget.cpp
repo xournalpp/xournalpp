@@ -15,12 +15,17 @@ XournalWidget::XournalWidget(std::shared_ptr<InputContext> inputContext, std::sh
 }
 
 auto XournalWidget::init() -> void {
-    this->drawingArea = gtk_drawing_area_new();
+    this->drawingArea = gtk_drawing_scrollable_new();
     gtk_widget_set_hexpand(this->drawingArea, true);
     gtk_widget_set_vexpand(this->drawingArea, true);
     g_signal_connect(G_OBJECT(drawingArea), "size-allocate", G_CALLBACK(XournalWidget::sizeAllocateCallback), this);
     g_signal_connect(G_OBJECT(drawingArea), "realize", G_CALLBACK(XournalWidget::realizeCallback), this);
     g_signal_connect(G_OBJECT(drawingArea), "draw", G_CALLBACK(XournalWidget::drawCallback), this);
+    GtkScrollable* scrollableWidget = GTK_SCROLLABLE(drawingArea);
+    GtkAdjustment* hadjustment = gtk_scrollable_get_hadjustment(scrollableWidget);
+    GtkAdjustment* vadjustment = gtk_scrollable_get_vadjustment(scrollableWidget);
+    g_signal_connect(G_OBJECT(hadjustment), "value-changed", G_CALLBACK(XournalWidget::horizontalScroll), this);
+    g_signal_connect(G_OBJECT(vadjustment), "value-changed", G_CALLBACK(XournalWidget::verticalScroll), this);
     if (this->input) {
         this->input->connect(this);
     }
@@ -82,3 +87,5 @@ auto XournalWidget::drawCallback(GtkWidget* drawArea, cairo_t* cr, XournalWidget
 auto XournalWidget::scroll(int xDiff, int yDiff) -> void {}
 auto XournalWidget::setVisibleArea(const Rectangle<double>& rect) -> void {}
 auto XournalWidget::zoom(int originX, int originY, double scale) -> void {}
+auto XournalWidget::horizontalScroll(GtkAdjustment* hadjustment, XournalWidget* self) -> void {}
+auto XournalWidget::verticalScroll(GtkAdjustment* vadjustment, XournalWidget* self) -> void {}

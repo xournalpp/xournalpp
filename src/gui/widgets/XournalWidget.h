@@ -24,6 +24,8 @@ class Renderer;
 
 #include <util/Rectangle.h>
 
+#include "gtkdrawingareascrollable.h"
+
 class XournalWidget {
 public:
     XournalWidget(std::shared_ptr<InputContext> inputContext, std::shared_ptr<Renderer> render);
@@ -50,6 +52,9 @@ private:
     static auto sizeAllocateCallback(GtkWidget* widget, GdkRectangle* allocation, XournalWidget* self) -> void;
     static auto realizeCallback(GtkWidget* widget, XournalWidget* self) -> void;
     static auto drawCallback(GtkWidget* widget, cairo_t* cr, XournalWidget* self) -> gboolean;
+
+    static auto horizontalScroll(GtkAdjustment* hadjustment, XournalWidget* self) -> void;
+    static auto verticalScroll(GtkAdjustment* vadjustment, XournalWidget* self) -> void;
 
 private:
     GtkWidget* drawingArea;
