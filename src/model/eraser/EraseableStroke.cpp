@@ -158,25 +158,28 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize, Eraseable
 
     double len = hypot(bX - aX, bY - aY);
     /**
-     * The normale to a vector, the padding to a point
+     * The distance of the center of the eraser box to the line passing through (aX, aY) and (bX, bY)
      */
-    double p = std::abs((x - aX) * (aY - bY) + (y - aY) * (bX - aX)) / hypot(aX - x, aY - y);
+    double p = std::abs((x - aX) * (aY - bY) + (y - aY) * (bX - aX)) / len;
 
-    // The space to the line is in the range, but it can also be parallel
-    // and not enough close, so calculate a "circle" with the center on the
-    // center of the line
+    // If the distance p of the center of the eraser box to the (full) line is in the range,
+    // we check whether the eraser box is not too far from the line segment through the two points.
 
     if (p <= halfEraserSize) {
-        double centerX = (aX + x) / 2;
-        double centerY = (aY + y) / 2;
+        double centerX = (aX + bX) / 2;
+        double centerY = (aY + bY) / 2;
         double distance = hypot(x - centerX, y - centerY);
 
-        // we should calculate the length of the line within the rectangle, to find out
-        // the distance from the border to the point, but the stroke are not rectangular
-        // so we can do it simpler
-        distance -= hypot((x2 - x1) / 2, (y2 - y1) / 2);
+        // For the above check we imagine a circle whose center is the mid point of the two points of the stroke
+        // and whose radius is half the length of the line segment plus half the diameter of the eraser box
+        // plus some small padding
+        // If the center of the eraser box lies within that circle then we consider it to be close enough
 
-        if (distance <= (len / 2) + 0.1) {
+        distance -= halfEraserSize * std::sqrt(2);
+
+        constexpr double PADDING = 0.1;
+
+        if (distance <= len / 2 + PADDING) {
             bool deleteAfter = false;
 
             if (erasePart(x, y, halfEraserSize, part, list, &deleteAfter)) {
