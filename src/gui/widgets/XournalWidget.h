@@ -18,11 +18,12 @@ class Layout;
 class XojPageView;
 class XournalView;
 class InputContext;
-class Renderer;
 
 #include <memory>
 
 #include <util/Rectangle.h>
+
+#include "gui/Renderer.h"
 
 #include "gtkdrawingareascrollable.h"
 
@@ -33,21 +34,35 @@ public:
 
     auto getGtkWidget() -> GtkWidget*;  // TODO remove and encapsulate widget completely
 
-    auto repaintArea(const Rectangle<double>& rect) -> void;
-    auto repaintArea(const Rectangle<int>& rect) -> void;
+    auto getViewport() -> Rectangle<double>;
+    auto repaintViewport(const Rectangle<double>& rect) -> void;
 
+    auto repaintVisibleArea(const Rectangle<double>& rect) -> void;
     auto getVisibleArea() -> Rectangle<double>;
-    auto getViewport() -> Rectangle<int>;
-
     auto setVisibleArea(const Rectangle<double>& rect) -> void;
 
-    auto scroll(int xDiff, int yDiff) -> void;
-    auto zoom(int originX, int originY, double scale) -> void;
+    auto setScale(double scale) -> void;
 
+    /**
+     * Queues a widget redraw.
+     *
+     * Call this after you updated the model.
+     */
     auto queueRedraw() -> void;
+
+    /**
+     * Queues a widget allocate.
+     *
+     * Call this after you changed the layout of the model. (Additional page, different page layout)
+     */
+    auto queueAllocate() -> void;
 
 private:
     auto init() -> void;
+    auto updateScrollbar(GtkAdjustment* adj, double value, bool infinite) -> void;
+
+    static auto initHScrolling(XournalWidget* self) -> void;
+    static auto initVScrolling(XournalWidget* self) -> void;
 
     static auto sizeAllocateCallback(GtkWidget* widget, GdkRectangle* allocation, XournalWidget* self) -> void;
     static auto realizeCallback(GtkWidget* widget, XournalWidget* self) -> void;
@@ -68,8 +83,9 @@ private:
     /**
      * Top left corner of the current visible rectangle
      */
-    Rectangle<int> viewport;
+    double x = 0;
+    double y = 0;
     double scale = 0;
 
-    static const int SIZE_EXTENSION = 50;
+    constexpr static double STEP_INCREMENT = 10;
 };

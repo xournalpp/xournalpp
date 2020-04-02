@@ -8,6 +8,9 @@
 
 class Renderer {
 public:
-    virtual auto render(cairo_t* cr, Rectangle<int> viewport, double scale) -> void;
-    virtual auto getDocumentSize() -> const Rectangle<int>&;
+    virtual auto render(cairo_t* cr, Rectangle<double> viewport, double scale) -> void;
+    virtual auto getDocumentSize() -> const Rectangle<double>&;
+    virtual auto isInfiniteHorizontally() -> bool;
+    virtual auto isInfiniteVertically() -> bool;
+    virtual auto getGtkStyleContext() -> GtkStyleContext*;
 };
