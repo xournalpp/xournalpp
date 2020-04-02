@@ -639,7 +639,7 @@ void XojPageView::addRerenderRect(double x, double y, double width, double heigh
         // so loop through the rectangles to be redrawn, if new rectangle
         // intersects any of them, replace it by the union with the new one
         if (r->intersects(*rect)) {
-            r->add(*rect);
+            r->unite(*rect);
 
             delete rect;
 

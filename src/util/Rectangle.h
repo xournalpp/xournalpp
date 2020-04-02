@@ -11,57 +11,71 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <algorithm>
+#include <cassert>
+#include <optional>
 
-#include "XournalType.h"
-
-class Range;
+#include "Range.h"
 
 template <class T>
-class Rectangle {
+class Rectangle final {
 public:
-    Rectangle();
-    explicit Rectangle(const Range& rect);
-    Rectangle(T x, T y, T width, T height);
+    Rectangle() = default;
+    Rectangle(T x, T y, T width, T height): x(x), y(y), width(width), height(height) {}
+    explicit Rectangle(const Range& rect):
+            x(rect.getX()), y(rect.getY()), width(rect.getWidth()), height(rect.getHeight()) {}
 
-public:
     /**
-     * Returns whether this rectangle intersects another
-     *
+     * Returns whether this rectangle intersects another and the intersection
      * @param other the other rectangle
-     * @param dest  if this is not nullptr, the rectangle will be modified to contain the intersection
-     *
-     * @return whether the rectangles intersect
+     * @return whether the rectangles intersect and if so, the intersection
      */
-    bool intersects(const Rectangle<T>& other, Rectangle<T>* dest = nullptr) const;
-
-    /**
-     * Computes the union of this rectangle with the one given by the parameters
-     */
-    void add(T x, T y, T width, T height);
+    std::optional<Rectangle> intersects(const Rectangle& other) const {
+        auto x1 = std::max(this->x, other.x);
+        auto y1 = std::max(this->y, other.y);
+        auto x2 = std::min(this->x + this->width, other.x + other.width);
+        auto y2 = std::min(this->y + this->height, other.y + other.height);
+        if (x2 > x1 && y2 > y1) {
+            return {{x1, y1, x2 - x1, y2 - y1}};
+        }
+        return std::nullopt;
+    }
 
     /**
      * Returns a new Rectangle with an offset specified
      * by the function arguments
-     *
      */
-    Rectangle<T> translated(T dx, T dy) const;
+    Rectangle translated(T dx, T dy) const { return Rectangle(this->x + dx, this->y + dy, this->width, this->height); }
 
     /**
-     * Same as the above, provided for convenience
+     * Computes the union of this and the other rectangle
      */
-    void add(const Rectangle<T>& other);
+    void unite(const Rectangle& other) {
+        assert(other.width > 0 && other.height > 0 && "Rectangle not normalized");
+        this->x = std::min(this->x, other.x);
+        this->y = std::min(this->y, other.y);
+        this->width = std::max(this->x + this->width, other.x + other.width) - this->x;
+        this->height = std::max(this->y + this->height, other.y + other.height) - this->y;
+    }
 
-    Rectangle<T> intersect(const Rectangle<T>& other) const;
+    /**
+     * Applies a scalar to this rectangle
+     */
+    Rectangle& operator*=(T factor) {
+        x *= factor;
+        y *= factor;
+        width *= factor;
+        height *= factor;
+        return *this;
+    }
 
-    Rectangle<T>& operator*=(T factor);
+    /**
+     * Calculates the area
+     */
+    T area() const { return width * height; }
 
-    T area() const;
-
-public:
-    T x = 0;
-    T y = 0;
-    T width = 0;
-    T height = 0;
+    T x{};
+    T y{};
+    T width{};
+    T height{};
 };

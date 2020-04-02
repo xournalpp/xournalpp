@@ -186,7 +186,7 @@ auto SplineHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         this->currPoint = Point(pos.x / zoom, pos.y / zoom);
     }
 
-    rect.add(this->computeRepaintRectangle());
+    rect.unite(this->computeRepaintRectangle());
     this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
 
     return true;
