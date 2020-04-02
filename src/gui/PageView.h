@@ -226,7 +226,7 @@ private:
     int lastVisibleTime = -1;
 
     GMutex repaintRectMutex{};
-    vector<Rectangle<double>*> rerenderRects;
+    vector<Rectangle<double>> rerenderRects;
     bool rerenderComplete = false;
 
     GMutex drawingMutex{};
