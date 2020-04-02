@@ -10,7 +10,7 @@ void PageHandler::addListener(PageListener* l) { this->listener.push_back(l); }
 
 void PageHandler::removeListener(PageListener* l) { this->listener.remove(l); }
 
-void PageHandler::fireRectChanged(Rectangle& rect) {
+void PageHandler::fireRectChanged(Rectangle<double>& rect) {
     for (PageListener* pl: this->listener) {
         pl->rectChanged(rect);
     }

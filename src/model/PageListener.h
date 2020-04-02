@@ -13,10 +13,11 @@
 
 #include <memory>
 
+#include <util/Rectangle.h>
+
 class Element;
 class PageHandler;
 class Range;
-class Rectangle;
 
 class PageListener {
 public:
@@ -27,7 +28,7 @@ public:
     void registerListener(std::shared_ptr<PageHandler> const& handler);
     void unregisterListener();
 
-    virtual void rectChanged(Rectangle& rect) {}
+    virtual void rectChanged(Rectangle<double>& rect) {}
     virtual void rangeChanged(Range& range) {}
     virtual void elementChanged(Element* elem) {}
     virtual void pageChanged() {}

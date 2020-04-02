@@ -102,7 +102,7 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
         return false;
     }
 
-    Rectangle rect = this->computeRepaintRectangle();
+    Rectangle<double> rect = this->computeRepaintRectangle();
 
     switch (event->keyval) {
         case GDK_KEY_Escape: {
@@ -176,7 +176,7 @@ auto SplineHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
     }
 
     double zoom = xournal->getZoom();
-    Rectangle rect = this->computeRepaintRectangle();
+    Rectangle<double> rect = this->computeRepaintRectangle();
     if (this->isButtonPressed) {
         Point newTangent = Point(pos.x / zoom - this->currPoint.x, pos.y / zoom - this->currPoint.y);
         if (validMotion(newTangent, this->tangents.back())) {
@@ -233,7 +233,7 @@ void SplineHandler::finalizeSpline() {
 
     if (this->getKnotCount() < 2) {  // This is not a valid spline
         g_warning("Spline incomplete!");
-        Rectangle rect = this->computeRepaintRectangle();
+        Rectangle<double> rect = this->computeRepaintRectangle();
         this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
 
         delete stroke;
@@ -254,7 +254,7 @@ void SplineHandler::finalizeSpline() {
 
     layer->addElement(stroke);
 
-    Rectangle rect = this->computeRepaintRectangle();
+    Rectangle<double> rect = this->computeRepaintRectangle();
     this->redrawable->rerenderRect(rect.x, rect.y, rect.width, rect.height);
 
     stroke = nullptr;
@@ -310,7 +310,7 @@ void SplineHandler::updateStroke() {
     }
 }
 
-auto SplineHandler::computeRepaintRectangle() const -> Rectangle {
+auto SplineHandler::computeRepaintRectangle() const -> Rectangle<double> {
     double zoom = xournal->getZoom();
     double radius = RADIUS_WITHOUT_ZOOM / zoom;
     std::vector<double> xCoords = {};
@@ -332,5 +332,5 @@ auto SplineHandler::computeRepaintRectangle() const -> Rectangle {
     double maxX = *std::max_element(xCoords.begin(), xCoords.end());
     double minY = *std::min_element(yCoords.begin(), yCoords.end());
     double maxY = *std::max_element(yCoords.begin(), yCoords.end());
-    return Rectangle(minX - radius, minY - radius, maxX - minX + 2 * radius, maxY - minY + 2 * radius);
+    return Rectangle<double>(minX - radius, minY - radius, maxX - minX + 2 * radius, maxY - minY + 2 * radius);
 }

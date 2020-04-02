@@ -48,7 +48,7 @@ private:
     void finalizeSpline();
     void movePoint(double dx, double dy);
     void updateStroke();
-    Rectangle computeRepaintRectangle() const;
+    Rectangle<double> computeRepaintRectangle() const;
 
 private:
     std::vector<Point> knots{};

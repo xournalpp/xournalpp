@@ -52,7 +52,9 @@ auto Element::getElementHeight() -> double {
     return this->height;
 }
 
-auto Element::boundingRect() -> Rectangle { return Rectangle(getX(), getY(), getElementWidth(), getElementHeight()); }
+auto Element::boundingRect() -> Rectangle<double> {
+    return Rectangle<double>(getX(), getY(), getElementWidth(), getElementHeight());
+}
 
 void Element::setColor(int color) { this->color = color; }
 

@@ -43,7 +43,7 @@ auto TextUndoAction::undo(Control* control) -> bool {
     x2 = std::max(x2, text->getX() + text->getElementWidth());
     y2 = std::max(y2, text->getY() + text->getElementHeight());
 
-    Rectangle rect(x1, y1, x2 - x1, y2 - y1);
+    Rectangle<double> rect(x1, y1, x2 - x1, y2 - y1);
     this->page->fireRectChanged(rect);
 
     this->undone = true;
@@ -64,7 +64,7 @@ auto TextUndoAction::redo(Control* control) -> bool {
     x2 = std::max(x2, text->getX() + text->getElementWidth());
     y2 = std::max(y2, text->getY() + text->getElementHeight());
 
-    Rectangle rect(x1, y1, x2 - x1, y2 - y1);
+    Rectangle<double> rect(x1, y1, x2 - x1, y2 - y1);
     this->page->fireRectChanged(rect);
 
     this->undone = false;

@@ -106,7 +106,7 @@ static void gtk_xournal_class_init(GtkXournalClass* klass) {
     widget_class->destroy = gtk_xournal_destroy;
 }
 
-auto gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p) -> Rectangle* {
+auto gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p) -> Rectangle<double>* {
     g_return_val_if_fail(widget != nullptr, nullptr);
     g_return_val_if_fail(GTK_IS_XOURNAL(widget), nullptr);
 
@@ -144,7 +144,7 @@ auto gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p) -> Rectangl
                   "should never happen");
     }
 
-    return new Rectangle(std::max(r3.x, 0) / zoom, std::max(r3.y, 0) / zoom, r3.width / zoom, r3.height / zoom);
+    return new Rectangle<double>(std::max(r3.x, 0) / zoom, std::max(r3.y, 0) / zoom, r3.width / zoom, r3.height / zoom);
 }
 
 auto gtk_xournal_get_layout(GtkWidget* widget) -> Layout* {

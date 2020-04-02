@@ -21,7 +21,7 @@ RenderJob::~RenderJob() { this->view = nullptr; }
 
 auto RenderJob::getSource() -> void* { return this->view; }
 
-void RenderJob::rerenderRectangle(Rectangle* rect) {
+void RenderJob::rerenderRectangle(Rectangle<double>* rect) {
     double zoom = view->xournal->getZoom();
     Document* doc = view->xournal->getDocument();
 
@@ -81,7 +81,7 @@ void RenderJob::run() {
     g_mutex_lock(&this->view->repaintRectMutex);
 
     bool rerenderComplete = this->view->rerenderComplete;
-    std::vector<Rectangle*> rerenderRects = this->view->rerenderRects;
+    std::vector<Rectangle<double>*> rerenderRects = this->view->rerenderRects;
     this->view->rerenderRects.clear();
 
     this->view->rerenderComplete = false;
@@ -137,7 +137,7 @@ void RenderJob::run() {
         g_mutex_unlock(&this->view->drawingMutex);
         doc->unlock();
     } else {
-        for (Rectangle* rect: rerenderRects) {
+        for (Rectangle<double>* rect: rerenderRects) {
             rerenderRectangle(rect);
         }
     }
@@ -146,7 +146,7 @@ void RenderJob::run() {
     repaintWidget(this->view->getXournal()->getWidget());
 
     // delete all rectangles
-    for (Rectangle* rect: rerenderRects) {
+    for (Rectangle<double>* rect: rerenderRects) {
         delete rect;
     }
     rerenderRects.clear();
