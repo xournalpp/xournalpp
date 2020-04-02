@@ -73,19 +73,10 @@ XojPageView::~XojPageView() {
 
     this->xournal->getControl()->getScheduler()->removePage(this);
     delete this->inputHandler;
-    this->inputHandler = nullptr;
     delete this->eraser;
-    this->eraser = nullptr;
     endText();
     deleteViewBuffer();
-
-    for (Rectangle<double>* rect: this->rerenderRects) {
-        delete rect;
-    }
-    this->rerenderRects.clear();
-
     delete this->search;
-    this->search = nullptr;
 }
 
 void XojPageView::setIsVisible(bool visible) {
@@ -630,19 +621,16 @@ void XojPageView::addRerenderRect(double x, double y, double width, double heigh
         return;
     }
 
-    auto* rect = new Rectangle<double>(x, y, width, height);
+    auto rect = Rectangle<double>{x, y, width, height};
 
     g_mutex_lock(&this->repaintRectMutex);
 
-    for (Rectangle<double>* r: this->rerenderRects) {
+    for (auto&& r: this->rerenderRects) {
         // its faster to redraw only one rect than repaint twice the same area
         // so loop through the rectangles to be redrawn, if new rectangle
         // intersects any of them, replace it by the union with the new one
-        if (r->intersects(*rect)) {
-            r->unite(*rect);
-
-            delete rect;
-
+        if (r.intersects(rect)) {
+            r.unite(rect);
             g_mutex_unlock(&this->repaintRectMutex);
             return;
         }
