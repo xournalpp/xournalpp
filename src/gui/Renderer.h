@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <cairo.h>
+
 #include "Rectangle.h"
 
 class Renderer {

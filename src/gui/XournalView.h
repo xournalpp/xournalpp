@@ -18,6 +18,8 @@
 #include "model/PageRef.h"
 #include "widgets/XournalWidget.h"
 
+#include "XournalRenderer.h"
+
 class Control;
 class XournalppCursor;
 class Document;
@@ -35,13 +37,6 @@ public:
     virtual ~XournalView();
 
 public:
-    void zoomIn();
-    void zoomOut();
-
-    bool paint(GtkWidget* widget, GdkEventExpose* event);
-
-    void requestPage(XojPageView* page);
-
     void layoutPages();
 
     void scrollTo(size_t pageNo, double y = 0);
@@ -75,9 +70,6 @@ public:
 
     void resetShapeRecognizer();
 
-    int getDisplayWidth() const;
-    int getDisplayHeight() const;
-
     bool isPageVisible(size_t page, int* visibleHeight);
 
     void ensureRectIsVisible(int x, int y, int width, int height);
@@ -88,7 +80,6 @@ public:
     void repaintSelection(bool evenWithoutSelection = false);
 
     TextEditor* getTextEditor();
-    std::vector<XojPageView*> const& getViewPages() const;
 
     Control* getControl();
     double getZoom();
@@ -99,24 +90,12 @@ public:
     XournalWidget* getWidget();
     XournalppCursor* getCursor();
 
-    Rectangle<double>* getVisibleRect(int page);
     Rectangle<double>* getVisibleRect(XojPageView* redrawable);
-
-    /**
-     * A pen action was detected now, therefore ignore touch events
-     * for a short time
-     */
-    void penActionDetected();
 
     /**
      * @return Helper class for Touch specific fixes
      */
     HandRecognition* getHandRecognition();
-
-    GtkAdjustment* getHorizontalAdjustment();
-    GtkAdjustment* getVerticalAdjustment();
-
-    void queueResize();
 
 public:
     // ZoomListener interface
@@ -138,10 +117,6 @@ public:
     // static void onRealized(GtkWidget* widget, XournalView* view);
 
 private:
-    void fireZoomChanged();
-
-    void addLoadPageToQue(PageRef page, int priority);
-
     Rectangle<double>* getVisibleRect(size_t page);
 
     static gboolean clearMemoryTimer(XournalView* widget);

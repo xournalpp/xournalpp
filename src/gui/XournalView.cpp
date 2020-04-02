@@ -453,10 +453,6 @@ auto XournalView::getHandRecognition() -> HandRecognition* { return handRecognit
 
 auto XournalView::getWidget() -> XournalWidget* { return this->widget.get(); }
 
-void XournalView::zoomIn() { control->getZoomControl()->zoomOneStep(ZOOM_IN); }
-
-void XournalView::zoomOut() { control->getZoomControl()->zoomOneStep(ZOOM_OUT); }
-
 void XournalView::ensureRectIsVisible(int x, int y, int width, int height) {
     this->widget->getLayout()->ensureRectIsVisible(x, y, width, height);
 }
@@ -630,18 +626,6 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
 
 void XournalView::layoutPages() { this->widget->getLayout()->recalculate(); }
 
-auto XournalView::getDisplayHeight() const -> int {
-    GtkAllocation allocation = {0};
-    gtk_widget_get_allocation(this->widget->getGtkWidget(), &allocation);
-    return allocation.height;
-}
-
-auto XournalView::getDisplayWidth() const -> int {
-    GtkAllocation allocation = {0};
-    gtk_widget_get_allocation(this->widget->getGtkWidget(), &allocation);
-    return allocation.width;
-}
-
 auto XournalView::isPageVisible(size_t page, int* visibleHeight) -> bool {
     Rectangle<double>* rect = getVisibleRect(page);
     if (rect) {
@@ -734,14 +718,6 @@ auto XournalView::actionDelete() -> bool {
 
 auto XournalView::getDocument() -> Document* { return control->getDocument(); }
 
-auto XournalView::getViewPages() const -> std::vector<XojPageView*> const& { return viewPages; }
-
 auto XournalView::getCursor() -> XournalppCursor* { return control->getCursor(); }
 
 auto XournalView::getSelection() -> EditSelection* { return this->widget->selection; }
-
-auto XournalView::getHorizontalAdjustment() -> GtkAdjustment* { return this->horizontal; }
-
-auto XournalView::getVerticalAdjustment() -> GtkAdjustment* { return this->vertical; }
-
-void XournalView::queueResize() { gtk_widget_queue_resize(this->widget->getGtkWidget()); }
