@@ -165,6 +165,14 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool {
      */
     gdouble eventX = event->relativeX;
     gdouble eventY = event->relativeY;
+
+    GtkXournal* xournal = this->inputContext->getXournal();
+
+    if (auto* laser = this->inputContext->getView()->getPresentationLaser()) {
+        laser->target.x = eventX;
+        laser->target.y = eventY;
+    }
+
     GtkAdjustment* adjHorizontal = this->inputContext->getScrollHandling()->getHorizontal();
     GtkAdjustment* adjVertical = this->inputContext->getScrollHandling()->getVertical();
     double h = gtk_adjustment_get_value(adjHorizontal);
@@ -182,7 +190,6 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool {
     }
 
 
-    GtkXournal* xournal = this->inputContext->getXournal();
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
 
     this->changeTool(event);

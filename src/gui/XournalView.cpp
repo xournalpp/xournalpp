@@ -35,6 +35,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
     } else {
         this->widget = gtk_xournal_new_deprecated(this, scrollHandling);
     }
+    this->presentationLaser = std::make_unique<PresentationLaser>(this->widget);
     // we need to refer widget here, because we unref it somewhere twice!?
     g_object_ref(this->widget);
 
@@ -768,3 +769,5 @@ auto XournalView::getSelection() -> EditSelection* {
 
     return GTK_XOURNAL(this->widget)->selection;
 }
+
+PresentationLaser* XournalView::getPresentationLaser() { return this->presentationLaser.get(); }
