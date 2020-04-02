@@ -103,7 +103,7 @@ auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool {
         this->drawShape(malleablePoint, pos);
 
 
-        rect.add(stroke->boundingRect());
+        rect.unite(stroke->boundingRect());
 
         double w = stroke->getWidth();
         redrawable->repaintRect(rect.x - w, rect.y - w, rect.width + 2 * w, rect.height + 2 * w);
@@ -137,7 +137,7 @@ auto BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> boo
 
     drawShape(currentPoint, pos);
 
-    rect.add(stroke->boundingRect());
+    rect.unite(stroke->boundingRect());
     double w = stroke->getWidth();
 
     redrawable->repaintRect(rect.x - w, rect.y - w, rect.width + 2 * w, rect.height + 2 * w);

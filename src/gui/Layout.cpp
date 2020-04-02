@@ -80,12 +80,11 @@ void Layout::updateVisibility() {
                     && !(visRect.y > y2 || visRect.y + visRect.height < y1)) {
                     // now use exact check of page itself:
                     // visrect not outside current page dimensions:
-                    Rectangle pageRect = pageView->getRect();
-                    if (pageRect.intersects(visRect)) {
+                    auto const& pageRect = pageView->getRect();
+                    if (auto intersection = pageRect.intersects(visRect); intersection) {
                         pageView->setIsVisible(true);
-
                         // Set the selected page
-                        double percent = pageRect.intersect(visRect).area() / pageRect.area();
+                        double percent = intersection->area() / pageRect.area();
 
                         if (percent > mostPagePercent) {
                             mostPageNr = *optionalPage;
