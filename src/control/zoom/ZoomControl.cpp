@@ -34,7 +34,7 @@ void ZoomControl::zoomOneStep(bool zoomIn, double x, double y) {
     } else {
         newZoom = this->zoom - this->zoomStep;
     }
-    this->zoomSequenceChange(newZoom, false);
+    zoomSequenceChange(newZoom, false);
 
     endZoomSequence();
 }
@@ -44,14 +44,10 @@ void ZoomControl::zoomScroll(bool zoomIn, double x, double y) {
         return;
     }
 
+    startZoomSequence(x, y);
+
     if (this->zoomFitMode) {
         this->setZoomFitMode(false);
-    }
-
-    if (this->zoomSequenceStart == -1 || scrollCursorPositionX != x || scrollCursorPositionY != y) {
-        scrollCursorPositionX = x;
-        scrollCursorPositionY = y;
-        startZoomSequence(x, y);
     }
 
     double newZoom = NAN;
@@ -60,7 +56,9 @@ void ZoomControl::zoomScroll(bool zoomIn, double x, double y) {
     } else {
         newZoom = this->zoom - this->zoomStepScroll;
     }
-    this->zoomSequenceChange(newZoom, false);
+    zoomSequenceChange(newZoom, false);
+
+    endZoomSequence();
 }
 
 /**
@@ -71,19 +69,26 @@ void ZoomControl::zoomScroll(bool zoomIn, double x, double y) {
  */
 void ZoomControl::startZoomSequence(double centerX, double centerY) {
     Rectangle rect = getVisibleRect();
-    this->zoomWidgetPosX = rect.width / 2; //width not position
-    this->zoomWidgetPosY = rect.height / 2;
-    if (centerX == -1 || centerY == -1) {
-        this->scrollPositionX = (rect.x + this->zoomWidgetPosX) / this->zoom;
-        this->scrollPositionY = (rect.y + this->zoomWidgetPosY) / this->zoom;
+    double x;
+    double y;
+
+    if (centerX == -1) {
+        this->zoomWidgetPosX = rect.width / 2; // distance from left edge to cursor
+        x = rect.x;
     } else {
-        this->scrollPositionX = (centerX) / this->zoom;
-        this->scrollPositionY = (centerY) / this->zoom;
+        this->zoomWidgetPosX = centerX - rect.x; // distance from left edge to cursor
+        x = centerX - this->zoomWidgetPosX;
     }
 
-    this->scrollPositionX = (rect.x + this->zoomWidgetPosX) / this->zoom;
-    this->scrollPositionY = (rect.y + this->zoomWidgetPosY) / this->zoom;
+    if (centerY == -1) {
+        this->zoomWidgetPosY = rect.height / 2; // distance from top edge to cursor
+        y = rect.y;
+    } else {
+        this->zoomWidgetPosY = centerY - rect.y; // distance from top edge to cursor
+        y = centerY - this->zoomWidgetPosY;
+    }
 
+    setScrollPositionAfterZoom(x, y);
     this->zoomSequenceStart = this->zoom;
 }
 
@@ -350,16 +355,11 @@ auto ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScr
     }
 
     if (state & GDK_CONTROL_MASK) {
-        GtkWidget* topLevel = gtk_widget_get_toplevel(widget);
-        int wx = 0;
-        int wy = 0;
-        gtk_widget_translate_coordinates(widget, topLevel, 0, 0, &wx, &wy);
-
         if (event->direction == GDK_SCROLL_UP || (event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0)) {
-            zoom->zoomScroll(ZOOM_IN, event->x + wx, event->y + wy);
+            zoom->zoomScroll(ZOOM_IN, event->x, event->y);
         } else if (event->direction == GDK_SCROLL_DOWN ||
                    (event->direction == GDK_SCROLL_SMOOTH && event->delta_y > 0)) {
-            zoom->zoomScroll(ZOOM_OUT, event->x + wx, event->y + wy);
+            zoom->zoomScroll(ZOOM_OUT, event->x, event->y);
         }
         return true;
     }
