@@ -71,12 +71,14 @@ void ZoomControl::zoomScroll(bool zoomIn, double x, double y) {
  */
 void ZoomControl::startZoomSequence(double centerX, double centerY) {
     Rectangle rect = getVisibleRect();
+    this->zoomWidgetPosX = rect.width / 2; //width not position
+    this->zoomWidgetPosY = rect.height / 2;
     if (centerX == -1 || centerY == -1) {
-        this->zoomWidgetPosX = rect.width / 2;
-        this->zoomWidgetPosY = rect.height / 2;
+        this->scrollPositionX = (rect.x + this->zoomWidgetPosX) / this->zoom;
+        this->scrollPositionY = (rect.y + this->zoomWidgetPosY) / this->zoom;
     } else {
-        this->zoomWidgetPosX = centerX;
-        this->zoomWidgetPosY = centerY;
+        this->scrollPositionX = (centerX) / this->zoom;
+        this->scrollPositionY = (centerY) / this->zoom;
     }
 
     this->scrollPositionX = (rect.x + this->zoomWidgetPosX) / this->zoom;
