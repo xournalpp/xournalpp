@@ -73,18 +73,18 @@ void ZoomControl::startZoomSequence(double centerX, double centerY) {
     double y;
 
     if (centerX == -1) {
-        this->zoomWidgetOffsetX = rect.width / 2; // distance from left edge to cursor
+        this->zoomWidgetOffsetX = rect.width / 2;  // distance from left edge to cursor
         x = rect.x;
     } else {
-        this->zoomWidgetOffsetX = centerX - rect.x; // distance from left edge to cursor
+        this->zoomWidgetOffsetX = centerX - rect.x;  // distance from left edge to cursor
         x = centerX - this->zoomWidgetOffsetX;
     }
 
     if (centerY == -1) {
-        this->zoomWidgetOffsetY = rect.height / 2; // distance from top edge to cursor
+        this->zoomWidgetOffsetY = rect.height / 2;  // distance from top edge to cursor
         y = rect.y;
     } else {
-        this->zoomWidgetOffsetY = centerY - rect.y; // distance from top edge to cursor
+        this->zoomWidgetOffsetY = centerY - rect.y;  // distance from top edge to cursor
         y = centerY - this->zoomWidgetOffsetY;
     }
 
