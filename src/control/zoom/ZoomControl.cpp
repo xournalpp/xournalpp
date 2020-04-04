@@ -73,19 +73,19 @@ void ZoomControl::startZoomSequence(double centerX, double centerY) {
     double y;
 
     if (centerX == -1) {
-        this->zoomWidgetPosX = rect.width / 2; // distance from left edge to cursor
+        this->zoomWidgetOffsetX = rect.width / 2; // distance from left edge to cursor
         x = rect.x;
     } else {
-        this->zoomWidgetPosX = centerX - rect.x; // distance from left edge to cursor
-        x = centerX - this->zoomWidgetPosX;
+        this->zoomWidgetOffsetX = centerX - rect.x; // distance from left edge to cursor
+        x = centerX - this->zoomWidgetOffsetX;
     }
 
     if (centerY == -1) {
-        this->zoomWidgetPosY = rect.height / 2; // distance from top edge to cursor
+        this->zoomWidgetOffsetY = rect.height / 2; // distance from top edge to cursor
         y = rect.y;
     } else {
-        this->zoomWidgetPosY = centerY - rect.y; // distance from top edge to cursor
-        y = centerY - this->zoomWidgetPosY;
+        this->zoomWidgetOffsetY = centerY - rect.y; // distance from top edge to cursor
+        y = centerY - this->zoomWidgetOffsetY;
     }
 
     setScrollPositionAfterZoom(x, y);
@@ -126,8 +126,10 @@ auto ZoomControl::getVisibleRect() -> Rectangle<double> {
 }
 
 void ZoomControl::setScrollPositionAfterZoom(double x, double y) {
-    this->scrollPositionX = (x + this->zoomWidgetPosX) / this->zoom;
-    this->scrollPositionY = (y + this->zoomWidgetPosY) / this->zoom;
+    // this logic must be done before zooming and undone after zooming since
+    // the zoom variable will update
+    this->scrollPositionX = (x + this->zoomWidgetOffsetX) / this->zoom;
+    this->scrollPositionY = (y + this->zoomWidgetOffsetY) / this->zoom;
 }
 
 /**
@@ -138,8 +140,10 @@ auto ZoomControl::getScrollPositionAfterZoom() const -> std::tuple<double, doubl
         return std::make_tuple(-1, -1);
     }
 
-    double x = (this->scrollPositionX * this->zoom) - this->zoomWidgetPosX;
-    double y = (this->scrollPositionY * this->zoom) - this->zoomWidgetPosY;
+    // this logic must be done before zooming and undone after zooming since
+    // the zoom variable will update
+    double x = (this->scrollPositionX * this->zoom) - this->zoomWidgetOffsetX;
+    double y = (this->scrollPositionY * this->zoom) - this->zoomWidgetOffsetY;
     return std::make_tuple(x, y);
 }
 

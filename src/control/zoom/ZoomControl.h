@@ -230,12 +230,12 @@ private:
     /**
      * Zoom point on widget, will not be zoomed!
      */
-    double zoomWidgetPosX = 0;
+    double zoomWidgetOffsetX = 0;
 
     /**
      * Zoom point on widget, will not be zoomed!
      */
-    double zoomWidgetPosY = 0;
+    double zoomWidgetOffsetY = 0;
 
     /**
      * Scroll position to scale
