@@ -44,15 +44,54 @@ enum InputDeviceClass {
     INPUT_DEVICE_IGNORE
 };
 
-class InputEvent {
-public:
-    GdkEvent* sourceEvent = nullptr;
+struct GdkEventGuard {
+    static inline GdkEvent* safeRef(GdkEvent* source) { return gdk_event_copy(source); }
+    static inline GdkEvent* safeMove(GdkEvent*& source) {
+        auto ret = source;
+        source = nullptr;
+        return ret;
+    }
+    static inline void safeDelete(GdkEvent* source) {
+        if (source != nullptr) {
+            gdk_event_free(source);
+        }
+    }
+
+    GdkEventGuard() = default;
+    [[maybe_unused]] explicit GdkEventGuard(GdkEvent* source): event(safeRef(source)) {}
+    GdkEventGuard(GdkEventGuard const& other): event(safeRef(other.event)) {}
+    GdkEventGuard(GdkEventGuard&& other): event(safeMove(other.event)) {}
+
+    GdkEventGuard& operator=(GdkEvent* source) {
+        safeDelete(event);
+        event = safeRef(source);
+        return *this;
+    }
+    GdkEventGuard& operator=(GdkEventGuard const& other) {
+        safeDelete(event);
+        event = safeRef(other.event);
+        return *this;
+    }
+    GdkEventGuard& operator=(GdkEventGuard&& other) {
+        safeDelete(event);
+        event = safeMove(other.event);
+        return *this;
+    }
+
+    operator GdkEvent*() { return event; }
+
+    ~GdkEventGuard() { safeDelete(event); }
+
+    GdkEvent* event{};
+};
+
+
+struct InputEvent final {
+    GdkEventGuard sourceEvent;
 
     InputEventType type = UNKNOWN;
-
     InputDeviceClass deviceClass = INPUT_DEVICE_IGNORE;
     gchar* deviceName = nullptr;
-
 
     gdouble absoluteX = 0;
     gdouble absoluteY = 0;
@@ -66,9 +105,7 @@ public:
     GdkEventSequence* sequence = nullptr;
     guint32 timestamp = 0;
 
-    ~InputEvent();
-
-    InputEvent* copy() const;
+    operator bool() { return sourceEvent.event; }
 };
 
 class InputEvents {
@@ -79,5 +116,5 @@ public:
     static InputDeviceClass translateDeviceType(GdkDevice* device, Settings* settings);
     static InputDeviceClass translateDeviceType(const string& name, GdkInputSource source, Settings* settings);
 
-    static InputEvent* translateEvent(GdkEvent* sourceEvent, Settings* settings);
+    static InputEvent translateEvent(GdkEvent* sourceEvent, Settings* settings);
 };
