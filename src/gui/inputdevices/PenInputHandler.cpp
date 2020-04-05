@@ -26,25 +26,9 @@ void PenInputHandler::updateLastEvent(InputEvent* event) {
     if (!event) {
         return;
     }
-
-    InputEvent* oldEvent = this->lastEvent;
-    this->lastEvent = event->copy();
-
-    // Update the refcount of the events for the GTK garbage collector
-    if (oldEvent != nullptr) {
-        delete oldEvent;
-        oldEvent = nullptr;
-    }
-
+    this->lastEvent = *event;
     if (getPageAtCurrentPosition(event)) {
-        InputEvent* oldHitEvent = this->lastHitEvent;
-        this->lastHitEvent = event->copy();
-
-        // Update the refcount of the events for the GTK garbage collector
-        if (oldHitEvent != nullptr) {
-            delete oldHitEvent;
-            oldHitEvent = nullptr;
-        }
+        this->lastHitEvent = *event;
     }
 }
 
@@ -210,8 +194,8 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool {
     }
 
     // Check if page was left / entered
-    XojPageView* lastEventPage = getPageAtCurrentPosition(this->lastEvent);
-    XojPageView* lastHitEventPage = getPageAtCurrentPosition(this->lastHitEvent);
+    XojPageView* lastEventPage = getPageAtCurrentPosition(&this->lastEvent);
+    XojPageView* lastHitEventPage = getPageAtCurrentPosition(&this->lastHitEvent);
     XojPageView* currentPage = getPageAtCurrentPosition(event);
 
     if (!toolHandler->isSinglePageTool()) {
@@ -224,7 +208,7 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool {
 #ifdef DEBUG_INPUT
             g_message("PenInputHandler: Start new input on switching page...");
 #endif
-            this->actionEnd(this->lastHitEvent);
+            this->actionEnd(&this->lastHitEvent);
             this->updateLastEvent(event);
 
             bool result = this->actionStart(event);
@@ -302,7 +286,7 @@ auto PenInputHandler::actionEnd(InputEvent* event) -> bool {
             if (!this->lastHitEvent) {
                 return false;
             }
-            currentPage = getPageAtCurrentPosition(this->lastHitEvent);
+            currentPage = getPageAtCurrentPosition(&this->lastHitEvent);
         }
 
         if (currentPage) {
@@ -324,8 +308,6 @@ auto PenInputHandler::actionEnd(InputEvent* event) -> bool {
     }
 
     this->inputRunning = false;
-    delete this->lastHitEvent;
-    this->lastHitEvent = nullptr;
 
     return false;
 }
@@ -362,7 +344,7 @@ void PenInputHandler::actionLeaveWindow(InputEvent* event) {
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
     if (this->inputRunning && !toolHandler->isSinglePageTool()) {
         if (!this->inputContext->getSettings()->getInputSystemDrawOutsideWindowEnabled()) {
-            this->actionEnd(this->lastHitEvent);
+            this->actionEnd(&this->lastHitEvent);
         }
     } else if (this->deviceClassPressed) {
         // scroll if we have an active selection

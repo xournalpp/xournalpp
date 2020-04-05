@@ -37,12 +37,12 @@ protected:
     /**
      * Reference to the last event
      */
-    InputEvent* lastEvent = nullptr;
+    InputEvent lastEvent{};
 
     /**
      * Reference to the last event actually hitting a page
      */
-    InputEvent* lastHitEvent = nullptr;
+    InputEvent lastHitEvent{};
 
     /**
      * Start position to reference scroll offset
