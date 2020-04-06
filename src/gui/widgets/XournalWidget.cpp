@@ -283,6 +283,7 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
     cairo_rectangle(cr, x1, y1, x2 - x1, y2 - y1);
     cairo_fill(cr);
 
+    cairo_save(cr);
     xournal->scrollHandling->translate(cr, x1, x2, y1, y2);
 
     Rectangle clippingRect(x1 - 10, y1 - 10, x2 - x1 + 20, y2 - y1 + 20);
@@ -313,6 +314,11 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
         cairo_translate(cr, red->getX(), red->getY());
 
         xournal->selection->paint(cr, zoom);
+    }
+    cairo_restore(cr);
+
+    if (auto* laser = xournal->view->getPresentationLaser()) {
+        laser->draw(cr);
     }
 
     return true;

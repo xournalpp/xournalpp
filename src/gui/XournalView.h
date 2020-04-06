@@ -14,6 +14,7 @@
 #include <gtk/gtk.h>
 
 #include "control/zoom/ZoomListener.h"
+#include "gui/PresentationLaser.h"
 #include "model/DocumentListener.h"
 #include "model/PageRef.h"
 #include "widgets/XournalWidget.h"
@@ -120,6 +121,8 @@ public:
      */
     ScrollHandling* getScrollHandling();
 
+    PresentationLaser* getPresentationLaser();
+
 public:
     // ZoomListener interface
     void zoomChanged();
@@ -182,6 +185,11 @@ private:
      * Helper class for Touch specific fixes
      */
     HandRecognition* handRecognition = nullptr;
+
+    /**
+     * Presentation laser
+     */
+    std::unique_ptr<PresentationLaser> presentationLaser;
 
     friend class Layout;
 };
