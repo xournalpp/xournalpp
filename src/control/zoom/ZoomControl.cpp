@@ -75,8 +75,8 @@ void ZoomControl::startZoomSequence(double centerX, double centerY) {
         this->zoomWidgetPosX = rect.width / 2;
         this->zoomWidgetPosY = rect.height / 2;
     } else {
-        this->zoomWidgetPosX = centerX;
-        this->zoomWidgetPosY = centerY;
+        this->zoomWidgetPosX = centerX - rect.x;
+        this->zoomWidgetPosY = centerY - rect.y;
     }
 
     this->scrollPositionX = (rect.x + this->zoomWidgetPosX) / this->zoom;
@@ -354,10 +354,10 @@ auto ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScr
         gtk_widget_translate_coordinates(widget, topLevel, 0, 0, &wx, &wy);
 
         if (event->direction == GDK_SCROLL_UP || (event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0)) {
-            zoom->zoomScroll(ZOOM_IN, event->x + wx, event->y + wy);
+            zoom->zoomScroll(ZOOM_IN, event->x, event->y);
         } else if (event->direction == GDK_SCROLL_DOWN ||
                    (event->direction == GDK_SCROLL_SMOOTH && event->delta_y > 0)) {
-            zoom->zoomScroll(ZOOM_OUT, event->x + wx, event->y + wy);
+            zoom->zoomScroll(ZOOM_OUT, event->x, event->y);
         }
         return true;
     }
