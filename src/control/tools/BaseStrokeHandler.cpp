@@ -30,7 +30,7 @@ void BaseStrokeHandler::snapToGrid(double& x, double& y) {
      * If x/y coordinates are under a certain tolerance,
      * fix the point to the grid intersection value
      */
-    double gridSize = 14.17;
+    double gridSize = 14.17 / 2.0;
 
     double t = xournal->getControl()->getSettings()->getSnapGridTolerance();
     double tolerance = (gridSize / 2) - (1 / t);

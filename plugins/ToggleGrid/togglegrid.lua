@@ -1,16 +1,18 @@
 
 -- Register all Toolbar actions and intialize all UI stuff
 function initUi()
-  app.registerUi({["menu"] = "Grid with snapping On", ["callback"] = "toggleGridOn"});
-  app.registerUi({["menu"] = "Grid with snapping Off", ["callback"] = "toggleGridOff"});
+  app.registerUi({["menu"] = "Toggle Grid Paper", ["callback"] = "toggleGridPaper"});
 end
 
-function toggleGridOn()
-  app.uiActionSelected("GROUP_GRID_SNAPPING", "ACTION_GRID_SNAPPING");
-  app.changeCurrentPageBackground("graph");
-end
+local toggleState = false
 
-function toggleGridOff()
-  app.uiActionSelected("GROUP_GRID_SNAPPING", "ACTION_NONE");
-  app.changeCurrentPageBackground("plain");
+function toggleGridPaper()
+  if toggleState == true then
+    app.uiActionSelected("GROUP_GRID_SNAPPING", "ACTION_GRID_SNAPPING");
+    app.changeCurrentPageBackground("graph");
+  else
+    app.uiActionSelected("GROUP_GRID_SNAPPING", "ACTION_NONE");
+    app.changeCurrentPageBackground("plain");
+  end
+  toggleState = not toggleState
 end
