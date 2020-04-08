@@ -100,37 +100,40 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     // separate events to appropriate handlers
     // handle tablet stylus
     if (event.deviceClass == INPUT_DEVICE_PEN || event.deviceClass == INPUT_DEVICE_ERASER) {
-        return this->stylusHandler->handle(&event);
+        return this->stylusHandler->handle(event);
     }
 
     if (event.deviceClass == INPUT_DEVICE_MOUSE_KEYBOARD_COMBO) {
-        return this->mouseHandler->handle(&event) || this->keyboardHandler->handle(&event);
+        return this->mouseHandler->handle(event) || this->keyboardHandler->handle(event);
     }
 
     // handle mouse devices
     if (event.deviceClass == INPUT_DEVICE_MOUSE) {
-        return this->mouseHandler->handle(&event);
+        return this->mouseHandler->handle(event);
     }
 
     // handle touchscreens
     if (event.deviceClass == INPUT_DEVICE_TOUCHSCREEN) {
         // trigger touch drawing depending on the setting
         if (this->touchWorkaroundEnabled) {
-            return this->touchDrawingHandler->handle(&event);
+            return this->touchDrawingHandler->handle(event);
         }
 
-        return this->touchHandler->handle(&event);
+        return this->touchHandler->handle(event);
     }
 
     // handle keyboard
     if (event.deviceClass == INPUT_DEVICE_KEYBOARD) {
-        return this->keyboardHandler->handle(&event);
+        return this->keyboardHandler->handle(event);
     }
 
     if (event.deviceClass == INPUT_DEVICE_IGNORE) {
         return true;
     }
-    g_warning("We received an event we do not have a handler for");
+
+#ifdef DEBUG_INPUT
+    gmessage("We received an event we do not have a handler for");
+#endif
     return false;
 }
 

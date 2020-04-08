@@ -22,31 +22,31 @@ PenInputHandler::PenInputHandler(InputContext* inputContext): AbstractInputHandl
 
 PenInputHandler::~PenInputHandler() = default;
 
-void PenInputHandler::updateLastEvent(InputEvent* event) {
+void PenInputHandler::updateLastEvent(InputEvent const& event) {
     if (!event) {
         return;
     }
-    this->lastEvent = *event;
+    this->lastEvent = event;
     if (getPageAtCurrentPosition(event)) {
-        this->lastHitEvent = *event;
+        this->lastHitEvent = event;
     }
 }
 
-void PenInputHandler::handleScrollEvent(InputEvent* event) {
+void PenInputHandler::handleScrollEvent(InputEvent const& event) {
     // use root coordinates as reference point because
     // scrolling changes window relative coordinates
     // see github Gnome/evince@1adce5486b10e763bed869
 
     // GTK handles event compression/filtering differently between versions - this may be needed on certain hardware/GTK
     // combinations.
-    if (std::abs((this->scrollStartX - event->absoluteX)) < 0.1 &&
-        std::abs((this->scrollStartY - event->absoluteY)) < 0.1) {
+    if (std::abs((this->scrollStartX - event.absoluteX)) < 0.1 &&
+        std::abs((this->scrollStartY - event.absoluteY)) < 0.1) {
         return;
     }
 
     if (this->scrollOffsetX == 0 && this->scrollOffsetY == 0) {
-        this->scrollOffsetX = this->scrollStartX - event->absoluteX;
-        this->scrollOffsetY = this->scrollStartY - event->absoluteY;
+        this->scrollOffsetX = this->scrollStartX - event.absoluteX;
+        this->scrollOffsetY = this->scrollStartY - event.absoluteY;
 
         Util::execInUiThread([&]() {
             this->inputContext->getXournal()->layout->scrollRelative(this->scrollOffsetX, this->scrollOffsetY);
@@ -57,12 +57,12 @@ void PenInputHandler::handleScrollEvent(InputEvent* event) {
         });
 
         // Update the reference for the scroll-offset
-        this->scrollStartX = event->absoluteX;
-        this->scrollStartY = event->absoluteY;
+        this->scrollStartX = event.absoluteX;
+        this->scrollStartY = event.absoluteY;
     }
 }
 
-auto PenInputHandler::actionStart(InputEvent* event) -> bool {
+auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     this->inputContext->focusWidget();
 
     XojPageView* currentPage = this->getPageAtCurrentPosition(event);
@@ -93,8 +93,8 @@ auto PenInputHandler::actionStart(InputEvent* event) -> bool {
 
     // Save the starting offset when hand-tool is selected to get a reference for the scroll-offset
     if (toolType == TOOL_HAND) {
-        this->scrollStartX = event->absoluteX;
-        this->scrollStartY = event->absoluteY;
+        this->scrollStartX = event.absoluteX;
+        this->scrollStartY = event.absoluteY;
     }
 
     // Set the reference page for selections and other single-page elements so motion events are passed to the right
@@ -142,13 +142,13 @@ auto PenInputHandler::actionStart(InputEvent* event) -> bool {
     return false;
 }
 
-auto PenInputHandler::actionMotion(InputEvent* event) -> bool {
+auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
     /*
      * Workaround for misbehaving devices where Enter events are not published every time
      * This is required to disable outside scrolling again
      */
-    gdouble eventX = event->relativeX;
-    gdouble eventY = event->relativeY;
+    gdouble eventX = event.relativeX;
+    gdouble eventY = event.relativeY;
     GtkAdjustment* adjHorizontal = this->inputContext->getScrollHandling()->getHorizontal();
     GtkAdjustment* adjVertical = this->inputContext->getScrollHandling()->getVertical();
     double h = gtk_adjustment_get_value(adjHorizontal);
@@ -194,8 +194,8 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool {
     }
 
     // Check if page was left / entered
-    XojPageView* lastEventPage = getPageAtCurrentPosition(&this->lastEvent);
-    XojPageView* lastHitEventPage = getPageAtCurrentPosition(&this->lastHitEvent);
+    XojPageView* lastEventPage = getPageAtCurrentPosition(this->lastEvent);
+    XojPageView* lastHitEventPage = getPageAtCurrentPosition(this->lastHitEvent);
     XojPageView* currentPage = getPageAtCurrentPosition(event);
 
     if (!toolHandler->isSinglePageTool()) {
@@ -208,7 +208,7 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool {
 #ifdef DEBUG_INPUT
             g_message("PenInputHandler: Start new input on switching page...");
 #endif
-            this->actionEnd(&this->lastHitEvent);
+            this->actionEnd(this->lastHitEvent);
             this->updateLastEvent(event);
 
             bool result = this->actionStart(event);
@@ -258,7 +258,7 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool {
     return false;
 }
 
-auto PenInputHandler::actionEnd(InputEvent* event) -> bool {
+auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
     GtkXournal* xournal = inputContext->getXournal();
     XournalppCursor* cursor = xournal->view->getCursor();
     ToolHandler* toolHandler = inputContext->getToolHandler();
@@ -286,7 +286,7 @@ auto PenInputHandler::actionEnd(InputEvent* event) -> bool {
             if (!this->lastHitEvent) {
                 return false;
             }
-            currentPage = getPageAtCurrentPosition(&this->lastHitEvent);
+            currentPage = getPageAtCurrentPosition(this->lastHitEvent);
         }
 
         if (currentPage) {
@@ -312,7 +312,7 @@ auto PenInputHandler::actionEnd(InputEvent* event) -> bool {
     return false;
 }
 
-void PenInputHandler::actionPerform(InputEvent* event) {
+void PenInputHandler::actionPerform(InputEvent const& event) {
 #ifdef DEBUG_INPUT
     g_message("Discrete input action; modifier1=%s, modifier2=%2", this->modifier2 ? "true" : "false",
               this->modifier3 ? "true" : "false");
@@ -324,14 +324,14 @@ void PenInputHandler::actionPerform(InputEvent* event) {
     }
 
     PositionInputData pos = this->getInputDataRelativeToCurrentPage(currentPage, event);
-    if (event->type == BUTTON_2_PRESS_EVENT) {
+    if (event.type == BUTTON_2_PRESS_EVENT) {
         currentPage->onButtonDoublePressEvent(pos);
-    } else if (event->type == BUTTON_3_PRESS_EVENT) {
+    } else if (event.type == BUTTON_3_PRESS_EVENT) {
         currentPage->onButtonTriplePressEvent(pos);
     }
 }
 
-void PenInputHandler::actionLeaveWindow(InputEvent* event) {
+void PenInputHandler::actionLeaveWindow(InputEvent const& event) {
     if (!this->penInWidget) {
         return;
     }
@@ -344,12 +344,12 @@ void PenInputHandler::actionLeaveWindow(InputEvent* event) {
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
     if (this->inputRunning && !toolHandler->isSinglePageTool()) {
         if (!this->inputContext->getSettings()->getInputSystemDrawOutsideWindowEnabled()) {
-            this->actionEnd(&this->lastHitEvent);
+            this->actionEnd(this->lastHitEvent);
         }
     } else if (this->deviceClassPressed) {
         // scroll if we have an active selection
-        gdouble eventX = event->relativeX;
-        gdouble eventY = event->relativeY;
+        gdouble eventX = event.relativeX;
+        gdouble eventY = event.relativeY;
 
         GtkAdjustment* adjHorizontal = this->inputContext->getScrollHandling()->getHorizontal();
         GtkAdjustment* adjVertical = this->inputContext->getScrollHandling()->getVertical();
@@ -399,7 +399,7 @@ void PenInputHandler::actionLeaveWindow(InputEvent* event) {
     }
 }
 
-void PenInputHandler::actionEnterWindow(InputEvent* event) {
+void PenInputHandler::actionEnterWindow(InputEvent const& event) {
     this->penInWidget = true;
 
     if (!this->inputContext->getSettings()->getInputSystemDrawOutsideWindowEnabled()) {

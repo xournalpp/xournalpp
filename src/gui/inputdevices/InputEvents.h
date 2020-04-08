@@ -78,7 +78,7 @@ struct GdkEventGuard {
         return *this;
     }
 
-    operator GdkEvent*() { return event; }
+    operator GdkEvent*() const { return event; }
 
     ~GdkEventGuard() { safeDelete(event); }
 
@@ -87,25 +87,25 @@ struct GdkEventGuard {
 
 
 struct InputEvent final {
+    /*explicit(false)*/ explicit operator bool() const { return sourceEvent.event; }
+
     GdkEventGuard sourceEvent;
 
-    InputEventType type = UNKNOWN;
-    InputDeviceClass deviceClass = INPUT_DEVICE_IGNORE;
-    gchar* deviceName = nullptr;
+    InputEventType type{UNKNOWN};
+    InputDeviceClass deviceClass{INPUT_DEVICE_IGNORE};
+    gchar* deviceName{};
 
-    gdouble absoluteX = 0;
-    gdouble absoluteY = 0;
-    gdouble relativeX = 0;
-    gdouble relativeY = 0;
+    gdouble absoluteX{0};
+    gdouble absoluteY{0};
+    gdouble relativeX{0};
+    gdouble relativeY{0};
 
-    guint button = 0;
-    GdkModifierType state = (GdkModifierType)0;
-    gdouble pressure = Point::NO_PRESSURE;
+    guint button{0};
+    GdkModifierType state{};
+    gdouble pressure{Point::NO_PRESSURE};
 
-    GdkEventSequence* sequence = nullptr;
-    guint32 timestamp = 0;
-
-    operator bool() { return sourceEvent.event; }
+    GdkEventSequence* sequence{};
+    guint32 timestamp{0};
 };
 
 class InputEvents {

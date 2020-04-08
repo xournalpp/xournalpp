@@ -27,8 +27,8 @@ public:
     explicit TouchDrawingInputHandler(InputContext* inputContext);
     ~TouchDrawingInputHandler() override;
 
-    bool handleImpl(InputEvent* event) override;
+    bool handleImpl(InputEvent const& event) override;
 
 protected:
-    bool changeTool(InputEvent* event) override;
+    bool changeTool(InputEvent const& event) override;
 };

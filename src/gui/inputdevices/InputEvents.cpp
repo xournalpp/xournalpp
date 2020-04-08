@@ -87,12 +87,12 @@ auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> I
     targetEvent.deviceName = const_cast<gchar*>(gdk_device_get_name(device));
 
     // Copy both coordinates of the event
-    gdk_event_get_root_coords(sourceEvent, &(targetEvent.absoluteX), &(targetEvent.absoluteY));
-    gdk_event_get_coords(sourceEvent, &(targetEvent.relativeX), &(targetEvent.relativeY));
+    gdk_event_get_root_coords(sourceEvent, &targetEvent.absoluteX, &targetEvent.absoluteY);
+    gdk_event_get_coords(sourceEvent, &targetEvent.relativeX, &targetEvent.relativeY);
 
     // Copy the event button if there is any
     if (targetEvent.type == BUTTON_PRESS_EVENT || targetEvent.type == BUTTON_RELEASE_EVENT) {
-        gdk_event_get_button(sourceEvent, &(targetEvent.button));
+        gdk_event_get_button(sourceEvent, &targetEvent.button);
     }
     if (sourceEventType == GDK_TOUCH_BEGIN || sourceEventType == GDK_TOUCH_END || sourceEventType == GDK_TOUCH_CANCEL) {
         // As we only handle single finger events we can set the button statically to 1

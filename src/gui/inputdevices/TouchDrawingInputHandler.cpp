@@ -13,12 +13,12 @@ TouchDrawingInputHandler::TouchDrawingInputHandler(InputContext* inputContext): 
 
 TouchDrawingInputHandler::~TouchDrawingInputHandler() = default;
 
-auto TouchDrawingInputHandler::handleImpl(InputEvent* event) -> bool {
+auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
     // Only handle events when there is no active gesture
     GtkXournal* xournal = inputContext->getXournal();
 
     // Disallow multitouch
-    if (this->currentSequence && this->currentSequence != event->sequence) {
+    if (this->currentSequence && this->currentSequence != event.sequence) {
         return false;
     }
 
@@ -26,8 +26,8 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent* event) -> bool {
      * Trigger start action
      */
     // Trigger start of action when pen/mouse is pressed
-    if (event->type == BUTTON_PRESS_EVENT && this->currentSequence == nullptr) {
-        this->currentSequence = event->sequence;
+    if (event.type == BUTTON_PRESS_EVENT && this->currentSequence == nullptr) {
+        this->currentSequence = event.sequence;
         this->deviceClassPressed = true;
         this->actionStart(event);
         return true;
@@ -37,22 +37,22 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent* event) -> bool {
      * Trigger motion actions
      */
     // Trigger motion action when finger is pressed and moved
-    if (this->deviceClassPressed && event->type == MOTION_EVENT) {
+    if (this->deviceClassPressed && event.type == MOTION_EVENT) {
         this->actionMotion(event);
         XournalppCursor* cursor = xournal->view->getCursor();
         cursor->updateCursor();
     }
 
     // Notify if finger enters/leaves widget
-    if (event->type == ENTER_EVENT) {
+    if (event.type == ENTER_EVENT) {
         this->actionEnterWindow(event);
     }
-    if (event->type == LEAVE_EVENT) {
+    if (event.type == LEAVE_EVENT) {
         this->actionLeaveWindow(event);
     }
 
     // Trigger end of action if mouse button is released
-    if (event->type == BUTTON_RELEASE_EVENT) {
+    if (event.type == BUTTON_RELEASE_EVENT) {
         this->currentSequence = nullptr;
         this->actionEnd(event);
         this->deviceClassPressed = false;
@@ -60,7 +60,7 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent* event) -> bool {
     }
 
     // If we loose our Grab on the device end the current action
-    if (event->type == GRAB_BROKEN_EVENT && this->deviceClassPressed) {
+    if (event.type == GRAB_BROKEN_EVENT && this->deviceClassPressed) {
         this->currentSequence = nullptr;
         this->actionEnd(event);
         this->deviceClassPressed = false;
@@ -70,13 +70,13 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent* event) -> bool {
     return false;
 }
 
-auto TouchDrawingInputHandler::changeTool(InputEvent* event) -> bool {
+auto TouchDrawingInputHandler::changeTool(InputEvent const& event) -> bool {
     Settings* settings = this->inputContext->getSettings();
     ButtonConfig* cfgTouch = settings->getTouchButtonConfig();
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
 
     ButtonConfig* cfg = nullptr;
-    if (cfgTouch->device == event->deviceName) {
+    if (cfgTouch->device == event.deviceName) {
         cfg = cfgTouch;
 
         // If an action is defined we do it, even if it's a drawing action...
