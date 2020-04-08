@@ -24,9 +24,9 @@ public:
     explicit StylusInputHandler(InputContext* inputContext);
     ~StylusInputHandler();
 
-    bool handleImpl(InputEvent* event) override;
-    bool changeTool(InputEvent* event) override;
+    bool handleImpl(InputEvent const& event) override;
+    bool changeTool(InputEvent const& event) override;
 
 private:
-    void setPressedState(InputEvent*);
+    void setPressedState(InputEvent const& event);
 };

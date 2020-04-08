@@ -19,13 +19,13 @@
 
 class MouseInputHandler: public PenInputHandler {
 private:
-    void setPressedState(InputEvent*);
+    void setPressedState(InputEvent const& event);
 
 public:
     explicit MouseInputHandler(InputContext* inputContext);
     ~MouseInputHandler() override;
 
-    bool handleImpl(InputEvent* event) override;
-    bool changeTool(InputEvent* event) override;
+    bool handleImpl(InputEvent const& event) override;
+    bool changeTool(InputEvent const& event) override;
     void onBlock() override;
 };

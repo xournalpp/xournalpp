@@ -13,7 +13,7 @@ MouseInputHandler::MouseInputHandler(InputContext* inputContext): PenInputHandle
 
 MouseInputHandler::~MouseInputHandler() = default;
 
-auto MouseInputHandler::handleImpl(InputEvent* event) -> bool {
+auto MouseInputHandler::handleImpl(InputEvent const& event) -> bool {
     // Only handle events when there is no active gesture
     GtkXournal* xournal = inputContext->getXournal();
 
@@ -24,12 +24,12 @@ auto MouseInputHandler::handleImpl(InputEvent* event) -> bool {
      * Trigger start action
      */
     // Trigger start of action when pen/mouse is pressed
-    if (event->type == BUTTON_PRESS_EVENT) {
+    if (event.type == BUTTON_PRESS_EVENT) {
         this->actionStart(event);
         return true;
     }
 
-    if (event->type == BUTTON_2_PRESS_EVENT || event->type == BUTTON_3_PRESS_EVENT) {
+    if (event.type == BUTTON_2_PRESS_EVENT || event.type == BUTTON_3_PRESS_EVENT) {
         this->actionPerform(event);
         return true;
     }
@@ -38,7 +38,7 @@ auto MouseInputHandler::handleImpl(InputEvent* event) -> bool {
      * Trigger motion actions
      */
     // Trigger motion action when pen/mouse is pressed and moved
-    if (event->type == MOTION_EVENT)  // mouse or pen moved
+    if (event.type == MOTION_EVENT)  // mouse or pen moved
     {
         this->actionMotion(event);
         XournalppCursor* cursor = xournal->view->getCursor();
@@ -47,23 +47,23 @@ auto MouseInputHandler::handleImpl(InputEvent* event) -> bool {
     }
 
     // Notify if mouse enters/leaves widget
-    if (event->type == ENTER_EVENT) {
+    if (event.type == ENTER_EVENT) {
         this->actionEnterWindow(event);
     }
-    if (event->type == LEAVE_EVENT) {
+    if (event.type == LEAVE_EVENT) {
         // this->inputContext->unblockDevice(InputContext::TOUCHSCREEN);
         // this->inputContext->getView()->getHandRecognition()->unblock();
         this->actionLeaveWindow(event);
     }
 
     // Trigger end of action if mouse button is released
-    if (event->type == BUTTON_RELEASE_EVENT) {
+    if (event.type == BUTTON_RELEASE_EVENT) {
         this->actionEnd(event);
         return true;
     }
 
     // If we loose our Grab on the device end the current action
-    if (event->type == GRAB_BROKEN_EVENT && this->deviceClassPressed) {
+    if (event.type == GRAB_BROKEN_EVENT && this->deviceClassPressed) {
         // TODO(fabian): We may need to update pressed state manually here
         this->actionEnd(event);
         return true;
@@ -72,16 +72,16 @@ auto MouseInputHandler::handleImpl(InputEvent* event) -> bool {
     return false;
 }
 
-void MouseInputHandler::setPressedState(InputEvent* event) {
+void MouseInputHandler::setPressedState(InputEvent const& event) {
     XojPageView* currentPage = getPageAtCurrentPosition(event);
 
     this->inputContext->getXournal()->view->getCursor()->setInsidePage(currentPage != nullptr);
 
-    if (event->type == BUTTON_PRESS_EVENT)  // mouse button pressed or pen touching surface
+    if (event.type == BUTTON_PRESS_EVENT)  // mouse button pressed or pen touching surface
     {
         this->deviceClassPressed = true;
 
-        switch (event->button) {
+        switch (event.button) {
             case 2:
                 this->modifier2 = true;
                 break;
@@ -91,11 +91,11 @@ void MouseInputHandler::setPressedState(InputEvent* event) {
                 break;
         }
     }
-    if (event->type == BUTTON_RELEASE_EVENT)  // mouse button released or pen not touching surface anymore
+    if (event.type == BUTTON_RELEASE_EVENT)  // mouse button released or pen not touching surface anymore
     {
         this->deviceClassPressed = false;
 
-        switch (event->button) {
+        switch (event.button) {
             case 2:
                 this->modifier2 = false;
                 break;
@@ -107,7 +107,7 @@ void MouseInputHandler::setPressedState(InputEvent* event) {
     }
 }
 
-auto MouseInputHandler::changeTool(InputEvent* event) -> bool {
+auto MouseInputHandler::changeTool(InputEvent const& event) -> bool {
     Settings* settings = this->inputContext->getSettings();
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
     GtkXournal* xournal = this->inputContext->getXournal();
