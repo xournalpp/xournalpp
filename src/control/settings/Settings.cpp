@@ -137,6 +137,8 @@ void Settings::loadDefault() {
     this->pluginEnabled = "";
     this->pluginDisabled = "";
 
+    this->numIgnoredStylusEvents = 0;
+
     this->newInputSystemEnabled = true;
     this->inputSystemTPCButton = false;
     this->inputSystemDrawOutsideWindow = true;
@@ -408,6 +410,9 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->audioInputDevice = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioOutputDevice")) == 0) {
         this->audioOutputDevice = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numIgnoredStylusEvents")) == 0) {
+        this->numIgnoredStylusEvents =
+                std::max<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10), 0);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("newInputSystemEnabled")) == 0) {
         this->newInputSystemEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("inputSystemTPCButton")) == 0) {
@@ -778,6 +783,8 @@ void Settings::save() {
     WRITE_BOOL_PROP(strokeFilterEnabled);
     WRITE_BOOL_PROP(doActionOnStrokeFiltered);
     WRITE_BOOL_PROP(trySelectOnStrokeFiltered);
+
+    WRITE_INT_PROP(numIgnoredStylusEvents);
 
     WRITE_BOOL_PROP(newInputSystemEnabled);
     WRITE_BOOL_PROP(inputSystemTPCButton);
@@ -1548,6 +1555,17 @@ auto Settings::getDoActionOnStrokeFiltered() const -> bool { return this->doActi
 void Settings::setTrySelectOnStrokeFiltered(bool enabled) { this->trySelectOnStrokeFiltered = enabled; }
 
 auto Settings::getTrySelectOnStrokeFiltered() const -> bool { return this->trySelectOnStrokeFiltered; }
+
+
+void Settings::setIgnoredStylusEvents(int numEvents) {
+    if (this->numIgnoredStylusEvents == numEvents) {
+        return;
+    }
+    this->numIgnoredStylusEvents = std::max<int>(numEvents, 0);
+    save();
+}
+
+auto Settings::getIgnoredStylusEvents() const -> int { return this->numIgnoredStylusEvents; }
 
 
 void Settings::setExperimentalInputSystemEnabled(bool systemEnabled) {

@@ -28,5 +28,16 @@ public:
     bool changeTool(InputEvent const& event) override;
 
 private:
+    /**
+     * How many events since hitting the screen with the stylus are still left to be ignored before actually starting
+     * the action. Will first be set according to the user's setting on every button-1-press-event. Will be evaluated
+     * and then decreased by one (until -1) on every button-1-press-event and motion-event.\n
+     * If >0: Ignore the event\n
+     * If 0: Start the action\n
+     * If -1: Action already started, handle the event normally
+     */
+    int eventsToIgnore = 0;
+
+private:
     void setPressedState(InputEvent const& event);
 };
