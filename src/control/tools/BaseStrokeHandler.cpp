@@ -1,13 +1,13 @@
 #include "BaseStrokeHandler.h"
 
 #include <cmath>
+#include <memory>
 
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
 #include "undo/InsertUndoAction.h"
-#include "util/cpp14memory.h"
 
 
 guint32 BaseStrokeHandler::lastStrokeTime;  // persist for next stroke
@@ -206,7 +206,7 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
 
-    undo->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, stroke));
+    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
 
     layer->addElement(stroke);
     page->fireElementChanged(stroke);

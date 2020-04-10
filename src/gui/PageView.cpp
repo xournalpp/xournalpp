@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
+#include <memory>
 
 #include <gdk/gdk.h>
 
@@ -32,7 +33,6 @@
 #include "undo/InsertUndoAction.h"
 #include "undo/TextBoxUndoAction.h"
 #include "util/XojMsgBox.h"
-#include "util/cpp14memory.h"
 #include "view/TextView.h"
 #include "widgets/XournalWidget.h"
 
@@ -158,7 +158,7 @@ void XojPageView::endText() {
         // old element
         int pos = layer->indexOf(txt);
         if (pos != -1) {
-            auto eraseDeleteUndoAction = mem::make_unique<DeleteUndoAction>(page, true);
+            auto eraseDeleteUndoAction = std::make_unique<DeleteUndoAction>(page, true);
             layer->removeElement(txt, false);
             eraseDeleteUndoAction->addElement(layer, txt, pos);
             undo->addUndoAction(std::move(eraseDeleteUndoAction));
@@ -166,7 +166,7 @@ void XojPageView::endText() {
     } else {
         // new element
         if (layer->indexOf(txt) == -1) {
-            undo->addUndoActionBefore(mem::make_unique<InsertUndoAction>(page, layer, txt),
+            undo->addUndoActionBefore(std::make_unique<InsertUndoAction>(page, layer, txt),
                                       this->textEditor->getFirstUndoAction());
             layer->addElement(txt);
             this->textEditor->textCopyed();
@@ -177,7 +177,7 @@ void XojPageView::endText() {
             // TextUndoAction does not work because the textEdit object is destroyed
             // after endText() so we need to instead copy the information between an
             // old and new element that we can push and pop to recover.
-            undo->addUndoAction(mem::make_unique<TextBoxUndoAction>(page, layer, txt, this->oldtext));
+            undo->addUndoAction(std::make_unique<TextBoxUndoAction>(page, layer, txt, this->oldtext));
         }
     }
 

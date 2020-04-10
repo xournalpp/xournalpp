@@ -1,11 +1,11 @@
 #include "VerticalToolHandler.h"
 
 #include <cmath>
+#include <memory>
 
 #include "model/Layer.h"
 #include "undo/UndoRedoHandler.h"
 #include "util/GtkColorWrapper.h"
-#include "util/cpp14memory.h"
 #include "view/DocumentView.h"
 
 VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, double y, double zoom):
@@ -92,7 +92,7 @@ auto VerticalToolHandler::finalize() -> std::unique_ptr<MoveUndoAction> {
     double dY = this->endY - this->startY;
 
     auto undo =
-            mem::make_unique<MoveUndoAction>(this->layer, this->page, &this->elements, 0, dY, this->layer, this->page);
+            std::make_unique<MoveUndoAction>(this->layer, this->page, &this->elements, 0, dY, this->layer, this->page);
 
     for (Element* e: this->elements) {
         e->move(0, dY);

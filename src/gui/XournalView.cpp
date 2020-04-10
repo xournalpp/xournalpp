@@ -1,6 +1,7 @@
 #include "XournalView.h"
 
 #include <cmath>
+#include <memory>
 #include <tuple>
 
 #include <gdk/gdk.h>
@@ -12,7 +13,6 @@
 #include "model/Document.h"
 #include "model/Stroke.h"
 #include "undo/DeleteUndoAction.h"
-#include "util/cpp14memory.h"
 #include "widgets/XournalWidget.h"
 
 #include "Layout.h"
@@ -591,7 +591,7 @@ void XournalView::deleteSelection(EditSelection* sel) {
 
     if (sel) {
         XojPageView* view = sel->getView();
-        auto undo = mem::make_unique<DeleteUndoAction>(sel->getSourcePage(), false);
+        auto undo = std::make_unique<DeleteUndoAction>(sel->getSourcePage(), false);
         sel->fillUndoItem(undo.get());
         control->getUndoRedoHandler()->addUndoAction(std::move(undo));
 

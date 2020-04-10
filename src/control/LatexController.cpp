@@ -1,14 +1,13 @@
 #include "LatexController.h"
 
+#include <memory>
 #include <utility>
 
 #include "gui/XournalView.h"
 #include "gui/dialog/LatexDialog.h"
 #include "undo/InsertUndoAction.h"
-#include "util/cpp14memory.h"
 
 #include "Control.h"
-#include "Stacktrace.h"
 #include "StringUtils.h"
 #include "Util.h"
 #include "XojMsgBox.h"
@@ -409,7 +408,7 @@ void LatexController::insertTexImage() {
     layer->addElement(img);
     view->rerenderElement(img);
     doc->unlock();
-    control->getUndoRedoHandler()->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, img));
+    control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, img));
 
     // Select element
     auto* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);

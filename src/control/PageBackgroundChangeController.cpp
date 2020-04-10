@@ -1,5 +1,7 @@
 #include "PageBackgroundChangeController.h"
 
+#include <memory>
+
 #include "control/Control.h"
 #include "control/pagetype/PageTypeHandler.h"
 #include "gui/dialog/backgroundSelect/ImagesDialog.h"
@@ -7,7 +9,6 @@
 #include "stockdlg/ImageOpenDlg.h"
 #include "undo/GroupUndoAction.h"
 #include "undo/PageBackgroundChangedUndoAction.h"
-#include "util/cpp14memory.h"
 
 #include "XojMsgBox.h"
 #include "i18n.h"
@@ -37,7 +38,7 @@ void PageBackgroundChangeController::changeAllPagesBackground(const PageType& pt
 
     Document* doc = control->getDocument();
 
-    auto groupUndoAction = mem::make_unique<GroupUndoAction>();
+    auto groupUndoAction = std::make_unique<GroupUndoAction>();
 
     for (size_t p = 0; p < doc->getPageCount(); p++) {
         PageRef page = doc->getPage(p);
@@ -101,7 +102,7 @@ void PageBackgroundChangeController::changeCurrentPageBackground(PageType& pageT
 
     control->firePageChanged(pageNr);
     control->updateBackgroundSizeButton();
-    control->getUndoRedoHandler()->addUndoAction(mem::make_unique<PageBackgroundChangedUndoAction>(
+    control->getUndoRedoHandler()->addUndoAction(std::make_unique<PageBackgroundChangedUndoAction>(
             page, origType, origPdfPage, origBackgroundImage, origW, origH));
 }
 

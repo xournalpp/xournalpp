@@ -1,6 +1,7 @@
 #include "StrokeHandler.h"
 
 #include <cmath>
+#include <memory>
 
 #include <gdk/gdk.h>
 
@@ -12,7 +13,6 @@
 #include "gui/XournalView.h"
 #include "undo/InsertUndoAction.h"
 #include "undo/RecognizerUndoAction.h"
-#include "util/cpp14memory.h"
 
 #include "config-features.h"
 
@@ -170,7 +170,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
 
-    undo->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, stroke));
+    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
 
     ToolHandler* h = control->getToolHandler();
 
@@ -215,7 +215,7 @@ void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Laye
     Stroke* recognized = result->getRecognized();
     recognized->setWidth(stroke->hasPressure() ? stroke->getAvgPressure() : stroke->getWidth());
 
-    auto recognizerUndo = mem::make_unique<RecognizerUndoAction>(page, layer, stroke, recognized);
+    auto recognizerUndo = std::make_unique<RecognizerUndoAction>(page, layer, stroke, recognized);
     auto& locRecUndo = *recognizerUndo;
 
     UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();

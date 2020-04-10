@@ -1,13 +1,13 @@
 #include "SplineHandler.h"
 
 #include <cmath>
+#include <memory>
 
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
 #include "undo/InsertUndoAction.h"
-#include "util/cpp14memory.h"
 
 SplineHandler::SplineHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page):
         InputHandler(xournal, redrawable, page) {}
@@ -250,7 +250,7 @@ void SplineHandler::finalizeSpline() {
     Layer* layer = page->getSelectedLayer();
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
-    undo->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, stroke));
+    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
 
     layer->addElement(stroke);
 

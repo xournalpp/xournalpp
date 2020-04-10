@@ -1,5 +1,7 @@
 #include "ImageHandler.h"
 
+#include <memory>
+
 #include "control/Control.h"
 #include "control/stockdlg/ImageOpenDlg.h"
 #include "gui/PageView.h"
@@ -7,7 +9,6 @@
 #include "model/Image.h"
 #include "model/Layer.h"
 #include "undo/InsertUndoAction.h"
-#include "util/cpp14memory.h"
 
 #include "XojMsgBox.h"
 #include "i18n.h"
@@ -75,7 +76,7 @@ auto ImageHandler::insertImage(GFile* file, double x, double y) -> bool {
     page->getSelectedLayer()->addElement(img);
 
     control->getUndoRedoHandler()->addUndoAction(
-            mem::make_unique<InsertUndoAction>(page, page->getSelectedLayer(), img));
+            std::make_unique<InsertUndoAction>(page, page->getSelectedLayer(), img));
 
     view->rerenderElement(img);
     auto* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
