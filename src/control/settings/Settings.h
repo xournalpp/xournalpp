@@ -12,6 +12,7 @@
 #pragma once
 
 #include <map>
+#include <memory>
 
 #include <config-dev.h>
 #include <libxml/xmlreader.h>
@@ -74,34 +75,17 @@ public:
     string comment;
 };
 
-class SElement;
 
-class __RefSElement {
-public:
-    __RefSElement();
-    virtual ~__RefSElement();
-
-public:
-    void ref();
-    void unref();
-
-private:
-    std::map<string, SAttribute> attributes;
-    std::map<string, SElement> children;
-
-    int refcount;
-
-    friend class SElement;
-};
-
-class SElement {
-public:
-    SElement();
-    SElement(const SElement& elem);
-    virtual ~SElement();
+class SElement final {
+    struct SElementData {
+    private:
+        std::map<string, SAttribute> attributes;
+        std::map<string, SElement> children;
+        friend class SElement;
+    };
 
 public:
-    void operator=(const SElement& elem);
+    SElement() = default;
 
     void clear();
 
@@ -124,7 +108,7 @@ public:
     std::map<string, SElement>& children();
 
 private:
-    __RefSElement* element;
+    std::shared_ptr<SElementData> element = std::make_shared<SElementData>();
 };
 
 class Settings {
