@@ -109,18 +109,22 @@ TODO
 
 #### AppImage
 
-One way to generate an AppImage is to first generate the `.tar.gz` package and
-then use that as the `AppDir` for `linuxdeploy`. For an example, see
-[`azure-pipelines/release.yml`](../azure-pipelines/release.yml)
+The quickest way to generate an AppImage is to first generate the `.tar.gz`
+package and then use that with the `azure-pipelines/util/build_appimage.sh`
+script.
 
 ```bash
 cmake .. -DPACK_GENERATOR="TGZ"
 cmake --build . --target package
-# Extract the package contents in preparation for AppImage packaging
-tar xf packages/xournalpp-*.tar.gz --one-top-level=appimage_staging/usr --strip=1
-# Generate AppImage with linuxdeploy, assuming you have it downloaded
-./linuxdeploy.AppImage --appdir=appimage_staging --output appimage
+../azure-pipelines/util/build_appimage.sh
 ```
+
+The `build_appimage.sh` script will automatically download LinuxDeploy, copy the
+`.tar.gz` files and required libraries and resources into a `appimage_staging`
+directory, and run LinuxDeploy on the prepared app dir.
+
+By default, the `build_appimage.sh` script will copy the Adwaita GTK theme and
+the Adwaita icon theme into the AppImage.
 
 #### Flatpak
 

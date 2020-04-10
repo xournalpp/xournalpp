@@ -52,6 +52,11 @@ if [ x"${RSVG_LIBDIR}" != "x" ]; then
     cp -a "${RSVG_LIBDIR}"/librsvg*.so* "$APPDIR"/usr/lib
 fi
 
+# Copy Adwaita GTK theme and icon theme
+mkdir -p "$APPDIR"/usr/share/themes "$APPDIR"/usr/share/icons
+cp -r /usr/share/themes/Adwaita "$APPDIR"/usr/share/themes
+cp -r /usr/share/icons/Adwaita "$APPDIR"/usr/share/icons
+
 set +x
 
 # Generate AppImage
