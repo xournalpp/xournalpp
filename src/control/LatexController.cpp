@@ -80,8 +80,10 @@ auto LatexController::findTexDependencies() -> LatexController::FindDependencySt
     g_spawn_sync(nullptr, kpsewhichArgs, nullptr, kpsewhichFlags, nullptr, nullptr, nullptr, nullptr, &kpsewhichStatus,
                  &kpsewhichErr);
     if (kpsewhichErr != nullptr) {
+        string msg =
+                FS(_F("Error: {1}\nCould not find kpsewhich in PATH; please install kpsewhich and put it on path.") %
+                   kpsewhichErr->message);
         g_error_free(kpsewhichErr);
-        string msg = _("Could not find kpsewhich in PATH; please install kpsewhich and put it on path.");
         return LatexController::FindDependencyStatus(false, msg);
     }
     if (kpsewhichStatus != 0) {
