@@ -108,8 +108,9 @@ LatexController::FindDependencyStatus LatexController::findTexDependencies()
 	}
 	else if (kpsewhichStatus != 0)
 	{
-		string msg = FS(_F("Could not find the LaTeX package 'standalone'.\nPlease install standalone (found in texlive-latex-extra) and make sure "
-		                   "it's accessible by your LaTeX installation."));
+		string msg = FS(_F("Could not find the LaTeX package 'standalone'.\nPlease install standalone (found in "
+						   "texlive-latex-extra) and make sure "
+						   "it's accessible by your LaTeX installation."));
 		return LatexController::FindDependencyStatus(false, msg);
 	}
 
