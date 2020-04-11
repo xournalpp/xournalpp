@@ -12,10 +12,12 @@
 #pragma once
 
 #include "model/Point.h"
+#include "model/Snapping.h"
 #include "model/SplineSegment.h"
 #include "view/DocumentView.h"
 
 #include "InputHandler.h"
+#include "SnapToGridInputHandler.h"
 
 /**
  * @brief A class to handle splines
@@ -50,10 +52,16 @@ private:
     void updateStroke();
     Rectangle<double> computeRepaintRectangle() const;
 
+    // to filter out short strokes (usually the user tapping on the page to select it)
+    guint32 startStrokeTime{};
+    static guint32 lastStrokeTime;  // persist across strokes - allow us to not ignore persistent dotting.
+
+
 private:
     std::vector<Point> knots{};
     std::vector<Point> tangents{};
     bool isButtonPressed = false;
+    SnapToGridInputHandler snappingHandler;
 
 public:
     void addKnot(const Point& p);
@@ -65,4 +73,6 @@ public:
 protected:
     DocumentView view;
     Point currPoint;
+    Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid. See startPoint defined in
+                            // derived classes such as CircleHandler.
 };

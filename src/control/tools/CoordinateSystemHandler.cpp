@@ -23,10 +23,7 @@ void CoordinateSystemHandler::drawShape(Point& c, const PositionInputData& pos) 
     /**
      * Snap point to grid (if enabled)
      */
-    Settings* settings = xournal->getControl()->getSettings();
-    if (pos.isAltDown() != settings->isSnapGrid()) {
-        snapToGrid(c.x, c.y);
-    }
+    c = snappingHandler.snapToGrid(c, pos.isAltDown());
 
     if (!this->started)  // initialize first point
     {
@@ -42,6 +39,7 @@ void CoordinateSystemHandler::drawShape(Point& c, const PositionInputData& pos) 
         this->modShift = pos.isShiftDown();
         this->modControl = pos.isControlDown();
 
+        Settings* settings = xournal->getControl()->getSettings();
         if (settings->getDrawDirModsEnabled())  // change modifiers based on draw dir
         {
             this->modifyModifiersByDrawDir(width, height, true);

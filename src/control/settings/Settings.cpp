@@ -95,10 +95,10 @@ void Settings::loadDefault() {
     this->drawDirModsEnabled = false;
 
     this->snapRotation = true;
-    this->snapRotationTolerance = 0.20;
+    this->snapRotationTolerance = 0.30;
 
     this->snapGrid = true;
-    this->snapGridTolerance = 0.25;
+    this->snapGridTolerance = 0.50;
 
     this->touchWorkaround = false;
 

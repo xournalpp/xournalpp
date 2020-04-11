@@ -20,7 +20,6 @@ public:
 
 private:
     virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
-    void snapRotation(double& x, double& y);
 
 private:
 };
