@@ -15,8 +15,18 @@
 #include <CrashHandler.h>
 #include <Stacktrace.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 int main(int argc, char* argv[])
 {
+#ifdef _WIN32
+    // Show and hide the console here. Otherwise, gspawn-win32-helper will create annoying console popups.
+    AllocConsole();
+    ShowWindow(GetConsoleWindow(), SW_HIDE);
+#endif
+
 	// init crash handler
 	installCrashHandlers();
 
