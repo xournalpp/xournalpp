@@ -15,57 +15,10 @@ guint32 BaseStrokeHandler::lastStrokeTime;  // persist for next stroke
 
 BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift,
                                      bool flipControl):
-        InputHandler(xournal, redrawable, page) {
-    this->flipShift = flipShift;
-    this->flipControl = flipControl;
-}
-
-void BaseStrokeHandler::snapToGrid(double& x, double& y) {
-    if (!xournal->getControl()->getSettings()->isSnapGrid()) {
-        return;
-    }
-
-    /**
-     * Snap points to a grid:
-     * If x/y coordinates are under a certain tolerance,
-     * fix the point to the grid intersection value
-     */
-    double gridSize = 14.17 / 4.0;
-
-    double t = xournal->getControl()->getSettings()->getSnapGridTolerance();
-    double tolerance = (gridSize / 2) - (1 / t);
-
-    double xRem = fmod(x, gridSize);
-    double yRem = fmod(y, gridSize);
-
-    bool snapX = false;
-    bool snapY = false;
-
-    double tmpX = 0;
-    double tmpY = 0;
-
-    if (xRem < tolerance) {
-        tmpX = x - xRem;
-        snapX = true;
-    }
-    if (xRem > gridSize - tolerance) {
-        tmpX = x + (gridSize - xRem);
-        snapX = true;
-    }
-    if (yRem < tolerance) {
-        tmpY = y - yRem;
-        snapY = true;
-    }
-    if (yRem > gridSize - tolerance) {
-        tmpY = y + (gridSize - yRem);
-        snapY = true;
-    }
-
-    if (snapX && snapY) {
-        x = tmpX;
-        y = tmpY;
-    }
-}
+        InputHandler(xournal, redrawable, page),
+        snappingHandler(xournal->getControl()->getSettings()),
+        flipShift(flipShift),
+        flipControl(flipControl) {}
 
 BaseStrokeHandler::~BaseStrokeHandler() = default;
 
