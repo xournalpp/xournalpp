@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.0.18
+
+* Fixed a crash occurring when recent file entries are invalid (#1730, thanks to
+  @iczero)
+* Fixed translations not being built correctly, causing packaging issues (#1596)
+* Fixed background PDF outlines not being saved in exported PDF (only available
+  when compiled with Cairo 1.16 or newer)
+* Fixed a deadlock occurring when a second PDF with an outline is opened (#1582).
+* Fixed the settings file being written to when it is parsed (#1074, thanks to
+  @Guldoman)
+* Fixed dark mode icons not loading properly (#1767, thanks to @badshah400)
+* Added missing dark mode icons (#1765, thanks to @badshah400)
+* Fixed crash in `Export As ...` on some page range options (#1790)
+* Fixed crash caused by custom colors in toolbar being "too close" (#1659)
+* Windows: Fixed the LaTeX tool always failing to find kpsewhich (#1738). Note
+  that to make this work properly, a console window will now flash briefly
+  before Xournal++ starts.
+
 ## 1.0.17
 
 * Fixed arrow tip scaling: now scales with thickness instead of length (#967,
