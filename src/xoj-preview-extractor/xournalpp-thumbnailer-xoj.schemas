@@ -18,7 +18,7 @@
 			<applyto>/desktop/gnome/thumbnailers/application@x-xoj/command</applyto>
 			<owner>xournalpp</owner>
 			<type>string</type>
-			<default>xournal-thumbnailer %i %o</default>
+			<default>xournalpp-thumbnailer %i %o</default>
 			<locale name="C">
 				<short></short>
 				<long></long>

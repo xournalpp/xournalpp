@@ -1,4 +1,4 @@
 [Thumbnailer Entry]
-Exec=xournal-thumbnailer %i %o
+Exec=xournalpp-thumbnailer %i %o
 MimeType=application/x-xoj;application/x-xojpp;application/x-xopp;
 
