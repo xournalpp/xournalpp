@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-13 16:09+0000\n"
-"PO-Revision-Date: 2020-04-13 16:18\n"
+"POT-Creation-Date: 2020-04-13 17:12+0000\n"
+"PO-Revision-Date: 2020-04-13 17:26\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -1488,35 +1488,35 @@ msgstr "sbianca"
 msgid "xoj-File: {1}"
 msgstr "xoj-File: {1}"
 
-#: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:71
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:71
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
 msgstr "xoj-preview-extractor: chiama con INPUT.xoj OUTPUT.png"
 
-#: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:143
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:143
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr "xoj-preview-extractor: impossibile trovare l'icona \"{1}\""
 
-#: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:92
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:92
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
 msgstr "xoj-preview-extractor: Il file \"{1}\" non contiene anteprime"
 
-#: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:84
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:84
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
 msgstr "xoj-preview-extractor: Il file \"{1}\" non è un file .xoj"
 
-#: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:97
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:97
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr "xoj-preview-extractor: Nessuna anteprima trovata, forse un file non valido?"
 
-#: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:88
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:88
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
 msgstr "xoj-preview-extractor: Apertura del file di input \"{1}\" fallita"
 
-#: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:156
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:156
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr "xoj-preview-extractor: Apertura del file di output \"{1}\" fallita"
 
-#: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:163
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:163
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: Estratto con successo"
 
