@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-13 21:14\n"
+"PO-Revision-Date: 2020-04-13 21:32\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -272,40 +272,42 @@ msgstr "Ezin izan da irudia irakurri: {1}. Errore mezua: {2}"
 #: ../src/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "Ezin izan da \"{1}\" berregin\n"
+"Zerbait gaizki joan da… Mesedez, idatzi akatsen berri…"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:169
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr ""
+msgstr "Ezin izan da {1} tresna-barratik {2} kokalekuko tresna"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr ""
+msgstr "Ezin izan da {2} tresna-barratik {3} kokalekuko {1} tresna"
 
 #: ../src/control/Control.cpp:230
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr ""
+msgstr "Ezin izan da berrizendatu fitxategia '{1}'-etik '{2}'-era: {3}"
 
 #: ../src/control/LatexController.cpp:110
 msgid "Could not save .tex file: {1}"
-msgstr ""
+msgstr "Ezin izan da .tex fitxategia gorde: {1}"
 
 #: ../src/control/LatexController.cpp:129
 msgid "Could not start pdflatex: {1} (exit code: {2})"
-msgstr ""
+msgstr "Ezin izan da pdflatex abiarazi: {1} (irteera kodea: {2})"
 
 #: ../src/undo/UndoRedoHandler.cpp:108
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "Ezin izan da \"{1}\" desegin\n"
+"Zerbait gaizki joan da… Mesedez, idatzi akatsen berri…"
 
 #: ../src/control/xojfile/SaveHandler.cpp:232
 msgid "Could not write background \"{1}\", {2}"
-msgstr ""
+msgstr "Ezin izan da atzeko planoa idatzi \"{1}\", {2}"
 
 #: ../src/control/xojfile/SaveHandler.cpp:328
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr ""
+msgstr "Ezin izan da \"{1}\" atzeko planoa idatzi. Jarraitu hala ere."
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:74
 msgid "Create new layer"
