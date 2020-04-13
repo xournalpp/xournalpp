@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-10 01:30+0000\n"
-"PO-Revision-Date: 2020-04-10 01:55\n"
+"POT-Creation-Date: 2020-04-13 16:09+0000\n"
+"PO-Revision-Date: 2020-04-13 16:18\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -198,29 +198,25 @@ msgstr "未能產生備份檔案！(此檔案應為老版本Xournal所建)"
 msgid "Could not create folder: {1}"
 msgstr "無法建立資料夾： {1}"
 
-#: ../src/control/LatexController.cpp:84
-msgid "Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
-msgstr ""
-
 #: ../src/control/LatexController.cpp:69
 msgid "Could not find pdflatex in PATH.\n"
 "Please install pdflatex first and make sure it's in the PATH."
 msgstr ""
 
-#: ../src/control/LatexController.cpp:88
+#: ../src/control/LatexController.cpp:90
 msgid "Could not find the LaTeX package 'standalone'.\n"
 "Please install standalone (found in texlive-latex-extra) and make sure it's accessible by your LaTeX installation."
 msgstr ""
 
-#: ../src/control/LatexController.cpp:385
+#: ../src/control/LatexController.cpp:387
 msgid "Could not load LaTeX PDF file"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:370
+#: ../src/control/LatexController.cpp:372
 msgid "Could not load LaTeX PDF file, File Error: {1}"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:377
+#: ../src/control/LatexController.cpp:379
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr ""
 
@@ -288,11 +284,11 @@ msgstr ""
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "無法將自動儲存檔案 \"{1}\" 重新命名至 \"{2}\"： {3}"
 
-#: ../src/control/LatexController.cpp:108
+#: ../src/control/LatexController.cpp:110
 msgid "Could not save .tex file: {1}"
 msgstr "無法儲存 .tex 檔案： {1}"
 
-#: ../src/control/LatexController.cpp:127
+#: ../src/control/LatexController.cpp:129
 msgid "Could not start pdflatex: {1} (exit code: {2})"
 msgstr ""
 
@@ -503,6 +499,11 @@ msgstr ""
 #: ../src/util/CrashHandler.cpp:39
 msgid "Error: {1}"
 msgstr "錯誤：{1}"
+
+#: ../src/control/LatexController.cpp:84
+msgid "Error: {1}\n"
+"Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:138
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -1142,7 +1143,7 @@ msgstr ""
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr ""
 
-#: ../src/control/LatexController.cpp:306
+#: ../src/control/LatexController.cpp:308
 msgid "The formula is empty when rendered or invalid."
 msgstr ""
 
@@ -1424,7 +1425,7 @@ msgstr ""
 msgid "mouse"
 msgstr "滑鼠"
 
-#: ../src/control/LatexController.cpp:263
+#: ../src/control/LatexController.cpp:265
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
 msgstr ""
 
