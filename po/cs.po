@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-10 01:30+0000\n"
-"PO-Revision-Date: 2020-04-10 21:05\n"
+"POT-Creation-Date: 2020-04-13 16:09+0000\n"
+"PO-Revision-Date: 2020-04-13 16:18\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -199,31 +199,27 @@ msgstr "Nelze vytvořit zálohu! (Soubor byl vytvořen ve starší verzi Xournal
 msgid "Could not create folder: {1}"
 msgstr "Nelze vytvořit složku: {1}"
 
-#: ../src/control/LatexController.cpp:84
-msgid "Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
-msgstr "Nelze najít kpsewhich v PATH; nainstalujte prosím kpsewhich a vložte ho na cestu."
-
 #: ../src/control/LatexController.cpp:69
 msgid "Could not find pdflatex in PATH.\n"
 "Please install pdflatex first and make sure it's in the PATH."
 msgstr "Nelze najít pdflatex v PATH.\n"
 "Nejprve prosím nainstalujte pdflatex a ujistěte se, že je v PATH."
 
-#: ../src/control/LatexController.cpp:88
+#: ../src/control/LatexController.cpp:90
 msgid "Could not find the LaTeX package 'standalone'.\n"
 "Please install standalone (found in texlive-latex-extra) and make sure it's accessible by your LaTeX installation."
 msgstr "Nepodařilo se najít balíček LaTeX 'standalone'.\n"
 "Prosím nainstalujte samostatný balíček (nalezený v texlive-latex-extra) a ujistěte se, že je dostupný při instalaci LaTeX."
 
-#: ../src/control/LatexController.cpp:385
+#: ../src/control/LatexController.cpp:387
 msgid "Could not load LaTeX PDF file"
 msgstr "Nelze načíst LaTeX PDF soubor"
 
-#: ../src/control/LatexController.cpp:370
+#: ../src/control/LatexController.cpp:372
 msgid "Could not load LaTeX PDF file, File Error: {1}"
 msgstr "Nelze načíst LaTeX PDF soubor, Chyba souboru: {1}"
 
-#: ../src/control/LatexController.cpp:377
+#: ../src/control/LatexController.cpp:379
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Nelze načíst LaTeX PDF soubor: {1}"
 
@@ -291,11 +287,11 @@ msgstr "Nástroj {1} z panelu nástrojů {2} nelze odstranit z pozice {3}"
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Nelze přejmenovat soubor automatického ukládání z \"{1}\" na \"{2}\": {3}"
 
-#: ../src/control/LatexController.cpp:108
+#: ../src/control/LatexController.cpp:110
 msgid "Could not save .tex file: {1}"
 msgstr "Soubor .tex nebylo možno uložit: {1}"
 
-#: ../src/control/LatexController.cpp:127
+#: ../src/control/LatexController.cpp:129
 msgid "Could not start pdflatex: {1} (exit code: {2})"
 msgstr "Nelze spustit pdflatex: {1} (exit code: {2})"
 
@@ -508,6 +504,11 @@ msgstr "Chyba {1} při provádění systémového příkazu: {2}"
 #: ../src/util/CrashHandler.cpp:39
 msgid "Error: {1}"
 msgstr "Chyba: {1}"
+
+#: ../src/control/LatexController.cpp:84
+msgid "Error: {1}\n"
+"Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:138
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -1153,7 +1154,7 @@ msgstr "Soubor není platný .xopp soubor (chybí verze): \"{1}\""
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Soubor není platný .xopp soubor (Version string je poškozený): \"{1}\""
 
-#: ../src/control/LatexController.cpp:306
+#: ../src/control/LatexController.cpp:308
 msgid "The formula is empty when rendered or invalid."
 msgstr "Vzorec je prázdný, když je vykreslený, nebo neplatný."
 
@@ -1438,7 +1439,7 @@ msgstr "latex"
 msgid "mouse"
 msgstr "myš"
 
-#: ../src/control/LatexController.cpp:263
+#: ../src/control/LatexController.cpp:265
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
 msgstr "pdflatex narazil na chybu: {1} (chybový kód: {2})"
 
