@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-10 01:30+0000\n"
-"PO-Revision-Date: 2020-04-10 01:55\n"
+"POT-Creation-Date: 2020-04-13 16:09+0000\n"
+"PO-Revision-Date: 2020-04-13 16:18\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -199,30 +199,26 @@ msgstr "Não foi possível criar o backup! (O arquivo foi criado a partir de uma
 msgid "Could not create folder: {1}"
 msgstr "Não foi possível criar a pasta: {1}"
 
-#: ../src/control/LatexController.cpp:84
-msgid "Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
-msgstr "Não foi possível encontrar o kpsewhich no PATH; instale o kpsewhich e coloque-o no PATH."
-
 #: ../src/control/LatexController.cpp:69
 msgid "Could not find pdflatex in PATH.\n"
 "Please install pdflatex first and make sure it's in the PATH."
 msgstr "Não foi possível encontrar o pdflatex no PATH; instale o pdflatex e coloque-o no PATH."
 
-#: ../src/control/LatexController.cpp:88
+#: ../src/control/LatexController.cpp:90
 msgid "Could not find the LaTeX package 'standalone'.\n"
 "Please install standalone (found in texlive-latex-extra) and make sure it's accessible by your LaTeX installation."
 msgstr "Não foi possível encontrar o pacote LaTeX 'standalone'.\n"
 "Instale o standalone (encontrado em texlive-latex-extra) e verifique se ele é acessível pela sua instalação do LaTeX."
 
-#: ../src/control/LatexController.cpp:385
+#: ../src/control/LatexController.cpp:387
 msgid "Could not load LaTeX PDF file"
 msgstr "Não foi possível carregar o arquivo PDF do LaTeX"
 
-#: ../src/control/LatexController.cpp:370
+#: ../src/control/LatexController.cpp:372
 msgid "Could not load LaTeX PDF file, File Error: {1}"
 msgstr "Não foi possível carregar o arquivo PDF do LaTeX, Erro de Arquivo: {1}"
 
-#: ../src/control/LatexController.cpp:377
+#: ../src/control/LatexController.cpp:379
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Não foi possível carregar o arquivo PDF do LaTeX: {1}"
 
@@ -287,11 +283,11 @@ msgstr "Não foi possível remover o item de ferramenta {1} da barra de ferramen
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Não foi possível renomear o arquivo de salvamento automático de \"{1}\" para \"{2}\": {3}"
 
-#: ../src/control/LatexController.cpp:108
+#: ../src/control/LatexController.cpp:110
 msgid "Could not save .tex file: {1}"
 msgstr "Não foi possível salvar o arquivo .tex: {1}"
 
-#: ../src/control/LatexController.cpp:127
+#: ../src/control/LatexController.cpp:129
 msgid "Could not start pdflatex: {1} (exit code: {2})"
 msgstr "Não foi possível iniciar o pdflatex: {1} (código de saída: {2})"
 
@@ -501,6 +497,11 @@ msgstr ""
 #: ../src/util/CrashHandler.cpp:39
 msgid "Error: {1}"
 msgstr "Erro: {1}"
+
+#: ../src/control/LatexController.cpp:84
+msgid "Error: {1}\n"
+"Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:138
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -1138,7 +1139,7 @@ msgstr ""
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr ""
 
-#: ../src/control/LatexController.cpp:306
+#: ../src/control/LatexController.cpp:308
 msgid "The formula is empty when rendered or invalid."
 msgstr ""
 
@@ -1420,7 +1421,7 @@ msgstr "latex"
 msgid "mouse"
 msgstr "mouse"
 
-#: ../src/control/LatexController.cpp:263
+#: ../src/control/LatexController.cpp:265
 msgid "pdflatex encountered an error: {1} (exit code: {2})"
 msgstr ""
 
