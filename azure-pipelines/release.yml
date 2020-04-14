@@ -58,6 +58,15 @@ stages:
               build_type: 'RelWithDebInfo'
               cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=$PWD/staging -DCPACK_GENERATOR="TGZ;DEB"'
               cmake_commands: '--target package'
+          - bash: |
+              # Build AppImage
+              export VERSION=$(cat VERSION | sed '1q;d')
+              export ARCH=$(cat VERSION | sed '4q;d')
+              ../azure-pipelines/util/build_appimage.sh
+              # Move and rename the generated AppImage file
+              find . -name '*.AppImage' -not -name 'linuxdeploy.AppImage' -exec mv {} packages/xournalpp-$VERSION-$ARCH.AppImage \;
+            workingDirectory: ./build
+            displayName: 'Create AppImage'
           - task: PublishPipelineArtifact@1
             inputs:
               artifactName: 'linux-ubuntu-packages'
