@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 16:59\n"
+"PO-Revision-Date: 2020-04-14 17:14\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1996,7 +1996,7 @@ msgstr "点击操作"
 
 #: ../ui/settings.glade:796
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
-msgstr ""
+msgstr "启用溢出绘图 <i>【允许笔划穿过窗口】</i>"
 
 #: ../ui/settings.glade:1466
 msgid "Enable internal Hand Recognition"
@@ -2052,7 +2052,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3026
 msgid "First Page Offset "
-msgstr ""
+msgstr "第一页偏移 "
 
 #: ../ui/main.glade:485 ../ui/settings.glade:2395
 msgid "Fullscreen"
@@ -2068,7 +2068,7 @@ msgstr ""
 
 #: ../ui/about.glade:153
 msgid "Git commit"
-msgstr ""
+msgstr "Git 提交"
 
 #: ../ui/settings.glade:2114
 msgid "Global"
@@ -2104,15 +2104,15 @@ msgstr "隐藏侧边栏"
 
 #: ../ui/settings.glade:2278
 msgid "Hide the horizontal scrollbar"
-msgstr ""
+msgstr "隐藏水平滚动条"
 
 #: ../ui/settings.glade:2293
 msgid "Hide the vertical scrollbar"
-msgstr ""
+msgstr "隐藏垂直滚动条"
 
 #: ../ui/settings.glade:2144
 msgid "Highlight cursor position"
-msgstr ""
+msgstr "高亮光标位置"
 
 #: ../ui/main.glade:1724
 msgid "Highlighter Opti_ons"
@@ -2138,11 +2138,11 @@ msgstr "输入设备"
 
 #: ../ui/settings.glade:744
 msgid "Input Devices"
-msgstr ""
+msgstr "输入设备"
 
 #: ../ui/settings.glade:869
 msgid "Input System"
-msgstr ""
+msgstr "输入系统"
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
@@ -2150,11 +2150,11 @@ msgstr "插入LaTeX"
 
 #: ../ui/main.glade:2532
 msgid "Insert Page After"
-msgstr ""
+msgstr "在此后插入页面"
 
 #: ../ui/main.glade:2524
 msgid "Insert Page Before"
-msgstr ""
+msgstr "在此前插入页面"
 
 #: ../ui/main.glade:2115
 msgid "Insert a copy of the current page below"
@@ -2186,7 +2186,7 @@ msgstr "定制工具条"
 
 #: ../ui/settings.glade:3337
 msgid "Max Length (mm)"
-msgstr ""
+msgstr "最大长度 (毫米)"
 
 #: ../ui/settings.glade:827
 msgid "Merge button events with stylus tip events\n"
@@ -2207,7 +2207,7 @@ msgstr "鼠标按钮"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
-msgstr ""
+msgstr "鼠标+键盘结合"
 
 #: ../ui/main.glade:2562
 msgid "Move Down"
@@ -2356,7 +2356,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3862
 msgid "Sample Rate"
-msgstr ""
+msgstr "采样率"
 
 #: ../ui/settings.glade:2328
 msgid "Scrollbars"
@@ -2364,7 +2364,7 @@ msgstr "滚动条"
 
 #: ../ui/settings.glade:2993
 msgid "Scrolling outside the page"
-msgstr ""
+msgstr "在页面外滚动"
 
 #: ../ui/pageTemplate.glade:174
 msgid "Select Background Color"
@@ -2497,31 +2497,31 @@ msgstr ""
 #: ../ui/settings.glade:1420 ../ui/settings.glade:1889
 #: ../ui/settingsDeviceClassConfig.glade:46
 msgid "Touchscreen"
-msgstr ""
+msgstr "触摸屏"
 
 #: ../ui/fillTransparency.glade:14
 msgid "Transparency settings"
-msgstr ""
+msgstr "透明度设置"
 
 #: ../ui/settings.glade:3377
 msgid "Try to select object first."
-msgstr ""
+msgstr "请先选择对象。"
 
 #: ../ui/settings.glade:3382 ../ui/settings.glade:3412
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
-msgstr ""
+msgstr "请先选择对象；如果没有选中，则显示浮动工具箱（需要启用）。"
 
 #: ../ui/settings.glade:3038
 msgid "Usually 0 or 1"
-msgstr ""
+msgstr "通常为 0 或 1"
 
 #: ../ui/about.glade:101
 msgid "Version"
-msgstr ""
+msgstr "版本"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Version: "
-msgstr ""
+msgstr "版本："
 
 #: ../ui/settings.glade:2527
 msgid "View"
