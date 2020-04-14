@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 07:51\n"
+"PO-Revision-Date: 2020-04-14 08:14\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -1297,27 +1297,27 @@ msgstr "Puntuen zenbaketa okerra ({1})"
 
 #: ../src/control/xojfile/LoadHandler.cpp:906
 msgid "Wrong number of points, got {1}, expected {2}"
-msgstr ""
+msgstr "Puntuen zenbaketa okerra, eskuratua {1}, espero zen {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:218
 msgid "XML Parser error: {1}"
-msgstr ""
+msgstr "XML analizatzailearen errorea: {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:26
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "Xournal (bateragarritasuna)"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:50
 msgid "Xournal files"
-msgstr ""
+msgstr "Xournal fitxategiak"
 
 #: ../src/control/XournalMain.cpp:157
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "Xournal++-ek huts egin du azkenekoan. Nahi al duzu editatutako azken fitxategia leheneratzea?"
 
 #: ../src/control/Control.cpp:2283 ../src/control/stockdlg/XojOpenDlg.cpp:57
 msgid "Xournal++ files"
-msgstr ""
+msgstr "Xournal++ fitxategiak"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:64
 #: ../src/gui/dialog/PageTemplateDialog.cpp:89
