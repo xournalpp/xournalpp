@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 14:59\n"
+"PO-Revision-Date: 2020-04-14 15:09\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1764,11 +1764,11 @@ msgstr "工具点击操作"
 
 #: ../ui/settings.glade:2921
 msgid "Add additional horizontal space of"
-msgstr ""
+msgstr "增加额外的水平间距"
 
 #: ../ui/settings.glade:2899
 msgid "Add additional vertical space of"
-msgstr ""
+msgstr "增加额外的垂直间距"
 
 #: ../ui/exportSettings.glade:142
 msgid "All pages"
@@ -1777,7 +1777,8 @@ msgstr "所有页面"
 #: ../ui/settings.glade:3396
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
-msgstr ""
+msgstr "在忽略笔划之前，必须满足所有三个条件。\n"
+"它必须是短时间、短距离的，且最近没有可忽略的另一条笔画。"
 
 #: ../ui/settings.glade:3830
 msgid "Audio Devices"
@@ -1785,7 +1786,7 @@ msgstr "音频设备"
 
 #: ../ui/settings.glade:4035
 msgid "Audio Recording"
-msgstr ""
+msgstr "音频录音"
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
@@ -1829,7 +1830,7 @@ msgstr "当前页面和其他选择的边框颜色"
 
 #: ../ui/about.glade:127
 msgid "Built on"
-msgstr ""
+msgstr "构建于"
 
 #: ../ui/settings.glade:1208
 msgid "Button 1"
@@ -1865,7 +1866,7 @@ msgstr "光标"
 
 #: ../ui/settings.glade:1699
 msgid "Custom Commands (for Method \"Custom\")"
-msgstr ""
+msgstr "自定义命令(对于\"自定义\"方法)"
 
 #: ../ui/settings.glade:2074
 msgid "Dark Theme (requires restart)"
@@ -1921,7 +1922,7 @@ msgstr "已禁用"
 
 #: ../ui/settings.glade:1496
 msgid "Disabling Method"
-msgstr ""
+msgstr "禁用方法"
 
 #: ../ui/settings.glade:2786
 msgid "Display DPI Calibration"
