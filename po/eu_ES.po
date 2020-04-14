@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 07:19\n"
+"PO-Revision-Date: 2020-04-14 07:36\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -938,59 +938,59 @@ msgstr "Biraketaren atxikipena"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:20
 msgid "Ruled"
-msgstr ""
+msgstr "Lerroduna"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled with vertical line"
-msgstr ""
+msgstr "Lerroduna marra bertikalarekin"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Ruler"
-msgstr ""
+msgstr "Erregela"
 
 #: ../src/control/jobs/CustomExportJob.cpp:24
 msgid "SVG graphics"
-msgstr ""
+msgstr "SVG irudiak"
 
 #: ../src/control/jobs/CustomExportJob.cpp:25
 msgid "SVG with transparent background"
-msgstr ""
+msgstr "SVG atzeko plano gardena"
 
 #: ../src/control/Control.cpp:2441 ../src/control/jobs/SaveJob.cpp:13
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:319
 msgid "Save"
-msgstr ""
+msgstr "Gorde"
 
 #: ../src/control/Control.cpp:2441
 msgid "Save As..."
-msgstr ""
+msgstr "Gorde honela..."
 
 #: ../src/control/Control.cpp:2277 ../src/gui/dialog/PageTemplateDialog.cpp:83
 msgid "Save File"
-msgstr ""
+msgstr "Gorde fitxategia"
 
 #: ../src/control/jobs/CustomExportJob.cpp:128
 #: ../src/control/jobs/SaveJob.cpp:112
 msgid "Save file error: {1}"
-msgstr ""
+msgstr "Errorea fitxategia gordetzean: {1}"
 
 #: ../src/undo/ScaleUndoAction.cpp:52
 msgid "Scale"
-msgstr ""
+msgstr "Jarri eskalan"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:334
 msgid "Search"
-msgstr ""
+msgstr "Bilatu"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Select Font"
-msgstr ""
+msgstr "Hautatu letra-tipoa"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:66
 msgid "Select Object"
-msgstr ""
+msgstr "Hautatu objektua"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
@@ -998,30 +998,30 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:56
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:86
 msgid "Select Rectangle"
-msgstr ""
+msgstr "Hautatu laukizuzena"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:61
 msgid "Select Region"
-msgstr ""
+msgstr "Hautatu area"
 
 #: ../src/control/Control.cpp:1995
 msgid "Select another PDF"
-msgstr ""
+msgstr "Hautatu beste PDF"
 
 #: ../src/util/XojMsgBox.cpp:70
 msgid "Select another name"
-msgstr ""
+msgstr "Hautatu beste izena"
 
 #: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:114
 msgid "Select background color"
-msgstr ""
+msgstr "Hautatu atzeko planoaren kolorea"
 
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:39
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:91
 msgid "Select color"
-msgstr ""
+msgstr "Hautatu kolorea"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:64
 msgid "Select rectangle"
