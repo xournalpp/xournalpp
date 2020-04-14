@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 08:29\n"
+"PO-Revision-Date: 2020-04-14 21:38\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -646,19 +646,19 @@ msgstr "Txertatu orria"
 
 #: ../src/control/XournalMain.cpp:273
 msgid "Jump to Page (first Page: 1)"
-msgstr ""
+msgstr "Joan orrialde honetara (lehenengo orrialdea: 1)"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:246
 msgid "Layer"
-msgstr ""
+msgstr "Geruza"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
 msgid "Layer Preview"
-msgstr ""
+msgstr "Geruzaren aurre-ikuspena"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:236
 msgid "Layer selection"
-msgstr ""
+msgstr "Geruzaren hautapena"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:21
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:182
