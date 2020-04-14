@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 06:24\n"
+"PO-Revision-Date: 2020-04-14 07:04\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -466,180 +466,183 @@ msgstr "Errorea PDF oharpenak fitxategian \"{1}\"\n"
 
 #: ../src/gui/GladeGui.cpp:21
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr ""
+msgstr "Errorea \"{1}\" Glade fitxategia kargatzean (saiatu \"{2}\" kargatzen)"
 
 #: ../src/control/Control.cpp:2019
 msgid "Error opening file \"{1}\""
-msgstr ""
+msgstr "Errorea \"{1}\" fitxategia irekitzean"
 
 #: ../src/util/OutputStream.cpp:25
 msgid "Error opening file: \"{1}\""
-msgstr ""
+msgstr "Errorea \"{1}\" fitxategia irekitzean"
 
 #: ../src/control/xojfile/LoadHandler.cpp:439
 #: ../src/control/xojfile/LoadHandler.cpp:460
 msgid "Error reading PDF: {1}"
-msgstr ""
+msgstr "Errorea {1} PDF irakurtzean"
 
 #: ../src/control/xojfile/LoadHandler.cpp:506
 msgid "Error reading width of a stroke: {1}"
-msgstr ""
+msgstr "Errorea trazuaren zabalera irakurtzean: {1}"
 
 #: ../src/control/jobs/ImageExport.cpp:104
 msgid "Error save image #1"
-msgstr ""
+msgstr "Errorea irudia gordetzean #1"
 
 #: ../src/control/jobs/ImageExport.cpp:119
 msgid "Error save image #2"
-msgstr ""
+msgstr "Errorea irudia gordetzean #2"
 
 #: ../src/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
-msgstr ""
+msgstr "Errorea automatikoki gordetzean: {1}"
 
 #: ../src/util/Util.cpp:167
 msgid "Error {1} executing system command: {2}"
-msgstr ""
+msgstr "{1} errorea sistemaren komandoa exekutatzean: {2}"
 
 #: ../src/util/CrashHandler.cpp:39
 msgid "Error: {1}"
-msgstr ""
+msgstr "Errorea: {1}"
 
 #: ../src/control/LatexController.cpp:84
 msgid "Error: {1}\n"
 "Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
-msgstr ""
+msgstr "Errorea: {1}\n"
+"Ezin izan da kpsewhich aurkitu bidean; mesedez instalatu kpsewhich eta jarri bidean."
 
 #: ../src/control/XournalMain.cpp:138
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
-msgstr ""
+msgstr "Errore erregistroa ezin izan da ezabatu. Eskuz egin behar duzu.\n"
+"Logfile: {1}"
 
 #: ../src/control/jobs/BaseExportJob.cpp:16
 msgid "Export PDF"
-msgstr ""
+msgstr "Esportatu PDF gisa"
 
 #: ../src/util/Util.cpp:123 ../src/util/Util.cpp:140
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr ""
+msgstr "Ezin da fitxategia ireki. Eskuz egin behar duzu:\n"
+"URL: {1}"
 
 #: ../src/control/Control.cpp:1963
 msgid "Filename: {1}"
-msgstr ""
+msgstr "Fitxategiaren izena: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:458
 msgid "Fill"
-msgstr ""
+msgstr "Bete"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:472
 msgid "Fine"
-msgstr ""
+msgstr "Fina"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:66
 msgid "Floating Toolbox (experimental)"
-msgstr ""
+msgstr "Tresna-kutxa mugikorra (esperimentala)"
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:54
 msgid "Font"
-msgstr ""
+msgstr "Letra-tipoa"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Forward"
-msgstr ""
+msgstr "Aurrera"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
 msgid "Go to first page"
-msgstr ""
+msgstr "Joan lehenengo orrira"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Go to last page"
-msgstr ""
+msgstr "Joan azken orrira"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:371
 msgid "Go to next layer"
-msgstr ""
+msgstr "Joan hurrengo geruzara"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:366
 msgid "Go to page"
-msgstr ""
+msgstr "Joan orrira"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Go to previous layer"
-msgstr ""
+msgstr "Joan aurreko geruzara"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 msgid "Go to top layer"
-msgstr ""
+msgstr "Joan goiko geruzara"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Graph"
-msgstr ""
+msgstr "Grafikoa"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:108
 msgid "Gray"
-msgstr ""
+msgstr "Grisa"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:11
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:104
 msgid "Green"
-msgstr ""
+msgstr "Berdea"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:342
 msgid "Grid Snapping"
-msgstr ""
+msgstr "Saretara atxikitzen"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:65
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Hand"
-msgstr ""
+msgstr "Eskua"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:68
 msgid "Hide all"
-msgstr ""
+msgstr "Ezkutatu denak"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:59
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Highlighter"
-msgstr ""
+msgstr "Nabarmengailua"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:30
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 msgid "Image"
-msgstr ""
+msgstr "Irudia"
 
 #: ../src/control/XournalMain.cpp:225
 msgid "Image file successfully created"
-msgstr ""
+msgstr "Irudi fitxategia behar bezala sortu da"
 
 #: ../src/control/XournalMain.cpp:272
 msgid "Image output filename (.png / .svg)"
-msgstr ""
+msgstr "Irudiaren irteerako fitxategi-izena (.png / .svg)"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:17
 msgid "Images"
-msgstr ""
+msgstr "Irudiak"
 
 #: ../src/undo/InsertUndoAction.cpp:79
 msgid "Insert elements"
-msgstr ""
+msgstr "Txertatu elementuak"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:61 ../src/undo/InsertUndoAction.cpp:34
 msgid "Insert image"
-msgstr ""
+msgstr "Txertatu irudia"
 
 #: ../src/undo/InsertUndoAction.cpp:36
 msgid "Insert latex"
-msgstr ""
+msgstr "Txertatu latex"
 
 #: ../src/undo/InsertLayerUndoAction.cpp:26
 msgid "Insert layer"
-msgstr ""
+msgstr "Txertatu geruza"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "Insert page"
-msgstr ""
+msgstr "Txertatu orria"
 
 #: ../src/control/XournalMain.cpp:273
 msgid "Jump to Page (first Page: 1)"
