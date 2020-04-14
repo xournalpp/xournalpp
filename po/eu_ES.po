@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 22:10\n"
+"PO-Revision-Date: 2020-04-14 22:16\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -1161,19 +1161,19 @@ msgstr "Formula hutsik dago bihurtzean edo baliogabea da."
 
 #: ../src/control/XournalMain.cpp:110
 msgid "The most recent log file name: {1}"
-msgstr ""
+msgstr "Azken erregistro fitxategiaren izena: {1}"
 
 #: ../src/control/XournalMain.cpp:103
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Xournal++-ek erroreko erregistro fitxategiak sortu ditu. Bidali akats txostena erroreak konpondu ahal izateko."
 
 #: ../src/control/XournalMain.cpp:102
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Xournal++-ek erroreko erregistro fitxategia sortu du. Bidali akats txostena errorea konpondu ahal izateko."
 
 #: ../src/util/XojMsgBox.cpp:89
 msgid "There was an error displaying help: {1}"
-msgstr ""
+msgstr "Laguntza erakusteak huts egin du: {1}"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:84
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
@@ -1182,36 +1182,36 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:81
 msgid "Thickness - don't change"
-msgstr ""
+msgstr "Zabalera - ez aldatu"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:82
 msgid "Thin"
-msgstr ""
+msgstr "Mehea"
 
 #: ../src/control/Control.cpp:2440
 msgid "This document is not saved yet."
-msgstr ""
+msgstr "Dokumentu hau oraindik ez da gorde."
 
 #: ../src/control/PageBackgroundChangeController.cpp:151
 #: ../src/control/tools/ImageHandler.cpp:44
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "Irudia ezin da kargatu. Errore mezua: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
 msgid "Toggle fullscreen"
-msgstr ""
+msgstr "Aldatu pantaila osora"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:56
 msgid "Tool - don't change"
-msgstr ""
+msgstr "Tresna - ez aldatu"
 
 #: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:106
 msgid "Toolbar found: {1}"
-msgstr ""
+msgstr "Tresna-barra aurkitu da: {1}"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:45
 msgid "Toolbars"
-msgstr ""
+msgstr "Tresna-barrak"
 
 #: ../src/util/CrashHandler.cpp:30
 msgid "Trying to emergency save the current open document…"
