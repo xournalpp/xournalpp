@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 14:09\n"
+"PO-Revision-Date: 2020-04-14 14:20\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -167,7 +167,7 @@ msgstr ""
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:226
 msgid "Contents"
-msgstr ""
+msgstr "Tartalom"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:331
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:75
@@ -181,7 +181,7 @@ msgstr "Jelenlegi kijelölés másolása"
 
 #: ../src/undo/CopyUndoAction.cpp:60
 msgid "Copy page"
-msgstr ""
+msgstr "Oldal másolása"
 
 #: ../src/control/jobs/SaveJob.cpp:99
 msgid "Could not create backup! (The file was created from an older Xournal version)"
