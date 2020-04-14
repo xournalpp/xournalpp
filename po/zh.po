@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 17:14\n"
+"PO-Revision-Date: 2020-04-14 17:37\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2044,11 +2044,11 @@ msgstr "透明度"
 
 #: ../ui/main.glade:2334
 msgid "Find next occurrence of the search string"
-msgstr ""
+msgstr "向下查找搜索字符串"
 
 #: ../ui/main.glade:2312
 msgid "Find previous occurrence of the search string"
-msgstr ""
+msgstr "向上查找搜索字符串"
 
 #: ../ui/settings.glade:3026
 msgid "First Page Offset "
@@ -2166,7 +2166,7 @@ msgstr "布局"
 
 #: ../ui/settings.glade:2249
 msgid "Left / Right-Handed"
-msgstr ""
+msgstr "左利手/右利手"
 
 #: ../ui/about.glade:265
 msgid "License"
@@ -2255,7 +2255,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:18
 msgid "Page Template"
-msgstr ""
+msgstr "页面模板"
 
 #: ../ui/exportSettings.glade:175
 msgid "Pages:"
@@ -2263,7 +2263,7 @@ msgstr "页码："
 
 #: ../ui/settings.glade:3058
 msgid "Paired Pages"
-msgstr ""
+msgstr "双页配对"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2284,11 +2284,11 @@ msgstr "纸张背景(_a)"
 #: ../ui/about.glade:247
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr ""
+msgstr "部分基于 Denis Auroux 的 Xournal 软件"
 
 #: ../ui/main.glade:1842
 msgid "Pause"
-msgstr ""
+msgstr "暂停"
 
 #: ../ui/main.glade:1469
 msgid "Pen _Options"
@@ -2296,11 +2296,11 @@ msgstr "画笔选项(_O)"
 
 #: ../ui/settings.glade:3988
 msgid "Playback Settings"
-msgstr ""
+msgstr "播放设置"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr ""
+msgstr "插件管理器"
 
 #: ../ui/main.glade:1907
 msgid "Plugin _Manager"
@@ -2316,11 +2316,11 @@ msgstr "偏好设置"
 
 #: ../ui/settings.glade:2496
 msgid "Presentation Mode"
-msgstr ""
+msgstr "演示模式"
 
 #: ../ui/settings.glade:1136
 msgid "Pressure Sensitivity"
-msgstr ""
+msgstr "压力感应度"
 
 #: ../ui/about.glade:167
 msgid "RELEASE_IDENTIFIER"
@@ -2336,19 +2336,19 @@ msgstr "最近文档(_D)"
 
 #: ../ui/main.glade:1832
 msgid "Record / Stop"
-msgstr ""
+msgstr "录制/停止"
 
 #: ../ui/settings.glade:3923
 msgid "Recording Quality"
-msgstr ""
+msgstr "录制质量"
 
 #: ../ui/exportSettings.glade:112
 msgid "Resolution"
-msgstr ""
+msgstr "分辨率"
 
 #: ../ui/settings.glade:999
 msgid "Right Mouse Button"
-msgstr ""
+msgstr "鼠标右键"
 
 #: ../ui/settings.glade:3091
 msgid "Rotation snapping tolerance"
@@ -2368,11 +2368,11 @@ msgstr "在页面外滚动"
 
 #: ../ui/pageTemplate.glade:174
 msgid "Select Background Color"
-msgstr ""
+msgstr "选择背景色"
 
 #: ../ui/settings.glade:3696
 msgid "Select Folder"
-msgstr ""
+msgstr "选择文件夹"
 
 #: ../ui/images.glade:8
 msgid "Select Image"
@@ -2388,15 +2388,15 @@ msgstr "选择工具条："
 
 #: ../ui/settings.glade:2051
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr ""
+msgstr "选择颜色（文字，笔划等）"
 
 #: ../ui/main.glade:621
 msgid "Set Columns"
-msgstr ""
+msgstr "设置列"
 
 #: ../ui/main.glade:726
 msgid "Set Rows"
-msgstr ""
+msgstr "设置行"
 
 #: ../ui/settings.glade:3398
 msgid "Settings:"
@@ -2404,11 +2404,11 @@ msgstr "设置："
 
 #: ../ui/settings.glade:3407
 msgid "Show Floating Toolbox"
-msgstr ""
+msgstr "显示浮动工具箱"
 
 #: ../ui/settings.glade:1943
 msgid "Show Menubar on Startup"
-msgstr ""
+msgstr "启动时显示菜单栏"
 
 #: ../ui/main.glade:496
 msgid "Show sidebar"
@@ -2424,11 +2424,11 @@ msgstr "垂直滚动条左置"
 
 #: ../ui/settings.glade:3150
 msgid "Snapping"
-msgstr ""
+msgstr "吸附"
 
 #: ../ui/settings.glade:2579
 msgid "Speed for Ctrl + Scroll"
-msgstr ""
+msgstr "Ctrl+滚动 的速度"
 
 #: ../ui/settings.glade:2607
 msgid "Speed for a Zoomstep"
@@ -2444,7 +2444,7 @@ msgstr "保存位置"
 
 #: ../ui/settings.glade:1333
 msgid "Stylus"
-msgstr ""
+msgstr "触控笔"
 
 #: ../ui/settings.glade:1302
 msgid "Stylus Buttons"
