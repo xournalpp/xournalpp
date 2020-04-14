@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 07:36\n"
+"PO-Revision-Date: 2020-04-14 07:51\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -1025,63 +1025,65 @@ msgstr "Hautatu kolorea"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:64
 msgid "Select rectangle"
-msgstr ""
+msgstr "Hautatu laukizuzena"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 msgid "Select region"
-msgstr ""
+msgstr "Hautatu area"
 
 #: ../src/control/XournalMain.cpp:115
 msgid "Send Bugreport"
-msgstr ""
+msgstr "Bidali akats-txostena"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:50
 msgid "Separator"
-msgstr ""
+msgstr "Bereizlea"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Shape Recognizer"
-msgstr ""
+msgstr "Formen identifikatzailea"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:63
 msgid "Show all"
-msgstr ""
+msgstr "Erakutsi dena"
 
 #: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:88
 msgid "Show only not used pages (one unused page)"
-msgstr ""
+msgstr "Erakutsi bakarrik erabili gabeko orriak (erabili gabeko orri bat)"
 
 #: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:89
 msgid "Show only not used pages ({1} unused pages)"
-msgstr ""
+msgstr "Erabili bakarri erabili gabeko orriak ({1} erabili gabeko orri)"
 
 #: ../src/control/XournalMain.cpp:339
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr ""
+msgstr "Xournal++-ek aldi bakoitzean orri bakarra ireki dezake.\n"
+"Besteak baztertzen ditu."
 
 #: ../src/control/XournalMain.cpp:351
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
-msgstr ""
+msgstr "Xournal++-ek ezin du urruneko fitxategirik ireki momentuz.\n"
+"Gorde behar duzu fitxategia direktorio lokal batean."
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:22
 msgid "Staves"
-msgstr ""
+msgstr "Pentagramak"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Stop"
-msgstr ""
+msgstr "Gelditu"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:105
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
 #: ../src/undo/RecognizerUndoAction.cpp:72
 msgid "Stroke recognizer"
-msgstr ""
+msgstr "Trazuen identifikatzailea"
 
 #: ../src/util/CrashHandler.cpp:41
 msgid "Successfully saved document to \"{1}\""
-msgstr ""
+msgstr "Fitxategia behar bezala gorde hemen \"{1}\""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
@@ -1291,7 +1293,7 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:896
 msgid "Wrong count of points ({1})"
-msgstr ""
+msgstr "Puntuen zenbaketa okerra ({1})"
 
 #: ../src/control/xojfile/LoadHandler.cpp:906
 msgid "Wrong number of points, got {1}, expected {2}"
