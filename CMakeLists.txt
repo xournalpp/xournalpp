@@ -24,6 +24,9 @@ core_find_git_rev(RELEASE_IDENTIFIER)
 string(TIMESTAMP PACKAGE_TIMESTAMP "%Y%m%d.%H%M" UTC)
 set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION}~git${PACKAGE_TIMESTAMP}-${RELEASE_IDENTIFIER}-${DISTRO_CODENAME})
 
+include(TargetArch)
+target_architecture(PACKAGE_ARCH)
+
 configure_file(cmake/VERSION.in VERSION)
 
 configure_file (
@@ -310,9 +313,6 @@ set (CPACK_PACKAGE_NAME "${PROJECT_PACKAGE}")
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Xournal++ - Open source hand note-taking program")
 set (CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 set (CPACK_PACKAGE_INSTALL_DIRECTORY "Xournal++")
-
-include(TargetArch)
-target_architecture(PACKAGE_ARCH)
 set (CPACK_PACKAGE_FILE_NAME "xournalpp-${PROJECT_VERSION}-${DISTRO_NAME}-${DISTRO_CODENAME}-${PACKAGE_ARCH}")
 
 # .deb package options
