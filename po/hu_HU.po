@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 14:20\n"
+"PO-Revision-Date: 2020-04-14 15:09\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -276,7 +276,7 @@ msgstr ""
 
 #: ../src/control/LatexController.cpp:110
 msgid "Could not save .tex file: {1}"
-msgstr ""
+msgstr "Nem sikerült elmenteni a .tex fájlt: {1}"
 
 #: ../src/control/LatexController.cpp:129
 msgid "Could not start pdflatex: {1} (exit code: {2})"
