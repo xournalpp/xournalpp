@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 22:16\n"
+"PO-Revision-Date: 2020-04-14 22:21\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -1215,40 +1215,40 @@ msgstr "Tresna-barrak"
 
 #: ../src/util/CrashHandler.cpp:30
 msgid "Trying to emergency save the current open document…"
-msgstr ""
+msgstr "Une honetan irekita dagoen dokumentua larrialdiz gordetzen saiatzen…"
 
 #: ../src/gui/PageView.cpp:346
 msgid "Unable to play audio recording {1}"
-msgstr ""
+msgstr "Ezin da erreproduzitu audio grabazioa {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:325
 #: ../src/undo/UndoRedoHandler.cpp:203
 msgid "Undo"
-msgstr ""
+msgstr "Desegin"
 
 #: ../src/undo/UndoRedoHandler.cpp:198
 msgid "Undo: "
-msgstr ""
+msgstr "Desegin: "
 
 #: ../src/control/xojfile/LoadHandler.cpp:278
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "Ustekabeko root etiketa: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:299
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "Ustekabeko etiketa dokumentuan: \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:488
 msgid "Unknown background type: {1}"
-msgstr ""
+msgstr "Atzeko plano mota ezezaguna: {1}"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:54
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "Kolore balio ezezaguna: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:446
 msgid "Unknown domain type: {1}"
-msgstr ""
+msgstr "Domeinu mota ezezaguna: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:221
 msgid "Unknown parser error"
