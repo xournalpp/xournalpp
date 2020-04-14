@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 17:37\n"
+"PO-Revision-Date: 2020-04-14 17:47\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -311,7 +311,7 @@ msgstr "未能写上背景\"{1}\"，不管啦继续哦..."
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:74
 msgid "Create new layer"
-msgstr "创建新层"
+msgstr "创建新图层"
 
 #: ../src/gui/dialog/FormatDialog.cpp:67
 msgid "Custom"
@@ -2448,7 +2448,7 @@ msgstr "触控笔"
 
 #: ../ui/settings.glade:1302
 msgid "Stylus Buttons"
-msgstr ""
+msgstr "触控笔按钮"
 
 #: ../ui/settings.glade:3348
 msgid "Successive (ms)"
@@ -2456,11 +2456,11 @@ msgstr ""
 
 #: ../ui/main.glade:2072
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "将当前页面与上页切换"
 
 #: ../ui/main.glade:2094
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "将当前页面与下页切换"
 
 #: ../ui/main.glade:840
 msgid "T_oolbars"
@@ -2472,7 +2472,7 @@ msgstr "模板："
 
 #: ../ui/settings.glade:1660 ../ui/settings.glade:1673
 msgid "Test"
-msgstr ""
+msgstr "测试"
 
 #: ../ui/main.glade:1820
 msgid "Text Font..."
@@ -2484,15 +2484,15 @@ msgstr "标尺的单位是厘米"
 
 #: ../ui/settings.glade:775
 msgid "These settings take only effect if the experimental input system is activated"
-msgstr ""
+msgstr "这些设置仅在实验性输入系统激活时生效"
 
 #: ../ui/settings.glade:628
 msgid "This is an experimental feature! Use it with care."
-msgstr ""
+msgstr "这是实验功能！小心使用。"
 
 #: ../ui/settings.glade:1507
 msgid "Timeout"
-msgstr ""
+msgstr "超时"
 
 #: ../ui/settings.glade:1420 ../ui/settings.glade:1889
 #: ../ui/settingsDeviceClassConfig.glade:46
@@ -2805,23 +2805,23 @@ msgstr "涂白(_w)"
 
 #: ../ui/pageTemplate.glade:158
 msgid "change"
-msgstr ""
+msgstr "更改"
 
 #: ../ui/exportSettings.glade:223
 msgid "dpi"
-msgstr ""
+msgstr "点/每英寸"
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
-msgstr ""
+msgstr "启用，"
 
 #: ../ui/settings.glade:266
 msgid "every"
-msgstr ""
+msgstr "所有"
 
 #: ../ui/pageTemplate.glade:51
 msgid "load from file"
-msgstr ""
+msgstr "从文件加载"
 
 #: ../ui/settings.glade:293
 msgid "minutes"
@@ -2830,7 +2830,7 @@ msgstr "分钟"
 #: ../ui/settings.glade:2960 ../ui/settings.glade:2971
 #: ../ui/settings.glade:3219
 msgid "pixels"
-msgstr ""
+msgstr "像素"
 
 #: ../ui/settings.glade:1551
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
@@ -2838,7 +2838,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:37
 msgid "save to file"
-msgstr ""
+msgstr "保存文件"
 
 #: ../ui/main.glade:1524 ../ui/main.glade:1670 ../ui/main.glade:1779
 msgid "ver_y thick"
