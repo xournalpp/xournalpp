@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 06:14\n"
+"PO-Revision-Date: 2020-04-14 06:24\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -461,7 +461,8 @@ msgstr "Ezabagailua"
 #: ../src/control/Control.cpp:2187
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "Errorea PDF oharpenak fitxategian \"{1}\"\n"
+"{2}"
 
 #: ../src/gui/GladeGui.cpp:21
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
