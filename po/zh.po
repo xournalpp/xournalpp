@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 15:31\n"
+"PO-Revision-Date: 2020-04-14 16:59\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1716,7 +1716,7 @@ msgstr "<i>选择按下缺省按钮后的工具和设置</i>"
 
 #: ../ui/settings.glade:1592
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
-msgstr ""
+msgstr "<i>设定在手势识别模式下触发的指令。这些指令会在UI线程中执行，请确保不会造成阻碍！</i>"
 
 #: ../ui/settings.glade:3749
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments. \n"
@@ -1937,7 +1937,10 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "<i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "从起点向左拖拽，效果如同按住Shift键。\n"
+"向上拖拽，效果如同按住Ctrl键。\n\n"
+"临界半径：达到此半径后，设置会锁定，到笔划结束为止。\n\n"
+"<i>有助于无键盘操作。</i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
@@ -1953,7 +1956,7 @@ msgstr "绘图区域"
 
 #: ../ui/settings.glade:3234
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
-msgstr ""
+msgstr "绘图工具 - 依据笔划方向调整设置【实验性】"
 
 #: ../ui/main.glade:2540
 msgid "Duplicate"
@@ -1973,7 +1976,7 @@ msgstr ""
 
 #: ../ui/settings.glade:544
 msgid "Enable Autoloading of Journals"
-msgstr ""
+msgstr "启用自动加载文档"
 
 #: ../ui/settings.glade:242
 msgid "Enable Autosaving"
@@ -1981,7 +1984,7 @@ msgstr "启用自动保存"
 
 #: ../ui/settings.glade:1836
 msgid "Enable GTK Touch / Scrolling workaround  (requires restart)"
-msgstr ""
+msgstr "启用GTK触摸/滚动特别修复模式【需重启】"
 
 #: ../ui/settings.glade:1114
 msgid "Enable Pressure Sensitivity"
