@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 17:47\n"
+"PO-Revision-Date: 2020-04-14 18:14\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2130,7 +2130,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3284
 msgid "Ignore Time (ms)"
-msgstr ""
+msgstr "忽略时间（毫秒）"
 
 #: ../ui/settings.glade:3773
 msgid "Input Device"
@@ -2158,7 +2158,7 @@ msgstr "在此前插入页面"
 
 #: ../ui/main.glade:2115
 msgid "Insert a copy of the current page below"
-msgstr ""
+msgstr "在下方插入当前页面的副本"
 
 #: ../ui/main.glade:512
 msgid "Layout"
@@ -2308,7 +2308,7 @@ msgstr ""
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ was restarted"
-msgstr ""
+msgstr "插件更改需要 Xournal++ 重启才会生效"
 
 #: ../ui/main.glade:440
 msgid "Preferences"
@@ -2537,11 +2537,11 @@ msgstr "宽度："
 
 #: ../ui/about.glade:232
 msgid "With help from the community"
-msgstr ""
+msgstr "来自社区的热心帮助"
 
 #: ../ui/settings.glade:1858
 msgid "Workaround"
-msgstr ""
+msgstr "特殊解决方案"
 
 #: ../ui/settings.glade:112
 msgid "Xournal++ Preferences"
@@ -2553,7 +2553,7 @@ msgstr "缩放"
 
 #: ../ui/settings.glade:1789
 msgid "Zoom Gestures"
-msgstr ""
+msgstr "缩放手势"
 
 #: ../ui/settings.glade:2661
 msgid "Zoom Speed"
