@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-15 21:21\n"
+"PO-Revision-Date: 2020-04-15 21:41\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -1819,95 +1819,95 @@ msgstr "Orrien arteko atzeko planoa"
 
 #: ../ui/settings.glade:2160
 msgid "Big cursor for pen"
-msgstr ""
+msgstr "Kurtsore handia arkatzarentzat"
 
 #: ../ui/settings.glade:2015
 msgid "Border color"
-msgstr ""
+msgstr "Ertzaren kolorea"
 
 #: ../ui/settings.glade:2000
 msgid "Border color for current page and other selections"
-msgstr ""
+msgstr "Ertzaren kolorea uneko orrirako eta beste hautapenetarako"
 
 #: ../ui/about.glade:127
 msgid "Built on"
-msgstr ""
+msgstr "Integratua"
 
 #: ../ui/settings.glade:1208
 msgid "Button 1"
-msgstr ""
+msgstr "Botoi 1"
 
 #: ../ui/settings.glade:1246
 msgid "Button 2"
-msgstr ""
+msgstr "Botoi 2"
 
 #: ../ui/settings.glade:2096
 msgid "Colors"
-msgstr ""
+msgstr "Koloreak"
 
 #: ../ui/main.glade:1134
 msgid "Configure Page Template"
-msgstr ""
+msgstr "Konfiguratu orriaren txantiloia"
 
 #: ../ui/pageTemplate.glade:185
 msgid "Copy last page settings"
-msgstr ""
+msgstr "Kopiatu azken orriaren ezarpenak"
 
 #: ../ui/pageTemplate.glade:296
 msgid "Copy last page size"
-msgstr ""
+msgstr "Kopiatu azken orriaren tamaina"
 
 #: ../ui/exportSettings.glade:158
 msgid "Current page"
-msgstr ""
+msgstr "Uneko orria"
 
 #: ../ui/settings.glade:2182
 msgid "Cursor"
-msgstr ""
+msgstr "Kurtsorea"
 
 #: ../ui/settings.glade:1699
 msgid "Custom Commands (for Method \"Custom\")"
-msgstr ""
+msgstr "Agindu pertsonalizatuak (Pertsonalizatua metodoarentzat)"
 
 #: ../ui/settings.glade:2074
 msgid "Dark Theme (requires restart)"
-msgstr ""
+msgstr "Gai iluna (berrabiaraztea eskatzen du)"
 
 #: ../ui/settings.glade:498
 msgid "Default Save Name"
-msgstr ""
+msgstr "Gordetzeko izen lehenetsia"
 
 #: ../ui/settings.glade:3955
 msgid "Default Seek Time (in seconds)"
-msgstr ""
+msgstr "Kokatze denbora lehenetsia (segundotan)"
 
 #: ../ui/settings.glade:386
 msgid "Default name: "
-msgstr ""
+msgstr "Izen lehenetsia: "
 
 #: ../ui/settings.glade:3608
 msgid "Defaults"
-msgstr ""
+msgstr "Lehenetsiak"
 
 #: ../ui/main.glade:1172
 msgid "Delete Layer"
-msgstr ""
+msgstr "Ezabatu geruza"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
-msgstr ""
+msgstr "Ezabatu trazua"
 
 #: ../ui/main.glade:2136
 msgid "Delete this page"
-msgstr ""
+msgstr "Ezabatu orri hau"
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
-msgstr ""
+msgstr "Gailua"
 
 #: ../ui/settings.glade:1627
 msgid "Disable"
-msgstr ""
+msgstr "Desgaitu"
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
@@ -2081,31 +2081,31 @@ msgstr "Joan orrira"
 
 #: ../ui/settings.glade:3104
 msgid "Grid snapping tolerance"
-msgstr ""
+msgstr "Saretara atxikitzeko tolerantzia"
 
 #: ../ui/main.glade:1451
 msgid "H_and Tool"
-msgstr ""
+msgstr "Esku_a tresna"
 
 #: ../ui/settings.glade:1724
 msgid "Hand Recognition"
-msgstr ""
+msgstr "Eskua ezagutzea"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
-msgstr ""
+msgstr "Altuera:"
 
 #: ../ui/main.glade:888 ../ui/settings.glade:2357 ../ui/settings.glade:2424
 msgid "Hide Menubar"
-msgstr ""
+msgstr "Ezkutatu menu-barra"
 
 #: ../ui/settings.glade:2373 ../ui/settings.glade:2440
 msgid "Hide Sidebar"
-msgstr ""
+msgstr "Ezkutatu alboko panela"
 
 #: ../ui/settings.glade:2278
 msgid "Hide the horizontal scrollbar"
-msgstr ""
+msgstr "Ezkutatu korritze barra horizontala"
 
 #: ../ui/settings.glade:2293
 msgid "Hide the vertical scrollbar"
@@ -2313,47 +2313,47 @@ msgstr ""
 
 #: ../ui/main.glade:440
 msgid "Preferences"
-msgstr ""
+msgstr "Hobespenak"
 
 #: ../ui/settings.glade:2496
 msgid "Presentation Mode"
-msgstr ""
+msgstr "Aurkezpen modua"
 
 #: ../ui/settings.glade:1136
 msgid "Pressure Sensitivity"
-msgstr ""
+msgstr "Presio sentsibilitatea"
 
 #: ../ui/about.glade:167
 msgid "RELEASE_IDENTIFIER"
-msgstr ""
+msgstr "RELEASE_IDENTIFIER"
 
 #: ../ui/exportSettings.glade:127
 msgid "Range"
-msgstr ""
+msgstr "Tartea"
 
 #: ../ui/main.glade:190
 msgid "Recent _Documents"
-msgstr ""
+msgstr "Azken _dokumentuak"
 
 #: ../ui/main.glade:1832
 msgid "Record / Stop"
-msgstr ""
+msgstr "Grabatu / Gelditu"
 
 #: ../ui/settings.glade:3923
 msgid "Recording Quality"
-msgstr ""
+msgstr "Grabazioaren kalitatea"
 
 #: ../ui/exportSettings.glade:112
 msgid "Resolution"
-msgstr ""
+msgstr "Bereizmena"
 
 #: ../ui/settings.glade:999
 msgid "Right Mouse Button"
-msgstr ""
+msgstr "Saguaren eskuin klik"
 
 #: ../ui/settings.glade:3091
 msgid "Rotation snapping tolerance"
-msgstr ""
+msgstr "Biraketaren atxikitzeko tolerantzia"
 
 #: ../ui/settings.glade:3862
 msgid "Sample Rate"
