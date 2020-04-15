@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-15 18:58\n"
+"PO-Revision-Date: 2020-04-15 21:21\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -1735,85 +1735,87 @@ msgstr "<i>Izen hori proposatuko da dokumentu berri bat gordetzen baduzu.</i>"
 
 #: ../ui/settings.glade:2692
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
-msgstr ""
+msgstr "<i>Ziurtatzeko zooma %100ean elementuen tamaina naturala da. (berrabiarazi behar da)</i>"
 
 #: ../ui/settings.glade:1962
 msgid "<i>Toggle visibility of menubar with F10</i>"
-msgstr ""
+msgstr "<i>Aldatu menu-barraren ikusgarritasuna F10-rekin</i>"
 
 #: ../ui/settings.glade:1755
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
-msgstr ""
+msgstr "<i>Erabili pintza keinuak zoom egiteko koadernoaren orrietan.</i>"
 
 #: ../ui/settings.glade:1384
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
-msgstr ""
+msgstr "<i>Konfiguratu ditzakezu GTK-k ukipen-pantaila gisa identifikatzen ez dituen gailuak, jokatzeko ukipen-pantaila moduan.</i>"
 
 #: ../ui/about.glade:73
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
-msgstr ""
+msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+"<i>Hurrengo belaunaldia</i>"
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
-msgstr ""
+msgstr "Xournal++-i buruz"
 
 #: ../ui/settings.glade:3430
 msgid "Action on Tool Tap"
-msgstr ""
+msgstr "Tap tresnaren ekintza"
 
 #: ../ui/settings.glade:2921
 msgid "Add additional horizontal space of"
-msgstr ""
+msgstr "Gehitu espazio horizontal gehiago"
 
 #: ../ui/settings.glade:2899
 msgid "Add additional vertical space of"
-msgstr ""
+msgstr "Gehitu espazio bertikal gehiago"
 
 #: ../ui/exportSettings.glade:142
 msgid "All pages"
-msgstr ""
+msgstr "Orri guztiak"
 
 #: ../ui/settings.glade:3396
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
-msgstr ""
+msgstr "Hiru baldintzak bete behar dira trazua ahazteko.\n"
+"Denbora eta luzeran motza izan behar du eta duela gutxi ezin dugu beste trazu bat ahaztu."
 
 #: ../ui/settings.glade:3830
 msgid "Audio Devices"
-msgstr ""
+msgstr "Audio gailuak"
 
 #: ../ui/settings.glade:4035
 msgid "Audio Recording"
-msgstr ""
+msgstr "Audio-grabazioa"
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
-msgstr ""
+msgstr "Egilea: "
 
 #: ../ui/about.glade:186
 msgid "Authors:"
-msgstr ""
+msgstr "Egileak:"
 
 #: ../ui/settings.glade:1522
 msgid "Autodetect"
-msgstr ""
+msgstr "Detektatu automatikoki"
 
 #: ../ui/settings.glade:566
 msgid "Autoloading Journals"
-msgstr ""
+msgstr "Koadernoen karga automatikoa"
 
 #: ../ui/settings.glade:323
 msgid "Autosaving"
-msgstr ""
+msgstr "Gorde automatikoki"
 
 #: ../ui/settings.glade:472
 msgid "Available Placeholders"
-msgstr ""
+msgstr "Leku-markak eskuragarri"
 
 #: ../ui/settings.glade:2026
 msgid "Background color between pages"
-msgstr ""
+msgstr "Orrien arteko atzeko planoa"
 
 #: ../ui/settings.glade:2160
 msgid "Big cursor for pen"
