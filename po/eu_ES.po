@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-15 22:29\n"
+"PO-Revision-Date: 2020-04-15 22:53\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -2211,108 +2211,109 @@ msgstr "Saguaren botoiak"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
-msgstr ""
+msgstr "Sagua+teklatuaren konbinazioa"
 
 #: ../ui/main.glade:2562
 msgid "Move Down"
-msgstr ""
+msgstr "Mugitu behera"
 
 #: ../ui/main.glade:2554
 msgid "Move Up"
-msgstr ""
+msgstr "Mugitu gora"
 
 #: ../ui/main.glade:1066
 msgid "N_ext annotated page"
-msgstr ""
+msgstr "Hurrengo oharren orria"
 
 #: ../ui/main.glade:1113
 msgid "New Page _After"
-msgstr ""
+msgstr "Orri berria ondoren"
 
 #: ../ui/main.glade:1103
 msgid "New Page _Before"
-msgstr ""
+msgstr "Orri berria _aurretik"
 
 #: ../ui/main.glade:1124
 msgid "New Page at _End"
-msgstr ""
+msgstr "Orri berria _bukaeran"
 
 #: ../ui/main.glade:1161
 msgid "New _Layer"
-msgstr ""
+msgstr "_Geruza berria"
 
 #: ../ui/settings.glade:3025
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
-msgstr ""
+msgstr "Desplazatu lehenengo orria hainbat orri <b>Parekatu orriak</b> gaituta dagoenean"
 
 #: ../ui/settings.glade:849
 msgid "Options"
-msgstr ""
+msgstr "Aukerak"
 
 #: ../ui/settings.glade:3796
 msgid "Output Device"
-msgstr ""
+msgstr "Irteerako gailua"
 
 #: ../ui/main.glade:1077
 msgid "P_revious annotated Page"
-msgstr ""
+msgstr "Aurreko oharpen orria"
 
 #: ../ui/pageTemplate.glade:18
 msgid "Page Template"
-msgstr ""
+msgstr "Orriaren txantiloia"
 
 #: ../ui/exportSettings.glade:175
 msgid "Pages:"
-msgstr ""
+msgstr "Orriak:"
 
 #: ../ui/settings.glade:3058
 msgid "Paired Pages"
-msgstr ""
+msgstr "Parekatutako orriak"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
-msgstr ""
+msgstr "Paper-formatua"
 
 #: ../ui/main.glade:1199
 msgid "Paper _Color"
-msgstr ""
+msgstr "Paperaren _kolorea"
 
 #: ../ui/main.glade:1189
 msgid "Paper _Format"
-msgstr ""
+msgstr "Paperaren _formatua"
 
 #: ../ui/main.glade:1209
 msgid "Paper b_ackground"
-msgstr ""
+msgstr "Paperaren atzeko planoa"
 
 #: ../ui/about.glade:247
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr ""
+msgstr "Xournal-en partzialki oinarritua\n"
+"Denis Auroux-ek egina"
 
 #: ../ui/main.glade:1842
 msgid "Pause"
-msgstr ""
+msgstr "Pausatu"
 
 #: ../ui/main.glade:1469
 msgid "Pen _Options"
-msgstr ""
+msgstr "Arkatzaren aukerak"
 
 #: ../ui/settings.glade:3988
 msgid "Playback Settings"
-msgstr ""
+msgstr "Erreprodukzio zerrendaren ezarpenak"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr ""
+msgstr "Plugin kudeatzailea"
 
 #: ../ui/main.glade:1907
 msgid "Plugin _Manager"
-msgstr ""
+msgstr "Plugin _kudeatzailea"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ was restarted"
-msgstr ""
+msgstr "Pluginen aldaketek aplikatuko dira Xournal++ abiarazi ondoren"
 
 #: ../ui/main.glade:440
 msgid "Preferences"
@@ -2517,203 +2518,203 @@ msgstr "Saiatu lehenengo objektua hautatzen; ezer hautatuta ez badago, erakutsi 
 
 #: ../ui/settings.glade:3038
 msgid "Usually 0 or 1"
-msgstr ""
+msgstr "Normalean 0 edo 1"
 
 #: ../ui/about.glade:101
 msgid "Version"
-msgstr ""
+msgstr "Bertsioa"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Version: "
-msgstr ""
+msgstr "Bertsioa: "
 
 #: ../ui/settings.glade:2527
 msgid "View"
-msgstr ""
+msgstr "Ikusi"
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
-msgstr ""
+msgstr "Tinta zuzentzailea"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
-msgstr ""
+msgstr "Zabalera:"
 
 #: ../ui/about.glade:232
 msgid "With help from the community"
-msgstr ""
+msgstr "Komunitatearen laguntzarekin"
 
 #: ../ui/settings.glade:1858
 msgid "Workaround"
-msgstr ""
+msgstr "Irtenbidea"
 
 #: ../ui/settings.glade:112
 msgid "Xournal++ Preferences"
-msgstr ""
+msgstr "Xournal++ hobespenak"
 
 #: ../ui/settings.glade:2817
 msgid "Zoom"
-msgstr ""
+msgstr "Zooma"
 
 #: ../ui/settings.glade:1789
 msgid "Zoom Gestures"
-msgstr ""
+msgstr "Zoom keinuak"
 
 #: ../ui/settings.glade:2661
 msgid "Zoom Speed"
-msgstr ""
+msgstr "Zoomaren abiadura"
 
 #: ../ui/main.glade:633
 msgid "_1 Column"
-msgstr ""
+msgstr "_1 zutabea"
 
 #: ../ui/main.glade:738
 msgid "_1 Row"
-msgstr ""
+msgstr "_1 errenkada"
 
 #: ../ui/main.glade:644
 msgid "_2 Columns"
-msgstr ""
+msgstr "_2 zutabe"
 
 #: ../ui/main.glade:749
 msgid "_2 Rows"
-msgstr ""
+msgstr "_2 errenkada"
 
 #: ../ui/main.glade:655
 msgid "_3 Columns"
-msgstr ""
+msgstr "_3 zutabe"
 
 #: ../ui/main.glade:760
 msgid "_3 Rows"
-msgstr ""
+msgstr "_3 errenkada"
 
 #: ../ui/main.glade:666
 msgid "_4 Columns"
-msgstr ""
+msgstr "_4 zutabe"
 
 #: ../ui/main.glade:771
 msgid "_4 Rows"
-msgstr ""
+msgstr "_4 errenkada"
 
 #: ../ui/main.glade:677
 msgid "_5 Columns"
-msgstr ""
+msgstr "_5 zutabe"
 
 #: ../ui/main.glade:782
 msgid "_5 Rows"
-msgstr ""
+msgstr "_5 errenkada"
 
 #: ../ui/main.glade:688
 msgid "_6 Columns"
-msgstr ""
+msgstr "_6 zutabe"
 
 #: ../ui/main.glade:793
 msgid "_6 Rows"
-msgstr ""
+msgstr "_6 errenkada"
 
 #: ../ui/main.glade:699
 msgid "_7 Columns"
-msgstr ""
+msgstr "_7 zutabe"
 
 #: ../ui/main.glade:804
 msgid "_7 Rows"
-msgstr ""
+msgstr "_7 errenkada"
 
 #: ../ui/main.glade:710
 msgid "_8 Columns"
-msgstr ""
+msgstr "_8 zutabe"
 
 #: ../ui/main.glade:815
 msgid "_8 Rows"
-msgstr ""
+msgstr "_8 errenkada"
 
 #: ../ui/main.glade:199
 msgid "_Annotate PDF"
-msgstr ""
+msgstr "_PDF oharpenak"
 
 #: ../ui/main.glade:593
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "_Goitik behera"
 
 #: ../ui/main.glade:608
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "_Zut/Errenk"
 
 #: ../ui/main.glade:868
 msgid "_Customize"
-msgstr ""
+msgstr "_Pertsonalizatu"
 
 #: ../ui/main.glade:1293
 msgid "_Default Tools"
-msgstr ""
+msgstr "_Tresna lehenetsiak"
 
 #: ../ui/main.glade:1144
 msgid "_Delete Page"
-msgstr ""
+msgstr "_Ezabatu orria"
 
 #: ../ui/main.glade:295
 msgid "_Edit"
-msgstr ""
+msgstr "_Editatu"
 
 #: ../ui/main.glade:1245
 msgid "_Eraser"
-msgstr ""
+msgstr "_Ezabatzailea"
 
 #: ../ui/main.glade:240
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_Esportatu PDF gisa"
 
 #: ../ui/main.glade:155
 msgid "_File"
-msgstr ""
+msgstr "_Fitxategia"
 
 #: ../ui/main.glade:967
 msgid "_First Page"
-msgstr ""
+msgstr "_Lehenengo orria"
 
 #: ../ui/main.glade:989
 msgid "_Goto Page"
-msgstr ""
+msgstr "_Joan orrira"
 
 #: ../ui/main.glade:1921
 msgid "_Help"
-msgstr ""
+msgstr "_Laguntza"
 
 #: ../ui/main.glade:1257
 msgid "_Highlighter"
-msgstr ""
+msgstr "_Nabarmentzailea"
 
 #: ../ui/main.glade:524
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Horizontala"
 
 #: ../ui/main.glade:1281
 msgid "_Image"
-msgstr ""
+msgstr "_Irudia"
 
 #: ../ui/main.glade:1092
 msgid "_Journal"
-msgstr ""
+msgstr "_Koadernoa"
 
 #: ../ui/main.glade:1011
 msgid "_Last Page"
-msgstr ""
+msgstr "_Azken orria"
 
 #: ../ui/main.glade:553
 msgid "_Left To Right"
-msgstr ""
+msgstr "_Ezkerretik eskuinera"
 
 #: ../ui/main.glade:858
 msgid "_Manage"
-msgstr ""
+msgstr "_Kudeatu"
 
 #: ../ui/main.glade:956
 msgid "_Navigation"
-msgstr ""
+msgstr "_Nabigazioa"
 
 #: ../ui/main.glade:1039
 msgid "_Next Layer"
-msgstr ""
+msgstr "_Hurrengo geruza"
 
 #: ../ui/main.glade:1000
 msgid "_Next Page"
