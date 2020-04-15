@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-15 06:44\n"
+"PO-Revision-Date: 2020-04-15 07:00\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -1912,50 +1912,53 @@ msgstr "Desaktibatu gailu hau marrazteko"
 
 #: ../ui/settings.glade:2308
 msgid "Disable scrollbar fade out"
-msgstr ""
+msgstr "Desaktibatu korritze barra desagertzea"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
-msgstr ""
+msgstr "Desaktibatua"
 
 #: ../ui/settings.glade:1496
 msgid "Disabling Method"
-msgstr ""
+msgstr "Desaktibatzeko metodoa"
 
 #: ../ui/settings.glade:2786
 msgid "Display DPI Calibration"
-msgstr ""
+msgstr "Bistaratu DPI kalibrazioa"
 
 #: ../ui/settings.glade:3271
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
-msgstr ""
+msgstr "Ez ezazu denbora eta luzera laburreko sarrerak marraztu, ondoz ondo ez badaude. Horren ordez, erakutsi tresna-kutxa mugikorra."
 
 #: ../ui/settings.glade:648 ../ui/settings.glade:815 ../ui/settings.glade:3184
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "<i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "Abiapuntutik EZKERRERA arrastatzeak Mayus tekla zanpatzearen baliokidea da.\n"
+"GORA arrastatzeak Control tekla zanpatzearen baliokidea da.\n\n"
+"Zehaztapen erradioa: zehazten du aldagailuak zein erradioan blokeatuko diren marrazkia bukatu arte.\n\n"
+"<i> Teklaturik gabe funtzionatzeko erabilgarria. </i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr ""
+msgstr "Arrastatu eta jaregin osagaiak hemendik tresna-barrara eta atzera."
 
 #: ../ui/main.glade:1364
 msgid "Draw _Line"
-msgstr ""
+msgstr "Marraztu _lerroa"
 
 #: ../ui/settings.glade:3462
 msgid "Drawing Area"
-msgstr ""
+msgstr "Marrazteko area"
 
 #: ../ui/settings.glade:3234
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
-msgstr ""
+msgstr "Marrazteko tresnak - Ezarri aldatzaileak marrazkiaren norabidearen arabera (esperimentala)"
 
 #: ../ui/main.glade:2540
 msgid "Duplicate"
-msgstr ""
+msgstr "Bikoiztu"
 
 #: ../ui/main.glade:2577
 msgid "Edit (not implemented yet)"
