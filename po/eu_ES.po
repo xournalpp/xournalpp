@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-15 22:01\n"
+"PO-Revision-Date: 2020-04-15 22:16\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -2489,28 +2489,28 @@ msgstr "Ezarpen hauek bakarrik izango dute eragina sarrerako sistema esperimenta
 
 #: ../ui/settings.glade:628
 msgid "This is an experimental feature! Use it with care."
-msgstr ""
+msgstr "Hau eginbide esperimentala da! Erabili kontu handiz."
 
 #: ../ui/settings.glade:1507
 msgid "Timeout"
-msgstr ""
+msgstr "Denbora-muga"
 
 #: ../ui/settings.glade:1420 ../ui/settings.glade:1889
 #: ../ui/settingsDeviceClassConfig.glade:46
 msgid "Touchscreen"
-msgstr ""
+msgstr "Ukipen-pantaila"
 
 #: ../ui/fillTransparency.glade:14
 msgid "Transparency settings"
-msgstr ""
+msgstr "Gardentasunaren ezarpenak"
 
 #: ../ui/settings.glade:3377
 msgid "Try to select object first."
-msgstr ""
+msgstr "Saiatu lehenengo objektuak hautatzen."
 
 #: ../ui/settings.glade:3382 ../ui/settings.glade:3412
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
-msgstr ""
+msgstr "Saiatu lehenengo objektua hautatzen; ezer hautatuta ez badago, erakutsi tresna-barra mugikorra gaituta badago."
 
 #: ../ui/settings.glade:3038
 msgid "Usually 0 or 1"
@@ -2714,134 +2714,134 @@ msgstr ""
 
 #: ../ui/main.glade:1000
 msgid "_Next Page"
-msgstr ""
+msgstr "Hurre_ngo orria"
 
 #: ../ui/main.glade:465
 msgid "_Pair Pages"
-msgstr ""
+msgstr "_Parekatu orriak"
 
 #: ../ui/main.glade:1233
 msgid "_Pen"
-msgstr ""
+msgstr "_Arkatza"
 
 #: ../ui/main.glade:1896
 msgid "_Plugin"
-msgstr ""
+msgstr "_Gehigarria"
 
 #: ../ui/main.glade:475
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "_Aurkezpen modua"
 
 #: ../ui/main.glade:1028
 msgid "_Previous Layer"
-msgstr ""
+msgstr "_Aurreko geruza"
 
 #: ../ui/main.glade:978
 msgid "_Previous Page"
-msgstr ""
+msgstr "_Aurreko orria"
 
 #: ../ui/main.glade:564
 msgid "_Right To Left"
-msgstr ""
+msgstr "_Eskuinetik ezkerrera"
 
 #: ../ui/main.glade:1309
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "_Formen identifikatzailea"
 
 #: ../ui/main.glade:1269
 msgid "_Text"
-msgstr ""
+msgstr "_Testua"
 
 #: ../ui/main.glade:1222
 msgid "_Tools"
-msgstr ""
+msgstr "_Tresnak"
 
 #: ../ui/main.glade:1050
 msgid "_Top Layer"
-msgstr ""
+msgstr "_Goiko geruza"
 
 #: ../ui/main.glade:582
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "_Goitik behera"
 
 #: ../ui/main.glade:535
 msgid "_Vertical"
-msgstr ""
+msgstr "_Bertikala"
 
 #: ../ui/main.glade:1427
 msgid "_Vertical Space"
-msgstr ""
+msgstr "_Espazio bertikala"
 
 #: ../ui/main.glade:454
 msgid "_View"
-msgstr ""
+msgstr "_Ikusi"
 
 #: ../ui/main.glade:1709
 msgid "_delete strokes"
-msgstr ""
+msgstr "_ezabatu trazuak"
 
 #: ../ui/main.glade:1491 ../ui/main.glade:1637 ../ui/main.glade:1746
 msgid "_fine"
-msgstr ""
+msgstr "_fina"
 
 #: ../ui/main.glade:1502 ../ui/main.glade:1648 ../ui/main.glade:1757
 msgid "_medium"
-msgstr ""
+msgstr "_ertaina"
 
 #: ../ui/main.glade:1687
 msgid "_standard"
-msgstr ""
+msgstr "_estandarra"
 
 #: ../ui/main.glade:1513 ../ui/main.glade:1659 ../ui/main.glade:1768
 msgid "_thick"
-msgstr ""
+msgstr "_zabala"
 
 #: ../ui/main.glade:1480 ../ui/main.glade:1626 ../ui/main.glade:1735
 msgid "_very fine"
-msgstr ""
+msgstr "_oso fina"
 
 #: ../ui/main.glade:1698
 msgid "_whiteout"
-msgstr ""
+msgstr "_tinta zuzentzailea"
 
 #: ../ui/pageTemplate.glade:158
 msgid "change"
-msgstr ""
+msgstr "aldatu"
 
 #: ../ui/exportSettings.glade:223
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
-msgstr ""
+msgstr "gaituta,"
 
 #: ../ui/settings.glade:266
 msgid "every"
-msgstr ""
+msgstr "bakoitza"
 
 #: ../ui/pageTemplate.glade:51
 msgid "load from file"
-msgstr ""
+msgstr "kargatu fitxategitik"
 
 #: ../ui/settings.glade:293
 msgid "minutes"
-msgstr ""
+msgstr "minutu"
 
 #: ../ui/settings.glade:2960 ../ui/settings.glade:2971
 #: ../ui/settings.glade:3219
 msgid "pixels"
-msgstr ""
+msgstr "pixel"
 
 #: ../ui/settings.glade:1551
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
-msgstr ""
+msgstr "s <i>(ondoren, ukipen-pantaila berriro aktibatuko da)</i>"
 
 #: ../ui/pageTemplate.glade:37
 msgid "save to file"
-msgstr ""
+msgstr "gorde fitxategira"
 
 #: ../ui/main.glade:1524 ../ui/main.glade:1670 ../ui/main.glade:1779
 msgid "ver_y thick"
-msgstr ""
+msgstr "_oso lodia"
 
