@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-15 07:27\n"
+"PO-Revision-Date: 2020-04-15 07:32\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -2050,31 +2050,31 @@ msgstr "Bilatu bilaketa-katearen aurreko agerraldia"
 
 #: ../ui/settings.glade:3026
 msgid "First Page Offset "
-msgstr ""
+msgstr "Lehen orriaren desplazamendua "
 
 #: ../ui/main.glade:485 ../ui/settings.glade:2395
 msgid "Fullscreen"
-msgstr ""
+msgstr "Pantaila osoa"
 
 #: ../ui/about.glade:281
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "GNU GPLv2 edo berriagoa"
 
 #: ../ui/settings.glade:3874
 msgid "Gain"
-msgstr ""
+msgstr "Irabazia"
 
 #: ../ui/about.glade:153
 msgid "Git commit"
-msgstr ""
+msgstr "Git commit"
 
 #: ../ui/settings.glade:2114
 msgid "Global"
-msgstr ""
+msgstr "Globala"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
-msgstr ""
+msgstr "Joan orrira"
 
 #: ../ui/settings.glade:3104
 msgid "Grid snapping tolerance"
