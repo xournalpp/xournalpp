@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-15 06:17\n"
+"PO-Revision-Date: 2020-04-15 06:37\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -1589,85 +1589,91 @@ msgstr "... ETA Zenbat denbora pasa behar da azken trazuaz geroztik.\n\n"
 
 #: ../ui/settings.glade:3968
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
-msgstr ""
+msgstr "<b>... edo hautatu lehendik erabilitako irudia:</b>"
 
 #: ../ui/pageTemplate.glade:256
 msgid "<b>Background Color</b>"
-msgstr ""
+msgstr "<b>Atzeko planoaren kolorea</b>"
 
 #: ../ui/pageTemplate.glade:269
 msgid "<b>Background</b>"
-msgstr ""
+msgstr "<b>Atzeko planoa</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
-msgstr ""
+msgstr "<b>Kolorea</b>"
 
 #: ../ui/pageTemplate.glade:110
 msgid "<b>Configure Xournal++ Template Page</b>\n"
 "This settings will be used if you create a new document"
-msgstr ""
+msgstr "<b>Konfiguratu Xournal++ txantiloi orria</b>\n"
+"Ezarpen hau erabiliko da dokumentu berria sortzen baduzu"
 
 #: ../ui/pageTemplate.glade:241 ../ui/pageTemplate.glade:282
 msgid "<b>Copy last page</b>\n"
 "Use the settings above\n"
 "for the fist Page"
-msgstr ""
+msgstr "<b>Kopiatu azken orria</b>\n"
+"Erabili goiko ezarpenak\n"
+"lehenengo orrirako"
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
-msgstr ""
+msgstr "<b>Tresna lehenetsiak</b>"
 
 #: ../ui/settings.glade:3568
 msgid "<b>Default</b>"
-msgstr ""
+msgstr "<b>Lehenetsia</b>"
 
 #: ../ui/exportSettings.glade:90
 msgid "<b>Document export settings</b>\n"
 "Select pages to export"
-msgstr ""
+msgstr "<b>Dokumentua esportatzeko ezarpenak</b>\n"
+"Hautatu orriak esportatzeko"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "<i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>Tresna-kutxa hutsa</b>\n"
+"<i>Menu: Ikusi/Tresna-barrak</i>"
 
 #: ../ui/fillTransparency.glade:79
 msgid "<b>Fill transparency settings</b>\n"
 "Select transparency for fill color"
-msgstr ""
+msgstr "<b>Bete gardentasun ezarpenak</b>\n"
+"Hautatu gardentasuna betetze-kolorerako"
 
 #: ../ui/pageTemplate.glade:132
 msgid "<b>Page size</b>"
-msgstr ""
+msgstr "<b>Orriaren tamaina</b>"
 
 #: ../ui/pagesize.glade:142
 msgid "<b>Pagesize</b>"
-msgstr ""
+msgstr "<b>Orriaren tamaina</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separator</b>"
-msgstr ""
+msgstr "<b>Bereizlea</b>"
 
 #: ../ui/settings.glade:708
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
-msgstr ""
+msgstr "<i>Esleitu gailu klasea zure sistemako sarrera-gailu bakoitzari. Balio horiek aldatu bakarrik zure gailuak behar bezala izendatuta ez daudenean. (adibidez, arkatza ukipen-pantaila gisa agertzen denean)</i>"
 
 #: ../ui/settings.glade:3659
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
-msgstr ""
+msgstr "<i>Audio grabazioak une honetan bereizitako karpeta batean gordeak daude eta koadernoan estekatuta daude.</i>"
 
 #: ../ui/settings.glade:4002
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
-msgstr ""
+msgstr "<i>Aldaketek grabazio eta erreprodukzio berrietan baino ez dira aplikatuko.</i>"
 
 #: ../ui/settings.glade:920
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
-msgstr ""
+msgstr "<i>Definitu zein tresna aukeratuko diren saguaren botoia sakatzen baduzu. Botoia askatu ondoren, aurrez aukeratutako tresna hautatuko da.</i>"
 
 #: ../ui/exportSettings.glade:209
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
