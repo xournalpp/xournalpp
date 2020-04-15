@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-15 22:16\n"
+"PO-Revision-Date: 2020-04-15 22:29\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -2109,102 +2109,105 @@ msgstr "Ezkutatu korritze barra horizontala"
 
 #: ../ui/settings.glade:2293
 msgid "Hide the vertical scrollbar"
-msgstr ""
+msgstr "Ezkutatu korritze barra bertikala"
 
 #: ../ui/settings.glade:2144
 msgid "Highlight cursor position"
-msgstr ""
+msgstr "Nabarmendu kurtsorearen kokapena"
 
 #: ../ui/main.glade:1724
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "Nabarmentzailearen aukerak"
 
 #: ../ui/settings.glade:3317
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "Trazuaren zabalera (pantailako mm)  AND...\n\n"
+"<i>Gomendagarria: 1 mm</i>"
 
 #: ../ui/settings.glade:3297
 msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "Zein tarte (denbora)  AND...\n\n"
+"<i>Gomendagarria: 150ms</i>"
 
 #: ../ui/settings.glade:3284
 msgid "Ignore Time (ms)"
-msgstr ""
+msgstr "Ahazteko denbora (ms)"
 
 #: ../ui/settings.glade:3773
 msgid "Input Device"
-msgstr ""
+msgstr "Sarrerako gailua"
 
 #: ../ui/settings.glade:744
 msgid "Input Devices"
-msgstr ""
+msgstr "Sarrerako gailuak"
 
 #: ../ui/settings.glade:869
 msgid "Input System"
-msgstr ""
+msgstr "Sarrerako sistema"
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
-msgstr ""
+msgstr "Txertatu latex"
 
 #: ../ui/main.glade:2532
 msgid "Insert Page After"
-msgstr ""
+msgstr "Txertatu orria ondoren"
 
 #: ../ui/main.glade:2524
 msgid "Insert Page Before"
-msgstr ""
+msgstr "Txertatu orria aurretik"
 
 #: ../ui/main.glade:2115
 msgid "Insert a copy of the current page below"
-msgstr ""
+msgstr "Txertatu kopia bat uneko orriaren azpian"
 
 #: ../ui/main.glade:512
 msgid "Layout"
-msgstr ""
+msgstr "Diseinua"
 
 #: ../ui/settings.glade:2249
 msgid "Left / Right-Handed"
-msgstr ""
+msgstr "Ezkertia / Eskuina"
 
 #: ../ui/about.glade:265
 msgid "License"
-msgstr ""
+msgstr "Lizentzia"
 
 #: ../ui/settings.glade:594
 msgid "Load / Save"
-msgstr ""
+msgstr "Kargatu / Gorde"
 
 #: ../ui/images.glade:73
 msgid "Load file"
-msgstr ""
+msgstr "Kargatu fitxategia"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
-msgstr ""
+msgstr "Kudeatu tresna-barra"
 
 #: ../ui/settings.glade:3337
 msgid "Max Length (mm)"
-msgstr ""
+msgstr "Luzera maximoa (mm)"
 
 #: ../ui/settings.glade:827
 msgid "Merge button events with stylus tip events\n"
 "<i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
+msgstr "Batu botoiaren gertaerak stylus-aren puntako gertaerekin\n"
+"<i>(Markatu hau baldin eta </i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
 
 #: ../ui/settings.glade:961
 msgid "Middle Mouse Button"
-msgstr ""
+msgstr "Saguaren erdiko botoia"
 
 #: ../ui/settings.glade:1048 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
-msgstr ""
+msgstr "Sagua"
 
 #: ../ui/settings.glade:1017
 msgid "Mouse Buttons"
-msgstr ""
+msgstr "Saguaren botoiak"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
