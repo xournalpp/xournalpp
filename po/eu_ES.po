@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-15 07:00\n"
+"PO-Revision-Date: 2020-04-15 07:27\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -1402,7 +1402,7 @@ msgstr "marraduna"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:28
 msgid "default disabled"
-msgstr "berez desaktibatua"
+msgstr "berez desgaitua"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:28
 msgid "default enabled"
@@ -1908,15 +1908,15 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
-msgstr "Desaktibatu gailu hau marrazteko"
+msgstr "Desgaitu gailu hau marrazteko"
 
 #: ../ui/settings.glade:2308
 msgid "Disable scrollbar fade out"
-msgstr "Desaktibatu korritze barra desagertzea"
+msgstr "Desgaitu korritze barra desagertzea"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
-msgstr "Desaktibatua"
+msgstr "Desgaitua"
 
 #: ../ui/settings.glade:1496
 msgid "Disabling Method"
@@ -1962,91 +1962,91 @@ msgstr "Bikoiztu"
 
 #: ../ui/main.glade:2577
 msgid "Edit (not implemented yet)"
-msgstr ""
+msgstr "Editatu (oraindik ezarri gabe)"
 
 #: ../ui/settings.glade:1615
 msgid "Enable"
-msgstr ""
+msgstr "Gaitu"
 
 #: ../ui/settings.glade:3179
 msgid "Enable  with determination radius of "
-msgstr ""
+msgstr "Gaitu zehaztapen erradio honekin "
 
 #: ../ui/settings.glade:544
 msgid "Enable Autoloading of Journals"
-msgstr ""
+msgstr "Gaitu koadernoen karga automatikoa"
 
 #: ../ui/settings.glade:242
 msgid "Enable Autosaving"
-msgstr ""
+msgstr "Gaitu gordetze automatikoa"
 
 #: ../ui/settings.glade:1836
 msgid "Enable GTK Touch / Scrolling workaround  (requires restart)"
-msgstr ""
+msgstr "Gaitu GTK Ukimena / Korritzea erabiltzea (berrabiaraztea eskatzen du)"
 
 #: ../ui/settings.glade:1114
 msgid "Enable Pressure Sensitivity"
-msgstr ""
+msgstr "Gaitu presioaren sentsibilitatea"
 
 #: ../ui/settings.glade:3266
 msgid "Enable Tap action"
-msgstr ""
+msgstr "Gaitu tap ekintza"
 
 #: ../ui/settings.glade:796
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
-msgstr ""
+msgstr "Gaitu leihotik kanpo marraztea <i>(Marrazketa ez da leihoaren ertzean geldituko)</i>"
 
 #: ../ui/settings.glade:1466
 msgid "Enable internal Hand Recognition"
-msgstr ""
+msgstr "Gaitu eskuen barne ezagutzea"
 
 #: ../ui/settings.glade:643
 msgid "Enable new input system (Requires restart)"
-msgstr ""
+msgstr "Gaitu sarrera sistema berria (berrabiaraztea eskatzen du)"
 
 #: ../ui/settings.glade:1767
 msgid "Enable zoom gestures (requires restart)"
-msgstr ""
+msgstr "Gaitu zoom mugimenduak (berrabiaraztea eskatzen du)"
 
 #: ../ui/texdialog.glade:72
 msgid "Enter / edit LaTeX Text"
-msgstr ""
+msgstr "Sartu / editatu Latex testua"
 
 #: ../ui/main.glade:1615
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "Ezabagailuaren aukerak"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
-msgstr ""
+msgstr "Ezabagailu mota - ez aldatu"
 
 #: ../ui/settings.glade:677
 msgid "Experimental Input System"
-msgstr ""
+msgstr "Sarrera sistema esperimentala"
 
 #: ../ui/exportSettings.glade:25
 msgid "Export"
-msgstr ""
+msgstr "Esportatu"
 
 #: ../ui/main.glade:250
 msgid "Export as..."
-msgstr ""
+msgstr "Esportatu honela..."
 
 #: ../ui/main.glade:1591 ../ui/main.glade:1796
 msgid "Fi_ll"
-msgstr ""
+msgstr "Bete"
 
 #: ../ui/main.glade:1601 ../ui/main.glade:1806
 msgid "Fill transparency"
-msgstr ""
+msgstr "Bete gardena"
 
 #: ../ui/main.glade:2334
 msgid "Find next occurrence of the search string"
-msgstr ""
+msgstr "Bilatu bilaketa-katearen hurrengo agerraldia"
 
 #: ../ui/main.glade:2312
 msgid "Find previous occurrence of the search string"
-msgstr ""
+msgstr "Bilatu bilaketa-katearen aurreko agerraldia"
 
 #: ../ui/settings.glade:3026
 msgid "First Page Offset "
