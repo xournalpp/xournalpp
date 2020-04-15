@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-15 21:41\n"
+"PO-Revision-Date: 2020-04-15 22:01\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -2357,135 +2357,135 @@ msgstr "Biraketaren atxikitzeko tolerantzia"
 
 #: ../ui/settings.glade:3862
 msgid "Sample Rate"
-msgstr ""
+msgstr "Lagin-maiztasuna"
 
 #: ../ui/settings.glade:2328
 msgid "Scrollbars"
-msgstr ""
+msgstr "Korritze-barrak"
 
 #: ../ui/settings.glade:2993
 msgid "Scrolling outside the page"
-msgstr ""
+msgstr "Orritik kanpora korritzen"
 
 #: ../ui/pageTemplate.glade:174
 msgid "Select Background Color"
-msgstr ""
+msgstr "Hautatu atzeko planoaren kolorea"
 
 #: ../ui/settings.glade:3696
 msgid "Select Folder"
-msgstr ""
+msgstr "Hautatu karpeta"
 
 #: ../ui/images.glade:8
 msgid "Select Image"
-msgstr ""
+msgstr "Hautatu irudia"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr ""
+msgstr "Hautatu PDF orria"
 
 #: ../ui/settings.glade:2461
 msgid "Select toolbar:"
-msgstr ""
+msgstr "Hautatu tresna-barra:"
 
 #: ../ui/settings.glade:2051
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr ""
+msgstr "Hautapenaren kolorea (testua, trazuaren hautapena etab.)"
 
 #: ../ui/main.glade:621
 msgid "Set Columns"
-msgstr ""
+msgstr "Ezarri zutabeak"
 
 #: ../ui/main.glade:726
 msgid "Set Rows"
-msgstr ""
+msgstr "Ezarri errenkadak"
 
 #: ../ui/settings.glade:3398
 msgid "Settings:"
-msgstr ""
+msgstr "Ezarpenak:"
 
 #: ../ui/settings.glade:3407
 msgid "Show Floating Toolbox"
-msgstr ""
+msgstr "Erakutsi trena-barra mugikorra"
 
 #: ../ui/settings.glade:1943
 msgid "Show Menubar on Startup"
-msgstr ""
+msgstr "Erakutsi menu-barra abioan"
 
 #: ../ui/main.glade:496
 msgid "Show sidebar"
-msgstr ""
+msgstr "Erakutsi alboko barra"
 
 #: ../ui/settings.glade:2211
 msgid "Show sidebar on the right side"
-msgstr ""
+msgstr "Erakutsi alboko barra eskuin aldean"
 
 #: ../ui/settings.glade:2227
 msgid "Show vertical scrollbar on the left side"
-msgstr ""
+msgstr "Erakutsi korritze-barra bertikala ezker aldean"
 
 #: ../ui/settings.glade:3150
 msgid "Snapping"
-msgstr ""
+msgstr "Atxikitzea"
 
 #: ../ui/settings.glade:2579
 msgid "Speed for Ctrl + Scroll"
-msgstr ""
+msgstr "Ctrl + korritzearen abiadura"
 
 #: ../ui/settings.glade:2607
 msgid "Speed for a Zoomstep"
-msgstr ""
+msgstr "Zoomaren urratsen abiadura"
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
-msgstr ""
+msgstr "Estandarra"
 
 #: ../ui/settings.glade:3681 ../ui/settings.glade:3718
 msgid "Storage Folder"
-msgstr ""
+msgstr "Biltegiratzeko karpeta"
 
 #: ../ui/settings.glade:1333
 msgid "Stylus"
-msgstr ""
+msgstr "Stylus-a"
 
 #: ../ui/settings.glade:1302
 msgid "Stylus Buttons"
-msgstr ""
+msgstr "Stylus-aren botoiak"
 
 #: ../ui/settings.glade:3348
 msgid "Successive (ms)"
-msgstr ""
+msgstr "Ondorengoa (ms)"
 
 #: ../ui/main.glade:2072
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "Ordeztu uneko orria aurrekoarekin"
 
 #: ../ui/main.glade:2094
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "Ordeztu uneko orria hurrengoarekin"
 
 #: ../ui/main.glade:840
 msgid "T_oolbars"
-msgstr ""
+msgstr "Tresna-barrak"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
-msgstr ""
+msgstr "Txantiloia:"
 
 #: ../ui/settings.glade:1660 ../ui/settings.glade:1673
 msgid "Test"
-msgstr ""
+msgstr "Proba egin"
 
 #: ../ui/main.glade:1820
 msgid "Text Font..."
-msgstr ""
+msgstr "Testuaren letra-tipoa..."
 
 #: ../ui/settings.glade:2763
 msgid "The unit of the ruler is cm"
-msgstr ""
+msgstr "Erregelaren unitatea cm da"
 
 #: ../ui/settings.glade:775
 msgid "These settings take only effect if the experimental input system is activated"
-msgstr ""
+msgstr "Ezarpen hauek bakarrik izango dute eragina sarrerako sistema esperimentala aktibatuta dagoenean"
 
 #: ../ui/settings.glade:628
 msgid "This is an experimental feature! Use it with care."
