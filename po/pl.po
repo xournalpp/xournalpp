@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-18 22:48\n"
+"PO-Revision-Date: 2020-04-18 23:04\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -1726,11 +1726,11 @@ msgstr "<i>Określ urządzenia audio używane do nagrywania i odtwarzania załą
 
 #: ../ui/settings.glade:1167
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
-msgstr ""
+msgstr "<i>Określ narzędzia, które zostaną wybrane, po naciśnięciu przycisku rysika lub podczas używania gumki do mazania. Po zwolnieniu przycisku wybrane zostanie poprzednie narzędzie.</i>"
 
 #: ../ui/settings.glade:353
 msgid "<i>This name will be proposed if you save a new document.</i>"
-msgstr ""
+msgstr "<i>Ta nazwa zostanie zaproponowana, gdy będziesz zapisywać nowy dokument</i>"
 
 #: ../ui/settings.glade:2692
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
@@ -1738,7 +1738,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1962
 msgid "<i>Toggle visibility of menubar with F10</i>"
-msgstr ""
+msgstr "<i>Przełącz widoczność paska menu przy użyciu klawisza F10</i>"
 
 #: ../ui/settings.glade:1755
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
@@ -1746,7 +1746,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1384
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
-msgstr ""
+msgstr "<i>Możesz skonfigurować urządzenia które nie zostały zidentyfikowane przez GTK jako ekran dotykowy, aby zachowywały się tak, jakby nim były.</i>"
 
 #: ../ui/about.glade:73
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
