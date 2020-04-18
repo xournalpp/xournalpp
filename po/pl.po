@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-13 17:26\n"
+"PO-Revision-Date: 2020-04-18 22:48\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -1721,7 +1721,8 @@ msgstr ""
 #: ../ui/settings.glade:3749
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments. \n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
-msgstr ""
+msgstr "<i>Określ urządzenia audio używane do nagrywania i odtwarzania załączników audio. \n"
+"Jeśli jest dostępne wybierz <small><tt>pulse</tt></small> jako urządzenie wejścia / wyjścia.</i>"
 
 #: ../ui/settings.glade:1167
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
