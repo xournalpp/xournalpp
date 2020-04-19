@@ -99,10 +99,10 @@ public:
     XojPageView* getViewAt(int x, int y);
 
     /**
-     * Return the page index found ( or -1 if not found) at layout grid row,col
+     * Return the page index found ( or std::nullopt if not found) at layout grid row,col
      *
      */
-    LayoutMapper::optional_size_t getIndexAtGridMap(size_t row, size_t col);
+    std::optional<size_t> getIndexAtGridMap(size_t row, size_t col);
 
 protected:
     static void horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
