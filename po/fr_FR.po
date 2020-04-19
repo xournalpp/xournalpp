@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-19 21:33\n"
+"PO-Revision-Date: 2020-04-19 22:02\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -60,7 +60,7 @@ msgstr "Chemin absolu pour la lecture des fichiers audio"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:399
 msgid "Add/Edit Tex"
-msgstr "Ajout/Édition d'un formulaire Tex"
+msgstr "Ajout/Édition d'une formule Tex"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:35
 msgid "All files"
@@ -81,11 +81,11 @@ msgstr "Attacher le fichier au journal"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:104
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre à virgule (double), la valeur est \"{2}\""
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre entier (double), la valeur est \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:97
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre à virgule (double), la valeur est nullptr"
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre entier (double), la valeur est nullptr"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:121
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:140
@@ -103,7 +103,7 @@ msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre entier (size_t
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:152
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre à virgule (double), la valeur est nullptr"
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme size_t, la valeur est nullptr"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:46
 msgid "Attribute color not set!"
