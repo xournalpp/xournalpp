@@ -96,10 +96,7 @@ auto LayoutMapper::isPairedPages() const -> bool { return data_.showPairedPages;
 
 // Todo: replace with map<pair(x,y)> -> index and vector<index> -> pair(x,y)
 //       precalculate it in configure
-// Todo: replace with
-//       boost::optional<size_t> LayoutMapper::map(size_t x, size_t y) or
-//       std::optional<size_t> LayoutMapper::map(size_t x, size_t y)
-auto LayoutMapper::map(size_t col, size_t row) const -> LayoutMapper::optional_size_t {
+auto LayoutMapper::map(size_t col, size_t row) const -> std::optional<size_t> {
     if (isRightToLeft()) {
         // reverse x
         col = data_.cols - 1 - col;
@@ -138,11 +135,10 @@ auto LayoutMapper::isBottomToTop() const -> bool { return data_.verticalDir == B
 auto LayoutMapper::isRightToLeft() const -> bool { return data_.horizontalDir == RightToLeft; }
 
 auto LayoutMapper::at(size_t page) const -> std::pair<size_t, size_t> { return pageToRaster.at(page); }
-auto LayoutMapper::at(std::pair<size_t, size_t> rasterXY) const -> LayoutMapper::optional_size_t {
-    LayoutMapper::optional_size_t ret;
-    auto iter = rasterToPage.find(rasterXY);
-    if (iter != end(rasterToPage)) {
-        ret = iter->second;
+
+auto LayoutMapper::at(std::pair<size_t, size_t> rasterXY) const -> std::optional<size_t> {
+    if (auto iter = rasterToPage.find(rasterXY); iter != end(rasterToPage)) {
+        return iter->second;
     }
-    return ret;
+    return std::nullopt;
 }

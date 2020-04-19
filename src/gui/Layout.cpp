@@ -299,7 +299,7 @@ auto Layout::getViewAt(int x, int y) -> XojPageView* {
 
 // Todo replace with boost::optional<size_t> Layout::getIndexAtGridMap(size_t row, size_t col)
 //                  or std::optional<size_t> Layout::getIndexAtGridMap(size_t row, size_t col)
-auto Layout::getIndexAtGridMap(size_t row, size_t col) -> LayoutMapper::optional_size_t {
+auto Layout::getIndexAtGridMap(size_t row, size_t col) -> std::optional<size_t> {
     return this->mapper.at({col, row});  // watch out.. x,y --> c,r
 }
 
