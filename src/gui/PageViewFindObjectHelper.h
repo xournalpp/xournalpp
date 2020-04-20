@@ -13,9 +13,12 @@
 
 // No include needed, this is included after PageView.h
 
-#include <util/audio/AudioPlayer.h>
-#include "util/cpp14memory.h"
+#include <limits>
+
 #include <memory.h>
+#include <util/audio/AudioPlayer.h>
+
+#include "util/cpp14memory.h"
 
 class BaseSelectObject
 {
@@ -52,22 +55,29 @@ public:
 	}
 
 protected:
-	bool checkLayer(Layer* l)
-	{
-		for (Element* e : *l->getElements())
-		{
-			if (e->intersectsArea(&matchRect))
-			{
-				if (this->checkElement(e))
-				{
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    bool checkLayer(Layer* l) {
+        // Search for Element closest to center of matching rectangle
+        bool found = false;
+        double minDistSq = std::numeric_limits<double>::max();
+        const double mX = matchRect.x + matchRect.width / 2.0;
+        const double mY = matchRect.y + matchRect.height / 2.0;
+        for (Element* e: *l->getElements()) {
+            const double eX = e->getX() + e->getElementWidth() / 2.0;
+            const double eY = e->getY() + e->getElementHeight() / 2.0;
+            const double dx = eX - mX;
+            const double dy = eY - mY;
+            const double distSq = dx * dx + dy * dy;
+            if (e->intersectsArea(&matchRect) && distSq < minDistSq) {
+                minDistSq = distSq;
+                if (this->checkElement(e)) {
+                    found = true;
+                }
+            }
+        }
+        return found;
+    }
 
-	virtual bool checkElement(Element* e) = 0;
+    virtual bool checkElement(Element* e) = 0;
 
 protected:
 	GdkRectangle matchRect;
