@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 17:12+0000\n"
-"PO-Revision-Date: 2020-04-14 18:14\n"
+"PO-Revision-Date: 2020-04-20 16:33\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2629,7 +2629,7 @@ msgstr "标注PDF(_A)"
 
 #: ../ui/main.glade:593
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "从下到上"
 
 #: ../ui/main.glade:608
 msgid "_Cols/Rows"
@@ -2761,7 +2761,7 @@ msgstr ""
 
 #: ../ui/main.glade:582
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "从上到下"
 
 #: ../ui/main.glade:535
 msgid "_Vertical"
