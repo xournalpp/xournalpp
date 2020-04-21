@@ -30,7 +30,7 @@ poppler-glib texlive-bin texlive-pictures gettext libzip
 #### For Fedora/CentOS/RHEL:
 ```bash
 sudo dnf install gcc-c++ cmake gtk3-devel libxml2-devel cppunit-devel portaudio-devel libsndfile-devel \
-poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel
+poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel lua-devel
 ```
 
 #### For Ubuntu/Debian:
@@ -57,7 +57,7 @@ portaudio-devel libsndfile-devel alsa-lib-devel cppunit-devel lua-devel
 The basic steps to compile Xournal++ are:
 
 ```bash
-git clone http://github.com/xournalpp/xournalpp.git
+git clone https://github.com/xournalpp/xournalpp.git
 cd xournalpp
 mkdir build
 cd build
@@ -72,6 +72,10 @@ With Cairo 1.16 PDF Bookmarks will be possible, but this Version is not yet
 common available, therefore the Cairo PDF Export is without PDF Bookmarks.
 
 The binary executable will be placed in the `build/src/` subdirectory.
+
+To place the binary executable and support files in systemwide directories, execute `sudo make install`.
+
+After updating xournalpp, with perhaps `git pull`, execute `cmake ..`, `cmake --build .`, and optionally `sudo make install` again.
 
 ## Packaging and Installation
 
