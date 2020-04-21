@@ -73,9 +73,7 @@ common available, therefore the Cairo PDF Export is without PDF Bookmarks.
 
 The binary executable will be placed in the `build/src/` subdirectory.
 
-To place the binary executable and support files in systemwide directories, execute `sudo make install`.
-
-After updating xournalpp, with perhaps `git pull`, execute `cmake ..`, `cmake --build .`, and optionally `sudo make install` again.
+After updating xournalpp, with perhaps `git pull`, execute `cmake ..` and `cmake --build .`.
 
 ## Packaging and Installation
 
