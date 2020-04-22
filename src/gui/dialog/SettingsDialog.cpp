@@ -208,7 +208,8 @@ void SettingsDialog::load() {
     loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
     loadCheckbox("cbDisableScrollbarFadeout", settings->isScrollbarFadeoutDisabled());
     loadCheckbox("cbTouchWorkaround", settings->isTouchWorkaround());
-    loadCheckbox("cbIgnoreFirstStylusEvents", settings->getIgnoredStylusEvents() != 0);  // 0 means disabled, >0 enabled
+    const bool ignoreStylusEventsEnabled = settings->getIgnoredStylusEvents() != 0;  // 0 means disabled, >0 enabled
+    loadCheckbox("cbIgnoreFirstStylusEvents", ignoreStylusEventsEnabled);
     loadCheckbox("cbNewInputSystem", settings->getExperimentalInputSystemEnabled());
     loadCheckbox("cbInputSystemTPCButton", settings->getInputSystemTPCButtonEnabled());
     loadCheckbox("cbInputSystemDrawOutsideWindow", settings->getInputSystemDrawOutsideWindowEnabled());
@@ -224,7 +225,7 @@ void SettingsDialog::load() {
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
 
     GtkWidget* spNumIgnoredStylusEvents = get("spNumIgnoredStylusEvents");
-    if (settings->getIgnoredStylusEvents() == 0) {  // 0 means checkbox disabled, the spinButton's value should be >= 1
+    if (!ignoreStylusEventsEnabled) {  // The spinButton's value should be >= 1
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents), 1);
     } else {
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents), settings->getIgnoredStylusEvents());
