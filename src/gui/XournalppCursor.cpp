@@ -410,12 +410,13 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     }
 
     if (bright) {
-        // A yellow transparent circle with no border
+        // Highlight cursor with a circle
+        auto&& color = Util::argb_to_GdkRGBA(control->getSettings()->getCursorHighlightColor());
         cairo_set_line_width(cr, 0);
-        cairo_set_source_rgba(cr, 255, 255, 0, 0.5);
-        cairo_arc(cr, centerX, centerY, 30, 0, 2 * 3.1415);
+        cairo_set_source_rgba(cr, color.red, color.green, color.blue, color.alpha);
+        cairo_arc(cr, centerX, centerY, control->getSettings()->getCursorHighlightRadius(), 0, 2 * 3.1415);
         cairo_fill_preserve(cr);
-        cairo_set_source_rgb(cr, 0, 0, 0);
+        cairo_set_source_rgb(cr, 0, 0, 0);  // No border
         cairo_stroke(cr);
     }
 

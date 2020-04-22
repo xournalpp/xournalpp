@@ -16,6 +16,7 @@
 #define WRITE_BOOL_PROP(var) xmlNode = saveProperty((const char*)#var, (var) ? "true" : "false", root)
 #define WRITE_STRING_PROP(var) xmlNode = saveProperty((const char*)#var, (var).empty() ? "" : (var).c_str(), root)
 #define WRITE_INT_PROP(var) xmlNode = saveProperty((const char*)#var, var, root)
+#define WRITE_UINT_PROP(var) xmlNode = savePropertyUnsigned((const char*)#var, var, root)
 #define WRITE_DOUBLE_PROP(var) xmlNode = savePropertyDouble((const char*)#var, var, root)
 #define WRITE_COMMENT(var)                      \
     com = xmlNewComment((const xmlChar*)(var)); \
@@ -72,6 +73,8 @@ void Settings::loadDefault() {
     this->autoloadPdfXoj = true;
     this->showBigCursor = false;
     this->highlightPosition = false;
+    this->cursorHighlightColor = 0x80FFFF00;  // Yellow with 50% opacity
+    this->cursorHighlightRadius = 30.0;
     this->darkTheme = false;
     this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
     this->disableScrollbarFadeout = false;
@@ -332,6 +335,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->showBigCursor = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("highlightPosition")) == 0) {
         this->highlightPosition = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightColor")) == 0) {
+        this->cursorHighlightColor = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightRadius")) == 0) {
+        this->cursorHighlightRadius = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("darkTheme")) == 0) {
         this->darkTheme = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultSaveName")) == 0) {
@@ -570,6 +577,13 @@ auto Settings::saveProperty(const gchar* key, int value, xmlNodePtr parent) -> x
     return xmlNode;
 }
 
+auto Settings::savePropertyUnsigned(const gchar* key, unsigned int value, xmlNodePtr parent) -> xmlNodePtr {
+    char* text = g_strdup_printf("%u", value);
+    xmlNodePtr xmlNode = saveProperty(key, text, parent);
+    g_free(text);
+    return xmlNode;
+}
+
 auto Settings::saveProperty(const gchar* key, const gchar* value, xmlNodePtr parent) -> xmlNodePtr {
     xmlNodePtr xmlNode = xmlNewChild(parent, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);
 
@@ -710,6 +724,8 @@ void Settings::save() {
 
     WRITE_BOOL_PROP(showBigCursor);
     WRITE_BOOL_PROP(highlightPosition);
+    WRITE_UINT_PROP(cursorHighlightColor);
+    WRITE_DOUBLE_PROP(cursorHighlightRadius);
     WRITE_BOOL_PROP(darkTheme);
 
     WRITE_BOOL_PROP(disableScrollbarFadeout);
@@ -1001,6 +1017,24 @@ void Settings::setHighlightPosition(bool highlight) {
 
     this->highlightPosition = highlight;
     save();
+}
+
+auto Settings::getCursorHighlightColor() const -> uint32_t { return this->cursorHighlightColor; }
+
+void Settings::setCursorHighlightColor(uint32_t color) {
+    if (this->cursorHighlightColor != color) {
+        this->cursorHighlightColor = color;
+        save();
+    }
+}
+
+auto Settings::getCursorHighlightRadius() const -> double { return this->cursorHighlightRadius; }
+
+void Settings::setCursorHighlightRadius(double radius) {
+    if (this->cursorHighlightRadius != radius) {
+        this->cursorHighlightRadius = radius;
+        save();
+    }
 }
 
 auto Settings::isSnapRotation() const -> bool { return this->snapRotation; }
