@@ -17,7 +17,7 @@ stages:
   jobs:
   - job: 'Build_Test'
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-18.04'
     displayName: 'Test for correct Clang formatting'
     steps:
     - bash: |

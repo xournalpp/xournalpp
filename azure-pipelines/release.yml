@@ -20,7 +20,7 @@ stages:
     jobs:
       - job: 'Versioning'
         pool:
-          vmImage: 'ubuntu-16.04'
+          vmImage: 'ubuntu-18.04'
         displayName: 'Set Build Number'
         steps:
           - bash: |
@@ -48,7 +48,7 @@ stages:
     jobs:
       - job: 'Ubuntu'
         pool:
-          vmImage: 'ubuntu-16.04'
+          vmImage: 'ubuntu-18.04'
         displayName: 'Build for Ubuntu'
         condition: always()
         steps:
@@ -74,7 +74,7 @@ stages:
             displayName: 'Publish packages'
       - job: 'Debian'
         pool:
-          vmImage: 'ubuntu-16.04'
+          vmImage: 'ubuntu-18.04'
         container:
           image: xournalpp/debian-latest-sudo:latest
         displayName: 'Build for Debian'
