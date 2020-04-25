@@ -297,6 +297,12 @@ public:
     double getCursorHighlightRadius() const;
     void setCursorHighlightRadius(double radius);
 
+    uint32_t getCursorHighlightBorderColor() const;
+    void setCursorHighlightBorderColor(uint32_t color);
+
+    double getCursorHighlightBorderWidth() const;
+    void setCursorHighlightBorderWidth(double width);
+
     ScrollbarHideType getScrollbarHideType() const;
     void setScrollbarHideType(ScrollbarHideType type);
 
@@ -517,6 +523,16 @@ private:
      * of the cursor in the display server (default is probably 30 pixels).
      */
     double cursorHighlightRadius{};
+
+    /**
+     * Cursor highlight border color (ARGB format)
+     */
+    uint32_t cursorHighlightBorderColor{};
+
+    /**
+     * Width of cursor highlight border, in pixels.
+     */
+    double cursorHighlightBorderWidth{};
 
     /**
      * If the user uses a dark-themed DE, he should enable this

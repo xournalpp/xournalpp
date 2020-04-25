@@ -75,6 +75,8 @@ void Settings::loadDefault() {
     this->highlightPosition = false;
     this->cursorHighlightColor = 0x80FFFF00;  // Yellow with 50% opacity
     this->cursorHighlightRadius = 30.0;
+    this->cursorHighlightBorderColor = 0x800000FF;  // Blue with 50% opacity
+    this->cursorHighlightBorderWidth = 0.0;
     this->darkTheme = false;
     this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
     this->disableScrollbarFadeout = false;
@@ -339,6 +341,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->cursorHighlightColor = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightRadius")) == 0) {
         this->cursorHighlightRadius = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightBorderColor")) == 0) {
+        this->cursorHighlightBorderColor = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightBorderWidth")) == 0) {
+        this->cursorHighlightBorderWidth = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("darkTheme")) == 0) {
         this->darkTheme = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultSaveName")) == 0) {
@@ -725,7 +731,9 @@ void Settings::save() {
     WRITE_BOOL_PROP(showBigCursor);
     WRITE_BOOL_PROP(highlightPosition);
     WRITE_UINT_PROP(cursorHighlightColor);
+    WRITE_UINT_PROP(cursorHighlightBorderColor);
     WRITE_DOUBLE_PROP(cursorHighlightRadius);
+    WRITE_DOUBLE_PROP(cursorHighlightBorderWidth);
     WRITE_BOOL_PROP(darkTheme);
 
     WRITE_BOOL_PROP(disableScrollbarFadeout);
@@ -1033,6 +1041,24 @@ auto Settings::getCursorHighlightRadius() const -> double { return this->cursorH
 void Settings::setCursorHighlightRadius(double radius) {
     if (this->cursorHighlightRadius != radius) {
         this->cursorHighlightRadius = radius;
+        save();
+    }
+}
+
+auto Settings::getCursorHighlightBorderColor() const -> uint32_t { return this->cursorHighlightBorderColor; }
+
+void Settings::setCursorHighlightBorderColor(uint32_t color) {
+    if (this->cursorHighlightBorderColor != color) {
+        this->cursorHighlightBorderColor = color;
+        save();
+    }
+}
+
+auto Settings::getCursorHighlightBorderWidth() const -> double { return this->cursorHighlightBorderWidth; }
+
+void Settings::setCursorHighlightBorderWidth(double radius) {
+    if (this->cursorHighlightBorderWidth != radius) {
+        this->cursorHighlightBorderWidth = radius;
         save();
     }
 }

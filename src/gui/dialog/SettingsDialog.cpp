@@ -268,7 +268,11 @@ void SettingsDialog::load() {
     loadCheckbox("cbHighlightPosition", settings->isHighlightPosition());
     color = Util::argb_to_GdkRGBA(settings->getCursorHighlightColor());
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightColor")), &color);
+    color = Util::argb_to_GdkRGBA(settings->getCursorHighlightBorderColor());
+    gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightBorderColor")), &color);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("cursorHighlightRadius")), settings->getCursorHighlightRadius());
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("cursorHighlightBorderWidth")),
+                              settings->getCursorHighlightBorderWidth());
 
     bool hideFullscreenMenubar = false;
     bool hideFullscreenSidebar = false;
@@ -472,8 +476,12 @@ void SettingsDialog::save() {
     settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightColor")), &color);
     settings->setCursorHighlightColor(Util::gdkrgba_to_hex(color));
+    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightBorderColor")), &color);
+    settings->setCursorHighlightBorderColor(Util::gdkrgba_to_hex(color));
     GtkWidget* spCursorHighlightRadius = get("cursorHighlightRadius");
     settings->setCursorHighlightRadius(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spCursorHighlightRadius)));
+    GtkWidget* spCursorHighlightBorderWidth = get("cursorHighlightBorderWidth");
+    settings->setCursorHighlightBorderWidth(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spCursorHighlightBorderWidth)));
 
 
     bool hideFullscreenMenubar = getCheckbox("cbHideFullscreenMenubar");
