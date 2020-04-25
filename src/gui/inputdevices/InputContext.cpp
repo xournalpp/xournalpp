@@ -8,15 +8,15 @@
 
 #include "InputEvents.h"
 
-InputContext::InputContext(XournalView* view) {
-    this->view = view;
-
+InputContext::InputContext(Control* control) {
     this->stylusHandler = new StylusInputHandler(this);
     this->touchHandler = new TouchInputHandler(this);
     this->mouseHandler = new MouseInputHandler(this);
     this->keyboardHandler = new KeyboardInputHandler(this);
 
-    for (const InputDevice& savedDevices: this->view->getControl()->getSettings()->getKnownInputDevices()) {
+    this->control = control;
+
+    for (const InputDevice& savedDevices: this->control->getSettings()->getKnownInputDevices()) {
         this->knownDevices.insert(savedDevices.getName());
     }
 }
@@ -35,9 +35,9 @@ InputContext::~InputContext() {
     this->keyboardHandler = nullptr;
 }
 
-void InputContext::connect(XournalWidget* pWidget) {
-    this->widget = pWidget;
-    gtk_widget_set_support_multidevice(widget->getGtkWidget(), true);
+void InputContext::connect(GtkWidget* widget) {
+    this->widget = widget;
+    gtk_widget_set_support_multidevice(widget, true);
 
     int mask =
             // Key handling
@@ -51,9 +51,9 @@ void InputContext::connect(XournalWidget* pWidget) {
             GDK_SMOOTH_SCROLL_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK | GDK_PROXIMITY_IN_MASK |
             GDK_PROXIMITY_OUT_MASK;
 
-    gtk_widget_add_events(pWidget->getGtkWidget(), mask);
+    gtk_widget_add_events(widget, mask);
 
-    g_signal_connect(pWidget->getGtkWidget(), "event", G_CALLBACK(eventCallback), this);
+    g_signal_connect(widget, "event", G_CALLBACK(eventCallback), this);
 }
 
 auto InputContext::eventCallback(GtkWidget* widget, GdkEvent* event, InputContext* self) -> bool {
@@ -91,7 +91,8 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     }
 
     // Deactivate touchscreen when a pen event occurs
-    this->getView()->getHandRecognition()->event(event->deviceClass);
+    // this->getView()->getHandRecognition()->event(event->deviceClass);
+    // TODO dispatch Action to deactivate hand recognition
 
     // Get the state of all modifiers
     this->modifierState = event->state;
@@ -131,13 +132,9 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     return false;
 }
 
-auto InputContext::getXournal() -> XournalWidget* { return this->widget; }
+auto InputContext::getSettings() -> Settings* { return this->control->getSettings(); }
 
-auto InputContext::getView() -> XournalView* { return view; }
-
-auto InputContext::getSettings() -> Settings* { return view->getControl()->getSettings(); }
-
-auto InputContext::getToolHandler() -> ToolHandler* { return view->getControl()->getToolHandler(); }
+auto InputContext::getToolHandler() -> ToolHandler* { return this->control->getToolHandler(); }
 
 auto InputContext::getModifierState() -> GdkModifierType { return this->modifierState; }
 
@@ -145,8 +142,8 @@ auto InputContext::getModifierState() -> GdkModifierType { return this->modifier
  * Focus the widget
  */
 void InputContext::focusWidget() {
-    if (!gtk_widget_has_focus(this->widget->getGtkWidget())) {
-        gtk_widget_grab_focus(this->widget->getGtkWidget());
+    if (!gtk_widget_has_focus(this->widget)) {
+        gtk_widget_grab_focus(this->widget);
     }
 }
 
@@ -256,8 +253,8 @@ void InputContext::printDebug(GdkEvent* event) {
         message += "Source device:\t" + gdkInputSources[gdk_device_get_source(device)] + "\n";
         string gdkInputClasses[] = {"INPUT_DEVICE_MOUSE",    "INPUT_DEVICE_PEN",
                                     "INPUT_DEVICE_ERASER",   "INPUT_DEVICE_TOUCHSCREEN",
-                                "INPUT_DEVICE_KEYBOARD", "INPUT_DEVICE_MOUSE_KEYBOARD_COMBO",
-                                "INPUT_DEVICE_IGNORE"};
+                                    "INPUT_DEVICE_KEYBOARD", "INPUT_DEVICE_MOUSE_KEYBOARD_COMBO",
+                                    "INPUT_DEVICE_IGNORE"};
         InputDeviceClass deviceClass = InputEvents::translateDeviceType(device, this->getSettings());
         message += "Device Class:\t" + gdkInputClasses[deviceClass] + "\n";
     }
