@@ -13,7 +13,7 @@
 #include "SelectionEvent.h"
 class Selections: public Storage<SelectionEvent> {
 public:
-    auto getSelection() -> std::unique_ptr<EditSelection>;
+    auto getSelection() -> std::shared_ptr<EditSelection>;
 
     auto onAction(const Action& action) -> void override;
 };
