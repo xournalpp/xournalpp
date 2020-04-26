@@ -21,45 +21,24 @@ class InputContext;
 
 #include <memory>
 
+#include <gui/LayoutEvent.h>
 #include <util/Rectangle.h>
 
 #include "gui/Renderer.h"
+#include "gui/ViewportEvent.h"
 
 #include "gtkdrawingareascrollable.h"
 
-class XournalWidget {
+class XournalWidget: public ControllerView<ViewportEvent>, public ControllerView<LayoutEvent> {
 public:
-    XournalWidget(std::shared_ptr<InputContext> inputContext, std::shared_ptr<Renderer> render);
-    virtual ~XournalWidget();
+    XournalWidget(std::unique_ptr<Renderer> render, std::shared_ptr<Viewport> viewport, std::shared_ptr<Layout> layout);
+    ~XournalWidget() override;
 
-    auto getGtkWidget() -> GtkWidget*;  // TODO remove and encapsulate widget completely
-
-    auto getViewport() -> Rectangle<double>;
-    auto repaintViewport(const Rectangle<double>& rect) -> void;
-
-    auto repaintVisibleArea(const Rectangle<double>& rect) -> void;
-    auto getVisibleArea() -> Rectangle<double>;
-    auto setVisibleArea(const Rectangle<double>& rect) -> void;
-
-    auto setScale(double scale) -> void;
-
-    /**
-     * Queues a widget redraw.
-     *
-     * Call this after you updated the model.
-     */
-    auto queueRedraw() -> void;
-
-    /**
-     * Queues a widget allocate.
-     *
-     * Call this after you changed the layout of the model. (Additional page, different page layout)
-     */
-    auto queueAllocate() -> void;
+    auto eventCallback(const ViewportEvent& event) -> void override;
+    auto eventCallback(const LayoutEvent& event) -> void override;
 
 private:
-    auto init() -> void;
-    auto updateScrollbar(GtkAdjustment* adj, double value, bool infinite) -> void;
+    auto updateScrollbar(ScrollEvent::ScrollDirection direction, double value, bool infinite) -> void;
 
     static auto initHScrolling(XournalWidget* self) -> void;
     static auto initVScrolling(XournalWidget* self) -> void;
@@ -74,18 +53,14 @@ private:
 private:
     GtkWidget* drawingArea;
 
-    /** Layout */
-    std::shared_ptr<Renderer> renderer;
+    /** Renderer */
+    std::unique_ptr<Renderer> renderer;
 
-    /** New input handling */
-    std::shared_ptr<InputContext> input;
+    /** Viewport storage (state) */
+    std::shared_ptr<Viewport> viewport;
 
-    /**
-     * Top left corner of the current visible rectangle
-     */
-    double x = 0;
-    double y = 0;
-    double scale = 0;
+    /** Layout storage (state) */
+    std::shared_ptr<Layout> layout;
 
     constexpr static double STEP_INCREMENT = 10;
 };
