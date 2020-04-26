@@ -13,8 +13,8 @@ UndoRedoController::~UndoRedoController() {
 }
 
 void UndoRedoController::before() {
-    EditSelection* selection = control->getWindow()->getXournal()->getSelection();
-    if (selection != nullptr) {
+    auto selection = control->getWindow()->getXournal()->getSelections()->getSelection();
+    if (selection) {
         layer = selection->getSourceLayer();
         for (Element* e: *selection->getElements()) {
             elements.push_back(e);
@@ -54,7 +54,7 @@ void UndoRedoController::after() {
         visibleElements.push_back(e);
     }
 
-    auto* selection = new EditSelection(control->getUndoRedoHandler(), visibleElements, view, page);
+    auto selection = std::make_shared<EditSelection>(control->getUndoRedoHandler(), visibleElements, view, page);
     control->getWindow()->getXournal()->setSelection(selection);
 }
 
