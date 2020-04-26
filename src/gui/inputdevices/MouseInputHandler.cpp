@@ -15,7 +15,6 @@ MouseInputHandler::~MouseInputHandler() = default;
 
 auto MouseInputHandler::handleImpl(InputEvent* event) -> bool {
     // Only handle events when there is no active gesture
-    XournalWidget* xournal = inputContext->getXournal();
 
     // Determine the pressed states of devices and associate them to the current event
     setPressedState(event);
@@ -41,7 +40,7 @@ auto MouseInputHandler::handleImpl(InputEvent* event) -> bool {
     if (event->type == MOTION_EVENT)  // mouse or pen moved
     {
         this->actionMotion(event);
-        XournalppCursor* cursor = xournal->view->getCursor();
+        XournalppCursor* cursor = inputContext->getView()->getCursor();
         cursor->setInvisible(false);
         cursor->updateCursor();
     }
@@ -75,7 +74,7 @@ auto MouseInputHandler::handleImpl(InputEvent* event) -> bool {
 void MouseInputHandler::setPressedState(InputEvent* event) {
     XojPageView* currentPage = getPageAtCurrentPosition(event);
 
-    this->inputContext->getXournal()->view->getCursor()->setInsidePage(currentPage != nullptr);
+    this->inputContext->getView()->getCursor()->setInsidePage(currentPage != nullptr);
 
     if (event->type == BUTTON_PRESS_EVENT)  // mouse button pressed or pen touching surface
     {
@@ -110,12 +109,12 @@ void MouseInputHandler::setPressedState(InputEvent* event) {
 auto MouseInputHandler::changeTool(InputEvent* event) -> bool {
     Settings* settings = this->inputContext->getSettings();
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
-    XournalWidget* xournal = this->inputContext->getXournal();
+    auto selection = inputContext->getView()->getSelections()->getSelection();
 
     ButtonConfig* cfg = nullptr;
-    if (modifier2 /* Middle Button */ && !xournal->selection) {
+    if (modifier2 /* Middle Button */ && !selection) {
         cfg = settings->getMiddleButtonConfig();
-    } else if (modifier3 /* Right Button */ && !xournal->selection) {
+    } else if (modifier3 /* Right Button */ && !selection) {
         cfg = settings->getRightButtonConfig();
     }
 
