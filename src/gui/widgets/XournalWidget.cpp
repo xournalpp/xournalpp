@@ -69,6 +69,8 @@ auto XournalWidget::sizeAllocateCallback(GtkWidget* drawingArea, GdkRectangle* a
     gtk_adjustment_set_page_size(hadjustment, allocation->width);
     gtk_adjustment_set_page_increment(vadjustment, allocation->height - STEP_INCREMENT);
     gtk_adjustment_set_page_increment(hadjustment, allocation->width - STEP_INCREMENT);
+
+    gtk_widget_queue_draw(drawingArea);
 }
 
 auto XournalWidget::realizeCallback(GtkWidget* drawingArea, XournalWidget* self) -> void {
@@ -149,10 +151,8 @@ auto XournalWidget::eventCallback(const ViewportEvent& event) -> void {
     if (typeid(event) == typeid(ScrollEvent)) {
         auto scrollEvent = dynamic_cast<const ScrollEvent&>(event);
         updateScrollbar(scrollEvent.getDirection(), scrollEvent.getDifference(), layout->isInfiniteHorizontally());
-    } else if (typeid(event) == typeid(ScaleEvent)) {
-        gtk_widget_queue_allocate(this->drawingArea);
     }
-    gtk_widget_queue_draw(this->drawingArea);
+    gtk_widget_queue_allocate(this->drawingArea);
 }
 
 auto XournalWidget::eventCallback(const LayoutEvent& event) -> void { gtk_widget_queue_allocate(this->drawingArea); }
