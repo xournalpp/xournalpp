@@ -158,6 +158,4 @@ auto XournalWidget::eventCallback(const ViewportEvent& event) -> void {
 
 auto XournalWidget::eventCallback(const LayoutEvent& event) -> void { gtk_widget_queue_allocate(this->drawingArea); }
 
-auto XournalWidget::connectInputContext(std::shared_ptr<InputContext> input) -> void {
-    input->connect(this->drawingArea);
-}
+auto XournalWidget::getGtkWidget() -> GtkWidget* { return this->drawingArea; };

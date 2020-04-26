@@ -37,7 +37,7 @@ public:
     auto eventCallback(const ViewportEvent& event) -> void override;
     auto eventCallback(const LayoutEvent& event) -> void override;
 
-    auto connectInputContext(std::shared_ptr<InputContext> input) -> void;
+    auto getGtkWidget() -> GtkWidget*;
 
 private:
     auto updateScrollbar(ScrollEvent::ScrollDirection direction, double value, bool infinite) -> void;
