@@ -11,11 +11,11 @@
 #include "gui/inputdevices/HandRecognition.h"
 #include "model/Document.h"
 #include "model/Stroke.h"
+#include "model/softstorage/Layout.h"
 #include "undo/DeleteUndoAction.h"
 #include "util/cpp14memory.h"
 #include "widgets/XournalWidget.h"
 
-#include "Layout.h"
 #include "PageView.h"
 #include "Rectangle.h"
 #include "RepaintHandler.h"
@@ -24,21 +24,23 @@
 #include "XournalppCursor.h"
 
 XournalView::XournalView(GtkScrolledWindow* parent, Control* control): control(control) {
-    this->horizontal = gtk_scrolled_window_get_hadjustment(parent);
-    this->vertical = gtk_scrolled_window_get_vadjustment(parent);
-
     this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
     registerListener(control);
 
-    auto inputContext = std::make_shared<InputContext>(this);
+    this->input = std::make_shared<InputContext>(this);
+    this->viewport = std::make_shared<Viewport>();
+    this->layout = std::make_shared<Layout>(viewport);
+    this->selection = std::make_shared<Selections>();
+    auto xournalRenderer = std::make_unique<XournalRenderer>();
 
-    this->widget = std::make_unique<XournalWidget>(this, inputContext);
+    this->widget = std::make_unique<XournalWidget>(std::move(xournalRenderer), this->viewport, this->layout);
+    this->input->connect(this->widget->getGtkWidget());
 
     gtk_container_add(GTK_CONTAINER(parent), this->widget->getGtkWidget());
     gtk_widget_show(this->widget->getGtkWidget());
 
     this->repaintHandler = new RepaintHandler(this);
-    this->handRecognition = new HandRecognition(this->widget->getGtkWidget(), inputContext, control->getSettings());
+    this->handRecognition = new HandRecognition(this->widget->getGtkWidget(), input, control->getSettings());
 
     control->getZoomControl()->addZoomListener(this);
 

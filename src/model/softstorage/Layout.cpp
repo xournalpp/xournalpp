@@ -5,9 +5,8 @@
 #include <numeric>
 
 #include "control/Control.h"
-#include "widgets/XournalWidget.h"
-
-#include "XournalView.h"
+#include "gui/XournalView.h"
+#include "gui/widgets/XournalWidget.h"
 /**
  * Padding outside the pages, including shadow
  */

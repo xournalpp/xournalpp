@@ -12,6 +12,7 @@
 #pragma once
 
 #include <gtk/gtk.h>
+#include <model/softstorage/Selections.h>
 
 #include "control/zoom/ZoomListener.h"
 #include "model/DocumentListener.h"
@@ -99,6 +100,7 @@ public:
 
     auto getLayout() -> std::shared_ptr<Layout>;
     auto getViewport() -> std::shared_ptr<Viewport>;
+    auto getSelections() -> std::shared_ptr<Selections>;
 
 public:
     // ZoomListener interface
@@ -131,6 +133,7 @@ private:
     std::shared_ptr<Layout> layout;
     std::shared_ptr<Viewport> viewport;
     std::shared_ptr<InputContext> input;
+    std::shared_ptr<Selections> selection;
 
     double margin = 75;
 

@@ -18,10 +18,10 @@
 #include <model/PageRef.h>
 
 #include "gui/LayoutMapper.h"
+#include "gui/PageView.h"
 #include "model/Storage.h"
 
 #include "LayoutEvent.h"
-#include "PageView.h"
 #include "Rectangle.h"
 #include "Viewport.h"
 #include "XournalType.h"

@@ -21,11 +21,11 @@ class InputContext;
 
 #include <memory>
 
-#include <gui/LayoutEvent.h>
+#include <model/softstorage/LayoutEvent.h>
 #include <util/Rectangle.h>
 
 #include "gui/Renderer.h"
-#include "gui/ViewportEvent.h"
+#include "model/softstorage/ViewportEvent.h"
 
 #include "gtkdrawingareascrollable.h"
 

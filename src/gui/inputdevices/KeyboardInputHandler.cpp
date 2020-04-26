@@ -14,10 +14,9 @@ KeyboardInputHandler::~KeyboardInputHandler() = default;
 
 auto KeyboardInputHandler::handleImpl(InputEvent* event) -> bool {
     auto keyEvent = reinterpret_cast<GdkEventKey*>(event->sourceEvent);
-    XournalWidget* xournal = inputContext->getXournal();
 
     if (keyEvent->type == GDK_KEY_PRESS) {
-        EditSelection* selection = xournal->selection;
+        auto selection = inputContext->getView()->getSelections()->getSelection();
         if (selection) {
             int d = 3;
 
@@ -47,7 +46,7 @@ auto KeyboardInputHandler::handleImpl(InputEvent* event) -> bool {
             }
         }
 
-        return xournal->view->onKeyPressEvent(keyEvent);
+        return inputContext->getView()->onKeyPressEvent(keyEvent);
     }
 
     return inputContext->getView()->onKeyReleaseEvent(keyEvent);
