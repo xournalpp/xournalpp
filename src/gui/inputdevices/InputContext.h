@@ -41,8 +41,8 @@ private:
     KeyboardInputHandler* keyboardHandler;
     TouchInputHandler* touchHandler;
 
-    GtkWidget* widget = nullptr;
-    Control* control = nullptr;
+    XournalWidget* widget = nullptr;
+    XournalView* view;
 
     GdkModifierType modifierState = (GdkModifierType)0;
 
@@ -56,7 +56,7 @@ public:
     };
 
 public:
-    InputContext(Control* control);
+    InputContext(XournalView* view);
     ~InputContext();
 
 private:
@@ -85,8 +85,10 @@ public:
     /**
      * Connect the input handling to the window to receive events
      */
-    void connect(GtkWidget* widget);
+    void connect(XournalWidget* widget);
 
+    XournalWidget* getXournal();
+    XournalView* getView();
     ToolHandler* getToolHandler();
     Settings* getSettings();
 
