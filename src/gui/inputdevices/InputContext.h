@@ -85,9 +85,8 @@ public:
     /**
      * Connect the input handling to the window to receive events
      */
-    void connect(XournalWidget* widget);
+    void connect(GtkWidget* widget);
 
-    XournalWidget* getXournal();
     XournalView* getView();
     ToolHandler* getToolHandler();
     Settings* getSettings();

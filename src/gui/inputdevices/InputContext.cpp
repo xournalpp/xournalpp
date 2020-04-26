@@ -35,9 +35,8 @@ InputContext::~InputContext() {
     this->keyboardHandler = nullptr;
 }
 
-void InputContext::connect(XournalWidget* pWidget) {
-    this->widget = pWidget;
-    gtk_widget_set_support_multidevice(widget->getGtkWidget(), true);
+void InputContext::connect(GtkWidget* pWidget) {
+    gtk_widget_set_support_multidevice(pWidget, true);
 
     int mask =
             // Key handling
@@ -51,9 +50,9 @@ void InputContext::connect(XournalWidget* pWidget) {
             GDK_SMOOTH_SCROLL_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK | GDK_PROXIMITY_IN_MASK |
             GDK_PROXIMITY_OUT_MASK;
 
-    gtk_widget_add_events(pWidget->getGtkWidget(), mask);
+    gtk_widget_add_events(pWidget, mask);
 
-    g_signal_connect(pWidget->getGtkWidget(), "event", G_CALLBACK(eventCallback), this);
+    g_signal_connect(pWidget, "event", G_CALLBACK(eventCallback), this);
 }
 
 auto InputContext::eventCallback(GtkWidget* widget, GdkEvent* event, InputContext* self) -> bool {
