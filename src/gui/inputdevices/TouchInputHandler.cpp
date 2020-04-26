@@ -93,10 +93,7 @@ void TouchInputHandler::scrollMotion(InputEvent* event) {
         this->secLastAbsY = event->absoluteY;
     }
 
-    GtkAdjustment* h = this->inputContext->getView()->getHorizontalAdjustment();
-    gtk_adjustment_set_value(h, gtk_adjustment_get_value(h) - offsetX);
-    GtkAdjustment* v = this->inputContext->getView()->getVerticalAdjustment();
-    gtk_adjustment_set_value(v, gtk_adjustment_get_value(v) - offsetY);
+    this->inputContext->getView()->scrollRelative(offsetX, offsetY);
 }
 
 void TouchInputHandler::zoomStart() {

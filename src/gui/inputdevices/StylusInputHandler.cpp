@@ -17,7 +17,7 @@ StylusInputHandler::~StylusInputHandler() = default;
 
 auto StylusInputHandler::handleImpl(InputEvent* event) -> bool {
     // Only handle events when there is no active gesture
-    XournalWidget* xournal = inputContext->getXournal();
+    auto view = this->inputContext->getView();
 
     // Determine the pressed states of devices and associate them to the current event
     setPressedState(event);
@@ -50,7 +50,7 @@ auto StylusInputHandler::handleImpl(InputEvent* event) -> bool {
     if (event->type == MOTION_EVENT)  // mouse or pen moved
     {
         this->actionMotion(event);
-        XournalppCursor* cursor = xournal->view->getCursor();
+        XournalppCursor* cursor = view->getCursor();
         cursor->setInvisible(false);
         cursor->updateCursor();
     }
@@ -104,7 +104,7 @@ auto StylusInputHandler::handleImpl(InputEvent* event) -> bool {
 void StylusInputHandler::setPressedState(InputEvent* event) {
     XojPageView* currentPage = getPageAtCurrentPosition(event);
 
-    this->inputContext->getXournal()->view->getCursor()->setInsidePage(currentPage != nullptr);
+    this->inputContext->getView()->getCursor()->setInsidePage(currentPage != nullptr);
 
     if (event->type == BUTTON_PRESS_EVENT)  // mouse button pressed or pen touching surface
     {
