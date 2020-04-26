@@ -4,5 +4,32 @@
 
 #pragma once
 
+class Action {
+public:
+    Action();
+    virtual ~Action();
+};
 
-class Action {};
+class ViewportAction: public Action {};
+
+class Allocation: public ViewportAction {
+public:
+    Allocation(int width, int height);
+};
+
+class Scroll: public ViewportAction {
+public:
+    Scroll(double difference);
+    virtual ~Scroll();
+
+    const double difference;
+};
+
+class HScroll: public Scroll {
+public:
+    HScroll(double difference);
+};
+class VScroll: public Scroll {
+public:
+    VScroll(double difference);
+};

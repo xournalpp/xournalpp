@@ -7,12 +7,10 @@
 #include <cairo.h>
 
 #include "Rectangle.h"
+#include "Viewport.h"
 
 class Renderer {
 public:
-    virtual auto render(cairo_t* cr, Rectangle<double> viewport, double scale) -> void;
-    virtual auto getDocumentSize() -> const Rectangle<double>&;
-    virtual auto isInfiniteHorizontally() -> bool;
-    virtual auto isInfiniteVertically() -> bool;
-    virtual auto getGtkStyleContext() -> GtkStyleContext*;
+    virtual auto render(cairo_t* cr, std::shared_ptr<Viewport> viewport) -> void = 0;
+    virtual auto getGtkStyleContext() -> GtkStyleContext* = 0;
 };

@@ -17,7 +17,9 @@
 #include <gtk/gtk.h>
 
 #include "gui/LayoutMapper.h"
+#include "model/Storage.h"
 
+#include "LayoutEvent.h"
 #include "Rectangle.h"
 #include "XournalType.h"
 
@@ -31,12 +33,16 @@ class XournalView;
  * This class manages the layout of the XojPageView's contained
  * in the XournalWidget
  */
-class Layout {
+class Layout: public Storage<LayoutEvent> {
 public:
     Layout(XournalView* view);
     virtual ~Layout();
 
 public:
+    virtual auto getDocumentSize() -> const Rectangle<double>&;
+    virtual auto isInfiniteHorizontally() -> bool;
+    virtual auto isInfiniteVertically() -> bool;
+
     /**
      * Increases the adjustments by the given amounts
      */

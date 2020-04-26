@@ -4,13 +4,25 @@
 
 #pragma once
 
+#include <functional>
 
-class Viewport: Storage {
+#include <model/Storage.h>
+
+#include "ViewportEvent.h"
+
+class Viewport: public Storage<ViewportEvent> {
 public:
     Viewport();
 
 public:
-    auto onScaleUpdate(std::function<void(double)> callback) -> void;
+    auto getX() -> double;
+    auto getY() -> double;
+    auto getWidth() -> unsigned int;
+    auto getHeight() -> unsigned int;
+    auto getRawScale() -> double;
+    auto getScale() -> double;
+
+    auto onAction(const Action& action) -> void override;
 
 private:
     double x = 0;
