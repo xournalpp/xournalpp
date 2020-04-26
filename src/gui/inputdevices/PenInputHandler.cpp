@@ -65,7 +65,7 @@ void PenInputHandler::handleScrollEvent(InputEvent* event) {
         this->scrollOffsetY = this->scrollStartY - event->absoluteY;
 
         Util::execInUiThread([&]() {
-            this->inputContext->getXournal()->getLayout()->scrollRelative(this->scrollOffsetX, this->scrollOffsetY);
+            this->inputContext->getView()->scrollRelative(this->scrollOffsetX, this->scrollOffsetY);
 
             // Scrolling done, so reset our counters
             this->scrollOffsetX = 0;
@@ -101,9 +101,7 @@ auto PenInputHandler::actionStart(InputEvent* event) -> bool {
 
     this->penInWidget = true;
 
-    XournalWidget* xournal = this->inputContext->getXournal();
-
-    XournalppCursor* cursor = xournal->view->getCursor();
+    XournalppCursor* cursor = inputContext->getView()->getCursor();
     cursor->setMouseDown(true);
 
 
@@ -120,28 +118,28 @@ auto PenInputHandler::actionStart(InputEvent* event) -> bool {
     }
 
     // hand tool don't change the selection, so you can scroll e.g. with your touchscreen without remove the selection
-    if (toolHandler->getToolType() != TOOL_HAND && xournal->selection) {
-        EditSelection* selection = xournal->selection;
+    auto selection = inputContext->getView()->getSelections()->getSelection();
+    if (toolHandler->getToolType() != TOOL_HAND && selection) {
 
         XojPageView* view = selection->getView();
         PositionInputData selectionPos = this->getInputDataRelativeToCurrentPage(view, event);
 
         // Check if event modifies selection instead of page
         CursorSelectionType selType =
-                selection->getSelectionTypeForPos(selectionPos.x, selectionPos.y, xournal->view->getZoom());
+                selection->getSelectionTypeForPos(selectionPos.x, selectionPos.y, inputContext->getView()->getZoom());
         if (selType) {
 
             if (selType == CURSOR_SELECTION_MOVE && modifier3) {
                 selection->copySelection();
             }
 
-            xournal->selection->mouseDown(selType, selectionPos.x, selectionPos.y);
+            selection->mouseDown(selType, selectionPos.x, selectionPos.y);
             // Only modify selection and do not forward event to page
             return true;
         }
 
 
-        xournal->view->clearSelection();
+        inputContext->getView()->clearSelection();
         if (changeTool(event)) {
             // Do not handle event in any further way to make click only deselect selection
             return true;
@@ -165,12 +163,6 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool {
      */
     gdouble eventX = event->relativeX;
     gdouble eventY = event->relativeY;
-    GtkAdjustment* adjHorizontal = this->inputContext->getView()->getHorizontalAdjustment();
-    GtkAdjustment* adjVertical = this->inputContext->getView()->getVerticalAdjustment();
-    double h = gtk_adjustment_get_value(adjHorizontal);
-    double v = gtk_adjustment_get_value(adjVertical);
-    eventX -= h;
-    eventY -= v;
 
     GtkWidget* widget = gtk_widget_get_parent(this->inputContext->getView()->getWidget()->getGtkWidget());
     gint width = gtk_widget_get_allocated_width(widget);
@@ -181,8 +173,6 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool {
         this->penInWidget = true;
     }
 
-
-    XournalWidget* xournal = this->inputContext->getXournal();
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
 
     this->changeTool(event);
@@ -194,17 +184,19 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool {
         }
         return false;
     }
-    if (xournal->selection) {
-        EditSelection* selection = xournal->selection;
+
+    auto selection = this->inputContext->getView()->getSelections()->getSelection();
+    if (selection) {
         XojPageView* view = selection->getView();
 
         PositionInputData pos = this->getInputDataRelativeToCurrentPage(view, event);
 
-        if (xournal->selection->isMoving()) {
+        if (selection->isMoving()) {
             selection->mouseMove(pos.x, pos.y);
         } else {
-            CursorSelectionType selType = selection->getSelectionTypeForPos(pos.x, pos.y, xournal->view->getZoom());
-            xournal->view->getCursor()->setMouseSelectionType(selType);
+            CursorSelectionType selType =
+                    selection->getSelectionTypeForPos(pos.x, pos.y, this->inputContext->getView()->getZoom());
+            this->inputContext->getView()->getCursor()->setMouseSelectionType(selType);
         }
         return true;
     }
@@ -249,7 +241,7 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool {
     this->updateLastEvent(event);
 
     // Update the cursor
-    xournal->view->getCursor()->setInsidePage(currentPage != nullptr);
+    this->inputContext->getView()->getCursor()->setInsidePage(currentPage != nullptr);
 
     // Selections and single-page elements will always work on one page so we need to handle them differently
     if (this->sequenceStartPage && toolHandler->isSinglePageTool()) {
@@ -275,13 +267,12 @@ auto PenInputHandler::actionMotion(InputEvent* event) -> bool {
 }
 
 auto PenInputHandler::actionEnd(InputEvent* event) -> bool {
-    XournalWidget* xournal = inputContext->getXournal();
-    XournalppCursor* cursor = xournal->view->getCursor();
+    XournalppCursor* cursor = this->inputContext->getView()->getCursor();
     ToolHandler* toolHandler = inputContext->getToolHandler();
 
     cursor->setMouseDown(false);
 
-    EditSelection* sel = xournal->view->getSelection();
+    auto sel = this->inputContext->getView()->getSelections()->getSelection();
     if (sel) {
         sel->mouseUp();
     }
@@ -312,15 +303,15 @@ auto PenInputHandler::actionEnd(InputEvent* event) -> bool {
     }
 
     // Reset the selection
-    EditSelection* tmpSelection = xournal->selection;
-    xournal->selection = nullptr;
+    auto tmpSelection = this->inputContext->getView()->getSelections()->getSelection();
+    this->inputContext->getView()->deleteSelection();
     this->sequenceStartPage = nullptr;
 
     toolHandler->restoreLastConfig();
 
     // we need this workaround so it's possible to select something with the middle button
     if (tmpSelection) {
-        xournal->view->setSelection(tmpSelection);
+        this->inputContext->getView()->setSelection(tmpSelection);
     }
 
     this->inputRunning = false;
@@ -369,16 +360,9 @@ void PenInputHandler::actionLeaveWindow(InputEvent* event) {
         gdouble eventX = event->relativeX;
         gdouble eventY = event->relativeY;
 
-        GtkAdjustment* adjHorizontal = this->inputContext->getView()->getHorizontalAdjustment();
-        GtkAdjustment* adjVertical = this->inputContext->getView()->getVerticalAdjustment();
-        double h = gtk_adjustment_get_value(adjHorizontal);
-        double v = gtk_adjustment_get_value(adjVertical);
-        eventX -= h;
-        eventY -= v;
-
-        GtkWidget* widget = this->inputContext->getView()->getWidget()->getGtkWidget();
-        gint width = gtk_widget_get_allocated_width(widget);
-        gint height = gtk_widget_get_allocated_height(widget);
+        auto viewport = this->inputContext->getView()->getViewport();
+        gint width = viewport->getWidth();
+        gint height = viewport->getHeight();
 
         new std::thread([&, eventX, eventY, width, height]() {
             int offsetX = 0, offsetY = 0;
@@ -405,8 +389,7 @@ void PenInputHandler::actionLeaveWindow(InputEvent* event) {
 #endif
 
             while (!this->penInWidget) {
-                Util::execInUiThread(
-                        [&]() { this->inputContext->getXournal()->getLayout()->scrollRelative(offsetX, offsetY); });
+                Util::execInUiThread([&]() { this->inputContext->getView()->scrollRelative(offsetX, offsetY); });
 
                 // sleep for half a second until we scroll again
                 g_usleep(static_cast<gulong>(0.5 * G_USEC_PER_SEC));
