@@ -8,6 +8,8 @@
 
 #include <model/Storage.h>
 
+#include "util/Rectangle.h"
+
 #include "ViewportEvent.h"
 
 class Viewport: public Storage<ViewportEvent> {
@@ -17,10 +19,11 @@ public:
 public:
     auto getX() -> double;
     auto getY() -> double;
-    auto getWidth() -> unsigned int;
-    auto getHeight() -> unsigned int;
+    auto getWidth() -> int;
+    auto getHeight() -> int;
     auto getRawScale() -> double;
     auto getScale() -> double;
+    auto getVisibleRect() -> Rectangle<double>;
 
     auto onAction(const Action& action) -> void override;
 

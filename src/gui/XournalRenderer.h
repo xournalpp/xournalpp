@@ -9,9 +9,6 @@
 
 class XournalRenderer: public Renderer {
 public:
-    auto render(cairo_t* cr, Rectangle<double> viewport, double scale) -> void;
-    auto getDocumentSize() -> const Rectangle<double>&;
-    auto isInfiniteHorizontally() -> bool;
-    auto isInfiniteVertically() -> bool;
-    auto getGtkStyleContext() -> GtkStyleContext*;
+    auto render(cairo_t* cr, std::shared_ptr<Viewport> viewport) -> void override;
+    auto getGtkStyleContext() -> GtkStyleContext* override;
 };

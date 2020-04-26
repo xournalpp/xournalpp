@@ -97,6 +97,9 @@ public:
      */
     HandRecognition* getHandRecognition();
 
+    auto getLayout() -> std::shared_ptr<Layout>;
+    auto getViewport() -> std::shared_ptr<Viewport>;
+
 public:
     // ZoomListener interface
     void zoomChanged();
@@ -125,9 +128,9 @@ private:
 
 private:
     std::unique_ptr<XournalWidget> widget;
-
-    GtkAdjustment* horizontal = nullptr;
-    GtkAdjustment* vertical = nullptr;
+    std::shared_ptr<Layout> layout;
+    std::shared_ptr<Viewport> viewport;
+    std::shared_ptr<InputContext> input;
 
     double margin = 75;
 

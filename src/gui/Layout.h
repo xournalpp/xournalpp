@@ -47,11 +47,6 @@ public:
     auto onAction(const Action& action) -> void override;
 
     /**
-     * Returns the Rectangle which is currently visible
-     */
-    auto getVisibleRect() -> Rectangle<double>;
-
-    /**
      * Return the pageview containing co-ordinates.
      */
     auto getViewAt(int x, int y) -> XojPageView*;

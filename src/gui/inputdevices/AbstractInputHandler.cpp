@@ -25,7 +25,7 @@ auto AbstractInputHandler::isBlocked() const -> bool { return this->blocked; }
 
 auto AbstractInputHandler::handle(InputEvent* event) -> bool {
     if (!this->blocked) {
-        this->inputContext->getXournal()->view->getCursor()->setInputDeviceClass(event->deviceClass);
+        this->inputContext->getView()->getCursor()->setInputDeviceClass(event->deviceClass);
         return this->handleImpl(event);
     }
     return true;
@@ -44,12 +44,12 @@ auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent* event) -> XojPag
     gdouble eventX = event->relativeX;
     gdouble eventY = event->relativeY;
 
-    XournalWidget* xournal = this->inputContext->getXournal();
+    auto viewport = this->inputContext->getView()->getViewport();
 
-    double x = eventX + xournal->x;
-    double y = eventY + xournal->y;
+    double x = eventX + viewport->getX();
+    double y = eventY + viewport->getY();
 
-    return xournal->getLayout()->getViewAt(x, y);
+    return this->inputContext->getView()->getLayout()->getViewAt(x, y);
 }
 
 /**
@@ -58,14 +58,14 @@ auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent* event) -> XojPag
 auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent* event)
         -> PositionInputData {
     g_assert(page != nullptr);
-    XournalWidget* xournal = inputContext->getXournal();
+    auto viewport = this->inputContext->getView()->getViewport();
 
     gdouble eventX = event->relativeX;
     gdouble eventY = event->relativeY;
 
     PositionInputData pos = {};
-    pos.x = eventX - page->getX() - xournal->x;
-    pos.y = eventY - page->getY() - xournal->y;
+    pos.x = eventX - page->getX() - viewport->getX();
+    pos.y = eventY - page->getY() - viewport->getY();
     pos.pressure = Point::NO_PRESSURE;
 
     if (this->inputContext->getSettings()->isPressureSensitivity()) {

@@ -130,8 +130,6 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     return false;
 }
 
-auto InputContext::getXournal() -> XournalWidget* { return this->widget; }
-
 auto InputContext::getView() -> XournalView* { return view; }
 
 auto InputContext::getSettings() -> Settings* { return view->getControl()->getSettings(); }
