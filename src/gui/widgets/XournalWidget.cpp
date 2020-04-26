@@ -44,7 +44,8 @@ auto XournalWidget::initVScrolling(XournalWidget* self) -> void {
 
 auto XournalWidget::sizeAllocateCallback(GtkWidget* drawingArea, GdkRectangle* allocation, XournalWidget* self)
         -> void {
-    Dispatcher::getMainStage().dispatch(Allocation{allocation->width, allocation->height});
+    if (allocation->width != self->viewport->getWidth() || allocation->height != self->viewport->getHeight())
+        Dispatcher::getMainStage().dispatch(Allocation{allocation->width, allocation->height});
 
     Rectangle<double> documentSize = self->layout->getDocumentSize();
     GtkScrollable* scrollableWidget = GTK_SCROLLABLE(drawingArea);
@@ -70,7 +71,7 @@ auto XournalWidget::sizeAllocateCallback(GtkWidget* drawingArea, GdkRectangle* a
     gtk_adjustment_set_page_increment(vadjustment, allocation->height - STEP_INCREMENT);
     gtk_adjustment_set_page_increment(hadjustment, allocation->width - STEP_INCREMENT);
 
-    gtk_widget_queue_draw(drawingArea);
+    // gtk_widget_queue_draw(drawingArea); TODO?
 }
 
 auto XournalWidget::realizeCallback(GtkWidget* drawingArea, XournalWidget* self) -> void {
