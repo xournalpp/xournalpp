@@ -38,6 +38,10 @@ pid_t getPid();
 void openFileWithDefaultApplicaion(const Path& filename);
 void openFileWithFilebrowser(const Path& filename);
 
+/**
+ * Return the configuration folder path (may not be guaranteed to exist).
+ */
+Path getConfigFolder();
 Path getConfigSubfolder(const Path& subfolder = "");
 Path getCacheSubfolder(const Path& subfolder = "");
 Path getDataSubfolder(const Path& subfolder = "");

@@ -80,9 +80,14 @@ auto Util::getAutosaveFilename() -> Path {
     return p;
 }
 
-auto Util::getConfigSubfolder(const Path& subfolder) -> Path {
+auto Util::getConfigFolder() -> Path {
     Path p(g_get_user_config_dir());
     p /= g_get_prgname();
+    return p;
+}
+
+auto Util::getConfigSubfolder(const Path& subfolder) -> Path {
+    Path p = getConfigFolder();
     p /= subfolder;
 
     return Util::ensureFolderExists(p);

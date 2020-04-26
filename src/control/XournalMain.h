@@ -31,7 +31,11 @@ public:
 
 private:
     static void initLocalisation();
-    static void migrateSettings();
+
+    /**
+     * Returns true if configuration settings were migrated.
+     */
+    static bool migrateSettings();
 
     static void checkForErrorlog();
     static void checkForEmergencySave(Control* control);

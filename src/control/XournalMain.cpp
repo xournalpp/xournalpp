@@ -72,19 +72,22 @@ void XournalMain::initLocalisation() {
     std::cout.imbue(std::locale());
 }
 
-void XournalMain::migrateSettings() {
-    Path newConfigPath(g_get_user_config_dir());
-    newConfigPath /= g_get_prgname();
+bool XournalMain::migrateSettings() {
+    Path newConfigPath = Util::getConfigFolder();
 
     if (!newConfigPath.exists()) {
         Path oldConfigPath(g_get_home_dir());
         oldConfigPath /= ".xournalpp";
 
         if (oldConfigPath.exists()) {
+            g_message("Migrating configuration from %s to %s", oldConfigPath.str().c_str(),
+                      newConfigPath.str().c_str());
             fs::create_directories(newConfigPath.str());
             fs::copy(oldConfigPath.str(), newConfigPath.str(), fs::copy_options::recursive);
+            return true;
         }
     }
+    return false;
 }
 
 void XournalMain::checkForErrorlog() {
@@ -276,7 +279,7 @@ auto XournalMain::exportPdf(const char* input, const char* output) -> int {
 auto XournalMain::run(int argc, char* argv[]) -> int {
     g_set_prgname("com.github.xournalpp.xournalpp");
     this->initLocalisation();
-    this->migrateSettings();
+    bool hasMigrated = this->migrateSettings();
 
     GError* error = nullptr;
     GOptionContext* context = g_option_context_new("FILE");
@@ -392,6 +395,17 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
     // There is a timing issue with the layout
     // This fixes it, see #405
     Util::execInUiThread([=]() { control->getWindow()->getXournal()->layoutPages(); });
+
+    if (hasMigrated) {
+        Util::execInUiThread([=]() {
+            Path oldConfigPath(g_get_home_dir());
+            oldConfigPath /= ".xournalpp";
+            const char* msg = "Due to a recent update, Xournal++ has changed where its configuration files are "
+                              "stored.\nThey have been automatically copied from\n{1}\nto\n{2}";
+            XojMsgBox::showErrorToUser(control->getGtkWindow(),
+                                       FS(_F(msg) % oldConfigPath.c_str() % Util::getConfigFolder().c_str()));
+        });
+    }
 
     gtk_main();
 
