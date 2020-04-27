@@ -18,7 +18,6 @@
 
 #include "PageView.h"
 #include "Rectangle.h"
-#include "RepaintHandler.h"
 #include "Shadow.h"
 #include "Util.h"
 #include "XournalppCursor.h"
@@ -29,7 +28,7 @@ XournalView::XournalView(GtkScrolledWindow* parent, Control* control): control(c
 
     this->input = std::make_shared<InputContext>(this);
     this->viewport = std::make_shared<Viewport>();
-    this->layout = std::make_shared<Layout>(viewport);
+    this->layout = std::make_shared<PageLayout>(viewport);
     this->selection = std::make_shared<Selections>();
     auto xournalRenderer = std::make_unique<XournalRenderer>();
 
@@ -39,10 +38,7 @@ XournalView::XournalView(GtkScrolledWindow* parent, Control* control): control(c
     gtk_container_add(GTK_CONTAINER(parent), this->widget->getGtkWidget());
     gtk_widget_show(this->widget->getGtkWidget());
 
-    this->repaintHandler = new RepaintHandler(this);
     this->handRecognition = new HandRecognition(this->widget->getGtkWidget(), input, control->getSettings());
-
-    control->getZoomControl()->addZoomListener(this);
 
     gtk_widget_set_can_default(this->widget->getGtkWidget(), true);
     gtk_widget_grab_default(this->widget->getGtkWidget());
@@ -62,8 +58,6 @@ XournalView::~XournalView() {
 
     delete this->cache;
     this->cache = nullptr;
-    delete this->repaintHandler;
-    this->repaintHandler = nullptr;
 
     delete this->handRecognition;
     this->handRecognition = nullptr;

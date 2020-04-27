@@ -3,7 +3,6 @@
 #include <cmath>
 
 #include "control/Control.h"
-#include "gui/Layout.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
 #include "model/Document.h"
@@ -11,6 +10,7 @@
 #include "model/Layer.h"
 #include "model/Stroke.h"
 #include "model/Text.h"
+#include "model/softstorage/Layout.h"
 #include "serializing/ObjectInputStream.h"
 #include "serializing/ObjectOutputStream.h"
 #include "undo/ColorUndoAction.h"

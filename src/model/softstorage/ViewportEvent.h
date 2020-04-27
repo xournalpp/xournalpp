@@ -5,6 +5,7 @@
 #pragma once
 
 
+#include <model/StorageEvent.h>
 class ViewportEvent: public StorageEvent {
 public:
     virtual ~ViewportEvent();

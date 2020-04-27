@@ -1,8 +1,8 @@
 #include "ScrollHandler.h"
 
-#include "gui/Layout.h"
 #include "gui/XournalView.h"
 #include "gui/widgets/SpinPageAdapter.h"
+#include "model/softstorage/Layout.h"
 
 #include "Control.h"
 

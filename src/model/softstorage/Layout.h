@@ -34,37 +34,10 @@
  */
 class Layout: public Storage<LayoutEvent> {
 public:
-    enum Mode { FIT_WIDTH, FIT_HEIGHT, FREE };
+    virtual ~Layout();
 
 public:
-    Layout(std::shared_ptr<Viewport> viewport);
-
-public:
-    auto getDocumentSize() -> const Rectangle<double>&;
-    auto isInfiniteHorizontally() -> bool;
-    auto isInfiniteVertically() -> bool;
-
-    auto onAction(const Action& action) -> void override;
-
-    /**
-     * Return the pageview containing co-ordinates.
-     */
-    auto getViewAt(int x, int y) -> XojPageView*;
-
-    /**
-     * Return current page
-     */
-    auto getCurrentPage() -> PageRef;
-
-private:
-    LayoutMapper mapper;
-
-    std::vector<unsigned> widthCols;
-    std::vector<unsigned> heightRows;
-
-    /**
-     * The width and height of all our pages
-     */
-    size_t minWidth = 0;
-    size_t minHeight = 0;
+    virtual auto getDocumentSize() -> const Rectangle<double>& = 0;
+    virtual auto isInfiniteHorizontally() -> bool = 0;
+    virtual auto isInfiniteVertically() -> bool = 0;
 };

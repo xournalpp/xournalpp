@@ -11,35 +11,23 @@
 
 #pragma once
 
+#include <control/Control.h>
 #include <gtk/gtk.h>
+#include <model/softstorage/PageLayout.h>
 #include <model/softstorage/Selections.h>
 
-#include "control/zoom/ZoomListener.h"
 #include "model/DocumentListener.h"
 #include "model/PageRef.h"
 #include "widgets/XournalWidget.h"
 
 #include "XournalRenderer.h"
 
-class Control;
-class XournalppCursor;
-class Document;
-class EditSelection;
-class Layout;
-class XojPageView;
-class PdfCache;
-class RepaintHandler;
-class TextEditor;
-class HandRecognition;
-
-class XournalView: public DocumentListener, public ZoomListener {
+class XournalView: public DocumentListener {
 public:
     XournalView(GtkScrolledWindow* parent, Control* control);
     virtual ~XournalView();
 
 public:
-    void layoutPages();
-
     void scrollTo(size_t pageNo, double y = 0);
 
     // Relative navigation in current layout:
@@ -75,9 +63,10 @@ public:
 
     void ensureRectIsVisible(int x, int y, int width, int height);
 
-    void setSelection(EditSelection* selection);
-    EditSelection* getSelection();
-    void deleteSelection(EditSelection* sel = nullptr);
+    auto scrollRelative(int offsetX, int offsetY) -> void;
+
+    void setSelection(std::shared_ptr<EditSelection> selection);
+    void deleteSelection();
     void repaintSelection(bool evenWithoutSelection = false);
 
     TextEditor* getTextEditor();
@@ -87,24 +76,14 @@ public:
     int getDpiScaleFactor();
     Document* getDocument();
     PdfCache* getCache();
-    RepaintHandler* getRepaintHandler();
     XournalWidget* getWidget();
     XournalppCursor* getCursor();
 
     Rectangle<double>* getVisibleRect(XojPageView* redrawable);
 
-    /**
-     * @return Helper class for Touch specific fixes
-     */
-    HandRecognition* getHandRecognition();
-
-    auto getLayout() -> std::shared_ptr<Layout>;
+    auto getLayout() -> std::shared_ptr<PageLayout>;
     auto getViewport() -> std::shared_ptr<Viewport>;
     auto getSelections() -> std::shared_ptr<Selections>;
-
-public:
-    // ZoomListener interface
-    void zoomChanged();
 
 public:
     // DocumentListener interface
@@ -119,47 +98,12 @@ public:
     bool onKeyPressEvent(GdkEventKey* event);
     bool onKeyReleaseEvent(GdkEventKey* event);
 
-    // static void onRealized(GtkWidget* widget, XournalView* view);
-
-private:
-    Rectangle<double>* getVisibleRect(size_t page);
-
-    static gboolean clearMemoryTimer(XournalView* widget);
-
-    // static void staticLayoutPages(GtkWidget* widget, GtkAllocation* allocation, void* data);
-
 private:
     std::unique_ptr<XournalWidget> widget;
-    std::shared_ptr<Layout> layout;
+    std::shared_ptr<PageLayout> layout;
     std::shared_ptr<Viewport> viewport;
     std::shared_ptr<InputContext> input;
     std::shared_ptr<Selections> selection;
 
-    double margin = 75;
-
-    std::vector<XojPageView*> viewPages;
-
     Control* control = nullptr;
-
-    size_t currentPage = 0;
-    size_t lastSelectedPage = -1;
-
-    PdfCache* cache = nullptr;
-
-    /**
-     * Handler for rerendering pages / repainting pages
-     */
-    RepaintHandler* repaintHandler = nullptr;
-
-    /**
-     * Memory cleanup timeout
-     */
-    int cleanupTimeout = -1;
-
-    /**
-     * Helper class for Touch specific fixes
-     */
-    HandRecognition* handRecognition = nullptr;
-
-    friend class Layout;
 };

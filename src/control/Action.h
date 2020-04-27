@@ -12,6 +12,11 @@ public:
 
 class ViewportAction: public Action {};
 
+class Scale: public ViewportAction {
+public:
+    Scale(double rawScale);
+};
+
 class Allocation: public ViewportAction {
 public:
     Allocation(int width, int height);
