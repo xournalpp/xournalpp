@@ -117,7 +117,7 @@ void TouchInputHandler::zoomStart() {
     lastZoomScrollCenterX = (this->priLastAbsX + this->secLastAbsX) / 2.0;
     lastZoomScrollCenterY = (this->priLastAbsY + this->secLastAbsY) / 2.0;
 
-    ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
+    auto zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
 
     // Disable zoom fit as we are zooming currently
     // TODO(fabian): this should happen internally!!!
@@ -125,7 +125,7 @@ void TouchInputHandler::zoomStart() {
         zoomControl->setZoomFitMode(false);
     }
 
-    Rectangle zoomSequenceRectangle = zoomControl->getVisibleRect();
+    auto zoomSequenceRectangle = zoomControl->getVisibleRect();
 
     zoomControl->startZoomSequence(centerX - zoomSequenceRectangle.x, centerY - zoomSequenceRectangle.y);
 }
@@ -144,7 +144,7 @@ void TouchInputHandler::zoomMotion(InputEvent const& event) {
                                   std::pow(this->priLastAbsY - this->secLastAbsY, 2.0));
     double zoom = sqDistance / this->startZoomDistance;
 
-    ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
+    auto zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
     zoomControl->zoomSequenceChange(zoom, true);
 
     double centerX = (this->priLastAbsX + this->secLastAbsX) / 2.0;
@@ -160,7 +160,7 @@ void TouchInputHandler::zoomMotion(InputEvent const& event) {
 }
 
 void TouchInputHandler::zoomEnd() {
-    ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
+    auto zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
     zoomControl->endZoomSequence();
 }
 

@@ -139,7 +139,14 @@ public:
 
     auto getZoom100Value() -> double;
 
+    auto startZoomSequence(double x, double y) -> void;
+    auto zoomSequenceChange(double zoom, bool b) -> void;
+    auto endZoomSequence() -> void;
+
     auto setSelection(EditSelection* selection) -> void;
+
+    auto getScrollPositionAfterZoom() -> std::tuple<double, double>;
+    auto setScrollPositionAfterZoom(double x, double y) -> void;
 
     auto getSelection() -> std::shared_ptr<EditSelection>;
 
@@ -158,6 +165,8 @@ public:
      * @param y2
      */
     auto repaintArea(int x1, int y1, int x2, int y2) -> void;
+
+    auto getVisibleRect() -> Rectangle<double>;
 
 public:
     // DocumentListener interface
