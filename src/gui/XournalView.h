@@ -141,6 +141,8 @@ public:
 
     auto setSelection(EditSelection* selection) -> void;
 
+    auto getSelection() -> std::shared_ptr<EditSelection>;
+
 public:
     // DocumentListener interface
     void pageSelected(size_t page);

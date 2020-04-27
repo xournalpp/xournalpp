@@ -91,7 +91,7 @@ public:
     GtkWidget** getToolbarWidgets(int& length);
     const char* getToolbarName(GtkToolbar* toolbar);
 
-    Layout* getLayout();
+    XournalView* getLayout();
 
     bool isGestureActive();
 

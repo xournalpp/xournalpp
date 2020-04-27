@@ -198,10 +198,7 @@ void MainWindow::initXournalWidget() {
 
     this->xournal = new XournalView(GTK_SCROLLED_WINDOW(winXournal), control);
 
-    control->getZoomControl()->initZoomHandler(winXournal, xournal, control);
     gtk_widget_show_all(winXournal);
-
-    // Todo configure-event
 }
 
 void MainWindow::setTouchscreenScrollingForDeviceMapping() {
@@ -252,7 +249,7 @@ void MainWindow::initHideMenu() {
     }
 }
 
-auto MainWindow::getLayout() -> Layout* { return this->xournal->getWidget()->getLayout(); }
+auto MainWindow::getLayout() -> XournalView* { return this->xournal; }
 
 auto cancellable_cancel(GCancellable* cancel) -> bool {
     g_cancellable_cancel(cancel);
