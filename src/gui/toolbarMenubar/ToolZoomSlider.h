@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 
-#include "control/zoom/ZoomListener.h"
+#include "gui/XournalView.h"
 
 #include "AbstractToolItem.h"
 #include "XournalType.h"
@@ -23,9 +23,9 @@
 
 class ZoomControl;
 
-class ToolZoomSlider: public AbstractToolItem, public ZoomListener {
+class ToolZoomSlider: public AbstractToolItem {
 public:
-    ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom);
+    ToolZoomSlider(ActionHandler* handler, string id, ActionType type, XournalView* zoom);
     virtual ~ToolZoomSlider();
 
 public:
@@ -63,6 +63,6 @@ private:
     gint64 sliderHoverScrollLastTime = 0;
 
     GtkWidget* slider = nullptr;
-    ZoomControl* zoom = nullptr;
+    XournalView* zoom = nullptr;
     bool horizontal = true;
 };

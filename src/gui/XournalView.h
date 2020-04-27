@@ -13,6 +13,7 @@
 
 #include <control/Control.h>
 #include <gtk/gtk.h>
+#include <gui/toolbarMenubar/ToolZoomSlider.h>
 #include <model/softstorage/PageLayout.h>
 #include <model/softstorage/Selections.h>
 
@@ -136,12 +137,15 @@ public:
      * @param value
      */
     auto setZoom(double value) -> void;
+    auto getZoomFitValue() -> double;
 
     auto getZoom100Value() -> double;
 
     auto startZoomSequence(double x, double y) -> void;
     auto zoomSequenceChange(double zoom, bool b) -> void;
     auto endZoomSequence() -> void;
+
+    auto addZoomListener(ToolZoomSlider* slider) -> void;
 
     auto setSelection(EditSelection* selection) -> void;
 
@@ -168,6 +172,9 @@ public:
 
     auto getVisibleRect() -> Rectangle<double>;
 
+    constexpr auto getZoomMax() -> double;
+    constexpr auto getZoomMin() -> double;
+
 public:
     // DocumentListener interface
     void pageSelected(size_t page);
@@ -189,4 +196,5 @@ private:
     std::shared_ptr<Selections> selection;
 
     Control* control = nullptr;
+    PdfCache* cache = nullptr;
 };

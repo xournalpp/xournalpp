@@ -5,12 +5,10 @@
 
 #include <config.h>
 
-#include "control/zoom/ZoomControl.h"
-
 #include "StringUtils.h"
 #include "i18n.h"
 
-ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom):
+ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, XournalView* zoom):
         AbstractToolItem(std::move(id), handler, type, nullptr), zoom(zoom) {
     zoom->addZoomListener(this);
 }
@@ -137,8 +135,8 @@ auto ToolZoomSlider::newItem() -> GtkToolItem* {
         g_signal_handlers_disconnect_by_func(this->slider, (void*)(sliderFormatValue), this);
     }
 
-    double sliderMin = scaleFunc(DEFAULT_ZOOM_MIN);
-    double sliderMax = scaleFunc(DEFAULT_ZOOM_MAX);
+    double sliderMin = scaleFunc(this->zoom->getZoomMin());
+    double sliderMax = scaleFunc(this->zoom->getZoomMax());
     // slider has 100 steps
     double sliderStep = (sliderMax - sliderMin) / 100;
 
