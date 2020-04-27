@@ -24,7 +24,6 @@
 #include "settings/MetadataManager.h"
 #include "settings/Settings.h"
 #include "undo/UndoRedoHandler.h"
-#include "zoom/ZoomControl.h"
 
 #include "Actions.h"
 #include "AudioController.h"
@@ -234,7 +233,7 @@ public:
     MetadataManager* getMetadataManager();
     Settings* getSettings();
     ToolHandler* getToolHandler();
-    ZoomControl* getZoomControl();
+    XournalView* getZoomControl();
     Document* getDocument();
     UndoRedoHandler* getUndoRedoHandler();
     MainWindow* getWindow();
@@ -328,7 +327,6 @@ private:
 
     RecentManager* recent;
     UndoRedoHandler* undoRedo;
-    ZoomControl* zoom;
 
     Settings* settings;
     MainWindow* win = nullptr;

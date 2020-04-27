@@ -85,7 +85,7 @@ public:
     auto getViewport() -> std::shared_ptr<Viewport>;
     auto getSelections() -> std::shared_ptr<Selections>;
 
-    // Adapters
+    // Adapter functions
     /**
      * Layout zoom adjusted coordinates
      * @param x
@@ -93,6 +93,53 @@ public:
      * @return
      */
     auto getPageViewAt(double x, double y) -> XojPageView*;
+
+    /**
+     *
+     * @return
+     */
+    auto getZoomReal() -> double;
+
+    /**
+     * Indicate changed layout settings (probably noop as view will get updated on settings change by default)
+     */
+    auto layoutPages() -> void;
+
+    /**
+     * Update zoom presentation value
+     * @return success
+     */
+    auto updateZoomPresentationValue() -> bool;
+
+    /**
+     * Update zoom fit value
+     * @return success
+     */
+    auto updateZoomFitValue() -> bool;
+
+    /**
+     *
+     * @return iszoompresentationmode
+     */
+    auto isZoomPresentationMode() -> bool;
+
+    /**
+     * Is zoom fit width mode
+     * @return
+     */
+    auto isZoomFitMode() -> bool;
+
+    auto setZoomFitMode(bool enable) -> void;
+
+    /**
+     * Set scale factor (not raw), has to get dpi adjusted
+     * @param value
+     */
+    auto setZoom(double value) -> void;
+
+    auto getZoom100Value() -> double;
+
+    auto setSelection(EditSelection* selection) -> void;
 
 public:
     // DocumentListener interface

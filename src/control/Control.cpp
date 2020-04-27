@@ -23,7 +23,6 @@
 #include "gui/dialog/SettingsDialog.h"
 #include "gui/dialog/ToolbarManageDialog.h"
 #include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"
-#include "gui/inputdevices/HandRecognition.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
 #include "gui/toolbarMenubar/model/ToolbarData.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
@@ -106,11 +105,6 @@ Control::Control(GladeSearchpath* gladeSearchPath) {
     // for crashhandling
     setEmergencyDocument(this->doc);
 
-    this->zoom = new ZoomControl();
-    this->zoom->setZoomStep(this->settings->getZoomStep() / 100.0);
-    this->zoom->setZoomStepScroll(this->settings->getZoomStepScroll() / 100.0);
-    this->zoom->setZoom100Value(this->settings->getDisplayDpi() / Util::DPI_NORMALIZATION_FACTOR);
-
     this->toolHandler = new ToolHandler(this, this, this->settings);
     this->toolHandler->loadSettings();
 
@@ -168,8 +162,6 @@ Control::~Control() {
     this->metadata = nullptr;
     delete this->cursor;
     this->cursor = nullptr;
-    delete this->zoom;
-    this->zoom = nullptr;
     delete this->scheduler;
     this->scheduler = nullptr;
     delete this->dragDropHandler;
@@ -372,7 +364,8 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
     this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
     this->sidebar->selectPageNr(page, pdfPage);
 
-    this->metadata->storeMetadata(this->doc->getEvMetadataFilename().str(), page, getZoomControl()->getZoomReal());
+    this->metadata->storeMetadata(this->doc->getEvMetadataFilename().str(), page,
+                                  this->win->getXournal()->getZoomReal());
 
     int current = getCurrentPageNo();
     int count = this->doc->getPageCount();
@@ -1366,7 +1359,7 @@ void Control::setViewPairedPages(bool enabled) {
 
 void Control::setViewPresentationMode(bool enabled) {
     if (enabled) {
-        bool success = zoom->updateZoomPresentationValue();
+        bool success = this->win->getXournal()->updateZoomPresentationValue();
         if (!success) {
             g_warning("Error calculating zoom value");
             fireActionSelected(GROUP_PRESENTATION_MODE, ACTION_NOT_SELECTED);
@@ -2125,7 +2118,7 @@ auto Control::loadMetadataCallback(MetadataCallbackData* data) -> bool {
         delete data;
         return false;
     }
-    ZoomControl* zoom = data->ctrl->zoom;
+    auto zoom = data->ctrl->getWindow()->getXournal();
     if (zoom->isZoomPresentationMode()) {
         data->ctrl->setViewPresentationMode(true);
     } else if (zoom->isZoomFitMode()) {
@@ -2802,7 +2795,7 @@ void Control::runLatex() {
 
 auto Control::getUndoRedoHandler() -> UndoRedoHandler* { return this->undoRedo; }
 
-auto Control::getZoomControl() -> ZoomControl* { return this->zoom; }
+auto Control::getZoomControl() -> XournalView* { return this->win->getXournal(); }
 
 auto Control::getCursor() -> XournalppCursor* { return this->cursor; }
 
