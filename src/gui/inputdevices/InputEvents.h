@@ -44,31 +44,68 @@ enum InputDeviceClass {
     INPUT_DEVICE_IGNORE
 };
 
-class InputEvent {
-public:
-    GdkEvent* sourceEvent = nullptr;
+struct GdkEventGuard {
+    static inline GdkEvent* safeRef(GdkEvent* source) { return gdk_event_copy(source); }
+    static inline GdkEvent* safeMove(GdkEvent*& source) {
+        auto ret = source;
+        source = nullptr;
+        return ret;
+    }
+    static inline void safeDelete(GdkEvent* source) {
+        if (source != nullptr) {
+            gdk_event_free(source);
+        }
+    }
 
-    InputEventType type = UNKNOWN;
+    GdkEventGuard() = default;
+    [[maybe_unused]] explicit GdkEventGuard(GdkEvent* source): event(safeRef(source)) {}
+    GdkEventGuard(GdkEventGuard const& other): event(safeRef(other.event)) {}
+    GdkEventGuard(GdkEventGuard&& other): event(safeMove(other.event)) {}
 
-    InputDeviceClass deviceClass = INPUT_DEVICE_IGNORE;
-    gchar* deviceName = nullptr;
+    GdkEventGuard& operator=(GdkEvent* source) {
+        safeDelete(event);
+        event = safeRef(source);
+        return *this;
+    }
+    GdkEventGuard& operator=(GdkEventGuard const& other) {
+        safeDelete(event);
+        event = safeRef(other.event);
+        return *this;
+    }
+    GdkEventGuard& operator=(GdkEventGuard&& other) {
+        safeDelete(event);
+        event = safeMove(other.event);
+        return *this;
+    }
+
+    operator GdkEvent*() const { return event; }
+
+    ~GdkEventGuard() { safeDelete(event); }
+
+    GdkEvent* event{};
+};
 
 
-    gdouble absoluteX = 0;
-    gdouble absoluteY = 0;
-    gdouble relativeX = 0;
-    gdouble relativeY = 0;
+struct InputEvent final {
+    /*explicit(false)*/ explicit operator bool() const { return sourceEvent.event; }
 
-    guint button = 0;
-    GdkModifierType state = (GdkModifierType)0;
-    gdouble pressure = Point::NO_PRESSURE;
+    GdkEventGuard sourceEvent;
 
-    GdkEventSequence* sequence = nullptr;
-    guint32 timestamp = 0;
+    InputEventType type{UNKNOWN};
+    InputDeviceClass deviceClass{INPUT_DEVICE_IGNORE};
+    gchar* deviceName{};
 
-    ~InputEvent();
+    gdouble absoluteX{0};
+    gdouble absoluteY{0};
+    gdouble relativeX{0};
+    gdouble relativeY{0};
 
-    InputEvent* copy() const;
+    guint button{0};
+    GdkModifierType state{};
+    gdouble pressure{Point::NO_PRESSURE};
+
+    GdkEventSequence* sequence{};
+    guint32 timestamp{0};
 };
 
 class InputEvents {
@@ -79,5 +116,5 @@ public:
     static InputDeviceClass translateDeviceType(GdkDevice* device, Settings* settings);
     static InputDeviceClass translateDeviceType(const string& name, GdkInputSource source, Settings* settings);
 
-    static InputEvent* translateEvent(GdkEvent* sourceEvent, Settings* settings);
+    static InputEvent translateEvent(GdkEvent* sourceEvent, Settings* settings);
 };

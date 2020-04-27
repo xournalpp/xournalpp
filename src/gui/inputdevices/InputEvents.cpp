@@ -4,31 +4,6 @@
 
 #include "InputEvents.h"
 
-InputEvent::~InputEvent() { gdk_event_free(this->sourceEvent); }
-
-auto InputEvent::copy() const -> InputEvent* {
-    auto inputEvent = new InputEvent();
-
-    inputEvent->sourceEvent = gdk_event_copy(this->sourceEvent);
-    inputEvent->type = this->type;
-    inputEvent->deviceClass = this->deviceClass;
-    inputEvent->deviceName = this->deviceName;
-
-    inputEvent->absoluteX = this->absoluteX;
-    inputEvent->absoluteY = this->absoluteY;
-    inputEvent->relativeX = this->relativeX;
-    inputEvent->relativeY = this->relativeY;
-
-    inputEvent->button = this->button;
-    inputEvent->state = this->state;
-    inputEvent->pressure = this->pressure;
-
-    inputEvent->sequence = this->sequence;
-    inputEvent->timestamp = this->timestamp;
-
-    return inputEvent;
-}
-
 auto InputEvents::translateEventType(GdkEventType type) -> InputEventType {
     switch (type) {
         case GDK_MOTION_NOTIFY:
@@ -97,48 +72,48 @@ auto InputEvents::translateDeviceType(GdkDevice* device, Settings* settings) -> 
     return translateDeviceType(gdk_device_get_name(device), gdk_device_get_source(device), settings);
 }
 
-auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> InputEvent* {
-    auto targetEvent = new InputEvent();
+auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> InputEvent {
+    InputEvent targetEvent{};
 
-    targetEvent->sourceEvent = sourceEvent;
+    targetEvent.sourceEvent = sourceEvent;
 
     // Map the event type to our internal ones
     GdkEventType sourceEventType = gdk_event_get_event_type(sourceEvent);
-    targetEvent->type = translateEventType(sourceEventType);
+    targetEvent.type = translateEventType(sourceEventType);
 
     GdkDevice* device = gdk_event_get_source_device(sourceEvent);
-    targetEvent->deviceClass = translateDeviceType(device, settings);
+    targetEvent.deviceClass = translateDeviceType(device, settings);
 
-    targetEvent->deviceName = const_cast<gchar*>(gdk_device_get_name(device));
+    targetEvent.deviceName = const_cast<gchar*>(gdk_device_get_name(device));
 
     // Copy both coordinates of the event
-    gdk_event_get_root_coords(sourceEvent, &(targetEvent->absoluteX), &(targetEvent->absoluteY));
-    gdk_event_get_coords(sourceEvent, &(targetEvent->relativeX), &(targetEvent->relativeY));
+    gdk_event_get_root_coords(sourceEvent, &targetEvent.absoluteX, &targetEvent.absoluteY);
+    gdk_event_get_coords(sourceEvent, &targetEvent.relativeX, &targetEvent.relativeY);
 
     // Copy the event button if there is any
-    if (targetEvent->type == BUTTON_PRESS_EVENT || targetEvent->type == BUTTON_RELEASE_EVENT) {
-        gdk_event_get_button(sourceEvent, &(targetEvent->button));
+    if (targetEvent.type == BUTTON_PRESS_EVENT || targetEvent.type == BUTTON_RELEASE_EVENT) {
+        gdk_event_get_button(sourceEvent, &targetEvent.button);
     }
     if (sourceEventType == GDK_TOUCH_BEGIN || sourceEventType == GDK_TOUCH_END || sourceEventType == GDK_TOUCH_CANCEL) {
         // As we only handle single finger events we can set the button statically to 1
-        targetEvent->button = 1;
+        targetEvent.button = 1;
     }
-    gdk_event_get_state(sourceEvent, &targetEvent->state);
-    if (targetEvent->deviceClass == INPUT_DEVICE_KEYBOARD) {
-        gdk_event_get_keyval(sourceEvent, &targetEvent->button);
+    gdk_event_get_state(sourceEvent, &targetEvent.state);
+    if (targetEvent.deviceClass == INPUT_DEVICE_KEYBOARD) {
+        gdk_event_get_keyval(sourceEvent, &targetEvent.button);
     }
 
     // Copy the event sequence if there is any
     if (sourceEventType == GDK_TOUCH_BEGIN || sourceEventType == GDK_TOUCH_UPDATE || sourceEventType == GDK_TOUCH_END ||
         sourceEventType == GDK_TOUCH_CANCEL) {
-        targetEvent->sequence = gdk_event_get_event_sequence(sourceEvent);
+        targetEvent.sequence = gdk_event_get_event_sequence(sourceEvent);
     }
 
     // Copy the timestamp
-    targetEvent->timestamp = gdk_event_get_time(sourceEvent);
+    targetEvent.timestamp = gdk_event_get_time(sourceEvent);
 
     // Copy the pressure data
-    gdk_event_get_axis(sourceEvent, GDK_AXIS_PRESSURE, &targetEvent->pressure);
+    gdk_event_get_axis(sourceEvent, GDK_AXIS_PRESSURE, &targetEvent.pressure);
 
     return targetEvent;
 }

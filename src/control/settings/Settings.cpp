@@ -1643,39 +1643,6 @@ SAttribute::~SAttribute() {
 
 //////////////////////////////////////////////////
 
-__RefSElement::__RefSElement() { this->refcount = 0; }
-
-__RefSElement::~__RefSElement() = default;
-
-void __RefSElement::ref() { this->refcount++; }
-
-void __RefSElement::unref() {
-    this->refcount--;
-    if (this->refcount == 0) {
-        delete this;
-    }
-}
-
-SElement::SElement() {
-    this->element = new __RefSElement();
-    this->element->ref();
-}
-
-SElement::SElement(const SElement& elem) {
-    this->element = elem.element;
-    this->element->ref();
-}
-
-SElement::~SElement() {
-    this->element->unref();
-    this->element = nullptr;
-}
-
-void SElement::operator=(const SElement& elem) {
-    this->element = elem.element;
-    this->element->ref();
-}
-
 auto SElement::attributes() -> std::map<string, SAttribute>& { return this->element->attributes; }
 
 auto SElement::children() -> std::map<string, SElement>& { return this->element->children; }

@@ -10,7 +10,7 @@ include_directories (
   ${xournalpp_INCLUDE_DIRS}
 )
 
-# Build xournal-thumbnailer as it doesn't need CXX_FLAGS from below
+# Build xournalpp-thumbnailer as it doesn't need CXX_FLAGS from below
 add_subdirectory (xoj-preview-extractor)
 
 # Used for both util and xournalpp targets

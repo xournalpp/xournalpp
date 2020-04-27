@@ -47,7 +47,6 @@
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertDeletePageUndoAction.h"
 #include "undo/InsertUndoAction.h"
-#include "util/cpp14memory.h"
 #include "view/DocumentView.h"
 #include "view/TextView.h"
 #include "xojfile/LoadHandler.h"
@@ -1227,7 +1226,7 @@ void Control::deletePage() {
     this->doc->unlock();
 
     updateDeletePageButton();
-    this->undoRedo->addUndoAction(mem::make_unique<InsertDeletePageUndoAction>(page, pNr, false));
+    this->undoRedo->addUndoAction(std::make_unique<InsertDeletePageUndoAction>(page, pNr, false));
 
     if (pNr >= this->doc->getPageCount()) {
         pNr = this->doc->getPageCount() - 1;
@@ -1255,7 +1254,7 @@ void Control::insertPage(const PageRef& page, size_t position) {
     firePageSelected(position);
 
     updateDeletePageButton();
-    undoRedo->addUndoAction(mem::make_unique<InsertDeletePageUndoAction>(page, position, true));
+    undoRedo->addUndoAction(std::make_unique<InsertDeletePageUndoAction>(page, position, true));
 }
 
 void Control::gotoPage() {
@@ -2603,7 +2602,7 @@ void Control::clipboardPaste(Element* e) {
 
     this->doc->unlock();
 
-    undoRedo->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, e));
+    undoRedo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, e));
     auto* selection = new EditSelection(this->undoRedo, e, view, page);
 
     win->getXournal()->setSelection(selection);
@@ -2641,7 +2640,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
         this->doc->unlock();
 
         int count = in.readInt();
-        auto pasteAddUndoAction = mem::make_unique<AddUndoAction>(page, false);
+        auto pasteAddUndoAction = std::make_unique<AddUndoAction>(page, false);
         // this will undo a group of elements that are inserted
 
         for (int i = 0; i < count; i++) {
@@ -2649,13 +2648,13 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
             element.reset();
 
             if (name == "Stroke") {
-                element = mem::make_unique<Stroke>();
+                element = std::make_unique<Stroke>();
             } else if (name == "Image") {
-                element = mem::make_unique<Image>();
+                element = std::make_unique<Image>();
             } else if (name == "TexImage") {
-                element = mem::make_unique<TexImage>();
+                element = std::make_unique<TexImage>();
             } else if (name == "Text") {
-                element = mem::make_unique<Text>();
+                element = std::make_unique<Text>();
             } else {
                 throw InputStreamException(FS(FORMAT_STR("Get unknown object {1}") % name), __FILE__, __LINE__);
             }

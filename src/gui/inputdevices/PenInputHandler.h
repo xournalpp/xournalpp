@@ -11,11 +11,7 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
 #include "AbstractInputHandler.h"
-#include "XournalType.h"
 
 class InputContext;
 
@@ -37,12 +33,12 @@ protected:
     /**
      * Reference to the last event
      */
-    InputEvent* lastEvent = nullptr;
+    InputEvent lastEvent{};
 
     /**
      * Reference to the last event actually hitting a page
      */
-    InputEvent* lastHitEvent = nullptr;
+    InputEvent lastHitEvent{};
 
     /**
      * Start position to reference scroll offset
@@ -79,34 +75,34 @@ protected:
      * Action for the start of an input
      * @param event The event triggering the action
      */
-    bool actionStart(InputEvent* event);
+    bool actionStart(InputEvent const& event);
 
     /**
      * Action for motion during an input
      * @param event The event triggering the action
      */
-    bool actionMotion(InputEvent* event);
+    bool actionMotion(InputEvent const& event);
 
     /**
      * Action for a discrete input.
      */
-    void actionPerform(InputEvent* event);
+    void actionPerform(InputEvent const& event);
 
-    void actionLeaveWindow(InputEvent* event);
-    void actionEnterWindow(InputEvent* event);
+    void actionLeaveWindow(InputEvent const& event);
+    void actionEnterWindow(InputEvent const& event);
 
     /**
      * Action for the end of an input
      * @param event The event triggering the action
      */
-    bool actionEnd(InputEvent* event);
+    bool actionEnd(InputEvent const& event);
 
-    virtual bool changeTool(InputEvent* event) = 0;
+    virtual bool changeTool(InputEvent const& event) = 0;
 
     /**
      * Do the scrolling with the hand tool
      */
-    void handleScrollEvent(InputEvent* event);
+    void handleScrollEvent(InputEvent const& event);
 
     /**
      * Stores references to the provided event in lastEvent and lastHitEvent
@@ -114,5 +110,5 @@ protected:
      * lastHitEvent will only be updated when the event did hit a page
      * @param event
      */
-    void updateLastEvent(InputEvent* event);
+    void updateLastEvent(InputEvent const& event);
 };

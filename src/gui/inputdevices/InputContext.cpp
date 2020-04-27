@@ -62,71 +62,65 @@ auto InputContext::eventCallback(GtkWidget* widget, GdkEvent* event, InputContex
 auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     printDebug(sourceEvent);
 
-    // The drawing area widget is connected to the configure event, which has no
-    // device.
-    if (!gdk_event_get_source_device(sourceEvent)) {
-        return false;
-    }
-
-    InputEvent* event = InputEvents::translateEvent(sourceEvent, this->getSettings());
+    InputEvent event = InputEvents::translateEvent(sourceEvent, this->getSettings());
 
     // Add the device to the list of known devices if it is currently unknown
     GdkDevice* sourceDevice = gdk_event_get_source_device(sourceEvent);
     GdkInputSource inputSource = gdk_device_get_source(sourceDevice);
     if (inputSource != GDK_SOURCE_KEYBOARD && gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER &&
-        this->knownDevices.find(string(event->deviceName)) == this->knownDevices.end()) {
+        this->knownDevices.find(string(event.deviceName)) == this->knownDevices.end()) {
 
-        this->knownDevices.insert(string(event->deviceName));
+        this->knownDevices.insert(string(event.deviceName));
         this->getSettings()->transactionStart();
-        auto deviceClassOption = this->getSettings()->getDeviceClassForDevice(string(event->deviceName), inputSource);
+        auto deviceClassOption = this->getSettings()->getDeviceClassForDevice(string(event.deviceName), inputSource);
         this->getSettings()->setDeviceClassForDevice(sourceDevice, deviceClassOption);
         this->getSettings()->transactionEnd();
     }
 
     // We do not handle scroll events manually but let GTK do it for us
-    if (event->type == SCROLL_EVENT) {
+    if (event.type == SCROLL_EVENT) {
         // Hand over to standard GTK Scroll / Zoom handling
         return false;
     }
 
     // Deactivate touchscreen when a pen event occurs
-    this->getView()->getHandRecognition()->event(event->deviceClass);
+    this->getView()->getHandRecognition()->event(event.deviceClass);
 
     // Get the state of all modifiers
-    this->modifierState = event->state;
+    this->modifierState = event.state;
 
     // separate events to appropriate handlers
     // handle tablet stylus
-    if (event->deviceClass == INPUT_DEVICE_PEN || event->deviceClass == INPUT_DEVICE_ERASER) {
+    if (event.deviceClass == INPUT_DEVICE_PEN || event.deviceClass == INPUT_DEVICE_ERASER) {
         return this->stylusHandler->handle(event);
     }
 
-    if (event->deviceClass == INPUT_DEVICE_MOUSE_KEYBOARD_COMBO) {
+    if (event.deviceClass == INPUT_DEVICE_MOUSE_KEYBOARD_COMBO) {
         return this->mouseHandler->handle(event) || this->keyboardHandler->handle(event);
     }
 
     // handle mouse devices
-    if (event->deviceClass == INPUT_DEVICE_MOUSE) {
+    if (event.deviceClass == INPUT_DEVICE_MOUSE) {
         return this->mouseHandler->handle(event);
     }
 
     // handle touchscreens
-    if (event->deviceClass == INPUT_DEVICE_TOUCHSCREEN) {
+    if (event.deviceClass == INPUT_DEVICE_TOUCHSCREEN) {
         return this->touchHandler->handle(event);
     }
 
     // handle keyboard
-    if (event->deviceClass == INPUT_DEVICE_KEYBOARD) {
+    if (event.deviceClass == INPUT_DEVICE_KEYBOARD) {
         return this->keyboardHandler->handle(event);
     }
 
-    if (event->deviceClass == INPUT_DEVICE_IGNORE) {
+    if (event.deviceClass == INPUT_DEVICE_IGNORE) {
         return true;
     }
 
-    delete event;
-
-    // We received an event we do not have a handler for
+#ifdef DEBUG_INPUT
+    gmessage("We received an event we do not have a handler for");
+#endif
     return false;
 }
 

@@ -27,7 +27,7 @@ public:
     RenderJob(XojPageView* view);
 
 protected:
-    virtual ~RenderJob();
+    virtual ~RenderJob() = default;
 
 public:
     virtual JobType getType();
@@ -42,7 +42,7 @@ private:
      */
     static void repaintWidget(GtkWidget* widget);
 
-    void rerenderRectangle(Rectangle<double>* rect);
+    void rerenderRectangle(Rectangle<double> const& rect);
 
 private:
     XojPageView* view;

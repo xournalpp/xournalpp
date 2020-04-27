@@ -1,14 +1,13 @@
 #include "LatexController.h"
 
+#include <memory>
 #include <utility>
 
 #include "gui/XournalView.h"
 #include "gui/dialog/LatexDialog.h"
 #include "undo/InsertUndoAction.h"
-#include "util/cpp14memory.h"
 
 #include "Control.h"
-#include "Stacktrace.h"
 #include "StringUtils.h"
 #include "Util.h"
 #include "XojMsgBox.h"
@@ -81,8 +80,10 @@ auto LatexController::findTexDependencies() -> LatexController::FindDependencySt
     g_spawn_sync(nullptr, kpsewhichArgs, nullptr, kpsewhichFlags, nullptr, nullptr, nullptr, nullptr, &kpsewhichStatus,
                  &kpsewhichErr);
     if (kpsewhichErr != nullptr) {
+        string msg =
+                FS(_F("Error: {1}\nCould not find kpsewhich in PATH; please install kpsewhich and put it on path.") %
+                   kpsewhichErr->message);
         g_error_free(kpsewhichErr);
-        string msg = _("Could not find kpsewhich in PATH; please install kpsewhich and put it on path.");
         return LatexController::FindDependencyStatus(false, msg);
     }
     if (kpsewhichStatus != 0) {
@@ -409,7 +410,7 @@ void LatexController::insertTexImage() {
     layer->addElement(img);
     view->rerenderElement(img);
     doc->unlock();
-    control->getUndoRedoHandler()->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, img));
+    control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, img));
 
     // Select element
     auto* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);

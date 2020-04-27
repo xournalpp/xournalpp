@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Extracts a preview of an .xoj file, used by xournal-thumbnailer and xournalpp
+ * Extracts a preview of an .xoj file, used by xournalpp-thumbnailer and xournalpp
  * Because of this xournal type checks cannot be used
  *
  * @author Xournal++ Team

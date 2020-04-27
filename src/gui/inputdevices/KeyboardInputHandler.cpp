@@ -12,8 +12,8 @@ KeyboardInputHandler::KeyboardInputHandler(InputContext* inputContext): Abstract
 
 KeyboardInputHandler::~KeyboardInputHandler() = default;
 
-auto KeyboardInputHandler::handleImpl(InputEvent* event) -> bool {
-    auto keyEvent = reinterpret_cast<GdkEventKey*>(event->sourceEvent);
+auto KeyboardInputHandler::handleImpl(InputEvent const& event) -> bool {
+    auto keyEvent = reinterpret_cast<GdkEventKey*>(event.sourceEvent);
 
     if (keyEvent->type == GDK_KEY_PRESS) {
         auto selection = inputContext->getView()->getSelections()->getSelection();

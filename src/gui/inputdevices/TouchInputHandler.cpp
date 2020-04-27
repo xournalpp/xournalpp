@@ -10,25 +10,25 @@
 
 TouchInputHandler::TouchInputHandler(InputContext* inputContext): AbstractInputHandler(inputContext) {}
 
-auto TouchInputHandler::handleImpl(InputEvent* event) -> bool {
+auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     // Don't handle more then 2 inputs
-    if (this->primarySequence && this->primarySequence != event->sequence && this->secondarySequence &&
-        this->secondarySequence != event->sequence) {
+    if (this->primarySequence && this->primarySequence != event.sequence && this->secondarySequence &&
+        this->secondarySequence != event.sequence) {
         return false;
     }
 
-    if (event->type == BUTTON_PRESS_EVENT) {
+    if (event.type == BUTTON_PRESS_EVENT) {
         // Start scrolling when a sequence starts and we currently have none other
         if (this->primarySequence == nullptr && this->secondarySequence == nullptr) {
-            this->primarySequence = event->sequence;
+            this->primarySequence = event.sequence;
 
             // Set sequence data
             sequenceStart(event);
         }
         // Start zooming as soon as we have two sequences
-        else if (this->primarySequence && this->primarySequence != event->sequence &&
+        else if (this->primarySequence && this->primarySequence != event.sequence &&
                  this->secondarySequence == nullptr) {
-            this->secondarySequence = event->sequence;
+            this->secondarySequence = event.sequence;
 
             // Set sequence data
             sequenceStart(event);
@@ -37,7 +37,7 @@ auto TouchInputHandler::handleImpl(InputEvent* event) -> bool {
         }
     }
 
-    if (event->type == MOTION_EVENT && this->primarySequence) {
+    if (event.type == MOTION_EVENT && this->primarySequence) {
         // Only zoom if there are two fingers involved
         if (this->primarySequence && this->secondarySequence) {
             zoomMotion(event);
@@ -46,13 +46,13 @@ auto TouchInputHandler::handleImpl(InputEvent* event) -> bool {
         }
     }
 
-    if (event->type == BUTTON_RELEASE_EVENT) {
+    if (event.type == BUTTON_RELEASE_EVENT) {
         // Only stop zooing if both sequences were active (we were scrolling)
         if (this->primarySequence != nullptr && this->secondarySequence != nullptr) {
             zoomEnd();
         }
 
-        if (event->sequence == this->primarySequence) {
+        if (event.sequence == this->primarySequence) {
             this->primarySequence = nullptr;
         } else {
             this->secondarySequence = nullptr;
@@ -62,35 +62,35 @@ auto TouchInputHandler::handleImpl(InputEvent* event) -> bool {
     return false;
 }
 
-void TouchInputHandler::sequenceStart(InputEvent* event) {
-    if (event->sequence == this->primarySequence) {
-        this->priLastAbsX = event->absoluteX;
-        this->priLastAbsY = event->absoluteY;
-        this->priLastRelX = event->relativeX;
-        this->priLastRelY = event->relativeY;
+void TouchInputHandler::sequenceStart(InputEvent const& event) {
+    if (event.sequence == this->primarySequence) {
+        this->priLastAbsX = event.absoluteX;
+        this->priLastAbsY = event.absoluteY;
+        this->priLastRelX = event.relativeX;
+        this->priLastRelY = event.relativeY;
     } else {
-        this->secLastAbsX = event->absoluteX;
-        this->secLastAbsY = event->absoluteY;
-        this->secLastRelX = event->relativeX;
-        this->secLastRelY = event->relativeY;
+        this->secLastAbsX = event.absoluteX;
+        this->secLastAbsY = event.absoluteY;
+        this->secLastRelX = event.relativeX;
+        this->secLastRelY = event.relativeY;
     }
 }
 
-void TouchInputHandler::scrollMotion(InputEvent* event) {
+void TouchInputHandler::scrollMotion(InputEvent const& event) {
     double offsetX = NAN;
     double offsetY = NAN;
 
     // Will only be called if there is a single sequence (zooming handles two sequences)
-    if (event->sequence == this->primarySequence) {
-        offsetX = event->absoluteX - this->priLastAbsX;
-        offsetY = event->absoluteY - this->priLastAbsY;
-        this->priLastAbsX = event->absoluteX;
-        this->priLastAbsY = event->absoluteY;
+    if (event.sequence == this->primarySequence) {
+        offsetX = event.absoluteX - this->priLastAbsX;
+        offsetY = event.absoluteY - this->priLastAbsY;
+        this->priLastAbsX = event.absoluteX;
+        this->priLastAbsY = event.absoluteY;
     } else {
-        offsetX = event->absoluteX - this->secLastAbsX;
-        offsetY = event->absoluteY - this->secLastAbsY;
-        this->secLastAbsX = event->absoluteX;
-        this->secLastAbsY = event->absoluteY;
+        offsetX = event.absoluteX - this->secLastAbsX;
+        offsetY = event.absoluteY - this->secLastAbsY;
+        this->secLastAbsX = event.absoluteX;
+        this->secLastAbsY = event.absoluteY;
     }
 
     this->inputContext->getView()->scrollRelative(offsetX, offsetY);
@@ -130,14 +130,14 @@ void TouchInputHandler::zoomStart() {
     zoomControl->startZoomSequence(centerX - zoomSequenceRectangle.x, centerY - zoomSequenceRectangle.y);
 }
 
-void TouchInputHandler::zoomMotion(InputEvent* event) {
+void TouchInputHandler::zoomMotion(InputEvent const& event) {
 
-    if (event->sequence == this->primarySequence) {
-        this->priLastAbsX = event->absoluteX;
-        this->priLastAbsY = event->absoluteY;
+    if (event.sequence == this->primarySequence) {
+        this->priLastAbsX = event.absoluteX;
+        this->priLastAbsY = event.absoluteY;
     } else {
-        this->secLastAbsX = event->absoluteX;
-        this->secLastAbsY = event->absoluteY;
+        this->secLastAbsX = event.absoluteX;
+        this->secLastAbsY = event.absoluteY;
     }
 
     double sqDistance = std::sqrt(std::pow(this->priLastAbsX - this->secLastAbsX, 2.0) +

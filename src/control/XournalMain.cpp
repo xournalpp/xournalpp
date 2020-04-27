@@ -1,5 +1,7 @@
 #include "XournalMain.h"
 
+#include <memory>
+
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
 #include <libintl.h>
@@ -13,7 +15,6 @@
 #include "pdf/base/XojPdfExport.h"
 #include "pdf/base/XojPdfExportFactory.h"
 #include "undo/EmergencySaveRestore.h"
-#include "util/cpp14memory.h"
 #include "xojfile/LoadHandler.h"
 
 #include "Control.h"
@@ -172,7 +173,7 @@ void XournalMain::checkForEmergencySave(Control* control) {
             control->getDocument()->setFilename("");
 
             // Make sure the document is changed, there is a question to ask for save
-            control->getUndoRedoHandler()->addUndoAction(mem::make_unique<EmergencySaveRestore>());
+            control->getUndoRedoHandler()->addUndoAction(std::make_unique<EmergencySaveRestore>());
             control->updateWindowTitle();
             g_unlink(filename.c_str());
         }

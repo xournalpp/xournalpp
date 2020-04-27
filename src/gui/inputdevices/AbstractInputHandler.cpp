@@ -14,7 +14,7 @@ AbstractInputHandler::~AbstractInputHandler() = default;
 
 void AbstractInputHandler::block(bool block) {
     this->blocked = block;
-    if (block == false) {
+    if (!block) {
         this->onUnblock();
     } else {
         this->onBlock();
@@ -23,9 +23,9 @@ void AbstractInputHandler::block(bool block) {
 
 auto AbstractInputHandler::isBlocked() const -> bool { return this->blocked; }
 
-auto AbstractInputHandler::handle(InputEvent* event) -> bool {
+auto AbstractInputHandler::handle(InputEvent const& event) -> bool {
     if (!this->blocked) {
-        this->inputContext->getView()->getCursor()->setInputDeviceClass(event->deviceClass);
+        this->inputContext->getView()->getCursor()->setInputDeviceClass(event.deviceClass);
         return this->handleImpl(event);
     }
     return true;
@@ -36,13 +36,13 @@ auto AbstractInputHandler::handle(InputEvent* event) -> bool {
  *
  * @return page or nullptr if none
  */
-auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent* event) -> XojPageView* {
-    if (event == nullptr) {
+auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent const& event) -> XojPageView* {
+    if (!event) {
         return nullptr;
     }
 
-    gdouble eventX = event->relativeX;
-    gdouble eventY = event->relativeY;
+    gdouble eventX = event.relativeX;
+    gdouble eventY = event.relativeY;
 
     auto viewport = this->inputContext->getView()->getViewport();
 
@@ -55,13 +55,13 @@ auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent* event) -> XojPag
 /**
  * Get input data relative to current input page
  */
-auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent* event)
+auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent const& event)
         -> PositionInputData {
     g_assert(page != nullptr);
     auto viewport = this->inputContext->getView()->getViewport();
 
-    gdouble eventX = event->relativeX;
-    gdouble eventY = event->relativeY;
+    gdouble eventX = event.relativeX;
+    gdouble eventY = event.relativeY;
 
     PositionInputData pos = {};
     pos.x = eventX - page->getX() - viewport->getX();
@@ -69,11 +69,11 @@ auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, 
     pos.pressure = Point::NO_PRESSURE;
 
     if (this->inputContext->getSettings()->isPressureSensitivity()) {
-        pos.pressure = event->pressure;
+        pos.pressure = event.pressure;
     }
 
     pos.state = this->inputContext->getModifierState();
-    pos.timestamp = event->timestamp;
+    pos.timestamp = event.timestamp;
 
     return pos;
 }

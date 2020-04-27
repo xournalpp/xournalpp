@@ -1,13 +1,13 @@
 #include "BaseStrokeHandler.h"
 
 #include <cmath>
+#include <memory>
 
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
 #include "undo/InsertUndoAction.h"
-#include "util/cpp14memory.h"
 
 
 guint32 BaseStrokeHandler::lastStrokeTime;  // persist for next stroke
@@ -30,7 +30,7 @@ void BaseStrokeHandler::snapToGrid(double& x, double& y) {
      * If x/y coordinates are under a certain tolerance,
      * fix the point to the grid intersection value
      */
-    double gridSize = 14.17;
+    double gridSize = 14.17 / 4.0;
 
     double t = xournal->getControl()->getSettings()->getSnapGridTolerance();
     double tolerance = (gridSize / 2) - (1 / t);
@@ -103,7 +103,7 @@ auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool {
         this->drawShape(malleablePoint, pos);
 
 
-        rect.add(stroke->boundingRect());
+        rect.unite(stroke->boundingRect());
 
         double w = stroke->getWidth();
         redrawable->repaintRect(rect.x - w, rect.y - w, rect.width + 2 * w, rect.height + 2 * w);
@@ -137,7 +137,7 @@ auto BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> boo
 
     drawShape(currentPoint, pos);
 
-    rect.add(stroke->boundingRect());
+    rect.unite(stroke->boundingRect());
     double w = stroke->getWidth();
 
     redrawable->repaintRect(rect.x - w, rect.y - w, rect.width + 2 * w, rect.height + 2 * w);
@@ -206,7 +206,7 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
 
-    undo->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, stroke));
+    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
 
     layer->addElement(stroke);
     page->fireElementChanged(stroke);

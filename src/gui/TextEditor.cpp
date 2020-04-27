@@ -1,10 +1,11 @@
 #include "TextEditor.h"
 
+#include <memory>
+
 #include <gtk/gtkimmulticontext.h>
 
 #include "control/Control.h"
 #include "undo/ColorUndoAction.h"
-#include "util/cpp14memory.h"
 #include "view/DocumentView.h"
 #include "view/TextView.h"
 
@@ -551,7 +552,7 @@ void TextEditor::contentsChanged(bool forceCreateUndoAction) {
                                                        (currentText.length() - lastText.length())) > 100) {
         if (!lastText.empty() && !this->undoActions.empty() &&
             this->undoActions.front().get().getUndoText() != currentText) {
-            auto undo = mem::make_unique<TextUndoAction>(gui->getPage(), gui->getPage()->getSelectedLayer(), this->text,
+            auto undo = std::make_unique<TextUndoAction>(gui->getPage(), gui->getPage()->getSelectedLayer(), this->text,
                                                          lastText, this);
             UndoRedoHandler* handler = gui->getXournal()->getControl()->getUndoRedoHandler();
             this->undoActions.emplace_back(std::ref(*undo));
