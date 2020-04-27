@@ -501,8 +501,7 @@ auto EditSelection::getPageViewUnderCursor() -> XojPageView* {
     double hy = this->view->getY() + (this->y + this->relMousePosY) * zoom;
 
 
-    Layout* layout = this->view->getXournal()->getWidget()->getLayout();
-    XojPageView* v = layout->getViewAt(hx, hy);
+    auto v = this->view->getXournal()->getPageViewAt(hx, hy);
 
     return v;
 }

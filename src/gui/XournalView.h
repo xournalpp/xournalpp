@@ -85,6 +85,15 @@ public:
     auto getViewport() -> std::shared_ptr<Viewport>;
     auto getSelections() -> std::shared_ptr<Selections>;
 
+    // Adapters
+    /**
+     * Layout zoom adjusted coordinates
+     * @param x
+     * @param y
+     * @return
+     */
+    auto getPageViewAt(double x, double y) -> XojPageView*;
+
 public:
     // DocumentListener interface
     void pageSelected(size_t page);
