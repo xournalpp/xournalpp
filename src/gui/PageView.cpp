@@ -254,7 +254,7 @@ void XojPageView::startText(double x, double y) {
             // perform the old swap onto the new text drawn.
         }
 
-        this->textEditor = new TextEditor(this, xournal->getWidget(), text, ownText);
+        this->textEditor = new TextEditor(this, xournal->getWidget()->getGtkWidget(), text, ownText);
         if (!ownText) {
             this->textEditor->mousePressed(x - text->getX(), y - text->getY());
         }
@@ -355,8 +355,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         imgHandler.insertImage(x, y);
     } else if (h->getToolType() == TOOL_FLOATING_TOOLBOX) {
         gint wx = 0, wy = 0;
-        GtkWidget* widget = xournal->getWidget();
-        gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
+        this->xournal->translateToplevel(&wx, &wy);
 
         wx += std::lround(pos.x) + this->getX();
         wy += std::lround(pos.y) + this->getY();
@@ -383,7 +382,7 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
 
     DrawingType drawingType = toolHandler->getDrawingType();
 
-    EditSelection* selection = xournal->getSelection();
+    auto selection = xournal->getSelection();
     bool hasNoModifiers = !pos.isShiftDown() && !pos.isControlDown();
 
     if (hasNoModifiers && isSelectTool && selection != nullptr) {
@@ -498,8 +497,7 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
             if (doAction)  // pop up a menu
             {
                 gint wx = 0, wy = 0;
-                GtkWidget* widget = xournal->getWidget();
-                gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
+                this->xournal->translateToplevel(&wx, &wy);
                 wx += std::lround(pos.x + this->getX());
                 wy += std::lround(pos.y + this->getY());
                 control->getWindow()->floatingToolbox->show(wx, wy);
@@ -858,7 +856,7 @@ auto XojPageView::getDisplayHeight() const -> int {
 }
 
 auto XojPageView::getSelectedTex() -> TexImage* {
-    EditSelection* theSelection = this->xournal->getSelection();
+    auto theSelection = this->xournal->getSelection();
     if (!theSelection) {
         return nullptr;
     }
@@ -872,7 +870,7 @@ auto XojPageView::getSelectedTex() -> TexImage* {
 }
 
 auto XojPageView::getSelectedText() -> Text* {
-    EditSelection* theSelection = this->xournal->getSelection();
+    auto theSelection = this->xournal->getSelection();
     if (!theSelection) {
         return nullptr;
     }

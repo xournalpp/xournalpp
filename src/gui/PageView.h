@@ -16,7 +16,6 @@
 #include "model/PageRef.h"
 #include "model/TexImage.h"
 
-#include "Layout.h"
 #include "Range.h"
 #include "Redrawable.h"
 
@@ -244,6 +243,4 @@ private:
     friend class BaseSelectObject;
     friend class SelectObject;
     friend class PlayObject;
-    // only function allowed to setX(), setY(), setMappedRowCol():
-    friend void Layout::layoutPages(int width, int height);
 };

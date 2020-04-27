@@ -143,6 +143,8 @@ public:
 
     auto getSelection() -> std::shared_ptr<EditSelection>;
 
+    auto translateToplevel(int* x, int* y) -> void;
+
 public:
     // DocumentListener interface
     void pageSelected(size_t page);
