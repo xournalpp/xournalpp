@@ -3,6 +3,7 @@
 #include <config.h>
 
 #include "control/Control.h"
+#include "gui/XournalView.h"
 #include "model/LinkDestination.h"
 #include "model/XojPage.h"
 
