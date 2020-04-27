@@ -25,7 +25,6 @@
 #include "gui/widgets/XournalWidget.h"
 
 #include "AbstractInputHandler.h"
-#include "HandRecognition.h"
 #include "KeyboardInputHandler.h"
 #include "MouseInputHandler.h"
 #include "StylusInputHandler.h"

@@ -83,9 +83,6 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
         return false;
     }
 
-    // Deactivate touchscreen when a pen event occurs
-    this->getView()->getHandRecognition()->event(event.deviceClass);
-
     // Get the state of all modifiers
     this->modifierState = event.state;
 
