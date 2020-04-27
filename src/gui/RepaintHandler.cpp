@@ -15,13 +15,13 @@ void RepaintHandler::repaintPage(XojPageView* view) {
     int x2 = x1 + view->getDisplayWidth();
     int y2 = y1 + view->getDisplayHeight();
 
-    this->xournal->getWidget()->repaintArea(x1, y1, x2, y2);
+    this->xournal->repaintArea(x1, y1, x2, y2);
 }
 
 void RepaintHandler::repaintPageArea(XojPageView* view, int x1, int y1, int x2, int y2) {
     int x = view->getX();
     int y = view->getY();
-    this->xournal->getWidget()->repaintArea(x + x1, y + y1, x + x2, y + y2);
+    this->xournal->repaintArea(x + x1, y + y1, x + x2, y + y2);
 }
 
 void RepaintHandler::repaintPageBorder(XojPageView* view) {

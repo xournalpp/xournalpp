@@ -143,7 +143,21 @@ public:
 
     auto getSelection() -> std::shared_ptr<EditSelection>;
 
+    /**
+     * Return widgets translation relative to top window
+     * @param x
+     * @param y
+     */
     auto translateToplevel(int* x, int* y) -> void;
+
+    /**
+     * Repaint specified rectangle, coordinates are dependent on current layout state and absolute
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     */
+    auto repaintArea(int x1, int y1, int x2, int y2) -> void;
 
 public:
     // DocumentListener interface
