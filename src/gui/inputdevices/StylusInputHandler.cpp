@@ -70,7 +70,6 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
         this->actionEnterWindow(event);
     }
     if (event.type == LEAVE_EVENT) {
-        this->inputContext->getView()->getHandRecognition()->unblock();
         this->actionLeaveWindow(event);
     }
 
