@@ -9,6 +9,7 @@
 
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/breadth_first_search.hpp>
+#include <boost/graph/depth_first_search.hpp>
 #include <boost/graph/graph_traits.hpp>
 
 #include "ActionListener.h"
@@ -20,14 +21,20 @@ struct VertexData {
 
 typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::directedS, VertexData> Graph;
 typedef boost::graph_traits<Graph>::vertex_descriptor VertexDescriptor;
+typedef boost::graph_traits<Graph>::edge_descriptor EdgeDescriptor;
 
-class Visitor: public boost::default_bfs_visitor {
+class BfsVisitor: public boost::default_bfs_visitor {
 public:
-    Visitor(std::function<void(VertexDescriptor, Graph)> visit);
+    BfsVisitor(std::function<void(VertexDescriptor, Graph)> visit);
     auto examine_vertex(VertexDescriptor v, const Graph& g) const -> void;
     std::function<void(VertexDescriptor, Graph)> visit;
 };
 
+class DfsVisitor: public boost::default_dfs_visitor {
+public:
+    auto back_edge(EdgeDescriptor e, const Graph& g) -> void;
+    bool hasCycle = false;
+};
 
 class Dispatcher {
 public:
@@ -55,8 +62,9 @@ private:
     Dispatcher() = default;
 
     Graph listenerGraph{};
-    VertexDescriptor initialNode;
+    std::vector<VertexDescriptor> componentStartNodes{};
 
 private:
-    auto findVertices(const std::vector<std::shared_ptr<ActionListener>>& listeners) -> std::vector<VertexDescriptor>;
+    auto findVertex(const std::shared_ptr<ActionListener>& listener) -> VertexDescriptor;
+    auto recalculateParts() -> void;
 };
