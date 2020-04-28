@@ -21,10 +21,11 @@
 #include "gui/PageView.h"
 #include "model/Storage.h"
 
-#include "LayoutEvent.h"
 #include "Rectangle.h"
 #include "Viewport.h"
 #include "XournalType.h"
+
+class LayoutEvent {};
 
 /**
  * @brief The Layout manager for the XournalWidget

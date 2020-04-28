@@ -10,7 +10,29 @@
 
 #include "util/Rectangle.h"
 
-#include "ViewportEvent.h"
+class ViewportEvent {
+public:
+    virtual ~ViewportEvent();
+};
+class ScrollEvent: public ViewportEvent {
+public:
+    enum ScrollDirection { HORIZONTAL, VERTICAL };
+
+public:
+    ScrollEvent(ScrollDirection direction, double difference);
+
+public:
+    auto getDirection() -> ScrollDirection;
+    auto getDifference() -> double;
+};
+
+class ScaleEvent: public ViewportEvent {
+public:
+    ScaleEvent(double rawScale);
+
+public:
+    auto getRawScale() -> double;
+};
 
 class Viewport: public Storage<ViewportEvent> {
 public:

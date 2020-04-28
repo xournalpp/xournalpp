@@ -8,12 +8,10 @@
 #include "control/Control.h"
 #include "control/PdfCache.h"
 #include "control/settings/MetadataManager.h"
-#include "gui/inputdevices/HandRecognition.h"
 #include "model/Document.h"
 #include "model/Stroke.h"
 #include "model/softstorage/Layout.h"
 #include "undo/DeleteUndoAction.h"
-#include "util/cpp14memory.h"
 #include "widgets/XournalWidget.h"
 
 #include "PageView.h"
@@ -37,8 +35,6 @@ XournalView::XournalView(GtkScrolledWindow* parent, Control* control): control(c
 
     gtk_container_add(GTK_CONTAINER(parent), this->widget->getGtkWidget());
     gtk_widget_show(this->widget->getGtkWidget());
-
-    this->handRecognition = new HandRecognition(this->widget->getGtkWidget(), input, control->getSettings());
 
     gtk_widget_set_can_default(this->widget->getGtkWidget(), true);
     gtk_widget_grab_default(this->widget->getGtkWidget());

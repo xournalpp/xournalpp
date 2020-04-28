@@ -10,8 +10,8 @@
 #include "gui/inputdevices/InputContext.h"
 
 XournalWidget::XournalWidget(std::unique_ptr<Renderer> render, std::shared_ptr<Viewport> viewport,
-                             std::shared_ptr<Layout> layout):
-        renderer(std::move(render)), viewport(std::move(viewport)), layout(std::move(layout)) {
+                             std::shared_ptr<Layout> layout, Viewpane viewpane):
+        renderer(std::move(render)), viewport(std::move(viewport)), layout(std::move(layout)), viewpane(viewpane) {
     this->drawingArea = gtk_drawing_scrollable_new();
     gtk_widget_set_hexpand(this->drawingArea, true);
     gtk_widget_set_vexpand(this->drawingArea, true);
@@ -20,11 +20,28 @@ XournalWidget::XournalWidget(std::unique_ptr<Renderer> render, std::shared_ptr<V
     g_signal_connect(G_OBJECT(drawingArea), "draw", G_CALLBACK(XournalWidget::drawCallback), this);
     g_signal_connect(G_OBJECT(drawingArea), "notify::hadjustment", G_CALLBACK(XournalWidget::initHScrolling), this);
     g_signal_connect(G_OBJECT(drawingArea), "notify::vadjustment", G_CALLBACK(XournalWidget::initVScrolling), this);
-    viewport->registerListener(*this, [](auto e) { return true; });
-    layout->registerListener(*this, [](auto e) { return true; });
+    viewportCallbackId = viewport->registerListener([&](auto event) {
+        if (typeid(event) == typeid(ScrollEvent)) {
+            auto scrollEvent = dynamic_cast<const ScrollEvent&>(event);
+            updateScrollbar(scrollEvent.getDirection(), scrollEvent.getDifference(), layout->isInfiniteHorizontally());
+        }
+        gtk_widget_queue_allocate(this->drawingArea);
+    });
+    layoutCallbackId = layout->registerListener([&](auto event) { gtk_widget_queue_allocate(this->drawingArea); });
+    viewpaneCallbackId = viewpane.registerListener([&](auto event) {
+        if (typeid(event) == typeid(ViewpaneChangeEvent)) {
+            auto changeEvent = dynamic_cast<const ViewpaneChangeEvent&>(event);
+            gtk_widget_queue_draw_area(this->drawingArea, changeEvent.x, changeEvent.y, changeEvent.width,
+                                       changeEvent.height);
+        }
+    });
 }
 
-XournalWidget::~XournalWidget() { gtk_widget_destroy(this->drawingArea); };
+XournalWidget::~XournalWidget() {
+    viewport->unregisterListener(viewportCallbackId);
+    layout->unregisterListener(layoutCallbackId);
+    viewpane.unregisterListener(viewpaneCallbackId);
+}
 
 auto XournalWidget::initHScrolling(XournalWidget* self) -> void {
     GtkScrollable* scrollableWidget = GTK_SCROLLABLE(self->drawingArea);
@@ -147,15 +164,5 @@ auto XournalWidget::verticalScroll(GtkAdjustment* vadjustment, XournalWidget* se
     VScroll verticalScrollAction{yDiff};
     Dispatcher::getMainStage().dispatch(verticalScrollAction);
 }
-
-auto XournalWidget::eventCallback(const ViewportEvent& event) -> void {
-    if (typeid(event) == typeid(ScrollEvent)) {
-        auto scrollEvent = dynamic_cast<const ScrollEvent&>(event);
-        updateScrollbar(scrollEvent.getDirection(), scrollEvent.getDifference(), layout->isInfiniteHorizontally());
-    }
-    gtk_widget_queue_allocate(this->drawingArea);
-}
-
-auto XournalWidget::eventCallback(const LayoutEvent& event) -> void { gtk_widget_queue_allocate(this->drawingArea); }
 
 auto XournalWidget::getGtkWidget() -> GtkWidget* { return this->drawingArea; };

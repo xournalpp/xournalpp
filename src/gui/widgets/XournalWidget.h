@@ -22,6 +22,7 @@ class InputContext;
 #include <memory>
 
 #include <model/softstorage/LayoutEvent.h>
+#include <model/softstorage/Viewpane.h>
 #include <util/Rectangle.h>
 
 #include "gui/Renderer.h"
@@ -29,13 +30,11 @@ class InputContext;
 
 #include "gtkdrawingareascrollable.h"
 
-class XournalWidget: public ControllerView<ViewportEvent>, public ControllerView<LayoutEvent> {
+class XournalWidget {
 public:
-    XournalWidget(std::unique_ptr<Renderer> render, std::shared_ptr<Viewport> viewport, std::shared_ptr<Layout> layout);
-    ~XournalWidget() override;
-
-    auto eventCallback(const ViewportEvent& event) -> void override;
-    auto eventCallback(const LayoutEvent& event) -> void override;
+    XournalWidget(std::unique_ptr<Renderer> renderer, std::shared_ptr<Viewport> viewport,
+                  std::shared_ptr<Layout> layout, Viewpane viewpane);
+    ~XournalWidget();
 
     auto getGtkWidget() -> GtkWidget*;
 
@@ -58,6 +57,8 @@ private:
     /** Renderer */
     std::unique_ptr<Renderer> renderer;
 
+    Viewpane viewpane;
+
     /** Viewport storage (state) */
     std::shared_ptr<Viewport> viewport;
 
@@ -65,4 +66,8 @@ private:
     std::shared_ptr<Layout> layout;
 
     constexpr static double STEP_INCREMENT = 10;
+
+    int viewportCallbackId;
+    int layoutCallbackId;
+    int viewpaneCallbackId;
 };

@@ -8,7 +8,6 @@
 #include <memory>
 
 #include <control/ActionListener.h>
-#include <gui/ControllerView.h>
 
 template <class E>
 class Storage: public ActionListener {
@@ -16,12 +15,12 @@ public:
     virtual ~Storage();
 
 public:
-    auto registerListener(const ControllerView<E>& listener, std::function<bool(E)> filter) -> void;
-    auto unregisterListener(const ControllerView<E>& listener) -> void;
+    auto registerListener(std::function<void(E)> callback) -> int;
+    auto unregisterListener(int index) -> void;
 
 protected:
     auto emit(const E& event) -> void;
 
 private:
-    std::vector<std::weak_ptr<ControllerView<E>>> listeners{};
+    std::vector<std::function<void(E)>> listeners{};
 };
