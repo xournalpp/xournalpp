@@ -78,6 +78,7 @@ endmacro (add_includes_ldflags LDFLAGS INCLUDES)
 
 find_package(CXX17 REQUIRED COMPONENTS optional)
 find_package(Filesystem REQUIRED COMPONENTS Boost Final Experimental)
+find_package(Boost REQUIRED COMPONENTS graph)
 
 # libexec
 if (WIN32)
