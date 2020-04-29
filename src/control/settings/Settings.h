@@ -130,6 +130,7 @@ private:
 
     static xmlNodePtr savePropertyDouble(const gchar* key, double value, xmlNodePtr parent);
     static xmlNodePtr saveProperty(const gchar* key, int value, xmlNodePtr parent);
+    static xmlNodePtr savePropertyUnsigned(const gchar* key, unsigned int value, xmlNodePtr parent);
     static xmlNodePtr saveProperty(const gchar* key, const gchar* value, xmlNodePtr parent);
 
     void saveData(xmlNodePtr root, const string& name, SElement& elem);
@@ -289,6 +290,18 @@ public:
 
     bool isHighlightPosition() const;
     void setHighlightPosition(bool highlight);
+
+    uint32_t getCursorHighlightColor() const;
+    void setCursorHighlightColor(uint32_t color);
+
+    double getCursorHighlightRadius() const;
+    void setCursorHighlightRadius(double radius);
+
+    uint32_t getCursorHighlightBorderColor() const;
+    void setCursorHighlightBorderColor(uint32_t color);
+
+    double getCursorHighlightBorderWidth() const;
+    void setCursorHighlightBorderWidth(double width);
 
     ScrollbarHideType getScrollbarHideType() const;
     void setScrollbarHideType(ScrollbarHideType type);
@@ -496,9 +509,30 @@ private:
     bool showBigCursor{};
 
     /**
-     * Show a yellow circle around the cursor
+     * Show a colored circle around the cursor
      */
     bool highlightPosition{};
+
+    /**
+     * Cursor highlight color (ARGB format)
+     */
+    uint32_t cursorHighlightColor{};
+
+    /**
+     * Radius of cursor highlight circle. Note that this is limited by the size
+     * of the cursor in the display server (default is probably 30 pixels).
+     */
+    double cursorHighlightRadius{};
+
+    /**
+     * Cursor highlight border color (ARGB format)
+     */
+    uint32_t cursorHighlightBorderColor{};
+
+    /**
+     * Width of cursor highlight border, in pixels.
+     */
+    double cursorHighlightBorderWidth{};
 
     /**
      * If the user uses a dark-themed DE, he should enable this

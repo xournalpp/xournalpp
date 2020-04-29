@@ -38,11 +38,14 @@ void Util::execInUiThread(std::function<void()>&& callback) {
                          new CallbackUiData(std::move(callback)));
 }
 
-auto Util::rgb_to_GdkRGBA(const uint32_t color) -> GdkRGBA {  // clang-format off
-	return {((color >> 16U) & 0xFFU) / 255.0,
-	        ((color >> 8U) & 0xFFU) / 255.0,
-	        (color & 0xFFU) / 255.0,
-	        1.0};
+auto Util::rgb_to_GdkRGBA(const uint32_t color) -> GdkRGBA { return Util::argb_to_GdkRGBA(0xFF000000U | color); }
+
+auto Util::argb_to_GdkRGBA(const uint32_t color) -> GdkRGBA {
+    // clang-format off
+    return {((color >> 16U) & 0xFFU) / 255.0,
+            ((color >> 8U) & 0xFFU) / 255.0,
+            (color & 0xFFU) / 255.0,
+            ((color >> 24U) & 0xFFU) / 255.0};
     // clang-format on
 }
 

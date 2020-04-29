@@ -196,7 +196,6 @@ void SettingsDialog::load() {
     loadCheckbox("cbDoActionOnStrokeFiltered", settings->getDoActionOnStrokeFiltered());
     loadCheckbox("cbTrySelectOnStrokeFiltered", settings->getTrySelectOnStrokeFiltered());
     loadCheckbox("cbBigCursor", settings->isShowBigCursor());
-    loadCheckbox("cbHighlightPosition", settings->isHighlightPosition());
     loadCheckbox("cbDarkTheme", settings->isDarkTheme());
     loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
     loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
@@ -266,6 +265,14 @@ void SettingsDialog::load() {
     color = Util::rgb_to_GdkRGBA(settings->getSelectionColor());
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorSelection")), &color);
 
+    loadCheckbox("cbHighlightPosition", settings->isHighlightPosition());
+    color = Util::argb_to_GdkRGBA(settings->getCursorHighlightColor());
+    gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightColor")), &color);
+    color = Util::argb_to_GdkRGBA(settings->getCursorHighlightBorderColor());
+    gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightBorderColor")), &color);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("cursorHighlightRadius")), settings->getCursorHighlightRadius());
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("cursorHighlightBorderWidth")),
+                              settings->getCursorHighlightBorderWidth());
 
     bool hideFullscreenMenubar = false;
     bool hideFullscreenSidebar = false;
@@ -438,7 +445,6 @@ void SettingsDialog::save() {
     settings->setDoActionOnStrokeFiltered(getCheckbox("cbDoActionOnStrokeFiltered"));
     settings->setTrySelectOnStrokeFiltered(getCheckbox("cbTrySelectOnStrokeFiltered"));
     settings->setShowBigCursor(getCheckbox("cbBigCursor"));
-    settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
     settings->setDarkTheme(getCheckbox("cbDarkTheme"));
     settings->setTouchWorkaround(getCheckbox("cbTouchWorkaround"));
     settings->setExperimentalInputSystemEnabled(getCheckbox("cbNewInputSystem"));
@@ -465,6 +471,17 @@ void SettingsDialog::save() {
 
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorSelection")), &color);
     settings->setSelectionColor(Util::gdkrgba_to_hex(color));
+
+
+    settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
+    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightColor")), &color);
+    settings->setCursorHighlightColor(Util::gdkrgba_to_hex(color));
+    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightBorderColor")), &color);
+    settings->setCursorHighlightBorderColor(Util::gdkrgba_to_hex(color));
+    GtkWidget* spCursorHighlightRadius = get("cursorHighlightRadius");
+    settings->setCursorHighlightRadius(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spCursorHighlightRadius)));
+    GtkWidget* spCursorHighlightBorderWidth = get("cursorHighlightBorderWidth");
+    settings->setCursorHighlightBorderWidth(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spCursorHighlightBorderWidth)));
 
 
     bool hideFullscreenMenubar = getCheckbox("cbHideFullscreenMenubar");
