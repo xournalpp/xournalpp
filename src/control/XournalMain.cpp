@@ -301,7 +301,8 @@ int XournalMain::run(int argc, char* argv[])
 {
 	XOJ_CHECK_TYPE(XournalMain);
 
-	this->initLocalisation();
+    g_set_prgname("com.github.xournalpp.xournalpp");
+    this->initLocalisation();
 
 	GError* error = NULL;
 	GOptionContext* context = g_option_context_new("FILE");
