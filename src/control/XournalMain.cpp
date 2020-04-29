@@ -258,6 +258,7 @@ auto XournalMain::exportPdf(const char* input, const char* output) -> int {
 }
 
 auto XournalMain::run(int argc, char* argv[]) -> int {
+    g_set_prgname("com.github.xournalpp.xournalpp");
     this->initLocalisation();
 
     GError* error = nullptr;
