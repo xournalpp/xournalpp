@@ -310,21 +310,22 @@ int XournalMain::run(int argc, char* argv[])
 	gchar** optFilename = NULL;
 	gchar* pdfFilename = NULL;
 	gchar* imgFilename = NULL;
-	int openAtPageNumber = -1;
+    gboolean showVersion = false;
+    int openAtPageNumber = -1;
 
 	string create_pdf = _("PDF output filename");
 	string create_img = _("Image output filename (.png / .svg)");
 	string page_jump = _("Jump to Page (first Page: 1)");
 	string audio_folder = _("Absolute path for the audio files playback");
-	GOptionEntry options[] = {
-		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      create_pdf.c_str(), NULL },
-		{ "create-img",      'i', 0, G_OPTION_ARG_FILENAME,       &imgFilename,      create_img.c_str(), NULL },
-		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, page_jump.c_str(), "N" },
-		{G_OPTION_REMAINING,   0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>", NULL },
-		{NULL}
-	};
+    string version = _("Get version of xournalpp");
+    GOptionEntry options[] = {{"create-pdf", 'p', 0, G_OPTION_ARG_FILENAME, &pdfFilename, create_pdf.c_str(), nullptr},
+                              {"create-img", 'i', 0, G_OPTION_ARG_FILENAME, &imgFilename, create_img.c_str(), nullptr},
+                              {"page", 'n', 0, G_OPTION_ARG_INT, &openAtPageNumber, page_jump.c_str(), "N"},
+                              {G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename, "<input>", nullptr},
+                              {"version", 0, 0, G_OPTION_ARG_NONE, &showVersion, version.c_str(), nullptr},
+                              {nullptr}};
 
-	g_option_context_add_main_entries(context, options, GETTEXT_PACKAGE);
+    g_option_context_add_main_entries(context, options, GETTEXT_PACKAGE);
 	// parse options, so we don't need gtk_init, but don't init display (so we have a commandline mode)
 	g_option_context_add_group(context, gtk_get_option_group(false));
 	if (!g_option_context_parse(context, &argc, &argv, &error))
@@ -347,7 +348,12 @@ int XournalMain::run(int argc, char* argv[])
 		return exportImg(*optFilename, imgFilename);
 	}
 
-	// Checks for input method compatibility
+    if (showVersion) {
+        g_printf("%s %s \n", PROJECT_NAME, PROJECT_VERSION);
+        return 0;
+    }
+
+    // Checks for input method compatibility
 
 	const char* imModule = g_getenv("GTK_IM_MODULE");
 	if (imModule != NULL && strcmp(imModule, "xim") == 0)
