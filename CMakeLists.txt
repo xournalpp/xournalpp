@@ -68,16 +68,17 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBS
 endif ()
 
 ## Libraries ##
-
 macro(add_includes_ldflags LDFLAGS INCLUDES)
 	set(xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "${LDFLAGS}")
-    include_directories(SYSTEM ${INCLUDES})
-    # Do not add system headers and external libraries to the additional include paths
-    # set(xournalpp_INCLUDE_DIRS ${xournalpp_INCLUDE_DIRS} "${INCLUDES}")
-endmacro (add_includes_ldflags LDFLAGS INCLUDES)
+	include_directories(SYSTEM ${INCLUDES})
+	# Do not add system headers and external libraries to the additional include paths
+	# set(xournalpp_INCLUDE_DIRS ${xournalpp_INCLUDE_DIRS} "${INCLUDES}")
+endmacro(add_includes_ldflags LDFLAGS INCLUDES)
 
 find_package(CXX17 REQUIRED COMPONENTS optional)
 find_package(Filesystem REQUIRED COMPONENTS Boost Final Experimental)
+find_package(Lager CONFIG)
+find_package(Zug CONFIG)
 
 # libexec
 if (WIN32)

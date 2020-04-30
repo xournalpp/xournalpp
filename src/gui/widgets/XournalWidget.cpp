@@ -1,17 +1,17 @@
 #include "XournalWidget.h"
 
 #include <cmath>
+#include <utility>
 
-#include <control/Dispatcher.h>
 #include <gdk/gdk.h>
 
 #include "gui/Renderer.h"
 #include "gui/Shadow.h"
 #include "gui/inputdevices/InputContext.h"
 
-XournalWidget::XournalWidget(std::unique_ptr<Renderer> render, std::shared_ptr<Viewport> viewport,
-                             std::shared_ptr<Layout> layout, Viewpane viewpane):
-        renderer(std::move(render)), viewport(std::move(viewport)), layout(std::move(layout)), viewpane(viewpane) {
+XournalWidget::XournalWidget(std::unique_ptr<Renderer> renderer, lager::reader<Viewport> viewportReader,
+                             lager::reader<Layout> layoutReader):
+        renderer(std::move(renderer)), viewport(std::move(viewportReader)), layout(std::move(layoutReader)) {
     this->drawingArea = gtk_drawing_scrollable_new();
     gtk_widget_set_hexpand(this->drawingArea, true);
     gtk_widget_set_vexpand(this->drawingArea, true);
@@ -20,68 +20,56 @@ XournalWidget::XournalWidget(std::unique_ptr<Renderer> render, std::shared_ptr<V
     g_signal_connect(G_OBJECT(drawingArea), "draw", G_CALLBACK(XournalWidget::drawCallback), this);
     g_signal_connect(G_OBJECT(drawingArea), "notify::hadjustment", G_CALLBACK(XournalWidget::initHScrolling), this);
     g_signal_connect(G_OBJECT(drawingArea), "notify::vadjustment", G_CALLBACK(XournalWidget::initVScrolling), this);
-    viewportCallbackId = viewport->registerListener([&](auto event) {
-        if (typeid(event) == typeid(ScrollEvent)) {
-            auto scrollEvent = dynamic_cast<const ScrollEvent&>(event);
-            updateScrollbar(scrollEvent.getDirection(), scrollEvent.getDifference(), layout->isInfiniteHorizontally());
-        }
-        gtk_widget_queue_allocate(this->drawingArea);
+    GtkScrollable* scrollableWidget = GTK_SCROLLABLE(this->drawingArea);
+    lager::reader<double>{viewport[&Viewport::x]}.watch([&](auto v) {
+        updateScrollbar(gtk_scrollable_get_hadjustment(scrollableWidget), v, this->layout->infiniteHorizontally);
     });
-    layoutCallbackId = layout->registerListener([&](auto event) { gtk_widget_queue_allocate(this->drawingArea); });
-    viewpaneCallbackId = viewpane.registerListener([&](auto event) {
-        if (typeid(event) == typeid(ViewpaneChangeEvent)) {
-            auto changeEvent = dynamic_cast<const ViewpaneChangeEvent&>(event);
-            gtk_widget_queue_draw_area(this->drawingArea, changeEvent.x, changeEvent.y, changeEvent.width,
-                                       changeEvent.height);
-        }
+    lager::reader<double>{viewport[&Viewport::y]}.watch([&](auto v) {
+        updateScrollbar(gtk_scrollable_get_vadjustment(scrollableWidget), v, this->layout->infiniteVertically);
     });
-}
-
-XournalWidget::~XournalWidget() {
-    viewport->unregisterListener(viewportCallbackId);
-    layout->unregisterListener(layoutCallbackId);
-    viewpane.unregisterListener(viewpaneCallbackId);
+    lager::reader<double>{viewport[&Viewport::rawScale]}.watch(
+            [&](auto v) { gtk_widget_queue_allocate(this->drawingArea); });
+    layout.watch([&](auto) { gtk_widget_queue_allocate(this->drawingArea); });
 }
 
 auto XournalWidget::initHScrolling(XournalWidget* self) -> void {
     GtkScrollable* scrollableWidget = GTK_SCROLLABLE(self->drawingArea);
     GtkAdjustment* hadjustment = gtk_scrollable_get_hadjustment(scrollableWidget);
-    gtk_adjustment_configure(hadjustment, self->viewport->getX(), self->viewport->getX() - 150,
-                             self->viewport->getX() + 150, STEP_INCREMENT, STEP_INCREMENT, 100);
+    gtk_adjustment_configure(hadjustment, self->viewport->x, self->viewport->x - 150, self->viewport->x + 150,
+                             STEP_INCREMENT, STEP_INCREMENT, 100);
     g_signal_connect(G_OBJECT(hadjustment), "value-changed", G_CALLBACK(XournalWidget::horizontalScroll), self);
 }
 
 auto XournalWidget::initVScrolling(XournalWidget* self) -> void {
     GtkScrollable* scrollableWidget = GTK_SCROLLABLE(self->drawingArea);
     GtkAdjustment* vadjustment = gtk_scrollable_get_vadjustment(scrollableWidget);
-    gtk_adjustment_configure(vadjustment, self->viewport->getY(), self->viewport->getY() - 150,
-                             self->viewport->getY() + 150, STEP_INCREMENT, STEP_INCREMENT, 100);
+    gtk_adjustment_configure(vadjustment, self->viewport->y, self->viewport->y - 150, self->viewport->y + 150,
+                             STEP_INCREMENT, STEP_INCREMENT, 100);
     g_signal_connect(G_OBJECT(vadjustment), "value-changed", G_CALLBACK(XournalWidget::verticalScroll), self);
 }
 
 auto XournalWidget::sizeAllocateCallback(GtkWidget* drawingArea, GdkRectangle* allocation, XournalWidget* self)
         -> void {
-    if (allocation->width != self->viewport->getWidth() || allocation->height != self->viewport->getHeight())
-        Dispatcher::getMainStage().dispatch(Allocation{allocation->width, allocation->height});
+    if (allocation->width != self->viewport->width || allocation->height != self->viewport->height)
+        storage.dispatch(Resize{allocation->width, allocation->height});
 
-    Rectangle<double> documentSize = self->layout->getDocumentSize();
     GtkScrollable* scrollableWidget = GTK_SCROLLABLE(drawingArea);
     GtkAdjustment* hadjustment = gtk_scrollable_get_hadjustment(scrollableWidget);
     GtkAdjustment* vadjustment = gtk_scrollable_get_vadjustment(scrollableWidget);
 
-    if (self->layout->isInfiniteVertically()) {
+    if (self->layout->infiniteVertically) {
         gtk_adjustment_set_lower(vadjustment, -1.5 * allocation->height);
         gtk_adjustment_set_upper(vadjustment, 1.5 * allocation->height);
     } else {
-        gtk_adjustment_set_lower(vadjustment, documentSize.y);
-        gtk_adjustment_set_upper(vadjustment, documentSize.y + documentSize.height * self->viewport->getRawScale());
+        gtk_adjustment_set_lower(vadjustment, 0);
+        gtk_adjustment_set_upper(vadjustment, self->layout->documentHeight * self->viewport->rawScale);
     }
-    if (self->layout->isInfiniteHorizontally()) {
+    if (self->layout->infiniteHorizontally) {
         gtk_adjustment_set_lower(hadjustment, -1.5 * allocation->width);
         gtk_adjustment_set_upper(hadjustment, 1.5 * allocation->width);
     } else {
-        gtk_adjustment_set_lower(hadjustment, documentSize.x);
-        gtk_adjustment_set_upper(hadjustment, documentSize.x + documentSize.width * self->viewport->getRawScale());
+        gtk_adjustment_set_lower(hadjustment, 0);
+        gtk_adjustment_set_upper(hadjustment, self->layout->documentWidth * self->viewport->rawScale);
     }
     gtk_adjustment_set_page_size(vadjustment, allocation->height);
     gtk_adjustment_set_page_size(hadjustment, allocation->width);
@@ -105,38 +93,30 @@ auto XournalWidget::drawCallback(GtkWidget* drawArea, cairo_t* cr, XournalWidget
     gtk_render_background(context, cr, x1, y1, x2 - x1, y2 - y1);
 
     // cairo clip is relative to viewport position
-    Rectangle<double> clippingRect(self->viewport->getX() + x1, self->viewport->getY() + y1, x2 - x1, y2 - y1);
+    Rectangle<double> clippingRect(self->viewport->x + x1, self->viewport->y + y1, x2 - x1, y2 - y1);
 
-    Rectangle<double> documentSize = self->layout->getDocumentSize();
-    bool hInfinite = self->layout->isInfiniteHorizontally();
-    bool vInfinite = self->layout->isInfiniteVertically();
+    bool hInfinite = self->layout->infiniteHorizontally;
+    bool vInfinite = self->layout->infiniteVertically);
     int allocWidth = gtk_widget_get_allocated_width(drawArea);
     int allocHeight = gtk_widget_get_allocated_height(drawArea);
 
     // if width / height of document (multiplied by scale) is smaller than widget width translate the cairo context
-    if (!hInfinite && documentSize.width * self->viewport->getRawScale() < allocWidth) {
-        double borderWidth = (allocWidth - documentSize.width) / 2;
-        clippingRect.width = std::min(clippingRect.width, documentSize.width * self->viewport->getRawScale());
+    if (!hInfinite && self->layout->documentWidth * self->viewport->rawScale < allocWidth) {
+        double borderWidth = (allocWidth - self->layout->documentWidth) / 2;
+        clippingRect.width = std::min(clippingRect.width, self->layout->documentWidth * self->viewport->rawScale);
         cairo_translate(cr, borderWidth, 0);
     }
-    if (!vInfinite && documentSize.height * self->viewport->getRawScale() < allocHeight) {
-        double borderHeight = (allocHeight - documentSize.height) / 2;
-        clippingRect.height = std::min(clippingRect.height, documentSize.height * self->viewport->getRawScale());
+    if (!vInfinite && self->layout->documentHeight * self->viewport->rawScale < allocHeight) {
+        double borderHeight = (allocHeight - self->layout->documentHeight) / 2;
+        clippingRect.height = std::min(clippingRect.height, self->layout->documentHeight * self->viewport->rawScale);
         cairo_translate(cr, 0, borderHeight);
     }
 
-    // transfer state to ideally stateless renderer
-    self->renderer->render(cr, self->viewport);
+    self->renderer->render(cr);
     return true;
 }
 
-auto XournalWidget::updateScrollbar(ScrollEvent::ScrollDirection direction, double value, bool infinite) -> void {
-    GtkAdjustment* adj = nullptr;
-    GtkScrollable* scrollableWidget = GTK_SCROLLABLE(this->drawingArea);
-    if (direction == ScrollEvent::HORIZONTAL)
-        adj = gtk_scrollable_get_hadjustment(scrollableWidget);
-    else
-        adj = gtk_scrollable_get_vadjustment(scrollableWidget);
+auto XournalWidget::updateScrollbar(GtkAdjustment* adj, double value, bool infinite) -> void {
     if (infinite) {
         double upper = gtk_adjustment_get_upper(adj);
         double lower = gtk_adjustment_get_lower(adj);
@@ -155,14 +135,12 @@ auto XournalWidget::updateScrollbar(ScrollEvent::ScrollDirection direction, doub
 
 auto XournalWidget::horizontalScroll(GtkAdjustment* hadjustment, XournalWidget* self) -> void {
     double xDiff = gtk_adjustment_get_value(hadjustment);
-    HScroll horizontalScrollAction{xDiff};
-    Dispatcher::getMainStage().dispatch(horizontalScrollAction);
+    storage.dispatch(Scroll{Scroll::HORIZONTAL, xDiff});
 }
 
 auto XournalWidget::verticalScroll(GtkAdjustment* vadjustment, XournalWidget* self) -> void {
     double yDiff = gtk_adjustment_get_value(vadjustment);
-    VScroll verticalScrollAction{yDiff};
-    Dispatcher::getMainStage().dispatch(verticalScrollAction);
+    storage.dispatch(Scroll{Scroll::VERTICAL, yDiff});
 }
 
-auto XournalWidget::getGtkWidget() -> GtkWidget* { return this->drawingArea; };
+auto XournalWidget::getGtkWidget() -> GtkWidget* { return this->drawingArea; }

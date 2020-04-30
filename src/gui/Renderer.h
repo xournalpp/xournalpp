@@ -13,6 +13,6 @@
 class Renderer {
 public:
     virtual ~Renderer() = default;
-    virtual auto render(cairo_t* cr, std::shared_ptr<Viewport> viewport) -> void = 0;
+    virtual auto render(cairo_t* cr) -> void = 0;
     virtual auto getGtkStyleContext() -> GtkStyleContext* = 0;
 };

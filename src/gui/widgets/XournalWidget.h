@@ -11,35 +11,26 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
-
-class EditSelection;
-class Layout;
-class XojPageView;
-class XournalView;
-class InputContext;
-
 #include <memory>
 
-#include <model/softstorage/LayoutEvent.h>
-#include <model/softstorage/Viewpane.h>
+#include <gtk/gtk.h>
+#include <lager/reader.hpp>
+#include <model/softstorage/Layout.h>
 #include <util/Rectangle.h>
 
 #include "gui/Renderer.h"
-#include "model/softstorage/ViewportEvent.h"
 
 #include "gtkdrawingareascrollable.h"
 
 class XournalWidget {
 public:
-    XournalWidget(std::unique_ptr<Renderer> renderer, std::shared_ptr<Viewport> viewport,
-                  std::shared_ptr<Layout> layout, Viewpane viewpane);
-    ~XournalWidget();
+    XournalWidget(std::unique_ptr<Renderer> renderer, lager::reader<Viewport> viewportReader,
+                  lager::reader<Layout> layoutReader);
 
     auto getGtkWidget() -> GtkWidget*;
 
 private:
-    auto updateScrollbar(ScrollEvent::ScrollDirection direction, double value, bool infinite) -> void;
+    static auto updateScrollbar(GtkAdjustment* adj, double value, bool infinite) -> void;
 
     static auto initHScrolling(XournalWidget* self) -> void;
     static auto initVScrolling(XournalWidget* self) -> void;
@@ -57,17 +48,9 @@ private:
     /** Renderer */
     std::unique_ptr<Renderer> renderer;
 
-    Viewpane viewpane;
-
-    /** Viewport storage (state) */
-    std::shared_ptr<Viewport> viewport;
-
-    /** Layout storage (state) */
-    std::shared_ptr<Layout> layout;
+    /** State */
+    lager::reader<Viewport> viewport;
+    lager::reader<Layout> layout;
 
     constexpr static double STEP_INCREMENT = 10;
-
-    int viewportCallbackId;
-    int layoutCallbackId;
-    int viewpaneCallbackId;
 };
