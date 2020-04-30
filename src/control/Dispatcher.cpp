@@ -10,7 +10,10 @@
 #include <boost/graph/connected_components.hpp>
 #include <boost/graph/topological_sort.hpp>
 
-auto Dispatcher::dispatch(const Action& action) -> void {
+typedef
+
+        auto
+        Dispatcher::dispatch(const Action& action) -> void {
     // TODO make parallel
     for (auto& initialNode: componentStartNodes)
         boost::breadth_first_search(
@@ -47,7 +50,9 @@ auto Dispatcher::recalculateParts() -> void {
         throw std::invalid_argument("Dependency cycle detected, must be removed");
     // Partition graph into connected components
     std::map<VertexDescriptor, int> componentMap{};
-    boost::connected_components(listenerGraph, boost::make_assoc_property_map(componentMap));
+    int components = boost::connected_components(listenerGraph, boost::make_assoc_property_map(componentMap));
+    for (int i = 0; i < components; i++) {
+    }
     // Sort graph topological to traverse dependencies
     std::vector<VertexDescriptor> topologicalSorted{};
     boost::topological_sort(listenerGraph, std::back_inserter(topologicalSorted));
