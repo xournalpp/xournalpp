@@ -96,7 +96,7 @@ auto XournalWidget::drawCallback(GtkWidget* drawArea, cairo_t* cr, XournalWidget
     Rectangle<double> clippingRect(self->viewport->x + x1, self->viewport->y + y1, x2 - x1, y2 - y1);
 
     bool hInfinite = self->layout->infiniteHorizontally;
-    bool vInfinite = self->layout->infiniteVertically);
+    bool vInfinite = self->layout->infiniteVertically;
     int allocWidth = gtk_widget_get_allocated_width(drawArea);
     int allocHeight = gtk_widget_get_allocated_height(drawArea);
 
