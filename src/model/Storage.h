@@ -21,6 +21,6 @@ using Storage = lager::store<Action, State>;
 static const Storage storage = lager::make_store<Action>(
         State{},
         [](auto m, auto a) {
-            return std::pair{m + a, [&](auto context) {}};
+            std::visit(lager::visitor{[=](const Resize& resize) { std::pair{m, lager::noop}; }}, a);
         },
         lager::with_manual_event_loop{});
