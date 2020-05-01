@@ -349,7 +349,7 @@ void PenInputHandler::actionLeaveWindow(InputEvent const& event) {
         new std::thread([&, eventX, eventY, width, height]() {
             int offsetX = 0, offsetY = 0;
 
-            // TODO(fabian): make offset dependent on how big the distance between pen and view is
+            // TODO(fabian): make offset dependent on how big the distance between pen and xournalview is
             if (eventX < WIDGET_SCROLL_BORDER) {
                 offsetX = -10;
             }

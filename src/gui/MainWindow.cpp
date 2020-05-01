@@ -7,10 +7,10 @@
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
 #include "gui/GladeSearchpath.h"
-#include "model/softstorage/Layout.h"
 #include "toolbarMenubar/ToolMenuHandler.h"
 #include "toolbarMenubar/model/ToolbarData.h"
 #include "toolbarMenubar/model/ToolbarModel.h"
+#include "view/Layout.h"
 #include "widgets/SpinPageAdapter.h"
 #include "widgets/XournalWidget.h"
 

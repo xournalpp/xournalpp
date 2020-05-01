@@ -6,7 +6,7 @@
 
 #include <cairo.h>
 
-#include "model/softstorage/Viewport.h"
+#include "view/Viewport.h"
 
 #include "Rectangle.h"
 

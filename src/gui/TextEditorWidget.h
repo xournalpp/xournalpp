@@ -137,7 +137,7 @@ static void gtk_xoj_int_txt_class_init(GtkXojIntTxtClass* klass) {
      * The ::select-all signal is a
      * <link linkend="keybinding-signals">keybinding signal</link>
      * which gets emitted to select or unselect the complete
-     * contents of the text view.
+     * contents of the text xournalview.
      *
      * The default bindings for this signal are Ctrl-a and Ctrl-/
      * for selecting and Shift-Ctrl-a and Ctrl-\ for unselecting.

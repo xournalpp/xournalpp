@@ -10,8 +10,8 @@
 #include "control/settings/MetadataManager.h"
 #include "model/Document.h"
 #include "model/Stroke.h"
-#include "model/softstorage/Layout.h"
 #include "undo/DeleteUndoAction.h"
+#include "view/Layout.h"
 #include "widgets/XournalWidget.h"
 
 #include "PageView.h"

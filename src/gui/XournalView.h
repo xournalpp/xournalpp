@@ -102,7 +102,7 @@ public:
     auto getZoomReal() -> double;
 
     /**
-     * Indicate changed layout settings (probably noop as view will get updated on settings change by default)
+     * Indicate changed layout settings (probably noop as xournalview will get updated on settings change by default)
      */
     auto layoutPages() -> void;
 

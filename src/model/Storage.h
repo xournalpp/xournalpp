@@ -4,11 +4,13 @@
 
 #pragma once
 
-#include <control/Action.h>
 #include <lager/event_loop/manual.hpp>
 #include <lager/store.hpp>
-#include <model/softstorage/Layout.h>
-#include <model/softstorage/Viewport.h>
+#include <view/Layout.h>
+#include <view/Viewport.h>
+
+
+using Action = std::variant<Scroll, Resize, Scale>;
 
 struct AppState {
     Viewport viewport;

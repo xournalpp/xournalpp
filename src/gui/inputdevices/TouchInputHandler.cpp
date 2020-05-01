@@ -101,7 +101,7 @@ void TouchInputHandler::zoomStart() {
         return;
     }
 
-    // Take horizontal and vertical padding of view into account when calculating the center of the gesture
+    // Take horizontal and vertical padding of xournalview into account when calculating the center of the gesture
     int vPadding = inputContext->getSettings()->getAddVerticalSpace() ?
                            inputContext->getSettings()->getAddVerticalSpaceAmount() :
                            0;

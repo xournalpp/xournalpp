@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * PDF view
+ * PDF xournalview
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp

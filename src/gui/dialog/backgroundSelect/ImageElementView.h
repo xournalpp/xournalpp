@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Image view
+ * Image xournalview
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp

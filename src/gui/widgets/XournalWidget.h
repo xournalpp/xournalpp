@@ -15,8 +15,8 @@
 
 #include <gtk/gtk.h>
 #include <lager/reader.hpp>
-#include <model/softstorage/Layout.h>
 #include <util/Rectangle.h>
+#include <view/Layout.h>
 
 #include "gui/Renderer.h"
 
