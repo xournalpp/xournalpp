@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <numeric>
+#include <optional>
 
 #include "control/Control.h"
 #include "gui/scroll/ScrollHandling.h"
@@ -68,7 +69,7 @@ void Layout::updateVisibility() {
     int y1 = 0;
 
     // Data to select page based on visibility
-    size_t mostPageNr = 0;
+    std::optional<size_t> mostPageNr;
     double mostPagePercent = 0;
 
     for (size_t row = 0; row < this->heightRows.size(); ++row) {
@@ -107,7 +108,9 @@ void Layout::updateVisibility() {
         x1 = 0;
     }
 
-    this->view->getControl()->firePageSelected(mostPageNr);
+    if (mostPageNr) {
+        this->view->getControl()->firePageSelected(mostPageNr.value());
+    }
 }
 
 auto Layout::getVisibleRect() -> Rectangle<double> {
