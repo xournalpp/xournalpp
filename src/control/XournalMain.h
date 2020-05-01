@@ -33,9 +33,24 @@ private:
     static void initLocalisation();
 
     /**
-     * Returns true if configuration settings were migrated.
+     * Configuration migration status.
      */
-    static bool migrateSettings();
+    enum class MigrateStatus {
+        /** No migration was needed. */
+        NotNeeded,
+        /** Migration was carried out successfully. */
+        Success,
+        /** Migration failed. */
+        Failure,
+    };
+
+    struct MigrateResult {
+        MigrateStatus status;
+        /** Any additional information about the migration status. */
+        std::string message;
+    };
+
+    static MigrateResult migrateSettings();
 
     static void checkForErrorlog();
     static void checkForEmergencySave(Control* control);

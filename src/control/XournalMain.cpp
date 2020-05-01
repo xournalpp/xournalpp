@@ -6,7 +6,6 @@
 #include <gtk/gtk.h>
 #include <libintl.h>
 
-#include "filesystem.h"
 #include "control/jobs/ImageExport.h"
 #include "control/jobs/ProgressListener.h"
 #include "gui/GladeSearchpath.h"
@@ -25,6 +24,7 @@
 #include "config-dev.h"
 #include "config-paths.h"
 #include "config.h"
+#include "filesystem.h"
 #include "i18n.h"
 
 #if __linux__
@@ -72,7 +72,7 @@ void XournalMain::initLocalisation() {
     std::cout.imbue(std::locale());
 }
 
-bool XournalMain::migrateSettings() {
+XournalMain::MigrateResult XournalMain::migrateSettings() {
     Path newConfigPath = Util::getConfigFolder();
 
     if (!newConfigPath.exists()) {
@@ -83,14 +83,24 @@ bool XournalMain::migrateSettings() {
             g_message("Migrating configuration from %s to %s", oldConfigPath.str().c_str(),
                       newConfigPath.str().c_str());
             auto xdgConfDir = fs::path(newConfigPath.str()).parent_path();
-            if (!fs::exists(xdgConfDir)) {
-                fs::create_directories(xdgConfDir);
+            try {
+                if (!fs::exists(xdgConfDir)) {
+                    fs::create_directories(xdgConfDir);
+                }
+                fs::copy(oldConfigPath.str(), newConfigPath.str(), fs::copy_options::recursive);
+                const char* msg = "Due to a recent update, Xournal++ has changed where its configuration files are "
+                                  "stored.\nThey have been automatically copied from\n\t{1}\nto\n\t{2}";
+                return {MigrateStatus::Success, FS(_F(msg) % oldConfigPath.c_str() % newConfigPath.c_str())};
+            } catch (fs::filesystem_error& except) {
+                const char* msg = "Due to a recent update, Xournal++ has changed where its configuration files are "
+                                  "stored.\nHowever, when attempting to copy\n\t{1}\nto\n\t{2}\nmigration failed:\n{3}";
+                g_message("Migration failed: %s", except.what());
+                return {MigrateStatus::Failure,
+                        FS(_F(msg) % oldConfigPath.c_str() % newConfigPath.c_str() % except.what())};
             }
-            fs::copy(oldConfigPath.str(), newConfigPath.str(), fs::copy_options::recursive);
-            return true;
         }
     }
-    return false;
+    return {MigrateStatus::NotNeeded, ""};
 }
 
 void XournalMain::checkForErrorlog() {
@@ -282,7 +292,7 @@ auto XournalMain::exportPdf(const char* input, const char* output) -> int {
 auto XournalMain::run(int argc, char* argv[]) -> int {
     g_set_prgname("com.github.xournalpp.xournalpp");
     this->initLocalisation();
-    bool hasMigrated = this->migrateSettings();
+    MigrateResult migrateResult = this->migrateSettings();
 
     GError* error = nullptr;
     GOptionContext* context = g_option_context_new("FILE");
@@ -399,15 +409,8 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
     // This fixes it, see #405
     Util::execInUiThread([=]() { control->getWindow()->getXournal()->layoutPages(); });
 
-    if (hasMigrated) {
-        Util::execInUiThread([=]() {
-            Path oldConfigPath(g_get_home_dir());
-            oldConfigPath /= ".xournalpp";
-            const char* msg = "Due to a recent update, Xournal++ has changed where its configuration files are "
-                              "stored.\nThey have been automatically copied from\n{1}\nto\n{2}";
-            XojMsgBox::showErrorToUser(control->getGtkWindow(),
-                                       FS(_F(msg) % oldConfigPath.c_str() % Util::getConfigFolder().c_str()));
-        });
+    if (migrateResult.status != MigrateStatus::NotNeeded) {
+        Util::execInUiThread([=]() { XojMsgBox::showErrorToUser(control->getGtkWindow(), migrateResult.message); });
     }
 
     gtk_main();
