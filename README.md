@@ -111,7 +111,7 @@ Multiple page background, easy selectable on the toolbar
 For general usage, consult the [User
 Manual](https://github.com/xournalpp/xournalpp/wiki/User-Manual). Answers to
 some common questions can be found in the
-[FAQ](https://github.com/xournalpp/xournalpp/wiki/Frequently-Asked-Questions).
+[FAQ](https://github.com/xournalpp/xournalpp/wiki/Frequently-Asked-Questions-&-Problem-Solving).
 
 ## Experimental Features:
 Sometimes a feature is added that might not be rock solid, or the developers aren't sure it is useful. 
