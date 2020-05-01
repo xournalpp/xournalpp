@@ -22,7 +22,9 @@
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
 
-const char* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default", "stylus", "stylus2"};
+constexpr auto DEFAULT_GRID_SIZE = 14.17;
+
+constexpr char const* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default", "stylus", "stylus2"};
 
 Settings::Settings(Path filename): filename(std::move(filename)) { loadDefault(); }
 
@@ -99,6 +101,7 @@ void Settings::loadDefault() {
 
     this->snapGrid = true;
     this->snapGridTolerance = 0.50;
+    this->snapGridSize = DEFAULT_GRID_SIZE;
 
     this->touchWorkaround = false;
 
@@ -393,8 +396,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->snapRotationTolerance = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapGrid")) == 0) {
         this->snapGrid = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapGrid")) == 0) {
-        this->snapGrid = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapGridSize")) == 0) {
+        this->snapGridSize = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapGridTolerance")) == 0) {
         this->snapGridTolerance = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchWorkaround")) == 0) {
@@ -770,6 +773,7 @@ void Settings::save() {
     WRITE_DOUBLE_PROP(snapRotationTolerance);
     WRITE_BOOL_PROP(snapGrid);
     WRITE_DOUBLE_PROP(snapGridTolerance);
+    WRITE_DOUBLE_PROP(snapGridSize);
 
     WRITE_BOOL_PROP(touchWorkaround);
 
@@ -1098,6 +1102,14 @@ void Settings::setSnapGridTolerance(double tolerance) {
 }
 
 auto Settings::getSnapGridTolerance() const -> double { return this->snapGridTolerance; }
+auto Settings::getSnapGridSize() const -> double { return this->snapGridSize; };
+void Settings::setSnapGridSize(double gridSize) {
+    if (this->snapGridSize == gridSize) {
+        return;
+    }
+    this->snapGridSize = gridSize;
+    save();
+}
 
 auto Settings::isTouchWorkaround() const -> bool { return this->touchWorkaround; }
 

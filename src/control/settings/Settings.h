@@ -55,7 +55,6 @@ enum class InputDeviceTypeOption {
 class ButtonConfig;
 class InputDevice;
 
-extern const char* BUTTON_NAMES[];
 const int BUTTON_COUNT = 7;
 
 
@@ -284,6 +283,8 @@ public:
     void setSnapGrid(bool b);
     double getSnapGridTolerance() const;
     void setSnapGridTolerance(double tolerance);
+    double getSnapGridSize() const;
+    void setSnapGridSize(double gridSize);
 
     bool isShowBigCursor() const;
     void setShowBigCursor(bool b);
@@ -785,6 +786,10 @@ private:
      * Rotation epsilon for rotation snapping feature
      */
     double snapRotationTolerance{};
+
+
+    /// Grid size for Snapping
+    double snapGridSize{};
 
     /**
      * Do not use GTK Scrolling / Touch handling

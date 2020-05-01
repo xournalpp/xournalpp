@@ -12,8 +12,6 @@
 
 #include "Point.h"
 
-constexpr auto DEFAULT_GRID_SIZE = 14.17 / 4;
-
 namespace Snapping {
 
 /**

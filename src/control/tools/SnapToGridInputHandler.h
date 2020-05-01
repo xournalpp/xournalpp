@@ -10,8 +10,9 @@
  */
 #pragma once
 
-#include "control/settings/Settings.h"
 #include "model/Point.h"
+
+class Settings;
 
 class SnapToGridInputHandler final {
 

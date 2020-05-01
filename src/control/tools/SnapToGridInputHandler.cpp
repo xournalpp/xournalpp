@@ -1,12 +1,13 @@
 #include "SnapToGridInputHandler.h"
 
+#include "control/settings/Settings.h"
 #include "model/Snapping.h"
 
 SnapToGridInputHandler::SnapToGridInputHandler(Settings* settings): settings(settings) {}
 
 Point SnapToGridInputHandler::snapToGrid(Point const& pos, bool alt) {
     if (alt != settings->isSnapGrid()) {
-        return Snapping::snapToGrid(pos, DEFAULT_GRID_SIZE,
+        return Snapping::snapToGrid(pos, settings->getSnapGridSize(),
                                     settings->getSnapGridTolerance());  // grid size is not yet in the settings
     }
     return pos;
