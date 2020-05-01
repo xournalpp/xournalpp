@@ -4,9 +4,4 @@
 
 #include "Viewport.h"
 
-#include "control/Dispatcher.h"
-
-Viewport::Viewport() {
-    Dispatcher::getMainStage().registerListener(*this,
-                                                [](auto action) { return typeid(action) == typeid(ViewportAction); });
-}
+auto viewportUpdate(Viewport model, ViewportAction action) -> ViewportResult {}
