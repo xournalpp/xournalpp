@@ -30,12 +30,15 @@ auto update(AppState model, Action action) -> XournalppResult {
 auto main(int argc, char* argv[]) -> int {
     auto store = lager::make_store<Action>(AppState{}, update, lager::with_manual_event_loop{});
     auto reader = static_cast<lager::reader<AppState>>(store);
+    auto context = static_cast<lager::context<Action>>(store);
     /*
-     * TODO initialize Widget tree and pass reader as state to all child widgets
+     * TODO initialize Widget tree and pass reader and context to all child widgets
      * if a child widget only needs part of the state, use following:
      * lager::reader<Viewport> viewportReader = reader[&AppState::viewport];
+     * context should also only use the most restricted action type possible
      * viewportReader->x allows access to members
      */
+
 
     return 0;
 }
