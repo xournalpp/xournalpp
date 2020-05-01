@@ -4,6 +4,9 @@
 
 #pragma once
 
+#include <variant>
+
+#include <lager/context.hpp>
 struct Viewport {
     int width;
     int height;
@@ -27,3 +30,8 @@ struct Resize {
     int width;
     int height;
 };
+
+using ViewportAction = std::variant<Scroll, Resize, Scale>;
+using ViewportResult = std::pair<Viewport, lager::effect<ViewportAction>>;
+
+auto viewportUpdate(Viewport model, ViewportAction action) -> ViewportResult;

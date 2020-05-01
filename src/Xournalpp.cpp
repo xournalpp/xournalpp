@@ -9,42 +9,33 @@
  * @license GNU GPLv2
  */
 
-#include <config-dev.h>
+#include "Xournalpp.h"
 
-#include "control/XournalMain.h"
+#include <lager/event_loop/manual.hpp>
+#include <lager/store.hpp>
 
-#include "CrashHandler.h"
-#include "Stacktrace.h"
+using XournalppResult = std::pair<AppState, lager::effect<Action>>;
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
+auto update(AppState model, Action action) -> XournalppResult {
+    // To add more update functions see https://sinusoid.es/lager/modularity.html
+    // Consider doing this on the lowest layer of hierarchy possible
+    return std::visit(lager::visitor{[&](const ViewportAction& viewportAction) -> XournalppResult {
+                          auto [newViewport, effect] = viewportUpdate(model.viewport, viewportAction);
+                          model.viewport = newViewport;
+                          return {model, effect};
+                      }},
+                      action);
+}
 
 auto main(int argc, char* argv[]) -> int {
-#ifdef _WIN32
-    // Show and hide the console here. Otherwise, gspawn-win32-helper will create annoying console popups.
-    AllocConsole();
-    ShowWindow(GetConsoleWindow(), SW_HIDE);
-#endif
+    auto store = lager::make_store<Action>(AppState{}, update, lager::with_manual_event_loop{});
+    auto reader = static_cast<lager::reader<AppState>>(store);
+    /*
+     * TODO initialize Widget tree and pass reader as state to all child widgets
+     * if a child widget only needs part of the state, use following:
+     * lager::reader<Viewport> viewportReader = reader[&AppState::viewport];
+     * viewportReader->x allows access to members
+     */
 
-    // init crash handler
-    installCrashHandlers();
-
-#ifdef DEV_CALL_LOG
-    Log::initlog();
-#endif
-
-    // Use this two line to test the crash handler...
-    //	int* crash = nullptr;
-    //	*crash = 0;
-
-    auto* main = new XournalMain();
-    int result = main->run(argc, argv);
-    delete main;
-
-#ifdef DEV_CALL_LOG
-    Log::closelog();
-#endif
-
-    return result;
+    return 0;
 }
