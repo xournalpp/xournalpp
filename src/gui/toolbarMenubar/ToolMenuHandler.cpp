@@ -317,6 +317,7 @@ void ToolMenuHandler::initToolItems() {
     ADD_STOCK_ITEM("NEW", ACTION_NEW, "document-new", _("New Xournal"));
     ADD_STOCK_ITEM("OPEN", ACTION_OPEN, "document-open", _("Open file"));
     ADD_STOCK_ITEM("SAVE", ACTION_SAVE, "document-save", _("Save"));
+    ADD_STOCK_ITEM("PRINT", ACTION_PRINT, "document-print", _("Print"));
 
     // Menu Edit
     // ************************************************************************
