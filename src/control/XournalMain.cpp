@@ -390,7 +390,11 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
         g_object_unref(file);
 
         if (!p.isEmpty()) {
-            opened = control->openFile(p, openAtPageNumber);
+            if (g_file_test(optFilename[0], G_FILE_TEST_EXISTS)) {
+                opened = control->openFile(p, openAtPageNumber);
+            } else {
+                opened = control->newFile("", optFilename[0]);
+            }
         } else {
             string msg = _("Sorry, Xournal++ cannot open remote files at the moment.\n"
                            "You have to copy the file to a local directory.");
