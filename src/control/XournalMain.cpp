@@ -82,7 +82,10 @@ bool XournalMain::migrateSettings() {
         if (oldConfigPath.exists()) {
             g_message("Migrating configuration from %s to %s", oldConfigPath.str().c_str(),
                       newConfigPath.str().c_str());
-            fs::create_directories(newConfigPath.str());
+            auto xdgConfDir = fs::path(newConfigPath.str()).parent_path();
+            if (!fs::exists(xdgConfDir)) {
+                fs::create_directories(xdgConfDir);
+            }
             fs::copy(oldConfigPath.str(), newConfigPath.str(), fs::copy_options::recursive);
             return true;
         }
