@@ -11,6 +11,8 @@
 
 #include "Xournalpp.h"
 
+#include <any>
+
 #include <gtk/gtk.h>
 #include <lager/store.hpp>
 #include <util/gtk_event_loop.h>
@@ -18,6 +20,7 @@
 #include "gui/MainWindow.h"
 
 using XournalppResult = std::pair<AppState, lager::effect<Action>>;
+using XournalppStore = lager::store<Action, XournalppResult>;
 
 auto update(AppState model, Action action) -> XournalppResult {
     // To add more update functions see https://sinusoid.es/lager/modularity.html
@@ -30,8 +33,13 @@ auto update(AppState model, Action action) -> XournalppResult {
                       action);
 }
 
-static auto run(GtkApplication* app, gpointer user_data) -> void {
-    auto store = lager::make_store<Action>(AppState{}, update, with_gtk_event_loop{});
+struct ApplicationData {
+    std::optional<XournalppStore> state;
+    std::optional<MainWindow> widgetTree;
+};
+
+static auto activateCb(GtkApplication* app, ApplicationData* user_data) -> void {
+    user_data->state = lager::make_store<Action>(AppState{}, update, with_gtk_event_loop{});
     /*
      * TODO initialize Widget tree and pass reader and context to all child widgets
      * if a child widget only needs part of the state, use following:
@@ -39,13 +47,14 @@ static auto run(GtkApplication* app, gpointer user_data) -> void {
      * context should also only use the most restricted action type possible
      * viewportReader->x allows access to members of Viewport
      */
-    auto mainWindow = MainWindow{store, store};
-    mainWindow.show();
+    user_data->widgetTree = {user_data->state.value(), user_data->state.value()};
+    user_data->widgetTree->show();
 }
 
 auto main(int argc, char* argv[]) -> int {
     auto gtkapplication = gtk_application_new("org.xournalpp.xournalpp", G_APPLICATION_FLAGS_NONE);
-    g_signal_connect(gtkapplication, "activate", G_CALLBACK(run), nullptr);
+    auto appData = ApplicationData{};
+    g_signal_connect(gtkapplication, "activate", G_CALLBACK(activateCb), &appData);
     auto status = g_application_run(G_APPLICATION(gtkapplication), argc, argv);
     g_object_unref(gtkapplication);
 
