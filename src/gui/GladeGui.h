@@ -12,30 +12,15 @@
 #pragma once
 
 #include <string>
-#include <vector>
-
 #include <gtk/gtk.h>
 
-#include "XournalType.h"
-
-class GladeSearchpath;
 
 class GladeGui {
 public:
-    GladeGui(GladeSearchpath* gladeSearchPath, const string& glade, const string& mainWnd);
-    virtual ~GladeGui();
+    GladeGui(const std::string& glade);
+    ~GladeGui();
 
-    virtual void show(GtkWindow* parent) = 0;
-
-    operator GtkWindow*();
-    operator GdkWindow*();
-
-    GtkWidget* get(const string& name);
-
-    void setThemePath(string themePath);
-
-    GtkWidget* getWindow();
-    GladeSearchpath* getGladeSearchPath();
+    GtkWidget* get(const std::string& name);
 
     GtkBuilder* getBuilder();
 
@@ -44,15 +29,4 @@ private:
      * The Glade resources
      */
     GtkBuilder* builder;
-
-    /**
-     * Our search paths
-     */
-    GladeSearchpath* gladeSearchPath;
-
-protected:
-    /**
-     * This window
-     */
-    GtkWidget* window = nullptr;
 };

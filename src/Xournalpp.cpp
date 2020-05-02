@@ -11,8 +11,9 @@
 
 #include "Xournalpp.h"
 
-#include <lager/event_loop/manual.hpp>
+#include <gtk/gtk.h>
 #include <lager/store.hpp>
+#include <util/gtk_event_loop.h>
 
 using XournalppResult = std::pair<AppState, lager::effect<Action>>;
 
@@ -27,8 +28,8 @@ auto update(AppState model, Action action) -> XournalppResult {
                       action);
 }
 
-auto main(int argc, char* argv[]) -> int {
-    auto store = lager::make_store<Action>(AppState{}, update, lager::with_manual_event_loop{});
+static auto run(GtkApplication* app, gpointer user_data) -> void {
+    auto store = lager::make_store<Action>(AppState{}, update, with_gtk_event_loop{});
     auto reader = static_cast<lager::reader<AppState>>(store);
     auto context = static_cast<lager::context<Action>>(store);
     /*
@@ -36,9 +37,19 @@ auto main(int argc, char* argv[]) -> int {
      * if a child widget only needs part of the state, use following:
      * lager::reader<Viewport> viewportReader = reader[&AppState::viewport];
      * context should also only use the most restricted action type possible
-     * viewportReader->x allows access to members
+     * viewportReader->x allows access to members of Viewport
      */
+    auto window = gtk_application_window_new(app);
+    gtk_window_set_title(GTK_WINDOW(window), "Window");
 
+    gtk_widget_show_all(window);
+}
 
-    return 0;
+auto main(int argc, char* argv[]) -> int {
+    auto gtkapplication = gtk_application_new("org.xournalpp.xournalpp", G_APPLICATION_FLAGS_NONE);
+    g_signal_connect(gtkapplication, "activate", G_CALLBACK(run), nullptr);
+    auto status = g_application_run(G_APPLICATION(gtkapplication), argc, argv);
+    g_object_unref(gtkapplication);
+
+    return status;
 }

@@ -16,7 +16,7 @@
 #include <gtk/gtk.h>
 #include <lager/reader.hpp>
 #include <util/Rectangle.h>
-#include <view/Layout.h>
+#include <xournalview/Viewport.h>
 
 #include "gui/Renderer.h"
 
@@ -25,7 +25,7 @@
 class XournalWidget {
 public:
     XournalWidget(std::unique_ptr<Renderer> renderer, lager::reader<Viewport> viewportReader,
-                  lager::reader<Layout> layoutReader);
+                  lager::context<ViewportAction> context, lager::reader<Layout> layoutReader);
 
     auto getGtkWidget() -> GtkWidget*;
 
@@ -50,6 +50,7 @@ private:
 
     /** State */
     lager::reader<Viewport> viewport;
+    lager::context<ViewportAction> context;
     lager::reader<Layout> layout;
 
     constexpr static double STEP_INCREMENT = 10;
