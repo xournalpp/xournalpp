@@ -10,5 +10,7 @@ MainWindow::MainWindow(lager::reader<AppState> state, lager::context<Action> con
                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     g_object_unref(cssProvider);
     auto gladeBuilder = gtk_builder_new_from_resource("ui/main.glade");
-    auto overlay = GTK_OVERLAY(gtk_builder_get_object(gladeBuilder, "mainOverlay"));
+    this->window = GTK_WINDOW(gtk_builder_get_object(gladeBuilder, "mainWindow"));
 }
+
+auto MainWindow::show() -> void { gtk_widget_show_all(this->window); }

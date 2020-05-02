@@ -15,6 +15,8 @@
 #include <lager/store.hpp>
 #include <util/gtk_event_loop.h>
 
+#include "gui/MainWindow.h"
+
 using XournalppResult = std::pair<AppState, lager::effect<Action>>;
 
 auto update(AppState model, Action action) -> XournalppResult {
@@ -30,8 +32,6 @@ auto update(AppState model, Action action) -> XournalppResult {
 
 static auto run(GtkApplication* app, gpointer user_data) -> void {
     auto store = lager::make_store<Action>(AppState{}, update, with_gtk_event_loop{});
-    auto reader = static_cast<lager::reader<AppState>>(store);
-    auto context = static_cast<lager::context<Action>>(store);
     /*
      * TODO initialize Widget tree and pass reader and context to all child widgets
      * if a child widget only needs part of the state, use following:
@@ -39,10 +39,8 @@ static auto run(GtkApplication* app, gpointer user_data) -> void {
      * context should also only use the most restricted action type possible
      * viewportReader->x allows access to members of Viewport
      */
-    auto window = gtk_application_window_new(app);
-    gtk_window_set_title(GTK_WINDOW(window), "Window");
-
-    gtk_widget_show_all(window);
+    auto mainWindow = MainWindow{store, store};
+    mainWindow.show();
 }
 
 auto main(int argc, char* argv[]) -> int {
