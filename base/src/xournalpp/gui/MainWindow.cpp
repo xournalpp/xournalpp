@@ -13,4 +13,4 @@ MainWindow::MainWindow(lager::reader<AppState> state, lager::context<Action> con
     this->window = GTK_WINDOW(gtk_builder_get_object(gladeBuilder, "mainWindow"));
 }
 
-auto MainWindow::show() -> void { gtk_widget_show_all(this->window); }
+auto MainWindow::show() -> void { gtk_widget_show_all(GTK_WIDGET(this->window)); }
