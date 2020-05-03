@@ -44,9 +44,9 @@
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustmentSnapGridSize">
-    <property name="lower">0.10000000000000001</property>
-    <property name="upper">50</property>
-    <property name="value">14.17</property>
+    <property name="lower">0.01</property>
+    <property name="upper">20</property>
+    <property name="value">1</property>
     <property name="step_increment">0.01</property>
     <property name="page_increment">10</property>
   </object>
@@ -3374,7 +3374,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             <property name="adjustment">adjustmentSnapGridSize</property>
                                             <property name="climb_rate">0.01</property>
                                             <property name="digits">2</property>
-                                            <property name="value">14.17</property>
+                                            <property name="value">1.00</property>
                                           </object>
                                           <packing>
                                             <property name="left_attach">1</property>

@@ -22,8 +22,6 @@
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
 
-constexpr auto DEFAULT_GRID_SIZE = 14.17;
-
 constexpr char const* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default", "stylus", "stylus2"};
 
 Settings::Settings(Path filename): filename(std::move(filename)) { loadDefault(); }
