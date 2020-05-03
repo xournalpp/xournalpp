@@ -32,12 +32,11 @@ auto update(AppState model, Action action) -> XournalppResult {
 }
 
 struct ApplicationData {
-    std::optional<XournalppStore> state;
     std::optional<MainWindow> widgetTree;
 };
 
 static auto activateCb(GtkApplication* app, ApplicationData* user_data) -> void {
-    user_data->state = lager::make_store<Action>(AppState{}, update, with_gtk_event_loop{});
+    auto state = lager::make_store<Action>(AppState{}, update, with_gtk_event_loop{});
     /*
      * TODO initialize Widget tree and pass reader and context to all child widgets
      * if a child widget only needs part of the state, use following:
@@ -45,7 +44,7 @@ static auto activateCb(GtkApplication* app, ApplicationData* user_data) -> void 
      * context should also only use the most restricted action type possible
      * viewportReader->x allows access to members of Viewport
      */
-    user_data->widgetTree = {user_data->state.value(), user_data->state.value()};
+    user_data->widgetTree = MainWindow{lager::reader<AppState>(state), lager::context<Action>(state)};
     user_data->widgetTree->show();
 }
 
