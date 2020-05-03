@@ -1104,10 +1104,10 @@ void Settings::setSnapGridTolerance(double tolerance) {
 auto Settings::getSnapGridTolerance() const -> double { return this->snapGridTolerance; }
 auto Settings::getSnapGridSize() const -> double { return this->snapGridSize; };
 void Settings::setSnapGridSize(double gridSize) {
-    if (this->snapGridSize == gridSize) {
+    if (this->snapGridSize == gridSize/14.17) {
         return;
     }
-    this->snapGridSize = gridSize;
+    this->snapGridSize = gridSize*14.17;
     save();
 }
 
