@@ -9,13 +9,14 @@
  * @license GNU GPLv2
  */
 
-#include "Xournalpp.h"
+#include "../../public-header/xournalpp/Xournalpp.h"
 
 #include <any>
 
 #include <gtk/gtk.h>
 #include <lager/store.hpp>
-#include <util/gtk_event_loop.h>
+
+#include "util/gtk_event_loop.h"
 
 #include "gui/MainWindow.h"
 
@@ -51,7 +52,7 @@ static auto activateCb(GtkApplication* app, ApplicationData* user_data) -> void 
     user_data->widgetTree->show();
 }
 
-auto main(int argc, char* argv[]) -> int {
+auto run(int argc, char* argv[]) -> int {
     auto gtkapplication = gtk_application_new("org.xournalpp.xournalpp", G_APPLICATION_FLAGS_NONE);
     auto appData = ApplicationData{};
     g_signal_connect(gtkapplication, "activate", G_CALLBACK(activateCb), &appData);

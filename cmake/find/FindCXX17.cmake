@@ -29,7 +29,7 @@ set(extra_components ${CXX17_FIND_COMPONENTS})
 if (extra_components)
     list(REMOVE_ITEM extra_components optional filesystem map)
     foreach (component IN LISTS extra_components)
-        message(WARNING "Extraneous find_package component for Filesystem: ${component}")
+        message(WARNING "Extraneous find_package component for CXX: ${component}")
     endforeach ()
 endif ()
 

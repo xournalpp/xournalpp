@@ -48,8 +48,8 @@ cmake-build-*
 doc/html
 doc/latex
 
-src/xournalview/.DS_Store
-src/xournalview/background/.DS_Store
+base/src/xournalpp/view/.DS_Store
+base/src/xournalpp/view/background/.DS_Store
 
 # Flatpak
 repo/

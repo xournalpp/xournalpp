@@ -14,7 +14,7 @@ if (XGETTEXT_FOUND)
             --keyword=C_:1c,2 --keyword=C_F:1c,2 --keyword=NC_:1c,2
 
     SRCFILES
-      "${PROJECT_SOURCE_DIR}/src/*.cpp"
+      "../base/src/*.cpp"
 
     GLADEFILES
       "${PROJECT_SOURCE_DIR}/ui/*.glade"

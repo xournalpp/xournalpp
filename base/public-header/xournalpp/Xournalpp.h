@@ -4,9 +4,12 @@
 
 #pragma once
 
-#include <xournalview/Viewport.h>
+#include "../../src/xournalview/Viewport.h"
+
 using Action = std::variant<ViewportAction>;
 
 struct AppState {
     Viewport viewport;
 };
+
+auto run(int argc, char* argv[]) -> int;
