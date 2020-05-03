@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/config">
+        <file>pagetemplates.ini</file>
+        <file>toolbar.ini</file>
+    </gresource>
+</gresources>

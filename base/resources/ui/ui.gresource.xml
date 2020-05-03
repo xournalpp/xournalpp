@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/ui">
+        <file>exportSettings.glade</file>
+        <file>fillTransparency.glade</file>
+        <file>goto.glade</file>
+        <file>images.glade</file>
+        <file>main.glade</file>
+        <file>pagesize.glade</file>
+        <file>pageTemplate.glade</file>
+        <file>pdfpages.glade</file>
+        <file>plugin.glade</file>
+        <file>pluginEntry.glade</file>
+        <file>settings.glade</file>
+        <file>settingsButtonConfig.glade</file>
+        <file>settingsDeviceClassConfig.glade</file>
+        <file>texdialog.glade</file>
+        <file>toolbarCustomizeDialog.glade</file>
+        <file>toolbarManageDialog.glade</file>
+        <file>xournalpp.css</file>
+    </gresource>
+</gresources>
