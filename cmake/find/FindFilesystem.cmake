@@ -228,7 +228,6 @@ if (CXX_FILESYSTEM_HAVE_FS)
     endif ()
 endif ()
 
-message("Found: ${_found}")
 if (NOT _found AND "Boost" IN_LIST want_components)
     message("-- Check for Boost::filesystem")
     set(Boost_USE_STATIC_LIBS ON)

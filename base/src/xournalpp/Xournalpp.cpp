@@ -9,16 +9,13 @@
  * @license GNU GPLv2
  */
 
-#include "../../public-header/xournalpp/Xournalpp.h"
-
-#include <any>
+#include "xournalpp/Xournalpp.h"
 
 #include <gtk/gtk.h>
 #include <lager/store.hpp>
 
-#include "util/gtk_event_loop.h"
-
 #include "gui/MainWindow.h"
+#include "util/gtk_event_loop.h"
 
 using XournalppResult = std::pair<AppState, lager::effect<Action>>;
 using XournalppStore = lager::store<Action, XournalppResult>;

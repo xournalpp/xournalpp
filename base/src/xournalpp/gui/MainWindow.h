@@ -11,11 +11,12 @@
 
 #pragma once
 
-
-
-#include <Xournalpp.h>
+#include <gtk/gtk.h>
 #include <lager/context.hpp>
 #include <lager/reader.hpp>
+
+#include "xournalpp/Xournalpp.h"
+
 class MainWindow {
 public:
     MainWindow(lager::reader<AppState> state, lager::context<Action> context);

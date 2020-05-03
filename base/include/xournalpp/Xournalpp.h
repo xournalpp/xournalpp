@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../../src/xournalview/Viewport.h"
+#include "xournalpp/view/Viewport.h"
 
 using Action = std::variant<ViewportAction>;
 
