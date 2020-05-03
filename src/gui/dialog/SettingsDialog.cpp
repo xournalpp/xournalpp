@@ -225,7 +225,7 @@ void SettingsDialog::load() {
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapGridTolerance), settings->getSnapGridTolerance());
 
     GtkWidget* spSnapGridSize = get("spSnapGridSize");
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapGridSize), settings->getSnapGridSize() / 14.17);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapGridSize), settings->getSnapGridSize() / DEFAULT_GRID_SIZE);
 
     GtkWidget* spZoomStep = get("spZoomStep");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spZoomStep), settings->getZoomStep());
@@ -576,7 +576,7 @@ void SettingsDialog::save() {
     settings->setSnapGridTolerance(
             static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridTolerance")))));
     settings->setSnapGridSize(
-            static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridSize"))) * 14.17));
+            static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridSize"))) * DEFAULT_GRID_SIZE));
 
     int selectedInputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioInputDevice"))) - 1;
     if (selectedInputDeviceIndex >= 0 && selectedInputDeviceIndex < static_cast<int>(this->audioInputDevices.size())) {

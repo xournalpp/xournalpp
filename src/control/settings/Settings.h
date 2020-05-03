@@ -23,6 +23,8 @@
 
 #include "Path.h"
 
+constexpr auto DEFAULT_GRID_SIZE = 14.17;
+
 enum AttributeType {
     ATTRIBUTE_TYPE_NONE,
     ATTRIBUTE_TYPE_STRING,
