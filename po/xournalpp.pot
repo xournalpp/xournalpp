@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-03 18:44+0000\n"
+"POT-Creation-Date: 2020-05-03 23:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/control/XournalMain.cpp:518
+#: ../src/control/XournalMain.cpp:555
 msgid ""
 "\n"
 "\n"
 "Will now attempt to run without this file."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:498
+#: ../src/control/XournalMain.cpp:535
 msgid ""
 "\n"
 "Will now attempt to run without this file."
@@ -44,7 +44,7 @@ msgid ""
 "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:513
+#: ../src/control/XournalMain.cpp:550
 msgid ""
 "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
@@ -54,7 +54,7 @@ msgid ""
 "  Not in {2}"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:276
+#: ../src/control/XournalMain.cpp:309
 msgid "Absolute path for the audio files playback"
 msgstr ""
 
@@ -115,11 +115,11 @@ msgid ""
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr ""
 
-#: ../src/control/Control.cpp:239
+#: ../src/control/Control.cpp:237
 msgid "Autosave failed with an error: {1}"
 msgstr ""
 
-#: ../src/control/Control.cpp:205
+#: ../src/control/Control.cpp:203
 msgid "Autosave renamed from {1} to {2}"
 msgstr ""
 
@@ -148,8 +148,8 @@ msgstr ""
 msgid "Blue"
 msgstr ""
 
-#: ../src/control/Control.cpp:1997 ../src/control/Control.cpp:2449
-#: ../src/control/XournalMain.cpp:119
+#: ../src/control/Control.cpp:1995 ../src/control/Control.cpp:2447
+#: ../src/control/XournalMain.cpp:151
 msgid "Cancel"
 msgstr ""
 
@@ -196,7 +196,7 @@ msgid ""
 "Could not create backup! (The file was created from an older Xournal version)"
 msgstr ""
 
-#: ../src/util/Util.cpp:107
+#: ../src/util/Util.cpp:134
 msgid "Could not create folder: {1}"
 msgstr ""
 
@@ -286,7 +286,7 @@ msgstr ""
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr ""
 
-#: ../src/control/Control.cpp:230
+#: ../src/control/Control.cpp:228
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr ""
 
@@ -345,7 +345,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:118
+#: ../src/control/XournalMain.cpp:150
 msgid "Delete Logfile"
 msgstr ""
 
@@ -353,7 +353,7 @@ msgstr ""
 msgid "Delete current page"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:162
+#: ../src/control/XournalMain.cpp:194
 msgid "Delete file"
 msgstr ""
 
@@ -361,11 +361,11 @@ msgstr ""
 msgid "Delete layer"
 msgstr ""
 
-#: ../src/control/Control.cpp:2446
+#: ../src/control/Control.cpp:2444
 msgid "Discard"
 msgstr ""
 
-#: ../src/control/Control.cpp:1938
+#: ../src/control/Control.cpp:1936
 msgid ""
 "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
@@ -376,7 +376,7 @@ msgstr ""
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/control/Control.cpp:2440
+#: ../src/control/Control.cpp:2438
 msgid "Document file was removed."
 msgstr ""
 
@@ -460,7 +460,7 @@ msgstr ""
 msgid "Eraser"
 msgstr ""
 
-#: ../src/control/Control.cpp:2187
+#: ../src/control/Control.cpp:2185
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
@@ -470,7 +470,7 @@ msgstr ""
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr ""
 
-#: ../src/control/Control.cpp:2019
+#: ../src/control/Control.cpp:2017
 msgid "Error opening file \"{1}\""
 msgstr ""
 
@@ -499,7 +499,7 @@ msgstr ""
 msgid "Error while autosaving: {1}"
 msgstr ""
 
-#: ../src/util/Util.cpp:170
+#: ../src/util/Util.cpp:197
 msgid "Error {1} executing system command: {2}"
 msgstr ""
 
@@ -514,7 +514,7 @@ msgid ""
 "path."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:138
+#: ../src/control/XournalMain.cpp:170
 msgid ""
 "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
@@ -524,13 +524,13 @@ msgstr ""
 msgid "Export PDF"
 msgstr ""
 
-#: ../src/util/Util.cpp:126 ../src/util/Util.cpp:143
+#: ../src/util/Util.cpp:153 ../src/util/Util.cpp:170
 msgid ""
 "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr ""
 
-#: ../src/control/Control.cpp:1963
+#: ../src/control/Control.cpp:1961
 msgid "Filename: {1}"
 msgstr ""
 
@@ -554,7 +554,7 @@ msgstr ""
 msgid "Forward"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:277
+#: ../src/control/XournalMain.cpp:310
 msgid "Get version of xournalpp"
 msgstr ""
 
@@ -619,11 +619,11 @@ msgstr ""
 msgid "Image"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:225
+#: ../src/control/XournalMain.cpp:257
 msgid "Image file successfully created"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:274
+#: ../src/control/XournalMain.cpp:307
 msgid "Image output filename (.png / .svg)"
 msgstr ""
 
@@ -651,7 +651,7 @@ msgstr ""
 msgid "Insert page"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:275
+#: ../src/control/XournalMain.cpp:308
 msgid "Jump to Page (first Page: 1)"
 msgstr ""
 
@@ -703,7 +703,7 @@ msgstr ""
 msgid "Medium"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:495
+#: ../src/control/XournalMain.cpp:532
 msgid ""
 "Missing the needed UI file:\n"
 "{1}\n"
@@ -770,11 +770,11 @@ msgstr ""
 msgid "Open Image"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:116
+#: ../src/control/XournalMain.cpp:148
 msgid "Open Logfile"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:117
+#: ../src/control/XournalMain.cpp:149
 msgid "Open Logfile directory"
 msgstr ""
 
@@ -805,7 +805,7 @@ msgstr ""
 msgid "PDF background missing"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:255
+#: ../src/control/XournalMain.cpp:287
 msgid "PDF file successfully created"
 msgstr ""
 
@@ -815,7 +815,7 @@ msgstr ""
 msgid "PDF files"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:273
+#: ../src/control/XournalMain.cpp:306
 msgid "PDF output filename"
 msgstr ""
 
@@ -899,7 +899,7 @@ msgstr ""
 msgid "Record Audio / Stop Recording"
 msgstr ""
 
-#: ../src/control/Control.cpp:898
+#: ../src/control/Control.cpp:896
 msgid "Recorder could not be started."
 msgstr ""
 
@@ -917,7 +917,7 @@ msgstr ""
 msgid "Redo: "
 msgstr ""
 
-#: ../src/control/Control.cpp:1996
+#: ../src/control/Control.cpp:1994
 msgid "Remove PDF Background"
 msgstr ""
 
@@ -937,7 +937,7 @@ msgstr ""
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:163
+#: ../src/control/XournalMain.cpp:195
 msgid "Restore file"
 msgstr ""
 
@@ -969,16 +969,16 @@ msgstr ""
 msgid "SVG with transparent background"
 msgstr ""
 
-#: ../src/control/Control.cpp:2441 ../src/control/jobs/SaveJob.cpp:13
+#: ../src/control/Control.cpp:2439 ../src/control/jobs/SaveJob.cpp:13
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:319
 msgid "Save"
 msgstr ""
 
-#: ../src/control/Control.cpp:2441
+#: ../src/control/Control.cpp:2439
 msgid "Save As..."
 msgstr ""
 
-#: ../src/control/Control.cpp:2277 ../src/gui/dialog/PageTemplateDialog.cpp:83
+#: ../src/control/Control.cpp:2275 ../src/gui/dialog/PageTemplateDialog.cpp:83
 msgid "Save File"
 msgstr ""
 
@@ -1019,7 +1019,7 @@ msgstr ""
 msgid "Select Region"
 msgstr ""
 
-#: ../src/control/Control.cpp:1995
+#: ../src/control/Control.cpp:1993
 msgid "Select another PDF"
 msgstr ""
 
@@ -1044,7 +1044,7 @@ msgstr ""
 msgid "Select region"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:115
+#: ../src/control/XournalMain.cpp:147
 msgid "Send Bugreport"
 msgstr ""
 
@@ -1068,13 +1068,13 @@ msgstr ""
 msgid "Show only not used pages ({1} unused pages)"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:348
+#: ../src/control/XournalMain.cpp:381
 msgid ""
 "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:360
+#: ../src/control/XournalMain.cpp:393
 msgid ""
 "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
@@ -1136,17 +1136,17 @@ msgstr ""
 msgid "Text not found, searched on all pages"
 msgstr ""
 
-#: ../src/control/Control.cpp:1057
+#: ../src/control/Control.cpp:1055
 msgid ""
 "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to "
 "edit?"
 msgstr ""
 
-#: ../src/control/Control.cpp:1992
+#: ../src/control/Control.cpp:1990
 msgid "The attached background PDF could not be found."
 msgstr ""
 
-#: ../src/control/Control.cpp:1993
+#: ../src/control/Control.cpp:1991
 msgid "The background PDF could not be found."
 msgstr ""
 
@@ -1170,17 +1170,17 @@ msgstr ""
 msgid "The formula is empty when rendered or invalid."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:110
+#: ../src/control/XournalMain.cpp:142
 msgid "The most recent log file name: {1}"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:103
+#: ../src/control/XournalMain.cpp:135
 msgid ""
 "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug "
 "may be fixed."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:102
+#: ../src/control/XournalMain.cpp:134
 msgid ""
 "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug "
 "may be fixed."
@@ -1203,7 +1203,7 @@ msgstr ""
 msgid "Thin"
 msgstr ""
 
-#: ../src/control/Control.cpp:2440
+#: ../src/control/Control.cpp:2438
 msgid "This document is not saved yet."
 msgstr ""
 
@@ -1277,7 +1277,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2341
+#: ../src/control/Control.cpp:2339
 msgid "Unsaved Document"
 msgstr ""
 
@@ -1330,12 +1330,12 @@ msgstr ""
 msgid "Xournal files"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:157
+#: ../src/control/XournalMain.cpp:189
 msgid ""
 "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/control/Control.cpp:2283 ../src/control/stockdlg/XojOpenDlg.cpp:57
+#: ../src/control/Control.cpp:2281 ../src/control/stockdlg/XojOpenDlg.cpp:57
 msgid "Xournal++ files"
 msgstr ""
 
@@ -1356,7 +1356,7 @@ msgid ""
 "Template\"."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:106
+#: ../src/control/XournalMain.cpp:138
 msgid ""
 "You're using {1}/{2} branch. Send Bugreport will direct you to this repo's "
 "issue tracker."
@@ -1391,7 +1391,7 @@ msgstr ""
 msgid "Zoom to 100%"
 msgstr ""
 
-#: ../src/control/Control.cpp:2277 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2275 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:11
 #: ../src/control/stockdlg/XojOpenDlg.cpp:11
 #: ../src/gui/dialog/PageTemplateDialog.cpp:84
@@ -1403,7 +1403,7 @@ msgstr ""
 msgid "_Open"
 msgstr ""
 
-#: ../src/control/Control.cpp:2278 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2276 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:84
 msgid "_Save"
 msgstr ""
@@ -1542,7 +1542,7 @@ msgstr ""
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
 
-#: ../src/util/Util.cpp:99
+#: ../src/util/Util.cpp:126
 msgid "xournalpp-{1}"
 msgstr ""
 
