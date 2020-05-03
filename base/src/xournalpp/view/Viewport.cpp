@@ -4,4 +4,4 @@
 
 #include "xournalpp/view/Viewport.h"
 
-auto viewportUpdate(Viewport model, ViewportAction action) -> ViewportResult {}
+auto viewportUpdate(Viewport model, ViewportAction action) -> ViewportResult { return {model, lager::noop}; }
