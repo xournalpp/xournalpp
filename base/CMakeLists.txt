@@ -9,7 +9,7 @@ target_include_directories(xournalpp_core PUBLIC
         PRIVATE ${xournalpp_priv_include_dir}
         )
 
-target_link_libraries(xournalpp_core CXX Lager Threads xournalpp_deff PkgConfig::xournalpp_deps Boost::boost)
+target_link_libraries(xournalpp_core lager xournalpp_deff PkgConfig::xournalpp_deps Boost::boost)
 
 add_executable(xournalpp exe/xournalppmain.cpp)
 target_link_libraries(xournalpp PRIVATE xournalpp_core)
