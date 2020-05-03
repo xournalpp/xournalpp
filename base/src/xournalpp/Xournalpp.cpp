@@ -12,13 +12,11 @@
 #include "xournalpp/Xournalpp.h"
 
 #include <gtk/gtk.h>
-#include <lager/store.hpp>
+#include <lager/lens.hpp>
 
 #include "gui/MainWindow.h"
 #include "util/gtk_event_loop.h"
 
-using XournalppResult = std::pair<AppState, lager::effect<Action>>;
-using XournalppStore = lager::store<Action, XournalppResult>;
 
 auto update(AppState model, Action action) -> XournalppResult {
     // To add more update functions see https://sinusoid.es/lager/modularity.html
@@ -44,7 +42,8 @@ static auto activateCb(GtkApplication* app, ApplicationData* user_data) -> void 
      * context should also only use the most restricted action type possible
      * viewportReader->x allows access to members of Viewport
      */
-    user_data->widgetTree = MainWindow{lager::reader<AppState>(state), lager::context<Action>(state)};
+
+    user_data->widgetTree = MainWindow{std::move(state)};
     user_data->widgetTree->show();
 }
 

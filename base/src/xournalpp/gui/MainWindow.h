@@ -19,13 +19,12 @@
 
 class MainWindow {
 public:
-    MainWindow(lager::reader<AppState> state, lager::context<Action> context);
+    MainWindow(XournalppStore store);
 
     auto show() -> void;
 
 private:
-    lager::reader<AppState> state;
-    lager::context<Action> context;
+    XournalppStore store;
 
     GtkWindow* window = nullptr;
 };

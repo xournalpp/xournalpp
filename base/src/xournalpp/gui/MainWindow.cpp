@@ -2,8 +2,7 @@
 
 #include <gtk/gtk.h>
 
-MainWindow::MainWindow(lager::reader<AppState> state, lager::context<Action> context):
-        state(std::move(state)), context(std::move(context)) {
+MainWindow::MainWindow(XournalppStore store): store(std::move(store)) {
     auto cssProvider = gtk_css_provider_new();
     gtk_css_provider_load_from_resource(cssProvider, "/ui/xournalpp.css");
     gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(cssProvider),
