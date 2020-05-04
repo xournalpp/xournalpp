@@ -97,10 +97,6 @@ target_compile_definitions(xournalpp_deff
 ## I18n Translations ##
 add_subdirectory(po)
 
-## ui files ##
-include(glib-compile-resources)
-glib_compile_resources(Xournal++UI ${CMAKE_CURRENT_SOURCE_DIR}/resource/ui)
-
 include(clang-tidy)
 
 set(xournalpp_CXX_FLAGS ${CMAKE_CXX_FLAGS})

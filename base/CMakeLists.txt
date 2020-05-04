@@ -9,7 +9,11 @@ target_include_directories(xournalpp_core PUBLIC
         PRIVATE ${xournalpp_priv_include_dir}
         )
 
-target_link_libraries(xournalpp_core lager xournalpp_deff PkgConfig::xournalpp_deps Boost::boost)
+## ui files ##
+include(glib-compile-resources)
+glib_compile_resources(XournalppUI ${CMAKE_CURRENT_SOURCE_DIR}/resources/ui ${CMAKE_CURRENT_SOURCE_DIR}/resources/ui/ui.gresource.xml)
+
+target_link_libraries(xournalpp_core lager xournalpp_deff PkgConfig::xournalpp_deps Boost::boost XournalppUI)
 
 add_executable(xournalpp exe/xournalppmain.cpp)
 target_link_libraries(xournalpp PRIVATE xournalpp_core)
