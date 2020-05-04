@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.22.2 -->
 <interface>
-  <requires lib="gtk+" version="3.0"/>
+  <requires lib="gtk+" version="3.16"/>
   <object class="GtkAdjustment" id="adjustment1">
     <property name="upper">10000</property>
     <property name="step_increment">1</property>
@@ -15,10 +15,13 @@
   <object class="GtkDialog" id="templateDialog">
     <property name="name">templateDialog</property>
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Page Template</property>
+    <property name="title" translatable="yes">Configure new page template</property>
     <property name="window_position">center</property>
     <property name="icon">pixmaps/com.github.xournalpp.xournalpp.svg</property>
     <property name="type_hint">dialog</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox2">
         <property name="visible">True</property>
@@ -33,8 +36,8 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="btSave">
-                <property name="name">btSave</property>
                 <property name="label" translatable="yes">save to file</property>
+                <property name="name">btSave</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -47,8 +50,8 @@
             </child>
             <child>
               <object class="GtkButton" id="btLoad">
-                <property name="name">btLoad</property>
                 <property name="label" translatable="yes">load from file</property>
+                <property name="name">btLoad</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -61,8 +64,8 @@
             </child>
             <child>
               <object class="GtkButton" id="btCancel">
-                <property name="name">btCancel</property>
                 <property name="label">gtk-cancel</property>
+                <property name="name">btCancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
@@ -77,8 +80,8 @@
             </child>
             <child>
               <object class="GtkButton" id="btOk">
-                <property name="name">btOk</property>
                 <property name="label">gtk-ok</property>
+                <property name="name">btOk</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -107,8 +110,7 @@
               <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">&lt;b&gt;Configure Xournal++ Template Page&lt;/b&gt;
-This settings will be used if you create a new document</property>
+                <property name="label" translatable="yes">These settings will be used for new pages</property>
                 <property name="use_markup">True</property>
                 <property name="xalign">0</property>
               </object>
@@ -154,8 +156,8 @@ This settings will be used if you create a new document</property>
                 </child>
                 <child>
                   <object class="GtkButton" id="btChangePaperSize">
-                    <property name="name">btChangePaperSize</property>
                     <property name="label" translatable="yes">change</property>
+                    <property name="name">btChangePaperSize</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -181,18 +183,19 @@ This settings will be used if you create a new document</property>
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="cbCopyLastPage">
+                    <property name="label" translatable="yes">Copy current page background instead</property>
                     <property name="name">cbCopyLastPage</property>
-                    <property name="label" translatable="yes">Copy last page settings</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="tooltip_text" translatable="yes">Copy the background of the current page instead of using the background set above.</property>
                     <property name="xalign">0</property>
                     <property name="draw_indicator">True</property>
                   </object>
                   <packing>
-                    <property name="left_attach">1</property>
+                    <property name="left_attach">0</property>
                     <property name="top_attach">4</property>
-                    <property name="width">2</property>
+                    <property name="width">3</property>
                   </packing>
                 </child>
                 <child>
@@ -215,8 +218,8 @@ This settings will be used if you create a new document</property>
                     </child>
                     <child>
                       <object class="GtkButton" id="btBackgroundDropdown">
-                        <property name="name">btBackgroundDropdown</property>
                         <property name="label">⌄</property>
+                        <property name="name">btBackgroundDropdown</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
@@ -232,21 +235,6 @@ This settings will be used if you create a new document</property>
                     <property name="left_attach">1</property>
                     <property name="top_attach">2</property>
                     <property name="width">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label5">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">&lt;b&gt;Copy last page&lt;/b&gt;
-Use the settings above
-for the fist Page</property>
-                    <property name="use_markup">True</property>
-                    <property name="xalign">0</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">4</property>
                   </packing>
                 </child>
                 <child>
@@ -276,34 +264,20 @@ for the fist Page</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="label6">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">&lt;b&gt;Copy last page&lt;/b&gt;
-Use the settings above
-for the fist Page</property>
-                    <property name="use_markup">True</property>
-                    <property name="xalign">0</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">1</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkCheckButton" id="cbCopyLastPageSize">
+                    <property name="label" translatable="yes">Copy current page size instead</property>
                     <property name="name">cbCopyLastPageSize</property>
-                    <property name="label" translatable="yes">Copy last page size</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="tooltip_text" translatable="yes">Use the current page size instead of the page size above.</property>
                     <property name="xalign">0</property>
                     <property name="draw_indicator">True</property>
                   </object>
                   <packing>
-                    <property name="left_attach">1</property>
+                    <property name="left_attach">0</property>
                     <property name="top_attach">1</property>
-                    <property name="width">2</property>
+                    <property name="width">3</property>
                   </packing>
                 </child>
               </object>
