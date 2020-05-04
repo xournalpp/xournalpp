@@ -12,4 +12,4 @@ MainWindow::MainWindow(XournalppStore store): store(std::move(store)) {
     this->window = GTK_WINDOW(gtk_builder_get_object(gladeBuilder, "mainWindow"));
 }
 
-auto MainWindow::show() -> void { gtk_widget_show_all(GTK_WIDGET(this->window)); }
+auto MainWindow::show() -> void { gtk_window_present(this->window); }
