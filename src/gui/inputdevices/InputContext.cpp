@@ -132,7 +132,7 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     }
 
 #ifdef DEBUG_INPUT
-    gmessage("We received an event we do not have a handler for");
+    g_message("We received an event we do not have a handler for");
 #endif
     return false;
 }
