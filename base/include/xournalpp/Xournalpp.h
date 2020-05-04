@@ -15,6 +15,6 @@ struct AppState {
 };
 
 using XournalppResult = std::pair<AppState, lager::effect<Action>>;
-using XournalppStore = lager::store<Action, XournalppResult>;
+using XournalppStore = lager::store<Action, AppState>;
 
 auto run(int argc, char* argv[]) -> int;
