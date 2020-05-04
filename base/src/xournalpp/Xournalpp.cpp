@@ -47,7 +47,7 @@ static auto activateCb(GtkApplication* app, ApplicationData* user_data) -> void 
     auto resource = ui_get_resource();
     g_resources_register(resource);
 
-    user_data->widgetTree = MainWindow{std::move(state)};
+    user_data->widgetTree = MainWindow{app, std::move(state)};
     user_data->widgetTree->show();
 }
 
@@ -56,5 +56,4 @@ auto run(int argc, char* argv[]) -> int {
     auto appData = ApplicationData{};
     g_signal_connect(gtkapplication, "activate", G_CALLBACK(activateCb), &appData);
     return g_application_run(G_APPLICATION(gtkapplication), argc, argv);
-    ;
 }

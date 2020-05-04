@@ -19,7 +19,7 @@
 
 class MainWindow {
 public:
-    MainWindow(XournalppStore store);
+    MainWindow(GtkApplication* app, XournalppStore store);
 
     auto show() -> void;
 
