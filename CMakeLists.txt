@@ -99,7 +99,7 @@ add_subdirectory(po)
 
 ## ui files ##
 include(glib-compile-resources)
-glib_compile_resources(Xournal++UI ${CMAKE_CURRENT_SOURCE_DIR}/ui)
+glib_compile_resources(Xournal++UI ${CMAKE_CURRENT_SOURCE_DIR}/resource/ui)
 
 include(clang-tidy)
 
