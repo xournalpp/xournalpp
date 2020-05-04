@@ -18,5 +18,6 @@
         <file>toolbarCustomizeDialog.glade</file>
         <file>toolbarManageDialog.glade</file>
         <file>xournalpp.css</file>
+        <file alias="pixmaps/com.github.xournalpp.xournalpp.svg">com.github.xournalpp.xournalpp.svg</file>
     </gresource>
 </gresources>
