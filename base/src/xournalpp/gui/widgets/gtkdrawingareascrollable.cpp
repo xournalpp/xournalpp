@@ -4,10 +4,10 @@
 
 #include "gtkdrawingareascrollable.h"
 
-//#define GTK_DRAWING_SCROLLABLE_GET_PRIVATE(object) \
-    (G_TYPE_INSTANCE_GET_PRIVATE((object), GTK_TYPE_DRAWING_SCROLLABLE, GtkDrawingScrollablePrivate))
+#define DRAWING_SCROLLABLE_GET_PRIVATE(object) \
+    (G_TYPE_INSTANCE_GET_PRIVATE((object), TYPE_DRAWING_SCROLLABLE, DrawingScrollablePrivate))
 
-struct _GtkDrawingScrollablePrivate {
+struct _DrawingScrollablePrivate {
     GtkAdjustment* hadjustment;
     GtkAdjustment* vadjustment;
 
@@ -17,11 +17,11 @@ struct _GtkDrawingScrollablePrivate {
 
 enum { PROP_0, PROP_HADJUSTMENT, PROP_VADJUSTMENT, PROP_HSCROLL_POLICY, PROP_VSCROLL_POLICY };
 
-G_DEFINE_TYPE_WITH_CODE(GtkDrawingScrollable, gtk_drawing_scrollable, GTK_TYPE_DRAWING_AREA,
-                        G_ADD_PRIVATE(GtkDrawingScrollable) G_IMPLEMENT_INTERFACE(GTK_TYPE_SCROLLABLE, NULL))
+G_DEFINE_TYPE_WITH_CODE(DrawingScrollable, drawing_scrollable, GTK_TYPE_DRAWING_AREA,
+                        G_ADD_PRIVATE(DrawingScrollable) G_IMPLEMENT_INTERFACE(GTK_TYPE_SCROLLABLE, NULL))
 
-static void gtk_drawing_scrollable_get_property(GObject* object, guint prop_id, GValue* value, GParamSpec* pspec) {
-    GtkDrawingScrollable* viewport = GTK_DRAWING_SCROLLABLE(object);
+static void drawing_scrollable_get_property(GObject* object, guint prop_id, GValue* value, GParamSpec* pspec) {
+    DrawingScrollable* viewport = DRAWING_SCROLLABLE(object);
 
     switch (prop_id) {
         case PROP_HADJUSTMENT:
@@ -42,9 +42,8 @@ static void gtk_drawing_scrollable_get_property(GObject* object, guint prop_id, 
     }
 }
 
-static void gtk_drawing_scrollable_set_property(GObject* object, guint prop_id, const GValue* value,
-                                                GParamSpec* pspec) {
-    GtkDrawingScrollable* drawingScrollable = GTK_DRAWING_SCROLLABLE(object);
+static void drawing_scrollable_set_property(GObject* object, guint prop_id, const GValue* value, GParamSpec* pspec) {
+    DrawingScrollable* drawingScrollable = DRAWING_SCROLLABLE(object);
     switch (prop_id) {
         case PROP_HADJUSTMENT: {
             GtkAdjustment* h = GTK_ADJUSTMENT(g_value_get_object(value));
@@ -86,20 +85,20 @@ static void gtk_drawing_scrollable_set_property(GObject* object, guint prop_id, 
     }
 }
 
-static void gtk_drawing_scrollable_destroy(GtkWidget* widget) {
-    GtkDrawingScrollable* drawingScrollable = GTK_DRAWING_SCROLLABLE(widget);
+static void drawing_scrollable_destroy(GtkWidget* widget) {
+    DrawingScrollable* drawingScrollable = DRAWING_SCROLLABLE(widget);
     g_object_unref(drawingScrollable->priv->hadjustment);
     g_object_unref(drawingScrollable->priv->vadjustment);
-    GTK_WIDGET_CLASS(gtk_drawing_scrollable_parent_class)->destroy(widget);
+    GTK_WIDGET_CLASS(drawing_scrollable_parent_class)->destroy(widget);
 }
 
-static void gtk_drawing_scrollable_class_init(GtkDrawingScrollableClass* clazz) {
+static void drawing_scrollable_class_init(DrawingScrollableClass* clazz) {
     GObjectClass* gObjectClass = G_OBJECT_CLASS(clazz);
     GtkWidgetClass* widgetClass = GTK_WIDGET_CLASS(clazz);
 
-    widgetClass->destroy = gtk_drawing_scrollable_destroy;
-    gObjectClass->get_property = gtk_drawing_scrollable_get_property;
-    gObjectClass->set_property = gtk_drawing_scrollable_set_property;
+    widgetClass->destroy = drawing_scrollable_destroy;
+    gObjectClass->get_property = drawing_scrollable_get_property;
+    gObjectClass->set_property = drawing_scrollable_set_property;
 
     g_object_class_override_property(gObjectClass, PROP_HADJUSTMENT, "hadjustment");
     g_object_class_override_property(gObjectClass, PROP_VADJUSTMENT, "vadjustment");
@@ -107,12 +106,12 @@ static void gtk_drawing_scrollable_class_init(GtkDrawingScrollableClass* clazz) 
     g_object_class_override_property(gObjectClass, PROP_VSCROLL_POLICY, "vscroll-policy");
 }
 
-static void gtk_drawing_scrollable_init(GtkDrawingScrollable* drawingScrollable) {
-    drawingScrollable->priv = gtk_drawing_scrollable_get_instance_private(drawingScrollable);
+static void drawing_scrollable_init(DrawingScrollable* drawingScrollable) {
+    drawingScrollable->priv = DRAWING_SCROLLABLE_GET_PRIVATE(drawingScrollable);
     drawingScrollable->priv->hadjustment = gtk_adjustment_new(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
     g_object_ref_sink(drawingScrollable->priv->hadjustment);
     drawingScrollable->priv->vadjustment = gtk_adjustment_new(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
     g_object_ref_sink(drawingScrollable->priv->vadjustment);
 }
 
-GtkWidget* gtk_drawing_scrollable_new(void) { return GTK_WIDGET(g_object_new(GTK_TYPE_DRAWING_SCROLLABLE, nullptr)); }
+GtkWidget* drawing_scrollable_new(void) { return GTK_WIDGET(g_object_new(TYPE_DRAWING_SCROLLABLE, nullptr)); }

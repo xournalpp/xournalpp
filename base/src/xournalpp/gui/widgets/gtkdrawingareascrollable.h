@@ -8,39 +8,38 @@
 
 G_BEGIN_DECLS
 
-#define GTK_TYPE_DRAWING_SCROLLABLE (gtk_drawing_scrollable_get_type())
-#define GTK_DRAWING_SCROLLABLE(obj) \
-    (G_TYPE_CHECK_INSTANCE_CAST((obj), GTK_TYPE_DRAWING_SCROLLABLE, GtkDrawingScrollable))
-#define GTK_DRAWING_SCROLLABLE_CLASS(klass) \
-    (G_TYPE_CHECK_CLASS_CAST((klass), GTK_TYPE_DRAWING_SCROLLABLE, GtkDrawingScrollableClass))
-#define GTK_IS_DRAWING_SCROLLABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), GTK_TYPE_DRAWING_SCROLLABLE))
-#define GTK_IS_DRAWING_SCROLLABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GTK_TYPE_DRAWING_SCROLLABLE))
-#define GTK_DRAWING_SCROLLABLE_GET_CLASS(obj) \
-    (G_TYPE_INSTANCE_GET_CLASS((obj), GTK_TYPE_DRAWING_SCROLLABLE, GtkDrawingScrollableClass))
+#define TYPE_DRAWING_SCROLLABLE (drawing_scrollable_get_type())
+#define DRAWING_SCROLLABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), TYPE_DRAWING_SCROLLABLE, DrawingScrollable))
+#define DRAWING_SCROLLABLE_CLASS(klass) \
+    (G_TYPE_CHECK_CLASS_CAST((klass), TYPE_DRAWING_SCROLLABLE, DrawingScrollableClass))
+#define IS_DRAWING_SCROLLABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), TYPE_DRAWING_SCROLLABLE))
+#define IS_DRAWING_SCROLLABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), TYPE_DRAWING_SCROLLABLE))
+#define DRAWING_SCROLLABLE_GET_CLASS(obj) \
+    (G_TYPE_INSTANCE_GET_CLASS((obj), TYPE_DRAWING_SCROLLABLE, DrawingScrollableClass))
 
 
-typedef struct _GtkDrawingScrollable GtkDrawingScrollable;
-typedef struct _GtkDrawingScrollablePrivate GtkDrawingScrollablePrivate;
-typedef struct _GtkDrawingScrollableClass GtkDrawingScrollableClass;
+typedef struct _DrawingScrollable DrawingScrollable;
+typedef struct _DrawingScrollablePrivate DrawingScrollablePrivate;
+typedef struct _DrawingScrollableClass DrawingScrollableClass;
 
-struct _GtkDrawingScrollable {
+struct _DrawingScrollable {
     GtkDrawingArea area;
 
     /*< private >*/
-    GtkDrawingScrollablePrivate* priv;
+    DrawingScrollablePrivate* priv;
 };
 
-struct _GtkDrawingScrollableClass {
+struct _DrawingScrollableClass {
     GtkDrawingAreaClass parent_class;
 
     /* Padding for future expansion */
-    void (*_gtk_reserved1)(void);
-    void (*_gtk_reserved2)(void);
-    void (*_gtk_reserved3)(void);
-    void (*_gtk_reserved4)(void);
+    void (*_reserved1)(void);
+    void (*_reserved2)(void);
+    void (*_reserved3)(void);
+    void (*_reserved4)(void);
 };
 
-GType gtk_drawing_scrollable_get_type(void) G_GNUC_CONST;
-GtkWidget* gtk_drawing_scrollable_new(void);
+GType drawing_scrollable_get_type(void) G_GNUC_CONST;
+GtkWidget* drawing_scrollable_new(void);
 
 G_END_DECLS
