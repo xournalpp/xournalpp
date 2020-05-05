@@ -111,6 +111,8 @@ static void gtk_drawing_scrollable_init(GtkDrawingScrollable* drawingScrollable)
     drawingScrollable->priv = gtk_drawing_scrollable_get_instance_private(drawingScrollable);
     drawingScrollable->priv->hadjustment = gtk_adjustment_new(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
     g_object_ref_sink(drawingScrollable->priv->hadjustment);
+    drawingScrollable->priv->vadjustment = gtk_adjustment_new(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+    g_object_ref_sink(drawingScrollable->priv->vadjustment);
 }
 
-GtkWidget* gtk_drawing_scrollable_new() { return GTK_WIDGET(g_object_new(GTK_TYPE_DRAWING_SCROLLABLE, nullptr)); }
+GtkWidget* gtk_drawing_scrollable_new(void) { return GTK_WIDGET(g_object_new(GTK_TYPE_DRAWING_SCROLLABLE, nullptr)); }
