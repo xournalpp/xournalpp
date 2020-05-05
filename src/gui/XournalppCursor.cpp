@@ -422,8 +422,9 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     }
 
     cairo_set_source_rgba(cr, r, g, b, alpha);
-    // Correct the offset of the coloured dot for big-cursor mode
-    cairo_rectangle(cr, centerX, centerY, size, size);
+    double topLeftX = centerX - size/2.0, 
+           topLeftY = centerY - size/2.0;
+    cairo_rectangle(cr, topLeftX, topLeftY, size, size);
     cairo_fill(cr);
     cairo_destroy(cr);
     GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
