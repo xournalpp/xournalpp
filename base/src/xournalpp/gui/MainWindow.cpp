@@ -2,7 +2,9 @@
 
 #include <gtk/gtk.h>
 
-MainWindow::MainWindow(GtkApplication* app, XournalppStore store): store(std::move(store)) {
+MainWindow::MainWindow(GtkApplication* app, XournalppStore store):
+        store(std::move(store)),
+        xournal(this->store[&AppState::settings], this->store[&AppState::viewport], this->store) {
     auto cssProvider = gtk_css_provider_new();
     gtk_css_provider_load_from_resource(cssProvider, "/ui/xournalpp.css");
     gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(cssProvider),
@@ -14,7 +16,6 @@ MainWindow::MainWindow(GtkApplication* app, XournalppStore store): store(std::mo
     gtk_window_set_application(this->window, app);
 
     // add XournalWidget
-    this->xournal = XournalWidget{store[&AppState::settings], store[&AppState::viewport], store};
     auto xournalArea = gtk_builder_get_object(gladeBuilder, "boxContents");
     auto scrolledWindow = gtk_scrolled_window_new(nullptr, nullptr);
     gtk_container_add(GTK_CONTAINER(scrolledWindow), this->xournal.getGtkWidget());
