@@ -21,6 +21,7 @@
 #include "control/Tool.h"
 #include "model/Font.h"
 
+#include "LatexSettings.h"
 #include "Path.h"
 
 constexpr auto DEFAULT_GRID_SIZE = 14.17;
@@ -507,6 +508,8 @@ public:
      * Stop transaction and save settings
      */
     void transactionEnd();
+
+    LatexSettings latexSettings{};
 
 private:
     /**

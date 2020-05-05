@@ -3489,7 +3489,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             <property name="adjustment">adjustmentSnapGridSize</property>
                                             <property name="climb_rate">0.01</property>
                                             <property name="digits">2</property>
-                                            <property name="value">1.00</property>
+                                            <property name="value">1</property>
                                           </object>
                                           <packing>
                                             <property name="left_attach">1</property>
@@ -4393,6 +4393,30 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
               </object>
               <packing>
                 <property name="position">9</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="latexTabBox">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="position">10</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="latexTabLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Latex</property>
+              </object>
+              <packing>
+                <property name="position">10</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>

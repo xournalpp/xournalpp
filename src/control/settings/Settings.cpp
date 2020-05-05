@@ -450,6 +450,15 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->doActionOnStrokeFiltered = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("trySelectOnStrokeFiltered")) == 0) {
         this->trySelectOnStrokeFiltered = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.autoCheckDependencies")) == 0) {
+        this->latexSettings.autoCheckDependencies = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.globalTemplatePath")) == 0) {
+        std::string v(reinterpret_cast<char*>(value));
+        this->latexSettings.globalTemplatePath = fs::u8path(v);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.kpsewhichCmd")) == 0) {
+        this->latexSettings.kpsewhichCmd = reinterpret_cast<char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genCmd")) == 0) {
+        this->latexSettings.genCmd = reinterpret_cast<char*>(value);
     }
 
     xmlFree(name);
@@ -820,6 +829,15 @@ void Settings::save() {
     WRITE_BOOL_PROP(newInputSystemEnabled);
     WRITE_BOOL_PROP(inputSystemTPCButton);
     WRITE_BOOL_PROP(inputSystemDrawOutsideWindow);
+
+    WRITE_BOOL_PROP(latexSettings.autoCheckDependencies);
+    // Inline WRITE_STRING_PROP(latexSettings.globalTemplatePath) since it
+    // breaks on Windows due to the native character representation being
+    // wchar_t instead of char
+    fs::path& p = latexSettings.globalTemplatePath;
+    xmlNode = saveProperty("latexSettings.globalTemplatePath", p.empty() ? "" : p.u8string().c_str(), root);
+    WRITE_STRING_PROP(latexSettings.kpsewhichCmd);
+    WRITE_STRING_PROP(latexSettings.genCmd);
 
     xmlNodePtr xmlFont = nullptr;
     xmlFont = xmlNewChild(root, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);
