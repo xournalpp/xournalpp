@@ -8,7 +8,7 @@
 XournalWidget::XournalWidget(const lager::reader<Settings>& settings, lager::reader<Viewport> viewport,
                              lager::context<ViewportAction> context):
         context(std::move(context)), viewport(std::move(viewport)) {
-    this->drawingArea = gtk_drawing_scrollable_new();
+    this->drawingArea = drawing_scrollable_new();
     gtk_widget_set_hexpand(this->drawingArea, true);
     gtk_widget_set_vexpand(this->drawingArea, true);
     g_signal_connect(G_OBJECT(drawingArea), "size-allocate", G_CALLBACK(XournalWidget::sizeAllocateCallback), this);
@@ -25,8 +25,8 @@ XournalWidget::XournalWidget(const lager::reader<Settings>& settings, lager::rea
          * exchange DrawingManager, reallocate
          */
     });
-    this->scrollX = lager::reader<double>{viewport[&Viewport::x]};
-    this->scrollY = lager::reader<double>{viewport[&Viewport::y]};
+    this->scrollX = lager::reader<double>{this->viewport[&Viewport::x]};
+    this->scrollY = lager::reader<double>{this->viewport[&Viewport::y]};
     this->scrollX.watch([&](auto&&, auto&& x) {
         auto adj = gtk_scrollable_get_hadjustment(scrollableWidget);
         updateScrollbar(adj, x);
@@ -35,7 +35,7 @@ XournalWidget::XournalWidget(const lager::reader<Settings>& settings, lager::rea
         auto adj = gtk_scrollable_get_vadjustment(scrollableWidget);
         updateScrollbar(adj, y);
     });
-    this->rawScale = lager::reader<double>{viewport[&Viewport::rawScale]};
+    this->rawScale = lager::reader<double>{this->viewport[&Viewport::rawScale]};
     this->rawScale.watch([&](auto&&, auto&& v) { gtk_widget_queue_allocate(this->drawingArea); });
 }
 

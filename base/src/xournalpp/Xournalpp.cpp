@@ -35,7 +35,8 @@ struct ApplicationData {
 };
 
 static auto activateCb(GtkApplication* app, ApplicationData* user_data) -> void {
-    auto state = lager::make_store<Action>(AppState{}, update, with_gtk_event_loop{});
+    auto state = lager::make_store<Action>(AppState{Viewport{0, 0, 0.0, 0.0, 0.0}, Settings{Settings::PAGE}}, update,
+                                           with_gtk_event_loop{});
     /*
      * TODO initialize Widget tree and pass reader and context to all child widgets
      * if a child widget only needs part of the state, use following:
