@@ -15,22 +15,20 @@
 
 #include <gtk/gtk.h>
 #include <lager/reader.hpp>
-#include <util/Rectangle.h>
-#include <xournalview/Viewport.h>
-
-#include "gui/Renderer.h"
+#include <xournalpp/settings/Settings.h>
+#include <xournalpp/view/Viewport.h>
 
 #include "gtkdrawingareascrollable.h"
 
 class XournalWidget {
 public:
-    XournalWidget(std::unique_ptr<Renderer> renderer, lager::reader<Viewport> viewportReader,
-                  lager::context<ViewportAction> context, lager::reader<Layout> layoutReader);
+    XournalWidget(const lager::reader<Settings>& settings, lager::reader<Viewport> viewport,
+                  lager::context<ViewportAction> context);
 
     auto getGtkWidget() -> GtkWidget*;
 
 private:
-    static auto updateScrollbar(GtkAdjustment* adj, double value, bool infinite) -> void;
+    auto updateScrollbar(GtkAdjustment* adj, double value) -> void;
 
     static auto initHScrolling(XournalWidget* self) -> void;
     static auto initVScrolling(XournalWidget* self) -> void;
@@ -45,13 +43,18 @@ private:
 private:
     GtkWidget* drawingArea;
 
-    /** Renderer */
-    std::unique_ptr<Renderer> renderer;
-
     /** State */
     lager::reader<Viewport> viewport;
+    lager::reader<double> scrollX;
+    lager::reader<double> scrollY;
+    lager::reader<double> rawScale;
+    lager::reader<Settings::DocumentMode> docMode;
     lager::context<ViewportAction> context;
-    lager::reader<Layout> layout;
+
+    /*
+     * References to library state, document stuff etc.
+     */
+
 
     constexpr static double STEP_INCREMENT = 10;
 };
