@@ -75,9 +75,9 @@ find_package(Boost REQUIRED)
 
 pkg_check_modules(xournalpp_deps REQUIRED IMPORTED_TARGET GLOBAL
         "glib-2.0 >= 2.32.0"
-        "gtk+-3.0 >= 3.22.0"
+        "gtkmm-3.0 >= 3.24.0"
         "gthread-2.0 >= 2.4.0"
-        "libxop3"
+        libxop3-gtk
         )
 
 add_library(xournalpp_deff INTERFACE)
