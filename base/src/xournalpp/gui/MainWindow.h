@@ -14,6 +14,7 @@
 #include <gtk/gtk.h>
 #include <lager/context.hpp>
 #include <lager/reader.hpp>
+#include <xournalpp/gui/widgets/XournalWidget.h>
 
 #include "xournalpp/Xournalpp.h"
 
@@ -24,7 +25,13 @@ public:
     auto show() -> void;
 
 private:
+    // State
     XournalppStore store;
 
+    // View components
+    XournalWidget xournal;
+
+
+    // Gtk components
     GtkWindow* window = nullptr;
 };

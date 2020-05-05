@@ -12,6 +12,13 @@ MainWindow::MainWindow(GtkApplication* app, XournalppStore store): store(std::mo
     gtk_builder_set_application(gladeBuilder, app);
     this->window = GTK_WINDOW(gtk_builder_get_object(gladeBuilder, "mainWindow"));
     gtk_window_set_application(this->window, app);
+
+    // add XournalWidget
+    this->xournal = XournalWidget{store[&AppState::settings], store[&AppState::viewport], store};
+    auto xournalArea = gtk_builder_get_object(gladeBuilder, "boxContents");
+    auto scrolledWindow = gtk_scrolled_window_new(nullptr, nullptr);
+    gtk_container_add(GTK_CONTAINER(scrolledWindow), this->xournal.getGtkWidget());
+    gtk_container_add(GTK_CONTAINER(xournalArea), scrolledWindow);
 }
 
 auto MainWindow::show() -> void { gtk_window_present(this->window); }
