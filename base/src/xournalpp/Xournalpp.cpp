@@ -11,7 +11,7 @@
 
 #include "xournalpp/Xournalpp.h"
 
-#include <gtk/gtk.h>
+#include <gtkmm.h>
 #include <lager/lens.hpp>
 #include <xournalppui.c>
 
@@ -30,31 +30,12 @@ auto update(AppState model, Action action) -> XournalppResult {
                       action);
 }
 
-struct ApplicationData {
-    std::optional<MainWindow> widgetTree;
-};
-
-static auto activateCb(GtkApplication* app, ApplicationData* user_data) -> void {
-    auto state = lager::make_store<Action>(AppState{Viewport{0, 0, 0.0, 0.0, 0.0}, Settings{Settings::PAGE}}, update,
-                                           with_gtk_event_loop{});
-    /*
-     * TODO initialize Widget tree and pass reader and context to all child widgets
-     * if a child widget only needs part of the state, use following:
-     * lager::reader<Viewport> viewportReader = reader[&AppState::viewport];
-     * context should also only use the most restricted action type possible
-     * viewportReader->x allows access to members of Viewport
-     */
-
+auto run(int argc, char* argv[]) -> int {
     auto resource = ui_get_resource();
     g_resources_register(resource);
-
-    user_data->widgetTree = MainWindow{app, std::move(state)};
-    user_data->widgetTree->show();
-}
-
-auto run(int argc, char* argv[]) -> int {
-    auto gtkapplication = gtk_application_new("org.xournalpp.xournalpp", G_APPLICATION_FLAGS_NONE);
-    auto appData = ApplicationData{};
-    g_signal_connect(gtkapplication, "activate", G_CALLBACK(activateCb), &appData);
-    return g_application_run(G_APPLICATION(gtkapplication), argc, argv);
+    auto gtkapplication = Gtk::Application::create(argc, argv, "org.xournalpp.xournalpp");
+    auto state = lager::make_store<Action>(AppState{Viewport{0, 0, 0.0, 0.0, 0.0}, Settings{Settings::PAGE}}, update,
+                                           with_gtk_event_loop{});
+    MainWindow mainWindow{std::move(state)};
+    return gtkapplication->run(*mainWindow.getGtkWindow());
 }

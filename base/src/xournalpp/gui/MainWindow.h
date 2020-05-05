@@ -11,27 +11,23 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <gtkmm.h>
 #include <lager/context.hpp>
 #include <lager/reader.hpp>
-#include <xournalpp/gui/widgets/XournalWidget.h>
 
 #include "xournalpp/Xournalpp.h"
 
-class MainWindow {
+class MainWindow: public Gtk::Window {
 public:
-    MainWindow(GtkApplication* app, XournalppStore store);
+    MainWindow(XournalppStore store);
+    ~MainWindow();
 
-    auto show() -> void;
+    auto getGtkWindow() -> Gtk::Window*;
 
 private:
     // State
     XournalppStore store;
 
-    // View components
-    XournalWidget xournal;
-
-
-    // Gtk components
-    GtkWindow* window = nullptr;
+    // Gtk stuff
+    Gtk::Window* window = nullptr;
 };
