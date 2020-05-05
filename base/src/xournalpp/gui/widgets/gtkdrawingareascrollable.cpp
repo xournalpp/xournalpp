@@ -107,7 +107,8 @@ static void drawing_scrollable_class_init(DrawingScrollableClass* clazz) {
 }
 
 static void drawing_scrollable_init(DrawingScrollable* drawingScrollable) {
-    drawingScrollable->priv = DRAWING_SCROLLABLE_GET_PRIVATE(drawingScrollable);
+    drawingScrollable->priv =
+            static_cast<DrawingScrollablePrivate*>(drawing_scrollable_get_instance_private(drawingScrollable));
     drawingScrollable->priv->hadjustment = gtk_adjustment_new(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
     g_object_ref_sink(drawingScrollable->priv->hadjustment);
     drawingScrollable->priv->vadjustment = gtk_adjustment_new(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
