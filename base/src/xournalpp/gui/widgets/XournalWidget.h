@@ -25,6 +25,8 @@ public:
     XournalWidget(const lager::reader<Settings>& settings, lager::reader<Viewport> viewport,
                   lager::context<ViewportAction> context);
 
+    ~XournalWidget();
+
     auto getGtkWidget() -> GtkWidget*;
 
 private:

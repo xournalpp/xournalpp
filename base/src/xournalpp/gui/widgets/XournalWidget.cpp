@@ -18,15 +18,15 @@ XournalWidget::XournalWidget(const lager::reader<Settings>& settings, lager::rea
     g_signal_connect(G_OBJECT(drawingArea), "notify::vadjustment", G_CALLBACK(XournalWidget::initVScrolling), this);
 
     GtkScrollable* scrollableWidget = GTK_SCROLLABLE(this->drawingArea);
-    this->docMode = lager::reader<Settings::DocumentMode>{settings[&Settings::mode]};
+    this->docMode = settings[&Settings::mode];
     this->docMode.watch([](auto&&, auto&& mode) {
         /*
          * TODO
          * exchange DrawingManager, reallocate
          */
     });
-    this->scrollX = lager::reader<double>{this->viewport[&Viewport::x]};
-    this->scrollY = lager::reader<double>{this->viewport[&Viewport::y]};
+    this->scrollX = this->viewport[&Viewport::x];
+    this->scrollY = this->viewport[&Viewport::y];
     this->scrollX.watch([&](auto&&, auto&& x) {
         auto adj = gtk_scrollable_get_hadjustment(scrollableWidget);
         updateScrollbar(adj, x);
@@ -35,9 +35,12 @@ XournalWidget::XournalWidget(const lager::reader<Settings>& settings, lager::rea
         auto adj = gtk_scrollable_get_vadjustment(scrollableWidget);
         updateScrollbar(adj, y);
     });
-    this->rawScale = lager::reader<double>{this->viewport[&Viewport::rawScale]};
+    this->rawScale = this->viewport[&Viewport::rawScale];
     this->rawScale.watch([&](auto&&, auto&& v) { gtk_widget_queue_allocate(this->drawingArea); });
+    this->rawScale.get();
 }
+
+XournalWidget::~XournalWidget() { g_object_unref(this->drawingArea); }
 
 auto XournalWidget::initHScrolling(XournalWidget* self) -> void {
     GtkScrollable* scrollableWidget = GTK_SCROLLABLE(self->drawingArea);
