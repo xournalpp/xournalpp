@@ -20,8 +20,8 @@ G_BEGIN_DECLS
 
 
 typedef struct _GtkDrawingScrollable GtkDrawingScrollable;
-typedef struct _GtkDrawingScrollableClass GtkDrawingScrollableClass;
 typedef struct _GtkDrawingScrollablePrivate GtkDrawingScrollablePrivate;
+typedef struct _GtkDrawingScrollableClass GtkDrawingScrollableClass;
 
 struct _GtkDrawingScrollable {
     GtkDrawingArea area;
@@ -31,7 +31,7 @@ struct _GtkDrawingScrollable {
 };
 
 struct _GtkDrawingScrollableClass {
-    GtkDrawingArea parent_class;
+    GtkDrawingAreaClass parent_class;
 
     /* Padding for future expansion */
     void (*_gtk_reserved1)(void);
