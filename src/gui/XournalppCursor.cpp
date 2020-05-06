@@ -413,7 +413,7 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
         // Highlight cursor with a circle
         auto&& color = Util::argb_to_GdkRGBA(control->getSettings()->getCursorHighlightColor());
         cairo_set_source_rgba(cr, color.red, color.green, color.blue, color.alpha);
-        cairo_arc(cr, centerX, centerY, control->getSettings()->getCursorHighlightRadius(), 0, 2 * 3.1415);
+        cairo_arc(cr, centerX, centerY, control->getSettings()->getCursorHighlightRadius(), 0, 2 * M_PI);
         cairo_fill_preserve(cr);
         auto&& borderColor = Util::argb_to_GdkRGBA(control->getSettings()->getCursorHighlightBorderColor());
         cairo_set_source_rgba(cr, borderColor.red, borderColor.green, borderColor.blue, borderColor.alpha);
