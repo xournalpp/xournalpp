@@ -63,9 +63,9 @@ auto XournalWidget::updateScrollbar(const Glib::RefPtr<Gtk::Adjustment>& adj, do
         double lowerThreshhold = lower + 0.1 * fullRange;
         double upperThreshhold = upper - fullRange - 0.1 * fullRange;
         if (value < lowerThreshhold) {
-            adj->set_lower(lower - (lowerThreshhold - value));
+            adj->set_lower(lower - fullRange * 0.5);
         } else if (value > upperThreshhold) {
-            adj->set_upper(upper + (value - upperThreshhold));
+            adj->set_upper(upper + fullRange * 0.5);
         }
     }
 }

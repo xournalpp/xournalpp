@@ -19,7 +19,7 @@ struct Viewport {
 struct Scroll {
     enum Direction { HORIZONTAL, VERTICAL };
     Direction direction;
-    double difference;
+    double newVal;
 };
 
 struct Scale {
