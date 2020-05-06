@@ -424,7 +424,7 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
 
     cairo_set_source_rgba(cr, r, g, b, alpha);
     double cursorSize = control->getToolHandler()->getThickness() * control->getZoomControl()->getZoom();
-    cairo_arc(cr, centerX, centerY, cursorSize/2., 0, 2. * M_PI);
+    cairo_arc(cr, centerX, centerY, cursorSize / 2., 0, 2. * M_PI);
     cairo_fill(cr);
     cairo_destroy(cr);
     GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
