@@ -508,8 +508,8 @@ GdkCursor* XournalppCursor::createHighlighterOrPenCursor(int size, double alpha)
 		// A yellow transparent circle with no border
 		cairo_set_line_width(cr, 0);
 		cairo_set_source_rgba(cr, 255, 255, 0, 0.5);
-		cairo_arc(cr, centerX, centerY, 30, 0, 2 * 3.1415);
-		cairo_fill_preserve(cr);
+        cairo_arc(cr, centerX, centerY, 30, 0, 2 * M_PI);
+        cairo_fill_preserve(cr);
 		cairo_set_source_rgb(cr, 0, 0, 0);
 		cairo_stroke(cr);
 	}
