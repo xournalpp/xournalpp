@@ -18,8 +18,7 @@
 #include <xournalpp/settings/Settings.h>
 #include <xournalpp/view/Viewport.h>
 
-
-class XournalWidget: public virtual Gtk::DrawingArea, public virtual Gtk::Scrollable {
+class XournalWidget: public virtual Gtk::Scrollable, public Gtk::DrawingArea {
 public:
     XournalWidget(const lager::reader<Settings>& settings, lager::reader<Viewport> viewport,
                   lager::context<ViewportAction> context);

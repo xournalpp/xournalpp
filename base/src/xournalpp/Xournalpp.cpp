@@ -34,8 +34,8 @@ auto run(int argc, char* argv[]) -> int {
     auto resource = ui_get_resource();
     g_resources_register(resource);
     auto gtkapplication = Gtk::Application::create(argc, argv, "org.xournalpp.xournalpp");
-    auto state = lager::make_store<Action>(AppState{Viewport{0, 0, 0.0, 0.0, 0.0}, Settings{Settings::PAGE}}, update,
-                                           with_gtk_event_loop{});
+    auto state = lager::make_store<Action>(AppState{Viewport{0, 0, 0.0, 0.0, 0.0}, Settings{Settings::INFINITE}},
+                                           update, with_gtk_event_loop{});
     MainWindow mainWindow{std::move(state)};
     return gtkapplication->run(*mainWindow.getGtkWindow());
 }

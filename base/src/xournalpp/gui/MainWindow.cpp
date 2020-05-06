@@ -17,10 +17,12 @@ MainWindow::MainWindow(XournalppStore store): store(std::move(store)) {
     // add XournalWidget
     Gtk::Container* box = nullptr;
     gladeBuilder->get_widget("boxContents", box);
-    auto scrolledWindow = Gtk::ScrolledWindow{};
-    XournalWidget xournal{this->store[&AppState::settings], this->store[&AppState::viewport], this->store};
-    scrolledWindow.add(xournal);
-    box->add(scrolledWindow);
+    auto scrolledWindow = Gtk::make_managed<Gtk::ScrolledWindow>();
+    auto xournal = Gtk::make_managed<XournalWidget>(this->store[&AppState::settings], this->store[&AppState::viewport],
+                                                    this->store);
+    scrolledWindow->add(*xournal);
+    box->add(*scrolledWindow);
+    box->show_all();
 }
 
 MainWindow::~MainWindow() { delete this->window; }
