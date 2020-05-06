@@ -21,6 +21,10 @@ MainWindow::MainWindow(XournalppStore store): store(std::move(store)) {
     auto xournal = Gtk::make_managed<XournalWidget>(this->store[&AppState::settings], this->store[&AppState::viewport],
                                                     this->store);
     scrolledWindow->add(*xournal);
+    scrolledWindow->set_policy(Gtk::POLICY_ALWAYS, Gtk::POLICY_AUTOMATIC);
+    scrolledWindow->set_propagate_natural_height(false);
+    scrolledWindow->set_propagate_natural_width(false);
+    scrolledWindow->add_events(Gdk::SCROLL_MASK);
     box->add(*scrolledWindow);
     box->show_all();
 }
