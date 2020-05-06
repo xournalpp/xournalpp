@@ -2,6 +2,8 @@
 
 #include <gtkmm.h>
 
+#include "xournalpp/gui/widgets/XournalWidget.h"
+
 MainWindow::MainWindow(XournalppStore store): store(std::move(store)) {
     auto cssProvider = gtk_css_provider_new();
     gtk_css_provider_load_from_resource(cssProvider, "/ui/xournalpp.css");
@@ -16,8 +18,8 @@ MainWindow::MainWindow(XournalppStore store): store(std::move(store)) {
     Gtk::Container* box = nullptr;
     gladeBuilder->get_widget("boxContents", box);
     auto scrolledWindow = Gtk::ScrolledWindow{};
-    /*XournalWidget xournal{this->store[&AppState::settings], this->store[&AppState::viewport], this->store};
-    box->add(xournal);*/
+    XournalWidget xournal{this->store[&AppState::settings], this->store[&AppState::viewport], this->store};
+    scrolledWindow.add(xournal);
     box->add(scrolledWindow);
 }
 
