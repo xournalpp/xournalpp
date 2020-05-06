@@ -422,8 +422,8 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     }
 
     cairo_set_source_rgba(cr, r, g, b, alpha);
-    double topLeftX = centerX - size/2.0, 
-           topLeftY = centerY - size/2.0;
+    double topLeftX = centerX - size / 2.0;
+    double topLeftY = centerY - size / 2.0;
     cairo_rectangle(cr, topLeftX, topLeftY, size, size);
     cairo_fill(cr);
     cairo_destroy(cr);
