@@ -26,7 +26,7 @@ public:
 private:
     auto initHScrollbar() -> void;
     auto initVScrollbar() -> void;
-    auto updateScrollbar(Glib::RefPtr<Gtk::Adjustment> adj, double value) -> void;
+    auto updateScrollbar(const Glib::RefPtr<Gtk::Adjustment>& adj, double value) -> void;
 
     auto hScroll() -> void;
     auto vScroll() -> void;

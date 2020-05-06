@@ -1,9 +1,10 @@
 #include "XournalWidget.h"
 
-#include <cmath>
 #include <utility>
 
-#include <gdk/gdk.h>
+/*
+ * GtkAdjustment value specifies top left corner!
+ */
 
 enum Direction { HORIZONTAL, VERTICAL };
 
@@ -31,34 +32,40 @@ XournalWidget::XournalWidget(const lager::reader<Settings>& settings, lager::rea
 }
 
 auto XournalWidget::initHScrollbar() -> void {
-    if (this->property_hadjustment().get_value()) {
-        this->property_hadjustment().get_value()->signal_value_changed().connect(
-                sigc::mem_fun(this, &XournalWidget::hScroll));
-        this->scrollX.watch([&](auto&&, auto&& x) { updateScrollbar(this->property_hadjustment().get_value(), x); });
+    if (this->get_hadjustment()) {
+        this->get_hadjustment()->signal_value_changed().connect(sigc::mem_fun(this, &XournalWidget::hScroll));
+        this->scrollX.watch([&](auto&&, auto&& x) { updateScrollbar(this->get_hadjustment(), x); });
+        if (docMode.get() == Settings::DocumentMode::INFINITE) {
+            this->get_hadjustment()->set_lower(-10.0);
+            this->get_hadjustment()->set_upper(20.0);
+            this->get_hadjustment()->set_page_size(10.0);
+        }
     }
 }
 
 auto XournalWidget::initVScrollbar() -> void {
-    if (this->property_vadjustment().get_value()) {
-        this->property_vadjustment().get_value()->signal_value_changed().connect(
-                sigc::mem_fun(this, &XournalWidget::vScroll));
-        this->scrollY.watch([&](auto&&, auto&& y) { updateScrollbar(this->property_vadjustment().get_value(), y); });
+    if (this->get_vadjustment()) {
+        this->get_vadjustment()->signal_value_changed().connect(sigc::mem_fun(this, &XournalWidget::vScroll));
+        this->scrollY.watch([&](auto&&, auto&& y) { updateScrollbar(this->get_vadjustment(), y); });
+        if (docMode.get() == Settings::DocumentMode::INFINITE) {
+            this->get_vadjustment()->set_lower(-10.0);
+            this->get_vadjustment()->set_upper(20.0);
+            this->get_vadjustment()->set_page_size(10.0);
+        }
     }
 }
 
-auto XournalWidget::updateScrollbar(Glib::RefPtr<Gtk::Adjustment> adj, double value) -> void {
+auto XournalWidget::updateScrollbar(const Glib::RefPtr<Gtk::Adjustment>& adj, double value) -> void {
     if (docMode.get() == Settings::DocumentMode::INFINITE) {
         double upper = adj->get_upper();
         double lower = adj->get_lower();
-        double fullRange = upper - lower;
+        double fullRange = adj->get_page_size();
         double lowerThreshhold = lower + 0.1 * fullRange;
-        double upperThreshhold = upper - 0.1 * fullRange;
+        double upperThreshhold = upper - fullRange - 0.1 * fullRange;
         if (value < lowerThreshhold) {
-            adj->set_lower(lower - 0.2 * fullRange);
-            adj->set_upper(upper - 0.2 * fullRange);
+            adj->set_lower(lower - (lowerThreshhold - value));
         } else if (value > upperThreshhold) {
-            adj->set_lower(lower + 0.2 * fullRange);
-            adj->set_upper(upper + 0.2 * fullRange);
+            adj->set_upper(upper + (value - upperThreshhold));
         }
     }
 }
@@ -72,21 +79,17 @@ void XournalWidget::on_size_allocate(Gtk::Allocation& allocation) {
     auto hadjustment = this->get_hadjustment();
     auto vadjustment = this->get_vadjustment();
 
-    if (this->docMode.get() == Settings::INFINITE) {
-        vadjustment->set_lower(-1.5 * allocation.get_height());
-        hadjustment->set_lower(-1.5 * allocation.get_width());
-        vadjustment->set_upper(1.5 * allocation.get_height());
-        hadjustment->set_upper(1.5 * allocation.get_width());
-    } else {
+    if (this->docMode.get() != Settings::INFINITE) {
         vadjustment->set_lower(0.0);
         hadjustment->set_lower(0.0);
         // gtk_adjustment_set_upper(vadjustment, self->layout->documentHeight * self->viewport->rawScale);
         // gtk_adjustment_set_upper(hadjustment, self->layout->documentWidth * self->viewport->rawScale);
+        hadjustment->set_page_size(allocation.get_width());
+        vadjustment->set_page_size(allocation.get_height());
+        hadjustment->set_page_increment(allocation.get_width() - STEP_INCREMENT);
+        vadjustment->set_page_increment(allocation.get_height() - STEP_INCREMENT);
     }
-    hadjustment->set_page_size(allocation.get_width());
-    vadjustment->set_page_size(allocation.get_height());
-    hadjustment->set_page_increment(allocation.get_width() - STEP_INCREMENT);
-    vadjustment->set_page_increment(allocation.get_height() - STEP_INCREMENT);
+
 
     // gtk_widget_queue_draw(drawingArea); TODO?
 }
