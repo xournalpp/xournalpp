@@ -55,13 +55,11 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
     // Trigger motion action when pen/mouse is pressed and moved
     if (event.type == MOTION_EVENT)  // mouse or pen moved
     {
-        if (this->eventsToIgnore >= 0) {
-            if (this->eventsToIgnore == 0) {
-                this->eventsToIgnore = -1;
-                this->actionStart(event);
-            } else {
-                this->eventsToIgnore--;
-            }
+        if (this->eventsToIgnore > 0) {
+            this->eventsToIgnore--;
+        } else if (this->eventsToIgnore == 0) {
+            this->eventsToIgnore = -1;
+            this->actionStart(event);
         } else {
             this->actionMotion(event);
         }
@@ -92,8 +90,10 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
     // Trigger end of action if pen tip leaves screen or mouse button is released
     if (event.type == BUTTON_RELEASE_EVENT) {
         if (event.button == 1 || this->inputContext->getSettings()->getInputSystemTPCButtonEnabled()) {
-            if (this->inputRunning) {
+            if (this->eventsToIgnore < 0) {
                 this->actionEnd(event);
+            } else {
+                this->eventsToIgnore = -1;
             }
             return true;
         }
@@ -127,7 +127,7 @@ void StylusInputHandler::setPressedState(InputEvent const& event) {
     {
         switch (event.button) {
             case 1:
-                if (!this->eventsToIgnore >= 0) {
+                if (this->inputContext->getSettings()->getIgnoredStylusEvents() <= 0) {
                     this->deviceClassPressed = true;
                 }
                 break;
@@ -139,8 +139,11 @@ void StylusInputHandler::setPressedState(InputEvent const& event) {
             default:
                 break;
         }
-    }
-    if (event.type == BUTTON_RELEASE_EVENT)  // mouse button released or pen not touching surface anymore
+    } else if (event.type == MOTION_EVENT) {
+        if (this->eventsToIgnore == 0) {
+            this->deviceClassPressed = true;
+        }
+    } else if (event.type == BUTTON_RELEASE_EVENT)  // mouse button released or pen not touching surface anymore
     {
         switch (event.button) {
             case 1:
