@@ -34,6 +34,12 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
+    g_signal_connect(get("cbIgnoreFirstStylusEvents"), "toggled",
+                     G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+                         self->enableWithCheckbox("cbIgnoreFirstStylusEvents", "spNumIgnoredStylusEvents");
+                     }),
+                     this);
+
 
     g_signal_connect(get("btTestEnable"), "clicked", G_CALLBACK(+[](GtkButton* bt, SettingsDialog* self) {
                          Util::systemWithMessage(gtk_entry_get_text(GTK_ENTRY(self->get("txtEnableTouchCommand"))));
@@ -201,6 +207,8 @@ void SettingsDialog::load() {
     loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
     loadCheckbox("cbDisableScrollbarFadeout", settings->isScrollbarFadeoutDisabled());
     loadCheckbox("cbTouchWorkaround", settings->isTouchWorkaround());
+    const bool ignoreStylusEventsEnabled = settings->getIgnoredStylusEvents() != 0;  // 0 means disabled, >0 enabled
+    loadCheckbox("cbIgnoreFirstStylusEvents", ignoreStylusEventsEnabled);
     loadCheckbox("cbNewInputSystem", settings->getExperimentalInputSystemEnabled());
     loadCheckbox("cbInputSystemTPCButton", settings->getInputSystemTPCButtonEnabled());
     loadCheckbox("cbInputSystemDrawOutsideWindow", settings->getInputSystemDrawOutsideWindowEnabled());
@@ -214,6 +222,13 @@ void SettingsDialog::load() {
 
     GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
+
+    GtkWidget* spNumIgnoredStylusEvents = get("spNumIgnoredStylusEvents");
+    if (!ignoreStylusEventsEnabled) {  // The spinButton's value should be >= 1
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents), 1);
+    } else {
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents), settings->getIgnoredStylusEvents());
+    }
 
     GtkWidget* spPairsOffset = get("spPairsOffset");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spPairsOffset), settings->getPairsOffset());
@@ -308,6 +323,7 @@ void SettingsDialog::load() {
     loadCheckbox("cbHideMenubarStartup", settings->isMenubarVisible());
 
     enableWithCheckbox("cbAutosave", "boxAutosave");
+    enableWithCheckbox("cbIgnoreFirstStylusEvents", "spNumIgnoredStylusEvents");
     enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpace");
     enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpace");
     enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
@@ -509,6 +525,14 @@ void SettingsDialog::save() {
     GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
     int autosaveTimeout = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout));
     settings->setAutosaveTimeout(autosaveTimeout);
+
+    if (getCheckbox("cbIgnoreFirstStylusEvents")) {
+        GtkWidget* spNumIgnoredStylusEvents = get("spNumIgnoredStylusEvents");
+        int numIgnoredStylusEvents = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents));
+        settings->setIgnoredStylusEvents(numIgnoredStylusEvents);
+    } else {
+        settings->setIgnoredStylusEvents(0);  // This means nothing will be ignored
+    }
 
     GtkWidget* spPairsOffset = get("spPairsOffset");
     int numPairsOffset = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spPairsOffset));

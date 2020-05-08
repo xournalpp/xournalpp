@@ -26,7 +26,13 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
     if (event.type == BUTTON_PRESS_EVENT) {
 
         if (event.button == 1 || this->inputContext->getSettings()->getInputSystemTPCButtonEnabled()) {
-            this->actionStart(event);
+            this->eventsToIgnore = this->inputContext->getSettings()->getIgnoredStylusEvents();
+            if (this->eventsToIgnore > 0) {
+                this->eventsToIgnore--;  // This is already the first ignored event
+            } else {
+                this->eventsToIgnore = -1;
+                this->actionStart(event);
+            }
             return true;
         }
         if (this->inputRunning) {
@@ -49,7 +55,14 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
     // Trigger motion action when pen/mouse is pressed and moved
     if (event.type == MOTION_EVENT)  // mouse or pen moved
     {
-        this->actionMotion(event);
+        if (this->eventsToIgnore > 0) {
+            this->eventsToIgnore--;
+        } else if (this->eventsToIgnore == 0) {
+            this->eventsToIgnore = -1;
+            this->actionStart(event);
+        } else {
+            this->actionMotion(event);
+        }
         XournalppCursor* cursor = xournal->view->getCursor();
         cursor->setInvisible(false);
         cursor->updateCursor();
@@ -77,7 +90,11 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
     // Trigger end of action if pen tip leaves screen or mouse button is released
     if (event.type == BUTTON_RELEASE_EVENT) {
         if (event.button == 1 || this->inputContext->getSettings()->getInputSystemTPCButtonEnabled()) {
-            this->actionEnd(event);
+            if (this->eventsToIgnore < 0) {
+                this->actionEnd(event);
+            } else {
+                this->eventsToIgnore = -1;
+            }
             return true;
         }
         if (this->inputRunning) {
@@ -110,7 +127,9 @@ void StylusInputHandler::setPressedState(InputEvent const& event) {
     {
         switch (event.button) {
             case 1:
-                this->deviceClassPressed = true;
+                if (this->inputContext->getSettings()->getIgnoredStylusEvents() <= 0) {
+                    this->deviceClassPressed = true;
+                }
                 break;
             case 2:
                 this->modifier2 = true;
@@ -120,8 +139,11 @@ void StylusInputHandler::setPressedState(InputEvent const& event) {
             default:
                 break;
         }
-    }
-    if (event.type == BUTTON_RELEASE_EVENT)  // mouse button released or pen not touching surface anymore
+    } else if (event.type == MOTION_EVENT) {
+        if (this->eventsToIgnore == 0) {
+            this->deviceClassPressed = true;
+        }
+    } else if (event.type == BUTTON_RELEASE_EVENT)  // mouse button released or pen not touching surface anymore
     {
         switch (event.button) {
             case 1:
