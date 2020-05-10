@@ -12,7 +12,7 @@ assignees: ''
 **Affects versions :**
  - OS: [e.g. Linux (which distro), Mac, Windows]
  - (Linux only) Desktop environment: [e.g. Wayland, Gnome-Wayland, XWayland, X11]
- - Which version of libgtk do you use
+ - Which version of libgtk do you use: [e.g. output of `pkg-config --modversion gtk+-3.0`]
  - Version of Xournal++: [e.g. 1.0.16, specific commit, specific branch]
  - Installation method: [e.g. PPA, Flatpak, official release, etc.]
 
