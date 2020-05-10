@@ -264,6 +264,10 @@ install (DIRECTORY plugins
 		DESTINATION "share/xournalpp"
 		COMPONENT xournalpp
 )
+install (DIRECTORY resources
+        DESTINATION "share/xournalpp"
+        COMPONENT xournalpp
+)
 
 # Install desktop shortcuts for Linux
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")

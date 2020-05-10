@@ -20,6 +20,7 @@
 
 #include <poppler.h>
 
+#include "control/settings/LatexSettings.h"
 #include "gui/dialog/LatexDialog.h"
 #include "model/PageRef.h"
 #include "model/Text.h"
@@ -134,6 +135,12 @@ private:
 
 private:
     Control* control = nullptr;
+    LatexSettings const& settings;
+
+    /**
+     * The contents of the latex template, loaded from disk.
+     */
+    std::string latexTemplate;
 
     /**
      * LaTex editor dialog

@@ -1,0 +1,25 @@
+\documentclass[varwidth=true, crop, border=5pt]{standalone}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Blank formula checking
+\usepackage{ifthen}
+\newlength{\pheight}
+
+% User input
+\def\preview{\(
+  \displaystyle
+  %%XPP_TOOL_INPUT%%
+  \)
+}
+
+\begin{document}
+  % Check if the formula is empty
+  \settoheight{\pheight}{\preview}
+  \ifthenelse{\pheight=0}{\GenericError{}{xournalpp:blankformula}{}{}}
+
+  % Render the user input
+  \preview
+\end{document}

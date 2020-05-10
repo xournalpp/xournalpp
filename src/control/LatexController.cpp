@@ -1,6 +1,9 @@
 #include "LatexController.h"
 
+#include <fstream>
+#include <iterator>
 #include <memory>
+#include <regex>
 #include <utility>
 
 #include "gui/XournalView.h"
@@ -51,6 +54,7 @@ const char* LATEX_TEMPLATE_2 = "\n\\)}\n"
 
 LatexController::LatexController(Control* control):
         control(control),
+        settings(control->getSettings()->latexSettings),
         dlg(control->getGladeSearchPath()),
         doc(control->getDocument()),
         texTmpDir(Util::getTmpDirSubfolder("tex")) {
@@ -93,15 +97,23 @@ auto LatexController::findTexDependencies() -> LatexController::FindDependencySt
         return LatexController::FindDependencyStatus(false, msg);
     }
 
+    std::ifstream is(this->settings.globalTemplatePath.string());
+    if (!is.is_open()) {
+        g_message("%s", this->settings.globalTemplatePath.string().c_str());
+        string msg = FS(_F("Global template file does not exist. Please check your settings."));
+        return LatexController::FindDependencyStatus(false, msg);
+    }
+    this->latexTemplate = std::string(std::istreambuf_iterator<char>(is), {});
+    is.close();
+
     return LatexController::FindDependencyStatus(true, "");
 }
 
 auto LatexController::runCommandAsync(const string& texString) -> std::unique_ptr<GPid> {
     g_assert(!this->isUpdating);
 
-    string texContents = LATEX_TEMPLATE_1;
-    texContents += texString;
-    texContents += LATEX_TEMPLATE_2;
+    const static std::regex substRe("%%XPP_TOOL_INPUT%%");
+    const string texContents = std::regex_replace(this->latexTemplate, substRe, texString);
 
     Path texFile = this->texTmpDir / "tex.tex";
 
