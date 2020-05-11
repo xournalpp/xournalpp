@@ -337,6 +337,7 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
 
     if (showVersion) {
         g_printf("%s %s \n", PROJECT_NAME, PROJECT_VERSION);
+        g_printf("└──%s: %d.%d.%d \n", "libgtk", gtk_get_major_version(), gtk_get_minor_version(), gtk_get_micro_version());
         return 0;
     }
 
