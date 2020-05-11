@@ -79,25 +79,56 @@ string toolTypeToString(ToolType type)
 	}
 }
 
-ToolType toolTypeFromString(string type)
-{
-	if (type == "none") 							return TOOL_NONE;
-	else if (type == "pen")  						return TOOL_PEN;
-	else if (type == "eraser")  					return TOOL_ERASER;
-	else if (type == "hilighter")					return TOOL_HILIGHTER;
-	else if (type == "image")   					return TOOL_IMAGE;
-	else if (type == "selectRect")					return TOOL_SELECT_RECT;
-	else if (type == "selectRegion")				return TOOL_SELECT_REGION;
-	else if (type == "selectObject")				return TOOL_SELECT_OBJECT;
-	else if (type == "playObject")  				return TOOL_PLAY_OBJECT;
-	else if (type == "verticalSpace")				return TOOL_VERTICAL_SPACE;
-	else if (type == "hand")						return TOOL_HAND;
-	else if (type == "drawRect")					return TOOL_DRAW_RECT;
-	else if (type == "drawCircle")  				return TOOL_DRAW_CIRCLE;
-	else if (type == "drawArrow")   				return TOOL_DRAW_ARROW;
-	else if (type == "drawCoordinateSystem")		return TOOL_DRAW_COORDINATE_SYSTEM;
-	else if (type == "showFloatingToolbox") 		return TOOL_FLOATING_TOOLBOX;
-	else	      									return TOOL_NONE;
+auto toolTypeFromString(const string& type) -> ToolType {
+    if (type == "pen") {
+        return TOOL_PEN;
+    }
+    if (type == "eraser") {
+        return TOOL_ERASER;
+    }
+    if (type == "hilighter") {
+        return TOOL_HILIGHTER;
+    }
+    if (type == "text") {
+        return TOOL_TEXT;
+    }
+    if (type == "image") {
+        return TOOL_IMAGE;
+    }
+    if (type == "selectRect") {
+        return TOOL_SELECT_RECT;
+    }
+    if (type == "selectRegion") {
+        return TOOL_SELECT_REGION;
+    }
+    if (type == "selectObject") {
+        return TOOL_SELECT_OBJECT;
+    }
+    if (type == "playObject") {
+        return TOOL_PLAY_OBJECT;
+    }
+    if (type == "verticalSpace") {
+        return TOOL_VERTICAL_SPACE;
+    }
+    if (type == "hand") {
+        return TOOL_HAND;
+    }
+    if (type == "drawRect") {
+        return TOOL_DRAW_RECT;
+    }
+    if (type == "drawCircle") {
+        return TOOL_DRAW_CIRCLE;
+    }
+    if (type == "drawArrow") {
+        return TOOL_DRAW_ARROW;
+    }
+    if (type == "drawCoordinateSystem") {
+        return TOOL_DRAW_COORDINATE_SYSTEM;
+    }
+    if (type == "showFloatingToolbox") {
+        return TOOL_FLOATING_TOOLBOX;
+    }
+    return TOOL_NONE;
 }
 
 string eraserTypeToString(EraserType type)

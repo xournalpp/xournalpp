@@ -80,7 +80,7 @@ enum ToolType
 #define TOOL_COUNT (TOOL_END_ENTRY - 1)
 
 string toolTypeToString(ToolType type);
-ToolType toolTypeFromString(string type);
+ToolType toolTypeFromString(const string& type);
 
 
 enum EraserType
