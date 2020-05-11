@@ -1,7 +1,7 @@
 #include "AboutDialog.h"
 
 #include <config.h>
-#include <StringUtils.h>
+#include <gtk/gtk.h>
 
 AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath)
  : GladeGui(gladeSearchPath, "about.glade", "aboutDialog")
@@ -12,10 +12,15 @@ AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath)
 	gtk_label_set_markup(GTK_LABEL(get("lbVersion")), PROJECT_VERSION);
 	gtk_label_set_markup(GTK_LABEL(get("lbRevId")), GIT_COMMIT_ID);
 
-	GtkWidget* w = get("vbox1");
-	GtkWidget* linkButton = gtk_link_button_new("http://github.com/xournalpp/xournalpp");
-	gtk_widget_show(linkButton);
-	gtk_box_pack_start(GTK_BOX(w), linkButton, TRUE, TRUE, 0);
+    char gtkVersion[10];
+    sprintf(gtkVersion, "%d.%d.%d", gtk_get_major_version(), gtk_get_minor_version(), gtk_get_micro_version());
+
+    gtk_label_set_markup(GTK_LABEL(get("lbGtkVersion")), gtkVersion);
+
+    GtkWidget* w = get("vbox1");
+    GtkWidget* linkButton = gtk_link_button_new("http://github.com/xournalpp/xournalpp");
+    gtk_widget_show(linkButton);
+    gtk_box_pack_start(GTK_BOX(w), linkButton, true, true, 0);
 }
 
 AboutDialog::~AboutDialog()
