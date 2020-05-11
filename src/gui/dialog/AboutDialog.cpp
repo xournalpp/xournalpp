@@ -1,8 +1,7 @@
 #include "AboutDialog.h"
 
-#include <gtk/gtk.h>
-
 #include <config.h>
+#include <gtk/gtk.h>
 
 #include "StringUtils.h"
 
