@@ -144,6 +144,9 @@ auto toolTypeFromString(const string& type) -> ToolType {
     if (type == "hilighter") {
         return TOOL_HILIGHTER;
     }
+    if (type == "text") {
+        return TOOL_TEXT;
+    }
     if (type == "image") {
         return TOOL_IMAGE;
     }
