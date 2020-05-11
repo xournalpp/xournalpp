@@ -21,6 +21,38 @@
 #include <map>
 #include <portaudio.h>
 
+enum Buttons {
+    BUTTON_ERASER,
+    BUTTON_MIDDLE,
+    BUTTON_RIGHT,
+    BUTTON_TOUCH,
+    BUTTON_DEFAULT,
+    BUTTON_STYLUS,
+    BUTTON_STYLUS2,
+    BUTTON_COUNT
+};
+
+inline auto buttonToString(Buttons button) -> const char* {
+    switch (button) {
+        case BUTTON_ERASER:
+            return "eraser";
+        case BUTTON_MIDDLE:
+            return "middle";
+        case BUTTON_RIGHT:
+            return "right";
+        case BUTTON_TOUCH:
+            return "touch";
+        case BUTTON_DEFAULT:
+            return "default";
+        case BUTTON_STYLUS:
+            return "stylus";
+        case BUTTON_STYLUS2:
+            return "stylus2";
+        default:
+            return "unknown";
+    }
+}
+
 enum AttributeType
 {
 	ATTRIBUTE_TYPE_NONE,
@@ -44,8 +76,6 @@ class ButtonConfig;
 class InputDevice;
 
 extern const char* BUTTON_NAMES[];
-const int BUTTON_COUNT = 7;
-
 
 class SAttribute
 {
@@ -705,14 +735,6 @@ private:
 
 	/**
 	 * The button config
-	 *
-	 * 0: eraser
-	 * 1: middle button
-	 * 2: right button
-	 * 3: touch screen
-	 * 4: default
-	 * 5: Pen Button 1
-	 * 6: Pen Button 2
 	 */
 	ButtonConfig* buttonConfig[BUTTON_COUNT];
 
