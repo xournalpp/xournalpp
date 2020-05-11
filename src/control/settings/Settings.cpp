@@ -17,8 +17,6 @@
 #define WRITE_DOUBLE_PROP(var) xmlNode = savePropertyDouble((const char *)#var, var, root)
 #define WRITE_COMMENT(var) com = xmlNewComment((const xmlChar *)var); xmlAddPrevSibling(xmlNode, com);
 
-const char* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default", "stylus", "stylus2"};
-
 Settings::Settings(Path filename)
  : filename(std::move(filename))
 {
@@ -109,22 +107,29 @@ void Settings::loadDefault()
 
 	this->defaultSaveName = _("%F-Note-%H-%M");
 
-	// Eraser
-	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
-	// Middle button
-	this->buttonConfig[1] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
-	// Right button
-	this->buttonConfig[2] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
-	// Touch
-	this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
-	// Default config
-	this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
-	// Pen button 1
-	this->buttonConfig[5] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
-	// Pen button 2
-	this->buttonConfig[6] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // Eraser
+    this->buttonConfig[BUTTON_ERASER] =
+            new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // Middle button
+    this->buttonConfig[BUTTON_MIDDLE] =
+            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // Right button
+    this->buttonConfig[BUTTON_RIGHT] =
+            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // Touch
+    this->buttonConfig[BUTTON_TOUCH] =
+            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // Default config
+    this->buttonConfig[BUTTON_DEFAULT] =
+            new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // Pen button 1
+    this->buttonConfig[BUTTON_STYLUS] =
+            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // Pen button 2
+    this->buttonConfig[BUTTON_STYLUS2] =
+            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 
-	this->fullscreenHideElements = "mainMenubar";
+    this->fullscreenHideElements = "mainMenubar";
 	this->presentationHideElements = "mainMenubar,sidebarContents";
 
 	this->pdfPageCacheSize = 10;
@@ -647,10 +652,10 @@ void Settings::loadButtonConfig()
 
 	for (int i = 0; i < BUTTON_COUNT; i++)
 	{
-		SElement& e = s.child(BUTTON_NAMES[i]);
-		ButtonConfig* cfg = buttonConfig[i];
+        SElement& e = s.child(buttonToString(static_cast<Buttons>(i)));
+        ButtonConfig* cfg = buttonConfig[i];
 
-		string sType;
+        string sType;
 		if (e.getString("tool", sType))
 		{
 			ToolType type = toolTypeFromString(sType);
@@ -707,16 +712,15 @@ void Settings::loadButtonConfig()
 			}
 
 			// Touch device
-			if (i == 3)
-			{
-				if (!e.getString("device", cfg->device))
+            if (i == BUTTON_TOUCH) {
+                if (!e.getString("device", cfg->device))
 				{
 					cfg->device = "";
 				}
 
 				e.getBool("disableDrawing", cfg->disableDrawing);
-			}
-		}
+            }
+        }
 		else
 		{
 			continue;
@@ -837,10 +841,10 @@ void Settings::saveButtonConfig()
 
 	for (int i = 0; i < BUTTON_COUNT; i++)
 	{
-		SElement& e = s.child(BUTTON_NAMES[i]);
-		ButtonConfig* cfg = buttonConfig[i];
+        SElement& e = s.child(buttonToString(static_cast<Buttons>(i)));
+        ButtonConfig* cfg = buttonConfig[i];
 
-		ToolType type = cfg->action;
+        ToolType type = cfg->action;
 		e.setString("tool", toolTypeToString(type));
 
 		if (type == TOOL_PEN || type == TOOL_HILIGHTER)
@@ -861,12 +865,11 @@ void Settings::saveButtonConfig()
 		}
 
 		// Touch device
-		if (i == 3)
-		{
-			e.setString("device", cfg->device);
+        if (i == BUTTON_TOUCH) {
+            e.setString("device", cfg->device);
 			e.setBool("disableDrawing", cfg->disableDrawing);
-		}
-	}
+        }
+    }
 }
 
 /**
@@ -2112,49 +2115,49 @@ ButtonConfig* Settings::getEraserButtonConfig()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	return this->buttonConfig[0];
+    return this->buttonConfig[BUTTON_ERASER];
 }
 
 ButtonConfig* Settings::getMiddleButtonConfig()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	return this->buttonConfig[1];
+    return this->buttonConfig[BUTTON_MIDDLE];
 }
 
 ButtonConfig* Settings::getRightButtonConfig()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	return this->buttonConfig[2];
+    return this->buttonConfig[BUTTON_RIGHT];
 }
 
 ButtonConfig* Settings::getTouchButtonConfig()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	return this->buttonConfig[3];
+    return this->buttonConfig[BUTTON_TOUCH];
 }
 
 ButtonConfig* Settings::getDefaultButtonConfig()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	return this->buttonConfig[4];
+    return this->buttonConfig[BUTTON_DEFAULT];
 }
 
 ButtonConfig* Settings::getStylusButton1Config()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	return this->buttonConfig[5];
+    return this->buttonConfig[BUTTON_STYLUS];
 }
 
 ButtonConfig* Settings::getStylusButton2Config()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	return this->buttonConfig[6];
+    return this->buttonConfig[BUTTON_STYLUS2];
 }
 
 string const& Settings::getFullscreenHideElements() const
