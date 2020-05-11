@@ -22,8 +22,6 @@
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
 
-constexpr char const* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default", "stylus", "stylus2"};
-
 Settings::Settings(Path filename): filename(std::move(filename)) { loadDefault(); }
 
 Settings::~Settings() {
@@ -106,19 +104,26 @@ void Settings::loadDefault() {
     this->defaultSaveName = _("%F-Note-%H-%M");
 
     // Eraser
-    this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_ERASER] =
+            new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Middle button
-    this->buttonConfig[1] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_MIDDLE] =
+            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Right button
-    this->buttonConfig[2] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_RIGHT] =
+            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Touch
-    this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_TOUCH] =
+            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Default config
-    this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_DEFAULT] =
+            new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Pen button 1
-    this->buttonConfig[5] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_STYLUS] =
+            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Pen button 2
-    this->buttonConfig[6] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_STYLUS2] =
+            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 
     this->fullscreenHideElements = "mainMenubar";
     this->presentationHideElements = "mainMenubar,sidebarContents";
@@ -468,7 +473,7 @@ void Settings::loadButtonConfig() {
     SElement& s = getCustomElement("buttonConfig");
 
     for (int i = 0; i < BUTTON_COUNT; i++) {
-        SElement& e = s.child(BUTTON_NAMES[i]);
+        SElement& e = s.child(buttonToString(static_cast<Buttons>(i)));
         ButtonConfig* cfg = buttonConfig[i];
 
         string sType;
@@ -514,7 +519,7 @@ void Settings::loadButtonConfig() {
             }
 
             // Touch device
-            if (i == 3) {
+            if (i == BUTTON_TOUCH) {
                 if (!e.getString("device", cfg->device)) {
                     cfg->device = "";
                 }
@@ -624,7 +629,7 @@ void Settings::saveButtonConfig() {
     s.clear();
 
     for (int i = 0; i < BUTTON_COUNT; i++) {
-        SElement& e = s.child(BUTTON_NAMES[i]);
+        SElement& e = s.child(buttonToString(static_cast<Buttons>(i)));
         ButtonConfig* cfg = buttonConfig[i];
 
         ToolType type = cfg->action;
@@ -645,7 +650,7 @@ void Settings::saveButtonConfig() {
         }
 
         // Touch device
-        if (i == 3) {
+        if (i == BUTTON_TOUCH) {
             e.setString("device", cfg->device);
             e.setBool("disableDrawing", cfg->disableDrawing);
         }
@@ -1455,19 +1460,19 @@ auto Settings::getButtonConfig(int id) -> ButtonConfig* {
     return this->buttonConfig[id];
 }
 
-auto Settings::getEraserButtonConfig() -> ButtonConfig* { return this->buttonConfig[0]; }
+auto Settings::getEraserButtonConfig() -> ButtonConfig* { return this->buttonConfig[BUTTON_ERASER]; }
 
-auto Settings::getMiddleButtonConfig() -> ButtonConfig* { return this->buttonConfig[1]; }
+auto Settings::getMiddleButtonConfig() -> ButtonConfig* { return this->buttonConfig[BUTTON_MIDDLE]; }
 
-auto Settings::getRightButtonConfig() -> ButtonConfig* { return this->buttonConfig[2]; }
+auto Settings::getRightButtonConfig() -> ButtonConfig* { return this->buttonConfig[BUTTON_RIGHT]; }
 
-auto Settings::getTouchButtonConfig() -> ButtonConfig* { return this->buttonConfig[3]; }
+auto Settings::getTouchButtonConfig() -> ButtonConfig* { return this->buttonConfig[BUTTON_TOUCH]; }
 
-auto Settings::getDefaultButtonConfig() -> ButtonConfig* { return this->buttonConfig[4]; }
+auto Settings::getDefaultButtonConfig() -> ButtonConfig* { return this->buttonConfig[BUTTON_DEFAULT]; }
 
-auto Settings::getStylusButton1Config() -> ButtonConfig* { return this->buttonConfig[5]; }
+auto Settings::getStylusButton1Config() -> ButtonConfig* { return this->buttonConfig[BUTTON_STYLUS]; }
 
-auto Settings::getStylusButton2Config() -> ButtonConfig* { return this->buttonConfig[6]; }
+auto Settings::getStylusButton2Config() -> ButtonConfig* { return this->buttonConfig[BUTTON_STYLUS2]; }
 
 auto Settings::getFullscreenHideElements() const -> string const& { return this->fullscreenHideElements; }
 

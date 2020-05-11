@@ -131,14 +131,14 @@ void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool wi
 }
 
 void SettingsDialog::initMouseButtonEvents() {
-    initMouseButtonEvents("hboxMidleMouse", 1);
-    initMouseButtonEvents("hboxRightMouse", 2);
-    initMouseButtonEvents("hboxEraser", 0);
-    initMouseButtonEvents("hboxTouch", 3, true);
-    initMouseButtonEvents("hboxPenButton1", 5);
-    initMouseButtonEvents("hboxPenButton2", 6);
+    initMouseButtonEvents("hboxMidleMouse", BUTTON_MIDDLE);
+    initMouseButtonEvents("hboxRightMouse", BUTTON_RIGHT);
+    initMouseButtonEvents("hboxEraser", BUTTON_ERASER);
+    initMouseButtonEvents("hboxTouch", BUTTON_TOUCH, true);
+    initMouseButtonEvents("hboxPenButton1", BUTTON_STYLUS);
+    initMouseButtonEvents("hboxPenButton2", BUTTON_STYLUS2);
 
-    initMouseButtonEvents("hboxDefaultTool", 4);
+    initMouseButtonEvents("hboxDefaultTool", BUTTON_DEFAULT);
 }
 
 void SettingsDialog::setDpi(int dpi) {
