@@ -84,6 +84,8 @@ void RectSelection::currentPos(double x, double y) {
 
     this->ex = x;
     this->ey = y;
+
+    this->userTapped = false;
 }
 
 void RectSelection::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
@@ -165,6 +167,8 @@ void RegionSelect::currentPos(double x, double y) {
 
     // at least three points needed
     if (this->points && this->points->next && this->points->next->next) {
+
+        this->userTapped = false;
 
         auto* r0 = static_cast<RegionPoint*>(this->points->data);
         double ax = r0->x;

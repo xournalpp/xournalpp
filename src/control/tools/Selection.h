@@ -25,6 +25,7 @@ class Selection: public ShapeContainer {
 public:
     Selection(Redrawable* view);
     virtual ~Selection();
+    bool userTapped = true;
 
 public:
     virtual bool finalize(PageRef page) = 0;
