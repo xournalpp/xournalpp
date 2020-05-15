@@ -146,6 +146,8 @@ Windows. For other Linux distributions (or older/newer ones), we also provide an
 AppImage that is binary compatible with any distribution released around or
 after Ubuntu 16.04.
 
+On Linux, Xournal++ can also be installed via [snapcraft](https://snapcraft.io/xournalpp).
+
 **A note for Ubuntu/Debian users**: The official binaries that we provide are
 only compatible with the _specific version of Debian or Ubuntu_ indicated by the
 file name. For example, if you are on Ubuntu 20.04, the binary whose name
