@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.22.2 -->
 <interface>
-  <requires lib="gtk+" version="3.0"/>
+  <requires lib="gtk+" version="3.16"/>
   <object class="GtkAdjustment" id="adjustment1">
     <property name="upper">10000</property>
     <property name="step_increment">1</property>
@@ -26,6 +26,9 @@
     <property name="window_position">center</property>
     <property name="icon">pixmaps/com.github.xournalpp.xournalpp.svg</property>
     <property name="type_hint">dialog</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox2">
         <property name="visible">True</property>
@@ -40,8 +43,8 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="btCancel">
-                <property name="name">btCancel</property>
                 <property name="label">gtk-cancel</property>
+                <property name="name">btCancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
@@ -56,8 +59,8 @@
             </child>
             <child>
               <object class="GtkButton" id="btOk">
-                <property name="name">btOk</property>
                 <property name="label">gtk-ok</property>
+                <property name="name">btOk</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -138,12 +141,12 @@ Select pages to export</property>
                 </child>
                 <child>
                   <object class="GtkRadioButton" id="rdRangeAll">
-                    <property name="name">rdRangeAll</property>
                     <property name="label" translatable="yes">All pages</property>
+                    <property name="name">rdRangeAll</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
-                    <property name="xalign">0</property>
+                    <property name="halign">start</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                   </object>
@@ -154,13 +157,12 @@ Select pages to export</property>
                 </child>
                 <child>
                   <object class="GtkRadioButton" id="rdRangeCurrent">
-                    <property name="name">rdRangeCurrent</property>
                     <property name="label" translatable="yes">Current page</property>
+                    <property name="name">rdRangeCurrent</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
-                    <property name="xalign">0</property>
-                    <property name="active">True</property>
+                    <property name="halign">start</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">rdRangeAll</property>
                   </object>
@@ -171,13 +173,12 @@ Select pages to export</property>
                 </child>
                 <child>
                   <object class="GtkRadioButton" id="rdRangePages">
-                    <property name="name">rdRangePages</property>
                     <property name="label" translatable="yes">Pages:</property>
+                    <property name="name">rdRangePages</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
-                    <property name="xalign">0</property>
-                    <property name="active">True</property>
+                    <property name="halign">start</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">rdRangeAll</property>
                   </object>
@@ -307,8 +308,8 @@ Select pages to export</property>
       </object>
     </child>
     <action-widgets>
-      <action-widget response="2">btCancel</action-widget>
-      <action-widget response="1">btOk</action-widget>
+      <action-widget response="-6">btCancel</action-widget>
+      <action-widget response="-5">btOk</action-widget>
     </action-widgets>
   </object>
   <object class="GtkEntryBuffer" id="entrybuffer1">
