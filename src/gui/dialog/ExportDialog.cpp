@@ -17,6 +17,16 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath)
 			XOJ_CHECK_TYPE_OBJ(self, ExportDialog);
 			gtk_widget_set_sensitive(self->get("txtPages"), gtk_toggle_button_get_active(togglebutton));
 		}), this);
+
+
+    GSList* radios = gtk_radio_button_get_group(GTK_RADIO_BUTTON(get("rdRangeAll")));
+    for (GSList* head = radios; head != nullptr; head = head->next) {
+        g_signal_connect(reinterpret_cast<GtkRadioButton*>(head->data), "activate",
+                         G_CALLBACK(+[](GtkButton*, ExportDialog* self) {
+                             gtk_dialog_response(GTK_DIALOG(self->window), GTK_RESPONSE_OK);
+                         }),
+                         this);
+    }
 }
 
 ExportDialog::~ExportDialog()
@@ -96,8 +106,7 @@ void ExportDialog::show(GtkWindow* parent)
 
 	int res = gtk_dialog_run(GTK_DIALOG(this->window));
 
-	// Button 1 OK
-	if (res == 1)
+	if (res == GTK_RESPONSE_OK)
 	{
 		confirmed = true;
 	}
