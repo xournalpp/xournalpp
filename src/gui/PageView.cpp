@@ -534,8 +534,8 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
             delete this->selection;
             this->selection = nullptr;
         } else {
-            if (this->selection->userTapped) {
-                double zoom = xournal->getZoom();
+            double zoom = xournal->getZoom();
+            if (this->selection->userTapped(zoom)) {
                 SelectObject select(this);
                 select.at(pos.x / zoom, pos.y / zoom);
             }

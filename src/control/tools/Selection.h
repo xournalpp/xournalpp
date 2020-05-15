@@ -25,12 +25,12 @@ class Selection: public ShapeContainer {
 public:
     Selection(Redrawable* view);
     virtual ~Selection();
-    bool userTapped = true;
 
 public:
     virtual bool finalize(PageRef page) = 0;
     virtual void paint(cairo_t* cr, GdkRectangle* rect, double zoom) = 0;
     virtual void currentPos(double x, double y) = 0;
+    virtual bool userTapped(double zoom) = 0;
 
 private:
 protected:
@@ -56,12 +56,14 @@ public:
     virtual void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
     virtual void currentPos(double x, double y);
     virtual bool contains(double x, double y);
+    virtual bool userTapped(double zoom);
 
 private:
     double sx;
     double sy;
     double ex;
     double ey;
+    double maxDist = 0;
 
     /**
      * In zoom coordinates
@@ -82,6 +84,7 @@ public:
     virtual void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
     virtual void currentPos(double x, double y);
     virtual bool contains(double x, double y);
+    virtual bool userTapped(double zoom);
 
 private:
     GList* points;

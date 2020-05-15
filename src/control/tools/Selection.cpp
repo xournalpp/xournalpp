@@ -85,8 +85,10 @@ void RectSelection::currentPos(double x, double y) {
     this->ex = x;
     this->ey = y;
 
-    this->userTapped = false;
+    this->maxDist = std::max({this->maxDist, x - this->sx, this->sx - x, y - this->sy, this->sy - y});
 }
+
+auto RectSelection::userTapped(double zoom) -> bool { return this->maxDist < 10 / zoom; }
 
 void RectSelection::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
     GtkColorWrapper selectionColor = view->getSelectionColor();
@@ -167,8 +169,6 @@ void RegionSelect::currentPos(double x, double y) {
 
     // at least three points needed
     if (this->points && this->points->next && this->points->next->next) {
-
-        this->userTapped = false;
 
         auto* r0 = static_cast<RegionPoint*>(this->points->data);
         double ax = r0->x;
@@ -303,4 +303,16 @@ auto RegionSelect::finalize(PageRef page) -> bool {
     view->repaintArea(this->x1Box - 10, this->y1Box - 10, this->x2Box + 10, this->y2Box + 10);
 
     return !this->selectedElements.empty();
+}
+
+auto RegionSelect::userTapped(double zoom) -> bool {
+    double maxDist = 10 / zoom;
+    auto* r0 = static_cast<RegionPoint*>(this->points->data);
+    for (GList* l = this->points; l != nullptr; l = l->next) {
+        auto* p = static_cast<RegionPoint*>(l->data);
+        if (r0->x - p->x > maxDist || p->x - r0->x > maxDist || r0->y - p->y > maxDist || p->y - r0->y > maxDist) {
+            return false;
+        }
+    }
+    return true;
 }
