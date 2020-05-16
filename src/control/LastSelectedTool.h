@@ -30,6 +30,10 @@ public:
      */
     Tool* restoreAndGet();
 
+    ToolType getToolType();
+
+    void setColor(int color);
+
 private:
     /**
      * The last tool

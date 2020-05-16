@@ -30,3 +30,5 @@ void Tool::setCapability(int capability, bool enabled) {
 auto Tool::hasCapability(ToolCapabilities cap) const -> bool { return (this->capabilities & cap) != 0; }
 
 auto Tool::getThickness(ToolSize size) -> double { return this->thickness[size - TOOL_SIZE_VERY_FINE]; }
+
+auto Tool::getToolType() -> ToolType { return this->type; }

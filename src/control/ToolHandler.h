@@ -123,6 +123,8 @@ public:
      */
     bool isSinglePageTool();
 
+    bool triggeredByStylusButton = false;
+
 protected:
     void initTools();
 

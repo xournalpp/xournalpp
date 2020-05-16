@@ -106,15 +106,18 @@ void ColorToolItem::showColorchooser() {
  */
 void ColorToolItem::enable(bool enabled) {
     if (!enabled && toolHandler->getToolType() == TOOL_ERASER) {
-        if (this->icon) {
+        if (this->icon && toolHandler->triggeredByStylusButton) {
+            // allow changes in color if eraser only set via stylus
             icon->setState(COLOR_ICON_STATE_PEN);
+            AbstractToolItem::enable(true);
+        } else {
+            // disallow changes in color
+            icon->setState(COLOR_ICON_STATE_DISABLED);
+            AbstractToolItem::enable(false);
         }
-        AbstractToolItem::enable(true);
-        switchToPen = true;
         return;
     }
 
-    switchToPen = false;
     AbstractToolItem::enable(enabled);
     if (this->icon) {
         if (enabled) {
@@ -126,10 +129,6 @@ void ColorToolItem::enable(bool enabled) {
 }
 
 void ColorToolItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton) {
-    if (switchToPen) {
-        toolHandler->selectTool(TOOL_PEN, true);
-    }
-
     if (inUpdate) {
         return;
     }

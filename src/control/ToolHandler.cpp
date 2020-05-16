@@ -138,6 +138,13 @@ void ToolHandler::selectTool(ToolType type, bool fireToolChanged) {
         g_warning("unknown tool selected: %i\n", type);
         return;
     }
+    // if lastSelectedTool is set then eraser was only set
+    // temporarily using the stylus buttons
+    if (type == TOOL_ERASER && this->lastSelectedTool) {
+        this->triggeredByStylusButton = true;
+    } else {
+        this->triggeredByStylusButton = false;
+    }
     this->current = tools[type - TOOL_PEN].get();
 
     if (fireToolChanged) {
@@ -252,6 +259,13 @@ void ToolHandler::setLineStyle(const LineStyle& style) {
  * 			and therefore should not be applied to a selection
  */
 void ToolHandler::setColor(Color color, bool userSelection) {
+    // TODO: execption rased when switching to eraser in the menu bar
+    //       - Cause: lastSelectedTool not set
+    if (this->current->type == TOOL_ERASER && this->lastSelectedTool) {
+        this->lastSelectedTool->setColor(color);
+        this->listener->toolColorChanged(userSelection);
+        this->listener->setCustomColorSelected();
+    }
     this->current->setColor(color);
     this->listener->toolColorChanged(userSelection);
     this->listener->setCustomColorSelected();
