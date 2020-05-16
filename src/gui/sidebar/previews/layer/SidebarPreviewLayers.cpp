@@ -55,7 +55,7 @@ void SidebarPreviewLayers::enableSidebar() {
 
 auto SidebarPreviewLayers::getName() -> string { return _("Layer Preview"); }
 
-auto SidebarPreviewLayers::getIconName() -> string { return "layer"; }
+auto SidebarPreviewLayers::getIconName() -> string { return "sidebar-layer"; }
 
 void SidebarPreviewLayers::pageSizeChanged(size_t page) {
     if (page != this->lc->getCurrentPageId() || !enabled) {
