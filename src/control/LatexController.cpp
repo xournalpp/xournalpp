@@ -1,9 +1,11 @@
 #include "LatexController.h"
 
 #include <fstream>
+#include <iomanip>
 #include <iterator>
 #include <memory>
 #include <regex>
+#include <sstream>
 #include <utility>
 
 #include "gui/XournalView.h"
@@ -109,11 +111,41 @@ auto LatexController::findTexDependencies() -> LatexController::FindDependencySt
     return LatexController::FindDependencyStatus(true, "");
 }
 
+/**
+ * Latex template variable substitution
+ */
+static std::string templateSub(const string& input, const string& templ, const uint32_t textColor) {
+    const static std::regex substRe("%%((XPP_TOOL_INPUT)|(XPP_TEXT_COLOR))%%");
+    std::sregex_iterator substBegin(templ.begin(), templ.end(), substRe);
+    std::string output;
+    output.reserve(templ.length());
+    int templatePos = 0;
+    for (auto it = substBegin; it != std::sregex_iterator{}; it++) {
+        std::smatch match = *it;
+        std::string matchStr = match[1];
+        std::string repl;
+        // Performance can be optimized here by precomputing hashes
+        if (matchStr == "XPP_TOOL_INPUT") {
+            repl = input;
+        } else if (matchStr == "XPP_TEXT_COLOR") {
+            std::ostringstream s;
+            s.imbue(std::locale::classic());
+            s << std::hex << std::setfill('0') << std::setw(6) << std::right << (textColor & 0xFFFFFFU);
+            repl = s.str();
+        }
+        output.append(templ, templatePos, match.position() - templatePos);
+        output.append(repl);
+        templatePos = match.position() + match.length();
+    }
+    output.append(templ, templatePos);
+    return output;
+}
+
 auto LatexController::runCommandAsync(const string& texString) -> std::unique_ptr<GPid> {
     g_assert(!this->isUpdating);
 
-    const static std::regex substRe("%%XPP_TOOL_INPUT%%");
-    const string texContents = std::regex_replace(this->latexTemplate, substRe, texString);
+    const std::string texContents =
+            templateSub(texString, this->latexTemplate, this->control->getToolHandler()->getTool(TOOL_TEXT).getColor());
 
     Path texFile = this->texTmpDir / "tex.tex";
 

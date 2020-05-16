@@ -8,6 +8,10 @@
 \usepackage{ifthen}
 \newlength{\pheight}
 
+% Color support
+\usepackage{xcolor}
+\definecolor{xpp_font_color}{HTML}{%%XPP_TEXT_COLOR%%}
+
 % User input
 \def\preview{\(
   \displaystyle
@@ -21,5 +25,5 @@
   \ifthenelse{\pheight=0}{\GenericError{}{xournalpp:blankformula}{}{}}
 
   % Render the user input
-  \preview
+  \textcolor{xpp_font_color}{\preview}
 \end{document}
