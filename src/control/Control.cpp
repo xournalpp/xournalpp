@@ -2495,7 +2495,7 @@ auto Control::checkExistingFile(Path& folder, Path& filename) -> bool {
     if (filename.exists()) {
         string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % filename.getFilename());
         int res = XojMsgBox::replaceFileQuestion(getGtkWindow(), msg);
-        return res != 1;  // res != 1 when user clicks on Replace
+        return res == GTK_RESPONSE_OK;
     }
     return true;
 }
