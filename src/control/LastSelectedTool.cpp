@@ -14,3 +14,7 @@ auto LastSelectedTool::restoreAndGet() -> Tool* {
 
     return tool;
 }
+
+auto LastSelectedTool::getToolType() -> ToolType { return this->tool->getToolType(); }
+
+void LastSelectedTool::setColor(int color) { this->tool->setColor(color); }

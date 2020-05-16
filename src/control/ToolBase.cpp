@@ -8,7 +8,7 @@ ToolBase::~ToolBase() = default;
  * Apply data from another ToolBase or any extending class
  */
 void ToolBase::applyFrom(const ToolBase* t) {
-    this->color = t->color;
+    // this->color = t->color;
     this->size = t->size;
     this->drawingType = t->drawingType;
     this->fill = t->fill;

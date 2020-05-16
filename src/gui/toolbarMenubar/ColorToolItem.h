@@ -75,11 +75,6 @@ private:
      */
     ColorSelectImage* icon = nullptr;
 
-    /**
-     * Switch to pen if the color icon is pressed
-     */
-    bool switchToPen = false;
-
     GtkWindow* parent = nullptr;
     ToolHandler* toolHandler = nullptr;
 
