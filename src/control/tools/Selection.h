@@ -28,6 +28,7 @@ public:
 	virtual bool finalize(PageRef page) = 0;
 	virtual void paint(cairo_t* cr, GdkRectangle* rect, double zoom) = 0;
 	virtual void currentPos(double x, double y) = 0;
+    virtual bool userTapped(double zoom) = 0;
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -56,6 +57,7 @@ public:
 	virtual void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
 	virtual void currentPos(double x, double y);
 	virtual bool contains(double x, double y);
+    virtual bool userTapped(double zoom);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -64,11 +66,12 @@ private:
 	double sy;
 	double ex;
 	double ey;
+    double maxDist = 0;
 
-	/**
-	 * In zoom coordinates
-	 */
-	double x1;
+    /**
+     * In zoom coordinates
+     */
+    double x1;
 	double x2;
 	double y1;
 	double y2;
@@ -85,6 +88,7 @@ public:
 	virtual void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
 	virtual void currentPos(double x, double y);
 	virtual bool contains(double x, double y);
+    virtual bool userTapped(double zoom);
 
 private:
 	XOJ_TYPE_ATTRIB;
