@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-13 07:25+0000\n"
+"POT-Creation-Date: 2020-05-17 19:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1625,7 +1625,7 @@ msgstr ""
 msgid "<b>Default</b>"
 msgstr ""
 
-#: ../ui/exportSettings.glade:90
+#: ../ui/exportSettings.glade:93
 msgid ""
 "<b>Document export settings</b>\n"
 "Select pages to export"
@@ -1678,7 +1678,7 @@ msgid ""
 "you release the button the previously selected tool will be selected.</i>"
 msgstr ""
 
-#: ../ui/exportSettings.glade:209
+#: ../ui/exportSettings.glade:210
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
 msgstr ""
 
@@ -1807,7 +1807,7 @@ msgstr ""
 msgid "Add additional vertical space of"
 msgstr ""
 
-#: ../ui/exportSettings.glade:142
+#: ../ui/exportSettings.glade:144
 msgid "All pages"
 msgstr ""
 
@@ -1924,7 +1924,7 @@ msgid ""
 "above."
 msgstr ""
 
-#: ../ui/exportSettings.glade:158
+#: ../ui/exportSettings.glade:160
 msgid "Current page"
 msgstr ""
 
@@ -2344,7 +2344,7 @@ msgstr ""
 msgid "P_revious annotated Page"
 msgstr ""
 
-#: ../ui/exportSettings.glade:175
+#: ../ui/exportSettings.glade:176
 msgid "Pages:"
 msgstr ""
 
@@ -2418,7 +2418,7 @@ msgstr ""
 msgid "Radius"
 msgstr ""
 
-#: ../ui/exportSettings.glade:127
+#: ../ui/exportSettings.glade:130
 msgid "Range"
 msgstr ""
 
@@ -2434,7 +2434,7 @@ msgstr ""
 msgid "Recording Quality"
 msgstr ""
 
-#: ../ui/exportSettings.glade:112
+#: ../ui/exportSettings.glade:115
 msgid "Resolution"
 msgstr ""
 
@@ -2910,7 +2910,7 @@ msgstr ""
 msgid "change"
 msgstr ""
 
-#: ../ui/exportSettings.glade:223
+#: ../ui/exportSettings.glade:224
 msgid "dpi"
 msgstr ""
 
