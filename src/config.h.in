@@ -43,6 +43,11 @@ constexpr auto PROJECT_STRING = "@PROJECT_NAME@ @PROJECT_VERSION@";
  */
 constexpr auto PROJECT_URL = "@PROJECT_URL@";
 
+/**
+ * File format version
+ */
+constexpr int FILE_FORMAT_VERSION = @DEV_FILE_FORMAT_VERSION@;
+
 
 /* --- Current git repo info --- */
 
