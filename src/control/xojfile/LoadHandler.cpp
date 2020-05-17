@@ -1345,3 +1345,7 @@ string LoadHandler::getTempFileForPath(string filename)
 		return "";
 	}
 }
+
+auto LoadHandler::getFileVersion() const -> int { return this->fileVersion; }
+
+auto LoadHandler::getFileMinVersion() const -> int { return this->minimalFileVersion; }
