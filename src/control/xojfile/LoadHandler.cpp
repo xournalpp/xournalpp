@@ -1044,3 +1044,7 @@ auto LoadHandler::getTempFileForPath(const string& filename) -> string {
     error("%s", FC(_F("Requested temporary file was not found for attachment {1}") % filename));
     return "";
 }
+
+auto LoadHandler::getFileVersion() const -> int { return this->fileVersion; }
+
+auto LoadHandler::getFileMinVersion() const -> int { return this->minimalFileVersion; }

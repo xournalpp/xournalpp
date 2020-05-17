@@ -1987,7 +1987,6 @@ auto Control::openFile(Path filename, int scrollToPage, bool forceOpen) -> bool 
         !loadHandler.getMissingPdfFilename().empty()) {
         // give the user a second chance to select a new PDF file, or to discard the PDF
 
-
         GtkWidget* dialog = gtk_message_dialog_new(
                 getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
                 loadHandler.isAttachedPdfMissing() ? _("The attached background PDF could not be found.") :
@@ -2022,8 +2021,18 @@ auto Control::openFile(Path filename, int scrollToPage, bool forceOpen) -> bool 
 
         fileLoaded(scrollToPage);
         return false;
+    } else if (loadHandler.getFileVersion() > FILE_FORMAT_VERSION) {
+        GtkWidget* dialog = gtk_message_dialog_new(
+                getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING, GTK_BUTTONS_YES_NO, "%s",
+                _("The file being loaded has a file format version newer than the one currently supported by this "
+                  "version of Xournal++, so it may not load properly. Open anyways?"));
+        int response = gtk_dialog_run(GTK_DIALOG(dialog));
+        gtk_widget_destroy(dialog);
+        if (response != GTK_RESPONSE_YES) {
+            loadedDocument->clearDocument();
+            return false;
+        }
     }
-
 
     this->closeDocument();
 
