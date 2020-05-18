@@ -16,7 +16,7 @@
 
 #include "XournalType.h"
 
-enum class PageTypeFormat { Plain, Ruled, Lined, Staves, Graph, Dotted, Pdf, Image, Copy };
+enum class PageTypeFormat { Plain, Ruled, Lined, Staves, Graph, Dotted, IsoDotted, IsoGraph, Pdf, Image, Copy };
 
 class PageType {
 public:
