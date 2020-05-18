@@ -4,6 +4,7 @@
 #include "BaseBackgroundPainter.h"
 #include "DottedBackgroundPainter.h"
 #include "GraphBackgroundPainter.h"
+#include "IsometricBackgroundPainter.h"
 #include "LineBackgroundPainter.h"
 #include "StavesBackgroundPainter.h"
 
@@ -15,6 +16,8 @@ MainBackgroundPainter::MainBackgroundPainter() {
     painter[PageTypeFormat::Staves] = new StavesBackgroundPainter();
     painter[PageTypeFormat::Graph] = new GraphBackgroundPainter();
     painter[PageTypeFormat::Dotted] = new DottedBackgroundPainter();
+    painter[PageTypeFormat::IsoDotted] = new IsometricBackgroundPainter(false);
+    painter[PageTypeFormat::IsoGraph] = new IsometricBackgroundPainter(true);
 }
 
 MainBackgroundPainter::~MainBackgroundPainter() {
