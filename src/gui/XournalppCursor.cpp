@@ -307,12 +307,7 @@ void XournalppCursor::updateCursor() {
 
 
 auto XournalppCursor::getEraserCursor() -> GdkCursor* {
-
-    if (CRSR_ERASER == this->currentCursor) {
-        return nullptr;  // cursor already set
-    }
     this->currentCursor = CRSR_ERASER;
-
 
     // Eraser's size follow a quadratic increment, so the cursor will do the same
     double cursorSize = control->getToolHandler()->getThickness() * 2 * control->getZoomControl()->getZoom();
@@ -336,7 +331,6 @@ auto XournalppCursor::getHighlighterCursor() -> GdkCursor* {
     if (this->drawDirActive) {
         return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
     }
-
 
     return createHighlighterOrPenCursor(5, 120 / 255.0);
 }
@@ -366,9 +360,6 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     gulong flavour = (big ? 1 : 0) | (bright ? 2 : 0) | static_cast<gulong>(64 * alpha) << 2 |
                      static_cast<gulong>(size) << 9 | static_cast<gulong>(rgb) << 14;
 
-    if (CRSR_PENORHIGHLIGHTER == this->currentCursor && flavour == this->currentCursorFlavour) {
-        return nullptr;
-    }
     this->currentCursor = CRSR_PENORHIGHLIGHTER;
     this->currentCursorFlavour = flavour;
 
