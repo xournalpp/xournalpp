@@ -15,7 +15,7 @@
 
 class XmlTexNode: public XmlNode {
 public:
-    XmlTexNode(const char* tag, string& binaryData);
+    XmlTexNode(const char* tag, string&& binaryData);
     virtual ~XmlTexNode();
 
 public:
@@ -25,5 +25,5 @@ private:
     /**
      * Binary .PNG or .PDF
      */
-    string& binaryData;
+    string binaryData;
 };

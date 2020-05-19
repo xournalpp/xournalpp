@@ -118,12 +118,6 @@ private:
     void setUpdating(bool newValue);
 
     /**
-     * Convert the given PDF Document to a TexImage and set the formula to the
-     * given formula.
-     */
-    std::unique_ptr<TexImage> convertDocumentToImage(PopplerDocument* doc, string formula) const;
-
-    /**
      * Load the preview PDF from disk and create a TexImage object.
      */
     std::unique_ptr<TexImage> loadRendered(string renderedTex);

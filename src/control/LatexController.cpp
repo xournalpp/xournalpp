@@ -19,41 +19,6 @@
 #include "i18n.h"
 #include "pixbuf-utils.h"
 
-/**
- * First half of the LaTeX template used to generate preview PDFs. User-supplied
- * formulas will be inserted between the two halves.
- *
- * This template is necessarily complicated because we need to cause an error if
- * the rendered formula is blank. Otherwise, a completely blank, sizeless PDF
- * will be generated, which Poppler will be unable to load.
- */
-const char* LATEX_TEMPLATE_1 = R"(\documentclass[varwidth=true, crop, border=5pt]{standalone})"
-                               "\n"
-                               R"(\usepackage{amsmath})"
-                               "\n"
-                               R"(\usepackage{amssymb})"
-                               "\n"
-                               R"(\usepackage{ifthen})"
-                               "\n"
-                               R"(\newlength{\pheight})"
-                               "\n"
-                               R"(\def\preview{\(\displaystyle)"
-                               "\n";
-
-const char* LATEX_TEMPLATE_2 = "\n\\)}\n"
-                               R"(\begin{document})"
-                               "\n"
-                               R"(\settoheight{\pheight}{\preview} %)"
-                               "\n"
-                               R"(\ifthenelse{\pheight=0})"
-                               "\n"
-                               R"({\GenericError{}{xournalpp: blank formula}{}{}})"
-                               "\n"
-                               R"(\preview)"
-                               "\n"
-                               R"(\end{document})"
-                               "\n";
-
 LatexController::LatexController(Control* control):
         control(control),
         settings(control->getSettings()->latexSettings),
@@ -368,39 +333,6 @@ void LatexController::deleteOldImage() {
     }
 }
 
-auto LatexController::convertDocumentToImage(PopplerDocument* doc, string formula) const -> std::unique_ptr<TexImage> {
-    if (poppler_document_get_n_pages(doc) < 1) {
-        return nullptr;
-    }
-
-    PopplerPage* page = poppler_document_get_page(doc, 0);
-
-
-    double pageWidth = 0;
-    double pageHeight = 0;
-    poppler_page_get_size(page, &pageWidth, &pageHeight);
-
-    std::unique_ptr<TexImage> img(new TexImage());
-    img->setX(posx);
-    img->setY(posy);
-    img->setText(std::move(formula));
-
-    if (imgheight) {
-        double ratio = pageWidth / pageHeight;
-        if (ratio == 0) {
-            img->setWidth(imgwidth == 0 ? 10 : imgwidth);
-        } else {
-            img->setWidth(imgheight * ratio);
-        }
-        img->setHeight(imgheight);
-    } else {
-        img->setWidth(pageWidth);
-        img->setHeight(pageHeight);
-    }
-
-    return img;
-}
-
 auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexImage> {
     if (!this->isValidTex) {
         return nullptr;
@@ -418,26 +350,32 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
         return nullptr;
     }
 
-    PopplerDocument* pdf = poppler_document_new_from_data(fileContents, fileLength, nullptr, &err);
+    auto img = std::make_unique<TexImage>();
+    bool loaded = img->loadData(std::string(fileContents, fileLength), &err);
+
     if (err != nullptr) {
         string message = FS(_F("Could not load LaTeX PDF file: {1}") % err->message);
         g_message("%s", message.c_str());
         XojMsgBox::showErrorToUser(control->getGtkWindow(), message);
         g_error_free(err);
         return nullptr;
-    }
-
-    if (pdf == nullptr) {
+    } else if (!loaded || !img->getPdf()) {
         XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not load LaTeX PDF file")));
         return nullptr;
     }
 
-    std::unique_ptr<TexImage> img = convertDocumentToImage(pdf, std::move(renderedTex));
-    g_object_unref(pdf);
-
-    // Do not assign the PDF, theoretical it should work, but it gets a Poppler PDF error
-    // img->setPdf(pdf);
-    img->setBinaryData(string(fileContents, fileLength));
+    img->setX(posx);
+    img->setY(posy);
+    img->setText(std::move(renderedTex));
+    if (imgheight) {
+        double ratio = img->getElementWidth() / img->getElementHeight();
+        if (ratio == 0) {
+            img->setWidth(imgwidth == 0 ? 10 : imgwidth);
+        } else {
+            img->setWidth(imgheight * ratio);
+        }
+        img->setHeight(imgheight);
+    }
 
     g_free(fileContents);
 
@@ -469,7 +407,7 @@ void LatexController::run() {
     }
 
     this->findSelectedTexElement();
-    string newTex = this->showTexEditDialog();
+    const string newTex = this->showTexEditDialog();
 
     if (this->initialTex != newTex) {
         g_assert(this->isValidTex);

@@ -689,7 +689,7 @@ void LoadHandler::parseAttachment() {
             break;
         }
         case PARSER_POS_IN_TEXIMAGE: {
-            this->teximage->setBinaryData(imgData);
+            this->teximage->loadData(std::move(imgData), nullptr);
             break;
         }
         default:
@@ -950,7 +950,7 @@ void LoadHandler::readTexImage(const gchar* base64string, gsize base64stringLen)
         return;
     }
 
-    this->teximage->setBinaryData(parseBase64(const_cast<char*>(base64string), base64stringLen));
+    this->teximage->loadData(parseBase64(const_cast<char*>(base64string), base64stringLen));
 }
 
 /**

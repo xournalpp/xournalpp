@@ -1,6 +1,6 @@
 #include "XmlTexNode.h"
 
-XmlTexNode::XmlTexNode(const char* tag, string& binaryData): XmlNode(tag), binaryData(binaryData) {}
+XmlTexNode::XmlTexNode(const char* tag, string&& binaryData): XmlNode(tag), binaryData(binaryData) {}
 
 XmlTexNode::~XmlTexNode() = default;
 
