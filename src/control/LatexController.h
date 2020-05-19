@@ -214,11 +214,9 @@ private:
     Path texTmpDir;
 
     /**
-     * Previously existing TexImage
+     * The element that is currently being edited.
      */
-    TexImage* selectedTexImage = nullptr;
-
-    Text* selectedText = nullptr;
+    Element* selectedElem = nullptr;
 
     /**
      * The controller owns the rendered preview in order to be able to delete it

@@ -170,26 +170,21 @@ void LatexController::findSelectedTexElement() {
     this->page = this->doc->getPage(pageNr);
     this->layer = page->getSelectedLayer();
 
-    this->selectedTexImage = view->getSelectedTex();
-    this->selectedText = view->getSelectedText();
-
-    if (this->selectedTexImage || this->selectedText) {
+    this->selectedElem = view->getSelectedTex() != nullptr ? static_cast<Element*>(view->getSelectedTex()) :
+                                                             static_cast<Element*>(view->getSelectedText());
+    if (this->selectedElem) {
         // this will get the position of the Latex properly
         EditSelection* theSelection = control->getWindow()->getXournal()->getSelection();
         this->posx = theSelection->getXOnView();
         this->posy = theSelection->getYOnView();
 
-        if (this->selectedTexImage != nullptr) {
-            this->initialTex = this->selectedTexImage->getText();
-            this->imgwidth = this->selectedTexImage->getElementWidth();
-            this->imgheight = this->selectedTexImage->getElementHeight();
-        } else {
-            this->initialTex += "\\text{";
-            this->initialTex += this->selectedText->getText();
-            this->initialTex += "}";
-            this->imgwidth = this->selectedText->getElementWidth();
-            this->imgheight = this->selectedText->getElementHeight();
+        if (auto* img = dynamic_cast<TexImage*>(this->selectedElem)) {
+            this->initialTex = img->getText();
+        } else if (auto* txt = dynamic_cast<Text*>(this->selectedElem)) {
+            this->initialTex = "\\text{" + txt->getText() + "}";
         }
+        this->imgwidth = this->selectedElem->getElementWidth();
+        this->imgheight = this->selectedElem->getElementHeight();
     } else {
         // This is a new latex object, so here we pick a convenient initial location
         const double zoom = this->control->getWindow()->getXournal()->getZoom();
@@ -211,9 +206,6 @@ void LatexController::findSelectedTexElement() {
         }
     }
     this->doc->unlock();
-
-    // need to do this otherwise we can't remove the image for its replacement
-    this->control->clearSelectionEndText();
 }
 
 auto LatexController::showTexEditDialog() -> string {
@@ -320,16 +312,10 @@ void LatexController::setUpdating(bool newValue) {
 }
 
 void LatexController::deleteOldImage() {
-    if (this->selectedTexImage != nullptr) {
-        g_assert(this->selectedText == nullptr);
-        EditSelection selection(control->getUndoRedoHandler(), selectedTexImage, view, page);
+    if (this->selectedElem) {
+        EditSelection selection(control->getUndoRedoHandler(), selectedElem, view, page);
         this->view->getXournal()->deleteSelection(&selection);
-        this->selectedTexImage = nullptr;
-    } else if (this->selectedText) {
-        g_assert(this->selectedTexImage == nullptr);
-        EditSelection selection(control->getUndoRedoHandler(), selectedText, view, page);
-        view->getXournal()->deleteSelection(&selection);
-        this->selectedText = nullptr;
+        this->selectedElem = nullptr;
     }
 }
 
@@ -386,6 +372,7 @@ void LatexController::insertTexImage() {
     g_assert(this->temporaryRender != nullptr);
     TexImage* img = this->temporaryRender.release();
 
+    this->control->clearSelectionEndText();
     this->deleteOldImage();
 
     doc->lock();
