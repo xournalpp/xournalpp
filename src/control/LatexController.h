@@ -22,6 +22,7 @@
 
 #include "control/settings/LatexSettings.h"
 #include "gui/dialog/LatexDialog.h"
+#include "latex/LatexGenerator.h"
 #include "model/PageRef.h"
 #include "model/Text.h"
 
@@ -78,16 +79,6 @@ private:
     void deleteOldImage();
 
     /**
-     * Run the LaTeX command asynchronously to generate a preview for the given
-     * LaTeX string. Note that this method can only be called when the preview
-     * is not updating.
-     *
-     * @return The PID of the spawned process, or nullptr if the .tex file could
-     * not be written or the command failed to start.
-     */
-    std::unique_ptr<GPid> runCommandAsync(const string& texString);
-
-    /**
      * Asynchronously runs the LaTeX command and then updates the TeX image with
      * the given LaTeX string. If the preview is already being updated, then
      * this method will be a no-op.
@@ -113,7 +104,7 @@ private:
      * If the Latex text has changed since the last update, triggerPreviewUpdate
      * will be called again.
      */
-    static void onPdfRenderComplete(GPid pid, gint returnCode, LatexController* self);
+    static void onPdfRenderComplete(GObject* procObj, GAsyncResult* res, LatexController* self);
 
     void setUpdating(bool newValue);
 
@@ -223,4 +214,6 @@ private:
      * when a new render is created
      */
     std::unique_ptr<TexImage> temporaryRender;
+
+    LatexGenerator generator;
 };

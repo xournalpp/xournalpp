@@ -10,6 +10,7 @@
 
 #include "gui/XournalView.h"
 #include "gui/dialog/LatexDialog.h"
+#include "latex/LatexGenerator.h"
 #include "undo/InsertUndoAction.h"
 
 #include "Control.h"
@@ -24,7 +25,8 @@ LatexController::LatexController(Control* control):
         settings(control->getSettings()->latexSettings),
         dlg(control->getGladeSearchPath()),
         doc(control->getDocument()),
-        texTmpDir(Util::getTmpDirSubfolder("tex")) {
+        texTmpDir(Util::getTmpDirSubfolder("tex")),
+        generator(settings) {
     Util::ensureFolderExists(this->texTmpDir);
 }
 
@@ -34,120 +36,19 @@ LatexController::~LatexController() { this->control = nullptr; }
  * Find the tex executable, return false if not found
  */
 auto LatexController::findTexDependencies() -> LatexController::FindDependencyStatus {
-    gchar* pdflatex = g_find_program_in_path("pdflatex");
-    if (!pdflatex) {
-        string msg =
-                _("Could not find pdflatex in PATH.\nPlease install pdflatex first and make sure it's in the PATH.");
-        return LatexController::FindDependencyStatus(false, msg);
-    }
-    this->pdflatexPath = pdflatex;
-    g_free(pdflatex);
-
-    // Check for 'standalone' latex package
-    static gchar* kpsewhichArgs[] = {g_strdup("kpsewhich"), g_strdup("standalone"), nullptr};
-    auto kpsewhichFlags = GSpawnFlags(G_SPAWN_DEFAULT | G_SPAWN_SEARCH_PATH | G_SPAWN_STDOUT_TO_DEV_NULL);
-    GError* kpsewhichErr = nullptr;
-    gint kpsewhichStatus = 0;
-    g_spawn_sync(nullptr, kpsewhichArgs, nullptr, kpsewhichFlags, nullptr, nullptr, nullptr, nullptr, &kpsewhichStatus,
-                 &kpsewhichErr);
-    if (kpsewhichErr != nullptr) {
-        string msg =
-                FS(_F("Error: {1}\nCould not find kpsewhich in PATH; please install kpsewhich and put it on path.") %
-                   kpsewhichErr->message);
-        g_error_free(kpsewhichErr);
-        return LatexController::FindDependencyStatus(false, msg);
-    }
-    if (kpsewhichStatus != 0) {
-        string msg = FS(_F("Could not find the LaTeX package 'standalone'.\nPlease install standalone (found in "
-                           "texlive-latex-extra) and make sure "
-                           "it's accessible by your LaTeX installation."));
-        return LatexController::FindDependencyStatus(false, msg);
-    }
-
-    std::ifstream is(this->settings.globalTemplatePath.string());
+    std::ifstream is(this->settings.globalTemplatePath.string(), std::ios_base::binary);
     if (!is.is_open()) {
         g_message("%s", this->settings.globalTemplatePath.string().c_str());
-        string msg = FS(_F("Global template file does not exist. Please check your settings."));
+        string msg = _("Global template file does not exist. Please check your settings.");
         return LatexController::FindDependencyStatus(false, msg);
     }
     this->latexTemplate = std::string(std::istreambuf_iterator<char>(is), {});
-    is.close();
+    if (!is.good()) {
+        string msg = _("Failed to read global template file. Please check your settings.");
+        return LatexController::FindDependencyStatus(false, msg);
+    }
 
     return LatexController::FindDependencyStatus(true, "");
-}
-
-/**
- * Latex template variable substitution
- */
-static std::string templateSub(const string& input, const string& templ, const uint32_t textColor) {
-    const static std::regex substRe("%%((XPP_TOOL_INPUT)|(XPP_TEXT_COLOR))%%");
-    std::sregex_iterator substBegin(templ.begin(), templ.end(), substRe);
-    std::string output;
-    output.reserve(templ.length());
-    int templatePos = 0;
-    for (auto it = substBegin; it != std::sregex_iterator{}; it++) {
-        std::smatch match = *it;
-        std::string matchStr = match[1];
-        std::string repl;
-        // Performance can be optimized here by precomputing hashes
-        if (matchStr == "XPP_TOOL_INPUT") {
-            repl = input;
-        } else if (matchStr == "XPP_TEXT_COLOR") {
-            std::ostringstream s;
-            s.imbue(std::locale::classic());
-            s << std::hex << std::setfill('0') << std::setw(6) << std::right << (textColor & 0xFFFFFFU);
-            repl = s.str();
-        }
-        output.append(templ, templatePos, match.position() - templatePos);
-        output.append(repl);
-        templatePos = match.position() + match.length();
-    }
-    output.append(templ, templatePos);
-    return output;
-}
-
-auto LatexController::runCommandAsync(const string& texString) -> std::unique_ptr<GPid> {
-    g_assert(!this->isUpdating);
-
-    const std::string texContents =
-            templateSub(texString, this->latexTemplate, this->control->getToolHandler()->getTool(TOOL_TEXT).getColor());
-
-    Path texFile = this->texTmpDir / "tex.tex";
-
-    GError* err = nullptr;
-    if (!g_file_set_contents(texFile.c_str(), texContents.c_str(), texContents.length(), &err)) {
-        XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not save .tex file: {1}") % err->message));
-        g_error_free(err);
-        return nullptr;
-    }
-
-    char* texFileEscaped = g_strescape(texFile.c_str(), nullptr);
-    char* cmd = g_strdup(this->pdflatexPath.c_str());
-
-    static char* texFlag = g_strdup("-interaction=nonstopmode");
-    char* argv[] = {cmd, texFlag, texFileEscaped, nullptr};
-
-    std::unique_ptr<GPid> pdflatexPid(new GPid);
-    auto flags = GSpawnFlags(G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL | G_SPAWN_DO_NOT_REAP_CHILD);
-
-    this->setUpdating(true);
-    this->lastPreviewedTex = texString;
-
-    bool success = g_spawn_async(texTmpDir.c_str(), argv, nullptr, flags, nullptr, nullptr, pdflatexPid.get(), &err);
-    if (!success) {
-        string message = FS(_F("Could not start pdflatex: {1} (exit code: {2})") % err->message % err->code);
-        g_warning("%s", message.c_str());
-        XojMsgBox::showErrorToUser(control->getGtkWindow(), message);
-
-        g_error_free(err);
-        this->setUpdating(false);
-        pdflatexPid.reset();
-    }
-
-    g_free(texFileEscaped);
-    g_free(cmd);
-
-    return pdflatexPid;
 }
 
 /**
@@ -233,10 +134,16 @@ void LatexController::triggerImageUpdate(const string& texString) {
         return;
     }
 
-    std::unique_ptr<GPid> pid = this->runCommandAsync(texString);
-    if (pid != nullptr) {
-        g_assert(this->isUpdating);
-        g_child_watch_add(*pid, reinterpret_cast<GChildWatchFunc>(onPdfRenderComplete), this);
+    this->setUpdating(true);
+    this->lastPreviewedTex = texString;
+    const std::string texContents = LatexGenerator::templateSub(
+            texString, this->latexTemplate, this->control->getToolHandler()->getTool(TOOL_TEXT).getColor());
+    auto result = generator.asyncRun(this->texTmpDir, texContents);
+    if (auto* err = std::get_if<LatexGenerator::GenError>(&result)) {
+        this->setUpdating(false);
+        XojMsgBox::showErrorToUser(this->control->getGtkWindow(), err->message);
+    } else if (auto** proc = std::get_if<GSubprocess*>(&result)) {
+        g_subprocess_wait_check_async(*proc, nullptr, reinterpret_cast<GAsyncReadyCallback>(onPdfRenderComplete), this);
     }
 }
 
@@ -252,19 +159,21 @@ void LatexController::handleTexChanged(GtkTextBuffer* buffer, LatexController* s
     self->triggerImageUpdate(self->dlg.getBufferContents());
 }
 
-void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, LatexController* self) {
+void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, LatexController* self) {
     g_assert(self->isUpdating);
     GError* err = nullptr;
-    g_spawn_check_exit_status(returnCode, &err);
-    g_spawn_close_pid(pid);
-    string currentTex = self->dlg.getBufferContents();
+    GSubprocess* proc = G_SUBPROCESS(procObj);
+    g_subprocess_wait_check_finish(proc, res, &err);
+
+    const string currentTex = self->dlg.getBufferContents();
     bool shouldUpdate = self->lastPreviewedTex != currentTex;
     if (err != nullptr) {
         self->isValidTex = false;
         if (!g_error_matches(err, G_SPAWN_EXIT_ERROR, 1)) {
             // The error was not caused by invalid LaTeX.
-            string message = FS(_F("pdflatex encountered an error: {1} (exit code: {2})") % err->message % err->code);
-            g_warning("%s", message.c_str());
+            string message =
+                    FS(_F("Latex generation encountered an error: {1} (exit code: {2})") % err->message % err->code);
+            g_warning("latex: %s", message.c_str());
             XojMsgBox::showErrorToUser(self->control->getGtkWindow(), message);
         }
         Path pdfPath = self->texTmpDir / "tex.pdf";
@@ -280,6 +189,7 @@ void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, LatexContro
             self->dlg.setTempRender(self->temporaryRender->getPdf());
         }
     }
+
     self->setUpdating(false);
     if (shouldUpdate) {
         self->triggerImageUpdate(currentTex);
