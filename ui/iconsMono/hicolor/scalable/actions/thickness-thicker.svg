@@ -7,32 +7,33 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="thickness_very_thick.svg"
-   inkscape:version="1.1-dev (7fa40cb683, 2020-03-24)"
-   version="1.1"
-   id="svg2"
+   width="22"
    height="22"
-   width="22">
+   id="svg2"
+   version="1.1"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="thickness-thicker.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
-     inkscape:window-maximized="0"
-     inkscape:window-y="925"
-     inkscape:window-x="1806"
-     inkscape:window-height="774"
-     inkscape:window-width="1275"
-     showgrid="false"
-     inkscape:current-layer="layer1"
-     inkscape:document-units="px"
-     inkscape:cy="9.4173813"
-     inkscape:cx="17.866557"
-     inkscape:zoom="22.4"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
-     borderopacity="1.0"
-     bordercolor="#666666"
+     inkscape:document-rotation="0"
+     id="base"
      pagecolor="#ffffff"
-     id="base" />
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="22.4"
+     inkscape:cx="17.866557"
+     inkscape:cy="9.4173813"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1275"
+     inkscape:window-height="774"
+     inkscape:window-x="1806"
+     inkscape:window-y="925"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -46,94 +47,31 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(0,-1030.3622)"
-     id="layer1"
+     inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
-     inkscape:label="Ebene 1">
+     id="layer1"
+     transform="translate(0,-1030.3622)">
+    <circle
+       style="fill:#d9d9d9;fill-opacity:1;stroke:none"
+       id="path2985"
+       cx="10.982142"
+       cy="1041.38"
+       r="9.8214283" />
+    <path
+       id="circle849"
+       style="fill:#b2b2b2;fill-opacity:1;stroke:none"
+       d="M 1.2265625 10.517578 A 9.8214283 9.8214283 0 0 0 1.1601562 11.017578 A 9.8214283 9.8214283 0 0 0 10.982422 20.839844 A 9.8214283 9.8214283 0 0 0 20.802734 11.017578 A 9.8214283 9.8214283 0 0 0 20.769531 10.761719 A 9.8214283 9.8214283 0 0 1 10.982422 19.839844 A 9.8214283 9.8214283 0 0 1 1.2265625 10.517578 z "
+       transform="translate(0,1030.3622)" />
+    <path
+       id="circle856"
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       d="M 10.982422 1.1972656 A 9.8214283 9.8214283 0 0 0 1.1601562 11.017578 A 9.8214283 9.8214283 0 0 0 1.2265625 11.517578 A 9.8214283 9.8214283 0 0 1 10.982422 2.1953125 A 9.8214283 9.8214283 0 0 1 20.736328 11.517578 A 9.8214283 9.8214283 0 0 0 20.802734 11.017578 A 9.8214283 9.8214283 0 0 0 10.982422 1.1972656 z "
+       transform="translate(0,1030.3622)" />
     <circle
        r="9.8214283"
        cy="1041.38"
        cx="10.982142"
-       id="path2985"
-       style="fill:#d9d9d9;fill-opacity:1;stroke:none" />
-    <rect
-       ry="1.3000001"
-       rx="1.5000001"
-       y="1032.9121"
-       x="30.74869"
-       height="4.6382856"
-       width="4.6382856"
-       id="rect847-5"
-       style="fill:#d9d9d9;fill-opacity:1;stroke:#273445;stroke-width:0;stroke-linecap:round" />
-    <rect
-       style="fill:#727272;fill-opacity:1;stroke:#273445;stroke-width:0;stroke-linecap:round"
-       id="rect849"
-       width="4.6382856"
-       height="4.6382856"
-       x="30.762922"
-       y="1038.6887"
-       rx="1.5000001"
-       ry="1.3000001" />
-    <rect
-       style="fill:#b2b2b2;fill-opacity:1;stroke:#273445;stroke-width:0;stroke-linecap:round"
-       id="rect851"
-       width="4.6382856"
-       height="4.6382856"
-       x="36.691498"
-       y="1032.9121"
-       rx="1.5000001"
-       ry="1.3000001" />
-    <rect
-       ry="1.3000001"
-       rx="1.5000001"
-       y="1038.6653"
-       x="36.731358"
-       height="4.6382856"
-       width="4.6382856"
-       id="rect853"
-       style="fill:#4d4d4d;fill-opacity:1;stroke:#273445;stroke-width:0;stroke-linecap:round" />
-    <rect
-       style="fill:#241f31;fill-opacity:1;stroke:#273445;stroke-width:0;stroke-linecap:round"
-       id="rect855"
-       width="4.6382856"
-       height="4.6382856"
-       x="36.631706"
-       y="1044.3749"
-       rx="1.5000001"
-       ry="1.3000001" />
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect857"
-       width="4.6382856"
-       height="4.6382856"
-       x="24.906607"
-       y="1032.9121"
-       rx="1.5000001"
-       ry="1.3000001" />
-    <rect
-       ry="1.3000001"
-       rx="1.5000001"
-       y="1038.6902"
-       x="24.906607"
-       height="4.6382856"
-       width="4.6382856"
-       id="rect860"
-       style="fill:#999999;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <path
-       transform="translate(0,1030.3622)"
-       d="M 1.2265625 10.517578 A 9.8214283 9.8214283 0 0 0 1.1601562 11.017578 A 9.8214283 9.8214283 0 0 0 10.982422 20.839844 A 9.8214283 9.8214283 0 0 0 20.802734 11.017578 A 9.8214283 9.8214283 0 0 0 20.769531 10.761719 A 9.8214283 9.8214283 0 0 1 10.982422 19.839844 A 9.8214283 9.8214283 0 0 1 1.2265625 10.517578 z "
-       style="fill:#b2b2b2;fill-opacity:1;stroke:none"
-       id="circle849" />
-    <path
-       transform="translate(0,1030.3622)"
-       d="M 10.982422 1.1972656 A 9.8214283 9.8214283 0 0 0 1.1601562 11.017578 A 9.8214283 9.8214283 0 0 0 1.2265625 11.517578 A 9.8214283 9.8214283 0 0 1 10.982422 2.1953125 A 9.8214283 9.8214283 0 0 1 20.736328 11.517578 A 9.8214283 9.8214283 0 0 0 20.802734 11.017578 A 9.8214283 9.8214283 0 0 0 10.982422 1.1972656 z "
-       style="fill:#ffffff;fill-opacity:1;stroke:none"
-       id="circle856" />
-    <circle
-       style="fill:none;fill-opacity:1;stroke:#241f31;stroke-opacity:1"
        id="circle863"
-       cx="10.982142"
-       cy="1041.38"
-       r="9.8214283" />
+       style="fill:none;fill-opacity:1;stroke:#241f31;stroke-opacity:1" />
   </g>
 </svg>

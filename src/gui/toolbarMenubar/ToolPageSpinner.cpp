@@ -31,7 +31,7 @@ void ToolPageSpinner::setText(const string& text) {
 auto ToolPageSpinner::getToolDisplayName() -> string { return _("Page number"); }
 
 auto ToolPageSpinner::getNewToolIcon() -> GtkWidget* {
-    return gtk_image_new_from_icon_name("pageSpinner", GTK_ICON_SIZE_SMALL_TOOLBAR);
+    return gtk_image_new_from_icon_name("page-spinner", GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
 auto ToolPageSpinner::newItem() -> GtkToolItem* {
