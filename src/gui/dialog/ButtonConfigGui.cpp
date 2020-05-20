@@ -59,7 +59,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
     ADD_TYPE_CB("tool-highlighter", _("Highlighter"), TOOL_HILIGHTER);
     ADD_TYPE_CB("tool-text", _("Text"), TOOL_TEXT);
     ADD_TYPE_CB("tool-image", _("Insert image"), TOOL_IMAGE);
-    ADD_TYPE_CB("stretch", _("Vertical space"), TOOL_VERTICAL_SPACE);
+    ADD_TYPE_CB("spacer", _("Vertical space"), TOOL_VERTICAL_SPACE);
     ADD_TYPE_CB("select-lasso", _("Select region"), TOOL_SELECT_REGION);
     ADD_TYPE_CB("select-rect", _("Select rectangle"), TOOL_SELECT_RECT);
     ADD_TYPE_CB("hand", _("Hand"), TOOL_HAND);
