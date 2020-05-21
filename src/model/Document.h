@@ -13,6 +13,8 @@
 
 #pragma once
 
+#include <unordered_map>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -116,6 +118,23 @@ private:
      * The pages in the document
      */
     vector<PageRef> pages;
+
+    /**
+     * Index from pdf page number to document page number
+     */
+    using PageIndex = std::unordered_map<size_t, size_t>;
+
+    /**
+     * The cached page index
+     */
+    std::unique_ptr<PageIndex> pageIndex;
+
+    /**
+     * Creates an index from pdf page number to document page number
+     *
+     * Clears the index first in case it is already exists.
+     */
+    void indexPdfPages();
 
     /**
      * The bookmark contents model
