@@ -1,3 +1,5 @@
+#include "Document.h"
+
 #include <algorithm>
 #include <utility>
 
@@ -5,7 +7,6 @@
 
 #include "pdf/base/XojPdfAction.h"
 
-#include "Document.h"
 #include "LinkDestination.h"
 #include "Stacktrace.h"
 #include "Util.h"
