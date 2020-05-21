@@ -74,16 +74,13 @@ find_package(Boost REQUIRED)
 # GLIB, GTK+, GThread
 
 pkg_check_modules(xournalpp_deps REQUIRED IMPORTED_TARGET GLOBAL
-        "glib-2.0 >= 2.32.0"
-        "gtk+-3.0 >= 3.22.0"
-        "gthread-2.0 >= 2.4.0"
-        "libxop3"
+        "glib-2.0"
+        "gtk4 >= 3.98"
+        "gthread-2.0"
         )
 
 add_library(xournalpp_deff INTERFACE)
 target_compile_definitions(xournalpp_deff
-        INTERFACE -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_32
-        INTERFACE -DGDK_VERSION_MIN_REQUIRED=GDK_VERSION_3_22
         INTERFACE -DGTK_DISABLE_SINGLE_INCLUDES -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGSEAL_ENABLE)
 ################################
 # Runtime linked

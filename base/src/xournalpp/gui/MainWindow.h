@@ -11,10 +11,9 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <gtk-4.0/gtk/gtk.h>
 #include <lager/context.hpp>
 #include <lager/reader.hpp>
-#include <xournalpp/gui/widgets/XournalWidget.h>
 
 #include "xournalpp/Xournalpp.h"
 
@@ -27,10 +26,6 @@ public:
 private:
     // State
     XournalppStore store;
-
-    // View components
-    XournalWidget xournal;
-
 
     // Gtk components
     GtkWindow* window = nullptr;

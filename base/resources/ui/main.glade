@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.36.0 -->
 <interface>
   <requires lib="gtk+" version="3.10"/>
   <object class="GtkAdjustment" id="adjHorizontal">
@@ -129,9 +129,6 @@
     <property name="can_focus">False</property>
     <property name="icon">pixmaps/com.github.xournalpp.xournalpp.svg</property>
     <child>
-      <placeholder/>
-    </child>
-    <child>
       <object class="GtkOverlay" id="mainOverlay">
         <property name="name">mainOverlay</property>
         <property name="visible">True</property>
@@ -222,8 +219,8 @@
                             <property name="use_underline">True</property>
                             <property name="use_stock">True</property>
                             <signal name="activate" handler="ACTION_SAVE_AS" swapped="no"/>
-                            <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                             <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                            <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -905,8 +902,8 @@
                             <property name="use_underline">True</property>
                             <property name="use_stock">True</property>
                             <signal name="activate" handler="ACTION_ZOOM_IN" swapped="no"/>
-                            <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                             <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -918,8 +915,8 @@
                             <property name="use_underline">True</property>
                             <property name="use_stock">True</property>
                             <signal name="activate" handler="ACTION_ZOOM_OUT" swapped="no"/>
-                            <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                             <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -2205,7 +2202,50 @@
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <placeholder/>
+                          <object class="GtkScrolledWindow">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="hexpand">True</property>
+                            <property name="vexpand">True</property>
+                            <property name="shadow_type">in</property>
+                            <child>
+                              <object class="GtkViewport">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <object class="GtkScrolledWindow">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="hexpand">True</property>
+                                    <property name="vexpand">True</property>
+                                    <property name="shadow_type">in</property>
+                                    <child>
+                                      <object class="GtkViewport">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <child>
+                                          <object class="GtkLabel">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="margin_right">380</property>
+                                            <property name="margin_bottom">742</property>
+                                            <property name="hexpand">True</property>
+                                            <property name="vexpand">True</property>
+                                            <property name="label" translatable="yes">label</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
                         </child>
                       </object>
                       <packing>
@@ -2510,6 +2550,9 @@
           </packing>
         </child>
       </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
     </child>
   </object>
   <object class="GtkMenu" id="sidebarPreviewContextMenu">
