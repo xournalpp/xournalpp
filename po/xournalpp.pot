@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-20 03:35+0000\n"
+"POT-Creation-Date: 2020-05-21 11:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/control/XournalMain.cpp:555
+#: ../src/control/XournalMain.cpp:557
 msgid ""
 "\n"
 "\n"
 "Will now attempt to run without this file."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:535
+#: ../src/control/XournalMain.cpp:537
 msgid ""
 "\n"
 "Will now attempt to run without this file."
@@ -44,7 +44,7 @@ msgid ""
 "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:550
+#: ../src/control/XournalMain.cpp:552
 msgid ""
 "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
@@ -711,7 +711,7 @@ msgstr ""
 msgid "Medium"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:532
+#: ../src/control/XournalMain.cpp:534
 msgid ""
 "Missing the needed UI file:\n"
 "{1}\n"
@@ -1076,13 +1076,13 @@ msgstr ""
 msgid "Show only not used pages ({1} unused pages)"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:381
+#: ../src/control/XournalMain.cpp:383
 msgid ""
 "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:393
+#: ../src/control/XournalMain.cpp:395
 msgid ""
 "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
@@ -1842,7 +1842,7 @@ msgstr ""
 msgid "Author: "
 msgstr ""
 
-#: ../ui/about.glade:186
+#: ../ui/about.glade:211
 msgid "Authors:"
 msgstr ""
 
@@ -2143,7 +2143,7 @@ msgstr ""
 msgid "Fullscreen"
 msgstr ""
 
-#: ../ui/about.glade:281
+#: ../ui/about.glade:306
 msgid "GNU GPLv2 or later"
 msgstr ""
 
@@ -2265,7 +2265,7 @@ msgstr ""
 msgid "Left / Right-Handed"
 msgstr ""
 
-#: ../ui/about.glade:265
+#: ../ui/about.glade:290
 msgid "License"
 msgstr ""
 
@@ -2376,7 +2376,7 @@ msgstr ""
 msgid "Paper b_ackground"
 msgstr ""
 
-#: ../ui/about.glade:247
+#: ../ui/about.glade:272
 msgid ""
 "Partially based on Xournal\n"
 "by Denis Auroux"
@@ -2646,12 +2646,16 @@ msgstr ""
 msgid "Width:"
 msgstr ""
 
-#: ../ui/about.glade:232
+#: ../ui/about.glade:257
 msgid "With help from the community"
 msgstr ""
 
 #: ../ui/settings.glade:1991
 msgid "Workaround"
+msgstr ""
+
+#: ../ui/about.glade:192
+msgid "X.X.X"
 msgstr ""
 
 #: ../ui/settings.glade:137
@@ -2958,4 +2962,8 @@ msgstr ""
 
 #: ../ui/main.glade:1524 ../ui/main.glade:1670 ../ui/main.glade:1779
 msgid "ver_y thick"
+msgstr ""
+
+#: ../ui/about.glade:178
+msgid "with libgtk"
 msgstr ""
