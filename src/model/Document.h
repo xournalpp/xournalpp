@@ -46,6 +46,8 @@ public:
 
     void insertPage(const PageRef& p, size_t position);
     void addPage(const PageRef& p);
+    template<class InputIter>
+    void addPages(InputIter first, InputIter last);
     PageRef getPage(size_t page);
     void deletePage(size_t pNr);
 
@@ -156,3 +158,10 @@ private:
      */
     GMutex documentLock{};
 };
+
+template<class InputIter>
+void Document::addPages(InputIter first, InputIter last) {
+  this->pages.insert(this->pages.end(), first, last);
+  this->pageIndex.reset();
+  updateIndexPageNumbers();
+}
