@@ -5,21 +5,27 @@ parameters:
   cmake_flags: ''
 
 steps:
-  - task: DownloadPipelineArtifact@2
-    inputs:
-      buildType: 'specific'
-      project: 'ce85de88-4b71-44a0-8a57-2707c0b9a6e7'
-      definition: '8'
-      buildVersionToDownload: 'latest'
-      targetPath: 'C:\'
-      artifact: 'msys'
-  - task: ExtractFiles@1
-    inputs:
-      archiveFilePatterns: 'C:\msys.7z'
-      destinationFolder: 'C:\'
-      cleanDestinationFolder: false
+  # Copy of msys2-blob as a temporary fix for Windows CI
   - script: |
-      set PATH=%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
+      set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+      pacman --noconfirm -S mingw-w64-x86_64-ninja mingw-w64-x86_64-cppunit mingw-w64-x86_64-poppler mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip mingw-w64-x86_64-lua
+    env:
+      MSYS2_ARCH: x86_64
+      MSYSTEM: MINGW64
+      CHERE_INVOKING: yes
+    displayName: 'Install dependencies on Windows'
+  - script: |
+      set PATH="C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%"
+      C:\msys64\usr\bin\bash -lc "./build-portaudio.sh"
+    workingDirectory: ./windows-setup
+    env:
+      MSYS2_ARCH: x86_64
+      MSYSTEM: MINGW64
+      CHERE_INVOKING: yes
+    displayName: 'Build Portaudio'
+  # End msys setup
+  - script: |
+      set PATH="C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%"
       C:\msys64\usr\bin\bash -lc "mkdir build"
     env:
       MSYS2_ARCH: x86_64
@@ -27,7 +33,7 @@ steps:
       CHERE_INVOKING: yes
     displayName: 'Create build directory'
   - script: |
-      set PATH=%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
+      set PATH="C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%"
       C:\msys64\usr\bin\bash -lc "cmake -GNinja .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type}} ${{ parameters.cmake_flags }}"
       rem Make sure pot is up to date with sources (maybe translation pipeline is currently running)
       C:\msys64\usr\bin\bash -lc "cmake --build . --target pot"
