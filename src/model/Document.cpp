@@ -1,5 +1,6 @@
 #include "Document.h"
 
+#include <algorithm>
 #include <utility>
 
 #include <config.h>
@@ -85,6 +86,7 @@ void Document::clearDocument(bool destroy) {
     }
 
     this->pages.clear();
+    this->pageIndex.reset();
     freeTreeContentModel();
 
     this->filename = "";
@@ -169,15 +171,15 @@ auto Document::isPdfDocumentLoaded() -> bool { return pdfDocument.isLoaded(); }
 auto Document::isAttachPdf() const -> bool { return this->attachPdf; }
 
 auto Document::findPdfPage(size_t pdfPage) -> size_t {
-    for (size_t i = 0; i < getPageCount(); i++) {
-        PageRef p = this->pages[i];
-        if (p->getBackgroundType().isPdfPage()) {
-            if (p->getPdfPageNr() == pdfPage) {
-                return i;
-            }
-        }
+    // Create a page index if not already indexed.
+    if (!this->pageIndex)
+        indexPdfPages();
+    auto pos = this->pageIndex->find(pdfPage);
+    if (pos == this->pageIndex->end()) {
+        return -1;
+    } else {
+        return pos->second;
     }
-    return -1;
 }
 
 void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterator* iter) {
@@ -214,6 +216,18 @@ void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterato
 
     } while (iter->next());
 }
+
+void Document::indexPdfPages() {
+    auto index = std::make_unique<PageIndex>();
+    for (size_t i = 0; i < this->pages.size(); ++i) {
+        const auto& p = this->pages[i];
+        if (p->getBackgroundType().isPdfPage()) {
+            index->emplace(p->getPdfPageNr(), i);
+        }
+    }
+    this->pageIndex.swap(index);
+}
+
 
 void Document::buildContentsModel() {
     freeTreeContentModel();
@@ -298,10 +312,11 @@ auto Document::readPdf(const Path& filename, bool initPages, bool attachToDocume
             XojPdfPageSPtr page = pdfDocument.getPage(i);
             auto p = std::make_shared<XojPage>(page->getWidth(), page->getHeight());
             p->setBackgroundPdfPageNr(i);
-            addPage(std::move(p));
+            this->pages.emplace_back(std::move(p));
         }
     }
 
+    indexPdfPages();
     buildContentsModel();
     updateIndexPageNumbers();
 
@@ -327,18 +342,24 @@ void Document::deletePage(size_t pNr) {
     auto it = this->pages.begin() + pNr;
     this->pages.erase(it);
 
+    // Reset the page index
+    this->pageIndex.reset();
     updateIndexPageNumbers();
 }
 
 void Document::insertPage(const PageRef& p, size_t position) {
     this->pages.insert(this->pages.begin() + position, p);
 
+    // Reset the page index
+    this->pageIndex.reset();
     updateIndexPageNumbers();
 }
 
 void Document::addPage(const PageRef& p) {
     this->pages.push_back(p);
 
+    // Reset the page index
+    this->pageIndex.reset();
     updateIndexPageNumbers();
 }
 
@@ -378,11 +399,9 @@ auto Document::operator=(const Document& doc) -> Document& {
     this->createBackupOnSave = doc.createBackupOnSave;
     this->pdfFilename = doc.pdfFilename;
     this->filename = doc.filename;
+    this->pages = doc.pages;
 
-    for (const PageRef& p: doc.pages) {
-        addPage(p);
-    }
-
+    indexPdfPages();
     buildContentsModel();
     updateIndexPageNumbers();
 
