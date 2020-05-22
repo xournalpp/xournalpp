@@ -232,7 +232,7 @@ double XojPage::getHeight() const
 	return this->height;
 }
 
-size_t XojPage::getPdfPageNr()
+size_t XojPage::getPdfPageNr() const
 {
 	XOJ_CHECK_TYPE(XojPage);
 
@@ -269,7 +269,7 @@ void XojPage::setBackgroundType(PageType bgType)
 	}
 }
 
-PageType XojPage::getBackgroundType()
+PageType XojPage::getBackgroundType() const
 {
 	XOJ_CHECK_TYPE(XojPage);
 
