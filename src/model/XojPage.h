@@ -45,9 +45,9 @@ public:
 	void setBackgroundPdfPageNr(size_t page);
 
 	void setBackgroundType(PageType bgType);
-	PageType getBackgroundType();
+    PageType getBackgroundType() const;
 
-	/**
+    /**
 	 * Do not call this, cal doc->setPageSize(Page * p, double width, double height);
 	 */
 	void setSize(double width, double height);
@@ -55,9 +55,9 @@ public:
 	double getWidth() const;
 	double getHeight() const;
 
-	size_t getPdfPageNr();
+    size_t getPdfPageNr() const;
 
-	bool isAnnotated();
+    bool isAnnotated();
 
 	void setBackgroundColor(int color);
 	int getBackgroundColor();

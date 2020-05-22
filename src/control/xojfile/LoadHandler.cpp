@@ -293,7 +293,10 @@ bool LoadHandler::parseXml()
 
 	g_markup_parse_context_free(context);
 
-	if (this->pos != PASER_POS_FINISHED && this->lastError == "")
+    // Add all parsed pages to the document
+    this->doc.addPages(pages.begin(), pages.end());
+
+    if (this->pos != PASER_POS_FINISHED && this->lastError == "")
 	{
 		lastError = _("Document is not complete (maybe the end is cut off?)");
 		return false;
@@ -374,7 +377,7 @@ void LoadHandler::parseContents()
 
 		this->page = new XojPage(width, height);
 
-		this->doc.addPage(this->page);
+        pages.push_back(this->page);
 	}
 	else if (strcmp(elementName, "audio") == 0)
 	{

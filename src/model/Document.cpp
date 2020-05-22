@@ -9,6 +9,7 @@
 #include <i18n.h>
 #include <Stacktrace.h>
 #include <Util.h>
+#include <util/cpp14memory.h>
 
 Document::Document(DocumentHandler* handler)
  : handler(handler)
@@ -112,6 +113,7 @@ void Document::clearDocument(bool destroy)
 	}
 
 	this->pages.clear();
+    this->pageIndex.reset();
 	freeTreeContentModel();
 
 	this->filename = "";
@@ -259,18 +261,15 @@ size_t Document::findPdfPage(size_t pdfPage)
 {
 	XOJ_CHECK_TYPE(Document);
 
-	for (size_t i = 0; i < getPageCount(); i++)
-	{
-		PageRef p = this->pages[i];
-		if (p->getBackgroundType().isPdfPage())
-		{
-			if (p->getPdfPageNr() == pdfPage)
-			{
-				return i;
-			}
-		}
-	}
-	return -1;
+    // Create a page index if not already indexed.
+    if (!this->pageIndex)
+        indexPdfPages();
+    auto pos = this->pageIndex->find(pdfPage);
+    if (pos == this->pageIndex->end()) {
+        return -1;
+    } else {
+        return pos->second;
+    }
 }
 
 void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterator* iter)
@@ -314,6 +313,18 @@ void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterato
 	}
 	while (iter->next());
 }
+
+void Document::indexPdfPages() {
+    auto index = mem::make_unique<PageIndex>();
+    for (size_t i = 0; i < this->pages.size(); ++i) {
+        const auto& p = this->pages[i];
+        if (p->getBackgroundType().isPdfPage()) {
+            index->emplace(p->getPdfPageNr(), i);
+        }
+    }
+    this->pageIndex.swap(index);
+}
+
 
 void Document::buildContentsModel()
 {
@@ -422,10 +433,11 @@ bool Document::readPdf(Path filename, bool initPages, bool attachToDocument, gpo
 			XojPdfPageSPtr page = pdfDocument.getPage(i);
 			PageRef p = new XojPage(page->getWidth(), page->getHeight());
 			p->setBackgroundPdfPageNr(i);
-			addPage(p);
-		}
+            this->pages.emplace_back(p);
+        }
 	}
 
+    indexPdfPages();
 	buildContentsModel();
 	updateIndexPageNumbers();
 
@@ -470,6 +482,7 @@ void Document::deletePage(size_t pNr)
 	vector<PageRef>::iterator it = this->pages.begin() + pNr;
 	this->pages.erase(it);
 
+    this->pageIndex.reset();
 	updateIndexPageNumbers();
 }
 
@@ -479,7 +492,8 @@ void Document::insertPage(const PageRef& p, size_t position)
 
 	this->pages.insert(this->pages.begin() + position, p);
 
-	updateIndexPageNumbers();
+    this->pageIndex.reset();
+    updateIndexPageNumbers();
 }
 
 void Document::addPage(const PageRef& p)
@@ -488,7 +502,8 @@ void Document::addPage(const PageRef& p)
 
 	this->pages.push_back(p);
 
-	updateIndexPageNumbers();
+    this->pageIndex.reset();
+    updateIndexPageNumbers();
 }
 
 size_t Document::indexOf(const PageRef& page)
@@ -550,12 +565,9 @@ Document& Document::operator=(const Document& doc)
 	this->createBackupOnSave = doc.createBackupOnSave;
 	this->pdfFilename = doc.pdfFilename;
 	this->filename = doc.filename;
+    this->pages = doc.pages;
 
-	for (const PageRef& p: doc.pages)
-	{
-		addPage(p);
-	}
-
+    indexPdfPages();
 	buildContentsModel();
 	updateIndexPageNumbers();
 

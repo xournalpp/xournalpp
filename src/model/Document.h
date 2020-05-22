@@ -21,6 +21,7 @@
 #include "pdf/base/XojPdfPage.h"
 #include "pdf/base/XojPdfBookmarkIterator.h"
 
+#include <unordered_map>
 #include <Path.h>
 #include <XournalType.h>
 
@@ -47,7 +48,9 @@ public:
 
 	void insertPage(const PageRef& p, size_t position);
 	void addPage(const PageRef& p);
-	PageRef getPage(size_t page);
+    template <class InputIter>
+    void addPages(InputIter first, InputIter last);
+    PageRef getPage(size_t page);
 	void deletePage(size_t pNr);
 
 	void setPageSize(PageRef p, double width, double height);
@@ -123,7 +126,24 @@ private:
 	 */
 	vector<PageRef> pages;
 
-	/**
+    /**
+     * Index from pdf page number to document page number
+     */
+    using PageIndex = std::unordered_map<size_t, size_t>;
+
+    /**
+     * The cached page index
+     */
+    std::unique_ptr<PageIndex> pageIndex;
+
+    /**
+     * Creates an index from pdf page number to document page number
+     *
+     * Clears the index first in case it is already exists.
+     */
+    void indexPdfPages();
+
+    /**
 	 * The bookmark contents model
 	 */
 	GtkTreeModel* contentsModel = NULL;
@@ -143,3 +163,10 @@ private:
 	 */
 	GMutex documentLock;
 };
+
+template <class InputIter>
+void Document::addPages(InputIter first, InputIter last) {
+    this->pages.insert(this->pages.end(), first, last);
+    this->pageIndex.reset();
+    updateIndexPageNumbers();
+}
