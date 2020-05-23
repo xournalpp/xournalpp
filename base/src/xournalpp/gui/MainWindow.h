@@ -23,6 +23,10 @@ public:
 
     auto show() -> void;
 
+    static auto dragBegin(GtkGestureDrag* gesture, double start_x, double start_y, gpointer user_data) -> void;
+    static auto dragEnd(GtkGestureDrag* gesture, double offset_x, double offset_y, gpointer user_data) -> void;
+    static auto dragUpdate(GtkGestureDrag* gesture, double offset_x, double offset_y, gpointer user_data) -> void;
+
 private:
     // State
     XournalppStore store;
