@@ -699,6 +699,9 @@ void XournalView::documentChanged(DocumentChangeType type) {
     }
     viewPages.clear();
 
+    delete this->cache;
+    this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
+
     Document* doc = control->getDocument();
     doc->lock();
 
