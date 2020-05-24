@@ -699,6 +699,8 @@ void XournalView::documentChanged(DocumentChangeType type) {
     }
     viewPages.clear();
 
+    this->cache->clearCache();
+
     Document* doc = control->getDocument();
     doc->lock();
 

@@ -35,10 +35,10 @@ private:
 
 public:
     void render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, double zoom);
+    void clearCache();
 
 private:
     void setZoom(double zoom);
-    void clearCache();
     cairo_surface_t* lookup(const XojPdfPageSPtr& popplerPage);
     void cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img);
 
