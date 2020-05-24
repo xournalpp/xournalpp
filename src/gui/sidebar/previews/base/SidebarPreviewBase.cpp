@@ -135,6 +135,7 @@ void SidebarPreviewBase::documentChanged(DocumentChangeType type)
 
 	if (type == DOCUMENT_CHANGE_COMPLETE || type == DOCUMENT_CHANGE_CLEARED)
 	{
+        this->cache->clearCache();
 		updatePreviews();
 	}
 }

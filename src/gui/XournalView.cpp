@@ -1024,6 +1024,8 @@ void XournalView::documentChanged(DocumentChangeType type)
 	}
 	delete[] this->viewPages;
 
+    this->cache->clearCache();
+
 	Document* doc = control->getDocument();
 	doc->lock();
 
