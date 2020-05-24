@@ -41,7 +41,7 @@ stages:
           - template: steps/build_windows.yml
             parameters:
               build_type: 'Debug'
-              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_OSX_DEPLOYMENT_TARGET=10.13'
+              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
           - script: |
               set PATH=%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
               C:\msys64\usr\bin\bash -lc "CI=true ctest --verbose"
@@ -60,7 +60,7 @@ stages:
           - template: steps/build_mac.yml
             parameters:
               build_type: 'Debug'
-              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
+              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_OSX_DEPLOYMENT_TARGET=10.13'
           - bash: |
               export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
               install_name_tool -add_rpath /Users/git-bin/gtk/inst/lib/. test/test-loadHandler
