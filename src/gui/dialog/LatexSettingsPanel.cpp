@@ -18,7 +18,6 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
     if (!settings.globalTemplatePath.empty()) {
         gtk_file_chooser_set_filename(this->globalTemplateChooser, settings.globalTemplatePath.u8string().c_str());
     }
-    gtk_entry_set_text(GTK_ENTRY(this->get("latexSettingsKpsewhich")), settings.kpsewhichCmd.c_str());
     gtk_entry_set_text(GTK_ENTRY(this->get("latexSettingsGenCmd")), settings.genCmd.c_str());
 }
 
@@ -31,7 +30,6 @@ void LatexSettingsPanel::save(LatexSettings& settings) {
     } else {
         settings.globalTemplatePath = "";
     }
-    settings.kpsewhichCmd = gtk_entry_get_text(GTK_ENTRY(this->get("latexSettingsKpsewhich")));
     settings.genCmd = gtk_entry_get_text(GTK_ENTRY(this->get("latexSettingsGenCmd")));
 }
 

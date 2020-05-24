@@ -455,8 +455,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.globalTemplatePath")) == 0) {
         std::string v(reinterpret_cast<char*>(value));
         this->latexSettings.globalTemplatePath = fs::u8path(v);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.kpsewhichCmd")) == 0) {
-        this->latexSettings.kpsewhichCmd = reinterpret_cast<char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genCmd")) == 0) {
         this->latexSettings.genCmd = reinterpret_cast<char*>(value);
     }
@@ -836,7 +834,6 @@ void Settings::save() {
     // wchar_t instead of char
     fs::path& p = latexSettings.globalTemplatePath;
     xmlNode = saveProperty("latexSettings.globalTemplatePath", p.empty() ? "" : p.u8string().c_str(), root);
-    WRITE_STRING_PROP(latexSettings.kpsewhichCmd);
     WRITE_STRING_PROP(latexSettings.genCmd);
 
     xmlNodePtr xmlFont = nullptr;
