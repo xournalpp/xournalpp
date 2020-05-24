@@ -31,6 +31,8 @@ public:
     void save(LatexSettings& settings);
 
 private:
+    void checkDeps();
+
     GtkToggleButton* cbAutoDepCheck;
     GtkFileChooser* globalTemplateChooser;
 };
