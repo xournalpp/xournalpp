@@ -5,7 +5,7 @@
 MainWindow::MainWindow(GtkApplication* app, XournalppStore store): store(std::move(store)) {
     this->window = reinterpret_cast<GtkWindow*>(gtk_application_window_new(app));
     auto scrolled = gtk_scrolled_window_new(NULL, NULL);
-    auto child = gtk_image_new_from_file("/home/julius/Bilder/mr-robot-fsociety-logo-minimalism-qs-2560x1440.jpg");
+    auto child = gtk_image_new_from_resource("pixmaps/com.github.xournalpp.xournalpp.svg");
     gtk_widget_set_size_request(child, 1000, 1000);
     gtk_scrolled_window_set_child(reinterpret_cast<GtkScrolledWindow*>(scrolled), child);
     gtk_scrolled_window_set_capture_button_press(reinterpret_cast<GtkScrolledWindow*>(scrolled), false);
