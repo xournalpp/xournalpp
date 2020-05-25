@@ -34,16 +34,6 @@ steps:
       unzip ninja-mac.zip -d /Users/git-bin/gtk/inst/bin
     displayName: 'Get Ninja'
   - bash: |
-      set -e
-      # Using SourceForge instead of bintray due to boostorg/boost#299
-      curl -L -o boost_1_72_0.tar.gz https://sourceforge.net/projects/boost/files/boost/1.72.0/boost_1_72_0.tar.gz/download
-      tar -xzf boost_1_72_0.tar.gz
-      cd boost_1_72_0
-      ./bootstrap.sh --prefix=/usr/local/boost-1.72.0
-      sudo ./b2 cxxflags="-std=c++17" --with-system --with-filesystem variant=release link=static threading=multi install
-      export DYLD_LIBRARY_PATH=/usr/local/boost-1.72.0/lib:$DYLD_LIBRARY_PATH
-    displayName: 'Build boost'
-  - bash: |
       export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
       cmake -GNinja -DCMAKE_INSTALL_PREFIX:PATH=/Users/git-bin/gtk/inst .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type }} ${{ parameters.cmake_flags }}
       # Make sure pot is up to date with sources (maybe translation pipeline is currently running)

@@ -1,6 +1,11 @@
 # Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
 # file Copyright.txt or https://cmake.org/licensing for details.
 
+# Original file from CMake Community Modules by vector-of-bool
+# (https://github.com/vector-of-bool/CMakeCM)
+#
+# With modifications by the Xournal++ Team
+
 #[=======================================================================[.rst:
 
 FindFilesystem
@@ -105,6 +110,7 @@ endif ()
 include(CMakePushCheckState)
 include(CheckIncludeFileCXX)
 include(CheckCXXSourceCompiles)
+include(ExternalProject)
 
 cmake_push_check_state()
 
@@ -121,7 +127,7 @@ endif ()
 
 # Warn on any unrecognized components
 set(extra_components ${want_components})
-list(REMOVE_ITEM extra_components Final Experimental Boost)
+list(REMOVE_ITEM extra_components Final Experimental Boost ghc)
 foreach (component IN LISTS extra_components)
     message(WARNING "Extraneous find_package component for Filesystem: ${component}")
 endforeach ()
@@ -236,13 +242,37 @@ if (NOT _found AND "Boost" IN_LIST want_components)
     find_package(Boost COMPONENTS filesystem)
     if (TARGET Boost::filesystem)
         set(_found TRUE)
-        set(CXX_FILESYSTEM_HEADER boost/filesystem.hpp CACHE STRING "The header that should be included to obtain the filesystem APIs")
-        set(CXX_FILESYSTEM_NAMESPACE boost::filesystem CACHE STRING "The C++ namespace that contains the filesystem APIs")
+        set(CXX_FILESYSTEM_HEADER boost/filesystem.hpp CACHE STRING "The header that should be included to obtain the filesystem APIs" FORCE)
+        set(CXX_FILESYSTEM_NAMESPACE boost::filesystem CACHE STRING "The C++ namespace that contains the filesystem APIs" FORCE)
         add_library(std_filesystem INTERFACE)
         target_compile_features(std_filesystem INTERFACE cxx_std_17)
         target_link_libraries(std_filesystem INTERFACE Boost::boost Boost::filesystem)
         add_library(std::filesystem ALIAS std_filesystem)
     endif ()
+elseif (NOT _found AND "ghc" IN_LIST want_components)
+    message("-- Using ghc::filesystem (git download)")
+    set (GHC_FILESYSTEM ghcFilesystem_git)
+    ExternalProject_Add(${GHC_FILESYSTEM}
+      GIT_REPOSITORY "https://github.com/gulrak/filesystem.git"
+      GIT_TAG "v1.3.2"
+      LOG_DOWNLOAD 1
+      CONFIGURE_COMMAND ""
+      BUILD_COMMAND ""
+      UPDATE_COMMAND ""
+      INSTALL_COMMAND ""
+      )
+    set(_found TRUE)
+    set(CXX_FILESYSTEM_HEADER ghc/filesystem.hpp CACHE STRING "The header that should be included to obtain the filesystem APIs" FORCE)
+    set(CXX_FILESYSTEM_NAMESPACE ghc::filesystem CACHE STRING "The C++ namespace that contains the filesystem APIs" FORCE)
+
+    add_library(std_filesystem INTERFACE)
+    add_dependencies(std_filesystem ghcFilesystem_git)
+    target_compile_features(std_filesystem INTERFACE cxx_std_17)
+    ExternalProject_Get_Property(${GHC_FILESYSTEM} SOURCE_DIR)
+    file(MAKE_DIRECTORY "${SOURCE_DIR}/include")
+    target_include_directories(std_filesystem INTERFACE "${SOURCE_DIR}/include")
+
+    add_library(std::filesystem ALIAS std_filesystem)
 endif ()
 
 
