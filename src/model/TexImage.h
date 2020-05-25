@@ -51,8 +51,8 @@ public:
      */
     PopplerDocument* getPdf();
 
-    virtual void scale(double x0, double y0, double fx, double fy);
-    virtual void rotate(double x0, double y0, double xo, double yo, double th);
+    virtual void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth);
+    virtual void rotate(double x0, double y0, double th);
 
     // text tag to alow latex
     void setText(string text);
@@ -71,7 +71,7 @@ public:
     void readSerialized(ObjectInputStream& in);
 
 private:
-    virtual void calcSize();
+    void calcSize() const override;
 
     static cairo_status_t cairoReadFunction(TexImage* image, unsigned char* data, unsigned int length);
 

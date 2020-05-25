@@ -7,8 +7,12 @@
 #include "undo/UndoRedoHandler.h"
 #include "view/DocumentView.h"
 
-VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, double y, double zoom):
-        view(view), page(page), layer(this->page->getSelectedLayer()), startY(y), endY(y) {
+VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, Settings* settings, double y,
+                                         double zoom):
+        view(view), page(page), layer(this->page->getSelectedLayer()), snappingHandler(settings) {
+    double ySnapped = snappingHandler.snapVertically(y, false);
+    this->startY = ySnapped;
+    this->endY = ySnapped;
     for (Element* e: *this->layer->getElements()) {
         if (e->getY() >= y) {
             this->elements.push_back(e);
@@ -76,12 +80,13 @@ void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
 }
 
 void VerticalToolHandler::currentPos(double x, double y) {
-    if (this->endY == y) {
+    double ySnapped = snappingHandler.snapVertically(y, false);
+    if (this->endY == ySnapped) {
         return;
     }
-    double y1 = std::min(this->endY, y);
+    double y1 = std::min(this->endY, ySnapped);
 
-    this->endY = y;
+    this->endY = ySnapped;
 
     this->view->repaintRect(0, y1, this->page->getWidth(), this->page->getHeight());
 }

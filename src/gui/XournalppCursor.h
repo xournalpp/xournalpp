@@ -38,6 +38,7 @@ public:
     void setInsidePage(bool insidePage);
     void activateDrawDirCursor(bool enable, bool shift = false, bool ctrl = false);
     void setInputDeviceClass(InputDeviceClass inputDevice);
+    void setRotationAngle(double angle);
 
 private:
     void setCursor(int id);
@@ -46,6 +47,7 @@ private:
 
     GdkCursor* getEraserCursor();
     GdkCursor* getHighlighterCursor();
+    GdkCursor* getResizeCursor(double deltaAngle);
 
     GdkCursor* createHighlighterOrPenCursor(int size, double alpha);
     GdkCursor* createCustomDrawDirCursor(int size, bool shift, bool ctrl);
@@ -70,4 +72,7 @@ private:
     guint currentCursor = 0;        // enum AVAILABLECURSORS
     gulong currentCursorFlavour{};  // for different flavours of a cursor (i.e. drawdir, pen and hilighter custom
                                     // cursors)
+
+    // for resizing rotated selections
+    double angle = 0;
 };

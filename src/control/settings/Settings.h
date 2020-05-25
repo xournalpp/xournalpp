@@ -400,7 +400,6 @@ public:
      */
     bool getStrokeFilterEnabled() const;
 
-
     /**
      * get strokeFilter settings
      */
@@ -431,6 +430,28 @@ public:
      * Get TrySelectOnStrokeFilter enabled
      */
     bool getTrySelectOnStrokeFiltered() const;
+
+
+    /**
+     * Set snap recognized shapes enabled
+     */
+    void setSnapRecognizedShapesEnabled(bool enabled);
+
+    /**
+     * Get snap recognized shapes enabled
+     */
+    bool getSnapRecognizedShapesEnabled() const;
+
+    /**
+     * Set line width restoring for resized edit selctions enabled
+     */
+    void setRestoreLineWidthEnabled(bool enabled);
+
+    /**
+     * Get line width restoring enabled
+     */
+    bool getRestoreLineWidthEnabled() const;
+
 
 public:
     // Custom settings
@@ -826,6 +847,16 @@ private:
     bool strokeFilterEnabled{};
     bool doActionOnStrokeFiltered{};
     bool trySelectOnStrokeFiltered{};
+
+    /**
+     * Whether snapping for recognized shapes is enabled
+     */
+    bool snapRecognizedShapesEnabled{};
+
+    /**
+     * Whether the line width should be preserved in a resizing operation
+     */
+    bool restoreLineWidthEnabled{};
 
     /**
      * How many stylus events since hitting the screen should be ignored before actually starting the action. If set to

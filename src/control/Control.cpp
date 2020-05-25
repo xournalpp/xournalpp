@@ -2642,10 +2642,9 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
         y = std::max(0.0, y - selection->getHeight() / 2);
 
         // calculate difference between current selection position and destination
-        auto dx = selection->getXOnView() - x;
-        auto dy = selection->getYOnView() - y;
+        auto dx = x - selection->getXOnView();
+        auto dy = y - selection->getYOnView();
 
-        // for some reason selection moving is inverted (x -= dx,...), intended?
         selection->moveSelection(dx, dy);
         // update all Elements (same procedure as moving a element selection by hand and releasing the mouse button)
         selection->mouseUp();

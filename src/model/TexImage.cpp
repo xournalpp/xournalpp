@@ -35,9 +35,15 @@ auto TexImage::clone() -> Element* {
     return img;
 }
 
-void TexImage::setWidth(double width) { this->width = width; }
+void TexImage::setWidth(double width) {
+    this->width = width;
+    this->calcSize();
+}
 
-void TexImage::setHeight(double height) { this->height = height; }
+void TexImage::setHeight(double height) {
+    this->height = height;
+    this->calcSize();
+}
 
 auto TexImage::cairoReadFunction(TexImage* image, unsigned char* data, unsigned int length) -> cairo_status_t {
     for (unsigned int i = 0; i < length; i++, image->read++) {
@@ -91,15 +97,18 @@ auto TexImage::getImage() -> cairo_surface_t* { return this->image; }
 
 auto TexImage::getPdf() -> PopplerDocument* { return this->pdf; }
 
-void TexImage::scale(double x0, double y0, double fx, double fy) {
+void TexImage::scale(double x0, double y0, double fx, double fy, double rotation,
+                     bool) {  // line width scaling option is not used
+
     this->x = (this->x - x0) * fx + x0;
     this->y = (this->y - y0) * fy + y0;
 
     this->width *= fx;
     this->height *= fy;
+    this->calcSize();
 }
 
-void TexImage::rotate(double x0, double y0, double xo, double yo, double th) {
+void TexImage::rotate(double x0, double y0, double th) {
     // Rotation for TexImages not yet implemented
 }
 
@@ -135,6 +144,10 @@ void TexImage::readSerialized(ObjectInputStream& in) {
     this->loadData(std::string(data, len), nullptr);
 
     in.endObject();
+    this->calcSize();
 }
 
-void TexImage::calcSize() {}
+void TexImage::calcSize() const {
+    this->snappedBounds = Rectangle<double>(this->x, this->y, this->width, this->height);
+    this->sizeCalculated = true;
+}

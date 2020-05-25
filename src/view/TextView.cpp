@@ -15,7 +15,7 @@ static int textDpi = 72;
 
 void TextView::setDpi(int dpi) { textDpi = dpi; }
 
-auto TextView::initPango(cairo_t* cr, Text* t) -> PangoLayout* {
+auto TextView::initPango(cairo_t* cr, const Text* t) -> PangoLayout* {
     PangoLayout* layout = pango_cairo_create_layout(cr);
 
     // Additional Feature: add autowrap and text field size for
@@ -30,16 +30,16 @@ auto TextView::initPango(cairo_t* cr, Text* t) -> PangoLayout* {
     return layout;
 }
 
-void TextView::updatePangoFont(PangoLayout* layout, Text* t) {
-    PangoFontDescription* desc = pango_font_description_from_string(t->getFont().getName().c_str());
-    // pango_font_description_set_absolute_size(desc, t->getFont().getSize() * PANGO_SCALE);
-    pango_font_description_set_size(desc, t->getFont().getSize() * PANGO_SCALE);
+void TextView::updatePangoFont(PangoLayout* layout, const Text* t) {
+    PangoFontDescription* desc = pango_font_description_from_string(t->getFontName().c_str());
+    // pango_font_description_set_absolute_size(desc, t->getFontSize() * PANGO_SCALE);
+    pango_font_description_set_size(desc, t->getFontSize() * PANGO_SCALE);
 
     pango_layout_set_font_description(layout, desc);
     pango_font_description_free(desc);
 }
 
-void TextView::drawText(cairo_t* cr, Text* t) {
+void TextView::drawText(cairo_t* cr, const Text* t) {
     cairo_save(cr);
 
     cairo_translate(cr, t->getX(), t->getY());
@@ -55,7 +55,7 @@ void TextView::drawText(cairo_t* cr, Text* t) {
     cairo_restore(cr);
 }
 
-auto TextView::findText(Text* t, string& search) -> vector<XojPdfRectangle> {
+auto TextView::findText(const Text* t, string& search) -> vector<XojPdfRectangle> {
     cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
     cairo_t* cr = cairo_create(surface);
 
@@ -95,7 +95,7 @@ auto TextView::findText(Text* t, string& search) -> vector<XojPdfRectangle> {
     return list;
 }
 
-void TextView::calcSize(Text* t, double& width, double& height) {
+void TextView::calcSize(const Text* t, double& width, double& height) {
     cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
     cairo_t* cr = cairo_create(surface);
 
