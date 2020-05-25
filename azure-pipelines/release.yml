@@ -43,7 +43,7 @@ stages:
             name: 'VersionRelease'
             displayName: 'Set Version Information for Release'
             workingDirectory: ./build
-            condition: and(ne(variables['Build.Reason'], 'Schedule'), ne(variables['runForRelease'], 'False')) # Run for non-scheduled (release)
+            condition: or(eq(variables['Build.Reason'], 'IndividualCI'), ne(variables['runForRelease'], 'False')) # Run for non-scheduled (release)
   - stage: Release
     jobs:
       - job: 'Ubuntu'
