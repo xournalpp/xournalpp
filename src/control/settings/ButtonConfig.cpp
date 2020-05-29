@@ -25,7 +25,7 @@ void ButtonConfig::acceptActions(ToolHandler* toolHandler) {
         return;
     }
 
-    toolHandler->selectTool(this->action, false);
+    toolHandler->selectTool(this->action, false, true);
 
     if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_ERASER) {
 
