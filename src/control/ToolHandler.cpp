@@ -8,7 +8,6 @@
 #include "model/StrokeStyle.h"
 
 #include "Actions.h"
-#include "LastSelectedTool.h"
 #include "Util.h"
 
 ToolListener::~ToolListener() = default;
@@ -133,19 +132,18 @@ void ToolHandler::eraserTypeChanged() {
 
 auto ToolHandler::getEraserType() -> EraserType { return this->eraserType; }
 
-void ToolHandler::selectTool(ToolType type, bool fireToolChanged) {
+void ToolHandler::selectTool(ToolType type, bool fireToolChanged, bool stylus) {
     if (type < 1 || type > TOOL_COUNT) {
         g_warning("unknown tool selected: %i\n", type);
         return;
     }
-    // if lastSelectedTool is set then eraser was only set
-    // temporarily using the stylus buttons
-    if (type == TOOL_ERASER && this->lastSelectedTool) {
-        this->triggeredByStylusButton = true;
-    } else {
-        this->triggeredByStylusButton = false;
+    this->triggeredByStylusButton = stylus;
+    if (!this->triggeredByStylusButton && this->toolbarSelectedTool) {
+        // in this case apply changes to toolbarSelectedTool for later
+        // use of restoreFromToolbarSelectedTool
+        this->toolbarSelectedTool = tools[type - TOOL_PEN].get();
     }
-    this->current = tools[type - TOOL_PEN].get();
+    this->currentTool = tools[type - TOOL_PEN].get();
 
     if (fireToolChanged) {
         this->fireToolChanged();
@@ -160,11 +158,11 @@ void ToolHandler::fireToolChanged() {
 
 auto ToolHandler::getTool(ToolType type) -> Tool& { return *(this->tools[type - TOOL_PEN]); }
 
-auto ToolHandler::getToolType() -> ToolType { return this->current->type; }
+auto ToolHandler::getToolType() -> ToolType { return this->currentTool->type; }
 
-auto ToolHandler::hasCapability(ToolCapabilities cap) -> bool { return (current->capabilities & cap) != 0; }
+auto ToolHandler::hasCapability(ToolCapabilities cap) -> bool { return (currentTool->capabilities & cap) != 0; }
 
-auto ToolHandler::getSize() -> ToolSize { return this->current->getSize(); }
+auto ToolHandler::getSize() -> ToolSize { return this->currentTool->getSize(); }
 
 auto ToolHandler::getPenSize() -> ToolSize { return tools[TOOL_PEN - TOOL_PEN]->getSize(); }
 
@@ -175,7 +173,7 @@ auto ToolHandler::getHilighterSize() -> ToolSize { return tools[TOOL_HILIGHTER -
 void ToolHandler::setPenSize(ToolSize size) {
     this->tools[TOOL_PEN - TOOL_PEN]->setSize(size);
 
-    if (this->current->type == TOOL_PEN) {
+    if (this->currentTool->type == TOOL_PEN) {
         this->listener->toolSizeChanged();
     }
 }
@@ -183,7 +181,7 @@ void ToolHandler::setPenSize(ToolSize size) {
 void ToolHandler::setEraserSize(ToolSize size) {
     this->tools[TOOL_ERASER - TOOL_PEN]->setSize(size);
 
-    if (this->current->type == TOOL_ERASER) {
+    if (this->currentTool->type == TOOL_ERASER) {
         this->listener->toolSizeChanged();
     }
 }
@@ -191,7 +189,7 @@ void ToolHandler::setEraserSize(ToolSize size) {
 void ToolHandler::setHilighterSize(ToolSize size) {
     this->tools[TOOL_HILIGHTER - TOOL_PEN]->setSize(size);
 
-    if (this->current->type == TOOL_HILIGHTER) {
+    if (this->currentTool->type == TOOL_HILIGHTER) {
         this->listener->toolSizeChanged();
     }
 }
@@ -199,7 +197,7 @@ void ToolHandler::setHilighterSize(ToolSize size) {
 void ToolHandler::setPenFillEnabled(bool fill, bool fireEvent) {
     this->tools[TOOL_PEN - TOOL_PEN]->setFill(fill);
 
-    if (this->current->type == TOOL_PEN && fireEvent) {
+    if (this->currentTool->type == TOOL_PEN && fireEvent) {
         this->listener->toolFillChanged();
     }
 }
@@ -213,7 +211,7 @@ auto ToolHandler::getPenFill() -> int { return this->tools[TOOL_PEN - TOOL_PEN]-
 void ToolHandler::setHilighterFillEnabled(bool fill, bool fireEvent) {
     this->tools[TOOL_HILIGHTER - TOOL_PEN]->setFill(fill);
 
-    if (this->current->type == TOOL_HILIGHTER && fireEvent) {
+    if (this->currentTool->type == TOOL_HILIGHTER && fireEvent) {
         this->listener->toolFillChanged();
     }
 }
@@ -225,12 +223,12 @@ void ToolHandler::setHilighterFill(int alpha) { this->tools[TOOL_HILIGHTER - TOO
 auto ToolHandler::getHilighterFill() -> int { return this->tools[TOOL_HILIGHTER - TOOL_PEN]->getFillAlpha(); }
 
 auto ToolHandler::getThickness() -> double {
-    if (this->current->thickness) {
-        return this->current->thickness[this->current->getSize()];
+    if (this->currentTool->thickness) {
+        return this->currentTool->thickness[this->currentTool->getSize()];
     }
 
 
-    g_warning("Request size of \"%s\"", this->current->getName().c_str());
+    g_warning("Request size of \"%s\"", this->currentTool->getName().c_str());
     return 0;
 }
 
@@ -240,7 +238,7 @@ void ToolHandler::setSize(ToolSize size) {
         return;
     }
 
-    this->current->setSize(size);
+    this->currentTool->setSize(size);
     this->listener->toolSizeChanged();
 }
 
@@ -258,37 +256,34 @@ void ToolHandler::setLineStyle(const LineStyle& style) {
  * 			false if the color is selected by a tool change
  * 			and therefore should not be applied to a selection
  */
+
 void ToolHandler::setColor(Color color, bool userSelection) {
-    // TODO: execption rased when switching to eraser in the menu bar
-    //       - Cause: lastSelectedTool not set
-    if (this->current->type == TOOL_ERASER && this->lastSelectedTool) {
-        this->lastSelectedTool->setColor(color);
-        this->listener->toolColorChanged(userSelection);
-        this->listener->setCustomColorSelected();
+    if (this->toolbarSelectedTool) {
+        this->toolbarSelectedTool->setColor(color);
     }
-    this->current->setColor(color);
+    this->currentTool->setColor(color);
     this->listener->toolColorChanged(userSelection);
     this->listener->setCustomColorSelected();
 }
 
-auto ToolHandler::getColor() -> Color { return current->getColor(); }
+auto ToolHandler::getColor() -> Color { return currentTool->getColor(); }
 
 /**
  * @return -1 if fill is disabled, else the fill alpha value
  */
 auto ToolHandler::getFill() -> int {
-    if (!current->getFill()) {
+    if (!currentTool->getFill()) {
         return -1;
     }
 
-    return current->getFillAlpha();
+    return currentTool->getFillAlpha();
 }
 
-auto ToolHandler::getLineStyle() -> const LineStyle& { return current->getLineStyle(); }
+auto ToolHandler::getLineStyle() -> const LineStyle& { return currentTool->getLineStyle(); }
 
-auto ToolHandler::getDrawingType() -> DrawingType { return current->getDrawingType(); }
+auto ToolHandler::getDrawingType() -> DrawingType { return currentTool->getDrawingType(); }
 
-void ToolHandler::setDrawingType(DrawingType drawingType) { current->setDrawingType(drawingType); }
+void ToolHandler::setDrawingType(DrawingType drawingType) { currentTool->setDrawingType(drawingType); }
 
 auto ToolHandler::getTools() const -> std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& { return tools; }
 
@@ -296,7 +291,7 @@ void ToolHandler::saveSettings() {
     SElement& s = settings->getCustomElement("tools");
     s.clear();
 
-    s.setString("current", this->current->getName());
+    s.setString("current", this->currentTool->getName());
 
     for (auto&& tool: tools) {
         SElement& st = s.child(tool->getName());
@@ -364,7 +359,7 @@ void ToolHandler::loadSettings() {
             SElement& st = s.child(tool->getName());
 
             if (selectedTool == tool->getName()) {
-                this->current = tool.get();
+                this->currentTool = tool.get();
             }
 
             int iColor{};
@@ -426,22 +421,21 @@ void ToolHandler::loadSettings() {
     }
 }
 
-void ToolHandler::copyCurrentConfig() {
+void ToolHandler::setToolbarSelectedTool() {
     // If there is no last config, create one, if there is already one
     // do not overwrite this config!
-    if (this->lastSelectedTool == nullptr) {
-        this->lastSelectedTool = new LastSelectedTool(this->current);
+    if (this->toolbarSelectedTool == nullptr) {
+        this->toolbarSelectedTool = this->currentTool;
     }
 }
 
-void ToolHandler::restoreLastConfig() {
-    if (this->lastSelectedTool == nullptr) {
+void ToolHandler::restoreFromToolbarSelectedTool() {
+    if (this->toolbarSelectedTool == nullptr) {
         return;
     }
 
-    this->current = this->lastSelectedTool->restoreAndGet();
-    delete this->lastSelectedTool;
-    this->lastSelectedTool = nullptr;
+    this->currentTool = this->toolbarSelectedTool;
+    this->toolbarSelectedTool = nullptr;
 
     this->listener->toolColorChanged(false);
     this->listener->toolSizeChanged();
@@ -465,8 +459,8 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
         t->setFill(false);
     }
 
-    if (this->current->type == TOOL_SELECT_RECT || this->current->type == TOOL_SELECT_REGION ||
-        this->current->type == TOOL_SELECT_OBJECT || this->current->type == TOOL_PLAY_OBJECT) {
+    if (this->currentTool->type == TOOL_SELECT_RECT || this->currentTool->type == TOOL_SELECT_REGION ||
+        this->currentTool->type == TOOL_SELECT_OBJECT || this->currentTool->type == TOOL_PLAY_OBJECT) {
         this->listener->toolColorChanged(false);
         this->listener->toolSizeChanged();
         this->listener->toolFillChanged();
