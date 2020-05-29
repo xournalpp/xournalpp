@@ -23,7 +23,6 @@
 #include "Tool.h"
 #include "XournalType.h"
 
-class LastSelectedTool;
 
 class ToolListener {
 public:
@@ -89,7 +88,7 @@ public:
     void setHilighterFill(int alpha);
     int getHilighterFill();
 
-    void selectTool(ToolType type, bool fireToolChanged = true);
+    void selectTool(ToolType type, bool fireToolChanged = true, bool stylus = false);
     ToolType getToolType();
     void fireToolChanged();
 
@@ -104,8 +103,8 @@ public:
     void saveSettings();
     void loadSettings();
 
-    void copyCurrentConfig();
-    void restoreLastConfig();
+    void setToolbarSelectedTool();
+    void restoreFromToolbarSelectedTool();
 
     std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& getTools() const;
 
@@ -130,12 +129,12 @@ protected:
 
 private:
     std::array<std::unique_ptr<Tool>, TOOL_COUNT> tools;
-    Tool* current = nullptr;
+    Tool* currentTool = nullptr;
 
     /**
      * Last selected tool, reference with color values etc.
      */
-    LastSelectedTool* lastSelectedTool = nullptr;
+    Tool* toolbarSelectedTool = nullptr;
 
     EraserType eraserType = ERASER_TYPE_DEFAULT;
 

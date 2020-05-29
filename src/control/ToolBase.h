@@ -26,11 +26,6 @@ public:
     ToolBase();
     virtual ~ToolBase();
 
-    /**
-     * Apply data from another ToolBase or any extending class
-     */
-    void applyFrom(const ToolBase* t);
-
 private:
     void operator=(const ToolBase& t);
     ToolBase(const ToolBase& t);
