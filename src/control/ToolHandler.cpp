@@ -95,8 +95,9 @@ void ToolHandler::initTools() {
     tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] = std::make_unique<Tool>("showFloatingToolbox", TOOL_FLOATING_TOOLBOX,
                                                                      Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
-
-    selectTool(TOOL_PEN);
+    this->buttonSelectedTool = &getTool(TOOL_PEN);
+    this->toolbarSelectedTool = &getTool(TOOL_PEN);
+    this->currentTool = &getTool(TOOL_PEN);
 }
 
 ToolHandler::~ToolHandler() {
@@ -132,18 +133,18 @@ void ToolHandler::eraserTypeChanged() {
 
 auto ToolHandler::getEraserType() -> EraserType { return this->eraserType; }
 
-void ToolHandler::selectTool(ToolType type, bool fireToolChanged, bool stylus) {
+void ToolHandler::selectTool(ToolType type, bool fireToolChanged, bool triggeredByButton) {
     if (type < 1 || type > TOOL_COUNT) {
         g_warning("unknown tool selected: %i\n", type);
         return;
     }
-    this->triggeredByStylusButton = stylus;
-    if (!this->triggeredByStylusButton && this->toolbarSelectedTool) {
-        // in this case apply changes to toolbarSelectedTool for later
-        // use of restoreFromToolbarSelectedTool
-        this->toolbarSelectedTool = tools[type - TOOL_PEN].get();
+    this->triggeredByButton = triggeredByButton;
+    if (this->triggeredByButton) {
+        this->buttonSelectedTool = &getTool(type);
+    } else {
+        this->toolbarSelectedTool = &getTool(type);
     }
-    this->currentTool = tools[type - TOOL_PEN].get();
+    this->currentTool = &getTool(type);
 
     if (fireToolChanged) {
         this->fireToolChanged();
@@ -256,12 +257,9 @@ void ToolHandler::setLineStyle(const LineStyle& style) {
  * 			false if the color is selected by a tool change
  * 			and therefore should not be applied to a selection
  */
-
 void ToolHandler::setColor(Color color, bool userSelection) {
-    if (this->toolbarSelectedTool) {
-        this->toolbarSelectedTool->setColor(color);
-    }
-    this->currentTool->setColor(color);
+    this->toolbarSelectedTool->setColor(color);
+    this->buttonSelectedTool->setColor(color);
     this->listener->toolColorChanged(userSelection);
     this->listener->setCustomColorSelected();
 }
@@ -421,21 +419,10 @@ void ToolHandler::loadSettings() {
     }
 }
 
-void ToolHandler::setToolbarSelectedTool() {
-    // If there is no last config, create one, if there is already one
-    // do not overwrite this config!
-    if (this->toolbarSelectedTool == nullptr) {
-        this->toolbarSelectedTool = this->currentTool;
-    }
-}
+void ToolHandler::setToolbarSelectedTool() { this->currentTool = this->buttonSelectedTool; }
 
 void ToolHandler::restoreFromToolbarSelectedTool() {
-    if (this->toolbarSelectedTool == nullptr) {
-        return;
-    }
-
     this->currentTool = this->toolbarSelectedTool;
-    this->toolbarSelectedTool = nullptr;
 
     this->listener->toolColorChanged(false);
     this->listener->toolSizeChanged();

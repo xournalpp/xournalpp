@@ -122,7 +122,7 @@ public:
      */
     bool isSinglePageTool();
 
-    bool triggeredByStylusButton = false;
+    bool triggeredByButton = false;
 
 protected:
     void initTools();
@@ -135,6 +135,7 @@ private:
      * Last selected tool, reference with color values etc.
      */
     Tool* toolbarSelectedTool = nullptr;
+    Tool* buttonSelectedTool = nullptr;
 
     EraserType eraserType = ERASER_TYPE_DEFAULT;
 
