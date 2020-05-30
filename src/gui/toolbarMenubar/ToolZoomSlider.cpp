@@ -29,7 +29,7 @@ void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self) {
 auto ToolZoomSlider::sliderButtonPress(GtkRange* range, GdkEvent* event, ToolZoomSlider* self) -> bool {
     if (!self->sliderChangingBySliderDrag && !self->zoom->isZoomPresentationMode()) {
         self->zoom->setZoomFitMode(false);
-        self->zoom->startZoomSequence(-1, -1);
+        self->zoom->startZoomSequence();
         self->sliderChangingBySliderDrag = true;
     }
     return false;
@@ -45,7 +45,7 @@ auto ToolZoomSlider::sliderHoverScroll(GtkWidget* range, GdkEventScroll* event, 
     gint64 now = g_get_monotonic_time();
     if (now > self->sliderHoverScrollLastTime + 500) {
         self->zoom->setZoomFitMode(false);
-        self->zoom->startZoomSequence(-1, -1);
+        self->zoom->startZoomSequence();
     }
     self->sliderChangingBySliderHoverScroll = true;
     self->sliderHoverScrollLastTime = now;

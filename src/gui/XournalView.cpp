@@ -499,9 +499,10 @@ void XournalView::zoomChanged() {
     if (zoom->isZoomPresentationMode() || zoom->isZoomFitMode()) {
         scrollTo(currentPage);
     } else {
-        std::tuple<double, double> pos = zoom->getScrollPositionAfterZoom();
-        if (std::get<0>(pos) != -1 && std::get<1>(pos) != -1) {
-            layout->scrollAbs(std::get<0>(pos), std::get<1>(pos));
+        auto pos = zoom->getScrollPositionAfterZoom();
+        if (pos.x != -1 && pos.y != -1) {
+            // Todo: This could be one source of all evil:
+            layout->scrollAbs(pos.x, pos.y);
         }
     }
     // move this somewhere else maybe
