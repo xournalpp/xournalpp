@@ -29,8 +29,6 @@ public:
 
     double getThickness(ToolSize size);
 
-    ToolType getToolType();
-
 protected:
     void setCapability(int capability, bool enabled);
 

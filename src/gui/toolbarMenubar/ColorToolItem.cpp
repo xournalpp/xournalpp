@@ -106,7 +106,7 @@ void ColorToolItem::showColorchooser() {
  */
 void ColorToolItem::enable(bool enabled) {
     if (!enabled && toolHandler->getToolType() == TOOL_ERASER) {
-        if (this->icon && toolHandler->triggeredByStylusButton) {
+        if (this->icon && toolHandler->triggeredByButton) {
             // allow changes in color if eraser only set via stylus
             icon->setState(COLOR_ICON_STATE_PEN);
             AbstractToolItem::enable(true);
