@@ -79,4 +79,4 @@ constexpr const auto DPI_NORMALIZATION_FACTOR = 72.0;
 
 }  // namespace Util
 
-static const size_t npos = std::numeric_limits<size_t>::max();
+constexpr auto npos = std::numeric_limits<size_t>::max();

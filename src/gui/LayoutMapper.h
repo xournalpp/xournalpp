@@ -91,10 +91,6 @@ public:
 private:
     void precalculateMappers();
 
-    // Todo: replace with
-    //       boost::optional<size_t> LayoutMapper::map(size_t x, size_t y) or
-    //       std::optional<size_t> LayoutMapper::map(size_t x, size_t y)
-
     /**
      * Map page location to document index
      *
