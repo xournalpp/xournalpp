@@ -567,7 +567,10 @@ void XournalView::pageInserted(size_t page) {
     viewPages.insert(begin(viewPages) + page, pageView);
 
     Layout* layout = gtk_xournal_get_layout(this->widget);
+    GtkAllocation allocation;
+    gtk_widget_get_allocation(this->widget, &allocation);
     layout->recalculate();
+    layout->layoutPages(allocation.width, allocation.height);
     layout->updateVisibility();
 }
 
