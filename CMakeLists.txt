@@ -19,6 +19,7 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/find" "${PROJECT_SOURCE_DIR}/
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set_directory_properties(PROPERTIES EP_BASE "${PROJECT_BINARY_DIR}/external")
 
 add_definitions(-D_USE_MATH_DEFINES)
 
@@ -77,7 +78,7 @@ macro(add_includes_ldflags LDFLAGS INCLUDES)
 endmacro (add_includes_ldflags LDFLAGS INCLUDES)
 
 find_package(CXX17 REQUIRED COMPONENTS optional)
-find_package(Filesystem REQUIRED COMPONENTS Boost Final Experimental)
+find_package(Filesystem REQUIRED COMPONENTS ghc Final Experimental)
 
 # libexec
 if (WIN32)
@@ -319,6 +320,7 @@ message("
 Configuration:
 	Compiler:                   ${CMAKE_CXX_COMPILER}
 	CppUnit enabled:            ${ENABLE_CPPUNIT}
+	Filesystem library:         ${CXX_FILESYSTEM_NAMESPACE}
 ")
 
 option(CMAKE_DEBUG_INCLUDES_LDFLAGS "List include dirs and ldflags for xournalpp target" OFF)

@@ -109,7 +109,7 @@ void Layout::updateVisibility() {
     }
 
     if (mostPageNr) {
-        this->view->getControl()->firePageSelected(mostPageNr.value());
+        this->view->getControl()->firePageSelected(*mostPageNr);
     }
 }
 
