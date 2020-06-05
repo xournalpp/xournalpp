@@ -31,7 +31,7 @@ auto XojCairoPdfExport::startPdf(const Path& file) -> bool {
     this->cr = cairo_create(surface);
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
-    cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_TITLE, doc->getFilename().c_str());
+    cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_TITLE, doc->getFilename().getFilename().c_str());
     GtkTreeModel* tocModel = doc->getContentsModel();
     this->populatePdfOutline(tocModel);
 #endif
