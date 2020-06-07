@@ -3,17 +3,6 @@
 [![Build Status](https://dev.azure.com/xournalpp/xournalpp/_apis/build/status/CI?branchName=master)](https://dev.azure.com/xournalpp/xournalpp/_build/latest?definitionId=1&branchName=master)
 [![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Please help us with an important decision
-We would like to have your feedback concerning the new rendering system. One of the big changes will be that it will support infinity pages. Of course we will still provide support for showing the old multi-page documents. Therefore we would like to know how you want to have these rendered in the future. For this reason we have a small poll we kindly ask you to fill out:
-
-Thanks to everybody that did take part in the poll. The results were quite clear.
-
-We will provide two modes to import multiple page documents:
-- Multiple page documents are imported on the limited size pages and the view will show them like Xournal++ currently does. Note that in this mode infinity pages are technically not possible, you will be able to resize pages though
-- All pages will be imported onto one single infinity page. You can layout the pages at import into a multi-column/row grid if wanted. For printing we will integrate a feature that shows you the page borders so you end up with prints that make sense.
-
-We might add the mode to import each page onto its own infinity page later on.
-
 <table border="0px" ><tr><td width = 600px>
 
 <img src="readme/main.png" width=550px% title="Xournal++ Screenshot on Linux"/>
