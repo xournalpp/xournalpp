@@ -8,9 +8,14 @@ GraphBackgroundPainter::GraphBackgroundPainter() = default;
 
 GraphBackgroundPainter::~GraphBackgroundPainter() = default;
 
+/**
+ * Set the Graph line color to a lower contrast alternative if a black background is used
+ */
 void GraphBackgroundPainter::updateGraphColor() {
-    int color = this->page->getBackgroundColor() + 16777216;
-    if (color == 0x000000) {
+    unsigned int backgroundColor = this->page->getBackgroundColor();
+
+    // The background color returned by getBackgroundColor is sometimes offset by 0xff000000
+    if (backgroundColor == 0x000000 || backgroundColor == 0xff000000) {
         this->foregroundColor1 = 0x202020;
         return;
     }
@@ -35,7 +40,6 @@ void GraphBackgroundPainter::paint() {
 }
 
 void GraphBackgroundPainter::paintBackgroundGraph() {
-
     Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
 
     cairo_set_line_width(cr, lineWidth * lineWidthFactor);
