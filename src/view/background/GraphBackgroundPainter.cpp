@@ -14,11 +14,11 @@ GraphBackgroundPainter::~GraphBackgroundPainter() = default;
 void GraphBackgroundPainter::updateGraphColor() {
     unsigned int backgroundColor = this->page->getBackgroundColor();
 
-    auto greyscale = [](uint32_t color){
-      return ((0xff & color) + (0xff & (color >> 8)) + (0xff & (color >> 16))) / 3;
+    auto greyscale = [](uint32_t color) {
+        return ((0xff & color) + (0xff & (color >> 8)) + (0xff & (color >> 16))) / 3;
     };
 
-    this->foregroundColor1 = greyscale(backgroundColor)  < 0x80 ? 0x202020 : 0xBDBDBD;
+    this->foregroundColor1 = greyscale(backgroundColor) < 0x80 ? 0x202020 : 0xBDBDBD;
 }
 
 void GraphBackgroundPainter::resetConfig() {
