@@ -18,7 +18,7 @@ void GraphBackgroundPainter::updateGraphColor() {
       return ((0xff & color) + (0xff & (color >> 8)) + (0xff & (color >> 16))) / 3;
     };
 
-    this->foregroundColor1 = int32_t(greyscale(backgroundColor)) - 0x80 < 0 ? 0x202020 : 0xBDBDBD;
+    this->foregroundColor1 = greyscale(backgroundColor)  < 0x80 ? 0x202020 : 0xBDBDBD;
 }
 
 void GraphBackgroundPainter::resetConfig() {
