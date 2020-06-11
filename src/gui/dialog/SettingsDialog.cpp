@@ -34,14 +34,20 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
+    g_signal_connect(get("cbIgnoreFirstStylusEvents"), "toggled",
+                     G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+                         self->enableWithCheckbox("cbIgnoreFirstStylusEvents", "spNumIgnoredStylusEvents");
+                     }),
+                     this);
+
 
     g_signal_connect(get("btTestEnable"), "clicked", G_CALLBACK(+[](GtkButton* bt, SettingsDialog* self) {
-                         system(gtk_entry_get_text(GTK_ENTRY(self->get("txtEnableTouchCommand"))));
+                         Util::systemWithMessage(gtk_entry_get_text(GTK_ENTRY(self->get("txtEnableTouchCommand"))));
                      }),
                      this);
 
     g_signal_connect(get("btTestDisable"), "clicked", G_CALLBACK(+[](GtkButton* bt, SettingsDialog* self) {
-                         system(gtk_entry_get_text(GTK_ENTRY(self->get("txtDisableTouchCommand"))));
+                         Util::systemWithMessage(gtk_entry_get_text(GTK_ENTRY(self->get("txtDisableTouchCommand"))));
                      }),
                      this);
 
@@ -125,14 +131,14 @@ void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool wi
 }
 
 void SettingsDialog::initMouseButtonEvents() {
-    initMouseButtonEvents("hboxMidleMouse", 1);
-    initMouseButtonEvents("hboxRightMouse", 2);
-    initMouseButtonEvents("hboxEraser", 0);
-    initMouseButtonEvents("hboxTouch", 3, true);
-    initMouseButtonEvents("hboxPenButton1", 5);
-    initMouseButtonEvents("hboxPenButton2", 6);
+    initMouseButtonEvents("hboxMidleMouse", BUTTON_MIDDLE);
+    initMouseButtonEvents("hboxRightMouse", BUTTON_RIGHT);
+    initMouseButtonEvents("hboxEraser", BUTTON_ERASER);
+    initMouseButtonEvents("hboxTouch", BUTTON_TOUCH, true);
+    initMouseButtonEvents("hboxPenButton1", BUTTON_STYLUS);
+    initMouseButtonEvents("hboxPenButton2", BUTTON_STYLUS2);
 
-    initMouseButtonEvents("hboxDefaultTool", 4);
+    initMouseButtonEvents("hboxDefaultTool", BUTTON_DEFAULT);
 }
 
 void SettingsDialog::setDpi(int dpi) {
@@ -196,12 +202,13 @@ void SettingsDialog::load() {
     loadCheckbox("cbDoActionOnStrokeFiltered", settings->getDoActionOnStrokeFiltered());
     loadCheckbox("cbTrySelectOnStrokeFiltered", settings->getTrySelectOnStrokeFiltered());
     loadCheckbox("cbBigCursor", settings->isShowBigCursor());
-    loadCheckbox("cbHighlightPosition", settings->isHighlightPosition());
     loadCheckbox("cbDarkTheme", settings->isDarkTheme());
     loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
     loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
     loadCheckbox("cbDisableScrollbarFadeout", settings->isScrollbarFadeoutDisabled());
     loadCheckbox("cbTouchWorkaround", settings->isTouchWorkaround());
+    const bool ignoreStylusEventsEnabled = settings->getIgnoredStylusEvents() != 0;  // 0 means disabled, >0 enabled
+    loadCheckbox("cbIgnoreFirstStylusEvents", ignoreStylusEventsEnabled);
     loadCheckbox("cbNewInputSystem", settings->getExperimentalInputSystemEnabled());
     loadCheckbox("cbInputSystemTPCButton", settings->getInputSystemTPCButtonEnabled());
     loadCheckbox("cbInputSystemDrawOutsideWindow", settings->getInputSystemDrawOutsideWindowEnabled());
@@ -216,6 +223,13 @@ void SettingsDialog::load() {
     GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
 
+    GtkWidget* spNumIgnoredStylusEvents = get("spNumIgnoredStylusEvents");
+    if (!ignoreStylusEventsEnabled) {  // The spinButton's value should be >= 1
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents), 1);
+    } else {
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents), settings->getIgnoredStylusEvents());
+    }
+
     GtkWidget* spPairsOffset = get("spPairsOffset");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spPairsOffset), settings->getPairsOffset());
 
@@ -224,6 +238,9 @@ void SettingsDialog::load() {
 
     GtkWidget* spSnapGridTolerance = get("spSnapGridTolerance");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapGridTolerance), settings->getSnapGridTolerance());
+
+    GtkWidget* spSnapGridSize = get("spSnapGridSize");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapGridSize), settings->getSnapGridSize() / DEFAULT_GRID_SIZE);
 
     GtkWidget* spZoomStep = get("spZoomStep");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spZoomStep), settings->getZoomStep());
@@ -266,6 +283,14 @@ void SettingsDialog::load() {
     color = Util::rgb_to_GdkRGBA(settings->getSelectionColor());
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorSelection")), &color);
 
+    loadCheckbox("cbHighlightPosition", settings->isHighlightPosition());
+    color = Util::argb_to_GdkRGBA(settings->getCursorHighlightColor());
+    gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightColor")), &color);
+    color = Util::argb_to_GdkRGBA(settings->getCursorHighlightBorderColor());
+    gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightBorderColor")), &color);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("cursorHighlightRadius")), settings->getCursorHighlightRadius());
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("cursorHighlightBorderWidth")),
+                              settings->getCursorHighlightBorderWidth());
 
     bool hideFullscreenMenubar = false;
     bool hideFullscreenSidebar = false;
@@ -298,6 +323,7 @@ void SettingsDialog::load() {
     loadCheckbox("cbHideMenubarStartup", settings->isMenubarVisible());
 
     enableWithCheckbox("cbAutosave", "boxAutosave");
+    enableWithCheckbox("cbIgnoreFirstStylusEvents", "spNumIgnoredStylusEvents");
     enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpace");
     enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpace");
     enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
@@ -438,7 +464,6 @@ void SettingsDialog::save() {
     settings->setDoActionOnStrokeFiltered(getCheckbox("cbDoActionOnStrokeFiltered"));
     settings->setTrySelectOnStrokeFiltered(getCheckbox("cbTrySelectOnStrokeFiltered"));
     settings->setShowBigCursor(getCheckbox("cbBigCursor"));
-    settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
     settings->setDarkTheme(getCheckbox("cbDarkTheme"));
     settings->setTouchWorkaround(getCheckbox("cbTouchWorkaround"));
     settings->setExperimentalInputSystemEnabled(getCheckbox("cbNewInputSystem"));
@@ -467,6 +492,17 @@ void SettingsDialog::save() {
     settings->setSelectionColor(Util::gdkrgba_to_hex(color));
 
 
+    settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
+    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightColor")), &color);
+    settings->setCursorHighlightColor(Util::gdkrgba_to_hex(color));
+    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightBorderColor")), &color);
+    settings->setCursorHighlightBorderColor(Util::gdkrgba_to_hex(color));
+    GtkWidget* spCursorHighlightRadius = get("cursorHighlightRadius");
+    settings->setCursorHighlightRadius(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spCursorHighlightRadius)));
+    GtkWidget* spCursorHighlightBorderWidth = get("cursorHighlightBorderWidth");
+    settings->setCursorHighlightBorderWidth(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spCursorHighlightBorderWidth)));
+
+
     bool hideFullscreenMenubar = getCheckbox("cbHideFullscreenMenubar");
     bool hideFullscreenSidebar = getCheckbox("cbHideFullscreenSidebar");
     settings->setFullscreenHideElements(
@@ -489,6 +525,14 @@ void SettingsDialog::save() {
     GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
     int autosaveTimeout = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout));
     settings->setAutosaveTimeout(autosaveTimeout);
+
+    if (getCheckbox("cbIgnoreFirstStylusEvents")) {
+        GtkWidget* spNumIgnoredStylusEvents = get("spNumIgnoredStylusEvents");
+        int numIgnoredStylusEvents = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents));
+        settings->setIgnoredStylusEvents(numIgnoredStylusEvents);
+    } else {
+        settings->setIgnoredStylusEvents(0);  // This means nothing will be ignored
+    }
 
     GtkWidget* spPairsOffset = get("spPairsOffset");
     int numPairsOffset = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spPairsOffset));
@@ -555,6 +599,8 @@ void SettingsDialog::save() {
             static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapRotationTolerance")))));
     settings->setSnapGridTolerance(
             static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridTolerance")))));
+    settings->setSnapGridSize(
+            static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridSize"))) * DEFAULT_GRID_SIZE));
 
     int selectedInputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioInputDevice"))) - 1;
     if (selectedInputDeviceIndex >= 0 && selectedInputDeviceIndex < static_cast<int>(this->audioInputDevices.size())) {

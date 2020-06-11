@@ -28,6 +28,7 @@ namespace Util {
 void cairo_set_source_rgbi(cairo_t* cr, int color);
 
 GdkRGBA rgb_to_GdkRGBA(uint32_t color);
+GdkRGBA argb_to_GdkRGBA(uint32_t color);
 uint32_t gdkrgba_to_hex(const GdkRGBA& color);
 
 Path getAutosaveFilename();
@@ -37,12 +38,25 @@ pid_t getPid();
 void openFileWithDefaultApplicaion(const Path& filename);
 void openFileWithFilebrowser(const Path& filename);
 
+/**
+ * Return the configuration folder path (may not be guaranteed to exist).
+ */
+Path getConfigFolder();
 Path getConfigSubfolder(const Path& subfolder = "");
+Path getCacheSubfolder(const Path& subfolder = "");
+Path getDataSubfolder(const Path& subfolder = "");
+
 Path getConfigFile(const Path& relativeFileName = "");
+Path getCacheFile(const Path& relativeFileName = "");
 
 Path getTmpDirSubfolder(const Path& subfolder = "");
 
 Path ensureFolderExists(const Path& p);
+
+/**
+ * Wrap the system call to redirect errors to a dialog
+ */
+void systemWithMessage(const char* command);
 
 /**
  * Execute the callback in the UI Thread.
@@ -65,4 +79,4 @@ constexpr const auto DPI_NORMALIZATION_FACTOR = 72.0;
 
 }  // namespace Util
 
-static const size_t npos = std::numeric_limits<size_t>::max();
+constexpr auto npos = std::numeric_limits<size_t>::max();

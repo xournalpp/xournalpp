@@ -32,6 +32,26 @@ public:
 private:
     static void initLocalisation();
 
+    /**
+     * Configuration migration status.
+     */
+    enum class MigrateStatus {
+        /** No migration was needed. */
+        NotNeeded,
+        /** Migration was carried out successfully. */
+        Success,
+        /** Migration failed. */
+        Failure,
+    };
+
+    struct MigrateResult {
+        MigrateStatus status;
+        /** Any additional information about the migration status. */
+        std::string message;
+    };
+
+    static MigrateResult migrateSettings();
+
     static void checkForErrorlog();
     static void checkForEmergencySave(Control* control);
 

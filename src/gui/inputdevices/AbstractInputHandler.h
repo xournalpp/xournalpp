@@ -38,8 +38,8 @@ protected:
     bool inputRunning = false;
 
 protected:
-    XojPageView* getPageAtCurrentPosition(InputEvent* event);
-    PositionInputData getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent* event);
+    XojPageView* getPageAtCurrentPosition(InputEvent const& event);
+    PositionInputData getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent const& event);
 
 public:
     explicit AbstractInputHandler(InputContext* inputContext);
@@ -49,6 +49,6 @@ public:
     bool isBlocked() const;
     virtual void onBlock();
     virtual void onUnblock();
-    bool handle(InputEvent* event);
-    virtual bool handleImpl(InputEvent* event) = 0;
+    bool handle(InputEvent const& event);
+    virtual bool handleImpl(InputEvent const& event) = 0;
 };

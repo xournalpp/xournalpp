@@ -22,5 +22,5 @@ private:
 public:
     explicit KeyboardInputHandler(InputContext* inputContext);
     ~KeyboardInputHandler() override;
-    bool handleImpl(InputEvent* event) override;
+    bool handleImpl(InputEvent const& event) override;
 };

@@ -89,7 +89,7 @@ void SidebarPreviewLayers::updatePreviews() {
     this->selectedEntry = npos;
 
     PageRef page = lc->getCurrentPage();
-    if (!page.isValid()) {
+    if (!page) {
         return;
     }
 
@@ -117,7 +117,7 @@ void SidebarPreviewLayers::rebuildLayerMenu() {
 
 void SidebarPreviewLayers::layerVisibilityChanged() {
     PageRef p = lc->getCurrentPage();
-    if (!p.isValid()) {
+    if (!p) {
         return;
     }
 

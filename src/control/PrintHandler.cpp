@@ -16,7 +16,7 @@ void PrintHandler::drawPage(GtkPrintOperation* operation, GtkPrintContext* conte
     cairo_t* cr = gtk_print_context_get_cairo_context(context);
 
     PageRef page = handler->doc->getPage(pageNr);
-    if (!page.isValid()) {
+    if (!page) {
         return;
     }
 
@@ -43,7 +43,7 @@ void PrintHandler::drawPage(GtkPrintOperation* operation, GtkPrintContext* conte
 void PrintHandler::requestPageSetup(GtkPrintOperation* operation, GtkPrintContext* context, gint pageNr,
                                     GtkPageSetup* setup, PrintHandler* handler) {
     PageRef page = handler->doc->getPage(pageNr);
-    if (!page.isValid()) {
+    if (!page) {
         return;
     }
 

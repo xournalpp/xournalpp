@@ -64,8 +64,6 @@ public:
 
     const LineStyle& getLineStyle();
 
-    void setColorFound();
-
     ToolSize getSize();
     void setSize(ToolSize size);
     double getThickness();
@@ -142,7 +140,6 @@ private:
      * so its a "predefined" color for us, but may it is
      * not in the list, so its a "custom" color for us
      */
-    bool colorFound = false;
 
     ToolListener* listener = nullptr;
 

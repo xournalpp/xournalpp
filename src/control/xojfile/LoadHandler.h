@@ -125,6 +125,7 @@ private:
 
     vector<double> pressureBuffer;
 
+    std::vector<PageRef> pages;
     PageRef page;
     Layer* layer;
     Stroke* stroke;

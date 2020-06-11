@@ -12,6 +12,7 @@
 #pragma once
 
 #include <map>
+#include <memory>
 
 #include <config-dev.h>
 #include <libxml/xmlreader.h>
@@ -21,6 +22,40 @@
 #include "model/Font.h"
 
 #include "Path.h"
+
+constexpr auto DEFAULT_GRID_SIZE = 14.17;
+
+enum Buttons {
+    BUTTON_ERASER,
+    BUTTON_MIDDLE,
+    BUTTON_RIGHT,
+    BUTTON_TOUCH,
+    BUTTON_DEFAULT,
+    BUTTON_STYLUS,
+    BUTTON_STYLUS2,
+    BUTTON_COUNT
+};
+
+constexpr auto buttonToString(Buttons button) -> const char* {
+    switch (button) {
+        case BUTTON_ERASER:
+            return "eraser";
+        case BUTTON_MIDDLE:
+            return "middle";
+        case BUTTON_RIGHT:
+            return "right";
+        case BUTTON_TOUCH:
+            return "touch";
+        case BUTTON_DEFAULT:
+            return "default";
+        case BUTTON_STYLUS:
+            return "stylus";
+        case BUTTON_STYLUS2:
+            return "stylus2";
+        default:
+            return "unknown";
+    }
+}
 
 enum AttributeType {
     ATTRIBUTE_TYPE_NONE,
@@ -39,11 +74,20 @@ enum ScrollbarHideType {
     SCROLLBAR_HIDE_BOTH = SCROLLBAR_HIDE_HORIZONTAL | SCROLLBAR_HIDE_VERTICAL
 };
 
+/**
+ * The user-selectable device types
+ */
+enum class InputDeviceTypeOption {
+    Disabled = 0,
+    Mouse = 1,
+    Pen = 2,
+    Eraser = 3,
+    Touchscreen = 4,
+    MouseKeyboardCombo = 5,
+};
+
 class ButtonConfig;
 class InputDevice;
-
-extern const char* BUTTON_NAMES[];
-const int BUTTON_COUNT = 7;
 
 
 class SAttribute {
@@ -62,34 +106,17 @@ public:
     string comment;
 };
 
-class SElement;
 
-class __RefSElement {
-public:
-    __RefSElement();
-    virtual ~__RefSElement();
-
-public:
-    void ref();
-    void unref();
-
-private:
-    std::map<string, SAttribute> attributes;
-    std::map<string, SElement> children;
-
-    int refcount;
-
-    friend class SElement;
-};
-
-class SElement {
-public:
-    SElement();
-    SElement(const SElement& elem);
-    virtual ~SElement();
+class SElement final {
+    struct SElementData {
+    private:
+        std::map<string, SAttribute> attributes;
+        std::map<string, SElement> children;
+        friend class SElement;
+    };
 
 public:
-    void operator=(const SElement& elem);
+    SElement() = default;
 
     void clear();
 
@@ -112,7 +139,7 @@ public:
     std::map<string, SElement>& children();
 
 private:
-    __RefSElement* element;
+    std::shared_ptr<SElementData> element = std::make_shared<SElementData>();
 };
 
 class Settings {
@@ -134,6 +161,7 @@ private:
 
     static xmlNodePtr savePropertyDouble(const gchar* key, double value, xmlNodePtr parent);
     static xmlNodePtr saveProperty(const gchar* key, int value, xmlNodePtr parent);
+    static xmlNodePtr savePropertyUnsigned(const gchar* key, unsigned int value, xmlNodePtr parent);
     static xmlNodePtr saveProperty(const gchar* key, const gchar* value, xmlNodePtr parent);
 
     void saveData(xmlNodePtr root, const string& name, SElement& elem);
@@ -287,12 +315,26 @@ public:
     void setSnapGrid(bool b);
     double getSnapGridTolerance() const;
     void setSnapGridTolerance(double tolerance);
+    double getSnapGridSize() const;
+    void setSnapGridSize(double gridSize);
 
     bool isShowBigCursor() const;
     void setShowBigCursor(bool b);
 
     bool isHighlightPosition() const;
     void setHighlightPosition(bool highlight);
+
+    uint32_t getCursorHighlightColor() const;
+    void setCursorHighlightColor(uint32_t color);
+
+    double getCursorHighlightRadius() const;
+    void setCursorHighlightRadius(double radius);
+
+    uint32_t getCursorHighlightBorderColor() const;
+    void setCursorHighlightBorderColor(uint32_t color);
+
+    double getCursorHighlightBorderWidth() const;
+    void setCursorHighlightBorderWidth(double width);
 
     ScrollbarHideType getScrollbarHideType() const;
     void setScrollbarHideType(ScrollbarHideType type);
@@ -358,6 +400,15 @@ public:
     string const& getPluginDisabled() const;
     void setPluginDisabled(const string& pluginDisabled);
 
+    /**
+     * Sets #numIgnoredStylusEvents. If given a negative value writes 0 instead.
+     */
+    void setIgnoredStylusEvents(int numEvents);
+    /**
+     * Returns #numIgnoredStylusEvents.
+     */
+    int getIgnoredStylusEvents() const;
+
     bool getExperimentalInputSystemEnabled() const;
     void setExperimentalInputSystemEnabled(bool systemEnabled);
 
@@ -369,10 +420,11 @@ public:
 
     void loadDeviceClasses();
     void saveDeviceClasses();
-    void setDeviceClassForDevice(GdkDevice* device, int deviceClass);
-    void setDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource, int deviceClass);
-    int getDeviceClassForDevice(GdkDevice* device) const;
-    int getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource) const;
+    void setDeviceClassForDevice(GdkDevice* device, InputDeviceTypeOption deviceClass);
+    void setDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource,
+                                 InputDeviceTypeOption deviceClass);
+    InputDeviceTypeOption getDeviceClassForDevice(GdkDevice* device) const;
+    InputDeviceTypeOption getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource) const;
     std::vector<InputDevice> getKnownInputDevices() const;
 
     /**
@@ -499,9 +551,30 @@ private:
     bool showBigCursor{};
 
     /**
-     * Show a yellow circle around the cursor
+     * Show a colored circle around the cursor
      */
     bool highlightPosition{};
+
+    /**
+     * Cursor highlight color (ARGB format)
+     */
+    uint32_t cursorHighlightColor{};
+
+    /**
+     * Radius of cursor highlight circle. Note that this is limited by the size
+     * of the cursor in the display server (default is probably 30 pixels).
+     */
+    double cursorHighlightRadius{};
+
+    /**
+     * Cursor highlight border color (ARGB format)
+     */
+    uint32_t cursorHighlightBorderColor{};
+
+    /**
+     * Width of cursor highlight border, in pixels.
+     */
+    double cursorHighlightBorderWidth{};
 
     /**
      * If the user uses a dark-themed DE, he should enable this
@@ -691,14 +764,6 @@ private:
 
     /**
      * The button config
-     *
-     * 0: eraser
-     * 1: middle button
-     * 2: right button
-     * 3: touch screen
-     * 4: default
-     * 5: Pen Button 1
-     * 6: Pen Button 2
      */
     ButtonConfig* buttonConfig[BUTTON_COUNT]{};
 
@@ -755,6 +820,10 @@ private:
      */
     double snapRotationTolerance{};
 
+
+    /// Grid size for Snapping
+    double snapGridSize{};
+
     /**
      * Do not use GTK Scrolling / Touch handling
      */
@@ -809,6 +878,12 @@ private:
     bool trySelectOnStrokeFiltered{};
 
     /**
+     * How many stylus events since hitting the screen should be ignored before actually starting the action. If set to
+     * 0, no event will be ignored. Should not be negative.
+     */
+    int numIgnoredStylusEvents{};
+
+    /**
      * Whether the new experimental input system is activated
      */
     bool newInputSystemEnabled{};
@@ -820,7 +895,7 @@ private:
 
     bool inputSystemDrawOutsideWindow{};
 
-    std::map<string, std::pair<int, GdkInputSource>> inputDeviceClasses = {};
+    std::map<string, std::pair<InputDeviceTypeOption, GdkInputSource>> inputDeviceClasses = {};
 
     /**
      * "Transaction" running, do not save until the end is reached

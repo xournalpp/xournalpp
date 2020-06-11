@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * A rectangle with double precision
+ * A rectangle data structure over a numeric data type.
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -11,57 +11,71 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <algorithm>
+#include <cassert>
+#include <optional>
 
-#include "XournalType.h"
+#include "Range.h"
 
-class Range;
-
-class Rectangle {
+template <class T>
+class Rectangle final {
 public:
-    Rectangle();
-    explicit Rectangle(const Range& rect);
-    Rectangle(double x, double y, double width, double height);
-    virtual ~Rectangle();
+    Rectangle() = default;
+    Rectangle(T x, T y, T width, T height): x(x), y(y), width(width), height(height) {}
+    explicit Rectangle(const Range& rect):
+            x(rect.getX()), y(rect.getY()), width(rect.getWidth()), height(rect.getHeight()) {}
 
-public:
     /**
-     * Returns whether this rectangle intersects another
-     *
+     * Returns whether this rectangle intersects another and the intersection
      * @param other the other rectangle
-     * @param dest  if this is not nullptr, the rectangle will be modified to contain the intersection
-     *
-     * @return whether the rectangles intersect
+     * @return whether the rectangles intersect and if so, the intersection
      */
-    bool intersects(const Rectangle& other, Rectangle* dest = nullptr) const;
-
-    /**
-     * Computes the union of this rectangle with the one given by the parameters
-     */
-    void add(double x, double y, double width, double height);
+    std::optional<Rectangle> intersects(const Rectangle& other) const {
+        auto x1 = std::max(this->x, other.x);
+        auto y1 = std::max(this->y, other.y);
+        auto x2 = std::min(this->x + this->width, other.x + other.width);
+        auto y2 = std::min(this->y + this->height, other.y + other.height);
+        if (x2 > x1 && y2 > y1) {
+            return {{x1, y1, x2 - x1, y2 - y1}};
+        }
+        return std::nullopt;
+    }
 
     /**
      * Returns a new Rectangle with an offset specified
      * by the function arguments
-     *
      */
-    Rectangle translated(double dx, double dy) const;
+    Rectangle translated(T dx, T dy) const { return Rectangle(this->x + dx, this->y + dy, this->width, this->height); }
 
     /**
-     * Same as the above, provided for convenience
+     * Computes the union of this and the other rectangle
      */
-    void add(const Rectangle& other);
+    void unite(const Rectangle& other) {
+        assert(other.width > 0 && other.height > 0 && "Rectangle not normalized");
+        this->x = std::min(this->x, other.x);
+        this->y = std::min(this->y, other.y);
+        this->width = std::max(this->x + this->width, other.x + other.width) - this->x;
+        this->height = std::max(this->y + this->height, other.y + other.height) - this->y;
+    }
 
-    Rectangle intersect(const Rectangle& other) const;
+    /**
+     * Applies a scalar to this rectangle
+     */
+    Rectangle& operator*=(T factor) {
+        x *= factor;
+        y *= factor;
+        width *= factor;
+        height *= factor;
+        return *this;
+    }
 
-    Rectangle& operator*=(double factor);
+    /**
+     * Calculates the area
+     */
+    T area() const { return width * height; }
 
-    double area() const;
-
-public:
-    double x = 0;
-    double y = 0;
-    double width = 0;
-    double height = 0;
+    T x{};
+    T y{};
+    T width{};
+    T height{};
 };

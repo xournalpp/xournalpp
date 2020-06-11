@@ -25,17 +25,13 @@
 
 #define MINPIXSIZE 5  // smallest can scale down to, in pixels.
 
-EditSelection::EditSelection(UndoRedoHandler* undo, const PageRef& page, XojPageView* view) {
-    this->x = 0;
-    this->y = 0;
-    this->rotation = 0;
-    this->width = 0;
-    this->height = 0;
-
+EditSelection::EditSelection(UndoRedoHandler* undo, const PageRef& page, XojPageView* view):
+        snappingHandler(view->getXournal()->getControl()->getSettings()), x(0), y(0), rotation(0), width(0), height(0) {
     contstruct(undo, view, page);
 }
 
-EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection, XojPageView* view) {
+EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection, XojPageView* view):
+        snappingHandler(view->getXournal()->getControl()->getSettings()) {
     calcSizeFromElements(selection->selectedElements);
 
     contstruct(undo, view, view->getPage());
@@ -48,12 +44,12 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection, XojPag
     view->rerenderPage();
 }
 
-EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* view, const PageRef& page) {
-    this->x = e->getX();
-    this->y = e->getY();
-    this->width = e->getElementWidth();
-    this->height = e->getElementHeight();
-
+EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* view, const PageRef& page):
+        snappingHandler(view->getXournal()->getControl()->getSettings()),
+        x(e->getX()),
+        y(e->getY()),
+        width(e->getElementWidth()),
+        height(e->getElementHeight()) {
     contstruct(undo, view, page);
 
     addElement(e, this->sourceLayer->indexOf(e));
@@ -63,7 +59,8 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* vie
 }
 
 EditSelection::EditSelection(UndoRedoHandler* undo, const vector<Element*>& elements, XojPageView* view,
-                             const PageRef& page) {
+                             const PageRef& page):
+        snappingHandler(view->getXournal()->getControl()->getSettings()) {
     calcSizeFromElements(elements);
 
     contstruct(undo, view, page);
@@ -308,8 +305,7 @@ void EditSelection::mouseUp() {
 
     PageRef page = this->view->getPage();
     Layer* layer = page->getSelectedLayer();
-
-    snapRotation();
+    this->rotation = snappingHandler.snapAngle(this->rotation, false);
 
     this->contents->updateContent(this->x, this->y, this->rotation, this->width, this->height, this->aspectRatio, layer,
                                   page, this->view, this->undo, this->mouseDownType);
@@ -643,24 +639,6 @@ auto EditSelection::getSelectionTypeForPos(double x, double y, double zoom) -> C
     return CURSOR_SELECTION_NONE;
 }
 
-void EditSelection::snapRotation() {
-    bool snapping = this->view->getXournal()->getControl()->getSettings()->isSnapRotation();
-    if (!snapping) {
-        return;
-    }
-
-    double epsilon = this->view->getXournal()->getControl()->getSettings()->getSnapRotationTolerance();
-
-    const double ROTATION_LOCK[8] = {0,           M_PI / 2.0,        M_PI,       M_PI / 4.0, 3.0 * M_PI / 4.0,
-                                     -M_PI / 4.0, -3.0 * M_PI / 4.0, -M_PI / 2.0};
-
-    for (double i: ROTATION_LOCK) {
-        if (std::abs(this->rotation - i) < epsilon) {
-            this->rotation = i;
-        }
-    }
-}
-
 /**
  * Paints the selection to cr, with the given zoom factor. The coordinates of cr
  * should be relative to the provided view by getView() (use translateEvent())
@@ -671,7 +649,8 @@ void EditSelection::paint(cairo_t* cr, double zoom) {
 
 
     if (std::abs(this->rotation) > __DBL_EPSILON__) {
-        snapRotation();
+        this->rotation = snappingHandler.snapAngle(this->rotation, false);
+
 
         double rx = ((x + width / 2) - 0.7) * zoom;
         double ry = ((y + height / 2) - 0.7) * zoom;

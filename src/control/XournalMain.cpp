@@ -1,5 +1,7 @@
 #include "XournalMain.h"
 
+#include <memory>
+
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
 #include <libintl.h>
@@ -13,7 +15,6 @@
 #include "pdf/base/XojPdfExport.h"
 #include "pdf/base/XojPdfExportFactory.h"
 #include "undo/EmergencySaveRestore.h"
-#include "util/cpp14memory.h"
 #include "xojfile/LoadHandler.h"
 
 #include "Control.h"
@@ -23,6 +24,7 @@
 #include "config-dev.h"
 #include "config-paths.h"
 #include "config.h"
+#include "filesystem.h"
 #include "i18n.h"
 
 #if __linux__
@@ -70,8 +72,39 @@ void XournalMain::initLocalisation() {
     std::cout.imbue(std::locale());
 }
 
+XournalMain::MigrateResult XournalMain::migrateSettings() {
+    Path newConfigPath = Util::getConfigFolder();
+
+    if (!newConfigPath.exists()) {
+        Path oldConfigPath(g_get_home_dir());
+        oldConfigPath /= ".xournalpp";
+
+        if (oldConfigPath.exists()) {
+            g_message("Migrating configuration from %s to %s", oldConfigPath.str().c_str(),
+                      newConfigPath.str().c_str());
+            auto xdgConfDir = fs::path(newConfigPath.str()).parent_path();
+            try {
+                if (!fs::exists(xdgConfDir)) {
+                    fs::create_directories(xdgConfDir);
+                }
+                fs::copy(oldConfigPath.str(), newConfigPath.str(), fs::copy_options::recursive);
+                const char* msg = "Due to a recent update, Xournal++ has changed where its configuration files are "
+                                  "stored.\nThey have been automatically copied from\n\t{1}\nto\n\t{2}";
+                return {MigrateStatus::Success, FS(_F(msg) % oldConfigPath.c_str() % newConfigPath.c_str())};
+            } catch (fs::filesystem_error& except) {
+                const char* msg = "Due to a recent update, Xournal++ has changed where its configuration files are "
+                                  "stored.\nHowever, when attempting to copy\n\t{1}\nto\n\t{2}\nmigration failed:\n{3}";
+                g_message("Migration failed: %s", except.what());
+                return {MigrateStatus::Failure,
+                        FS(_F(msg) % oldConfigPath.c_str() % newConfigPath.c_str() % except.what())};
+            }
+        }
+    }
+    return {MigrateStatus::NotNeeded, ""};
+}
+
 void XournalMain::checkForErrorlog() {
-    Path errorDir = Util::getConfigSubfolder(ERRORLOG_DIR);
+    Path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
     GDir* home = g_dir_open(errorDir.c_str(), 0, nullptr);
 
     if (home == nullptr) {
@@ -119,7 +152,7 @@ void XournalMain::checkForErrorlog() {
 
     int res = gtk_dialog_run(GTK_DIALOG(dialog));
 
-    Path errorlogPath = Util::getConfigSubfolder(ERRORLOG_DIR);
+    Path errorlogPath = Util::getCacheSubfolder(ERRORLOG_DIR);
     errorlogPath /= errorList[0];
     if (res == 1)  // Send Bugreport
     {
@@ -172,7 +205,7 @@ void XournalMain::checkForEmergencySave(Control* control) {
             control->getDocument()->setFilename("");
 
             // Make sure the document is changed, there is a question to ask for save
-            control->getUndoRedoHandler()->addUndoAction(mem::make_unique<EmergencySaveRestore>());
+            control->getUndoRedoHandler()->addUndoAction(std::make_unique<EmergencySaveRestore>());
             control->updateWindowTitle();
             g_unlink(filename.c_str());
         }
@@ -257,7 +290,9 @@ auto XournalMain::exportPdf(const char* input, const char* output) -> int {
 }
 
 auto XournalMain::run(int argc, char* argv[]) -> int {
+    g_set_prgname("com.github.xournalpp.xournalpp");
     this->initLocalisation();
+    MigrateResult migrateResult = this->migrateSettings();
 
     GError* error = nullptr;
     GOptionContext* context = g_option_context_new("FILE");
@@ -265,16 +300,19 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
     gchar** optFilename = nullptr;
     gchar* pdfFilename = nullptr;
     gchar* imgFilename = nullptr;
+    gboolean showVersion = false;
     int openAtPageNumber = -1;
 
     string create_pdf = _("PDF output filename");
     string create_img = _("Image output filename (.png / .svg)");
     string page_jump = _("Jump to Page (first Page: 1)");
     string audio_folder = _("Absolute path for the audio files playback");
+    string version = _("Get version of xournalpp");
     GOptionEntry options[] = {{"create-pdf", 'p', 0, G_OPTION_ARG_FILENAME, &pdfFilename, create_pdf.c_str(), nullptr},
                               {"create-img", 'i', 0, G_OPTION_ARG_FILENAME, &imgFilename, create_img.c_str(), nullptr},
                               {"page", 'n', 0, G_OPTION_ARG_INT, &openAtPageNumber, page_jump.c_str(), "N"},
                               {G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename, "<input>", nullptr},
+                              {"version", 0, 0, G_OPTION_ARG_NONE, &showVersion, version.c_str(), nullptr},
                               {nullptr}};
 
     g_option_context_add_main_entries(context, options, GETTEXT_PACKAGE);
@@ -295,6 +333,13 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
     }
     if (imgFilename && optFilename && *optFilename) {
         return exportImg(*optFilename, imgFilename);
+    }
+
+    if (showVersion) {
+        g_printf("%s %s \n", PROJECT_NAME, PROJECT_VERSION);
+        g_printf("└──%s: %d.%d.%d \n", "libgtk", gtk_get_major_version(), gtk_get_minor_version(),
+                 gtk_get_micro_version());
+        return 0;
     }
 
     // Checks for input method compatibility
@@ -319,13 +364,13 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
 
     auto* control = new Control(gladePath);
 
+    string icon = gladePath->getFirstSearchPath() + "/icons/";
+    gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.c_str());
+
     if (control->getSettings()->isDarkTheme()) {
         string icon = gladePath->getFirstSearchPath() + "/iconsDark/";
         gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.c_str());
     }
-
-    string icon = gladePath->getFirstSearchPath() + "/icons/";
-    gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.c_str());
 
     auto* win = new MainWindow(gladePath, control);
     control->initWindow(win);
@@ -345,7 +390,11 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
         g_object_unref(file);
 
         if (!p.isEmpty()) {
-            opened = control->openFile(p, openAtPageNumber);
+            if (g_file_test(optFilename[0], G_FILE_TEST_EXISTS)) {
+                opened = control->openFile(p, openAtPageNumber);
+            } else {
+                opened = control->newFile("", optFilename[0]);
+            }
         } else {
             string msg = _("Sorry, Xournal++ cannot open remote files at the moment.\n"
                            "You have to copy the file to a local directory.");
@@ -365,6 +414,10 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
     // There is a timing issue with the layout
     // This fixes it, see #405
     Util::execInUiThread([=]() { control->getWindow()->getXournal()->layoutPages(); });
+
+    if (migrateResult.status != MigrateStatus::NotNeeded) {
+        Util::execInUiThread([=]() { XojMsgBox::showErrorToUser(control->getGtkWindow(), migrateResult.message); });
+    }
 
     gtk_main();
 

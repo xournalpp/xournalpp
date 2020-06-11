@@ -55,7 +55,7 @@ public:
     double getElementWidth();
     double getElementHeight();
 
-    Rectangle boundingRect();
+    Rectangle<double> boundingRect();
 
     virtual bool intersectsArea(const GdkRectangle* src);
     virtual bool intersectsArea(double x, double y, double width, double height);

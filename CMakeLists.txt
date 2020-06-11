@@ -19,6 +19,7 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/find" "${PROJECT_SOURCE_DIR}/
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set_directory_properties(PROPERTIES EP_BASE "${PROJECT_BINARY_DIR}/external")
 
 add_definitions(-D_USE_MATH_DEFINES)
 
@@ -27,6 +28,9 @@ include (Version)
 core_find_git_rev(RELEASE_IDENTIFIER)
 string(TIMESTAMP PACKAGE_TIMESTAMP "%Y%m%d.%H%M" UTC)
 set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION}~git${PACKAGE_TIMESTAMP}-${RELEASE_IDENTIFIER}-${DISTRO_CODENAME})
+
+include(TargetArch)
+target_architecture(PACKAGE_ARCH)
 
 configure_file(cmake/VERSION.in VERSION)
 
@@ -74,7 +78,7 @@ macro(add_includes_ldflags LDFLAGS INCLUDES)
 endmacro (add_includes_ldflags LDFLAGS INCLUDES)
 
 find_package(CXX17 REQUIRED COMPONENTS optional)
-find_package(Filesystem REQUIRED COMPONENTS Boost Final Experimental)
+find_package(Filesystem REQUIRED COMPONENTS ghc Final Experimental)
 
 # libexec
 if (WIN32)
@@ -198,7 +202,6 @@ mark_as_advanced (FORCE
 )
 
 # Advanced development config
-set (DEV_CONFIG_DIR ".xournalpp" CACHE STRING "Xournal++ config dir, relative to user's home dir")
 set (DEV_TOOLBAR_CONFIG "toolbar.ini" CACHE STRING "Toolbar config file name")
 set (DEV_SETTINGS_XML_FILE "settings.xml" CACHE STRING "Settings file name")
 set (DEV_PRINT_CONFIG_FILE "print-config.ini" CACHE STRING "Print config file name")
@@ -212,10 +215,10 @@ if (DEV_CHECK_GTK3_COMPAT)
 	add_definitions(-DGTK_DISABLE_SINGLE_INCLUDES -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGSEAL_ENABLE)
 endif ()
 
-mark_as_advanced(FORCE
-		DEV_CONFIG_DIR DEV_TOOLBAR_CONFIG DEV_SETTINGS_XML_FILE DEV_PRINT_CONFIG_FILE DEV_METADATA_FILE DEV_METADATA_MAX_ITEMS
+mark_as_advanced (FORCE
+		DEV_TOOLBAR_CONFIG DEV_SETTINGS_XML_FILE DEV_PRINT_CONFIG_FILE DEV_METADATA_FILE DEV_METADATA_MAX_ITEMS
 		DEV_ENABLE_GCOV DEV_CHECK_GTK3_COMPAT
-		)
+)
 
 configure_file(
 		src/config.h.in
@@ -317,6 +320,7 @@ message("
 Configuration:
 	Compiler:                   ${CMAKE_CXX_COMPILER}
 	CppUnit enabled:            ${ENABLE_CPPUNIT}
+	Filesystem library:         ${CXX_FILESYSTEM_NAMESPACE}
 ")
 
 option(CMAKE_DEBUG_INCLUDES_LDFLAGS "List include dirs and ldflags for xournalpp target" OFF)
@@ -333,9 +337,6 @@ set (CPACK_PACKAGE_NAME "${PROJECT_PACKAGE}")
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Xournal++ - Open source hand note-taking program")
 set (CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 set (CPACK_PACKAGE_INSTALL_DIRECTORY "Xournal++")
-
-include(TargetArch)
-target_architecture(PACKAGE_ARCH)
 set (CPACK_PACKAGE_FILE_NAME "xournalpp-${PROJECT_VERSION}-${DISTRO_NAME}-${DISTRO_CODENAME}-${PACKAGE_ARCH}")
 
 # .deb package options

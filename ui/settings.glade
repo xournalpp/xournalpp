@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.22.2 -->
 <interface>
-  <requires lib="gtk+" version="3.0"/>
+  <requires lib="gtk+" version="3.18"/>
   <object class="GtkAdjustment" id="adjustmentAudioGain">
     <property name="upper">10</property>
     <property name="value">1</property>
     <property name="step_increment">0.10000000000000001</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentCursorHighlightBorderWidth">
+    <property name="upper">30</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentCursorHighlightRadius">
+    <property name="upper">30</property>
+    <property name="value">30</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">5</property>
   </object>
   <object class="GtkAdjustment" id="adjustmentDrawDirModRadius">
     <property name="lower">2</property>
@@ -17,6 +28,13 @@
   <object class="GtkAdjustment" id="adjustmentHorizontalSpace">
     <property name="upper">1000</property>
     <property name="value">150</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentIgnoreStylusEvents">
+    <property name="lower">1</property>
+    <property name="upper">1000</property>
+    <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
@@ -32,18 +50,25 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkAdjustment" id="adjustmentSnapGridSize">
+    <property name="lower">0.01</property>
+    <property name="upper">20</property>
+    <property name="value">1</property>
+    <property name="step_increment">0.01</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="GtkAdjustment" id="adjustmentSnapGridTolerance">
-    <property name="lower">0.20000000000000001</property>
-    <property name="upper">10</property>
-    <property name="value">0.25</property>
-    <property name="step_increment">0.05000000000000001</property>
+    <property name="lower">0.10000000000000001</property>
+    <property name="upper">1</property>
+    <property name="value">0.5</property>
+    <property name="step_increment">0.050000000000000003</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustmentSnapRotationTolerance">
     <property name="lower">0.10000000000000001</property>
-    <property name="upper">0.5</property>
-    <property name="value">0.20000000000000001</property>
-    <property name="step_increment">0.05000000000000001</property>
+    <property name="upper">1</property>
+    <property name="value">0.29999999999999999</property>
+    <property name="step_increment">0.050000000000000003</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustmentStrokeIgnoreLength">
@@ -115,7 +140,7 @@
     <property name="type_hint">normal</property>
     <property name="gravity">center</property>
     <signal name="close" handler="gtk_widget_hide" swapped="no"/>
-    <child>
+    <child type="titlebar">
       <placeholder/>
     </child>
     <child internal-child="vbox">
@@ -1144,6 +1169,114 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkFrame" id="sid183">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label_xalign">0.0099999997764825821</property>
+                                <child>
+                                  <object class="GtkAlignment" id="sid184">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="bottom_padding">8</property>
+                                    <property name="left_padding">12</property>
+                                    <property name="right_padding">12</property>
+                                    <child>
+                                      <object class="GtkBox" id="sid185">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="orientation">vertical</property>
+                                        <child>
+                                          <object class="GtkLabel" id="sid186">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="label" translatable="yes">&lt;i&gt;With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.&lt;/i&gt;</property>
+                                            <property name="use_markup">True</property>
+                                            <property name="wrap">True</property>
+                                            <property name="width_chars">85</property>
+                                            <property name="max_width_chars">85</property>
+                                            <property name="xalign">0</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkBox" id="sid187">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <child>
+                                              <object class="GtkCheckButton" id="cbIgnoreFirstStylusEvents">
+                                                <property name="label" translatable="yes">Ignore the first</property>
+                                                <property name="name">cbSettingIgnoreFirstStylusEvents</property>
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="receives_default">False</property>
+                                                <property name="xalign">0</property>
+                                                <property name="draw_indicator">True</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkSpinButton" id="spNumIgnoredStylusEvents">
+                                                <property name="name">spNrOfIgnoredFirstStylusEvents</property>
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="text" translatable="yes">1</property>
+                                                <property name="adjustment">adjustmentIgnoreStylusEvents</property>
+                                                <property name="value">1</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="padding">10</property>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="lbIgnoreFirstStylusEvents">
+                                                <property name="name">lbIgnoreFirstStylusEvents</property>
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="label" translatable="yes">events</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">2</property>
+                                              </packing>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel" id="sid188">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">Artifact workaround</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkFrame" id="sid38">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
@@ -1306,7 +1439,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">1</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                           </object>
@@ -2140,14 +2273,211 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbHighlightPosition">
-                                            <property name="label" translatable="yes">Highlight cursor position</property>
-                                            <property name="name">cbHighlightPosition</property>
+                                          <object class="GtkGrid">
                                             <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="receives_default">False</property>
-                                            <property name="xalign">0</property>
-                                            <property name="draw_indicator">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="column_homogeneous">True</property>
+                                            <child>
+                                              <object class="GtkCheckButton" id="cbHighlightPosition">
+                                                <property name="label" translatable="yes">Highlight cursor position</property>
+                                                <property name="name">cbHighlightPosition</property>
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="receives_default">False</property>
+                                                <property name="tooltip_text" translatable="yes">Draw a transparent circle around the cursor</property>
+                                                <property name="draw_indicator">True</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left_attach">0</property>
+                                                <property name="top_attach">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <child>
+                                                  <object class="GtkColorButton" id="cursorHighlightColor">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">True</property>
+                                                    <property name="receives_default">True</property>
+                                                    <property name="use_alpha">True</property>
+                                                    <property name="title" translatable="yes">Choose the color to use for "Highlight cursor position"</property>
+                                                    <property name="show_editor">True</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="pack_type">end</property>
+                                                    <property name="position">0</property>
+                                                  </packing>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="label" translatable="yes">Circle Color</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="padding">10</property>
+                                                    <property name="pack_type">end</property>
+                                                    <property name="position">1</property>
+                                                  </packing>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="left_attach">1</property>
+                                                <property name="top_attach">1</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="label" translatable="yes">pixels</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="pack_type">end</property>
+                                                    <property name="position">0</property>
+                                                  </packing>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkSpinButton" id="cursorHighlightRadius">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">True</property>
+                                                    <property name="input_purpose">number</property>
+                                                    <property name="adjustment">adjustmentCursorHighlightRadius</property>
+                                                    <property name="numeric">True</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="pack_type">end</property>
+                                                    <property name="position">1</property>
+                                                  </packing>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="label" translatable="yes">Radius</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="pack_type">end</property>
+                                                    <property name="position">3</property>
+                                                  </packing>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="left_attach">0</property>
+                                                <property name="top_attach">1</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="label" translatable="yes">pixels</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="pack_type">end</property>
+                                                    <property name="position">0</property>
+                                                  </packing>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkSpinButton" id="cursorHighlightBorderWidth">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">True</property>
+                                                    <property name="text" translatable="yes">30</property>
+                                                    <property name="input_purpose">number</property>
+                                                    <property name="adjustment">adjustmentCursorHighlightBorderWidth</property>
+                                                    <property name="numeric">True</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="pack_type">end</property>
+                                                    <property name="position">1</property>
+                                                  </packing>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="label" translatable="yes">Border Width</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="pack_type">end</property>
+                                                    <property name="position">3</property>
+                                                  </packing>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="left_attach">0</property>
+                                                <property name="top_attach">2</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <child>
+                                                  <object class="GtkColorButton" id="cursorHighlightBorderColor">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">True</property>
+                                                    <property name="receives_default">True</property>
+                                                    <property name="use_alpha">True</property>
+                                                    <property name="title" translatable="yes">Choose the color to use for "Highlight cursor position"</property>
+                                                    <property name="show_editor">True</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="pack_type">end</property>
+                                                    <property name="position">0</property>
+                                                  </packing>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="label" translatable="yes">Border Color</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="padding">10</property>
+                                                    <property name="pack_type">end</property>
+                                                    <property name="position">1</property>
+                                                  </packing>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="left_attach">1</property>
+                                                <property name="top_attach">2</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <placeholder/>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
@@ -2162,7 +2492,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
-                                            <property name="xalign">0</property>
                                             <property name="draw_indicator">True</property>
                                           </object>
                                           <packing>
@@ -3137,6 +3466,34 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                           <packing>
                                             <property name="left_attach">1</property>
                                             <property name="top_attach">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="lbSnapGridSize">
+                                            <property name="name">lbSnapGridSize</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="label" translatable="yes">Grid size</property>
+                                            <property name="xalign">0</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">0</property>
+                                            <property name="top_attach">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSpinButton" id="spSnapGridSize">
+                                            <property name="name">spSnapGridSize</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="adjustment">adjustmentSnapGridSize</property>
+                                            <property name="climb_rate">0.01</property>
+                                            <property name="digits">2</property>
+                                            <property name="value">1.00</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">1</property>
+                                            <property name="top_attach">2</property>
                                           </packing>
                                         </child>
                                       </object>

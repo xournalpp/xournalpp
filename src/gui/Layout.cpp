@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <numeric>
+#include <optional>
 
 #include "control/Control.h"
 #include "gui/scroll/ScrollHandling.h"
@@ -26,9 +27,11 @@ constexpr size_t const XOURNAL_PADDING_BETWEEN = 15;
 
 
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling): view(view), scrollHandling(scrollHandling) {
-    g_signal_connect(scrollHandling->getHorizontal(), "value-changed", G_CALLBACK(horizontalScrollChanged), this);
+    this->hadjHandler = g_signal_connect(scrollHandling->getHorizontal(), "value-changed",
+                                         G_CALLBACK(horizontalScrollChanged), this);
 
-    g_signal_connect(scrollHandling->getVertical(), "value-changed", G_CALLBACK(verticalScrollChanged), this);
+    this->vadjHandler =
+            g_signal_connect(scrollHandling->getVertical(), "value-changed", G_CALLBACK(verticalScrollChanged), this);
 
 
     lastScrollHorizontal = gtk_adjustment_get_value(scrollHandling->getHorizontal());
@@ -36,15 +39,19 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling): view(view), s
 }
 
 void Layout::horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
+    g_signal_handler_block(layout->scrollHandling->getHorizontal(), layout->hadjHandler);
     Layout::checkScroll(adjustment, layout->lastScrollHorizontal);
     layout->updateVisibility();
     layout->scrollHandling->scrollChanged();
+    g_signal_handler_unblock(layout->scrollHandling->getHorizontal(), layout->hadjHandler);
 }
 
 void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
+    g_signal_handler_block(layout->scrollHandling->getVertical(), layout->vadjHandler);
     Layout::checkScroll(adjustment, layout->lastScrollVertical);
     layout->updateVisibility();
     layout->scrollHandling->scrollChanged();
+    g_signal_handler_unblock(layout->scrollHandling->getVertical(), layout->vadjHandler);
 }
 
 Layout::~Layout() = default;
@@ -62,7 +69,7 @@ void Layout::updateVisibility() {
     int y1 = 0;
 
     // Data to select page based on visibility
-    size_t mostPageNr = 0;
+    std::optional<size_t> mostPageNr;
     double mostPagePercent = 0;
 
     for (size_t row = 0; row < this->heightRows.size(); ++row) {
@@ -80,12 +87,11 @@ void Layout::updateVisibility() {
                     && !(visRect.y > y2 || visRect.y + visRect.height < y1)) {
                     // now use exact check of page itself:
                     // visrect not outside current page dimensions:
-                    Rectangle pageRect = pageView->getRect();
-                    if (pageRect.intersects(visRect)) {
+                    auto const& pageRect = pageView->getRect();
+                    if (auto intersection = pageRect.intersects(visRect); intersection) {
                         pageView->setIsVisible(true);
-
                         // Set the selected page
-                        double percent = pageRect.intersect(visRect).area() / pageRect.area();
+                        double percent = intersection->area() / pageRect.area();
 
                         if (percent > mostPagePercent) {
                             mostPageNr = *optionalPage;
@@ -102,10 +108,12 @@ void Layout::updateVisibility() {
         x1 = 0;
     }
 
-    this->view->getControl()->firePageSelected(mostPageNr);
+    if (mostPageNr) {
+        this->view->getControl()->firePageSelected(*mostPageNr);
+    }
 }
 
-auto Layout::getVisibleRect() -> Rectangle {
+auto Layout::getVisibleRect() -> Rectangle<double> {
     return Rectangle(gtk_adjustment_get_value(scrollHandling->getHorizontal()),
                      gtk_adjustment_get_value(scrollHandling->getVertical()),
                      gtk_adjustment_get_page_size(scrollHandling->getHorizontal()),
@@ -300,7 +308,7 @@ auto Layout::getViewAt(int x, int y) -> XojPageView* {
 
 // Todo replace with boost::optional<size_t> Layout::getIndexAtGridMap(size_t row, size_t col)
 //                  or std::optional<size_t> Layout::getIndexAtGridMap(size_t row, size_t col)
-auto Layout::getIndexAtGridMap(size_t row, size_t col) -> LayoutMapper::optional_size_t {
+auto Layout::getIndexAtGridMap(size_t row, size_t col) -> std::optional<size_t> {
     return this->mapper.at({col, row});  // watch out.. x,y --> c,r
 }
 

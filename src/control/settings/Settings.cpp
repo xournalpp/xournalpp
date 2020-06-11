@@ -16,12 +16,11 @@
 #define WRITE_BOOL_PROP(var) xmlNode = saveProperty((const char*)#var, (var) ? "true" : "false", root)
 #define WRITE_STRING_PROP(var) xmlNode = saveProperty((const char*)#var, (var).empty() ? "" : (var).c_str(), root)
 #define WRITE_INT_PROP(var) xmlNode = saveProperty((const char*)#var, var, root)
+#define WRITE_UINT_PROP(var) xmlNode = savePropertyUnsigned((const char*)#var, var, root)
 #define WRITE_DOUBLE_PROP(var) xmlNode = savePropertyDouble((const char*)#var, var, root)
 #define WRITE_COMMENT(var)                      \
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
-
-const char* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default", "stylus", "stylus2"};
 
 Settings::Settings(Path filename): filename(std::move(filename)) { loadDefault(); }
 
@@ -72,6 +71,10 @@ void Settings::loadDefault() {
     this->autoloadPdfXoj = true;
     this->showBigCursor = false;
     this->highlightPosition = false;
+    this->cursorHighlightColor = 0x80FFFF00;  // Yellow with 50% opacity
+    this->cursorHighlightRadius = 30.0;
+    this->cursorHighlightBorderColor = 0x800000FF;  // Blue with 50% opacity
+    this->cursorHighlightBorderWidth = 0.0;
     this->darkTheme = false;
     this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
     this->disableScrollbarFadeout = false;
@@ -90,29 +93,37 @@ void Settings::loadDefault() {
     this->drawDirModsEnabled = false;
 
     this->snapRotation = true;
-    this->snapRotationTolerance = 0.20;
+    this->snapRotationTolerance = 0.30;
 
     this->snapGrid = true;
-    this->snapGridTolerance = 0.25;
+    this->snapGridTolerance = 0.50;
+    this->snapGridSize = DEFAULT_GRID_SIZE;
 
     this->touchWorkaround = false;
 
     this->defaultSaveName = _("%F-Note-%H-%M");
 
     // Eraser
-    this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_ERASER] =
+            new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Middle button
-    this->buttonConfig[1] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_MIDDLE] =
+            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Right button
-    this->buttonConfig[2] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_RIGHT] =
+            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Touch
-    this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_TOUCH] =
+            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Default config
-    this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_DEFAULT] =
+            new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Pen button 1
-    this->buttonConfig[5] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_STYLUS] =
+            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Pen button 2
-    this->buttonConfig[6] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_STYLUS2] =
+            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 
     this->fullscreenHideElements = "mainMenubar";
     this->presentationHideElements = "mainMenubar,sidebarContents";
@@ -136,6 +147,8 @@ void Settings::loadDefault() {
 
     this->pluginEnabled = "";
     this->pluginDisabled = "";
+
+    this->numIgnoredStylusEvents = 0;
 
     this->newInputSystemEnabled = true;
     this->inputSystemTPCButton = false;
@@ -272,10 +285,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 
     // TODO(fabian): remove this typo fix in 2-3 release cycles
     if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presureSensitivity")) == 0) {
-        setPressureSensitivity(xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0);
+        this->pressureSensitivity = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     }
     if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pressureSensitivity")) == 0) {
-        setPressureSensitivity(xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0);
+        this->pressureSensitivity = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomGesturesEnabled")) == 0) {
         this->zoomGesturesEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectedToolbar")) == 0) {
@@ -332,6 +345,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->showBigCursor = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("highlightPosition")) == 0) {
         this->highlightPosition = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightColor")) == 0) {
+        this->cursorHighlightColor = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightRadius")) == 0) {
+        this->cursorHighlightRadius = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightBorderColor")) == 0) {
+        this->cursorHighlightBorderColor = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightBorderWidth")) == 0) {
+        this->cursorHighlightBorderWidth = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("darkTheme")) == 0) {
         this->darkTheme = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultSaveName")) == 0) {
@@ -380,8 +401,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->snapRotationTolerance = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapGrid")) == 0) {
         this->snapGrid = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapGrid")) == 0) {
-        this->snapGrid = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapGridSize")) == 0) {
+        this->snapGridSize = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapGridTolerance")) == 0) {
         this->snapGridTolerance = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchWorkaround")) == 0) {
@@ -408,6 +429,9 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->audioInputDevice = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioOutputDevice")) == 0) {
         this->audioOutputDevice = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numIgnoredStylusEvents")) == 0) {
+        this->numIgnoredStylusEvents =
+                std::max<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10), 0);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("newInputSystemEnabled")) == 0) {
         this->newInputSystemEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("inputSystemTPCButton")) == 0) {
@@ -440,8 +464,8 @@ void Settings::loadDeviceClasses() {
         int deviceSource = 0;
         deviceNode.getInt("deviceClass", deviceClass);
         deviceNode.getInt("deviceSource", deviceSource);
-        inputDeviceClasses.insert(std::pair<string, std::pair<int, GdkInputSource>>(
-                device.first, std::pair<int, GdkInputSource>(deviceClass, static_cast<GdkInputSource>(deviceSource))));
+        inputDeviceClasses.emplace(device.first, std::make_pair(static_cast<InputDeviceTypeOption>(deviceClass),
+                                                                static_cast<GdkInputSource>(deviceSource)));
     }
 }
 
@@ -449,7 +473,7 @@ void Settings::loadButtonConfig() {
     SElement& s = getCustomElement("buttonConfig");
 
     for (int i = 0; i < BUTTON_COUNT; i++) {
-        SElement& e = s.child(BUTTON_NAMES[i]);
+        SElement& e = s.child(buttonToString(static_cast<Buttons>(i)));
         ButtonConfig* cfg = buttonConfig[i];
 
         string sType;
@@ -495,7 +519,7 @@ void Settings::loadButtonConfig() {
             }
 
             // Touch device
-            if (i == 3) {
+            if (i == BUTTON_TOUCH) {
                 if (!e.getString("device", cfg->device)) {
                     cfg->device = "";
                 }
@@ -570,6 +594,13 @@ auto Settings::saveProperty(const gchar* key, int value, xmlNodePtr parent) -> x
     return xmlNode;
 }
 
+auto Settings::savePropertyUnsigned(const gchar* key, unsigned int value, xmlNodePtr parent) -> xmlNodePtr {
+    char* text = g_strdup_printf("%u", value);
+    xmlNodePtr xmlNode = saveProperty(key, text, parent);
+    g_free(text);
+    return xmlNode;
+}
+
 auto Settings::saveProperty(const gchar* key, const gchar* value, xmlNodePtr parent) -> xmlNodePtr {
     xmlNodePtr xmlNode = xmlNewChild(parent, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);
 
@@ -583,10 +614,13 @@ auto Settings::saveProperty(const gchar* key, const gchar* value, xmlNodePtr par
 void Settings::saveDeviceClasses() {
     SElement& s = getCustomElement("deviceClasses");
 
-    for (const std::map<string, std::pair<int, GdkInputSource>>::value_type& device: inputDeviceClasses) {
-        SElement& e = s.child(device.first);
-        e.setInt("deviceClass", device.second.first);
-        e.setInt("deviceSource", device.second.second);
+    for (auto& device: inputDeviceClasses) {
+        const std::string& name = device.first;
+        InputDeviceTypeOption& deviceClass = device.second.first;
+        GdkInputSource& source = device.second.second;
+        SElement& e = s.child(name);
+        e.setInt("deviceClass", static_cast<int>(deviceClass));
+        e.setInt("deviceSource", source);
     }
 }
 
@@ -595,7 +629,7 @@ void Settings::saveButtonConfig() {
     s.clear();
 
     for (int i = 0; i < BUTTON_COUNT; i++) {
-        SElement& e = s.child(BUTTON_NAMES[i]);
+        SElement& e = s.child(buttonToString(static_cast<Buttons>(i)));
         ButtonConfig* cfg = buttonConfig[i];
 
         ToolType type = cfg->action;
@@ -616,7 +650,7 @@ void Settings::saveButtonConfig() {
         }
 
         // Touch device
-        if (i == 3) {
+        if (i == BUTTON_TOUCH) {
             e.setString("device", cfg->device);
             e.setBool("disableDrawing", cfg->disableDrawing);
         }
@@ -707,6 +741,10 @@ void Settings::save() {
 
     WRITE_BOOL_PROP(showBigCursor);
     WRITE_BOOL_PROP(highlightPosition);
+    WRITE_UINT_PROP(cursorHighlightColor);
+    WRITE_UINT_PROP(cursorHighlightBorderColor);
+    WRITE_DOUBLE_PROP(cursorHighlightRadius);
+    WRITE_DOUBLE_PROP(cursorHighlightBorderWidth);
     WRITE_BOOL_PROP(darkTheme);
 
     WRITE_BOOL_PROP(disableScrollbarFadeout);
@@ -743,6 +781,7 @@ void Settings::save() {
     WRITE_DOUBLE_PROP(snapRotationTolerance);
     WRITE_BOOL_PROP(snapGrid);
     WRITE_DOUBLE_PROP(snapGridTolerance);
+    WRITE_DOUBLE_PROP(snapGridSize);
 
     WRITE_BOOL_PROP(touchWorkaround);
 
@@ -775,6 +814,8 @@ void Settings::save() {
     WRITE_BOOL_PROP(strokeFilterEnabled);
     WRITE_BOOL_PROP(doActionOnStrokeFiltered);
     WRITE_BOOL_PROP(trySelectOnStrokeFiltered);
+
+    WRITE_INT_PROP(numIgnoredStylusEvents);
 
     WRITE_BOOL_PROP(newInputSystemEnabled);
     WRITE_BOOL_PROP(inputSystemTPCButton);
@@ -1000,6 +1041,42 @@ void Settings::setHighlightPosition(bool highlight) {
     save();
 }
 
+auto Settings::getCursorHighlightColor() const -> uint32_t { return this->cursorHighlightColor; }
+
+void Settings::setCursorHighlightColor(uint32_t color) {
+    if (this->cursorHighlightColor != color) {
+        this->cursorHighlightColor = color;
+        save();
+    }
+}
+
+auto Settings::getCursorHighlightRadius() const -> double { return this->cursorHighlightRadius; }
+
+void Settings::setCursorHighlightRadius(double radius) {
+    if (this->cursorHighlightRadius != radius) {
+        this->cursorHighlightRadius = radius;
+        save();
+    }
+}
+
+auto Settings::getCursorHighlightBorderColor() const -> uint32_t { return this->cursorHighlightBorderColor; }
+
+void Settings::setCursorHighlightBorderColor(uint32_t color) {
+    if (this->cursorHighlightBorderColor != color) {
+        this->cursorHighlightBorderColor = color;
+        save();
+    }
+}
+
+auto Settings::getCursorHighlightBorderWidth() const -> double { return this->cursorHighlightBorderWidth; }
+
+void Settings::setCursorHighlightBorderWidth(double radius) {
+    if (this->cursorHighlightBorderWidth != radius) {
+        this->cursorHighlightBorderWidth = radius;
+        save();
+    }
+}
+
 auto Settings::isSnapRotation() const -> bool { return this->snapRotation; }
 
 void Settings::setSnapRotation(bool b) {
@@ -1035,6 +1112,14 @@ void Settings::setSnapGridTolerance(double tolerance) {
 }
 
 auto Settings::getSnapGridTolerance() const -> double { return this->snapGridTolerance; }
+auto Settings::getSnapGridSize() const -> double { return this->snapGridSize; };
+void Settings::setSnapGridSize(double gridSize) {
+    if (this->snapGridSize == gridSize) {
+        return;
+    }
+    this->snapGridSize = gridSize;
+    save();
+}
 
 auto Settings::isTouchWorkaround() const -> bool { return this->touchWorkaround; }
 
@@ -1375,19 +1460,19 @@ auto Settings::getButtonConfig(int id) -> ButtonConfig* {
     return this->buttonConfig[id];
 }
 
-auto Settings::getEraserButtonConfig() -> ButtonConfig* { return this->buttonConfig[0]; }
+auto Settings::getEraserButtonConfig() -> ButtonConfig* { return this->buttonConfig[BUTTON_ERASER]; }
 
-auto Settings::getMiddleButtonConfig() -> ButtonConfig* { return this->buttonConfig[1]; }
+auto Settings::getMiddleButtonConfig() -> ButtonConfig* { return this->buttonConfig[BUTTON_MIDDLE]; }
 
-auto Settings::getRightButtonConfig() -> ButtonConfig* { return this->buttonConfig[2]; }
+auto Settings::getRightButtonConfig() -> ButtonConfig* { return this->buttonConfig[BUTTON_RIGHT]; }
 
-auto Settings::getTouchButtonConfig() -> ButtonConfig* { return this->buttonConfig[3]; }
+auto Settings::getTouchButtonConfig() -> ButtonConfig* { return this->buttonConfig[BUTTON_TOUCH]; }
 
-auto Settings::getDefaultButtonConfig() -> ButtonConfig* { return this->buttonConfig[4]; }
+auto Settings::getDefaultButtonConfig() -> ButtonConfig* { return this->buttonConfig[BUTTON_DEFAULT]; }
 
-auto Settings::getStylusButton1Config() -> ButtonConfig* { return this->buttonConfig[5]; }
+auto Settings::getStylusButton1Config() -> ButtonConfig* { return this->buttonConfig[BUTTON_STYLUS]; }
 
-auto Settings::getStylusButton2Config() -> ButtonConfig* { return this->buttonConfig[6]; }
+auto Settings::getStylusButton2Config() -> ButtonConfig* { return this->buttonConfig[BUTTON_STYLUS2]; }
 
 auto Settings::getFullscreenHideElements() const -> string const& { return this->fullscreenHideElements; }
 
@@ -1547,6 +1632,17 @@ void Settings::setTrySelectOnStrokeFiltered(bool enabled) { this->trySelectOnStr
 auto Settings::getTrySelectOnStrokeFiltered() const -> bool { return this->trySelectOnStrokeFiltered; }
 
 
+void Settings::setIgnoredStylusEvents(int numEvents) {
+    if (this->numIgnoredStylusEvents == numEvents) {
+        return;
+    }
+    this->numIgnoredStylusEvents = std::max<int>(numEvents, 0);
+    save();
+}
+
+auto Settings::getIgnoredStylusEvents() const -> int { return this->numIgnoredStylusEvents; }
+
+
 void Settings::setExperimentalInputSystemEnabled(bool systemEnabled) {
     if (this->newInputSystemEnabled == systemEnabled) {
         return;
@@ -1577,67 +1673,70 @@ void Settings::setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnab
 
 auto Settings::getInputSystemDrawOutsideWindowEnabled() const -> bool { return this->inputSystemDrawOutsideWindow; }
 
-void Settings::setDeviceClassForDevice(GdkDevice* device, int deviceClass) {
+void Settings::setDeviceClassForDevice(GdkDevice* device, InputDeviceTypeOption deviceClass) {
     this->setDeviceClassForDevice(gdk_device_get_name(device), gdk_device_get_source(device), deviceClass);
 }
 
-void Settings::setDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource, int deviceClass) {
+void Settings::setDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource,
+                                       InputDeviceTypeOption deviceClass) {
     auto it = inputDeviceClasses.find(deviceName);
     if (it != inputDeviceClasses.end()) {
         it->second.first = deviceClass;
         it->second.second = deviceSource;
     } else {
-        inputDeviceClasses.insert(std::pair<string, std::pair<int, GdkInputSource>>(
-                deviceName, std::pair<int, GdkInputSource>(deviceClass, deviceSource)));
+        inputDeviceClasses.emplace(deviceName, std::make_pair(deviceClass, deviceSource));
     }
 }
 
 auto Settings::getKnownInputDevices() const -> std::vector<InputDevice> {
     std::vector<InputDevice> inputDevices;
-    for (const std::pair<string, std::pair<int, GdkInputSource>>& device: inputDeviceClasses) {
-        inputDevices.emplace_back(device.first, device.second.second);
+    for (auto pair: inputDeviceClasses) {
+        const std::string& name = pair.first;
+        GdkInputSource& source = pair.second.second;
+        inputDevices.emplace_back(name, source);
     }
     return inputDevices;
 }
 
-auto Settings::getDeviceClassForDevice(GdkDevice* device) const -> int {
+auto Settings::getDeviceClassForDevice(GdkDevice* device) const -> InputDeviceTypeOption {
     return this->getDeviceClassForDevice(gdk_device_get_name(device), gdk_device_get_source(device));
 }
 
-auto Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource) const -> int {
+auto Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource) const
+        -> InputDeviceTypeOption {
     auto search = inputDeviceClasses.find(deviceName);
     if (search != inputDeviceClasses.end()) {
         return search->second.first;
     }
 
 
-    guint deviceType = 0;
+    InputDeviceTypeOption deviceType = InputDeviceTypeOption::Disabled;
     switch (deviceSource) {
         case GDK_SOURCE_CURSOR:
 #if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
         case GDK_SOURCE_TABLET_PAD:
 #endif
         case GDK_SOURCE_KEYBOARD:
-            deviceType = 0;
+            deviceType = InputDeviceTypeOption::Disabled;
             break;
         case GDK_SOURCE_MOUSE:
         case GDK_SOURCE_TOUCHPAD:
 #if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
         case GDK_SOURCE_TRACKPOINT:
 #endif
-            deviceType = 1;
+            deviceType = InputDeviceTypeOption::Mouse;
             break;
         case GDK_SOURCE_PEN:
-            deviceType = 2;
+            deviceType = InputDeviceTypeOption::Pen;
             break;
         case GDK_SOURCE_ERASER:
-            deviceType = 3;
+            deviceType = InputDeviceTypeOption::Eraser;
             break;
         case GDK_SOURCE_TOUCHSCREEN:
-            deviceType = 4;
+            deviceType = InputDeviceTypeOption::Touchscreen;
             break;
         default:
-            deviceType = 0;
+            deviceType = InputDeviceTypeOption::Disabled;
     }
     return deviceType;
 }
@@ -1668,39 +1767,6 @@ SAttribute::~SAttribute() {
 }
 
 //////////////////////////////////////////////////
-
-__RefSElement::__RefSElement() { this->refcount = 0; }
-
-__RefSElement::~__RefSElement() = default;
-
-void __RefSElement::ref() { this->refcount++; }
-
-void __RefSElement::unref() {
-    this->refcount--;
-    if (this->refcount == 0) {
-        delete this;
-    }
-}
-
-SElement::SElement() {
-    this->element = new __RefSElement();
-    this->element->ref();
-}
-
-SElement::SElement(const SElement& elem) {
-    this->element = elem.element;
-    this->element->ref();
-}
-
-SElement::~SElement() {
-    this->element->unref();
-    this->element = nullptr;
-}
-
-void SElement::operator=(const SElement& elem) {
-    this->element = elem.element;
-    this->element->ref();
-}
 
 auto SElement::attributes() -> std::map<string, SAttribute>& { return this->element->attributes; }
 

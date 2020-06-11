@@ -1,5 +1,7 @@
 #include "PageBackgroundChangeController.h"
 
+#include <memory>
+
 #include "control/Control.h"
 #include "control/pagetype/PageTypeHandler.h"
 #include "gui/dialog/backgroundSelect/ImagesDialog.h"
@@ -7,7 +9,6 @@
 #include "stockdlg/ImageOpenDlg.h"
 #include "undo/GroupUndoAction.h"
 #include "undo/PageBackgroundChangedUndoAction.h"
-#include "util/cpp14memory.h"
 
 #include "XojMsgBox.h"
 #include "i18n.h"
@@ -37,11 +38,11 @@ void PageBackgroundChangeController::changeAllPagesBackground(const PageType& pt
 
     Document* doc = control->getDocument();
 
-    auto groupUndoAction = mem::make_unique<GroupUndoAction>();
+    auto groupUndoAction = std::make_unique<GroupUndoAction>();
 
     for (size_t p = 0; p < doc->getPageCount(); p++) {
         PageRef page = doc->getPage(p);
-        if (!page.isValid()) {
+        if (!page) {
             // Should not happen
             continue;
         }
@@ -79,7 +80,7 @@ void PageBackgroundChangeController::changeCurrentPageBackground(PageType& pageT
     control->clearSelectionEndText();
 
     PageRef page = control->getCurrentPage();
-    if (!page.isValid()) {
+    if (!page) {
         return;
     }
 
@@ -101,7 +102,7 @@ void PageBackgroundChangeController::changeCurrentPageBackground(PageType& pageT
 
     control->firePageChanged(pageNr);
     control->updateBackgroundSizeButton();
-    control->getUndoRedoHandler()->addUndoAction(mem::make_unique<PageBackgroundChangedUndoAction>(
+    control->getUndoRedoHandler()->addUndoAction(std::make_unique<PageBackgroundChangedUndoAction>(
             page, origType, origPdfPage, origBackgroundImage, origW, origH));
 }
 
@@ -260,13 +261,12 @@ void PageBackgroundChangeController::insertNewPage(size_t position) {
     PageTemplateSettings model;
     model.parse(control->getSettings()->getPageTemplate());
 
-    PageRef page = new XojPage(model.getPageWidth(), model.getPageHeight());
-
+    auto page = std::make_shared<XojPage>(model.getPageWidth(), model.getPageHeight());
     PageType pt = control->getNewPageType()->getSelected();
     PageRef current = control->getCurrentPage();
 
-    // current.isValid() should always be true, but if you open an invalid file or something like this...
-    if (pt.format == PageTypeFormat::Copy && current.isValid()) {
+    // current should always be valid, but if you open an invalid file or something like this...
+    if (pt.format == PageTypeFormat::Copy && current) {
         copyBackgroundFromOtherPage(page, current);
     } else {
         // Create a new page from template
@@ -278,7 +278,7 @@ void PageBackgroundChangeController::insertNewPage(size_t position) {
         // Set background Color
         page->setBackgroundColor(model.getBackgroundColor());
 
-        if (model.isCopyLastPageSize() && current.isValid()) {
+        if (model.isCopyLastPageSize() && current) {
             page->setSize(current->getWidth(), current->getHeight());
         }
     }
@@ -297,8 +297,8 @@ void PageBackgroundChangeController::pageInserted(size_t page) {}
 void PageBackgroundChangeController::pageDeleted(size_t page) {}
 
 void PageBackgroundChangeController::pageSelected(size_t page) {
-    PageRef current = control->getCurrentPage();
-    if (!current.isValid()) {
+    auto const& current = control->getCurrentPage();
+    if (!current) {
         return;
     }
 

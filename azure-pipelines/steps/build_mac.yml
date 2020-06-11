@@ -4,7 +4,8 @@ parameters:
 
 steps:
   - bash: |
-      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+      # Ignore Homebrew uninstall errors
+      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)" || true
     displayName: 'Uninstall brew'
   - bash: |
       cd /Users
@@ -32,14 +33,6 @@ steps:
       fi
       unzip ninja-mac.zip -d /Users/git-bin/gtk/inst/bin
     displayName: 'Get Ninja'
-  - bash: |
-      curl -L -o boost_1_72_0.tar.gz https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.gz
-      tar -xzf boost_1_72_0.tar.gz
-      cd boost_1_72_0
-      ./bootstrap.sh --prefix=/usr/local/boost-1.72.0
-      sudo ./b2 cxxflags="-std=c++17" --with-system --with-filesystem variant=release link=static threading=multi install
-      export DYLD_LIBRARY_PATH=/usr/local/boost-1.72.0/lib:$DYLD_LIBRARY_PATH
-    displayName: 'Build boost'
   - bash: |
       export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
       cmake -GNinja -DCMAKE_INSTALL_PREFIX:PATH=/Users/git-bin/gtk/inst .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type }} ${{ parameters.cmake_flags }}

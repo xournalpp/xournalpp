@@ -1,0 +1,2926 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: xournalpp\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-22 22:03+0000\n"
+"PO-Revision-Date: 2020-05-22 22:06\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Greek\n"
+"Language: el_GR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: xournalpp\n"
+"X-Crowdin-Language: el\n"
+"X-Crowdin-File: /master/po/xournalpp.pot\n"
+
+#: ../src/control/XournalMain.cpp:557
+msgid "\n\n"
+"Will now attempt to run without this file."
+msgstr "\n\n"
+"Θα προσπαθήσουμε να εκτελέσουμε χωρίς αυτό το αρχείο."
+
+#: ../src/control/XournalMain.cpp:537
+msgid "\n"
+"Will now attempt to run without this file."
+msgstr "\n"
+"Θα προσπαθήσουμε να εκτελέσουμε χωρίς αυτό το αρχείο."
+
+#: ../src/gui/MainWindow.cpp:630
+msgctxt "Page {pagenumber} \"of {pagecount}\""
+msgid " of {1}{2}"
+msgstr " από {1}{2}"
+
+#: ../src/control/settings/Settings.cpp:104
+msgid "%F-Note-%H-%M"
+msgstr "%F-Σημείωση-%H-%M"
+
+#: ../src/gui/dialog/SettingsDialog.cpp:108
+msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
+msgstr "<b>Δεν βρέθηκαν συσκευές. Κάτι δεν πάει καλά - μήπως να κάνετε μια αναφορά σφάλματος;</b>"
+
+#: ../src/control/XournalMain.cpp:552
+msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
+"<b>{1}</b></span>\n"
+"Could not find them at any location.\n"
+"  Not relative\n"
+"  Not in the Working Path\n"
+"  Not in {2}"
+msgstr "<span foreground='red' size='x-large'>Το απαιτούμενο αρχείο διεπαφής λείπει:\n"
+"<b>{1}</b></span>\n"
+"Δεν βρέθηκε σε καμία τοποθεσία.\n"
+" Δεν είναι σχετική διεύθυνση\n"
+" Δεν είναι στο λειτουργικό μονοπάτι\n"
+" Δεν είναι στο {2}"
+
+#: ../src/control/XournalMain.cpp:309
+msgid "Absolute path for the audio files playback"
+msgstr "Απόλυτη μονοπάτι για αναπαραγωγή αρχείων ήχου"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
+msgid "Add/Edit Tex"
+msgstr "Προσθήκη/επεξεργασία TeX"
+
+#: ../src/control/stockdlg/XojOpenDlg.cpp:35
+msgid "All files"
+msgstr "Όλα τα αρχεία"
+
+#: ../src/control/pagetype/PageTypeMenu.cpp:197
+msgid "Apply to all pages"
+msgstr "Εφαρμογή σε όλες τις σελίδες"
+
+#: ../src/control/pagetype/PageTypeMenu.cpp:188
+msgid "Apply to current page"
+msgstr "Εφαρμογή στην τρέχουσα σελίδα"
+
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:27
+#: ../src/control/stockdlg/XojOpenDlg.cpp:112
+msgid "Attach file to the journal"
+msgstr "Επισύναψη αρχείου στο journal"
+
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:104
+msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
+msgstr "Το χαρακτηριστικό \"{1}\" δεν ήταν δυνατό να αναλυθεί ως αριθμός κυμαινόμενου σημείου, η τιμή του είναι \"{2}\""
+
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:97
+msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
+msgstr "Το χαρακτηριστικό \"{1}\" δεν ήταν δυνατό να αναλυθεί ως αριθμός κυμαινόμενου σημείου, η τιμή του είναι nullptr"
+
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:121
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:140
+msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
+msgstr "Το χαρακτηριστικό \"{1}\" δεν ήταν δυνατό να αναλυθεί ως ακέραιος αριθμός, η τιμή του είναι \"{2}\""
+
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:114
+msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
+msgstr "Το χαρακτηριστικό \"{1}\" δεν ήταν δυνατό να αναλυθεί ως ακέραιος αριθμός, η τιμή του είναι nullptr"
+
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:159
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:179
+msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
+msgstr "Το χαρακτηριστικό \"{1}\" δεν ήταν δυνατό να αναλυθεί size_t, η τιμή του είναι \"{2}\""
+
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:152
+msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
+msgstr "Το χαρακτηριστικό \"{1}\" δεν ήταν δυνατό να αναλυθεί ως size_t, η τιμή του είναι nullptr"
+
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:46
+msgid "Attribute color not set!"
+msgstr "Το χαρακτηριστικό \"χρώμα\" δεν έχει οριστεί!"
+
+#: ../src/control/AudioController.cpp:92
+msgid "Audio folder not set! Recording won't work!\n"
+"Please set the recording folder under \"Preferences > Audio recording\""
+msgstr "Δεν έχει ορισθεί φάκελος ήχου! Η έγγραφη δεν θα λειτουργήσει!\n"
+"Παρακαλώ να ορίσετε τον φάκελο στις \"Προτιμήσεις > Εγγραφή ήχου\""
+
+#: ../src/control/Control.cpp:237
+msgid "Autosave failed with an error: {1}"
+msgstr "Η αυτόματη αποθήκευση απέτυχε με σφάλμα: {1}"
+
+#: ../src/control/Control.cpp:203
+msgid "Autosave renamed from {1} to {2}"
+msgstr "Η αυτόματη αποθήκευση μετονομάστηκε από {1} σε {2}"
+
+#: ../src/control/jobs/AutosaveJob.cpp:44
+msgid "Autosaving to {1}"
+msgstr "Αποθηκεύεται αυτόματα στο {1}"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:366
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
+msgid "Back"
+msgstr "Πίσω"
+
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:19
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:191
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:231
+msgid "Background"
+msgstr "Φόντο"
+
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:103
+msgid "Black"
+msgstr "Μαύρο"
+
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:14
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:107
+msgid "Blue"
+msgstr "Μπλε"
+
+#: ../src/control/Control.cpp:1995 ../src/control/Control.cpp:2447
+#: ../src/control/XournalMain.cpp:151
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+#: ../src/undo/ColorUndoAction.cpp:90
+msgid "Change color"
+msgstr "Αλλαγή χρώματος"
+
+#: ../src/undo/FontUndoAction.cpp:105
+msgid "Change font"
+msgstr "Αλλαγή γραμματοσειράς"
+
+#: ../src/undo/FillUndoAction.cpp:79
+msgid "Change stroke fill"
+msgstr "Αλλαγή χρώματος μολυβιάς"
+
+#: ../src/undo/SizeUndoAction.cpp:104
+msgid "Change stroke width"
+msgstr "Αλλαγή πάχους μολυβιάς"
+
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:70
+msgid "Color \"{1}\" unknown (not defined in default color list)!"
+msgstr "Άγνωστο χρώμα \"{1}\" (δεν έχει ορισθεί στην προεπιλεγμένη λίστα χρωμάτων)!"
+
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:226
+msgid "Contents"
+msgstr "Περιεχόμενα"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:332
+#: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:75
+#: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:81
+msgid "Copy"
+msgstr "Αντιγραφή"
+
+#: ../src/control/pagetype/PageTypeHandler.cpp:30
+msgid "Copy current"
+msgstr "Αντιγραφή τρέχοντος"
+
+#: ../src/undo/CopyUndoAction.cpp:60
+msgid "Copy page"
+msgstr "Αντιγραφή σελίδας"
+
+#: ../src/control/jobs/SaveJob.cpp:99
+msgid "Could not create backup! (The file was created from an older Xournal version)"
+msgstr "Δεν ήταν δυνατή η δημιουργία αντιγράφου ασφαλείας! (Το αρχείο δημιουργήθηκε σε παλαιότερη έκδοση του Xournal)"
+
+#: ../src/util/Util.cpp:134
+msgid "Could not create folder: {1}"
+msgstr "Δεν ήταν δυνατή η δημιουργία του φακέλου: {1}"
+
+#: ../src/control/LatexController.cpp:69
+msgid "Could not find pdflatex in PATH.\n"
+"Please install pdflatex first and make sure it's in the PATH."
+msgstr "Το pdflatex δεν βρέθηκε στο PATH\n"
+"Παρακαλώ να εγκαταστήσετε πρώτα το pdflatex και βεβαιωθείτε ότι βρίσκεται στο PATH."
+
+#: ../src/control/LatexController.cpp:90
+msgid "Could not find the LaTeX package 'standalone'.\n"
+"Please install standalone (found in texlive-latex-extra) and make sure it's accessible by your LaTeX installation."
+msgstr "Δεν βρέθηκε το πακέτο LaTeX 'standalone'.\n"
+"Παρακαλώ να εγκαταστήσετε το standalone (βρίσκεται στο texlive-latex-extra) και βεβαιωθείτε ότι είναι προσβάσιμο από την LaTeX."
+
+#: ../src/control/LatexController.cpp:387
+msgid "Could not load LaTeX PDF file"
+msgstr "Δεν ήταν δυνατό να φορτωθεί το αρχείο LaTeX PDF"
+
+#: ../src/control/LatexController.cpp:372
+msgid "Could not load LaTeX PDF file, File Error: {1}"
+msgstr "Δεν ήταν δυνατό να φορτωθεί το αρχείο LaTeX PDF, Σφάλμα Αρχείου: {1}"
+
+#: ../src/control/LatexController.cpp:379
+msgid "Could not load LaTeX PDF file: {1}"
+msgstr "Δεν ήταν δυνατό να φορτωθεί το αρχείο LaTeX PDF: {1}"
+
+#: ../src/control/pagetype/PageTypeHandler.cpp:15
+msgid "Could not load pagetemplates.ini file"
+msgstr "Απέτυχε η φόρτωση του αρχείου pagetemplates.ini"
+
+#: ../src/control/xojfile/LoadHandler.cpp:776
+msgid "Could not open attachment: {1}. Error message: Could not read file"
+msgstr "Απέτυχε το άνοιγμα του συνημμένου: {1}. Μήνυμα σφάλματος: Δεν ήταν δυνατή η ανάγνωση του αρχείου"
+
+#: ../src/control/xojfile/LoadHandler.cpp:785
+msgid "Could not open attachment: {1}. Error message: Could not write file"
+msgstr "Απέτυχε το άνοιγμα του συνημμένου: {1}. Μήνυμα σφάλματος: Δεν ήταν δυνατή η εγγραφή του αρχείου"
+
+#: ../src/control/xojfile/LoadHandler.cpp:757
+#: ../src/control/xojfile/LoadHandler.cpp:1007
+#: ../src/control/xojfile/LoadHandler.cpp:1026
+msgid "Could not open attachment: {1}. Error message: No valid file size provided"
+msgstr "Απέτυχε το άνοιγμα του συνημμένου: {1}. Μήνυμα σφάλματος: Δεν δόθηκε αποδεκτό μέγεθος αρχείου"
+
+#: ../src/control/xojfile/LoadHandler.cpp:748
+#: ../src/control/xojfile/LoadHandler.cpp:764
+#: ../src/control/xojfile/LoadHandler.cpp:999
+#: ../src/control/xojfile/LoadHandler.cpp:1014
+msgid "Could not open attachment: {1}. Error message: {2}"
+msgstr "Απέτυχε το άνοιγμα του συνημμένου: {1}. Μήνυμα σφάλματος: {2}"
+
+#: ../src/control/xojfile/LoadHandler.cpp:154
+msgid "Could not open file: \"{1}\""
+msgstr "Δεν ήταν δυνατό το άνοιγμα αρχείου: \"{1}\""
+
+#: ../src/gui/MainWindow.cpp:86
+msgid "Could not parse custom toolbar.ini file: {1}\n"
+"Toolbars will not be available"
+msgstr "Αδύνατη προσπέλαση προσαρμοσμένου αρχείου toolbar.ini: {1}\n"
+"Οι γραμμές εργαλείων δεν θα είναι διαθέσιμες"
+
+#: ../src/gui/MainWindow.cpp:77
+msgid "Could not parse general toolbar.ini file: {1}\n"
+"No Toolbars will be available"
+msgstr "Αδύνατη προσπέλαση γενικού αρχείου toolbar.ini: {1}\n"
+"Οι γραμμές εργαλείων δεν θα είναι διαθέσιμες"
+
+#: ../src/control/xojfile/LoadHandler.cpp:343
+#: ../src/control/xojfile/LoadHandler.cpp:367
+msgid "Could not read image: {1}. Error message: {2}"
+msgstr "Απέτυχε η ανάγνωση της εικόνας: {1}. Μήνυμα σφάλματος: {2}"
+
+#: ../src/undo/UndoRedoHandler.cpp:137
+msgid "Could not redo \"{1}\"\n"
+"Something went wrong… Please write a bug report…"
+msgstr "Δεν μπόρεσε να ξαναγίνει το ''{1}\"\n"
+"Κάτι πήγε στραβά... Παρακαλείστε να κάνετε μια αναφορά σφάλματος…"
+
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:169
+msgid "Could not remove tool item from Toolbar {1} on position {2}"
+msgstr "Δεν ήταν δυνατό να αφαιρεθεί το εργαλείο από την γραμμή εργαλείων {1} στην θέση {2}"
+
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
+msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
+msgstr "Δεν ήταν δυνατό να αφαιρεθεί το εργαλείο {1} από την γραμμή εργαλείων {2} στην θέση {3}"
+
+#: ../src/control/Control.cpp:228
+msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
+msgstr "Δεν ήταν δυνατό να μετονομαστεί το αρχείο από \"{1}\" σε \"{2}\": {3}"
+
+#: ../src/control/LatexController.cpp:110
+msgid "Could not save .tex file: {1}"
+msgstr "Αδυναμία αποθήκευσης .tex αρχείου: {1}"
+
+#: ../src/control/LatexController.cpp:129
+msgid "Could not start pdflatex: {1} (exit code: {2})"
+msgstr "Αδυναμία εκκίνησης pdflatex: {1} (κωδικός εξόδου; {2})"
+
+#: ../src/undo/UndoRedoHandler.cpp:108
+msgid "Could not undo \"{1}\"\n"
+"Something went wrong… Please write a bug report…"
+msgstr "Δεν ήταν δυνατή η αντιστροφή του \"{1}\"\n"
+"Κάτι πήγε στραβά... Παρακαλείστε να κάνετε μια αναφορά σφάλματος…"
+
+#: ../src/control/xojfile/SaveHandler.cpp:232
+msgid "Could not write background \"{1}\", {2}"
+msgstr "Αδυναμία εγγραφής φόντου \"{1}\", {2}"
+
+#: ../src/control/xojfile/SaveHandler.cpp:328
+msgid "Could not write background \"{1}\". Continuing anyway."
+msgstr "Αδυναμία εγγραφής φόντου \"{1}\". Συνέχεια αγνοώντας το."
+
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:74
+msgid "Create new layer"
+msgstr "Δημιουργία νέας στρώσης"
+
+#: ../src/gui/dialog/FormatDialog.cpp:67
+msgid "Custom"
+msgstr "Προσαρμοσμένο"
+
+#: ../src/control/jobs/CustomExportJob.cpp:18
+msgid "Custom Export"
+msgstr "Προσαρμοσμένη εξαγωγή"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:355
+msgid "Customize Toolbars"
+msgstr "Προσαρμογή γραμμών εργαλείων"
+
+#: ../src/gui/dialog/ToolbarManageDialog.cpp:29
+msgid "Customized"
+msgstr "Προσαρμοσμένο"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:331
+msgid "Cut"
+msgstr "Αποκοπή"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:402
+msgid "Default Tool"
+msgstr "Προεπιλεγμένο εργαλείο"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:337
+#: ../src/undo/DeleteUndoAction.cpp:74
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#: ../src/control/XournalMain.cpp:150
+msgid "Delete Logfile"
+msgstr "Διαγραφή αρχείου καταγραφής"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:386
+msgid "Delete current page"
+msgstr "Διαγραφή της τρέχουσας σελίδας"
+
+#: ../src/control/XournalMain.cpp:194
+msgid "Delete file"
+msgstr "Διαγραφή αρχείου"
+
+#: ../src/undo/RemoveLayerUndoAction.cpp:28
+msgid "Delete layer"
+msgstr "Διαγραφή στρώσης"
+
+#: ../src/control/Control.cpp:2444
+msgid "Discard"
+msgstr "Απόρριψη"
+
+#: ../src/control/Control.cpp:1936
+msgid "Do not open Autosave files. They may will be overwritten!\n"
+"Copy the files to another folder.\n"
+"Files from Folder {1} cannot be opened."
+msgstr "Μην ανοίγετε αρχεία αυτόματης αποθήκευσης. Μπορεί να επανεγγραφούν!\n"
+"Αντιγράψτε τα αρχεία σε άλλο φάκελο.\n"
+"Τα αρχεία στον Φάκελο {1} δεν μπορούν να ανοιχτούν."
+
+#: ../src/control/jobs/BaseExportJob.cpp:32
+msgid "Do not overwrite the background PDF! This will cause errors!"
+msgstr "Μην επανεγγράφετε το PDF του υποβάθρου! Θα προκαλέσει προβλήματα!"
+
+#: ../src/control/Control.cpp:2438
+msgid "Document file was removed."
+msgstr "Το έγγραφο αφαιρέθηκε."
+
+#: ../src/control/xojfile/LoadHandler.cpp:236
+msgid "Document is corrupted (no pages found in file)"
+msgstr "Το έγγραφο είναι κατεστραμμένο (δεν βρέθηκαν σελίδες στο αρχείο)"
+
+#: ../src/control/xojfile/LoadHandler.cpp:232
+msgid "Document is not complete (maybe the end is cut off?)"
+msgstr "Το έγγραφο είναι ημιτελές (μήπως έχει αποκοπεί το τέλος;)"
+
+#: ../src/model/Document.cpp:284 ../src/model/Document.cpp:292
+msgid "Document not loaded! ({1}), {2}"
+msgstr "Το έγγραφο δεν φορτώθηκε! ({1}),{2}"
+
+#: ../src/control/pagetype/PageTypeHandler.cpp:24
+msgid "Dotted"
+msgstr "Διάστικτη"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:101
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:30
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:407
+msgid "Draw Arrow"
+msgstr "Σχεδίασε Βέλος"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:99
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:406
+msgid "Draw Circle"
+msgstr "Σχεδίασε Κύκλο"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:95
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
+msgid "Draw Line"
+msgstr "Σχεδίασε Γραμμή"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:97
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:24
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:28
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:91
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:94
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:405
+msgid "Draw Rectangle"
+msgstr "Σχεδίασε Παραλληλόγραμμο"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:107
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
+msgid "Draw Spline"
+msgstr "Σχεδίασε Spline"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:103
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:32
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:409
+msgid "Draw coordinate system"
+msgstr "Σχεδίασε σύστημα συντεταγμένων"
+
+#: ../src/undo/InsertUndoAction.cpp:30
+msgid "Draw stroke"
+msgstr "Μολυβιά"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:91
+msgid "Drawing Type - don't change"
+msgstr "Τύπος σχεδιασμού - καμία αλλαγή"
+
+#: ../src/undo/TextBoxUndoAction.cpp:36
+msgid "Edit text"
+msgstr "Επεξεργασία κειμένου"
+
+#: ../src/undo/EmergencySaveRestore.cpp:19
+msgid "Emergency saved document"
+msgstr "Αρχείο από επείγουσα αποθήκευση"
+
+#: ../src/undo/AddUndoAction.cpp:75 ../src/undo/DeleteUndoAction.cpp:71
+#: ../src/undo/EraseUndoAction.cpp:90
+msgid "Erase stroke"
+msgstr "Διαγραφή μολυβιάς"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:58
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:247
+msgid "Eraser"
+msgstr "Γόμα"
+
+#: ../src/control/Control.cpp:2185
+msgid "Error annotate PDF file \"{1}\"\n"
+"{2}"
+msgstr "Σφάλμα σημειωμένου αρχείου PDF \"{1}\"\n"
+"{2}"
+
+#: ../src/gui/GladeGui.cpp:21
+msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
+msgstr "Σφάλμα κατά την φόρτωση αρχείου glade \"{1}\" (προσπαθήστε να φορτώσετε \"{2}\")"
+
+#: ../src/control/Control.cpp:2017
+msgid "Error opening file \"{1}\""
+msgstr "Σφάλμα κατά το άνοιγμα αρχείου \"{1}\""
+
+#: ../src/util/OutputStream.cpp:25
+msgid "Error opening file: \"{1}\""
+msgstr "Σφάλμα κατά το άνοιγμα αρχείου: \"{1}\""
+
+#: ../src/control/xojfile/LoadHandler.cpp:442
+#: ../src/control/xojfile/LoadHandler.cpp:463
+msgid "Error reading PDF: {1}"
+msgstr "Σφάλμα ανάγνωσης PDF: {1}"
+
+#: ../src/control/xojfile/LoadHandler.cpp:509
+msgid "Error reading width of a stroke: {1}"
+msgstr "Σφάλμα ανάγνωσης πλάτους μιας μολυβιάς: {1}"
+
+#: ../src/control/jobs/ImageExport.cpp:104
+msgid "Error save image #1"
+msgstr "Σφάλμα αποθήκευσης εικόνας #1"
+
+#: ../src/control/jobs/ImageExport.cpp:119
+msgid "Error save image #2"
+msgstr "Σφάλμα αποθήκευσης εικόνας #2"
+
+#: ../src/control/jobs/AutosaveJob.cpp:15
+msgid "Error while autosaving: {1}"
+msgstr "Σφάλμα κατά την αυτόματη αποθήκευση: {1}"
+
+#: ../src/util/Util.cpp:197
+msgid "Error {1} executing system command: {2}"
+msgstr "Σφάλμα {1} κατά την εκτέλεση εντολής συστήματος: {2}"
+
+#: ../src/util/CrashHandler.cpp:39
+msgid "Error: {1}"
+msgstr "Σφάλμα: {1}"
+
+#: ../src/control/LatexController.cpp:84
+msgid "Error: {1}\n"
+"Could not find kpsewhich in PATH; please install kpsewhich and put it on path."
+msgstr "Σφάλμα: {1}\n"
+"Το kpsewhich δεν βρέθηκε στο PATH; παρακαλώ να εγκαταστήσετε το kpsewhich και να το τοποθετήσετε σε αυτή την θέση."
+
+#: ../src/control/XournalMain.cpp:170
+msgid "Errorlog cannot be deleted. You have to do it manually.\n"
+"Logfile: {1}"
+msgstr "Αδυναμία διαγραφής errorlog. Πρέπει να γίνει χειροκίνητα.\n"
+"Logfile: {1}"
+
+#: ../src/control/jobs/BaseExportJob.cpp:16
+msgid "Export PDF"
+msgstr "Εξαγωγή σε PDF"
+
+#: ../src/util/Util.cpp:153 ../src/util/Util.cpp:170
+msgid "File couldn't be opened. You have to do it manually:\n"
+"URL: {1}"
+msgstr "Δεν ήταν δυνατό το άνοιγμα του αρχείου Πρέπει να γίνει χειροκίνητα.\n"
+"URL: {1}"
+
+#: ../src/control/Control.cpp:1961
+msgid "Filename: {1}"
+msgstr "Όνομα αρχείου: {1}"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:459
+msgid "Fill"
+msgstr "Γέμισμα"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:473
+msgid "Fine"
+msgstr "Λεπτό"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:66
+msgid "Floating Toolbox (experimental)"
+msgstr "Αιωρούμενο κουτί εργαλείων (πειραματικό)"
+
+#: ../src/gui/toolbarMenubar/FontButton.cpp:54
+msgid "Font"
+msgstr "Γραμματοσειρά"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
+msgid "Forward"
+msgstr "Επόμενη σελίδα"
+
+#: ../src/control/XournalMain.cpp:310
+msgid "Get version of xournalpp"
+msgstr ""
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
+msgid "Go to first page"
+msgstr "Μετάβαση στην πρώτη σελίδα"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
+msgid "Go to last page"
+msgstr "Μετάβαση στην τελευταία σελίδα"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
+msgid "Go to next layer"
+msgstr "Μετάβαση στην επόμενη στρώση"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
+msgid "Go to page"
+msgstr "Μετάβαση στη σελίδα"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:371
+msgid "Go to previous layer"
+msgstr "Πηγαίνετε στην προηγούμενη στρώση"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:373
+msgid "Go to top layer"
+msgstr "Μετάβαση στην πρώτη στρώση"
+
+#: ../src/control/pagetype/PageTypeHandler.cpp:23
+msgid "Graph"
+msgstr "Γράφημα"
+
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:108
+msgid "Gray"
+msgstr "Γκρι"
+
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:11
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:104
+msgid "Green"
+msgstr "Πράσινο"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:343
+msgid "Grid Snapping"
+msgstr "Προσκόλληση στον καμβά"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:65
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
+msgid "Hand"
+msgstr "Χέρι"
+
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:68
+msgid "Hide all"
+msgstr "Aπόκρυψη όλων"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:59
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:397
+msgid "Highlighter"
+msgstr "Υπογραμμισμός"
+
+#: ../src/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
+msgid "Image"
+msgstr "Εικόνα"
+
+#: ../src/control/XournalMain.cpp:257
+msgid "Image file successfully created"
+msgstr "Το αρχείο εικόνας δημιουργήθηκε επιτυχώς"
+
+#: ../src/control/XournalMain.cpp:307
+msgid "Image output filename (.png / .svg)"
+msgstr "Τύπος αρχείου εικόνας εξόδου (.png / .svg)"
+
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:17
+msgid "Images"
+msgstr "Εικόνες"
+
+#: ../src/undo/InsertUndoAction.cpp:79
+msgid "Insert elements"
+msgstr "Εισαγωγή στοιχείων"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:61 ../src/undo/InsertUndoAction.cpp:34
+msgid "Insert image"
+msgstr "Εισαγωγή εικόνας"
+
+#: ../src/undo/InsertUndoAction.cpp:36
+msgid "Insert latex"
+msgstr "Εισαγωγή latex"
+
+#: ../src/undo/InsertLayerUndoAction.cpp:26
+msgid "Insert layer"
+msgstr "Εισαγωγή στρώσης"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
+msgid "Insert page"
+msgstr "Εισαγωγή σελίδας"
+
+#: ../src/control/pagetype/PageTypeHandler.cpp:25
+msgid "Isometric Dotted"
+msgstr ""
+
+#: ../src/control/pagetype/PageTypeHandler.cpp:26
+msgid "Isometric Graph"
+msgstr ""
+
+#: ../src/control/XournalMain.cpp:308
+msgid "Jump to Page (first Page: 1)"
+msgstr "Μετάβαση στη σελίδα (πρώτη σελίδα: 1)"
+
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:246
+msgid "Layer"
+msgstr "Στρώση"
+
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
+msgid "Layer Preview"
+msgstr "Προεπισκόπηση Στρώσης"
+
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:236
+msgid "Layer selection"
+msgstr "Επιλογή στρώσης"
+
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:21
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:182
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:229
+msgid "Layer {1}"
+msgstr "Στρώση {1}"
+
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:105
+msgid "Light Blue"
+msgstr "Ανοικτό μπλε"
+
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:13
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:106
+msgid "Light Green"
+msgstr "Ανοικτό πράσινο"
+
+#: ../src/gui/PageView.cpp:692
+#: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:76
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:15
+msgid "Loading..."
+msgstr "Φόρτωση..."
+
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:110
+msgid "Magenta"
+msgstr "Ματζέντα"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:354
+msgid "Manage Toolbars"
+msgstr "Διαχείριση γραμμής εργαλείων"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:83
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
+msgid "Medium"
+msgstr "Μεσαίο"
+
+#: ../src/control/XournalMain.cpp:534
+msgid "Missing the needed UI file:\n"
+"{1}\n"
+" .app corrupted?\n"
+"Path: {2}"
+msgstr "Λείπει το απαιτούμενο αρχείο UI:\n"
+"{1}\n"
+" .app αλλοιωμένο ?\n"
+"Μονοπάτι: {2}"
+
+#: ../src/undo/MoveUndoAction.cpp:17
+msgid "Move"
+msgstr "Μετακίνηση"
+
+#: ../src/undo/MoveLayerUndoAction.cpp:27
+msgid "Move layer"
+msgstr "Μετακίνηση στρώσης"
+
+#: ../src/undo/SwapUndoAction.cpp:63
+msgid "Move page downwards"
+msgstr "Μετακίνηση σελίδας κάτω"
+
+#: ../src/undo/SwapUndoAction.cpp:63
+msgid "Move page upwards"
+msgstr "Μετακίνηση σελίδας πάνω"
+
+#: ../src/gui/dialog/ToolbarManageDialog.cpp:70
+msgid "New"
+msgstr "Νέο"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:317
+msgid "New Xournal"
+msgstr "Νέο Xournal"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
+msgid "Next"
+msgstr "Επόμενο"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
+msgid "Next annotated page"
+msgstr "Επόμενη σημειωμένη σελίδα"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:41
+msgid "No device"
+msgstr "Καμία συσκευή"
+
+#: ../src/pdf/base/XojCairoPdfExport.cpp:117
+#: ../src/pdf/base/XojCairoPdfExport.cpp:155
+msgid "No pages to export!"
+msgstr "Δεν υπάρχουν σελίδες για εξαγωγή!"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:93
+msgid "Normal drawing"
+msgstr "Κανονικός σχεδιασμός"
+
+#: ../src/plugin/Plugin.cpp:308 ../src/plugin/Plugin.cpp:327
+msgid "OK"
+msgstr "ΟΚ"
+
+#: ../src/control/jobs/BaseExportJob.cpp:86
+msgid "Only local files are supported\n"
+"Path: {1}"
+msgstr "Μόνο τοπικά αρχεία υποστηρίζονται\n"
+"Μονοπάτι: {1}"
+
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:11
+msgid "Open Image"
+msgstr "Άνοιγμα εικόνας"
+
+#: ../src/control/XournalMain.cpp:148
+msgid "Open Logfile"
+msgstr "Άνοιγμα αρχείου καταγραφής"
+
+#: ../src/control/XournalMain.cpp:149
+msgid "Open Logfile directory"
+msgstr "Άνοιγμα φακέλου αρχείου καταγραφής"
+
+#: ../src/control/stockdlg/XojOpenDlg.cpp:11
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:318
+msgid "Open file"
+msgstr "Άνοιγμα αρχείου"
+
+#: ../src/control/RecentManager.cpp:181
+msgctxt "{1} is a URI"
+msgid "Open {1}"
+msgstr "Άνοιγμα {1}"
+
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:18
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:111
+msgid "Orange"
+msgstr "Πορτοκαλί"
+
+#: ../src/control/jobs/PdfExportJob.cpp:9
+msgid "PDF Export"
+msgstr "Εξαγωγή σε PDF"
+
+#: ../src/gui/MainWindow.cpp:628
+msgid "PDF Page {1}"
+msgstr "PDF σελίδα {1}"
+
+#: ../src/view/PdfView.cpp:32
+msgid "PDF background missing"
+msgstr "Φόντο PDF λείπει"
+
+#: ../src/control/XournalMain.cpp:287
+msgid "PDF file successfully created"
+msgstr "Το αρχείο PDF δημιουργήθηκε με επιτυχία"
+
+#: ../src/control/jobs/CustomExportJob.cpp:20
+#: ../src/control/jobs/PdfExportJob.cpp:13
+#: ../src/control/stockdlg/XojOpenDlg.cpp:42
+msgid "PDF files"
+msgstr "Αρχεία PDF"
+
+#: ../src/control/XournalMain.cpp:306
+msgid "PDF output filename"
+msgstr "όνομα αρχείου εξόδου PDF"
+
+#: ../src/control/jobs/CustomExportJob.cpp:21
+msgid "PDF with plain background"
+msgstr "PDF με κενό λευκό φόντο"
+
+#: ../src/control/jobs/CustomExportJob.cpp:22
+msgid "PNG graphics"
+msgstr "PNG γραφικά"
+
+#: ../src/control/jobs/CustomExportJob.cpp:23
+msgid "PNG with transparent background"
+msgstr "PNG με διαφανές φόντο"
+
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:42
+msgid "Page"
+msgstr "Σελίδα"
+
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:62
+msgid "Page Preview"
+msgstr "Προεπισκόπηση Σελίδας"
+
+#: ../src/undo/PageBackgroundChangedUndoAction.cpp:81
+msgid "Page background changed"
+msgstr "Το φόντο σελίδας άλλαξε"
+
+#: ../src/undo/InsertDeletePageUndoAction.cpp:98
+msgid "Page deleted"
+msgstr "Σελίδα διαγράφηκε"
+
+#: ../src/undo/InsertDeletePageUndoAction.cpp:94
+msgid "Page inserted"
+msgstr "Η σελίδα εισήχθη"
+
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:31
+msgid "Page number"
+msgstr "Αριθμός σελίδας"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:349
+msgid "Paired pages"
+msgstr "Διπλές σελίδες"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:333
+#: ../src/undo/AddUndoAction.cpp:77
+msgid "Paste"
+msgstr "Επικόλληση"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
+msgid "Pause / Play"
+msgstr "Παύση/Αναπαραγωγή"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:57
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:228
+msgid "Pen"
+msgstr "Στυλό"
+
+#: ../src/control/pagetype/PageTypeHandler.cpp:19
+msgid "Plain"
+msgstr "Κενή"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:71
+msgid "Play Object"
+msgstr "Αναπαραγωγή Αντικειμένου"
+
+#: ../src/gui/dialog/ToolbarManageDialog.cpp:17
+msgid "Predefined"
+msgstr "Προκαθορισμένο"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
+msgid "Presentation mode"
+msgstr "Λειτουργία παρουσίασης"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:320
+msgid "Print"
+msgstr ""
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+msgid "Record Audio / Stop Recording"
+msgstr "Εγγραφή ήχου / Λήξη εγγραφής"
+
+#: ../src/control/Control.cpp:896
+msgid "Recorder could not be started."
+msgstr "Δεν ήταν δυνατή η εκκίνηση της εγγραφής."
+
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:109
+msgid "Red"
+msgstr "Κόκκινο"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:327
+#: ../src/undo/UndoRedoHandler.cpp:215
+msgid "Redo"
+msgstr "Ακύρωση Αναίρεσης"
+
+#: ../src/undo/UndoRedoHandler.cpp:210
+msgid "Redo: "
+msgstr "Ακύρωση Αναίρεσης: "
+
+#: ../src/control/Control.cpp:1994
+msgid "Remove PDF Background"
+msgstr "Αφαίρεση φόντου PDF"
+
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:160
+msgid "Removed tool item from Toolbar {1} ID {2}"
+msgstr "Αφαιρέθηκε εργαλείο από την γραμμή εργαλείων {1} ID {2}"
+
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:158
+msgid "Removed tool item {1} from Toolbar {2} ID {3}"
+msgstr "Αφαιρέθηκε το εργαλείο {1} από την γραμμή εργαλείων {2} ID {3}"
+
+#: ../src/util/XojMsgBox.cpp:71
+msgid "Replace"
+msgstr "Αντικατάσταση"
+
+#: ../src/control/xojfile/LoadHandler.cpp:1044
+msgid "Requested temporary file was not found for attachment {1}"
+msgstr "Το προσωρινό αρχείο που ζητήθηκε δεν βρέθηκε για επισύναψη {1}"
+
+#: ../src/control/XournalMain.cpp:195
+msgid "Restore file"
+msgstr "Επαναφορά αρχείου"
+
+#: ../src/undo/RotateUndoAction.cpp:53
+msgid "Rotation"
+msgstr "Περιστροφή"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:341
+msgid "Rotation Snapping"
+msgstr "Περιστροφή με σκάλες"
+
+#: ../src/control/pagetype/PageTypeHandler.cpp:20
+msgid "Ruled"
+msgstr "Ριγέ"
+
+#: ../src/control/pagetype/PageTypeHandler.cpp:21
+msgid "Ruled with vertical line"
+msgstr "Ριγέ με κάθετη"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
+msgid "Ruler"
+msgstr "Χάρακας"
+
+#: ../src/control/jobs/CustomExportJob.cpp:24
+msgid "SVG graphics"
+msgstr "SVG γραφικά"
+
+#: ../src/control/jobs/CustomExportJob.cpp:25
+msgid "SVG with transparent background"
+msgstr "SVG με διαφανές φόντο"
+
+#: ../src/control/Control.cpp:2439 ../src/control/jobs/SaveJob.cpp:13
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:319
+msgid "Save"
+msgstr "Αποθήκευση"
+
+#: ../src/control/Control.cpp:2439
+msgid "Save As..."
+msgstr "Αποθήκευση Ως..."
+
+#: ../src/control/Control.cpp:2275 ../src/gui/dialog/PageTemplateDialog.cpp:83
+msgid "Save File"
+msgstr "Αποθήκευση Αρχείου"
+
+#: ../src/control/jobs/CustomExportJob.cpp:128
+#: ../src/control/jobs/SaveJob.cpp:112
+msgid "Save file error: {1}"
+msgstr "Σφάλμα αποθήκευσης αρχείου: {1}"
+
+#: ../src/undo/ScaleUndoAction.cpp:52
+msgid "Scale"
+msgstr "Κλιμάκωση"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:335
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
+msgid "Select Font"
+msgstr "Επιλογή Γραμματοσειράς"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:66
+msgid "Select Object"
+msgstr "Επιλογή Αντικειμένου"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:17
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:56
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:86
+msgid "Select Rectangle"
+msgstr "Ορθογώνια Επιλογή"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:61
+msgid "Select Region"
+msgstr "Επιλογή Περιοχής"
+
+#: ../src/control/Control.cpp:1993
+msgid "Select another PDF"
+msgstr "Επιλέξτε άλλο PDF"
+
+#: ../src/util/XojMsgBox.cpp:70
+msgid "Select another name"
+msgstr "Επιλέξτε άλλο όνομα"
+
+#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:114
+msgid "Select background color"
+msgstr "Επιλέξτε χρώμα του φόντου"
+
+#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:39
+#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:91
+msgid "Select color"
+msgstr "Επιλέξτε χρώμα"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:64
+msgid "Select rectangle"
+msgstr "Ορθογώνια επιλογή"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:63
+msgid "Select region"
+msgstr "Επιλογή περιοχής"
+
+#: ../src/control/XournalMain.cpp:147
+msgid "Send Bugreport"
+msgstr "Στείλε Αναφορά Σφάλματος"
+
+#: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:50
+msgid "Separator"
+msgstr "Διαχωριστικό"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:404
+msgid "Shape Recognizer"
+msgstr "Αναγνωρισμός Σχήματος"
+
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:63
+msgid "Show all"
+msgstr "Εμφάνιση όλων"
+
+#: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:88
+msgid "Show only not used pages (one unused page)"
+msgstr "Προβολή μόνο αχρησιμοποίητων σελίδων (μία αχρησιμοποίητη σελίδα)"
+
+#: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:89
+msgid "Show only not used pages ({1} unused pages)"
+msgstr "Προβολή μόνο αχρησιμοποίητων σελίδων ({1} αχρησιμοποίητες σελίδες)"
+
+#: ../src/control/XournalMain.cpp:383
+msgid "Sorry, Xournal++ can only open one file at once.\n"
+"Others are ignored."
+msgstr "Συγγνώμη το Xournal++ μπορεί να ανοίξει μόνο ένα αρχείο την φορά.\n"
+"Τα υπόλοιπα θα αγνοηθούν."
+
+#: ../src/control/XournalMain.cpp:395
+msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
+"You have to copy the file to a local directory."
+msgstr "Συγγνώμη το Xournal++ δεν μπορεί να ανοίξει απομακρυσμένα αρχεία ακόμη.\n"
+"Πρέπει να αντιγράψετε το αρχείο σε τοπικό φάκελο."
+
+#: ../src/control/pagetype/PageTypeHandler.cpp:22
+msgid "Staves"
+msgstr "Πεντέγραμμο"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:431
+msgid "Stop"
+msgstr "Διακοπή"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:105
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
+#: ../src/undo/RecognizerUndoAction.cpp:72
+msgid "Stroke recognizer"
+msgstr "Αναγνωρισμός μολυβιάς"
+
+#: ../src/util/CrashHandler.cpp:41
+msgid "Successfully saved document to \"{1}\""
+msgstr "Το έγγραφο αποθηκεύτηκε επιτυχώς στη θέση \"{1}\""
+
+#: ../src/control/stockdlg/XojOpenDlg.cpp:93
+msgid "Supported files"
+msgstr "Υποστηριζόμενα αρχεία"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:60
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:399
+msgid "Text"
+msgstr "Κείμενο"
+
+#: ../src/gui/SearchBar.cpp:67
+#, c-format
+msgid "Text %i times found on this page"
+msgstr "Κείμενο βρέθηκε %i σε αυτή την σελίδα"
+
+#: ../src/undo/TextUndoAction.cpp:29
+msgid "Text changes"
+msgstr "Αλλαγές σε κείμενο"
+
+#: ../src/gui/SearchBar.cpp:65
+msgid "Text found on this page"
+msgstr "Κείμενο βρέθηκε σε αυτή την σελίδα"
+
+#: ../src/gui/SearchBar.cpp:123 ../src/gui/SearchBar.cpp:167
+msgid "Text found once on page {1}"
+msgstr "Κείμενο βρέθηκε μια φορά στην σελίδα {1}"
+
+#: ../src/gui/SearchBar.cpp:124 ../src/gui/SearchBar.cpp:168
+msgid "Text found {1} times on page {2}"
+msgstr "Κείμενο βρέθηκε {1} φορές στην σελίδα {2}"
+
+#: ../src/gui/SearchBar.cpp:72
+msgid "Text not found"
+msgstr "Δεν βρέθηκε το κείμενο"
+
+#: ../src/gui/SearchBar.cpp:134 ../src/gui/SearchBar.cpp:178
+msgid "Text not found, searched on all pages"
+msgstr "Δεν βρέθηκε το κείμενο, αναζητήθηκε σε όλες τις σελίδες"
+
+#: ../src/control/Control.cpp:1055
+msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
+msgstr "Η διαμόρφωση τη γραμμής εργαλείων \"{1}\" είναι προκαθορισμένη, θα θέλατε να δημιουργήσετε αντίγραφο για να την επεξεργαστείτε;"
+
+#: ../src/control/Control.cpp:1990
+msgid "The attached background PDF could not be found."
+msgstr "Το συνημμένο φόντο PDF δεν βρέθηκε."
+
+#: ../src/control/Control.cpp:1991
+msgid "The background PDF could not be found."
+msgstr "Το φόντο PDF δεν βρέθηκε."
+
+#: ../src/control/xojfile/LoadHandler.cpp:115
+msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
+msgstr "Το αρχείο δεν είναι έγκυρο .xopp αρχείο (έλλειψη Mimetype): \"{1}\""
+
+#: ../src/control/xojfile/LoadHandler.cpp:122
+msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
+msgstr "Το αρχείο δεν είναι έγκυρο .xopp αρχείο (λάθος Mimetype): \"{1}\""
+
+#: ../src/control/xojfile/LoadHandler.cpp:130
+msgid "The file is no valid .xopp file (Version missing): \"{1}\""
+msgstr "Το αρχείο δεν είναι έγκυρο .xopp αρχείο (έλλειψη Version): \"{1}\""
+
+#: ../src/control/xojfile/LoadHandler.cpp:143
+msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
+msgstr "Το αρχείο δεν είναι έγκυρο .xopp αρχείο (Version string κατεστραμμένο): \"{1}\""
+
+#: ../src/control/LatexController.cpp:308
+msgid "The formula is empty when rendered or invalid."
+msgstr "Ο τύπος είναι κενός όταν αποδίδεται ή μη έγκυρος."
+
+#: ../src/control/XournalMain.cpp:142
+msgid "The most recent log file name: {1}"
+msgstr "Το πιο πρόσφατο όνομα αρχείου καταγραφής: {1}"
+
+#: ../src/control/XournalMain.cpp:135
+msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
+msgstr "Υπάρχουν αρχεία σφαλμάτων από το Xournal++. Παρακαλώ στείλτε μια αναφορά σφάλματος έτσι ώστε να διορθωθεί το πρόβλημα."
+
+#: ../src/control/XournalMain.cpp:134
+msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
+msgstr "Υπάρχουν ένα αρχείο σφαλμάτων από το Xournal++. Παρακαλώ στείλτε μια αναφορά σφάλματος έτσι ώστε να διορθωθεί το πρόβλημα."
+
+#: ../src/util/XojMsgBox.cpp:89
+msgid "There was an error displaying help: {1}"
+msgstr "Παρουσιάστηκε σφάλμα κατά την προβολή της βοήθειας: {1}"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:84
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:475
+msgid "Thick"
+msgstr "Παχύ"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:81
+msgid "Thickness - don't change"
+msgstr "Πάχος - καμία αλλαγή"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:82
+msgid "Thin"
+msgstr "Λεπτό"
+
+#: ../src/control/Control.cpp:2438
+msgid "This document is not saved yet."
+msgstr "Το αρχείο δεν έχει αποθηκευτεί ακόμα."
+
+#: ../src/control/PageBackgroundChangeController.cpp:151
+#: ../src/control/tools/ImageHandler.cpp:44
+msgid "This image could not be loaded. Error message: {1}"
+msgstr "Απέτυχε η φόρτωση της εικόνας. Μήνυμα σφάλματος: {1}"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:352
+msgid "Toggle fullscreen"
+msgstr "Εναλλαγή πλήρης οθόνης"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:56
+msgid "Tool - don't change"
+msgstr "Εργαλείο - καμία αλλαγή"
+
+#: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:106
+msgid "Toolbar found: {1}"
+msgstr "Γραμμή εργαλείων βρέθηκε: {1}"
+
+#: ../src/gui/dialog/ToolbarManageDialog.cpp:45
+msgid "Toolbars"
+msgstr "Γραμμές εργαλείων"
+
+#: ../src/util/CrashHandler.cpp:30
+msgid "Trying to emergency save the current open document…"
+msgstr "Προσπάθεια έκτακτης αποθήκευσης του ανοιχτού εγγράφου…"
+
+#: ../src/gui/PageView.cpp:346
+msgid "Unable to play audio recording {1}"
+msgstr "Αδυναμία αναπαραγωγής ηχητικής εγγραφής {1}"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:326
+#: ../src/undo/UndoRedoHandler.cpp:203
+msgid "Undo"
+msgstr "Αναίρεση"
+
+#: ../src/undo/UndoRedoHandler.cpp:198
+msgid "Undo: "
+msgstr "Αναίρεση: "
+
+#: ../src/control/xojfile/LoadHandler.cpp:281
+msgid "Unexpected root tag: {1}"
+msgstr "Μη αναμενόμενη ετικέτα ρίζας: {1}"
+
+#: ../src/control/xojfile/LoadHandler.cpp:302
+msgid "Unexpected tag in document: \"{1}\""
+msgstr "Μη αναμενόμενη ετικέτα στο έγγραφο: \"{1}\""
+
+#: ../src/control/xojfile/LoadHandler.cpp:491
+msgid "Unknown background type: {1}"
+msgstr "Άγνωστος τύπος φόντου: {1}"
+
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:54
+msgid "Unknown color value \"{1}\""
+msgstr "Άγνωστη τιμή χρώματος \"{1}\""
+
+#: ../src/control/xojfile/LoadHandler.cpp:449
+msgid "Unknown domain type: {1}"
+msgstr "Άγνωστος τύπος τομέα: {1}"
+
+#: ../src/control/xojfile/LoadHandler.cpp:221
+msgid "Unknown parser error"
+msgstr "Άγνωστο σφάλμα αναλυτή"
+
+#: ../src/control/xojfile/LoadHandler.cpp:379
+msgid "Unknown pixmap::domain type: {1}"
+msgstr "Άγνωστος pixmap::τύπος τομέα: {1}"
+
+#: ../src/control/xojfile/LoadHandler.cpp:582
+msgid "Unknown stroke type: \"{1}\", assuming pen"
+msgstr "Άγνωστος τύπος μολυβιάς: \"{1}\", υποθέτω στυλό"
+
+#: ../src/control/Control.cpp:2339
+msgid "Unsaved Document"
+msgstr "Μη Αποθηκευμένο Έγγραφο"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
+msgid "Vertical Space"
+msgstr "Κατακόρυφος Χώρος"
+
+#: ../src/gui/dialog/ButtonConfigGui.cpp:62
+msgid "Vertical space"
+msgstr "Κατακόρυφος χώρος"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:472
+msgid "Very Fine"
+msgstr "Πολύ λεπτό"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
+msgid "Very Thick"
+msgstr "Πολύ παχύ"
+
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:113
+msgid "White"
+msgstr "Λευκό"
+
+#: ../src/control/pagetype/PageTypeHandler.cpp:31
+msgid "With PDF background"
+msgstr "Με φόντο PDF"
+
+#: ../src/undo/InsertUndoAction.cpp:32
+msgid "Write text"
+msgstr "Σύνταξη κειμένου"
+
+#: ../src/control/xojfile/LoadHandler.cpp:899
+msgid "Wrong count of points ({1})"
+msgstr "Λάθος μέτρημα σημείων ({1})"
+
+#: ../src/control/xojfile/LoadHandler.cpp:909
+msgid "Wrong number of points, got {1}, expected {2}"
+msgstr "Λάθος αριθμός σημείων, βρέθηκαν {1}, περιμέναμε {2}"
+
+#: ../src/control/xojfile/LoadHandler.cpp:218
+msgid "XML Parser error: {1}"
+msgstr "Σφάλμα αναλυτή XML: {1}"
+
+#: ../src/control/jobs/CustomExportJob.cpp:26
+msgid "Xournal (Compatibility)"
+msgstr "Xournal (Συμβατότητα)"
+
+#: ../src/control/stockdlg/XojOpenDlg.cpp:50
+msgid "Xournal files"
+msgstr "Αρχεία Xournal"
+
+#: ../src/control/XournalMain.cpp:189
+msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
+msgstr "Το Xournal++ κατέρρευσε την προηγούμενη φορά. Θα θέλατε να επαναφέρετε το τελευταίο αρχείο που επεξεργαστήκατε;"
+
+#: ../src/control/Control.cpp:2281 ../src/control/stockdlg/XojOpenDlg.cpp:57
+msgid "Xournal++ files"
+msgstr "Αρχεία Xournal++"
+
+#: ../src/control/stockdlg/XojOpenDlg.cpp:64
+#: ../src/gui/dialog/PageTemplateDialog.cpp:89
+msgid "Xournal++ template"
+msgstr "Πρότυπο Xournal++"
+
+#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:112
+msgid "Yellow"
+msgstr "Κίτρινο"
+
+#: ../src/control/PageBackgroundChangeController.cpp:186
+msgid "You don't have any PDF pages to select from. Cancel operation.\n"
+"Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
+msgstr "Δεν έχετε σελίδες PDF για να επιλέξετε. Ακύρωση ενέργειας.\n"
+"Παρακαλώ επιλέξτε άλλο τύπο φόντου: Μενού \"Journal\" → \"Ρύθμιση Πρότυπου Σελίδων\"."
+
+#: ../src/control/XournalMain.cpp:138
+msgid "You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker."
+msgstr "Χρησιμοποιείτε τον κλάδο {1}/{2}. Η Αποστόλη Σφάλματος θα οδηγήσει στην διαχείριση σφαλμάτων αυτής της repo."
+
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:77
+msgid "Your current document does not contain PDF Page no {1}\n"
+"Would you like to insert this page?\n\n"
+"Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
+msgstr "Το τρέχων έγγραφο δεν περιέχει σελίδα PDF με αριθμό {1}\n"
+"Θα θέλατε να εισάγετε την σελίδα?\n\n"
+"Συμβουλή: Μπορείτε να επιλέξετε Journal → Φόντο Χαρτιού → Φόντο PDF για να εισάγεται σελίδα PDF."
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:359
+msgid "Zoom fit to screen"
+msgstr "Μεγέθυνση εφαρμοσμένη στην οθόνη"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:358
+msgid "Zoom in"
+msgstr "Μεγέθυνση"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:357
+msgid "Zoom out"
+msgstr "Σμίκρυνση"
+
+#: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:72
+msgid "Zoom slider"
+msgstr "Slider μεγέθυνσης"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:360
+msgid "Zoom to 100%"
+msgstr "Μεγέθυνση στο 100%"
+
+#: ../src/control/Control.cpp:2275 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:11
+#: ../src/control/stockdlg/XojOpenDlg.cpp:11
+#: ../src/gui/dialog/PageTemplateDialog.cpp:84
+msgid "_Cancel"
+msgstr "_Άκυρο"
+
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:12
+#: ../src/control/stockdlg/XojOpenDlg.cpp:12
+msgid "_Open"
+msgstr "_Άνοιγμα"
+
+#: ../src/control/Control.cpp:2276 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/gui/dialog/PageTemplateDialog.cpp:84
+msgid "_Save"
+msgstr "_Αποθήκευση"
+
+#: ../src/util/DeviceListHelper.cpp:96
+msgid "cursor"
+msgstr "κέρσορας"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:236
+msgid "dash-/ dotted"
+msgstr "διακεκομμένο και τελείες"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:233
+msgid "dashed"
+msgstr "διακεκομμένο"
+
+#: ../src/gui/dialog/PluginDialogEntry.cpp:28
+msgid "default disabled"
+msgstr "προεπιλογή απενεργοποιημένη"
+
+#: ../src/gui/dialog/PluginDialogEntry.cpp:28
+msgid "default enabled"
+msgstr "προεπιλογή ενεργοποιημένη"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:251
+msgid "delete stroke"
+msgstr "διαγραφή μολυβιάς"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:239
+msgid "dotted"
+msgstr "τελείες"
+
+#: ../src/undo/AddUndoAction.cpp:86 ../src/undo/DeleteUndoAction.cpp:83
+msgid "elements"
+msgstr "στοιχεία"
+
+#: ../src/util/DeviceListHelper.cpp:94
+msgid "eraser"
+msgstr "γόμα"
+
+#: ../src/undo/AddUndoAction.cpp:97 ../src/undo/DeleteUndoAction.cpp:94
+msgid "image"
+msgstr "εικόνα"
+
+#: ../src/util/DeviceListHelper.cpp:99
+msgid "keyboard"
+msgstr "πληκτρολόγιο"
+
+#: ../src/undo/AddUndoAction.cpp:100 ../src/undo/DeleteUndoAction.cpp:97
+msgid "latex"
+msgstr "latex"
+
+#: ../src/util/DeviceListHelper.cpp:90
+msgid "mouse"
+msgstr "ποντίκι"
+
+#: ../src/control/LatexController.cpp:265
+msgid "pdflatex encountered an error: {1} (exit code: {2})"
+msgstr "το pdflatex αντιμετώπισε σφάλμα: {1} (κωδικός εξόδου: {2})"
+
+#: ../src/util/DeviceListHelper.cpp:92
+msgid "pen"
+msgstr "στυλό"
+
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:153
+msgid "show"
+msgstr "προβολή"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:230
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:249
+msgid "standard"
+msgstr "κανονικό"
+
+#: ../src/undo/AddUndoAction.cpp:94 ../src/undo/DeleteUndoAction.cpp:91
+msgid "stroke"
+msgstr "μολυβιά"
+
+#: ../src/util/DeviceListHelper.cpp:108
+msgid "tablet pad"
+msgstr "γραφίδα σχεδίασης"
+
+#: ../src/undo/AddUndoAction.cpp:103 ../src/undo/DeleteUndoAction.cpp:100
+msgid "text"
+msgstr "κείμενο"
+
+#: ../src/util/DeviceListHelper.cpp:103
+msgid "touchpad"
+msgstr "touchpad"
+
+#: ../src/util/DeviceListHelper.cpp:101
+msgid "touchscreen"
+msgstr "οθόνη αφής"
+
+#: ../src/util/DeviceListHelper.cpp:106
+msgid "trackpoint"
+msgstr "trackpoint"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:250
+msgid "whiteout"
+msgstr "διορθωτικό υγρό"
+
+#: ../src/control/xojfile/LoadHandler.cpp:908
+msgid "xoj-File: {1}"
+msgstr "xoj-Αρχείο: {1}"
+
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:71
+msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
+msgstr "xoj-preview-extractor: καλέστε με ΕΙΣΑΓΩΓΗ.xoj ΕΞΑΓΩΓΗ.png"
+
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:143
+msgid "xoj-preview-extractor: could not find icon \"{1}\""
+msgstr "xoj-preview-extractor: δεν βρέθηκε το icon \"{1}\""
+
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:92
+msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
+msgstr "xoj-preview-extractor: το αρχείο \"{1}\" δεν περιέχει προεπισκόπηση"
+
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:84
+msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
+msgstr "xoj-preview-extractor: το αρχείο \"{1}\" δεν είναι αρχείο .xoj"
+
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:97
+msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
+msgstr "xoj-preview-extractor: δεν βρέθηκε προεπισκόπηση ούτε σελίδα, πιθανών μη έγκυρο αρχείο;"
+
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:88
+msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
+msgstr "xoj-preview-extractor: το άνοιγμα του αρχείου \"{1}\" απέτυχε"
+
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:156
+msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
+msgstr "xoj-preview-extractor: το άνοιγμα του αρχείου εξαγωγής {1} απέτυχε"
+
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:163
+msgid "xoj-preview-extractor: successfully extracted"
+msgstr "xoj-preview-extractor: εξαγάγαμε επιτυχώς"
+
+#: ../src/util/Util.cpp:126
+msgid "xournalpp-{1}"
+msgstr "xournalpp-{1}"
+
+#: ../ui/main.glade:31
+msgid " = Floating Toolbox (experimental) ="
+msgstr " = Αιωρούμενο κουτί εργαλείων (πειραματικό) ="
+
+#: ../ui/settings.glade:2964 ../ui/settings.glade:2975
+msgid "%"
+msgstr "%"
+
+#: ../ui/settings.glade:450
+msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
+"%A\t\tFull weekday name (e.g. Thursday)\n"
+"%b\t\tAbbreviated month name (e.g. Aug)\n"
+"%B\t\tFull month name (e.g. August)\n"
+"%c\t\tDate and time representation (e.g. Thu Aug 23 14:55:02 2001)\n"
+"%d\t\tDay of the month (01-31)\n"
+"%F\t\tDate representation (e.g. 2001-08-23)\n"
+"%H\t\tHour in 24h format (00-23)\n"
+"%I\t\tHour in 12h format (01-12)\n"
+"%j\t\tDay of the year (001-366)\n"
+"%m\tMonth as a decimal number (01-12)\n"
+"%M\tMinute (00-59)\n"
+"%p\t\tAM or PM designation (e.g. PM)\n"
+"%S\t\tSecond (00-61)\n"
+"%U\t\tWeek number with the first Sunday as the first day of week one (00-53)\n"
+"%w\t\tWeekday as a decimal number with Sunday as 0 (0-6)\n"
+"%W\tWeek number with the first Monday as the first day of week one (00-53)\n"
+"%x\t\tDate representation (e.g. 08/23/01)\n"
+"%X\t\tTime representation (e.g. 14:55:02)\n"
+"%y\t\tYear, last two digits (00-99)\n"
+"%Y\t\tYear (e.g. 2001)\n"
+"%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
+"%%\tA % sign"
+msgstr "%a\t\tΣυντομογραφία μέρας εβδομάδας (π.χ. Thu)\n"
+"%A\t\tΜέρα της εβδομάδας (π.χ. Thursday)\n"
+"%b\t\tΣυντομογραφία μήνα (π.χ. Aug)\n"
+"%B\t\tΜήνας (π.χ. August)\n"
+"%c\t\tΜέρα και ώρα (π.χ. Thu Aug 23 14:55:02 2001)\n"
+"%d\t\tΗμερομηνία (01-31)\n"
+"%F\t\tΠλήρης ημερομηνία (π.χ. 2001-08-23)\n"
+"%H\t\tΏρα σε 24ωρη μορφή (00-23)\n"
+"%I\t\tΏρα σε 12ωρη μορφή (01-12)\n"
+"%j\t\tΑριθμός μέρας του χρόνου (001-366)\n"
+"%m Μήνας σαν δεκαδικός αριθμός (01-12)\n"
+"%M\tΛεπτό (00-59)\n"
+"%p\t\tΈνδειξη AM ή PM (e.g. PM)\n"
+"%S\t\tΔευτερόλεπτο (00-61)\n"
+"%U\t\tΑριθμός εβδομάδας του χρόνου αρχίζοντας την πρώτη εβδομάδα από την πρώτη Κυριακή (00-53)\n"
+"%w\t\tΜέρα της εβδομάδας σαν δεκαδικός αριθμός με Κυριακή 0 (0-6)\n"
+"%W\tΑριθμός εβδομάδας του χρόνου αρχίζοντας την πρώτη εβδομάδα από την πρώτη Δευτέρα (00-53)\n"
+"%x\t\tΠλήρης ημερομηνία με διαφορετική μορφή (e.g. 08/23/01)\n"
+"%X\t\tΏρα (e.g. 14:55:02)\n"
+"%y\t\tΧρόνος, τελευταία 2 ψηφία (00-99)\n"
+"%Y\t\tΧρόνος (e.g. 2001)\n"
+"%Z\t\tΖώνη ώρας ή συντόμευση (e.g. CDT)\n"
+"%%\tΤο σύμβολο επί τοις εκατό %"
+
+#: ../ui/settings.glade:3717
+msgid "... AND How much time must have passed since last stroke.\n\n"
+"<i>Recommended: 500ms</i>"
+msgstr "... ΚΑΙ πόσος χρόνος πρέπει να έχει περάσει από την τελευταία μολυβιά.\n\n"
+"<i>Προτεινόμενος: 500ms</i>"
+
+#: ../ui/settings.glade:1230
+msgid "1"
+msgstr ""
+
+#: ../ui/settings.glade:4325
+msgid "1,00"
+msgstr "1,00"
+
+#: ../ui/settings.glade:2407
+msgid "30"
+msgstr ""
+
+#: ../ui/images.glade:88
+msgid "<b>... or select already used Image:</b>"
+msgstr "<b>... ή επιλέξτε εικόνα που ήδη έχει χρησιμοποιηθεί:</b>"
+
+#: ../ui/pageTemplate.glade:244
+msgid "<b>Background Color</b>"
+msgstr "<b>Χρώμα Φόντου</b>"
+
+#: ../ui/pageTemplate.glade:257
+msgid "<b>Background</b>"
+msgstr "<b>Φόντο</b>"
+
+#: ../ui/toolbarCustomizeDialog.glade:141
+msgid "<b>Color</b>"
+msgstr "<b>Χρωμά</b>"
+
+#: ../ui/toolbarCustomizeDialog.glade:86
+msgid "<b>Default Tools</b>"
+msgstr "<b>Προεπιλεγμένα Εργαλεία</b>"
+
+#: ../ui/settings.glade:3925
+msgid "<b>Default</b>"
+msgstr "<b>Προεπιλογή</b>"
+
+#: ../ui/exportSettings.glade:93
+msgid "<b>Document export settings</b>\n"
+"Select pages to export"
+msgstr "<b>Ρυθμίσεις εξαγωγής εγγράφου</b>\n"
+"Επιλογή σελίδων για εξαγωγή"
+
+#: ../ui/main.glade:110
+msgid "<b>Empty Toolbox</b>\n"
+"<i>Menu: View/Toolbars</i>"
+msgstr "<b>Κενό κουτί εργαλείων</b>\n"
+"<i>Μενού: Προβολή/Μπάρες εργαλείων</i>"
+
+#: ../ui/fillTransparency.glade:79
+msgid "<b>Fill transparency settings</b>\n"
+"Select transparency for fill color"
+msgstr "<b>Ρυθμίσεις διαφάνειας γεμίσματος σχημάτων</b>\n"
+"Επιλογή διαφάνειας για το χρώμα γεμίσματος σχημάτων"
+
+#: ../ui/pageTemplate.glade:134
+msgid "<b>Page size</b>"
+msgstr "<b>Μέγεθος σελίδας</b>"
+
+#: ../ui/pagesize.glade:142
+msgid "<b>Pagesize</b>"
+msgstr "<b>Μέγεθος σελίδας</b>"
+
+#: ../ui/toolbarCustomizeDialog.glade:196
+msgid "<b>Separator</b>"
+msgstr "<b>Διαχωριστικό</b>"
+
+#: ../ui/settings.glade:733
+msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
+msgstr "<i>Θέστε κατηγορίες συσκευών σε κάθε συσκευή εισόδου του συστήματός σας. Αλλάξτε τις τιμές μόνο αν οι συσκευές σας δεν είναι σωστά κατηγοριοποιημένες. (π.χ. η γραφίδα σας έχει οριστεί σαν οθόνη αφής)</i>"
+
+#: ../ui/settings.glade:4016
+msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
+msgstr "<i>Οι εγγραφές ήχου αποθηκεύονται σε ξεχωριστό φάκελο και αναφέρονται από το journal.</i>"
+
+#: ../ui/settings.glade:4359
+msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
+msgstr "<i>Οι αλλαγές εφαρμόζονται μόνο σε νέες εγγραφές και αναπαραγωγές ήχου.</i>"
+
+#: ../ui/settings.glade:945
+msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
+msgstr "<i>Ορίστε ποια εργαλεία θα επιλεγούν αν πιέσετε κουμπί ποντικιού. Όταν ελευθερώσετε κουμπί το εργαλείο που επιλέξατε πριν θα επιλεγεί.</i>"
+
+#: ../ui/exportSettings.glade:210
+msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
+msgstr "<i>Παράδειγμα:</i> 1-3 ή 1,3,5-7 κοκ."
+
+#: ../ui/settings.glade:1953
+msgid "<i>For some specific hardware the scroll / touch behaviour of the system is not as expected. For these cases Xournal++ has a workaround.\n"
+"This also enables touch drawing.</i>"
+msgstr "<i>Για κάποιες συσκευές η συμπεριφορά κύλισης / αφής του συστήματος είναι διαφορετική από την αναμενόμενη. Για τις περιπτώσεις αυτές το Xournal++ έχει λύση.\n"
+"Αυτό ενεργοποιεί επίσης το σχεδιασμό με αφή.</i>"
+
+#: ../ui/settings.glade:247
+msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
+"If the file was not yet saved you can find it in your home directory, in ~/.xournalpp/autosave</i>"
+msgstr "<i>Αν το έγγραφο είχε ήδη αποθηκευτεί μπορείτε να το βρείτε στο φάκελο με την επέκταση .autosave.xoj\n"
+"Αν το αρχείο δεν είχε αποθηκευτεί ακόμα μπορείτε να το βρείτε στον φάκελο home σας, στο ~/.xournalpp/autosave</i>"
+
+#: ../ui/settings.glade:3197
+msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
+msgstr "<i>Αν προσθέσετε επιπλέον χώρο στις σελίδες μπορείτε να επιλέξετε την περιοχή της οθόνης στην οποία θα θέλατε να δουλέψετε </i>"
+
+#: ../ui/settings.glade:554
+msgid "<i>If you open a PDF and there is a Xournal file with the same name it will open the xoj file.</i>"
+msgstr "<i>Αν ανοίξετε ένα PDF και υπάρχει Xournal αρχείο με το ίδιο όνομα θα ανοιχθεί το αρχείο xoj.</i>"
+
+#: ../ui/settings.glade:1584
+msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
+msgstr "<i>Αν οι συσκευές σας δεν υποστηρίζουν αναγνώριση γραφής, το Xournal++ μπορεί να απενεργοποιήσει την οθόνη αφής σας όταν η γραφίδα σας είναι κοντά στην οθόνη.</i>"
+
+#: ../ui/settings.glade:1124
+msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
+msgstr "<i>Η ευαισθησία πίεσης επιτρέπει τον σχεδιασμό γραμμών διαφορετικού πάχους, ανάλογα με το πόσο πιέζετε την γραφίδα. Αν το tablet σας δεν υποστηρίζει αυτό το χαρακτηριστικό η επιλογή αυτή δεν επηρεάζει τίποτα.</i>"
+
+#: ../ui/settings.glade:3043
+msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
+msgstr "<i>Τοποθετήστε έναν χάρακα στην οθόνη σας και μετακινήστε την μπάρα μέχρι να ταυτίζονται οι δύο χάρακες</i>"
+
+#: ../ui/settings.glade:3870
+msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
+msgstr "<i>Επιλέξτε το εργαλείο και τις ρυθμίσεις αν πιέσετε το προεπιλεγμένο κουμπί,</i>"
+
+#: ../ui/settings.glade:1725
+msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
+msgstr "<i>Καθορίστε τις εντολές που εκτελούνται όταν λειτουργεί η Αναγνώριση Χεριού. Οι εντολές θα εκτελεστούν στο νήμα του UI, σιγουρευτείτε ότι δεν το μπλοκάρουν!</i>"
+
+#: ../ui/settings.glade:4106
+msgid "<i>Specify the audio devices used for recording and playback of audio attachments. \n"
+"If available select <small><tt>pulse</tt></small> as input / output device.</i>"
+msgstr "<i>Καθορίστε στην τις συσκευές ήχου για εγγραφή και αναπαραγωγή συνημμένων ήχου. \n"
+"Αν είναι διαθέσιμο επιλέξτε <small><tt>pulse</tt></small> σαν συσκευή εισόδου / εξόδου.</i>"
+
+#: ../ui/settings.glade:1300
+msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
+msgstr "<i>Καθορίστε τα εργαλεία που θα επιλεγούν αν πιέζετε κουμπί στην γραφίδα ή χρησιμοποιηθεί η γόμα. Μετά την απελευθέρωση του κουμπιού, το προηγούμενο εργαλείο θα επιλεγεί.</i>"
+
+#: ../ui/settings.glade:378
+msgid "<i>This name will be proposed if you save a new document.</i>"
+msgstr "<i>Αυτό το όνομα θα προτείνετε όταν αποθηκεύετε νέο έγγραφο.</i>"
+
+#: ../ui/settings.glade:3021
+msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
+msgstr "<i>Για να είναι σίγουρο ότι στο 100% της μεγέθυνσης τα στοιχεία είναι στο φυσικό τους μέγεθος. (απαιτεί επανεκκίνηση) </i>"
+
+#: ../ui/settings.glade:2095
+msgid "<i>Toggle visibility of menubar with F10</i>"
+msgstr "<i>Εναλλαγή προβολής της γραμμής μενού με το F10</i>"
+
+#: ../ui/settings.glade:1888
+msgid "<i>Use pinch gestures to zoom journal pages.</i>"
+msgstr "<i>Χρήση χειρονομιών τσιμπήματος για μεγέθυνση σε σελίδες του journal</i>"
+
+#: ../ui/settings.glade:1192
+msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
+msgstr ""
+
+#: ../ui/settings.glade:1517
+msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
+msgstr "<i>Μπορείτε να ρυθμίσετε συσκευές, που δεν αναγνωρίζονται από το GTK σαν οθόνες αφής, να συμπεριφέρονται σαν οθόνες αφής</i>"
+
+#: ../ui/about.glade:73
+msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+"<i>The next generation</i>"
+msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+"<i>Η επόμενη γενιά</i>"
+
+#: ../ui/about.glade:9
+msgid "About Xournal++"
+msgstr "Σχετικά με το Xournal++"
+
+#: ../ui/settings.glade:3787
+msgid "Action on Tool Tap"
+msgstr "Ενέργεια κατά το στιγμιαίο κλικ"
+
+#: ../ui/settings.glade:3250
+msgid "Add additional horizontal space of"
+msgstr "Προσθήκη οριζόντιου χώρου μεγέθους"
+
+#: ../ui/settings.glade:3228
+msgid "Add additional vertical space of"
+msgstr "Προσθήκη κατακόρυφου χώρου μεγέθους"
+
+#: ../ui/exportSettings.glade:144
+msgid "All pages"
+msgstr "Όλες οι σελίδες"
+
+#: ../ui/settings.glade:3753
+msgid "All three conditions must be met before stroke is ignored.\n"
+"It must be short in time and length and we can't have ignored another stroke recently."
+msgstr "Πρέπει να ικανοποιηθούν και οι τρεις συνθήκες για να αγνοηθεί η μολυβιά.\n"
+"Πρέπει να είναι μικρής διάρκειας και μήκους και δεν πρέπει να έχει αγνοηθεί πρόσφατα άλλη μολυβιά."
+
+#: ../ui/settings.glade:1269
+msgid "Artifact workaround"
+msgstr ""
+
+#: ../ui/settings.glade:4187
+msgid "Audio Devices"
+msgstr "Συσκευές Ήχου"
+
+#: ../ui/settings.glade:4392
+msgid "Audio Recording"
+msgstr "Καταγραφή ήχου"
+
+#: ../ui/pluginEntry.glade:57
+msgid "Author: "
+msgstr "Συγγραφέας: "
+
+#: ../ui/about.glade:211
+msgid "Authors:"
+msgstr "Συγγραφείς:"
+
+#: ../ui/settings.glade:1655
+msgid "Autodetect"
+msgstr "Αυτόματος Εντοπισμός"
+
+#: ../ui/settings.glade:591
+msgid "Autoloading Journals"
+msgstr "Αυτόματη φόρτωση Journal"
+
+#: ../ui/settings.glade:348
+msgid "Autosaving"
+msgstr "Γίνεται αυτόματη αποθήκευση"
+
+#: ../ui/settings.glade:497
+msgid "Available Placeholders"
+msgstr "Διαθέσιμοι κωδικοποιημένοι χαρακτήρες"
+
+#: ../ui/settings.glade:2159
+msgid "Background color between pages"
+msgstr "Χρώμα φόντου μεταξύ σελίδων"
+
+#: ../ui/settings.glade:2490
+msgid "Big cursor for pen"
+msgstr "Μεγάλος κέρσορας για το στυλό"
+
+#: ../ui/settings.glade:2462
+msgid "Border Color"
+msgstr ""
+
+#: ../ui/settings.glade:2423
+msgid "Border Width"
+msgstr ""
+
+#: ../ui/settings.glade:2148
+msgid "Border color"
+msgstr "Χρώμα περιγράμματος"
+
+#: ../ui/settings.glade:2133
+msgid "Border color for current page and other selections"
+msgstr "Χρώμα περιγράμματος για την τρέχουσα σελίδα και τις άλλες επιλεγμένες"
+
+#: ../ui/about.glade:127
+msgid "Built on"
+msgstr "Χτίστηκε στις"
+
+#: ../ui/settings.glade:1341
+msgid "Button 1"
+msgstr "Κουμπί 1"
+
+#: ../ui/settings.glade:1379
+msgid "Button 2"
+msgstr "Κουμπί 2"
+
+#: ../ui/settings.glade:2305 ../ui/settings.glade:2448
+msgid "Choose the color to use for \"Highlight cursor position\""
+msgstr ""
+
+#: ../ui/settings.glade:2319
+msgid "Circle Color"
+msgstr ""
+
+#: ../ui/settings.glade:2229
+msgid "Colors"
+msgstr "Χρώματα"
+
+#: ../ui/main.glade:1134
+msgid "Configure Page Template"
+msgstr "Ρύθμιση Πρότυπου Σελίδων"
+
+#: ../ui/pageTemplate.glade:18
+msgid "Configure new page template"
+msgstr ""
+
+#: ../ui/pageTemplate.glade:186
+msgid "Copy current page background instead"
+msgstr ""
+
+#: ../ui/pageTemplate.glade:268
+msgid "Copy current page size instead"
+msgstr ""
+
+#: ../ui/pageTemplate.glade:191
+msgid "Copy the background of the current page instead of using the background set above."
+msgstr ""
+
+#: ../ui/exportSettings.glade:160
+msgid "Current page"
+msgstr "Τρέχουσα σελίδα"
+
+#: ../ui/settings.glade:2511
+msgid "Cursor"
+msgstr "Κέρσορας"
+
+#: ../ui/settings.glade:1832
+msgid "Custom Commands (for Method \"Custom\")"
+msgstr "Προσαρμοσμένες Εντολές (για Μέθοδο \"Προσαρμοσμένο/η\")"
+
+#: ../ui/settings.glade:2207
+msgid "Dark Theme (requires restart)"
+msgstr "Σκούρο θέμα (απαιτεί επανεκκίνηση)"
+
+#: ../ui/settings.glade:523
+msgid "Default Save Name"
+msgstr "Προεπιλεγμένο όνομα αποθήκευσης"
+
+#: ../ui/settings.glade:4312
+msgid "Default Seek Time (in seconds)"
+msgstr "Προεπιλεγμένος χρόνος αναζήτησης (σε δευτερόλεπτα)"
+
+#: ../ui/settings.glade:411
+msgid "Default name: "
+msgstr "Προεπιλεγμένο όνομα: "
+
+#: ../ui/settings.glade:3965
+msgid "Defaults"
+msgstr "Προεπιλογές"
+
+#: ../ui/main.glade:1172
+msgid "Delete Layer"
+msgstr "Διαγραφή Στρώσης"
+
+#: ../ui/settingsButtonConfig.glade:132
+msgid "Delete stroke"
+msgstr "Διαγραφή μολυβιάς"
+
+#: ../ui/main.glade:2136
+msgid "Delete this page"
+msgstr "Διαγραφή της σελίδας"
+
+#: ../ui/settingsButtonConfig.glade:25
+msgid "Device"
+msgstr "Συσκευή"
+
+#: ../ui/settings.glade:1760
+msgid "Disable"
+msgstr "Απενεργοποίηση"
+
+#: ../ui/settingsButtonConfig.glade:50
+msgid "Disable drawing for this device"
+msgstr "Απενεργοποίηση σχεδιασμού για την συσκευή"
+
+#: ../ui/settings.glade:2637
+msgid "Disable scrollbar fade out"
+msgstr "Απενεργοποίηση απόκρυψης μπάρας κύλισης"
+
+#: ../ui/settingsDeviceClassConfig.glade:41
+msgid "Disabled"
+msgstr "Ανενεργό"
+
+#: ../ui/settings.glade:1629
+msgid "Disabling Method"
+msgstr "Μέθοδος απενεργοποίησης"
+
+#: ../ui/settings.glade:3115
+msgid "Display DPI Calibration"
+msgstr "Βαθμονόμηση DPI Οθόνης"
+
+#: ../ui/settings.glade:3628
+msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
+msgstr "Να μην σχεδιάζονται είσοδοι μικρού μήκους και χρόνου εκτός αν γίνονται σε κοντά η μία στην άλλη. Αντ' αυτού να εμφανίζεται το αιωρούμενο κουτί εργαλείων."
+
+#: ../ui/settings.glade:673 ../ui/settings.glade:840 ../ui/settings.glade:3541
+msgid "Drag LEFT from start point acts like shift key is being held.\n"
+"Drag UP acts as if Control key is being held.\n\n"
+"Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
+"<i>Useful for operating without keyboard.</i>"
+msgstr "Αν σύρετε ΑΡΙΣΤΕΡΑ από το σημείο έναρξης θα συμπεριφερθεί σαν να είναι πατημένο το πλήκτρο Shift.\n"
+"Αν σύρετε ΠΑΝΩ σαν να είναι πατημένο το Control\n\n"
+"Αναγνωριστική Ακτίνα: Η ακτίνα στην οποία οι ρυθμίσεις θα κλειδώσουν μέχρι το τέλος του σχεδιασμού.\n\n"
+"<i>Χρήσιμο για χρήση χωρίς πληκτρολόγιο.</i>"
+
+#: ../ui/toolbarCustomizeDialog.glade:57
+msgid "Drag and drop Components fom here to the toolbars and back."
+msgstr "Σύρεται αντικείμενα από και προς τις γραμμές εργαλείων."
+
+#: ../ui/main.glade:1364
+msgid "Draw _Line"
+msgstr "Σχεδίασε _Γραμμή"
+
+#: ../ui/settings.glade:2287
+msgid "Draw a transparent circle around the cursor"
+msgstr ""
+
+#: ../ui/settings.glade:3819
+msgid "Drawing Area"
+msgstr "Περιοχή Σχεδιασμού"
+
+#: ../ui/settings.glade:3591
+msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
+msgstr "Εργαλεία Σχεδιασμού - Ορισμός Χαρακτηριστικών μέσω της Κατεύθυνσης Σχεδιασμού (Πειραματικό)"
+
+#: ../ui/main.glade:2540
+msgid "Duplicate"
+msgstr "Δημιουργία διπλοτύπου / αντιγράφου"
+
+#: ../ui/main.glade:2577
+msgid "Edit (not implemented yet)"
+msgstr "Επεξεργασία (μη υλοποιημένο)"
+
+#: ../ui/settings.glade:1748
+msgid "Enable"
+msgstr "Ενεργοποίηση"
+
+#: ../ui/settings.glade:3536
+msgid "Enable  with determination radius of "
+msgstr "Ενεργοποίση με αναγνωριστική ακτίνα "
+
+#: ../ui/settings.glade:569
+msgid "Enable Autoloading of Journals"
+msgstr "Ενεργοποίηση Αυτόματη Φόρτωση Journal"
+
+#: ../ui/settings.glade:267
+msgid "Enable Autosaving"
+msgstr "Ενεργοποίηση Αυτόματης Αποθήκευσης"
+
+#: ../ui/settings.glade:1969
+msgid "Enable GTK Touch / Scrolling workaround  (requires restart)"
+msgstr "Ενεργοποίηση λύσης του GTK  για Αφής / Scrolling (Απαιτεί επανεκκίνηση)"
+
+#: ../ui/settings.glade:1139
+msgid "Enable Pressure Sensitivity"
+msgstr "Ενεργοποίηση Ευαισθησίας Πίεσης"
+
+#: ../ui/settings.glade:3623
+msgid "Enable Tap action"
+msgstr "Ενεργοποίηση ενέργειας κατά το στιγμιαίο κλίκ"
+
+#: ../ui/settings.glade:821
+msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
+msgstr "Ενεργοποίηση σχεδιασμού εκτός παραθύρου <i>(Ο σχεδιασμός δεν θα σταματήσει στο σύνορο παραθύρου)</i>"
+
+#: ../ui/settings.glade:1599
+msgid "Enable internal Hand Recognition"
+msgstr "Ενεργοποιείστε της εσωτερικής Αναγνώρισης Παλάμης"
+
+#: ../ui/settings.glade:668
+msgid "Enable new input system (Requires restart)"
+msgstr "Ενεργοποίησης νέο συστήματος εισόδου (Απαιτεί επανεκκίνηση)"
+
+#: ../ui/settings.glade:1900
+msgid "Enable zoom gestures (requires restart)"
+msgstr "Ενεργοποίηση χειρονομιών μεγέθυνσης (Απαιτεί επανεκκίνηση)"
+
+#: ../ui/texdialog.glade:72
+msgid "Enter / edit LaTeX Text"
+msgstr "Προσθήκη / επεξεργασία κειμένου LaTeX"
+
+#: ../ui/main.glade:1615
+msgid "Eraser Optio_ns"
+msgstr "Ρυθ_μίσεις Γόμας"
+
+#: ../ui/settingsButtonConfig.glade:129
+msgid "Eraser Type - don't change"
+msgstr "Τύπος γόμας - καμία αλλαγή"
+
+#: ../ui/settings.glade:702
+msgid "Experimental Input System"
+msgstr "Πειραματικό Σύστημα Εισόδου"
+
+#: ../ui/exportSettings.glade:25
+msgid "Export"
+msgstr "Εξαγωγή"
+
+#: ../ui/main.glade:250
+msgid "Export as..."
+msgstr "Εξαγωγή ως..."
+
+#: ../ui/main.glade:1591 ../ui/main.glade:1796
+msgid "Fi_ll"
+msgstr "Γε_μισμα"
+
+#: ../ui/main.glade:1601 ../ui/main.glade:1806
+msgid "Fill transparency"
+msgstr "Διαφάνεια γεμίσματος"
+
+#: ../ui/main.glade:2334
+msgid "Find next occurrence of the search string"
+msgstr "Βρες την επόμενη εμφάνιση της αναζητούμενης συμβολοσειράς"
+
+#: ../ui/main.glade:2312
+msgid "Find previous occurrence of the search string"
+msgstr "Βρες την προηγούμενη εμφάνιση της αναζητούμενης συμβολοσειράς"
+
+#: ../ui/settings.glade:3355
+msgid "First Page Offset "
+msgstr "Μετατόπιση Πρώτης Σελίδας "
+
+#: ../ui/main.glade:485 ../ui/settings.glade:2724
+msgid "Fullscreen"
+msgstr "Πλήρης οθόνη"
+
+#: ../ui/about.glade:306
+msgid "GNU GPLv2 or later"
+msgstr "GNU GPLv2 ή νεότερη έκδοση"
+
+#: ../ui/settings.glade:4231
+msgid "Gain"
+msgstr "Ενίσχυση"
+
+#: ../ui/about.glade:153
+msgid "Git commit"
+msgstr "Git commit"
+
+#: ../ui/settings.glade:2247
+msgid "Global"
+msgstr "Γενικό"
+
+#: ../ui/goto.glade:14
+msgid "Go to Page"
+msgstr "Μεταβείτε Στη Σελίδα"
+
+#: ../ui/settings.glade:3476
+msgid "Grid size"
+msgstr ""
+
+#: ../ui/settings.glade:3433
+msgid "Grid snapping tolerance"
+msgstr "Ευαισθησία προσκόλλησης στον καμβά"
+
+#: ../ui/main.glade:1451
+msgid "H_and Tool"
+msgstr "Εργαλείο Χ_εριού"
+
+#: ../ui/settings.glade:1857
+msgid "Hand Recognition"
+msgstr "Αναγνώριση Παλάμης"
+
+#: ../ui/pagesize.glade:212
+msgid "Height:"
+msgstr "Ύψος:"
+
+#: ../ui/main.glade:888 ../ui/settings.glade:2686 ../ui/settings.glade:2753
+msgid "Hide Menubar"
+msgstr "Απόκρυψη γραμμής μενού"
+
+#: ../ui/settings.glade:2702 ../ui/settings.glade:2769
+msgid "Hide Sidebar"
+msgstr "Απόκρυψη πλευρικής μπάρας"
+
+#: ../ui/settings.glade:2607
+msgid "Hide the horizontal scrollbar"
+msgstr "Απόκρυψη της οριζόντιας μπάρας κύλισης"
+
+#: ../ui/settings.glade:2622
+msgid "Hide the vertical scrollbar"
+msgstr "Απόκρυψη της κατακόρυφης μπάρας κύλισης"
+
+#: ../ui/settings.glade:2282
+msgid "Highlight cursor position"
+msgstr "Έμφαση στην θέση του κέρσορα"
+
+#: ../ui/main.glade:1724
+msgid "Highlighter Opti_ons"
+msgstr "Επι_λογές Υπογραμμισμού"
+
+#: ../ui/settings.glade:3674
+msgid "How short (screen mm)  of the stroke  AND...\n\n"
+"<i>Recommended: 1 mm</i>"
+msgstr "Πόσο μικρή (μμ στην οθόνης) μολυβιά ΚΑΙ...\n\n"
+"<i>Προτεινόμενο: 1 μμ</i>"
+
+#: ../ui/settings.glade:3654
+msgid "How short (time)  AND...\n\n"
+"<i>Recommended: 150ms</i>"
+msgstr "Πόσο σύντομη (χρόνος) ΚΑΙ...\n\n"
+"<i>Προτεινόμενο: 150 ms</i>"
+
+#: ../ui/settings.glade:3641
+msgid "Ignore Time (ms)"
+msgstr "Αγνόησε Χρόνο (ms)"
+
+#: ../ui/settings.glade:1211
+msgid "Ignore the first"
+msgstr ""
+
+#: ../ui/settings.glade:4130
+msgid "Input Device"
+msgstr "Συσκευή Εισόδου"
+
+#: ../ui/settings.glade:769
+msgid "Input Devices"
+msgstr "Συσκευές Εισόδου"
+
+#: ../ui/settings.glade:894
+msgid "Input System"
+msgstr "Σύστημα Εισόδου"
+
+#: ../ui/texdialog.glade:9
+msgid "Insert Latex"
+msgstr "Εισαγωγή Latex"
+
+#: ../ui/main.glade:2532
+msgid "Insert Page After"
+msgstr "Εισαγωγή Σελίδας Μετά"
+
+#: ../ui/main.glade:2524
+msgid "Insert Page Before"
+msgstr "Εισαγωγή Σελίδας Πριν"
+
+#: ../ui/main.glade:2115
+msgid "Insert a copy of the current page below"
+msgstr "Εισαγωγή αντιγράφου της τρέχουσας σελίδας από κάτω"
+
+#: ../ui/main.glade:512
+msgid "Layout"
+msgstr "Διάταξη"
+
+#: ../ui/settings.glade:2578
+msgid "Left / Right-Handed"
+msgstr "Αριστερό-/Δεξιόχειρας"
+
+#: ../ui/about.glade:290
+msgid "License"
+msgstr "Άδεια"
+
+#: ../ui/settings.glade:619
+msgid "Load / Save"
+msgstr "Φόρτωση / Αποθήκευση"
+
+#: ../ui/images.glade:73
+msgid "Load file"
+msgstr "Φόρτωση αρχείου"
+
+#: ../ui/toolbarManageDialog.glade:9
+msgid "Manage Toolbar"
+msgstr "Διαχείριση Γραμμής Εργαλείων"
+
+#: ../ui/settings.glade:3694
+msgid "Max Length (mm)"
+msgstr "Μέγιστο μήκος (μμ)"
+
+#: ../ui/settings.glade:852
+msgid "Merge button events with stylus tip events\n"
+"<i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
+msgstr "Ένωση ενεργειών κουμπιών και ενεργειών μύτης γραφίδας\n"
+"<i>(Επιλέξτε αυτό αν</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>επιστρέφει</i> \"<tt>on</tt>\"<i>)</i>"
+
+#: ../ui/settings.glade:986
+msgid "Middle Mouse Button"
+msgstr "Μεσαίο Πλήκτρο Ποντικιού"
+
+#: ../ui/settings.glade:1073 ../ui/settingsDeviceClassConfig.glade:42
+msgid "Mouse"
+msgstr "Ποντίκι"
+
+#: ../ui/settings.glade:1042
+msgid "Mouse Buttons"
+msgstr "Πλήκτρα Ποντικιού"
+
+#: ../ui/settingsDeviceClassConfig.glade:43
+msgid "Mouse+Keyboard Combo"
+msgstr "Ποντίκι+Πληκτρολόγιο combo"
+
+#: ../ui/main.glade:2562
+msgid "Move Down"
+msgstr "Μετακίνηση προς τα Κάτω"
+
+#: ../ui/main.glade:2554
+msgid "Move Up"
+msgstr "Μετακίνηση προς τα Επάνω"
+
+#: ../ui/main.glade:1066
+msgid "N_ext annotated page"
+msgstr "Ε_πόμενη σημειωμένη σελίδα"
+
+#: ../ui/main.glade:1113
+msgid "New Page _After"
+msgstr "Νέα σελίδα _Μετά"
+
+#: ../ui/main.glade:1103
+msgid "New Page _Before"
+msgstr "Νέα Σελίδα _Πριν"
+
+#: ../ui/main.glade:1124
+msgid "New Page at _End"
+msgstr "Νέα Σελίδα στο _Τέλος"
+
+#: ../ui/main.glade:1161
+msgid "New _Layer"
+msgstr "Νέα _Στρώση"
+
+#: ../ui/settings.glade:3354
+msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
+msgstr "Μετατόπιση της πρώτης σελίδας αυτό τον αριθμό σελίδων όταν η επιλογή <b>Διπλές Σελίδες</b> είναι ενεργοποιημένη"
+
+#: ../ui/settings.glade:874
+msgid "Options"
+msgstr "Επιλογές"
+
+#: ../ui/settings.glade:4153
+msgid "Output Device"
+msgstr "Συσκευή Εξόδου"
+
+#: ../ui/main.glade:1077
+msgid "P_revious annotated Page"
+msgstr "Π_ροηγούμενη σημειωμένη Σελίδα"
+
+#: ../ui/exportSettings.glade:176
+msgid "Pages:"
+msgstr "Σελίδες:"
+
+#: ../ui/settings.glade:3387
+msgid "Paired Pages"
+msgstr "Διπλές σελίδες"
+
+#: ../ui/pagesize.glade:18
+msgid "Paper Format"
+msgstr "Σχήμα και διάταξη Χαρτιού"
+
+#: ../ui/main.glade:1199
+msgid "Paper _Color"
+msgstr "Χρώμα _Χαρτιού"
+
+#: ../ui/main.glade:1189
+msgid "Paper _Format"
+msgstr "Σχήμα και _Διάταξη Χαρτιού"
+
+#: ../ui/main.glade:1209
+msgid "Paper b_ackground"
+msgstr "Χρώμα φ_όντου"
+
+#: ../ui/about.glade:272
+msgid "Partially based on Xournal\n"
+"by Denis Auroux"
+msgstr "Μερικός βασισμένο στο Xournal\n"
+"από τον Denis Auroux"
+
+#: ../ui/main.glade:1842
+msgid "Pause"
+msgstr "Παύση"
+
+#: ../ui/main.glade:1469
+msgid "Pen _Options"
+msgstr "Επιλογές _Στυλό"
+
+#: ../ui/settings.glade:4345
+msgid "Playback Settings"
+msgstr "Ρυθμίσεις αναπαραγωγής"
+
+#: ../ui/plugin.glade:14
+msgid "Plugin Manager"
+msgstr "Διαχείριση Προσθέτων"
+
+#: ../ui/main.glade:1907
+msgid "Plugin _Manager"
+msgstr "Διαχείριση _Προσθέτων"
+
+#: ../ui/plugin.glade:121
+msgid "Plugin changes are only applied after Xournal++ was restarted"
+msgstr "Αλλαγές στα πρόσθετα εφαρμόζονται μόνο μετά από επανεκκίνηση του Xournal++"
+
+#: ../ui/main.glade:440
+msgid "Preferences"
+msgstr "Προτιμήσεις"
+
+#: ../ui/settings.glade:2825
+msgid "Presentation Mode"
+msgstr "Λειτουργία Παρουσίασης"
+
+#: ../ui/settings.glade:1161
+msgid "Pressure Sensitivity"
+msgstr "Ευαισθησία Πίεσης"
+
+#: ../ui/about.glade:167
+msgid "RELEASE_IDENTIFIER"
+msgstr "ΑΝΑΓΝΩΡΙΣΤΙΚΟ_ΕΚΔΟΣΗΣ"
+
+#: ../ui/settings.glade:2371
+msgid "Radius"
+msgstr ""
+
+#: ../ui/exportSettings.glade:130
+msgid "Range"
+msgstr "Εύρος"
+
+#: ../ui/main.glade:190
+msgid "Recent _Documents"
+msgstr "Πρόσφατα _Έγγραφα"
+
+#: ../ui/main.glade:1832
+msgid "Record / Stop"
+msgstr "Έναρξη / Διακοπή Εγγραφής"
+
+#: ../ui/settings.glade:4280
+msgid "Recording Quality"
+msgstr "Ποιότητα Εγγραφής"
+
+#: ../ui/exportSettings.glade:115
+msgid "Resolution"
+msgstr "Ανάλυση"
+
+#: ../ui/settings.glade:1024
+msgid "Right Mouse Button"
+msgstr "Δεξιό κουμπί ποντικιού"
+
+#: ../ui/settings.glade:3420
+msgid "Rotation snapping tolerance"
+msgstr "Ευαισθησία περιστροφής με σκάλες"
+
+#: ../ui/settings.glade:4219
+msgid "Sample Rate"
+msgstr "Ρυθμός Δειγματοληψίας"
+
+#: ../ui/settings.glade:2657
+msgid "Scrollbars"
+msgstr "Μπάρες κύλισης"
+
+#: ../ui/settings.glade:3322
+msgid "Scrolling outside the page"
+msgstr "Κύλιση εκτός της σελίδας"
+
+#: ../ui/pageTemplate.glade:176
+msgid "Select Background Color"
+msgstr "Επιλογή Χρώματος Φόντου"
+
+#: ../ui/settings.glade:4053
+msgid "Select Folder"
+msgstr "Επιλογή Φακέλου"
+
+#: ../ui/images.glade:8
+msgid "Select Image"
+msgstr "Επιλογή Εικόνας"
+
+#: ../ui/pdfpages.glade:8
+msgid "Select PDF Page"
+msgstr "Επιλογή Σελίδας PDF"
+
+#: ../ui/settings.glade:2790
+msgid "Select toolbar:"
+msgstr "Επιλογή γραμμής εργαλείων:"
+
+#: ../ui/settings.glade:2184
+msgid "Selection Color (Text, Stroke Selection etc.)"
+msgstr "Χρώμα επιλεγμένων (Κείμενο, Μολυβιάς κτλ.)"
+
+#: ../ui/main.glade:621
+msgid "Set Columns"
+msgstr "Ορισμός Στηλών"
+
+#: ../ui/main.glade:726
+msgid "Set Rows"
+msgstr "Ορισμός Γραμμών"
+
+#: ../ui/settings.glade:3755
+msgid "Settings:"
+msgstr "Ρυθμίσεις:"
+
+#: ../ui/settings.glade:3764
+msgid "Show Floating Toolbox"
+msgstr "Εμφάνιση Αιωρούμενου Κουτιού Εργαλείων"
+
+#: ../ui/settings.glade:2076
+msgid "Show Menubar on Startup"
+msgstr "Εμφάνιση Γραμμής Μενού κατά την Εκκίνηση"
+
+#: ../ui/main.glade:496
+msgid "Show sidebar"
+msgstr "Εμφάνιση πλαϊνής μπάρας"
+
+#: ../ui/settings.glade:2540
+msgid "Show sidebar on the right side"
+msgstr "Εμφάνιση πλαϊνής μπάρας στην δεξιά πλευρά"
+
+#: ../ui/settings.glade:2556
+msgid "Show vertical scrollbar on the left side"
+msgstr "Εμφάνιση κάθετης μπάρας κύλισης στην αριστερή πλευρά"
+
+#: ../ui/settings.glade:3507
+msgid "Snapping"
+msgstr "Προσκόλληση"
+
+#: ../ui/settings.glade:2908
+msgid "Speed for Ctrl + Scroll"
+msgstr "Ταχύτητα Ctrl + Scroll"
+
+#: ../ui/settings.glade:2936
+msgid "Speed for a Zoomstep"
+msgstr "Ταχύτητα για κάθε βήμα μεγέθυνσης"
+
+#: ../ui/settingsButtonConfig.glade:130
+msgid "Standard"
+msgstr "Τυπικό"
+
+#: ../ui/settings.glade:4038 ../ui/settings.glade:4075
+msgid "Storage Folder"
+msgstr "Φάκελος Αποθήκευσης"
+
+#: ../ui/settings.glade:1466
+msgid "Stylus"
+msgstr "Γραφίδα"
+
+#: ../ui/settings.glade:1435
+msgid "Stylus Buttons"
+msgstr "Πλήκτρα Γραφίδας"
+
+#: ../ui/settings.glade:3705
+msgid "Successive (ms)"
+msgstr "Συνεχόμενο (ms)"
+
+#: ../ui/main.glade:2072
+msgid "Swap the current page with the one above"
+msgstr "Αντιστροφή της θέσης της τρέχουσας σελίδας με της πάνω"
+
+#: ../ui/main.glade:2094
+msgid "Swap the current page with the one below"
+msgstr "Αντιστροφή της θέσης της τρέχουσας σελίδας με της κάτω"
+
+#: ../ui/main.glade:840
+msgid "T_oolbars"
+msgstr "Γ_ραμμές Εργαλείων"
+
+#: ../ui/pagesize.glade:101
+msgid "Template:"
+msgstr "Πρότυπο:"
+
+#: ../ui/settings.glade:1793 ../ui/settings.glade:1806
+msgid "Test"
+msgstr "Δοκιμή"
+
+#: ../ui/main.glade:1820
+msgid "Text Font..."
+msgstr "Γραμματοσειρά κειμένου..."
+
+#: ../ui/settings.glade:3092
+msgid "The unit of the ruler is cm"
+msgstr "Η μονάδα μέτρησης του χάρακα είναι εκ"
+
+#: ../ui/settings.glade:800
+msgid "These settings take only effect if the experimental input system is activated"
+msgstr "Αυτές οι ρυθμίσεις ενεργοποιούνται μόνο αν το πειραματικό σύστημα εισόδου είναι ενεργοποιημένο"
+
+#: ../ui/pageTemplate.glade:113
+msgid "These settings will be used for new pages"
+msgstr ""
+
+#: ../ui/settings.glade:653
+msgid "This is an experimental feature! Use it with care."
+msgstr "Αυτό το χαρακτηριστικό είναι πειραματικό! Χρησιμοποιήστε με προσοχή."
+
+#: ../ui/settings.glade:1640
+msgid "Timeout"
+msgstr "Χρονικό όριο"
+
+#: ../ui/settings.glade:1553 ../ui/settings.glade:2022
+#: ../ui/settingsDeviceClassConfig.glade:46
+msgid "Touchscreen"
+msgstr "Οθόνη Αφής"
+
+#: ../ui/fillTransparency.glade:14
+msgid "Transparency settings"
+msgstr "Ρυθμίσεις διαφάνειας"
+
+#: ../ui/settings.glade:3734
+msgid "Try to select object first."
+msgstr "Προσπαθήστε να επιλέξετε αντικείμενο πρώτα."
+
+#: ../ui/settings.glade:3739 ../ui/settings.glade:3769
+msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
+msgstr "Να δοκιμαστεί η επιλογή αντικειμένου πρώτα, αν δεν έχει επιλεγεί τίποτε τότε να εμφανιστεί το αιωρούμενο κουτί εργαλείων."
+
+#: ../ui/pageTemplate.glade:273
+msgid "Use the current page size instead of the page size above."
+msgstr ""
+
+#: ../ui/settings.glade:3367
+msgid "Usually 0 or 1"
+msgstr "Συνήθως, 0 ή 1"
+
+#: ../ui/about.glade:101
+msgid "Version"
+msgstr "Έκδοση"
+
+#: ../ui/pluginEntry.glade:94
+msgid "Version: "
+msgstr "Έκδοση: "
+
+#: ../ui/settings.glade:2856
+msgid "View"
+msgstr "Προβολή"
+
+#: ../ui/settingsButtonConfig.glade:131
+msgid "Whiteout"
+msgstr "Διορθωτικό υγρό"
+
+#: ../ui/pagesize.glade:189
+msgid "Width:"
+msgstr "Πλάτος:"
+
+#: ../ui/about.glade:257
+msgid "With help from the community"
+msgstr "Με βοήθεια από την κοινότητα"
+
+#: ../ui/settings.glade:1991
+msgid "Workaround"
+msgstr "Λύση"
+
+#: ../ui/about.glade:192
+msgid "X.X.X"
+msgstr ""
+
+#: ../ui/settings.glade:137
+msgid "Xournal++ Preferences"
+msgstr "Προτιμήσεις του Xournal++"
+
+#: ../ui/settings.glade:3146
+msgid "Zoom"
+msgstr "Μεγέθυνση"
+
+#: ../ui/settings.glade:1922
+msgid "Zoom Gestures"
+msgstr "Χειρονομίες Μεγέθυνσης"
+
+#: ../ui/settings.glade:2990
+msgid "Zoom Speed"
+msgstr "Ταχύτητα Μεγέθυνσης"
+
+#: ../ui/main.glade:633
+msgid "_1 Column"
+msgstr "_1 Στήλη"
+
+#: ../ui/main.glade:738
+msgid "_1 Row"
+msgstr "_1 Γραμμή"
+
+#: ../ui/main.glade:644
+msgid "_2 Columns"
+msgstr "_2 Στήλες"
+
+#: ../ui/main.glade:749
+msgid "_2 Rows"
+msgstr "_2 Γραμμές"
+
+#: ../ui/main.glade:655
+msgid "_3 Columns"
+msgstr "_3 Στήλες"
+
+#: ../ui/main.glade:760
+msgid "_3 Rows"
+msgstr "_3 Γραμμές"
+
+#: ../ui/main.glade:666
+msgid "_4 Columns"
+msgstr "_4 Στήλες"
+
+#: ../ui/main.glade:771
+msgid "_4 Rows"
+msgstr "_4 Γραμμές"
+
+#: ../ui/main.glade:677
+msgid "_5 Columns"
+msgstr "_5 Στήλες"
+
+#: ../ui/main.glade:782
+msgid "_5 Rows"
+msgstr "_5 Γραμμές"
+
+#: ../ui/main.glade:688
+msgid "_6 Columns"
+msgstr "_6 Στήλες"
+
+#: ../ui/main.glade:793
+msgid "_6 Rows"
+msgstr "_6 Γραμμές"
+
+#: ../ui/main.glade:699
+msgid "_7 Columns"
+msgstr "_7 Στήλες"
+
+#: ../ui/main.glade:804
+msgid "_7 Rows"
+msgstr "_7 Γραμμές"
+
+#: ../ui/main.glade:710
+msgid "_8 Columns"
+msgstr "_8 Στήλες"
+
+#: ../ui/main.glade:815
+msgid "_8 Rows"
+msgstr "_8 Γραμμές"
+
+#: ../ui/main.glade:199
+msgid "_Annotate PDF"
+msgstr "_Σημείωση στο PDF"
+
+#: ../ui/main.glade:593
+msgid "_Bottom to Top"
+msgstr "_Επιστροφή στην Αρχή"
+
+#: ../ui/main.glade:608
+msgid "_Cols/Rows"
+msgstr "_Στήλες/Γραμμές"
+
+#: ../ui/main.glade:868
+msgid "_Customize"
+msgstr "_Προσωποποίηση"
+
+#: ../ui/main.glade:1293
+msgid "_Default Tools"
+msgstr "_Προεπιλεγμένα Εργαλεία"
+
+#: ../ui/main.glade:1144
+msgid "_Delete Page"
+msgstr "_Διαγραφή Σελίδας"
+
+#: ../ui/main.glade:295
+msgid "_Edit"
+msgstr "_Επεξεργασία"
+
+#: ../ui/main.glade:1245
+msgid "_Eraser"
+msgstr "_Γόμα"
+
+#: ../ui/main.glade:240
+msgid "_Export as PDF"
+msgstr "_Εξαγωγή ως PDF"
+
+#: ../ui/main.glade:155
+msgid "_File"
+msgstr "_Αρχείο"
+
+#: ../ui/main.glade:967
+msgid "_First Page"
+msgstr "_Πρώτη σελίδα"
+
+#: ../ui/main.glade:989
+msgid "_Goto Page"
+msgstr "_Μετάβαση σε σελίδα"
+
+#: ../ui/main.glade:1921
+msgid "_Help"
+msgstr "_Βοήθεια"
+
+#: ../ui/main.glade:1257
+msgid "_Highlighter"
+msgstr "_Υπογραμμιστής"
+
+#: ../ui/main.glade:524
+msgid "_Horizontal"
+msgstr "_Οριζόντιο"
+
+#: ../ui/main.glade:1281
+msgid "_Image"
+msgstr "_Εικόνα"
+
+#: ../ui/main.glade:1092
+msgid "_Journal"
+msgstr "_Journal"
+
+#: ../ui/main.glade:1011
+msgid "_Last Page"
+msgstr "_Τελευταία σελίδα"
+
+#: ../ui/main.glade:553
+msgid "_Left To Right"
+msgstr "_Αριστερά Προς Δεξιά"
+
+#: ../ui/main.glade:858
+msgid "_Manage"
+msgstr "_Διαχείριση"
+
+#: ../ui/main.glade:956
+msgid "_Navigation"
+msgstr "_Πλοήγηση"
+
+#: ../ui/main.glade:1039
+msgid "_Next Layer"
+msgstr "_Επόμενη Στρώση"
+
+#: ../ui/main.glade:1000
+msgid "_Next Page"
+msgstr "_Επόμενη Σελίδα"
+
+#: ../ui/main.glade:465
+msgid "_Pair Pages"
+msgstr "_Διπλές σελίδες"
+
+#: ../ui/main.glade:1233
+msgid "_Pen"
+msgstr "_Στυλό"
+
+#: ../ui/main.glade:1896
+msgid "_Plugin"
+msgstr "_Πρόσθετο"
+
+#: ../ui/main.glade:475
+msgid "_Presentation Mode"
+msgstr "_Λειτουργία Παρουσίασης"
+
+#: ../ui/main.glade:1028
+msgid "_Previous Layer"
+msgstr "_Προηγούμενη Στρώση"
+
+#: ../ui/main.glade:978
+msgid "_Previous Page"
+msgstr "_Προηγούμενη Σελίδα"
+
+#: ../ui/main.glade:564
+msgid "_Right To Left"
+msgstr "_Δεξιά προς Αριστερά"
+
+#: ../ui/main.glade:1309
+msgid "_Shape Recognizer"
+msgstr "_Αναγνώριση Σχημάτων"
+
+#: ../ui/main.glade:1269
+msgid "_Text"
+msgstr "_Κείμενο"
+
+#: ../ui/main.glade:1222
+msgid "_Tools"
+msgstr "_Εργαλεία"
+
+#: ../ui/main.glade:1050
+msgid "_Top Layer"
+msgstr "_Κορυφαία Στρώση"
+
+#: ../ui/main.glade:582
+msgid "_Top to Bottom"
+msgstr "_Πάνω προς τα Κάτω"
+
+#: ../ui/main.glade:535
+msgid "_Vertical"
+msgstr "Κατακόρυφο"
+
+#: ../ui/main.glade:1427
+msgid "_Vertical Space"
+msgstr "_Κατακόρυφος Χώρος"
+
+#: ../ui/main.glade:454
+msgid "_View"
+msgstr "_Προβολή"
+
+#: ../ui/main.glade:1709
+msgid "_delete strokes"
+msgstr "_διαγραφή μολυβιών"
+
+#: ../ui/main.glade:1491 ../ui/main.glade:1637 ../ui/main.glade:1746
+msgid "_fine"
+msgstr "_λεπτό"
+
+#: ../ui/main.glade:1502 ../ui/main.glade:1648 ../ui/main.glade:1757
+msgid "_medium"
+msgstr "_μεσαίο"
+
+#: ../ui/main.glade:1687
+msgid "_standard"
+msgstr "_τυπικό"
+
+#: ../ui/main.glade:1513 ../ui/main.glade:1659 ../ui/main.glade:1768
+msgid "_thick"
+msgstr "_παχύ"
+
+#: ../ui/main.glade:1480 ../ui/main.glade:1626 ../ui/main.glade:1735
+msgid "_very fine"
+msgstr "_πολύ λεπτό"
+
+#: ../ui/main.glade:1698
+msgid "_whiteout"
+msgstr "_διορθωτικό υγρό"
+
+#: ../ui/pageTemplate.glade:159
+msgid "change"
+msgstr "αλλαγή"
+
+#: ../ui/exportSettings.glade:224
+msgid "dpi"
+msgstr "dpi"
+
+#: ../ui/pluginEntry.glade:130
+msgid "enabled,"
+msgstr "ενεργοποιημένο,"
+
+#: ../ui/settings.glade:1246
+msgid "events"
+msgstr "συμβάντα"
+
+#: ../ui/settings.glade:291
+msgid "every"
+msgstr "κάθε"
+
+#: ../ui/pageTemplate.glade:53
+msgid "load from file"
+msgstr "φόρτωση από αρχείο"
+
+#: ../ui/settings.glade:318
+msgid "minutes"
+msgstr "λεπτά"
+
+#: ../ui/settings.glade:2343 ../ui/settings.glade:2394
+#: ../ui/settings.glade:3289 ../ui/settings.glade:3300
+#: ../ui/settings.glade:3576
+msgid "pixels"
+msgstr "pixels"
+
+#: ../ui/settings.glade:1684
+msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
+msgstr "s <i>(μετά από το οποίο θα ενεργοποιηθεί ξανά η οθόνη αφής)</i>"
+
+#: ../ui/pageTemplate.glade:39
+msgid "save to file"
+msgstr "Αποθήκευση σε αρχείο"
+
+#: ../ui/main.glade:1524 ../ui/main.glade:1670 ../ui/main.glade:1779
+msgid "ver_y thick"
+msgstr "πολ_ύ παχύ"
+
+#: ../ui/about.glade:178
+msgid "with libgtk"
+msgstr ""
+

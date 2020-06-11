@@ -4,31 +4,29 @@
 
 #include "TouchInputHandler.h"
 
-#include <cmath>
-
 #include "InputContext.h"
 
 TouchInputHandler::TouchInputHandler(InputContext* inputContext): AbstractInputHandler(inputContext) {}
 
-auto TouchInputHandler::handleImpl(InputEvent* event) -> bool {
+auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     // Don't handle more then 2 inputs
-    if (this->primarySequence && this->primarySequence != event->sequence && this->secondarySequence &&
-        this->secondarySequence != event->sequence) {
+    if (this->primarySequence && this->primarySequence != event.sequence && this->secondarySequence &&
+        this->secondarySequence != event.sequence) {
         return false;
     }
 
-    if (event->type == BUTTON_PRESS_EVENT) {
+    if (event.type == BUTTON_PRESS_EVENT) {
         // Start scrolling when a sequence starts and we currently have none other
         if (this->primarySequence == nullptr && this->secondarySequence == nullptr) {
-            this->primarySequence = event->sequence;
+            this->primarySequence = event.sequence;
 
             // Set sequence data
             sequenceStart(event);
         }
         // Start zooming as soon as we have two sequences
-        else if (this->primarySequence && this->primarySequence != event->sequence &&
+        else if (this->primarySequence && this->primarySequence != event.sequence &&
                  this->secondarySequence == nullptr) {
-            this->secondarySequence = event->sequence;
+            this->secondarySequence = event.sequence;
 
             // Set sequence data
             sequenceStart(event);
@@ -37,7 +35,7 @@ auto TouchInputHandler::handleImpl(InputEvent* event) -> bool {
         }
     }
 
-    if (event->type == MOTION_EVENT && this->primarySequence) {
+    if (event.type == MOTION_EVENT && this->primarySequence) {
         // Only zoom if there are two fingers involved
         if (this->primarySequence && this->secondarySequence) {
             zoomMotion(event);
@@ -46,13 +44,13 @@ auto TouchInputHandler::handleImpl(InputEvent* event) -> bool {
         }
     }
 
-    if (event->type == BUTTON_RELEASE_EVENT) {
+    if (event.type == BUTTON_RELEASE_EVENT) {
         // Only stop zooing if both sequences were active (we were scrolling)
         if (this->primarySequence != nullptr && this->secondarySequence != nullptr) {
             zoomEnd();
         }
 
-        if (event->sequence == this->primarySequence) {
+        if (event.sequence == this->primarySequence) {
             this->primarySequence = nullptr;
         } else {
             this->secondarySequence = nullptr;
@@ -62,41 +60,36 @@ auto TouchInputHandler::handleImpl(InputEvent* event) -> bool {
     return false;
 }
 
-void TouchInputHandler::sequenceStart(InputEvent* event) {
-    if (event->sequence == this->primarySequence) {
-        this->priLastAbsX = event->absoluteX;
-        this->priLastAbsY = event->absoluteY;
-        this->priLastRelX = event->relativeX;
-        this->priLastRelY = event->relativeY;
+void TouchInputHandler::sequenceStart(InputEvent const& event) {
+    if (event.sequence == this->primarySequence) {
+        this->priLastAbs = {event.absoluteX, event.absoluteY};
+        this->priLastRel = {event.relativeX, event.relativeY};
     } else {
-        this->secLastAbsX = event->absoluteX;
-        this->secLastAbsY = event->absoluteY;
-        this->secLastRelX = event->relativeX;
-        this->secLastRelY = event->relativeY;
+        this->secLastAbs = {event.absoluteX, event.absoluteY};
+        this->secLastRel = {event.relativeX, event.relativeY};
     }
 }
 
-void TouchInputHandler::scrollMotion(InputEvent* event) {
-    double offsetX = NAN;
-    double offsetY = NAN;
+void TouchInputHandler::scrollMotion(InputEvent const& event) {
 
     // Will only be called if there is a single sequence (zooming handles two sequences)
-    if (event->sequence == this->primarySequence) {
-        offsetX = event->absoluteX - this->priLastAbsX;
-        offsetY = event->absoluteY - this->priLastAbsY;
-        this->priLastAbsX = event->absoluteX;
-        this->priLastAbsY = event->absoluteY;
-    } else {
-        offsetX = event->absoluteX - this->secLastAbsX;
-        offsetY = event->absoluteY - this->secLastAbsY;
-        this->secLastAbsX = event->absoluteX;
-        this->secLastAbsY = event->absoluteY;
-    }
+    auto offset = [&]() {
+        auto absolutePoint = utl::Point{event.absoluteX, event.absoluteY};
+        if (event.sequence == this->primarySequence) {
+            auto offset = absolutePoint - this->priLastAbs;
+            this->priLastAbs = absolutePoint;
+            return offset;
+        } else {
+            auto offset = absolutePoint - this->secLastAbs;
+            this->secLastAbs = absolutePoint;
+            return offset;
+        }
+    }();
 
     GtkAdjustment* h = this->inputContext->getView()->getScrollHandling()->getHorizontal();
-    gtk_adjustment_set_value(h, gtk_adjustment_get_value(h) - offsetX);
+    gtk_adjustment_set_value(h, gtk_adjustment_get_value(h) - offset.x);
     GtkAdjustment* v = this->inputContext->getView()->getScrollHandling()->getVertical();
-    gtk_adjustment_set_value(v, gtk_adjustment_get_value(v) - offsetY);
+    gtk_adjustment_set_value(v, gtk_adjustment_get_value(v) - offset.y);
 }
 
 void TouchInputHandler::zoomStart() {
@@ -112,13 +105,10 @@ void TouchInputHandler::zoomStart() {
                            inputContext->getSettings()->getAddHorizontalSpaceAmount() :
                            0;
 
-    double centerX = (this->priLastRelX + this->secLastRelX) / 2.0 - hPadding;
-    double centerY = (this->priLastRelY + this->secLastRelY) / 2.0 - vPadding;
+    auto center = (this->priLastRel + this->secLastRel) / 2.0 - utl::Point<double>{double(hPadding), double(vPadding)};
 
-    this->startZoomDistance = std::sqrt(std::pow(this->priLastAbsX - this->secLastAbsX, 2.0) +
-                                        std::pow(this->priLastAbsY - this->secLastAbsY, 2.0));
-    lastZoomScrollCenterX = (this->priLastAbsX + this->secLastAbsX) / 2.0;
-    lastZoomScrollCenterY = (this->priLastAbsY + this->secLastAbsY) / 2.0;
+    this->startZoomDistance = this->priLastAbs.distance(this->secLastAbs);
+    lastZoomScrollCenter = (this->priLastAbs + this->secLastAbs) / 2.0;
 
     ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
 
@@ -130,36 +120,29 @@ void TouchInputHandler::zoomStart() {
 
     Rectangle zoomSequenceRectangle = zoomControl->getVisibleRect();
 
-    zoomControl->startZoomSequence(centerX - zoomSequenceRectangle.x, centerY - zoomSequenceRectangle.y);
+    zoomControl->startZoomSequence(center);
 }
 
-void TouchInputHandler::zoomMotion(InputEvent* event) {
+void TouchInputHandler::zoomMotion(InputEvent const& event) {
 
-    if (event->sequence == this->primarySequence) {
-        this->priLastAbsX = event->absoluteX;
-        this->priLastAbsY = event->absoluteY;
+    if (event.sequence == this->primarySequence) {
+        this->priLastAbs = {event.absoluteX, event.absoluteY};
     } else {
-        this->secLastAbsX = event->absoluteX;
-        this->secLastAbsY = event->absoluteY;
+        this->secLastAbs = {event.absoluteX, event.absoluteY};
     }
 
-    double sqDistance = std::sqrt(std::pow(this->priLastAbsX - this->secLastAbsX, 2.0) +
-                                  std::pow(this->priLastAbsY - this->secLastAbsY, 2.0));
+    double sqDistance = this->priLastAbs.distance(this->secLastAbs);
     double zoom = sqDistance / this->startZoomDistance;
 
     ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
     zoomControl->zoomSequenceChange(zoom, true);
 
-    double centerX = (this->priLastAbsX + this->secLastAbsX) / 2.0;
-    double centerY = (this->priLastAbsY + this->secLastAbsY) / 2.0;
+    auto center = (this->priLastAbs + this->secLastAbs) / 2;
+    auto lastScrollPosition = zoomControl->getScrollPositionAfterZoom();
+    auto offset = lastScrollPosition - (center - lastZoomScrollCenter);
 
-    std::tuple<double, double> lastScrollPosition = zoomControl->getScrollPositionAfterZoom();
-    double offsetX = std::get<0>(lastScrollPosition) - (centerX - lastZoomScrollCenterX);
-    double offsetY = std::get<1>(lastScrollPosition) - (centerY - lastZoomScrollCenterY);
-
-    zoomControl->setScrollPositionAfterZoom(offsetX, offsetY);
-    lastZoomScrollCenterX = centerX;
-    lastZoomScrollCenterY = centerY;
+    zoomControl->setScrollPositionAfterZoom(offset);
+    lastZoomScrollCenter = center;
 }
 
 void TouchInputHandler::zoomEnd() {
@@ -172,16 +155,10 @@ void TouchInputHandler::onUnblock() {
     this->secondarySequence = nullptr;
 
     this->startZoomDistance = 0.0;
-    this->lastZoomScrollCenterX = 0.0;
-    this->lastZoomScrollCenterY = 0.0;
+    this->lastZoomScrollCenter = {};
 
-    this->priLastAbsX = -1.0;
-    this->priLastAbsY = -1.0;
-    this->secLastAbsX = -1.0;
-    this->secLastAbsY = -1.0;
-
-    this->priLastRelX = -1.0;
-    this->priLastRelY = -1.0;
-    this->secLastRelX = -1.0;
-    this->secLastRelY = -1.0;
+    priLastAbs = {-1.0, -1.0};
+    secLastAbs = {-1.0, -1.0};
+    priLastRel = {-1.0, -1.0};
+    secLastRel = {-1.0, -1.0};
 }

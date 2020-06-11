@@ -16,40 +16,36 @@
 #include <vector>
 
 #include "AbstractInputHandler.h"
+#include "Point.h"
 #include "XournalType.h"
 
 class InputContext;
 
 class TouchInputHandler: public AbstractInputHandler {
 private:
-    GdkEventSequence* primarySequence = nullptr;
-    GdkEventSequence* secondarySequence = nullptr;
+    GdkEventSequence* primarySequence{};
+    GdkEventSequence* secondarySequence{};
 
     double startZoomDistance = 0.0;
-    double lastZoomScrollCenterX = 0.0;
-    double lastZoomScrollCenterY = 0.0;
+    utl::Point<double> lastZoomScrollCenter{};
 
-    double priLastAbsX = -1.0;
-    double priLastAbsY = -1.0;
-    double secLastAbsX = -1.0;
-    double secLastAbsY = -1.0;
+    utl::Point<double> priLastAbs{-1.0, -1.0};
+    utl::Point<double> secLastAbs{-1.0, -1.0};
 
-    double priLastRelX = -1.0;
-    double priLastRelY = -1.0;
-    double secLastRelX = -1.0;
-    double secLastRelY = -1.0;
+    utl::Point<double> priLastRel{-1.0, -1.0};
+    utl::Point<double> secLastRel{-1.0, -1.0};
 
 private:
-    void sequenceStart(InputEvent* event);
-    void scrollMotion(InputEvent* event);
+    void sequenceStart(InputEvent const& event);
+    void scrollMotion(InputEvent const& event);
     void zoomStart();
-    void zoomMotion(InputEvent* event);
+    void zoomMotion(InputEvent const& event);
     void zoomEnd();
 
 public:
     explicit TouchInputHandler(InputContext* inputContext);
     ~TouchInputHandler() override = default;
 
-    bool handleImpl(InputEvent* event) override;
+    bool handleImpl(InputEvent const& event) override;
     void onUnblock() override;
 };

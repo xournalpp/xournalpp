@@ -1,6 +1,7 @@
 #include "XournalView.h"
 
 #include <cmath>
+#include <memory>
 #include <tuple>
 
 #include <gdk/gdk.h>
@@ -12,7 +13,6 @@
 #include "model/Document.h"
 #include "model/Stroke.h"
 #include "undo/DeleteUndoAction.h"
-#include "util/cpp14memory.h"
 #include "widgets/XournalWidget.h"
 
 #include "Layout.h"
@@ -437,7 +437,7 @@ void XournalView::getPasteTarget(double& x, double& y) {
         return;
     }
 
-    Rectangle* rect = getVisibleRect(pageNo);
+    Rectangle<double>* rect = getVisibleRect(pageNo);
 
     if (rect) {
         x = rect->x + rect->width / 2;
@@ -451,7 +451,7 @@ void XournalView::getPasteTarget(double& x, double& y) {
  *
  * Or nullptr if the page is not visible
  */
-auto XournalView::getVisibleRect(size_t page) -> Rectangle* {
+auto XournalView::getVisibleRect(size_t page) -> Rectangle<double>* {
     if (page == npos || page >= this->viewPages.size()) {
         return nullptr;
     }
@@ -460,7 +460,7 @@ auto XournalView::getVisibleRect(size_t page) -> Rectangle* {
     return getVisibleRect(p);
 }
 
-auto XournalView::getVisibleRect(XojPageView* redrawable) -> Rectangle* {
+auto XournalView::getVisibleRect(XojPageView* redrawable) -> Rectangle<double>* {
     return gtk_xournal_get_visible_area(this->widget, redrawable);
 }
 
@@ -499,9 +499,10 @@ void XournalView::zoomChanged() {
     if (zoom->isZoomPresentationMode() || zoom->isZoomFitMode()) {
         scrollTo(currentPage);
     } else {
-        std::tuple<double, double> pos = zoom->getScrollPositionAfterZoom();
-        if (std::get<0>(pos) != -1 && std::get<1>(pos) != -1) {
-            layout->scrollAbs(std::get<0>(pos), std::get<1>(pos));
+        auto pos = zoom->getScrollPositionAfterZoom();
+        if (pos.x != -1 && pos.y != -1) {
+            // Todo: This could be one source of all evil:
+            layout->scrollAbs(pos.x, pos.y);
         }
     }
     // move this somewhere else maybe
@@ -591,7 +592,7 @@ void XournalView::deleteSelection(EditSelection* sel) {
 
     if (sel) {
         XojPageView* view = sel->getView();
-        auto undo = mem::make_unique<DeleteUndoAction>(sel->getSourcePage(), false);
+        auto undo = std::make_unique<DeleteUndoAction>(sel->getSourcePage(), false);
         sel->fillUndoItem(undo.get());
         control->getUndoRedoHandler()->addUndoAction(std::move(undo));
 
@@ -667,7 +668,7 @@ auto XournalView::getDisplayWidth() const -> int {
 }
 
 auto XournalView::isPageVisible(size_t page, int* visibleHeight) -> bool {
-    Rectangle* rect = getVisibleRect(page);
+    Rectangle<double>* rect = getVisibleRect(page);
     if (rect) {
         if (visibleHeight) {
             *visibleHeight = std::lround(rect->height);
@@ -698,6 +699,8 @@ void XournalView::documentChanged(DocumentChangeType type) {
         delete page;
     }
     viewPages.clear();
+
+    this->cache->clearCache();
 
     Document* doc = control->getDocument();
     doc->lock();

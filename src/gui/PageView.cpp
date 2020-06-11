@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
+#include <memory>
 
 #include <gdk/gdk.h>
 
@@ -32,7 +33,6 @@
 #include "undo/InsertUndoAction.h"
 #include "undo/TextBoxUndoAction.h"
 #include "util/XojMsgBox.h"
-#include "util/cpp14memory.h"
 #include "view/TextView.h"
 #include "widgets/XournalWidget.h"
 
@@ -73,19 +73,10 @@ XojPageView::~XojPageView() {
 
     this->xournal->getControl()->getScheduler()->removePage(this);
     delete this->inputHandler;
-    this->inputHandler = nullptr;
     delete this->eraser;
-    this->eraser = nullptr;
     endText();
     deleteViewBuffer();
-
-    for (Rectangle* rect: this->rerenderRects) {
-        delete rect;
-    }
-    this->rerenderRects.clear();
-
     delete this->search;
-    this->search = nullptr;
 }
 
 void XojPageView::setIsVisible(bool visible) {
@@ -167,7 +158,7 @@ void XojPageView::endText() {
         // old element
         int pos = layer->indexOf(txt);
         if (pos != -1) {
-            auto eraseDeleteUndoAction = mem::make_unique<DeleteUndoAction>(page, true);
+            auto eraseDeleteUndoAction = std::make_unique<DeleteUndoAction>(page, true);
             layer->removeElement(txt, false);
             eraseDeleteUndoAction->addElement(layer, txt, pos);
             undo->addUndoAction(std::move(eraseDeleteUndoAction));
@@ -175,7 +166,7 @@ void XojPageView::endText() {
     } else {
         // new element
         if (layer->indexOf(txt) == -1) {
-            undo->addUndoActionBefore(mem::make_unique<InsertUndoAction>(page, layer, txt),
+            undo->addUndoActionBefore(std::make_unique<InsertUndoAction>(page, layer, txt),
                                       this->textEditor->getFirstUndoAction());
             layer->addElement(txt);
             this->textEditor->textCopyed();
@@ -186,7 +177,7 @@ void XojPageView::endText() {
             // TextUndoAction does not work because the textEdit object is destroyed
             // after endText() so we need to instead copy the information between an
             // old and new element that we can push and pop to recover.
-            undo->addUndoAction(mem::make_unique<TextBoxUndoAction>(page, layer, txt, this->oldtext));
+            undo->addUndoAction(std::make_unique<TextBoxUndoAction>(page, layer, txt, this->oldtext));
         }
     }
 
@@ -543,6 +534,11 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
             delete this->selection;
             this->selection = nullptr;
         } else {
+            double zoom = xournal->getZoom();
+            if (this->selection->userTapped(zoom)) {
+                SelectObject select(this);
+                select.at(pos.x / zoom, pos.y / zoom);
+            }
             delete this->selection;
             this->selection = nullptr;
 
@@ -630,19 +626,16 @@ void XojPageView::addRerenderRect(double x, double y, double width, double heigh
         return;
     }
 
-    auto* rect = new Rectangle(x, y, width, height);
+    auto rect = Rectangle<double>{x, y, width, height};
 
     g_mutex_lock(&this->repaintRectMutex);
 
-    for (Rectangle* r: this->rerenderRects) {
+    for (auto&& r: this->rerenderRects) {
         // its faster to redraw only one rect than repaint twice the same area
         // so loop through the rectangles to be redrawn, if new rectangle
         // intersects any of them, replace it by the union with the new one
-        if (r->intersects(*rect)) {
-            r->add(*rect);
-
-            delete rect;
-
+        if (r.intersects(rect)) {
+            r.unite(rect);
             g_mutex_unlock(&this->repaintRectMutex);
             return;
         }
@@ -897,11 +890,11 @@ auto XojPageView::getSelectedText() -> Text* {
     return nullptr;
 }
 
-auto XojPageView::getRect() const -> Rectangle {
-    return Rectangle(getX(), getY(), getDisplayWidth(), getDisplayHeight());
+auto XojPageView::getRect() const -> Rectangle<double> {
+    return Rectangle<double>(getX(), getY(), getDisplayWidth(), getDisplayHeight());
 }
 
-void XojPageView::rectChanged(Rectangle& rect) { rerenderRect(rect.x, rect.y, rect.width, rect.height); }
+void XojPageView::rectChanged(Rectangle<double>& rect) { rerenderRect(rect.x, rect.y, rect.width, rect.height); }
 
 void XojPageView::rangeChanged(Range& range) { rerenderRange(range); }
 

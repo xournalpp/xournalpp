@@ -225,6 +225,9 @@ auto LoadHandler::parseXml() -> bool {
 
     g_markup_parse_context_free(context);
 
+    // Add all parsed pages to the document
+    this->doc.addPages(pages.begin(), pages.end());
+
     if (this->pos != PASER_POS_FINISHED && this->lastError.empty()) {
         lastError = _("Document is not complete (maybe the end is cut off?)");
         return false;
@@ -286,9 +289,9 @@ void LoadHandler::parseContents() {
         double width = LoadHandlerHelper::getAttribDouble("width", this);
         double height = LoadHandlerHelper::getAttribDouble("height", this);
 
-        this->page = new XojPage(width, height);
+        this->page = std::make_unique<XojPage>(width, height);
 
-        this->doc.addPage(this->page);
+        pages.push_back(this->page);
     } else if (strcmp(elementName, "audio") == 0) {
         this->parseAudio();
     } else if (strcmp(elementName, "title") == 0) {
@@ -369,7 +372,7 @@ void LoadHandler::parseBgPixmap() {
     } else if (!strcmp(domain, "clone")) {
         PageRef p = doc.getPage(stoull(filename));
 
-        if (p.isValid()) {
+        if (p) {
             this->page->setBackgroundImage(p->getBackgroundImage());
         }
     } else {

@@ -26,7 +26,6 @@ class Layout;
 class PagePositionHandler;
 class XojPageView;
 class PdfCache;
-class Rectangle;
 class RepaintHandler;
 class ScrollHandling;
 class TextEditor;
@@ -102,8 +101,8 @@ public:
     GtkWidget* getWidget();
     XournalppCursor* getCursor();
 
-    Rectangle* getVisibleRect(int page);
-    Rectangle* getVisibleRect(XojPageView* redrawable);
+    Rectangle<double>* getVisibleRect(int page);
+    Rectangle<double>* getVisibleRect(XojPageView* redrawable);
 
     /**
      * A pen action was detected now, therefore ignore touch events
@@ -145,7 +144,7 @@ private:
 
     void addLoadPageToQue(PageRef page, int priority);
 
-    Rectangle* getVisibleRect(size_t page);
+    Rectangle<double>* getVisibleRect(size_t page);
 
     static gboolean clearMemoryTimer(XournalView* widget);
 

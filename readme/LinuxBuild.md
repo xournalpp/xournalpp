@@ -109,7 +109,22 @@ TODO
 
 #### AppImage
 
-TODO
+The quickest way to generate an AppImage is to first generate the `.tar.gz`
+package and then use that with the `azure-pipelines/util/build_appimage.sh`
+script.
+
+```bash
+cmake .. -DPACK_GENERATOR="TGZ"
+cmake --build . --target package
+../azure-pipelines/util/build_appimage.sh
+```
+
+The `build_appimage.sh` script will automatically download LinuxDeploy, copy the
+`.tar.gz` files and required libraries and resources into a `appimage_staging`
+directory, and run LinuxDeploy on the prepared app dir.
+
+By default, the `build_appimage.sh` script will copy the Adwaita GTK theme and
+the Adwaita icon theme into the AppImage.
 
 #### Flatpak
 

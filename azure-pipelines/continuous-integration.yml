@@ -16,7 +16,7 @@ stages:
     jobs:
       - job: 'Linux'
         pool:
-          vmImage: 'ubuntu-16.04'
+          vmImage: 'ubuntu-18.04'
         displayName: 'Test Xournal++ on Linux'
         steps:
           - template: steps/install_deps_ubuntu.yml
@@ -54,13 +54,13 @@ stages:
 
       - job: macOS
         pool:
-          vmImage: 'macOS-10.13'
+          vmImage: 'macOS-10.15'
         displayName: 'Test Xournal++ on MacOS'
         steps:
           - template: steps/build_mac.yml
             parameters:
               build_type: 'Debug'
-              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
+              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_OSX_DEPLOYMENT_TARGET=10.13'
           - bash: |
               export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
               install_name_tool -add_rpath /Users/git-bin/gtk/inst/lib/. test/test-loadHandler

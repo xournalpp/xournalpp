@@ -79,7 +79,7 @@ void MoveUndoAction::repaint() {
 
     this->page->firePageChanged();
 
-    if (this->targetPage.isValid()) {
+    if (this->targetPage) {
         this->targetPage->firePageChanged();
     }
 }

@@ -307,12 +307,7 @@ void XournalppCursor::updateCursor() {
 
 
 auto XournalppCursor::getEraserCursor() -> GdkCursor* {
-
-    if (CRSR_ERASER == this->currentCursor) {
-        return nullptr;  // cursor already set
-    }
     this->currentCursor = CRSR_ERASER;
-
 
     // Eraser's size follow a quadratic increment, so the cursor will do the same
     double cursorSize = control->getToolHandler()->getThickness() * 2 * control->getZoomControl()->getZoom();
@@ -336,7 +331,6 @@ auto XournalppCursor::getHighlighterCursor() -> GdkCursor* {
     if (this->drawDirActive) {
         return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
     }
-
 
     return createHighlighterOrPenCursor(5, 120 / 255.0);
 }
@@ -366,9 +360,6 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     gulong flavour = (big ? 1 : 0) | (bright ? 2 : 0) | static_cast<gulong>(64 * alpha) << 2 |
                      static_cast<gulong>(size) << 9 | static_cast<gulong>(rgb) << 14;
 
-    if (CRSR_PENORHIGHLIGHTER == this->currentCursor && flavour == this->currentCursorFlavour) {
-        return nullptr;
-    }
     this->currentCursor = CRSR_PENORHIGHLIGHTER;
     this->currentCursorFlavour = flavour;
 
@@ -410,18 +401,21 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     }
 
     if (bright) {
-        // A yellow transparent circle with no border
-        cairo_set_line_width(cr, 0);
-        cairo_set_source_rgba(cr, 255, 255, 0, 0.5);
-        cairo_arc(cr, centerX, centerY, 30, 0, 2 * 3.1415);
+        // Highlight cursor with a circle
+        auto&& color = Util::argb_to_GdkRGBA(control->getSettings()->getCursorHighlightColor());
+        cairo_set_source_rgba(cr, color.red, color.green, color.blue, color.alpha);
+        cairo_arc(cr, centerX, centerY, control->getSettings()->getCursorHighlightRadius(), 0, 2 * M_PI);
         cairo_fill_preserve(cr);
-        cairo_set_source_rgb(cr, 0, 0, 0);
+        auto&& borderColor = Util::argb_to_GdkRGBA(control->getSettings()->getCursorHighlightBorderColor());
+        cairo_set_source_rgba(cr, borderColor.red, borderColor.green, borderColor.blue, borderColor.alpha);
+        cairo_set_line_width(cr, control->getSettings()->getCursorHighlightBorderWidth());
         cairo_stroke(cr);
     }
 
+
     cairo_set_source_rgba(cr, r, g, b, alpha);
-    // Correct the offset of the coloured dot for big-cursor mode
-    cairo_rectangle(cr, centerX, centerY, size, size);
+    double cursorSize = control->getToolHandler()->getThickness() * control->getZoomControl()->getZoom();
+    cairo_arc(cr, centerX, centerY, cursorSize / 2., 0, 2. * M_PI);
     cairo_fill(cr);
     cairo_destroy(cr);
     GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);

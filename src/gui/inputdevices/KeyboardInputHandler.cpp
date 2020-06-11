@@ -12,11 +12,12 @@ KeyboardInputHandler::KeyboardInputHandler(InputContext* inputContext): Abstract
 
 KeyboardInputHandler::~KeyboardInputHandler() = default;
 
-auto KeyboardInputHandler::handleImpl(InputEvent* event) -> bool {
-    auto keyEvent = reinterpret_cast<GdkEventKey*>(event->sourceEvent);
+auto KeyboardInputHandler::handleImpl(InputEvent const& event) -> bool {
     GtkXournal* xournal = inputContext->getXournal();
+    GdkEvent* gdkEvent = event.sourceEvent;
 
-    if (keyEvent->type == GDK_KEY_PRESS) {
+    if (gdkEvent->type == GDK_KEY_PRESS) {
+        auto keyEvent = reinterpret_cast<GdkEventKey*>(gdkEvent);
         EditSelection* selection = xournal->selection;
         if (selection) {
             int d = 3;
@@ -46,9 +47,11 @@ auto KeyboardInputHandler::handleImpl(InputEvent* event) -> bool {
                 return true;
             }
         }
-
         return xournal->view->onKeyPressEvent(keyEvent);
+    } else if (gdkEvent->type == GDK_KEY_RELEASE) {
+        auto keyEvent = reinterpret_cast<GdkEventKey*>(gdkEvent);
+        return inputContext->getView()->onKeyReleaseEvent(keyEvent);
     }
 
-    return inputContext->getView()->onKeyReleaseEvent(keyEvent);
+    return false;
 }

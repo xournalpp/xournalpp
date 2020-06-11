@@ -20,7 +20,7 @@ stages:
     jobs:
       - job: 'Versioning'
         pool:
-          vmImage: 'ubuntu-16.04'
+          vmImage: 'ubuntu-18.04'
         displayName: 'Set Build Number'
         steps:
           - bash: |
@@ -43,12 +43,12 @@ stages:
             name: 'VersionRelease'
             displayName: 'Set Version Information for Release'
             workingDirectory: ./build
-            condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['runForRelease'], 'False')) # Run for non-scheduled (release)
+            condition: or(eq(variables['Build.Reason'], 'IndividualCI'), ne(variables['runForRelease'], 'False')) # Run for non-scheduled (release)
   - stage: Release
     jobs:
       - job: 'Ubuntu'
         pool:
-          vmImage: 'ubuntu-16.04'
+          vmImage: 'ubuntu-18.04'
         displayName: 'Build for Ubuntu'
         condition: always()
         steps:
@@ -58,6 +58,15 @@ stages:
               build_type: 'RelWithDebInfo'
               cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=$PWD/staging -DCPACK_GENERATOR="TGZ;DEB"'
               cmake_commands: '--target package'
+          - bash: |
+              # Build AppImage
+              export VERSION=$(cat VERSION | sed '1q;d')
+              export ARCH=$(cat VERSION | sed '4q;d')
+              ../azure-pipelines/util/build_appimage.sh
+              # Move and rename the generated AppImage file
+              find . -name '*.AppImage' -not -name 'linuxdeploy.AppImage' -exec mv {} packages/xournalpp-$VERSION-$ARCH.AppImage \;
+            workingDirectory: ./build
+            displayName: 'Create AppImage'
           - task: PublishPipelineArtifact@1
             inputs:
               artifactName: 'linux-ubuntu-packages'
@@ -65,7 +74,7 @@ stages:
             displayName: 'Publish packages'
       - job: 'Debian'
         pool:
-          vmImage: 'ubuntu-16.04'
+          vmImage: 'ubuntu-18.04'
         container:
           image: xournalpp/debian-latest-sudo:latest
         displayName: 'Build for Debian'
@@ -114,14 +123,14 @@ stages:
 
       - job: macOS
         pool:
-          vmImage: 'macOS-10.13'
+          vmImage: 'macOS-10.15'
         displayName: 'Build for macOS'
         condition: always()
         steps:
           - template: steps/build_mac.yml
             parameters:
               build_type: 'RelWithDebInfo'
-              cmake_flags: ''
+              cmake_flags: '-DCMAKE_OSX_DEPLOYMENT_TARGET=10.13'
           - bash: |
               export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
               ./build-app.sh /Users/git-bin/gtk

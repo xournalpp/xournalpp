@@ -47,7 +47,6 @@
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertDeletePageUndoAction.h"
 #include "undo/InsertUndoAction.h"
-#include "util/cpp14memory.h"
 #include "view/DocumentView.h"
 #include "view/TextView.h"
 #include "xojfile/LoadHandler.h"
@@ -85,9 +84,7 @@ Control::Control(GladeSearchpath* gladeSearchPath) {
     this->lastGroup = GROUP_NOGROUP;
     this->lastEnabled = false;
 
-    Path name = Path(g_get_home_dir());
-    name /= CONFIG_DIR;
-    name /= SETTINGS_XML_FILE;
+    Path name = Util::getConfigFile(SETTINGS_XML_FILE);
     this->settings = new Settings(name);
     this->settings->load();
 
@@ -139,9 +136,7 @@ Control::~Control() {
 
     this->scheduler->stop();
 
-    for (XojPage* page: this->changedPages) {
-        page->unreference();
-    }
+    this->changedPages.clear();  // can be removed, will be done by implicit destructor
 
     delete this->pluginController;
     this->pluginController = nullptr;
@@ -260,16 +255,13 @@ auto Control::checkChangedDocument(Control* control) -> bool {
         // call again later
         return true;
     }
-    for (XojPage* page: control->changedPages) {
+    for (auto const& page: control->changedPages) {
         int p = control->doc->indexOf(page);
         if (p != -1) {
             control->firePageChanged(p);
         }
-
-        page->unreference();
     }
     control->changedPages.clear();
-
     control->doc->unlock();
 
     // Call again
@@ -1188,12 +1180,12 @@ void Control::addDefaultPage(string pageTemplate) {
     PageTemplateSettings model;
     model.parse(pageTemplate);
 
-    PageRef page = new XojPage(model.getPageWidth(), model.getPageHeight());
+    auto page = std::make_shared<XojPage>(model.getPageWidth(), model.getPageHeight());
     page->setBackgroundColor(model.getBackgroundColor());
     page->setBackgroundType(model.getBackgroundType());
 
     this->doc->lock();
-    this->doc->addPage(page);
+    this->doc->addPage(std::move(page));
     this->doc->unlock();
 
     updateDeletePageButton();
@@ -1232,7 +1224,7 @@ void Control::deletePage() {
     this->doc->unlock();
 
     updateDeletePageButton();
-    this->undoRedo->addUndoAction(mem::make_unique<InsertDeletePageUndoAction>(page, pNr, false));
+    this->undoRedo->addUndoAction(std::make_unique<InsertDeletePageUndoAction>(page, pNr, false));
 
     if (pNr >= this->doc->getPageCount()) {
         pNr = this->doc->getPageCount() - 1;
@@ -1260,7 +1252,7 @@ void Control::insertPage(const PageRef& page, size_t position) {
     firePageSelected(position);
 
     updateDeletePageButton();
-    undoRedo->addUndoAction(mem::make_unique<InsertDeletePageUndoAction>(page, position, true));
+    undoRedo->addUndoAction(std::make_unique<InsertDeletePageUndoAction>(page, position, true));
 }
 
 void Control::gotoPage() {
@@ -1282,8 +1274,8 @@ void Control::updateBackgroundSizeButton() {
     }
 
     // Update paper color button
-    PageRef p = getCurrentPage();
-    if (!p.isValid() || this->win == nullptr) {
+    auto const& p = getCurrentPage();
+    if (!p || this->win == nullptr) {
         return;
     }
     GtkWidget* paperColor = win->get("menuJournalPaperColor");
@@ -1308,8 +1300,8 @@ void Control::paperTemplate() {
 }
 
 void Control::paperFormat() {
-    PageRef page = getCurrentPage();
-    if (!page.isValid() || page->getBackgroundType().isPdfPage()) {
+    auto const& page = getCurrentPage();
+    if (!page || page->getBackgroundType().isPdfPage()) {
         return;
     }
     clearSelectionEndText();
@@ -1337,10 +1329,10 @@ void Control::paperFormat() {
 void Control::changePageBackgroundColor() {
     int pNr = getCurrentPageNo();
     this->doc->lock();
-    PageRef p = this->doc->getPage(pNr);
+    auto const& p = this->doc->getPage(pNr);
     this->doc->unlock();
 
-    if (!p.isValid()) {
+    if (!p) {
         return;
     }
 
@@ -1617,15 +1609,11 @@ void Control::undoRedoChanged() {
 }
 
 void Control::undoRedoPageChanged(PageRef page) {
-    for (XojPage* p: this->changedPages) {
-        if (p == static_cast<XojPage*>(page)) {
-            return;
-        }
+    if (std::find(begin(this->changedPages), end(this->changedPages), page) == end(this->changedPages)) {
+        return;
     }
 
-    auto* p = static_cast<XojPage*>(page);
-    this->changedPages.push_back(p);
-    p->reference();
+    this->changedPages.emplace_back(std::move(page));
 }
 
 void Control::selectTool(ToolType type) {
@@ -1908,7 +1896,7 @@ void Control::showSettings() {
     delete dlg;
 }
 
-auto Control::newFile(string pageTemplate) -> bool {
+auto Control::newFile(string pageTemplate, Path fileName) -> bool {
     if (!this->close(true)) {
         return false;
     }
@@ -1917,6 +1905,9 @@ auto Control::newFile(string pageTemplate) -> bool {
 
     this->doc->lock();
     *doc = newDoc;
+    if (!fileName.isEmpty()) {
+        this->doc->setFilename(fileName);
+    };
     this->doc->unlock();
 
     addDefaultPage(std::move(pageTemplate));
@@ -2507,7 +2498,7 @@ auto Control::checkExistingFile(Path& folder, Path& filename) -> bool {
     if (filename.exists()) {
         string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % filename.getFilename());
         int res = XojMsgBox::replaceFileQuestion(getGtkWindow(), msg);
-        return res != 1;  // res != 1 when user clicks on Replace
+        return res == GTK_RESPONSE_OK;
     }
     return true;
 }
@@ -2612,7 +2603,7 @@ void Control::clipboardPaste(Element* e) {
 
     this->doc->unlock();
 
-    undoRedo->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, e));
+    undoRedo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, e));
     auto* selection = new EditSelection(this->undoRedo, e, view, page);
 
     win->getXournal()->setSelection(selection);
@@ -2650,7 +2641,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
         this->doc->unlock();
 
         int count = in.readInt();
-        auto pasteAddUndoAction = mem::make_unique<AddUndoAction>(page, false);
+        auto pasteAddUndoAction = std::make_unique<AddUndoAction>(page, false);
         // this will undo a group of elements that are inserted
 
         for (int i = 0; i < count; i++) {
@@ -2658,13 +2649,13 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
             element.reset();
 
             if (name == "Stroke") {
-                element = mem::make_unique<Stroke>();
+                element = std::make_unique<Stroke>();
             } else if (name == "Image") {
-                element = mem::make_unique<Image>();
+                element = std::make_unique<Image>();
             } else if (name == "TexImage") {
-                element = mem::make_unique<TexImage>();
+                element = std::make_unique<TexImage>();
             } else if (name == "Text") {
-                element = mem::make_unique<Text>();
+                element = std::make_unique<Text>();
             } else {
                 throw InputStreamException(FS(FORMAT_STR("Get unknown object {1}") % name), __FILE__, __LINE__);
             }

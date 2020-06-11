@@ -18,9 +18,11 @@
 #include "control/Tool.h"
 #include "model/Font.h"
 #include "model/PageRef.h"
+#include "model/Snapping.h"
 #include "view/ElementContainer.h"
 
 #include "CursorSelectionType.h"
+#include "SnapToGridInputHandler.h"
 #include "XournalType.h"
 
 class UndoRedoHandler;
@@ -50,8 +52,6 @@ private:
      * Calculate the size from the element list
      */
     void calcSizeFromElements(vector<Element*> elements);
-
-    void snapRotation();
 
 public:
     /**
@@ -320,4 +320,9 @@ private:  // HANDLER
      * Undo redo handler
      */
     UndoRedoHandler* undo{};
+
+    /**
+     * The handler for snapping points
+     */
+    SnapToGridInputHandler snappingHandler;
 };

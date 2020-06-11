@@ -1,13 +1,13 @@
 #include "BaseStrokeHandler.h"
 
 #include <cmath>
+#include <memory>
 
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
 #include "undo/InsertUndoAction.h"
-#include "util/cpp14memory.h"
 
 
 guint32 BaseStrokeHandler::lastStrokeTime;  // persist for next stroke
@@ -15,57 +15,10 @@ guint32 BaseStrokeHandler::lastStrokeTime;  // persist for next stroke
 
 BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift,
                                      bool flipControl):
-        InputHandler(xournal, redrawable, page) {
-    this->flipShift = flipShift;
-    this->flipControl = flipControl;
-}
-
-void BaseStrokeHandler::snapToGrid(double& x, double& y) {
-    if (!xournal->getControl()->getSettings()->isSnapGrid()) {
-        return;
-    }
-
-    /**
-     * Snap points to a grid:
-     * If x/y coordinates are under a certain tolerance,
-     * fix the point to the grid intersection value
-     */
-    double gridSize = 14.17;
-
-    double t = xournal->getControl()->getSettings()->getSnapGridTolerance();
-    double tolerance = (gridSize / 2) - (1 / t);
-
-    double xRem = fmod(x, gridSize);
-    double yRem = fmod(y, gridSize);
-
-    bool snapX = false;
-    bool snapY = false;
-
-    double tmpX = 0;
-    double tmpY = 0;
-
-    if (xRem < tolerance) {
-        tmpX = x - xRem;
-        snapX = true;
-    }
-    if (xRem > gridSize - tolerance) {
-        tmpX = x + (gridSize - xRem);
-        snapX = true;
-    }
-    if (yRem < tolerance) {
-        tmpY = y - yRem;
-        snapY = true;
-    }
-    if (yRem > gridSize - tolerance) {
-        tmpY = y + (gridSize - yRem);
-        snapY = true;
-    }
-
-    if (snapX && snapY) {
-        x = tmpX;
-        y = tmpY;
-    }
-}
+        InputHandler(xournal, redrawable, page),
+        snappingHandler(xournal->getControl()->getSettings()),
+        flipShift(flipShift),
+        flipControl(flipControl) {}
 
 BaseStrokeHandler::~BaseStrokeHandler() = default;
 
@@ -79,7 +32,7 @@ void BaseStrokeHandler::draw(cairo_t* cr) {
 
 auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool {
     if (event->is_modifier) {
-        Rectangle rect = stroke->boundingRect();
+        Rectangle<double> rect = stroke->boundingRect();
 
         PositionInputData pos{};
         pos.x = pos.y = pos.pressure = 0;  // not used in redraw
@@ -103,7 +56,7 @@ auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool {
         this->drawShape(malleablePoint, pos);
 
 
-        rect.add(stroke->boundingRect());
+        rect.unite(stroke->boundingRect());
 
         double w = stroke->getWidth();
         redrawable->repaintRect(rect.x - w, rect.y - w, rect.width + 2 * w, rect.height + 2 * w);
@@ -124,7 +77,7 @@ auto BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> boo
     int pointCount = stroke->getPointCount();
 
     Point currentPoint(x, y);
-    Rectangle rect = stroke->boundingRect();
+    Rectangle<double> rect = stroke->boundingRect();
 
     if (pointCount > 0) {
         if (!validMotion(currentPoint, stroke->getPoint(pointCount - 1))) {
@@ -137,7 +90,7 @@ auto BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> boo
 
     drawShape(currentPoint, pos);
 
-    rect.add(stroke->boundingRect());
+    rect.unite(stroke->boundingRect());
     double w = stroke->getWidth();
 
     redrawable->repaintRect(rect.x - w, rect.y - w, rect.width + 2 * w, rect.height + 2 * w);
@@ -206,7 +159,7 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
 
-    undo->addUndoAction(mem::make_unique<InsertUndoAction>(page, layer, stroke));
+    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
 
     layer->addElement(stroke);
     page->fireElementChanged(stroke);

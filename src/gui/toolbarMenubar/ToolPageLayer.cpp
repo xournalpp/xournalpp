@@ -216,7 +216,7 @@ void ToolPageLayer::updateLayerData() {
 
     PageRef page = lc->getCurrentPage();
 
-    if (page.isValid()) {
+    if (page) {
         for (auto& kv: showLayerItems) {
             gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(kv.second), page->isLayerVisible(kv.first));
         }

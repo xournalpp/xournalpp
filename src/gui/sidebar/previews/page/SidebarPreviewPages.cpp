@@ -1,11 +1,12 @@
 #include "SidebarPreviewPages.h"
 
+#include <memory>
+
 #include "control/Control.h"
 #include "control/PdfCache.h"
 #include "gui/sidebar/previews/base/SidebarToolbar.h"
 #include "undo/CopyUndoAction.h"
 #include "undo/SwapUndoAction.h"
-#include "util/cpp14memory.h"
 
 #include "SidebarPreviewPageEntry.h"
 #include "i18n.h"
@@ -29,7 +30,7 @@ SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, Sideba
         // Unfortunately, we need a fairly complicated mechanism to keep track
         // of which action we want to execute.
         using Data = SidebarPreviewPages::ContextMenuData;
-        auto userdata = mem::make_unique<Data>(Data{this->toolbar, pair.second});
+        auto userdata = std::make_unique<Data>(Data{this->toolbar, pair.second});
 
         const auto callback =
                 G_CALLBACK(+[](GtkMenuItem* item, Data* data) { data->toolbar->runAction(data->actions); });
@@ -70,7 +71,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action) {
         case SIDEBAR_ACTION_MOVE_UP: {
             Document* doc = control->getDocument();
             PageRef swappedPage = control->getCurrentPage();
-            if (!swappedPage.isValid() || doc->getPageCount() <= 1) {
+            if (!swappedPage || doc->getPageCount() <= 1) {
                 return;
             }
 
@@ -84,7 +85,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action) {
             doc->unlock();
 
             UndoRedoHandler* undo = control->getUndoRedoHandler();
-            undo->addUndoAction(mem::make_unique<SwapUndoAction>(page - 1, true, swappedPage, otherPage));
+            undo->addUndoAction(std::make_unique<SwapUndoAction>(page - 1, true, swappedPage, otherPage));
 
             control->firePageDeleted(page);
             control->firePageInserted(page - 1);
@@ -96,7 +97,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action) {
         case SIDEBAR_ACTION_MOVE_DOWN: {
             Document* doc = control->getDocument();
             PageRef swappedPage = control->getCurrentPage();
-            if (!swappedPage.isValid() || doc->getPageCount() <= 1) {
+            if (!swappedPage || doc->getPageCount() <= 1) {
                 return;
             }
 
@@ -110,7 +111,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action) {
             doc->unlock();
 
             UndoRedoHandler* undo = control->getUndoRedoHandler();
-            undo->addUndoAction(mem::make_unique<SwapUndoAction>(page, false, swappedPage, otherPage));
+            undo->addUndoAction(std::make_unique<SwapUndoAction>(page, false, swappedPage, otherPage));
 
             control->firePageDeleted(page);
             control->firePageInserted(page + 1);
@@ -122,20 +123,19 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action) {
         case SIDEBAR_ACTION_COPY: {
             Document* doc = control->getDocument();
             PageRef currentPage = control->getCurrentPage();
-            if (!currentPage.isValid()) {
+            if (!currentPage) {
                 return;
             }
 
             doc->lock();
             size_t page = doc->indexOf(currentPage);
 
-            PageRef newPage = currentPage.clone();
+            auto newPage = PageRef(currentPage->clone());
             doc->insertPage(newPage, page + 1);
-
             doc->unlock();
 
             UndoRedoHandler* undo = control->getUndoRedoHandler();
-            undo->addUndoAction(mem::make_unique<CopyUndoAction>(newPage, page + 1));
+            undo->addUndoAction(std::make_unique<CopyUndoAction>(newPage, page + 1));
 
             control->firePageInserted(page + 1);
             control->firePageSelected(page + 1);

@@ -1,6 +1,7 @@
 #include "EditSelectionContents.h"
 
 #include <cmath>
+#include <memory>
 
 #include "control/Control.h"
 #include "gui/PageView.h"
@@ -22,7 +23,6 @@
 #include "undo/ScaleUndoAction.h"
 #include "undo/SizeUndoAction.h"
 #include "undo/UndoRedoHandler.h"
-#include "util/cpp14memory.h"
 #include "view/DocumentView.h"
 
 #include "Selection.h"
@@ -380,10 +380,10 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
     bool scale = (width != this->lastWidth || height != this->lastHeight);
 
     if (type == CURSOR_SELECTION_MOVE) {
-        undo->addUndoAction(mem::make_unique<MoveUndoAction>(this->sourceLayer, this->sourcePage, &this->selected, mx,
+        undo->addUndoAction(std::make_unique<MoveUndoAction>(this->sourceLayer, this->sourcePage, &this->selected, mx,
                                                              my, layer, targetPage));
     } else if (type == CURSOR_SELECTION_ROTATE) {
-        undo->addUndoAction(mem::make_unique<RotateUndoAction>(this->sourcePage, &this->selected, x, y, width / 2,
+        undo->addUndoAction(std::make_unique<RotateUndoAction>(this->sourcePage, &this->selected, x, y, width / 2,
                                                                height / 2, rotation - this->lastRotation));
         this->rotation = 0;             // reset rotation for next usage
         this->lastRotation = rotation;  // undo one rotation at a time.
@@ -417,7 +417,7 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
 
         // Todo: this needs to be aware of the rotation...  this should all be rewritten to scale and rotate from
         //       center... !!!!!!!!!
-        undo->addUndoAction(mem::make_unique<ScaleUndoAction>(this->sourcePage, &this->selected, px, py, fx, fy));
+        undo->addUndoAction(std::make_unique<ScaleUndoAction>(this->sourcePage, &this->selected, px, py, fx, fy));
     }
 
     this->lastX = x;

@@ -23,14 +23,13 @@ class ColorSelectImage;
 
 class ColorToolItem: public AbstractToolItem {
 public:
-    ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, int color,
+    ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, unsigned int color,
                   bool selektor = false);
     virtual ~ColorToolItem();
 
 public:
     virtual void actionSelected(ActionGroup group, ActionType action);
-    void enableColor(int color);
-    bool colorEqualsMoreOreLess(int color) const;
+    void enableColor(unsigned int color);
     virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
 
     virtual string getToolDisplayName();
@@ -38,7 +37,7 @@ public:
 
     virtual string getId();
 
-    int getColor() const;
+    unsigned int getColor() const;
 
     /**
      * Enable / Disable the tool item
@@ -64,7 +63,7 @@ private:
     /**
      * Color
      */
-    int color;
+    unsigned int color;
 
     /**
      * Name of the Color

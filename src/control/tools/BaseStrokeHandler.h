@@ -12,9 +12,11 @@
 #pragma once
 
 #include "model/Point.h"
+#include "model/Snapping.h"
 #include "view/DocumentView.h"
 
 #include "InputHandler.h"
+#include "SnapToGridInputHandler.h"
 
 enum DIRSET_MODIFIERS { NONE = 0, SET = 1, SHIFT = 1 << 1, CONTROL = 1 << 2 };
 
@@ -47,7 +49,6 @@ private:
     static guint32 lastStrokeTime;  // persist across strokes - allow us to not ignore persistent dotting.
 
 protected:
-    void snapToGrid(double& x, double& y);
     /**
      * modifyModifiersByDrawDir
      * @brief 	Toggle shift and control modifiers depending on initial drawing direction.
@@ -61,4 +62,5 @@ protected:
                             // derived classes such as CircleHandler.
     bool modShift = false;
     bool modControl = false;
+    SnapToGridInputHandler snappingHandler;
 };

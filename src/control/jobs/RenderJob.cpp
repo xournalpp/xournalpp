@@ -1,8 +1,6 @@
 #include "RenderJob.h"
 
-#include <list>
-
-#include <config-features.h>
+#include <cmath>
 
 #include "control/Control.h"
 #include "control/ToolHandler.h"
@@ -17,23 +15,20 @@
 
 RenderJob::RenderJob(XojPageView* view): view(view) {}
 
-RenderJob::~RenderJob() { this->view = nullptr; }
-
 auto RenderJob::getSource() -> void* { return this->view; }
 
-void RenderJob::rerenderRectangle(Rectangle* rect) {
+void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
     double zoom = view->xournal->getZoom();
     Document* doc = view->xournal->getDocument();
-
     doc->lock();
     double pageWidth = view->page->getWidth();
     double pageHeight = view->page->getHeight();
     doc->unlock();
 
-    int x = rect->x * zoom;
-    int y = rect->y * zoom;
-    int width = rect->width * zoom;
-    int height = rect->height * zoom;
+    auto x = int(std::lround(rect.x * zoom));
+    auto y = int(std::lround(rect.y * zoom));
+    auto width = int(std::lround(rect.width * zoom));
+    auto height = int(std::lround(rect.height * zoom));
 
     cairo_surface_t* rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
     cairo_t* crRect = cairo_create(rectBuffer);
@@ -43,7 +38,7 @@ void RenderJob::rerenderRectangle(Rectangle* rect) {
     DocumentView v;
     Control* control = view->getXournal()->getControl();
     v.setMarkAudioStroke(control->getToolHandler()->getToolType() == TOOL_PLAY_OBJECT);
-    v.limitArea(rect->x, rect->y, rect->width, rect->height);
+    v.limitArea(rect.x, rect.y, rect.width, rect.height);
 
     bool backgroundVisible = view->page->isLayerVisible(0);
     if (backgroundVisible && view->page->getBackgroundType().isPdfPage()) {
@@ -81,8 +76,7 @@ void RenderJob::run() {
     g_mutex_lock(&this->view->repaintRectMutex);
 
     bool rerenderComplete = this->view->rerenderComplete;
-    std::vector<Rectangle*> rerenderRects = this->view->rerenderRects;
-    this->view->rerenderRects.clear();
+    auto rerenderRects = std::move(this->view->rerenderRects);
 
     this->view->rerenderComplete = false;
 
@@ -114,8 +108,8 @@ void RenderJob::run() {
         }
 
         Control* control = view->getXournal()->getControl();
-        DocumentView view;
-        view.setMarkAudioStroke(control->getToolHandler()->getToolType() == TOOL_PLAY_OBJECT);
+        DocumentView localView;
+        localView.setMarkAudioStroke(control->getToolHandler()->getToolType() == TOOL_PLAY_OBJECT);
         int width = this->view->page->getWidth();
         int height = this->view->page->getHeight();
 
@@ -123,7 +117,7 @@ void RenderJob::run() {
         if (backgroundVisible) {
             PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom, width, height);
         }
-        view.drawPage(this->view->page, cr2, false);
+        localView.drawPage(this->view->page, cr2, false);
 
         cairo_destroy(cr2);
 
@@ -137,19 +131,13 @@ void RenderJob::run() {
         g_mutex_unlock(&this->view->drawingMutex);
         doc->unlock();
     } else {
-        for (Rectangle* rect: rerenderRects) {
+        for (Rectangle<double> const& rect: rerenderRects) {
             rerenderRectangle(rect);
         }
     }
 
     // Schedule a repaint of the widget
     repaintWidget(this->view->getXournal()->getWidget());
-
-    // delete all rectangles
-    for (Rectangle* rect: rerenderRects) {
-        delete rect;
-    }
-    rerenderRects.clear();
 }
 
 /**

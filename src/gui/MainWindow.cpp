@@ -80,7 +80,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
         XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
     }
 
-    file = string(g_get_home_dir()) + G_DIR_SEPARATOR_S + CONFIG_DIR + G_DIR_SEPARATOR_S + TOOLBAR_CONFIG;
+    file = Util::getConfigFile(TOOLBAR_CONFIG).str();
     if (g_file_test(file.c_str(), G_FILE_TEST_EXISTS)) {
         if (!tbModel->parse(file, false)) {
             string msg = FS(_F("Could not parse custom toolbar.ini file: {1}\n"

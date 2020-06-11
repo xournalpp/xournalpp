@@ -1,6 +1,7 @@
 #include "EraseHandler.h"
 
 #include <cmath>
+#include <memory>
 
 #include "control/ToolHandler.h"
 #include "control/jobs/RenderJob.h"
@@ -13,7 +14,6 @@
 #include "undo/DeleteUndoAction.h"
 #include "undo/EraseUndoAction.h"
 #include "undo/UndoRedoHandler.h"
-#include "util/cpp14memory.h"
 
 #include "Range.h"
 #include "Rectangle.h"
@@ -81,7 +81,7 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
         // removed the if statement - this prevents us from putting multiple elements into a
         // stroke erase operation, but it also prevents the crashing and layer issues!
         if (!this->eraseDeleteUndoAction) {
-            auto eraseDel = mem::make_unique<DeleteUndoAction>(this->page, true);
+            auto eraseDel = std::make_unique<DeleteUndoAction>(this->page, true);
             // Todo check dangerous: this->eraseDeleteUndoAction could be a dangling reference
             this->eraseDeleteUndoAction = eraseDel.get();
             this->undo->addUndoAction(std::move(eraseDel));
@@ -96,7 +96,7 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
         }
 
         if (this->eraseUndoAction == nullptr) {
-            auto eraseUndo = mem::make_unique<EraseUndoAction>(this->page);
+            auto eraseUndo = std::make_unique<EraseUndoAction>(this->page);
             // Todo check dangerous: this->eraseDeleteUndoAction could be a dangling reference
             this->eraseUndoAction = eraseUndo.get();
             this->undo->addUndoAction(std::move(eraseUndo));

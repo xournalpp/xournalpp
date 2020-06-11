@@ -9,7 +9,7 @@ stages:
   jobs:
   - job: 'Linux'
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-18.04'
     displayName: 'Update translation template'
     steps:
     - bash: |
@@ -34,7 +34,7 @@ stages:
       displayName: 'Get the deploy key'
     - bash: |
         if [[ $(git diff --word-diff=porcelain --no-color -U0 | wc -l) -gt 9 ]]; then
-          git commit -am "Update translation template [skip ci]"
+          git commit -am "[skip ci] Update translation template"
 
           mkdir ~/.ssh && mv $DOWNLOADSECUREFILE_SECUREFILEPATH ~/.ssh/id_rsa
           chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa

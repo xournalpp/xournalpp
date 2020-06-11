@@ -17,7 +17,7 @@ auto GroupUndoAction::getPages() -> vector<PageRef> {
 
     for (UndoAction* a: actions) {
         for (PageRef addPage: a->getPages()) {
-            if (!addPage.isValid()) {
+            if (!addPage) {
                 continue;
             }
 

@@ -13,7 +13,9 @@ assignees: ''
  - OS: [e.g. Linux (which distro), Mac, Windows]
  - (Linux only) Desktop environment: [e.g. Wayland, Gnome-Wayland, XWayland, X11]
  - Which version of libgtk do you use
+     - can be obtained by running `xournalpp --version` or in the **About** window
  - Version of Xournal++: [e.g. 1.0.16, specific commit, specific branch]
+     - can be obtained by running `xournalpp --version` or in the **About** window
  - Installation method: [e.g. PPA, Flatpak, official release, etc.]
 
 **Describe the bug**

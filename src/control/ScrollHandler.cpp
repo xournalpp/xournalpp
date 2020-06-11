@@ -38,7 +38,7 @@ void ScrollHandler::scrollToPage(const PageRef& page, double top) {
     Document* doc = this->control->getDocument();
 
     doc->lock();
-    int p = doc->indexOf(page);
+    auto p = doc->indexOf(page);
     doc->unlock();
 
     if (p != -1) {
@@ -49,7 +49,7 @@ void ScrollHandler::scrollToPage(const PageRef& page, double top) {
 void ScrollHandler::scrollToPage(size_t page, double top) {
     MainWindow* win = this->control->getWindow();
     if (win == nullptr) {
-        g_error("Windows is nullptr!");
+        g_error("Window is nullptr!");
         return;
     }
 

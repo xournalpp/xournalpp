@@ -27,11 +27,8 @@ pacman -S git
 ```bash
 pacman -S mingw-w64-x86_64-toolchain \
           mingw-w64-x86_64-cmake \
-          mingw-w64-x86_64-make \
           mingw-w64-x86_64-ninja \
           patch \
-          make \
-          tar \
           mingw-w64-x86_64-cppunit
 ```
 -> press enter multiple times / confirm all default values
@@ -42,7 +39,8 @@ pacman -S mingw-w64-x86_64-toolchain \
 pacman -S mingw-w64-x86_64-poppler \
           mingw-w64-x86_64-gtk3 \
           mingw-w64-x86_64-libsndfile \
-          mingw-w64-x86_64-libzip
+          mingw-w64-x86_64-libzip \
+          mingw-w64-x86_64-lua
 ```
 -> press enter multiple times / confirm all default values
 
@@ -58,13 +56,6 @@ cd xournalpp/
 Build/Install portaudio with
 ```bash
 windows-setup/build-portaudio.sh
-```
-
-### Install Lua
-
-Build/Install lua with
-```bash
-windows-setup/build-lua.sh
 ```
 
 ## Build Xournal++

@@ -63,7 +63,7 @@ auto FontUndoAction::undo(Control* control) -> bool {
         y2 = std::max(y2, e->e->getY() + e->e->getElementHeight());
     }
 
-    Rectangle rect(x1, y1, x2 - x1, y2 - y1);
+    Rectangle<double> rect(x1, y1, x2 - x1, y2 - y1);
     this->page->fireRectChanged(rect);
 
     return true;
@@ -96,7 +96,7 @@ auto FontUndoAction::redo(Control* control) -> bool {
         y2 = std::max(y2, e->e->getY() + e->e->getElementHeight());
     }
 
-    Rectangle rect(x1, y1, x2 - x1, y2 - y1);
+    Rectangle<double> rect(x1, y1, x2 - x1, y2 - y1);
     this->page->fireRectChanged(rect);
 
     return true;

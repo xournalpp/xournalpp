@@ -38,6 +38,7 @@ nbproject/
 
 # Visual Studio Code
 .vscode/
+*/.vscode/
 
 # CLion
 .idea

@@ -3,17 +3,6 @@
 [![Build Status](https://dev.azure.com/xournalpp/xournalpp/_apis/build/status/CI?branchName=master)](https://dev.azure.com/xournalpp/xournalpp/_build/latest?definitionId=1&branchName=master)
 [![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Please help us with an important decision
-We would like to have your feedback concerning the new rendering system. One of the big changes will be that it will support infinity pages. Of course we will still provide support for showing the old multi-page documents. Therefore we would like to know how you want to have these rendered in the future. For this reason we have a small poll we kindly ask you to fill out:
-
-Thanks to everybody that did take part in the poll. The results were quite clear.
-
-We will provide two modes to import multiple page documents:
-- Multiple page documents are imported on the limited size pages and the view will show them like Xournal++ currently does. Note that in this mode infinity pages are technically not possible, you will be able to resize pages though
-- All pages will be imported onto one single infinity page. You can layout the pages at import into a multi-column/row grid if wanted. For printing we will integrate a feature that shows you the page borders so you end up with prints that make sense.
-
-We might add the mode to import each page onto its own infinity page later on.
-
 <table border="0px" ><tr><td width = 600px>
 
 <img src="readme/main.png" width=550px% title="Xournal++ Screenshot on Linux"/>
@@ -111,7 +100,7 @@ Multiple page background, easy selectable on the toolbar
 For general usage, consult the [User
 Manual](https://github.com/xournalpp/xournalpp/wiki/User-Manual). Answers to
 some common questions can be found in the
-[FAQ](https://github.com/xournalpp/xournalpp/wiki/Frequently-Asked-Questions).
+[FAQ](https://github.com/xournalpp/xournalpp/wiki/Frequently-Asked-Questions-&-Problem-Solving).
 
 ## Experimental Features:
 Sometimes a feature is added that might not be rock solid, or the developers aren't sure it is useful. 
@@ -141,7 +130,20 @@ Here are a few under development that you can play with now.
 
 The official releases of Xournal++ can be found on the
 [Releases](https://github.com/xournalpp/xournalpp/releases) page. We provide
-binaries for Debian, Ubuntu, MacOS, and Windows.
+binaries for Debian (Buster), Ubuntu (16.04), MacOS (10.13 and newer), and
+Windows. For other Linux distributions (or older/newer ones), we also provide an
+AppImage that is binary compatible with any distribution released around or
+after Ubuntu 16.04.
+
+On Linux, Xournal++ can also be installed via [snapcraft](https://snapcraft.io/xournalpp).
+
+**A note for Ubuntu/Debian users**: The official binaries that we provide are
+only compatible with the _specific version of Debian or Ubuntu_ indicated by the
+file name. For example, if you are on Ubuntu 20.04, the binary whose name
+contains `Ubuntu-xenial` is _only_ compatible with Ubuntu 18.04. If your system
+is not one of the specific Debian or Ubuntu versions that are supported by the
+official binaries, we recommend you use either the PPA, the Flatpak, or the
+AppImage.
 
 There is also an _unstable_, [automated nightly
 release](https://github.com/xournalpp/xournalpp/releases/tag/nightly) that
@@ -160,7 +162,12 @@ sudo apt update
 sudo apt install xournalpp
 ```
 
-This PPA is provided by the Xournal++ team.
+This PPA is provided by the Xournal++ team. While it has the latest features and
+bug fixes, it has also not been tested thoroughly and may break periodically (we
+try our best not to break things, though).
+
+We eventually also planning on setting up a PPA for stable releases
+([#1013](https://github.com/xournalpp/xournalpp/issues/1013)).
 
 ### Fedora
 
@@ -204,7 +211,7 @@ repository](https://www.archlinux.org/packages/?q=xournalpp).
 To build the latest state of the master branch yourself, use [this AUR
 package](https://aur.archlinux.org/packages/xournalpp-git/).
 
-### Solus Linux
+### Solus
 
 The latest stable release is available in the main repository:
 
@@ -223,7 +230,12 @@ flatpak install flathub com.github.xournalpp.xournalpp
 ```
 
 Note that for Xournal++ to work properly, you must have at least one GTK theme
-and one icon theme installed on Flatpak.
+and one icon theme installed on Flatpak. To enable LaTeX support, you will also
+need to install the TeX Live extension:
+
+```bash
+flatpak install flathub org.freedesktop.Sdk.Extension.texlive
+```
 
 The Flatpak manifest can be found at the [Xournal++ Flatpak packaging
 repository](https://github.com/flathub/com.github.xournalpp.xournalpp), and all
@@ -231,19 +243,34 @@ Flatpak-related packaging issues should be reported there.
 
 ### Windows
 
-**The windows Version has a Bug:**
-Please start Xournal++, touch with the Pen, Quit Xournal++ and start again.
-Then Pen input will be working, until you restart Windows. [#659](https://github.com/xournalpp/xournalpp/issues/659)
+Official Windows releases are provided on the [Releases
+page](https://github.com/xournalpp/xournalpp/releases).
 
-https://github.com/xournalpp/xournalpp/releases
+**Notes:**
+
+* Currently, only WinTab drivers are supported. This is due to a limitation with
+  the underlying library that we use, GTK.
+* There is a GTK that prevents stylus input from working correctly. Please start
+  Xournal++, touch with the stylus, quit Xournal++ and start again. Then stylus
+  input will be working, until you restart Windows. See
+  [#659](https://github.com/xournalpp/xournalpp/issues/659).
 
 ### Mac OS X
 
-Xournal++ will be deliverd with a patched GTK. Else pressure sensitivity is not
-working on Mac [#569](https://github.com/xournalpp/xournalpp/issues/569).
-(GTK-Issue)
+Mac OS X releases are provided on the [Releases
+page](https://github.com/xournalpp/xournalpp/releases).
 
-https://github.com/xournalpp/xournalpp/releases
+**Notes:**
+
+* There have been compatibility problems with Mac OS X Catalina regarding both
+  file permissions and stylus support
+  ([#1772](https://github.com/xournalpp/xournalpp/issues/1772) and
+  [#1757](https://github.com/xournalpp/xournalpp/issues/1757)). Unfortunately,
+  we don't have the resources to adequately support Catalina at this time. Help
+  would be appreciated!
+* Xournal++ will be delivered with a patched GTK. Else pressure sensitivity may
+  not will not work on Mac
+  [#569](https://github.com/xournalpp/xournalpp/issues/569).
 
 ## Building
 

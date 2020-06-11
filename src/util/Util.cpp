@@ -1,6 +1,7 @@
 #include "Util.h"
 
 #include <array>
+#include <cstdlib>
 #include <utility>
 
 #include <unistd.h>
@@ -37,11 +38,14 @@ void Util::execInUiThread(std::function<void()>&& callback) {
                          new CallbackUiData(std::move(callback)));
 }
 
-auto Util::rgb_to_GdkRGBA(const uint32_t color) -> GdkRGBA {  // clang-format off
-	return {((color >> 16U) & 0xFFU) / 255.0,
-	        ((color >> 8U) & 0xFFU) / 255.0,
-	        (color & 0xFFU) / 255.0,
-	        1.0};
+auto Util::rgb_to_GdkRGBA(const uint32_t color) -> GdkRGBA { return Util::argb_to_GdkRGBA(0xFF000000U | color); }
+
+auto Util::argb_to_GdkRGBA(const uint32_t color) -> GdkRGBA {
+    // clang-format off
+    return {((color >> 16U) & 0xFFU) / 255.0,
+            ((color >> 8U) & 0xFFU) / 255.0,
+            (color & 0xFFU) / 255.0,
+            ((color >> 24U) & 0xFFU) / 255.0};
     // clang-format on
 }
 
@@ -76,9 +80,30 @@ auto Util::getAutosaveFilename() -> Path {
     return p;
 }
 
+auto Util::getConfigFolder() -> Path {
+    Path p(g_get_user_config_dir());
+    p /= g_get_prgname();
+    return p;
+}
+
 auto Util::getConfigSubfolder(const Path& subfolder) -> Path {
-    Path p(g_get_home_dir());
-    p /= CONFIG_DIR;
+    Path p = getConfigFolder();
+    p /= subfolder;
+
+    return Util::ensureFolderExists(p);
+}
+
+auto Util::getCacheSubfolder(const Path& subfolder) -> Path {
+    Path p(g_get_user_cache_dir());
+    p /= g_get_prgname();
+    p /= subfolder;
+
+    return Util::ensureFolderExists(p);
+}
+
+auto Util::getDataSubfolder(const Path& subfolder) -> Path {
+    Path p(g_get_user_data_dir());
+    p /= g_get_prgname();
     p /= subfolder;
 
     return Util::ensureFolderExists(p);
@@ -86,6 +111,12 @@ auto Util::getConfigSubfolder(const Path& subfolder) -> Path {
 
 auto Util::getConfigFile(const Path& relativeFileName) -> Path {
     Path p = getConfigSubfolder(relativeFileName.getParentPath());
+    p /= relativeFileName.getFilename();
+    return p;
+}
+
+auto Util::getCacheFile(const Path& relativeFileName) -> Path {
+    Path p = getCacheSubfolder(relativeFileName.getParentPath());
     p /= relativeFileName.getFilename();
     return p;
 }
@@ -159,4 +190,11 @@ void Util::writeCoordinateString(OutputStream* out, double xVal, double yVal) {
     out->write(" ");
     g_ascii_formatd(coordString.data(), G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, yVal);
     out->write(coordString.data());
+}
+
+void Util::systemWithMessage(const char* command) {
+    if (auto errc = std::system(command); errc != 0) {
+        string msg = FS(_F("Error {1} executing system command: {2}") % errc % command);
+        XojMsgBox::showErrorToUser(nullptr, msg);
+    }
 }
