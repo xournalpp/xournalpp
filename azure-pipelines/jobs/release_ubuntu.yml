@@ -1,0 +1,37 @@
+# Template for running Ubuntu release jobs
+parameters:
+  - name: ubuntu_version
+    type: string
+  - name: job_name
+    type: string
+  - name: build_appimage
+    type: boolean
+    default: false
+
+jobs:
+  - job: '${{ parameters.job_name }}'
+    pool:
+      vmImage: 'ubuntu-${{ parameters.ubuntu_version }}'
+    displayName: 'Build for Ubuntu ${{ parameters.ubuntu_version }}'
+    steps:
+      - template: ../steps/install_deps_ubuntu.yml
+      - template: ../steps/build_linux.yml
+        parameters:
+          build_type: 'RelWithDebInfo'
+          cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=$PWD/staging -DCPACK_GENERATOR="TGZ;DEB"'
+          cmake_commands: '--target package'
+      - bash: |
+          # Build AppImage
+          export VERSION=$(cat VERSION | sed '1q;d')
+          export ARCH=$(cat VERSION | sed '4q;d')
+          ../azure-pipelines/util/build_appimage.sh
+          # Move and rename the generated AppImage file
+          find . -name '*.AppImage' -not -name 'linuxdeploy.AppImage' -exec mv {} packages/xournalpp-$VERSION-$ARCH.AppImage \;
+        workingDirectory: ./build
+        displayName: 'Create AppImage'
+        condition: eq('${{ parameters.build_appimage }}', true)
+      - task: PublishPipelineArtifact@1
+        inputs:
+          artifactName: 'linux-ubuntu-${{ parameters.ubuntu_version }}-packages'
+          targetPath: '$(System.DefaultWorkingDirectory)/build/packages'
+        displayName: 'Publish packages'
