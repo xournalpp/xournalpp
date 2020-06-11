@@ -8,7 +8,9 @@ LineBackgroundPainter::~LineBackgroundPainter() = default;
 
 void LineBackgroundPainter::resetConfig() {
     this->foregroundColor1 = 0x40A0FF;
+    this->alternativeForegroundColor1 = 0x434343;
     this->foregroundColor2 = 0xFF0080;
+    this->alternativeForegroundColor2 = 0x220080;
     this->lineWidth = 0.5;
 }
 
@@ -28,7 +30,7 @@ const double footerSize = 20;
 const double roulingSize = 24;
 
 void LineBackgroundPainter::paintBackgroundRuled() {
-    Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
+    Util::cairo_set_source_rgbi(cr, this->alternativeColor(this->foregroundColor1, this->alternativeForegroundColor1));
     cairo_set_line_width(cr, lineWidth * lineWidthFactor);
 
     int numLines = static_cast<int>((height - headerSize - footerSize) / (roulingSize + lineWidth * lineWidthFactor));
@@ -45,7 +47,7 @@ void LineBackgroundPainter::paintBackgroundRuled() {
 }
 
 void LineBackgroundPainter::paintBackgroundVerticalLine() {
-    Util::cairo_set_source_rgbi(cr, this->foregroundColor2);
+    Util::cairo_set_source_rgbi(cr, this->alternativeColor(this->foregroundColor2, this->alternativeForegroundColor2));
     cairo_set_line_width(cr, lineWidth * lineWidthFactor);
 
     cairo_move_to(cr, 72, 0);

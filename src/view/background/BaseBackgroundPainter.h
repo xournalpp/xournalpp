@@ -60,12 +60,14 @@ protected:
      * e.g. FF0000 for Red
      */
     int foregroundColor1 = 0;
+    int alternativeForegroundColor1 = 0;
 
     /**
      * c2=XXXXXX
      * e.g. FF0000 for Red
      */
     int foregroundColor2 = 0;
+    int alternativeForegroundColor2 = 0;
 
     /**
      * lw=1.23
@@ -93,4 +95,5 @@ protected:
      * Line width factor, to use to draw Previews
      */
     double lineWidthFactor = 1;
+    int alternativeColor(int color1, int color2);
 };

@@ -6,6 +6,16 @@ BaseBackgroundPainter::BaseBackgroundPainter() { resetConfig(); }
 
 BaseBackgroundPainter::~BaseBackgroundPainter() = default;
 
+int BaseBackgroundPainter::alternativeColor(int color1, int color2) {
+    auto backgroundColor = this->page->getBackgroundColor();
+
+    auto greyscale = [](uint32_t color) {
+      return ((0xff & color) + (0xff & (color >> 8)) + (0xff & (color >> 16))) / 3;
+    };
+
+    return greyscale(backgroundColor) < 0x80 ? color2 : color1;
+}
+
 /**
  * Set a factor to draw the lines bolder, for previews
  */
@@ -25,6 +35,9 @@ void BaseBackgroundPainter::paint(cairo_t* cr, PageRef page, BackgroundConfig* c
 
     this->config->loadValueHex("f1", this->foregroundColor1);
     this->config->loadValueHex("f2", this->foregroundColor2);
+
+    this->config->loadValueHex("af1", this->alternativeForegroundColor1);
+    this->config->loadValueHex("af2", this->alternativeForegroundColor2);
 
     this->config->loadValue("lw", this->lineWidth);
     this->config->loadValue("r1", this->drawRaster1);

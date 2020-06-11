@@ -8,7 +8,9 @@ StavesBackgroundPainter::~StavesBackgroundPainter() = default;
 
 void StavesBackgroundPainter::resetConfig() {
     this->foregroundColor1 = 0x000000;
+    this->alternativeForegroundColor1 = 0xFFFFFF;
     this->foregroundColor2 = 0xFF0080;
+    this->alternativeForegroundColor2 = 0x220080;
     this->lineWidth = 0.5;
 }
 
@@ -28,7 +30,7 @@ void StavesBackgroundPainter::paint() {
 
 
 void StavesBackgroundPainter::paintBackgroundStaves(double offset) {
-    Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
+    Util::cairo_set_source_rgbi(cr, this->alternativeColor(this->foregroundColor1, this->alternativeForegroundColor1));
     cairo_set_line_width(cr, lineWidth * lineWidthFactor);
 
     double staveOffset = offset;

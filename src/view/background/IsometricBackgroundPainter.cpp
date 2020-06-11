@@ -10,6 +10,7 @@ IsometricBackgroundPainter::~IsometricBackgroundPainter() = default;
 
 void IsometricBackgroundPainter::resetConfig() {
     this->foregroundColor1 = 0xBDBDBD;
+    this->alternativeForegroundColor1 = 0x434343;
     this->lineWidth = drawLines ? 1.0 : 1.5;
     this->drawRaster1 = 14.17;
 }
@@ -105,7 +106,7 @@ void paintBackgroundGraph(int cols, int rows, double xstep, double ystep, DrawFu
 void IsometricBackgroundPainter::paint() {
     paintBackgroundColor();
 
-    Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
+    Util::cairo_set_source_rgbi(cr, this->alternativeColor(this->foregroundColor1, this->alternativeForegroundColor1));
 
     cairo_set_line_width(cr, lineWidth * lineWidthFactor);
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
