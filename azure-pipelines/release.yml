@@ -46,39 +46,21 @@ stages:
             condition: or(eq(variables['Build.Reason'], 'IndividualCI'), ne(variables['runForRelease'], 'False')) # Run for non-scheduled (release)
   - stage: Release
     jobs:
-      - job: 'Ubuntu'
-        pool:
-          vmImage: 'ubuntu-18.04'
-        displayName: 'Build for Ubuntu'
-        condition: always()
-        steps:
-          - template: steps/install_deps_ubuntu.yml
-          - template: steps/build_linux.yml
-            parameters:
-              build_type: 'RelWithDebInfo'
-              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=$PWD/staging -DCPACK_GENERATOR="TGZ;DEB"'
-              cmake_commands: '--target package'
-          - bash: |
-              # Build AppImage
-              export VERSION=$(cat VERSION | sed '1q;d')
-              export ARCH=$(cat VERSION | sed '4q;d')
-              ../azure-pipelines/util/build_appimage.sh
-              # Move and rename the generated AppImage file
-              find . -name '*.AppImage' -not -name 'linuxdeploy.AppImage' -exec mv {} packages/xournalpp-$VERSION-$ARCH.AppImage \;
-            workingDirectory: ./build
-            displayName: 'Create AppImage'
-          - task: PublishPipelineArtifact@1
-            inputs:
-              artifactName: 'linux-ubuntu-packages'
-              targetPath: '$(System.DefaultWorkingDirectory)/build/packages'
-            displayName: 'Publish packages'
+      - template: jobs/release_ubuntu.yml
+        parameters:
+          ubuntu_version: 18.04
+          job_name: 'Ubuntu18_04'
+          build_appimage: true
+      - template: jobs/release_ubuntu.yml
+        parameters:
+          ubuntu_version: 20.04
+          job_name: 'Ubuntu20_04'
       - job: 'Debian'
         pool:
           vmImage: 'ubuntu-18.04'
         container:
           image: xournalpp/debian-latest-sudo:latest
         displayName: 'Build for Debian'
-        condition: always()
         steps:
           - bash: |
               sudo apt-get update
@@ -100,7 +82,6 @@ stages:
         pool:
           vmImage: 'vs2017-win2016'
         displayName: 'Build for Windows'
-        condition: always()
         steps:
           - template: steps/build_windows.yml
             parameters:
@@ -125,7 +106,6 @@ stages:
         pool:
           vmImage: 'macOS-10.15'
         displayName: 'Build for macOS'
-        condition: always()
         steps:
           - template: steps/build_mac.yml
             parameters:
