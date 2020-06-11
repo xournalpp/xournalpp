@@ -309,7 +309,7 @@ void XournalppCursor::updateCursor() {
 auto XournalppCursor::getEraserCursor() -> GdkCursor* {
 
     // Eraser's size follow a quadratic increment, so the cursor will do the same
-    double cursorSize = control->getToolHandler()->getThickness() * 2 * control->getZoomControl()->getZoom();
+    double cursorSize = control->getToolHandler()->getThickness() * 2.0 * control->getZoomControl()->getZoom();
     gulong flavour = static_cast<gulong>(64 * cursorSize);
 
     if (CRSR_ERASER == this->currentCursor && flavour == this->currentCursorFlavour) {
