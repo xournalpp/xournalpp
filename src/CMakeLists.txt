@@ -84,7 +84,8 @@ unset (xournalpp_SOURCES_RECURSE)
 add_library (xournalpp-core OBJECT ${xournalpp_SOURCES})
 add_dependencies (xournalpp-core util)
 target_compile_features (xournalpp-core PUBLIC ${PROJECT_CXX_FEATURES})
-target_link_libraries(xournalpp-core util)
+# Can't use target_link_directories since we require CMake >= 3.10
+target_include_directories (xournalpp-core PRIVATE $<TARGET_PROPERTY:util,INTERFACE_INCLUDE_DIRECTORIES>)
 
 ## xournalpp main program ##
 add_executable (xournalpp
