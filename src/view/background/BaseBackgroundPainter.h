@@ -56,30 +56,40 @@ protected:
     // ParserKey=Value
 protected:
     /**
-     * c1=XXXXXX
+     * Primary foreground color:
+     * f1=XXXXXX
+     * Primary foreground color used with dark backgrounds:
+     * af1=XXXXXX
      * e.g. FF0000 for Red
      */
     int foregroundColor1 = 0;
     int alternativeForegroundColor1 = 0;
 
     /**
-     * c2=XXXXXX
+     * Secondary foreground color:
+     * f2=XXXXXX
+     * Secondary foreground color used with dark backgrounds:
+     * af2=XXXXXX
      * e.g. FF0000 for Red
      */
     int foregroundColor2 = 0;
     int alternativeForegroundColor2 = 0;
 
     /**
+     * Line width:
      * lw=1.23
+     * Eg: With of lines used in graph view
      */
     double lineWidth = 0;
 
     /**
+     *  With of the boxes the gaph view
      * r1=1.23
      */
     double drawRaster1 = 1;
 
     /**
+     * Margin size used in various views:
      * m1=40
      */
     double margin1 = 0;
