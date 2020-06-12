@@ -307,10 +307,17 @@ void XournalppCursor::updateCursor() {
 
 
 auto XournalppCursor::getEraserCursor() -> GdkCursor* {
-    this->currentCursor = CRSR_ERASER;
 
     // Eraser's size follow a quadratic increment, so the cursor will do the same
-    double cursorSize = control->getToolHandler()->getThickness() * 2 * control->getZoomControl()->getZoom();
+    double cursorSize = control->getToolHandler()->getThickness() * 2.0 * control->getZoomControl()->getZoom();
+    gulong flavour = static_cast<gulong>(64 * cursorSize);
+
+    if (CRSR_ERASER == this->currentCursor && flavour == this->currentCursorFlavour) {
+        return nullptr;  // cursor already set
+    }
+    this->currentCursor = CRSR_ERASER;
+    this->currentCursorFlavour = flavour;
+
     cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, cursorSize, cursorSize);
     cairo_t* cr = cairo_create(surface);
     cairo_rectangle(cr, 0, 0, cursorSize, cursorSize);
@@ -341,7 +348,6 @@ auto XournalppCursor::getPenCursor() -> GdkCursor* {
         return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
     }
 
-
     return createHighlighterOrPenCursor(3, 1.0);
 }
 
@@ -360,6 +366,9 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     gulong flavour = (big ? 1 : 0) | (bright ? 2 : 0) | static_cast<gulong>(64 * alpha) << 2 |
                      static_cast<gulong>(size) << 9 | static_cast<gulong>(rgb) << 14;
 
+    if (CRSR_PENORHIGHLIGHTER == this->currentCursor && flavour == this->currentCursorFlavour) {
+        return nullptr;
+    }
     this->currentCursor = CRSR_PENORHIGHLIGHTER;
     this->currentCursorFlavour = flavour;
 
