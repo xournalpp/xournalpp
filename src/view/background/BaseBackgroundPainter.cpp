@@ -10,7 +10,7 @@ int BaseBackgroundPainter::alternativeColor(int color1, int color2) {
     auto backgroundColor = this->page->getBackgroundColor();
 
     auto greyscale = [](uint32_t color) {
-      return ((0xff & color) + (0xff & (color >> 8)) + (0xff & (color >> 16))) / 3;
+        return ((0xff & color) + (0xff & (color >> 8)) + (0xff & (color >> 16))) / 3;
     };
 
     return greyscale(backgroundColor) < 0x80 ? color2 : color1;
