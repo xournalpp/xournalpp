@@ -1,5 +1,43 @@
 # Changelog
 
+## 1.0.19
+
+More bugfixes and improvements due to help from the various community
+contributors!
+
+* Changed select object algorithm to be more intuitive
+* Added ability for taps with Select Rectangle and Select Region to act like
+  Select Object (#1980)
+* Improved document loading speed (#2002)
+* Added a `--version` command to print the Xournal++ version
+* Added a `libgtk` version display to the About dialog
+* Added a 16kHz sample rate to audio settings and fixed the 91kHz sample rate
+  (#2092)
+* Added file version check for future compatibility (#1991)
+* Changed wording of new page template dialog to be less confusing (#1524)
+* Fixed behavior of "Attach file to the journal" option when choosing "Annotate
+  PDF" (#1725, #2106). This now allows the background PDF and the annotation files to
+  be renamed and moved as long as they 1) share the same file prefix; and 2)
+  share the same relative path.
+* Fixed an issue where clicking the X on the replace file dialog would overwrite
+  the file (#1983)
+* (libcairo >= 1.16 only): Fixed PDF export crashing when the table of contents
+  is empty (#2236).
+* Fixed a bug where the PDF background would not update when loading a new
+  document (#1964)
+* Fixed plugin window causing a crash on Ubuntu 16.04
+* Fixed a bug where the icon would not appear correctly on some desktop
+  environments (#1892)
+* Fixed inconsistent ordering of button keybindings (#1961)
+* Fixed the Enter key not confirming PDF export settings (#1977)
+* Fixed exported PDF title (#2039)
+* Fixed a bug where different page backgrounds can cause PDFs to be exported
+  with the wrong backgrounds (#2119)
+* Fixed a bug where the page number count would not be updated after deleting a
+  page (#2134)
+* Fixed selection object tool not working correctly (#2081) / crashing (#2133)
+  when there are multiple layers
+
 ## 1.0.18
 
 * Fixed a crash occurring when recent file entries are invalid (#1730, thanks to
