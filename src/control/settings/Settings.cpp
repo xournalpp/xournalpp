@@ -139,7 +139,7 @@ void Settings::loadDefault() {
 	this->pageTemplate = "xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
     // clang-format on
 
-    this->audioSampleRate = 44100.0;
+    this->audioSampleRate = 16000.0;
     this->audioInputDevice = -1;
     this->audioOutputDevice = -1;
     this->audioGain = 1.0;
