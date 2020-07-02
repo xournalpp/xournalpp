@@ -38,10 +38,6 @@ void ButtonConfig::acceptActions(ToolHandler* toolHandler) {
         }
     }
 
-    if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_TEXT) {
-        toolHandler->setColor(this->color, false);
-    }
-
     if (this->action == TOOL_ERASER && this->eraserMode != ERASER_TYPE_NONE) {
         toolHandler->setEraserType(this->eraserMode);
     }

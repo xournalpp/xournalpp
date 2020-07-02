@@ -251,6 +251,9 @@ void ToolHandler::setLineStyle(const LineStyle& style) {
 /**
  * Select the color for the tool
  *
+ * If the buttonSelectedTool is the Eraser changing the color has no effect on the Eraser.
+ * In this case the toolbarSelectedTool's color will be changed instead.
+ *
  * @param color Color
  * @param userSelection
  * 			true if the user selected the color
@@ -258,8 +261,10 @@ void ToolHandler::setLineStyle(const LineStyle& style) {
  * 			and therefore should not be applied to a selection
  */
 void ToolHandler::setColor(Color color, bool userSelection) {
-    this->toolbarSelectedTool->setColor(color);
-    this->buttonSelectedTool->setColor(color);
+    if (this->buttonSelectedTool->type == TOOL_ERASER) {
+        this->toolbarSelectedTool->setColor(color);
+    }
+    this->currentTool->setColor(color);
     this->listener->toolColorChanged(userSelection);
     this->listener->setCustomColorSelected();
 }
@@ -419,9 +424,9 @@ void ToolHandler::loadSettings() {
     }
 }
 
-void ToolHandler::setToolbarSelectedTool() { this->currentTool = this->buttonSelectedTool; }
+void ToolHandler::pointCurrentToolToButtonTool() { this->currentTool = this->buttonSelectedTool; }
 
-void ToolHandler::restoreFromToolbarSelectedTool() {
+void ToolHandler::pointCurrentToolToToolbarTool() {
     this->currentTool = this->toolbarSelectedTool;
 
     this->listener->toolColorChanged(false);

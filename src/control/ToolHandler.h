@@ -103,8 +103,8 @@ public:
     void saveSettings();
     void loadSettings();
 
-    void setToolbarSelectedTool();
-    void restoreFromToolbarSelectedTool();
+    void pointCurrentToolToButtonTool();
+    void pointCurrentToolToToolbarTool();
 
     std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& getTools() const;
 
