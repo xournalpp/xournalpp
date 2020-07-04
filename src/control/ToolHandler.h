@@ -98,7 +98,7 @@ public:
     EraserType getEraserType();
     void eraserTypeChanged();
 
-    bool hasCapability(ToolCapabilities cap);
+    bool hasCapability(ToolCapabilities cap, bool mainTool = false);
 
     void saveSettings();
     void loadSettings();
