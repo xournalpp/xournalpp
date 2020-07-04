@@ -161,7 +161,13 @@ auto ToolHandler::getTool(ToolType type) -> Tool& { return *(this->tools[type - 
 
 auto ToolHandler::getToolType() -> ToolType { return this->currentTool->type; }
 
-auto ToolHandler::hasCapability(ToolCapabilities cap) -> bool { return (currentTool->capabilities & cap) != 0; }
+auto ToolHandler::hasCapability(ToolCapabilities cap, bool mainTool) -> bool {
+    if (mainTool == false) {
+        return (currentTool->capabilities & cap) != 0;
+    } else {
+        return (toolbarSelectedTool->capabilities & cap) != 0;
+    }
+}
 
 auto ToolHandler::getSize() -> ToolSize { return this->currentTool->getSize(); }
 
@@ -261,7 +267,7 @@ void ToolHandler::setLineStyle(const LineStyle& style) {
  * 			and therefore should not be applied to a selection
  */
 void ToolHandler::setColor(Color color, bool userSelection) {
-    if (this->buttonSelectedTool->type == TOOL_ERASER) {
+    if ((this->buttonSelectedTool->capabilities & TOOL_CAP_COLOR) == 0) {
         this->toolbarSelectedTool->setColor(color);
     }
     this->currentTool->setColor(color);
