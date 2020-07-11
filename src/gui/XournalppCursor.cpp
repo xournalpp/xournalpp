@@ -344,6 +344,10 @@ auto XournalppCursor::getHighlighterCursor() -> GdkCursor* {
 
 
 auto XournalppCursor::getPenCursor() -> GdkCursor* {
+    if (control->getSettings()->getStylusCursorType() == STYLUS_CURSOR_NONE) {
+        setCursor(CRSR_BLANK_CURSOR);
+        return nullptr;
+    }
     if (this->drawDirActive) {
         return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
     }
@@ -357,7 +361,7 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     double r = ((rgb >> 16) & 0xff) / 255.0;
     double g = ((rgb >> 8) & 0xff) / 255.0;
     double b = (rgb & 0xff) / 255.0;
-    bool big = control->getSettings()->isShowBigCursor();
+    bool big = control->getSettings()->getStylusCursorType() == STYLUS_CURSOR_BIG;
     bool bright = control->getSettings()->isHighlightPosition();
     int height = size;
     int width = size;
@@ -484,7 +488,7 @@ void XournalppCursor::setCursor(int cursorID) {
 
 
 auto XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl) -> GdkCursor* {
-    bool big = control->getSettings()->isShowBigCursor();
+    bool big = control->getSettings()->getStylusCursorType() == STYLUS_CURSOR_BIG;
     bool bright = control->getSettings()->isHighlightPosition();
 
     int newCursorID = CRSR_DRAWDIRNONE + (shift ? 1 : 0) + (ctrl ? 2 : 0);

@@ -1859,7 +1859,7 @@ void Control::showSettings() {
     int verticalSpaceAmount = settings->getAddVerticalSpaceAmount();
     bool horizontalSpace = settings->getAddHorizontalSpace();
     int horizontalSpaceAmount = settings->getAddHorizontalSpaceAmount();
-    bool bigCursor = settings->isShowBigCursor();
+    StylusCursorType stylusCursorType = settings->getStylusCursorType();
     bool highlightPosition = settings->isHighlightPosition();
 
     auto* dlg = new SettingsDialog(this->gladeSearchPath, settings, this);
@@ -1878,7 +1878,7 @@ void Control::showSettings() {
         scrollHandler->scrollToPage(currentPage);
     }
 
-    if (bigCursor != settings->isShowBigCursor() || highlightPosition != settings->isHighlightPosition()) {
+    if (stylusCursorType != settings->getStylusCursorType() || highlightPosition != settings->isHighlightPosition()) {
         getCursor()->updateCursor();
     }
 

@@ -69,7 +69,7 @@ void Settings::loadDefault() {
     this->menubarVisible = true;
 
     this->autoloadPdfXoj = true;
-    this->showBigCursor = false;
+    this->stylusCursorType = STYLUS_CURSOR_DOT;
     this->highlightPosition = false;
     this->cursorHighlightColor = 0x80FFFF00;  // Yellow with 50% opacity
     this->cursorHighlightRadius = 30.0;
@@ -341,8 +341,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->presentationMode = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autoloadPdfXoj")) == 0) {
         this->autoloadPdfXoj = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showBigCursor")) == 0) {
-        this->showBigCursor = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stylusCursorType")) == 0) {
+        this->stylusCursorType = stylusCursorTypeFromString(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("highlightPosition")) == 0) {
         this->highlightPosition = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightColor")) == 0) {
@@ -739,7 +739,9 @@ void Settings::save() {
     WRITE_STRING_PROP(presentationHideElements);
     WRITE_COMMENT("Which gui elements are hidden if you are in Presentation mode, separated by a colon (,)");
 
-    WRITE_BOOL_PROP(showBigCursor);
+    xmlNode = saveProperty("stylusCursorType", stylusCursorTypeToString(this->stylusCursorType), root);
+    WRITE_COMMENT("The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\"");
+
     WRITE_BOOL_PROP(highlightPosition);
     WRITE_UINT_PROP(cursorHighlightColor);
     WRITE_UINT_PROP(cursorHighlightBorderColor);
@@ -1018,15 +1020,15 @@ void Settings::setDrawDirModsRadius(int pixels) {
     save();
 }
 
+auto Settings::getStylusCursorType() const -> StylusCursorType { return this->stylusCursorType; }
 
-auto Settings::isShowBigCursor() const -> bool { return this->showBigCursor; }
-
-void Settings::setShowBigCursor(bool b) {
-    if (this->showBigCursor == b) {
+void Settings::setStylusCursorType(StylusCursorType type) {
+    if (this->stylusCursorType == type) {
         return;
     }
 
-    this->showBigCursor = b;
+    this->stylusCursorType = type;
+
     save();
 }
 
