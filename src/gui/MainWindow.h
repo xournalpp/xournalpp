@@ -69,6 +69,7 @@ public:
     XournalView* getXournal();
 
     void setSidebarVisible(bool visible);
+    void setToolbarVisible(bool visible);
 
     Control* getControl();
 
@@ -121,6 +122,11 @@ private:
      * Sidebar show / hidden
      */
     static void viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* win);
+
+    /**
+     * Toolbar show / hidden
+     */
+    static void viewShowToolbar(GtkCheckMenuItem* checkmenuitem, MainWindow* win);
 
     /**
      * Window close Button is pressed

@@ -179,6 +179,9 @@ public:
     bool isSidebarVisible() const;
     void setSidebarVisible(bool visible);
 
+    bool isToolbarVisible() const;
+    void setToolbarVisible(bool visible);
+
     int getSidebarWidth() const;
     void setSidebarWidth(int width);
 
@@ -473,6 +476,11 @@ private:
      *  If the sidebar is visible
      */
     bool showSidebar{};
+
+    /**
+     *  If the sidebar is visible
+     */
+    bool showToolbar{};
 
     /**
      *  The Width of the Sidebar

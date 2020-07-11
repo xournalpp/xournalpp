@@ -92,8 +92,13 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
 
     createToolbarAndMenu();
 
+    setToolbarVisible(control->getSettings()->isToolbarVisible());
+
     GtkWidget* menuViewSidebarVisible = get("menuViewSidebarVisible");
     g_signal_connect(menuViewSidebarVisible, "toggled", G_CALLBACK(viewShowSidebar), this);
+
+    GtkWidget* menuViewToolbarsVisible = get("menuViewToolbarsVisible");
+    g_signal_connect(menuViewToolbarsVisible, "toggled", G_CALLBACK(viewShowToolbar), this);
 
     updateScrollbarSidebarPosition();
 
@@ -376,6 +381,14 @@ void MainWindow::viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* wi
     win->setSidebarVisible(a);
 }
 
+void MainWindow::viewShowToolbar(GtkCheckMenuItem* checkmenuitem, MainWindow* win) {
+    bool showToolbar = gtk_check_menu_item_get_active(checkmenuitem);
+    if (win->control->getSettings()->isToolbarVisible() == showToolbar) {
+        return;
+    }
+    win->setToolbarVisible(showToolbar);
+}
+
 auto MainWindow::getControl() -> Control* { return control; }
 
 void MainWindow::updateScrollbarSidebarPosition() {
@@ -479,6 +492,18 @@ void MainWindow::setSidebarVisible(bool visible) {
     }
 
     GtkWidget* w = get("menuViewSidebarVisible");
+    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(w), visible);
+}
+
+void MainWindow::setToolbarVisible(bool visible) {
+    Settings* settings = control->getSettings();
+
+    settings->setToolbarVisible(visible);
+    for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+        gtk_widget_set_visible(this->toolbarWidgets[i], visible);
+    }
+
+    GtkWidget* w = get("menuViewToolbarsVisible");
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(w), visible);
 }
 

@@ -62,6 +62,8 @@ void Settings::loadDefault() {
     this->showSidebar = true;
     this->sidebarWidth = 150;
 
+    this->showToolbar = true;
+
     this->sidebarOnRight = false;
 
     this->scrollbarOnLeft = false;
@@ -311,6 +313,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->mainWndHeight = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("maximized")) == 0) {
         this->maximized = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showToolbar")) == 0) {
+        this->showToolbar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showSidebar")) == 0) {
         this->showSidebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarWidth")) == 0) {
@@ -716,6 +720,8 @@ void Settings::save() {
     WRITE_INT_PROP(mainWndWidth);
     WRITE_INT_PROP(mainWndHeight);
     WRITE_BOOL_PROP(maximized);
+
+    WRITE_BOOL_PROP(showToolbar);
 
     WRITE_BOOL_PROP(showSidebar);
     WRITE_INT_PROP(sidebarWidth);
@@ -1410,6 +1416,16 @@ void Settings::setSidebarVisible(bool visible) {
         return;
     }
     this->showSidebar = visible;
+    save();
+}
+
+auto Settings::isToolbarVisible() const -> bool { return this->showToolbar; }
+
+void Settings::setToolbarVisible(bool visible) {
+    if (this->showToolbar == visible) {
+        return;
+    }
+    this->showToolbar = visible;
     save();
 }
 
