@@ -4,6 +4,9 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 
+% for storing in memory verbatim content to be reused later
+\usepackage{scontents}
+
 % Blank formula checking
 \usepackage{ifthen}
 \newlength{\pheight}
@@ -13,17 +16,18 @@
 \definecolor{xpp_font_color}{HTML}{%%XPP_TEXT_COLOR%%}
 
 % User input
-\def\preview{\(
-  \displaystyle
-  %%XPP_TOOL_INPUT%%
-  \)
-}
+\begin{scontents}[store-env=preview]
+	\( 
+	\displaystyle
+    %%XPP_TOOL_INPUT%%
+	\)
+\end{scontents}
 
 \begin{document}
   % Check if the formula is empty
-  \settoheight{\pheight}{\preview}
+  \settoheight{\pheight}{\getstored[1]{preview}}
   \ifthenelse{\pheight=0}{\GenericError{}{xournalpp:blankformula}{}{}}
 
   % Render the user input
-  \textcolor{xpp_font_color}{\preview}
+  \textcolor{xpp_font_color}{\getstored[1]{preview}}
 \end{document}
