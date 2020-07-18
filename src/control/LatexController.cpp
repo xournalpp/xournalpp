@@ -36,19 +36,25 @@ LatexController::~LatexController() { this->control = nullptr; }
  * Find the tex executable, return false if not found
  */
 auto LatexController::findTexDependencies() -> LatexController::FindDependencyStatus {
-    std::ifstream is(this->settings.globalTemplatePath.string(), std::ios_base::binary);
-    if (!is.is_open()) {
-        g_message("%s", this->settings.globalTemplatePath.string().c_str());
-        string msg = _("Global template file does not exist. Please check your settings.");
-        return LatexController::FindDependencyStatus(false, msg);
-    }
-    this->latexTemplate = std::string(std::istreambuf_iterator<char>(is), {});
-    if (!is.good()) {
-        string msg = _("Failed to read global template file. Please check your settings.");
-        return LatexController::FindDependencyStatus(false, msg);
-    }
+    std::string templatePathName = this->settings.globalTemplatePath.string();
+    if (fs::is_regular_file(fs::status(templatePathName))) {
+        std::ifstream is(templatePathName, std::ios_base::binary);
+        if (!is.is_open()) {
+            g_message("%s", templatePathName.c_str());
+            string msg = _("Global template file does not exist. Please check your settings.");
+            return LatexController::FindDependencyStatus(false, msg);
+        }
+        this->latexTemplate = std::string(std::istreambuf_iterator<char>(is), {});
+        if (!is.good()) {
+            string msg = _("Failed to read global template file. Please check your settings.");
+            return LatexController::FindDependencyStatus(false, msg);
+        }
 
-    return LatexController::FindDependencyStatus(true, "");
+        return LatexController::FindDependencyStatus(true, "");
+    } else {
+        string msg = _("Global template file is not a regular file. Please check your settings. ");
+        return LatexController::FindDependencyStatus(false, msg);
+    }
 }
 
 /**
