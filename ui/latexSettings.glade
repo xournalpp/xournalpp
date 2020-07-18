@@ -139,7 +139,7 @@
                             <property name="top_attach">2</property>
                           </packing>
                         </child>
-                        <child>
+                        <!-- <child>
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
@@ -162,7 +162,7 @@
                             <property name="left_attach">1</property>
                             <property name="top_attach">3</property>
                           </packing>
-                        </child>
+                        </child> -->
                         <child>
                           <object class="GtkFileChooserButton" id="latexSettingsTemplateFile">
                             <property name="visible">True</property>

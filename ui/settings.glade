@@ -4413,7 +4413,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
               <object class="GtkLabel" id="latexTabLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Latex</property>
+                <property name="label" translatable="yes">LaTeX</property>
               </object>
               <packing>
                 <property name="position">10</property>
