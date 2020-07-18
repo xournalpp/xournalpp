@@ -73,8 +73,10 @@ auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
         if (!pdf || poppler_document_get_n_pages(this->pdf) < 1) {
             return false;
         }
-        PopplerPage* page = poppler_document_get_page(this->pdf, 0);
-        poppler_page_get_size(page, &this->width, &this->height);
+        if (!this->width && !this->height) {
+            PopplerPage* page = poppler_document_get_page(this->pdf, 0);
+            poppler_page_get_size(page, &this->width, &this->height);
+        }
     } else if (type == "PNG") {
         this->image = cairo_image_surface_create_from_png_stream(
                 reinterpret_cast<cairo_read_func_t>(&cairoReadFunction), this);
