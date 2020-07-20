@@ -68,6 +68,11 @@ auto StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
     }
 
     if (Point::NO_PRESSURE != pos.pressure && stroke->getToolType() == STROKE_TOOL_PEN) {
+        const double LOWER_LIMIT = 0.2;
+        double pressure = pos.pressure;
+        if(pressure < LOWER_LIMIT) {
+            pressure = LOWER_LIMIT;
+        }
         stroke->setLastPressure(pos.pressure * stroke->getWidth());
     }
 
