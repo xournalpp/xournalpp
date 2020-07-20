@@ -73,7 +73,7 @@ auto StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         if(pressure < LOWER_LIMIT) {
             pressure = LOWER_LIMIT;
         }
-        stroke->setLastPressure(pos.pressure * stroke->getWidth());
+        stroke->setLastPressure(pressure * stroke->getWidth());
     }
 
     stroke->addPoint(currentPoint);
