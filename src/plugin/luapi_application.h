@@ -9,6 +9,7 @@
  * @license GNU GPLv2 or later
  */
 
+#include <cstring>
 #include <map>
 
 #include "control/Control.h"
@@ -18,6 +19,43 @@
 #include "StringUtils.h"
 #include "XojMsgBox.h"
 using std::map;
+
+/**
+ * Create a 'Save As' native dialog and return as a string
+ * the filepath of the location the user chose to save.
+ */
+static int applib_saveAs(lua_State* L) {
+    GtkFileChooserNative* native;
+    gint res;
+    int args_returned = 0;  // change to 1 if user chooses file
+
+    // Create a 'Save As' native dialog
+    native = gtk_file_chooser_native_new(_("Save file"), nullptr, GTK_FILE_CHOOSER_ACTION_SAVE, nullptr, nullptr);
+
+    // If user tries to overwrite a file, ask if it's OK
+    gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(native), TRUE);
+    // Offer a suggestion for the filename
+    gchar* default_filename = g_strconcat(_("Untitled"), ".png", nullptr);
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(native), default_filename);
+
+    // Wait until user responds to dialog
+    res = gtk_native_dialog_run(GTK_NATIVE_DIALOG(native));
+
+    // Return the filename chosen to lua
+    if (res == GTK_RESPONSE_ACCEPT) {
+        char* filename = static_cast<char*>(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native)));
+
+        lua_pushlstring(L, filename, strlen(filename));
+        g_free(static_cast<gchar*>(filename));
+        args_returned = 1;
+    }
+
+    // Destroy the dialog and free memory
+    g_object_unref(native);
+    g_free(default_filename);
+
+    return args_returned;
+}
 
 /**
  * Example:
@@ -201,6 +239,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"uiAction", applib_uiAction},
                                   {"uiActionSelected", applib_uiActionSelected},
                                   {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
+                                  {"saveAs", applib_saveAs},
 
                                   // Placeholder
                                   //	{"MSG_BT_OK", nullptr},
