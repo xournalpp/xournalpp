@@ -4245,7 +4245,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                             <items>
                                               <item id="16000">16000 Hz</item>
                                               <item id="44100">44100 Hz</item>
-                                              <item id="96100">96100 Hz</item>
+                                              <item id="96100">96000 Hz</item>
                                               <item id="192000">192000 Hz</item>
                                             </items>
                                           </object>

@@ -391,18 +391,18 @@ void SettingsDialog::load() {
     }
 
     switch (static_cast<int>(settings->getAudioSampleRate())) {
-        case 44100:
-            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 1);
+        case 16000:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 0);
             break;
-        case 96100:
+        case 96000:
             gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 2);
             break;
         case 192000:
             gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 3);
             break;
-        case 16000:
+        case 44100:
         default:
-            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 0);
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 1);
             break;
     }
 
@@ -618,18 +618,18 @@ void SettingsDialog::save() {
     }
 
     switch (gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioSampleRate")))) {
-        case 1:
-            settings->setAudioSampleRate(44100.0);
+        case 0:
+            settings->setAudioSampleRate(16000.0);
             break;
         case 2:
-            settings->setAudioSampleRate(96100.0);
+            settings->setAudioSampleRate(96000.0);
             break;
         case 3:
             settings->setAudioSampleRate(192000.0);
             break;
-        case 0:
+        case 1:
         default:
-            settings->setAudioSampleRate(16000.0);
+            settings->setAudioSampleRate(44100.0);
             break;
     }
 
