@@ -1231,6 +1231,7 @@ void Control::deletePage() {
     }
 
     scrollHandler->scrollToPage(pNr, 0);
+    this->win->getXournal()->forceUpdatePagenumbers();
 }
 
 void Control::insertNewPage(size_t position) { pageBackgroundChangeController->insertNewPage(position); }
