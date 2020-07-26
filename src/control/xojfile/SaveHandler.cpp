@@ -218,8 +218,10 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
 
             if (doc->isAttachPdf()) {
                 background->setAttrib("domain", "attach");
-                Path filename = Path(doc->getFilename().str() + ".bg.pdf");
-                background->setAttrib("filename", filename.str());
+                Path filename = doc->getFilename();
+                filename.clearExtensions();
+                filename += ".xopp.bg.pdf";
+                background->setAttrib("filename", "bg.pdf");
 
                 GError* error = nullptr;
                 doc->getPdfDocument().save(filename, &error);
