@@ -99,6 +99,7 @@ void XojCairoPdfExport::exportPage(size_t page) {
 
     DocumentView view;
 
+    cairo_save(this->cr);
     if (p->getBackgroundType().isPdfPage() && !noBackgroundExport) {
         int pgNo = p->getPdfPageNr();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
@@ -110,6 +111,7 @@ void XojCairoPdfExport::exportPage(size_t page) {
 
     // next page
     cairo_show_page(this->cr);
+    cairo_restore(this->cr);
 }
 
 auto XojCairoPdfExport::createPdf(Path file, PageRangeVector& range) -> bool {
