@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-26 17:35+0000\n"
+"POT-Creation-Date: 2020-07-26 17:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -304,11 +304,11 @@ msgid ""
 "Something went wrong… Please write a bug report…"
 msgstr ""
 
-#: ../src/control/xojfile/SaveHandler.cpp:232
+#: ../src/control/xojfile/SaveHandler.cpp:234
 msgid "Could not write background \"{1}\", {2}"
 msgstr ""
 
-#: ../src/control/xojfile/SaveHandler.cpp:328
+#: ../src/control/xojfile/SaveHandler.cpp:330
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr ""
 
@@ -388,7 +388,7 @@ msgstr ""
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr ""
 
-#: ../src/model/Document.cpp:284 ../src/model/Document.cpp:292
+#: ../src/model/Document.cpp:285 ../src/model/Document.cpp:293
 msgid "Document not loaded! ({1}), {2}"
 msgstr ""
 
