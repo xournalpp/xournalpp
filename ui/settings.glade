@@ -3879,8 +3879,9 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                             <property name="can_focus">False</property>
                                             <property name="active">0</property>
                                             <items>
+                                              <item id="16000">16000 Hz</item>
                                               <item id="44100">44100 Hz</item>
-                                              <item id="91000">91000 Hz</item>
+                                              <item id="96000">96000 Hz</item>
                                               <item id="192000">192000 Hz</item>
                                             </items>
                                           </object>
