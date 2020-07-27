@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-26 17:39+0000\n"
+"POT-Creation-Date: 2020-07-27 07:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1608,7 +1608,7 @@ msgstr ""
 msgid "1"
 msgstr ""
 
-#: ../ui/settings.glade:4325
+#: ../ui/settings.glade:4326
 msgid "1,00"
 msgstr ""
 
@@ -1683,7 +1683,7 @@ msgid ""
 "from the journal.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4359
+#: ../ui/settings.glade:4360
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr ""
 
@@ -1841,7 +1841,7 @@ msgstr ""
 msgid "Audio Devices"
 msgstr ""
 
-#: ../ui/settings.glade:4392
+#: ../ui/settings.glade:4393
 msgid "Audio Recording"
 msgstr ""
 
@@ -1959,7 +1959,7 @@ msgstr ""
 msgid "Default Save Name"
 msgstr ""
 
-#: ../ui/settings.glade:4312
+#: ../ui/settings.glade:4313
 msgid "Default Seek Time (in seconds)"
 msgstr ""
 
@@ -2397,7 +2397,7 @@ msgstr ""
 msgid "Pen _Options"
 msgstr ""
 
-#: ../ui/settings.glade:4345
+#: ../ui/settings.glade:4346
 msgid "Playback Settings"
 msgstr ""
 
@@ -2445,7 +2445,7 @@ msgstr ""
 msgid "Record / Stop"
 msgstr ""
 
-#: ../ui/settings.glade:4280
+#: ../ui/settings.glade:4281
 msgid "Recording Quality"
 msgstr ""
 
