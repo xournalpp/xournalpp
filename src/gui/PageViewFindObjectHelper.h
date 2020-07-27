@@ -35,12 +35,8 @@ public:
         view->xournal->getControl()->clearSelection();
         matchRect = {gint(x - 10), gint(y - 10), 20, 20};
 
-        for (Layer* l: *view->page->getLayers()) {
-            if (view->page->isLayerVisible(l)) {
-                return checkLayer(l);
-            }
-        }
-        return false;
+        Layer* layer = this->view->getPage()->getSelectedLayer();
+        return checkLayer(layer);
     }
 
 protected:
