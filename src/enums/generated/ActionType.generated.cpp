@@ -137,6 +137,11 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_NEW_PAGE_AT_END;
     }
 
+
+    if (value == "ACTION_APPEND_NEW_PDF_PAGES") {
+        return ACTION_APPEND_NEW_PDF_PAGES;
+    }
+
     if (value == "ACTION_CONFIGURE_PAGE_TEMPLATE") {
         return ACTION_CONFIGURE_PAGE_TEMPLATE;
     }
@@ -709,6 +714,11 @@ auto ActionType_toString(ActionType value) -> string {
 
     if (value == ACTION_NEW_PAGE_AT_END) {
         return "ACTION_NEW_PAGE_AT_END";
+    }
+
+
+    if (value == ACTION_APPEND_NEW_PDF_PAGES) {
+        return "ACTION_APPEND_NEW_PDF_PAGES";
     }
 
     if (value == ACTION_CONFIGURE_PAGE_TEMPLATE) {
