@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.2 -->
+<!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.18"/>
   <object class="GtkAdjustment" id="adjustmentAudioGain">
@@ -2273,7 +2273,50 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkGrid">
+                                          <object class="GtkBox">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="spacing">5</property>
+                                            <child>
+                                              <object class="GtkLabel">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="label" translatable="yes">Cursor icon for pen</property>
+                                                <property name="xalign">0</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkComboBoxText" id="cbStylusCursorType">
+                                                <property name="name">cbStylusCursorType</property>
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="active">0</property>
+                                                <items>
+                                                  <item id="none" translatable="yes" context="stylus cursor uses no icon">No icon</item>
+                                                  <item id="dot" translatable="yes" context="stylus cursor uses a small dot">Small dot icon</item>
+                                                  <item id="big" translatable="yes" context="stylus cursor uses a big pen icon">Big pen icon</item>
+                                                </items>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkGrid" id="highlightCursorGrid">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="column_homogeneous">True</property>
@@ -2478,21 +2521,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             <child>
                                               <placeholder/>
                                             </child>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">0</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkCheckButton" id="cbBigCursor">
-                                            <property name="label" translatable="yes">Big cursor for pen</property>
-                                            <property name="name">cbBigCursor</property>
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="receives_default">False</property>
-                                            <property name="draw_indicator">True</property>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
@@ -3489,7 +3517,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             <property name="adjustment">adjustmentSnapGridSize</property>
                                             <property name="climb_rate">0.01</property>
                                             <property name="digits">2</property>
-                                            <property name="value">1.00</property>
+                                            <property name="value">1</property>
                                           </object>
                                           <packing>
                                             <property name="left_attach">1</property>

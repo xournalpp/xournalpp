@@ -22,73 +22,12 @@
 #include "model/Font.h"
 
 #include "Path.h"
+#include "SettingsEnums.h"
 
 constexpr auto DEFAULT_GRID_SIZE = 14.17;
 
-enum Buttons {
-    BUTTON_ERASER,
-    BUTTON_MIDDLE,
-    BUTTON_RIGHT,
-    BUTTON_TOUCH,
-    BUTTON_DEFAULT,
-    BUTTON_STYLUS,
-    BUTTON_STYLUS2,
-    BUTTON_COUNT
-};
-
-constexpr auto buttonToString(Buttons button) -> const char* {
-    switch (button) {
-        case BUTTON_ERASER:
-            return "eraser";
-        case BUTTON_MIDDLE:
-            return "middle";
-        case BUTTON_RIGHT:
-            return "right";
-        case BUTTON_TOUCH:
-            return "touch";
-        case BUTTON_DEFAULT:
-            return "default";
-        case BUTTON_STYLUS:
-            return "stylus";
-        case BUTTON_STYLUS2:
-            return "stylus2";
-        default:
-            return "unknown";
-    }
-}
-
-enum AttributeType {
-    ATTRIBUTE_TYPE_NONE,
-    ATTRIBUTE_TYPE_STRING,
-    ATTRIBUTE_TYPE_INT,
-    ATTRIBUTE_TYPE_DOUBLE,
-    ATTRIBUTE_TYPE_INT_HEX,
-    ATTRIBUTE_TYPE_BOOLEAN,
-};
-
-// use this as a bit flag
-enum ScrollbarHideType {
-    SCROLLBAR_HIDE_NONE = 0,
-    SCROLLBAR_HIDE_HORIZONTAL = 1 << 1,
-    SCROLLBAR_HIDE_VERTICAL = 1 << 2,
-    SCROLLBAR_HIDE_BOTH = SCROLLBAR_HIDE_HORIZONTAL | SCROLLBAR_HIDE_VERTICAL
-};
-
-/**
- * The user-selectable device types
- */
-enum class InputDeviceTypeOption {
-    Disabled = 0,
-    Mouse = 1,
-    Pen = 2,
-    Eraser = 3,
-    Touchscreen = 4,
-    MouseKeyboardCombo = 5,
-};
-
 class ButtonConfig;
 class InputDevice;
-
 
 class SAttribute {
 public:
@@ -318,8 +257,8 @@ public:
     double getSnapGridSize() const;
     void setSnapGridSize(double gridSize);
 
-    bool isShowBigCursor() const;
-    void setShowBigCursor(bool b);
+    StylusCursorType getStylusCursorType() const;
+    void setStylusCursorType(StylusCursorType stylusCursorType);
 
     bool isHighlightPosition() const;
     void setHighlightPosition(bool highlight);
@@ -546,9 +485,9 @@ private:
     bool sidebarOnRight{};
 
     /**
-     *  Show a better visible cursor for pen
+     *  Type of cursor icon to use with a stylus
      */
-    bool showBigCursor{};
+    StylusCursorType stylusCursorType;
 
     /**
      * Show a colored circle around the cursor

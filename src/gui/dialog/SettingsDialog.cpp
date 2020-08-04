@@ -90,6 +90,11 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
             G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) { self->customHandRecognitionToggled(); }),
             this);
 
+    g_signal_connect(get("cbStylusCursorType"), "changed", G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
+                         self->customStylusIconTypeChanged();
+                     }),
+                     this);
+
     gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
     gtk_widget_show(callib);
 
@@ -188,6 +193,13 @@ void SettingsDialog::customHandRecognitionToggled() {
     gtk_widget_set_sensitive(get("boxCustomTouchDisableSettings"), touchMethod == 2);
 }
 
+void SettingsDialog::customStylusIconTypeChanged() {
+    GtkWidget* cbStylusCursorType = get("cbStylusCursorType");
+    int stylusCursorType = gtk_combo_box_get_active(GTK_COMBO_BOX(cbStylusCursorType));
+    bool showCursorHighlightOptions = stylusCursorType != STYLUS_CURSOR_NONE;
+    gtk_widget_set_sensitive(get("highlightCursorGrid"), showCursorHighlightOptions);
+}
+
 void SettingsDialog::load() {
     loadCheckbox("cbSettingPresureSensitivity", settings->isPressureSensitivity());
     loadCheckbox("cbEnableZoomGestures", settings->isZoomGesturesEnabled());
@@ -201,7 +213,6 @@ void SettingsDialog::load() {
     loadCheckbox("cbStrokeFilterEnabled", settings->getStrokeFilterEnabled());
     loadCheckbox("cbDoActionOnStrokeFiltered", settings->getDoActionOnStrokeFiltered());
     loadCheckbox("cbTrySelectOnStrokeFiltered", settings->getTrySelectOnStrokeFiltered());
-    loadCheckbox("cbBigCursor", settings->isShowBigCursor());
     loadCheckbox("cbDarkTheme", settings->isDarkTheme());
     loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
     loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
@@ -292,6 +303,19 @@ void SettingsDialog::load() {
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("cursorHighlightBorderWidth")),
                               settings->getCursorHighlightBorderWidth());
 
+    switch (settings->getStylusCursorType()) {
+        case STYLUS_CURSOR_NONE:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbStylusCursorType")), 0);
+            break;
+        case STYLUS_CURSOR_BIG:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbStylusCursorType")), 2);
+            break;
+        case STYLUS_CURSOR_DOT:
+        default:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbStylusCursorType")), 1);
+            break;
+    }
+
     bool hideFullscreenMenubar = false;
     bool hideFullscreenSidebar = false;
     bool hidePresentationMenubar = false;
@@ -334,6 +358,7 @@ void SettingsDialog::load() {
     enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
     enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
     customHandRecognitionToggled();
+    customStylusIconTypeChanged();
 
 
     SElement& touch = settings->getCustomElement("touch");
@@ -466,7 +491,6 @@ void SettingsDialog::save() {
     settings->setStrokeFilterEnabled(getCheckbox("cbStrokeFilterEnabled"));
     settings->setDoActionOnStrokeFiltered(getCheckbox("cbDoActionOnStrokeFiltered"));
     settings->setTrySelectOnStrokeFiltered(getCheckbox("cbTrySelectOnStrokeFiltered"));
-    settings->setShowBigCursor(getCheckbox("cbBigCursor"));
     settings->setDarkTheme(getCheckbox("cbDarkTheme"));
     settings->setTouchWorkaround(getCheckbox("cbTouchWorkaround"));
     settings->setExperimentalInputSystemEnabled(getCheckbox("cbNewInputSystem"));
@@ -505,6 +529,18 @@ void SettingsDialog::save() {
     GtkWidget* spCursorHighlightBorderWidth = get("cursorHighlightBorderWidth");
     settings->setCursorHighlightBorderWidth(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spCursorHighlightBorderWidth)));
 
+    switch (gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbStylusCursorType")))) {
+        case 0:
+            settings->setStylusCursorType(STYLUS_CURSOR_NONE);
+            break;
+        case 2:
+            settings->setStylusCursorType(STYLUS_CURSOR_BIG);
+            break;
+        case 1:
+        default:
+            settings->setStylusCursorType(STYLUS_CURSOR_DOT);
+            break;
+    }
 
     bool hideFullscreenMenubar = getCheckbox("cbHideFullscreenMenubar");
     bool hideFullscreenSidebar = getCheckbox("cbHideFullscreenSidebar");

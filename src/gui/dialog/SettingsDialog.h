@@ -37,6 +37,7 @@ public:
      */
     void enableWithCheckbox(const string& checkbox, const string& widget);
     void customHandRecognitionToggled();
+    void customStylusIconTypeChanged();
 
 private:
     void load();
