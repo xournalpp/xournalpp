@@ -505,6 +505,22 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkCheckMenuItem" id="menuViewToolbarsVisible">
+                            <property name="name">menuViewToolbarsVisible</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Show toolbars</property>
+                            <property name="use_underline">True</property>
+                            <accelerator key="F9" signal="activate"/>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkSeparatorMenuItem" id="menuViewToolbarsVisibleSeparator">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkMenuItem" id="menuitemLayout">
                             <property name="name">menuitemLayout</property>
                             <property name="visible">True</property>
