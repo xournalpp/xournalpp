@@ -1,0 +1,28 @@
+Xournal++ is a hand note taking software written in C++ with the target of 
+flexibility, functionality and speed. Stroke recognizer and other parts are 
+based on Xournal Code, which you can find at sourceforge. 
+It supports Linux (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows 10. 
+Supports pen input from devices such as Wacom Tablets.
+
+Xournal++ features:
+
+ - Support for Pen preassure, e.g. Wacom Tablet
+ - Support for annotating PDFs
+ - Fill shape functionality
+ - PDF Export (with and without paper style)
+ - PNG Export (with and without transparent background)
+ - Allows maping different tools/colors etc. to stylus/mouse buttons
+ - Sidebar with Page Previews with page sorting, PDF Bookmarks and Layers
+ - Enhanced support for image insertion
+ - Eraser with multiple configurations
+ - LaTeX support (requires a working LaTeX install)
+ - Bug reporting, autosave, and auto backup tools
+ - Customizeable toolbar, with multiple configurations
+ - Page Template definitions
+ - Shape drawing (line, arrow, circle, rect)
+ - Shape resizing and rotation
+ - Rotation snapping every 45 degrees
+ - Rect snapping to grid
+ - Audio recording and playback alongside with handwritten notes
+ - Multi Language Support, English, German, Italian ...
+ - Plugins using LUA Scripting
