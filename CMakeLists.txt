@@ -386,6 +386,16 @@ if (${PACKAGE_ARCH} STREQUAL "x86_64")
 	set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
 endif()
 
+if(CPACK_GENERATOR STREQUAL "DEB")
+	message("Preparing documentation for DEB package")
+	add_custom_target(package_docummentation ALL)
+
+	#Compress changelog and save it as share/doc/xournalpp/changelog.Debian.gz
+	add_custom_command(TARGET package_docummentation PRE_BUILD
+	COMMAND gzip -c -9 -n "${PROJECT_SOURCE_DIR}/debian/changelog" > "changelog.Debian.gz" VERBATIM)
+	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/changelog.Debian.gz" DESTINATION "share/doc/xournalpp/")
+endif()
+
 if (NOT DEFINED CPACK_GENERATOR)
 	set(CPACK_GENERATOR "TGZ")
 endif ()
