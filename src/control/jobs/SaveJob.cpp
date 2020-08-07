@@ -6,6 +6,7 @@
 #include "control/xojfile/SaveHandler.h"
 #include "view/DocumentView.h"
 
+#include "PathUtil.h"
 #include "XojMsgBox.h"
 #include "i18n.h"
 
@@ -86,16 +87,16 @@ auto SaveJob::save() -> bool {
 
     doc->lock();
     h.prepareSave(doc);
-    Path filename = doc->getFilename();
-    filename.clearExtensions();
-    filename += ".xopp";
+    fs::path file = doc->getFilepath();
+    Util::clearExtensions(file);
+    file += ".xopp";
     doc->unlock();
 
     if (doc->shouldCreateBackupOnSave()) {
-        Path backup = filename;
+        fs::path backup = file;
         backup += "~";
 
-        if (!PathUtil::copy(doc->getFilename(), backup)) {
+        if (!fs::copy_file(doc->getFilepath(), backup)) {
             g_warning(_("Could not create backup! (The file was created from an older Xournal version)"));
         }
 
@@ -104,8 +105,8 @@ auto SaveJob::save() -> bool {
 
     doc->lock();
 
-    h.saveTo(filename, this->control);
-    doc->setFilename(filename);
+    h.saveTo(file, this->control);
+    doc->setFilepath(file);
     doc->unlock();
 
     if (!h.getErrorMessage().empty()) {

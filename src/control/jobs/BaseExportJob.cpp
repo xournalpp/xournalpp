@@ -26,9 +26,14 @@ void BaseExportJob::addFileFilterToDialog(const string& name, const string& patt
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 }
 
-auto BaseExportJob::checkOverwriteBackgroundPDF(Path& filename) -> bool {
+auto BaseExportJob::checkOverwriteBackgroundPDF(fs::path const& file) const -> bool {
+    auto backgroundPDF = control->getDocument()->getPdfFilepath();
+    // If there is no background, we can return
+    if (!fs::exists(backgroundPDF)) {
+        return true;
+    }
     // If the new file name (with the selected extension) is the previously selected pdf, warn the user
-    if (StringUtils::iequals(filename.str(), control->getDocument()->getPdfFilename().str())) {
+    if (fs::equivalent(file, backgroundPDF)) {
         string msg = _("Do not overwrite the background PDF! This will cause errors!");
         XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
         return false;
@@ -48,12 +53,12 @@ auto BaseExportJob::showFilechooser() -> bool {
     Settings* settings = control->getSettings();
     Document* doc = control->getDocument();
     doc->lock();
-    Path folder = doc->createSaveFolder(settings->getLastSavePath());
-    Path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName());
+    fs::path folder = doc->createSaveFolder(settings->getLastSavePath());
+    fs::path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName());
     doc->unlock();
 
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), folder.c_str());
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), name.c_str());
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), folder.u8string().c_str());
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), name.u8string().c_str());
 
     gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
 
@@ -64,17 +69,17 @@ auto BaseExportJob::showFilechooser() -> bool {
         }
 
         string uri(gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog)));
-        this->filename = Path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
-        this->filename.clearExtensions();
-        Path currentFolder = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog));
+        this->filepath = fs::u8path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+        Util::clearExtensions(this->filepath);
+        fs::path currentFolder = fs::u8path(gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog)));
 
         // Since we add the extension after the OK button, we have to check manually on existing files
-        if (isUriValid(uri) && control->checkExistingFile(currentFolder, filename)) {
+        if (isUriValid(uri) && control->askToReplace(currentFolder / filepath)) {
             break;
         }
     }
 
-    settings->setLastSavePath(this->filename.getParentPath());
+    settings->setLastSavePath(this->filepath.parent_path());
 
     gtk_widget_destroy(dialog);
 

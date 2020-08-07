@@ -2,9 +2,11 @@
 
 #include <memory>
 
+#include "PathUtil.h"
 #include "PopplerGlibPage.h"
 #include "PopplerGlibPageBookmarkIterator.h"
 #include "Util.h"
+#include "filesystem.h"
 
 
 PopplerGlibDocument::PopplerGlibDocument() = default;
@@ -37,21 +39,21 @@ auto PopplerGlibDocument::equals(XojPdfDocumentInterface* doc) -> bool {
     return document == (dynamic_cast<PopplerGlibDocument*>(doc))->document;
 }
 
-auto PopplerGlibDocument::save(Path filename, GError** error) -> bool {
+auto PopplerGlibDocument::save(fs::path const& file, GError** error) -> bool {
     if (document == nullptr) {
         return false;
     }
 
-    string uri = filename.toUri(error);
-    if (*error != nullptr) {
+    auto uri = Util::toUri(file);
+    if (!uri) {
         return false;
     }
-    return poppler_document_save(document, uri.c_str(), error);
+    return poppler_document_save(document, uri->c_str(), error);
 }
 
-auto PopplerGlibDocument::load(Path filename, string password, GError** error) -> bool {
-    string uri = filename.toUri(error);
-    if (*error != nullptr) {
+auto PopplerGlibDocument::load(fs::path const& file, string password, GError** error) -> bool {
+    auto uri = Util::toUri(file);
+    if (!uri) {
         return false;
     }
 
@@ -59,7 +61,7 @@ auto PopplerGlibDocument::load(Path filename, string password, GError** error) -
         g_object_unref(document);
     }
 
-    this->document = poppler_document_new_from_file(uri.c_str(), password.c_str(), error);
+    this->document = poppler_document_new_from_file(uri->c_str(), password.c_str(), error);
     return this->document != nullptr;
 }
 

@@ -24,9 +24,9 @@ private:
     void operator=(const XmlAudioNode& node);
 
 public:
-    string getAudioFilename();
-    void setAudioFilename(string filename);
+    fs::path getAudioFilepath();
+    void setAudioFilepath(fs::path filepath);
 
 private:
-    string audioFilename;
+    fs::path audioFilepath;
 };

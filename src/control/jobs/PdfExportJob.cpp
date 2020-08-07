@@ -18,10 +18,10 @@ auto PdfExportJob::isUriValid(string& uri) -> bool {
     }
 
     // Remove any pre-existing extension and adds .pdf
-    filename.clearExtensions(".pdf");
-    filename += ".pdf";
+    Util::clearExtensions(filepath, ".pdf");
+    filepath += ".pdf";
 
-    return checkOverwriteBackgroundPDF(filename);
+    return checkOverwriteBackgroundPDF(filepath);
 }
 
 
@@ -32,7 +32,7 @@ void PdfExportJob::run() {
     XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
     doc->unlock();
 
-    if (!pdfe->createPdf(this->filename)) {
+    if (!pdfe->createPdf(this->filepath)) {
         if (control->getWindow()) {
             callAfterRun();
         } else {

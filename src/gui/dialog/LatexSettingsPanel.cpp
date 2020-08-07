@@ -5,7 +5,7 @@
 
 #include "control/latex/LatexGenerator.h"
 
-#include "Util.h"
+#include "PathUtil.h"
 #include "filesystem.h"
 #include "i18n.h"
 
@@ -60,14 +60,15 @@ void LatexSettingsPanel::checkDeps() {
         } else {
             std::string templ(std::istreambuf_iterator<char>(is), {});
             std::string sample = LatexGenerator::templateSub("x^2", templ, 0x000000U);
-            const Path tmpDir = Util::getTmpDirSubfolder("tex");
+            auto const& tmpDir = Util::getTmpDirSubfolder("tex");
             auto result = LatexGenerator(settings).asyncRun(tmpDir, sample);
             if (auto* proc = std::get_if<GSubprocess*>(&result)) {
                 GError* err = nullptr;
                 if (g_subprocess_wait_check(*proc, nullptr, &err)) {
                     msg = _("Sample LaTeX file generated successfully.");
                 } else {
-                    msg = FS(_F("Error: {1}. Please check the contents of {2}") % err->message % tmpDir.c_str());
+                    msg = FS(_F("Error: {1}. Please check the contents of {2}") % err->message %
+                             tmpDir.u8string().c_str());
                     g_error_free(err);
                 }
                 g_object_unref(*proc);

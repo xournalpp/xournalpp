@@ -1,9 +1,10 @@
 #include "RecentManager.h"
 
 #include <config.h>
+#include <filesystem.h>
 #include <gtk/gtk.h>
 
-#include "Path.h"
+#include "PathUtil.h"
 #include "StringUtils.h"
 #include "Util.h"
 #include "i18n.h"
@@ -39,7 +40,7 @@ void RecentManager::recentManagerChangedCallback(GtkRecentManager* manager, Rece
     recentManager->updateMenu();
 }
 
-void RecentManager::addRecentFileFilename(const Path& filename) {
+void RecentManager::addRecentFileFilename(const fs::path& filepath) {
     GtkRecentManager* recentManager = nullptr;
     GtkRecentData* recentData = nullptr;
 
@@ -52,7 +53,7 @@ void RecentManager::addRecentFileFilename(const Path& filename) {
     recentData->display_name = nullptr;
     recentData->description = nullptr;
 
-    if (filename.hasExtension(".pdf")) {
+    if (filepath.extension() == ".pdf") {
         recentData->mime_type = g_strdup(MIME_PDF);
     } else {
         recentData->mime_type = g_strdup(MIME);
@@ -63,38 +64,39 @@ void RecentManager::addRecentFileFilename(const Path& filename) {
     recentData->groups = groups;
     recentData->is_private = false;
 
-    GFile* file = g_file_new_for_path(filename.c_str());
-    gchar* uri = g_file_get_uri(file);
-    gtk_recent_manager_add_full(recentManager, uri, recentData);
-    g_free(uri);
+    auto uri = Util::toUri(filepath);
+    if (!uri) {
+        return;
+    }
+    gtk_recent_manager_add_full(recentManager, (*uri).c_str(), recentData);
 
     g_free(recentData->app_exec);
 
     g_slice_free(GtkRecentData, recentData);
-
-    g_object_unref(file);
 }
 
-void RecentManager::removeRecentFileFilename(const Path& filename) {
-    GFile* file = g_file_new_for_path(filename.c_str());
+void RecentManager::removeRecentFileFilename(const fs::path& filename) {
+    auto uri = Util::toUri(filename);
+
+    if (!uri) {
+        return;
+    }
 
     GtkRecentManager* recentManager = gtk_recent_manager_get_default();
-    gtk_recent_manager_remove_item(recentManager, g_file_get_uri(file), nullptr);
-
-    g_object_unref(file);
+    gtk_recent_manager_remove_item(recentManager, uri->c_str(), nullptr);
 }
 
 auto RecentManager::getMaxRecent() const -> int { return this->maxRecent; }
 
 void RecentManager::setMaxRecent(int maxRecent) { this->maxRecent = maxRecent; }
 
-void RecentManager::openRecent(const Path& p) {
-    if (p.getFilename().empty()) {
+void RecentManager::openRecent(const fs::path& p) {
+    if (p.empty()) {
         return;
     }
 
     for (RecentManagerListener* l: this->listener) {
-        l->fileOpened(p.c_str());
+        l->fileOpened(p);
     }
 }
 
@@ -125,17 +127,17 @@ auto RecentManager::filterRecent(GList* items, bool xoj) -> GList* {
             continue;
         }
 
-        Path p = Path::fromUri(uri);
+        auto p = Util::fromUri(uri);
 
         // Skip remote files
-        if (p.isEmpty() || !p.exists()) {
+        if (!p || !fs::exists(*p)) {
             continue;
         }
 
-        if (xoj && (p.hasExtension(".xoj") || p.hasExtension(".xopp"))) {
+        if (xoj && Util::hasXournalFileExt(*p)) {
             filteredItems = g_list_prepend(filteredItems, info);
         }
-        if (!xoj && p.hasExtension(".pdf")) {
+        if (!xoj && p->extension() == ".pdf") {
             filteredItems = g_list_prepend(filteredItems, info);
         }
     }
@@ -150,9 +152,9 @@ void RecentManager::recentsMenuActivateCallback(GtkAction* action, RecentManager
     auto* info = static_cast<GtkRecentInfo*>(g_object_get_data(G_OBJECT(action), "gtk-recent-info"));
     g_return_if_fail(info != nullptr);
 
-    Path p = Path::fromUri(gtk_recent_info_get_uri(info));
-    if (!p.isEmpty()) {
-        recentManager->openRecent(p);
+    auto p = Util::fromUri(gtk_recent_info_get_uri(info));
+    if (p) {
+        recentManager->openRecent(*p);
     }
 }
 

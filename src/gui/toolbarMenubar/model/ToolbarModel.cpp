@@ -4,6 +4,7 @@
 
 #include "ToolbarData.h"
 #include "XojMsgBox.h"
+#include "filesystem.h"
 #include "i18n.h"
 
 ToolbarModel::ToolbarModel() = default;
@@ -39,10 +40,10 @@ void ToolbarModel::remove(ToolbarData* data) {
 
 void ToolbarModel::add(ToolbarData* data) { this->toolbars.push_back(data); }
 
-auto ToolbarModel::parse(const string& filename, bool predefined) -> bool {
+auto ToolbarModel::parse(fs::path const& filepath, bool predefined) -> bool {
     GKeyFile* config = g_key_file_new();
     g_key_file_set_list_separator(config, ',');
-    if (!g_key_file_load_from_file(config, filename.c_str(), G_KEY_FILE_NONE, nullptr)) {
+    if (!g_key_file_load_from_file(config, filepath.u8string().c_str(), G_KEY_FILE_NONE, nullptr)) {
         g_key_file_free(config);
         return false;
     }
@@ -127,7 +128,7 @@ const char* TOOLBAR_INI_HEADER =
         "  LAYER: The layer dropdown menu\n"
         "\n";
 
-void ToolbarModel::save(const Path& filename) {
+void ToolbarModel::save(fs::path const& filepath) {
     GKeyFile* config = g_key_file_new();
     g_key_file_set_list_separator(config, ',');
 
@@ -143,7 +144,7 @@ void ToolbarModel::save(const Path& filename) {
     char* data = g_key_file_to_data(config, &len, nullptr);
 
     GError* error = nullptr;
-    if (!g_file_set_contents(filename.c_str(), data, len, &error)) {
+    if (!g_file_set_contents(filepath.u8string().c_str(), data, len, &error)) {
         XojMsgBox::showErrorToUser(nullptr, error->message);
         g_error_free(error);
     }

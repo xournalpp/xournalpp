@@ -16,6 +16,7 @@
 #include <vector>
 
 #include "XournalType.h"
+#include "filesystem.h"
 
 class ToolbarColorNames {
 private:
@@ -27,8 +28,8 @@ public:
     static void freeInstance();
 
 public:
-    void loadFile(const string& file);
-    void saveFile(const string& file);
+    void loadFile(fs::path const& file);
+    void saveFile(fs::path const& file);
 
     void addColor(int color, const string& name, bool predefined);
 

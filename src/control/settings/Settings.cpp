@@ -9,6 +9,7 @@
 
 #include "ButtonConfig.h"
 #include "Util.h"
+#include "filesystem.h"
 #include "i18n.h"
 #define DEFAULT_FONT "Sans"
 #define DEFAULT_FONT_SIZE 12
@@ -22,7 +23,7 @@
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
 
-Settings::Settings(Path filename): filename(std::move(filename)) { loadDefault(); }
+Settings::Settings(fs::path filepath): filepath(std::move(filepath)) { loadDefault(); }
 
 Settings::~Settings() {
     for (auto& i: this->buttonConfig) {
@@ -546,12 +547,12 @@ void Settings::loadButtonConfig() {
 auto Settings::load() -> bool {
     xmlKeepBlanksDefault(0);
 
-    if (!filename.exists()) {
-        g_warning("configfile does not exist %s\n", filename.c_str());
+    if (!fs::exists(filepath)) {
+        g_warning("configfile does not exist %s\n", filepath.string().c_str());
         return false;
     }
 
-    xmlDocPtr doc = xmlParseFile(filename.c_str());
+    xmlDocPtr doc = xmlParseFile(filepath.u8string().c_str());
 
     if (doc == nullptr) {
         g_warning("Settings::load:: doc == null, could not load Settings!\n");
@@ -560,14 +561,14 @@ auto Settings::load() -> bool {
 
     xmlNodePtr cur = xmlDocGetRootElement(doc);
     if (cur == nullptr) {
-        g_message("The settings file \"%s\" is empty", filename.c_str());
+        g_message("The settings file \"%s\" is empty", filepath.string().c_str());
         xmlFreeDoc(doc);
 
         return false;
     }
 
     if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("settings"))) {
-        g_message("File \"%s\" is of the wrong type", filename.c_str());
+        g_message("File \"%s\" is of the wrong type", filepath.string().c_str());
         xmlFreeDoc(doc);
 
         return false;
@@ -714,9 +715,9 @@ void Settings::save() {
 
     WRITE_STRING_PROP(selectedToolbar);
 
-    auto lastSavePath = this->lastSavePath.str();
-    auto lastOpenPath = this->lastOpenPath.str();
-    auto lastImagePath = this->lastImagePath.str();
+    auto lastSavePath = this->lastSavePath.string();
+    auto lastOpenPath = this->lastOpenPath.string();
+    auto lastImagePath = this->lastImagePath.string();
     WRITE_STRING_PROP(lastSavePath);
     WRITE_STRING_PROP(lastOpenPath);
     WRITE_STRING_PROP(lastImagePath);
@@ -860,7 +861,7 @@ void Settings::save() {
         saveData(root, p.first, p.second);
     }
 
-    xmlSaveFormatFileEnc(filename.c_str(), doc, "UTF-8", 1);
+    xmlSaveFormatFileEnc(filepath.u8string().c_str(), doc, "UTF-8", 1);
     xmlFreeDoc(doc);
 }
 
@@ -1360,21 +1361,21 @@ void Settings::setViewLayoutB2T(bool b2t) {
 
 auto Settings::getViewLayoutB2T() const -> bool { return this->layoutBottomToTop; }
 
-void Settings::setLastSavePath(Path p) {
+void Settings::setLastSavePath(fs::path p) {
     this->lastSavePath = std::move(p);
     save();
 }
 
-auto Settings::getLastSavePath() const -> Path const& { return this->lastSavePath; }
+auto Settings::getLastSavePath() const -> fs::path const& { return this->lastSavePath; }
 
-void Settings::setLastOpenPath(Path p) {
+void Settings::setLastOpenPath(fs::path p) {
     this->lastOpenPath = std::move(p);
     save();
 }
 
-auto Settings::getLastOpenPath() const -> Path const& { return this->lastOpenPath; }
+auto Settings::getLastOpenPath() const -> fs::path const& { return this->lastOpenPath; }
 
-void Settings::setLastImagePath(const Path& path) {
+void Settings::setLastImagePath(const fs::path& path) {
     if (this->lastImagePath == path) {
         return;
     }
@@ -1382,7 +1383,7 @@ void Settings::setLastImagePath(const Path& path) {
     save();
 }
 
-auto Settings::getLastImagePath() const -> Path const& { return this->lastImagePath; }
+auto Settings::getLastImagePath() const -> fs::path const& { return this->lastImagePath; }
 
 void Settings::setZoomStep(double zoomStep) {
     if (this->zoomStep == zoomStep) {

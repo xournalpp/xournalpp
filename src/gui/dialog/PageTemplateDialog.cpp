@@ -13,6 +13,7 @@
 
 #include "PathUtil.h"
 #include "Util.h"
+#include "filesystem.h"
 #include "i18n.h"
 using std::ofstream;
 
@@ -90,8 +91,9 @@ void PageTemplateDialog::saveToFile() {
     gtk_file_filter_add_pattern(filterXoj, "*.xopt");
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
-    if (!settings->getLastSavePath().isEmpty()) {
-        gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
+    if (!settings->getLastSavePath().empty()) {
+        gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
+                                                settings->getLastSavePath().u8string().c_str());
     }
 
 
@@ -128,10 +130,10 @@ void PageTemplateDialog::saveToFile() {
 
 void PageTemplateDialog::loadFromFile() {
     XojOpenDlg dlg(GTK_WINDOW(this->getWindow()), this->settings);
-    Path filename = dlg.showOpenTemplateDialog();
+    fs::path file = dlg.showOpenTemplateDialog();
 
     string contents;
-    if (!PathUtil::readString(contents, filename)) {
+    if (!Util::readString(contents, file)) {
         return;
     }
     model.parse(contents);

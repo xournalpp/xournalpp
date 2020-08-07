@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "XournalType.h"
+#include "filesystem.h"
 
 class Control;
 class Plugin;
@@ -30,7 +31,7 @@ public:
      *
      * @param path The path which contains the plugin folders
      */
-    void loadPluginsFrom(const string& path);
+    void loadPluginsFrom(fs::path const& path);
 
     /**
      * Register toolbar item and all other UI stuff

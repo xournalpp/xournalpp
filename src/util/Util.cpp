@@ -6,6 +6,7 @@
 
 #include <unistd.h>
 
+#include "PathUtil.h"
 #include "StringUtils.h"
 #include "XojMsgBox.h"
 #include "config-dev.h"
@@ -74,105 +75,6 @@ auto Util::gdkrgba_to_hex(const GdkRGBA& color) -> uint32_t {  // clang-format o
 
 auto Util::getPid() -> pid_t { return ::getpid(); }
 
-auto Util::getAutosaveFilename() -> Path {
-    Path p(getConfigSubfolder("autosave"));
-    p /= std::to_string(getPid()) + ".xopp";
-    return p;
-}
-
-auto Util::getConfigFolder() -> Path {
-    Path p(g_get_user_config_dir());
-    p /= g_get_prgname();
-    return p;
-}
-
-auto Util::getConfigSubfolder(const Path& subfolder) -> Path {
-    Path p = getConfigFolder();
-    p /= subfolder;
-
-    return Util::ensureFolderExists(p);
-}
-
-auto Util::getCacheSubfolder(const Path& subfolder) -> Path {
-    Path p(g_get_user_cache_dir());
-    p /= g_get_prgname();
-    p /= subfolder;
-
-    return Util::ensureFolderExists(p);
-}
-
-auto Util::getDataSubfolder(const Path& subfolder) -> Path {
-    Path p(g_get_user_data_dir());
-    p /= g_get_prgname();
-    p /= subfolder;
-
-    return Util::ensureFolderExists(p);
-}
-
-auto Util::getConfigFile(const Path& relativeFileName) -> Path {
-    Path p = getConfigSubfolder(relativeFileName.getParentPath());
-    p /= relativeFileName.getFilename();
-    return p;
-}
-
-auto Util::getCacheFile(const Path& relativeFileName) -> Path {
-    Path p = getCacheSubfolder(relativeFileName.getParentPath());
-    p /= relativeFileName.getFilename();
-    return p;
-}
-
-auto Util::getTmpDirSubfolder(const Path& subfolder) -> Path {
-    Path p(g_get_tmp_dir());
-    p /= FS(_F("xournalpp-{1}") % Util::getPid());
-    p /= subfolder;
-    return Util::ensureFolderExists(p);
-}
-
-auto Util::ensureFolderExists(const Path& p) -> Path {
-    if (g_mkdir_with_parents(p.c_str(), 0700) == -1) {
-        Util::execInUiThread([=]() {
-            string msg = FS(_F("Could not create folder: {1}") % p.str());
-            g_warning("%s", msg.c_str());
-            XojMsgBox::showErrorToUser(nullptr, msg);
-        });
-    }
-    return p;
-}
-
-void Util::openFileWithDefaultApplicaion(const Path& filename) {
-#ifdef __APPLE__
-    constexpr auto const OPEN_PATTERN = "open \"{1}\"";
-#elif _WIN32  // note the underscore: without it, it's not msdn official!
-    constexpr auto const OPEN_PATTERN = "start \"{1}\"";
-#else         // linux, unix, ...
-    constexpr auto const OPEN_PATTERN = "xdg-open \"{1}\"";
-#endif
-
-    string command = FS(FORMAT_STR(OPEN_PATTERN) % filename.getEscapedPath());
-    if (system(command.c_str()) != 0) {
-        string msg = FS(_F("File couldn't be opened. You have to do it manually:\n"
-                           "URL: {1}") %
-                        filename.str());
-        XojMsgBox::showErrorToUser(nullptr, msg);
-    }
-}
-
-void Util::openFileWithFilebrowser(const Path& filename) {
-#ifdef __APPLE__
-    constexpr auto const OPEN_PATTERN = "open \"{1}\"";
-#elif _WIN32
-    constexpr auto const OPEN_PATTERN = "explorer.exe /n,/e,\"{1}\"";
-#else  // linux, unix, ...
-    constexpr auto const OPEN_PATTERN = R"(nautilus "file://{1}" || dolphin "file://{1}" || konqueror "file://{1}" &)";
-#endif
-    string command = FS(FORMAT_STR(OPEN_PATTERN) % filename.getEscapedPath());
-    if (system(command.c_str()) != 0) {
-        string msg = FS(_F("File couldn't be opened. You have to do it manually:\n"
-                           "URL: {1}") %
-                        filename.str());
-        XojMsgBox::showErrorToUser(nullptr, msg);
-    }
-}
 
 auto Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void*) -> gboolean {
     GtkAllocation alloc;

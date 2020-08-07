@@ -9,6 +9,8 @@
 #include <zlib.h>
 
 #include "GzUtil.h"
+#include "PathUtil.h"
+#include "filesystem.h"
 
 const char* TAG_PREVIEW_NAME = "preview";
 const int TAG_PREVIEW_NAME_LEN = strlen(TAG_PREVIEW_NAME);
@@ -93,14 +95,14 @@ auto XojPreviewExtractor::readPreview(char* buffer, int len) -> PreviewExtractRe
  * @param file .xoj File
  * @return true if a preview was read, false if not
  */
-auto XojPreviewExtractor::readFile(const Path& file) -> PreviewExtractResult {
+auto XojPreviewExtractor::readFile(const fs::path& file) -> PreviewExtractResult {
     // check file extensions
-    if (!file.hasXournalFileExt()) {
+    if (!Util::hasXournalFileExt(file)) {
         return PREVIEW_RESULT_BAD_FILE_EXTENSION;
     }
     // read the new file format
     int zipError = 0;
-    zip_t* zipFp = zip_open(file.c_str(), ZIP_RDONLY, &zipError);
+    zip_t* zipFp = zip_open(file.u8string().c_str(), ZIP_RDONLY, &zipError);
 
     if (!zipFp && zipError == ZIP_ER_NOZIP) {
         gzFile fp = GzUtil::openPath(file, "r");

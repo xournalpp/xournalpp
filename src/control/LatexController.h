@@ -26,8 +26,8 @@
 #include "model/PageRef.h"
 #include "model/Text.h"
 
-#include "Path.h"
 #include "XournalType.h"
+#include "filesystem.h"
 
 class Control;
 class TexImage;
@@ -135,7 +135,7 @@ private:
     /**
      * Tex binary full path
      */
-    Path pdflatexPath;
+    fs::path pdflatexPath;
 
     /**
      * The original TeX string when the dialog was opened, or the empty string
@@ -202,7 +202,7 @@ private:
      * The directory in which the LaTeX files will be generated. Note that this
      * should be within a system temporary directory.
      */
-    Path texTmpDir;
+    fs::path texTmpDir;
 
     /**
      * The element that is currently being edited.

@@ -14,7 +14,8 @@
 
 PluginController::PluginController(Control* control): control(control) {
 #ifdef ENABLE_PLUGINS
-    string path = control->getGladeSearchPath()->getFirstSearchPath();
+    // Use string instead of fs::path due to string operations below
+    string path = control->getGladeSearchPath()->getFirstSearchPath().string();
     if (StringUtils::endsWith(path, "ui")) {
         path = path.substr(0, path.length() - 2) + "plugins";
     } else {
@@ -45,7 +46,7 @@ PluginController::~PluginController()
  *
  * @param path The path which contains the plugin folders
  */
-void PluginController::loadPluginsFrom(const string& path) {
+void PluginController::loadPluginsFrom(fs::path const& path) {
 #ifdef ENABLE_PLUGINS
 
     GError* error = nullptr;

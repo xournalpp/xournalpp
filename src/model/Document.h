@@ -25,8 +25,8 @@
 #include "DocumentHandler.h"
 #include "LinkDestination.h"
 #include "PageRef.h"
-#include "Path.h"
 #include "XournalType.h"
+#include "filesystem.h"
 
 class Document {
 public:
@@ -36,7 +36,7 @@ public:
 public:
     enum DocumentType { XOPP, XOJ, PDF };
 
-    bool readPdf(const Path& filename, bool initPages, bool attachToDocument, gpointer data = nullptr,
+    bool readPdf(const fs::path& filename, bool initPages, bool attachToDocument, gpointer data = nullptr,
                  gsize length = 0);
 
     size_t getPageCount();
@@ -67,13 +67,13 @@ public:
 
     Document& operator=(const Document& doc);
 
-    void setFilename(Path filename);
-    Path getFilename();
-    Path getPdfFilename();
-    Path createSaveFolder(Path lastSavePath);
-    Path createSaveFilename(DocumentType type, const string& defaultSaveName);
+    void setFilepath(fs::path filepath);
+    fs::path getFilepath();
+    fs::path getPdfFilepath();
+    fs::path createSaveFolder(fs::path lastSavePath);
+    fs::path createSaveFilename(DocumentType type, const string& defaultSaveName);
 
-    Path getEvMetadataFilename();
+    fs::path getEvMetadataFilename();
 
     GtkTreeModel* getContentsModel();
 
@@ -105,8 +105,8 @@ private:
 
     XojPdfDocument pdfDocument;
 
-    Path filename;
-    Path pdfFilename;
+    fs::path filepath;
+    fs::path pdfFilepath;
     bool attachPdf = false;
 
     /**

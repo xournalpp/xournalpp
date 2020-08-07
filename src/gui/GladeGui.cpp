@@ -12,13 +12,13 @@
 GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const string& glade, const string& mainWnd) {
     this->gladeSearchPath = gladeSearchPath;
 
-    string filename = this->gladeSearchPath->findFile("", glade);
+    auto filepath = this->gladeSearchPath->findFile("", glade);
 
     GError* error = nullptr;
     builder = gtk_builder_new();
 
-    if (!gtk_builder_add_from_file(builder, filename.c_str(), &error)) {
-        string msg = FS(_F("Error loading glade file \"{1}\" (try to load \"{2}\")") % glade % filename);
+    if (!gtk_builder_add_from_file(builder, filepath.u8string().c_str(), &error)) {
+        string msg = FS(_F("Error loading glade file \"{1}\" (try to load \"{2}\")") % glade % filepath.string());
 
         if (error != nullptr) {
             msg += "\n";

@@ -24,6 +24,8 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
+#include "filesystem.h"
+
 class LoadHandlerTest: public CppUnit::TestFixture {
     CPPUNIT_TEST_SUITE(LoadHandlerTest);
 
@@ -329,12 +331,12 @@ public:
 
         SaveHandler h;
         h.prepareSave(doc1);
-        Path tmp = Util::getTmpDirSubfolder() / "save.xopp";
+        auto tmp = Util::getTmpDirSubfolder() / "save.xopp";
         h.saveTo(tmp);
 
         // Create a second loader so the first one doesn't free the memory
         LoadHandler handler2;
-        Document* doc2 = handler2.loadDocument(tmp.str());
+        Document* doc2 = handler2.loadDocument(tmp);
         auto elements2 = getElements(doc2);
 
         // Check that the coordinates from both files don't differ more than the precision they were saved with

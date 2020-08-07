@@ -15,6 +15,8 @@
 
 #include "pdf/base/XojPdfDocumentInterface.h"
 
+#include "filesystem.h"
+
 class PopplerGlibDocument: public XojPdfDocumentInterface {
 public:
     PopplerGlibDocument();
@@ -26,8 +28,8 @@ public:
     virtual bool equals(XojPdfDocumentInterface* doc);
 
 public:
-    virtual bool save(Path filename, GError** error);
-    virtual bool load(Path filename, string password, GError** error);
+    virtual bool save(fs::path const& filepath, GError** error);
+    virtual bool load(fs::path const& filepath, string password, GError** error);
     virtual bool load(gpointer data, gsize length, string password, GError** error);
     virtual bool isLoaded();
 

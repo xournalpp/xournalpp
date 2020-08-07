@@ -18,8 +18,9 @@ auto ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bool
     gtk_file_filter_add_pixbuf_formats(filterSupported);
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterSupported);
 
-    if (!settings->getLastImagePath().isEmpty()) {
-        gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastImagePath().c_str());
+    if (!settings->getLastImagePath().empty()) {
+        gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
+                                                settings->getLastImagePath().u8string().c_str());
     }
 
     GtkWidget* cbAttach = nullptr;

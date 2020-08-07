@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "XournalType.h"
+#include "filesystem.h"
 
 class GladeSearchpath {
 public:
@@ -22,21 +23,21 @@ public:
     virtual ~GladeSearchpath();
 
 public:
-    void addSearchDirectory(const string& directory);
+    void addSearchDirectory(fs::path const& directory);
 
     /**
      * Searches for a path, return the path, an empty string if not found
      */
-    string findFile(const string& subdir, const string& file);
+    fs::path findFile(fs::path const& subdir, fs::path const& file);
 
     /**
      * @return The first search path
      */
-    string getFirstSearchPath();
+    fs::path getFirstSearchPath() const;
 
 private:
     /**
      * Search directory for icons and Glade files
      */
-    vector<string> directories;
+    vector<fs::path> directories;
 };

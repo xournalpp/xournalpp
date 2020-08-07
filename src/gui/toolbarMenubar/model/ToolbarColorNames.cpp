@@ -34,10 +34,10 @@ void ToolbarColorNames::freeInstance() {
     instance = nullptr;
 }
 
-void ToolbarColorNames::loadFile(const string& file) {
+void ToolbarColorNames::loadFile(fs::path const& file) {
     GError* error = nullptr;
-    if (!g_key_file_load_from_file(config, file.c_str(), G_KEY_FILE_NONE, &error)) {
-        g_warning("Failed to load \"colornames.ini\" (%s): %s\n", file.c_str(), error->message);
+    if (!g_key_file_load_from_file(config, file.u8string().c_str(), G_KEY_FILE_NONE, &error)) {
+        g_warning("Failed to load \"colornames.ini\" (%s): %s\n", file.string().c_str(), error->message);
         g_error_free(error);
         return;
     }
@@ -45,13 +45,13 @@ void ToolbarColorNames::loadFile(const string& file) {
     g_key_file_set_string(this->config, "info", "about", "Xournalpp custom color names");
 }
 
-void ToolbarColorNames::saveFile(const string& file) {
+void ToolbarColorNames::saveFile(fs::path const& file) {
     gsize len = 0;
     char* data = g_key_file_to_data(this->config, &len, nullptr);
 
-    FILE* fp = g_fopen(file.c_str(), "wbe");
+    FILE* fp = g_fopen(file.u8string().c_str(), "wbe");
     if (!fp) {
-        g_error("Could not save color file «%s»", file.c_str());
+        g_error("Could not save color file «%s»", file.u8string().c_str());
         return;
     }
 
