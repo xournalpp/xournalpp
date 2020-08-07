@@ -8,8 +8,8 @@
 #include "control/xojfile/SaveHandler.h"
 #include "model/Document.h"
 
+#include "PathUtil.h"
 #include "Stacktrace.h"
-#include "Util.h"
 #include "i18n.h"
 
 static Document* document = nullptr;
@@ -29,15 +29,15 @@ void emergencySave() {
 
     g_warning(_("Trying to emergency save the current open document…"));
 
-    Path filename = Util::getConfigFile("emergencysave.xopp");
+    auto const& filepath = Util::getConfigFile("emergencysave.xopp");
 
     SaveHandler handler;
     handler.prepareSave(document);
-    handler.saveTo(filename);
+    handler.saveTo(filepath);
 
     if (!handler.getErrorMessage().empty()) {
         g_error("%s", FC(_F("Error: {1}") % handler.getErrorMessage()));
     } else {
-        g_warning("%s", FC(_F("Successfully saved document to \"{1}\"") % filename.str()));
+        g_warning("%s", FC(_F("Successfully saved document to \"{1}\"") % filepath.string()));
     }
 }

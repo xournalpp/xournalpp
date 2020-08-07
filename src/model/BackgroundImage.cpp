@@ -12,11 +12,11 @@
  */
 
 struct BackgroundImage::Content {
-    Content(string filename, GError** error):
-            filename(std::move(filename)), pixbuf(gdk_pixbuf_new_from_file(this->filename.c_str(), error)) {}
+    Content(fs::path path, GError** error):
+            path(std::move(path)), pixbuf(gdk_pixbuf_new_from_file(this->path.u8string().c_str(), error)) {}
 
-    Content(GInputStream* stream, string filename, GError** error):
-            filename(std::move(filename)), pixbuf(gdk_pixbuf_new_from_stream(stream, nullptr, error)) {}
+    Content(GInputStream* stream, fs::path path, GError** error):
+            path(std::move(path)), pixbuf(gdk_pixbuf_new_from_stream(stream, nullptr, error)) {}
 
     ~Content() {
         g_object_unref(this->pixbuf);
@@ -28,7 +28,7 @@ struct BackgroundImage::Content {
     auto operator=(const Content&) -> Content& = delete;
     auto operator=(Content &&) -> Content& = default;
 
-    string filename;
+    fs::path path;
     GdkPixbuf* pixbuf = nullptr;
     int pageId = -1;
     bool attach = false;
@@ -46,12 +46,12 @@ auto BackgroundImage::operator==(const BackgroundImage& img) -> bool { return th
 
 void BackgroundImage::free() { this->img.reset(); }
 
-void BackgroundImage::loadFile(const string& filename, GError** error) {
-    this->img = std::make_shared<Content>(filename, error);
+void BackgroundImage::loadFile(fs::path const& path, GError** error) {
+    this->img = std::make_shared<Content>(path, error);
 }
 
-void BackgroundImage::loadFile(GInputStream* stream, const string& filename, GError** error) {
-    this->img = std::make_shared<Content>(stream, filename, error);
+void BackgroundImage::loadFile(GInputStream* stream, fs::path const& path, GError** error) {
+    this->img = std::make_shared<Content>(stream, path, error);
 }
 
 auto BackgroundImage::getCloneId() -> int { return this->img ? this->img->pageId : -1; }
@@ -64,11 +64,11 @@ void BackgroundImage::setCloneId(int id) {
 
 void BackgroundImage::clearSaveState() { this->setCloneId(-1); }
 
-auto BackgroundImage::getFilename() -> string { return this->img ? this->img->filename : ""; }
+auto BackgroundImage::getFilepath() -> fs::path { return this->img ? this->img->path : fs::path{}; }
 
-void BackgroundImage::setFilename(string filename) {
+void BackgroundImage::setFilepath(fs::path path) {
     if (this->img) {
-        this->img->filename = std::move(filename);
+        this->img->path = std::move(path);
     }
 }
 

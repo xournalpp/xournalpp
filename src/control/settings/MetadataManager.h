@@ -15,15 +15,16 @@
 #include <vector>
 
 #include "XournalType.h"
+#include "filesystem.h"
 
 class MetadataEntry {
 public:
     MetadataEntry();
 
 public:
-    string metadataFile;
+    fs::path metadataFile;
     bool valid;
-    string path;
+    fs::path path;
     double zoom;
     int page;
     gint64 time;
@@ -38,12 +39,12 @@ public:
     /**
      * Get the metadata for a file
      */
-    static MetadataEntry getForFile(const string& file);
+    static MetadataEntry getForFile(fs::path const& file);
 
     /**
      * Store the current data into metadata
      */
-    void storeMetadata(const string& file, int page, double zoom);
+    void storeMetadata(fs::path const& file, int page, double zoom);
 
     /**
      * Document was closed, a new document was opened etc.
@@ -54,12 +55,12 @@ private:
     /**
      * Delete an old metadata file
      */
-    static void deleteMetadataFile(const string& path);
+    static void deleteMetadataFile(fs::path const& path);
 
     /**
      * Parse a single metadata file
      */
-    static MetadataEntry loadMetadataFile(const string& path, const string& file);
+    static MetadataEntry loadMetadataFile(fs::path const& path, fs::path const& file);
 
     /**
      * Store metadata to file

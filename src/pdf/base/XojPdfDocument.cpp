@@ -4,6 +4,8 @@
 
 #include "pdf/popplerapi/PopplerGlibDocument.h"
 
+#include "filesystem.h"
+
 XojPdfDocument::XojPdfDocument(): doc(new PopplerGlibDocument()) {}
 
 XojPdfDocument::XojPdfDocument(const XojPdfDocument& doc): doc(new PopplerGlibDocument()) {}
@@ -24,10 +26,10 @@ void XojPdfDocument::assign(XojPdfDocumentInterface* doc) { this->doc->assign(do
 
 auto XojPdfDocument::equals(XojPdfDocumentInterface* doc) -> bool { return this->doc->equals(doc); }
 
-auto XojPdfDocument::save(Path filename, GError** error) -> bool { return doc->save(filename, error); }
+auto XojPdfDocument::save(fs::path const& file, GError** error) -> bool { return doc->save(file, error); }
 
-auto XojPdfDocument::load(Path filename, string password, GError** error) -> bool {
-    return doc->load(filename, password, error);
+auto XojPdfDocument::load(fs::path const& file, string password, GError** error) -> bool {
+    return doc->load(file, password, error);
 }
 
 auto XojPdfDocument::load(gpointer data, gsize length, string password, GError** error) -> bool {

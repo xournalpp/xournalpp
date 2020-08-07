@@ -8,6 +8,7 @@
 #include "ToolbarAdapter.h"
 #include "ToolbarCustomizeDialog.h"
 #include "ToolbarDragDropHelper.h"
+#include "filesystem.h"
 
 ToolbarDragDropHandler::ToolbarDragDropHandler(Control* control): control(control) {}
 
@@ -49,7 +50,7 @@ void ToolbarDragDropHandler::toolbarConfigDialogClosed() {
 
     this->clearToolbarsFromDragAndDrop();
 
-    Path file = Util::getConfigFile(TOOLBAR_CONFIG);
+    auto file = Util::getConfigFile(TOOLBAR_CONFIG);
     win->getToolbarModel()->save(file);
     win->floatingToolbox->hide();
 }

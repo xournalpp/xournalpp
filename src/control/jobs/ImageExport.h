@@ -19,8 +19,8 @@
 #include "view/DocumentView.h"
 
 #include "PageRange.h"
-#include "Path.h"
 #include "XournalType.h"
+#include "filesystem.h"
 
 class Document;
 class ProgressListener;
@@ -29,7 +29,7 @@ enum ExportGraphicsFormat { EXPORT_GRAPHICS_UNDEFINED, EXPORT_GRAPHICS_PDF, EXPO
 
 class ImageExport {
 public:
-    ImageExport(Document* doc, Path filename, ExportGraphicsFormat format, bool hideBackground,
+    ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format, bool hideBackground,
                 PageRangeVector& exportRange);
     virtual ~ImageExport();
 
@@ -63,7 +63,7 @@ private:
     /**
      * Get a filename with a number, e.g. .../export-1.png, if the no is -1, return .../export.png
      */
-    string getFilenameWithNumber(int no) const;
+    fs::path getFilenameWithNumber(int no) const;
 
     /**
      * Export a single Image page
@@ -79,7 +79,7 @@ public:
     /**
      * Filename for export
      */
-    Path filename;
+    fs::path file;
 
     /**
      * Export graphics format

@@ -16,8 +16,8 @@
 
 #include <gtk/gtk.h>
 
-#include "Path.h"
 #include "XournalType.h"
+#include "filesystem.h"
 
 class RecentManagerListener {
 public:
@@ -27,7 +27,7 @@ public:
      * This function is called whenever some file
      * from the recent menu is opened
      */
-    virtual void fileOpened(const gchar* uri) = 0;
+    virtual void fileOpened(fs::path const& file) = 0;
 };
 
 /**
@@ -43,13 +43,13 @@ public:
      * Adds a file to the underlying GtkRecentManager
      * without altering the menu
      */
-    static void addRecentFileFilename(const Path& filename);
+    static void addRecentFileFilename(const fs::path& filename);
 
     /**
      * Removes a file from the underlying GtkRecentManager
      * without altering the menu
      */
-    static void removeRecentFileFilename(const Path& filename);
+    static void removeRecentFileFilename(const fs::path& filename);
 
     /**
      * Removes all of the menu items corresponding to recent files
@@ -75,7 +75,7 @@ public:
      * Notifies all RecentManagerListener%s that a new
      * file is opened
      */
-    void openRecent(const Path& p);
+    void openRecent(const fs::path& p);
 
     /**
      * Returns the root menu containing all the items

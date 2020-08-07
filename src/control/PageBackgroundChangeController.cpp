@@ -127,7 +127,7 @@ auto PageBackgroundChangeController::applyImageBackground(PageRef page) -> bool 
     } else if (dlg.shouldShowFilechooser()) {
         bool attach = false;
         GFile* file = ImageOpenDlg::show(control->getGtkWindow(), control->getSettings(), true, &attach);
-        string filename;
+        fs::path filepath;
         if (file == nullptr) {
             // The user canceled
             return false;
@@ -135,7 +135,7 @@ auto PageBackgroundChangeController::applyImageBackground(PageRef page) -> bool 
 
 
         char* name = g_file_get_path(file);
-        filename = name;
+        filepath = name;
         g_free(name);
         name = nullptr;
         g_object_unref(file);
@@ -144,7 +144,7 @@ auto PageBackgroundChangeController::applyImageBackground(PageRef page) -> bool 
 
         BackgroundImage newImg;
         GError* err = nullptr;
-        newImg.loadFile(filename, &err);
+        newImg.loadFile(filepath, &err);
         newImg.setAttach(attach);
         if (err) {
             XojMsgBox::showErrorToUser(control->getGtkWindow(),

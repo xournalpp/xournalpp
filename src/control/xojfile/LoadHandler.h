@@ -45,14 +45,14 @@ public:
     virtual ~LoadHandler();
 
 public:
-    Document* loadDocument(const string& filename);
+    Document* loadDocument(fs::path const& filepath);
 
     string getLastError();
     bool isAttachedPdfMissing() const;
     string getMissingPdfFilename();
 
     void removePdfBackground();
-    void setPdfReplacement(string filename, bool attachToDocument);
+    void setPdfReplacement(fs::path filepath, bool attachToDocument);
 
     /** @return The version of the loaded file */
     int getFileVersion() const;
@@ -77,7 +77,7 @@ private:
     string readLine();
     zip_int64_t readContentFile(char* buffer, zip_uint64_t len);
     bool closeFile();
-    bool openFile(const string& filename);
+    bool openFile(fs::path const& filepath);
     bool parseXml();
 
     static void parserText(GMarkupParseContext* context, const gchar* text, gsize textLen, gpointer userdata,
@@ -101,8 +101,8 @@ private:
 
 private:
     static string parseBase64(const gchar* base64, gsize lenght);
-    bool readZipAttachment(const string& filename, gpointer& data, gsize& length);
-    string getTempFileForPath(const string& filename);
+    bool readZipAttachment(fs::path const& filename, gpointer& data, gsize& length);
+    fs::path getTempFileForPath(fs::path const& filename);
 
 private:
     string lastError;
@@ -110,10 +110,10 @@ private:
     bool attachedPdfMissing;
 
     bool removePdfBackgroundFlag;
-    string pdfReplacementFilename;
+    fs::path pdfReplacementFilepath;
     bool pdfReplacementAttach;
 
-    string filename;
+    fs::path filepath;
 
     bool pdfFilenameParsed;
 
@@ -141,7 +141,7 @@ private:
 
     const char* endRootTag = "xournal";
 
-    string xournalFilename;
+    fs::path xournalFilepath;
 
     GError* error;
     const gchar** attributeNames;

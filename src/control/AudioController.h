@@ -20,8 +20,8 @@
 #include "util/audio/AudioRecorder.h"
 
 #include "Control.h"
-#include "Path.h"
 #include "XournalType.h"
+#include "filesystem.h"
 
 class AudioPlayer;
 
@@ -43,7 +43,7 @@ public:
     void seekBackwards();
 
     string const& getAudioFilename() const;
-    Path getAudioFolder() const;
+    fs::path getAudioFolder() const;
     size_t getStartTime() const;
     vector<DeviceInfo> getOutputDevices() const;
     vector<DeviceInfo> getInputDevices() const;

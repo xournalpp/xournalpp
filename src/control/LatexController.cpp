@@ -182,11 +182,8 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
             g_warning("latex: %s", message.c_str());
             XojMsgBox::showErrorToUser(self->control->getGtkWindow(), message);
         }
-        Path pdfPath = self->texTmpDir / "tex.pdf";
-        if (pdfPath.exists()) {
-            // Delete the pdf to prevent more errors
-            pdfPath.deleteFile();
-        }
+        fs::path pdfPath = self->texTmpDir / "tex.pdf";
+        fs::remove(pdfPath);
         g_error_free(err);
     } else {
         self->isValidTex = true;
@@ -240,12 +237,12 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
         return nullptr;
     }
 
-    Path pdfPath = texTmpDir / "tex.pdf";
+    fs::path pdfPath = texTmpDir / "tex.pdf";
     GError* err = nullptr;
 
     gchar* fileContents = nullptr;
     gsize fileLength = 0;
-    if (!g_file_get_contents(pdfPath.c_str(), &fileContents, &fileLength, &err)) {
+    if (!g_file_get_contents(pdfPath.u8string().c_str(), &fileContents, &fileLength, &err)) {
         XojMsgBox::showErrorToUser(control->getGtkWindow(),
                                    FS(_F("Could not load LaTeX PDF file, File Error: {1}") % err->message));
         g_error_free(err);

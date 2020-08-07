@@ -68,7 +68,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
 
     this->toolbar = new ToolMenuHandler(this->control, this, GTK_WINDOW(getWindow()));
 
-    string file = gladeSearchPath->findFile("", "toolbar.ini");
+    auto file = gladeSearchPath->findFile("", "toolbar.ini");
 
     ToolbarModel* tbModel = this->toolbar->getModel();
 
@@ -76,16 +76,16 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
 
         string msg = FS(_F("Could not parse general toolbar.ini file: {1}\n"
                            "No Toolbars will be available") %
-                        file);
+                        file.string());
         XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
     }
 
-    file = Util::getConfigFile(TOOLBAR_CONFIG).str();
+    file = Util::getConfigFile(TOOLBAR_CONFIG);
     if (g_file_test(file.c_str(), G_FILE_TEST_EXISTS)) {
         if (!tbModel->parse(file, false)) {
             string msg = FS(_F("Could not parse custom toolbar.ini file: {1}\n"
                                "Toolbars will not be available") %
-                            file);
+                            file.string());
             XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
         }
     }
@@ -698,9 +698,9 @@ void MainWindow::enableAudioPlaybackButtons() { this->getToolMenuHandler()->enab
 void MainWindow::setAudioPlaybackPaused(bool paused) { this->getToolMenuHandler()->setAudioPlaybackPaused(paused); }
 
 void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename) {
-    string filename = gladeSearchPath->findFile("", cssFilename);
+    auto filepath = gladeSearchPath->findFile("", cssFilename);
     GtkCssProvider* provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(provider, filename.c_str(), nullptr);
+    gtk_css_provider_load_from_path(provider, filepath.u8string().c_str(), nullptr);
     gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider),
                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     g_object_unref(provider);

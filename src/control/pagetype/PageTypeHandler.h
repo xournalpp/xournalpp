@@ -18,6 +18,7 @@
 #include "model/PageType.h"
 
 #include "XournalType.h"
+#include "filesystem.h"
 
 class PageTypeInfo {
 public:
@@ -39,7 +40,7 @@ public:
 
 private:
     void addPageTypeInfo(string name, PageTypeFormat format, string config);
-    bool parseIni(const string& filename);
+    bool parseIni(fs::path const& filepath);
     void loadFormat(GKeyFile* config, const char* group);
 
 private:

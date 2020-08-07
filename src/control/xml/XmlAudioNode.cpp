@@ -2,10 +2,10 @@
 
 #include <utility>
 
-XmlAudioNode::XmlAudioNode(const char* tag): XmlNode(tag), audioFilename("") {}
+XmlAudioNode::XmlAudioNode(const char* tag): XmlNode(tag), audioFilepath{} {}
 
 XmlAudioNode::~XmlAudioNode() = default;
 
-auto XmlAudioNode::getAudioFilename() -> string { return this->audioFilename; }
+auto XmlAudioNode::getAudioFilepath() -> fs::path { return this->audioFilepath; }
 
-void XmlAudioNode::setAudioFilename(string filename) { this->audioFilename = std::move(filename); }
+void XmlAudioNode::setAudioFilepath(fs::path filepath) { this->audioFilepath = std::move(filepath); }

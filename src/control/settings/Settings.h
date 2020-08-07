@@ -22,8 +22,8 @@
 #include "model/Font.h"
 
 #include "LatexSettings.h"
-#include "Path.h"
 #include "SettingsEnums.h"
+#include "filesystem.h"
 
 constexpr auto DEFAULT_GRID_SIZE = 14.17;
 
@@ -84,7 +84,7 @@ private:
 
 class Settings {
 public:
-    /*[[implicit]]*/ Settings(Path filename);
+    /*[[implicit]]*/ Settings(fs::path filepath);
     Settings(const Settings& settings) = delete;
     void operator=(const Settings& settings) = delete;
     virtual ~Settings();
@@ -159,17 +159,17 @@ public:
     /**
      * The last saved path
      */
-    void setLastSavePath(Path p);
-    Path const& getLastSavePath() const;
+    void setLastSavePath(fs::path p);
+    fs::path const& getLastSavePath() const;
 
     /**
      * The last open path
      */
-    void setLastOpenPath(Path p);
-    Path const& getLastOpenPath() const;
+    void setLastOpenPath(fs::path p);
+    fs::path const& getLastOpenPath() const;
 
-    void setLastImagePath(const Path& p);
-    Path const& getLastImagePath() const;
+    void setLastImagePath(const fs::path& p);
+    fs::path const& getLastImagePath() const;
 
     void setMainWndSize(int width, int height);
     void setMainWndMaximized(bool max);
@@ -455,9 +455,9 @@ public:
 
 private:
     /**
-     *  The config filename
+     *  The config filepath
      */
-    Path filename;
+    fs::path filepath;
 
 private:
     /**
@@ -555,17 +555,17 @@ private:
     /**
      *  The last saved folder
      */
-    Path lastSavePath;
+    fs::path lastSavePath;
 
     /**
      *  The last opened folder
      */
-    Path lastOpenPath;
+    fs::path lastOpenPath;
 
     /**
      *  The last "insert image" folder
      */
-    Path lastImagePath;
+    fs::path lastImagePath;
 
     /**
      * The last used font

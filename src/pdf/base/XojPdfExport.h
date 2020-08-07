@@ -15,8 +15,8 @@
 #include <vector>
 
 #include "PageRange.h"
-#include "Path.h"
 #include "XournalType.h"
+#include "filesystem.h"
 
 class XojPdfExport {
 public:
@@ -24,8 +24,8 @@ public:
     virtual ~XojPdfExport();
 
 public:
-    virtual bool createPdf(Path file) = 0;
-    virtual bool createPdf(Path file, PageRangeVector& range) = 0;
+    virtual bool createPdf(fs::path const& file) = 0;
+    virtual bool createPdf(fs::path const& file, PageRangeVector& range) = 0;
     virtual string getLastError() = 0;
 
     /**

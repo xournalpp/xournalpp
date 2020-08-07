@@ -33,8 +33,8 @@ public:
 
 public:
     void prepareSave(Document* doc);
-    void saveTo(const Path& filename, ProgressListener* listener = nullptr);
-    void saveTo(OutputStream* out, const Path& filename, ProgressListener* listener = nullptr);
+    void saveTo(const fs::path& filepath, ProgressListener* listener = nullptr);
+    void saveTo(OutputStream* out, const fs::path& filepath, ProgressListener* listener = nullptr);
     string getErrorMessage();
 
 protected:
