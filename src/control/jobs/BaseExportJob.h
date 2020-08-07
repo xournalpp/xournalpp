@@ -13,6 +13,7 @@
 
 #include <string>
 #include <vector>
+#include <filesystem>
 
 #include "BlockingJob.h"
 #include "PathUtil.h"
@@ -38,14 +39,14 @@ protected:
     void initDialog();
     virtual void addFilterToDialog() = 0;
     void addFileFilterToDialog(const string& name, const string& pattern);
-    bool checkOverwriteBackgroundPDF(Path& filename);
+    bool checkOverwriteBackgroundPDF(std::filesystem::path& filename);
     virtual bool isUriValid(string& uri);
 
 private:
 protected:
     GtkWidget* dialog = nullptr;
 
-    Path filename;
+    std::filesystem::path filename;
 
     /**
      * Error message to show to the user

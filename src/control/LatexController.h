@@ -17,6 +17,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <filesystem>
 
 #include <poppler.h>
 
@@ -24,7 +25,6 @@
 #include "model/PageRef.h"
 #include "model/Text.h"
 
-#include "Path.h"
 #include "XournalType.h"
 
 class Control;
@@ -143,7 +143,7 @@ private:
     /**
      * Tex binary full path
      */
-    Path pdflatexPath;
+    std::filesystem::path pdflatexPath;
 
     /**
      * The original TeX string when the dialog was opened, or the empty string
@@ -210,7 +210,7 @@ private:
      * The directory in which the LaTeX files will be generated. Note that this
      * should be within a system temporary directory.
      */
-    Path texTmpDir;
+    std::filesystem::path texTmpDir;
 
     /**
      * Previously existing TexImage

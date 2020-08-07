@@ -17,12 +17,12 @@ void OutputStream::write(const char* str) { write(str, strlen(str)); }
 /// GzOutputStream /////////////////////////////////////
 ////////////////////////////////////////////////////////
 
-GzOutputStream::GzOutputStream(const Path& filename) {
+GzOutputStream::GzOutputStream(const std::filesystem::path& filename) {
     this->filename = filename;
 
     this->fp = GzUtil::openPath(filename, "w");
     if (this->fp == nullptr) {
-        this->error = FS(_F("Error opening file: \"{1}\"") % filename.str());
+        this->error = FS(_F("Error opening file: \"{1}\"") % filename.string());
     }
 }
 

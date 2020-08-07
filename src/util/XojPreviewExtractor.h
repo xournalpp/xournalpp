@@ -13,10 +13,10 @@
 #pragma once
 
 #include <string>
+#include <filesystem>
 
 #include <gdk/gdk.h>
 
-#include "Path.h"
 using std::string;
 
 enum PreviewExtractResult {
@@ -58,7 +58,7 @@ public:
      * @param file .xoj File
      * @return If an image was read, or the error
      */
-    PreviewExtractResult readFile(const Path& file);
+    PreviewExtractResult readFile(const std::filesystem::path& file);
 
     /**
      * Try to read the preview from byte buffer

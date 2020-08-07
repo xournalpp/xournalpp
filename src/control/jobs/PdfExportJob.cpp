@@ -18,7 +18,7 @@ auto PdfExportJob::isUriValid(string& uri) -> bool {
     }
 
     // Remove any pre-existing extension and adds .pdf
-    filename.clearExtensions(".pdf");
+    PathUtil::clearExtensions(filename, ".pdf");
     filename += ".pdf";
 
     return checkOverwriteBackgroundPDF(filename);

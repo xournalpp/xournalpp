@@ -1,9 +1,10 @@
+#include <filesystem>
+
 #include "AutosaveJob.h"
 
 #include "control/Control.h"
 #include "control/xojfile/SaveHandler.h"
 
-#include "Path.h"
 #include "XojMsgBox.h"
 #include "i18n.h"
 
@@ -26,22 +27,21 @@ void AutosaveJob::run() {
 
     doc->lock();
     handler.prepareSave(doc);
-    Path filename = doc->getFilename();
+    std::filesystem::path filename = doc->getFilename();
     doc->unlock();
 
-    if (filename.isEmpty()) {
+    if (filename.empty()) {
         filename = Util::getAutosaveFilename();
     } else {
-        string file = filename.getFilename();
-        filename = filename.getParentPath();
+        string file = filename.filename();
+        filename = filename.parent_path();
         filename /= string(".") + file;
     }
-    filename.clearExtensions();
-    filename += ".autosave.xopp";
+    filename.replace_extension(".autosave.xopp");
 
     control->renameLastAutosaveFile();
 
-    g_message("%s", FS(_F("Autosaving to {1}") % filename.str()).c_str());
+    g_message("%s", FS(_F("Autosaving to {1}") % filename.string()).c_str());
 
     handler.saveTo(filename);
 

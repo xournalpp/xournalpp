@@ -4,6 +4,7 @@
 #include <gio/gio.h>
 
 #include "StringUtils.h"
+#include "PathUtil.h"
 #include "XojPreviewExtractor.h"
 #include "i18n.h"
 
@@ -14,7 +15,7 @@ XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings): win(win), settings(s
     gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
     const gchar* currentFolder = nullptr;
-    if (!settings->getLastOpenPath().isEmpty()) {
+    if (!settings->getLastOpenPath().empty()) {
         currentFolder = settings->getLastOpenPath().c_str();
     } else {
         g_warning("lastOpenPath is not set!");
@@ -66,28 +67,28 @@ void XojOpenDlg::addFilterXopt() {
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXopt);
 }
 
-auto XojOpenDlg::runDialog() -> Path {
+auto XojOpenDlg::runDialog() -> std::filesystem::path {
     gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
     if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
         gtk_widget_destroy(dialog);
         dialog = nullptr;
-        return Path("");
+        return std::filesystem::path("");
     }
 
-    Path file(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
-    settings->setLastOpenPath(file.getParentPath().str());
+    std::filesystem::path file(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+    settings->setLastOpenPath(file.parent_path().string());
 
     return file;
 }
 
-auto XojOpenDlg::showOpenTemplateDialog() -> Path {
+auto XojOpenDlg::showOpenTemplateDialog() -> std::filesystem::path {
     addFilterAllFiles();
     addFilterXopt();
 
     return runDialog();
 }
 
-auto XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf) -> Path {
+auto XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf) -> std::filesystem::path {
     if (!pdf) {
         GtkFileFilter* filterSupported = gtk_file_filter_new();
         gtk_file_filter_set_name(filterSupported, _("Supported files"));
@@ -120,25 +121,25 @@ auto XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf) -> Path {
     g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback), nullptr);
 
     auto lastOpenPath = this->settings->getLastOpenPath();
-    if (!lastOpenPath.isEmpty()) {
+    if (!lastOpenPath.empty()) {
         gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(this->dialog), lastOpenPath.c_str());
     }
 
     auto lastSavePath = this->settings->getLastSavePath();
-    if (!lastSavePath.isEmpty()) {
+    if (!lastSavePath.empty()) {
         gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(this->dialog), lastSavePath.c_str(), nullptr);
     }
 
-    Path file = runDialog();
+    std::filesystem::path file = runDialog();
 
     if (attachOpt) {
         attachPdf = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(attachOpt));
         g_object_unref(attachOpt);
     }
 
-    if (!file.isEmpty()) {
+    if (!file.empty()) {
         g_message("lastOpenPath set");
-        this->settings->setLastOpenPath(file.getParentPath().str());
+        this->settings->setLastOpenPath(file.parent_path().string());
     }
 
     return file;
@@ -152,11 +153,11 @@ void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userDa
         return;
     }
 
-    Path filepath = filename;
+    std::filesystem::path filepath = filename;
     g_free(filename);
     filename = nullptr;
 
-    if (!filepath.hasXournalFileExt()) {
+    if (!PathUtil::hasXournalFileExt(filepath)) {
         gtk_file_chooser_set_preview_widget_active(fileChooser, false);
         return;
     }

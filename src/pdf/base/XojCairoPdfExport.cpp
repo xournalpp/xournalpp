@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <stack>
+#include <filesystem>
 
 #include <cairo/cairo-pdf.h>
 
@@ -26,12 +27,12 @@ void XojCairoPdfExport::setNoBackgroundExport(bool noBackgroundExport) {
     this->noBackgroundExport = noBackgroundExport;
 }
 
-auto XojCairoPdfExport::startPdf(const Path& file) -> bool {
+auto XojCairoPdfExport::startPdf(const std::filesystem::path& file) -> bool {
     this->surface = cairo_pdf_surface_create(file.c_str(), 0, 0);
     this->cr = cairo_create(surface);
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
-    cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_TITLE, doc->getFilename().getFilename().c_str());
+    cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_TITLE, doc->getFilename().filename().c_str());
     GtkTreeModel* tocModel = doc->getContentsModel();
     this->populatePdfOutline(tocModel);
 #endif
@@ -114,7 +115,7 @@ void XojCairoPdfExport::exportPage(size_t page) {
     cairo_restore(this->cr);
 }
 
-auto XojCairoPdfExport::createPdf(Path file, PageRangeVector& range) -> bool {
+auto XojCairoPdfExport::createPdf(std::filesystem::path file, PageRangeVector& range) -> bool {
     if (range.empty()) {
         this->lastError = _("No pages to export!");
         return false;
@@ -152,7 +153,7 @@ auto XojCairoPdfExport::createPdf(Path file, PageRangeVector& range) -> bool {
     return true;
 }
 
-auto XojCairoPdfExport::createPdf(Path file) -> bool {
+auto XojCairoPdfExport::createPdf(std::filesystem::path file) -> bool {
     if (doc->getPageCount() < 1) {
         lastError = _("No pages to export!");
         return false;

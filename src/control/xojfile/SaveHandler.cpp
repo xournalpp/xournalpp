@@ -2,6 +2,8 @@
 
 #include <config.h>
 
+#include "PathUtil.h"
+
 #include "control/jobs/ProgressListener.h"
 #include "control/pagetype/PageTypeHandler.h"
 #include "control/xml/XmlImageNode.h"
@@ -218,8 +220,8 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
 
             if (doc->isAttachPdf()) {
                 background->setAttrib("domain", "attach");
-                Path filename = doc->getFilename();
-                filename.clearExtensions();
+                std::filesystem::path filename = doc->getFilename();
+                PathUtil::clearExtensions(filename);
                 filename += ".xopp.bg.pdf";
                 background->setAttrib("filename", "bg.pdf");
 
@@ -231,13 +233,13 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
                         this->errorMessage += "\n";
                     }
                     this->errorMessage +=
-                            FS(_F("Could not write background \"{1}\", {2}") % filename.str() % error->message);
+                            FS(_F("Could not write background \"{1}\", {2}") % filename.string() % error->message);
 
                     g_error_free(error);
                 }
             } else {
                 background->setAttrib("domain", "absolute");
-                background->setAttrib("filename", doc->getPdfFilename().str());
+                background->setAttrib("filename", doc->getPdfFilename().string());
             }
         }
         background->setAttrib("pageno", p->getPdfPageNr() + 1);
@@ -295,7 +297,7 @@ void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p) {
     }
 }
 
-void SaveHandler::saveTo(const Path& filename, ProgressListener* listener) {
+void SaveHandler::saveTo(const std::filesystem::path& filename, ProgressListener* listener) {
     GzOutputStream out(filename);
 
     if (!out.getLastError().empty()) {
@@ -312,7 +314,7 @@ void SaveHandler::saveTo(const Path& filename, ProgressListener* listener) {
     }
 }
 
-void SaveHandler::saveTo(OutputStream* out, const Path& filename, ProgressListener* listener) {
+void SaveHandler::saveTo(OutputStream* out, const std::filesystem::path& filename, ProgressListener* listener) {
     // XMLNode should be locale-safe ( store doubles using Locale 'C' format
 
     out->write("<?xml version=\"1.0\" standalone=\"no\"?>\n");
@@ -321,7 +323,7 @@ void SaveHandler::saveTo(OutputStream* out, const Path& filename, ProgressListen
     for (GList* l = this->backgroundImages; l != nullptr; l = l->next) {
         auto* img = static_cast<BackgroundImage*>(l->data);
 
-        string tmpfn = filename.str() + "." + img->getFilename();
+        string tmpfn = filename.string() + "." + img->getFilename();
         if (!gdk_pixbuf_save(img->getPixbuf(), tmpfn.c_str(), "png", nullptr, nullptr)) {
             if (!this->errorMessage.empty()) {
                 this->errorMessage += "\n";

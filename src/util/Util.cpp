@@ -7,6 +7,7 @@
 #include <unistd.h>
 
 #include "StringUtils.h"
+#include "PathUtil.h"
 #include "XojMsgBox.h"
 #include "config-dev.h"
 #include "i18n.h"
@@ -74,64 +75,64 @@ auto Util::gdkrgba_to_hex(const GdkRGBA& color) -> uint32_t {  // clang-format o
 
 auto Util::getPid() -> pid_t { return ::getpid(); }
 
-auto Util::getAutosaveFilename() -> Path {
-    Path p(getConfigSubfolder("autosave"));
+auto Util::getAutosaveFilename() -> std::filesystem::path {
+    std::filesystem::path p(getConfigSubfolder("autosave"));
     p /= std::to_string(getPid()) + ".xopp";
     return p;
 }
 
-auto Util::getConfigFolder() -> Path {
-    Path p(g_get_user_config_dir());
+auto Util::getConfigFolder() -> std::filesystem::path {
+    std::filesystem::path p(g_get_user_config_dir());
     p /= g_get_prgname();
     return p;
 }
 
-auto Util::getConfigSubfolder(const Path& subfolder) -> Path {
-    Path p = getConfigFolder();
+auto Util::getConfigSubfolder(const std::filesystem::path& subfolder) -> std::filesystem::path {
+    std::filesystem::path p = getConfigFolder();
     p /= subfolder;
 
     return Util::ensureFolderExists(p);
 }
 
-auto Util::getCacheSubfolder(const Path& subfolder) -> Path {
-    Path p(g_get_user_cache_dir());
-    p /= g_get_prgname();
-    p /= subfolder;
-
-    return Util::ensureFolderExists(p);
-}
-
-auto Util::getDataSubfolder(const Path& subfolder) -> Path {
-    Path p(g_get_user_data_dir());
+auto Util::getCacheSubfolder(const std::filesystem::path& subfolder) -> std::filesystem::path {
+    std::filesystem::path p(g_get_user_cache_dir());
     p /= g_get_prgname();
     p /= subfolder;
 
     return Util::ensureFolderExists(p);
 }
 
-auto Util::getConfigFile(const Path& relativeFileName) -> Path {
-    Path p = getConfigSubfolder(relativeFileName.getParentPath());
-    p /= relativeFileName.getFilename();
+auto Util::getDataSubfolder(const std::filesystem::path& subfolder) -> std::filesystem::path {
+    std::filesystem::path p(g_get_user_data_dir());
+    p /= g_get_prgname();
+    p /= subfolder;
+
+    return Util::ensureFolderExists(p);
+}
+
+auto Util::getConfigFile(const std::filesystem::path& relativeFileName) -> std::filesystem::path {
+    std::filesystem::path p = getConfigSubfolder(relativeFileName.parent_path());
+    p /= relativeFileName.filename();
     return p;
 }
 
-auto Util::getCacheFile(const Path& relativeFileName) -> Path {
-    Path p = getCacheSubfolder(relativeFileName.getParentPath());
-    p /= relativeFileName.getFilename();
+auto Util::getCacheFile(const std::filesystem::path& relativeFileName) -> std::filesystem::path {
+    std::filesystem::path p = getCacheSubfolder(relativeFileName.parent_path());
+    p /= relativeFileName.filename();
     return p;
 }
 
-auto Util::getTmpDirSubfolder(const Path& subfolder) -> Path {
-    Path p(g_get_tmp_dir());
+auto Util::getTmpDirSubfolder(const std::filesystem::path& subfolder) -> std::filesystem::path {
+    std::filesystem::path p(g_get_tmp_dir());
     p /= FS(_F("xournalpp-{1}") % Util::getPid());
     p /= subfolder;
     return Util::ensureFolderExists(p);
 }
 
-auto Util::ensureFolderExists(const Path& p) -> Path {
+auto Util::ensureFolderExists(const std::filesystem::path& p) -> std::filesystem::path {
     if (g_mkdir_with_parents(p.c_str(), 0700) == -1) {
         Util::execInUiThread([=]() {
-            string msg = FS(_F("Could not create folder: {1}") % p.str());
+            string msg = FS(_F("Could not create folder: {1}") % p.string());
             g_warning("%s", msg.c_str());
             XojMsgBox::showErrorToUser(nullptr, msg);
         });
@@ -139,7 +140,7 @@ auto Util::ensureFolderExists(const Path& p) -> Path {
     return p;
 }
 
-void Util::openFileWithDefaultApplicaion(const Path& filename) {
+void Util::openFileWithDefaultApplicaion(const std::filesystem::path& filename) {
 #ifdef __APPLE__
     constexpr auto const OPEN_PATTERN = "open \"{1}\"";
 #elif _WIN32  // note the underscore: without it, it's not msdn official!
@@ -148,16 +149,16 @@ void Util::openFileWithDefaultApplicaion(const Path& filename) {
     constexpr auto const OPEN_PATTERN = "xdg-open \"{1}\"";
 #endif
 
-    string command = FS(FORMAT_STR(OPEN_PATTERN) % filename.getEscapedPath());
+    string command = FS(FORMAT_STR(OPEN_PATTERN) % PathUtil::getEscapedPath(filename));
     if (system(command.c_str()) != 0) {
         string msg = FS(_F("File couldn't be opened. You have to do it manually:\n"
                            "URL: {1}") %
-                        filename.str());
+                        filename.string());
         XojMsgBox::showErrorToUser(nullptr, msg);
     }
 }
 
-void Util::openFileWithFilebrowser(const Path& filename) {
+void Util::openFileWithFilebrowser(const std::filesystem::path& filename) {
 #ifdef __APPLE__
     constexpr auto const OPEN_PATTERN = "open \"{1}\"";
 #elif _WIN32
@@ -165,11 +166,11 @@ void Util::openFileWithFilebrowser(const Path& filename) {
 #else  // linux, unix, ...
     constexpr auto const OPEN_PATTERN = R"(nautilus "file://{1}" || dolphin "file://{1}" || konqueror "file://{1}" &)";
 #endif
-    string command = FS(FORMAT_STR(OPEN_PATTERN) % filename.getEscapedPath());
+    string command = FS(FORMAT_STR(OPEN_PATTERN) % PathUtil::getEscapedPath(filename));
     if (system(command.c_str()) != 0) {
         string msg = FS(_F("File couldn't be opened. You have to do it manually:\n"
                            "URL: {1}") %
-                        filename.str());
+                        filename.string());
         XojMsgBox::showErrorToUser(nullptr, msg);
     }
 }

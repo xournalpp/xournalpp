@@ -4,6 +4,7 @@
 #include <sstream>
 
 #include <config.h>
+#include <filesystem>
 
 #include "control/pagetype/PageTypeHandler.h"
 #include "control/stockdlg/XojOpenDlg.h"
@@ -90,7 +91,7 @@ void PageTemplateDialog::saveToFile() {
     gtk_file_filter_add_pattern(filterXoj, "*.xopt");
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
-    if (!settings->getLastSavePath().isEmpty()) {
+    if (!settings->getLastSavePath().empty()) {
         gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
     }
 
@@ -128,7 +129,7 @@ void PageTemplateDialog::saveToFile() {
 
 void PageTemplateDialog::loadFromFile() {
     XojOpenDlg dlg(GTK_WINDOW(this->getWindow()), this->settings);
-    Path filename = dlg.showOpenTemplateDialog();
+    std::filesystem::path filename = dlg.showOpenTemplateDialog();
 
     string contents;
     if (!PathUtil::readString(contents, filename)) {

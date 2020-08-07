@@ -69,9 +69,9 @@ public:
 
 public:
     // Menu File
-    bool newFile(string pageTemplate = "", Path fileName = "");
-    bool openFile(Path filename = "", int scrollToPage = -1, bool forceOpen = false);
-    bool annotatePdf(Path filename, bool attachPdf, bool attachToDocument);
+    bool newFile(string pageTemplate = "", std::filesystem::path fileName = "");
+    bool openFile(std::filesystem::path filename = "", int scrollToPage = -1, bool forceOpen = false);
+    bool annotatePdf(std::filesystem::path filename, bool attachPdf, bool attachToDocument);
     void print();
     void exportAsPdf();
     void exportAs();
@@ -108,7 +108,7 @@ public:
 
     // Asks user to replace an existing file when saving / exporting, since we add the extension
     // after the OK, we need to check manually
-    bool checkExistingFile(Path& folder, Path& filename);
+    bool checkExistingFile(std::filesystem::path& folder, std::filesystem::path& filename);
 
     void resetShapeRecognizer();
 
@@ -227,8 +227,8 @@ public:
     void unblock();
 
     void renameLastAutosaveFile();
-    void setLastAutosaveFile(Path newAutosaveFile);
-    void deleteLastAutosaveFile(Path newAutosaveFile);
+    void setLastAutosaveFile(std::filesystem::path newAutosaveFile);
+    void deleteLastAutosaveFile(std::filesystem::path newAutosaveFile);
     void setClipboardHandlerSelection(EditSelection* selection);
 
     MetadataManager* getMetadataManager();
@@ -317,8 +317,8 @@ protected:
      */
     bool shouldFileOpen(string filename);
 
-    bool loadXoptTemplate(Path filename);
-    bool loadPdf(const Path& filename, int scrollToPage);
+    bool loadXoptTemplate(std::filesystem::path filename);
+    bool loadPdf(const std::filesystem::path& filename, int scrollToPage);
 
 private:
     /**
@@ -374,7 +374,7 @@ private:
      * The autosave handler ID
      */
     int autosaveTimeout = 0;
-    Path lastAutosaveFilename;
+    std::filesystem::path lastAutosaveFilename;
 
     XournalScheduler* scheduler;
 

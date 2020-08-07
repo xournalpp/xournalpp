@@ -15,10 +15,12 @@
 
 #include <limits>
 #include <optional>
+#include <filesystem>
 
 #include "util/audio/AudioPlayer.h"
 
 #include "XournalView.h"
+#include "PathUtil.h"
 
 class BaseSelectObject {
 public:
@@ -152,10 +154,10 @@ protected:
 
             if (!fn.empty()) {
                 if (fn.rfind(G_DIR_SEPARATOR, 0) != 0) {
-                    Path path = Path::fromUri(view->settings->getAudioFolder());
+                    std::filesystem::path path = PathUtil::fromUri(view->settings->getAudioFolder());
                     path /= fn;
 
-                    fn = path.str();
+                    fn = path.string();
                 }
                 auto* ac = view->getXournal()->getControl()->getAudioController();
                 bool success = ac->startPlayback(fn, (unsigned int)ts);

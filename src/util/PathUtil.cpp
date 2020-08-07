@@ -1,4 +1,5 @@
 #include "PathUtil.h"
+#include "StringUtils.h"
 
 #include <array>
 
@@ -16,7 +17,7 @@
  *
  * @return true if the file was read, false if not
  */
-auto PathUtil::readString(string& output, Path& path, bool showErrorToUser) -> bool {
+auto PathUtil::readString(string& output, std::filesystem::path& path, bool showErrorToUser) -> bool {
     gchar* contents = nullptr;
     gsize length = 0;
     GError* error = nullptr;
@@ -35,7 +36,7 @@ auto PathUtil::readString(string& output, Path& path, bool showErrorToUser) -> b
     return false;
 }
 
-auto PathUtil::copy(const Path& src, const Path& dest) -> bool {
+auto PathUtil::copy(const std::filesystem::path& src, const std::filesystem::path& dest) -> bool {
     std::array<char, 16 * 1024> buffer{};  // 16k
 
     FILE* fpRead = g_fopen(src.c_str(), "rbe");
@@ -61,3 +62,70 @@ auto PathUtil::copy(const Path& src, const Path& dest) -> bool {
 
     return true;
 }
+
+auto PathUtil::getEscapedPath(const std::filesystem::path& path) -> string {
+    string escaped = path.string();
+    StringUtils::replaceAllChars(escaped, {replace_pair('\\', "\\\\"), replace_pair('\"', "\\\"")});
+
+    return escaped;
+}
+
+auto PathUtil::hasXournalFileExt(const std::filesystem::path& path) -> bool {
+    auto extension = path.extension();
+    return extension == ".xoj" || extension == ".xopp";
+}
+
+auto PathUtil::clearExtensions(std::filesystem::path& path, const std::string &ext) -> void {
+    auto rm_ext = [&path](const std::string ext) {
+        if (StringUtils::toLowerCase(path.extension()) == StringUtils::toLowerCase(ext)) {
+            path.replace_extension("");
+        }
+    };
+
+    rm_ext(".xoj");
+    rm_ext(".xopp");
+    if (!ext.empty()) {
+        rm_ext(ext);
+    }
+}
+
+auto PathUtil::fromUri(const std::string &uri) -> std::filesystem::path {
+    if (!StringUtils::startsWith(uri, "file://")) {
+        return {};
+    }
+
+    gchar* filename = g_filename_from_uri(uri.c_str(), nullptr, nullptr);
+    if (filename == nullptr) {
+        return {};
+    }
+    std::filesystem::path p(filename);
+    g_free(filename);
+
+    return p;
+}
+
+auto PathUtil::toUri(const std::filesystem::path& path, GError **error) -> std::string {
+    char* uri = g_filename_to_uri(path.c_str(), nullptr, error);
+
+    if (uri == nullptr) {
+        return {};
+    }
+
+    string uriString = uri;
+    g_free(uri);
+    return uriString;
+}
+
+#ifndef BUILD_THUMBNAILER
+auto PathUtil::fromGFile(GFile* file) -> std::filesystem::path {
+    char* uri = g_file_get_uri(file);
+    std::filesystem::path ret{fromUri(uri)};
+    g_free(uri);
+
+    return ret;
+}
+
+auto PathUtil::toGFile(const std::filesystem::path path) -> GFile* {
+    return g_file_new_for_path(path.c_str());
+}
+#endif

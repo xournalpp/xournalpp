@@ -13,10 +13,10 @@
 
 #include <string>
 #include <vector>
+#include <filesystem>
 
 #include <gtk/gtk.h>
 
-#include "Path.h"
 #include "XournalType.h"
 
 class RecentManagerListener {
@@ -43,13 +43,13 @@ public:
      * Adds a file to the underlying GtkRecentManager
      * without altering the menu
      */
-    static void addRecentFileFilename(const Path& filename);
+    static void addRecentFileFilename(const std::filesystem::path& filename);
 
     /**
      * Removes a file from the underlying GtkRecentManager
      * without altering the menu
      */
-    static void removeRecentFileFilename(const Path& filename);
+    static void removeRecentFileFilename(const std::filesystem::path& filename);
 
     /**
      * Removes all of the menu items corresponding to recent files
@@ -75,7 +75,7 @@ public:
      * Notifies all RecentManagerListener%s that a new
      * file is opened
      */
-    void openRecent(const Path& p);
+    void openRecent(const std::filesystem::path& p);
 
     /**
      * Returns the root menu containing all the items

@@ -60,7 +60,7 @@ auto sortMetadata(MetadataEntry& a, MetadataEntry& b) -> bool { return a.time > 
  * Load the metadata list (sorted)
  */
 auto MetadataManager::loadList() -> vector<MetadataEntry> {
-    Path folder = Util::getConfigSubfolder("metadata");
+    std::filesystem::path folder = Util::getConfigSubfolder("metadata");
 
     vector<MetadataEntry> data;
 
@@ -74,7 +74,7 @@ auto MetadataManager::loadList() -> vector<MetadataEntry> {
 
     const gchar* file = nullptr;
     while ((file = g_dir_read_name(home)) != nullptr) {
-        string path = folder.str();
+        string path = folder.string();
         path += "/";
         path += file;
 
@@ -190,8 +190,8 @@ void MetadataManager::storeMetadata(MetadataEntry* m) {
         }
     }
 
-    Path folder = Util::getConfigSubfolder("metadata");
-    string path = folder.str();
+    std::filesystem::path folder = Util::getConfigSubfolder("metadata");
+    string path = folder.string();
     path += "/";
     gint64 time = g_get_real_time();
     path += std::to_string(time);

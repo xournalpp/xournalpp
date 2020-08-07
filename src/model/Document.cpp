@@ -2,11 +2,13 @@
 
 #include <algorithm>
 #include <utility>
+#include <filesystem>
 
 #include <config.h>
 
 #include "pdf/base/XojPdfAction.h"
 
+#include "PathUtil.h"
 #include "LinkDestination.h"
 #include "Stacktrace.h"
 #include "Util.h"
@@ -100,35 +102,35 @@ auto Document::getPageCount() -> size_t { return this->pages.size(); }
 
 auto Document::getPdfPageCount() -> size_t { return pdfDocument.getPageCount(); }
 
-void Document::setFilename(Path filename) { this->filename = std::move(filename); }
+void Document::setFilename(std::filesystem::path filename) { this->filename = std::move(filename); }
 
-auto Document::getFilename() -> Path { return filename; }
+auto Document::getFilename() -> std::filesystem::path { return filename; }
 
-auto Document::getPdfFilename() -> Path { return pdfFilename; }
+auto Document::getPdfFilename() -> std::filesystem::path { return pdfFilename; }
 
-auto Document::createSaveFolder(Path lastSavePath) -> Path {
-    if (!filename.isEmpty()) {
-        return filename.getParentPath();
+auto Document::createSaveFolder(std::filesystem::path lastSavePath) -> std::filesystem::path {
+    if (!filename.empty()) {
+        return filename.parent_path();
     }
-    if (!pdfFilename.isEmpty()) {
-        return pdfFilename.getParentPath();
+    if (!pdfFilename.empty()) {
+        return pdfFilename.parent_path();
     }
 
 
     return lastSavePath;
 }
 
-auto Document::createSaveFilename(DocumentType type, const string& defaultSaveName) -> Path {
-    if (!filename.isEmpty()) {
+auto Document::createSaveFilename(DocumentType type, const string& defaultSaveName) -> std::filesystem::path {
+    if (!filename.empty()) {
         // This can be any extension
-        Path p = filename.getFilename();
-        p.clearExtensions();
+        std::filesystem::path p = filename.filename();
+        p.replace_extension("");
         return p;
     }
-    if (!pdfFilename.isEmpty()) {
-        Path p = pdfFilename.getFilename();
+    if (!pdfFilename.empty()) {
+        std::filesystem::path p = pdfFilename.filename();
         std::string ext = this->attachPdf ? ".pdf" : "";
-        p.clearExtensions(ext);
+        PathUtil::clearExtensions(p, ext);
         return p;
     }
 
@@ -138,8 +140,8 @@ auto Document::createSaveFilename(DocumentType type, const string& defaultSaveNa
     strftime(stime, sizeof(stime), defaultSaveName.c_str(), localtime(&curtime));
 
     // Remove the extension, file format is handled by the filter combo box
-    Path p = stime;
-    p.clearExtensions();
+    std::filesystem::path p = stime;
+    PathUtil::clearExtensions(p);
     return p;
 }
 
@@ -157,14 +159,14 @@ void Document::setPreview(cairo_surface_t* preview) {
     }
 }
 
-auto Document::getEvMetadataFilename() -> Path {
-    if (!this->filename.isEmpty()) {
+auto Document::getEvMetadataFilename() -> std::filesystem::path {
+    if (!this->filename.empty()) {
         return this->filename;
     }
-    if (!this->pdfFilename.isEmpty()) {
+    if (!this->pdfFilename.empty()) {
         return this->pdfFilename;
     }
-    return Path("");
+    return std::filesystem::path("");
 }
 
 auto Document::isPdfDocumentLoaded() -> bool { return pdfDocument.isLoaded(); }
@@ -274,7 +276,7 @@ void Document::updateIndexPageNumbers() {
     }
 }
 
-auto Document::readPdf(const Path& filename, bool initPages, bool attachToDocument, gpointer data, gsize length)
+auto Document::readPdf(const std::filesystem::path& filename, bool initPages, bool attachToDocument, gpointer data, gsize length)
         -> bool {
     GError* popplerError = nullptr;
 
@@ -282,7 +284,7 @@ auto Document::readPdf(const Path& filename, bool initPages, bool attachToDocume
 
     if (data != nullptr) {
         if (!pdfDocument.load(data, length, password, &popplerError)) {
-            lastError = FS(_F("Document not loaded! ({1}), {2}") % filename.str() % popplerError->message);
+            lastError = FS(_F("Document not loaded! ({1}), {2}") % filename.string() % popplerError->message);
             g_error_free(popplerError);
             unlock();
 
@@ -290,7 +292,7 @@ auto Document::readPdf(const Path& filename, bool initPages, bool attachToDocume
         }
     } else {
         if (!pdfDocument.load(filename.c_str(), password, &popplerError)) {
-            lastError = FS(_F("Document not loaded! ({1}), {2}") % filename.str() % popplerError->message);
+            lastError = FS(_F("Document not loaded! ({1}), {2}") % filename.string() % popplerError->message);
             g_error_free(popplerError);
             unlock();
 

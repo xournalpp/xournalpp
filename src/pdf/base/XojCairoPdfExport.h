@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <filesystem>
+
 #include "control/jobs/ProgressListener.h"
 #include "model/Document.h"
 
@@ -22,8 +24,8 @@ public:
     virtual ~XojCairoPdfExport();
 
 public:
-    virtual bool createPdf(Path file);
-    virtual bool createPdf(Path file, PageRangeVector& range);
+    virtual bool createPdf(std::filesystem::path file);
+    virtual bool createPdf(std::filesystem::path file, PageRangeVector& range);
     virtual string getLastError();
 
     /**
@@ -32,7 +34,7 @@ public:
     virtual void setNoBackgroundExport(bool noBackgroundExport);
 
 private:
-    bool startPdf(const Path& file);
+    bool startPdf(const std::filesystem::path& file);
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
     /**
      * Populate the outline of the generated PDF using the outline of the

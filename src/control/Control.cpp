@@ -84,7 +84,7 @@ Control::Control(GladeSearchpath* gladeSearchPath) {
     this->lastGroup = GROUP_NOGROUP;
     this->lastEnabled = false;
 
-    Path name = Util::getConfigFile(SETTINGS_XML_FILE);
+    std::filesystem::path name = Util::getConfigFile(SETTINGS_XML_FILE);
     this->settings = new Settings(name);
     this->settings->load();
 
@@ -183,26 +183,26 @@ Control::~Control() {
 }
 
 void Control::renameLastAutosaveFile() {
-    if (this->lastAutosaveFilename.isEmpty()) {
+    if (this->lastAutosaveFilename.empty()) {
         return;
     }
 
-    Path filename = this->lastAutosaveFilename;
-    Path renamed = Util::getAutosaveFilename();
-    renamed.clearExtensions();
-    if (filename.str().find_first_of('.') != 0) {
+    std::filesystem::path filename = this->lastAutosaveFilename;
+    std::filesystem::path renamed = Util::getAutosaveFilename();
+    PathUtil::clearExtensions(renamed);
+    if (filename.string().find_first_of('.') != 0) {
         // This file must be a fresh, unsaved document. Since this file is
         // already in ~/.xournalpp/autosave/, we need to change the renamed filename.
         renamed += ".old.autosave.xopp";
     } else {
         // The file is a saved document with the form ".<filename>.autosave.xopp"
-        renamed += filename.getFilename();
+        renamed += filename.filename();
     }
 
     g_message("%s",
-              FS(_F("Autosave renamed from {1} to {2}") % this->lastAutosaveFilename.str() % renamed.str()).c_str());
+              FS(_F("Autosave renamed from {1} to {2}") % this->lastAutosaveFilename.string() % renamed.string()).c_str());
 
-    if (!filename.exists()) {
+    if (!std::filesystem::exists(filename)) {
         this->save(false);
     }
 
@@ -226,7 +226,7 @@ void Control::renameLastAutosaveFile() {
 
     if (err != nullptr) {
         auto fmtstr = _F("Could not rename autosave file from \"{1}\" to \"{2}\": {3}");
-        errors.push_back(FS(fmtstr % filename.str() % renamed.str() % err->message));
+        errors.push_back(FS(fmtstr % filename.string() % renamed.string() % err->message));
         g_error_free(err);
     }
 
@@ -240,10 +240,10 @@ void Control::renameLastAutosaveFile() {
     }
 }
 
-void Control::setLastAutosaveFile(Path newAutosaveFile) { this->lastAutosaveFilename = std::move(newAutosaveFile); }
+void Control::setLastAutosaveFile(std::filesystem::path newAutosaveFile) { this->lastAutosaveFilename = std::move(newAutosaveFile); }
 
-void Control::deleteLastAutosaveFile(Path newAutosaveFile) {
-    if (!this->lastAutosaveFilename.isEmpty()) {
+void Control::deleteLastAutosaveFile(std::filesystem::path newAutosaveFile) {
+    if (!this->lastAutosaveFilename.empty()) {
         // delete old autosave file
         g_unlink(this->lastAutosaveFilename.c_str());
     }
@@ -370,7 +370,7 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
     this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
     this->sidebar->selectPageNr(page, pdfPage);
 
-    this->metadata->storeMetadata(this->doc->getEvMetadataFilename().str(), page, getZoomControl()->getZoomReal());
+    this->metadata->storeMetadata(this->doc->getEvMetadataFilename().string(), page, getZoomControl()->getZoomReal());
 
     int current = getCurrentPageNo();
     int count = this->doc->getPageCount();
@@ -1042,8 +1042,8 @@ void Control::manageToolbars() {
 
     this->win->updateToolbarMenu();
 
-    Path file = Util::getConfigFile(TOOLBAR_CONFIG);
-    this->win->getToolbarModel()->save(file.str());
+    std::filesystem::path file = Util::getConfigFile(TOOLBAR_CONFIG);
+    this->win->getToolbarModel()->save(file.string());
 }
 
 void Control::customizeToolbars() {
@@ -1897,7 +1897,7 @@ void Control::showSettings() {
     delete dlg;
 }
 
-auto Control::newFile(string pageTemplate, Path fileName) -> bool {
+auto Control::newFile(string pageTemplate, std::filesystem::path fileName) -> bool {
     if (!this->close(true)) {
         return false;
     }
@@ -1906,7 +1906,7 @@ auto Control::newFile(string pageTemplate, Path fileName) -> bool {
 
     this->doc->lock();
     *doc = newDoc;
-    if (!fileName.isEmpty()) {
+    if (!fileName.empty()) {
         this->doc->setFilename(fileName);
     };
     this->doc->unlock();
@@ -1927,7 +1927,7 @@ auto Control::shouldFileOpen(string filename) -> bool {
     // Compare case insensitive, just in case (Windows, FAT Filesystem etc.)
 
     filename = StringUtils::toLowerCase(filename);
-    string basename = StringUtils::toLowerCase(Util::getConfigSubfolder("").str());
+    string basename = StringUtils::toLowerCase(Util::getConfigSubfolder("").string());
 
     if (basename.size() > filename.size()) {
         return true;
@@ -1948,8 +1948,8 @@ auto Control::shouldFileOpen(string filename) -> bool {
     return true;
 }
 
-auto Control::openFile(Path filename, int scrollToPage, bool forceOpen) -> bool {
-    if (!forceOpen && !shouldFileOpen(filename.str())) {
+auto Control::openFile(std::filesystem::path filename, int scrollToPage, bool forceOpen) -> bool {
+    if (!forceOpen && !shouldFileOpen(filename.string())) {
         return false;
     }
 
@@ -1957,33 +1957,33 @@ auto Control::openFile(Path filename, int scrollToPage, bool forceOpen) -> bool 
         return false;
     }
 
-    if (filename.isEmpty()) {
+    if (filename.empty()) {
         bool attachPdf = false;
         XojOpenDlg dlg(getGtkWindow(), this->settings);
-        filename = Path(dlg.showOpenDialog(false, attachPdf).str());
+        filename = std::filesystem::path(dlg.showOpenDialog(false, attachPdf).string());
 
-        g_message("%s", (_F("Filename: {1}") % filename.str()).c_str());
+        g_message("%s", (_F("Filename: {1}") % filename.string()).c_str());
 
-        if (filename.isEmpty()) {
+        if (filename.empty()) {
             return false;
         }
 
-        if (!shouldFileOpen(filename.str())) {
+        if (!shouldFileOpen(filename.string())) {
             return false;
         }
     }
 
     // Read template file
-    if (filename.hasExtension(".xopt")) {
+    if (filename.extension() == ".xopt") {
         return loadXoptTemplate(filename);
     }
 
-    if (filename.hasExtension(".pdf")) {
+    if (filename.extension() == ".pdf") {
         return loadPdf(filename, scrollToPage);
     }
 
     LoadHandler loadHandler;
-    Document* loadedDocument = loadHandler.loadDocument(filename.str());
+    Document* loadedDocument = loadHandler.loadDocument(filename.string());
     if ((loadedDocument != nullptr && loadHandler.isAttachedPdfMissing()) ||
         !loadHandler.getMissingPdfFilename().empty()) {
         // give the user a second chance to select a new PDF file, or to discard the PDF
@@ -2003,21 +2003,21 @@ auto Control::openFile(Path filename, int scrollToPage, bool forceOpen) -> bool 
         if (res == 2)  // remove PDF background
         {
             loadHandler.removePdfBackground();
-            loadedDocument = loadHandler.loadDocument(filename.str());
+            loadedDocument = loadHandler.loadDocument(filename.string());
         } else if (res == 1)  // select another PDF background
         {
             bool attachToDocument = false;
             XojOpenDlg dlg(getGtkWindow(), this->settings);
-            Path pdfFilename = Path(dlg.showOpenDialog(true, attachToDocument).str());
-            if (!pdfFilename.isEmpty()) {
-                loadHandler.setPdfReplacement(pdfFilename.str(), attachToDocument);
-                loadedDocument = loadHandler.loadDocument(filename.str());
+            std::filesystem::path pdfFilename = std::filesystem::path(dlg.showOpenDialog(true, attachToDocument).string());
+            if (!pdfFilename.empty()) {
+                loadHandler.setPdfReplacement(pdfFilename.string(), attachToDocument);
+                loadedDocument = loadHandler.loadDocument(filename.string());
             }
         }
     }
 
     if (!loadedDocument) {
-        string msg = FS(_F("Error opening file \"{1}\"") % filename.str()) + "\n" + loadHandler.getLastError();
+        string msg = FS(_F("Error opening file \"{1}\"") % filename.string()) + "\n" + loadHandler.getLastError();
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 
         fileLoaded(scrollToPage);
@@ -2045,27 +2045,27 @@ auto Control::openFile(Path filename, int scrollToPage, bool forceOpen) -> bool 
     // Set folder as last save path, so the next save will be at the current document location
     // This is important because of the new .xopp format, where Xournal .xoj handled as import,
     // not as file to load
-    settings->setLastSavePath(filename.getParentPath());
+    settings->setLastSavePath(filename.parent_path());
 
 
     fileLoaded(scrollToPage);
     return true;
 }
 
-auto Control::loadPdf(const Path& filename, int scrollToPage) -> bool {
+auto Control::loadPdf(const std::filesystem::path& filename, int scrollToPage) -> bool {
     LoadHandler loadHandler;
 
     if (settings->isAutloadPdfXoj()) {
-        Path f = filename;
-        f.clearExtensions();
+        std::filesystem::path f = filename;
+        PathUtil::clearExtensions(f);
         f += ".xopp";
-        Document* tmp = loadHandler.loadDocument(f.str());
+        Document* tmp = loadHandler.loadDocument(f.string());
 
         if (tmp == nullptr) {
             f = filename;
-            f.clearExtensions();
+            PathUtil::clearExtensions(f);
             f += ".xoj";
-            tmp = loadHandler.loadDocument(f.str());
+            tmp = loadHandler.loadDocument(f.string());
         }
 
         if (tmp) {
@@ -2084,7 +2084,7 @@ auto Control::loadPdf(const Path& filename, int scrollToPage) -> bool {
     return an;
 }
 
-auto Control::loadXoptTemplate(Path filename) -> bool {
+auto Control::loadXoptTemplate(std::filesystem::path filename) -> bool {
     string contents;
     if (!PathUtil::readString(contents, filename)) {
         return false;
@@ -2095,11 +2095,11 @@ auto Control::loadXoptTemplate(Path filename) -> bool {
 
 void Control::fileLoaded(int scrollToPage) {
     this->doc->lock();
-    Path file = this->doc->getEvMetadataFilename();
+    std::filesystem::path file = this->doc->getEvMetadataFilename();
     this->doc->unlock();
 
-    if (!file.isEmpty()) {
-        MetadataEntry md = MetadataManager::getForFile(file.str());
+    if (!file.empty()) {
+        MetadataEntry md = MetadataManager::getForFile(file.string());
         if (!md.valid) {
             md.zoom = -1;
             md.page = 0;
@@ -2162,15 +2162,15 @@ void Control::loadMetadata(MetadataEntry md) {
     g_idle_add(reinterpret_cast<GSourceFunc>(loadMetadataCallback), data);
 }
 
-auto Control::annotatePdf(Path filename, bool /*attachPdf*/, bool attachToDocument) -> bool {
+auto Control::annotatePdf(std::filesystem::path filename, bool /*attachPdf*/, bool attachToDocument) -> bool {
     if (!this->close(false)) {
         return false;
     }
 
-    if (filename.isEmpty()) {
+    if (filename.empty()) {
         XojOpenDlg dlg(getGtkWindow(), this->settings);
-        filename = Path(dlg.showOpenDialog(true, attachToDocument).str());
-        if (filename.isEmpty()) {
+        filename = std::filesystem::path(dlg.showOpenDialog(true, attachToDocument).string());
+        if (filename.empty()) {
             return false;
         }
     }
@@ -2186,16 +2186,16 @@ auto Control::annotatePdf(Path filename, bool /*attachPdf*/, bool attachToDocume
         RecentManager::addRecentFileFilename(filename.c_str());
 
         this->doc->lock();
-        Path file = this->doc->getEvMetadataFilename();
+        std::filesystem::path file = this->doc->getEvMetadataFilename();
         this->doc->unlock();
-        MetadataEntry md = MetadataManager::getForFile(file.str());
+        MetadataEntry md = MetadataManager::getForFile(file.string());
         loadMetadata(md);
     } else {
         this->doc->lock();
         string errMsg = doc->getLastErrorMsg();
         this->doc->unlock();
 
-        string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filename.str() % errMsg);
+        string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filename.string() % errMsg);
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
     }
     getCursor()->setCursorBusy(false);
@@ -2260,10 +2260,10 @@ auto Control::save(bool synchron) -> bool {
     clearSelectionEndText();
 
     this->doc->lock();
-    Path filename = this->doc->getFilename();
+    std::filesystem::path filename = this->doc->getFilename();
     this->doc->unlock();
 
-    if (filename.isEmpty()) {
+    if (filename.empty()) {
         if (!showSaveDialog()) {
             return false;
         }
@@ -2296,8 +2296,8 @@ auto Control::showSaveDialog() -> bool {
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
     this->doc->lock();
-    Path suggested_folder = this->doc->createSaveFolder(this->settings->getLastSavePath());
-    Path suggested_name = this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
+    std::filesystem::path suggested_folder = this->doc->createSaveFolder(this->settings->getLastSavePath());
+    std::filesystem::path suggested_name = this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
     this->doc->unlock();
 
     gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), suggested_folder.c_str());
@@ -2314,10 +2314,10 @@ auto Control::showSaveDialog() -> bool {
             return false;
         }
 
-        Path filenameTmp = Path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
-        filenameTmp.clearExtensions();
+        std::filesystem::path filenameTmp = std::filesystem::path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+        PathUtil::clearExtensions(filenameTmp);
         filenameTmp += ".xopp";
-        Path currentFolder(gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog)));
+        std::filesystem::path currentFolder(gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog)));
 
         // Since we add the extension after the OK button, we have to check manually on existing files
         if (checkExistingFile(currentFolder, filenameTmp)) {
@@ -2347,21 +2347,21 @@ void Control::updateWindowTitle() {
     string title{};
 
     this->doc->lock();
-    if (doc->getFilename().isEmpty()) {
-        if (doc->getPdfFilename().isEmpty()) {
+    if (doc->getFilename().empty()) {
+        if (doc->getPdfFilename().empty()) {
             title = _("Unsaved Document");
         } else {
             if (undoRedo->isChanged()) {
                 title += "*";
             }
-            title += doc->getPdfFilename().getFilename();
+            title += doc->getPdfFilename().filename();
         }
     } else {
         if (undoRedo->isChanged()) {
             title += "*";
         }
 
-        title += doc->getFilename().getFilename();
+        title += doc->getFilename().filename();
     }
     this->doc->unlock();
 
@@ -2395,10 +2395,10 @@ auto Control::saveAs() -> bool {
         return false;
     }
     this->doc->lock();
-    Path filename = doc->getFilename();
+    std::filesystem::path filename = doc->getFilename();
     this->doc->unlock();
 
-    if (filename.isEmpty()) {
+    if (filename.empty()) {
         return false;
     }
 
@@ -2409,7 +2409,7 @@ auto Control::saveAs() -> bool {
 
 void Control::resetSavedStatus() {
     this->doc->lock();
-    Path filename = this->doc->getFilename();
+    std::filesystem::path filename = this->doc->getFilename();
     this->doc->unlock();
 
     this->undoRedo->documentSaved();
@@ -2446,7 +2446,8 @@ auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
     metadata->documentChanged();
 
     bool discard = false;
-    const bool fileRemoved = !doc->getFilename().isEmpty() && !this->doc->getFilename().exists();
+    const bool fileRemoved = !doc->getFilename().empty()
+        && !std::filesystem::exists(this->doc->getFilename());
     if (undoRedo->isChanged()) {
         const auto message = fileRemoved ? _("Document file was removed.") : _("This document is not saved yet.");
         const auto saveLabel = fileRemoved ? _("Save As...") : _("Save");
@@ -2504,9 +2505,9 @@ void Control::closeDocument() {
     this->undoRedoChanged();
 }
 
-auto Control::checkExistingFile(Path& folder, Path& filename) -> bool {
-    if (filename.exists()) {
-        string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % filename.getFilename());
+auto Control::checkExistingFile(std::filesystem::path& folder, std::filesystem::path& filename) -> bool {
+    if (std::filesystem::exists(filename)) {
+        string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % filename.filename());
         int res = XojMsgBox::replaceFileQuestion(getGtkWindow(), msg);
         return res == GTK_RESPONSE_OK;
     }

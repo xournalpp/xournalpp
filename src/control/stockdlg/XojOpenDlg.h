@@ -12,10 +12,10 @@
 #pragma once
 
 #include <gtk/gtk.h>
+#include <filesystem>
 
 #include "control/settings/Settings.h"
 
-#include "Path.h"
 
 class XojOpenDlg {
 public:
@@ -23,8 +23,8 @@ public:
     virtual ~XojOpenDlg();
 
 public:
-    Path showOpenDialog(bool pdf, bool& attachPdf);
-    Path showOpenTemplateDialog();
+    std::filesystem::path showOpenDialog(bool pdf, bool& attachPdf);
+    std::filesystem::path showOpenTemplateDialog();
 
 protected:
     void addFilterAllFiles();
@@ -33,7 +33,7 @@ protected:
     void addFilterXopp();
     void addFilterXopt();
 
-    Path runDialog();
+    std::filesystem::path runDialog();
 
 private:
     static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);

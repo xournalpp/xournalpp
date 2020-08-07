@@ -29,7 +29,7 @@ void emergencySave() {
 
     g_warning(_("Trying to emergency save the current open document…"));
 
-    Path filename = Util::getConfigFile("emergencysave.xopp");
+    std::filesystem::path filename = Util::getConfigFile("emergencysave.xopp");
 
     SaveHandler handler;
     handler.prepareSave(document);
@@ -38,6 +38,6 @@ void emergencySave() {
     if (!handler.getErrorMessage().empty()) {
         g_error("%s", FC(_F("Error: {1}") % handler.getErrorMessage()));
     } else {
-        g_warning("%s", FC(_F("Successfully saved document to \"{1}\"") % filename.str()));
+        g_warning("%s", FC(_F("Successfully saved document to \"{1}\"") % filename.string()));
     }
 }

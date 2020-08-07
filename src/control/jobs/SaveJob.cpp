@@ -6,6 +6,8 @@
 #include "control/xojfile/SaveHandler.h"
 #include "view/DocumentView.h"
 
+#include "PathUtil.h"
+
 #include "XojMsgBox.h"
 #include "i18n.h"
 
@@ -86,13 +88,13 @@ auto SaveJob::save() -> bool {
 
     doc->lock();
     h.prepareSave(doc);
-    Path filename = doc->getFilename();
-    filename.clearExtensions();
-    filename += ".xopp";
+    std::filesystem::path filename = doc->getFilename();
+    PathUtil::clearExtensions(filename);
+    filename /= ".xopp";
     doc->unlock();
 
     if (doc->shouldCreateBackupOnSave()) {
-        Path backup = filename;
+        std::filesystem::path backup = filename;
         backup += "~";
 
         if (!PathUtil::copy(doc->getFilename(), backup)) {

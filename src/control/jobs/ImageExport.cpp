@@ -12,7 +12,7 @@
 #include "i18n.h"
 
 
-ImageExport::ImageExport(Document* doc, Path filename, ExportGraphicsFormat format, bool hideBackground,
+ImageExport::ImageExport(Document* doc, std::filesystem::path filename, ExportGraphicsFormat format, bool hideBackground,
                          PageRangeVector& exportRange):
         doc(doc),
         filename(std::move(filename)),
@@ -76,10 +76,10 @@ auto ImageExport::freeSurface(int id) -> bool {
 auto ImageExport::getFilenameWithNumber(int no) const -> string {
     if (no == -1) {
         // No number to add
-        return filename.str();
+        return filename.string();
     }
 
-    string filepath = filename.str();
+    string filepath = filename.string();
     size_t dotPos = filepath.find_last_of('.');
     if (dotPos == string::npos) {
         // No file extension, add number

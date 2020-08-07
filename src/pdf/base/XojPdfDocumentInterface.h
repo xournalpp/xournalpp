@@ -13,8 +13,9 @@
 
 #include <string>
 #include <vector>
+#include <filesystem>
 
-#include "Path.h"
+
 #include "XojPdfBookmarkIterator.h"
 #include "XojPdfPage.h"
 #include "XournalType.h"
@@ -29,8 +30,8 @@ public:
     virtual bool equals(XojPdfDocumentInterface* doc) = 0;
 
 public:
-    virtual bool save(Path filename, GError** error) = 0;
-    virtual bool load(Path filename, string password, GError** error) = 0;
+    virtual bool save(std::filesystem::path filename, GError** error) = 0;
+    virtual bool load(std::filesystem::path filename, string password, GError** error) = 0;
     virtual bool load(gpointer data, gsize length, string password, GError** error) = 0;
     virtual bool isLoaded() = 0;
 

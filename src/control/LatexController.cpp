@@ -103,7 +103,7 @@ auto LatexController::runCommandAsync(const string& texString) -> std::unique_pt
     texContents += texString;
     texContents += LATEX_TEMPLATE_2;
 
-    Path texFile = this->texTmpDir / "tex.tex";
+    std::filesystem::path texFile = this->texTmpDir / "tex.tex";
 
     GError* err = nullptr;
     if (!g_file_set_contents(texFile.c_str(), texContents.c_str(), texContents.length(), &err)) {
@@ -266,10 +266,10 @@ void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, LatexContro
             g_warning("%s", message.c_str());
             XojMsgBox::showErrorToUser(self->control->getGtkWindow(), message);
         }
-        Path pdfPath = self->texTmpDir / "tex.pdf";
-        if (pdfPath.exists()) {
+        std::filesystem::path pdfPath = self->texTmpDir / "tex.pdf";
+        if (std::filesystem::exists(pdfPath)) {
             // Delete the pdf to prevent more errors
-            pdfPath.deleteFile();
+            std::filesystem::remove(pdfPath);
         }
         g_error_free(err);
     } else {
@@ -362,7 +362,7 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
         return nullptr;
     }
 
-    Path pdfPath = texTmpDir / "tex.pdf";
+    std::filesystem::path pdfPath = texTmpDir / "tex.pdf";
     GError* err = nullptr;
 
     gchar* fileContents = nullptr;

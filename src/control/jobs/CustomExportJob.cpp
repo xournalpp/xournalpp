@@ -2,6 +2,7 @@
 
 #include <config-features.h>
 
+#include "PathUtil.h"
 #include "control/Control.h"
 #include "control/xojfile/XojExportHandler.h"
 #include "gui/dialog/ExportDialog.h"
@@ -53,7 +54,7 @@ auto CustomExportJob::isUriValid(string& uri) -> bool {
     this->chosenFilterName = BaseExportJob::getFilterName();
 
     // Remove any pre-existing extension and adds the chosen one
-    filename.clearExtensions(filters[this->chosenFilterName]->extension);
+    PathUtil::clearExtensions(filename, filters[this->chosenFilterName]->extension);
     filename += filters[this->chosenFilterName]->extension;
 
     return checkOverwriteBackgroundPDF(filename);
@@ -64,7 +65,7 @@ auto CustomExportJob::showFilechooser() -> bool {
         return false;
     }
 
-    if (filename.hasExtension(".xoj")) {
+    if (filename.extension() == ".xoj") {
         exportTypeXoj = true;
         return true;
     }
@@ -72,13 +73,13 @@ auto CustomExportJob::showFilechooser() -> bool {
     Document* doc = control->getDocument();
     doc->lock();
     auto* dlg = new ExportDialog(control->getGladeSearchPath());
-    if (filename.hasExtension(".pdf")) {
+    if (filename.extension() == ".pdf") {
         dlg->removeDpiSelection();
         format = EXPORT_GRAPHICS_PDF;
-    } else if (filename.hasExtension(".svg")) {
+    } else if (filename.extension() == ".svg") {
         dlg->removeDpiSelection();
         format = EXPORT_GRAPHICS_SVG;
-    } else if (filename.hasExtension(".png")) {
+    } else if (filename.extension() == ".png") {
         dlg->removeDpiSelection();
         format = EXPORT_GRAPHICS_PNG;
     }

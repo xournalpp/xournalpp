@@ -48,7 +48,7 @@ void XournalMain::initLocalisation() {
 
 #ifdef __APPLE__
 #undef PACKAGE_LOCALE_DIR
-    Path p = Stacktrace::getExePath();
+    std::filesystem::path p = Stacktrace::getExePath();
     p /= "../Resources/share/locale/";
     const char* PACKAGE_LOCALE_DIR = p.c_str();
 #endif
@@ -73,21 +73,21 @@ void XournalMain::initLocalisation() {
 }
 
 XournalMain::MigrateResult XournalMain::migrateSettings() {
-    Path newConfigPath = Util::getConfigFolder();
+    std::filesystem::path newConfigPath = Util::getConfigFolder();
 
-    if (!newConfigPath.exists()) {
-        Path oldConfigPath(g_get_home_dir());
+    if (!std::filesystem::exists(newConfigPath)) {
+        std::filesystem::path oldConfigPath(g_get_home_dir());
         oldConfigPath /= ".xournalpp";
 
-        if (oldConfigPath.exists()) {
-            g_message("Migrating configuration from %s to %s", oldConfigPath.str().c_str(),
-                      newConfigPath.str().c_str());
-            auto xdgConfDir = fs::path(newConfigPath.str()).parent_path();
+        if (!std::filesystem::exists(oldConfigPath)) {
+            g_message("Migrating configuration from %s to %s", oldConfigPath.string().c_str(),
+                      newConfigPath.string().c_str());
+            auto xdgConfDir = fs::path(newConfigPath.string()).parent_path();
             try {
                 if (!fs::exists(xdgConfDir)) {
                     fs::create_directories(xdgConfDir);
                 }
-                fs::copy(oldConfigPath.str(), newConfigPath.str(), fs::copy_options::recursive);
+                fs::copy(oldConfigPath.string(), newConfigPath.string(), fs::copy_options::recursive);
                 const char* msg = "Due to a recent update, Xournal++ has changed where its configuration files are "
                                   "stored.\nThey have been automatically copied from\n\t{1}\nto\n\t{2}";
                 return {MigrateStatus::Success, FS(_F(msg) % oldConfigPath.c_str() % newConfigPath.c_str())};
@@ -104,7 +104,7 @@ XournalMain::MigrateResult XournalMain::migrateSettings() {
 }
 
 void XournalMain::checkForErrorlog() {
-    Path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
+    std::filesystem::path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
     GDir* home = g_dir_open(errorDir.c_str(), 0, nullptr);
 
     if (home == nullptr) {
@@ -152,7 +152,7 @@ void XournalMain::checkForErrorlog() {
 
     int res = gtk_dialog_run(GTK_DIALOG(dialog));
 
-    Path errorlogPath = Util::getCacheSubfolder(ERRORLOG_DIR);
+    std::filesystem::path errorlogPath = Util::getCacheSubfolder(ERRORLOG_DIR);
     errorlogPath /= errorList[0];
     if (res == 1)  // Send Bugreport
     {
@@ -163,12 +163,12 @@ void XournalMain::checkForErrorlog() {
         Util::openFileWithDefaultApplicaion(errorlogPath);
     } else if (res == 3)  // Open Logfile directory
     {
-        Util::openFileWithFilebrowser(errorlogPath.getParentPath());
+        Util::openFileWithFilebrowser(errorlogPath.parent_path());
     } else if (res == 4)  // Delete Logfile
     {
-        if (!errorlogPath.exists()) {
+        if (!std::filesystem::exists(errorlogPath)) {
             string msg = FS(_F("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}") %
-                            errorlogPath.str());
+                            errorlogPath.string());
             XojMsgBox::showErrorToUser(nullptr, msg);
         }
     } else if (res == 5)  // Cancel
@@ -180,9 +180,9 @@ void XournalMain::checkForErrorlog() {
 }
 
 void XournalMain::checkForEmergencySave(Control* control) {
-    Path filename = Util::getConfigFile("emergencysave.xopp");
+    std::filesystem::path filename = Util::getConfigFile("emergencysave.xopp");
 
-    if (!filename.exists()) {
+    if (!std::filesystem::exists(filename)) {
         return;
     }
 
@@ -290,7 +290,7 @@ auto XournalMain::exportPdf(const char* input, const char* output) -> int {
 }
 
 auto XournalMain::run(int argc, char* argv[]) -> int {
-    g_set_prgname("com.github.xournalpp.xournalpp");
+    g_set_prgname("xournalpp");
     this->initLocalisation();
     MigrateResult migrateResult = this->migrateSettings();
 
@@ -356,10 +356,10 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
     auto* gladePath = new GladeSearchpath();
     initResourcePath(gladePath, "ui/about.glade");
     initResourcePath(gladePath, "ui/xournalpp.css",
-                     false);  // will notify user if file not present. Path ui/ already added above.
+                     false);  // will notify user if file not present. std::filesystem::path ui/ already added above.
 
     // init singleton
-    string colorNameFile = Util::getConfigFile("colornames.ini").str();
+    string colorNameFile = Util::getConfigFile("colornames.ini").string();
     ToolbarColorNames::getInstance().loadFile(colorNameFile);
 
     auto* control = new Control(gladePath);
@@ -386,10 +386,10 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
         }
 
         GFile* file = g_file_new_for_commandline_arg(optFilename[0]);
-        Path p = Path::fromGFile(file);
+        std::filesystem::path p = PathUtil::fromGFile(file);
         g_object_unref(file);
 
-        if (!p.isEmpty()) {
+        if (!p.empty()) {
             if (g_file_test(optFilename[0], G_FILE_TEST_EXISTS)) {
                 opened = control->openFile(p, openAtPageNumber);
             } else {
@@ -444,70 +444,70 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
 auto XournalMain::findResourcePath(const string& searchFile) -> string {
     // First check if the files are available relative to the path
     // So a "portable" installation will be possible
-    Path relative1 = searchFile;
+    std::filesystem::path relative1 = searchFile;
 
-    if (relative1.exists()) {
-        return relative1.getParentPath().str();
+    if (std::filesystem::exists(relative1)) {
+        return relative1.parent_path().string();
     }
 
     // -----------------------------------------------------------------------
 
     // Check if we are in the "build" directory, and therefore the resources
     // are installed two folders back
-    Path relative2 = "../..";
+    std::filesystem::path relative2 = "../..";
     relative2 /= searchFile;
 
-    if (relative2.exists()) {
-        return relative2.getParentPath().str();
+    if (std::filesystem::exists(relative2)) {
+        return relative2.parent_path().string();
     }
 
     // -----------------------------------------------------------------------
 
-    Path executableDir = Stacktrace::getExePath();
-    executableDir = executableDir.getParentPath();
+    std::filesystem::path executableDir = Stacktrace::getExePath();
+    executableDir = executableDir.parent_path();
 
     // First check if the files are available relative to the executable
     // So a "portable" installation will be possible
-    Path relative3 = executableDir;
+    std::filesystem::path relative3 = executableDir;
     relative3 /= searchFile;
 
-    if (relative3.exists()) {
-        return relative3.getParentPath().str();
+    if (std::filesystem::exists(relative3)) {
+        return relative3.parent_path().string();
     }
 
     // -----------------------------------------------------------------------
 
     // Check one folder back, for windows portable
-    Path relative4 = executableDir;
+    std::filesystem::path relative4 = executableDir;
     relative4 /= "..";
     relative4 /= searchFile;
 
-    if (relative4.exists()) {
-        return relative4.getParentPath().str();
+    if (std::filesystem::exists(relative4)) {
+        return relative4.parent_path().string();
     }
 
     // -----------------------------------------------------------------------
 
     // Check if we are in the "build" directory, and therefore the resources
     // are installed two folders back
-    Path relative5 = executableDir;
+    std::filesystem::path relative5 = executableDir;
     relative5 /= "../..";
     relative5 /= searchFile;
 
-    if (relative5.exists()) {
-        return relative5.getParentPath().str();
+    if (std::filesystem::exists(relative5)) {
+        return relative5.parent_path().string();
     }
 
     // -----------------------------------------------------------------------
 
     // Check for .../share resources directory relative to binary to support
     // relocatable installations (such as e.g., AppImages)
-    Path relative6 = executableDir;
+    std::filesystem::path relative6 = executableDir;
     relative6 /= "../share/xournalpp/";
     relative6 /= searchFile;
 
-    if (relative6.exists()) {
-        return relative6.getParentPath().str();
+    if (std::filesystem::exists(relative6)) {
+        return relative6.parent_path().string();
     }
 
     // Not found
@@ -525,17 +525,17 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* rela
     // -----------------------------------------------------------------------
 
 #ifdef __APPLE__
-    Path p = Stacktrace::getExePath();
+    std::filesystem::path p = Stacktrace::getExePath();
     p /= "../Resources";
     p /= relativePathAndFile;
 
-    if (p.exists()) {
-        gladePath->addSearchDirectory(p.getParentPath().str());
+    if (std::filesystem::exists(p)) {
+        gladePath->addSearchDirectory(p.parent_path().string());
         return;
     }
 
     string msg =
-            FS(_F("Missing the needed UI file:\n{1}\n .app corrupted?\nPath: {2}") % relativePathAndFile % p.str());
+            FS(_F("Missing the needed UI file:\n{1}\n .app corrupted?\nPath: {2}") % relativePathAndFile % p.string());
 
     if (!failIfNotFound) {
         msg += _("\nWill now attempt to run without this file.");
@@ -543,18 +543,18 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* rela
     XojMsgBox::showErrorToUser(nullptr, msg);
 #else
     // Check at the target installation directory
-    Path absolute = PACKAGE_DATA_DIR;
+    std::filesystem::path absolute = PACKAGE_DATA_DIR;
     absolute /= PROJECT_PACKAGE;
     absolute /= relativePathAndFile;
 
-    if (absolute.exists()) {
-        gladePath->addSearchDirectory(absolute.getParentPath().str());
+    if (std::filesystem::exists(absolute)) {
+        gladePath->addSearchDirectory(absolute.parent_path().string());
         return;
     }
 
 
     string msg = FS(_F("<span foreground='red' size='x-large'>Missing the needed UI file:\n<b>{1}</b></span>\nCould "
-                       "not find them at any location.\n  Not relative\n  Not in the Working Path\n  Not in {2}") %
+                       "not find them at any location.\n  Not relative\n  Not in the Working std::filesystem::path\n  Not in {2}") %
                     relativePathAndFile % PACKAGE_DATA_DIR);
 
     if (!failIfNotFound) {

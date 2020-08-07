@@ -17,6 +17,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <filesystem>
 
 #include "pdf/base/XojPdfBookmarkIterator.h"
 #include "pdf/base/XojPdfDocument.h"
@@ -25,7 +26,6 @@
 #include "DocumentHandler.h"
 #include "LinkDestination.h"
 #include "PageRef.h"
-#include "Path.h"
 #include "XournalType.h"
 
 class Document {
@@ -36,7 +36,7 @@ public:
 public:
     enum DocumentType { XOPP, XOJ, PDF };
 
-    bool readPdf(const Path& filename, bool initPages, bool attachToDocument, gpointer data = nullptr,
+    bool readPdf(const std::filesystem::path& filename, bool initPages, bool attachToDocument, gpointer data = nullptr,
                  gsize length = 0);
 
     size_t getPageCount();
@@ -67,13 +67,13 @@ public:
 
     Document& operator=(const Document& doc);
 
-    void setFilename(Path filename);
-    Path getFilename();
-    Path getPdfFilename();
-    Path createSaveFolder(Path lastSavePath);
-    Path createSaveFilename(DocumentType type, const string& defaultSaveName);
+    void setFilename(std::filesystem::path filename);
+    std::filesystem::path getFilename();
+    std::filesystem::path getPdfFilename();
+    std::filesystem::path createSaveFolder(std::filesystem::path lastSavePath);
+    std::filesystem::path createSaveFilename(DocumentType type, const string& defaultSaveName);
 
-    Path getEvMetadataFilename();
+    std::filesystem::path getEvMetadataFilename();
 
     GtkTreeModel* getContentsModel();
 
@@ -105,8 +105,8 @@ private:
 
     XojPdfDocument pdfDocument;
 
-    Path filename;
-    Path pdfFilename;
+    std::filesystem::path filename;
+    std::filesystem::path pdfFilename;
     bool attachPdf = false;
 
     /**

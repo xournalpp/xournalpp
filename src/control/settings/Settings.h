@@ -21,7 +21,7 @@
 #include "control/Tool.h"
 #include "model/Font.h"
 
-#include "Path.h"
+#include <filesystem>
 #include "SettingsEnums.h"
 
 constexpr auto DEFAULT_GRID_SIZE = 14.17;
@@ -83,7 +83,7 @@ private:
 
 class Settings {
 public:
-    /*[[implicit]]*/ Settings(Path filename);
+    /*[[implicit]]*/ Settings(std::filesystem::path filename);
     Settings(const Settings& settings) = delete;
     void operator=(const Settings& settings) = delete;
     virtual ~Settings();
@@ -158,17 +158,17 @@ public:
     /**
      * The last saved path
      */
-    void setLastSavePath(Path p);
-    Path const& getLastSavePath() const;
+    void setLastSavePath(std::filesystem::path p);
+    std::filesystem::path const& getLastSavePath() const;
 
     /**
      * The last open path
      */
-    void setLastOpenPath(Path p);
-    Path const& getLastOpenPath() const;
+    void setLastOpenPath(std::filesystem::path p);
+    std::filesystem::path const& getLastOpenPath() const;
 
-    void setLastImagePath(const Path& p);
-    Path const& getLastImagePath() const;
+    void setLastImagePath(const std::filesystem::path& p);
+    std::filesystem::path const& getLastImagePath() const;
 
     void setMainWndSize(int width, int height);
     void setMainWndMaximized(bool max);
@@ -454,7 +454,7 @@ private:
     /**
      *  The config filename
      */
-    Path filename;
+    std::filesystem::path filename;
 
 private:
     /**
@@ -552,17 +552,17 @@ private:
     /**
      *  The last saved folder
      */
-    Path lastSavePath;
+    std::filesystem::path lastSavePath;
 
     /**
      *  The last opened folder
      */
-    Path lastOpenPath;
+    std::filesystem::path lastOpenPath;
 
     /**
      *  The last "insert image" folder
      */
-    Path lastImagePath;
+    std::filesystem::path lastImagePath;
 
     /**
      * The last used font

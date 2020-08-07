@@ -3,6 +3,7 @@
 #include <cmath>
 #include <memory>
 #include <tuple>
+#include <filesystem>
 
 #include <gdk/gdk.h>
 
@@ -353,10 +354,10 @@ void XournalView::pageSelected(size_t page) {
 
     Document* doc = control->getDocument();
     doc->lock();
-    Path file = doc->getEvMetadataFilename();
+    std::filesystem::path file = doc->getEvMetadataFilename();
     doc->unlock();
 
-    control->getMetadataManager()->storeMetadata(file.str(), page, getZoom());
+    control->getMetadataManager()->storeMetadata(file.string(), page, getZoom());
 
     if (this->lastSelectedPage != npos && this->lastSelectedPage < this->viewPages.size()) {
         this->viewPages[this->lastSelectedPage]->setSelected(false);
@@ -510,10 +511,10 @@ void XournalView::zoomChanged() {
 
     Document* doc = control->getDocument();
     doc->lock();
-    Path file = doc->getEvMetadataFilename();
+    std::filesystem::path file = doc->getEvMetadataFilename();
     doc->unlock();
 
-    control->getMetadataManager()->storeMetadata(file.str(), getCurrentPage(), zoom->getZoomReal());
+    control->getMetadataManager()->storeMetadata(file.string(), getCurrentPage(), zoom->getZoomReal());
 
     // Updates the Eraser's cursor icon in order to make it as big as the erasing area
     control->getCursor()->updateCursor();

@@ -2,9 +2,10 @@
 
 #include <config.h>
 #include <gtk/gtk.h>
+#include <filesystem.h>
 
-#include "Path.h"
 #include "StringUtils.h"
+#include "PathUtil.h"
 #include "Util.h"
 #include "i18n.h"
 
@@ -39,7 +40,7 @@ void RecentManager::recentManagerChangedCallback(GtkRecentManager* manager, Rece
     recentManager->updateMenu();
 }
 
-void RecentManager::addRecentFileFilename(const Path& filename) {
+void RecentManager::addRecentFileFilename(const std::filesystem::path& filename) {
     GtkRecentManager* recentManager = nullptr;
     GtkRecentData* recentData = nullptr;
 
@@ -52,7 +53,7 @@ void RecentManager::addRecentFileFilename(const Path& filename) {
     recentData->display_name = nullptr;
     recentData->description = nullptr;
 
-    if (filename.hasExtension(".pdf")) {
+    if (filename.extension() == ".pdf") {
         recentData->mime_type = g_strdup(MIME_PDF);
     } else {
         recentData->mime_type = g_strdup(MIME);
@@ -75,7 +76,7 @@ void RecentManager::addRecentFileFilename(const Path& filename) {
     g_object_unref(file);
 }
 
-void RecentManager::removeRecentFileFilename(const Path& filename) {
+void RecentManager::removeRecentFileFilename(const std::filesystem::path& filename) {
     GFile* file = g_file_new_for_path(filename.c_str());
 
     GtkRecentManager* recentManager = gtk_recent_manager_get_default();
@@ -88,8 +89,8 @@ auto RecentManager::getMaxRecent() const -> int { return this->maxRecent; }
 
 void RecentManager::setMaxRecent(int maxRecent) { this->maxRecent = maxRecent; }
 
-void RecentManager::openRecent(const Path& p) {
-    if (p.getFilename().empty()) {
+void RecentManager::openRecent(const std::filesystem::path& p) {
+    if (p.filename().empty()) {
         return;
     }
 
@@ -125,17 +126,17 @@ auto RecentManager::filterRecent(GList* items, bool xoj) -> GList* {
             continue;
         }
 
-        Path p = Path::fromUri(uri);
+        std::filesystem::path p = PathUtil::fromUri(uri);
 
         // Skip remote files
-        if (p.isEmpty() || !p.exists()) {
+        if (p.empty() || !std::filesystem::exists(p)) {
             continue;
         }
 
-        if (xoj && (p.hasExtension(".xoj") || p.hasExtension(".xopp"))) {
+        if (xoj && PathUtil::hasXournalFileExt(p)) {
             filteredItems = g_list_prepend(filteredItems, info);
         }
-        if (!xoj && p.hasExtension(".pdf")) {
+        if (!xoj && p.extension() == ".pdf") {
             filteredItems = g_list_prepend(filteredItems, info);
         }
     }
@@ -150,8 +151,8 @@ void RecentManager::recentsMenuActivateCallback(GtkAction* action, RecentManager
     auto* info = static_cast<GtkRecentInfo*>(g_object_get_data(G_OBJECT(action), "gtk-recent-info"));
     g_return_if_fail(info != nullptr);
 
-    Path p = Path::fromUri(gtk_recent_info_get_uri(info));
-    if (!p.isEmpty()) {
+    std::filesystem::path p = PathUtil::fromUri(gtk_recent_info_get_uri(info));
+    if (!p.empty()) {
         recentManager->openRecent(p);
     }
 }

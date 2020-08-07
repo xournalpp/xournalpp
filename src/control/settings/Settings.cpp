@@ -3,6 +3,7 @@
 #include <utility>
 
 #include <config.h>
+#include <filesystem>
 
 #include "model/FormatDefinitions.h"
 #include "util/DeviceListHelper.h"
@@ -22,7 +23,7 @@
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
 
-Settings::Settings(Path filename): filename(std::move(filename)) { loadDefault(); }
+Settings::Settings(std::filesystem::path filename): filename(std::move(filename)) { loadDefault(); }
 
 Settings::~Settings() {
     for (auto& i: this->buttonConfig) {
@@ -539,7 +540,7 @@ void Settings::loadButtonConfig() {
 auto Settings::load() -> bool {
     xmlKeepBlanksDefault(0);
 
-    if (!filename.exists()) {
+    if (!std::filesystem::exists(filename)) {
         g_warning("configfile does not exist %s\n", filename.c_str());
         return false;
     }
@@ -707,9 +708,9 @@ void Settings::save() {
 
     WRITE_STRING_PROP(selectedToolbar);
 
-    auto lastSavePath = this->lastSavePath.str();
-    auto lastOpenPath = this->lastOpenPath.str();
-    auto lastImagePath = this->lastImagePath.str();
+    auto lastSavePath = this->lastSavePath.string();
+    auto lastOpenPath = this->lastOpenPath.string();
+    auto lastImagePath = this->lastImagePath.string();
     WRITE_STRING_PROP(lastSavePath);
     WRITE_STRING_PROP(lastOpenPath);
     WRITE_STRING_PROP(lastImagePath);
@@ -1345,21 +1346,21 @@ void Settings::setViewLayoutB2T(bool b2t) {
 
 auto Settings::getViewLayoutB2T() const -> bool { return this->layoutBottomToTop; }
 
-void Settings::setLastSavePath(Path p) {
+void Settings::setLastSavePath(std::filesystem::path p) {
     this->lastSavePath = std::move(p);
     save();
 }
 
-auto Settings::getLastSavePath() const -> Path const& { return this->lastSavePath; }
+auto Settings::getLastSavePath() const -> std::filesystem::path const& { return this->lastSavePath; }
 
-void Settings::setLastOpenPath(Path p) {
+void Settings::setLastOpenPath(std::filesystem::path p) {
     this->lastOpenPath = std::move(p);
     save();
 }
 
-auto Settings::getLastOpenPath() const -> Path const& { return this->lastOpenPath; }
+auto Settings::getLastOpenPath() const -> std::filesystem::path const& { return this->lastOpenPath; }
 
-void Settings::setLastImagePath(const Path& path) {
+void Settings::setLastImagePath(const std::filesystem::path& path) {
     if (this->lastImagePath == path) {
         return;
     }
@@ -1367,7 +1368,7 @@ void Settings::setLastImagePath(const Path& path) {
     save();
 }
 
-auto Settings::getLastImagePath() const -> Path const& { return this->lastImagePath; }
+auto Settings::getLastImagePath() const -> std::filesystem::path const& { return this->lastImagePath; }
 
 void Settings::setZoomStep(double zoomStep) {
     if (this->zoomStep == zoomStep) {
