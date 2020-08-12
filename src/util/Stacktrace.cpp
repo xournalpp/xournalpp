@@ -44,7 +44,7 @@ void Stacktrace::printStracktrace(std::ostream& stream) {
 
 #ifdef __APPLE__
 
-#include "Path.h"
+#include <filesystem>
 
 std::string Stacktrace::getExePath() {
     char c;
@@ -53,9 +53,9 @@ std::string Stacktrace::getExePath() {
 
     char* path = new char[size + 1];
     if (_NSGetExecutablePath(path, &size) == 0) {
-        Path p(path);
+        std::filesystem::path p(path);
         delete[] path;
-        return p.getParentPath().str();
+        return p.parent_path().string();
     }
 
     g_error("Could not executable path!");
