@@ -90,13 +90,13 @@ XournalMain::MigrateResult XournalMain::migrateSettings() {
                 fs::copy(oldConfigPath.string(), newConfigPath.string(), fs::copy_options::recursive);
                 const char* msg = "Due to a recent update, Xournal++ has changed where its configuration files are "
                                   "stored.\nThey have been automatically copied from\n\t{1}\nto\n\t{2}";
-                return {MigrateStatus::Success, FS(_F(msg) % oldConfigPath.c_str() % newConfigPath.c_str())};
+                return {MigrateStatus::Success, FS(_F(msg) % oldConfigPath.string().c_str() % newConfigPath.string().c_str())};
             } catch (fs::filesystem_error& except) {
                 const char* msg = "Due to a recent update, Xournal++ has changed where its configuration files are "
                                   "stored.\nHowever, when attempting to copy\n\t{1}\nto\n\t{2}\nmigration failed:\n{3}";
                 g_message("Migration failed: %s", except.what());
                 return {MigrateStatus::Failure,
-                        FS(_F(msg) % oldConfigPath.c_str() % newConfigPath.c_str() % except.what())};
+                        FS(_F(msg) % oldConfigPath.string().c_str() % newConfigPath.string().c_str() % except.what())};
             }
         }
     }
@@ -105,7 +105,7 @@ XournalMain::MigrateResult XournalMain::migrateSettings() {
 
 void XournalMain::checkForErrorlog() {
     std::filesystem::path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
-    GDir* home = g_dir_open(errorDir.c_str(), 0, nullptr);
+    GDir* home = g_dir_open(errorDir.string().c_str(), 0, nullptr);
 
     if (home == nullptr) {
         return;
@@ -198,7 +198,7 @@ void XournalMain::checkForEmergencySave(Control* control) {
 
     if (res == 1)  // Delete file
     {
-        g_unlink(filename.c_str());
+        g_unlink(filename.string().c_str());
     } else if (res == 2)  // Open File
     {
         if (control->openFile(filename, -1, true)) {
@@ -207,7 +207,7 @@ void XournalMain::checkForEmergencySave(Control* control) {
             // Make sure the document is changed, there is a question to ask for save
             control->getUndoRedoHandler()->addUndoAction(std::make_unique<EmergencySaveRestore>());
             control->updateWindowTitle();
-            g_unlink(filename.c_str());
+            g_unlink(filename.string().c_str());
         }
     }
 

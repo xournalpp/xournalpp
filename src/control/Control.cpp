@@ -210,8 +210,8 @@ void Control::renameLastAutosaveFile() {
 
     // See https://github.com/xournalpp/xournalpp/issues/1122 for why we use
     // `g_file_copy` instead of `g_rename` here.
-    GFile* src = g_file_new_for_path(filename.c_str());
-    GFile* dest = g_file_new_for_path(renamed.c_str());
+    GFile* src = g_file_new_for_path(filename.string().c_str());
+    GFile* dest = g_file_new_for_path(renamed.string().c_str());
     GError* err = nullptr;
     // Use target default perms; the source partition may have different file
     // system attributes than the target, and we don't want anything bad in the
@@ -245,7 +245,7 @@ void Control::setLastAutosaveFile(std::filesystem::path newAutosaveFile) { this-
 void Control::deleteLastAutosaveFile(std::filesystem::path newAutosaveFile) {
     if (!this->lastAutosaveFilename.empty()) {
         // delete old autosave file
-        g_unlink(this->lastAutosaveFilename.c_str());
+        g_unlink(this->lastAutosaveFilename.string().c_str());
     }
     this->lastAutosaveFilename = std::move(newAutosaveFile);
 }
@@ -2300,9 +2300,9 @@ auto Control::showSaveDialog() -> bool {
     std::filesystem::path suggested_name = this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
     this->doc->unlock();
 
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), suggested_folder.c_str());
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), suggested_name.c_str());
-    gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), this->settings->getLastOpenPath().c_str(), nullptr);
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), suggested_folder.string().c_str());
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), suggested_name.string().c_str());
+    gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), this->settings->getLastOpenPath().string().c_str(), nullptr);
 
     gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), false);  // handled below
 
@@ -2354,14 +2354,14 @@ void Control::updateWindowTitle() {
             if (undoRedo->isChanged()) {
                 title += "*";
             }
-            title += doc->getPdfFilename().filename();
+            title += doc->getPdfFilename().filename().string();
         }
     } else {
         if (undoRedo->isChanged()) {
             title += "*";
         }
 
-        title += doc->getFilename().filename();
+        title += doc->getFilename().filename().string();
     }
     this->doc->unlock();
 
@@ -2507,7 +2507,7 @@ void Control::closeDocument() {
 
 auto Control::checkExistingFile(std::filesystem::path& folder, std::filesystem::path& filename) -> bool {
     if (std::filesystem::exists(filename)) {
-        string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % filename.filename());
+        string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % filename.filename().string());
         int res = XojMsgBox::replaceFileQuestion(getGtkWindow(), msg);
         return res == GTK_RESPONSE_OK;
     }

@@ -541,11 +541,11 @@ auto Settings::load() -> bool {
     xmlKeepBlanksDefault(0);
 
     if (!std::filesystem::exists(filename)) {
-        g_warning("configfile does not exist %s\n", filename.c_str());
+        g_warning("configfile does not exist %s\n", filename.string().c_str());
         return false;
     }
 
-    xmlDocPtr doc = xmlParseFile(filename.c_str());
+    xmlDocPtr doc = xmlParseFile(filename.string().c_str());
 
     if (doc == nullptr) {
         g_warning("Settings::load:: doc == null, could not load Settings!\n");
@@ -554,14 +554,14 @@ auto Settings::load() -> bool {
 
     xmlNodePtr cur = xmlDocGetRootElement(doc);
     if (cur == nullptr) {
-        g_message("The settings file \"%s\" is empty", filename.c_str());
+        g_message("The settings file \"%s\" is empty", filename.string().c_str());
         xmlFreeDoc(doc);
 
         return false;
     }
 
     if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("settings"))) {
-        g_message("File \"%s\" is of the wrong type", filename.c_str());
+        g_message("File \"%s\" is of the wrong type", filename.string().c_str());
         xmlFreeDoc(doc);
 
         return false;
@@ -846,7 +846,7 @@ void Settings::save() {
         saveData(root, p.first, p.second);
     }
 
-    xmlSaveFormatFileEnc(filename.c_str(), doc, "UTF-8", 1);
+    xmlSaveFormatFileEnc(filename.string().c_str(), doc, "UTF-8", 1);
     xmlFreeDoc(doc);
 }
 

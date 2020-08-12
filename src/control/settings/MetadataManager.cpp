@@ -65,7 +65,7 @@ auto MetadataManager::loadList() -> vector<MetadataEntry> {
     vector<MetadataEntry> data;
 
     GError* error = nullptr;
-    GDir* home = g_dir_open(folder.c_str(), 0, &error);
+    GDir* home = g_dir_open(folder.string().c_str(), 0, &error);
     if (error != nullptr) {
         XojMsgBox::showErrorToUser(nullptr, error->message);
         g_error_free(error);

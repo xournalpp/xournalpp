@@ -33,7 +33,7 @@ void AutosaveJob::run() {
     if (filename.empty()) {
         filename = Util::getAutosaveFilename();
     } else {
-        string file = filename.filename();
+        string file = filename.filename().string();
         filename = filename.parent_path();
         filename /= string(".") + file;
     }

@@ -144,7 +144,7 @@ void ToolbarModel::save(const std::filesystem::path& filename) {
     char* data = g_key_file_to_data(config, &len, nullptr);
 
     GError* error = nullptr;
-    if (!g_file_set_contents(filename.c_str(), data, len, &error)) {
+    if (!g_file_set_contents(filename.string().c_str(), data, len, &error)) {
         XojMsgBox::showErrorToUser(nullptr, error->message);
         g_error_free(error);
     }

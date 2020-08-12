@@ -21,7 +21,7 @@ auto PathUtil::readString(string& output, std::filesystem::path& path, bool show
     gchar* contents = nullptr;
     gsize length = 0;
     GError* error = nullptr;
-    if (g_file_get_contents(path.c_str(), &contents, &length, &error)) {
+    if (g_file_get_contents(path.string().c_str(), &contents, &length, &error)) {
         output = contents;
         g_free(contents);
         return true;
@@ -36,15 +36,16 @@ auto PathUtil::readString(string& output, std::filesystem::path& path, bool show
     return false;
 }
 
+// TODO use std::filesystem for this
 auto PathUtil::copy(const std::filesystem::path& src, const std::filesystem::path& dest) -> bool {
     std::array<char, 16 * 1024> buffer{};  // 16k
 
-    FILE* fpRead = g_fopen(src.c_str(), "rbe");
+    FILE* fpRead = g_fopen(src.string().c_str(), "rbe");
     if (!fpRead) {
         return false;
     }
 
-    FILE* fpWrite = g_fopen(dest.c_str(), "wbe");
+    FILE* fpWrite = g_fopen(dest.string().c_str(), "wbe");
     if (!fpWrite) {
         fclose(fpRead);
         return false;
@@ -77,7 +78,7 @@ auto PathUtil::hasXournalFileExt(const std::filesystem::path& path) -> bool {
 
 auto PathUtil::clearExtensions(std::filesystem::path& path, const std::string &ext) -> void {
     auto rm_ext = [&path](const std::string ext) {
-        if (StringUtils::toLowerCase(path.extension()) == StringUtils::toLowerCase(ext)) {
+        if (StringUtils::toLowerCase(path.extension().string()) == StringUtils::toLowerCase(ext)) {
             path.replace_extension("");
         }
     };
@@ -105,7 +106,7 @@ auto PathUtil::fromUri(const std::string &uri) -> std::filesystem::path {
 }
 
 auto PathUtil::toUri(const std::filesystem::path& path, GError **error) -> std::string {
-    char* uri = g_filename_to_uri(path.c_str(), nullptr, error);
+    char* uri = g_filename_to_uri(path.string().c_str(), nullptr, error);
 
     if (uri == nullptr) {
         return {};
@@ -126,6 +127,6 @@ auto PathUtil::fromGFile(GFile* file) -> std::filesystem::path {
 }
 
 auto PathUtil::toGFile(const std::filesystem::path path) -> GFile* {
-    return g_file_new_for_path(path.c_str());
+    return g_file_new_for_path(path.string().c_str());
 }
 #endif

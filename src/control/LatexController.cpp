@@ -106,14 +106,14 @@ auto LatexController::runCommandAsync(const string& texString) -> std::unique_pt
     std::filesystem::path texFile = this->texTmpDir / "tex.tex";
 
     GError* err = nullptr;
-    if (!g_file_set_contents(texFile.c_str(), texContents.c_str(), texContents.length(), &err)) {
+    if (!g_file_set_contents(texFile.string().c_str(), texContents.c_str(), texContents.length(), &err)) {
         XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not save .tex file: {1}") % err->message));
         g_error_free(err);
         return nullptr;
     }
 
-    char* texFileEscaped = g_strescape(texFile.c_str(), nullptr);
-    char* cmd = g_strdup(this->pdflatexPath.c_str());
+    char* texFileEscaped = g_strescape(texFile.string().c_str(), nullptr);
+    char* cmd = g_strdup(this->pdflatexPath.string().c_str());
 
     static char* texFlag = g_strdup("-interaction=nonstopmode");
     char* argv[] = {cmd, texFlag, texFileEscaped, nullptr};
@@ -124,7 +124,7 @@ auto LatexController::runCommandAsync(const string& texString) -> std::unique_pt
     this->setUpdating(true);
     this->lastPreviewedTex = texString;
 
-    bool success = g_spawn_async(texTmpDir.c_str(), argv, nullptr, flags, nullptr, nullptr, pdflatexPid.get(), &err);
+    bool success = g_spawn_async(texTmpDir.string().c_str(), argv, nullptr, flags, nullptr, nullptr, pdflatexPid.get(), &err);
     if (!success) {
         string message = FS(_F("Could not start pdflatex: {1} (exit code: {2})") % err->message % err->code);
         g_warning("%s", message.c_str());
@@ -367,7 +367,7 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
 
     gchar* fileContents = nullptr;
     gsize fileLength = 0;
-    if (!g_file_get_contents(pdfPath.c_str(), &fileContents, &fileLength, &err)) {
+    if (!g_file_get_contents(pdfPath.string().c_str(), &fileContents, &fileLength, &err)) {
         XojMsgBox::showErrorToUser(control->getGtkWindow(),
                                    FS(_F("Could not load LaTeX PDF file, File Error: {1}") % err->message));
         g_error_free(err);

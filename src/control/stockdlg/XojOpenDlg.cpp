@@ -16,7 +16,7 @@ XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings): win(win), settings(s
 
     const gchar* currentFolder = nullptr;
     if (!settings->getLastOpenPath().empty()) {
-        currentFolder = settings->getLastOpenPath().c_str();
+        currentFolder = settings->getLastOpenPath().string().c_str();
     } else {
         g_warning("lastOpenPath is not set!");
         currentFolder = g_get_home_dir();
@@ -122,12 +122,12 @@ auto XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf) -> std::filesystem::p
 
     auto lastOpenPath = this->settings->getLastOpenPath();
     if (!lastOpenPath.empty()) {
-        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(this->dialog), lastOpenPath.c_str());
+        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(this->dialog), lastOpenPath.string().c_str());
     }
 
     auto lastSavePath = this->settings->getLastSavePath();
     if (!lastSavePath.empty()) {
-        gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(this->dialog), lastSavePath.c_str(), nullptr);
+        gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(this->dialog), lastSavePath.string().c_str(), nullptr);
     }
 
     std::filesystem::path file = runDialog();

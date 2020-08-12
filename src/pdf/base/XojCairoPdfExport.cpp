@@ -28,11 +28,11 @@ void XojCairoPdfExport::setNoBackgroundExport(bool noBackgroundExport) {
 }
 
 auto XojCairoPdfExport::startPdf(const std::filesystem::path& file) -> bool {
-    this->surface = cairo_pdf_surface_create(file.c_str(), 0, 0);
+    this->surface = cairo_pdf_surface_create(file.string().c_str(), 0, 0);
     this->cr = cairo_create(surface);
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
-    cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_TITLE, doc->getFilename().filename().c_str());
+    cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_TITLE, doc->getFilename().filename().string().c_str());
     GtkTreeModel* tocModel = doc->getContentsModel();
     this->populatePdfOutline(tocModel);
 #endif

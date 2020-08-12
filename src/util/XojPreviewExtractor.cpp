@@ -101,7 +101,7 @@ auto XojPreviewExtractor::readFile(const std::filesystem::path& file) -> Preview
     }
     // read the new file format
     int zipError = 0;
-    zip_t* zipFp = zip_open(file.c_str(), ZIP_RDONLY, &zipError);
+    zip_t* zipFp = zip_open(file.string().c_str(), ZIP_RDONLY, &zipError);
 
     if (!zipFp && zipError == ZIP_ER_NOZIP) {
         gzFile fp = GzUtil::openPath(file, "r");

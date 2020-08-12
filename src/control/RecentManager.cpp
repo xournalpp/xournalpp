@@ -64,7 +64,7 @@ void RecentManager::addRecentFileFilename(const std::filesystem::path& filename)
     recentData->groups = groups;
     recentData->is_private = false;
 
-    GFile* file = g_file_new_for_path(filename.c_str());
+    GFile* file = g_file_new_for_path(filename.string().c_str());
     gchar* uri = g_file_get_uri(file);
     gtk_recent_manager_add_full(recentManager, uri, recentData);
     g_free(uri);
@@ -77,7 +77,7 @@ void RecentManager::addRecentFileFilename(const std::filesystem::path& filename)
 }
 
 void RecentManager::removeRecentFileFilename(const std::filesystem::path& filename) {
-    GFile* file = g_file_new_for_path(filename.c_str());
+    GFile* file = g_file_new_for_path(filename.string().c_str());
 
     GtkRecentManager* recentManager = gtk_recent_manager_get_default();
     gtk_recent_manager_remove_item(recentManager, g_file_get_uri(file), nullptr);
@@ -95,7 +95,7 @@ void RecentManager::openRecent(const std::filesystem::path& p) {
     }
 
     for (RecentManagerListener* l: this->listener) {
-        l->fileOpened(p.c_str());
+        l->fileOpened(p.string().c_str());
     }
 }
 

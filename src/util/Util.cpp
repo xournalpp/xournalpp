@@ -130,7 +130,7 @@ auto Util::getTmpDirSubfolder(const std::filesystem::path& subfolder) -> std::fi
 }
 
 auto Util::ensureFolderExists(const std::filesystem::path& p) -> std::filesystem::path {
-    if (g_mkdir_with_parents(p.c_str(), 0700) == -1) {
+    if (g_mkdir_with_parents(p.string().c_str(), 0700) == -1) {
         Util::execInUiThread([=]() {
             string msg = FS(_F("Could not create folder: {1}") % p.string());
             g_warning("%s", msg.c_str());
