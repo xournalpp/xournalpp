@@ -21,6 +21,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <filesystem>
 
 #include <cppunit/extensions/HelperMacros.h>
 
@@ -329,12 +330,12 @@ public:
 
         SaveHandler h;
         h.prepareSave(doc1);
-        Path tmp = Util::getTmpDirSubfolder() / "save.xopp";
+        std::filesystem::path tmp = Util::getTmpDirSubfolder() / "save.xopp";
         h.saveTo(tmp);
 
         // Create a second loader so the first one doesn't free the memory
         LoadHandler handler2;
-        Document* doc2 = handler2.loadDocument(tmp.str());
+        Document* doc2 = handler2.loadDocument(tmp.string());
         auto elements2 = getElements(doc2);
 
         // Check that the coordinates from both files don't differ more than the precision they were saved with

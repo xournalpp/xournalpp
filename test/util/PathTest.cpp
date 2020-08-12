@@ -14,8 +14,9 @@
 #include <config-test.h>
 #include <cppunit/extensions/HelperMacros.h>
 #include <stdlib.h>
+#include <filesystem>
 
-#include "Path.h"
+#include "PathUtil.h"
 
 using namespace std;
 
@@ -37,117 +38,119 @@ public:
     void tearDown() {}
 
     void testUnsupportedUri() {
-        Path a = Path::fromUri("http://localhost/test.txt");
-        CPPUNIT_ASSERT_EQUAL(true, a.isEmpty());
-        Path b = Path::fromUri("file://invalid");
-        CPPUNIT_ASSERT_EQUAL(true, b.isEmpty());
+        std::filesystem::path a = PathUtil::fromUri("http://localhost/test.txt");
+        CPPUNIT_ASSERT_EQUAL(true, a.empty());
+        std::filesystem::path b = PathUtil::fromUri("file://invalid");
+        CPPUNIT_ASSERT_EQUAL(true, b.empty());
     }
 
     void testPathFromUri() {
-        Path b = Path::fromUri("file:///tmp/test.txt");
-        CPPUNIT_ASSERT_EQUAL(false, b.isEmpty());
-        CPPUNIT_ASSERT_EQUAL(G_DIR_SEPARATOR_S + string("tmp") + G_DIR_SEPARATOR_S + string("test.txt"), b.str());
+        std::filesystem::path b = PathUtil::fromUri("file:///tmp/test.txt");
+        CPPUNIT_ASSERT_EQUAL(false, b.empty());
+        CPPUNIT_ASSERT_EQUAL(G_DIR_SEPARATOR_S + string("tmp") + G_DIR_SEPARATOR_S + string("test.txt"), b.string());
     }
 
     void testParentPath() {
-        Path a = Path("C:\\test\\abc\\xyz.txt");
-        CPPUNIT_ASSERT_EQUAL(string("C:\\test\\abc"), a.getParentPath().str());
-        CPPUNIT_ASSERT_EQUAL(string("C:\\test"), a.getParentPath().getParentPath().str());
+        std::filesystem::path a("C:\\test\\abc\\xyz.txt");
+        CPPUNIT_ASSERT_EQUAL(string("C:\\test\\abc"), a.parent_path().string());
+        CPPUNIT_ASSERT_EQUAL(string("C:\\test"), a.parent_path().parent_path().string());
 
-        Path b = Path("/temp/test/asdf.txt");
-        CPPUNIT_ASSERT_EQUAL(string("/temp/test"), b.getParentPath().str());
-        CPPUNIT_ASSERT_EQUAL(string("/temp"), b.getParentPath().getParentPath().str());
+        std::filesystem::path b("/temp/test/asdf.txt");
+        CPPUNIT_ASSERT_EQUAL(string("/temp/test"), b.parent_path().string());
+        CPPUNIT_ASSERT_EQUAL(string("/temp"), b.parent_path().parent_path().string());
     }
 
     void testFilename() {
-        Path a = Path("C:\\test\\abc\\xyz.txt");
-        CPPUNIT_ASSERT_EQUAL(string("xyz.txt"), a.getFilename());
-        CPPUNIT_ASSERT_EQUAL(string("abc"), a.getParentPath().getFilename());
+        std::filesystem::path a("C:\\test\\abc\\xyz.txt");
+        CPPUNIT_ASSERT_EQUAL(string("xyz.txt"), a.filename().string());
+        CPPUNIT_ASSERT_EQUAL(string("abc"), a.parent_path().filename().string());
 
-        Path b = Path("/temp/test/asdf.txt");
-        CPPUNIT_ASSERT_EQUAL(string("asdf.txt"), b.getFilename());
-        CPPUNIT_ASSERT_EQUAL(string("test"), b.getParentPath().getFilename());
+        std::filesystem::path b("/temp/test/asdf.txt");
+        CPPUNIT_ASSERT_EQUAL(string("asdf.txt"), b.filename().string());
+        CPPUNIT_ASSERT_EQUAL(string("test"), b.parent_path().filename().string());
     }
 
     void testHasExtension() {
-        Path a = Path("C:\\test\\abc\\xyz.txt");
-        CPPUNIT_ASSERT_EQUAL(true, a.hasExtension(".txt"));
+        // std::filesystem::path a("C:\\test\\abc\\xyz.txt");
+        std::filesystem::path a("/test/abc/xyz.txt");
+        CPPUNIT_ASSERT_EQUAL(string(".txt"), a.extension().string());
 
-        Path b = Path("C:\\test\\abc\\xyz.TXT");
-        CPPUNIT_ASSERT_EQUAL(true, b.hasExtension(".txt"));
+        // std::filesystem::path b("C:\\test\\abc\\xyz.TXT");
+        std::filesystem::path b("test/abc/xyz.TXT");
+        CPPUNIT_ASSERT_EQUAL(string(".txt"), b.extension().string());
 
-        CPPUNIT_ASSERT_EQUAL(false, a.hasExtension("."));
-        CPPUNIT_ASSERT_EQUAL(false, a.hasExtension("xyz"));
+        CPPUNIT_ASSERT_EQUAL(false, a.extension() == ".");
+        CPPUNIT_ASSERT_EQUAL(false, a.extension() == "xyz");
     }
 
     void testClearExtensions() {
-        Path a = Path("C:\\test\\abc\\xyz.txt");
-        a.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("C:\\test\\abc\\xyz.txt"), a.str());
+        std::filesystem::path a("C:\\test\\abc\\xyz.txt");
+        PathUtil::clearExtensions(a);
+        CPPUNIT_ASSERT_EQUAL(string("C:\\test\\abc\\xyz.txt"), a.string());
 
-        Path b = Path("/test/asdf.TXT");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.TXT"), b.str());
-        b.clearExtensions(".txt");
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+        std::filesystem::path b("/test/asdf.TXT");
+        PathUtil::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.TXT"), b.string());
+        PathUtil::clearExtensions(b, ".txt");
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.string());
 
-        b = Path("/test/asdf.asdf/asdf");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.asdf/asdf"), b.str());
+        b = std::filesystem::path("/test/asdf.asdf/asdf");
+        PathUtil::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.asdf/asdf"), b.string());
 
-        b = Path("/test/asdf.PDF");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.str());
-        b.clearExtensions(".pdf");
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+        b = std::filesystem::path("/test/asdf.PDF");
+        PathUtil::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.string());
+        PathUtil::clearExtensions(b, ".pdf");
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.string());
 
-        b = Path("/test/asdf.PDF.xoj");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.str());
+        b = std::filesystem::path("/test/asdf.PDF.xoj");
+        PathUtil::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.string());
 
-        b = Path("/test/asdf.PDF.xoj");
-        b.clearExtensions(".Pdf");
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+        b = std::filesystem::path("/test/asdf.PDF.xoj");
+        PathUtil::clearExtensions(b, ".Pdf");
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.string());
 
-        b = Path("/test/asdf.pdf.pdf");
-        b.clearExtensions(".pdf");
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.pdf"), b.str());
+        b = std::filesystem::path("/test/asdf.pdf.pdf");
+        PathUtil::clearExtensions(b, ".pdf");
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.pdf"), b.string());
 
-        b = Path("/test/asdf.xopp.xopp");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.xopp"), b.str());
+        b = std::filesystem::path("/test/asdf.xopp.xopp");
+        PathUtil::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.xopp"), b.string());
 
-        b = Path("/test/asdf.PDF.xopp");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.str());
+        b = std::filesystem::path("/test/asdf.PDF.xopp");
+        PathUtil::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.string());
 
-        b = Path("/test/asdf.SVG.xopp");
-        b.clearExtensions(".svg");
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+        b = std::filesystem::path("/test/asdf.SVG.xopp");
+        PathUtil::clearExtensions(b, ".svg");
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.string());
 
-        b = Path("/test/asdf.xoj");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+        b = std::filesystem::path("/test/asdf.xoj");
+        PathUtil::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.string());
 
-        b = Path("/test/asdf.xopp");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+        b = std::filesystem::path("/test/asdf.xopp");
+        PathUtil::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.string());
 
-        b = Path("/test/asdf.pdf");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.pdf"), b.str());
+        b = std::filesystem::path("/test/asdf.pdf");
+        PathUtil::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.pdf"), b.string());
     }
 
     void testOperators() {
-        Path a = Path("/test/a");
-        Path b = a / "foo.pdf";
-        CPPUNIT_ASSERT_EQUAL(string("/test/a"), a.str());
-        CPPUNIT_ASSERT_EQUAL(string("/test/foo.pdf"), b.str());
+        std::filesystem::path a("/test/a");
+        std::filesystem::path b = a / "foo.pdf";
+        CPPUNIT_ASSERT_EQUAL(string("/test/a"), a.string());
+        CPPUNIT_ASSERT_EQUAL(string("/test/foo.pdf"), b.string());
 
         a /= "bar.pdf";
-        CPPUNIT_ASSERT_EQUAL(string("/test/a/bar.pdf"), a.str());
+        CPPUNIT_ASSERT_EQUAL(string("/test/a/bar.pdf"), a.string());
         // b should not be affected by a
-        CPPUNIT_ASSERT_EQUAL(string("/test/foo.pdf"), b.str());
+        CPPUNIT_ASSERT_EQUAL(string("/test/foo.pdf"), b.string());
     }
 };
 
