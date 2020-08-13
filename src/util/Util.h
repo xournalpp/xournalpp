@@ -19,7 +19,7 @@
 #include <gtk/gtk.h>
 
 #include "OutputStream.h"
-#include <filesystem>
+#include "filesystem.h"
 
 using std::string;
 
@@ -31,27 +31,27 @@ GdkRGBA rgb_to_GdkRGBA(uint32_t color);
 GdkRGBA argb_to_GdkRGBA(uint32_t color);
 uint32_t gdkrgba_to_hex(const GdkRGBA& color);
 
-std::filesystem::path getAutosaveFilename();
+fs::path getAutosaveFilename();
 
 pid_t getPid();
 
-void openFileWithDefaultApplicaion(const std::filesystem::path& filename);
-void openFileWithFilebrowser(const std::filesystem::path& filename);
+void openFileWithDefaultApplicaion(const fs::path& filename);
+void openFileWithFilebrowser(const fs::path& filename);
 
 /**
  * Return the configuration folder path (may not be guaranteed to exist).
  */
-std::filesystem::path getConfigFolder();
-std::filesystem::path getConfigSubfolder(const std::filesystem::path& subfolder = "");
-std::filesystem::path getCacheSubfolder(const std::filesystem::path& subfolder = "");
-std::filesystem::path getDataSubfolder(const std::filesystem::path& subfolder = "");
+fs::path getConfigFolder();
+fs::path getConfigSubfolder(const fs::path& subfolder = "");
+fs::path getCacheSubfolder(const fs::path& subfolder = "");
+fs::path getDataSubfolder(const fs::path& subfolder = "");
 
-std::filesystem::path getConfigFile(const std::filesystem::path& relativeFileName = "");
-std::filesystem::path getCacheFile(const std::filesystem::path& relativeFileName = "");
+fs::path getConfigFile(const fs::path& relativeFileName = "");
+fs::path getCacheFile(const fs::path& relativeFileName = "");
 
-std::filesystem::path getTmpDirSubfolder(const std::filesystem::path& subfolder = "");
+fs::path getTmpDirSubfolder(const fs::path& subfolder = "");
 
-std::filesystem::path ensureFolderExists(const std::filesystem::path& p);
+fs::path ensureFolderExists(const fs::path& p);
 
 /**
  * Wrap the system call to redirect errors to a dialog

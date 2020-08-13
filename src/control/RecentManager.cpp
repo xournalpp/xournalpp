@@ -40,7 +40,7 @@ void RecentManager::recentManagerChangedCallback(GtkRecentManager* manager, Rece
     recentManager->updateMenu();
 }
 
-void RecentManager::addRecentFileFilename(const std::filesystem::path& filename) {
+void RecentManager::addRecentFileFilename(const fs::path& filename) {
     GtkRecentManager* recentManager = nullptr;
     GtkRecentData* recentData = nullptr;
 
@@ -76,7 +76,7 @@ void RecentManager::addRecentFileFilename(const std::filesystem::path& filename)
     g_object_unref(file);
 }
 
-void RecentManager::removeRecentFileFilename(const std::filesystem::path& filename) {
+void RecentManager::removeRecentFileFilename(const fs::path& filename) {
     GFile* file = g_file_new_for_path(filename.string().c_str());
 
     GtkRecentManager* recentManager = gtk_recent_manager_get_default();
@@ -89,7 +89,7 @@ auto RecentManager::getMaxRecent() const -> int { return this->maxRecent; }
 
 void RecentManager::setMaxRecent(int maxRecent) { this->maxRecent = maxRecent; }
 
-void RecentManager::openRecent(const std::filesystem::path& p) {
+void RecentManager::openRecent(const fs::path& p) {
     if (p.filename().empty()) {
         return;
     }
@@ -126,10 +126,10 @@ auto RecentManager::filterRecent(GList* items, bool xoj) -> GList* {
             continue;
         }
 
-        std::filesystem::path p = PathUtil::fromUri(uri);
+        fs::path p = PathUtil::fromUri(uri);
 
         // Skip remote files
-        if (p.empty() || !std::filesystem::exists(p)) {
+        if (p.empty() || !fs::exists(p)) {
             continue;
         }
 
@@ -151,7 +151,7 @@ void RecentManager::recentsMenuActivateCallback(GtkAction* action, RecentManager
     auto* info = static_cast<GtkRecentInfo*>(g_object_get_data(G_OBJECT(action), "gtk-recent-info"));
     g_return_if_fail(info != nullptr);
 
-    std::filesystem::path p = PathUtil::fromUri(gtk_recent_info_get_uri(info));
+    fs::path p = PathUtil::fromUri(gtk_recent_info_get_uri(info));
     if (!p.empty()) {
         recentManager->openRecent(p);
     }

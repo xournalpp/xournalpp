@@ -7,7 +7,7 @@
 #include <glib.h>
 #include <zip.h>
 #include <zlib.h>
-#include <filesystem>
+#include "filesystem.h"
 
 #include "GzUtil.h"
 
@@ -94,7 +94,7 @@ auto XojPreviewExtractor::readPreview(char* buffer, int len) -> PreviewExtractRe
  * @param file .xoj File
  * @return true if a preview was read, false if not
  */
-auto XojPreviewExtractor::readFile(const std::filesystem::path& file) -> PreviewExtractResult {
+auto XojPreviewExtractor::readFile(const fs::path& file) -> PreviewExtractResult {
     // check file extensions
     if (file.extension() != ".xoj" && file.extension() != ".xopp") {
         return PREVIEW_RESULT_BAD_FILE_EXTENSION;

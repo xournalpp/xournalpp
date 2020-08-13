@@ -17,7 +17,7 @@ void OutputStream::write(const char* str) { write(str, strlen(str)); }
 /// GzOutputStream /////////////////////////////////////
 ////////////////////////////////////////////////////////
 
-GzOutputStream::GzOutputStream(const std::filesystem::path& filename) {
+GzOutputStream::GzOutputStream(const fs::path& filename) {
     this->filename = filename;
 
     this->fp = GzUtil::openPath(filename, "w");

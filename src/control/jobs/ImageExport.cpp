@@ -12,7 +12,7 @@
 #include "i18n.h"
 
 
-ImageExport::ImageExport(Document* doc, std::filesystem::path filename, ExportGraphicsFormat format, bool hideBackground,
+ImageExport::ImageExport(Document* doc, fs::path filename, ExportGraphicsFormat format, bool hideBackground,
                          PageRangeVector& exportRange):
         doc(doc),
         filename(std::move(filename)),

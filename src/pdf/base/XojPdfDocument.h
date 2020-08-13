@@ -34,8 +34,8 @@ public:
     bool equals(XojPdfDocumentInterface* doc);
 
 public:
-    bool save(std::filesystem::path filename, GError** error);
-    bool load(std::filesystem::path filename, string password, GError** error);
+    bool save(fs::path filename, GError** error);
+    bool load(fs::path filename, string password, GError** error);
     bool load(gpointer data, gsize length, string password, GError** error);
     bool isLoaded();
 

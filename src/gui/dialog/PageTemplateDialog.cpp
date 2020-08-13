@@ -4,7 +4,7 @@
 #include <sstream>
 
 #include <config.h>
-#include <filesystem>
+#include "filesystem.h"
 
 #include "control/pagetype/PageTypeHandler.h"
 #include "control/stockdlg/XojOpenDlg.h"
@@ -129,7 +129,7 @@ void PageTemplateDialog::saveToFile() {
 
 void PageTemplateDialog::loadFromFile() {
     XojOpenDlg dlg(GTK_WINDOW(this->getWindow()), this->settings);
-    std::filesystem::path filename = dlg.showOpenTemplateDialog();
+    fs::path filename = dlg.showOpenTemplateDialog();
 
     string contents;
     if (!PathUtil::readString(contents, filename)) {

@@ -103,7 +103,7 @@ auto LatexController::runCommandAsync(const string& texString) -> std::unique_pt
     texContents += texString;
     texContents += LATEX_TEMPLATE_2;
 
-    std::filesystem::path texFile = this->texTmpDir / "tex.tex";
+    fs::path texFile = this->texTmpDir / "tex.tex";
 
     GError* err = nullptr;
     if (!g_file_set_contents(texFile.string().c_str(), texContents.c_str(), texContents.length(), &err)) {
@@ -266,10 +266,10 @@ void LatexController::onPdfRenderComplete(GPid pid, gint returnCode, LatexContro
             g_warning("%s", message.c_str());
             XojMsgBox::showErrorToUser(self->control->getGtkWindow(), message);
         }
-        std::filesystem::path pdfPath = self->texTmpDir / "tex.pdf";
-        if (std::filesystem::exists(pdfPath)) {
+        fs::path pdfPath = self->texTmpDir / "tex.pdf";
+        if (fs::exists(pdfPath)) {
             // Delete the pdf to prevent more errors
-            std::filesystem::remove(pdfPath);
+            fs::remove(pdfPath);
         }
         g_error_free(err);
     } else {
@@ -362,7 +362,7 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
         return nullptr;
     }
 
-    std::filesystem::path pdfPath = texTmpDir / "tex.pdf";
+    fs::path pdfPath = texTmpDir / "tex.pdf";
     GError* err = nullptr;
 
     gchar* fileContents = nullptr;

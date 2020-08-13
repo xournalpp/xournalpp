@@ -3,7 +3,7 @@
 #include <utility>
 
 #include <config.h>
-#include <filesystem>
+#include "filesystem.h"
 
 #include "model/FormatDefinitions.h"
 #include "util/DeviceListHelper.h"
@@ -23,7 +23,7 @@
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
 
-Settings::Settings(std::filesystem::path filename): filename(std::move(filename)) { loadDefault(); }
+Settings::Settings(fs::path filename): filename(std::move(filename)) { loadDefault(); }
 
 Settings::~Settings() {
     for (auto& i: this->buttonConfig) {
@@ -540,7 +540,7 @@ void Settings::loadButtonConfig() {
 auto Settings::load() -> bool {
     xmlKeepBlanksDefault(0);
 
-    if (!std::filesystem::exists(filename)) {
+    if (!fs::exists(filename)) {
         g_warning("configfile does not exist %s\n", filename.string().c_str());
         return false;
     }
@@ -1346,21 +1346,21 @@ void Settings::setViewLayoutB2T(bool b2t) {
 
 auto Settings::getViewLayoutB2T() const -> bool { return this->layoutBottomToTop; }
 
-void Settings::setLastSavePath(std::filesystem::path p) {
+void Settings::setLastSavePath(fs::path p) {
     this->lastSavePath = std::move(p);
     save();
 }
 
-auto Settings::getLastSavePath() const -> std::filesystem::path const& { return this->lastSavePath; }
+auto Settings::getLastSavePath() const -> fs::path const& { return this->lastSavePath; }
 
-void Settings::setLastOpenPath(std::filesystem::path p) {
+void Settings::setLastOpenPath(fs::path p) {
     this->lastOpenPath = std::move(p);
     save();
 }
 
-auto Settings::getLastOpenPath() const -> std::filesystem::path const& { return this->lastOpenPath; }
+auto Settings::getLastOpenPath() const -> fs::path const& { return this->lastOpenPath; }
 
-void Settings::setLastImagePath(const std::filesystem::path& path) {
+void Settings::setLastImagePath(const fs::path& path) {
     if (this->lastImagePath == path) {
         return;
     }
@@ -1368,7 +1368,7 @@ void Settings::setLastImagePath(const std::filesystem::path& path) {
     save();
 }
 
-auto Settings::getLastImagePath() const -> std::filesystem::path const& { return this->lastImagePath; }
+auto Settings::getLastImagePath() const -> fs::path const& { return this->lastImagePath; }
 
 void Settings::setZoomStep(double zoomStep) {
     if (this->zoomStep == zoomStep) {

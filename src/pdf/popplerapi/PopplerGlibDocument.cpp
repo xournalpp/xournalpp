@@ -1,7 +1,7 @@
 #include "PopplerGlibDocument.h"
 
 #include <memory>
-#include <filesystem>
+#include "filesystem.h"
 
 #include "PopplerGlibPage.h"
 #include "PopplerGlibPageBookmarkIterator.h"
@@ -39,7 +39,7 @@ auto PopplerGlibDocument::equals(XojPdfDocumentInterface* doc) -> bool {
     return document == (dynamic_cast<PopplerGlibDocument*>(doc))->document;
 }
 
-auto PopplerGlibDocument::save(std::filesystem::path filename, GError** error) -> bool {
+auto PopplerGlibDocument::save(fs::path filename, GError** error) -> bool {
     if (document == nullptr) {
         return false;
     }
@@ -51,7 +51,7 @@ auto PopplerGlibDocument::save(std::filesystem::path filename, GError** error) -
     return poppler_document_save(document, uri.c_str(), error);
 }
 
-auto PopplerGlibDocument::load(std::filesystem::path filename, string password, GError** error) -> bool {
+auto PopplerGlibDocument::load(fs::path filename, string password, GError** error) -> bool {
     string uri = PathUtil::toUri(filename, error);
     if (*error != nullptr) {
         return false;

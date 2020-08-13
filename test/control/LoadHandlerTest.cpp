@@ -21,7 +21,7 @@
 
 #include <cmath>
 #include <iostream>
-#include <filesystem>
+#include "filesystem.h"
 
 #include <cppunit/extensions/HelperMacros.h>
 
@@ -330,7 +330,7 @@ public:
 
         SaveHandler h;
         h.prepareSave(doc1);
-        std::filesystem::path tmp = Util::getTmpDirSubfolder() / "save.xopp";
+        fs::path tmp = Util::getTmpDirSubfolder() / "save.xopp";
         h.saveTo(tmp);
 
         // Create a second loader so the first one doesn't free the memory

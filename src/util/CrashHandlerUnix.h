@@ -70,7 +70,7 @@ static void crashHandler(int sig) {
     time_t curtime = time(0);
     char stime[128];
     strftime(stime, sizeof(stime), "%Y%m%d-%H%M%S", localtime(&curtime));
-    std::filesystem::path errorlogPath = Util::getCacheSubfolder(ERRORLOG_DIR);
+    fs::path errorlogPath = Util::getCacheSubfolder(ERRORLOG_DIR);
     errorlogPath /= std::string("errorlog.") + stime + ".log";
     ofstream fp(errorlogPath.string());
     if (fp) {

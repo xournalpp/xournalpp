@@ -13,7 +13,7 @@
 
 #include <string>
 #include <vector>
-#include <filesystem>
+#include "filesystem.h"
 
 #include <gtk/gtk.h>
 
@@ -29,7 +29,7 @@ enum ExportGraphicsFormat { EXPORT_GRAPHICS_UNDEFINED, EXPORT_GRAPHICS_PDF, EXPO
 
 class ImageExport {
 public:
-    ImageExport(Document* doc, std::filesystem::path filename, ExportGraphicsFormat format, bool hideBackground,
+    ImageExport(Document* doc, fs::path filename, ExportGraphicsFormat format, bool hideBackground,
                 PageRangeVector& exportRange);
     virtual ~ImageExport();
 
@@ -79,7 +79,7 @@ public:
     /**
      * Filename for export
      */
-    std::filesystem::path filename;
+    fs::path filename;
 
     /**
      * Export graphics format

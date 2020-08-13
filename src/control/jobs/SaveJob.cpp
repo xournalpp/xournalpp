@@ -88,13 +88,13 @@ auto SaveJob::save() -> bool {
 
     doc->lock();
     h.prepareSave(doc);
-    std::filesystem::path filename = doc->getFilename();
+    fs::path filename = doc->getFilename();
     PathUtil::clearExtensions(filename);
     filename /= ".xopp";
     doc->unlock();
 
     if (doc->shouldCreateBackupOnSave()) {
-        std::filesystem::path backup = filename;
+        fs::path backup = filename;
         backup += "~";
 
         if (!PathUtil::copy(doc->getFilename(), backup)) {

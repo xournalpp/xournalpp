@@ -1,4 +1,4 @@
-#include <filesystem>
+#include "filesystem.h"
 
 #include "AutosaveJob.h"
 
@@ -27,7 +27,7 @@ void AutosaveJob::run() {
 
     doc->lock();
     handler.prepareSave(doc);
-    std::filesystem::path filename = doc->getFilename();
+    fs::path filename = doc->getFilename();
     doc->unlock();
 
     if (filename.empty()) {

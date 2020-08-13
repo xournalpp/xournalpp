@@ -75,61 +75,61 @@ auto Util::gdkrgba_to_hex(const GdkRGBA& color) -> uint32_t {  // clang-format o
 
 auto Util::getPid() -> pid_t { return ::getpid(); }
 
-auto Util::getAutosaveFilename() -> std::filesystem::path {
-    std::filesystem::path p(getConfigSubfolder("autosave"));
+auto Util::getAutosaveFilename() -> fs::path {
+    fs::path p(getConfigSubfolder("autosave"));
     p /= std::to_string(getPid()) + ".xopp";
     return p;
 }
 
-auto Util::getConfigFolder() -> std::filesystem::path {
-    std::filesystem::path p(g_get_user_config_dir());
+auto Util::getConfigFolder() -> fs::path {
+    fs::path p(g_get_user_config_dir());
     p /= g_get_prgname();
     return p;
 }
 
-auto Util::getConfigSubfolder(const std::filesystem::path& subfolder) -> std::filesystem::path {
-    std::filesystem::path p = getConfigFolder();
+auto Util::getConfigSubfolder(const fs::path& subfolder) -> fs::path {
+    fs::path p = getConfigFolder();
     p /= subfolder;
 
     return Util::ensureFolderExists(p);
 }
 
-auto Util::getCacheSubfolder(const std::filesystem::path& subfolder) -> std::filesystem::path {
-    std::filesystem::path p(g_get_user_cache_dir());
+auto Util::getCacheSubfolder(const fs::path& subfolder) -> fs::path {
+    fs::path p(g_get_user_cache_dir());
     p /= g_get_prgname();
     p /= subfolder;
 
     return Util::ensureFolderExists(p);
 }
 
-auto Util::getDataSubfolder(const std::filesystem::path& subfolder) -> std::filesystem::path {
-    std::filesystem::path p(g_get_user_data_dir());
+auto Util::getDataSubfolder(const fs::path& subfolder) -> fs::path {
+    fs::path p(g_get_user_data_dir());
     p /= g_get_prgname();
     p /= subfolder;
 
     return Util::ensureFolderExists(p);
 }
 
-auto Util::getConfigFile(const std::filesystem::path& relativeFileName) -> std::filesystem::path {
-    std::filesystem::path p = getConfigSubfolder(relativeFileName.parent_path());
+auto Util::getConfigFile(const fs::path& relativeFileName) -> fs::path {
+    fs::path p = getConfigSubfolder(relativeFileName.parent_path());
     p /= relativeFileName.filename();
     return p;
 }
 
-auto Util::getCacheFile(const std::filesystem::path& relativeFileName) -> std::filesystem::path {
-    std::filesystem::path p = getCacheSubfolder(relativeFileName.parent_path());
+auto Util::getCacheFile(const fs::path& relativeFileName) -> fs::path {
+    fs::path p = getCacheSubfolder(relativeFileName.parent_path());
     p /= relativeFileName.filename();
     return p;
 }
 
-auto Util::getTmpDirSubfolder(const std::filesystem::path& subfolder) -> std::filesystem::path {
-    std::filesystem::path p(g_get_tmp_dir());
+auto Util::getTmpDirSubfolder(const fs::path& subfolder) -> fs::path {
+    fs::path p(g_get_tmp_dir());
     p /= FS(_F("xournalpp-{1}") % Util::getPid());
     p /= subfolder;
     return Util::ensureFolderExists(p);
 }
 
-auto Util::ensureFolderExists(const std::filesystem::path& p) -> std::filesystem::path {
+auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
     if (g_mkdir_with_parents(p.string().c_str(), 0700) == -1) {
         Util::execInUiThread([=]() {
             string msg = FS(_F("Could not create folder: {1}") % p.string());
@@ -140,7 +140,7 @@ auto Util::ensureFolderExists(const std::filesystem::path& p) -> std::filesystem
     return p;
 }
 
-void Util::openFileWithDefaultApplicaion(const std::filesystem::path& filename) {
+void Util::openFileWithDefaultApplicaion(const fs::path& filename) {
 #ifdef __APPLE__
     constexpr auto const OPEN_PATTERN = "open \"{1}\"";
 #elif _WIN32  // note the underscore: without it, it's not msdn official!
@@ -158,7 +158,7 @@ void Util::openFileWithDefaultApplicaion(const std::filesystem::path& filename) 
     }
 }
 
-void Util::openFileWithFilebrowser(const std::filesystem::path& filename) {
+void Util::openFileWithFilebrowser(const fs::path& filename) {
 #ifdef __APPLE__
     constexpr auto const OPEN_PATTERN = "open \"{1}\"";
 #elif _WIN32

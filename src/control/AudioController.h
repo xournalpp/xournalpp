@@ -13,7 +13,7 @@
 
 #include <string>
 #include <vector>
-#include <filesystem>
+#include "filesystem.h"
 
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
 #include "settings/Settings.h"
@@ -43,7 +43,7 @@ public:
     void seekBackwards();
 
     string const& getAudioFilename() const;
-    std::filesystem::path getAudioFolder() const;
+    fs::path getAudioFolder() const;
     size_t getStartTime() const;
     vector<DeviceInfo> getOutputDevices() const;
     vector<DeviceInfo> getInputDevices() const;

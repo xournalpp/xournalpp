@@ -3,7 +3,7 @@
 #include <cmath>
 #include <memory>
 #include <tuple>
-#include <filesystem>
+#include "filesystem.h"
 
 #include <gdk/gdk.h>
 
@@ -354,7 +354,7 @@ void XournalView::pageSelected(size_t page) {
 
     Document* doc = control->getDocument();
     doc->lock();
-    std::filesystem::path file = doc->getEvMetadataFilename();
+    fs::path file = doc->getEvMetadataFilename();
     doc->unlock();
 
     control->getMetadataManager()->storeMetadata(file.string(), page, getZoom());
@@ -511,7 +511,7 @@ void XournalView::zoomChanged() {
 
     Document* doc = control->getDocument();
     doc->lock();
-    std::filesystem::path file = doc->getEvMetadataFilename();
+    fs::path file = doc->getEvMetadataFilename();
     doc->unlock();
 
     control->getMetadataManager()->storeMetadata(file.string(), getCurrentPage(), zoom->getZoomReal());

@@ -26,7 +26,7 @@ void BaseExportJob::addFileFilterToDialog(const string& name, const string& patt
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 }
 
-auto BaseExportJob::checkOverwriteBackgroundPDF(std::filesystem::path& filename) -> bool {
+auto BaseExportJob::checkOverwriteBackgroundPDF(fs::path& filename) -> bool {
     // If the new file name (with the selected extension) is the previously selected pdf, warn the user
     if (StringUtils::iequals(filename.string(), control->getDocument()->getPdfFilename().string())) {
         string msg = _("Do not overwrite the background PDF! This will cause errors!");
@@ -48,8 +48,8 @@ auto BaseExportJob::showFilechooser() -> bool {
     Settings* settings = control->getSettings();
     Document* doc = control->getDocument();
     doc->lock();
-    std::filesystem::path folder = doc->createSaveFolder(settings->getLastSavePath());
-    std::filesystem::path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName());
+    fs::path folder = doc->createSaveFolder(settings->getLastSavePath());
+    fs::path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName());
     doc->unlock();
 
     gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), folder.string().c_str());
@@ -64,9 +64,9 @@ auto BaseExportJob::showFilechooser() -> bool {
         }
 
         string uri(gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog)));
-        this->filename = std::filesystem::path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+        this->filename = fs::path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
         PathUtil::clearExtensions(this->filename);
-        std::filesystem::path currentFolder = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog));
+        fs::path currentFolder = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog));
 
         // Since we add the extension after the OK button, we have to check manually on existing files
         if (isUriValid(uri) && control->checkExistingFile(currentFolder, filename)) {

@@ -13,7 +13,7 @@
 
 #include <string>
 #include <vector>
-#include <filesystem>
+#include "filesystem.h"
 
 #include <gtk/gtk.h>
 
@@ -43,13 +43,13 @@ public:
      * Adds a file to the underlying GtkRecentManager
      * without altering the menu
      */
-    static void addRecentFileFilename(const std::filesystem::path& filename);
+    static void addRecentFileFilename(const fs::path& filename);
 
     /**
      * Removes a file from the underlying GtkRecentManager
      * without altering the menu
      */
-    static void removeRecentFileFilename(const std::filesystem::path& filename);
+    static void removeRecentFileFilename(const fs::path& filename);
 
     /**
      * Removes all of the menu items corresponding to recent files
@@ -75,7 +75,7 @@ public:
      * Notifies all RecentManagerListener%s that a new
      * file is opened
      */
-    void openRecent(const std::filesystem::path& p);
+    void openRecent(const fs::path& p);
 
     /**
      * Returns the root menu containing all the items

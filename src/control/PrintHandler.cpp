@@ -62,7 +62,7 @@ void PrintHandler::requestPageSetup(GtkPrintOperation* operation, GtkPrintContex
 }
 
 void PrintHandler::print(Document* doc, int currentPage) {
-    std::filesystem::path filename = Util::getConfigFile(PRINT_CONFIG_FILE);
+    fs::path filename = Util::getConfigFile(PRINT_CONFIG_FILE);
 
     GtkPrintSettings* settings = gtk_print_settings_new_from_file(filename.string().c_str(), nullptr);
 

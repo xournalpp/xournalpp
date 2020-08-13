@@ -2,7 +2,7 @@
 
 #include <sstream>
 #include <stack>
-#include <filesystem>
+#include "filesystem.h"
 
 #include <cairo/cairo-pdf.h>
 
@@ -27,7 +27,7 @@ void XojCairoPdfExport::setNoBackgroundExport(bool noBackgroundExport) {
     this->noBackgroundExport = noBackgroundExport;
 }
 
-auto XojCairoPdfExport::startPdf(const std::filesystem::path& file) -> bool {
+auto XojCairoPdfExport::startPdf(const fs::path& file) -> bool {
     this->surface = cairo_pdf_surface_create(file.string().c_str(), 0, 0);
     this->cr = cairo_create(surface);
 
@@ -115,7 +115,7 @@ void XojCairoPdfExport::exportPage(size_t page) {
     cairo_restore(this->cr);
 }
 
-auto XojCairoPdfExport::createPdf(std::filesystem::path file, PageRangeVector& range) -> bool {
+auto XojCairoPdfExport::createPdf(fs::path file, PageRangeVector& range) -> bool {
     if (range.empty()) {
         this->lastError = _("No pages to export!");
         return false;
@@ -153,7 +153,7 @@ auto XojCairoPdfExport::createPdf(std::filesystem::path file, PageRangeVector& r
     return true;
 }
 
-auto XojCairoPdfExport::createPdf(std::filesystem::path file) -> bool {
+auto XojCairoPdfExport::createPdf(fs::path file) -> bool {
     if (doc->getPageCount() < 1) {
         lastError = _("No pages to export!");
         return false;

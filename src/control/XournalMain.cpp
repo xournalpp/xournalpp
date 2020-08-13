@@ -48,7 +48,7 @@ void XournalMain::initLocalisation() {
 
 #ifdef __APPLE__
 #undef PACKAGE_LOCALE_DIR
-    std::filesystem::path p = Stacktrace::getExePath();
+    fs::path p = Stacktrace::getExePath();
     p /= "../Resources/share/locale/";
     const char* PACKAGE_LOCALE_DIR = p.c_str();
 #endif
@@ -73,13 +73,13 @@ void XournalMain::initLocalisation() {
 }
 
 XournalMain::MigrateResult XournalMain::migrateSettings() {
-    std::filesystem::path newConfigPath = Util::getConfigFolder();
+    fs::path newConfigPath = Util::getConfigFolder();
 
-    if (!std::filesystem::exists(newConfigPath)) {
-        std::filesystem::path oldConfigPath(g_get_home_dir());
+    if (!fs::exists(newConfigPath)) {
+        fs::path oldConfigPath(g_get_home_dir());
         oldConfigPath /= ".xournalpp";
 
-        if (!std::filesystem::exists(oldConfigPath)) {
+        if (!fs::exists(oldConfigPath)) {
             g_message("Migrating configuration from %s to %s", oldConfigPath.string().c_str(),
                       newConfigPath.string().c_str());
             auto xdgConfDir = fs::path(newConfigPath.string()).parent_path();
@@ -104,7 +104,7 @@ XournalMain::MigrateResult XournalMain::migrateSettings() {
 }
 
 void XournalMain::checkForErrorlog() {
-    std::filesystem::path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
+    fs::path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
     GDir* home = g_dir_open(errorDir.string().c_str(), 0, nullptr);
 
     if (home == nullptr) {
@@ -152,7 +152,7 @@ void XournalMain::checkForErrorlog() {
 
     int res = gtk_dialog_run(GTK_DIALOG(dialog));
 
-    std::filesystem::path errorlogPath = Util::getCacheSubfolder(ERRORLOG_DIR);
+    fs::path errorlogPath = Util::getCacheSubfolder(ERRORLOG_DIR);
     errorlogPath /= errorList[0];
     if (res == 1)  // Send Bugreport
     {
@@ -166,7 +166,7 @@ void XournalMain::checkForErrorlog() {
         Util::openFileWithFilebrowser(errorlogPath.parent_path());
     } else if (res == 4)  // Delete Logfile
     {
-        if (!std::filesystem::exists(errorlogPath)) {
+        if (!fs::exists(errorlogPath)) {
             string msg = FS(_F("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}") %
                             errorlogPath.string());
             XojMsgBox::showErrorToUser(nullptr, msg);
@@ -180,9 +180,9 @@ void XournalMain::checkForErrorlog() {
 }
 
 void XournalMain::checkForEmergencySave(Control* control) {
-    std::filesystem::path filename = Util::getConfigFile("emergencysave.xopp");
+    fs::path filename = Util::getConfigFile("emergencysave.xopp");
 
-    if (!std::filesystem::exists(filename)) {
+    if (!fs::exists(filename)) {
         return;
     }
 
@@ -356,7 +356,7 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
     auto* gladePath = new GladeSearchpath();
     initResourcePath(gladePath, "ui/about.glade");
     initResourcePath(gladePath, "ui/xournalpp.css",
-                     false);  // will notify user if file not present. std::filesystem::path ui/ already added above.
+                     false);  // will notify user if file not present. fs::path ui/ already added above.
 
     // init singleton
     string colorNameFile = Util::getConfigFile("colornames.ini").string();
@@ -386,7 +386,7 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
         }
 
         GFile* file = g_file_new_for_commandline_arg(optFilename[0]);
-        std::filesystem::path p = PathUtil::fromGFile(file);
+        fs::path p = PathUtil::fromGFile(file);
         g_object_unref(file);
 
         if (!p.empty()) {
@@ -444,9 +444,9 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
 auto XournalMain::findResourcePath(const string& searchFile) -> string {
     // First check if the files are available relative to the path
     // So a "portable" installation will be possible
-    std::filesystem::path relative1 = searchFile;
+    fs::path relative1 = searchFile;
 
-    if (std::filesystem::exists(relative1)) {
+    if (fs::exists(relative1)) {
         return relative1.parent_path().string();
     }
 
@@ -454,35 +454,35 @@ auto XournalMain::findResourcePath(const string& searchFile) -> string {
 
     // Check if we are in the "build" directory, and therefore the resources
     // are installed two folders back
-    std::filesystem::path relative2 = "../..";
+    fs::path relative2 = "../..";
     relative2 /= searchFile;
 
-    if (std::filesystem::exists(relative2)) {
+    if (fs::exists(relative2)) {
         return relative2.parent_path().string();
     }
 
     // -----------------------------------------------------------------------
 
-    std::filesystem::path executableDir = Stacktrace::getExePath();
+    fs::path executableDir = Stacktrace::getExePath();
     executableDir = executableDir.parent_path();
 
     // First check if the files are available relative to the executable
     // So a "portable" installation will be possible
-    std::filesystem::path relative3 = executableDir;
+    fs::path relative3 = executableDir;
     relative3 /= searchFile;
 
-    if (std::filesystem::exists(relative3)) {
+    if (fs::exists(relative3)) {
         return relative3.parent_path().string();
     }
 
     // -----------------------------------------------------------------------
 
     // Check one folder back, for windows portable
-    std::filesystem::path relative4 = executableDir;
+    fs::path relative4 = executableDir;
     relative4 /= "..";
     relative4 /= searchFile;
 
-    if (std::filesystem::exists(relative4)) {
+    if (fs::exists(relative4)) {
         return relative4.parent_path().string();
     }
 
@@ -490,11 +490,11 @@ auto XournalMain::findResourcePath(const string& searchFile) -> string {
 
     // Check if we are in the "build" directory, and therefore the resources
     // are installed two folders back
-    std::filesystem::path relative5 = executableDir;
+    fs::path relative5 = executableDir;
     relative5 /= "../..";
     relative5 /= searchFile;
 
-    if (std::filesystem::exists(relative5)) {
+    if (fs::exists(relative5)) {
         return relative5.parent_path().string();
     }
 
@@ -502,11 +502,11 @@ auto XournalMain::findResourcePath(const string& searchFile) -> string {
 
     // Check for .../share resources directory relative to binary to support
     // relocatable installations (such as e.g., AppImages)
-    std::filesystem::path relative6 = executableDir;
+    fs::path relative6 = executableDir;
     relative6 /= "../share/xournalpp/";
     relative6 /= searchFile;
 
-    if (std::filesystem::exists(relative6)) {
+    if (fs::exists(relative6)) {
         return relative6.parent_path().string();
     }
 
@@ -525,11 +525,11 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* rela
     // -----------------------------------------------------------------------
 
 #ifdef __APPLE__
-    std::filesystem::path p = Stacktrace::getExePath();
+    fs::path p = Stacktrace::getExePath();
     p /= "../Resources";
     p /= relativePathAndFile;
 
-    if (std::filesystem::exists(p)) {
+    if (fs::exists(p)) {
         gladePath->addSearchDirectory(p.parent_path().string());
         return;
     }
@@ -543,18 +543,18 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* rela
     XojMsgBox::showErrorToUser(nullptr, msg);
 #else
     // Check at the target installation directory
-    std::filesystem::path absolute = PACKAGE_DATA_DIR;
+    fs::path absolute = PACKAGE_DATA_DIR;
     absolute /= PROJECT_PACKAGE;
     absolute /= relativePathAndFile;
 
-    if (std::filesystem::exists(absolute)) {
+    if (fs::exists(absolute)) {
         gladePath->addSearchDirectory(absolute.parent_path().string());
         return;
     }
 
 
     string msg = FS(_F("<span foreground='red' size='x-large'>Missing the needed UI file:\n<b>{1}</b></span>\nCould "
-                       "not find them at any location.\n  Not relative\n  Not in the Working std::filesystem::path\n  Not in {2}") %
+                       "not find them at any location.\n  Not relative\n  Not in the Working fs::path\n  Not in {2}") %
                     relativePathAndFile % PACKAGE_DATA_DIR);
 
     if (!failIfNotFound) {

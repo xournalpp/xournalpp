@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <filesystem>
+#include "filesystem.h"
 
 #include <poppler.h>
 
@@ -28,8 +28,8 @@ public:
     virtual bool equals(XojPdfDocumentInterface* doc);
 
 public:
-    virtual bool save(std::filesystem::path filename, GError** error);
-    virtual bool load(std::filesystem::path filename, string password, GError** error);
+    virtual bool save(fs::path filename, GError** error);
+    virtual bool load(fs::path filename, string password, GError** error);
     virtual bool load(gpointer data, gsize length, string password, GError** error);
     virtual bool isLoaded();
 

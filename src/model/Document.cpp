@@ -2,7 +2,7 @@
 
 #include <algorithm>
 #include <utility>
-#include <filesystem>
+#include "filesystem.h"
 
 #include <config.h>
 
@@ -102,13 +102,13 @@ auto Document::getPageCount() -> size_t { return this->pages.size(); }
 
 auto Document::getPdfPageCount() -> size_t { return pdfDocument.getPageCount(); }
 
-void Document::setFilename(std::filesystem::path filename) { this->filename = std::move(filename); }
+void Document::setFilename(fs::path filename) { this->filename = std::move(filename); }
 
-auto Document::getFilename() -> std::filesystem::path { return filename; }
+auto Document::getFilename() -> fs::path { return filename; }
 
-auto Document::getPdfFilename() -> std::filesystem::path { return pdfFilename; }
+auto Document::getPdfFilename() -> fs::path { return pdfFilename; }
 
-auto Document::createSaveFolder(std::filesystem::path lastSavePath) -> std::filesystem::path {
+auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
     if (!filename.empty()) {
         return filename.parent_path();
     }
@@ -120,15 +120,15 @@ auto Document::createSaveFolder(std::filesystem::path lastSavePath) -> std::file
     return lastSavePath;
 }
 
-auto Document::createSaveFilename(DocumentType type, const string& defaultSaveName) -> std::filesystem::path {
+auto Document::createSaveFilename(DocumentType type, const string& defaultSaveName) -> fs::path {
     if (!filename.empty()) {
         // This can be any extension
-        std::filesystem::path p = filename.filename();
+        fs::path p = filename.filename();
         p.replace_extension("");
         return p;
     }
     if (!pdfFilename.empty()) {
-        std::filesystem::path p = pdfFilename.filename();
+        fs::path p = pdfFilename.filename();
         std::string ext = this->attachPdf ? ".pdf" : "";
         PathUtil::clearExtensions(p, ext);
         return p;
@@ -140,7 +140,7 @@ auto Document::createSaveFilename(DocumentType type, const string& defaultSaveNa
     strftime(stime, sizeof(stime), defaultSaveName.c_str(), localtime(&curtime));
 
     // Remove the extension, file format is handled by the filter combo box
-    std::filesystem::path p = stime;
+    fs::path p = stime;
     PathUtil::clearExtensions(p);
     return p;
 }
@@ -159,14 +159,14 @@ void Document::setPreview(cairo_surface_t* preview) {
     }
 }
 
-auto Document::getEvMetadataFilename() -> std::filesystem::path {
+auto Document::getEvMetadataFilename() -> fs::path {
     if (!this->filename.empty()) {
         return this->filename;
     }
     if (!this->pdfFilename.empty()) {
         return this->pdfFilename;
     }
-    return std::filesystem::path("");
+    return fs::path("");
 }
 
 auto Document::isPdfDocumentLoaded() -> bool { return pdfDocument.isLoaded(); }
@@ -276,7 +276,7 @@ void Document::updateIndexPageNumbers() {
     }
 }
 
-auto Document::readPdf(const std::filesystem::path& filename, bool initPages, bool attachToDocument, gpointer data, gsize length)
+auto Document::readPdf(const fs::path& filename, bool initPages, bool attachToDocument, gpointer data, gsize length)
         -> bool {
     GError* popplerError = nullptr;
 

@@ -1,4 +1,4 @@
-#include <filesystem>
+#include "filesystem.h"
 
 #include "ToolbarDragDropHandler.h"
 
@@ -51,7 +51,7 @@ void ToolbarDragDropHandler::toolbarConfigDialogClosed() {
 
     this->clearToolbarsFromDragAndDrop();
 
-    std::filesystem::path file = Util::getConfigFile(TOOLBAR_CONFIG);
+    fs::path file = Util::getConfigFile(TOOLBAR_CONFIG);
     win->getToolbarModel()->save(file);
     win->floatingToolbox->hide();
 }

@@ -13,7 +13,7 @@
 
 #include <zlib.h>
 
-#include <filesystem>
+#include "filesystem.h"
 
 class GzUtil {
 private:
@@ -21,5 +21,5 @@ private:
     virtual ~GzUtil();
 
 public:
-    static gzFile openPath(const std::filesystem::path& path, const std::string& flags);
+    static gzFile openPath(const fs::path& path, const std::string& flags);
 };

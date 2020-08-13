@@ -1,7 +1,7 @@
 #include "ToolbarModel.h"
 
 #include <fstream>
-#include <filesystem>
+#include "filesystem.h"
 
 #include "ToolbarData.h"
 #include "XojMsgBox.h"
@@ -128,7 +128,7 @@ const char* TOOLBAR_INI_HEADER =
         "  LAYER: The layer dropdown menu\n"
         "\n";
 
-void ToolbarModel::save(const std::filesystem::path& filename) {
+void ToolbarModel::save(const fs::path& filename) {
     GKeyFile* config = g_key_file_new();
     g_key_file_set_list_separator(config, ',');
 

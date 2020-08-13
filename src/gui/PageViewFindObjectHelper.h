@@ -15,7 +15,7 @@
 
 #include <limits>
 #include <optional>
-#include <filesystem>
+#include "filesystem.h"
 
 #include "util/audio/AudioPlayer.h"
 
@@ -154,7 +154,7 @@ protected:
 
             if (!fn.empty()) {
                 if (fn.rfind(G_DIR_SEPARATOR, 0) != 0) {
-                    std::filesystem::path path = PathUtil::fromUri(view->settings->getAudioFolder());
+                    fs::path path = PathUtil::fromUri(view->settings->getAudioFolder());
                     path /= fn;
 
                     fn = path.string();

@@ -17,7 +17,7 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include <filesystem>
+#include "filesystem.h"
 
 #include <poppler.h>
 
@@ -143,7 +143,7 @@ private:
     /**
      * Tex binary full path
      */
-    std::filesystem::path pdflatexPath;
+    fs::path pdflatexPath;
 
     /**
      * The original TeX string when the dialog was opened, or the empty string
@@ -210,7 +210,7 @@ private:
      * The directory in which the LaTeX files will be generated. Note that this
      * should be within a system temporary directory.
      */
-    std::filesystem::path texTmpDir;
+    fs::path texTmpDir;
 
     /**
      * Previously existing TexImage

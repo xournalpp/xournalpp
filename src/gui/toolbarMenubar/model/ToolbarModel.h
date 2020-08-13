@@ -13,7 +13,7 @@
 
 #include <string>
 #include <vector>
-#include <filesystem>
+#include "filesystem.h"
 
 #include "XournalType.h"
 
@@ -33,7 +33,7 @@ public:
     bool parse(const string& filename, bool predefined);
     void add(ToolbarData* data);
     void remove(ToolbarData* data);
-    void save(const std::filesystem::path& filename);
+    void save(const fs::path& filename);
     bool existsId(const string& id);
     void initCopyNameId(ToolbarData* data);
 

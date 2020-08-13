@@ -44,7 +44,7 @@ void Stacktrace::printStracktrace(std::ostream& stream) {
 
 #ifdef __APPLE__
 
-#include <filesystem>
+#include "filesystem.h"
 
 std::string Stacktrace::getExePath() {
     char c;
@@ -53,7 +53,7 @@ std::string Stacktrace::getExePath() {
 
     char* path = new char[size + 1];
     if (_NSGetExecutablePath(path, &size) == 0) {
-        std::filesystem::path p(path);
+        fs::path p(path);
         delete[] path;
         return p.parent_path().string();
     }

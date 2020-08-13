@@ -85,7 +85,7 @@ void AudioController::stopPlayback() {
 
 auto AudioController::getAudioFilename() const -> string const& { return this->audioFilename; }
 
-auto AudioController::getAudioFolder() const -> std::filesystem::path {
+auto AudioController::getAudioFolder() const -> fs::path {
     string const& af = this->settings.getAudioFolder();
 
     if (af.length() < 8) {
@@ -93,7 +93,7 @@ auto AudioController::getAudioFolder() const -> std::filesystem::path {
                        "recording folder under \"Preferences > Audio recording\"");
         g_warning("%s", msg.c_str());
         XojMsgBox::showErrorToUser(this->control.getGtkWindow(), msg);
-        return std::filesystem::path("");
+        return fs::path("");
     }
 
     return PathUtil::fromUri(af);

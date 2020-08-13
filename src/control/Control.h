@@ -69,9 +69,9 @@ public:
 
 public:
     // Menu File
-    bool newFile(string pageTemplate = "", std::filesystem::path fileName = "");
-    bool openFile(std::filesystem::path filename = "", int scrollToPage = -1, bool forceOpen = false);
-    bool annotatePdf(std::filesystem::path filename, bool attachPdf, bool attachToDocument);
+    bool newFile(string pageTemplate = "", fs::path fileName = "");
+    bool openFile(fs::path filename = "", int scrollToPage = -1, bool forceOpen = false);
+    bool annotatePdf(fs::path filename, bool attachPdf, bool attachToDocument);
     void print();
     void exportAsPdf();
     void exportAs();
@@ -108,7 +108,7 @@ public:
 
     // Asks user to replace an existing file when saving / exporting, since we add the extension
     // after the OK, we need to check manually
-    bool checkExistingFile(std::filesystem::path& folder, std::filesystem::path& filename);
+    bool checkExistingFile(fs::path& folder, fs::path& filename);
 
     void resetShapeRecognizer();
 
@@ -227,8 +227,8 @@ public:
     void unblock();
 
     void renameLastAutosaveFile();
-    void setLastAutosaveFile(std::filesystem::path newAutosaveFile);
-    void deleteLastAutosaveFile(std::filesystem::path newAutosaveFile);
+    void setLastAutosaveFile(fs::path newAutosaveFile);
+    void deleteLastAutosaveFile(fs::path newAutosaveFile);
     void setClipboardHandlerSelection(EditSelection* selection);
 
     MetadataManager* getMetadataManager();
@@ -317,8 +317,8 @@ protected:
      */
     bool shouldFileOpen(string filename);
 
-    bool loadXoptTemplate(std::filesystem::path filename);
-    bool loadPdf(const std::filesystem::path& filename, int scrollToPage);
+    bool loadXoptTemplate(fs::path filename);
+    bool loadPdf(const fs::path& filename, int scrollToPage);
 
 private:
     /**
@@ -374,7 +374,7 @@ private:
      * The autosave handler ID
      */
     int autosaveTimeout = 0;
-    std::filesystem::path lastAutosaveFilename;
+    fs::path lastAutosaveFilename;
 
     XournalScheduler* scheduler;
 

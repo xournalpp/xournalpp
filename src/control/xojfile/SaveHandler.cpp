@@ -220,7 +220,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
 
             if (doc->isAttachPdf()) {
                 background->setAttrib("domain", "attach");
-                std::filesystem::path filename = doc->getFilename();
+                fs::path filename = doc->getFilename();
                 PathUtil::clearExtensions(filename);
                 filename += ".xopp.bg.pdf";
                 background->setAttrib("filename", "bg.pdf");
@@ -297,7 +297,7 @@ void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p) {
     }
 }
 
-void SaveHandler::saveTo(const std::filesystem::path& filename, ProgressListener* listener) {
+void SaveHandler::saveTo(const fs::path& filename, ProgressListener* listener) {
     GzOutputStream out(filename);
 
     if (!out.getLastError().empty()) {
@@ -314,7 +314,7 @@ void SaveHandler::saveTo(const std::filesystem::path& filename, ProgressListener
     }
 }
 
-void SaveHandler::saveTo(OutputStream* out, const std::filesystem::path& filename, ProgressListener* listener) {
+void SaveHandler::saveTo(OutputStream* out, const fs::path& filename, ProgressListener* listener) {
     // XMLNode should be locale-safe ( store doubles using Locale 'C' format
 
     out->write("<?xml version=\"1.0\" standalone=\"no\"?>\n");

@@ -67,28 +67,28 @@ void XojOpenDlg::addFilterXopt() {
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXopt);
 }
 
-auto XojOpenDlg::runDialog() -> std::filesystem::path {
+auto XojOpenDlg::runDialog() -> fs::path {
     gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
     if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
         gtk_widget_destroy(dialog);
         dialog = nullptr;
-        return std::filesystem::path("");
+        return fs::path("");
     }
 
-    std::filesystem::path file(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+    fs::path file(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
     settings->setLastOpenPath(file.parent_path().string());
 
     return file;
 }
 
-auto XojOpenDlg::showOpenTemplateDialog() -> std::filesystem::path {
+auto XojOpenDlg::showOpenTemplateDialog() -> fs::path {
     addFilterAllFiles();
     addFilterXopt();
 
     return runDialog();
 }
 
-auto XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf) -> std::filesystem::path {
+auto XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf) -> fs::path {
     if (!pdf) {
         GtkFileFilter* filterSupported = gtk_file_filter_new();
         gtk_file_filter_set_name(filterSupported, _("Supported files"));
@@ -130,7 +130,7 @@ auto XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf) -> std::filesystem::p
         gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(this->dialog), lastSavePath.string().c_str(), nullptr);
     }
 
-    std::filesystem::path file = runDialog();
+    fs::path file = runDialog();
 
     if (attachOpt) {
         attachPdf = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(attachOpt));
@@ -153,7 +153,7 @@ void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userDa
         return;
     }
 
-    std::filesystem::path filepath = filename;
+    fs::path filepath = filename;
     g_free(filename);
     filename = nullptr;
 

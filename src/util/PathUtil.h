@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <filesystem>
+#include "filesystem.h"
 #include <gio/gio.h>
 
 class PathUtil {
@@ -29,19 +29,19 @@ public:
      *
      * @return true if the file was read, false if not
      */
-    static bool readString(std::string& output, std::filesystem::path& path, bool showErrorToUser = true);
+    static bool readString(std::string& output, fs::path& path, bool showErrorToUser = true);
 
-    static bool copy(const std::filesystem::path& src, const std::filesystem::path& dest);
+    static bool copy(const fs::path& src, const fs::path& dest);
 
     /**
      * Get escaped path, all " and \ are escaped
      */
-    static std::string getEscapedPath(const std::filesystem::path& path);
+    static std::string getEscapedPath(const fs::path& path);
 
     /**
      * @return true if this file has .xopp or .xoj extension
      */
-    static bool hasXournalFileExt(const std::filesystem::path& path);
+    static bool hasXournalFileExt(const fs::path& path);
 
     /**
      * Clear the the last known xournal extension (last .xoj, .xopp etc.)
@@ -49,16 +49,16 @@ public:
      * @param ext An extension to clear additionally, eg .pdf (would also clear
      *  .pdf.xopp etc.)
      */
-    static void clearExtensions(std::filesystem::path& path, const std::string& ext = "");
+    static void clearExtensions(fs::path& path, const std::string& ext = "");
 
-    static std::filesystem::path fromUri(const std::string& uri);
+    static fs::path fromUri(const std::string& uri);
 
-    static std::string toUri(const std::filesystem::path& path, GError **error);
+    static std::string toUri(const fs::path& path, GError **error);
 
 
     #ifndef BUILD_THUMBNAILER
-    static std::filesystem::path fromGFile(GFile *file);
+    static fs::path fromGFile(GFile *file);
 
-    static GFile* toGFile(const std::filesystem::path);
+    static GFile* toGFile(const fs::path);
 #endif
 };

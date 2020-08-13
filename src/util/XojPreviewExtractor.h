@@ -13,7 +13,7 @@
 #pragma once
 
 #include <string>
-#include <filesystem>
+#include "filesystem.h"
 
 #include <gdk/gdk.h>
 
@@ -58,7 +58,7 @@ public:
      * @param file .xoj File
      * @return If an image was read, or the error
      */
-    PreviewExtractResult readFile(const std::filesystem::path& file);
+    PreviewExtractResult readFile(const fs::path& file);
 
     /**
      * Try to read the preview from byte buffer
