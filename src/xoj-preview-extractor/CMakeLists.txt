@@ -1,7 +1,7 @@
 ## xournalpp-thumbnailer executable ##
 
 if (WIN32)
-  # Windows does not support the thumbniler like this
+  # Windows does not support the thumbnailer like this
   return ()
 endif ()
 
@@ -23,11 +23,14 @@ else()
   set(thumbnailer_GTK_LDFLAGS "${GTK_LDFLAGS}")
 endif()
 
+add_dependencies(xournalpp-thumbnailer std::filesystem)
+
 target_link_libraries (xournalpp-thumbnailer
   ${ZLIB_LIBRARIES}
   ${Glib_LDFLAGS}
   ${ZIP_LDFLAGS}
   ${thumbnailer_GTK_LDFLAGS}
+  std::filesystem
 )
 
 set (THUMBNAILER_BIN "xournalpp-thumbnailer")

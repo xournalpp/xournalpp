@@ -83,7 +83,6 @@ unset (xournalpp_SOURCES_RECURSE)
 # Used for xournalpp and xournalpp-test
 add_library (xournalpp-core OBJECT ${xournalpp_SOURCES})
 add_dependencies (xournalpp-core util)
-add_dependencies(xournalpp-core std::filesystem)
 target_compile_features (xournalpp-core PUBLIC ${PROJECT_CXX_FEATURES})
 # Can't use target_link_directories since we require CMake >= 3.10
 target_include_directories (xournalpp-core PRIVATE $<TARGET_PROPERTY:util,INTERFACE_INCLUDE_DIRECTORIES>)
