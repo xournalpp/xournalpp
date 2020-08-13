@@ -2,11 +2,11 @@
 
 #include <array>
 #include <iostream>
+#include <climits>
 
 #ifdef _WIN32
 #include <Windows.h>
 #else
-#include <climits>
 
 #include <execinfo.h>
 #include <unistd.h>
@@ -14,6 +14,7 @@
 
 #ifdef __APPLE__
 #include <mach-o/dyld.h>
+#include <glib.h>
 #endif
 
 

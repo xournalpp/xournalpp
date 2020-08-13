@@ -39,7 +39,7 @@ add_executable (test-util $<TARGET_OBJECTS:xournalpp-core> $<TARGET_OBJECTS:xour
     ${util_sources_SOURCES_RECURSE}
 )
 add_dependencies (test-util xournalpp-core xournalpp-test-base util)
-target_link_libraries (test-util ${xournalpp_LDFLAGS} ${CppUnit_LDFLAGS})
+target_link_libraries (test-util ${xournalpp_LDFLAGS} ${CppUnit_LDFLAGS} std::filesystem)
 
 ## ------------------------
 
@@ -48,7 +48,7 @@ add_executable (test-loadHandler $<TARGET_OBJECTS:xournalpp-core> $<TARGET_OBJEC
     control/LoadHandlerTest.cpp
 )
 add_dependencies (test-loadHandler xournalpp-core xournalpp-test-base util)
-target_link_libraries (test-loadHandler ${xournalpp_LDFLAGS} ${CppUnit_LDFLAGS})
+target_link_libraries (test-loadHandler ${xournalpp_LDFLAGS} ${CppUnit_LDFLAGS} std::filesystem)
 
 ## CTest ##
 add_test (util test-util)
