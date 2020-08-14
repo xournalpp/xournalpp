@@ -5,6 +5,7 @@
 
 #include <glib.h>
 #include <glib/gstdio.h>
+#include <iostream>
 
 #include "XojMsgBox.h"
 
@@ -36,33 +37,6 @@ auto PathUtil::readString(string& output, fs::path& path, bool showErrorToUser) 
     return false;
 }
 
-auto PathUtil::copy(const fs::path& src, const fs::path& dest) -> bool {
-    std::array<char, 16 * 1024> buffer{};  // 16k
-
-    FILE* fpRead = g_fopen(src.string().c_str(), "rbe");
-    if (!fpRead) {
-        return false;
-    }
-
-    FILE* fpWrite = g_fopen(dest.string().c_str(), "wbe");
-    if (!fpWrite) {
-        fclose(fpRead);
-        return false;
-    }
-
-    while (!feof(fpRead)) {
-        size_t bytes = fread(buffer.data(), 1, buffer.size(), fpRead);
-        if (bytes) {
-            fwrite(buffer.data(), 1, bytes, fpWrite);
-        }
-    }
-
-    fclose(fpRead);
-    fclose(fpWrite);
-
-    return true;
-}
-
 auto PathUtil::getEscapedPath(const fs::path& path) -> string {
     string escaped = path.string();
     StringUtils::replaceAllChars(escaped, {replace_pair('\\', "\\\\"), replace_pair('\"', "\\\"")});
@@ -90,17 +64,24 @@ auto PathUtil::clearExtensions(fs::path& path, const std::string &ext) -> void {
 }
 
 auto PathUtil::fromUri(const std::string &uri) -> fs::path {
+    std::cout << "Checking startsWith" << std::endl;
     if (!StringUtils::startsWith(uri, "file://")) {
         return {};
     }
 
+    std::cout << "Getting the filename from URI" << std::endl;
     gchar* filename = g_filename_from_uri(uri.c_str(), nullptr, nullptr);
+
+    std::cout << "Checking if filename is null" << std::endl;
     if (filename == nullptr) {
         return {};
     }
+    std::cout << "Generating path from filename" << std::endl;
     fs::path p(filename);
+    std::cout << "Freeing filename" << std::endl;
     g_free(filename);
 
+    std::cout << "Returning p" << std::endl;
     return p;
 }
 
