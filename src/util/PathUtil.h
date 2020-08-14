@@ -31,8 +31,6 @@ public:
      */
     static bool readString(std::string& output, fs::path& path, bool showErrorToUser = true);
 
-    static bool copy(const fs::path& src, const fs::path& dest);
-
     /**
      * Get escaped path, all " and \ are escaped
      */

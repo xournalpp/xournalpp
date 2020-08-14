@@ -97,7 +97,7 @@ auto SaveJob::save() -> bool {
         fs::path backup = filename;
         backup += "~";
 
-        if (!PathUtil::copy(doc->getFilename(), backup)) {
+        if (!fs::copy_file(doc->getFilename(), backup)) {
             g_warning(_("Could not create backup! (The file was created from an older Xournal version)"));
         }
 
