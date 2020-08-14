@@ -48,11 +48,21 @@ public:
     }
 
     void testClearExtensions() {
-        fs::path a("C:\\test\\abc\\xyz.txt");
+        // These tests use the preferred separator (i.e. "\\" on Windows and "/" on POSIX)
+        auto a = fs::path("C:") / "test" / "abc" / "xyz.txt";
+        fs::path old_path(a);
         PathUtil::clearExtensions(a);
-        CPPUNIT_ASSERT_EQUAL(string("C:\\test\\abc\\xyz.txt"), a.string());
+        CPPUNIT_ASSERT_EQUAL(old_path.string(), a.string());
 
-        fs::path b("/test/asdf.TXT");
+        a = fs::path("C:") / "test" / "abc" / "xyz";
+        old_path = a;
+        a += ".xopp";
+        PathUtil::clearExtensions(a);
+        CPPUNIT_ASSERT_EQUAL(old_path.string(), a.string());
+        
+
+        // The following tests use the generic separator which works on all systems
+        auto b = fs::path("/test/asdf.TXT");
         PathUtil::clearExtensions(b);
         CPPUNIT_ASSERT_EQUAL(string("/test/asdf.TXT"), b.string());
         PathUtil::clearExtensions(b, ".txt");
