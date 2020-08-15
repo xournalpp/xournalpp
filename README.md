@@ -63,7 +63,9 @@ Xournal++ features:
 
 Since mid 2020, there is a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (in comming) available. Even though it is not perfectly stable nor every of Xournal++'s features is supported yet, you may check it out and open your Xournal++ notebooks on your mobile devices. Yout can get in touch in it's [seperatre repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile).
 
-[![Get it on Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=online.xournal.mobile)
+[Get it on Google Play](https://play.google.com/store/apps/details?id=online.xournal.mobile)
+
+It offers a web version on [xournal.online](https://xournal.online) too.
 
 *Why is the iOS app not published yet?*
 
@@ -253,7 +255,7 @@ Flatpak-related packaging issues should be reported there.
 
 ### Android and Chrome OS
 
-Android is supported by Xournal++ Mobile. It can be downloaded either on the [Tags page](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile/-/tags) or [![Get it on Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=online.xournal.mobile).
+Android is supported by Xournal++ Mobile. It can be downloaded either on the [Tags page](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile/-/tags) or [from Google Play](https://play.google.com/store/apps/details?id=online.xournal.mobile).
 
 ### iOS
 
