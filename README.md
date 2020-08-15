@@ -59,6 +59,16 @@ Xournal++ features:
 * Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...
 * Plugins using LUA Scripting
 
+## Mobile app
+
+Since mid 2020, there is a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (in comming) available. Even though it is not perfectly stable nor every of Xournal++'s features is supported yet, you may check it out and open your Xournal++ notebooks on your mobile devices. Yout can get in touch in it's [seperatre repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile).
+
+[![Get it on Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=online.xournal.mobile)
+
+*Why is the iOS app not published yet?*
+
+According to the Apple App Store guidelines, it is prohibited to publish unstable or beta apps. Though we wait until Xournal++ Mobile works more stable and offers more complete feature compatibility to Xournal++.
+
 <table>
 <tr>
 <td>
@@ -133,7 +143,7 @@ The official releases of Xournal++ can be found on the
 binaries for Debian (Buster), Ubuntu (16.04), MacOS (10.13 and newer), and
 Windows. For other Linux distributions (or older/newer ones), we also provide an
 AppImage that is binary compatible with any distribution released around or
-after Ubuntu 16.04.
+after Ubuntu 16.04. For installing Xournal++ Mobile on handheld devices, please check out [Xournal++ Mobile's instructions](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#try-it-out)
 
 On Linux, Xournal++ can also be installed via [snapcraft](https://snapcraft.io/xournalpp).
 
@@ -241,6 +251,14 @@ The Flatpak manifest can be found at the [Xournal++ Flatpak packaging
 repository](https://github.com/flathub/com.github.xournalpp.xournalpp), and all
 Flatpak-related packaging issues should be reported there.
 
+### Android and Chrome OS
+
+Android is supported by Xournal++ Mobile. It can be downloaded either on the [Tags page](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile/-/tags) or [![Get it on Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=online.xournal.mobile).
+
+### iOS
+
+Unfortunately, the iOS app is not published yet in the Apple App Store. See [here](#mobile-app) to learn, why. Anyway, in the [Building section](#building) you can learn how to build an early preview.
+
 ### Windows
 
 Official Windows releases are provided on the [Releases
@@ -279,6 +297,10 @@ page](https://github.com/xournalpp/xournalpp/releases).
 [Mac Build](readme/MacBuild.md)
 
 [Windows Build](readme/WindowsBuild.md)
+
+[Android Build](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#getting-started)
+
+[iOS Build](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#getting-started)
 
 ## Fileformat
 The fileformat *.xopp is an XML which is .gz compressed. PDFs are not embedded into the file, so if the PDF is deleted, the background is lost. *.xopp is basically the same fileformat as *.xoj, which is used by Xournal. Therefor Xournal++ reads *.xoj files, and can also export *.xoj. On exporting to *.xoj all Xournal++ specific Extension are lost, like addtional Background types.
