@@ -9,18 +9,20 @@
 
 </td><td>
 
-## Shout out - Translators Needed!  
+## Shout out - Translators Needed!
 
 Recently we revisited the settings dialog to improve the feeling and usability.
 While doing that we also added better descriptions, for which we require
 new translations.
 
 Partial translations, which need to be updated:
+
 - Czech
 - Polish
 - Chinese
 
 Full translations for all languages not mentioned previously **except**:
+
 - English
 - German
 - Italian
@@ -37,59 +39,83 @@ Xournal++ is a hand note taking software written in C++ with the target of flexi
 Stroke recognizer and other parts are based on Xournal Code, which you can find at [sourceforge](http://sourceforge.net/projects/xournal/)
 
 Xournal++ features:
-* Support for pen pressure, e.g. Wacom Tablet
-* Support for annotating PDFs
-* Fill shape functionality
-* PDF Export (with and without paper style)
-* PNG Export (with and without transparent background)
-* Allow to map different tools / colors etc. to stylus buttons / mouse buttons
-* Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (can be individually hidden, editing layer can be selected)
-* enhanced support for image insertion
-* Eraser with multiple configurations
-* Significantly reduced memory usage and code to detect memory leaks compared to Xournal
-* LaTeX support (requires a working LaTeX install)
-* bug reporting, autosave, and auto backup tools
-* Customizeable toolbar, with multiple configurations, e.g. to optimize toolbar for portrait / landscape
-* Page Template definitions
-* Shape drawing (line, arrow, circle, rect, splines)
-* Shape resizing and rotation
-* Rotation snapping every 45 degrees
-* Rect snapping to grid
-* Audio recording and playback alongside with handwritten notes
-* Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...
-* Plugins using LUA Scripting
+
+- Support for pen pressure, e.g. Wacom Tablet
+- Support for annotating PDFs
+- Fill shape functionality
+- PDF Export (with and without paper style)
+- PNG Export (with and without transparent background)
+- Allow to map different tools / colors etc. to stylus buttons / mouse buttons
+- Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (can be individually hidden, editing layer can be selected)
+- enhanced support for image insertion
+- Eraser with multiple configurations
+- Significantly reduced memory usage and code to detect memory leaks compared to Xournal
+- LaTeX support (requires a working LaTeX install)
+- bug reporting, auto-save, and auto backup tools
+- Customizable toolbar, with multiple configurations, e.g. to optimize toolbar for portrait / landscape
+- Page Template definitions
+- Shape drawing (line, arrow, circle, rect, splines)
+- Shape resizing and rotation
+- Rotation snapping every 45 degrees
+- Rect snapping to grid
+- Audio recording and playback alongside with handwritten notes
+- Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...
+- Plugins using LUA Scripting
+
+## Mobile & web app
+
+Since mid 2020, there is a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (in coming) as well as a **web app** available. Even though it is not perfectly stable nor every of Xournal++'s features is supported yet, you may check it out and open your Xournal++ notebooks on your mobile devices. You can get in touch in it's [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile).
+
+[Get it on Google Play](https://play.google.com/store/apps/details?id=online.xournal.mobile)
+
+The web app is available at [xournal.online](https://xournal.online).
+
+_Why is the iOS app not published yet?_
+
+According to the Apple App Store guidelines, it is prohibited to publish unstable or beta apps. Hence we wait until Xournal++ Mobile works more stable and offers more complete feature compatibility to Xournal++.
 
 <table>
 <tr>
 <td>
 
 ## Linux
+
 <img src="readme/main.png" width=100% title="Xournal++ Screenshot on Linux"/>
 
 </td><td>
 
 ## Windows 10
+
 <img src="readme/main-win.png" width=100% title="Xournal++ Screenshot on Win10"/>
 
 </td></tr><tr><td>
 
 ## macOS High Sierra
+
 <img src="readme/main-mac.png" width=100% title="Xournal++ Screenshot on macOS"/>
 
 </td><td>
 
-## Toolbar / Page Background / Layer
-Multiple page background, easy selectable on the toolbar
-<img src="readme/background.png" width=100% title="Xournal++ Screenshot"/>
+## Xournal++ Mobile
+
+<img src="https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile/-/raw/master/fastlane/metadata/android/en_US/images/tenInchScreenshots/03.png" width=100% title="Xournal++ Mobile Screenshot on Chromium OS"/>
 
 </td></tr><tr><td>
 
-## Layer sidebar and advance Layer selection.
-<img src="readme/layer.png" width=100% title="Xournal++ Screenshot"/>
+## Toolbar / Page Background / Layer
+
+Multiple page background, easy selectable on the toolbar
+<img src="readme/background.png" width=100% title="Xournal++ Screenshot"/>
 
 </td><td>
 
-## Multiple predefined and fully customizeable Toolbar.
+## Layer sidebar and advance Layer selection.
+
+<img src="readme/layer.png" width=100% title="Xournal++ Screenshot"/>
+
+</td></tr><tr><td>
+
+## Multiple predefined and fully customizable Toolbar.
 
 <img src="readme/toolbar.png" width=100% title="Xournal++ Screenshot"/>
 
@@ -103,28 +129,25 @@ some common questions can be found in the
 [FAQ](https://github.com/xournalpp/xournalpp/wiki/Frequently-Asked-Questions-&-Problem-Solving).
 
 ## Experimental Features:
-Sometimes a feature is added that might not be rock solid, or the developers aren't sure it is useful. 
+
+Sometimes a feature is added that might not be rock solid, or the developers aren't sure it is useful.
 Try these out and give us some feedback.
 
 Here are a few under development that you can play with now.
 
+- <img src="readme/floatingtoolboxmbmenu.png"  title="Xournal++ Screenshot"/> Assign a mouse button or stylus button to bring up a toolbox of toolbars right under the cursor. You can also modify what is in the toolbox through the usual View->Toolbars->Customize although **it won't appear unless you've assigned a button in preferences: mouse or stylus** ( or selected a toolbar configuration that uses it).
 
-* <img src="readme/floatingtoolboxmbmenu.png"  title="Xournal++ Screenshot"/> Assign a mouse button or stylus button to bring up a toolbox of toolbars right under the cursor.  You can also modify what is in the toolbox through the usual View->Toolbars->Customize although **it won't appear unless you've assigned a button in preferences: mouse or stylus** ( or selected a toolbar configuration that uses it).
   - This is an experimental feature because not everything you can put in the toolbox behaves. So be aware.
-  
+
     <img src="readme/floatingtoolbox.png" width=25% />
 
+* Keep your eyes out for other experimental features in preferences as seen here:
 
+  DrawingTools: When drawing a box, circle etc simulate ctrl or shift modifiers by the initial direction you move the mouse.
 
+  Action on Tool Tap: Allow a brief tap on the screen to bring up the floating toolbox and/or select an object. May work with pen and highlighter only.
 
- -  Keep your eyes out for other experimental features in preferences as seen here:
- 
-     DrawingTools: When drawing a box, circle etc simulate ctrl or shift modifiers by the initial direction you move the mouse.
-   
-     Action on Tool Tap: Allow a brief tap on the screen to bring up the floating toolbox and/or select an object. May work with pen and highlighter only.
-  
-     <img src="readme/moreexperimentals.png" width=50% />
-
+   <img src="readme/moreexperimentals.png" width=50% />
 
 ## Installing
 
@@ -133,7 +156,7 @@ The official releases of Xournal++ can be found on the
 binaries for Debian (Buster), Ubuntu (16.04), MacOS (10.13 and newer), and
 Windows. For other Linux distributions (or older/newer ones), we also provide an
 AppImage that is binary compatible with any distribution released around or
-after Ubuntu 16.04.
+after Ubuntu 16.04. For installing Xournal++ Mobile on handheld devices, please check out [Xournal++ Mobile's instructions](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#try-it-out)
 
 On Linux, Xournal++ can also be installed via [snapcraft](https://snapcraft.io/xournalpp).
 
@@ -179,7 +202,9 @@ via _Software_ application or the following command:
 ```bash
 sudo dnf install xournalpp
 ```
-or 
+
+or
+
 ```bash
 pkcon install xournalpp
 ```
@@ -241,6 +266,14 @@ The Flatpak manifest can be found at the [Xournal++ Flatpak packaging
 repository](https://github.com/flathub/com.github.xournalpp.xournalpp), and all
 Flatpak-related packaging issues should be reported there.
 
+### Android and Chrome OS
+
+Android is supported by Xournal++ Mobile. It can be downloaded either on the [Tags page](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile/-/tags) or [from Google Play](https://play.google.com/store/apps/details?id=online.xournal.mobile).
+
+### iOS
+
+Unfortunately, the iOS app is not published yet in the Apple App Store. See [here](#mobile--web-app) to learn, why. Anyway, in the [Building section](#building) you can learn how to build an early preview.
+
 ### Windows
 
 Official Windows releases are provided on the [Releases
@@ -248,9 +281,9 @@ page](https://github.com/xournalpp/xournalpp/releases).
 
 **Notes:**
 
-* Currently, only WinTab drivers are supported. This is due to a limitation with
+- Currently, only WinTab drivers are supported. This is due to a limitation with
   the underlying library that we use, GTK.
-* There is a GTK that prevents stylus input from working correctly. Please start
+- There is a GTK bug that prevents stylus input from working correctly. Please start
   Xournal++, touch with the stylus, quit Xournal++ and start again. Then stylus
   input will be working, until you restart Windows. See
   [#659](https://github.com/xournalpp/xournalpp/issues/659).
@@ -262,14 +295,13 @@ page](https://github.com/xournalpp/xournalpp/releases).
 
 **Notes:**
 
-* There have been compatibility problems with Mac OS X Catalina regarding both
+- There have been compatibility problems with Mac OS X Catalina regarding both
   file permissions and stylus support
   ([#1772](https://github.com/xournalpp/xournalpp/issues/1772) and
   [#1757](https://github.com/xournalpp/xournalpp/issues/1757)). Unfortunately,
   we don't have the resources to adequately support Catalina at this time. Help
   would be appreciated!
-* Xournal++ will be delivered with a patched GTK. Else pressure sensitivity may
-  not will not work on Mac
+- Xournal++ will be delivered with a patched GTK. Else pressure sensitivity will not work on Mac
   [#569](https://github.com/xournalpp/xournalpp/issues/569).
 
 ## Building
@@ -280,17 +312,23 @@ page](https://github.com/xournalpp/xournalpp/releases).
 
 [Windows Build](readme/WindowsBuild.md)
 
-## Fileformat
-The fileformat *.xopp is an XML which is .gz compressed. PDFs are not embedded into the file, so if the PDF is deleted, the background is lost. *.xopp is basically the same fileformat as *.xoj, which is used by Xournal. Therefor Xournal++ reads *.xoj files, and can also export *.xoj. On exporting to *.xoj all Xournal++ specific Extension are lost, like addtional Background types.
+[Android Build](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#getting-started)
 
-*.xopp can theoretically be read by Xournal, as long as you do not use any new feature, Xournal does not open files at all if there are new attributes or unknown values, because of this Xournal++ will add the extension .xopp to all saved files.
+[iOS Build](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#getting-started)
 
-All new files will be saved as *.xopp, if an *.xoj file is opened which was created by Xournal, the Save-As dialog will be displayed on save. If the *.xoj file was by Xournal++ created, Xournal++ overwrite the file on save, and does not change the extension.
+## File format
+
+The file format _.xopp is an XML which is .gz compressed. PDFs are not embedded into the file, so if the PDF is deleted, the background is lost. _.xopp is basically the same file format as _.xoj, which is used by Xournal. Therefor Xournal++ reads _.xoj files, and can also export _.xoj. On exporting to _.xoj all Xournal++ specific Extension are lost, like additional Background types.
+
+\*.xopp can theoretically be read by Xournal, as long as you do not use any new feature, Xournal does not open files at all if there are new attributes or unknown values, because of this Xournal++ will add the extension .xopp to all saved files.
+
+All new files will be saved as _.xopp, if an _.xoj file is opened which was created by Xournal, the Save-As dialog will be displayed on save. If the \*.xoj file was by Xournal++ created, Xournal++ overwrite the file on save, and does not change the extension.
 
 **We are currently introducing a new file format that can efficiently store attached PDF files and other attachments internally. We will still allow for attachments that are linked to external files. Please refer to [#937](https://github.com/xournalpp/xournalpp/issues/937) for futher details.**
 
 ## Development
-For developping new features, write a Ticket, so others know what you are doing.
+
+For developing new features, write a Ticket, so others know what you are doing.
 For development create a fork, and use the master as base. Create a Pull request for each fix.
 Do not create big pull requests, as long as you don't break anything features also can be
 merged, even if they are not 100% finished.
@@ -299,8 +337,6 @@ See [GitHub:xournalpp](http://github.com/xournalpp/xournalpp) for current develo
 our Gitter channel via the badge on top.
 
 Also take a look at our [Coding Conventions](https://github.com/xournalpp/xournalpp/wiki/Coding-conventions)
-
-
 
 ## Code documentation
 
