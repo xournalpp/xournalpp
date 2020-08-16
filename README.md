@@ -272,7 +272,7 @@ Android is supported by Xournal++ Mobile. It can be downloaded either on the [Ta
 
 ### iOS
 
-Unfortunately, the iOS app is not published yet in the Apple App Store. See [here](#mobile-app) to learn, why. Anyway, in the [Building section](#building) you can learn how to build an early preview.
+Unfortunately, the iOS app is not published yet in the Apple App Store. See [here](#mobile--web-app) to learn, why. Anyway, in the [Building section](#building) you can learn how to build an early preview.
 
 ### Windows
 
