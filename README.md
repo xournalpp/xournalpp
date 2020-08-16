@@ -328,7 +328,7 @@ All new files will be saved as _.xopp, if an _.xoj file is opened which was crea
 
 ## Development
 
-For developping new features, write a Ticket, so others know what you are doing.
+For developing new features, write a Ticket, so others know what you are doing.
 For development create a fork, and use the master as base. Create a Pull request for each fix.
 Do not create big pull requests, as long as you don't break anything features also can be
 merged, even if they are not 100% finished.
