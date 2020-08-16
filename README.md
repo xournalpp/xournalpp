@@ -62,13 +62,13 @@ Xournal++ features:
 - Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...
 - Plugins using LUA Scripting
 
-## Mobile app
+## Mobile & web app
 
-Since mid 2020, there is a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (in coming) available. Even though it is not perfectly stable nor every of Xournal++'s features is supported yet, you may check it out and open your Xournal++ notebooks on your mobile devices. You can get in touch in it's [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile).
+Since mid 2020, there is a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (in coming) as well as a **web app** available. Even though it is not perfectly stable nor every of Xournal++'s features is supported yet, you may check it out and open your Xournal++ notebooks on your mobile devices. You can get in touch in it's [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile).
 
 [Get it on Google Play](https://play.google.com/store/apps/details?id=online.xournal.mobile)
 
-It offers a web version on [xournal.online](https://xournal.online) too.
+The web app is available at [xournal.online](https://xournal.online).
 
 _Why is the iOS app not published yet?_
 
@@ -96,7 +96,7 @@ According to the Apple App Store guidelines, it is prohibited to publish unstabl
 
 </td><td>
 
-## Chromium OS & Android
+## Xournal++ Mobile
 
 <img src="https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile/-/raw/master/fastlane/metadata/android/en_US/images/tenInchScreenshots/03.png" width=100% title="Xournal++ Mobile Screenshot on Chromium OS"/>
 
