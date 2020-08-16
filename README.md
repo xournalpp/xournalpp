@@ -72,7 +72,7 @@ It offers a web version on [xournal.online](https://xournal.online) too.
 
 _Why is the iOS app not published yet?_
 
-According to the Apple App Store guidelines, it is prohibited to publish unstable or beta apps. Though we wait until Xournal++ Mobile works more stable and offers more complete feature compatibility to Xournal++.
+According to the Apple App Store guidelines, it is prohibited to publish unstable or beta apps. Hence we wait until Xournal++ Mobile works more stable and offers more complete feature compatibility to Xournal++.
 
 <table>
 <tr>
@@ -96,18 +96,24 @@ According to the Apple App Store guidelines, it is prohibited to publish unstabl
 
 </td><td>
 
+## Chromium OS & Android
+
+<img src="https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile/-/raw/master/fastlane/metadata/android/en_US/images/tenInchScreenshots/03.png" width=100% title="Xournal++ Mobile Screenshot on Chromium OS"/>
+
+</td></tr><tr><td>
+
 ## Toolbar / Page Background / Layer
 
 Multiple page background, easy selectable on the toolbar
 <img src="readme/background.png" width=100% title="Xournal++ Screenshot"/>
 
-</td></tr><tr><td>
+</td><td>
 
 ## Layer sidebar and advance Layer selection.
 
 <img src="readme/layer.png" width=100% title="Xournal++ Screenshot"/>
 
-</td><td>
+</td></tr><tr><td>
 
 ## Multiple predefined and fully customizable Toolbar.
 
@@ -277,7 +283,7 @@ page](https://github.com/xournalpp/xournalpp/releases).
 
 - Currently, only WinTab drivers are supported. This is due to a limitation with
   the underlying library that we use, GTK.
-- There is a GTK that prevents stylus input from working correctly. Please start
+- There is a GTK bug that prevents stylus input from working correctly. Please start
   Xournal++, touch with the stylus, quit Xournal++ and start again. Then stylus
   input will be working, until you restart Windows. See
   [#659](https://github.com/xournalpp/xournalpp/issues/659).
@@ -295,8 +301,7 @@ page](https://github.com/xournalpp/xournalpp/releases).
   [#1757](https://github.com/xournalpp/xournalpp/issues/1757)). Unfortunately,
   we don't have the resources to adequately support Catalina at this time. Help
   would be appreciated!
-- Xournal++ will be delivered with a patched GTK. Else pressure sensitivity may
-  not will not work on Mac
+- Xournal++ will be delivered with a patched GTK. Else pressure sensitivity will not work on Mac
   [#569](https://github.com/xournalpp/xournalpp/issues/569).
 
 ## Building
