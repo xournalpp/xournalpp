@@ -16,7 +16,8 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         GladeGui(gladeSearchPath, "settings.glade", "settingsDialog"),
         settings(settings),
         control(control),
-        callib(zoomcallib_new()) {
+        callib(zoomcallib_new()),
+        latexPanel(gladeSearchPath) {
     GtkWidget* vbox = get("zoomVBox");
     g_return_if_fail(vbox != nullptr);
 
@@ -114,6 +115,8 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         gtk_box_pack_end(GTK_BOX(container), label, true, true, 0);
         gtk_widget_show(label);
     }
+
+    gtk_container_add(GTK_CONTAINER(this->get("latexTabBox")), this->latexPanel.get("latexSettingsPanel"));
 }
 
 SettingsDialog::~SettingsDialog() {
@@ -433,6 +436,8 @@ void SettingsDialog::load() {
 
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spAudioGain")), settings->getAudioGain());
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")), settings->getDefaultSeekTime());
+
+    this->latexPanel.load(settings->latexSettings);
 }
 
 auto SettingsDialog::updateHideString(const string& hidden, bool hideMenubar, bool hideSidebar) -> string {
@@ -676,6 +681,8 @@ void SettingsDialog::save() {
     for (DeviceClassConfigGui* deviceClassConfigGui: this->deviceClassConfigs) {
         deviceClassConfigGui->saveSettings();
     }
+
+    this->latexPanel.save(settings->latexSettings);
 
     settings->transactionEnd();
 

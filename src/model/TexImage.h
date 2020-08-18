@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -23,6 +24,10 @@
 class TexImage: public Element {
 public:
     TexImage();
+    TexImage(const TexImage&) = delete;
+    TexImage& operator=(const TexImage&) = delete;
+    TexImage(const TexImage&&) = delete;
+    TexImage&& operator=(const TexImage&&) = delete;
     virtual ~TexImage();
 
 public:
@@ -30,33 +35,21 @@ public:
     void setHeight(double height);
 
     /**
-     * Sets the binary data, a .PNG image or a .PDF
+     * Returns the binary data (PDF or PNG (deprecated)).
      */
-    void setBinaryData(string binaryData);
+    const std::string& getBinaryData() const;
 
     /**
-     * Gets the binary data, a .PNG image or a .PDF
-     */
-    string& getBinaryData();
-
-    /**
-     * Get the Image, if rendered as image
+     * @return The image, if render source is PNG. Note: this is deprecated.
      */
     cairo_surface_t* getImage();
 
     /**
-     * @return The PDF Document, if rendered as .pdf
+     * @return The PDF Document, if rendered as a PDF.
      *
      * The document needs to be referenced, if it will be hold somewhere
      */
     PopplerDocument* getPdf();
-
-    /**
-     * @param pdf The PDF Document, if rendered as .pdf
-     *
-     * The PDF will be referenced
-     */
-    void setPdf(PopplerDocument* pdf);
 
     virtual void scale(double x0, double y0, double fx, double fy);
     virtual void rotate(double x0, double y0, double xo, double yo, double th);
@@ -66,6 +59,11 @@ public:
     string getText();
 
     virtual Element* clone();
+
+    /**
+     * @return true if the binary data (PNG or PDF) was loaded successfully.
+     */
+    bool loadData(std::string&& bytes, GError** err = nullptr);
 
 public:
     // Serialize interface
@@ -82,11 +80,6 @@ private:
      */
     void freeImageAndPdf();
 
-    /**
-     * Load the binary data, either .PNG or .PDF
-     */
-    void loadBinaryData();
-
 private:
     /**
      * Tex PDF Document, if rendered as PDF
@@ -94,24 +87,19 @@ private:
     PopplerDocument* pdf = nullptr;
 
     /**
-     * Tex image, if rendered as image
+     * Tex image, if rendered as image. Note: this is deprecated and subject to removal in a later version.
      */
     cairo_surface_t* image = nullptr;
 
     /**
      * PNG Image / PDF Document
      */
-    string binaryData;
+    std::string binaryData;
 
     /**
-     * Flag if the binary data is already parsed
+     * Read position for PNG binaryData (deprecated).
      */
-    bool parsedBinaryData = false;
-
-    /**
-     * Read position in binaryData
-     */
-    string::size_type read = 0;
+    std::string::size_type read = 0;
 
     /**
      * Tex String

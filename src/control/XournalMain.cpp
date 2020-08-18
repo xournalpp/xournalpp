@@ -372,6 +372,13 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
         gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.c_str());
     }
 
+    auto& globalLatexTemplatePath = control->getSettings()->latexSettings.globalTemplatePath;
+    if (globalLatexTemplatePath.empty()) {
+        globalLatexTemplatePath = fs::u8path(findResourcePath("resources/")) / "default_template.tex";
+        g_message("Using default latex template in %s", globalLatexTemplatePath.u8string().c_str());
+        control->getSettings()->save();
+    }
+
     auto* win = new MainWindow(gladePath, control);
     control->initWindow(win);
 

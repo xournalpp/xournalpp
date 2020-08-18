@@ -20,7 +20,9 @@
 
 #include <poppler.h>
 
+#include "control/settings/LatexSettings.h"
 #include "gui/dialog/LatexDialog.h"
+#include "latex/LatexGenerator.h"
 #include "model/PageRef.h"
 #include "model/Text.h"
 
@@ -77,16 +79,6 @@ private:
     void deleteOldImage();
 
     /**
-     * Run the LaTeX command asynchronously to generate a preview for the given
-     * LaTeX string. Note that this method can only be called when the preview
-     * is not updating.
-     *
-     * @return The PID of the spawned process, or nullptr if the .tex file could
-     * not be written or the command failed to start.
-     */
-    std::unique_ptr<GPid> runCommandAsync(const string& texString);
-
-    /**
      * Asynchronously runs the LaTeX command and then updates the TeX image with
      * the given LaTeX string. If the preview is already being updated, then
      * this method will be a no-op.
@@ -112,15 +104,9 @@ private:
      * If the Latex text has changed since the last update, triggerPreviewUpdate
      * will be called again.
      */
-    static void onPdfRenderComplete(GPid pid, gint returnCode, LatexController* self);
+    static void onPdfRenderComplete(GObject* procObj, GAsyncResult* res, LatexController* self);
 
     void setUpdating(bool newValue);
-
-    /**
-     * Convert the given PDF Document to a TexImage and set the formula to the
-     * given formula.
-     */
-    std::unique_ptr<TexImage> convertDocumentToImage(PopplerDocument* doc, string formula) const;
 
     /**
      * Load the preview PDF from disk and create a TexImage object.
@@ -134,6 +120,12 @@ private:
 
 private:
     Control* control = nullptr;
+    LatexSettings const& settings;
+
+    /**
+     * The contents of the latex template, loaded from disk.
+     */
+    std::string latexTemplate;
 
     /**
      * LaTex editor dialog
@@ -213,15 +205,15 @@ private:
     Path texTmpDir;
 
     /**
-     * Previously existing TexImage
+     * The element that is currently being edited.
      */
-    TexImage* selectedTexImage = nullptr;
-
-    Text* selectedText = nullptr;
+    Element* selectedElem = nullptr;
 
     /**
      * The controller owns the rendered preview in order to be able to delete it
      * when a new render is created
      */
     std::unique_ptr<TexImage> temporaryRender;
+
+    LatexGenerator generator;
 };

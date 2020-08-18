@@ -11,9 +11,6 @@ TexImage::TexImage(): Element(ELEMENT_TEXIMAGE) { this->sizeCalculated = true; }
 
 TexImage::~TexImage() { freeImageAndPdf(); }
 
-/**
- * Free image and PDF
- */
 void TexImage::freeImageAndPdf() {
     if (this->image) {
         cairo_surface_destroy(this->image);
@@ -24,30 +21,17 @@ void TexImage::freeImageAndPdf() {
         g_object_unref(this->pdf);
         this->pdf = nullptr;
     }
-
-    this->parsedBinaryData = false;
 }
 
 auto TexImage::clone() -> Element* {
     auto* img = new TexImage();
-
+    img->loadData(std::string(this->binaryData), nullptr);
     img->x = this->x;
     img->y = this->y;
     img->setColor(this->getColor());
     img->width = this->width;
     img->height = this->height;
     img->text = this->text;
-    img->binaryData = this->binaryData;
-
-    if (this->pdf) {
-        img->pdf = this->pdf;
-        g_object_ref(img->pdf);
-    }
-
-    if (this->image) {
-        img->image = cairo_surface_reference(this->image);
-    }
-
     return img;
 }
 
@@ -67,92 +51,49 @@ auto TexImage::cairoReadFunction(TexImage* image, unsigned char* data, unsigned 
 }
 
 /**
- * Sets the binary data, a .PNG image or a .PDF
- */
-void TexImage::setBinaryData(string binaryData) { this->binaryData = std::move(binaryData); }
-
-/**
  * Gets the binary data, a .PNG image or a .PDF
  */
-auto TexImage::getBinaryData() -> string& { return this->binaryData; }
+auto TexImage::getBinaryData() const -> std::string const& { return this->binaryData; }
 
 void TexImage::setText(string text) { this->text = std::move(text); }
 
 auto TexImage::getText() -> string { return this->text; }
 
-auto TexImage::getImage() -> cairo_surface_t* {
-    if (this->image == nullptr && !this->parsedBinaryData) {
-        loadBinaryData();
-    }
-
-    return this->image;
-}
-
-/**
- * Load the binary data, either .PNG or .PDF
- */
-void TexImage::loadBinaryData() {
-    freeImageAndPdf();
-
+auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
+    this->freeImageAndPdf();
+    this->binaryData = bytes;
     if (this->binaryData.length() < 4) {
-        this->parsedBinaryData = true;
-        return;
+        return false;
     }
 
-    string type = this->binaryData.substr(0, 4);
-
-    if (type[1] == 'P' && type[2] == 'N' && type[3] == 'G') {
-        this->read = 0;
+    const std::string type = binaryData.substr(1, 3);
+    if (type == "PDF") {
+        // Note: binaryData must not be modified while pdf is live.
+        this->pdf = poppler_document_new_from_data(this->binaryData.data(), this->binaryData.size(), nullptr, err);
+        if (!pdf || poppler_document_get_n_pages(this->pdf) < 1) {
+            return false;
+        }
+        if (!this->width && !this->height) {
+            PopplerPage* page = poppler_document_get_page(this->pdf, 0);
+            poppler_page_get_size(page, &this->width, &this->height);
+        }
+    } else if (type == "PNG") {
         this->image = cairo_image_surface_create_from_png_stream(
                 reinterpret_cast<cairo_read_func_t>(&cairoReadFunction), this);
-    } else if (type[1] == 'P' && type[2] == 'D' && type[3] == 'F') {
-        this->pdf = poppler_document_new_from_data(const_cast<char*>(this->binaryData.c_str()),
-                                                   this->binaryData.length(), nullptr, nullptr);
     } else {
         g_warning("Unknown Latex image type: «%s»", type.c_str());
     }
 
-    this->parsedBinaryData = true;
+    return true;
 }
 
-/**
- * @return The PDF Document, if rendered as .pdf
- *
- * The document needs to be referenced, if it will be hold somewhere
- */
-auto TexImage::getPdf() -> PopplerDocument* {
-    if (this->pdf == nullptr && !this->parsedBinaryData) {
-        loadBinaryData();
-    }
+auto TexImage::getImage() -> cairo_surface_t* { return this->image; }
 
-    return this->pdf;
-}
-
-/**
- * @param pdf The PDF Document, if rendered as .pdf
- *
- * The PDF will be referenced
- */
-void TexImage::setPdf(PopplerDocument* pdf) {
-    if (this->pdf != nullptr) {
-        g_object_unref(this->pdf);
-    }
-
-    this->pdf = pdf;
-
-    if (this->pdf != nullptr) {
-        g_object_ref(this->pdf);
-        this->parsedBinaryData = true;
-    }
-}
+auto TexImage::getPdf() -> PopplerDocument* { return this->pdf; }
 
 void TexImage::scale(double x0, double y0, double fx, double fy) {
-    this->x -= x0;
-    this->x *= fx;
-    this->x += x0;
-    this->y -= y0;
-    this->y *= fy;
-    this->y += y0;
+    this->x = (this->x - x0) * fx + x0;
+    this->y = (this->y - y0) * fy + y0;
 
     this->width *= fx;
     this->height *= fy;
@@ -191,7 +132,7 @@ void TexImage::readSerialized(ObjectInputStream& in) {
     int len = 0;
     in.readData(reinterpret_cast<void**>(&data), &len);
 
-    this->binaryData = string(data, len);
+    this->loadData(std::string(data, len), nullptr);
 
     in.endObject();
 }

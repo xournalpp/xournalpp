@@ -21,6 +21,7 @@
 #include "control/Tool.h"
 #include "model/Font.h"
 
+#include "LatexSettings.h"
 #include "Path.h"
 #include "SettingsEnums.h"
 
@@ -449,6 +450,8 @@ public:
      * Stop transaction and save settings
      */
     void transactionEnd();
+
+    LatexSettings latexSettings{};
 
 private:
     /**

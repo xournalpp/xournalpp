@@ -17,6 +17,7 @@
 #include "util/audio/DeviceInfo.h"
 
 #include "DeviceClassConfigGui.h"
+#include "LatexSettingsPanel.h"
 
 class ButtonConfigGui;
 
@@ -59,4 +60,6 @@ private:
 
     vector<ButtonConfigGui*> buttonConfigs;
     vector<DeviceClassConfigGui*> deviceClassConfigs;
+
+    LatexSettingsPanel latexPanel;
 };
