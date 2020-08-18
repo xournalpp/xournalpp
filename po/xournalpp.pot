@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-05 20:03+0000\n"
+"POT-Creation-Date: 2020-08-18 05:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/control/XournalMain.cpp:561
+#: ../src/control/XournalMain.cpp:568
 msgid ""
 "\n"
 "\n"
 "Will now attempt to run without this file."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:541
+#: ../src/control/XournalMain.cpp:548
 msgid ""
 "\n"
 "Will now attempt to run without this file."
@@ -39,12 +39,12 @@ msgstr ""
 msgid "%F-Note-%H-%M"
 msgstr ""
 
-#: ../src/gui/dialog/SettingsDialog.cpp:113
+#: ../src/gui/dialog/SettingsDialog.cpp:114
 msgid ""
 "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:556
+#: ../src/control/XournalMain.cpp:563
 msgid ""
 "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
@@ -200,28 +200,15 @@ msgstr ""
 msgid "Could not create folder: {1}"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:69
-msgid ""
-"Could not find pdflatex in PATH.\n"
-"Please install pdflatex first and make sure it's in the PATH."
-msgstr ""
-
-#: ../src/control/LatexController.cpp:90
-msgid ""
-"Could not find the LaTeX package 'standalone'.\n"
-"Please install standalone (found in texlive-latex-extra) and make sure it's "
-"accessible by your LaTeX installation."
-msgstr ""
-
-#: ../src/control/LatexController.cpp:387
+#: ../src/control/LatexController.cpp:265
 msgid "Could not load LaTeX PDF file"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:372
+#: ../src/control/LatexController.cpp:250
 msgid "Could not load LaTeX PDF file, File Error: {1}"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:379
+#: ../src/control/LatexController.cpp:259
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr ""
 
@@ -290,12 +277,12 @@ msgstr ""
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:110
+#: ../src/control/latex/LatexGenerator.cpp:69
 msgid "Could not save .tex file: {1}"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:129
-msgid "Could not start pdflatex: {1} (exit code: {2})"
+#: ../src/control/latex/LatexGenerator.cpp:85
+msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr ""
 
 #: ../src/undo/UndoRedoHandler.cpp:108
@@ -507,11 +494,14 @@ msgstr ""
 msgid "Error: {1}"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:84
+#: ../src/gui/dialog/LatexSettingsPanel.cpp:79
 msgid ""
-"Error: {1}\n"
-"Could not find kpsewhich in PATH; please install kpsewhich and put it on "
-"path."
+"Error: {1} is not a regular file. Please check your LaTeX template file "
+"settings. "
+msgstr ""
+
+#: ../src/gui/dialog/LatexSettingsPanel.cpp:70
+msgid "Error: {1}. Please check the contents of {2}"
 msgstr ""
 
 #: ../src/control/XournalMain.cpp:170
@@ -522,6 +512,18 @@ msgstr ""
 
 #: ../src/control/jobs/BaseExportJob.cpp:16
 msgid "Export PDF"
+msgstr ""
+
+#: ../src/control/latex/LatexGenerator.cpp:60
+msgid "Failed to find LaTeX generator program in PATH: {1}"
+msgstr ""
+
+#: ../src/control/latex/LatexGenerator.cpp:56
+msgid "Failed to parse LaTeX generator command: {1}"
+msgstr ""
+
+#: ../src/control/LatexController.cpp:49
+msgid "Failed to read global template file. Please check your settings."
 msgstr ""
 
 #: ../src/util/Util.cpp:153 ../src/util/Util.cpp:170
@@ -556,6 +558,15 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:310
 msgid "Get version of xournalpp"
+msgstr ""
+
+#: ../src/control/LatexController.cpp:44
+msgid "Global template file does not exist. Please check your settings."
+msgstr ""
+
+#: ../src/control/LatexController.cpp:55
+msgid ""
+"Global template file is not a regular file. Please check your settings. "
 msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
@@ -663,6 +674,10 @@ msgstr ""
 msgid "Jump to Page (first Page: 1)"
 msgstr ""
 
+#: ../src/control/LatexController.cpp:181
+msgid "Latex generation encountered an error: {1} (exit code: {2})"
+msgstr ""
+
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:246
 msgid "Layer"
 msgstr ""
@@ -711,7 +726,7 @@ msgstr ""
 msgid "Medium"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:538
+#: ../src/control/XournalMain.cpp:545
 msgid ""
 "Missing the needed UI file:\n"
 "{1}\n"
@@ -977,6 +992,10 @@ msgstr ""
 msgid "SVG with transparent background"
 msgstr ""
 
+#: ../src/gui/dialog/LatexSettingsPanel.cpp:68
+msgid "Sample LaTeX file generated successfully."
+msgstr ""
+
 #: ../src/control/Control.cpp:2452 ../src/control/jobs/SaveJob.cpp:13
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:319
 msgid "Save"
@@ -1076,13 +1095,13 @@ msgstr ""
 msgid "Show only not used pages ({1} unused pages)"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:383
+#: ../src/control/XournalMain.cpp:390
 msgid ""
 "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:399
+#: ../src/control/XournalMain.cpp:406
 msgid ""
 "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
@@ -1181,7 +1200,7 @@ msgstr ""
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr ""
 
-#: ../src/control/LatexController.cpp:308
+#: ../src/control/LatexController.cpp:225
 msgid "The formula is empty when rendered or invalid."
 msgstr ""
 
@@ -1245,6 +1264,10 @@ msgstr ""
 
 #: ../src/util/CrashHandler.cpp:30
 msgid "Trying to emergency save the current open document…"
+msgstr ""
+
+#: ../src/gui/dialog/LatexSettingsPanel.cpp:58
+msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
 #: ../src/gui/PageView.cpp:346
@@ -1475,10 +1498,6 @@ msgstr ""
 msgid "mouse"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:265
-msgid "pdflatex encountered an error: {1} (exit code: {2})"
-msgstr ""
-
 #: ../src/util/DeviceListHelper.cpp:92
 msgid "pen"
 msgstr ""
@@ -1567,6 +1586,14 @@ msgstr ""
 
 #: ../ui/settings.glade:2992 ../ui/settings.glade:3003
 msgid "%"
+msgstr ""
+
+#: ../ui/latexSettings.glade:184
+msgid "%%XPP_TEXT_COLOR%%"
+msgstr ""
+
+#: ../ui/latexSettings.glade:123
+msgid "%%XPP_TOOL_INPUT%%"
 msgstr ""
 
 #: ../ui/settings.glade:450
@@ -1833,6 +1860,10 @@ msgid ""
 "recently."
 msgstr ""
 
+#: ../ui/latexSettings.glade:43
+msgid "Always check LaTeX dependencies before running"
+msgstr ""
+
 #: ../ui/settings.glade:1269
 msgid "Artifact workaround"
 msgstr ""
@@ -1904,6 +1935,10 @@ msgstr ""
 
 #: ../ui/settings.glade:1379
 msgid "Button 2"
+msgstr ""
+
+#: ../ui/latexSettings.glade:172
+msgid "Choose a global LaTeX template file"
 msgstr ""
 
 #: ../ui/settings.glade:2348 ../ui/settings.glade:2491
@@ -2163,12 +2198,20 @@ msgstr ""
 msgid "Gain"
 msgstr ""
 
+#: ../ui/latexSettings.glade:64
+msgid "General LaTeX tool settings"
+msgstr ""
+
 #: ../ui/about.glade:153
 msgid "Git commit"
 msgstr ""
 
 #: ../ui/settings.glade:2247
 msgid "Global"
+msgstr ""
+
+#: ../ui/latexSettings.glade:98
+msgid "Global template file path"
 msgstr ""
 
 #: ../ui/goto.glade:14
@@ -2233,6 +2276,12 @@ msgid ""
 "<i>Recommended: 150ms</i>"
 msgstr ""
 
+#: ../ui/latexSettings.glade:47
+msgid ""
+"If enabled, check that required LaTeX packages are installed and that the "
+"LaTeX commands are available before running the LaTeX tool."
+msgstr ""
+
 #: ../ui/settings.glade:3669
 msgid "Ignore Time (ms)"
 msgstr ""
@@ -2267,6 +2316,18 @@ msgstr ""
 
 #: ../ui/main.glade:2131
 msgid "Insert a copy of the current page below"
+msgstr ""
+
+#: ../ui/settings.glade:4445
+msgid "LaTeX"
+msgstr ""
+
+#: ../ui/latexSettings.glade:284
+msgid "LaTeX executable settings"
+msgstr ""
+
+#: ../ui/latexSettings.glade:242
+msgid "LaTeX generation command"
 msgstr ""
 
 #: ../ui/main.glade:528
@@ -2592,6 +2653,10 @@ msgstr ""
 msgid "T_oolbars"
 msgstr ""
 
+#: ../ui/latexSettings.glade:211
+msgid "Template file settings"
+msgstr ""
+
 #: ../ui/pagesize.glade:101
 msgid "Template:"
 msgstr ""
@@ -2600,8 +2665,36 @@ msgstr ""
 msgid "Test"
 msgstr ""
 
+#: ../ui/latexSettings.glade:263
+msgid "Test configuration"
+msgstr ""
+
+#: ../ui/latexSettings.glade:267
+msgid ""
+"Test if the current configuration is valid by running the LaTeX generation "
+"command on the global template file with a test formula."
+msgstr ""
+
 #: ../ui/main.glade:1836
 msgid "Text Font..."
+msgstr ""
+
+#: ../ui/latexSettings.glade:96
+msgid "The LaTeX file to use as a template for the LaTeX tool."
+msgstr ""
+
+#: ../ui/latexSettings.glade:196
+msgid "The current color of the Text Tool, in hex RGB format."
+msgstr ""
+
+#: ../ui/latexSettings.glade:110
+msgid ""
+"The following strings will be substituted in the global template file when "
+"running the LaTeX tool:"
+msgstr ""
+
+#: ../ui/latexSettings.glade:135
+msgid "The math mode formula typed in the LaTeX tool."
 msgstr ""
 
 #: ../ui/settings.glade:3120
