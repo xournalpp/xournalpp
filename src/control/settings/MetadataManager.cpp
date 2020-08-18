@@ -33,7 +33,7 @@ void MetadataManager::deleteMetadataFile(fs::path const& path) {
 
     try {
         fs::remove(path);
-    } catch (fs::filesystem_error&) {
+    } catch (fs::filesystem_error const&) {
         g_warning("Could not delete metadata file %s", path.string().c_str());
     }
 }
@@ -61,31 +61,23 @@ auto sortMetadata(MetadataEntry& a, MetadataEntry& b) -> bool { return a.time > 
  * Load the metadata list (sorted)
  */
 auto MetadataManager::loadList() -> vector<MetadataEntry> {
-    fs::path folder = Util::getConfigSubfolder("metadata");
+    auto folder = Util::getConfigSubfolder("metadata");
 
     vector<MetadataEntry> data;
+    try {
+        for (auto const& f: fs::directory_iterator(folder)) {
+            auto path = folder / f;
 
-    GError* error = nullptr;
-    GDir* home = g_dir_open(folder.u8string().c_str(), 0, &error);
-    if (error != nullptr) {
-        XojMsgBox::showErrorToUser(nullptr, error->message);
-        g_error_free(error);
+            MetadataEntry entry = loadMetadataFile(path, f.path());
+
+            if (entry.valid) {
+                data.push_back(entry);
+            }
+        }
+    } catch (fs::filesystem_error& e) {
+        XojMsgBox::showErrorToUser(nullptr, e.what());
         return data;
     }
-
-    const gchar* file = nullptr;
-    while ((file = g_dir_read_name(home)) != nullptr) {
-        string path = folder.string();
-        path += "/";
-        path += file;
-
-        MetadataEntry entry = loadMetadataFile(path, file);
-
-        if (entry.valid) {
-            data.push_back(entry);
-        }
-    }
-    g_dir_close(home);
 
     std::sort(data.begin(), data.end(), sortMetadata);
 

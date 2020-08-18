@@ -48,44 +48,37 @@ PluginController::~PluginController()
  */
 void PluginController::loadPluginsFrom(fs::path const& path) {
 #ifdef ENABLE_PLUGINS
-
-    GError* error = nullptr;
-    GDir* dir = g_dir_open(path.c_str(), 0, &error);
-    if (error != nullptr) {
-        g_warning("Could not open plugin dir: «%s»", path.c_str());
-        g_error_free(error);
-        return;
-    }
-
     Settings* settings = control->getSettings();
     vector<string> pluginEnabled = StringUtils::split(settings->getPluginEnabled(), ',');
     vector<string> pluginDisabled = StringUtils::split(settings->getPluginDisabled(), ',');
 
-    const gchar* file;
-    while ((file = g_dir_read_name(dir)) != nullptr) {
-        string pluginFolder = path;
-        pluginFolder += "/";
-        pluginFolder += file;
+    try {
+        for (auto const& f: fs::directory_iterator(path)) {
+            auto pluginFolder = path / f.path();
 
-        Plugin* p = new Plugin(control, file, pluginFolder);
-        if (!p->isValid()) {
-            g_warning("Error loading plugin «%s»", file);
-            delete p;
-            continue;
+            Plugin* p = new Plugin(control, f.path().string(), pluginFolder.string());
+            if (!p->isValid()) {
+                g_warning("Error loading plugin «%s»", f.path().string().c_str());
+                delete p;
+                continue;
+            }
+
+            if (p->isDefaultEnabled()) {
+                p->setEnabled(!(std::find(pluginDisabled.begin(), pluginDisabled.end(), p->getName()) !=
+                                pluginDisabled.end()));
+            } else {
+                p->setEnabled(std::find(pluginEnabled.begin(), pluginEnabled.end(), p->getName()) !=
+                              pluginEnabled.end());
+            }
+
+            p->loadScript();
+
+            this->plugins.push_back(p);
         }
-
-        if (p->isDefaultEnabled()) {
-            p->setEnabled(
-                    !(std::find(pluginDisabled.begin(), pluginDisabled.end(), p->getName()) != pluginDisabled.end()));
-        } else {
-            p->setEnabled(std::find(pluginEnabled.begin(), pluginEnabled.end(), p->getName()) != pluginEnabled.end());
-        }
-
-        p->loadScript();
-
-        this->plugins.push_back(p);
+    } catch (fs::filesystem_error const& e) {
+        g_warning("Could not open plugin dir: «%s»", path.string().c_str());
+        return;
     }
-    g_dir_close(dir);
 #endif
 }
 

@@ -81,7 +81,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
     }
 
     file = Util::getConfigFile(TOOLBAR_CONFIG);
-    if (g_file_test(file.c_str(), G_FILE_TEST_EXISTS)) {
+    if (fs::exists(file)) {
         if (!tbModel->parse(file, false)) {
             string msg = FS(_F("Could not parse custom toolbar.ini file: {1}\n"
                                "Toolbars will not be available") %

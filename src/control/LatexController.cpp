@@ -238,19 +238,14 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
     }
 
     fs::path pdfPath = texTmpDir / "tex.pdf";
-    GError* err = nullptr;
-
-    gchar* fileContents = nullptr;
-    gsize fileLength = 0;
-    if (!g_file_get_contents(pdfPath.u8string().c_str(), &fileContents, &fileLength, &err)) {
-        XojMsgBox::showErrorToUser(control->getGtkWindow(),
-                                   FS(_F("Could not load LaTeX PDF file, File Error: {1}") % err->message));
-        g_error_free(err);
+    auto contents = Util::readString(pdfPath, true);
+    if (!contents) {
         return nullptr;
     }
 
     auto img = std::make_unique<TexImage>();
-    bool loaded = img->loadData(std::string(fileContents, fileLength), &err);
+    GError* err;
+    bool loaded = img->loadData(std::move(*contents), &err);
 
     if (err != nullptr) {
         string message = FS(_F("Could not load LaTeX PDF file: {1}") % err->message);
@@ -275,8 +270,6 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
         }
         img->setHeight(imgheight);
     }
-
-    g_free(fileContents);
 
     return img;
 }

@@ -14,29 +14,24 @@
 /**
  * Read a file to a string
  *
- * @param output Read contents
  * @param path Path to read
  * @param showErrorToUser Show an error to the user, if the file could not be read
  *
- * @return true if the file was read, false if not
+ * @return contents if the file was read, std::nullopt if not
  */
-auto Util::readString(string& output, fs::path const& path, bool showErrorToUser) -> bool {
-    gchar* contents = nullptr;
-    gsize length = 0;
-    GError* error = nullptr;
-    if (g_file_get_contents(path.string().c_str(), &contents, &length, &error)) {
-        output = contents;
-        g_free(contents);
-        return true;
+auto Util::readString(fs::path const& path, bool showErrorToUser) -> std::optional<std::string> {
+    try {
+        std::string s;
+        std::ifstream ifs{path};
+        s.resize(fs::file_size(path));
+        ifs.read(s.data(), s.size());
+        return {std::move(s)};
+    } catch (fs::filesystem_error const& e) {
+        if (showErrorToUser) {
+            XojMsgBox::showErrorToUser(nullptr, e.what());
+        }
     }
-
-
-    if (showErrorToUser) {
-        XojMsgBox::showErrorToUser(nullptr, error->message);
-    }
-
-    g_error_free(error);
-    return false;
+    return std::nullopt;
 }
 
 auto Util::getEscapedPath(const fs::path& path) -> string {
@@ -203,7 +198,7 @@ auto Util::getTmpDirSubfolder(const fs::path& subfolder) -> fs::path {
 }
 
 auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
-    if (g_mkdir_with_parents(p.u8string().c_str(), 0700) == -1) {
+    if (!fs::create_directories(p)) {
         Util::execInUiThread([=]() {
             string msg = FS(_F("Could not create folder: {1}") % p.string());
             g_warning("%s", msg.c_str());

@@ -106,24 +106,16 @@ XournalMain::MigrateResult XournalMain::migrateSettings() {
 
 void XournalMain::checkForErrorlog() {
     fs::path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
-    GDir* home = g_dir_open(errorDir.u8string().c_str(), 0, nullptr);
-
-    if (home == nullptr) {
+    if (!fs::exists(errorDir)) {
         return;
     }
 
-    vector<string> errorList;
-
-    const gchar* file = nullptr;
-    while ((file = g_dir_read_name(home)) != nullptr) {
-        if (g_file_test(file, G_FILE_TEST_IS_REGULAR)) {
-            if (StringUtils::startsWith(file, "errorlog.")) {
-                errorList.emplace_back(file);
-            }
+    vector<fs::path> errorList;
+    for (auto const& f: fs::directory_iterator(errorDir)) {
+        if (f.is_regular_file() && f.path().stem() == "errorlog") {
+            errorList.emplace_back(f);
         }
     }
-    g_dir_close(home);
-
 
     if (errorList.empty()) {
         return;
@@ -140,7 +132,7 @@ void XournalMain::checkForErrorlog() {
               GIT_REPO_OWNER % GIT_BRANCH);
     msg += "\n";
 #endif
-    msg += FS(_F("The most recent log file name: {1}") % errorList[0]);
+    msg += FS(_F("The most recent log file name: {1}") % errorList[0].string());
 
     GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
                                                msg.c_str());
@@ -198,7 +190,7 @@ void XournalMain::checkForEmergencySave(Control* control) {
 
     if (res == 1)  // Delete file
     {
-        g_unlink(file.string().c_str());
+        fs::remove(file);
     } else if (res == 2)  // Open File
     {
         if (control->openFile(file, -1, true)) {
@@ -207,7 +199,7 @@ void XournalMain::checkForEmergencySave(Control* control) {
             // Make sure the document is changed, there is a question to ask for save
             control->getUndoRedoHandler()->addUndoAction(std::make_unique<EmergencySaveRestore>());
             control->updateWindowTitle();
-            g_unlink(file.string().c_str());
+            fs::remove(file);
         }
     }
 
@@ -387,19 +379,18 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
             XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*win), msg);
         }
 
-        GFile* file = g_file_new_for_commandline_arg(optFilename[0]);
-        fs::path p = Util::fromGFile(file);
-        g_object_unref(file);
+        fs::path p(optFilename[0]);
 
-        if (fs::exists(p)) {
-            if (g_file_test(optFilename[0], G_FILE_TEST_EXISTS)) {
+        try {
+            if (fs::exists(p)) {
                 opened = control->openFile(p, openAtPageNumber);
             } else {
                 opened = control->newFile("", optFilename[0]);
             }
-        } else {
-            string msg = _("Sorry, Xournal++ cannot open remote files at the moment.\n"
-                           "You have to copy the file to a local directory.");
+        } catch (fs::filesystem_error const& e) {
+            string msg = FS(_F("Sorry, Xournal++ cannot open remote files at the moment.\n"
+                               "You have to copy the file to a local directory.") %
+                            p.u8string().c_str() % e.what());
             XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*win), msg);
         }
     }
