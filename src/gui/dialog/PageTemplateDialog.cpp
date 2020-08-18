@@ -132,11 +132,11 @@ void PageTemplateDialog::loadFromFile() {
     XojOpenDlg dlg(GTK_WINDOW(this->getWindow()), this->settings);
     fs::path file = dlg.showOpenTemplateDialog();
 
-    string contents;
-    if (!Util::readString(contents, file)) {
+    auto contents = Util::readString(file);
+    if (!contents.has_value()) {
         return;
     }
-    model.parse(contents);
+    model.parse(*contents);
 
     updateDataFromModel();
 }

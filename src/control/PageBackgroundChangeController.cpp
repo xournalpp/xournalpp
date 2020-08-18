@@ -127,20 +127,13 @@ auto PageBackgroundChangeController::applyImageBackground(PageRef page) -> bool 
     } else if (dlg.shouldShowFilechooser()) {
         bool attach = false;
         GFile* file = ImageOpenDlg::show(control->getGtkWindow(), control->getSettings(), true, &attach);
-        fs::path filepath;
         if (file == nullptr) {
             // The user canceled
             return false;
         }
 
 
-        char* name = g_file_get_path(file);
-        filepath = name;
-        g_free(name);
-        name = nullptr;
-        g_object_unref(file);
-        file = nullptr;
-
+        auto filepath = Util::fromGFile(file);
 
         BackgroundImage newImg;
         GError* err = nullptr;

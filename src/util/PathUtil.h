@@ -21,13 +21,12 @@ namespace Util {
 /**
  * Read a file to a string
  *
- * @param output Read contents
  * @param path Path to read
  * @param showErrorToUser Show an error to the user, if the file could not be read
  *
- * @return true if the file was read, false if not
+ * @return contents if the file was read, std::nullopt if not
  */
-bool readString(std::string& output, fs::path const& path, bool showErrorToUser = true);
+std::optional<std::string> readString(fs::path const& path, bool showErrorToUser = true);
 
 /**
  * Get escaped path, all " and \ are escaped

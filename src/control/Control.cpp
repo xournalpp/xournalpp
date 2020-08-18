@@ -208,26 +208,26 @@ void Control::renameLastAutosaveFile() {
 
     std::vector<string> errors;
 
-    // See https://github.com/xournalpp/xournalpp/issues/1122 for why we use
-    // `g_file_copy` instead of `g_rename` here.
-    GFile* src = g_file_new_for_path(filename.string().c_str());
-    GFile* dest = g_file_new_for_path(renamed.string().c_str());
-    GError* err = nullptr;
+    // Due to https://github.com/xournalpp/xournalpp/issues/1122,
+    // we first attempt to move the file with fs::rename.
+    // If this fails, we then copy and delete the source, as
+    // discussed in the issue
     // Use target default perms; the source partition may have different file
     // system attributes than the target, and we don't want anything bad in the
     // autosave directory
-    auto flags = static_cast<GFileCopyFlags>(G_FILE_COPY_TARGET_DEFAULT_PERMS | G_FILE_COPY_OVERWRITE);
-    g_file_copy(src, dest, flags, nullptr, nullptr, nullptr, &err);
-    if (err == nullptr) {
-        g_file_delete(src, nullptr, &err);
-    }
-    g_object_unref(src);
-    g_object_unref(dest);
 
-    if (err != nullptr) {
-        auto fmtstr = _F("Could not rename autosave file from \"{1}\" to \"{2}\": {3}");
-        errors.push_back(FS(fmtstr % filename.string() % renamed.string() % err->message));
-        g_error_free(err);
+    // Attempt move
+    try {
+        fs::rename(filename, renamed);
+    } catch (fs::filesystem_error const&) {
+        // Attempt copy and delete
+        try {
+            fs::copy(filename, renamed, fs::copy_options::overwrite_existing);
+            fs::remove(std::move(filename));
+        } catch (fs::filesystem_error const& e) {
+            auto fmtstr = _F("Could not rename autosave file from \"{1}\" to \"{2}\": {3}");
+            errors.emplace_back(FS(fmtstr % filename.string() % renamed.string() % e.what()));
+        }
     }
 
     if (!errors.empty()) {
@@ -243,10 +243,7 @@ void Control::renameLastAutosaveFile() {
 void Control::setLastAutosaveFile(fs::path newAutosaveFile) { this->lastAutosaveFilename = std::move(newAutosaveFile); }
 
 void Control::deleteLastAutosaveFile(fs::path newAutosaveFile) {
-    if (!this->lastAutosaveFilename.empty()) {
-        // delete old autosave file
-        g_unlink(this->lastAutosaveFilename.string().c_str());
-    }
+    fs::remove(this->lastAutosaveFilename);
     this->lastAutosaveFilename = std::move(newAutosaveFile);
 }
 
@@ -2070,12 +2067,13 @@ auto Control::loadPdf(const fs::path& filepath, int scrollToPage) -> bool {
     return an;
 }
 
-auto Control::loadXoptTemplate(fs::path const& file) -> bool {
-    string contents;
-    if (!Util::readString(contents, file)) {
+auto Control::loadXoptTemplate(fs::path const& filepath) -> bool {
+    auto contents = Util::readString(filepath);
+    if (!contents.has_value()) {
         return false;
     }
-    newFile(contents);
+
+    newFile(*contents);
     return true;
 }
 

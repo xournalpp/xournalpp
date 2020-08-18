@@ -14,9 +14,9 @@ auto GladeSearchpath::findFile(fs::path const& subdir, fs::path const& file) -> 
 
     // We step through each directory to find it.
     for (const auto& dir: directories) {
-        auto pathname = dir / G_DIR_SEPARATOR_S / file;
+        auto pathname = dir / filepath;
 
-        if (g_file_test(pathname.string().c_str(), G_FILE_TEST_EXISTS)) {
+        if (fs::exists(pathname)) {
             return pathname;
         }
     }
