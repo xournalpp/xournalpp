@@ -3,23 +3,140 @@
 ## 1.1.0 / Nightly (Unreleased)
 
 * **Breaking changes**:
-    * The code has been updated to use C++17 and must now be compiled using a
-      supported compiler version, such as GCC 7 or Clang 5 (or newer).
+    * Xournal++ now follows the [XDG Base Directory
+      Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+      (#1101, #1384). The configuration files will now be stored in an
+      appropriate platform-specific user data folder. Old configuration files
+      will be copied automatically if the new user data folder does not exist.
+    * The code has been updated to use C++17 (#1485) and must now be compiled
+      using a supported compiler version, such as GCC 7 or Clang 5 (or newer).
+    * Linux: Support for Ubuntu 16.04 (and older distros) has been dropped.
+      Please use a distro from 2018 or later, such as Ubuntu 18.04 or Debian
+      Buster.
+    * Linux: The thumbnailer program has been renamed from `xournal-thumbnailer`
+      to `xournalpp-thumbnailer` in order to fix tab completion (#1752).
 * Audio playback
-    * Added seeking functionality during playback
+    * Added seeking functionality during playback (#1520)
     * Fixed crashes caused by race conditions in the audio system
     * Fixed bug where gaps in the audio stream could appear while recording
     * Added an error message popup which displays when a recording fails to load
-      or play.
+      or play (#1573)
 * Input System
-    * The new input system is now enabled by default. Should errors occur please
-      file a bug report and deactivate it in the settings.
-    * Zoom gesture reimplemented for better compatibility
+    * The new input system is now enabled by default (#1560). Should errors
+      occur please file a bug report and deactivate it in the settings.
+    * Reimplemented zoom gestures for better compatibility (#1528)
+    * Added a `Mouse+Keyboard` device class for handling e.g. wireless USB
+      mouse/keyboard receivers (#1769, #1785).
 * LaTeX
-    * Added support for `\newline`
+    * Reworked LaTeX tool implementation (#1952).
+    * Added a new tab in the Preferences window for LaTeX configuration.
+    * Added a `global template file` setting for custom LaTeX template files
+      to be used when rendering LaTeX formulas (#1188).
+    * Added a button in the Preferences window for testing LaTeX setup.
+* Splines
+    * Added cubic splines as a drawing tool (#1688, #1798, #1861).
+    * Click to add anchor points (knots) and drag to create non-trivial
+      tangents. Backspace key, arrow keys, s and Shift+s allow to delete/modifiy
+      the last set knot/its tangent. Escape key and double click exit the spline
+      drawing mode.
+* Snapping and selections
+    * Added snapping for vertical space (#2011)
+    * Added snapping for moving and resizing selections (#1972, #2011)
+    * Added snapping for recognized shapes (optional setting; #2011)
+    * Added a Preferences settings to preserve line width while resizing a
+      selection (#2011)
+    * Added a Preferences setting to change the snap grid size (#1920).
+    * Fixed a bug in the object selection algorithm (#2478)
+* Pen
+    * Added Preferences settings to configure the radius, color, and border of
+      the cursor highlight when `Highlight cursor position` is enabled (#1891,
+      #1898).
 * Misc
+    * Added a menu toggle item for showing/hiding the toolbar, bound to F9
+      (#2112).
+    * Added a new mode for drawing without pen icon (#2111).
+    * Added a Lua plugin for taking a screenshot and saving it to a file
+      (#2086).
+    * Added a Lua plugin for cycling though a color list (#1835, #2251).
+    * Added Ubuntu 20.04 as a release build (#2060).
+    * Added a language setting in the Preferences window (#2188)
     * Non-visible refactoring and code cleanup (see #1279 for details)
+    * Switch to std::filesystem (#2150)
     * Updated translations
+    * Made the eraser more accurate (#1818).
+    * Fixed a cursor update bug (#1954).
+    * Made the grid size configurable (#1920).
+    * Fixed keyboard shortcuts not working when the menubar is hidden (#2324)
+    * Added support for more export options in command line and GUI (#2449)
+    * Switched from deprecated gtk2 initialisation to gtk3 initialisation (#2252)
+    * Improved tool handling and performance improvement (#2339)
+    * Added menu entry to append new pdf pages (#2146)
+
+## 1.0.20
+
+More bugfixes.
+
+* Fixed a regression with pdf files that could not be overwritten (#2355)
+* Fixed page layout update after inserting or deleting a page, changing the page layout or zooming (#1777, #2346, #2411)
+* Fixed incorrect rendering of pages after changing the page format (#2457)
+* Fixed blocked scrolling after saving a file (#2062)
+* Fixed presentation mode after startup 
+
+## 1.0.19
+
+More bugfixes and improvements due to help from the various community
+contributors!
+
+* Changed select object algorithm to be more intuitive (#1881).
+* Added ability for taps with Select Rectangle and Select Region to act like
+  Select Object (#1980)
+* Improved document loading speed (#2002)
+* Added a `--version` command to print the Xournal++ version
+* Added a `libgtk` version display to the About dialog
+* Added a 16kHz sample rate to audio settings and fixed the 91kHz sample rate
+  (#2092)
+* Added file version check for future compatibility (#1991)
+* Changed wording of new page template dialog to be less confusing (#1524)
+* Fixed behavior of "Attach file to the journal" option when choosing "Annotate
+  PDF" (#1725, #2106). This now allows the background PDF and the annotation files to
+  be renamed and moved as long as they 1) share the same file prefix; and 2)
+  share the same relative path.
+* Fixed an issue where clicking the X on the replace file dialog would overwrite
+  the file (#1983)
+* (libcairo >= 1.16 only): Fixed PDF export crashing when the table of contents
+  is empty (#2236).
+* Fixed a bug where the PDF background would not update when loading a new
+  document (#1964)
+* Fixed plugin window causing a crash on Ubuntu 16.04
+* Fixed a bug where the icon would not appear correctly on some desktop
+  environments (#1892)
+* Fixed inconsistent ordering of button keybindings (#1961)
+* Fixed the Enter key not confirming PDF export settings (#1977)
+* Fixed exported PDF title (#2039)
+* Fixed a bug where different page backgrounds can cause PDFs to be exported
+  with the wrong backgrounds (#2119)
+* Fixed a bug where the page number count would not be updated after deleting a
+  page (#2134)
+* Fixed selection object tool not working correctly (#2081) / crashing (#2133)
+  when there are multiple layers
+
+## 1.0.18
+
+* Fixed a crash occurring when recent file entries are invalid (#1730, thanks to
+  @iczero)
+* Fixed translations not being built correctly, causing packaging issues (#1596)
+* Fixed background PDF outlines not being saved in exported PDF (only available
+  when compiled with Cairo 1.16 or newer)
+* Fixed a deadlock occurring when a second PDF with an outline is opened (#1582).
+* Fixed the settings file being written to when it is parsed (#1074, thanks to
+  @Guldoman)
+* Fixed dark mode icons not loading properly (#1767, thanks to @badshah400)
+* Added missing dark mode icons (#1765, thanks to @badshah400)
+* Fixed crash in `Export As ...` on some page range options (#1790)
+* Fixed crash caused by custom colors in toolbar being "too close" (#1659)
+* Windows: Fixed the LaTeX tool always failing to find kpsewhich (#1738). Note
+  that to make this work properly, a console window will now flash briefly
+  before Xournal++ starts.
 
 ## 1.0.17
 
