@@ -13,7 +13,7 @@
 /**
  * Padding outside the pages, including shadow
  */
-constexpr size_t const XOURNAL_PADDING = 10;
+constexpr size_t const XOURNAL_PADDING = 0;
 
 /**
  * Allowance for shadow between page pairs in paired page mode
@@ -23,7 +23,7 @@ constexpr size_t const XOURNAL_ROOM_FOR_SHADOW = 3;
 /**
  * Padding between the pages
  */
-constexpr size_t const XOURNAL_PADDING_BETWEEN = 15;
+constexpr size_t const XOURNAL_PADDING_BETWEEN = 0;
 
 
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling): view(view), scrollHandling(scrollHandling) {
@@ -173,6 +173,7 @@ void Layout::layoutPages(int width, int height) {
     }
     valid = false;
 
+    //printf("[layoutPages] %i %i\n", width, height);
     size_t const len = this->view->viewPages.size();
     Settings* settings = this->view->getControl()->getSettings();
 

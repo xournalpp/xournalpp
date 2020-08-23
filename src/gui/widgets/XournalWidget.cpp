@@ -219,6 +219,7 @@ static void gtk_xournal_realize(GtkWidget* widget) {
 
 static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left, int top, int width, int height,
                                     bool selected) {
+    return;
     if (selected) {
         Shadow::drawShadow(cr, left - 2, top - 2, width + 4, height + 4);
 
