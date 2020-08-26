@@ -326,6 +326,11 @@ private:
      */
     void closeDocument();
 
+    /**
+     * Applies the preferred language to the UI
+     */
+    void applyPreferredLanguage();
+
     RecentManager* recent;
     UndoRedoHandler* undoRedo;
     ZoomControl* zoom;

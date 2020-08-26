@@ -431,7 +431,6 @@ public:
      */
     bool getTrySelectOnStrokeFiltered() const;
 
-
     /**
      * Set snap recognized shapes enabled
      */
@@ -452,6 +451,16 @@ public:
      */
     bool getRestoreLineWidthEnabled() const;
 
+    /**
+     * Set the preferred locale
+     */
+    void setPreferredLocale(std::string const& locale) const;
+
+    /**
+     * Get the preferred locale
+     */
+    std::string getPreferredLocale() const {
+        return "de_DE.UTF-8"; }
 
 public:
     // Custom settings
@@ -882,4 +891,9 @@ private:
      * "Transaction" running, do not save until the end is reached
      */
     bool inTransaction{};
+
+    /** The preferred locale as its language code
+     * e.g. "en_US"
+     */
+    std::string preferredLocale;
 };

@@ -88,6 +88,8 @@ Control::Control(GladeSearchpath* gladeSearchPath) {
     this->settings = new Settings(std::move(name));
     this->settings->load();
 
+    this->applyPreferredLanguage();
+
     TextView::setDpi(settings->getDisplayDpi());
 
     this->pageTypes = new PageTypeHandler(gladeSearchPath);
@@ -2457,6 +2459,8 @@ void Control::closeDocument() {
 
     this->undoRedoChanged();
 }
+
+void Control::applyPreferredLanguage() { setenv("LANGUAGE", this->settings->getPreferredLocale().c_str(), 1); }
 
 auto Control::askToReplace(fs::path const& filepath) const -> bool {
     if (fs::exists(filepath)) {

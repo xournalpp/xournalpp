@@ -845,6 +845,8 @@ void Settings::save() {
     WRITE_BOOL_PROP(inputSystemTPCButton);
     WRITE_BOOL_PROP(inputSystemDrawOutsideWindow);
 
+    WRITE_STRING_PROP(preferredLocale);
+
     WRITE_BOOL_PROP(latexSettings.autoCheckDependencies);
     // Inline WRITE_STRING_PROP(latexSettings.globalTemplatePath) since it
     // breaks on Windows due to the native character representation being
