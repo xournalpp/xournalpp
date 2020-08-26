@@ -198,7 +198,7 @@ auto Util::getTmpDirSubfolder(const fs::path& subfolder) -> fs::path {
 }
 
 auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
-    if (!fs::create_directories(p)) {
+    if (!fs::exists(p) && !fs::create_directories(p)) {
         Util::execInUiThread([=]() {
             string msg = FS(_F("Could not create folder: {1}") % p.string());
             g_warning("%s", msg.c_str());
