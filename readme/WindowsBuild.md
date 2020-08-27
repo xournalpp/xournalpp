@@ -67,8 +67,13 @@ cd build/
 cmake ..
 cmake --build .
 ```
+## Modify Path Environment Variable
 
-You can run Xournal++ with
+Add `C:\msys64\mingw64\bin` and `C:\msys64\usr\bin` to the top of 
+your PATH environment variable in the Windows Advanced system 
+settings (assuming default installation folder for MSYS2). 
+
+You can now run Xournal++ with
 ```bash
 ./src/xournalpp.exe
 ```
