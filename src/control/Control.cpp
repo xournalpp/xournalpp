@@ -1922,38 +1922,31 @@ auto Control::newFile(string pageTemplate, fs::path filepath) -> bool {
  */
 auto Control::shouldFileOpen(fs::path const& filepath) const -> bool {
     auto basePath = Util::getConfigSubfolder("");
-
-    if (!Util::isChild(filepath, basePath)) {
+    auto isChild = Util::isChild(filepath, basePath);
+    if (isChild) {
         string msg = FS(_F("Do not open Autosave files. They may will be overwritten!\n"
                            "Copy the files to another folder.\n"
                            "Files from Folder {1} cannot be opened.") %
                         basePath.u8string());
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
-        return false;
     }
-
-    return true;
+    return !isChild;
 }
 
 auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> bool {
-    if (!forceOpen && !shouldFileOpen(filepath)) {
+    if (filepath.empty()) {
+        bool attachPdf = false;
+        XojOpenDlg dlg(getGtkWindow(), this->settings);
+        filepath = dlg.showOpenDialog(false, attachPdf);
+        g_message("%s", (_F("file: {1}") % filepath.string()).c_str());
+    }
+
+    if (filepath.empty() || (!forceOpen && !shouldFileOpen(filepath))) {
         return false;
     }
 
     if (!this->close(false)) {
         return false;
-    }
-
-    if (filepath.empty()) {
-        bool attachPdf = false;
-        XojOpenDlg dlg(getGtkWindow(), this->settings);
-        filepath = dlg.showOpenDialog(false, attachPdf);
-
-        g_message("%s", (_F("file: {1}") % filepath.string()).c_str());
-
-        if (filepath.empty() || !shouldFileOpen(filepath)) {
-            return false;
-        }
     }
 
     // Read template file
