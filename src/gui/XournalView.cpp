@@ -138,6 +138,8 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     if (event->keyval == GDK_KEY_Escape || event->keyval == GDK_KEY_F11) {
         if (control->isFullscreen()) {
             control->setFullscreen(false);
+            control->setViewPresentationMode(false);
+            control->getWindow()->setToolbarVisible(true);
             return true;
         }
     }
@@ -147,6 +149,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         if (!control->isFullscreen()) {
             control->setViewPresentationMode(true);
             control->setFullscreen(true);
+            control->getWindow()->setToolbarVisible(false);
             return true;
         }
     }
@@ -396,6 +399,8 @@ void XournalView::scrollTo(size_t pageNo, double yDocument) {
     int height = v->getDisplayHeight();
 
     layout->ensureRectIsVisible(x, y, width, height);
+
+    printf("[XournalView::scrollTo] %d %d %d %d\n", x, y, width, height);
 
     // Select the page
     control->firePageSelected(pageNo);

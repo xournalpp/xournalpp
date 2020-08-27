@@ -27,26 +27,29 @@ void FullscreenHandler::hideWidget(MainWindow* win, const string& widgetName) {
         // 1px is used by GTK
 
         GtkWidget* mainMenubar = win->get("mainMenubar");
-        GtkWidget* mainBox = win->get("mainBox");
 
         if (mainMenubar == nullptr || !gtk_widget_is_visible(mainMenubar)) {
             // Menu not visible (global menu or something like this)
             return;
         }
 
-        // Remove menu from parent
-        gtk_container_remove(GTK_CONTAINER(gtk_widget_get_parent(mainMenubar)), mainMenubar);
-
-        GtkWidget* fix = gtk_invisible_new();
-
-        gtk_widget_set_size_request(fix, 0, 0);
-        gtk_fixed_put(GTK_FIXED(fix), mainMenubar, 0, 0);
-
-        gtk_widget_show(fix);
-
-        gtk_box_pack_end(GTK_BOX(mainBox), fix, false, false, 0);
-
+        gtk_widget_hide(mainMenubar);
         menubarHidden = true;
+
+        // // Remove menu from parent
+        // gtk_container_remove(GTK_CONTAINER(gtk_widget_get_parent(mainMenubar)), mainMenubar);
+
+        // GtkWidget* fix = gtk_invisible_new();
+
+        // gtk_widget_set_size_request(fix, 0, 0);
+        // gtk_fixed_put(GTK_FIXED(fix), mainMenubar, 0, 0);
+
+        // gtk_widget_show(fix);
+
+        // GtkWidget* mainBox = win->get("mainBox");   
+        // gtk_box_pack_end(GTK_BOX(mainBox), fix, false, false, 0);
+
+        // menubarHidden = true;
 
         return;
     }
@@ -76,24 +79,28 @@ void FullscreenHandler::disableFullscreen(MainWindow* win) {
 
     if (this->menubarHidden) {
         GtkWidget* mainMenubar = win->get("mainMenubar");
-        GtkWidget* mainBox = win->get("mainBox");
 
-        GtkWidget* parent = gtk_widget_get_parent(mainMenubar);
-
-        // Remove menu from parent
-        gtk_container_remove(GTK_CONTAINER(parent), mainMenubar);
-        gtk_box_pack_start(GTK_BOX(mainBox), mainMenubar, false, true, 0);
-
-
-        GValue value = G_VALUE_INIT;
-        g_value_init(&value, G_TYPE_INT);
-        g_value_set_int(&value, 0);
-        gtk_container_child_set_property(GTK_CONTAINER(mainBox), mainMenubar, "position", &value);
-
-        // not needed, will be recreated next time
-        gtk_widget_destroy(parent);
-
+        gtk_widget_show(mainMenubar);
         menubarHidden = false;
+
+        // GtkWidget* mainBox = win->get("mainBox");
+
+        // GtkWidget* parent = gtk_widget_get_parent(mainMenubar);
+
+        // // Remove menu from parent
+        // gtk_container_remove(GTK_CONTAINER(parent), mainMenubar);
+        // gtk_box_pack_start(GTK_BOX(mainBox), mainMenubar, false, true, 0);
+
+
+        // GValue value = G_VALUE_INIT;
+        // g_value_init(&value, G_TYPE_INT);
+        // g_value_set_int(&value, 0);
+        // gtk_container_child_set_property(GTK_CONTAINER(mainBox), mainMenubar, "position", &value);
+
+        // // not needed, will be recreated next time
+        // gtk_widget_destroy(parent);
+
+        // menubarHidden = false;
     }
 }
 

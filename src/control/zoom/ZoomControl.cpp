@@ -174,7 +174,7 @@ auto ZoomControl::updateZoomPresentationValue(size_t pageNo) -> bool {
     }
 
     Rectangle widget_rect = getVisibleRect();
-    //printf("[updateZoomPresentationValue] %f %f %f %f\n", widget_rect.width, widget_rect.height, page->getWidth(), page->getHeight());
+    printf("[updateZoomPresentationValue] %f %f %f %f\n", widget_rect.width, widget_rect.height, page->getWidth(), page->getHeight());
     double zoom_fit_width = widget_rect.width / (page->getWidth());
     double zoom_fit_height = widget_rect.height / (page->getHeight());
     double zoom_presentation = zoom_fit_width < zoom_fit_height ? zoom_fit_width : zoom_fit_height;

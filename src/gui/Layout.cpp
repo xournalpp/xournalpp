@@ -18,7 +18,7 @@ constexpr size_t const XOURNAL_PADDING = 0;
 /**
  * Allowance for shadow between page pairs in paired page mode
  */
-constexpr size_t const XOURNAL_ROOM_FOR_SHADOW = 3;
+constexpr size_t const XOURNAL_ROOM_FOR_SHADOW = 0;
 
 /**
  * Padding between the pages
@@ -149,6 +149,7 @@ void Layout::recalculate() {
         XojPageView* v = view->viewPages[pageIdx];
         widthCols[c] = std::max<unsigned>(widthCols[c], v->getDisplayWidth());
         heightRows[r] = std::max<unsigned>(heightRows[r], v->getDisplayHeight());
+        //printf("[Layout::recalculate] %lu %lu %u %u\n", r, c, widthCols[c], heightRows[r]);
     }
 
     // add space around the entire page area to accomodate older Wacom tablets with limited sense area.
@@ -163,6 +164,8 @@ void Layout::recalculate() {
     minWidth = std::accumulate(begin(widthCols), end(widthCols), minWidth);
     minHeight = std::accumulate(begin(heightRows), end(heightRows), minHeight);
 
+
+    printf("[Layout::recalculate] %zu %zu\n", minWidth, minHeight);
     setLayoutSize(minWidth, minHeight);
     valid = true;
 }
@@ -173,7 +176,7 @@ void Layout::layoutPages(int width, int height) {
     }
     valid = false;
 
-    //printf("[layoutPages] %i %i\n", width, height);
+    printf("[layoutPages] %i %i\n", width, height);
     size_t const len = this->view->viewPages.size();
     Settings* settings = this->view->getControl()->getSettings();
 
@@ -286,8 +289,10 @@ void Layout::scrollAbs(double x, double y) {
 
 
 void Layout::ensureRectIsVisible(int x, int y, int width, int height) {
-    gtk_adjustment_clamp_page(scrollHandling->getHorizontal(), x - 5, x + width + 10);
-    gtk_adjustment_clamp_page(scrollHandling->getVertical(), y - 5, y + height + 10);
+    // gtk_adjustment_clamp_page(scrollHandling->getHorizontal(), x - 5, x + width + 10);
+    // gtk_adjustment_clamp_page(scrollHandling->getVertical(), y - 5, y + height + 10);
+    gtk_adjustment_clamp_page(scrollHandling->getHorizontal(), x, x + width);
+    gtk_adjustment_clamp_page(scrollHandling->getVertical(), y, y + height);
 }
 
 
