@@ -466,6 +466,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->snapRecognizedShapesEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("restoreLineWidthEnabled")) == 0) {
         this->restoreLineWidthEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("preferredLocale")) == 0) {
+        this->preferredLocale = reinterpret_cast<char*>(value);
     }
 
     xmlFree(name);
@@ -1684,6 +1686,9 @@ void Settings::setRestoreLineWidthEnabled(bool enabled) { this->restoreLineWidth
 
 auto Settings::getRestoreLineWidthEnabled() const -> bool { return this->restoreLineWidthEnabled; }
 
+auto Settings::setPreferredLocale(std::string const& locale) -> void { this->preferredLocale = locale; }
+
+auto Settings::getPreferredLocale() const -> std::string { return this->preferredLocale; }
 
 void Settings::setIgnoredStylusEvents(int numEvents) {
     if (this->numIgnoredStylusEvents == numEvents) {
