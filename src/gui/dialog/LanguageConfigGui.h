@@ -11,8 +11,11 @@
 
 #pragma once
 
-#include <gdk/gdk.h>
 #include <memory>
+#include <vector>
+
+#include <gdk/gdk.h>
+
 #include "gui/GladeGui.h"
 
 class Settings;
@@ -23,14 +26,15 @@ public:
     LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings);
 
 public:
-    void loadSettings() {};
+    void loadSettings(){};
     void saveSettings();
 
     // Not implemented! This is not a dialog!
-    void show(GtkWindow* parent) override {};
+    void show(GtkWindow* parent) override{};
 
 private:
+    std::vector<std::string> availableLocales;
 
-private:
+
     Settings* settings;
 };

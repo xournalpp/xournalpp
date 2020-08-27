@@ -2460,7 +2460,13 @@ void Control::closeDocument() {
     this->undoRedoChanged();
 }
 
-void Control::applyPreferredLanguage() { setenv("LANGUAGE", this->settings->getPreferredLocale().c_str(), 1); }
+void Control::applyPreferredLanguage() {
+#ifdef _WIN32
+    _putenv_s("LANGUAGE", this->settings->getPreferredLocale().c_str());
+#else
+    setenv("LANGUAGE", this->settings->getPreferredLocale().c_str(), 1);
+#endif
+}
 
 auto Control::askToReplace(fs::path const& filepath) const -> bool {
     if (fs::exists(filepath)) {
