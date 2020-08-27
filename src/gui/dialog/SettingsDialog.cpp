@@ -99,6 +99,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
     gtk_widget_show(callib);
 
+    initLanguageSettings();
     initMouseButtonEvents();
 
     vector<InputDevice> deviceList = DeviceListHelper::getDeviceList(this->settings);
@@ -132,6 +133,10 @@ SettingsDialog::~SettingsDialog() {
 
     // DO NOT delete settings!
     this->settings = nullptr;
+}
+
+void SettingsDialog::initLanguageSettings() {
+    languageConfig = std::make_unique<LanguageConfigGui>(getGladeSearchPath(), get("hboxLanguageSelect"), settings);
 }
 
 void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool withDevice) {
@@ -622,6 +627,8 @@ void SettingsDialog::save() {
     for (ButtonConfigGui* bcg: this->buttonConfigs) {
         bcg->saveSettings();
     }
+
+    languageConfig->saveSettings();
 
     SElement& touch = settings->getCustomElement("touch");
     touch.setBool("disableTouch", getCheckbox("cbDisableTouchOnPenNear"));

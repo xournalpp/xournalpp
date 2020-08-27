@@ -454,13 +454,12 @@ public:
     /**
      * Set the preferred locale
      */
-    void setPreferredLocale(std::string const& locale) const;
+    void setPreferredLocale(std::string const& locale);
 
     /**
      * Get the preferred locale
      */
-    std::string getPreferredLocale() const {
-        return "de_DE.UTF-8"; }
+    std::string getPreferredLocale() const;
 
 public:
     // Custom settings

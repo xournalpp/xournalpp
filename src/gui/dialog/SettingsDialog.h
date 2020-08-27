@@ -18,8 +18,10 @@
 
 #include "DeviceClassConfigGui.h"
 #include "LatexSettingsPanel.h"
+#include "LanguageConfigGui.h"
 
 class ButtonConfigGui;
+class LanguageConfigGui;
 
 class SettingsDialog: public GladeGui {
 public:
@@ -50,6 +52,8 @@ private:
     void initMouseButtonEvents();
     void initMouseButtonEvents(const char* hbox, int button, bool withDevice = false);
 
+    void initLanguageSettings();
+
 private:
     Settings* settings = nullptr;
     Control* control = nullptr;
@@ -58,6 +62,7 @@ private:
     vector<DeviceInfo> audioInputDevices;
     vector<DeviceInfo> audioOutputDevices;
 
+    std::unique_ptr<LanguageConfigGui> languageConfig;
     vector<ButtonConfigGui*> buttonConfigs;
     vector<DeviceClassConfigGui*> deviceClassConfigs;
 
