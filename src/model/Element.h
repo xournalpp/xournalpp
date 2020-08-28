@@ -18,6 +18,7 @@
 
 #include "serializing/Serializeable.h"
 
+#include "Color.h"
 #include "Rectangle.h"
 #include "XournalType.h"
 
@@ -49,8 +50,8 @@ public:
     virtual void scale(double x0, double y0, double fx, double fy) = 0;
     virtual void rotate(double x0, double y0, double xo, double yo, double th) = 0;
 
-    void setColor(int color);
-    int getColor() const;
+    void setColor(Color color);
+    Color getColor() const;
 
     double getElementWidth();
     double getElementHeight();
@@ -96,5 +97,5 @@ private:
     /**
      * The color in RGB format
      */
-    int color = 0;
+    Color color{0U};
 };

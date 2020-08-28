@@ -3,7 +3,6 @@
 #include <cmath>
 
 #include "model/Layer.h"
-#include "util/GtkColorWrapper.h"
 
 Selection::Selection(Redrawable* view) {
     this->view = view;
@@ -91,11 +90,11 @@ void RectSelection::currentPos(double x, double y) {
 auto RectSelection::userTapped(double zoom) -> bool { return this->maxDist < 10 / zoom; }
 
 void RectSelection::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
-    GtkColorWrapper selectionColor = view->getSelectionColor();
+    GdkRGBA selectionColor = view->getSelectionColor();
 
     // set the line always the same size on display
     cairo_set_line_width(cr, 1 / zoom);
-    selectionColor.apply(cr);
+    gdk_cairo_set_source_rgba(cr, &selectionColor);
 
     int aX = std::min(this->sx, this->ex);
     int bX = std::max(this->sx, this->ex);
@@ -110,7 +109,8 @@ void RectSelection::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
     cairo_close_path(cr);
 
     cairo_stroke_preserve(cr);
-    selectionColor.applyWithAlpha(cr, 0.3);
+    auto applied = GdkRGBA{selectionColor.red, selectionColor.green, selectionColor.blue, 0.3};
+    gdk_cairo_set_source_rgba(cr, &applied);
     cairo_fill(cr);
 }
 
@@ -142,11 +142,11 @@ RegionSelect::~RegionSelect() {
 void RegionSelect::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
     // at least three points needed
     if (this->points && this->points->next && this->points->next->next) {
-        GtkColorWrapper selectionColor = view->getSelectionColor();
+        GdkRGBA selectionColor = view->getSelectionColor();
 
         // set the line always the same size on display
         cairo_set_line_width(cr, 1 / zoom);
-        selectionColor.apply(cr);
+        gdk_cairo_set_source_rgba(cr, &selectionColor);
 
         auto* r0 = static_cast<RegionPoint*>(this->points->data);
         cairo_move_to(cr, r0->x, r0->y);
@@ -159,7 +159,8 @@ void RegionSelect::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
         cairo_line_to(cr, r0->x, r0->y);
 
         cairo_stroke_preserve(cr);
-        selectionColor.applyWithAlpha(cr, 0.3);
+        auto applied = GdkRGBA{selectionColor.red, selectionColor.green, selectionColor.blue, 0.3};
+        gdk_cairo_set_source_rgba(cr, &applied);
         cairo_fill(cr);
     }
 }

@@ -29,7 +29,7 @@ void ToolHandler::initTools() {
     thickness[TOOL_SIZE_THICK] = 2.26;
     thickness[TOOL_SIZE_VERY_THICK] = 5.67;
     tools[TOOL_PEN - TOOL_PEN] = std::make_unique<Tool>(
-            "pen", TOOL_PEN, 0x3333CC,
+            "pen", TOOL_PEN, Color{0x3333CCU},
             TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_CIRCLE | TOOL_CAP_ARROW |
                     TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL | TOOL_CAP_DASH_LINE,
             thickness);
@@ -40,7 +40,8 @@ void ToolHandler::initTools() {
     thickness[TOOL_SIZE_MEDIUM] = 8.50;
     thickness[TOOL_SIZE_THICK] = 12;
     thickness[TOOL_SIZE_VERY_THICK] = 18;
-    tools[TOOL_ERASER - TOOL_PEN] = std::make_unique<Tool>("eraser", TOOL_ERASER, 0x000000, TOOL_CAP_SIZE, thickness);
+    tools[TOOL_ERASER - TOOL_PEN] =
+            std::make_unique<Tool>("eraser", TOOL_ERASER, Color{0x000000U}, TOOL_CAP_SIZE, thickness);
 
     // highlighter thicknesses = 1, 3, 7 mm
     thickness = new double[5];
@@ -50,49 +51,50 @@ void ToolHandler::initTools() {
     thickness[TOOL_SIZE_THICK] = 19.84;
     thickness[TOOL_SIZE_VERY_THICK] = 30;
     tools[TOOL_HILIGHTER - TOOL_PEN] = std::make_unique<Tool>(
-            "hilighter", TOOL_HILIGHTER, 0xFFFF00,
+            "hilighter", TOOL_HILIGHTER, Color{0xFFFF00U},
             TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_CIRCLE | TOOL_CAP_ARROW |
                     TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
             thickness);
 
-    tools[TOOL_TEXT - TOOL_PEN] = std::make_unique<Tool>("text", TOOL_TEXT, 0x000000, TOOL_CAP_COLOR, nullptr);
+    tools[TOOL_TEXT - TOOL_PEN] = std::make_unique<Tool>("text", TOOL_TEXT, Color{0x000000U}, TOOL_CAP_COLOR, nullptr);
 
-    tools[TOOL_IMAGE - TOOL_PEN] = std::make_unique<Tool>("image", TOOL_IMAGE, 0x000000, TOOL_CAP_NONE, nullptr);
+    tools[TOOL_IMAGE - TOOL_PEN] =
+            std::make_unique<Tool>("image", TOOL_IMAGE, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
     tools[TOOL_SELECT_RECT - TOOL_PEN] =
-            std::make_unique<Tool>("selectRect", TOOL_SELECT_RECT, 0x000000, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("selectRect", TOOL_SELECT_RECT, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
     tools[TOOL_SELECT_REGION - TOOL_PEN] =
-            std::make_unique<Tool>("selectRegion", TOOL_SELECT_REGION, 0x000000, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("selectRegion", TOOL_SELECT_REGION, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
     tools[TOOL_SELECT_OBJECT - TOOL_PEN] =
-            std::make_unique<Tool>("selectObject", TOOL_SELECT_OBJECT, 0x000000, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("selectObject", TOOL_SELECT_OBJECT, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
     tools[TOOL_VERTICAL_SPACE - TOOL_PEN] =
-            std::make_unique<Tool>("verticalSpace", TOOL_VERTICAL_SPACE, 0x000000, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("verticalSpace", TOOL_VERTICAL_SPACE, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
-    tools[TOOL_HAND - TOOL_PEN] = std::make_unique<Tool>("hand", TOOL_HAND, 0x000000, TOOL_CAP_NONE, nullptr);
+    tools[TOOL_HAND - TOOL_PEN] = std::make_unique<Tool>("hand", TOOL_HAND, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
     tools[TOOL_PLAY_OBJECT - TOOL_PEN] =
-            std::make_unique<Tool>("playObject", TOOL_PLAY_OBJECT, 0x000000, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("playObject", TOOL_PLAY_OBJECT, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
     tools[TOOL_DRAW_RECT - TOOL_PEN] =
-            std::make_unique<Tool>("drawRect", TOOL_DRAW_RECT, 0x000000, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("drawRect", TOOL_DRAW_RECT, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
     tools[TOOL_DRAW_CIRCLE - TOOL_PEN] =
-            std::make_unique<Tool>("drawCircle", TOOL_DRAW_CIRCLE, 0x000000, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("drawCircle", TOOL_DRAW_CIRCLE, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
     tools[TOOL_DRAW_ARROW - TOOL_PEN] =
-            std::make_unique<Tool>("drawArrow", TOOL_DRAW_ARROW, 0x000000, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("drawArrow", TOOL_DRAW_ARROW, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
     tools[TOOL_DRAW_COORDINATE_SYSTEM - TOOL_PEN] = std::make_unique<Tool>(
-            "drawCoordinateSystem", TOOL_DRAW_COORDINATE_SYSTEM, 0x000000, TOOL_CAP_NONE, nullptr);
+            "drawCoordinateSystem", TOOL_DRAW_COORDINATE_SYSTEM, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
     tools[TOOL_DRAW_SPLINE - TOOL_PEN] =
-            std::make_unique<Tool>("drawSpline", TOOL_DRAW_SPLINE, 0x000000, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("drawSpline", TOOL_DRAW_SPLINE, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
-    tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] =
-            std::make_unique<Tool>("showFloatingToolbox", TOOL_FLOATING_TOOLBOX, 0x000000, TOOL_CAP_NONE, nullptr);
+    tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] = std::make_unique<Tool>("showFloatingToolbox", TOOL_FLOATING_TOOLBOX,
+                                                                     Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
 
     selectTool(TOOL_PEN);
@@ -249,13 +251,13 @@ void ToolHandler::setLineStyle(const LineStyle& style) {
  * 			false if the color is selected by a tool change
  * 			and therefore should not be applied to a selection
  */
-void ToolHandler::setColor(int color, bool userSelection) {
+void ToolHandler::setColor(Color color, bool userSelection) {
     this->current->setColor(color);
     this->listener->toolColorChanged(userSelection);
     this->listener->setCustomColorSelected();
 }
 
-auto ToolHandler::getColor() -> int { return current->getColor(); }
+auto ToolHandler::getColor() -> Color { return current->getColor(); }
 
 /**
  * @return -1 if fill is disabled, else the fill alpha value
@@ -285,7 +287,7 @@ void ToolHandler::saveSettings() {
     for (auto&& tool: tools) {
         SElement& st = s.child(tool->getName());
         if (tool->hasCapability(TOOL_CAP_COLOR)) {
-            st.setIntHex("color", tool->getColor());
+            st.setIntHex("color", int(tool->getColor()));
         }
 
         st.setString("drawingType", drawingTypeToString(tool->getDrawingType()));
@@ -351,9 +353,9 @@ void ToolHandler::loadSettings() {
                 this->current = tool.get();
             }
 
-            int color = 0;
-            if (tool->hasCapability(TOOL_CAP_COLOR) && st.getInt("color", color)) {
-                tool->setColor(color);
+            int iColor{};
+            if (tool->hasCapability(TOOL_CAP_COLOR) && st.getInt("color", iColor)) {
+                tool->setColor(Color(iColor));
             }
 
             string drawingType;
@@ -445,7 +447,7 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
         t->setCapability(TOOL_CAP_SIZE, setSize);
         t->setCapability(TOOL_CAP_FILL, setFill);
         t->setSize(TOOL_SIZE_NONE);
-        t->setColor(-1);
+        t->setColor(Color(-1));
         t->setFill(false);
     }
 

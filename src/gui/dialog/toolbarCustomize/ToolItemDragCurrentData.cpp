@@ -30,7 +30,7 @@ void ToolItemDragCurrentData::setData(ToolItemType type, int id, AbstractToolIte
     data->id = id;
 }
 
-void ToolItemDragCurrentData::setDataColor(int id, int color) {
+void ToolItemDragCurrentData::setDataColor(int id, Color color) {
     data = ToolitemDragDrop::ToolItemDragDropData_new(nullptr);
     data->type = TOOL_ITEM_COLOR;
     data->id = id;

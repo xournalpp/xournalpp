@@ -19,6 +19,7 @@
 
 #include "control/settings/LatexSettings.h"
 
+#include "Color.h"
 #include "filesystem.h"
 
 class LatexGenerator {
@@ -45,7 +46,7 @@ public:
     /**
      * Instantiate the LaTeX template.
      */
-    static std::string templateSub(const std::string& input, const std::string& templ, const uint32_t textColor);
+    static std::string templateSub(const std::string& input, const std::string& templ, Color textColor);
 
 private:
     const LatexSettings& settings;

@@ -116,9 +116,9 @@ void XojPage::setBackgroundPdfPageNr(size_t page) {
     this->bgType.config = "";
 }
 
-void XojPage::setBackgroundColor(int color) { this->backgroundColor = color; }
+void XojPage::setBackgroundColor(Color color) { this->backgroundColor = color; }
 
-auto XojPage::getBackgroundColor() const -> int { return this->backgroundColor; }
+auto XojPage::getBackgroundColor() const -> Color { return this->backgroundColor; }
 
 void XojPage::setSize(double width, double height) {
     this->width = width;

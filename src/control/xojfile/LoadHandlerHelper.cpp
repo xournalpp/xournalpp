@@ -1,7 +1,5 @@
 #include "LoadHandlerHelper.h"
 
-#include <config.h>
-
 #include "LoadHandler.h"
 #include "i18n.h"
 
@@ -12,28 +10,28 @@
 
 struct PredefinedColor {
     const char* name;
-    const int rgb;
+    const Color rgb;
 };
 
-static PredefinedColor PREDEFINED_COLORS[] = {{"black", 0x000000},      {"blue", 0x3333cc},    {"red", 0xff0000},
-                                              {"green", 0x008000},      {"gray", 0x808080},    {"lightblue", 0x00c0ff},
-                                              {"lightgreen", 0x00ff00}, {"magenta", 0xff00ff}, {"orange", 0xff8000},
-                                              {"yellow", 0xffff00},     {"white", 0xffffff}};
+constexpr PredefinedColor PREDEFINED_COLORS[] = {
+        {"black", 0x000000U},  {"blue", 0x3333ccU},      {"red", 0xff0000U},        {"green", 0x008000U},
+        {"gray", 0x808080U},   {"lightblue", 0x00c0ffU}, {"lightgreen", 0x00ff00U}, {"magenta", 0xff00ffU},
+        {"orange", 0xff8000U}, {"yellow", 0xffff00U},    {"white", 0xffffffU}};
 
-auto LoadHandlerHelper::parseBackgroundColor(LoadHandler* loadHandler) -> int {
+auto LoadHandlerHelper::parseBackgroundColor(LoadHandler* loadHandler) -> Color {
     const char* sColor = LoadHandlerHelper::getAttrib("color", false, loadHandler);
 
-    int color = 0xffffff;
+    Color color{0xffffffU};
     if (strcmp("blue", sColor) == 0) {
-        color = 0xa0e8ff;
+        color = {0xa0e8ffU};
     } else if (strcmp("pink", sColor) == 0) {
-        color = 0xffc0d4;
+        color = {0xffc0d4U};
     } else if (strcmp("green", sColor) == 0) {
-        color = 0x80FFC0;
+        color = {0x80FFC0U};
     } else if (strcmp("orange", sColor) == 0) {
-        color = 0xFFC080;
+        color = {0xFFC080U};
     } else if (strcmp("yellow", sColor) == 0) {
-        color = 0xFFFF80;
+        color = {0xFFFF80U};
     } else {
         LoadHandlerHelper::parseColor(sColor, color, loadHandler);
     }
@@ -41,7 +39,7 @@ auto LoadHandlerHelper::parseBackgroundColor(LoadHandler* loadHandler) -> int {
     return color;
 }
 
-auto LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* loadHandler) -> bool {
+auto LoadHandlerHelper::parseColor(const char* text, Color& color, LoadHandler* loadHandler) -> bool {
     if (text == nullptr) {
         error("%s", _("Attribute color not set!"));
         return false;
@@ -49,13 +47,13 @@ auto LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* lo
 
     if (text[0] == '#') {
         gchar* ptr = nullptr;
-        int c = g_ascii_strtoull(&text[1], &ptr, 16);
+        auto c = uint32_t(g_ascii_strtoull(&text[1], &ptr, 16));
         if (ptr != text + strlen(text)) {
             error("%s", FC(_F("Unknown color value \"{1}\"") % text));
             return false;
         }
 
-        color = c >> 8;
+        color = c >> 8U;
 
         return true;
     }

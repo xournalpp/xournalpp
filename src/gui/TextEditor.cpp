@@ -107,8 +107,8 @@ void TextEditor::setText(const string& text) {
     gtk_text_buffer_place_cursor(this->buffer, &first);
 }
 
-auto TextEditor::setColor(int color) -> UndoAction* {
-    int origColor = this->text->getColor();
+auto TextEditor::setColor(Color color) -> UndoAction* {
+    auto origColor = this->text->getColor();
     this->text->setColor(color);
 
     repaintEditor();
@@ -925,7 +925,7 @@ void TextEditor::drawCursor(cairo_t* cr, double x, double y, double height, doub
 }
 
 void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom) {
-    GtkColorWrapper selectionColor = this->gui->getSelectionColor();
+    GdkRGBA selectionColor = this->gui->getSelectionColor();
 
     cairo_save(cr);
 

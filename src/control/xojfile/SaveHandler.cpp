@@ -82,8 +82,8 @@ void SaveHandler::writeHeader() {
     this->root->addChild(new XmlTextNode("title", std::string{"Xournal++ document - see "} + PROJECT_URL));
 }
 
-auto SaveHandler::getColorStr(uint32_t c, unsigned char alpha) -> string {
-    char* str = g_strdup_printf("#%08x", c << 8U | alpha);
+auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> string {
+    char* str = g_strdup_printf("#%08x", uint32_t(c) << 8U | alpha);
     string color = str;
     g_free(str);
     return color;

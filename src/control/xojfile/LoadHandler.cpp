@@ -317,7 +317,7 @@ void LoadHandler::parseBgSolid() {
 
     this->page->setBackgroundType(bg);
 
-    int color = LoadHandlerHelper::parseBackgroundColor(this);
+    Color color = LoadHandlerHelper::parseBackgroundColor(this);
     this->page->setBackgroundColor(color);
 }
 
@@ -483,7 +483,7 @@ void LoadHandler::parsePage() {
         } else if (strcmp("pdf", type) == 0) {
             if (this->removePdfBackgroundFlag) {
                 this->page->setBackgroundType(PageType(PageTypeFormat::Plain));
-                this->page->setBackgroundColor(0xffffff);
+                this->page->setBackgroundColor(0xffffffU);
             } else {
                 parseBgPdf();
             }
@@ -527,7 +527,7 @@ void LoadHandler::parseStroke() {
         this->pressureBuffer.push_back(val);
     }
 
-    int color = 0;
+    Color color{0U};
     const char* sColor = LoadHandlerHelper::getAttrib("color", false, this);
     if (!LoadHandlerHelper::parseColor(sColor, color, this)) {
         return;
@@ -611,7 +611,7 @@ void LoadHandler::parseText() {
     f.setName(sFont);
     f.setSize(fontSize);
     const char* sColor = LoadHandlerHelper::getAttrib("color", false, this);
-    int color = 0;
+    Color color{0U};
     LoadHandlerHelper::parseColor(sColor, color, this);
     text->setColor(color);
 

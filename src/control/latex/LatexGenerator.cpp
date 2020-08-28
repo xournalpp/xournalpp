@@ -11,7 +11,7 @@
 
 LatexGenerator::LatexGenerator(const LatexSettings& settings): settings(settings) {}
 
-auto LatexGenerator::templateSub(const std::string& input, const std::string& templ, const uint32_t textColor)
+auto LatexGenerator::templateSub(const std::string& input, const std::string& templ, const Color textColor)
         -> std::string {
     const static std::regex substRe("%%XPP_((TOOL_INPUT)|(TEXT_COLOR))%%");
     std::string output;

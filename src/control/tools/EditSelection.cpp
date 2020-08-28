@@ -17,7 +17,6 @@
 #include "undo/FontUndoAction.h"
 #include "undo/SizeUndoAction.h"
 #include "undo/UndoRedoHandler.h"
-#include "util/GtkColorWrapper.h"
 
 #include "EditSelectionContents.h"
 #include "Selection.h"
@@ -256,7 +255,7 @@ auto EditSelection::setFill(int alphaPen, int alphaHighligther) -> UndoAction* {
  * Set the color of all elements, return an undo action
  * (Or nullptr if nothing done, e.g. because there is only an image)
  */
-auto EditSelection::setColor(int color) -> UndoAction* { return this->contents->setColor(color); }
+auto EditSelection::setColor(Color color) -> UndoAction* { return this->contents->setColor(color); }
 
 /**
  * Sets the font of all containing text elements, return an undo action
@@ -669,19 +668,20 @@ void EditSelection::paint(cairo_t* cr, double zoom) {
 
     cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 
-    GtkColorWrapper selectionColor = view->getSelectionColor();
+    GdkRGBA selectionColor = view->getSelectionColor();
 
     // set the line always the same size on display
     cairo_set_line_width(cr, 1);
 
     const double dashes[] = {10.0, 10.0};
     cairo_set_dash(cr, dashes, sizeof(dashes) / sizeof(dashes[0]), 0);
-    selectionColor.apply(cr);
+    gdk_cairo_set_source_rgba(cr, &selectionColor);
 
     cairo_rectangle(cr, x * zoom, y * zoom, width * zoom, height * zoom);
 
     cairo_stroke_preserve(cr);
-    selectionColor.applyWithAlpha(cr, 0.3);
+    auto applied = GdkRGBA{selectionColor.red, selectionColor.green, selectionColor.blue, 0.3};
+    gdk_cairo_set_source_rgba(cr, &applied);
     cairo_fill(cr);
 
     cairo_set_dash(cr, nullptr, 0, 0);
@@ -716,8 +716,8 @@ void EditSelection::paint(cairo_t* cr, double zoom) {
 }
 
 void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double zoom) {
-    GtkColorWrapper selectionColor = view->getSelectionColor();
-    selectionColor.apply(cr);
+    GdkRGBA selectionColor = view->getSelectionColor();
+    gdk_cairo_set_source_rgba(cr, &selectionColor);
     cairo_rectangle(cr, x * zoom - (this->btnWidth / 2), y * zoom - (this->btnWidth / 2), this->btnWidth,
                     this->btnWidth);
     cairo_stroke_preserve(cr);
@@ -729,8 +729,8 @@ void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double z
  * draws an idicator where you can scale the selection
  */
 void EditSelection::drawAnchorRect(cairo_t* cr, double x, double y, double zoom) {
-    GtkColorWrapper selectionColor = view->getSelectionColor();
-    selectionColor.apply(cr);
+    GdkRGBA selectionColor = view->getSelectionColor();
+    gdk_cairo_set_source_rgba(cr, &selectionColor);
     cairo_rectangle(cr, x * zoom - (this->btnWidth / 2), y * zoom - (this->btnWidth / 2), this->btnWidth,
                     this->btnWidth);
     cairo_stroke_preserve(cr);

@@ -190,11 +190,10 @@ void Shadow::drawShadowBottom(cairo_t* cr, int x, int y, int width, double r, do
         this->bottom = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, shadowBottomRightSize);
         cairo_t* cr2 = cairo_create(this->bottom);
 
-        double a = NAN;
 
         // draw shadow on top and left
         for (int i = 0; i < shadowBottomRightSize; i++) {
-            a = shadowBottomRight[i] / 255.0;
+            auto a = shadowBottomRight[i] / 255.0;
             cairo_set_source_rgba(cr2, r, g, b, a);
 
             cairo_rectangle(cr2, 0, i, width, 1);

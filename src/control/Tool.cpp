@@ -2,7 +2,7 @@
 
 #include <utility>
 
-Tool::Tool(string name, ToolType type, int color, int capabilities, double* thickness) {
+Tool::Tool(string name, ToolType type, Color color, int capabilities, double* thickness) {
     this->name = std::move(name);
     this->type = type;
     this->thickness = thickness;

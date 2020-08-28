@@ -69,7 +69,7 @@ public:
 
     vector<AbstractToolItem*>* getToolItems();
 
-    bool isColorInUse(int color);
+    bool isColorInUse(Color color);
 
     void disableAudioPlaybackButtons();
 

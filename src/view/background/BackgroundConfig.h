@@ -13,7 +13,6 @@
 
 #include <map>
 #include <string>
-#include <vector>
 
 #include "XournalType.h"
 using std::map;
@@ -28,6 +27,7 @@ public:
     bool loadValue(const string& key, int& value);
     bool loadValue(const string& key, double& value);
     bool loadValueHex(const string& key, int& value);
+    bool loadValueHex(const string& key, uint32_t& value);
 
 private:
     map<string, string> data;

@@ -7,8 +7,8 @@ LineBackgroundPainter::LineBackgroundPainter(bool verticalLine): verticalLine(ve
 LineBackgroundPainter::~LineBackgroundPainter() = default;
 
 void LineBackgroundPainter::resetConfig() {
-    this->foregroundColor1 = 0x40A0FF;
-    this->foregroundColor2 = 0xFF0080;
+    this->foregroundColor1 = 0x40A0FFU;
+    this->foregroundColor2 = 0xFF0080U;
     this->lineWidth = 0.5;
 }
 

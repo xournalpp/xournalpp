@@ -19,12 +19,12 @@ void ToolBase::applyFrom(const ToolBase* t) {
 /**
  * @return Color of the tool for all drawing tools
  */
-auto ToolBase::getColor() const -> int { return this->color; }
+auto ToolBase::getColor() const -> Color { return this->color; }
 
 /**
  * @param color Color of the tool for all drawing tools
  */
-void ToolBase::setColor(int color) { this->color = color; }
+void ToolBase::setColor(Color color) { this->color = color; }
 
 /**
  * @return Size of a drawing tool

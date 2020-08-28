@@ -51,7 +51,7 @@ public:
      * Set the color of all elements, return an undo action
      * (Or nullptr if nothing done, e.g. because there is only an image)
      */
-    UndoAction* setColor(int color);
+    UndoAction* setColor(Color color);
 
     /**
      * Sets the font of all containing text elements, return an undo action

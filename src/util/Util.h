@@ -25,12 +25,6 @@ using std::string;
 
 namespace Util {
 
-void cairo_set_source_rgbi(cairo_t* cr, int color);
-
-GdkRGBA rgb_to_GdkRGBA(uint32_t color);
-GdkRGBA argb_to_GdkRGBA(uint32_t color);
-uint32_t gdkrgba_to_hex(const GdkRGBA& color);
-
 pid_t getPid();
 
 /**

@@ -1,15 +1,15 @@
 #include "Util.h"
 
 #include <array>
+#include <cassert>
 #include <cstdlib>
-#include <utility>
 
 #include <unistd.h>
 
+#include "Color.h"
 #include "PathUtil.h"
 #include "StringUtils.h"
 #include "XojMsgBox.h"
-#include "config-dev.h"
 #include "i18n.h"
 
 struct CallbackUiData {
@@ -39,38 +39,14 @@ void Util::execInUiThread(std::function<void()>&& callback) {
                          new CallbackUiData(std::move(callback)));
 }
 
-auto Util::rgb_to_GdkRGBA(const uint32_t color) -> GdkRGBA { return Util::argb_to_GdkRGBA(0xFF000000U | color); }
-
-auto Util::argb_to_GdkRGBA(const uint32_t color) -> GdkRGBA {
-    // clang-format off
-    return {((color >> 16U) & 0xFFU) / 255.0,
-            ((color >> 8U) & 0xFFU) / 255.0,
-            (color & 0xFFU) / 255.0,
-            ((color >> 24U) & 0xFFU) / 255.0};
-    // clang-format on
-}
-
-void Util::cairo_set_source_rgbi(cairo_t* cr, int color) {
+void Util::cairo_set_source_rgbi(cairo_t* cr, Color color) {
     auto rgba = rgb_to_GdkRGBA(color);
-    cairo_set_source_rgb(cr, rgba.red, rgba.green, rgba.blue);
+    gdk_cairo_set_source_rgba(cr, &rgba);
 }
 
-// Splits the double into a equal sized distribution between [0,256[ and rounding down
-// inspired by, which isn't completely correct:
-// https://stackoverflow.com/questions/1914115/converting-color-value-from-float-0-1-to-byte-0-255
-constexpr double MAXCOLOR = 256.0 - std::numeric_limits<double>::epsilon() * 128;
-
-inline auto float_to_int_color(const double color) -> uint32_t {
-    static_assert(MAXCOLOR < 256.0, "MAXCOLOR isn't smaler than 256");
-    return static_cast<uint32_t>(color * MAXCOLOR);
-}
-
-auto Util::gdkrgba_to_hex(const GdkRGBA& color) -> uint32_t {  // clang-format off
-	return float_to_int_color(color.alpha) << 24U |
-	       float_to_int_color(color.red)  << 16U |
-	       float_to_int_color(color.green) << 8U |
-	       float_to_int_color(color.blue);
-                                                               // clang-format on
+void Util::cairo_set_source_rgbi(cairo_t* cr, Color color, double alpha) {
+    auto rgba = argb_to_GdkRGBA(color, alpha);
+    gdk_cairo_set_source_rgba(cr, &rgba);
 }
 
 auto Util::getPid() -> pid_t { return ::getpid(); }

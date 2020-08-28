@@ -32,7 +32,7 @@ public:
     virtual bool redo(Control* control);
     virtual string getText();
 
-    void addStroke(Element* e, int originalColor, double newColor);
+    void addStroke(Element* e, Color originalColor, Color newColor);
 
 private:
     std::vector<ColorUndoActionEntry*> data;

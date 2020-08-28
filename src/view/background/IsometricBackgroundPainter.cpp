@@ -9,7 +9,7 @@ IsometricBackgroundPainter::IsometricBackgroundPainter(bool drawLines): drawLine
 IsometricBackgroundPainter::~IsometricBackgroundPainter() = default;
 
 void IsometricBackgroundPainter::resetConfig() {
-    this->foregroundColor1 = 0xBDBDBD;
+    this->foregroundColor1 = 0xBDBDBDU;
     this->lineWidth = drawLines ? 1.0 : 1.5;
     this->drawRaster1 = 14.17;
 }

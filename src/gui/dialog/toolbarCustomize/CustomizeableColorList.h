@@ -27,7 +27,7 @@ public:
     vector<XojColor*>* getPredefinedColors();
 
 private:
-    void addPredefinedColor(int color, string name);
+    void addPredefinedColor(Color color, string name);
 
 private:
     vector<XojColor*> colors;

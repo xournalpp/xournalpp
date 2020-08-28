@@ -13,7 +13,6 @@
 
 #include "model/PageRef.h"
 #include "pdf/base/XojPdfPage.h"
-#include "util/GtkColorWrapper.h"
 
 class SearchControl {
 public:
@@ -21,7 +20,7 @@ public:
     virtual ~SearchControl();
 
     bool search(string text, int* occures, double* top);
-    void paint(cairo_t* cr, GdkRectangle* rect, double zoom, const GtkColorWrapper& color);
+    void paint(cairo_t* cr, GdkRectangle* rect, double zoom, const GdkRGBA& color);
 
 private:
     void freeSearchResults();

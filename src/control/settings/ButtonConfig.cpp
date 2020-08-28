@@ -2,7 +2,8 @@
 
 #include "control/ToolHandler.h"
 
-ButtonConfig::ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType, EraserType eraserMode) {
+ButtonConfig::ButtonConfig(ToolType action, Color color, ToolSize size, DrawingType drawingType,
+                           EraserType eraserMode) {
     this->action = action;
     this->color = color;
     this->size = size;

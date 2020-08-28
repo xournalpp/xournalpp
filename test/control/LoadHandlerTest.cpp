@@ -251,9 +251,9 @@ public:
         CPPUNIT_ASSERT_EQUAL(string("blue"), t2->getText());
         CPPUNIT_ASSERT_EQUAL(string("green"), t3->getText());
 
-        CPPUNIT_ASSERT_EQUAL(0xff0000, t1->getColor());
-        CPPUNIT_ASSERT_EQUAL(0x3333CC, t2->getColor());
-        CPPUNIT_ASSERT_EQUAL(0x00f000, t3->getColor());
+        CPPUNIT_ASSERT_EQUAL(0xff0000U, t1->getColor());
+        CPPUNIT_ASSERT_EQUAL(0x3333CCU, t2->getColor());
+        CPPUNIT_ASSERT_EQUAL(0x00f000U, t3->getColor());
     }
 
     void testTextZipped() {
@@ -279,9 +279,9 @@ public:
         CPPUNIT_ASSERT_EQUAL(string("blue"), t2->getText());
         CPPUNIT_ASSERT_EQUAL(string("green"), t3->getText());
 
-        CPPUNIT_ASSERT_EQUAL(0xff0000, t1->getColor());
-        CPPUNIT_ASSERT_EQUAL(0x3333CC, t2->getColor());
-        CPPUNIT_ASSERT_EQUAL(0x00f000, t3->getColor());
+        CPPUNIT_ASSERT_EQUAL(0xff0000U, t1->getColor());
+        CPPUNIT_ASSERT_EQUAL(0x3333CCU, t2->getColor());
+        CPPUNIT_ASSERT_EQUAL(0x00f000U, t3->getColor());
     }
 
     void testStroke() {}

@@ -13,9 +13,10 @@
 #pragma once
 
 #include <string>
-#include <vector>
+#include <unordered_map>
 
-#include "XournalType.h"
+#include "util/Color.h"
+
 #include "filesystem.h"
 
 class ToolbarColorNames {
@@ -31,14 +32,14 @@ public:
     void loadFile(fs::path const& file);
     void saveFile(fs::path const& file);
 
-    void addColor(int color, const string& name, bool predefined);
+    void addColor(Color color, const std::string& name, bool predefined);
 
-    string getColorName(int color);
+    std::string getColorName(Color color);
 
 private:
     void initPredefinedColors();
 
 private:
     GKeyFile* config;
-    GHashTable* predefinedColorNames;
+    std::unordered_map<Color, std::string> predefinedColorNames{};
 };
