@@ -108,35 +108,35 @@ void Settings::loadDefault() {
 
     // Eraser
     this->buttonConfig[BUTTON_ERASER] =
-            new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            new ButtonConfig(TOOL_ERASER, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Middle button
     this->buttonConfig[BUTTON_MIDDLE] =
-            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Right button
     this->buttonConfig[BUTTON_RIGHT] =
-            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Touch
     this->buttonConfig[BUTTON_TOUCH] =
-            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Default config
     this->buttonConfig[BUTTON_DEFAULT] =
-            new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            new ButtonConfig(TOOL_PEN, Color{0x000000U}, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Pen button 1
     this->buttonConfig[BUTTON_STYLUS] =
-            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Pen button 2
     this->buttonConfig[BUTTON_STYLUS2] =
-            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 
     this->fullscreenHideElements = "mainMenubar";
     this->presentationHideElements = "mainMenubar,sidebarContents";
 
     this->pdfPageCacheSize = 10;
 
-    this->selectionBorderColor = 0xff0000;  // red
-    this->selectionMarkerColor = 0x729FCF;  // light blue
+    this->selectionBorderColor = 0xff0000U;  // red
+    this->selectionMarkerColor = 0x729fcfU;  // light blue
 
-    this->backgroundColor = 0xDCDAD5;
+    this->backgroundColor = 0xdcdad5U;
 
     // clang-format off
 	this->pageTemplate = "xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
@@ -383,11 +383,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pdfPageCacheSize")) == 0) {
         this->pdfPageCacheSize = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectionBorderColor")) == 0) {
-        this->selectionBorderColor = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+        this->selectionBorderColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectionMarkerColor")) == 0) {
-        this->selectionMarkerColor = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+        this->selectionMarkerColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("backgroundColor")) == 0) {
-        this->backgroundColor = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+        this->backgroundColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpace")) == 0) {
         this->addHorizontalSpace = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpaceAmount")) == 0) {
@@ -509,7 +509,9 @@ void Settings::loadButtonConfig() {
             }
 
             if (type == TOOL_PEN || type == TOOL_HILIGHTER || type == TOOL_TEXT) {
-                e.getInt("color", cfg->color);
+                if (int iColor; e.getInt("color", iColor)) {
+                    cfg->color = Color(iColor);
+                }
             }
 
             if (type == TOOL_ERASER) {
@@ -653,7 +655,7 @@ void Settings::saveButtonConfig() {
         }  // end if pen or highlighter
 
         if (type == TOOL_PEN || type == TOOL_HILIGHTER || type == TOOL_TEXT) {
-            e.setIntHex("color", cfg->color);
+            e.setIntHex("color", int32_t(cfg->color));
         }
 
         if (type == TOOL_ERASER) {
@@ -801,9 +803,9 @@ void Settings::save() {
 
     WRITE_BOOL_PROP(touchWorkaround);
 
-    WRITE_INT_PROP(selectionBorderColor);
-    WRITE_INT_PROP(backgroundColor);
-    WRITE_INT_PROP(selectionMarkerColor);
+    WRITE_UINT_PROP(uint32_t(selectionBorderColor));
+    WRITE_UINT_PROP(uint32_t(backgroundColor));
+    WRITE_UINT_PROP(uint32_t(selectionMarkerColor));
 
     WRITE_INT_PROP(pdfPageCacheSize);
     WRITE_COMMENT("The count of rendered PDF pages which will be cached.");
@@ -1065,9 +1067,9 @@ void Settings::setHighlightPosition(bool highlight) {
     save();
 }
 
-auto Settings::getCursorHighlightColor() const -> uint32_t { return this->cursorHighlightColor; }
+auto Settings::getCursorHighlightColor() const -> Color { return this->cursorHighlightColor; }
 
-void Settings::setCursorHighlightColor(uint32_t color) {
+void Settings::setCursorHighlightColor(Color color) {
     if (this->cursorHighlightColor != color) {
         this->cursorHighlightColor = color;
         save();
@@ -1083,9 +1085,9 @@ void Settings::setCursorHighlightRadius(double radius) {
     }
 }
 
-auto Settings::getCursorHighlightBorderColor() const -> uint32_t { return this->cursorHighlightBorderColor; }
+auto Settings::getCursorHighlightBorderColor() const -> Color { return this->cursorHighlightBorderColor; }
 
-void Settings::setCursorHighlightBorderColor(uint32_t color) {
+void Settings::setCursorHighlightBorderColor(Color color) {
     if (this->cursorHighlightBorderColor != color) {
         this->cursorHighlightBorderColor = color;
         save();
@@ -1532,9 +1534,9 @@ void Settings::setPdfPageCacheSize(int size) {
     save();
 }
 
-auto Settings::getBorderColor() const -> int { return this->selectionBorderColor; }
+auto Settings::getBorderColor() const -> Color { return this->selectionBorderColor; }
 
-void Settings::setBorderColor(int color) {
+void Settings::setBorderColor(Color color) {
     if (this->selectionBorderColor == color) {
         return;
     }
@@ -1542,9 +1544,9 @@ void Settings::setBorderColor(int color) {
     save();
 }
 
-auto Settings::getSelectionColor() const -> int { return this->selectionMarkerColor; }
+auto Settings::getSelectionColor() const -> Color { return this->selectionMarkerColor; }
 
-void Settings::setSelectionColor(int color) {
+void Settings::setSelectionColor(Color color) {
     if (this->selectionMarkerColor == color) {
         return;
     }
@@ -1552,9 +1554,9 @@ void Settings::setSelectionColor(int color) {
     save();
 }
 
-auto Settings::getBackgroundColor() const -> int { return this->backgroundColor; }
+auto Settings::getBackgroundColor() const -> Color { return this->backgroundColor; }
 
-void Settings::setBackgroundColor(int color) {
+void Settings::setBackgroundColor(Color color) {
     if (this->backgroundColor == color) {
         return;
     }

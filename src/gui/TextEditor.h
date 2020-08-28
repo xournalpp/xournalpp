@@ -57,7 +57,7 @@ public:
 
     void setText(const string& text);
     void setFont(XojFont font);
-    UndoAction* setColor(int color);
+    UndoAction* setColor(Color color);
 
 private:
     void repaintEditor();

@@ -3,48 +3,41 @@
 #include "control/Control.h"
 
 #include "Util.h"
-#include "config.h"
 #include "i18n.h"
 
-GdkRGBA background1[] = {
-        // clang-format off
-        Util::rgb_to_GdkRGBA(0xfabebe),
-        Util::rgb_to_GdkRGBA(0xfee7c4),
-        Util::rgb_to_GdkRGBA(0xfef8c9),
-        Util::rgb_to_GdkRGBA(0xdcf6c1),
-        Util::rgb_to_GdkRGBA(0xd4e2f0),
-        Util::rgb_to_GdkRGBA(0xe6d8e4),
-        Util::rgb_to_GdkRGBA(0xf8ead3),
-        Util::rgb_to_GdkRGBA(0xdadcda),
-        Util::rgb_to_GdkRGBA(0xfafaf9)
-        // clang-format on
+static inline std::array<GdkRGBA, 9> background1 = {
+        Util::rgb_to_GdkRGBA(0xfabebeU),  //
+        Util::rgb_to_GdkRGBA(0xfee7c4U),  //
+        Util::rgb_to_GdkRGBA(0xfef8c9U),  //
+        Util::rgb_to_GdkRGBA(0xdcf6c1U),  //
+        Util::rgb_to_GdkRGBA(0xd4e2f0U),  //
+        Util::rgb_to_GdkRGBA(0xe6d8e4U),  //
+        Util::rgb_to_GdkRGBA(0xf8ead3U),  //
+        Util::rgb_to_GdkRGBA(0xdadcdaU),  //
+        Util::rgb_to_GdkRGBA(0xfafaf9U)   //
 };
 
-const int background1Count = sizeof(background1) / sizeof(GdkRGBA);
-
-// clang-format off
-GdkRGBA backgroundXournal[] = {Util::rgb_to_GdkRGBA(0xffffff),
-                               Util::rgb_to_GdkRGBA(0xa0e8ff),
-                               Util::rgb_to_GdkRGBA(0x80ffc0),
-                               Util::rgb_to_GdkRGBA(0xffc0d4),
-                               Util::rgb_to_GdkRGBA(0xffc080),
-                               Util::rgb_to_GdkRGBA(0xffff80)};
-// clang-format on
-
-const int backgroundXournalCount = sizeof(backgroundXournal) / sizeof(GdkRGBA);
+static inline std::array<GdkRGBA, 6> backgroundXournal = {
+        Util::rgb_to_GdkRGBA(0xffffffU),  //
+        Util::rgb_to_GdkRGBA(0xa0e8ffU),  //
+        Util::rgb_to_GdkRGBA(0x80ffc0U),  //
+        Util::rgb_to_GdkRGBA(0xffc0d4U),  //
+        Util::rgb_to_GdkRGBA(0xffc080U),  //
+        Util::rgb_to_GdkRGBA(0xffff80U)   //
+};
 
 SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control* control):
-        control(control)  // clang-format off
- , lastBackgroundColors{Util::rgb_to_GdkRGBA(0xffffff),
-                        Util::rgb_to_GdkRGBA(0xffffff),
-                        Util::rgb_to_GdkRGBA(0xffffff),
-                        Util::rgb_to_GdkRGBA(0xffffff),
-                        Util::rgb_to_GdkRGBA(0xffffff),
-                        Util::rgb_to_GdkRGBA(0xffffff),
-                        Util::rgb_to_GdkRGBA(0xffffff),
-                        Util::rgb_to_GdkRGBA(0xffffff),
-                        Util::rgb_to_GdkRGBA(0xffffff)}
-// clang-format on
+        control(control),
+        lastBackgroundColors{Util::rgb_to_GdkRGBA(0xffffffU),  //
+                             Util::rgb_to_GdkRGBA(0xffffffU),  //
+                             Util::rgb_to_GdkRGBA(0xffffffU),  //
+                             Util::rgb_to_GdkRGBA(0xffffffU),  //
+                             Util::rgb_to_GdkRGBA(0xffffffU),  //
+                             Util::rgb_to_GdkRGBA(0xffffffU),  //
+                             Util::rgb_to_GdkRGBA(0xffffffU),  //
+                             Util::rgb_to_GdkRGBA(0xffffffU),  //
+                             Util::rgb_to_GdkRGBA(0xffffffU)}
+
 {
     Settings* settings = control->getSettings();
     SElement& el = settings->getCustomElement("lastUsedPageBgColor");
@@ -52,33 +45,30 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control* control):
     int count = 0;
     el.getInt("count", count);
 
-    int index = 0;
+    auto index = 0ULL;
 
     for (int i = 0; i < count && index < LAST_BACKGROUND_COLOR_COUNT; i++) {
-        int color = -1;
+        int iColor{};
         char* settingName = g_strdup_printf("color%02i", i);
-        bool read = el.getInt(settingName, color);
+        bool read = el.getInt(settingName, iColor);
         g_free(settingName);
 
         if (!read) {
             continue;
         }
 
-        lastBackgroundColors[index] = Util::rgb_to_GdkRGBA(color);
+        lastBackgroundColors[index] = Util::rgb_to_GdkRGBA(Color(iColor));
 
-        index++;
+        ++index;
     }
 }
 
-SelectBackgroundColorDialog::~SelectBackgroundColorDialog() = default;
-
 void SelectBackgroundColorDialog::storeLastUsedValuesInSettings() {
-    if (this->selected < 0) {
-        // No color selected, do not save to list
+    if (!this->selected) {  // No color selected, do not save to list
         return;
     }
 
-    GdkRGBA newColor = Util::rgb_to_GdkRGBA(this->selected);
+    GdkRGBA newColor = Util::rgb_to_GdkRGBA(*this->selected);
 
     for (auto& lastBackgroundColor: lastBackgroundColors) {
         if (gdk_rgba_equal(&lastBackgroundColor, &newColor)) {
@@ -101,36 +91,36 @@ void SelectBackgroundColorDialog::storeLastUsedValuesInSettings() {
     el.setInt("count", LAST_BACKGROUND_COLOR_COUNT);
     for (int i = 0; i < LAST_BACKGROUND_COLOR_COUNT; i++) {
         char* settingName = g_strdup_printf("color%02i", i);
-        el.setIntHex(settingName, Util::gdkrgba_to_hex(lastBackgroundColors[i]));
+        el.setIntHex(settingName, int(Util::GdkRGBA_to_argb(lastBackgroundColors[i])));
         g_free(settingName);
     }
 
     settings->customSettingsChanged();
 }
 
-auto SelectBackgroundColorDialog::getSelectedColor() const -> int { return this->selected; }
+auto SelectBackgroundColorDialog::getSelectedColor() const -> std::optional<Color> { return this->selected; }
 
 void SelectBackgroundColorDialog::show(GtkWindow* parent) {
     GtkWidget* dialog = gtk_color_chooser_dialog_new(_("Select background color"), parent);
     gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(dialog), false);
 
-    gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9, background1Count,
-                                  background1);
+    gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9, background1.size(),
+                                  background1.data());
 
-    gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9, backgroundXournalCount,
-                                  backgroundXournal);
+    gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9, backgroundXournal.size(),
+                                  backgroundXournal.data());
 
     // Last used colors (only by background, the general last used are shared with the
     // pen and highlighter etc.)
-    gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9, LAST_BACKGROUND_COLOR_COUNT,
-                                  lastBackgroundColors);
+    gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9, lastBackgroundColors.size(),
+                                  lastBackgroundColors.data());
 
 
     int response = gtk_dialog_run(GTK_DIALOG(dialog));
     if (response == GTK_RESPONSE_OK) {
         GdkRGBA color;
         gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dialog), &color);
-        this->selected = Util::gdkrgba_to_hex(color);
+        this->selected = Util::GdkRGBA_to_argb(color);
 
         storeLastUsedValuesInSettings();
     }

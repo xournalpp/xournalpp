@@ -72,7 +72,7 @@ void PageTemplateDialog::saveToModel() {
 
     GdkRGBA color;
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cbBackgroundButton")), &color);
-    model.setBackgroundColor(Util::gdkrgba_to_hex(color));
+    model.setBackgroundColor(Util::GdkRGBA_to_argb(color));
 }
 
 void PageTemplateDialog::saveToFile() {

@@ -4,7 +4,7 @@
 
 #include "pixbuf-utils.h"
 
-ColorSelectImage::ColorSelectImage(int color, bool circle): color(color), circle(circle) {
+ColorSelectImage::ColorSelectImage(Color color, bool circle): color(color), circle(circle) {
     widget = gtk_drawing_area_new();
     gtk_widget_set_size_request(widget, 16, 16);
 
@@ -39,7 +39,7 @@ auto ColorSelectImage::getWidget() -> GtkWidget* { return widget; }
 /**
  * Color of the icon
  */
-void ColorSelectImage::setColor(int color) {
+void ColorSelectImage::setColor(Color color) {
     this->color = color;
     gtk_widget_queue_draw(widget);
 }
@@ -55,7 +55,7 @@ void ColorSelectImage::setState(ColorIconState state) {
 /**
  * Create a new GtkImage with preview color
  */
-auto ColorSelectImage::newColorIcon(int color, int size, bool circle) -> GtkWidget* {
+auto ColorSelectImage::newColorIcon(Color color, int size, bool circle) -> GtkWidget* {
     cairo_surface_t* surface = newColorIconSurface(color, size, circle);
     GtkWidget* w = gtk_image_new_from_surface(surface);
     cairo_surface_destroy(surface);
@@ -75,18 +75,12 @@ void ColorSelectImage::drawWidget(cairo_t* cr, const IconConfig& config) {
     // Fill transparent
     cairo_set_source_rgba(cr, 1, 1, 1, 0);
     cairo_fill(cr);
+    Util::cairo_set_source_rgbi(cr, config.color, alpha);
 
+    constexpr int x = 0;
     int y = (config.height - config.size) / 2;
-
-    double r = ((config.color & 0xff0000) >> 16) / 255.0;
-    double g = ((config.color & 0xff00) >> 8) / 255.0;
-    double b = ((config.color & 0xff)) / 255.0;
-    cairo_set_source_rgba(cr, r, g, b, alpha);
-
-    int x = 0;
-    int width = config.size;
-
-    double radius = config.size / 2.0;
+    int const width = config.size;
+    double const radius = config.size / 2.0;
 
     if (config.circle) {
         cairo_arc(cr, radius + x, radius + y, radius - 1, 0, 2 * M_PI);
@@ -105,7 +99,6 @@ void ColorSelectImage::drawWidget(cairo_t* cr, const IconConfig& config) {
 
     cairo_set_line_width(cr, 0.8);
     cairo_stroke(cr);
-
 
     if (config.state == COLOR_ICON_STATE_PEN) {
         // Pencil cursor from cursor drawing, a little shrinked, so that it fits to the color item
@@ -129,7 +122,7 @@ void ColorSelectImage::drawWidget(cairo_t* cr, const IconConfig& config) {
 /**
  * Create a new cairo_surface_t* with preview color
  */
-auto ColorSelectImage::newColorIconSurface(int color, int size, bool circle) -> cairo_surface_t* {
+auto ColorSelectImage::newColorIconSurface(Color color, int size, bool circle) -> cairo_surface_t* {
     cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, size, size);
     cairo_t* cr = cairo_create(crBuffer);
 
@@ -148,7 +141,7 @@ auto ColorSelectImage::newColorIconSurface(int color, int size, bool circle) -> 
 /**
  * Create a new GdkPixbuf* with preview color
  */
-auto ColorSelectImage::newColorIconPixbuf(int color, int size, bool circle) -> GdkPixbuf* {
+auto ColorSelectImage::newColorIconPixbuf(Color color, int size, bool circle) -> GdkPixbuf* {
     cairo_surface_t* surface = newColorIconSurface(color, size, circle);
     GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(surface, 0, 0, cairo_image_surface_get_width(surface),
                                                     cairo_image_surface_get_height(surface));

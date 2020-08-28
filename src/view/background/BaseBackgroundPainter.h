@@ -11,15 +11,12 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
 #include <gtk/gtk.h>
 
 #include "model/PageRef.h"
+#include "util/Color.h"
 
 #include "BackgroundConfig.h"
-#include "XournalType.h"
 
 class BaseBackgroundPainter {
 public:
@@ -55,37 +52,21 @@ protected:
     // Drawing attributes
     // ParserKey=Value
 protected:
-    /**
-     * c1=XXXXXX
-     * e.g. FF0000 for Red
-     */
-    int foregroundColor1 = 0;
+    Color foregroundColor1{0U};
 
-    /**
-     * c2=XXXXXX
-     * e.g. FF0000 for Red
-     */
-    int foregroundColor2 = 0;
+    Color foregroundColor2{0U};
 
-    /**
-     * lw=1.23
-     */
     double lineWidth = 0;
 
-    /**
-     * r1=1.23
-     */
     double drawRaster1 = 1;
 
-    /**
-     * m1=40
-     */
     double margin1 = 0;
 
     /**
      * rm=1
      * Round margin = 0 => No rounding
      * Round margin = 1 => Round to next grid etc.
+     * Todo(fabian): use enum RoundMargin : bool{ DoNotRound = false, RoundToNextGrid = true};
      */
     int roundMargin = 0;
 

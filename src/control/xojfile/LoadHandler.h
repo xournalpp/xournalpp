@@ -24,6 +24,7 @@
 #include "model/TexImage.h"
 #include "model/Text.h"
 
+#include "LoadHandlerHelper.h"
 #include "XournalType.h"
 
 enum ParserPosition {
@@ -154,5 +155,14 @@ private:
     DocumentHandler dHanlder;
     Document doc;
 
-    friend class LoadHandlerHelper;
+    friend Color LoadHandlerHelper::parseBackgroundColor(LoadHandler* loadHandler);
+    friend bool LoadHandlerHelper::parseColor(const char* text, Color& color, LoadHandler* loadHandler);
+
+    friend const char* LoadHandlerHelper::getAttrib(const char* name, bool optional, LoadHandler* loadHandler);
+    friend double LoadHandlerHelper::getAttribDouble(const char* name, LoadHandler* loadHandler);
+    friend int LoadHandlerHelper::getAttribInt(const char* name, LoadHandler* loadHandler);
+    friend bool LoadHandlerHelper::getAttribInt(const char* name, bool optional, LoadHandler* loadHandler, int& rValue);
+    friend size_t LoadHandlerHelper::getAttribSizeT(const char* name, LoadHandler* loadHandler);
+    friend bool LoadHandlerHelper::getAttribSizeT(const char* name, bool optional, LoadHandler* loadHandler,
+                                                  size_t& rValue);
 };

@@ -56,8 +56,8 @@ public:
 
     bool isAnnotated();
 
-    void setBackgroundColor(int color);
-    int getBackgroundColor() const;
+    void setBackgroundColor(Color color);
+    Color getBackgroundColor() const;
 
     vector<Layer*>* getLayers();
     size_t getLayerCount();
@@ -111,7 +111,7 @@ private:
     /**
      * The background color if the background type is plain
      */
-    int backgroundColor = 0xffffff;
+    Color backgroundColor{0xffffffU};
 
     /**
      * Background visible

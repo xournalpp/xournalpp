@@ -16,6 +16,8 @@
 #include <string>
 #include <vector>
 
+#include <util/Color.h>
+
 #include "settings/Settings.h"
 
 #include "Tool.h"
@@ -51,8 +53,8 @@ public:
      * 			false if the color is selected by a tool change
      * 			and therefore should not be applied to a selection
      */
-    void setColor(int color, bool userSelection);
-    int getColor();
+    void setColor(Color color, bool userSelection);
+    Color getColor();
 
     /**
      * @return -1 if fill is disabled, else the fill alpha value

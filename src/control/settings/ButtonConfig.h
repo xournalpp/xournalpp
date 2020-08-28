@@ -22,7 +22,7 @@ class ToolHandler;
 
 class ButtonConfig {
 public:
-    ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType, EraserType eraserMode);
+    ButtonConfig(ToolType action, Color color, ToolSize size, DrawingType drawingType, EraserType eraserMode);
     virtual ~ButtonConfig();
 
 public:
@@ -33,7 +33,7 @@ public:
 
 private:
     ToolType action;
-    int color;
+    Color color{};
     ToolSize size;
     EraserType eraserMode;
     DrawingType drawingType;

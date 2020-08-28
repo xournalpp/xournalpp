@@ -56,9 +56,9 @@ auto Element::boundingRect() -> Rectangle<double> {
     return Rectangle<double>(getX(), getY(), getElementWidth(), getElementHeight());
 }
 
-void Element::setColor(int color) { this->color = color; }
+void Element::setColor(Color color) { this->color = color; }
 
-auto Element::getColor() const -> int { return this->color; }
+auto Element::getColor() const -> Color { return this->color; }
 
 auto Element::intersectsArea(const GdkRectangle* src) -> bool {
     GdkRectangle rect = {gint(getX()), gint(getY()), gint(getElementWidth()), gint(getElementHeight())};
@@ -102,7 +102,7 @@ void Element::serializeElement(ObjectOutputStream& out) const {
 
     out.writeDouble(this->x);
     out.writeDouble(this->y);
-    out.writeInt(this->color);
+    out.writeInt(int(this->color));
 
     out.endObject();
 }
@@ -112,7 +112,7 @@ void Element::readSerializedElement(ObjectInputStream& in) {
 
     this->x = in.readDouble();
     this->y = in.readDouble();
-    this->color = in.readInt();
+    this->color = Color(in.readInt());
 
     in.endObject();
 }

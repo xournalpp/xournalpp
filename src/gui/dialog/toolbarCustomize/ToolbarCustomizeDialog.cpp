@@ -153,7 +153,7 @@ void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget* widget, GdkDragConte
  * Drag a Toolitem from dialog
  */
 void ToolbarCustomizeDialog::toolitemColorDragBegin(GtkWidget* widget, GdkDragContext* context, void* data) {
-    int color = GPOINTER_TO_INT(data);
+    Color color = GPOINTER_TO_UINT(data);
     ToolItemDragCurrentData::setDataColor(-1, color);
 
     GdkPixbuf* image = ColorSelectImage::newColorIconPixbuf(color, 32, true);
@@ -179,7 +179,7 @@ void ToolbarCustomizeDialog::toolitemColorDragDataGet(GtkWidget* widget, GdkDrag
                                                       GtkSelectionData* selection_data, guint info, guint time,
                                                       void* data) {
 
-    int color = GPOINTER_TO_INT(data);
+    Color color = GPOINTER_TO_UINT(data);
 
     ToolItemDragDropData* it = ToolitemDragDrop::ToolItemDragDropData_new(nullptr);
     it->color = color;
@@ -343,10 +343,10 @@ void ToolbarCustomizeDialog::rebuildColorIcons() {
         gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
         ToolbarDragDropHelper::dragSourceAddToolbar(ebox);
 
-        g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemColorDragBegin), GINT_TO_POINTER(color->getColor()));
+        g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemColorDragBegin), GUINT_TO_POINTER(color->getColor()));
         g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemColorDragEnd), this);
         g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemColorDragDataGet),
-                         GINT_TO_POINTER(color->getColor()));
+                         GUINT_TO_POINTER(color->getColor()));
 
         int x = i % 5;
         int y = i / 5;

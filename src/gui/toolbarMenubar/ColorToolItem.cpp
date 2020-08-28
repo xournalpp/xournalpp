@@ -11,7 +11,7 @@
 
 bool ColorToolItem::inUpdate = false;
 
-ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, unsigned int color,
+ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, Color color,
                              bool selektor):
         AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR),
         color(color),
@@ -53,7 +53,7 @@ void ColorToolItem::actionSelected(ActionGroup group, ActionType action) {
     inUpdate = false;
 }
 
-void ColorToolItem::enableColor(unsigned int color) {
+void ColorToolItem::enableColor(Color color) {
     if (isSelector()) {
         if (this->icon) {
             this->icon->setColor(color);
@@ -70,7 +70,7 @@ void ColorToolItem::enableColor(unsigned int color) {
     }
 }
 
-auto ColorToolItem::getColor() const -> unsigned int { return this->color; }
+auto ColorToolItem::getColor() const -> Color { return this->color; }
 
 auto ColorToolItem::getId() -> string {
     if (isSelector()) {
@@ -78,7 +78,7 @@ auto ColorToolItem::getId() -> string {
     }
 
     char buffer[64];
-    sprintf(buffer, "COLOR(0x%06x)", this->color);
+    sprintf(buffer, "COLOR(0x%06x)", uint32_t{this->color});
     string id = buffer;
 
     return id;
@@ -95,9 +95,7 @@ void ColorToolItem::showColorchooser() {
     if (response == GTK_RESPONSE_OK) {
         GdkRGBA color;
         gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dialog), &color);
-        this->color = ((static_cast<int>(color.red * 255)) & 0xff) << 16 |
-                      ((static_cast<int>(color.green * 255)) & 0xff) << 8 |
-                      ((static_cast<int>(color.blue * 255)) & 0xff);
+        this->color = Util::GdkRGBA_to_argb(color);
     }
 
     gtk_widget_destroy(dialog);

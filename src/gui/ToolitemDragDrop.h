@@ -12,6 +12,7 @@
 #pragma once
 
 #include <gtk/gtk.h>
+#include <util/Color.h>
 
 class AbstractToolItem;
 
@@ -24,7 +25,7 @@ struct ToolItemDragDropData {
     ToolItemType type;
     int id;
     AbstractToolItem* item;
-    int color;
+    Color color;
 };
 
 class ToolitemDragDrop {
@@ -35,7 +36,7 @@ private:
 public:
     static void attachMetadata(GtkWidget* w, int id, AbstractToolItem* ait);
     static void attachMetadata(GtkWidget* w, int id, ToolItemType type);
-    static void attachMetadataColor(GtkWidget* w, int id, int color, AbstractToolItem* item);
+    static void attachMetadataColor(GtkWidget* w, int id, Color color, AbstractToolItem* item);
 
 public:
     static ToolItemDragDropData* ToolItemDragDropData_new(AbstractToolItem* item);

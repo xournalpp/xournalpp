@@ -1328,10 +1328,9 @@ void Control::changePageBackgroundColor() {
 
     SelectBackgroundColorDialog dlg(this);
     dlg.show(GTK_WINDOW(this->win->getWindow()));
-    int color = dlg.getSelectedColor();
 
-    if (color != -1) {
-        p->setBackgroundColor(color);
+    if (auto optColor = dlg.getSelectedColor(); optColor) {
+        p->setBackgroundColor(*optColor);
         firePageChanged(pNr);
     }
 }
@@ -1814,7 +1813,7 @@ void Control::toolColorChanged(bool userSelection) {
     fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR);
     getCursor()->updateCursor();
 
-    if (userSelection && this->win && toolHandler->getColor() != -1) {
+    if (userSelection && this->win && toolHandler->getColor() != Color(-1)) {
         EditSelection* sel = this->win->getXournal()->getSelection();
         if (sel) {
             UndoAction* undo = sel->setColor(toolHandler->getColor());
@@ -1836,7 +1835,7 @@ void Control::setCustomColorSelected() { fireActionSelected(GROUP_COLOR, ACTION_
 
 void Control::showSettings() {
     // take note of some settings before to compare with after
-    int selectionColor = settings->getBorderColor();
+    auto selectionColor = settings->getBorderColor();
     bool verticalSpace = settings->getAddVerticalSpace();
     int verticalSpaceAmount = settings->getAddVerticalSpaceAmount();
     bool horizontalSpace = settings->getAddHorizontalSpace();

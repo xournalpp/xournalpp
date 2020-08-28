@@ -515,20 +515,20 @@ void SettingsDialog::save() {
 
     GdkRGBA color;
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorBorder")), &color);
-    settings->setBorderColor(Util::gdkrgba_to_hex(color));
+    settings->setBorderColor(Util::GdkRGBA_to_argb(color));
 
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorBackground")), &color);
-    settings->setBackgroundColor(Util::gdkrgba_to_hex(color));
+    settings->setBackgroundColor(Util::GdkRGBA_to_argb(color));
 
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorSelection")), &color);
-    settings->setSelectionColor(Util::gdkrgba_to_hex(color));
+    settings->setSelectionColor(Util::GdkRGBA_to_argb(color));
 
 
     settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightColor")), &color);
-    settings->setCursorHighlightColor(Util::gdkrgba_to_hex(color));
+    settings->setCursorHighlightColor(Util::GdkRGBA_to_argb(color));
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightBorderColor")), &color);
-    settings->setCursorHighlightBorderColor(Util::gdkrgba_to_hex(color));
+    settings->setCursorHighlightBorderColor(Util::GdkRGBA_to_argb(color));
     GtkWidget* spCursorHighlightRadius = get("cursorHighlightRadius");
     settings->setCursorHighlightRadius(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spCursorHighlightRadius)));
     GtkWidget* spCursorHighlightBorderWidth = get("cursorHighlightBorderWidth");

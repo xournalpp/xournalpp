@@ -822,7 +822,7 @@ auto XojPageView::getBufferPixels() -> int {
     return 0;
 }
 
-auto XojPageView::getSelectionColor() -> GtkColorWrapper { return settings->getSelectionColor(); }
+auto XojPageView::getSelectionColor() -> GdkRGBA { return Util::rgb_to_GdkRGBA(settings->getSelectionColor()); }
 
 auto XojPageView::getTextEditor() -> TextEditor* { return textEditor; }
 

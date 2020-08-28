@@ -2,10 +2,10 @@
 
 #include <utility>
 
-XojColor::XojColor(int color, string name): color(color), name(std::move(name)) {}
+XojColor::XojColor(Color color, string name): color(color), name(std::move(name)) {}
 
 XojColor::~XojColor() = default;
 
-auto XojColor::getColor() const -> int { return this->color; }
+auto XojColor::getColor() const -> Color { return this->color; }
 
 auto XojColor::getName() -> string { return this->name; }

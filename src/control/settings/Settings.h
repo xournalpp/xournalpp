@@ -267,14 +267,14 @@ public:
     bool isHighlightPosition() const;
     void setHighlightPosition(bool highlight);
 
-    uint32_t getCursorHighlightColor() const;
-    void setCursorHighlightColor(uint32_t color);
+    Color getCursorHighlightColor() const;
+    void setCursorHighlightColor(Color color);
 
     double getCursorHighlightRadius() const;
     void setCursorHighlightRadius(double radius);
 
-    uint32_t getCursorHighlightBorderColor() const;
-    void setCursorHighlightBorderColor(uint32_t color);
+    Color getCursorHighlightBorderColor() const;
+    void setCursorHighlightBorderColor(Color color);
 
     double getCursorHighlightBorderWidth() const;
     void setCursorHighlightBorderWidth(double width);
@@ -304,14 +304,14 @@ public:
     string const& getPresentationHideElements() const;
     void setPresentationHideElements(string elements);
 
-    int getBorderColor() const;
-    void setBorderColor(int color);
+    Color getBorderColor() const;
+    void setBorderColor(Color color);
 
-    int getSelectionColor() const;
-    void setSelectionColor(int color);
+    Color getSelectionColor() const;
+    void setSelectionColor(Color color);
 
-    int getBackgroundColor() const;
-    void setBackgroundColor(int color);
+    Color getBackgroundColor() const;
+    void setBackgroundColor(Color color);
 
     int getPdfPageCacheSize() const;
     void setPdfPageCacheSize(int size);
@@ -508,7 +508,7 @@ private:
     /**
      * Cursor highlight color (ARGB format)
      */
-    uint32_t cursorHighlightColor{};
+    Color cursorHighlightColor{};
 
     /**
      * Radius of cursor highlight circle. Note that this is limited by the size
@@ -519,7 +519,7 @@ private:
     /**
      * Cursor highlight border color (ARGB format)
      */
-    uint32_t cursorHighlightBorderColor{};
+    Color cursorHighlightBorderColor{};
 
     /**
      * Width of cursor highlight border, in pixels.
@@ -733,17 +733,17 @@ private:
      * The color to draw borders on selected elements
      * (Page, insert image selection etc.)
      */
-    int selectionBorderColor{};
+    Color selectionBorderColor{};
 
     /**
      * Color for Text selection, Stroke selection etc.
      */
-    int selectionMarkerColor{};
+    Color selectionMarkerColor{};
 
     /**
      * The color for Xournal page background
      */
-    int backgroundColor{};
+    Color backgroundColor{};
 
     /**
      * Page template String

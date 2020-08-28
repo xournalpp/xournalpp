@@ -5,7 +5,6 @@
 
 #include "model/Layer.h"
 #include "undo/UndoRedoHandler.h"
-#include "util/GtkColorWrapper.h"
 #include "view/DocumentView.h"
 
 VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, double y, double zoom):
@@ -48,11 +47,11 @@ VerticalToolHandler::~VerticalToolHandler() {
 }
 
 void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
-    GtkColorWrapper selectionColor = view->getSelectionColor();
+    GdkRGBA selectionColor = view->getSelectionColor();
 
     cairo_set_line_width(cr, 1);
 
-    selectionColor.apply(cr);
+    gdk_cairo_set_source_rgba(cr, &selectionColor);
 
     double y = NAN;
     double height = NAN;
@@ -68,7 +67,8 @@ void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
     cairo_rectangle(cr, 0, y * zoom, this->page->getWidth() * zoom, height * zoom);
 
     cairo_stroke_preserve(cr);
-    selectionColor.applyWithAlpha(cr, 0.3);
+    auto applied = GdkRGBA{selectionColor.red, selectionColor.green, selectionColor.blue, 0.3};
+    gdk_cairo_set_source_rgba(cr, &applied);
     cairo_fill(cr);
 
     cairo_set_source_surface(cr, this->crBuffer, 0, this->endY * zoom);

@@ -14,19 +14,21 @@
 #include <string>
 #include <vector>
 
+#include "util/Color.h"
+
 #include "XournalType.h"
 
 class XojColor {
 public:
-    XojColor(int color, string name);
+    XojColor(Color color, string name);
     virtual ~XojColor();
 
 public:
-    int getColor() const;
+    Color getColor() const;
     string getName();
 
 private:
-    int color;
+    Color color;
     // the localized name of the color
     string name;
 };

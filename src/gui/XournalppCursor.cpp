@@ -357,10 +357,8 @@ auto XournalppCursor::getPenCursor() -> GdkCursor* {
 
 
 auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> GdkCursor* {
-    int rgb = control->getToolHandler()->getColor();
-    double r = ((rgb >> 16) & 0xff) / 255.0;
-    double g = ((rgb >> 8) & 0xff) / 255.0;
-    double b = (rgb & 0xff) / 255.0;
+    auto irgb = control->getToolHandler()->getColor();
+    auto drgb = Util::rgb_to_GdkRGBA(irgb);
     bool big = control->getSettings()->getStylusCursorType() == STYLUS_CURSOR_BIG;
     bool bright = control->getSettings()->isHighlightPosition();
     int height = size;
@@ -368,7 +366,7 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
 
     // create a hash of variables so we notice if one changes despite being the same cursor type:
     gulong flavour = (big ? 1 : 0) | (bright ? 2 : 0) | static_cast<gulong>(64 * alpha) << 2 |
-                     static_cast<gulong>(size) << 9 | static_cast<gulong>(rgb) << 14;
+                     static_cast<gulong>(size) << 9 | static_cast<gulong>(irgb) << 14;
 
     if (CRSR_PENORHIGHLIGHTER == this->currentCursor && flavour == this->currentCursorFlavour) {
         return nullptr;
@@ -391,7 +389,7 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     if (big) {
         // When using highlighter, paint the icon with the current color
         if (size == 5) {
-            cairo_set_source_rgb(cr, r, g, b);
+            gdk_cairo_set_source_rgba(cr, &drgb);
         } else {
             cairo_set_source_rgb(cr, 1, 1, 1);
         }
@@ -416,17 +414,18 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     if (bright) {
         // Highlight cursor with a circle
         auto&& color = Util::argb_to_GdkRGBA(control->getSettings()->getCursorHighlightColor());
-        cairo_set_source_rgba(cr, color.red, color.green, color.blue, color.alpha);
+        gdk_cairo_set_source_rgba(cr, &color);
         cairo_arc(cr, centerX, centerY, control->getSettings()->getCursorHighlightRadius(), 0, 2 * M_PI);
         cairo_fill_preserve(cr);
         auto&& borderColor = Util::argb_to_GdkRGBA(control->getSettings()->getCursorHighlightBorderColor());
-        cairo_set_source_rgba(cr, borderColor.red, borderColor.green, borderColor.blue, borderColor.alpha);
+        gdk_cairo_set_source_rgba(cr, &borderColor);
         cairo_set_line_width(cr, control->getSettings()->getCursorHighlightBorderWidth());
         cairo_stroke(cr);
     }
 
-
-    cairo_set_source_rgba(cr, r, g, b, alpha);
+    auto drgbCopy = drgb;
+    drgbCopy.alpha = alpha;
+    gdk_cairo_set_source_rgba(cr, &drgbCopy);
     double cursorSize = control->getToolHandler()->getThickness() * control->getZoomControl()->getZoom();
     cairo_arc(cr, centerX, centerY, cursorSize / 2., 0, 2. * M_PI);
     cairo_fill(cr);

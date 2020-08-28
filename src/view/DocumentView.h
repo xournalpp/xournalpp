@@ -49,8 +49,8 @@ public:
                     bool noAlpha = false) const;
 
     static void applyColor(cairo_t* cr, Stroke* s);
-    static void applyColor(cairo_t* cr, int c, int alpha = 255);
-    static void applyColor(cairo_t* cr, Element* e, int alpha = 255);
+    static void applyColor(cairo_t* cr, Color c, uint8_t alpha = 0xff);
+    static void applyColor(cairo_t* cr, Element* e, uint8_t alpha = 0xff);
 
     void limitArea(double x, double y, double width, double height);
 

@@ -229,14 +229,14 @@ auto EditSelectionContents::setFont(XojFont& font) -> UndoAction* {
  * Set the color of all elements, return an undo action
  * (Or nullptr if nothing done, e.g. because there is only an image)
  */
-auto EditSelectionContents::setColor(int color) -> UndoAction* {
+auto EditSelectionContents::setColor(Color color) -> UndoAction* {
     auto* undo = new ColorUndoAction(this->sourcePage, this->sourceLayer);
 
     bool found = false;
 
     for (Element* e: this->selected) {
         if (e->getType() == ELEMENT_TEXT || e->getType() == ELEMENT_STROKE) {
-            int lastColor = e->getColor();
+            auto lastColor = e->getColor();
             e->setColor(color);
             undo->addStroke(e, lastColor, e->getColor());
 
@@ -253,9 +253,6 @@ auto EditSelectionContents::setColor(int color) -> UndoAction* {
 
 
     delete undo;
-    return nullptr;
-
-
     return nullptr;
 }
 

@@ -16,6 +16,8 @@
 
 #include <gtk/gtk.h>
 
+#include "util/Color.h"
+
 #include "XournalType.h"
 
 enum ColorIconState {
@@ -40,7 +42,7 @@ public:
     /**
      * Color of the icon
      */
-    int color = 0;
+    Color color{0U};
 
     /**
      * Size of the icon
@@ -70,7 +72,7 @@ public:
 
 class ColorSelectImage {
 public:
-    ColorSelectImage(int color, bool circle);
+    ColorSelectImage(Color color, bool circle);
     virtual ~ColorSelectImage();
 
 public:
@@ -82,7 +84,7 @@ public:
     /**
      * Color of the icon
      */
-    void setColor(int color);
+    void setColor(Color color);
 
     /**
      * Set State of the Icon
@@ -92,17 +94,17 @@ public:
     /**
      * Create a new GtkImage with preview color
      */
-    static GtkWidget* newColorIcon(int color, int size = 22, bool circle = true);
+    static GtkWidget* newColorIcon(Color color, int size = 22, bool circle = true);
 
     /**
      * Create a new cairo_surface_t* with preview color
      */
-    static cairo_surface_t* newColorIconSurface(int color, int size = 22, bool circle = true);
+    static cairo_surface_t* newColorIconSurface(Color color, int size = 22, bool circle = true);
 
     /**
      * Create a new GdkPixbuf* with preview color
      */
-    static GdkPixbuf* newColorIconPixbuf(int color, int size = 22, bool circle = true);
+    static GdkPixbuf* newColorIconPixbuf(Color color, int size = 22, bool circle = true);
 
 private:
     /**
@@ -124,7 +126,7 @@ private:
     /**
      * Color of the icon
      */
-    int color = 0;
+    Color color{0U};
 
     /**
      * Size of the icon
