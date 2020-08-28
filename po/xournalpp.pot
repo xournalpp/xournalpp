@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-28 17:45+0000\n"
+"POT-Creation-Date: 2020-08-28 22:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -191,8 +191,10 @@ msgstr ""
 msgid "Copy page"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:202
-msgid "Could not create folder: {1}"
+#: ../src/util/PathUtil.cpp:204
+msgid ""
+"Could not create folder: {1}\n"
+"Failed with error: {2}"
 msgstr ""
 
 #: ../src/control/LatexController.cpp:257
