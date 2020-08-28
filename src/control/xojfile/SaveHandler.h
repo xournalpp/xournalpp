@@ -38,7 +38,7 @@ public:
     string getErrorMessage();
 
 protected:
-    static string getColorStr(int c, unsigned char alpha = 0xff);
+    static string getColorStr(uint32_t c, unsigned char alpha = 0xff);
 
     virtual void visitPage(XmlNode* root, PageRef p, Document* doc, int id);
     virtual void visitLayer(XmlNode* page, Layer* l);

@@ -4,7 +4,6 @@
 #include <fstream>
 
 #include <glib.h>
-#include <glib/gstdio.h>
 
 #include "StringUtils.h"
 #include "Util.h"
@@ -77,7 +76,7 @@ auto Util::fromUri(const std::string& uri) -> std::optional<fs::path> {
 }
 
 auto Util::toUri(const fs::path& path) -> std::optional<std::string> {
-    GError* error;
+    GError* error{};
     char* uri = g_filename_to_uri(path.u8string().c_str(), nullptr, &error);
 
     if (error != nullptr) {
@@ -211,4 +210,28 @@ auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
 auto Util::isChild(fs::path const& path, fs::path const& base) -> bool {
     auto resultPath = fs::relative(path, base);
     return *std::begin(resultPath) != "..";
+}
+
+bool Util::safeRenameFile(fs::path const& from, fs::path const& to) {
+    if (!fs::is_regular_file(from)) {
+        return false;
+    }
+
+    // Due to https://github.com/xournalpp/xournalpp/issues/1122,
+    // we first attempt to move the file with fs::rename.
+    // If this fails, we then copy and delete the source, as
+    // discussed in the issue
+    // Use target default perms; the source partition may have different file
+    // system attributes than the target, and we don't want anything bad in the
+    // autosave directory
+
+    // Attempt move
+    try {
+        fs::rename(from, to);
+    } catch (fs::filesystem_error const&) {
+        // Attempt copy and delete
+        fs::copy(from, to, fs::copy_options::overwrite_existing);
+        fs::remove(from);
+    }
+    return true;
 }

@@ -244,7 +244,7 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
     }
 
     auto img = std::make_unique<TexImage>();
-    GError* err;
+    GError* err{};
     bool loaded = img->loadData(std::move(*contents), &err);
 
     if (err != nullptr) {

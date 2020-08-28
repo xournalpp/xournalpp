@@ -8,6 +8,7 @@
 
 #include "PathUtil.h"
 #include "XojMsgBox.h"
+#include "filesystem.h"
 #include "i18n.h"
 
 
@@ -82,42 +83,36 @@ void SaveJob::updatePreview(Control* control) {
 auto SaveJob::save() -> bool {
     updatePreview(control);
     Document* doc = this->control->getDocument();
-
     SaveHandler h;
 
     doc->lock();
     h.prepareSave(doc);
-    fs::path file = doc->getFilepath();
-    Util::clearExtensions(file);
-    file += ".xopp";
+    fs::path const filepath = doc->getFilepath();
     doc->unlock();
 
     if (doc->shouldCreateBackupOnSave()) {
-        fs::path backup = file;
-        backup += "~";
-
-        if (!fs::copy_file(doc->getFilepath(), backup)) {
-            g_warning(_("Could not create backup! (The file was created from an older Xournal version)"));
+        try {
+            Util::safeRenameFile(filepath, fs::path{filepath} += "~");
+        } catch (fs::filesystem_error const& fe) {
+            g_warning("Could not create backup! Failed with %s", fe.what());
+            return false;
         }
-
         doc->setCreateBackupOnSave(false);
     }
 
-    doc->lock();
+    auto const target = fs::path{filepath}.replace_extension(".xopp");
 
-    h.saveTo(file, this->control);
-    doc->setFilepath(file);
+    doc->lock();
+    h.saveTo(target, this->control);
+    doc->setFilepath(target);
     doc->unlock();
 
     if (!h.getErrorMessage().empty()) {
         this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());
         if (!control->getWindow()) {
             g_error("%s", this->lastError.c_str());
-            return false;
         }
-
         return false;
     }
-
     return true;
 }

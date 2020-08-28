@@ -59,11 +59,14 @@ GFile* toGFile(const fs::path);
 #endif
 
 
-fs::path getAutosaveFilepath();
-
-
 void openFileWithDefaultApplication(const fs::path& filename);
 void openFileWithFilebrowser(const fs::path& filename);
+
+bool isChild(fs::path const& path, fs::path const& base);
+
+bool safeRenameFile(fs::path const& from, fs::path const& to);
+
+fs::path ensureFolderExists(const fs::path& p);
 
 
 /**
@@ -73,14 +76,9 @@ fs::path getConfigFolder();
 fs::path getConfigSubfolder(const fs::path& subfolder = "");
 fs::path getCacheSubfolder(const fs::path& subfolder = "");
 fs::path getDataSubfolder(const fs::path& subfolder = "");
-
 fs::path getConfigFile(const fs::path& relativeFileName = "");
 fs::path getCacheFile(const fs::path& relativeFileName = "");
-
 fs::path getTmpDirSubfolder(const fs::path& subfolder = "");
-
-fs::path ensureFolderExists(const fs::path& p);
-
-bool isChild(fs::path const& path, fs::path const& base);
+fs::path getAutosaveFilepath();
 
 }  // namespace Util

@@ -207,28 +207,13 @@ void Control::renameLastAutosaveFile() {
     }
 
     std::vector<string> errors;
-
-    // Due to https://github.com/xournalpp/xournalpp/issues/1122,
-    // we first attempt to move the file with fs::rename.
-    // If this fails, we then copy and delete the source, as
-    // discussed in the issue
-    // Use target default perms; the source partition may have different file
-    // system attributes than the target, and we don't want anything bad in the
-    // autosave directory
-
-    // Attempt move
     try {
-        fs::rename(filename, renamed);
-    } catch (fs::filesystem_error const&) {
-        // Attempt copy and delete
-        try {
-            fs::copy(filename, renamed, fs::copy_options::overwrite_existing);
-            fs::remove(std::move(filename));
-        } catch (fs::filesystem_error const& e) {
-            auto fmtstr = _F("Could not rename autosave file from \"{1}\" to \"{2}\": {3}");
-            errors.emplace_back(FS(fmtstr % filename.string() % renamed.string() % e.what()));
-        }
+        Util::safeRenameFile(filename, renamed);
+    } catch (fs::filesystem_error const& e) {
+        auto fmtstr = _F("Could not rename autosave file from \"{1}\" to \"{2}\": {3}");
+        errors.emplace_back(FS(fmtstr % filename.string() % renamed.string() % e.what()));
     }
+
 
     if (!errors.empty()) {
         string error = std::accumulate(errors.begin() + 1, errors.end(), *errors.begin(),
