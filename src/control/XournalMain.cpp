@@ -76,28 +76,28 @@ XournalMain::MigrateResult XournalMain::migrateSettings() {
     fs::path newConfigPath = Util::getConfigFolder();
 
     if (!fs::exists(newConfigPath)) {
-        fs::path oldConfigPath(g_get_home_dir());
-        oldConfigPath /= ".xournalpp";
-
-        if (!fs::exists(oldConfigPath)) {
-            g_message("Migrating configuration from %s to %s", oldConfigPath.string().c_str(),
-                      newConfigPath.string().c_str());
-            auto xdgConfDir = newConfigPath.parent_path();
+        std::array<fs::path, 1> oldPaths = {
+                fs::u8path(g_get_home_dir()) /= ".xournalpp",
+        };
+        for (auto const& oldPath: oldPaths) {
+            if (!fs::is_directory(oldPath)) {
+                continue;
+            }
+            g_message("Migrating configuration from %s to %s", oldPath.c_str(), newConfigPath.c_str());
+            Util::ensureFolderExists(newConfigPath.parent_path());
             try {
-                if (!fs::exists(xdgConfDir)) {
-                    fs::create_directories(xdgConfDir);
-                }
-                fs::copy(oldConfigPath, newConfigPath, fs::copy_options::recursive);
-                const char* msg = "Due to a recent update, Xournal++ has changed where its configuration files are "
-                                  "stored.\nThey have been automatically copied from\n\t{1}\nto\n\t{2}";
+                fs::copy(oldPath, newConfigPath, fs::copy_options::recursive);
+                constexpr auto msg = "Due to a recent update, Xournal++ has changed where it's configuration files are "
+                                     "stored.\nThey have been automatically copied from\n\t{1}\nto\n\t{2}";
                 return {MigrateStatus::Success,
-                        FS(_F(msg) % oldConfigPath.string().c_str() % newConfigPath.string().c_str())};
+                        FS(_F(msg) % oldPath.u8string().c_str() % newConfigPath.u8string().c_str())};
             } catch (fs::filesystem_error const& except) {
-                const char* msg = "Due to a recent update, Xournal++ has changed where its configuration files are "
-                                  "stored.\nHowever, when attempting to copy\n\t{1}\nto\n\t{2}\nmigration failed:\n{3}";
+                constexpr auto msg =
+                        "Due to a recent update, Xournal++ has changed where it's configuration files are "
+                        "stored.\nHowever, when attempting to copy\n\t{1}\nto\n\t{2}\nmigration failed:\n{3}";
                 g_message("Migration failed: %s", except.what());
                 return {MigrateStatus::Failure,
-                        FS(_F(msg) % oldConfigPath.string().c_str() % newConfigPath.string().c_str() % except.what())};
+                        FS(_F(msg) % oldPath.u8string().c_str() % newConfigPath.u8string().c_str() % except.what())};
             }
         }
     }

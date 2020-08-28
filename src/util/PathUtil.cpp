@@ -197,10 +197,12 @@ auto Util::getTmpDirSubfolder(const fs::path& subfolder) -> fs::path {
 }
 
 auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
-    if (!fs::exists(p) && !fs::create_directories(p)) {
+    try {
+        fs::create_directories(p);
+    } catch (fs::filesystem_error const& fe) {
         Util::execInUiThread([=]() {
-            string msg = FS(_F("Could not create folder: {1}") % p.string());
-            g_warning("%s", msg.c_str());
+            string msg = FS(_F("Could not create folder: {1}\nFailed with error: {2}") % p.string() % fe.what());
+            g_warning("%s %s", msg.c_str(), fe.what());
             XojMsgBox::showErrorToUser(nullptr, msg);
         });
     }
