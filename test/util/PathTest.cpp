@@ -9,11 +9,8 @@
  * @license GNU GPLv2 or later
  */
 
-#include <ctime>
 
-#include <config-test.h>
 #include <cppunit/extensions/HelperMacros.h>
-#include <stdlib.h>
 
 #include "PathUtil.h"
 #include "filesystem.h"
@@ -26,6 +23,7 @@ class PathTest: public CppUnit::TestFixture {
     CPPUNIT_TEST(testUnsupportedUri);
     CPPUNIT_TEST(testPathFromUri);
     CPPUNIT_TEST(testClearExtensions);
+    CPPUNIT_TEST(testPathIsChildOf);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -45,6 +43,23 @@ public:
         auto b = Util::fromUri("file:///tmp/test.txt");
         CPPUNIT_ASSERT_EQUAL(false, !b);
         CPPUNIT_ASSERT_EQUAL(G_DIR_SEPARATOR_S + string("tmp") + G_DIR_SEPARATOR_S + string("test.txt"), b->string());
+    }
+
+    void testPathIsChildOf() {
+        CPPUNIT_ASSERT(Util::isChild("C:/Users/Subdir", "C:/Users"));
+        CPPUNIT_ASSERT(Util::isChild("C:/Users/Subdir", "C:/Users/"));
+        CPPUNIT_ASSERT(Util::isChild("C:/Users/Subdir/", "C:/Users/"));
+        CPPUNIT_ASSERT(Util::isChild("C:/Users/Subdir/", "C:/Users"));
+        CPPUNIT_ASSERT(Util::isChild("D:/Users/Subdir", "D:/Users"));
+        CPPUNIT_ASSERT(!Util::isChild("D:/Users/Subdir", "D:/users"));
+
+        CPPUNIT_ASSERT(!Util::isChild("C:/A/B", "C:/B/A"));
+        CPPUNIT_ASSERT(!Util::isChild("C:/B/A", "C:/A/B"));
+
+        CPPUNIT_ASSERT(!Util::isChild("D:/Users/Subdir", "C:/Users"));
+        CPPUNIT_ASSERT(!Util::isChild("D:/Users/Subdir", "C:/Users"));
+
+        // Todo add a symlink test
     }
 
     void testClearExtensions() {
