@@ -210,8 +210,8 @@ auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
 }
 
 auto Util::isChild(fs::path const& path, fs::path const& base) -> bool {
-    auto resultPath = fs::relative(path, base);
-    return *std::begin(resultPath) != "..";
+    return path.root_path() == base.root_path() &&  //
+           *std::begin(fs::relative(path, base)) != "..";
 }
 
 bool Util::safeRenameFile(fs::path const& from, fs::path const& to) {
