@@ -187,7 +187,8 @@ if (CXX_FILESYSTEM_HAVE_FS)
 
         int main() {
             auto cwd = @CXX_FILESYSTEM_NAMESPACE@::current_path();
-            return cwd.string().size();
+            auto relative = @CXX_FILESYSTEM_NAMESPACE@::relative(cwd,cwd);
+            return relative.string().size();
         }
     ]] code @ONLY)
 
