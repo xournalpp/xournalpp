@@ -62,7 +62,7 @@ GFile* toGFile(const fs::path);
 void openFileWithDefaultApplication(const fs::path& filename);
 void openFileWithFilebrowser(const fs::path& filename);
 
-bool isChild(fs::path const& path, fs::path const& base);
+bool isChildOrEquivalent(fs::path const& path, fs::path const& base);
 
 bool safeRenameFile(fs::path const& from, fs::path const& to);
 

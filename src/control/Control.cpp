@@ -1907,7 +1907,7 @@ auto Control::newFile(string pageTemplate, fs::path filepath) -> bool {
  */
 auto Control::shouldFileOpen(fs::path const& filepath) const -> bool {
     auto basePath = Util::getConfigSubfolder("");
-    auto isChild = Util::isChild(filepath, basePath);
+    auto isChild = Util::isChildOrEquivalent(filepath, basePath);
     if (isChild) {
         string msg = FS(_F("Do not open Autosave files. They may will be overwritten!\n"
                            "Copy the files to another folder.\n"
