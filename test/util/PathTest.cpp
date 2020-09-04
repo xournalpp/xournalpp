@@ -46,18 +46,19 @@ public:
     }
 
     void testPathIsChildOf() {
-        CPPUNIT_ASSERT(Util::isChild("C:/Users/Subdir", "C:/Users"));
-        CPPUNIT_ASSERT(Util::isChild("C:/Users/Subdir", "C:/Users/"));
-        CPPUNIT_ASSERT(Util::isChild("C:/Users/Subdir/", "C:/Users/"));
-        CPPUNIT_ASSERT(Util::isChild("C:/Users/Subdir/", "C:/Users"));
-        CPPUNIT_ASSERT(Util::isChild("D:/Users/Subdir", "D:/Users"));
-        CPPUNIT_ASSERT(!Util::isChild("D:/Users/Subdir", "D:/users"));
+        CPPUNIT_ASSERT(Util::isChildOrEquivalent("C:/Users/Subdir", "C:/Users"));
+        CPPUNIT_ASSERT(Util::isChildOrEquivalent("C:/Users/Subdir", "C:/Users/"));
+        CPPUNIT_ASSERT(Util::isChildOrEquivalent("C:/Users/Subdir/", "C:/Users/"));
+        CPPUNIT_ASSERT(Util::isChildOrEquivalent("C:/Users/Subdir/", "C:/Users"));
+        CPPUNIT_ASSERT(Util::isChildOrEquivalent("C:/Users/Subdir/", "C:/Users/Subdir/"));
+        CPPUNIT_ASSERT(Util::isChildOrEquivalent("D:/Users/Subdir", "D:/Users"));
+        CPPUNIT_ASSERT(!Util::isChildOrEquivalent("D:/Users/Subdir", "D:/users"));
 
-        CPPUNIT_ASSERT(!Util::isChild("C:/A/B", "C:/B/A"));
-        CPPUNIT_ASSERT(!Util::isChild("C:/B/A", "C:/A/B"));
+        CPPUNIT_ASSERT(!Util::isChildOrEquivalent("C:/A/B", "C:/B/A"));
+        CPPUNIT_ASSERT(!Util::isChildOrEquivalent("C:/B/A", "C:/A/B"));
 
-        CPPUNIT_ASSERT(!Util::isChild("D:/Users/Subdir", "C:/Users"));
-        CPPUNIT_ASSERT(!Util::isChild("D:/Users/Subdir", "C:/Users"));
+        CPPUNIT_ASSERT(!Util::isChildOrEquivalent("D:/Users/Subdir", "C:/Users"));
+        CPPUNIT_ASSERT(!Util::isChildOrEquivalent("D:/Users/Subdir", "C:/Users"));
 
         // Todo add a symlink test
     }

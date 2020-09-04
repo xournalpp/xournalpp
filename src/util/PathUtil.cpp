@@ -209,9 +209,19 @@ auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
     return p;
 }
 
-auto Util::isChild(fs::path const& path, fs::path const& base) -> bool {
-    return path.root_path() == base.root_path() &&  //
-           *std::begin(fs::relative(path, base)) != "..";
+auto Util::isChildOrEquivalent(fs::path const& path, fs::path const& base) -> bool {
+    auto safeCanonical = [](fs::path const& p) {
+        try {
+            return fs::weakly_canonical(p);
+        } catch (fs::filesystem_error const& fe) {
+            g_warning("Util::isChildOrEquivalent: Error resolving paths, failed with %s.\nFalling back to "
+                      "lexicographical path",
+                      fe.what());
+            return p;
+        }
+    };
+    auto relativePath = safeCanonical(path).lexically_relative(safeCanonical(base));
+    return !relativePath.empty() && *std::begin(relativePath) != "..";
 }
 
 bool Util::safeRenameFile(fs::path const& from, fs::path const& to) {
