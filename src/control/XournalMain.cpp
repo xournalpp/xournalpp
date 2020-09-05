@@ -424,7 +424,7 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
     delete control;
     delete gladePath;
 
-    ToolbarColorNames::getInstance().saveFile(colorNameFile.string());
+    ToolbarColorNames::getInstance().saveFile(colorNameFile);
     ToolbarColorNames::freeInstance();
 
     return 0;

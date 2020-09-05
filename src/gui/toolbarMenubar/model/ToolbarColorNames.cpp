@@ -1,5 +1,7 @@
 #include "ToolbarColorNames.h"
 
+#include <fstream>
+
 #include <config.h>
 #include <glib/gstdio.h>
 
@@ -48,16 +50,14 @@ void ToolbarColorNames::loadFile(fs::path const& file) {
 void ToolbarColorNames::saveFile(fs::path const& file) {
     gsize len = 0;
     char* data = g_key_file_to_data(this->config, &len, nullptr);
-
-    FILE* fp = g_fopen(file.u8string().c_str(), "wbe");
-    if (!fp) {
-        g_error("Could not save color file «%s»", file.u8string().c_str());
-        return;
+    try {
+        std::ofstream ofs{file, std::ios::binary};
+        ofs.exceptions(std::ios::badbit | std::ios::failbit);
+        ofs.write(data, len);
+    } catch (std::ios_base::failure const& e) {
+        g_warning("Could not save color file «%s».\n%s with error code %d", file.u8string().c_str(), e.what(),
+                  e.code().value());
     }
-
-    fwrite(data, len, 1, fp);
-    fclose(fp);
-
     g_free(data);
 }
 
