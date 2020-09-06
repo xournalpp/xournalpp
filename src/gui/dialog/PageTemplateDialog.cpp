@@ -3,8 +3,6 @@
 #include <fstream>
 #include <sstream>
 
-#include <config.h>
-
 #include "control/pagetype/PageTypeHandler.h"
 #include "control/stockdlg/XojOpenDlg.h"
 #include "gui/dialog/FormatDialog.h"
@@ -111,21 +109,12 @@ void PageTemplateDialog::saveToFile() {
         return;
     }
 
-    char* name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-
-    string filename = name;
-    char* folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
-    settings->setLastSavePath(folder);
-    g_free(folder);
-    g_free(name);
-
+    auto filepath = Util::fromGtkFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+    settings->setLastSavePath(filepath.parent_path());
     gtk_widget_destroy(dialog);
 
-
-    ofstream out;
-    out.open(filename.c_str());
+    std::ofstream out{filepath};
     out << model.toString();
-    out.close();
 }
 
 void PageTemplateDialog::loadFromFile() {

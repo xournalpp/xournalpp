@@ -1,6 +1,7 @@
 #include "ImageOpenDlg.h"
 
 #include <config.h>
+#include <util/PathUtil.h>
 
 #include "control/settings/Settings.h"
 
@@ -44,17 +45,14 @@ auto ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bool
         *attach = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbAttach));
     }
 
-    char* folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
 
     // e.g. from last used files, there is no folder selected
     // in this case do not store the folder
-    if (folder != nullptr) {
+    if (auto folder = Util::fromGtkFilename(gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog)));
+        !folder.empty()) {
         settings->setLastImagePath(folder);
-        g_free(folder);
     }
-
     gtk_widget_destroy(dialog);
-
     return file;
 }
 

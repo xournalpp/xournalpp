@@ -95,7 +95,6 @@ auto Util::toUri(const fs::path& path) -> std::optional<std::string> {
     return {std::move(uriString)};
 }
 
-#ifndef BUILD_THUMBNAILER
 auto Util::fromGFile(GFile* file) -> fs::path {
     char* p = g_file_get_path(file);
     auto ret = p ? fs::u8path(p) : fs::path{};
@@ -103,8 +102,7 @@ auto Util::fromGFile(GFile* file) -> fs::path {
     return ret;
 }
 
-auto Util::toGFile(const fs::path path) -> GFile* { return g_file_new_for_path(path.u8string().c_str()); }
-#endif
+auto Util::toGFile(fs::path const& path) -> GFile* { return g_file_new_for_path(path.u8string().c_str()); }
 
 
 void Util::openFileWithDefaultApplication(const fs::path& filename) {

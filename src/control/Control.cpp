@@ -2277,25 +2277,17 @@ auto Control::showSaveDialog() -> bool {
             return false;
         }
 
-        auto fileTmp = fs::path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+        auto fileTmp = Util::fromGtkFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
         Util::clearExtensions(fileTmp);
         fileTmp += ".xopp";
-        fs::path currentFolder(gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog)));
-
         // Since we add the extension after the OK button, we have to check manually on existing files
-        if (askToReplace(currentFolder / fileTmp)) {
+        if (askToReplace(fileTmp)) {
             break;
         }
     }
 
-    char* name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-
-    string filename = name;
-    char* folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
-    settings->setLastSavePath(folder);
-    g_free(folder);
-    g_free(name);
-
+    auto filename = Util::fromGtkFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+    settings->setLastSavePath(filename.parent_path());
     gtk_widget_destroy(dialog);
 
     this->doc->lock();

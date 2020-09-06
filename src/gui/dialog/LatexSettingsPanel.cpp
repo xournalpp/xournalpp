@@ -34,13 +34,7 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
 
 void LatexSettingsPanel::save(LatexSettings& settings) {
     settings.autoCheckDependencies = gtk_toggle_button_get_active(this->cbAutoDepCheck);
-    gchar* templPath = gtk_file_chooser_get_filename(this->globalTemplateChooser);
-    if (templPath) {
-        settings.globalTemplatePath = fs::u8path(templPath);
-        g_free(templPath);
-    } else {
-        settings.globalTemplatePath = "";
-    }
+    settings.globalTemplatePath = Util::fromGtkFilename(gtk_file_chooser_get_filename(this->globalTemplateChooser));
     settings.genCmd = gtk_entry_get_text(GTK_ENTRY(this->get("latexSettingsGenCmd")));
 }
 

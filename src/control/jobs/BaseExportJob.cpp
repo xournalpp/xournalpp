@@ -67,14 +67,15 @@ auto BaseExportJob::showFilechooser() -> bool {
             gtk_widget_destroy(dialog);
             return false;
         }
-
-        string uri(gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog)));
-        this->filepath = fs::u8path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+        auto uri = [](char* uri) {
+            std::string ret{uri};
+            g_free(uri);
+            return ret;
+        }(gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog)));
+        this->filepath = Util::fromGtkFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
         Util::clearExtensions(this->filepath);
-        fs::path currentFolder = fs::u8path(gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog)));
-
         // Since we add the extension after the OK button, we have to check manually on existing files
-        if (isUriValid(uri) && control->askToReplace(currentFolder / filepath)) {
+        if (isUriValid(uri) && control->askToReplace(filepath)) {
             break;
         }
     }
