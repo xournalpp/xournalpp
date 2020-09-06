@@ -239,10 +239,14 @@ bool Util::safeRenameFile(fs::path const& from, fs::path const& to) {
 
     // Attempt move
     try {
+        fs::remove(to);
         fs::rename(from, to);
-    } catch (fs::filesystem_error const&) {
+    } catch (fs::filesystem_error const& fe) {
         // Attempt copy and delete
-        fs::copy(from, to, fs::copy_options::overwrite_existing);
+        g_warning("Renaming file %s to %s failed with %s. This may happen when source and target are on different "
+                  "filesystems. Attempt to copy the file.",
+                  fe.path1().string().c_str(), fe.path2().string().c_str(), fe.what());
+        fs::copy_file(from, to, fs::copy_options::overwrite_existing);
         fs::remove(from);
     }
     return true;
