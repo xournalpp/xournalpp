@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-28 22:42+0000\n"
+"POT-Creation-Date: 2020-09-06 17:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,8 +74,8 @@ msgstr ""
 msgid "Apply to current page"
 msgstr ""
 
-#: ../src/control/stockdlg/ImageOpenDlg.cpp:28
-#: ../src/control/stockdlg/XojOpenDlg.cpp:113
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:29
+#: ../src/control/stockdlg/XojOpenDlg.cpp:112
 msgid "Attach file to the journal"
 msgstr ""
 
@@ -148,7 +148,7 @@ msgstr ""
 msgid "Blue"
 msgstr ""
 
-#: ../src/control/Control.cpp:1959 ../src/control/Control.cpp:2423
+#: ../src/control/Control.cpp:1959 ../src/control/Control.cpp:2415
 #: ../src/control/XournalMain.cpp:144
 msgid "Cancel"
 msgstr ""
@@ -191,7 +191,7 @@ msgstr ""
 msgid "Copy page"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:204
+#: ../src/util/PathUtil.cpp:202
 msgid ""
 "Could not create folder: {1}\n"
 "Failed with error: {2}"
@@ -341,7 +341,7 @@ msgstr ""
 msgid "Delete layer"
 msgstr ""
 
-#: ../src/control/Control.cpp:2420
+#: ../src/control/Control.cpp:2412
 msgid "Discard"
 msgstr ""
 
@@ -356,7 +356,7 @@ msgstr ""
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/control/Control.cpp:2414
+#: ../src/control/Control.cpp:2406
 msgid "Document file was removed."
 msgstr ""
 
@@ -487,13 +487,13 @@ msgstr ""
 msgid "Error: {1}"
 msgstr ""
 
-#: ../src/gui/dialog/LatexSettingsPanel.cpp:80
+#: ../src/gui/dialog/LatexSettingsPanel.cpp:74
 msgid ""
 "Error: {1} is not a regular file. Please check your LaTeX template file "
 "settings. "
 msgstr ""
 
-#: ../src/gui/dialog/LatexSettingsPanel.cpp:70
+#: ../src/gui/dialog/LatexSettingsPanel.cpp:64
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr ""
 
@@ -519,7 +519,7 @@ msgstr ""
 msgid "Failed to read global template file. Please check your settings."
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:121 ../src/util/PathUtil.cpp:138
+#: ../src/util/PathUtil.cpp:119 ../src/util/PathUtil.cpp:136
 msgid ""
 "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
@@ -627,7 +627,7 @@ msgstr ""
 msgid "Image output filename (.png / .svg)"
 msgstr ""
 
-#: ../src/control/stockdlg/ImageOpenDlg.cpp:17
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:18
 msgid "Images"
 msgstr ""
 
@@ -772,13 +772,13 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: ../src/control/jobs/BaseExportJob.cpp:91
+#: ../src/control/jobs/BaseExportJob.cpp:92
 msgid ""
 "Only local files are supported\n"
 "Path: {1}"
 msgstr ""
 
-#: ../src/control/stockdlg/ImageOpenDlg.cpp:11
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
 msgstr ""
 
@@ -981,20 +981,20 @@ msgstr ""
 msgid "SVG with transparent background"
 msgstr ""
 
-#: ../src/gui/dialog/LatexSettingsPanel.cpp:68
+#: ../src/gui/dialog/LatexSettingsPanel.cpp:62
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/control/Control.cpp:2415 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2407 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:319
 msgid "Save"
 msgstr ""
 
-#: ../src/control/Control.cpp:2415
+#: ../src/control/Control.cpp:2407
 msgid "Save As..."
 msgstr ""
 
-#: ../src/control/Control.cpp:2250 ../src/gui/dialog/PageTemplateDialog.cpp:84
+#: ../src/control/Control.cpp:2250 ../src/gui/dialog/PageTemplateDialog.cpp:82
 msgid "Save File"
 msgstr ""
 
@@ -1114,7 +1114,7 @@ msgstr ""
 msgid "Successfully saved document to \"{1}\""
 msgstr ""
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:94
+#: ../src/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
 msgstr ""
 
@@ -1226,7 +1226,7 @@ msgstr ""
 msgid "Thin"
 msgstr ""
 
-#: ../src/control/Control.cpp:2414
+#: ../src/control/Control.cpp:2406
 msgid "This document is not saved yet."
 msgstr ""
 
@@ -1255,7 +1255,7 @@ msgstr ""
 msgid "Trying to emergency save the current open document…"
 msgstr ""
 
-#: ../src/gui/dialog/LatexSettingsPanel.cpp:58
+#: ../src/gui/dialog/LatexSettingsPanel.cpp:52
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
@@ -1304,7 +1304,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2315
+#: ../src/control/Control.cpp:2307
 msgid "Unsaved Document"
 msgstr ""
 
@@ -1367,7 +1367,7 @@ msgid "Xournal++ files"
 msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:65
-#: ../src/gui/dialog/PageTemplateDialog.cpp:90
+#: ../src/gui/dialog/PageTemplateDialog.cpp:88
 msgid "Xournal++ template"
 msgstr ""
 
@@ -1419,19 +1419,19 @@ msgid "Zoom to 100%"
 msgstr ""
 
 #: ../src/control/Control.cpp:2250 ../src/control/jobs/BaseExportJob.cpp:17
-#: ../src/control/stockdlg/ImageOpenDlg.cpp:11
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
-#: ../src/gui/dialog/PageTemplateDialog.cpp:85
+#: ../src/gui/dialog/PageTemplateDialog.cpp:83
 msgid "_Cancel"
 msgstr ""
 
-#: ../src/control/stockdlg/ImageOpenDlg.cpp:12
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:13
 msgid "_Open"
 msgstr ""
 
 #: ../src/control/Control.cpp:2251 ../src/control/jobs/BaseExportJob.cpp:17
-#: ../src/gui/dialog/PageTemplateDialog.cpp:85
+#: ../src/gui/dialog/PageTemplateDialog.cpp:83
 msgid "_Save"
 msgstr ""
 
@@ -1569,7 +1569,7 @@ msgstr ""
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:194
+#: ../src/util/PathUtil.cpp:192
 msgid "xournalpp-{1}"
 msgstr ""
 
