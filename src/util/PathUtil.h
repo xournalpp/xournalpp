@@ -26,17 +26,17 @@ namespace Util {
  *
  * @return contents if the file was read, std::nullopt if not
  */
-std::optional<std::string> readString(fs::path const& path, bool showErrorToUser = true);
+[[maybe_unused]] [[nodiscard]] std::optional<std::string> readString(fs::path const& path, bool showErrorToUser = true);
 
 /**
  * Get escaped path, all " and \ are escaped
  */
-std::string getEscapedPath(const fs::path& path);
+[[maybe_unused]] [[nodiscard]] std::string getEscapedPath(const fs::path& path);
 
 /**
  * @return true if this file has .xopp or .xoj extension
  */
-bool hasXournalFileExt(const fs::path& path);
+[[maybe_unused]] [[nodiscard]] bool hasXournalFileExt(const fs::path& path);
 
 /**
  * Clear the the last known xournal extension (last .xoj, .xopp etc.)
@@ -47,38 +47,43 @@ bool hasXournalFileExt(const fs::path& path);
 void clearExtensions(fs::path& path, const std::string& ext = "");
 
 // Uri must be ASCII-encoded!
-std::optional<fs::path> fromUri(const std::string& uri);
+[[maybe_unused]] [[nodiscard]] std::optional<fs::path> fromUri(const std::string& uri);
 
-std::optional<std::string> toUri(const fs::path& path);
+[[maybe_unused]] [[nodiscard]] std::optional<std::string> toUri(const fs::path& path);
 
 
-#ifndef BUILD_THUMBNAILER
-fs::path fromGFile(GFile* file);
+[[maybe_unused]] [[nodiscard]] fs::path fromGFile(GFile* file);
+[[maybe_unused]] [[nodiscard]] GFile* toGFile(fs::path const& path);
 
-GFile* toGFile(const fs::path);
-#endif
-
+[[maybe_unused]] [[nodiscard]] inline fs::path fromGtkFilename(char* path) {
+    if (path == nullptr) {
+        return {};
+    }
+    auto ret = fs::path{path};
+    g_free(path);
+    return ret;
+}
 
 void openFileWithDefaultApplication(const fs::path& filename);
 void openFileWithFilebrowser(const fs::path& filename);
 
-bool isChildOrEquivalent(fs::path const& path, fs::path const& base);
+[[maybe_unused]] [[nodiscard]] bool isChildOrEquivalent(fs::path const& path, fs::path const& base);
 
-bool safeRenameFile(fs::path const& from, fs::path const& to);
+[[maybe_unused]] bool safeRenameFile(fs::path const& from, fs::path const& to);
 
-fs::path ensureFolderExists(const fs::path& p);
+[[maybe_unused]] fs::path ensureFolderExists(const fs::path& p);
 
 
 /**
  * Return the configuration folder path (may not be guaranteed to exist).
  */
-fs::path getConfigFolder();
-fs::path getConfigSubfolder(const fs::path& subfolder = "");
-fs::path getCacheSubfolder(const fs::path& subfolder = "");
-fs::path getDataSubfolder(const fs::path& subfolder = "");
-fs::path getConfigFile(const fs::path& relativeFileName = "");
-fs::path getCacheFile(const fs::path& relativeFileName = "");
-fs::path getTmpDirSubfolder(const fs::path& subfolder = "");
-fs::path getAutosaveFilepath();
+[[maybe_unused]] [[nodiscard]] fs::path getConfigFolder();
+[[maybe_unused]] [[nodiscard]] fs::path getConfigSubfolder(const fs::path& subfolder = "");
+[[maybe_unused]] [[nodiscard]] fs::path getCacheSubfolder(const fs::path& subfolder = "");
+[[maybe_unused]] [[nodiscard]] fs::path getDataSubfolder(const fs::path& subfolder = "");
+[[maybe_unused]] [[nodiscard]] fs::path getConfigFile(const fs::path& relativeFileName = "");
+[[maybe_unused]] [[nodiscard]] fs::path getCacheFile(const fs::path& relativeFileName = "");
+[[maybe_unused]] [[nodiscard]] fs::path getTmpDirSubfolder(const fs::path& subfolder = "");
+[[maybe_unused]] [[nodiscard]] fs::path getAutosaveFilepath();
 
 }  // namespace Util

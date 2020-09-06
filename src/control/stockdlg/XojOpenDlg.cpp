@@ -75,9 +75,8 @@ auto XojOpenDlg::runDialog() -> fs::path {
         return fs::path{};
     }
 
-    fs::path file(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+    auto file = Util::fromGtkFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
     settings->setLastOpenPath(file.parent_path());
-
     return file;
 }
 
@@ -146,16 +145,12 @@ auto XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf) -> fs::path {
 }
 
 void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userData) {
-    gchar* filename = gtk_file_chooser_get_preview_filename(fileChooser);
+    auto filepath = Util::fromGtkFilename(gtk_file_chooser_get_preview_filename(fileChooser));
 
-    if (!filename) {
+    if (filepath.empty()) {
         gtk_file_chooser_set_preview_widget_active(fileChooser, false);
         return;
     }
-
-    fs::path filepath = filename;
-    g_free(filename);
-    filename = nullptr;
 
     if (!Util::hasXournalFileExt(filepath)) {
         gtk_file_chooser_set_preview_widget_active(fileChooser, false);
