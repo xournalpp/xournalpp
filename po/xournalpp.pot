@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-06 17:18+0000\n"
+"POT-Creation-Date: 2020-09-12 23:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,33 +79,33 @@ msgstr ""
 msgid "Attach file to the journal"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:104
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:102
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:97
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:95
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:121
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:140
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:119
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:138
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:114
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:112
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:159
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:179
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:157
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:177
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:152
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:150
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:46
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:44
 msgid "Attribute color not set!"
 msgstr ""
 
@@ -139,21 +139,21 @@ msgid "Background"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:103
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:94
 msgid "Black"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:14
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:107
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:98
 msgid "Blue"
 msgstr ""
 
-#: ../src/control/Control.cpp:1959 ../src/control/Control.cpp:2415
+#: ../src/control/Control.cpp:1958 ../src/control/Control.cpp:2414
 #: ../src/control/XournalMain.cpp:144
 msgid "Cancel"
 msgstr ""
 
-#: ../src/undo/ColorUndoAction.cpp:90
+#: ../src/undo/ColorUndoAction.cpp:85
 msgid "Change color"
 msgstr ""
 
@@ -169,7 +169,7 @@ msgstr ""
 msgid "Change stroke width"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:70
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:68
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
 msgstr ""
 
@@ -341,11 +341,11 @@ msgstr ""
 msgid "Delete layer"
 msgstr ""
 
-#: ../src/control/Control.cpp:2412
+#: ../src/control/Control.cpp:2411
 msgid "Discard"
 msgstr ""
 
-#: ../src/control/Control.cpp:1912
+#: ../src/control/Control.cpp:1911
 msgid ""
 "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
@@ -356,7 +356,7 @@ msgstr ""
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/control/Control.cpp:2406
+#: ../src/control/Control.cpp:2405
 msgid "Document file was removed."
 msgstr ""
 
@@ -440,7 +440,7 @@ msgstr ""
 msgid "Eraser"
 msgstr ""
 
-#: ../src/control/Control.cpp:2160
+#: ../src/control/Control.cpp:2159
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
@@ -450,7 +450,7 @@ msgstr ""
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr ""
 
-#: ../src/control/Control.cpp:1981
+#: ../src/control/Control.cpp:1980
 msgid "Error opening file \"{1}\""
 msgstr ""
 
@@ -479,7 +479,7 @@ msgstr ""
 msgid "Error while autosaving: {1}"
 msgstr ""
 
-#: ../src/util/Util.cpp:99
+#: ../src/util/Util.cpp:75
 msgid "Error {1} executing system command: {2}"
 msgstr ""
 
@@ -587,12 +587,12 @@ msgid "Graph"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:108
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:99
 msgid "Gray"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:11
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:104
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:95
 msgid "Green"
 msgstr ""
 
@@ -686,12 +686,12 @@ msgid "Layer {1}"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:105
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
 msgid "Light Blue"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:13
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:106
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:97
 msgid "Light Green"
 msgstr ""
 
@@ -702,7 +702,7 @@ msgid "Loading..."
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:110
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:101
 msgid "Magenta"
 msgstr ""
 
@@ -801,7 +801,7 @@ msgid "Open {1}"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:18
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:111
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:102
 msgid "Orange"
 msgstr ""
 
@@ -916,7 +916,7 @@ msgid "Recorder could not be started."
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:109
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:100
 msgid "Red"
 msgstr ""
 
@@ -929,7 +929,7 @@ msgstr ""
 msgid "Redo: "
 msgstr ""
 
-#: ../src/control/Control.cpp:1958
+#: ../src/control/Control.cpp:1957
 msgid "Remove PDF Background"
 msgstr ""
 
@@ -985,16 +985,16 @@ msgstr ""
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/control/Control.cpp:2407 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2406 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:319
 msgid "Save"
 msgstr ""
 
-#: ../src/control/Control.cpp:2407
+#: ../src/control/Control.cpp:2406
 msgid "Save As..."
 msgstr ""
 
-#: ../src/control/Control.cpp:2250 ../src/gui/dialog/PageTemplateDialog.cpp:82
+#: ../src/control/Control.cpp:2249 ../src/gui/dialog/PageTemplateDialog.cpp:82
 msgid "Save File"
 msgstr ""
 
@@ -1035,7 +1035,7 @@ msgstr ""
 msgid "Select Region"
 msgstr ""
 
-#: ../src/control/Control.cpp:1957
+#: ../src/control/Control.cpp:1956
 msgid "Select another PDF"
 msgstr ""
 
@@ -1043,7 +1043,7 @@ msgstr ""
 msgid "Select another name"
 msgstr ""
 
-#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:114
+#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:104
 msgid "Select background color"
 msgstr ""
 
@@ -1158,15 +1158,15 @@ msgid ""
 "edit?"
 msgstr ""
 
-#: ../src/control/Control.cpp:1954
+#: ../src/control/Control.cpp:1953
 msgid "The attached background PDF could not be found."
 msgstr ""
 
-#: ../src/control/Control.cpp:1955
+#: ../src/control/Control.cpp:1954
 msgid "The background PDF could not be found."
 msgstr ""
 
-#: ../src/control/Control.cpp:1989
+#: ../src/control/Control.cpp:1988
 msgid ""
 "The file being loaded has a file format version newer than the one currently "
 "supported by this version of Xournal++, so it may not load properly. Open "
@@ -1226,7 +1226,7 @@ msgstr ""
 msgid "Thin"
 msgstr ""
 
-#: ../src/control/Control.cpp:2406
+#: ../src/control/Control.cpp:2405
 msgid "This document is not saved yet."
 msgstr ""
 
@@ -1284,7 +1284,7 @@ msgstr ""
 msgid "Unknown background type: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:54
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:52
 msgid "Unknown color value \"{1}\""
 msgstr ""
 
@@ -1304,7 +1304,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2307
+#: ../src/control/Control.cpp:2306
 msgid "Unsaved Document"
 msgstr ""
 
@@ -1325,7 +1325,7 @@ msgid "Very Thick"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:113
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:104
 msgid "White"
 msgstr ""
 
@@ -1362,7 +1362,7 @@ msgid ""
 "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/control/Control.cpp:2256 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2255 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr ""
 
@@ -1372,7 +1372,7 @@ msgid "Xournal++ template"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:112
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:103
 msgid "Yellow"
 msgstr ""
 
@@ -1418,7 +1418,7 @@ msgstr ""
 msgid "Zoom to 100%"
 msgstr ""
 
-#: ../src/control/Control.cpp:2250 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2249 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:83
@@ -1430,7 +1430,7 @@ msgstr ""
 msgid "_Open"
 msgstr ""
 
-#: ../src/control/Control.cpp:2251 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2250 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:83
 msgid "_Save"
 msgstr ""
@@ -1471,7 +1471,7 @@ msgstr ""
 msgid "eraser"
 msgstr ""
 
-#: ../src/control/Control.cpp:1926
+#: ../src/control/Control.cpp:1925
 msgid "file: {1}"
 msgstr ""
 
