@@ -60,7 +60,7 @@ void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest)
 		break;
 	case POPPLER_DEST_XYZ:
 		{
-			PopplerPage* page = poppler_document_get_page(document, pDest->page_num);
+			PopplerPage* page = poppler_document_get_page(document, pDest->page_num - 1);
 			if (page == NULL)
 			{
 				return;
