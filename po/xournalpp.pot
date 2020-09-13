@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-12 23:28+0000\n"
+"POT-Creation-Date: 2020-09-13 18:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -191,7 +191,7 @@ msgstr ""
 msgid "Copy page"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:202
+#: ../src/util/PathUtil.cpp:207
 msgid ""
 "Could not create folder: {1}\n"
 "Failed with error: {2}"
@@ -368,7 +368,8 @@ msgstr ""
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr ""
 
-#: ../src/model/Document.cpp:287 ../src/model/Document.cpp:295
+#: ../src/model/Document.cpp:287 ../src/model/Document.cpp:296
+#: ../src/model/Document.cpp:299
 msgid "Document not loaded! ({1}), {2}"
 msgstr ""
 
@@ -519,7 +520,7 @@ msgstr ""
 msgid "Failed to read global template file. Please check your settings."
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:119 ../src/util/PathUtil.cpp:136
+#: ../src/util/PathUtil.cpp:124 ../src/util/PathUtil.cpp:141
 msgid ""
 "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
@@ -1569,7 +1570,7 @@ msgstr ""
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:192
+#: ../src/util/PathUtil.cpp:197
 msgid "xournalpp-{1}"
 msgstr ""
 
