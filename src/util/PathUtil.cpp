@@ -77,16 +77,21 @@ auto Util::fromUri(const std::string& uri) -> std::optional<fs::path> {
 
 auto Util::toUri(const fs::path& path) -> std::optional<std::string> {
     GError* error{};
-    char* uri = g_filename_to_uri(path.u8string().c_str(), nullptr, &error);
+    char* uri = [&] {
+        if (path.is_absolute()) {
+            return g_filename_to_uri(path.u8string().c_str(), nullptr, &error);
+        }
+        return g_filename_to_uri(fs::absolute(path).u8string().c_str(), nullptr, &error);
+    }();
 
     if (error != nullptr) {
-        g_warning("Could not load preview image, error: %s\n", error->message);
+        g_warning("Util::toUri: could not parse path to URI, error: %s\n", error->message);
         g_error_free(error);
         return std::nullopt;
     }
 
     if (!uri) {
-        g_warning("Could not load preview image");
+        g_warning("Util::toUri: path results in empty URI");
         return std::nullopt;
     }
 
