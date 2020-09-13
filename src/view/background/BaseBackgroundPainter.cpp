@@ -24,8 +24,8 @@ void BaseBackgroundPainter::paint(cairo_t* cr, PageRef page, BackgroundConfig* c
     this->height = page->getHeight();
 
     uint32_t temp{};
-    this->foregroundColor1 = this->config->loadValueHex("f1", temp) ? temp : 0;
-    this->foregroundColor2 = this->config->loadValueHex("f2", temp) ? temp : 0;
+    this->foregroundColor1 = this->config->loadValueHex("f1", temp) ? temp : this->foregroundColor1;
+    this->foregroundColor2 = this->config->loadValueHex("f2", temp) ? temp : this->foregroundColor2;
 
     this->config->loadValue("lw", this->lineWidth);
     this->config->loadValue("r1", this->drawRaster1);
