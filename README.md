@@ -175,6 +175,12 @@ includes the very latest features and bug fixes.
 With the help of the community, Xournal++ is also available on official repositories
 of some popular Linux distros and platforms.
 
+### Debian
+
+[Stable releases](https://github.com/xournalpp/xournalpp/releases) and
+_unstable_, [automated nightly releases](https://github.com/xournalpp/xournalpp/releases/tag/nightly)
+for Debian can be found on Debian.
+
 ### Ubuntu and derivatives
 
 An _unstable_, nightly release is available for Ubuntu-based distributions via the following PPA:
