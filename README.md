@@ -165,7 +165,7 @@ only compatible with the _specific version of Debian or Ubuntu_ indicated by the
 file name. For example, if you are on Ubuntu 20.04, the binary whose name
 contains `Ubuntu-xenial` is _only_ compatible with Ubuntu 18.04. If your system
 is not one of the specific Debian or Ubuntu versions that are supported by the
-official binaries, we recommend you use either the PPA, the Flatpak, or the
+official binaries, we recommend you use either the PPA (Ubuntu only), the Flatpak, or the
 AppImage.
 
 There is also an _unstable_, [automated nightly
