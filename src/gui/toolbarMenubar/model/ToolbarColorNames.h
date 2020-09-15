@@ -19,22 +19,24 @@
 
 #include "filesystem.h"
 
-class ToolbarColorNames {
-private:
-    ToolbarColorNames();
-    virtual ~ToolbarColorNames();
+class ToolbarColorNames final {
+    explicit ToolbarColorNames(fs::path path);
 
 public:
     static ToolbarColorNames& getInstance();
-    static void freeInstance();
+
+    ~ToolbarColorNames() noexcept;
+    ToolbarColorNames(ToolbarColorNames const&) = delete;
+    ToolbarColorNames(ToolbarColorNames&&) = delete;
+    ToolbarColorNames& operator=(ToolbarColorNames const&) = delete;
+    ToolbarColorNames& operator=(ToolbarColorNames&&) = delete;
 
 public:
-    void loadFile(fs::path const& file);
-    void saveFile(fs::path const& file);
-
     void addColor(Color color, const std::string& name, bool predefined);
-
     std::string getColorName(Color color);
+
+    void load();
+    void save() const noexcept;
 
 private:
     void initPredefinedColors();
@@ -42,4 +44,5 @@ private:
 private:
     GKeyFile* config;
     std::unordered_map<Color, std::string> predefinedColorNames{};
+    fs::path file;
 };

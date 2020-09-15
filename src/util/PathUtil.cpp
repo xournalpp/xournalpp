@@ -10,6 +10,9 @@
 #include "XojMsgBox.h"
 #include "i18n.h"
 
+using namespace std::string_view_literals;
+constexpr auto CONFIG_FOLDER_NAME = "xournalpp"sv;
+
 /**
  * Read a file to a string
  *
@@ -152,8 +155,7 @@ auto Util::getAutosaveFilepath() -> fs::path {
 
 auto Util::getConfigFolder() -> fs::path {
     auto p = fs::u8path(g_get_user_config_dir());
-    p /= g_get_prgname();
-    return p;
+    return (p /= CONFIG_FOLDER_NAME);
 }
 
 auto Util::getConfigSubfolder(const fs::path& subfolder) -> fs::path {
@@ -165,7 +167,7 @@ auto Util::getConfigSubfolder(const fs::path& subfolder) -> fs::path {
 
 auto Util::getCacheSubfolder(const fs::path& subfolder) -> fs::path {
     auto p = fs::u8path(g_get_user_cache_dir());
-    p /= g_get_prgname();
+    p /= CONFIG_FOLDER_NAME;
     p /= subfolder;
 
     return Util::ensureFolderExists(p);
@@ -173,7 +175,7 @@ auto Util::getCacheSubfolder(const fs::path& subfolder) -> fs::path {
 
 auto Util::getDataSubfolder(const fs::path& subfolder) -> fs::path {
     auto p = fs::u8path(g_get_user_data_dir());
-    p /= g_get_prgname();
+    p /= CONFIG_FOLDER_NAME;
     p /= subfolder;
 
     return Util::ensureFolderExists(p);

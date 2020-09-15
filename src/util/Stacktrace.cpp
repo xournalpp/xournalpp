@@ -68,7 +68,7 @@ fs::path Stacktrace::getExePath() {
 auto Stacktrace::getExePath() -> fs::path {
     std::array<char, PATH_MAX> result{};
     ssize_t count = readlink("/proc/self/exe", result.data(), PATH_MAX);
-    return fs::path{std::string(result.data(), (count > 0) ? count : 0)};
+    return fs::path{std::string(result.data(), std::max(ssize_t{0}, count))};
 }
 #endif
 

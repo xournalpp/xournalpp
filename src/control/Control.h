@@ -14,9 +14,9 @@
 #include <string>
 #include <vector>
 
-#include "../gui/dialog/LatexDialog.h"
 #include "gui/MainWindow.h"
 #include "gui/SearchBar.h"
+#include "gui/dialog/LatexDialog.h"
 #include "gui/sidebar/Sidebar.h"
 #include "jobs/ProgressListener.h"
 #include "jobs/XournalScheduler.h"
@@ -62,7 +62,7 @@ class Control:
         public ClipboardListener,
         public ProgressListener {
 public:
-    Control(GladeSearchpath* gladeSearchPath);
+    Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath);
     virtual ~Control();
 
     void initWindow(MainWindow* win);
@@ -333,11 +333,11 @@ private:
      */
     void applyPreferredLanguage();
 
-    RecentManager* recent;
-    UndoRedoHandler* undoRedo;
-    ZoomControl* zoom;
+    RecentManager* recent = nullptr;
+    UndoRedoHandler* undoRedo = nullptr;
+    ZoomControl* zoom = nullptr;
 
-    Settings* settings;
+    Settings* settings = nullptr;
     MainWindow* win = nullptr;
 
     Document* doc = nullptr;
@@ -356,6 +356,8 @@ private:
     AudioController* audioController;
 
     ToolbarDragDropHandler* dragDropHandler = nullptr;
+
+    GApplication* gtkApp = nullptr;
 
     /**
      * The cursor handler
