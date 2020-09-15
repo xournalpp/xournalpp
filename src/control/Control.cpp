@@ -1,15 +1,10 @@
 #include "Control.h"
 
 #include <ctime>
-#include <fstream>
 #include <memory>
 #include <numeric>
-#include <sstream>
-#include <utility>
 
-#include <gio/gio.h>
 #include <glib/gstdio.h>
-#include <gtk/gtk.h>
 
 #include "gui/TextEditor.h"
 #include "gui/XournalView.h"
@@ -24,21 +19,15 @@
 #include "gui/dialog/ToolbarManageDialog.h"
 #include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"
 #include "gui/inputdevices/HandRecognition.h"
-#include "gui/toolbarMenubar/ToolMenuHandler.h"
 #include "gui/toolbarMenubar/model/ToolbarData.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
 #include "jobs/AutosaveJob.h"
-#include "jobs/BlockingJob.h"
 #include "jobs/CustomExportJob.h"
 #include "jobs/PdfExportJob.h"
 #include "jobs/SaveJob.h"
 #include "layer/LayerController.h"
-#include "model/BackgroundImage.h"
-#include "model/FormatDefinitions.h"
 #include "model/StrokeStyle.h"
-#include "model/XojPage.h"
 #include "pagetype/PageTypeHandler.h"
-#include "pagetype/PageTypeMenu.h"
 #include "plugin/PluginController.h"
 #include "serializing/ObjectInputStream.h"
 #include "settings/ButtonConfig.h"
@@ -48,7 +37,6 @@
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertDeletePageUndoAction.h"
 #include "undo/InsertUndoAction.h"
-#include "view/DocumentView.h"
 #include "view/TextView.h"
 #include "xojfile/LoadHandler.h"
 
@@ -64,12 +52,11 @@
 #include "Util.h"
 #include "XojMsgBox.h"
 #include "config-dev.h"
-#include "config-features.h"
 #include "config.h"
 #include "i18n.h"
 
 
-Control::Control(GladeSearchpath* gladeSearchPath) {
+Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp(gtkApp) {
     this->recent = new RecentManager();
     this->undoRedo = new UndoRedoHandler(this);
     this->recent->addListener(this);
@@ -137,9 +124,7 @@ Control::~Control() {
     this->enableAutosave(false);
 
     deleteLastAutosaveFile("");
-
     this->scheduler->stop();
-
     this->changedPages.clear();  // can be removed, will be done by implicit destructor
 
     delete this->pluginController;
@@ -2433,7 +2418,7 @@ void Control::quit(bool allowCancel) {
 
     this->scheduler->removeAllJobs();
     this->scheduler->unlock();
-    gtk_main_quit();
+    g_application_quit(G_APPLICATION(gtkApp));
 }
 
 auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
