@@ -2,8 +2,6 @@
 
 #include <utility>
 
-#include <config.h>
-
 #include "model/FormatDefinitions.h"
 #include "util/DeviceListHelper.h"
 
@@ -11,8 +9,9 @@
 #include "Util.h"
 #include "filesystem.h"
 #include "i18n.h"
-#define DEFAULT_FONT "Sans"
-#define DEFAULT_FONT_SIZE 12
+
+constexpr auto const* DEFAULT_FONT = "Sans";
+constexpr auto DEFAULT_FONT_SIZE = 12;
 
 #define WRITE_BOOL_PROP(var) xmlNode = saveProperty((const char*)#var, (var) ? "true" : "false", root)
 #define WRITE_STRING_PROP(var) xmlNode = saveProperty((const char*)#var, (var).empty() ? "" : (var).c_str(), root)
@@ -272,10 +271,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
             if (sscanf(reinterpret_cast<const char*>(size), "%lf", &dSize) == 1) {
                 this->font.setSize(dSize);
             }
-
             xmlFree(size);
         }
-
         return;
     }
 
@@ -803,9 +800,9 @@ void Settings::save() {
 
     WRITE_BOOL_PROP(touchWorkaround);
 
-    WRITE_UINT_PROP(uint32_t(selectionBorderColor));
-    WRITE_UINT_PROP(uint32_t(backgroundColor));
-    WRITE_UINT_PROP(uint32_t(selectionMarkerColor));
+    WRITE_UINT_PROP(selectionBorderColor);
+    WRITE_UINT_PROP(backgroundColor);
+    WRITE_UINT_PROP(selectionMarkerColor);
 
     WRITE_INT_PROP(pdfPageCacheSize);
     WRITE_COMMENT("The count of rendered PDF pages which will be cached.");
