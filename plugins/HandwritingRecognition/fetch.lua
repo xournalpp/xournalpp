@@ -6,7 +6,10 @@ local json = require("json")
 function sendRequest(ink, lang, width, height)
   local path = "https://www.google.com/inputtools/request?ime=handwriting&app=mobilesearch&cs=1&oe=UTF-8"
 
-  if #ink > 150 then 
+  if (not ink) then
+    print("No strokes!")
+    return
+  elseif #ink > 150 then 
     print("Number of strokes N = " .. #ink .. " is greater than 150, the maximal number of strokes that can be processed. Only the first 150 strokes will be used. \n")
     ink = { table.unpack(ink, 1, 150) }
   end
