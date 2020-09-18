@@ -14,6 +14,7 @@
 
 #include "control/Control.h"
 #include "control/PageBackgroundChangeController.h"
+#include "control/Tool.h"
 #include "control/pagetype/PageTypeHandler.h"
 
 #include "StringUtils.h"
@@ -218,7 +219,7 @@ static int applib_uiActionSelected(lua_State* L) {
 }
 
 /**
- * Select UI action
+ * Change page background
  */
 static int applib_changeCurrentPageBackground(lua_State* L) {
     PageType pt;
@@ -233,6 +234,63 @@ static int applib_changeCurrentPageBackground(lua_State* L) {
     return 1;
 }
 
+/**
+ * Change color of a specified tool or of the current tool
+ */
+static int applib_changeColor(lua_State* L) {
+
+    // discard any extra arguments passed in
+    lua_settop(L, 1);
+    luaL_checktype(L, 1, LUA_TTABLE);
+
+    lua_getfield(L, 1, "selection"); /* either true or false, for changing selection color
+                                       defaults to true*/
+    lua_getfield(L, 1, "tool");      /* "pen", "hilighter", "text"
+                                      "select_rect", "select_object", "select_region"
+                                      if omitted, current Tool is used */
+    lua_getfield(L, 1, "color");     // an RGB hex code defining the color
+    // stack now has following:
+    //    1 = {["color"] = 0xff00ff, ["tool"] = "PEN", ["selection"] = false}
+    //   -3 = false
+    //   -2 = "pen"
+    //   -1 = 0xff0077
+
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* ctrl = plugin->getControl();
+    ToolHandler* toolHandler = ctrl->getToolHandler();
+
+    bool selection = false;
+    if (lua_isboolean(L, -3)) {
+        selection = lua_toboolean(L, -3);
+    }
+
+    ToolType toolType = toolHandler->getToolType();
+    const char* toolStr = luaL_optstring(L, -2, nullptr);
+    if (toolStr != nullptr) {
+        toolType = toolTypeFromString(StringUtils::toLowerCase(toolStr));
+    }
+
+    if (toolType == TOOL_NONE) {
+        g_warning("tool \"%s\" is not valid or no tool has been selected", toolTypeToString(toolType).c_str());
+        return 0;
+    }
+
+    int color = 0x000000;
+    if (lua_isinteger(L, -1)) {
+        color = lua_tointeger(L, -1);
+    }
+
+    Tool& tool = toolHandler->getTool(toolType);
+
+    if (tool.hasCapability(TOOL_CAP_COLOR)) {
+        tool.setColor(color);
+        ctrl->toolColorChanged(selection);
+    } else {
+        g_warning("tool \"%s\" has no color capability", toolTypeToString(toolType).c_str());
+    }
+
+    return 1;
+}
 
 static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"registerUi", applib_registerUi},
@@ -240,6 +298,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"uiActionSelected", applib_uiActionSelected},
                                   {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
                                   {"saveAs", applib_saveAs},
+                                  {"changeColor", applib_changeColor},
 
                                   // Placeholder
                                   //	{"MSG_BT_OK", nullptr},
