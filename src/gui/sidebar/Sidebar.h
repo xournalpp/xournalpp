@@ -68,6 +68,11 @@ public:
      */
     void saveSize();
 
+    /**
+     * Gets the sidebar toolbar
+     */
+    SidebarToolbar* getToolbar();
+
 public:
     // DocumentListener interface
     virtual void documentChanged(DocumentChangeType type);
